@@ -18,6 +18,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#include <stdlib.h> //abs
 #include <math.h>
 #include <Rinternals.h>
 

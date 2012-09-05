@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* for mantelhaen.test */
+
 #include <R.h>
 #include <Rmath.h>
 

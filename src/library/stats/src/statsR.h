@@ -85,6 +85,7 @@ SEXP pAnsari(SEXP q, SEXP sm, SEXP sn);
 SEXP qAnsari(SEXP p, SEXP sm, SEXP sn);
 SEXP pKendall(SEXP q, SEXP sn);
 SEXP pRho(SEXP q, SEXP sn, SEXP lower);
+SEXP SWilk(SEXP x, SEXP sn);
 
 SEXP bw_den(SEXP nbin, SEXP sx);
 SEXP bw_ucv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
@@ -92,3 +93,8 @@ SEXP bw_bcv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
 SEXP bw_phi4(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
 SEXP bw_phi6(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
 
+SEXP acf(SEXP x, SEXP lmax, SEXP sCor);
+SEXP pacf1(SEXP acf, SEXP lmax);
+SEXP Burg(SEXP x, SEXP order);
+SEXP pp_sum(SEXP u, SEXP sl);
+SEXP intgrt_vec(SEXP x, SEXP xi, SEXP slag);

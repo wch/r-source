@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1999, 2001-12   The R Core Team
+ *  Copyright (C) 1999-12   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -108,36 +108,50 @@ SEXP rfilter(SEXP x, SEXP filter, SEXP out)
 }
 
 /* now allows missing values */
-void
-acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
+static void
+acf0(double *x, int n, int ns, int nl, int correlation, double *acf)
 {
-    int i, u, v, lag, nl = *nlag, nn=*n, ns = *nser, d1 = nl+1, d2 = ns*d1,
-	nu;
+    int d1 = nl+1, d2 = ns*d1, nu;
     double sum, *se;
 
     se = (double *) R_alloc(ns, sizeof(double));
-    for(u = 0; u < ns; u++)
-	for(v = 0; v < ns; v++)
-	    for(lag = 0; lag <= nl; lag++) {
+    for(int u = 0; u < ns; u++)
+	for(int v = 0; v < ns; v++)
+	    for(int lag = 0; lag <= nl; lag++) {
 		sum = 0.0; nu = 0;
-		for(i = 0; i < nn-lag; i++)
-		    if(!ISNAN(x[i + lag + nn*u]) && !ISNAN(x[i + nn*v])) {
+		for(int i = 0; i < n-lag; i++)
+		    if(!ISNAN(x[i + lag + n*u]) && !ISNAN(x[i + n*v])) {
 			nu++;
-			sum += x[i + lag + nn*u] * x[i + nn*v];
+			sum += x[i + lag + n*u] * x[i + n*v];
 		    }
 		acf[lag + d1*u + d2*v] = (nu > 0) ? sum/(nu + lag) : NA_REAL;
 	    }
-    if(*correlation) {
-	for(u = 0; u < ns; u++)
+    if(correlation) {
+	for(int u = 0; u < ns; u++)
 	    se[u] = sqrt(acf[0 + d1*u + d2*u]);
-	if(nn == 1) {
-	    for(u = 0; u < ns; u++)
+	if(n == 1) {
+	    for(int u = 0; u < ns; u++)
 		acf[0 + d1*u + d2*u] = 1.0;
 	} else {
-	    for(u = 0; u < ns; u++)
-		for(v = 0; v < ns; v++)
-		    for(lag = 0; lag <= nl; lag++)
+	    for(int u = 0; u < ns; u++)
+		for(int v = 0; v < ns; v++)
+		    for(int lag = 0; lag <= nl; lag++)
 			acf[lag + d1*u + d2*v] /= se[u]*se[v];
 	}
     }
+}
+
+SEXP acf(SEXP x, SEXP lmax, SEXP sCor)
+{
+    int nx = nrows(x), ns = ncols(x), lagmax = asInteger(lmax),
+	cor = asLogical(sCor);
+    x = PROTECT(coerceVector(x, REALSXP));
+    SEXP ans = PROTECT(allocVector(REALSXP, (lagmax + 1)*ns*ns));
+    acf0(REAL(x), nx, ns, lagmax, cor, REAL(ans));
+    SEXP d = PROTECT(allocVector(INTSXP, 3));
+    INTEGER(d)[0] = lagmax + 1;
+    INTEGER(d)[1] = INTEGER(d)[2] = ns;
+    setAttrib(ans, R_DimSymbol, d);
+    UNPROTECT(3);
+    return ans;
 }

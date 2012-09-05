@@ -47,18 +47,15 @@ acf <-
 	x <- sweep(x, 2, colMeans(x, na.rm = TRUE), check.margin=FALSE)
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
-    acf <- array(.C(C_acf, as.double(x), sampleT, nser, lag.max,
-                    as.integer(type == "correlation"),
-                    acf = double((lag.max+1L) * nser * nser), NAOK = TRUE
-                    )$acf, c(lag.max + 1L, nser, nser))
+    acf <- .Call(C_acf, x, lag.max, type == "correlation")
     lag <- outer(0:lag.max, lag/x.freq)
-    acf.out <- structure(.Data = list(acf = acf, type = type,
-        n.used = sampleT, lag = lag, series = series, snames = colnames(x)),
-        class = "acf")
+    acf.out <- structure(list(acf = acf, type = type, n.used = sampleT,
+                              lag = lag, series = series, snames = colnames(x)),
+                         class = "acf")
     if (plot) {
         plot.acf(acf.out, ...)
-        return(invisible(acf.out))
-    } else return(acf.out)
+        invisible(acf.out)
+    } else acf.out
 }
 
 pacf <- function(x, lag.max, plot, na.action, ...) UseMethod("pacf")
@@ -90,11 +87,7 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
         x <- scale(x, TRUE, FALSE)
         acf <- drop(acf(x, lag.max = lag.max, plot = FALSE,
                         na.action = na.action)$acf)
-        pacf <- array(.C(C_uni_pacf,
-                         as.double(acf),
-                         pacf = double(lag.max),
-                         as.integer(lag.max))$pacf,
-                      dim=c(lag.max,1L,1L))
+        pacf <- .Call(C_pacf1, acf, lag.max)
         lag <- array((1L:lag.max)/x.freq, dim=c(lag.max,1L,1L))
         snames <- NULL
     }

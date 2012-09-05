@@ -32,7 +32,6 @@ void d2x2xk(int *k, double *m, double *n, double *t, double *d);
 void fexact(int *nrow, int *ncol, int *table, int *ldtabl,
 	    double *expect, double *percnt, double *emin, double *prt,
 	    double *pre, int *workspace, int *mult);
-void swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault);
 
 void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
 	    double *fact, int *jwork, int *matrix);

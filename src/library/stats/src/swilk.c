@@ -25,18 +25,16 @@
  */
 #include <Rmath.h>
 
-#include "ctest.h"
-
 #ifndef min
 # define min(a, b)		((a) > (b) ? (b) : (a))
 #endif
 
 static double poly(const double *, int, double);
 
-void
-swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault)
+static void
+swilk(double *x, int n, int n1, double *w, double *pw, int *ifault)
 {
-    int nn2 = *n / 2;
+    int nn2 = n / 2;
     double a[nn2 + 1]; /* 1-based */
 
 /*	ALGORITHM AS R94 APPL. STATIST. (1995) vol.44, no.4, 547-551.
@@ -73,18 +71,18 @@ swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault)
 
     *pw = 1.;
     if (*w >= 0.) *w = 1.;
-    if (*n < 3) { *ifault = 1; return;}
+    if (n < 3) { *ifault = 1; return;}
 
-    an = (double) (*n);
-    if (*n1 < 3) {*ifault = 1; return;}
-    ncens = *n - *n1;
-    if (ncens < 0 || (ncens > 0 && *n < 20)) {*ifault = 4; return;}
+    an = (double) (n);
+    if (n1 < 3) {*ifault = 1; return;}
+    ncens = n - n1;
+    if (ncens < 0 || (ncens > 0 && n < 20)) {*ifault = 4; return;}
     if (ncens > 0) {
 	delta = (double) ncens / an;
 	if (delta > 0.8) {*ifault = 5; return;}
     } /* just for -Wall:*/ else { delta = 0.; }
 
-    if (*n == 3) {
+    if (n == 3) {
 	a[1] = 0.70710678;/* = sqrt(1/2) */
     } else {
 	an25 = an + .25;
@@ -100,7 +98,7 @@ swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault)
 	a1 = poly(c1, 6, rsn) - a[1] / ssumm2;
 
 	/* Normalize a[] */
-	if (*n > 5) {
+	if (n > 5) {
 	    i1 = 3;
 	    a2 = -a[2] / ssumm2 + poly(c2, 6, rsn);
 	    fac = sqrt((summ2 - 2. * (a[1] * a[1]) - 2. * (a[2] * a[2]))
@@ -125,7 +123,7 @@ swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault)
 
 /*	Check for zero range */
 
-    range = x[*n1 - 1] - x[0];
+    range = x[n1 - 1] - x[0];
     if (range < small) {*ifault = 6; return;}
 
 /*	Check for correct sort order on range - scaled X */
@@ -135,8 +133,8 @@ swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault)
     xx = x[0] / range;
     sx = xx;
     sa = -a[1];
-    j = *n - 1;
-    for (i = 1; i < *n1; --j) {
+    j = n - 1;
+    for (i = 1; i < n1; --j) {
 	xi = x[i] / range;
 	if (xx - xi > small) {
 	    /* Fortran had:	 print *, "ANYTHING"
@@ -151,16 +149,16 @@ swilk(double *x, int *n, int *n1, double *w, double *pw, int *ifault)
 	    sa += sign(i - j) * a[min(i,j)];
 	xx = xi;
     }
-    if (*n > 5000) *ifault = 2;
+    if (n > 5000) *ifault = 2;
 
 /*	Calculate W statistic as squared correlation
 	between data and coefficients */
 
-    sa /= *n1;
-    sx /= *n1;
+    sa /= n1;
+    sx /= n1;
     ssa = ssx = sax = 0.;
-    j = *n - 1;
-    for (i = 0; i < *n1; ++i, --j) {
+    j = n - 1;
+    for (i = 0; i < n1; ++i, --j) {
 	if (i != j)
 	    asa = sign(i - j) * a[1+min(i,j)] - sa;
 	else
@@ -181,7 +179,7 @@ L70:
 
 /*	Calculate significance level for W */
 
-    if (*n == 3) {/* exact P value : */
+    if (n == 3) {/* exact P value : */
 	double pi6 = 1.90985931710274, /* = 6/pi */
 	    stqr = 1.04719755119660; /* = asin(sqrt(3/4)) */
 	*pw = pi6 * (asin(sqrt(*w)) - stqr);
@@ -190,7 +188,7 @@ L70:
     }
     y = log(w1);
     xx = log(an);
-    if (*n <= 11) {
+    if (n <= 11) {
 	gamma = poly(g, 2, an);
 	if (y >= gamma) {
 	    *pw = 1e-99;/* an "obvious" value, was 'small' which was 1e-19f */
@@ -253,3 +251,19 @@ static double poly(const double *cc, int nord, double x)
     }
     return ret_val;
 } /* poly */
+
+
+#include <Rinternals.h>
+SEXP SWilk(SEXP x, SEXP sn)
+{
+    int n = asInteger(sn), ifault = 0;
+    double W, pw;
+    x = PROTECT(coerceVector(x, REALSXP));
+    swilk(REAL(x), n, n, &W, &pw, &ifault);
+    if (ifault > 0 && ifault != 7)
+	error("ifault=%d. This should not happen", ifault);
+    SEXP ans = PROTECT(allocVector(REALSXP, 2));
+    REAL(ans)[0] = W, REAL(ans)[1] = pw;
+    UNPROTECT(2);
+    return ans;
+}

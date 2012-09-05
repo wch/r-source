@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-12   The R Core Team.
+ *  Copyright (C) 2001-2012   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,8 +41,6 @@ static R_NativePrimitiveArgType d2_t[5] = {INTSXP, REALSXP, REALSXP, REALSXP, RE
 static R_NativePrimitiveArgType fexact_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, REALSXP,
 					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType swilk_t[6] = {REALSXP, INTSXP, INTSXP,
-					      REALSXP, REALSXP, INTSXP};
 
 #define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
@@ -52,20 +50,14 @@ static const R_CMethodDef CEntries[]  = {
     {"fisher_sim", (DL_FUNC) &fisher_sim, 10, fishersim_t},
     {"d2x2xk", (DL_FUNC) &d2x2xk, 5, d2_t},
     {"fexact",   (DL_FUNC) &fexact, 11, fexact_t},
-    {"swilk2", (DL_FUNC) &swilk, 6, swilk_t},
     {"loess_raw", (DL_FUNC) &loess_raw, 24},
     {"loess_dfit", (DL_FUNC) &loess_dfit, 13},
     {"loess_dfitse", (DL_FUNC) &loess_dfitse, 16},
     {"loess_ifit", (DL_FUNC) &loess_ifit, 8},
     {"loess_ise", (DL_FUNC) &loess_ise, 15},
-    {"acf", (DL_FUNC) &acf, 6},
-    {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
     {"artoma", (DL_FUNC) &artoma, 4},
-    {"burg", (DL_FUNC) &burg, 6},
     {"multi_burg", (DL_FUNC) &multi_burg, 11},
     {"multi_yw", (DL_FUNC) &multi_yw, 10},
-    {"R_intgrt_vec", (DL_FUNC) &R_intgrt_vec, 4},
-    {"R_pp_sum", (DL_FUNC) &R_pp_sum, 4},
     {"HoltWinters", (DL_FUNC) &HoltWinters, 17},
     {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
     {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
@@ -144,11 +136,17 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(qAnsari, 3),
     CALLDEF(pKendall, 2),
     CALLDEF(pRho, 3),
+    CALLDEF(SWilk, 2),
     CALLDEF(bw_den, 2),
     CALLDEF(bw_ucv, 4),
     CALLDEF(bw_bcv, 4),
     CALLDEF(bw_phi4, 4),
     CALLDEF(bw_phi6, 4),
+    CALLDEF(acf, 3),
+    CALLDEF(pacf1, 2),
+    CALLDEF(Burg, 2),
+    CALLDEF(intgrt_vec, 3),
+    CALLDEF(pp_sum, 2),
     {NULL, NULL, 0}
 };
 

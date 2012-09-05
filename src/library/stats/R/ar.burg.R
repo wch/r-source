@@ -42,17 +42,10 @@ ar.burg.default <-
     if (order.max < 1L) stop("'order.max' must be >= 1")
     else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     xaic <- numeric(order.max + 1L)
-    z <- .C(C_burg,
-            as.integer(n.used),
-            as.double(x),
-            as.integer(order.max),
-            coefs=double(order.max^2),
-            var1=double(1L+order.max),
-            var2=double(1L+order.max)
-            )
-    coefs <- matrix(z$coefs, order.max, order.max)
+    z <- .Call(C_Burg, x, order.max)
+    coefs <- matrix(z[[1L]], order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
-    var.pred <- if(var.method == 1L) z$var1 else z$var2
+    var.pred <- if(var.method == 1L) z[[2L]] else z[[3L]]
     xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
     maic <- min(aic)
     xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
@@ -72,7 +65,7 @@ ar.burg.default <-
                 method = ifelse(var.method==1L,"Burg","Burg2"),
                 series = series, frequency = xfreq, call = match.call())
     if(order) {
-        xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
+        xacf <- acf(x, type = "covariance", lag.max = order, plot = FALSE)$acf
         res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq_len(order)]))*var.pred/n.used
     }
     class(res) <- "ar"

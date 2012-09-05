@@ -133,10 +133,11 @@ function(x, y = NULL, z = NULL,
 
             METHOD <- paste("Exact conditional test of independence",
                             "in 2 x 2 x k tables")
-            m <- apply(x, c(2L, 3L), sum)[1, ]
-            n <- apply(x, c(2L, 3L), sum)[2, ]
-            t <- apply(x, c(1L, 3L), sum)[1, ]
-            s <- sum(x[1, 1, ])
+            mn <- apply(x, c(2L, 3L), sum)
+            m <- mn[1L, ]
+            n <- mn[2L, ]
+            t <- apply(x, c(1L, 3L), sum)[1L, ]
+            s <- sum(x[1L, 1L, ])
             lo <- sum(pmax(0, t - n))
             hi <- sum(pmin(m, t))
 

@@ -64,12 +64,8 @@ PP.test <- function (x, lshort = TRUE)
     tstat <- (res.sum$coefficients[3,1]-1)/res.sum$coefficients[3,2]
     u <- residuals (res)
     ssqru <- sum(u^2)/n
-    if (lshort)
-        l <- trunc(4*(n/100)^0.25)
-    else
-        l <- trunc(12*(n/100)^0.25)
-    ssqrtl <- .C(C_R_pp_sum, as.double(u), as.integer(n),
-                 as.integer(l), trm = as.double(ssqru))$trm
+    l <- if (lshort) trunc(4*(n/100)^0.25) else trunc(12*(n/100)^0.25)
+    ssqrtl <- ssqru + .Call(C_pp_sum, u, l)
     n2 <- n^2
     trm1 <- n2*(n2-1)*sum(yt1^2)/12
     trm2 <- n*sum(yt1*(1L:n))^2

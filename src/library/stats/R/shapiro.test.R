@@ -19,32 +19,17 @@
 shapiro.test <- function(x)
 {
     DNAME <- deparse(substitute(x))
-    x <- sort(x[complete.cases(x)])
     stopifnot(is.numeric(x))
+    x <- sort(x[complete.cases(x)])
     n <- length(x)
     if(is.na(n) || n < 3L || n > 5000L)
 	stop("sample size must be between 3 and 5000")
     rng <- x[n] - x[1L]
-    if(rng == 0)
-	stop("all 'x' values are identical")
-    if(rng < 1e-10)
-	x <- x/rng # rescale to avoid ifault=6
-    n2 <- n %/% 2L # integer, too
-    ## C Code: Use the first n1 observations as uncensored
-    sw <- .C(C_swilk2,
-	     as.double(x),
-	     n,#      integer
-	     n1 = n,#   "
-	     w	= double(1L),
-	     pw = double(1L),
-	     ifault = integer(1L))
-    if (sw$ifault && sw$ifault != 7L) # 7 *does* happen (Intel Linux)
-	stop(gettextf("ifault=%d. This should not happen", sw$ifault),
-             domain = NA)
-    RVAL <- list(statistic = c(W = sw$w),
-		 p.value = sw$pw,
-		 method = "Shapiro-Wilk normality test",
-		 data.name = DNAME)
+    if(rng == 0) stop("all 'x' values are identical")
+    if(rng < 1e-10) x <- x/rng # rescale to avoid ifault=6 with single version.
+    res <- .Call(C_SWilk, x, n)
+    RVAL <- list(statistic = c(W = res[1]), p.value = res[2],
+		 method = "Shapiro-Wilk normality test", data.name = DNAME)
     class(RVAL) <- "htest"
     return(RVAL)
 }

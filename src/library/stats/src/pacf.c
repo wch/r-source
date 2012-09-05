@@ -1,6 +1,6 @@
 /*  R : A Computer Language for Statistical Data Analysis
  *
- *  Copyright (C) 1999-2002	The R Core Team
+ *  Copyright (C) 1999-2012	The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,31 +45,44 @@ static void dotrans(Starma G, double *raw, double *new, int trans);
 
 
 /* cor is the autocorrelations starting from 0 lag*/
-void uni_pacf(double *cor, double *p, int *pnlag)
+static void uni_pacf(double *cor, double *p, int nlag)
 {
-    int nlag = *pnlag;
-    int i, ll;
     double a, b, c, *v, *w;
 
     v = (double*) R_alloc(nlag, sizeof(double));
     w = (double*) R_alloc(nlag, sizeof(double));
     w[0] = p[0] = cor[1];
-    for(ll = 1; ll < nlag; ll++) {
+    for(int ll = 1; ll < nlag; ll++) {
 	a = cor[ll+1];
 	b = 1.0;
-	for(i = 0; i < ll; i++) {
+	for(int i = 0; i < ll; i++) {
 	    a -= w[i] * cor[ll - i];
 	    b -= w[i] * cor[i + 1];
 	}
 	p[ll] = c = a/b;
 	if(ll+1 == nlag) break;
 	w[ll] = c;
-	for(i = 0; i < ll; i++)
+	for(int i = 0; i < ll; i++)
 	    v[ll-i-1] = w[i];
-	for(i = 0; i < ll; i++)
+	for(int i = 0; i < ll; i++)
 	    w[i] -= c*v[i];
     }
 }
+
+SEXP pacf1(SEXP acf, SEXP lmax)
+{
+    int lagmax = asInteger(lmax);
+    acf = PROTECT(coerceVector(acf, REALSXP));
+    SEXP ans = PROTECT(allocVector(REALSXP, lagmax));
+    uni_pacf(REAL(acf), REAL(ans), lagmax);
+    SEXP d = PROTECT(allocVector(INTSXP, 3));
+    INTEGER(d)[0] = lagmax;
+    INTEGER(d)[1] = INTEGER(d)[2] = 1;
+    setAttrib(ans, R_DimSymbol, d);
+    UNPROTECT(2);
+    return ans;
+}
+
 
 /* Use an external reference to store the structure we keep allocated
    memory in */
