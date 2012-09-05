@@ -200,8 +200,13 @@
 
       A different algorithm is used for \code{n, size, replace = FALSE,
 	prob = NULL)} for \code{n > 1e7} and \code{size <= n/2}.  This
-	is much faster and uses less memory, but does give different
-	results.
+      is much faster and uses less memory, but does give different results.
+      
+      \item \code{approxfun()} and \code{splinefun()} now return a
+      wrapper to an internal function in the \pkg{stats} namespace
+      rather than a \code{.C()} or \code{.Call()} call.  This is more
+      likely to work if the function is saved and used in a different
+      session.
     }
   }
 

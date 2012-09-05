@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-09-03 r60546) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-09-04 r60559) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6273,12 +6273,11 @@ and	9 plateau levels (y) with summary
 > 
 > ## Advanced: What's inside the function closure?
 > print(ls.Fn12 <- ls(environment(Fn12)))
-[1] "f"      "method" "n"      "nobs"   "x"      "y"      "yleft"  "yright"
+[1] "f"      "method" "nobs"   "x"      "y"      "yleft"  "yright"
 > ##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
 > utils::ls.str(environment(Fn12))
 f :  num 0
 method :  int 2
-n :  int 8
 nobs :  int 12
 x :  num [1:8] -2.2 -2 -0.6 0 0.1 0.6 0.8 0.9
 y :  num [1:8] 0.0833 0.1667 0.3333 0.5 0.5833 ...
@@ -15365,13 +15364,13 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > ## look at the internal structure:
 > unclass(sfun0)
 function (v) 
-.Call(C_Approx, x, y, v, method, yleft, yright, f)
-<bytecode: 0x7fc9528ac870>
-<environment: 0x7fc9574391c8>
+.approxfun(x, y, v, method, yleft, yright, f)
+<bytecode: 0x7fe49c0a7f90>
+<environment: 0x7fe4a0fe5b50>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
-[1] "f"      "method" "n"      "x"      "y"      "yleft"  "yright"
+[1] "f"      "method" "x"      "y"      "yleft"  "yright"
 > 
 > x0 <- seq(0.5,3.5, by = 0.25)
 > rbind(x=x0, f.f0 = sfun0(x0), f.f02= sfun.2(x0),

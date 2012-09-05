@@ -107,12 +107,16 @@ approxfun <- function(x, y = NULL, method = "linear",
 	yright <- if (rule[2L] == 1) NA else y[length(y)]
     force(f)
     stopifnot(length(yleft) == 1L, length(yright) == 1L, length(f) == 1L)
-    rm(rule, ties, lenR)
+    rm(rule, ties, lenR, n) # we do not need n, but summary.stepfun did.
 
     ## 1. Test input consistency once
     x <- as.double(x); y <- as.double(y)
     .Call(C_ApproxTest, x, y, method, f)
 
     ## 2. Create and return function that does not test input validity...
-    function(v) .Call(C_Approx, x, y, v, method, yleft, yright, f)
+    function(v) .approxfun(x, y, v, method, yleft, yright, f)
 }
+
+## avoid capturing internal calls
+.approxfun <- function(x, y, v,  method, yleft, yright, f)
+    .Call(C_Approx, x, y, v, method, yleft, yright, f)
