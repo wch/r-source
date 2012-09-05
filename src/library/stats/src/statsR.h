@@ -80,3 +80,8 @@ SEXP Approx(SEXP x, SEXP y, SEXP v, SEXP method,
 
 SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start,
 	    SEXP snmar, SEXP eps, SEXP iter);
+
+SEXP pAnsari(SEXP q, SEXP sm, SEXP sn);
+SEXP qAnsari(SEXP p, SEXP sm, SEXP sn);
+SEXP pKendall(SEXP q, SEXP sn);
+SEXP pRho(SEXP q, SEXP sn, SEXP lower);

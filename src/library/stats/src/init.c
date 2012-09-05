@@ -37,16 +37,9 @@ static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP
 static R_NativePrimitiveArgType fishersim_t[10] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
 					   INTSXP, INTSXP, REALSXP, INTSXP, REALSXP};
 static R_NativePrimitiveArgType d2_t[5] = {INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType dansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
-static R_NativePrimitiveArgType pansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
-static R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType fexact_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, REALSXP,
 					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, INTSXP};
-
-static R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
-
-static R_NativePrimitiveArgType prho_t[5] = {INTSXP, REALSXP, REALSXP, INTSXP, LGLSXP};
 
 static R_NativePrimitiveArgType swilk_t[6] = {REALSXP, INTSXP, INTSXP,
 					      REALSXP, REALSXP, INTSXP};
@@ -64,19 +57,13 @@ static const R_CMethodDef CEntries[]  = {
     {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},
     {"fisher_sim", (DL_FUNC) &fisher_sim, 10, fishersim_t},
     {"d2x2xk", (DL_FUNC) &d2x2xk, 5, d2_t},
-    {"dansari", (DL_FUNC) &dansari, 4, dansari_t},
     {"fexact",   (DL_FUNC) &fexact, 11, fexact_t},
-    {"pansari",  (DL_FUNC)&pansari, 4, pansari_t},
-    {"pkendall", (DL_FUNC)  &pkendall, 3, pkendall_t},
-    {"prho", (DL_FUNC) &prho, 5, prho_t},
-    {"qansari",  (DL_FUNC) &qansari, 4, qansari_t},
     {"swilk2", (DL_FUNC) &swilk, 6, swilk_t},
     {"loess_raw", (DL_FUNC) &loess_raw, 24},
     {"loess_dfit", (DL_FUNC) &loess_dfit, 13},
     {"loess_dfitse", (DL_FUNC) &loess_dfitse, 16},
     {"loess_ifit", (DL_FUNC) &loess_ifit, 8},
     {"loess_ise", (DL_FUNC) &loess_ise, 15},
-    {"R_distance", (DL_FUNC) &R_distance, 7},
     {"acf", (DL_FUNC) &acf, 6},
     {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
     {"artoma", (DL_FUNC) &artoma, 4},
@@ -164,6 +151,10 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(Approx, 7),
     CALLDEF(ApproxTest, 4),
     CALLDEF(LogLin, 7),
+    CALLDEF(pAnsari, 3),
+    CALLDEF(qAnsari, 3),
+    CALLDEF(pKendall, 2),
+    CALLDEF(pRho, 3),
     {NULL, NULL, 0}
 };
 

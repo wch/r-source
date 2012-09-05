@@ -20,9 +20,6 @@
 #include <R.h>
 #include <Rinternals.h>
 
-void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
-		int *method, double *p);
-
 SEXP cutree(SEXP merge, SEXP which);
 
 SEXP rWishart(SEXP ns, SEXP nuP, SEXP scal);

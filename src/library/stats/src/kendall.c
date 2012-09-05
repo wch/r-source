@@ -30,7 +30,8 @@
 */
 
 static double
-ckendall(int k, int n, double **w) {
+ckendall(int k, int n, double **w) 
+{
     int i, u;
     double s;
 
@@ -56,7 +57,8 @@ ckendall(int k, int n, double **w) {
 
 #if 0
 void
-dkendall(int *len, double *x, int *n) {
+dkendall(int *len, double *x, int *n) 
+{
     int i;
     double **w;
 
@@ -71,25 +73,37 @@ dkendall(int *len, double *x, int *n) {
 }
 #endif
 
-void
-pkendall(int *len, double *x, int *n) {
+static void
+pkendall(int len, double *Q, double *P, int n) 
+{
     int i, j;
     double p, q;
     double **w;
 
-    w = (double **) R_alloc(*n + 1, sizeof(double *));
-    memset(w, '\0', sizeof(double*) * (*n+1));
+    w = (double **) R_alloc(n + 1, sizeof(double *));
+    memset(w, '\0', sizeof(double*) * (n+1));
 
-    for (i = 0; i < *len; i++) {
-	q = floor(x[i] + 1e-7);
+    for (i = 0; i < len; i++) {
+	q = floor(Q[i] + 1e-7);
 	if (q < 0)
-	    x[i] = 0;
-	else if (q > (*n * (*n - 1) / 2))
-	    x[i] = 1;
+	    P[i] = 0;
+	else if (q > (n * (n - 1) / 2))
+	    P[i] = 1;
 	else {
 	    p = 0;
-	    for (j = 0; j <= q; j++) p += ckendall(j, *n, w);
-	    x[i] = p / gammafn(*n + 1);
+	    for (j = 0; j <= q; j++) p += ckendall(j, n, w);
+	    P[i] = p / gammafn(n + 1);
 	}
     }
+}
+
+#include <Rinternals.h>
+SEXP pKendall(SEXP q, SEXP sn)
+{
+    q = PROTECT(coerceVector(q, REALSXP));
+    int len = LENGTH(q), n = asInteger(sn);
+    SEXP p = PROTECT(allocVector(REALSXP, len));
+    pkendall(len, REAL(q), REAL(p), n);
+    UNPROTECT(2);
+    return p;
 }

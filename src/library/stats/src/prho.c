@@ -37,7 +37,7 @@
  - new argument lower_tail --> potentially increased precision in extreme cases.
 */
 void
-prho(int *n, double *is, double *pv, int *ifault, int *lower_tail)
+prho(int n, double is, double *pv, int ifault, int lower_tail)
 {
 /*	Algorithm AS 89	  Appl. Statist. (1975) Vol.24, No. 3, P377.
 
@@ -76,44 +76,44 @@ prho(int *n, double *is, double *pv, int *ifault, int *lower_tail)
     int nfac, i, m, mt, ifr, ise, n1;
 
     /* Test admissibility of arguments and initialize */
-    *pv = *lower_tail ? 0. : 1.;
-    if (*n <= 1) { *ifault = 1; return; }
+    *pv = lower_tail ? 0. : 1.;
+    if (n <= 1) { ifault = 1; return; }
 
-    *ifault = 0;
-    if (*is <= 0.) return;/* with p = 1 */
+    ifault = 0;
+    if (is <= 0.) return;/* with p = 1 */
 
-    n3 = (double)*n;
+    n3 = (double)n;
     n3 *= (n3 * n3 - 1.) / 3.;/* = (n^3 - n)/3 */
-    if (*is > n3) { /* larger than maximal value */
+    if (is > n3) { /* larger than maximal value */
 	*pv = 1 - *pv; return;
     }
     /* NOT rounding to even anymore:  with ties, S, may even be non-integer!
-     * js = *is;
+     * js = is;
      * if(fmod(js, 2.) != 0.) ++js;
      */
-    if (*n <= n_small) { /* 2 <= n <= n_small :
+    if (n <= n_small) { /* 2 <= n <= n_small :
 			  * Exact evaluation of probability */
 	nfac = 1.;
-	for (i = 1; i <= *n; ++i) {
+	for (i = 1; i <= n; ++i) {
 	    nfac *= i;
 	    l[i - 1] = i;
 	}
 	/* KH mod next line: was `!=' in the code but `.eq.' in the paper */
-	if (*is == n3) {
+	if (is == n3) {
 	    ifr = 1;
 	}
 	else {
 	    ifr = 0;
 	    for (m = 0; m < nfac; ++m) {
 		ise = 0;
-		for (i = 0; i < *n; ++i) {
+		for (i = 0; i < n; ++i) {
 		    n1 = i + 1 - l[i];
 		    ise += n1 * n1;
 		}
-		if (*is <= ise)
+		if (is <= ise)
 		    ++ifr;
 
-		n1 = *n;
+		n1 = n;
 		do {
 		    mt = l[0];
 		    for (i = 1; i < n1; ++i)
@@ -123,14 +123,14 @@ prho(int *n, double *is, double *pv, int *ifault, int *lower_tail)
 		} while (mt == n1+1 && n1 > 1);
 	    }
 	}
-	*pv = (*lower_tail ? nfac-ifr : ifr) / (double) nfac;
+	*pv = (lower_tail ? nfac-ifr : ifr) / (double) nfac;
     } /* exact for n <= n_small */
 
     else { /* n >= 7 :	Evaluation by Edgeworth series expansion */
 
-	y = (double) (*n);
+	y = (double) n;
 	b = 1 / y;
-	x = (6. * (*is - 1) * b / (y * y - 1) - 1) * sqrt(y - 1);
+	x = (6. * (is - 1) * b / (y * y - 1) - 1) * sqrt(y - 1);
 	/* = rho * sqrt(n-1)  ==  rho / sqrt(var(rho))  ~  (0,1) */
 	y = x * x;
 	u = x * b * (c1 + b * (c2 + c3 * b) +
@@ -139,11 +139,20 @@ prho(int *n, double *is, double *pv, int *ifault, int *lower_tail)
 				   y * (c9 - c10 * b + y * b * (c11 - c12 * y))
 			      )));
 	y = u / exp(y / 2.);
-	*pv = (*lower_tail ? -y : y) +
-	    pnorm(x, 0., 1., *lower_tail, /*log_p = */FALSE);
+	*pv = (lower_tail ? -y : y) +
+	    pnorm(x, 0., 1., lower_tail, /*log_p = */FALSE);
 	/* above was call to alnorm() [algorithm AS 66] */
 	if (*pv < 0) *pv = 0.;
 	if (*pv > 1) *pv = 1.;
     }
     return;
 } /* prho */
+
+#include <Rinternals.h>
+SEXP pRho(SEXP q, SEXP sn, SEXP lower)
+{
+    double s = asReal(q), p;
+    int n = asInteger(sn), ltail = asInteger(lower), ifault;
+    prho(n, s, &p, ifault, ltail);
+    return ScalarReal(p);
+}
