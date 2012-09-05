@@ -50,7 +50,8 @@ print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
 
 summary.ecdf <- function(object, ...)
 {
-    header <- paste("Empirical CDF:	 ", environment(object)$"n",
+    n <- length(eval(expression(x), envir = environment(object)))
+    header <- paste("Empirical CDF:	 ", n,
                     "unique values with summary\n")
     structure(summary(knots(object), ...),
               header = header, class = "summary.ecdf")
