@@ -60,22 +60,6 @@
 
 #include "basedecl.h"
 
-/* FIXME: bincode is no longer used in R, but is still used by
-   packages mixOmics spam .  Remove after R 2.15.2.
-*/
-void bincode (double *x, int *n, double *breaks, int *nb,
-	      int *code, int *right, int *include_border, int *naok);
-
-static R_NativePrimitiveArgType bincode_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, LGLSXP, LGLSXP, LGLSXP};
-
-
-#define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
-
-static R_CMethodDef cMethods [] = {
-    CDEF(bincode), // remove after R 2.15.2
-
-    {NULL, NULL, 0}
-};
 
 
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
@@ -124,6 +108,6 @@ static R_FortranMethodDef fortranMethods[] = {
 void attribute_hidden
 R_init_base(DllInfo *dll)
 {
-    R_registerRoutines(dll, cMethods, callMethods, fortranMethods, NULL);
+    R_registerRoutines(dll, NULL, callMethods, fortranMethods, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
