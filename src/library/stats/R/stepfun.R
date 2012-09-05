@@ -66,7 +66,7 @@ print.stepfun <- function (x, digits = getOption("digits") - 2, ...)
     cat(" x[1:", n, "] = ", numform(xx[i1(n)]),
 	if(n > 3L) ", ", if(n > 5L) " ..., ", numform(xx[i2(n)]), "\n", sep = "")
     y <- eval(expression(c(yleft, y)), envir = env)
-    cat(n+1L, " plateau levels = ", numform(y[i1(n+1)]),
+    cat(n+1L, " plateau levels = ", numform(y[i1(n+1L)]),
 	if(n+1L > 3L) ", ", if(n+1L > 5L) " ..., ", numform(y[i2(n+1L)]), "\n",
 	sep = "")
     invisible(x)
