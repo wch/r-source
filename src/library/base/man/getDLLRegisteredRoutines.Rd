@@ -52,15 +52,20 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
 \details{
   This takes the registration information after it has been registered
   and processed by the R internals.  In other words, it uses the extended
-  information
+  information.
+
+  There is \code{print} methods for the class, which prints only the
+  types which have registered routines.
 }
 \value{
-  A list with four elements corresponding to the routines
-  registered for the .C, .Call, .Fortran and .External interfaces.
-  Each element is a list with as many elements as there were
-  routines registered for that interface.
+  A list of class \code{"DLLRegisteredRoutines"} with four elements
+  corresponding to the routines registered for the \code{.C},
+  \code{.Call}, \code{.Fortran} and \code{.External} interfaces. Each is
+  a list with as many elements as there were routines registered for
+  that interface.
+  
   Each element identifies a routine and is an object
-  of class \code{NativeSymbolInfo}.
+  of class \code{"NativeSymbolInfo"}.
   An object of this class has the following fields:
   \item{name}{the registered name of the routine (not necessarily the
     name in the C code).}
@@ -75,7 +80,8 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   }
 }
 \references{
-  "Writing R Extensions Manual" for symbol registration.
+  \sQuote{Writing R Extensions Manual} for symbol registration.
+  
   R News, Volume 1/3, September 2001.   "In search of C/C++ & Fortran Symbols"
 }
 \author{Duncan Temple Lang \email{duncan@wald.ucdavis.edu}}

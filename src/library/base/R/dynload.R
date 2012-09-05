@@ -128,27 +128,27 @@ function(x, ...)
     invisible(x)
 }
 
+### This is arranged as a ragged data frame.  It may be confusing
+### if one reads it row-wise as the columns are related in pairs
+### but not across pairs.  We might leave it as  a list of lists
+### but that spans a great deal of vertical space and involves
+### a lot of scrolling for the user.
 print.DLLRegisteredRoutines <-
-      # This is arranged as a ragged data frame.  It may be confusing
-      # if one reads it row-wise as the columns are related in pairs
-      # but not across pairs.  We might leave it as  a list of lists
-      # but that spans a great deal of vertical space and involves
-      # a lot of scrolling for the user.
 function(x, ...)
 {
-      # Create a data frame with as many rows as the maximum number
-      # of routines in any category. Then fill the column with ""
-      # and then the actual entries.
+    ## Create a data frame with as many rows as the maximum number
+    ## of routines in any category. Then fill the column with ""
+    ## and then the actual entries.
 
-    n <- max(vapply(x, length, 1L))
+    n <- vapply(x, length, 1L)
+    x <- x[n > 0]
+    n <- max(n)
     d <- list()
     sapply(names(x),
              function(id) {
                 d[[id]] <<- rep("", n)
                 names <- sapply(x[[id]], function(x) x$name)
-                if(length(names))
-                    d[[id]][seq_along(names)] <<- names
-
+                if(length(names)) d[[id]][seq_along(names)] <<- names
                 d[[paste(id, "numParameters")]] <<- rep("", n)
                 names <- sapply(x[[id]], function(x) x$numParameters)
                 if(length(names))
@@ -179,7 +179,7 @@ function(f = sys.function(-1), doStop = FALSE)
             return(NULL)
     }
 
-       # Please feel free to replace with a more encapsulated way to do this.
+    ## Please feel free to replace with a more encapsulated way to do this.
     if (is.null(env <- e$".__NAMESPACE__.")) env <- baseenv()
     if(exists("DLLs", envir = env) && length(env$DLLs))
         return(env$DLLs[[1L]])
