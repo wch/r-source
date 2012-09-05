@@ -50,14 +50,14 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
 
     method <- match.arg(method)
 
-    fSD <- function(h) (c1/SDh(alph2 * h^(5/7)))^(1/5) - h
+    fSD <- function(h) ( c1/SDh(alph2 * h^(5/7)) )^(1/5) - h
     SDh <- function(h)
         .C(C_band_phi4_bin, n, nb, as.double(d), cnt, as.double(h), u = double(1L))$u
     TDh <- function(h)
         .C(C_band_phi6_bin, n, nb, as.double(d), cnt, as.double(h), u = double(1L))$u
 
     Z <- .C(C_band_den_bin, n, nb, d = double(1L), x, cnt = integer(nb))
-    d <- Z$d; cnt <- as.integer(Z$cnt)
+    d <- Z$d; cnt <- Z$cnt
     scale <- min(sd(x), IQR(x)/1.349)
     a <- 1.24 * scale * n^(-1/7)
     b <- 1.23 * scale * n^(-1/9)
