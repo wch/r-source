@@ -93,7 +93,7 @@ install: installdirs install-intl-@USE_INCLUDED_LIBINTL@
 	done
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rincludedir)@R_ARCH@"
-install-intl-yes:
+install-intl-yes: installdirs
 	@$(INSTALL_DATA) libintl.h "$(DESTDIR)$(rincludedir)@R_ARCH@"
 install-intl-no:
 

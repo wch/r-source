@@ -1951,4 +1951,14 @@ rowsum(as.data.frame(x), group)
 ## one version had factor row names.
 
 
+## Rather pointless usage in PR#15044
+set.seed(42)
+n <- 10
+y <- rnorm(n)
+x <- rnorm(n)
+w <- rep(0, n)
+lm.wfit(cbind(1, x), y, w)
+## segfaulted in 2.15.1, only
+
+
 proc.time()

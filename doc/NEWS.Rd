@@ -859,6 +859,9 @@
       
       \item \code{install.packages(type = "both")} could call
       \code{chooseCRANmirror()} twice.      
+      
+      \item \code{lm.wfit()} could segfault in \R 2.15.1 if all the
+      weights were zero. (\PR{15044})
     }
   }
 }
