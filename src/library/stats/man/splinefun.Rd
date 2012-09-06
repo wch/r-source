@@ -76,13 +76,8 @@ splinefunH(x, y, m)
   can be used to evaluate the interpolating cubic spline
   (\code{deriv} = 0), or its derivatives (\code{deriv} = 1, 2, 3) at the
   points \code{x}, where the spline function interpolates the data
-  points originally specified.  This is often more useful than
-  \code{spline}.
-}
-\section{Warning}{
-  The value returned by \code{splinefun} contains references to the code
-  in the current version of \R: it is not intended to be saved and
-  loaded into a different \R session.
+  points originally specified.  In uses data stored in its environment
+  when it was created, the details of which are suject to change.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
