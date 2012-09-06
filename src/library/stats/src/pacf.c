@@ -294,10 +294,9 @@ void artoma(int *pp, double *phi, double *psi, int *npsi)
     int i, j, p = *pp;
 
     for(i = 0; i < p; i++) psi[i] = phi[i];
-    for(i = p + 1; i < *npsi; i++) psi[i] = 0.0;
-    for(i = 0; i < *npsi - p - 1; i++) {
+    for(i = p; i < *npsi; i++) psi[i] = 0.0;
+    for(i = 0; i < *npsi - p - 1; i++)
 	for(j = 0; j < p; j++) psi[i + j + 1] += phi[j]*psi[i];
-    }
 }
 
 static void partrans(int p, double *raw, double *new)
