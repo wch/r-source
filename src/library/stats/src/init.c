@@ -115,7 +115,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(qAnsari, 3),
     CALLDEF(pKendall, 2),
     CALLDEF(pRho, 3),
-    CALLDEF(SWilk, 2),
+    CALLDEF(SWilk, 1),
     CALLDEF(bw_den, 2),
     CALLDEF(bw_ucv, 4),
     CALLDEF(bw_bcv, 4),

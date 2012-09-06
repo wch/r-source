@@ -254,11 +254,12 @@ static double poly(const double *cc, int nord, double x)
 
 
 #include <Rinternals.h>
-SEXP SWilk(SEXP x, SEXP sn)
+SEXP SWilk(SEXP x)
 {
-    int n = asInteger(sn), ifault = 0;
-    double W, pw;
+    int n, ifault = 0;
+    double W = 0, pw;
     x = PROTECT(coerceVector(x, REALSXP));
+    n = LENGTH(x);
     swilk(REAL(x), n, n, &W, &pw, &ifault);
     if (ifault > 0 && ifault != 7)
 	error("ifault=%d. This should not happen", ifault);

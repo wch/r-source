@@ -93,7 +93,7 @@ SEXP pAnsari(SEXP q, SEXP sm, SEXP sn);
 SEXP qAnsari(SEXP p, SEXP sm, SEXP sn);
 SEXP pKendall(SEXP q, SEXP sn);
 SEXP pRho(SEXP q, SEXP sn, SEXP lower);
-SEXP SWilk(SEXP x, SEXP sn);
+SEXP SWilk(SEXP x);
 
 SEXP bw_den(SEXP nbin, SEXP sx);
 SEXP bw_ucv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
