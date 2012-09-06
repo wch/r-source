@@ -130,6 +130,9 @@ mcMap(f, ...)
   Some precautions have been taken to make this usable in
   \command{R.app} on Mac OS X, but users of third-party front-ends
   should consult their documentation.
+
+  Note that \pkg{tcltk} counts as a GUI for these purposes since
+  \command{Tk} runs an event loop.  
 }
 
 \author{

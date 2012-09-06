@@ -82,6 +82,9 @@ mcexit(exit.code = 0L, send = NULL)
 
   This can also apply to other connections, e.g. to an X server, created
   before forking.
+
+  Note that \pkg{tcltk} counts as a GUI for these purposes since
+  \command{Tk} runs an event loop.
 }
 
 \author{
