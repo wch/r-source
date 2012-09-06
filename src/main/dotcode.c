@@ -103,7 +103,6 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
 {
     if (isValidString(op)) return;
 
-    *fun = NULL;
     if(TYPEOF(op) == EXTPTRSXP) {
 	char *p = NULL;
 	if(R_ExternalPtrTag(op) == install("native symbol"))
@@ -191,13 +190,6 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     strcpy(dll.DLLname, ""); 
     dll.dll = NULL; dll.obj = NULL; dll.type = NOT_DEFINED;
     
-    // find if we were called from a namespace
-    SEXP env2 = ENCLOS(env);
-    const char *ns = "";
-    if(R_IsNamespaceEnv(env2))
-	ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env2), 0));
-    else env2 = R_NilValue;
-
     op = CAR(args);  // value of .NAME =
     /* NB, this sets fun, symbol and buf and is not just a check! */
     checkValidSymbolId(op, call, fun, symbol, buf);
@@ -225,6 +217,13 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 
     if (dll.type == FILENAME && !strlen(dll.DLLname))
 	errorcall(call, _("PACKAGE = \"\" is invalid"));
+
+    // find if we were called from a namespace
+    SEXP env2 = ENCLOS(env);
+    const char *ns = "";
+    if(R_IsNamespaceEnv(env2))
+	ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env2), 0));
+    else env2 = R_NilValue;
 
 #ifdef CHECK_CROSS_USAGE
     if (dll.type == FILENAME && strcmp(dll.DLLname, "base")) {
@@ -543,16 +542,17 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     VarFun fun = NULL;
     SEXP retval, cargs[MAX_ARGS], pargs;
     R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}, NULL};
+
     int nargs;
     const void *vmax = vmaxget();
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
     check1arg2(args, call, ".NAME");
+
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
     args = CDR(args);
-    fun = (VarFun) ofun;
 
     for(nargs = 0, pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
 	if (nargs == MAX_ARGS)
