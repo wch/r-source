@@ -268,7 +268,7 @@ print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
 }
 
 predict.arima0 <-
-    function(object, n.ahead = 1, newxreg = NULL, se.fit=TRUE, ...)
+    function(object, n.ahead = 1L, newxreg = NULL, se.fit=TRUE, ...)
 {
     myNCOL <- function(x) if(is.null(x)) 0 else NCOL(x)
     data <- eval.parent(parse(text = object$series))

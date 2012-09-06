@@ -251,7 +251,7 @@ function (x,
 
 ## Predictions, optionally with prediction intervals
 predict.HoltWinters <-
-    function (object, n.ahead = 1, prediction.interval = FALSE,
+    function (object, n.ahead = 1L, prediction.interval = FALSE,
               level = 0.95, ...)
 {
     f <- frequency(object$x)
@@ -270,7 +270,7 @@ predict.HoltWinters <-
 
     ## compute predictions
     # level
-    fit <- rep(as.vector(object$coefficients[1L]),n.ahead)
+    fit <- rep(as.vector(object$coefficients[1L]) ,n.ahead)
     # trend
     if (!is.logical(object$beta) || object$beta)
         fit <- fit + as.vector((1L:n.ahead)*object$coefficients[2L])

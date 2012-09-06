@@ -12075,15 +12075,15 @@ Coefficients of ridge terms:
 +        cat(fn, ":\n\t", deparse(args(f)), "\n")
 +        }, silent = TRUE)
 predict.Arima :
-	 function (object, n.ahead = 1, newxreg = NULL, se.fit = TRUE,      ...)  NULL 
+	 function (object, n.ahead = 1L, newxreg = NULL, se.fit = TRUE,      ...)  NULL 
 predict.HoltWinters :
-	 function (object, n.ahead = 1, prediction.interval = FALSE, level = 0.95,      ...)  NULL 
+	 function (object, n.ahead = 1L, prediction.interval = FALSE, level = 0.95,      ...)  NULL 
 predict.StructTS :
-	 function (object, n.ahead = 1, se.fit = TRUE, ...)  NULL 
+	 function (object, n.ahead = 1L, se.fit = TRUE, ...)  NULL 
 predict.ar :
-	 function (object, newdata, n.ahead = 1, se.fit = TRUE, ...)  NULL 
+	 function (object, newdata, n.ahead = 1L, se.fit = TRUE, ...)  NULL 
 predict.arima0 :
-	 function (object, n.ahead = 1, newxreg = NULL, se.fit = TRUE,      ...)  NULL 
+	 function (object, n.ahead = 1L, newxreg = NULL, se.fit = TRUE,      ...)  NULL 
 predict.bSpline :
 	 function (object, x, nseg = 50, deriv = 0, ...)  NULL 
 predict.bs :

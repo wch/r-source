@@ -161,7 +161,7 @@ print.StructTS <- function(x, digits = max(3, getOption("digits") - 3), ...)
     invisible(x)
 }
 
-predict.StructTS <- function(object, n.ahead = 1, se.fit = TRUE, ...)
+predict.StructTS <- function(object, n.ahead = 1L, se.fit = TRUE, ...)
 {
     xtsp <- object$xtsp
     z <- KalmanForecast(n.ahead, object$model)

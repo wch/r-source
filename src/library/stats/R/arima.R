@@ -381,7 +381,7 @@ print.Arima <-
 
 
 predict.Arima <-
-    function (object, n.ahead = 1, newxreg = NULL, se.fit = TRUE, ...)
+    function (object, n.ahead = 1L, newxreg = NULL, se.fit = TRUE, ...)
 {
     myNCOL <- function(x) if (is.null(x)) 0 else NCOL(x)
     rsd <- object$residuals
