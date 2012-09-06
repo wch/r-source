@@ -22,8 +22,6 @@
 #include <Rinternals.h>
 #include "stats.h"
 
-void artoma(int *pp, double *phi, double *psi, int *npsi);
-
 void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
 		double *pacf, double *var, double *aic, int *porder,
 		int *useaic, int *vmethod);
@@ -97,6 +95,7 @@ SEXP getQ0(SEXP sPhi, SEXP sTheta);
 
 SEXP acf(SEXP x, SEXP lmax, SEXP sCor);
 SEXP pacf1(SEXP acf, SEXP lmax);
+SEXP ar2ma(SEXP ar, SEXP npsi);
 SEXP Burg(SEXP x, SEXP order);
 SEXP pp_sum(SEXP u, SEXP sl);
 SEXP intgrt_vec(SEXP x, SEXP xi, SEXP slag);

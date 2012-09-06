@@ -302,15 +302,25 @@ SEXP arma0_kfore(SEXP pG, SEXP pd, SEXP psd, SEXP nahead)
     return res;
 }
 
-void artoma(int *pp, double *phi, double *psi, int *npsi)
+static void artoma(int p, double *phi, double *psi, int npsi)
 {
-    int i, j, p = *pp;
+    int i, j;
 
     for(i = 0; i < p; i++) psi[i] = phi[i];
-    for(i = p + 1; i < *npsi; i++) psi[i] = 0.0;
-    for(i = 0; i < *npsi - p - 1; i++) {
+    for(i = p; i < npsi; i++) psi[i] = 0.0;
+    for(i = 0; i < npsi - p - 1; i++)
 	for(j = 0; j < p; j++) psi[i + j + 1] += phi[j]*psi[i];
-    }
+}
+
+SEXP ar2ma(SEXP ar, SEXP npsi)
+{
+    ar = PROTECT(coerceVector(ar, REALSXP));
+    int p = LENGTH(ar), ns = asInteger(npsi), ns1 = ns + p + 1;
+    SEXP psi = PROTECT(allocVector(REALSXP, ns1));
+    artoma(p, REAL(ar), REAL(psi), ns1);
+    SEXP ans = lengthgets(psi, ns);
+    UNPROTECT(2);
+    return ans;
 }
 
 static void partrans(int p, double *raw, double *new)
