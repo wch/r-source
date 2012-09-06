@@ -20,7 +20,7 @@
 
 #include <R_ext/Boolean.h>
 #include <Rinternals.h>
-#include "mva.h"
+#include "statsR.h"
 
 SEXP cutree(SEXP merge, SEXP which)
 {

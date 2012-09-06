@@ -17,10 +17,18 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* auxiliary */
 SEXP getListElement(SEXP list, char *str);
 
 /* Declarations for .Call entry points */
 
+SEXP logit_link(SEXP mu);
+SEXP logit_linkinv(SEXP eta);
+SEXP logit_mu_eta(SEXP eta);
+SEXP binomial_dev_resids(SEXP y, SEXP mu, SEXP wt);
+
+SEXP cutree(SEXP merge, SEXP which);
+SEXP rWishart(SEXP ns, SEXP nuP, SEXP scal);
 SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
 SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
 SEXP r2dtable(SEXP n, SEXP r, SEXP c);

@@ -17,8 +17,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#include <math.h>
-#include "mva.h"
+#include "Rinternals.h"
 
 /* Double Centering for Classical Multidimensional Scaling */
 

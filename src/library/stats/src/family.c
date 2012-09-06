@@ -23,8 +23,9 @@
 #include <Rinternals.h>
 #include <Rconfig.h>
 #include <R_ext/Constants.h>
-#include "family.h"
 #include <float.h>
+#include "stats.h"
+#include "statsR.h"
 
 static const double THRESH = 30.;
 static const double MTHRESH = -30.;

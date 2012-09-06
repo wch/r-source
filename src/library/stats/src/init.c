@@ -20,9 +20,7 @@
 #include <R.h>
 #include <Rinternals.h>
 
-#include "family.h"
 #include "modreg.h"
-#include "mva.h"
 #include "nls.h"
 #include "port.h"
 #include "stats.h"

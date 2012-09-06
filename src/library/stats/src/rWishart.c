@@ -26,8 +26,8 @@
 #include <Rmath.h>
 #include <R_ext/Lapack.h>        /* for Lapack (dpotrf, etc.) and BLAS */
 
-#include "mva.h"
-#include "stats.h"
+#include "stats.h" // for _()
+#include "statsR.h"
 
 
 /**
