@@ -18,7 +18,7 @@
 
 loess <-
 function(formula, data, weights, subset, na.action, model = FALSE,
-	 span = 0.75, enp.target, degree = 2, parametric = FALSE,
+	 span = 0.75, enp.target, degree = 2L, parametric = FALSE,
 	 drop.square = FALSE, normalize = TRUE,
 	 family = c("gaussian", "symmetric"),
 	 method = c("loess", "model.frame"),
@@ -51,7 +51,7 @@ function(formula, data, weights, subset, na.action, model = FALSE,
 	if(!missing(span))
 	    warning("both 'span' and 'enp.target' specified: 'span' will be used")
 	else {				# White book p.321
-	    tau <- switch(degree+1, 1, D+1, (D+1)*(D+2)/2) - sum(drop.square)
+	    tau <- switch(degree+1L, 1, D+1, (D+1)*(D+2)/2) - sum(drop.square)
 	    span <- 1.2 * tau/enp.target
 	}
     ## Let's add sanity checks on control
@@ -77,7 +77,7 @@ loess.control <-
   function(surface = c("interpolate", "direct"),
 	   statistics = c("approximate", "exact"),
 	   trace.hat = c("exact", "approximate"),
-	   cell = 0.2, iterations = 4, ...)
+	   cell = 0.2, iterations = 4L, ...)
 {
     list(surface=match.arg(surface),
 	 statistics=match.arg(statistics),
@@ -87,10 +87,10 @@ loess.control <-
 
 
 simpleLoess <-
-  function(y, x, weights, span = 0.75, degree = 2, parametric = FALSE,
+  function(y, x, weights, span = 0.75, degree = 2L, parametric = FALSE,
 	   drop.square = FALSE, normalize = TRUE,
 	   statistics = "approximate", surface = "interpolate",
-	   cell = 0.2, iterations = 1, trace.hat = "exact")
+	   cell = 0.2, iterations = 1L, trace.hat = "exact")
 {
     ## loess_ translated to R.
 
@@ -120,10 +120,10 @@ simpleLoess <-
     nonparametric <- sum(!parametric)
     order.parametric <- order(parametric)
     x <- x[, order.parametric]
-    order.drop.sqr <- (2 - drop.square)[order.parametric]
-    if(degree==1 && sum.drop.sqr)
+    order.drop.sqr <- (2L - drop.square)[order.parametric]
+    if(degree == 1L && sum.drop.sqr)
 	stop("specified the square of a factor predictor to be dropped when degree = 1")
-    if(D == 1 && sum.drop.sqr)
+    if(D == 1L && sum.drop.sqr)
 	stop("specified the square of a predictor to be dropped with only one numeric predictor")
     if(sum.parametric == D) stop("specified parametric for all predictors")
 
@@ -148,15 +148,15 @@ simpleLoess <-
 		as.double(span*cell),
 		as.character(surf.stat),
 		fitted.values = double(N),
-		parameter = integer(7),
+		parameter = integer(7L),
 		a = integer(max.kd),
 		xi = double(max.kd),
-		vert = double(2*D),
-		vval = double((D+1)*max.kd),
+		vert = double(2L*D),
+		vval = double((D+1L)*max.kd),
 		diagonal = double(N),
-		trL = double(1),
-		delta1 = double(1),
-		delta2 = double(1),
+		trL = double(1L),
+		delta1 = double(1L),
+		delta2 = double(1L),
 		as.integer(surf.stat == "interpolate/exact"))
 	if(j==1) {
 	    trace.hat.out <- z$trL
@@ -172,7 +172,7 @@ simpleLoess <-
     {
 	pars <- setNames(z$parameter,
 			 c("d", "n", "vc", "nc", "nv", "liv", "lv"))
-	enough <- (D + 1) * pars["nv"]
+	enough <- (D + 1L) * pars["nv"]
 	fit.kd <- list(parameter=pars, a=z$a[1L:pars[4L]], xi=z$xi[1L:pars[4L]],
 		       vert=z$vert, vval=z$vval[1L:enough])
     }
@@ -208,18 +208,19 @@ simpleLoess <-
 		0L)
 	pseudo.resid <- pseudovalues - zz$temp
     }
-    sum.squares <- if(iterations <= 1) sum(weights * fitted.residuals^2)
+    sum.squares <- if(iterations <= 1L) sum(weights * fitted.residuals^2)
     else sum(weights * pseudo.resid^2)
     enp <- one.delta + 2*trace.hat.out - N
     s <- sqrt(sum.squares/one.delta)
-    pars <- list(robust=robust, span=span, degree=degree, normalize=normalize,
-		 parametric=parametric, drop.square=drop.square,
-		 surface=surface, cell=cell, family=
-		 if(iterations <= 1) "gaussian" else "symmetric",
-		 iterations=iterations)
-    fit <- list(n=N, fitted=z$fitted.values, residuals=fitted.residuals,
-		enp=enp, s=s, one.delta=one.delta, two.delta=two.delta,
-		trace.hat=trace.hat.out, divisor=divisor)
+    pars <- list(robust = robust, span = span, degree = degree,
+                 normalize = normalize,
+		 parametric = parametric, drop.square = drop.square,
+		 surface = surface, cell = cell,
+                 family = if(iterations <= 1L) "gaussian" else "symmetric",
+		 iterations = iterations)
+    fit <- list(n = N, fitted = z$fitted.values, residuals = fitted.residuals,
+		enp = enp, s = s, one.delta = one.delta, two.delta = two.delta,
+		trace.hat = trace.hat.out, divisor = divisor)
     fit$pars <- pars
     if(surface == "interpolate") fit$kd <- fit.kd
     class(fit) <- "loess"
@@ -239,12 +240,11 @@ predict.loess <-
         as.matrix(model.frame(delete.response(terms(object)), newdata,
                               na.action = na.action))
     else as.matrix(newdata) # this case is undocumented
-    res <- predLoess(object$y, object$x, newx, object$s, object$weights,
-		     object$pars$robust, object$pars$span, object$pars$degree,
-		     object$pars$normalize, object$pars$parametric,
-		     object$pars$drop.square, object$pars$surface,
-		     object$pars$cell, object$pars$family,
-		     object$kd, object$divisor, se=se)
+    res <-
+        with(object, predLoess(y, x, newx, s, weights, pars$robust,
+                               pars$span, pars$degree, pars$normalize,
+                               pars$parametric, pars$drop.square, pars$surface,
+                               pars$cell, pars$family, kd, divisor, se = se))
     if(!is.null(out.attrs <- attr(newdata, "out.attrs"))) { # expand.grid used
         if(se) {
             res$fit <- array(res$fit, out.attrs$dim, out.attrs$dimnames)
@@ -253,13 +253,13 @@ predict.loess <-
     }
     if(se)
 	res$df <- object$one.delta^2/object$two.delta
-    res
-}
+    res}
+
 
 predLoess <-
   function(y, x, newx, s, weights, robust, span, degree,
 	   normalize, parametric, drop.square, surface, cell, family,
-	   kd, divisor, se=FALSE)
+	   kd, divisor, se = FALSE)
 {
     ## translation of pred_
     D <- NCOL(x); N <- NROW(x); M <- NROW(newx)
@@ -271,7 +271,7 @@ predLoess <-
     order.parametric <- order(parametric)
     x <- x[, order.parametric, drop=FALSE]
     x.evaluate <- newx[, order.parametric, drop=FALSE]
-    order.drop.sqr <- (2 - drop.square)[order.parametric]
+    order.drop.sqr <- (2L - drop.square)[order.parametric]
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
     if(surface == "direct") {
@@ -322,8 +322,8 @@ predLoess <-
 	## need to eliminate points outside original range - not in pred_
 	inside <- matrix(FALSE, M, ncol = D)
 	ranges <- apply(x, 2L, range)
-	inside <- (x.evaluate <= rep(ranges[2,], rep(M, D))) &
-	(x.evaluate >= rep(ranges[1,], rep(M, D)))
+	inside <- (x.evaluate <= rep(ranges[2L,], rep(M, D))) &
+	(x.evaluate >= rep(ranges[1L,], rep(M, D)))
 	inside <- inside %*% rep(1, D) == D
         inside[is.na(inside)] <- FALSE
 	M1 <- sum(inside)
@@ -452,12 +452,10 @@ loess.smooth <-
     new.x <- seq.int(min(x[notna]), max(x[notna]), length.out = evaluation)
 
     control <- loess.control(...)
-    ##	x <- matrix(x, ncol = 1L)
-    ##	n <- length(y)
     x <- x[notna]; y <- y[notna]
     w <- rep(1, length(y))
     family <- match.arg(family)
-    iterations <- if(family == "gaussian") 1 else control$iterations
+    iterations <- if(family == "gaussian") 1L else control$iterations
     fit <- simpleLoess(y, x, w, span, degree, FALSE, FALSE,
 		       normalize=FALSE, "none", "interpolate",
 		       control$cell, iterations, control$trace.hat)
@@ -471,16 +469,6 @@ loess.smooth <-
 	    fit = double(evaluation))$fit
     list(x = new.x, y = z)
 }
-
-## panel.smooth is currently defined in ../../graphics/R/coplot.R :
-## panel.smooth <-
-##   function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"),
-##	   zero.line = FALSE, evaluation = 50, ...)
-## {
-##   points(x, y, ...)
-##   lines(loess.smooth(x, y, span, degree, family, evaluation), ...)
-##   if(zero.line) abline(h = 0, ...)
-## }
 
 anova.loess <- function(object, ...)
 {
@@ -496,7 +484,7 @@ anova.loess <- function(object, ...)
                 "removed because response differs from model 1")
     }
     nmodels <- length(objects)
-    if(nmodels <= 1) stop("no models to compare")
+    if(nmodels <= 1L) stop("no models to compare")
     models <- as.character(lapply(objects, function(x) x$call))
     descr <- paste("Model ", format(1L:nmodels), ": ", models,
 		   sep = "", collapse = "\n")
@@ -512,11 +500,11 @@ anova.loess <- function(object, ...)
     dfden <- (delta1^2/delta2)[max.enp]
     Fvalue <- c(NA, (abs(diff(rss))/d1diff)/s[max.enp]^2)
     pr <- pf(Fvalue, dfnum, dfden, lower.tail = FALSE)
-    ans <- data.frame(ENP = round(enp,2), RSS = rss, "F-value" = Fvalue,
+    ans <- data.frame(ENP = round(enp,2L), RSS = rss, "F-value" = Fvalue,
 		      "Pr(>F)" = pr, check.names = FALSE)
     attr(ans, "heading") <-
 	paste(descr, "\n\n", "Analysis of Variance:   denominator df ",
-	      format(round(dfden,2)), "\n", sep = "")
+	      format(round(dfden, 2L)), "\n", sep = "")
     class(ans) <- c("anova", "data.frame")
     ans
 }
