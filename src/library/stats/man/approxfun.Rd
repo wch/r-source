@@ -73,6 +73,7 @@ approxfun(x, y = NULL,       method  ="linear",
   \code{x} values, this function will return the corresponding
   interpolated values.  It uses data stored in its environment when it
   was created, the details of which are subject to change.
+}
 \seealso{
   \code{\link{spline}} and \code{\link{splinefun}} for spline
   interpolation.
