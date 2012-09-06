@@ -45,7 +45,7 @@
 static void check1arg2(SEXP arg, SEXP call, const char *formal)
 {
     if (TAG(arg) == R_NilValue) return;
-    warningcall(call, "the first argument should not be named");
+    errorcall(call, "the first argument should not be named");
  }
 
 
