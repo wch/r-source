@@ -40,13 +40,13 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol)
 {
     SEXP ans, ansnames;
     SEXP qr, coefficients, residuals, effects, pivot, qraux;
-    int n, ny, p, rank, nprotect = 4, pivoted = 0;
+    int n, ny = 0, p, rank, nprotect = 4, pivoted = 0;
     double rtol = asReal(tol), *work;
 
 
     int *dims = INTEGER(getAttrib(x, R_DimSymbol));
     n = dims[0]; p = dims[1];
-    ny = LENGTH(y)/n;  /* n x ny, or a vector */
+    if(n) ny = LENGTH(y)/n;  /* n x ny, or a vector */
 
     /* These lose attributes, so do after we have extracted dims */
     if (TYPEOF(x) != REALSXP) {

@@ -41,7 +41,6 @@ ar.burg.default <-
     else floor(order.max)
     if (order.max < 1L) stop("'order.max' must be >= 1")
     else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
-    xaic <- numeric(order.max + 1L)
     z <- .C(C_burg,
             as.integer(n.used),
             as.double(x),
