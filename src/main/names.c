@@ -1217,7 +1217,6 @@ SEXP install(const char *name)
 }
 
 
-#define CHECK_INTERNALS 1
 /*  do_internal - This is the code for .Internal(). */
 
 SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1258,8 +1257,12 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 		      ".Internal(%s()) not called from a base namespace\n", fn);
 	// nspackloader.R contained a .Internal call, so need this
 	// until all packages have been re-installed.
-	if (strlen(ns) && strcmp(fn, "getRegisteredNamespace")
-	    && strcmp(ns, "base") && strcmp(ns, "tools") && strcmp(ns, "methods")
+	if (strlen(ns)
+#if CHECK_INTERNALS < 2
+	    && strcmp(fn, "getRegisteredNamespace")
+	    && strcmp(ns, "methods")
+#endif
+	    && strcmp(ns, "base") && strcmp(ns, "tools") 
 	    && strcmp(ns, "utils") && strcmp(ns, "compiler"))
 	    errorcall(call,
 		      ".Internal(%s()) called from namespace '%s'\n", fn, ns);
