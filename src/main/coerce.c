@@ -2283,7 +2283,9 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
      */
     if (!isString(rfun) || length(rfun) != 1)
 	errorcall_return(call, _("first argument must be a character string"));
-    PROTECT(rfun = install(translateChar(STRING_ELT(rfun, 0))));
+    const char *str = translateChar(STRING_ELT(rfun, 0));
+    if (streql(str, ".Internal")) error("illegal usage");
+    PROTECT(rfun = install(str));
     PROTECT(evargs = duplicate(CDR(args)));
     for (rest = evargs; rest != R_NilValue; rest = CDR(rest))
 	SETCAR(rest, eval(CAR(rest), rho));
@@ -2322,10 +2324,15 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(c = call = allocList(n + 1));
     SET_TYPEOF(c, LANGSXP);
-    if( isString(fun) )
-	SETCAR(c, install(translateChar(STRING_ELT(fun, 0))));
-    else
+    if( isString(fun) ) {
+	const char *str = translateChar(STRING_ELT(fun, 0));
+	if (streql(str, ".Internal")) error("illegal usage");
+	SETCAR(c, install(str));
+    } else {
+	if(TYPEOF(fun) == SPECIALSXP && streql(PRIMNAME(fun), ".Internal"))
+	    error("illegal usage");
 	SETCAR(c, fun);
+    }
     c = CDR(c);
     for (i = 0; i < n; i++) {
 #ifndef NEW
