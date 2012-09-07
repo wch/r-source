@@ -113,9 +113,10 @@ for(f in S4gen) {
 
 ## check that they do argument matching, or at least check names
 except <- c("call", "switch", ".C", ".Fortran", ".Call", ".External",
-            ".Call.graphics", ".External.graphics", ".subset", ".subset2",
-            ".primTrace", ".primUntrace", "lazyLoadDBfetch",
-            ".Internal", ".Primitive", "^", "|", "%*%", "rep", "seq.int",
+            ".External2", ".Call.graphics", ".External.graphics",
+            ".subset", ".subset2", ".primTrace", ".primUntrace",
+            "lazyLoadDBfetch", ".Internal", ".Primitive", "^", "|",
+            "%*%", "rep", "seq.int",
             ## these may not be enabled
             "tracemem", "retracemem", "untracemem")
 
