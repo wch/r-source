@@ -175,8 +175,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## from another package.  A better test would be to move this
             ## down into the loop and test against specific other package name
             ## but subtle conflicts like that are likely to be found elsewhere
-            these <- objects(lib.pos, all.names = TRUE)
-            these <- these[substr(these, 1L, 6L) == ".__T__"]
+	    these <- ob[substr(ob, 1L, 6L) == ".__T__"]
             gen <- gsub(".__T__(.*):([^:]+)", "\\1", these)
             from <- gsub(".__T__(.*):([^:]+)", "\\2", these)
             gen <- gen[from != package]
