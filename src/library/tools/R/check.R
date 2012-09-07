@@ -2514,7 +2514,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     "in the 'Writing R Extensions' manual.\n")
             if(cran) {
                 known <- basename(dots) %in% .hidden_file_exclusions
-                if (all(known))
+                known <- known | grepl("^.Rbuildindex[.]", dots) |
+                  grepl("inst/doc/[.](Rinstignore|build[.]timestamp)$", dots) |
+                  grepl("vignettes/[.]Rinstignore$", dots) |
+                  grepl("^src.*/[.]deps$", dots)
+               if (all(known))
                     printLog(Log, "\nCRAN-pack knows about all of these\n")
                 else if (any(!known)) {
                     printLog(Log, "\nCRAN-pack does not know about\n")
