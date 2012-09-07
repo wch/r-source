@@ -624,6 +624,26 @@ function(ifile, encoding = "unknown", ignore = character())
 
     ## Strip the string delimiters.
     pd$text <- substring(pd$text, 2L, nchar(pd$text) - 1L)
+    ## Replace whitespace C backslash escape sequences by whitespace.
+    pd$text <- gsub("(^|[^\\])\\\\[fnrt]", "\\1  ", pd$text)
+    pd$text <- gsub(  "([^\\])\\\\[fnrt]", "\\1  ", pd$text)
+    ## (Do this twice for now because in e.g.
+    ##    \n\t\tInformation on package %s
+    ## the first \t is not matched the first time.  Alternatively, we
+    ## could match with
+    ##    (^|[^\\])((\\\\[fnrt])+)
+    ## but then computing the replacement (\\1 plus as many blanks as
+    ## the characters in \\2) is not straightforward.
+    ## For gettextf() calls, replace basic percent escape sequences by
+    ## whitespace.
+    ind <- pd$caller == "gettextf"
+    if(any(ind)) {
+        pd$text[ind] <-
+            gsub("(^|[^%])%[dioxXfeEgGaAs]", "\\1  ", pd$text[ind])
+        pd$text[ind] <-
+            gsub("  ([^%])%[dioxXfeEgGaAs]", "\\1  ", pd$text[ind])
+        ## (See above for doing this twice.)
+    }
 
     lines <- readLines(ifile, encoding = encoding)
 
@@ -758,7 +778,8 @@ function(file, encoding = "unknown")
         ## Need to canonicalize to match string constants before and
         ## after parsing ...
         texts <- vapply(parse(text = table$text), as.character, "")
-        table[!is.na(match(texts, strings)), ]
+        pos <- which(!is.na(match(texts, strings)))
+        cbind(table[pos, ], caller = rep.int(fun, length(pos)))
     }
 
     do.call(rbind,
