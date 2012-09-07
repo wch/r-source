@@ -26,8 +26,7 @@ density.default <-
 	     give.Rkern = FALSE,
 	     n = 512, from, to, cut = 3, na.rm = FALSE, ...)
 {
-    if(length(list(...)))
-	warning("non-matched further arguments are disregarded")
+    if(!missing(...)) warning("non-matched further arguments are disregarded")
     if(!missing(window) && missing(kernel))
 	kernel <- window
     kernel <- match.arg(kernel)

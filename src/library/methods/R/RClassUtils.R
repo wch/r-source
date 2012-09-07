@@ -610,12 +610,14 @@ newBasic <-
                "single" = as.single(c(...)),
                   ## note on array, matrix:  not possible to be compatible with
                   ## S-Plus on array, unless R allows 0-length .Dim attribute
-               "array" = (if(length(list(...))) array(...) else structure(numeric(), .Dim =0)),
-               "matrix" = (if (length(list(...))) matrix(...) else matrix(0, 0L, 0L)),
+               "array" = if(!missing(...)) array(...) else structure(numeric(), .Dim =0L),
+               "matrix" = if (!missing(...)) matrix(...) else matrix(0, 0L, 0L),
 #               "ts" = ts(...),
 # break dependence on package stats
-               "ts" = (if(length(list(...))) stats::ts(...)
-               else structure(NA, .Tsp = c(1, 1, 1), class = "ts")),
+	       "ts" = if(!missing(...)) stats::ts(...) else
+		      structure(NA, .Tsp = c(1, 1, 1), class = "ts"),
+
+                ## otherwise:
                   {
                       args <- list(...)
                       if(length(args) == 1L && is(args[[1L]], Class)) {
@@ -2283,7 +2285,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
         if(isTRUE(short)) abbreviate(nodes)
         else if(is.character(short)) {
             if(length(short) != length(nodes))
-                stop(gettextf("Needed the supplied labels vector of length %d, got %d",
+                stop(gettextf("Needed the supplied labels vector of length %n, got %n",
                               length(nodes), length(short)), domain = NA)
             else short
         } else nodes

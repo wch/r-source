@@ -40,7 +40,7 @@ seq.default <-
         }
 	length.out <- ceiling(length.out)
     }
-    if(length(list(...)))
+    if(!missing(...))
 	warning(gettextf("extra argument(s) %s will be disregarded",
 			 paste(sQuote(names(list(...))), collapse = ", ")),
 		domain = NA)

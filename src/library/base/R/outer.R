@@ -40,7 +40,7 @@ outer <- function (X, Y, FUN = "*", ...)
         if(!no.ny) ny <- list(names(Y))
     }
     if (is.character(FUN) && FUN=="*") {
-        if (length(list(...))) stop('using ... with FUN = "*" is an error')
+        if(!missing(...)) stop('using ... with FUN = "*" is an error')
         # this is for numeric vectors, so dropping attributes is OK
         robj <- as.vector(X) %*% t(as.vector(Y))
         dim(robj) <- c(dX, dY)

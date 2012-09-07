@@ -23,7 +23,7 @@ axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
                  hadj = NA, padj = NA, ...)
 {
     ## we need to do this as the C code processes 'col' before '...'
-    if(is.null(col) && length(list(...)) && !is.null(fg <- list(...)$fg)) {
+    if(is.null(col) && !missing(...) && !is.null(fg <- list(...)$fg)) {
         ## help(par) 'fg' says this should work
         col <- fg
     }

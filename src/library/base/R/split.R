@@ -20,7 +20,7 @@ split <- function(x, f, drop = FALSE, ...) UseMethod("split")
 
 split.default <- function(x, f, drop = FALSE, sep = ".", ...)
 {
-    if(length(list(...))) .NotYetUsed(deparse(...), error = FALSE)
+    if(!missing(...)) .NotYetUsed(deparse(...), error = FALSE)
 
     if (is.list(f)) f <- interaction(f, drop = drop, sep = sep)
     else if (drop || !is.factor(f)) # drop extraneous levels

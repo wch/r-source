@@ -320,11 +320,9 @@ setMethod("nobs", "mle", function (object, ...)
     if("nobs" %in% slotNames(object)) object@nobs else NA_integer_)
 
 setGeneric("logLik")
-setMethod("logLik", "mle",
-function (object, ...)
-{
-    if(length(list(...)))
-        warning("extra arguments discarded")
+setMethod("logLik", "mle", function(object, ...) {
+    if(!missing(...))
+	warning("extra arguments discarded")
     val <- -object@min
     if ("nobs" %in% slotNames(object) && # introduced in 2.13.0
         !is.na(no <- object@nobs)) attr(val, "nobs") <- no

@@ -331,10 +331,8 @@ that class itself, but then you could just overrwite the object).
          },
          callSuper = function(...) stop("direct calls to callSuper() are invalid:  should only be called from another method"),
          initFields = function(...) {
-             if(length(list(...))>0)
-                 initRefFields(.self, .refClassDef, as.environment(.self),list(...))
-             else
-                 .self
+             if(missing(...)) .self else
+             initRefFields(.self, .refClassDef, as.environment(.self), list(...))
          },
          copy = function(shallow = FALSE) {
              def <- .refClassDef

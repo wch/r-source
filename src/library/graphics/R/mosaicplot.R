@@ -180,7 +180,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     dimd <- length(dx <- dim(x))
     if(dimd == 0L || any(dx == 0L))
         stop("'x' must not have 0 dimensionality")
-    if(length(list(...)))
+    if(!missing(...))
         warning(gettextf("extra argument(s) %s will be disregarded",
                          paste(sQuote(names(list(...))), collapse = ", ")),
                 domain = NA)

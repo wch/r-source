@@ -52,8 +52,7 @@ as.data.frame.logLik <- function (x, ...)
 ## log-likelihood for glm objects
 logLik.glm <- function(object, ...)
 {
-    if(length(list(...)))
-        warning("extra arguments discarded")
+    if(!missing(...)) warning("extra arguments discarded")
     fam <- family(object)$family
     p <- object$rank
     ## allow for estimated dispersion

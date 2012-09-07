@@ -25,7 +25,7 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
 {
     noOpt <- missing(digits) && missing(quote) && missing(na.print) &&
 	missing(print.gap) && missing(right) && missing(max) &&
-	missing(useSource) && length(list(...)) == 0L
+	missing(useSource) && missing(...)
     .Internal(print.default(x, digits, quote, na.print, print.gap, right, max,
 			    useSource, noOpt))
 }

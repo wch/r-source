@@ -73,15 +73,14 @@ diffinv.ts <- function (x, lag = 1, differences = 1, xi, ...)
     ts(y, frequency = frequency(x), end = end(x))
 }
 
-toeplitz <- function (x)
+toeplitz <- function (x, ...)
 {
-    if (!is.vector(x)) stop ("'x' is not a vector")
-    n <- length (x)
+    if(!is.vector(x)) stop("'x' is not a vector")
+    if(!missing(...))
+	warning(gettextf("extra argument(s) %s will be disregarded",
+			 paste(sQuote(names(list(...))), collapse = ", ")),
+		domain = NA)
+    n <- length(x)
     A <- matrix(raw(), n, n)
     matrix(x[abs(col(A) - row(A)) + 1L], n, n)
 }
-
-
-
-
-
