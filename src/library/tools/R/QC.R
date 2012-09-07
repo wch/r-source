@@ -5469,7 +5469,9 @@ function(dir)
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
 
-    if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
+    language <- meta["Language"]
+    if((is.na(language) || language == "en") &&
+       config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
                                         FALSE))) {
         a <- utils:::aspell_package_description(dir,
                                                 control =
