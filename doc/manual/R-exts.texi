@@ -7495,6 +7495,81 @@ methods can contain
 @c Omegahat Web site at @uref{http://www.omegahat.org/GccTranslationUnit/}
 @c for more information.
 
+@menu
+* Speed considerations::        
+* Linking to native routines in other packages::  
+@end menu
+
+@node Speed considerations, Linking to native routines in other packages, Registering native routines, Registering native routines
+@subsection Speed considerations
+
+Sometimes registering native routines or using a @code{PACKAGE} argument
+can make a large difference.  The results can depend quite markedly on
+the OS (and even if it is 32- or 64-bit), on the version of @R{} and
+what else is loaded into @R{} at the time.
+
+To fix ideas, first consider @code{x84_64} Mac OS 10.7 and @R{} 2.15.2.  A
+simple @code{.Call} function might be
+@example
+foo <- function(x) .Call("foo", x)
+@end example
+with C code
+@example
+SEXP foo(SEXP x)
+@{
+    return x;
+@}
+@end example
+If we compile with by @command{R CMD SHLIB foo.c}, load the code by
+@code{dyn.load("foo.so")} and run @code{foo(pi)} it took around 22
+microseconds (us). Specifying the DLL by
+@example
+foo2 <- function(x) .Call("foo", x, PACKAGE = "foo")
+@end example
+reduced the time to 1.7 us.
+
+Now consider making these functions part of a package whose
+@file{NAMESPACE} file uses @code{useDynlib(foo)}.  This immediately
+reduces the running time as @code{"foo"} will be preferentially looked
+for @file{foo.dll}.  Without specifying @code{PACKAGE} it took about 5
+us (it needs to fathom out the appropriate DLL each time it is invoked
+but it does not need to search all DLLs), and with the @code{PACKAGE}
+argument it is again about 1.7 us.
+
+Next suppose the package has registered the native routine @code{foo}.
+Then @code{foo()} still has to find the appropriate DLL but can get to
+the entry point in the DLL faster, in about 4.2 us.  And @code{foo2()}
+now takes about 1 us.  If we register the symbols in the
+@file{NAMESPACE} file and use
+@example
+foo3 <- function(x) .Call(C_foo, x)
+@end example
+then the address for the native routine is looked up just once when the
+package is loaded, and @code{foo3(pi)} takes about 0.8 us.
+
+Versions using @code{.C()} rather than @code{.Call()} take about 0.2 us
+longer.
+
+These are all quite small differences, but C routines are not uncommonly
+invoked millions of times for run times of a few microseconds, and those
+doing such things may wish to be aware of the differences.
+
+On Linux and Solaris there is a much smaller overhead in looking up
+symbols so @code{foo(pi)} takes around 5 times as long as
+@code{foo3(pi)}.
+
+Symbol lookup on Windows used to be far slower, so @R{} maintains a
+small cache.  If the cache is currently empty enough that the symbol can
+be stored in the cache then the performance is similar to Linux and
+Solaris: if not it may be slower.  @R{}'s own code always uses
+registered symbols and so these never contribute to the cache: however
+many other packages do rely on symbol lookup.
+
+
+
+@node Linking to native routines in other packages,  , Speed considerations, Registering native routines
+@subsection Linking to native routines in other packages
+
 In addition to registering C routines to be called by @R{}, it can at
 times be useful for one package to make some of its C routines available
 to be called by C code in another package.  An interface to support this
