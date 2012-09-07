@@ -308,6 +308,12 @@
 
       \item Most of the linear algebra functions make fewer copies when
       the input(s) are not double (e.g. integer or logical).
+
+      \item A foreign function call (\code{.C()} etc) in a package
+      without a \code{PACKAGE} argument will only look in the first DLL
+      specified in the \file{NAMESPACE} file of the package rather than
+      searching all loaded DLLs.  A few packages need \code{PACKAGE}
+      arguments added.
     }
   }
 

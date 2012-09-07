@@ -174,8 +174,7 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
   and look there.
 */
 
-#define CHECK_NAMSPACE_RESOLUTION 1
-
+#define CHECK_NAMESPACE_RESOLUTION 2
 
 static SEXP
 resolveNativeRoutine(SEXP args, DL_FUNC *fun,
@@ -253,8 +252,12 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	   from the namespace defining the function */
 	*fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol, env2);
 	if (*fun) return args;
-#ifdef CHECK_NAMSPACE_RESOLUTION
+#ifdef CHECK_NAMESPACE_RESOLUTION
+#if CHECK_NAMESPACE_RESOLUTION > 1
+	errorcall(call, 
+#else
 	warningcall(call, 
+#endif
 		    "\"%s\" not resolved from current namespace (%s)", buf, ns);
 #endif
 	/* need to continue if the namespace search failed */
