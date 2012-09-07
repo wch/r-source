@@ -38,7 +38,7 @@ shapiro.test <- function(x)
 	     n1 = n,#   "
 	     n2,#       "
 	     a = single(n2),
-	     w	= double(1),
+	     w	= 0, # input/output
 	     pw = double(1),
 	     ifault = integer(1L))
     if (sw$ifault && sw$ifault != 7L) # 7 *does* happen (Intel Linux)

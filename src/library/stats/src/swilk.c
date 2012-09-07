@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-8   The R Core Team.
+ *  Copyright (C) 2000-12   The R Core Team.
  *
  *  Based on Applied Statistics algorithms AS181, R94
  *    (C) Royal Statistical Society 1982, 1995
@@ -32,6 +32,8 @@
 #endif
 
 static double poly(const float *, int, float);
+
+/* NB: 'w' is input/output here */
 
 void
 swilk(int *init,/* logical: is a[] already initialized ? */
