@@ -2283,7 +2283,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
         if(isTRUE(short)) abbreviate(nodes)
         else if(is.character(short)) {
             if(length(short) != length(nodes))
-                stop(gettextf("Needed the supplied labels vector of length %n, got %n",
+                stop(gettextf("Needed the supplied labels vector of length %d, got %d",
                               length(nodes), length(short)), domain = NA)
             else short
         } else nodes
