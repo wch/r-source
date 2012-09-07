@@ -5,7 +5,7 @@ useDynLib(graphics, C_contour, C_contourDef, C_filledcontour, C_image,
           C_polygon, C_raster, C_rect, C_segments, C_strHeight,
           C_strWidth, C_symbols, C_text, C_title, C_xspline,
           C_plot_new, C_locator, C_identify, C_StemLeaf, C_BinCount,
-          unregisterBase)
+          RunregisterBase)
 
 import(grDevices)
 

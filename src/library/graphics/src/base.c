@@ -314,6 +314,12 @@ unregisterBase(void) {
     baseRegisterIndex = -1;   
 }
 
+SEXP RunregisterBase(void)
+{
+    unregisterBase();
+    return R_NilValue;
+}
+
 /* FIXME: Make this a macro to avoid function call overhead?
    Inline it if you really think it matters.
  */

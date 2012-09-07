@@ -1404,10 +1404,6 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
     .Call(C_R_identC, c1, c2)
 }
 
-## a version of match that avoids the is.factor() junk: faster & safe for bootstrapping
-## This cannot work: wrong number of args.
-## .matchBasic <- function(x, table, nomatch = NA) .Internal(match(x, table, nomatch))
-
 ## match default exprs in the method to those in the generic
 ## if the method does not itself specify a default, and the
 ## generic does

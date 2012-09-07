@@ -105,3 +105,6 @@ SEXP Fexact(SEXP x, SEXP pars, SEXP work, SEXP smult);
 SEXP Fisher_sim(SEXP sr, SEXP sc, SEXP sB);
 SEXP chisq_sim(SEXP sr, SEXP sc, SEXP sB, SEXP E);
 SEXP d2x2xk(SEXP sK, SEXP sm, SEXP sn, SEXP st, SEXP srn);
+
+SEXP stats_signrank_free(void);
+SEXP stats_wilcox_free(void);

@@ -313,10 +313,6 @@ checkSlotAssignment <- function(obj, name, value)
 
 
 
-## "@" <-
-##   function(object, name)
-##   .Internal(object@name)
-
 "@<-" <-
    function(object, name, value) {
      arg <- substitute(name)
