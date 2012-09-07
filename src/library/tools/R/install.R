@@ -850,7 +850,7 @@
 		    ## to work ...
 
 		    ## encoding issues ... so need useBytes = TRUE
-		    ## FIXME: some packages have useDynlib()
+		    ## FIXME: some packages have useDynLib()
 		    ## spread over several lines.
 		    writeLines(sub("useDynLib.*", 'useDynLib("")',
 				   readLines("NAMESPACE", warn = FALSE),

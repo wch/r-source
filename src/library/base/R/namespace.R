@@ -1259,7 +1259,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 
                        dup <- duplicated(names(symNames))
                        if (any(dup))
-                           warning(gettextf("duplicated symbol names %s in useDynlib(\"%s\")", paste(names(symNames)[dup], collapse = ", "), dyl),
+                           warning(gettextf("duplicated symbol names %s in useDynLib(\"%s\")", paste(names(symNames)[dup], collapse = ", "), dyl),
                                    domain = NA)
 
                        symNames <- symNames[!dup]
