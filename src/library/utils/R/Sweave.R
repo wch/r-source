@@ -133,6 +133,7 @@ Sweave <- function(file, driver = RweaveLatex(),
             chunk <- paste0("#line ", linenum+linediff+1L, ' "', basename(file), '"')
             attr(chunk, "srclines") <- linenum + linediff
             attr(chunk, "srcFilenum") <- filenum
+            attr(chunk, "srcFilenames") <- srcFilenames
             chunknr <- chunknr + 1L  # this is really 'code chunk number'
             chunkopts$chunknr <- chunknr
         } else {  # continuation of current chunk
@@ -165,6 +166,7 @@ Sweave <- function(file, driver = RweaveLatex(),
 	    chunk <- c(chunk, line)
             attr(chunk, "srclines") <- srclines
             attr(chunk, "srcFilenum") <- srcfilenum
+            attr(chunk, "srcFilenames") <- srcFilenames
 	}
 	prevfilenum <- filenum
 	prevlinediff <- linediff

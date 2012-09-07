@@ -213,6 +213,9 @@
       called with an unnamed first argument: the formal arguemnts were
       changed from \code{name=} to \code{.NAME=} in \R 2.13.0, but some
       packages were still using the old name.
+      
+      \item \code{Sweave()} by default now reports the locations in
+      the source file(s) of each chunk.      
     }
   }
 
