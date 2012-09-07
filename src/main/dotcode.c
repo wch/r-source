@@ -181,13 +181,6 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     strcpy(dll.DLLname, ""); 
     dll.dll = NULL; dll.obj = NULL; dll.type = NOT_DEFINED;
     
-    // find if we were called from a namespace
-    SEXP env2 = ENCLOS(env);
-    const char *ns = "";
-    if(R_IsNamespaceEnv(env2))
-	ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env2), 0));
-    else env2 = R_NilValue;
-
     op = CAR(args);  // value of .NAME =
     /* NB, this sets fun, symbol and buf and is not just a check! */
     checkValidSymbolId(op, call, fun, symbol, buf);
@@ -211,8 +204,17 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	args = pkgtrim(args, &dll);
     }
 
-    /* Make up the load symbol and look it up. */
+    /* We were given a symbol (or an address), so we are done. */
+    if (*fun) return args;
 
+    // find if we were called from a namespace
+    SEXP env2 = ENCLOS(env);
+    const char *ns = "";
+    if(R_IsNamespaceEnv(env2))
+	ns = CHAR(STRING_ELT(R_NamespaceEnvSpec(env2), 0));
+    else env2 = R_NilValue;
+
+    /* Make up the load symbol */
     if(TYPEOF(op) == STRSXP) {
 	p = translateChar(STRING_ELT(op, 0));
 	if(strlen(p) >= MaxSymbolBytes)
@@ -225,61 +227,65 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	}
     }
 
-    if(!*fun) {
-	if(dll.type != FILENAME && strlen(ns)) {
-	    /* no PACKAGE= arg, so see if we can identify a DLL
-	       from the namespace defining the function */
-	    *fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol, env2);
+    if(dll.type != FILENAME && strlen(ns)) {
+	/* no PACKAGE= arg, so see if we can identify a DLL
+	   from the namespace defining the function */
+	*fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol, env2);
+	if (*fun) return args;
 #ifdef CHECK_NAMSPACE_RESOLUTION
-	    if(!*fun)
-		warningcall(call, 
-			    "\"%s\" not resolved from current namespace (%s)",
-			    buf, ns);
+	warningcall(call, 
+		    "\"%s\" not resolved from current namespace (%s)",
+		    buf, ns);
 #endif
-	    /* need to continue if the namespace search failed */
-	}
-
-	/* NB: the actual conversion to the symbol is done in
-	   R_dlsym in Rdynload.c.  That prepends an underscore (usually),
-	   and may append one or more underscores.
-	*/
-
-	if (!*fun && !(*fun = R_FindSymbol(buf, dll.DLLname, symbol))) {
-	    if(strlen(dll.DLLname)) {
-		switch(symbol->type) {
-		case R_C_SYM:
-		    errorcall(call,
-			      _("\"%s\" not available for %s() for package \"%s\""),
-			      buf, ".C", dll.DLLname);
-		    break;
-		case R_FORTRAN_SYM:
-		    errorcall(call,
-			      _("\"%s\" not available for %s() for package \"%s\""),
-			      buf, ".Fortran", dll.DLLname);
-		    break;
-		case R_CALL_SYM:
-		    errorcall(call,
-			      _("\"%s\" not available for %s() for package \"%s\""),
-			      buf, ".Call", dll.DLLname);
-		    break;
-		case R_EXTERNAL_SYM:
-		    errorcall(call,
-			      _("\"%s\" not available for %s() for package \"%s\""),
-			      buf, ".External", dll.DLLname);
-		    break;
-		case R_ANY_SYM:
-		    errorcall(call,
-			      _("%s symbol name \"%s\" not in DLL for package \"%s\""),
-			      "C/Fortran", buf, dll.DLLname);
-		    break;
-		}
-	    } else
-		errorcall(call, _("%s symbol name \"%s\" not in load table"),
-			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C", buf);
-	}
+	/* need to continue if the namespace search failed */
     }
 
-    return args;
+    /* NB: the actual conversion to the symbol is done in
+       R_dlsym in Rdynload.c.  That prepends an underscore (usually),
+       and may append one or more underscores.
+    */
+
+    *fun = R_FindSymbol(buf, dll.DLLname, symbol);
+    if (*fun) return args;
+
+    /* so we've failed and bail out */
+    *fun = R_FindSymbol(buf, dll.DLLname, symbol);
+    if (*fun) return args;
+
+    /* so we've failed and bail out */
+    if(strlen(dll.DLLname)) {
+	switch(symbol->type) {
+	case R_C_SYM:
+	    errorcall(call,
+		      _("\"%s\" not available for %s() for package \"%s\""),
+		      buf, ".C", dll.DLLname);
+	    break;
+	case R_FORTRAN_SYM:
+	    errorcall(call,
+		      _("\"%s\" not available for %s() for package \"%s\""),
+		      buf, ".Fortran", dll.DLLname);
+	    break;
+	case R_CALL_SYM:
+	    errorcall(call,
+		      _("\"%s\" not available for %s() for package \"%s\""),
+		      buf, ".Call", dll.DLLname);
+	    break;
+	case R_EXTERNAL_SYM:
+	    errorcall(call,
+		      _("\"%s\" not available for %s() for package \"%s\""),
+		      buf, ".External", dll.DLLname);
+	    break;
+	case R_ANY_SYM:
+	    errorcall(call,
+		      _("%s symbol name \"%s\" not in DLL for package \"%s\""),
+		      "C/Fortran", buf, dll.DLLname);
+	    break;
+	}
+    } else
+	errorcall(call, _("%s symbol name \"%s\" not in load table"),
+		  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C", buf);
+
+    return args; /* -Wall */
 }
 
 
