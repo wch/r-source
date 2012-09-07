@@ -207,6 +207,12 @@
       rather than a \code{.C()} or \code{.Call()} call.  This is more
       likely to work if the function is saved and used in a different
       session.
+      
+      \item The functions \code{.C()}, \code{.Call()},
+      \code{.External()} and \code{.Fortran()} now check that they are
+      called with an unnamed first argument: the formal arguemnts were
+      changed from \code{name=} to \code{.NAME=} in \R 2.13.0, but some
+      packages were still using the old name.
     }
   }
 
