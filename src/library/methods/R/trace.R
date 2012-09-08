@@ -535,17 +535,7 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
     }
 }
 
-### finding the package name for a loaded namespace -- kludgy but is there
-### a table in this direction anywhere?
-## .searchNamespaceNames <- function(env) {
-##     namespaces <- .Internal(getNamespaceRegistry())
-##     names <- objects(namespaces, all.names = TRUE)
-##     for(what in names)
-##         if(identical(get(what, envir=namespaces), env))
-##             return(paste("namespace", what, sep=":"))
-##     return(character())
-## }
-
+### finding the package name for a loaded namespace
 .searchNamespaceNames <- function(env)
     paste("namespace", getNamespaceName(env), sep=":")
 
