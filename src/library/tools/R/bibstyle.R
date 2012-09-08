@@ -196,7 +196,7 @@ makeJSS <- function()
 
 	formatBook <- function(book) {
 	    authors <- authorList(book)
-	    if (is.null(authors))
+	    if(!length(authors))
 		authors <- editorList(book)
 
 	    collapse(c(fmtPrefix(book),
@@ -209,7 +209,7 @@ makeJSS <- function()
 	formatInbook <- function(paper) {
 	    authors <- authorList(paper)
 	    editors <- editorList(paper)
-	    if (is.null(authors)) {
+	    if(!length(authors)) {
 		authors <- editors
 		editors <- NULL
 	    }
