@@ -466,18 +466,12 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
         rval <- rval[!sapply(rval, .is_not_nonempty_text)]
 	fields <- tolower(names(rval))
         names(rval) <- fields
+        attr(rval, "bibtype") <- bibtype
 
-        ## required fields
-        rfields <- strsplit(tools:::BibTeX_entry_field_db[[pos]], "|",
-                            fixed = TRUE)
-        if(length(rfields) > 0L) {
-            ok <- sapply(rfields, function(f) any(f %in% fields))
-	    if(any(!ok))
-                stop(gettextf("A bibentry of bibtype %s has to correctly specify the field(s): %s",
-                              sQuote(bibtype),
-                              paste(rfields[!ok], collapse = ", ")),
-                     domain = NA)
-        }
+        ## check required fields
+        .bibentry_check_bibentry1(rval)
+
+        ## canonicalize
         pos <- fields %in% c("author", "editor")
 	if(any(pos)) {
             for(i in which(pos)) rval[[i]] <- as.person(rval[[i]])
@@ -487,9 +481,10 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
 	}
 
         ## set attributes
-        attr(rval, "bibtype") <- bibtype
-        attr(rval, "key") <- if(is.null(key)) NULL else as.character(key)
-        if(!is.null(textVersion)) attr(rval, "textVersion") <- as.character(textVersion)
+        attr(rval, "key") <-
+            if(is.null(key)) NULL else as.character(key)
+        if(!is.null(textVersion))
+            attr(rval, "textVersion") <- as.character(textVersion)
         if(!.is_not_nonempty_text(header))
             attr(rval, "header") <- paste(header, collapse = "\n")
         if(!.is_not_nonempty_text(footer))
@@ -514,6 +509,25 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
     rval
 }
 
+.bibentry_check_bibentry1 <-
+function(x, force = FALSE)
+{
+    fields <- names(x)
+    if(!force && !.is_not_nonempty_text(x$crossref)) return(NULL)
+    bibtype <- attr(x, "bibtype")
+    rfields <-
+        strsplit(tools:::BibTeX_entry_field_db[[bibtype]], "|",
+                 fixed = TRUE)
+    if(length(rfields) > 0L) {
+        ok <- sapply(rfields, function(f) any(f %in% fields))
+        if(any(!ok))
+            stop(gettextf("A bibentry of bibtype %s has to specify the field(s): %s",
+                          sQuote(bibtype),
+                          paste(rfields[!ok], collapse = ", ")),
+                 domain = NA)
+    }
+}
+
 bibentry_attribute_names <-
     c("bibtype", "textVersion", "header", "footer", "key")
 
@@ -529,7 +543,7 @@ function(x, i)
 bibentry_format_styles <-
     c("text", "Bibtex", "citation", "html", "latex", "textVersion", "R")
 
-.match_bibentry_format_style <-
+.bibentry_match_format_style <-
 function(style)
 {
     ind <- pmatch(tolower(style), tolower(bibentry_format_styles),
@@ -546,7 +560,7 @@ function(style)
 format.bibentry <-
 function(x, style = "text", .bibstyle=NULL, ...)
 {
-    style <- .match_bibentry_format_style(style)
+    style <- .bibentry_match_format_style(style)
 
     x <- sort(x, .bibstyle=.bibstyle)
     x$.index <- as.list(seq_along(x))
@@ -555,7 +569,7 @@ function(x, style = "text", .bibstyle=NULL, ...)
         out <- file()
         saveopt <- tools::Rd2txt_options(width = getOption("width"))
         on.exit({tools::Rd2txt_options(saveopt); close(out)})
-        sapply(x,
+        sapply(.bibentry_expand_crossrefs(x),
                function(y) {
                    rd <- tools::toRd(y, style = .bibstyle)
                    con <- textConnection(rd)
@@ -608,10 +622,61 @@ function(x, style = "text", .bibstyle=NULL, ...)
            )
 }
 
-print.bibentry <-
-function(x, style = "text", .bibstyle=NULL, ...)
+.bibentry_expand_crossrefs <-
+function(x)
 {
-    style <- .match_bibentry_format_style(style)
+    x <- unclass(x)
+    
+    crossrefs <- lapply(x, `[[`, "crossref")
+    pc <- which(vapply(crossrefs, length, 0L) > 0L)
+    
+    if(length(pc)) {
+        keys <- lapply(x, attr, "key")
+        keys[!vapply(keys, length, 0L)] <- ""
+        keys <- unlist(keys)
+        pk <- match(unlist(crossrefs[pc]), keys)
+        ## If an entry has a crossref we cannot resolve it might still
+        ## be complete: we could warn about the bad crossref ...
+        ok <- !is.na(pk)
+        ## Merge entries: note that InCollection and InProceedings need
+        ## to remap title to booktitle as needed.
+        x[pc[ok]] <-
+            Map(function(u, v) {
+                add <- setdiff(names(v), names(u))
+                u[add] <- v[add]
+                if(!is.na(match(tolower(attr(u, "bibtype")),
+                                c("incollection", "inproceedings"))) &&
+                   is.null(u$booktitle))
+                    u$booktitle <- v$title
+                u
+            },
+                x[pc[ok]],
+                x[pk[ok]])
+        ## Now check entries with crossrefs for completeness.
+        ## Ignore bad entries with a warning.
+        status <- lapply(x[pc],
+                         function(e)
+                         tryCatch(.bibentry_check_bibentry1(e, TRUE),
+                                  error = identity))
+        bad <- which(sapply(status, inherits, "error"))
+        if(length(bad)) {
+            for(b in bad) {
+                warning(gettextf("Dropping invalid entry %d:\n%s",
+                                 pc[b],
+                                 conditionMessage(status[[b]])))
+            }
+            x[pc[bad]] <- NULL
+        }
+    }
+    
+    class(x) <- "bibentry"
+    x
+}
+
+print.bibentry <-
+function(x, style = "text", .bibstyle = NULL, ...)
+{
+    style <- .bibentry_match_format_style(style)
 
     if(style == "R") {
         writeLines(format(x, "R", collapse = TRUE))
@@ -776,16 +841,16 @@ function(x, name, value)
 
     ## check bibtype
     if(name == "bibtype") {
-      stopifnot(all(sapply(value, length) == 1L))
-      BibTeX_names <- names(tools:::BibTeX_entry_field_db)
-      value <- unlist(value)
-      pos <- match(tolower(value), tolower(BibTeX_names))
-      if(any(is.na(pos)))
-          stop(gettextf("%s has to be one of %s",
-                        sQuote("bibtype"),
-                        paste(BibTeX_names, collapse = ", ")),
-               domain = NA)
-      value <- as.list(BibTeX_names[pos])
+        stopifnot(all(sapply(value, length) == 1L))
+        BibTeX_names <- names(tools:::BibTeX_entry_field_db)
+        value <- unlist(value)
+        pos <- match(tolower(value), tolower(BibTeX_names))
+        if(any(is.na(pos)))
+            stop(gettextf("%s has to be one of %s",
+                          sQuote("bibtype"),
+                          paste(BibTeX_names, collapse = ", ")),
+                 domain = NA)
+        value <- as.list(BibTeX_names[pos])
     }
 
     ## replace all values
@@ -804,22 +869,7 @@ function(x, name, value)
     }
 
     ## check whether all elements still have their required fields
-    check_bibentry1 <- function(x) {
-	fields <- names(x)
-	bibtype <- attr(x, "bibtype")
-        rfields <-
-            strsplit(tools:::BibTeX_entry_field_db[[bibtype]], "|",
-                     fixed = TRUE)
-        if(length(rfields) > 0L) {
-            ok <- sapply(rfields, function(f) any(f %in% fields))
-	    if(any(!ok))
-                stop(gettextf("A bibentry of bibtype %s has to specify the field(s): %s",
-                              sQuote(bibtype),
-                              paste(rfields[!ok], collapse = ", ")),
-                     domain = NA)
-        }
-    }
-    for(i in seq_along(x)) check_bibentry1(x[[i]])
+    for(i in seq_along(x)) .bibentry_check_bibentry1(x[[i]])
 
     class(x) <- "bibentry"
     x
