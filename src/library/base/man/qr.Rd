@@ -117,7 +117,7 @@ as.qr(x)
   routines are used for \code{qr.coef}, \code{qr.qy} and \code{qr.aty}.
   
   LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
-  \code{\url{http://www.netlib.org/linpack} and their guides are listed
+  \url{http://www.netlib.org/linpack} and their guides are listed
   in the references.
 }
 \references{

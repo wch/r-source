@@ -85,7 +85,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   routines \code{RS}, \code{RG}, \code{CH} and \code{CG}.
 
   LAPACK and EISPACK are from \url{http://www.netlib.org/lapack} and
-  \code{\url{http://www.netlib.org/eispack} and their guides are listed
+  \url{http://www.netlib.org/eispack} and their guides are listed
   in the references.
 }
 \references{

@@ -78,7 +78,7 @@ chol(x, \dots)
   \code{DPSTRF} and the LINPACK routines \code{DPOFA} and \code{DCHDC}.
   
   LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
-  \code{\url{http://www.netlib.org/linpack} and their guides are listed
+  \url{http://www.netlib.org/linpack} and their guides are listed
   in the references.
 }
 \references{
