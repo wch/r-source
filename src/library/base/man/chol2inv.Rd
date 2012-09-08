@@ -1,6 +1,6 @@
 % File src/library/base/man/chol2inv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol2inv}
@@ -25,20 +25,23 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
 \value{
   The inverse of the matrix whose Choleski decomposition was given.
 }
-\details{
-  This is an interface to the LAPACK routine DPOTRI and the LINPACK
-  routine DPODI.
+\source{
+  This is an interface to the LAPACK routine \code{DPOTRI} and the LINPACK
+  routine \code{DPODI}.
+  
+  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
+  \code{\url{http://www.netlib.org/linpack} and their guides are listed
+  in the references.
 }
 \references{
-  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide}.
-  Philadelphia: SIAM Publications.
-
   Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}. Third Edition.
-  SIAM.
+  \emph{LAPACK Users' Guide}. Third Edition. SIAM.
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
+  
+  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
+  \emph{LINPACK Users Guide}.
+  Philadelphia: SIAM Publications.  
 }
 \seealso{
   \code{\link{chol}}, \code{\link{solve}}.
