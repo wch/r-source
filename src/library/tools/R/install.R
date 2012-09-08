@@ -153,6 +153,13 @@
         setwd(startdir)
         if (dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
+    
+    # Check whether dir is a subdirectory of parent,
+    # to protect against malicious package names like ".." below
+    # Assumes that both directories exist
+    
+    is_subdir <- function(dir, parent) 
+        normalizePath(parent) == normalizePath(file.path(dir, ".."))
 
     do_exit_on_error <- function()
     {
@@ -160,14 +167,16 @@
         ## set curPkg
         if(clean_on_error && length(curPkg)) {
             pkgdir <- file.path(lib, curPkg)
-            if (nzchar(pkgdir) && dir.exists(pkgdir)) {
+            if (nzchar(pkgdir) && dir.exists(pkgdir) &&
+                is_subdir(pkgdir, lib)) {
                 starsmsg(stars, "removing ", sQuote(pkgdir))
                 unlink(pkgdir, recursive = TRUE)
             }
 
             if (nzchar(lockdir) &&
-                dir.exists(lp <- file.path(lockdir, curPkg))) {
-                starsmsg(stars, "restoring previous ", sQuote(pkgdir))
+                dir.exists(lp <- file.path(lockdir, curPkg)) &&
+                is_subdir(lp, lockdir)) {
+                starsmsg(stars, "restoring previous ", sQuote(pkgdir)) 
                 if (WINDOWS) {
                     file.copy(lp, dirname(pkgdir), recursive = TRUE)
                     Sys.setFileTime(pkgdir, file.info(lp)$mtime)
@@ -256,6 +265,12 @@
         dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         if (!dir.exists(instdir)) {
             message("ERROR: unable to create ", sQuote(instdir), domain = NA)
+            do_exit_on_error()
+        }
+        
+        if (!is_subdir(instdir, lib)) {
+            message("ERROR: ", sQuote(pkg_name), " is not a legal package name", 
+                    domain = NA)
             do_exit_on_error()
         }
 

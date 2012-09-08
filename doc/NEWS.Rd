@@ -877,6 +877,9 @@
       
       \item \code{lm.wfit()} could segfault in \R 2.15.1 if all the
       weights were zero. (\PR{15044})
+      
+      \item A malformed package name could cause \command{R CMD INSTALL}
+      to write outside the target library.
     }
   }
 }
