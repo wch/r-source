@@ -36,9 +36,6 @@ chol(x, \dots)
 \details{
   \code{chol} is generic: the description here applies to the default
   method.
-  
-  This is an interface to the LAPACK routines DPOTRF and DPSTRF and the
-  LINPACK routines DPOFA and DCHDC.
 
   Note that only the upper triangular part of \code{x} is used, so
   that \eqn{R'R = x} when \code{x} is symmetric.
@@ -76,18 +73,26 @@ chol(x, \dots)
   by construction.
 }
 
+\source{
+  This is an interface to the LAPACK routines \code{DPOTRF} and
+  \code{DPSTRF} and the LINPACK routines \code{DPOFA} and \code{DCHDC}.
+  
+  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
+  \code{\url{http://www.netlib.org/linpack} and their guides are listed
+  in the references.
+}
 \references{
+  Anderson. E. and ten others (1999)
+  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  Available on-line at
+  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
+  
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
-
-  Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
-  Available on-line at
-  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
 
 \note{

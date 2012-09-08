@@ -58,11 +58,10 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \bold{cond}ition number, see the details.
 }
 \details{
-  For \code{kappa()}, if \code{exact = FALSE} (the default) the
-  2-norm condition number is estimated by a cheap approximation.
-  Following S, by default, this uses the LINPACK routine \code{dtrco()}.
-  However, in \R (or S) the exact calculation (via \code{\link{svd}}) is
-  also likely to be quick enough.
+  For \code{kappa()}, if \code{exact = FALSE} (the default) the 2-norm
+  condition number is estimated by a cheap approximation.  However, the
+  exact calculation (via \code{\link{svd}}) is also likely to be quick
+  enough.
 
   Note that the 1- and Inf-norm condition numbers are much faster to
   calculate, and \code{rcond()} computes these \emph{\bold{r}eciprocal}
@@ -78,11 +77,27 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   The condition number, \eqn{kappa}, or an approximation if
   \code{exact = FALSE}.
 }
+\source{
+  The LAPACK routines \code{DTRCON} and \code{ZTRCON} and the LINPACK
+  routine \code{DTRCO}.
+  
+  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
+  \url{http://www.netlib.org/linpack} and their guides are listed
+  in the references.
+}
 \references{
-  Chambers, J. M. (1992)
+  Anderson. E. and ten others (1999)
+  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  Available on-line at
+  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
+  
+ Chambers, J. M. (1992)
   \emph{Linear models.}
   Chapter 4 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
+
+  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
+  \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 }
 \author{
   The design was inspired by (but differs considerably from)

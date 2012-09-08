@@ -46,9 +46,7 @@ as.qr(x)
   \item{\dots}{further arguments passed to or from other methods}
 }
 \description{
-  \code{qr} computes the QR decomposition of a matrix.  It provides an
-  interface to the techniques used in the LINPACK routine DQRDC
-  or the LAPACK routines DGEQP3 and (for complex matrices) ZGEQP3.
+  \code{qr} computes the QR decomposition of a matrix.
 }
 \details{
   The QR decomposition plays an important role in many
@@ -113,18 +111,27 @@ as.qr(x)
   Using LAPACK (including in the complex case) uses column pivoting and
   does not attempt to detect rank-deficient matrices.
 }
+\source{
+  For \code{qr}, the LINPACK routine \code{DQRDC} and the LAPACK
+  routines \code{DGEQP3} and \code{ZGEQP3}.  Further LINPACK and LAPACK
+  routines are used for \code{qr.coef}, \code{qr.qy} and \code{qr.aty}.
+  
+  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
+  \code{\url{http://www.netlib.org/linpack} and their guides are listed
+  in the references.
+}
 \references{
+  Anderson. E. and ten others (1999)
+  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  Available on-line at
+  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
+  
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
-
-  Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
-  Available on-line at
-  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
 \seealso{
   \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for

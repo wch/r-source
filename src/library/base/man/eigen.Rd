@@ -29,11 +29,6 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     \R < 1.7.0)?}
 }
 \details{
-  By default \code{eigen} uses the LAPACK routines DSYEVR,
-  DGEEV, ZHEEV and ZGEEV whereas \code{eigen(EISPACK = TRUE)} provides an
-  interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
-  and \code{CG}.
-
   If \code{symmetric} is unspecified, the code attempts to
   determine if the matrix is symmetric up to plausible numerical
   inaccuracies.  It is faster and surer to set the value yourself.
@@ -83,7 +78,22 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   then \deqn{A = V \Lambda V^{-1}}{A = V Lmbd V^(-1)} (up to numerical
   fuzz), where \eqn{\Lambda =}{Lmbd =}\code{diag(lam)}.
 }
+\source{
+  By default \code{eigen} uses the LAPACK routines \code{DSYEVR},
+  \code{DGEEV}, \code{ZHEEV} and \code{ZGEEV} whereas
+  \code{eigen(EISPACK = TRUE)} provides an interface to the EISPACK
+  routines \code{RS}, \code{RG}, \code{CH} and \code{CG}.
+
+  LAPACK and EISPACK are from \url{http://www.netlib.org/lapack} and
+  \code{\url{http://www.netlib.org/eispack} and their guides are listed
+  in the references.
+}
 \references{
+  Anderson. E. and ten others (1999)
+  \emph{LAPACK Users' Guide}.  Third Edition.  SIAM.\cr
+  Available on-line at
+  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
+  
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
@@ -93,13 +103,12 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \emph{Matrix Eigensystems Routines -- EISPACK Guide}.
   Springer-Verlag Lecture Notes in Computer Science \bold{6}.
 
-  Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}.  Third Edition.  SIAM.\cr
-  Available on-line at
-  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
-
   Wilkinson, J. H. (1965) \emph{The Algebraic Eigenvalue Problem.}
   Clarendon Press, Oxford.
+
+  Wilkinson, J. H. and Reinsch, C. (1971) \emph{Linear Algebra}.  Volume
+  II of \emph{Handbook for Automatic Computation}, Springer-Verlag.\cr
+  [Original source for EISPACK, in ALGOL.]
 }
 
 \note{

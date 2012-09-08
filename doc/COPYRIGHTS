@@ -258,18 +258,21 @@ src/main/xspline.c
  * notice remain intact.
 
 
-src/modules/lapack/dlapack[0123].f, cmplx.f, dlamc.f
+src/modules/lapack/dlapack.f, cmplx.f, dlamc.f
 
   Extracted from
-  *  -- LAPACK routine (version 3.1) --
-  *     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-  *     Courant Institute, Argonne National Lab, and Rice University
+  *  -- LAPACK computational routine (version 3.4.0) --
+  *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+  *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+  *     November 2011
 
-  The README says
+  where the version number and date vary by subroutine.
+
+  The LAPACK README says
 
     It is freely-available software, and is copyrighted.
 
-  although no actual copyright statement appears in the code.
+  but no copyright statements appear in the sources.
 
 
 src/extra/xdr/*
