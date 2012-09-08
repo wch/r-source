@@ -77,7 +77,7 @@ splinefunH(x, y, m)
   (\code{deriv} = 0), or its derivatives (\code{deriv} = 1, 2, 3) at the
   points \code{x}, where the spline function interpolates the data
   points originally specified.  In uses data stored in its environment
-  when it was created, the details of which are suject to change.
+  when it was created, the details of which are subject to change.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
