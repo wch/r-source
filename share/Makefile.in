@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 ## subdirectories of R_HOME/share
-SUBDIRS_WITH_NO_BUILD = R encodings licenses make sh texmf java
+SUBDIRS_WITH_NO_BUILD = R dictionaries encodings licenses make sh texmf java
 
 all: Makefile R
 
@@ -33,6 +33,7 @@ install: install-message installdirs install-sources
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/R"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/dictionaries"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/encodings"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/java"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/licenses"
@@ -47,6 +48,9 @@ install-message:
 install-sources: installdirs
 	@for f in $(srcdir)/R/*.R; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/R"; \
+	done
+	@for f in $(srcdir)/dictionaries/*.rds; do \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/dictionaries"; \
 	done
 	@for f in $(srcdir)/encodings/*; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/encodings"; \
