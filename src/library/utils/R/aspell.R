@@ -324,30 +324,38 @@ function(program = NULL)
     program
 }
 
+aspell_dictionaries_R <- "en_stats"
+
 aspell_find_dictionaries <-
-function(dictionaries)
+function(dictionaries, dirnames = character())
 {
-    paths <- as.character(dictionaries)
-    if(!(n <- length(paths))) return(NULL)
+    dictionaries <- as.character(dictionaries)
+    if(!(n <- length(dictionaries))) return(character())
+
+    ## Always search the R system dictionary directory first.
+    dirnames <- c(file.path(R.home("share"), "dictionaries"), dirnames)
 
     ## For now, all dictionary files should be .rds files.
-    ind <- !grepl("\\.rds$", paths)
+    ind <- !grepl("\\.rds$", dictionaries)
     if(any(ind))
-        paths[ind] <- sprintf("%s.rds", paths[ind])
+        dictionaries[ind] <- sprintf("%s.rds", dictionaries[ind])
 
-    ## Dictionaries with no path separators are looked for in the R
-    ## system dictionary directory.
-    pos <- grep(.Platform$file.sep, paths, fixed = TRUE)
+    out <- character(n)
+    ## Dictionaries with no path separators are looked for in the given
+    ## dictionary directories (by default, the R system dictionary
+    ## directory).
+    ind <- grepl(.Platform$file.sep, dictionaries, fixed = TRUE)
     ## (Equivalently, could check where paths == basename(paths).)
-    if(length(pos) < n)
-        paths[-pos] <-
-            file.path(R.home("share"), "dictionaries", paths[-pos])
-    if(length(pos))
-        paths[pos] <- path.expand(paths[pos])
+    if(length(pos <- which(ind))) {
+        pos <- pos[file_test("-f", dictionaries[pos])]
+        out[pos] <- normalizePath(dictionaries[pos], "/")
+    }
+    if(length(pos <- which(!ind))) {
+        out[pos] <- find_files_in_directories(dictionaries[pos],
+                                              dirnames)
+    }
 
-    paths[!file_test("-f", paths)] <- ""
-
-    paths
+    out
 }
 
 ### Utilities.
@@ -423,7 +431,8 @@ aspell_control_R_manuals <-
          c("-d en_US,en_GB"))
 
 aspell_R_manuals <-
-function(which = NULL, dir = NULL, program = NULL)
+function(which = NULL, dir = NULL, program = NULL,
+         dictionaries = aspell_dictionaries_R)
 {
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
     ## Allow specifying 'R-exts' and alikes, or full paths.
@@ -442,7 +451,8 @@ function(which = NULL, dir = NULL, program = NULL)
 
     aspell(files,
            control = aspell_control_R_manuals[[names(program)]],
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## For spell-checking the R Rd files:
@@ -456,7 +466,7 @@ aspell_control_R_Rd_files <-
 
 aspell_R_Rd_files <-
 function(which = NULL, dir = NULL, drop = "\\references",
-         program = NULL)
+         program = NULL, dictionaries = aspell_dictionaries_R)
 {
     files <- character()
     
@@ -483,16 +493,17 @@ function(which = NULL, dir = NULL, drop = "\\references",
     aspell(files,
            filter = list("Rd", drop = drop),
            control = aspell_control_R_Rd_files[[names(program)]],
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## For spell-checking Rd files in a package:
 
 aspell_package_Rd_files <-
-function(dir, drop = c("\\author", "\\references"), control = list(),
-         program = NULL)
+function(dir, drop = c("\\author", "\\references"),
+         control = list(), program = NULL, dictionaries = character())
 {
-    dir <- tools::file_path_as_absolute(dir)
+    dir <- normalizePath(dir, "/")
 
     subdir <- file.path(dir, "man")
     files <- if(file_test("-d", subdir))
@@ -507,27 +518,34 @@ function(dir, drop = c("\\author", "\\references"), control = list(),
 
     defaults <- .aspell_package_defaults(dir, encoding)$Rd_files
     if(!is.null(defaults)) {
-        ## For now, allow providing defaults for drop/control directly,
-        ## and for setting the personal dictionary (without hard-wiring
-        ## the file path).  Direct settings currently override (could
-        ## add a list add = TRUE mechanism eventually).
+        ## Direct settings currently override (could add a list add =
+        ## TRUE mechanism eventually).
         if(!is.null(d <- defaults$drop))
             drop <- d
         if(!is.null(d <- defaults$control))
             control <- d
+        if(!is.null(d <- defaults$program))
+            program <- d
+        if(!is.null(d <- defaults$dictionaries)) {
+            dictionaries <-
+                aspell_find_dictionaries(d, file.path(dir, ".aspell"))
+        }
+        ## <FIXME>
+        ## Deprecated in favor of specifying R level dictionaries.
+        ## Maybe give a warning (in particular if both are given)?
         if(!is.null(d <- defaults$personal))
             control <- c(control,
                          sprintf("-p %s",
                                  shQuote(file.path(dir, ".aspell", d))))
-        if(!is.null(d <- defaults$program))
-            program <- d
+        ## </FIXME>
     }
 
     aspell(files,
            filter = list("Rd", drop = drop),
            control = control,
            encoding = encoding,
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## For spell-checking the R vignettes:
@@ -548,7 +566,7 @@ aspell_control_R_vignettes <-
          c("-t", "-d en_US,en_GB"))
 
 aspell_R_vignettes <-
-function(program = NULL)
+function(program = NULL, dictionaries = aspell_dictionaries_R)
 {
     files <- Sys.glob(file.path(tools:::.R_top_srcdir_from_Rd(),
                                 "src", "library", "*", "vignettes",
@@ -559,7 +577,8 @@ function(program = NULL)
     aspell(files,
            filter = "Sweave",
            control = aspell_control_R_vignettes[[names(program)]],
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## For spell-checking vignettes in a package:
@@ -578,7 +597,8 @@ aspell_control_package_vignettes <-
            ))
 
 aspell_package_vignettes <-
-function(dir, control = list(), program = NULL)
+function(dir,
+         control = list(), program = NULL, dictionaries = character())
 {
     dir <- tools::file_path_as_absolute(dir)
 
@@ -595,12 +615,20 @@ function(dir, control = list(), program = NULL)
     if(!is.null(defaults)) {
         if(!is.null(d <- defaults$control))
             control <- d
+        if(!is.null(d <- defaults$program))
+            program <- d
+        if(!is.null(d <- defaults$dictionaries)) {
+            dictionaries <-
+                aspell_find_dictionaries(d, file.path(dir, ".aspell"))
+        }
+        ## <FIXME>
+        ## Deprecated in favor of specifying R level dictionaries.
+        ## Maybe give a warning (in particular if both are given)?
         if(!is.null(d <- defaults$personal))
             control <- c(control,
                          sprintf("-p %s",
                                  shQuote(file.path(dir, ".aspell", d))))
-        if(!is.null(d <- defaults$program))
-            program <- d
+        ## </FIXME>
     }
 
     program <- aspell_find_program(program)
@@ -611,7 +639,8 @@ function(dir, control = list(), program = NULL)
            c("-t",
              aspell_control_package_vignettes[[names(program)]],
              control),
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## Spell-checking R files.
@@ -793,7 +822,7 @@ aspell_R_R_files <-
 function(which = NULL, dir = NULL,
          ignore = c("[ \t]'[^']*'[ \t[:punct:]]",
                     "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]"),
-         program = NULL)
+         program = NULL, dictionaries = aspell_dictionaries_R)
 {
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
     if(is.null(which))
@@ -811,13 +840,15 @@ function(which = NULL, dir = NULL,
     aspell(files,
            filter = list("R", ignore = ignore),
            control = aspell_control_R_Rd_files[[names(program)]],
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## For spell-checking R files in a package.
   
 aspell_package_R_files <-
-function(dir, ignore = "", control = list(), program = NULL)
+function(dir, ignore = character(),
+         control = list(), program = NULL, dictionaries = character())
 {
     dir <- tools::file_path_as_absolute(dir)
 
@@ -832,10 +863,19 @@ function(dir, ignore = "", control = list(), program = NULL)
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
 
-    ## <FIXME>
-    ## Add support for defaults eventually ...
-    ##   defaults <- .aspell_package_defaults(dir, encoding)$R_files
-    ## </FIXME>
+    defaults <- .aspell_package_defaults(dir, encoding)$R_files
+    if(!is.null(defaults)) {
+        if(!is.null(d <- defaults$ignore))
+            ignore <- d
+        if(!is.null(d <- defaults$control))
+            control <- d
+        if(!is.null(d <- defaults$program))
+            program <- d
+        if(!is.null(d <- defaults$dictionaries)) {
+            dictionaries <-
+                aspell_find_dictionaries(d, file.path(dir, ".aspell"))
+        }
+    }
 
     program <- aspell_find_program(program)    
 
@@ -843,7 +883,8 @@ function(dir, ignore = "", control = list(), program = NULL)
            filter = list("R", ignore = ignore),
            control = control,
            encoding = encoding,
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## Spell-checking pot files.
@@ -879,6 +920,11 @@ function (ifile, encoding = "unknown", ignore = character())
                as.character(do.call(c, lapply(entries[-1L], do_entry))))
 
     lines <- sub("\"[ \t]*$", " ", lines)
+
+    ## <FIXME>
+    ## Could replace backslash escapes for blanks and percent escapes by
+    ## blanks, similar to what the R text filter does.
+    ## </FIXME>
     
     for(re in ignore[nzchar(ignore)])
         lines <- blank_out_regexp_matches(lines, re)
@@ -886,10 +932,11 @@ function (ifile, encoding = "unknown", ignore = character())
     lines
 }
 
-## For spell-checking pot files in a package.
+## For spell-checking all pot files in a package.
 
 aspell_package_pot_files <-
-function(dir, ignore = "", control = list(), program = NULL)
+function(dir, ignore = character(),
+         control = list(), program = NULL, dictionaries = character())
 {
     dir <- tools::file_path_as_absolute(dir)
     subdir <- file.path(dir, "po")
@@ -907,7 +954,8 @@ function(dir, ignore = "", control = list(), program = NULL)
            filter = list("pot", ignore = ignore),
            control = control,
            encoding = encoding,
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## For spell-checking the R C files.
@@ -916,7 +964,7 @@ aspell_R_C_files <-
 function(which = NULL, dir = NULL,
          ignore = c("[ \t]'[[:alnum:]_.]*'[ \t[:punct:]]",
                     "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]"),
-         program = NULL)
+         program = NULL, dictionaries = aspell_dictionaries_R)
 {
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
     if(is.null(which))
@@ -934,7 +982,49 @@ function(which = NULL, dir = NULL,
     aspell(files,
            filter = list("pot", ignore = ignore),
            control = aspell_control_R_Rd_files[[names(program)]],
-           program = program)
+           program = program,
+           dictionaries = dictionaries)
+}
+
+## For spell-checking package C files.
+
+aspell_package_pot_files <-
+function(dir, ignore = character(),
+         control = list(), program = NULL, dictionaries = character())
+{
+    dir <- tools::file_path_as_absolute(dir)
+    ## Assume that the package C message template file is shipped as
+    ## 'po/PACKAGE.pot'.
+    files <- file.path(dir, "po",
+                       paste(basename(dir), "pot", collapse = "."))
+    files <- files[file_test("-f", files)]
+
+    meta <- tools:::.get_package_metadata(dir, installed = FALSE)
+    if(is.na(encoding <- meta["Encoding"]))
+        encoding <- "unknown"
+
+    defaults <- .aspell_package_defaults(dir, encoding)$C_files
+    if(!is.null(defaults)) {
+        if(!is.null(d <- defaults$ignore))
+            ignore <- d
+        if(!is.null(d <- defaults$control))
+            control <- d
+        if(!is.null(d <- defaults$program))
+            program <- d
+        if(!is.null(d <- defaults$dictionaries)) {
+            dictionaries <-
+                aspell_find_dictionaries(d, file.path(dir, ".aspell"))
+        }
+    }
+    
+    program <- aspell_find_program(program)
+    
+    aspell(files,
+           filter = list("pot", ignore = ignore),
+           control = control,
+           encoding = encoding,
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## Spell-checking DCF files.
@@ -954,7 +1044,8 @@ function(ifile, encoding, keep = c("Title", "Description"))
 ## For spell-checking package DESCRIPTION files.
 
 aspell_package_description <-
-function(dir, control = list(), program = NULL)
+function(dir,
+         control = list(), program = NULL, dictionaries = character())
 {
     dir <- tools::file_path_as_absolute(dir)
     files <- file.path(dir, "DESCRIPTION")
@@ -965,8 +1056,12 @@ function(dir, control = list(), program = NULL)
 
     program <- aspell_find_program(program)
     
-    aspell(files, filter = "dcf", control = control,
-           encoding = encoding, program = program)
+    aspell(files,
+           filter = "dcf",
+           control = control,
+           encoding = encoding,
+           program = program,
+           dictionaries = dictionaries)
 }
 
 ## For writing personal dictionaries:
@@ -1038,4 +1133,24 @@ blanks <-
 function(n) {
     vapply(Map(rep.int, rep.int(" ", length(n)), n, USE.NAMES = FALSE),
            paste, "", collapse = "")
+}
+
+find_files_in_directories <-
+function(basenames, dirnames)
+{
+    dirnames <- dirnames[file_test("-d", dirnames)]
+    dirnames <- normalizePath(dirnames, "/")
+
+    out <- character(length(basenames))
+    pos <- seq_along(out)
+
+    for(dir in dirnames) {
+        paths <- file.path(dir, basenames[pos])
+        ind <- file_test("-f", paths)
+        out[pos[ind]] <- paths[ind]
+        pos <- pos[!ind]
+        if(!length(pos)) break
+    }
+
+    out
 }
