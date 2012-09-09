@@ -175,9 +175,7 @@ qr.resid <- function(qr, y)
 	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
     .Fortran(.F_dqrrsd,
-	     as.double(qr$qr), n, k, as.double(qr$qraux), y, ny,
-	     rsd = y# incl. {dim}names
-	     )$rsd
+	     as.double(qr$qr), n, k, as.double(qr$qraux), y, ny, rsd = y)$rsd
 }
 
 qr.fitted <- function(qr, y, k=qr$rank)
@@ -195,9 +193,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 	stop("'qr' and 'y' must have the same number of rows")
     storage.mode(y) <- "double"
     .Fortran(.F_dqrxb,
-	     as.double(qr$qr), n, k, as.double(qr$qraux), y, ny,
-	     xb = y,# incl. {dim}names
-             DUP = FALSE)$xb
+	     as.double(qr$qr), n, k, as.double(qr$qraux), y, ny, xb = y)$xb
 }
 
 ## qr.solve is defined in  ./solve.R

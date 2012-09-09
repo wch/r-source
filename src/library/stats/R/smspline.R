@@ -146,13 +146,12 @@ smooth.spline <-
     keep.stuff <- FALSE ## << to become an argument in the future
     ans.names <- c("coef","ty","lev","spar","parms","crit","iparms","ier",
                    if(keep.stuff) "scratch")
-    ## This used to use DUP = FALSE, but the C code changes w
     fit <- .Fortran(C_rbart,		# code in ../src/qsbart.f
 		    as.double(penalty),
 		    as.double(dofoff),
 		    x = as.double(xbar),
 		    y = as.double(ybar),
-		    w = as.double(wbar),
+		    w = as.double(wbar), # changed in the Fortran code
 		    ssw = as.double(yssw),
 		    as.integer(nx),
 		    as.double(knot),
@@ -298,8 +297,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 			      nk  = as.integer(object$nk),
 			      x	  = as.double(xs[interp]),
 			      s	  = double(n),
-			      order= as.integer(deriv),
-			      DUP = FALSE)$s
+			      order= as.integer(deriv))$s
     if(any(extrap)) {
 	xrange <- c(object$min, object$min + object$range)
 	if(deriv == 0) {
