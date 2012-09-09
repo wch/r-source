@@ -76,7 +76,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
       4.6*10^18} for most initial seeds.  The seed is two integers (all
     values allowed for the first seed: the second must be odd).
 
-    We use the implementation by Reeds et al.\ (1982--84).
+    We use the implementation by Reeds et al. (1982--84).
 
     The two seeds are the Tausworthe and congruence long integers,
     respectively.  A one-to-one mapping to S's \code{.Random.seed[1:12]}
@@ -155,7 +155,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   guarantee that different values of \code{seed} will seed the RNG
   differently, although any exceptions would be extremely rare.
 
-  The use of \code{kind=NULL} or \code{normal.kind=NULL} in
+  The use of \code{kind = NULL} or \code{normal.kind = NULL} in
   \code{RNGkind} or \code{set.seed} selects the currently-used
   generator (including that used in the previous session if the
   workspace has been restored): if no generator has been used it selects
