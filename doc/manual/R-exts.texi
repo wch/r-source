@@ -6640,7 +6640,7 @@ An example of @code{valgrind} output is
 @smallexample
 ==12539== Invalid read of size 4
 ==12539==    at 0x1CDF6CBE: csc_compTr (Mutils.c:273)
-==12539==    by 0x1CE07E1E: tsc_trresolvedpose (dtCMatrix.c:25)
+==12539==    by 0x1CE07E1E: tsc_transpose (dtCMatrix.c:25)
 ==12539==    by 0x80A67A7: do_dotcall (dotcode.c:858)
 ==12539==    by 0x80CACE2: Rf_eval (eval.c:400)
 ==12539==    by 0x80CB5AF: R_execClosure (eval.c:658)
@@ -8342,7 +8342,7 @@ The usual @R{} object modes are given in the table.
 @multitable {SEXPTYPE} {numeric with storage mode integer integer}
 @headitem SEXPTYPE @tab @R{} equivalent
 @item @code{REALSXP}  @tab numeric with storage mode @code{double}
-@item @code{R OBJECTS}   @tab integer
+@item @code{INTSXP}   @tab integer
 @item @code{CPLXSXP}  @tab complex
 @item @code{LGLSXP}   @tab logical
 @item @code{STRSXP}   @tab character
