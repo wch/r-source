@@ -1536,18 +1536,12 @@ Rboolean attribute_hidden R_seemsOldStyleS4Object(SEXP object)
 	    getAttrib(klass, R_PackageSymbol) != R_NilValue) ? TRUE: FALSE;
 }
 
-#if 0
-SEXP R_isS4Object(SEXP object)
+SEXP attribute_hidden do_setS4Object(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* wanted: return isS4(object) ? mkTrue() : mkFalse(); */
-    return IS_S4_OBJECT(object) ? mkTrue() : mkFalse(); ;
-}
-#endif
-
-SEXP R_setS4Object(SEXP object, SEXP onOff, SEXP do_complete)
-{
-    int flag = asLogical(onOff), complete = asInteger(do_complete);
-    if(length(onOff) != 1 || flag == NA_INTEGER)
+    checkArity(op, args);
+    SEXP object = CAR(args);
+    int flag = asLogical(CADR(args)), complete = asInteger(CADDR(args));
+    if(length(CADR(args)) != 1 || flag == NA_INTEGER)
 	error("invalid '%s' argument", "flag");
     if(complete == NA_INTEGER)
 	error("invalid '%s' argument", "complete");

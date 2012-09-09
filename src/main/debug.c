@@ -92,8 +92,11 @@ static Rboolean tracing_state = TRUE;
 #define GET_TRACE_STATE tracing_state
 #define SET_TRACE_STATE(value) tracing_state = value
 
-SEXP R_traceOnOff(SEXP onOff)
+SEXP attribute_hidden do_traceOnOff(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
+    SEXP onOff = CAR(args);
+
     Rboolean prev = GET_TRACE_STATE;
     if(length(onOff) > 0) {
 	Rboolean _new = asLogical(onOff);

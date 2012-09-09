@@ -902,6 +902,7 @@
  do_setFileTime
  do_setGraphicsEventEnv
  do_setInternet2
+ do_setS4Object
  do_setSessionTimeLimit
  do_setStatusBar
  do_setTimeLimit
@@ -974,6 +975,7 @@
  do_tilde
  do_tolower
  do_trace
+ do_traceOnOff
  do_traceback
  do_tracemem
  do_transpose

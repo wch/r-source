@@ -25,9 +25,6 @@ SEXP R_getTaskCallbackNames(void);
 SEXP R_removeTaskCallback(SEXP);
 SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);
 
-SEXP R_traceOnOff(SEXP);
-SEXP R_setS4Object(SEXP, SEXP);
-
 void F77_SYMBOL(dchdc)(double *, int *, int *, double *, int *, int *, int *);
 void F77_SYMBOL(dpbfa)(double *, int *, int *, int *, int *);
 void F77_SYMBOL(dpbsl)(double *, int *, int *, int *, double *);

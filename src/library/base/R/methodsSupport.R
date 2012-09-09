@@ -64,14 +64,14 @@ untrace <- function(what, signature = NULL, where = topenv(parent.frame())) {
 }
 
 
-tracingState <- function(on = NULL) .Call(.C_R_traceOnOff, on)
+tracingState <- function(on = NULL) .Internal(traceOnOff(on))
 
 
 asS4 <- function(object, flag = TRUE, complete = TRUE)
-    .Call(.C_R_setS4Object, object, flag, complete)
+    .Internal(setS4Object(object, flag, complete))
 
 asS3 <- function(object, flag = TRUE, complete = TRUE)
-    .Call(.C_R_setS4Object, object, !as.logical(flag), complete)
+    .Internal(setS4Object(object, !as.logical(flag), complete))
 
 
 .doTrace <- function(expr, msg) {
