@@ -215,7 +215,10 @@
       packages were still using the old name.
       
       \item \code{Sweave()} by default now reports the locations in
-      the source file(s) of each chunk.      
+      the source file(s) of each chunk.
+
+      \item \code{clearPushBack()} is now a documented interface to a
+      long-existing internal call.
     }
   }
 

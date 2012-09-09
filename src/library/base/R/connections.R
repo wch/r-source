@@ -155,10 +155,13 @@ truncate.connection <- function(con, ...)
 }
 
 pushBack <- function(data, connection, newLine = TRUE)
-    invisible(.Internal(pushBack(data, connection, newLine)))
+    .Internal(pushBack(data, connection, newLine))
 
 pushBackLength <- function(connection)
     .Internal(pushBackLength(connection))
+
+clearPushBack <- function(connection)
+    .Internal(clearPushBack(connection))
 
 print.connection <- function(x, ...)
 {

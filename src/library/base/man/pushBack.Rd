@@ -1,11 +1,12 @@
 % File src/library/base/man/pushBack.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pushBack}
 \alias{pushBack}
 \alias{pushBackLength}
+\alias{clearPushBack}
 \title{Push Text Back on to a Connection}
 \description{
   Functions to push back text lines onto a \link{connection}, and to enquire
@@ -14,6 +15,7 @@
 \usage{
 pushBack(data, connection, newLine = TRUE)
 pushBackLength(connection)
+clearPushBack(connection)
 }
 \arguments{
   \item{data}{a character vector.}
@@ -42,7 +44,7 @@ pushBackLength(connection)
   \samp{<U+xxxx>} if they cannot be converted.
 }
 \value{
-  \code{pushBack} returns nothing.
+  \code{pushBack} and \code{clearPushBack()} return nothing, invisibly.
 
   \code{pushBackLength} returns number of lines currently pushed back.
 }

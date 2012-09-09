@@ -78,7 +78,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         if(all(!nzchar(lines))) stop("empty beginning of file")
         if(nlines < n0lines && file == 0L)  { # stdin() has reached EOF
             pushBack(c(lines, lines, ""), file)
-            on.exit(.Internal(clearPushBack(stdin())))
+            on.exit((clearPushBack(stdin())))
         } else pushBack(c(lines, lines), file)
         first <- scan(file, what = "", sep = sep, quote = quote,
                       nlines = 1, quiet = TRUE, skip = 0,
