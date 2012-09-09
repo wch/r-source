@@ -192,18 +192,7 @@ formatC <- function (x, digits = NULL, width = NULL,
     r <- .Internal(formatC(x, as.character(mode), width, digits,
                            as.character(format), as.character(flag),
                            i.strlen))
-##     r <- .C(.C_str_signif,
-## 	    x = x,
-## 	    n = n,
-## 	    mode   = as.character(mode),
-## 	    width  = as.integer(width),
-## 	    digits = as.integer(digits),
-## 	    format = as.character(format),
-## 	    flag   = as.character(flag),
-## 	    result = blank.chars(i.strlen + 2L) # used to overrun
-## 	    )$result
-    if (some.special)
-	r[!Ok] <- format.char(rQ, width=width, flag=flag)
+    if (some.special) r[!Ok] <- format.char(rQ, width = width, flag = flag)
 
     if(big.mark != "" || small.mark != "" || decimal.mark != "." ||
        !is.null(zero.print) || drop0trailing)

@@ -253,8 +253,8 @@ predict.loess <-
     }
     if(se)
 	res$df <- object$one.delta^2/object$two.delta
-    res}
-
+    res
+}
 
 predLoess <-
   function(y, x, newx, s, weights, robust, span, degree,

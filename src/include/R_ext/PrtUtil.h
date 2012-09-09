@@ -25,7 +25,6 @@
 
 #include <Rinternals.h> // for R_xlen_t
 #include <R_ext/Complex.h>
-//#include <R_ext/Print.h>
 
 #define formatLogical      Rf_formatLogical
 #define formatInteger      Rf_formatInteger
