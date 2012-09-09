@@ -1082,8 +1082,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             out3 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
 
-        if(!(is_base_pkg || is_rec_pkg) &&
-           R_check_use_codetools && R_check_dot_internal) {
+        if(!is_base_pkg && R_check_use_codetools && R_check_dot_internal) {
             details <- pkgname != "relax" # has .Internal in a 10,000 line fun
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)

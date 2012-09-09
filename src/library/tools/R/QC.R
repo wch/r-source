@@ -5144,7 +5144,22 @@ function(package, dir, lib.loc = NULL, details = TRUE)
         objects_in_env[sapply(x,
                               function(s) any(s %in% ".Internal"))]
     }
+    find_bad_S4methods <- function(env) {
+        gens <- .get_S4_generics(code_env)
+        x <- lapply(gens, function(f) {
+            tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
+                       envir = code_env)
+            ## Of course, the S4 'system' does **copy** base code into
+            ## packages (and bug reports on this fatal design error
+            ## has been ignored since 2004!).
+            ## So we'll not yet penalize acolytes ....
+            any(unlist(eapply(tab, function(v) !inherits(v, "derivedDefaultMethod") && any(codetools::findGlobals(v) %in% ".Internal"))))
+        })
+        gens[unlist(x)]
+    }
 
+
+    bad_S4methods <- list()
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
@@ -5155,6 +5170,8 @@ function(package, dir, lib.loc = NULL, details = TRUE)
                            asNamespace(package)
             else .package_env(package)
             bad_closures <- find_bad_closures(code_env)
+            if(.isMethodsDispatchOn())
+                bad_S4methods <- find_bad_S4methods(code_env)
         }
     }
     else {
@@ -5172,7 +5189,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
                 character()
             .source_assignments_in_code_dir(code_dir, code_env, meta)
             bad_closures <- find_bad_closures(code_env)
-        }
+         }
     }
 
     internals <- character()
@@ -5189,7 +5206,8 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             internals <<- c(internals, calls3)
         })
     }
-    out <- list(bad_closures = bad_closures, internals = internals)
+    out <- list(bad_closures = bad_closures, internals = internals,
+                bad_S4methods = bad_S4methods)
     class(out) <- "check_dotInternal"
     out
 }
@@ -5197,7 +5215,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
 format.check_dotInternal <-
 function(x, ...)
 {
-    if(length(x$bad_closures)) {
+    out <- if(length(x$bad_closures)) {
         msg <- ngettext(length(x$bad_closures),
                         "Found .Internal call in the following function:",
                         "Found .Internal calls in the following functions:"
@@ -5208,6 +5226,14 @@ function(x, ...)
                      .pretty_format(sort(unique(x$internals))))
         out
     } else character()
+    if(length(x$bad_S4methods)) {
+        msg <- ngettext(length(x$bad_S4methods),
+                        "Found .Internal call in methods for the following S4 generic:",
+                        "Found .Internal calls in methods for the following S4 generics:"
+                        )
+        out <- c(out, strwrap(msg), .pretty_format(x$bad_S4methods))
+    }
+    out
 }
 
 print.check_dotInternal <-
