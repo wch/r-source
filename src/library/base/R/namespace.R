@@ -1322,7 +1322,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     for (e in directives)
         parseDirective(e)
 
-    dynlibs <- unique(dynlibs)
+       # need to preserve the names on dynlibs, so unique() is not appropriate.
+    dynlibs <- dynlibs[!duplicated(dynlibs)]  
     list(imports = imports, exports = exports, exportPatterns = exportPatterns,
          importClasses = importClasses, importMethods = importMethods,
          exportClasses = exportClasses,  exportMethods = exportMethods,
