@@ -19,11 +19,11 @@ approxfun(x, y = NULL,       method  ="linear",
           yleft, yright, rule = 1, f = 0, ties = mean)
 }
 \arguments{
-  \item{x, y}{vectors giving the coordinates of the points to be
+  \item{x, y}{numeric vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
     specified: see \code{\link{xy.coords}}.}
-  \item{xout}{an optional set of values specifying where interpolation
-    is to take place.}
+  \item{xout}{an optional set of numeric values specifying where
+    interpolation is to take place.}
   \item{method}{specifies the interpolation method to be used.  Choices
     are \code{"linear"} or \code{"constant"}.}
   \item{n}{If \code{xout} is not specified, interpolation takes place at

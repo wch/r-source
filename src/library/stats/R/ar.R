@@ -19,7 +19,7 @@
 ## based on, especially multivariate case, code by Martyn Plummer
 ar <-
     function (x, aic = TRUE, order.max = NULL,
-              method=c("yule-walker","burg", "ols", "mle", "yw"),
+              method = c("yule-walker","burg", "ols", "mle", "yw"),
               na.action = na.fail, series = deparse(substitute(x)), ...)
 {
     res <- switch(match.arg(method),
@@ -56,16 +56,16 @@ ar.yw.default <-
     nser <- ncol(x)
     if (demean) {
         xm <- colMeans(x)
-        x <- sweep(x, 2, xm, check.margin=FALSE)
+        x <- sweep(x, 2L, xm, check.margin=FALSE)
     } else xm <- rep.int(0, nser)
     n.used <- nrow(x)
     order.max <- if (is.null(order.max))
-	min(n.used-1L, floor(10 * log10(n.used))) else round(order.max)
+	min(n.used - 1L, floor(10 * log10(n.used))) else round(order.max)
     if (order.max < 1L) stop("'order.max' must be >= 1")
     else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     xacf <- acf(x, type = "covariance", lag.max = order.max, plot = FALSE,
                 demean = demean)$acf
-    if(nser > 1) {
+    if(nser > 1L) {
         ## multivariate case
         snames <- colnames(x)
         A <- B <- array(0, dim = c(order.max + 1L, nser, nser))
@@ -98,10 +98,8 @@ ar.yw.default <-
         }
         cal.resid <- function() {
             resid <- array(0, dim = c(n.used - order, nser))
-            for (i in 0L:order) {
-                resid <- resid + x[(order - i + 1L):(n.used - i),
-                                   , drop = FALSE] %*% t(ar[i + 1L, , ])
-            }
+            for (i in 0L:order)
+                resid <- resid + x[(order - i + 1L):(n.used - i), , drop = FALSE] %*% t(ar[i + 1L, , ])
             return(rbind(matrix(NA, order, nser), resid))
         }
         order <- 0L
@@ -123,8 +121,8 @@ ar.yw.default <-
         if(order) {
             ar <- -ar[2L:(order + 1L), , , drop = FALSE]
             dimnames(ar) <- list(seq_len(order), snames, snames)
-        } else ar <- array(0, dim=c(0L, nser, nser),
-                           dimnames=list(NULL, snames, snames))
+        } else ar <- array(0, dim = c(0L, nser, nser),
+                           dimnames = list(NULL, snames, snames))
         dimnames(var.pred) <- list(snames, snames)
         dimnames(partialacf) <- list(seq_len(order.max), snames, snames)
         colnames(resid) <- colnames(x)
@@ -148,7 +146,7 @@ ar.yw.default <-
         ar <- if (order) coefs[order, seq_len(order)] else numeric()
         var.pred <- var.pred[order+1L]
         ## Splus compatibility fix
-        var.pred <- var.pred * n.used/(n.used - (order + 1))
+        var.pred <- var.pred * n.used/(n.used - (order + 1L))
         resid <- if(order) c(rep.int(NA, order), embed(x, order + 1L) %*% c(1, -ar))
         else as.vector(x) # we had as.matrix() above
         if(ists) {
@@ -156,10 +154,10 @@ ar.yw.default <-
             attr(resid, "class") <- "ts"
         }
     }
-    res <- list(order=order, ar=ar, var.pred=var.pred, x.mean = drop(xm),
-                aic = xaic, n.used=n.used, order.max=order.max,
-                partialacf=partialacf, resid=resid, method = "Yule-Walker",
-                series=series, frequency=xfreq, call=match.call())
+    res <- list(order = order, ar = ar, var.pred = var.pred, x.mean  =  drop(xm),
+                aic  =  xaic, n.used = n.used, order.max = order.max,
+                partialacf = partialacf, resid = resid, method = "Yule-Walker",
+                series = series, frequency = xfreq, call = match.call())
     if(nser == 1L && order)
         res$asy.var.coef <-
             solve(toeplitz(drop(xacf)[seq_len(order)]))*var.pred/n.used
@@ -194,9 +192,9 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
     invisible(x)
 }
 
-predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
+predict.ar <- function(object, newdata, n.ahead = 1L, se.fit = TRUE, ...)
 {
-    if (n.ahead < 1) stop("'n.ahead' must be at least 1")
+    if (n.ahead < 1L) stop("'n.ahead' must be at least 1")
     if(missing(newdata)) {
         newdata <- eval.parent(parse(text=object$series))
         if (!is.null(nas <- object$call$na.action))
@@ -225,8 +223,8 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
                     x[n+i,] <- x[n+i,] + ar[j,,] %*% x[n+i-j,]
             }
             x[n + seq_len(n.ahead), ]
-        } else matrix(xint, n.ahead, nser, byrow=TRUE)
-        pred <- pred + matrix(object$x.mean, n.ahead, nser, byrow=TRUE)
+        } else matrix(xint, n.ahead, nser, byrow = TRUE)
+        pred <- pred + matrix(object$x.mean, n.ahead, nser, byrow = TRUE)
         colnames(pred) <- colnames(object$var.pred)
         if(se.fit) {
             warning("'se.fit' not yet implemented for multivariate models")

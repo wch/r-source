@@ -21,12 +21,11 @@
 ####  also consider ``compatibility'' with  'approx' and 'approxfun'
 
 spline <-
-    function(x, y=NULL, n=3*length(x), method="fmm", xmin=min(x), xmax=max(x),
-             xout, ties = mean)
+    function(x, y = NULL, n = 3*length(x), method = "fmm",
+             xmin = min(x), xmax = max(x), xout, ties = mean)
 {
     method <- pmatch(method, c("periodic", "natural", "fmm"))
-    if(is.na(method))
-	stop("invalid interpolation method")
+    if(is.na(method)) stop("invalid interpolation method")
 
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y

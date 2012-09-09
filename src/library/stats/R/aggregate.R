@@ -119,7 +119,7 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
     m$... <- m$FUN <- NULL
     m[[1L]] <- as.name("model.frame")
 
-    if(as.character(formula[[2L]] == ".")) {
+    if (formula[[2L]] == ".") {
         ## LHS is a dot, expand it ...
         rhs <- unlist(strsplit(deparse(formula[[3L]]), " *[:+] *"))
         ## <NOTE>

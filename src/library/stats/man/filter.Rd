@@ -20,9 +20,9 @@ filter(x, filter, method = c("convolution", "recursive"),
     can be abbreviated). If \code{"convolution"} a moving average is
     used: if \code{"recursive"} an autoregression is used.}
 
-  \item{sides}{for convolution filters only. If \code{sides=1} the
-    filter coefficients are for past values only; if \code{sides=2}
-    they are centred around lag 0. In this case the length of the
+  \item{sides}{for convolution filters only. If \code{sides = 1} the
+    filter coefficients are for past values only; if \code{sides = 2}
+    they are centred around lag 0.  In this case the length of the
     filter should be odd, but if it is even, more of the filter
     is forward in time than backward.}
 

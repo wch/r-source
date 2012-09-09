@@ -1,6 +1,6 @@
 % File src/library/base/man/qr.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{qr}
@@ -41,7 +41,7 @@ as.qr(x)
   \item{a}{a QR decomposition or (\code{qr.solve} only) a rectangular matrix.}
   \item{k}{effective rank.}
   \item{LAPACK}{logical.  For real \code{x}, if true use LAPACK
-    otherwise use LINPACK.}
+    otherwise use LINPACK (the default).}
   \item{\dots}{further arguments passed to or from other methods}
 }
 \description{
@@ -62,7 +62,7 @@ as.qr(x)
   \code{t(Q) \%*\% y}, where \code{Q} is the (complete) \eqn{\bold{Q}} matrix.
 
   All the above functions keep \code{dimnames} (and \code{names}) of
-  \code{x} and \code{y} if there are.
+  \code{x} and \code{y} if there are any.
 
   \code{solve.qr} is the method for \code{\link{solve}} for \code{qr} objects.
   \code{qr.solve} solves systems of equations via the QR decomposition:
@@ -77,6 +77,8 @@ as.qr(x)
 
   It is not possible to coerce objects to mode \code{"qr"}.  Objects
   either are QR decompositions or they are not.
+
+  \code{qr.fitted} and \code{qr.resid} only support the LINPACK interface.
 }
 \value{
   The QR decomposition of the matrix as computed by LINPACK or LAPACK.

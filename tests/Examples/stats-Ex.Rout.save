@@ -12082,7 +12082,7 @@ predict.HoltWinters :
 predict.StructTS :
 	 function (object, n.ahead = 1, se.fit = TRUE, ...)  NULL 
 predict.ar :
-	 function (object, newdata, n.ahead = 1, se.fit = TRUE, ...)  NULL 
+	 function (object, newdata, n.ahead = 1L, se.fit = TRUE, ...)  NULL 
 predict.arima0 :
 	 function (object, n.ahead = 1, newxreg = NULL, se.fit = TRUE,      ...)  NULL 
 predict.bSpline :
