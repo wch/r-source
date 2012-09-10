@@ -379,6 +379,8 @@
       \item The \sQuote{internal} graphics device invoked by
       \code{.Call("R_GD_nullDevice", package = "grDevices")} has
       been removed: use \code{pdf(file = NULL)} instead.
+
+      \item The long-defunct function \code{print.coefmat()} has been removed.
     }
   }
 

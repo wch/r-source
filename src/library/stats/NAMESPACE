@@ -77,7 +77,7 @@ export(median.default)
 export(mauchley.test)
 
 # defunct
-export(reshapeWide, reshapeLong, print.coefmat, anovalist.lm, lm.fit.null,
+export(reshapeWide, reshapeLong, anovalist.lm, lm.fit.null,
        lm.wfit.null, glm.fit.null)
 
 ## register all the methods for generics elsewhere in case namespace is

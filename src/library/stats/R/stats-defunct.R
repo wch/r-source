@@ -29,14 +29,15 @@ reshapeLong <- function(x,jvars,  ilev = row.names(x),
 ## <entry>
 ## Deprecated in 1.8.0
 ## Defunct in 1.9.0
-print.coefmat <- function(x, digits=max(3, getOption("digits") - 2),
-              signif.stars = getOption("show.signif.stars"),
-              dig.tst = max(1, min(5, digits - 1)),
-              cs.ind, tst.ind, zap.ind = integer(0L),
-              P.values = NULL,
-              has.Pvalue,
-              eps.Pvalue = .Machine$double.eps,
-              na.print = "", ...) .Defunct()
+# removed in 2.16.0 to avoid confusion as a method
+## print.coefmat <- function(x, digits=max(3, getOption("digits") - 2),
+##               signif.stars = getOption("show.signif.stars"),
+##               dig.tst = max(1, min(5, digits - 1)),
+##               cs.ind, tst.ind, zap.ind = integer(0L),
+##               P.values = NULL,
+##               has.Pvalue,
+##               eps.Pvalue = .Machine$double.eps,
+##               na.print = "", ...) .Defunct()
 anovalist.lm <- function (object, ..., test = NULL) .Defunct()
 lm.fit.null <- function(x, y, method = "qr", tol = 1e-07, ...)
     .Defunct("lm.fit")
