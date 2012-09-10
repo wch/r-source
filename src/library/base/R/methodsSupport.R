@@ -75,7 +75,7 @@ asS3 <- function(object, flag = TRUE, complete = TRUE)
 
 
 .doTrace <- function(expr, msg) {
-    on <- tracingState(FALSE)	   # turn it off QUICKLY (via a .Call)
+    on <- tracingState(FALSE)	   # turn it off QUICKLY (via a .Internal)
     if(on) {
 	on.exit(tracingState(TRUE)) # restore on exit, keep off during trace
 	if(!missing(msg)) {
