@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-06 18:25+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -28,17 +28,17 @@ msgstr "'derivs' 의 길이는 'x' 의 길이와 일치해야 합니다 "
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord' 는 양의 정수, 많아야 knots 의 수입니다 "
 
-msgid "need at least 2*ord -1 (=%d) knots"
+#, fuzzy
+msgid "need at least %s (=%d) knots"
 msgstr "적어도  2*ord -1 (=%d) 개의 knots 가 필요합니다"
 
-msgid ""
-"the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
+#, fuzzy
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
 msgstr ""
 "'outer.ok = TRUE' 으로 지정되지 않았다면 데이터 'x' 는 %g 에서 %g 의 범위내"
 "에 있어야 합니다 "
 
-msgid ""
-"splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
 
 msgid "values of 'x' must be distinct"

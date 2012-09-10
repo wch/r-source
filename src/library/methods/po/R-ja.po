@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-02-26 14:07+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1454,28 +1454,23 @@ msgstr ""
 " %s、ラベル \"%s\"、 に対するメソッドのメタテーブル中に不正なオブジェクトがあ"
 "ります。クラス \"%s\" でした "
 
-msgid "Invalid mlist element for signature \""
-msgstr " 以下のシグネチャに対する不正な mlist 要素 \" "
-
-msgid "\" at level"
-msgstr " \"、レベルは "
-
-msgid "( should be methods list or method, had class \""
+#, fuzzy
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr ""
 " ( メソッドリストかメソッドでなければなりませんが、以下のクラスを持ちます \" "
-
-msgid "\")"
-msgstr " \") "
 
 msgid "bad method object stored in method table, class %s"
 msgstr " 間違ったオブジェクトがメソッド(クラス %s)として見付かりました "
 
-msgid "Invalid object in methods table (\""
-msgstr " 不正なオブジェクトが以下のメソッドテーブル中にありました (\" "
-
-msgid "\"), expected a method, got an object of class \""
+#, fuzzy
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
 msgstr ""
-" \")、メソッドが期待されますが、以下のクラスのオブジェクトが得られました \" "
+" 不正なメソッド定義です：関数が期待されますが、クラス %s のオブジェクトが得ら"
+"れました "
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr " 以下の総称的関数中に不正か未設定のメソッドテーブルがあります \" "
@@ -1538,7 +1533,9 @@ msgstr " %d 個の曖昧な可能性からメソッド %s を選択 "
 msgid "Failed to find expected group generic function:"
 msgstr " 期待されたグループ総称的関数を見付けることができませんでした: "
 
-msgid "Invalid group generic function in search for inherited method (class \""
+#, fuzzy
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 " 継承メソッドを探索中に不正なグループ総称関数が見付かりました(クラスは \" "
 
@@ -1652,9 +1649,10 @@ msgstr ""
 " \"%s\" に対する不整合な旧式の情報(恐らく古いクラスと新しいクラスが混ざってい"
 "る？) "
 
+#, fuzzy
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
 "S3Classは, \"oldClass\" の拡張としてか, データパートを持つクラスとしてのみ定"
 "義されます: 真の以下のクラスではありません \" "
@@ -1912,7 +1910,8 @@ msgstr ""
 " 不正な ignore= 引数です；クラス定義か文字列ベクトルでなければなりませんがク"
 "ラス %s のオブジェクトを得ました "
 
-msgid "An object of class \""
+#, fuzzy
+msgid "An object of class %s"
 msgstr " オブジェクトのクラスは \" "
 
 msgid ""
@@ -1995,13 +1994,13 @@ msgstr ""
 " シンボル %s の binding を跨ぐメソッドを設定しています(環境/パッケージ %s "
 "中) "
 
-msgid "Constructing traceable class \""
+#, fuzzy
+msgid "Constructing traceable class %s"
 msgstr " トレース可能な以下のクラスを作成中 \" "
 
-msgid "Environment of class \""
-msgstr " 以下のクラスの環境 \" "
-
-msgid "\" is locked; using global environment for new class"
+#, fuzzy
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr ""
 " \" はロックされています；グローバル環境を新しいクラスのために使います "
 
@@ -2100,6 +2099,26 @@ msgstr " ファイルを移動するか、クラスまたはメソッドを削�
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] " クラス %s に対する定義はありません "
+
+#~ msgid "Invalid mlist element for signature \""
+#~ msgstr " 以下のシグネチャに対する不正な mlist 要素 \" "
+
+#~ msgid "\" at level"
+#~ msgstr " \"、レベルは "
+
+#~ msgid "\")"
+#~ msgstr " \") "
+
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr " 不正なオブジェクトが以下のメソッドテーブル中にありました (\" "
+
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr ""
+#~ " \")、メソッドが期待されますが、以下のクラスのオブジェクトが得られました "
+#~ "\" "
+
+#~ msgid "Environment of class \""
+#~ msgstr " 以下のクラスの環境 \" "
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr " 置き換え値は以下のクラスでなければなりません \" "

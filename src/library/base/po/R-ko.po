@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -157,9 +157,6 @@ msgstr "자동로더는 '%s' 를 '%s' 에서 찾을 수 없습니다 "
 
 msgid "complex matrices not permitted at present"
 msgstr "복소 행렬은 현재 허용도지 않습니다 "
-
-msgid "non-numeric argument to 'chol'"
-msgstr "수치가 아닌 인수가 'chol' 에 있습니다 "
 
 msgid "non-square matrix in 'chol'"
 msgstr "'chol' 에 비정방행렬이 있습니다 "
@@ -416,7 +413,8 @@ msgstr "문자열이 표준서식을 따르지 않습니다 "
 msgid "'origin' must be supplied"
 msgstr "'origin' 이 반드시 지정되어야 합니다 "
 
-msgid "do not know how to convert '%s' to class \"Date\""
+#, fuzzy
+msgid "do not know how to convert '%s' to class %s"
 msgstr "'%s' 를 클래스 \"Date\" 로 변환하는 방법을 알수없습니다 "
 
 msgid "'%s' is not a \"date\" object"
@@ -493,12 +491,6 @@ msgstr "'origin' 의 길이는 반드시 1 이어야 합니다 "
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' 과 'differences' 는 1이상의 정수 이어야 합니다 "
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "'%s' 를 \"POSIXlt\" 클래스로 변경하는 방법을 알 수 없습니다 "
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "'%s' 를 \"POSIXlt\" 클래스로 변경하는 방법을 알 수 없습니다 "
 
 msgid "wrong class"
 msgstr "잘못된 class 입니다"
@@ -600,7 +592,8 @@ msgstr "MARGIN ="
 msgid "is invalid for dim ="
 msgstr "은 잘못된 dim 값을 가집니다 = "
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+#, fuzzy
+msgid "must pass a package name, %s or %s object"
 msgstr "패키지명, DLLInfo 혹은 DllInfoReferenec 객체를 건네주어야 합니다 "
 
 msgid "No DLL currently loaded with name or path"
@@ -609,7 +602,8 @@ msgstr "No DLL currently loaded with name or path"
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "'%s' 와 일치하는 다수의 DLL 가 있습니다: '%s' 를 사용합니다 "
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+#, fuzzy
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr "DLLInfo 객체를 통해서 DLL 을 수정하요. getLoadedDLLs()  를 보세요"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
@@ -1238,7 +1232,8 @@ msgstr "패키지 %s 는 NAMESPACE 파일을 가지고 있지 않습니다 "
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "NAMESPACE 파일에는 '%s' 라는 명령어 이름이 없습니다 "
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr "useDynlib(\"%s\") 에 심볼이름 %s 가 중복되었습니다 "
 
 msgid "bad 'S3method' directive: %s"
@@ -1538,10 +1533,12 @@ msgstr "모든 인수들은 동일한 길이를 가져야 합니다 "
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr "2^31 개의 요소를 넘게 가지는 테이블을 생성하려고 했습니다  "
 
-msgid "'object' must inherit from class \"table\""
+#, fuzzy
+msgid "'object' must inherit from class %s"
 msgstr "'object' 는 반드시 \"table\" 클래스에 종속되어야 합니다 "
 
-msgid "'x' must inherit from class \"summary.table\""
+#, fuzzy
+msgid "'x' must inherit from class %s"
 msgstr "'x' 는 반드시 \"summary.table\" 클래스에 종속되어야 합니다 "
 
 msgid "cannot coerce into a table"
@@ -1753,6 +1750,15 @@ msgstr[0] "S3 메소드 %s 는 NAMESPACE 안에 선언되었으나 찾을 수 �
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#~ msgid "non-numeric argument to 'chol'"
+#~ msgstr "수치가 아닌 인수가 'chol' 에 있습니다 "
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
+#~ msgstr "'%s' 를 \"POSIXlt\" 클래스로 변경하는 방법을 알 수 없습니다 "
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
+#~ msgstr "'%s' 를 \"POSIXlt\" 클래스로 변경하는 방법을 알 수 없습니다 "
 
 #~ msgid "invalid 'n' value"
 #~ msgstr "'n' 값이 잘 못되었습니다 "

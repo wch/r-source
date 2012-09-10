@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1255,26 +1255,20 @@ msgstr "链结"
 msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr "元方法表里%1$s的对象有问题，\"%2$s\"标签的类别不应该是%3$s"
 
-msgid "Invalid mlist element for signature \""
-msgstr "标记的mlist元素不对"
-
-msgid "\" at level"
-msgstr "\"在水平"
-
-msgid "( should be methods list or method, had class \""
+#, fuzzy
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr "(应该是list或method方法，但其类别却是\""
-
-msgid "\")"
-msgstr "\")"
 
 msgid "bad method object stored in method table, class %s"
 msgstr "作为方法的对象(类别是%s)出错"
 
-msgid "Invalid object in methods table (\""
-msgstr "列表方法的对象出错"
-
-msgid "\"), expected a method, got an object of class \""
-msgstr "\"),提供的应该是函数，得到的却是对象"
+#, fuzzy
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
+msgstr "方法定义不对：提供的应该是函数，现在却是个类别为%s的对象"
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr "泛型函数的方法表不对，或还没有设制"
@@ -1332,7 +1326,9 @@ msgstr "从%2$d个歧义可能选择中选%1$s方法"
 msgid "Failed to find expected group generic function:"
 msgstr "找不到团体泛型函数："
 
-msgid "Invalid group generic function in search for inherited method (class \""
+#, fuzzy
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr "在找继承方法时出现的泛型函数不对"
 
 msgid "Invalid methods table request"
@@ -1428,9 +1424,10 @@ msgid ""
 "classes?)"
 msgstr "\"%s\"旧式类别信息有矛盾(会不会是将旧的和新的类别混在了一起用?)"
 
+#, fuzzy
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
 "S3Class只能定义于\"oldClass\"的扩充类别或带数据部分的类别不适用于类别 \""
 
@@ -1653,7 +1650,8 @@ msgstr ""
 "ignore=参数不对，它要么是类别定义，要么是字符串；现在得到的却是类别为%s的对象"
 "对象"
 
-msgid "An object of class \""
+#, fuzzy
+msgid "An object of class %s"
 msgstr "对象为类别"
 
 msgid ""
@@ -1725,13 +1723,13 @@ msgid ""
 "setting a method over the binding of symbol %s in environment/package %s"
 msgstr "在环境/程輯包%2$s里将符号%1$s的连结重新进行了方法设定"
 
-msgid "Constructing traceable class \""
+#, fuzzy
+msgid "Constructing traceable class %s"
 msgstr "建立可追踪的类别"
 
-msgid "Environment of class \""
-msgstr "环境有类别"
-
-msgid "\" is locked; using global environment for new class"
+#, fuzzy
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr "\"被锁住了；在新的类别上用全局环境"
 
 msgid ""
@@ -1813,6 +1811,24 @@ msgstr "移动文件或删除类别/方法"
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "类别%s的定义不存在"
+
+#~ msgid "Invalid mlist element for signature \""
+#~ msgstr "标记的mlist元素不对"
+
+#~ msgid "\" at level"
+#~ msgstr "\"在水平"
+
+#~ msgid "\")"
+#~ msgstr "\")"
+
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr "列表方法的对象出错"
+
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr "\"),提供的应该是函数，得到的却是对象"
+
+#~ msgid "Environment of class \""
+#~ msgstr "环境有类别"
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr "替换值的类别必需为"

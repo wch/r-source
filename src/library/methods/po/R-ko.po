@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -1515,16 +1515,9 @@ msgstr ""
 msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 
-msgid "Invalid mlist element for signature \""
-msgstr ""
-
-msgid "\" at level"
-msgstr ""
-
-msgid "( should be methods list or method, had class \""
-msgstr ""
-
-msgid "\")"
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr ""
 
 #, fuzzy
@@ -1532,11 +1525,9 @@ msgid "bad method object stored in method table, class %s"
 msgstr "메소드(클래스 \"%s\")으로서 검색되는 사이에 잘못된 오브젝트 입니다"
 
 #, fuzzy
-msgid "Invalid object in methods table (\""
-msgstr "메소드(클래스 \"%s\")으로서 검색되는 사이에 잘못된 오브젝트 입니다"
-
-#, fuzzy
-msgid "\"), expected a method, got an object of class \""
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
 msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
 
 msgid "Invalid or unset methods table in generic function \""
@@ -1596,7 +1587,8 @@ msgstr ""
 msgid "Failed to find expected group generic function:"
 msgstr ""
 
-msgid "Invalid group generic function in search for inherited method (class \""
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 
 #, fuzzy
@@ -1712,8 +1704,8 @@ msgstr ""
 "클래스 정보입니다"
 
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
 
 msgid ""
@@ -1945,8 +1937,9 @@ msgstr ""
 "스 \"%s\"\n"
 "의 오브젝트를 얻었습니다"
 
-msgid "An object of class \""
-msgstr ""
+#, fuzzy
+msgid "An object of class %s"
+msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
 
 #, fuzzy
 msgid ""
@@ -2026,13 +2019,11 @@ msgid ""
 "setting a method over the binding of symbol %s in environment/package %s"
 msgstr "환경/패키지 '%s'에서 심벌 '%s'의 결합에 관한 메소드를 세트합니다"
 
-msgid "Constructing traceable class \""
+msgid "Constructing traceable class %s"
 msgstr ""
 
-msgid "Environment of class \""
-msgstr ""
-
-msgid "\" is locked; using global environment for new class"
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr ""
 
 msgid ""
@@ -2120,6 +2111,14 @@ msgstr ""
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+
+#, fuzzy
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr "메소드(클래스 \"%s\")으로서 검색되는 사이에 잘못된 오브젝트 입니다"
+
+#, fuzzy
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
 
 #, fuzzy
 #~ msgid "Replacement value must be of class \""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -159,9 +159,6 @@ msgstr "автозагрузчик не нашел '%s' в '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "в настоящее время комплексные матрицы не разрешены"
-
-msgid "non-numeric argument to 'chol'"
-msgstr "нечисловой аргумент для 'chol'"
 
 msgid "non-square matrix in 'chol'"
 msgstr "не квадратная матрица в 'chol'"
@@ -413,7 +410,8 @@ msgstr "текстовая строка не относится к стандартному однозначному формату"
 msgid "'origin' must be supplied"
 msgstr "надо указать 'origin'"
 
-msgid "do not know how to convert '%s' to class \"Date\""
+#, fuzzy
+msgid "do not know how to convert '%s' to class %s"
 msgstr "не знаю как конвертировать '%s' в класс \"Date\""
 
 msgid "'%s' is not a \"date\" object"
@@ -489,12 +487,6 @@ msgstr "'origin' должен быть длиной 1"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' и 'differences' должны быть целыми >= 1"
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "не знаю как конвертировать '%s' в класс \"POSIXlt\""
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "не знаю как конвертировать '%s' в класс \"POSIXct\""
 
 msgid "wrong class"
 msgstr "неправильный класс"
@@ -597,7 +589,8 @@ msgstr "MARGIN ="
 msgid "is invalid for dim ="
 msgstr "это неправильно для dim ="
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+#, fuzzy
+msgid "must pass a package name, %s or %s object"
 msgstr "должен передать имя пакета, DLLInfo или объект DllInfoReference"
 
 msgid "No DLL currently loaded with name or path"
@@ -606,7 +599,8 @@ msgstr "Сейчас не было загружено DLL с именем или путем"
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "несколько DLL соответствуют '%s'. Использую '%s'"
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+#, fuzzy
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr "надо определить DLL через объект DLLInfo. См. getLoadedDLLs()"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
@@ -1230,7 +1224,8 @@ msgstr "у пакета %s нет файла NAMESPACE"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "пустое имя в директиве '%s' из файла NAMESPACE"
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr "повторяющиеся имена символов %s в useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
@@ -1528,10 +1523,12 @@ msgstr "все аргументы должны иметь одинаковую длину"
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr "попытка создания таблицы с >= 2^31 элементов"
 
-msgid "'object' must inherit from class \"table\""
+#, fuzzy
+msgid "'object' must inherit from class %s"
 msgstr "'объект' должен наследовать классу \"table\""
 
-msgid "'x' must inherit from class \"summary.table\""
+#, fuzzy
+msgid "'x' must inherit from class %s"
 msgstr "'x' должен наследовать классу \"summary.table\""
 
 msgid "cannot coerce into a table"
@@ -1768,6 +1765,15 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "non-numeric argument to 'chol'"
+#~ msgstr "нечисловой аргумент для 'chol'"
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
+#~ msgstr "не знаю как конвертировать '%s' в класс \"POSIXlt\""
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
+#~ msgstr "не знаю как конвертировать '%s' в класс \"POSIXct\""
 
 #~ msgid "invalid 'n' value"
 #~ msgstr "неправильное значение 'n'"

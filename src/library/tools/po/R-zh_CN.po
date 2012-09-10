@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -169,12 +169,17 @@ msgstr "%s里不能有T/F这样的值"
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr "程辑包的名字'%s'好象有问题；用文件目录名'%s'替代"
 
+#, fuzzy
 msgid ""
-"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
-"DESCRIPTION Depends/Suggests/Imports entries."
+"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
+"Depends/Suggests/Imports entries."
 msgstr ""
 "标头从属(\\VignetteDepends{}条目)必需包含在DESCRIPTION文件里的Depends/"
 "Suggests/Imports条目中."
+
+#, fuzzy
+msgid "\\VignetteDepends{}"
+msgstr "插图："
 
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
@@ -357,11 +362,15 @@ msgstr "程序包启动函数不应该改变搜索路径"
 msgid "installed.packages"
 msgstr "程辑包无效."
 
-msgid "See section %s in ?.onAttach."
+#, fuzzy
+msgid "See section %s in '%s'."
 msgstr "参见?.onAttach 里的%s章节"
 
 msgid "Good practice"
 msgstr "良好实践"
+
+msgid "?.onAttach"
+msgstr ""
 
 msgid "package 'methods' is used but not declared"
 msgstr "用了'methods'这个程辑包却没有被声明"
@@ -399,23 +408,13 @@ msgstr "Rd对象'%s'里存在没有描述的参数："
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "在Rd对象'%s'里自动产生的内容需要修改："
 
-msgid "Generics g in env ="
-msgstr "同属函数g在env="
-
-msgid "where hasMethods(g, env) errors:"
-msgstr "hasMethods(g, env) 出了错："
-
-msgid "May need something like"
-msgstr "可能应该是这样的"
-
-msgid "importFrom("
-msgstr " importFrom("
-
-msgid ")"
-msgstr ")"
-
-msgid "in NAMESPACE."
-msgstr "在NAMESPACE。"
+msgid ""
+"Generics 'g' in 'env' %s where '%s' errors: %s\n"
+"May need something like\n"
+"\n"
+"%s\n"
+"in NAMESPACE."
+msgstr ""
 
 msgid "Generics without methods in"
 msgstr "没有方法的同属函数在"
@@ -426,10 +425,16 @@ msgstr "："
 msgid "argument 'file' must be a character string or connection"
 msgstr "参数'document'必需是字符串或联结"
 
-msgid "missing/empty \\name field in '%s'"
+#, fuzzy
+msgid "missing/empty %s field in '%s'"
 msgstr "'%s'里缺少或有空白的\\name域"
 
-msgid "Rd files must have a non-empty \\name."
+#, fuzzy
+msgid "\\name"
+msgstr "名字"
+
+#, fuzzy
+msgid "Rd files must have a non-empty %s."
 msgstr "Rd文件里必需要有非空白的\\name."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
@@ -450,7 +455,8 @@ msgstr "你必需在'dir'或'files'中选一个"
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "无法使用缺少或有空白名字的Rd对象"
 
-msgid "missing/empty \\name field in Rd file(s)"
+#, fuzzy
+msgid "missing/empty %s field in Rd file(s)"
 msgstr "Rd文件里缺少或有空白的\\name域"
 
 msgid "No help on %s found in RdDB %s"
@@ -486,13 +492,15 @@ msgstr "不能确定的当前工作目录"
 msgid "no inputs"
 msgstr "没有输入"
 
-msgid "Error in running tools::texi2pdf"
+#, fuzzy
+msgid "Error in running tools::texi2pdf()"
 msgstr "调用tools::texi2pdf时出了错"
 
 msgid "invalid value for '%s' : %s"
 msgstr "'%s'值无效：%s"
 
-msgid "Only one Rd section per \\Sexpr is supported."
+#, fuzzy
+msgid "Only one Rd section per %s is supported."
 msgstr "每\\Sexpr只支持一个Rd章节"
 
 msgid "unable to create temp directory"
@@ -588,7 +596,8 @@ msgstr "改动需要特别'style'"
 msgid "The default JSS style may not be modified."
 msgstr "不能对缺省JSS式样进行修改"
 
-msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+#, fuzzy
+msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "--compact-vignettes的值不对，用\"qpdf\""
 
 msgid "Error: cannot rename directory to"
@@ -606,7 +615,7 @@ msgstr "R 2.12.0以后的版本不支持设置文件"
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch'只设定了一个可以用的子体系结构"
 
-msgid "--as-cran turns off --extra-arch"
+msgid "'--as-cran' turns off '--extra-arch'"
 msgstr ""
 
 msgid "Error: no packages were specified"
@@ -615,7 +624,8 @@ msgstr "错误：没有设定程序包"
 msgid "ERROR: cannot create check dir %s"
 msgstr "错误：无法建立检查目录%s"
 
-msgid "package dir"
+#, fuzzy
+msgid "package directory"
 msgstr "程序包目录"
 
 msgid "does not exist"
@@ -738,7 +748,8 @@ msgstr "用'install.libs.R'安装到"
 msgid "installing to"
 msgstr "安装至"
 
-msgid "generating debug symbols (dSYM)"
+#, fuzzy
+msgid "generating debug symbols (%s)"
 msgstr "产生调试符号(dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -749,7 +760,8 @@ msgid ""
 "similar"
 msgstr "R包含目录是空的--也许你需要安装R-devel.rpm或类似的程序包"
 
-msgid "running src/Makefile.win ..."
+#, fuzzy
+msgid "running 'src/Makefile.win' ..."
 msgstr "调用src/Makefile.win ..."
 
 msgid "no source files found"
@@ -761,7 +773,8 @@ msgstr "空的'data'目录"
 msgid "cannot create temporary directory"
 msgstr "无法建立临时性目录"
 
-msgid "ERROR: --merge-multiarch applies only to a single tarball"
+#, fuzzy
+msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "错误：--merge-multiarch只适用于单独压缩包"
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
@@ -925,7 +938,8 @@ msgstr "找不到PDF字头"
 msgid "EOF marker not found"
 msgstr "找不到EOF标记"
 
-msgid "cannot find startxref"
+#, fuzzy
+msgid "cannot find 'startxref' keyword"
 msgstr "找不到startxref"
 
 msgid "cannot find xref table"
@@ -991,7 +1005,8 @@ msgstr "展开%s"
 msgid "unsupported filter %s"
 msgstr "不支持%s过滤器"
 
-msgid "unsupported flatedecode predictor %d"
+#, fuzzy
+msgid "unsupported %s predictor %d"
 msgstr "不支持flatedecode预测器%d "
 
 msgid "unsupported PNG filter %d"
@@ -1178,6 +1193,9 @@ msgstr "程辑包布局不对"
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
 
+msgid "contains a blank line"
+msgstr ""
+
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "没有这样带非ASCII数据的编码: 转换为ASCII "
 
@@ -1219,9 +1237,32 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "下面的函数调用了.Internal:"
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following S4 generic:"
+msgid_plural "Found .Internal calls in methods for the following S4 generics:"
+msgstr[0] "下面的函数调用了.Internal:"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "Generics g in env ="
+#~ msgstr "同属函数g在env="
+
+#~ msgid "where hasMethods(g, env) errors:"
+#~ msgstr "hasMethods(g, env) 出了错："
+
+#~ msgid "May need something like"
+#~ msgstr "可能应该是这样的"
+
+#~ msgid "importFrom("
+#~ msgstr " importFrom("
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "in NAMESPACE."
+#~ msgstr "在NAMESPACE。"
 
 #, fuzzy
 #~ msgid "Foreign function call(s) without 'PACKAGE' argument:"

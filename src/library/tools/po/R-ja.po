@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -178,12 +178,17 @@ msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 " パッケージ名 '%s' は無効のようです。代わりにディレクトリ名 '%s' を使います "
 
+#, fuzzy
 msgid ""
-"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
-"DESCRIPTION Depends/Suggests/Imports entries."
+"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
+"Depends/Suggests/Imports entries."
 msgstr ""
 " ビニエット依存性(\\VignetteDepends{} 項目)は　DESCRIPTION の Depends/"
 "Suggests/Imports 項目に含まれなければなりません "
+
+#, fuzzy
+msgid "\\VignetteDepends{}"
+msgstr " ビニエット: "
 
 msgid "Malformed package name"
 msgstr " 奇矯なパッケージ名です "
@@ -382,11 +387,15 @@ msgstr " パッケージのスターツアップ関数はサーチパスを変�
 msgid "installed.packages"
 msgstr " 不正なパッケージです "
 
-msgid "See section %s in ?.onAttach."
+#, fuzzy
+msgid "See section %s in '%s'."
 msgstr " ?.onAttachのセクション%sを見てください。 "
 
 msgid "Good practice"
 msgstr " 良い方法です。 "
+
+msgid "?.onAttach"
+msgstr ""
 
 msgid "package 'methods' is used but not declared"
 msgstr " パッケージ \"methods\" が使われていますが、宣言されていません "
@@ -428,23 +437,13 @@ msgstr "Rdオブジェクト '%s' に説明のない引数: "
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "Rdオブジェクト '%s' に編集する必要のある自動生成された項目: "
 
-msgid "Generics g in env ="
-msgstr " 総称的な g (以下の環境中） "
-
-msgid "where hasMethods(g, env) errors:"
-msgstr " hasMethods(g, env) のエラー： "
-
-msgid "May need something like"
-msgstr " 以下のようなものが必要なのでは: "
-
-msgid "importFrom("
-msgstr " importFrom( "
-
-msgid ")"
-msgstr " ) "
-
-msgid "in NAMESPACE."
-msgstr " 名前空間の中に。 "
+msgid ""
+"Generics 'g' in 'env' %s where '%s' errors: %s\n"
+"May need something like\n"
+"\n"
+"%s\n"
+"in NAMESPACE."
+msgstr ""
 
 msgid "Generics without methods in"
 msgstr " メソッドを伴わない Generics があります "
@@ -455,12 +454,18 @@ msgstr " ： "
 msgid "argument 'file' must be a character string or connection"
 msgstr " 引数 'file' は文字列ベクトルかコネクションでなければなりません "
 
-msgid "missing/empty \\name field in '%s'"
+#, fuzzy
+msgid "missing/empty %s field in '%s'"
 msgstr ""
 " '%s' 中に欠如もしくは空の  \n"
 " ame 欄があります "
 
-msgid "Rd files must have a non-empty \\name."
+#, fuzzy
+msgid "\\name"
+msgstr " 名前 "
+
+#, fuzzy
+msgid "Rd files must have a non-empty %s."
 msgstr ""
 " Rdファイルは空でない  \n"
 " ame を持たなければなりません "
@@ -485,7 +490,8 @@ msgstr " 'dir' もしくは 'file' を指定しなければなりません "
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr " 欠損もしくは空の名前を持つ Rd オブジェクトは扱えません "
 
-msgid "missing/empty \\name field in Rd file(s)"
+#, fuzzy
+msgid "missing/empty %s field in Rd file(s)"
 msgstr ""
 " Rd ファイル中に欠損もしくは空の  \n"
 " ame 欄 "
@@ -524,13 +530,15 @@ msgstr " 現在の作業ディレクトリを確認することができませ�
 msgid "no inputs"
 msgstr " 入力がありません "
 
-msgid "Error in running tools::texi2pdf"
+#, fuzzy
+msgid "Error in running tools::texi2pdf()"
 msgstr " tools::texi2pdf の実行時にエラーがありました "
 
 msgid "invalid value for '%s' : %s"
 msgstr " '%s' に対する不正な値 : %s "
 
-msgid "Only one Rd section per \\Sexpr is supported."
+#, fuzzy
+msgid "Only one Rd section per %s is supported."
 msgstr " \\SexprはRdセクションを1つしか持てません。 "
 
 msgid "unable to create temp directory"
@@ -630,7 +638,8 @@ msgstr " 指定された 'style' の変更が必要です "
 msgid "The default JSS style may not be modified."
 msgstr " 既定の JSS スタイルは変更できないかもしれません "
 
-msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+#, fuzzy
+msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr " --compact-vignettes に対する不正な値です、 \"qpdf\" であるとします "
 
 msgid "Error: cannot rename directory to"
@@ -649,7 +658,7 @@ msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr ""
 " ただ一つの使用可能なサブアーキテクチャで '--multiarch' が指定されました "
 
-msgid "--as-cran turns off --extra-arch"
+msgid "'--as-cran' turns off '--extra-arch'"
 msgstr ""
 
 msgid "Error: no packages were specified"
@@ -658,7 +667,8 @@ msgstr " エラー：パッケージが指定されていません "
 msgid "ERROR: cannot create check dir %s"
 msgstr " エラー：チェックディレクトリ '%s' を生成することが出来ません "
 
-msgid "package dir"
+#, fuzzy
+msgid "package directory"
 msgstr " パッケージ dir "
 
 msgid "does not exist"
@@ -785,7 +795,8 @@ msgstr " 'install.libs.R' を用いて、以下にインストール中: "
 msgid "installing to"
 msgstr " 以下にインストール中: "
 
-msgid "generating debug symbols (dSYM)"
+#, fuzzy
+msgid "generating debug symbols (%s)"
 msgstr " デバッグシンボル (dSYM) を生成中 "
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -798,7 +809,8 @@ msgstr ""
 "R の include ディレクトリが空です -- 恐らく R-devel.rpm か類似物をインストー"
 "ルする必要があります "
 
-msgid "running src/Makefile.win ..."
+#, fuzzy
+msgid "running 'src/Makefile.win' ..."
 msgstr " src/Makefile.win を実行中 "
 
 msgid "no source files found"
@@ -810,7 +822,8 @@ msgstr " 'data' ディレクトリが空です "
 msgid "cannot create temporary directory"
 msgstr " 一時ディレクトリを生成することが出来ません "
 
-msgid "ERROR: --merge-multiarch applies only to a single tarball"
+#, fuzzy
+msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr " エラー: --merge-multiarch は単一の tarball だけに適用可能です "
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
@@ -982,7 +995,8 @@ msgstr "PDFヘッダが見つかりませんでした "
 msgid "EOF marker not found"
 msgstr "EOFマーカーが見つかりませんでした "
 
-msgid "cannot find startxref"
+#, fuzzy
+msgid "cannot find 'startxref' keyword"
 msgstr " startxref が見つかりません "
 
 msgid "cannot find xref table"
@@ -1048,7 +1062,8 @@ msgstr " %s を展開中 "
 msgid "unsupported filter %s"
 msgstr " 未サポートのフィルタ %s "
 
-msgid "unsupported flatedecode predictor %d"
+#, fuzzy
+msgid "unsupported %s predictor %d"
 msgstr " 未サポートの flatedecode predictor %d "
 
 msgid "unsupported PNG filter %d"
@@ -1237,6 +1252,9 @@ msgstr " 不正なパッケージ構成です "
 msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "
 
+msgid "contains a blank line"
+msgstr ""
+
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr " 非ASCIIデータをもつ未知のエンコーディングです: ASCIIに変換します "
 
@@ -1279,9 +1297,32 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following S4 generic:"
+msgid_plural "Found .Internal calls in methods for the following S4 generics:"
+msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "Generics g in env ="
+#~ msgstr " 総称的な g (以下の環境中） "
+
+#~ msgid "where hasMethods(g, env) errors:"
+#~ msgstr " hasMethods(g, env) のエラー： "
+
+#~ msgid "May need something like"
+#~ msgstr " 以下のようなものが必要なのでは: "
+
+#~ msgid "importFrom("
+#~ msgstr " importFrom( "
+
+#~ msgid ")"
+#~ msgstr " ) "
+
+#~ msgid "in NAMESPACE."
+#~ msgstr " 名前空間の中に。 "
 
 #, fuzzy
 #~ msgid "Foreign function call(s) without 'PACKAGE' argument:"

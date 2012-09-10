@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:26\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -83,6 +83,10 @@ msgstr "'which'没有指定因子"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which'内的非因子略过不用"
+
+#, fuzzy
+msgid "'sampleT' and 'nser' must be integer"
+msgstr "'lower'和'upper'必需都是有限值"
 
 msgid "'lag.max' must be at least 0"
 msgstr "'lag.max'至少必需为零"
@@ -271,10 +275,6 @@ msgstr "没有非NA数据点"
 msgid "'approx' requires n >= 1"
 msgstr "'approx'需要n大于等于一"
 
-#, fuzzy
-msgid "invalid length(xout)"
-msgstr "成员长度不对"
-
 msgid "'order.max' must be >= 1"
 msgstr "'order.max'必需大于等于一"
 
@@ -290,14 +290,14 @@ msgstr "'object'和'newdata'里的序列数目不同"
 msgid "'se.fit' not yet implemented for multivariate models"
 msgstr "'se.fit'没有为多变量的模型实现"
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr "Burg的算法只为单变量序列实现"
-
 msgid "MLE only implemented for univariate series"
 msgstr "MLE只为单变量序列实现"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max'必需大于等于零"
+
+msgid "Burg's algorithm only implemented for univariate series"
+msgstr "Burg的算法只为单变量序列实现"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order'必需是长度为三的非负数值矢量"
@@ -363,6 +363,10 @@ msgid "need at least 2 data points"
 msgstr "至少需要两个数据点"
 
 msgid "invalid 'x'"
+msgstr "'x'不对"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "'x'不对"
 
 msgid "sample is too sparse to find TD"
@@ -530,8 +534,9 @@ msgstr "奇异对比矩阵"
 msgid "numeric contrasts or contrast name expected"
 msgstr "需要数值对比或对比的名字"
 
-msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr "contr*(.., sparse=TRUE) 需要正确安装的\"Matrix\"程序包"
+#, fuzzy
+msgid "%s needs package 'Matrix' correctly installed"
+msgstr "xtabs(*, sparse=TRUE) 需要正确安装的\"Matrix\"程序包"
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "设定对比的自由度不够"
@@ -716,7 +721,8 @@ msgstr "'x'不是矢量"
 msgid "bad value for 'lag' or 'differences'"
 msgstr "'lag'或'differences'的值有错"
 
-msgid "'xi' has not the right length"
+#, fuzzy
+msgid "'xi' does not have the right length"
 msgstr "'xi'的长度不对"
 
 msgid "incorrect dimensions for 'xi'"
@@ -724,6 +730,10 @@ msgstr "'xi'的尺寸不对"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x'不是矢量或矩阵"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "额外参数不用"
 
 msgid "invalid distance method"
 msgstr "距离方法不对"
@@ -1126,7 +1136,8 @@ msgstr "系統樹圖不对"
 msgid "'merge' component in dendrogram must be integer"
 msgstr "系統樹圖的'merge'组件必需是整数"
 
-msgid "argument 'x' cannot be coerced to class \"hclust\""
+#, fuzzy
+msgid "argument 'x' cannot be coerced to class %s"
 msgstr "无法将'x'参数強制转换成\"hclust\"类别"
 
 msgid "Consider providing an as.hclust.%s() method"
@@ -1422,15 +1433,6 @@ msgstr "没有适用于'nobs'的方法"
 msgid "'start' and 'table' must be same length"
 msgstr "'start'和'table'的长度必需相等"
 
-msgid "this should not happen"
-msgstr "这不应该发生"
-
-msgid "algorithm did not converge"
-msgstr "算法没有聚合"
-
-msgid "incorrect specification of 'table' or 'start'"
-msgstr "当'table'或'start'正确地被设定时"
-
 msgid "%d missing values deleted"
 msgstr "删除了%d个遺漏值"
 
@@ -1461,7 +1463,8 @@ msgstr "'low'和'high'不能同时都为TRUE"
 msgid "need multiple response"
 msgstr "需要多个反应"
 
-msgid "object must be of class \"manova\" or \"maov\""
+#, fuzzy
+msgid "object must be of class %s or %s"
 msgstr "对象必需是\"manova\"或\"maov\"的类别"
 
 msgid "need multiple responses"
@@ -1561,7 +1564,8 @@ msgstr "没有项组件也没有属性"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels'必需是长度至少为一的字节矢量"
 
-msgid "'termobj' must be a object of class \"terms\""
+#, fuzzy
+msgid "'termobj' must be a object of class %s"
 msgstr "'termobj'必需是类别为个\"terms\"的对象"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
@@ -1743,7 +1747,8 @@ msgid ""
 "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr "L-BFGS-B方法用'factr'(和'pgtol') ，而不是'reltol'和'abstol'"
 
-msgid "one-diml optimization by Nelder-Mead is unreliable:"
+#, fuzzy
+msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
 msgstr "用Nelder-Mead方法来算一维优化不很可靠："
 
 msgid "use \"Brent\" or optimize() directly"
@@ -2007,9 +2012,6 @@ msgstr "样本大小必需在3和5000之间"
 
 msgid "all 'x' values are identical"
 msgstr "所有'x'的值都是一样的"
-
-msgid "ifault=%d. This should not happen"
-msgstr "ifault=%d。这不应该发生"
 
 msgid "attempt to smooth non-numeric values"
 msgstr "不能平滑非数值数据"
@@ -2315,9 +2317,6 @@ msgstr "差異数目必需是正整数"
 msgid "'start.innov' is too short: need %d points"
 msgstr "'start.innov'太短了，需要%d 个点"
 
-msgid "insufficient observations"
-msgstr "观察量数目不够"
-
 msgid "need an object with call component"
 msgstr "需要一个有調用组件的对象"
 
@@ -2348,11 +2347,9 @@ msgstr "有零时无法計算精確的置信区间"
 msgid "must supply either 'formula' or 'data'"
 msgstr "至少要提供'formula'和'data'中间的一个"
 
-msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+#, fuzzy
+msgid "%s applies only to two-way tables"
 msgstr "xtabs(*, sparse=TRUE) 只适用于双向表"
-
-msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr "xtabs(*, sparse=TRUE) 需要正确安装的\"Matrix\"程序包"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "无法拟合渐近迴歸模型，因为相互不同的输入值太少"
@@ -2411,6 +2408,28 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#, fuzzy
+#~ msgid "invalid length(xout)"
+#~ msgstr "成员长度不对"
+
+#~ msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+#~ msgstr "contr*(.., sparse=TRUE) 需要正确安装的\"Matrix\"程序包"
+
+#~ msgid "this should not happen"
+#~ msgstr "这不应该发生"
+
+#~ msgid "algorithm did not converge"
+#~ msgstr "算法没有聚合"
+
+#~ msgid "incorrect specification of 'table' or 'start'"
+#~ msgstr "当'table'或'start'正确地被设定时"
+
+#~ msgid "ifault=%d. This should not happen"
+#~ msgstr "ifault=%d。这不应该发生"
+
+#~ msgid "insufficient observations"
+#~ msgstr "观察量数目不够"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec'含NA"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -156,9 +156,6 @@ msgstr "automat ładujący nie znalazł '%s' w '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "macierze zespolone nie są dozwolone na chwilę obecną"
-
-msgid "non-numeric argument to 'chol'"
-msgstr "nieliczbowy argument przekazany do 'chol'"
 
 msgid "non-square matrix in 'chol'"
 msgstr "macierz w 'chol' nie jest kwadratowa"
@@ -415,7 +412,8 @@ msgstr "ciąg znaków nie jest w standardowym jednoznacznym formacie"
 msgid "'origin' must be supplied"
 msgstr "'origin' musi zostać dostarczone"
 
-msgid "do not know how to convert '%s' to class \"Date\""
+#, fuzzy
+msgid "do not know how to convert '%s' to class %s"
 msgstr "nie wiem jak przekonwertować klasę '%s' na klasę \"Date\""
 
 msgid "'%s' is not a \"date\" object"
@@ -492,12 +490,6 @@ msgstr "'origin' musi być długości 1"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' oraz 'differences' muszą być liczbami całkowitymi >= 1"
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "nie wiadomo jak przekonwertować '%s' na klasę \"POSIXlt\""
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "nie wiadomo jak przekonwertować '%s' na klasę \"POSIXct\""
 
 msgid "wrong class"
 msgstr "zła klasa"
@@ -600,7 +592,8 @@ msgstr "MARGINES ="
 msgid "is invalid for dim ="
 msgstr "jest niepoprawne dla dim ="
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+#, fuzzy
+msgid "must pass a package name, %s or %s object"
 msgstr "potrzeba przekazać nazwę pakietu, DLLInfo lub obiekt DllInfoReference"
 
 msgid "No DLL currently loaded with name or path"
@@ -609,7 +602,8 @@ msgstr "Brak biblioteki DLL aktualnie załadowanej o nazwie lub ścieżce"
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "wielokrotna zgodność plików DLL z '%s'. Używanie '%s'"
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+#, fuzzy
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr "potrzeba określić DLL przez obiekt DLLInfo. Zobacz 'getLoadedDLLs()'"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
@@ -1252,7 +1246,8 @@ msgstr "pakiet '%s' nie posiada pliku NAMESPACE"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "pusta nazwa w dyrektywie '%s' w pliku NAMESPACE"
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr "powtórzone nazwy symboli '%s' w 'useDynlib(\"%s\")'"
 
 msgid "bad 'S3method' directive: %s"
@@ -1548,10 +1543,12 @@ msgstr "wszystkie argumenty muszą mieć tę samą długość"
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr "próba utworzenia tabeli z >= 2^31 elementami"
 
-msgid "'object' must inherit from class \"table\""
+#, fuzzy
+msgid "'object' must inherit from class %s"
 msgstr "'object' musi dziedziczyć z klasy \"table\""
 
-msgid "'x' must inherit from class \"summary.table\""
+#, fuzzy
+msgid "'x' must inherit from class %s"
 msgstr "'x' musi dziedziczyć z klasy \"summary.table\""
 
 msgid "cannot coerce into a table"
@@ -1795,6 +1792,15 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+#~ msgid "non-numeric argument to 'chol'"
+#~ msgstr "nieliczbowy argument przekazany do 'chol'"
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
+#~ msgstr "nie wiadomo jak przekonwertować '%s' na klasę \"POSIXlt\""
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
+#~ msgstr "nie wiadomo jak przekonwertować '%s' na klasę \"POSIXct\""
 
 #~ msgid "invalid 'n' value"
 #~ msgstr "niepoprawna wartość 'n'"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-15 11:56-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1438,26 +1438,21 @@ msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 "Неверный объект в мета-таблице методов для %s, метка \"%s\", имеет класс %s"
 
-msgid "Invalid mlist element for signature \""
-msgstr "Неверный mlist элемент для идентификатора \""
-
-msgid "\" at level"
-msgstr "\" на уровне"
-
-msgid "( should be methods list or method, had class \""
+#, fuzzy
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr "( должен быть списком методов либо методом, имеет класс \""
-
-msgid "\")"
-msgstr "\")"
 
 msgid "bad method object stored in method table, class %s"
 msgstr "плохой объект найден в качестве метода (класс %s)"
 
-msgid "Invalid object in methods table (\""
-msgstr "неверный объект в таблице методов (\""
-
-msgid "\"), expected a method, got an object of class \""
-msgstr "\"), ожидался метод, получен объект класса \""
+#, fuzzy
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
+msgstr ""
+"Неверное определение метода: ожидалась функция, а получен объект класса %s"
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr "неверная или неустановленная таблица методов в общей функции \""
@@ -1519,7 +1514,9 @@ msgstr "Выбран метод %s из %d сомнительных возможностей"
 msgid "Failed to find expected group generic function:"
 msgstr "Не могу найти ожидаемую групповую общую функцию:"
 
-msgid "Invalid group generic function in search for inherited method (class \""
+#, fuzzy
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 "Неверная групповая общая функция в поиске для наследованного метода (класс \""
 
@@ -1629,9 +1626,10 @@ msgstr ""
 "противоречивая, в старом стиле информация для класса \"%s\" (возможно имеет "
 "место смешение старых и новых классов?)"
 
+#, fuzzy
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
 "S3Class определен только для расширений \"oldClass\" или классов с частями-"
 "данными: это не так у класса \""
@@ -1882,7 +1880,8 @@ msgstr ""
 "неправильный ignore= argument; должен быть определенем класса или текстовой "
 "строкой; получен объект класса \"%s\""
 
-msgid "An object of class \""
+#, fuzzy
+msgid "An object of class %s"
 msgstr "Объект класса \""
 
 msgid ""
@@ -1963,13 +1962,13 @@ msgid ""
 "setting a method over the binding of symbol %s in environment/package %s"
 msgstr "установка метода через связывание символа %s в окружении/пакете %s"
 
-msgid "Constructing traceable class \""
+#, fuzzy
+msgid "Constructing traceable class %s"
 msgstr "Конструирование отслеживаемого класса \""
 
-msgid "Environment of class \""
-msgstr "Окружение класса \""
-
-msgid "\" is locked; using global environment for new class"
+#, fuzzy
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr "\" заблокировано; использую основное окружение для нового класса"
 
 msgid ""
@@ -2066,6 +2065,24 @@ msgid_plural "no definition for classes %s"
 msgstr[0] "нет определения класса \"%s\""
 msgstr[1] "нет определений классов \"%s\""
 msgstr[2] "нет определений классов \"%s\""
+
+#~ msgid "Invalid mlist element for signature \""
+#~ msgstr "Неверный mlist элемент для идентификатора \""
+
+#~ msgid "\" at level"
+#~ msgstr "\" на уровне"
+
+#~ msgid "\")"
+#~ msgstr "\")"
+
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr "неверный объект в таблице методов (\""
+
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr "\"), ожидался метод, получен объект класса \""
+
+#~ msgid "Environment of class \""
+#~ msgstr "Окружение класса \""
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr "Замещающее значение должно быть класса \""

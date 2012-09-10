@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-09-10 11:13+0100\n"
 "PO-Revision-Date: 2011-11-28 23:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,11 +61,11 @@ msgstr "ugyldigt plotsymbol"
 msgid "Unable to clip to rotated rectangle"
 msgstr "Kan ikke klippe til roteret rektangel"
 
-#: layout.c:519
+#: layout.c:570
 msgid "invalid layout.pos.row"
 msgstr "ugyldig layout.pos.row"
 
-#: layout.c:523
+#: layout.c:574
 msgid "invalid layout.pos.col"
 msgstr "ugyldig layout.pos.col"
 

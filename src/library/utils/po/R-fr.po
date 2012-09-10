@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-06 22:16+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -57,7 +57,8 @@ msgstr "l'objet %s n'est pas de la classe \"SweaveSyntax\""
 msgid "recursive Sweave input %s in stack"
 msgstr "entrée Sweave récursive %s dans la pile"
 
-msgid "target syntax not of class \"SweaveSyntax\""
+#, fuzzy
+msgid "target syntax not of class %s"
 msgstr "la syntaxe de la cible n'est pas de la classe \"SweaveSyntax\""
 
 msgid "target syntax contains no translation table"
@@ -114,6 +115,11 @@ msgstr "Le filtre '%s' n'est pas disponible."
 msgid "Invalid 'filter' argument."
 msgstr "argument 'filter' incorrect"
 
+msgid ""
+"The following dictionaries were not found:\n"
+"%s"
+msgstr ""
+
 msgid "Processing file %s"
 msgstr "Traitement du fichier %s"
 
@@ -153,9 +159,6 @@ msgid ""
 msgstr ""
 "Tous les arguments n'ont pas même longueur, le suivant doit être recyclé: %s"
 
-msgid ","
-msgstr ","
-
 msgid "Use either %s or %s/%s but not both."
 msgstr "Utilisez soit %s, soit %s/%s, mais pas les deux en même temps."
 
@@ -174,7 +177,8 @@ msgstr "Il est recommandé d'utiliser %s/%s à la place de %s/%s/%s."
 msgid "method is just applicable to %s objects"
 msgstr "la méthode n'est applicable qu'à des objets %s"
 
-msgid "all arguments must be of class \"person\""
+#, fuzzy
+msgid "all arguments must be of class %s"
 msgstr "tous les arguments doivent être de la classe \"person\""
 
 msgid "at least one field has to be specified"
@@ -186,16 +190,19 @@ msgstr "tous les champs doivent être nommés"
 msgid "%s has to be one of %s"
 msgstr "%s doit être l'un de %s"
 
-msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
-msgstr ""
-"Une entrée bibentry de bibtype %s doit spécifier correctement le(s) champ"
-"(s) : %s"
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
+msgstr "Une entrée bibentry de bibtype %s doit spécifier le(s) champ(s) : %s"
 
 msgid "%s should be one of %s"
 msgstr "%s doit être l'un de %s"
 
-msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr "Une entrée bibentry de bibtype %s doit spécifier le(s) champ(s) : %s"
+msgid "A BibTeX entry for LaTeX users is"
+msgstr ""
+
+msgid ""
+"Dropping invalid entry %d:\n"
+"%s"
+msgstr ""
 
 msgid "package %s not found"
 msgstr "package %s introuvable"
@@ -209,6 +216,17 @@ msgstr "pas de champ date dans le fichier DESCRIPTION du package %s"
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr ""
 "impossible de déterminer l'année de %s du fichier DESCRIPTION du package "
+
+msgid "To cite package %s in publications use:"
+msgstr ""
+
+msgid ""
+"ATTENTION: This citation information has been auto-generated from the "
+"package DESCRIPTION file and may need manual editing, see %s."
+msgstr ""
+
+msgid "help(\"citation\")"
+msgstr ""
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -274,8 +292,12 @@ msgstr "rien n'a été assign()é"
 msgid "Browsing in the environment with call:"
 msgstr "Navigation dans l'environnement avec l'appel :"
 
-msgid "'dump' is not an object of class 'dump.frames'"
+#, fuzzy
+msgid "'dump' is not an object of class %s"
 msgstr "'dump'  n'est pas un objet de la classe 'dump.frames'"
+
+msgid "dump.frames"
+msgstr ""
 
 msgid "Message:"
 msgstr "Message :"
@@ -642,7 +664,8 @@ msgstr ""
 "'oldPkgs' incorrect ; il faut des chaines de caractères ou des données "
 "renvoyées par old.packages()"
 
-msgid "illformed 'instPkgs' matrix"
+#, fuzzy
+msgid "ill-formed 'instPkgs' matrix"
 msgstr "matrice 'instPkgs' incorrecte"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
@@ -786,6 +809,9 @@ msgstr "impossible de créer le répertoire temporaire %s"
 msgid "foundpkgs:"
 msgstr ""
 
+msgid ","
+msgstr ","
+
 msgid "files:"
 msgstr ""
 
@@ -817,7 +843,8 @@ msgstr "'file' doit être \"\" ou un objet connexion"
 msgid "must have max > min"
 msgstr "doit avoir max > min"
 
-msgid "'pb' is not from class \"txtProgressBar\""
+#, fuzzy
+msgid "'pb' is not from class %s"
 msgstr "'pb' n'est pas un objet de classe \"txtProgressBar\""
 
 msgid "cannot determine a usable name"
@@ -1195,7 +1222,8 @@ msgstr ""
 "Si rien ne se passe, vous devrez ouvrir\n"
 "%s vous-même"
 
-msgid "zipfile %s not found"
+#, fuzzy
+msgid "zip file %s not found"
 msgstr "fichier zip %s introuvable"
 
 msgid "failed to create %s"
@@ -1212,9 +1240,6 @@ msgstr "winDialog() ne peut être utilisé en mode non interactif"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() ne peut être utilisé en mode non interactif"
-
-msgid "'pb' is not from class \"winProgressBar\""
-msgstr "'pb' n'est pas un objet de classe \"winProgressBar\""
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1292,6 +1317,14 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages %s sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+#~ msgstr ""
+#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) champ"
+#~ "(s) : %s"
+
+#~ msgid "'pb' is not from class \"winProgressBar\""
+#~ msgstr "'pb' n'est pas un objet de classe \"winProgressBar\""
 
 #~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 #~ msgstr ""

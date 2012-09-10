@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48+0100\n"
+"POT-Creation-Date: 2012-09-10 11:13+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Event GE_ScalePS requires a single numeric value"
 msgstr " イベント GE_ScalePS は単一の数値を必要とします "
 
-#: base.c:322 base.c:329 base.c:337
+#: base.c:328 base.c:335 base.c:343
 #, fuzzy
 msgid "the base graphics system is not registered"
 msgstr " 登録されたグラフィックスシステムが多すぎます "
@@ -188,8 +188,8 @@ msgid "invalid font specification"
 msgstr " フォントの指定が不正です "
 
 #: plot.c:268 plot.c:282 plot.c:473 plot.c:478 plot.c:2101 plot.c:2108
-#: plot.c:3125 plot.c:3127 plot.c:3129 plot.c:3281 plot3d.c:1166 plot3d.c:1170
-#: plot3d.c:1172 plot3d.c:1911
+#: plot.c:3125 plot.c:3127 plot.c:3129 plot.c:3281 plot3d.c:1160 plot3d.c:1164
+#: plot3d.c:1166 plot3d.c:1900
 #, c-format
 msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
@@ -246,7 +246,7 @@ msgstr " 軸のラベルの型が不正です "
 
 #: plot.c:757 plot.c:1290 plot.c:1611 plot.c:1676 plot.c:1751 plot.c:1817
 #: plot.c:1890 plot.c:1985 plot.c:2061 plot.c:2339 plot.c:2513 plot.c:2729
-#: plot.c:3263 plot.c:3390 plot.c:3466 plot.c:3632 plot.c:3912 plot3d.c:1875
+#: plot.c:3263 plot.c:3390 plot.c:3466 plot.c:3632 plot.c:3912 plot3d.c:1869
 msgid "too few arguments"
 msgstr " 引数が少なすぎます "
 
@@ -392,8 +392,8 @@ msgid "'a' and 'b' must be finite"
 msgstr " 'a' と 'b'  は有限でなければなりません "
 
 #: plot.c:2914 plot.c:4032 plot.c:4036 plot.c:4039 plot.c:4059 plot.c:4063
-#: plot.c:4066 plot3d.c:1088 plot3d.c:1092 plot3d.c:1097 plot3d.c:1101
-#: plot3d.c:1105 plot3d.c:1109 stem.c:159 stem.c:160 stem.c:162 stem.c:163
+#: plot.c:4066 plot3d.c:1082 plot3d.c:1086 plot3d.c:1091 plot3d.c:1095
+#: plot3d.c:1099 plot3d.c:1103 stem.c:159 stem.c:160 stem.c:162 stem.c:163
 #: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
@@ -511,97 +511,97 @@ msgstr " '%s' 引数の長さが不正です "
 msgid "unable to allocate memory (in xspline)"
 msgstr " メモリ確保ができません (xspline 中) "
 
-#: plot3d.c:196 plot3d.c:1937
+#: plot3d.c:192 plot3d.c:1926
 msgid "insufficient 'x' or 'y' values"
 msgstr " 'x' または 'y' の値が不足しています "
 
-#: plot3d.c:199 plot3d.c:1940
+#: plot3d.c:195 plot3d.c:1929
 msgid "dimension mismatch"
 msgstr " 次元が一致しません "
 
-#: plot3d.c:202 plot3d.c:1943
+#: plot3d.c:198 plot3d.c:1932
 msgid "no contour values"
 msgstr " 等高線値がありません "
 
-#: plot3d.c:264
+#: plot3d.c:260
 msgid "invalid x / y values or limits"
 msgstr " x または y の値または限界値が不正です "
 
-#: plot3d.c:266
+#: plot3d.c:262
 msgid "invalid contour levels: must be strictly increasing"
 msgstr " 等高線レベルが不正です：狭義単調増加でなくてはなりません "
 
-#: plot3d.c:1052 plot3d.c:1065
+#: plot3d.c:1046 plot3d.c:1059
 msgid "Axis orientation not calculated"
 msgstr " 軸方向は計算されませんでした "
 
-#: plot3d.c:1085
+#: plot3d.c:1079
 msgid "too few parameters"
 msgstr " パラメータが少なすぎます "
 
-#: plot3d.c:1115
+#: plot3d.c:1109
 msgid "invalid 'x' limits"
 msgstr " 'x' の限界値が不正です "
 
-#: plot3d.c:1117
+#: plot3d.c:1111
 msgid "invalid 'y' limits"
 msgstr " 'y' の限界値が不正です "
 
-#: plot3d.c:1119
+#: plot3d.c:1113
 msgid "invalid 'z' limits"
 msgstr " 'zlim' の限界値が不正です "
 
-#: plot3d.c:1140
+#: plot3d.c:1134
 msgid "'xlab' must be a character vector of length 1"
 msgstr " 'xlab' は長さ1の文字列ベクトルでなくてはなりません "
 
-#: plot3d.c:1142
+#: plot3d.c:1136
 msgid "'ylab' must be a character vector of length 1"
 msgstr " 'ylab' は長さ1の文字列ベクトルでなくてはなりません "
 
-#: plot3d.c:1144
+#: plot3d.c:1138
 msgid "'zlab' must be a character vector of length 1"
 msgstr " 'zlab' は長さ1の文字列ベクトルでなくてはなりません "
 
-#: plot3d.c:1164
+#: plot3d.c:1158
 msgid "invalid viewing parameters"
 msgstr " 不正な viewing パラメータです "
 
-#: plot3d.c:1182 plot3d.c:1186
+#: plot3d.c:1176 plot3d.c:1180
 #, c-format
 msgid "invalid '%s' specification"
 msgstr " '%s' の指定が不正です "
 
-#: plot3d.c:1532
+#: plot3d.c:1526
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr " contour(): circular/long seglist -- set %s > %d? "
 
-#: plot3d.c:1947
+#: plot3d.c:1936
 msgid "missing 'x' values"
 msgstr " 'x' の値が欠損しています "
 
-#: plot3d.c:1949
+#: plot3d.c:1938
 msgid "increasing 'x' values expected"
 msgstr " 増加する 'x' 値が期待されています "
 
-#: plot3d.c:1954
+#: plot3d.c:1943
 msgid "missing 'y' values"
 msgstr " 'y' の値が欠損しています "
 
-#: plot3d.c:1956
+#: plot3d.c:1945
 msgid "increasing 'y' values expected"
 msgstr " 増加する 'y' 値が期待されています "
 
-#: plot3d.c:1961
+#: plot3d.c:1950
 msgid "invalid NA contour values"
 msgstr " 不正な NA 等高線（contour）値です "
 
-#: plot3d.c:1973
+#: plot3d.c:1962
 msgid "all z values are equal"
 msgstr " z 変数の値が全部同じ値です "
 
-#: plot3d.c:1975
+#: plot3d.c:1964
 msgid "all z values are NA"
 msgstr " z 変数の値が全部 NA です "
 

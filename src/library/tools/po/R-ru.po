@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -176,12 +176,17 @@ msgstr ""
 "похоже, что имя пакета '%s' неправильное; вместо него использую имя папки "
 "'%s'"
 
+#, fuzzy
 msgid ""
-"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
-"DESCRIPTION Depends/Suggests/Imports entries."
+"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
+"Depends/Suggests/Imports entries."
 msgstr ""
 "Зависимости очерка (элементы \\VignetteDepends{}) должны содержаться в "
 "пунктах 'Depends/Suggests/Imports' файла DESCRIPTION."
+
+#, fuzzy
+msgid "\\VignetteDepends{}"
+msgstr "Миниатюры:"
 
 msgid "Malformed package name"
 msgstr "Плохое имя пакета"
@@ -377,11 +382,15 @@ msgstr "Стартовые функции пакета не должны вызывать %s."
 msgid "installed.packages"
 msgstr "installed.packages"
 
-msgid "See section %s in ?.onAttach."
+#, fuzzy
+msgid "See section %s in '%s'."
 msgstr "См. раздел %s в ?.onAttach."
 
 msgid "Good practice"
 msgstr "Хорошо сделано"
+
+msgid "?.onAttach"
+msgstr ""
 
 msgid "package 'methods' is used but not declared"
 msgstr "пакет 'methods' используется, но не объявлен"
@@ -422,23 +431,13 @@ msgstr ""
 "Автоматические сгенерированное содержание требует редактирования в оббъекте "
 "Rd '%s':"
 
-msgid "Generics g in env ="
-msgstr "Общие 'g' в env ="
-
-msgid "where hasMethods(g, env) errors:"
-msgstr "где ошибки hasMethods(g, env):"
-
-msgid "May need something like"
-msgstr "Возможно, надо что-то вроде"
-
-msgid "importFrom("
-msgstr "importFrom("
-
-msgid ")"
-msgstr ")"
-
-msgid "in NAMESPACE."
-msgstr "в NAMESPACE."
+msgid ""
+"Generics 'g' in 'env' %s where '%s' errors: %s\n"
+"May need something like\n"
+"\n"
+"%s\n"
+"in NAMESPACE."
+msgstr ""
 
 msgid "Generics without methods in"
 msgstr "Общие функции без методов в"
@@ -449,10 +448,16 @@ msgstr ":"
 msgid "argument 'file' must be a character string or connection"
 msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
 
-msgid "missing/empty \\name field in '%s'"
+#, fuzzy
+msgid "missing/empty %s field in '%s'"
 msgstr "пропущенное/пустое поле \\имен в '%s'"
 
-msgid "Rd files must have a non-empty \\name."
+#, fuzzy
+msgid "\\name"
+msgstr "имя"
+
+#, fuzzy
+msgid "Rd files must have a non-empty %s."
 msgstr "Rd-файлы должны иметь непустое \\имя."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
@@ -474,7 +479,8 @@ msgstr "Вы должны задать 'dir' или 'file'"
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
 
-msgid "missing/empty \\name field in Rd file(s)"
+#, fuzzy
+msgid "missing/empty %s field in Rd file(s)"
 msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 
 msgid "No help on %s found in RdDB %s"
@@ -510,13 +516,15 @@ msgstr "невозможно перейти в текущий рабочий каталог"
 msgid "no inputs"
 msgstr "нет вводов"
 
-msgid "Error in running tools::texi2pdf"
+#, fuzzy
+msgid "Error in running tools::texi2pdf()"
 msgstr "Ошибка запуска tools::texi2pdf"
 
 msgid "invalid value for '%s' : %s"
 msgstr "неправильное значение '%s' : %s"
 
-msgid "Only one Rd section per \\Sexpr is supported."
+#, fuzzy
+msgid "Only one Rd section per %s is supported."
 msgstr "Поддерживается только один раздел Rd на \\Sexpr."
 
 msgid "unable to create temp directory"
@@ -614,7 +622,8 @@ msgstr "Изменения требуют определенного 'style'"
 msgid "The default JSS style may not be modified."
 msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
 
-msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+#, fuzzy
+msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "неправильное значение --compact-vignettes, предполагаю \"qpdf\""
 
 msgid "Error: cannot rename directory to"
@@ -633,7 +642,7 @@ msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' определен только для одной используемой субархитектуры"
 
 #, fuzzy
-msgid "--as-cran turns off --extra-arch"
+msgid "'--as-cran' turns off '--extra-arch'"
 msgstr "--cran выключает --extra-arch"
 
 msgid "Error: no packages were specified"
@@ -642,7 +651,8 @@ msgstr "Ошибка: пакеты не определены"
 msgid "ERROR: cannot create check dir %s"
 msgstr "ОШИБКА: не могу создать проверочную директорию %s"
 
-msgid "package dir"
+#, fuzzy
+msgid "package directory"
 msgstr "директория пакетов"
 
 msgid "does not exist"
@@ -769,7 +779,8 @@ msgstr "инсталлирую четез 'install.libs.R' в"
 msgid "installing to"
 msgstr "устанавливаю в"
 
-msgid "generating debug symbols (dSYM)"
+#, fuzzy
+msgid "generating debug symbols (%s)"
 msgstr "создаю символы отладки (dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -781,7 +792,8 @@ msgid ""
 msgstr ""
 "Включаемая папка R пуста -- возможно, надо установить R-devel.rpm или похожее"
 
-msgid "running src/Makefile.win ..."
+#, fuzzy
+msgid "running 'src/Makefile.win' ..."
 msgstr "запускаю src/Makefile.win ..."
 
 msgid "no source files found"
@@ -793,7 +805,8 @@ msgstr "пустая папка 'data'"
 msgid "cannot create temporary directory"
 msgstr "Не могу создать врЕменную"
 
-msgid "ERROR: --merge-multiarch applies only to a single tarball"
+#, fuzzy
+msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "ОШИБКА: --merge-multiarch применим только к одному tar-архиву"
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
@@ -960,7 +973,8 @@ msgstr "Заголовок PDF не найден"
 msgid "EOF marker not found"
 msgstr "Маркер EOF не найден"
 
-msgid "cannot find startxref"
+#, fuzzy
+msgid "cannot find 'startxref' keyword"
 msgstr "не могу найти startxref"
 
 msgid "cannot find xref table"
@@ -1026,7 +1040,8 @@ msgstr "раскрываю %s"
 msgid "unsupported filter %s"
 msgstr "неподдерживаемый фильтр %s"
 
-msgid "unsupported flatedecode predictor %d"
+#, fuzzy
+msgid "unsupported %s predictor %d"
 msgstr "неподдерживаемый flatedecode predictor %d"
 
 msgid "unsupported PNG filter %d"
@@ -1213,6 +1228,9 @@ msgstr "неправильная структура пакета"
 msgid "file '%s' is not in valid DCF format"
 msgstr "файл '%s' не является правильным форматом DCF"
 
+msgid "contains a blank line"
+msgstr ""
+
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Неизвестная кодировка с не-ASCII данными: конвертирую в ASCII"
 
@@ -1270,11 +1288,36 @@ msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following S4 generic:"
+msgid_plural "Found .Internal calls in methods for the following S4 generics:"
+msgstr[0] "Найден вызов .Internal call в следующей функции:"
+msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
+msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "Generics g in env ="
+#~ msgstr "Общие 'g' в env ="
+
+#~ msgid "where hasMethods(g, env) errors:"
+#~ msgstr "где ошибки hasMethods(g, env):"
+
+#~ msgid "May need something like"
+#~ msgstr "Возможно, надо что-то вроде"
+
+#~ msgid "importFrom("
+#~ msgstr "importFrom("
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "in NAMESPACE."
+#~ msgstr "в NAMESPACE."
 
 #, fuzzy
 #~ msgid "Foreign function call(s) without 'PACKAGE' argument:"

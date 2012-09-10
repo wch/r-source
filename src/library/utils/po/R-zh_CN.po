@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -53,7 +53,8 @@ msgstr "对象%s不属于\"SweavSyntax\"这一类别"
 msgid "recursive Sweave input %s in stack"
 msgstr "堆疊里不能有回歸Sweave输入%s"
 
-msgid "target syntax not of class \"SweaveSyntax\""
+#, fuzzy
+msgid "target syntax not of class %s"
 msgstr "目标語法不是\"SweaveSyntax\"这一类别"
 
 msgid "target syntax contains no translation table"
@@ -109,6 +110,11 @@ msgstr "没有'%s'这种过滤器"
 msgid "Invalid 'filter' argument."
 msgstr "'filter'参数不对"
 
+msgid ""
+"The following dictionaries were not found:\n"
+"%s"
+msgstr ""
+
 msgid "Processing file %s"
 msgstr "处理文件%s"
 
@@ -146,9 +152,6 @@ msgid ""
 "%s"
 msgstr "不是所有的参数的长度都一样，下面这些需要被再循环：%s"
 
-msgid ","
-msgstr ","
-
 msgid "Use either %s or %s/%s but not both."
 msgstr "要么用%s或%s/%s，但不能两者都用"
 
@@ -167,7 +170,8 @@ msgstr "建议你用%s/%s而不用%s/%s/%s。"
 msgid "method is just applicable to %s objects"
 msgstr "这个方法只适用于%s目标对象"
 
-msgid "all arguments must be of class \"person\""
+#, fuzzy
+msgid "all arguments must be of class %s"
 msgstr "所有的参数都必需是\"person\"类别"
 
 msgid "at least one field has to be specified"
@@ -179,14 +183,19 @@ msgstr "所有的项都必需有名字"
 msgid "%s has to be one of %s"
 msgstr "%s必需是%s这些中的一个"
 
-msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
-msgstr "bibtype %s的条目必需正确地设定这些项：%s"
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
+msgstr "bibtype %s的条目必需设定这些项：%s"
 
 msgid "%s should be one of %s"
 msgstr "%s必需是%s这些中的一个"
 
-msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr "bibtype %s的条目必需设定这些项：%s"
+msgid "A BibTeX entry for LaTeX users is"
+msgstr ""
+
+msgid ""
+"Dropping invalid entry %d:\n"
+"%s"
+msgstr ""
 
 msgid "package %s not found"
 msgstr "没有%s这一个程序包"
@@ -199,6 +208,17 @@ msgstr "程序包%s里的DESCRIPTION文件中没有日期这一域"
 
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "无法从程序包的DESCRIPTION文件中为%s确定年份"
+
+msgid "To cite package %s in publications use:"
+msgstr ""
+
+msgid ""
+"ATTENTION: This citation information has been auto-generated from the "
+"package DESCRIPTION file and may need manual editing, see %s."
+msgstr ""
+
+msgid "help(\"citation\")"
+msgstr ""
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -260,8 +280,12 @@ msgstr "assign()没有用到"
 msgid "Browsing in the environment with call:"
 msgstr "在調用环境里浏览:"
 
-msgid "'dump' is not an object of class 'dump.frames'"
+#, fuzzy
+msgid "'dump' is not an object of class %s"
 msgstr "'dump'必需是类别为'dump.框s'的对象"
+
+msgid "dump.frames"
+msgstr ""
 
 msgid "Message:"
 msgstr "訊息:"
@@ -603,7 +627,8 @@ msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr "'oldPkgs'的值不对；必需字符矢量或从old.packages()得到的结果"
 
-msgid "illformed 'instPkgs' matrix"
+#, fuzzy
+msgid "ill-formed 'instPkgs' matrix"
 msgstr "'instPkgs'矩阵有错"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
@@ -742,6 +767,9 @@ msgstr "无法建立临时目录%s"
 msgid "foundpkgs:"
 msgstr ""
 
+msgid ","
+msgstr ","
+
 msgid "files:"
 msgstr ""
 
@@ -773,7 +801,8 @@ msgstr "'file'必需是\"\"或打开的联结"
 msgid "must have max > min"
 msgstr "一定得满足max > min这个条件"
 
-msgid "'pb' is not from class \"txtProgressBar\""
+#, fuzzy
+msgid "'pb' is not from class %s"
 msgstr "'pb'不属于\"txtProgressBar\"这一类别"
 
 msgid "cannot determine a usable name"
@@ -1128,7 +1157,8 @@ msgid ""
 "%s yourself"
 msgstr "如果什么都不发生的话，你应该自己打开%s"
 
-msgid "zipfile %s not found"
+#, fuzzy
+msgid "zip file %s not found"
 msgstr "找不到%s这一zip文件"
 
 msgid "failed to create %s"
@@ -1145,9 +1175,6 @@ msgstr "winDialog()不能在非互交形式下使用"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString()不能在非互交形式下使用"
-
-msgid "'pb' is not from class \"winProgressBar\""
-msgstr "'pb'不属于\"winProgressBar\"这一类别"
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1210,6 +1237,12 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+#~ msgstr "bibtype %s的条目必需正确地设定这些项：%s"
+
+#~ msgid "'pb' is not from class \"winProgressBar\""
+#~ msgstr "'pb'不属于\"winProgressBar\"这一类别"
 
 #~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 #~ msgstr "无法通过LC_CTYPE关闭与地点有关的字符"

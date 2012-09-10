@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,9 +141,6 @@ msgid "autoloader did not find '%s' in '%s'"
 msgstr ""
 
 msgid "complex matrices not permitted at present"
-msgstr ""
-
-msgid "non-numeric argument to 'chol'"
 msgstr ""
 
 msgid "non-square matrix in 'chol'"
@@ -389,7 +386,7 @@ msgstr ""
 msgid "'origin' must be supplied"
 msgstr ""
 
-msgid "do not know how to convert '%s' to class \"Date\""
+msgid "do not know how to convert '%s' to class %s"
 msgstr ""
 
 msgid "'%s' is not a \"date\" object"
@@ -462,12 +459,6 @@ msgid "'origin' must be of length one"
 msgstr ""
 
 msgid "'lag' and 'differences' must be integers >= 1"
-msgstr ""
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr ""
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
 msgstr ""
 
 msgid "wrong class"
@@ -554,7 +545,7 @@ msgstr ""
 msgid "is invalid for dim ="
 msgstr ""
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+msgid "must pass a package name, %s or %s object"
 msgstr ""
 
 msgid "No DLL currently loaded with name or path"
@@ -563,7 +554,7 @@ msgstr ""
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr ""
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr ""
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
@@ -1145,7 +1136,7 @@ msgstr ""
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr ""
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr ""
 
 msgid "bad 'S3method' directive: %s"
@@ -1430,10 +1421,10 @@ msgstr ""
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr ""
 
-msgid "'object' must inherit from class \"table\""
+msgid "'object' must inherit from class %s"
 msgstr ""
 
-msgid "'x' must inherit from class \"summary.table\""
+msgid "'x' must inherit from class %s"
 msgstr ""
 
 msgid "cannot coerce into a table"

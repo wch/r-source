@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -246,7 +246,8 @@ msgstr "Operador não tem significância para objetos raster"
 msgid "no current device to record from"
 msgstr "nenhum dispositivo atual disponível do qual gravar"
 
-msgid "argument is not of class \"recordedplot\""
+#, fuzzy
+msgid "argument is not of class %s"
 msgstr "argumento não é da classe \"recordedplot\""
 
 msgid "loading snapshot from pre-2.0.0 R version"
@@ -312,10 +313,12 @@ msgstr "'title' inválido"
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "fonte Quartz inválido: deve ser 4 cadeias"
 
-msgid "invalid arguments in quartzFonts (must be font names)"
+#, fuzzy
+msgid "invalid arguments in 'quartzFonts' (must be font names)"
 msgstr "argumentos inválidos em quartzFonts (devem ser nomes de fontes)"
 
-msgid "invalid arguments in quartzFonts (need named args)"
+#, fuzzy
+msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr "argumentos inválidos em quartzFonts (precisa de argumentos nomeados)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
@@ -326,6 +329,14 @@ msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "especificação de fonte X11 inválido:"
+
+#, fuzzy
+msgid "invalid arguments in 'X11Fonts' (must be font names)"
+msgstr "argumentos inválidos em '%s' (devem ser nomes de fontes)"
+
+#, fuzzy
+msgid "invalid arguments in 'X11Fonts' (need named args)"
+msgstr "argumentos inválidos em '%s' (precisa-se de argumentos nomeados)"
 
 msgid "no such device"
 msgstr "dispositivo não existe"

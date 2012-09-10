@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -184,12 +184,17 @@ msgstr ""
 "le nom du package '%s' semble incorrect ; utilisation du nom de répertoire "
 "'%s' à la place"
 
+#, fuzzy
 msgid ""
-"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
-"DESCRIPTION Depends/Suggests/Imports entries."
+"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
+"Depends/Suggests/Imports entries."
 msgstr ""
 "Les dépendances de vignette (entrée \\VignetteDepends{}) doivent être "
 "contenues dans les entrées Depends/Suggests/Imports de DESCRIPTION."
+
+#, fuzzy
+msgid "\\VignetteDepends{}"
+msgstr "Vignettes :"
 
 msgid "Malformed package name"
 msgstr "Nom de package mal orthographié"
@@ -389,11 +394,15 @@ msgstr "Les fonctionne de démarrage de package ne devraient pas appeler %s."
 msgid "installed.packages"
 msgstr "installed.packages"
 
-msgid "See section %s in ?.onAttach."
+#, fuzzy
+msgid "See section %s in '%s'."
 msgstr "Voir section %s dans ?.onAttach."
 
 msgid "Good practice"
 msgstr "Bonne pratique"
+
+msgid "?.onAttach"
+msgstr ""
 
 msgid "package 'methods' is used but not declared"
 msgstr "le package 'methods' est utilisé mais pas déclaré"
@@ -433,23 +442,13 @@ msgstr "Arguments sans description dans l'objet Rd '%s' :"
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "Contenu automatique de l'objet Rd '%s' à éditer :"
 
-msgid "Generics g in env ="
-msgstr "Les génériques g dans env ="
-
-msgid "where hasMethods(g, env) errors:"
-msgstr "où les erreurs hasMethods(g, env) :"
-
-msgid "May need something like"
-msgstr "Il faut quelque chose du genre"
-
-msgid "importFrom("
-msgstr "importFrom("
-
-msgid ")"
-msgstr ")"
-
-msgid "in NAMESPACE."
-msgstr "dans NAMESPACE."
+msgid ""
+"Generics 'g' in 'env' %s where '%s' errors: %s\n"
+"May need something like\n"
+"\n"
+"%s\n"
+"in NAMESPACE."
+msgstr ""
 
 msgid "Generics without methods in"
 msgstr "Des fonctions génériques sans méthodes associées dans"
@@ -460,10 +459,16 @@ msgstr " :"
 msgid "argument 'file' must be a character string or connection"
 msgstr "l'argument 'file' doit être une chaîne de caractères ou une connexion"
 
-msgid "missing/empty \\name field in '%s'"
+#, fuzzy
+msgid "missing/empty %s field in '%s'"
 msgstr "champ \\name manquant ou vide dans '%s'"
 
-msgid "Rd files must have a non-empty \\name."
+#, fuzzy
+msgid "\\name"
+msgstr "nom"
+
+#, fuzzy
+msgid "Rd files must have a non-empty %s."
 msgstr "les fichiers Rd doivent avoir un \\name non vide"
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
@@ -489,7 +494,8 @@ msgstr ""
 "impossible de travailler avec des objets Rd dont les noms sont manquants ou "
 "vides"
 
-msgid "missing/empty \\name field in Rd file(s)"
+#, fuzzy
+msgid "missing/empty %s field in Rd file(s)"
 msgstr "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
 
 msgid "No help on %s found in RdDB %s"
@@ -525,13 +531,15 @@ msgstr "le répertoire de travail actuel ne peut être déterminé"
 msgid "no inputs"
 msgstr "pas d'entrées"
 
-msgid "Error in running tools::texi2pdf"
+#, fuzzy
+msgid "Error in running tools::texi2pdf()"
 msgstr "Erreur lors de l'exécution de tools:texi2pdf"
 
 msgid "invalid value for '%s' : %s"
 msgstr "valeur inexacte pour '%s' : %s"
 
-msgid "Only one Rd section per \\Sexpr is supported."
+#, fuzzy
+msgid "Only one Rd section per %s is supported."
 msgstr "Seulement une section par \\Sexpr est supportée."
 
 msgid "unable to create temp directory"
@@ -630,7 +638,8 @@ msgstr "Les modifications nécessite le 'style' spécifié"
 msgid "The default JSS style may not be modified."
 msgstr "Le style par défaut JSS ne peut être modifié."
 
-msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+#, fuzzy
+msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "valeur incorrecte pour --compact-vignettes, \"qpdf\" sera utilisée"
 
 msgid "Error: cannot rename directory to"
@@ -651,7 +660,7 @@ msgstr ""
 "--multiarch spécifié alors qu'une seule sous-architecture est utilisable"
 
 #, fuzzy
-msgid "--as-cran turns off --extra-arch"
+msgid "'--as-cran' turns off '--extra-arch'"
 msgstr "--cran inactive --extra-arch"
 
 msgid "Error: no packages were specified"
@@ -660,7 +669,8 @@ msgstr "Erreur : aucun package spécifié"
 msgid "ERROR: cannot create check dir %s"
 msgstr "ERREUR : impossible de créer le répertoire de vérification %s"
 
-msgid "package dir"
+#, fuzzy
+msgid "package directory"
 msgstr "le répertoire"
 
 msgid "does not exist"
@@ -787,7 +797,8 @@ msgstr "Installation via 'install.libs.R' vers"
 msgid "installing to"
 msgstr "installation dans"
 
-msgid "generating debug symbols (dSYM)"
+#, fuzzy
+msgid "generating debug symbols (%s)"
 msgstr "génération des symboles de débogage (dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -800,7 +811,8 @@ msgstr ""
 "le répertoire include de R est vide -- il faut peut-être installer R-devel."
 "rpm ou similaire"
 
-msgid "running src/Makefile.win ..."
+#, fuzzy
+msgid "running 'src/Makefile.win' ..."
 msgstr "exécution de src/Makefile.win ..."
 
 msgid "no source files found"
@@ -812,7 +824,8 @@ msgstr "répertoire 'data' vide"
 msgid "cannot create temporary directory"
 msgstr "impossible de créer un répertoire temporaire"
 
-msgid "ERROR: --merge-multiarch applies only to a single tarball"
+#, fuzzy
+msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "ERREUR : --merge-multiarch est valide pour un seul package"
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
@@ -982,7 +995,8 @@ msgstr "Entête PDF introuvable"
 msgid "EOF marker not found"
 msgstr "Marqueur EOF introuvable"
 
-msgid "cannot find startxref"
+#, fuzzy
+msgid "cannot find 'startxref' keyword"
 msgstr "impossible de trouver startxref"
 
 msgid "cannot find xref table"
@@ -1048,7 +1062,8 @@ msgstr "expansion de '%s'"
 msgid "unsupported filter %s"
 msgstr "filtre %s non supporté"
 
-msgid "unsupported flatedecode predictor %d"
+#, fuzzy
+msgid "unsupported %s predictor %d"
 msgstr "flatedecode predictor %d non supporté"
 
 msgid "unsupported PNG filter %d"
@@ -1239,6 +1254,9 @@ msgstr "structure de package incorrecte"
 msgid "file '%s' is not in valid DCF format"
 msgstr "le fichier '%s' n'est pas d'un format DCF valide"
 
+msgid "contains a blank line"
+msgstr ""
+
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Encodage inconnu avec des données non-ASCII : conversion vers ASCII"
 
@@ -1295,10 +1313,34 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following S4 generic:"
+msgid_plural "Found .Internal calls in methods for the following S4 generics:"
+msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
+msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "Generics g in env ="
+#~ msgstr "Les génériques g dans env ="
+
+#~ msgid "where hasMethods(g, env) errors:"
+#~ msgstr "où les erreurs hasMethods(g, env) :"
+
+#~ msgid "May need something like"
+#~ msgstr "Il faut quelque chose du genre"
+
+#~ msgid "importFrom("
+#~ msgstr "importFrom("
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "in NAMESPACE."
+#~ msgstr "dans NAMESPACE."
 
 #, fuzzy
 #~ msgid "Foreign function call(s) without 'PACKAGE' argument:"

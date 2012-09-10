@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:26+0100\n"
+"POT-Creation-Date: 2012-09-10 11:13+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-#: Srunmed.c:52
+#: Srunmed.c:55
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "båndbredde/spænd for kørende medianer er større end n"
 
-#: ansari.c:149
+#: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "sandsynligheder uden for [0,1] i qansari()"
 
-#: approx.c:110 approx.c:142
+#: approx.c:101
 msgid "approx(): invalid f value"
 msgstr "approx(): ugyldig f-værdi"
 
-#: approx.c:115 approx.c:145
+#: approx.c:104
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): ugyldig interpolationsmetode"
 
-#: approx.c:121 approx.c:151
+#: approx.c:110
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): forsøgte at interpolere NA-værdier"
 
@@ -41,7 +41,7 @@ msgstr "approx(): forsøgte at interpolere NA-værdier"
 msgid "invalid argument type"
 msgstr "ugyldig argumenttype"
 
-#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+#: arima.c:418 arima.c:502 pacf.c:331 pacf.c:371
 msgid "can only transform 100 pars in arima0"
 msgstr "kan kun transformere 100 par i arima0"
 
@@ -122,15 +122,15 @@ msgstr "ugyldig værdi for lag.max"
 msgid "invalid tag"
 msgstr "ugyldig argumenttype"
 
-#: distance.c:156
+#: distance.c:155
 msgid "treating non-finite values as NA"
 msgstr "behandler ikkebegrænsende værdier som NA"
 
-#: distance.c:229
+#: distance.c:228
 msgid "distance(): invalid p"
 msgstr "distance(): ugyldig p"
 
-#: distance.c:232
+#: distance.c:231
 msgid "distance(): invalid distance"
 msgstr "distance(): ugyldig afstand"
 
@@ -142,17 +142,17 @@ msgstr ""
 msgid "Non-numeric argument to mathematical function"
 msgstr ""
 
-#: family.c:43
+#: family.c:44
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr "Værdi %g uden for interval (0, 1)"
 
-#: family.c:64 family.c:78 family.c:96
+#: family.c:65 family.c:79 family.c:97
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "Argument %s skal være en numerisk vektor som ikke er tom"
 
-#: family.c:129 family.c:132
+#: family.c:130 family.c:133
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argument %s skal være en numerisk vektor af længde 1 eller længde %d"
@@ -178,13 +178,25 @@ msgstr ""
 msgid "invalid factors"
 msgstr "Ugyldig vmethod"
 
-#: ksmooth.c:66
+#: ksmooth.c:67
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "kun 2.500 rækker er tilladt for sm.method=\"spline\""
 
 #: loessc.c:233
 msgid "span is too small"
 msgstr "spænd er for lille"
+
+#: loglin.c:369
+msgid "this should not happen"
+msgstr ""
+
+#: loglin.c:371
+msgid "algorithm did not converge"
+msgstr ""
+
+#: loglin.c:373
+msgid "incorrect specification of 'table' or 'start'"
+msgstr ""
 
 #: lowess.c:292
 msgid "'f' must be finite and > 0"
@@ -654,21 +666,21 @@ msgstr ""
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 
-#: pacf.c:81
+#: pacf.c:94
 msgid "bad Starma struct"
 msgstr "ugyldig Starma struct"
 
-#: pacf.c:227
+#: pacf.c:240
 #, c-format
 msgid "starma error code %d"
 msgstr "fejlkode for starma %d"
 
-#: pacf.c:287
+#: pacf.c:300
 #, c-format
 msgid "forkal error code %d"
 msgstr "fejlkode for forkal %d"
 
-#: pacf.c:451
+#: pacf.c:474
 msgid "invalid value of lag.max"
 msgstr "ugyldig værdi for lag.max"
 
@@ -752,51 +764,48 @@ msgstr ""
 msgid "'scal' matrix is not positive-definite"
 msgstr ""
 
-#: random.c:65 random.c:69 random.c:74 random.c:79 random.c:160 random.c:166
-#: random.c:171 random.c:176 random.c:239 random.c:244 random.c:249
-#: random.c:263 random.c:354
+#: random.c:66 random.c:70 random.c:75 random.c:80 random.c:161 random.c:167
+#: random.c:172 random.c:177 random.c:240 random.c:245 random.c:250
+#: random.c:264 random.c:355
 #, fuzzy
 msgid "invalid arguments"
 msgstr "ugyldig argumenttype"
 
-#: random.c:94 random.c:120 random.c:193 random.c:221 random.c:269
-#: random.c:288
+#: random.c:95 random.c:121 random.c:194 random.c:222 random.c:270
+#: random.c:289
 msgid "NAs produced"
 msgstr ""
 
-#: random.c:307
+#: random.c:308
 #, fuzzy
 msgid "invalid first argument 'n'"
 msgstr "ugyldig argumenttype"
 
-#: random.c:309
+#: random.c:310
 #, fuzzy
 msgid "invalid second argument 'size'"
 msgstr "ugyldig argumenttype"
 
-#: rcont.c:85
+#: rcont.c:83
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""
 
-#: smooth.c:98
+#: smooth.c:101
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "ugyldig end-rule for kørende median af 3: %d"
-
-#: smooth.c:250
-msgid "allocation error in smooth(*, '3RSR')."
-msgstr "allokeringsfejl i smooth(*, '3RSR')."
-
-#: smooth.c:263 smooth.c:273
-msgid "allocation error in smooth(*, '3RSS')."
-msgstr "allokeringsfejl i smooth(*, '3RSS')."
-
-#: smooth.c:283
-msgid "allocation error in smooth(*, '3R')."
-msgstr "allokeringsfejl i smooth(*, '3R')."
 
 #: starma.c:366
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "manglende værdi i sidste %d observationer"
+
+#~ msgid "allocation error in smooth(*, '3RSR')."
+#~ msgstr "allokeringsfejl i smooth(*, '3RSR')."
+
+#~ msgid "allocation error in smooth(*, '3RSS')."
+#~ msgstr "allokeringsfejl i smooth(*, '3RSS')."
+
+#~ msgid "allocation error in smooth(*, '3R')."
+#~ msgstr "allokeringsfejl i smooth(*, '3R')."

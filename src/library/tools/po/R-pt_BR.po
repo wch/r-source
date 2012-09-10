@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -170,8 +170,11 @@ msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 
 msgid ""
-"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
-"DESCRIPTION Depends/Suggests/Imports entries."
+"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
+"Depends/Suggests/Imports entries."
+msgstr ""
+
+msgid "\\VignetteDepends{}"
 msgstr ""
 
 msgid "Malformed package name"
@@ -350,10 +353,13 @@ msgstr ""
 msgid "installed.packages"
 msgstr ""
 
-msgid "See section %s in ?.onAttach."
+msgid "See section %s in '%s'."
 msgstr ""
 
 msgid "Good practice"
+msgstr ""
+
+msgid "?.onAttach"
 msgstr ""
 
 msgid "package 'methods' is used but not declared"
@@ -392,22 +398,12 @@ msgstr ""
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr ""
 
-msgid "Generics g in env ="
-msgstr ""
-
-msgid "where hasMethods(g, env) errors:"
-msgstr ""
-
-msgid "May need something like"
-msgstr ""
-
-msgid "importFrom("
-msgstr ""
-
-msgid ")"
-msgstr ""
-
-msgid "in NAMESPACE."
+msgid ""
+"Generics 'g' in 'env' %s where '%s' errors: %s\n"
+"May need something like\n"
+"\n"
+"%s\n"
+"in NAMESPACE."
 msgstr ""
 
 msgid "Generics without methods in"
@@ -419,10 +415,13 @@ msgstr ""
 msgid "argument 'file' must be a character string or connection"
 msgstr ""
 
-msgid "missing/empty \\name field in '%s'"
+msgid "missing/empty %s field in '%s'"
 msgstr ""
 
-msgid "Rd files must have a non-empty \\name."
+msgid "\\name"
+msgstr ""
+
+msgid "Rd files must have a non-empty %s."
 msgstr ""
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
@@ -443,7 +442,7 @@ msgstr ""
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr ""
 
-msgid "missing/empty \\name field in Rd file(s)"
+msgid "missing/empty %s field in Rd file(s)"
 msgstr ""
 
 msgid "No help on %s found in RdDB %s"
@@ -479,13 +478,13 @@ msgstr ""
 msgid "no inputs"
 msgstr ""
 
-msgid "Error in running tools::texi2pdf"
+msgid "Error in running tools::texi2pdf()"
 msgstr ""
 
 msgid "invalid value for '%s' : %s"
 msgstr ""
 
-msgid "Only one Rd section per \\Sexpr is supported."
+msgid "Only one Rd section per %s is supported."
 msgstr ""
 
 msgid "unable to create temp directory"
@@ -578,7 +577,7 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
-msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr ""
 
 msgid "Error: cannot rename directory to"
@@ -596,7 +595,7 @@ msgstr ""
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr ""
 
-msgid "--as-cran turns off --extra-arch"
+msgid "'--as-cran' turns off '--extra-arch'"
 msgstr ""
 
 msgid "Error: no packages were specified"
@@ -605,7 +604,7 @@ msgstr ""
 msgid "ERROR: cannot create check dir %s"
 msgstr ""
 
-msgid "package dir"
+msgid "package directory"
 msgstr ""
 
 msgid "does not exist"
@@ -728,7 +727,7 @@ msgstr ""
 msgid "installing to"
 msgstr ""
 
-msgid "generating debug symbols (dSYM)"
+msgid "generating debug symbols (%s)"
 msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -739,7 +738,7 @@ msgid ""
 "similar"
 msgstr ""
 
-msgid "running src/Makefile.win ..."
+msgid "running 'src/Makefile.win' ..."
 msgstr ""
 
 msgid "no source files found"
@@ -751,7 +750,7 @@ msgstr ""
 msgid "cannot create temporary directory"
 msgstr ""
 
-msgid "ERROR: --merge-multiarch applies only to a single tarball"
+msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr ""
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
@@ -901,7 +900,7 @@ msgstr ""
 msgid "EOF marker not found"
 msgstr ""
 
-msgid "cannot find startxref"
+msgid "cannot find 'startxref' keyword"
 msgstr ""
 
 msgid "cannot find xref table"
@@ -967,7 +966,7 @@ msgstr ""
 msgid "unsupported filter %s"
 msgstr ""
 
-msgid "unsupported flatedecode predictor %d"
+msgid "unsupported %s predictor %d"
 msgstr ""
 
 msgid "unsupported PNG filter %d"
@@ -1154,6 +1153,9 @@ msgstr ""
 msgid "file '%s' is not in valid DCF format"
 msgstr ""
 
+msgid "contains a blank line"
+msgstr ""
+
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr ""
 
@@ -1199,6 +1201,11 @@ msgstr[1] ""
 
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Found .Internal call in methods for the following S4 generic:"
+msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] ""
 msgstr[1] ""
 

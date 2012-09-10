@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1138,25 +1138,17 @@ msgstr ""
 msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 
-msgid "Invalid mlist element for signature \""
-msgstr ""
-
-msgid "\" at level"
-msgstr ""
-
-msgid "( should be methods list or method, had class \""
-msgstr ""
-
-msgid "\")"
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr ""
 
 msgid "bad method object stored in method table, class %s"
 msgstr ""
 
-msgid "Invalid object in methods table (\""
-msgstr ""
-
-msgid "\"), expected a method, got an object of class \""
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
 msgstr ""
 
 msgid "Invalid or unset methods table in generic function \""
@@ -1208,7 +1200,8 @@ msgstr ""
 msgid "Failed to find expected group generic function:"
 msgstr ""
 
-msgid "Invalid group generic function in search for inherited method (class \""
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 
 msgid "Invalid methods table request"
@@ -1297,10 +1290,13 @@ msgid ""
 "classes?)"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
+"S3Part() er kun defineret for klasser opsat af setOldClass(), grundlæggende "
+"klasser eller underklasser af disse: gælder ikke klasse %s"
 
 msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
@@ -1487,8 +1483,9 @@ msgid ""
 "vector, got an object of class %s"
 msgstr ""
 
-msgid "An object of class \""
-msgstr ""
+#, fuzzy
+msgid "An object of class %s"
+msgstr "\", fik en af klasse \""
 
 msgid ""
 "invalid call to 'classLabel': expected a name or a class definition, got an "
@@ -1553,13 +1550,11 @@ msgid ""
 "setting a method over the binding of symbol %s in environment/package %s"
 msgstr ""
 
-msgid "Constructing traceable class \""
+msgid "Constructing traceable class %s"
 msgstr ""
 
-msgid "Environment of class \""
-msgstr ""
-
-msgid "\" is locked; using global environment for new class"
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr ""
 
 msgid ""
@@ -1641,6 +1636,3 @@ msgstr[1] ""
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr "Erstatningsværdi skal være af klasse \""
-
-#~ msgid "\", got one of class \""
-#~ msgstr "\", fik en af klasse \""

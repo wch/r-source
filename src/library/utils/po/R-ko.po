@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -57,7 +57,8 @@ msgstr "객체 %s 는 \"SweaveSyntax\" 클래스를 가지지 않습니다 "
 msgid "recursive Sweave input %s in stack"
 msgstr "스택에 재귀적인 Sweave 입력 %s 입니다"
 
-msgid "target syntax not of class \"SweaveSyntax\""
+#, fuzzy
+msgid "target syntax not of class %s"
 msgstr "클래스 \"SweaveSyntax\" 이 아닌 target syntax 입니다"
 
 msgid "target syntax contains no translation table"
@@ -113,6 +114,11 @@ msgstr "필터 '%s' 는 사용가능하지 않습니다 "
 msgid "Invalid 'filter' argument."
 msgstr "'filter' 인자가 부적절합니다"
 
+msgid ""
+"The following dictionaries were not found:\n"
+"%s"
+msgstr ""
+
 msgid "Processing file %s"
 msgstr "%s 파일을 처리중입니다 "
 
@@ -152,9 +158,6 @@ msgstr ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
 
-msgid ","
-msgstr ","
-
 msgid "Use either %s or %s/%s but not both."
 msgstr "%s 혹은  %s/%s 중 하나를 사용하세요."
 
@@ -173,7 +176,8 @@ msgstr "%s/%s 를 이용하는 것이 %s/%s/%s 를 사용하는 것보다 권장
 msgid "method is just applicable to %s objects"
 msgstr "%s 객체들에만 적용이 가능한 메소드입니다 "
 
-msgid "all arguments must be of class \"person\""
+#, fuzzy
+msgid "all arguments must be of class %s"
 msgstr "모든 인수는 \"person\" 이라는 클래스 내에 정의되어 있어야 합니다"
 
 msgid "at least one field has to be specified"
@@ -185,16 +189,19 @@ msgstr "모든 항목들에 이름이 주어져야 합니다 "
 msgid "%s has to be one of %s"
 msgstr "%s 은 %s 중에 하나이어야 합니다 "
 
-msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
-msgstr ""
-"비브타입 %s 을 가지는 비브엔트리는 다음 항목(들)을 올바르게 명시해야합니다: "
-"%s"
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
+msgstr "비브타입 %s 를 가지는 비브엔트리는 다음 항목(들)을 명시해야합니다: %s"
 
 msgid "%s should be one of %s"
 msgstr "%s 은 %s 중 하나이어야 합니다"
 
-msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr "비브타입 %s 를 가지는 비브엔트리는 다음 항목(들)을 명시해야합니다: %s"
+msgid "A BibTeX entry for LaTeX users is"
+msgstr ""
+
+msgid ""
+"Dropping invalid entry %d:\n"
+"%s"
+msgstr ""
 
 msgid "package %s not found"
 msgstr "패키지 %s 를 찾을 수 없습니다 "
@@ -207,6 +214,17 @@ msgstr "패키지 %s 의 DESCRIPTION 파일에 date 항목이 없습니다 "
 
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "패키지 DESCRIPTION 파일로부터 %s 에 대한 년도를 정할 수 없습니다 "
+
+msgid "To cite package %s in publications use:"
+msgstr ""
+
+msgid ""
+"ATTENTION: This citation information has been auto-generated from the "
+"package DESCRIPTION file and may need manual editing, see %s."
+msgstr ""
+
+msgid "help(\"citation\")"
+msgstr ""
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -268,8 +286,12 @@ msgstr "assign() 에 아무것도 할당하지 않았습니다 "
 msgid "Browsing in the environment with call:"
 msgstr "Browsing in the environment with call:"
 
-msgid "'dump' is not an object of class 'dump.frames'"
+#, fuzzy
+msgid "'dump' is not an object of class %s"
 msgstr "'dump' 는 'dump.frames' 라는 클래스의 객체가 아닙니다 "
+
+msgid "dump.frames"
+msgstr ""
 
 msgid "Message:"
 msgstr "메세지:"
@@ -627,7 +649,8 @@ msgstr ""
 "잘못된 'oldPkgs' 입니다; 반드시 문자형 벡터이거나 old.packages() 의 결과이어"
 "야 합니다"
 
-msgid "illformed 'instPkgs' matrix"
+#, fuzzy
+msgid "ill-formed 'instPkgs' matrix"
 msgstr "잘못된 형식의 'instPkgs' 행렬입니다 "
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
@@ -768,6 +791,9 @@ msgstr "임시 디렉토리 %s 를 생성할 수 없습니다 "
 msgid "foundpkgs:"
 msgstr ""
 
+msgid ","
+msgstr ","
+
 msgid "files:"
 msgstr ""
 
@@ -799,7 +825,8 @@ msgstr "'file' 은 반드시 \"\" 혹은 열린 커넥션 객체이어야 합니
 msgid "must have max > min"
 msgstr "반드시 max > min 이어야 합니다 "
 
-msgid "'pb' is not from class \"txtProgressBar\""
+#, fuzzy
+msgid "'pb' is not from class %s"
 msgstr "'pb' 는 클래스 \"txtProgressBar\" 로부터 나온 것이 아닙니다"
 
 msgid "cannot determine a usable name"
@@ -1163,7 +1190,8 @@ msgstr ""
 "If nothing happens, you should open\n"
 "%s yourself"
 
-msgid "zipfile %s not found"
+#, fuzzy
+msgid "zip file %s not found"
 msgstr "zipfile %s 를 찾을 수 없습니다 "
 
 msgid "failed to create %s"
@@ -1180,9 +1208,6 @@ msgstr "winDialog() 는 인터랙티브하게 사용될 수 없습니다 "
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() 은 인터랙티브하게 사용될 수 없습니다 "
-
-msgid "'pb' is not from class \"winProgressBar\""
-msgstr "'pb' 는 \"winProgressBar\" 클래스로부터 나온 것이 아닙니다 "
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1245,6 +1270,14 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+
+#~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+#~ msgstr ""
+#~ "비브타입 %s 을 가지는 비브엔트리는 다음 항목(들)을 올바르게 명시해야합니"
+#~ "다: %s"
+
+#~ msgid "'pb' is not from class \"winProgressBar\""
+#~ msgstr "'pb' 는 \"winProgressBar\" 클래스로부터 나온 것이 아닙니다 "
 
 #~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 #~ msgstr "LC_CTYPE 을 통해서 로케일 특정문자를 사용못하게 할 수 없습니다 "

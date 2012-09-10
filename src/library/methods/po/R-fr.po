@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-06 21:42+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1531,29 +1531,25 @@ msgstr ""
 "Objet incorrect dans la table de métadonnées des méthodes pour %s, "
 "l'étiquette \"%s\", avait la classe %s"
 
-msgid "Invalid mlist element for signature \""
-msgstr "Elément mlist incorrect pour la signature \""
-
-msgid "\" at level"
-msgstr "\" au niveau"
-
-msgid "( should be methods list or method, had class \""
+#, fuzzy
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr ""
 "(devrait être une liste de méthodes ou une méthode, et elle avait la classe "
 "\""
-
-msgid "\")"
-msgstr "\")"
 
 msgid "bad method object stored in method table, class %s"
 msgstr ""
 "mauvais objet trouvé comme méthode dans la table des méthodes, class %s"
 
-msgid "Invalid object in methods table (\""
-msgstr "Mauvais objet trouvé comme méthode (\""
-
-msgid "\"), expected a method, got an object of class \""
-msgstr "\"), une méthode est attendue et un objet est fourni de classe \""
+#, fuzzy
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
+msgstr ""
+"définition de méthode incorrecte : une fonction est attendue et un objet de "
+"classe %s est fourni"
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr ""
@@ -1618,7 +1614,9 @@ msgstr "Choix de la méthode %s de %d possibilités ambigües"
 msgid "Failed to find expected group generic function:"
 msgstr "Impossible de trouver la fonction générique du groupe attendu :"
 
-msgid "Invalid group generic function in search for inherited method (class \""
+#, fuzzy
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 "Fonction générique de groupe incorrecte lors de la recherche de méthode "
 "héritée (classe \""
@@ -1740,9 +1738,10 @@ msgstr ""
 "information d'une classe d'ancien style (S3) incompatible pour \"%s\" (un "
 "mélange entre des anciennes et nouvelles classes est peut-être fait)"
 
+#, fuzzy
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
 "S3Class est seulement défini pour des extensions de \"oldClass\" ou des "
 "classes ayant une partie 'data' : ce n'est pas le cas de la classe \""
@@ -2008,7 +2007,8 @@ msgstr ""
 "argument 'ignore=' incorrect ; doit être une définition de classe ou une "
 "chaîne de caractères ; un objet de classe %s est obtenu"
 
-msgid "An object of class \""
+#, fuzzy
+msgid "An object of class %s"
 msgstr "Un objet de classe \""
 
 msgid ""
@@ -2096,13 +2096,13 @@ msgstr ""
 "création d'une méthode à travers un lien du symbole %s dans l'environnement/"
 "le package %s"
 
-msgid "Constructing traceable class \""
+#, fuzzy
+msgid "Constructing traceable class %s"
 msgstr "La construction de la classe traçable \""
 
-msgid "Environment of class \""
-msgstr "Un environnement de classe \""
-
-msgid "\" is locked; using global environment for new class"
+#, fuzzy
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr ""
 "\" est verrouillée ; Utilisation de l'environnement global pour la nouvelle "
 "classe"
@@ -2211,6 +2211,24 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "aucune définition de la classe %s n'est trouvée"
 msgstr[1] "aucune définition des classes %s n'est trouvée"
+
+#~ msgid "Invalid mlist element for signature \""
+#~ msgstr "Elément mlist incorrect pour la signature \""
+
+#~ msgid "\" at level"
+#~ msgstr "\" au niveau"
+
+#~ msgid "\")"
+#~ msgstr "\")"
+
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr "Mauvais objet trouvé comme méthode (\""
+
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr "\"), une méthode est attendue et un objet est fourni de classe \""
+
+#~ msgid "Environment of class \""
+#~ msgstr "Un environnement de classe \""
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr "La valeur de remplacement doit être de classe \""

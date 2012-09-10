@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:26\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-06 21:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -90,6 +90,10 @@ msgstr "'which' ne spécifie aucun facteur"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which' spécifie des variables non facteurs qui seront éliminées"
+
+#, fuzzy
+msgid "'sampleT' and 'nser' must be integer"
+msgstr "'lower' et 'upper' doivent être des valeurs finies"
 
 msgid "'lag.max' must be at least 0"
 msgstr "'lag.max' doit valoir au moins 0"
@@ -292,10 +296,6 @@ msgstr "zéro points non NA"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' nécessite n >= 1"
 
-#, fuzzy
-msgid "invalid length(xout)"
-msgstr "longueur des membres incorrecte"
-
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' doit être >= 1"
 
@@ -311,14 +311,14 @@ msgstr "le nombre de séries dans 'object' et 'newdata' ne correspondent pas"
 msgid "'se.fit' not yet implemented for multivariate models"
 msgstr "'se.fit' n'est pas encore implémenté pour des modèles multivariés"
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr "l'algorithme de Burg n'est implémenté que pour des séries univariées"
-
 msgid "MLE only implemented for univariate series"
 msgstr "MLE n'est implémenté que pour des séries univariées"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' doit être >= 0"
+
+msgid "Burg's algorithm only implemented for univariate series"
+msgstr "l'algorithme de Burg n'est implémenté que pour des séries univariées"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' doit être un vecteur numérique positif ou nul de longueur 3"
@@ -385,6 +385,10 @@ msgid "need at least 2 data points"
 msgstr "il faut au moins 2 points"
 
 msgid "invalid 'x'"
+msgstr "'x' incorrect"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "'x' incorrect"
 
 msgid "sample is too sparse to find TD"
@@ -560,10 +564,10 @@ msgstr "matrice de contrastes singulière"
 msgid "numeric contrasts or contrast name expected"
 msgstr "contrastes numérique ou nom de contraste attendu"
 
-msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+#, fuzzy
+msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
-"contr*(..., sparse=TRUE) nécessite un package \"Matrix\" installé "
-"correctement"
+"xtabs(*, sparse=TRUE) nécessite un package \"Matrix\" correctemnt installé"
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "nombre de degrés de liberté insuffisant pour définir des contrastes"
@@ -757,7 +761,8 @@ msgstr "'x' n'est pas un vecteur"
 msgid "bad value for 'lag' or 'differences'"
 msgstr "valeur incorrecte de 'lag' ou 'differences'"
 
-msgid "'xi' has not the right length"
+#, fuzzy
+msgid "'xi' does not have the right length"
 msgstr "'xi' n'a pas la bonne longueur"
 
 msgid "incorrect dimensions for 'xi'"
@@ -765,6 +770,10 @@ msgstr "dimensions incorrectes pour 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' n'est pas un vecteur ou une matrice"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "arguments supplémentaires ignorés"
 
 msgid "invalid distance method"
 msgstr "méthode de calcul de distance incorrecte"
@@ -1201,7 +1210,8 @@ msgstr "dendrogramme incorrect"
 msgid "'merge' component in dendrogram must be integer"
 msgstr "la composante 'merge' du dendrogramme doit être un entier"
 
-msgid "argument 'x' cannot be coerced to class \"hclust\""
+#, fuzzy
+msgid "argument 'x' cannot be coerced to class %s"
 msgstr "l'argument 'x' ne peut pas être converti en objet de classe \"hclust\""
 
 msgid "Consider providing an as.hclust.%s() method"
@@ -1520,15 +1530,6 @@ msgstr "pas de méthode 'nobs' disponible"
 msgid "'start' and 'table' must be same length"
 msgstr "'start' et 'table' doivent avoir la même longueur"
 
-msgid "this should not happen"
-msgstr "ceci ne devrait pas se produire"
-
-msgid "algorithm did not converge"
-msgstr "l'algorithme n'a pas convergé"
-
-msgid "incorrect specification of 'table' or 'start'"
-msgstr "spécification de 'table' ou de 'start' incorrecte"
-
 msgid "%d missing values deleted"
 msgstr "%d valeurs manquantes supprimées"
 
@@ -1559,7 +1560,8 @@ msgstr "'low' et 'high' ne peuvent pas être vrais tous les deux simultanément"
 msgid "need multiple response"
 msgstr "réponse multiple nécessaire"
 
-msgid "object must be of class \"manova\" or \"maov\""
+#, fuzzy
+msgid "object must be of class %s or %s"
 msgstr "l'objet doit être de la classe \"manova\" ou \"maov\""
 
 msgid "need multiple responses"
@@ -1664,7 +1666,8 @@ msgstr "pas de composante 'terms' ni d'attribut"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' doit être un vecteur de caractères de longueur >= 1"
 
-msgid "'termobj' must be a object of class \"terms\""
+#, fuzzy
+msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' doit être un objet de classe \"terms\""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
@@ -1862,7 +1865,8 @@ msgstr ""
 "la méthode L-BFGS-B utilise 'factr' (et 'pgtol') au lieu de 'reltol' et "
 "'abstol'"
 
-msgid "one-diml optimization by Nelder-Mead is unreliable:"
+#, fuzzy
+msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
 msgstr "l'optimisation de Nelder-Mead unidimensionnelle est instable :"
 
 msgid "use \"Brent\" or optimize() directly"
@@ -2144,9 +2148,6 @@ msgstr "la taille de l'échantillon doit être comprise entre 3 et 5000"
 
 msgid "all 'x' values are identical"
 msgstr "toutes les valeurs de 'x' sont identiques"
-
-msgid "ifault=%d. This should not happen"
-msgstr "ifault=%d. Ceci ne devrait pas se produire"
 
 msgid "attempt to smooth non-numeric values"
 msgstr "tentative de lisser des valeurs non numériques"
@@ -2469,9 +2470,6 @@ msgstr "le nombre de différences doit être un entier positif"
 msgid "'start.innov' is too short: need %d points"
 msgstr "'start.innov' est trop court : il faut %d points"
 
-msgid "insufficient observations"
-msgstr "observations insuffisantes"
-
 msgid "need an object with call component"
 msgstr "il faut un objet avec une composante call"
 
@@ -2505,14 +2503,11 @@ msgstr "impossible de calculer un intervalle de confiance exact avec des zéros"
 msgid "must supply either 'formula' or 'data'"
 msgstr "il faut fournir soit 'formula', soit 'data'"
 
-msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+#, fuzzy
+msgid "%s applies only to two-way tables"
 msgstr ""
 "xtabs(*, sparse=TRUE) est seulement applicable sur des tables de contingence "
 "à deux entrées"
-
-msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr ""
-"xtabs(*, sparse=TRUE) nécessite un package \"Matrix\" correctemnt installé"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
@@ -2593,6 +2588,30 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "le paramètre %s n'apparaît pas dans la formule du modèle"
 msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
+
+#, fuzzy
+#~ msgid "invalid length(xout)"
+#~ msgstr "longueur des membres incorrecte"
+
+#~ msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+#~ msgstr ""
+#~ "contr*(..., sparse=TRUE) nécessite un package \"Matrix\" installé "
+#~ "correctement"
+
+#~ msgid "this should not happen"
+#~ msgstr "ceci ne devrait pas se produire"
+
+#~ msgid "algorithm did not converge"
+#~ msgstr "l'algorithme n'a pas convergé"
+
+#~ msgid "incorrect specification of 'table' or 'start'"
+#~ msgstr "spécification de 'table' ou de 'start' incorrecte"
+
+#~ msgid "ifault=%d. This should not happen"
+#~ msgstr "ifault=%d. Ceci ne devrait pas se produire"
+
+#~ msgid "insufficient observations"
+#~ msgstr "observations insuffisantes"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' contient des NA"

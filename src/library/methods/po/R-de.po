@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-05 22:07+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -1485,26 +1485,21 @@ msgstr ""
 "Ungültiges Objekt im Metatable der Methoden für %s, Label \"%s\", hatte "
 "Klasse %s"
 
-msgid "Invalid mlist element for signature \""
-msgstr "Ungültiges mlist Element für die Signatur \""
-
-msgid "\" at level"
-msgstr "\" auf Level"
-
-msgid "( should be methods list or method, had class \""
+#, fuzzy
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr "( sollte Methodenliste oder Methode sein, hatte Klasse \""
-
-msgid "\")"
-msgstr "\")"
 
 msgid "bad method object stored in method table, class %s"
 msgstr "ungültiges Methodenobjekt in der Methodentabelle, Klasse %s"
 
-msgid "Invalid object in methods table (\""
-msgstr "Unzulässiges Ohjekt in Methodentabelle (\""
-
-msgid "\"), expected a method, got an object of class \""
-msgstr "\") erwartete Methode, bekam Objekt der Klasse \""
+#, fuzzy
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
+msgstr ""
+"ungültie Methodendefinition; Funktion erwartet, Objekt der Klasse %s bekommen"
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr ""
@@ -1568,7 +1563,9 @@ msgstr "Wähle Methode %s unter %d nicht eindeutigen Möglichkeiten"
 msgid "Failed to find expected group generic function:"
 msgstr "Konnte die erwartete gruppengenerische Funktion nicht finden"
 
-msgid "Invalid group generic function in search for inherited method (class \""
+#, fuzzy
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 "Ungültige gruppengenerische Funktion bei der Suche nach der vererbten "
 "Methode (Klasse \""
@@ -1679,9 +1676,10 @@ msgstr ""
 "inkonsistente Klasseninformation für \"%s\" im alten Stil (werden evtl. "
 "alten und neue Klassen vermischt?)"
 
+#, fuzzy
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
 "S3Class ist nur definiert für Erweiterungen von \"oldClass\" oder Klassen "
 "mit Datenteil: gilt nicht für Klasse\""
@@ -1950,7 +1948,8 @@ msgstr ""
 "Zeichenkette sein;\n"
 " bekam ein Objekt aus Klasse \"%s\""
 
-msgid "An object of class \""
+#, fuzzy
+msgid "An object of class %s"
 msgstr "Ein Objekt der Klasse \""
 
 msgid ""
@@ -2036,13 +2035,13 @@ msgstr ""
 "Setzen einer Methode über die Bindung des Symbols %s in der Umgebung / im "
 "Paket %s"
 
-msgid "Constructing traceable class \""
+#, fuzzy
+msgid "Constructing traceable class %s"
 msgstr "Konstruktion einer verfolgbaren Klasse\""
 
-msgid "Environment of class \""
-msgstr "Umgebung der Klasse \""
-
-msgid "\" is locked; using global environment for new class"
+#, fuzzy
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr "\" ist gesichert; nutze die globale Umgebung für die neue Klasse"
 
 msgid ""
@@ -2142,6 +2141,24 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "keine Definition der Klasse %s"
 msgstr[1] "keine Definition der Klassen %s"
+
+#~ msgid "Invalid mlist element for signature \""
+#~ msgstr "Ungültiges mlist Element für die Signatur \""
+
+#~ msgid "\" at level"
+#~ msgstr "\" auf Level"
+
+#~ msgid "\")"
+#~ msgstr "\")"
+
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr "Unzulässiges Ohjekt in Methodentabelle (\""
+
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr "\") erwartete Methode, bekam Objekt der Klasse \""
+
+#~ msgid "Environment of class \""
+#~ msgstr "Umgebung der Klasse \""
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr "Unbedingt Ersetzungswert aus Klasse \""

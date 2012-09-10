@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -172,12 +172,17 @@ msgstr ""
 "nazwa pakietu '%s' wygląda na niepoprawną; zamiast niej używanie nazwy "
 "katalogu '%s'"
 
+#, fuzzy
 msgid ""
-"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
-"DESCRIPTION Depends/Suggests/Imports entries."
+"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
+"Depends/Suggests/Imports entries."
 msgstr ""
 "Zależności winiet (wpisy \\VignetteDepends{}) muszą być zawarte we wpisach "
 "'Depends/Suggests/Imports' pliku DESCRIPTION."
+
+#, fuzzy
+msgid "\\VignetteDepends{}"
+msgstr "Winiey:"
 
 msgid "Malformed package name"
 msgstr "Źle sformatowana nazwa pakietu"
@@ -373,11 +378,15 @@ msgstr "Funkcje startowe pakiety nie powinny wzywać %s."
 msgid "installed.packages"
 msgstr "installed.packages"
 
-msgid "See section %s in ?.onAttach."
+#, fuzzy
+msgid "See section %s in '%s'."
 msgstr "Zobacz sekcję %s w ?.onAttach."
 
 msgid "Good practice"
 msgstr "Dobra praktyka"
+
+msgid "?.onAttach"
+msgstr ""
 
 msgid "package 'methods' is used but not declared"
 msgstr "pakiet 'methods' jest użyty, ale nie jest zadeklarowany"
@@ -418,23 +427,13 @@ msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr ""
 "Automatycznie wygenerowana treść wymaga wykonania edycji w obiekcie Rd '%s':"
 
-msgid "Generics g in env ="
-msgstr "Ogólne 'g' w env ="
-
-msgid "where hasMethods(g, env) errors:"
-msgstr "gdzie błędy hasMethods(g, env):"
-
-msgid "May need something like"
-msgstr "Można potrzebować czegoś jak"
-
-msgid "importFrom("
-msgstr "importFrom("
-
-msgid ")"
-msgstr ")"
-
-msgid "in NAMESPACE."
-msgstr "w NAMESPACE."
+msgid ""
+"Generics 'g' in 'env' %s where '%s' errors: %s\n"
+"May need something like\n"
+"\n"
+"%s\n"
+"in NAMESPACE."
+msgstr ""
 
 msgid "Generics without methods in"
 msgstr "Funkcja ogólna bez metod w"
@@ -445,10 +444,16 @@ msgstr ":"
 msgid "argument 'file' must be a character string or connection"
 msgstr "argument 'file' musi być ciągiem tekstowym lub połączeniem"
 
-msgid "missing/empty \\name field in '%s'"
+#, fuzzy
+msgid "missing/empty %s field in '%s'"
 msgstr "brakujące/puste pole \\name w '%s'"
 
-msgid "Rd files must have a non-empty \\name."
+#, fuzzy
+msgid "\\name"
+msgstr "nazwa"
+
+#, fuzzy
+msgid "Rd files must have a non-empty %s."
 msgstr "Pliki Rd muszą mieć niepustą \\nazwę."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
@@ -471,7 +476,8 @@ msgstr "musisz określić 'dir' lub 'files'"
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "nie można radzić sobie z obiektami Rd z brakującymi/pustymi nazwami"
 
-msgid "missing/empty \\name field in Rd file(s)"
+#, fuzzy
+msgid "missing/empty %s field in Rd file(s)"
 msgstr "brakujące/puste pole \\nazwa w pliku(ach) Rd"
 
 msgid "No help on %s found in RdDB %s"
@@ -507,13 +513,15 @@ msgstr "bieżący katalog roboczy nie może być ustalony"
 msgid "no inputs"
 msgstr "brak wejść"
 
-msgid "Error in running tools::texi2pdf"
+#, fuzzy
+msgid "Error in running tools::texi2pdf()"
 msgstr "Błąd w działaniu tools::texi2pdf"
 
 msgid "invalid value for '%s' : %s"
 msgstr "niepoprawna wartość dla '%s' : %s"
 
-msgid "Only one Rd section per \\Sexpr is supported."
+#, fuzzy
+msgid "Only one Rd section per %s is supported."
 msgstr "Tylko jedna sekcja Rd na \\Sexpr jest wspierana."
 
 msgid "unable to create temp directory"
@@ -612,7 +620,8 @@ msgstr "Zmiany wymagają określonego 'style'"
 msgid "The default JSS style may not be modified."
 msgstr "Domyślny styl JSS nie może być zmieniony."
 
-msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+#, fuzzy
+msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "Niepoprawna wartość --compact-vignettes, zakładanie \"qpdf\""
 
 msgid "Error: cannot rename directory to"
@@ -630,7 +639,8 @@ msgstr "pliki konfiguracyjne nie są wspierane od wersji R 2.12.0"
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' zdefiniowany tylko z jedną użyteczną pod-architekturą"
 
-msgid "--as-cran turns off --extra-arch"
+#, fuzzy
+msgid "'--as-cran' turns off '--extra-arch'"
 msgstr "--as-cran wyłącza --extra-arch"
 
 msgid "Error: no packages were specified"
@@ -639,7 +649,8 @@ msgstr "Błąd: nie określono pakietów"
 msgid "ERROR: cannot create check dir %s"
 msgstr "BŁĄD: nie można utworzyć katalogu sprawdzenia %s"
 
-msgid "package dir"
+#, fuzzy
+msgid "package directory"
 msgstr "katalog pakietu"
 
 msgid "does not exist"
@@ -766,7 +777,8 @@ msgstr "instalowanie poprzez 'install.libs.R' do"
 msgid "installing to"
 msgstr "instalowanie do"
 
-msgid "generating debug symbols (dSYM)"
+#, fuzzy
+msgid "generating debug symbols (%s)"
 msgstr "tworzenie symboli debugowania (dSYM)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -779,7 +791,8 @@ msgstr ""
 "Katalog 'include' w R jest pusty -- być może trzeba zainstalować R-devel.rpm "
 "lub coś podobnego"
 
-msgid "running src/Makefile.win ..."
+#, fuzzy
+msgid "running 'src/Makefile.win' ..."
 msgstr "uruchamianie src/Makefile.win ..."
 
 msgid "no source files found"
@@ -791,7 +804,8 @@ msgstr "pusty katalog 'data'"
 msgid "cannot create temporary directory"
 msgstr "nie można utworzyć katalogu tymczasowego"
 
-msgid "ERROR: --merge-multiarch applies only to a single tarball"
+#, fuzzy
+msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr ""
 "BŁĄD: --merge-multiarch stosuje się tylko to pojedynczego pliku tarball"
 
@@ -963,7 +977,8 @@ msgstr "nie znaleziono nagłówka PDF"
 msgid "EOF marker not found"
 msgstr "nie znaleziono znacznika EOF"
 
-msgid "cannot find startxref"
+#, fuzzy
+msgid "cannot find 'startxref' keyword"
 msgstr "nie można znaleźć startxref"
 
 msgid "cannot find xref table"
@@ -1029,7 +1044,8 @@ msgstr "rozszerzanie %s"
 msgid "unsupported filter %s"
 msgstr "niewspierany filtr '%s'"
 
-msgid "unsupported flatedecode predictor %d"
+#, fuzzy
+msgid "unsupported %s predictor %d"
 msgstr "niewspierany flatedecode predictor %d"
 
 msgid "unsupported PNG filter %d"
@@ -1220,6 +1236,9 @@ msgstr "niepoprawna struktura pakietu"
 msgid "file '%s' is not in valid DCF format"
 msgstr "plik '%s' nie jest poprawnym formatem DCF"
 
+msgid "contains a blank line"
+msgstr ""
+
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Nieznane kodowanie z danymi nie-ASCII: konwertowanie do ASCII"
 
@@ -1287,11 +1306,36 @@ msgstr[0] "Znaleziono wywołanie .Internal w następującej funkcji:"
 msgstr[1] "Znaleziono wywołania .Internal w następujących funkcjach:"
 msgstr[2] "Znaleziono wywołania .Internal w następujących funkcjach:"
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following S4 generic:"
+msgid_plural "Found .Internal calls in methods for the following S4 generics:"
+msgstr[0] "Znaleziono wywołanie .Internal w następującej funkcji:"
+msgstr[1] "Znaleziono wywołania .Internal w następujących funkcjach:"
+msgstr[2] "Znaleziono wywołania .Internal w następujących funkcjach:"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "obiekt %s jest utworzony przez więcej niż jedno wywołanie danych"
 msgstr[1] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
+
+#~ msgid "Generics g in env ="
+#~ msgstr "Ogólne 'g' w env ="
+
+#~ msgid "where hasMethods(g, env) errors:"
+#~ msgstr "gdzie błędy hasMethods(g, env):"
+
+#~ msgid "May need something like"
+#~ msgstr "Można potrzebować czegoś jak"
+
+#~ msgid "importFrom("
+#~ msgstr "importFrom("
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "in NAMESPACE."
+#~ msgstr "w NAMESPACE."
 
 #, fuzzy
 #~ msgid "Foreign function call(s) without 'PACKAGE' argument:"

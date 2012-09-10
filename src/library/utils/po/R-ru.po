@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-15 12:09-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -60,7 +60,8 @@ msgstr "у объекта %s нет класса \"SweaveSyntax\""
 msgid "recursive Sweave input %s in stack"
 msgstr "рекурсивный Sweave-ввод %s в стек"
 
-msgid "target syntax not of class \"SweaveSyntax\""
+#, fuzzy
+msgid "target syntax not of class %s"
 msgstr "целевой синтаксис не имеет класса \"SweaveSyntax\""
 
 msgid "target syntax contains no translation table"
@@ -116,6 +117,11 @@ msgstr "Фильтр '%s' недоступен."
 msgid "Invalid 'filter' argument."
 msgstr "Неправильный аргумент 'filter'"
 
+msgid ""
+"The following dictionaries were not found:\n"
+"%s"
+msgstr ""
+
 msgid "Processing file %s"
 msgstr "Обрабатываю файл %s"
 
@@ -153,9 +159,6 @@ msgid ""
 "%s"
 msgstr "Не все аргументы имеют одну длину, следующие надо зациклить: %s"
 
-msgid ","
-msgstr ","
-
 msgid "Use either %s or %s/%s but not both."
 msgstr "Используйте либо %s, либо %s/%s, но не оба сразу."
 
@@ -174,7 +177,8 @@ msgstr "Рекомендуется использовать %s/%s вместо %s/%s/%s."
 msgid "method is just applicable to %s objects"
 msgstr "метод не подходит для объектов %s"
 
-msgid "all arguments must be of class \"person\""
+#, fuzzy
+msgid "all arguments must be of class %s"
 msgstr "все аргументы должны быть класса \"person\""
 
 msgid "at least one field has to be specified"
@@ -186,15 +190,19 @@ msgstr "все поля надо поименовать"
 msgid "%s has to be one of %s"
 msgstr "%s должен быть одним из %s"
 
-msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
-msgstr ""
-"Библиографическая запись типа %s имеет неправильно определенные пол(я): %s"
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
+msgstr "Библиографическая запись типа %s должна определять пол(я): %s"
 
 msgid "%s should be one of %s"
 msgstr "%s должен быть одним из %s"
 
-msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr "Библиографическая запись типа %s должна определять пол(я): %s"
+msgid "A BibTeX entry for LaTeX users is"
+msgstr ""
+
+msgid ""
+"Dropping invalid entry %d:\n"
+"%s"
+msgstr ""
 
 msgid "package %s not found"
 msgstr "пакет %s не найден"
@@ -207,6 +215,17 @@ msgstr "в файле DESCRIPTION пакета %s нет поля date"
 
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "не могу определить год для %s из файла DESCRIPTION пакета"
+
+msgid "To cite package %s in publications use:"
+msgstr ""
+
+msgid ""
+"ATTENTION: This citation information has been auto-generated from the "
+"package DESCRIPTION file and may need manual editing, see %s."
+msgstr ""
+
+msgid "help(\"citation\")"
+msgstr ""
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -268,8 +287,12 @@ msgstr "не могу ничего assign()"
 msgid "Browsing in the environment with call:"
 msgstr "Просмотр окружения с вызовом:"
 
-msgid "'dump' is not an object of class 'dump.frames'"
+#, fuzzy
+msgid "'dump' is not an object of class %s"
 msgstr "'dump' не является объектом класса 'dump.frames'"
+
+msgid "dump.frames"
+msgstr ""
 
 msgid "Message:"
 msgstr "Сообщение:"
@@ -627,7 +650,8 @@ msgstr ""
 "неверное значение oldPkgs; должна быть текстовая строка или результат old."
 "packages()"
 
-msgid "illformed 'instPkgs' matrix"
+#, fuzzy
+msgid "ill-formed 'instPkgs' matrix"
 msgstr "Неверная матрица 'instPkgs'"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
@@ -769,6 +793,9 @@ msgstr "не могу создать временную директорию %s"
 msgid "foundpkgs:"
 msgstr ""
 
+msgid ","
+msgstr ","
+
 msgid "files:"
 msgstr ""
 
@@ -800,7 +827,8 @@ msgstr "'file' должен быть \"\" или открытым соединением"
 msgid "must have max > min"
 msgstr "должен быть max > min"
 
-msgid "'pb' is not from class \"txtProgressBar\""
+#, fuzzy
+msgid "'pb' is not from class %s"
 msgstr "'pb' не из класса \"txtProgressBar\""
 
 msgid "cannot determine a usable name"
@@ -1169,7 +1197,8 @@ msgstr ""
 "Если ничего не произойдет, надо открыть\n"
 "%s самостоятельно"
 
-msgid "zipfile %s not found"
+#, fuzzy
+msgid "zip file %s not found"
 msgstr "zip-файл %s не найден"
 
 msgid "failed to create %s"
@@ -1186,9 +1215,6 @@ msgstr "winDialog() нельзя использовать неинтерактивно"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() нельзя использовать неинтерактивно"
-
-msgid "'pb' is not from class \"winProgressBar\""
-msgstr "'pb' не из класса \"winProgressBar\""
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1278,6 +1304,13 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+#~ msgstr ""
+#~ "Библиографическая запись типа %s имеет неправильно определенные пол(я): %s"
+
+#~ msgid "'pb' is not from class \"winProgressBar\""
+#~ msgstr "'pb' не из класса \"winProgressBar\""
 
 #~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 #~ msgstr "не могу выключить специфичные для локали символы через LC_CTYPE"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1425,28 +1425,22 @@ msgstr ""
 msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 
-msgid "Invalid mlist element for signature \""
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr ""
-
-msgid "\" at level"
-msgstr ""
-
-msgid "( should be methods list or method, had class \""
-msgstr ""
-
-#, fuzzy
-msgid "\")"
-msgstr "\""
 
 #, fuzzy
 msgid "bad method object stored in method table, class %s"
 msgstr "objeto inválido encontrado como método (classe \"%s\")"
 
-msgid "Invalid object in methods table (\""
-msgstr "Objeto inválido na tabela de métodos(\""
-
-msgid "\"), expected a method, got an object of class \""
-msgstr "\"), esperando um método, obtido um objeto de classe\""
+#, fuzzy
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
+msgstr ""
+"definição de método inválida: uma função era esperada, mas foi especificado "
+"um objeto de classe \"%s\""
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr ""
@@ -1504,7 +1498,8 @@ msgstr ""
 msgid "Failed to find expected group generic function:"
 msgstr ""
 
-msgid "Invalid group generic function in search for inherited method (class \""
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 
 #, fuzzy
@@ -1604,10 +1599,13 @@ msgid ""
 "classes?)"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
+"S3Part() só é definida para classes criadas por setOldCLass(), classes "
+"básicas ou subclasses destas: não verdadeiro para classe \"%s\""
 
 msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
@@ -1830,7 +1828,8 @@ msgstr ""
 "argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
 "objeto de classe  \"%s\""
 
-msgid "An object of class \""
+#, fuzzy
+msgid "An object of class %s"
 msgstr "Um objeto de classe \""
 
 #, fuzzy
@@ -1914,14 +1913,11 @@ msgstr ""
 "não é possível remover os métodos para \"%s\" no ambiente/pacote bloqueado "
 "\"%s\""
 
-msgid "Constructing traceable class \""
+msgid "Constructing traceable class %s"
 msgstr ""
 
-#, fuzzy
-msgid "Environment of class \""
-msgstr "Um objeto de classe \""
-
-msgid "\" is locked; using global environment for new class"
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr ""
 
 msgid ""
@@ -2013,6 +2009,20 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "nenhuma definição existente para função '%s'"
 msgstr[1] "nenhuma definição existente para função '%s'"
+
+#, fuzzy
+#~ msgid "\")"
+#~ msgstr "\""
+
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr "Objeto inválido na tabela de métodos(\""
+
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr "\"), esperando um método, obtido um objeto de classe\""
+
+#, fuzzy
+#~ msgid "Environment of class \""
+#~ msgstr "Um objeto de classe \""
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr "valor de substituição deve ser da classe \""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-08 20:29+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -94,7 +94,8 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "취소"
 
-msgid "'pb' is not from class \"tkProgressBar\""
+#, fuzzy
+msgid "'pb' is not from class %s"
 msgstr "'pb' 는 \"tkProgressBar\" 클래스가 아닙니다 "
 
 msgid "'filters' must be a 2-column character matrix"

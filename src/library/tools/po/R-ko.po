@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:48\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -175,12 +175,17 @@ msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 "패키지 이름 '%s' 가 잘못된 듯 합니다. 대신 디렉토리 이름 '%s' 를 사용합니다 "
 
+#, fuzzy
 msgid ""
-"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
-"DESCRIPTION Depends/Suggests/Imports entries."
+"Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
+"Depends/Suggests/Imports entries."
 msgstr ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
+
+#, fuzzy
+msgid "\\VignetteDepends{}"
+msgstr "비니에트:"
 
 msgid "Malformed package name"
 msgstr "잘못된 패키지 이름 "
@@ -375,11 +380,15 @@ msgstr "패키지 스타트업 함수들은 %s 를 호출해서는 안됩니다 
 msgid "installed.packages"
 msgstr "installed.packages"
 
-msgid "See section %s in ?.onAttach."
+#, fuzzy
+msgid "See section %s in '%s'."
 msgstr "?.onAttach 도움말에서  %s 섹션을 확인하세요 "
 
 msgid "Good practice"
 msgstr "좋은 연습입니다 "
+
+msgid "?.onAttach"
+msgstr ""
 
 msgid "package 'methods' is used but not declared"
 msgstr "'methods' 패키지가 사용되었으나 선언되지 않았습니다 "
@@ -417,23 +426,13 @@ msgstr "Rd 객체 '%s' 내에 설명이 되지 않은 인자들에 대한 항목
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "Rd 객체 '%s' 를 편집하는데 필요한 자동생성된 컨텐츠: "
 
-msgid "Generics g in env ="
-msgstr "Generics g in env ="
-
-msgid "where hasMethods(g, env) errors:"
-msgstr "hasMethos(g, env)  에러가 발생한 위치들: "
-
-msgid "May need something like"
-msgstr "아마도 다음과 같은 것들이 필요하지 않을까 싶습니다 "
-
-msgid "importFrom("
-msgstr "importFrom("
-
-msgid ")"
-msgstr ")"
-
-msgid "in NAMESPACE."
-msgstr "in NAMESPACE."
+msgid ""
+"Generics 'g' in 'env' %s where '%s' errors: %s\n"
+"May need something like\n"
+"\n"
+"%s\n"
+"in NAMESPACE."
+msgstr ""
 
 msgid "Generics without methods in"
 msgstr "Generics without methods in"
@@ -444,10 +443,16 @@ msgstr ":"
 msgid "argument 'file' must be a character string or connection"
 msgstr "인수 'file' 은 문자열이거나 연결이어야 합니다 "
 
-msgid "missing/empty \\name field in '%s'"
+#, fuzzy
+msgid "missing/empty %s field in '%s'"
 msgstr "'%s' 비어있는 \\name 항목이 있습니다 "
 
-msgid "Rd files must have a non-empty \\name."
+#, fuzzy
+msgid "\\name"
+msgstr "이름 "
+
+#, fuzzy
+msgid "Rd files must have a non-empty %s."
 msgstr "Rd 파일은 반드시 비어있지 않은 \\name 을 가져야 합니다 "
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
@@ -470,7 +475,8 @@ msgstr "'dir' 또는 'file' 을 반드시 지정해야 합니다 "
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "비어 있는 이름을 가진 Rd 객체들은 다루어 질 수 없습니다 "
 
-msgid "missing/empty \\name field in Rd file(s)"
+#, fuzzy
+msgid "missing/empty %s field in Rd file(s)"
 msgstr "Rd 파일에서 \\name 항목이 비어있습니다 "
 
 msgid "No help on %s found in RdDB %s"
@@ -506,13 +512,15 @@ msgstr "현재 작업디렉토리를 확인할 수 없습니다 "
 msgid "no inputs"
 msgstr "no inputs"
 
-msgid "Error in running tools::texi2pdf"
+#, fuzzy
+msgid "Error in running tools::texi2pdf()"
 msgstr "tools::texi2pdf 를 실행하는데 실패했습니다 "
 
 msgid "invalid value for '%s' : %s"
 msgstr "'%s' 에 대한 값이 잘못되었습니다: %s "
 
-msgid "Only one Rd section per \\Sexpr is supported."
+#, fuzzy
+msgid "Only one Rd section per %s is supported."
 msgstr "Only one Rd section per \\Sexpr is supported."
 
 msgid "unable to create temp directory"
@@ -610,7 +618,8 @@ msgstr "Changes require specified 'style'"
 msgid "The default JSS style may not be modified."
 msgstr "기본 JSS  스타일이 아마 바뀌지 않은 것 같습니다 "
 
-msgid "invalid value for --compact-vignettes, assuming \"qpdf\""
+#, fuzzy
+msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "--compact-vignettes 에 대한 값이 잘못되어 \"qpdf\" 로 가정합니다 "
 
 msgid "Error: cannot rename directory to"
@@ -629,7 +638,7 @@ msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' specified with only one usable sub-architecture"
 
 #, fuzzy
-msgid "--as-cran turns off --extra-arch"
+msgid "'--as-cran' turns off '--extra-arch'"
 msgstr "--cran 은 --extra-arch 를 꺼버렸습니다 "
 
 msgid "Error: no packages were specified"
@@ -638,7 +647,8 @@ msgstr "에러: 지정된 패키지들이 없습니다 "
 msgid "ERROR: cannot create check dir %s"
 msgstr "에러: 체크 디렉토리 '%s' 를 작성할 수가 없습니다"
 
-msgid "package dir"
+#, fuzzy
+msgid "package directory"
 msgstr "패키지 디렉토리 "
 
 msgid "does not exist"
@@ -765,7 +775,8 @@ msgstr "'install.libs.R' 을 통해서 다음부분에 설치됩니다 "
 msgid "installing to"
 msgstr "다음 부분에 설치 "
 
-msgid "generating debug symbols (dSYM)"
+#, fuzzy
+msgid "generating debug symbols (%s)"
 msgstr "디버그 심볼 (dSYM) 을 생성하는 중입니다 "
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -778,7 +789,8 @@ msgstr ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
 
-msgid "running src/Makefile.win ..."
+#, fuzzy
+msgid "running 'src/Makefile.win' ..."
 msgstr "src/Makefile.win 을 실행중입니다 "
 
 msgid "no source files found"
@@ -790,7 +802,8 @@ msgstr "비어있는 'data' 디렉토리입니다 "
 msgid "cannot create temporary directory"
 msgstr "임시 디렉토리를 생성할 수 없습니다 "
 
-msgid "ERROR: --merge-multiarch applies only to a single tarball"
+#, fuzzy
+msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "에러: --merge-multiarch 는 단 한개의 타르볼에만 적용됩니다 "
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
@@ -955,7 +968,8 @@ msgstr "PDF 헤더를 찾을 수 없습니다 "
 msgid "EOF marker not found"
 msgstr "EOF 마커를 찾을 수 없습니다 "
 
-msgid "cannot find startxref"
+#, fuzzy
+msgid "cannot find 'startxref' keyword"
 msgstr "startxref 를 찾을 수 없습니다 "
 
 msgid "cannot find xref table"
@@ -1021,7 +1035,8 @@ msgstr "expanding %s"
 msgid "unsupported filter %s"
 msgstr "지원되지 않는 필터 %s "
 
-msgid "unsupported flatedecode predictor %d"
+#, fuzzy
+msgid "unsupported %s predictor %d"
 msgstr "unsupported flatedecode predictor %d"
 
 msgid "unsupported PNG filter %d"
@@ -1208,6 +1223,9 @@ msgstr "패키지 레이아웃이 올바르지 않습니다 "
 msgid "file '%s' is not in valid DCF format"
 msgstr "파일 '%s' 는 올바른 DCF 형식을 가지고 있지 않습니다 "
 
+msgid "contains a blank line"
+msgstr ""
+
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "알 수 없는 인코딩과 ASCII 가 아닌 데이터: ASCII 로 변환합니다 "
 
@@ -1249,9 +1267,32 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "다음의 함수들에서 .Internal 호출들을  찾았습니다 "
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following S4 generic:"
+msgid_plural "Found .Internal calls in methods for the following S4 generics:"
+msgstr[0] "다음의 함수들에서 .Internal 호출들을  찾았습니다 "
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니다 "
+
+#~ msgid "Generics g in env ="
+#~ msgstr "Generics g in env ="
+
+#~ msgid "where hasMethods(g, env) errors:"
+#~ msgstr "hasMethos(g, env)  에러가 발생한 위치들: "
+
+#~ msgid "May need something like"
+#~ msgstr "아마도 다음과 같은 것들이 필요하지 않을까 싶습니다 "
+
+#~ msgid "importFrom("
+#~ msgstr "importFrom("
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "in NAMESPACE."
+#~ msgstr "in NAMESPACE."
 
 #, fuzzy
 #~ msgid "Foreign function call(s) without 'PACKAGE' argument:"

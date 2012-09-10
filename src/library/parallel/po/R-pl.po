@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -70,7 +70,8 @@ msgstr "niepoprawny argument 'child'"
 msgid "'children' must be a list of processes or a single process"
 msgstr "'children' musi być listą procesów lub pojedynczym procesem"
 
-msgid "'process' must be of the class \"process\""
+#, fuzzy
+msgid "'process' must be of the class %s"
 msgstr "'process' musi być klasy \"process\""
 
 msgid "'child' must be a valid child process"

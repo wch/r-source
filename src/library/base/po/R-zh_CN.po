@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -156,9 +156,6 @@ msgstr "自动载入器在'%2$s'找不到'%1$s' "
 
 msgid "complex matrices not permitted at present"
 msgstr "复数矩阵现在不能用"
-
-msgid "non-numeric argument to 'chol'"
-msgstr "'chol'的参数不是数值"
 
 msgid "non-square matrix in 'chol'"
 msgstr "'chol'的矩阵不是正方形的"
@@ -408,7 +405,8 @@ msgstr "字符串的格式不够标准明确"
 msgid "'origin' must be supplied"
 msgstr "'origin'一定得给值"
 
-msgid "do not know how to convert '%s' to class \"Date\""
+#, fuzzy
+msgid "do not know how to convert '%s' to class %s"
 msgstr "不知如何将'%s'转换成\"Date\""
 
 msgid "'%s' is not a \"date\" object"
@@ -483,12 +481,6 @@ msgstr "'origin'的长度必需为一"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag'和'differences'的值必需为大于等于一的整数"
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "不知如何将'%s'转换成\"POSIXlt\"类别"
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "不知如何将'%s'转换成\"POSIXct\"类别"
 
 msgid "wrong class"
 msgstr "类别不对"
@@ -590,7 +582,8 @@ msgstr "MARGIN ="
 msgid "is invalid for dim ="
 msgstr "不能适用于dim="
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+#, fuzzy
+msgid "must pass a package name, %s or %s object"
 msgstr "必需提供程辑名，DLLInfo或DllInfoReference对象"
 
 msgid "No DLL currently loaded with name or path"
@@ -599,7 +592,8 @@ msgstr "目前并没有载入带这个名字或路径的DLL"
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "多个DLL有相同的'%s'名字。用%s"
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+#, fuzzy
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr "必需通过DllInfo对象来设定DLL的名字。见getLoadedDLLs()"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
@@ -1215,7 +1209,8 @@ msgstr "程辑包%s 没有NAMESPACE这一文件"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "NAMESPACE文件里'%s'指示中有空的名字"
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr "useDynlib(\"%2$s\")里有重复字符名字%1$s"
 
 msgid "bad 'S3method' directive: %s"
@@ -1510,10 +1505,12 @@ msgstr "所有参数的长度都应一致"
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr "企图建立一个元素多于2^31的表"
 
-msgid "'object' must inherit from class \"table\""
+#, fuzzy
+msgid "'object' must inherit from class %s"
 msgstr "'object'必需从\"table\"繼承类别"
 
-msgid "'x' must inherit from class \"summary.table\""
+#, fuzzy
+msgid "'x' must inherit from class %s"
 msgstr "'x'必需从\"summary.table\"繼承类别"
 
 msgid "cannot coerce into a table"
@@ -1724,6 +1721,15 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "non-numeric argument to 'chol'"
+#~ msgstr "'chol'的参数不是数值"
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
+#~ msgstr "不知如何将'%s'转换成\"POSIXlt\"类别"
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
+#~ msgstr "不知如何将'%s'转换成\"POSIXct\"类别"
 
 #~ msgid "invalid 'n' value"
 #~ msgstr "'n'的值有错"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:26\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -84,6 +84,10 @@ msgstr ""
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr ""
+
+#, fuzzy
+msgid "'sampleT' and 'nser' must be integer"
+msgstr "'k' ve 'h' skalar olmalı"
 
 msgid "'lag.max' must be at least 0"
 msgstr "'lag.max' en az 0 olmalı"
@@ -270,10 +274,6 @@ msgstr "sıfır NA-olmayan nokta"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' n >= 1 gerektirir"
 
-#, fuzzy
-msgid "invalid length(xout)"
-msgstr "geçersiz 'x'"
-
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' >= 1 olmalı"
 
@@ -289,14 +289,14 @@ msgstr "'object' ve 'newdata' içindeki seri sayıları eşleşmiyor"
 msgid "'se.fit' not yet implemented for multivariate models"
 msgstr "'se.fit' çok değişkenli modeller için henüz tanımlanmadı"
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr "Burg'ün algoritması sadece tek değişkenli seriler için tanımlı"
-
 msgid "MLE only implemented for univariate series"
 msgstr "MLE sadece tek değişkenli tek değişkenli seriler için tanımlı"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' >= 0 olmalı"
+
+msgid "Burg's algorithm only implemented for univariate series"
+msgstr "Burg'ün algoritması sadece tek değişkenli seriler için tanımlı"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' negatif olmayan 3 uzunluğunda bir sayısal vektör olmalı"
@@ -366,6 +366,10 @@ msgid "need at least 2 data points"
 msgstr "en az 2 veri noktası gerekli"
 
 msgid "invalid 'x'"
+msgstr "geçersiz 'x'"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "geçersiz 'x'"
 
 msgid "sample is too sparse to find TD"
@@ -534,8 +538,10 @@ msgstr ""
 msgid "numeric contrasts or contrast name expected"
 msgstr ""
 
-msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+#, fuzzy
+msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
+"xtabs(*, sparse=TRUE) \"Matrix\" paketinin düzgün kurulumunu gerektirir"
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr ""
@@ -720,7 +726,8 @@ msgstr "'x' bir vektör değil"
 msgid "bad value for 'lag' or 'differences'"
 msgstr "'lag' veya 'differences' için hatalı değer"
 
-msgid "'xi' has not the right length"
+#, fuzzy
+msgid "'xi' does not have the right length"
 msgstr "'xi' doğru uzunluğa sahip değil"
 
 msgid "incorrect dimensions for 'xi'"
@@ -728,6 +735,10 @@ msgstr "'xi' için hatalı boyutlar"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' bir vektör veya matris değil"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "ekstra argümanlar çıkarıldı"
 
 msgid "invalid distance method"
 msgstr "geçersiz uzaklık metodu"
@@ -1139,8 +1150,9 @@ msgstr "geçersiz ağaç diyagramı"
 msgid "'merge' component in dendrogram must be integer"
 msgstr ""
 
-msgid "argument 'x' cannot be coerced to class \"hclust\""
-msgstr ""
+#, fuzzy
+msgid "argument 'x' cannot be coerced to class %s"
+msgstr "'x' argümanı nümerik olmalı"
 
 msgid "Consider providing an as.hclust.%s() method"
 msgstr ""
@@ -1437,15 +1449,6 @@ msgstr ""
 msgid "'start' and 'table' must be same length"
 msgstr "'start' ve 'table' aynı uzunlukta olmalı"
 
-msgid "this should not happen"
-msgstr "gerçekleşmemesi gerekir"
-
-msgid "algorithm did not converge"
-msgstr "algoritma yakınsamadı"
-
-msgid "incorrect specification of 'table' or 'start'"
-msgstr "'table' veya 'start' ın hatalı özelliği"
-
 msgid "%d missing values deleted"
 msgstr "%d eksik değer silindi"
 
@@ -1478,7 +1481,8 @@ msgstr "'low' ve 'high' aynı anda TRUE olamaz"
 msgid "need multiple response"
 msgstr "çoklu cevap gerekli"
 
-msgid "object must be of class \"manova\" or \"maov\""
+#, fuzzy
+msgid "object must be of class %s or %s"
 msgstr "nesneler \"manova\" veya \"maov\" sınıfında olmalı"
 
 msgid "need multiple responses"
@@ -1576,7 +1580,8 @@ msgstr ""
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' en az bir uzunluğunda bir karakter vektörü olmalı"
 
-msgid "'termobj' must be a object of class \"terms\""
+#, fuzzy
+msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' \"terms\" sınıfının bir nesnesi olmalı"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
@@ -1761,7 +1766,7 @@ msgid ""
 "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
 
-msgid "one-diml optimization by Nelder-Mead is unreliable:"
+msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
 msgstr ""
 
 msgid "use \"Brent\" or optimize() directly"
@@ -2025,9 +2030,6 @@ msgstr ""
 
 msgid "all 'x' values are identical"
 msgstr "bütün 'x' değerleri eşit"
-
-msgid "ifault=%d. This should not happen"
-msgstr ""
 
 msgid "attempt to smooth non-numeric values"
 msgstr ""
@@ -2340,9 +2342,6 @@ msgstr "farkların sayısı bir pozitif tamsayı olmalı"
 msgid "'start.innov' is too short: need %d points"
 msgstr "'start.innov' çok kısa: %d nokta gerekli"
 
-msgid "insufficient observations"
-msgstr "yetersiz gözlem sayısı"
-
 msgid "need an object with call component"
 msgstr "çağrı bileşeni içeren bir nesne gerekli"
 
@@ -2373,12 +2372,9 @@ msgstr "sıfırlarla kesin güven aralığı hesaplanamıyor"
 msgid "must supply either 'formula' or 'data'"
 msgstr "'formula' veya 'data' verilmeli"
 
-msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+#, fuzzy
+msgid "%s applies only to two-way tables"
 msgstr "xtabs(*, sparse=TRUE) sadece 2 yönlü tablolara uygulanır"
-
-msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr ""
-"xtabs(*, sparse=TRUE) \"Matrix\" paketinin düzgün kurulumunu gerektirir"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
@@ -2441,6 +2437,22 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "invalid length(xout)"
+#~ msgstr "geçersiz 'x'"
+
+#~ msgid "this should not happen"
+#~ msgstr "gerçekleşmemesi gerekir"
+
+#~ msgid "algorithm did not converge"
+#~ msgstr "algoritma yakınsamadı"
+
+#~ msgid "incorrect specification of 'table' or 'start'"
+#~ msgstr "'table' veya 'start' ın hatalı özelliği"
+
+#~ msgid "insufficient observations"
+#~ msgstr "yetersiz gözlem sayısı"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' NAs içeriyor"

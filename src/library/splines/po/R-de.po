@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2009-10-07 14:29+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -27,17 +27,17 @@ msgid "'ord' must be positive integer, at most the number of knots"
 msgstr ""
 "'ord' muss eine positive ganze Zahl sein, maximal die Anzahl der Knoten"
 
-msgid "need at least 2*ord -1 (=%d) knots"
+#, fuzzy
+msgid "need at least %s (=%d) knots"
 msgstr "brauche mindestens 2*ord -1 (=%d) Knoten"
 
-msgid ""
-"the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
+#, fuzzy
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
 msgstr ""
 "die 'x' Daten müssen im Bereich %g bis %g liegen, außer es ist 'outer.ok = "
 "TRUE'"
 
-msgid ""
-"splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
 
 msgid "values of 'x' must be distinct"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,9 +151,6 @@ msgstr "autoindlæser fandt ikke '%s' i '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "kompleks matricer er ikke tilladt i øjeblikket"
-
-msgid "non-numeric argument to 'chol'"
-msgstr "ikke numerisk argument for 'chol'"
 
 msgid "non-square matrix in 'chol'"
 msgstr ""
@@ -403,7 +400,8 @@ msgstr "tegnstreng er ikke i et utvetydigt standardformat"
 msgid "'origin' must be supplied"
 msgstr "'origin' skal angives"
 
-msgid "do not know how to convert '%s' to class \"Date\""
+#, fuzzy
+msgid "do not know how to convert '%s' to class %s"
 msgstr "ved ikke hvordan '%s' skal konverteres til klasse »Date«"
 
 msgid "'%s' is not a \"date\" object"
@@ -479,12 +477,6 @@ msgstr "'origin' skal være af længde en"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' og 'differences' skal være heltal >=1"
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "kan ikke konvertere '%s' til klasse »POSIXIt«"
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "kan ikke konvertere '%s' til klasse »POSIXct«"
 
 msgid "wrong class"
 msgstr "forkert klasse"
@@ -586,7 +578,8 @@ msgstr "MARGEN ="
 msgid "is invalid for dim ="
 msgstr "er ugyldig for dim ="
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+#, fuzzy
+msgid "must pass a package name, %s or %s object"
 msgstr "skal overholde et pakkenavn, DLLInfo- eller DLLInfoReference-objekt"
 
 msgid "No DLL currently loaded with name or path"
@@ -595,7 +588,8 @@ msgstr "Ingen DLL er aktuelt indlæst med navn eller sti"
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "flere DLL'er matcher '%s'. Bruger '%s'"
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+#, fuzzy
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr "skal angive DLL via et DLLInfo-objekt. Se getLoadedDLLs()"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
@@ -1208,7 +1202,7 @@ msgstr ""
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr ""
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr ""
 
 msgid "bad 'S3method' directive: %s"
@@ -1499,10 +1493,11 @@ msgstr ""
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr ""
 
-msgid "'object' must inherit from class \"table\""
-msgstr ""
+#, fuzzy
+msgid "'object' must inherit from class %s"
+msgstr "'object' skal være en liste"
 
-msgid "'x' must inherit from class \"summary.table\""
+msgid "'x' must inherit from class %s"
 msgstr ""
 
 msgid "cannot coerce into a table"
@@ -1725,6 +1720,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "non-numeric argument to 'chol'"
+#~ msgstr "ikke numerisk argument for 'chol'"
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
+#~ msgstr "kan ikke konvertere '%s' til klasse »POSIXIt«"
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
+#~ msgstr "kan ikke konvertere '%s' til klasse »POSIXct«"
 
 #~ msgid "invalid argument values in 'backsolve'"
 #~ msgstr "ugyldigt argumentværdier i 'backsolve'"

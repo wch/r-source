@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 06:58\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1446,26 +1446,21 @@ msgstr ""
 "Niepoprawny obiekt w meta tablicy metod dla %s, etykieta \"%s\", otrzymano "
 "klasę %s"
 
-msgid "Invalid mlist element for signature \""
-msgstr "Niepoprawny element 'mlist' dla sygnatury \""
-
-msgid "\" at level"
-msgstr "\"na poziomie"
-
-msgid "( should be methods list or method, had class \""
+#, fuzzy
+msgid ""
+"Invalid mlist element for signature %s at level %d (should be methods list "
+"or method, had class %s)"
 msgstr "( powinna być lista metod albo metoda, otrzymano klasę \""
-
-msgid "\")"
-msgstr "\")"
 
 msgid "bad method object stored in method table, class %s"
 msgstr "błędny obiekt metody przechowywany w tablicy metod, klasy %s"
 
-msgid "Invalid object in methods table (\""
-msgstr "Niepoprawny obiekt w tablicy metody (\""
-
-msgid "\"), expected a method, got an object of class \""
-msgstr "\"), oczekiwano metody, otrzymano obiekt klasy \""
+#, fuzzy
+msgid ""
+"Invalid object in methods table (%s), expected a method, got an object of "
+"class %s"
+msgstr ""
+"niepoprawna definicja metody: oczekiwano funkcja, a otrzymano obiekt klasy %s"
 
 msgid "Invalid or unset methods table in generic function \""
 msgstr "Niepoprawna lub nieustawiona tablica metod w ogólnej funkcji \""
@@ -1527,7 +1522,9 @@ msgstr "Wybieranie metody %s z %d niejednoznacznych możliwości"
 msgid "Failed to find expected group generic function:"
 msgstr "Nie udało się znaleźć oczekiwanej funkcji grupy ogolnej:"
 
-msgid "Invalid group generic function in search for inherited method (class \""
+#, fuzzy
+msgid ""
+"Invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 "Niepoprawna funkcja grupy ogólnej w poszukiwaniu dziedziczonej metody (klasa "
 "\""
@@ -1636,9 +1633,10 @@ msgstr ""
 "niespójna informacja o starym stylu klasy dla \"%s\" (być może mieszanie "
 "starych oraz nowych klas?)"
 
+#, fuzzy
 msgid ""
-"S3Class only defined for extensions of \"oldClass\" or classes with a data "
-"part:  not true of class \""
+"S3Class only defined for extensions of %s or classes with a data part:  not "
+"true of class %s"
 msgstr ""
 "S3Class zdefiniowana tylko dla rozszerzeń \"oldClass\" lub klas z częściami "
 "danych: nie jest to prawda dla klasy \""
@@ -1895,7 +1893,8 @@ msgstr ""
 "niepoprawny argument 'ignore='; powinien być definicją klasy lub ciągiem "
 "tekstowym; otrzymano obiekt klasy \"%s\""
 
-msgid "An object of class \""
+#, fuzzy
+msgid "An object of class %s"
 msgstr "Obiekt klasy \""
 
 msgid ""
@@ -1976,13 +1975,13 @@ msgid ""
 msgstr ""
 "ustawianie metody poprzez powiązanie symbolu %s w środowisku/pakiecie %s"
 
-msgid "Constructing traceable class \""
+#, fuzzy
+msgid "Constructing traceable class %s"
 msgstr "Konstruowanie klasy możliwej do śledzenia \""
 
-msgid "Environment of class \""
-msgstr "Środowisko klasy \""
-
-msgid "\" is locked; using global environment for new class"
+#, fuzzy
+msgid ""
+"Environment of class %s is locked; using global environment for new class"
 msgstr "\" jest zablokowane; używanie globalnego środowiska dla nowej klasy"
 
 msgid ""
@@ -2080,6 +2079,24 @@ msgid_plural "no definition for classes %s"
 msgstr[0] "brak definicji dla klasy \"%s\""
 msgstr[1] "brak definicji dla klas \"%s\""
 msgstr[2] "brak definicji dla klas \"%s\""
+
+#~ msgid "Invalid mlist element for signature \""
+#~ msgstr "Niepoprawny element 'mlist' dla sygnatury \""
+
+#~ msgid "\" at level"
+#~ msgstr "\"na poziomie"
+
+#~ msgid "\")"
+#~ msgstr "\")"
+
+#~ msgid "Invalid object in methods table (\""
+#~ msgstr "Niepoprawny obiekt w tablicy metody (\""
+
+#~ msgid "\"), expected a method, got an object of class \""
+#~ msgstr "\"), oczekiwano metody, otrzymano obiekt klasy \""
+
+#~ msgid "Environment of class \""
+#~ msgstr "Środowisko klasy \""
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr "Wartość zamiany musi być klasą \""

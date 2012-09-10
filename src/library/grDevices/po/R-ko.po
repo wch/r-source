@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -272,7 +272,8 @@ msgstr ""
 msgid "no current device to record from"
 msgstr "현재 이하의 것으로부터 기록할수가 있는 디바이스는 없습니다:"
 
-msgid "argument is not of class \"recordedplot\""
+#, fuzzy
+msgid "argument is not of class %s"
 msgstr "인수는 클래스 \"recordedplot\"가 아닙니다"
 
 msgid "loading snapshot from pre-2.0.0 R version"
@@ -341,10 +342,12 @@ msgstr "부적절한 'family' 인수입니다"
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "부적절한 Quartz font입니다: 4개 문자열이 아니면 되지 않습니다"
 
-msgid "invalid arguments in quartzFonts (must be font names)"
+#, fuzzy
+msgid "invalid arguments in 'quartzFonts' (must be font names)"
 msgstr "quartzFonts에서 부적절한 인수입니다(font명이 필요합니다)"
 
-msgid "invalid arguments in quartzFonts (need named args)"
+#, fuzzy
+msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr "quartFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
@@ -355,6 +358,14 @@ msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "부적절한 X11 폰트의 지정방법입니다"
+
+#, fuzzy
+msgid "invalid arguments in 'X11Fonts' (must be font names)"
+msgstr "'%s' 에서 부적절한 인수입니다(폰트명이 필요합니다)"
+
+#, fuzzy
+msgid "invalid arguments in 'X11Fonts' (need named args)"
+msgstr "'%s'에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
 
 msgid "no such device"
 msgstr "그러한 디바이스는 없습니다"

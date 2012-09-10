@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -158,9 +158,6 @@ msgstr "autocarregador não encontrou '%s' em '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "matrizes complexas não permitidas atualmente"
-
-msgid "non-numeric argument to 'chol'"
-msgstr "argumento não numérico para 'chol'"
 
 msgid "non-square matrix in 'chol'"
 msgstr "matriz não quadrada em 'chol'"
@@ -418,7 +415,8 @@ msgstr "string de caracteres não é um formato padrão não ambíguo"
 msgid "'origin' must be supplied"
 msgstr "'origin' deve ser especificado"
 
-msgid "do not know how to convert '%s' to class \"Date\""
+#, fuzzy
+msgid "do not know how to convert '%s' to class %s"
 msgstr "não sei como converter '%s' para classe \"Date\""
 
 msgid "'%s' is not a \"date\" object"
@@ -495,12 +493,6 @@ msgstr "'origin' deve ter comprimento 1"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' e differences' devem ser inteiros >= 1"
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "não sei como converter '%s' para classe \"POSIXlt\""
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "não sei como converter '%s' para classe \"POSIXct\""
 
 msgid "wrong class"
 msgstr "classe errada"
@@ -602,7 +594,8 @@ msgstr "MARGIN ="
 msgid "is invalid for dim ="
 msgstr "é inválido para dim ="
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+#, fuzzy
+msgid "must pass a package name, %s or %s object"
 msgstr ""
 "deve ser passado o nome de um pacote, DLLInfo ou objeto DllInfoReference"
 
@@ -612,7 +605,8 @@ msgstr "Nenhuma DLL atualmente carregada com nome ou caminho"
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "várias DLLs pareiam '%s'. Usando '%s'"
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+#, fuzzy
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr "DLL deve ser especificada via objeto DLLInfo. Veja getLoadedDLLs()"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
@@ -1295,7 +1289,8 @@ msgstr "pacote '%s' não tem arquivo NAMESPACE"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "nome vazio na diretiva '%s' do arquivo NAMESPACE"
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr "nomes de símbolos duplicados %s em useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
@@ -1596,10 +1591,12 @@ msgstr "todos os argumentos devem ter o mesmo comprimento"
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr "tentativa de criar uma tabela com mais de 2^31 elementos"
 
-msgid "'object' must inherit from class \"table\""
+#, fuzzy
+msgid "'object' must inherit from class %s"
 msgstr "'object' deve herdar da classe \"table\""
 
-msgid "'x' must inherit from class \"summary.table\""
+#, fuzzy
+msgid "'x' must inherit from class %s"
 msgstr "'x' deve herdar da classe \"summary.table\""
 
 msgid "cannot coerce into a table"
@@ -1825,6 +1822,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "non-numeric argument to 'chol'"
+#~ msgstr "argumento não numérico para 'chol'"
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
+#~ msgstr "não sei como converter '%s' para classe \"POSIXlt\""
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
+#~ msgstr "não sei como converter '%s' para classe \"POSIXct\""
 
 #~ msgid "invalid 'n' value"
 #~ msgstr "valor de 'n' inválido"

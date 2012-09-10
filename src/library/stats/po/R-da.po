@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:26\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,6 +81,9 @@ msgstr "»which« angav ingen faktorer"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "»whick« angav nogle ikkefaktorer som blive smidt"
+
+msgid "'sampleT' and 'nser' must be integer"
+msgstr ""
 
 msgid "'lag.max' must be at least 0"
 msgstr "»lag.max« skal være mindst 0"
@@ -267,9 +270,6 @@ msgstr ""
 msgid "'approx' requires n >= 1"
 msgstr ""
 
-msgid "invalid length(xout)"
-msgstr ""
-
 msgid "'order.max' must be >= 1"
 msgstr ""
 
@@ -285,13 +285,13 @@ msgstr ""
 msgid "'se.fit' not yet implemented for multivariate models"
 msgstr ""
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr ""
-
 msgid "MLE only implemented for univariate series"
 msgstr ""
 
 msgid "'order.max' must be >= 0"
+msgstr ""
+
+msgid "Burg's algorithm only implemented for univariate series"
 msgstr ""
 
 msgid "'order' must be a non-negative numeric vector of length 3"
@@ -358,6 +358,9 @@ msgid "need at least 2 data points"
 msgstr ""
 
 msgid "invalid 'x'"
+msgstr ""
+
+msgid "invalid 'nb'"
 msgstr ""
 
 msgid "sample is too sparse to find TD"
@@ -524,7 +527,7 @@ msgstr ""
 msgid "numeric contrasts or contrast name expected"
 msgstr ""
 
-msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
 
 msgid "not enough degrees of freedom to define contrasts"
@@ -710,13 +713,16 @@ msgstr ""
 msgid "bad value for 'lag' or 'differences'"
 msgstr ""
 
-msgid "'xi' has not the right length"
+msgid "'xi' does not have the right length"
 msgstr ""
 
 msgid "incorrect dimensions for 'xi'"
 msgstr ""
 
 msgid "'x' is not a vector or matrix"
+msgstr ""
+
+msgid "extra argument(s) %s will be disregarded"
 msgstr ""
 
 msgid "invalid distance method"
@@ -1118,7 +1124,7 @@ msgstr ""
 msgid "'merge' component in dendrogram must be integer"
 msgstr ""
 
-msgid "argument 'x' cannot be coerced to class \"hclust\""
+msgid "argument 'x' cannot be coerced to class %s"
 msgstr ""
 
 msgid "Consider providing an as.hclust.%s() method"
@@ -1406,15 +1412,6 @@ msgstr ""
 msgid "'start' and 'table' must be same length"
 msgstr ""
 
-msgid "this should not happen"
-msgstr ""
-
-msgid "algorithm did not converge"
-msgstr ""
-
-msgid "incorrect specification of 'table' or 'start'"
-msgstr ""
-
 msgid "%d missing values deleted"
 msgstr ""
 
@@ -1445,7 +1442,7 @@ msgstr ""
 msgid "need multiple response"
 msgstr ""
 
-msgid "object must be of class \"manova\" or \"maov\""
+msgid "object must be of class %s or %s"
 msgstr ""
 
 msgid "need multiple responses"
@@ -1543,7 +1540,7 @@ msgstr ""
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr ""
 
-msgid "'termobj' must be a object of class \"terms\""
+msgid "'termobj' must be a object of class %s"
 msgstr ""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
@@ -1724,7 +1721,7 @@ msgid ""
 "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
 
-msgid "one-diml optimization by Nelder-Mead is unreliable:"
+msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
 msgstr ""
 
 msgid "use \"Brent\" or optimize() directly"
@@ -1984,9 +1981,6 @@ msgid "sample size must be between 3 and 5000"
 msgstr ""
 
 msgid "all 'x' values are identical"
-msgstr ""
-
-msgid "ifault=%d. This should not happen"
 msgstr ""
 
 msgid "attempt to smooth non-numeric values"
@@ -2292,9 +2286,6 @@ msgstr ""
 msgid "'start.innov' is too short: need %d points"
 msgstr ""
 
-msgid "insufficient observations"
-msgstr ""
-
 msgid "need an object with call component"
 msgstr ""
 
@@ -2325,10 +2316,7 @@ msgstr ""
 msgid "must supply either 'formula' or 'data'"
 msgstr ""
 
-msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
-msgstr ""
-
-msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgid "%s applies only to two-way tables"
 msgstr ""
 
 msgid "too few distinct input values to fit an asymptotic regression model"

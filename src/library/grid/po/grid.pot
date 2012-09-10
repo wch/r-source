@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:54+0100\n"
+"POT-Creation-Date: 2012-09-10 11:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,11 +61,11 @@ msgstr ""
 msgid "Unable to clip to rotated rectangle"
 msgstr ""
 
-#: layout.c:519
+#: layout.c:570
 msgid "invalid layout.pos.row"
 msgstr ""
 
-#: layout.c:523
+#: layout.c:574
 msgid "invalid layout.pos.col"
 msgstr ""
 

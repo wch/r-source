@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:26\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -93,6 +93,10 @@ msgstr "'which' не указывает факторы"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which' указывает некоторые не-факторы, которые будут выброшены"
+
+#, fuzzy
+msgid "'sampleT' and 'nser' must be integer"
+msgstr "'lower' и 'upper' должны быть конечными значениями"
 
 msgid "'lag.max' must be at least 0"
 msgstr "'lag.max' должен быть по меньшей мере 0"
@@ -286,10 +290,6 @@ msgstr "нулевые не-NA точки"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' требует n >= 1"
 
-#, fuzzy
-msgid "invalid length(xout)"
-msgstr "неправильная длина членов"
-
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' должен быть >= 1"
 
@@ -305,14 +305,14 @@ msgstr "количество серий в 'object' и 'newdata' не совпадают"
 msgid "'se.fit' not yet implemented for multivariate models"
 msgstr "'se.fit' для многомерных моделей еще не разработан"
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr "алгоритм Бурга разработан только для одномерных серий"
-
 msgid "MLE only implemented for univariate series"
 msgstr "MLE разработан только для одномерных серий"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' должен быть >= 0"
+
+msgid "Burg's algorithm only implemented for univariate series"
+msgstr "алгоритм Бурга разработан только для одномерных серий"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' должен быть неотрицательным числовым вектором длины 3"
@@ -383,6 +383,10 @@ msgid "need at least 2 data points"
 msgstr "нужны по крайней мере 2 точки"
 
 msgid "invalid 'x'"
+msgstr "неправильный 'x'"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "неправильный 'x'"
 
 msgid "sample is too sparse to find TD"
@@ -552,9 +556,10 @@ msgstr "сингулярная матрица контрастов"
 msgid "numeric contrasts or contrast name expected"
 msgstr "ожидаются числовые контрасты или имя контраста"
 
-msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+#, fuzzy
+msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
-"contr*(.., sparse=TRUE) требует правильно установленного пакета \"Matrix\""
+"xtabs(*, sparse=TRUE) требует правильно установленного пакета \"Matrix\""
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "недостаточно степеней свободы, чтобы определить контрасты"
@@ -741,7 +746,8 @@ msgstr "'x' -- не вектор"
 msgid "bad value for 'lag' or 'differences'"
 msgstr "неправильное значение 'lag' или 'differences'"
 
-msgid "'xi' has not the right length"
+#, fuzzy
+msgid "'xi' does not have the right length"
 msgstr "'xi' неправильной длины"
 
 msgid "incorrect dimensions for 'xi'"
@@ -749,6 +755,10 @@ msgstr "неправильные измерения у 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' не является вектором или матрицей"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "дополнительные аргументы отброшены"
 
 msgid "invalid distance method"
 msgstr "неправильный метод подсчета расстояний"
@@ -1169,7 +1179,8 @@ msgstr "неправильная дендрограмма"
 msgid "'merge' component in dendrogram must be integer"
 msgstr "компонент дендрограммы 'merge' должен быть целым"
 
-msgid "argument 'x' cannot be coerced to class \"hclust\""
+#, fuzzy
+msgid "argument 'x' cannot be coerced to class %s"
 msgstr "аргумент 'x' не может быть конвертирован в класс \"hclust\""
 
 msgid "Consider providing an as.hclust.%s() method"
@@ -1476,15 +1487,6 @@ msgstr "нет доступного метода 'nobs'"
 msgid "'start' and 'table' must be same length"
 msgstr "'start' и 'table' должны быть одной длины"
 
-msgid "this should not happen"
-msgstr "это не должно случиться"
-
-msgid "algorithm did not converge"
-msgstr "алгоритм не сходится"
-
-msgid "incorrect specification of 'table' or 'start'"
-msgstr "неправильное указание 'table' или 'start'"
-
 msgid "%d missing values deleted"
 msgstr "%d пропущенных значений удалено"
 
@@ -1517,7 +1519,8 @@ msgstr "'low' и 'high' не могут оба быть TRUE"
 msgid "need multiple response"
 msgstr "нужен множественный отклик"
 
-msgid "object must be of class \"manova\" or \"maov\""
+#, fuzzy
+msgid "object must be of class %s or %s"
 msgstr "объект должен быть класса \"manova\" или \"maov\""
 
 msgid "need multiple responses"
@@ -1618,7 +1621,8 @@ msgstr "нет ни компонента terms, ни атрибута"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' должен быть текстовым вектором с длиной не меньше единицы"
 
-msgid "'termobj' must be a object of class \"terms\""
+#, fuzzy
+msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' должен быть объектом класса \"terms\""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
@@ -1804,7 +1808,8 @@ msgid ""
 msgstr ""
 "метод L-BFGS-B использует 'factr' (и 'pgtol') вместо 'reltol' и 'abstol'"
 
-msgid "one-diml optimization by Nelder-Mead is unreliable:"
+#, fuzzy
+msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
 msgstr "одномерная оптимизация методом Нелдера-Мида ненадежна:"
 
 msgid "use \"Brent\" or optimize() directly"
@@ -2076,9 +2081,6 @@ msgstr "размер выборки должен быть между 3 и 5000"
 
 msgid "all 'x' values are identical"
 msgstr "все значения 'x' равны"
-
-msgid "ifault=%d. This should not happen"
-msgstr "ifault=%d. Это не должно случиться"
 
 msgid "attempt to smooth non-numeric values"
 msgstr "попытка сгладить нечисловые значения"
@@ -2391,9 +2393,6 @@ msgstr "количество различий должно быть положительным целым числом"
 msgid "'start.innov' is too short: need %d points"
 msgstr "'start.innov' слишком короткий: нужно %d точек"
 
-msgid "insufficient observations"
-msgstr "недостаточно наблюдений"
-
 msgid "need an object with call component"
 msgstr "нужен объект с компонентом 'call'"
 
@@ -2424,12 +2423,9 @@ msgstr "не могу высчитать точный доверительный интервал при наличии нулей"
 msgid "must supply either 'formula' or 'data'"
 msgstr "нужно указать либо 'formula', либо 'data'"
 
-msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+#, fuzzy
+msgid "%s applies only to two-way tables"
 msgstr "xtabs(*, sparse=TRUE) применим только к двувходовым таблицам"
-
-msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr ""
-"xtabs(*, sparse=TRUE) требует правильно установленного пакета \"Matrix\""
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
@@ -2512,6 +2508,29 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#, fuzzy
+#~ msgid "invalid length(xout)"
+#~ msgstr "неправильная длина членов"
+
+#~ msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+#~ msgstr ""
+#~ "contr*(.., sparse=TRUE) требует правильно установленного пакета \"Matrix\""
+
+#~ msgid "this should not happen"
+#~ msgstr "это не должно случиться"
+
+#~ msgid "algorithm did not converge"
+#~ msgstr "алгоритм не сходится"
+
+#~ msgid "incorrect specification of 'table' or 'start'"
+#~ msgstr "неправильное указание 'table' или 'start'"
+
+#~ msgid "ifault=%d. This should not happen"
+#~ msgstr "ifault=%d. Это не должно случиться"
+
+#~ msgid "insufficient observations"
+#~ msgstr "недостаточно наблюдений"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' содержит NAs"

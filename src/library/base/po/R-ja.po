@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -153,9 +153,6 @@ msgstr " 自動ローダーは '%s' を '%s' 中に見つけられませんで�
 
 msgid "complex matrices not permitted at present"
 msgstr " 複素行列は現在許可されていません "
-
-msgid "non-numeric argument to 'chol'"
-msgstr " 'chol' へ数値でない引数 "
 
 msgid "non-square matrix in 'chol'"
 msgstr " 'chol' 中に非正方行列 "
@@ -411,7 +408,8 @@ msgstr " 文字列は標準的な曖昧さのない書式にはなっていま�
 msgid "'origin' must be supplied"
 msgstr " 'origin' を指定しなければなりません "
 
-msgid "do not know how to convert '%s' to class \"Date\""
+#, fuzzy
+msgid "do not know how to convert '%s' to class %s"
 msgstr " '%s' をクラス \"Date\" へ変換する仕方が分かりません "
 
 msgid "'%s' is not a \"date\" object"
@@ -488,12 +486,6 @@ msgstr " 'origin' は長さ 1 でなければなりません "
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr " 'lag' そして 'differences' は 1 以上の整数でなければなりません "
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr " '%s' をクラス \"POSIXlt\" へ変換する方法が分かりません "
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr " '%s' をクラス \"POSIXct\" へ変換する方法が分かりません "
 
 msgid "wrong class"
 msgstr " 間違ったクラスです "
@@ -596,7 +588,8 @@ msgstr " MARGIN= "
 msgid "is invalid for dim ="
 msgstr " は以下の次元には無効です： "
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+#, fuzzy
+msgid "must pass a package name, %s or %s object"
 msgstr ""
 " パッケージ名、DLLInfo または DllInfoReference オブジェクトを渡さなければなり"
 "ません "
@@ -607,7 +600,8 @@ msgstr " 名前かパスを持つ Dll は現在何もロードされていませ
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr " '%s' にマッチする複数の DLL があります。'%s' を使用します "
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+#, fuzzy
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr ""
 " DLLInfo オブジェクトによって DLL を指定しなければなりません。GetLoadedDLLs"
 "() を見て下さい "
@@ -1257,7 +1251,8 @@ msgstr " パッケージ '%s' は NAMESPACE ファイルを持っていません
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr " NAMESPACE ファイル中の directive '%s' 中には名前がありません "
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr " 重複したシンボル名 %s が useDynlib(\"%s\")中に見つかりました "
 
 msgid "bad 'S3method' directive: %s"
@@ -1560,10 +1555,12 @@ msgstr " 全ての引数は同じ長さでなければなりません "
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr " 2^31 個の要素を超えるテーブルを作成しようとしています "
 
-msgid "'object' must inherit from class \"table\""
+#, fuzzy
+msgid "'object' must inherit from class %s"
 msgstr " 'object' はクラス \"table\" を継承しなければなりません "
 
-msgid "'x' must inherit from class \"summary.table\""
+#, fuzzy
+msgid "'x' must inherit from class %s"
 msgstr " 'x' はクラス \"summary.table\" を継承しなければなりません "
 
 msgid "cannot coerce into a table"
@@ -1777,6 +1774,15 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "non-numeric argument to 'chol'"
+#~ msgstr " 'chol' へ数値でない引数 "
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
+#~ msgstr " '%s' をクラス \"POSIXlt\" へ変換する方法が分かりません "
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
+#~ msgstr " '%s' をクラス \"POSIXct\" へ変換する方法が分かりません "
 
 #~ msgid "invalid 'n' value"
 #~ msgstr " 無効な 'n' 値です "

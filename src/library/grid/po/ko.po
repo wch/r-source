@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-09-10 11:13+0100\n"
 "PO-Revision-Date: 2012-03-09 06:45+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -65,11 +65,11 @@ msgstr "플랏 기호가 잘못되었습니다 "
 msgid "Unable to clip to rotated rectangle"
 msgstr "회전된 사각형에 고정시킬 수 없습니다 "
 
-#: layout.c:519
+#: layout.c:570
 msgid "invalid layout.pos.row"
 msgstr "layout.pos.row 가 잘못되었습니다 "
 
-#: layout.c:523
+#: layout.c:574
 msgid "invalid layout.pos.col"
 msgstr "layout.pos.col 이 잘못되었습니다 "
 

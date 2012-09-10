@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-09-10 11:13+0100\n"
 "PO-Revision-Date: 2010-09-29 20:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -63,11 +63,11 @@ msgstr " 不正なプロット記号です "
 msgid "Unable to clip to rotated rectangle"
 msgstr " 回転矩形へクリップ出来ません "
 
-#: layout.c:519
+#: layout.c:570
 msgid "invalid layout.pos.row"
 msgstr " 不正な layout.pos.row です "
 
-#: layout.c:523
+#: layout.c:574
 msgid "invalid layout.pos.col"
 msgstr " 不正な layout.pos.col です "
 

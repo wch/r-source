@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-10-18 22:15-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -30,17 +30,17 @@ msgstr "длина 'derivs' должна соответствовать длине 'x'"
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord' должен быть положительным целым, максимум количеством узлов"
 
-msgid "need at least 2*ord -1 (=%d) knots"
+#, fuzzy
+msgid "need at least %s (=%d) knots"
 msgstr "необходимо как минимум 2*ord -1 (=%d) узлов"
 
-msgid ""
-"the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
+#, fuzzy
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
 msgstr ""
 "данные 'x' должны быть в промежутке от %g до %g пока Вы не установите 'outer."
 "ok = TRUE'"
 
-msgid ""
-"splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
 
 msgid "values of 'x' must be distinct"

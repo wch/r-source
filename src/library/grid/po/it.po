@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-09-10 11:13+0100\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -64,11 +64,11 @@ msgstr "layout.pos.col non valido"
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossibile tagliare su una viewport ruotata"
 
-#: layout.c:519
+#: layout.c:570
 msgid "invalid layout.pos.row"
 msgstr "layout.pos.row non valido"
 
-#: layout.c:523
+#: layout.c:574
 msgid "invalid layout.pos.col"
 msgstr "layout.pos.col non valido"
 

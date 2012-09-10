@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:26\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-06 09:25+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -85,6 +85,10 @@ msgstr "'which' spezifizierte keine Faktoren"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which' spezifizert einige Nicht-Faktoren, diese werden nicht beachtet"
+
+#, fuzzy
+msgid "'sampleT' and 'nser' must be integer"
+msgstr "'lower' und 'upper' müssen endliche Werte sein"
 
 msgid "'lag.max' must be at least 0"
 msgstr "'lag.max' muss mindestens 0 sein"
@@ -279,10 +283,6 @@ msgstr "keine nicht-NA Punkte"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' verlangt n >= 1"
 
-#, fuzzy
-msgid "invalid length(xout)"
-msgstr "unzulässige Anzahl von Teilnehmern"
-
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' muss >= 1 sein"
 
@@ -298,14 +298,14 @@ msgstr "Anzahl von Reihen in 'object' und 'newdata' passen nicht"
 msgid "'se.fit' not yet implemented for multivariate models"
 msgstr "'se.fit' für multivariate Modelle noch nicht implementiert"
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr "Burgs Algorhythmus nur für univariate Zeitreihen implementiert"
-
 msgid "MLE only implemented for univariate series"
 msgstr "MLE nur für univariate Zeitreihen implementiert"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' muss >= 0 sein"
+
+msgid "Burg's algorithm only implemented for univariate series"
+msgstr "Burgs Algorhythmus nur für univariate Zeitreihen implementiert"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' muss ein nicht-negativer numerischer Vektor der Länge 3 sein"
@@ -372,6 +372,10 @@ msgid "need at least 2 data points"
 msgstr "benötige zumindest 2 Datenpunkte"
 
 msgid "invalid 'x'"
+msgstr "unzulässiges 'x'"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "unzulässiges 'x'"
 
 msgid "sample is too sparse to find TD"
@@ -543,8 +547,9 @@ msgstr "singläre Kontrastmatrix"
 msgid "numeric contrasts or contrast name expected"
 msgstr "numerische Kontraste oder ein Kontrastname erwartet"
 
-msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr "contr*(..,sparse=TRUE) benötigt das installierte Paket \"Matrix\""
+#, fuzzy
+msgid "%s needs package 'Matrix' correctly installed"
+msgstr "xtabs(*, sparse=TRUE) benötig das installierte Paket \"Matrix\""
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "zu wenig Freiheitsgrade, um Kontraste zu definieren"
@@ -729,7 +734,8 @@ msgstr "'x' ist kein Vektor"
 msgid "bad value for 'lag' or 'differences'"
 msgstr "ungültiger Wert für lag' oder 'differences'"
 
-msgid "'xi' has not the right length"
+#, fuzzy
+msgid "'xi' does not have the right length"
 msgstr "'xi' hat nicht die richtige Länge"
 
 msgid "incorrect dimensions for 'xi'"
@@ -737,6 +743,10 @@ msgstr "falsche Dimensionen für 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' ist weder Vektor noch Matrix"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "zusätzliche Argumente verworfen"
 
 msgid "invalid distance method"
 msgstr "unzulässige Distanzmethode"
@@ -1163,7 +1173,8 @@ msgstr "unzulässiges Dendrogramm"
 msgid "'merge' component in dendrogram must be integer"
 msgstr "Die 'merge' Komponente in einem Dendrogramm muss ganzzahlig sein"
 
-msgid "argument 'x' cannot be coerced to class \"hclust\""
+#, fuzzy
+msgid "argument 'x' cannot be coerced to class %s"
 msgstr "Argument 'x' kann nich in die Klasse \"hclust\" gewandelt werden"
 
 msgid "Consider providing an as.hclust.%s() method"
@@ -1470,15 +1481,6 @@ msgstr "keine 'nobs' Methode verfügbar"
 msgid "'start' and 'table' must be same length"
 msgstr "'start' und 'table' müssen dieselbe Länge haben"
 
-msgid "this should not happen"
-msgstr "dies sollte nicht passieren"
-
-msgid "algorithm did not converge"
-msgstr "Algorithmus konvergierte nicht"
-
-msgid "incorrect specification of 'table' or 'start'"
-msgstr "falsche Spezifikation von 'table' oder 'start'"
-
 msgid "%d missing values deleted"
 msgstr "%d fehlende Werte gelöscht"
 
@@ -1511,7 +1513,8 @@ msgstr "'low' und 'high' können nicht beide TRUE sein"
 msgid "need multiple response"
 msgstr "benötige multiple Antwort"
 
-msgid "object must be of class \"manova\" or \"maov\""
+#, fuzzy
+msgid "object must be of class %s or %s"
 msgstr "Objekt muss aus Klasse \"manova\" oder \"maov\" sein"
 
 msgid "need multiple responses"
@@ -1613,7 +1616,8 @@ msgstr "keine terms Komponente noch Attribut"
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr "'termlabels' muss ein Zeichenkettenvektor mit Länge >= 1 sein"
 
-msgid "'termobj' must be a object of class \"terms\""
+#, fuzzy
+msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' muss ein Objekt aus der Klasse \"terms\" sein"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
@@ -1800,7 +1804,8 @@ msgstr ""
 "Methode L-BFGS-B benutzt 'factr' (and 'pgtol') anstelle von 'reltol' und "
 "'abstol'"
 
-msgid "one-diml optimization by Nelder-Mead is unreliable:"
+#, fuzzy
+msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
 msgstr "eindimensionale Optimierung mit Nelder-Mead ist unzuverlässig:"
 
 msgid "use \"Brent\" or optimize() directly"
@@ -2070,9 +2075,6 @@ msgstr "Stichprobengröße muss zwischen 3 und 5000 liegen"
 
 msgid "all 'x' values are identical"
 msgstr "alle 'x' Werte sind gleich"
-
-msgid "ifault=%d. This should not happen"
-msgstr "ifault=%d. Das sollte es nicht geben"
 
 msgid "attempt to smooth non-numeric values"
 msgstr "Versuch nicht-numerische Werte zu glätten"
@@ -2386,9 +2388,6 @@ msgstr "Anzahl der Differenzen muss eine positive ganze Zahl sein"
 msgid "'start.innov' is too short: need %d points"
 msgstr "'start.innov' ist zu kurz: benötige %d Punkte"
 
-msgid "insufficient observations"
-msgstr "nicht genug Beobachtungen"
-
 msgid "need an object with call component"
 msgstr "benötige ein Objekt mit einer call Komponente"
 
@@ -2420,11 +2419,9 @@ msgstr "kann das exakte Konfidenzinterval bei Nullen nicht berechnen"
 msgid "must supply either 'formula' or 'data'"
 msgstr "entweder 'formula' oder 'data' müssen angegeben werden"
 
-msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
+#, fuzzy
+msgid "%s applies only to two-way tables"
 msgstr "xtabs(*, sparse=TRUE) ist nur für zweifache Tabellen anwendbar"
-
-msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr "xtabs(*, sparse=TRUE) benötig das installierte Paket \"Matrix\""
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
@@ -2500,6 +2497,28 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "Parameter %s kommt in der Modellgleichung nicht vor"
 msgstr[1] "Parameter %s kommen in der Modellgleichung nicht vor"
+
+#, fuzzy
+#~ msgid "invalid length(xout)"
+#~ msgstr "unzulässige Anzahl von Teilnehmern"
+
+#~ msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
+#~ msgstr "contr*(..,sparse=TRUE) benötigt das installierte Paket \"Matrix\""
+
+#~ msgid "this should not happen"
+#~ msgstr "dies sollte nicht passieren"
+
+#~ msgid "algorithm did not converge"
+#~ msgstr "Algorithmus konvergierte nicht"
+
+#~ msgid "incorrect specification of 'table' or 'start'"
+#~ msgstr "falsche Spezifikation von 'table' oder 'start'"
+
+#~ msgid "ifault=%d. This should not happen"
+#~ msgstr "ifault=%d. Das sollte es nicht geben"
+
+#~ msgid "insufficient observations"
+#~ msgstr "nicht genug Beobachtungen"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' enthält NAs"

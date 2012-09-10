@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -161,9 +161,6 @@ msgstr "le chargement automatique n'a pas trouvé '%s' dans '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "les matrices complexes ne sont pas encore traitées"
-
-msgid "non-numeric argument to 'chol'"
-msgstr "argument non numérique pour 'chol'"
 
 msgid "non-square matrix in 'chol'"
 msgstr "la matrice doit être carrée pour 'chol'"
@@ -430,7 +427,8 @@ msgstr "la chaîne de caractères n'est pas dans un format standard non ambigu"
 msgid "'origin' must be supplied"
 msgstr "'origin' doit être spécifié"
 
-msgid "do not know how to convert '%s' to class \"Date\""
+#, fuzzy
+msgid "do not know how to convert '%s' to class %s"
 msgstr "incapable de convertir '%s' dans la classe \"Date\""
 
 msgid "'%s' is not a \"date\" object"
@@ -508,12 +506,6 @@ msgstr "'origin' doit être de longueur un"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' et 'differences' doivent être des entiers >= 1"
-
-msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "incapable de convertir automatiquement '%s' dans la classe \"POSIXlt\""
-
-msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "incapable de convertir automatiquement '%s' dans la classe \"POSIXct\""
 
 msgid "wrong class"
 msgstr "mauvaise classe"
@@ -621,7 +613,8 @@ msgstr "MARGIN ="
 msgid "is invalid for dim ="
 msgstr "est incorrect pour dim ="
 
-msgid "must pass a package name, DLLInfo or DllInfoReference object"
+#, fuzzy
+msgid "must pass a package name, %s or %s object"
 msgstr ""
 "un nom de package, un objet DLLInfo ou DllInfoReference doit être fourni"
 
@@ -631,7 +624,8 @@ msgstr "Aucune DLL n'est actuellement chargée avec ce nom ou chemin d'accès"
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "plusieurs DLLs correspondent à '%s'. Utilisation de '%s'"
 
-msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+#, fuzzy
+msgid "must specify DLL via a %s object. See getLoadedDLLs()"
 msgstr "la DLL doit être spécifiée via un objet DLLInfo. Voyez getLoadedDLLs()"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
@@ -1286,7 +1280,8 @@ msgstr "le package %s n'a aucun fichier NAMESPACE"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "nom vide dans la directive '%s' dans le fichier NAMESPACE"
 
-msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr "noms de symboles dupliqués %s dans useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
@@ -1586,10 +1581,12 @@ msgstr "tous les arguments doivent avoir la même longueur"
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr "tentative de création d'une table contenant 2^31 éléments ou plus"
 
-msgid "'object' must inherit from class \"table\""
+#, fuzzy
+msgid "'object' must inherit from class %s"
 msgstr "'object' doit hériter de la classe \"table\""
 
-msgid "'x' must inherit from class \"summary.table\""
+#, fuzzy
+msgid "'x' must inherit from class %s"
 msgstr "'x' doit hériter de la classe \"summary.table\""
 
 msgid "cannot coerce into a table"
@@ -1815,6 +1812,17 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "non-numeric argument to 'chol'"
+#~ msgstr "argument non numérique pour 'chol'"
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
+#~ msgstr ""
+#~ "incapable de convertir automatiquement '%s' dans la classe \"POSIXlt\""
+
+#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
+#~ msgstr ""
+#~ "incapable de convertir automatiquement '%s' dans la classe \"POSIXct\""
 
 #~ msgid "invalid 'n' value"
 #~ msgstr "valeur 'n' incorrecte"

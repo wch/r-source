@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "recursive Sweave input %s in stack"
 msgstr ""
 
-msgid "target syntax not of class \"SweaveSyntax\""
+msgid "target syntax not of class %s"
 msgstr ""
 
 msgid "target syntax contains no translation table"
@@ -95,6 +95,9 @@ msgstr ""
 msgid "Invalid 'filter' argument."
 msgstr ""
 
+msgid "The following dictionaries were not found:\n%s"
+msgstr ""
+
 msgid "Processing file %s"
 msgstr ""
 
@@ -122,9 +125,6 @@ msgstr ""
 msgid "Not all arguments are of the same length, the following need to be recycled: %s"
 msgstr ""
 
-msgid ","
-msgstr ""
-
 msgid "Use either %s or %s/%s but not both."
 msgstr ""
 
@@ -143,7 +143,7 @@ msgstr ""
 msgid "method is just applicable to %s objects"
 msgstr ""
 
-msgid "all arguments must be of class \"person\""
+msgid "all arguments must be of class %s"
 msgstr ""
 
 msgid "at least one field has to be specified"
@@ -155,13 +155,16 @@ msgstr ""
 msgid "%s has to be one of %s"
 msgstr ""
 
-msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr ""
 
 msgid "%s should be one of %s"
 msgstr ""
 
-msgid "A bibentry of bibtype %s has to specify the field(s): %s"
+msgid "A BibTeX entry for LaTeX users is"
+msgstr ""
+
+msgid "Dropping invalid entry %d:\n%s"
 msgstr ""
 
 msgid "package %s not found"
@@ -174,6 +177,15 @@ msgid "no date field in DESCRIPTION file of package %s"
 msgstr ""
 
 msgid "could not determine year for %s from package DESCRIPTION file"
+msgstr ""
+
+msgid "To cite package %s in publications use:"
+msgstr ""
+
+msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
+msgstr ""
+
+msgid "help(\"citation\")"
 msgstr ""
 
 msgid "m < 0"
@@ -236,7 +248,10 @@ msgstr ""
 msgid "Browsing in the environment with call:"
 msgstr ""
 
-msgid "'dump' is not an object of class 'dump.frames'"
+msgid "'dump' is not an object of class %s"
+msgstr ""
+
+msgid "dump.frames"
 msgstr ""
 
 msgid "Message:"
@@ -560,7 +575,7 @@ msgstr ""
 msgid "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr ""
 
-msgid "illformed 'instPkgs' matrix"
+msgid "ill-formed 'instPkgs' matrix"
 msgstr ""
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
@@ -680,6 +695,9 @@ msgstr ""
 msgid "foundpkgs:"
 msgstr ""
 
+msgid ","
+msgstr ""
+
 msgid "files:"
 msgstr ""
 
@@ -701,7 +719,7 @@ msgstr ""
 msgid "must have max > min"
 msgstr ""
 
-msgid "'pb' is not from class \"txtProgressBar\""
+msgid "'pb' is not from class %s"
 msgstr ""
 
 msgid "cannot determine a usable name"
@@ -1031,7 +1049,7 @@ msgstr ""
 msgid "If nothing happens, you should open\n%s yourself"
 msgstr ""
 
-msgid "zipfile %s not found"
+msgid "zip file %s not found"
 msgstr ""
 
 msgid "failed to create %s"
@@ -1047,9 +1065,6 @@ msgid "winDialog() cannot be used non-interactively"
 msgstr ""
 
 msgid "winDialogString() cannot be used non-interactively"
-msgstr ""
-
-msgid "'pb' is not from class \"winProgressBar\""
 msgstr ""
 
 msgid        "class discarded from column %s"

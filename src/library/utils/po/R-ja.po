@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:49\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -50,7 +50,8 @@ msgstr " オブジェクト %s はクラス \"SweaveSyntax\" を持ちません 
 msgid "recursive Sweave input %s in stack"
 msgstr " スタック中に再帰的な Sweave 入力 %s "
 
-msgid "target syntax not of class \"SweaveSyntax\""
+#, fuzzy
+msgid "target syntax not of class %s"
 msgstr " ターゲットの構文はクラス \"SweaveSyntax\" ではありません "
 
 msgid "target syntax contains no translation table"
@@ -106,6 +107,11 @@ msgstr " フィルタ '%s' が利用できません "
 msgid "Invalid 'filter' argument."
 msgstr " 不正な 'filter' 引数 "
 
+msgid ""
+"The following dictionaries were not found:\n"
+"%s"
+msgstr ""
+
 msgid "Processing file %s"
 msgstr " ファイル %s を処理中 "
 
@@ -144,9 +150,6 @@ msgid ""
 msgstr ""
 " 引数の長さが等しくありません．以下をリサイクル使用する必要があります：%s "
 
-msgid ","
-msgstr " , "
-
 msgid "Use either %s or %s/%s but not both."
 msgstr " %s か %s/%s のどちらかを使いますが，両方ではありません． "
 
@@ -165,7 +168,8 @@ msgstr " %s/%s の代わりに %s/%s/%s を使うことをおすすめします�
 msgid "method is just applicable to %s objects"
 msgstr " メソッドは %s オブジェクトだけに適用可能です． "
 
-msgid "all arguments must be of class \"person\""
+#, fuzzy
+msgid "all arguments must be of class %s"
 msgstr " 全ての引数がクラス \"person\" でなければなりません "
 
 msgid "at least one field has to be specified"
@@ -177,14 +181,19 @@ msgstr " すべての欄は名前を持つ必要があります "
 msgid "%s has to be one of %s"
 msgstr " %s は %s のどれかである必要があります "
 
-msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
-msgstr " bibitype %s の bibentry  は欄を正確に指定しなければなりません： %s "
+msgid "A bibentry of bibtype %s has to specify the field(s): %s"
+msgstr " bibitype %s の bibentry は欄を正確に指定しなければなりません： %s  "
 
 msgid "%s should be one of %s"
 msgstr " %s は %s のどれかである必要があります "
 
-msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr " bibitype %s の bibentry は欄を正確に指定しなければなりません： %s  "
+msgid "A BibTeX entry for LaTeX users is"
+msgstr ""
+
+msgid ""
+"Dropping invalid entry %d:\n"
+"%s"
+msgstr ""
 
 msgid "package %s not found"
 msgstr " パッケージ %s が見付かりません "
@@ -199,6 +208,17 @@ msgstr " パッケージ %s の DESCRIPTION ファイル中に日付け欄があ
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr ""
 " パッケージの DESCRIPTION ファイルから %s に対する年度を決定できませんでした "
+
+msgid "To cite package %s in publications use:"
+msgstr ""
+
+msgid ""
+"ATTENTION: This citation information has been auto-generated from the "
+"package DESCRIPTION file and may need manual editing, see %s."
+msgstr ""
+
+msgid "help(\"citation\")"
+msgstr ""
 
 msgid "m < 0"
 msgstr " m < 0 "
@@ -262,8 +282,12 @@ msgstr " 何も assign() しませんでした "
 msgid "Browsing in the environment with call:"
 msgstr " 以下の呼び出しに伴う環境でブラウジング：  "
 
-msgid "'dump' is not an object of class 'dump.frames'"
+#, fuzzy
+msgid "'dump' is not an object of class %s"
 msgstr " 'dump' はクラス 'dump.frames' のオブジェクトではありません "
+
+msgid "dump.frames"
+msgstr ""
 
 msgid "Message:"
 msgstr " メッセージ： "
@@ -623,7 +647,8 @@ msgstr ""
 " 不正な 'oldPkgs'; 文字ベクトルまたは old.packages()の返り値でなければなりま"
 "せん "
 
-msgid "illformed 'instPkgs' matrix"
+#, fuzzy
+msgid "ill-formed 'instPkgs' matrix"
 msgstr " 不正な 'instPkgs' 行列 "
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
@@ -773,6 +798,9 @@ msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
 msgid "foundpkgs:"
 msgstr ""
 
+msgid ","
+msgstr " , "
+
 msgid "files:"
 msgstr ""
 
@@ -806,7 +834,8 @@ msgstr ""
 msgid "must have max > min"
 msgstr " max > minである必要があります "
 
-msgid "'pb' is not from class \"txtProgressBar\""
+#, fuzzy
+msgid "'pb' is not from class %s"
 msgstr " 'pb'はクラス\"txtProgressBar\"からではありません "
 
 msgid "cannot determine a usable name"
@@ -1183,7 +1212,8 @@ msgid ""
 "%s yourself"
 msgstr " もし何も起きなければ、自分で '%s' を開いてください "
 
-msgid "zipfile %s not found"
+#, fuzzy
+msgid "zip file %s not found"
 msgstr " zip ファイル '%s' が見付かりません "
 
 msgid "failed to create %s"
@@ -1200,9 +1230,6 @@ msgstr " winDialog() は対話的にしか使用できません "
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr " winDialogString() は対話的にしか使用できません "
-
-msgid "'pb' is not from class \"winProgressBar\""
-msgstr " 'pb'は\"winProgressBar\"クラスを継承していません "
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1266,6 +1293,13 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
+#~ msgstr ""
+#~ " bibitype %s の bibentry  は欄を正確に指定しなければなりません： %s "
+
+#~ msgid "'pb' is not from class \"winProgressBar\""
+#~ msgstr " 'pb'は\"winProgressBar\"クラスを継承していません "
 
 #~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 #~ msgstr " LC_CTYPE 経由でロケール固有の文字を使用停止にできません "

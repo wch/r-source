@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2012-09-10 11:13\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -27,17 +27,17 @@ msgid "'ord' must be positive integer, at most the number of knots"
 msgstr ""
 "'ord' deve ser um inteiro positivo, sendo no máximo igual ao número de nós"
 
-msgid "need at least 2*ord -1 (=%d) knots"
+#, fuzzy
+msgid "need at least %s (=%d) knots"
 msgstr "são necessários pelo menos 2*ord -1 (=%d) nós"
 
-msgid ""
-"the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
+#, fuzzy
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
 msgstr ""
 "os dados 'x' devem estar na faixa de %g a %g, a não ser que você especifique "
 "'outer.ok = TRUE'"
 
-msgid ""
-"splineDesign(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
+msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
 
 msgid "values of 'x' must be distinct"
