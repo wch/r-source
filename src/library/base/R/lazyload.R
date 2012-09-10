@@ -86,7 +86,7 @@ lazyLoadDBexec <- function(filebase, fun, filter)
             if (! is.null(data$attributes))
                 attributes(e) <- data$attributes
             if (! is.null(data$isS4) && data$isS4)
-                .Call(.C_R_setS4Object, e, TRUE, TRUE)
+                .Internal(setS4Object(e, TRUE, TRUE))
             if (! is.null(data$locked) && data$locked)
                 .Internal(lockEnvironment(e, FALSE))
             e

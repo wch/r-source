@@ -37,10 +37,8 @@
 \alias{.C_R_getTaskCallbackNames}
 \alias{.C_R_getbcprofcounts}
 \alias{.C_R_removeTaskCallback}
-\alias{.C_R_setS4Object}
 \alias{.C_R_startbcprof}
 \alias{.C_R_stopbcprof}
-\alias{.C_R_traceOnOff}
 \alias{.C_bincode}
 \alias{.C_str_signif}
 \alias{.F_cg}
