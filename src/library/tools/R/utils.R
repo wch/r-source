@@ -1122,12 +1122,11 @@ function(package)
 {
     ## Return a character vector with the names of the functions in
     ## @code{package} which 'look' like S3 methods, but are not.
-    ## Using package=NULL returns all known examples
+    ## Using package = NULL returns all known examples
 
     stopList <-
         list(base = c("all.equal", "all.names", "all.vars",
              "format.char", "format.info", "format.pval",
-             ## "kappa.tri", not visible in 2.16.0
              "max.col",
              ## the next two only exist in *-defunct.Rd.
              "print.atomic", "print.coefmat",

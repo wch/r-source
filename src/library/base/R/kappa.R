@@ -63,7 +63,7 @@ kappa.default <- function(z, exact = FALSE,
         if(method == "qr" || d[1L] != d[2L])
 	    kappa.qr(qr(if(d[1L] < d[2L]) t(z) else z),
 		     exact = FALSE, norm = norm, ...)
-        else kappa.tri(z, exact = FALSE, norm = norm, ...)
+        else .kappa_tri(z, exact = FALSE, norm = norm, ...)
     }
 }
 
@@ -74,10 +74,10 @@ kappa.qr <- function(z, ...)
     qr <- z$qr
     R <- qr[1L:min(dim(qr)), , drop = FALSE]
     R[lower.tri(R)] <- 0
-    kappa.tri(R, ...)
+    .kappa_tri(R, ...)
 }
 
-kappa.tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
+.kappa_tri <- function(z, exact = FALSE, LINPACK = TRUE, norm=NULL, ...)
 {
     if(exact) {
         stopifnot(is.null(norm) || identical("2", norm))

@@ -719,6 +719,10 @@
       \code{svd(LINPACK = TRUE)} are deprecated and give a warning.
 
       They were provided for compatibility with \R 1.7.0 (Mar 2003)!
+      
+      \item The \sQuote{internal function} \code{kappa.tri()} has been
+      renamed to \code{.kappa_tri()} so it is not inadvertently called
+      as a method for class \code{"tri"}.
     }
   }
 

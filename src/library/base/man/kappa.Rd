@@ -1,10 +1,17 @@
 % File src/library/base/man/kappa.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Copyright 2008-2010 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{kappa}
+\alias{rcond}
+\alias{kappa}
+\alias{kappa.default}
+\alias{kappa.lm}
+\alias{kappa.qr}
+\alias{.kappa_tri}
+
 \title{Compute or Estimate the Condition Number of a Matrix}
 \usage{
 kappa(z, \dots)
@@ -13,16 +20,10 @@ kappa(z, \dots)
 \method{kappa}{lm}(z, \dots)
 \method{kappa}{qr}(z, \dots)
 
-kappa.tri(z, exact = FALSE, LINPACK = TRUE, norm=NULL, \dots)
+.kappa_tri(z, exact = FALSE, LINPACK = TRUE, norm=NULL, \dots)
 
 rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 }
-\alias{rcond}
-\alias{kappa}
-\alias{kappa.default}
-\alias{kappa.lm}
-\alias{kappa.qr}
-\alias{kappa.tri}
 \arguments{
   \item{z,x}{A matrix or a the result of \code{\link{qr}} or a fit from
     a class inheriting from \code{"lm"}.}
@@ -71,7 +72,8 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \code{kappa} and \code{rcond} are different interfaces to
   \emph{partly} identical functionality.
 
-  \code{kappa.tri} is an internal function called by \code{kappa.qr}.
+  \code{.kappa_tri} is an internal function called by \code{kappa.qr} and
+  \code{kappa.default}.
 }
 \value{
   The condition number, \eqn{kappa}, or an approximation if
