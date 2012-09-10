@@ -1888,7 +1888,7 @@ function(package, dir, file, lib.loc = NULL,
     ## Also, need to handle base::.Call() etc ...
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
 
-    ## allow calls to LINPACK and LAPACK functions in base, if registered.
+    ## allow calls to LINPACK functions in base, if registered.
     ## NB: dqrls and dqrdc2 are not LINPACK
     allowed <- c("dchdc", "dqrcf","dsvdc", "dtrco")
 
@@ -1949,8 +1949,13 @@ function(package, dir, file, lib.loc = NULL,
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
             for(f in .get_S4_generics(code_env)) {
-                mlist <- .get_S4_methods_list(f, code_env)
-                exprs <- c(exprs, lapply(mlist, body))
+                ## see the comments in .check_dotInternal
+                tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
+                           envir = code_env)
+                exprs <-
+                    c(exprs, eapply(tab, function(v) {
+                        if(!inherits(v, "derivedDefaultMethod")) body(v)
+                    }))
             }
         }
     }
@@ -5150,9 +5155,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
                        envir = code_env)
             ## Of course, the S4 'system' does **copy** base code into
-            ## packages (and bug reports on this fatal design error
-            ## has been ignored since 2004!).
-            ## So we'll not yet penalize acolytes ....
+            ## packages ....
             any(unlist(eapply(tab, function(v) !inherits(v, "derivedDefaultMethod") && any(codetools::findGlobals(v) %in% ".Internal"))))
         })
         gens[unlist(x)]
