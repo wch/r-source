@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-10 11:13\n"
-"PO-Revision-Date: 2012-03-06 09:33+0100\n"
+"PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -625,7 +625,7 @@ msgid "Error: cannot rename directory to"
 msgstr "Fehler: kann  Verzeichnis nicht umbennen in"
 
 msgid "cannot link from"
-msgstr ""
+msgstr "kann nicht linken aus"
 
 msgid "-l option without value"
 msgstr "-l Option ohne Wert"
@@ -638,7 +638,7 @@ msgstr "'--multiarch' angegeben, obwohl es nur eine sub-Architektur gibt"
 
 #, fuzzy
 msgid "'--as-cran' turns off '--extra-arch'"
-msgstr "--cran schaltet --extra-arch aus"
+msgstr "--as-cran schaltet --extra-arch aus"
 
 msgid "Error: no packages were specified"
 msgstr "Fehler: keine Pakete angegeben"
@@ -655,6 +655,7 @@ msgstr "existiert nicht"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
+"nicht-ASCII Zeichen in CITATION Datei, ohne eine Zeichenkodierung anzugeben"
 
 msgid "No files in this directory"
 msgstr "Keine Dateien in diesem Verzeichnis"
@@ -806,7 +807,7 @@ msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "Fehler: --merge-multiarch bezieht sich nur auf einen tarball"
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
-msgstr ""
+msgstr "nur eine Architektur, also wird '--merge-multiarch' ignoriert"
 
 msgid "invalid package"
 msgstr "ungültiges Paket"
@@ -1231,7 +1232,7 @@ msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
 
 msgid "contains a blank line"
-msgstr ""
+msgstr "enthält Leerzeile"
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Unbekannte Kodierung mit nicht-ASCII Daten: konvertiere nach ASCII"
@@ -1293,6 +1294,9 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
+#~ msgid "Foreign function calls without 'PACKAGE' argument:"
+#~ msgstr "Aufrufe paketexterner Funktionen ohne 'PACKAGE' Argument:"
+
 #~ msgid "Generics g in env ="
 #~ msgstr "Generische g in env ="
 
@@ -1310,39 +1314,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "in NAMESPACE."
 #~ msgstr "im NAMESPACE."
-
-#, fuzzy
-#~ msgid "Foreign function call(s) without 'PACKAGE' argument:"
-#~ msgstr "Aufrufe paketexterner Funktionen ohne 'PACKAGE' Argument:"
-
-#, fuzzy
-#~ msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
-#~ msgstr "Aufrufe paketexterner Funktionen ohne 'PACKAGE' Argument:"
-
-#, fuzzy
-#~ msgid ""
-#~ "Foreign function call(s) with 'PACKAGE' argument in different package:"
-#~ msgstr "Aufrufe paketexterner Funktionen ohne 'PACKAGE' Argument:"
-
-#, fuzzy
-#~ msgid "not insttalling"
-#~ msgstr "installiert nach"
-
-#, fuzzy
-#~ msgid "running msgmerge failed"
-#~ msgstr "Ausführen von 'make ' fehlgeschlagen"
-
-#, fuzzy
-#~ msgid "running msginit failed"
-#~ msgstr "Ausführen von 'zip' fehlgeschlagen"
-
-#, fuzzy
-#~ msgid "running msgconv failed"
-#~ msgstr "Ausführen von 'make ' fehlgeschlagen"
-
-#, fuzzy
-#~ msgid "running xgettext failed"
-#~ msgstr "Ausführen von 'make ' fehlgeschlagen"
 
 #~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 #~ msgstr ""
