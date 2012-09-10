@@ -889,6 +889,10 @@
       
       \item A malformed package name could cause \command{R CMD INSTALL}
       to write outside the target library.
+      
+      \item Some of the quality control functions
+      (e.g. \code{tools::checkFF()} were wrongly identifying the source
+      of S4 methods in a package and so not checking them.
     }
   }
 }

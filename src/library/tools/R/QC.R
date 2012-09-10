@@ -1949,13 +1949,8 @@ function(package, dir, file, lib.loc = NULL,
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
             for(f in .get_S4_generics(code_env)) {
-                ## see the comments in .check_dotInternal
-                tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
-                           envir = code_env)
-                exprs <-
-                    c(exprs, eapply(tab, function(v) {
-                        if(!inherits(v, "derivedDefaultMethod")) body(v)
-                    }))
+                mlist <- .get_S4_methods_list(f, code_env)
+                exprs <- c(exprs, lapply(mlist, body))
             }
         }
     }
@@ -5990,7 +5985,10 @@ function(f, env)
         ## This no longer works, so we exclude "at least" all methods
         ## with a namespace environment (as these cannot come from a
         ## package with no namespace).
-        namespace <- .get_namespace_from_package_env(env)
+
+        ## This was wrong, as some of the callers pass namespaces, not packages.
+        ## namespace <- .get_namespace_from_package_env(env)
+        namespace <- if(isNamespace(env)) env else .get_namespace_from_package_env(env)
         if(!is.null(namespace)) {
             mlist <- Filter(function(m)
                             identical(environment(m), namespace),
