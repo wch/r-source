@@ -1127,8 +1127,9 @@ function(package)
     stopList <-
         list(base = c("all.equal", "all.names", "all.vars",
              "format.char", "format.info", "format.pval",
-             "kappa.tri",
+             ## "kappa.tri", not visible in 2.16.0
              "max.col",
+             ## the next two only exist in *-defunct.Rd.
              "print.atomic", "print.coefmat",
              "qr.Q", "qr.R", "qr.X", "qr.coef", "qr.fitted", "qr.qty",
              "qr.qy", "qr.resid", "qr.solve",

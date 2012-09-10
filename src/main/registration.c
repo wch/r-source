@@ -70,6 +70,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_removeTaskCallback, 1),
     CALLDEF(R_addTaskCallback, 4),
 
+    // These have no interface in R, so used directly by .Call
     CALLDEF(R_getbcprofcounts, 0),
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
