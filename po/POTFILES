@@ -1,7 +1,6 @@
 # List of source files containing translatable strings.
 # The last line must not be a comment.
 
-src/appl/binning.c
 src/appl/optim.c
 src/appl/pretty.c
 src/appl/rcont.c
