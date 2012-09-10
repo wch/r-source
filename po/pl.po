@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-01 09:37+0100\n"
+"POT-Creation-Date: 2012-09-10 11:11+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -942,8 +942,8 @@ msgstr "problem z wyświetleniem pliku '%ls'"
 #: src/main/context.c:606 src/main/datetime.c:745 src/main/datetime.c:825
 #: src/main/datetime.c:827 src/main/datetime.c:831 src/main/datetime.c:994
 #: src/main/datetime.c:996 src/main/datetime.c:1160 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:469
-#: src/main/dotcode.c:473 src/main/dotcode.c:478 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:476
+#: src/main/dotcode.c:480 src/main/dotcode.c:485 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -1259,7 +1259,7 @@ msgstr "niepoprawna sygnatura czasu"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3289 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:202 src/main/errors.c:900 src/main/errors.c:931
+#: src/main/dotcode.c:196 src/main/errors.c:900 src/main/errors.c:931
 #: src/main/errors.c:1032 src/main/errors.c:1057 src/main/errors.c:1062
 #: src/main/errors.c:1334 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -5818,7 +5818,7 @@ msgstr "wartość NULL przekazana jako adres symbolu"
 # error(_("symbol '%s' is too long"), p)
 # src/main/dotcode.c: 209
 # error(_("symbol '%s' is too long"), p)
-#: src/main/dotcode.c:142 src/main/dotcode.c:218
+#: src/main/dotcode.c:142 src/main/dotcode.c:221
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "symbol '%s' jest zbyt długi"
@@ -5836,12 +5836,12 @@ msgstr ""
 # errorcall(call, _("too many arguments in foreign function call"))
 # src/main/dotcode.c: 520
 # errorcall(call, _("too many arguments in foreign function call"))
-#: src/main/dotcode.c:204 src/main/dotcode.c:555
+#: src/main/dotcode.c:198 src/main/dotcode.c:562
 msgid "too many arguments in foreign function call"
 msgstr "zbyt wiele argumentów w obcym wywołaniu funkcji"
 
-#: src/main/dotcode.c:251 src/main/dotcode.c:256 src/main/dotcode.c:261
-#: src/main/dotcode.c:266
+#: src/main/dotcode.c:260 src/main/dotcode.c:265 src/main/dotcode.c:270
+#: src/main/dotcode.c:275
 #, c-format
 msgid "\"%s\" not available for %s() for package \"%s\""
 msgstr "\"%s\" nie jest dostępne dla %s() dla pakietu \"%s\""
@@ -5850,7 +5850,7 @@ msgstr "\"%s\" nie jest dostępne dla %s() dla pakietu \"%s\""
 # errorcall(call,
 # 			      _("%s symbol name \"%s\" not in DLL for package \"%s\""),
 # 			      "C/Fortran", buf, dll.DLLname)
-#: src/main/dotcode.c:271
+#: src/main/dotcode.c:280
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "nazwa symbolu %s \"%s\" nie jest w pliku DLL pakietu \"%s\""
@@ -5858,26 +5858,26 @@ msgstr "nazwa symbolu %s \"%s\" nie jest w pliku DLL pakietu \"%s\""
 # src/main/dotcode.c: 265
 # errorcall(call, _("%s symbol name \"%s\" not in load table"),
 # 			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C", buf)
-#: src/main/dotcode.c:276
+#: src/main/dotcode.c:285
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "nazwa symbolu %s \"%s\" nie jest w tablicy startowej"
 
 # src/main/dotcode.c: 321
 # warning(_("NAOK used more than once"))
-#: src/main/dotcode.c:332
+#: src/main/dotcode.c:339
 msgid "NAOK used more than once"
 msgstr "NAOK użyto więcej niż raz"
 
 # src/main/dotcode.c: 325
 # warning(_("DUP used more than once"))
-#: src/main/dotcode.c:336
+#: src/main/dotcode.c:343
 msgid "DUP used more than once"
 msgstr "DUP użyto więcej niż raz"
 
 # src/main/dotcode.c: 331
 # error(_("DLL name is too long"))
-#: src/main/dotcode.c:342
+#: src/main/dotcode.c:349
 msgid "DLL name is too long"
 msgstr "nazwa DLL jest zbyt długa"
 
@@ -5887,37 +5887,37 @@ msgstr "nazwa DLL jest zbyt długa"
 # warning(_("PACKAGE used more than once"))
 # src/main/dotcode.c: 400
 # warning(_("PACKAGE used more than once"))
-#: src/main/dotcode.c:345 src/main/dotcode.c:407 src/main/dotcode.c:413
+#: src/main/dotcode.c:352 src/main/dotcode.c:414 src/main/dotcode.c:420
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE użyto więcej niż raz"
 
 # src/main/dotcode.c: 373
 # error(_("PACKAGE argument must be a single character string"))
-#: src/main/dotcode.c:386
+#: src/main/dotcode.c:393
 msgid "PACKAGE argument must be a single character string"
 msgstr "argument PACKAGE musi być jednoznakowym łańcuchem tekstowym"
 
 # src/main/dotcode.c: 379
 # error(_("PACKAGE argument is too long"))
-#: src/main/dotcode.c:392
+#: src/main/dotcode.c:399
 msgid "PACKAGE argument is too long"
 msgstr "argument PACKAGE jest zbyt długi"
 
 # src/main/dotcode.c: 321
 # warning(_("NAOK used more than once"))
-#: src/main/dotcode.c:436 src/main/dotcode.c:445
+#: src/main/dotcode.c:443 src/main/dotcode.c:452
 msgid "ENCODING used more than once"
 msgstr "ENCODING użyto więcej niż raz"
 
 # src/main/dotcode.c: 373
 # error(_("PACKAGE argument must be a single character string"))
-#: src/main/dotcode.c:438 src/main/dotcode.c:447
+#: src/main/dotcode.c:445 src/main/dotcode.c:454
 msgid "ENCODING argument must be a single character string"
 msgstr "argument ENCODING musi być jednoznakowym łańcuchem tekstowym"
 
 # src/main/dotcode.c: 440
 # error(_("no arguments supplied"))
-#: src/main/dotcode.c:465
+#: src/main/dotcode.c:472
 msgid "no arguments supplied"
 msgstr "nie dostarczono argumentów"
 
@@ -5929,7 +5929,7 @@ msgstr "nie dostarczono argumentów"
 # stop("too many arguments")
 # src/library/Recommended/Matrix/R/abIndex.R: 200
 # stop("too many arguments")
-#: src/main/dotcode.c:466 src/main/seq.c:774
+#: src/main/dotcode.c:473 src/main/seq.c:774
 msgid "too many arguments"
 msgstr "zbyt dużo argumentów"
 
@@ -5939,7 +5939,7 @@ msgstr "zbyt dużo argumentów"
 # errorcall(call, _("'.NAME' is missing"))
 # src/main/dotcode.c: 1353
 # errorcall(call, _("'.NAME' is missing"))
-#: src/main/dotcode.c:503 src/main/dotcode.c:546 src/main/dotcode.c:1390
+#: src/main/dotcode.c:510 src/main/dotcode.c:553 src/main/dotcode.c:1397
 msgid "'.NAME' is missing"
 msgstr "brakuje '.NAME'"
 
@@ -5951,7 +5951,7 @@ msgstr "brakuje '.NAME'"
 # errorcall(call,
 # 		      _("Incorrect number of arguments (%d), expecting %d for '%s'"),
 # 		      nargs, symbol.symbol.c->numArgs, symName)
-#: src/main/dotcode.c:519 src/main/dotcode.c:562 src/main/dotcode.c:1411
+#: src/main/dotcode.c:526 src/main/dotcode.c:569 src/main/dotcode.c:1418
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Niepoprawna liczba argumentów (%d), oczekiwano %d dla '%s' "
@@ -5960,7 +5960,7 @@ msgstr "Niepoprawna liczba argumentów (%d), oczekiwano %d dla '%s' "
 # errorcall(call, _("too many arguments, sorry"))
 # src/main/dotcode.c: 2254
 # errorcall(call, _("too many arguments, sorry"))
-#: src/main/dotcode.c:1219 src/main/dotcode.c:2267
+#: src/main/dotcode.c:1226 src/main/dotcode.c:2274
 msgid "too many arguments, sorry"
 msgstr "zbyt dużo argumentów, przykro mi"
 
@@ -5968,20 +5968,20 @@ msgstr "zbyt dużo argumentów, przykro mi"
 # errorcall(call, _("Invalid graphics state"))
 # src/main/dotcode.c: 1235
 # errorcall(call, _("Invalid graphics state"))
-#: src/main/dotcode.c:1251 src/main/dotcode.c:1268
+#: src/main/dotcode.c:1258 src/main/dotcode.c:1275
 msgid "Invalid graphics state"
 msgstr "Niepoprawny stan grafiki"
 
 # src/main/dotcode.c: 1308
 # error(_("NULL value for DLLInfoReference when looking for DLL"))
-#: src/main/dotcode.c:1347
+#: src/main/dotcode.c:1354
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "wartość NULL dla DLLInfoReference gdy szukano DLL"
 
 # src/main/dotcode.c: 1414
 # errorcall(call, _("Wrong type for argument %d in call to %s"),
 # 		      na+1, symName)
-#: src/main/dotcode.c:1450
+#: src/main/dotcode.c:1457
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Błędny typ dla argumentu %d przy odwołaniu do %s"
@@ -5989,7 +5989,7 @@ msgstr "Błędny typ dla argumentu %d przy odwołaniu do %s"
 # src/main/dotcode.c: 1449
 # error(_("explicit request not to duplicate arguments in call to '%s', but argument %d is of the wrong type (%d != %d)"),
 # 		      symName, na + 1, targetType, TYPEOF(s))
-#: src/main/dotcode.c:1485
+#: src/main/dotcode.c:1492
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
@@ -6000,52 +6000,52 @@ msgstr ""
 
 # src/main/dotcode.c: 1503
 # error(_("NAs in foreign function call (arg %d)"), na + 1)
-#: src/main/dotcode.c:1527
+#: src/main/dotcode.c:1534
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "wartości NA w wywołaniu obcej funkcji (argument %d)"
 
 # src/main/dotcode.c: 1526
 # error(_("NA/NaN/Inf in foreign function call (arg %d)"), na + 1)
-#: src/main/dotcode.c:1544
+#: src/main/dotcode.c:1551
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "wartość NA/NaN/Inf w wywołaniu obcej funcji (argument %d)"
 
 # src/main/dotcode.c: 1557
 # error(_("complex NA/NaN/Inf in foreign function call (arg %d)"), na + 1)
-#: src/main/dotcode.c:1568
+#: src/main/dotcode.c:1575
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "zespolone wartości NA/NaN/Inf w wywołaniu obcej funkcji (argument %d)"
 
 # src/main/dotcode.c: 1576
 # error(_("character variables must be duplicated in .C/.Fortran"))
-#: src/main/dotcode.c:1581
+#: src/main/dotcode.c:1588
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "zmienne tekstowe musza być powtórzone w  .C/.Fortran"
 
 # src/main/dotcode.c: 1581
 # warning(_("only first string in char vector used in .Fortran"))
-#: src/main/dotcode.c:1586
+#: src/main/dotcode.c:1593
 msgid "only first string in char vector used in .Fortran"
 msgstr "tylko pierwszy łańcuch w wektorze tekstowym został użyty w .Fortran"
 
 # src/main/connections.c: 2836
 # error(_("unsupported mode"))
-#: src/main/dotcode.c:1598
+#: src/main/dotcode.c:1605
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "niewspierane kodowanie '%s'"
 
-#: src/main/dotcode.c:1614
+#: src/main/dotcode.c:1621
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "problem konwersji w ponownym przekodowaniu do '%s'"
 
 # src/main/dotcode.c: 1624
 # error(_("invalid mode to pass to Fortran (arg %d)"), na + 1)
-#: src/main/dotcode.c:1642
+#: src/main/dotcode.c:1649
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "niepoprawny typ do przekazania do Fortran (argument %d)"
@@ -6056,45 +6056,45 @@ msgstr "niepoprawny typ do przekazania do Fortran (argument %d)"
 # src/main/dotcode.c: 1650
 # error(_("invalid mode (%s) to pass to Fortran (arg %d)"),
 # 			    type2char(t), na + 1)
-#: src/main/dotcode.c:1657 src/main/dotcode.c:1663
+#: src/main/dotcode.c:1664 src/main/dotcode.c:1670
 #, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "niepoprawny tryb (%s) do przekazania do Fortran (argument %d)"
 
 # src/main/dotcode.c: 1655
 # warning(_("pairlists are passed as SEXP as from R 2.15.0"))
-#: src/main/dotcode.c:1668
+#: src/main/dotcode.c:1675
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr "sparowane listy, od wersji R 2.15.0, są przekazywane jako SEXP"
 
 # src/main/dotcode.c: 2499
 # error(_("type \"%s\" not supported in interlanguage calls"), s)
-#: src/main/dotcode.c:2382
+#: src/main/dotcode.c:2389
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "typ \"%s\" nie wspierany w wywołaniach międzyjęzykowych"
 
 # src/main/dotcode.c: 2566
 # error(_("invalid function in call_R"))
-#: src/main/dotcode.c:2449
+#: src/main/dotcode.c:2456
 msgid "invalid function in call_R"
 msgstr "niepoprawna funkcja w 'call_R'"
 
 # src/main/dotcode.c: 2568
 # error(_("invalid argument count in call_R"))
-#: src/main/dotcode.c:2451
+#: src/main/dotcode.c:2458
 msgid "invalid argument count in call_R"
 msgstr "niepoprawny licznik argumentów w 'call_R'"
 
 # src/main/dotcode.c: 2570
 # error(_("invalid return value count in call_R"))
-#: src/main/dotcode.c:2453
+#: src/main/dotcode.c:2460
 msgid "invalid return value count in call_R"
 msgstr "niepoprawny licznik zwróconej wartości w 'call_R'"
 
 # src/main/dotcode.c: 2604
 # error(_("mode '%s' is not supported in call_R"), modes[i])
-#: src/main/dotcode.c:2487
+#: src/main/dotcode.c:2494
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "tryb '%s' nie jest wspierany w 'call_R'"

@@ -1,21 +1,24 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR The R Foundation
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Danish translation r.
+# Copyright (c) 2012 r & nedenstående oversættere.
+# This file is distributed under the same license as the r package.
+# Joe Hansen <joedalton2@yahoo.dk>, 2011, 2012.
+#
+# '' -> ''
+# \" -> ""
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: r-2-15-branch\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-01 09:37+0100\n"
+"POT-Creation-Date: 2012-09-10 11:11+0100\n"
 "PO-Revision-Date: 2011-11-29 21:34+0200\n"
-"Last-Translator: Joe <joedalton2@yahoo.dk>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.1.6\n"
 
 #: src/appl/binning.c:73
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
@@ -160,8 +163,8 @@ msgstr "problem med visning af '%ls'"
 #: src/main/context.c:606 src/main/datetime.c:745 src/main/datetime.c:825
 #: src/main/datetime.c:827 src/main/datetime.c:831 src/main/datetime.c:994
 #: src/main/datetime.c:996 src/main/datetime.c:1160 src/main/debug.c:224
-#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:469
-#: src/main/dotcode.c:473 src/main/dotcode.c:478 src/main/dounzip.c:320
+#: src/main/deparse.c:386 src/main/devices.c:583 src/main/dotcode.c:476
+#: src/main/dotcode.c:480 src/main/dotcode.c:485 src/main/dounzip.c:320
 #: src/main/dounzip.c:327 src/main/dounzip.c:337 src/main/dounzip.c:342
 #: src/main/dounzip.c:346 src/main/dounzip.c:350 src/main/envir.c:1544
 #: src/main/envir.c:1547 src/main/envir.c:1666 src/main/envir.c:1671
@@ -285,7 +288,7 @@ msgstr "ugyldigt tidsstempel"
 #: src/gnuwin32/extra.c:2057 src/main/character.c:586 src/main/colors.c:358
 #: src/main/connections.c:3289 src/main/context.c:639 src/main/context.c:658
 #: src/main/datetime.c:677 src/main/datetime.c:747 src/main/datetime.c:998
-#: src/main/dotcode.c:202 src/main/errors.c:900 src/main/errors.c:931
+#: src/main/dotcode.c:196 src/main/errors.c:900 src/main/errors.c:931
 #: src/main/errors.c:1032 src/main/errors.c:1057 src/main/errors.c:1062
 #: src/main/errors.c:1334 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:184 src/main/optimize.c:190
@@ -2649,7 +2652,7 @@ msgstr ""
 msgid "NULL value passed as symbol address"
 msgstr ""
 
-#: src/main/dotcode.c:142 src/main/dotcode.c:218
+#: src/main/dotcode.c:142 src/main/dotcode.c:221
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr ""
@@ -2658,164 +2661,164 @@ msgstr ""
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 
-#: src/main/dotcode.c:204 src/main/dotcode.c:555
+#: src/main/dotcode.c:198 src/main/dotcode.c:562
 msgid "too many arguments in foreign function call"
 msgstr ""
 
-#: src/main/dotcode.c:251 src/main/dotcode.c:256 src/main/dotcode.c:261
-#: src/main/dotcode.c:266
+#: src/main/dotcode.c:260 src/main/dotcode.c:265 src/main/dotcode.c:270
+#: src/main/dotcode.c:275
 #, c-format
 msgid "\"%s\" not available for %s() for package \"%s\""
 msgstr ""
 
-#: src/main/dotcode.c:271
+#: src/main/dotcode.c:280
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr ""
 
-#: src/main/dotcode.c:276
+#: src/main/dotcode.c:285
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr ""
 
-#: src/main/dotcode.c:332
+#: src/main/dotcode.c:339
 msgid "NAOK used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:336
+#: src/main/dotcode.c:343
 msgid "DUP used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:342
+#: src/main/dotcode.c:349
 msgid "DLL name is too long"
 msgstr ""
 
-#: src/main/dotcode.c:345 src/main/dotcode.c:407 src/main/dotcode.c:413
+#: src/main/dotcode.c:352 src/main/dotcode.c:414 src/main/dotcode.c:420
 msgid "PACKAGE used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:386
+#: src/main/dotcode.c:393
 msgid "PACKAGE argument must be a single character string"
 msgstr ""
 
-#: src/main/dotcode.c:392
+#: src/main/dotcode.c:399
 msgid "PACKAGE argument is too long"
 msgstr ""
 
-#: src/main/dotcode.c:436 src/main/dotcode.c:445
+#: src/main/dotcode.c:443 src/main/dotcode.c:452
 msgid "ENCODING used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:438 src/main/dotcode.c:447
+#: src/main/dotcode.c:445 src/main/dotcode.c:454
 msgid "ENCODING argument must be a single character string"
 msgstr ""
 
-#: src/main/dotcode.c:465
+#: src/main/dotcode.c:472
 msgid "no arguments supplied"
 msgstr ""
 
-#: src/main/dotcode.c:466 src/main/seq.c:774
+#: src/main/dotcode.c:473 src/main/seq.c:774
 msgid "too many arguments"
 msgstr ""
 
-#: src/main/dotcode.c:503 src/main/dotcode.c:546 src/main/dotcode.c:1390
+#: src/main/dotcode.c:510 src/main/dotcode.c:553 src/main/dotcode.c:1397
 msgid "'.NAME' is missing"
 msgstr ""
 
-#: src/main/dotcode.c:519 src/main/dotcode.c:562 src/main/dotcode.c:1411
+#: src/main/dotcode.c:526 src/main/dotcode.c:569 src/main/dotcode.c:1418
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:1219 src/main/dotcode.c:2267
+#: src/main/dotcode.c:1226 src/main/dotcode.c:2274
 msgid "too many arguments, sorry"
 msgstr ""
 
-#: src/main/dotcode.c:1251 src/main/dotcode.c:1268
+#: src/main/dotcode.c:1258 src/main/dotcode.c:1275
 msgid "Invalid graphics state"
 msgstr ""
 
-#: src/main/dotcode.c:1347
+#: src/main/dotcode.c:1354
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr ""
 
-#: src/main/dotcode.c:1450
+#: src/main/dotcode.c:1457
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr ""
 
-#: src/main/dotcode.c:1485
+#: src/main/dotcode.c:1492
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
 
-#: src/main/dotcode.c:1527
+#: src/main/dotcode.c:1534
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:1544
+#: src/main/dotcode.c:1551
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:1568
+#: src/main/dotcode.c:1575
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:1581
+#: src/main/dotcode.c:1588
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr ""
 
-#: src/main/dotcode.c:1586
+#: src/main/dotcode.c:1593
 msgid "only first string in char vector used in .Fortran"
 msgstr ""
 
-#: src/main/dotcode.c:1598
+#: src/main/dotcode.c:1605
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:1614
+#: src/main/dotcode.c:1621
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:1642
+#: src/main/dotcode.c:1649
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:1657 src/main/dotcode.c:1663
+#: src/main/dotcode.c:1664 src/main/dotcode.c:1670
 #, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:1668
+#: src/main/dotcode.c:1675
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2382
+#: src/main/dotcode.c:2389
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr ""
 
-#: src/main/dotcode.c:2449
+#: src/main/dotcode.c:2456
 msgid "invalid function in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2451
+#: src/main/dotcode.c:2458
 msgid "invalid argument count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2453
+#: src/main/dotcode.c:2460
 msgid "invalid return value count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2487
+#: src/main/dotcode.c:2494
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr ""
@@ -3140,27 +3143,27 @@ msgstr ""
 #: src/main/envir.c:1862 src/main/envir.c:1870
 #, c-format
 msgid "wrong length for '%s' argument"
-msgstr ""
+msgstr "forkert længde for '%s'-argument"
 
 #: src/main/envir.c:2005
 msgid "invalid use of 'missing'"
-msgstr ""
+msgstr "ugyldig brug af 'missing'"
 
 #: src/main/envir.c:2030
 msgid "'missing' can only be used for arguments"
-msgstr ""
+msgstr "'missing' kan kun bruges for argumenter"
 
 #: src/main/envir.c:2111
 msgid "'pos' must be an integer"
-msgstr ""
+msgstr "'pos' skal være et heltal"
 
 #: src/main/envir.c:2125
 msgid "all elements of a list must be named"
-msgstr ""
+msgstr "alle elementer på en liste skal være navngivet"
 
 #: src/main/envir.c:2148
 msgid "'attach' only works for lists, data frames and environments"
-msgstr ""
+msgstr "'attach' virker kun forlister, datarammer og miljøer"
 
 #: src/main/envir.c:2231
 msgid "detaching \"package:base\" is not allowed"
@@ -3168,11 +3171,11 @@ msgstr ""
 
 #: src/main/envir.c:2532 src/main/envir.c:2587
 msgid "argument must be an environment"
-msgstr ""
+msgstr "argument skal være et miljø"
 
 #: src/main/envir.c:2591
 msgid "arguments must be symbolic"
-msgstr ""
+msgstr "arguments skal være symbolske"
 
 #: src/main/envir.c:2712
 msgid "no enclosing environment"
@@ -3189,40 +3192,40 @@ msgstr ""
 
 #: src/main/envir.c:2791
 msgid "S4 object does not extend class \"environment\""
-msgstr ""
+msgstr "S4-objekt udvider ikke klasse »environment«"
 
 #: src/main/envir.c:2806
 msgid "invalid object for 'as.environment'"
-msgstr ""
+msgstr "ugyldigt objekt for »as.environment«"
 
 #: src/main/envir.c:2832 src/main/envir.c:2860 src/main/envir.c:2889
 #: src/main/envir.c:2910 src/main/envir.c:2933 src/main/envir.c:2968
 #: src/main/envir.c:2989
 msgid "not an environment"
-msgstr ""
+msgstr "ikke et miljø"
 
 #: src/main/envir.c:2884 src/main/envir.c:2905 src/main/envir.c:2926
 #: src/main/envir.c:2963 src/main/envir.c:2984 src/main/envir.c:3083
 msgid "not a symbol"
-msgstr ""
+msgstr "ikke et symbol"
 
 #: src/main/envir.c:2897 src/main/envir.c:2918 src/main/envir.c:2976
 #: src/main/envir.c:2997
 #, c-format
 msgid "no binding for \"%s\""
-msgstr ""
+msgstr "ingen binding for »%s«"
 
 #: src/main/envir.c:2928
 msgid "not a function"
-msgstr ""
+msgstr "ikke en funktion"
 
 #: src/main/envir.c:2936 src/main/envir.c:2952
 msgid "symbol already has a regular binding"
-msgstr ""
+msgstr "symbol har allerede en regulær binding"
 
 #: src/main/envir.c:2938 src/main/envir.c:2954
 msgid "cannot change active binding if binding is locked"
-msgstr ""
+msgstr "kan ikke ændre aktive binding hvis binding er låst"
 
 #: src/main/envir.c:3042
 msgid "unknown op"
@@ -3242,38 +3245,38 @@ msgstr ""
 
 #: src/main/envir.c:3236
 msgid "namespace already registered"
-msgstr ""
+msgstr "navnerum er allerede registreret"
 
 #: src/main/envir.c:3248
 msgid "namespace not registered"
-msgstr ""
+msgstr "navnerum er ikke registreret"
 
 #: src/main/envir.c:3295
 msgid "bad import environment argument"
-msgstr ""
+msgstr "ugyldigt arguement for importmiljø"
 
 #: src/main/envir.c:3300
 msgid "bad export environment argument"
-msgstr ""
+msgstr "ugyldigt argument for eksportmiljø"
 
 #: src/main/envir.c:3304
 msgid "length of import and export names must match"
-msgstr ""
+msgstr "længden på import- og eksportnavne skal matche"
 
 #: src/main/envir.c:3327
 #, c-format
 msgid "exported symbol '%s' has no value"
-msgstr ""
+msgstr "eksporteret symbol '%s' har ingen værdi"
 
 #: src/main/envir.c:3506
 #, c-format
 msgid "unknown encoding: %d"
-msgstr ""
+msgstr "ukendt kodning: %d"
 
 #: src/main/envir.c:3526
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr ""
+msgstr "indlejret nul i streng: '%s'"
 
 #: src/main/errors.c:148 src/main/errors.c:185
 msgid "interrupts suspended; signal ignored"
@@ -3281,22 +3284,22 @@ msgstr ""
 
 #: src/main/errors.c:291
 msgid "invalid option \"warning.expression\""
-msgstr ""
+msgstr "ugyldig indstilling »warning.expression«"
 
 #: src/main/errors.c:321
 #, c-format
 msgid "(converted from warning) %s"
-msgstr ""
+msgstr "(konverteret fra advarsel) %s"
 
 #: src/main/errors.c:332
 #, c-format
 msgid "Warning: %s\n"
-msgstr ""
+msgstr "Advarsel: %s\n"
 
 #: src/main/errors.c:335 src/main/errors.c:337
 #, c-format
 msgid "Warning in %s : %s\n"
-msgstr ""
+msgstr "Advarsel i %s : %s\n"
 
 #: src/main/errors.c:339
 #, c-format
@@ -3304,26 +3307,29 @@ msgid ""
 "Warning in %s :\n"
 "  %s\n"
 msgstr ""
+"Advarsel i %s :\n"
+"  %s\n"
 
 #: src/main/errors.c:402 src/main/errors.c:420 src/main/errors.c:567
 msgid "Lost warning messages\n"
-msgstr ""
+msgstr "Mistede advarselsbeskeder\n"
 
 #: src/main/errors.c:432
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Advarselsbesked:\n"
+msgstr[1] "Advarselsbeskeder:\n"
 
 #: src/main/errors.c:487
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
-msgstr ""
+msgstr "Der var %d advarsler (brug warnings() for at se dem)\n"
 
 #: src/main/errors.c:490
 #, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
+"Der var %d eller flere advarsler (brug warnings() for at se den første %d)\n"
 
 #: src/main/errors.c:558
 msgid "Error during wrapup: "
@@ -3331,17 +3337,17 @@ msgstr ""
 
 #: src/main/errors.c:583
 msgid "Error in "
-msgstr ""
+msgstr "Fejl i "
 
 #: src/main/errors.c:584
 #, c-format
 msgid " (from %s) : "
-msgstr ""
+msgstr " (fra %s) :"
 
 #: src/main/errors.c:635 src/main/errors.c:641
 #, c-format
 msgid "Error: "
-msgstr ""
+msgstr "Fejl: "
 
 #: src/main/errors.c:661 src/main/errors.c:1286
 msgid "In addition: "
@@ -3357,33 +3363,33 @@ msgstr ""
 
 #: src/main/errors.c:1001
 msgid "'msg1' must be a character string"
-msgstr ""
+msgstr "'msg1' skal være en tegnstreng"
 
 #: src/main/errors.c:1003
 msgid "'msg2' must be a character string"
-msgstr ""
+msgstr "'msg2' skal være en tegnstreng"
 
 #: src/main/errors.c:1098
 msgid " [invalid string in stop(.)]"
-msgstr ""
+msgstr " [ugyldig streng i stop(.)]"
 
 #: src/main/errors.c:1124
 msgid " [invalid string in warning(.)]"
-msgstr ""
+msgstr " [ugyldig streng i warning(.)]"
 
 #: src/main/errors.c:1139
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
-msgstr ""
+msgstr "forkert antal argumenter for »%s«"
 
 #: src/main/errors.c:1145 src/main/errors.c:1160
 #, c-format
 msgid "unimplemented feature in %s"
-msgstr ""
+msgstr "funktion ikke implementeret i %s"
 
 #: src/main/errors.c:1154
 msgid "invalid number of arguments"
-msgstr ""
+msgstr "ugyldigt antal argumenter"
 
 #: src/main/errors.c:1157
 msgid "time-series/vector length mismatch"
@@ -3391,19 +3397,19 @@ msgstr ""
 
 #: src/main/errors.c:1158
 msgid "incompatible arguments"
-msgstr ""
+msgstr "argumenter er ikke kompatible"
 
 #: src/main/errors.c:1161
 msgid "unknown error (report this!)"
-msgstr ""
+msgstr "ukendt fejl (rapporter denne!)"
 
 #: src/main/errors.c:1173
 msgid "unknown warning (report this!)"
-msgstr ""
+msgstr "ukendt advarsel (rapporter denne !)"
 
 #: src/main/errors.c:1251
 msgid "No function to return from, jumping to top level"
-msgstr ""
+msgstr "Ingen funktion at returnere fra, hopper til øverste niveau"
 
 #: src/main/errors.c:1267
 msgid "top level inconsistency?"
@@ -3411,11 +3417,11 @@ msgstr ""
 
 #: src/main/errors.c:1444
 msgid "bad handler data"
-msgstr ""
+msgstr "ugyldige håndtagsdata"
 
 #: src/main/errors.c:1594
 msgid "error message not a string"
-msgstr ""
+msgstr "fejlbesked er ikke en streng"
 
 #: src/main/errors.c:1669
 msgid "handler or restart stack mismatch in old restart"
@@ -3423,11 +3429,11 @@ msgstr ""
 
 #: src/main/errors.c:1695 src/main/errors.c:1711
 msgid "bad error message"
-msgstr ""
+msgstr "ugyldig fejlbesked"
 
 #: src/main/errors.c:1753
 msgid "bad restart"
-msgstr ""
+msgstr "ugyldig restart"
 
 #: src/main/errors.c:1785
 msgid "restart not on stack"
@@ -3439,20 +3445,20 @@ msgstr ""
 
 #: src/main/errors.c:1815
 msgid "error message must be a character string"
-msgstr ""
+msgstr "fejlbesked skal være en tegnstreng"
 
 #: src/main/eval.c:221
 #, c-format
 msgid "Rprof: cannot open profile file '%s'"
-msgstr ""
+msgstr "Rprof: Kan ikke åbne profilfil '%s'"
 
 #: src/main/eval.c:262
 msgid "can't use R profiling while byte code profiling"
-msgstr ""
+msgstr "kan ikke bruge R-profilering under bytekode-profilering"
 
 #: src/main/eval.c:282
 msgid "R profiling is not available on this system"
-msgstr ""
+msgstr "R-profilering er ikke tilgængelig på dette system"
 
 #: src/main/eval.c:306
 msgid ""
@@ -3494,19 +3500,19 @@ msgstr ""
 
 #: src/main/eval.c:1122
 msgid "the condition has length > 1 and only the first element will be used"
-msgstr ""
+msgstr "betingelsen har længde > 1 og kun det første element vil blive brugt"
 
 #: src/main/eval.c:1139
 msgid "missing value where TRUE/FALSE needed"
-msgstr ""
+msgstr "manglende værdi hvor TRUE/FALSE er krævet"
 
 #: src/main/eval.c:1140
 msgid "argument is not interpretable as logical"
-msgstr ""
+msgstr "argument kan ikke fortolkes som logisk"
 
 #: src/main/eval.c:1141
 msgid "argument is of length zero"
-msgstr ""
+msgstr "argument har længden nul"
 
 #: src/main/eval.c:1214
 msgid "non-symbol loop variable"
@@ -3556,12 +3562,12 @@ msgstr ""
 #: src/main/eval.c:1825
 #, c-format
 msgid "argument %d is empty"
-msgstr ""
+msgstr "argument %d er tomt"
 
 #: src/main/eval.c:1828
 #, c-format
 msgid "'%s' is missing"
-msgstr ""
+msgstr "'%s' mangler"
 
 #: src/main/eval.c:1978
 msgid "invalid formal argument list for \"function\""
@@ -3586,12 +3592,12 @@ msgstr ""
 #: src/main/eval.c:2471 src/main/objects.c:712
 #, c-format
 msgid "call name too long in '%s'"
-msgstr ""
+msgstr "kaldnavn for langt i '%s'"
 
 #: src/main/eval.c:2492
 #, c-format
 msgid "generic name too long in '%s'"
-msgstr ""
+msgstr "generisk navn for langt i '%s'"
 
 #: src/main/eval.c:2555
 #, c-format
@@ -3605,7 +3611,7 @@ msgstr ""
 #: src/main/eval.c:2932
 #, c-format
 msgid "\"%s\" is not a %s function"
-msgstr ""
+msgstr "»%s« er ikke en %s-funktion"
 
 #: src/main/eval.c:3125
 msgid "node stack overflow"
@@ -4407,20 +4413,19 @@ msgstr ""
 
 #: src/main/model.c:756
 msgid "argument is not a valid model"
-msgstr ""
+msgstr "argument er ikke en gyldig model"
 
 #: src/main/model.c:766
-#, fuzzy
 msgid "'specials' must be NULL or a character vector"
-msgstr "'path' skal være en tegnvektor"
+msgstr "'specials' skal være NULL eller en tegnvektor"
 
 #: src/main/model.c:779
 msgid "'data' argument is of the wrong type"
-msgstr ""
+msgstr "'data'-argument er af forkert type"
 
 #: src/main/model.c:1044
 msgid "'.' in formula and no 'data' argument"
-msgstr ""
+msgstr "'.' i formel og intet 'data'-argument"
 
 #: src/main/model.c:1192
 msgid "invalid formula in 'update'"
@@ -4749,7 +4754,7 @@ msgstr ""
 #: src/main/objects.c:1580
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
-msgstr ""
+msgstr "Objekt for klasse »%s« korresponderer ikke til et gyldigt S3-objekt"
 
 #: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:179
 msgid "non-finite value supplied by optim"
@@ -4794,39 +4799,39 @@ msgstr ""
 #: src/main/optim.c:306 src/main/optim.c:331 src/main/optim.c:361
 #: src/main/optim.c:440
 msgid "'ndeps' is of the wrong length"
-msgstr ""
+msgstr "'ndeps' er af forkert længde"
 
 #: src/main/optim.c:391
 msgid "unknown 'method'"
-msgstr ""
+msgstr "ukendt 'method'"
 
 #: src/main/optim.c:539
 msgid "REPORT must be > 0 (method = \"BFGS\")"
-msgstr ""
+msgstr "REPORT skal være > 0 (metode = »BFGS«)"
 
 #: src/main/optim.c:550
 msgid "initial value in 'vmmin' is not finite"
-msgstr ""
+msgstr "oprindelig værdi i 'vmmin' er ikke finitte"
 
 #: src/main/optim.c:698
 msgid "function cannot be evaluated at initial parameters"
-msgstr ""
+msgstr "funktion kan ikke evalueres ved oprindelige parametre"
 
 #: src/main/optim.c:892
 msgid "unknown 'type' in CG method of optim"
-msgstr ""
+msgstr "ukendt 'type' i CG-metode for optim"
 
 #: src/main/optim.c:905
 msgid "Function cannot be evaluated at initial parameters"
-msgstr ""
+msgstr "Funktion kan ikke evalueres ved oprindelige parametre"
 
 #: src/main/optim.c:960
 msgid "unknown type in CG method of optim"
-msgstr ""
+msgstr "ukendt type i CG-metode for optim"
 
 #: src/main/optim.c:1053
 msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
-msgstr ""
+msgstr "REPORT skal være > 0 (metode = »L-BFGS-B«)"
 
 #: src/main/optim.c:1077
 msgid "L-BFGS-B needs finite values of 'fn'"
@@ -4923,7 +4928,7 @@ msgstr ""
 
 #: src/main/optimize.c:512
 msgid "invalid iteration limit in nlm"
-msgstr ""
+msgstr "ugyldig gennemløbsbegrænsning i nlm"
 
 #: src/main/optimize.c:514
 msgid "minimization function has no good digits in nlm"
@@ -5042,83 +5047,83 @@ msgstr ""
 #: src/main/options.c:583
 #, c-format
 msgid "invalid value for '%s'"
-msgstr ""
+msgstr "ugyldig værdi for '%s'"
 
 #: src/main/options.c:576 src/main/options.c:598
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
-msgstr ""
+msgstr "»par.ask.default« er blevet erstattet af »device.ask.default«"
 
 #: src/main/par.c:157
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
-msgstr ""
+msgstr "ugyldig værdi angivet for grafisk parameter »%s«"
 
 #: src/main/par.c:164
 #, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
-msgstr ""
+msgstr "grafisk paramter »%s« har forkert længde"
 
 #: src/main/par.c:259 src/main/par.c:693
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
-msgstr ""
+msgstr "grafisk parameter »%s« kan ikke angives"
 
 #: src/main/par.c:327 src/main/par.c:721
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr ""
+msgstr "grafisk parameter 'family' har en maksimal længde på 200 byte"
 
 #: src/main/par.c:456
 msgid "parameter \"mfg\" has the wrong length"
-msgstr ""
+msgstr "parameter »mfg« har forkert længde"
 
 #: src/main/par.c:464
 msgid "parameter \"i\" in \"mfg\" is out of range"
-msgstr ""
+msgstr "parameter »i« i »mfg« er uden for interval"
 
 #: src/main/par.c:466
 msgid "parameter \"j\" in \"mfg\" is out of range"
-msgstr ""
+msgstr "parameter »j« i »mfg« er uden for interval"
 
 #: src/main/par.c:471
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
-msgstr ""
+msgstr "værdien nr i »mfg« er forkert og vil blive ignoreret"
 
 #: src/main/par.c:473
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
-msgstr ""
+msgstr "værdien nc i »mfg« er forkert og vil blive ignoreret"
 
 #: src/main/par.c:499
 msgid "calling par(new=TRUE) with no plot"
-msgstr ""
+msgstr "kalder par(new=TRUE) uden plot"
 
 #: src/main/par.c:685 src/main/par.c:1102
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
-msgstr ""
+msgstr "grafisk parameter »%s« er forældet"
 
 #: src/main/par.c:689 src/main/par.c:1106
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
-msgstr ""
+msgstr "»%s« er ikke en grafisk parameter"
 
 #: src/main/par.c:1159
 msgid "invalid argument passed to par()"
-msgstr ""
+msgstr "ugyldigt argument sendt til par()"
 
 #: src/main/par.c:1204
 #, c-format
 msgid "too many rows in layout, limit %d"
-msgstr ""
+msgstr "for mange rækker i layout, begræns %d"
 
 #: src/main/par.c:1210
 #, c-format
 msgid "too many columns in layout, limit %d"
-msgstr ""
+msgstr "for mange kolonner i layout, begræns %d"
 
 #: src/main/par.c:1212
 #, c-format
 msgid "too many cells in layout, limit %d"
-msgstr ""
+msgstr "for mange celler i layout, begræns %d"
 
 #: src/main/paste.c:77 src/main/paste.c:292
 msgid "invalid separator"
@@ -5134,7 +5139,7 @@ msgstr ""
 
 #: src/main/paste.c:541
 msgid "Impossible mode ( x )"
-msgstr ""
+msgstr "Umulig tilstand ( x )"
 
 #: src/main/paste.c:629
 msgid "atomic vector arguments only"
@@ -5142,15 +5147,15 @@ msgstr ""
 
 #: src/main/platform.c:294 src/main/platform.c:312
 msgid "invalid filename specification"
-msgstr ""
+msgstr "ugyldig filnavnsspecifikation"
 
 #: src/main/platform.c:436 src/main/platform.c:491
 msgid "write error during file append"
-msgstr ""
+msgstr "skrivefejl under filtilføjelse"
 
 #: src/main/platform.c:454
 msgid "nothing to append to"
-msgstr ""
+msgstr "intet at tilføje til"
 
 #: src/main/platform.c:456
 msgid "'outFile' must be a single file"
@@ -5183,9 +5188,9 @@ msgid "nothing to link"
 msgstr ""
 
 #: src/main/platform.c:630
-#, fuzzy
 msgid "symbolic links are not supported on this version of Windows"
-msgstr "Windowsversion er ikke understøttet"
+msgstr ""
+"symbolske henvisninger er ikke understøttet på denne version af Windows"
 
 #: src/main/platform.c:649
 #, c-format
@@ -5209,7 +5214,7 @@ msgstr ""
 #: src/main/platform.c:737
 #, c-format
 msgid "cannot link '%s' to '%s', reason '%s'"
-msgstr ""
+msgstr "kan ikke lænke '%s' til '%s', årsag '%s'"
 
 #: src/main/platform.c:746
 msgid "(hard) links are not supported on this platform"
@@ -5217,24 +5222,24 @@ msgstr ""
 
 #: src/main/platform.c:777
 msgid "'from' and 'to' are of different lengths"
-msgstr ""
+msgstr "'from' og 'to' er af forskellig længde"
 
 #: src/main/platform.c:788 src/main/platform.c:798
 msgid "expanded 'from' name too long"
-msgstr ""
+msgstr "udvidet 'from'-navn er for langt"
 
 #: src/main/platform.c:792 src/main/platform.c:802
 msgid "expanded 'to' name too long"
-msgstr ""
+msgstr "udvidet 'to'-navn er for langt"
 
 #: src/main/platform.c:806
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
-msgstr ""
+msgstr "kan ikke omdøbe fil '%s' til '%s', årsag '%s'"
 
 #: src/main/platform.c:1157
 msgid "invalid 'pattern' regular expression"
-msgstr ""
+msgstr "ugyldigt regulært udtryk for 'pattern'"
 
 #: src/main/platform.c:1278
 msgid "unable to determine R home location"
@@ -5242,7 +5247,7 @@ msgstr ""
 
 #: src/main/platform.c:1330
 msgid "file name too long"
-msgstr ""
+msgstr "filnavn er for langt"
 
 #: src/main/platform.c:1585 src/main/platform.c:1632 src/main/sysutils.c:1636
 #: src/main/sysutils.c:1650
@@ -5252,11 +5257,11 @@ msgstr ""
 #: src/main/platform.c:1628 src/main/sysutils.c:1646
 #, c-format
 msgid "read error on '%s'"
-msgstr ""
+msgstr "læsefejl på '%s'"
 
 #: src/main/platform.c:1788
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
-msgstr ""
+msgstr "angivelse af 'LC_NUMERIC' kan få R til at fungere mærkeligt"
 
 #: src/main/platform.c:1800
 msgid "LC_MESSAGES exists on Windows but is not operational"
@@ -5287,22 +5292,22 @@ msgstr ""
 #: src/main/platform.c:2208
 #, c-format
 msgid "'%s' already exists"
-msgstr ""
+msgstr "'%s' findes allerede"
 
 #: src/main/platform.c:2211
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
-msgstr ""
+msgstr "kan ikke oprette mappe '%s', årsag '%s'"
 
 #: src/main/platform.c:2257
 #, c-format
 msgid "'%ls' already exists"
-msgstr ""
+msgstr "'%ls' findes allerede"
 
 #: src/main/platform.c:2261
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
-msgstr ""
+msgstr "kan ikke oprette mappe '%ls', årsag '%s'"
 
 #: src/main/platform.c:2276 src/main/platform.c:2433
 msgid "too deep nesting"
@@ -5317,12 +5322,12 @@ msgstr ""
 #: src/main/platform.c:2304
 #, c-format
 msgid "problem creating directory %ls: %s"
-msgstr ""
+msgstr "problem ved oprettelse af mappe %ls: %s"
 
 #: src/main/platform.c:2323
 #, c-format
 msgid "problem reading dir %ls: %s"
-msgstr ""
+msgstr "problem ved læsning af mappe %ls: %s"
 
 #: src/main/platform.c:2341
 #, c-format
@@ -5337,20 +5342,20 @@ msgstr ""
 #: src/main/platform.c:2490
 #, c-format
 msgid "problem reading directory %s: %s"
-msgstr ""
+msgstr "problem ved læsning af mappe %s: %s"
 
 #: src/main/platform.c:2511
 #, c-format
 msgid "problem copying %s to %s: %s"
-msgstr ""
+msgstr "problem med at kopiere %s til %s: %s"
 
 #: src/main/platform.c:2634
 msgid "'mode' must be of length at least one"
-msgstr ""
+msgstr "'mode' skal mindst have længden en"
 
 #: src/main/platform.c:2701
 msgid "insufficient OS support on this platform"
-msgstr ""
+msgstr "utilstrækkelig OS-understøttelse på denne platform"
 
 #: src/main/plot.c:109
 msgid "only NA allowed in logical plotting symbol"
@@ -5379,7 +5384,7 @@ msgstr ""
 
 #: src/main/plot.c:467
 msgid "at least 3 arguments required"
-msgstr ""
+msgstr "mindst 3 argumenter krævet"
 
 #: src/main/plot.c:482
 msgid "\"log=\" specification must be character"
@@ -5456,96 +5461,96 @@ msgstr ""
 
 #: src/main/plot.c:1494 src/main/plot.c:3196
 msgid "invalid plot type"
-msgstr ""
+msgstr "ugyldig plottype"
 
 #: src/main/plot.c:1694
 #, c-format
 msgid "invalid plot type '%c'"
-msgstr ""
+msgstr "ugyldig plottype '%c'"
 
 #: src/main/plot.c:1755
 msgid "invalid third argument"
-msgstr ""
+msgstr "ugyldigt tredje argument"
 
 #: src/main/plot.c:1763
 msgid "invalid fourth argument"
-msgstr ""
+msgstr "ugyldigt fjerde argument"
 
 #: src/main/plot.c:1771
 msgid "cannot mix zero-length and non-zero-length coordinates"
-msgstr ""
+msgstr "kan ikke blande nullængde og ikke-nullængde koordinater"
 
 #: src/main/plot.c:1960
 msgid "unable to allocate memory (in GPath)"
-msgstr ""
+msgstr "kan ikke allokere hukommelse (i GPath)"
 
 #: src/main/plot.c:1966
 msgid "invalid x or y (in GPath)"
-msgstr ""
+msgstr "ugyldig x eller y (iGPath)"
 
 #: src/main/plot.c:2089
 msgid "invalid arrow head length"
-msgstr ""
+msgstr "ugyldig længde for pilehoved"
 
 #: src/main/plot.c:2094
 msgid "invalid arrow head angle"
-msgstr ""
+msgstr "ugyldig vinkel for pilehoved"
 
 #: src/main/plot.c:2099
 msgid "invalid arrow head specification"
-msgstr ""
+msgstr "ugyldig specifikation for pilehoved"
 
 #: src/main/plot.c:2264 src/main/plot.c:3338
 msgid "zero length 'labels'"
-msgstr ""
+msgstr "nullængde 'labels'"
 
 #: src/main/plot.c:2338
 msgid "no coordinates were supplied"
-msgstr ""
+msgstr "ingen koordinater blev angivet"
 
 #: src/main/plot.c:2544
 msgid "zero length 'text' specified"
-msgstr ""
+msgstr "nullængde 'test' angivet"
 
 #: src/main/plot.c:2550
 msgid "zero length 'side' specified"
-msgstr ""
+msgstr "nullængde 'side' angivet"
 
 #: src/main/plot.c:2557
 msgid "zero length 'line' specified"
-msgstr ""
+msgstr "nullængde 'line' angivet"
 
 #: src/main/plot.c:2565
 msgid "zero length 'outer' specified"
-msgstr ""
+msgstr "nullængde 'outer' angivet"
 
 #: src/main/plot.c:2572
 msgid "zero length 'at' specified"
-msgstr ""
+msgstr "nullængde 'at' angivet"
 
 #: src/main/plot.c:2579
 msgid "zero length 'adj' specified"
-msgstr ""
+msgstr "nullængde 'adj' angivet"
 
 #: src/main/plot.c:2593
 msgid "zero length 'cex' specified"
-msgstr ""
+msgstr "nullængde 'cex' angivet"
 
 #: src/main/plot.c:2601
 msgid "zero length 'col' specified"
-msgstr ""
+msgstr "nullængde 'col' angivet"
 
 #: src/main/plot.c:2608
 msgid "zero length 'font' specified"
-msgstr ""
+msgstr "nullængde 'font' angivet"
 
 #: src/main/plot.c:2971
 msgid "invalid a=, b= specification"
-msgstr ""
+msgstr "ugyldig a=, b= specifikation"
 
 #: src/main/plot.c:2980
 msgid "'a' and 'b' must be finite"
-msgstr ""
+msgstr "'a' og 'b' skal være finitte"
 
 #: src/main/plot.c:3191
 msgid "invalid number of points in locator()"
@@ -5557,11 +5562,11 @@ msgstr ""
 
 #: src/main/plot.c:3329
 msgid "incorrect argument type"
-msgstr ""
+msgstr "ej korrekt argumenttype"
 
 #: src/main/plot.c:3341
 msgid "different argument lengths"
-msgstr ""
+msgstr "forskellige argumentlængder"
 
 #: src/main/plot.c:3343
 msgid "more 'labels' than points"
@@ -5578,7 +5583,7 @@ msgstr ""
 
 #: src/main/plot.c:3486
 msgid "invalid units"
-msgstr ""
+msgstr "ugyldige enheder"
 
 #: src/main/plot.c:3665 src/main/plot.c:3775
 msgid "invalid dendrogram input"
@@ -5590,7 +5595,7 @@ msgstr ""
 
 #: src/main/plot.c:3855
 msgid "invalid symbol coordinates"
-msgstr ""
+msgstr "ugyldige symbolkoordinater"
 
 #: src/main/plot.c:3863
 msgid "x/y/parameter length mismatch"
@@ -5603,7 +5608,7 @@ msgstr ""
 #: src/main/plot.c:3884 src/main/plot.c:3905 src/main/plot.c:3930
 #: src/main/plot.c:3960
 msgid "invalid symbol parameter"
-msgstr ""
+msgstr "ugyldig symbolparamter"
 
 #: src/main/plot.c:3903
 msgid "invalid squares data"
@@ -5611,7 +5616,7 @@ msgstr ""
 
 #: src/main/plot.c:3928
 msgid "invalid rectangles data (need 2 columns)"
-msgstr ""
+msgstr "ugyldige rektangeldata (kræver 2 kolonner)"
 
 #: src/main/plot.c:3958
 msgid "invalid stars data"
@@ -5676,7 +5681,7 @@ msgstr ""
 
 #: src/main/plot3d.c:1408 src/main/plot3d.c:1675
 msgid "insufficient 'x' or 'y' values"
-msgstr ""
+msgstr "utilstrækkelige 'x'- eller 'y'-værdier"
 
 #: src/main/plot3d.c:1411 src/main/plot3d.c:1678
 msgid "dimension mismatch"
@@ -5688,19 +5693,19 @@ msgstr ""
 
 #: src/main/plot3d.c:1418
 msgid "missing 'x' values"
-msgstr ""
+msgstr "manglende 'x'-værdier"
 
 #: src/main/plot3d.c:1420
 msgid "increasing 'x' values expected"
-msgstr ""
+msgstr "øgende 'x'-værdier forventet"
 
 #: src/main/plot3d.c:1425
 msgid "missing 'y' values"
-msgstr ""
+msgstr "manglende 'y'-værdier"
 
 #: src/main/plot3d.c:1427
 msgid "increasing 'y' values expected"
-msgstr ""
+msgstr "øgende 'y'-værdier forventet"
 
 #: src/main/plot3d.c:1432
 msgid "invalid NA contour values"
@@ -5720,7 +5725,7 @@ msgstr ""
 
 #: src/main/plot3d.c:2441
 msgid "too few parameters"
-msgstr ""
+msgstr "for få parametre"
 
 #: src/main/plot3d.c:2473
 msgid "invalid 'x' limits"
@@ -5788,11 +5793,11 @@ msgstr ""
 
 #: src/main/print.c:152
 msgid "invalid row labels"
-msgstr ""
+msgstr "ugyldige rækkeetiketter"
 
 #: src/main/print.c:154
 msgid "invalid column labels"
-msgstr ""
+msgstr "ugyldige kolonneetiketter"
 
 #: src/main/print.c:178
 msgid "non-function argument to .Internal(print.function(.))"
@@ -5800,7 +5805,7 @@ msgstr ""
 
 #: src/main/print.c:257
 msgid "'gap' must be non-negative integer"
-msgstr ""
+msgstr "'gap' skal være et ikkenegativt heltal"
 
 #: src/main/print.c:281
 msgid "invalid 'tryS4' internal argument"
@@ -6193,24 +6198,24 @@ msgstr ""
 
 #: src/main/scan.c:1071 src/main/scan.c:1089
 msgid "string terminated by newline or EOF"
-msgstr ""
+msgstr "streng afsluttet af newline eller EOF"
 
 #: src/main/scan.c:1209
 msgid "the first argument must be of mode character"
-msgstr ""
+msgstr "det første argument skal være tilstandstegn"
 
 #: src/main/scan.c:1441
 #, c-format
 msgid "Selection: "
-msgstr ""
+msgstr "Valg: "
 
 #: src/main/scan.c:1529 src/main/scan.c:1542
 msgid "cannot allocate buffer in 'readTableHead'"
-msgstr ""
+msgstr "kan ikke allokere mellemlager i 'readTableHead'"
 
 #: src/main/scan.c:1553
 msgid "\\ followed by EOF"
-msgstr ""
+msgstr "\\ efterfulgt af EOF"
 
 #: src/main/scan.c:1598 src/main/scan.c:1601
 #, c-format
@@ -6279,7 +6284,7 @@ msgstr ""
 
 #: src/main/seq.c:668 src/main/seq.c:730 src/main/seq.c:760
 msgid "'to' must be finite"
-msgstr ""
+msgstr "'to' skal være finitte"
 
 #: src/main/seq.c:680
 msgid "invalid '(to - from)/by' in 'seq'"
@@ -6287,15 +6292,15 @@ msgstr ""
 
 #: src/main/seq.c:688
 msgid "'by' argument is much too small"
-msgstr ""
+msgstr "'by'-argument er alt for lille"
 
 #: src/main/seq.c:690
 msgid "wrong sign in 'by' argument"
-msgstr ""
+msgstr "forkert tegn i 'by'-argument"
 
 #: src/main/seq.c:744 src/main/seq.c:762
 msgid "'by' must be finite"
-msgstr ""
+msgstr "'by' skal være finitte"
 
 #: src/main/seq.c:826
 msgid "argument must be coercible to non-negative integer"
@@ -6303,71 +6308,71 @@ msgstr ""
 
 #: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
 msgid "unknown or inappropriate output format"
-msgstr ""
+msgstr "ukendt eller upassende resultatformat"
 
 #: src/main/serialize.c:502
 msgid "must specify ascii, binary, or xdr format"
-msgstr ""
+msgstr "det skal være ascii-, binært eller xdr-format"
 
 #: src/main/serialize.c:503
 msgid "unknown output format"
-msgstr ""
+msgstr "ukendt resultatformat"
 
 #: src/main/serialize.c:534
 msgid "unknown input format"
-msgstr ""
+msgstr "ukendt kildeformat"
 
 #: src/main/serialize.c:539
 msgid "input format does not match specified format"
-msgstr ""
+msgstr "kildeformat matcher ikke angivet format"
 
 #: src/main/serialize.c:750
 msgid "no restore method available"
-msgstr ""
+msgstr "ingen gendannelsesmetode tilgængelig"
 
 #: src/main/serialize.c:780
 msgid "names in persistent strings are currently ignored"
-msgstr ""
+msgstr "navne i vedvarende strenge ignoreres i øjeblikket"
 
 #: src/main/serialize.c:945
 #, c-format
 msgid "'%s' may not be available when loading"
-msgstr ""
+msgstr "'%s' er måske ikke tilgængelig under indlæsning"
 
 #: src/main/serialize.c:952
 msgid "namespaces may not be available when loading"
-msgstr ""
+msgstr "navnerum er måske ikke tilgængelig under indlæsning"
 
 #: src/main/serialize.c:1077
 #, c-format
 msgid "WriteItem: unknown type %i"
-msgstr ""
+msgstr "WriteItem: Ukendt type %i"
 
 #: src/main/serialize.c:1254
 #, c-format
 msgid "version %d not supported"
-msgstr ""
+msgstr "version %d er ikke understøttet"
 
 #: src/main/serialize.c:1282
 msgid "reference index out of range"
-msgstr ""
+msgstr "referenceindeks uden for interval"
 
 #: src/main/serialize.c:1312
 msgid "names in persistent strings are not supported yet"
-msgstr ""
+msgstr "navne i vedvarende strenge er endnu ikke understøttet"
 
 #: src/main/serialize.c:1622
 msgid "this version of R cannot read class references"
-msgstr ""
+msgstr "denne version af R kan ikke læse klassereferencer"
 
 #: src/main/serialize.c:1624
 msgid "this version of R cannot read generic function references"
-msgstr ""
+msgstr "denne version af R kan ikke læse generiske funktionsreferencer"
 
 #: src/main/serialize.c:1642
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
-msgstr ""
+msgstr "ReadItem: Ukendt type %i, msåke skrevet af en senere version af R"
 
 #: src/main/serialize.c:1786
 #, c-format
@@ -6375,6 +6380,8 @@ msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d."
 "%d"
 msgstr ""
+"kan ikke læse ej frigivet arbejdsrumversion %d skrevet af eksperimentel R %d."
+"%d.%d"
 
 #: src/main/serialize.c:1790
 #, c-format
@@ -6382,136 +6389,138 @@ msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
 "newer"
 msgstr ""
+"kan ikke læse arbejdsrumversion %d skrevet af R %d.%d.%d; kræver R %d.%d.%d "
+"eller nyere"
 
 #: src/main/serialize.c:1869
 msgid "read failed"
-msgstr ""
+msgstr "læs mislykkedes"
 
 #: src/main/serialize.c:1932
 msgid "error reading from ascii connection"
-msgstr ""
+msgstr "fejl under læsning fra ascii-forbindelse"
 
 #: src/main/serialize.c:1934
 msgid "unexpected format in ascii connection"
-msgstr ""
+msgstr "uventet format i ascii-forbindelse"
 
 #: src/main/serialize.c:1939 src/main/serialize.c:1953
 msgid "error reading from connection"
-msgstr ""
+msgstr "fejl under læsning fra forbindelse"
 
 #: src/main/serialize.c:1994
 msgid "only ascii format can be written to text mode connections"
-msgstr ""
+msgstr "kun ascii-format kan skrivet til forbindelser i teksttilstand"
 
 #: src/main/serialize.c:2008
 msgid "only ascii format can be read from text mode connections"
-msgstr ""
+msgstr "kun ascii-format kan læses fra forbindelser i teksttilstand"
 
 #: src/main/serialize.c:2063 src/main/serialize.c:2216
 #: src/main/serialize.c:2357
 msgid "bad version value"
-msgstr ""
+msgstr "ugyldig versionsværdi"
 
 #: src/main/serialize.c:2088
 msgid "binary-mode connection required for ascii=FALSE"
-msgstr ""
+msgstr "forbindlese i binær tilstand krævet for ascii=FALSE"
 
 #: src/main/serialize.c:2247 src/main/serialize.c:2276
 #: src/main/serialize.c:2337
 msgid "serialization is too large to store in a raw vector"
-msgstr ""
+msgstr "serialisering er for stor til at lagre i en rå vektor"
 
 #: src/main/serialize.c:2257
 msgid "cannot allocate buffer"
-msgstr ""
+msgstr "kan ikke allokere mellemlager"
 
 #: src/main/serialize.c:2441 src/main/serialize.c:2510
 msgid "not a proper file name"
-msgstr ""
+msgstr "ikke et korrekt filnavn"
 
 #: src/main/serialize.c:2443
 msgid "not a proper raw vector"
-msgstr ""
+msgstr "ikke en korrekt rå vektor"
 
 #: src/main/serialize.c:2464
 msgid "could not determine file position"
-msgstr ""
+msgstr "kunne ikke bestemme filplacering"
 
 #: src/main/serialize.c:2512
 msgid "bad offset/length argument"
-msgstr ""
+msgstr "ugyldig forskydning/længde-argument"
 
 #: src/main/serialize.c:2536 src/main/serialize.c:2549
 #: src/main/serialize.c:2558 src/main/serialize.c:2568
 #: src/main/serialize.c:2581
 #, c-format
 msgid "seek failed on %s"
-msgstr ""
+msgstr "søgning mislykkedes på %s"
 
 #: src/main/serialize.c:2553 src/main/serialize.c:2562
 #: src/main/serialize.c:2572 src/main/serialize.c:2585
 #, c-format
 msgid "read failed on %s"
-msgstr ""
+msgstr "læsning mislykkedes på %s"
 
 #: src/main/serialize.c:2604
 msgid "bad environment"
-msgstr ""
+msgstr "ugyldigt miljø"
 
 #: src/main/serialize.c:2606
 msgid "bad variable names"
-msgstr ""
+msgstr "ugyldige variabelnavne"
 
 #: src/main/sort.c:87
 msgid "only atomic vectors can be tested to be sorted"
-msgstr ""
+msgstr "kun atomare vektorer kan testes for sortering"
 
 #: src/main/sort.c:309 src/main/sort.c:875 src/main/sort.c:973
 msgid "'decreasing' must be TRUE or FALSE"
-msgstr ""
+msgstr "'decreasing' skal være SAND eller FALSK"
 
 #: src/main/sort.c:312 src/main/sort.c:564
 msgid "only atomic vectors can be sorted"
-msgstr ""
+msgstr "kun atomare vektorer kan sorteres"
 
 #: src/main/sort.c:314 src/main/sort.c:566 src/main/sort.c:918
 msgid "raw vectors cannot be sorted"
-msgstr ""
+msgstr "rå vektorer kan ikke sorteres"
 
 #: src/main/sort.c:573
 msgid "NA index"
-msgstr ""
+msgstr "NA-indeks"
 
 #: src/main/sort.c:575
 #, c-format
 msgid "index %d outside bounds"
-msgstr ""
+msgstr "indeks %d uden for grænser"
 
 #: src/main/sort.c:884
 #, c-format
 msgid "argument %d is not a vector"
-msgstr ""
+msgstr "argument %d er ikke en vektor"
 
 #: src/main/sort.c:886
 msgid "argument lengths differ"
-msgstr ""
+msgstr "argumentlængder er forskellige"
 
 #: src/main/sort.c:924
 msgid "invalid ties.method for rank() [should never happen]"
-msgstr ""
+msgstr "ugyldig ties.method for rank() [bør aldrig ske]"
 
 #: src/main/sort.c:980
 msgid "negative value in 'x'"
-msgstr ""
+msgstr "negativ værdi i 'x'"
 
 #: src/main/sort.c:991
 msgid "too large a range of values in 'x'"
-msgstr ""
+msgstr "for stort interval for værdier i 'x'"
 
 #: src/main/source.c:135
 #, c-format
 msgid "%s%d:%d: %s"
-msgstr ""
+msgstr "%s%d:%d: %s"
 
 #: src/main/source.c:140
 #, c-format
@@ -6520,6 +6529,9 @@ msgid ""
 "%d: %s\n"
 "%*s"
 msgstr ""
+"%s%d:%d: %s\n"
+"%d: %s\n"
+"%*s"
 
 #: src/main/source.c:147
 #, c-format
@@ -6529,16 +6541,20 @@ msgid ""
 "%d: %s\n"
 "%*s"
 msgstr ""
+"%s%d:%d: %s\n"
+"%d: %s\n"
+"%d: %s\n"
+"%*s"
 
 #: src/main/source.c:157
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: src/main/source.c:160
 #, c-format
 msgid "%s in \"%s\""
-msgstr ""
+msgstr "%s i »%s«"
 
 #: src/main/source.c:164
 #, c-format
@@ -6547,6 +6563,9 @@ msgid ""
 "\"%s\n"
 "%s\""
 msgstr ""
+"%s i:\n"
+"\"%s\n"
+"%s\""
 
 #: src/main/source.c:211
 msgid "coercion of 'text' to character was unsuccessful"
@@ -6661,16 +6680,15 @@ msgstr ""
 
 #: src/main/sprintf.c:415
 msgid "unsupported type"
-msgstr ""
+msgstr "ej understøttet type"
 
 #: src/main/sprintf.c:484
-#, fuzzy
 msgid "'fmt' must be length 1"
-msgstr "'%s' skal have en længde på 1"
+msgstr "'fmt' skal have en længde på 1"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"
-msgstr ""
+msgstr "R_LibraryFileName: mellemlager for lille"
 
 #: src/main/subassign.c:105
 msgid "attempt to enlarge non-vector"
@@ -6694,7 +6712,7 @@ msgstr ""
 #: src/main/subassign.c:472 src/main/subassign.c:743 src/main/subassign.c:1010
 #: src/main/subassign.c:1525
 msgid "replacement has length zero"
-msgstr ""
+msgstr "erstatning har længden nul"
 
 #: src/main/subassign.c:474 src/main/subassign.c:745 src/main/subassign.c:1012
 msgid "number of items to replace is not a multiple of replacement length"
@@ -6796,7 +6814,7 @@ msgstr ""
 
 #: src/main/subscript.c:167
 msgid "internal error in use of recursive indexing"
-msgstr ""
+msgstr "intern fejl i brugen af rekursiv indeksering"
 
 #: src/main/subscript.c:221
 #, c-format
@@ -6806,20 +6824,20 @@ msgstr ""
 #: src/main/subscript.c:256
 #, c-format
 msgid "recursive indexing failed at level %d\n"
-msgstr ""
+msgstr "rekursiv indeksering mislykkedes på niveau %d\n"
 
 #: src/main/subscript.c:263
 #, c-format
 msgid "no such index at level %d\n"
-msgstr ""
+msgstr "intet sådant indeks på niveau %d\n"
 
 #: src/main/subscript.c:287
 msgid "incorrect number of columns in matrix subscript"
-msgstr ""
+msgstr "ukorrekt antal kolonner i matrix-underskript"
 
 #: src/main/subscript.c:305
 msgid "negative values are not allowed in a matrix subscript"
-msgstr ""
+msgstr "negative værdier er ikke tilladt i et matrix-underskript"
 
 #: src/main/subscript.c:378
 msgid "(subscript) logical subscript too long"
@@ -6859,7 +6877,7 @@ msgstr ""
 
 #: src/main/subset.c:873
 msgid "no index specified"
-msgstr ""
+msgstr "intet indeks angivet"
 
 #: src/main/subset.c:883
 msgid "this S4 class is not subsettable"
@@ -6905,11 +6923,11 @@ msgstr ""
 
 #: src/main/summary.c:1012
 msgid "not all arguments have the same length"
-msgstr ""
+msgstr "ikke alle argumenter har den samme længde"
 
 #: src/main/summary.c:1030
 msgid "no arguments"
-msgstr ""
+msgstr "ingen argumenter"
 
 #: src/main/summary.c:1041 src/main/summary.c:1058
 msgid "invalid input type"
@@ -6926,7 +6944,7 @@ msgstr ""
 
 #: src/main/sysutils.c:168
 msgid "encoding of a filename cannot be 'bytes'"
-msgstr ""
+msgstr "kodning for et filnavn kan ikke være 'bytes'"
 
 #: src/main/sysutils.c:171 src/main/sysutils.c:804 src/main/sysutils.c:819
 #: src/main/sysutils.c:913
@@ -6948,32 +6966,32 @@ msgstr ""
 
 #: src/main/sysutils.c:251
 msgid "invalid file extension"
-msgstr ""
+msgstr "ugyldig filendelse"
 
 #: src/main/sysutils.c:253
 msgid "no 'pattern'"
-msgstr ""
+msgstr "ingen 'pattern'"
 
 #: src/main/sysutils.c:255
 msgid "no 'tempdir'"
-msgstr ""
+msgstr "ingen 'tempdir'"
 
 #: src/main/sysutils.c:257
 msgid "no 'fileext'"
-msgstr ""
+msgstr "ingen 'fileext'"
 
 #: src/main/sysutils.c:349 src/main/sysutils.c:352 src/main/sysutils.c:443
 #: src/main/sysutils.c:445 src/main/sysutils.c:481
 msgid "wrong type for argument"
-msgstr ""
+msgstr "forkert type for argument"
 
 #: src/main/sysutils.c:447
 msgid "wrong length for argument"
-msgstr ""
+msgstr "forkert længde for argument"
 
 #: src/main/sysutils.c:468
 msgid "'Sys.setenv' is not available on this system"
-msgstr ""
+msgstr "'Sys.setenv' er ikke tilgængelig på dette system"
 
 #: src/main/sysutils.c:512
 msgid "this system cannot unset environment variables: setting to \"\""
