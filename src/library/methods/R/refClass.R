@@ -1221,3 +1221,13 @@ all.equal.environment <- function(target, current, ...) {
     codetools::walkCode(body(method), walker)
     unique(methods)
 }
+
+getMethodsAndAccessors <- function(Class) {
+    def <- getClass(Class)
+    if(!is(def, "refClassRepresentation"))
+        stop(gettextf("%s is not a reference class",
+             dQuote(def@className)))
+    ff <- def@fieldPrototypes
+    accs <- sapply(ff, function(what) is(what, "activeBindingFunction") && !is(what, "defaultBindingFunction"))
+    c(as.list(def@refMethods), as.list(ff)[accs])
+}
