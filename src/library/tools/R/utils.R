@@ -1120,13 +1120,13 @@ function(package)
 {
     ## Return a character vector with the names of the functions in
     ## @code{package} which 'look' like S3 methods, but are not.
-    ## Using package=NULL returns all known examples
+    ## Using package = NULL returns all known examples
 
     stopList <-
         list(base = c("all.equal", "all.names", "all.vars",
              "format.char", "format.info", "format.pval",
-             "kappa.tri",
              "max.col",
+             ## the next two only exist in *-defunct.Rd.
              "print.atomic", "print.coefmat",
              "qr.Q", "qr.R", "qr.X", "qr.coef", "qr.fitted", "qr.qty",
              "qr.qy", "qr.resid", "qr.solve",
@@ -1176,6 +1176,7 @@ function(package)
              ic.infer = "all.R2",
              hier.part = "all.regs",
              lasso2 = "qr.rtr.inv",
+             latticeExtra = "xyplot.list",
              locfit = c("density.lf", "plot.eval"),
              moments = c("all.cumulants", "all.moments"),
              mratios = c("t.test.ration", "t.test.ratio.default",

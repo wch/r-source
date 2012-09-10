@@ -5852,7 +5852,10 @@ function(f, env)
         ## This no longer works, so we exclude "at least" all methods
         ## with a namespace environment (as these cannot come from a
         ## package with no namespace).
-        namespace <- .get_namespace_from_package_env(env)
+
+        ## This was wrong, as some of the callers pass namespaces, not packages.
+        ## namespace <- .get_namespace_from_package_env(env)
+        namespace <- if(isNamespace(env)) env else .get_namespace_from_package_env(env)
         if(!is.null(namespace)) {
             mlist <- Filter(function(m)
                             identical(environment(m), namespace),
