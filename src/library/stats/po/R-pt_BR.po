@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:22\n"
+"POT-Creation-Date: 2012-09-10 13:59\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -372,6 +372,10 @@ msgid "need at least 2 data points"
 msgstr "são necessários ao menos 2 pontos"
 
 msgid "invalid 'x'"
+msgstr "'x' inválido"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "'x' inválido"
 
 msgid "sample is too sparse to find TD"
@@ -751,6 +755,10 @@ msgstr "dimensões incorretas para 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' não é um vetor ou matriz"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "argumentos extras descartados"
 
 msgid "invalid distance method"
 msgstr "método de distância inválido"
@@ -1934,9 +1942,6 @@ msgid ""
 msgstr ""
 
 msgid "'newdata' does not have the correct number of columns"
-msgstr ""
-
-msgid "wrong number of predictors"
 msgstr ""
 
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"

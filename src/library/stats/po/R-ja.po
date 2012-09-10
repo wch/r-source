@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:22\n"
+"POT-Creation-Date: 2012-09-10 13:59\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -371,6 +371,10 @@ msgstr " 少なくとも 2 つのデータ点が必要です "
 msgid "invalid 'x'"
 msgstr " 無効な 'x' "
 
+#, fuzzy
+msgid "invalid 'nb'"
+msgstr " 無効な 'x' "
+
 msgid "sample is too sparse to find TD"
 msgstr " サンプルが疎過ぎるため TD を見つけることができません "
 
@@ -734,6 +738,10 @@ msgstr " 'xi' の次元が不正確です "
 
 msgid "'x' is not a vector or matrix"
 msgstr " 'x' はベクトルでも行列でもありません "
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr " 余計な引数は捨てられました "
 
 msgid "invalid distance method"
 msgstr " 無効な距離法です "
@@ -1905,9 +1913,6 @@ msgstr " 'newdata' は、元の列の一つ以上とマッチする名前つき�
 msgid "'newdata' does not have the correct number of columns"
 msgstr " 'newdata' は正しい列数を持ちません "
 
-msgid "wrong number of predictors"
-msgstr " 予測子の数が間違っています "
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr " 'x' と 'covmat' の双方が与えられました。'x' は無視されます "
 
@@ -2466,6 +2471,9 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] " モデル式中にパラメータ %s がありません "
+
+#~ msgid "wrong number of predictors"
+#~ msgstr " 予測子の数が間違っています "
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr " 'vec' が NA を含んでいます "

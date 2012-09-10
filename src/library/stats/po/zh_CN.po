@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07+0100\n"
+"POT-Creation-Date: 2012-09-10 13:58+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -41,7 +41,7 @@ msgstr "approx(): 不能内插NA值"
 msgid "invalid argument type"
 msgstr "参数种类不对"
 
-#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+#: arima.c:418 arima.c:502 pacf.c:307 pacf.c:347
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0里只能转换100个参数"
 
@@ -192,7 +192,7 @@ msgstr "starma出错编号%d"
 msgid "forkal error code %d"
 msgstr "forkal出错编号%d"
 
-#: pacf.c:451
+#: pacf.c:450
 msgid "invalid value of lag.max"
 msgstr "lag.max的值不对"
 

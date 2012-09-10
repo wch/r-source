@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07+0100\n"
+"POT-Creation-Date: 2012-09-10 13:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "invalid argument type"
 msgstr ""
 
-#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+#: arima.c:418 arima.c:502 pacf.c:307 pacf.c:347
 msgid "can only transform 100 pars in arima0"
 msgstr ""
 
@@ -192,7 +192,7 @@ msgstr ""
 msgid "forkal error code %d"
 msgstr ""
 
-#: pacf.c:451
+#: pacf.c:450
 msgid "invalid value of lag.max"
 msgstr ""
 

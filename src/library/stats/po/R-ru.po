@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:22\n"
+"POT-Creation-Date: 2012-09-10 13:59\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -385,6 +385,10 @@ msgstr "нужны по крайней мере 2 точки"
 msgid "invalid 'x'"
 msgstr "неправильный 'x'"
 
+#, fuzzy
+msgid "invalid 'nb'"
+msgstr "неправильный 'x'"
+
 msgid "sample is too sparse to find TD"
 msgstr "выборка слишком редка, чтобы найти TD"
 
@@ -749,6 +753,10 @@ msgstr "неправильные измерения у 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' не является вектором или матрицей"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "дополнительные аргументы отброшены"
 
 msgid "invalid distance method"
 msgstr "неправильный метод подсчета расстояний"
@@ -1924,9 +1932,6 @@ msgstr ""
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata' не имеет правильного количества колонок"
 
-msgid "wrong number of predictors"
-msgstr "неправильное число предикторов"
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "указаны и 'x', и 'covmat': 'x' будет пропущено"
 
@@ -2508,6 +2513,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "неправильное число предикторов"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' содержит NAs"

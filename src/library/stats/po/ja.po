@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07+0100\n"
+"POT-Creation-Date: 2012-09-10 13:58+0100\n"
 "PO-Revision-Date: 2010-09-29 20:43+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -41,7 +41,7 @@ msgstr " approx()：NA値を補間しようとしました "
 msgid "invalid argument type"
 msgstr " 不正な引数の型です "
 
-#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+#: arima.c:418 arima.c:502 pacf.c:307 pacf.c:347
 msgid "can only transform 100 pars in arima0"
 msgstr " arima0 では 100 個のパラメータまでしか変換出来ません "
 
@@ -192,7 +192,7 @@ msgstr " starma エラーコード %d です "
 msgid "forkal error code %d"
 msgstr " forkal エラーコード %d です "
 
-#: pacf.c:451
+#: pacf.c:450
 msgid "invalid value of lag.max"
 msgstr " 不正な lag.max 値です "
 

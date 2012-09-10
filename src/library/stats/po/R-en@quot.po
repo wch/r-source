@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:22\n"
-"PO-Revision-Date: 2012-08-24 09:22\n"
+"POT-Creation-Date: 2012-09-10 13:59\n"
+"PO-Revision-Date: 2012-09-10 13:59\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -380,6 +380,9 @@ msgstr "need at least 2 data points"
 
 msgid "invalid 'x'"
 msgstr "invalid ‘x’"
+
+msgid "invalid 'nb'"
+msgstr "invalid ‘nb’"
 
 msgid "sample is too sparse to find TD"
 msgstr "sample is too sparse to find TD"
@@ -741,6 +744,9 @@ msgstr "incorrect dimensions for ‘xi’"
 
 msgid "'x' is not a vector or matrix"
 msgstr "‘x’ is not a vector or matrix"
+
+msgid "extra argument(s) %s will be disregarded"
+msgstr "extra argument(s) %s will be disregarded"
 
 msgid "invalid distance method"
 msgstr "invalid distance method"
@@ -1887,9 +1893,6 @@ msgstr ""
 
 msgid "'newdata' does not have the correct number of columns"
 msgstr "‘newdata’ does not have the correct number of columns"
-
-msgid "wrong number of predictors"
-msgstr "wrong number of predictors"
 
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "both ‘x’ and ‘covmat’ were supplied: ‘x’ will be ignored"

@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-01 09:38\n"
-"PO-Revision-Date: 2012-03-06 09:33+0100\n"
+"PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -619,7 +619,7 @@ msgid "Error: cannot rename directory to"
 msgstr "Fehler: kann  Verzeichnis nicht umbennen in"
 
 msgid "cannot link from"
-msgstr ""
+msgstr "kann nicht linken aus"
 
 msgid "-l option without value"
 msgstr "-l Option ohne Wert"
@@ -630,9 +630,8 @@ msgstr "Konfigurationsdateien sind ab R-2.12.0 nicht unterstützt"
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch' angegeben, obwohl es nur eine sub-Architektur gibt"
 
-#, fuzzy
 msgid "--as-cran turns off --extra-arch"
-msgstr "--cran schaltet --extra-arch aus"
+msgstr "--as-cran schaltet --extra-arch aus"
 
 msgid "Error: no packages were specified"
 msgstr "Fehler: keine Pakete angegeben"
@@ -647,7 +646,7 @@ msgid "does not exist"
 msgstr "existiert nicht"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
-msgstr ""
+msgstr "nicht-ASCII Zeichen in CITATION Datei, ohne eine Zeichenkodierung anzugeben"
 
 msgid "No files in this directory"
 msgstr "Keine Dateien in diesem Verzeichnis"
@@ -796,7 +795,7 @@ msgid "ERROR: --merge-multiarch applies only to a single tarball"
 msgstr "Fehler: --merge-multiarch bezieht sich nur auf einen tarball"
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
-msgstr ""
+msgstr "nur eine Architektur, also wird '--merge-multiarch' ignoriert"
 
 msgid "invalid package"
 msgstr "ungültiges Paket"
@@ -1212,7 +1211,7 @@ msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
 
 msgid "contains a blank line"
-msgstr ""
+msgstr "enthält Leerzeile"
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Unbekannte Kodierung mit nicht-ASCII Daten: konvertiere nach ASCII"

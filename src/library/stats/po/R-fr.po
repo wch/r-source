@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:22\n"
+"POT-Creation-Date: 2012-09-10 13:59\n"
 "PO-Revision-Date: 2012-03-06 21:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -385,6 +385,10 @@ msgid "need at least 2 data points"
 msgstr "il faut au moins 2 points"
 
 msgid "invalid 'x'"
+msgstr "'x' incorrect"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "'x' incorrect"
 
 msgid "sample is too sparse to find TD"
@@ -765,6 +769,10 @@ msgstr "dimensions incorrectes pour 'xi'"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' n'est pas un vecteur ou une matrice"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "arguments supplémentaires ignorés"
 
 msgid "invalid distance method"
 msgstr "méthode de calcul de distance incorrecte"
@@ -1986,9 +1994,6 @@ msgstr ""
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata' n'a pas le bon nombre de colonnes"
 
-msgid "wrong number of predictors"
-msgstr "nombre de prédicteurs incorrect"
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "'x' et 'covmat' fournis tous les deux : 'x' sera ignoré"
 
@@ -2589,6 +2594,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "le paramètre %s n'apparaît pas dans la formule du modèle"
 msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "nombre de prédicteurs incorrect"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' contient des NA"

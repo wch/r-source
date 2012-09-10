@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2005-2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.15.0\n"
+"Project-Id-Version: R-2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-10 11:11+0100\n"
-"PO-Revision-Date: 2012-03-05 15:33+0100\n"
+"PO-Revision-Date: 2012-09-10 14:38+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -513,9 +513,9 @@ msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): Datei '%s' existiert nicht\n"
 
 #: src/gnuwin32/system.c:967
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
-msgstr "Warnung: '%s' Wert ist ungültig: wird ignoriert"
+msgstr "Warnung: R_MAX_MEM_SIZE Wert ist ungültig: wird ignoriert\n"
 
 #: src/gnuwin32/system.c:999
 msgid "WARNING: no max-mem-size given\n"
@@ -1086,9 +1086,8 @@ msgid "'x' must be numeric"
 msgstr "'x' muss numerisch sein"
 
 #: src/main/array.c:1417
-#, fuzzy
 msgid "'dim' specifies too large an array"
-msgstr "angegebene Vektorgröße ist zu groß"
+msgstr "'dim' spezifiziert ein zu großes Array"
 
 #: src/main/array.c:1489 src/main/attrib.c:925
 msgid "'dimnames' applied to non-array"
@@ -2140,9 +2139,8 @@ msgid "'con' is not an output rawConnection"
 msgstr "'con' ist keine Ausgabe-Verbindung vom raw Typ"
 
 #: src/main/connections.c:2485
-#, fuzzy
 msgid "too many characters for text connection"
-msgstr "kann keinen Speicher für Textverbindung zuweisen"
+msgstr "zu viele Zeichen für eine Textverbindung"
 
 #: src/main/connections.c:2490
 msgid "cannot allocate memory for text connection"
@@ -2330,9 +2328,8 @@ msgstr ""
 "Nullen auf"
 
 #: src/main/connections.c:4354
-#, fuzzy
 msgid "maximum number of pushback lines exceeded"
-msgstr "maximale Anzahl von Farben überschritten"
+msgstr "maximale Anzahl von pushback Zeilen überschritten"
 
 #: src/main/connections.c:4360 src/main/connections.c:4364
 #: src/main/connections.c:4400 src/main/connections.c:4406
@@ -2360,9 +2357,8 @@ msgid "no sink to remove"
 msgstr "kein sink zu entfernen"
 
 #: src/main/connections.c:4605
-#, fuzzy
 msgid "there is no connection NA"
-msgstr "Es gibt keine Verbindung %d"
+msgstr "Es gibt keine Verbindung NA"
 
 #: src/main/connections.c:4607
 #, c-format
@@ -2730,9 +2726,9 @@ msgstr "zu viele Argumente im externen Funktionsaufruf"
 
 #: src/main/dotcode.c:260 src/main/dotcode.c:265 src/main/dotcode.c:270
 #: src/main/dotcode.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" not available for %s() for package \"%s\""
-msgstr "'%s' für dieses Device nicht verfügbar"
+msgstr "'%s' ist nicht verfügbar für %s() aus Paket \"%s\""
 
 #: src/main/dotcode.c:280
 #, c-format
@@ -2785,9 +2781,8 @@ msgid "too many arguments"
 msgstr "zu viele Argumente"
 
 #: src/main/dotcode.c:510 src/main/dotcode.c:553 src/main/dotcode.c:1397
-#, fuzzy
 msgid "'.NAME' is missing"
-msgstr "'EXPR' fehlt"
+msgstr "'.NAME' fehlt"
 
 #: src/main/dotcode.c:526 src/main/dotcode.c:569 src/main/dotcode.c:1418
 #, c-format
@@ -2859,13 +2854,13 @@ msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "ungültiger Modus zur Übergabe nach Fortran (Arg. %d)"
 
 #: src/main/dotcode.c:1664 src/main/dotcode.c:1670
-#, fuzzy, c-format
+#, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
-msgstr "ungültiger Modus zur Übergabe nach Fortran (Arg. %d)"
+msgstr "ungültiger Modus (%s) zur Übergabe nach Fortran (arg. %d)"
 
 #: src/main/dotcode.c:1675
 msgid "pairlists are passed as SEXP as from R 2.15.0"
-msgstr ""
+msgstr "beginnend mit R-2.15.0 werden Paarlisten als SEXP übergeben"
 
 #: src/main/dotcode.c:2389
 #, c-format
@@ -3407,7 +3402,7 @@ msgstr "Fehler in "
 #: src/main/errors.c:584
 #, c-format
 msgid " (from %s) : "
-msgstr ""
+msgstr " (von %s) : "
 
 #: src/main/errors.c:635 src/main/errors.c:641
 #, c-format
@@ -3530,7 +3525,7 @@ msgid ""
 "promise already under evaluation: recursive default argument reference or "
 "earlier problems?"
 msgstr ""
-"promise evalustion läuft bereits: rekursive Referenz auf das "
+"promise evaluation läuft bereits: rekursive Referenz auf das "
 "Standardargument oder frühere Fehler?"
 
 #: src/main/eval.c:308
@@ -3720,9 +3715,9 @@ msgid "invalid sequence argument in for loop"
 msgstr "ungültiges Argument für Sequenz in for Schleife"
 
 #: src/main/eval.c:4318 src/main/names.c:1222
-#, fuzzy, c-format
+#, c-format
 msgid "there is no .Internal function '%s'"
-msgstr "keine interne Funktion \"%s\""
+msgstr "es gibt keine .Internal Funktion '%s'"
 
 #: src/main/eval.c:4425 src/main/eval.c:4748 src/main/eval.c:4790
 msgid "bad function"
@@ -5440,14 +5435,13 @@ msgstr "kann Verzeichnis '%ls' nicht erzeugen, Grund '%s'"
 
 #: src/main/platform.c:2276 src/main/platform.c:2433
 msgid "too deep nesting"
-msgstr ""
+msgstr "zu tiefe Verschachtelung"
 
 #: src/main/platform.c:2284 src/main/platform.c:2297 src/main/platform.c:2315
 #: src/main/platform.c:2333 src/main/platform.c:2449 src/main/platform.c:2462
 #: src/main/platform.c:2482 src/main/platform.c:2502
-#, fuzzy
 msgid "over-long path length"
-msgstr "Parameter Längen passen nicht"
+msgstr "überlange Pfadlänge"
 
 #: src/main/platform.c:2304
 #, c-format
@@ -5971,13 +5965,13 @@ msgid "too few column labels"
 msgstr "zu wenig Spaltenlabel"
 
 #: src/main/printarray.c:485
-#, fuzzy, c-format
+#, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
 msgstr[0] ""
-" [ erreichte getOption(\"max.print\") -- letzte Zeile ausgelassen ]]\n"
+" [ erreichte getOption(\"max.print\") -- letzte Zeile ausgelassen ]\n"
 msgstr[1] ""
-" [ erreichte getOption(\"max.print\") -- letzte %d Zeilen ausgelassen ]]\n"
+" [ erreichte getOption(\"max.print\") -- letzte %d Zeilen ausgelassen ]\n"
 
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
@@ -6303,9 +6297,8 @@ msgid "scan() expected '%s', got '%s'"
 msgstr "scan() erwartete '%s', bekam '%s'"
 
 #: src/main/scan.c:568 src/main/scan.c:715
-#, fuzzy
 msgid "too many items"
-msgstr "zu viele Argumente"
+msgstr "zu viele Elemente"
 
 #: src/main/scan.c:654
 msgid "empty 'what' specified"
@@ -6409,9 +6402,9 @@ msgid "incorrect type for second argument"
 msgstr "falscher Typ für zweites Argument"
 
 #: src/main/seq.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "attempt to replicate an object of type '%s'"
-msgstr "Versuch einen Nicht-Vektor zu replizieren"
+msgstr "Versuch ein Objekt vom Typ '%s' zu replizieren"
 
 #: src/main/seq.c:514 src/main/seq.c:521 src/main/seq.c:648 src/main/seq.c:828
 #, c-format
@@ -6834,9 +6827,8 @@ msgid "unsupported type"
 msgstr "nicht unterstützter Typ"
 
 #: src/main/sprintf.c:484
-#, fuzzy
 msgid "'fmt' must be length 1"
-msgstr "'fromLast' muss Länge 1 haben"
+msgstr "'fmt' muss Länge 1 haben"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"
@@ -7388,9 +7380,8 @@ msgid "warning message truncated to 255 chars"
 msgstr "Warnung auf 255 Zeichen gekürzt"
 
 #: src/main/util.c:1750
-#, fuzzy
 msgid "all arguments must be named"
-msgstr "Attribute müssen Namen haben"
+msgstr "alle Argumente müssen Namen haben"
 
 #: src/main/util.c:1822
 msgid "ICU is not supported on this build"
@@ -7791,7 +7782,7 @@ msgstr "der führende Minor der Ordnung %d ist nicht positiv definit"
 
 #: src/modules/lapack/Lapack.c:905
 msgid "the matrix is either rank-deficient or indefinite"
-msgstr ""
+msgstr "die Matrix hat entweder nicht vollen Rang oder ist indefinit"
 
 #: src/modules/lapack/Lapack.c:927 src/modules/lapack/Lapack.c:948
 #: src/modules/lapack/Lapack.c:984 src/modules/lapack/Lapack.c:1037
@@ -7824,9 +7815,9 @@ msgid "'b' must be a numeric matrix"
 msgstr "'b' muss numerische Matrix sein"
 
 #: src/modules/lapack/Lapack.c:1016
-#, fuzzy, c-format
+#, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
-msgstr "Lapackroutine dgesv: System ist genau singulär"
+msgstr "Lapackroutine %s: System ist genau singulär: U[%d,%d] = 0"
 
 #: src/modules/lapack/Lapack.c:1023
 #, c-format

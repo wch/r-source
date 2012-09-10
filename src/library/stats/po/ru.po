@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07+0100\n"
+"POT-Creation-Date: 2012-09-10 13:58+0100\n"
 "PO-Revision-Date: 2012-03-15 12:00-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -46,7 +46,7 @@ msgstr "approx(): попытка интерполировать пропущенные значения"
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
-#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+#: arima.c:418 arima.c:502 pacf.c:307 pacf.c:347
 msgid "can only transform 100 pars in arima0"
 msgstr "могу трансформировать только 100 пар в arima0"
 
@@ -198,7 +198,7 @@ msgstr "ошибка 'starma' с кодом %d"
 msgid "forkal error code %d"
 msgstr "ошибка 'forkal' с кодом %d"
 
-#: pacf.c:451
+#: pacf.c:450
 msgid "invalid value of lag.max"
 msgstr "неправильное значение 'lag.max'"
 

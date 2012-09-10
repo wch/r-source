@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07+0100\n"
+"POT-Creation-Date: 2012-09-10 13:58+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -44,7 +44,7 @@ msgstr "approx(): tentativa de interpolar valores NA"
 msgid "invalid argument type"
 msgstr "tipo de argumento inválido"
 
-#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+#: arima.c:418 arima.c:502 pacf.c:307 pacf.c:347
 msgid "can only transform 100 pars in arima0"
 msgstr "pode-se transformar apenas 100 pares em arima0"
 
@@ -195,7 +195,7 @@ msgstr "erro starma código %d"
 msgid "forkal error code %d"
 msgstr "erro forkal código %d"
 
-#: pacf.c:451
+#: pacf.c:450
 msgid "invalid value of lag.max"
 msgstr "valor inválido para lag.max"
 

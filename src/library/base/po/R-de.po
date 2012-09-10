@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-08-06 10:53\n"
-"PO-Revision-Date: 2012-03-05 16:41+0100\n"
+"PO-Revision-Date: 2012-09-06 13:39+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: \n"
@@ -93,9 +93,8 @@ msgstr "'X' muss benannte Dimensionen besitzten"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nicht alle Elemente von 'MARGIN' sind Namen von Dimensionen"
 
-#, fuzzy
 msgid "use of 0-length dim is deprecated"
-msgstr "Benutzung von 'save' ist veraltet."
+msgstr "Benutzung eines dim Parameters der Länge 0 ist veraltet."
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' spezifiziert ein zu großes Array"
@@ -125,13 +124,12 @@ msgstr ""
 msgid "package %s is required by %s so will not be detached"
 msgstr "Paket %s wird von %s benötigt, wird deshalb nicht detached"
 
-#, fuzzy
 msgid ""
 "%s failed in %s() for '%s', details:\n"
 "  call: %s\n"
 "  error: %s"
 msgstr ""
-"%s in %s() fehlgechlagen, Details:\n"
+"%s in %s() für '%s' fehlgeschlagen, Details:\n"
 "  Aufruf: %s\n"
 "  Fehler: %s"
 
@@ -159,9 +157,8 @@ msgstr "Autoloader konnte '%s' nicht in '%s' finden"
 msgid "invalid argument values in 'backsolve'"
 msgstr "ungültige Argumentwerte in 'backsolve'"
 
-#, fuzzy
 msgid "invalid value of ncol(x)"
-msgstr "ungültiger Wert"
+msgstr "ungültiger Wert für ncol(x)"
 
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "singuläre Matrix in 'backsolve'. Erste Null in Diagonale [%d]"
@@ -178,9 +175,8 @@ msgstr "nicht-quadratische Matrix in 'chol'"
 msgid "non-matrix argument to 'chol'"
 msgstr "nicht-matrix Argument für 'chol'"
 
-#, fuzzy
 msgid "invalid nrow(x)"
-msgstr "ungültiger Name"
+msgstr "ungültige nrow(x)"
 
 msgid "matrix not positive definite"
 msgstr "Matrix nicht positiv definit"
@@ -272,9 +268,8 @@ msgstr "ungültige 'row.names', Länge %d für data frame mit %d Zeilen"
 msgid "supplied %d row names for %d rows"
 msgstr "%d Zeilennamen für %d Zeilen angegeben"
 
-#, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
-msgstr "options('stringsAsFactors') weder TRUE noch FALSE gesetzt"
+msgstr "options(\"stringsAsFactors\") weder TRUE noch FALSE gesetzt"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
@@ -677,9 +672,8 @@ msgstr ""
 msgid "no files to copy to"
 msgstr "keine Dateien, um dorthin zu kopieren"
 
-#, fuzzy
 msgid "attempt to copy a directory to itself"
-msgstr "konnte Verzeichnis für link %s nicht anlegen"
+msgstr "Versuch ein Verzeichnis in sich selbst zu kopieren"
 
 msgid "more 'from' files than 'to' files"
 msgstr "mehr 'from' Dateien als 'to' Dateien"
@@ -1072,9 +1066,8 @@ msgstr ""
 "Versuch die Spaltennamen für ein Objekt mit weniger als zwei Dimensionen zu "
 "setzen"
 
-#, fuzzy
 msgid "invalid value of nrow(x)"
-msgstr "ungültiger Wert"
+msgstr "ungültiger Wert für nrow(x)"
 
 msgid "argument is not numeric or logical: returning NA"
 msgstr "Argument ist weder numerisch noch boolesch: gebe NA zurück"
@@ -1085,9 +1078,8 @@ msgstr "'trim' muss nummerisch sein und Länge 1 haben"
 msgid "trimmed means are not defined for complex data"
 msgstr "getrimmte Mittelwerte sind für komplexe Daten nicht definiert"
 
-#, fuzzy
 msgid "'by' must specify uniquely valid column(s)"
-msgstr "'by' muss gültige Spalte(n) spezifizieren"
+msgstr "'by' muss einmalige, gültige Spalte(n) spezifizieren"
 
 msgid "'by' must match numbers of columns"
 msgstr "'by' muss zu den Anzahlen der Spalten passen"
@@ -1321,26 +1313,23 @@ msgstr "'u5.bias' muss nicht negativ numerisch sein"
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct' muss 0, 1 oder 2 sein"
 
-#, fuzzy
 msgid "invalid ncol(x)"
-msgstr "ungültiger Name"
+msgstr "ungültige ncol(x)"
 
 msgid "first argument must be a QR decomposition"
 msgstr "erstes Argument muss eine QR-Zerlegung sein"
 
 msgid "invalid nrow(qr$qr)"
-msgstr ""
+msgstr "ungültige nrow(qr$qr)"
 
 msgid "invalid ncol(qr$qr)"
-msgstr ""
+msgstr "ungültige ncol(qr$qr)"
 
-#, fuzzy
 msgid "invalid ncol(qr$rank)"
-msgstr "ungültiger Name"
+msgstr "ungültige ncol(qr$rank)"
 
-#, fuzzy
 msgid "invalid ncol(y)"
-msgstr "ungültiger Name"
+msgstr "ungültige ncol(y)"
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr "'qr' und 'y' müssen gleiche Zeilenanzahl haben"
@@ -1352,7 +1341,7 @@ msgid "argument is not a QR decomposition"
 msgstr "Argument ist keine QR Zerlegung"
 
 msgid "invalid NCOL(y)"
-msgstr ""
+msgstr "ungültige NCOL(y)"
 
 msgid "not implemented for complex 'qr'"
 msgstr "für komplexes 'qr' nicht implementiert"
@@ -1367,7 +1356,7 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
 
 msgid "invalid NCOL(R)"
-msgstr ""
+msgstr "ungültige NCOL(R)"
 
 msgid "'x' must be an atomic vector"
 msgstr "'x' muss ein atomarer Vektor sein"
@@ -1590,17 +1579,14 @@ msgstr "'x' ist kein Array"
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' muss numerisch oder Faktor sein"
 
-#, fuzzy
 msgid "invalid value of length(bin)"
-msgstr "ungültiger Wert"
+msgstr "ungültiger Wert für length(bin)"
 
-#, fuzzy
 msgid "invalid value of nbins"
-msgstr "ungültiger Wert"
+msgstr "ungültiger Wert für nbins"
 
-#, fuzzy
 msgid "'INDEX' is of length zero"
-msgstr "'x' muss Länge 1 haben"
+msgstr "'INDEX' hat Länge 0"
 
 msgid "arguments must have same length"
 msgstr "Argumente müssen die selbe Länge haben"
@@ -1779,7 +1765,11 @@ msgid_plural ""
 "Functions found when exporting methods from the namespace %s which are not "
 "S4 generic: %s"
 msgstr[0] ""
+"Funktion beim Export von Methoden aus dem Namensraum %s gefunden, die\n"
+"keine generische S4 Funktion ist: %s"
 msgstr[1] ""
+"Funktionen beim Export von Methoden aus dem Namensraum %s gefunden,\n"
+"die keine generische S4 Funktionen sind: %s"
 
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"

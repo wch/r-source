@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:22\n"
+"POT-Creation-Date: 2012-09-10 13:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -866,6 +866,18 @@ msgstr "potrzeba przynajmniej 2 punktów"
 msgid "invalid 'x'"
 msgstr "niepoprawny 'x'"
 
+# stats/R/loess.R: 102
+# stop("invalid 'x'")
+# stats/R/bandwidths.R: 44
+# stop("invalid 'x'")
+# stats/R/bandwidths.R: 116
+# stop("invalid 'x'")
+# stats/R/bandwidths.R: 147
+# stop("invalid 'x'")
+#, fuzzy
+msgid "invalid 'nb'"
+msgstr "niepoprawny 'x'"
+
 # stats/R/bandwidths.R: 80
 # stop("sample is too sparse to find TD")
 msgid "sample is too sparse to find TD"
@@ -1576,6 +1588,12 @@ msgstr "niepoprawne wymiary dla 'xi'"
 # stop ("'x' is not a vector or matrix")
 msgid "'x' is not a vector or matrix"
 msgstr "'x' nie jest wektorem lub macierzą"
+
+# stats/R/logLik.R: 56
+# warning("extra arguments discarded")
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "dodatkowe argumenty zostały odrzucone"
 
 # stats/R/dist.R: 29
 # stop("invalid distance method")
@@ -3773,9 +3791,6 @@ msgstr ""
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata' nie ma poprawnej liczby kolumn"
 
-msgid "wrong number of predictors"
-msgstr "niepoprawna liczba predyktorów"
-
 # stats/R/princomp.R: 66
 # warning("both 'x' and 'covmat' were supplied: 'x' will be ignored")
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
@@ -4754,3 +4769,6 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "parametr %s nie pojawia się w formule modelu"
 msgstr[1] "parametry %s nie pojawiają się w formule modelu"
 msgstr[2] "parametry %s nie pojawiają się w formule modelu"
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "niepoprawna liczba predyktorów"

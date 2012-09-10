@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:22\n"
+"POT-Creation-Date: 2012-09-10 13:59\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -363,6 +363,10 @@ msgid "need at least 2 data points"
 msgstr "至少需要两个数据点"
 
 msgid "invalid 'x'"
+msgstr "'x'不对"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "'x'不对"
 
 msgid "sample is too sparse to find TD"
@@ -724,6 +728,10 @@ msgstr "'xi'的尺寸不对"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x'不是矢量或矩阵"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "额外参数不用"
 
 msgid "invalid distance method"
 msgstr "距离方法不对"
@@ -1858,9 +1866,6 @@ msgstr "'newdata'的列名同原始数据的列名没有任何相同的"
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata'列的数目不对"
 
-msgid "wrong number of predictors"
-msgstr "従属変数数目不对"
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "同时提供了'x'和'covmat': 'x'略过不用"
 
@@ -2407,6 +2412,9 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "従属変数数目不对"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec'含NA"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-04 17:07+0100\n"
+"POT-Creation-Date: 2012-09-10 13:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -69,7 +69,7 @@ msgstr "niepoprawny typ argumentu"
 # error(_("can only transform 100 pars in arima0"))
 # stats/src/pacf.c: 348
 # error(_("can only transform 100 pars in arima0"))
-#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
+#: arima.c:418 arima.c:502 pacf.c:307 pacf.c:347
 msgid "can only transform 100 pars in arima0"
 msgstr "można przekształcić tylko do 100 par w 'arima0'"
 
@@ -325,7 +325,7 @@ msgstr "forkal: kod błędu %d"
 
 # stats/src/pacf.c: 451
 # error(_("invalid value of lag.max"))
-#: pacf.c:451
+#: pacf.c:450
 msgid "invalid value of lag.max"
 msgstr "niepoprawna wartość 'lag.max'"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:22\n"
+"POT-Creation-Date: 2012-09-10 13:59\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -384,6 +384,10 @@ msgid "need at least 2 data points"
 msgstr "servono almeno 2 punti"
 
 msgid "invalid 'x'"
+msgstr "'x' non valida"
+
+#, fuzzy
+msgid "invalid 'nb'"
 msgstr "'x' non valida"
 
 msgid "sample is too sparse to find TD"
@@ -769,6 +773,10 @@ msgstr "lunghezza di 'x' sbagliata"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' non è un vettore o una matrice"
+
+#, fuzzy
+msgid "extra argument(s) %s will be disregarded"
+msgstr "argometni extra ignorati"
 
 msgid "invalid distance method"
 msgstr "metodo distanza sbagliato"
@@ -1998,9 +2006,6 @@ msgstr ""
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata' ha un numero di colonne non corretto"
 
-msgid "wrong number of predictors"
-msgstr "numero di predittori sbagliato"
-
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr "specificati sia 'x' che 'covmat': 'x' verrà ignorata"
 
@@ -2602,6 +2607,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "wrong number of predictors"
+#~ msgstr "numero di predittori sbagliato"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' contiene NA"
