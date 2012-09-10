@@ -988,7 +988,7 @@ function(which = NULL, dir = NULL,
 
 ## For spell-checking package C files.
 
-aspell_package_pot_files <-
+aspell_package_C_files <-
 function(dir, ignore = character(),
          control = list(), program = NULL, dictionaries = character())
 {
