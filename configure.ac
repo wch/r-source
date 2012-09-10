@@ -2608,6 +2608,7 @@ AC_CONFIG_FILES(
   src/library/translations/Makefile
   src/library/utils/DESCRIPTION
   src/library/utils/Makefile
+  src/library/utils/src/Makefile
   src/main/Makefile
   src/modules/Makefile
   src/modules/X11/Makefile

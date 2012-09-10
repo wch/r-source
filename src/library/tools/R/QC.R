@@ -1811,9 +1811,6 @@ function(package, dir, file, lib.loc = NULL,
             if(exists("DLLs", envir = ce$.__NAMESPACE__.)) {
                 DLLs <- get("DLLs", envir = ce$.__NAMESPACE__.)
                 has_namespace <- length(DLLs) > 0L
-                if(has_namespace) { # the C code only looks at the first
-                    nsDLL <- DLLs[1L]
-                }
             }
             ce
         } else

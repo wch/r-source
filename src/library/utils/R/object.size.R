@@ -17,7 +17,7 @@
 #  http://www.r-project.org/Licenses/
 
 object.size <- function(x)
-    structure(.Internal(object.size(x)), class="object_size")
+    structure(.Call(C_objectSize, x), class = "object_size")
 
 print.object_size <-
     function(x, quote = FALSE, units = "b", ...)

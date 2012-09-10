@@ -1706,7 +1706,8 @@ static void HashTableSetup1(SEXP x, HashData *d)
     for (R_xlen_t i = 0; i < d->M; i++) INTEGER(d->HashTable)[i] = NIL;
 }
 
-SEXP attribute_hidden csduplicated(SEXP x)
+/* used in utils */
+SEXP csduplicated(SEXP x)
 {
     SEXP ans;
     int n;
