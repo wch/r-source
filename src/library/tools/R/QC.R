@@ -5506,7 +5506,8 @@ function(dir)
                                                 control =
                                                  c("--master=en_US",
                                                    "--add-extra-dicts=en_GB"),
-                                                program = "aspell")
+                                                program = "aspell",
+                                                dictionaries = "en_stats")
         if(NROW(a))
             out$spelling <- a
     }
