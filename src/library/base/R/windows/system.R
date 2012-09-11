@@ -122,7 +122,7 @@ shell <- function(cmd, shell, flag = "/c", intern = FALSE,
     if(intern) res else invisible(res)
 }
 
-shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
+shell.exec <- function(file) .Internal(shell.exec(file))
 
 Sys.timezone <- function()
 {

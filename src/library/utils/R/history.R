@@ -17,10 +17,10 @@
 #  http://www.r-project.org/Licenses/
 
 loadhistory <- function(file = ".Rhistory")
-    invisible(.Internal(loadhistory(file)))
+    .Internal(loadhistory(file))
 
 savehistory <- function(file = ".Rhistory")
-    invisible(.Internal(savehistory(file)))
+    .Internal(savehistory(file))
 
 history <- function(max.show = 25, reverse = FALSE, pattern, ...)
 {

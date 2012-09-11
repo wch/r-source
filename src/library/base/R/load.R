@@ -66,8 +66,7 @@ save <- function(..., list = character(),
     names <- as.character( substitute(list(...)))[-1L]
     list <- c(list, names)
     if (!is.null(version) && version == 1)
-        invisible(.Internal(save(list, file, ascii, version, envir,
-                                 eval.promises)))
+        .Internal(save(list, file, ascii, version, envir, eval.promises))
     else {
         if (precheck) {
             ## check for existence of objects before opening connection
@@ -115,8 +114,7 @@ save <- function(..., list = character(),
 	else stop("bad file argument")
 	if(isOpen(con) && summary(con)$text != "binary")
 	    stop("can only save to a binary connection")
-	invisible(.Internal(saveToConn(list, con, ascii, version, envir,
-				       eval.promises)))
+	.Internal(saveToConn(list, con, ascii, version, envir, eval.promises))
     }
 }
 

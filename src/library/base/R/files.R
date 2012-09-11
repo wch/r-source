@@ -167,8 +167,7 @@ file.access <- function(names, mode = 0)
 
 dir.create <- function(path, showWarnings = TRUE, recursive = FALSE,
                        mode = "0777")
-    invisible(.Internal(dir.create(path, showWarnings, recursive,
-                                   as.octmode(mode))))
+    .Internal(dir.create(path, showWarnings, recursive, as.octmode(mode)))
 
 system.file <- function(..., package = "base", lib.loc = NULL, mustWork = FALSE)
 {
@@ -199,7 +198,7 @@ Sys.info <- function()
     .Internal(Sys.info())
 
 Sys.sleep <- function(time)
-    invisible(.Internal(Sys.sleep(time)))
+    .Internal(Sys.sleep(time))
 
 path.expand <- function(path)
     .Internal(path.expand(path))

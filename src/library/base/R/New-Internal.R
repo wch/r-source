@@ -148,7 +148,7 @@ gc <- function(verbose = getOption("verbose"),	reset=FALSE)
     if(all(is.na(res[, 5L]))) res[, -5L] else res
 }
 gcinfo <- function(verbose) .Internal(gcinfo(verbose))
-gctorture <- function(on=TRUE) invisible(.Internal(gctorture(on)))
+gctorture <- function(on = TRUE) .Internal(gctorture(on))
 gctorture2 <- function(step, wait = step, inhibit_release = FALSE)
     .Internal(gctorture2(step, wait, inhibit_release))
 
