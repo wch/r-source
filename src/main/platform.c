@@ -341,7 +341,7 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 
 
-SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ti, ed;
     const char **f, **title, *editor;

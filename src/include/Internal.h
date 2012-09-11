@@ -33,14 +33,15 @@
 SEXP do_X11(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveplot(SEXP, SEXP, SEXP, SEXP);
 
+SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
+SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
+
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 SEXP do_wsbrowser(SEXP, SEXP, SEXP, SEXP);
 SEXP do_browsepkgs(SEXP, SEXP, SEXP, SEXP);
 SEXP do_datamanger(SEXP, SEXP, SEXP, SEXP);
 SEXP do_packagemanger(SEXP, SEXP, SEXP, SEXP);
-SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_hsbrowser(SEXP, SEXP, SEXP, SEXP);
-SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_aqua_custom_print(SEXP, SEXP, SEXP, SEXP);
 #endif
 
@@ -53,7 +54,6 @@ SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chooseFiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chooseDir(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
-SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getClipboardFormats(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getIdentification(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getWindowHandle(SEXP, SEXP, SEXP, SEXP);
@@ -65,7 +65,6 @@ SEXP do_mkjunction(SEXP, SEXP, SEXP, SEXP);
 SEXP do_msgwindow(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readClipboard(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readRegistry(SEXP, SEXP, SEXP, SEXP);
-SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setStatusBar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setTitle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);

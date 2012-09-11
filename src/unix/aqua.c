@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2010 The R Core Team
+ *  Copyright (C) 1999-2012 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -132,12 +132,12 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isString(objType) || LENGTH(objType)<1)
 	errorcall(call, "invalid arguments");
-    ct=CHAR(STRING_ELT(objType,0));
-    cpr=ptr_Raqua_CustomPrint(ct, obj);
+    ct = CHAR(STRING_ELT(objType,0));
+    cpr = ptr_Raqua_CustomPrint(ct, obj);
 
     /* FIXME: trying to store a pointer in an integer is wrong */
-    PROTECT(rv=allocVector(INTSXP, 1));
-    INTEGER(rv)[0]=cpr;
+    PROTECT(rv = allocVector(INTSXP, 1));
+    INTEGER(rv)[0] = cpr;
 
     vmaxset(vm);
     UNPROTECT(1);

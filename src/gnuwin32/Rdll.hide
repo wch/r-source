@@ -634,7 +634,6 @@
  do_filechoose
  do_filecopy
  do_filecreate
- do_fileedit
  do_fileexists
  do_fileinfo
  do_filelink
