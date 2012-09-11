@@ -130,7 +130,12 @@ SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP flushconsole(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    return do_flushconsole(call, op, CDR(args), rho);
+#ifdef Win32
+    R_FlushConsole();
+#else
+    do_flushconsole(call, op, CDR(args), rho);
+#endif
+    return R_NilValue;
 }
 
 SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
