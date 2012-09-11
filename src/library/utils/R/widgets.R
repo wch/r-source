@@ -25,7 +25,7 @@ select.list <-
         stop("'title' must be NULL or a length-1 character vector")
     if(isTRUE(graphics)) {
         if (.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-        return(.Internal(select.list(choices, preselect, multiple, title)))
+        return(.External2(C_selectlist, choices, preselect, multiple, title))
         ## must be Unix here
         ## Tk might not require X11 on Mac OS X, but if DISPLAY is set
         ## this will work for Aqua Tcl/Tk.
@@ -69,6 +69,4 @@ select.list <-
     }
 }
 
-flush.console <- function()
-    if (.Platform$GUI == "AQUA" || .Platform$OS.type == "windows")
-        .Internal(flush.console())
+flush.console <- function() invisible(.External2(C_flushconsole))

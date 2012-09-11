@@ -64,6 +64,13 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(loadhistory, 1),
     EXTDEF(savehistory, 1),
 
+    EXTDEF(dataentry, 2),
+    EXTDEF(dataviewer, 2),
+    EXTDEF(edit, 4),
+    EXTDEF(fileedit, 3),
+    EXTDEF(flushconsole, 0),
+    EXTDEF(selectlist, 4),
+
     {NULL, NULL, 0}
 };
 

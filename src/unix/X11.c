@@ -91,7 +91,7 @@ SEXP attribute_hidden do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifndef HAVE_AQUA
-SEXP attribute_hidden do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 /*  This copy of do_dataentry is needed when R is built under MacOSX along
     with the aqua module which contains a definition of do_dataentry. If R
@@ -131,7 +131,7 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn clpcon, char *type)
     }
 }
 
-SEXP attribute_hidden do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_X11_Init();
     if(initialized > 0)

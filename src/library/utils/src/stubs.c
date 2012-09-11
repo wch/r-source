@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-4     the R Core Team
+ *  Copyright (C) 2000-12     the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #endif
 
 #include <Defn.h> /* for checkArity */
+#include <Internal.h>
 
 #ifdef Win32
 #include "Startup.h"
@@ -90,22 +91,49 @@ SEXP addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP loadhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    args = CDR(args);
-    ptr_R_loadhistory(call, op, args, rho);
+    ptr_R_loadhistory(call, op, CDR(args), rho);
     return R_NilValue;
 }
 
 SEXP savehistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    args = CDR(args);
-    ptr_R_savehistory(call, op, args, rho);
+    ptr_R_savehistory(call, op, CDR(args), rho);
     return R_NilValue;
 }
 
 SEXP addhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    args = CDR(args);
-    if(ptr_R_addhistory) ptr_R_addhistory(call, op, args, rho);
+    if(ptr_R_addhistory) ptr_R_addhistory(call, op, CDR(args), rho);
     return R_NilValue;
 }
 #endif
+
+SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_dataentry(call, op, CDR(args), rho);
+}
+
+SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_dataviewer(call, op, CDR(args), rho);
+}
+
+SEXP edit(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_edit(call, op, CDR(args), rho);
+}
+
+SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_fileedit(call, op, CDR(args), rho);
+}
+
+SEXP flushconsole(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_flushconsole(call, op, CDR(args), rho);
+}
+
+SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_selectlist(call, op, CDR(args), rho);
+}

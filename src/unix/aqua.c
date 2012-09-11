@@ -113,17 +113,6 @@ SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
     return(ptr_do_packagemanger(call, op, args, env));
 }
 
-SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-	if(ptr_do_flushconsole)
-		ptr_do_flushconsole(call, op, args, env);
-	return R_NilValue;
-}
-
-SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return(ptr_do_selectlist(call, op, args, env));
-}
 
 SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -156,3 +145,16 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
     return rv;
 }
 #endif
+
+SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    if(ptr_do_flushconsole) ptr_do_flushconsole(call, op, args, env);
+    return R_NilValue;
+}
+
+SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    if(ptr_do_selectlist) return ptr_do_selectlist(call, op, args, env);
+    return R_NilValue;
+}
+

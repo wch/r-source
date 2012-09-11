@@ -23,7 +23,7 @@ dataentry <- function (data, modes)
     if(!is.list(modes) ||
        (length(modes) && !all(sapply(modes, is.character))))
         stop("invalid 'modes' argument")
-    .Internal(dataentry(data, modes))
+    .External2(C_dataentry, data, modes)
 }
 
 View <- function (x, title)
@@ -43,7 +43,7 @@ View <- function (x, title)
     if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||
        !max(sapply(x, length)))
         stop("invalid 'x' argument")
-    .Internal(dataviewer(x, title))
+    invisible(.External2(C_dataviewer, x, title))
 }
 
 edit <- function(name,...)UseMethod("edit")
@@ -52,18 +52,9 @@ edit.default <-
     function (name = NULL, file = "", title = NULL,
               editor = getOption("editor"), ...)
 {
-    if(FALSE){}
-# This should no longer be necessary, and caused problems in the no-GUI
-# situation.
-#is.matrix(name) &&
-#       (mode(name) == "numeric" || mode(name) == "character"))
-#        edit.matrix(name=name, ...)
-    else {
-	if (is.null(title)) title <- deparse(substitute(name))
-        if (is.function(editor))
-            invisible(editor(name, file, title))
-	else .Internal(edit(name, file, title, editor))
-    }
+    if (is.null(title)) title <- deparse(substitute(name))
+    if (is.function(editor)) invisible(editor(name, file, title))
+    else .External2(C_edit, name, file, title, editor)
 }
 
 edit.data.frame <-
@@ -119,7 +110,7 @@ edit.data.frame <-
     }
     rn <- attr(name, "row.names")
 
-    out <- .Internal(dataentry(datalist, modes))
+    out <- .External2(C_dataentry, datalist, modes)
     if(length(out) == 0L) {
         ## e.g. started with 0-col data frame or NULL, and created no cols
         return (name)
@@ -204,7 +195,7 @@ edit.matrix <-
         modes <- c(list(row.names = "character"), modes)
     }
 
-    out <- .Internal(dataentry(datalist, modes))
+    out <- .External2(C_dataentry, datalist, modes)
 
     lengths <- sapply(out, length)
     maxlength <- max(lengths)
@@ -243,21 +234,21 @@ file.edit <-
         }
     }
     if (is.function(editor)) invisible(editor(file = file, title = title))
-    else .Internal(file.edit(file, title, editor))
+    else invisible(.External2(C_fileedit, file, title, editor))
 }
 
-vi <- function(name=NULL, file="")
-    edit.default(name, file, editor="vi")
+vi <- function(name = NULL, file = "")
+    edit.default(name, file, editor = "vi")
 
-emacs <- function(name=NULL, file="")
-    edit.default(name, file, editor="emacs")
+emacs <- function(name = NULL, file = "")
+    edit.default(name, file, editor = "emacs")
 
-xemacs <- function(name=NULL, file="")
-    edit.default(name, file, editor="xemacs")
+xemacs <- function(name = NULL, file = "")
+    edit.default(name, file, editor = "xemacs")
 
-xedit <- function(name=NULL, file="")
-    edit.default(name, file, editor="xedit")
+xedit <- function(name = NULL, file = "")
+    edit.default(name, file, editor = "xedit")
 
-pico <- function(name=NULL, file="")
-    edit.default(name, file, editor="pico")
+pico <- function(name = NULL, file = "")
+    edit.default(name, file, editor = "pico")
 
