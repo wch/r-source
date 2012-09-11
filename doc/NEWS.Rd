@@ -219,6 +219,16 @@
 
       \item \code{clearPushBack()} is now a documented interface to a
       long-existing internal call.
+
+      \item \code{aspell()} gains filters for R code, Debian Control
+      Format and message catalog files, and support for R level
+      dictionaries.  In addition, package \pkg{utils} now provides
+      \code{aspell_package_R_files()} and
+      \code{aspell_package_C_files()} for spell checking R and C level
+      message strings in packages.
+
+      \item \code{bibentry()} gains some support for \dQuote{incomplete}
+      entries with a \samp{crossref} field.
     }
   }
 
