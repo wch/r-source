@@ -35,7 +35,7 @@ saveRDS <-
     }
     else
         stop("bad 'file' argument")
-    invisible(.Internal(serializeToConn(object, con, ascii, version, refhook)))
+    .Internal(serializeToConn(object, con, ascii, version, refhook))
 }
 
 readRDS <- function(file, refhook = NULL)

@@ -83,7 +83,7 @@ set.seed <- function(seed, kind = NULL, normal.kind = NULL)
             stop("Buggy version of Kinderman-Ramage generator is not allowed")
          if(normal.kind == length(n.kinds) - 1L) normal.kind <- -1L
     }
-    invisible(.Internal(set.seed(seed, i.knd, normal.kind)))
+    .Internal(set.seed(seed, i.knd, normal.kind))
 }
 
 # Compatibility function to set RNGkind as in a given R version

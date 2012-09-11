@@ -69,8 +69,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
 	stop("increasing 'x' and 'y' values expected")
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
 	stop("no proper 'z' matrix specified")
-    ##- don't lose  dim(.)
-    invisible(.Internal(contourLines(x, y, z, levels)))
+    .Internal(contourLines(x, y, z, levels))
 }
 
 chull <- function(x, y = NULL)

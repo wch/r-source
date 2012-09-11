@@ -42,16 +42,14 @@ writeLines <- function(text, con = stdout(), sep = "\n", useBytes = FALSE)
         con <- file(con, "w")
         on.exit(close(con))
     }
-    invisible(.Internal(writeLines(text, con, sep, useBytes)))
+    .Internal(writeLines(text, con, sep, useBytes))
 }
 
 open <- function(con, ...)
     UseMethod("open")
 
 open.connection <- function(con, open = "r", blocking = TRUE, ...)
-{
-    invisible(.Internal(open(con, open, blocking)))
-}
+    .Internal(open(con, open, blocking))
 
 isOpen <- function(con, rw = "")
 {
@@ -69,12 +67,12 @@ close <- function(con, ...)
     UseMethod("close")
 
 close.connection <- function (con, type = "rw", ...)
-    invisible(.Internal(close(con, type)))
+    .Internal(close(con, type))
 
 flush <- function(con) UseMethod("flush")
 
 flush.connection <- function (con)
-    invisible(.Internal(flush(con)))
+    .Internal(flush(con))
 
 file <- function(description = "", open = "", blocking = TRUE,
                  encoding = getOption("encoding"), raw = FALSE)
