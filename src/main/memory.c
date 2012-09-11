@@ -3421,7 +3421,6 @@ SEXP do_Rprofmem(SEXP args)
 
 #include "RBufferUtils.h"
 
-attribute_hidden
 void *R_AllocStringBuffer(size_t blen, R_StringBuffer *buf)
 {
     size_t blen1, bsize = buf->defaultSize;
@@ -3453,7 +3452,7 @@ void *R_AllocStringBuffer(size_t blen, R_StringBuffer *buf)
     return buf->data;
 }
 
-void attribute_hidden
+void
 R_FreeStringBuffer(R_StringBuffer *buf)
 {
     if (buf->data != NULL) {

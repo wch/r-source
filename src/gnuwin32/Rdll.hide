@@ -308,7 +308,6 @@
  Rf_chebyshev_init
  Rf_check1arg
  Rf_check_stack_balance
- Rf_con_pushback
  Rf_convertToC
  Rf_copyListMatrix
  Rf_d1mach

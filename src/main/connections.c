@@ -165,7 +165,6 @@ static int ConnIndex(Rconnection con)
 }
 
 /* internal, not the same as R function getConnection */
-attribute_hidden
 Rconnection getConnection(int n)
 {
     Rconnection con = NULL;
@@ -4354,7 +4353,6 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 /* used in readLines and scan */
-attribute_hidden
 void con_pushback(Rconnection con, Rboolean newLine, char *line)
 {
     int nexists = con->nPushBack;
