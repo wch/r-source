@@ -509,8 +509,6 @@
  do_RGB2hsv
  do_RNGkind
  do_Rhome
- do_Rprof
- do_Rprofmem
  do_S4on
  do_abbrev
  do_abs
@@ -586,7 +584,6 @@
  do_complex
  do_copyDFattr
  do_contourLines
- do_countfields
  do_crc64
  do_cum
  do_dataentry
@@ -782,7 +779,6 @@
  do_memlimits
  do_memoryprofile
  do_memsize
- do_menu
  do_merge
  do_mget
  do_missing
@@ -803,7 +799,6 @@
  do_nextn
  do_ngettext
  do_normalizepath
- do_nsl
  do_nzchar
  do_onexit
  do_open
@@ -979,7 +974,6 @@
  do_transpose
  do_trunc
  do_truncate
- do_typecvt
  do_typeof
  do_unclass
  do_unlink
@@ -1012,7 +1006,6 @@
  do_writebin
  do_writechar
  do_writelines
- do_writetable
  do_xtfrm
  dos_wglob
  dos_wglobfree

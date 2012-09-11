@@ -551,7 +551,7 @@ installed.packages <-
             base <- paste(c(lib, fields), collapse = ",")
             ## add length and 64-bit CRC in hex (in theory, seems
             ## it is actually 32-bit on some systems)
-            enc <- sprintf("%d_%s", nchar(base), .Internal(crc64(base)))
+            enc <- sprintf("%d_%s", nchar(base), .Call(C_crc64, base))
             dest <- file.path(tempdir(), paste0("libloc_", enc, ".rds"))
             if(file.exists(dest) &&
                file.info(dest)$mtime > file.info(lib)$mtime &&

@@ -514,6 +514,7 @@ void Rwin_fpset(void)
     __asm__ ( "fninit" ) ;
 }
 
+#if 0
 #include "getline/getline.h"     /* for gl_load/savehistory */
 #include "getline/wc_history.h"  /* for wgl_load/savehistory */
 SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -572,6 +573,7 @@ SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     return R_NilValue;
 }
+#endif
 
 #include <preferences.h>
 

@@ -17,10 +17,10 @@
 #  http://www.r-project.org/Licenses/
 
 loadhistory <- function(file = ".Rhistory")
-    invisible(.Internal(loadhistory(file)))
+    invisible(.External2(C_loadhistory, file))
 
 savehistory <- function(file = ".Rhistory")
-    invisible(.Internal(savehistory(file)))
+    invisible(.External2(C_savehistory, file))
 
 history <- function(max.show = 25, reverse = FALSE, pattern, ...)
 {
@@ -44,7 +44,7 @@ timestamp <- function(stamp = date(), prefix = "##------ ",
                       suffix = " ------##", quiet = FALSE)
 {
     stamp <- paste0(prefix, stamp, suffix)
-    .Internal(addhistory(stamp))
+    .External2(C_addhistory, stamp)
     if (!quiet) cat(stamp, sep = "\n")
     invisible(stamp)
 }

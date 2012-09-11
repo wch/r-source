@@ -26,14 +26,14 @@ function(file, sep = "", quote = "\"'", skip = 0,
     }
     if(!inherits(file, "connection"))
         stop("'file' must be a character string or connection")
-    .Internal(count.fields(file, sep, quote, skip, blank.lines.skip,
-                           comment.char))
+    .External(C_countfields, file, sep, quote, skip, blank.lines.skip,
+              comment.char)
 }
 
 
 type.convert <-
 function(x, na.strings = "NA", as.is = FALSE, dec = ".")
-    .Internal(type.convert(x, na.strings, as.is, dec))
+    .External2(C_typecvt, x, na.strings, as.is, dec)
 
 
 read.table <-
@@ -67,8 +67,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     ## read a few lines to determine header, no of cols.
     nlines <- n0lines <- if (nrows < 0L) 5 else min(5L, (header + nrows))
 
-    lines <- .Internal(readTableHead(file, nlines, comment.char,
-                                     blank.lines.skip, quote, sep))
+    lines <- .External(C_readtablehead, file, nlines, comment.char,
+                       blank.lines.skip, quote, sep)
     nlines <- length(lines)
     if(!nlines) {
         if(missing(col.names)) stop("no lines available in input")
@@ -109,8 +109,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 
         if (header) {
             ## skip over header
-           .Internal(readTableHead(file, 1L, comment.char,
-                                   blank.lines.skip, quote, sep))
+           .External(C_readtablehead, file, 1L, comment.char,
+                     blank.lines.skip, quote, sep)
             if(missing(col.names)) col.names <- first
             else if(length(first) != length(col.names))
                 warning("header and 'col.names' are of different lengths")

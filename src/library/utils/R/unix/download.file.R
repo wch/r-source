@@ -70,5 +70,4 @@ download.file <-
     invisible(status)
 }
 
-nsl <- function(hostname)
-    .Internal(nsl(hostname))
+nsl <- function(hostname) .Call(C_nsl, hostname)

@@ -251,7 +251,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
     R_Profiling = 1;
 }
 
-SEXP attribute_hidden do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_Rprof(SEXP args)
 {
     SEXP filename;
     int append_mode, mem_profiling;
@@ -263,7 +263,6 @@ SEXP attribute_hidden do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
     }
 #endif
-    checkArity(op, args);
     if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
 	error(_("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
@@ -277,7 +276,7 @@ SEXP attribute_hidden do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 #else /* not R_PROFILING */
-SEXP attribute_hidden do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_Rprof(SEXP args)
 {
     error(_("R profiling is not available on this system"));
     return R_NilValue;		/* -Wall */

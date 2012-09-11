@@ -508,7 +508,7 @@ FUNTAB R_FunTab[] =
 {"format.info",	do_formatinfo,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"cat",		do_cat,		0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"do.call",	do_docall,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"type.convert",do_typecvt,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+//{"type.convert",do_typecvt,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
 
 /* String Manipulation */
@@ -635,7 +635,7 @@ FUNTAB R_FunTab[] =
 {"Version",	do_version,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"machine",	do_machine,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"commandArgs", do_commandArgs, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"unzip",	do_unzip,	0,	111,    7,	{PP_FUNCALL, PREC_FN,	0}},
+
 #ifdef Win32
 {"system",	do_system,	0,	211,	5,	{PP_FUNCALL, PREC_FN,	0}},
 #else
@@ -703,7 +703,7 @@ FUNTAB R_FunTab[] =
 {"dump",	do_dump,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"quit",	do_quit,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"readline",	do_readln,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"menu",	do_menu,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"menu",	do_menu,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"print.default",do_printdefault,0,	111,	9,	{PP_FUNCALL, PREC_FN,	0}},
 {"print.function",do_printfunction,0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"prmatrix",	do_prmatrix,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
@@ -742,8 +742,8 @@ FUNTAB R_FunTab[] =
 {"order",	do_order,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rank",	do_rank,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"scan",	do_scan,	0,	11,	18,	{PP_FUNCALL, PREC_FN,	0}},
-{"count.fields",do_countfields,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
-{"readTableHead",do_readtablehead,0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
+//{"count.fields",do_countfields,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
+//{"readTableHead",do_readtablehead,0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"t.default",	do_transpose,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"aperm",	do_aperm,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"builtins",	do_builtins,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -767,8 +767,6 @@ FUNTAB R_FunTab[] =
 {"colMeans",	do_colsum,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"rowSums",	do_colsum,	2,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"rowMeans",	do_colsum,	3,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"Rprof",	do_Rprof,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"Rprofmem",	do_Rprofmem,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"tracemem",    do_tracemem,    0,      1,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"retracemem",  do_retracemem,  0,      201,     -1,      {PP_FUNCALL, PREC_FN,	0}},
 {"untracemem",  do_untracemem,  0,      101,	1,      {PP_FUNCALL, PREC_FN,	0}},
@@ -878,9 +876,9 @@ FUNTAB R_FunTab[] =
 {"standardGeneric",do_standardGeneric,0, 201,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* History manipulation */
-{"loadhistory", do_loadhistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"savehistory", do_savehistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"addhistory",  do_addhistory,  0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"loadhistory", do_loadhistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"savehistory", do_savehistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"addhistory",  do_addhistory,  0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* date-time manipulations */
 {"Sys.time",	do_systime,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
@@ -947,17 +945,10 @@ FUNTAB R_FunTab[] =
 {"getAllConnections",do_getallconnections,0,11, 0,      {PP_FUNCALL, PREC_FN,	0}},
 {"summary.connection",do_sumconnection,0,11,    1,      {PP_FUNCALL, PREC_FN,	0}},
 {"download",	do_download,	0,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
-{"nsl",		do_nsl,		0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
+//{"nsl",		do_nsl,		0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"gzcon",	do_gzcon,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"memCompress",do_memCompress,	0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"memDecompress",do_memDecompress,0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
-
-{"sockconnect",	do_sock,	0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
-{"sockopen",	do_sock,	1,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
-{"socklisten",	do_sock,	2,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
-{"sockclose",	do_sock,	3,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
-{"sockread",	do_sock,	4,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
-{"sockwrite",	do_sock,	5,      111,    2,      {PP_FUNCALL, PREC_FN,	0}},
 
 
 {"readDCF",	do_readDCF,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
@@ -985,7 +976,7 @@ FUNTAB R_FunTab[] =
 {"importIntoEnv",do_importIntoEnv, 0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"env.profile",  do_envprofile,    0,	211,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"write.table",	do_writetable,	0,    111,     11,	{PP_FUNCALL, PREC_FN,	0}},
+//{"write.table",	do_writetable,	0,    111,     11,	{PP_FUNCALL, PREC_FN,	0}},
 {"Encoding",	do_encoding,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"setEncoding",	do_setencoding,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"setTimeLimit",do_setTimeLimit,0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},

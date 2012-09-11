@@ -260,7 +260,7 @@ SEXP attribute_hidden do_stopHTTPD(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-static SEXP Rsockconnect(SEXP sport, SEXP shost)
+SEXP Rsockconnect(SEXP sport, SEXP shost)
 {
     if (length(sport) != 1) error("invalid 'socket' argument");
     int port = asInteger(sport);
@@ -274,7 +274,7 @@ static SEXP Rsockconnect(SEXP sport, SEXP shost)
     return ScalarInteger(port); // The socket number
 }
 
-static SEXP Rsockread(SEXP ssock, SEXP smaxlen)
+SEXP Rsockread(SEXP ssock, SEXP smaxlen)
 {
     if (length(ssock) != 1) error("invalid 'socket' argument");
     int sock = asInteger(ssock), maxlen = asInteger(smaxlen);
@@ -292,7 +292,7 @@ static SEXP Rsockread(SEXP ssock, SEXP smaxlen)
 		       
 }
 
-static SEXP Rsockclose(SEXP ssock)
+SEXP Rsockclose(SEXP ssock)
 {
     if (length(ssock) != 1) error("invalid 'socket' argument");
     int sock = asInteger(ssock);
@@ -304,7 +304,7 @@ static SEXP Rsockclose(SEXP ssock)
     return ScalarLogical(sock);
 }
 
-static SEXP Rsockopen(SEXP sport)
+SEXP Rsockopen(SEXP sport)
 {
     if (length(sport) != 1) error("invalid 'port' argument");
     int port = asInteger(sport);
@@ -316,7 +316,7 @@ static SEXP Rsockopen(SEXP sport)
     return ScalarInteger(port); // The socket number
 }
 
-static SEXP Rsocklisten(SEXP ssock)
+SEXP Rsocklisten(SEXP ssock)
 {
     if (length(ssock) != 1) error("invalid 'socket' argument");
     int sock = asInteger(ssock), len = 256;
@@ -335,7 +335,7 @@ static SEXP Rsocklisten(SEXP ssock)
     return ans;
 }
 
-static SEXP Rsockwrite(SEXP ssock, SEXP sstring)
+SEXP Rsockwrite(SEXP ssock, SEXP sstring)
 {
     if (length(ssock) != 1) error("invalid 'socket' argument");
     int sock = asInteger(ssock), start = 0, end, len;
@@ -362,26 +362,4 @@ int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 	error(_("socket routines cannot be loaded"));
 	return 0;
     }
-}
-
-attribute_hidden
-SEXP do_sock(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP ans = R_NilValue; /* -Wall */
-    checkArity(op, args);
-    switch(PRIMVAL(op)) {
-    case 0: ans = Rsockconnect(CAR(args), CADR(args));
-	break;
-    case 1: ans = Rsockopen(CAR(args));
-	break;
-    case 2: ans = Rsocklisten(CAR(args));
-	break;
-    case 3: ans = Rsockclose(CAR(args)); 
-	break;
-    case 4: ans = Rsockread(CAR(args), CADR(args)); 
-	break;
-    case 5: ans = Rsockwrite(CAR(args), CADR(args)); 
-	break;
-    }
-    return ans;
 }

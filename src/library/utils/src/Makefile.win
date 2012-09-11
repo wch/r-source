@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = init.c size.c
+SOURCES_C = init.c io.c size.c sock.c stubs.c utils.c
 
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
@@ -19,8 +19,11 @@ OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
 SHLIB = $(pkg).dll
 RESFLAGS = -I $(R_HOME)/include
 
-## need config.h
-PKG_CPPFLAGS=-I$(R_HOME)/src/include -DHAVE_CONFIG_H -I$(R_HOME)/src/main
+XZ_CPPFLAGS = -DLZMA_API_STATIC -I../../../extra/xz/api
+
+PKG_CPPFLAGS=-I$(R_HOME)/src/include -DHAVE_CONFIG_H \
+  -I$(R_HOME)/src/main -I$(RHOME)/src/gnuwin32 $(XZ_XPPFLAGS)
+
 all: makeMakedeps shlib
 
 shlib: $(SHLIB)

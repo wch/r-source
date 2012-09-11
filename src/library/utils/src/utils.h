@@ -17,4 +17,34 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
+
 SEXP objectSize(SEXP s);
+SEXP unzip(SEXP args);
+SEXP Rprof(SEXP args);
+SEXP Rprofmem(SEXP args);
+
+SEXP countfields(SEXP args);
+SEXP typecvt(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP menu(SEXP args);
+SEXP readtablehead(SEXP args);
+SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env);
+
+SEXP crc64(SEXP in);
+SEXP nsl(SEXP hostname);
+
+SEXP sockconnect(SEXP sport, SEXP shost);
+SEXP sockread(SEXP sport, SEXP smaxlen);
+SEXP sockclose(SEXP sport);
+SEXP sockopen(SEXP sport);
+SEXP socklisten(SEXP sport);
+SEXP sockwrite(SEXP sport, SEXP sstring);
+
+SEXP addhistory(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP loadhistory(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP savehistory(SEXP call, SEXP op, SEXP args, SEXP rho);

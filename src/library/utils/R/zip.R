@@ -24,8 +24,8 @@ unzip <-
     if(identical(unzip, "internal")) {
         if(!list && !missing(exdir))
             dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
-        res <- .Internal(unzip(zipfile, files, exdir, list, overwrite,
-                               junkpaths, setTimes))
+        res <- .External(C_unzip, zipfile, files, exdir, list, overwrite,
+                         junkpaths, setTimes)
         if(list) {
             dates <- as.POSIXct(res[[3]], "%Y-%m-%d %H:%M",  tz="UTC")
             data.frame(Name = res[[1]], Length = res[[2]], Date = dates,
