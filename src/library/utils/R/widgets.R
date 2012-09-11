@@ -69,4 +69,4 @@ select.list <-
     }
 }
 
-flush.console <- function() invisible(.External2(C_flushconsole))
+flush.console <- function() invisible(.Call(C_flushconsole))

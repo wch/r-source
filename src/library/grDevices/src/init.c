@@ -60,7 +60,7 @@ void *getQuartzAPI();
 
 static R_CMethodDef CEntries [] = {
 #ifndef WIN32
-    // What is this for?  Not use in R nor R.app sources
+    // This is used by src/unix/aqua.c, as a symbol to be looked up
     {"getQuartzAPI", (DL_FUNC) getQuartzAPI, 0},
 #endif
     {NULL, NULL, 0}

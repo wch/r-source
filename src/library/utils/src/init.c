@@ -32,6 +32,7 @@
 
 static const R_CallMethodDef CallEntries[] = {
     CALLDEF(crc64, 1),
+    CALLDEF(flushconsole, 0),
     CALLDEF(menu, 1),
     CALLDEF(nsl, 1),
     CALLDEF(objectSize, 1),
@@ -68,7 +69,6 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(dataviewer, 2),
     EXTDEF(edit, 4),
     EXTDEF(fileedit, 3),
-    EXTDEF(flushconsole, 0),
     EXTDEF(selectlist, 4),
 
     {NULL, NULL, 0}

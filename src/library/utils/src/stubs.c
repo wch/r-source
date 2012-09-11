@@ -110,11 +110,13 @@ SEXP addhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    // defined in unix/aqua.c or gnuwin32/dataentry.c
     return do_dataentry(call, op, CDR(args), rho);
 }
 
 SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    // defined in unix/aqua.c or gnuwin32/dataentry.c
     return do_dataviewer(call, op, CDR(args), rho);
 }
 
@@ -123,22 +125,68 @@ SEXP edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_edit(call, op, CDR(args), rho);
 }
 
-SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP flushconsole(void)
 {
-    return do_fileedit(call, op, CDR(args), rho);
-}
-
-SEXP flushconsole(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-#ifdef Win32
     R_FlushConsole();
-#else
-    do_flushconsole(call, op, CDR(args), rho);
-#endif
     return R_NilValue;
 }
 
 SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    // defined in unix/aqua.c or gnuwin32/extra.c
     return do_selectlist(call, op, CDR(args), rho);
+}
+
+// formerly in src/main/platform.c
+SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, ti, ed;
+    const char **f, **title, *editor;
+    int i, n;
+
+    args = CDR(args);
+    fn = CAR(args); args = CDR(args);
+    ti = CAR(args); args = CDR(args);
+    ed = CAR(args);
+
+    n = length(fn);
+    if (!isString(ed) || length(ed) != 1)
+	error(_("invalid '%s' specification"), "editor");
+    if (n > 0) {
+	if (!isString(fn))
+	    error(_("invalid '%s' specification"), "filename");
+	f = (const char**) R_alloc(n, sizeof(char*));
+	title = (const char**) R_alloc(n, sizeof(char*));
+	/* FIXME convert to UTF-8 on Windows */
+	for (i = 0; i < n; i++) {
+	    SEXP el = STRING_ELT(fn, 0);
+	    if (!isNull(el))
+#ifdef Win32
+		f[i] = acopy_string(reEnc(CHAR(el), getCharCE(el), CE_UTF8, 1));
+#else
+		f[i] = acopy_string(translateChar(el));
+#endif
+	    else
+		f[i] = "";
+	    if (!isNull(STRING_ELT(ti, i)))
+		title[i] = acopy_string(translateChar(STRING_ELT(ti, i)));
+	    else
+		title[i] = "";
+	}
+    }
+    else {  /* open a new file for editing */
+	n = 1;
+	f = (const char**) R_alloc(1, sizeof(char*));
+	f[0] = "";
+	title = (const char**) R_alloc(1, sizeof(char*));
+	title[0] = "";
+    }
+    SEXP ed0 = STRING_ELT(ed, 0);
+#ifdef Win32
+    editor = acopy_string(reEnc(CHAR(ed0), getCharCE(ed0), CE_UTF8, 1));
+#else
+    editor = acopy_string(translateChar(ed0));
+#endif
+    R_EditFiles(n, f, title, editor);
+    return R_NilValue;
 }

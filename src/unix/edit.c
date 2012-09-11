@@ -210,5 +210,5 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_CLOENV(x, envir);
     UNPROTECT(3);
     vmaxset(vmaxsave);
-    return (x);
+    return x;
 }

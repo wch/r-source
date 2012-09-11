@@ -332,69 +332,6 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-/*  file.edit
- *
- *  Open a file in a text editor. The function calls
- *  "R_EditFiles" which is a platform dependent hook that invokes
- *  the given editor.
- *
- */
-
-
-SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP fn, ti, ed;
-    const char **f, **title, *editor;
-    int i, n;
-
-    checkArity(op, args);
-    fn = CAR(args); args = CDR(args);
-    ti = CAR(args); args = CDR(args);
-    ed = CAR(args);
-
-    n = length(fn);
-    if (!isString(ed) || length(ed) != 1)
-	error(_("invalid '%s' specification"), "editor");
-    if (n > 0) {
-	if (!isString(fn))
-	    error(_("invalid '%s' specification"), "filename");
-	f = (const char**) R_alloc(n, sizeof(char*));
-	title = (const char**) R_alloc(n, sizeof(char*));
-	/* FIXME convert to UTF-8 on Windows */
-	for (i = 0; i < n; i++) {
-	    SEXP el = STRING_ELT(fn, 0);
-	    if (!isNull(el))
-#ifdef Win32
-		f[i] = acopy_string(reEnc(CHAR(el), getCharCE(el), CE_UTF8, 1));
-#else
-		f[i] = acopy_string(translateChar(el));
-#endif
-	    else
-		f[i] = "";
-	    if (!isNull(STRING_ELT(ti, i)))
-		title[i] = acopy_string(translateChar(STRING_ELT(ti, i)));
-	    else
-		title[i] = "";
-	}
-    }
-    else {  /* open a new file for editing */
-	n = 1;
-	f = (const char**) R_alloc(1, sizeof(char*));
-	f[0] = "";
-	title = (const char**) R_alloc(1, sizeof(char*));
-	title[0] = "";
-    }
-    SEXP ed0 = STRING_ELT(ed, 0);
-#ifdef Win32
-    editor = acopy_string(reEnc(CHAR(ed0), getCharCE(ed0), CE_UTF8, 1));
-#else
-    editor = acopy_string(translateChar(ed0));
-#endif
-    R_EditFiles(n, f, title, editor);
-    return R_NilValue;
-}
-
-
 /*  file.append
  *
  *  Given two file names as arguments and arranges for

@@ -33,7 +33,7 @@
 
 #ifdef HAVE_AQUA
 
-/* tell QuartzDevice to insert definitions for us (to maintain consistency) */
+/* tell QuartzDevice.h to insert definitions for us (to maintain consistency) */
 #define IN_AQUA_C 1
 
 #include <R_ext/GraphicsEngine.h>
@@ -43,6 +43,12 @@
 extern Rboolean useaqua; /* from src/unix/system.c */
 
 
+/* These are in no header.  Their definitions are in
+   Mac-GUI/REngine/Rinit.m, which sets them to functions in that
+   Mac-GUI/REngine/Rcallbacks.m
+
+   So this is a essentially a private hook arrangement for R.app
+*/
 DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
     ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
     ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser,
@@ -51,8 +57,9 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
 
 int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
 
-static QuartzFunctions_t* qfn;
 
+/* called from Mac-GUI/RController.m */
+static QuartzFunctions_t* qfn;  // could this not be internal to function?
 QuartzFunctions_t *getQuartzFunctions(void) {
     if (qfn) return qfn;
     {
@@ -60,7 +67,7 @@ QuartzFunctions_t *getQuartzFunctions(void) {
 	fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
 	if (!fn) {
 	    /* we need to load grDevices - not sure if this is the best way, though ... */
-	    SEXP call = lang2(install("library"), install("grDevices"));
+	    SEXP call = lang2(install("loadNamespace"), install("grDevices"));
 	    PROTECT(call);
 	    eval(call, R_GlobalEnv);
 	    UNPROTECT(1);
@@ -74,43 +81,41 @@ QuartzFunctions_t *getQuartzFunctions(void) {
 
 SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_wsbrowser(call, op, args, env));
+    return ptr_do_wsbrowser(call, op, args, env);
 }
 
-#if defined(HAVE_X11)
+#ifdef HAVE_X11
 extern SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho); /* from src/unix/X11.c */
 #endif
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    if(useaqua)
-	return(ptr_do_dataentry(call, op, args, env));
-#if defined(HAVE_X11)
-    else
-	return(X11_do_dataentry(call, op, args, env));
+    if(useaqua) return ptr_do_dataentry(call, op, args, env);
+#ifdef HAVE_X11
+    else return X11_do_dataentry(call, op, args, env);
 #endif
 }
 
 SEXP do_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_browsepkgs(call, op, args, env));
+    return ptr_do_browsepkgs(call, op, args, env);
 }
 
 
 SEXP do_datamanger(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_datamanger(call, op, args, env));
+    return ptr_do_datamanger(call, op, args, env);
 }
 
 
 SEXP do_hsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_hsbrowser(call, op, args, env));
+    return ptr_do_hsbrowser(call, op, args, env);
 }
 
 SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_packagemanger(call, op, args, env));
+    return ptr_do_packagemanger(call, op, args, env);
 }
 
 
@@ -145,14 +150,6 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
     return rv;
 }
 #endif
-
-SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-#ifdef HAVE_AQUA
-    if(ptr_do_flushconsole) ptr_do_flushconsole(call, op, args, env);
-#endif
-    return R_NilValue;
-}
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
 {

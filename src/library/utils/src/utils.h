@@ -30,6 +30,7 @@ SEXP Rprof(SEXP args);
 SEXP Rprofmem(SEXP args);
 
 SEXP countfields(SEXP args);
+SEXP flushconsole(void);
 SEXP menu(SEXP args);
 SEXP readtablehead(SEXP args);
 SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env);
@@ -53,5 +54,4 @@ SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP edit(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho);
-SEXP flushconsole(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho);

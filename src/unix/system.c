@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ void R_setStartTime(void); /* in sys-unix.c */
 
 #ifdef HAVE_AQUA
 /*  this should be a global variable as it used in unix/devQuartz.c
-	and in unix/aqua.c
+	and in main/sysutils.c
 */
 Rboolean useaqua = FALSE;
 #endif
