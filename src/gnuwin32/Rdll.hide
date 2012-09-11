@@ -76,7 +76,6 @@
  R_DisableNLinBrowser
  R_DotEnvSymbol
  R_DoubleColonSymbol
- R_EditFiles
  R_ErrorCon
  R_ExactSymbol
  R_Expressions
