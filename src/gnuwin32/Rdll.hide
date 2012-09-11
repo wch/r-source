@@ -67,7 +67,6 @@
  R_CBoundsCheck
  R_CStackDir
  R_ChooseFile
- R_ClearerrConsole
  R_CollectWarnings
  R_Collected
  R_CommentSymbol
@@ -1013,7 +1012,6 @@
  elapsedLimit2
  elapsedLimitValue
  epslon_
- filenameToWchar
  fontname
  fontsty
  formatError
@@ -1036,10 +1034,8 @@
  getusermenuname
  gl_hist_next
  gl_hist_prev
- gl_histadd
  gl_in_hook
  gl_out_hook
- gl_savehistory
  gl_setwidth
  gl_strwidth
  gl_tab_hook
@@ -1098,7 +1094,6 @@
  lzma_code
  lzma_crc32
  lzma_crc32_table
- lzma_crc64
  lzma_crc64_table
  lzma_delta_coder_init
  lzma_delta_coder_memusage
@@ -1441,11 +1436,8 @@
  wgl_hist_init
  wgl_hist_next
  wgl_hist_prev
- wgl_histadd
  wgl_loadhistory
- wgl_loadhistoryW
  wgl_savehistory
- wgl_savehistoryW
  winAccessW
  winaddmenu
  winaddmenuitem
