@@ -46,12 +46,6 @@
 #undef ERROR
 #include <R_ext/RS.h> /* for Calloc */
 
-SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    R_FlushConsole();
-    return R_NilValue;
-}
-
 #include <winbase.h>
 
 typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);

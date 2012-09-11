@@ -581,8 +581,6 @@
  do_contourLines
  do_crc64
  do_cum
- do_dataentry
- do_dataviewer
  do_date
  do_debug
  do_delayed
@@ -593,6 +591,7 @@
  do_devsize
  do_dfltStop
  do_dfltWarn
+ do_diag
  do_dim
  do_dimgets
  do_dimnames
@@ -613,7 +612,6 @@
  do_dynload
  do_dynunload
  do_eapply
- do_edit
  do_emptyenv
  do_enablejit
  do_enc2
@@ -645,7 +643,6 @@
  do_findinterval
  do_first_min
  do_flush
- do_flushconsole
  do_for
  do_formals
  do_format
@@ -871,6 +868,7 @@
  do_rowscols
  do_rowsum
  do_sample
+ do_sample2
  do_save
  do_saveToConn
  do_savefile
@@ -878,7 +876,6 @@
  do_scan
  do_search
  do_seek
- do_selectlist
  do_seq
  do_seq_along
  do_seq_len
