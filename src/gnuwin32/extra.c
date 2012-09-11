@@ -514,66 +514,6 @@ void Rwin_fpset(void)
     __asm__ ( "fninit" ) ;
 }
 
-#if 0
-#include "getline/getline.h"     /* for gl_load/savehistory */
-#include "getline/wc_history.h"  /* for wgl_load/savehistory */
-SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP sfile;
-
-    checkArity(op, args);
-    sfile = CAR(args);
-    if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, _("invalid '%s' argument"), "file");
-    if (CharacterMode == RGui) {
-	R_setupHistory(); /* re-read the history size */
-	wgl_savehistoryW(filenameToWchar(STRING_ELT(sfile, 0), 0), 
-			 R_HistorySize);
-    } else if (R_Interactive && CharacterMode == RTerm) {
-	R_setupHistory(); /* re-read the history size */
-	gl_savehistory(translateChar(STRING_ELT(sfile, 0)), R_HistorySize);
-    } else
-	errorcall(call, _("'savehistory' can only be used in Rgui and Rterm"));
-    return R_NilValue;
-}
-
-SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP sfile;
-
-    checkArity(op, args);
-    sfile = CAR(args);
-    if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, _("invalid '%s' argument"), "file");
-    if (CharacterMode == RGui)
-	wgl_loadhistoryW(filenameToWchar(STRING_ELT(sfile, 0), 0));
-    else if (R_Interactive && CharacterMode == RTerm)
-	gl_loadhistory(translateChar(STRING_ELT(sfile, 0)));
-    else
-	errorcall(call, _("'loadhistory' can only be used in Rgui and Rterm"));
-    return R_NilValue;
-}
-
-
-SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP stamp;
-    int i;
-
-    checkArity(op, args);
-    stamp = CAR(args);
-    if (!isString(stamp))
-	errorcall(call, _("invalid timestamp"));
-    if (CharacterMode == RGui) {   
-	for (i = 0; i < LENGTH(stamp); i++) 
-	    wgl_histadd(wtransChar(STRING_ELT(stamp, i)));
-    } else if (R_Interactive && CharacterMode == RTerm) {
-    	for (i = 0; i < LENGTH(stamp); i++)
-	    gl_histadd(translateChar(STRING_ELT(stamp, i)));
-    }
-    return R_NilValue;
-}
-#endif
 
 #include <preferences.h>
 

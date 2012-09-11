@@ -24,9 +24,11 @@
 #include <Defn.h> /* for checkArity */
 
 #ifdef Win32
+#include "Startup.h"
+extern UImode CharacterMode;
 #include "getline/getline.h"     /* for gl_load/savehistory */
 #include "getline/wc_history.h"  /* for wgl_load/savehistory */
-SEXP avehistory(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
 

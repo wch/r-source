@@ -1978,6 +1978,10 @@ SEXP attribute_hidden do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#ifdef Win32
+// this includes RS.h
+# undef ERROR
+#endif
 #include <R_ext/Applic.h>
 SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
