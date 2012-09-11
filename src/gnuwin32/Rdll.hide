@@ -607,7 +607,6 @@
  do_dotCode
  do_dotcall
  do_dotcallgr
- do_download
  do_dput
  do_drop
  do_dump

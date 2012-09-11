@@ -22,6 +22,8 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
+
 #include <Rconnections.h>
 #include <Rdynpriv.h>
 

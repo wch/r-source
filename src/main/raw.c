@@ -22,6 +22,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 
 #define isRaw(x) (TYPEOF(x) == RAWSXP)
 

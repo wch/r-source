@@ -33,6 +33,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "Defn.h"
+#include <Internal.h>
 #include "Fileio.h"
 #include <direct.h>
 #include "graphapp/ga.h"

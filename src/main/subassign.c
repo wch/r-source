@@ -84,7 +84,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
+#include <Internal.h>
 #include <R_ext/RS.h> /* for test of S4 objects */
 
 /* EnlargeVector() takes a vector "x" and changes its length to "newlen".

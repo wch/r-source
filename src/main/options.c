@@ -23,6 +23,7 @@
 #endif
 
 #include "Defn.h"
+#include <Internal.h>
 #include "Print.h"
 
 /* The global var. R_Expressions is in Defn.h */

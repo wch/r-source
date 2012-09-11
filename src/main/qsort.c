@@ -29,6 +29,7 @@
 #endif
 
 #include <Defn.h> /* => Utils.h with the protos from here */
+#include <Internal.h>
 #include <Rmath.h>
 
 #include <R_ext/RS.h>

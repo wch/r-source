@@ -58,6 +58,7 @@
 #endif
 
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
+#include <Internal.h>
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */
 

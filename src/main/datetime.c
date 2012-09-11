@@ -111,6 +111,7 @@ extern time_t mktime (struct tm*);
 
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h>
+#include <Internal.h>
 
 /* The glibc in RH8.0 was broken and assumed that dates before
    1970-01-01 do not exist.  So does Windows, but its code was replaced

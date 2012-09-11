@@ -95,6 +95,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include <Parse.h>
 #define STRICT_R_HEADERS
 #include <R_ext/RS.h>           /* for R_chk_* allocation */

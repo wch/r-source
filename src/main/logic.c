@@ -22,7 +22,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
+#include <Internal.h>
 
 /* interval at which to check interrupts, a guess */
 #define NINTERRUPT 10000000

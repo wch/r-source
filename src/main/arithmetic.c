@@ -32,10 +32,12 @@
 /* for definition of "struct exception" in math.h */
 # define __LIBM_PRIVATE
 #endif
-#include "Defn.h"		/*-> Arith.h -> math.h */
+#include <Defn.h>		/*-> Arith.h -> math.h */
 #ifdef __OpenBSD__
 # undef __LIBM_PRIVATE
 #endif
+
+#include <Internal.h>
 
 #define R_MSG_NA	_("NaNs produced")
 #define R_MSG_NONNUM_MATH _("Non-numeric argument to mathematical function")

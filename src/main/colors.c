@@ -25,6 +25,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include <Graphics.h>  /* for dpptr */
 #include <Colors.h>
 #include <R_ext/GraphicsEngine.h>

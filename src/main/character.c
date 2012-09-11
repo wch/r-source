@@ -70,6 +70,7 @@ abbreviate chartr make.names strtrim tolower toupper give error.
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include <errno.h>
 
 #include <R_ext/RS.h>  /* for Calloc/Free */

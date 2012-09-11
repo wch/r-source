@@ -23,7 +23,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
+#include <Internal.h>
 #include <R_ext/Random.h>
 
 /* Normal generator is not actually set here but in nmath/snorm.c */

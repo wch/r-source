@@ -38,7 +38,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
+#include <Internal.h>
 
 /* JMC convinced MM that this was not a good idea: */
 #undef _S4_subsettable

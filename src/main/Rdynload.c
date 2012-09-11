@@ -85,6 +85,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 
 #include <string.h>
 #include <stdlib.h>

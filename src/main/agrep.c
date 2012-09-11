@@ -27,6 +27,8 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
+
 /* This is remapped */
 #undef pmatch 
 

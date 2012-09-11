@@ -24,6 +24,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include <Rmath.h>
 #include <errno.h>
 

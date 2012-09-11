@@ -25,6 +25,7 @@
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+#include <Internal.h>
 #include "win-nls.h"
 
 #define WIN32_LEAN_AND_MEAN 1

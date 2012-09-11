@@ -29,6 +29,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include <R_ext/Print.h>
 
 /* FIXME: envir.c keeps this private - it should probably go to Defn.h */

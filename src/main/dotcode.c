@@ -25,6 +25,7 @@
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+#include <Internal.h>
 #include <ctype.h> /* for tolower */
 #include <string.h>
 #include <errno.h>

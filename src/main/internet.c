@@ -22,6 +22,8 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
+
 #include <Rconnections.h>
 #include <Rdynpriv.h>
 #include <R_ext/R-ftp-http.h>
@@ -31,7 +33,7 @@ static R_InternetRoutines routines, *ptr = &routines;
 
 
 /*
-SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP Rdownload(SEXP call, SEXP op, SEXP args, SEXP env);
 Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode, int timeout);
 
@@ -92,12 +94,11 @@ static void internet_Init(void)
     return;
 }
 
-
-SEXP attribute_hidden do_download(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP Rdownload(SEXP args)
 {
     if(!initialized) internet_Init();
     if(initialized > 0)
-	return (*ptr->download)(call, op, args, env);
+	return (*ptr->download)(args);
     else {
 	error(_("internet routines cannot be loaded"));
 	return R_NilValue;

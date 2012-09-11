@@ -26,6 +26,7 @@
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+#include <Internal.h>
 
 #define NIL -1
 #define ARGUSED(x) LEVELS(x)

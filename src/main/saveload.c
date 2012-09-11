@@ -27,6 +27,7 @@
 #define NEED_CONNECTION_PSTREAMS
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+#include <Internal.h>
 #include <Rinterface.h>
 #include <Rmath.h>
 #include <Fileio.h>

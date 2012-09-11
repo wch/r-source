@@ -25,6 +25,7 @@
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+#include <Internal.h>
 #include <R_ext/Print.h>
 #include <ctype.h>		/* for isspace */
 

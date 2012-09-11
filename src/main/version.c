@@ -23,6 +23,7 @@
 #endif
 
 #include "Defn.h"
+#include <Internal.h>
 #include <Rversion.h>
 
 void attribute_hidden PrintGreeting(void)

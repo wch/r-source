@@ -25,6 +25,7 @@
 #include <stdlib.h> /* for putenv */
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+#include <Internal.h>
 #include <R_ext/Riconv.h>
 #include <Rinterface.h>
 #include <errno.h>

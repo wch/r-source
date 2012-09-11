@@ -27,6 +27,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include <float.h>  /* for DBL_EPSILON */
 #include <Rmath.h>
 

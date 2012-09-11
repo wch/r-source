@@ -22,6 +22,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 
 /* .Internal(lapply(X, FUN)) */
 

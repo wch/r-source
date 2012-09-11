@@ -24,6 +24,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include "RBufferUtils.h"
 #include <R_ext/RS.h> /* for Calloc/Free */
 

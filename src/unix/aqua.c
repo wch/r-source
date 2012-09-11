@@ -22,6 +22,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 
 #include "Runix.h"
 #include <sys/types.h>

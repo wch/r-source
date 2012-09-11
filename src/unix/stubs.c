@@ -22,6 +22,8 @@
 #endif
 
 #include <Defn.h> /* for checkArity */
+#include <Internal.h>
+
 #define R_INTERFACE_PTRS 1
 #include <Rinterface.h>
 

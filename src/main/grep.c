@@ -57,6 +57,7 @@ strsplit grep [g]sub [g]regexpr
 #define NINTERRUPT 1000000
 
 #include <Defn.h>
+#include <Internal.h>
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <ctype.h>
 #include <wchar.h>

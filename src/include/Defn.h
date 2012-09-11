@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2011  The R Core Team.
+ *  Copyright (C) 1998--2012  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -152,9 +152,6 @@ SEXP (SET_CXTAIL)(SEXP x, SEXP y);
 # define CXHEAD(x) CAR(x)
 # define CXTAIL(x) CDR(x)
 #endif /* USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS */
-
-
-#include "Internal.h"		/* do_FOO */
 
 #include "Errormsg.h"
 

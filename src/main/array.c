@@ -24,6 +24,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include <Rmath.h>
 #include <R_ext/RS.h>     /* for Calloc/Free */
 #include <R_ext/Applic.h> /* for dgemm */

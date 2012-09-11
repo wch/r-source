@@ -34,6 +34,7 @@
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+#include <Internal.h>
 #include <float.h>  /* for DBL_DIG */
 #include <Fileio.h>
 #include <Rconnections.h>

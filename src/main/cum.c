@@ -22,7 +22,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
+#include <Internal.h>
 
 static SEXP cumsum(SEXP x, SEXP s)
 {

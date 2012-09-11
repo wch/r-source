@@ -22,6 +22,7 @@
 #endif
 
 #include <Defn.h>
+#include <Internal.h>
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Applic.h>	/* pretty0() */
 #include <Rmath.h>

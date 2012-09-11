@@ -23,6 +23,7 @@
 #endif
 
 #include "Defn.h"
+#include <Internal.h>
 
 SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
