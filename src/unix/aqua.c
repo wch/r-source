@@ -31,7 +31,7 @@
 #endif
 
 
-#if defined(HAVE_AQUA)
+#ifdef HAVE_AQUA
 
 /* tell QuartzDevice to insert definitions for us (to maintain consistency) */
 #define IN_AQUA_C 1
@@ -148,13 +148,17 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+#ifdef HAVE_AQUA
     if(ptr_do_flushconsole) ptr_do_flushconsole(call, op, args, env);
+#endif
     return R_NilValue;
 }
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+#ifdef HAVE_AQUA
     if(ptr_do_selectlist) return ptr_do_selectlist(call, op, args, env);
+#endif
     return R_NilValue;
 }
 
