@@ -42,7 +42,7 @@ download.file <-
             stop("no download method found")
     }
     if(method == "internal") {
-        status <- .Internal(download(url, destfile, quiet, mode, cacheOK))
+        status <- .External(C_download, url, destfile, quiet, mode, cacheOK)
         ## needed for Mac GUI from download.packages etc
         if(!quiet) flush.console()
     } else if(method == "wget") {

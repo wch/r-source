@@ -37,6 +37,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env);
 
 SEXP crc64(SEXP in);
 SEXP nsl(SEXP hostname);
+SEXP download(SEXP args);
 
 SEXP sockconnect(SEXP sport, SEXP shost);
 SEXP sockread(SEXP sport, SEXP smaxlen);

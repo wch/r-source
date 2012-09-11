@@ -50,6 +50,7 @@ static const R_CallMethodDef CallEntries[] = {
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_ExternalMethodDef ExtEntries[] = {
+    EXTDEF(download, 5),
     EXTDEF(unzip, 7),
     EXTDEF(Rprof, 4),
     EXTDEF(Rprofmem, 3),
