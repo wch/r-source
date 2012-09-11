@@ -41,8 +41,8 @@ aspell_write_personal_dictionary_file(x, out, language = "en",
     \code{NULL} (default).  By default, the system path is searched for
     \command{aspell}, \command{hunspell} and \command{ispell} (in that
     order), and the first one found is used.}
-  \item{dictionaries}{a character vector of file paths of additional R
-    level dictionaries to use.  See \code{\link{aspell}}.}
+  \item{dictionaries}{a character vector of names or file paths of
+    additional R level dictionaries to use.  See \code{\link{aspell}}.}
   \item{ignore}{a character vector with regular expressions to be
     replaced by blanks when filtering the message strings.}
   \item{x}{a character vector, or the result of a call to
@@ -53,23 +53,14 @@ aspell_write_personal_dictionary_file(x, out, language = "en",
     Aspell.}
 }
 \details{
-  \code{aspell_package_Rd_files}, \code{aspell_package_vignettes},
-  \code{aspell_package_R_files} and \code{aspell_package_C_files}
-  perform spell checking on the Rd files, vignettes, R files, and
-  C-level messages of the package with root directory \code{dir}.  They
-  determine the respective files, apply the appropriate filters, and run
-  the spell checker.
+  Functions \code{aspell_package_Rd_files},
+  \code{aspell_package_vignettes}, \code{aspell_package_R_files} and
+  \code{aspell_package_C_files} perform spell checking on the Rd files,
+  vignettes, R files, and C-level messages of the package with root
+  directory \code{dir}.  They determine the respective files, apply the
+  appropriate filters, and run the spell checker.
 
-  For R files, the filter extracts the message string constants in calls
-  to \code{\link{message}}, \code{\link{warning}}, \code{\link{stop}},
-  \code{\link{packageStartupMessage}}, \code{\link{gettext}},
-  \code{\link{gettextf}}, and \code{\link{ngettext}} (the unnamed string
-  constants for the first five, and \code{fmt} and
-  \code{msg1}/\code{msg2} string constants, respectively, for the latter
-  two).  Using \code{ignore}, one can specify parts of message strings
-  to be ignored for spell checking: e.g., using
-  \code{"[ \t]'[^']*'[ \t[:punct:]]"} ignores all text inside single
-  quotes.
+  See \code{\link{aspell}} for details on filters.
 
   The C-level message string are obtained from the
   \file{po/\var{PACKAGE}.pot} message catalog file, with \var{PACKAGE}
@@ -79,7 +70,7 @@ aspell_write_personal_dictionary_file(x, out, language = "en",
   When using Aspell, the vignette checking skips parameters and/or
   options of commands \verb{\Sexpr}, \verb{\citep}, \verb{\code},
   \verb{\pkg}, \verb{\proglang} and \verb{\samp}.  Further commands can
-  be added by adding \verb{--add-tex-command} options to the
+  be skipped by adding \verb{--add-tex-command} options to the
   \code{control} argument.  E.g., to skip both option and parameter of
   \verb{\mycmd}, add \verb{--add-tex-command='mycmd op'}.
 
@@ -89,23 +80,25 @@ aspell_write_personal_dictionary_file(x, out, language = "en",
   \file{defaults.R} into the \file{.aspell} subdirectory of \code{dir},
   and provides defaults via assignments of suitable named lists, e.g.,
   \preformatted{  vignettes <- list(control = "--add-tex-command='mycmd op'")}
-  for vignettes (when using Aspell) and assigning to \code{Rd_files} for
-  Rd files defaults.
+  for vignettes (when using Aspell) and similarly assigning to
+  \code{Rd_files}, \code{R_files} and \code{C_files} for Rd files, R
+  files and C level message defaults.
 
   Maintainers of packages using both English and American spelling will
   find it convenient to pass control options \option{--master=en_US} and
-  \option{--add-extra-dicts=en_GB} to Aspell and \option{-d en_US,en_GB}
-  to Hunspell (provided that the corresponding dictionaries are
-  installed).
+  \option{--add-extra-dicts=en_GB} to Aspell and control options
+  \option{-d en_US,en_GB} to Hunspell (provided that the corresponding
+  dictionaries are installed).
 
   Older versions of \R had no support for R level dictionaries, and
-  hence provided \code{aspell_write_personal_dictionary_file} to create
-  (spell check) program-specific personal dictionary files from words to
-  be accepted.  The new mechanism is to use R level dictionaries, i.e.,
-  \file{.rds} files obtained by serializing character vectors of such
-  words using \code{\link{saveRDS}}.  For such dictionaries specified
-  via the package defaults mechanism, elements with no path separator
-  can be R system dictionaries or dictionaries in the \file{.aspell}
+  hence provided the function
+  \code{aspell_write_personal_dictionary_file} to create (spell check)
+  program-specific personal dictionary files from words to be accepted.
+  The new mechanism is to use R level dictionaries, i.e., \file{.rds}
+  files obtained by serializing character vectors of such words using
+  \code{\link{saveRDS}}.  For such dictionaries specified via the
+  package defaults mechanism, elements with no path separator can be R
+  system dictionaries or dictionaries in the \file{.aspell}
   subdirectory.
 }
 \seealso{

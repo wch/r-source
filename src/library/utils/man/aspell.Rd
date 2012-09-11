@@ -29,11 +29,11 @@ aspell(files, filter, control = list(), encoding = "unknown",
     \code{NULL} (default).  By default, the system path is searched for
     \command{aspell}, \command{hunspell} and \command{ispell} (in that
     order), and the first one found is used.}
-  \item{dictionaries}{a character vector of file paths of additional R
-    level dictionaries to use.  Elements with no path separator specify
-    R system dictionaries (in subdirectory \file{share/dictionaries} of
-    the R home directory).  The file extension (currently, only
-    \file{.rds}) can be omitted.}
+  \item{dictionaries}{a character vector of names or file paths of
+    additional R level dictionaries to use.  Elements with no path
+    separator specify R system dictionaries (in subdirectory
+    \file{share/dictionaries} of the R home directory).  The file
+    extension (currently, only \file{.rds}) can be omitted.}
 }
 \details{
   The spell check programs employed must support the so-called Ispell
@@ -45,9 +45,28 @@ aspell(files, filter, control = list(), encoding = "unknown",
   obtaining the Aspell, Hunspell and (International) Ispell programs and
   dictionaries.
   
-  Currently the only available built-in filters are \code{"Rd"},
-  corresponding to \code{\link{RdTextFilter}}, and \code{"Sweave"},
-  corresponding to \code{\link{SweaveTeXFilter}}.
+  The currently available built-in filters are \code{"Rd"}
+  (corresponding to \code{\link{RdTextFilter}}), \code{"Sweave"}
+  (corresponding to \code{\link{SweaveTeXFilter}}), \code{"R"},
+  \code{"pot"} and \code{"dcf"}.
+
+  Filter \code{"R"} is for R code and extracts the message string
+  constants in calls to \code{\link{message}}, \code{\link{warning}},
+  \code{\link{stop}}, \code{\link{packageStartupMessage}},
+  \code{\link{gettext}}, \code{\link{gettextf}}, and
+  \code{\link{ngettext}} (the unnamed string constants for the first
+  five, and \code{fmt} and \code{msg1}/\code{msg2} string constants,
+  respectively, for the latter two).
+  Filter \code{"pot"} is for message string catalog \file{.pot} files.
+  Both have an argument \code{ignore} allowing to give regular
+  expressions for parts of message strings to be ignored for spell
+  checking: e.g., using \code{"[ \t]'[^']*'[ \t[:punct:]]"} ignores all
+  text inside single quotes.
+
+  Filter \code{"dcf"} is for files in Debian Control File format.
+  The fields to keep can be controlled by argument \code{keep} (a
+  character vector with the respective field names).  By default,
+  \samp{Title} and \samp{Description} fields are kept.
 
   The print method has for the objects returned by \code{aspell} has an
   \code{indent} argument controlling the indentation of the positions of
@@ -89,9 +108,9 @@ aspell(files, filter = "Sweave", control = "-t")
 ## To check all Texinfo files (Aspell only)
 files <- Sys.glob("*.texi")
 aspell(files, control = "--mode=texinfo")
+}
 
 ## List the available R system dictionaries.
 Sys.glob(file.path(R.home("share"), "dictionaries", "*.rds"))
-}
 }
 \keyword{utilities}
