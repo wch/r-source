@@ -32,8 +32,6 @@
 #include "Fileio.h"
 #include "Parse.h"
 
-#include "Runix.h"
-
 #include <stdio.h>
 #ifdef Win32
 # include "run.h"
