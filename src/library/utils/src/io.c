@@ -454,7 +454,7 @@ SEXP countfields(SEXP args)
     return bns;
 }
 
-/* A struct used by typecvt to keep track of possible types for the input */
+/* A struct used by typeconvert to keep track of possible types for the input */
 typedef struct typecvt_possible_types {
     unsigned int islogical  : 1;
     unsigned int isinteger  : 1;
@@ -511,7 +511,7 @@ static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data
    or a factor if as.is == FALSE. */
 
 
-SEXP typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP cvec, a, dup, levs, dims, names, dec;
     SEXP rval = R_NilValue; /* -Wall */

@@ -59,7 +59,6 @@
  PRIMOFFSET
  PrintUsage
  ProfileEvent
- R_AllocStringBuffer
  R_BCNodeStackBase
  R_BCNodeStackEnd
  R_BCNodeStackTop
@@ -87,8 +86,6 @@
  R_FileExists
  R_FileMtime
  R_FreeSEXP
- R_FreeStringBuffer
- R_FreeStringBufferL
  R_GE_VStrHeight
  R_GE_VStrWidth
  R_GE_VText
@@ -1027,7 +1024,6 @@
  getActive
  getActiveSink
  getAttrib0
- getConnection
  getConnection_no_err
  getDefaults
  getGraphMenu

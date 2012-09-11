@@ -33,7 +33,7 @@ function(file, sep = "", quote = "\"'", skip = 0,
 
 type.convert <-
 function(x, na.strings = "NA", as.is = FALSE, dec = ".")
-    .External2(C_typecvt, x, na.strings, as.is, dec)
+    .External2(C_typeconvert, x, na.strings, as.is, dec)
 
 
 read.table <-

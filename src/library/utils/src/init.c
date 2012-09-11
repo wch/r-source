@@ -43,6 +43,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(sockopen, 1),
     CALLDEF(socklisten, 1),
     CALLDEF(sockwrite, 2),
+
     {NULL, NULL, 0}
 };
 
@@ -54,8 +55,8 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(Rprofmem, 3),
 
     EXTDEF(countfields, 6),
-    EXTDEF(typecvt, 4),
     EXTDEF(readtablehead, 6),
+    EXTDEF(typeconvert, 4),
     EXTDEF(writetable, 11),
 
     EXTDEF(addhistory, 1),

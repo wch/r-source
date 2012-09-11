@@ -79,7 +79,7 @@
  * rightassoc: Right (1) or left (0) associative operator
  *
  */
-//attribute_hidden
+
 FUNTAB R_FunTab[] =
 {
 
@@ -508,8 +508,6 @@ FUNTAB R_FunTab[] =
 {"format.info",	do_formatinfo,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"cat",		do_cat,		0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"do.call",	do_docall,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
-//{"type.convert",do_typecvt,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-
 
 /* String Manipulation */
 
@@ -703,7 +701,7 @@ FUNTAB R_FunTab[] =
 {"dump",	do_dump,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"quit",	do_quit,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"readline",	do_readln,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"menu",	do_menu,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+
 {"print.default",do_printdefault,0,	111,	9,	{PP_FUNCALL, PREC_FN,	0}},
 {"print.function",do_printfunction,0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"prmatrix",	do_prmatrix,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
@@ -742,8 +740,7 @@ FUNTAB R_FunTab[] =
 {"order",	do_order,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rank",	do_rank,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"scan",	do_scan,	0,	11,	18,	{PP_FUNCALL, PREC_FN,	0}},
-//{"count.fields",do_countfields,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
-//{"readTableHead",do_readtablehead,0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
+
 {"t.default",	do_transpose,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"aperm",	do_aperm,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"builtins",	do_builtins,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -840,14 +837,6 @@ FUNTAB R_FunTab[] =
 
 /* Graphics */
 
-//{"dev.control",	do_devcontrol,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dev.displaylist",do_devcontrol,1,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dev.copy",	do_devcopy,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dev.cur",	do_devcur,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dev.next",	do_devnext,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dev.off",	do_devoff,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dev.prev",	do_devprev,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dev.set",	do_devset,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb",		do_rgb,		0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb256",	do_rgb,		1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb2hsv",	do_RGB2hsv,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -864,21 +853,12 @@ FUNTAB R_FunTab[] =
 {"getGraphicsEventEnv",do_getGraphicsEventEnv,0,11,1,{PP_FUNCALL, PREC_FN, 0}},
 {"setGraphicsEventEnv",do_setGraphicsEventEnv,0,11,2,{PP_FUNCALL, PREC_FN, 0}},
 {"devAskNewPage",do_devAskNewPage,0,	211,	1,      {PP_FUNCALL, PREC_FN,   0}},
-//{"dev.size",	do_devsize,	0,	11,	0,      {PP_FUNCALL, PREC_FN,   0}},
-//{"devHoldFlush",do_devholdflush,0,	111,	1,      {PP_FUNCALL, PREC_FN,   0}},
-//{"dev.capabilities", do_devcap,	0,	11,	0,      {PP_FUNCALL, PREC_FN,   0}},
-//{"devCapture"  , do_devcapture,	0,	111,	1,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"UseMethod",	do_usemethod,	0,     200,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"NextMethod",	do_nextmethod,	0,     210,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"standardGeneric",do_standardGeneric,0, 201,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-
-/* History manipulation */
-//{"loadhistory", do_loadhistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"savehistory", do_savehistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"addhistory",  do_addhistory,  0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* date-time manipulations */
 {"Sys.time",	do_systime,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
@@ -945,7 +925,6 @@ FUNTAB R_FunTab[] =
 {"getAllConnections",do_getallconnections,0,11, 0,      {PP_FUNCALL, PREC_FN,	0}},
 {"summary.connection",do_sumconnection,0,11,    1,      {PP_FUNCALL, PREC_FN,	0}},
 {"download",	do_download,	0,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
-//{"nsl",		do_nsl,		0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"gzcon",	do_gzcon,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"memCompress",do_memCompress,	0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"memDecompress",do_memDecompress,0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
@@ -976,7 +955,6 @@ FUNTAB R_FunTab[] =
 {"importIntoEnv",do_importIntoEnv, 0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"env.profile",  do_envprofile,    0,	211,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-//{"write.table",	do_writetable,	0,    111,     11,	{PP_FUNCALL, PREC_FN,	0}},
 {"Encoding",	do_encoding,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"setEncoding",	do_setencoding,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"setTimeLimit",do_setTimeLimit,0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
