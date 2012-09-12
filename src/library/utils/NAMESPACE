@@ -38,7 +38,7 @@ export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        toLatex, type.convert, unstack, untar, unzip,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.csv, write.csv2, write.socket, write.table,
-       wsbrowser, xedit, xemacs, zip, zip.file.extract)
+       xedit, xemacs, zip, zip.file.extract)
 
 export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 

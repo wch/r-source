@@ -1,6 +1,6 @@
 % File src/library/utils/man/browseEnv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browseEnv}
@@ -14,7 +14,7 @@
 \usage{
 browseEnv(envir = .GlobalEnv, pattern,
           excludepatt = "^last\\\\.warning",
-          html = .Platform$OS.type != "mac",
+          html = .Platform$GUI != "AQUA",
           expanded = TRUE, properties = NULL,
           main = NULL, debugMe = FALSE)
 }
@@ -25,8 +25,9 @@ browseEnv(envir = .GlobalEnv, pattern,
     is passed to the internal \code{\link{ls}()} call.}
   \item{excludepatt}{a regular expression for \emph{dropping} objects
     with matching names.}
-  \item{html}{is used on non Macintosh machines to display the workspace
-    on a HTML page in your favorite browser.}
+  \item{html}{is used to display the workspace
+    on a HTML page in your favorite browser.  The default except when
+    running from \command{R.app} on OS X.}
   \item{expanded}{whether to show one level of recursion.  It can be useful
     to switch it to \code{FALSE} if your workspace is large.  This
     option is ignored if \code{html} is set to \code{FALSE}.}
@@ -39,15 +40,12 @@ browseEnv(envir = .GlobalEnv, pattern,
 }
 
 \details{
-  Very experimental code.  Only allows one level of recursion into
-  object structures. The HTML version is not dynamic.
+  Very experimental code: displays a static HTML page on all platforms
+  except \command{R.app} on Mac OS X.
 
-  It can be generalized.  See sources
-  (\file{..../library/base/R/databrowser.R}) for details.
+  Only allows one level of recursion into object structures.
 
-  \code{wsbrowser()} is currently just an internally used function;
-  its argument list will certainly change.
-
+  It can be generalized.  See sources for details.
   Most probably, this should rather work through using the \file{tkWidget}
   package (from \url{www.Bioconductor.org}).
 }
