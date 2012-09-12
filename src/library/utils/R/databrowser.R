@@ -18,7 +18,7 @@
 
 browseEnv <- function(envir = .GlobalEnv, pattern,
                       excludepatt = "^last\\.warning",
-		      html = .Platform$OS.type != "mac",
+		      html = .Platform$GUI != "AQUA",
 		      expanded = TRUE, properties = NULL,
 		      main = NULL, debugMe = FALSE)
 {

@@ -378,6 +378,9 @@
       \item Some of the quality control functions
       (e.g. \code{tools::checkFF()} were wrongly identifying the source
       of S4 methods in a package and so not checking them.
+
+      \item The default type of display by \code{browseEnv()} when using
+      \command{R.app} on Mac OS X has been incorrect for a long time.
     }
   }
 }
