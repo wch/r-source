@@ -120,9 +120,13 @@ extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
 
-#ifdef HAVE_AQUA
+// added in 2.16.0
 extern int  (*ptr_R_EditFiles)(int, const char **, const char **, const char *);
-#endif
+// naming follows earlier versions in R.app
+extern SEXP (*ptr_do_selectlist)(SEXP, SEXP, SEXP, SEXP);
+extern SEXP (*ptr_do_dataentry)(SEXP, SEXP, SEXP, SEXP);
+extern SEXP (*ptr_do_dataviewer)(SEXP, SEXP, SEXP, SEXP);
+
 
 /* These two are not used by R itself, but are used by the GNOME front-end
    and the tcltk package */

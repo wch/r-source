@@ -11831,6 +11831,11 @@ extern int  (*ptr_R_EditFile)(const char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
+// added in R 2.16.0
+extern int  (*ptr_R_EditFiles)(int, const char **, const char **, const char *);
+extern SEXP (*ptr_do_selectlist)(SEXP, SEXP, SEXP, SEXP);
+extern SEXP (*ptr_do_dataentry)(SEXP, SEXP, SEXP, SEXP);
+extern SEXP (*ptr_do_dataviewer)(SEXP, SEXP, SEXP, SEXP);
 @end example
 
 @noindent
@@ -11903,13 +11908,17 @@ Return value is 0 for success, > 0 otherwise.
 Send a file to an editor window.
 @end deftypefun
 
+@deftypefun int R_EditFiles (int @var{nfile}, const char **@var{file}, const char **@var{title}, const char *@var{editor})
+Send @var{nfile} files to an editor, with titles possibly to be used for
+the editor window(s).
+@end deftypefun
+
 @deftypefun SEXP R_loadhistory (SEXP, SEXP, SEXP, SEXP);
 @deftypefunx SEXP R_savehistory (SEXP, SEXP, SEXP, SEXP);
 @deftypefunx SEXP R_addhistory (SEXP, SEXP, SEXP, SEXP);
 
 @code{.Internal} functions for @code{loadhistory}, @code{savehistory}
-and @code{timestamp}: these are called after checking the number of
-arguments.
+and @code{timestamp}.
 
 If the console has no history mechanism these can be as
 simple as
@@ -11997,6 +12006,16 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 
 These callbacks should never be changed in a running @R{} session (and
 hence cannot be called from an extension package).
+
+@deftypefun SEXP R_dataentry (SEXP, SEXP, SEXP, SEXP);
+@deftypefunx SEXP R_dataviewer (SEXP, SEXP, SEXP, SEXP);
+@deftypefunx SEXP R_selectlist (SEXP, SEXP, SEXP, SEXP);
+
+@code{.Internal} functions for @code{dataentry} (and @code{edit} on
+matrices and data frames), @code{View} and @code{select.list}.  These
+can be changed if they are not currently in use.
+@end deftypefun
+
 
 @node Registering symbols, Meshing event loops, Setting R callbacks, Embedding R under Unix-alikes
 @subsection Registering symbols

@@ -465,6 +465,11 @@
       \item A few recently added C entry points were missing the
       remapping to \code{Rf_}, notably \code{[dpq]nbinom_mu}.  Packages
       using them need to be reinstalled.
+      
+      \item Some of the interface pointers formerly available only to
+      \command{R.app} are now available to front-ends on all
+      Unix-alikes: one has been added for the interface to
+      \code{View()}.
     }
   }
 

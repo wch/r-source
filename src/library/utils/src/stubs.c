@@ -84,6 +84,22 @@ SEXP addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+// defined in gnuwin32/dataentry.c
+SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_dataentry(call, op, CDR(args), rho);
+}
+
+SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_dataviewer(call, op, CDR(args), rho);
+}
+
+SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return do_selectlist(call, op, CDR(args), rho);
+}
+
 #else
 
 #define R_INTERFACE_PTRS 1
@@ -106,19 +122,28 @@ SEXP addhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(ptr_R_addhistory) ptr_R_addhistory(call, op, CDR(args), rho);
     return R_NilValue;
 }
+
+extern SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
+extern SEXP X11_do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    if(ptr_do_dataentry) return ptr_do_dataentry(call, op, args, env);
+    else return X11_do_dataentry(call, op, args, env);
+}
+
+SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    if(ptr_do_dataviewer) return ptr_do_dataviewer(call, op, args, env);
+    else return X11_do_dataviewer(call, op, args, env);
+}
+
+SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    if(ptr_do_selectlist) return ptr_do_selectlist(call, op, args, env);
+    return R_NilValue;
+}
 #endif
-
-SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    // defined in unix/aqua.c or gnuwin32/dataentry.c
-    return do_dataentry(call, op, CDR(args), rho);
-}
-
-SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    // defined in unix/aqua.c or gnuwin32/dataentry.c
-    return do_dataviewer(call, op, CDR(args), rho);
-}
 
 SEXP edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -131,11 +156,6 @@ SEXP flushconsole(void)
     return R_NilValue;
 }
 
-SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    // defined in unix/aqua.c or gnuwin32/extra.c
-    return do_selectlist(call, op, CDR(args), rho);
-}
 
 // formerly in src/main/platform.c
 SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)

@@ -304,7 +304,7 @@ int R_system(const char *command)
     sigprocmask(SIG_BLOCK, &ss,  NULL);
 #ifdef HAVE_AQUA
     char *cmdcpy;
-    if(useaqua) {
+    if(useaqua) { // should be if(ptr_CocoaSystem)
 	/* FIXME, is Cocoa's interface not const char*? */
 	cmdcpy = acopy_string(command);
 	res = ptr_CocoaSystem(cmdcpy);

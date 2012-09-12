@@ -218,7 +218,9 @@ int Rf_initialize_R(int ac, char **av)
     R_set_command_line_arguments(ac, av);
     cmdlines[0] = '\0';
 
-    /* first task is to select the GUI */
+    /* first task is to select the GUI.
+       If run from the shell script, only Tk|tk|X11|x11 are allowed.
+     */
     for(i = 0, avv = av; i < ac; i++, avv++) {
 	if(!strncmp(*avv, "--gui", 5) || !strncmp(*avv, "-g", 2)) {
 	    if(!strncmp(*avv, "--gui", 5) && strlen(*avv) >= 7)
@@ -234,14 +236,14 @@ int Rf_initialize_R(int ac, char **av)
 		}
 	    }
 	    if(!strcmp(p, "none"))
-		useX11 = FALSE;
+		useX11 = FALSE; // not allowed from R.sh
 	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
-		;
+		; // not allowed from R.sh
 #ifdef HAVE_AQUA
 	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
-		useaqua = TRUE;
+		useaqua = TRUE; // not allowed from R.sh
 	    else if(!strcmp(p, "cocoa") || !strcmp(p, "Cocoa"))
-		useaqua = TRUE;
+		useaqua = TRUE; // not allowed from R.sh
 #endif
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
@@ -258,9 +260,8 @@ int Rf_initialize_R(int ac, char **av)
 		R_ShowMessage(msg);
 	    }
 	    /* now remove it/them */
-	    for(j = i; j < ac-ioff; j++) {
+	    for(j = i; j < ac - ioff; j++)
 		av[j] = av[j + ioff];
-	    }
 	    ac -= ioff;
 	    break;
 	}
@@ -440,20 +441,15 @@ int R_EditFiles(int nfile, const char **file, const char **title,
 		const char *editor)
 {
     char  buf[1024];
-#if defined(HAVE_AQUA)
-    if (useaqua) return(ptr_R_EditFiles(nfile, file, title, editor));
-#endif
+
+    if (ptr_R_EditFiles) return(ptr_R_EditFiles(nfile, file, title, editor));
 
     if (nfile > 0) {
 	if (nfile > 1)
 	    R_ShowMessage(_("WARNING: Only editing the first in the list of files"));
 
-#if defined(HAVE_AQUA)
-	if (ptr_R_EditFile)
-	    ptr_R_EditFile((char *) file[0]);
-	else
-#endif
-	{
+	if (ptr_R_EditFile) ptr_R_EditFile((char *) file[0]);
+	else {
 	    /* Quote path if necessary */
 	    if (editor[0] != '"' && Rf_strchr(editor, ' '))
 		snprintf(buf, 1024, "\"%s\" \"%s\"", editor, file[0]);
