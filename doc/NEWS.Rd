@@ -3230,6 +3230,11 @@
 
       \item \code{download.file()} can be now used with external methods
       even if there are spaces in the URL or the target filename.
+      
+      \item The first formal argument of \code{.C()}, \code{.Fortran()},
+      \code{.Call()} and \code{.External()} is now referred to a
+      \code{.NAME} rather than \code{name}: however actual calls should
+      have an unnamed first argument.
     }
   }
 

@@ -24,9 +24,9 @@
   \item{\dots}{arguments to be passed to the compiled code. Up to 65 for
     \code{.Call}.}
   
-  \item{PACKAGE}{if supplied, confine the search for the \code{.NAME} to
-    the DLL given by this argument (plus the conventional extension,
-    \file{.so}, \file{.dll}, \dots).
+  \item{PACKAGE}{if supplied, confine the search for a character string
+    \code{.NAME} to the DLL given by this argument (plus the
+    conventional extension, \file{.so}, \file{.dll}, \dots).
 
     This argument follows \code{...} and so its name cannot be abbreviated.
 
@@ -48,10 +48,9 @@
   variable number of arguments.
   
   These functions are \link{primitive}, and \code{.NAME} is always
-  matched to the first argument supplied (which if named must partially
-  match \code{.NAME}).  For clarity, avoid using names in the
-  arguments passed to \code{\dots} that match or partially match
-  \code{.NAME}.  
+  matched to the first argument supplied (which should not be named).
+  For clarity, avoid using names in the arguments passed to \code{\dots}
+  that match or partially match \code{.NAME}.
 }
 
 \value{
@@ -73,6 +72,8 @@
   You may see \code{PACKAGE = "base"} for symbols linked into \R.  Do
   not use this in your own code: such symbols are not part of the API
   and may be changed without warning.
+  
+  \code{PACKAGE = ""} is accepted, but will become an error in \R 2.16.0.
 }
 
 \references{
