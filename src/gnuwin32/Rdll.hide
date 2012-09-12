@@ -350,7 +350,6 @@
  Rf_ucstomb
  Rf_unbindVar
  Rf_utf8toucs
- Rf_wcstoutf8
  Rf_yychar
  Rf_yylval
  Rf_yynerrs
@@ -1315,7 +1314,6 @@
  setconsoleoptions
  setfirstcol
  setfirstvisible
- showstatusbar
  sigaction
  sigaddset
  sigblock

@@ -69,4 +69,12 @@ SEXP winMenuAdd(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP winMenuDel(SEXP call, SEXP op, SEXP args, SEXP env);
 
 SEXP readRegistry(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP winver(void);
+SEXP getClipboardFormats(void);
+SEXP readClipboard(SEXP sformat, SEXP sraw);
+SEXP writeClipboard(SEXP text, SEXP sformat);
+SEXP getIdentification(void);
+SEXP getWindowTitle(void);
+SEXP setWindowTitle(SEXP title);
+SEXP setStatusBar(SEXP text);
 #endif

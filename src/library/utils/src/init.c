@@ -45,6 +45,17 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(socklisten, 1),
     CALLDEF(sockwrite, 2),
 
+#ifdef Win32
+    CALLDEF(winver, 0),
+    CALLDEF(getClipboardFormats, 0),
+    CALLDEF(readClipboard, 2),
+    CALLDEF(writeClipboard, 2),
+    CALLDEF(getIdentification, 0),
+    CALLDEF(getWindowTitle, 0),
+    CALLDEF(setWindowTitle, 1),
+    CALLDEF(setStatusBar, 1),
+#endif
+
     {NULL, NULL, 0}
 };
 

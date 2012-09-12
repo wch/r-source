@@ -12,7 +12,8 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SOURCES_C = init.c io.c size.c sock.c stubs.c utils.c \
-  win32/dataentry.c win32/dialogs.c win32/registry.c win32/selectlist.c
+  win32/dataentry.c win32/dialogs.c win32/registry.c \
+  win32/selectlist.c win32/util.c
 
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
