@@ -44,10 +44,13 @@ extern Rboolean useaqua; /* from src/unix/system.c */
 
 
 /* These are in no header.  Their definitions are in
-   Mac-GUI/REngine/Rinit.m, which sets them to functions in that
+   Mac-GUI/REngine/Rinit.m, which sets them to functions in
    Mac-GUI/REngine/Rcallbacks.m
 
    So this is a essentially a private hook arrangement for R.app
+
+   There's another one in src/main/systutils.c, ptr_CocoaSystem .
+
 */
 DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
     ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
