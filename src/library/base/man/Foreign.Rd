@@ -41,16 +41,10 @@
 \details{
   These functions can be used to make calls to compiled C and Fortran 77
   code.  Later interfaces are \code{\link{.Call}} and
-  \code{\link{.External}}.
-
-  Character strings will be translated from the value of \code{ENCODING}
-  or any declared encoding (see \code{\link{Encoding}}) to the current
-  locale before being passed to the compiled C code.  They will be
-  returned encoded in the current locale unless \code{ENCODING} was
-  specified, when the output strings are translated to the specified
-  encoding.  This is deprecated: convert code to use \code{\link{iconv}}.
+  \code{\link{.External}} which are more flexible and have better
+  performance.
   
-  These functions are all \link{primitive}, and \code{.NAME} is always
+  These functions are both \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which should not be named).
   The other named arguments follow \code{\dots} and so cannot be
   abbreviated.  For clarity, should avoid using names in the arguments
