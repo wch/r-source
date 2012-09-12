@@ -114,7 +114,7 @@ readRegistry <-
              maxdepth = 1, view = c("default", "32-bit", "64-bit"))
 {
     view <- match(match.arg(view), c("default", "32-bit", "64-bit"))
-    .Internal(readRegistry(key, match.arg(hive), maxdepth, view))
+    .External2(C_readRegistry, key, match.arg(hive), maxdepth, view)
 }
 
 setInternet2 <- function(use = TRUE)

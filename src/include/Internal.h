@@ -70,17 +70,8 @@ SEXP do_setTitle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shortpath(SEXP, SEXP, SEXP, SEXP);
 SEXP do_syswhich(SEXP, SEXP, SEXP, SEXP);
-SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
-SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
-SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
-SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
-SEXP do_winmenunames(SEXP, SEXP, SEXP, SEXP);
-SEXP do_wingetmenuitems(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
 SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
-SEXP do_winprogressbar(SEXP, SEXP, SEXP, SEXP);
-SEXP do_closewinprogressbar(SEXP, SEXP, SEXP, SEXP);
-SEXP do_setwinprogressbar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setInternet2(SEXP, SEXP, SEXP, SEXP);
 #endif
 

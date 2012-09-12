@@ -71,6 +71,20 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(fileedit, 3),
     EXTDEF(selectlist, 4),
 
+#ifdef Win32
+    EXTDEF(winProgressBar, 6),
+    EXTDEF(closeWinProgressBar, 1),
+    EXTDEF(setWinProgressBar, 4),
+    EXTDEF(winDialog, 2),
+    EXTDEF(winDialogString, 2),
+    EXTDEF(winMenuNames, 0),
+    EXTDEF(winMenuItems, 1),
+    EXTDEF(winMenuAdd, 3),
+    EXTDEF(winMenuDel, 2),
+
+    EXTDEF(readRegistry, 4),
+#endif
+
     {NULL, NULL, 0}
 };
 

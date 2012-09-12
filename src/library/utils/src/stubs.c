@@ -84,20 +84,24 @@ SEXP addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-// defined in gnuwin32/dataentry.c
+SEXP Win_dataentry(SEXP args);
+SEXP Win_dataviewer(SEXP args);
+
 SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    return do_dataentry(call, op, CDR(args), rho);
+    return Win_dataentry(CDR(args));
 }
 
 SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    return do_dataviewer(call, op, CDR(args), rho);
+    return Win_dataviewer(CDR(args));
 }
+
+SEXP Win_selectlist(SEXP args);
 
 SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    return do_selectlist(call, op, CDR(args), rho);
+    return Win_selectlist(CDR(args));
 }
 
 #else

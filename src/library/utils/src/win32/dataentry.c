@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2011  The R Core Team
+ *  Copyright (C) 1998--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -203,7 +203,7 @@ static void de_closewin_cend(void *DE)
     de_closewin((DEstruct) DE);
 }
 
-SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP Win_dataentry(SEXP args)
 {
     SEXP colmodes, tnames, tvec, tvec2, work2;
     SEXPTYPE type;
@@ -213,7 +213,6 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     destruct DE1;
     DEstruct DE = &DE1;
 
-    checkArity(op, args);
     DE->isEditor = TRUE;
     nprotect = 0;/* count the PROTECT()s */
     PROTECT_WITH_INDEX(DE->work = duplicate(CAR(args)), &DE->wpi); nprotect++;
@@ -221,7 +220,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     tnames = getAttrib(DE->work, R_NamesSymbol);
 
     if (TYPEOF(DE->work) != VECSXP || TYPEOF(colmodes) != VECSXP)
-	errorcall(call, G_("invalid argument"));
+	error(G_("invalid argument"));
 
     /* initialize the constants */
 
@@ -268,7 +267,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (type == NILSXP) type = REALSXP;
 	    SET_VECTOR_ELT(DE->work, i, ssNewVector(DE, type, 100));
 	} else if (!isVector(VECTOR_ELT(DE->work, i)))
-	    errorcall(call, G_("invalid type for value"));
+	    error(G_("invalid type for value"));
 	else {
 	    if (TYPEOF(VECTOR_ELT(DE->work, i)) != type)
 		SET_VECTOR_ELT(DE->work, i,
@@ -280,7 +279,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* start up the window, more initializing in here */
     if (initwin(DE, G_("Data Editor")))
-	errorcall(call, G_("invalid device"));
+	error(G_("invalid device"));
     R_de_up = TRUE;
 
     /* set up a context which will close the window if there is an error */
@@ -1834,7 +1833,7 @@ static void dv_closewin_cend(void *data)
     free(DE);
 }
 
-SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP Win_dataviewer(SEXP args)
 {
     SEXP stitle;
     SEXPTYPE type;
@@ -1842,17 +1841,16 @@ SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT cntxt;
     DEstruct DE = (DEstruct) malloc(sizeof(destruct));
 
-    checkArity(op, args);
     DE->isEditor = FALSE;
     nprotect = 0;/* count the PROTECT()s */
     DE->work = CAR(args);
     DE->names = getAttrib(DE->work, R_NamesSymbol);
 
     if (TYPEOF(DE->work) != VECSXP)
-	errorcall(call, G_("invalid argument"));
+	error(G_("invalid argument"));
     stitle = CADR(args);
     if (!isString(stitle) || LENGTH(stitle) != 1)
-	errorcall(call, G_("invalid argument"));
+	error(G_("invalid argument"));
 
     /* initialize the constants */
 
@@ -1883,14 +1881,14 @@ SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
 	DE->ymaxused = max(len, DE->ymaxused);
 	type = TYPEOF(VECTOR_ELT(DE->work, i));
 	if (type != STRSXP && type != REALSXP)
-	    errorcall(call, G_("invalid argument"));
+	    error(G_("invalid argument"));
     }
 
     DE->xScrollbarScale = DE->yScrollbarScale = 1;
 
     /* start up the window, more initializing in here */
     if (initwin(DE, CHAR(STRING_ELT(stitle, 0))))
-	errorcall(call, G_("invalid device"));
+	error(G_("invalid device"));
 
     /* set up a context which will close the window if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,

@@ -640,22 +640,15 @@ FUNTAB R_FunTab[] =
 {"system",	do_system,	0,	211,	5,	{PP_FUNCALL, PREC_FN,	0}},
 #else
 {"system",	do_system,	0,	211,	2,	{PP_FUNCALL, PREC_FN,	0}},
-//{"flush.console",do_flushconsole,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
+
 #ifdef Win32
 {"win.version", do_winver,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"shell.exec",	do_shellexec,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"winDialog",	do_windialog,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"winDialogString", do_windialogstring, 0, 11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"winMenuNames", do_winmenunames, 0,    11,     0,      {PP_FUNCALL, PREC_FN,   0}},
-{"winMenuItems", do_wingetmenuitems, 0, 11, 1, {PP_FUNCALL, PREC_FN, 0}},
-{"winMenuAdd",	do_winmenuadd,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"winMenuDel",	do_winmenudel,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"memory.size",	do_memsize,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"DLL.version",	do_dllversion,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"bringToTop",	do_bringtotop,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"msgWindow",	do_msgwindow,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-//{"select.list",	do_selectlist,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"getClipboardFormats",do_getClipboardFormats,0,11,0,	{PP_FUNCALL, PREC_FN,	0}},
 {"readClipboard",do_readClipboard,0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"writeClipboard",do_writeClipboard,0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -671,13 +664,11 @@ FUNTAB R_FunTab[] =
 {"shortPathName",do_shortpath,	0,	11,	1,	{PP_FUNCALL, PREC_FN,   0}},
 {"loadRconsole", do_loadRconsole,0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Sys.which",	do_syswhich,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"readRegistry",do_readRegistry,0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"winProgressBar",do_winprogressbar,0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
-{"closeWinProgressBar",do_closewinprogressbar,0,111,1,	{PP_FUNCALL, PREC_FN,	0}},
-{"setWinProgressBar",do_setwinprogressbar,0,11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+//{"readRegistry",do_readRegistry,0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"useInternet2",do_setInternet2,0,	211,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"mkjunction", do_mkjunction,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
+
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 {"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"pkgbrowser",	do_browsepkgs,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
@@ -687,6 +678,7 @@ FUNTAB R_FunTab[] =
 //{"select.list",do_selectlist,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"aqua.custom.print", do_aqua_custom_print, 0, 11, 2,   {PP_FUNCALL, PREC_FN,   0}},
 #endif
+
 {"parse",	do_parse,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"parse_Rd", 	do_parseRd,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"parseLatex",  do_parseLatex,  0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
@@ -745,9 +737,6 @@ FUNTAB R_FunTab[] =
 {"t.default",	do_transpose,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"aperm",	do_aperm,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"builtins",	do_builtins,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-//{"edit",	do_edit,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dataentry",	do_dataentry,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-//{"dataviewer",	do_dataviewer,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"args",	do_args,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"formals",	do_formals,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"body",	do_body,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

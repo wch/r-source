@@ -270,11 +270,12 @@ update_RGui_po <- function(srcdir)
     Sys.setlocale("LC_COLLATE", "C")
     setwd(srcdir)
     cfiles <- c(file.path("src/gnuwin32",
-                          c("console.c", "dataentry.c",  "editor.c",  "extra.c",
+                          c("console.c", "editor.c",  "extra.c",
                             "pager.c", "preferences.c", "rui.c", "system.c")),
                 file.path("src/extra/graphapp",
                           c("clipboard.c", "dialogs.c", "gmenus.c",
                             "metafile.c", "printer.c")),
+                "src/library/utils/src/win32/dataentry.c",
                 "src/library/grDevices/src/devWindows.c")
     potfile <- "src/library/base/po/RGui.pot"
     ofile <- tempfile()

@@ -73,7 +73,7 @@ endif
 R-DLLLIBS =$(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
 CSOURCES = \
-  console.c dataentry.c dynload.c editor.c embeddedR.c extra.c \
+  console.c dynload.c editor.c embeddedR.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rt_complete.c \
   rui.c run.c shext.c sys-win32.c system.c dos_wglob.c
 OBJS = $(CSOURCES:.c=.o)

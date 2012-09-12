@@ -11,7 +11,8 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = init.c io.c size.c sock.c stubs.c utils.c
+SOURCES_C = init.c io.c size.c sock.c stubs.c utils.c \
+  win32/dataentry.c win32/dialogs.c win32/registry.c win32/selectlist.c
 
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
@@ -22,7 +23,11 @@ RESFLAGS = -I $(R_HOME)/include
 XZ_CPPFLAGS = -DLZMA_API_STATIC -I../../../extra/xz/api
 
 PKG_CPPFLAGS=-I$(R_HOME)/src/include -DHAVE_CONFIG_H \
-  -I$(R_HOME)/src/main -I$(R_HOME)/src/gnuwin32 $(XZ_CPPFLAGS)
+  -I$(R_HOME)/src/main -I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra \
+  $(XZ_CPPFLAGS)
+
+PKG_LIBS=-lRgraphapp
+
 
 all: makeMakedeps shlib
 

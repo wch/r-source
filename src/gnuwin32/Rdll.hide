@@ -355,7 +355,6 @@
  Rf_yylval
  Rf_yynerrs
  Rf_yyparse
- RgetMDIsize
  RguiCommonHelp
  RguiPackageMenu
  Rgui_Edit
@@ -466,7 +465,6 @@
  consolecopy
  consolefg
  consoleflush
- consolefn
  consolegetlazy
  consolehelp
  consolenewline
@@ -1011,8 +1009,6 @@
  fontsty
  formatError
  framenames
- freeConsoleData
- freemenuitems
  getActive
  getActiveSink
  getAttrib0
@@ -1026,7 +1022,6 @@
  get_current_mem
  get_duplicate_counter
  getline
- getusermenuname
  gl_hist_next
  gl_hist_prev
  gl_in_hook
@@ -1034,7 +1029,6 @@
  gl_setwidth
  gl_strwidth
  gl_tab_hook
- guiColors
  haveusedapager
  helpmenuact
  hqr_
@@ -1256,18 +1250,13 @@
  nCPFun
  newWpipe
  newconsole
- newconsoledata
  newpager
  newxbuf
  nl_Rdummy
- numwinmenus
- orderVector1
  pR_ShowMessage
  pagerMultiple
  pagerbclose
- pagercol
  pagerhighlight
- pagerrow
  parseError
  pause
  pcre_assign_jit_stack
@@ -1434,11 +1423,6 @@
  wgl_loadhistory
  wgl_savehistory
  winAccessW
- winaddmenu
- winaddmenuitem
- windelmenu
- windelmenuitem
- wingetmenuitems
  xbufaddxc
  xbufaddxs
  xbufdel

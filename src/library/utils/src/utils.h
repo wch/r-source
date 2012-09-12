@@ -55,3 +55,18 @@ SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP edit(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+#ifdef Win32
+SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP closeWinProgressBar(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP setWinProgressBar(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+SEXP winDialog(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP winDialogString(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP winMenuNames(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP winMenuItems(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP winMenuAdd(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP winMenuDel(SEXP call, SEXP op, SEXP args, SEXP env);
+
+SEXP readRegistry(SEXP call, SEXP op, SEXP args, SEXP env);
+#endif
