@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-09-13 13:51+0100\n"
 "PO-Revision-Date: 2011-11-28 22:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,11 @@ msgstr "argumentet 'files' skal være tegn"
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 fejlede på fil '%s'"
+
+#: dirchmod.c:94
+#, fuzzy, c-format
+msgid "invalid '%s' argument"
+msgstr "ugyldig argumenttype"
 
 #: signals.c:43
 msgid "pskill() is not supported on this platform"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-09-13 13:51+0100\n"
 "PO-Revision-Date: 2011-10-22 21:52+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -25,6 +25,11 @@ msgstr " 引数 'files' は文字型でなければなりません "
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr " md5 はファイル '%s' で失敗しました "
+
+#: dirchmod.c:94
+#, fuzzy, c-format
+msgid "invalid '%s' argument"
+msgstr " 不正な引数の型です "
 
 #: signals.c:43
 msgid "pskill() is not supported on this platform"
