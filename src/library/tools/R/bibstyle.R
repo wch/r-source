@@ -216,7 +216,7 @@ makeJSS <- function()
 	    collapse(c(fmtPrefix(paper),
 	               sentence(authors, fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
-		       paste("In", sentence(editors, fmtBtitle(paper$fmtBtitle), bookVolume(paper),
+		       paste("In", sentence(editors, fmtBtitle(paper$booktitle), bookVolume(paper),
 					    fmtChapter(paper$chapter),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
 		       sentence(bookPublisher(paper)),
@@ -227,7 +227,7 @@ makeJSS <- function()
 	    collapse(c(fmtPrefix(paper),
 	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
-		       paste("In", sentence(editorList(paper), fmtBtitle(paper$fmtBtitle), bookVolume(paper),
+		       paste("In", sentence(editorList(paper), fmtBtitle(paper$booktitle), bookVolume(paper),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
 		       sentence(bookPublisher(paper)),
 		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
