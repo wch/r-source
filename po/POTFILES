@@ -116,7 +116,6 @@ src/nmath/signrank.c
 src/nmath/snorm.c
 src/nmath/wilcox.c
 src/unix/dynload.c
-src/unix/edit.c
 src/unix/sys-std.c
 src/unix/sys-unix.c
 src/unix/system.c
