@@ -132,8 +132,6 @@ static int      mkVerbEnv();
 
 %}
 
-%debug
-
 %token		END_OF_INPUT ERROR
 %token		MACRO
 %token		TEXT COMMENT

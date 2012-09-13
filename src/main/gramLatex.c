@@ -202,11 +202,11 @@ static int      mkVerbEnv();
 
 
 /* Line 189 of yacc.c  */
-#line 204 "gramLatex.c"
+#line 206 "gramLatex.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 
 /* Enabling verbose error messages.  */
@@ -267,7 +267,7 @@ typedef struct YYLTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 269 "gramLatex.c"
+#line 271 "gramLatex.c"
 
 #ifdef short
 # undef short
@@ -1209,7 +1209,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
-#line 1211 "gramLatex.c"
+#line 1213 "gramLatex.c"
 	break;
       case 6: /* "TEXT" */
 
@@ -1218,7 +1218,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
-#line 1220 "gramLatex.c"
+#line 1222 "gramLatex.c"
 	break;
       case 7: /* "COMMENT" */
 
@@ -1227,7 +1227,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
-#line 1229 "gramLatex.c"
+#line 1231 "gramLatex.c"
 	break;
       case 8: /* "BEGIN" */
 
@@ -1236,7 +1236,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
-#line 1238 "gramLatex.c"
+#line 1240 "gramLatex.c"
 	break;
       case 9: /* "END" */
 
@@ -1245,7 +1245,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
-#line 1247 "gramLatex.c"
+#line 1249 "gramLatex.c"
 	break;
 
       default:
@@ -1718,7 +1718,7 @@ yyreduce:
 
 
 /* Line 1464 of yacc.c  */
-#line 1720 "gramLatex.c"
+#line 1722 "gramLatex.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
