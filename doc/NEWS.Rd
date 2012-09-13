@@ -62,7 +62,8 @@
       \item On Windows, the C stack size has been increased to 64MB (it
       has been 10MB since the days of 32MB RAM systems).
 
-      On other OS this is set at run time rather than when compiling.
+      On other OSes the stack size is set at run time rather than when
+      compiling.
 
       \item Matrix indexing of dataframes by two column numeric indices
       is now supported for replacement as well as extraction.
@@ -70,7 +71,7 @@
       \item \code{setNames()} now has a default for its \code{object}
       argument, useful for a character result.
 
-      \item \code{StrucTS()} has a revised additive constant in the
+      \item \code{StructTS()} has a revised additive constant in the
       \code{loglik} component of the result: the previous definition is
       returned as the \code{loglik0} component.  However, the help page has
       always warned of a lack of comparability of log-likelihoods for
@@ -126,9 +127,6 @@
 
       \item \code{termplot()} does a better job when given a model with
       interactions (and no longer attempts to plot interaction terms).
-
-      \item Multistratum MANOVA works. In fact, it seems to have done so
-      for years in spite of the help page claiming it did not.
 
       \item The parser now incorporates code from Romain Francois'
       parser package, to support more detailed computation on the
@@ -189,9 +187,6 @@
       \item \code{backsolve()} (and \code{forwardsolve()}) are now
       internal functions, for speed and support for large matrices.
       
-      \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
-      although it was contrary to the documentation.  It is now an error.
-      
       \item More matrix algebra functions (e.g. \code{chol()} and
       \code{solve()}) accept logical matrices (and coerce to numeric).
      
@@ -240,15 +235,15 @@
       (Elements of character vectors remain limited to
       \eqn{2^{31}-1}{2^31 - 1} bytes.)
 
-      All aspects are currently experimental.
+      Use of such vectors is work-in-progress.
 
       \item Most operations which can sensibly be done with long vectors
       now work: others may return the error \sQuote{long vectors not
       supported yet}.  Some of these are because they explicitly work
-      with integer indices (e.g. \code{anyDuplicated()}, \code{match()},
-      \code{sample.int()}) or because other limits (e.g. of character
-      strings or matrix dimensions) would be exceeded or the operations
-      would be extremely slow.
+      with integer indices (e.g. \code{anyDuplicated()} and
+      \code{match()}) or because other limits (e.g. of character strings
+      or matrix dimensions) would be exceeded or the operations would be
+      extremely slow.
 
       \item \code{length()} returns a double for long vectors, and
       lengths can be set to \eqn{2^{31}}{2^31} or more by the
@@ -261,9 +256,9 @@
       \item There is some support for matrices and arrays with each
       dimension less than \eqn{2^{31}}{2^31} but total number of
       elements more than that.  Only some aspects of matrix algebra work
-      for such matrices, often taking minutes or hours for the smallest
-      possible matrix.  In other cases the underlying Fortran code has
-      an unstated restriction (as was found for complex \code{svd()}).
+      for such matrices, often taking a very long time.  In other cases
+      the underlying Fortran code has an unstated restriction (as was
+      found for complex \code{svd()}).
 
       \item \code{dist()} can produce dissimilarity objects for more
       than 65536 rows (but for example \code{cmdscale()} and
@@ -284,10 +279,9 @@
       \code{.C()} calls and so fail.
 
       \item \code{.C()} and \code{.Fortran()} do not accept long vector
-      inputs, at least for the time being.  This is a precaution as it
-      is very unlikely that existing code will have been written to
-      handle long vectors (and the \R wrappers often assume that
-      \code{length(x)} is an integer).
+      inputs.  This is a precaution as it is very unlikely that existing
+      code will have been written to handle long vectors (and the \R
+      wrappers often assume that \code{length(x)} is an integer).
       
       \item Most of the methods for \code{sort()} work for long vectors.
 
@@ -413,7 +407,7 @@
       \code{.Internal(optimhess)} and \code{.Internal(update.formula)}.
 
       It also means that packages such as \CRANpkg{compositions} which
-      make copies of \pkg{stats} functions at installation need to be
+      made copies of \pkg{stats} functions at installation need to be
       re-installed.  As may packages which have been byte-compiled,
       since some \code{.Internal()} calls are inlined by the compiler.
 
@@ -520,11 +514,14 @@
       \code{authors@R} field of the \file{DESCRIPTION} file, it tries
       harder to do so in the encoding specified for the package (rather
       than using ASCII escapes).
+      
+      \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
+      although it was contrary to the documentation.  It is now an error.
 
-      \item Fix in \pkg{grid} for pushing a viewport into a layout
-      cell, where the layout is within a viewport that has zero width
-      or zero height (the layout column widths or row heights in this
-      case were being calculated with non-finite values).
+      \item Fix in package \pkg{grid} for pushing a viewport into a
+      layout cell, where the layout is within a viewport that has zero
+      width or zero height (the layout column widths or row heights in
+      this case were being calculated with non-finite values).
       (Reported by Winston Chang.)
       
       \item \code{solve(A, b)} for a vector \code{b} gave the answer
@@ -605,7 +602,7 @@
       
       \item \code{maintainer()} now converts embedded new lines to spaces.
       
-      \item The \code{X11()} device has some more protection against
+      \item The \code{X11()} device has some protection against
       being used with forked processes \emph{via} package \pkg{parallel}.
       
       \item Setting the environment variable \env{R_OSX_VALGRIND} (to
@@ -906,7 +903,7 @@
       to write outside the target library.
       
       \item Some of the quality control functions
-      (e.g. \code{tools::checkFF()} were wrongly identifying the source
+      (e.g. \code{tools::checkFF()}) were wrongly identifying the source
       of S4 methods in a package and so not checking them.
 
       \item The default type of display by \code{browseEnv()} when using

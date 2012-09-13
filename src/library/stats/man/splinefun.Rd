@@ -79,6 +79,11 @@ splinefunH(x, y, m)
   points originally specified.  It uses data stored in its environment
   when it was created, the details of which are subject to change.
 }
+\section{Warning}{
+  The value returned by \code{splinefun} contains references to the code
+  in the current version of \R: it is not intended to be saved and
+  loaded into a different \R session.  This is safer in \R >= 2.16.0.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

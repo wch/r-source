@@ -74,6 +74,11 @@ approxfun(x, y = NULL,       method  ="linear",
   interpolated values.  It uses data stored in its environment when it
   was created, the details of which are subject to change.
 }
+\section{Warning}{
+  The value returned by \code{approxfun} contains references to the code
+  in the current version of \R: it is not intended to be saved and
+  loaded into a different \R session.  This is safer for \R >= 2.16.0.
+}
 \seealso{
   \code{\link{spline}} and \code{\link{splinefun}} for spline
   interpolation.
