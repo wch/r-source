@@ -18,6 +18,8 @@ OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
 SHLIB = $(pkg).dll
 RESFLAGS = -I $(R_HOME)/include
 
+PKG_CPPFLAGS=-I$(R_HOME)/src/include -DHAVE_CONFIG_H
+
 all: makeMakedeps shlib
 
 shlib: $(SHLIB)
