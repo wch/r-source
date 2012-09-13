@@ -149,6 +149,7 @@ void Rwin_fpset(void)
 
 #include <preferences.h>
 
+/* utils::loadRconsole */
 SEXP do_loadRconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
@@ -167,6 +168,7 @@ SEXP do_loadRconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 #include <lmcons.h>
 typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
 
+/* base::Sys.info */
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
@@ -358,8 +360,7 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UINT  cchVer = 0;
 
 	lpstrVffInfo = (LPSTR) malloc(dwVerInfoSize);
-	if (GetFileVersionInfoW(dll, 0L, dwVerInfoSize, lpstrVffInfo))
-	{
+	if (GetFileVersionInfoW(dll, 0L, dwVerInfoSize, lpstrVffInfo)) {
 
 	    fRet = VerQueryValue(lpstrVffInfo,
 				 TEXT("\\StringFileInfo\\040904E4\\FileVersion"),
@@ -516,6 +517,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* utils::shortPathName */
 SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, paths = CAR(args), el;
@@ -553,379 +555,13 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
-
-static int countFilenamesW(const wchar_t *list)
-{
-    const wchar_t *temp;
-    int count;
-    count = 0;
-    for (temp = list; *temp; temp += wcslen(temp)+1) count++;
-    return count;
-}
-
-
-static SEXP mkCharUTF8(const wchar_t *wc)
-{
-    char s[4*MAX_PATH];
-    wcstoutf8(s, wc, 4*MAX_PATH);
-    return mkCharCE(s, CE_UTF8);
-}
-
-/* utils::choose.files */
-SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP ans, def, caption, filters;
-    wchar_t *temp, *res, *cfilters;
-    const wchar_t *p;
-    wchar_t path[32768], filename[32768];
-    int multi, filterindex, i, count, lfilters, pathlen;
-
-    checkArity(op, args);
-    def = CAR(args);
-    caption = CADR(args);
-    multi = asLogical(CADDR(args));
-    filters = CADDDR(args);
-    filterindex = asInteger(CAD4R(args));
-    if(length(def) != 1 )
-	errorcall(call, _("'default' must be a character string"));
-    p = filenameToWchar(STRING_ELT(def, 0), 1);
-    if(wcslen(p) >= 32768) errorcall(call, _("'default' is overlong"));
-    wcscpy(path, p);
-    for(temp = path; *temp; temp++) if(*temp == L'/') *temp = L'\\';
-    if(length(caption) != 1 )
-	errorcall(call, _("'caption' must be a character string"));
-    if(multi == NA_LOGICAL)
-	errorcall(call, _("'multi' must be a logical value"));
-    if(filterindex == NA_INTEGER)
-	errorcall(call, _("'filterindex' must be an integer value"));
-    lfilters = 1 + length(filters);
-    for (i = 0; i < length(filters); i++)
-	lfilters += wcslen(filenameToWchar(STRING_ELT(filters, i), 0));
-    cfilters = (wchar_t *) R_alloc(lfilters, sizeof(wchar_t));
-    temp = cfilters;
-    for (i = 0; i < length(filters)/2; i++) {
-	wcscpy(temp, filenameToWchar(STRING_ELT(filters, i), 0));
-	temp += wcslen(temp)+1;
-	wcscpy(temp, filenameToWchar(STRING_ELT(filters, i+length(filters)/2),
-				     0));
-	temp += wcslen(temp)+1;
-    }
-    *temp = 0;
-
-    res = askfilenamesW(filenameToWchar(STRING_ELT(caption, 0), 0), path,
-			multi, cfilters, filterindex, NULL);
-
-    if(!multi) {
-	/* only one filename possible */
-	count = 1;
-    } else {
-	count = countFilenamesW(res);
-    }
-
-    if (count < 2) PROTECT(ans = allocVector(STRSXP, count));
-    else PROTECT(ans = allocVector(STRSXP, count-1));
-
-    switch (count) {
-    case 0: break;
-    case 1: SET_STRING_ELT(ans, 0, mkCharUTF8(res));
-	break;
-    default:
-	wcsncpy(path, res, 32768);
-	pathlen = wcslen(path);
-	if (path[pathlen-1] == L'\\') path[--pathlen] = L'\0';
-	temp = res;
-	for (i = 0; i < count-1; i++) {
-	    temp += wcslen(temp) + 1;
-	    if (wcschr(temp,L':') || *temp == L'\\' || *temp == L'/')
-		SET_STRING_ELT(ans, i, mkCharUTF8(temp));
-	    else {
-		wcsncpy(filename, path, 32768);
-		filename[pathlen] = L'\\';
-		wcsncpy(filename+pathlen+1, temp, 32768-pathlen-1);
-		SET_STRING_ELT(ans, i, mkCharUTF8(filename));
-	    }
-	}
-    }
-    UNPROTECT(1);
-    return ans;
-}
-
-SEXP do_chooseDir(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP ans, def, caption;
-    const char *p;
-    char path[MAX_PATH];
-
-    checkArity(op, args);
-    def = CAR(args);
-    caption = CADR(args);
-    if(!isString(def) || length(def) != 1 )
-	errorcall(call, _("'default' must be a character string"));
-    p = translateChar(STRING_ELT(def, 0));
-    if(strlen(p) >= MAX_PATH) errorcall(call, _("'default' is overlong"));
-    strcpy(path, R_ExpandFileName(p));
-    R_fixbackslash(path);
-    if(!isString(caption) || length(caption) != 1 )
-	errorcall(call, _("'caption' must be a character string"));
-    p = askcdstring(translateChar(STRING_ELT(caption, 0)), path);
-
-    PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, p ? mkChar(p): NA_STRING);
-    UNPROTECT(1);
-    return ans;
-}
-
-extern window RFrame; /* from rui.c */
-
-SEXP getIdentification(void)
-{
-    const char *res = "" /* -Wall */;
-
-    switch(CharacterMode) {
-    case RGui:
-	if(RguiMDI & RW_MDI) res = "RGui"; else res = "R Console";
-	break;
-    case RTerm:
-	res = "Rterm";
-	break;
-    default:
-	/* do nothing */
-	break; /* -Wall */
-    }
-    return mkString(res);
-}
-
-SEXP getWindowTitle(void)
-{
-    char buf[512], *res = "";
-
-    switch(CharacterMode) {
-    case RGui:
-	if(RguiMDI & RW_MDI) res = GA_gettext(RFrame);
-	else res = GA_gettext(RConsole);
-	break;
-    case RTerm:
-	GetConsoleTitle(buf, 512);
-	buf[511] = '\0';
-	res = buf;
-	break;
-    default:
-	/* do nothing */
-	break;
-    }
-    return mkString(res);
-}
-
-SEXP setTitle(const char *title)
-{
-    SEXP result = getWindowTitle();
-
-    switch(CharacterMode) {
-    case RGui:
-	if(RguiMDI & RW_MDI) settext(RFrame, title);
-	else settext(RConsole, title);
-	break;
-    case RTerm:
-	SetConsoleTitle(title);
-	break;
-    default:
-	/* do nothing */
-	break; /* -Wall */
-    }
-    return result;
-}
-
-SEXP do_getIdentification(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    checkArity(op, args);
-    return getIdentification();
-}
-
-SEXP do_setTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP title = CAR(args);
-
-    checkArity(op, args);
-    if(!isString(title)  || LENGTH(title) != 1 ||
-       STRING_ELT(title, 0) == NA_STRING)
-	errorcall(call, _("'title' must be a character string"));
-    return setTitle(translateChar(STRING_ELT(title, 0)));
-}
-
-SEXP do_getWindowTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    checkArity(op, args);
-    return getWindowTitle();
-}
-
-SEXP do_setStatusBar(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP text = CAR(args);
-
-    checkArity(op, args);
-    if(!isString(text)  || LENGTH(text) != 1 ||
-       STRING_ELT(text, 0) == NA_STRING)
-	errorcall(call, _("'text' must be a character string"));
-    showstatusbar();
-    setstatus(translateChar(STRING_ELT(text, 0)));
-    return R_NilValue;
-}
-
-static void * getConsoleHandle(const char *which)
-{
-    if (CharacterMode != RGui) return(NULL);
-    else if (strcmp(which, "Console") == 0 && RConsole)
-	return getHandle(RConsole);
-    else if (strcmp(which, "Frame") == 0 && RFrame)
-	return getHandle(RFrame);
-    else if (strcmp(which, "Process") == 0)
-	return GetCurrentProcess();
-    else return NULL;
-}
-
-static void * getDeviceHandle(int);
-
-SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    void * handle;
-    SEXP which = CAR(args);
-
-    checkArity(op, args);
-    if(LENGTH(which) != 1)
-	errorcall(call, _("'%s' must be length 1"), "which");
-    if (isString(which)) handle = getConsoleHandle(CHAR(STRING_ELT(which,0)));
-    else if (isInteger(which)) handle = getDeviceHandle(INTEGER(which)[0]);
-    else handle = NULL;
-
-    if (handle)
-	return R_MakeExternalPtr(handle,R_NilValue,R_NilValue);
-    else
-	return R_NilValue;
-}
-
-static SEXP          EnumResult;
-static int           EnumCount;
-static PROTECT_INDEX EnumIndex;
-static int           EnumMinimized;
-static DWORD         EnumProcessId;
-
-static BOOL CALLBACK EnumWindowsProc(HWND handle, LPARAM param) 
-{
-    char title[1024];
-    if (IsWindowVisible(handle)) {
-    	if (EnumProcessId) { /* restrict to R windows only */
-    	    DWORD processId;
-    	    GetWindowThreadProcessId(handle, &processId);
-    	    if (processId != EnumProcessId) return TRUE;
-    	}
-    	if (!EnumMinimized && IsIconic(handle)) return TRUE;
-    	if (EnumCount >= length(EnumResult)) {
-    	    int newlen = 2*length(EnumResult);
-    	    REPROTECT(EnumResult = lengthgets(EnumResult, newlen), EnumIndex);
-    	    setAttrib(EnumResult, R_NamesSymbol, 
-    	              lengthgets(getAttrib(EnumResult, R_NamesSymbol), newlen));
-    	}
-    	SET_VECTOR_ELT(EnumResult, EnumCount, R_MakeExternalPtr(handle,R_NilValue,R_NilValue));
-    	if (GetWindowText(handle, title, 1024)) 
-    	    SET_STRING_ELT(getAttrib(EnumResult, R_NamesSymbol), EnumCount, mkChar(title));
-    	EnumCount++;
-    }
-    return TRUE;
-}
-
-SEXP do_getWindowHandles(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    PROTECT_WITH_INDEX(EnumResult = allocVector(VECSXP, 8), &EnumIndex);
-    setAttrib(EnumResult, R_NamesSymbol, allocVector(STRSXP, 8));
-    EnumCount = 0;
-    const char * w;
-
-    checkArity(op, args);
-    w = CHAR(STRING_ELT(CAR(args), 0));
-    EnumMinimized = LOGICAL(CADR(args))[0];
-
-    if (strcmp(w, "R") == 0) 
-    	EnumProcessId = GetCurrentProcessId();
-    else EnumProcessId = 0;
-
-    if (ismdi() && EnumProcessId) 
-    	EnumChildWindows(GetParent(getHandle(RConsole)), EnumWindowsProc, 0);    
-    else
-    	EnumWindows(EnumWindowsProc, 0);
-    	
-    EnumResult = lengthgets(EnumResult, EnumCount);
-    UNPROTECT(1);
-    return EnumResult;
-}
-
-static void ArrangeWindows(int n, void** windows, int action, int preserve, int outer) {
-    int j;
-    if (action == MINIMIZE || action == RESTORE) {
-    	for (j=0; j<n; j++)
-    	    ShowWindow((HWND)windows[j], action == MINIMIZE ? SW_MINIMIZE : SW_RESTORE);
-    } else {
-    	RECT rect = {0,0,0,0};
-    	RECT *prect = &rect;
-    	HWND parent;
-    	if (preserve) {
-	    WINDOWPLACEMENT wp;
-	    wp.length = sizeof(wp);
-	    for (j=0; j<n; j++) {
-		if (GetWindowPlacement((HWND)windows[j], &wp)) {
-		    UnionRect(prect, prect, &wp.rcNormalPosition);
-		    if (wp.showCmd == SW_SHOWMINIMIZED || wp.showCmd == SW_SHOWMAXIMIZED) {
-			wp.showCmd = SW_RESTORE;
-			SetWindowPlacement((HWND)windows[j], &wp);
-		    }
-		}
-	    }
-	}
-        if (rect.left == rect.right || rect.top == rect.bottom) prect = NULL;
-        
-        if (!outer && ismdi())
-            parent = GetParent(getHandle(RConsole));
-        else
-            parent = NULL;
-	switch (action) {
-	case CASCADE: CascadeWindows(parent, 0, prect, n, (HWND FAR *)windows);
-		      break;
-	case TILEHORIZ: TileWindows(parent, MDITILE_HORIZONTAL, prect, n, (HWND FAR *)windows);
-		      break;
-	case TILEVERT: TileWindows(parent, MDITILE_VERTICAL, prect, n, (HWND FAR *)windows);
-		      break;    
-        }
-    }
-}
-
-SEXP do_arrangeWindows(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP windows;
-    int i, action, preserve, outer;
-    void **handles;
-    
-    checkArity(op, args);
-    windows = CAR(args);
-    if (length(windows)) {
-	if (TYPEOF(windows) != VECSXP) error(_("'%s' must be a list"), "windows");
-	handles = (void **)R_alloc(length(windows), sizeof(void *));
-	for (i=0; i<length(windows); i++) {
-	    if (TYPEOF(VECTOR_ELT(windows, i)) != EXTPTRSXP)
-		error(_("'%s' element %d is not a window handle"), "windows", i+1);
-	    handles[i] = R_ExternalPtrAddr(VECTOR_ELT(windows, i));
-	}
-	action = asInteger(CADR(args));
-	preserve = asInteger(CADDR(args));
-	outer = asInteger(CADDDR(args));
-	ArrangeWindows(length(windows), handles, action, preserve, outer);
-    }
-    return windows;
-}
     
 #include "devWindows.h"
 #include <Startup.h>
 #include <R_ext/GraphicsEngine.h> /* GEgetDevice */
 extern UImode CharacterMode;
 
+/* grDevices::bringToTop */
 SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int dev, stay;
@@ -951,6 +587,7 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+/* grDevices::msgWindow */
 SEXP do_msgwindow(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int dev, type;
@@ -982,25 +619,13 @@ SEXP do_msgwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-static void * getDeviceHandle(int dev)
-{
-    pGEDevDesc gdd;
-    gadesc *xd;
-
-    if (dev == -1) return(getHandle(RConsole));
-    if (dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER) return(0);
-    gdd = GEgetDevice(dev - 1);
-    if (!gdd) return(NULL);
-    xd = (gadesc *) gdd->dev->deviceSpecific;
-    if (!xd) return(NULL);
-    return getHandle(xd->gawin);
-}
 
 /* This assumes a menuname of the form 
    $Graph<nn>Main, $Graph<nn>Popup, $Graph<nn>LocMain,
    or $Graph<nn>LocPopup where <nn> is the
    device number.  We've already checked the $Graph prefix. */
 
+/* called from rui.c, only */
 menu getGraphMenu(const char* menuname)
 {
     int devnum;

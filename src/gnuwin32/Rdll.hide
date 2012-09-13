@@ -199,7 +199,6 @@
  R_dot_GenericDefEnv
  R_dot_Group
  R_dot_Methods
- R_fixbackslash
  R_fixslash
  R_getClockIncrement
  R_getDllTable
