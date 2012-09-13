@@ -44,7 +44,7 @@ writeClipboard <- function(str, format = 1L)
 getIdentification <- function() .Call(C_getIdentification)
 
 setWindowTitle <- function(suffix, title = paste(getIdentification(), suffix))
-    .Call(C_setWindowTitle,  title)
+    invisible(.Call(C_setWindowTitle,  title))
 
 getWindowTitle <- function() .Call(C_getWindowTitle)
 
