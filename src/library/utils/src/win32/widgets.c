@@ -150,3 +150,116 @@ SEXP Win_selectlist(SEXP args)
     UNPROTECT(1);
     return ans;
 }
+
+static int countFilenamesW(const wchar_t *list)
+{
+    const wchar_t *temp;
+    int count;
+    count = 0;
+    for (temp = list; *temp; temp += wcslen(temp)+1) count++;
+    return count;
+}
+
+
+static SEXP mkCharUTF8(const wchar_t *wc)
+{
+    char s[4*MAX_PATH];
+    wcstoutf8(s, wc, 4*MAX_PATH);
+    return mkCharCE(s, CE_UTF8);
+}
+
+
+SEXP chooseFiles(SEXP def, SEXP caption, SEXP smulti, SEXP filters, SEXP sindex)
+{
+    wchar_t *temp, *res, *cfilters;
+    const wchar_t *p;
+    wchar_t path[32768], filename[32768];
+    int multi, filterindex, i, count, lfilters, pathlen;
+
+    multi = asLogical(smulti);
+    filterindex = asInteger(sindex);
+    if(length(def) != 1 )
+	error(_("'default' must be a character string"));
+    p = filenameToWchar(STRING_ELT(def, 0), 1);
+    if(wcslen(p) >= 32768) error(_("'default' is overlong"));
+    wcscpy(path, p);
+    for(temp = path; *temp; temp++) if(*temp == L'/') *temp = L'\\';
+    if(length(caption) != 1 )
+	error(_("'caption' must be a character string"));
+    if(multi == NA_LOGICAL)
+	error(_("'multi' must be a logical value"));
+    if(filterindex == NA_INTEGER)
+	error(_("'filterindex' must be an integer value"));
+    lfilters = 1 + length(filters);
+    for (i = 0; i < length(filters); i++)
+	lfilters += wcslen(filenameToWchar(STRING_ELT(filters, i), 0));
+    cfilters = (wchar_t *) R_alloc(lfilters, sizeof(wchar_t));
+    temp = cfilters;
+    for (i = 0; i < length(filters)/2; i++) {
+	wcscpy(temp, filenameToWchar(STRING_ELT(filters, i), 0));
+	temp += wcslen(temp)+1;
+	wcscpy(temp, filenameToWchar(STRING_ELT(filters, i+length(filters)/2),
+				     0));
+	temp += wcslen(temp)+1;
+    }
+    *temp = 0;
+
+    res = askfilenamesW(filenameToWchar(STRING_ELT(caption, 0), 0), path,
+			multi, cfilters, filterindex, NULL);
+
+    if(!multi) {
+	/* only one filename possible */
+	count = 1;
+    } else {
+	count = countFilenamesW(res);
+    }
+
+    SEXP ans;
+    if (count < 2) PROTECT(ans = allocVector(STRSXP, count));
+    else PROTECT(ans = allocVector(STRSXP, count-1));
+
+    switch (count) {
+    case 0: break;
+    case 1: SET_STRING_ELT(ans, 0, mkCharUTF8(res));
+	break;
+    default:
+	wcsncpy(path, res, 32768);
+	pathlen = wcslen(path);
+	if (path[pathlen-1] == L'\\') path[--pathlen] = L'\0';
+	temp = res;
+	for (i = 0; i < count-1; i++) {
+	    temp += wcslen(temp) + 1;
+	    if (wcschr(temp,L':') || *temp == L'\\' || *temp == L'/')
+		SET_STRING_ELT(ans, i, mkCharUTF8(temp));
+	    else {
+		wcsncpy(filename, path, 32768);
+		filename[pathlen] = L'\\';
+		wcsncpy(filename+pathlen+1, temp, 32768-pathlen-1);
+		SET_STRING_ELT(ans, i, mkCharUTF8(filename));
+	    }
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP chooseDir(SEXP def, SEXP caption)
+{
+    const char *p;
+    char path[MAX_PATH];
+
+    if(!isString(def) || length(def) != 1 )
+	error(_("'default' must be a character string"));
+    p = translateChar(STRING_ELT(def, 0));
+    if(strlen(p) >= MAX_PATH) error(_("'default' is overlong"));
+    strcpy(path, R_ExpandFileName(p));
+    R_fixbackslash(path);
+    if(!isString(caption) || length(caption) != 1 )
+	error(_("'caption' must be a character string"));
+    p = askcdstring(translateChar(STRING_ELT(caption, 0)), path);
+
+    SEXP ans = PROTECT(allocVector(STRSXP, 1));
+    SET_STRING_ELT(ans, 0, p ? mkChar(p): NA_STRING);
+    UNPROTECT(1);
+    return ans;
+}

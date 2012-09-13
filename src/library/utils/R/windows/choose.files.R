@@ -39,9 +39,8 @@ structure(c("R or S files (*.R,*.q,*.ssc,*.S)",
        					"RData", "zip", "All"), NULL))
 
 choose.files <- function(default = '', caption = 'Select files', multi = TRUE,
-                         filters=Filters, index = nrow(Filters) ) {
-	.Internal(chooseFiles(default, caption, multi, filters, index))
-}
+                         filters = Filters, index = nrow(Filters) )
+    .Call(C_chooseFiles, default, caption, multi, filters, index)
 
 choose.dir <- function(default = '', caption = 'Select folder')
-    .Internal(chooseDir(default, caption))
+    .Call(C_chooseDir, default, caption)

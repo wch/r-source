@@ -94,6 +94,51 @@ SEXP winver(void)
     return mkString(ver);
 }
 
+SEXP dllversion(SEXP path)
+{
+    const wchar_t *dll;
+    DWORD dwVerInfoSize;
+    DWORD dwVerHnd;
+
+    if(!isString(path) || LENGTH(path) != 1)
+	error(_("invalid '%s' argument"), "path");
+    dll = filenameToWchar(STRING_ELT(path, 0), FALSE);
+    dwVerInfoSize = GetFileVersionInfoSizeW(dll, &dwVerHnd);
+    SEXP ans = PROTECT(allocVector(STRSXP, 2));
+    SET_STRING_ELT(ans, 0, mkChar(""));
+    SET_STRING_ELT(ans, 1, mkChar(""));
+    if (dwVerInfoSize) {
+	BOOL  fRet;
+	LPSTR lpstrVffInfo;
+	LPSTR lszVer = NULL;
+	UINT  cchVer = 0;
+
+	lpstrVffInfo = (LPSTR) malloc(dwVerInfoSize);
+	if (GetFileVersionInfoW(dll, 0L, dwVerInfoSize, lpstrVffInfo)) {
+
+	    fRet = VerQueryValue(lpstrVffInfo,
+				 TEXT("\\StringFileInfo\\040904E4\\FileVersion"),
+				 (LPVOID)&lszVer, &cchVer);
+	    if(fRet) SET_STRING_ELT(ans, 0, mkChar(lszVer));
+
+	    fRet = VerQueryValue(lpstrVffInfo,
+				 TEXT("\\StringFileInfo\\040904E4\\R Version"),
+				 (LPVOID)&lszVer, &cchVer);
+	    if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
+	    else {
+		fRet = VerQueryValue(lpstrVffInfo,
+				     TEXT("\\StringFileInfo\\040904E4\\Compiled under R Version"),
+				     (LPVOID)&lszVer, &cchVer);
+		if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
+	    }
+
+	} else ans = R_NilValue;
+	free(lpstrVffInfo);
+    } else ans = R_NilValue;
+    UNPROTECT(1);
+    return ans;
+}
+
 SEXP getClipboardFormats(void)
 {
     SEXP ans = R_NilValue;
@@ -353,4 +398,165 @@ SEXP setStatusBar(SEXP text)
     showstatusbar();
     setstatus(translateChar(STRING_ELT(text, 0)));
     return R_NilValue;
+}
+
+static void * getConsoleHandle(const char *which)
+{
+    if (CharacterMode != RGui) return(NULL);
+    else if (strcmp(which, "Console") == 0 && RConsole)
+	return getHandle(RConsole);
+    else if (strcmp(which, "Frame") == 0 && RFrame)
+	return getHandle(RFrame);
+    else if (strcmp(which, "Process") == 0)
+	return GetCurrentProcess();
+    else return NULL;
+}
+
+#include <R_ext/GraphicsEngine.h>
+#include "devWindows.h"
+static void *getDeviceHandle(int dev)
+{
+    pGEDevDesc gdd;
+    gadesc *xd;
+
+    if (dev == -1) return(getHandle(RConsole));
+    if (dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER) return(0);
+    gdd = GEgetDevice(dev - 1);
+    if (!gdd) return(NULL);
+    xd = (gadesc *) gdd->dev->deviceSpecific;
+    if (!xd) return(NULL);
+    return getHandle(xd->gawin);
+}
+
+
+SEXP getWindowsHandle(SEXP which)
+{
+    void * handle;
+
+    if(length(which) != 1) error(_("'%s' must be length 1"), "which");
+    if (isString(which)) handle = getConsoleHandle(CHAR(STRING_ELT(which,0)));
+    else if (isInteger(which)) handle = getDeviceHandle(INTEGER(which)[0]);
+    else handle = NULL;
+
+    if (handle)
+	return R_MakeExternalPtr(handle,R_NilValue,R_NilValue);
+    else
+	return R_NilValue;
+}
+
+static SEXP          EnumResult;
+static int           EnumCount;
+static PROTECT_INDEX EnumIndex;
+static int           EnumMinimized;
+static DWORD         EnumProcessId;
+
+static BOOL CALLBACK EnumWindowsProc(HWND handle, LPARAM param) 
+{
+    char title[1024];
+    if (IsWindowVisible(handle)) {
+    	if (EnumProcessId) { /* restrict to R windows only */
+    	    DWORD processId;
+    	    GetWindowThreadProcessId(handle, &processId);
+    	    if (processId != EnumProcessId) return TRUE;
+    	}
+    	if (!EnumMinimized && IsIconic(handle)) return TRUE;
+    	if (EnumCount >= length(EnumResult)) {
+    	    int newlen = 2*length(EnumResult);
+    	    REPROTECT(EnumResult = lengthgets(EnumResult, newlen), EnumIndex);
+    	    setAttrib(EnumResult, R_NamesSymbol, 
+    	              lengthgets(getAttrib(EnumResult, R_NamesSymbol), newlen));
+    	}
+    	SET_VECTOR_ELT(EnumResult, EnumCount, R_MakeExternalPtr(handle,R_NilValue,R_NilValue));
+    	if (GetWindowText(handle, title, 1024)) 
+    	    SET_STRING_ELT(getAttrib(EnumResult, R_NamesSymbol), EnumCount, mkChar(title));
+    	EnumCount++;
+    }
+    return TRUE;
+}
+
+SEXP getWindowsHandles(SEXP which, SEXP minimized)
+{
+    PROTECT_WITH_INDEX(EnumResult = allocVector(VECSXP, 8), &EnumIndex);
+    setAttrib(EnumResult, R_NamesSymbol, allocVector(STRSXP, 8));
+    EnumCount = 0;
+    const char * w;
+
+    w = CHAR(STRING_ELT(which, 0));
+    EnumMinimized = asLogical(minimized);
+
+    if (strcmp(w, "R") == 0) EnumProcessId = GetCurrentProcessId();
+    else EnumProcessId = 0;
+
+    if (ismdi() && EnumProcessId) 
+    	EnumChildWindows(GetParent(getHandle(RConsole)), EnumWindowsProc, 0);
+    else
+    	EnumWindows(EnumWindowsProc, 0);
+    	
+    EnumResult = lengthgets(EnumResult, EnumCount);
+    UNPROTECT(1);
+    return EnumResult;
+}
+
+static void 
+in_ArrangeWindows(int n, void** windows, int action, int preserve, int outer) 
+{
+    int j;
+    if (action == MINIMIZE || action == RESTORE) {
+    	for (j=0; j<n; j++)
+    	    ShowWindow((HWND)windows[j], action == MINIMIZE ? SW_MINIMIZE : SW_RESTORE);
+    } else {
+    	RECT rect = {0,0,0,0};
+    	RECT *prect = &rect;
+    	HWND parent;
+    	if (preserve) {
+	    WINDOWPLACEMENT wp;
+	    wp.length = sizeof(wp);
+	    for (j=0; j<n; j++) {
+		if (GetWindowPlacement((HWND)windows[j], &wp)) {
+		    UnionRect(prect, prect, &wp.rcNormalPosition);
+		    if (wp.showCmd == SW_SHOWMINIMIZED || wp.showCmd == SW_SHOWMAXIMIZED) {
+			wp.showCmd = SW_RESTORE;
+			SetWindowPlacement((HWND)windows[j], &wp);
+		    }
+		}
+	    }
+	}
+        if (rect.left == rect.right || rect.top == rect.bottom) prect = NULL;
+        
+        if (!outer && ismdi())
+            parent = GetParent(getHandle(RConsole));
+        else
+            parent = NULL;
+	switch (action) {
+	case CASCADE: CascadeWindows(parent, 0, prect, n, (HWND FAR *)windows);
+		      break;
+	case TILEHORIZ: TileWindows(parent, MDITILE_HORIZONTAL, prect, n, (HWND FAR *)windows);
+		      break;
+	case TILEVERT: TileWindows(parent, MDITILE_VERTICAL, prect, n, (HWND FAR *)windows);
+		      break;    
+        }
+    }
+}
+
+SEXP arrangeWindows(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP windows;
+    int action, preserve, outer;
+    
+    args = CDR(args);
+    windows = CAR(args);
+    if (length(windows)) {
+	if (TYPEOF(windows) != VECSXP) error(_("'%s' must be a list"), "windows");
+	void **handles = (void **) R_alloc(length(windows), sizeof(void *));
+	for (int i = 0; i < length(windows); i++) {
+	    if (TYPEOF(VECTOR_ELT(windows, i)) != EXTPTRSXP)
+		error(_("'%s' element %d is not a window handle"), "windows", i+1);
+	    handles[i] = R_ExternalPtrAddr(VECTOR_ELT(windows, i));
+	}
+	action = asInteger(CADR(args));
+	preserve = asInteger(CADDR(args));
+	outer = asInteger(CADDDR(args));
+	in_ArrangeWindows(length(windows), handles, action, preserve, outer);
+    }
+    return windows;
 }

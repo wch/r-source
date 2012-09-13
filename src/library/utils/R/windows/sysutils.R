@@ -20,7 +20,7 @@ memory.size <- function(max = FALSE) round(.Internal(memory.size(max)), 2L)
 
 memory.limit <- function(size = NA) trunc(.Internal(memory.size(size)))
 
-DLL.version <- function(path) .Internal(DLL.version(path))
+DLL.version <- function(path) .Call(C_dllversion, path)
 
 getClipboardFormats <- function(numeric = FALSE)
 {
@@ -57,7 +57,7 @@ getWindowsHandle <- function(which = "Console") {
         if(which > 0 && which <= length(.Devices) && .Devices[[which]] != "windows")
             return(NULL)
     }
-    .Internal(getWindowHandle(which))
+    .Call(C_getWindowsHandle, which)
 }
 
 getWindowsHandles <- function(which = "R", pattern = "", minimized = FALSE)
@@ -69,9 +69,8 @@ getWindowsHandles <- function(which = "R", pattern = "", minimized = FALSE)
     minimized <- rep(minimized, length.out = len)
     result <- list()
     for (i in seq_along(which)) {
-	res <- .Internal(getWindowHandles(which[i], minimized))
-	if (nzchar(pattern[i]))
-    	    res <- res[grep(pattern[i], names(res))]
+	res <- .Call(C_getWindowsHandles, which[i], minimized)
+	if (nzchar(pattern[i])) res <- res[grep(pattern[i], names(res))]
     	result <- c(result, res)
     }
     dup <- duplicated(sapply(result, deparse))
@@ -95,7 +94,7 @@ arrangeWindows <-
             args$minimized <- TRUE
     	windows <- do.call(getWindowsHandles, args)
     }
-   .Internal(arrangeWindows(windows, action, preserve, outer))
+   .External2(C_arrangeWindows, windows, action, preserve, outer)
 }
 
 menuShowCRAN <- function()

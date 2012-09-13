@@ -77,4 +77,12 @@ SEXP getIdentification(void);
 SEXP getWindowTitle(void);
 SEXP setWindowTitle(SEXP title);
 SEXP setStatusBar(SEXP text);
+SEXP chooseFiles(SEXP def, SEXP action, SEXP smulti, SEXP filters, SEXP sindex);
+SEXP chooseDir(SEXP def, SEXP caption);
+
+SEXP getWindowsHandle(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP getWindowsHandles(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP arrangeWindows(SEXP call, SEXP op, SEXP args, SEXP env);
+
+SEXP dllversion(SEXP path);
 #endif

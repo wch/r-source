@@ -49,22 +49,15 @@ SEXP do_aqua_custom_print(SEXP, SEXP, SEXP, SEXP);
 /* Function Names */
 
 #if Win32
-SEXP do_arrangeWindows(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
-SEXP do_chooseFiles(SEXP, SEXP, SEXP, SEXP);
-SEXP do_chooseDir(SEXP, SEXP, SEXP, SEXP);
-SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
-SEXP do_getWindowHandle(SEXP, SEXP, SEXP, SEXP);
-SEXP do_getWindowHandles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_loadRconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mkjunction(SEXP, SEXP, SEXP, SEXP);
 SEXP do_msgwindow(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shortpath(SEXP, SEXP, SEXP, SEXP);
-SEXP do_syswhich(SEXP, SEXP, SEXP, SEXP);
-SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setInternet2(SEXP, SEXP, SEXP, SEXP);
+SEXP do_syswhich(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
