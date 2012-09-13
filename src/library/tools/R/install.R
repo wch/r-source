@@ -153,12 +153,12 @@
         setwd(startdir)
         if (dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
-    
+
     # Check whether dir is a subdirectory of parent,
     # to protect against malicious package names like ".." below
     # Assumes that both directories exist
-    
-    is_subdir <- function(dir, parent) 
+
+    is_subdir <- function(dir, parent)
         normalizePath(parent) == normalizePath(file.path(dir, ".."))
 
     do_exit_on_error <- function()
@@ -176,7 +176,7 @@
             if (nzchar(lockdir) &&
                 dir.exists(lp <- file.path(lockdir, curPkg)) &&
                 is_subdir(lp, lockdir)) {
-                starsmsg(stars, "restoring previous ", sQuote(pkgdir)) 
+                starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
                     file.copy(lp, dirname(pkgdir), recursive = TRUE)
                     Sys.setFileTime(pkgdir, file.info(lp)$mtime)
@@ -267,9 +267,9 @@
             message("ERROR: unable to create ", sQuote(instdir), domain = NA)
             do_exit_on_error()
         }
-        
+
         if (!is_subdir(instdir, lib)) {
-            message("ERROR: ", sQuote(pkg_name), " is not a legal package name", 
+            message("ERROR: ", sQuote(pkg_name), " is not a legal package name",
                     domain = NA)
             do_exit_on_error()
         }
@@ -290,7 +290,7 @@
             do_install_binary(pkg_name, instdir, desc)
 
         ## Add read permission to all, write permission to owner
-        .Internal(dirchmod(instdir))
+        .Call(dirchmod, instdir)
         is_first_package <<- FALSE
 
         if (tar_up) { # Unix only
@@ -388,7 +388,7 @@
                 for(arch in archs) {
                     ss <- paste("src", arch, sep = "-")
                     ## it seems fixing permissions is sometimes needed
-                    .Internal(dirchmod(ss))
+                    .Call(dirchmod, ss)
                     unlink(ss, recursive = TRUE)
                 }
 
@@ -710,7 +710,7 @@
                             dir.create(ss, showWarnings = FALSE)
                             file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
                             ## avoid read-only files/dir such as nested .svn
-                            .Internal(dirchmod(ss))
+                            .Call(dirchmod, ss)
                             setwd(ss)
 
                             ra <- paste0("/", arch)
@@ -962,7 +962,7 @@
             i_dirs <- grep(.vc_dir_names_re, i_dirs,
                            invert = TRUE, value = TRUE)
             ## This ignores any restrictive permissions in the source
-            ## tree, since the later .Internal(dirchmod()) call will
+            ## tree, since the later .Call(dirchmod) call will
             ## fix the permissions.
 
             ## handle .Rinstignore:

@@ -1583,6 +1583,7 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 #endif
 
+#if 0
 static void chmod_one(const char *name)
 {
     DIR *dir;
@@ -1642,6 +1643,7 @@ SEXP attribute_hidden do_dirchmod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return R_NilValue;
 }
+#endif
 
 
 SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)

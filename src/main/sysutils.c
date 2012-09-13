@@ -58,7 +58,7 @@ extern	Rboolean useaqua;
 #endif
 
 #ifdef Win32
-Rboolean attribute_hidden R_FileExists(const char *path)
+Rboolean R_FileExists(const char *path)
 {
     struct _stati64 sb;
     return _stati64(R_ExpandFileName(path), &sb) == 0;
@@ -72,7 +72,7 @@ double attribute_hidden R_FileMtime(const char *path)
     return sb.st_mtime;
 }
 #else
-Rboolean attribute_hidden R_FileExists(const char *path)
+Rboolean R_FileExists(const char *path)
 {
     struct stat sb;
     return stat(R_ExpandFileName(path), &sb) == 0;

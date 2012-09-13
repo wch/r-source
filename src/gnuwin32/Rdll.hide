@@ -81,7 +81,6 @@
  R_Expressions
  R_Expressions_keep
  R_ExternalPtrAddrFn
- R_FileExists
  R_FileMtime
  R_FreeSEXP
  R_GE_VStrHeight

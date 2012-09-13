@@ -29,6 +29,7 @@
 #endif
 
 SEXP delim_match(SEXP x, SEXP delims);
+SEXP dirchmod(SEXP dr);
 SEXP Rmd5(SEXP files);
 SEXP check_nonASCII(SEXP text, SEXP ignore_quotes);
 SEXP check_nonASCII2(SEXP text);

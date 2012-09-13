@@ -36,6 +36,7 @@ static const R_CMethodDef CEntries[]  = {
 
 static const R_CallMethodDef CallEntries[] = {
     {"delim_match", (DL_FUNC) &delim_match, 2},
+    {"dirchmod", (DL_FUNC) &dirchmod, 1},
     {"Rmd5", (DL_FUNC) &Rmd5, 1},
     {"check_nonASCII", (DL_FUNC) &check_nonASCII, 2},
     {"check_nonASCII2", (DL_FUNC) &check_nonASCII2, 1},

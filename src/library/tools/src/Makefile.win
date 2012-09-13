@@ -11,10 +11,9 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = text.c init.c Rmd5.c md5.c signals.c
-SOURCES_F =
+SOURCES_C = text.c init.c Rmd5.c md5.c signals.c dirchmod.c
 DEPENDS = $(SOURCES_C:.c=.d)
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o
+OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
 
 SHLIB = $(pkg).dll
 RESFLAGS = -I $(R_HOME)/include
