@@ -165,8 +165,6 @@ static int 	mkComment(int);
 
 %}
 
-%debug
-
 %token		END_OF_INPUT ERROR
 %token		SECTIONHEADER RSECTIONHEADER VSECTIONHEADER
 %token		SECTIONHEADER2

@@ -204,7 +204,7 @@ static int      mkVerbEnv();
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 
 /* Enabling verbose error messages.  */
@@ -556,9 +556,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   150,   150,   151,   152,   155,   156,   157,   158,   160,
-     161,   163,   164,   165,   166,   167,   168,   170,   170,   174,
-     176,   177
+       0,   148,   148,   149,   150,   153,   154,   155,   156,   158,
+     159,   161,   162,   163,   164,   165,   166,   168,   168,   172,
+     174,   175
 };
 #endif
 
@@ -1203,7 +1203,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
       case 5: /* "MACRO" */
 
 /* Line 1009 of yacc.c  */
-#line 146 "gramLatex.y"
+#line 144 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
@@ -1212,7 +1212,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
       case 6: /* "TEXT" */
 
 /* Line 1009 of yacc.c  */
-#line 146 "gramLatex.y"
+#line 144 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
@@ -1221,7 +1221,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
       case 7: /* "COMMENT" */
 
 /* Line 1009 of yacc.c  */
-#line 146 "gramLatex.y"
+#line 144 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
@@ -1230,7 +1230,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
       case 8: /* "BEGIN" */
 
 /* Line 1009 of yacc.c  */
-#line 146 "gramLatex.y"
+#line 144 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
@@ -1239,7 +1239,7 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
       case 9: /* "END" */
 
 /* Line 1009 of yacc.c  */
-#line 146 "gramLatex.y"
+#line 144 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
 /* Line 1009 of yacc.c  */
@@ -1575,119 +1575,119 @@ yyreduce:
         case 2:
 
 /* Line 1464 of yacc.c  */
-#line 150 "gramLatex.y"
+#line 148 "gramLatex.y"
     { xxsavevalue((yyvsp[(1) - (2)]), &(yyloc)); return 0; ;}
     break;
 
   case 3:
 
 /* Line 1464 of yacc.c  */
-#line 151 "gramLatex.y"
+#line 149 "gramLatex.y"
     { xxsavevalue(NULL, &(yyloc)); return 0; ;}
     break;
 
   case 4:
 
 /* Line 1464 of yacc.c  */
-#line 152 "gramLatex.y"
+#line 150 "gramLatex.y"
     { PROTECT(Value = R_NilValue);  YYABORT; ;}
     break;
 
   case 5:
 
 /* Line 1464 of yacc.c  */
-#line 155 "gramLatex.y"
+#line 153 "gramLatex.y"
     { (yyval) = xxnewlist((yyvsp[(1) - (1)])); ;}
     break;
 
   case 6:
 
 /* Line 1464 of yacc.c  */
-#line 156 "gramLatex.y"
+#line 154 "gramLatex.y"
     { (yyval) = xxnewlist((yyvsp[(1) - (1)])); ;}
     break;
 
   case 7:
 
 /* Line 1464 of yacc.c  */
-#line 157 "gramLatex.y"
+#line 155 "gramLatex.y"
     { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
     break;
 
   case 8:
 
 /* Line 1464 of yacc.c  */
-#line 158 "gramLatex.y"
+#line 156 "gramLatex.y"
     { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
     break;
 
   case 9:
 
 /* Line 1464 of yacc.c  */
-#line 160 "gramLatex.y"
+#line 158 "gramLatex.y"
     { (yyval) = xxnewlist((yyvsp[(1) - (1)])); ;}
     break;
 
   case 10:
 
 /* Line 1464 of yacc.c  */
-#line 161 "gramLatex.y"
+#line 159 "gramLatex.y"
     { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
     break;
 
   case 11:
 
 /* Line 1464 of yacc.c  */
-#line 163 "gramLatex.y"
+#line 161 "gramLatex.y"
     { (yyval) = xxtag((yyvsp[(1) - (1)]), TEXT, &(yyloc)); ;}
     break;
 
   case 12:
 
 /* Line 1464 of yacc.c  */
-#line 164 "gramLatex.y"
+#line 162 "gramLatex.y"
     { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT, &(yyloc)); ;}
     break;
 
   case 13:
 
 /* Line 1464 of yacc.c  */
-#line 165 "gramLatex.y"
+#line 163 "gramLatex.y"
     { (yyval) = xxtag((yyvsp[(1) - (1)]), MACRO, &(yyloc)); ;}
     break;
 
   case 14:
 
 /* Line 1464 of yacc.c  */
-#line 166 "gramLatex.y"
+#line 164 "gramLatex.y"
     { (yyval) = xxtag((yyvsp[(1) - (1)]), VERB, &(yyloc)); ;}
     break;
 
   case 15:
 
 /* Line 1464 of yacc.c  */
-#line 167 "gramLatex.y"
+#line 165 "gramLatex.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 16:
 
 /* Line 1464 of yacc.c  */
-#line 168 "gramLatex.y"
+#line 166 "gramLatex.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 17:
 
 /* Line 1464 of yacc.c  */
-#line 170 "gramLatex.y"
+#line 168 "gramLatex.y"
     { xxSetInVerbEnv((yyvsp[(3) - (4)])); ;}
     break;
 
   case 18:
 
 /* Line 1464 of yacc.c  */
-#line 171 "gramLatex.y"
+#line 169 "gramLatex.y"
     { (yyval) = xxenv((yyvsp[(3) - (10)]), (yyvsp[(6) - (10)]), (yyvsp[(9) - (10)]), &(yyloc));
                                                   UNPROTECT_PTR((yyvsp[(1) - (10)])); UNPROTECT_PTR((yyvsp[(7) - (10)])); ;}
     break;
@@ -1695,21 +1695,21 @@ yyreduce:
   case 19:
 
 /* Line 1464 of yacc.c  */
-#line 174 "gramLatex.y"
+#line 172 "gramLatex.y"
     { (yyval) = xxmath((yyvsp[(2) - (3)]), &(yyloc)); ;}
     break;
 
   case 20:
 
 /* Line 1464 of yacc.c  */
-#line 176 "gramLatex.y"
+#line 174 "gramLatex.y"
     { (yyval) = xxblock((yyvsp[(2) - (3)]), &(yyloc)); ;}
     break;
 
   case 21:
 
 /* Line 1464 of yacc.c  */
-#line 177 "gramLatex.y"
+#line 175 "gramLatex.y"
     { (yyval) = xxblock(NULL, &(yyloc)); ;}
     break;
 
@@ -1935,7 +1935,7 @@ yyreturn:
 
 
 /* Line 1684 of yacc.c  */
-#line 179 "gramLatex.y"
+#line 177 "gramLatex.y"
 
 
 static SEXP xxnewlist(SEXP item)
