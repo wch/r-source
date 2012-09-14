@@ -340,18 +340,26 @@ void allocateRemainingWidth(SEXP layout, int *relativeWidths,
     double sumWidth;
     sumWidth = totalUnrespectedWidth(layout, relativeWidths,
 				     parentContext, parentgc, dd);
-    for (i=0; i<layoutNCol(layout); i++) 
-	if (relativeWidths[i])
-	    if (!colRespected(i, layout))
-		npcWidths[i] = remainingWidthCM*
-		    transformWidth(widths, i, parentContext, parentgc,
+    if (sumWidth > 0) {
+        for (i=0; i<layoutNCol(layout); i++) 
+            if (relativeWidths[i])
+                if (!colRespected(i, layout))
+                    npcWidths[i] = remainingWidthCM*
+                        transformWidth(widths, i, parentContext, parentgc,
 				   /* 
 				    * NOTE: 0, 0, here is ok
 				    * because we are only 
 				    * obtaining "null" units
 				    */
-				   0, 0, 1, 0, dd)/
-		    sumWidth;
+                                       0, 0, 1, 0, dd)/
+                        sumWidth;
+    } else {
+        /* 
+         * If ALL relative widths are zero then they all get 
+         * allocated zero width
+         */
+        setRemainingWidthZero(layout, relativeWidths, npcWidths);
+    }
 }
 
 void setRemainingWidthZero(SEXP layout, 
@@ -377,18 +385,26 @@ void allocateRemainingHeight(SEXP layout, int *relativeHeights,
     double sumHeight;
     sumHeight = totalUnrespectedHeight(layout, relativeHeights,
 				       parentContext, parentgc, dd);
-    for (i=0; i<layoutNRow(layout); i++) 
-	if (relativeHeights[i])
-	    if (!rowRespected(i, layout))
-		npcHeights[i] = remainingHeightCM*
-		    transformHeight(heights, i, parentContext, parentgc,
+    if (sumHeight > 0) {
+        for (i=0; i<layoutNRow(layout); i++) 
+            if (relativeHeights[i])
+                if (!rowRespected(i, layout))
+                    npcHeights[i] = remainingHeightCM*
+                        transformHeight(heights, i, parentContext, parentgc,
 				    /* 
 				     * NOTE: 0, 0, here is ok
 				     * because we are only 
 				     * obtaining "null" units
 				     */
-				    0, 0, 1, 0, dd)/
-		    sumHeight;
+                                        0, 0, 1, 0, dd)/
+                        sumHeight;
+    } else {
+        /* 
+         * If ALL relative heights are zero then they all get 
+         * allocated zero height
+         */
+        setRemainingHeightZero(layout, relativeHeights, npcHeights);
+    }
 }
 
 void setRemainingHeightZero(SEXP layout, 
@@ -535,9 +551,9 @@ void calcViewportLayout(SEXP viewport,
                                 parentContext, parentgc, dd, npcHeights);
     } else {
         /* 
-         * IF EITHER we started with ZERO width
-         *    OR we've used up all the width
-         * THEN any relative widths get ZERO
+         * IF EITHER we started with ZERO height
+         *    OR we've used up all the height
+         * THEN any relative heights get ZERO
          */ 
         setRemainingHeightZero(layout, relativeHeights, npcHeights);
     }

@@ -520,8 +520,9 @@
 
       \item Fix in package \pkg{grid} for pushing a viewport into a
       layout cell, where the layout is within a viewport that has zero
-      width or zero height (the layout column widths or row heights in
-      this case were being calculated with non-finite values).
+      physical width OR where the layout has zero total relative width
+      (likewise for height).  The layout column widths (or row heights)
+      in this case were being calculated with non-finite values.
       (Reported by Winston Chang.)
       
       \item \code{solve(A, b)} for a vector \code{b} gave the answer
