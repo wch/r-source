@@ -2899,14 +2899,14 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
 }
 
 /* recordPlot() */
-SEXP attribute_hidden do_getSnapshot(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_getSnapshot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     return GEcreateSnapshot(GEcurrentDevice());
 }
 
 /* replayPlot() */
-SEXP attribute_hidden do_playSnapshot(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_playSnapshot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     GEplaySnapshot(CAR(args), GEcurrentDevice());

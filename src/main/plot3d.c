@@ -262,7 +262,7 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 }
 
 /* This is for contourLines() in package grDevices */
-SEXP attribute_hidden do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP c, x, y, z;
     int nx, ny, nc;

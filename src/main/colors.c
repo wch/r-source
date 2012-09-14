@@ -93,7 +93,7 @@ static unsigned int CheckAlpha(int x)
 }
 
 
-SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP c, h, s, v, a;
     double hh, ss, vv, aa, r=0., g=0., b=0.; /* -Wall */
@@ -202,7 +202,7 @@ hcl2rgb(double h, double c, double l, double *R, double *G, double *B)
     *B = gtrans(( 0.055648 * X - 0.204043 * Y + 1.057311 * Z) / WHITE_Y);
 }
 
-SEXP attribute_hidden do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP h, c, l, a, ans;
     double H, C, L, A, r, g, b;
@@ -252,7 +252,7 @@ SEXP attribute_hidden do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP c, r, g, b, a, nam;
     R_xlen_t i, l_max, nr, ng, nb, na;
@@ -319,7 +319,7 @@ SEXP attribute_hidden do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
     return c;
 }
 
-SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP lev, ans;
     double level;
@@ -343,7 +343,7 @@ SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* This is in package grDevices, but mixes up the base graphics concept
    of a background colour */
-SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
 
@@ -415,7 +415,7 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden do_RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* (r,g,b) -> (h,s,v) conversion */
     SEXP rgb, dd, ans, names, dmns;
@@ -1262,7 +1262,7 @@ static void setpalette(const char **palette)
     R_ColorTableSize = i;
 }
 
-SEXP attribute_hidden do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP val, ans;
     unsigned int color[COLOR_TABLE_SIZE];
@@ -1292,7 +1292,7 @@ SEXP attribute_hidden do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP attribute_hidden do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     int n;
