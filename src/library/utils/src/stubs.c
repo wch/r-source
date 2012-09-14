@@ -132,12 +132,14 @@ extern SEXP X11_do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    args = CDR(args);
     if(ptr_do_dataentry) return ptr_do_dataentry(call, op, args, env);
     else return X11_do_dataentry(call, op, args, env);
 }
 
 SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    args = CDR(args);
     if(ptr_do_dataviewer) return ptr_do_dataviewer(call, op, args, env);
     else return X11_do_dataviewer(call, op, args, env);
 }
