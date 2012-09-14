@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = axis_scales.c chull.c devices.c init.c stubs.c \
+SOURCES_C = axis_scales.c chull.c devices.c init.c stubs.c colors.c \
    devPicTeX.c devPS.c devWindows.c
 SOURCES_F =
 DEPENDS = $(SOURCES_C:.c=.d)
