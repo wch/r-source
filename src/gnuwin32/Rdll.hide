@@ -493,7 +493,6 @@
  do_ICUset
  do_Math2
  do_POSIXlt2D
- do_RGB2hsv
  do_RNGkind
  do_Rhome
  do_S4on
@@ -560,9 +559,7 @@
  do_close
  do_closewinprogressbar
  do_cmathfuns
- do_col2RGB
  do_colon
- do_colors
  do_colsum
  do_commandArgs
  do_comment
@@ -570,7 +567,6 @@
  do_compilepkgs
  do_complex
  do_copyDFattr
- do_contourLines
  do_crc64
  do_cum
  do_date
@@ -650,8 +646,6 @@
  do_get
  do_getClipboardFormats
  do_getDllTable
- do_getGraphicsEvent
- do_getGraphicsEventEnv
  do_getIdentification
  do_getNSRegistry
  do_getNumRtoCConverters
@@ -660,7 +654,6 @@
  do_getRestart
  do_getRtoCConverterDescriptions
  do_getRtoCConverterStatus
- do_getSnapshot
  do_getSymbolInfo
  do_getVarsFromFrame
  do_getWindowHandle
@@ -677,15 +670,12 @@
  do_getwd
  do_glob
  do_globalenv
- do_gray
  do_grep
  do_grepraw
  do_growconst
  do_gsub
  do_gzcon
  do_gzfile
- do_hcl
- do_hsv
  do_iconv
  do_identical
  do_if
@@ -787,7 +777,6 @@
  do_options
  do_order
  do_packBits
- do_palette
  do_paren
  do_parentenv
  do_parentenvgets
@@ -798,7 +787,6 @@
  do_paste
  do_pathexpand
  do_pipe
- do_playSnapshot
  do_pmatch
  do_pmin
  do_polyroot
@@ -856,7 +844,6 @@
  do_restart
  do_retracemem
  do_return
- do_rgb
  do_rowscols
  do_rowsum
  do_sample
@@ -875,7 +862,6 @@
  do_serializeToConn
  do_set
  do_setFileTime
- do_setGraphicsEventEnv
  do_setInternet2
  do_setS4Object
  do_setSessionTimeLimit

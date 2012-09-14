@@ -47,6 +47,7 @@
 #endif
 #include <windows.h>
 #include "devWindows.h"
+#define DEVWINDOWS 1
 #include "grDevices.h"
 
 /* there are conflicts with Rmath.h */

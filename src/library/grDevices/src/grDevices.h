@@ -90,6 +90,7 @@ SEXP getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP getGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
 
+#ifndef DEVWINDOWS
 SEXP rgb(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP hsv(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP hcl(SEXP call, SEXP op, SEXP args, SEXP env);
@@ -98,5 +99,5 @@ SEXP colors(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP col2rgb(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP palette(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env);
-
+#endif
 

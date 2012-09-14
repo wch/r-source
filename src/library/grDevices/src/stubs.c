@@ -20,6 +20,7 @@
 #include <Rinternals.h>
 #include <Internal.h>
 
+#ifndef WIN32
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env);
 
@@ -32,6 +33,7 @@ SEXP savePlot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return do_saveplot(call, op, CDR(args), env);
 }
+#endif
 
 SEXP contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
