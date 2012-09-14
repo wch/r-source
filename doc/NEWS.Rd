@@ -736,6 +736,9 @@
       \item The \sQuote{internal function} \code{kappa.tri()} has been
       renamed to \code{.kappa_tri()} so it is not inadvertently called
       as a method for class \code{"tri"}.
+
+      \item The \code{.Fortran()} entry point \code{"dqrls"} which has
+      not been used by \R since version 2.15.1 is no longer available.
     }
   }
 

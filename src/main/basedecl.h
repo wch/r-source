@@ -25,10 +25,6 @@ SEXP R_getTaskCallbackNames(void);
 SEXP R_removeTaskCallback(SEXP);
 SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);
 
-void F77_SYMBOL(dchdc)(double *, int *, int *, double *, int *, int *, int *);
-void F77_SYMBOL(dpbfa)(double *, int *, int *, int *, int *);
-void F77_SYMBOL(dpbsl)(double *, int *, int *, int *, double *);
-
 SEXP R_getbcprofcounts(void);
 SEXP R_startbcprof(void);
 SEXP R_stopbcprof(void);
