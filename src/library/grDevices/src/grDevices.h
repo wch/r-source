@@ -89,6 +89,7 @@ SEXP playSnapshot(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP getGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env);
 
 #ifndef DEVWINDOWS
 SEXP rgb(SEXP call, SEXP op, SEXP args, SEXP env);

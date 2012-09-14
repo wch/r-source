@@ -800,16 +800,6 @@ FUNTAB R_FunTab[] =
 /* Complex Valued Functions */
 {"polyroot",	do_polyroot,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-/* Device Drivers */
-
-#ifdef Unix
-//{"X11",		do_X11,		0,	111,	17,	{PP_FUNCALL, PREC_FN,	0}},
-//{"savePlot",	do_saveplot,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
-#endif
-
-/* Graphics */
-
-{"devAskNewPage",do_devAskNewPage,0,	211,	1,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},

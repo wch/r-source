@@ -17,8 +17,10 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#include <Rinternals.h>
+#include <config.h>
+#include <Defn.h>
 #include <Internal.h>
+#include "grDevices.h"
 
 #ifndef WIN32
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env);
@@ -78,6 +80,25 @@ SEXP col2rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP palette(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return do_palette(call, op, CDR(args), env);
+}
+
+#include <R_ext/GraphicsEngine.h>
+
+SEXP devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int ask;
+    pGEDevDesc gdd = GEcurrentDevice();
+    Rboolean oldask = gdd->ask;
+
+    args = CDR(args);
+    if (!isNull(CAR(args))) {
+	ask = asLogical(CAR(args));
+	if (ask == NA_LOGICAL) error(_("invalid '%s' argument"), "ask");
+	gdd->ask = ask;
+	R_Visible = FALSE;
+    } else R_Visible = TRUE;
+
+    return ScalarLogical(oldask);
 }
 
 

@@ -336,7 +336,7 @@ checkIntFormat <- function(s)
     length(grep("%", s)) == 0L
 }
 
-devAskNewPage <- function(ask=NULL) .Internal(devAskNewPage(ask))
+devAskNewPage <- function(ask=NULL) .External2(C_devAskNewPage, ask)
 
 dev.size <- function(units = c("in", "cm", "px"))
 {
