@@ -224,6 +224,9 @@
 
       \item \code{bibentry()} gains some support for \dQuote{incomplete}
       entries with a \samp{crossref} field.
+
+      \item \code{gray()} and \code{gray.colors()} finally allow
+      \code{alpha} to be specified.
     }
   }
 
