@@ -33,7 +33,7 @@ cairo_png <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 2L, width, height, pointsize, bg,
+    invisible(.External(C_devCairo, filename, 2L, width, height, pointsize, bg,
                         res, antialias, 100L, family))
 }
 
@@ -54,7 +54,7 @@ cairo_jpeg <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 3L, width, height, pointsize, bg,
+    invisible(.External(C_devCairo, filename, 3L, width, height, pointsize, bg,
                         res, antialias, quality, family))
 }
 
@@ -77,7 +77,7 @@ cairo_tiff <-
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     comp <- switch( match.arg(compression),
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
-    invisible(.External(devCairo, filename, 8L, width, height, pointsize, bg,
+    invisible(.External(C_devCairo, filename, 8L, width, height, pointsize, bg,
                         res, antialias, comp, family))
 }
 
@@ -97,6 +97,6 @@ cairo_bmp <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 9L, width, height, pointsize, bg,
+    invisible(.External(C_devCairo, filename, 9L, width, height, pointsize, bg,
                         res, antialias, 100L, family))
 }

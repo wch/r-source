@@ -50,21 +50,22 @@ png <- function(filename = "Rplot%03d.png",
     if(type == "quartz" && capabilities("aqua")) {
         width <- g$width/ifelse(is.na(res), 72, res);
         height <- g$height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "png", path.expand(filename),
+        invisible(.External(C_Quartz, "png", path.expand(filename),
                             width, height, pointsize, d$family,
                             d$antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
-        invisible(.External(devCairo, filename, 2L, g$width, g$height,
+        invisible(.External(C_devCairo, filename, 2L, g$width, g$height,
                             pointsize, bg, res, antialias, 100L, d$family))
     else if (type == "cairo-png" && capabilities("cairo"))
-        invisible(.External(devCairo, filename, 5L, g$width, g$height,
+        invisible(.External(C_devCairo, filename, 5L, g$width, g$height,
                             pointsize, bg, res, antialias, 100L, d$family))
     else
-        .Internal(X11(paste("png::", filename, sep=""),
-                      g$width, g$height, pointsize, d$gamma,
-                      d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", 0, 0, d$family))
+        invisible(.External2(C_X11,
+                             paste("png::", filename, sep=""),
+                             g$width, g$height, pointsize, d$gamma,
+                             d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                             0L, 0L, "", 0, 0, d$family))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
@@ -83,18 +84,19 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     if(type == "quartz" && capabilities("aqua")) {
         width <- g$width/ifelse(is.na(res), 72, res);
         height <- g$height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "jpeg", path.expand(filename),
+        invisible(.External(C_Quartz, "jpeg", path.expand(filename),
                             width, height, pointsize, d$family,
                             d$antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
-        invisible(.External(devCairo, filename, 3L, g$width, g$height,
+        invisible(.External(C_devCairo, filename, 3L, g$width, g$height,
                             pointsize, bg, res, antialias, quality, d$family))
     else
-        .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
-                      g$width, g$height, pointsize, d$gamma,
-                      d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", 0, 0, d$family))
+        invisible(.External2(C_X11,
+                            paste("jpeg::", quality, ":", filename, sep=""),
+                            g$width, g$height, pointsize, d$gamma,
+                            d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                            0L, 0L, "", 0, 0, d$family))
 }
 
 tiff <- function(filename = "Rplot%03d.tiff",
@@ -115,18 +117,19 @@ tiff <- function(filename = "Rplot%03d.tiff",
     if(type == "quartz" && capabilities("aqua")) {
         width <- g$width/ifelse(is.na(res), 72, res);
         height <- g$height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "tiff", path.expand(filename),
+        invisible(.External(C_Quartz, "tiff", path.expand(filename),
                             width, height, pointsize, d$family,
                             d$antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
-        invisible(.External(devCairo, filename, 8L, g$width, g$height,
+        invisible(.External(C_devCairo, filename, 8L, g$width, g$height,
                             pointsize, bg, res, antialias, comp, d$family))
     else
-        .Internal(X11(paste("tiff::", comp, ":", filename, sep=""),
-                      g$width, g$height, pointsize, d$gamma,
-                      d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", 0, 0, d$family))
+        invisible(.External2(C_X11,
+                             paste("tiff::", comp, ":", filename, sep=""),
+                             g$width, g$height, pointsize, d$gamma,
+                             d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                             0L, 0L, "", 0, 0, d$family))
 }
 
 bmp <- function(filename = "Rplot%03d.bmp",
@@ -144,16 +147,17 @@ bmp <- function(filename = "Rplot%03d.bmp",
     if(type == "quartz" && capabilities("aqua")) {
         width <- g$width/ifelse(is.na(res), 72, res);
         height <- g$height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "bmp", path.expand(filename),
+        invisible(.External(C_Quartz, "bmp", path.expand(filename),
                             width, height, pointsize, d$family,
                             d$antialias != "none", TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
-        invisible(.External(devCairo, filename, 9L, g$width, g$height,
+        invisible(.External(C_devCairo, filename, 9L, g$width, g$height,
                             pointsize, bg, res, antialias, 100L, d$family))
     else
-        .Internal(X11(paste("bmp::", filename, sep=""),
-                      g$width, g$height, pointsize, d$gamma,
-                      d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", 0, 0, d$family))
+        invsible(.External2(C_X11,
+                            paste("bmp::", filename, sep=""),
+                            g$width, g$height, pointsize, d$gamma,
+                            d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                            0L, 0L, "", 0, 0, d$family))
 }

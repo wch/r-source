@@ -69,7 +69,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
 	stop("increasing 'x' and 'y' values expected")
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
 	stop("no proper 'z' matrix specified")
-    .Internal(contourLines(x, y, z, levels))
+    invisible(.External2(C_contourLines, x, y, z, levels))
 }
 
 chull <- function(x, y = NULL)
@@ -127,9 +127,9 @@ xyTable <- function(x, y = NULL, digits)
 axisTicks <- function(usr, log, axp = NULL, nint = 5) {
     if(is.null(axp))
 	axp <- unlist(.axisPars(usr, log=log, nintLog=nint), use.names=FALSE)
-    .Call(R_CreateAtVector, axp, if(log) 10^usr else usr, nint, log)
+    .Call(C_R_CreateAtVector, axp, if(log) 10^usr else usr, nint, log)
 }
 
 .axisPars <- function(usr, log = FALSE, nintLog = 5) {
-    .Call(R_GAxisPars, usr, log, nintLog)
+    .Call(C_R_GAxisPars, usr, log, nintLog)
 }

@@ -89,7 +89,7 @@ windows <-
     rescale <- match(d$rescale, c("R", "fit", "fixed"))
     if(is.na(rescale)) stop("invalid value for 'rescale'")
     antialias <- pmatch(d$antialias, aa.win)
-    invisible(.External(Cdevga, "", d$width, d$height, d$pointsize,
+    invisible(.External(C_devga, "", d$width, d$height, d$pointsize,
                         d$record, rescale, d$xpinch, d$ypinch,
                         d$canvas, d$gamma, d$xpos, d$ypos,
                         d$buffered, .PSenv, d$bg,
@@ -106,7 +106,7 @@ win.graph <- function(width, height, pointsize)
     d <- check.options(new = new, envir = .WindowsEnv,
                        name.opt = ".Windows.Options",
                        reset = FALSE, assign.opt = FALSE)
-    invisible(.External(Cdevga, "", d$width, d$height, d$pointsize,
+    invisible(.External(C_devga, "", d$width, d$height, d$pointsize,
                         FALSE, 1L, d$xpinch, d$ypinch, "white",
                         d$gamma, NA_integer_, NA_integer_, d$buffered,
                         .PSenv, NA, d$restoreConsole, "", TRUE,
@@ -119,7 +119,7 @@ win.print <-
              family = "", antialias = "default", restoreConsole = TRUE)
 {
     antialias <- match(match.arg(antialias, aa.win), aa.win)
-    invisible(.External(Cdevga, paste("win.print:", printer, sep=""),
+    invisible(.External(C_devga, paste("win.print:", printer, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_,
@@ -133,7 +133,7 @@ win.metafile <-
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
-    invisible(.External(Cdevga, paste("win.metafile:", filename, sep=""),
+    invisible(.External(C_devga, paste("win.metafile:", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_, FALSE, .PSenv, NA,
@@ -180,7 +180,7 @@ savePlot <- function(filename = "Rplot",
     else if(regexpr("\\.",filename) < 0)
         filename <- paste(filename, type, sep = ".")
     filename <- path.expand(filename)
-    invisible(.External(CsavePlot, device, filename, type, restoreConsole))
+    invisible(.External(C_savePlot, device, filename, type, restoreConsole))
 }
 
 print.SavedPlots <- function(x, ...)

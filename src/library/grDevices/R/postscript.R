@@ -262,7 +262,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
 
     onefile <- old$onefile # for 'file'
     if(!checkIntFormat(file)) stop("invalid 'file'")
-    .External(PostScript,
+    .External(C_PostScript,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
               onefile, old$pagecentre, old$print.it, old$command,
@@ -284,7 +284,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     initPSandPDFfonts()
 
     if(!checkIntFormat(file)) stop("invalid 'file'")
-    .External(XFig, file, paper, family, bg, fg,
+    .External(C_XFig, file, paper, family, bg, fg,
               width, height, horizontal, pointsize,
               onefile, pagecentre, defaultfont, textspecial, encoding)
     invisible()
@@ -365,7 +365,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 
     onefile <- old$onefile # needed to set 'file'
     if(!checkIntFormat(file)) stop("invalid 'file'")
-    .External(PDF,
+    .External(C_PDF,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$pointsize, onefile, old$pagecentre,
               old$title, old$fonts, version[1L], version[2L],
@@ -484,8 +484,8 @@ isPDF <- function(fontDBname) {
 
 checkFontInUse <- function(names, fontDBname) {
     for (i in names)
-        if (.Call(Type1FontInUse, i, isPDF(fontDBname))
-            || .Call(CIDFontInUse, i, isPDF(fontDBname)))
+        if (.Call(C_Type1FontInUse, i, isPDF(fontDBname))
+            || .Call(C_CIDFontInUse, i, isPDF(fontDBname)))
             stop(gettextf("font %s already in use", i), domain = NA)
     invisible()
 }

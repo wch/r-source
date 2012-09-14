@@ -74,7 +74,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(CIDFontInUse, 2),
     CALLDEF(R_CreateAtVector, 4),
     CALLDEF(R_GAxisPars, 3),
-    CALLDEF(C_chull, 1),
+    CALLDEF(chull, 1),
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),
     CALLDEF(cairoProps, 1),
@@ -102,13 +102,27 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(devprev, 1),
     EXTDEF(devset, 1),
     EXTDEF(devsize, 0),
+    EXTDEF(savePlot, 3),
+    EXTDEF(contourLines, 5),
+    EXTDEF(getSnapshot, 0),
+    EXTDEF(playSnapshot, 1),
+    EXTDEF(getGraphicsEvent, 1),
+    EXTDEF(getGraphicsEventEnv, 1),
+    EXTDEF(setGraphicsEventEnv, 2),
+    EXTDEF(rgb, 6),
+    EXTDEF(RGB2hsv, 1),
+    EXTDEF(hsv, 4),
+    EXTDEF(hcl, 5),
+    EXTDEF(gray, 1),
+    EXTDEF(colors, 0),
+    EXTDEF(col2rgb, 1),
+    EXTDEF(palette, 1),
+
 #ifdef WIN32
     EXTDEF(devga, 19),
-    EXTDEF(savePlot, 3),
 #else
     EXTDEF(Quartz, 12),
     EXTDEF(X11, 17),
-    EXTDEF(savePlot, 3),
 #endif
     {NULL, NULL, 0}
 };

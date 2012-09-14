@@ -45,13 +45,13 @@ png <-
     g <- .geometry(width, height, units, res)
     if(match.arg(type) == "cairo") {
         antialias <- match(match.arg(antialias), aa.cairo)
-        invisible(.External(devCairo, filename, 2L,
+        invisible(.External(C_devCairo, filename, 2L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans"))
     } else if(match.arg(type) == "cairo-png") {
         antialias <- match(match.arg(antialias), aa.cairo)
-        invisible(.External(devCairo, filename, 5L,
+        invisible(.External(C_devCairo, filename, 5L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans"))
@@ -63,7 +63,7 @@ png <-
             check.options(new = new, envir = .WindowsEnv,
                           name.opt = ".Windows.Options",
                           reset = FALSE, assign.opt = FALSE)$bitmap.aa.win
-        invisible(.External(Cdevga, paste("png:", filename, sep=""),
+        invisible(.External(C_devga, paste("png:", filename, sep=""),
                             g$width, g$height, pointsize, FALSE, 1L,
                             NA_real_, NA_real_, bg, 1,
                             as.integer(res), NA_integer_, FALSE, .PSenv, NA,
@@ -83,7 +83,7 @@ bmp <-
     g <- .geometry(width, height, units, res)
     if(match.arg(type) == "cairo") {
         antialias <- match(match.arg(antialias), aa.cairo)
-        invisible(.External(devCairo, filename,
+        invisible(.External(C_devCairo, filename,
                             9L, g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans"))
@@ -95,7 +95,7 @@ bmp <-
             check.options(new = new, envir = .WindowsEnv,
                           name.opt = ".Windows.Options",
                           reset = FALSE, assign.opt = FALSE)$bitmap.aa.win
-        invisible(.External(Cdevga, paste("bmp:", filename, sep=""),
+        invisible(.External(C_devga, paste("bmp:", filename, sep=""),
                             g$width, g$height, pointsize, FALSE, 1L,
                             NA_real_, NA_real_, bg, 1,
                             as.integer(res), NA_integer_, FALSE, .PSenv, NA,
@@ -115,7 +115,7 @@ jpeg <-
     g <- .geometry(width, height, units, res)
     if(match.arg(type) == "cairo") {
         antialias <- match(match.arg(antialias), aa.cairo)
-        invisible(.External(devCairo, filename, 3L, g$width, height, pointsize,
+        invisible(.External(C_devCairo, filename, 3L, g$width, height, pointsize,
                             bg, res, antialias, quality,
                             if(nzchar(family)) family else "sans"))
     } else {
@@ -126,7 +126,7 @@ jpeg <-
             check.options(new = new, envir = .WindowsEnv,
                           name.opt = ".Windows.Options",
                           reset = FALSE, assign.opt = FALSE)$bitmap.aa.win
-        invisible(.External(Cdevga,
+        invisible(.External(C_devga,
                             paste("jpeg:", quality, ":",filename, sep=""),
                             g$width, g$height, pointsize, FALSE, 1L,
                             NA_real_, NA_real_, bg, 1,
@@ -151,7 +151,7 @@ tiff <-
                "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L, "zip" = 8L)
     if(match.arg(type) == "cairo") {
         antialias <- match(match.arg(antialias), aa.cairo)
-        invisible(.External(devCairo, filename, 8L,
+        invisible(.External(C_devCairo, filename, 8L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, comp,
                             if(nzchar(family)) family else "sans"))
@@ -163,7 +163,7 @@ tiff <-
             check.options(new = new, envir = .WindowsEnv,
                           name.opt = ".Windows.Options",
                           reset = FALSE, assign.opt = FALSE)$bitmap.aa.win
-        invisible(.External(Cdevga,
+        invisible(.External(C_devga,
                             paste("tiff:", comp, ":", filename, sep=""),
                             g$width, g$height, pointsize, FALSE, 1L,
                             NA_real_, NA_real_, bg, 1,

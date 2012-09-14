@@ -16,17 +16,17 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-colors <- function() .Internal(colors())
+colors <- function() .External2(C_colors)
 colours <- colors
 col2rgb <- function(col, alpha=FALSE) {
-  result <- .Internal(col2rgb(col))
+  result <- .External2(C_col2rgb, col)
   if (!alpha)
     result <- result[1L:3,, drop=FALSE]
   result
 }
 
 ## FIXME: gray() should also allow alpha; ditto for gray.colors() below
-gray <- function(level) .Internal(gray(level))
+gray <- function(level) .External2(C_gray, level)
 grey <- gray
 
 rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
@@ -46,25 +46,18 @@ rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 	}
     }
 
-    ## in the first case, (r,g,b) are (coerced to) integer, otherwise
-    ## double :
-    if(maxColorValue == 255)
-        result <- .Internal(rgb256(red, green, blue, alpha, names))
-    else
-        result <- .Internal(rgb(red, green, blue, alpha, maxColorValue, names))
+    result <- .External2(C_rgb, red, green, blue, alpha, maxColorValue, names)
     ## If alpha not specified only return #RRGGBB
-    if (!alphaspec)
-        structure(substr(result, 1L, 7L), names=names(result))
+    if (!alphaspec) structure(substr(result, 1L, 7L), names = names(result))
     else result
 }
 
-hsv <- function(h=1, s=1, v=1, alpha = 1)
+hsv <- function(h = 1, s = 1, v = 1, alpha = 1)
 {
     alphaspec <- !missing(alpha)
-    result <- .Internal(hsv(h, s, v, alpha))
+    result <- .External2(C_hsv, h, s, v, alpha)
     ## If alpha not specified only return #RRGGBB
-    if (!alphaspec)
-        structure(substr(result, 1L, 7L), names=names(result))
+    if (!alphaspec) structure(substr(result, 1L, 7L), names = names(result))
     else result
 }
 
@@ -72,9 +65,8 @@ hcl <-
 function (h = 0, c = 35, l = 85, alpha = 1, fixup = TRUE)
 {
     alphaspec <- !missing(alpha)
-    result <- .Internal(hcl(h, c, l, alpha, fixup))
-    if (!alphaspec)
-        structure(substr(result, 1L, 7L), names=names(result))
+    result <- .External2(C_hcl, h, c, l, alpha, fixup)
+    if (!alphaspec) structure(substr(result, 1L, 7L), names = names(result))
     else result
 }
 
@@ -94,13 +86,13 @@ rgb2hsv <- function(r, g = NULL, b = NULL, maxColorValue = 255)
     if(any(0 > rgb) || any(rgb > 1))
         stop("rgb values must be in [0, maxColorValue]")
 
-    .Internal(rgb2hsv(rgb))
+    .External2(C_RGB2hsv, rgb)
 }
 
 palette <- function(value)
 {
-    if(missing(value)) .Internal(palette(character()))
-    else invisible(.Internal(palette(value)))
+    if(missing(value)) .External2(C_palette, character())
+    else invisible(.External2(C_palette, value))
 }
 
 ## A quick little ''rainbow'' function -- improved by MM

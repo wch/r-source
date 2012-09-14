@@ -626,7 +626,7 @@ FUNTAB R_FunTab[] =
 {".C",		do_dotCode,	0,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".Fortran",	do_dotCode,	1,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".External",   do_External,    0,      1,      -1,     {PP_FOREIGN, PREC_FN,	0}},
-{".External2",   do_External,   1,      1,      -1,     {PP_FOREIGN, PREC_FN,	0}},
+{".External2",   do_External,   1,    201,      -1,     {PP_FOREIGN, PREC_FN,	0}},
 {".Call",       do_dotcall,     0,      1,      -1,     {PP_FOREIGN, PREC_FN,	0}},
 {".External.graphics", do_Externalgr, 0, 1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".Call.graphics", do_dotcallgr, 0,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
@@ -809,21 +809,6 @@ FUNTAB R_FunTab[] =
 
 /* Graphics */
 
-{"rgb",		do_rgb,		0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
-{"rgb256",	do_rgb,		1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"rgb2hsv",	do_RGB2hsv,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"hsv",		do_hsv,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"hcl",		do_hcl,		0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"gray",	do_gray,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"colors",	do_colors,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"col2rgb",	do_col2RGB,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"palette",	do_palette,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"contourLines",do_contourLines,0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"getSnapshot",	do_getSnapshot,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"playSnapshot",do_playSnapshot,0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"getGraphicsEvent",do_getGraphicsEvent,0,  11, 1,      {PP_FUNCALL, PREC_FN,   0}},
-{"getGraphicsEventEnv",do_getGraphicsEventEnv,0,11,1,{PP_FUNCALL, PREC_FN, 0}},
-{"setGraphicsEventEnv",do_setGraphicsEventEnv,0,11,2,{PP_FUNCALL, PREC_FN, 0}},
 {"devAskNewPage",do_devAskNewPage,0,	211,	1,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */

@@ -40,11 +40,13 @@ SEXP PDF(SEXP);
 SEXP Type1FontInUse(SEXP, SEXP);
 SEXP CIDFontInUse(SEXP, SEXP);
 
+#ifndef WIN32
 SEXP Quartz(SEXP);
 SEXP makeQuartzDefault();
 
 SEXP X11(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP savePlot(SEXP call, SEXP op, SEXP args, SEXP rho);
+#endif
 
 SEXP devCairo(SEXP);
 
@@ -79,4 +81,22 @@ SEXP devprev(SEXP args);
 SEXP devset(SEXP args);
 SEXP devsize(SEXP args);
 
-SEXP C_chull(SEXP x);
+SEXP chull(SEXP x);
+
+SEXP contourLines(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP getSnapshot(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP playSnapshot(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP getGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+SEXP rgb(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP hsv(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP hcl(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP gray(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP colors(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP col2rgb(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP palette(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env);
+
+

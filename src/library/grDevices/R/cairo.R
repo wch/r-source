@@ -26,7 +26,7 @@ svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
     new <- list()
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 4L, 72*width, 72*height, pointsize,
+    invisible(.External(C_devCairo, filename, 4L, 72*width, 72*height, pointsize,
                         bg, NA_integer_, antialias, onefile, family))
 }
 
@@ -38,7 +38,7 @@ cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 6L, 72*width, 72*height,
+    invisible(.External(C_devCairo, filename, 6L, 72*width, 72*height,
                         pointsize, bg, NA_integer_, antialias, onefile,
                         family))
 }
@@ -51,7 +51,7 @@ cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 7L, 72*width, 72*height,
+    invisible(.External(C_devCairo, filename, 7L, 72*width, 72*height,
                         pointsize, bg, NA_integer_, antialias, onefile,
                         family))
 }

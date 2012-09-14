@@ -24,7 +24,7 @@
     extras <- if(.Platform$OS.type == "windows")
         list(windowsTimeouts = c(100L,500L)) else
     list(bitmapType = if(capabilities("aqua")) "quartz"
-    else if(.Call(cairoProps, 2L)) "cairo" else "Xlib")
+    else if(.Call(C_cairoProps, 2L)) "cairo" else "Xlib")
     defdev <- Sys.getenv("R_DEFAULT_DEVICE")
     ## Use devices rather than names to make it harder to get masked.
     if(!nzchar(defdev)) defdev <- pdf
@@ -36,13 +36,13 @@
             if(.Platform$OS.type == "windows") windows
             else if (.Platform$GUI == "AQUA" ||
                      ((!nzchar(dsp) || grepl("^/tmp/launch-", dsp))
-                      && .Call(makeQuartzDefault))) quartz
+                      && .Call(C_makeQuartzDefault))) quartz
             else if (nzchar(dsp) && .Platform$GUI %in% c("X11", "Tk")) X11
 	    else defdev
         }
     } else defdev
 
-    if (.Platform$OS.type != "windows" && !.Call(cairoProps, 2L))
+    if (.Platform$OS.type != "windows" && !.Call(C_cairoProps, 2L))
         X11.options(type = "Xlib")
     op.grDevices <- c(list(locatorBell = TRUE, device.ask.default = FALSE),
                   extras, device = device)

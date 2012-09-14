@@ -1,29 +1,4 @@
-## Explicitly enumerate the symbols here that are in the registration
-## information rather than use .registration as there are symbols that
-## conflict with functions on Windows, i.e. savePlot.
-
-## most likely R_GD_nullDevice should not be here
-if(tools:::.OStype() == "windows") {
-    useDynLib(grDevices, R_CreateAtVector, R_GAxisPars,
-              PicTeX, PostScript, XFig, PDF,
-              Cdevga = devga, CsavePlot = savePlot, devCairo,
-              Type1FontInUse, CIDFontInUse,
-              C_devcap = devcap, C_devcapture = devcapture,
-              C_devcontrol = devcontrol, C_devcopy = devcopy, C_devcur = devcur,
-              C_devdisplaylist = devdisplaylist, C_devholdflush = devholdflush,
-              C_devnext = devnext, C_devoff = devoff, C_devprev = devprev,
-              C_devset = devset, C_devsize = devsize, C_chull)
-} else {
-    useDynLib(grDevices, R_CreateAtVector, R_GAxisPars,
-              PicTeX, PostScript, XFig, PDF, CQuartz = Quartz, devCairo,
-              Type1FontInUse, CIDFontInUse, C_X11 = X11, C_savePlot = savePlot,
-              C_devcap = devcap, C_devcapture = devcapture,
-              C_devcontrol = devcontrol, C_devcopy = devcopy, C_devcur = devcur,
-              C_devdisplaylist = devdisplaylist, C_devholdflush = devholdflush,
-              C_devnext = devnext, C_devoff = devoff, C_devprev = devprev,
-              C_devset = devset, C_devsize = devsize, C_chull,
-              cairoProps, makeQuartzDefault)
-}
+useDynLib(grDevices, .registration = TRUE, .fixes = "C_")
 
 export(Hershey, adjustcolor, as.graphicsAnnot, as.raster, axisTicks, blues9,
        boxplot.stats, check.options, chull, CIDFont, col2rgb, colors,

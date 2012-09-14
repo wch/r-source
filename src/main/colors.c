@@ -255,39 +255,39 @@ SEXP attribute_hidden do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP c, r, g, b, a, nam;
-    int OP;
     R_xlen_t i, l_max, nr, ng, nb, na;
     Rboolean max_1 = FALSE;
     double mV = 0.0; /* -Wall */
 
-    checkArity(op, args);
-    OP = PRIMVAL(op);
-    if(OP) {/* op == 1:  rgb256() :*/
-	PROTECT(r = coerceVector(CAR(args), INTSXP)); args = CDR(args);
-	PROTECT(g = coerceVector(CAR(args), INTSXP)); args = CDR(args);
-	PROTECT(b = coerceVector(CAR(args), INTSXP)); args = CDR(args);
-	PROTECT(a = coerceVector(CAR(args), INTSXP)); args = CDR(args);
-    }
-    else {
-	PROTECT(r = coerceVector(CAR(args), REALSXP)); args = CDR(args);
-	PROTECT(g = coerceVector(CAR(args), REALSXP)); args = CDR(args);
-	PROTECT(b = coerceVector(CAR(args), REALSXP)); args = CDR(args);
-	PROTECT(a = coerceVector(CAR(args), REALSXP)); args = CDR(args);
-	mV = asReal(CAR(args));			       args = CDR(args);
+    r = CAR(args); args = CDR(args);
+    g = CAR(args); args = CDR(args);
+    b = CAR(args); args = CDR(args);
+    a = CAR(args); args = CDR(args);
+    mV = asReal(CAR(args)); args = CDR(args);
+    if(mV == 255.) {
+	PROTECT(r = coerceVector(r, INTSXP));
+	PROTECT(g = coerceVector(g, INTSXP));
+	PROTECT(b = coerceVector(b, INTSXP));
+	PROTECT(a = coerceVector(a, INTSXP));
+    } else {
+	PROTECT(r = coerceVector(r, REALSXP));
+	PROTECT(g = coerceVector(g, REALSXP));
+	PROTECT(b = coerceVector(b, REALSXP));
+	PROTECT(a = coerceVector(a, REALSXP));
 	max_1 = (mV == 1.);
     }
 
     nr = XLENGTH(r); ng = XLENGTH(g); nb = XLENGTH(b); na = XLENGTH(a);
     if (nr <= 0 || ng <= 0 || nb <= 0 || na <= 0) {
 	UNPROTECT(4);
-	return(allocVector(STRSXP, 0));
+	return allocVector(STRSXP, 0);
     }
     l_max = nr;
     if (l_max < ng) l_max = ng;
     if (l_max < nb) l_max = nb;
     if (l_max < na) l_max = na;
 
-    PROTECT(nam = coerceVector(CAR(args), STRSXP)); args = CDR(args);
+    PROTECT(nam = coerceVector(CAR(args), STRSXP));
     if (length(nam) != 0 && length(nam) != l_max)
 	error(_("invalid 'names' vector"));
     PROTECT(c = allocVector(STRSXP, l_max));
@@ -296,7 +296,7 @@ SEXP attribute_hidden do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < l_max; i++)				\
 	SET_STRING_ELT(c, i, mkChar(RGBA2rgb(_R,_G,_B,_A)))
 
-    if(OP) { /* OP == 1:  rgb256() :*/
+    if(mV == 255.0) {
 	_R_set_c_RGBA(CheckColor(INTEGER(r)[i%nr]),
 		      CheckColor(INTEGER(g)[i%ng]),
 		      CheckColor(INTEGER(b)[i%nb]),
@@ -314,8 +314,7 @@ SEXP attribute_hidden do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 		      ScaleColor(REAL(b)[i%nb] / mV),
 		      ScaleAlpha(REAL(a)[i%na] / mV));
     }
-    if (length(nam) != 0)
-	setAttrib(c, R_NamesSymbol, nam);
+    if (length(nam) != 0) setAttrib(c, R_NamesSymbol, nam);
     UNPROTECT(6);
     return c;
 }

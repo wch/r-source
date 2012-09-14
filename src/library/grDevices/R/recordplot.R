@@ -25,7 +25,7 @@ recordPlot <- function()
 {
     if(dev.cur() == 1)
         stop("no current device to record from")
-    res <- .Internal(getSnapshot())
+    res <- .External2(C_getSnapshot)
     attr(res, "version") <- rversion()
     class(res) <- "recordedplot"
     res
@@ -44,7 +44,7 @@ replayPlot <- function(x)
     else if (version != rversion())
         warning(gettext("loading snapshot from different R version"),
                 " (", version, ")", domain = NA)
-    .Internal(playSnapshot(x))
+    invisible(.External2(C_playSnapshot, x))
 }
 
 print.recordedplot <- function(x, ...)

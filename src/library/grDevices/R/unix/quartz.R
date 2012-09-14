@@ -65,7 +65,7 @@ quartz <- function(title, width, height, pointsize, family,
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
     if(!is.null(file) && !checkIntFormat(file)) stop("invalid 'file'")
     d <- check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv)
-    .External(CQuartz, d$type, file, d$width, d$height, d$pointsize, d$family,
+    .External(C_Quartz, d$type, file, d$width, d$height, d$pointsize, d$family,
               d$antialias, d$fontsmooth, d$title, d$bg, d$canvas,
               if(is.na(d$dpi)) NULL else d$dpi)
     invisible()
