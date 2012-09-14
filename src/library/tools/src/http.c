@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-11   The R Core Team.
+ *  Copyright (C) 2092--2012     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,30 +15,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
+ *
  */
 
-#ifndef R_TOOLS_H
-#define R_TOOLS_H
-
 #include <Rinternals.h>
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext ("tools", String)
-#else
-#define _(String) (String)
-#endif
+#include "tools.h"
 
-SEXP delim_match(SEXP x, SEXP delims);
-SEXP dirchmod(SEXP dr);
-SEXP Rmd5(SEXP files);
-SEXP check_nonASCII(SEXP text, SEXP ignore_quotes);
-SEXP check_nonASCII2(SEXP text);
-SEXP doTabExpand(SEXP strings, SEXP starts);
-SEXP ps_kill(SEXP pid, SEXP signal);
-SEXP ps_sigs(SEXP);
-SEXP ps_priority(SEXP pid, SEXP value);
-SEXP codeFilesAppend(SEXP f1, SEXP f2);
-SEXP getfmts(SEXP format);
-SEXP startHTTPD(SEXP sIP, SEXP sPort);
-SEXP stopHTTPD(void);
-#endif
+
+extern int extR_HTTPDCreate(const char *ip, int port);
+extern void extR_HTTPDStop(void);
+
+SEXP startHTTPD(SEXP sIP, SEXP sPort)
+{
+    const char *ip = 0;
+    if (sIP != R_NilValue && (TYPEOF(sIP) != STRSXP || LENGTH(sIP) != 1))
+	error(_("invalid bind address specification"));
+    if (sIP != R_NilValue) ip = CHAR(STRING_ELT(sIP, 0));
+    return ScalarInteger(extR_HTTPDCreate(ip, asInteger(sPort)));
+}
+
+SEXP stopHTTPD(void)
+{
+    extR_HTTPDStop();
+    return R_NilValue;
+}

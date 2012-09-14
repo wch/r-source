@@ -187,11 +187,11 @@ function(dir, potFile, name = "R", version, bugs)
             }
 }
 
-## not exported
-getfmts <- function(s) .Internal(getfmts(s))
 
 checkPoFile <- function(f, strictPlural = FALSE)
 {
+    getfmts <- function(s) .Call(C_getfmts, s)
+
     lines <- readLines(f, encoding = "bytes")
     i <- 0
     noCformat <- FALSE
@@ -217,7 +217,7 @@ checkPoFile <- function(f, strictPlural = FALSE)
 		i <- i + 1L
 		s1 <- paste0(s1, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[i]))
 	    }
-	    f1 <- try(.Internal(getfmts(s1)), silent = TRUE)
+	    f1 <- try(getfmts(s1), silent = TRUE)
 	    j <- i + 1L
 
 	    if (noCformat || inherits(f1, "try-error")) {
@@ -248,7 +248,7 @@ checkPoFile <- function(f, strictPlural = FALSE)
 		    break
 		}
 
-		f2 <- try(.Internal(getfmts(s2)), silent = TRUE)
+		f2 <- try(getfmts(s2), silent = TRUE)
 
 		if (statement == "msgid_plural") {
 		    if (!strictPlural) {

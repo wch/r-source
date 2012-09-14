@@ -535,7 +535,7 @@ FUNTAB R_FunTab[] =
 {"toupper",	do_tolower,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"chartr",	do_chartr,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"sprintf",	do_sprintf,	1,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"getfmts",	do_getfmts,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+//{"getfmts",	do_getfmts,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"make.unique",	do_makeunique,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"charToRaw",	do_charToRaw,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rawToChar",	do_rawToChar,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -752,8 +752,8 @@ FUNTAB R_FunTab[] =
 {"parent.env<-",do_parentenvgets, 0,	11,     2,      {PP_FUNCALL, PREC_LEFT,	1}},
 {"l10n_info",	do_l10n_info,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"Cstack_info", do_Cstack_info,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"startHTTPD",  do_startHTTPD,  0,      11,     2,      {PP_FUNCALL, PREC_FN,   0}},
-{"stopHTTPD",	do_stopHTTPD,	0,      11,     0,      {PP_FUNCALL, PREC_FN,   0}},
+//{"startHTTPD",  do_startHTTPD,  0,      11,     2,      {PP_FUNCALL, PREC_FN,   0}},
+//{"stopHTTPD",	do_stopHTTPD,	0,      11,     0,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Functions To Interact with the Operating System */
 
@@ -762,7 +762,6 @@ FUNTAB R_FunTab[] =
 {"file.remove",	do_fileremove,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.rename",	do_filerename,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.append",	do_fileappend,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"codeFiles.append",do_fileappend,1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.symlink",do_filesymlink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.link",	do_filelink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.copy",	do_filecopy,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},

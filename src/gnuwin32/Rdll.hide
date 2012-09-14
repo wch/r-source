@@ -88,8 +88,6 @@
  R_GE_VText
  R_GetMaxNSize
  R_GetMaxVSize
- R_HTTPDCreate
- R_HTTPDStop
  R_HandlerStack
  R_HiddenFile
  R_InitialData

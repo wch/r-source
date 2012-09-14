@@ -11,14 +11,14 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = text.c init.c Rmd5.c md5.c signals.c dirchmod.c
+SOURCES_C = text.c init.c Rmd5.c md5.c signals.c install.c getfmts.c http.c
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
 
 SHLIB = $(pkg).dll
 RESFLAGS = -I $(R_HOME)/include
 
-PKG_CPPFLAGS=-I$(R_HOME)/src/include -DHAVE_CONFIG_H
+PKG_CPPFLAGS = -I$(R_HOME)/src/include -DHAVE_CONFIG_H -I$(R_HOME)/src/main
 
 all: makeMakedeps shlib
 

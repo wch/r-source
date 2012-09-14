@@ -582,7 +582,7 @@ function(file1, file2)
 {
     ## Use a fast version of file.append() that ensures LF between
     ## files.
-    .Internal(codeFiles.append(file1, file2))
+    .Call(codeFilesAppend, file1, file2)
 }
 
 ### ** .find_calls

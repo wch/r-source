@@ -13,13 +13,14 @@ R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
 
-SOURCES_C = text.c init.c Rmd5.c md5.c signals.c dirchmod.c
+SOURCES_C = text.c init.c Rmd5.c md5.c signals.c install.c getfmts.c http.c
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o)
 
 # need config.h
-PKG_CPPFLAGS = -I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
-PKG_CFLAGS=$(C_VISIBILITY)
+PKG_CPPFLAGS = -I../../../include -I$(top_srcdir)/src/include \
+  -DHAVE_CONFIG_H -I$(top_srcdir)/src/main
+PKG_CFLAGS = $(C_VISIBILITY)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 

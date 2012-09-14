@@ -17,6 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* Formerly in src/main/platform.c */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -95,4 +97,59 @@ SEXP dirchmod(SEXP dr)
     chmod_one(translateChar(STRING_ELT(dr, 0)));
 
     return R_NilValue;
+}
+
+#if defined(BUFSIZ) && (BUFSIZ > 512)
+/* OS's buffer size in stdio.h, probably.
+   Windows has 512, Solaris 1024, glibc 8192
+ */
+# define APPENDBUFSIZE BUFSIZ
+#else
+# define APPENDBUFSIZE 512
+#endif
+
+SEXP codeFilesAppend(SEXP f1, SEXP f2)
+{
+    int n, n1, n2;
+    n1 = length(f1);
+    n2 = length(f2);
+    if (!isString(f1) || n1 != 1)
+	error(_("invalid '%s' argument"), "file1");
+    if (!isString(f2))
+	error(_("invalid '%s' argument"), "file2");
+    if (n2 < 1) return allocVector(LGLSXP, 0);
+    n = (n1 > n2) ? n1 : n2; // will be n2.
+    SEXP ans = PROTECT(allocVector(LGLSXP, n));
+    for (int i = 0; i < n; i++) LOGICAL(ans)[i] = 0;  /* all FALSE */
+    FILE *fp1, *fp2;
+    char buf[APPENDBUFSIZE];
+    int status = 0;
+    size_t nchar;
+    if (STRING_ELT(f1, 0) == NA_STRING ||
+	!(fp1 = RC_fopen(STRING_ELT(f1, 0), "ab", TRUE)))
+	goto done;
+    for (int i = 0; i < n; i++) {
+	status = 0;
+	if (STRING_ELT(f2, i) == NA_STRING ||
+	    !(fp2 = RC_fopen(STRING_ELT(f2, i), "rb", TRUE))) continue;
+	snprintf(buf, APPENDBUFSIZE, "#line 1 \"%s\"\n",
+		 CHAR(STRING_ELT(f2, i)));
+	if(fwrite(buf, 1, strlen(buf), fp1) != strlen(buf)) goto append_error;
+	while ((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
+	    if (fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
+		goto append_error;
+	if (fwrite(buf, 1, nchar, fp1) != nchar) goto append_error;
+	if (buf[nchar - 1] != '\n')
+	    if (fwrite("\n", 1, 1, fp1) != 1) goto append_error;
+	
+	status = 1;
+    append_error:
+	if (status == 0) warning(_("write error during file append"));
+	LOGICAL(ans)[i] = status;
+	fclose(fp2);
+    }
+    fclose(fp1);
+done:
+    UNPROTECT(1);
+    return ans;
 }

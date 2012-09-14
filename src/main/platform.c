@@ -334,9 +334,8 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /*  file.append
  *
- *  Given two file names as arguments and arranges for
- *  the second file to be appended to the second.
- *  op = 1 is codeFiles.append, used in tools:::.file_append_ensuring_LFs
+ *  Given two vectors of file names as arguments and arranges for
+ *  the second set of files to be appended to the first.
  */
 
 #if defined(BUFSIZ) && (BUFSIZ > 512)
@@ -354,24 +353,17 @@ static int R_AppendFile(SEXP file1, SEXP file2)
     char buf[APPENDBUFSIZE];
     size_t nchar;
     int status = 0;
-    if ((fp1 = RC_fopen(file1, "ab", TRUE)) == NULL) {
-	return 0;
-    }
+    if ((fp1 = RC_fopen(file1, "ab", TRUE)) == NULL) return 0;
     if ((fp2 = RC_fopen(file2, "rb", TRUE)) == NULL) {
 	fclose(fp1);
 	return 0;
     }
     while ((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
-	if (fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE) {
-	    goto append_error;
-	}
-    if (fwrite(buf, 1, nchar, fp1) != nchar) {
-	goto append_error;
-    }
+	if (fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE) goto append_error;
+    if (fwrite(buf, 1, nchar, fp1) != nchar) goto append_error;
     status = 1;
  append_error:
-    if (status == 0)
-	warning(_("write error during file append"));
+    if (status == 0) warning(_("write error during file append"));
     fclose(fp1);
     fclose(fp2);
     return status;
@@ -380,7 +372,8 @@ static int R_AppendFile(SEXP file1, SEXP file2)
 SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP f1, f2, ans;
-    int i, n, n1, n2;
+    int n, n1, n2;
+
     checkArity(op, args);
     f1 = CAR(args); n1 = length(f1);
     f2 = CADR(args); n2 = length(f2);
@@ -390,13 +383,11 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "file2");
     if (n1 < 1)
 	error(_("nothing to append to"));
-    if (PRIMVAL(op) > 0 && n1 > 1)
-	error(_("'outFile' must be a single file"));
     if (n2 < 1)
 	return allocVector(LGLSXP, 0);
     n = (n1 > n2) ? n1 : n2;
     PROTECT(ans = allocVector(LGLSXP, n));
-    for (i = 0; i < n; i++) LOGICAL(ans)[i] = 0;  /* all FALSE */
+    for (int i = 0; i < n; i++) LOGICAL(ans)[i] = 0;  /* all FALSE */
     if (n1 == 1) { /* common case */
 	FILE *fp1, *fp2;
 	char buf[APPENDBUFSIZE];
@@ -405,24 +396,14 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(f1, 0) == NA_STRING ||
 	    !(fp1 = RC_fopen(STRING_ELT(f1, 0), "ab", TRUE)))
 	   goto done;
-	for (i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 	    status = 0;
 	    if (STRING_ELT(f2, i) == NA_STRING ||
 	       !(fp2 = RC_fopen(STRING_ELT(f2, i), "rb", TRUE))) continue;
-	    if (PRIMVAL(op) == 1) { /* codeFiles.append */
-	    	snprintf(buf, APPENDBUFSIZE, "#line 1 \"%s\"\n",
-			 CHAR(STRING_ELT(f2, i)));
-	    	if(fwrite(buf, 1, strlen(buf), fp1) != strlen(buf))
-		    goto append_error;
-	    }
 	    while ((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
 		if (fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
 		    goto append_error;
 	    if (fwrite(buf, 1, nchar, fp1) != nchar) goto append_error;
-	    if (PRIMVAL(op) == 1 && buf[nchar - 1] != '\n') {
-		if (fwrite("\n", 1, 1, fp1) != 1) goto append_error;
-	    }
-
 	    status = 1;
 	append_error:
 	    if (status == 0)
@@ -432,7 +413,7 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	fclose(fp1);
     } else {
-	for (i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 	    if (STRING_ELT(f1, i%n1) == R_NilValue ||
 		STRING_ELT(f2, i%n2) == R_NilValue)
 		LOGICAL(ans)[i] = 0;
