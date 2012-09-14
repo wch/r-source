@@ -187,9 +187,9 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         dom <- pkg
         od <- setwd("src")
         cfiles <- dir(".", pattern = "[.]c$")
-        if (file.exists("win32"))
+        if (file.exists("windows"))
             cfiles <- c(cfiles,
-                        dir("win32", pattern = "[.]c$", full.names = TRUE))
+                        dir("windows", pattern = "[.]c$", full.names = TRUE))
     } else {
         dom <- "R"
         od <- setwd("../../..")
@@ -278,8 +278,8 @@ update_RGui_po <- function(srcdir)
                 file.path("src/extra/graphapp",
                           c("clipboard.c", "dialogs.c", "gmenus.c",
                             "metafile.c", "printer.c")),
-                "src/library/utils/src/win32/dataentry.c",
-                "src/library/utils/src/win32/widgets.c",
+                "src/library/utils/src/windows/dataentry.c",
+                "src/library/utils/src/windows/widgets.c",
                 "src/library/grDevices/src/devWindows.c")
     potfile <- "src/library/base/po/RGui.pot"
     ofile <- tempfile()
