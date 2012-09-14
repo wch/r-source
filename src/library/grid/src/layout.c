@@ -328,6 +328,18 @@ double totalUnrespectedHeight(SEXP layout, int *relativeHeights,
     return totalHeight;
 }
 
+
+void setRemainingWidthZero(SEXP layout, 
+                           int *relativeWidths, 
+                           double *npcWidths)
+{
+    int i;
+    for (i=0; i<layoutNCol(layout); i++)
+        if (relativeWidths[i])
+            if (!colRespected(i, layout)) 
+                npcWidths[i] = 0;
+}
+
 void allocateRemainingWidth(SEXP layout, int *relativeWidths,
 			    double remainingWidthCM, 
 			    LViewportContext parentContext, 
@@ -362,15 +374,15 @@ void allocateRemainingWidth(SEXP layout, int *relativeWidths,
     }
 }
 
-void setRemainingWidthZero(SEXP layout, 
-                           int *relativeWidths, 
-                           double *npcWidths)
+void setRemainingHeightZero(SEXP layout, 
+                            int *relativeHeights, 
+                            double *npcHeights)
 {
     int i;
-    for (i=0; i<layoutNCol(layout); i++)
-        if (relativeWidths[i])
-            if (!colRespected(i, layout)) 
-                npcWidths[i] = 0;
+    for (i=0; i<layoutNRow(layout); i++)
+        if (relativeHeights[i])
+            if (!rowRespected(i, layout)) 
+                npcHeights[i] = 0;
 }
 
 void allocateRemainingHeight(SEXP layout, int *relativeHeights,
@@ -405,17 +417,6 @@ void allocateRemainingHeight(SEXP layout, int *relativeHeights,
          */
         setRemainingHeightZero(layout, relativeHeights, npcHeights);
     }
-}
-
-void setRemainingHeightZero(SEXP layout, 
-                            int *relativeHeights, 
-                            double *npcHeights)
-{
-    int i;
-    for (i=0; i<layoutNRow(layout); i++)
-        if (relativeHeights[i])
-            if (!rowRespected(i, layout)) 
-                npcHeights[i] = 0;
 }
 
 static double sumDims(double dims[], int from, int to)
