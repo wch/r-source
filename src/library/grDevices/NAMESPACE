@@ -16,7 +16,7 @@ if(tools:::.OStype() == "windows") {
 } else {
     useDynLib(grDevices, R_CreateAtVector, R_GAxisPars,
               PicTeX, PostScript, XFig, PDF, CQuartz = Quartz, devCairo,
-              Type1FontInUse, CIDFontInUse,
+              Type1FontInUse, CIDFontInUse, C_X11 = X11, C_savePlot = savePlot,
               C_devcap = devcap, C_devcapture = devcapture,
               C_devcontrol = devcontrol, C_devcopy = devcopy, C_devcur = devcur,
               C_devdisplaylist = devdisplaylist, C_devholdflush = devholdflush,

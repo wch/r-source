@@ -43,6 +43,9 @@ SEXP CIDFontInUse(SEXP, SEXP);
 SEXP Quartz(SEXP);
 SEXP makeQuartzDefault();
 
+SEXP X11(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP savePlot(SEXP call, SEXP op, SEXP args, SEXP rho);
+
 SEXP devCairo(SEXP);
 
 Rboolean

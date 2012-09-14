@@ -38,17 +38,22 @@ typedef Rboolean (*R_X11clp)(Rclpconn, char*);
 typedef struct {
     R_do_X11 X11;
     R_do_X11 saveplot;
-    R_X11DataEntryRoutine de;
     R_GetX11ImageRoutine  image;
     R_X11_access access;
     R_X11clp readclp;
-    R_X11DataViewer dv;
 } R_X11Routines;
+
+typedef struct {
+    R_X11DataEntryRoutine de;
+    R_GetX11ImageRoutine  image;
+    R_X11DataViewer dv;
+} R_deRoutines;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 R_X11Routines *R_setX11Routines(R_X11Routines *routines);
+R_deRoutines *R_setdeRoutines(R_deRoutines *routines);
 #ifdef __cplusplus
 }
 #endif

@@ -107,6 +107,8 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(savePlot, 3),
 #else
     EXTDEF(Quartz, 12),
+    EXTDEF(X11, 17),
+    EXTDEF(savePlot, 3),
 #endif
     {NULL, NULL, 0}
 };

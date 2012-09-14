@@ -68,7 +68,7 @@ Rboolean attribute_hidden R_access_X11(void)
     return (initialized > 0) ? (*ptr->access)() > 0 : FALSE;
 }
 
-SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_X11_Init();
     if(initialized > 0)
@@ -79,22 +79,11 @@ SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-SEXP attribute_hidden do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_X11_Init();
     if(initialized > 0)
 	return (*ptr->saveplot)(call, op, args, rho);
-    else {
-	error(_("X11 module cannot be loaded"));
-	return R_NilValue;
-    }
-}
-
-SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    R_X11_Init();
-    if(initialized > 0)
-	return (*ptr->de)(call, op, args, rho);
     else {
 	error(_("X11 module cannot be loaded"));
 	return R_NilValue;
@@ -123,15 +112,44 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn clpcon, char *type)
     }
 }
 
+static R_deRoutines de_routines, *de_ptr = &de_routines;
+
+R_deRoutines * R_setdeRoutines(R_deRoutines *routines)
+{
+    R_deRoutines *tmp;
+    tmp = de_ptr;
+    de_ptr = routines;
+    return tmp;
+}
+
+static void R_de_Init(void)
+{
+    static int de_init = 0;
+
+    if(de_init > 0) return;
+    if(de_init < 0) error(_("X11 module cannot be loaded"));
+
+    de_init = -1;
+    if(strcmp(R_GUIType, "none") == 0) {
+	warning(_("X11 module is not available under this GUI"));
+	return;
+    }
+    int res = R_moduleCdynload("R_de", 1, 1);
+    if(!res) error(_("X11 module cannot be loaded"));
+    de_init = 1;
+    return;
+}
+
+SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    R_de_Init();
+    return (*de_ptr->de)(call, op, args, rho);
+}
+
 SEXP X11_do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    R_X11_Init();
-    if(initialized > 0)
-	return (*ptr->dv)(call, op, args, rho);
-    else {
-	error(_("X11 module cannot be loaded"));
-	return R_NilValue;
-    }
+    R_de_Init();
+    return (*de_ptr->dv)(call, op, args, rho);
 }
 #else /* No HAVE_X11 */
 
@@ -158,12 +176,6 @@ SEXP attribute_hidden do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP attribute_hidden X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error(_("X11 is not available"));
-    return R_NilValue;
-}
-
 Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {
     error(_("X11 is not available"));
@@ -174,6 +186,12 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn con, char *type)
 {
     error(_("X11 is not available"));
     return FALSE;
+}
+
+SEXP attribute_hidden X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error(_("X11 is not available"));
+    return R_NilValue;
 }
 
 SEXP X11_do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)

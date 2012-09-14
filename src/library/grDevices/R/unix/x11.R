@@ -95,10 +95,11 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     ## Aargh -- trkplot has a trapdoor and does not set type.
     if (display == "XImage") type <- 0L
     antialias <- match(d$antialias, aa.cairo)
-    .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
-                  d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
-                  NA_integer_, d$xpos, d$ypos, d$title,
-                  type, antialias, d$family))
+    .External2(C_X11, d$display, d$width, d$height, d$pointsize, d$gamma,
+               d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
+               NA_integer_, d$xpos, d$ypos, d$title,
+               type, antialias, d$family)
+    invisible()
 }
 
 x11 <- X11
@@ -205,5 +206,5 @@ savePlot <- function(filename = paste("Rplot", type, sep="."),
     devname <- names(devlist)[devcur]
     if(devname != "X11cairo")
         stop("can only copy from 'X11(type=\"*cairo\")' devices")
-    .Internal(savePlot(filename, type, device))
+    invisible(.External2(C_savePlot, filename, type, device))
 }

@@ -16,9 +16,11 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) @CAIROX11_CPPFLAGS@ \
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_X_LIBS = $(X_PRE_LIBS) @CAIROX11_LIBS@ $(X_LIBS) $(X_EXTRA_LIBS)
 
-SOURCES = dataentry.c devX11.c rotated.c rbitmap.c 
+SOURCES = devX11.c rotated.c rbitmap.c 
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
+DE_SOURCES = dataentry.c
+DE_OBJECTS = $(DE_SOURCES:.c=.o)
 HEADERS = bitmap.h devX11.h rotated.h rlogo_icon.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -28,6 +30,9 @@ DISTFILES = \
 R_X11_la = R_X11$(SHLIB_EXT)
 ## AIX needs LIBM
 R_X11_la_LIBADD = $(ALL_X_LIBS) @BITMAP_LIBS@ $(LIBR) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
+
+R_de_la = R_de$(SHLIB_EXT)
+R_de_la_LIBADD = $(ALL_X_LIBS) $(LIBR) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 all: Makefile Makedeps R
 
@@ -42,26 +47,30 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(R_X11_la)
+	@$(MAKE) $(R_X11_la) $(R_de_la)
+	@$(MAKE) rhome="$(abs_top_builddir)" install
 
 $(R_X11_la): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(R_X11_la_LIBADD)
-## <FIXME>
-## Not sure if we want to do this ...
-	@$(MAKE) rhome="$(abs_top_builddir)" install
-## </FIXME>
+
+$(R_de_la): $(DE_OBJECTS)
+	$(SHLIB_LINK) -o $@ $(DE_OBJECTS) $(R_de_la_LIBADD)
 
 install: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(DESTDIR)$(Rexecmodulesdir)/$(R_X11_la)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_de_la) "$(DESTDIR)$(Rexecmodulesdir)/$(R_de_la)"
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecmodulesdir)"
 install-strip: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(DESTDIR)$(Rexecmodulesdir)/$(R_X11_la)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(DESTDIR)$(Rexecmodulesdir)/$(R_de_la)"
 	@if test -n "$(STRIP_LIBS)"; then \
 	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(R_X11_la)" ;\
+	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(R_de_la)" ;\
 	fi
 uninstall:
-	@rm -f "$(Rexecmodulesdir)/R_X11$(SHLIB_EXT)"
+	@rm -f "$(Rexecmodulesdir)/R_X11$(SHLIB_EXT)"\
+	  "$(Rexecmodulesdir)/R_de(SHLIB_EXT)"
 
 mostlyclean: clean
 clean:

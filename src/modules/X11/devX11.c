@@ -3379,9 +3379,6 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
     return res;
 }
 
-extern SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
-extern SEXP in_RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
-
 #include <R_ext/Rdynload.h>
 void R_init_R_X11(DllInfo *info)
 {
@@ -3393,10 +3390,8 @@ void R_init_R_X11(DllInfo *info)
     }
     tmp->X11 = in_do_X11;
     tmp->saveplot = in_do_saveplot;
-    tmp->de = in_RX11_dataentry;
     tmp->image = in_R_GetX11Image;
     tmp->access = in_R_X11_access;
     tmp->readclp = in_R_X11readclp;
-    tmp->dv = in_R_X11_dataviewer;
     R_setX11Routines(tmp);
 }
