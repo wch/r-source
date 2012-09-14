@@ -43,7 +43,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"C_getfmts", (DL_FUNC) &getfmts, 1},
     CALLDEF(Rmd5, 1),
     CALLDEF(check_nonASCII, 2),
-    CALLDEF(check_nonASCII2, 2),
+    CALLDEF(check_nonASCII2, 1),
     CALLDEF(doTabExpand, 2),
     CALLDEF(ps_kill, 2),
     CALLDEF(ps_sigs, 1),
