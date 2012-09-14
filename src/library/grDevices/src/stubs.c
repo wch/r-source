@@ -65,28 +65,6 @@ SEXP setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_setGraphicsEventEnv(call, op, CDR(args), env);
 }
 
-
-
-SEXP rgb(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_rgb(call, op, CDR(args), env);
-}
-
-SEXP hsv(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_hsv(call, op, CDR(args), env);
-}
-
-SEXP hcl(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_hcl(call, op, CDR(args), env);
-}
-
-SEXP gray(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_gray(call, op, CDR(args), env);
-}
-
 SEXP colors(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return do_colors(call, op, CDR(args), env);
@@ -100,11 +78,6 @@ SEXP col2rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP palette(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return do_palette(call, op, CDR(args), env);
-}
-
-SEXP RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_RGB2hsv(call, op, CDR(args), env);
 }
 
 

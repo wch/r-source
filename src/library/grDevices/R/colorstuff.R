@@ -25,7 +25,7 @@ col2rgb <- function(col, alpha=FALSE) {
   result
 }
 
-gray <- function(level, alpha = NULL) .External2(C_gray, level, alpha)
+gray <- function(level, alpha = NULL) .Call(C_gray, level, alpha)
 grey <- gray
 
 rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
@@ -39,16 +39,15 @@ rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 	}
     }
 
-    .External2(C_rgb, red, green, blue,
-               if (missing(alpha)) NULL else alpha,
-               maxColorValue, names)
+    .Call(C_rgb, red, green, blue, if (missing(alpha)) NULL else alpha,
+          maxColorValue, names)
 }
 
 hsv <- function(h = 1, s = 1, v = 1, alpha = 1)
-    .External2(C_hsv, h, s, v, if(missing(alpha)) NULL else alpha)
+    .Call(C_hsv, h, s, v, if(missing(alpha)) NULL else alpha)
 
 hcl <- function (h = 0, c = 35, l = 85, alpha = 1, fixup = TRUE)
-    .External2(C_hcl, h, c, l, if(missing(alpha)) NULL else alpha, fixup)
+    .Call(C_hcl, h, c, l, if(missing(alpha)) NULL else alpha, fixup)
 
 
 rgb2hsv <- function(r, g = NULL, b = NULL, maxColorValue = 255)
@@ -64,7 +63,7 @@ rgb2hsv <- function(r, g = NULL, b = NULL, maxColorValue = 255)
     if(any(0 > rgb) || any(rgb > 1))
         stop("rgb values must be in [0, maxColorValue]")
 
-    .External2(C_RGB2hsv, rgb)
+    .Call(C_RGB2hsv, rgb)
 }
 
 palette <- function(value)
