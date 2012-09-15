@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2010 The R Core Team
+ *  Copyright (C) 1999-2012 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,9 +30,9 @@
 #endif
 
 
-#if defined(HAVE_AQUA)
+#ifdef HAVE_AQUA
 
-/* tell QuartzDevice to insert definitions for us (to maintain consistency) */
+/* tell QuartzDevice.h to insert definitions for us (to maintain consistency) */
 #define IN_AQUA_C 1
 
 #include <R_ext/GraphicsEngine.h>
@@ -44,30 +44,33 @@ extern Rboolean useaqua; /* from src/unix/system.c */
 
 DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
     ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
-    ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser,
-    ptr_do_selectlist;
+    ptr_do_packagemanger, ptr_do_hsbrowser, ptr_do_selectlist;
+
+// R.app used to set this, so keep it for now in case it does.
+DL_FUNC ptr_do_flushconsole;
+
+/* And from Rinterface.h: */
+extern void (*ptr_R_FlushConsole)(void);
 
 
-int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
-
-static QuartzFunctions_t* qfn;
-
-QuartzFunctions_t *getQuartzFunctions(void) {
+/* called from Mac-GUI/RController.m, before packages are loaded.
+   If this fails, it hangs R.app */
+QuartzFunctions_t *getQuartzFunctions(void) 
+{
+    static QuartzFunctions_t* qfn;
     if (qfn) return qfn;
-    {
-	QuartzFunctions_t *(*fn)(void);
+
+    QuartzFunctions_t *(*fn)(void);
+    fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
+    if (!fn) {
+	SEXP call = lang2(install("loadNamespace"), mkString("grDevices"));
+	PROTECT(call);
+	eval(call, R_GlobalEnv);
+	UNPROTECT(1);
 	fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
-	if (!fn) {
-	    /* we need to load grDevices - not sure if this is the best way, though ... */
-	    SEXP call = lang2(install("library"), install("grDevices"));
-	    PROTECT(call);
-	    eval(call, R_GlobalEnv);
-	    UNPROTECT(1);
-	    fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
-	    if (!fn) error(_("unable to load Quartz"));
-	}
-	return fn();
+	if (!fn) error("unable to get QuartzAPI");
     }
+    return fn();
 }
 
 
@@ -92,37 +95,41 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_browsepkgs(call, op, args, env));
+    return ptr_do_browsepkgs(call, op, args, env);
 }
 
 
 SEXP do_datamanger(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_datamanger(call, op, args, env));
+    return ptr_do_datamanger(call, op, args, env);
 }
 
 
 SEXP do_hsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_hsbrowser(call, op, args, env));
+    return ptr_do_hsbrowser(call, op, args, env);
 }
 
 SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_packagemanger(call, op, args, env));
+    return ptr_do_packagemanger(call, op, args, env);
 }
 
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	if(ptr_do_flushconsole)
-		ptr_do_flushconsole(call, op, args, env);
-	return R_NilValue;
+    if(ptr_R_FlushConsole) ptr_R_FlushConsole();
+    else if(ptr_do_flushconsole) // but the args are unused in R.app.
+	ptr_do_flushconsole(call, op, args, env);
+    return R_NilValue;
 }
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return(ptr_do_selectlist(call, op, args, env));
 }
+
+// to be set by R.app
+int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
 
 SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -140,14 +147,14 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
     objType = CAR(args); args = CDR(args);
     obj = CAR(args);
 
-    if (!isString(objType) || LENGTH(objType)<1)
+    if (!isString(objType) || LENGTH(objType) < 1)
 	errorcall(call, "invalid arguments");
-    ct=CHAR(STRING_ELT(objType,0));
-    cpr=ptr_Raqua_CustomPrint(ct, obj);
+    ct = CHAR(STRING_ELT(objType,0));
+    cpr = ptr_Raqua_CustomPrint(ct, obj);
 
     /* FIXME: trying to store a pointer in an integer is wrong */
-    PROTECT(rv=allocVector(INTSXP, 1));
-    INTEGER(rv)[0]=cpr;
+    PROTECT(rv = allocVector(INTSXP, 1));
+    INTEGER(rv)[0] = cpr;
 
     vmaxset(vm);
     UNPROTECT(1);

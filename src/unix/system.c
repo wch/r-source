@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Core Team
+ *  Copyright (C) 1997--2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,6 +50,7 @@
 
 #include "Fileio.h"
 
+// This creates the interface pointers in this file
 #define __SYSTEM__
 #define R_INTERFACE_PTRS 1
 #include <Rinterface.h>
@@ -72,7 +73,9 @@ int R_ReadConsole(const char *prompt, unsigned char *buf, int len, int addtohist
 void R_WriteConsole(const char *buf, int len) {if (ptr_R_WriteConsole) ptr_R_WriteConsole(buf, len); else ptr_R_WriteConsoleEx(buf, len, 0); }
 void R_WriteConsoleEx(const char *buf, int len, int otype) {if (ptr_R_WriteConsole) ptr_R_WriteConsole(buf, len); else ptr_R_WriteConsoleEx(buf, len, otype); }
 void R_ResetConsole(void) { ptr_R_ResetConsole(); }
+#ifndef HAVE_AQUA
 void R_FlushConsole(void) { ptr_R_FlushConsole(); }
+#endif
 void R_ClearerrConsole(void) { ptr_R_ClearerrConsole(); }
 void R_Busy(int which) { ptr_R_Busy(which); }
 void R_CleanUp(SA_TYPE saveact, int status, int runLast)
@@ -88,10 +91,17 @@ void R_setStartTime(void); /* in sys-unix.c */
 
 
 #ifdef HAVE_AQUA
-/*  this should be a global variable as it used in unix/devQuartz.c
-	and in unix/aqua.c
+/*  this should be a global variable as it used in unix/aqua.c
+    and main/sysutils.c (for system).
 */
 Rboolean useaqua = FALSE;
+// This should have been fixed a long time ago ....
+#include <R_ext/Rdynload.h>
+DL_FUNC ptr_do_flushconsole;
+void R_FlushConsole(void) {
+    if (ptr_R_FlushConsole) ptr_R_FlushConsole(); 
+    else if (ptr_do_flushconsole) ptr_do_flushconsole();
+}
 #endif
 
 
@@ -232,7 +242,9 @@ int Rf_initialize_R(int ac, char **av)
     R_set_command_line_arguments(ac, av);
     cmdlines[0] = '\0';
 
-    /* first task is to select the GUI */
+    /* first task is to select the GUI.
+       If run from the shell script, only Tk|tk|X11|x11 are allowed.
+     */
     for(i = 0, avv = av; i < ac; i++, avv++) {
 	if(!strncmp(*avv, "--gui", 5) || !strncmp(*avv, "-g", 2)) {
 	    if(!strncmp(*avv, "--gui", 5) && strlen(*avv) >= 7)
@@ -248,14 +260,14 @@ int Rf_initialize_R(int ac, char **av)
 		}
 	    }
 	    if(!strcmp(p, "none"))
-		useX11 = FALSE;
+		useX11 = FALSE; // not allowed from R.sh
 	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
-		;
+		; // not allowed from R.sh
 #ifdef HAVE_AQUA
 	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
-		useaqua = TRUE;
+		useaqua = TRUE; // not allowed from R.sh
 	    else if(!strcmp(p, "cocoa") || !strcmp(p, "Cocoa"))
-		useaqua = TRUE;
+		useaqua = TRUE; // but 'cocaa' is used by R.app
 #endif
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
@@ -272,9 +284,8 @@ int Rf_initialize_R(int ac, char **av)
 		R_ShowMessage(msg);
 	    }
 	    /* now remove it/them */
-	    for(j = i; j < ac-ioff; j++) {
+	    for(j = i; j < ac - ioff; j++)
 		av[j] = av[j + ioff];
-	    }
 	    ac -= ioff;
 	    break;
 	}

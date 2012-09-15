@@ -75,7 +75,7 @@
       
       \item \code{maintainer()} now converts embedded new lines to spaces.
       
-      \item The \code{X11()} device has some more protection against
+      \item The \code{X11()} device has some protection against
       being used with forked processes \emph{via} package \pkg{parallel}.
       
       \item Setting the environment variable \env{R_OSX_VALGRIND} (to
@@ -376,7 +376,7 @@
       to write outside the target library.
       
       \item Some of the quality control functions
-      (e.g. \code{tools::checkFF()} were wrongly identifying the source
+      (e.g. \code{tools::checkFF()}) were wrongly identifying the source
       of S4 methods in a package and so not checking them.
 
       \item The default type of display by \code{browseEnv()} when using
