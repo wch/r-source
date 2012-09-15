@@ -1961,4 +1961,13 @@ lm.wfit(cbind(1, x), y, w)
 ## segfaulted in 2.15.1, only
 
 
+## as.data.frame() methods should preferably not barf on an 'nm' arg
+## reported by Bill Dunlap
+## (https://stat.ethz.ch/pipermail/r-devel/2012-September/064848.html)
+as.data.frame(1:10, nm="OneToTen")
+as.data.frame(LETTERS[1:10], nm="FirstTenLetters")
+as.data.frame(LETTERS[1:10])
+## second failed in 2.15.1.
+
+
 proc.time()

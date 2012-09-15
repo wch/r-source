@@ -232,13 +232,16 @@ default.stringsAsFactors <- function()
     val
 }
 
-
+## in case someone passes 'nm'
 as.data.frame.character <-
-    function(x, ..., stringsAsFactors = default.stringsAsFactors()){
-        nm <- deparse(substitute(x), width.cutoff=500L)
-        if(stringsAsFactors) x <- factor(x)
-        as.data.frame.vector(x, ..., nm=nm)
-    }
+    function(x, ..., stringsAsFactors = default.stringsAsFactors())
+{
+    nm <- deparse(substitute(x), width.cutoff=500L)
+    if(stringsAsFactors) x <- factor(x)
+    if(!"nm" %in% names(list(...)))
+        as.data.frame.vector(x, ..., nm = nm)
+    else as.data.frame.vector(x, ...)
+}
 
 as.data.frame.logical <- as.data.frame.vector
 
