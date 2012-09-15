@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-13 14:03+0100\n"
+"POT-Creation-Date: 2012-09-15 17:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 
 #: io.c:310 io.c:314 io.c:324 io.c:538 io.c:719 io.c:770 io.c:782 io.c:786
 #: io.c:792 io.c:1007 io.c:1008 io.c:1010 io.c:1011 io.c:1012 io.c:1013
-#: io.c:1014 io.c:1015 stubs.c:39 stubs.c:59 win32/dialogs.c:170
-#: win32/dialogs.c:195 win32/dialogs.c:198 win32/dialogs.c:242
-#: win32/dialogs.c:279 win32/dialogs.c:290 win32/dialogs.c:314
-#: win32/dialogs.c:322 win32/util.c:104 win32/widgets.c:78 win32/widgets.c:81
-#: win32/widgets.c:86
+#: io.c:1014 io.c:1015 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
+#: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
+#: windows/dialogs.c:322 windows/util.c:104 windows/widgets.c:78
+#: windows/widgets.c:81 windows/widgets.c:86
 #, c-format
 msgid "invalid '%s' argument"
 msgstr ""
@@ -99,7 +99,19 @@ msgstr ""
 msgid "invalid timestamp"
 msgstr ""
 
-#: stubs.c:178 stubs.c:181
+#: stubs.c:141 stubs.c:149
+msgid "X11 dataentry cannot be loaded"
+msgstr ""
+
+#: stubs.c:145
+msgid "X11 module is not available under this GUI"
+msgstr ""
+
+#: stubs.c:174 stubs.c:180
+msgid "X11 is not available"
+msgstr ""
+
+#: stubs.c:232 stubs.c:235
 #, c-format
 msgid "invalid '%s' specification"
 msgstr ""
@@ -121,113 +133,113 @@ msgstr ""
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: win32/dialogs.c:182
+#: windows/dialogs.c:182
 msgid "unknown type"
 msgstr ""
 
-#: win32/dialogs.c:214 win32/dialogs.c:238 win32/dialogs.c:276
-#: win32/dialogs.c:311
+#: windows/dialogs.c:214 windows/dialogs.c:238 windows/dialogs.c:276
+#: windows/dialogs.c:311
 msgid "Menu functions can only be used in the GUI"
 msgstr ""
 
-#: win32/dialogs.c:246
+#: windows/dialogs.c:246
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr ""
 
-#: win32/dialogs.c:284
+#: windows/dialogs.c:284
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr ""
 
-#: win32/dialogs.c:296
+#: windows/dialogs.c:296
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr ""
 
-#: win32/dialogs.c:319
+#: windows/dialogs.c:319
 msgid "menu does not exist"
 msgstr ""
 
-#: win32/dialogs.c:326
+#: windows/dialogs.c:326
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr ""
 
-#: win32/registry.c:73 win32/registry.c:254 win32/registry.c:257
-#: win32/registry.c:260
+#: windows/registry.c:73 windows/registry.c:254 windows/registry.c:257
+#: windows/registry.c:260
 #, c-format
 msgid "invalid '%s' value"
 msgstr ""
 
-#: win32/registry.c:272
+#: windows/registry.c:272
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr ""
 
-#: win32/util.c:41
+#: windows/util.c:41
 msgid "unsupported version of Windows"
 msgstr ""
 
-#: win32/util.c:267
+#: windows/util.c:267
 msgid "argument must be a character vector or a raw vector"
 msgstr ""
 
-#: win32/util.c:304
+#: windows/util.c:304
 msgid "unable to open the clipboard"
 msgstr ""
 
-#: win32/util.c:309
+#: windows/util.c:309
 msgid "unable to write to the clipboard"
 msgstr ""
 
-#: win32/util.c:388
+#: windows/util.c:388
 msgid "'title' must be a character string"
 msgstr ""
 
-#: win32/util.c:397
+#: windows/util.c:397
 msgid "'text' must be a character string"
 msgstr ""
 
-#: win32/util.c:436
+#: windows/util.c:436
 #, c-format
 msgid "'%s' must be length 1"
 msgstr ""
 
-#: win32/util.c:549
+#: windows/util.c:549
 #, c-format
 msgid "'%s' must be a list"
 msgstr ""
 
-#: win32/util.c:553
+#: windows/util.c:553
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr ""
 
-#: win32/widgets.c:108
+#: windows/widgets.c:108
 msgid "Select one or more"
 msgstr ""
 
-#: win32/widgets.c:108
+#: windows/widgets.c:108
 msgid "Select one"
 msgstr ""
 
-#: win32/widgets.c:182 win32/widgets.c:252
+#: windows/widgets.c:182 windows/widgets.c:252
 msgid "'default' must be a character string"
 msgstr ""
 
-#: win32/widgets.c:184 win32/widgets.c:254
+#: windows/widgets.c:184 windows/widgets.c:254
 msgid "'default' is overlong"
 msgstr ""
 
-#: win32/widgets.c:188 win32/widgets.c:258
+#: windows/widgets.c:188 windows/widgets.c:258
 msgid "'caption' must be a character string"
 msgstr ""
 
-#: win32/widgets.c:190
+#: windows/widgets.c:190
 msgid "'multi' must be a logical value"
 msgstr ""
 
-#: win32/widgets.c:192
+#: windows/widgets.c:192
 msgid "'filterindex' must be an integer value"
 msgstr ""

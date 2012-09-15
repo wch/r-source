@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:25+0100\n"
+"POT-Creation-Date: 2012-09-15 17:47+0100\n"
 "PO-Revision-Date: 2012-02-26 14:10+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -23,6 +23,43 @@ msgstr ""
 #, c-format
 msgid "'%s' must be numeric of length %d"
 msgstr " '%s'は長さ%dの数値でなければなりません "
+
+#: colors.c:71
+#, c-format
+msgid "color intensity %g, not in [0,1]"
+msgstr ""
+
+#: colors.c:78
+#, c-format
+msgid "color intensity %d, not in 0:255"
+msgstr ""
+
+#: colors.c:85
+#, c-format
+msgid "alpha level %g, not in [0,1]"
+msgstr ""
+
+#: colors.c:92
+#, c-format
+msgid "alpha level %d, not in 0:255"
+msgstr ""
+
+#: colors.c:131 colors.c:145
+msgid "invalid hsv color"
+msgstr ""
+
+#: colors.c:251 colors.c:269
+msgid "invalid hcl color"
+msgstr ""
+
+#: colors.c:326
+#, fuzzy
+msgid "invalid 'names' vector"
+msgstr " 不正な 'file' 引数 "
+
+#: colors.c:385 colors.c:394
+msgid "invalid gray level, must be in [0,1]."
+msgstr ""
 
 #: devPS.c:559
 #, c-format
@@ -164,11 +201,11 @@ msgstr " デバイスのエンコーディングを記録することに失敗�
 msgid "Object .ps.prolog is not a character vector"
 msgstr " オブジェクト .ps.prolog は文字列ベクトルではありません "
 
-#: devPS.c:2639 devPS.c:6410 devWindows.c:783
+#: devPS.c:2639 devPS.c:6410 devWindows.c:784
 msgid "Invalid line end"
 msgstr " 行末が不正です "
 
-#: devPS.c:2658 devPS.c:6429 devWindows.c:796
+#: devPS.c:2658 devPS.c:6429 devWindows.c:797
 msgid "Invalid line join"
 msgstr " 行のつながりが不正です "
 
@@ -231,7 +268,7 @@ msgstr " postscript(print.it=TRUE)　が空の描画命令とともに使われ�
 msgid "invalid page type '%s' (postscript)"
 msgstr " 不正なページ '%s'  (ポストスクリプト) "
 
-#: devPS.c:3456 devPS.c:4569 devWindows.c:2337
+#: devPS.c:3456 devPS.c:4569 devWindows.c:2338
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -449,14 +486,14 @@ msgstr " %s 中に不正な 'family' パラメータ "
 msgid "invalid 'fonts' parameter in %s"
 msgstr " %s 中に不正な 'fonts' パラメータ "
 
-#: devPS.c:8236 devPS.c:8398 devPS.c:8401 devWindows.c:3642 devWindows.c:3646
-#: devWindows.c:3654 devWindows.c:3665 devWindows.c:3671 devWindows.c:3678
-#: devWindows.c:3685 devWindows.c:3689
+#: devPS.c:8236 devPS.c:8398 devPS.c:8401 devWindows.c:3643 devWindows.c:3647
+#: devWindows.c:3655 devWindows.c:3666 devWindows.c:3672 devWindows.c:3679
+#: devWindows.c:3686 devWindows.c:3690
 #, c-format
 msgid "invalid value of '%s'"
 msgstr " '%s' の値が不正です "
 
-#: devPS.c:8249 devPS.c:8316 devPS.c:8415 devPicTeX.c:742 devWindows.c:3722
+#: devPS.c:8249 devPS.c:8316 devPS.c:8415 devPicTeX.c:742 devWindows.c:3723
 #, c-format
 msgid "unable to start %s() device"
 msgstr " デバイス %s() を開始できませんでした "
@@ -495,147 +532,147 @@ msgstr "Quartzデバイスを作成できません。与えられた型はサポ
 msgid "Quartz device is not available on this platform"
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません "
 
-#: devWindows.c:340 devWindows.c:386 devWindows.c:457
+#: devWindows.c:341 devWindows.c:387 devWindows.c:458
 msgid "Not enough memory to copy graphics window"
 msgstr " グラフィックスウィンドをコピーするのに十分なメモリがありません "
 
-#: devWindows.c:345 devWindows.c:391 devWindows.c:462
+#: devWindows.c:346 devWindows.c:392 devWindows.c:463
 msgid "No device available to copy graphics window"
 msgstr " グラフィックスウィンドをコピーするのに使えるデバイスがありません "
 
-#: devWindows.c:395 devWindows.c:466
+#: devWindows.c:396 devWindows.c:467
 #, c-format
 msgid "'%%' is not allowed in file name"
 msgstr " '%%' はファイル名には利用できません "
 
-#: devWindows.c:603
+#: devWindows.c:604
 msgid "Invalid font specification"
 msgstr " 不正なフォント指定 "
 
-#: devWindows.c:642
+#: devWindows.c:643
 msgid "Font family not found in Windows font database"
 msgstr " Windows のフォントデータベースにフォントファミリが見付かりません "
 
-#: devWindows.c:1073
+#: devWindows.c:1074
 msgid "plot history seems corrupted"
 msgstr " 描画履歴が破損しているようです "
 
-#: devWindows.c:1080
+#: devWindows.c:1081
 msgid "no plot history!"
 msgstr " 描画履歴がありません "
 
-#: devWindows.c:1794
+#: devWindows.c:1795
 #, c-format
 msgid "filename too long in %s() call"
 msgstr " 呼出し %s() 中に長すぎるファイル名  "
 
-#: devWindows.c:1798 devWindows.c:1833 devWindows.c:1867
+#: devWindows.c:1799 devWindows.c:1834 devWindows.c:1868
 msgid "Unable to load Rbitmap.dll"
 msgstr " Rbitmap.dll　をロードできませんでした "
 
-#: devWindows.c:1803 devWindows.c:1842 devWindows.c:1876
+#: devWindows.c:1804 devWindows.c:1843 devWindows.c:1877
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr " 'width=%d, height=%d' はピクセル単位でありそうもない値です "
 
-#: devWindows.c:1811 devWindows.c:1816 devWindows.c:1845 devWindows.c:1850
-#: devWindows.c:1879 devWindows.c:1884
+#: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
+#: devWindows.c:1880 devWindows.c:1885
 msgid "Unable to allocate bitmap"
 msgstr " ビットマップを割り当てられません "
 
-#: devWindows.c:1822 devWindows.c:1856 devWindows.c:2180
+#: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr " ファイル '%s' を書込み用に開くことができません "
 
-#: devWindows.c:1839
+#: devWindows.c:1840
 msgid "filename too long in jpeg() call"
 msgstr " 呼出し jpeg() 中に長すぎるファイル名 "
 
-#: devWindows.c:1873
+#: devWindows.c:1874
 msgid "filename too long in tiff() call"
 msgstr " 呼出し tiff() 中に長すぎるファイル名  "
 
-#: devWindows.c:1905
+#: devWindows.c:1906
 msgid "filename too long in win.metafile() call"
 msgstr " 呼出し win.metafile() 中に長すぎるファイル名 "
 
-#: devWindows.c:1915
+#: devWindows.c:1916
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr " メタファイル '%s' を書込み用に開くことができません "
 
-#: devWindows.c:1917
+#: devWindows.c:1918
 msgid "Unable to open clipboard to write metafile"
 msgstr " メタファイルを書込むためにクリップボードを開くことができません "
 
-#: devWindows.c:2128
+#: devWindows.c:2129
 msgid "Insufficient memory for resize. Killing device"
 msgstr " メモリ不足でサイズ変更できません。デバイスを停止します "
 
-#: devWindows.c:2136
+#: devWindows.c:2137
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr " メモリ不足でサイズ変更できません。alpha blending を停止します "
 
-#: devWindows.c:2165
+#: devWindows.c:2166
 msgid "A clipboard metafile can store only one figure."
 msgstr " クリップボードメタファイルは一つの図だけを保管できます "
 
-#: devWindows.c:2171
+#: devWindows.c:2172
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr " メタファイル '%s' を作成できませんでした "
 
-#: devWindows.c:3108 devWindows.c:3746
+#: devWindows.c:3109 devWindows.c:3747
 msgid "R Graphics"
 msgstr " R グラフィックス "
 
-#: devWindows.c:3122
+#: devWindows.c:3123
 msgid "attempt to use the locator after dev.hold()"
 msgstr " dev.hold()のあとにロケーターを使おうとしています "
 
-#: devWindows.c:3386
+#: devWindows.c:3387
 msgid "option 'windowsTimeouts' should be integer"
 msgstr " オプション 'windowsTimeouts' は整数でなければなりません "
 
-#: devWindows.c:3407
+#: devWindows.c:3408
 msgid "invalid device number in 'savePlot'"
 msgstr " savePlot　中に不正なデバイス番号 "
 
-#: devWindows.c:3409
+#: devWindows.c:3410
 msgid "invalid device in 'savePlot'"
 msgstr " savePlot 中に不正なデバイス "
 
-#: devWindows.c:3412
+#: devWindows.c:3413
 msgid "invalid filename argument in savePlot"
 msgstr " savePlot 中に不正なファイル名引数 "
 
-#: devWindows.c:3417
+#: devWindows.c:3418
 msgid "invalid type argument in 'savePlot'"
 msgstr " savePlot　に不正な型の引数 "
 
-#: devWindows.c:3444
+#: devWindows.c:3445
 msgid "unknown type in savePlot"
 msgstr " savePlot 中に未知の型 "
 
-#: devWindows.c:3489 devWindows.c:3522 devWindows.c:3551 devWindows.c:3583
-#: devWindows.c:3608
+#: devWindows.c:3490 devWindows.c:3523 devWindows.c:3552 devWindows.c:3584
+#: devWindows.c:3609
 msgid "processing of the plot ran out of memory"
 msgstr " プロット中にメモリ不足になりました "
 
-#: devWindows.c:3568
+#: devWindows.c:3569
 msgid "Impossible to open "
 msgstr " オープンできません "
 
-#: devWindows.c:3595
+#: devWindows.c:3596
 msgid "Impossible to load Rbitmap.dll"
 msgstr " Rbitmap.dll をロードできません "
 
-#: devWindows.c:3637
+#: devWindows.c:3638
 msgid "invalid 'width' or 'height'"
 msgstr " 不正な幅か高さ "
 
-#: devWindows.c:3840
+#: devWindows.c:3841
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr " winCairo.dllをロードできませんでした。ビルドされていますか? "
 
@@ -657,6 +694,11 @@ msgstr "QuartzBitmap_Output - ファイル'%s'を開けません "
 msgid "Not a supported scheme, no image data written"
 msgstr ""
 " サポートされていないスキーム(scheme)なのでイメージデータは書き出されません "
+
+#: stubs.c:114
+#, fuzzy, c-format
+msgid "invalid '%s' argument"
+msgstr " 不正な 'file' 引数 "
 
 #~ msgid "unable to start NULL device"
 #~ msgstr " Null デバイスは開始できません "

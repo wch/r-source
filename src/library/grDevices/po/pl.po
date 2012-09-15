@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-24 09:25+0100\n"
+"POT-Creation-Date: 2012-09-15 17:47+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -21,6 +21,43 @@ msgstr ""
 #, c-format
 msgid "'%s' must be numeric of length %d"
 msgstr "'%s' musi być liczbą o długości %d"
+
+#: colors.c:71
+#, c-format
+msgid "color intensity %g, not in [0,1]"
+msgstr ""
+
+#: colors.c:78
+#, c-format
+msgid "color intensity %d, not in 0:255"
+msgstr ""
+
+#: colors.c:85
+#, c-format
+msgid "alpha level %g, not in [0,1]"
+msgstr ""
+
+#: colors.c:92
+#, c-format
+msgid "alpha level %d, not in 0:255"
+msgstr ""
+
+#: colors.c:131 colors.c:145
+msgid "invalid hsv color"
+msgstr ""
+
+#: colors.c:251 colors.c:269
+msgid "invalid hcl color"
+msgstr ""
+
+#: colors.c:326
+#, fuzzy
+msgid "invalid 'names' vector"
+msgstr "błędny argument 'file'"
+
+#: colors.c:385 colors.c:394
+msgid "invalid gray level, must be in [0,1]."
+msgstr ""
 
 #: devPS.c:559
 #, c-format
@@ -158,11 +195,11 @@ msgstr "Nie udało się zapisać kodowania urządzenia"
 msgid "Object .ps.prolog is not a character vector"
 msgstr "Obiekt '.ps.prolog' nie jest wektorem tekstowym"
 
-#: devPS.c:2639 devPS.c:6410 devWindows.c:783
+#: devPS.c:2639 devPS.c:6410 devWindows.c:784
 msgid "Invalid line end"
 msgstr "Błędny koniec linii"
 
-#: devPS.c:2658 devPS.c:6429 devWindows.c:796
+#: devPS.c:2658 devPS.c:6429 devWindows.c:797
 msgid "Invalid line join"
 msgstr "Błędny łącznik linii"
 
@@ -225,7 +262,7 @@ msgstr "'postscript(print.it=TRUE)' użyte z pustą komendą drukowania"
 msgid "invalid page type '%s' (postscript)"
 msgstr "niepoprawny typ strony '%s' (postscript)"
 
-#: devPS.c:3456 devPS.c:4569 devWindows.c:2337
+#: devPS.c:3456 devPS.c:4569 devWindows.c:2338
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -441,14 +478,14 @@ msgstr "niepoprawny parametr 'family' w %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "niepoprawny parametr 'fonts' w %s"
 
-#: devPS.c:8236 devPS.c:8398 devPS.c:8401 devWindows.c:3642 devWindows.c:3646
-#: devWindows.c:3654 devWindows.c:3665 devWindows.c:3671 devWindows.c:3678
-#: devWindows.c:3685 devWindows.c:3689
+#: devPS.c:8236 devPS.c:8398 devPS.c:8401 devWindows.c:3643 devWindows.c:3647
+#: devWindows.c:3655 devWindows.c:3666 devWindows.c:3672 devWindows.c:3679
+#: devWindows.c:3686 devWindows.c:3690
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "niepoprawna wartość '%s'"
 
-#: devPS.c:8249 devPS.c:8316 devPS.c:8415 devPicTeX.c:742 devWindows.c:3722
+#: devPS.c:8249 devPS.c:8316 devPS.c:8415 devPicTeX.c:742 devWindows.c:3723
 #, c-format
 msgid "unable to start %s() device"
 msgstr "nie można uruchomić urządzenia '%s()'"
@@ -488,150 +525,150 @@ msgstr ""
 msgid "Quartz device is not available on this platform"
 msgstr "urządzenie Quartz nie jest dostępne na tej platformie"
 
-#: devWindows.c:340 devWindows.c:386 devWindows.c:457
+#: devWindows.c:341 devWindows.c:387 devWindows.c:458
 msgid "Not enough memory to copy graphics window"
 msgstr "Zbyt mało pamięci aby skopiować okno grafiki"
 
-#: devWindows.c:345 devWindows.c:391 devWindows.c:462
+#: devWindows.c:346 devWindows.c:392 devWindows.c:463
 msgid "No device available to copy graphics window"
 msgstr "Brak dostępnego urządzenia aby skopiować okno grafiki"
 
-#: devWindows.c:395 devWindows.c:466
+#: devWindows.c:396 devWindows.c:467
 #, c-format
 msgid "'%%' is not allowed in file name"
 msgstr "'%%' nie jest dozwolone w nazwie pliku"
 
-#: devWindows.c:603
+#: devWindows.c:604
 msgid "Invalid font specification"
 msgstr "Niepoprawne określenie czcionki"
 
-#: devWindows.c:642
+#: devWindows.c:643
 msgid "Font family not found in Windows font database"
 msgstr ""
 "Rodzina czcionek nie została znaleziona w bazie czcionek systemu Windows"
 
-#: devWindows.c:1073
+#: devWindows.c:1074
 msgid "plot history seems corrupted"
 msgstr "historia wykresu wygląda na uszkodzoną"
 
-#: devWindows.c:1080
+#: devWindows.c:1081
 msgid "no plot history!"
 msgstr "brak historii wykresu!"
 
-#: devWindows.c:1794
+#: devWindows.c:1795
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "nazwa pliku jest zbyt długa w wywołaniu %s()"
 
-#: devWindows.c:1798 devWindows.c:1833 devWindows.c:1867
+#: devWindows.c:1799 devWindows.c:1834 devWindows.c:1868
 msgid "Unable to load Rbitmap.dll"
 msgstr "Nie można załadować Rbitmap.dll"
 
-#: devWindows.c:1803 devWindows.c:1842 devWindows.c:1876
+#: devWindows.c:1804 devWindows.c:1843 devWindows.c:1877
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d' są mało prawdopodobnymi wartościami w pikselach"
 
-#: devWindows.c:1811 devWindows.c:1816 devWindows.c:1845 devWindows.c:1850
-#: devWindows.c:1879 devWindows.c:1884
+#: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
+#: devWindows.c:1880 devWindows.c:1885
 msgid "Unable to allocate bitmap"
 msgstr "Nie można przydzielić bitmapy"
 
-#: devWindows.c:1822 devWindows.c:1856 devWindows.c:2180
+#: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr "Nie można otworzyć pliku '%s' do zapisu"
 
-#: devWindows.c:1839
+#: devWindows.c:1840
 msgid "filename too long in jpeg() call"
 msgstr "nazwa pliku jest zbyt długa w wywołaniu jpeg()"
 
-#: devWindows.c:1873
+#: devWindows.c:1874
 msgid "filename too long in tiff() call"
 msgstr "nazwa pliku jest zbyt długa w wywołaniu tiff()"
 
-#: devWindows.c:1905
+#: devWindows.c:1906
 msgid "filename too long in win.metafile() call"
 msgstr "nazwa pliku jest zbyt długa w wywołaniu win.metafile()"
 
-#: devWindows.c:1915
+#: devWindows.c:1916
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr "Nie można otworzyć metapliku '%s' do zapisu"
 
-#: devWindows.c:1917
+#: devWindows.c:1918
 msgid "Unable to open clipboard to write metafile"
 msgstr "Nie można otworzyć schowka aby zapisać plik meta"
 
-#: devWindows.c:2128
+#: devWindows.c:2129
 msgid "Insufficient memory for resize. Killing device"
 msgstr ""
 "Niewystarczająca ilość pamięci do zmiany rozmiaru. Zabijanie urządzenia"
 
-#: devWindows.c:2136
+#: devWindows.c:2137
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr ""
 "Niewystarczająca ilość pamięci do zmiany rozmiaru. Wyłączenie mieszania alfa"
 
-#: devWindows.c:2165
+#: devWindows.c:2166
 msgid "A clipboard metafile can store only one figure."
 msgstr "Metaplik schowka może przechowywać tylko jeden obrazek."
 
-#: devWindows.c:2171
+#: devWindows.c:2172
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "plik meta '%s' nie mógł zostać utworzony"
 
-#: devWindows.c:3108 devWindows.c:3746
+#: devWindows.c:3109 devWindows.c:3747
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:3122
+#: devWindows.c:3123
 msgid "attempt to use the locator after dev.hold()"
 msgstr "próba użycia 'locator' po 'dev.hold()'"
 
-#: devWindows.c:3386
+#: devWindows.c:3387
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "opcja 'windowsTimeouts' powinna być liczba całkowitą"
 
-#: devWindows.c:3407
+#: devWindows.c:3408
 msgid "invalid device number in 'savePlot'"
 msgstr "niepoprawny numer urządzenia w 'savePlot'"
 
-#: devWindows.c:3409
+#: devWindows.c:3410
 msgid "invalid device in 'savePlot'"
 msgstr "niepoprawne urządzenie w 'savePlot'"
 
-#: devWindows.c:3412
+#: devWindows.c:3413
 msgid "invalid filename argument in savePlot"
 msgstr "niepoprawny argument nazwy pliku w 'savePlot'"
 
-#: devWindows.c:3417
+#: devWindows.c:3418
 msgid "invalid type argument in 'savePlot'"
 msgstr "niepoprawny typ argumentu w 'savePlot'"
 
-#: devWindows.c:3444
+#: devWindows.c:3445
 msgid "unknown type in savePlot"
 msgstr "nieznany typ w 'savePlot'"
 
-#: devWindows.c:3489 devWindows.c:3522 devWindows.c:3551 devWindows.c:3583
-#: devWindows.c:3608
+#: devWindows.c:3490 devWindows.c:3523 devWindows.c:3552 devWindows.c:3584
+#: devWindows.c:3609
 msgid "processing of the plot ran out of memory"
 msgstr "zabrakło pamięci podczas przetwarzania wykresu"
 
-#: devWindows.c:3568
+#: devWindows.c:3569
 msgid "Impossible to open "
 msgstr "Nie można otworzyć "
 
-#: devWindows.c:3595
+#: devWindows.c:3596
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Nie można załadować Rbitmap.dll"
 
-#: devWindows.c:3637
+#: devWindows.c:3638
 msgid "invalid 'width' or 'height'"
 msgstr "niepoprawna wartość 'width' lub 'height'"
 
-#: devWindows.c:3840
+#: devWindows.c:3841
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Nie można załadować winCairo.dll: czy został zbudowany?"
 
@@ -652,6 +689,11 @@ msgstr "QuartzBitmap_Output - nie można otworzyć pliku '%s'"
 #: qdBitmap.c:94
 msgid "Not a supported scheme, no image data written"
 msgstr "To nie jest wspierany schemat, nie zapisano danych obrazka"
+
+#: stubs.c:114
+#, fuzzy, c-format
+msgid "invalid '%s' argument"
+msgstr "błędny argument 'file'"
 
 #~ msgid "unable to start NULL device"
 #~ msgstr "nie można uruchomić urządzenia NULL"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13+0100\n"
+"POT-Creation-Date: 2012-09-15 17:47+0100\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -63,11 +63,11 @@ msgstr "simbolo para gráfico inválido"
 msgid "Unable to clip to rotated rectangle"
 msgstr "Não é possível cortar sobre um retângulo rotacionado"
 
-#: layout.c:570
+#: layout.c:587
 msgid "invalid layout.pos.row"
 msgstr "layout.pos.row inválido"
 
-#: layout.c:574
+#: layout.c:591
 msgid "invalid layout.pos.col"
 msgstr "layout.pos.col inválido"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13+0100\n"
+"POT-Creation-Date: 2012-09-15 17:47+0100\n"
 "PO-Revision-Date: 2011-10-18 19:36-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -66,11 +66,11 @@ msgstr "неправильный символ графика"
 msgid "Unable to clip to rotated rectangle"
 msgstr "Не могу обрезать повернутый четырехугольник"
 
-#: layout.c:570
+#: layout.c:587
 msgid "invalid layout.pos.row"
 msgstr "неправильный layout.pos.row"
 
-#: layout.c:574
+#: layout.c:591
 msgid "invalid layout.pos.col"
 msgstr "неправильный layout.pos.col"
 
