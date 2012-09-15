@@ -96,11 +96,12 @@ void R_setStartTime(void); /* in sys-unix.c */
 */
 Rboolean useaqua = FALSE;
 // This should have been fixed a long time ago ....
+// Finally in Sep 2012 R.app sets ptr_R_FlushConsole
 #include <R_ext/Rdynload.h>
 DL_FUNC ptr_do_flushconsole;
 void R_FlushConsole(void) {
-    if (ptr_do_flushconsole) ptr_do_flushconsole();
-    else ptr_R_FlushConsole(); 
+    if (ptr_R_FlushConsole) ptr_R_FlushConsole(); 
+    else if (ptr_do_flushconsole) ptr_do_flushconsole();
 }
 #endif
 

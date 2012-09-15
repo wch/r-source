@@ -62,8 +62,6 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, ptr_do_browsepkgs,
     ptr_do_datamanger, ptr_do_packagemanger, ptr_do_hsbrowser;
 
 
-int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
-
 
 /* called from Mac-GUI/RController.m, before packages are loaded.
    If this fails, it hangs R.app */
@@ -83,7 +81,7 @@ QuartzFunctions_t *getQuartzFunctions(void)
 	eval(call, R_GlobalEnv);
 	UNPROTECT(1);
 	fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
-	if (!fn) error(_("unable to get QuartzAPI"));
+	if (!fn) error("unable to get QuartzAPI");
     }
     return fn();
 }
@@ -115,6 +113,9 @@ SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
     return ptr_do_packagemanger(call, op, args, env);
 }
 
+// to be set by R.app
+int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
+
 SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     const void *vm;
@@ -131,7 +132,7 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
     objType = CAR(args); args = CDR(args);
     obj = CAR(args);
 
-    if (!isString(objType) || LENGTH(objType)<1)
+    if (!isString(objType) || LENGTH(objType) < 1)
 	errorcall(call, "invalid arguments");
     ct = CHAR(STRING_ELT(objType,0));
     cpr = ptr_Raqua_CustomPrint(ct, obj);
