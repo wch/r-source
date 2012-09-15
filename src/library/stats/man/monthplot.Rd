@@ -33,7 +33,9 @@ monthplot(x, \dots)
           times = seq_along(x),
           phase = (times - 1L)\%\%length(labels) + 1L, base = mean,
           axes = TRUE, type = c("l", "h"), box = TRUE,
-          add = FALSE, \dots)
+          add = FALSE, 
+          col = par("col"), lty = par("lty"), lwd = par("lwd"), 
+          col.base = col, lty.base = lty, lwd.base = lwd, ...)
 }
 \arguments{
   \item{x}{Time series or related object.}
@@ -50,6 +52,9 @@ monthplot(x, \dots)
     lines, and \code{"h"} is for histogram-like vertical lines.}
   \item{box}{Should a box be drawn (ignored if \code{add=TRUE}?}
   \item{add}{Should thus just add on an existing plot.}
+  \item{col, lty, lwd}{Graphics parameters for the series.}
+  \item{col.base, lty.base, lwd.base}{Graphics parameters for the
+    segments used for the reference lines.}
 }
 \details{
   These functions extract subseries from a time series and plot them

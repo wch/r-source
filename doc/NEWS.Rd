@@ -227,6 +227,9 @@
 
       \item \code{gray()} and \code{gray.colors()} finally allow
       \code{alpha} to be specified.
+      
+      \item \code{monthplot()} gains parameters to control the look of
+      the reference lines.  (Suggestion of Ian McLeod.)
     }
   }
 
