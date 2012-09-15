@@ -127,8 +127,60 @@ SEXP addhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-extern SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
-extern SEXP X11_do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
+#ifdef HAVE_X11
+
+#include <Rdynpriv.h>
+#include <Rmodules/RX11.h>   /* typedefs for the module routine types */
+static R_deRoutines de_routines, *de_ptr = &de_routines;
+
+static void R_de_Init(void)
+{
+    static int de_init = 0;
+
+    if(de_init > 0) return;
+    if(de_init < 0) error(_("X11 dataentry cannot be loaded"));
+
+    de_init = -1;
+    if(strcmp(R_GUIType, "none") == 0) {
+	warning(_("X11 module is not available under this GUI"));
+	return;
+    }
+    int res = R_moduleCdynload("R_de", 1, 1);
+    if(!res) error(_("X11 dataentry cannot be loaded"));
+    de_ptr->de = (R_X11DataEntryRoutine) 
+	R_FindSymbol("in_RX11_dataentry", "R_de", NULL);
+    de_ptr->dv = (R_X11DataViewer) 
+	R_FindSymbol("in_R_X11_dataviewer", "R_de", NULL);
+    de_init = 1;
+    return;
+}
+
+static SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    R_de_Init();
+    return (*de_ptr->de)(call, op, args, rho);
+}
+
+static SEXP X11_do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    R_de_Init();
+    return (*de_ptr->dv)(call, op, args, rho);
+}
+
+#else /* no X11 */
+
+static SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error(_("X11 is not available"));
+    return R_NilValue;
+}
+
+static SEXP X11_do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error(_("X11 is not available"));
+    return R_NilValue;
+}
+#endif
 
 SEXP dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 {

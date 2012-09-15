@@ -45,7 +45,6 @@ typedef struct {
 
 typedef struct {
     R_X11DataEntryRoutine de;
-    R_GetX11ImageRoutine  image;
     R_X11DataViewer dv;
 } R_deRoutines;
 

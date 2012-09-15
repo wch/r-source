@@ -56,15 +56,10 @@ extern SEXP (*ptr_do_datamanger)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_browsepkgs)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_wsbrowser)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_hsbrowser)(SEXP, SEXP, SEXP, SEXP);
-extern SEXP (*ptr_do_dataentry)(SEXP, SEXP, SEXP, SEXP);
-extern SEXP (*ptr_do_selectlist)(SEXP, SEXP, SEXP, SEXP);
-extern void (*ptr_do_flushconsole)();
 */
 
-DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
-//    ptr_do_dataentry, ptr_do_selectlist,
-    ptr_do_browsepkgs, ptr_do_datamanger,
-    ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser;
+DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, ptr_do_browsepkgs,
+    ptr_do_datamanger, ptr_do_packagemanger, ptr_do_hsbrowser;
 
 
 int (*ptr_Raqua_CustomPrint)(const char *, SEXP);

@@ -2611,19 +2611,3 @@ static int last_wchar_bytes(char *str)
     return(bytes);
 }
 
-#include <Rmodules/RX11.h>   /* typedefs for the module routine types */
-
-#include <R_ext/Rdynload.h>
-void R_init_R_de(DllInfo *info)
-{
-    R_deRoutines *tmp;
-    tmp = (R_deRoutines*) malloc(sizeof(R_deRoutines));
-    if(!tmp) {
-	error(_("cannot allocate memory for deRoutines structure"));
-	return;
-    }
-    tmp->de = in_RX11_dataentry;
-    tmp->dv = in_R_X11_dataviewer;
-    R_setdeRoutines(tmp);
-}
-
