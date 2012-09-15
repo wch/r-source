@@ -198,7 +198,7 @@ SEXP dataviewer(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    if(ptr_do_selectlist) return ptr_do_selectlist(call, op, args, env);
+    if(ptr_do_selectlist) return ptr_do_selectlist(call, op, CDR(args), env);
     return R_NilValue;
 }
 #endif

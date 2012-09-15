@@ -136,5 +136,6 @@ void R_init_grDevices(DllInfo *dll)
 {
     R_registerRoutines(dll, CEntries, CallEntries, NULL, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
-    R_forceSymbols(dll, TRUE);
+// Uh, oh, R.app looks up symbols ....
+//    R_forceSymbols(dll, TRUE);
 }

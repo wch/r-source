@@ -65,24 +65,27 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, ptr_do_browsepkgs,
 int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
 
 
-/* called from Mac-GUI/RController.m */
-static QuartzFunctions_t* qfn;  // could this not be internal to function?
-QuartzFunctions_t *getQuartzFunctions(void) {
+/* called from Mac-GUI/RController.m, before packages are loaded.
+   If this fails, it hangs R.app */
+
+/* FIXME: this should not be allowed: we were requiring symbols in
+   grDevices.dll */
+QuartzFunctions_t *getQuartzFunctions(void) 
+{
+    static QuartzFunctions_t* qfn;
     if (qfn) return qfn;
-    {
-	QuartzFunctions_t *(*fn)(void);
+
+    QuartzFunctions_t *(*fn)(void);
+    fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
+    if (!fn) {
+	SEXP call = lang2(install("loadNamespace"), mkString("grDevices"));
+	PROTECT(call);
+	eval(call, R_GlobalEnv);
+	UNPROTECT(1);
 	fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
-	if (!fn) {
-	    /* we need to load grDevices - not sure if this is the best way, though ... */
-	    SEXP call = lang2(install("loadNamespace"), install("grDevices"));
-	    PROTECT(call);
-	    eval(call, R_GlobalEnv);
-	    UNPROTECT(1);
-	    fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
-	    if (!fn) error(_("unable to load Quartz"));
-	}
-	return fn();
+	if (!fn) error(_("unable to get QuartzAPI"));
     }
+    return fn();
 }
 
 
