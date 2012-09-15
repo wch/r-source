@@ -16,9 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-memory.size <- function(max = FALSE) round(.Internal(memory.size(max)), 2L)
+memory.size <- function(max = FALSE) round(.Call(C_memsize, max), 2L)
 
-memory.limit <- function(size = NA) trunc(.Internal(memory.size(size)))
+memory.limit <- function(size = NA) trunc(.Call(C_memsize, size))
 
 DLL.version <- function(path) .Call(C_dllversion, path)
 
@@ -105,7 +105,7 @@ menuShowCRAN <- function()
     shell.exec(CRAN)
 }
 
-shortPathName <- function(path) .Internal(shortPathName(path))
+shortPathName <- function(path) .Call(C_shortpath, path)
 
 readRegistry <-
     function(key, hive=c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),

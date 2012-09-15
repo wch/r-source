@@ -82,6 +82,24 @@ SEXP palette(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_palette(call, op, CDR(args), env);
 }
 
+#ifdef WIN32
+SEXP bringtotop(SEXP sdev, SEXP sstay);
+SEXP msgwindow(SEXP sdev, SEXP stype);
+
+
+SEXP bringToTop(SEXP sdev, SEXP sstay)
+{
+    return bringtotop(sdev, sstay);
+}
+
+SEXP msgWindow(SEXP sdev, SEXP stype)
+{
+    return msgwindow(sdev, stype);
+}
+
+#endif
+
+
 #include <R_ext/GraphicsEngine.h>
 
 SEXP devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env)

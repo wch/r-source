@@ -644,11 +644,6 @@ FUNTAB R_FunTab[] =
 
 #ifdef Win32
 {"shell.exec",	do_shellexec,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"memory.size",	do_memsize,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"bringToTop",	do_bringtotop,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"msgWindow",	do_msgwindow,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"shortPathName",do_shortpath,	0,	11,	1,	{PP_FUNCALL, PREC_FN,   0}},
-{"loadRconsole", do_loadRconsole,0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Sys.which",	do_syswhich,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"useInternet2",do_setInternet2,0,	211,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"mkjunction", do_mkjunction,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -660,7 +655,6 @@ FUNTAB R_FunTab[] =
 {"data.manager", do_datamanger,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"package.manager",do_packagemanger,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"hsbrowser",	do_hsbrowser,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-//{"select.list",do_selectlist,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"aqua.custom.print", do_aqua_custom_print, 0, 11, 2,   {PP_FUNCALL, PREC_FN,   0}},
 #endif
 

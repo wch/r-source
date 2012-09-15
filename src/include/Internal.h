@@ -49,13 +49,8 @@ SEXP do_aqua_custom_print(SEXP, SEXP, SEXP, SEXP);
 /* Function Names */
 
 #if Win32
-SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
-SEXP do_loadRconsole(SEXP, SEXP, SEXP, SEXP);
-SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mkjunction(SEXP, SEXP, SEXP, SEXP);
-SEXP do_msgwindow(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
-SEXP do_shortpath(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setInternet2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_syswhich(SEXP, SEXP, SEXP, SEXP);
 #endif

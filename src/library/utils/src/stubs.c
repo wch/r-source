@@ -216,3 +216,25 @@ SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_EditFiles(n, f, title, editor);
     return R_NilValue;
 }
+
+#ifdef Win32
+SEXP in_loadRconsole(SEXP);
+SEXP in_memsize(SEXP);
+SEXP in_shortpath(SEXP);
+
+SEXP loadRconsole(SEXP file)
+{
+    return in_loadRconsole(file);
+}
+
+SEXP memsize(SEXP size)
+{
+    return in_memsize(size);
+}
+
+SEXP shortpath(SEXP paths)
+{
+    return in_shortpath(paths);
+}
+
+#endif

@@ -84,6 +84,9 @@ static const R_CallMethodDef CallEntries[] = {
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),
     CALLDEF(cairoProps, 1),
+#else
+    CALLDEF(bringToTop, 2),
+    CALLDEF(msgWindow, 2),
 #endif
     {NULL, NULL, 0}
 };

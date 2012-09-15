@@ -85,4 +85,8 @@ SEXP getWindowsHandles(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP arrangeWindows(SEXP call, SEXP op, SEXP args, SEXP env);
 
 SEXP dllversion(SEXP path);
+
+SEXP loadRconsole(SEXP file);
+SEXP memsize(SEXP size);
+SEXP shortpath(SEXP paths);
 #endif

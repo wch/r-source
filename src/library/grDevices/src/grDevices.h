@@ -66,6 +66,8 @@ PDFDeviceDriver(pDevDesc, const char *, const char *, const char *,
 #ifdef WIN32
 SEXP devga(SEXP);
 SEXP savePlot(SEXP);
+SEXP bringToTop(SEXP, SEXP);
+SEXP msgWindow(SEXP, SEXP);
 #endif
 
 SEXP devcap(SEXP args);

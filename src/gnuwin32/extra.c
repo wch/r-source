@@ -150,15 +150,12 @@ void Rwin_fpset(void)
 #include <preferences.h>
 
 /* utils::loadRconsole */
-SEXP do_loadRconsole(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP in_loadRconsole(SEXP sfile)
 {
-    SEXP sfile;
     struct structGUI gui;
 
-    checkArity(op, args);
-    sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, _("invalid '%s' argument"), "file");
+	error(_("invalid '%s' argument"), "file");
     getActive(&gui);  /* Will get defaults if there's no active console */
     if (loadRconsole(&gui, translateChar(STRING_ELT(sfile, 0)))) applyGUI(&gui);
     if (strlen(gui.warning)) warning(gui.warning);
@@ -292,34 +289,33 @@ struct mallinfo {
 extern R_size_t R_max_memory;
 
 struct mallinfo mallinfo(void);
-#endif
+#endif 
 
-SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP in_memsize(SEXP ssize)
 {
     SEXP ans;
     int maxmem = NA_LOGICAL;
 
-    checkArity(op, args);
-    if(isLogical(CAR(args))) 
-	maxmem = asLogical(CAR(args));
-    else if(isReal(CAR(args))) {
+    if(isLogical(ssize)) 
+	maxmem = asLogical(ssize);
+    else if(isReal(ssize)) {
 	R_size_t newmax;
-	double mem = asReal(CAR(args));
+	double mem = asReal(ssize);
 	if (!R_FINITE(mem))
-	    errorcall(call, _("incorrect argument"));
+	    error(_("incorrect argument"));
 #ifdef LEA_MALLOC
 #ifndef WIN64
 	if(mem >= 4096)
-	    errorcall(call, _("don't be silly!: your machine has a 4Gb address limit"));
+	    error(_("don't be silly!: your machine has a 4Gb address limit"));
 #endif
 	newmax = mem * 1048576.0;
 	if (newmax < R_max_memory)
-	    warningcall(call, _("cannot decrease memory limit: ignored"));
+	    warning(_("cannot decrease memory limit: ignored"));
 	else
 	    R_max_memory = newmax;
 #endif
     } else
-	errorcall(call, _("incorrect argument"));
+	error(_("incorrect argument"));
 	
     PROTECT(ans = allocVector(REALSXP, 1));
 #ifdef LEA_MALLOC
@@ -518,17 +514,15 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* utils::shortPathName */
-SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP in_shortpath(SEXP paths)
 {
-    SEXP ans, paths = CAR(args), el;
+    SEXP ans, el;
     int i, n = LENGTH(paths);
     char tmp[MAX_PATH];
     wchar_t wtmp[32768];
     DWORD res;
 
-    checkArity(op, args);
-    if(!isString(paths))
-	errorcall(call, _("'path' must be a character vector"));
+    if(!isString(paths)) error(_("'path' must be a character vector"));
 
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
@@ -562,25 +556,24 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 extern UImode CharacterMode;
 
 /* grDevices::bringToTop */
-SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP bringtotop(SEXP sdev, SEXP sstay)
 {
     int dev, stay;
     pGEDevDesc gdd;
     gadesc *xd;
 
-    checkArity(op, args);
-    dev = asInteger(CAR(args));
-    stay = asInteger(CADR(args));
+    dev = asInteger(sdev);
+    stay = asInteger(sstay);
 
     if(dev == -1) { /* console */
 	if(CharacterMode == RGui) BringToTop(RConsole, stay);
     } else {
 	if(dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER)
-	    errorcall(call, _("invalid '%s' argument"), "which");
+	    error(_("invalid '%s' argument"), "which");
 	gdd = GEgetDevice(dev - 1);
-	if(!gdd) errorcall(call, _("invalid device"));
+	if(!gdd) error(_("invalid device"));
 	xd = (gadesc *) gdd->dev->deviceSpecific;
-	if(!xd) errorcall(call, _("invalid device"));
+	if(!xd) error(_("invalid device"));
 	if(stay && ismdi()) error(_("requires SDI mode"));
 	BringToTop(xd->gawin, stay);
     }
@@ -588,25 +581,24 @@ SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* grDevices::msgWindow */
-SEXP do_msgwindow(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP msgwindow(SEXP sdev, SEXP stype)
 {
     int dev, type;
     pGEDevDesc gdd;
     gadesc *xd;
 
-    checkArity(op, args);
-    dev = asInteger(CAR(args));
-    type = asInteger(CADR(args));
+    dev = asInteger(sdev);
+    type = asInteger(stype);
 
     if(dev == -1) { /* console */
 	if(CharacterMode == RGui) GA_msgWindow(RConsole, type);
     } else {
 	if(dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER)
-	    errorcall(call, _("invalid '%s' argument"), "which");
+	    error(_("invalid '%s' argument"), "which");
 	gdd = GEgetDevice(dev - 1);
-	if(!gdd) errorcall(call, _("invalid device"));
+	if(!gdd) error(_("invalid device"));
 	xd = (gadesc *) gdd->dev->deviceSpecific;
-	if(!xd) errorcall(call, _("invalid device"));
+	if(!xd) error(_("invalid device"));
 	if(type == 5) {
 	    xd->recording = TRUE;
 	    check(xd->mrec);

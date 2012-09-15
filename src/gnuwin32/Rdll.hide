@@ -56,7 +56,6 @@
  MDIset
  MDIsize
  MainThread
- PRIMOFFSET
  PrintUsage
  ProfileEvent
  R_BCNodeStackBase
@@ -83,6 +82,7 @@
  R_ExternalPtrAddrFn
  R_FileMtime
  R_FreeSEXP
+ R_FreeStringBufferL
  R_GE_VStrHeight
  R_GE_VStrWidth
  R_GE_VText
@@ -211,6 +211,7 @@
  R_isMissing
  R_is_running
  R_jit_enabled
+ R_lazyLoadDBinsertValue
  R_localtime
  R_max_memory
  R_max_num_math_threads
@@ -220,6 +221,7 @@
  R_newunz
  R_newurl
  R_num_math_threads
+ R_nwarnings
  R_osDynSymbol
  R_possible_dispatch
  R_pretty
@@ -538,7 +540,6 @@
  do_body
  do_bodyCode
  do_break
- do_bringtotop
  do_browser
  do_builtins
  do_c
@@ -759,7 +760,6 @@
  do_mkjunction
  do_modelframe
  do_modelmatrix
- do_msgwindow
  do_mvfft
  do_names
  do_namesgets

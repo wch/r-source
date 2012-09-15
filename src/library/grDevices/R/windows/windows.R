@@ -147,7 +147,8 @@ bringToTop <- function(which = dev.cur(), stay = FALSE)
     }
     if(which > 0 && .Devices[[which]] != "windows")
         stop("can only bring windows devices to the front")
-    invisible(.Internal(bringToTop(as.integer(which), as.logical(stay))))
+    .Call(C_bringToTop, as.integer(which), as.logical(stay))
+    invisible()
 }
 
 msgWindow <-
@@ -161,7 +162,8 @@ msgWindow <-
     if(!exists(".Devices")) .Devices <- list("null device")
     if(which > 0 && .Devices[[which]] != "windows")
         stop("can only manipulate windows devices")
-    invisible(.Internal(msgWindow(as.integer(which), as.integer(itype))))
+    .Call(C_msgWindow, as.integer(which), as.integer(itype))
+    invisible()
 }
 
 savePlot <- function(filename = "Rplot",
