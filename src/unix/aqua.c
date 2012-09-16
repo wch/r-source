@@ -50,13 +50,13 @@ extern Rboolean useaqua; /* from src/unix/system.c */
    So this is a essentially a private hook arrangement for R.app
 
    There's another one in src/main/systutils.c, ptr_CocoaSystem .
-
-extern SEXP (*ptr_do_wsbrowser)(SEXP, SEXP, SEXP, SEXP);
 */
 
-DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters;
-// Remove next set eventually
-DL_FUNC ptr_do_browsepkgs, ptr_do_datamanger, ptr_do_packagemanger, ptr_do_hsbrowser;
+DL_FUNC ptr_GetQuartzParameters;
+// Remove rest eventually
+DL_FUNC ptr_do_wsbrowser, ptr_do_browsepkgs, ptr_do_datamanger, 
+    ptr_do_packagemanger, ptr_do_hsbrowser;
+int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
 
 
 
@@ -83,28 +83,5 @@ QuartzFunctions_t *getQuartzFunctions(void)
     return fn();
 }
 
-
-SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_wsbrowser(call, op, args, env);
-}
-
-// to be set by R.app
-int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
-
-SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    if (!ptr_Raqua_CustomPrint) return R_NilValue;
-
-    checkArity(op, args);
-    SEXP objType = CAR(args), obj = CADR(args);
-
-    if (!isString(objType) || LENGTH(objType) < 1)
-	errorcall(call, "invalid arguments");
-    const char *ct = CHAR(STRING_ELT(objType, 0));
-    int cpr = ptr_Raqua_CustomPrint(ct, obj);
-
-    return ScalarInteger(cpr);
-}
 #endif
 

@@ -39,10 +39,7 @@ function(topic, package = NULL, lib.loc = NULL,
                     return(library(help = package, lib.loc = lib.loc,
                                    character.only = TRUE))
                 browser <- if (.Platform$GUI == "AQUA") {
-                    function(x, ...) {
-                        .Internal(aqua.custom.print("help-files", x))
-                        return(invisible(x))
-                    }
+                    get("aqua.browser", envir = as.environment("tools:RGUI"))
                 } else getOption("browser")
  		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
                                 "/library/", package, "/html/00Index.html",
@@ -104,12 +101,8 @@ print.help_files_with_topic <- function(x, ...)
     browser <- getOption("browser")
     topic <- attr(x, "topic")
     type <- attr(x, "type")
-    if (.Platform$GUI == "AQUA" && type == "html") {
-        browser <- function(x, ...) {
-            .Internal(aqua.custom.print("help-files", x))
-    	    return(invisible(x))
-        }
-    }
+    if (.Platform$GUI == "AQUA" && type == "html")
+        browser <- get("aqua.browser", envir = as.environment("tools:RGUI"))
     paths <- as.character(x)
     if(!length(paths)) {
         writeLines(c(gettextf("No documentation for %s in specified packages and libraries:",

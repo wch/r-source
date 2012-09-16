@@ -174,14 +174,15 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 				    si[c("user","nodename","sysname")]})))
     }
     if(html)
-	wsbrowser(IDS,IsRoot,Container,ItemsPerContainer, ParentID,
-		  NAMES,TYPES,DIMS,
-		  kind = "HTML", main = main, properties = properties,
-		  expanded)
-    else ## currently only for Mac:
-	.Internal(wsbrowser(as.integer(IDS),IsRoot,Container,
-			    as.integer(ItemsPerContainer),as.integer(ParentID),
-			    NAMES,TYPES,DIMS))
+	wsbrowser(IDS, IsRoot, Container, ItemsPerContainer, ParentID,
+		  NAMES, TYPES, DIMS, kind = "HTML", main = main,
+                  properties = properties, expanded)
+    else if(.Platform$GUI == "AQUA") {
+        awsbrowser <- get("wsbrowser", envir = as.environment("tools:RGUI"))
+ 	awsbrowser(as.integer(IDS), IsRoot, Container,
+                   as.integer(ItemsPerContainer), as.integer(ParentID),
+                   NAMES, TYPES, DIMS)
+   } else stop("only 'html = TRUE' is supported on this platform")
 }
 
 wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
