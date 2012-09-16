@@ -79,7 +79,7 @@ SEXP pacf1(SEXP acf, SEXP lmax)
     INTEGER(d)[0] = lagmax;
     INTEGER(d)[1] = INTEGER(d)[2] = 1;
     setAttrib(ans, R_DimSymbol, d);
-    UNPROTECT(2);
+    UNPROTECT(3);
     return ans;
 }
 
