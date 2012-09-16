@@ -51,15 +51,12 @@ extern Rboolean useaqua; /* from src/unix/system.c */
 
    There's another one in src/main/systutils.c, ptr_CocoaSystem .
 
-extern SEXP (*ptr_do_packagemanger)(SEXP, SEXP, SEXP, SEXP);
-extern SEXP (*ptr_do_datamanger)(SEXP, SEXP, SEXP, SEXP);
-extern SEXP (*ptr_do_browsepkgs)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_wsbrowser)(SEXP, SEXP, SEXP, SEXP);
-extern SEXP (*ptr_do_hsbrowser)(SEXP, SEXP, SEXP, SEXP);
 */
 
-DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, ptr_do_browsepkgs,
-    ptr_do_datamanger, ptr_do_packagemanger, ptr_do_hsbrowser;
+DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters;
+// Remove next set eventually
+DL_FUNC ptr_do_browsepkgs, ptr_do_datamanger, ptr_do_packagemanger, ptr_do_hsbrowser;
 
 
 
@@ -92,59 +89,22 @@ SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
     return ptr_do_wsbrowser(call, op, args, env);
 }
 
-SEXP do_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_browsepkgs(call, op, args, env);
-}
-
-SEXP do_datamanger(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_datamanger(call, op, args, env);
-}
-
-
-SEXP do_hsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_hsbrowser(call, op, args, env);
-}
-
-SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_packagemanger(call, op, args, env);
-}
-
 // to be set by R.app
 int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
 
 SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    const void *vm;
-    const char *ct;
-    int cpr;
-    SEXP rv, objType, obj;
-
     if (!ptr_Raqua_CustomPrint) return R_NilValue;
 
     checkArity(op, args);
-
-    vm = vmaxget();
-
-    objType = CAR(args); args = CDR(args);
-    obj = CAR(args);
+    SEXP objType = CAR(args), obj = CADR(args);
 
     if (!isString(objType) || LENGTH(objType) < 1)
 	errorcall(call, "invalid arguments");
-    ct = CHAR(STRING_ELT(objType,0));
-    cpr = ptr_Raqua_CustomPrint(ct, obj);
+    const char *ct = CHAR(STRING_ELT(objType, 0));
+    int cpr = ptr_Raqua_CustomPrint(ct, obj);
 
-    /* FIXME: trying to store a pointer in an integer is wrong */
-    PROTECT(rv = allocVector(INTSXP, 1));
-    INTEGER(rv)[0] = cpr;
-
-    vmaxset(vm);
-    UNPROTECT(1);
-
-    return rv;
+    return ScalarInteger(cpr);
 }
 #endif
 
