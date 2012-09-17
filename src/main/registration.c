@@ -65,15 +65,17 @@
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static R_CallMethodDef callMethods [] = {
-    /* Top-level task callbacks */
+    /* Top-level task callbacks: .Call as .Internal does not work */
+    CALLDEF(R_addTaskCallback, 4),
     CALLDEF(R_getTaskCallbackNames, 0),
     CALLDEF(R_removeTaskCallback, 1),
-    CALLDEF(R_addTaskCallback, 4),
 
+#ifdef BC_PROFILING
     // These have no interface in R, so used directly by .Call
     CALLDEF(R_getbcprofcounts, 0),
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
+#endif
 
     {NULL, NULL, 0}
 };
@@ -83,11 +85,14 @@ static R_CallMethodDef callMethods [] = {
 static R_FortranMethodDef fortranMethods[] = {
     FDEF(ch2inv, 5),
     FDEF(chol, 5),
+
+    /* EISPACK */
     FDEF(cg, 13),
     FDEF(ch, 12),
     FDEF(rg, 10),
     FDEF(rs, 9),
-    /* Linpack etc */
+
+    /* LINPACK */
     FDEF(dchdc, 7),
     FDEF(dqrcf, 8),
     FDEF(dqrdc2, 9),
@@ -97,7 +102,7 @@ static R_FortranMethodDef fortranMethods[] = {
     FDEF(dqrxb, 7),
     FDEF(dsvdc, 13),
     FDEF(dtrco, 6),
-//    FDEF(dqrls, -1), // for historical reasons, 13 args
+
     {NULL, NULL, 0}
 };
 

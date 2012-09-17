@@ -36,10 +36,7 @@
 
 \alias{.C_R_addTaskCallback}
 \alias{.C_R_getTaskCallbackNames}
-\alias{.C_R_getbcprofcounts}
 \alias{.C_R_removeTaskCallback}
-\alias{.C_R_startbcprof}
-\alias{.C_R_stopbcprof}
 \alias{.F_cg}
 \alias{.F_ch}
 \alias{.F_ch2inv}
@@ -55,6 +52,10 @@
 \alias{.F_dtrco}
 \alias{.F_rg}
 \alias{.F_rs}
+% These are compiled in conditionally
+\alias{.C_R_getbcprofcounts}
+\alias{.C_R_startbcprof}
+\alias{.C_R_stopbcprof}
 
 \title{Internal Objects in Package \pkg{base}}
 \description{
