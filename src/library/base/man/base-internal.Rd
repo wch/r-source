@@ -32,6 +32,7 @@
 \alias{.methodsNamespace} % created by the methods package ....
 \alias{.popath}
 \alias{.mapply}
+\alias{.detach}
 
 \alias{.C_R_addTaskCallback}
 \alias{.C_R_getTaskCallbackNames}
@@ -39,8 +40,6 @@
 \alias{.C_R_removeTaskCallback}
 \alias{.C_R_startbcprof}
 \alias{.C_R_stopbcprof}
-\alias{.C_bincode}
-\alias{.C_str_signif}
 \alias{.F_cg}
 \alias{.F_ch}
 \alias{.F_ch2inv}
@@ -105,6 +104,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .popath
 
 .mapply(FUN, dots, MoreArgs)
+
+.detach(pos)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -145,6 +146,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{dots}{list of arguments to vectorize over (vectors or lists of
     strictly positive length, or all of zero length).}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
+  \item{pos}{an integer.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -224,6 +226,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{.popath} is a variable created at startup which records where
   the \pkg{translations} package in use is.
+  
+  \code{.mapply} and \code{.detach} are \sQuote{bare-bones} versions for
+  use in other \R packages.
   
   Objects starting \code{.C_} and \code{.F_} are references to
   registered C and Fortran entry points.

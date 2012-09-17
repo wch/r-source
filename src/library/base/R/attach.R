@@ -121,7 +121,7 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
     ## out of the way now
     if (! grepl("^package:", packageName) ) {
         res <- .Internal(detach(pos))
-        return(invisible(res))
+        return(res)
     }
 
     pkgname <- sub("^package:", "", packageName)
@@ -174,6 +174,8 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
     }
     invisible()
 }
+
+.detach <- function(pos) .Internal(detach(pos))
 
 ls <- objects <-
     function (name, pos = -1, envir = as.environment(pos), all.names = FALSE,

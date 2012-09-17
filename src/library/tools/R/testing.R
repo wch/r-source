@@ -586,7 +586,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
     isPkg <- grepl("^package:", pkgs)
     for(item in pkgs[!isPkg]) {
         pos <- match(item, search())
-        if(!is.na(pos)) .Internal(detach(pos))
+        if(!is.na(pos)) .detach(pos)
     }
 
     pkgs <- pkgs[isPkg]
