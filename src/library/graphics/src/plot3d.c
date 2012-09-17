@@ -180,22 +180,19 @@ SEXP C_filledcontour(SEXP args)
     sy = PROTECT(coerceVector(CAR(args), REALSXP));
     ny = LENGTH(sy);
     args = CDR(args);
+    if (nx < 2 || ny < 2) error(_("insufficient 'x' or 'y' values"));
 
-    sz = PROTECT(coerceVector(CAR(args), REALSXP));
+    // do it this way as coerceVector can lose dims, e.g. for a list matrix
+    sz = CAR(args);
+    if (nrows(sz) != nx || ncols(sz) != ny) error(_("dimension mismatch"));
+    sz = PROTECT(coerceVector(sz, REALSXP));
     args = CDR(args);
 
     sc = PROTECT(coerceVector(CAR(args), REALSXP)); /* levels */
     nc = length(sc);
     args = CDR(args);
 
-    if (nx < 2 || ny < 2)
-	error(_("insufficient 'x' or 'y' values"));
-
-    if (nrows(sz) != nx || ncols(sz) != ny)
-	error(_("dimension mismatch"));
-
-    if (nc < 1)
-	error(_("no contour values"));
+    if (nc < 1) error(_("no contour values"));
 
     PROTECT(scol = FixupCol(CAR(args), R_TRANWHITE));
     ncol = length(scol);

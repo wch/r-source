@@ -119,10 +119,8 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
 
     ## we need to treat packages differently from other objects, so get those
     ## out of the way now
-    if (! grepl("^package:", packageName) ) {
-        res <- .Internal(detach(pos))
-        return(res)
-    }
+    if (! grepl("^package:", packageName) )
+        return(invisible(.Internal(detach(pos))))
 
     pkgname <- sub("^package:", "", packageName)
     for(pkg in search()[-1L]) {
