@@ -91,10 +91,9 @@ void R_setStartTime(void); /* in sys-unix.c */
 
 
 #ifdef HAVE_AQUA
-/*  this should be a global variable as it used in unix/aqua.c
-    and main/sysutils.c (for system).
-*/
+/*  used here and in main/sysutils.c (for system). */
 Rboolean useaqua = FALSE;
+
 // This should have been fixed a long time ago ....
 // Finally in Sep 2012 R.app sets ptr_R_FlushConsole
 #include <R_ext/Rdynload.h>
@@ -280,15 +279,15 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef HAVE_X11
     if(useX11) R_GUIType = "X11";
 #endif /* HAVE_X11 */
+
 #ifdef HAVE_AQUA
-    if(useaqua)
-	R_GUIType = "AQUA";
+    if(useaqua) R_GUIType = "AQUA";
 #endif
+
 #ifdef HAVE_TCLTK
-    if(useTk) {
-	R_GUIType = "Tk";
-    }
+    if(useTk) R_GUIType = "Tk";
 #endif
+
     R_common_command_line(&ac, av, Rp);
     while (--ac) {
 	if (**++av == '-') {
@@ -404,7 +403,8 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef HAVE_AQUA
     /* for Aqua and non-dumb terminal use callbacks instead of connections
        and pretty-print warnings/errors (ESS = dumb terminal) */
-    if(useaqua || (R_Interactive && getenv("TERM") && strcmp(getenv("TERM"),"dumb"))) {
+    if(useaqua || 
+       (R_Interactive && getenv("TERM") && strcmp(getenv("TERM"), "dumb"))) {
 	R_Outputfile = NULL;
 	R_Consolefile = NULL;
 	ptr_R_WriteConsoleEx = Rstd_WriteConsoleEx;

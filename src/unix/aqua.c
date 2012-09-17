@@ -21,6 +21,10 @@
 #include <config.h>
 #endif
 
+/* This file provides support for R.app, the OS X front end */
+
+#ifdef HAVE_AQUA
+
 #include <Defn.h>
 #include <Internal.h>
 
@@ -30,18 +34,12 @@
 # include <sys/stat.h>
 #endif
 
-
-#ifdef HAVE_AQUA
-
 /* tell QuartzDevice.h to insert definitions for us (to maintain consistency) */
 #define IN_AQUA_C 1
 
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/QuartzDevice.h>
-
-extern Rboolean useaqua; /* from src/unix/system.c */
-
 
 /* These are in no header.  Their definitions are in
    Mac-GUI/REngine/Rinit.m, which sets them to functions in
