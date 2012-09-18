@@ -571,7 +571,6 @@
  do_debug
  do_delayed
  do_deparse
- do_deparseRd
  do_detach
  do_devAskNewPage
  do_devsize
@@ -779,8 +778,6 @@
  do_parentenvgets
  do_parentframe
  do_parse
- do_parseLatex
- do_parseRd
  do_paste
  do_pathexpand
  do_pipe
