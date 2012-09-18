@@ -178,10 +178,12 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 		  NAMES,TYPES,DIMS,
 		  kind = "HTML", main = main, properties = properties,
 		  expanded)
-    else ## currently only for Mac:
+    else {## currently only for Mac:
 	.Internal(wsbrowser(as.integer(IDS),IsRoot,Container,
 			    as.integer(ItemsPerContainer),as.integer(ParentID),
 			    NAMES,TYPES,DIMS))
+        invsible()
+    }
 }
 
 wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
