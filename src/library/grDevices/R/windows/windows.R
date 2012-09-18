@@ -97,22 +97,15 @@ windows <-
                         d$fillOddEven, family, antialias))
 }
 
+## historical wrappers
 win.graph <- function(width, height, pointsize)
-{
-    new <- list()
-    if(!missing(width)) new$width <- as.double(width)
-    if(!missing(height)) new$height <- as.double(height)
-    if(!missing(pointsize)) new$pointsize <- as.double(pointsize)
-    d <- check.options(new = new, envir = .WindowsEnv,
-                       name.opt = ".Windows.Options",
-                       reset = FALSE, assign.opt = FALSE)
-    invisible(.External(C_devga, "", d$width, d$height, d$pointsize,
-                        FALSE, 1L, d$xpinch, d$ypinch, "white",
-                        d$gamma, NA_integer_, NA_integer_, d$buffered,
-                        .PSenv, NA, d$restoreConsole, "", TRUE,
-                        d$fillOddEven, "",
-                        pmatch(d$antialias, aa.win)))
-}
+    windows(width = width, height = height, pointsize = pointsize)
+
+x11 <- X11 <-
+     function(width, height, pointsize, bg, gamma, xpos, ypos, title)
+    windows(width = width, height = height, pointsize = pointsize,
+            bg = bg, gamma = gamma,
+            xpos = xpos, ypos = ypos, title = title)
 
 win.print <-
     function(width = 7, height = 7, pointsize = 12, printer = "",
