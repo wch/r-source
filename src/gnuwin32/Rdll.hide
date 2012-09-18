@@ -121,13 +121,8 @@
  R_Parse1File
  R_ParseBuffer
  R_ParseConn
- R_ParseContext
- R_ParseContextLast
- R_ParseContextLine
- R_ParseError
  R_ParseErrorCol
  R_ParseErrorFile
- R_ParseErrorMsg
  R_ParseFile
  R_PendingPromises
  R_Primitive
@@ -147,9 +142,7 @@
  R_ShowErrorMessages
  R_ShowFiles
  R_ShowWarnCalls
- R_SrcfileSymbol
  R_Srcref
- R_SrcrefSymbol
  R_StdinEnc
  R_StringHash
  R_SymbolTable
@@ -1232,7 +1225,6 @@
  pagerMultiple
  pagerbclose
  pagerhighlight
- parseError
  pause
  pcre_assign_jit_stack
  pcre_callout
