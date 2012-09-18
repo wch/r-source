@@ -449,15 +449,6 @@ static SEXP GrowList(SEXP l, SEXP s)
 
 /*--------------------------------------------------------------------------*/
 
-/*
- *  Parsing Entry Points:
- *
- *  The Following entry points provide Rd parsing facilities.
- *
- *	SEXP R_ParseLatex(SEXP text, ParseStatus *status, SEXP srcfile)
- *
- */
- 
 static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 {
     R_ParseContextLast = 0;
@@ -499,7 +490,7 @@ static int char_getc(void)
     return (c);
 }
 
-attribute_hidden
+static
 SEXP R_ParseLatex(SEXP text, ParseStatus *status, SEXP srcfile)
 {
     nextchar_parse = CHAR(STRING_ELT(text, 0));

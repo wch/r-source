@@ -129,8 +129,6 @@
  R_ParseErrorFile
  R_ParseErrorMsg
  R_ParseFile
- R_ParseLatex
- R_ParseRd
  R_PendingPromises
  R_Primitive
  R_Quiet
