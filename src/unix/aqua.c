@@ -29,9 +29,6 @@
 # include <sys/stat.h>
 #endif
 
-
-#ifdef HAVE_AQUA
-
 /* tell QuartzDevice.h to insert definitions for us (to maintain consistency) */
 #define IN_AQUA_C 1
 
@@ -57,8 +54,13 @@ extern void (*ptr_R_FlushConsole)(void);
    If this fails, it hangs R.app */
 QuartzFunctions_t *getQuartzFunctions(void) 
 {
+    /* presumably this was intended to cache the result.
+       But,
+       - it was never used
+       - it would be unsafe as the namespace could be unloaded/reloaded
     static QuartzFunctions_t* qfn;
     if (qfn) return qfn;
+    */
 
     QuartzFunctions_t *(*fn)(void);
     fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
@@ -145,4 +147,4 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ScalarInteger(cpr);
 }
-#endif
+
