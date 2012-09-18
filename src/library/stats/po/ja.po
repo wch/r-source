@@ -8,18 +8,19 @@ msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-10 13:58+0100\n"
-"PO-Revision-Date: 2010-09-29 20:43+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"PO-Revision-Date: 2012-09-13 15:56+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
-"X-Generator: Pootle 1.1.0 \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 #: Srunmed.c:58
 msgid "bandwidth/span of running medians is larger than n"
-msgstr " 移動中央値のバンド幅・バンド範囲(span)が n より大きくなっています "
+msgstr " 移動中央値のバンド幅・バンド範囲 (span) が n より大きくなっています "
 
 #: ansari.c:149
 msgid "probabilities outside [0,1] in qansari()"
@@ -69,7 +70,7 @@ msgstr " 値 %g は範囲 (0, 1) 外です "
 #: family.c:64 family.c:78 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
-msgstr " 引数 %s は空でない数値ベクトルでなければなりません  "
+msgstr " 引数 %s は空でない数値ベクトルでなければなりません "
 
 #: family.c:129 family.c:132
 #, c-format
@@ -82,7 +83,7 @@ msgstr " sm.method=\"spline\" では 2500 行までしか扱えません "
 
 #: loessc.c:235
 msgid "span is too small"
-msgstr " 範囲(span)が小さすぎます "
+msgstr " 範囲 (span) が小さすぎます "
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
@@ -102,15 +103,15 @@ msgstr " Burg のアルゴリズムが偏相関を見つけ損ないました "
 
 #: monoSpl.c:40
 msgid "n must be at least two"
-msgstr " n は最低でも２でなければなりません "
+msgstr " n は最低でも 2 でなければなりません "
 
 #: monoSpl.c:73
 msgid "Argument m must be numeric"
-msgstr " 引数 ｍ は数値でなければなりません  "
+msgstr " 引数 m は数値でなければなりません "
 
 #: monoSpl.c:76
 msgid "length(m) must be at least two"
-msgstr " length(m) は少なくとも２でなければなりません "
+msgstr " length(m) は少なくとも 2 でなければなりません "
 
 #: monoSpl.c:78
 msgid "Argument Sx must be numeric vector one shorter than m[]"
@@ -158,7 +159,7 @@ msgstr " NULL 環境の使用は廃止されました "
 
 #: nls.c:294
 msgid "'rho' should be an environment"
-msgstr " 'rho' は環境(environment)でなければなりません "
+msgstr " 'rho' は環境 (environment) でなければなりません "
 
 #: nls.c:297
 msgid "'dir' is not a numeric vector of the correct length"
@@ -213,11 +214,11 @@ msgstr " ヘッシアン関数は次数 %d の正方数値行列を返さなけ�
 
 #: port.c:370
 msgid "'rho' must be an environment"
-msgstr " 'rho' は環境(environment)でなければなりません "
+msgstr " 'rho' は環境 (environment) でなければなりません "
 
 #: port.c:372 port.c:523
 msgid "'d' must be a nonempty numeric vector"
-msgstr " `d' は空でない数値ベクトルでなければなりません "
+msgstr " 'd' は空でない数値ベクトルでなければなりません "
 
 #: port.c:374
 msgid "When Hessian defined must also have gradient defined"
@@ -226,11 +227,11 @@ msgstr " ヘッシアンを定義した際は、グラディエントも定義�
 #: port.c:377
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr " 環境 `rho' は長さが %d の数値ベクトル `.par' を含まねばなりません "
+msgstr " 環境 'rho' は長さが %d の数値ベクトル '.par' を含まねばなりません "
 
 #: port.c:391
 msgid "'lower' and 'upper' must be numeric vectors"
-msgstr " lower' と 'upper' は数値ベクトルでなければなりません "
+msgstr " 'lower' と 'upper' は数値ベクトルでなければなりません "
 
 #: port.c:437
 msgid "'getElement' applies only to named lists"
@@ -244,7 +245,7 @@ msgstr " %s$%s() が見つかりません "
 #: port.c:471
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
-msgstr " 'gradient' は次元 (%d,%d) の数値行列でなければなりません "
+msgstr " 'gradient' は次元 (%d, %d) の数値行列でなければなりません "
 
 #: port.c:492
 #, c-format
@@ -262,19 +263,19 @@ msgstr " m はリストでなければなりません "
 
 #: port.c:544
 msgid "'lowerb' and 'upperb' must be numeric vectors"
-msgstr " lowerb と upperb は数値ベクトルでなければなりません "
+msgstr " 'lowerb' と 'upperb' は数値ベクトルでなければなりません "
 
 #: rWishart.c:51
 msgid "inconsistent degrees of freedom and dimension"
-msgstr ""
+msgstr " 自由度と次元が矛盾しています "
 
 #: rWishart.c:84
 msgid "'scal' must be a square, real matrix"
-msgstr ""
+msgstr " 'scal' は正方行列かつ実行列でなければなりません "
 
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"
-msgstr ""
+msgstr " 行列 'scal' が正定値ではありません "
 
 #: smooth.c:102
 #, c-format

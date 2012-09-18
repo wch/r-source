@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:11+0100\n"
+"POT-Creation-Date: 2012-09-18 07:16+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -508,8 +508,8 @@ msgstr "<에러: 인코딩 '%s' 에서 재인코딩 실패>\n"
 #: src/gnuwin32/system.c:1048 src/main/connections.c:570
 #: src/main/connections.c:575 src/main/dounzip.c:177 src/main/saveload.c:1949
 #: src/main/serialize.c:2447 src/main/serialize.c:2452
-#: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:316
-#: src/unix/system.c:336
+#: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:327
+#: src/unix/system.c:347
 #, c-format
 msgid "cannot open file '%s': %s"
 msgstr "파일 '%s'를 열수없습니다:%s"
@@ -548,22 +548,22 @@ msgstr "경고: --max-mem-size =%4.1fM': 너무 작아 무시되었습니다\n"
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "경고: --max-mem-size =%4.0fM: 너무 커서 %uM으로 변경되었습니다 \n"
 
-#: src/gnuwin32/system.c:1059 src/unix/system.c:355
+#: src/gnuwin32/system.c:1059 src/unix/system.c:366
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "경고: 입력이 너무 길어서 '-e %s' 는 생략되었습니다 \n"
 
-#: src/gnuwin32/system.c:1063 src/unix/system.c:369
+#: src/gnuwin32/system.c:1063 src/unix/system.c:380
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "경고: 알수 없는 '%s'옵션 \n"
 
-#: src/gnuwin32/system.c:1085 src/unix/system.c:373
+#: src/gnuwin32/system.c:1085 src/unix/system.c:384
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "인수'%s'  가 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:1091 src/unix/system.c:380
+#: src/gnuwin32/system.c:1091 src/unix/system.c:391
 msgid "cannot use -e with -f or --file"
 msgstr "-e 는 -f 나 --file 과 함께 사용될 수 없습니다"
 
@@ -571,7 +571,7 @@ msgstr "-e 는 -f 나 --file 과 함께 사용될 수 없습니다"
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "tmpfile의 생성에 실패하였습니다 -- TMPDIR이 정확히 설정되었나요?"
 
-#: src/gnuwin32/system.c:1128 src/unix/system.c:430
+#: src/gnuwin32/system.c:1128 src/unix/system.c:441
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'-- save', '--no-save', '--vanilia' 중 하나를 지정해주세요 "
 
@@ -3703,7 +3703,7 @@ msgstr "바이트 코드 버전이 불일치합니다"
 msgid "invalid sequence argument in for loop"
 msgstr "for 루프 범위 인수가 잘못되었습니다"
 
-#: src/main/eval.c:4318 src/main/names.c:1222
+#: src/main/eval.c:4318 src/main/names.c:1225
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "내부 함수 \"%s \" 가 없습니다"
@@ -4586,24 +4586,24 @@ msgstr "복소수는 현재 모델 행렬에서 허용되지 않습니다"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "유형 '%s'변수는 모델 행렬에서 허용되지 않습니다"
 
-#: src/main/names.c:1054
+#: src/main/names.c:1057
 msgid "string argument required"
 msgstr "문자열 인수가 요구되고 있습니다"
 
-#: src/main/names.c:1057
+#: src/main/names.c:1060
 msgid "no such primitive function"
 msgstr "그런 원시함수는 없습니다"
 
-#: src/main/names.c:1188
+#: src/main/names.c:1191
 msgid "attempt to use zero-length variable name"
 msgstr "길이가 0 인 변수 이름을 사용하려 했습니다"
 
-#: src/main/names.c:1190
+#: src/main/names.c:1193
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "변수 이름은 %d 바이트가 상한입니다"
 
-#: src/main/names.c:1217 src/main/names.c:1220
+#: src/main/names.c:1220 src/main/names.c:1223
 msgid "invalid .Internal() argument"
 msgstr ".Internal()의 인수가 잘못되었습니다"
 
@@ -8275,26 +8275,26 @@ msgstr "명령 '%s'의 실행으로 %d 가 되고 오류 메시지 '%s'을 가�
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info ()가 시스템에서 구현되지 않았습니다"
 
-#: src/unix/system.c:245
+#: src/unix/system.c:257
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "경고 : - gui 또는 - g에 대해 값이 지정되어 있지 않기 때문에 무시됩니다"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:279
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "경고 : \\\"%s\\\"은 미지의 gui입니다. X11을 사용합니다 \n"
 
-#: src/unix/system.c:270
+#: src/unix/system.c:282
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "경고 : \\\"%s\\\"은 미지의 gui입니다. 아무것도 사용하지 않습니다 \n"
 
-#: src/unix/system.c:382
+#: src/unix/system.c:393
 msgid "creating temporary file for '-e' failed"
 msgstr "'- e'에 대해 임시 파일 만들기가 실패했습니다"
 
-#: src/unix/system.c:463
+#: src/unix/system.c:474
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "경고 : 파일 목록 첫번째만을 편집합니다"
 

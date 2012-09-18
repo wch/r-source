@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:11+0100\n"
+"POT-Creation-Date: 2012-09-18 07:16+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -503,8 +503,8 @@ msgstr "<FEIL: Feil ved omkoding frå teiknkodinga «%s»>\n"
 #: src/gnuwin32/system.c:1048 src/main/connections.c:570
 #: src/main/connections.c:575 src/main/dounzip.c:177 src/main/saveload.c:1949
 #: src/main/serialize.c:2447 src/main/serialize.c:2452
-#: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:316
-#: src/unix/system.c:336
+#: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:327
+#: src/unix/system.c:347
 #, c-format
 msgid "cannot open file '%s': %s"
 msgstr "klarte ikkje opna fila «%s»: %s"
@@ -547,22 +547,22 @@ msgstr ""
 "ÅTVARING: «--max-mem-size=%4.0fM»-verdien er for låg, og %uM vert brukt i "
 "staden for\n"
 
-#: src/gnuwin32/system.c:1059 src/unix/system.c:355
+#: src/gnuwin32/system.c:1059 src/unix/system.c:366
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "ÅTVARING: «-e %s»-argumentet utelate, sidan inndata er for stor\n"
 
-#: src/gnuwin32/system.c:1063 src/unix/system.c:369
+#: src/gnuwin32/system.c:1063 src/unix/system.c:380
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ÅTVARING: ukjent val («%s»)\n"
 
-#: src/gnuwin32/system.c:1085 src/unix/system.c:373
+#: src/gnuwin32/system.c:1085 src/unix/system.c:384
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENTET «%s» __ikkje brukt__\n"
 
-#: src/gnuwin32/system.c:1091 src/unix/system.c:380
+#: src/gnuwin32/system.c:1091 src/unix/system.c:391
 msgid "cannot use -e with -f or --file"
 msgstr "kan ikkje bruka «-e» med «-f» eller «--file»"
 
@@ -570,7 +570,7 @@ msgstr "kan ikkje bruka «-e» med «-f» eller «--file»"
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "klarte ikkje lagra «tmpfile». Prøv å definera «TMPDIR»."
 
-#: src/gnuwin32/system.c:1128 src/unix/system.c:430
+#: src/gnuwin32/system.c:1128 src/unix/system.c:441
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "du må velja «--save», «--no-save» eller «--vanilla»"
 
@@ -3726,7 +3726,7 @@ msgstr "feil i bytekode-versjon"
 msgid "invalid sequence argument in for loop"
 msgstr "ugyldig følgjeargument i for-lykkje"
 
-#: src/main/eval.c:4318 src/main/names.c:1222
+#: src/main/eval.c:4318 src/main/names.c:1225
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "internfunksjonen «%s» finst ikkje"
@@ -4617,24 +4617,24 @@ msgstr "kan ikkje bruka komplekse variablar i modellmatriser"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "kan ikkje bruka variablar av typen «%s» i modellmatriser"
 
-#: src/main/names.c:1054
+#: src/main/names.c:1057
 msgid "string argument required"
 msgstr "krev strengargument"
 
-#: src/main/names.c:1057
+#: src/main/names.c:1060
 msgid "no such primitive function"
 msgstr "primitivfunksjonen finst ikkje"
 
-#: src/main/names.c:1188
+#: src/main/names.c:1191
 msgid "attempt to use zero-length variable name"
 msgstr "variabelnamn av lengd null"
 
-#: src/main/names.c:1190
+#: src/main/names.c:1193
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "variabelnamn må vera mindre enn %d byte"
 
-#: src/main/names.c:1217 src/main/names.c:1220
+#: src/main/names.c:1220 src/main/names.c:1223
 msgid "invalid .Internal() argument"
 msgstr "ugyldig .Internal()-argument"
 
@@ -8327,26 +8327,26 @@ msgstr "køyring av kommandoen «%s» gav statusen %d og feilmeldinga «%s»"
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() er ikkje implementert på dette systemet"
 
-#: src/unix/system.c:245
+#: src/unix/system.c:257
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "ÅTVARING: --gui eller -g utan verdi ignorert"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:279
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "ÅTVARING: ukjend gui «%s» (brukar X11)\n"
 
-#: src/unix/system.c:270
+#: src/unix/system.c:282
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ÅTVARING: ukjend gui «%s» (brukar ingen)\n"
 
-#: src/unix/system.c:382
+#: src/unix/system.c:393
 msgid "creating temporary file for '-e' failed"
 msgstr "feil ved oppretting av mellombels fil for «-e»"
 
-#: src/unix/system.c:463
+#: src/unix/system.c:474
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ÅTVARING: Redigerer berre den første i lista over filer"
 

@@ -3,22 +3,22 @@ msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-07-31 12:46\n"
-"PO-Revision-Date: 2011-10-22 08:06+0900 \n"
-"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
+"PO-Revision-Date: 2012-09-13 05:54+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"X-Generator: Pootle 2.0.5 \n"
 "Report- Msgid-Bugs-To: bugs@r-project.org \n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr " 'a' は 'reg\" により無効にされます "
 
 msgid "only using the first two of %d regression coefficients"
-msgstr " %d 個の怪奇係数のうち最初の二つだけを使います "
+msgstr " %d 個の回帰係数のうち最初の二つだけを使います "
 
 msgid "'a' and 'b' are overridden by 'coef'"
 msgstr " 'a' と 'b' は 'coef' により置き換えられます "
@@ -39,7 +39,7 @@ msgid "incorrect 'col': must be length 2"
 msgstr " 誤った 'col'：長さは2でなければなりません "
 
 msgid "only for 1-D table"
-msgstr " １次元のテーブル専用です "
+msgstr " 1次元のテーブル専用です "
 
 msgid "'side' must be in {1:4}"
 msgstr " 'side' は範囲 {1:4} 中になければなりません "
@@ -184,9 +184,8 @@ msgstr " 不正確な寸法(geometry)の指定です "
 msgid "'x' must be numeric"
 msgstr " 'x' は数値でなければなりません "
 
-#, fuzzy
 msgid "invalid length(x)"
-msgstr " 無効な 'log' です "
+msgstr " 無効な length(x) です "
 
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr " 'breaks' が指定された時は、'nclass' は使用されません "
@@ -203,9 +202,8 @@ msgstr " 'breaks' の数が無効です "
 msgid "hist.default: pretty() error, breaks="
 msgstr " hist.default: pretty() の間違いです。分割点 = "
 
-#, fuzzy
 msgid "invalid length(breaks)"
-msgstr " 無効な座標長です "
+msgstr " 無効な length(breaks) です "
 
 msgid "'breaks' are not strictly increasing"
 msgstr " 'breaks' が狭義増加ではありません "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:11+0100\n"
+"POT-Creation-Date: 2012-09-18 07:16+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -505,8 +505,8 @@ msgstr "<HATA: '%s' kodlamasını tekrar kodlamada hata>\n"
 #: src/gnuwin32/system.c:1048 src/main/connections.c:570
 #: src/main/connections.c:575 src/main/dounzip.c:177 src/main/saveload.c:1949
 #: src/main/serialize.c:2447 src/main/serialize.c:2452
-#: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:316
-#: src/unix/system.c:336
+#: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:327
+#: src/unix/system.c:347
 #, c-format
 msgid "cannot open file '%s': %s"
 msgstr "dosya '%s' açılamadı: %s"
@@ -545,22 +545,22 @@ msgstr "UYARI: --max-mem-size=%4.1fM: çok küçük, görmezden gelindi\n"
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "UYARI: --max-mem-size=%4.0fM: çok büyük, %uM olarak olarak alındı\n"
 
-#: src/gnuwin32/system.c:1059 src/unix/system.c:355
+#: src/gnuwin32/system.c:1059 src/unix/system.c:366
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "UYARI: '-e %s' giriş çok uzun olduğu için ihmal edildi\n"
 
-#: src/gnuwin32/system.c:1063 src/unix/system.c:369
+#: src/gnuwin32/system.c:1063 src/unix/system.c:380
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "UYARI: bilinmeyen seçecek '%s'\n"
 
-#: src/gnuwin32/system.c:1085 src/unix/system.c:373
+#: src/gnuwin32/system.c:1085 src/unix/system.c:384
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGÜMAN '%s' __yoksayıldı__\n"
 
-#: src/gnuwin32/system.c:1091 src/unix/system.c:380
+#: src/gnuwin32/system.c:1091 src/unix/system.c:391
 msgid "cannot use -e with -f or --file"
 msgstr "-e argümanı -f veye --file ile kullanılamaz"
 
@@ -570,7 +570,7 @@ msgstr ""
 "geçicidosya oluşturulması sırasında hata -- TMPDIR uygun olarak belirlendi "
 "mi?"
 
-#: src/gnuwin32/system.c:1128 src/unix/system.c:430
+#: src/gnuwin32/system.c:1128 src/unix/system.c:441
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save', '--no-save' veya '--vanilla' seçmek zorundasınız"
 
@@ -3716,7 +3716,7 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr "döngü için geçersiz sıralama argümanı"
 
-#: src/main/eval.c:4318 src/main/names.c:1222
+#: src/main/eval.c:4318 src/main/names.c:1225
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "iç fonksiyonlarda \"%s\" yok"
@@ -4615,24 +4615,24 @@ msgstr "şuanda model matrislerinde karmaşık değişkenlere izin verilmiyor"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "model matrislerinde '%s' tipinin değişkenlerine izin verilmiyor"
 
-#: src/main/names.c:1054
+#: src/main/names.c:1057
 msgid "string argument required"
 msgstr "dize argümanı gerekli"
 
-#: src/main/names.c:1057
+#: src/main/names.c:1060
 msgid "no such primitive function"
 msgstr "böyle bir basit fonksiyon yok"
 
-#: src/main/names.c:1188
+#: src/main/names.c:1191
 msgid "attempt to use zero-length variable name"
 msgstr "sıfır uzunlukta değişken ismi kullanımı denemesi"
 
-#: src/main/names.c:1190
+#: src/main/names.c:1193
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "değişken isimleri %d karakterle sınırlıdır"
 
-#: src/main/names.c:1217 src/main/names.c:1220
+#: src/main/names.c:1220 src/main/names.c:1223
 msgid "invalid .Internal() argument"
 msgstr "geçersiz .Internal() argüman"
 
@@ -8322,27 +8322,27 @@ msgstr ""
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() bu sistemde tanımlanmamış"
 
-#: src/unix/system.c:245
+#: src/unix/system.c:257
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "UYARI: değersiz --gui veya -g  görmezden gelindi"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:279
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "UYARI: bilinmeyen grafiksel arabirim '%s', X11 kullanılıyor\n"
 
-#: src/unix/system.c:270
+#: src/unix/system.c:282
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr ""
 "UYARI: bilinmeyen grafiksel arabirim '%s', grafiksel arabirim kullanılmıyor\n"
 
-#: src/unix/system.c:382
+#: src/unix/system.c:393
 msgid "creating temporary file for '-e' failed"
 msgstr "'-e' için geçici dosya oluşturması başarısız"
 
-#: src/unix/system.c:463
+#: src/unix/system.c:474
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "UYARI: Dosya listesinde sadece ilk öğe düzenleniyor"
 

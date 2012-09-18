@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:11+0100\n"
+"POT-Creation-Date: 2012-09-18 07:16+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1679,8 +1679,8 @@ msgstr "<BŁĄD: ponowne kodowanie nie powiodło się dla kodowania '%s'>\n"
 #: src/gnuwin32/system.c:1048 src/main/connections.c:570
 #: src/main/connections.c:575 src/main/dounzip.c:177 src/main/saveload.c:1949
 #: src/main/serialize.c:2447 src/main/serialize.c:2452
-#: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:316
-#: src/unix/system.c:336
+#: src/main/serialize.c:2533 src/main/serialize.c:2578 src/unix/system.c:327
+#: src/unix/system.c:347
 #, c-format
 msgid "cannot open file '%s': %s"
 msgstr "nie można otworzyć pliku '%s': %s"
@@ -1723,17 +1723,17 @@ msgstr ""
 "OSTRZEŻENIE: --max-mem-size=%4.0fM: wartość zbyt duża została wzięta jako "
 "%uM\n"
 
-#: src/gnuwin32/system.c:1059 src/unix/system.c:355
+#: src/gnuwin32/system.c:1059 src/unix/system.c:366
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "OSTRZEŻENIE: '-e %s' pominięto ponieważ wejście jest zbyt długie\n"
 
-#: src/gnuwin32/system.c:1063 src/unix/system.c:369
+#: src/gnuwin32/system.c:1063 src/unix/system.c:380
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "OSTRZEŻENIE: nieznana opcja '%s'\n"
 
-#: src/gnuwin32/system.c:1085 src/unix/system.c:373
+#: src/gnuwin32/system.c:1085 src/unix/system.c:384
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENT '%s' __zignorowano__\n"
@@ -1742,7 +1742,7 @@ msgstr "ARGUMENT '%s' __zignorowano__\n"
 # (_("cannot use -e with -f or --file"))
 # src/unix/system.c: 365
 # (_("cannot use -e with -f or --file"))
-#: src/gnuwin32/system.c:1091 src/unix/system.c:380
+#: src/gnuwin32/system.c:1091 src/unix/system.c:391
 msgid "cannot use -e with -f or --file"
 msgstr "nie można użyć -e razem z -f lub --file"
 
@@ -1757,7 +1757,7 @@ msgstr ""
 # (_("you must specify '--save', '--no-save' or '--vanilla'"))
 # src/unix/system.c: 415
 # (_("you must specify '--save', '--no-save' or '--vanilla'"))
-#: src/gnuwin32/system.c:1128 src/unix/system.c:430
+#: src/gnuwin32/system.c:1128 src/unix/system.c:441
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "musisz określić '--save', '--no-save' lub '--vanilla'"
 
@@ -7448,7 +7448,7 @@ msgstr "niepoprawny argument sekwencji w pętli 'for'"
 # src/main/names.c: 1173
 # errorcall(call, _("there is no .Internal function '%s'"),
 # 		  CHAR(PRINTNAME(fun)))
-#: src/main/eval.c:4318 src/main/names.c:1222
+#: src/main/eval.c:4318 src/main/names.c:1225
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "brak wewnętrznej (.Internal) funkcji '%s'"
@@ -9097,25 +9097,25 @@ msgstr "zmienne typu '%s' nie są dozwolone w macierzach modelu"
 
 # src/main/names.c: 1008
 # errorcall(call, _("string argument required"))
-#: src/main/names.c:1054
+#: src/main/names.c:1057
 msgid "string argument required"
 msgstr "wymagany jest argument łańcucha"
 
 # src/main/names.c: 1011
 # errorcall(call, _("no such primitive function"))
-#: src/main/names.c:1057
+#: src/main/names.c:1060
 msgid "no such primitive function"
 msgstr "brak takiej prymitywnej funkcji"
 
 # src/main/names.c: 1139
 # error(_("attempt to use zero-length variable name"))
-#: src/main/names.c:1188
+#: src/main/names.c:1191
 msgid "attempt to use zero-length variable name"
 msgstr "próba użycia nazwy zmiennej o zerowej długości"
 
 # src/main/names.c: 1141
 # error(_("variable names are limited to %d bytes"), MAXIDSIZE)
-#: src/main/names.c:1190
+#: src/main/names.c:1193
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "nazwy zmiennych są ograniczone do %d bajtów"
@@ -9124,7 +9124,7 @@ msgstr "nazwy zmiennych są ograniczone do %d bajtów"
 # errorcall(call, _("invalid .Internal() argument"))
 # src/main/names.c: 1171
 # errorcall(call, _("invalid .Internal() argument"))
-#: src/main/names.c:1217 src/main/names.c:1220
+#: src/main/names.c:1220 src/main/names.c:1223
 msgid "invalid .Internal() argument"
 msgstr "niepoprawny argument '.Internal()'"
 
@@ -15877,30 +15877,30 @@ msgstr "'Sys.info()' nie jest zaimplementowane w tym systemie"
 
 # src/unix/system.c: 230
 #  _("WARNING: --gui or -g without value ignored")
-#: src/unix/system.c:245
+#: src/unix/system.c:257
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "OSTRZEŻENIE: zignorowano --gui lub -g bez wartości"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:279
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "OSTRZEŻENIE: nieznane gui '%s', używanie X11\n"
 
-#: src/unix/system.c:270
+#: src/unix/system.c:282
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "OSTRZEŻENIE: nieznane gui '%s', nie używam żadnego\n"
 
 # src/unix/system.c: 367
 # (_("creating temporary file for '-e' failed"))
-#: src/unix/system.c:382
+#: src/unix/system.c:393
 msgid "creating temporary file for '-e' failed"
 msgstr "tworzenie pliku tymczasowego dla '-e' nie powiodło się"
 
 # src/unix/system.c: 448
 # (_("WARNING: Only editing the first in the list of files"))
-#: src/unix/system.c:463
+#: src/unix/system.c:474
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "OSTRZEŻENIE: Edytowanie tylko pierwszego pliku na liście"
 

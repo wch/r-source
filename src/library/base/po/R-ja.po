@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-08-06 10:53\n"
-"PO-Revision-Date: 2012-02-26 14:09+0200 \n"
+"PO-Revision-Date: 2012-09-13 08:12+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
@@ -88,9 +88,8 @@ msgstr " 'x' は名前付きの次元名でなければなりません "
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr " `MARGIN` に次元名でない要素があります "
 
-#, fuzzy
 msgid "use of 0-length dim is deprecated"
-msgstr " '%s' の使用は廃止予定です "
+msgstr " 長さゼロのdimの使用は廃止予定です "
 
 msgid "'dim' specifies too large an array"
 msgstr " 'dim' は余りに大きな配列を指定しています "
@@ -154,9 +153,8 @@ msgstr " 自動ローダーは '%s' を '%s' 中に見つけられませんで�
 msgid "invalid argument values in 'backsolve'"
 msgstr " 'backsolve' に無効な引数値が与えられました "
 
-#, fuzzy
 msgid "invalid value of ncol(x)"
-msgstr " 無効な値です "
+msgstr " ncol(x) の値が不正です "
 
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr " 'backsolve' に特異行列。対角線 [%d] の最初の要素がゼロです "
@@ -173,9 +171,8 @@ msgstr " 'chol' 中に非正方行列 "
 msgid "non-matrix argument to 'chol'"
 msgstr " 'chol' へ行列でない引数 "
 
-#, fuzzy
 msgid "invalid nrow(x)"
-msgstr " 不当な名前です "
+msgstr " nrow(x) が不正です "
 
 msgid "matrix not positive definite"
 msgstr " 行列は正定値符号ではありません "
@@ -269,10 +266,9 @@ msgstr ""
 msgid "supplied %d row names for %d rows"
 msgstr " %d 個の行名が %d 個の行に提供されました "
 
-#, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr ""
-" options('stringsAsFactors') は TRUE もしくは FALSE に設定されていません "
+" options(\"stringsAsFactors\") が TRUE もしくは FALSE に設定されていません "
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr " 'data.frame' の引数中の行名(項目 %d)が不適当です "
@@ -675,9 +671,8 @@ msgstr ""
 msgid "no files to copy to"
 msgstr " そこへコピーすべきファイルがありません "
 
-#, fuzzy
 msgid "attempt to copy a directory to itself"
-msgstr " リンク \"%s\" に対するディレクトリを作成できませんでした "
+msgstr " ディレクトリを自分自身にコピーしようとしました "
 
 msgid "more 'from' files than 'to' files"
 msgstr " コピー先ファイルよりも多くのコピー元ファイルがあります "
@@ -1075,9 +1070,8 @@ msgstr " 次元無しのオブジェクトに行名を設定しようとしま�
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr " 次元が 2 未満のオブジェクトに列名を設定しようとしました "
 
-#, fuzzy
 msgid "invalid value of nrow(x)"
-msgstr " 無効な値です "
+msgstr " nrow(x)の値が無効です "
 
 msgid "argument is not numeric or logical: returning NA"
 msgstr " 引数は数値でも論理値でもありません。NA 値を返します "
@@ -1088,9 +1082,8 @@ msgstr " 'trim' は長さ 1 の数値でなければなりません "
 msgid "trimmed means are not defined for complex data"
 msgstr " 複素数データに対しては刈込み平均は定義されません "
 
-#, fuzzy
 msgid "'by' must specify uniquely valid column(s)"
-msgstr " 'by' は有効な列を指定しなければなりません "
+msgstr " 'by' には有効かつ一意な列を指定しなければなりません "
 
 msgid "'by' must match numbers of columns"
 msgstr " 'by' は列数にマッチしなければなりません "
@@ -1330,26 +1323,24 @@ msgstr " 'u5.bias' は非負の数値でなければなりません "
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr " 'eps.correct' は 0, 1 または 2 でなければなりません "
 
-#, fuzzy
 msgid "invalid ncol(x)"
-msgstr " 不当な名前です "
+msgstr " ncol(x)の値が不正です "
 
 msgid "first argument must be a QR decomposition"
 msgstr " 最初の引数は QR 分解でなければなりません "
 
 msgid "invalid nrow(qr$qr)"
-msgstr ""
+msgstr " qrの行数が不正です "
 
 msgid "invalid ncol(qr$qr)"
-msgstr ""
+msgstr " qrの列数が不正です "
 
-#, fuzzy
+# 直訳：qrの階数の列数【原文の間違いのようです ソースはk <- as.integer(qr$rank); if(is.na(k)) stop("invalid ncol(qr$rank)")】
 msgid "invalid ncol(qr$rank)"
-msgstr " 不当な名前です "
+msgstr " qrの階数が不正です "
 
-#, fuzzy
 msgid "invalid ncol(y)"
-msgstr " 不当な名前です "
+msgstr " yの列数が不正です "
 
 msgid "'qr' and 'y' must have the same number of rows"
 msgstr " 'qr' そして 'y' は同じ行数を持たなければなりません "
@@ -1361,7 +1352,7 @@ msgid "argument is not a QR decomposition"
 msgstr " 引数は QR 分解ではありません "
 
 msgid "invalid NCOL(y)"
-msgstr ""
+msgstr " yの列数が不正です "
 
 msgid "not implemented for complex 'qr'"
 msgstr " 複素数の 'qr' に対しては実装されていません "
@@ -1376,7 +1367,7 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr " ピボット操作が起きたので、より大きな 'ncol' 値が必要です "
 
 msgid "invalid NCOL(R)"
-msgstr ""
+msgstr "Rの列数が不正です "
 
 msgid "'x' must be an atomic vector"
 msgstr " 'x' はベクトルでなければなりません "
@@ -1602,17 +1593,14 @@ msgstr " 'x' は配列ではありません "
 msgid "'bin' must be numeric or a factor"
 msgstr " 'bin' は数値または因子でなければなりません "
 
-#, fuzzy
 msgid "invalid value of length(bin)"
-msgstr " 無効な値です "
+msgstr " length(bin)の値が無効です "
 
-#, fuzzy
 msgid "invalid value of nbins"
-msgstr " 無効な値です "
+msgstr " nbinsの値が不正です "
 
-#, fuzzy
 msgid "'INDEX' is of length zero"
-msgstr " 'x' は長さ 1 でなければなりません "
+msgstr " INDEXの長さがゼロです "
 
 msgid "arguments must have same length"
 msgstr " 引数は同じ長さでなければなりません "
@@ -1786,6 +1774,7 @@ msgid_plural ""
 "Functions found when exporting methods from the namespace %s which are not "
 "S4 generic: %s"
 msgstr[0] ""
+" 名前空間 %s からメソッドを呼び出す際に，S4 総称的でない関数が見つかりました "
 
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"

@@ -1983,7 +1983,7 @@ msgstr "'keep.source' jest przestarzałe i będzie zignorowane"
 #                               sQuote(basename(pkgpath))),
 #                      call. = FALSE, domain = NA)
 msgid "package %s has not been installed properly"
-msgstr "pakiet 's nie został zainstalowany poprawnie"
+msgstr "pakiet %s nie został zainstalowany poprawnie"
 
 # src/library/base/R/library.R: 52
 # stop(gettextf("package %s was built before R 2.10.0: please re-install it",

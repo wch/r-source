@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-01 09:38\n"
-"PO-Revision-Date: 2012-02-26 14:22+0200 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"PO-Revision-Date: 2012-09-13 11:25+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -324,9 +324,8 @@ msgstr " もう使われていない %s が Rd xrefs　中にあります "
 msgid "Package(s) unavailable to check Rd xrefs: %s"
 msgstr "Rd xrefs をチェックするためのパッケージがありません: %s "
 
-#, fuzzy
 msgid "Unknown package(s) %s in Rd xrefs"
-msgstr " Rd xrefs 中に未知のパッケージがあります "
+msgstr " Rd xrefs 中に未知のパッケージ %s があります "
 
 msgid "Missing link(s) in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
@@ -377,13 +376,11 @@ msgstr ""
 msgid "packageStartupMessage"
 msgstr " packageStartupMessage "
 
-#, fuzzy
 msgid "Package startup functions should not call %s."
-msgstr " パッケージのスターツアップ関数はサーチパスを変更できません。 "
+msgstr " パッケージのスタートアップ関数は%sを呼び出すべきではありません "
 
-#, fuzzy
 msgid "installed.packages"
-msgstr " 不正なパッケージです "
+msgstr " installed.packages "
 
 msgid "See section %s in ?.onAttach."
 msgstr " ?.onAttachのセクション%sを見てください。 "
@@ -405,10 +402,9 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 
-#, fuzzy
 msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
-" 'library' もしくは 'requires' 呼出しが以下から宣言されていません： ％ｓ "
+" 'library' もしくは 'requires' の呼出しが以下から宣言されていません： %s"
 
 msgid "'data(package=)' calls not declared from:"
 msgstr " 'data(package=)' コールは以下から宣言されていません: "
@@ -418,6 +414,8 @@ msgstr " 'data(package=)' コールは以下から宣言されていません: %
 
 msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr ""
+" 注意： .check_package_CRAN_incoming を使うためにはインターネット接続が必要で"
+"す "
 
 msgid "Rd files with duplicated name '%s':"
 msgstr " 名前 '%s' が重複する Rd ファイル: "
@@ -623,9 +621,8 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr " エラー：この R はバージョン %s です。 R %s %s を必要とします "
 
-#, fuzzy
 msgid "loading failed"
-msgstr " '%s' のロードに失敗しました "
+msgstr " ロードが失敗しました "
 
 msgid "Changes require specified 'style'"
 msgstr " 指定された 'style' の変更が必要です "
@@ -640,7 +637,7 @@ msgid "Error: cannot rename directory to"
 msgstr " エラー：ディレクトリの名前を以下に変更できません "
 
 msgid "cannot link from"
-msgstr ""
+msgstr " 以下からリンクできません： "
 
 msgid "-l option without value"
 msgstr " 値のない -l オプション "
@@ -653,7 +650,7 @@ msgstr ""
 " ただ一つの使用可能なサブアーキテクチャで '--multiarch' が指定されました "
 
 msgid "--as-cran turns off --extra-arch"
-msgstr ""
+msgstr " --as-cran は --extra-arch をオフにします "
 
 msgid "Error: no packages were specified"
 msgstr " エラー：パッケージが指定されていません "
@@ -669,6 +666,7 @@ msgstr " は存在しません "
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
+" 宣言されているエンコード外の non-ASCII 入力が CITATION ファイル中にあります "
 
 msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "
@@ -817,7 +815,7 @@ msgid "ERROR: --merge-multiarch applies only to a single tarball"
 msgstr " エラー: --merge-multiarch は単一の tarball だけに適用可能です "
 
 msgid "only one architecture so ignoring '--merge-multiarch'"
-msgstr ""
+msgstr " アーキテクチャが一つしかないため '--merge-multiarch' を無視しました "
 
 msgid "invalid package"
 msgstr " 不正なパッケージです "
@@ -1234,7 +1232,7 @@ msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "
 
 msgid "contains a blank line"
-msgstr ""
+msgstr " 空行が含まれています "
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr " 非ASCIIデータをもつ未知のエンコーディングです: ASCIIに変換します "
