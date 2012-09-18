@@ -16,6 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## this is called during package installation via makeLatex()
 parseLatex <- function(text, filename = deparse(substitute(text)),
                      verbose = FALSE, verbatim = c("verbatim", "verbatim*",
                      "Sinput", "Soutput") )
@@ -23,13 +24,14 @@ parseLatex <- function(text, filename = deparse(substitute(text)),
     ## the internal function must get some sort of srcfile
     srcfile <- srcfilecopy(filename, text, file.info(filename)[1,"mtime"])
     text <- paste(text, collapse="\n")
-
-    .Internal(parseLatex(text, srcfile, verbose, as.character(verbatim)))
+    .External2("C_parseLatex", text, srcfile, verbose, as.character(verbatim),
+               PACKAGE = "tools")
 }
 
 
 # This converts a latex object into a single element character vector
-deparseLatex <- function(x, dropBraces=FALSE) {
+deparseLatex <- function(x, dropBraces = FALSE)
+{
     result <- character()
     lastTag <- "TEXT"
     for (i in seq_along(x)) {
@@ -42,7 +44,7 @@ deparseLatex <- function(x, dropBraces=FALSE) {
         MACRO = ,
         COMMENT = result <- c(result, a),
         BLOCK = result <- c(result, if (dropBraces && lastTag == "TEXT") deparseLatex(a) else c("{", deparseLatex(a), "}")),
-        ENVIRONMENT = result <- c(result, 
+        ENVIRONMENT = result <- c(result,
         	"\\begin{", a[[1L]], "}",
         	deparseLatex(a[[2L]]),
         	"\\end{", a[[1L]], "}"),
@@ -54,17 +56,18 @@ deparseLatex <- function(x, dropBraces=FALSE) {
     paste(result, collapse="")
 }
 
-print.LaTeX <- function(x, ...)
-    cat(deparseLatex(x), "\n")
+print.LaTeX <- function(x, ...) cat(deparseLatex(x), "\n")
 
-latex_tag <- function(x, tag) {
+latex_tag <- function(x, tag)
+{
     if (!is.null(x)) attr(x, "latex_tag") <- tag
     x
 }
 
 # This makes substitutions within a latex object to replace latex characters
 # with UTF8 characters where possible.
-latexToUtf8 <- function(x) {
+latexToUtf8 <- function(x)
+{
     i <- 0L
     whitespace <- c(' ', '\t', '\n')
     while (i < length(x)) {
@@ -123,11 +126,11 @@ latexToUtf8 <- function(x) {
 			    BLOCK = deparseLatex(nextobj1, dropBraces=TRUE)))
 		}
 		subst <- latex_tag(latexTable[[index]], "TEXT")
-		
+
 		if (!is.null(subst) && !is.list(subst)) { # We've made a substitution, which will always
 		  	       	       # be a new latex object, possibly containing UTF8
 		    x[[i]] <- subst
-		    
+
 		    if (numargs) {
 		    	if (nexttag == "TEXT" && length(nextchars)) {
 		    	    # We've partially used up the next one, so rebuild it
@@ -141,19 +144,20 @@ latexToUtf8 <- function(x) {
 			    j <- j-1L
 			}
 	            }
-		} else 
+		} else
 		    i <- j
 	    }
 	} else if (tag == "BLOCK")
 	    x[[i]] <- latexToUtf8(a)
     }
     x
-}    
+}
 
-makeLatexTable <- function(utf8table) {
+makeLatexTable <- function(utf8table)
+{
     all <- list()
     for (i in seq_along(utf8table)) {
-    	if (grepl("^[{].*[}]$", c <- utf8table[i])) 
+    	if (grepl("^[{].*[}]$", c <- utf8table[i]))
     	    all[[as.character(i)]] <- parseLatex(c)[[1L]]
     }
     table <- list()
@@ -200,10 +204,10 @@ makeLatexTable <- function(utf8table) {
     	    }
     	    index <- c(index, arg)
     	}
-    	repeat{  # Need to record \a macros twice        
+    	repeat{  # Need to record \a macros twice
 	    oldArgCount <- latexArgCount[macro]
 	    argCount <- length(index) - 1L
-	    if (is.na(oldArgCount)) 
+	    if (is.na(oldArgCount))
 		latexArgCount[macro] <<- argCount
 	    else if (oldArgCount != length(index) - 1L)
     	    stop("Inconsistent arg count for ", macro)

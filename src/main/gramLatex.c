@@ -2599,7 +2599,7 @@ static int yylex(void)
  If there is text then that is read and the other arguments are ignored.
 */
 
-SEXP attribute_hidden do_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s = R_NilValue, source, text;
     ParseStatus status;
@@ -2608,7 +2608,6 @@ SEXP attribute_hidden do_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
     yydebug = 1;
 #endif 
 
-    checkArity(op, args);
     R_ParseError = 0;
     R_ParseErrorMsg[0] = '\0';
 

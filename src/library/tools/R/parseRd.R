@@ -70,8 +70,8 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     writeLines(lines, tcon, useBytes = TRUE)
     on.exit(close(tcon))
 
-    result <- .Internal(parse_Rd(tcon, srcfile, "UTF-8",
-                       verbose, basename, fragment, warningCalls))
+    result <- .External2(C_parseRd, tcon, srcfile, "UTF-8",
+                         verbose, basename, fragment, warningCalls)
     expandDynamicFlags(result)
 }
 
@@ -88,9 +88,9 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
                 "\\S4method", "\\tabular")
     USERMACROS <- c("USERMACRO", "\\newcommand", "\\renewcommand")
     EQN <- c("\\deqn", "\\eqn", "\\figure")
-    modes <- c(RLIKE=1L, LATEXLIKE=2L, VERBATIM=3L, INOPTION=4L, COMMENTMODE=5L, UNKNOWNMODE=6L)
-    tags  <- c(RCODE=1L, TEXT=2L,      VERB=3L,                  COMMENT=5L,     UNKNOWN=6L)
-    state <- c(braceDepth=0L, inRString=0L)
+    modes <- c(RLIKE = 1L, LATEXLIKE = 2L, VERBATIM = 3L, INOPTION = 4L, COMMENTMODE = 5L, UNKNOWNMODE = 6L)
+    tags  <- c(RCODE = 1L, TEXT = 2L,      VERB = 3L,                  COMMENT = 5L,     UNKNOWN = 6L)
+    state <- c(braceDepth = 0L, inRString = 0L)
     needBraces <- FALSE  # if next character is alphabetic, separate by braces.
     inEqn <- 0L
 
@@ -164,4 +164,4 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
 }
 
 deparseRdElement <- function(element, state)
-    .Internal(deparseRd(element, state))
+    .External2(C_deparseRd(element, state))

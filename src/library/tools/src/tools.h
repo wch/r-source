@@ -41,4 +41,9 @@ SEXP codeFilesAppend(SEXP f1, SEXP f2);
 SEXP getfmts(SEXP format);
 SEXP startHTTPD(SEXP sIP, SEXP sPort);
 SEXP stopHTTPD(void);
+
+SEXP C_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP C_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env);
+
 #endif
