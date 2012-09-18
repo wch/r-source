@@ -36,6 +36,7 @@
 
 static SEXP bcEval(SEXP, SEXP, Rboolean);
 
+/* BC_PROILFING needs to be defined here and in registration.c */
 /*#define BC_PROFILING*/
 #ifdef BC_PROFILING
 static Rboolean bc_profiling = FALSE;
@@ -5280,10 +5281,10 @@ SEXP R_stopbcprof()
 
     return R_NilValue;
 }
-#else
-SEXP R_getbcprofcounts() { return R_NilValue; }
-SEXP R_startbcprof() { return R_NilValue; }
-SEXP R_stopbcprof() { return R_NilValue; }
+//#else
+//SEXP R_getbcprofcounts() { return R_NilValue; }
+//SEXP R_startbcprof() { return R_NilValue; }
+//SEXP R_stopbcprof() { return R_NilValue; }
 #endif
 
 /* end of byte code section */

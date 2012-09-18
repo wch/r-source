@@ -138,12 +138,6 @@ static R_CMethodDef cMethods [] = {
     /* nmath cleanup */
     {"signrank_free", (DL_FUNC)&signrank_free, 0, NULL},
     {"wilcox_free", (DL_FUNC)&wilcox_free, 0, NULL},
-
-#if 0
-    /* Why are these here?  Not used (currently) */
-    {"InitGraphics", (DL_FUNC)&Rf_InitGraphics, 0, NULL},
-    {"InitColors", (DL_FUNC)&Rf_InitColors, 0, NULL},
-#endif
     {NULL, NULL, 0}
 };
 
@@ -221,9 +215,12 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_lazyLoadDBinsertValue, 5),
     CALLDEF(R_lazyLoadDBflush, 1),
 
+#ifdef BC_PROFILING
+    // These have no interface in R, so used directly by .Call
     CALLDEF(R_getbcprofcounts, 0),
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
+#endif
 
     /* base graphics */
     CALLDEF(Rg_contourDef, 0),
