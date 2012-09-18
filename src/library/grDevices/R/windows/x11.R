@@ -31,8 +31,8 @@ x11 <- X11 <-
     d <- check.options(new = new, envir = .WindowsEnv,
                        name.opt = ".Windows.Options",
                        reset = FALSE, assign.opt = FALSE)
-    antialias <- pmatch(d$antialias, aa.win)                       
-    invisible(.External(Cdevga, "", d$width, d$height, d$pointsize,
+    antialias <- pmatch(d$antialias, aa.win)
+    invisible(.External(C_devga, "", d$width, d$height, d$pointsize,
                         FALSE, 1L, d$xpinch, d$ypinch, "white",
                         d$gamma, d$xpos, d$ypos, d$buffered,
                         .PSenv, d$bg, d$restoreConsole, d$title, TRUE,
