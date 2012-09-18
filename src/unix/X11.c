@@ -68,6 +68,7 @@ Rboolean attribute_hidden R_access_X11(void)
     return (initialized > 0) ? (*ptr->access)() > 0 : FALSE;
 }
 
+// called from src/library/grDevices/src/stubs.c
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_X11_Init();
@@ -79,6 +80,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+// called from src/library/grDevices/src/stubs.c
 SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_X11_Init();
@@ -90,6 +92,7 @@ SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+// exported for src/include/R_ext/GetX11Image.h (and package tkrplot)
 Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {
     R_X11_Init();
@@ -118,13 +121,7 @@ Rboolean attribute_hidden R_access_X11(void)
     return FALSE;
 }
 
-SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error(_("X11 is not available"));
-    return R_NilValue;
-}
-
-SEXP attribute_hidden do_cairo(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error(_("X11 is not available"));
     return R_NilValue;
