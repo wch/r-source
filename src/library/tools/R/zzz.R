@@ -22,23 +22,24 @@
 function(libpath)
     library.dynam.unload("tools", libpath)
 
+library.dynam("tools", "tools", .Library)
+PS_sigs <- getDLLRegisteredRoutines("tools")[[c(".Call", "ps_sigs")]]
+
 ## These are created at install time: the numbers are hard-coded in signals.c
 ## They happen to be the BSD ones as this started in multicore
-## They are created before the C symbols are registered
-library.dynam("tools", "tools", .Library)
-SIGHUP <- .Call("ps_sigs", 1L, PACKAGE = "tools")
-SIGINT <- .Call("ps_sigs", 2L, PACKAGE = "tools")
-SIGQUIT <- .Call("ps_sigs", 3L, PACKAGE = "tools")
-SIGKILL <- .Call("ps_sigs", 9L, PACKAGE = "tools")
-SIGTERM <- .Call("ps_sigs", 15L, PACKAGE = "tools")
-SIGSTOP <- .Call("ps_sigs", 17L, PACKAGE = "tools")
-SIGTSTP <- .Call("ps_sigs", 18L, PACKAGE = "tools")
-SIGCONT <- .Call("ps_sigs", 19L, PACKAGE = "tools")
-SIGCHLD <- .Call("ps_sigs", 20L, PACKAGE = "tools")
-SIGUSR1 <- .Call("ps_sigs", 30L, PACKAGE = "tools")
-SIGUSR2 <- .Call("ps_sigs", 31L, PACKAGE = "tools")
+SIGHUP <- .Call(PS_sigs, 1L)
+SIGINT <- .Call(PS_sigs, 2L)
+SIGQUIT <- .Call(PS_sigs, 3L)
+SIGKILL <- .Call(PS_sigs, 9L)
+SIGTERM <- .Call(PS_sigs, 15L)
+SIGSTOP <- .Call(PS_sigs, 17L)
+SIGTSTP <- .Call(PS_sigs, 18L)
+SIGCONT <- .Call(PS_sigs, 19L)
+SIGCHLD <- .Call(PS_sigs, 20L)
+SIGUSR1 <- .Call(PS_sigs, 30L)
+SIGUSR2 <- .Call(PS_sigs, 31L)
 
-
-
+## This calls C code in the package too
 latexArgCount <- integer()              # The next line modifies this
 latexTable <- makeLatexTable(utf8table)  # FIXME: Should latexTable be hardcoded instead?
+rm(PS_sigs)
