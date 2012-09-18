@@ -1066,7 +1066,7 @@ msgid "Missing  function for load action: %s"
 msgstr " ロード操作に対する関数がありません： %s "
 
 msgid "Error in load action %s for package %s: %s: %s"
-msgstr " %s に対するロード操作中にエラー： %s： %s "
+msgstr " パッケージ %2$s の %1$s に対するロード操作中にエラー： %3$s： %4$s "
 
 msgid "non-function action: %s"
 msgstr " 非関数操作：%s\" "

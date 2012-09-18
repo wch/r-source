@@ -1774,7 +1774,7 @@ msgid_plural ""
 "Functions found when exporting methods from the namespace %s which are not "
 "S4 generic: %s"
 msgstr[0] ""
-" 名前空間 %s からメソッドを呼び出す際に，S4 総称的でない関数が見つかりました "
+" 名前空間 %s からメソッドを呼び出す際に，S4 総称的でない関数が見つかりました: %s "
 
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
