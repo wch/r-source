@@ -120,7 +120,7 @@ static SEXP tabExpand(SEXP strings)
     return result;
 }
     	
-void attribute_hidden parseError(SEXP call, int linenum)
+void parseError(SEXP call, int linenum)
 {
     SEXP context;
     int len, width;
