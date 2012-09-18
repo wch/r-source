@@ -83,9 +83,7 @@ extern0 SEXP	R_CommentSymbol;    /* "comment" */
 extern0 SEXP	R_DotEnvSymbol;     /* ".Environment" */
 extern0 SEXP	R_ExactSymbol;	    /* "exact" */
 extern0 SEXP	R_RecursiveSymbol;  /* "recursive" */
-extern0 SEXP	R_SrcfileSymbol;    /* "srcfile" */
 extern0 SEXP	R_WholeSrcrefSymbol;   /* "wholeSrcref" */
-extern0 SEXP	R_SrcrefSymbol;     /* "srcref" */
 extern0 SEXP	R_TmpvalSymbol;     /* "*tmp*" */
 extern0 SEXP	R_UseNamesSymbol;   /* "use.names" */
 extern0 SEXP	R_DoubleColonSymbol;   /* "::" */
@@ -574,6 +572,10 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 #define extern0 extern
 #endif
 
+LibExtern SEXP  R_SrcfileSymbol;    /* "srcfile" */
+LibExtern SEXP  R_SrcrefSymbol;     /* "srcref" */
+
+
 LibExtern Rboolean R_interrupts_suspended INI_as(FALSE);
 LibExtern int R_interrupts_pending INI_as(0);
 
@@ -638,15 +640,15 @@ extern0 char   *Sys_TempDir	INI_as(NULL);	/* Name of per-session dir
 extern0 char	R_StdinEnc[31]  INI_as("");	/* Encoding assumed for stdin */
 
 /* Objects Used In Parsing  */
-extern int	R_ParseError	INI_as(0); /* Line where parse error occurred */
+LibExtern int	R_ParseError	INI_as(0); /* Line where parse error occurred */
 extern0 int	R_ParseErrorCol;    /* Column of start of token where parse error occurred */
 extern0 SEXP	R_ParseErrorFile;   /* Source file where parse error was seen */
 #define PARSE_ERROR_SIZE 256	    /* Parse error messages saved here */
-extern char	R_ParseErrorMsg[PARSE_ERROR_SIZE] INI_as("");
+LibExtern char	R_ParseErrorMsg[PARSE_ERROR_SIZE] INI_as("");
 #define PARSE_CONTEXT_SIZE 256	    /* Recent parse context kept in a circular buffer */
-extern char	R_ParseContext[PARSE_CONTEXT_SIZE] INI_as("");
-extern int	R_ParseContextLast INI_as(0); /* last character in context buffer */
-extern int	R_ParseContextLine; /* Line in file of the above */
+LibExtern char	R_ParseContext[PARSE_CONTEXT_SIZE] INI_as("");
+LibExtern int	R_ParseContextLast INI_as(0); /* last character in context buffer */
+LibExtern int	R_ParseContextLine; /* Line in file of the above */
 
 /* Image Dump/Restore */
 extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */

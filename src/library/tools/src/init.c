@@ -64,8 +64,6 @@ static const R_ExternalMethodDef ExtEntries[] = {
 };
 
 
-SEXP R_SrcrefSymbol, R_SrcfileSymbol;
-
 void
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 __attribute__ ((visibility ("default")))
@@ -74,8 +72,5 @@ R_init_tools(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
-
-    R_SrcrefSymbol = install("srcref");
-    R_SrcfileSymbol = install("srcfile");
 }
 
