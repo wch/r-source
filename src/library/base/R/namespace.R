@@ -330,63 +330,58 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
 
         assignNativeRoutines <- function(dll, lib, env, nativeRoutines) {
-            if(length(nativeRoutines) == 0L)
-                 return(NULL)
+            if(length(nativeRoutines) == 0L) return(NULL)
 
             if(nativeRoutines$useRegistration) {
-               ## Use the registration information to register ALL the symbols
-               fixes <- nativeRoutines$registrationFixes
-               routines <- getDLLRegisteredRoutines.DLLInfo(dll, addNames = FALSE)
-               lapply(routines,
-                      function(type) {
-                          lapply(type,
-                                 function(sym) {
-                                     varName <- paste0(fixes[1L], sym$name, fixes[2L])
-                                     if(exists(varName, envir = env))
-                                       warning("failed to assign RegisteredNativeSymbol for ",
-                                               sym$name,
-                                               paste(" to", varName),
-                                               " since ", varName,
-                                               " is already defined in the ", package,
-                                               " namespace")
-                                     else
-                                       assign(varName, sym, envir = env)
-                                 })
-                      })
+                ## Use the registration information to register ALL the symbols
+                fixes <- nativeRoutines$registrationFixes
+                routines <- getDLLRegisteredRoutines.DLLInfo(dll, addNames = FALSE)
+                lapply(routines,
+                       function(type) {
+                           lapply(type,
+                                  function(sym) {
+                                      varName <- paste0(fixes[1L], sym$name, fixes[2L])
+                                      if(exists(varName, envir = env))
+                                          warning("failed to assign RegisteredNativeSymbol for ",
+                                                  sym$name,
+                                                  paste(" to", varName),
+                                                  " since ", varName,
+                                                  " is already defined in the ", package,
+                                                  " namespace")
+                                      else
+                                          assign(varName, sym, envir = env)
+                                  })
+                       })
 
-             }
+            }
 
             symNames <- nativeRoutines$symbolNames
-            if(length(symNames) == 0L)
-              return(NULL)
+            if(length(symNames) == 0L) return(NULL)
 
             symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE,
                                            withRegistrationInfo = TRUE)
             lapply(seq_along(symNames),
-                    function(i) {
-                        ## could vectorize this outside of the loop
-                        ## and assign to different variable to
-                        ## maintain the original names.
-                        varName <- names(symNames)[i]
-                        origVarName <- symNames[i]
-                        if(exists(varName, envir = env))
+                   function(i) {
+                       ## could vectorize this outside of the loop
+                       ## and assign to different variable to
+                       ## maintain the original names.
+                       varName <- names(symNames)[i]
+                       origVarName <- symNames[i]
+                       if(exists(varName, envir = env))
                            warning("failed to assign NativeSymbolInfo for ",
                                    origVarName,
                                    ifelse(origVarName != varName,
-                                              paste(" to", varName), ""),
+                                          paste(" to", varName), ""),
                                    " since ", varName,
                                    " is already defined in the ", package,
                                    " namespace")
-                           else
-                              assign(varName, symbols[[origVarName]],
-                                     envir = env)
+                       else
+                           assign(varName, symbols[[origVarName]],
+                                  envir = env)
 
-                    })
-
-
-
+                   })
             symbols
-          }
+        }
 
         ## find package and check it has a namespace
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)
@@ -502,8 +497,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         for (i in seq_along(dynLibs)) {
             lib <- dynLibs[i]
             dlls[[lib]]  <- library.dynam(lib, package, package.lib)
-               assignNativeRoutines(dlls[[lib]], lib, env,
-                                    nsInfo$nativeRoutines[[lib]])
+            assignNativeRoutines(dlls[[lib]], lib, env,
+                                 nsInfo$nativeRoutines[[lib]])
 
             ## If the DLL has a name as in useDynLib(alias = foo),
             ## then assign DLL reference to alias.  Check if
@@ -518,6 +513,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         addNamespaceDynLibs(env, nsInfo$dynlibs)
 
 
+        ## used in e.g. utils::assignInNamespace
         Sys.setenv("_R_NS_LOAD_" = package)
         on.exit(Sys.unsetenv("_R_NS_LOAD_"), add = TRUE)
         ## run the load hook
@@ -1323,7 +1319,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         parseDirective(e)
 
        # need to preserve the names on dynlibs, so unique() is not appropriate.
-    dynlibs <- dynlibs[!duplicated(dynlibs)]  
+    dynlibs <- dynlibs[!duplicated(dynlibs)]
     list(imports = imports, exports = exports, exportPatterns = exportPatterns,
          importClasses = importClasses, importMethods = importMethods,
          exportClasses = exportClasses,  exportMethods = exportMethods,
