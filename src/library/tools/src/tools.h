@@ -44,6 +44,6 @@ SEXP stopHTTPD(void);
 
 SEXP C_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP C_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP C_deparseRd(SEXP e, SEXP state);
 
 #endif

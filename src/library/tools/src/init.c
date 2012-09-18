@@ -50,6 +50,8 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(ps_priority, 2),
     CALLDEF(startHTTPD, 2),
     CALLDEF(stopHTTPD, 0),
+    CALLDEF(C_deparseRd, 2),
+
     {NULL, NULL, 0}
 };
 
@@ -57,7 +59,6 @@ static const R_CallMethodDef CallEntries[] = {
 static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(C_parseLatex, 4),
     EXTDEF(C_parseRd, 7),
-    EXTDEF(C_deparseRd, 2),
 
     {NULL, NULL, 0}
 };

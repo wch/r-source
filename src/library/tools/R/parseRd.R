@@ -164,4 +164,4 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
 }
 
 deparseRdElement <- function(element, state)
-    .External2(C_deparseRd(element, state))
+    .Call(C_deparseRd, element, state)

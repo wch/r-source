@@ -95,7 +95,6 @@
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
-#include <Internal.h>
 #include <Parse.h>
 #define STRICT_R_HEADERS
 #include <R_ext/RS.h>           /* for R_chk_* allocation */
@@ -4549,12 +4548,14 @@ static void con_cleanup(void *data)
 
 /* "do_parseRd" 
 
- .Internal( parseRd(file, srcfile, encoding, verbose, basename, warningCalls) )
+ .External2(C_parseRd,file, srcfile, encoding, verbose, basename, warningCalls)
  If there is text then that is read and the other arguments are ignored.
 */
 
-SEXP do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    args = CDR(args);
+
     SEXP s = R_NilValue, source;
     Rconnection con;
     Rboolean wasopen, fragment;
@@ -4606,23 +4607,21 @@ SEXP do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* "do_deparseRd" 
 
- .Internal( deparseRd(element, state) )
+ .External2(C_deparseRd, element, state)
 */
 
-SEXP do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP C_deparseRd(SEXP e, SEXP state)
 {
-    SEXP e, state, result;
+    SEXP result;
     int  outlen, *statevals, quoteBraces, inRComment;
     const char *c;
     char *outbuf, *out, lookahead;
     Rboolean escape;
 
-    e = CAR(args);                       args = CDR(args);
     if(!isString(e) || length(e) != 1) 
     	error(_("deparseRd only supports deparsing character elements"));
     e = STRING_ELT(e, 0);
     
-    state = CAR(args);
     if(!isInteger(state) || length(state) != 5) error(_("bad state"));
     xxbraceDepth = INTEGER(state)[0];
     xxinRString = INTEGER(state)[1];

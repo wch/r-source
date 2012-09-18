@@ -153,22 +153,3 @@ done:
     UNPROTECT(1);
     return ans;
 }
-
-SEXP do_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env);
-
-SEXP C_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_parseLatex(call, op, CDR(args), env);
-}
-
-SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_parseRd(call, op, CDR(args), env);
-}
-
-SEXP C_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_deparseRd(call, op, CDR(args), env);
-}

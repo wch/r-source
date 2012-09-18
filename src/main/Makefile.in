@@ -22,7 +22,7 @@ SOURCES_C = \
 	dotcode.c dounzip.c dstruct.c duplicate.c \
 	edit.c engine.c envir.c errors.c eval.c \
 	format.c \
-	gevents.c gram.c gram-ex.c gramLatex.c gramRd.c graphics.c grep.c \
+	gevents.c gram.c gram-ex.c graphics.c grep.c \
 	identical.c inlined.c inspect.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c \
@@ -64,9 +64,7 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_C) \
 	$(EXTRA_SOURCES_C) \
 	$(SOURCES_F) \
-	gram.y \
-	gramRd.y \
-	gramLatex.y
+	gram.y
 
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
@@ -189,15 +187,7 @@ YFLAGS=-l
 $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	@$(ECHO) "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
-	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
-$(srcdir)/gramRd.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramRd.y
-	@$(ECHO) "re-making gramRd.c"
-	$(YACC) $(YFLAGS) $(srcdir)/gramRd.y
-	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramRd.c	
-$(srcdir)/gramLatex.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramLatex.y
-	@$(ECHO) "re-making gramLatex.c"
-	$(YACC) $(YFLAGS) $(srcdir)/gramLatex.y
-	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramLatex.c	
+	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c	
 
 install: installdirs
 	@$(MAKE) install-bin

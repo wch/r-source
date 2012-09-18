@@ -26,7 +26,6 @@
 #endif
 
 #include <Defn.h>
-#include <Internal.h>
 #include <Parse.h>
 #define STRICT_R_HEADERS
 #include <R_ext/RS.h>           /* for R_chk_* allocation */
@@ -831,14 +830,16 @@ static int yylex(void)
     return tok;
 }
 
-/* "do_parseRd" 
+/* "do_parseLatex" 
 
- .Internal( parseLatex(file, srcfile, verbose, basename, warningCalls) )
+ .External2(CC_parseLatex, file, srcfile, verbose, basename, warningCalls)
  If there is text then that is read and the other arguments are ignored.
 */
 
-SEXP do_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP C_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    args = CDR(args);
+
     SEXP s = R_NilValue, source, text;
     ParseStatus status;
 
