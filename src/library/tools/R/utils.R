@@ -442,10 +442,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 .BioC_version_associated_with_R_version <-
     numeric_version("2.10")
-## (Could also use something programmatically mapping (R) 2.10.x to
-## (BioC) 2.5, 2.9.x to 2.4, ..., 2.1.x to 1.6, but what if R 3.0.0
-## comes out? Also, pre-2.12.0 is out weeks before all of BioC 2.7)
-## E.g. pre-2.13.0 was out ca Sept 20, BioC 2.8 was ready Nov 17.
+## Things are more complicated from R-2.15.x with still two BioC
+## releases a year, so we do need to set this manually.
 
 ### ** .vc_dir_names
 
@@ -1313,7 +1311,7 @@ function(x, dfile)
     }
     ## Avoid declared encodings when writing out.
     Encoding(x) <- "unknown"
-    ## Avoid folding for Description, Author, Built, and Packaged.
+    ## Avoid folding for fields where we keep whitespace when reading.
     write.dcf(rbind(x), dfile,
               keep.white = .keep_white_description_fields)
 }
