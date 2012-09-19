@@ -25,7 +25,7 @@ HEADERS = bitmap.h devX11.h rotated.h rlogo_icon.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	Makefile.in $(SOURCES) $(HEADERS)
+	Makefile.in $(SOURCES) $(HEADERS) $(DE_SOURCES)
 
 R_X11_la = R_X11$(SHLIB_EXT)
 ## AIX needs LIBM
