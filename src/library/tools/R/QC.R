@@ -6008,18 +6008,11 @@ function(f, env)
         ## with a namespace environment (as these cannot come from a
         ## package with no namespace).
 
-        ## This was wrong, as some of the callers pass namespaces, not packages.
-        ## namespace <- .get_namespace_from_package_env(env)
         namespace <- if(isNamespace(env)) env else .get_namespace_from_package_env(env)
-        if(!is.null(namespace)) {
-            mlist <- Filter(function(m)
-                            identical(environment(m), namespace),
-                            mlist)
-        } else {
-            mlist <- Filter(function(m)
-                            environmentName(environment(m)) == "",
-                            mlist)
-        }
+        mlist <- if(!is.null(namespace))
+            Filter(function(m) identical(environment(m), namespace), mlist)
+        else
+            Filter(function(m) environmentName(environment(m)) == "", mlist)
     }
 
     mlist
@@ -6030,7 +6023,7 @@ function(env)
 {
     env <- as.environment(env)
     cl <- methods::getClasses(env)
-    cl <- cl[unlist(lapply(cl, function(Class) is(methods::getClass(Class, where = env), "refClassRepresentation")))]
+    cl <- cl[unlist(lapply(cl, function(Class) methods::is(methods::getClass(Class, where = env), "refClassRepresentation")))]
     if(length(cl)) {
         res <- lapply(cl, function(Class) {
             def <- methods::getClass(Class, where = env)
