@@ -6029,11 +6029,11 @@ function(f, env)
 function(env)
 {
     env <- as.environment(env)
-    cl <- getClasses(env)
-    cl <- cl[unlist(lapply(cl, function(Class) is(getClass(Class, where = env), "refClassRepresentation")))]
+    cl <- methods:::getClasses(env)
+    cl <- cl[unlist(lapply(cl, function(Class) is(methods:::getClass(Class, where = env), "refClassRepresentation")))]
     if(length(cl)) {
         res <- lapply(cl, function(Class) {
-            def <- getClass(Class, where = env)
+            def <- methods:::getClass(Class, where = env)
             ff <- def@fieldPrototypes
             accs <- unlist(lapply(ff, function(what) is(what, "activeBindingFunction") && !is(what, "defaultBindingFunction")))
             c(as.list(def@refMethods), as.list(ff)[accs])
