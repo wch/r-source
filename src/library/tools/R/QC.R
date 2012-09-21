@@ -6028,7 +6028,7 @@ function(env)
         res <- lapply(cl, function(Class) {
             def <- methods::getClass(Class, where = env)
             ff <- def@fieldPrototypes
-            accs <- unlist(lapply(ff, function(what) is(what, "activeBindingFunction") && !is(what, "defaultBindingFunction")))
+            accs <- unlist(lapply(ff, function(what) methods::is(what, "activeBindingFunction") && !methods::is(what, "defaultBindingFunction")))
             c(as.list(def@refMethods), as.list(ff)[accs])
         })
         names(res) <- cl
