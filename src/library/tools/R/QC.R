@@ -1950,7 +1950,12 @@ function(package, dir, file, lib.loc = NULL,
                 exprs <- c(exprs, lapply(mlist, body))
             }
             refs <- .get_ref_classes(code_env)
-            if(length(refs)) exprs <- c(exprs, unlist(refs, FALSE))
+            if(length(refs)) {
+                exprs2 <- lapply(unlist(refs, FALSE), function(f)
+                                         if(typeof(f) == "closure") body(f)
+                                         else NULL)
+                exprs <- c(exprs, exprs2)
+            }
        }
     }
     else {
