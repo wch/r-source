@@ -1949,7 +1949,9 @@ function(package, dir, file, lib.loc = NULL,
                 mlist <- .get_S4_methods_list(f, code_env)
                 exprs <- c(exprs, lapply(mlist, body))
             }
-        }
+            refs <- .get_ref_classes(code_env)
+            if(length(refs)) exprs <- c(exprs, unlist(refs, FALSE))
+       }
     }
     else {
         if(!is.na(enc) &&
@@ -5138,23 +5140,31 @@ function(package, dir, lib.loc = NULL, details = TRUE)
                         if (typeof(v) == "closure")
                             codetools::findGlobals(v)
                     })
-        objects_in_env[sapply(x,
-                              function(s) any(s %in% ".Internal"))]
+        objects_in_env[sapply(x, function(s) any(s %in% ".Internal"))]
     }
+
     find_bad_S4methods <- function(env) {
         gens <- .get_S4_generics(code_env)
         x <- lapply(gens, function(f) {
             tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
                        envir = code_env)
-            ## Of course, the S4 'system' does **copy** base code into
-            ## packages ....
+            ## The S4 'system' does **copy** base code into packages ....
             any(unlist(eapply(tab, function(v) !inherits(v, "derivedDefaultMethod") && any(codetools::findGlobals(v) %in% ".Internal"))))
         })
         gens[unlist(x)]
     }
 
+    find_bad_refClasses <- function(refs) {
+        cl <- names(refs)
+        x <- lapply(refs, function(z) {
+            any(unlist(sapply(z, function(v) any(codetools::findGlobals(v) %in% ".Internal"))))
+        })
+        cl[unlist(x)]
+    }
+
 
     bad_S4methods <- list()
+    bad_refs <- character()
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
@@ -5165,8 +5175,11 @@ function(package, dir, lib.loc = NULL, details = TRUE)
                            asNamespace(package)
             else .package_env(package)
             bad_closures <- find_bad_closures(code_env)
-            if(.isMethodsDispatchOn())
+            if(.isMethodsDispatchOn()) {
                 bad_S4methods <- find_bad_S4methods(code_env)
+                refs <- .get_ref_classes(code_env)
+                if(length(refs)) bad_refs <- find_bad_refClasses(refs)
+            }
         }
     }
     else {
@@ -5202,7 +5215,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
         })
     }
     out <- list(bad_closures = bad_closures, internals = internals,
-                bad_S4methods = bad_S4methods)
+                bad_S4methods = bad_S4methods, bad_refs = bad_refs)
     class(out) <- "check_dotInternal"
     out
 }
@@ -5227,6 +5240,13 @@ function(x, ...)
                         "Found .Internal calls in methods for the following S4 generics:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_S4methods))
+    }
+    if(length(x$bad_refs)) {
+        msg <- ngettext(length(x$bad_refs),
+                        "Found .Internal call in methods for the following refererence class:",
+                        "Found .Internal calls in methods for the following reference classes:"
+                        )
+        out <- c(out, strwrap(msg), .pretty_format(x$bad_refs))
     }
     out
 }
@@ -6000,6 +6020,24 @@ function(f, env)
     mlist
 }
 
+.get_ref_classes <-
+function(env)
+{
+    env <- as.environment(env)
+    cl <- getClasses(env)
+    cl <- cl[unlist(lapply(cl, function(Class) is(getClass(Class, where = env), "refClassRepresentation")))]
+    if(length(cl)) {
+        res <- lapply(cl, function(Class) {
+            def <- getClass(Class, where = env)
+            ff <- def@fieldPrototypes
+            accs <- unlist(lapply(ff, function(what) is(what, "activeBindingFunction") && !is(what, "defaultBindingFunction")))
+            c(as.list(def@refMethods), as.list(ff)[accs])
+        })
+        names(res) <- cl
+        res
+    } else list()
+}
+
 .get_namespace_from_package_env <-
 function(env)
 {
@@ -6108,7 +6146,7 @@ function(x)
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     ## \usage is only 'verbatim-like'
     ## <FIXME>
-    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
+    ## 'LanguageCl.Rd' in package methods has '"\{"' in its usage.
     ## But why should it use the backslash escape?
     txt <- gsub("\\{", "{", txt, fixed = TRUE)
     txt <- gsub("\\}", "}", txt, fixed = TRUE)
