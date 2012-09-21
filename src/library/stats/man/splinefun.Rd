@@ -26,7 +26,7 @@ splinefunH(x, y, m)
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
-    specified: see \code{\link{xy.coords}.}}
+    specified: see \code{\link{xy.coords}}.}
   \item{m}{(for \code{splinefunH()}): vector of \emph{slopes}
     \eqn{m_i}{m[i]} at the points \eqn{(x_i,y_i)}{(x[i],y[i])}; these
     together determine the \bold{H}ermite \dQuote{spline} which is
@@ -54,10 +54,10 @@ splinefunH(x, y, m)
   Natural splines are used when \code{method = "natural"}, and periodic
   splines when \code{method = "periodic"}.
 
-  The new (R 2.8.0) method \code{"monoH.FC"} computes a \emph{monotone}
-  Hermite spline according to the method of Fritsch and Carlson.  It
-  does so by determining slopes such that the Hermite spline, determined
-  by \eqn{(x_i,y_i,m_i)}{(x[i],y[i],m[i])}, is monotone (increasing or
+  The method \code{"monoH.FC"} computes a \emph{monotone} Hermite spline
+  according to the method of Fritsch and Carlson.  It does so by
+  determining slopes such that the Hermite spline, determined by
+  \eqn{(x_i,y_i,m_i)}{(x[i],y[i],m[i])}, is monotone (increasing or
   decreasing) \bold{iff} the data are.
 
   These interpolation splines can also be used for extrapolation, that is
@@ -90,7 +90,7 @@ splinefunH(x, y, m)
   Wadsworth & Brooks/Cole.
 
   Forsythe, G. E., Malcolm, M. A. and Moler, C. B. (1977)
-  \emph{Computer Methods for Mathematical Computations}.
+  \emph{Computer Methods for Mathematical Computations}. Wiley
 
   Fritsch, F. N. and Carlson, R. E. (1980)
   Monotone piecewise cubic interpolation, \emph{SIAM Journal on
