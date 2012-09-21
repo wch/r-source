@@ -19,9 +19,10 @@
 #### 'spline' and 'splinefun' are very similar --- keep in sync!
 ####  also consider ``compatibility'' with  'approx' and 'approxfun'
 
-splinefun <- function(x, y=NULL,
-                      method = c("fmm", "periodic", "natural", "monoH.FC"),
-                      ties = mean)
+splinefun <-
+    function(x, y = NULL,
+             method = c("fmm", "periodic", "natural", "monoH.FC", "hyman"),
+             ties = mean)
 {
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
@@ -50,8 +51,15 @@ splinefun <- function(x, y=NULL,
         return(splinefunH0(x = x, y = y, m = m, dx = dx))
     }
     ## else
-    iMeth <- match(method, c("periodic", "natural", "fmm", "monoH.FC"))
-    z <- .Call(C_SplineCoef, iMeth, x, y)
+    iMeth <- match(method, c("periodic", "natural", "fmm",
+                             "monoH.FC", "hyman"))
+    if(iMeth == 5L) {
+        dy <- diff(y)
+        if(!(all(dy > 0) || all(dy < 0)))
+            stop("'y' must be strictly increasing or decreasing")
+    }
+    z <- .Call(C_SplineCoef, min(3L, iMeth), x, y)
+    if(iMeth == 5L) z <- spl_coef_conv(hyman_filter(z))
     rm(x, y, nx, method, iMeth, ties)
     function(x, deriv = 0L) {
 	deriv <- as.integer(deriv)

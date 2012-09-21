@@ -230,6 +230,11 @@
       
       \item \code{monthplot()} gains parameters to control the look of
       the reference lines.  (Suggestion of Ian McLeod.)
+      
+      \item \code{spline()} and \code{splinefun()} gain a new method
+      \code{"hyman"}, an implementation of Hyman's method of
+      constructing monotonic interpolation splines.  (Contributed
+      by Simon Wood and Rob Hyndman.)
     }
   }
 
@@ -357,6 +362,10 @@
 
       \item \command{R CMD build} now omits Eclipse's \file{.metadata}
       directories, and \command{R CMD check} warns if it finds them.
+      
+      \item \command{R CMD check} now does some checks on functions
+      defined within reference classes, including of \code{.Call()} etc
+      calls.
     }
   }
 

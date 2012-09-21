@@ -15,7 +15,7 @@
 }
 \usage{
 splinefun(x, y = NULL,
-          method = c("fmm", "periodic", "natural", "monoH.FC"),
+          method = c("fmm", "periodic", "natural", "monoH.FC", "hyman"),
           ties = mean)
 
 spline(x, y = NULL, n = 3*length(x), method = "fmm",
@@ -26,14 +26,18 @@ splinefunH(x, y, m)
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
-    specified: see \code{\link{xy.coords}.}}
+    specified: see \code{\link{xy.coords}}.
+    
+    \code{y} must be strictly increasing or decreasing
+    for \code{method = "hyman"}.
+  }
   \item{m}{(for \code{splinefunH()}): vector of \emph{slopes}
     \eqn{m_i}{m[i]} at the points \eqn{(x_i,y_i)}{(x[i],y[i])}; these
     together determine the \bold{H}ermite \dQuote{spline} which is
     piecewise cubic, (only) \emph{once} differentiable continuously.}
   \item{method}{specifies the type of spline to be used.  Possible
-    values are \code{"fmm"}, \code{"natural"}, \code{"periodic"} and
-    \code{"monoH.FC"}.}
+    values are \code{"fmm"}, \code{"natural"}, \code{"periodic"},
+    \code{"monoH.FC"} and \code{"hyman"}.}
   \item{n}{if \code{xout} is left unspecified, interpolation takes place
        at \code{n} equally spaced points spanning the interval
        [\code{xmin}, \code{xmax}].}
@@ -54,11 +58,15 @@ splinefunH(x, y, m)
   Natural splines are used when \code{method = "natural"}, and periodic
   splines when \code{method = "periodic"}.
 
-  The new (R 2.8.0) method \code{"monoH.FC"} computes a \emph{monotone}
-  Hermite spline according to the method of Fritsch and Carlson.  It
-  does so by determining slopes such that the Hermite spline, determined
-  by \eqn{(x_i,y_i,m_i)}{(x[i],y[i],m[i])}, is monotone (increasing or
+  The method \code{"monoH.FC"} computes a \emph{monotone} Hermite spline
+  according to the method of Fritsch and Carlson.  It does so by
+  determining slopes such that the Hermite spline, determined by
+  \eqn{(x_i,y_i,m_i)}{(x[i],y[i],m[i])}, is monotone (increasing or
   decreasing) \bold{iff} the data are.
+
+  Method \code{"hyman"} computes a \emph{monotone} cubic spline using
+  Hyman filtering of an \code{method = "fmm"} fit for strictly monotonic
+  inputs.  (Added in \R 2.16.0.)
 
   These interpolation splines can also be used for extrapolation, that is
   prediction at points outside the range of \code{x}.  Extrapolation
@@ -89,12 +97,21 @@ splinefunH(x, y, m)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
+  Dougherty, R. L., Edelman, A. and Hyman, J. M. (1989)
+  Positivity-, monotonicity-, or convexity-preserving cubic and quintic
+  Hermite interpolation.
+  \emph{Mathematics of Computation} \bold{52}, 471--494.
+
   Forsythe, G. E., Malcolm, M. A. and Moler, C. B. (1977)
-  \emph{Computer Methods for Mathematical Computations}.
+  \emph{Computer Methods for Mathematical Computations}.  Wiley.
 
   Fritsch, F. N. and Carlson, R. E. (1980)
   Monotone piecewise cubic interpolation, \emph{SIAM Journal on
-  Numerical Analysis} \bold{17}, 238--246.
+    Numerical Analysis} \bold{17}, 238--246.
+
+  Hyman, J. M. (1983)
+  Accurate monotonicity preserving cubic interpolation.
+  \emph{SIAM J. Sci. Stat. Comput.} \bold{4}, 645--654.
 }
 \seealso{
   \code{\link{approx}} and \code{\link{approxfun}} for constant and
@@ -107,6 +124,12 @@ splinefunH(x, y, m)
 
   \code{\link{smooth.spline}} for smoothing splines.
 }
+\author{
+  R Core Team.
+
+  Simon Wood for the original code for Hyman filtering.
+}
+
 \examples{
 require(graphics)
 
@@ -160,11 +183,20 @@ n <- 20
 set.seed(11)
 x. <- sort(runif(n)) ; y. <- cumsum(abs(rnorm(n)))
 plot(x.,y.)
-curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
-curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
+curve(splinefun(x.,y.)(x), add = TRUE, col = 2, n = 1001)
+curve(splinefun(x.,y., method = "monoH.FC")(x), add = TRUE, col = 3, n = 1001)
+curve(splinefun(x.,y., method = "hyman")(x), add = TRUE, col = 4, n = 1001)
 legend("topleft",
-       paste0("splinefun( \"", c("fmm", "monoH.FC"), "\" )"),
-       col = 2:3, lty = 1)
+       paste0("splinefun( \"", c("fmm", "monoH.FC", "hyman"), "\" )"),
+       col = 2:4, lty = 1)
+
+## and one from Fritsch and Carlson (1980), Dougherty et al (1989)
+x. <- c(7.09, 8.09, 8.19, 8.7, 9.2, 10, 12, 15, 20)
+f <- c(0, 2.76429e-5, 4.37498e-2, 0.169183, 0.469428, 0.943740,
+       0.998636, 0.999919, 0.999994)
+plot(x., f, ylim = c(-0.2, 1.2))
+curve(splinefun(x., f)(x), add = TRUE, col = 2, n = 1001)
+curve(splinefun(x., f, method = "hyman")(x), add = TRUE, col = 4, n = 1001)
 }
 \keyword{math}
 \keyword{dplot}

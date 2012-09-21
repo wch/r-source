@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-09-04 r60559) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-09-19 r60762) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -12077,7 +12077,7 @@ Coefficients of ridge terms:
 predict.Arima :
 	 function (object, n.ahead = 1L, newxreg = NULL, se.fit = TRUE,      ...)  NULL 
 predict.HoltWinters :
-	 function (object, n.ahead = 1L, prediction.interval = FALSE, level = 0.95,      ...)  NULL 
+	 function (object, n.ahead = 1L, prediction.interval = FALSE,      level = 0.95, ...)  NULL 
 predict.StructTS :
 	 function (object, n.ahead = 1L, se.fit = TRUE, ...)  NULL 
 predict.ar :
@@ -15255,11 +15255,20 @@ Warning in spline(x, y, n = 201, method = "periodic") :
 > set.seed(11)
 > x. <- sort(runif(n)) ; y. <- cumsum(abs(rnorm(n)))
 > plot(x.,y.)
-> curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
-> curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
+> curve(splinefun(x.,y.)(x), add = TRUE, col = 2, n = 1001)
+> curve(splinefun(x.,y., method = "monoH.FC")(x), add = TRUE, col = 3, n = 1001)
+> curve(splinefun(x.,y., method = "hyman")(x), add = TRUE, col = 4, n = 1001)
 > legend("topleft",
-+        paste0("splinefun( \"", c("fmm", "monoH.FC"), "\" )"),
-+        col = 2:3, lty = 1)
++        paste0("splinefun( \"", c("fmm", "monoH.FC", "hyman"), "\" )"),
++        col = 2:4, lty = 1)
+> 
+> ## and one from Fritsch and Carlson (1980), Dougherty et al (1989)
+> x. <- c(7.09, 8.09, 8.19, 8.7, 9.2, 10, 12, 15, 20)
+> f <- c(0, 2.76429e-5, 4.37498e-2, 0.169183, 0.469428, 0.943740,
++        0.998636, 0.999919, 0.999994)
+> plot(x., f, ylim = c(-0.2, 1.2))
+> curve(splinefun(x., f)(x), add = TRUE, col = 2, n = 1001)
+> curve(splinefun(x., f, method = "hyman")(x), add = TRUE, col = 4, n = 1001)
 > 
 > 
 > 
