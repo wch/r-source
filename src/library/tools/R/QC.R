@@ -5243,7 +5243,7 @@ function(x, ...)
     }
     if(length(x$bad_refs)) {
         msg <- ngettext(length(x$bad_refs),
-                        "Found .Internal call in methods for the following refererence class:",
+                        "Found .Internal call in methods for the following reference class:",
                         "Found .Internal calls in methods for the following reference classes:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_refs))
