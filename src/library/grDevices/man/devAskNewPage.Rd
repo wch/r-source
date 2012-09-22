@@ -15,7 +15,7 @@ devAskNewPage(ask = NULL)
 }
 \arguments{
   \item{ask}{\code{NULL} or a logical value.  If \code{TRUE}, the user
-    iwill in future be prompted before a new page of output is started.}
+    will in future be prompted before a new page of output is started.}
 }
 \details{
   If the current device is the null device, this will open a graphics device.
