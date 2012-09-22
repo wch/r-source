@@ -384,7 +384,7 @@
 
       \item The \command{importMethodsFrom} implementation could be confused and fail to find
        generics when importing from multiple packages (reported and
-       fixed by Martin Morgan).
+       fixed by Michael Lawrence).
     }
   }
 }
