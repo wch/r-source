@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/devAskNewPage.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{devAskNewPage}
@@ -15,7 +15,7 @@ devAskNewPage(ask = NULL)
 }
 \arguments{
   \item{ask}{\code{NULL} or a logical value.  If \code{TRUE}, the user
-    is prompted before a new page of output is started. }
+    will in future be prompted before a new page of output is started.}
 }
 \details{
   If the current device is the null device, this will open a graphics device.
