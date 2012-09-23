@@ -1970,4 +1970,11 @@ as.data.frame(LETTERS[1:10])
 ## second failed in 2.15.1.
 
 
+## Test of stack direction (related to PR#15011)
+f <- function(depth) if(depth < 20) f(depth+1) else Cstack_info()
+(z <- f(0))
+stopifnot(z[2] > f(10)[2])
+## Previous test ould be defeated by compiler optimization.
+
+
 proc.time()
