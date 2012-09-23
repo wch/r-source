@@ -928,9 +928,13 @@
       \item The default type of display by \code{browseEnv()} when using
       \command{R.app} on Mac OS X has been incorrect for a long time.
 
-      \item The \command{importMethodsFrom} implementation could be
-      confused and fail to find generics when importing from multiple
-      packages (reported and fixed by Michael Lawrence).
+      \item The implementation of \code{importMethodsFrom} in a
+      \code{NAMESPACE} file could be confused and fail to find generics
+      when importing from multiple packages (reported and fixed by
+      Michael Lawrence).
+      
+      \item The detection of the C stack direction is better protected
+      against compiler optimization. (\PR{15011}.)
     }
   }
 }

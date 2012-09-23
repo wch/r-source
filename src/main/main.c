@@ -1540,4 +1540,11 @@ void attribute_hidden dummy12345(void)
     int i = 0;
     F77_CALL(intpr)("dummy", &i, &i, &i);
 }
+
+/* Used in unix/system.c, avoid inlining */
+uintptr_t dummy_ii(void)
+{
+    int ii;
+    return (uintptr_t) &ii;
+}
 #endif

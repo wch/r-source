@@ -142,6 +142,9 @@ int R_running_as_main_program = 0;
 
 extern void BindDomain(char *R_Home);
 
+/* In src/main/main.c, to avoid inlining */
+extern uintptr_t dummy_ii(void);
+
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
@@ -157,8 +160,9 @@ int Rf_initialize_R(int ac, char **av)
     struct rlimit rlim;
 
     {
-	int ii;
+	uintptr_t ii = dummy_ii();
 	/* 1 is downwards */
+	
 	R_CStackDir = ((uintptr_t)&i > (uintptr_t)&ii) ? 1 : -1;
     }
 
