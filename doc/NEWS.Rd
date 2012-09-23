@@ -400,6 +400,9 @@
       been removed: use \code{pdf(file = NULL)} instead.
 
       \item The long-defunct function \code{print.coefmat()} has been removed.
+
+      \item The \code{.Fortran()} entry point \code{"dqrls"} which has
+      not been used by \R since version 2.15.1 is no longer available.
     }
   }
 
@@ -751,9 +754,6 @@
       \item The \sQuote{internal function} \code{kappa.tri()} has been
       renamed to \code{.kappa_tri()} so it is not inadvertently called
       as a method for class \code{"tri"}.
-
-      \item The \code{.Fortran()} entry point \code{"dqrls"} which has
-      not been used by \R since version 2.15.1 is no longer available.
     }
   }
 
@@ -927,6 +927,10 @@
 
       \item The default type of display by \code{browseEnv()} when using
       \command{R.app} on Mac OS X has been incorrect for a long time.
+
+      \item The \command{importMethodsFrom} implementation could be
+      confused and fail to find generics when importing from multiple
+      packages (reported and fixed by Michael Lawrence).
     }
   }
 }
