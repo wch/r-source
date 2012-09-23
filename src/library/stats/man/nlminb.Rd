@@ -7,7 +7,7 @@
 \alias{nlminb}
 \title{Optimization using PORT routines }
 \description{
-  Unconstrained and constrained optimization using PORT routines.
+  Unconstrained and box-constrained optimization using PORT routines.
 }
 \usage{
 nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
@@ -45,9 +45,9 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   }
 }
 \details{
-  Any names of \code{start} are passed
-  on to \code{objective} and where applicable, \code{gradient} and
-  \code{hessian}.  The parameter vector will be coerced to double.
+  Any names of \code{start} are passed on to \code{objective} and where
+  applicable, \code{gradient} and \code{hessian}.  The parameter vector
+  will be coerced to double.
 
   The PORT documentation is at
   \url{http://netlib.bell-labs.com/cm/cs/cstr/153.pdf}.
@@ -56,9 +56,11 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   \code{hessian} has special semantics and is shared between calls.  The
   functions should not copy it.
   
-  If any of the functions returns a non-finite value the internal code
-  can infinite-loop.
+  If any of the functions returns \code{NA} or \code{NaN} the internal code
+  could infinite-loop in \R prior to 2.16.0: this is now an error.
+  Returning infinite values may work but is not supported.
 }
+% see PR#15052.
 \value{
   A list with components:
   \item{par}{The best set of parameters found.}

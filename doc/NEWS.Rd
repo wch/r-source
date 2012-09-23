@@ -549,6 +549,10 @@
 
       \item \code{La.svd()} accepts logical matrices (as documented, and
       as \code{svd()} did).
+      
+      \item The Fortran code underlying \code{nlminb()} could
+      infinite-loop if any the functions returned \code{NA} or
+      \code{NaN}, so this has been made an error.
     }
   }
 }
