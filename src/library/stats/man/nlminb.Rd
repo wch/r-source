@@ -18,12 +18,11 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
     numeric vector, initial values for the parameters to be optimized.
   }
   \item{objective}{
-    Function to be minimized.  Must return a scalar value (possibly
-    NA/Inf).  The first argument to \code{objective} is the vector of
-    parameters to be optimized, whose initial values are supplied
-    through \code{start}.  Further arguments (fixed during the course of
-    the optimization) to \code{objective} may be specified as well (see
-    \code{\dots}).
+    Function to be minimized.  Must return a scalar value.  The first
+    argument to \code{objective} is the vector of parameters to be
+    optimized, whose initial values are supplied through \code{start}.
+    Further arguments (fixed during the course of the optimization) to
+    \code{objective} may be specified as well (see \code{\dots}).
   }
   \item{gradient}{
     Optional function that takes the same arguments as \code{objective} and
@@ -56,6 +55,9 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   The parameter vector passed to \code{objective}, \code{gradient} and
   \code{hessian} has special semantics and is shared between calls.  The
   functions should not copy it.
+  
+  If any of the functions returns a non-finite value the internal code
+  can infinite-loop.
 }
 \value{
   A list with components:
@@ -115,9 +117,8 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
 % Lots of near-zeros, platform-specific results.
 \examples{\donttest{
 x <- rnbinom(100, mu = 10, size = 10)
-hdev <- function(par) {
+hdev <- function(par)
     -sum(dnbinom(x, mu = par[1], size = par[2], log = TRUE))
-}
 nlminb(c(9, 12), hdev)
 nlminb(c(20, 20), hdev, lower = 0, upper = Inf)
 nlminb(c(20, 20), hdev, lower = 0.001, upper = Inf)
@@ -169,4 +170,3 @@ r <- nlminb(rep(3, 25), flb, control = list(rel.tol=1e-16))
 stopifnot(grepl("rel.tol", r$message))
 }}
 \keyword{optimize}
-
