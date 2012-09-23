@@ -172,9 +172,9 @@ $(RPREFIX)-win.exe: R.iss
 uuidgen.exe: uuidgen.o
 	$(CC) -o $@ $< -lole32
 
-# currently use about 3300
+# currently use about 3500: allow for EXTRA_PKGS
 uuids: uuidgen.exe
-	./uuidgen 4000 > $@
+	./uuidgen 10000 > $@
 
 files.wxs: imagedir fixups 32bit extras md5sums
 	"$(WIX3DIR)/heat" dir $(RPREFIX) -sw5150 -nologo -o $@
@@ -188,7 +188,7 @@ $(RPREFIX)-$(SUFF).msi: R.wxs License.rtf
 	 -ext WixUIExtension -sw1076 -sval -spdb >> $(RPREFIX).log 2>&1
 
 
-## occasionally this fails to empty directories.
+## too often this fails to empty directories.
 clean:
 	rm -rf R.iss *.log R.wxs files.wxs R.wixobj uuidgen.o uuidgen.exe uuids
 	-rm -rf $(RPREFIX)
