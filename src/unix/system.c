@@ -163,7 +163,7 @@ int Rf_initialize_R(int ac, char **av)
 	uintptr_t ii = dummy_ii();
 	/* 1 is downwards */
 	
-	R_CStackDir = ((uintptr_t)&i > (uintptr_t)&ii) ? 1 : -1;
+	R_CStackDir = ((uintptr_t)&i > ii) ? 1 : -1;
     }
 
     if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
