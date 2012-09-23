@@ -553,6 +553,9 @@
       \item The Fortran code underlying \code{nlminb()} could
       infinite-loop if any the functions returned \code{NA} or
       \code{NaN}, so this has been made an error.
+
+      \item Custom line types would sometimes segfault on the Cairo
+      device. (PR{15055}.)
     }
   }
 }
