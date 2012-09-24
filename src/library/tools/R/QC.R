@@ -3690,8 +3690,8 @@ function(package, dir, lib.loc = NULL)
                     domain = NA)
         if(any(!miss))
             message(sprintf(ngettext(sum(miss),
-                                     "Package unavailable to check Rd xrefs: %s",
-                                     "Packages unavailable to check Rd xrefs: %s"),
+                                     "Unknown package %s in Rd xrefs",
+                                     "Unknown packages %s in Rd xrefs"),
                              paste(sQuote(unknown[!miss]), collapse = ", ")),
                     domain = NA)
     }
@@ -5210,7 +5210,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
                 character()
             .source_assignments_in_code_dir(code_dir, code_env, meta)
             bad_closures <- find_bad_closures(code_env)
-         }
+        }
     }
 
     internals <- character()
@@ -6155,7 +6155,7 @@ function(x)
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     ## \usage is only 'verbatim-like'
     ## <FIXME>
-    ## 'LanguageCl.Rd' in package methods has '"\{"' in its usage.
+    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
     ## But why should it use the backslash escape?
     txt <- gsub("\\{", "{", txt, fixed = TRUE)
     txt <- gsub("\\}", "}", txt, fixed = TRUE)
