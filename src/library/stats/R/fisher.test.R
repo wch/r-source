@@ -37,7 +37,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             if(any(x > .Machine$integer.max))
                 stop("'x' has entries too large to be integer")
             if(!identical(TRUE, (ax <- all.equal(xo, x))))
-                warning("'x' has been rounded to integer: ", ax)
+                warning(gettextf("'x' has been rounded to integer: %d", ax),
+                        domain = NA)
             storage.mode(x) <- "integer"
         }
     }

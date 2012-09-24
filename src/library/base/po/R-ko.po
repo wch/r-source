@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -137,7 +137,8 @@ msgstr ""
 msgid "namespace cannot be unloaded:"
 msgstr "네임스페이지를 로드할 수 없습니다 "
 
-msgid "converted to character string"
+#, fuzzy
+msgid "%s converted to character string"
 msgstr "문자열로 변환되었습니다 "
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -252,16 +253,9 @@ msgstr "'row.names' 에는 결손 값이 있어서는 안됩니다 "
 msgid "invalid 'dimnames' given for data frame"
 msgstr "데이터 프레임에 잘못된 'dimnames' 가 주어졌습니다 "
 
-msgid "cannot coerce class '%s' into a data.frame"
+#, fuzzy
+msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr "클래스 \"%s\" 는 데이터프레임형으로 강제변환 할 수 없습니다 "
-
-msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr ""
-"'row.names' 가 잘못되었습니다. %d 의 행을 가진 길이 %d 의 데이터 프레임입니"
-"다 "
-
-msgid "supplied %d row names for %d rows"
-msgstr "%d 개의 행에 %d 개의 이름이 지정되었습니다 "
 
 #, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -286,7 +280,8 @@ msgstr "행 이름들이 결손 값을 가지고 있습니다. "
 msgid "duplicate row.names:"
 msgstr "row.names 가 중복되었습니다: "
 
-msgid "arguments imply differing number of rows:"
+#, fuzzy
+msgid "arguments imply differing number of rows: %s"
 msgstr "arguments imply differing number of rows:"
 
 msgid "row.names should specify one of the variables"
@@ -343,38 +338,11 @@ msgstr "new columns would leave holes after existing columns"
 msgid "duplicate subscripts for columns"
 msgstr "열을 지정하는 첨자가 중복되었습니다 "
 
-msgid "replacement has %d rows, data has %d"
-msgstr "replacement has %d rows, data has %d"
-
-msgid "replacement has %d items, need %d"
-msgstr "치환은 %d의 항목을 가지므로 %d 가 필요합니다 "
-
-msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr ""
-"치환 요소 %d 는 %d 의 행의 개수를 가진 행렬 혹은 데이터 프레임이므로 %d행이 "
-"필요합니다"
-
-#, fuzzy
-msgid "replacement element %d has %d rows, need %d"
-msgstr "치환은 %d의 항목을 가지므로 %d 가 필요합니다 "
-
-msgid "replacement element %d has %d rows to replace %d rows"
-msgstr ""
-"치환은 %d의 항목을 가지므로 %d 개의 행을 대체할  %d 개의 행이 필요합니다 "
-
-msgid "%d rows in value to replace %d rows"
-msgstr "value 의 %d 개의 행들을 %d 행들로 대체하려 합니다 "
-
-msgid "replacement data has %d rows to replace %d rows"
-msgstr "치환 데이터는 %d 개의 행으로 대체할 %d 개의 행을 가지고 잇습니다 "
-
-msgid "provided %d variables to replace %d variables"
-msgstr "%d 개의 변수들을 대체할 %d 개의 변수들이 제공되었습니다 "
-
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 
-msgid "replacing element in non-existent column:"
+#, fuzzy
+msgid "replacing element in non-existent column: %s"
 msgstr "존재하지 않는 열의 요소들을 다음의 항목으로 대체합니다 "
 
 msgid "only a single element should be replaced"
@@ -435,10 +403,12 @@ msgstr "단항연산 - 은 Date 객체에 정의될 수 없습니다 "
 msgid "can only subtract numbers from Date objects"
 msgstr "Date 객체로부터 수자정보만 빼낼 수 있습니다 "
 
-msgid "unary"
-msgstr "단항 "
+#, fuzzy
+msgid "unary %s not defined for \"Date\" objects"
+msgstr "단항연산 - 은 Date 객체에 정의될 수 없습니다 "
 
-msgid "not defined for Date objects"
+#, fuzzy
+msgid "%s not defined for \"Date\" objects"
 msgstr "Date 객체들에 대해서 정의되어 질 수 없습니다 "
 
 msgid "'from' must be specified"
@@ -586,17 +556,16 @@ msgstr "단순히 행렬의 대각만이 대체되어질 수 있습니다 "
 msgid "replacement diagonal has wrong length"
 msgstr "치환 대각의 길이가 잘못되었습니다 "
 
-msgid "MARGIN ="
-msgstr "MARGIN ="
-
-msgid "is invalid for dim ="
+#, fuzzy
+msgid "MARGIN = %d is invalid for dim = %d"
 msgstr "은 잘못된 dim 값을 가집니다 = "
 
 #, fuzzy
 msgid "must pass a package name, %s or %s object"
 msgstr "패키지명, DLLInfo 혹은 DllInfoReferenec 객체를 건네주어야 합니다 "
 
-msgid "No DLL currently loaded with name or path"
+#, fuzzy
+msgid "No DLL currently loaded with name or path %s"
 msgstr "No DLL currently loaded with name or path"
 
 msgid "multiple DLLs match '%s'. Using '%s'"
@@ -723,7 +692,8 @@ msgstr ""
 "'format' 은 {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\"} 중 반드시 하나이어"
 "야 합니다 "
 
-msgid "'digits' reduced to"
+#, fuzzy
+msgid "'digits' reduced to %d"
 msgstr "'digits' 은 아래와 같이 줄어듭니다 "
 
 msgid "'flag' can contain only '0+- #'"
@@ -744,11 +714,9 @@ msgstr "'subset' 은 논리적으로 평가되어야 합니다"
 msgid "'subset' must be logical"
 msgstr "'subset' 는 반드시 논리값이어야 합니다"
 
-msgid "value for '"
-msgstr "' 에 대한 값 "
-
-msgid "' not found"
-msgstr "' 을 찾을 수 없습니다 "
+#, fuzzy
+msgid "value for %s not found"
+msgstr "파일 '%s' 를 찾을 수 없습니다 "
 
 msgid "all arguments must be named"
 msgstr "모든 인수들에는 이름이 주어져야 합니다 "
@@ -1004,7 +972,8 @@ msgstr "잘못된 파일 인수입니다"
 msgid "can only save to a binary connection"
 msgstr "이진 연결만 저장이 가능합니다 "
 
-msgid "image could not be renamed and is left in"
+#, fuzzy
+msgid "image could not be renamed and is left in %s"
 msgstr "image could not be renamed and is left in"
 
 msgid "[Previously saved workspace restored]"
@@ -1118,23 +1087,21 @@ msgstr "%s 을 찾을 수 없습니다 "
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr "네임스페이스 %s 는 이미 loadNamespace 에 있습니다"
 
-msgid "failed to assign RegisteredNativeSymbol for"
+#, fuzzy
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
 msgstr "RegisteredNativeSymbol 할당에 실패했습니다 "
 
-msgid "to"
-msgstr "to"
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
+msgstr ""
 
-msgid "since"
-msgstr "왜냐하면 "
-
-msgid "is already defined in the"
-msgstr "이미 다음 부분에 정의되어 있습니다 "
-
-msgid "namespace"
-msgstr " 네임스페이스 "
-
-msgid "failed to assign NativeSymbolInfo for"
-msgstr "NativeSymbolInfo 을 할당할 수 없습니다 "
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
+msgstr ""
 
 msgid "package %s does not have a namespace"
 msgstr "패키지 %s 는 네임스페이스를 가지고 있지 않습니다 "
@@ -1174,9 +1141,6 @@ msgstr ""
 msgid "Loading required namespace: %s"
 msgstr "요구된 네임스페이스를 로드중입니다: %s "
 
-msgid "not found"
-msgstr "찾을 수 없습니다 "
-
 msgid "not loading a namespace"
 msgstr "네임스페이스를 로딩하지 않습니다 "
 
@@ -1189,7 +1153,8 @@ msgstr "네임스페이스가 아닙니다 "
 msgid "operation not allowed on base namespace"
 msgstr "base 네임스페이스서 허용하지 않은 연산입니다 "
 
-msgid "duplicate import names"
+#, fuzzy
+msgid "duplicate import names %s"
 msgstr "duplicate import names"
 
 msgid "replacing local value with import %s when loading %s"
@@ -1223,7 +1188,8 @@ msgstr ""
 msgid "cannot add to exports of a sealed namespace"
 msgstr "cannot add to exports of a sealed namespace"
 
-msgid "undefined exports:"
+#, fuzzy
+msgid "undefined exports: %s"
 msgstr "정의되지 않은 내보내기: "
 
 msgid "package %s has no NAMESPACE file"
@@ -1360,9 +1326,6 @@ msgstr "'length.out' 인자는 반드시 길이가 1 이어야 합니다 "
 msgid "first element used of 'length.out' argument"
 msgstr "'length.out' 인자는 첫번째로 사용된 요소입니다 "
 
-msgid "extra argument(s) %s will be disregarded"
-msgstr "추가적인 %s 는 고려되지 않습니다 "
-
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "seq(.) 안의 (to - from)/by 가 잘못되었습니다 "
 
@@ -1476,23 +1439,12 @@ msgstr "'chdir = TRUE' 는 연결과 아무런 관계가 없습니다 "
 msgid "'%s' is not an existing file"
 msgstr "'%s' 는 존재하는 파일이 아닙니다 "
 
-msgid "Timestamp of '"
+#, fuzzy
+msgid "Timestamp of %s has chamged"
 msgstr "Timestamp of '"
-
-msgid "' has changed"
-msgstr "' has changed"
 
 msgid "additional arguments ignored in stop()"
 msgstr "additional arguments ignored in stop()"
-
-msgid "is not"
-msgstr "is not "
-
-msgid "all"
-msgstr "전부 "
-
-msgid "TRUE"
-msgstr "TRUE "
 
 msgid "additional arguments ignored in warning()"
 msgstr "additional arguments ignored in warning()"
@@ -1588,7 +1540,8 @@ msgstr "'width' 는 반드시 양수이어야 합니다 "
 msgid "No traceback available"
 msgstr "이용 할수 있는 트레이스백이 없습니다 "
 
-msgid "invalid version specification"
+#, fuzzy
+msgid "invalid version specification %s"
 msgstr "버전정보가 잘 못되었습니다 "
 
 msgid "wrong argument"
@@ -1603,8 +1556,9 @@ msgstr "\"numeric_version\" 객체에 단항 '%s' 은 정의되지 않았습니�
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr "\"numeric_version\" 객체에 '%s' 은 정의되지 않았습니다 "
 
-msgid "not defined for numeric_version objects"
-msgstr "수치형 객체가 정의되지 않았습니다 "
+#, fuzzy
+msgid "%s not defined for \"numeric_version\" objects"
+msgstr "\"numeric_version\" 객체에 '%s' 은 정의되지 않았습니다 "
 
 msgid "<0 elements>"
 msgstr "<0 elements>"
@@ -1707,6 +1661,62 @@ msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] "deparse options %s are not recognized"
 
+#, fuzzy
+msgid "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0] ""
+"'row.names' 가 잘못되었습니다. %d 의 행을 가진 길이 %d 의 데이터 프레임입니"
+"다 "
+
+#, fuzzy
+msgid "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0] "%d 개의 행에 %d 개의 이름이 지정되었습니다 "
+
+#, fuzzy
+msgid "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0] "replacement has %d rows, data has %d"
+
+#, fuzzy
+msgid "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0] "치환은 %d의 항목을 가지므로 %d 가 필요합니다 "
+
+#, fuzzy
+msgid "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] ""
+"치환 요소 %d 는 %d 의 행의 개수를 가진 행렬 혹은 데이터 프레임이므로 %d행이 "
+"필요합니다"
+
+#, fuzzy
+msgid "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0] "치환은 %d의 항목을 가지므로 %d 가 필요합니다 "
+
+#, fuzzy
+msgid "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0] ""
+"치환은 %d의 항목을 가지므로 %d 개의 행을 대체할  %d 개의 행이 필요합니다 "
+
+#, fuzzy
+msgid "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0] "value 의 %d 개의 행들을 %d 행들로 대체하려 합니다 "
+
+#, fuzzy
+msgid "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0] "치환 데이터는 %d 개의 행으로 대체할 %d 개의 행을 가지고 잇습니다 "
+
+#, fuzzy
+msgid "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0] "%d 개의 변수들을 대체할 %d 개의 변수들이 제공되었습니다 "
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "라이브러리 %s 는 아무런 패키지를 포함하고 있지 않습니다 "
@@ -1747,9 +1757,65 @@ msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3 메소드 %s 는 NAMESPACE 안에 선언되었으나 찾을 수 없습니다 "
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "추가적인 %s 는 고려되지 않습니다 "
+
+#, fuzzy
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] "TRUE 대신 T 가 사용되었습니다 "
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#, fuzzy
+#~ msgid "%s not defined for numeric_version objects"
+#~ msgstr "수치형 객체가 정의되지 않았습니다 "
+
+#~ msgid "unary"
+#~ msgstr "단항 "
+
+#~ msgid "MARGIN ="
+#~ msgstr "MARGIN ="
+
+#~ msgid "value for '"
+#~ msgstr "' 에 대한 값 "
+
+#~ msgid "' not found"
+#~ msgstr "' 을 찾을 수 없습니다 "
+
+#~ msgid "to"
+#~ msgstr "to"
+
+#~ msgid "since"
+#~ msgstr "왜냐하면 "
+
+#~ msgid "is already defined in the"
+#~ msgstr "이미 다음 부분에 정의되어 있습니다 "
+
+#~ msgid "namespace"
+#~ msgstr " 네임스페이스 "
+
+#~ msgid "failed to assign NativeSymbolInfo for"
+#~ msgstr "NativeSymbolInfo 을 할당할 수 없습니다 "
+
+#~ msgid "not found"
+#~ msgstr "찾을 수 없습니다 "
+
+#~ msgid "' has changed"
+#~ msgstr "' has changed"
+
+#~ msgid "is not"
+#~ msgstr "is not "
+
+#~ msgid "all"
+#~ msgstr "전부 "
+
+#~ msgid "TRUE"
+#~ msgstr "TRUE "
 
 #~ msgid "non-numeric argument to 'chol'"
 #~ msgstr "수치가 아닌 인수가 'chol' 에 있습니다 "

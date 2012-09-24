@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2011-10-18 19:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -91,7 +91,8 @@ msgstr "неправильный первый аргумент"
 msgid "'formula' missing or incorrect"
 msgstr "'formula' пропущена или неправильная"
 
-msgid "'at' must have same length as 'z$n', i.e."
+#, fuzzy
+msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' должен иметь ту же длину, что и 'z$n', т.е."
 
 msgid "invalid boxplot widths"
@@ -209,7 +210,8 @@ msgstr "неизвестный алгоритм 'breaks'"
 msgid "invalid number of 'breaks'"
 msgstr "неправильное количество 'breaks'"
 
-msgid "hist.default: pretty() error, breaks="
+#, fuzzy
+msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: ошибка в pretty(), breaks="
 
 #, fuzzy
@@ -262,9 +264,10 @@ msgstr ""
 "'respect' должен быть логическим или матрицей с той же размерностью, что и "
 "'mat'"
 
+#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n ="
+"to each of the values {1..n}; here  n = %d"
 msgstr ""
 "матрица-макет должна содержать по крайней мере одну ссылку\n"
 "на каждое из значений {1..n}; здесь же  n ="
@@ -281,7 +284,8 @@ msgstr "неправильные длины координат"
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width' должен быть числовым и >= 0"
 
-msgid "horizontal specification overrides: Number of columns :="
+#, fuzzy
+msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "горизонтальное указание превышено: Число колонок :="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
@@ -309,9 +313,6 @@ msgstr "пропущенные значения в таблице сопряженности"
 
 msgid "'x' must not have 0 dimensionality"
 msgstr "'x' не должен быть 0-мерным"
-
-msgid "extra argument(s) %s will be disregarded"
-msgstr "дополнительный(е) аргумент(ы) %s будут отброшены"
 
 msgid "invalid 'shade' specification"
 msgstr "неправильное указание 'shade'"
@@ -460,6 +461,13 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] "аргумент %s не для использования"
 msgstr[1] "аргументы %s не для использования"
 msgstr[2] "аргументы %s не для использования"
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "дополнительный(е) аргумент(ы) %s будут отброшены"
+msgstr[1] "дополнительный(е) аргумент(ы) %s будут отброшены"
+msgstr[2] "дополнительный(е) аргумент(ы) %s будут отброшены"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""

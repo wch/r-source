@@ -284,9 +284,10 @@ offline_help_helper <- function(texfile, type, texinputs = NULL)
         stop(gettextf("creation of %s failed", sQuote(ofile2)), domain = NA)
     if(file.copy(ofile, ofile2, overwrite = TRUE)) {
         unlink(ofile)
-        message("Saving help page to ", sQuote(basename(ofile2)))
+        message(gettextf("Saving help page to %s", sQuote(basename(ofile2))),
+                domain = NA)
     } else {
-        message("Saving help page to ", sQuote(ofile))
+        message(gettextf("Saving help page to %s", sQuote(ofile)), domain = NA)
     }
     invisible()
 }

@@ -810,9 +810,12 @@ reconcilePropertiesAndPrototype <-
           pnames <- prototype@slots
           prototype <- prototype@object
           if(length(superClasses) == 0L && any(is.na(match(pnames, slots))))
-            stop(gettextf("named elements of prototype do not correspond to slot names: %s",
-                      paste(.dQ(pnames[is.na(match(pnames, slots))]),
-                            collapse =", ")))
+              stop(sprintf(ngettext(sum(is.na(match(pnames, slots))),
+                                    "named elements of prototype do not correspond to slot name: %s",
+                                    "named elements of prototype do not correspond to slot names: %s"),
+                           paste(.dQ(pnames[is.na(match(pnames, slots))]),
+                                 collapse =", ")),
+                   domain = NA)
       }
       else
           pnames <- allNames(attributes(prototype))

@@ -590,9 +590,9 @@ anova.lmlist <- function (object, ..., scale = 0, test = "F")
     sameresp <- responses == responses[1L]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning("models with response ",
-                deparse(responses[!sameresp]),
-                " removed because response differs from ", "model 1")
+        warning(gettextf("models with response %s removed because response differs from model 1",
+                         sQuote(deparse(responses[!sameresp]))),
+                domain = NA)
     }
 
     ns <- sapply(objects, function(x) length(x$residuals))

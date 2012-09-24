@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13+0100\n"
+"POT-Creation-Date: 2012-09-24 07:46+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -191,8 +191,8 @@ msgid "invalid font specification"
 msgstr "geçersiz yazıtipi özelliği"
 
 #: plot.c:268 plot.c:282 plot.c:473 plot.c:478 plot.c:2101 plot.c:2108
-#: plot.c:3125 plot.c:3127 plot.c:3129 plot.c:3281 plot3d.c:1160 plot3d.c:1164
-#: plot3d.c:1166 plot3d.c:1900
+#: plot.c:3125 plot.c:3127 plot.c:3129 plot.c:3281 plot3d.c:1157 plot3d.c:1161
+#: plot3d.c:1163 plot3d.c:1897
 #, c-format
 msgid "invalid '%s' value"
 msgstr "geçersiz '%s' değeri"
@@ -249,7 +249,7 @@ msgstr "eksen etiketleri için geçersiz yazım"
 
 #: plot.c:757 plot.c:1290 plot.c:1611 plot.c:1676 plot.c:1751 plot.c:1817
 #: plot.c:1890 plot.c:1985 plot.c:2061 plot.c:2339 plot.c:2513 plot.c:2729
-#: plot.c:3263 plot.c:3390 plot.c:3466 plot.c:3632 plot.c:3912 plot3d.c:1869
+#: plot.c:3263 plot.c:3390 plot.c:3466 plot.c:3632 plot.c:3912 plot3d.c:1866
 msgid "too few arguments"
 msgstr "çok az argüman"
 
@@ -396,8 +396,8 @@ msgid "'a' and 'b' must be finite"
 msgstr "'a' ve 'b' sonlu olmalıdır"
 
 #: plot.c:2914 plot.c:4032 plot.c:4036 plot.c:4039 plot.c:4059 plot.c:4063
-#: plot.c:4066 plot3d.c:1082 plot3d.c:1086 plot3d.c:1091 plot3d.c:1095
-#: plot3d.c:1099 plot3d.c:1103 stem.c:159 stem.c:160 stem.c:162 stem.c:163
+#: plot.c:4066 plot3d.c:1079 plot3d.c:1083 plot3d.c:1088 plot3d.c:1092
+#: plot3d.c:1096 plot3d.c:1100 stem.c:159 stem.c:160 stem.c:162 stem.c:163
 #: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
@@ -515,97 +515,97 @@ msgstr "'%s' argümanı için hatalı uzunluk"
 msgid "unable to allocate memory (in xspline)"
 msgstr "bellek ayrılamadı (xspline içinde)"
 
-#: plot3d.c:192 plot3d.c:1926
+#: plot3d.c:183 plot3d.c:1923
 msgid "insufficient 'x' or 'y' values"
 msgstr "yetersiz 'x' veya 'y' değerleri"
 
-#: plot3d.c:195 plot3d.c:1929
+#: plot3d.c:187 plot3d.c:1926
 msgid "dimension mismatch"
 msgstr "boyut uyumsuzluğu"
 
-#: plot3d.c:198 plot3d.c:1932
+#: plot3d.c:195 plot3d.c:1929
 msgid "no contour values"
 msgstr "çevre değeri yok"
 
-#: plot3d.c:260
+#: plot3d.c:257
 msgid "invalid x / y values or limits"
 msgstr "geçersiz x / y değerleri veya sınırları"
 
-#: plot3d.c:262
+#: plot3d.c:259
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "geçersiz çevre seviyeleri: kesinlikle artan olmalı"
 
-#: plot3d.c:1046 plot3d.c:1059
+#: plot3d.c:1043 plot3d.c:1056
 msgid "Axis orientation not calculated"
 msgstr "Eksen yönelimi hesaplanmadı"
 
-#: plot3d.c:1079
+#: plot3d.c:1076
 msgid "too few parameters"
 msgstr "çok az parametre"
 
-#: plot3d.c:1109
+#: plot3d.c:1106
 msgid "invalid 'x' limits"
 msgstr "geçersiz 'x' sınırları"
 
-#: plot3d.c:1111
+#: plot3d.c:1108
 msgid "invalid 'y' limits"
 msgstr "geçersiz 'y' sınırları"
 
-#: plot3d.c:1113
+#: plot3d.c:1110
 msgid "invalid 'z' limits"
 msgstr "geçersiz 'z' sınırları"
 
-#: plot3d.c:1134
+#: plot3d.c:1131
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
 
-#: plot3d.c:1136
+#: plot3d.c:1133
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
 
-#: plot3d.c:1138
+#: plot3d.c:1135
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab' 1 birim uzunluğunda bir karakter vektörü olmalıdır"
 
-#: plot3d.c:1158
+#: plot3d.c:1155
 msgid "invalid viewing parameters"
 msgstr "geçersiz görüntüleme parametreleri"
 
-#: plot3d.c:1176 plot3d.c:1180
+#: plot3d.c:1173 plot3d.c:1177
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "geçersiz '%s' tanımlaması"
 
-#: plot3d.c:1526
+#: plot3d.c:1523
 #, fuzzy, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour(): dairesel/uzun seglist -- bug.report()!"
 
-#: plot3d.c:1936
+#: plot3d.c:1933
 msgid "missing 'x' values"
 msgstr "eksik 'x' değerleri"
 
-#: plot3d.c:1938
+#: plot3d.c:1935
 msgid "increasing 'x' values expected"
 msgstr "artan 'x' değerleri beklendi"
 
-#: plot3d.c:1943
+#: plot3d.c:1940
 msgid "missing 'y' values"
 msgstr "eksik 'y' değerleri"
 
-#: plot3d.c:1945
+#: plot3d.c:1942
 msgid "increasing 'y' values expected"
 msgstr "artan 'y' değeri beklendi"
 
-#: plot3d.c:1950
+#: plot3d.c:1947
 msgid "invalid NA contour values"
 msgstr "geçersiz NA çevre değerleri"
 
-#: plot3d.c:1962
+#: plot3d.c:1959
 msgid "all z values are equal"
 msgstr "tüm z değerleri eşit"
 
-#: plot3d.c:1964
+#: plot3d.c:1961
 msgid "all z values are NA"
 msgstr "tüm z değerleri NA"
 

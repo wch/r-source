@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:47\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,10 +53,10 @@ msgstr ""
 msgid "parse error or empty option in\n%s"
 msgstr ""
 
-msgid "Warning: unknown option"
+msgid "Warning: unknown option %s"
 msgstr ""
 
-msgid "Created PDF document"
+msgid "Created PDF document %s"
 msgstr ""
 
 msgid "Compacting PDF document"
@@ -83,9 +83,6 @@ msgstr ""
 msgid "elements of 'what' after the first will be ignored"
 msgstr ""
 
-msgid "%d occurrences in %s"
-msgstr ""
-
 msgid "No suitable spell check program found."
 msgstr ""
 
@@ -107,10 +104,7 @@ msgstr ""
 msgid "Use <code> %s </code> \n to list the vignettes in all <strong>available</strong> packages."
 msgstr ""
 
-msgid "No vignettes found by"
-msgstr ""
-
-msgid "call"
+msgid "No vignettes found by %s"
 msgstr ""
 
 msgid "Package %s: DESCRIPTION not found"
@@ -132,9 +126,6 @@ msgid "It is recommended to use %s instead of %s."
 msgstr ""
 
 msgid "Use either %s or %s but not both."
-msgstr ""
-
-msgid "Invalid role specification(s): %s."
 msgstr ""
 
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
@@ -216,6 +207,9 @@ msgid "file 'filelist' is missing for directory %s"
 msgstr ""
 
 msgid "data set %s not found"
+msgstr ""
+
+msgid "only 'html = TRUE' is supported on this platform"
 msgstr ""
 
 msgid "kind '%s' not yet implemented"
@@ -389,7 +383,7 @@ msgstr ""
 msgid "creation of %s failed"
 msgstr ""
 
-msgid "Saving help page to"
+msgid "Saving help page to %s"
 msgstr ""
 
 msgid "argument %s must be a single character string"
@@ -407,12 +401,6 @@ msgstr ""
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
-msgid "Rebuilding the help.search() database"
-msgstr ""
-
-msgid "..."
-msgstr ""
-
 msgid "Packages {readRDS() sequentially}:"
 msgstr ""
 
@@ -423,9 +411,6 @@ msgid "could not find package %s"
 msgstr ""
 
 msgid "package %s has empty hsearch data - strangely"
-msgstr ""
-
-msgid "no hsearch.rds meta data for package"
 msgstr ""
 
 msgid "reencoding ..."
@@ -447,9 +432,6 @@ msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 
 msgid "incorrect 'agrep' specification"
-msgstr ""
-
-msgid "matched %d objects."
 msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
@@ -486,12 +468,6 @@ msgid "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possibl
 msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
-msgstr ""
-
-msgid "package"
-msgstr ""
-
-msgid "not found"
 msgstr ""
 
 msgid "cannot update HTML package index"
@@ -650,7 +626,7 @@ msgstr ""
 msgid "unable to install packages"
 msgstr ""
 
-msgid "unable to create"
+msgid "unable to create %s"
 msgstr ""
 
 msgid "inferring 'repos = NULL' from the file name"
@@ -680,7 +656,7 @@ msgstr ""
 msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
 msgstr ""
 
-msgid "system (cmd0):"
+msgid "system (cmd0): %s"
 msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
@@ -692,13 +668,10 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr ""
 
-msgid "foundpkgs:"
+msgid "foundpkgs: %s"
 msgstr ""
 
-msgid ","
-msgstr ""
-
-msgid "files:"
+msgid "files: %s"
 msgstr ""
 
 msgid "installation of one of more packages failed,\n  probably %s"
@@ -815,16 +788,10 @@ msgstr ""
 msgid "invalid format"
 msgstr ""
 
-msgid "last record incomplete, %d lines discarded"
-msgstr ""
-
 msgid "transfer failure"
 msgstr ""
 
-msgid "HTTPUserAgent"
-msgstr ""
-
-msgid "option must be a length one character vector or NULL"
+msgid "%s option must be a length one character vector or NULL"
 msgstr ""
 
 msgid "'file' must be a character string or connection"
@@ -848,13 +815,7 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr ""
 
-msgid "Invalid roman numeral(s): %s"
-msgstr ""
-
 msgid "length mismatch: bug in code!"
-msgstr ""
-
-msgid "Processing file"
 msgstr ""
 
 msgid "no valid packages were specified"
@@ -881,7 +842,7 @@ msgstr ""
 msgid "invalid options(\"str\") -- using defaults instead"
 msgstr ""
 
-msgid "invalid components in options(\"str\"):"
+msgid "invalid components in options(\"str\"): %s"
 msgstr ""
 
 msgid "'str.default': 'le' is NA, so taken as 0"
@@ -1016,13 +977,10 @@ msgstr ""
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
 
-msgid "ERROR: failed to lock directory"
+msgid "ERROR: failed to lock directory %s for modifying\nTry removing %s"
 msgstr ""
 
-msgid "for modifying\nTry removing"
-msgstr ""
-
-msgid "ERROR: failed to create lock directory"
+msgid "ERROR: failed to create lock directory %s"
 msgstr ""
 
 msgid "restored %s"
@@ -1031,7 +989,7 @@ msgstr ""
 msgid "unable to move temporary installation %s to %s"
 msgstr ""
 
-msgid "cannot remove prior installation of package"
+msgid "cannot remove prior installation of package %s"
 msgstr ""
 
 msgid "The downloaded binary packages are in\n\t%s"
@@ -1058,17 +1016,29 @@ msgstr ""
 msgid "there is no 'libs' directory in package %s"
 msgstr ""
 
-msgid "cannot remove prior installation of package %s"
-msgstr ""
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr ""
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr ""
 
+msgid        "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "matched %d object."
+msgid_plural "matched %d objects."
 msgstr[0]    ""
 msgstr[1]    ""
 
@@ -1124,6 +1094,16 @@ msgstr[1]    ""
 
 msgid        "There is a binary version available (and will be installed) but the source version is later"
 msgid_plural "There are binary versions available (and will be installed) but the source versions are later"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "Invalid roman numeral: %s"
+msgid_plural "Invalid roman numerals: %s"
 msgstr[0]    ""
 msgstr[1]    ""
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -82,7 +82,8 @@ msgstr "первое значение временного ряда не должно быть пропущенным"
 msgid "all parameters were fixed"
 msgstr "все параметры были фиксированными"
 
-msgid "possible convergence problem: optim gave code="
+#, fuzzy
+msgid "possible convergence problem: optim gave code = %d %d"
 msgstr "возможно, проблема сходимости: 'optim' выдал код="
 
 msgid "no factors in the fitted model"
@@ -128,9 +129,6 @@ msgstr "количество используемых строк изменилось: убраны пропущенные значения?"
 msgid "attempting model selection on an essentially perfect fit is nonsense"
 msgstr "попытка выбора модели для в целом хорошей подгонки -- глупость"
 
-msgid "using the %d/%d rows from a combined fit"
-msgstr "использую %d/%d строк из комбинированного выравнивания"
-
 msgid "F test assumes quasi%s family"
 msgstr "Тест Фишера предполагает квази-%s семейство"
 
@@ -145,12 +143,6 @@ msgstr "'drop1'-метод для моделей \"mlm\" отсутствует"
 
 msgid "F test assumes 'quasi%s' family"
 msgstr "Тест Фишера предполагает семейство 'quasi%s'"
-
-msgid "lower scope has term(s) %s not included in model"
-msgstr "нижняя область действия имеет выражени(я) %s, не включенные в модель"
-
-msgid "upper scope does not include model term(s) %s"
-msgstr "верхняя область действия не включает выражени(я) модели %s"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC для этой модели не определена, поэтому 'step' не работает"
@@ -344,6 +336,10 @@ msgstr "нестационарная часть авторегрессии"
 
 msgid "non-stationary seasonal AR part"
 msgstr "нестационарная сезонная часть авторегрессии"
+
+#, fuzzy
+msgid "possible convergence problem: optim gave code = %d"
+msgstr "возможно, проблема сходимости: 'optim' выдал код="
 
 msgid "non-stationary AR part from CSS"
 msgstr "нестационарная часть авторегрессии из CSS"
@@ -817,12 +813,6 @@ msgstr "запрошенные вклады без матрицы 'x'"
 msgid "factor analysis requires at least three variables"
 msgstr "факторный анализ требует как минимум три переменные"
 
-msgid "%d factors is too many for %d variables"
-msgstr "%d факторов слишком много для %d переменных"
-
-msgid "'start' must have %d rows"
-msgstr "'start' должен иметь %d строк"
-
 msgid "no starting values supplied"
 msgstr "не указано стартовое значение"
 
@@ -832,7 +822,8 @@ msgstr "не могу оптимизировать, начиная с этих стартовых значени(й)"
 msgid "invalid argument 'lambda'"
 msgstr "неправильный аргумент 'lambda'"
 
-msgid "link not recognised"
+#, fuzzy
+msgid "%s link not recognised"
 msgstr "ссылка не распознана"
 
 msgid "link \"%s\" not available for poisson family; available links are %s"
@@ -877,10 +868,9 @@ msgstr "не целочисленные #successes в биномиальном 'glm'!"
 msgid "non-integer counts in a binomial glm!"
 msgstr "не целочисленные счетчики в биномиальном 'glm'!"
 
-msgid "for the binomial family, y must be a vector of 0 and 1's"
-msgstr "для биномиального семейства y должен быть вектором из 0 и 1"
-
+#, fuzzy
 msgid ""
+"for the binomial family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 "или 2-колонная матрица где колонка 1 -- это кол-во успехов, а колонка 2 -- "
@@ -895,8 +885,13 @@ msgstr ""
 "ссылка \"%s\" не доступна для квази-биномиального семейства; доступны ссылки "
 "%s"
 
-msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
-msgstr "для квази-биномиального семейства, y должен быть вектором из 0 и 1"
+#, fuzzy
+msgid ""
+"for the quasibinomial family, y must be a vector of 0 and 1's\n"
+"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgstr ""
+"или 2-колонная матрица где колонка 1 -- это кол-во успехов, а колонка 2 -- "
+"кол-во неудач"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
@@ -949,16 +944,14 @@ msgstr ""
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "длина 'init' должна равняться длине 'filter'"
 
-msgid "'init'; must have 1 or %d cols"
-msgstr "'init' должен иметь 1 или %d колонок"
-
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x' должен иметь по крайней мере 2 строки и колонки"
 
 msgid "'x' has entries too large to be integer"
 msgstr "у 'x' есть элементы, слишком большие чтобы быть целыми"
 
-msgid "'x' has been rounded to integer:"
+#, fuzzy
+msgid "'x' has been rounded to integer: %d"
 msgstr "'x' был округлен до целого:"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
@@ -1095,9 +1088,6 @@ msgstr "нет наблюдений, информативных для итерации"
 msgid "non-finite coefficients at iteration %d"
 msgstr "не-конечные коэффициенты в итерации %d"
 
-msgid "X matrix has rank %d, but only %d observations"
-msgstr "матрица X имеет ранг %d, но только %d наблюдений"
-
 msgid ""
 "no valid set of coefficients has been found: please supply starting values"
 msgstr ""
@@ -1134,23 +1124,18 @@ msgstr "следующие аргументы 'anova.glm' неправильные и были отброшены:"
 msgid ","
 msgstr ","
 
-msgid "using F test with a %s family is inappropriate"
-msgstr "использовать тест Фишера с семейством %s неправильно"
+msgid "using F test with a '%s' family is inappropriate"
+msgstr "использовать тест Фишера с семейством '%s' неправильно"
 
 msgid "using F test with a fixed dispersion is inappropriate"
 msgstr "использовать тест Фишера с фиксированной дисперсией неправильно"
 
-msgid "models with response"
-msgstr "модели с откликом"
-
-msgid "removed because response differs from model 1"
+#, fuzzy
+msgid "models with response %s removed because response differs from model 1"
 msgstr "удалено, потому что отклик отличается от модели 1"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "не все модели были подогнаны под размер данных"
-
-msgid "using F test with a '%s' family is inappropriate"
-msgstr "использовать тест Фишера с семейством '%s' неправильно"
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "наблюдения с нулевым весом не использовались при вычислении дисперсии"
@@ -1252,17 +1237,8 @@ msgstr "'x' -- не ядро"
 msgid "empty cluster: try a better set of initial centers"
 msgstr "пустой кластер: попробуйте другой набор исходных центров"
 
-msgid "did not converge in %d iterations"
-msgstr "не сошлось за %d итераций"
-
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "количество центров кластеров должно быть в пределах между 1 и nrow(x)"
-
-msgid "did not converge in"
-msgstr "не сошлось за"
-
-msgid "iterations"
-msgstr "итераций"
 
 #, fuzzy
 msgid "invalid nrow(x)"
@@ -1374,12 +1350,6 @@ msgstr "вызываю anova.lm(<fake-lm-object>) ..."
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "применение F-критерия для в целом хорошей подгонки бессмысленно"
 
-msgid "removed because response differs from"
-msgstr "удалено, потому что зависимость отличалась от"
-
-msgid "model 1"
-msgstr "модель 1"
-
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "вызываю predict.lm(<fake-lm-object>) ..."
 
@@ -1487,15 +1457,6 @@ msgstr "нет доступного метода 'nobs'"
 msgid "'start' and 'table' must be same length"
 msgstr "'start' и 'table' должны быть одной длины"
 
-msgid "%d missing values deleted"
-msgstr "%d пропущенных значений удалено"
-
-msgid "'X' matrix has %d responses, 'Y' has %d responses"
-msgstr "'X'-матрица имеет %d откликов, а 'Y' -- %d откликов"
-
-msgid "%d responses, but only %d variables"
-msgstr "%d откликов, но только %d переменных"
-
 msgid "number of weights = %d should equal %d (number of responses)"
 msgstr "количество весов = %d, а должно быть = %d (числу откликов)"
 
@@ -1559,20 +1520,15 @@ msgstr "'x' и 'y' должны иметь одинаковое количество уровней (минимум 2)"
 msgid "need numeric data"
 msgstr "нужны числовые данные"
 
-msgid "medpolish() did not converge in %d iterations"
-msgstr "medpolish() не сошелся в %d итераций"
-
 msgid "'mlm' objects with weights are not supported"
 msgstr "'mlm'-объекты с весами не поддерживается"
 
 msgid "X does not define a subspace of M"
 msgstr "X не определяет подпространство M"
 
-msgid "residuals have rank"
-msgstr "остатки имеют ранг"
-
-msgid "<"
-msgstr "<"
+#, fuzzy
+msgid "residuals have rank %s < %s"
+msgstr "остатки имеют ранг %d < %d"
 
 msgid "'model.tables' is not implemented for multiple responses"
 msgstr "'model.tables' для множественных откликов не разработаны"
@@ -1606,7 +1562,8 @@ msgstr "SE для типа '%s' еще не реализованы"
 msgid "na.action must be a function"
 msgstr "na.action должна быть функцией"
 
-msgid "non-factors ignored:"
+#, fuzzy
+msgid "non-factors ignored: %s"
 msgstr "не-факторы проигнорированы:"
 
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
@@ -1634,17 +1591,11 @@ msgstr "переменные %s указаны с другими типами, чем в подгонке"
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' должна быть таблицей данных, а не матрицей"
 
-msgid "'newdata' had %d rows but variable(s) found have %d rows"
-msgstr "'newdata' имеет %d строк, а переменная(ые) нашли %d строк"
-
 msgid "character variable '%s' changed to a factor"
 msgstr "текстовая переменная '%s' конвертирована в фактор"
 
 msgid "variable '%s' is not a factor"
 msgstr "переменная '%s' -- не фактор"
-
-msgid "factor '%s' has new level(s) %s"
-msgstr "у фактора '%s' есть новые уровн(и) %s"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' должен быть числом"
@@ -1699,9 +1650,6 @@ msgstr "f.upper = f(upper) -- это NA"
 msgid "f() values at end points not of opposite sign"
 msgstr "f() значений на концевых точках не противоположного знака"
 
-msgid "_NOT_ converged in"
-msgstr "_НЕ_ сошлось в"
-
 msgid "control argument must be a named list"
 msgstr "аргумент 'control' должен быть именованным списком"
 
@@ -1736,26 +1684,15 @@ msgstr "setVarying : длина 'vary' должна соответствовать длине параметров"
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "сингулярная градиентная матрица в оценке начальных параметров"
 
-msgid "unrecognized control element(s) named `"
-msgstr "нераспознанный контрольный элемент(ы) с именем `"
-
-msgid "' ignored"
-msgstr "' пропущен"
-
 msgid "'data' must be a list or an environment"
 msgstr "'data' должны быть списком либо окружением"
 
 msgid "No starting values specified"
 msgstr "Не заданы стартовые значения"
 
-msgid "parameters without starting value in 'data':"
+#, fuzzy
+msgid "parameters without starting value in 'data': %s"
 msgstr "параметры без стартового значения в 'data':"
-
-msgid "fitting parameters"
-msgstr "параметры для подгонки"
-
-msgid "without any variables"
-msgstr "безо всяких переменных"
 
 msgid "no parameters to fit"
 msgstr "нет параметров для подгонки"
@@ -1809,11 +1746,10 @@ msgstr ""
 "метод L-BFGS-B использует 'factr' (и 'pgtol') вместо 'reltol' и 'abstol'"
 
 #, fuzzy
-msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
+msgid ""
+"one-dimensional optimization by Nelder-Mead is unreliable:\n"
+"use \"Brent\" or optimize() directly"
 msgstr "одномерная оптимизация методом Нелдера-Мида ненадежна:"
-
-msgid "use \"Brent\" or optimize() directly"
-msgstr "используйте \"Brent\" или optimize() прямо"
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
 msgstr "метод = \"Brent\" доступен только для одномерной оптимизации"
@@ -1833,7 +1769,10 @@ msgstr "'x' и 'n' должны иметь одинаковую длину"
 msgid "too few groups"
 msgstr "слишком мало групп"
 
-msgid "Not plotting observations with leverage one:"
+#, fuzzy
+msgid ""
+"Not plotting observations with leverage one:\n"
+"  %s"
 msgstr "Наблюдения с единичной трансляцией не рисую:"
 
 msgid "use only with \"lm\" objects"
@@ -1845,10 +1784,10 @@ msgstr "'which' должен быть в пределах 1:6"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' должен быть в пределах {1,..,%d}"
 
-msgid "hat values (leverages) are all ="
-msgstr "hat-значения (трансляции) все ="
-
-msgid "and there are no factor predictors; no plot no. 5"
+#, fuzzy
+msgid ""
+"hat values (leverages) are all = %s\n"
+" and there are no factor predictors; no plot no. 5"
 msgstr "и здесь нет факторов-предикторов; нет графика N 5"
 
 msgid "'x' and 'T' have incompatible length"
@@ -2061,10 +2000,12 @@ msgstr "неправильный аргумент 'n'"
 msgid "'k' must be positive"
 msgstr "'k' должен быть положителен"
 
-msgid "'k' must be odd!  Changing 'k' to"
+#, fuzzy
+msgid "'k' must be odd!  Changing 'k' to %d"
 msgstr "'k' должен быть нечетным!  Изменяю 'k' в"
 
-msgid "'k' is bigger than 'n'!  Changing 'k' to"
+#, fuzzy
+msgid "'k' is bigger than 'n'!  Changing 'k' to %d"
 msgstr "'k' > 'n'!  Изменяю 'k' в"
 
 msgid "bandwidth 'k' must be >= 1 and odd!"
@@ -2178,9 +2119,6 @@ msgstr "'x' должен быть между 0 и 1 для периодического сглаживания"
 msgid "no finite observations"
 msgstr "нет конечных наблюдений"
 
-msgid "observation(s) with NAs, NaNs and/or Infs deleted"
-msgstr "наблюдени(я) с NAs, NaNs и/или Infs удалены"
-
 msgid "'p' must be between 0 and 0.5"
 msgstr "'p' должен быть между 0 и 0.5"
 
@@ -2199,6 +2137,10 @@ msgstr "покрывающая вероятность вне [0,1)"
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 "spline: первое и последнее значения y различны -- использую y[1] для обоих"
+
+#, fuzzy
+msgid "'y' must be strictly increasing or decreasing"
+msgstr "'x' должно *только* увеличиваться (не - NA)"
 
 msgid "'spline' requires n >= 1"
 msgstr "'spline' требует n >= 1"
@@ -2390,9 +2332,6 @@ msgstr "противоречивое указание на порядок 'ma'"
 msgid "number of differences must be a positive integer"
 msgstr "количество различий должно быть положительным целым числом"
 
-msgid "'start.innov' is too short: need %d points"
-msgstr "'start.innov' слишком короткий: нужно %d точек"
-
 msgid "need an object with call component"
 msgstr "нужен объект с компонентом 'call'"
 
@@ -2485,17 +2424,142 @@ msgstr ""
 "все значения 'x' должны быть неотрицательными, чтобы подогнать модель "
 "'Weibull growth'"
 
+#, fuzzy
+msgid "using the %d/%d row from a combined fit"
+msgid_plural "using the %d/%d rows from a combined fit"
+msgstr[0] "использую %d/%d строк из комбинированного выравнивания"
+msgstr[1] "использую %d/%d строк из комбинированного выравнивания"
+msgstr[2] "использую %d/%d строк из комбинированного выравнивания"
+
+#, fuzzy
+msgid "lower scope has term %s not included in model"
+msgid_plural "lower scope has terms %s not included in model"
+msgstr[0] ""
+"нижняя область действия имеет выражени(я) %s, не включенные в модель"
+msgstr[1] ""
+"нижняя область действия имеет выражени(я) %s, не включенные в модель"
+msgstr[2] ""
+"нижняя область действия имеет выражени(я) %s, не включенные в модель"
+
+#, fuzzy
+msgid "upper scope has term %s not included in model"
+msgid_plural "upper scope has terms %s not included in model"
+msgstr[0] ""
+"нижняя область действия имеет выражени(я) %s, не включенные в модель"
+msgstr[1] ""
+"нижняя область действия имеет выражени(я) %s, не включенные в модель"
+msgstr[2] ""
+"нижняя область действия имеет выражени(я) %s, не включенные в модель"
+
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "здесь %d ошибочных выражения: разрешено лишь одно"
 msgstr[1] "здесь %d ошибочных выражения: разрешено лишь одно"
 msgstr[2] "здесь %d ошибочных выражений: разрешено лишь одно"
 
-msgid "extra argument %s is not a \"%s\""
-msgid_plural "extra arguments %s are not \"%s\"s"
+#, fuzzy
+msgid "extra argument %s is not of class \"%s\""
+msgid_plural "extra arguments %s are not of class \"%s\"s"
 msgstr[0] "дополнительный аргумент %s не является \"%s\""
 msgstr[1] "дополнительные аргументы %s не являются \"%s\""
 msgstr[2] "дополнительные аргументы %s не являются \"%s\""
+
+#, fuzzy
+msgid "%d factor is too many for %d variables"
+msgid_plural "%d factors are too many for %d variables"
+msgstr[0] "%d факторов слишком много для %d переменных"
+msgstr[1] "%d факторов слишком много для %d переменных"
+msgstr[2] "%d факторов слишком много для %d переменных"
+
+#, fuzzy
+msgid "'start' must have %d row"
+msgid_plural "'start' must have %d rows"
+msgstr[0] "'start' должен иметь %d строк"
+msgstr[1] "'start' должен иметь %d строк"
+msgstr[2] "'start' должен иметь %d строк"
+
+#, fuzzy
+msgid "'init'; must have 1 column"
+msgid_plural "'init'; must have 1 or %d columns"
+msgstr[0] "'init' должен иметь 1 или %d колонок"
+msgstr[1] "'init' должен иметь 1 или %d колонок"
+msgstr[2] "'init' должен иметь 1 или %d колонок"
+
+#, fuzzy
+msgid "X matrix has rank %d, but only %d observation"
+msgid_plural "X matrix has rank %d, but only %d observations"
+msgstr[0] "матрица X имеет ранг %d, но только %d наблюдений"
+msgstr[1] "матрица X имеет ранг %d, но только %d наблюдений"
+msgstr[2] "матрица X имеет ранг %d, но только %d наблюдений"
+
+#, fuzzy
+msgid "did not converge in %d iteration"
+msgid_plural "did not converge in %d iterations"
+msgstr[0] "не сошлось за %d итераций"
+msgstr[1] "не сошлось за %d итераций"
+msgstr[2] "не сошлось за %d итераций"
+
+#, fuzzy
+msgid "%d missing value deleted"
+msgid_plural "%d missing values deleted"
+msgstr[0] "%d пропущенных значений удалено"
+msgstr[1] "%d пропущенных значений удалено"
+msgstr[2] "%d пропущенных значений удалено"
+
+#, fuzzy
+msgid "'X' matrix has %d response"
+msgid_plural "'X' matrix has %d responses"
+msgstr[0] "'X'-матрица имеет %d откликов, а 'Y' -- %d откликов"
+msgstr[1] "'X'-матрица имеет %d откликов, а 'Y' -- %d откликов"
+msgstr[2] "'X'-матрица имеет %d откликов, а 'Y' -- %d откликов"
+
+msgid "'Y' has %d response"
+msgid_plural "'Y' has %d responses"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, fuzzy
+msgid "%d response"
+msgid_plural "%d responses"
+msgstr[0] "модели с откликом"
+msgstr[1] "модели с откликом"
+msgstr[2] "модели с откликом"
+
+#, fuzzy
+msgid "but only %d variable"
+msgid_plural "but only %d variables"
+msgstr[0] "%d откликов, но только %d переменных"
+msgstr[1] "%d откликов, но только %d переменных"
+msgstr[2] "%d откликов, но только %d переменных"
+
+#, fuzzy
+msgid "medpolish() did not converge in %d iteration"
+msgid_plural "medpolish() did not converge in %d iterations"
+msgstr[0] "medpolish() не сошелся в %d итераций"
+msgstr[1] "medpolish() не сошелся в %d итераций"
+msgstr[2] "medpolish() не сошелся в %d итераций"
+
+#, fuzzy
+msgid "'newdata' had %d row"
+msgid_plural "'newdata' had %d rows"
+msgstr[0] "'start' должен иметь %d строк"
+msgstr[1] "'start' должен иметь %d строк"
+msgstr[2] "'start' должен иметь %d строк"
+
+#, fuzzy
+msgid "but variable found had %d row"
+msgid_plural "but variables found have %d rows"
+msgstr[0] "'newdata' имеет %d строк, а переменная(ые) нашли %d строк"
+msgstr[1] "'newdata' имеет %d строк, а переменная(ые) нашли %d строк"
+msgstr[2] "'newdata' имеет %d строк, а переменная(ые) нашли %d строк"
+
+#, fuzzy
+msgid "factor %s has new level %s"
+msgid_plural "factor %s has new levels %s"
+msgstr[0] "у фактора '%s' есть новые уровн(и) %s"
+msgstr[1] "у фактора '%s' есть новые уровн(и) %s"
+msgstr[2] "у фактора '%s' есть новые уровн(и) %s"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
@@ -2503,11 +2567,91 @@ msgstr[0] "%d пропущенное наблюдение удалено"
 msgstr[1] "%d пропущенных наблюдений удалены"
 msgstr[2] "%d пропущенных наблюдений удалены"
 
+#, fuzzy
+msgid "_NOT_ converged in %d iteration"
+msgid_plural "_NOT_ converged in %d iterations"
+msgstr[0] "не сошлось за %d итераций"
+msgstr[1] "не сошлось за %d итераций"
+msgstr[2] "не сошлось за %d итераций"
+
+#, fuzzy
+msgid "unrecognized control element named %s ignored"
+msgid_plural "unrecognized control elements named %s ignored"
+msgstr[0] "нераспознанный контрольный элемент(ы) с именем `"
+msgstr[1] "нераспознанный контрольный элемент(ы) с именем `"
+msgstr[2] "нераспознанный контрольный элемент(ы) с именем `"
+
+#, fuzzy
+msgid "fitting parameter %s without any variables"
+msgid_plural "fitting parameters %s without any variables"
+msgstr[0] "безо всяких переменных"
+msgstr[1] "безо всяких переменных"
+msgstr[2] "безо всяких переменных"
+
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#, fuzzy
+msgid "%d observation with NA, NaN or Inf deleted"
+msgid_plural "%d observations with NAs, NaNs and/or Infs deleted"
+msgstr[0] "наблюдени(я) с NAs, NaNs и/или Infs удалены"
+msgstr[1] "наблюдени(я) с NAs, NaNs и/или Infs удалены"
+msgstr[2] "наблюдени(я) с NAs, NaNs и/или Infs удалены"
+
+#, fuzzy
+msgid "'start.innov' is too short: need %d point"
+msgid_plural "'start.innov' is too short: need %d points"
+msgstr[0] "'start.innov' слишком короткий: нужно %d точек"
+msgstr[1] "'start.innov' слишком короткий: нужно %d точек"
+msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
+
+#~ msgid "upper scope does not include model term(s) %s"
+#~ msgstr "верхняя область действия не включает выражени(я) модели %s"
+
+#~ msgid "for the binomial family, y must be a vector of 0 and 1's"
+#~ msgstr "для биномиального семейства y должен быть вектором из 0 и 1"
+
+#~ msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
+#~ msgstr "для квази-биномиального семейства, y должен быть вектором из 0 и 1"
+
+#~ msgid "using F test with a %s family is inappropriate"
+#~ msgstr "использовать тест Фишера с семейством %s неправильно"
+
+#~ msgid "did not converge in"
+#~ msgstr "не сошлось за"
+
+#~ msgid "iterations"
+#~ msgstr "итераций"
+
+#~ msgid "removed because response differs from"
+#~ msgstr "удалено, потому что зависимость отличалась от"
+
+#~ msgid "model 1"
+#~ msgstr "модель 1"
+
+#~ msgid "residuals have rank"
+#~ msgstr "остатки имеют ранг"
+
+#~ msgid "<"
+#~ msgstr "<"
+
+#~ msgid "_NOT_ converged in"
+#~ msgstr "_НЕ_ сошлось в"
+
+#~ msgid "' ignored"
+#~ msgstr "' пропущен"
+
+#~ msgid "fitting parameters"
+#~ msgstr "параметры для подгонки"
+
+#~ msgid "use \"Brent\" or optimize() directly"
+#~ msgstr "используйте \"Brent\" или optimize() прямо"
+
+#~ msgid "hat values (leverages) are all ="
+#~ msgstr "hat-значения (трансляции) все ="
 
 #, fuzzy
 #~ msgid "invalid length(xout)"

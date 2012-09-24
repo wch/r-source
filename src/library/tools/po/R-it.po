@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -305,19 +305,6 @@ msgid ""
 "checked"
 msgstr ""
 
-msgid "Obsolete package(s) %s in Rd xrefs"
-msgstr ""
-
-msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr ""
-
-msgid "Unknown package(s) %s in Rd xrefs"
-msgstr ""
-
-#, fuzzy
-msgid "Missing link(s) in documentation object '%s':"
-msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
-
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
@@ -420,12 +407,6 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "Generics without methods in"
-msgstr ""
-
-msgid ":"
-msgstr ""
-
 msgid "argument 'file' must be a character string or connection"
 msgstr ""
 "argomento 'file' deve essere una stringa di caratteri o una connessione"
@@ -462,10 +443,6 @@ msgstr "specificare 'package', 'dir' o 'file'"
 
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "non posso lavorare con oggetti Rd con nomi mancanti/vuoti"
-
-#, fuzzy
-msgid "missing/empty %s field in Rd file(s)"
-msgstr "campo \\name mancante/vuoto nei file Rd"
 
 #, fuzzy
 msgid "No help on %s found in RdDB %s"
@@ -557,10 +534,6 @@ msgid "files in '%s' missing from '%s' field:"
 msgstr ""
 
 msgid "unable to create '%s'"
-msgstr "impossibile creare '%s'"
-
-#, fuzzy
-msgid "unable to re-encode '%s' line(s) %s"
 msgstr "impossibile creare '%s'"
 
 #, fuzzy
@@ -806,7 +779,7 @@ msgid "ERROR: no packages specified"
 msgstr ""
 
 #, fuzzy
-msgid "ERROR: cannot cd to directory"
+msgid "ERROR: cannot cd to directory %s"
 msgstr "impossibile creare directory '%s'"
 
 msgid "ERROR: no permission to install to directory"
@@ -1237,6 +1210,22 @@ msgstr "Successione delle chiamate:"
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
 
+msgid "Obsolete package %s in Rd xrefs"
+msgid_plural "Obsolete packages %s in Rd xrefs"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Package unavailable to check Rd xrefs: %s"
+msgid_plural "Packages unavailable to check Rd xrefs: %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "Missing link in documentation object %s:"
+msgid_plural "Missing links in documentation object %s:"
+msgstr[0] "Errore di sintassi nella documentazione dell'oggetto '%s':"
+msgstr[1] "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] ""
@@ -1278,6 +1267,33 @@ msgid "Found .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "Found .Internal call in methods for the following reference class:"
+msgid_plural ""
+"Found .Internal calls in methods for the following reference classes:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Generics without method in %s: %s"
+msgid_plural "Generics without methods in %s: %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid ""
+"missing/empty \\name field in Rd file\n"
+"%s"
+msgid_plural ""
+"missing/empty \\name field in Rd files\n"
+"%s"
+msgstr[0] "campo \\name mancante/vuoto nei file Rd"
+msgstr[1] "campo \\name mancante/vuoto nei file Rd"
+
+#, fuzzy
+msgid "unable to re-encode %s line %s"
+msgid_plural "unable to re-encode %s lines %s"
+msgstr[0] "impossibile creare '%s'"
+msgstr[1] "impossibile creare '%s'"
 
 #, fuzzy
 msgid "object %s is created by more than one data call"

@@ -1464,7 +1464,8 @@
         ## lib is allowed to be a relative path.
         ## should be OK below, but be sure.
         cwd <- tryCatch(setwd(lib), error = function(e)
-                        stop("ERROR: cannot cd to directory ", sQuote(lib), call. = FALSE))
+                        stop(gettextf("ERROR: cannot cd to directory %s", sQuote(lib)),
+                             call. = FALSE, domain = NA))
         lib <- getwd()
         setwd(cwd)
     }

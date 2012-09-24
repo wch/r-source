@@ -167,11 +167,14 @@ summary.Date <- function(object, digits = 12, ...)
 Ops.Date <- function(e1, e2)
 {
     if (nargs() == 1)
-        stop("unary ", .Generic, " not defined for Date objects")
+        stop(gettextf("unary %s not defined for \"Date\" objects", .Generic),
+             domain = NA)
     boolean <- switch(.Generic, "<" =, ">" =, "==" =,
                       "!=" =, "<=" =, ">=" = TRUE,
                       FALSE)
-    if (!boolean) stop(.Generic, " not defined for Date objects")
+    if (!boolean)
+        stop(gettextf("%s not defined for \"Date\" objects", .Generic),
+             domain = NA)
     ## allow character args to be coerced to dates
     if (is.character(e1)) e1 <- as.Date(e1)
     if (is.character(e2)) e2 <- as.Date(e2)
@@ -179,13 +182,15 @@ Ops.Date <- function(e1, e2)
 }
 
 Math.Date <- function (x, ...)
-    stop(.Generic, " not defined for Date objects")
+    stop(gettextf("%s not defined for \"Date\" objects", .Generic),
+         domain = NA)
 
 Summary.Date <- function (..., na.rm)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
-    if (!ok) stop(.Generic, " not defined for Date objects")
-    val <- NextMethod(.Generic)
+    if (!ok) stop(gettextf("%s not defined for \"Date\" objects", .Generic),
+                  domain = NA)
+   val <- NextMethod(.Generic)
     class(val) <- oldClass(list(...)[[1L]])
     val
 }

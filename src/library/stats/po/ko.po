@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13+0100\n"
+"POT-Creation-Date: 2012-09-24 07:46+0100\n"
 "PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -418,7 +418,7 @@ msgstr "수렴합니다 "
 msgid "'theta' should be of type character"
 msgstr "'theta' 는 반드시 문자형 이어야 합니다 "
 
-#: nls.c:290 port.c:368
+#: nls.c:290 port.c:374
 msgid "use of NULL environment is defunct"
 msgstr "use of NULL environment is defunct"
 
@@ -692,62 +692,62 @@ msgstr "Rf_divset: alg=%d 는 1,2,3, 혹은 4 의 값을 가져야 합니다 "
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "기울기 함수는 길이가 %d 인 수치형 벡터를 반환해야 합니다  "
 
-#: port.c:322
+#: port.c:324
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "Hessian 함수는 반드시 order 가 %d 인 수치형 정방행렬을 반환해야 합니다 "
 
-#: port.c:372
+#: port.c:378
 msgid "'rho' must be an environment"
 msgstr "'rho' 는 반드시 환경이어야 합니다 "
 
-#: port.c:374 port.c:525
+#: port.c:380 port.c:534
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' 는 반드시 수치형 벡터이어야 합니다 "
 
-#: port.c:376
+#: port.c:382
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Hessian 이 정의되었다면 기울기도 정의되어야 합니다 "
 
-#: port.c:379
+#: port.c:385
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 "환경 'rho' 은 반드시 길이가 %d 인 수치형 벡터 '.par' 를 포함해야 합니다  "
 
-#: port.c:393
+#: port.c:399
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' 와 'upper' 는 반드시 수치형 벡터이어야 합니다 "
 
-#: port.c:439
+#: port.c:448
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' 는 명명된 list 에만 적용됩니다 "
 
-#: port.c:460
+#: port.c:469
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() 를 찾을 수 없습니다 "
 
-#: port.c:473
+#: port.c:482
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' 는 반드시 (%d,%d) 인 수치형 행렬이어야 합니다 "
 
-#: port.c:494
+#: port.c:503
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn 은 모드 %d, 길이 %d 를 생성했고, 모드 %d, 길이 %d 를 요구합니다 "
 
-#: port.c:507
+#: port.c:516
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store 에 대한 유형이 잘못되었습니다 "
 
-#: port.c:526
+#: port.c:535
 msgid "m must be a list"
 msgstr "m 은 반드시 list 이어야 합니다 "
 
-#: port.c:546
+#: port.c:555
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' 와 'upperb' 는 반드시 수치형 벡터이어야 합니다 "
 

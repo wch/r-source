@@ -342,12 +342,9 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   function(sym) {
                                       varName <- paste0(fixes[1L], sym$name, fixes[2L])
                                       if(exists(varName, envir = env))
-                                          warning("failed to assign RegisteredNativeSymbol for ",
-                                                  sym$name,
-                                                  paste(" to", varName),
-                                                  " since ", varName,
-                                                  " is already defined in the ", package,
-                                                  " namespace")
+                                          warning(gettextf("failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace",
+                                                           sym$name, varName, varName, sQuote(package)),
+                                                  domain = NA)
                                       else
                                           assign(varName, sym, envir = env)
                                   })
@@ -368,16 +365,16 @@ loadNamespace <- function (package, lib.loc = NULL,
                        varName <- names(symNames)[i]
                        origVarName <- symNames[i]
                        if(exists(varName, envir = env))
-                           warning("failed to assign NativeSymbolInfo for ",
-                                   origVarName,
-                                   ifelse(origVarName != varName,
-                                          paste(" to", varName), ""),
-                                   " since ", varName,
-                                   " is already defined in the ", package,
-                                   " namespace")
+                           if(origVarName != varName)
+                               warning(gettextf("failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace",
+                                                origVarName, varName, varName, sQuote(package)),
+                                       domain = NA)
+                           else
+                               warning(gettextf("failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace",
+                                                origVarName, varName, sQuote(package)),
+                                       domain = NA)
                        else
-                           assign(varName, symbols[[origVarName]],
-                                  envir = env)
+                           assign(varName, symbols[[origVarName]], envir = env)
 
                    })
             symbols
@@ -717,7 +714,10 @@ requireNamespace <- function (package, ..., quietly = FALSE)
 }
 
 loadingNamespaceInfo <- function() {
-    dynGet <- function(name, notFound = stop(name, " not found")) {
+    dynGet <- function(name,
+                       notFound = stop(gettextf("%s not found", sQuote(name)),
+                       domain = NA))
+    {
         n <- sys.nframe()
         while (n > 1) {
             n <- n - 1
@@ -852,8 +852,9 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
     impvars <- makeImportExportNames(impvars)
     impnames <- names(impvars)
     if (anyDuplicated(impnames)) {
-        stop("duplicate import names ",
-             paste(impnames[duplicated(impnames)], collapse = ", "))
+        stop(gettextf("duplicate import names %s",
+                      paste(impnames[duplicated(impnames)], collapse = ", ")),
+             domain = NA)
     }
     if (isNamespace(self) && isBaseNamespace(self)) {
         impenv <- self
@@ -1057,7 +1058,7 @@ namespaceExport <- function(ns, vars) {
         undef <- undef[! vapply(undef, exists, NA, envir = ns)]
         if (length(undef)) {
             undef <- do.call("paste", as.list(c(undef, sep = ", ")))
-            stop("undefined exports: ", undef)
+            stop(gettextf("undefined exports: %s", undef), domain = NA)
         }
         if(.isMethodsDispatchOn()) .mergeExportMethods(new, ns)
         addExports(ns, new)

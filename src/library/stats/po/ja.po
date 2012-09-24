@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13+0100\n"
+"POT-Creation-Date: 2012-09-24 07:46+0100\n"
 "PO-Revision-Date: 2010-09-29 20:43+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -416,7 +416,7 @@ msgstr " 収束しました "
 msgid "'theta' should be of type character"
 msgstr " 'theta' は文字型でなければなりません "
 
-#: nls.c:290 port.c:368
+#: nls.c:290 port.c:374
 msgid "use of NULL environment is defunct"
 msgstr " NULL 環境の使用は廃止されました "
 
@@ -689,61 +689,61 @@ msgstr " Rf_divset: alg = %d は 1, 2, 3, または 4 でなければなりま�
 msgid "gradient function must return a numeric vector of length %d"
 msgstr " グラディエント関数は長さ %d の数値ベクトルを返さなければなりません "
 
-#: port.c:322
+#: port.c:324
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr " ヘッシアン関数は次数 %d の正方数値行列を返さなければなりません "
 
-#: port.c:372
+#: port.c:378
 msgid "'rho' must be an environment"
 msgstr " 'rho' は環境(environment)でなければなりません "
 
-#: port.c:374 port.c:525
+#: port.c:380 port.c:534
 msgid "'d' must be a nonempty numeric vector"
 msgstr " `d' は空でない数値ベクトルでなければなりません "
 
-#: port.c:376
+#: port.c:382
 msgid "When Hessian defined must also have gradient defined"
 msgstr " ヘッシアンを定義した際は、グラディエントも定義しなければなりません "
 
-#: port.c:379
+#: port.c:385
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr " 環境 `rho' は長さが %d の数値ベクトル `.par' を含まねばなりません "
 
-#: port.c:393
+#: port.c:399
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr " lower' と 'upper' は数値ベクトルでなければなりません "
 
-#: port.c:439
+#: port.c:448
 msgid "'getElement' applies only to named lists"
 msgstr " 'getElement' は名前つきリストにだけ適用されます "
 
-#: port.c:460
+#: port.c:469
 #, c-format
 msgid "%s$%s() not found"
 msgstr " %s$%s() が見つかりません "
 
-#: port.c:473
+#: port.c:482
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr " 'gradient' は次元 (%d,%d) の数値行列でなければなりません "
 
-#: port.c:494
+#: port.c:503
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 " モード %d, 長さ %d の fcn が作られました - モード %d, 長さ %d が必要でした "
 
-#: port.c:507
+#: port.c:516
 msgid "invalid type for eval_check_store"
 msgstr " eval_check_store に対する不正なタイプです "
 
-#: port.c:526
+#: port.c:535
 msgid "m must be a list"
 msgstr " m はリストでなければなりません "
 
-#: port.c:546
+#: port.c:555
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr " lowerb と upperb は数値ベクトルでなければなりません "
 

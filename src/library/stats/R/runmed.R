@@ -30,15 +30,15 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
     if(is.na(k)) stop("invalid value of 'k'")
     if(k < 0L) stop("'k' must be positive")
     if(k %% 2L == 0L)
-        warning("'k' must be odd!  Changing 'k' to ",
-                k <- as.integer(1+ 2*(k %/% 2)))
+        warning(gettextf("'k' must be odd!  Changing 'k' to %d",
+                         k <- as.integer(1+ 2*(k %/% 2))), domain = NA)
     if(n == 0L) {
 	x <- double(); attr(x, "k") <- k
 	return(x)
     }
     if (k > n)
-        warning("'k' is bigger than 'n'!  Changing 'k' to ",
-                k <- as.integer(1+ 2*((n - 1)%/% 2)))
+        warning(gettextf("'k' is bigger than 'n'!  Changing 'k' to %d",
+                         k <- as.integer(1+ 2*((n - 1)%/% 2))), domain = NA)
     algorithm <-
         if(missing(algorithm)) { ## use efficient default
             ## This is too primitive, MM knows better :

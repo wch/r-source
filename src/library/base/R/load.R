@@ -154,7 +154,8 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     if (safe)
         if (! file.rename(outfile, file)) {
             on.exit()
-            stop("image could not be renamed and is left in ", outfile)
+            stop(gettextf("image could not be renamed and is left in %s",
+                          outfile), domain = NA)
         }
     on.exit()
 }

@@ -397,9 +397,11 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
 	nms <- names(control)
 	pos <- pmatch(nms, names(port_cpos))
 	if (any(nap <- is.na(pos))) {
-	    warning(paste("unrecognized control element(s) named `",
-			  paste(nms[nap], collapse = ", "),
-			  "' ignored", sep = ""))
+            warning(sprintf(ngettext(length(nap),
+                                     "unrecognized control element named %s ignored",
+                                     "unrecognized control elements named %s ignored"),
+                            paste(nms[nap], collapse = ", ")),
+                    domain = NA)
 	    pos <- pos[!nap]
 	    control <- control[!nap]
 	}
@@ -506,16 +508,18 @@ nls <-
                 n <- n[i]
             }
             else                        # has 'start' but forgot some
-                stop("parameters without starting value in 'data': ",
-                     paste(nnn, collapse=", "))
+                stop(gettextf("parameters without starting value in 'data': %s",
+                              paste(nnn, collapse=", ")), domain = NA)
         }
     }
     else { ## length(varNames) == 0
 	if(length(pnames) && any((np <- sapply(pnames, lenVar)) == -1)) {
             ## Can fit a model with pnames even if no varNames
-	    message("fitting parameters ",
-		    paste(sQuote(pnames[np == -1]), collapse=", "),
-		    " without any variables")
+            message(sprintf(ngettext(sum(np == -1),
+                                     "fitting parameter %s without any variables",
+                                     "fitting parameters %s without any variables"),
+                            paste(sQuote(pnames[np == -1]), collapse=", ")),
+                    domain = NA)
             n <- integer()
         }
 	else
@@ -842,9 +846,9 @@ anovalist.nls <- function (object, ..., test = NULL)
     sameresp <- responses == responses[1L]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning("models with response ",
-                deparse(responses[!sameresp]),
-                " removed because response differs from model 1")
+        warning(gettextf("models with response %s removed because response differs from model 1",
+                         sQuote(deparse(responses[!sameresp]))),
+                domain = NA)
     }
     ## calculate the number of models
     nmodels <- length(objects)

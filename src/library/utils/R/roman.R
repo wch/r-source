@@ -111,8 +111,11 @@ function(x)
         y <- gsub("IV", "IIII", y)
         ok <- grepl("^M{,3}D?C{,4}L?X{,4}V?I{,4}$", y)
         if(any(!ok)) {
-            warning(gettextf("Invalid roman numeral(s): %s",
-                             paste(x[!ind][!ok], collapse = " ")))
+            warning(sprintf(ngettext(sum(!ok),
+                                     "Invalid roman numeral: %s",
+                                     "Invalid roman numerals: %s"),
+                            paste(x[!ind][!ok], collapse = " ")),
+                    domain = NA)
             out[!ind][!ok] <- NA
         }
         if(any(ok))

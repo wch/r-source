@@ -761,10 +761,10 @@ function(db)
             stop("cannot deal with Rd objects with missing/empty names")
         }
         else {
-            stop(paste(gettextf("missing/empty %s field in Rd file(s)",
-                                "\\name"),
-                       paste(" ", Rd_paths[idx], collapse = "\n"),
-                       sep = "\n"),
+            stop(sprintf(ngettext(sum(idx),
+                                  "missing/empty \\name field in Rd file\n%s",
+                                  "missing/empty \\name field in Rd files\n%s"),
+                         paste(" ", Rd_paths[idx], collapse = "\n")),
                  call. = FALSE, domain = NA)
         }
     }

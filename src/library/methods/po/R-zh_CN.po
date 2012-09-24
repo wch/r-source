@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:54\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -476,11 +476,6 @@ msgid ""
 "(%d)"
 msgstr "方法标记(%d)里的元素比泛型标记(%d)里的要多"
 
-msgid ""
-"in the method signature for function %s invalid argument names in the "
-"signature: %s"
-msgstr "在函数'%s'里的方法标记中标记的参数名字不对: %s"
-
 #, fuzzy
 msgid "No generic function found corresponding to %s"
 msgstr "为\"%s\"找不到泛型函数"
@@ -510,9 +505,6 @@ msgid ""
 "initialize method returned an object of class %s instead of the required "
 "class %s"
 msgstr "初始化方法回復了类别为%s的对象而不是所要求的%s这一类别"
-
-msgid "Reported %d ambiguous selections out of %d for function %s"
-msgstr "函数%3$s内%2$d个选择里有%1$d个歧义选择"
 
 msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
 msgstr "%d: 目标\"%s\": 选择\"%s\" (其它：%s)"
@@ -649,9 +641,6 @@ msgid ""
 "function prototype() to avoid trouble."
 msgstr "原型是带名字單元的串列(允许有歧义) ：最好用函数prototype()以避免出错。"
 
-msgid "named elements of prototype do not correspond to slot names: %s"
-msgstr "原型的單元同槽的类别对应不上: %s"
-
 #, fuzzy
 msgid "the '%s' list for class %s, includes an undefined class %s"
 msgstr "类别为%s的'%s'串列包含不存在的类别%s"
@@ -771,19 +760,8 @@ msgid ""
 "class %s"
 msgstr "%s的参数要么是NULL，要么是泛型函数对象；现在却是类别为%s的对象"
 
-msgid "non-arguments found in the signature: %s"
-msgstr "标记里出现了非参数：%s"
-
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr "此函数里没有合适的参数可用来分配方法"
-
-#, fuzzy
-msgid ""
-"the formal arguments of the generic function for %s (%s) differ from those "
-"of the non-generic to be used as the default (%s)"
-msgstr ""
-"用于'%s'泛型函数(%s)的正式参数与将作为默認值(%s)来用的非泛型的正式参数不相符"
-"合"
 
 msgid "special function %s is not permitted to have methods"
 msgstr "特殊函数%s不可以有方法"
@@ -1009,9 +987,6 @@ msgstr "表现的%d單元不是单字符的字串"
 msgid "duplicate class names among superclasses: %s"
 msgstr "父类别里有重复的类别名: %s"
 
-msgid "duplicated slot names: %s"
-msgstr "重复槽名: %s"
-
 msgid "only one data object (unnamed argument to prototype) allowed"
 msgstr "只能有一个数据对象(原型的参数没有名字)"
 
@@ -1060,8 +1035,8 @@ msgid ""
 "cannot use object of class %s in new():  class %s does not extend that class"
 msgstr "无法在new()里用类别为%s的对象；类别%s并不擴充此类别"
 
-msgid "invalid names for slots of class %s: %s"
-msgstr "类别%s的槽的名字不对：%s"
+msgid "duplicated slot names: %s"
+msgstr "重复槽名: %s"
 
 msgid ""
 "Class %s is defined, with package %s, but no corresponding metadata object "
@@ -1072,11 +1047,6 @@ msgstr ""
 
 msgid "no definition of %s to use for %s"
 msgstr "%s没有定义，不能为%s起作用"
-
-msgid ""
-"multiple definitions of class %s visible (%s); using the definition\n"
-"   in package %s for %s"
-msgstr "%s有多个定义(%s)；现在用程序包%s中%s的定义"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr "类别定义最多只能扩展这些数据种类中的一个: %s"
@@ -1226,15 +1196,6 @@ msgstr "类别%s无法擴充类别%s"
 msgid "Both classes must be defined"
 msgstr "两个类别都得有定义"
 
-msgid ""
-"class %s is missing slots from class %s (%s), and no coerce method was "
-"supplied"
-msgstr "类别%s在类别%s(%s)中缺少槽，出没有强制方法"
-
-msgid ""
-"slots in class %s must extend corresponding slots in class %s: fails for %s"
-msgstr "类别%s里的槽必需擴充类别%s中相应的槽：%s出了错"
-
 msgid "invalid index for function argument"
 msgstr "函数参数的索引不对"
 
@@ -1297,12 +1258,6 @@ msgstr ""
 " 目标标签为\"%3$s\".\n"
 " %4$s应该是有效的"
 
-msgid "found"
-msgstr "找到了"
-
-msgid "equally good next methods"
-msgstr "下一个方法一样有效"
-
 #, fuzzy
 msgid "unable to find an inherited method for function %s for signature %s"
 msgstr "找不到继承方法，函数是"
@@ -1310,18 +1265,6 @@ msgstr "找不到继承方法，函数是"
 msgid ""
 "Internal error in finding inherited methods; didn't return a unique method"
 msgstr "在搜索继承方法时出了错；找不到唯一方法"
-
-msgid "Selecting %d methods of min. distance"
-msgstr "选用min. distance的%d方法"
-
-msgid "Selecting %d non-group methods"
-msgstr "选用%d非组方法"
-
-msgid "Selecting %d partially exact-matching method(s)"
-msgstr "选用%d部分精密匹配方法"
-
-msgid "Choosing method %s from %d ambiguous possibilities"
-msgstr "从%2$d个歧义可能选择中选%1$s方法"
 
 msgid "Failed to find expected group generic function:"
 msgstr "找不到团体泛型函数："
@@ -1811,6 +1754,104 @@ msgstr "移动文件或删除类别/方法"
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "类别%s的定义不存在"
+
+#, fuzzy
+msgid ""
+"in the method signature for function %s invalid argument name in the "
+"signature: %s"
+msgid_plural ""
+"in the method signature for function %s invalid argument names in the "
+"signature: %s"
+msgstr[0] "在函数'%s'里的方法标记中标记的参数名字不对: %s"
+
+#, fuzzy
+msgid "Reported %d ambiguous selection out of %d for function %s\n"
+msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
+msgstr[0] "函数%3$s内%2$d个选择里有%1$d个歧义选择"
+
+#, fuzzy
+msgid "named elements of prototype do not correspond to slot name: %s"
+msgid_plural "named elements of prototype do not correspond to slot names: %s"
+msgstr[0] "原型的單元同槽的类别对应不上: %s"
+
+#, fuzzy
+msgid "non-argument found in the signature: %s"
+msgid_plural "non-arguments found in the signature: %s"
+msgstr[0] "标记里出现了非参数：%s"
+
+#, fuzzy
+msgid ""
+"the formal argument of the generic function for %s (%s) differs from that of "
+"the non-generic to be used as the default (%s)"
+msgid_plural ""
+"the formal arguments of the generic function for %s (%s) differ from those "
+"of the non-generic to be used as the default (%s)"
+msgstr[0] ""
+"用于'%s'泛型函数(%s)的正式参数与将作为默認值(%s)来用的非泛型的正式参数不相符"
+"合"
+
+#, fuzzy
+msgid "duplicated slot name: %s"
+msgid_plural "duplicated slot names: %s"
+msgstr[0] "重复槽名: %s"
+
+#, fuzzy
+msgid "invalid name for slot of class %s: %s"
+msgid_plural "invalid names for slots of class %s: %s"
+msgstr[0] "类别%s的槽的名字不对：%s"
+
+#, fuzzy
+msgid ""
+"multiple definition of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgid_plural ""
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgstr[0] "%s有多个定义(%s)；现在用程序包%s中%s的定义"
+
+#, fuzzy
+msgid ""
+"class %s is missing slot from class %s (%s), and no coerce method was "
+"supplied"
+msgid_plural ""
+"class %s is missing slots from class %s (%s), and no coerce method was "
+"supplied"
+msgstr[0] "类别%s在类别%s(%s)中缺少槽，出没有强制方法"
+
+#, fuzzy
+msgid ""
+"slot in class %s must extend corresponding slot in class %s: fails for %s"
+msgid_plural ""
+"slots in class %s must extend corresponding slots in class %s: fails for %s"
+msgstr[0] "类别%s里的槽必需擴充类别%s中相应的槽：%s出了错"
+
+#, fuzzy
+msgid "found %d equally good next method"
+msgid_plural "found %d equally good next methods"
+msgstr[0] "下一个方法一样有效"
+
+#, fuzzy
+msgid "Selecting %d method of min. distance"
+msgid_plural "Selecting %d methods of min. distance"
+msgstr[0] "选用min. distance的%d方法"
+
+#, fuzzy
+msgid "Selecting %d non-group method"
+msgid_plural "Selecting %d non-group methods"
+msgstr[0] "选用%d非组方法"
+
+#, fuzzy
+msgid "Selecting %d partially exact-matching method"
+msgid_plural "Selecting %d partially exact-matching methods"
+msgstr[0] "选用%d部分精密匹配方法"
+
+#, fuzzy
+msgid "Choosing method %s from %d ambiguous possibility"
+msgid_plural "Choosing method %s from %d ambiguous possibilities"
+msgstr[0] "从%2$d个歧义可能选择中选%1$s方法"
+
+#~ msgid "found"
+#~ msgstr "找到了"
 
 #~ msgid "Invalid mlist element for signature \""
 #~ msgstr "标记的mlist元素不对"

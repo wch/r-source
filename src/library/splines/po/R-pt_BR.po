@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -76,7 +76,8 @@ msgstr "spline deve ser monótono"
 msgid "'degree' must be integer >= 1"
 msgstr "'degree' deve ser inteiro >= 1"
 
-msgid "'df' was too small; have used"
+#, fuzzy
+msgid "'df' was too small; have used %d"
 msgstr "'df' muito pequeno; foi usado"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"

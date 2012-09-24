@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2012-09-07 16:45+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -79,7 +79,8 @@ msgstr "spline muss monoton sein"
 msgid "'degree' must be integer >= 1"
 msgstr "'degree' muss Integer >= 1 sein"
 
-msgid "'df' was too small; have used"
+#, fuzzy
+msgid "'df' was too small; have used %d"
 msgstr "'df' war zu klein; habe benutzt"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"

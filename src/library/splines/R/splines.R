@@ -30,18 +30,19 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     }
     else outside <- FALSE #rep(FALSE, length = length(x))
 
-    ord <- 1 + (degree <- as.integer(degree))
+    ord <- 1L + (degree <- as.integer(degree))
     if(ord <= 1) stop("'degree' must be integer >= 1")
     if(!is.null(df) && is.null(knots)) {
-	nIknots <- df - ord + (1 - intercept) # ==  #{inner knots}
-        if(nIknots < 0) {
-            nIknots <- 0
-            warning("'df' was too small; have used  ", ord - (1 - intercept))
+	nIknots <- df - ord + (1L - intercept) # ==  #{inner knots}
+        if(nIknots < 0L) {
+            nIknots <- 0L
+            warning(gettextf("'df' was too small; have used %d",
+                             ord - (1L - intercept)), domain = NA)
         }
         knots <-
-            if(nIknots > 0) {
+            if(nIknots > 0L) {
                 knots <- seq.int(from = 0, to = 1,
-                                 length.out = nIknots + 2)[-c(1, nIknots + 2)]
+                                 length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
                 stats::quantile(x[!outside], knots)
             }
     }
@@ -98,12 +99,13 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
     else outside <- FALSE # rep(FALSE, length = length(x))
     if(!is.null(df) && is.null(knots)) {
         ## df = number(interior knots) + 1 + intercept
-        nIknots <- df - 1 - intercept
-        if(nIknots < 0) {
-            nIknots <- 0
-            warning("'df' was too small; have used ", 1 + intercept)
+        nIknots <- df - 1L - intercept
+        if(nIknots < 0L) {
+            nIknots <- 0L
+            warning(gettextf("'df' was too small; have used %d",
+                             1L + intercept), domain = NA)
         }
-        knots <- if(nIknots > 0) {
+        knots <- if(nIknots > 0L) {
             knots <- seq.int(0, 1,
                              length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
             stats::quantile(x[!outside], knots)
@@ -142,7 +144,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         basis <- nmat
     }
     dimnames(basis) <- list(nx, 1L:n.col)
-    a <- list(degree = 3, knots = if(is.null(knots)) numeric() else knots,
+    a <- list(degree = 3L, knots = if(is.null(knots)) numeric() else knots,
               Boundary.knots = Boundary.knots, intercept = intercept)
     attributes(basis) <- c(attributes(basis), a)
     class(basis) <- c("ns", "basis", "matrix")
@@ -173,7 +175,7 @@ makepredictcall.ns <- function(var, call)
 {
     if(as.character(call)[1L] != "ns") return(call)
     at <- attributes(var)[c("knots", "Boundary.knots", "intercept")]
-    xxx <- call[1L:2]
+    xxx <- call[1L:2L]
     xxx[names(at)] <- at
     xxx
 }

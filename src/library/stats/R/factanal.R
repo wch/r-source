@@ -93,8 +93,10 @@ factanal <-
     if(p < 3) stop("factor analysis requires at least three variables")
     dof <- 0.5 * ((p - factors)^2 - p - factors)
     if(dof < 0)
-        stop(gettextf("%d factors is too many for %d variables", factors, p),
-             domain = NA)
+        stop(sprintf(ngettext(factors,
+                              "%d factor is too many for %d variables",
+                              "%d factors are too many for %d variables"),
+                     factors, p), domain = NA)
     sds <- sqrt(diag(cv))
     cv <- cv/(sds %o% sds)
 
@@ -110,10 +112,12 @@ factanal <-
     }
     start <- as.matrix(start)
     if(nrow(start) != p)
-        stop(gettextf("'start' must have %d rows", p), domain = NA)
+    stop(sprintf(ngettext(p,
+                       "'start' must have %d row",
+                       "'start' must have %d rows"),
+                 p), domain = NA)
     nc <- ncol(start)
     if(nc < 1) stop("no starting values supplied")
-
     best <- Inf
     for (i in 1L:nc) {
         nfit <- factanal.fit.mle(cv, factors, start[, i],

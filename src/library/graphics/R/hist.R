@@ -68,7 +68,8 @@ hist.default <-
 	breaks <- pretty (range(x), n = breaks, min.n = 1)
 	nB <- length(breaks)
 	if(nB <= 1) ##-- Impossible !
-	    stop("hist.default: pretty() error, breaks=", format(breaks))
+            stop(gettextf("hist.default: pretty() error, breaks=%s",
+                          format(breaks)), domain = NA)
     }
     nB <- as.integer(nB)
     if(is.na(nB)) stop("invalid length(breaks)")

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -68,10 +68,12 @@ msgstr "'from'要么是颜色转换器，要么是字符串"
 msgid "'to' must be a colorConverter or string"
 msgstr "'to'要么是颜色转换器，要么是字符串"
 
-msgid "'from.ref.white' disagrees with definition of"
+#, fuzzy
+msgid "'from.ref.white' disagrees with definition of %s"
 msgstr "'from.ref.white'同下面这个定义有冲突"
 
-msgid "'to.ref.white' disagrees with definition of"
+#, fuzzy
+msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.ref.white'同下面这个定义有冲突"
 
 msgid "color spaces use different reference whites."

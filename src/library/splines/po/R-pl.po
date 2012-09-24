@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -76,7 +76,8 @@ msgstr "funkcja sklejana musi być monotoniczna"
 msgid "'degree' must be integer >= 1"
 msgstr "'degree' musi być liczbą całkowitą >= 1"
 
-msgid "'df' was too small; have used"
+#, fuzzy
+msgid "'df' was too small; have used %d"
 msgstr "'df' było zbyt małe; użyto"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"

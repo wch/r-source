@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:47\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,10 +65,12 @@ msgstr ""
 "fortolkningsfejl eller tom indstilling i\n"
 "%s"
 
-msgid "Warning: unknown option"
+#, fuzzy
+msgid "Warning: unknown option %s"
 msgstr "Advarsel: Ukendt indstilling"
 
-msgid "Created PDF document"
+#, fuzzy
+msgid "Created PDF document %s"
 msgstr "Oprettet PDF-dokument"
 
 #, fuzzy
@@ -95,9 +97,6 @@ msgstr "værdien af indstillingen »strip.white« skal være med små bogstaver"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "elementer for »what« efter den første vil blive ignoreret"
-
-msgid "%d occurrences in %s"
-msgstr "%d tilfælde i %s"
 
 msgid "No suitable spell check program found."
 msgstr "Intet egnet stavekontrolprogram blev fundet."
@@ -131,11 +130,9 @@ msgstr ""
 "Brug <code> %s </code> \n"
 " for at vise vignetterne i alle <strong>tilgængelige</strong> pakker."
 
-msgid "No vignettes found by"
+#, fuzzy
+msgid "No vignettes found by %s"
 msgstr "Ingen vignetter fundet af"
-
-msgid "call"
-msgstr "kald"
 
 msgid "Package %s: DESCRIPTION not found"
 msgstr "Pakke %s: BESKRIVELSE blev ikke fundet"
@@ -160,9 +157,6 @@ msgstr "Det anbefales at bruge %s i stedet for %s."
 
 msgid "Use either %s or %s but not both."
 msgstr "Brug enten %s eller %s men ikke begge."
-
-msgid "Invalid role specification(s): %s."
-msgstr "Ugyldige rollespecifikationer: %s."
 
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "Det anbefales at bruge %s/%s i stedet for %s/%s/%s."
@@ -251,6 +245,9 @@ msgstr "fil »filelist« mangler for mappe %s"
 
 msgid "data set %s not found"
 msgstr "datasæt %s blev ikke fundet"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "slagsen »%s« er endnu ikke implementeret"
@@ -430,7 +427,7 @@ msgstr ""
 msgid "creation of %s failed"
 msgstr ""
 
-msgid "Saving help page to"
+msgid "Saving help page to %s"
 msgstr ""
 
 msgid "argument %s must be a single character string"
@@ -448,12 +445,6 @@ msgstr ""
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
-msgid "Rebuilding the help.search() database"
-msgstr ""
-
-msgid "..."
-msgstr ""
-
 msgid "Packages {readRDS() sequentially}:"
 msgstr ""
 
@@ -464,9 +455,6 @@ msgid "could not find package %s"
 msgstr ""
 
 msgid "package %s has empty hsearch data - strangely"
-msgstr ""
-
-msgid "no hsearch.rds meta data for package"
 msgstr ""
 
 msgid "reencoding ..."
@@ -488,9 +476,6 @@ msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 
 msgid "incorrect 'agrep' specification"
-msgstr ""
-
-msgid "matched %d objects."
 msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
@@ -532,12 +517,6 @@ msgid ""
 msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
-msgstr ""
-
-msgid "package"
-msgstr ""
-
-msgid "not found"
 msgstr ""
 
 msgid "cannot update HTML package index"
@@ -705,7 +684,7 @@ msgstr ""
 msgid "unable to install packages"
 msgstr ""
 
-msgid "unable to create"
+msgid "unable to create %s"
 msgstr ""
 
 msgid "inferring 'repos = NULL' from the file name"
@@ -739,7 +718,7 @@ msgid ""
 "If it was installed from an RPM, you may need the R-devel RPM"
 msgstr ""
 
-msgid "system (cmd0):"
+msgid "system (cmd0): %s"
 msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
@@ -751,14 +730,10 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr ""
 
-msgid "foundpkgs:"
+msgid "foundpkgs: %s"
 msgstr ""
 
-#, fuzzy
-msgid ","
-msgstr ","
-
-msgid "files:"
+msgid "files: %s"
 msgstr ""
 
 msgid ""
@@ -883,17 +858,12 @@ msgstr ""
 msgid "invalid format"
 msgstr ""
 
-msgid "last record incomplete, %d lines discarded"
-msgstr ""
-
 msgid "transfer failure"
 msgstr ""
 
-msgid "HTTPUserAgent"
-msgstr ""
-
-msgid "option must be a length one character vector or NULL"
-msgstr ""
+#, fuzzy
+msgid "%s option must be a length one character vector or NULL"
+msgstr "»package« skal være en tegnstreng eller NULL"
 
 msgid "'file' must be a character string or connection"
 msgstr ""
@@ -918,13 +888,7 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr ""
 
-msgid "Invalid roman numeral(s): %s"
-msgstr ""
-
 msgid "length mismatch: bug in code!"
-msgstr ""
-
-msgid "Processing file"
 msgstr ""
 
 msgid "no valid packages were specified"
@@ -951,7 +915,7 @@ msgstr ""
 msgid "invalid options(\"str\") -- using defaults instead"
 msgstr ""
 
-msgid "invalid components in options(\"str\"):"
+msgid "invalid components in options(\"str\"): %s"
 msgstr ""
 
 msgid "'str.default': 'le' is NA, so taken as 0"
@@ -1091,15 +1055,12 @@ msgstr ""
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
 
-msgid "ERROR: failed to lock directory"
-msgstr ""
-
 msgid ""
-"for modifying\n"
-"Try removing"
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
 msgstr ""
 
-msgid "ERROR: failed to create lock directory"
+msgid "ERROR: failed to create lock directory %s"
 msgstr ""
 
 msgid "restored %s"
@@ -1108,7 +1069,7 @@ msgstr ""
 msgid "unable to move temporary installation %s to %s"
 msgstr ""
 
-msgid "cannot remove prior installation of package"
+msgid "cannot remove prior installation of package %s"
 msgstr ""
 
 msgid ""
@@ -1140,17 +1101,31 @@ msgstr ""
 msgid "there is no 'libs' directory in package %s"
 msgstr ""
 
-msgid "cannot remove prior installation of package %s"
-msgstr ""
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr ""
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr ""
 
+#, fuzzy
+msgid "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0] "%d tilfælde i %s"
+msgstr[1] "%d tilfælde i %s"
+
+#, fuzzy
+msgid "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0] "Ugyldige rollespecifikationer: %s."
+msgstr[1] "Ugyldige rollespecifikationer: %s."
+
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "matched %d object."
+msgid_plural "matched %d objects."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1219,7 +1194,25 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "Invalid roman numeral: %s"
+msgid_plural "Invalid roman numerals: %s"
+msgstr[0] "ugyldig værdi for %s: %s"
+msgstr[1] "ugyldig værdi for %s: %s"
+
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "call"
+#~ msgstr "kald"
+
+#, fuzzy
+#~ msgid ","
+#~ msgstr ","

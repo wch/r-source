@@ -32,9 +32,9 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 {
     dropInf <- function(x, h) {
 	if(any(isInf <- h >= 1.0)) {
-	    warning("Not plotting observations with leverage one:\n  ",
-		    paste(which(isInf), collapse=", "),
-                    call.=FALSE)
+            warning(gettextf("Not plotting observations with leverage one:\n  %s",
+                             paste(which(isInf), collapse=", ")),
+                    call. = FALSE, domain = NA)
 	    x[isInf] <- NaN
 	}
 	x
@@ -235,9 +235,9 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
                 dev.flush()
             }
 	    else { # no factors
-		message("hat values (leverages) are all = ",
-                        format(mean(r.hat)),
-			"\n and there are no factor predictors; no plot no. 5")
+                message(gettextf("hat values (leverages) are all = %s\n and there are no factor predictors; no plot no. 5",
+                                 format(mean(r.hat))),
+                        domain = NA)
                 frame()
                 do.plot <- FALSE
             }

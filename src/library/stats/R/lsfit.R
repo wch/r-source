@@ -41,7 +41,10 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     good <- complete.cases(x, y, wt)
     dimy <- dim(as.matrix(y))
     if( any(!good) ) {
-	warning(gettextf("%d missing values deleted", sum(!good)), domain = NA)
+        warning(sprintf(ngettext(sum(!good),
+                                 "%d missing value deleted",
+                                 "%d missing values deleted"),
+                        sum(!good)), domain = NA)
 	x <- as.matrix(x)[good, ]
 	y <- as.matrix(y)[good, ]
 	wt <- wt[good]
@@ -55,14 +58,26 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     ncy <- NCOL(y)
     nwts <- length(wt)
     if(nry != nrx)
-        stop(gettextf("'X' matrix has %d responses, 'Y' has %d responses",
-                      nrx, nry), domain = NA)
+ stop(sprintf(ngettext(nrx,
+                       "'X' matrix has %d response",
+                       "'X' matrix has %d responses"),
+              ", ",
+              ngettext(nry,
+                       "'Y' has %d response",
+                       "'Y' has %d responses"),
+                       nrx, nry),
+                       domain = NA)
     if(nry < ncx)
-        stop(gettextf("%d responses, but only %d variables", nry, ncx),
+        stop(sprintf(ngettext(nry,
+                              "%d response",
+                              "%d responses"),
+                     ", ",
+                     ngettext(ncx,
+                              "but only %d variable",
+                              "but only %d variables"),
+                     nry, ncx),
              domain = NA)
-
     ## check weights if necessary
-
     if( !is.null(wt) ) {
 	if(any(wt < 0)) stop("negative weights not allowed")
 	if(nwts != nry)

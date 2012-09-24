@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:47\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -67,10 +67,12 @@ msgstr ""
 "解析出错或是\n"
 "%s里有空白的选项"
 
-msgid "Warning: unknown option"
+#, fuzzy
+msgid "Warning: unknown option %s"
 msgstr "警告：没有这样的选项"
 
-msgid "Created PDF document"
+#, fuzzy
+msgid "Created PDF document %s"
 msgstr "建立了PDF文件"
 
 #, fuzzy
@@ -97,9 +99,6 @@ msgstr "'strip.white'这个选项的值必需小写"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "只用'what'值里的第一个元素"
-
-msgid "%d occurrences in %s"
-msgstr "%2$s里出现了%1$d个具體值"
 
 msgid "No suitable spell check program found."
 msgstr "没有可用的拼写查对器"
@@ -132,11 +131,9 @@ msgstr ""
 "用<code> %s </code>来\n"
 "陈列所有<strong>可供使用</strong>的程序包的小文品。"
 
-msgid "No vignettes found by"
+#, fuzzy
+msgid "No vignettes found by %s"
 msgstr "没有找到小文品"
-
-msgid "call"
-msgstr "调用"
 
 msgid "Package %s: DESCRIPTION not found"
 msgstr "'程序包%s: 找不到DESCRIPTION这个文件"
@@ -160,9 +157,6 @@ msgstr "建议你用%s而不用%s。"
 
 msgid "Use either %s or %s but not both."
 msgstr "要么用%s,要么用%s，但不能两者都用"
-
-msgid "Invalid role specification(s): %s."
-msgstr "角色设定得不对: %s"
 
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "建议你用%s/%s而不用%s/%s/%s。"
@@ -249,6 +243,9 @@ msgstr "目录%s里没有'filelist'这一文件"
 
 msgid "data set %s not found"
 msgstr "没有%s这个数据集"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "'%s'这一类还没有被实现"
@@ -430,7 +427,8 @@ msgstr "有%s这样一个程序包但没有在R >= 2.10.0下安装，因此不�
 msgid "creation of %s failed"
 msgstr "制造%s时出了问题"
 
-msgid "Saving help page to"
+#, fuzzy
+msgid "Saving help page to %s"
 msgstr "保存帮助页到"
 
 msgid "argument %s must be a single character string"
@@ -448,12 +446,6 @@ msgstr "域设定得不对"
 msgid "argument 'help.db' is deprecated"
 msgstr "参数'help.db'已经不再用了"
 
-msgid "Rebuilding the help.search() database"
-msgstr "重建help.search()数据库"
-
-msgid "..."
-msgstr "…"
-
 msgid "Packages {readRDS() sequentially}:"
 msgstr "程序包{顺序readRDS()}:"
 
@@ -465,9 +457,6 @@ msgstr "找不到程序包%s"
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "程序包%s的hsearch数据是空的-很奇怪"
-
-msgid "no hsearch.rds meta data for package"
-msgstr "程序包里没有hsearch.rds样的隐喻数据"
 
 msgid "reencoding ..."
 msgstr "重新编码"
@@ -489,9 +478,6 @@ msgstr "数据库里没有关于程序包%s的信息：是不是需要设定'reb
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep'设定得不对"
-
-msgid "matched %d objects."
-msgstr "%d个匹配对象"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
@@ -535,12 +521,6 @@ msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "程序包'%s'里要么没有DESCRIPTION这个文件，要么出了错"
-
-msgid "package"
-msgstr "程序包"
-
-msgid "not found"
-msgstr "找不到"
 
 msgid "cannot update HTML package index"
 msgstr "无法更新HTML程序包索引"
@@ -715,7 +695,8 @@ msgstr "'lib=\"%s\"'不可写"
 msgid "unable to install packages"
 msgstr "无法安装程序包"
 
-msgid "unable to create"
+#, fuzzy
+msgid "unable to create %s"
 msgstr "无法建立"
 
 msgid "inferring 'repos = NULL' from the file name"
@@ -752,7 +733,7 @@ msgstr ""
 "本版本的R不能安装程序包的原始程序\n"
 "如果它是从RPM上安装来的话你可能需要R-devel的RPM文件"
 
-msgid "system (cmd0):"
+msgid "system (cmd0): %s"
 msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
@@ -764,13 +745,10 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr "无法建立临时目录%s"
 
-msgid "foundpkgs:"
+msgid "foundpkgs: %s"
 msgstr ""
 
-msgid ","
-msgstr ","
-
-msgid "files:"
+msgid "files: %s"
 msgstr ""
 
 msgid ""
@@ -900,16 +878,11 @@ msgstr "某些域缺少长度值"
 msgid "invalid format"
 msgstr "格式不对"
 
-msgid "last record incomplete, %d lines discarded"
-msgstr "最后一个记录不完全，%d行略不不用"
-
 msgid "transfer failure"
 msgstr "转移时出了错"
 
-msgid "HTTPUserAgent"
-msgstr "HTTPUserAgent"
-
-msgid "option must be a length one character vector or NULL"
+#, fuzzy
+msgid "%s option must be a length one character vector or NULL"
 msgstr "选项的值必需是字符串或NULL"
 
 msgid "'file' must be a character string or connection"
@@ -936,14 +909,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "无法将'x'转变成罗马数"
 
-msgid "Invalid roman numeral(s): %s"
-msgstr "罗马数字不对：%s"
-
 msgid "length mismatch: bug in code!"
 msgstr "长度不对：程序里有虫!"
-
-msgid "Processing file"
-msgstr "处理文件"
 
 msgid "no valid packages were specified"
 msgstr "没有设定程序包"
@@ -971,7 +938,7 @@ msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "options('str')不对，使用默认值"
 
 #, fuzzy
-msgid "invalid components in options(\"str\"):"
+msgid "invalid components in options(\"str\"): %s"
 msgstr "options('str')内元件无效："
 
 #, fuzzy
@@ -1114,17 +1081,14 @@ msgstr ""
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "程序包%s打开成功，MD5和检查也通过"
 
-msgid "ERROR: failed to lock directory"
+#, fuzzy
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
 msgstr "错误：不能打开锁定目录"
 
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-"修改\n"
-"试试删除"
-
-msgid "ERROR: failed to create lock directory"
+#, fuzzy
+msgid "ERROR: failed to create lock directory %s"
 msgstr "错误：无法建立锁定目录'"
 
 msgid "restored %s"
@@ -1133,8 +1097,8 @@ msgstr "回复了%s"
 msgid "unable to move temporary installation %s to %s"
 msgstr "无法将临时安装%s搬到%s"
 
-msgid "cannot remove prior installation of package"
-msgstr "无法拆除原来安装的程序包"
+msgid "cannot remove prior installation of package %s"
+msgstr "无法将拆除原来安装的程序包%s"
 
 msgid ""
 "The downloaded binary packages are in\n"
@@ -1167,18 +1131,30 @@ msgstr "无法建立%s"
 msgid "there is no 'libs' directory in package %s"
 msgstr "在程序包%s里找不到'libs'这个目录"
 
-msgid "cannot remove prior installation of package %s"
-msgstr "无法将拆除原来安装的程序包%s"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog()不能在非互交形式下使用"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString()不能在非互交形式下使用"
 
+#, fuzzy
+msgid "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0] "%2$s里出现了%1$d个具體值"
+
+#, fuzzy
+msgid "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0] "角色设定得不对: %s"
+
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
 msgstr[0] "放弃不用列%s的类别"
+
+#, fuzzy
+msgid "matched %d object."
+msgid_plural "matched %d objects."
+msgstr[0] "%d个匹配对象"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1234,9 +1210,56 @@ msgid_plural ""
 "versions are later"
 msgstr[0] ""
 
+#, fuzzy
+msgid "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0] "最后一个记录不完全，%d行略不不用"
+
+#, fuzzy
+msgid "Invalid roman numeral: %s"
+msgid_plural "Invalid roman numerals: %s"
+msgstr[0] "罗马数字不对：%s"
+
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid "call"
+#~ msgstr "调用"
+
+#~ msgid "Rebuilding the help.search() database"
+#~ msgstr "重建help.search()数据库"
+
+#~ msgid "..."
+#~ msgstr "…"
+
+#~ msgid "no hsearch.rds meta data for package"
+#~ msgstr "程序包里没有hsearch.rds样的隐喻数据"
+
+#~ msgid "package"
+#~ msgstr "程序包"
+
+#~ msgid "not found"
+#~ msgstr "找不到"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "HTTPUserAgent"
+#~ msgstr "HTTPUserAgent"
+
+#~ msgid "Processing file"
+#~ msgstr "处理文件"
+
+#~ msgid ""
+#~ "for modifying\n"
+#~ "Try removing"
+#~ msgstr ""
+#~ "修改\n"
+#~ "试试删除"
+
+#~ msgid "cannot remove prior installation of package"
+#~ msgstr "无法拆除原来安装的程序包"
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr "bibtype %s的条目必需正确地设定这些项：%s"

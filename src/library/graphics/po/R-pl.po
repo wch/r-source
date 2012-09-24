@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -87,7 +87,8 @@ msgstr "niepoprawny pierwszy argument"
 msgid "'formula' missing or incorrect"
 msgstr "brakująca lub niepoprawna 'formula'"
 
-msgid "'at' must have same length as 'z$n', i.e."
+#, fuzzy
+msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' musi mieć tę samą długość co 'z$n', tzn."
 
 msgid "invalid boxplot widths"
@@ -204,7 +205,8 @@ msgstr "nieznany algorygm 'breaks'"
 msgid "invalid number of 'breaks'"
 msgstr "niepoprawna liczba 'breaks'"
 
-msgid "hist.default: pretty() error, breaks="
+#, fuzzy
+msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: błąd 'pretty()', przerwy="
 
 #, fuzzy
@@ -260,9 +262,10 @@ msgstr ""
 "'respect' musi być wartością logiczną lub macierzą o tym samym wymiarze co "
 "'mat'"
 
+#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n ="
+"to each of the values {1..n}; here  n = %d"
 msgstr ""
 "macierz layoutu musi zawierać przynajmniej jedną referencję\n"
 "do każdej z wartości {1..n}; tutaj n ="
@@ -279,7 +282,8 @@ msgstr "niepoprawne długości współrzędnych"
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width' musi być liczbą >= 0"
 
-msgid "horizontal specification overrides: Number of columns :="
+#, fuzzy
+msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "obejścia określenia poziomu: Liczba kolumn :="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
@@ -307,9 +311,6 @@ msgstr "brakujące wartości w tabeli kontyngencji"
 
 msgid "'x' must not have 0 dimensionality"
 msgstr "'x' nie może być 0-wymiarowe"
-
-msgid "extra argument(s) %s will be disregarded"
-msgstr "dodatkowe argumenty %s będą odrzucone"
 
 msgid "invalid 'shade' specification"
 msgstr "niepoprawne określenie 'shade'"
@@ -462,6 +463,13 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] "argument %s nie robi użytku z"
 msgstr[1] "argumenty %s nie robią użytku z"
 msgstr[2] "argumenty %s nie robią użytku z"
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "dodatkowe argumenty %s będą odrzucone"
+msgstr[1] "dodatkowe argumenty %s będą odrzucone"
+msgstr[2] "dodatkowe argumenty %s będą odrzucone"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "ujemne 'counts'. Błąd wewnętrzny w kodzie C dla \"bincount\""

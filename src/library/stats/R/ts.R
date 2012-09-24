@@ -784,8 +784,10 @@ arima.sim <- function(model, n, rand.gen = rnorm,
             stop("number of differences must be a positive integer")
     }
     if(!missing(start.innov) && length(start.innov) < n.start)
-        stop(gettextf("'start.innov' is too short: need %d points", n.start),
-             domain = NA)
+        stop(sprintf(ngettext(n.start,
+                              "'start.innov' is too short: need %d point",
+                              "'start.innov' is too short: need %d points"),
+                     n.start), domain = NA)
     x <- ts(c(start.innov[1L:n.start], innov[1L:n]), start = 1 - n.start)
     if(length(model$ma)) {
         x <- filter(x, c(1, model$ma), sides = 1L)

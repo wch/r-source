@@ -247,8 +247,10 @@ glm.fit <-
             }
             ## stop if not enough parameters
             if (nobs < fit$rank)
-                stop(gettextf("X matrix has rank %d, but only %d observations",
-                              fit$rank, nobs), domain = NA)
+                stop(sprintf(ngettext(nobs,
+                                      "X matrix has rank %d, but only %d observation",
+                                      "X matrix has rank %d, but only %d observations"),
+                             fit$rank, nobs), domain = NA)
             ## calculate updated values of eta and mu with the new coef:
             start[fit$pivot] <- fit$coefficients
             eta <- drop(x %*% start)
@@ -527,7 +529,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
         if(test == "F" && df.dispersion == Inf) {
             fam <- object$family$family
             if(fam == "binomial" || fam == "poisson")
-                warning(gettextf("using F test with a %s family is inappropriate",
+                warning(gettextf("using F test with a '%s' family is inappropriate",
                                  fam),
                         domain = NA)
             else
@@ -553,8 +555,9 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
     sameresp <- responses==responses[1L]
     if(!all(sameresp)) {
 	object <- object[sameresp]
-	warning("models with response ", deparse(responses[!sameresp]),
-		" removed because response differs from model 1")
+        warning(gettextf("models with response %s removed because response differs from model 1",
+                         sQuote(deparse(responses[!sameresp]))),
+                domain = NA)
     }
 
     ns <- sapply(object, function(x) length(x$residuals))

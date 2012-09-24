@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13+0100\n"
+"POT-Creation-Date: 2012-09-24 07:46+0100\n"
 "PO-Revision-Date: 2012-03-06 09:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -415,7 +415,7 @@ msgstr "konvergiert"
 msgid "'theta' should be of type character"
 msgstr "'theta' sollte vom Typ character sein"
 
-#: nls.c:290 port.c:368
+#: nls.c:290 port.c:374
 msgid "use of NULL environment is defunct"
 msgstr "NULL Umgebung kann nicht genutzt werden"
 
@@ -694,65 +694,65 @@ msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 "Gradientenfunktion muss einen numerischen Vektor der Länge %d zurückgeben"
 
-#: port.c:322
+#: port.c:324
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "Hessematrixfunktion muss eine quadratische numerische Matrix mit Rang %d "
 "zurückgeben"
 
-#: port.c:372
+#: port.c:378
 msgid "'rho' must be an environment"
 msgstr "'rho' muss eine Umgebung sein"
 
-#: port.c:374 port.c:525
+#: port.c:380 port.c:534
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' muss ein nichtleerer numerischer Vektor sein"
 
-#: port.c:376
+#: port.c:382
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 "Wird eine Hesse-Funktion angegeben, so muss auch ein Gradient angegeben "
 "werden"
 
-#: port.c:379
+#: port.c:385
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 "Umgebung 'rho' muss einen numerischen Vektor '.par' der Länge %d enthalten"
 
-#: port.c:393
+#: port.c:399
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' und 'upper' müssen numerische Vektoren sein"
 
-#: port.c:439
+#: port.c:448
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' nur für benannte Listen anwendbar"
 
-#: port.c:460
+#: port.c:469
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() nicht gefunden"
 
-#: port.c:473
+#: port.c:482
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' muss eine numerische Matrix der Dimension (%d,%d) sein"
 
-#: port.c:494
+#: port.c:503
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn erzeugte Modus %d, Länge %d - gewünscht Modus %d, Länge %d"
 
-#: port.c:507
+#: port.c:516
 msgid "invalid type for eval_check_store"
 msgstr "unzulässiger Typ für eval_check_source"
 
-#: port.c:526
+#: port.c:535
 msgid "m must be a list"
 msgstr "m nuss eine Liste sein"
 
-#: port.c:546
+#: port.c:555
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' und 'upperb' muss ein numerischer Vektor sein"
 

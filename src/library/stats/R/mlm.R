@@ -286,7 +286,7 @@ anova.mlm <-
             stats <- matrix(NA, nmodels+1, 6L)
             colnames(stats) <- c("F", "num Df", "den Df",
                                  "Pr(>F)", "G-G Pr", "H-F Pr")
-            for(i in 1L:nmodels) {
+            for(i in seq_len(nmodels)) {
                 s2 <- Tr(solve(Psi,T %*% ss[[i]] %*% t(T)))/pp/df[i]
                 Fval <- s2/sph$sigma
                 stats[i,1L:3L] <- abs(c(Fval, df[i]*pp, df.res*pp))
@@ -313,13 +313,13 @@ anova.mlm <-
 
             rss.qr <- qr((T %*% ssd$SSD  %*% t(T)) * scm, tol=tol)
             if(rss.qr$rank < pp)
-                stop("residuals have rank ", rss.qr$rank," < ", pp)
+                stop(gettextf("residuals have rank %s < %s", rss.qr$rank, pp),
+                     domain = NA)
             eigs <- array(NA, c(nmodels, pp))
             stats <- matrix(NA, nmodels+1L, 5L)
-            colnames(stats) <- c(test, "approx F", "num Df", "den Df",
-                                       "Pr(>F)")
+            colnames(stats) <- c(test, "approx F", "num Df", "den Df", "Pr(>F)")
 
-            for(i in 1L:nmodels) {
+            for(i in seq_len(nmodels)) {
                 eigs[i, ] <- Re(eigen(qr.coef(rss.qr,
                                               (T %*% ss[[i]] %*% t(T)) * scm),
                                       symmetric = FALSE)$values)
@@ -431,9 +431,9 @@ anova.mlmlist <- function (object, ...,
     sameresp <- responses == responses[1L]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning("models with response ",
-                deparse(responses[!sameresp]),
-                " removed because response differs from ", "model 1")
+        warning(gettextf("models with response %s removed because response differs from model 1",
+                         sQuote(deparse(responses[!sameresp]))),
+                domain = NA)
     }
 
     ns <- sapply(objects, function(x) length(x$residuals))
@@ -461,11 +461,11 @@ anova.mlmlist <- function (object, ...,
     table <- data.frame(resdf, df, resdet)
     variables <- lapply(objects, function(x)
                         paste(deparse(formula(x)), collapse="\n") )
-    dimnames(table) <- list(1L:nmodels,
+    dimnames(table) <- list(seq_len(nmodels),
                             c("Res.Df", "Df", "Gen.var."))
 
     title <- "Analysis of Variance Table\n"
-    topnote <- paste("Model ", format(1L:nmodels),": ",
+    topnote <- paste("Model ", format(seq_len(nmodels)),": ",
 		     variables, sep="", collapse="\n")
     transformnote <- if (!missing(T))
         c("\nContrast matrix", apply(format(T), 1L, paste, collapse=" "))
@@ -498,7 +498,7 @@ anova.mlmlist <- function (object, ...,
 
         Psi <- T %*% Sigma %*% t(T)
         stats <- matrix(NA, nmodels, 6L)
-        dimnames(stats) <-  list(1L:nmodels,
+        dimnames(stats) <-  list(seq_len(nmodels),
                                  c("F", "num Df", "den Df",
                                    "Pr(>F)", "G-G Pr", "H-F Pr"))
         for(i in 2:nmodels) {
@@ -534,12 +534,13 @@ anova.mlmlist <- function (object, ...,
 
         rss.qr <- qr((T %*% resssd[[bigmodel]]$SSD %*% t(T)) * scm, tol=tol)
         if(rss.qr$rank < pp)
-            stop("residuals have rank ", rss.qr$rank," < ", pp)
+            stop(gettextf("residuals have rank %s < %s", rss.qr$rank, pp),
+                 domain = NA)
         eigs <- array(NA, c(nmodels, pp))
         stats <- matrix(NA, nmodels, 5L)
-        dimnames(stats) <-  list(1L:nmodels,
-                                 c(test, "approx F", "num Df", "den Df",
-                                   "Pr(>F)"))
+        dimnames(stats) <-
+            list(seq_len(nmodels),
+                 c(test, "approx F", "num Df", "den Df", "Pr(>F)"))
 
         for(i in 2:nmodels) {
             sg <- (df[i] > 0) -  (df[i] < 0)

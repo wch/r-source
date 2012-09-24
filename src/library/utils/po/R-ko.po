@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:47\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -71,10 +71,12 @@ msgstr ""
 "parse error or empty option in\n"
 "%s"
 
-msgid "Warning: unknown option"
+#, fuzzy
+msgid "Warning: unknown option %s"
 msgstr "경고: 알수없는 옵션입니다 "
 
-msgid "Created PDF document"
+#, fuzzy
+msgid "Created PDF document %s"
 msgstr "PDF 문서가 생성되었습니다 "
 
 #, fuzzy
@@ -101,9 +103,6 @@ msgstr "'strip.white' 옵션의 값은 반드시 소문자 이어야합니다 "
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "첫번째 다음에 오는 'what' 요소들은 모두 무시될 것입니다 "
-
-msgid "%d occurrences in %s"
-msgstr "%d 가 %s 내에서 발생했습니다"
 
 msgid "No suitable spell check program found."
 msgstr "적절한 스펠링 체크 프로그램을 찾지 못했습니다 "
@@ -136,11 +135,9 @@ msgstr ""
 "Use <code> %s </code> \n"
 " to list the vignettes in all <strong>available</strong> packages."
 
-msgid "No vignettes found by"
+#, fuzzy
+msgid "No vignettes found by %s"
 msgstr "비니에트를 찾을 수 없습니다 "
-
-msgid "call"
-msgstr "호출 "
 
 msgid "Package %s: DESCRIPTION not found"
 msgstr "패키지 %s: DESCRIPTION 파일을 찾을 수 없습니다 "
@@ -166,9 +163,6 @@ msgstr "%s 를 사용하는 것을 %s 를 이용하는 것보다 권장됩니다
 
 msgid "Use either %s or %s but not both."
 msgstr "%s 혹은 %s 중 하나를 이용하세요 "
-
-msgid "Invalid role specification(s): %s."
-msgstr "Invalid role specification(s): %s."
 
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "%s/%s 를 이용하는 것이 %s/%s/%s 를 사용하는 것보다 권장됩니다."
@@ -255,6 +249,9 @@ msgstr "file 'filelist' is missing for directory %s"
 
 msgid "data set %s not found"
 msgstr "데이터 셋 %s 를 찾을 수 없습니다 "
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "'%s' 종류는 아직 구현되지 않았습니다 "
@@ -441,7 +438,8 @@ msgstr ""
 msgid "creation of %s failed"
 msgstr "%s 의 생성이 실패했습니다 "
 
-msgid "Saving help page to"
+#, fuzzy
+msgid "Saving help page to %s"
 msgstr "도움말 페이지를 저장해주세요 "
 
 msgid "argument %s must be a single character string"
@@ -459,12 +457,6 @@ msgstr "올바르지 않은 유형정보입니다 "
 msgid "argument 'help.db' is deprecated"
 msgstr "인수 'help.db' 가 누락되었습니다 "
 
-msgid "Rebuilding the help.search() database"
-msgstr "help.search() 데이터베이스를 재구축합니다 "
-
-msgid "..."
-msgstr "..."
-
 msgid "Packages {readRDS() sequentially}:"
 msgstr "Packages {readRDS() sequentially}:"
 
@@ -476,9 +468,6 @@ msgstr "패키지 %s 를 찾을 수 없습니다 "
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "패키지 %s 는 비어있는 hsearch 데이터 입니다 - 이상합니다 "
-
-msgid "no hsearch.rds meta data for package"
-msgstr "패키지에 대한 hsearch.rds 메타 데이터가 없습니다 "
 
 msgid "reencoding ..."
 msgstr "재인코딩중입니다 ... "
@@ -503,9 +492,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep' 에 대한 설명이 잘못되었습니다 "
-
-msgid "matched %d objects."
-msgstr "일치된 %d 객체들입니다."
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr ""
@@ -553,12 +539,6 @@ msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "패키지 '%s'의 DESCRIPTION 파일이 없거나 손상되었습니다 "
-
-msgid "package"
-msgstr "패키지 "
-
-msgid "not found"
-msgstr "찾지 못했습니다 "
 
 msgid "cannot update HTML package index"
 msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"
@@ -737,7 +717,8 @@ msgstr "'lib = \"%s\"' 에 기록할 수 없습니다"
 msgid "unable to install packages"
 msgstr "패키지를 설치할 수 없습니다 "
 
-msgid "unable to create"
+#, fuzzy
+msgid "unable to create %s"
 msgstr "생성할 수 없습니다 "
 
 msgid "inferring 'repos = NULL' from the file name"
@@ -776,7 +757,7 @@ msgstr ""
 "현재 버전의  R 은 소스패키지를 설치 할 수 없습니다\n"
 "만약 RPM 으로부터 설치하려고 한다면, R-devel RPM 이 필요합니다 "
 
-msgid "system (cmd0):"
+msgid "system (cmd0): %s"
 msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
@@ -788,13 +769,10 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr "임시 디렉토리 %s 를 생성할 수 없습니다 "
 
-msgid "foundpkgs:"
+msgid "foundpkgs: %s"
 msgstr ""
 
-msgid ","
-msgstr ","
-
-msgid "files:"
+msgid "files: %s"
 msgstr ""
 
 msgid ""
@@ -928,16 +906,11 @@ msgstr "어떤 항목들은 길이에 대한 정보가 없습니다 "
 msgid "invalid format"
 msgstr "잘못된 형식입니다 "
 
-msgid "last record incomplete, %d lines discarded"
-msgstr "마지막 레코드는 완성되지 않았으며, %d 라인들이 삭제되었습니다 "
-
 msgid "transfer failure"
 msgstr "전송실패 "
 
-msgid "HTTPUserAgent"
-msgstr "HTTPUserAgent"
-
-msgid "option must be a length one character vector or NULL"
+#, fuzzy
+msgid "%s option must be a length one character vector or NULL"
 msgstr "옵션은 반드시 길이가 1인 문자벡터이거나 NULL 이어야 합니다 "
 
 msgid "'file' must be a character string or connection"
@@ -965,14 +938,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "'x' 를  roman 으로 강제변환 할 수 없습니다 "
 
-msgid "Invalid roman numeral(s): %s"
-msgstr "Invalid roman numeral(s): %s"
-
 msgid "length mismatch: bug in code!"
 msgstr "길이가 일치하지 않습니다: 코드내의 버그입니다!"
-
-msgid "Processing file"
-msgstr "처리중인 파일 "
 
 msgid "no valid packages were specified"
 msgstr "유효한 패키지들이 지정되지 않았습니다 "
@@ -1000,7 +967,7 @@ msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "options('str') 이 잘못되었습니다 -- 대신 기본값을 사용합니다 "
 
 #, fuzzy
-msgid "invalid components in options(\"str\"):"
+msgid "invalid components in options(\"str\"): %s"
 msgstr "options('str') 에 대한 잘못된 구성요소:"
 
 #, fuzzy
@@ -1145,17 +1112,14 @@ msgstr "파일 %s 는 OS X 바이너리 패키지가 아닙니다"
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "패키지 %s 는 성공적으로 압축을 해제하고 MD5 sums 를 확인했습니다"
 
-msgid "ERROR: failed to lock directory"
+#, fuzzy
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
 msgstr "에러: 디렉토리를 잠그는데 실패했습니다 "
 
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-"for modifying\n"
-"Try removing"
-
-msgid "ERROR: failed to create lock directory"
+#, fuzzy
+msgid "ERROR: failed to create lock directory %s"
 msgstr "에러: failed to create lock directory"
 
 msgid "restored %s"
@@ -1164,8 +1128,8 @@ msgstr "복구된 %s"
 msgid "unable to move temporary installation %s to %s"
 msgstr " 임시설치  %s 를 %s 로 이동할 수 없습니다 "
 
-msgid "cannot remove prior installation of package"
-msgstr "패키지의 설치전에 삭제할 수 없습니다 "
+msgid "cannot remove prior installation of package %s"
+msgstr "패키지 %s  의 설치 이전에 삭제할 수 없습니다 "
 
 msgid ""
 "The downloaded binary packages are in\n"
@@ -1200,18 +1164,30 @@ msgstr "%s 를 생성하는데 실패했습니다 "
 msgid "there is no 'libs' directory in package %s"
 msgstr "패키지 %s 에는 'libs' 라는 디렉토리가 없습니다 "
 
-msgid "cannot remove prior installation of package %s"
-msgstr "패키지 %s  의 설치 이전에 삭제할 수 없습니다 "
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() 는 인터랙티브하게 사용될 수 없습니다 "
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() 은 인터랙티브하게 사용될 수 없습니다 "
 
+#, fuzzy
+msgid "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0] "%d 가 %s 내에서 발생했습니다"
+
+#, fuzzy
+msgid "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0] "Invalid role specification(s): %s."
+
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
 msgstr[0] "class discarded from column %s"
+
+#, fuzzy
+msgid "matched %d object."
+msgid_plural "matched %d objects."
+msgstr[0] "일치된 %d 객체들입니다."
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1267,9 +1243,56 @@ msgid_plural ""
 "versions are later"
 msgstr[0] ""
 
+#, fuzzy
+msgid "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0] "마지막 레코드는 완성되지 않았으며, %d 라인들이 삭제되었습니다 "
+
+#, fuzzy
+msgid "Invalid roman numeral: %s"
+msgid_plural "Invalid roman numerals: %s"
+msgstr[0] "Invalid roman numeral(s): %s"
+
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+
+#~ msgid "call"
+#~ msgstr "호출 "
+
+#~ msgid "Rebuilding the help.search() database"
+#~ msgstr "help.search() 데이터베이스를 재구축합니다 "
+
+#~ msgid "..."
+#~ msgstr "..."
+
+#~ msgid "no hsearch.rds meta data for package"
+#~ msgstr "패키지에 대한 hsearch.rds 메타 데이터가 없습니다 "
+
+#~ msgid "package"
+#~ msgstr "패키지 "
+
+#~ msgid "not found"
+#~ msgstr "찾지 못했습니다 "
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "HTTPUserAgent"
+#~ msgstr "HTTPUserAgent"
+
+#~ msgid "Processing file"
+#~ msgstr "처리중인 파일 "
+
+#~ msgid ""
+#~ "for modifying\n"
+#~ "Try removing"
+#~ msgstr ""
+#~ "for modifying\n"
+#~ "Try removing"
+
+#~ msgid "cannot remove prior installation of package"
+#~ msgstr "패키지의 설치전에 삭제할 수 없습니다 "
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr ""

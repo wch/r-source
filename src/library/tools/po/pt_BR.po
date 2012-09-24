@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-09-24 07:47+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -51,6 +51,101 @@ msgstr ""
 
 #: getfmts.c:126
 msgid "at most one asterisk '*' is supported in each conversion specification"
+msgstr ""
+
+#: gramLatex.y:570 gramRd.y:1207
+msgid "input"
+msgstr ""
+
+#: gramLatex.y:571 gramRd.y:1208
+msgid "macro"
+msgstr ""
+
+#: gramLatex.y:642 gramRd.y:1298
+#, c-format
+msgid "unable to allocate buffer for long string at line %d"
+msgstr ""
+
+#: gramLatex.y:858 gramRd.y:1725 gramRd.y:1731
+#, fuzzy, c-format
+msgid "invalid '%s' value"
+msgstr "tipo de argumento inválido"
+
+#: gramRd.y:289 gramRd.y:292
+#, c-format
+msgid "bad markup (extra space?) at %s:%d:%d"
+msgstr ""
+
+#: gramRd.y:528
+#, c-format
+msgid "Macro '%s' previously defined."
+msgstr ""
+
+#: gramRd.y:537
+#, c-format
+msgid "At most 4 arguments are allowed for user defined macros."
+msgstr ""
+
+#: gramRd.y:571
+#, c-format
+msgid "No macro definition for '%s'."
+msgstr ""
+
+#: gramRd.y:723 gramRd.y:727
+#, c-format
+msgid "newline within quoted string at %s:%d"
+msgstr ""
+
+#: gramRd.y:746
+#, c-format
+msgid "unable to allocate buffer for long macro at line %d"
+msgstr ""
+
+#: gramRd.y:776
+msgid "macros nested too deeply: infinite recursion?"
+msgstr ""
+
+#: gramRd.y:1159
+#, c-format
+msgid "Unable to find macro %s"
+msgstr ""
+
+#: gramRd.y:1209
+msgid "conditional"
+msgstr ""
+
+#: gramRd.y:1210
+msgid "section header"
+msgstr ""
+
+#: gramRd.y:1358
+#, c-format
+msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
+msgstr ""
+
+#: gramRd.y:1736
+msgid "cannot open the connection"
+msgstr ""
+
+#: gramRd.y:1743
+msgid "cannot read from this connection"
+msgstr ""
+
+#: gramRd.y:1748
+msgid "invalid Rd file"
+msgstr ""
+
+#: gramRd.y:1766
+msgid "deparseRd only supports deparsing character elements"
+msgstr ""
+
+#: gramRd.y:1769
+msgid "bad state"
+msgstr ""
+
+#: gramRd.y:1779
+#, c-format
+msgid "bad text mode %d in deparseRd"
 msgstr ""
 
 #: http.c:32

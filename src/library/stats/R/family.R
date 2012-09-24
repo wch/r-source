@@ -121,7 +121,8 @@ make.link <- function (link)
                valideta <- function(eta) all(eta!=0)
            },
            ## else :
-           stop(sQuote(link), " link not recognised")
+           stop(gettextf("%s link not recognised", sQuote(link)),
+                domain = NA)
            )# end switch(.)
     structure(list(linkfun = linkfun, linkinv = linkinv,
                    mu.eta = mu.eta, valideta = valideta, name = link),
@@ -329,8 +330,7 @@ binomial <- function (link = "logit")
 	    weights <- weights * n
             mustart <- (n * y + 0.5)/(n + 1)
 	}
-	else stop("for the binomial family, y must be a vector of 0 and 1\'s\n",
-                  "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
+	else stop("for the binomial family, y must be a vector of 0 and 1\'s\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
     })
     simfun <- function(object, nsim) {
         ftd <- fitted(object)
@@ -417,8 +417,7 @@ quasibinomial <- function (link = "logit")
 	    weights <- weights * n
             mustart <- (n * y + 0.5)/(n + 1)
 	}
-	else stop("for the quasibinomial family, y must be a vector of 0 and 1\'s\n",
-                  "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
+	else stop("for the quasibinomial family, y must be a vector of 0 and 1\'s\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
     })
     structure(list(family = "quasibinomial",
 		   link = linktemp,

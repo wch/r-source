@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,7 +77,7 @@ msgstr ""
 msgid "'formula' missing or incorrect"
 msgstr ""
 
-msgid "'at' must have same length as 'z$n', i.e."
+msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr ""
 
 msgid "invalid boxplot widths"
@@ -191,7 +191,7 @@ msgstr ""
 msgid "invalid number of 'breaks'"
 msgstr ""
 
-msgid "hist.default: pretty() error, breaks="
+msgid "hist.default: pretty() error, breaks=%s"
 msgstr ""
 
 msgid "invalid length(breaks)"
@@ -239,7 +239,7 @@ msgstr ""
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 
-msgid "layout matrix must contain at least one reference\nto each of the values {1..n}; here  n ="
+msgid "layout matrix must contain at least one reference\nto each of the values {1..n}; here  n = %d"
 msgstr ""
 
 msgid "invalid title"
@@ -254,7 +254,7 @@ msgstr ""
 msgid "'text.width' must be numeric, >= 0"
 msgstr ""
 
-msgid "horizontal specification overrides: Number of columns :="
+msgid "horizontal specification overrides: Number of columns := %d"
 msgstr ""
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
@@ -279,9 +279,6 @@ msgid "missing values in contingency table"
 msgstr ""
 
 msgid "'x' must not have 0 dimensionality"
-msgstr ""
-
-msgid "extra argument(s) %s will be disregarded"
 msgstr ""
 
 msgid "invalid 'shade' specification"
@@ -426,5 +423,10 @@ msgstr[1]    ""
 
 msgid        "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
 msgstr[0]    ""
 msgstr[1]    ""

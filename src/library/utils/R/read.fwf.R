@@ -67,8 +67,10 @@ function(file, widths, header = FALSE, sep = "\t",
         nread <- length(raw)
         if (recordlength > 1L &&  nread %% recordlength) {
             raw<-raw[1L:(nread-nread %% recordlength)]
-            warning(gettextf("last record incomplete, %d lines discarded",
-                             nread %% recordlength), domain = NA)
+            warning(sprintf(ngettext(nread %% recordlength,
+                                     "last record incomplete, %d line discarded",
+                                     "last record incomplete, %d lines discarded"),
+                            nread %% recordlength), domain = NA)
         }
         if (recordlength > 1L) {
             raw <- matrix(raw, nrow=recordlength)

@@ -155,9 +155,8 @@ bmp <- function(filename = "Rplot%03d.bmp",
         invisible(.External(C_devCairo, filename, 9L, g$width, g$height,
                             pointsize, bg, res, antialias, 100L, d$family))
     else
-        invsible(.External2(C_X11,
-                            paste("bmp::", filename, sep=""),
-                            g$width, g$height, pointsize, d$gamma,
-                            d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                            0L, 0L, "", 0, 0, d$family))
+        invisible(.External2(C_X11, paste("bmp::", filename, sep=""),
+                             g$width, g$height, pointsize, d$gamma,
+                             d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
+                             0L, 0L, "", 0, 0, d$family))
 }

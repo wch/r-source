@@ -230,8 +230,10 @@
     setMethod("show", "MethodSelectionReport", where = envir,
               function(object) {
                   nreport <- length(object@target)
-                  cat(gettextf("Reported %d ambiguous selections out of %d for function %s\n",nreport,
-			       length(object@allSelections), object@generic))
+                  cat(sprintf(ngettext(nreport,
+                                       "Reported %d ambiguous selection out of %d for function %s\n",
+                                       "Reported %d ambiguous selections out of %d for function %s\n"),
+                              nreport, length(object@allSelections), object@generic))
                   target <- object@target; selected = object@selected
                   candidates <- object@candidates; note <- object@note
                   for(i in seq_len(nreport)) {

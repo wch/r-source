@@ -128,10 +128,14 @@ representation <-
                             collapse = ", ")),
              domain = NA)
     slots <- anames[nzchar(anames)]
-    if(anyDuplicated(slots))
-       stop(gettextf("duplicated slot names: %s",
-                     paste(sQuote(slots[duplicated(slots)]), collapse="")),
-            domain = NA)
+    if(anyDuplicated(slots)) {
+        dslots <- slots[duplicated(slots)]
+        stop(sprintf(ngettext(length(dslots),
+                              "duplicated slot name: %s",
+                              "duplicated slot names: %s"),
+                     paste(sQuote(dslots), collapse="")),
+             domain = NA)
+    }
     value
 }
 
@@ -652,7 +656,9 @@ initialize <- function(.Object, ...) {
                                     collapse = ", ")), domain = NA)
             which  <- match(snames, names(slotDefs))
             if(any(is.na(which)))
-                stop(gettextf("invalid names for slots of class %s: %s",
+                stop(sprintf(ngettext(sum(is.na(which)),
+                                      "invalid name for slot of class %s: %s",
+                                      "invalid names for slots of class %s: %s"),
                               dQuote(Class),
                               paste(snames[is.na(which)], collapse=", ")),
                      domain = NA)
@@ -736,11 +742,13 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
                 pkgs <- base::unique(pkgs)
                 where <- where[1L]
                 ## problem: 'unique'x is text passed in, so do not translate
-                warning(gettextf("multiple definitions of class %s visible (%s); using the definition\n   in package %s for %s",
-                                 dQuote(Class),
-                                 paste(sQuote(pkgs), collapse = ", "),
-                                 sQuote(pkgs[[1L]]),
-                                 unique),
+                warning(sprintf(ngettext(length(pkgs),
+                                         "multiple definition of class %s visible (%s); using the definition\n   in package %s for %s",
+                                         "multiple definitions of class %s visible (%s); using the definition\n   in package %s for %s"),
+                                dQuote(Class),
+                                paste(sQuote(pkgs), collapse = ", "),
+                                sQuote(pkgs[[1L]]),
+                                unique),
                         domain = NA)
             }
             ## else returns a list of >1 places, for the caller to sort out (e.g., .findOrCopyClass)

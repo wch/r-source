@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:54\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -549,13 +549,6 @@ msgid ""
 msgstr ""
 "więcej elementów w sygnaturze metody (%d) niż w ogólnej sygnaturze (%d)"
 
-msgid ""
-"in the method signature for function %s invalid argument names in the "
-"signature: %s"
-msgstr ""
-"w sygnaturze metody dla funkcji %s niepoprawne nazwy argumentów w "
-"sygnaturze: %s"
-
 #, fuzzy
 msgid "No generic function found corresponding to %s"
 msgstr "Nie znaleziono ogólnej funkcji odpowiadającej \"%s\""
@@ -589,9 +582,6 @@ msgid ""
 "initialize method returned an object of class %s instead of the required "
 "class %s"
 msgstr "metoda inicjująca zwróciła obiekt klasy %s zamiast wymaganej klasy %s"
-
-msgid "Reported %d ambiguous selections out of %d for function %s"
-msgstr "Odnotowano %d niejednoznaczne wybory z możliwych %d dla funkcji %s"
 
 msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
 msgstr "%d: cel \"%s\": wybrano \"%s\" (inne: %s)"
@@ -751,9 +741,6 @@ msgstr ""
 "prototyp jest listą z nazwanymi elementami (mogą być niejednoznaczne):  "
 "lepiej używać funkcji 'prototype()' aby uniknąć kłopotów."
 
-msgid "named elements of prototype do not correspond to slot names: %s"
-msgstr "nazwane elementy prototypu nie odnoszą się do nazw gniazd: %s"
-
 #, fuzzy
 msgid "the '%s' list for class %s, includes an undefined class %s"
 msgstr "lista %s dla klasy %s, zawiera w sobie niezdefiniowaną klasę %s"
@@ -886,19 +873,8 @@ msgstr ""
 "argument %s musi być wartością NULL lub obiektem ogólnej funkcji; otrzymano "
 "obiekt klasy %s"
 
-msgid "non-arguments found in the signature: %s"
-msgstr "nie znaleziono argumentów w sygnaturze: %s"
-
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr "brak odpowiednich argumentów do rozdzielenia metod w tej funkcji"
-
-#, fuzzy
-msgid ""
-"the formal arguments of the generic function for %s (%s) differ from those "
-"of the non-generic to be used as the default (%s)"
-msgstr ""
-"formalne argumenty ogólnej funkcji dla \"%s\" (%s) różnią się od tych dla "
-"nieogólnej, która ma być użyta jako domyślna (%s)"
 
 msgid "special function %s is not permitted to have methods"
 msgstr "specjalna funkcja %s nie ma prawa posiadać metod"
@@ -1162,9 +1138,6 @@ msgstr "element %d reprezentacji nie był pojedynczym ciągiem tekstowym"
 msgid "duplicate class names among superclasses: %s"
 msgstr "powtórzone nazwy klasy pośród superklas: %s"
 
-msgid "duplicated slot names: %s"
-msgstr "powtórzone nazwy gniazd: %s"
-
 msgid "only one data object (unnamed argument to prototype) allowed"
 msgstr ""
 "tylko jeden obiekt danych (nienazwany argument dla prototypu) jest dozwolony"
@@ -1219,8 +1192,8 @@ msgid ""
 msgstr ""
 "nie można użyć obiektu klasy %s w 'new()':  klasa %s nie rozszerza tej klasy"
 
-msgid "invalid names for slots of class %s: %s"
-msgstr "niepoprawne nazwy gniazd klasy '%s': %s"
+msgid "duplicated slot names: %s"
+msgstr "powtórzone nazwy gniazd: %s"
 
 msgid ""
 "Class %s is defined, with package %s, but no corresponding metadata object "
@@ -1231,13 +1204,6 @@ msgstr ""
 
 msgid "no definition of %s to use for %s"
 msgstr "brak definicji %s do użycia dla %s"
-
-msgid ""
-"multiple definitions of class %s visible (%s); using the definition\n"
-"   in package %s for %s"
-msgstr ""
-"wielokrotne definicje klasy %s są widoczne (%s); używanie definicji\n"
-"   w pakiecie %s dla %s"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
@@ -1411,19 +1377,6 @@ msgstr "klasa %s nie może rozszerzyć klasy %s"
 msgid "Both classes must be defined"
 msgstr "Obie klasy muszą być zdefiniowane"
 
-msgid ""
-"class %s is missing slots from class %s (%s), and no coerce method was "
-"supplied"
-msgstr ""
-"klasie %s brakuje gniazd z klasy %s (%s), przez co nie dostarczono żadnej "
-"metody przekształcenia"
-
-msgid ""
-"slots in class %s must extend corresponding slots in class %s: fails for %s"
-msgstr ""
-"gniazda w klasie %s muszą rozszerzać odpowiadające im gniazda w klasie %s: "
-"nie udało się dla %s"
-
 msgid "invalid index for function argument"
 msgstr "niepoprawny indeks dla argumentu funkcji"
 
@@ -1491,12 +1444,6 @@ msgstr ""
 " docelowa sygnatura \"%s\".\n"
 " %s również byłaby poprawna"
 
-msgid "found"
-msgstr "znaleziono"
-
-msgid "equally good next methods"
-msgstr "równie dobre kolejne metody"
-
 #, fuzzy
 msgid "unable to find an inherited method for function %s for signature %s"
 msgstr "nie można znaleźć dziedziczonej metody dla funkcji \""
@@ -1506,18 +1453,6 @@ msgid ""
 msgstr ""
 "Błąd wewnętrzny podczas wyszukiwania dziedziczonych metod; nie zwrócono "
 "unikalnej metody"
-
-msgid "Selecting %d methods of min. distance"
-msgstr "Wybieranie %d metod minimalnej odległości"
-
-msgid "Selecting %d non-group methods"
-msgstr "Wybieranie %d metod nie-grupowych"
-
-msgid "Selecting %d partially exact-matching method(s)"
-msgstr "Wybieranie %d częściowo pasujących metod"
-
-msgid "Choosing method %s from %d ambiguous possibilities"
-msgstr "Wybieranie metody %s z %d niejednoznacznych możliwości"
 
 msgid "Failed to find expected group generic function:"
 msgstr "Nie udało się znaleźć oczekiwanej funkcji grupy ogolnej:"
@@ -2079,6 +2014,162 @@ msgid_plural "no definition for classes %s"
 msgstr[0] "brak definicji dla klasy \"%s\""
 msgstr[1] "brak definicji dla klas \"%s\""
 msgstr[2] "brak definicji dla klas \"%s\""
+
+#, fuzzy
+msgid ""
+"in the method signature for function %s invalid argument name in the "
+"signature: %s"
+msgid_plural ""
+"in the method signature for function %s invalid argument names in the "
+"signature: %s"
+msgstr[0] ""
+"w sygnaturze metody dla funkcji %s niepoprawne nazwy argumentów w "
+"sygnaturze: %s"
+msgstr[1] ""
+"w sygnaturze metody dla funkcji %s niepoprawne nazwy argumentów w "
+"sygnaturze: %s"
+msgstr[2] ""
+"w sygnaturze metody dla funkcji %s niepoprawne nazwy argumentów w "
+"sygnaturze: %s"
+
+#, fuzzy
+msgid "Reported %d ambiguous selection out of %d for function %s\n"
+msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
+msgstr[0] "Odnotowano %d niejednoznaczne wybory z możliwych %d dla funkcji %s"
+msgstr[1] "Odnotowano %d niejednoznaczne wybory z możliwych %d dla funkcji %s"
+msgstr[2] "Odnotowano %d niejednoznaczne wybory z możliwych %d dla funkcji %s"
+
+#, fuzzy
+msgid "named elements of prototype do not correspond to slot name: %s"
+msgid_plural "named elements of prototype do not correspond to slot names: %s"
+msgstr[0] "nazwane elementy prototypu nie odnoszą się do nazw gniazd: %s"
+msgstr[1] "nazwane elementy prototypu nie odnoszą się do nazw gniazd: %s"
+msgstr[2] "nazwane elementy prototypu nie odnoszą się do nazw gniazd: %s"
+
+#, fuzzy
+msgid "non-argument found in the signature: %s"
+msgid_plural "non-arguments found in the signature: %s"
+msgstr[0] "nie znaleziono argumentów w sygnaturze: %s"
+msgstr[1] "nie znaleziono argumentów w sygnaturze: %s"
+msgstr[2] "nie znaleziono argumentów w sygnaturze: %s"
+
+#, fuzzy
+msgid ""
+"the formal argument of the generic function for %s (%s) differs from that of "
+"the non-generic to be used as the default (%s)"
+msgid_plural ""
+"the formal arguments of the generic function for %s (%s) differ from those "
+"of the non-generic to be used as the default (%s)"
+msgstr[0] ""
+"formalne argumenty ogólnej funkcji dla \"%s\" (%s) różnią się od tych dla "
+"nieogólnej, która ma być użyta jako domyślna (%s)"
+msgstr[1] ""
+"formalne argumenty ogólnej funkcji dla \"%s\" (%s) różnią się od tych dla "
+"nieogólnej, która ma być użyta jako domyślna (%s)"
+msgstr[2] ""
+"formalne argumenty ogólnej funkcji dla \"%s\" (%s) różnią się od tych dla "
+"nieogólnej, która ma być użyta jako domyślna (%s)"
+
+#, fuzzy
+msgid "duplicated slot name: %s"
+msgid_plural "duplicated slot names: %s"
+msgstr[0] "powtórzone nazwy gniazd: %s"
+msgstr[1] "powtórzone nazwy gniazd: %s"
+msgstr[2] "powtórzone nazwy gniazd: %s"
+
+#, fuzzy
+msgid "invalid name for slot of class %s: %s"
+msgid_plural "invalid names for slots of class %s: %s"
+msgstr[0] "niepoprawne nazwy gniazd klasy '%s': %s"
+msgstr[1] "niepoprawne nazwy gniazd klasy '%s': %s"
+msgstr[2] "niepoprawne nazwy gniazd klasy '%s': %s"
+
+#, fuzzy
+msgid ""
+"multiple definition of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgid_plural ""
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgstr[0] ""
+"wielokrotne definicje klasy %s są widoczne (%s); używanie definicji\n"
+"   w pakiecie %s dla %s"
+msgstr[1] ""
+"wielokrotne definicje klasy %s są widoczne (%s); używanie definicji\n"
+"   w pakiecie %s dla %s"
+msgstr[2] ""
+"wielokrotne definicje klasy %s są widoczne (%s); używanie definicji\n"
+"   w pakiecie %s dla %s"
+
+#, fuzzy
+msgid ""
+"class %s is missing slot from class %s (%s), and no coerce method was "
+"supplied"
+msgid_plural ""
+"class %s is missing slots from class %s (%s), and no coerce method was "
+"supplied"
+msgstr[0] ""
+"klasie %s brakuje gniazd z klasy %s (%s), przez co nie dostarczono żadnej "
+"metody przekształcenia"
+msgstr[1] ""
+"klasie %s brakuje gniazd z klasy %s (%s), przez co nie dostarczono żadnej "
+"metody przekształcenia"
+msgstr[2] ""
+"klasie %s brakuje gniazd z klasy %s (%s), przez co nie dostarczono żadnej "
+"metody przekształcenia"
+
+#, fuzzy
+msgid ""
+"slot in class %s must extend corresponding slot in class %s: fails for %s"
+msgid_plural ""
+"slots in class %s must extend corresponding slots in class %s: fails for %s"
+msgstr[0] ""
+"gniazda w klasie %s muszą rozszerzać odpowiadające im gniazda w klasie %s: "
+"nie udało się dla %s"
+msgstr[1] ""
+"gniazda w klasie %s muszą rozszerzać odpowiadające im gniazda w klasie %s: "
+"nie udało się dla %s"
+msgstr[2] ""
+"gniazda w klasie %s muszą rozszerzać odpowiadające im gniazda w klasie %s: "
+"nie udało się dla %s"
+
+#, fuzzy
+msgid "found %d equally good next method"
+msgid_plural "found %d equally good next methods"
+msgstr[0] "równie dobre kolejne metody"
+msgstr[1] "równie dobre kolejne metody"
+msgstr[2] "równie dobre kolejne metody"
+
+#, fuzzy
+msgid "Selecting %d method of min. distance"
+msgid_plural "Selecting %d methods of min. distance"
+msgstr[0] "Wybieranie %d metod minimalnej odległości"
+msgstr[1] "Wybieranie %d metod minimalnej odległości"
+msgstr[2] "Wybieranie %d metod minimalnej odległości"
+
+#, fuzzy
+msgid "Selecting %d non-group method"
+msgid_plural "Selecting %d non-group methods"
+msgstr[0] "Wybieranie %d metod nie-grupowych"
+msgstr[1] "Wybieranie %d metod nie-grupowych"
+msgstr[2] "Wybieranie %d metod nie-grupowych"
+
+#, fuzzy
+msgid "Selecting %d partially exact-matching method"
+msgid_plural "Selecting %d partially exact-matching methods"
+msgstr[0] "Wybieranie %d częściowo pasujących metod"
+msgstr[1] "Wybieranie %d częściowo pasujących metod"
+msgstr[2] "Wybieranie %d częściowo pasujących metod"
+
+#, fuzzy
+msgid "Choosing method %s from %d ambiguous possibility"
+msgid_plural "Choosing method %s from %d ambiguous possibilities"
+msgstr[0] "Wybieranie metody %s z %d niejednoznacznych możliwości"
+msgstr[1] "Wybieranie metody %s z %d niejednoznacznych możliwości"
+msgstr[2] "Wybieranie metody %s z %d niejednoznacznych możliwości"
+
+#~ msgid "found"
+#~ msgstr "znaleziono"
 
 #~ msgid "Invalid mlist element for signature \""
 #~ msgstr "Niepoprawny element 'mlist' dla sygnatury \""

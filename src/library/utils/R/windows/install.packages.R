@@ -106,12 +106,13 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
                 file.path(lib, paste("00LOCK", pkgname, sep="-"))
             else file.path(lib, "00LOCK")
 	    if (file.exists(lockdir)) {
-		stop("ERROR: failed to lock directory ", sQuote(lib),
-			" for modifying\nTry removing ", sQuote(lockdir))
+                stop(gettextf("ERROR: failed to lock directory %s for modifying\nTry removing %s",
+                              sQuote(lib), sQuote(lockdir)), domain = NA)
 	    }
 	    dir.create(lockdir, recursive = TRUE)
 	    if (!dir.exists(lockdir))
-		stop("ERROR: failed to create lock directory ", sQuote(lockdir))
+                stop(gettextf("ERROR: failed to create lock directory %s",
+                              sQuote(lockdir)), domain = NA)
             ## Back up a previous version
             if (file.exists(instPath)) {
                 file.copy(instPath, lockdir, recursive = TRUE)

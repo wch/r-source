@@ -301,11 +301,13 @@ function(dir, outDir)
         for(f in codeFiles) {
             tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "")
             if(length(bad <- which(is.na(tmp)))) {
-               warning(gettextf("unable to re-encode '%s' line(s) %s",
+                warning(sprintf(ngettext(sum(bad),
+                                         "unable to re-encode %s line %s",
+                                         "unable to re-encode %s lines %s"),
                                 basename(f), paste(bad, collapse=",")),
-                    domain = NA, call. = FALSE)
-               tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "",
-                            sub = "byte")
+                        domain = NA, call. = FALSE)
+                tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "",
+                             sub = "byte")
             }
             writeLines(paste0("#line 1 \"", f, "\""), con)
             writeLines(tmp, con)

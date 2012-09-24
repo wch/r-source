@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:54\n"
 "PO-Revision-Date: 2012-02-26 14:07+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -560,12 +560,6 @@ msgstr ""
 " メソッドシグナチャ (%d) 中に総称的な シグネチャ (%d) 中よりも多くの要素があ"
 "ります "
 
-msgid ""
-"in the method signature for function %s invalid argument names in the "
-"signature: %s"
-msgstr ""
-" 関数 %s に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：%s "
-
 #, fuzzy
 msgid "No generic function found corresponding to %s"
 msgstr " \"%s\" に対する総称的関数は見付かりません "
@@ -600,10 +594,6 @@ msgid ""
 "initialize method returned an object of class %s instead of the required "
 "class %s"
 msgstr " クラス %s のオブジェクト(要求されたクラス %s ではなく)を初期化 "
-
-#, fuzzy
-msgid "Reported %d ambiguous selections out of %d for function %s"
-msgstr " 関数 %s に対し、%d 個の曖昧な選択が %d 個中報告されました "
 
 msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
 msgstr " %d: ターゲット \"%s\": 選択 \"%s\" (その他: %s) "
@@ -762,9 +752,6 @@ msgstr ""
 " プロトタイプは名前付き要素のリストです(曖昧かも知れません)：面倒をさけるため"
 "には関数 prototype() を使う方が良いでしょう "
 
-msgid "named elements of prototype do not correspond to slot names: %s"
-msgstr " プロトタイプの名前つきの要素はスロット名に対応しません：%s "
-
 #, fuzzy
 msgid "the '%s' list for class %s, includes an undefined class %s"
 msgstr " \"%s\" リスト(クラス %s に対する)は未定義のクラス %s を含みます "
@@ -896,19 +883,8 @@ msgstr ""
 " 引数 %s は NULL か総称的関数オブジェクトでなければなりません；クラス\"%s\" "
 "のオブジェクトを得ました "
 
-msgid "non-arguments found in the signature: %s"
-msgstr " シグナチャ中に引数でないものがあります: %s "
-
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr " この関数中にはメソッドを割り当てるための適切な引数がありません "
-
-#, fuzzy
-msgid ""
-"the formal arguments of the generic function for %s (%s) differ from those "
-"of the non-generic to be used as the default (%s)"
-msgstr ""
-" \"%s\" (%s) に対する総称的関数の形式的引数は、既定 (%s) として使われる非総称"
-"的なそれの引数と異なります "
 
 msgid "special function %s is not permitted to have methods"
 msgstr " 特殊関数 \"%s\" はメソッドを持つことが出来ません "
@@ -1170,9 +1146,6 @@ msgstr " representation の要素 %d は単一の文字列ではありません 
 msgid "duplicate class names among superclasses: %s"
 msgstr " 上位クラス中に重複したクラス名があります: %s "
 
-msgid "duplicated slot names: %s"
-msgstr " 重複したスロット名：%s "
-
 msgid "only one data object (unnamed argument to prototype) allowed"
 msgstr ""
 " 一つのデータオブジェクト(プロトタイプへの名前の無い引数)だけが許されます "
@@ -1226,8 +1199,8 @@ msgstr ""
 " クラス %s のオブジェクトを new() の中では使えません：クラス %s はそのクラス"
 "には拡張されません "
 
-msgid "invalid names for slots of class %s: %s"
-msgstr " クラス %s のスロットに対しては不正な名前です: %s "
+msgid "duplicated slot names: %s"
+msgstr " 重複したスロット名：%s "
 
 msgid ""
 "Class %s is defined, with package %s, but no corresponding metadata object "
@@ -1238,13 +1211,6 @@ msgstr ""
 
 msgid "no definition of %s to use for %s"
 msgstr " %s (%s に対して使用する)の定義がありません "
-
-msgid ""
-"multiple definitions of class %s visible (%s); using the definition\n"
-"   in package %s for %s"
-msgstr ""
-" クラス %s の多重定義が見付かりました（%s）；パッケージ %s 中の定義を %s に対"
-"して使います "
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
@@ -1419,19 +1385,6 @@ msgstr " クラス \"%s\" はクラス \"%s\" に拡張できません "
 msgid "Both classes must be defined"
 msgstr " どちらのクラスも定義されなければなりません "
 
-msgid ""
-"class %s is missing slots from class %s (%s), and no coerce method was "
-"supplied"
-msgstr ""
-" クラス %s はクラス %s (%s) からのスロットを欠いています、そして強制変換メ"
-"ソッドは与えられていませ, "
-
-msgid ""
-"slots in class %s must extend corresponding slots in class %s: fails for %s"
-msgstr ""
-" クラス %s のスロット %s 中のスロットに拡張されなければなりません： %s に対し"
-"て失敗しました "
-
 msgid "invalid index for function argument"
 msgstr " 関数引数に対する不正なインデックスです "
 
@@ -1501,12 +1454,6 @@ msgstr ""
 " 対象シグネチャー\"%s\". \n"
 " \"%s\"も有効です "
 
-msgid "found"
-msgstr " が見付かりました "
-
-msgid "equally good next methods"
-msgstr " 同じぐらい良いネクストメソッド "
-
 #, fuzzy
 msgid "unable to find an inherited method for function %s for signature %s"
 msgstr " 以下の関数に対する継承メソッドを見付けることができません \" "
@@ -1516,19 +1463,6 @@ msgid ""
 msgstr ""
 " 継承メソッドを探索中に内部エラーがありました; ユニークなメソッドを返すことが"
 "できません "
-
-msgid "Selecting %d methods of min. distance"
-msgstr " 最小距離の %d 個のメソッドを選択 "
-
-msgid "Selecting %d non-group methods"
-msgstr " %d 個の非グループメソッドを選択 "
-
-msgid "Selecting %d partially exact-matching method(s)"
-msgstr " %d 個の部分的に正確なマッチングメソッドを選択 "
-
-#, fuzzy
-msgid "Choosing method %s from %d ambiguous possibilities"
-msgstr " %d 個の曖昧な可能性からメソッド %s を選択 "
 
 msgid "Failed to find expected group generic function:"
 msgstr " 期待されたグループ総称的関数を見付けることができませんでした: "
@@ -2099,6 +2033,111 @@ msgstr " ファイルを移動するか、クラスまたはメソッドを削�
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] " クラス %s に対する定義はありません "
+
+#, fuzzy
+msgid ""
+"in the method signature for function %s invalid argument name in the "
+"signature: %s"
+msgid_plural ""
+"in the method signature for function %s invalid argument names in the "
+"signature: %s"
+msgstr[0] ""
+" 関数 %s に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：%s "
+
+#, fuzzy
+msgid "Reported %d ambiguous selection out of %d for function %s\n"
+msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
+msgstr[0] " 関数 %s に対し、%d 個の曖昧な選択が %d 個中報告されました "
+
+#, fuzzy
+msgid "named elements of prototype do not correspond to slot name: %s"
+msgid_plural "named elements of prototype do not correspond to slot names: %s"
+msgstr[0] " プロトタイプの名前つきの要素はスロット名に対応しません：%s "
+
+#, fuzzy
+msgid "non-argument found in the signature: %s"
+msgid_plural "non-arguments found in the signature: %s"
+msgstr[0] " シグナチャ中に引数でないものがあります: %s "
+
+#, fuzzy
+msgid ""
+"the formal argument of the generic function for %s (%s) differs from that of "
+"the non-generic to be used as the default (%s)"
+msgid_plural ""
+"the formal arguments of the generic function for %s (%s) differ from those "
+"of the non-generic to be used as the default (%s)"
+msgstr[0] ""
+" \"%s\" (%s) に対する総称的関数の形式的引数は、既定 (%s) として使われる非総称"
+"的なそれの引数と異なります "
+
+#, fuzzy
+msgid "duplicated slot name: %s"
+msgid_plural "duplicated slot names: %s"
+msgstr[0] " 重複したスロット名：%s "
+
+#, fuzzy
+msgid "invalid name for slot of class %s: %s"
+msgid_plural "invalid names for slots of class %s: %s"
+msgstr[0] " クラス %s のスロットに対しては不正な名前です: %s "
+
+#, fuzzy
+msgid ""
+"multiple definition of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgid_plural ""
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgstr[0] ""
+" クラス %s の多重定義が見付かりました（%s）；パッケージ %s 中の定義を %s に対"
+"して使います "
+
+#, fuzzy
+msgid ""
+"class %s is missing slot from class %s (%s), and no coerce method was "
+"supplied"
+msgid_plural ""
+"class %s is missing slots from class %s (%s), and no coerce method was "
+"supplied"
+msgstr[0] ""
+" クラス %s はクラス %s (%s) からのスロットを欠いています、そして強制変換メ"
+"ソッドは与えられていませ, "
+
+#, fuzzy
+msgid ""
+"slot in class %s must extend corresponding slot in class %s: fails for %s"
+msgid_plural ""
+"slots in class %s must extend corresponding slots in class %s: fails for %s"
+msgstr[0] ""
+" クラス %s のスロット %s 中のスロットに拡張されなければなりません： %s に対し"
+"て失敗しました "
+
+#, fuzzy
+msgid "found %d equally good next method"
+msgid_plural "found %d equally good next methods"
+msgstr[0] " 同じぐらい良いネクストメソッド "
+
+#, fuzzy
+msgid "Selecting %d method of min. distance"
+msgid_plural "Selecting %d methods of min. distance"
+msgstr[0] " 最小距離の %d 個のメソッドを選択 "
+
+#, fuzzy
+msgid "Selecting %d non-group method"
+msgid_plural "Selecting %d non-group methods"
+msgstr[0] " %d 個の非グループメソッドを選択 "
+
+#, fuzzy
+msgid "Selecting %d partially exact-matching method"
+msgid_plural "Selecting %d partially exact-matching methods"
+msgstr[0] " %d 個の部分的に正確なマッチングメソッドを選択 "
+
+#, fuzzy
+msgid "Choosing method %s from %d ambiguous possibility"
+msgid_plural "Choosing method %s from %d ambiguous possibilities"
+msgstr[0] " %d 個の曖昧な可能性からメソッド %s を選択 "
+
+#~ msgid "found"
+#~ msgstr " が見付かりました "
 
 #~ msgid "Invalid mlist element for signature \""
 #~ msgstr " 以下のシグネチャに対する不正な mlist 要素 \" "

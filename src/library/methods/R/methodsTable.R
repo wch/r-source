@@ -712,28 +712,33 @@
             package = pkgs ))
  }
 
-.findNextFromTable <- function(method, f, optional, envir, prev = character()) {
-  fdef <- getGeneric(f)
-  env <- environment(fdef)
-  target <- method@target
-  n <- get(".SigLength", envir = env)
-  defined <- method@defined
-  m <- length(defined)
-  if(m > n)
-    length(defined) <- n
+.findNextFromTable <- function(method, f, optional, envir, prev = character())
+{
+    fdef <- getGeneric(f)
+    env <- environment(fdef)
+    target <- method@target
+    n <- get(".SigLength", envir = env)
+    defined <- method@defined
+    m <- length(defined)
+    if(m > n)
+        length(defined) <- n
   else if(n > m)
-    ## will only really need this to be a signature when the elements
-    ## have package attribute--see .sigLabel
-    defined <-  new("signature", fdef, c(defined@.Data, rep("ANY", n-m)))
-  excluded <- c(prev, .sigLabel(defined))
-  methods <- .findInheritedMethods(defined, fdef, mtable = NULL, excluded = excluded)
-  if(length(methods) == 0L) # use default method, maybe recursively.
-    methods <- list(finalDefaultMethod(fdef@default)) #todo: put a label on it?
-  if(length(methods) > 1L)
-    warning("found ", length(methods), " equally good next methods") #todo: better message
-  ## excluded slot is a list, but with methods tables, elements are just labels
-  new("MethodWithNext", method, nextMethod = methods[[1L]],
-      excluded = as.list(excluded))
+      ## will only really need this to be a signature when the elements
+      ## have package attribute--see .sigLabel
+      defined <-  new("signature", fdef, c(defined@.Data, rep("ANY", n-m)))
+    excluded <- c(prev, .sigLabel(defined))
+    methods <- .findInheritedMethods(defined, fdef, mtable = NULL, excluded = excluded)
+    if(length(methods) == 0L) # use default method, maybe recursively.
+        methods <- list(finalDefaultMethod(fdef@default)) #todo: put a label on it?
+    if(length(methods) > 1L)
+        warning(sprintf(ngettext(length(methods),
+                                 "found %d equally good next method",
+                                 "found %d equally good next methods"),
+                        length(methods)),
+                domain = NA)
+    ## excluded slot is a list, but with methods tables, elements are just labels
+    new("MethodWithNext", method, nextMethod = methods[[1L]],
+        excluded = as.list(excluded))
 }
 
 
@@ -880,13 +885,19 @@
   which2 <- .leastMethodDistance(candidates, supersList, classDefs,
                                  fromGroup[which])
   if(length(which2) < length(which)) {
-    note <- c(note, gettextf("Selecting %d methods of min. distance", which2))
+    note <- c(sprintf(ngettext(which2,
+                               "Selecting %d method of min. distance",
+                               "Selecting %d methods of min. distance"),
+                      which2))
     which <- which[which2]
   }
   ## if some are group methods, eliminate those
   if(length(which) > 1 && any(fromGroup[which]) && !all(fromGroup[which])) {
     which <- which[!fromGroup]
-    note <- c(note, gettextf("Selecting %d non-group methods", length(which)))
+    note <- c(note,  sprintf(ngettext(length(which),
+                                      "Selecting %d non-group method",
+                                      "Selecting %d non-group methods"),
+                             length(which)))
   }
   ## prefer partially direct methods
   if(length(which) > 1) {
@@ -895,15 +906,19 @@
                      target = target)
     if(any(direct) && !all(direct)) {
       which <- which[direct]
-      note <- c(note, gettextf("Selecting %d partially exact-matching method(s)",
-                               length(which)))
+      note <- c(note, sprintf(ngettext(length(which),
+                                       "Selecting %d partially exact-matching method",
+                                       "Selecting %d partially exact-matching methods"),
+                              length(which)))
     }
   }
   which <- which[[1L]]
   selected <- names(methods)[[which]]
   ## FIXME (?): This is not shown to the user
-  msg <- gettextf("Choosing method %s from %d ambiguous possibilities",
-                      selected, length(candidates))
+  msg <- sprintf(ngettext(length(candidates),
+                          "Choosing method %s from %d ambiguous possibility",
+                          "Choosing method %s from %d ambiguous possibilities"),
+                 sQuote(selected), length(candidates))
   condObject <- simpleCondition(msg)
   ## would be nice to use an S4 class eventually
   class(condObject) <- c("ambiguousMethodSelection", class(condObject))

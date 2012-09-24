@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2012-03-06 18:25+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -77,7 +77,8 @@ msgstr "spline 은 반드시 monotone 해야 합니다 "
 msgid "'degree' must be integer >= 1"
 msgstr "'depgree' 는 반드시 1 이상의 정수이어야 합니다 "
 
-msgid "'df' was too small; have used"
+#, fuzzy
+msgid "'df' was too small; have used %d"
 msgstr "'df' 가 너무 작아 다음의 값이 사용되었습니다 "
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"

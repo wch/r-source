@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2011-10-07 15:46+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -67,10 +67,12 @@ msgstr "'from' muss ein Farbkonvertierer oder eine Zeichenkette sein"
 msgid "'to' must be a colorConverter or string"
 msgstr "'to' muss ein Farbkonvertierer oder eine Zeichenkette sein"
 
-msgid "'from.ref.white' disagrees with definition of"
+#, fuzzy
+msgid "'from.ref.white' disagrees with definition of %s"
 msgstr "'from.ref.white' stimmt nicht Überein mit der Definition von"
 
-msgid "'to.ref.white' disagrees with definition of"
+#, fuzzy
+msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.ref.white' stimmt nicht Überein mit der Definition von"
 
 msgid "color spaces use different reference whites."

@@ -192,7 +192,7 @@ help.search <-
     if(rebuild) {
 	if(verbose > 0L) {
             message("Rebuilding the help.search() database", " ", "...",
-                    if(verbose > 1L) "...")
+                    if(verbose > 1L) "...", domain = NA)
             flush.console()
         }
 
@@ -304,7 +304,7 @@ help.search <-
                 }
 	    }
 	    else if(!is.null(package))
-                warning("no hsearch.rds meta data for package ", p)
+                warning("no hsearch.rds meta data for package ", p, domain = NA)
 	}
 
 	if(verbose >= 2L)  {
@@ -509,7 +509,11 @@ help.search <-
 		 c("topic", "title", "Package", "LibPath", "name", "Type"),
 		 drop = FALSE]
     if(verbose>= 2L) {
-        message(gettextf("matched %d objects.", NROW(db)), domain=NA)
+        message(sprintf(ngettext(NROW(db),
+                                 "matched %d object.",
+                                 "matched %d objects."),
+                        NROW(db)),
+                domain = NA)
         flush.console()
     }
 

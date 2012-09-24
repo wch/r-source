@@ -232,20 +232,24 @@ setIs <-
             n1 <- names(slots1)
             if(any(is.na(match(n2, n1))))
                 return(c(.msg(class1, class2), ": ",
-                     gettextf("class %s is missing slots from class %s (%s), and no coerce method was supplied",
-                              dQuote(class1),
-                              dQuote(class2),
-                              paste(n2[is.na(match(n2, n1))], collapse = ", "))))
+                         sprintf(ngettext(sum(is.na(match(n2, n1))),
+                                          "class %s is missing slot from class %s (%s), and no coerce method was supplied",
+                                          "class %s is missing slots from class %s (%s), and no coerce method was supplied"),
+                                 dQuote(class1),
+                                 dQuote(class2),
+                                 paste(n2[is.na(match(n2, n1))], collapse = ", "))))
             bad <- character()
             for(what in n2)
                 if(!extends(elNamed(slots1, what), elNamed(slots2, what)))
                     bad <- c(bad, what)
             if(length(bad))
                 return(c(.msg(class1, class2), ": ",
-                     gettextf("slots in class %s must extend corresponding slots in class %s: fails for %s",
-                              dQuote(class1),
-                              dQuote(class2),
-                              paste(bad, collapse = ", "))))
+                         sprintf(ngettext(length(bad),
+                                          "slot in class %s must extend corresponding slot in class %s: fails for %s",
+                                          "slots in class %s must extend corresponding slots in class %s: fails for %s"),
+                                 dQuote(class1),
+                                 dQuote(class2),
+                                 paste(bad, collapse = ", "))))
         }
     }
     TRUE

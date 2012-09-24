@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -302,18 +302,6 @@ msgid ""
 "checked"
 msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
 
-msgid "Obsolete package(s) %s in Rd xrefs"
-msgstr "Rd xrefs里程序包%s过时了"
-
-msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr "没有可用来检查Rd xrefs的程序包：%s"
-
-msgid "Unknown package(s) %s in Rd xrefs"
-msgstr "Rd xrefs里包含了不知来源的程序包%s"
-
-msgid "Missing link(s) in documentation object '%s':"
-msgstr "使用手冊对象'%s'缺少联结:"
-
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
@@ -416,12 +404,6 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "Generics without methods in"
-msgstr "没有方法的同属函数在"
-
-msgid ":"
-msgstr "："
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "参数'document'必需是字符串或联结"
 
@@ -454,10 +436,6 @@ msgstr "你必需在'dir'或'files'中选一个"
 
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "无法使用缺少或有空白名字的Rd对象"
-
-#, fuzzy
-msgid "missing/empty %s field in Rd file(s)"
-msgstr "Rd文件里缺少或有空白的\\name域"
 
 msgid "No help on %s found in RdDB %s"
 msgstr "RdDB %2$s里找不到关于%1$s的帮助"
@@ -552,9 +530,6 @@ msgstr "'%2$s' 域里没有'%1$s'里的文件:"
 
 msgid "unable to create '%s'"
 msgstr "无法建立'%s'"
-
-msgid "unable to re-encode '%s' line(s) %s"
-msgstr "无法重新编码'%s'%s行"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "无法拷贝索引至'%s'"
@@ -786,7 +761,8 @@ msgstr "程辑包无效."
 msgid "ERROR: no packages specified"
 msgstr "错误：没有设定程序包"
 
-msgid "ERROR: cannot cd to directory"
+#, fuzzy
+msgid "ERROR: cannot cd to directory %s"
 msgstr "错误：无法进入目录"
 
 msgid "ERROR: no permission to install to directory"
@@ -1208,6 +1184,21 @@ msgstr "调用序列:"
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
 
+#, fuzzy
+msgid "Obsolete package %s in Rd xrefs"
+msgid_plural "Obsolete packages %s in Rd xrefs"
+msgstr[0] "Rd xrefs里程序包%s过时了"
+
+#, fuzzy
+msgid "Package unavailable to check Rd xrefs: %s"
+msgid_plural "Packages unavailable to check Rd xrefs: %s"
+msgstr[0] "没有可用来检查Rd xrefs的程序包：%s"
+
+#, fuzzy
+msgid "Missing link in documentation object %s:"
+msgid_plural "Missing links in documentation object %s:"
+msgstr[0] "使用手冊对象'%s'缺少联结:"
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] "注意：发现%d个标志着Latin – 1的字符串"
@@ -1242,9 +1233,40 @@ msgid "Found .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "下面的函数调用了.Internal:"
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following reference class:"
+msgid_plural ""
+"Found .Internal calls in methods for the following reference classes:"
+msgstr[0] "下面的函数调用了.Internal:"
+
+#, fuzzy
+msgid "Generics without method in %s: %s"
+msgid_plural "Generics without methods in %s: %s"
+msgstr[0] "没有方法的同属函数在"
+
+#, fuzzy
+msgid ""
+"missing/empty \\name field in Rd file\n"
+"%s"
+msgid_plural ""
+"missing/empty \\name field in Rd files\n"
+"%s"
+msgstr[0] "Rd文件里缺少或有空白的\\name域"
+
+#, fuzzy
+msgid "unable to re-encode %s line %s"
+msgid_plural "unable to re-encode %s lines %s"
+msgstr[0] "无法重新编码'%s'%s行"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "Unknown package(s) %s in Rd xrefs"
+#~ msgstr "Rd xrefs里包含了不知来源的程序包%s"
+
+#~ msgid ":"
+#~ msgstr "："
 
 #~ msgid "Generics g in env ="
 #~ msgstr "同属函数g在env="

@@ -41,7 +41,9 @@ seq.default <-
 	length.out <- ceiling(length.out)
     }
     if(!missing(...))
-	warning(gettextf("extra argument(s) %s will be disregarded",
+        warning(sprintf(ngettext(length(list(...)),
+                                 "extra argument %s will be disregarded",
+                                 "extra arguments %s will be disregarded"),
 			 paste(sQuote(names(list(...))), collapse = ", ")),
 		domain = NA)
     if (!missing(from) && length(from) != 1L) stop("'from' must be of length 1")

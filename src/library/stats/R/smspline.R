@@ -345,7 +345,10 @@ supsmu <-
     if(leno == 0L)
         stop("no finite observations")
     if(diff <- n - leno)
-	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
+        warning(sprintf(ngettext(diff,
+                                 "%d observation with NA, NaN or Inf deleted",
+                                 "%d observations with NAs, NaNs and/or Infs deleted"),
+                        diff), domain = NA)
     .Fortran(C_setsmu)
     smo <- .Fortran(C_supsmu,
 		    as.integer(leno),

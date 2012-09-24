@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,7 +131,8 @@ msgstr ""
 msgid "namespace cannot be unloaded:"
 msgstr "navnerum kan ikke deaktiveres:"
 
-msgid "converted to character string"
+#, fuzzy
+msgid "%s converted to character string"
 msgstr "konverteret til tegnstreng"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -245,14 +246,9 @@ msgstr "manglende værdier i 'row.names' er ikke tilladt"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "ugyldige 'dimnames' angivet for dataramme"
 
-msgid "cannot coerce class '%s' into a data.frame"
+#, fuzzy
+msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr "kan ikke tvinge klasse '%s' ind i en data.frame"
-
-msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr "ugyldig 'row-names', længde %d for en dataramme med %d rækker"
-
-msgid "supplied %d row names for %d rows"
-msgstr "angivet %d rækkenavne for %d rækker"
 
 #, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -276,7 +272,8 @@ msgstr "rækkenavne indeholder manglende værdier"
 msgid "duplicate row.names:"
 msgstr "duplikate row.names:"
 
-msgid "arguments imply differing number of rows:"
+#, fuzzy
+msgid "arguments imply differing number of rows: %s"
 msgstr "argumenter antyder forskelligt antal rækker:"
 
 msgid "row.names should specify one of the variables"
@@ -334,34 +331,11 @@ msgstr "nye kolonner vil efterlade huller efter eksisterende kolonner"
 msgid "duplicate subscripts for columns"
 msgstr "duplikate underskripter for kolonner"
 
-msgid "replacement has %d rows, data has %d"
-msgstr "erstatning har %d rækker, data har %d"
-
-msgid "replacement has %d items, need %d"
-msgstr "erstatning har %d punkter, kræver %d"
-
-msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr "erstatningselement %d er en matrix/dataramme med %d rækker, kræver %d"
-
-msgid "replacement element %d has %d rows, need %d"
-msgstr "erstatningselement %d har %d rækker, kræver %d"
-
-msgid "replacement element %d has %d rows to replace %d rows"
-msgstr "erstatningselement %d har %d rækker til at erstatte %d rækker"
-
-msgid "%d rows in value to replace %d rows"
-msgstr "%d rækker i værdi til at erstatte %d rækker"
-
-msgid "replacement data has %d rows to replace %d rows"
-msgstr "erstatningsdata har %d rækker til at erstatte %d rækker"
-
-msgid "provided %d variables to replace %d variables"
-msgstr "leverede %d variabler til at erstatte %d variabler"
-
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr "gyldige kald er kun x[[j]] <- værdi eller x[[i,j]] <- værdi"
 
-msgid "replacing element in non-existent column:"
+#, fuzzy
+msgid "replacing element in non-existent column: %s"
 msgstr "erstatter element i ikkeeksisterende kolonne:"
 
 msgid "only a single element should be replaced"
@@ -422,10 +396,12 @@ msgstr "unære - er ikke defineret for Date-objekter"
 msgid "can only subtract numbers from Date objects"
 msgstr "kan kun fratrække tal fra Date-objekter"
 
-msgid "unary"
-msgstr "unær"
+#, fuzzy
+msgid "unary %s not defined for \"Date\" objects"
+msgstr "unære - er ikke defineret for Date-objekter"
 
-msgid "not defined for Date objects"
+#, fuzzy
+msgid "%s not defined for \"Date\" objects"
 msgstr "ikke defineret for Date-objekter"
 
 msgid "'from' must be specified"
@@ -572,17 +548,16 @@ msgstr "kun matrixdiagonaler kan erstattes"
 msgid "replacement diagonal has wrong length"
 msgstr "erstatningsdiagonal har forkert længde"
 
-msgid "MARGIN ="
-msgstr "MARGEN ="
-
-msgid "is invalid for dim ="
+#, fuzzy
+msgid "MARGIN = %d is invalid for dim = %d"
 msgstr "er ugyldig for dim ="
 
 #, fuzzy
 msgid "must pass a package name, %s or %s object"
 msgstr "skal overholde et pakkenavn, DLLInfo- eller DLLInfoReference-objekt"
 
-msgid "No DLL currently loaded with name or path"
+#, fuzzy
+msgid "No DLL currently loaded with name or path %s"
 msgstr "Ingen DLL er aktuelt indlæst med navn eller sti"
 
 msgid "multiple DLLs match '%s'. Using '%s'"
@@ -708,7 +683,8 @@ msgstr ""
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 
-msgid "'digits' reduced to"
+#, fuzzy
+msgid "'digits' reduced to %d"
 msgstr "'digits' reduceret til"
 
 msgid "'flag' can contain only '0+- #'"
@@ -730,11 +706,9 @@ msgstr "'subset' skal evaluere til logisk"
 msgid "'subset' must be logical"
 msgstr "'subset' skal være logisk"
 
-msgid "value for '"
-msgstr "værdi for '"
-
-msgid "' not found"
-msgstr "' ikke fundet"
+#, fuzzy
+msgid "value for %s not found"
+msgstr "fil '%s' ikke fundet"
 
 msgid "all arguments must be named"
 msgstr "alle argumenter skal være navngivet"
@@ -986,7 +960,8 @@ msgstr "ugyldigt filargument"
 msgid "can only save to a binary connection"
 msgstr "kan kun gemme til en binær forbindelse"
 
-msgid "image could not be renamed and is left in"
+#, fuzzy
+msgid "image could not be renamed and is left in %s"
 msgstr "billede kunne ikke omdøbes og efterlades"
 
 msgid "[Previously saved workspace restored]"
@@ -1096,22 +1071,19 @@ msgstr ""
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr ""
 
-msgid "failed to assign RegisteredNativeSymbol for"
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
 msgstr ""
 
-msgid "to"
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
 msgstr ""
 
-msgid "since"
-msgstr ""
-
-msgid "is already defined in the"
-msgstr ""
-
-msgid "namespace"
-msgstr ""
-
-msgid "failed to assign NativeSymbolInfo for"
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
 msgstr ""
 
 msgid "package %s does not have a namespace"
@@ -1146,9 +1118,6 @@ msgstr ""
 msgid "Loading required namespace: %s"
 msgstr ""
 
-msgid "not found"
-msgstr ""
-
 msgid "not loading a namespace"
 msgstr ""
 
@@ -1161,8 +1130,9 @@ msgstr ""
 msgid "operation not allowed on base namespace"
 msgstr ""
 
-msgid "duplicate import names"
-msgstr ""
+#, fuzzy
+msgid "duplicate import names %s"
+msgstr "duplikate row.names:"
 
 msgid "replacing local value with import %s when loading %s"
 msgstr ""
@@ -1193,7 +1163,7 @@ msgstr ""
 msgid "cannot add to exports of a sealed namespace"
 msgstr ""
 
-msgid "undefined exports:"
+msgid "undefined exports: %s"
 msgstr ""
 
 msgid "package %s has no NAMESPACE file"
@@ -1326,10 +1296,6 @@ msgstr ""
 msgid "first element used of 'length.out' argument"
 msgstr ""
 
-#, fuzzy
-msgid "extra argument(s) %s will be disregarded"
-msgstr "drop-argumenter vil blive ignoreret"
-
 msgid "invalid (to - from)/by in seq(.)"
 msgstr ""
 
@@ -1436,22 +1402,10 @@ msgstr ""
 msgid "'%s' is not an existing file"
 msgstr ""
 
-msgid "Timestamp of '"
-msgstr ""
-
-msgid "' has changed"
+msgid "Timestamp of %s has chamged"
 msgstr ""
 
 msgid "additional arguments ignored in stop()"
-msgstr ""
-
-msgid "is not"
-msgstr ""
-
-msgid "all"
-msgstr ""
-
-msgid "TRUE"
 msgstr ""
 
 msgid "additional arguments ignored in warning()"
@@ -1547,8 +1501,9 @@ msgstr ""
 msgid "No traceback available"
 msgstr ""
 
-msgid "invalid version specification"
-msgstr ""
+#, fuzzy
+msgid "invalid version specification %s"
+msgstr "ugyldig specifikation for 'breaks'"
 
 msgid "wrong argument"
 msgstr ""
@@ -1562,8 +1517,9 @@ msgstr ""
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr ""
 
-msgid "not defined for numeric_version objects"
-msgstr ""
+#, fuzzy
+msgid "%s not defined for \"numeric_version\" objects"
+msgstr "'%s' er ikke defineret for »difftime«-objekter"
 
 msgid "<0 elements>"
 msgstr ""
@@ -1667,6 +1623,69 @@ msgid_plural "deparse options %s are not recognized"
 msgstr[0] ""
 msgstr[1] ""
 
+#, fuzzy
+msgid "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0] "ugyldig 'row-names', længde %d for en dataramme med %d rækker"
+msgstr[1] "ugyldig 'row-names', længde %d for en dataramme med %d rækker"
+
+#, fuzzy
+msgid "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0] "angivet %d rækkenavne for %d rækker"
+msgstr[1] "angivet %d rækkenavne for %d rækker"
+
+#, fuzzy
+msgid "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0] "erstatning har %d rækker, data har %d"
+msgstr[1] "erstatning har %d rækker, data har %d"
+
+#, fuzzy
+msgid "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0] "erstatning har %d punkter, kræver %d"
+msgstr[1] "erstatning har %d punkter, kræver %d"
+
+#, fuzzy
+msgid "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] ""
+"erstatningselement %d er en matrix/dataramme med %d rækker, kræver %d"
+msgstr[1] ""
+"erstatningselement %d er en matrix/dataramme med %d rækker, kræver %d"
+
+#, fuzzy
+msgid "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0] "erstatningselement %d har %d rækker, kræver %d"
+msgstr[1] "erstatningselement %d har %d rækker, kræver %d"
+
+#, fuzzy
+msgid "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0] "erstatningselement %d har %d rækker til at erstatte %d rækker"
+msgstr[1] "erstatningselement %d har %d rækker til at erstatte %d rækker"
+
+#, fuzzy
+msgid "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0] "%d rækker i værdi til at erstatte %d rækker"
+msgstr[1] "%d rækker i værdi til at erstatte %d rækker"
+
+#, fuzzy
+msgid "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0] "erstatningsdata har %d rækker til at erstatte %d rækker"
+msgstr[1] "erstatningsdata har %d rækker til at erstatte %d rækker"
+
+#, fuzzy
+msgid "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0] "leverede %d variabler til at erstatte %d variabler"
+msgstr[1] "leverede %d variabler til at erstatte %d variabler"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "bibliotek %s indeholder ingen pakker"
@@ -1716,10 +1735,33 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] ""
 msgstr[1] ""
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "drop-argumenter vil blive ignoreret"
+msgstr[1] "drop-argumenter vil blive ignoreret"
+
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "unary"
+#~ msgstr "unær"
+
+#~ msgid "MARGIN ="
+#~ msgstr "MARGEN ="
+
+#~ msgid "value for '"
+#~ msgstr "værdi for '"
+
+#~ msgid "' not found"
+#~ msgstr "' ikke fundet"
 
 #~ msgid "non-numeric argument to 'chol'"
 #~ msgstr "ikke numerisk argument for 'chol'"

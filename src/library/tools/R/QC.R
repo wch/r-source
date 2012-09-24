@@ -3667,8 +3667,10 @@ function(package, dir, lib.loc = NULL)
     unknown <- unique(unknown)
     obsolete <- unknown %in% c("ctest", "eda", "lqs", "mle", "modreg", "mva", "nls", "stepfun", "ts")
     if (any(obsolete)) {
-        message(gettextf("Obsolete package(s) %s in Rd xrefs",
-                         paste(sQuote(unknown[obsolete]), collapse = ", ")),
+        message(sprintf(ngettext(sum(obsolete),
+                                 "Obsolete package %s in Rd xrefs",
+                                 "Obsolete packages %s in Rd xrefs"),
+                        paste(sQuote(unknown[obsolete]), collapse = ", ")),
                 domain = NA)
     }
     unknown <- unknown[!obsolete]
@@ -3681,11 +3683,15 @@ function(package, dir, lib.loc = NULL)
         else unknown %in% c(known, c("GLMMGibbs", "survnnet", "yags"))
         ## from CRANextras
         if(any(miss))
-            message(gettextf("Package(s) unavailable to check Rd xrefs: %s",
+            message(sprintf(ngettext(sum(miss),
+                                     "Package unavailable to check Rd xrefs: %s",
+                                     "Packages unavailable to check Rd xrefs: %s"),
                              paste(sQuote(unknown[miss]), collapse = ", ")),
                     domain = NA)
         if(any(!miss))
-            message(gettextf("Unknown package(s) %s in Rd xrefs",
+            message(sprintf(ngettext(sum(miss),
+                                     "Package unavailable to check Rd xrefs: %s",
+                                     "Packages unavailable to check Rd xrefs: %s"),
                              paste(sQuote(unknown[!miss]), collapse = ", ")),
                     domain = NA)
     }
@@ -3701,8 +3707,10 @@ function(x, ...)
     xx <- x$bad
     if(length(xx)) {
         .fmt <- function(i) {
-            c(gettextf("Missing link(s) in documentation object '%s':",
-                       names(xx)[i]),
+            c(sprintf(ngettext(length(xx)>1,
+                               "Missing link in documentation object %s:",
+                               "Missing links in documentation object %s:"),
+                      sQuote(names(xx)[i])),
               ## NB, link might be empty, and was in mvbutils
               .pretty_format(unique(xx[[i]])),
               "")
@@ -4204,7 +4212,7 @@ function(x, ...)
             writeLines(c(sprintf(ngettext(len,
                                           "Warning in file '%s':",
                                           "Warnings in file '%s':"),
-                                 xi$File),
+                                 sQuote(xi$File)),
                          paste(" ", gsub("\n\n", "\n  ", xi$Warnings,
 					 perl = TRUE, useBytes = TRUE))))
     }
@@ -5925,8 +5933,11 @@ function(env, verbose = getOption("verbose"))
 	!all(ok <- unlist(hasM))
     }) {
 	if(verbose)
-	    message("Generics without methods in ", format(env), ": ",
-		    paste(sQuote(r[!ok]), collapse = ", "))
+            message(sprintf(ngettext(sum(!ok),
+                                     "Generics without method in %s: %s",
+                                     "Generics without methods in %s: %s"),
+                            paste(sQuote(r[!ok]), collapse = ", ")),
+                    domain = NA)
 	r[ok]
     }
     else as.vector(r)# for back-compatibility and current ..../tests/reg-S4.R

@@ -66,7 +66,10 @@ uniroot <- function(f, interval, ...,
                       tol, as.integer(maxiter))
     iter <- as.integer(val[2L])
     if(iter < 0) {
-	warning("_NOT_ converged in ", maxiter, " iterations")
+        warning(sprintf(ngettext(maxiter,
+                                 "_NOT_ converged in %d iteration",
+                                 "_NOT_ converged in %d iterations"),
+                        maxiter), domain = NA)
         iter <- maxiter
     }
     list(root = val[1L], f.root = f(val[1L], ...),

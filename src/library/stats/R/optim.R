@@ -58,8 +58,7 @@ optim <-
 	any(!is.na(match(c("reltol","abstol"), namc))))
 	warning("method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'")
     if(npar == 1 && method == "Nelder-Mead")
-        warning("one-dimensional optimization by Nelder-Mead is unreliable:\n",
-                "use \"Brent\" or optimize() directly")
+        warning("one-dimensional optimization by Nelder-Mead is unreliable:\nuse \"Brent\" or optimize() directly")
     if(npar > 1 && method == "Brent")
 	stop('method = "Brent" is only available for one-dimensional optimization')
     lower <- as.double(rep_len(lower, npar))

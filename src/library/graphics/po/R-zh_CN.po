@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -83,7 +83,8 @@ msgstr "第一个参数不对"
 msgid "'formula' missing or incorrect"
 msgstr "要么是缺少'formula'，要么是它的设定不对"
 
-msgid "'at' must have same length as 'z$n', i.e."
+#, fuzzy
+msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at'同'z$n'的长度必需相等, 如"
 
 msgid "invalid boxplot widths"
@@ -198,7 +199,8 @@ msgstr "没有'breaks'这样的算法"
 msgid "invalid number of 'breaks'"
 msgstr "'breaks'数目不对"
 
-msgid "hist.default: pretty() error, breaks="
+#, fuzzy
+msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: pretty()错误, breaks="
 
 #, fuzzy
@@ -248,9 +250,10 @@ msgstr "useRaster=TRUE只适用于普通网格"
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr "'respect'要么是逻辑值，要么是同'mat'大小一样的矩阵"
 
+#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n ="
+"to each of the values {1..n}; here  n = %d"
 msgstr "格式矩阵至少要有对{1..n}里每一个值的参考值；但这里n ="
 
 msgid "invalid title"
@@ -265,7 +268,8 @@ msgstr "座标长度不对"
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width'必需为大于等于零的数值"
 
-msgid "horizontal specification overrides: Number of columns :="
+#, fuzzy
+msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "水平定义超越其它的定义： 列的数目为 :="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
@@ -291,9 +295,6 @@ msgstr "列联表里有缺少值"
 
 msgid "'x' must not have 0 dimensionality"
 msgstr "'x'不能为零维数"
-
-msgid "extra argument(s) %s will be disregarded"
-msgstr "多余的参数%s略过不用"
 
 msgid "invalid 'shade' specification"
 msgstr "'shade'定义不对"
@@ -437,6 +438,11 @@ msgstr[0] "boxplot%2$d里没有画离群值(%1$s)"
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "没有用%s这个参数"
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "多余的参数%s略过不用"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "负的'counts'。\"bincount\"的C码里出现了内部错误"

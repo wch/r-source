@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -73,10 +73,12 @@ msgstr "'from'는 colorConverter 또는 string가 나오지 않으면 되지 않
 msgid "'to' must be a colorConverter or string"
 msgstr "'to'는 colorConverter 또는 string가 나오지 않으면 되지 않습니다"
 
-msgid "'from.ref.white' disagrees with definition of"
+#, fuzzy
+msgid "'from.ref.white' disagrees with definition of %s"
 msgstr "'from.ref.white'가 이하의 정의와 일치합니다"
 
-msgid "'to.ref.white' disagrees with definition of"
+#, fuzzy
+msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.ref.white'가 이하의 정의와 일치하지 않습니다"
 
 msgid "color spaces use different reference whites."

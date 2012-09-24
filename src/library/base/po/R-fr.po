@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -140,7 +140,8 @@ msgstr ""
 msgid "namespace cannot be unloaded:"
 msgstr "l'espace de noms ne peut être déchargé :"
 
-msgid "converted to character string"
+#, fuzzy
+msgid "%s converted to character string"
 msgstr "convertis en chaînes de caractères"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -258,17 +259,11 @@ msgstr "les valeurs manquantes dans 'row.names' ne sont pas autorisées"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "'dimnames' incorrect pour ce tableau de données"
 
-msgid "cannot coerce class '%s' into a data.frame"
+#, fuzzy
+msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr ""
 "impossible de convertir automatiquement la classe  '%s' en un tableau de "
 "données (data.frame)"
-
-msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr ""
-"'row.names' incorrect, longueur %d pour un tableau de données ayant %d lignes"
-
-msgid "supplied %d row names for %d rows"
-msgstr "%d noms de lignes donnés pour %d lignes"
 
 #, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -293,7 +288,8 @@ msgstr "les noms de lignes contiennent des valeurs manquantes"
 msgid "duplicate row.names:"
 msgstr "'row.names' dupliqués :"
 
-msgid "arguments imply differing number of rows:"
+#, fuzzy
+msgid "arguments imply differing number of rows: %s"
 msgstr "les arguments impliquent des nombres de lignes différents :"
 
 msgid "row.names should specify one of the variables"
@@ -355,36 +351,11 @@ msgstr ""
 msgid "duplicate subscripts for columns"
 msgstr "indices dupliqués pour les colonnes"
 
-msgid "replacement has %d rows, data has %d"
-msgstr "le tableau de remplacement a %d lignes, le tableau remplacé en a %d"
-
-msgid "replacement has %d items, need %d"
-msgstr "le tableau de remplacement a %d éléments, et il en faut %d"
-
-msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr ""
-"l'élément de remplacement %d est une matrice / un tableau de données de %d "
-"lignes, et il en faut %d"
-
-msgid "replacement element %d has %d rows, need %d"
-msgstr "l'élément de remplacement %d a %d lignes, et il en faut %d"
-
-msgid "replacement element %d has %d rows to replace %d rows"
-msgstr "l'élément de remplacement %d a %d lignes pour remplacer %d lignes"
-
-msgid "%d rows in value to replace %d rows"
-msgstr "il y a %d lignes dans les valeurs pour remplacer %d lignes"
-
-msgid "replacement data has %d rows to replace %d rows"
-msgstr "les données de remplacement ont %d lignes pour remplacer %d lignes"
-
-msgid "provided %d variables to replace %d variables"
-msgstr "%d variables sont fournies pour remplacer %d variables"
-
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr "les seuls appels valides sont x[[j]] <- valeur ou x[[i,j]] <- valeur"
 
-msgid "replacing element in non-existent column:"
+#, fuzzy
+msgid "replacing element in non-existent column: %s"
 msgstr "remplacement d'élément dans une colonne non existante :"
 
 msgid "only a single element should be replaced"
@@ -450,10 +421,13 @@ msgstr ""
 msgid "can only subtract numbers from Date objects"
 msgstr "il n'est possible de soustraire que des nombres à des objets \"Date\""
 
-msgid "unary"
-msgstr "unaire"
+#, fuzzy
+msgid "unary %s not defined for \"Date\" objects"
+msgstr ""
+" l'opération moins unaire (-) n'est pas définie pour les objets \"Date\""
 
-msgid "not defined for Date objects"
+#, fuzzy
+msgid "%s not defined for \"Date\" objects"
 msgstr "pas défini pour des objets \"Date\""
 
 msgid "'from' must be specified"
@@ -607,10 +581,8 @@ msgstr "seules les diagonales des matrices peuvent être remplacées"
 msgid "replacement diagonal has wrong length"
 msgstr "la diagonale a une mauvaise longueur pour le remplacement"
 
-msgid "MARGIN ="
-msgstr "MARGIN ="
-
-msgid "is invalid for dim ="
+#, fuzzy
+msgid "MARGIN = %d is invalid for dim = %d"
 msgstr "est incorrect pour dim ="
 
 #, fuzzy
@@ -618,7 +590,8 @@ msgid "must pass a package name, %s or %s object"
 msgstr ""
 "un nom de package, un objet DLLInfo ou DllInfoReference doit être fourni"
 
-msgid "No DLL currently loaded with name or path"
+#, fuzzy
+msgid "No DLL currently loaded with name or path %s"
 msgstr "Aucune DLL n'est actuellement chargée avec ce nom ou chemin d'accès"
 
 msgid "multiple DLLs match '%s'. Using '%s'"
@@ -750,7 +723,8 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' doit être un de {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
-msgid "'digits' reduced to"
+#, fuzzy
+msgid "'digits' reduced to %d"
 msgstr "'digits' réduit à"
 
 msgid "'flag' can contain only '0+- #'"
@@ -774,11 +748,9 @@ msgstr "'subset' doit être évaluée comme une valeur logique"
 msgid "'subset' must be logical"
 msgstr "'subset' doit être une valeur logique"
 
-msgid "value for '"
-msgstr "valeur pour '"
-
-msgid "' not found"
-msgstr "' non trouvée"
+#, fuzzy
+msgid "value for %s not found"
+msgstr "fichier '%s' introuvable"
 
 msgid "all arguments must be named"
 msgstr "tous les arguments doivent être nommés"
@@ -1041,7 +1013,8 @@ msgstr "mauvais argument 'file'"
 msgid "can only save to a binary connection"
 msgstr "la sauvegarde n'est possible que vers une connexion binaire"
 
-msgid "image could not be renamed and is left in"
+#, fuzzy
+msgid "image could not be renamed and is left in %s"
 msgstr "l'image d'environnement ne peut être renommée et est laissée dans"
 
 msgid "[Previously saved workspace restored]"
@@ -1160,23 +1133,21 @@ msgstr "%s introuvable"
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr "l'espace de noms %s est déjà verrouillé dans loadNamespace"
 
-msgid "failed to assign RegisteredNativeSymbol for"
+#, fuzzy
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
 msgstr "impossible d'assigner RegisteredNativeSymbol pour"
 
-msgid "to"
-msgstr "à"
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
+msgstr ""
 
-msgid "since"
-msgstr "depuis"
-
-msgid "is already defined in the"
-msgstr "est déjà défini dans le"
-
-msgid "namespace"
-msgstr "un espace de noms"
-
-msgid "failed to assign NativeSymbolInfo for"
-msgstr "impossible d'assigner NativeSymbolInfo pour"
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
+msgstr ""
 
 msgid "package %s does not have a namespace"
 msgstr "le package %s n'a pas d'espace de noms"
@@ -1216,9 +1187,6 @@ msgstr ""
 msgid "Loading required namespace: %s"
 msgstr "Le chargement a nécessité le package : %s"
 
-msgid "not found"
-msgstr "introuvable"
-
 msgid "not loading a namespace"
 msgstr "un espace de noms n'est pas chargé"
 
@@ -1232,7 +1200,8 @@ msgstr "ceci n'est pas un espace de noms"
 msgid "operation not allowed on base namespace"
 msgstr "opération non tolérée sur l'espace de noms de base"
 
-msgid "duplicate import names"
+#, fuzzy
+msgid "duplicate import names %s"
 msgstr "noms d'importation dupliqués"
 
 msgid "replacing local value with import %s when loading %s"
@@ -1271,7 +1240,8 @@ msgstr ""
 msgid "cannot add to exports of a sealed namespace"
 msgstr "impossible d'ajouter aux exportations d'un espace de noms verrouillé"
 
-msgid "undefined exports:"
+#, fuzzy
+msgid "undefined exports: %s"
 msgstr "exportations non définies :"
 
 msgid "package %s has no NAMESPACE file"
@@ -1410,9 +1380,6 @@ msgstr "l'argument 'length.out' doit être de longueur 1"
 msgid "first element used of 'length.out' argument"
 msgstr "seul le premier élément de 'length.out' est utilisé"
 
-msgid "extra argument(s) %s will be disregarded"
-msgstr "l'argument supplémentaire %s sera ignoré"
-
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "(to - from) / by incorrect dans seq(.)"
 
@@ -1524,23 +1491,12 @@ msgstr "'chdir = TRUE' n'a pas de sens pour une connection"
 msgid "'%s' is not an existing file"
 msgstr "'%s' n'est pas un fichier existant"
 
-msgid "Timestamp of '"
+#, fuzzy
+msgid "Timestamp of %s has chamged"
 msgstr "La date d'enregistrement de '"
-
-msgid "' has changed"
-msgstr "' a été modifiée"
 
 msgid "additional arguments ignored in stop()"
 msgstr "arguments supplémentaires ignorés dans stop()"
-
-msgid "is not"
-msgstr "n'est pas"
-
-msgid "all"
-msgstr "tout"
-
-msgid "TRUE"
-msgstr "TRUE"
 
 msgid "additional arguments ignored in warning()"
 msgstr "arguments supplémentaires ignorés dans warning()"
@@ -1636,7 +1592,8 @@ msgstr "'width' doit être postif"
 msgid "No traceback available"
 msgstr "Pas d'historique des fonctions appelées ('traceback') disponible"
 
-msgid "invalid version specification"
+#, fuzzy
+msgid "invalid version specification %s"
 msgstr "spécification de version incorrecte"
 
 msgid "wrong argument"
@@ -1651,8 +1608,9 @@ msgstr "opérateur unaire '%s' non défini pour des objets \"numeric_version\""
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr "'%s' non défini pour des objets \"numeric_version\""
 
-msgid "not defined for numeric_version objects"
-msgstr "non défini pour des objets numeric_version"
+#, fuzzy
+msgid "%s not defined for \"numeric_version\" objects"
+msgstr "'%s' non défini pour des objets \"numeric_version\""
 
 msgid "<0 elements>"
 msgstr "<0 éléments>"
@@ -1757,6 +1715,73 @@ msgstr[0] "l'option de reconstruction de code (deparse) %s n'est pas reconnue"
 msgstr[1] ""
 "les options de reconstruction de code (deparse) %s ne sont pas reconnues"
 
+#, fuzzy
+msgid "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0] ""
+"'row.names' incorrect, longueur %d pour un tableau de données ayant %d lignes"
+msgstr[1] ""
+"'row.names' incorrect, longueur %d pour un tableau de données ayant %d lignes"
+
+#, fuzzy
+msgid "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0] "%d noms de lignes donnés pour %d lignes"
+msgstr[1] "%d noms de lignes donnés pour %d lignes"
+
+#, fuzzy
+msgid "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0] "le tableau de remplacement a %d lignes, le tableau remplacé en a %d"
+msgstr[1] "le tableau de remplacement a %d lignes, le tableau remplacé en a %d"
+
+#, fuzzy
+msgid "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0] "le tableau de remplacement a %d éléments, et il en faut %d"
+msgstr[1] "le tableau de remplacement a %d éléments, et il en faut %d"
+
+#, fuzzy
+msgid "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] ""
+"l'élément de remplacement %d est une matrice / un tableau de données de %d "
+"lignes, et il en faut %d"
+msgstr[1] ""
+"l'élément de remplacement %d est une matrice / un tableau de données de %d "
+"lignes, et il en faut %d"
+
+#, fuzzy
+msgid "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0] "l'élément de remplacement %d a %d lignes, et il en faut %d"
+msgstr[1] "l'élément de remplacement %d a %d lignes, et il en faut %d"
+
+#, fuzzy
+msgid "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0] "l'élément de remplacement %d a %d lignes pour remplacer %d lignes"
+msgstr[1] "l'élément de remplacement %d a %d lignes pour remplacer %d lignes"
+
+#, fuzzy
+msgid "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0] "il y a %d lignes dans les valeurs pour remplacer %d lignes"
+msgstr[1] "il y a %d lignes dans les valeurs pour remplacer %d lignes"
+
+#, fuzzy
+msgid "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0] "les données de remplacement ont %d lignes pour remplacer %d lignes"
+msgstr[1] "les données de remplacement ont %d lignes pour remplacer %d lignes"
+
+#, fuzzy
+msgid "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0] "%d variables sont fournies pour remplacer %d variables"
+msgstr[1] "%d variables sont fournies pour remplacer %d variables"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "la bibliothèque %s ne contient aucun package"
@@ -1808,10 +1833,68 @@ msgstr[0] "la méthode S3 %s est déclarée dans NAMESPACE mais est introuvable"
 msgstr[1] ""
 "les méthodes S3 %s sont déclarées dans NAMESPACE mais sont introuvables"
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "l'argument supplémentaire %s sera ignoré"
+msgstr[1] "l'argument supplémentaire %s sera ignoré"
+
+#, fuzzy
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] "T utilisé à la place de TRUE"
+msgstr[1] "T utilisé à la place de TRUE"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#, fuzzy
+#~ msgid "%s not defined for numeric_version objects"
+#~ msgstr "non défini pour des objets numeric_version"
+
+#~ msgid "unary"
+#~ msgstr "unaire"
+
+#~ msgid "MARGIN ="
+#~ msgstr "MARGIN ="
+
+#~ msgid "value for '"
+#~ msgstr "valeur pour '"
+
+#~ msgid "' not found"
+#~ msgstr "' non trouvée"
+
+#~ msgid "to"
+#~ msgstr "à"
+
+#~ msgid "since"
+#~ msgstr "depuis"
+
+#~ msgid "is already defined in the"
+#~ msgstr "est déjà défini dans le"
+
+#~ msgid "namespace"
+#~ msgstr "un espace de noms"
+
+#~ msgid "failed to assign NativeSymbolInfo for"
+#~ msgstr "impossible d'assigner NativeSymbolInfo pour"
+
+#~ msgid "not found"
+#~ msgstr "introuvable"
+
+#~ msgid "' has changed"
+#~ msgstr "' a été modifiée"
+
+#~ msgid "is not"
+#~ msgstr "n'est pas"
+
+#~ msgid "all"
+#~ msgstr "tout"
+
+#~ msgid "TRUE"
+#~ msgstr "TRUE"
 
 #~ msgid "non-numeric argument to 'chol'"
 #~ msgstr "argument non numérique pour 'chol'"

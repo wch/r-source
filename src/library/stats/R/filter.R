@@ -52,8 +52,10 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
             if(ni != nfilt)
                 stop("length of 'init' must equal length of 'filter'")
             if(NCOL(init) != 1L && NCOL(init) != nser)
-                stop(gettextf("'init'; must have 1 or %d cols", nser),
-                     domain = NA)
+                stop(sprintf(ngettext(nser,
+                                      "'init'; must have 1 column",
+                                      "'init'; must have 1 or %d columns"),
+                             nser), domain = NA)
             if(!is.matrix(init)) dim(init) <- c(nfilt, nser)
         }
         ind <- seq_len(nfilt)

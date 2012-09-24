@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -136,7 +136,8 @@ msgstr ""
 msgid "namespace cannot be unloaded:"
 msgstr "无法卸下名字空间："
 
-msgid "converted to character string"
+#, fuzzy
+msgid "%s converted to character string"
 msgstr "转换成字符串"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -251,14 +252,9 @@ msgstr "'row.names'里不允许有遗漏值"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "数据框的'dimnames'给得不对"
 
-msgid "cannot coerce class '%s' into a data.frame"
+#, fuzzy
+msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr "不能把'%s'类别强迫变成数据框"
-
-msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr "'row.names'不对，长度%d与数据框的%d行不相配"
-
-msgid "supplied %d row names for %d rows"
-msgstr "%d行名与%d行不相配"
 
 #, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -282,7 +278,8 @@ msgstr "行名里有遗漏值"
 msgid "duplicate row.names:"
 msgstr "row.names有重复:"
 
-msgid "arguments imply differing number of rows:"
+#, fuzzy
+msgid "arguments imply differing number of rows: %s"
 msgstr "参数值意味着不同的行数"
 
 msgid "row.names should specify one of the variables"
@@ -339,34 +336,11 @@ msgstr "新的列会在旧的列里留下洞"
 msgid "duplicate subscripts for columns"
 msgstr "列里有重复的下标"
 
-msgid "replacement has %d rows, data has %d"
-msgstr "替换数据里有%d行，但数据有%d"
-
-msgid "replacement has %d items, need %d"
-msgstr "替换值里有%d单元，需要%d"
-
-msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr "替换单元%d是有%d行的矩阵/数据框，但需要的是%d"
-
-msgid "replacement element %d has %d rows, need %d"
-msgstr "替换单元%d有%d行，但需要的是%d"
-
-msgid "replacement element %d has %d rows to replace %d rows"
-msgstr "替换单元%d有%d行来替换%d行"
-
-msgid "%d rows in value to replace %d rows"
-msgstr "值里有%d行替换%d行"
-
-msgid "replacement data has %d rows to replace %d rows"
-msgstr "替换数据里有%d行来替换%d行"
-
-msgid "provided %d variables to replace %d variables"
-msgstr "%d变数用来替换%d变数"
-
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr "正确调用的写法是x[[j]] <- value或x[[i,j]] <- value "
 
-msgid "replacing element in non-existent column:"
+#, fuzzy
+msgid "replacing element in non-existent column: %s"
 msgstr "替换不存在列里的单元："
 
 msgid "only a single element should be replaced"
@@ -427,10 +401,12 @@ msgstr "一进列的-法对Date对象不适用"
 msgid "can only subtract numbers from Date objects"
 msgstr "只能从Date对象那儿减数值"
 
-msgid "unary"
-msgstr "一进列"
+#, fuzzy
+msgid "unary %s not defined for \"Date\" objects"
+msgstr "一进列的-法对Date对象不适用"
 
-msgid "not defined for Date objects"
+#, fuzzy
+msgid "%s not defined for \"Date\" objects"
 msgstr "对Date对象不适用"
 
 msgid "'from' must be specified"
@@ -576,17 +552,16 @@ msgstr "只能替换矩阵的对角"
 msgid "replacement diagonal has wrong length"
 msgstr "对角替换值的长度不对"
 
-msgid "MARGIN ="
-msgstr "MARGIN ="
-
-msgid "is invalid for dim ="
+#, fuzzy
+msgid "MARGIN = %d is invalid for dim = %d"
 msgstr "不能适用于dim="
 
 #, fuzzy
 msgid "must pass a package name, %s or %s object"
 msgstr "必需提供程辑名，DLLInfo或DllInfoReference对象"
 
-msgid "No DLL currently loaded with name or path"
+#, fuzzy
+msgid "No DLL currently loaded with name or path %s"
 msgstr "目前并没有载入带这个名字或路径的DLL"
 
 msgid "multiple DLLs match '%s'. Using '%s'"
@@ -710,7 +685,8 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format'的值必需从{\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}中选一个"
 
-msgid "'digits' reduced to"
+#, fuzzy
+msgid "'digits' reduced to %d"
 msgstr "'digits'被减少到"
 
 msgid "'flag' can contain only '0+- #'"
@@ -731,11 +707,9 @@ msgstr "'subset'必需可以被评估成为逻辑值"
 msgid "'subset' must be logical"
 msgstr "'subset'必需是逻辑值"
 
-msgid "value for '"
-msgstr "这个符号的值'"
-
-msgid "' not found"
-msgstr "'不存在"
+#, fuzzy
+msgid "value for %s not found"
+msgstr "没有'%s'文件"
 
 msgid "all arguments must be named"
 msgstr "所有参数都必需有名字"
@@ -989,7 +963,8 @@ msgstr "文件参数值不对"
 msgid "can only save to a binary connection"
 msgstr "只能保存到二进列链结"
 
-msgid "image could not be renamed and is left in"
+#, fuzzy
+msgid "image could not be renamed and is left in %s"
 msgstr "映像无法被重新命名，因此被留在"
 
 msgid "[Previously saved workspace restored]"
@@ -1100,23 +1075,21 @@ msgstr "%s不存在"
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr "名字空间%s已经在loadNamespace封條了"
 
-msgid "failed to assign RegisteredNativeSymbol for"
+#, fuzzy
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
 msgstr "不能分配RegisteredNativeSymbol给"
 
-msgid "to"
-msgstr "到"
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
+msgstr ""
 
-msgid "since"
-msgstr "从"
-
-msgid "is already defined in the"
-msgstr "已经定义于"
-
-msgid "namespace"
-msgstr "名字空间"
-
-msgid "failed to assign NativeSymbolInfo for"
-msgstr "不能分配NativeSymbolInfo给"
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
+msgstr ""
 
 msgid "package %s does not have a namespace"
 msgstr "程辑包%s没有名字空间"
@@ -1151,9 +1124,6 @@ msgstr "在%s程辑包中%s方法指定被用于出口，但它的定义并不�
 msgid "Loading required namespace: %s"
 msgstr "载入需要的名字空间：%s"
 
-msgid "not found"
-msgstr "不存在"
-
 msgid "not loading a namespace"
 msgstr "不载入名字空间"
 
@@ -1166,7 +1136,8 @@ msgstr "不是名字空间"
 msgid "operation not allowed on base namespace"
 msgstr "命令不能在基本名字空间上使用"
 
-msgid "duplicate import names"
+#, fuzzy
+msgid "duplicate import names %s"
 msgstr "重复进口名字"
 
 msgid "replacing local value with import %s when loading %s"
@@ -1200,7 +1171,8 @@ msgstr ""
 msgid "cannot add to exports of a sealed namespace"
 msgstr "不能在封闭名字空间里进行出口加入"
 
-msgid "undefined exports:"
+#, fuzzy
+msgid "undefined exports: %s"
 msgstr "出口不存在："
 
 msgid "package %s has no NAMESPACE file"
@@ -1337,9 +1309,6 @@ msgstr "'length.out'参数的长度必需为一"
 msgid "first element used of 'length.out' argument"
 msgstr "用了'length.out'参数里的第一个元素"
 
-msgid "extra argument(s) %s will be disregarded"
-msgstr "额外参数%s忽略不用"
-
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "seq(.)里的(to - from)/by 有错"
 
@@ -1448,23 +1417,12 @@ msgstr "'chdir = TRUE'对联结来说没有任何意义"
 msgid "'%s' is not an existing file"
 msgstr "'%s'不存在"
 
-msgid "Timestamp of '"
+#, fuzzy
+msgid "Timestamp of %s has chamged"
 msgstr "时间戳'"
-
-msgid "' has changed"
-msgstr "'变了"
 
 msgid "additional arguments ignored in stop()"
 msgstr "stop()里的附加参数略过不用"
-
-msgid "is not"
-msgstr "不是"
-
-msgid "all"
-msgstr "所有"
-
-msgid "TRUE"
-msgstr "TRUE"
 
 msgid "additional arguments ignored in warning()"
 msgstr "warning()里的附加参数略过不用"
@@ -1560,7 +1518,8 @@ msgstr "'width'必需为正数"
 msgid "No traceback available"
 msgstr "无traceback"
 
-msgid "invalid version specification"
+#, fuzzy
+msgid "invalid version specification %s"
 msgstr "版本设定不对"
 
 msgid "wrong argument"
@@ -1575,8 +1534,9 @@ msgstr "一元算符'%s'对numeric_version对象没有定义"
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr "'%s'对numeric_version对象没有定义"
 
-msgid "not defined for numeric_version objects"
-msgstr "对numeric_version对象没有定义"
+#, fuzzy
+msgid "%s not defined for \"numeric_version\" objects"
+msgstr "'%s'对numeric_version对象没有定义"
 
 msgid "<0 elements>"
 msgstr "<0 元素>"
@@ -1678,6 +1638,57 @@ msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] "没有%s反向分析这个选项"
 
+#, fuzzy
+msgid "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0] "'row.names'不对，长度%d与数据框的%d行不相配"
+
+#, fuzzy
+msgid "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0] "%d行名与%d行不相配"
+
+#, fuzzy
+msgid "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0] "替换数据里有%d行，但数据有%d"
+
+#, fuzzy
+msgid "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0] "替换值里有%d单元，需要%d"
+
+#, fuzzy
+msgid "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] "替换单元%d是有%d行的矩阵/数据框，但需要的是%d"
+
+#, fuzzy
+msgid "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0] "替换单元%d有%d行，但需要的是%d"
+
+#, fuzzy
+msgid "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0] "替换单元%d有%d行来替换%d行"
+
+#, fuzzy
+msgid "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0] "值里有%d行替换%d行"
+
+#, fuzzy
+msgid "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0] "替换数据里有%d行来替换%d行"
+
+#, fuzzy
+msgid "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0] "%d变数用来替换%d变数"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "图书馆%s里没有程辑包"
@@ -1718,9 +1729,65 @@ msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "额外参数%s忽略不用"
+
+#, fuzzy
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] "用T代替TRUE"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "%s not defined for numeric_version objects"
+#~ msgstr "对numeric_version对象没有定义"
+
+#~ msgid "unary"
+#~ msgstr "一进列"
+
+#~ msgid "MARGIN ="
+#~ msgstr "MARGIN ="
+
+#~ msgid "value for '"
+#~ msgstr "这个符号的值'"
+
+#~ msgid "' not found"
+#~ msgstr "'不存在"
+
+#~ msgid "to"
+#~ msgstr "到"
+
+#~ msgid "since"
+#~ msgstr "从"
+
+#~ msgid "is already defined in the"
+#~ msgstr "已经定义于"
+
+#~ msgid "namespace"
+#~ msgstr "名字空间"
+
+#~ msgid "failed to assign NativeSymbolInfo for"
+#~ msgstr "不能分配NativeSymbolInfo给"
+
+#~ msgid "not found"
+#~ msgstr "不存在"
+
+#~ msgid "' has changed"
+#~ msgstr "'变了"
+
+#~ msgid "is not"
+#~ msgstr "不是"
+
+#~ msgid "all"
+#~ msgstr "所有"
+
+#~ msgid "TRUE"
+#~ msgstr "TRUE"
 
 #~ msgid "non-numeric argument to 'chol'"
 #~ msgstr "'chol'的参数不是数值"

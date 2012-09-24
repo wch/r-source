@@ -554,9 +554,11 @@ matchSignature <-
     ## and carried along the values.  Get the supplied classes in that
     ## order, from the matched args in the call object.
     if(any(is.na(which)))
-        stop(gettextf("in the method signature for function %s invalid argument names in the signature: %s",
-                      sQuote(fun@generic),
-                      paste(snames[is.na(which)], collapse = ", ")),
+        stop(sprintf(ngettext(sum(is.na(which)),
+                              "in the method signature for function %s invalid argument name in the signature: %s",
+                              "in the method signature for function %s invalid argument names in the signature: %s"),
+                     sQuote(fun@generic),
+                     paste(snames[is.na(which)], collapse = ", ")),
              domain = NA)
     smatch <- smatch[-1]
     for(i in seq_along(smatch)) {

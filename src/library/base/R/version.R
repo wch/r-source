@@ -48,9 +48,9 @@ function(x, strict = TRUE, regexp, classes = NULL)
     if(length(x)) {
         ok <- grepl(valid_numeric_version_regexp, x)
         if(!all(ok) && strict)
-            stop("invalid version specification ",
-                 paste(sQuote(unique(x[!ok])), collapse = ", "),
-                 call. = FALSE)
+            stop(gettextf("invalid version specification %s",
+                          paste(sQuote(unique(x[!ok])), collapse = ", ")),
+                 call. = FALSE, domain = NA)
         y[ok] <- lapply(strsplit(x[ok], "[.-]"), as.integer)
     }
     names(y) <- nms
@@ -243,7 +243,8 @@ function(..., na.rm)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if(!ok)
-        stop(.Generic, " not defined for numeric_version objects")
+        stop(gettextf("%s not defined for \"numeric_version\" objects",
+                      .Generic), domain = NA)
     x <- do.call("c", lapply(list(...), as.numeric_version))
     v <- .encode_numeric_version(x)
     if(!na.rm && length(pos <- which(is.na(v)))) {

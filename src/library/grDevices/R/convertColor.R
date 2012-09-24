@@ -223,12 +223,14 @@ convertColor <-
   if (is.null(from.ref.white))
       from.ref.white <- from$white
   else if (!is.null(from$white) && from.ref.white != from$white)
-      stop("'from.ref.white' disagrees with definition of ",from$name)
+      stop(gettextf("'from.ref.white' disagrees with definition of %s",
+                    from$name), domain = NA)
 
   if (is.null(to.ref.white))
       to.ref.white <- to$white
   else if (!is.null(to$white) && to.ref.white != to$white)
-      stop("'to.ref.white' disagrees with definition of ",to$name)
+      stop(gettextf("'to.ref.white' disagrees with definition of %s",
+                    to$name), domain = NA)
 
   if (is.null(to.ref.white) && is.null(from.ref.white))
       to.ref.white <- from.ref.white <- "D65"

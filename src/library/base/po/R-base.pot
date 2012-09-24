@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -122,7 +122,7 @@ msgstr ""
 msgid "namespace cannot be unloaded:"
 msgstr ""
 
-msgid "converted to character string"
+msgid "%s converted to character string"
 msgstr ""
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -236,13 +236,7 @@ msgstr ""
 msgid "invalid 'dimnames' given for data frame"
 msgstr ""
 
-msgid "cannot coerce class '%s' into a data.frame"
-msgstr ""
-
-msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr ""
-
-msgid "supplied %d row names for %d rows"
+msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -266,7 +260,7 @@ msgstr ""
 msgid "duplicate row.names:"
 msgstr ""
 
-msgid "arguments imply differing number of rows:"
+msgid "arguments imply differing number of rows: %s"
 msgstr ""
 
 msgid "row.names should specify one of the variables"
@@ -320,34 +314,10 @@ msgstr ""
 msgid "duplicate subscripts for columns"
 msgstr ""
 
-msgid "replacement has %d rows, data has %d"
-msgstr ""
-
-msgid "replacement has %d items, need %d"
-msgstr ""
-
-msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr ""
-
-msgid "replacement element %d has %d rows, need %d"
-msgstr ""
-
-msgid "replacement element %d has %d rows to replace %d rows"
-msgstr ""
-
-msgid "%d rows in value to replace %d rows"
-msgstr ""
-
-msgid "replacement data has %d rows to replace %d rows"
-msgstr ""
-
-msgid "provided %d variables to replace %d variables"
-msgstr ""
-
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr ""
 
-msgid "replacing element in non-existent column:"
+msgid "replacing element in non-existent column: %s"
 msgstr ""
 
 msgid "only a single element should be replaced"
@@ -407,10 +377,10 @@ msgstr ""
 msgid "can only subtract numbers from Date objects"
 msgstr ""
 
-msgid "unary"
+msgid "unary %s not defined for \"Date\" objects"
 msgstr ""
 
-msgid "not defined for Date objects"
+msgid "%s not defined for \"Date\" objects"
 msgstr ""
 
 msgid "'from' must be specified"
@@ -539,16 +509,13 @@ msgstr ""
 msgid "replacement diagonal has wrong length"
 msgstr ""
 
-msgid "MARGIN ="
-msgstr ""
-
-msgid "is invalid for dim ="
+msgid "MARGIN = %d is invalid for dim = %d"
 msgstr ""
 
 msgid "must pass a package name, %s or %s object"
 msgstr ""
 
-msgid "No DLL currently loaded with name or path"
+msgid "No DLL currently loaded with name or path %s"
 msgstr ""
 
 msgid "multiple DLLs match '%s'. Using '%s'"
@@ -665,7 +632,7 @@ msgstr ""
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 
-msgid "'digits' reduced to"
+msgid "'digits' reduced to %d"
 msgstr ""
 
 msgid "'flag' can contain only '0+- #'"
@@ -686,10 +653,7 @@ msgstr ""
 msgid "'subset' must be logical"
 msgstr ""
 
-msgid "value for '"
-msgstr ""
-
-msgid "' not found"
+msgid "value for %s not found"
 msgstr ""
 
 msgid "all arguments must be named"
@@ -926,7 +890,7 @@ msgstr ""
 msgid "can only save to a binary connection"
 msgstr ""
 
-msgid "image could not be renamed and is left in"
+msgid "image could not be renamed and is left in %s"
 msgstr ""
 
 msgid "[Previously saved workspace restored]"
@@ -1034,22 +998,13 @@ msgstr ""
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr ""
 
-msgid "failed to assign RegisteredNativeSymbol for"
+msgid "failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace"
 msgstr ""
 
-msgid "to"
+msgid "failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace"
 msgstr ""
 
-msgid "since"
-msgstr ""
-
-msgid "is already defined in the"
-msgstr ""
-
-msgid "namespace"
-msgstr ""
-
-msgid "failed to assign NativeSymbolInfo for"
+msgid "failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace"
 msgstr ""
 
 msgid "package %s does not have a namespace"
@@ -1082,9 +1037,6 @@ msgstr ""
 msgid "Loading required namespace: %s"
 msgstr ""
 
-msgid "not found"
-msgstr ""
-
 msgid "not loading a namespace"
 msgstr ""
 
@@ -1097,7 +1049,7 @@ msgstr ""
 msgid "operation not allowed on base namespace"
 msgstr ""
 
-msgid "duplicate import names"
+msgid "duplicate import names %s"
 msgstr ""
 
 msgid "replacing local value with import %s when loading %s"
@@ -1127,7 +1079,7 @@ msgstr ""
 msgid "cannot add to exports of a sealed namespace"
 msgstr ""
 
-msgid "undefined exports:"
+msgid "undefined exports: %s"
 msgstr ""
 
 msgid "package %s has no NAMESPACE file"
@@ -1259,9 +1211,6 @@ msgstr ""
 msgid "first element used of 'length.out' argument"
 msgstr ""
 
-msgid "extra argument(s) %s will be disregarded"
-msgstr ""
-
 msgid "invalid (to - from)/by in seq(.)"
 msgstr ""
 
@@ -1364,22 +1313,10 @@ msgstr ""
 msgid "'%s' is not an existing file"
 msgstr ""
 
-msgid "Timestamp of '"
-msgstr ""
-
-msgid "' has changed"
+msgid "Timestamp of %s has chamged"
 msgstr ""
 
 msgid "additional arguments ignored in stop()"
-msgstr ""
-
-msgid "is not"
-msgstr ""
-
-msgid "all"
-msgstr ""
-
-msgid "TRUE"
 msgstr ""
 
 msgid "additional arguments ignored in warning()"
@@ -1472,7 +1409,7 @@ msgstr ""
 msgid "No traceback available"
 msgstr ""
 
-msgid "invalid version specification"
+msgid "invalid version specification %s"
 msgstr ""
 
 msgid "wrong argument"
@@ -1487,7 +1424,7 @@ msgstr ""
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr ""
 
-msgid "not defined for numeric_version objects"
+msgid "%s not defined for \"numeric_version\" objects"
 msgstr ""
 
 msgid "<0 elements>"
@@ -1588,6 +1525,56 @@ msgid_plural "deparse options %s are not recognized"
 msgstr[0]    ""
 msgstr[1]    ""
 
+msgid        "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural "replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0]    ""
@@ -1630,6 +1617,16 @@ msgstr[1]    ""
 
 msgid        "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
 msgstr[0]    ""
 msgstr[1]    ""
 

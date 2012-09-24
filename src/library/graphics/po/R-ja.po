@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2011-10-22 08:06+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -80,7 +80,8 @@ msgstr " 最初の引数が無効です "
 msgid "'formula' missing or incorrect"
 msgstr " 'formula' が無いか不正確です "
 
-msgid "'at' must have same length as 'z$n', i.e."
+#, fuzzy
+msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr " 'at' は 'z$n' と同じ長さを持たなければなりません。すなわち  "
 
 msgid "invalid boxplot widths"
@@ -200,7 +201,8 @@ msgstr " 未知の 'breaks' アルゴリズムです "
 msgid "invalid number of 'breaks'"
 msgstr " 'breaks' の数が無効です "
 
-msgid "hist.default: pretty() error, breaks="
+#, fuzzy
+msgid "hist.default: pretty() error, breaks=%s"
 msgstr " hist.default: pretty() の間違いです。分割点 = "
 
 #, fuzzy
@@ -253,9 +255,10 @@ msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 " 'respect' は 'mat' と同じ次元の、論理値または行列でなければなりません "
 
+#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n ="
+"to each of the values {1..n}; here  n = %d"
 msgstr ""
 " レイアウト行列は値 {1..n} の各値を、少なくとも一回参照 \n"
 " しなければなりません; ここで n = "
@@ -272,7 +275,8 @@ msgstr " 無効な座標長です "
 msgid "'text.width' must be numeric, >= 0"
 msgstr " 'text.width' は非負の数値でなければなりません "
 
-msgid "horizontal specification overrides: Number of columns :="
+#, fuzzy
+msgid "horizontal specification overrides: Number of columns := %d"
 msgstr " 水平方向の指定は無効とされました: 列の数 := "
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
@@ -298,9 +302,6 @@ msgstr " 分割表中に欠測値があります "
 
 msgid "'x' must not have 0 dimensionality"
 msgstr " 'x' の次元はゼロであってはなりません "
-
-msgid "extra argument(s) %s will be disregarded"
-msgstr " 余分な引数(複数) %s は無視されます "
 
 msgid "invalid 'shade' specification"
 msgstr " 無効な陰影('shade')の指定です "
@@ -444,6 +445,11 @@ msgstr[0] " 外れ値 (%s) は描かれません 箱型図 %d 中では "
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] " 引数 %s は使用されていません "
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] " 余分な引数(複数) %s は無視されます "
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr ""

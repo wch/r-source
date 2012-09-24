@@ -320,8 +320,9 @@ replications <- function(formula, data = NULL, na.action)
 	if(o[i] < 1 || substring(l, 1L, 5L) == "Error") { z[[l]] <- NULL; next }
 	select <- vars[f[, i] > 0]
 	if(any(nn <- notfactor[select])) {
-	    warning("non-factors ignored: ",
-                    paste(names(nn), collapse = ", "))
+            warning(gettextf("non-factors ignored: %s",
+                             paste(names(nn), collapse = ", ")),
+                    domain = NA)
 	    next
 	}
 	if(length(select))

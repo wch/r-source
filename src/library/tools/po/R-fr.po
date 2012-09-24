@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -328,18 +328,6 @@ msgstr ""
 "le package %s existe, mais il n'a pas été installé sous R >= 2.10.0 et donc "
 "vérification de xrefs impossible"
 
-msgid "Obsolete package(s) %s in Rd xrefs"
-msgstr "Package(s) obsolètes %s dans les xrefs Rd"
-
-msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr "Package(s) non disponibles pour vérifier les xrefs Rd : %s"
-
-msgid "Unknown package(s) %s in Rd xrefs"
-msgstr "Package(s) inconnus %s dans les xrefs Rd"
-
-msgid "Missing link(s) in documentation object '%s':"
-msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
-
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
@@ -450,12 +438,6 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "Generics without methods in"
-msgstr "Des fonctions génériques sans méthodes associées dans"
-
-msgid ":"
-msgstr " :"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "l'argument 'file' doit être une chaîne de caractères ou une connexion"
 
@@ -493,10 +475,6 @@ msgid "cannot deal with Rd objects with missing/empty names"
 msgstr ""
 "impossible de travailler avec des objets Rd dont les noms sont manquants ou "
 "vides"
-
-#, fuzzy
-msgid "missing/empty %s field in Rd file(s)"
-msgstr "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
 
 msgid "No help on %s found in RdDB %s"
 msgstr "Pas d'aide pour %s trouvée dans RdDB %s"
@@ -593,9 +571,6 @@ msgstr "les fichiers dans '%s' sont manquants dans le champ '%s' :"
 
 msgid "unable to create '%s'"
 msgstr "impossible de créer '%s'"
-
-msgid "unable to re-encode '%s' line(s) %s"
-msgstr "impossible de réencoder la (les) ligne(s) %2$s de '%1$s'"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "impossible de copier INDEX vers '%s'"
@@ -837,7 +812,8 @@ msgstr "package incorrect"
 msgid "ERROR: no packages specified"
 msgstr "ERREUR : aucun package spécifié"
 
-msgid "ERROR: cannot cd to directory"
+#, fuzzy
+msgid "ERROR: cannot cd to directory %s"
 msgstr "ERREUR : impossible d'activer le répertoire"
 
 msgid "ERROR: no permission to install to directory"
@@ -1269,6 +1245,24 @@ msgstr "Séquence d'appel :"
 msgid "parsing '%s'"
 msgstr "analyse de '%s'"
 
+#, fuzzy
+msgid "Obsolete package %s in Rd xrefs"
+msgid_plural "Obsolete packages %s in Rd xrefs"
+msgstr[0] "Package(s) obsolètes %s dans les xrefs Rd"
+msgstr[1] "Package(s) obsolètes %s dans les xrefs Rd"
+
+#, fuzzy
+msgid "Package unavailable to check Rd xrefs: %s"
+msgid_plural "Packages unavailable to check Rd xrefs: %s"
+msgstr[0] "Package(s) non disponibles pour vérifier les xrefs Rd : %s"
+msgstr[1] "Package(s) non disponibles pour vérifier les xrefs Rd : %s"
+
+#, fuzzy
+msgid "Missing link in documentation object %s:"
+msgid_plural "Missing links in documentation object %s:"
+msgstr[0] "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
+msgstr[1] "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] "Note : %d chaîne de caractères marquée Latin-1 trouvée"
@@ -1319,10 +1313,45 @@ msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following reference class:"
+msgid_plural ""
+"Found .Internal calls in methods for the following reference classes:"
+msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
+msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#, fuzzy
+msgid "Generics without method in %s: %s"
+msgid_plural "Generics without methods in %s: %s"
+msgstr[0] "Des fonctions génériques sans méthodes associées dans"
+msgstr[1] "Des fonctions génériques sans méthodes associées dans"
+
+#, fuzzy
+msgid ""
+"missing/empty \\name field in Rd file\n"
+"%s"
+msgid_plural ""
+"missing/empty \\name field in Rd files\n"
+"%s"
+msgstr[0] "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
+msgstr[1] "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
+
+#, fuzzy
+msgid "unable to re-encode %s line %s"
+msgid_plural "unable to re-encode %s lines %s"
+msgstr[0] "impossible de réencoder la (les) ligne(s) %2$s de '%1$s'"
+msgstr[1] "impossible de réencoder la (les) ligne(s) %2$s de '%1$s'"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "Unknown package(s) %s in Rd xrefs"
+#~ msgstr "Package(s) inconnus %s dans les xrefs Rd"
+
+#~ msgid ":"
+#~ msgstr " :"
 
 #~ msgid "Generics g in env ="
 #~ msgstr "Les génériques g dans env ="

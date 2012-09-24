@@ -41,7 +41,8 @@ duplicated.matrix <- duplicated.array <-
     dx <- dim(x)
     ndim <- length(dx)
     if (length(MARGIN) > ndim || any(MARGIN > ndim))
-	stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
+        stop(gettextf("MARGIN = %d is invalid for dim = %d", MARGIN, dx),
+             domain = NA)
     collapse <- (ndim > 1L) && (prod(dx[-MARGIN]) > 1L)
     temp <- if(collapse) apply(x, MARGIN, function(x) paste(x, collapse = "\r")) else x
     res <- duplicated.default(temp, fromLast = fromLast, ...)
@@ -74,7 +75,8 @@ anyDuplicated.matrix <- anyDuplicated.array <-
     dx <- dim(x)
     ndim <- length(dx)
     if (length(MARGIN) > ndim || any(MARGIN > ndim))
-	stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
+        stop(gettextf("MARGIN = %d is invalid for dim = %d", MARGIN, dx),
+             domain = NA)
     collapse <- (ndim > 1L) && (prod(dx[-MARGIN]) > 1L)
     temp <- if(collapse) apply(x, MARGIN, function(x) paste(x, collapse = "\r")) else x
     anyDuplicated.default(temp, fromLast = fromLast)
@@ -117,7 +119,8 @@ unique.matrix <- unique.array <-
     dx <- dim(x)
     ndim <- length(dx)
     if (length(MARGIN) > ndim || any(MARGIN > ndim))
-        stop("MARGIN = ", MARGIN, " is invalid for dim = ", dx)
+        stop(gettextf("MARGIN = %d is invalid for dim = %d", MARGIN, dx),
+             domain = NA)
     collapse <- (ndim > 1L) && (prod(dx[-MARGIN]) > 1L)
     temp <- if(collapse) apply(x, MARGIN, function(x) paste(x, collapse = "\r")) else x
     args <- rep(alist(a=), ndim)

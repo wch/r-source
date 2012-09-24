@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:47\n"
 "PO-Revision-Date: 2012-03-15 12:09-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -74,10 +74,12 @@ msgstr ""
 "ошибка разбора или пустая опция в\n"
 "%s"
 
-msgid "Warning: unknown option"
+#, fuzzy
+msgid "Warning: unknown option %s"
 msgstr "Предупреждение: неизвестная опция"
 
-msgid "Created PDF document"
+#, fuzzy
+msgid "Created PDF document %s"
 msgstr "Созданный документ PDF"
 
 #, fuzzy
@@ -104,9 +106,6 @@ msgstr "значение опции 'strip.white' должно быть в нижнем регистре"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "элементы 'what' после первого будут пропущены"
-
-msgid "%d occurrences in %s"
-msgstr "%d вхождений в %s"
 
 msgid "No suitable spell check program found."
 msgstr "Не найдено подходящей программы проверки грамматики."
@@ -139,11 +138,9 @@ msgstr ""
 "Использую <code> %s </code> \n"
 " для перечисления миниатюр во всех <strong>доступных</strong> пакетах."
 
-msgid "No vignettes found by"
+#, fuzzy
+msgid "No vignettes found by %s"
 msgstr "Не найдено миниатюр в"
-
-msgid "call"
-msgstr "вызов"
 
 msgid "Package %s: DESCRIPTION not found"
 msgstr "Пакет %s: DESCRIPTION не найдено"
@@ -167,9 +164,6 @@ msgstr "Рекомендуется использовать %s вместо %s."
 
 msgid "Use either %s or %s but not both."
 msgstr "Используйте либо %s, либо %s, но не оба сразу."
-
-msgid "Invalid role specification(s): %s."
-msgstr "Неправильное указание роли: %s"
 
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "Рекомендуется использовать %s/%s вместо %s/%s/%s."
@@ -256,6 +250,9 @@ msgstr "файл 'filelist' в папке %s не найден"
 
 msgid "data set %s not found"
 msgstr "данные %s не найдены"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "'%s' еще не реализован"
@@ -446,7 +443,8 @@ msgstr ""
 msgid "creation of %s failed"
 msgstr "создание %s не удалось"
 
-msgid "Saving help page to"
+#, fuzzy
+msgid "Saving help page to %s"
 msgstr "Сохраняю страницу помощи в"
 
 msgid "argument %s must be a single character string"
@@ -464,12 +462,6 @@ msgstr "неправильное указание типа"
 msgid "argument 'help.db' is deprecated"
 msgstr "аргумент 'help.db' устарел"
 
-msgid "Rebuilding the help.search() database"
-msgstr "Перестройка базы данных help.search() "
-
-msgid "..."
-msgstr "..."
-
 msgid "Packages {readRDS() sequentially}:"
 msgstr "Пакеты {readRDS() последовательно}:"
 
@@ -481,9 +473,6 @@ msgstr "не могу найти пакет %s"
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "пакет %s странным образом имеет пустые данные hsearch"
-
-msgid "no hsearch.rds meta data for package"
-msgstr "нет метаданных hsearch.rds к пакету"
 
 msgid "reencoding ..."
 msgstr "перекодировка..."
@@ -505,9 +494,6 @@ msgstr "в базе данных нет информации о пакете %s: надо 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "неправильное указание 'agrep'"
-
-msgid "matched %d objects."
-msgstr "соответствует %d объект(ам)."
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "неправильное имя броузера, проверьте options(\"browser\")."
@@ -553,12 +539,6 @@ msgstr "у файла 'DESCRIPTION' есть поле 'Encoding' и перекодировка невозможна"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "файл DESCRIPTION пакета '%s' пропущен или поврежден"
-
-msgid "package"
-msgstr "пакет"
-
-msgid "not found"
-msgstr "не найден"
 
 msgid "cannot update HTML package index"
 msgstr "не могу обновить HTML-индекс пакетов"
@@ -739,7 +719,8 @@ msgstr "'lib = \"%s\"' не для записи"
 msgid "unable to install packages"
 msgstr "не могу установить пакеты"
 
-msgid "unable to create"
+#, fuzzy
+msgid "unable to create %s"
 msgstr "не удалось создать"
 
 msgid "inferring 'repos = NULL' from the file name"
@@ -778,7 +759,7 @@ msgstr ""
 "Эта версия R не подготовлена для инсталляции пакетов из исходников\n"
 "Если она была поставлена из RPM, Вам, возможно, потребуется R-devel RPM"
 
-msgid "system (cmd0):"
+msgid "system (cmd0): %s"
 msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
@@ -790,13 +771,10 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr "не могу создать временную директорию %s"
 
-msgid "foundpkgs:"
+msgid "foundpkgs: %s"
 msgstr ""
 
-msgid ","
-msgstr ","
-
-msgid "files:"
+msgid "files: %s"
 msgstr ""
 
 msgid ""
@@ -932,16 +910,11 @@ msgstr "в некоторых полях пропущены длины"
 msgid "invalid format"
 msgstr "неправильный формат"
 
-msgid "last record incomplete, %d lines discarded"
-msgstr "последняя запись неполная, %d строк не обработано"
-
 msgid "transfer failure"
 msgstr "передача не удалась"
 
-msgid "HTTPUserAgent"
-msgstr "HTTPUserAgent"
-
-msgid "option must be a length one character vector or NULL"
+#, fuzzy
+msgid "%s option must be a length one character vector or NULL"
 msgstr "'option' должна быть длиной с один текстовый вектор или NULL"
 
 msgid "'file' must be a character string or connection"
@@ -969,14 +942,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "не могу перевести 'x' в римскую"
 
-msgid "Invalid roman numeral(s): %s"
-msgstr "Неправильные римские номер(а): %s"
-
 msgid "length mismatch: bug in code!"
 msgstr "несовпадение длин: ошибка в коде!"
-
-msgid "Processing file"
-msgstr "Обрабатываю файл"
 
 msgid "no valid packages were specified"
 msgstr "правильные пакеты не указаны"
@@ -1004,7 +971,7 @@ msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "неправильная options('str') -- использую вместо нее умолчания"
 
 #, fuzzy
-msgid "invalid components in options(\"str\"):"
+msgid "invalid components in options(\"str\"): %s"
 msgstr "неправильные компоненты в options('str'):"
 
 #, fuzzy
@@ -1152,17 +1119,14 @@ msgstr ""
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "пакет %s успешно распакован, MD5-суммы проверены"
 
-msgid "ERROR: failed to lock directory"
+#, fuzzy
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
 msgstr "ОШИБКА: невозможно заблокировать каталог"
 
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-"для модификации\n"
-"Попробуйте удалить"
-
-msgid "ERROR: failed to create lock directory"
+#, fuzzy
+msgid "ERROR: failed to create lock directory %s"
 msgstr "ОШИБКА: не могу создать каталог для блокировок"
 
 msgid "restored %s"
@@ -1171,8 +1135,8 @@ msgstr "восстановлен %s"
 msgid "unable to move temporary installation %s to %s"
 msgstr "не могу перенести временную установку из %s в %s"
 
-msgid "cannot remove prior installation of package"
-msgstr "не могу удалить прежнюю установку пакета"
+msgid "cannot remove prior installation of package %s"
+msgstr "не могу удалить прежнюю установку пакета %s"
 
 msgid ""
 "The downloaded binary packages are in\n"
@@ -1207,20 +1171,38 @@ msgstr "не удалось создать %s"
 msgid "there is no 'libs' directory in package %s"
 msgstr "нет директории 'libs' в пакете %s"
 
-msgid "cannot remove prior installation of package %s"
-msgstr "не могу удалить прежнюю установку пакета %s"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() нельзя использовать неинтерактивно"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() нельзя использовать неинтерактивно"
 
+#, fuzzy
+msgid "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0] "%d вхождений в %s"
+msgstr[1] "%d вхождений в %s"
+msgstr[2] "%d вхождений в %s"
+
+#, fuzzy
+msgid "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0] "Неправильное указание роли: %s"
+msgstr[1] "Неправильное указание роли: %s"
+msgstr[2] "Неправильное указание роли: %s"
+
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
 msgstr[0] "класс удален из колонки %s"
 msgstr[1] "классы удалены из колонок %s"
 msgstr[2] "классы удалены из колонок %s"
+
+#, fuzzy
+msgid "matched %d object."
+msgid_plural "matched %d objects."
+msgstr[0] "соответствует %d объект(ам)."
+msgstr[1] "соответствует %d объект(ам)."
+msgstr[2] "соответствует %d объект(ам)."
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1299,11 +1281,62 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
+#, fuzzy
+msgid "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0] "последняя запись неполная, %d строк не обработано"
+msgstr[1] "последняя запись неполная, %d строк не обработано"
+msgstr[2] "последняя запись неполная, %d строк не обработано"
+
+#, fuzzy
+msgid "Invalid roman numeral: %s"
+msgid_plural "Invalid roman numerals: %s"
+msgstr[0] "Неправильные римские номер(а): %s"
+msgstr[1] "Неправильные римские номер(а): %s"
+msgstr[2] "Неправильные римские номер(а): %s"
+
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "call"
+#~ msgstr "вызов"
+
+#~ msgid "Rebuilding the help.search() database"
+#~ msgstr "Перестройка базы данных help.search() "
+
+#~ msgid "..."
+#~ msgstr "..."
+
+#~ msgid "no hsearch.rds meta data for package"
+#~ msgstr "нет метаданных hsearch.rds к пакету"
+
+#~ msgid "package"
+#~ msgstr "пакет"
+
+#~ msgid "not found"
+#~ msgstr "не найден"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "HTTPUserAgent"
+#~ msgstr "HTTPUserAgent"
+
+#~ msgid "Processing file"
+#~ msgstr "Обрабатываю файл"
+
+#~ msgid ""
+#~ "for modifying\n"
+#~ "Try removing"
+#~ msgstr ""
+#~ "для модификации\n"
+#~ "Попробуйте удалить"
+
+#~ msgid "cannot remove prior installation of package"
+#~ msgstr "не могу удалить прежнюю установку пакета"
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr ""

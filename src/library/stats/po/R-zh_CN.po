@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -72,7 +72,8 @@ msgstr "时间序列的第一个数值不能是遺漏值"
 msgid "all parameters were fixed"
 msgstr "所有参数值都是固定的"
 
-msgid "possible convergence problem: optim gave code="
+#, fuzzy
+msgid "possible convergence problem: optim gave code = %d %d"
 msgstr "可能遇到了收斂问题：optim信息code="
 
 msgid "no factors in the fitted model"
@@ -118,9 +119,6 @@ msgstr "行数有变化：是不是删除了遺漏值?"
 msgid "attempting model selection on an essentially perfect fit is nonsense"
 msgstr "对几乎是完全拟合再进行模型选择是没有用的"
 
-msgid "using the %d/%d rows from a combined fit"
-msgstr "在组合拟合中用%d/%d行"
-
 msgid "F test assumes quasi%s family"
 msgstr "F检验假設quasi%s家族"
 
@@ -135,12 +133,6 @@ msgstr "\"mlm\" 模型没有'drop1'方法"
 
 msgid "F test assumes 'quasi%s' family"
 msgstr "F检验假設'quasi%s'家族"
-
-msgid "lower scope has term(s) %s not included in model"
-msgstr "模型里下範疇没有这些词条%s"
-
-msgid "upper scope does not include model term(s) %s"
-msgstr "模型上範疇里没有这些词条%s "
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
@@ -328,6 +320,10 @@ msgstr "非平穩AR部分"
 
 msgid "non-stationary seasonal AR part"
 msgstr "非平穩季節性AR部分"
+
+#, fuzzy
+msgid "possible convergence problem: optim gave code = %d"
+msgstr "可能遇到了收斂问题：optim信息code="
 
 msgid "non-stationary AR part from CSS"
 msgstr "CSS里有非平穩的AR部分"
@@ -792,12 +788,6 @@ msgstr "被要求的分数没有'x'矩阵"
 msgid "factor analysis requires at least three variables"
 msgstr "因子分析至少需要三个变量"
 
-msgid "%d factors is too many for %d variables"
-msgstr "%2$d变量不能有%1$d这么多的因子"
-
-msgid "'start' must have %d rows"
-msgstr "'start'必需有%d行"
-
 msgid "no starting values supplied"
 msgstr "没有设定初始值"
 
@@ -807,7 +797,8 @@ msgstr "无法用这些初始值进行最佳化运算"
 msgid "invalid argument 'lambda'"
 msgstr "参数'lambda'不对"
 
-msgid "link not recognised"
+#, fuzzy
+msgid "%s link not recognised"
 msgstr "没有这样的鏈結"
 
 msgid "link \"%s\" not available for poisson family; available links are %s"
@@ -844,10 +835,9 @@ msgstr "二项通用线性模型里出现了非整数的#成功!"
 msgid "non-integer counts in a binomial glm!"
 msgstr "二项通用线性模型里出现了非整数的计数!"
 
-msgid "for the binomial family, y must be a vector of 0 and 1's"
-msgstr "二项分布族中的y必需是由0和1组成的矢量"
-
+#, fuzzy
 msgid ""
+"for the binomial family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
 
@@ -858,8 +848,11 @@ msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
-msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
-msgstr "quasibinomial分布族中的y必需由零和一组成的矢量"
+#, fuzzy
+msgid ""
+"for the quasibinomial family, y must be a vector of 0 and 1's\n"
+"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
@@ -908,16 +901,14 @@ msgstr ""
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "'init'的长度必需等于'filter'的长度"
 
-msgid "'init'; must have 1 or %d cols"
-msgstr "'init'; 必需有一个或%d个列"
-
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x'至少必需有两行和两列"
 
 msgid "'x' has entries too large to be integer"
 msgstr "'x'的正数值太大"
 
-msgid "'x' has been rounded to integer:"
+#, fuzzy
+msgid "'x' has been rounded to integer: %d"
 msgstr "'x'捨入成正数:"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
@@ -1054,9 +1045,6 @@ msgstr "观察量不含信息，于迭代"
 msgid "non-finite coefficients at iteration %d"
 msgstr "迭代%d时出现了无限大的係數值"
 
-msgid "X matrix has rank %d, but only %d observations"
-msgstr "X矩阵的秩为%d, 但只有%d个观察量"
-
 msgid ""
 "no valid set of coefficients has been found: please supply starting values"
 msgstr "找不到有效的係數：请提供初始值"
@@ -1091,23 +1079,18 @@ msgstr "以下'anova.glm'的参数不对因此略过不用:"
 msgid ","
 msgstr ","
 
-msgid "using F test with a %s family is inappropriate"
-msgstr "将F检验用在%s分布族上是不对的"
+msgid "using F test with a '%s' family is inappropriate"
+msgstr "将F检验用于%s分布族是不对的"
 
 msgid "using F test with a fixed dispersion is inappropriate"
 msgstr "将F检验用于固定疏散的分布是不对的"
 
-msgid "models with response"
-msgstr "带反应的模型"
-
-msgid "removed because response differs from model 1"
+#, fuzzy
+msgid "models with response %s removed because response differs from model 1"
 msgstr "被删除了，因为反应同第一个模型不相对"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "模型拟合时没有用同样大小的数据集"
-
-msgid "using F test with a '%s' family is inappropriate"
-msgstr "将F检验用于%s分布族是不对的"
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "计算离散度时零权数的观察量略过不用"
@@ -1209,17 +1192,8 @@ msgstr "'x'不是内核"
 msgid "empty cluster: try a better set of initial centers"
 msgstr "空的群集: 请试试更精确一点的初始中心集"
 
-msgid "did not converge in %d iterations"
-msgstr "%d迭代没有聚合"
-
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "群集中心数目必需在一和nrow(x) 这间"
-
-msgid "did not converge in"
-msgstr "没有聚合于"
-
-msgid "iterations"
-msgstr "迭代"
 
 #, fuzzy
 msgid "invalid nrow(x)"
@@ -1328,12 +1302,6 @@ msgstr "调用anova.lm(<fake-lm-object>) ..."
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "对几乎是完全拟合进行ANOVA F-检验的结果不会可靠"
 
-msgid "removed because response differs from"
-msgstr "删除了，因为反应不同与"
-
-msgid "model 1"
-msgstr "第一模型"
-
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "调用predict.lm(<fake-lm-object>) ..."
 
@@ -1433,15 +1401,6 @@ msgstr "没有适用于'nobs'的方法"
 msgid "'start' and 'table' must be same length"
 msgstr "'start'和'table'的长度必需相等"
 
-msgid "%d missing values deleted"
-msgstr "删除了%d个遺漏值"
-
-msgid "'X' matrix has %d responses, 'Y' has %d responses"
-msgstr "'X'矩阵有%d个反应, 而'Y'有%d个反应"
-
-msgid "%d responses, but only %d variables"
-msgstr "%d个反应, 但只有%d个变量"
-
 msgid "number of weights = %d should equal %d (number of responses)"
 msgstr "权数的数目 = %d但应等于%d (反应数目)"
 
@@ -1503,20 +1462,15 @@ msgstr "'x'和'y'必需有相同数目的层次(最少要有两层)"
 msgid "need numeric data"
 msgstr "需要数值数据"
 
-msgid "medpolish() did not converge in %d iterations"
-msgstr "medpolish()经过%d个迭代仍没有聚合"
-
 msgid "'mlm' objects with weights are not supported"
 msgstr "目前不支持带权数的'mlm'对象"
 
 msgid "X does not define a subspace of M"
 msgstr "X不设定M的子空间"
 
-msgid "residuals have rank"
-msgstr "残差有秩"
-
-msgid "<"
-msgstr "<"
+#, fuzzy
+msgid "residuals have rank %s < %s"
+msgstr "残差的秩 %d < %d"
 
 msgid "'model.tables' is not implemented for multiple responses"
 msgstr "'model.tables'没有为多反应实现"
@@ -1549,7 +1503,8 @@ msgstr "还没有为'%s'种类实现标准误的算法"
 msgid "na.action must be a function"
 msgstr "na.action必需为函数"
 
-msgid "non-factors ignored:"
+#, fuzzy
+msgid "non-factors ignored: %s"
 msgstr "非因子略过不用:"
 
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
@@ -1577,17 +1532,11 @@ msgstr "设定的变量%s的类别同拟合的类别不相符"
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data'必需是数据框, 不能是矩阵或陣列"
 
-msgid "'newdata' had %d rows but variable(s) found have %d rows"
-msgstr "'newdata'有%d行但变量里有%d行"
-
 msgid "character variable '%s' changed to a factor"
 msgstr "字符变量'%s'被转成因子"
 
 msgid "variable '%s' is not a factor"
 msgstr "变量'%s'不是因子"
-
-msgid "factor '%s' has new level(s) %s"
-msgstr "因子'%s'有新的层次%s"
 
 msgid "'offset' must be numeric"
 msgstr "'offset'必需为数值"
@@ -1640,9 +1589,6 @@ msgstr "f.upper = f(upper)的值为NA "
 msgid "f() values at end points not of opposite sign"
 msgstr "位于极点边的f()值之正负号不相反"
 
-msgid "_NOT_ converged in"
-msgstr "_没有_聚合于"
-
 msgid "control argument must be a named list"
 msgstr "控制参数必需是串列"
 
@@ -1677,26 +1623,15 @@ msgstr "setVarying : 'vary'的长度必需同参数的长度相符"
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
 
-msgid "unrecognized control element(s) named `"
-msgstr "没有叫这个名字的控制元素"
-
-msgid "' ignored"
-msgstr "' 略过不用"
-
 msgid "'data' must be a list or an environment"
 msgstr "'data'必需是串列或是环境"
 
 msgid "No starting values specified"
 msgstr "没有设定初始值"
 
-msgid "parameters without starting value in 'data':"
+#, fuzzy
+msgid "parameters without starting value in 'data': %s"
 msgstr "'data'里的参数没有被设定初始值"
-
-msgid "fitting parameters"
-msgstr "拟合参数"
-
-msgid "without any variables"
-msgstr "没有变量"
 
 msgid "no parameters to fit"
 msgstr "没有可用来拟合的参数值"
@@ -1748,11 +1683,10 @@ msgid ""
 msgstr "L-BFGS-B方法用'factr'(和'pgtol') ，而不是'reltol'和'abstol'"
 
 #, fuzzy
-msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
+msgid ""
+"one-dimensional optimization by Nelder-Mead is unreliable:\n"
+"use \"Brent\" or optimize() directly"
 msgstr "用Nelder-Mead方法来算一维优化不很可靠："
-
-msgid "use \"Brent\" or optimize() directly"
-msgstr "请直接用\"Brent\"或optimize()"
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
 msgstr " method = \"Brent\" 只适用于一维优化"
@@ -1772,7 +1706,10 @@ msgstr "'x'和'n'的长度必需相等"
 msgid "too few groups"
 msgstr "组数不够"
 
-msgid "Not plotting observations with leverage one:"
+#, fuzzy
+msgid ""
+"Not plotting observations with leverage one:\n"
+"  %s"
 msgstr "不对杠杆效果为一的点绘图"
 
 msgid "use only with \"lm\" objects"
@@ -1784,10 +1721,10 @@ msgstr "'which'必需在1:6之间"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n'必需在{1,..,%d}中"
 
-msgid "hat values (leverages) are all ="
-msgstr "所有的帽值(杠杆率) 都是"
-
-msgid "and there are no factor predictors; no plot no. 5"
+#, fuzzy
+msgid ""
+"hat values (leverages) are all = %s\n"
+" and there are no factor predictors; no plot no. 5"
 msgstr "没有因子预测变无，因此没有第五幅画表"
 
 msgid "'x' and 'T' have incompatible length"
@@ -1992,10 +1929,12 @@ msgstr "参数'n'不对"
 msgid "'k' must be positive"
 msgstr "'k'必需是正数"
 
-msgid "'k' must be odd!  Changing 'k' to"
+#, fuzzy
+msgid "'k' must be odd!  Changing 'k' to %d"
 msgstr "'k'只能是奇数! 把'k'改成"
 
-msgid "'k' is bigger than 'n'!  Changing 'k' to"
+#, fuzzy
+msgid "'k' is bigger than 'n'!  Changing 'k' to %d"
 msgstr "'k'比'n'大! 把'k'改成"
 
 msgid "bandwidth 'k' must be >= 1 and odd!"
@@ -2108,9 +2047,6 @@ msgstr "做周期平滑时'x'必需在零和一之间"
 msgid "no finite observations"
 msgstr "没有有限观察量"
 
-msgid "observation(s) with NAs, NaNs and/or Infs deleted"
-msgstr "删除了含NA, NaN或Inf的观察量"
-
 msgid "'p' must be between 0 and 0.5"
 msgstr "'p'必需在0和0.5之间"
 
@@ -2128,6 +2064,10 @@ msgstr "覆蓋機率在值域[0,1) 外"
 
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 第一个和最后一个y的值不相等-两个用y[1]"
+
+#, fuzzy
+msgid "'y' must be strictly increasing or decreasing"
+msgstr "'x'必需*严格*增加(非NA)"
 
 msgid "'spline' requires n >= 1"
 msgstr "'spline'需要n大于等于一"
@@ -2314,9 +2254,6 @@ msgstr "'ma'度数设定有矛盾"
 msgid "number of differences must be a positive integer"
 msgstr "差異数目必需是正整数"
 
-msgid "'start.innov' is too short: need %d points"
-msgstr "'start.innov'太短了，需要%d 个点"
-
 msgid "need an object with call component"
 msgstr "需要一个有調用组件的对象"
 
@@ -2393,21 +2330,176 @@ msgstr "因为相互不同的输入值太少，无法拟合Weibull成长模型"
 msgid "all 'x' values must be non-negative to fit the Weibull growth model"
 msgstr "所有'x'的值都必需是非负的才能拟合Weibull成长模型"
 
+#, fuzzy
+msgid "using the %d/%d row from a combined fit"
+msgid_plural "using the %d/%d rows from a combined fit"
+msgstr[0] "在组合拟合中用%d/%d行"
+
+#, fuzzy
+msgid "lower scope has term %s not included in model"
+msgid_plural "lower scope has terms %s not included in model"
+msgstr[0] "模型里下範疇没有这些词条%s"
+
+#, fuzzy
+msgid "upper scope has term %s not included in model"
+msgid_plural "upper scope has terms %s not included in model"
+msgstr[0] "模型里下範疇没有这些词条%s"
+
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "有%d个错误项，但最多只允许有一个"
 
-msgid "extra argument %s is not a \"%s\""
-msgid_plural "extra arguments %s are not \"%s\"s"
+#, fuzzy
+msgid "extra argument %s is not of class \"%s\""
+msgid_plural "extra arguments %s are not of class \"%s\"s"
 msgstr[0] "额外参数%s不是\"%s\""
+
+#, fuzzy
+msgid "%d factor is too many for %d variables"
+msgid_plural "%d factors are too many for %d variables"
+msgstr[0] "%2$d变量不能有%1$d这么多的因子"
+
+#, fuzzy
+msgid "'start' must have %d row"
+msgid_plural "'start' must have %d rows"
+msgstr[0] "'start'必需有%d行"
+
+#, fuzzy
+msgid "'init'; must have 1 column"
+msgid_plural "'init'; must have 1 or %d columns"
+msgstr[0] "'init'; 必需有一个或%d个列"
+
+#, fuzzy
+msgid "X matrix has rank %d, but only %d observation"
+msgid_plural "X matrix has rank %d, but only %d observations"
+msgstr[0] "X矩阵的秩为%d, 但只有%d个观察量"
+
+#, fuzzy
+msgid "did not converge in %d iteration"
+msgid_plural "did not converge in %d iterations"
+msgstr[0] "%d迭代没有聚合"
+
+#, fuzzy
+msgid "%d missing value deleted"
+msgid_plural "%d missing values deleted"
+msgstr[0] "删除了%d个遺漏值"
+
+#, fuzzy
+msgid "'X' matrix has %d response"
+msgid_plural "'X' matrix has %d responses"
+msgstr[0] "'X'矩阵有%d个反应, 而'Y'有%d个反应"
+
+msgid "'Y' has %d response"
+msgid_plural "'Y' has %d responses"
+msgstr[0] ""
+
+#, fuzzy
+msgid "%d response"
+msgid_plural "%d responses"
+msgstr[0] "带反应的模型"
+
+#, fuzzy
+msgid "but only %d variable"
+msgid_plural "but only %d variables"
+msgstr[0] "%d个反应, 但只有%d个变量"
+
+#, fuzzy
+msgid "medpolish() did not converge in %d iteration"
+msgid_plural "medpolish() did not converge in %d iterations"
+msgstr[0] "medpolish()经过%d个迭代仍没有聚合"
+
+#, fuzzy
+msgid "'newdata' had %d row"
+msgid_plural "'newdata' had %d rows"
+msgstr[0] "'start'必需有%d行"
+
+#, fuzzy
+msgid "but variable found had %d row"
+msgid_plural "but variables found have %d rows"
+msgstr[0] "'newdata'有%d行但变量里有%d行"
+
+#, fuzzy
+msgid "factor %s has new level %s"
+msgid_plural "factor %s has new levels %s"
+msgstr[0] "因子'%s'有新的层次%s"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
 msgstr[0] "因为不存在，%d个观察量被删除了"
 
+#, fuzzy
+msgid "_NOT_ converged in %d iteration"
+msgid_plural "_NOT_ converged in %d iterations"
+msgstr[0] "%d迭代没有聚合"
+
+#, fuzzy
+msgid "unrecognized control element named %s ignored"
+msgid_plural "unrecognized control elements named %s ignored"
+msgstr[0] "没有叫这个名字的控制元素"
+
+#, fuzzy
+msgid "fitting parameter %s without any variables"
+msgid_plural "fitting parameters %s without any variables"
+msgstr[0] "没有变量"
+
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#, fuzzy
+msgid "%d observation with NA, NaN or Inf deleted"
+msgid_plural "%d observations with NAs, NaNs and/or Infs deleted"
+msgstr[0] "删除了含NA, NaN或Inf的观察量"
+
+#, fuzzy
+msgid "'start.innov' is too short: need %d point"
+msgid_plural "'start.innov' is too short: need %d points"
+msgstr[0] "'start.innov'太短了，需要%d 个点"
+
+#~ msgid "upper scope does not include model term(s) %s"
+#~ msgstr "模型上範疇里没有这些词条%s "
+
+#~ msgid "for the binomial family, y must be a vector of 0 and 1's"
+#~ msgstr "二项分布族中的y必需是由0和1组成的矢量"
+
+#~ msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
+#~ msgstr "quasibinomial分布族中的y必需由零和一组成的矢量"
+
+#~ msgid "using F test with a %s family is inappropriate"
+#~ msgstr "将F检验用在%s分布族上是不对的"
+
+#~ msgid "did not converge in"
+#~ msgstr "没有聚合于"
+
+#~ msgid "iterations"
+#~ msgstr "迭代"
+
+#~ msgid "removed because response differs from"
+#~ msgstr "删除了，因为反应不同与"
+
+#~ msgid "model 1"
+#~ msgstr "第一模型"
+
+#~ msgid "residuals have rank"
+#~ msgstr "残差有秩"
+
+#~ msgid "<"
+#~ msgstr "<"
+
+#~ msgid "_NOT_ converged in"
+#~ msgstr "_没有_聚合于"
+
+#~ msgid "' ignored"
+#~ msgstr "' 略过不用"
+
+#~ msgid "fitting parameters"
+#~ msgstr "拟合参数"
+
+#~ msgid "use \"Brent\" or optimize() directly"
+#~ msgstr "请直接用\"Brent\"或optimize()"
+
+#~ msgid "hat values (leverages) are all ="
+#~ msgstr "所有的帽值(杠杆率) 都是"
 
 #, fuzzy
 #~ msgid "invalid length(xout)"

@@ -160,7 +160,8 @@ formatC <- function (x, digits = NULL, width = NULL,
     else {
 	maxDigits <- if(format != "f") 50L else ceiling(-(.Machine$double.neg.ulp.digits + .Machine$double.min.exp) / log2(10))
 	if (digits > maxDigits) {
-	    warning("'digits' reduced to ", maxDigits)
+            warning(gettextf("'digits' reduced to %d", maxDigits),
+                    domain = NA)
 	    digits <- maxDigits
 	}
     }

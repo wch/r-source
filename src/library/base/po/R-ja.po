@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -133,7 +133,8 @@ msgstr ""
 msgid "namespace cannot be unloaded:"
 msgstr " 名前空間をアンロード出来ません: "
 
-msgid "converted to character string"
+#, fuzzy
+msgid "%s converted to character string"
 msgstr " 文字列に変換されました "
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -249,15 +250,9 @@ msgstr " 'row.names' に欠損値があってはなりません "
 msgid "invalid 'dimnames' given for data frame"
 msgstr " データフレームに無効な 'dimnames' が与えられました "
 
-msgid "cannot coerce class '%s' into a data.frame"
+#, fuzzy
+msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr " クラス \"%s\" はデータフレームに強制変換できません "
-
-msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr ""
-" 無効な 'row.names' です。長さが %d ですが、データフレームの行数は %d です "
-
-msgid "supplied %d row names for %d rows"
-msgstr " %d 個の行名が %d 個の行に提供されました "
 
 #, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -282,7 +277,8 @@ msgstr " 列名は欠測値を含んでいます "
 msgid "duplicate row.names:"
 msgstr " row.names が重複しています： "
 
-msgid "arguments imply differing number of rows:"
+#, fuzzy
+msgid "arguments imply differing number of rows: %s"
 msgstr " 引数は異なった列数を意味します: "
 
 msgid "row.names should specify one of the variables"
@@ -339,37 +335,11 @@ msgstr " 新しい列は既存の列に穴を開けるかも知れません "
 msgid "duplicate subscripts for columns"
 msgstr " 列に対する重複した添字です "
 
-msgid "replacement has %d rows, data has %d"
-msgstr " 置き換えは %d 列ですが、データは %d 列です "
-
-msgid "replacement has %d items, need %d"
-msgstr " 置き換えは %d 個の項目を持ちますが、%d 個必要です "
-
-msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr ""
-" 置き換え要素 %d は %d 行の行列またはデータフレームですが、%d 行必要です "
-
-msgid "replacement element %d has %d rows, need %d"
-msgstr " 置き換え要素 %d は %d 行を持ちますが、%d 行必要です "
-
-msgid "replacement element %d has %d rows to replace %d rows"
-msgstr ""
-" 置き換え要素 %d は %d 行を持ちますが、%d 個の行を置き換えようとしています "
-
-msgid "%d rows in value to replace %d rows"
-msgstr " value 中の %d 行で %d 行を置き換えようとしています "
-
-msgid "replacement data has %d rows to replace %d rows"
-msgstr ""
-" 置き換えデータは %d 行を持ちますが、%d 個の行を置き換えようとしています "
-
-msgid "provided %d variables to replace %d variables"
-msgstr " %d 個の変数を与えて、%d 個の変数を置き換えようとしています "
-
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr " 有効な呼出しは x[[j]] <- value か x[[i,j]] <- value だけです "
 
-msgid "replacing element in non-existent column:"
+#, fuzzy
+msgid "replacing element in non-existent column: %s"
 msgstr " 存在しない列中の要素の置き換えです： "
 
 msgid "only a single element should be replaced"
@@ -430,10 +400,12 @@ msgstr " 単項演算 - は Date オブジェクトに対しては定義され�
 msgid "can only subtract numbers from Date objects"
 msgstr " Date オブジェクトからは数値しか引けません "
 
-msgid "unary"
-msgstr " 単項演算 "
+#, fuzzy
+msgid "unary %s not defined for \"Date\" objects"
+msgstr " 単項演算 - は Date オブジェクトに対しては定義されていません "
 
-msgid "not defined for Date objects"
+#, fuzzy
+msgid "%s not defined for \"Date\" objects"
 msgstr " は Date オブジェクトに対しては定義されていません "
 
 msgid "'from' must be specified"
@@ -582,10 +554,8 @@ msgstr " 行列の対角成分だけが置き換えられます "
 msgid "replacement diagonal has wrong length"
 msgstr " 置き換え対角成分の長さが間違っています "
 
-msgid "MARGIN ="
-msgstr " MARGIN= "
-
-msgid "is invalid for dim ="
+#, fuzzy
+msgid "MARGIN = %d is invalid for dim = %d"
 msgstr " は以下の次元には無効です： "
 
 #, fuzzy
@@ -594,7 +564,8 @@ msgstr ""
 " パッケージ名、DLLInfo または DllInfoReference オブジェクトを渡さなければなり"
 "ません "
 
-msgid "No DLL currently loaded with name or path"
+#, fuzzy
+msgid "No DLL currently loaded with name or path %s"
 msgstr " 名前かパスを持つ Dll は現在何もロードされていません "
 
 msgid "multiple DLLs match '%s'. Using '%s'"
@@ -727,7 +698,8 @@ msgstr ""
 " 'format' は {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\" } のいずれかでなけれ"
 "ばなりません "
 
-msgid "'digits' reduced to"
+#, fuzzy
+msgid "'digits' reduced to %d"
 msgstr " 'digits' は縮小されました "
 
 msgid "'flag' can contain only '0+- #'"
@@ -749,11 +721,9 @@ msgstr " 'subset' は論理値として評価されなければなりません "
 msgid "'subset' must be logical"
 msgstr " 'subset' は論理値でなければなりません "
 
-msgid "value for '"
-msgstr " 以下に対する値 ' "
-
-msgid "' not found"
-msgstr " ' が見つけられません "
+#, fuzzy
+msgid "value for %s not found"
+msgstr " ファイル '%s' が見付かりません "
 
 msgid "all arguments must be named"
 msgstr " 全ての引数は名前を持たなければなりません "
@@ -1016,7 +986,8 @@ msgstr " 誤ったファイル引数です "
 msgid "can only save to a binary connection"
 msgstr " バイナリコネクションへしかセーブできません "
 
-msgid "image could not be renamed and is left in"
+#, fuzzy
+msgid "image could not be renamed and is left in %s"
 msgstr " イメージは改名できませんので、以下に残されます： "
 
 msgid "[Previously saved workspace restored]"
@@ -1132,23 +1103,21 @@ msgstr " %s を見付けることができません "
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr " 名前空間 '%s' は既に loadNamespace 中に封印(seal)されています "
 
-msgid "failed to assign RegisteredNativeSymbol for"
+#, fuzzy
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
 msgstr " 以下に対する RegisteredNativeSymbol を割り当てられませんでした "
 
-msgid "to"
-msgstr " 以下へ "
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
+msgstr ""
 
-msgid "since"
-msgstr " なぜなら以下が "
-
-msgid "is already defined in the"
-msgstr " 既に以下の "
-
-msgid "namespace"
-msgstr " 名前空間に定義されているからです "
-
-msgid "failed to assign NativeSymbolInfo for"
-msgstr " 以下に対する NativeSymbolInfo を代入できません "
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
+msgstr ""
 
 msgid "package %s does not have a namespace"
 msgstr " パッケージ '%s' は名前空間を持っていません "
@@ -1188,9 +1157,6 @@ msgstr ""
 msgid "Loading required namespace: %s"
 msgstr " 要求されたパッケージ %s をロード中です "
 
-msgid "not found"
-msgstr " 見つかりません "
-
 msgid "not loading a namespace"
 msgstr " 名前空間をロードしません "
 
@@ -1204,7 +1170,8 @@ msgstr " 名前空間ではありません "
 msgid "operation not allowed on base namespace"
 msgstr " ベース名前空間では許可されない操作です "
 
-msgid "duplicate import names"
+#, fuzzy
+msgid "duplicate import names %s"
 msgstr " 重複したインポート名です "
 
 msgid "replacing local value with import %s when loading %s"
@@ -1242,7 +1209,8 @@ msgstr ""
 msgid "cannot add to exports of a sealed namespace"
 msgstr " 封印された名前空間のエクスポートへ加えることができません "
 
-msgid "undefined exports:"
+#, fuzzy
+msgid "undefined exports: %s"
 msgstr " 未定義のエクスポートです： "
 
 msgid "package %s has no NAMESPACE file"
@@ -1382,9 +1350,6 @@ msgstr " 引数 'length.out' は長さ 1 でなければなりません "
 msgid "first element used of 'length.out' argument"
 msgstr " 最初の要素は 引数 'length.out' として使われます "
 
-msgid "extra argument(s) %s will be disregarded"
-msgstr "  余分な引数 %s は無視されます "
-
 msgid "invalid (to - from)/by in seq(.)"
 msgstr " seq(.) 中の (to - from)/by が不正です "
 
@@ -1498,23 +1463,12 @@ msgstr " 'chdir = TRUE' はコネクションに対しては意味がありま�
 msgid "'%s' is not an existing file"
 msgstr " '%s' は既存のファイルではありません "
 
-msgid "Timestamp of '"
+#, fuzzy
+msgid "Timestamp of %s has chamged"
 msgstr " タイムスタンプ ( ' "
-
-msgid "' has changed"
-msgstr " ' ) が変更されました "
 
 msgid "additional arguments ignored in stop()"
 msgstr " stop() により追加の引数は無視されました "
-
-msgid "is not"
-msgstr " 違います "
-
-msgid "all"
-msgstr " 全て "
-
-msgid "TRUE"
-msgstr " TRUE "
 
 msgid "additional arguments ignored in warning()"
 msgstr " warning() 中の追加引数は無視されます "
@@ -1610,7 +1564,8 @@ msgstr " 'width' は正でなければなりません "
 msgid "No traceback available"
 msgstr " 利用できる traceback がありません "
 
-msgid "invalid version specification"
+#, fuzzy
+msgid "invalid version specification %s"
 msgstr " 無効なバージョンの指定です "
 
 msgid "wrong argument"
@@ -1625,8 +1580,9 @@ msgstr " 単項の'%s'はnumeric_version オブジェクトに対しては定義
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr " '%s'はnumeric_version オブジェクトに対しては定義されていません "
 
-msgid "not defined for numeric_version objects"
-msgstr " numeric_version オブジェクトに対しては定義されていません "
+#, fuzzy
+msgid "%s not defined for \"numeric_version\" objects"
+msgstr " '%s'はnumeric_version オブジェクトに対しては定義されていません "
 
 msgid "<0 elements>"
 msgstr " <0要素> "
@@ -1729,6 +1685,61 @@ msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] " 逆構文解析オプション %s は認識できません "
 
+#, fuzzy
+msgid "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0] ""
+" 無効な 'row.names' です。長さが %d ですが、データフレームの行数は %d です "
+
+#, fuzzy
+msgid "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0] " %d 個の行名が %d 個の行に提供されました "
+
+#, fuzzy
+msgid "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0] " 置き換えは %d 列ですが、データは %d 列です "
+
+#, fuzzy
+msgid "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0] " 置き換えは %d 個の項目を持ちますが、%d 個必要です "
+
+#, fuzzy
+msgid "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] ""
+" 置き換え要素 %d は %d 行の行列またはデータフレームですが、%d 行必要です "
+
+#, fuzzy
+msgid "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0] " 置き換え要素 %d は %d 行を持ちますが、%d 行必要です "
+
+#, fuzzy
+msgid "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0] ""
+" 置き換え要素 %d は %d 行を持ちますが、%d 個の行を置き換えようとしています "
+
+#, fuzzy
+msgid "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0] " value 中の %d 行で %d 行を置き換えようとしています "
+
+#, fuzzy
+msgid "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0] ""
+" 置き換えデータは %d 行を持ちますが、%d 個の行を置き換えようとしています "
+
+#, fuzzy
+msgid "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0] " %d 個の変数を与えて、%d 個の変数を置き換えようとしています "
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] " ライブラリ %s はパッケージを含んでいません "
@@ -1771,9 +1782,65 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] ""
 "S3 メソッド %s は NAMESPACE で宣言されましたが、見つかりませんでした "
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "  余分な引数 %s は無視されます "
+
+#, fuzzy
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] " TRUE の代わりに T が使われました "
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#, fuzzy
+#~ msgid "%s not defined for numeric_version objects"
+#~ msgstr " numeric_version オブジェクトに対しては定義されていません "
+
+#~ msgid "unary"
+#~ msgstr " 単項演算 "
+
+#~ msgid "MARGIN ="
+#~ msgstr " MARGIN= "
+
+#~ msgid "value for '"
+#~ msgstr " 以下に対する値 ' "
+
+#~ msgid "' not found"
+#~ msgstr " ' が見つけられません "
+
+#~ msgid "to"
+#~ msgstr " 以下へ "
+
+#~ msgid "since"
+#~ msgstr " なぜなら以下が "
+
+#~ msgid "is already defined in the"
+#~ msgstr " 既に以下の "
+
+#~ msgid "namespace"
+#~ msgstr " 名前空間に定義されているからです "
+
+#~ msgid "failed to assign NativeSymbolInfo for"
+#~ msgstr " 以下に対する NativeSymbolInfo を代入できません "
+
+#~ msgid "not found"
+#~ msgstr " 見つかりません "
+
+#~ msgid "' has changed"
+#~ msgstr " ' ) が変更されました "
+
+#~ msgid "is not"
+#~ msgstr " 違います "
+
+#~ msgid "all"
+#~ msgstr " 全て "
+
+#~ msgid "TRUE"
+#~ msgstr " TRUE "
 
 #~ msgid "non-numeric argument to 'chol'"
 #~ msgstr " 'chol' へ数値でない引数 "

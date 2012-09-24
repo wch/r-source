@@ -123,9 +123,8 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     n.legpercol <-
 	if(horiz) {
 	    if(ncol != 1)
-		warning(
-		    "horizontal specification overrides: Number of columns := ",
-			n.leg)
+                warning(gettextf("horizontal specification overrides: Number of columns := %d",
+                                 n.leg), domain = NA)
 	    ncol <- n.leg
 	    1
 	} else ceiling(n.leg / ncol)

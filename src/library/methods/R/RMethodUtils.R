@@ -82,9 +82,11 @@
     if(is.null(signature))
         signature <- args
     else if(any(is.na(match(signature, args))))
-        stop(gettextf("non-arguments found in the signature: %s",
-                      paste(signature[is.na(match(signature, args))],
-                            collapse = ", ")), domain = NA)
+        stop(sprintf(ngettext(sum(is.na(match(signature, args))),
+                              "non-argument found in the signature: %s",
+                              "non-arguments found in the signature: %s"),
+                     paste(signature[is.na(match(signature, args))], collapse = ", ")),
+             domain = NA)
     dots <- match("...", signature)
     if(!is.na(dots)) { # remove "..." unless it is the only element of the signature
         if(length(signature) > 1L)
@@ -101,8 +103,9 @@
         fdefault <- checkTrace(fdefault)
         if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
            !is.primitive(fdefault))
-            stop(gettextf("the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)",
-                          sQuote(f),
+            stop(sprintf(ngettext(length(fdef),
+                                  "the formal argument of the generic function for %s (%s) differs from that of the non-generic to be used as the default (%s)",
+                                  "the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)"),
                           paste(formalArgs(fdef), collapse = ", "),
                           paste(formalArgs(fdefault), collapse = ", ")),
                  domain = NA)
@@ -158,9 +161,11 @@ makeGeneric <-
     if(is.null(signature))
         signature <- args
     else if(any(is.na(match(signature, args))))
-        stop(gettextf("non-arguments found in the signature: %s",
-                      paste(signature[is.na(match(signature, args))],
-                            collapse = ", ")), domain = NA)
+        stop(sprintf(ngettext(sum(is.na(match(signature, args))),
+                              "non-argument found in the signature: %s",
+                              "non-arguments found in the signature: %s"),
+                     paste(signature[is.na(match(signature, args))], collapse = ", ")),
+             domain = NA)
     attr(signature, "simpleOnly") <- simpleInheritanceOnly # usually NULL
     dots <- match("...", signature)
     if(!is.na(dots)) ## ... is not currently supported in method signatures

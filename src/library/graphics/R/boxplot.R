@@ -187,7 +187,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     if(is.null(at))
 	at <- 1L:n
     else if(length(at) != n)
-	stop("'at' must have same length as 'z$n', i.e. ", n)
+        stop(gettextf("'at' must have same length as 'z$n', i.e. %d", n),
+             domain = NA)
     ## just for compatibility with S
     if(is.null(z$out))
 	z$out <- numeric()

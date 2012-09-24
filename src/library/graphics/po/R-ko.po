@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -86,7 +86,8 @@ msgstr "최초의 인수가 무효입니다"
 msgid "'formula' missing or incorrect"
 msgstr "'formula'가 없거나 부적절합니다"
 
-msgid "'at' must have same length as 'z$n', i.e."
+#, fuzzy
+msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at'는 'z$n'와 동일 길이를 가지지 않으면 안됩니다"
 
 msgid "invalid boxplot widths"
@@ -204,7 +205,8 @@ msgstr "알수 없는 'breaks' 알고니즘입니다"
 msgid "invalid number of 'breaks'"
 msgstr "'breaks'의 수가 무효입니다"
 
-msgid "hist.default: pretty() error, breaks="
+#, fuzzy
+msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: pretty()의 사이 차이입니다. 분할점 ="
 
 #, fuzzy
@@ -257,9 +259,10 @@ msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 "'respect'는 'mat'와 동일 차원의 논리값 또는 행렬이 아니면 되지 않습니다"
 
+#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n ="
+"to each of the values {1..n}; here  n = %d"
 msgstr ""
 "layout 행렬은 값{1..n}의 각 값을 적어도 1회 참조하지 않으면 되지 않습니다"
 
@@ -275,7 +278,8 @@ msgstr "무효인 좌표장입니다"
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width'는 비부(>=0)의 수치가 아니면 되지 않습니다"
 
-msgid "horizontal specification overrides: Number of columns :="
+#, fuzzy
+msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "수표 방향의 지정은 무효로 되어있습니다: 열의 수 :="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
@@ -302,9 +306,6 @@ msgstr "분할표에 결측치가 있습니다"
 
 msgid "'x' must not have 0 dimensionality"
 msgstr "'x'의 차원은 0로 되지 않습니다"
-
-msgid "extra argument(s) %s will be disregarded"
-msgstr "여분의 인수(복수)%s는 무시됩니다"
 
 msgid "invalid 'shade' specification"
 msgstr "무효인 'shade'의 지정입니다"
@@ -449,6 +450,11 @@ msgstr[0] "하나가 어긋나고 값(%s)이 boxplot %d로부터 제외해졌습
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] ""
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "여분의 인수(복수)%s는 무시됩니다"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr ""

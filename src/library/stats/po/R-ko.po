@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -81,7 +81,8 @@ msgstr "시계열의 최초의 값은 결손하지 않으면 안됩니다"
 msgid "all parameters were fixed"
 msgstr "모든 파라미터가 고정되어 있었습니다"
 
-msgid "possible convergence problem: optim gave code="
+#, fuzzy
+msgid "possible convergence problem: optim gave code = %d %d"
 msgstr "수렴에 관한 문제의 가능성: optim는 이하의 code=를 주었습니다"
 
 msgid "no factors in the fitted model"
@@ -128,9 +129,6 @@ msgstr "사용중의 행수가 변했습니다: 결손값을 제거합니까?"
 msgid "attempting model selection on an essentially perfect fit is nonsense"
 msgstr ""
 
-msgid "using the %d/%d rows from a combined fit"
-msgstr "결합한 적합로부터 %d/%d행을 사용합니다"
-
 msgid "F test assumes quasi%s family"
 msgstr "F test는 동일한 %s패밀리입니다"
 
@@ -146,14 +144,6 @@ msgstr "메소드 'drop1'는 mlm 모델에서 실제 적용되어 있지 않습�
 #, fuzzy
 msgid "F test assumes 'quasi%s' family"
 msgstr "F test는 동일한 %s패밀리입니다"
-
-#, fuzzy
-msgid "lower scope has term(s) %s not included in model"
-msgstr "하위의 scpoe는 모델에서 포함하고 되지 않습니다"
-
-#, fuzzy
-msgid "upper scope does not include model term(s) %s"
-msgstr "상위의 scope는 모델을 포함하고 있지 않습니다"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
@@ -350,6 +340,10 @@ msgstr "AR 부분이 비정상입니다"
 
 msgid "non-stationary seasonal AR part"
 msgstr "계절적인 AR 부분이 비정상입니다"
+
+#, fuzzy
+msgid "possible convergence problem: optim gave code = %d"
+msgstr "수렴에 관한 문제의 가능성: optim는 이하의 code=를 주었습니다"
 
 msgid "non-stationary AR part from CSS"
 msgstr "CSS로부터 비정상 AR의 부분입니다"
@@ -833,12 +827,6 @@ msgstr "'x' 행렬이 없이 요구된 scores입니다"
 msgid "factor analysis requires at least three variables"
 msgstr "인자 분석법은 적어도 3개의 변수를 필요로 합니다"
 
-msgid "%d factors is too many for %d variables"
-msgstr "%d개 인자는 %d개의 변수에 대해서 너무 많습니다"
-
-msgid "'start' must have %d rows"
-msgstr "'srart'는 %d 행을 가지지 않으면 안됩니다"
-
 msgid "no starting values supplied"
 msgstr "초기값이 주어지고 있지 않습니다"
 
@@ -849,7 +837,8 @@ msgstr "이러한 초기값으로부터 최적화를 할수가 없습니다"
 msgid "invalid argument 'lambda'"
 msgstr "무효인 인수 'omit'입니다"
 
-msgid "link not recognised"
+#, fuzzy
+msgid "%s link not recognised"
 msgstr "인정 받지 않는 link입니다"
 
 #, fuzzy
@@ -900,10 +889,9 @@ msgstr "2항 glm로 정수가 아닌 성공수가 있었습니다!"
 msgid "non-integer counts in a binomial glm!"
 msgstr "2항 glm로 정수가 아닌 카운터가 있었습니다!"
 
-msgid "for the binomial family, y must be a vector of 0 and 1's"
-msgstr "2항 패밀리에서는 y는 0과 1으로부터 되는 vector가 아니면 되지 않습니다."
-
+#, fuzzy
 msgid ""
+"for the binomial family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "또는 1열이 성공수, 2열이 실패수인 2열의 행렬입니다"
 
@@ -918,8 +906,11 @@ msgstr ""
 "link는 \n"
 "\"identity\",\"log\" 그리고 \"sqrt\" 입니다"
 
-msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
-msgstr "동일한 2항 패밀리에 대해서 y는 0과 1의 vector가 아니면 되지 않습니다"
+#, fuzzy
+msgid ""
+"for the quasibinomial family, y must be a vector of 0 and 1's\n"
+"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgstr "또는 1열이 성공수, 2열이 실패수인 2열의 행렬입니다"
 
 #, fuzzy
 msgid "link \"%s\" not available for gamma family; available links are %s"
@@ -977,16 +968,14 @@ msgstr ""
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "'init'의 길이는 'filter'의 길이에 동일하지 않으면 되지 않습니다"
 
-msgid "'init'; must have 1 or %d cols"
-msgstr "'init'; 1 또는 %d개의 cols를 가지지 않으면 안됩니다"
-
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x'는 적어도 2개의 행 그리고 열을 가지지 않으면 안됩니다"
 
 msgid "'x' has entries too large to be integer"
 msgstr "'x'는 정수라고 하기에는 너무나 많은 항목을 가지고 있습니다"
 
-msgid "'x' has been rounded to integer:"
+#, fuzzy
+msgid "'x' has been rounded to integer: %d"
 msgstr "'x'는 정수에 반올림할수가 있었습니다"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
@@ -1132,9 +1121,6 @@ msgstr "반복에 두고 의미가 있는 관측값이 없습니다"
 msgid "non-finite coefficients at iteration %d"
 msgstr "반복에 두고 유한하지 않는 계수를 얻을 수 있었습니다"
 
-msgid "X matrix has rank %d, but only %d observations"
-msgstr "X의 행렬는 link %d이지만, %d 관측값만 가지고 있습니다"
-
 msgid ""
 "no valid set of coefficients has been found: please supply starting values"
 msgstr "계수의 유효한 세트가 검색되지 않았습니다: 초기값을 주십시오"
@@ -1173,23 +1159,18 @@ msgstr "'anova.glm'에의 다음의 인수는 무효이고, 제거 되었습니�
 msgid ","
 msgstr ","
 
-msgid "using F test with a %s family is inappropriate"
+msgid "using F test with a '%s' family is inappropriate"
 msgstr ""
 
 msgid "using F test with a fixed dispersion is inappropriate"
 msgstr ""
 
-msgid "models with response"
-msgstr "응답"
-
-msgid "removed because response differs from model 1"
+#, fuzzy
+msgid "models with response %s removed because response differs from model 1"
 msgstr "응답이 모델 1과 다르므로 제거해졌습니다"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "model는 모두 동일 사이즈의 데이터 세트에 적용시킬수 없습니다"
-
-msgid "using F test with a '%s' family is inappropriate"
-msgstr ""
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "중량감이 0의 관측값이 표준편차의 계산으로 사용되지 않습니다"
@@ -1295,17 +1276,8 @@ msgstr "'k'는 kernel이 아닙니다"
 msgid "empty cluster: try a better set of initial centers"
 msgstr "비어 있는 cluster; 보다 좋은 초기 중심을 시도합시다"
 
-msgid "did not converge in %d iterations"
-msgstr "%d를 돌려주었습니만, 한꺼번에 묶지 못했습니다"
-
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "cluster 중심의 수는 1과 nrow(x)의 사이에 없으면 되지 않습니다"
-
-msgid "did not converge in"
-msgstr "한꺼번에 묶지 않습니다"
-
-msgid "iterations"
-msgstr "반복"
 
 #, fuzzy
 msgid "invalid nrow(x)"
@@ -1420,12 +1392,6 @@ msgstr ""
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr ""
 
-msgid "removed because response differs from"
-msgstr "(을)를 가지는 모델을 제거 했습니다. 응답이하와 다르기 때문입니다"
-
-msgid "model 1"
-msgstr "모델 1"
-
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr ""
 
@@ -1537,15 +1503,6 @@ msgstr "'x'에 대해서 적용 가능한 'as.stepfun'메소드는 없습니다"
 msgid "'start' and 'table' must be same length"
 msgstr "'start'와 'table'는 동일 길이가 나오지 않으면 되지 않습니다"
 
-msgid "%d missing values deleted"
-msgstr "%d개의 결손값이 삭제되었습니다"
-
-msgid "'X' matrix has %d responses, 'Y' has %d responses"
-msgstr "'x'행렬은 %d에 응답,'y'는 %d에 응답을 가지고 있습니다"
-
-msgid "%d responses, but only %d variables"
-msgstr "%d개의 변수밖에 없습니다만, %d의 응답이 있습니다"
-
 msgid "number of weights = %d should equal %d (number of responses)"
 msgstr "중량감의 수는 %d입니다만, %d(응답의 수)에 동일하지 않으면 안됩니다"
 
@@ -1609,20 +1566,15 @@ msgstr "'x' 그리고 'y'는 동일 수의 레벨(최저 2)을 가지지 않으�
 msgid "need numeric data"
 msgstr "수치 데이터가 필요합니다"
 
-msgid "medpolish() did not converge in %d iterations"
-msgstr "%d 회 돌려주었습니다만, medpolish()가 연속으로 묶지 못하였습니다"
-
 msgid "'mlm' objects with weights are not supported"
 msgstr "중량감 포함의 'mlm' 오브젝트는 서포트 되고 있지 않습니다"
 
 msgid "X does not define a subspace of M"
 msgstr "x는 m의 부분 공간을 정의 하지 않습니다"
 
-msgid "residuals have rank"
-msgstr "나머지는 link를 가집니다"
-
-msgid "<"
-msgstr "<"
+#, fuzzy
+msgid "residuals have rank %s < %s"
+msgstr "나머지 링크(rank)는 %d < %d 를 가집니다"
 
 msgid "'model.tables' is not implemented for multiple responses"
 msgstr "'model.tables'는 다중 응답에 대해서 실제 적용되지 않습니다"
@@ -1661,7 +1613,8 @@ msgstr "형태'%s'에 대한 SEs는 실제 적요되지 않습니다"
 msgid "na.action must be a function"
 msgstr "na.action는 함수가 아니면 되지 않습니다"
 
-msgid "non-factors ignored:"
+#, fuzzy
+msgid "non-factors ignored: %s"
 msgstr "인자가 아닌 겻은 무시 되었습니다"
 
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
@@ -1693,19 +1646,11 @@ msgstr "변수 %s는 적용시키기 위한 것과는 다른 클래스로서 지
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data'는 행렬이나 배열은 아니고, data.frame이 아니면 되지 않습니다"
 
-#, fuzzy
-msgid "'newdata' had %d rows but variable(s) found have %d rows"
-msgstr ""
-"'newdata'는 행렬이나 배열은 아니고, 데이터 프레임이 아니면 되지 않습니다"
-
 msgid "character variable '%s' changed to a factor"
 msgstr "변수 '%s'는 인자가 아닙니다"
 
 msgid "variable '%s' is not a factor"
 msgstr "변수 '%s'는 인자가 아닙니다"
-
-msgid "factor '%s' has new level(s) %s"
-msgstr "인자 '%s'에는 새로운 레벨(level(s) %s가 있습니다"
 
 #, fuzzy
 msgid "'offset' must be numeric"
@@ -1761,9 +1706,6 @@ msgstr ""
 msgid "f() values at end points not of opposite sign"
 msgstr "f()의 end point에서의 값이 다른 부호를 가지지 않습니다"
 
-msgid "_NOT_ converged in"
-msgstr "연속으로 묶지 않았습니다"
-
 #, fuzzy
 msgid "control argument must be a named list"
 msgstr "'split' 인수는 리스트가 아니면 되지 않습니다"
@@ -1801,12 +1743,6 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "파라미터의 초기 추정값으로 구매 행렬이 특이합니다"
 
-msgid "unrecognized control element(s) named `"
-msgstr ""
-
-msgid "' ignored"
-msgstr ""
-
 #, fuzzy
 msgid "'data' must be a list or an environment"
 msgstr "'newdata'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"
@@ -1815,14 +1751,7 @@ msgstr "'newdata'는 행렬 또는 데이터 프레임이 아니면 되지 않�
 msgid "No starting values specified"
 msgstr "초기값이 주어지고 있지 않습니다"
 
-msgid "parameters without starting value in 'data':"
-msgstr ""
-
-#, fuzzy
-msgid "fitting parameters"
-msgstr "모든 파라미터가 고정되어 있었습니다"
-
-msgid "without any variables"
+msgid "parameters without starting value in 'data': %s"
 msgstr ""
 
 #, fuzzy
@@ -1881,13 +1810,12 @@ msgstr ""
 "'factr' (와 'pgtol')를 사용합니다"
 
 #, fuzzy
-msgid "one-dimensional optimization by Nelder-Mead is unreliable:"
+msgid ""
+"one-dimensional optimization by Nelder-Mead is unreliable:\n"
+"use \"Brent\" or optimize() directly"
 msgstr ""
 "Nelder-Mead method에 의한 1 차원 최적화는 인정 할수가 없습니다: optimize를 사"
 "용해 주십시오"
-
-msgid "use \"Brent\" or optimize() directly"
-msgstr ""
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
 msgstr ""
@@ -1908,7 +1836,9 @@ msgstr "'x'와 'n'는 동일 길이가 나오지 않으면 되지 않습니다"
 msgid "too few groups"
 msgstr "그룹이 너무 적습니다"
 
-msgid "Not plotting observations with leverage one:"
+msgid ""
+"Not plotting observations with leverage one:\n"
+"  %s"
 msgstr ""
 
 msgid "use only with \"lm\" objects"
@@ -1921,10 +1851,9 @@ msgstr "'which'는 1:4에서 없으면 되지 않습니다"
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' {1,..,%d}에서 없으면 되지 않습니다"
 
-msgid "hat values (leverages) are all ="
-msgstr ""
-
-msgid "and there are no factor predictors; no plot no. 5"
+msgid ""
+"hat values (leverages) are all = %s\n"
+" and there are no factor predictors; no plot no. 5"
 msgstr ""
 
 #, fuzzy
@@ -2152,10 +2081,12 @@ msgstr "무효인 인수 'omit'입니다"
 msgid "'k' must be positive"
 msgstr "'iter.max'는 positive이 아니면 되지 않습니다"
 
-msgid "'k' must be odd!  Changing 'k' to"
+#, fuzzy
+msgid "'k' must be odd!  Changing 'k' to %d"
 msgstr "'k'는 홀수가 아니면 되지 않습니다! 'k' 이하와 같이 변경합니다"
 
-msgid "'k' is bigger than 'n'!  Changing 'k' to"
+#, fuzzy
+msgid "'k' is bigger than 'n'!  Changing 'k' to %d"
 msgstr "'k'는 'n'보다 큽니다! 'k' 이하와 같이 변경합니다"
 
 msgid "bandwidth 'k' must be >= 1 and odd!"
@@ -2276,9 +2207,6 @@ msgstr "periodic smooth를 위해서 'x'는 0과 1사이에 있을 필요가 있
 msgid "no finite observations"
 msgstr "유한한 관측값이 충분히 없습니다"
 
-msgid "observation(s) with NAs, NaNs and/or Infs deleted"
-msgstr "NA, NaN 및 Inf의 관측값은 삭제되었습니다"
-
 msgid "'p' must be between 0 and 0.5"
 msgstr "'p'는 0과 0.5의 사이에 없으면 되지 않습니다"
 
@@ -2296,6 +2224,10 @@ msgstr "coverage 확률이 범위 [0,1]외입니다"
 
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위해서 사용합니다"
+
+#, fuzzy
+msgid "'y' must be strictly increasing or decreasing"
+msgstr "'vec'는 비감소 순서에 소트되어 있지 않으면 되지 않습니다"
 
 #, fuzzy
 msgid "'spline' requires n >= 1"
@@ -2492,9 +2424,6 @@ msgstr "'ma' 차수가 모순된 지정입니다"
 msgid "number of differences must be a positive integer"
 msgstr "계차의 수는 positive 정수가 아니면 되지 않습니다"
 
-msgid "'start.innov' is too short: need %d points"
-msgstr ""
-
 msgid "need an object with call component"
 msgstr "호출 요소를 가지는 오브젝트가 필요합니다"
 
@@ -2576,22 +2505,163 @@ msgstr ""
 "되지 않습니다"
 
 #, fuzzy
+msgid "using the %d/%d row from a combined fit"
+msgid_plural "using the %d/%d rows from a combined fit"
+msgstr[0] "결합한 적합로부터 %d/%d행을 사용합니다"
+
+#, fuzzy
+msgid "lower scope has term %s not included in model"
+msgid_plural "lower scope has terms %s not included in model"
+msgstr[0] "하위의 scpoe는 모델에서 포함하고 되지 않습니다"
+
+#, fuzzy
+msgid "upper scope has term %s not included in model"
+msgid_plural "upper scope has terms %s not included in model"
+msgstr[0] "하위의 scpoe는 모델에서 포함하고 되지 않습니다"
+
+#, fuzzy
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "개의 에러 terms가 있습니다. 하나만 허용됩니다"
 
 #, fuzzy
-msgid "extra argument %s is not a \"%s\""
-msgid_plural "extra arguments %s are not \"%s\"s"
+msgid "extra argument %s is not of class \"%s\""
+msgid_plural "extra arguments %s are not of class \"%s\"s"
 msgstr[0] "불필요한 인수는 버려졌습니다"
+
+#, fuzzy
+msgid "%d factor is too many for %d variables"
+msgid_plural "%d factors are too many for %d variables"
+msgstr[0] "%d개 인자는 %d개의 변수에 대해서 너무 많습니다"
+
+#, fuzzy
+msgid "'start' must have %d row"
+msgid_plural "'start' must have %d rows"
+msgstr[0] "'srart'는 %d 행을 가지지 않으면 안됩니다"
+
+#, fuzzy
+msgid "'init'; must have 1 column"
+msgid_plural "'init'; must have 1 or %d columns"
+msgstr[0] "'init'; 1 또는 %d개의 cols를 가지지 않으면 안됩니다"
+
+#, fuzzy
+msgid "X matrix has rank %d, but only %d observation"
+msgid_plural "X matrix has rank %d, but only %d observations"
+msgstr[0] "X의 행렬는 link %d이지만, %d 관측값만 가지고 있습니다"
+
+#, fuzzy
+msgid "did not converge in %d iteration"
+msgid_plural "did not converge in %d iterations"
+msgstr[0] "%d를 돌려주었습니만, 한꺼번에 묶지 못했습니다"
+
+#, fuzzy
+msgid "%d missing value deleted"
+msgid_plural "%d missing values deleted"
+msgstr[0] "%d개의 결손값이 삭제되었습니다"
+
+#, fuzzy
+msgid "'X' matrix has %d response"
+msgid_plural "'X' matrix has %d responses"
+msgstr[0] "'x'행렬은 %d에 응답,'y'는 %d에 응답을 가지고 있습니다"
+
+msgid "'Y' has %d response"
+msgid_plural "'Y' has %d responses"
+msgstr[0] ""
+
+#, fuzzy
+msgid "%d response"
+msgid_plural "%d responses"
+msgstr[0] "응답"
+
+#, fuzzy
+msgid "but only %d variable"
+msgid_plural "but only %d variables"
+msgstr[0] "%d개의 변수밖에 없습니다만, %d의 응답이 있습니다"
+
+#, fuzzy
+msgid "medpolish() did not converge in %d iteration"
+msgid_plural "medpolish() did not converge in %d iterations"
+msgstr[0] "%d 회 돌려주었습니다만, medpolish()가 연속으로 묶지 못하였습니다"
+
+#, fuzzy
+msgid "'newdata' had %d row"
+msgid_plural "'newdata' had %d rows"
+msgstr[0] "'srart'는 %d 행을 가지지 않으면 안됩니다"
+
+#, fuzzy
+msgid "but variable found had %d row"
+msgid_plural "but variables found have %d rows"
+msgstr[0] ""
+"'newdata'는 행렬이나 배열은 아니고, 데이터 프레임이 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "factor %s has new level %s"
+msgid_plural "factor %s has new levels %s"
+msgstr[0] "인자 '%s'에는 새로운 레벨(level(s) %s가 있습니다"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
 msgstr[0] ""
 
+#, fuzzy
+msgid "_NOT_ converged in %d iteration"
+msgid_plural "_NOT_ converged in %d iterations"
+msgstr[0] "%d를 돌려주었습니만, 한꺼번에 묶지 못했습니다"
+
+msgid "unrecognized control element named %s ignored"
+msgid_plural "unrecognized control elements named %s ignored"
+msgstr[0] ""
+
+#, fuzzy
+msgid "fitting parameter %s without any variables"
+msgid_plural "fitting parameters %s without any variables"
+msgstr[0] "모든 파라미터가 고정되어 있었습니다"
+
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "모델식에서 파라미터 %s가 없습니다"
+
+#, fuzzy
+msgid "%d observation with NA, NaN or Inf deleted"
+msgid_plural "%d observations with NAs, NaNs and/or Infs deleted"
+msgstr[0] "NA, NaN 및 Inf의 관측값은 삭제되었습니다"
+
+msgid "'start.innov' is too short: need %d point"
+msgid_plural "'start.innov' is too short: need %d points"
+msgstr[0] ""
+
+#, fuzzy
+#~ msgid "upper scope does not include model term(s) %s"
+#~ msgstr "상위의 scope는 모델을 포함하고 있지 않습니다"
+
+#~ msgid "for the binomial family, y must be a vector of 0 and 1's"
+#~ msgstr ""
+#~ "2항 패밀리에서는 y는 0과 1으로부터 되는 vector가 아니면 되지 않습니다."
+
+#~ msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
+#~ msgstr ""
+#~ "동일한 2항 패밀리에 대해서 y는 0과 1의 vector가 아니면 되지 않습니다"
+
+#~ msgid "did not converge in"
+#~ msgstr "한꺼번에 묶지 않습니다"
+
+#~ msgid "iterations"
+#~ msgstr "반복"
+
+#~ msgid "removed because response differs from"
+#~ msgstr "(을)를 가지는 모델을 제거 했습니다. 응답이하와 다르기 때문입니다"
+
+#~ msgid "model 1"
+#~ msgstr "모델 1"
+
+#~ msgid "residuals have rank"
+#~ msgstr "나머지는 link를 가집니다"
+
+#~ msgid "<"
+#~ msgstr "<"
+
+#~ msgid "_NOT_ converged in"
+#~ msgstr "연속으로 묶지 않았습니다"
 
 #, fuzzy
 #~ msgid "invalid length(xout)"
@@ -2614,9 +2684,6 @@ msgstr[0] "모델식에서 파라미터 %s가 없습니다"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec'가 NA를 포함하고 있습니다"
-
-#~ msgid "'vec' must be sorted non-decreasingly"
-#~ msgstr "'vec'는 비감소 순서에 소트되어 있지 않으면 되지 않습니다"
 
 #, fuzzy
 #~ msgid "invalid length(vec)"

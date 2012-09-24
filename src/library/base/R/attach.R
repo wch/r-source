@@ -185,7 +185,8 @@ ls <- objects <-
             name <- substitute(name)
             if (!is.character(name))
                 name <- deparse(name)
-            warning(sQuote(name), " converted to character string")
+            warning(gettextf("%s converted to character string", sQuote(name)),
+                    domain = NA)
             pos <- name
         }
         else

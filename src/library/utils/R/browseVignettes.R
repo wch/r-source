@@ -61,8 +61,9 @@ browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
 print.browseVignettes <- function(x, ...)
 {
     if (length(x) == 0L) {
-        message("No vignettes found by ",
-                paste(deparse(attr(x, "call")), collapse=" "))
+        message(gettextf("No vignettes found by %s",
+                         paste(deparse(attr(x, "call")), collapse=" ")),
+                domain = NA)
         return(invisible(x))
     }
 

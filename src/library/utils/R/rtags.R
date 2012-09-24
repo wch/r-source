@@ -185,8 +185,8 @@ rtags <-
         src <- grep(keep.re, src, value = TRUE)
     for (s in src)
     {
-        if (verbose) message("Processing file ", s)
-        tryCatch(
+        if (verbose) message(gettextf("Processing file %s", s), domain = NA)
+       tryCatch(
                  rtags.file(s, ofile = ofile, append = TRUE),
                  error = function(e) NULL)
     }

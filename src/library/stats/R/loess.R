@@ -479,9 +479,9 @@ anova.loess <- function(object, ...)
     ## calculate the number of models
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning("models with response ",
-                sQuote(deparse(responses[!sameresp])),
-                "removed because response differs from model 1")
+        warning(gettextf("models with response %s removed because response differs from model 1",
+                         sQuote(deparse(responses[!sameresp]))),
+                domain = NA)
     }
     nmodels <- length(objects)
     if(nmodels <= 1L) stop("no models to compare")

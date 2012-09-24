@@ -508,6 +508,9 @@
 
       \item The translations form a separate group in the Windows
       installer, so can be omitted if desired.
+      
+      \item The markup for many messages has been changed to make them
+      easier to translate, incorporating suggestions from Łukasz Daniel.
     }
   }
 
@@ -553,9 +556,6 @@
       \item The Fortran code underlying \code{nlminb()} could
       infinite-loop if any the functions returned \code{NA} or
       \code{NaN}, so this has been made an error.
-
-      \item Custom line types would sometimes segfault on the Cairo
-      device. (PR{15055}.)
     }
   }
 }
@@ -942,6 +942,9 @@
       
       \item The detection of the C stack direction is better protected
       against compiler optimization. (\PR{15011}.)
+
+      \item Long custom line types would sometimes segfault on the
+      cairographics-based devices. (PR{15055}.)
     }
   }
 }

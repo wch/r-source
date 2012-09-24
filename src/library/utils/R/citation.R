@@ -93,8 +93,10 @@ function(given = NULL, family = NULL, middle = NULL,
         if(.is_not_nonempty_text(email)) email <- NULL
         if(.is_not_nonempty_text(role)) {
             if(!is.null(role))
-                warning(gettextf("Invalid role specification(s): %s.",
-                                 paste(sQuote(role), collapse = ", ")),
+                warning(sprintf(ngettext(length(role),
+                                         "Invalid role specification: %s.",
+                                         "Invalid role specifications: %s."),
+                                paste(sQuote(role), collapse = ", ")),
                         domain = NA)
             role <- NULL
         }
@@ -148,9 +150,10 @@ function(role)
                       0L)
         role[pos[ind > 0L]] <- MARC_relator_db$code[ind]
         if(any(ind <- (ind == 0L))) {
-            warning(gettextf("Invalid role specification(s): %s.",
-                             paste(sQuote(role[pos[ind]]),
-                                   collapse = ", ")),
+            warning(sprintf(ngettext(length(pos[ind]),
+                                     "Invalid role specification: %s.",
+                                     "Invalid role specifications: %s."),
+                            paste(sQuote(role[pos[ind]]), collapse = ", ")),
                     domain = NA)
             role <- role[-pos[ind]]
         }
@@ -626,10 +629,10 @@ function(x, style = "text", .bibstyle=NULL, ...)
 function(x)
 {
     x <- unclass(x)
-    
+
     crossrefs <- lapply(x, `[[`, "crossref")
     pc <- which(vapply(crossrefs, length, 0L) > 0L)
-    
+
     if(length(pc)) {
         keys <- lapply(x, attr, "key")
         keys[!vapply(keys, length, 0L)] <- ""
@@ -668,7 +671,7 @@ function(x)
             x[pc[bad]] <- NULL
         }
     }
-    
+
     class(x) <- "bibentry"
     x
 }
@@ -726,7 +729,7 @@ function(cname, cargs)
 function(x, collapse = FALSE)
 {
     x$.index <- NULL
-    
+
     ## There are two subleties for constructing R calls giving a given
     ## bibentry object.
     ## * There can be mheader and mfooter entries.

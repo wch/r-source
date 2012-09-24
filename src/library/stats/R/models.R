@@ -401,13 +401,19 @@ model.frame.default <-
         ## need to do this before subsetting and na.action
         nr2 <- max(sapply(variables, NROW))
         if(nr2 != nr)
-            warning(gettextf(
-                    "'newdata' had %d rows but variable(s) found have %d rows",
-                             nr, nr2), call.=FALSE)
+            warning(sprintf(paste0(ngettext(nr,
+                                            "'newdata' had %d row",
+                                            "'newdata' had %d rows"),
+                                   " ",
+                                  ngettext(nr2,
+                                           "but variable found had %d row",
+                                           "but variables found have %d rows")),
+                            nr, nr2),
+                    call. = FALSE, domain = NA)
     }
     if(is.null(attr(formula, "predvars"))) {
         for (i in seq_along(varnames))
-            predvars[[i+1]] <- makepredictcall(variables[[i]], vars[[i+1]])
+            predvars[[i+1L]] <- makepredictcall(variables[[i]], vars[[i+1L]])
         attr(formula, "predvars") <- predvars
     }
     extras <- substitute(list(...))
@@ -433,8 +439,10 @@ model.frame.default <-
 		    xi <- xi[, drop = TRUE] # drop unused levels
                     nxl <- levels(xi)
 		    if(any(m <- is.na(match(nxl, xl))))
-			stop(gettextf("factor '%s' has new level(s) %s",
-                                      nm, paste(nxl[m], collapse=", ")),
+                        stop(sprintf(ngettext(length(m),
+                                              "factor %s has new level %s",
+                                              "factor %s has new levels %s"),
+                                     nm, paste(nxl[m], collapse=", ")),
                              domain = NA)
 		    data[[nm]] <- factor(xi, levels=xl, exclude=NULL)
 		}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -317,18 +317,6 @@ msgstr ""
 "패키지 %s 존재하지만 R >= 2.10.0 에서는 설치할 수 없습니다. 따라서 xrefs 는 "
 "확인될 수 없습니다 "
 
-msgid "Obsolete package(s) %s in Rd xrefs"
-msgstr "Obsolete package(s) %s in Rd xrefs"
-
-msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr "Rd xrefs 를 확인할 수 없는 패키지(들): %s "
-
-msgid "Unknown package(s) %s in Rd xrefs"
-msgstr "Rd xrefs 내에서 확인할 수 없는 패키지(들) %s "
-
-msgid "Missing link(s) in documentation object '%s':"
-msgstr "문서객체 '%s' 내에서 link(s) 가 빠졌습니다 "
-
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
@@ -434,12 +422,6 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "Generics without methods in"
-msgstr "Generics without methods in"
-
-msgid ":"
-msgstr ":"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "인수 'file' 은 문자열이거나 연결이어야 합니다 "
 
@@ -474,10 +456,6 @@ msgstr "'dir' 또는 'file' 을 반드시 지정해야 합니다 "
 
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "비어 있는 이름을 가진 Rd 객체들은 다루어 질 수 없습니다 "
-
-#, fuzzy
-msgid "missing/empty %s field in Rd file(s)"
-msgstr "Rd 파일에서 \\name 항목이 비어있습니다 "
 
 msgid "No help on %s found in RdDB %s"
 msgstr "RdDB %s 에서 %s 에 대한 도움말을 찾을 수 없습니다 "
@@ -573,9 +551,6 @@ msgstr "'%s' 이 '%s' 항목으로부터 빠진 파일들: "
 
 msgid "unable to create '%s'"
 msgstr "'%s' 를 작성할수가 없습니다"
-
-msgid "unable to re-encode '%s' line(s) %s"
-msgstr "'%s' 줄들 %s 를 재인코딩할 수 없습니다 "
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "INDEX 를 '%s' 에 복사할 수 없습니다"
@@ -815,7 +790,8 @@ msgstr "잘못된 패키지 "
 msgid "ERROR: no packages specified"
 msgstr "에러: 지정된 패키지가 없습니다 "
 
-msgid "ERROR: cannot cd to directory"
+#, fuzzy
+msgid "ERROR: cannot cd to directory %s"
 msgstr "에러: cd 할 수 있는 디렉토리가 없습니다 "
 
 msgid "ERROR: no permission to install to directory"
@@ -1238,6 +1214,21 @@ msgstr "Call sequence:"
 msgid "parsing '%s'"
 msgstr "parsing '%s'"
 
+#, fuzzy
+msgid "Obsolete package %s in Rd xrefs"
+msgid_plural "Obsolete packages %s in Rd xrefs"
+msgstr[0] "Obsolete package(s) %s in Rd xrefs"
+
+#, fuzzy
+msgid "Package unavailable to check Rd xrefs: %s"
+msgid_plural "Packages unavailable to check Rd xrefs: %s"
+msgstr[0] "Rd xrefs 를 확인할 수 없는 패키지(들): %s "
+
+#, fuzzy
+msgid "Missing link in documentation object %s:"
+msgid_plural "Missing links in documentation object %s:"
+msgstr[0] "문서객체 '%s' 내에서 link(s) 가 빠졌습니다 "
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] "노트: %d 를 찾았으며 Latin-1 문자열로 마크합니다 "
@@ -1272,9 +1263,40 @@ msgid "Found .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "다음의 함수들에서 .Internal 호출들을  찾았습니다 "
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following reference class:"
+msgid_plural ""
+"Found .Internal calls in methods for the following reference classes:"
+msgstr[0] "다음의 함수들에서 .Internal 호출들을  찾았습니다 "
+
+#, fuzzy
+msgid "Generics without method in %s: %s"
+msgid_plural "Generics without methods in %s: %s"
+msgstr[0] "Generics without methods in"
+
+#, fuzzy
+msgid ""
+"missing/empty \\name field in Rd file\n"
+"%s"
+msgid_plural ""
+"missing/empty \\name field in Rd files\n"
+"%s"
+msgstr[0] "Rd 파일에서 \\name 항목이 비어있습니다 "
+
+#, fuzzy
+msgid "unable to re-encode %s line %s"
+msgid_plural "unable to re-encode %s lines %s"
+msgstr[0] "'%s' 줄들 %s 를 재인코딩할 수 없습니다 "
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니다 "
+
+#~ msgid "Unknown package(s) %s in Rd xrefs"
+#~ msgstr "Rd xrefs 내에서 확인할 수 없는 패키지(들) %s "
+
+#~ msgid ":"
+#~ msgstr ":"
 
 #~ msgid "Generics g in env ="
 #~ msgstr "Generics g in env ="

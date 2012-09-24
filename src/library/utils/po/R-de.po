@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:47\n"
 "PO-Revision-Date: 2012-09-10 14:39+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -68,10 +68,12 @@ msgstr ""
 "Parsing-Fehler oder leere Option in\n"
 "%s"
 
-msgid "Warning: unknown option"
+#, fuzzy
+msgid "Warning: unknown option %s"
 msgstr "Warnung: unbekannte Option"
 
-msgid "Created PDF document"
+#, fuzzy
+msgid "Created PDF document %s"
 msgstr "Erzeugte PDF Dokument"
 
 #, fuzzy
@@ -98,9 +100,6 @@ msgstr "Wert der 'strip.white' Option sollte in Kleinbuchstaben sein"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "Elemente von 'what' nach dem ersten werden ignoriert"
-
-msgid "%d occurrences in %s"
-msgstr "%d Vorkommen in %s"
 
 msgid "No suitable spell check program found."
 msgstr "Keine passende Rechtschreibprüfung gefunden."
@@ -133,11 +132,9 @@ msgstr ""
 "Nutze <code> %s </code> \n"
 " um die Vignetten in allen <strong>verfügbaren</strong> Paketen aufzulisten"
 
-msgid "No vignettes found by"
+#, fuzzy
+msgid "No vignettes found by %s"
 msgstr "Keine Vignetten gefunden durch"
-
-msgid "call"
-msgstr "Aufruf"
 
 msgid "Package %s: DESCRIPTION not found"
 msgstr "Paket %s: DESCRIPTION nicht gefunden"
@@ -163,9 +160,6 @@ msgstr "Es ist empfohlen %s anstelle von %s zu nutzen."
 
 msgid "Use either %s or %s but not both."
 msgstr "Nutze entweder %s oder %s aber nicht beide."
-
-msgid "Invalid role specification(s): %s."
-msgstr "unzulässige Spezifikation(en) für role: %s."
 
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "Es ist empfohlen %s/%s anstelle von %s/%s/%s zu nutzen."
@@ -252,6 +246,9 @@ msgstr "Datei 'filelist' fehlt für Verzeichnis %s"
 
 msgid "data set %s not found"
 msgstr "Datensatz %s nicht gefunden"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "Art '%s' noch nicht implementiert"
@@ -442,7 +439,8 @@ msgstr ""
 msgid "creation of %s failed"
 msgstr "Erzeugung von %s fehlgeschlagen"
 
-msgid "Saving help page to"
+#, fuzzy
+msgid "Saving help page to %s"
 msgstr "Sichere Hilfeseiten nach"
 
 msgid "argument %s must be a single character string"
@@ -460,12 +458,6 @@ msgstr "falsche Typspezifikation"
 msgid "argument 'help.db' is deprecated"
 msgstr "Argument 'help.db' ist veraltet"
 
-msgid "Rebuilding the help.search() database"
-msgstr "Neu-Erzeugung der help.search() Datenbank"
-
-msgid "..."
-msgstr "..."
-
 msgid "Packages {readRDS() sequentially}:"
 msgstr "Pakete {readRDS() sequentiell}:"
 
@@ -477,9 +469,6 @@ msgstr "konnte Paket %s nicht finden"
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "Paket %s hat leere hsearch Daten - seltsam"
-
-msgid "no hsearch.rds meta data for package"
-msgstr "keine hsearch.rds Metadaten für Paket"
 
 msgid "reencoding ..."
 msgstr "rekodieren ..."
@@ -502,9 +491,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "falsche 'agrep' Spezifikation"
-
-msgid "matched %d objects."
-msgstr "%d übereinstimmenden Objekte."
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "ungültiger Browsername, überprüfen Sie options(\"browser\")."
@@ -549,12 +535,6 @@ msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "DESCRIPTIN von Paket '%s' fehlt oder zerstört"
-
-msgid "package"
-msgstr "Paket"
-
-msgid "not found"
-msgstr " nicht gefunden"
 
 msgid "cannot update HTML package index"
 msgstr "kann HTML Paketindex nicht aktualisieren"
@@ -735,7 +715,8 @@ msgstr "'lib = \"%s\" ist nicht schreibbar"
 msgid "unable to install packages"
 msgstr "kann keine Pakete installieren"
 
-msgid "unable to create"
+#, fuzzy
+msgid "unable to create %s"
 msgstr "kann nicht erzeugen"
 
 msgid "inferring 'repos = NULL' from the file name"
@@ -775,7 +756,7 @@ msgstr ""
 "Diese Version von R ist nicht vorbereitet, um Source-Pakete zu installieren\n"
 "Wenn es  aus einem RPM installiert wurde, benötigen Sie evtl. das R-devel RPM"
 
-msgid "system (cmd0):"
+msgid "system (cmd0): %s"
 msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
@@ -787,13 +768,10 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
-msgid "foundpkgs:"
+msgid "foundpkgs: %s"
 msgstr ""
 
-msgid ","
-msgstr ","
-
-msgid "files:"
+msgid "files: %s"
 msgstr ""
 
 msgid ""
@@ -929,16 +907,11 @@ msgstr "fehlende Längen für einige Felder"
 msgid "invalid format"
 msgstr "unzulässiges Format"
 
-msgid "last record incomplete, %d lines discarded"
-msgstr "letzter Eintrag unvollständig, %d Zeilen verworfen"
-
 msgid "transfer failure"
 msgstr "Übertragungsfehler"
 
-msgid "HTTPUserAgent"
-msgstr "HTTPUserAgent"
-
-msgid "option must be a length one character vector or NULL"
+#, fuzzy
+msgid "%s option must be a length one character vector or NULL"
 msgstr "Option muss Zeichenkettenvektor der Länge 1 oder NULL sein"
 
 msgid "'file' must be a character string or connection"
@@ -965,14 +938,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "kann 'x' nicht nach Roman unwandeln"
 
-msgid "Invalid roman numeral(s): %s"
-msgstr "Ungültige römische Zahl(en): %s"
-
 msgid "length mismatch: bug in code!"
 msgstr "Längen passen nicht: Fehler im Code!"
-
-msgid "Processing file"
-msgstr "Verarbeite Datei"
 
 msgid "no valid packages were specified"
 msgstr "keine gültigen Pakete angegeben"
@@ -1001,7 +968,7 @@ msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "ungültige options('str') -- nutze stattdessen Standard"
 
 #, fuzzy
-msgid "invalid components in options(\"str\"):"
+msgid "invalid components in options(\"str\"): %s"
 msgstr "ungültige Kompoenten in options('str')"
 
 #, fuzzy
@@ -1149,17 +1116,14 @@ msgstr "Datei %s ist kein OS X Binärpaket"
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "Paket %s erfolgreich ausgepackt und MD5 Summen abgeglichen"
 
-msgid "ERROR: failed to lock directory"
+#, fuzzy
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
 msgstr "ERROR: Verzeichnis-Lock fehlgeschlagen"
 
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-"Um zu modifizieren\n"
-"Versuche Entfernen"
-
-msgid "ERROR: failed to create lock directory"
+#, fuzzy
+msgid "ERROR: failed to create lock directory %s"
 msgstr "ERROR: Kann lock-Verzeichnis nicht erzeugen"
 
 msgid "restored %s"
@@ -1168,8 +1132,8 @@ msgstr "%s wiederhergestellt"
 msgid "unable to move temporary installation %s to %s"
 msgstr "kann temporäre Installation %s nicht nach %s verschieben"
 
-msgid "cannot remove prior installation of package"
-msgstr "kann alte Installation des Pakets nicht entfernen"
+msgid "cannot remove prior installation of package %s"
+msgstr "kann alte Installation von Paket %s nicht entfernen"
 
 msgid ""
 "The downloaded binary packages are in\n"
@@ -1202,19 +1166,34 @@ msgstr "Erzeugen von %s fehlgeschlagen"
 msgid "there is no 'libs' directory in package %s"
 msgstr "kein 'libs' Verzeichnis im Paket %s"
 
-msgid "cannot remove prior installation of package %s"
-msgstr "kann alte Installation von Paket %s nicht entfernen"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() kann nicht nicht-interaktiv genutzt werden"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() kann nicht nicht-interaktiv genutzt werden"
 
+#, fuzzy
+msgid "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0] "%d Vorkommen in %s"
+msgstr[1] "%d Vorkommen in %s"
+
+#, fuzzy
+msgid "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0] "unzulässige Spezifikation(en) für role: %s."
+msgstr[1] "unzulässige Spezifikation(en) für role: %s."
+
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
 msgstr[0] "Klasse verworfen von Spalte %s"
 msgstr[1] "Klassen verworfen von Spalten %s"
+
+#, fuzzy
+msgid "matched %d object."
+msgid_plural "matched %d objects."
+msgstr[0] "%d übereinstimmenden Objekte."
+msgstr[1] "%d übereinstimmenden Objekte."
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1291,10 +1270,59 @@ msgstr[1] ""
 "Es gibt Binärversionen (und diese werden installiert), jedoch sind\\n\"\n"
 "\"die Quelltexte neuer"
 
+#, fuzzy
+msgid "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0] "letzter Eintrag unvollständig, %d Zeilen verworfen"
+msgstr[1] "letzter Eintrag unvollständig, %d Zeilen verworfen"
+
+#, fuzzy
+msgid "Invalid roman numeral: %s"
+msgid_plural "Invalid roman numerals: %s"
+msgstr[0] "Ungültige römische Zahl(en): %s"
+msgstr[1] "Ungültige römische Zahl(en): %s"
+
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "call"
+#~ msgstr "Aufruf"
+
+#~ msgid "Rebuilding the help.search() database"
+#~ msgstr "Neu-Erzeugung der help.search() Datenbank"
+
+#~ msgid "..."
+#~ msgstr "..."
+
+#~ msgid "no hsearch.rds meta data for package"
+#~ msgstr "keine hsearch.rds Metadaten für Paket"
+
+#~ msgid "package"
+#~ msgstr "Paket"
+
+#~ msgid "not found"
+#~ msgstr " nicht gefunden"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "HTTPUserAgent"
+#~ msgstr "HTTPUserAgent"
+
+#~ msgid "Processing file"
+#~ msgstr "Verarbeite Datei"
+
+#~ msgid ""
+#~ "for modifying\n"
+#~ "Try removing"
+#~ msgstr ""
+#~ "Um zu modifizieren\n"
+#~ "Versuche Entfernen"
+
+#~ msgid "cannot remove prior installation of package"
+#~ msgstr "kann alte Installation des Pakets nicht entfernen"
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr ""

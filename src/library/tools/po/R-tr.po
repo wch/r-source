@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -294,18 +294,6 @@ msgid ""
 "checked"
 msgstr ""
 
-msgid "Obsolete package(s) %s in Rd xrefs"
-msgstr ""
-
-msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr ""
-
-msgid "Unknown package(s) %s in Rd xrefs"
-msgstr ""
-
-msgid "Missing link(s) in documentation object '%s':"
-msgstr ""
-
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
@@ -405,12 +393,6 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "Generics without methods in"
-msgstr ""
-
-msgid ":"
-msgstr ""
-
 msgid "argument 'file' must be a character string or connection"
 msgstr ""
 
@@ -439,9 +421,6 @@ msgid "you must specify 'dir' or 'files'"
 msgstr ""
 
 msgid "cannot deal with Rd objects with missing/empty names"
-msgstr ""
-
-msgid "missing/empty %s field in Rd file(s)"
 msgstr ""
 
 msgid "No help on %s found in RdDB %s"
@@ -532,9 +511,6 @@ msgid "files in '%s' missing from '%s' field:"
 msgstr ""
 
 msgid "unable to create '%s'"
-msgstr ""
-
-msgid "unable to re-encode '%s' line(s) %s"
 msgstr ""
 
 msgid "unable to copy INDEX to '%s'"
@@ -760,7 +736,7 @@ msgstr ""
 msgid "ERROR: no packages specified"
 msgstr ""
 
-msgid "ERROR: cannot cd to directory"
+msgid "ERROR: cannot cd to directory %s"
 msgstr ""
 
 msgid "ERROR: no permission to install to directory"
@@ -1165,6 +1141,21 @@ msgstr ""
 msgid "parsing '%s'"
 msgstr ""
 
+msgid "Obsolete package %s in Rd xrefs"
+msgid_plural "Obsolete packages %s in Rd xrefs"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Package unavailable to check Rd xrefs: %s"
+msgid_plural "Packages unavailable to check Rd xrefs: %s"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Missing link in documentation object %s:"
+msgid_plural "Missing links in documentation object %s:"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] ""
@@ -1203,6 +1194,31 @@ msgstr[1] ""
 
 msgid "Found .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Found .Internal call in methods for the following reference class:"
+msgid_plural ""
+"Found .Internal calls in methods for the following reference classes:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Generics without method in %s: %s"
+msgid_plural "Generics without methods in %s: %s"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid ""
+"missing/empty \\name field in Rd file\n"
+"%s"
+msgid_plural ""
+"missing/empty \\name field in Rd files\n"
+"%s"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "unable to re-encode %s line %s"
+msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] ""
 msgstr[1] ""
 

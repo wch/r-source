@@ -474,7 +474,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         } else if (a == "--compact") {
             compact <- "qpdf"
         } else if (substr(a, 1, 1) == "-") {
-            message("Warning: unknown option ", sQuote(a))
+            message(gettextf("Warning: unknown option %s", sQuote(a)),
+                    domain = NA)
         } else file <- c(file, a)
        args <- args[-1L]
     }
@@ -494,7 +495,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         texfile <- basename(sub("\\.[rsRS][[:alpha:]]+$", ".tex", file))
         tools::texi2pdf(texfile, clean = TRUE)
         ofile <- sub("\\.tex$", ".pdf", texfile)
-        message("Created PDF document ", sQuote(ofile))
+        message(gettextf("Created PDF document %s", sQuote(ofile)),
+                domain = NA)
         if(compact != "no") {
             ## <NOTE>
             ## Same code as used for --compact-vignettes in
@@ -575,7 +577,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         } else if (substr(a, 1, 10) == "--options=") {
             options <- substr(a, 11, 1000)
         } else if (substr(a, 1, 1) == "-") {
-            message("Warning: unknown option ", sQuote(a))
+            message(gettextf("Warning: unknown option %s", sQuote(a)),
+                    domain = NA)
         } else file <- c(file, a)
         args <- args[-1L]
     }

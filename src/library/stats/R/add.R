@@ -152,8 +152,10 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         y <- model.response(m, "numeric")
         newn <- length(y)
         if(newn < oldn)
-            warning(gettextf("using the %d/%d rows from a combined fit",
-                             newn, oldn), domain = NA)
+            warning(sprintf(ngettext(newn,
+                                     "using the %d/%d row from a combined fit",
+                                     "using the %d/%d rows from a combined fit"),
+                            newn, oldn), domain = NA)
     } else {
         ## need to get offset and weights from somewhere
         wt <- object$weights
@@ -269,8 +271,11 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT",
         }
         newn <- length(y)
         if(newn < oldn)
-            warning(gettextf("using the %d/%d rows from a combined fit",
-                             newn, oldn), domain = NA)
+            warning(sprintf(ngettext(newn,
+                                     "using the %d/%d row from a combined fit",
+                                     "using the %d/%d rows from a combined fit"),
+                            newn, oldn), domain = NA)
+
     } else {
         ## need to get offset and weights from somewhere
         wt <- object$prior.weights
@@ -632,8 +637,10 @@ factor.scope <- function(factor, scope)
                              function(x) paste(sort(x), collapse=":"))
 	    where <- match(nmdrop0, nmfac0, 0L)
 	    if(any(!where))
-                stop(gettextf("lower scope has term(s) %s not included in model",
-                              paste(sQuote(nmdrop[where==0]), collapse=", ")),
+                stop(sprintf(ngettext(sum(where==0),
+                                      "lower scope has term %s not included in model",
+                                      "lower scope has terms %s not included in model"),
+                             paste(sQuote(nmdrop[where==0]), collapse=", ")),
                      domain = NA)
 	    facs <- factor[, -where, drop = FALSE]
 	    nmdrop <- nmfac[-where]
@@ -660,8 +667,10 @@ factor.scope <- function(factor, scope)
                              function(x) paste(sort(x), collapse=":"))
 	    where <- match(nmfac0, nmadd0, 0L)
 	    if(any(!where))
-                stop(gettextf("upper scope does not include model term(s) %s",
-                              paste(sQuote(nmfac[where==0L]), collapse=", ")),
+                stop(sprintf(ngettext(sum(where==0),
+                                      "upper scope has term %s not included in model",
+                                      "upper scope has terms %s not included in model"),
+                             paste(sQuote(nmdrop[where==0]), collapse=", ")),
                      domain = NA)
 	    nmadd <- nmadd[-where]
 	    add <- add[, -where, drop = FALSE]

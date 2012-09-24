@@ -107,8 +107,9 @@ str.default <-
     }
     else {
         if (!all(names(strO) %in% oDefs))
-            warning('invalid components in options("str"): ',
-                    paste(setdiff(names(strO), oDefs), collapse = ", "))
+            warning(gettextf("invalid components in options(\"str\"): %s",
+                             paste(setdiff(names(strO), oDefs), collapse = ", ")),
+                    domain = NA)
         strO <- modifyList(strOptions(), strO)
     }
     strict.width <- match.arg(strict.width, choices = c("no", "cut", "wrap"))

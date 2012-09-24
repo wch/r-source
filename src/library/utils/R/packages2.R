@@ -252,7 +252,8 @@ install.packages <-
 		ans <- ask.yes.no("Would you like to create a personal library\n%s\nto install packages into?")
 		if(identical(ans, "no")) stop("unable to install packages")
 		if(!dir.create(userdir, recursive = TRUE))
-		    stop("unable to create ", sQuote(userdir))
+                    stop(gettextf("unable to create %s", sQuote(userdir)),
+                         domain = NA)
 		.libPaths(c(userdir, .libPaths()))
 	    }
 	} else stop("unable to install packages")
@@ -480,7 +481,8 @@ install.packages <-
     if (!missing(INSTALL_opts))
         cmd0 <- paste(cmd0, paste(INSTALL_opts, collapse = " "))
 
-    if(verbose) message("system (cmd0): ", cmd0)
+    if(verbose) message(gettextf("system (cmd0): %s", cmd0), domain = NA)
+
     if(is.null(repos) & missing(contriburl)) {
         ## install from local source tarball(s)
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
@@ -522,12 +524,16 @@ install.packages <-
     ## at this point 'pkgs' may contain duplicates,
     ## the same pkg in different libs
     if(length(foundpkgs)) {
-	if(verbose) message("foundpkgs: ", paste(foundpkgs, collapse=", "))
+	if(verbose) message(gettextf("foundpkgs: %s",
+                                     paste(foundpkgs, collapse=", ")),
+                            domain = NA)
         update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
         found <- pkgs %in% foundpkgs[, 1L]
         files <- foundpkgs[match(pkgs[found], foundpkgs[, 1L]), 2L]
-	if(verbose) message("files: ", paste(files, collapse=", \n\t"))
+	if(verbose) message(gettextf("files: %s",
+                                     paste(files, collapse=", \n\t")),
+                            domain = NA)
         update <- cbind(update[found, , drop=FALSE], file = files)
         if(nrow(update) > 1L) {
             upkgs <- unique(pkgs <- update[, 1L])

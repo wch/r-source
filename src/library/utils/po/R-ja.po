@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:47\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -64,10 +64,12 @@ msgstr ""
 " 構文解析エラーか空のオプションが以下にあります \n"
 " %s "
 
-msgid "Warning: unknown option"
+#, fuzzy
+msgid "Warning: unknown option %s"
 msgstr " 警告：　未知のオプション "
 
-msgid "Created PDF document"
+#, fuzzy
+msgid "Created PDF document %s"
 msgstr "PDF 文章を作成 "
 
 #, fuzzy
@@ -94,9 +96,6 @@ msgstr " 'strip.white' オプションの値は小文字でなければなりま
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr " 'what' の要素の最初のもの以降は無視されます "
-
-msgid "%d occurrences in %s"
-msgstr " %d 回 %s 中に起きました "
 
 msgid "No suitable spell check program found."
 msgstr " 適当なスペルチェックプログラムが見つかりません． "
@@ -129,11 +128,9 @@ msgstr ""
 " すべての<strong>利用可能な</strong>パッケージのvignetteのリストを表示するに"
 "は<code>%s</code>を使ってください "
 
-msgid "No vignettes found by"
+#, fuzzy
+msgid "No vignettes found by %s"
 msgstr " ビニエット(vignette)が見付かりません "
-
-msgid "call"
-msgstr " call "
 
 msgid "Package %s: DESCRIPTION not found"
 msgstr " パッケージ %s: DESCRIPTION が見つかりません "
@@ -158,9 +155,6 @@ msgstr " %s の代わりに %s を使うことをおすすめします． "
 
 msgid "Use either %s or %s but not both."
 msgstr " %s か %s のどちらかを使いますが，両方ではありません． "
-
-msgid "Invalid role specification(s): %s."
-msgstr " 不正な role 指定です：%s "
 
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr " %s/%s の代わりに %s/%s/%s を使うことをおすすめします． "
@@ -251,6 +245,9 @@ msgstr " ディレクトリ %s に対するファイル 'filelist' がありま�
 
 msgid "data set %s not found"
 msgstr " データセット %s がありません "
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr " 種類 '%s' は未だ実装されていません  "
@@ -440,7 +437,8 @@ msgstr ""
 msgid "creation of %s failed"
 msgstr " %s の作成に失敗しました "
 
-msgid "Saving help page to"
+#, fuzzy
+msgid "Saving help page to %s"
 msgstr " ヘルプページを保存中: "
 
 msgid "argument %s must be a single character string"
@@ -458,12 +456,6 @@ msgstr " 不正確なタイプ指定です "
 msgid "argument 'help.db' is deprecated"
 msgstr " 引数 'help.db' は廃止されました  "
 
-msgid "Rebuilding the help.search() database"
-msgstr " help.search()のデータベースを再構築しています ... "
-
-msgid "..."
-msgstr " ... "
-
 msgid "Packages {readRDS() sequentially}:"
 msgstr " パッケージ {readRDS() sequentially}: "
 
@@ -475,9 +467,6 @@ msgstr " パッケージ %s を見付けることが出来ませんでした "
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr " パッケージ %s は空の hsearch データを持っています - 奇妙ですが "
-
-msgid "no hsearch.rds meta data for package"
-msgstr " パッケージに対する hsearch.rds メタデータがありません "
 
 msgid "reencoding ..."
 msgstr " エンコーディングし直しています ... "
@@ -501,9 +490,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr " 不正確な 'agrep' 指定 "
-
-msgid "matched %d objects."
-msgstr " %d 個のオブジェクトがマッチしました "
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr " 不正なブラウザー名です、 options(\"browser\") をチェックして下さい "
@@ -550,12 +536,6 @@ msgstr ""
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr ""
 " パッケージ '%s' に対する DESCRIPTION ファイルは存在しないか壊れています "
-
-msgid "package"
-msgstr " パッケージ "
-
-msgid "not found"
-msgstr " 見付かりません "
 
 msgid "cannot update HTML package index"
 msgstr " HTML パッケージ索引を更新出来ません "
@@ -737,7 +717,8 @@ msgstr " 'lib = \"%s\"' は書き込み可能ではありません "
 msgid "unable to install packages"
 msgstr " パッケージをインストール出来ませんでした "
 
-msgid "unable to create"
+#, fuzzy
+msgid "unable to create %s"
 msgstr " 生成できませんでした "
 
 msgid "inferring 'repos = NULL' from the file name"
@@ -783,7 +764,7 @@ msgstr ""
 "れていません \n"
 " もし RPM からインストールされたのなら R-devel RPM が必要でしょう "
 
-msgid "system (cmd0):"
+msgid "system (cmd0): %s"
 msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
@@ -795,13 +776,10 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
 
-msgid "foundpkgs:"
+msgid "foundpkgs: %s"
 msgstr ""
 
-msgid ","
-msgstr " , "
-
-msgid "files:"
+msgid "files: %s"
 msgstr ""
 
 msgid ""
@@ -946,16 +924,11 @@ msgstr " 幾つかの欄が長さを持ちません "
 msgid "invalid format"
 msgstr " 不正な書式 "
 
-msgid "last record incomplete, %d lines discarded"
-msgstr " 最後の記録が不完全で、%d 行が捨て去られました "
-
 msgid "transfer failure"
 msgstr " 移行(transfer)の失敗 "
 
-msgid "HTTPUserAgent"
-msgstr " HTTPUserAgent "
-
-msgid "option must be a length one character vector or NULL"
+#, fuzzy
+msgid "%s option must be a length one character vector or NULL"
 msgstr " オプションは長さ１の文字列か NULL でなければなりません "
 
 msgid "'file' must be a character string or connection"
@@ -983,14 +956,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr " 'x' をローマンに変換できません "
 
-msgid "Invalid roman numeral(s): %s"
-msgstr " 不正なローマ数字です: %s "
-
 msgid "length mismatch: bug in code!"
 msgstr " 長さが一致しません：コードにバグ！ "
-
-msgid "Processing file"
-msgstr " ファイルを処理中 "
 
 msgid "no valid packages were specified"
 msgstr " 有効なパッケージが指定されませんでした "
@@ -1020,7 +987,7 @@ msgid "invalid options(\"str\") -- using defaults instead"
 msgstr " 不正な options('str') -- 代わりに既定値を使います "
 
 #, fuzzy
-msgid "invalid components in options(\"str\"):"
+msgid "invalid components in options(\"str\"): %s"
 msgstr " options('str')の中に不正な要素があります "
 
 #, fuzzy
@@ -1168,18 +1135,14 @@ msgstr ""
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr " パッケージ %s は無事に展開され、MD5 サムもチェックされました "
 
-msgid "ERROR: failed to lock directory"
+#, fuzzy
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
 msgstr " ディレクトリのロックに失敗しました。 "
 
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-" 変更中 \n"
-" 除去を試みています "
-
 #, fuzzy
-msgid "ERROR: failed to create lock directory"
+msgid "ERROR: failed to create lock directory %s"
 msgstr " 排他的ディレクトリ '%s' を作ることが出来ません "
 
 msgid "restored %s"
@@ -1188,8 +1151,8 @@ msgstr " '%s'を復帰させました "
 msgid "unable to move temporary installation %s to %s"
 msgstr " 一時的なインストール '%s' を '%s' へ移動できませんでした "
 
-msgid "cannot remove prior installation of package"
-msgstr " パッケージの以前のインストールを取り除けません "
+msgid "cannot remove prior installation of package %s"
+msgstr " パッケージ '%s' の既存のインストールを取り除くことが出来ませんでした "
 
 msgid ""
 "The downloaded binary packages are in\n"
@@ -1222,18 +1185,30 @@ msgstr " '%s' を作成できませんでした "
 msgid "there is no 'libs' directory in package %s"
 msgstr " パッケージ '%s'には'libs'ディレクトリはありません。 "
 
-msgid "cannot remove prior installation of package %s"
-msgstr " パッケージ '%s' の既存のインストールを取り除くことが出来ませんでした "
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr " winDialog() は対話的にしか使用できません "
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr " winDialogString() は対話的にしか使用できません "
 
+#, fuzzy
+msgid "%d occurrence in %s"
+msgid_plural "%d occurrences in %s"
+msgstr[0] " %d 回 %s 中に起きました "
+
+#, fuzzy
+msgid "Invalid role specification: %s."
+msgid_plural "Invalid role specifications: %s."
+msgstr[0] " 不正な role 指定です：%s "
+
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
 msgstr[0] " 列 %s からクラスが切り捨てられたクラス "
+
+#, fuzzy
+msgid "matched %d object."
+msgid_plural "matched %d objects."
+msgstr[0] " %d 個のオブジェクトがマッチしました "
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1290,9 +1265,56 @@ msgid_plural ""
 "versions are later"
 msgstr[0] ""
 
+#, fuzzy
+msgid "last record incomplete, %d line discarded"
+msgid_plural "last record incomplete, %d lines discarded"
+msgstr[0] " 最後の記録が不完全で、%d 行が捨て去られました "
+
+#, fuzzy
+msgid "Invalid roman numeral: %s"
+msgid_plural "Invalid roman numerals: %s"
+msgstr[0] " 不正なローマ数字です: %s "
+
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "call"
+#~ msgstr " call "
+
+#~ msgid "Rebuilding the help.search() database"
+#~ msgstr " help.search()のデータベースを再構築しています ... "
+
+#~ msgid "..."
+#~ msgstr " ... "
+
+#~ msgid "no hsearch.rds meta data for package"
+#~ msgstr " パッケージに対する hsearch.rds メタデータがありません "
+
+#~ msgid "package"
+#~ msgstr " パッケージ "
+
+#~ msgid "not found"
+#~ msgstr " 見付かりません "
+
+#~ msgid ","
+#~ msgstr " , "
+
+#~ msgid "HTTPUserAgent"
+#~ msgstr " HTTPUserAgent "
+
+#~ msgid "Processing file"
+#~ msgstr " ファイルを処理中 "
+
+#~ msgid ""
+#~ "for modifying\n"
+#~ "Try removing"
+#~ msgstr ""
+#~ " 変更中 \n"
+#~ " 除去を試みています "
+
+#~ msgid "cannot remove prior installation of package"
+#~ msgstr " パッケージの以前のインストールを取り除けません "
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr ""

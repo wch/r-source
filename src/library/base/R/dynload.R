@@ -85,7 +85,8 @@ getDLLRegisteredRoutines.character <- function(dll, addNames = TRUE)
     w <- vapply(dlls, function(x) x[["name"]] == dll || x[["path"]] == dll, NA)
 
     if(!any(w))
-        stop("No DLL currently loaded with name or path ", sQuote(dll))
+        stop(gettextf("No DLL currently loaded with name or path %s", sQuote(dll)),
+             domain = NA)
 
     dll <- which(w)[1L]
     if(sum(w) > 1L)

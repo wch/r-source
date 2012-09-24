@@ -632,8 +632,8 @@ merge.dendrogram <- function(x, y, ..., height) {
 	    nms <- sapply(xpr[-1][!is.d], deparse, nlines=1L)
             ## do not simplify: xgettext needs this form
             msg <- ngettext(length(nms),
-                            "extra argument %s is not a \"%s\"",
-                            "extra arguments %s are not \"%s\"s")
+                            "extra argument %s is not of class \"%s\"",
+                            "extra arguments %s are not of class \"%s\"s")
 	    stop(sprintf(msg, paste(nms, collapse=", "), "dendrogram"),
                  domain = NA)
 	}

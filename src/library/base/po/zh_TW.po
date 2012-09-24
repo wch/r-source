@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-09-24 07:53+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -191,7 +191,7 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/main/datetime.c:746 src/main/datetime.c:827 src/main/datetime.c:829
 #: src/main/datetime.c:833 src/main/datetime.c:997 src/main/datetime.c:999
 #: src/main/datetime.c:1162 src/main/debug.c:228 src/main/deparse.c:388
-#: src/main/dotcode.c:486 src/main/dotcode.c:490 src/main/dotcode.c:495
+#: src/main/dotcode.c:477 src/main/dotcode.c:481 src/main/dotcode.c:486
 #: src/main/dounzip.c:320 src/main/dounzip.c:327 src/main/dounzip.c:337
 #: src/main/dounzip.c:342 src/main/dounzip.c:346 src/main/dounzip.c:350
 #: src/main/envir.c:1545 src/main/envir.c:1548 src/main/envir.c:1667
@@ -201,8 +201,8 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/main/envir.c:1899 src/main/envir.c:2116 src/main/envir.c:2237
 #: src/main/envir.c:2496 src/main/envir.c:2703 src/main/envir.c:2717
 #: src/main/envir.c:2724 src/main/envir.c:2740 src/main/envir.c:3303
-#: src/main/errors.c:1025 src/main/eval.c:268 src/main/eval.c:2033
-#: src/main/eval.c:2062 src/main/eval.c:2066 src/main/grep.c:767
+#: src/main/errors.c:1025 src/main/eval.c:269 src/main/eval.c:2034
+#: src/main/eval.c:2063 src/main/eval.c:2067 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
@@ -268,7 +268,7 @@ msgstr "不支援的 Windows 版本"
 #: src/gnuwin32/extra.c:264 src/main/character.c:593 src/main/colors.c:83
 #: src/main/connections.c:3291 src/main/context.c:640 src/main/context.c:659
 #: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
-#: src/main/dotcode.c:205 src/main/errors.c:926 src/main/errors.c:957
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:957
 #: src/main/errors.c:1058 src/main/errors.c:1083 src/main/errors.c:1088
 #: src/main/errors.c:1360 src/main/seq.c:188 src/main/seq.c:342
 #: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
@@ -412,8 +412,8 @@ msgstr "<錯誤：從編碼 '%s' 重新編碼時失敗>\n"
 #: src/gnuwin32/system.c:1043 src/main/connections.c:570
 #: src/main/connections.c:575 src/main/dounzip.c:177 src/main/saveload.c:1951
 #: src/main/serialize.c:2490 src/main/serialize.c:2495
-#: src/main/serialize.c:2580 src/main/serialize.c:2625 src/unix/system.c:313
-#: src/unix/system.c:333
+#: src/main/serialize.c:2580 src/main/serialize.c:2625 src/unix/system.c:316
+#: src/unix/system.c:336
 #, c-format
 msgid "cannot open file '%s': %s"
 msgstr "無法開啟檔案 '%s' ：%s"
@@ -452,22 +452,22 @@ msgstr "警告：--max-mem-size=%4.1fM：太小因而忽略\n"
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "警告：--max-mem-size=%4.0fM：太大因而視為 %uM\n"
 
-#: src/gnuwin32/system.c:1054 src/unix/system.c:352
+#: src/gnuwin32/system.c:1054 src/unix/system.c:355
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "警告：'-e %s' 因為輸入太長而被省略\n"
 
-#: src/gnuwin32/system.c:1058 src/unix/system.c:366
+#: src/gnuwin32/system.c:1058 src/unix/system.c:369
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 沒有 '%s' 這樣的選項\n"
 
-#: src/gnuwin32/system.c:1080 src/unix/system.c:370
+#: src/gnuwin32/system.c:1080 src/unix/system.c:373
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引數 '%s' 忽略不用\n"
 
-#: src/gnuwin32/system.c:1086 src/unix/system.c:377
+#: src/gnuwin32/system.c:1086 src/unix/system.c:380
 msgid "cannot use -e with -f or --file"
 msgstr "無法將 -e 與 -f 或 --file 共同使用"
 
@@ -475,7 +475,7 @@ msgstr "無法將 -e 與 -f 或 --file 共同使用"
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "建立暫存檔時失敗 -- 已適當設定了 TMPDIR？"
 
-#: src/gnuwin32/system.c:1123 src/unix/system.c:427
+#: src/gnuwin32/system.c:1123 src/unix/system.c:431
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "您必須指定 '--save'、'--no-save' 或 '--vanilla' 其中的一個"
 
@@ -1236,7 +1236,7 @@ msgstr "正式引數 'use.names' 出現重複"
 msgid "argument not a list"
 msgstr "引數不是串列"
 
-#: src/main/bind.c:1022 src/main/eval.c:2393 src/main/eval.c:2402
+#: src/main/bind.c:1022 src/main/eval.c:2394 src/main/eval.c:2403
 #: src/main/objects.c:312 src/main/objects.c:347 src/main/objects.c:722
 #: src/main/objects.c:739 src/main/objects.c:746
 #, c-format
@@ -1282,7 +1282,7 @@ msgstr "指定的向量大小太大"
 #: src/main/envir.c:1853 src/main/envir.c:2526 src/main/envir.c:2586
 #: src/main/envir.c:2858 src/main/envir.c:2887 src/main/envir.c:2908
 #: src/main/envir.c:2931 src/main/envir.c:2966 src/main/envir.c:2987
-#: src/main/envir.c:3293 src/main/envir.c:3298 src/main/eval.c:4958
+#: src/main/envir.c:3293 src/main/envir.c:3298 src/main/eval.c:4959
 #: src/main/objects.c:192 src/main/objects.c:198 src/main/saveload.c:2060
 #: src/main/saveload.c:2351 src/main/serialize.c:2647
 msgid "use of NULL environment is defunct"
@@ -1353,9 +1353,9 @@ msgstr "引數不正確"
 msgid "invalid value"
 msgstr "無效的值"
 
-#: src/main/builtin.c:934 src/main/eval.c:402 src/main/eval.c:519
-#: src/main/eval.c:1821 src/main/eval.c:1887 src/main/eval.c:1947
-#: src/main/eval.c:2273 src/main/eval.c:4372 src/main/eval.c:4481
+#: src/main/builtin.c:934 src/main/eval.c:403 src/main/eval.c:520
+#: src/main/eval.c:1822 src/main/eval.c:1888 src/main/eval.c:1948
+#: src/main/eval.c:2274 src/main/eval.c:4373 src/main/eval.c:4482
 msgid "'...' used in an incorrect context"
 msgstr "'...' 的上下文用得不正確"
 
@@ -1368,7 +1368,7 @@ msgstr "重複切換預設值：'%s' 和 '%s'"
 msgid "'EXPR' is missing"
 msgstr "缺少 'EXPR'"
 
-#: src/main/builtin.c:992 src/main/eval.c:4795
+#: src/main/builtin.c:992 src/main/eval.c:4796
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR 必須是長度為 1 的向量"
 
@@ -1522,7 +1522,7 @@ msgstr "試圖強制變更非向量"
 msgid "list argument expected"
 msgstr "需要串列引數"
 
-#: src/main/coerce.c:1540 src/main/eval.c:4962
+#: src/main/coerce.c:1540 src/main/eval.c:4963
 msgid "invalid environment"
 msgstr "環境物件不正確"
 
@@ -2438,7 +2438,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts' 應該是小的非負值整數"
 
 #: src/main/deparse.c:402 src/main/envir.c:1689 src/main/envir.c:1771
-#: src/main/eval.c:408 src/main/eval.c:1067 src/main/eval.c:3331
+#: src/main/eval.c:409 src/main/eval.c:1068 src/main/eval.c:3332
 #: src/main/saveload.c:1968 src/main/saveload.c:2299 src/main/serialize.c:2665
 #, c-format
 msgid "object '%s' not found"
@@ -2473,174 +2473,176 @@ msgstr "按 <return> 鍵來看下一張圖: "
 msgid "NULL value passed as symbol address"
 msgstr "NULL 值被當作符號位址"
 
-#: src/main/dotcode.c:151 src/main/dotcode.c:242
+#: src/main/dotcode.c:151 src/main/dotcode.c:240
 #, c-format
 msgid "symbol '%s' is too long"
 msgstr "符號 '%s' 太長"
 
 #: src/main/dotcode.c:163
-msgid "'name' must be a string (of length 1) or native symbol reference"
+#, fuzzy
+msgid ""
+"first argument must be a string (of length 1) or native symbol reference"
 msgstr "'name' 必須是字串 (長度為 1) 或是原生符號參照"
 
-#: src/main/dotcode.c:207 src/main/dotcode.c:563
+#: src/main/dotcode.c:205 src/main/dotcode.c:554
 msgid "too many arguments in foreign function call"
 msgstr "外接函數呼叫時引數太多"
 
-#: src/main/dotcode.c:219
+#: src/main/dotcode.c:217
 msgid "PACKAGE = \"\" is invalid"
 msgstr ""
 
-#: src/main/dotcode.c:280 src/main/dotcode.c:285 src/main/dotcode.c:290
-#: src/main/dotcode.c:295
+#: src/main/dotcode.c:271 src/main/dotcode.c:276 src/main/dotcode.c:281
+#: src/main/dotcode.c:286
 #, fuzzy, c-format
 msgid "\"%s\" not available for %s() for package \"%s\""
 msgstr "這個裝置無法使用 %s "
 
-#: src/main/dotcode.c:300
+#: src/main/dotcode.c:291
 #, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
 msgstr "套件 \"%3$s\" 的 DLL 中沒有 %1$s 的符號名稱 \"%2$s\""
 
-#: src/main/dotcode.c:305
+#: src/main/dotcode.c:296
 #, c-format
 msgid "%s symbol name \"%s\" not in load table"
 msgstr "載入表中沒有 %s 的符號名稱 \"%s\""
 
-#: src/main/dotcode.c:359
+#: src/main/dotcode.c:350
 msgid "NAOK used more than once"
 msgstr "NAOK 被使用超過一次"
 
-#: src/main/dotcode.c:363
+#: src/main/dotcode.c:354
 msgid "DUP used more than once"
 msgstr "DUP 被使用超過一次"
 
-#: src/main/dotcode.c:369
+#: src/main/dotcode.c:360
 msgid "DLL name is too long"
 msgstr "DLL 的名稱太長"
 
-#: src/main/dotcode.c:372 src/main/dotcode.c:436 src/main/dotcode.c:442
+#: src/main/dotcode.c:363 src/main/dotcode.c:427 src/main/dotcode.c:433
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE 被使用超過一次"
 
-#: src/main/dotcode.c:413
+#: src/main/dotcode.c:404
 msgid "PACKAGE argument must be a single character string"
 msgstr "PACKAGE 引數必須是單字元字串"
 
-#: src/main/dotcode.c:419
+#: src/main/dotcode.c:410
 msgid "PACKAGE argument is too long"
 msgstr "PACKAGE 引數太長"
 
-#: src/main/dotcode.c:482
+#: src/main/dotcode.c:473
 msgid "no arguments supplied"
 msgstr "沒有提供引數"
 
-#: src/main/dotcode.c:483 src/main/seq.c:906
+#: src/main/dotcode.c:474 src/main/seq.c:906
 msgid "too many arguments"
 msgstr "引數太多"
 
-#: src/main/dotcode.c:520 src/main/dotcode.c:554 src/main/dotcode.c:1401
+#: src/main/dotcode.c:511 src/main/dotcode.c:545 src/main/dotcode.c:1392
 #, fuzzy
 msgid "'.NAME' is missing"
 msgstr "缺少 'EXPR'"
 
-#: src/main/dotcode.c:570 src/main/dotcode.c:1422
+#: src/main/dotcode.c:561 src/main/dotcode.c:1413
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "不正確的引數數量 (%d)，預期為 %d 用於 '%s'"
 
-#: src/main/dotcode.c:1227 src/main/dotcode.c:2302
+#: src/main/dotcode.c:1218 src/main/dotcode.c:2293
 msgid "too many arguments, sorry"
 msgstr "對不起，引數太多"
 
-#: src/main/dotcode.c:1261 src/main/dotcode.c:1278
+#: src/main/dotcode.c:1252 src/main/dotcode.c:1269
 msgid "Invalid graphics state"
 msgstr "繪圖狀態發生錯誤"
 
-#: src/main/dotcode.c:1357
+#: src/main/dotcode.c:1348
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "尋找 DLL 時 DLLInfoReference 的值是 NULL"
 
-#: src/main/dotcode.c:1462
+#: src/main/dotcode.c:1453
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "呼叫 %2$s 時引數 %1$d 的類型不正確"
 
-#: src/main/dotcode.c:1497
+#: src/main/dotcode.c:1488
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr "呼叫 '%s' 時明確要求不要複製引數，但引數 %d 的類型不正確 (%d != %d)"
 
-#: src/main/dotcode.c:1520
+#: src/main/dotcode.c:1511
 #, fuzzy, c-format
 msgid "long vectors (argument %d) are not supported in %s"
 msgstr "這個平臺不支援符號連結"
 
-#: src/main/dotcode.c:1551
+#: src/main/dotcode.c:1542
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "外部函數呼叫時不能有 NA (引數 %d)"
 
-#: src/main/dotcode.c:1574
+#: src/main/dotcode.c:1565
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "外部函數呼叫時不能有 NA/NaN/Inf (引數 %d)"
 
-#: src/main/dotcode.c:1579
+#: src/main/dotcode.c:1570
 msgid "single values not returned if not duplicated"
 msgstr ""
 
-#: src/main/dotcode.c:1605
+#: src/main/dotcode.c:1596
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "外部函數呼叫時不能有複數的 NA/NaN/Inf (引數 %d)"
 
-#: src/main/dotcode.c:1624
+#: src/main/dotcode.c:1615
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "在呼叫 .C/.Fortran 時字元變數必須被複製"
 
-#: src/main/dotcode.c:1629
+#: src/main/dotcode.c:1620
 msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran 只用了位元組向量中的第一個字串"
 
-#: src/main/dotcode.c:1672
+#: src/main/dotcode.c:1663
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "傳給 Fortran 的狀態發生錯誤 (引數 %d)"
 
-#: src/main/dotcode.c:1687 src/main/dotcode.c:1698
+#: src/main/dotcode.c:1678 src/main/dotcode.c:1689
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "傳給 Fortran 的狀態發生錯誤 (引數 %d)"
 
-#: src/main/dotcode.c:1692
+#: src/main/dotcode.c:1683
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
 msgstr "傳給 Fortran 的狀態發生錯誤 (引數 %d)"
 
-#: src/main/dotcode.c:1703
+#: src/main/dotcode.c:1694
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2547
+#: src/main/dotcode.c:2538
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "語言間呼叫不支援此一類型 \"%s\""
 
-#: src/main/dotcode.c:2614
+#: src/main/dotcode.c:2605
 msgid "invalid function in call_R"
 msgstr "call_R 中的函數不正確"
 
-#: src/main/dotcode.c:2616
+#: src/main/dotcode.c:2607
 msgid "invalid argument count in call_R"
 msgstr "call_R 的引數數目不正確"
 
-#: src/main/dotcode.c:2618
+#: src/main/dotcode.c:2609
 msgid "invalid return value count in call_R"
 msgstr "call_R 的回傳值數目不正確"
 
-#: src/main/dotcode.c:2652
+#: src/main/dotcode.c:2643
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R 不支援 '%s' 型式"
@@ -2902,8 +2904,8 @@ msgstr "... 串列不包含 %d 個元素"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d 所用的上下文發生錯誤, 找不到..."
 
-#: src/main/envir.c:1321 src/main/envir.c:1767 src/main/eval.c:412
-#: src/main/eval.c:3322
+#: src/main/envir.c:1321 src/main/envir.c:1767 src/main/eval.c:413
+#: src/main/eval.c:3323
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "缺少引數 \"%s\"，也沒有預設值"
@@ -3278,304 +3280,304 @@ msgstr "不在 try 的上下文中"
 msgid "error message must be a character string"
 msgstr "錯誤訊息必須是字串"
 
-#: src/main/eval.c:222
+#: src/main/eval.c:223
 #, c-format
 msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof: 打不開程式概要分析檔案 '%s'"
 
-#: src/main/eval.c:263
+#: src/main/eval.c:264
 msgid "can't use R profiling while byte code profiling"
 msgstr "在位元組碼程式概要分析時不能用 R 來同時進行程式概要分析"
 
-#: src/main/eval.c:282
+#: src/main/eval.c:283
 msgid "R profiling is not available on this system"
 msgstr "本系統沒有 R 程式概要分析這個功能"
 
-#: src/main/eval.c:306
+#: src/main/eval.c:307
 msgid ""
 "promise already under evaluation: recursive default argument reference or "
 "earlier problems?"
 msgstr "約定已進行求值：遞迴預設引數參考或是之前的問題？"
 
-#: src/main/eval.c:308
+#: src/main/eval.c:309
 msgid "restarting interrupted promise evaluation"
 msgstr "重新啟動插斷的約定求值"
 
-#: src/main/eval.c:354
+#: src/main/eval.c:355
 msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "評估巢狀太深：無窮遞迴/選項(表示式=)?"
 
-#: src/main/eval.c:414 src/main/eval.c:3323
+#: src/main/eval.c:415 src/main/eval.c:3324
 msgid "argument is missing, with no default"
 msgstr "缺少引數, 也沒有預設值"
 
-#: src/main/eval.c:515 src/main/eval.c:4320
+#: src/main/eval.c:516 src/main/eval.c:4321
 msgid "attempt to apply non-function"
 msgstr "不適用於非函數"
 
-#: src/main/eval.c:538
+#: src/main/eval.c:539
 #, c-format
 msgid "%s at %s#%d: "
 msgstr "%s 於 %s#%d："
 
-#: src/main/eval.c:994
+#: src/main/eval.c:995
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "一般函數環境中沒有 \"%s\" 符號"
 
-#: src/main/eval.c:1012
+#: src/main/eval.c:1013
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "方法環境中沒有 \"%s\" 符號"
 
-#: src/main/eval.c:1122
+#: src/main/eval.c:1123
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "條件的長度 > 1，因此只能用其第一元素"
 
-#: src/main/eval.c:1139
+#: src/main/eval.c:1140
 msgid "missing value where TRUE/FALSE needed"
 msgstr "需要 TRUE/FALSE 值的地方有缺值"
 
-#: src/main/eval.c:1140
+#: src/main/eval.c:1141
 msgid "argument is not interpretable as logical"
 msgstr "引數無法解譯為邏輯值"
 
-#: src/main/eval.c:1141
+#: src/main/eval.c:1142
 msgid "argument is of length zero"
 msgstr "引數長度為零"
 
-#: src/main/eval.c:1214
+#: src/main/eval.c:1215
 msgid "non-symbol loop variable"
 msgstr "非符號循環變數"
 
-#: src/main/eval.c:1305 src/main/eval.c:4088
+#: src/main/eval.c:1306 src/main/eval.c:4089
 msgid "invalid for() loop sequence"
 msgstr "不當的 for() 循環序列"
 
-#: src/main/eval.c:1434
+#: src/main/eval.c:1435
 msgid "multi-argument returns are not permitted"
 msgstr "不允許多引數回傳"
 
-#: src/main/eval.c:1483
+#: src/main/eval.c:1484
 msgid "invalid (NULL) left side of assignment"
 msgstr "賦值公式左側是無效 (NULL) 值"
 
-#: src/main/eval.c:1505
+#: src/main/eval.c:1506
 msgid "target of assignment expands to non-language object"
 msgstr "賦值目標擴充到非語言的物件"
 
-#: src/main/eval.c:1541
+#: src/main/eval.c:1542
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "'%s' 中的名稱太長"
 
-#: src/main/eval.c:1601
+#: src/main/eval.c:1602
 msgid "cannot do complex assignments in base namespace"
 msgstr "無法在基本名稱空間中賦予複數值"
 
-#: src/main/eval.c:1603
+#: src/main/eval.c:1604
 msgid "cannot do complex assignments in base environment"
 msgstr "無法在基本環境中賦予複數值"
 
-#: src/main/eval.c:1640 src/main/eval.c:1667
+#: src/main/eval.c:1641 src/main/eval.c:1668
 msgid "invalid function in complex assignment"
 msgstr "複數賦值中的函數不正確"
 
-#: src/main/eval.c:1745
+#: src/main/eval.c:1746
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "(do_set) 賦值公式左側不正確"
 
-#: src/main/eval.c:1760
+#: src/main/eval.c:1761
 msgid "invalid assignment left-hand side"
 msgstr "賦值公式左側不正確"
 
-#: src/main/eval.c:1825
+#: src/main/eval.c:1826
 #, c-format
 msgid "argument %d is empty"
 msgstr "引數 %d 是空的"
 
-#: src/main/eval.c:1828
+#: src/main/eval.c:1829
 #, c-format
 msgid "'%s' is missing"
 msgstr "缺少 '%s'"
 
-#: src/main/eval.c:1978
+#: src/main/eval.c:1979
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\" 正式引數串列不正確"
 
-#: src/main/eval.c:2059
+#: src/main/eval.c:2060
 msgid "numeric 'envir' arg not of length one"
 msgstr "數值 'envir' 引數的長度不是 1"
 
-#: src/main/eval.c:2081 src/main/eval.c:2103
+#: src/main/eval.c:2082 src/main/eval.c:2104
 msgid "restarts not supported in 'eval'"
 msgstr "'eval' 不支援重新啟動"
 
-#: src/main/eval.c:2160 src/main/eval.c:2173
+#: src/main/eval.c:2161 src/main/eval.c:2174
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' 從閉包外部呼叫"
 
-#: src/main/eval.c:2266
+#: src/main/eval.c:2267
 msgid "value in '...' is not a promise"
 msgstr "'...' 中的值不是一個約定"
 
-#: src/main/eval.c:2455 src/main/objects.c:713
+#: src/main/eval.c:2456 src/main/objects.c:713
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "'%s' 中呼叫的名稱太長"
 
-#: src/main/eval.c:2476
+#: src/main/eval.c:2477
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "'%s' 中的一般名稱太長"
 
-#: src/main/eval.c:2539
+#: src/main/eval.c:2540
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "不相容的方法 (\"%s\", \"%s\") 用於 \"%s\""
 
-#: src/main/eval.c:2603
+#: src/main/eval.c:2604
 msgid "dispatch error in group dispatch"
 msgstr "群組派送時發生錯誤"
 
-#: src/main/eval.c:2916
+#: src/main/eval.c:2917
 #, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "\"%s\" 並非 %s 函數"
 
-#: src/main/eval.c:3109
+#: src/main/eval.c:3110
 msgid "node stack overflow"
 msgstr "節點堆疊向上溢位"
 
-#: src/main/eval.c:3115
+#: src/main/eval.c:3116
 msgid "integer stack overflow"
 msgstr "整數堆疊向上溢位"
 
-#: src/main/eval.c:3169
+#: src/main/eval.c:3170
 msgid "Bad opcode"
 msgstr "不當的操作代碼"
 
-#: src/main/eval.c:3911
+#: src/main/eval.c:3912
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "'x %2$s y' 中無效的 %1$s 類型"
 
-#: src/main/eval.c:3990
+#: src/main/eval.c:3991
 msgid "bytecode version mismatch; using eval"
 msgstr "位元組碼版本不符；使用 eval"
 
-#: src/main/eval.c:3995
+#: src/main/eval.c:3996
 msgid "bytecode version is too old"
 msgstr "位元組碼版本太舊"
 
-#: src/main/eval.c:3996
+#: src/main/eval.c:3997
 msgid "bytecode version is too new"
 msgstr "位元組碼版本太新"
 
-#: src/main/eval.c:4030
+#: src/main/eval.c:4031
 msgid "byte code version mismatch"
 msgstr "位元組碼版本不符"
 
-#: src/main/eval.c:4156
+#: src/main/eval.c:4157
 msgid "invalid sequence argument in for loop"
 msgstr "迴圈中的序列引數不正確"
 
-#: src/main/eval.c:4302 src/main/names.c:1147
+#: src/main/eval.c:4303 src/main/names.c:1133
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "沒有 \"%s\" 這個內部函數"
 
-#: src/main/eval.c:4409 src/main/eval.c:4732 src/main/eval.c:4774
+#: src/main/eval.c:4410 src/main/eval.c:4733 src/main/eval.c:4775
 msgid "bad function"
 msgstr "不當的函數"
 
-#: src/main/eval.c:4424
+#: src/main/eval.c:4425
 msgid "not a BUILTIN function"
 msgstr "非 BUILTIN 函數"
 
-#: src/main/eval.c:4799
+#: src/main/eval.c:4800
 msgid "numeric EXPR required for switch() without named alternatives"
 msgstr "switch() 需要數值而無需具名的替代方案"
 
-#: src/main/eval.c:4802
+#: src/main/eval.c:4803
 msgid "bad character switch offsets"
 msgstr "不當的字元切換偏移值"
 
-#: src/main/eval.c:4804
+#: src/main/eval.c:4805
 msgid "bad switch names"
 msgstr "不當的切換名稱"
 
-#: src/main/eval.c:4818
+#: src/main/eval.c:4819
 msgid "bad numeric switch offsets"
 msgstr "不當的數值切換偏移值"
 
-#: src/main/eval.c:4895
+#: src/main/eval.c:4896
 msgid "cannot find index for threaded code address"
 msgstr "找不到執行緒程式碼位址的索引"
 
-#: src/main/eval.c:4955
+#: src/main/eval.c:4956
 msgid "invalid body"
 msgstr "無效的主體"
 
-#: src/main/eval.c:4975
+#: src/main/eval.c:4976
 msgid "invalid symbol"
 msgstr "符號不正確"
 
-#: src/main/eval.c:5019
+#: src/main/eval.c:5020
 msgid "argument is not a byte code object"
 msgstr "引數不是位元組碼物件"
 
-#: src/main/eval.c:5040
+#: src/main/eval.c:5041
 msgid "bad file name"
 msgstr "不當的檔案名稱"
 
-#: src/main/eval.c:5044 src/main/eval.c:5065
+#: src/main/eval.c:5045 src/main/eval.c:5066
 msgid "unable to open 'file'"
 msgstr "無法開啟 'file'"
 
-#: src/main/eval.c:5059 src/main/saveload.c:1932
+#: src/main/eval.c:5060 src/main/saveload.c:1932
 msgid "'file' must be non-empty string"
 msgstr "'file' 必須是非空字串"
 
-#: src/main/eval.c:5061 src/main/saveload.c:1934 src/main/saveload.c:2234
+#: src/main/eval.c:5062 src/main/saveload.c:1934 src/main/saveload.c:2234
 #: src/main/serialize.c:2092
 msgid "'ascii' must be logical"
 msgstr "'ascii' 必須是邏輯值"
 
-#: src/main/eval.c:5090 src/main/eval.c:5097
+#: src/main/eval.c:5091 src/main/eval.c:5098
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: 緩衝區太小"
 
-#: src/main/eval.c:5130 src/main/eval.c:5179
+#: src/main/eval.c:5131 src/main/eval.c:5180
 msgid "constant buffer must be a generic vector"
 msgstr "常數緩衝區必須是個一般向量"
 
-#: src/main/eval.c:5149
+#: src/main/eval.c:5150
 msgid "constBuf must be a generic vector"
 msgstr "constBuf 必須是一般向量"
 
-#: src/main/eval.c:5153
+#: src/main/eval.c:5154
 msgid "bad constCount value"
 msgstr "不當的 constCount 值"
 
-#: src/main/eval.c:5181
+#: src/main/eval.c:5182
 msgid "bad constant count"
 msgstr "不當的常數計數"
 
-#: src/main/eval.c:5217
+#: src/main/eval.c:5218
 msgid "profile timer in use"
 msgstr "程式概要分析計時器在使用中"
 
-#: src/main/eval.c:5219
+#: src/main/eval.c:5220
 msgid "already byte code profiling"
 msgstr "已經在進行位元組碼程式概要分析"
 
-#: src/main/eval.c:5237
+#: src/main/eval.c:5238
 msgid "setting profile timer failed"
 msgstr "程式概要分析計時器設置失敗"
 
-#: src/main/eval.c:5254
+#: src/main/eval.c:5255
 msgid "not byte code profiling"
 msgstr "非位元組碼程式概要分析"
 
@@ -4149,24 +4151,24 @@ msgstr "Rprofmem：無法開啟輸出檔案 '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:982
+#: src/main/names.c:968
 msgid "string argument required"
 msgstr "需要字串引數"
 
-#: src/main/names.c:985
+#: src/main/names.c:971
 msgid "no such primitive function"
 msgstr "沒有此一原始函數"
 
-#: src/main/names.c:1113
+#: src/main/names.c:1099
 msgid "attempt to use zero-length variable name"
 msgstr "不能用零長度的變數名"
 
-#: src/main/names.c:1115
+#: src/main/names.c:1101
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "變數名稱受限為 %d 位元組"
 
-#: src/main/names.c:1142 src/main/names.c:1145
+#: src/main/names.c:1128 src/main/names.c:1131
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 引數不正確"
 
@@ -7042,26 +7044,26 @@ msgstr "執行命令 '%s' 時出現狀態 %d 和錯誤訊息 '%s'"
 msgid "Sys.info() is not implemented on this system"
 msgstr "本系統沒有實作 Sys.info() 此一功能"
 
-#: src/unix/system.c:243
+#: src/unix/system.c:246
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui 或 -g 選項沒有值，因此忽略不用"
 
-#: src/unix/system.c:265
+#: src/unix/system.c:268
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: 沒有這種 gui '%s', 使用 X11\n"
 
-#: src/unix/system.c:268
+#: src/unix/system.c:271
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: 沒有這種 gui '%s', 因此什麼都不用\n"
 
-#: src/unix/system.c:379
+#: src/unix/system.c:382
 msgid "creating temporary file for '-e' failed"
 msgstr "為 '-e' 建立暫存檔時失敗"
 
-#: src/unix/system.c:459
+#: src/unix/system.c:463
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: 只修改檔案串列中的第一個元素"
 
@@ -7073,12 +7075,11 @@ msgstr "本 GUI 中沒有 X11 模組"
 msgid "X11 routines cannot be accessed in module"
 msgstr "模組中沒有此一 X11 例行程式"
 
-#: src/unix/X11.c:77 src/unix/X11.c:88 src/unix/X11.c:99 src/unix/X11.c:110
+#: src/unix/X11.c:78 src/unix/X11.c:90 src/unix/X11.c:102 src/unix/X11.c:113
 msgid "X11 module cannot be loaded"
 msgstr "無法載入 X11 模組"
 
-#: src/unix/X11.c:123 src/unix/X11.c:129 src/unix/X11.c:135 src/unix/X11.c:141
-#: src/unix/X11.c:147
+#: src/unix/X11.c:126 src/unix/X11.c:132 src/unix/X11.c:138 src/unix/X11.c:144
 msgid "X11 is not available"
 msgstr "無法使用 X11"
 

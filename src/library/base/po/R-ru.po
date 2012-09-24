@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -139,7 +139,8 @@ msgstr ""
 msgid "namespace cannot be unloaded:"
 msgstr "пространство имен нельзя выгрузить:"
 
-msgid "converted to character string"
+#, fuzzy
+msgid "%s converted to character string"
 msgstr "конвертирован в текстовую строку"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -254,14 +255,9 @@ msgstr "пропущенные значения в 'row.names' не разрешены"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "для таблицы данных предложены неправильные 'dimnames'"
 
-msgid "cannot coerce class '%s' into a data.frame"
+#, fuzzy
+msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr "не могу перевести класс '%s' в data.frame"
-
-msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr "неправильные 'row.names', длиной %d для таблицы данных с %d строками"
-
-msgid "supplied %d row names for %d rows"
-msgstr "предложено %d имен для %d строк"
 
 #, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -285,7 +281,8 @@ msgstr "имена строк содержат пропущенные значения"
 msgid "duplicate row.names:"
 msgstr "одинаковые имена строк:"
 
-msgid "arguments imply differing number of rows:"
+#, fuzzy
+msgid "arguments imply differing number of rows: %s"
 msgstr "аргументы подразумевают разные количества строк:"
 
 msgid "row.names should specify one of the variables"
@@ -343,35 +340,12 @@ msgstr "новые колонки создадут дыры после существующих колонок"
 msgid "duplicate subscripts for columns"
 msgstr "одинаковые индексы колонок"
 
-msgid "replacement has %d rows, data has %d"
-msgstr "у замены %d строк, у данных -- %d"
-
-msgid "replacement has %d items, need %d"
-msgstr "у замены %d элементов, а надо %d"
-
-msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr "элемент замены %d -- матрица/таблица данных из %d строк, а надо %d"
-
-msgid "replacement element %d has %d rows, need %d"
-msgstr "у элемента замены %d -- %d строк, а надо %d"
-
-msgid "replacement element %d has %d rows to replace %d rows"
-msgstr "у элемента замены %d -- %d строк, чтобы заменить %d строк"
-
-msgid "%d rows in value to replace %d rows"
-msgstr "%d строк собираются заменить %d строк"
-
-msgid "replacement data has %d rows to replace %d rows"
-msgstr "у данных замены -- %d строк, чтобы заменить %d строк"
-
-msgid "provided %d variables to replace %d variables"
-msgstr "предложено %d переменных для замены %d переменных"
-
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr ""
 "правильны лишь такие вызовы: x[[j]] <- значение или x[[i,j]] <- значение"
 
-msgid "replacing element in non-existent column:"
+#, fuzzy
+msgid "replacing element in non-existent column: %s"
 msgstr "замена элемента в несуществующей колонке:"
 
 msgid "only a single element should be replaced"
@@ -432,10 +406,12 @@ msgstr "унарный '-' не определен для объектов 'Date'"
 msgid "can only subtract numbers from Date objects"
 msgstr "могу вычитать лишь числа из объектов 'Date'"
 
-msgid "unary"
-msgstr "унарный"
+#, fuzzy
+msgid "unary %s not defined for \"Date\" objects"
+msgstr "унарный '-' не определен для объектов 'Date'"
 
-msgid "not defined for Date objects"
+#, fuzzy
+msgid "%s not defined for \"Date\" objects"
 msgstr "не определено для объектов 'Date'"
 
 msgid "'from' must be specified"
@@ -583,17 +559,16 @@ msgstr "только диагонали матрицы могут быть заменены"
 msgid "replacement diagonal has wrong length"
 msgstr "у замены диагонали -- неправильная длина"
 
-msgid "MARGIN ="
-msgstr "MARGIN ="
-
-msgid "is invalid for dim ="
+#, fuzzy
+msgid "MARGIN = %d is invalid for dim = %d"
 msgstr "это неправильно для dim ="
 
 #, fuzzy
 msgid "must pass a package name, %s or %s object"
 msgstr "должен передать имя пакета, DLLInfo или объект DllInfoReference"
 
-msgid "No DLL currently loaded with name or path"
+#, fuzzy
+msgid "No DLL currently loaded with name or path %s"
 msgstr "Сейчас не было загружено DLL с именем или путем"
 
 msgid "multiple DLLs match '%s'. Using '%s'"
@@ -722,7 +697,8 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
-msgid "'digits' reduced to"
+#, fuzzy
+msgid "'digits' reduced to %d"
 msgstr "'digits' сокращено до"
 
 msgid "'flag' can contain only '0+- #'"
@@ -743,11 +719,9 @@ msgstr "вычисление 'subset' должен приводить к булевому значению"
 msgid "'subset' must be logical"
 msgstr "'subset' должен быть логическим"
 
-msgid "value for '"
-msgstr "значение для '"
-
-msgid "' not found"
-msgstr "' не найдено"
+#, fuzzy
+msgid "value for %s not found"
+msgstr "файл '%s' не найден"
 
 msgid "all arguments must be named"
 msgstr "все аргументы должны быть именованы"
@@ -999,7 +973,8 @@ msgstr "неправильный файловый аргумент"
 msgid "can only save to a binary connection"
 msgstr "могу сохранить только в бинарное соединение"
 
-msgid "image could not be renamed and is left in"
+#, fuzzy
+msgid "image could not be renamed and is left in %s"
 msgstr "изображение нельзя переименовать; оставлено в"
 
 msgid "[Previously saved workspace restored]"
@@ -1114,23 +1089,21 @@ msgstr "%s не найден"
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr "пространство имен %s уже запечатано в loadNamespace"
 
-msgid "failed to assign RegisteredNativeSymbol for"
+#, fuzzy
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
 msgstr "не удалось присвоить RegisteredNativeSymbol для"
 
-msgid "to"
-msgstr "в"
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
+msgstr ""
 
-msgid "since"
-msgstr "так как"
-
-msgid "is already defined in the"
-msgstr "уже определено в"
-
-msgid "namespace"
-msgstr "пространство имен"
-
-msgid "failed to assign NativeSymbolInfo for"
-msgstr "не удалось присвоить NativeSymbolInfo для"
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
+msgstr ""
 
 msgid "package %s does not have a namespace"
 msgstr "пакет %s не имеет пространства имен"
@@ -1166,9 +1139,6 @@ msgstr "в пакете '%s' указаны методы %s для экспорта, но не определены"
 msgid "Loading required namespace: %s"
 msgstr "Загрузка требуемого пакета: %s"
 
-msgid "not found"
-msgstr "не найден"
-
 msgid "not loading a namespace"
 msgstr "не загружаю пространство имен"
 
@@ -1181,7 +1151,8 @@ msgstr "это не пространство имен"
 msgid "operation not allowed on base namespace"
 msgstr "в базовом пространстве имен эта операция не разрешена"
 
-msgid "duplicate import names"
+#, fuzzy
+msgid "duplicate import names %s"
 msgstr "одинаковые импортированные имена"
 
 msgid "replacing local value with import %s when loading %s"
@@ -1215,7 +1186,8 @@ msgstr ""
 msgid "cannot add to exports of a sealed namespace"
 msgstr "не могу добавить к экспорту из запечатанного пространства имен"
 
-msgid "undefined exports:"
+#, fuzzy
+msgid "undefined exports: %s"
 msgstr "неопределенные экспорты:"
 
 msgid "package %s has no NAMESPACE file"
@@ -1352,9 +1324,6 @@ msgstr "аргумент 'length.out' должен быть длиной 1"
 msgid "first element used of 'length.out' argument"
 msgstr "только первый элемент аргумента 'length.out' использован"
 
-msgid "extra argument(s) %s will be disregarded"
-msgstr "дополнительные аргументы %s не будут учтены"
-
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "неправильный (to - from)/by в seq(.)"
 
@@ -1466,23 +1435,12 @@ msgstr "'chdir = TRUE' не имеет смысла для соединения"
 msgid "'%s' is not an existing file"
 msgstr "'%s' не является существующим файлом"
 
-msgid "Timestamp of '"
+#, fuzzy
+msgid "Timestamp of %s has chamged"
 msgstr "ВременнАя маска '"
-
-msgid "' has changed"
-msgstr "' сменилась"
 
 msgid "additional arguments ignored in stop()"
 msgstr "дополнительные аргументы пропущены в stop()"
-
-msgid "is not"
-msgstr "не является"
-
-msgid "all"
-msgstr "все"
-
-msgid "TRUE"
-msgstr "TRUE"
 
 msgid "additional arguments ignored in warning()"
 msgstr "дополнительные аргументы пропущены в warning()"
@@ -1578,7 +1536,8 @@ msgstr "'width' должна быть положительной"
 msgid "No traceback available"
 msgstr "Трассировка недоступна"
 
-msgid "invalid version specification"
+#, fuzzy
+msgid "invalid version specification %s"
 msgstr "неправильное указание версии"
 
 msgid "wrong argument"
@@ -1593,8 +1552,9 @@ msgstr "унарное '%s' не определено для \"numeric_version\" объектов"
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr "'%s' не определено для объектов \"numeric_version\""
 
-msgid "not defined for numeric_version objects"
-msgstr "не определено для объектов numeric_version"
+#, fuzzy
+msgid "%s not defined for \"numeric_version\" objects"
+msgstr "'%s' не определено для объектов \"numeric_version\""
 
 msgid "<0 elements>"
 msgstr "<0 элементов>"
@@ -1699,6 +1659,80 @@ msgstr[0] "опция разбора %s не распознана"
 msgstr[1] "опции разбора %s не распознаны"
 msgstr[2] "опции разбора %s не распознаны"
 
+#, fuzzy
+msgid "invalid 'row.names', length %d for a data frame with %d row"
+msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr[0] ""
+"неправильные 'row.names', длиной %d для таблицы данных с %d строками"
+msgstr[1] ""
+"неправильные 'row.names', длиной %d для таблицы данных с %d строками"
+msgstr[2] ""
+"неправильные 'row.names', длиной %d для таблицы данных с %d строками"
+
+#, fuzzy
+msgid "supplied %d row name for %d rows"
+msgid_plural "supplied %d row names for %d rows"
+msgstr[0] "предложено %d имен для %d строк"
+msgstr[1] "предложено %d имен для %d строк"
+msgstr[2] "предложено %d имен для %d строк"
+
+#, fuzzy
+msgid "replacement has %d row, data has %d"
+msgid_plural "replacement has %d rows, data has %d"
+msgstr[0] "у замены %d строк, у данных -- %d"
+msgstr[1] "у замены %d строк, у данных -- %d"
+msgstr[2] "у замены %d строк, у данных -- %d"
+
+#, fuzzy
+msgid "replacement has %d item, need %d"
+msgid_plural "replacement has %d items, need %d"
+msgstr[0] "у замены %d элементов, а надо %d"
+msgstr[1] "у замены %d элементов, а надо %d"
+msgstr[2] "у замены %d элементов, а надо %d"
+
+#, fuzzy
+msgid "replacement element %d is a matrix/data frame of %d row, need %d"
+msgid_plural ""
+"replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr[0] "элемент замены %d -- матрица/таблица данных из %d строк, а надо %d"
+msgstr[1] "элемент замены %d -- матрица/таблица данных из %d строк, а надо %d"
+msgstr[2] "элемент замены %d -- матрица/таблица данных из %d строк, а надо %d"
+
+#, fuzzy
+msgid "replacement element %d has %d row, need %d"
+msgid_plural "replacement element %d has %d rows, need %d"
+msgstr[0] "у элемента замены %d -- %d строк, а надо %d"
+msgstr[1] "у элемента замены %d -- %d строк, а надо %d"
+msgstr[2] "у элемента замены %d -- %d строк, а надо %d"
+
+#, fuzzy
+msgid "replacement element %d has %d row to replace %d rows"
+msgid_plural "replacement element %d has %d rows to replace %d rows"
+msgstr[0] "у элемента замены %d -- %d строк, чтобы заменить %d строк"
+msgstr[1] "у элемента замены %d -- %d строк, чтобы заменить %d строк"
+msgstr[2] "у элемента замены %d -- %d строк, чтобы заменить %d строк"
+
+#, fuzzy
+msgid "%d row in value to replace %d rows"
+msgid_plural "%d rows in value to replace %d rows"
+msgstr[0] "%d строк собираются заменить %d строк"
+msgstr[1] "%d строк собираются заменить %d строк"
+msgstr[2] "%d строк собираются заменить %d строк"
+
+#, fuzzy
+msgid "replacement data has %d row to replace %d rows"
+msgid_plural "replacement data has %d rows to replace %d rows"
+msgstr[0] "у данных замены -- %d строк, чтобы заменить %d строк"
+msgstr[1] "у данных замены -- %d строк, чтобы заменить %d строк"
+msgstr[2] "у данных замены -- %d строк, чтобы заменить %d строк"
+
+#, fuzzy
+msgid "provided %d variable to replace %d variables"
+msgid_plural "provided %d variables to replace %d variables"
+msgstr[0] "предложено %d переменных для замены %d переменных"
+msgstr[1] "предложено %d переменных для замены %d переменных"
+msgstr[2] "предложено %d переменных для замены %d переменных"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "библиотека %s не содержит пакетов"
@@ -1760,11 +1794,71 @@ msgstr[0] "S3 метод %s объявлен в NAMESPACE но не найден"
 msgstr[1] "S3 методы %s объявлены в NAMESPACE но не найдены"
 msgstr[2] "S3 методы %s объявлены в NAMESPACE но не найдены"
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "дополнительные аргументы %s не будут учтены"
+msgstr[1] "дополнительные аргументы %s не будут учтены"
+msgstr[2] "дополнительные аргументы %s не будут учтены"
+
+#, fuzzy
+msgid "%s is not TRUE"
+msgid_plural "%s are not all TRUE"
+msgstr[0] "T использовано вместо TRUE"
+msgstr[1] "T использовано вместо TRUE"
+msgstr[2] "T использовано вместо TRUE"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid "%s not defined for numeric_version objects"
+#~ msgstr "не определено для объектов numeric_version"
+
+#~ msgid "unary"
+#~ msgstr "унарный"
+
+#~ msgid "MARGIN ="
+#~ msgstr "MARGIN ="
+
+#~ msgid "value for '"
+#~ msgstr "значение для '"
+
+#~ msgid "' not found"
+#~ msgstr "' не найдено"
+
+#~ msgid "to"
+#~ msgstr "в"
+
+#~ msgid "since"
+#~ msgstr "так как"
+
+#~ msgid "is already defined in the"
+#~ msgstr "уже определено в"
+
+#~ msgid "namespace"
+#~ msgstr "пространство имен"
+
+#~ msgid "failed to assign NativeSymbolInfo for"
+#~ msgstr "не удалось присвоить NativeSymbolInfo для"
+
+#~ msgid "not found"
+#~ msgstr "не найден"
+
+#~ msgid "' has changed"
+#~ msgstr "' сменилась"
+
+#~ msgid "is not"
+#~ msgstr "не является"
+
+#~ msgid "all"
+#~ msgstr "все"
+
+#~ msgid "TRUE"
+#~ msgstr "TRUE"
 
 #~ msgid "non-numeric argument to 'chol'"
 #~ msgstr "нечисловой аргумент для 'chol'"

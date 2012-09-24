@@ -143,7 +143,7 @@ packageVersion <- function(pkg, lib.loc = NULL)
     res <- suppressWarnings(packageDescription(pkg, lib.loc=lib.loc,
                                                fields = "Version"))
     if (!is.na(res)) package_version(res) else
-    stop("package ", sQuote(pkg), " not found")
+    stop(gettextf("package %s not found", sQuote(pkg)), domain = NA)
 }
 
 ## used with firstOnly = TRUE for example()

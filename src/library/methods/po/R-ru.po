@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:54\n"
 "PO-Revision-Date: 2012-03-15 11:56-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -544,13 +544,6 @@ msgstr ""
 "в идентификаторе метода (%d) больше элементов, чем в общем идентификаторе "
 "(%d)"
 
-msgid ""
-"in the method signature for function %s invalid argument names in the "
-"signature: %s"
-msgstr ""
-"в идентификаторе метода для функции %s неверные имена аргументов в "
-"идентификаторе: %s"
-
 #, fuzzy
 msgid "No generic function found corresponding to %s"
 msgstr "Нет общей функции, соответствующей \"%s\""
@@ -586,9 +579,6 @@ msgid ""
 "class %s"
 msgstr ""
 "метод инициализации возвратил объект класса %s вместо требуемого класса %s"
-
-msgid "Reported %d ambiguous selections out of %d for function %s"
-msgstr "Сообщено %d сомнительных выборов из %d для функции %s"
 
 msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
 msgstr "%d: цель \"%s\": выбрано \"%s\" (другие: %s)"
@@ -748,9 +738,6 @@ msgstr ""
 "неоднозначность):  лучше использовать функцию prototype() чтобы избежать "
 "неприятности."
 
-msgid "named elements of prototype do not correspond to slot names: %s"
-msgstr "именованные элементы прототипа не соответствуют именам слотов: %s"
-
 #, fuzzy
 msgid "the '%s' list for class %s, includes an undefined class %s"
 msgstr "список %s для класса %s, включает неопределенный класс %s"
@@ -884,19 +871,8 @@ msgstr ""
 "аргумент %s должен быть NULL или объектом общей функции; получен объект "
 "класса %s"
 
-msgid "non-arguments found in the signature: %s"
-msgstr "не найдено аргументов в идентификаторе: %s"
-
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr "нет подходящих аргументов для методов отправки в данной функции"
-
-#, fuzzy
-msgid ""
-"the formal arguments of the generic function for %s (%s) differ from those "
-"of the non-generic to be used as the default (%s)"
-msgstr ""
-"формальные аргументы общей функции для \"%s\" (%s) отличаются от не-общих, "
-"используемых по умолчанию (%s)"
 
 msgid "special function %s is not permitted to have methods"
 msgstr "специальной функции %s не разрешено иметь методов"
@@ -1160,9 +1136,6 @@ msgstr "элемент %d представления не был одиночной символьной строкой"
 msgid "duplicate class names among superclasses: %s"
 msgstr "совпадение имен классов среди суперклассов: %s"
 
-msgid "duplicated slot names: %s"
-msgstr "совпадающие имена слотов: %s"
-
 msgid "only one data object (unnamed argument to prototype) allowed"
 msgstr "разрешен только один объект данных (безымянный аргумент для прототипа)"
 
@@ -1215,8 +1188,8 @@ msgstr ""
 "не могу использовать объект класса %s в new():  класс %s не может расширить "
 "данный класс"
 
-msgid "invalid names for slots of class %s: %s"
-msgstr "неверные имена для слотов класса %s: %s"
+msgid "duplicated slot names: %s"
+msgstr "совпадающие имена слотов: %s"
 
 msgid ""
 "Class %s is defined, with package %s, but no corresponding metadata object "
@@ -1227,13 +1200,6 @@ msgstr ""
 
 msgid "no definition of %s to use for %s"
 msgstr "нет определения %s для использования с %s"
-
-msgid ""
-"multiple definitions of class %s visible (%s); using the definition\n"
-"   in package %s for %s"
-msgstr ""
-"найдено несколько видимых определений класса %s (%s); использую определение\n"
-"   в пакете %s для %s"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
@@ -1404,19 +1370,6 @@ msgstr "класс %s не может расширить класс %s"
 msgid "Both classes must be defined"
 msgstr "Оба класса должны быть определены"
 
-msgid ""
-"class %s is missing slots from class %s (%s), and no coerce method was "
-"supplied"
-msgstr ""
-"у класса %s отсутствуют слоты из класса %s (%s), и не предоставлен метод "
-"приведения"
-
-msgid ""
-"slots in class %s must extend corresponding slots in class %s: fails for %s"
-msgstr ""
-"слоты в классе %s должны расширить соответствующие слоты в классе %s: сбои "
-"для %s"
-
 msgid "invalid index for function argument"
 msgstr "неверный индекс для аргумента функции"
 
@@ -1483,12 +1436,6 @@ msgstr ""
 " целевая подпись\"%s\".\n"
 " %s должна также быть правильной"
 
-msgid "found"
-msgstr "найдено"
-
-msgid "equally good next methods"
-msgstr "в равной степени хорошие следующие методы"
-
 #, fuzzy
 msgid "unable to find an inherited method for function %s for signature %s"
 msgstr "невозможно найти наследованный метод для функции \""
@@ -1498,18 +1445,6 @@ msgid ""
 msgstr ""
 "Внутренняя ошибка при поиске наследованных методов; не возвращен уникальный "
 "метод"
-
-msgid "Selecting %d methods of min. distance"
-msgstr "Выбираю %d методов минимальной дистанции"
-
-msgid "Selecting %d non-group methods"
-msgstr "Выбираю %d негрупповых методов"
-
-msgid "Selecting %d partially exact-matching method(s)"
-msgstr "Выбираю %d частично полностью соответствующих метод(ов)"
-
-msgid "Choosing method %s from %d ambiguous possibilities"
-msgstr "Выбран метод %s из %d сомнительных возможностей"
 
 msgid "Failed to find expected group generic function:"
 msgstr "Не могу найти ожидаемую групповую общую функцию:"
@@ -2065,6 +2000,162 @@ msgid_plural "no definition for classes %s"
 msgstr[0] "нет определения класса \"%s\""
 msgstr[1] "нет определений классов \"%s\""
 msgstr[2] "нет определений классов \"%s\""
+
+#, fuzzy
+msgid ""
+"in the method signature for function %s invalid argument name in the "
+"signature: %s"
+msgid_plural ""
+"in the method signature for function %s invalid argument names in the "
+"signature: %s"
+msgstr[0] ""
+"в идентификаторе метода для функции %s неверные имена аргументов в "
+"идентификаторе: %s"
+msgstr[1] ""
+"в идентификаторе метода для функции %s неверные имена аргументов в "
+"идентификаторе: %s"
+msgstr[2] ""
+"в идентификаторе метода для функции %s неверные имена аргументов в "
+"идентификаторе: %s"
+
+#, fuzzy
+msgid "Reported %d ambiguous selection out of %d for function %s\n"
+msgid_plural "Reported %d ambiguous selections out of %d for function %s\n"
+msgstr[0] "Сообщено %d сомнительных выборов из %d для функции %s"
+msgstr[1] "Сообщено %d сомнительных выборов из %d для функции %s"
+msgstr[2] "Сообщено %d сомнительных выборов из %d для функции %s"
+
+#, fuzzy
+msgid "named elements of prototype do not correspond to slot name: %s"
+msgid_plural "named elements of prototype do not correspond to slot names: %s"
+msgstr[0] "именованные элементы прототипа не соответствуют именам слотов: %s"
+msgstr[1] "именованные элементы прототипа не соответствуют именам слотов: %s"
+msgstr[2] "именованные элементы прототипа не соответствуют именам слотов: %s"
+
+#, fuzzy
+msgid "non-argument found in the signature: %s"
+msgid_plural "non-arguments found in the signature: %s"
+msgstr[0] "не найдено аргументов в идентификаторе: %s"
+msgstr[1] "не найдено аргументов в идентификаторе: %s"
+msgstr[2] "не найдено аргументов в идентификаторе: %s"
+
+#, fuzzy
+msgid ""
+"the formal argument of the generic function for %s (%s) differs from that of "
+"the non-generic to be used as the default (%s)"
+msgid_plural ""
+"the formal arguments of the generic function for %s (%s) differ from those "
+"of the non-generic to be used as the default (%s)"
+msgstr[0] ""
+"формальные аргументы общей функции для \"%s\" (%s) отличаются от не-общих, "
+"используемых по умолчанию (%s)"
+msgstr[1] ""
+"формальные аргументы общей функции для \"%s\" (%s) отличаются от не-общих, "
+"используемых по умолчанию (%s)"
+msgstr[2] ""
+"формальные аргументы общей функции для \"%s\" (%s) отличаются от не-общих, "
+"используемых по умолчанию (%s)"
+
+#, fuzzy
+msgid "duplicated slot name: %s"
+msgid_plural "duplicated slot names: %s"
+msgstr[0] "совпадающие имена слотов: %s"
+msgstr[1] "совпадающие имена слотов: %s"
+msgstr[2] "совпадающие имена слотов: %s"
+
+#, fuzzy
+msgid "invalid name for slot of class %s: %s"
+msgid_plural "invalid names for slots of class %s: %s"
+msgstr[0] "неверные имена для слотов класса %s: %s"
+msgstr[1] "неверные имена для слотов класса %s: %s"
+msgstr[2] "неверные имена для слотов класса %s: %s"
+
+#, fuzzy
+msgid ""
+"multiple definition of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgid_plural ""
+"multiple definitions of class %s visible (%s); using the definition\n"
+"   in package %s for %s"
+msgstr[0] ""
+"найдено несколько видимых определений класса %s (%s); использую определение\n"
+"   в пакете %s для %s"
+msgstr[1] ""
+"найдено несколько видимых определений класса %s (%s); использую определение\n"
+"   в пакете %s для %s"
+msgstr[2] ""
+"найдено несколько видимых определений класса %s (%s); использую определение\n"
+"   в пакете %s для %s"
+
+#, fuzzy
+msgid ""
+"class %s is missing slot from class %s (%s), and no coerce method was "
+"supplied"
+msgid_plural ""
+"class %s is missing slots from class %s (%s), and no coerce method was "
+"supplied"
+msgstr[0] ""
+"у класса %s отсутствуют слоты из класса %s (%s), и не предоставлен метод "
+"приведения"
+msgstr[1] ""
+"у класса %s отсутствуют слоты из класса %s (%s), и не предоставлен метод "
+"приведения"
+msgstr[2] ""
+"у класса %s отсутствуют слоты из класса %s (%s), и не предоставлен метод "
+"приведения"
+
+#, fuzzy
+msgid ""
+"slot in class %s must extend corresponding slot in class %s: fails for %s"
+msgid_plural ""
+"slots in class %s must extend corresponding slots in class %s: fails for %s"
+msgstr[0] ""
+"слоты в классе %s должны расширить соответствующие слоты в классе %s: сбои "
+"для %s"
+msgstr[1] ""
+"слоты в классе %s должны расширить соответствующие слоты в классе %s: сбои "
+"для %s"
+msgstr[2] ""
+"слоты в классе %s должны расширить соответствующие слоты в классе %s: сбои "
+"для %s"
+
+#, fuzzy
+msgid "found %d equally good next method"
+msgid_plural "found %d equally good next methods"
+msgstr[0] "в равной степени хорошие следующие методы"
+msgstr[1] "в равной степени хорошие следующие методы"
+msgstr[2] "в равной степени хорошие следующие методы"
+
+#, fuzzy
+msgid "Selecting %d method of min. distance"
+msgid_plural "Selecting %d methods of min. distance"
+msgstr[0] "Выбираю %d методов минимальной дистанции"
+msgstr[1] "Выбираю %d методов минимальной дистанции"
+msgstr[2] "Выбираю %d методов минимальной дистанции"
+
+#, fuzzy
+msgid "Selecting %d non-group method"
+msgid_plural "Selecting %d non-group methods"
+msgstr[0] "Выбираю %d негрупповых методов"
+msgstr[1] "Выбираю %d негрупповых методов"
+msgstr[2] "Выбираю %d негрупповых методов"
+
+#, fuzzy
+msgid "Selecting %d partially exact-matching method"
+msgid_plural "Selecting %d partially exact-matching methods"
+msgstr[0] "Выбираю %d частично полностью соответствующих метод(ов)"
+msgstr[1] "Выбираю %d частично полностью соответствующих метод(ов)"
+msgstr[2] "Выбираю %d частично полностью соответствующих метод(ов)"
+
+#, fuzzy
+msgid "Choosing method %s from %d ambiguous possibility"
+msgid_plural "Choosing method %s from %d ambiguous possibilities"
+msgstr[0] "Выбран метод %s из %d сомнительных возможностей"
+msgstr[1] "Выбран метод %s из %d сомнительных возможностей"
+msgstr[2] "Выбран метод %s из %d сомнительных возможностей"
+
+#~ msgid "found"
+#~ msgstr "найдено"
 
 #~ msgid "Invalid mlist element for signature \""
 #~ msgstr "Неверный mlist элемент для идентификатора \""

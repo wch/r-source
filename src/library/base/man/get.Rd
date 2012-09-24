@@ -1,6 +1,6 @@
 % File src/library/base/man/get.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{get}
@@ -14,11 +14,7 @@
 get(x, pos = -1, envir = as.environment(pos), mode = "any",
     inherits = TRUE)
 
-mget(x, envir, mode = "any",
-     ifnotfound = list(function(x)
-         stop(paste0("value for '", x, "' not found"),
-              call. = FALSE)),
-     inherits = FALSE)
+mget(x, envir, mode = "any", ifnotfound, inherits = FALSE)
 }
 \arguments{
   \item{x}{a variable name (given as a character string).}
@@ -32,7 +28,7 @@ mget(x, envir, mode = "any",
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
   \item{ifnotfound}{A \code{\link{list}} of values to be used if the item is
-    not found: it will be coerced to list if necessary.}
+    not found: it will be coerced to a list if necessary.}
 }
 \details{
   The \code{pos} argument can specify the environment in which to look

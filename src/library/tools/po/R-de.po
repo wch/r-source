@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-24 07:46\n"
 "PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -317,18 +317,6 @@ msgstr ""
 "Paket %s existiert, wurde aber nicht mit R >= 2.10.0 installiert, weshalb "
 "Querverweise nicht überprüft werden können"
 
-msgid "Obsolete package(s) %s in Rd xrefs"
-msgstr "Veraltete(s) Paket(e) %s in Rd Kreusreferenzen"
-
-msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr "Fehlende(s) Paket(e) um Rd Kreuzreferenzen zu überprüfen: %s"
-
-msgid "Unknown package(s) %s in Rd xrefs"
-msgstr "Unbekannte(s) Paket(e) %s in Rd Kreuzreferenzen"
-
-msgid "Missing link(s) in documentation object '%s':"
-msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
-
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
@@ -435,12 +423,6 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "Generics without methods in"
-msgstr "Generische Funktionen ohne Methoden in"
-
-msgid ":"
-msgstr ":"
-
 msgid "argument 'file' must be a character string or connection"
 msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
 
@@ -474,10 +456,6 @@ msgstr "sie müssen 'dir' oder 'files' angeben"
 
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "kann mit Rd Objekten mit fehlendem bzw. leerem Namen nicht umgehen"
-
-#, fuzzy
-msgid "missing/empty %s field in Rd file(s)"
-msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
 
 msgid "No help on %s found in RdDB %s"
 msgstr "Keine Hilfe zu %s in RdDB %s gefunden"
@@ -572,9 +550,6 @@ msgstr "fehlende Dateien in '%s' im Feld '%s':"
 
 msgid "unable to create '%s'"
 msgstr "kann '%s' nicht erzeugen"
-
-msgid "unable to re-encode '%s' line(s) %s"
-msgstr "kann '%s' Zeile(n) %s nicht rekodieren"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "kann INDEX nicht nach '%s' kopieren"
@@ -815,7 +790,8 @@ msgstr "ungültiges Paket"
 msgid "ERROR: no packages specified"
 msgstr "Fehler: keine Pakete angegeben"
 
-msgid "ERROR: cannot cd to directory"
+#, fuzzy
+msgid "ERROR: cannot cd to directory %s"
 msgstr "Fehler: kann  nicht in Verzeichnis wechseln"
 
 msgid "ERROR: no permission to install to directory"
@@ -1246,6 +1222,24 @@ msgstr "Aufrufsequenz:"
 msgid "parsing '%s'"
 msgstr "parse '%s'"
 
+#, fuzzy
+msgid "Obsolete package %s in Rd xrefs"
+msgid_plural "Obsolete packages %s in Rd xrefs"
+msgstr[0] "Veraltete(s) Paket(e) %s in Rd Kreusreferenzen"
+msgstr[1] "Veraltete(s) Paket(e) %s in Rd Kreusreferenzen"
+
+#, fuzzy
+msgid "Package unavailable to check Rd xrefs: %s"
+msgid_plural "Packages unavailable to check Rd xrefs: %s"
+msgstr[0] "Fehlende(s) Paket(e) um Rd Kreuzreferenzen zu überprüfen: %s"
+msgstr[1] "Fehlende(s) Paket(e) um Rd Kreuzreferenzen zu überprüfen: %s"
+
+#, fuzzy
+msgid "Missing link in documentation object %s:"
+msgid_plural "Missing links in documentation object %s:"
+msgstr[0] "Fehlende(r) Link(s) im Dokuobjekt '%s':"
+msgstr[1] "Fehlende(r) Link(s) im Dokuobjekt '%s':"
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] "Hinweis: %d markierte Latin-1 Zeichenkette gefunden"
@@ -1289,10 +1283,45 @@ msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
 
+#, fuzzy
+msgid "Found .Internal call in methods for the following reference class:"
+msgid_plural ""
+"Found .Internal calls in methods for the following reference classes:"
+msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
+msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#, fuzzy
+msgid "Generics without method in %s: %s"
+msgid_plural "Generics without methods in %s: %s"
+msgstr[0] "Generische Funktionen ohne Methoden in"
+msgstr[1] "Generische Funktionen ohne Methoden in"
+
+#, fuzzy
+msgid ""
+"missing/empty \\name field in Rd file\n"
+"%s"
+msgid_plural ""
+"missing/empty \\name field in Rd files\n"
+"%s"
+msgstr[0] "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
+msgstr[1] "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
+
+#, fuzzy
+msgid "unable to re-encode %s line %s"
+msgid_plural "unable to re-encode %s lines %s"
+msgstr[0] "kann '%s' Zeile(n) %s nicht rekodieren"
+msgstr[1] "kann '%s' Zeile(n) %s nicht rekodieren"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "Unknown package(s) %s in Rd xrefs"
+#~ msgstr "Unbekannte(s) Paket(e) %s in Rd Kreuzreferenzen"
+
+#~ msgid ":"
+#~ msgstr ":"
 
 #~ msgid "Foreign function calls without 'PACKAGE' argument:"
 #~ msgstr "Aufrufe paketexterner Funktionen ohne 'PACKAGE' Argument:"
