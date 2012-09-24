@@ -389,6 +389,9 @@
       
       \item The detection of the C stack direction is better protected
       against compiler optimization. (\PR{15011}.)
+
+      \item Long custom line types would sometimes segfault on the
+      cairographics-based devices. (PR{15055}.)
     }
   }
 }

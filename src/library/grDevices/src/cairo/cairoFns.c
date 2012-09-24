@@ -132,7 +132,10 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
 	cairo_set_dash(cc, 0, 0, 0);
     else {
 	double ls[16], lwd = (gc->lwd > 1) ? gc->lwd : 1;
-	int l, dt = gc->lty;
+	int l;
+        /* Use unsigned int otherwise right shift of 'dt'
+           may not terminate for loop */
+        unsigned int dt = gc->lty;
 	for (l = 0; dt != 0; dt >>= 4, l++)
 	    ls[l] = (dt & 0xF) * lwd * xd->lwdscale;
 	cairo_set_dash(cc, ls, l, 0);
