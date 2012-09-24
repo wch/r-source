@@ -319,8 +319,14 @@ summary.aov <- function(object, intercept = FALSE, split,
         if(!is.null(Terms <- object$terms)) {
             if(!is.list(split))
                 stop("the 'split' argument must be a list")
-            if(!all(ns %in% nmeffect))
-                stop("unknown name(s) in the 'split' list")
+            if(!all(ns %in% nmeffect)) {
+                na <- sum(!ns %in% nmeffect)
+                stop(sprintf(ngettext(na,
+                                      "unknown name %s in the 'split' list",
+                                      "unknown names %s in the 'split' list"),
+                             paste(sQuote(ns[na]), collapse = ", ")),
+                     domain = NA)
+            }
         }
         if(expand.split) {
             df.names <- names(coef(object))

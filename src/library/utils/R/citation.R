@@ -524,9 +524,10 @@ function(x, force = FALSE)
     if(length(rfields) > 0L) {
         ok <- sapply(rfields, function(f) any(f %in% fields))
         if(any(!ok))
-            stop(gettextf("A bibentry of bibtype %s has to specify the field(s): %s",
-                          sQuote(bibtype),
-                          paste(rfields[!ok], collapse = ", ")),
+            stop(sprintf(ngettext(sum(!ok),
+                                  "A bibentry of bibtype %s has to specify the field: %s",
+                                  "A bibentry of bibtype %s has to specify the fields: %s"),
+                          sQuote(bibtype), paste(rfields[!ok], collapse = ", ")),
                  domain = NA)
     }
 }

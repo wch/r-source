@@ -204,8 +204,10 @@ install.packages <-
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1L]
 	if(!quiet && length(.libPaths()) > 1L)
-	    message(gettextf("Installing package(s) into %s\n(as %s is unspecified)",
-			     sQuote(lib), sQuote("lib")), domain = NA)
+	    message(sprintf(ngettext(length(pkgs),
+                                     "Installing package into %s\n(as %s is unspecified)",
+                                     "Installing packages into %s\n(as %s is unspecified)"),
+                            sQuote(lib), sQuote("lib")), domain = NA)
     }
 
     ## check for writability by user

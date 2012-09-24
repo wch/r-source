@@ -76,10 +76,14 @@ diffinv.ts <- function (x, lag = 1, differences = 1, xi, ...)
 toeplitz <- function (x, ...)
 {
     if(!is.vector(x)) stop("'x' is not a vector")
-    if(!missing(...))
-	warning(gettextf("extra argument(s) %s will be disregarded",
-			 paste(sQuote(names(list(...))), collapse = ", ")),
+    if(!missing(...)) {
+        na <- length(list(...))
+        warning(sprintf(ngettext(na,
+                                 "extra argument %s will be disregarded",
+                                 "extra arguments %s will be disregarded"),
+                        paste(sQuote(names(list(...))), collapse = ", ")),
 		domain = NA)
+    }
     n <- length(x)
     A <- matrix(raw(), n, n)
     matrix(x[abs(col(A) - row(A)) + 1L], n, n)
