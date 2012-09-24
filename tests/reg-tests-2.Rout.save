@@ -4153,7 +4153,7 @@ Coefficients:
           7           8           9          10 
  0.08867482  0.25896653  0.27533143 -0.47793778 
 Warning message:
-'newdata' had 2 rows but variable(s) found have 10 rows 
+'newdata' had 2 rows but variables found have 10 rows 
 > ## warns as from 2.0.0
 > 
 > 
