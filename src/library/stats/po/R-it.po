@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:54\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -234,9 +234,6 @@ msgstr "modello Error() singolare"
 
 msgid "the 'split' argument must be a list"
 msgstr "l'argomento 'split' deve essere di tipo list"
-
-msgid "unknown name(s) in the 'split' list"
-msgstr "nome(i) sconosciuti nella lista 'split'"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
 msgstr "'coef' deve definire un contrasto, e.g., sommare a 0"
@@ -769,10 +766,6 @@ msgstr "lunghezza di 'x' sbagliata"
 msgid "'x' is not a vector or matrix"
 msgstr "'x' non è un vettore o una matrice"
 
-#, fuzzy
-msgid "extra argument(s) %s will be disregarded"
-msgstr "argometni extra ignorati"
-
 msgid "invalid distance method"
 msgstr "metodo distanza sbagliato"
 
@@ -832,9 +825,6 @@ msgstr "l'analisi fattoriale richiede almeno tre variabili"
 
 msgid "no starting values supplied"
 msgstr "valori iniziali non specificati"
-
-msgid "unable to optimize from these starting value(s)"
-msgstr "impossibile ottimizzare partendo da questi valori"
 
 #, fuzzy
 msgid "invalid argument 'lambda'"
@@ -2537,8 +2527,20 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, fuzzy
+msgid "unknown name %s in the 'split' list"
+msgid_plural "unknown names %s in the 'split' list"
+msgstr[0] "nome(i) sconosciuti nella lista 'split'"
+msgstr[1] "nome(i) sconosciuti nella lista 'split'"
+
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgstr[0] "argometni extra ignorati"
+msgstr[1] "argometni extra ignorati"
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
 msgstr[0] "argometni extra ignorati"
 msgstr[1] "argometni extra ignorati"
 
@@ -2553,6 +2555,12 @@ msgid "'start' must have %d row"
 msgid_plural "'start' must have %d rows"
 msgstr[0] "'start' deve avere %d righe"
 msgstr[1] "'start' deve avere %d righe"
+
+#, fuzzy
+msgid "unable to optimize from this starting value"
+msgid_plural "unable to optimize from these starting values"
+msgstr[0] "impossibile ottimizzare partendo da questi valori"
+msgstr[1] "impossibile ottimizzare partendo da questi valori"
 
 #, fuzzy
 msgid "'init'; must have 1 column"

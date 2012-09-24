@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-09-24 17:55\n"
 "PO-Revision-Date: 2012-02-26 14:01+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -125,7 +125,9 @@ msgstr " 有効な 'gpar' の名前のみを指定しなければいけません
 msgid "Invalid display list element"
 msgstr " 不正なディスプレイリストの要素です "
 
-msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+#, fuzzy
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
 msgstr ""
 " grob(s) が上書きされました（おそらく grab は信用できるものではありません; "
 "'wrap=TRUE' を試してください） "
@@ -182,9 +184,6 @@ msgstr " grid.grob() は廃止予定です; 代わりに grob() を使って下�
 msgid "A 'grob' path must contain at least one 'grob' name"
 msgstr ""
 " 'grob' のパスは少なくとも 1 つの 'grob' の名前を含んでいなければなりません "
-
-msgid "Invalid 'grob' name(s)"
-msgstr " 不正な 'grob' の名前です "
 
 msgid "Unable to coerce to gList"
 msgstr " gList に強制変換出来ません "
@@ -518,9 +517,6 @@ msgid "A viewport path must contain at least one viewport name"
 msgstr ""
 " viewport のパスは少なくとも一つの viewport 名を含んでいる必要があります "
 
-msgid "Invalid viewport name(s)"
-msgstr " 不正な viewport 名です "
-
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr " 'x' or 'xscale' のうち少なくとも一つを指定しなければなりません "
 
@@ -529,6 +525,16 @@ msgstr " 'y' か 'yscale' のうち少なくとも一つを指定しなければ
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr " 'grid'名前空間をアンロードする際にすべてのデバイスを閉じています "
+
+#, fuzzy
+msgid "Invalid grob name"
+msgid_plural "Invalid grob name"
+msgstr[0] " 不正な 'grob' の名前です "
+
+#, fuzzy
+msgid "Invalid viewport name"
+msgid_plural "Invalid viewport name"
+msgstr[0] " 不正な viewport 名です "
 
 #~ msgid "at least one of 'width' and 'height' must be specified"
 #~ msgstr " 少なくとも'width'と'height'のどちらかは指定する必要があります "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -1225,6 +1225,11 @@ msgid_plural "Packages unavailable to check Rd xrefs: %s"
 msgstr[0] "Rd xrefs 를 확인할 수 없는 패키지(들): %s "
 
 #, fuzzy
+msgid "Unknown package %s in Rd xrefs"
+msgid_plural "Unknown packages %s in Rd xrefs"
+msgstr[0] "Rd xrefs 내에서 확인할 수 없는 패키지(들) %s "
+
+#, fuzzy
 msgid "Missing link in documentation object %s:"
 msgid_plural "Missing links in documentation object %s:"
 msgstr[0] "문서객체 '%s' 내에서 link(s) 가 빠졌습니다 "
@@ -1291,9 +1296,6 @@ msgstr[0] "'%s' 줄들 %s 를 재인코딩할 수 없습니다 "
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니다 "
-
-#~ msgid "Unknown package(s) %s in Rd xrefs"
-#~ msgstr "Rd xrefs 내에서 확인할 수 없는 패키지(들) %s "
 
 #~ msgid ":"
 #~ msgstr ":"

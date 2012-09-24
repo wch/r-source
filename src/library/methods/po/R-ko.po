@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:54\n"
+"POT-Creation-Date: 2012-09-24 17:52\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -340,8 +340,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"first argument should be the name(s) of generic functions (got object of "
-"class %s)"
+"first argument should be the names of one of more generic functions (got "
+"object of class %s)"
 msgstr ""
 "첫번째 인수는 generic 함수(클래스 \"%s\"의 오브젝트를 얻을수 있습니다)의 이름"
 "이어야만\n"
@@ -1653,12 +1653,6 @@ msgid "multiple definitions of %s found; using the one on %s"
 msgstr "\"%s\"의 다수의 정의는 검색되었습니다; %s에서 사용합니다"
 
 #, fuzzy
-msgid ""
-"no definition of class %s in the specified position, %s, definition(s) on : "
-"%s"
-msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
-
-#, fuzzy
 msgid "%s is not a valid field or method name for reference class %s"
 msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
 
@@ -1966,8 +1960,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"Invalid source argument: expected file names(s) or connection, got an object "
-"of class %s"
+"invalid 'source' argument: expected file names or a connection but got an "
+"object of class %s"
 msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
 
 #, fuzzy
@@ -2137,6 +2131,13 @@ msgstr[0] ""
 msgid "Choosing method %s from %d ambiguous possibility"
 msgid_plural "Choosing method %s from %d ambiguous possibilities"
 msgstr[0] ""
+
+#, fuzzy
+msgid ""
+"no definition of class %s in the specified position, %s, definition on : %s"
+msgid_plural ""
+"no definition of class %s in the specified position, %s, definitions on : %s"
+msgstr[0] "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
 
 #, fuzzy
 #~ msgid "Invalid object in methods table (\""

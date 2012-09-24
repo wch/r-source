@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:54\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -221,9 +221,6 @@ msgstr "Error()模型奇异"
 
 msgid "the 'split' argument must be a list"
 msgstr "'split'参数必需是串列"
-
-msgid "unknown name(s) in the 'split' list"
-msgstr "'split'串列里的名字不对"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
 msgstr "'coef'必需设定对比, 如, 总和为零"
@@ -727,10 +724,6 @@ msgstr "'xi'的尺寸不对"
 msgid "'x' is not a vector or matrix"
 msgstr "'x'不是矢量或矩阵"
 
-#, fuzzy
-msgid "extra argument(s) %s will be disregarded"
-msgstr "额外参数不用"
-
 msgid "invalid distance method"
 msgstr "距离方法不对"
 
@@ -790,9 +783,6 @@ msgstr "因子分析至少需要三个变量"
 
 msgid "no starting values supplied"
 msgstr "没有设定初始值"
-
-msgid "unable to optimize from these starting value(s)"
-msgstr "无法用这些初始值进行最佳化运算"
 
 msgid "invalid argument 'lambda'"
 msgstr "参数'lambda'不对"
@@ -2350,9 +2340,19 @@ msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "有%d个错误项，但最多只允许有一个"
 
 #, fuzzy
+msgid "unknown name %s in the 'split' list"
+msgid_plural "unknown names %s in the 'split' list"
+msgstr[0] "'split'串列里的名字不对"
+
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
 msgstr[0] "额外参数%s不是\"%s\""
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "额外参数不用"
 
 #, fuzzy
 msgid "%d factor is too many for %d variables"
@@ -2363,6 +2363,11 @@ msgstr[0] "%2$d变量不能有%1$d这么多的因子"
 msgid "'start' must have %d row"
 msgid_plural "'start' must have %d rows"
 msgstr[0] "'start'必需有%d行"
+
+#, fuzzy
+msgid "unable to optimize from this starting value"
+msgid_plural "unable to optimize from these starting values"
+msgstr[0] "无法用这些初始值进行最佳化运算"
 
 #, fuzzy
 msgid "'init'; must have 1 column"

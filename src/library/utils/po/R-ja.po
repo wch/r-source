@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:47\n"
+"POT-Creation-Date: 2012-09-24 17:43\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -174,9 +174,6 @@ msgstr " すべての欄は名前を持つ必要があります "
 
 msgid "%s has to be one of %s"
 msgstr " %s は %s のどれかである必要があります "
-
-msgid "A bibentry of bibtype %s has to specify the field(s): %s"
-msgstr " bibitype %s の bibentry は欄を正確に指定しなければなりません： %s  "
 
 msgid "%s should be one of %s"
 msgstr " %s は %s のどれかである必要があります "
@@ -647,13 +644,6 @@ msgstr " 'priority' は文字か NULL で無ければなりません "
 msgid "Updating HTML index of packages in '.Library'"
 msgstr " '.Library' 中のパッケージの HTML 索引を更新します "
 
-msgid ""
-"Removing package(s) from %s\n"
-"(as %s is unspecified)"
-msgstr ""
-" パッケージを %s から取り除きます \n"
-" (%s が指定されていないので) "
-
 msgid "'destdir' is not a directory"
 msgstr " 'destdir' はディレクトリではありません "
 
@@ -703,13 +693,6 @@ msgstr ""
 
 msgid "no packages were specified"
 msgstr " 如何なるパッケージも指定されませんでした "
-
-msgid ""
-"Installing package(s) into %s\n"
-"(as %s is unspecified)"
-msgstr ""
-" パッケージを %s 中にインストールします \n"
-" (%s が指定されていないので) "
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr " 'lib = \"%s\"' は書き込み可能ではありません "
@@ -1201,6 +1184,12 @@ msgid "Invalid role specification: %s."
 msgid_plural "Invalid role specifications: %s."
 msgstr[0] " 不正な role 指定です：%s "
 
+#, fuzzy
+msgid "A bibentry of bibtype %s has to specify the field: %s"
+msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
+msgstr[0] ""
+" bibitype %s の bibentry は欄を正確に指定しなければなりません： %s  "
+
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
 msgstr[0] " 列 %s からクラスが切り捨てられたクラス "
@@ -1215,6 +1204,17 @@ msgid_plural "objects '%s' not found"
 msgstr[0] " オブジェクト '%s' が見付かりません "
 
 #, fuzzy
+msgid ""
+"Removing package from %s\n"
+"(as %s is unspecified)"
+msgid_plural ""
+"Removing packages from %s\n"
+"(as %s is unspecified)"
+msgstr[0] ""
+" パッケージを %s から取り除きます \n"
+" (%s が指定されていないので) "
+
+#, fuzzy
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
 msgstr[0] " パッケージ %s が利用できません "
@@ -1226,6 +1226,17 @@ msgstr[0] " 依存対象(dependency) %s が利用できません "
 msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] " 依存対象(dependency)　%s もインストールします "
+
+#, fuzzy
+msgid ""
+"Installing package into %s\n"
+"(as %s is unspecified)"
+msgid_plural ""
+"Installing packages into %s\n"
+"(as %s is unspecified)"
+msgstr[0] ""
+" パッケージを %s 中にインストールします \n"
+" (%s が指定されていないので) "
 
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:47\n"
+"POT-Creation-Date: 2012-09-24 17:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,9 +144,6 @@ msgid "all fields have to be named"
 msgstr ""
 
 msgid "%s has to be one of %s"
-msgstr ""
-
-msgid "A bibentry of bibtype %s has to specify the field(s): %s"
 msgstr ""
 
 msgid "%s should be one of %s"
@@ -569,9 +566,6 @@ msgstr ""
 msgid "Updating HTML index of packages in '.Library'"
 msgstr ""
 
-msgid "Removing package(s) from %s\n(as %s is unspecified)"
-msgstr ""
-
 msgid "'destdir' is not a directory"
 msgstr ""
 
@@ -615,9 +609,6 @@ msgid "Do not know which element of 'lib' to install dependencies into\nskipping
 msgstr ""
 
 msgid "no packages were specified"
-msgstr ""
-
-msgid "Installing package(s) into %s\n(as %s is unspecified)"
 msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
@@ -1032,6 +1023,11 @@ msgid_plural "Invalid role specifications: %s."
 msgstr[0]    ""
 msgstr[1]    ""
 
+msgid        "A bibentry of bibtype %s has to specify the field: %s"
+msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
 msgstr[0]    ""
@@ -1047,6 +1043,11 @@ msgid_plural "objects '%s' not found"
 msgstr[0]    ""
 msgstr[1]    ""
 
+msgid        "Removing package from %s\n(as %s is unspecified)"
+msgid_plural "Removing packages from %s\n(as %s is unspecified)"
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
 msgstr[0]    ""
@@ -1059,6 +1060,11 @@ msgstr[1]    ""
 
 msgid        "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "Installing package into %s\n(as %s is unspecified)"
+msgid_plural "Installing packages into %s\n(as %s is unspecified)"
 msgstr[0]    ""
 msgstr[1]    ""
 

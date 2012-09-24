@@ -146,8 +146,10 @@ gPathFromVector <- function(names) {
   n <- length(names)
   if (n < 1L)
     stop("A 'grob' path must contain at least one 'grob' name")
-  if (!all(is.character(names)))
-    stop("Invalid 'grob' name(s)")
+  if (any(bad <- !is.character(names)))
+      stop(ngettext(sum(bad),
+                    "Invalid grob name",
+                    "Invalid grob name"), domain = NA)
   path <- list(path=if (n==1) NULL else
                paste(names[1L:(n-1)], collapse=.grid.pathSep),
                name=names[n],

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1234,6 +1234,13 @@ msgstr[1] "Пакет(ы) недоступны для проверки Rd xrefs: %s"
 msgstr[2] "Пакет(ы) недоступны для проверки Rd xrefs: %s"
 
 #, fuzzy
+msgid "Unknown package %s in Rd xrefs"
+msgid_plural "Unknown packages %s in Rd xrefs"
+msgstr[0] "Неизвестные пакет(ы) %s в Rd xrefs"
+msgstr[1] "Неизвестные пакет(ы) %s в Rd xrefs"
+msgstr[2] "Неизвестные пакет(ы) %s в Rd xrefs"
+
+#, fuzzy
 msgid "Missing link in documentation object %s:"
 msgid_plural "Missing links in documentation object %s:"
 msgstr[0] "Пропущенные связ(и) с объектом документации '%s':"
@@ -1330,9 +1337,6 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
-
-#~ msgid "Unknown package(s) %s in Rd xrefs"
-#~ msgstr "Неизвестные пакет(ы) %s в Rd xrefs"
 
 #~ msgid ":"
 #~ msgstr ":"

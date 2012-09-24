@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1050,21 +1050,15 @@ msgstr " 'trim' は長さ 1 の数値でなければなりません "
 msgid "trimmed means are not defined for complex data"
 msgstr " 複素数データに対しては刈込み平均は定義されません "
 
-#, fuzzy
-msgid "'by' must specify uniquely valid column(s)"
-msgstr " 'by' は有効な列を指定しなければなりません "
-
 msgid "'by' must match numbers of columns"
 msgstr " 'by' は列数にマッチしなければなりません "
 
 msgid "'by' must match number of columns"
 msgstr " 'by' は列数にマッチしなければなりません "
 
-msgid "'by' must specify column(s) as numbers, names or logical"
+#, fuzzy
+msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr " 'by' は列を数値、名前ラベルもしくは論理値で特定しなければなりません "
-
-msgid "'by' must specify valid column(s)"
-msgstr " 'by' は有効な列を指定しなければなりません "
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr " 'by.x' そして 'by.y' は異なった列数を指定しています "
@@ -1756,6 +1750,11 @@ msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] " %s を見付けることができません "
 
+#, fuzzy
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] " 'by' は有効な列を指定しなければなりません "
+
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "
 "generic: %s"
@@ -1795,6 +1794,9 @@ msgstr[0] " TRUE の代わりに T が使われました "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "'by' must specify valid column(s)"
+#~ msgstr " 'by' は有効な列を指定しなければなりません "
 
 #, fuzzy
 #~ msgid "%s not defined for numeric_version objects"

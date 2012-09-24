@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-09-24 17:55\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -121,7 +121,9 @@ msgstr "Deve especificar apenas nomes 'gpar' válidos"
 msgid "Invalid display list element"
 msgstr "elemento da lista de exibição inválido"
 
-msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+#, fuzzy
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
 msgstr "grob(s) sobrescrito(s) (captura NÃO será fiel; tente 'wrap=TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
@@ -175,9 +177,6 @@ msgstr "grid.grob() é obsoleta; ao invés disso, use grob()"
 
 msgid "A 'grob' path must contain at least one 'grob' name"
 msgstr "Um caminho 'grob' deve conter ao menos um nome 'grob'"
-
-msgid "Invalid 'grob' name(s)"
-msgstr "Nome(s) de 'grob' inválido(s)"
 
 msgid "Unable to coerce to gList"
 msgstr "Impossível converter automaticamente em uma gList"
@@ -505,9 +504,6 @@ msgstr ""
 msgid "A viewport path must contain at least one viewport name"
 msgstr "Um caminho vista deve conter pelo menos um nome de vista"
 
-msgid "Invalid viewport name(s)"
-msgstr "Nome(s) de vista inválido(s)"
-
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Deve especificar pelo menos um de 'x' ou 'xscale'"
 
@@ -518,3 +514,15 @@ msgstr "Deve especificar pelo menos um de 'y' ou 'yscale'"
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr ""
 "desligando todos os dispositivos quando descarregando name space 'grid'"
+
+#, fuzzy
+msgid "Invalid grob name"
+msgid_plural "Invalid grob name"
+msgstr[0] "Nome(s) de 'grob' inválido(s)"
+msgstr[1] "Nome(s) de 'grob' inválido(s)"
+
+#, fuzzy
+msgid "Invalid viewport name"
+msgid_plural "Invalid viewport name"
+msgstr[0] "Nome(s) de vista inválido(s)"
+msgstr[1] "Nome(s) de vista inválido(s)"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1038,22 +1038,16 @@ msgstr "'trim' должен быть числовым объектом длины 1"
 msgid "trimmed means are not defined for complex data"
 msgstr "обрезанные средние не определены для комплексных данных"
 
-#, fuzzy
-msgid "'by' must specify uniquely valid column(s)"
-msgstr "'by' должен определять правильные колонк(и)"
-
 msgid "'by' must match numbers of columns"
 msgstr "'by' должен соответствовать номерам колонок"
 
 msgid "'by' must match number of columns"
 msgstr "'by' должен соответствовать числу колонок"
 
-msgid "'by' must specify column(s) as numbers, names or logical"
+#, fuzzy
+msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr ""
 "'by' должен определять колонк(и) как числа, имена или логические данные"
-
-msgid "'by' must specify valid column(s)"
-msgstr "'by' должен определять правильные колонк(и)"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' и 'by.y' определяют разные номера колонок"
@@ -1757,6 +1751,13 @@ msgstr[0] "%s не найден"
 msgstr[1] "%s не найден"
 msgstr[2] "%s не найден"
 
+#, fuzzy
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] "'by' должен определять правильные колонк(и)"
+msgstr[1] "'by' должен определять правильные колонк(и)"
+msgstr[2] "'by' должен определять правильные колонк(и)"
+
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "
 "generic: %s"
@@ -1813,6 +1814,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "'by' must specify valid column(s)"
+#~ msgstr "'by' должен определять правильные колонк(и)"
 
 #, fuzzy
 #~ msgid "%s not defined for numeric_version objects"

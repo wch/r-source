@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:54\n"
+"POT-Creation-Date: 2012-09-24 17:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,7 +203,7 @@ msgstr ""
 msgid "bad class specified for element %d (should be a single character string)"
 msgstr ""
 
-msgid "first argument should be the name(s) of generic functions (got object of class %s)"
+msgid "first argument should be the names of one of more generic functions (got object of class %s)"
 msgstr ""
 
 msgid "%s is not an S4 generic function in %s; methods not removed"
@@ -992,9 +992,6 @@ msgstr ""
 msgid "multiple definitions of %s found; using the one on %s"
 msgstr ""
 
-msgid "no definition of class %s in the specified position, %s, definition(s) on : %s"
-msgstr ""
-
 msgid "%s is not a valid field or method name for reference class %s"
 msgstr ""
 
@@ -1190,7 +1187,7 @@ msgstr ""
 msgid "Package %s is not attached and no namespace found for it"
 msgstr ""
 
-msgid "Invalid source argument: expected file names(s) or connection, got an object of class %s"
+msgid "invalid 'source' argument: expected file names or a connection but got an object of class %s"
 msgstr ""
 
 msgid "Can't find an environment corresponding to package name '%s\""
@@ -1321,5 +1318,10 @@ msgstr[1]    ""
 
 msgid        "Choosing method %s from %d ambiguous possibility"
 msgid_plural "Choosing method %s from %d ambiguous possibilities"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "no definition of class %s in the specified position, %s, definition on : %s"
+msgid_plural "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0]    ""
 msgstr[1]    ""

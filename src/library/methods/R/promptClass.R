@@ -92,25 +92,24 @@ function (clName, filename = NULL, type = "class",
     else {
         whereClass <- find(classMetaName(clName))
         if(length(whereClass) == 0L)
-          stop(gettextf("no definition of class %s found",
-                        dQuote(clName)),
-               domain = NA)
+            stop(gettextf("no definition of class %s found",
+                          dQuote(clName)), domain = NA)
         else if(length(whereClass) > 1L) {
             if(identical(where, topenv(parent.frame()))) {
                 whereClass <- whereClass[[1L]]
                 warning(gettextf("multiple definitions of %s found; using the one on %s",
-                                 dQuote(clName),
-                                 whereClass),
-                        domain = NA)
+                                 dQuote(clName), whereClass), domain = NA)
             }
             else {
                 if(exists(classMetaName(clName), where, inherits = FALSE))
-                  whereClass <- where
+                    whereClass <- where
                 else
-                  stop(gettextf("no definition of class %s in the specified position, %s, definition(s) on : %s",
-                                dQuote(clName), where,
-                                paste(whereClass, collapse = ", ")),
-                       domain = NA)
+                    stop(sprintf(ngettext(length(whereClass),
+                                          "no definition of class %s in the specified position, %s, definition on : %s",
+                                          "no definition of class %s in the specified position, %s, definitions on : %s"),
+                                 dQuote(clName), where,
+                                 paste(whereClass, collapse = ", ")),
+                         domain = NA)
             }
         }
     }

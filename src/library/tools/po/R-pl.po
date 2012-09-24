@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1242,6 +1242,13 @@ msgstr[1] "Pakiet(y) niedostępne dla sprawdzenia Rd xrefs: %s"
 msgstr[2] "Pakiet(y) niedostępne dla sprawdzenia Rd xrefs: %s"
 
 #, fuzzy
+msgid "Unknown package %s in Rd xrefs"
+msgid_plural "Unknown packages %s in Rd xrefs"
+msgstr[0] "Nieznany(e) pakiet(y) %s w Rd xrefs"
+msgstr[1] "Nieznany(e) pakiet(y) %s w Rd xrefs"
+msgstr[2] "Nieznany(e) pakiet(y) %s w Rd xrefs"
+
+#, fuzzy
 msgid "Missing link in documentation object %s:"
 msgid_plural "Missing links in documentation object %s:"
 msgstr[0] "Brakujące połączenia w obiekcie dokumentacji '%s':"
@@ -1348,9 +1355,6 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "obiekt %s jest utworzony przez więcej niż jedno wywołanie danych"
 msgstr[1] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
-
-#~ msgid "Unknown package(s) %s in Rd xrefs"
-#~ msgstr "Nieznany(e) pakiet(y) %s w Rd xrefs"
 
 #~ msgid ":"
 #~ msgstr ":"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:54\n"
+"POT-Creation-Date: 2012-09-24 17:52\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -286,9 +286,10 @@ msgid ""
 "bad class specified for element %d (should be a single character string)"
 msgstr "为單元%d所设定的类别不对(应当是条单字符字串)"
 
+#, fuzzy
 msgid ""
-"first argument should be the name(s) of generic functions (got object of "
-"class %s)"
+"first argument should be the names of one of more generic functions (got "
+"object of class %s)"
 msgstr "第一个参数应当为泛型函数的名称(现在却是类别为%s的对象)"
 
 #, fuzzy
@@ -1389,11 +1390,6 @@ msgstr "类别%s的定义不存在"
 msgid "multiple definitions of %s found; using the one on %s"
 msgstr "\"%s\"有多个定义；现在用%s这一个"
 
-msgid ""
-"no definition of class %s in the specified position, %s, definition(s) on : "
-"%s"
-msgstr "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
-
 #, fuzzy
 msgid "%s is not a valid field or method name for reference class %s"
 msgstr "\"%s\"场要么无效，要么引用类的方法名%s不对"
@@ -1687,9 +1683,10 @@ msgstr "在多个程序包中找到了对象：用%s而不用%s"
 msgid "Package %s is not attached and no namespace found for it"
 msgstr "\"%s\"程序包没有被附加，也找不到它的名字空间"
 
+#, fuzzy
 msgid ""
-"Invalid source argument: expected file names(s) or connection, got an object "
-"of class %s"
+"invalid 'source' argument: expected file names or a connection but got an "
+"object of class %s"
 msgstr "源参数不对：应该是文件名字或连接，现在却是类别为%s的对象"
 
 msgid "Can't find an environment corresponding to package name '%s\""
@@ -1849,6 +1846,13 @@ msgstr[0] "选用%d部分精密匹配方法"
 msgid "Choosing method %s from %d ambiguous possibility"
 msgid_plural "Choosing method %s from %d ambiguous possibilities"
 msgstr[0] "从%2$d个歧义可能选择中选%1$s方法"
+
+#, fuzzy
+msgid ""
+"no definition of class %s in the specified position, %s, definition on : %s"
+msgid_plural ""
+"no definition of class %s in the specified position, %s, definitions on : %s"
+msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
 
 #~ msgid "found"
 #~ msgstr "找到了"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:54\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -219,9 +219,6 @@ msgstr "Error() modeli tekil"
 
 msgid "the 'split' argument must be a list"
 msgstr "'split' argümanı bir liste olmalı"
-
-msgid "unknown name(s) in the 'split' list"
-msgstr "'split' listesinde bilinmeyen isim(ler)"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
 msgstr ""
@@ -730,10 +727,6 @@ msgstr "'xi' için hatalı boyutlar"
 msgid "'x' is not a vector or matrix"
 msgstr "'x' bir vektör veya matris değil"
 
-#, fuzzy
-msgid "extra argument(s) %s will be disregarded"
-msgstr "ekstra argümanlar çıkarıldı"
-
 msgid "invalid distance method"
 msgstr "geçersiz uzaklık metodu"
 
@@ -795,9 +788,6 @@ msgstr "faktör analizi en az 3 değişken gerektirir"
 
 msgid "no starting values supplied"
 msgstr "başlangıç değeri verilmedi"
-
-msgid "unable to optimize from these starting value(s)"
-msgstr ""
 
 msgid "invalid argument 'lambda'"
 msgstr "geçersiz argüman 'lambda'"
@@ -2366,8 +2356,20 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, fuzzy
+msgid "unknown name %s in the 'split' list"
+msgid_plural "unknown names %s in the 'split' list"
+msgstr[0] "'split' listesinde bilinmeyen isim(ler)"
+msgstr[1] "'split' listesinde bilinmeyen isim(ler)"
+
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgstr[0] "ekstra argümanlar çıkarıldı"
+msgstr[1] "ekstra argümanlar çıkarıldı"
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
 msgstr[0] "ekstra argümanlar çıkarıldı"
 msgstr[1] "ekstra argümanlar çıkarıldı"
 
@@ -2382,6 +2384,11 @@ msgid "'start' must have %d row"
 msgid_plural "'start' must have %d rows"
 msgstr[0] "'start' %d satıra sahip olmalı"
 msgstr[1] "'start' %d satıra sahip olmalı"
+
+msgid "unable to optimize from this starting value"
+msgid_plural "unable to optimize from these starting values"
+msgstr[0] ""
+msgstr[1] ""
 
 #, fuzzy
 msgid "'init'; must have 1 column"

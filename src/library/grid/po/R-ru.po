@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-09-24 17:55\n"
 "PO-Revision-Date: 2012-03-15 11:27-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -129,7 +129,9 @@ msgstr "Вы должны задавать только правильные имена 'gpar'"
 msgid "Invalid display list element"
 msgstr "Неправильный элемент списка изображений"
 
-msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+#, fuzzy
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
 msgstr "grob(s) переписан (grab НЕ БУДЕТ точным; попробуйте 'wrap=TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
@@ -182,9 +184,6 @@ msgstr "grid.grob() не одобряется; используйте, пожалуйста, grob()"
 
 msgid "A 'grob' path must contain at least one 'grob' name"
 msgstr "Путь к 'grob' должен содержать по крайней мере одно имя 'grob'"
-
-msgid "Invalid 'grob' name(s)"
-msgstr "Неправильные име(на) 'grob'"
 
 msgid "Unable to coerce to gList"
 msgstr "Не могу преобразовать в gList"
@@ -509,9 +508,6 @@ msgid "A viewport path must contain at least one viewport name"
 msgstr ""
 "Путь к оконнице должен должен содержать по меньшей мере одно имя оконницы"
 
-msgid "Invalid viewport name(s)"
-msgstr "Неправильное име(на) оконницы"
-
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Надо задать по крайней мере одно из 'x' или 'xscale'"
 
@@ -520,6 +516,20 @@ msgstr "Надо задать по крайней мере одно из 'y' или 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr "выключаю все устройства после выгрузки пространства имен 'grid'"
+
+#, fuzzy
+msgid "Invalid grob name"
+msgid_plural "Invalid grob name"
+msgstr[0] "Неправильные име(на) 'grob'"
+msgstr[1] "Неправильные име(на) 'grob'"
+msgstr[2] "Неправильные име(на) 'grob'"
+
+#, fuzzy
+msgid "Invalid viewport name"
+msgid_plural "Invalid viewport name"
+msgstr[0] "Неправильное име(на) оконницы"
+msgstr[1] "Неправильное име(на) оконницы"
+msgstr[2] "Неправильное име(на) оконницы"
 
 #~ msgid "at least one of 'width' and 'height' must be specified"
 #~ msgstr "по крайней мере 'width', и 'height' должны быть определены"

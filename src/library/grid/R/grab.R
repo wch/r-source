@@ -107,7 +107,7 @@ grabDL <- function(warn, wrap, ...) {
       names <- getNames()
       # Check for overwriting existing grob
       if (length(unique(names)) != length(names))
-        warning("grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')")
+        warning("one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')")
     }
     grid.newpage(recording=FALSE)
     # Start at 2 because first element is viewport[ROOT]

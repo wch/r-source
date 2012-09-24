@@ -998,7 +998,7 @@ showMethods <-
         if(length(f) > 1L) f <- paste(f, collapse = "; ")
     }
     if(!is(f, "character"))
-        stop(gettextf("first argument should be the name(s) of generic functions (got object of class %s)",
+        stop(gettextf("first argument should be the names of one of more generic functions (got object of class %s)",
                       dQuote(class(f))), domain = NA)
     if(length(f) ==  0L) { ## usually, the default character()
         f <- if(missing(where)) getGenerics() else getGenerics(where)

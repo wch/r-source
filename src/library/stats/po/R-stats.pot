@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:54\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,9 +207,6 @@ msgid "Error() model is singular"
 msgstr ""
 
 msgid "the 'split' argument must be a list"
-msgstr ""
-
-msgid "unknown name(s) in the 'split' list"
 msgstr ""
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
@@ -707,9 +704,6 @@ msgstr ""
 msgid "'x' is not a vector or matrix"
 msgstr ""
 
-msgid "extra argument(s) %s will be disregarded"
-msgstr ""
-
 msgid "invalid distance method"
 msgstr ""
 
@@ -768,9 +762,6 @@ msgid "factor analysis requires at least three variables"
 msgstr ""
 
 msgid "no starting values supplied"
-msgstr ""
-
-msgid "unable to optimize from these starting value(s)"
 msgstr ""
 
 msgid "invalid argument 'lambda'"
@@ -2254,8 +2245,18 @@ msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0]    ""
 msgstr[1]    ""
 
+msgid        "unknown name %s in the 'split' list"
+msgid_plural "unknown names %s in the 'split' list"
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
 msgstr[0]    ""
 msgstr[1]    ""
 
@@ -2266,6 +2267,11 @@ msgstr[1]    ""
 
 msgid        "'start' must have %d row"
 msgid_plural "'start' must have %d rows"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "unable to optimize from this starting value"
+msgid_plural "unable to optimize from these starting values"
 msgstr[0]    ""
 msgstr[1]    ""
 

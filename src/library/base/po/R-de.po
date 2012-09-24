@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2012-03-05 16:41+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1048,22 +1048,16 @@ msgstr "'trim' muss nummerisch sein und Länge 1 haben"
 msgid "trimmed means are not defined for complex data"
 msgstr "getrimmte Mittelwerte sind für komplexe Daten nicht definiert"
 
-#, fuzzy
-msgid "'by' must specify uniquely valid column(s)"
-msgstr "'by' muss gültige Spalte(n) spezifizieren"
-
 msgid "'by' must match numbers of columns"
 msgstr "'by' muss zu den Anzahlen der Spalten passen"
 
 msgid "'by' must match number of columns"
 msgstr "'by' muss zur Anzahl der Spalten passen"
 
-msgid "'by' must specify column(s) as numbers, names or logical"
+#, fuzzy
+msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr ""
 "'by' muss Spalte(n) als Zahlen, Namen oder logische Werte spezifizieren"
-
-msgid "'by' must specify valid column(s)"
-msgstr "'by' muss gültige Spalte(n) spezifizieren"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' und 'by.y' geben unterschiedliche Zahlen von Spalten an"
@@ -1760,6 +1754,12 @@ msgid_plural "objects %s not found"
 msgstr[0] "Objekt %s nicht gefunden"
 msgstr[1] "Objekte %s nicht gefunden"
 
+#, fuzzy
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] "'by' muss gültige Spalte(n) spezifizieren"
+msgstr[1] "'by' muss gültige Spalte(n) spezifizieren"
+
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "
 "generic: %s"
@@ -1805,6 +1805,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "'by' must specify valid column(s)"
+#~ msgstr "'by' muss gültige Spalte(n) spezifizieren"
 
 #, fuzzy
 #~ msgid "%s not defined for numeric_version objects"

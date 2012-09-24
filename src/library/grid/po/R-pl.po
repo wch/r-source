@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-09-24 17:55\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -126,7 +126,9 @@ msgstr "Potrzeba określić tylko poprawne nazwy 'gpar'"
 msgid "Invalid display list element"
 msgstr "Niepoprawne element listy wyświetleń"
 
-msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+#, fuzzy
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
 msgstr ""
 "'grob(s)' nadpisane ('grab' NIE BĘDZIE wiarygodne; spróbuj 'wrap=TRUE')"
 
@@ -180,9 +182,6 @@ msgstr "'grid.grob()' jest przestarzałe; proszę w zamian użyć 'grob()'"
 
 msgid "A 'grob' path must contain at least one 'grob' name"
 msgstr "Ścieżka 'grob' musi zawierać przynajmniej jedną nazwę 'grob'"
-
-msgid "Invalid 'grob' name(s)"
-msgstr "Niepoprawne nazwy 'grob'"
 
 msgid "Unable to coerce to gList"
 msgstr "Nie można przekształcić w 'gList'"
@@ -515,9 +514,6 @@ msgstr ""
 msgid "A viewport path must contain at least one viewport name"
 msgstr "Ścieżka okna ekranu musi zawierać przynajmniej jedną nazwę okna ekranu"
 
-msgid "Invalid viewport name(s)"
-msgstr "Niepoprawne nazwy okien ekranu"
-
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Potrzeba określić przynajmniej jeden z 'x' lub 'xscale'"
 
@@ -527,3 +523,17 @@ msgstr "Potrzeba określić przynajmniej jeden z 'y' lub 'yscale'"
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr ""
 "zamykanie wszystkich urządzeń kiedy wyłączana jest przestrzeń nazw 'grid'"
+
+#, fuzzy
+msgid "Invalid grob name"
+msgid_plural "Invalid grob name"
+msgstr[0] "Niepoprawne nazwy 'grob'"
+msgstr[1] "Niepoprawne nazwy 'grob'"
+msgstr[2] "Niepoprawne nazwy 'grob'"
+
+#, fuzzy
+msgid "Invalid viewport name"
+msgid_plural "Invalid viewport name"
+msgstr[0] "Niepoprawne nazwy okien ekranu"
+msgstr[1] "Niepoprawne nazwy okien ekranu"
+msgstr[2] "Niepoprawne nazwy okien ekranu"

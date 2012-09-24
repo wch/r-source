@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:54\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -236,9 +236,6 @@ msgstr "Error()-модель сингулярна"
 
 msgid "the 'split' argument must be a list"
 msgstr "аргумент 'split' должен быть списком"
-
-msgid "unknown name(s) in the 'split' list"
-msgstr "неизвестные имена(а) в 'split'-списке"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
 msgstr "'coef' должен определять контраст, т.е., его сумма должна = 0"
@@ -752,10 +749,6 @@ msgstr "неправильные измерения у 'xi'"
 msgid "'x' is not a vector or matrix"
 msgstr "'x' не является вектором или матрицей"
 
-#, fuzzy
-msgid "extra argument(s) %s will be disregarded"
-msgstr "дополнительные аргументы отброшены"
-
 msgid "invalid distance method"
 msgstr "неправильный метод подсчета расстояний"
 
@@ -815,9 +808,6 @@ msgstr "факторный анализ требует как минимум три переменные"
 
 msgid "no starting values supplied"
 msgstr "не указано стартовое значение"
-
-msgid "unable to optimize from these starting value(s)"
-msgstr "не могу оптимизировать, начиная с этих стартовых значени(й)"
 
 msgid "invalid argument 'lambda'"
 msgstr "неправильный аргумент 'lambda'"
@@ -2458,11 +2448,25 @@ msgstr[1] "здесь %d ошибочных выражения: разрешено лишь одно"
 msgstr[2] "здесь %d ошибочных выражений: разрешено лишь одно"
 
 #, fuzzy
+msgid "unknown name %s in the 'split' list"
+msgid_plural "unknown names %s in the 'split' list"
+msgstr[0] "неизвестные имена(а) в 'split'-списке"
+msgstr[1] "неизвестные имена(а) в 'split'-списке"
+msgstr[2] "неизвестные имена(а) в 'split'-списке"
+
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
 msgstr[0] "дополнительный аргумент %s не является \"%s\""
 msgstr[1] "дополнительные аргументы %s не являются \"%s\""
 msgstr[2] "дополнительные аргументы %s не являются \"%s\""
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "дополнительные аргументы отброшены"
+msgstr[1] "дополнительные аргументы отброшены"
+msgstr[2] "дополнительные аргументы отброшены"
 
 #, fuzzy
 msgid "%d factor is too many for %d variables"
@@ -2477,6 +2481,13 @@ msgid_plural "'start' must have %d rows"
 msgstr[0] "'start' должен иметь %d строк"
 msgstr[1] "'start' должен иметь %d строк"
 msgstr[2] "'start' должен иметь %d строк"
+
+#, fuzzy
+msgid "unable to optimize from this starting value"
+msgid_plural "unable to optimize from these starting values"
+msgstr[0] "не могу оптимизировать, начиная с этих стартовых значени(й)"
+msgstr[1] "не могу оптимизировать, начиная с этих стартовых значени(й)"
+msgstr[2] "не могу оптимизировать, начиная с этих стартовых значени(й)"
 
 #, fuzzy
 msgid "'init'; must have 1 column"

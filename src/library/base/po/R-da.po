@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1024,19 +1024,13 @@ msgstr ""
 msgid "trimmed means are not defined for complex data"
 msgstr ""
 
-msgid "'by' must specify uniquely valid column(s)"
-msgstr ""
-
 msgid "'by' must match numbers of columns"
 msgstr ""
 
 msgid "'by' must match number of columns"
 msgstr ""
 
-msgid "'by' must specify column(s) as numbers, names or logical"
-msgstr ""
-
-msgid "'by' must specify valid column(s)"
+msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr ""
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
@@ -1705,6 +1699,11 @@ msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] "objekt %s blev ikke fundet"
 msgstr[1] "Objekterne %s blev ikke fundet"
+
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "

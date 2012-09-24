@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -1036,21 +1036,15 @@ msgstr "'trim' 은 반드시 길이가 1인 수치형이어야 합니다 "
 msgid "trimmed means are not defined for complex data"
 msgstr "복소수 데이터에 대한 절사평균은 정의되지 않았습니다 "
 
-#, fuzzy
-msgid "'by' must specify uniquely valid column(s)"
-msgstr "'by' 에 올바른 열이 지정되어야 합니다 "
-
 msgid "'by' must match numbers of columns"
 msgstr "'by' 는 열의 개수와 반드시 일치해야 합니다 "
 
 msgid "'by' must match number of columns"
 msgstr "'by' 는 열의 개수와 반드시 일치해야 합니다 "
 
-msgid "'by' must specify column(s) as numbers, names or logical"
+#, fuzzy
+msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr "'by' must specify column(s) as numbers, names or logical"
-
-msgid "'by' must specify valid column(s)"
-msgstr "'by' 에 올바른 열이 지정되어야 합니다 "
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' 와 'by.y' 가 지정하는 열의 개수가 다릅니다 "
@@ -1733,6 +1727,11 @@ msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] "객체 %s 는 찾을 수 없습니다 "
 
+#, fuzzy
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] "'by' 에 올바른 열이 지정되어야 합니다 "
+
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "
 "generic: %s"
@@ -1770,6 +1769,9 @@ msgstr[0] "TRUE 대신 T 가 사용되었습니다 "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#~ msgid "'by' must specify valid column(s)"
+#~ msgstr "'by' 에 올바른 열이 지정되어야 합니다 "
 
 #, fuzzy
 #~ msgid "%s not defined for numeric_version objects"

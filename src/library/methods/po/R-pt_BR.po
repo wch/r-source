@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:54\n"
+"POT-Creation-Date: 2012-09-24 17:52\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -372,8 +372,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"first argument should be the name(s) of generic functions (got object of "
-"class %s)"
+"first argument should be the names of one of more generic functions (got "
+"object of class %s)"
 msgstr ""
 "primeiro argumento deve ser o(s) nome(s) de funções genérica (foi "
 "especificado objeto de classe \"%s\""
@@ -1566,11 +1566,6 @@ msgstr "nenhuma definição existente para função '%s'"
 msgid "multiple definitions of %s found; using the one on %s"
 msgstr "nenhuma definição existente para função '%s'"
 
-msgid ""
-"no definition of class %s in the specified position, %s, definition(s) on : "
-"%s"
-msgstr ""
-
 #, fuzzy
 msgid "%s is not a valid field or method name for reference class %s"
 msgstr "classe \"%s\" extende uma classe não definida, \"%s\""
@@ -1876,8 +1871,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"Invalid source argument: expected file names(s) or connection, got an object "
-"of class %s"
+"invalid 'source' argument: expected file names or a connection but got an "
+"object of class %s"
 msgstr ""
 "definição de método inválida: uma função era esperada, mas foi especificado "
 "um objeto de classe \"%s\""
@@ -2055,6 +2050,14 @@ msgid "Choosing method %s from %d ambiguous possibility"
 msgid_plural "Choosing method %s from %d ambiguous possibilities"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+msgid ""
+"no definition of class %s in the specified position, %s, definition on : %s"
+msgid_plural ""
+"no definition of class %s in the specified position, %s, definitions on : %s"
+msgstr[0] "nenhuma definição existente para função '%s'"
+msgstr[1] "nenhuma definição existente para função '%s'"
 
 #, fuzzy
 #~ msgid "\")"

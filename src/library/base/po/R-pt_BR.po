@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1086,21 +1086,15 @@ msgstr "'trim' deve ser numérico de comprimento 1"
 msgid "trimmed means are not defined for complex data"
 msgstr "médias aparadas não são definidas para dados complexos"
 
-#, fuzzy
-msgid "'by' must specify uniquely valid column(s)"
-msgstr "'by' deve especificar coluna(s) válida(s)"
-
 msgid "'by' must match numbers of columns"
 msgstr "'by' deve ser compatível com o número de colunas"
 
 msgid "'by' must match number of columns"
 msgstr "'by' deve ser compatível com o número de colunas"
 
-msgid "'by' must specify column(s) as numbers, names or logical"
+#, fuzzy
+msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr "'by' deve especificar coluna(s) como números, nomes ou lógico"
-
-msgid "'by' must specify valid column(s)"
-msgstr "'by' deve especificar coluna(s) válida(s)"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' e 'by.y' especificam números de colunas diferentes"
@@ -1813,6 +1807,12 @@ msgid_plural "objects %s not found"
 msgstr[0] "objeto %s não encontrado"
 msgstr[1] "objetos %s não encontrado"
 
+#, fuzzy
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] "'by' deve especificar coluna(s) válida(s)"
+msgstr[1] "'by' deve especificar coluna(s) válida(s)"
+
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "
 "generic: %s"
@@ -1858,6 +1858,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "'by' must specify valid column(s)"
+#~ msgstr "'by' deve especificar coluna(s) válida(s)"
 
 #, fuzzy
 #~ msgid "%s not defined for numeric_version objects"

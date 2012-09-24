@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:54\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -235,9 +235,6 @@ msgstr "Error()모델은 특이합니다"
 
 msgid "the 'split' argument must be a list"
 msgstr "'split' 인수는 리스트가 아니면 되지 않습니다"
-
-msgid "unknown name(s) in the 'split' list"
-msgstr "'split' 리스트에서 알수없는 이름입니다"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
 msgstr ""
@@ -766,10 +763,6 @@ msgstr "'x'의 길이가 정확하지 않습니다"
 msgid "'x' is not a vector or matrix"
 msgstr "'x'는 벡터 또는 행렬이 아닙니다"
 
-#, fuzzy
-msgid "extra argument(s) %s will be disregarded"
-msgstr "불필요한 인수는 버려졌습니다"
-
 msgid "invalid distance method"
 msgstr "무효인 거리 method입니다"
 
@@ -829,9 +822,6 @@ msgstr "인자 분석법은 적어도 3개의 변수를 필요로 합니다"
 
 msgid "no starting values supplied"
 msgstr "초기값이 주어지고 있지 않습니다"
-
-msgid "unable to optimize from these starting value(s)"
-msgstr "이러한 초기값으로부터 최적화를 할수가 없습니다"
 
 #, fuzzy
 msgid "invalid argument 'lambda'"
@@ -2525,8 +2515,18 @@ msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "개의 에러 terms가 있습니다. 하나만 허용됩니다"
 
 #, fuzzy
+msgid "unknown name %s in the 'split' list"
+msgid_plural "unknown names %s in the 'split' list"
+msgstr[0] "'split' 리스트에서 알수없는 이름입니다"
+
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgstr[0] "불필요한 인수는 버려졌습니다"
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
 msgstr[0] "불필요한 인수는 버려졌습니다"
 
 #, fuzzy
@@ -2538,6 +2538,11 @@ msgstr[0] "%d개 인자는 %d개의 변수에 대해서 너무 많습니다"
 msgid "'start' must have %d row"
 msgid_plural "'start' must have %d rows"
 msgstr[0] "'srart'는 %d 행을 가지지 않으면 안됩니다"
+
+#, fuzzy
+msgid "unable to optimize from this starting value"
+msgid_plural "unable to optimize from these starting values"
+msgstr[0] "이러한 초기값으로부터 최적화를 할수가 없습니다"
 
 #, fuzzy
 msgid "'init'; must have 1 column"

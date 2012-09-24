@@ -133,7 +133,8 @@ factanal <-
     if(best == Inf)
         stop(ngettext(nc,
                       "unable to optimize from this starting value",
-                      "unable to optimize from these starting values"))
+                      "unable to optimize from these starting values"),
+             domain = NA)
     load <- fit$loadings
     if(rotation != "none") {
         rot <- do.call(rotation, c(list(load), cn$rotate))

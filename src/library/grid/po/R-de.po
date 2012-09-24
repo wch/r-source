@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-09-24 17:55\n"
 "PO-Revision-Date: 2012-03-05 22:01+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -124,7 +124,9 @@ msgstr "es darf nur ein gültiger 'gpar' Name angegeben werden"
 msgid "Invalid display list element"
 msgstr "ungültiges Displaylisten-Element"
 
-msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+#, fuzzy
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
 msgstr "grob(s) überschrieben (grab NICHT zuverlässig; versuche 'wrap=TRUE'"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
@@ -177,9 +179,6 @@ msgstr "grid.grob() ist veraltet; bitte stattdessen grob() nutzen"
 
 msgid "A 'grob' path must contain at least one 'grob' name"
 msgstr "ein 'grob' Pfad muss mindestens einen 'grob' Namen enthalten"
-
-msgid "Invalid 'grob' name(s)"
-msgstr "ungültige(r) 'grob' Name(n)"
 
 msgid "Unable to coerce to gList"
 msgstr "kann nicht in gList gewandelt werden"
@@ -509,9 +508,6 @@ msgstr ""
 msgid "A viewport path must contain at least one viewport name"
 msgstr "Ein Viewport-Pfad muss zumindest einen Viewport-Namen enthalten"
 
-msgid "Invalid viewport name(s)"
-msgstr "Unzulässige(r) Viewport-Name(n)"
-
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Mindestens 'x' oder 'xscale' muss angegeben werden"
 
@@ -520,6 +516,18 @@ msgstr "Mindestens 'y' oder 'yscale' muss angegeben werden"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr "schließe alle Geräte, wenn der 'grid' Namensraum entfernt wird "
+
+#, fuzzy
+msgid "Invalid grob name"
+msgid_plural "Invalid grob name"
+msgstr[0] "ungültige(r) 'grob' Name(n)"
+msgstr[1] "ungültige(r) 'grob' Name(n)"
+
+#, fuzzy
+msgid "Invalid viewport name"
+msgid_plural "Invalid viewport name"
+msgstr[0] "Unzulässige(r) Viewport-Name(n)"
+msgstr[1] "Unzulässige(r) Viewport-Name(n)"
 
 #~ msgid "at least one of 'width' and 'height' must be specified"
 #~ msgstr "mindestens 'width' oder 'height' müssen angegeben sein"

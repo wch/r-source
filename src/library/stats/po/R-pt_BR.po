@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:54\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -227,9 +227,6 @@ msgstr "modelo Error() é singular"
 
 msgid "the 'split' argument must be a list"
 msgstr "o argumento  'split' deve ser uma lista"
-
-msgid "unknown name(s) in the 'split' list"
-msgstr "nome(s) desconhecidos na lista 'split'"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
 msgstr "'coef' deve definir um contraste, i.e., somatório deve ser  0"
@@ -754,10 +751,6 @@ msgstr "dimensões incorretas para 'xi'"
 msgid "'x' is not a vector or matrix"
 msgstr "'x' não é um vetor ou matriz"
 
-#, fuzzy
-msgid "extra argument(s) %s will be disregarded"
-msgstr "argumentos extras descartados"
-
 msgid "invalid distance method"
 msgstr "método de distância inválido"
 
@@ -817,9 +810,6 @@ msgstr "análise fatorial exige ao menos três variáveis"
 
 msgid "no starting values supplied"
 msgstr "nenhum valor de início fornecido"
-
-msgid "unable to optimize from these starting value(s)"
-msgstr "incapaz de otimizar a partir deste(s) valor(es) inicial(s)"
 
 msgid "invalid argument 'lambda'"
 msgstr "'lambda' é um argumento inválido"
@@ -2443,8 +2433,20 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, fuzzy
+msgid "unknown name %s in the 'split' list"
+msgid_plural "unknown names %s in the 'split' list"
+msgstr[0] "nome(s) desconhecidos na lista 'split'"
+msgstr[1] "nome(s) desconhecidos na lista 'split'"
+
+#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
+msgstr[0] "argumentos extras descartados"
+msgstr[1] "argumentos extras descartados"
+
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
 msgstr[0] "argumentos extras descartados"
 msgstr[1] "argumentos extras descartados"
 
@@ -2459,6 +2461,12 @@ msgid "'start' must have %d row"
 msgid_plural "'start' must have %d rows"
 msgstr[0] "'start' deve ter %d linhas"
 msgstr[1] "'start' deve ter %d linhas"
+
+#, fuzzy
+msgid "unable to optimize from this starting value"
+msgid_plural "unable to optimize from these starting values"
+msgstr[0] "incapaz de otimizar a partir deste(s) valor(es) inicial(s)"
+msgstr[1] "incapaz de otimizar a partir deste(s) valor(es) inicial(s)"
 
 #, fuzzy
 msgid "'init'; must have 1 column"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-09-24 17:55\n"
 "PO-Revision-Date: 2012-03-06 21:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -131,7 +131,9 @@ msgstr "Seuls les noms valides de 'gpar' sont autorisés"
 msgid "Invalid display list element"
 msgstr "Element de liste d'affichage (display list) incorrect"
 
-msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+#, fuzzy
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
 msgstr ""
 "un ou plusieurs grobs sont superposés (grab ne sera PAS fidèle ; essayez "
 "'wrap=TRUE')"
@@ -186,9 +188,6 @@ msgstr "grid.grob() est obsolète ; Veuillez utiliser grob() à la place"
 
 msgid "A 'grob' path must contain at least one 'grob' name"
 msgstr "Un chemin 'grob' doit contenir au moins un nom de 'grob'"
-
-msgid "Invalid 'grob' name(s)"
-msgstr "Nom(s) de 'grob' incorrect(s)"
 
 msgid "Unable to coerce to gList"
 msgstr "Impossible de convertir automatiquement vers une gList"
@@ -528,9 +527,6 @@ msgstr ""
 msgid "A viewport path must contain at least one viewport name"
 msgstr "Un chemin de vue doit contenir au moins un nom de vue"
 
-msgid "Invalid viewport name(s)"
-msgstr "Nom(s) de vue(s) incorrect(s)"
-
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Il faut spécifier au moins 'x' ou 'xscale'"
 
@@ -541,6 +537,18 @@ msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr ""
 "tous les périphériques graphiques sont fermés lorsque l'espace de noms de "
 "'grid' est déchargé"
+
+#, fuzzy
+msgid "Invalid grob name"
+msgid_plural "Invalid grob name"
+msgstr[0] "Nom(s) de 'grob' incorrect(s)"
+msgstr[1] "Nom(s) de 'grob' incorrect(s)"
+
+#, fuzzy
+msgid "Invalid viewport name"
+msgid_plural "Invalid viewport name"
+msgstr[0] "Nom(s) de vue(s) incorrect(s)"
+msgstr[1] "Nom(s) de vue(s) incorrect(s)"
 
 #~ msgid "at least one of 'width' and 'height' must be specified"
 #~ msgstr ""

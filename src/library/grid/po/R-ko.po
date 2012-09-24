@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:19\n"
+"POT-Creation-Date: 2012-09-24 17:55\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -132,7 +132,9 @@ msgstr "유효한 'gpar'의 이름만을 지정하지 않으면 안됩니다"
 msgid "Invalid display list element"
 msgstr "부적절한 display 리스트의 요소입니다"
 
-msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+#, fuzzy
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
 msgstr ""
 "grob(s)가 다시쓰기 되었습니다(아마 grab는 정확 할수 있는것이 아닙니다;\n"
 "'wrap=TRUE'를 고려해해주십시오) "
@@ -191,9 +193,6 @@ msgstr "grid.grob()는 없어져 버릴 예정입니다; 대신에 grob()를 사
 msgid "A 'grob' path must contain at least one 'grob' name"
 msgstr ""
 "'grob'의 패스는 적어도 1개의 'grob' 이름을 포함하고 있지 않으면 안됩니다"
-
-msgid "Invalid 'grob' name(s)"
-msgstr "부적절한 'grob'의 이름입니다"
 
 msgid "Unable to coerce to gList"
 msgstr ""
@@ -534,9 +533,6 @@ msgid "A viewport path must contain at least one viewport name"
 msgstr ""
 "viewport의 패스는 적어도 하나의 viewport명을 포함하고 있을 필요가 있습니다"
 
-msgid "Invalid viewport name(s)"
-msgstr "부적절한 viewport명입니다"
-
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "'x' 또는 'xscale' 중 적어도 하나를 지정하지 않으면 되지 않습니다"
 
@@ -545,6 +541,16 @@ msgstr "'y' 또는 'yscale' 중 적어도 하나를 지정하지 않으면 되�
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr ""
+
+#, fuzzy
+msgid "Invalid grob name"
+msgid_plural "Invalid grob name"
+msgstr[0] "부적절한 'grob'의 이름입니다"
+
+#, fuzzy
+msgid "Invalid viewport name"
+msgid_plural "Invalid viewport name"
+msgstr[0] "부적절한 viewport명입니다"
 
 #, fuzzy
 #~ msgid "at least one of 'width' and 'height' must be specified"

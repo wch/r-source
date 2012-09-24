@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1052,21 +1052,15 @@ msgstr "'trim' musi być liczą o długości jeden"
 msgid "trimmed means are not defined for complex data"
 msgstr "przycięte średnie nie są zdefiniowane dla danych złożonych"
 
-#, fuzzy
-msgid "'by' must specify uniquely valid column(s)"
-msgstr "'by' musi określać poprawne kolumny"
-
 msgid "'by' must match numbers of columns"
 msgstr "'by' musi zgadzać się z liczbą kolumn"
 
 msgid "'by' must match number of columns"
 msgstr "'by' musi zgadzać się z liczbą kolumn"
 
-msgid "'by' must specify column(s) as numbers, names or logical"
+#, fuzzy
+msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr "'by' musi określać kolumny jako liczby, nazwy lub warunki logiczne"
-
-msgid "'by' must specify valid column(s)"
-msgstr "'by' musi określać poprawne kolumny"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' oraz 'by.y' określają różne liczby kolumn"
@@ -1775,6 +1769,13 @@ msgstr[0] "nie znaleziono obiektu %s"
 msgstr[1] "nie znaleziono obiektów %s"
 msgstr[2] "nie znaleziono obiektów %s"
 
+#, fuzzy
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] "'by' musi określać poprawne kolumny"
+msgstr[1] "'by' musi określać poprawne kolumny"
+msgstr[2] "'by' musi określać poprawne kolumny"
+
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "
 "generic: %s"
@@ -1837,6 +1838,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+#~ msgid "'by' must specify valid column(s)"
+#~ msgstr "'by' musi określać poprawne kolumny"
 
 #, fuzzy
 #~ msgid "%s not defined for numeric_version objects"

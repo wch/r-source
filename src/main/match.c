@@ -374,7 +374,9 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
                 }
             }
 	    errorcall(call /* R_GlobalContext->call */,
-		      _("unused argument(s) %s"),
+		      ngettext("unused argument %s",
+			       "unused arguments %s",
+			       (unsigned long) length(unusedForError)),
 		      CHAR(STRING_ELT(deparse1line(unusedForError, 0), 0)) + 4);
                       /* '+ 4' is to remove 'list' from 'list(badTag1,...)' */
 	}

@@ -666,12 +666,10 @@ evalSource <- function(source, package = "", lock = TRUE, cache = FALSE) {
     env$.packageName <- package # Fixme: should be done by an initialize method
     setCacheOnAssign(env, cache)
     if(is(source, "character"))
-        for(text in source)
-            sys.source(text, envir = env)
-    else if(is(source, "connection"))
-        sys.source(source, envir = env)
+        for(text in source) sys.source(text, envir = env)
+    else if(is(source, "connection")) sys.source(source, envir = env)
     else if(!is(source, "environment"))
-        stop(gettextf("Invalid source argument: expected file names(s) or connection, got an object of class %s",
+        stop(gettextf("invalid 'source' argument: expected file names or a connection but got an object of class %s",
                       dQuote(class(source)[[1L]])),
              domain = NA)
     if(lock)

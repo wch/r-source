@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1027,21 +1027,15 @@ msgstr "'trim'必需是长度必需为一的数值"
 msgid "trimmed means are not defined for complex data"
 msgstr "复数数据不能算切尾平均值"
 
-#, fuzzy
-msgid "'by' must specify uniquely valid column(s)"
-msgstr "'by'所指定的那些列有错"
-
 msgid "'by' must match numbers of columns"
 msgstr "'by'的长度一定得和列的长度相同"
 
 msgid "'by' must match number of columns"
 msgstr "'by'的长度一定得和列的长度相同"
 
-msgid "'by' must specify column(s) as numbers, names or logical"
+#, fuzzy
+msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr "'by'一定得用数字，名字或逻辑值来指定列"
-
-msgid "'by' must specify valid column(s)"
-msgstr "'by'所指定的那些列有错"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x'和'by.y'设定了不同数目的列"
@@ -1705,6 +1699,11 @@ msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] "目标对象%s不存在"
 
+#, fuzzy
+msgid "'by' must specify a uniquely valid column"
+msgid_plural "'by' must specify uniquely valid columns"
+msgstr[0] "'by'所指定的那些列有错"
+
 msgid ""
 "Function found when exporting methods from the namespace %s which is not S4 "
 "generic: %s"
@@ -1742,6 +1741,9 @@ msgstr[0] "用T代替TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "'by' must specify valid column(s)"
+#~ msgstr "'by'所指定的那些列有错"
 
 #, fuzzy
 #~ msgid "%s not defined for numeric_version objects"

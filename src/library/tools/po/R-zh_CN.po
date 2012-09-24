@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-24 17:42\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -1195,6 +1195,11 @@ msgid_plural "Packages unavailable to check Rd xrefs: %s"
 msgstr[0] "没有可用来检查Rd xrefs的程序包：%s"
 
 #, fuzzy
+msgid "Unknown package %s in Rd xrefs"
+msgid_plural "Unknown packages %s in Rd xrefs"
+msgstr[0] "Rd xrefs里包含了不知来源的程序包%s"
+
+#, fuzzy
 msgid "Missing link in documentation object %s:"
 msgid_plural "Missing links in documentation object %s:"
 msgstr[0] "使用手冊对象'%s'缺少联结:"
@@ -1261,9 +1266,6 @@ msgstr[0] "无法重新编码'%s'%s行"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
-
-#~ msgid "Unknown package(s) %s in Rd xrefs"
-#~ msgstr "Rd xrefs里包含了不知来源的程序包%s"
 
 #~ msgid ":"
 #~ msgstr "："
