@@ -2565,7 +2565,7 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
 static int translate_key(KeySym keysym)
 {
     if ((keysym >= XK_F1) && (keysym <= XK_F12))
-    	return knF1 + keysym - XK_F1;
+    	return knF1 + (int)keysym - XK_F1;
     else {
     	switch(keysym) {
 	case XK_Left: return knLEFT;
