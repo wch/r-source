@@ -409,7 +409,10 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	if (INTEGER(iv)[0] == 2 && g) check_gv(gr, hs, rho, n, g, h);
 	else {
 	    fx = asReal(eval(fn, rho));
-	    if (ISNAN(fx)) error("NA/NaN function evaluation");
+	    if (ISNAN(fx)) {
+		warning("NA/NaN function evaluation");
+		fx = R_PosInf;
+	    }
 	}
     } while(INTEGER(iv)[0] < 3);
 

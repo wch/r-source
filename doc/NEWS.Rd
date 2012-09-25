@@ -554,8 +554,9 @@
       as \code{svd()} did).
       
       \item The Fortran code underlying \code{nlminb()} could
-      infinite-loop if any the functions returned \code{NA} or
-      \code{NaN}, so this has been made an error.
+      infinite-loop if any of the functions returned \code{NA} or
+      \code{NaN}.  This is now an error for the gradient or Hessian, and
+      a warning for the function (with the value replaced by \code{Inf}).
     }
   }
 }
@@ -945,6 +946,9 @@
 
       \item Long custom line types would sometimes segfault on the
       cairographics-based devices. (PR{15055}.)
+  
+      \item \code{tool::checkPoFile()} unprotected too early in its C
+      code and so segfaulted from time to time.
     }
   }
 }
