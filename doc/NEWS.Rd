@@ -392,6 +392,9 @@
 
       \item Long custom line types would sometimes segfault on the
       cairographics-based devices. (PR{15055}.)
+  
+      \item \code{tool::checkPoFile()} unprotected too early in its C
+      code and so segfaulted from time to time.
     }
   }
 }

@@ -571,7 +571,7 @@ SEXP attribute_hidden do_getfmts(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }  /* end for ( each chunk ) */
 
-    res = xlengthgets(res, maxlen);
+    res = lengthgets(res, maxlen);
     UNPROTECT(1);
     return res;
 }
