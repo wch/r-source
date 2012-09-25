@@ -9,7 +9,8 @@
   Prepare Translations for a Package
 }
 \description{
-  Prepare the \file{po} directory of a package.
+  Prepare the \file{po} directory of a package and compile and install
+  the translations.
 }
 \usage{
 update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
@@ -45,7 +46,8 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     \file{po/\var{pkgname}.pot} already exists.  All the \code{src/*.c}
     files in the package are examined to create a file
     \file{po/\var{pkgname}.po} containing the translatable messages
-    in the C files.
+    in the C files.  If there is a \code{src/windows} directory, C files
+    within it are also examined.
     \item All existing files in directory \code{po} with names
     \file{\var{lang}.po} are updated from \file{\var{pkgname}.pot}.
     \item \code{\link{checkPoFile}} is called on each
@@ -65,7 +67,7 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
   \command{msgfmt}, \command{msginit} and \command{msgconv}.  These are
   part of most Linux distributions and easily compiled from the sources
   on Unix-alikes (including Mac OS X).  Pre-compiled versions for
-  (32- or 64-bit) Windows are available from
+  Windows are available in
   \url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
   
   It may not work correctly for \code{en@auot} translations except in a

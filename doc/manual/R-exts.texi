@@ -3907,7 +3907,7 @@ need to add
 
 @example
 #ifndef ENABLE_NLS
-#define dngettext(pkg, String, StringP, N) (N > 1 ? StringP: String)
+#define dngettext(pkg, String, StringP, N) (N > 1 ? StringP : String)
 #endif
 @end example
 
@@ -3919,8 +3919,8 @@ dngettext(("@var{pkg}", @var{<singular string>}, @var{<plural string>}, n)
 @end example
 
 @noindent
-(This is only supported from @R{} 2.10.0, so packages which use it need
-to depend on @code{R (>= 2.10)}.)
+(This is only supported from @R{} 2.10.0, so packages which use
+@code{dngettext} need to depend on @code{R (>= 2.10)}.)
 
 @item
 In the package's @file{src} directory run
@@ -3934,16 +3934,17 @@ xgettext --keyword=_ -o @var{pkg}.pot *.c
 The file @file{src/@var{pkg}.pot} is the template file, and
 conventionally this is shipped as @file{po/@var{pkg}.pot}.  A translator
 to another language makes a copy of this file and edits it (see the
-@code{gettext} manual) to produce say @file{@var{ll}.po}, where @var{ll}
-is the code for the language in which the translation is to be used.
-(This file would be shipped in the @file{po} directory.)  Next run
-@code{msgfmt} on @file{@var{ll}.po} to produce @file{@var{ll}.mo}, and
-copy that to @file{inst/po/@var{ll}/LC_MESSAGES/@var{pkg}.mo}.  Now when
-the package is loaded after installation it will look for translations
-of its messages in the @file{po/@var{lang}/LC_MESSAGES/@var{pkg}.mo} file
-for any language @var{lang} that matches the user's preferences (@emph{via} the
-setting of the @code{LANGUAGE} environment variable or from the locale
-settings).
+@code{gettext} manual) to produce say @file{@var{ll}.po}, where
+@code{@var{ll}} is the code for the language in which the translation is
+to be used.  (This file would be shipped in the @file{po} directory.)
+Next run @code{msgfmt} on @file{@var{ll}.po} to produce
+@file{@var{ll}.mo}, and copy that to
+@file{inst/po/@var{ll}/LC_MESSAGES/@var{pkg}.mo}.  Now when the package
+is loaded after installation it will look for translations of its
+messages in the @file{po/@var{lang}/LC_MESSAGES/@var{pkg}.mo} file for
+any language @var{lang} that matches the user's preferences (@emph{via}
+the setting of the @code{LANGUAGE} environment variable or from the
+locale settings).
 
 @node R messages, Installing translations, C-level messages, Internationalization
 @subsection R messages
@@ -3971,8 +3972,8 @@ function @code{ngettext} provides an interface to the C function of the
 same name, and will choose an appropriate singular or plural form for
 the selected language depending on the value of its first argument
 @code{n}.  It is safest to use @code{domain="R-@var{pkg}"} explicitly in
-calls to @code{ngettext}, and necessary unless they are calls directly
-from a function in the package.
+calls to @code{ngettext}, and necessary for earlier versions of @R{}
+unless they are calls directly from a function in the package.
 
 
 @node Installing translations, Supporting R function, R messages, Internationalization
@@ -4016,8 +4017,8 @@ package's own sources).
 @subsection Supporting R function
 
 As from @R{} 2.16.0 there is an @R{} function, @code{update_pkg_po} in
-package @pkg{tools} to automate much of the maintenance of message
-translations. See its help for what it does in detail.
+package @pkg{tools}, to automate much of the maintenance of message
+translations.  See its help for what it does in detail.
 
 If this is called on a package with no existing translations, in creates
 the directory @file{@var{pkgdir}/po}, creates a template file of @R{}
@@ -12011,7 +12012,7 @@ hence cannot be called from an extension package).
 @deftypefunx SEXP R_dataviewer (SEXP, SEXP, SEXP, SEXP);
 @deftypefunx SEXP R_selectlist (SEXP, SEXP, SEXP, SEXP);
 
-@code{.Internal} functions for @code{dataentry} (and @code{edit} on
+@code{.External} functions for @code{dataentry} (and @code{edit} on
 matrices and data frames), @code{View} and @code{select.list}.  These
 can be changed if they are not currently in use.
 @end deftypefun

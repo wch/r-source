@@ -1001,9 +1001,6 @@ install the extra files into your intended @R{} source directory, e.g.@:
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @file{@var{R_HOME}} below.
 
-The toolchain used as from @R{} 2.14.2 differs from from that used for
-@R{} 2.12.0 to @R{} 2.14.1.
-
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
 
@@ -1088,8 +1085,8 @@ directories can also be set there.
 Example:
 
 @example
-> tar -zxf libpng-1.5.11.tar.gz
-> mv libpng-1.5.11 libpng
+> tar -zxf libpng-1.5.12.tar.gz
+> mv libpng-1.5.12 libpng
 > tar -zxf jpegsrc.v8d.tar.gz
 > tar -zxf tiff-4.0.2.tar.gz
 > mv tiff-4.0.2/libtiff .
@@ -1721,7 +1718,7 @@ binary containing either or both architectures.
 
 A few of the binary packages need other software to be installed on your
 system: see for example
-@uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/2.14/@/@@ReadMe}.
+@uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/2.16/@/@@ReadMe}.
 For 64-bit builds, packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution from
@@ -1860,10 +1857,10 @@ starting with a source tarball.
 @node Byte-compilation,  , Multiple sub-architectures, Installing packages
 @subsection Byte-compilation
 
-As from @R{} 2.14.0 the base and recommended packages are byte-compiled
-by default.  Other packages can be byte-compiled on installation by
-using the option @option{--byte-compile} with @command{R CMD INSTALL} or
-with @code{install.packages(type = "source")}.
+The base and recommended packages are byte-compiled by default.  Other
+packages can be byte-compiled on installation by using the option
+@option{--byte-compile} with @command{R CMD INSTALL} or with
+@code{install.packages(type = "source")}.
 
 Not all contributed packages work correctly when byte-compiled (for
 example because they interfere with the sealing of namespaces).  For
@@ -2055,11 +2052,11 @@ and @option{--build} can be added to zip up the installation.
 for many human languages, and @emph{localization} to adapting to a
 specific country and language.
 
-Prior to 2005 @R{} worked in the ISO Latin-1 8-bit character set and so
-covered English and most Western European languages (if not necessarily
-their currency symbols).  Since @R{} 2.1.0 it has supported Eastern
-European 8-bit character sets, and multi-byte character sets such as
-UTF-8 and others used for Chinese, Japanese and Korean.
+@c Prior to 2005 @R{} worked in the ISO Latin-1 8-bit character set and so
+@c covered English and most Western European languages (if not necessarily
+@c their currency symbols).  Since @R{} 2.1.0 it has supported Eastern
+@c European 8-bit character sets, and multi-byte character sets such as
+@c UTF-8 and others used for Chinese, Japanese and Korean.
 
 Current builds of @R{} support all the character sets that the
 underlying OS can handle.  These are interpreted according to the
@@ -2114,15 +2111,15 @@ and simplified Chinese.
 Optionally, a modifier, for example to indicate that Austria is to be
 considered pre- or post-Euro.  The modifier is also used to indicate the
 script (@code{@@latin}, @code{@@cyrillic} for Serbian, @code{@@iqtelif})
-or language dialect (e.g.@: @code{saaho}, a dialect of Afar, and
-@code{bokmal} and @code{nynorsk}, dialects of Norwegian regarded by some
-OSes as separate languages, @code{no} and @code{nn}).
+or language dialect (e.g.@: @code{@@saaho}, a dialect of Afar, and
+@code{@@bokmal} and @code{@@nynorsk}, dialects of Norwegian regarded by
+some OSes as separate languages, @code{no} and @code{nn}).
 @end itemize
 
 @R{} is principally concerned with the first (for translations) and
 third.  Note that the charset may be deducible from the language, as
 some OSes offer only one charset per language, and most OSes have only
-one charset each for many languages.
+one charset each for most languages.
 
 @menu
 * Locales under Linux::         
@@ -2214,7 +2211,8 @@ following domains.
 
 @itemize
 @item
-Domain @code{R} for basic C-level error messages.
+Domain @code{R} for the C-level error and warning messages from the @R{}
+interpreter.
 
 @item
 Domain @code{R-@var{pkg}} for the R @code{stop}, @code{warning} and
@@ -2232,6 +2230,9 @@ Domain @code{RGui} for the menus etc of the R for Windows GUI front-end.
 Dividing up the messages in this way allows @R{} to be extensible: as
 packages are loaded, their message translation catalogues can be loaded
 too.
+
+@R{} can be built without support for translations, but it is enabled by
+default.
 
 Translations are looked for by domain according to the currently
 specified language, as specifically as possible, so for example an
@@ -4937,9 +4938,8 @@ Windows-style paths.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
-The released version of @R{} 2.15.0 will be built with a different
-toolchain from @R{} 2.12.0 to 2.14.1.  The preferred toolchain is part
-of @code{Rtools215.exe}: this uses a beta version of @command{gcc 4.6.3}
+The preferred toolchain since @R{} 2.14.2 is part of
+@code{Rtools215.exe}: this uses a beta version of @command{gcc 4.6.3}
 and version 2.0.1 of the MinGW-w64 project's runtime.
 
 This toolchain uses @emph{multilib}: that is there is a single front-end
