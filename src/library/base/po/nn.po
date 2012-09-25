@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:53+0100\n"
+"POT-Creation-Date: 2012-09-25 08:43+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1427,7 +1427,8 @@ msgid "extracting substrings from a non-character object"
 msgstr "hentar ut delstrengar frå ikkjeteikn-objekt"
 
 #: src/main/character.c:268 src/main/character.c:363
-msgid "invalid substring argument(s)"
+#, fuzzy
+msgid "invalid substring arguments"
 msgstr "ugyldig(e) delstreng-argument"
 
 #: src/main/character.c:358
@@ -4103,9 +4104,11 @@ msgid "partial argument match of '%s' to '%s'"
 msgstr "delvis argumentsamsvar av «%s» til «%s»"
 
 #: src/main/match.c:377
-#, c-format
-msgid "unused argument(s) %s"
-msgstr "ubrukt(e) argument %s"
+#, fuzzy, c-format
+msgid "unused argument %s"
+msgid_plural "unused arguments %s"
+msgstr[0] "ubrukt(e) argument %s"
+msgstr[1] "ubrukt(e) argument %s"
 
 #: src/main/memory.c:1136
 msgid "can only weakly reference/finalize reference objects"
@@ -4866,7 +4869,7 @@ msgstr "for få kolonnenamn"
 
 #: src/main/printarray.c:485
 #, fuzzy, c-format
-msgid " [ reached getOption(\"max.print\") -- omitted last row ]\n"
+msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
 msgstr[0] " [ nådde getOption(\"max.print\") – hoppa over siste rad ]]\n"
 msgstr[1] " [ nådde getOption(\"max.print\") – hoppa over siste %d rader ]]\n"

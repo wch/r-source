@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-13 13:48+0100\n"
+"POT-Creation-Date: 2012-09-25 08:32+0100\n"
 "PO-Revision-Date: 2012-03-09 06:33+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -314,7 +314,7 @@ msgid "Save script"
 msgstr "스크립트 저장"
 
 #: src/gnuwin32/editor.c:704 src/gnuwin32/pager.c:451
-#: src/library/grDevices/src/devWindows.c:1592
+#: src/library/grDevices/src/devWindows.c:1593
 msgid "Return focus to Console"
 msgstr "콘솔로 돌아가기"
 
@@ -323,13 +323,13 @@ msgid "Print script"
 msgstr "스크립트 인쇄"
 
 #: src/gnuwin32/editor.c:709 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1102
-#: src/library/grDevices/src/devWindows.c:1586
+#: src/library/grDevices/src/devWindows.c:1587
 msgid "Print"
 msgstr "인쇄"
 
 #: src/gnuwin32/editor.c:727 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1120
-#: src/library/utils/src/win32/dataentry.c:1790
-#: src/library/grDevices/src/devWindows.c:1624
+#: src/library/utils/src/windows/dataentry.c:1790
+#: src/library/grDevices/src/devWindows.c:1625
 msgid "File"
 msgstr "파일"
 
@@ -350,7 +350,7 @@ msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
 #: src/gnuwin32/editor.c:737 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1136
-#: src/library/grDevices/src/devWindows.c:1687
+#: src/library/grDevices/src/devWindows.c:1688
 msgid "Print..."
 msgstr "인쇄..."
 
@@ -359,7 +359,7 @@ msgid "Close script"
 msgstr "스크립트 닫기"
 
 #: src/gnuwin32/editor.c:745 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1141
-#: src/library/utils/src/win32/dataentry.c:1796
+#: src/library/utils/src/windows/dataentry.c:1796
 msgid "Edit"
 msgstr "편집"
 
@@ -384,8 +384,8 @@ msgid "GUI preferences..."
 msgstr "GUI 설정..."
 
 #: src/gnuwin32/editor.c:781 src/gnuwin32/rui.c:1184
-#: src/library/utils/src/win32/dataentry.c:1697
-#: src/library/utils/src/win32/dataentry.c:1807
+#: src/library/utils/src/windows/dataentry.c:1697
+#: src/library/utils/src/windows/dataentry.c:1807
 msgid "Help"
 msgstr "도움말"
 
@@ -405,7 +405,7 @@ msgstr "편집기 윈도우를 생성할 수 없습니다"
 msgid "Untitled"
 msgstr "제목 없음"
 
-#: src/gnuwin32/extra.c:831 src/gnuwin32/rui.c:1222
+#: src/gnuwin32/extra.c:823 src/gnuwin32/rui.c:1222
 msgid "Select file"
 msgstr "파일 선택"
 
@@ -431,14 +431,14 @@ msgid "Paste commands to console"
 msgstr "명령어를 콘솔에 붙여넣기"
 
 #: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:867
-#: src/library/utils/src/win32/dataentry.c:1703
-#: src/library/grDevices/src/devWindows.c:1684
+#: src/library/utils/src/windows/dataentry.c:1703
+#: src/library/grDevices/src/devWindows.c:1685
 msgid "Stay on top"
 msgstr "창을 항상 맨 앞에 둡니다"
 
 #: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
-#: src/library/utils/src/win32/dataentry.c:1705
-#: src/library/utils/src/win32/dataentry.c:1792
+#: src/library/utils/src/windows/dataentry.c:1705
+#: src/library/utils/src/windows/dataentry.c:1792
 msgid "Close"
 msgstr "닫기"
 
@@ -842,10 +842,12 @@ msgstr "'%s'를 작업 디렉토리로 지정할 수 없습니다  "
 #: src/extra/graphapp/dialogs.c:602 src/extra/graphapp/dialogs.c:620
 #: src/extra/graphapp/dialogs.c:626 src/extra/graphapp/dialogs.c:725
 #: src/extra/graphapp/dialogs.c:739 src/extra/graphapp/dialogs.c:745
+#: src/library/utils/src/windows/widgets.c:125
 msgid "Cancel"
 msgstr "취소"
 
 #: src/extra/graphapp/dialogs.c:622 src/extra/graphapp/dialogs.c:741
+#: src/library/utils/src/windows/widgets.c:124
 msgid "OK"
 msgstr "OK"
 
@@ -866,77 +868,77 @@ msgstr "\"%s\"를 못 찾았습니다"
 msgid "Arrange Icons"
 msgstr "아이콘 배열"
 
-#: src/library/utils/src/win32/dataentry.c:223
-#: src/library/utils/src/win32/dataentry.c:1850
-#: src/library/utils/src/win32/dataentry.c:1853
-#: src/library/utils/src/win32/dataentry.c:1884
+#: src/library/utils/src/windows/dataentry.c:223
+#: src/library/utils/src/windows/dataentry.c:1850
+#: src/library/utils/src/windows/dataentry.c:1853
+#: src/library/utils/src/windows/dataentry.c:1884
 msgid "invalid argument"
 msgstr "부적절한 인수입니다"
 
-#: src/library/utils/src/win32/dataentry.c:270
+#: src/library/utils/src/windows/dataentry.c:270
 msgid "invalid type for value"
 msgstr "부적절한 값의 유형입니다"
 
-#: src/library/utils/src/win32/dataentry.c:281
+#: src/library/utils/src/windows/dataentry.c:281
 msgid "Data Editor"
 msgstr "자료 편집기"
 
-#: src/library/utils/src/win32/dataentry.c:282
-#: src/library/utils/src/win32/dataentry.c:1891
+#: src/library/utils/src/windows/dataentry.c:282
+#: src/library/utils/src/windows/dataentry.c:1891
 msgid "invalid device"
 msgstr "부적절한 디바이스입니다"
 
-#: src/library/utils/src/win32/dataentry.c:331
+#: src/library/utils/src/windows/dataentry.c:331
 msgid "dataentry: internal memory problem"
 msgstr "dataentry: 내부 메모리의 문제입니다"
 
-#: src/library/utils/src/win32/dataentry.c:634
-#: src/library/utils/src/win32/dataentry.c:1221
+#: src/library/utils/src/windows/dataentry.c:634
+#: src/library/utils/src/windows/dataentry.c:1221
 msgid "dataentry: internal memory error"
 msgstr "dataentry:  내부 메모리의 에러입니다"
 
-#: src/library/utils/src/win32/dataentry.c:757
-#: src/library/utils/src/win32/dataentry.c:770
+#: src/library/utils/src/windows/dataentry.c:757
+#: src/library/utils/src/windows/dataentry.c:770
 msgid "internal type error in dataentry"
 msgstr "dataentry에 내부 유형의 에러입니다"
 
-#: src/library/utils/src/win32/dataentry.c:852
+#: src/library/utils/src/windows/dataentry.c:852
 msgid "dataentry: parse error on string"
 msgstr "dataentry: 입력된 식이 너무 깁니다"
 
-#: src/library/utils/src/win32/dataentry.c:995
+#: src/library/utils/src/windows/dataentry.c:995
 msgid "dataentry: expression too long"
 msgstr "dataentry: 입력된 식이 너무 깁니다"
 
-#: src/library/utils/src/win32/dataentry.c:1472
+#: src/library/utils/src/windows/dataentry.c:1472
 msgid "column names cannot be blank"
 msgstr "열 이름은 공백으로 지정할 수 없습니다"
 
-#: src/library/utils/src/win32/dataentry.c:1518
+#: src/library/utils/src/windows/dataentry.c:1518
 msgid "Variable editor"
 msgstr "변수 편집기"
 
-#: src/library/utils/src/win32/dataentry.c:1523
+#: src/library/utils/src/windows/dataentry.c:1523
 msgid "variable name"
 msgstr "변수 이름"
 
-#: src/library/utils/src/win32/dataentry.c:1525
+#: src/library/utils/src/windows/dataentry.c:1525
 msgid "type"
 msgstr "유형"
 
-#: src/library/utils/src/win32/dataentry.c:1639
+#: src/library/utils/src/windows/dataentry.c:1639
 msgid "Cell width(s)"
 msgstr "셀의 폭"
 
-#: src/library/utils/src/win32/dataentry.c:1645
+#: src/library/utils/src/windows/dataentry.c:1645
 msgid "Cell width"
 msgstr "셀의 폭"
 
-#: src/library/utils/src/win32/dataentry.c:1648
+#: src/library/utils/src/windows/dataentry.c:1648
 msgid "variable"
 msgstr "변수"
 
-#: src/library/utils/src/win32/dataentry.c:1691
+#: src/library/utils/src/windows/dataentry.c:1691
 msgid ""
 "Navigation.\n"
 "  Keyboard: cursor keys move selection\n"
@@ -979,220 +981,220 @@ msgstr ""
 "절을 할 수 있습니다\n"
 "\n"
 
-#: src/library/utils/src/win32/dataentry.c:1699
+#: src/library/utils/src/windows/dataentry.c:1699
 msgid "Copy selected cell"
 msgstr "선택한 셀 복사"
 
-#: src/library/utils/src/win32/dataentry.c:1700
+#: src/library/utils/src/windows/dataentry.c:1700
 msgid "Paste to selected cell"
 msgstr "선택한 셀에 붙여넣기"
 
-#: src/library/utils/src/win32/dataentry.c:1701
+#: src/library/utils/src/windows/dataentry.c:1701
 msgid "Autosize column"
 msgstr "컬럼 크기의 자동조절"
 
-#: src/library/utils/src/win32/dataentry.c:1797
+#: src/library/utils/src/windows/dataentry.c:1797
 msgid "Copy  \tCTRL+C"
 msgstr "복사  \tCTRL+C"
 
-#: src/library/utils/src/win32/dataentry.c:1799
+#: src/library/utils/src/windows/dataentry.c:1799
 msgid "Paste \tCTRL+V"
 msgstr "붇여넣기 \tCTRL+V"
 
-#: src/library/utils/src/win32/dataentry.c:1801
+#: src/library/utils/src/windows/dataentry.c:1801
 msgid "Delete\tDEL"
 msgstr "삭제\tDEL"
 
-#: src/library/utils/src/win32/dataentry.c:1804
+#: src/library/utils/src/windows/dataentry.c:1804
 msgid "Cell widths ..."
 msgstr "셀 폭 ..."
 
-#: src/library/utils/src/win32/dataentry.c:1808
+#: src/library/utils/src/windows/dataentry.c:1808
 msgid "Data editor"
 msgstr "자료 편집기"
 
-#: src/library/grDevices/src/devWindows.c:931
+#: src/library/grDevices/src/devWindows.c:932
 msgid "Portable network graphics file"
 msgstr "휴대용 네트워크 그래픽스 파일"
 
-#: src/library/grDevices/src/devWindows.c:934
+#: src/library/grDevices/src/devWindows.c:935
 msgid "Windows bitmap file"
 msgstr "윈도우즈 bitmap 파일"
 
-#: src/library/grDevices/src/devWindows.c:937
+#: src/library/grDevices/src/devWindows.c:938
 msgid "TIFF file"
 msgstr "TIFF 파일"
 
-#: src/library/grDevices/src/devWindows.c:940
+#: src/library/grDevices/src/devWindows.c:941
 msgid "Jpeg file"
 msgstr "Jpeg 파일"
 
-#: src/library/grDevices/src/devWindows.c:962
+#: src/library/grDevices/src/devWindows.c:963
 msgid "Postscript file"
 msgstr "Postscript 파일"
 
-#: src/library/grDevices/src/devWindows.c:974
+#: src/library/grDevices/src/devWindows.c:975
 msgid "PDF file"
 msgstr "PDF 파일"
 
-#: src/library/grDevices/src/devWindows.c:986
+#: src/library/grDevices/src/devWindows.c:987
 msgid "Enhanced metafiles"
 msgstr "강화된 metafiles"
 
-#: src/library/grDevices/src/devWindows.c:989
-#: src/library/grDevices/src/devWindows.c:3434
+#: src/library/grDevices/src/devWindows.c:990
+#: src/library/grDevices/src/devWindows.c:3435
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "선택한 파일경로는 너무 깁니다: 512 바이트만 허용됩니다"
 
-#: src/library/grDevices/src/devWindows.c:1200
+#: src/library/grDevices/src/devWindows.c:1201
 msgid "No plot to replace!"
 msgstr "바꿀 플롯이 없습니다!"
 
-#: src/library/grDevices/src/devWindows.c:1248
+#: src/library/grDevices/src/devWindows.c:1249
 msgid "Variable name"
 msgstr "변수 이름"
 
-#: src/library/grDevices/src/devWindows.c:1255
+#: src/library/grDevices/src/devWindows.c:1256
 msgid "Variable doesn't exist or doesn't contain any plots!"
 msgstr "변수가 존재하지 않거나, 플롯을 포함하고 있지 않습니다!"
 
-#: src/library/grDevices/src/devWindows.c:1271
+#: src/library/grDevices/src/devWindows.c:1272
 msgid "Name of variable to save to"
 msgstr "저장될 변수 이름"
 
-#: src/library/grDevices/src/devWindows.c:1580
+#: src/library/grDevices/src/devWindows.c:1581
 msgid "Copy to the clipboard as a metafile"
 msgstr "metafile로 클립보드에 복사"
 
-#: src/library/grDevices/src/devWindows.c:1598
-#: src/library/grDevices/src/devWindows.c:1609
+#: src/library/grDevices/src/devWindows.c:1599
+#: src/library/grDevices/src/devWindows.c:1610
 msgid "Stop locator"
 msgstr "locator 정지"
 
-#: src/library/grDevices/src/devWindows.c:1608
-#: src/library/grDevices/src/devWindows.c:1612
+#: src/library/grDevices/src/devWindows.c:1609
+#: src/library/grDevices/src/devWindows.c:1613
 msgid "Stop"
 msgstr "정지"
 
-#: src/library/grDevices/src/devWindows.c:1614
+#: src/library/grDevices/src/devWindows.c:1615
 msgid "Continue"
 msgstr "계속"
 
-#: src/library/grDevices/src/devWindows.c:1618
+#: src/library/grDevices/src/devWindows.c:1619
 msgid "Next"
 msgstr "다음"
 
-#: src/library/grDevices/src/devWindows.c:1619
+#: src/library/grDevices/src/devWindows.c:1620
 msgid "Next plot"
 msgstr "다음 플롯"
 
-#: src/library/grDevices/src/devWindows.c:1625
+#: src/library/grDevices/src/devWindows.c:1626
 msgid "Save as"
 msgstr "다른 이름으로 저장"
 
-#: src/library/grDevices/src/devWindows.c:1634
-#: src/library/grDevices/src/devWindows.c:1636
-#: src/library/grDevices/src/devWindows.c:1638
+#: src/library/grDevices/src/devWindows.c:1635
+#: src/library/grDevices/src/devWindows.c:1637
+#: src/library/grDevices/src/devWindows.c:1639
 #, c-format
 msgid "%s quality..."
 msgstr "%s 품질..."
 
-#: src/library/grDevices/src/devWindows.c:1640
+#: src/library/grDevices/src/devWindows.c:1641
 msgid "Copy to the clipboard"
 msgstr "클립보드에 복사"
 
-#: src/library/grDevices/src/devWindows.c:1641
+#: src/library/grDevices/src/devWindows.c:1642
 msgid "as a Bitmap\tCTRL+C"
 msgstr "Bitmap으로\tCTRL+C"
 
-#: src/library/grDevices/src/devWindows.c:1642
+#: src/library/grDevices/src/devWindows.c:1643
 msgid "as a Metafile\tCTRL+W"
 msgstr "Metafile로\tCTRL+W"
 
-#: src/library/grDevices/src/devWindows.c:1645
+#: src/library/grDevices/src/devWindows.c:1646
 msgid "Print...\tCTRL+P"
 msgstr "인쇄...\tCTRL+P"
 
-#: src/library/grDevices/src/devWindows.c:1647
+#: src/library/grDevices/src/devWindows.c:1648
 msgid "close Device"
 msgstr "디바이스를 닫는다"
 
-#: src/library/grDevices/src/devWindows.c:1648
+#: src/library/grDevices/src/devWindows.c:1649
 msgid "History"
 msgstr "이력"
 
-#: src/library/grDevices/src/devWindows.c:1649
+#: src/library/grDevices/src/devWindows.c:1650
 msgid "Recording"
 msgstr "기록"
 
-#: src/library/grDevices/src/devWindows.c:1652
+#: src/library/grDevices/src/devWindows.c:1653
 msgid "Add\tINS"
 msgstr "추가\tINS"
 
-#: src/library/grDevices/src/devWindows.c:1653
+#: src/library/grDevices/src/devWindows.c:1654
 msgid "Replace"
 msgstr "변경"
 
-#: src/library/grDevices/src/devWindows.c:1655
+#: src/library/grDevices/src/devWindows.c:1656
 msgid "Previous\tPgUp"
 msgstr "이전\tPgUp"
 
-#: src/library/grDevices/src/devWindows.c:1656
+#: src/library/grDevices/src/devWindows.c:1657
 msgid "Next\tPgDown"
 msgstr "다음\tPgDown"
 
-#: src/library/grDevices/src/devWindows.c:1658
+#: src/library/grDevices/src/devWindows.c:1659
 msgid "Save to variable..."
 msgstr "변수에 저장..."
 
-#: src/library/grDevices/src/devWindows.c:1659
+#: src/library/grDevices/src/devWindows.c:1660
 msgid "Get from variable..."
 msgstr "변수에서 가져옴..."
 
-#: src/library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1662
 msgid "Clear history"
 msgstr "이력 지우기"
 
-#: src/library/grDevices/src/devWindows.c:1662
+#: src/library/grDevices/src/devWindows.c:1663
 msgid "Resize"
 msgstr "크기 변경"
 
-#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1664
 msgid "R mode"
 msgstr "R 모드"
 
-#: src/library/grDevices/src/devWindows.c:1665
+#: src/library/grDevices/src/devWindows.c:1666
 msgid "Fit to window"
 msgstr "윈도우에 맞도록"
 
-#: src/library/grDevices/src/devWindows.c:1667
+#: src/library/grDevices/src/devWindows.c:1668
 msgid "Fixed size"
 msgstr "고정 크기"
 
-#: src/library/grDevices/src/devWindows.c:1674
+#: src/library/grDevices/src/devWindows.c:1675
 msgid "Copy as metafile"
 msgstr "metafile로 복사"
 
-#: src/library/grDevices/src/devWindows.c:1676
+#: src/library/grDevices/src/devWindows.c:1677
 msgid "Copy as bitmap"
 msgstr "bitmap으로 복사"
 
-#: src/library/grDevices/src/devWindows.c:1679
+#: src/library/grDevices/src/devWindows.c:1680
 msgid "Save as metafile..."
 msgstr "metafile로 저장..."
 
-#: src/library/grDevices/src/devWindows.c:1681
+#: src/library/grDevices/src/devWindows.c:1682
 msgid "Save as postscript..."
 msgstr "postscript로 저장..."
 
-#: src/library/grDevices/src/devWindows.c:3134
+#: src/library/grDevices/src/devWindows.c:3135
 msgid "Locator is active"
 msgstr "Locator가 작동 중입니다"
 
-#: src/library/grDevices/src/devWindows.c:3757
+#: src/library/grDevices/src/devWindows.c:3758
 msgid "Waiting to confirm page change..."
 msgstr "페이지 변경을 확인하기 위해 기다리는 중..."
 
-#: src/library/grDevices/src/devWindows.c:3769
+#: src/library/grDevices/src/devWindows.c:3770
 msgid "Click or hit ENTER for next page"
 msgstr "클릭 또는 ENTER 키를 누르면 다음 페이지로 이동합니다"

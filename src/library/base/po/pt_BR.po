@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:53+0100\n"
+"POT-Creation-Date: 2012-09-25 08:43+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1427,7 +1427,8 @@ msgstr ""
 "tentativa de extrair substrings de um objeto de modo diferente de caractere"
 
 #: src/main/character.c:268 src/main/character.c:363
-msgid "invalid substring argument(s)"
+#, fuzzy
+msgid "invalid substring arguments"
 msgstr "argumento de substring inválido"
 
 #: src/main/character.c:358
@@ -4126,9 +4127,11 @@ msgid "partial argument match of '%s' to '%s'"
 msgstr "correspondência parcial de argumento de '%s' para '%s'"
 
 #: src/main/match.c:377
-#, c-format
-msgid "unused argument(s) %s"
-msgstr "argumento(s) não utilizado(s) %s"
+#, fuzzy, c-format
+msgid "unused argument %s"
+msgid_plural "unused arguments %s"
+msgstr[0] "argumento(s) não utilizado(s) %s"
+msgstr[1] "argumento(s) não utilizado(s) %s"
 
 #: src/main/memory.c:1136
 msgid "can only weakly reference/finalize reference objects"
@@ -4892,7 +4895,7 @@ msgstr "muitos poucos rótulos de colunas"
 
 #: src/main/printarray.c:485
 #, fuzzy, c-format
-msgid " [ reached getOption(\"max.print\") -- omitted last row ]\n"
+msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
 msgstr[0] " [ atingido getOption(\"max.print\") -- última linha omitida ]]\n"
 msgstr[1] ""

@@ -71,26 +71,6 @@ en_quote <- function(potfile, outfile)
     close(con)
 }
 
-## For previous version
-en_quote0 <- function(potfile, out)
-{
-    SED <- Sys.getenv("SED", "sed") # but needs to be GNU sed on my Mac
-#    SED <- "gnused"
-    tfile <- tempfile()
-    cmd <- paste("msginit -i", shQuote(potfile),
-                 "--no-translator -l en -o", shQuote(tfile))
-    if(system(cmd, ignore.stderr = TRUE) != 0L)
-        stop("running msginit failed", domain = NA)
-    tfile2 <- tempfile()
-    cmd <- paste("msgconv -t UTF-8 -o", shQuote(tfile2), shQuote(tfile))
-    if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
-    cmd <- paste("msgfilter -i", shQuote(tfile2), "-o", out, SED,
-                 "-f", shQuote(system.file(package="tools", "po","quot.sed")))
-    if(system(cmd, ignore.stderr = TRUE) != 0L)
-        stop("running msgfilter failed", domain = NA)
-}
-
-
 update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
 {
     same <- function(a, b)
@@ -100,6 +80,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         tmpb <- grep('^"POT-Creation-Date:', tmpb, invert = TRUE, value = TRUE)
         identical(tmpa, tmpb)
     }
+
     ## Follow previous version by always collating in C.
     pwd <- getwd()
     coll <- Sys.getlocale("LC_COLLATE")
@@ -125,6 +106,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         bugs <- "bugs.r-project.org"
         stem <- file.path("..", "translations", "inst")
     }
+
     ## The interpreter is 'src' for the base package.
     is_base <- (pkg == "base")
     have_src <- paste0(pkg, ".pot") %in% files
@@ -138,7 +120,6 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     pofiles <- dir("po", pattern = "R-.*[.]po$", full.names = TRUE)
     pofiles <- pofiles[pofiles != "po/R-en@quot.po"]
     ## .po file might be newer than .mo
-    # newer <- file_test("-nt", potfile, pofiles)
     for (f in pofiles) {
         lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
         message("  R-", lang, ":", domain = NA, appendLF = FALSE)
@@ -157,7 +138,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         dest <- file.path(stem, lang, "LC_MESSAGES")
         dir.create(dest, FALSE, TRUE)
         dest <- file.path(dest, sprintf("R-%s.mo", pkg))
-        if(file_test("-ot", f, dest)) next
+ #       if(file_test("-ot", f, dest)) next
         cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
         if(system(cmd) != 0L)
             warning(sprintf("running msgfmt on %s failed", basename(f)),
@@ -221,18 +202,16 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
             warning("running msgmerge on ",  f, " failed", domain = NA)
             next
         }
-        if (!dom %in% c("R", "stats")) {
-            res <- checkPoFile(f, TRUE)
-            if(nrow(res)) {
-                print(res)
-                message("not installing")
-                next
-            }
+        res <- checkPoFile(f, TRUE)
+        if(nrow(res)) {
+            print(res)
+            message("not installing")
+            next
         }
         dest <- file.path(stem, lang, "LC_MESSAGES")
         dir.create(dest, FALSE, TRUE)
         dest <- file.path(dest, sprintf("%s.mo", dom))
-        if(file_test("-ot", f, dest)) next
+#        if(file_test("-ot", f, dest)) next
         cmd <- paste("msgfmt -c --statistics -o", shQuote(dest), shQuote(f))
         if(system(cmd) != 0L)
             warning(sprintf("running msgfmt on %s failed", basename(f)),
@@ -242,7 +221,6 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     if (l10n_info()[["UTF-8"]]) {
         lang <- "en@quot"
         message("  ", lang, ":", domain = NA)
-        # f <- "po/en@quot.po"
         f <- tempfile()
         en_quote(potfile, f)
         dest <- file.path(stem, lang, "LC_MESSAGES")

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r-2-15-branch\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:53+0100\n"
+"POT-Creation-Date: 2012-09-25 08:43+0100\n"
 "PO-Revision-Date: 2011-11-29 21:34+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -1395,8 +1395,9 @@ msgid "extracting substrings from a non-character object"
 msgstr ""
 
 #: src/main/character.c:268 src/main/character.c:363
-msgid "invalid substring argument(s)"
-msgstr ""
+#, fuzzy
+msgid "invalid substring arguments"
+msgstr "ugyldigt antal argumenter"
 
 #: src/main/character.c:358
 msgid "replacing substrings in a non-character object"
@@ -4007,9 +4008,11 @@ msgid "partial argument match of '%s' to '%s'"
 msgstr ""
 
 #: src/main/match.c:377
-#, c-format
-msgid "unused argument(s) %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "unused argument %s"
+msgid_plural "unused arguments %s"
+msgstr[0] "ingen argumenter"
+msgstr[1] "ingen argumenter"
 
 #: src/main/memory.c:1136
 msgid "can only weakly reference/finalize reference objects"
@@ -4752,7 +4755,7 @@ msgstr ""
 
 #: src/main/printarray.c:485
 #, c-format
-msgid " [ reached getOption(\"max.print\") -- omitted last row ]\n"
+msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
 msgstr[0] ""
 msgstr[1] ""
