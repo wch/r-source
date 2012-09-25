@@ -1976,5 +1976,8 @@ f <- function(depth) if(depth < 20) f(depth+1) else Cstack_info()
 stopifnot(z[2] > f(10)[2])
 ## Previous test ould be defeated by compiler optimization.
 
+options(max.print=.Machine$integer.max)
+1 ## segfaulted because of integer overflow
+stopifnot(identical(.Machine$integer.max, getOption("max.print")))
 
 proc.time()
