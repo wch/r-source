@@ -87,6 +87,7 @@
     \code{x \%=~\% y}   \tab x and y are congruent \cr
     \code{x \%==\% y}   \tab x is defined as y \cr
     \code{x \%prop\% y}  \tab x is proportional to y \cr
+    \code{x \%~\% y}  \tab x is distributed as y \cr
     \code{plain(x)}   \tab draw x in normal font \cr
     \code{bold(x)}   \tab draw x in bold font \cr
     \code{italic(x)}   \tab draw x in italic font \cr

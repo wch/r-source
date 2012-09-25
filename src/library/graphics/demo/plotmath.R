@@ -63,13 +63,11 @@ draw.plotmath.cell(expression(x^2), i, nr); i <- i + 1
 draw.title.cell("Juxtaposition", i, nr); i <- i + 1
 draw.plotmath.cell(expression(x * y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(paste(x, y, z)), i, nr); i <- i + 1
-draw.title.cell("Lists", i, nr); i <- i + 1
-draw.plotmath.cell(expression(list(x, y, z)), i, nr); i <- i + 1
-# even columns up
-i <- 20
 draw.title.cell("Radicals", i, nr); i <- i + 1
 draw.plotmath.cell(expression(sqrt(x)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(sqrt(x, y)), i, nr); i <- i + 1
+draw.title.cell("Lists", i, nr); i <- i + 1
+draw.plotmath.cell(expression(list(x, y, z)), i, nr); i <- i + 1
 draw.title.cell("Relations", i, nr); i <- i + 1
 draw.plotmath.cell(expression(x == y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x != y), i, nr); i <- i + 1
@@ -81,6 +79,7 @@ draw.plotmath.cell(expression(x %~~% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %=~% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %==% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %prop% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x %~% y), i, nr); i <- i + 1
 draw.title.cell("Typeface", i, nr); i <- i + 1
 draw.plotmath.cell(expression(plain(x)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(italic(x)), i, nr); i <- i + 1

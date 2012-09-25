@@ -235,6 +235,9 @@
       \code{"hyman"}, an implementation of Hyman's method of
       constructing monotonic interpolation splines.  (Contributed
       by Simon Wood and Rob Hyndman.)
+
+      \item Added support for new \code{\%~\%} relation
+      (\dQuote{is distributed as}) in plotmath.
     }
   }
 

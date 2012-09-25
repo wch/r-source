@@ -2610,6 +2610,7 @@ SymTab RelTable[] = {
     { "%==%",		186 },	/* equivalence */
     { "%~~%",		187 },	/* approxequal */
     { "%prop%",         181 },  /* proportional to */
+    { "%~%",            126 },  /* distributed as */
 
     { "%<->%",		171 },	/* Arrows */
     { "%<-%",		172 },
