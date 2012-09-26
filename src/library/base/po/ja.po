@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-25 08:43+0100\n"
+"POT-Creation-Date: 2012-09-26 17:24+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -229,8 +229,8 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/platform.c:2311 src/main/platform.c:2468 src/main/platform.c:2471
 #: src/main/platform.c:2474 src/main/platform.c:2477 src/main/platform.c:2480
 #: src/main/platform.c:2550 src/main/platform.c:2558 src/main/platform.c:2594
-#: src/main/platform.c:2644 src/main/print.c:236 src/main/print.c:242
-#: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
+#: src/main/platform.c:2644 src/main/print.c:237 src/main/print.c:243
+#: src/main/print.c:265 src/main/print.c:271 src/main/print.c:278
 #: src/main/random.c:478 src/main/random.c:482 src/main/random.c:489
 #: src/main/random.c:517 src/main/saveload.c:1940 src/main/saveload.c:1943
 #: src/main/saveload.c:1946 src/main/saveload.c:2062 src/main/saveload.c:2242
@@ -4789,7 +4789,7 @@ msgstr " Texの中の 'which' の指定が不正です "
 msgid "invalid math style encountered"
 msgstr " 数式スタイルが不正です "
 
-#: src/main/plotmath.c:1261 src/main/plotmath.c:1366 src/main/plotmath.c:2663
+#: src/main/plotmath.c:1261 src/main/plotmath.c:1366 src/main/plotmath.c:2664
 msgid "invalid mathematical annotation"
 msgstr " 数式の注釈が不正です "
 
@@ -4809,51 +4809,51 @@ msgstr " グループの指定が不正です "
 msgid "group is incomplete"
 msgstr " グループが不完全です "
 
-#: src/main/plotmath.c:3189
+#: src/main/plotmath.c:3190
 msgid "Metric information not available for this family/device"
 msgstr " このfamily/deviceに対してメトリック情報は利用できません "
 
-#: src/main/print.c:144 src/main/print.c:248
+#: src/main/print.c:145 src/main/print.c:249
 msgid "invalid 'na.print' specification"
 msgstr " 'na.print' の指定が不正です "
 
-#: src/main/print.c:153
+#: src/main/print.c:154
 msgid "invalid row labels"
 msgstr " 行ラベルが不正です "
 
-#: src/main/print.c:155
+#: src/main/print.c:156
 msgid "invalid column labels"
 msgstr " 列ラベルが不正です "
 
-#: src/main/print.c:179
+#: src/main/print.c:180
 msgid "non-function argument to .Internal(print.function(.))"
 msgstr " .Internal(print.function(.)) への関数でない引数です "
 
-#: src/main/print.c:258
+#: src/main/print.c:259
 msgid "'gap' must be non-negative integer"
 msgstr " 'gap' は，非負の整数でなくてはなりません "
 
-#: src/main/print.c:282
+#: src/main/print.c:284
 msgid "invalid 'tryS4' internal argument"
 msgstr " 'tryS4' 内部引数が不正です "
 
-#: src/main/print.c:1012
+#: src/main/print.c:1014
 msgid "invalid character length in dblepr"
 msgstr " dblepr の文字列の長さが不正です "
 
-#: src/main/print.c:1030
+#: src/main/print.c:1032
 msgid "invalid character length in intpr"
 msgstr " intpr の文字列の長さが不正です "
 
-#: src/main/print.c:1049
+#: src/main/print.c:1051
 msgid "invalid character length in realpr"
 msgstr " realpr の文字列の長さが不正です "
 
-#: src/main/print.c:1059
+#: src/main/print.c:1061
 msgid "memory allocation error in realpr"
 msgstr " realpr でメモリ確保に失敗しました "
 
-#: src/main/print.c:1075
+#: src/main/print.c:1077
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr " BLAS/LAPACK 関数 '%6s' はエラーコード %d を返しました  "

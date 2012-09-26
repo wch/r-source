@@ -1230,6 +1230,7 @@ function(x, ...)
 
     .fmt <- function(nm) {
         docObj <- x[[nm]]
+        ## FIXME singular or plural?
         c(gettextf("Data codoc mismatches from documentation object '%s':",
                    nm),
           gettextf("Variables in data frame '%s'", docObj[["name"]]),
@@ -2008,15 +2009,20 @@ function(x, ...)
     if (length(x)) {
         .fmt <- function(x)
             paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
-        res <- c("Foreign function call(s) without 'PACKAGE' argument:",
-                 unlist(lapply(x, .fmt)))
+        msg <- ngettext(length(x),
+                        "Foreign function call without 'PACKAGE' argument:",
+                        "Foreign function calls without 'PACKAGE' argument:",
+                        domain = NA)
+        res <- c(msg, unlist(lapply(x, .fmt)))
     }
     if (length(xx)) {
         .fmt <- function(x)
             paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
-        res <- c(res,
-                 "Foreign function call(s) with empty 'PACKAGE' argument:",
-                 unlist(lapply(xx, .fmt)))
+        msg <- ngettext(length(x),
+                        "Foreign function call with empty 'PACKAGE' argument:",
+                        "Foreign function calls with empty 'PACKAGE' argument:",
+                        domain = NA)
+       res <- c(res, msg, unlist(lapply(xx, .fmt)))
     }
 
     if (length(y)) {
@@ -2028,22 +2034,31 @@ function(x, ...)
         if(any(base)) {
             xx <- unlist(lapply(seq_along(y)[base],
                                 function(i) .fmt2(y[[i]], z[i])))
-            res <- c(res,
-                     "Foreign function call(s) with 'PACKAGE' argument in a base package:",
-                     sort(unique(xx)))
+            xx <- unique(xx)
+            msg <- ngettext(length(xx),
+                            "Foreign function call with 'PACKAGE' argument in a base package:",
+                            "Foreign function calls with 'PACKAGE' argument in a base package:",
+                            domain = NA)
+            res <- c(res, msg, sort(xx))
         }
         if(any(!base)) {
             xx <-  unlist(lapply(seq_along(y)[!base],
                                  function(i) .fmt2(y[[i]], z[i])))
-            res <- c(res,
-                     "Foreign function call(s) with 'PACKAGE' argument in different package:",
-                    sort(unique(xx)))
+            xx <- unique(xx)
+            msg <- ngettext(length(xx),
+                            "Foreign function call with 'PACKAGE' argument in a different package:",
+                            "Foreign function calls with 'PACKAGE' argument in a different package:",
+                            domain = NA)
+            res <- c(res, msg, sort(xx))
         }
     }
     if (length(zz)) {
-            res <- c(res,
-                     "Undeclared package(s) in foreign function calls",
-                     paste("  ", paste(sQuote(sort(unique(zz))), collapse = ", ")))
+        zz <- unique(zz)
+        msg <- ngettext(length(zz),
+                        "Undeclared package in foreign function calls",
+                        "Undeclared packages in foreign function calls",
+                        domain = NA)
+        res <- c(res, msg, paste("  ", paste(sQuote(sort(zz)), collapse = ", ")))
     }
     res
 }
@@ -3814,8 +3829,12 @@ function(x, ...)
                            "Note: found %d string marked as \"bytes\"",
                            "Note: found %d strings marked as \"bytes\""), n)
       },
-      if(nrow(x$unknown)) {
-          c("Warning: found non-ASCII string(s)",
+      if(nr <- nrow(x$unknown)) {
+          msg <- ngettext(nr,
+                          "Warning: found non-ASCII string",
+                          "Warning: found non-ASCII strings",
+                          domain = NA)
+          c(msg,
             paste(iconv0(x$unknown[, 1L], "", "ASCII", sub = "byte"),
                   " in object '", x$unknown[, 2L], "'", sep = ""))
       })
@@ -3888,8 +3907,12 @@ function(x, ...)
         xx[ind3] <- sprintf("%.1fGb", x[ind3]/1024^3)
         xx
     }
-    if(nrow(x$rdas)) {
-        writeLines("Warning: large data file(s) saved inefficiently:")
+    if(nr <- nrow(x$rdas)) {
+        msg <- ngettext(nr,
+                        "Warning: large data file saved inefficiently:",
+                        "Warning: large data files saved inefficiently:",
+                        domain = NA)
+        writeLines(msg)
         rdas <- x$rdas
         rdas$size <- reformat(rdas$size)
         print(rdas)

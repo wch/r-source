@@ -218,7 +218,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
                     objs <- strwrap(paste(same, collapse=", "), indent=4,
                                     exdent=4)
-                    msg <- sprintf("The following object(s) are masked %s %s:\n\n%s\n",
+                    msg <- sprintf(ngettext(length(objs),
+                                            "The following object is masked %s %s:\n\n%s\n",
+                                            "The following objects are masked %s %s:\n\n%s\n"),
                                    if (i < lib.pos) "_by_" else "from",
                                    sQuote(sp[i]), paste(objs, collapse="\n"))
 		    packageStartupMessage(msg)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-25 08:43+0100\n"
+"POT-Creation-Date: 2012-09-26 17:24+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -232,8 +232,8 @@ msgstr "'%ls' 를 표시하는데 문제가 있습니다 "
 #: src/main/platform.c:2311 src/main/platform.c:2468 src/main/platform.c:2471
 #: src/main/platform.c:2474 src/main/platform.c:2477 src/main/platform.c:2480
 #: src/main/platform.c:2550 src/main/platform.c:2558 src/main/platform.c:2594
-#: src/main/platform.c:2644 src/main/print.c:236 src/main/print.c:242
-#: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
+#: src/main/platform.c:2644 src/main/print.c:237 src/main/print.c:243
+#: src/main/print.c:265 src/main/print.c:271 src/main/print.c:278
 #: src/main/random.c:478 src/main/random.c:482 src/main/random.c:489
 #: src/main/random.c:517 src/main/saveload.c:1940 src/main/saveload.c:1943
 #: src/main/saveload.c:1946 src/main/saveload.c:2062 src/main/saveload.c:2242
@@ -4750,7 +4750,7 @@ msgstr "TeX 에서 'which'가 유효하지 않습니다"
 msgid "invalid math style encountered"
 msgstr "수식 스타일이 잘못되었습니다"
 
-#: src/main/plotmath.c:1261 src/main/plotmath.c:1366 src/main/plotmath.c:2663
+#: src/main/plotmath.c:1261 src/main/plotmath.c:1366 src/main/plotmath.c:2664
 msgid "invalid mathematical annotation"
 msgstr "수식 주석이 잘못되었습니다"
 
@@ -4770,51 +4770,51 @@ msgstr "그룹 지정이 잘못되었습니다"
 msgid "group is incomplete"
 msgstr "그룹이 불완전합니다"
 
-#: src/main/plotmath.c:3189
+#: src/main/plotmath.c:3190
 msgid "Metric information not available for this family/device"
 msgstr "이 family / device에 대해 메트릭 정보를 사용할 수 없습니다"
 
-#: src/main/print.c:144 src/main/print.c:248
+#: src/main/print.c:145 src/main/print.c:249
 msgid "invalid 'na.print' specification"
 msgstr "'na.print'의 지정이 잘못되었습니다"
 
-#: src/main/print.c:153
+#: src/main/print.c:154
 msgid "invalid row labels"
 msgstr "행 레이블이 잘못되었습니다"
 
-#: src/main/print.c:155
+#: src/main/print.c:156
 msgid "invalid column labels"
 msgstr "열 레이블이 잘못되었습니다"
 
-#: src/main/print.c:179
+#: src/main/print.c:180
 msgid "non-function argument to .Internal(print.function(.))"
 msgstr ".Internal (print.function ())에 함수가 아닌 인수입니다"
 
-#: src/main/print.c:258
+#: src/main/print.c:259
 msgid "'gap' must be non-negative integer"
 msgstr "'gap'는 음이 아닌 정수여야 합니다"
 
-#: src/main/print.c:282
+#: src/main/print.c:284
 msgid "invalid 'tryS4' internal argument"
 msgstr "'tryS4' 내부인수가 잘못되었습니다"
 
-#: src/main/print.c:1012
+#: src/main/print.c:1014
 msgid "invalid character length in dblepr"
 msgstr "dblepr의 문자열 길이가 잘못되었습니다"
 
-#: src/main/print.c:1030
+#: src/main/print.c:1032
 msgid "invalid character length in intpr"
 msgstr "intpr의 문자열 길이가 잘못되었습니다"
 
-#: src/main/print.c:1049
+#: src/main/print.c:1051
 msgid "invalid character length in realpr"
 msgstr "'realpr'로 메모리 확보에 잘못되었습니다"
 
-#: src/main/print.c:1059
+#: src/main/print.c:1061
 msgid "memory allocation error in realpr"
 msgstr "realpr의 메모리 확보에 실패했습니다"
 
-#: src/main/print.c:1075
+#: src/main/print.c:1077
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK 함수'%6s'가 에러 코드 %d를 반환했습니다"

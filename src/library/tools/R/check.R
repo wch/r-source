@@ -398,9 +398,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         bad <- sub("[.].*", "", bad)
         bad <- grepl("^(con|prn|aux|clock[$]|nul|lpt[1-9]|com[1-9])$", bad)
         bad_files <- c(bad_files, allfiles[bad])
-        if (length(bad_files)) {
+        if (nb <- length(bad_files)) {
             errorLog(Log)
-            wrapLog("Found the following file(s) with non-portable file names:\n")
+            msg <- ngettext(nb,
+                            "Found the following file with a non-portable file name:\n",
+                            "Found the following files with non-portable file names:\n",
+                            domain = NA)
+            wrapLog(msg)
             printLog(Log, .format_lines_with_indent(bad_files), "\n")
             wrapLog("These are not valid file names",
                     "on all R platforms.\n",
@@ -415,9 +419,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         ## (that is on Windows and (by default) on Mac OS X).
 
         dups <- unique(allfiles[duplicated(tolower(allfiles))])
-        if (length(dups)) {
+        if (nb <- length(dups)) {
             errorLog(Log)
-            wrapLog("Found the following file(s) with duplicate lower-cased file names:\n")
+            wrapLog("Found the following files with duplicate lower-cased file names:\n")
             printLog(Log, .format_lines_with_indent(dups), "\n")
             wrapLog("File names must not differ just by case",
                     "to be usable on all R platforms.\n",
@@ -431,9 +435,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         non_ASCII_files <-
             allfiles[grepl("[^-A-Za-z0-9._!#$%&+,;=@^(){}\'[\\]]", #
                            basename(allfiles), perl = TRUE)]
-        if (length(non_ASCII_files)) {
+        if (nb <-length(non_ASCII_files)) {
             warningLog(Log)
-            wrapLog("Found the following file(s) with non-portable file names:\n")
+            msg <- ngettext(nb,
+                            "Found the following file with a non-portable file name:\n",
+                            "Found the following files with non-portable file names:\n",
+                            domain = NA)
+            wrapLog(msg)
             printLog(Log, .format_lines_with_indent(non_ASCII_files), "\n")
             wrapLog("These are not fully portable file names.\n",
                     "See section 'Package structure'",
@@ -687,9 +695,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if(any(ind)) {
             if(!any) warningLog(Log)
             any <- TRUE
-            printLog(Log,
-                     "Found the following directory(s) with ",
-                     "names of check directories:\n",
+            msg <- ngettext(sum(ind),
+                            "Found the following directory with the name of a check directory:\n",
+                            "Found the following directories with names of check directories:\n", domain = NA)
+            printLog(Log, msg,
                      .format_lines_with_indent(all_dirs[ind]),
                      "\n",
                      "Most likely, these were included erroneously.\n")
@@ -701,9 +710,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if(any(ind)) {
             if(!any) warningLog(Log)
             any <- TRUE
-            printLog(Log,
-                     "Found the following directory(s) with ",
-                     "names of Rd2pdf build directories:\n",
+            msg <- ngettext(sum(ind),
+                            "Found the following directory with the name of a Rd2pdf directory:\n",
+                            "Found the following directories with names of Rd2pdf directories:\n", domain = NA)
+           printLog(Log, msg,
                      .format_lines_with_indent(all_dirs[ind]),
                      "\n",
                      "Most likely, these were included erroneously.\n")
@@ -717,9 +727,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if(any(ind)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
-                printLog(Log,
-                         "Found the following directory(s) with ",
-                         "names of version control directories:\n",
+            msg <- ngettext(sum(ind),
+                            "Found the following directory with the name of a version control directory:\n",
+                            "Found the following directories with names of version control directories:\n", domain = NA)
+                printLog(Log, msg,
                          .format_lines_with_indent(all_dirs[ind]),
                          "\n",
                          "These should not be in a package tarball.\n")
@@ -914,7 +925,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if(length(files)) {
             if(!any) noteLog(Log)
             any <- TRUE
-            wrapLog("Found the following CITATION file(s) in a non-standard place:\n")
+            msg <- ngettext(length(files),
+                            "Found the following CITATION file in a non-standard place:\n",
+                            "Found the following CITATION files in a non-standard place:\n", domain = NA)
+            wrapLog(msg)
             printLog(Log, .format_lines_with_indent(files), "\n")
             wrapLog("Most likely 'inst/CITATION' should be used instead.\n")
         }
@@ -929,8 +943,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                       R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
             warningLog(Log)
-            wrapLog("Found the following files with",
-                    "non-ASCII characters:\n")
+            msg <- ngettext(length(out),
+                            "Found the following file with non-ASCII characters:\n",
+                            "Found the following files with non-ASCII characters:\n",
+                            domain = NA)
+            wrapLog(msg)
             printLog(Log, .format_lines_with_indent(out), "\n")
             wrapLog("Portable packages must use only ASCII",
                     "characters in their R code,\n",
@@ -2078,11 +2095,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             pdfs <- file.path(pkgdir, "inst", "doc",
                               sub("\\.[[:alpha:]]+$", ".pdf", basename(vf)))
             bad_vignettes <- vf[!file.exists(pdfs)]
-            if(length(bad_vignettes)) {
+            if(nb <- length(bad_vignettes)) {
                 any <- TRUE
                 warningLog(Log)
-                printLog(Log,
-                         "Package vignette(s) without corresponding PDF:\n")
+                msg <- ngettext(nb,
+                                "Package vignette( without corresponding PDF:\n",
+                                "Package vignettes without corresponding PDFs:\n", domain = NA)
+                printLog(Log, msg)
                 printLog(Log,
                          paste(c(paste("  ",
                                        sQuote(basename(bad_vignettes))),
@@ -2090,11 +2109,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             }
             encs <- vapply(vf, getVignetteEncoding, "")
             bad_vignettes <- vf[encs == "non-ASCII"]
-            if(length(bad_vignettes)) {
+            if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
-                printLog(Log,
-                         "  Non-ASCII package vignette(s) without specified encoding:\n")
+                msg <- ngettext(nb,
+                         "  Non-ASCII package vignette without specified encoding:\n",
+                         "  Non-ASCII package vignettes without specified encoding:\n", domain = NA)
+                printLog(Log, msg)
                 printLog(Log,
                          paste(c(paste("  ",
                                        sQuote(basename(bad_vignettes))),
@@ -2109,11 +2130,14 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if (length(sources)) {
             new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vf))
             dups <- sources[sources %in% new_sources]
-            if(length(dups)) {
+            if(nb <- length(dups)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
+                msg <- ngettext(nb,
+                                "  Unused file in 'inst/doc' which is pointless or misleading",
+                                "  Unused files in 'inst/doc' which are pointless or misleading", domain = NA)
                 printLog(Log,
-                         paste("  Unused files in 'inst/doc' which are pointless or misleading",
+                         paste(msg,
                                "  as they will be re-created from the vignettes:", "",
                                sep = "\n"))
                 printLog(Log,
@@ -2156,11 +2180,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             lines2 <- iconv(lines, enc, "UTF-16LE", toRaw = TRUE)
             if(any(vapply(lines2, is.null, TRUE)))
                 bad_vignettes <- c(bad_vignettes, v)
-            if(length(bad_vignettes)) {
+            if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
-                printLog(Log,
-                         "  Package vignette(s) which are not in their specified encoding:\n")
+                msg <- ngettext(nb,
+                                "  Package vignette which is not in its specified encoding:\n",
+                                "  Package vignettes which are not in their specified encoding:\n", domain = NA)
+                printLog(Log, msg)
                 printLog(Log,
                          paste(c(paste("  ",
                                        sQuote(basename(bad_vignettes))),
@@ -2468,8 +2494,12 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
         if (grepl("^check", install) && file.exists(".install_timestamp"))
             execs <- execs[file_test("-ot", execs, ".install_timestamp")]
-        if (length(execs)) {
-            warningLog(Log, "Found the following executable file(s):")
+        if (nb <- length(execs)) {
+            msg <- ngettext(nb,
+                            "Found the following executable file:",
+                            "Found the following executable files:",
+                            domain = NA)
+            warningLog(Log, msg)
             printLog(Log, .format_lines_with_indent(execs), "\n")
             wrapLog("Source packages should not contain undeclared executable files.\n",
                     "See section 'Package structure'",
@@ -2975,11 +3005,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                any(ind <- grepl("/src-(i386|x64|x86_64|ppc)$", ad))) {
                 if(!any) warningLog(Log)
                 any <- TRUE
-                printLog(Log,
-                         "Found the following directory(s) with ",
-                         "name(s) of multi-arch build directories:\n",
+                msg <- ngettext(sum(ind),
+                                "Found the following directory with a name of a multi-arch build directory:\n",
+                                "Found the following directories with names of multi-arch build directories:\n",
+                                domain = NA)
+                printLog(Log, msg,
                          .format_lines_with_indent(basename(ad[ind])),
-                     "\n",
+                         "\n",
                          "Most likely, these were included erroneously.\n")
             }
             if (thispkg_src_subdirs != "no" && dir.exists(srcd)) {

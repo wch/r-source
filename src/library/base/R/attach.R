@@ -69,7 +69,9 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
                         } else {
                             sp[i]
                         }
-                    msg <- sprintf("The following object(s) are masked %s '%s':\n\n%s\n",
+                    msg <- sprintf(ngettext(length(objs),
+                                            "The following object is masked %s %s:\n\n%s\n",
+                                            "The following objects are masked %s %s:\n\n%s\n"),
                                    if (i < db.pos) "_by_" else "from",
                                    pkg, paste(objs, collapse="\n"))
                     cat(msg)

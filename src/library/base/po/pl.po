@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-25 08:43+0100\n"
+"POT-Creation-Date: 2012-09-26 17:24+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -226,8 +226,8 @@ msgstr "problem z wyświetleniem '%ls'"
 #: src/main/platform.c:2311 src/main/platform.c:2468 src/main/platform.c:2471
 #: src/main/platform.c:2474 src/main/platform.c:2477 src/main/platform.c:2480
 #: src/main/platform.c:2550 src/main/platform.c:2558 src/main/platform.c:2594
-#: src/main/platform.c:2644 src/main/print.c:236 src/main/print.c:242
-#: src/main/print.c:264 src/main/print.c:270 src/main/print.c:276
+#: src/main/platform.c:2644 src/main/print.c:237 src/main/print.c:243
+#: src/main/print.c:265 src/main/print.c:271 src/main/print.c:278
 #: src/main/random.c:478 src/main/random.c:482 src/main/random.c:489
 #: src/main/random.c:517 src/main/saveload.c:1940 src/main/saveload.c:1943
 #: src/main/saveload.c:1946 src/main/saveload.c:2062 src/main/saveload.c:2242
@@ -4799,7 +4799,7 @@ msgstr "niepoprawne oznaczenie 'which' w TeX"
 msgid "invalid math style encountered"
 msgstr "napotkano niepoprawny styl matematyczny"
 
-#: src/main/plotmath.c:1261 src/main/plotmath.c:1366 src/main/plotmath.c:2663
+#: src/main/plotmath.c:1261 src/main/plotmath.c:1366 src/main/plotmath.c:2664
 msgid "invalid mathematical annotation"
 msgstr "niepoprawna adnotacja matematyczna"
 
@@ -4819,51 +4819,51 @@ msgstr "niepoprawne określenie grupy"
 msgid "group is incomplete"
 msgstr "grupa jest niekompletna"
 
-#: src/main/plotmath.c:3189
+#: src/main/plotmath.c:3190
 msgid "Metric information not available for this family/device"
 msgstr "Informacje metryczne nie są dostępne dla tej rodziny/urządzenia"
 
-#: src/main/print.c:144 src/main/print.c:248
+#: src/main/print.c:145 src/main/print.c:249
 msgid "invalid 'na.print' specification"
 msgstr "niepoprawne określenie 'na.print'"
 
-#: src/main/print.c:153
+#: src/main/print.c:154
 msgid "invalid row labels"
 msgstr "niepoprawne etykiety wierszy"
 
-#: src/main/print.c:155
+#: src/main/print.c:156
 msgid "invalid column labels"
 msgstr "niepoprawne etykiety kolumn"
 
-#: src/main/print.c:179
+#: src/main/print.c:180
 msgid "non-function argument to .Internal(print.function(.))"
 msgstr "argument nie-funkcyjny przekazany do '.Internal(print.function(.))'"
 
-#: src/main/print.c:258
+#: src/main/print.c:259
 msgid "'gap' must be non-negative integer"
 msgstr "'gap' musi być nieujemną liczbą całkowitą"
 
-#: src/main/print.c:282
+#: src/main/print.c:284
 msgid "invalid 'tryS4' internal argument"
 msgstr "niepoprawny wewnętrzny argument 'tryS4' "
 
-#: src/main/print.c:1012
+#: src/main/print.c:1014
 msgid "invalid character length in dblepr"
 msgstr "niepoprawna długość znaku w 'dblepr'"
 
-#: src/main/print.c:1030
+#: src/main/print.c:1032
 msgid "invalid character length in intpr"
 msgstr "niepoprawna długość znaku w 'intpr'"
 
-#: src/main/print.c:1049
+#: src/main/print.c:1051
 msgid "invalid character length in realpr"
 msgstr "niepoprawna długość znaku 'realpr'"
 
-#: src/main/print.c:1059
+#: src/main/print.c:1061
 msgid "memory allocation error in realpr"
 msgstr "błąd przydziału pamięci w 'realpr'"
 
-#: src/main/print.c:1075
+#: src/main/print.c:1077
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "procedura BLAS/LAPACK '%6s' zwróciła kod błędu %d"
