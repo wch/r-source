@@ -25,12 +25,12 @@ msgstr ""
 #: colors.c:71
 #, c-format
 msgid "color intensity %g, not in [0,1]"
-msgstr ""
+msgstr "colour intensity %g, not in [0,1]"
 
 #: colors.c:78
 #, c-format
 msgid "color intensity %d, not in 0:255"
-msgstr ""
+msgstr "colour intensity %d, not in 0:255"
 
 #: colors.c:85
 #, c-format
@@ -44,11 +44,11 @@ msgstr ""
 
 #: colors.c:131 colors.c:145
 msgid "invalid hsv color"
-msgstr ""
+msgstr "invalid hsv colour"
 
 #: colors.c:251 colors.c:269
 msgid "invalid hcl color"
-msgstr ""
+msgstr "invalid hcl colour"
 
 #: colors.c:326
 msgid "invalid 'names' vector"
@@ -56,7 +56,7 @@ msgstr ""
 
 #: colors.c:385 colors.c:394
 msgid "invalid gray level, must be in [0,1]."
-msgstr ""
+msgstr "invalid grey level, must be in [0,1]"
 
 #: devPS.c:559
 #, c-format
@@ -418,7 +418,7 @@ msgstr ""
 
 #: devPS.c:6575
 msgid "Failed to load sRGB colorspace file"
-msgstr ""
+msgstr "Failed to load sRGB colourspace file"
 
 #: devPS.c:6839
 msgid "Corrupt encodings in PDF device"
