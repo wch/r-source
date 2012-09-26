@@ -241,7 +241,7 @@ static int KeyType(const char * const s)
     for (i = 0; KeyWordDictionary[i].keyword; i++)
 	if (MatchKey(s, KeyWordDictionary[i].keyword))
 	    return KeyWordDictionary[i].code;
-    printf("Unknown %s\n", s);
+//    printf("Unknown %s\n", s); // not needed, PR#15057 found it annoying
     return Unknown;
 }
 
