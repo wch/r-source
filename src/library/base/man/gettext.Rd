@@ -1,6 +1,6 @@
 % File src/library/base/man/gettext.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gettext}
@@ -33,7 +33,8 @@ bindtextdomain(domain, dirname = NULL)
   based on the namespace which contains the function calling
   \code{gettext} or \code{ngettext}.  If a suitable domain can be found,
   each character string is offered for translation, and replaced by its
-  translation into the current language if one is found.
+  translation into the current language if one is found.  The value
+  (logical) \code{NA} suppresses any translation.
 
   Conventionally the domain for \R warning/error messages in package
   \pkg{pkg} is \code{"R-pkg"}, and that for C-level messages is \code{"pkg"}.

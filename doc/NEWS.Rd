@@ -238,6 +238,9 @@
 
       \item Added support for new \code{\%~\%} relation
       (\dQuote{is distributed as}) in plotmath.
+      
+      \item \code{domain = NA} is accepted by \code{gettext()} and
+      \code{ngettext()}, analogously to \code{stop()} etc.
     }
   }
 
