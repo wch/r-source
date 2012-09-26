@@ -57,8 +57,9 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   functions should not copy it.
   
   If any of the functions returns \code{NA} or \code{NaN} the internal code
-  could infinite-loop in \R prior to 2.16.0: this is now an error.
-  Returning infinite values may work but is not supported.
+  could infinite-loop in \R prior to 2.15.2: this is now an error for
+  the gradient and Hessian, and such values for function evaluation are
+  replaced by \code{+Inf} with a warning.
 }
 % see PR#15052.
 \value{
