@@ -1973,7 +1973,10 @@ as.data.frame(LETTERS[1:10])
 ## Test of stack direction (related to PR#15011)
 f <- function(depth) if(depth < 20) f(depth+1) else Cstack_info()
 (z <- f(0))
-stopifnot(z[2] > f(10)[2])
+z10 <- f(10)
+if(is.na(z[2]) || is.na(z10[2])) {
+    message("current stack size is not available")
+} else stopifnot(z[2] > z10[2])
 ## Previous test ould be defeated by compiler optimization.
 
 options(max.print=.Machine$integer.max)
