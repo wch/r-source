@@ -127,7 +127,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP attribute_hidden do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error(_("X11 is not available"));
     return R_NilValue;
