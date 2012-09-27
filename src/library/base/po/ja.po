@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:24+0100\n"
+"POT-Creation-Date: 2012-09-27 11:21+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -203,7 +203,7 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/envir.c:1899 src/main/envir.c:2116 src/main/envir.c:2237
 #: src/main/envir.c:2496 src/main/envir.c:2703 src/main/envir.c:2717
 #: src/main/envir.c:2724 src/main/envir.c:2740 src/main/envir.c:3303
-#: src/main/errors.c:1025 src/main/eval.c:269 src/main/eval.c:2034
+#: src/main/errors.c:1026 src/main/eval.c:269 src/main/eval.c:2034
 #: src/main/eval.c:2063 src/main/eval.c:2067 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
@@ -270,9 +270,9 @@ msgstr " このバージョンのWindowsはサポートされていません "
 #: src/gnuwin32/extra.c:264 src/main/character.c:593 src/main/colors.c:83
 #: src/main/connections.c:3291 src/main/context.c:640 src/main/context.c:659
 #: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
-#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:957
-#: src/main/errors.c:1058 src/main/errors.c:1083 src/main/errors.c:1088
-#: src/main/errors.c:1360 src/main/seq.c:188 src/main/seq.c:342
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:958
+#: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
+#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
 #: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
 #: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
 #: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
@@ -1497,15 +1497,15 @@ msgstr " 'mode' 引数が不正です "
 msgid "applies only to lists and vectors"
 msgstr " リストとベクトルのみに適用できます "
 
-#: src/main/coerce.c:77 src/main/errors.c:1195
+#: src/main/coerce.c:77 src/main/errors.c:1197
 msgid "NAs introduced by coercion"
 msgstr " 強制変換により NA が生成されました "
 
-#: src/main/coerce.c:79 src/main/errors.c:1196
+#: src/main/coerce.c:79 src/main/errors.c:1198
 msgid "inaccurate integer conversion in coercion"
 msgstr " 強制変換中に不正確な整数変換が行われました "
 
-#: src/main/coerce.c:81 src/main/errors.c:1197
+#: src/main/coerce.c:81 src/main/errors.c:1199
 msgid "imaginary parts discarded in coercion"
 msgstr " 複素数の虚部は，コネクションで捨てられました "
 
@@ -1677,7 +1677,7 @@ msgstr " 因子保管モードを変更するのは不正です "
 msgid "bad hsv to rgb color conversion"
 msgstr " hsv から rgb への色の変換が上手くいきません "
 
-#: src/main/colors.c:959 src/main/errors.c:1181 src/main/logic.c:171
+#: src/main/colors.c:959 src/main/errors.c:1183 src/main/logic.c:171
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
@@ -3245,7 +3245,7 @@ msgstr ""
 msgid "Error: "
 msgstr " エラー： "
 
-#: src/main/errors.c:687 src/main/errors.c:1312
+#: src/main/errors.c:687 src/main/errors.c:1314
 msgid "In addition: "
 msgstr " 追加情報:  "
 
@@ -3257,89 +3257,89 @@ msgstr " オプション \"error\" は不正です \n"
 msgid "Execution halted\n"
 msgstr " 実行が停止されました \n"
 
-#: src/main/errors.c:1027
+#: src/main/errors.c:1028
 msgid "'msg1' must be a character string"
 msgstr " 'msg1' は文字列でなければなりません "
 
-#: src/main/errors.c:1029
+#: src/main/errors.c:1030
 msgid "'msg2' must be a character string"
 msgstr " 'msg2' は文字列でなければなりません "
 
-#: src/main/errors.c:1124
+#: src/main/errors.c:1126
 msgid " [invalid string in stop(.)]"
 msgstr " stop 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1150
+#: src/main/errors.c:1152
 msgid " [invalid string in warning(.)]"
 msgstr " warning 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1165
+#: src/main/errors.c:1167
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr " \"%s\" への引数の個数が正しくありません "
 
-#: src/main/errors.c:1171 src/main/errors.c:1186
+#: src/main/errors.c:1173 src/main/errors.c:1188
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr " %s 中の未実装の機能です "
 
-#: src/main/errors.c:1180
+#: src/main/errors.c:1182
 msgid "invalid number of arguments"
 msgstr " 引数の個数が不正です "
 
-#: src/main/errors.c:1183
+#: src/main/errors.c:1185
 msgid "time-series/vector length mismatch"
 msgstr " 時系列またはベクトル の長さが合致しません "
 
-#: src/main/errors.c:1184
+#: src/main/errors.c:1186
 msgid "incompatible arguments"
 msgstr " 互換性のない引数です "
 
-#: src/main/errors.c:1187
+#: src/main/errors.c:1189
 msgid "unknown error (report this!)"
 msgstr " 未知のエラーです（報告して！） "
 
-#: src/main/errors.c:1199
+#: src/main/errors.c:1201
 msgid "unknown warning (report this!)"
 msgstr " 未知の警告です（報告して！） "
 
-#: src/main/errors.c:1277
+#: src/main/errors.c:1279
 msgid "No function to return from, jumping to top level"
 msgstr " 戻るべき関数がないので，トップレベルへジャンプします "
 
-#: src/main/errors.c:1293
+#: src/main/errors.c:1295
 msgid "top level inconsistency?"
 msgstr " トップレベルの不整合？ "
 
-#: src/main/errors.c:1470
+#: src/main/errors.c:1472
 msgid "bad handler data"
 msgstr " ハンドラーデータ（handler data）が不正です "
 
-#: src/main/errors.c:1620
+#: src/main/errors.c:1622
 msgid "error message not a string"
 msgstr " エラーメッセージが文字列ではありません "
 
-#: src/main/errors.c:1695
+#: src/main/errors.c:1697
 msgid "handler or restart stack mismatch in old restart"
 msgstr " handler stack か restart stack が，古い restart と一致しません "
 
-#: src/main/errors.c:1721 src/main/errors.c:1737
+#: src/main/errors.c:1723 src/main/errors.c:1739
 msgid "bad error message"
 msgstr " 不正なエラーメッセージです "
 
-#: src/main/errors.c:1779
+#: src/main/errors.c:1781
 msgid "bad restart"
 msgstr " 不正な再起動です "
 
-#: src/main/errors.c:1811
+#: src/main/errors.c:1813
 msgid "restart not on stack"
 msgstr " スタックからではない再実行です "
 
-#: src/main/errors.c:1828
+#: src/main/errors.c:1830
 msgid "not in a try context"
 msgstr " トライ (try) 文脈ではありません "
 
-#: src/main/errors.c:1841
+#: src/main/errors.c:1843
 msgid "error message must be a character string"
 msgstr " エラーメッセージは文字列であるに違いありません "
 

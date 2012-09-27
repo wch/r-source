@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:52\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-03-05 22:07+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -424,9 +424,6 @@ msgstr "Die formalen Argumente unterscheiden sich (in den Standardwerten?)"
 
 msgid "Formal arguments differ: (%s), (%s)"
 msgstr "Die formalen Argumente unterscheiden sich: (%s), (%s)"
-
-msgid ","
-msgstr ","
 
 msgid "Value classes differ: %s, %s"
 msgstr "Werteklassen unterscheiden sich: %s, %s"
@@ -938,9 +935,6 @@ msgstr ""
 
 msgid "expanding the signature to include omitted arguments in definition: %s"
 msgstr "erweitere Signatur um ausgelassene Argumente in Definition: %s"
-
-msgid "= \"missing\""
-msgstr "= \"missing\""
 
 msgid ""
 "methods can add arguments to the generic %s only if '...' is an argument to "
@@ -1521,6 +1515,9 @@ msgstr "\", es ist aber keine Generische: i="
 
 msgid ", funs ="
 msgstr ", funs ="
+
+msgid ","
+msgstr ","
 
 msgid "; gnames ="
 msgstr ": gnames ="
@@ -2213,6 +2210,9 @@ msgstr[0] ""
 msgstr[1] ""
 "keine Definiton der Klasse %s an der angegebenen Position, %s, Definitinen "
 "bei: %s"
+
+#~ msgid "= \"missing\""
+#~ msgstr "= \"missing\""
 
 #~ msgid "found"
 #~ msgstr "gefunden"

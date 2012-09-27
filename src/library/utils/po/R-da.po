@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:43\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -208,9 +208,6 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "help(\"citation\")"
-msgstr ""
-
 #, fuzzy
 msgid "m < 0"
 msgstr "m < 0"
@@ -277,9 +274,6 @@ msgid "Browsing in the environment with call:"
 msgstr ""
 
 msgid "'dump' is not an object of class %s"
-msgstr ""
-
-msgid "dump.frames"
 msgstr ""
 
 msgid "Message:"
@@ -382,9 +376,6 @@ msgid "No documentation for %s in specified packages and libraries:"
 msgstr ""
 
 msgid "you could try %s"
-msgstr ""
-
-msgid "??"
 msgstr ""
 
 msgid ""

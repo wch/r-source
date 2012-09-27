@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-01-07 21:49+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,18 +43,11 @@ msgstr "ukendt klyngetype"
 msgid "socket cluster with %d nodes on hosts %s"
 msgstr "sokkelklynge med %d-noder på værter %s"
 
-#, fuzzy
-msgid ","
-msgstr ","
-
 msgid "socket cluster with %d nodes on host %s"
 msgstr "sokkelklynge med %d noder på vært %s"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "knude for en sokkelklynge på vært %s med pid %d"
-
-msgid "host"
-msgstr "vært"
 
 msgid "'nnodes' must be >= 1"
 msgstr "»nnodes« skal være >= 1"
@@ -112,3 +105,10 @@ msgstr[0] ""
 msgstr[1] ""
 "planlagte kerner %s mødte fejl i brugerkode, alle værdier for jobbet vil "
 "blive påvirket"
+
+#, fuzzy
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "host"
+#~ msgstr "vært"

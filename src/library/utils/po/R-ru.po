@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:43\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-03-15 12:09-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -215,9 +215,6 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "help(\"citation\")"
-msgstr ""
-
 msgid "m < 0"
 msgstr "m < 0"
 
@@ -284,9 +281,6 @@ msgstr "Просмотр окружения с вызовом:"
 #, fuzzy
 msgid "'dump' is not an object of class %s"
 msgstr "'dump' не является объектом класса 'dump.frames'"
-
-msgid "dump.frames"
-msgstr ""
 
 msgid "Message:"
 msgstr "Сообщение:"
@@ -395,9 +389,6 @@ msgstr "В указанных пакетах и библиотеках нет документации для %s:"
 
 msgid "you could try %s"
 msgstr "можете попробовать %s"
-
-msgid "??"
-msgstr "??"
 
 msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
@@ -1324,6 +1315,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "??"
+#~ msgstr "??"
 
 #~ msgid "call"
 #~ msgstr "вызов"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:24+0100\n"
+"POT-Creation-Date: 2012-09-27 11:21+0100\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -202,7 +202,7 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/main/envir.c:1899 src/main/envir.c:2116 src/main/envir.c:2237
 #: src/main/envir.c:2496 src/main/envir.c:2703 src/main/envir.c:2717
 #: src/main/envir.c:2724 src/main/envir.c:2740 src/main/envir.c:3303
-#: src/main/errors.c:1025 src/main/eval.c:269 src/main/eval.c:2034
+#: src/main/errors.c:1026 src/main/eval.c:269 src/main/eval.c:2034
 #: src/main/eval.c:2063 src/main/eval.c:2067 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
@@ -269,9 +269,9 @@ msgstr "versión de Windows no soportada"
 #: src/gnuwin32/extra.c:264 src/main/character.c:593 src/main/colors.c:83
 #: src/main/connections.c:3291 src/main/context.c:640 src/main/context.c:659
 #: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
-#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:957
-#: src/main/errors.c:1058 src/main/errors.c:1083 src/main/errors.c:1088
-#: src/main/errors.c:1360 src/main/seq.c:188 src/main/seq.c:342
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:958
+#: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
+#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
 #: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
 #: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
 #: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
@@ -1517,15 +1517,15 @@ msgstr "argumento 'mode' no válido"
 msgid "applies only to lists and vectors"
 msgstr "se aplica solamente a listas y vectores"
 
-#: src/main/coerce.c:77 src/main/errors.c:1195
+#: src/main/coerce.c:77 src/main/errors.c:1197
 msgid "NAs introduced by coercion"
 msgstr "NAs introducidos por coerción"
 
-#: src/main/coerce.c:79 src/main/errors.c:1196
+#: src/main/coerce.c:79 src/main/errors.c:1198
 msgid "inaccurate integer conversion in coercion"
 msgstr "conversión entera imprecisa en la coerción"
 
-#: src/main/coerce.c:81 src/main/errors.c:1197
+#: src/main/coerce.c:81 src/main/errors.c:1199
 msgid "imaginary parts discarded in coercion"
 msgstr "partes imaginarias descartadas en la coerción"
 
@@ -1697,7 +1697,7 @@ msgstr "cambio no valido en el contenido de un factor"
 msgid "bad hsv to rgb color conversion"
 msgstr "conversión de color hsv a rgb imperfecta"
 
-#: src/main/colors.c:959 src/main/errors.c:1181 src/main/logic.c:171
+#: src/main/colors.c:959 src/main/errors.c:1183 src/main/logic.c:171
 msgid "invalid argument type"
 msgstr "argumento de tipo inválido"
 
@@ -3280,7 +3280,7 @@ msgstr ""
 msgid "Error: "
 msgstr "Error: "
 
-#: src/main/errors.c:687 src/main/errors.c:1312
+#: src/main/errors.c:687 src/main/errors.c:1314
 msgid "In addition: "
 msgstr "Además: "
 
@@ -3292,90 +3292,90 @@ msgstr "opción inválida \"error\"\n"
 msgid "Execution halted\n"
 msgstr "Ejecución interrumpida\n"
 
-#: src/main/errors.c:1027
+#: src/main/errors.c:1028
 msgid "'msg1' must be a character string"
 msgstr "'msg1' debe ser un string de caracteres"
 
-#: src/main/errors.c:1029
+#: src/main/errors.c:1030
 msgid "'msg2' must be a character string"
 msgstr "'msg2' debe ser un string de caracteres"
 
-#: src/main/errors.c:1124
+#: src/main/errors.c:1126
 msgid " [invalid string in stop(.)]"
 msgstr " [string inválido en stop(.)]"
 
-#: src/main/errors.c:1150
+#: src/main/errors.c:1152
 msgid " [invalid string in warning(.)]"
 msgstr " [string inválido en warning(.)]"
 
-#: src/main/errors.c:1165
+#: src/main/errors.c:1167
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "número de argumentos incorrectos para \"%s\""
 
-#: src/main/errors.c:1171 src/main/errors.c:1186
+#: src/main/errors.c:1173 src/main/errors.c:1188
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "recurso no implementado en %s"
 
-#: src/main/errors.c:1180
+#: src/main/errors.c:1182
 msgid "invalid number of arguments"
 msgstr "número inválido de argumentos"
 
-#: src/main/errors.c:1183
+#: src/main/errors.c:1185
 msgid "time-series/vector length mismatch"
 msgstr "longitud de la serie-temporal/vector incompatible"
 
-#: src/main/errors.c:1184
+#: src/main/errors.c:1186
 msgid "incompatible arguments"
 msgstr "argumentos incompatibles"
 
-#: src/main/errors.c:1187
+#: src/main/errors.c:1189
 msgid "unknown error (report this!)"
 msgstr "error desconocido (reporte esto!)"
 
-#: src/main/errors.c:1199
+#: src/main/errors.c:1201
 msgid "unknown warning (report this!)"
 msgstr "aviso desconocido (reporte esto!)"
 
-#: src/main/errors.c:1277
+#: src/main/errors.c:1279
 msgid "No function to return from, jumping to top level"
 msgstr "Ninguna función desde donde retornar, saltando al nivel superior"
 
-#: src/main/errors.c:1293
+#: src/main/errors.c:1295
 msgid "top level inconsistency?"
 msgstr "=BFnivel superior inconsistente?"
 
-#: src/main/errors.c:1470
+#: src/main/errors.c:1472
 msgid "bad handler data"
 msgstr "manipulador de datos defectuosos"
 
-#: src/main/errors.c:1620
+#: src/main/errors.c:1622
 msgid "error message not a string"
 msgstr "el mensaje de error no es un string"
 
-#: src/main/errors.c:1695
+#: src/main/errors.c:1697
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "manipulador o 'stack' de reinicio incompatible durante el reinicio antiguo"
 
-#: src/main/errors.c:1721 src/main/errors.c:1737
+#: src/main/errors.c:1723 src/main/errors.c:1739
 msgid "bad error message"
 msgstr "mensaje de error inválido"
 
-#: src/main/errors.c:1779
+#: src/main/errors.c:1781
 msgid "bad restart"
 msgstr "reinicio defectuoso"
 
-#: src/main/errors.c:1811
+#: src/main/errors.c:1813
 msgid "restart not on stack"
 msgstr "reinicio no está en el 'stack'"
 
-#: src/main/errors.c:1828
+#: src/main/errors.c:1830
 msgid "not in a try context"
 msgstr "no en el contexto 'try'"
 
-#: src/main/errors.c:1841
+#: src/main/errors.c:1843
 msgid "error message must be a character string"
 msgstr "\t\"mensaje de error debe ser una cadena de caracteres"
 

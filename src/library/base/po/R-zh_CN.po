@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:24\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -896,9 +896,6 @@ msgid ""
 "Further information is available in the following vignettes in directory %s:"
 msgstr "可以在目录%s中的小文品内找到更多的信息"
 
-msgid "doc"
-msgstr "文件"
-
 msgid "Description:"
 msgstr "描述："
 
@@ -1751,6 +1748,9 @@ msgstr[0] "用T代替TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "doc"
+#~ msgstr "文件"
 
 #~ msgid "'by' must specify valid column(s)"
 #~ msgstr "'by'所指定的那些列有错"

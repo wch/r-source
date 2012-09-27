@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-03-06 09:20+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <r-core@r-project.org>\n"
@@ -48,17 +48,11 @@ msgstr "unbekannter Clustertyp"
 msgid "socket cluster with %d nodes on hosts %s"
 msgstr "Socketcluster mit %d Knoten auf den Systemen %s"
 
-msgid ","
-msgstr ","
-
 msgid "socket cluster with %d nodes on host %s"
 msgstr "Socketcluster mit %d Knoten auf System %s"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "Knoten des Socketclusters auf System %s mit PID %d"
-
-msgid "host"
-msgstr "System"
 
 msgid "'nnodes' must be >= 1"
 msgstr "'nnodes' muss >= 1 sein"
@@ -117,3 +111,9 @@ msgstr[0] ""
 msgstr[1] ""
 "eingeplante Kerne %s berichten Fehler in Benutzerkode, alle Werte der Jobs "
 "werden betroffen sein"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "host"
+#~ msgstr "System"

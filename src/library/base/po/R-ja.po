@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:24\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -915,9 +915,6 @@ msgid ""
 "Further information is available in the following vignettes in directory %s:"
 msgstr " これ以上の情報はディレクトリ '%s' にあるビニエット中にあります： "
 
-msgid "doc"
-msgstr " ドキュメント "
-
 msgid "Description:"
 msgstr " 記述： "
 
@@ -1804,6 +1801,9 @@ msgstr[0] " TRUE の代わりに T が使われました "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "doc"
+#~ msgstr " ドキュメント "
 
 #~ msgid "'by' must specify valid column(s)"
 #~ msgstr " 'by' は有効な列を指定しなければなりません "

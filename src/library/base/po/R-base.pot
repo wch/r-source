@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:24\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -825,9 +825,6 @@ msgid "package %s found more than once,\nusing the one found in %s"
 msgstr ""
 
 msgid "Further information is available in the following vignettes in directory %s:"
-msgstr ""
-
-msgid "doc"
 msgstr ""
 
 msgid "Description:"

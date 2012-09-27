@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:52\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -426,9 +426,6 @@ msgstr ""
 
 msgid "Formal arguments differ: (%s), (%s)"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "Value classes differ: %s, %s"
 msgstr ""
@@ -951,9 +948,6 @@ msgstr "메소드 정의에서 생략된 형식상의 인수는 기호(%s)에 �
 
 msgid "expanding the signature to include omitted arguments in definition: %s"
 msgstr "포함한 기호를 확대하는 것은 명확함으로 인수를 생략했습니다: %s"
-
-msgid "= \"missing\""
-msgstr "=\\\"이상하다\""
 
 #, fuzzy
 msgid ""
@@ -1537,6 +1531,9 @@ msgstr "'%s'는 일반적인 함수(또는 여기서 보이지 않습니다)가 
 
 msgid ", funs ="
 msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "; gnames ="
 msgstr ""
@@ -2138,6 +2135,9 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
+
+#~ msgid "= \"missing\""
+#~ msgstr "=\\\"이상하다\""
 
 #, fuzzy
 #~ msgid "Invalid object in methods table (\""

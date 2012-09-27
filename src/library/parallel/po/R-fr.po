@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 11:13\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-03-06 21:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -50,17 +50,11 @@ msgstr "groupe de processus de type inconnu"
 msgid "socket cluster with %d nodes on hosts %s"
 msgstr "groupe de processus socket avec %d noeuds sur les hôtes %s"
 
-msgid ","
-msgstr ","
-
 msgid "socket cluster with %d nodes on host %s"
 msgstr "groupe de processus socket avec %d noeuds sur l'hôte %s"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "noeud d'un groupe de processus socket sur l'hôte %s avec le pid %d"
-
-msgid "host"
-msgstr "hôte"
 
 msgid "'nnodes' must be >= 1"
 msgstr "'nnodes' doit être >= 1"
@@ -122,3 +116,9 @@ msgstr[0] ""
 msgstr[1] ""
 "les coeurs programmés %s ont rencontré des erreurs dans le code utilisateur, "
 "toutes les valeurs pour ces tâches seront affectées"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "host"
+#~ msgstr "hôte"

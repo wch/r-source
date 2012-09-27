@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:25\n"
+"POT-Creation-Date: 2012-09-27 12:20\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -49,13 +49,16 @@ msgstr " ディレクトリ '%s' は R コードを含んでいません "
 msgid "directory '%s' does not contain Rd objects"
 msgstr " ディレクトリ '%s' は Rd オブジェクトを含んでいません "
 
+#, fuzzy
 msgid ""
-"Functions/methods with usage in documentation object '%s' but not in code:"
+"Functions or methods with usage in documentation object '%s' but not in code:"
 msgstr ""
 " ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはない関数もしく"
 "はメソッド: "
 
-msgid "Data sets with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid ""
+"Data set or sets with usage in documentation object '%s' but not in code:"
 msgstr ""
 " ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはないデータセッ"
 "ト: "
@@ -93,20 +96,11 @@ msgstr " S4 クラス codoc はドキュメントオブジェクト '%s' とマ�
 msgid "Slots for class '%s'"
 msgstr " クラス '%s' のためのスロット "
 
-msgid "name"
-msgstr " 名前 "
-
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr " データ codoc はドキュメントオブジェクト '%s' とマッチしません: "
 
 msgid "Variables in data frame '%s'"
 msgstr " データ・フレーム '%s' 中の変数 "
-
-msgid "code"
-msgstr " コード "
-
-msgid "docs"
-msgstr " ドキュメント "
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr " ドキュメントオブジェクト '%s' 中にドキュメントの無い引数 "
@@ -136,12 +130,6 @@ msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr ""
 " ドキュメンテーション・オブジェクト '%s' 中にフルネームで示されたS3メソッ"
 "ド： "
-
-msgid "unable to create"
-msgstr " 生成出来ません "
-
-msgid "unable to write code files"
-msgstr " コードファイルを書き込めません "
 
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr " 'package', 'dir' もしくは 'file' を指定しなければなりません "
@@ -186,23 +174,8 @@ msgstr ""
 " ビニエット依存性(\\VignetteDepends{} 項目)は　DESCRIPTION の Depends/"
 "Suggests/Imports 項目に含まれなければなりません "
 
-#, fuzzy
-msgid "\\VignetteDepends{}"
-msgstr " ビニエット: "
-
 msgid "Malformed package name"
 msgstr " 奇矯なパッケージ名です "
-
-msgid "Invalid package name."
-msgstr " 不正なパッケージ名です "
-
-msgid "This is the name of a base package."
-msgstr " これはbaseパッケージの名前です "
-
-msgid "This name was used for a base package and is remapped by library()."
-msgstr ""
-" この名前は既にbaseパッケージで使われていますので，library()により再配置され"
-"ました． "
 
 msgid "Unknown encoding"
 msgstr " 未知のエンコードです "
@@ -310,15 +283,16 @@ msgstr " 不正なライセンスファイルのポインタ: %s "
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable フラグ: "
 
-msgid "package must be loaded"
-msgstr " パッケージがロードされなければなりません "
-
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
 msgstr ""
 " パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないので xrefs"
 "をチェックできません "
+
+#, fuzzy
+msgid "Missing link or links in documentation object '%s':"
+msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
 
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
@@ -336,9 +310,6 @@ msgstr " ファイル '%s'： "
 msgid "%s has wrong argument list %s"
 msgstr " %sは誤った引数リスト%sを持っています "
 
-msgid ","
-msgstr " , "
-
 msgid "%s calls:"
 msgstr " %sの呼び出し: "
 
@@ -349,12 +320,6 @@ msgstr ""
 " パッケージのスターツアップ関数は%sと%sで始まる名前を持つ２つの引数が必要で"
 "す。 "
 
-msgid "lib"
-msgstr " lib "
-
-msgid "pkg"
-msgstr " pkg "
-
 msgid "Package startup functions should not change the search path."
 msgstr " パッケージのスターツアップ関数はサーチパスを変更できません。 "
 
@@ -363,26 +328,19 @@ msgstr ""
 " パッケージのスターツアップ関数は%sを使ってメッセージを生成する必要がありま"
 "す。 "
 
-msgid "packageStartupMessage"
-msgstr " packageStartupMessage "
-
 #, fuzzy
 msgid "Package startup functions should not call %s."
 msgstr " パッケージのスターツアップ関数はサーチパスを変更できません。 "
 
 #, fuzzy
-msgid "installed.packages"
-msgstr " 不正なパッケージです "
-
-#, fuzzy
 msgid "See section %s in '%s'."
 msgstr " ?.onAttachのセクション%sを見てください。 "
 
-msgid "Good practice"
-msgstr " 良い方法です。 "
+msgid "unable to create"
+msgstr " 生成出来ません "
 
-msgid "?.onAttach"
-msgstr ""
+msgid "unable to write code files"
+msgstr " コードファイルを書き込めません "
 
 msgid "package 'methods' is used but not declared"
 msgstr " パッケージ \"methods\" が使われていますが、宣言されていません "
@@ -440,10 +398,6 @@ msgid "missing/empty %s field in '%s'"
 msgstr ""
 " '%s' 中に欠如もしくは空の  \n"
 " ame 欄があります "
-
-#, fuzzy
-msgid "\\name"
-msgstr " 名前 "
 
 #, fuzzy
 msgid "Rd files must have a non-empty %s."
@@ -516,7 +470,8 @@ msgstr " '%s' に対する不正な値 : %s "
 msgid "Only one Rd section per %s is supported."
 msgstr " \\SexprはRdセクションを1つしか持てません。 "
 
-msgid "unable to create temp directory"
+#, fuzzy
+msgid "unable to create temp directory %s"
 msgstr " 仮ディレクトリを生成することが出来ません "
 
 msgid ""
@@ -573,8 +528,8 @@ msgstr " INDEX を '%s' にコピーすることが出来ません "
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を生成することが出来ません "
 
-msgid "processing"
-msgstr " 処理中 "
+msgid "processing %s"
+msgstr " %s を処理中 "
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
@@ -614,11 +569,13 @@ msgstr " 既定の JSS スタイルは変更できないかもしれません "
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr " --compact-vignettes に対する不正な値です、 \"qpdf\" であるとします "
 
-msgid "Error: cannot rename directory to"
+#, fuzzy
+msgid "Error: cannot rename directory to %s"
 msgstr " エラー：ディレクトリの名前を以下に変更できません "
 
-msgid "cannot link from"
-msgstr ""
+#, fuzzy
+msgid "cannot link from %s"
+msgstr " ディレクトリ '%s' を開くことが出来ません "
 
 msgid "-l option without value"
 msgstr " 値のない -l オプション "
@@ -639,21 +596,11 @@ msgstr " エラー：パッケージが指定されていません "
 msgid "ERROR: cannot create check dir %s"
 msgstr " エラー：チェックディレクトリ '%s' を生成することが出来ません "
 
-#, fuzzy
-msgid "package directory"
-msgstr " パッケージ dir "
-
-msgid "does not exist"
-msgstr " は存在しません "
-
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
 
 msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "
-
-msgid "Unrecognized search field:"
-msgstr " 認識できない検索フィールド: "
 
 msgid "No results found"
 msgstr " いかなる結果も見つかりません "
@@ -669,9 +616,6 @@ msgstr " ヘルプページ: "
 
 msgid "No help found for topic %s in any package."
 msgstr " トピック %s に対するヘルプはどんなパッケージにも見つかりません。 "
-
-msgid "Help on topic '%s' was found in the following packages:"
-msgstr " '%s' に関するヘルプが以下のパッケージに見つかりました: "
 
 msgid "No package index found for package %s"
 msgstr " パッケージ %s に対するパッケージインデックスがありません "
@@ -693,18 +637,6 @@ msgid ""
 msgstr ""
 " パッケージのヘルプファイル, %s, %s, %s 以下のファイル, %s だけが閲覧できま"
 "す "
-
-msgid "NEWS"
-msgstr "NEWS "
-
-msgid "DESCRIPTION"
-msgstr "DESCRIPTION "
-
-msgid "doc/"
-msgstr " doc/ "
-
-msgid "demo/"
-msgstr " demo/ "
 
 msgid "unsupported URL %s"
 msgstr " 未サポートのURL %s "
@@ -736,23 +668,11 @@ msgstr " httpdサーバーを起動することができませんでした "
 msgid "cannot read index information in file '%s'"
 msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
 
-msgid "ERROR:"
-msgstr " エラー: "
-
 msgid "error reading file '%s'"
 msgstr " ファイル '%s' の読み込みにエラーが発生 "
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr " バンドルされているようですが、現在は用いられていません "
-
-msgid "running 'zip' failed"
-msgstr " 'zip' の実行に失敗しました "
-
-msgid "packaged installation of"
-msgstr " 以下のパッケージ化されたインストール "
-
-msgid "as"
-msgstr " として "
 
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
@@ -760,12 +680,6 @@ msgid ""
 msgstr ""
 " 'cleanup' は存在しますが実行できません -- 参照 'R Installation and "
 "Adminstration Manual' "
-
-msgid "installing via 'install.libs.R' to"
-msgstr " 'install.libs.R' を用いて、以下にインストール中: "
-
-msgid "installing to"
-msgstr " 以下にインストール中: "
 
 #, fuzzy
 msgid "generating debug symbols (%s)"
@@ -781,10 +695,6 @@ msgstr ""
 "R の include ディレクトリが空です -- 恐らく R-devel.rpm か類似物をインストー"
 "ルする必要があります "
 
-#, fuzzy
-msgid "running 'src/Makefile.win' ..."
-msgstr " src/Makefile.win を実行中 "
-
 msgid "no source files found"
 msgstr " ソースファイルが見つかりません "
 
@@ -797,9 +707,6 @@ msgstr " 一時ディレクトリを生成することが出来ません "
 #, fuzzy
 msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr " エラー: --merge-multiarch は単一の tarball だけに適用可能です "
-
-msgid "only one architecture so ignoring '--merge-multiarch'"
-msgstr ""
 
 msgid "invalid package"
 msgstr " 不正なパッケージです "
@@ -814,27 +721,8 @@ msgstr " エラー：ディレクトリの変更が出来ません "
 msgid "ERROR: no permission to install to directory"
 msgstr " エラー：ディレクトリへのインストール許可がありません "
 
-msgid "ERROR: failed to lock directory"
-msgstr " エラー：ディレクトリをロックできません "
-
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-" 変更中 \n"
-" 除去試みています "
-
-msgid "ERROR: failed to create lock directory"
-msgstr " エラー：ロックディレクトリを生成することが出来ません "
-
 msgid "building a fake installation is disallowed"
 msgstr " まがい物(fake)インストールの構築は許されていません "
-
-msgid "finding HTML links ..."
-msgstr "HTML リンクを検索... "
-
-msgid "finding level-2 HTML links ..."
-msgstr " level-2 HTML リンクを検索... "
 
 msgid "there is no package called '%s'"
 msgstr " '%s' という名前のパッケージが見当たりません "
@@ -928,36 +816,6 @@ msgstr ""
 msgid "Processing packages:"
 msgstr " パッケージを処理中： "
 
-msgid "Internal error, no tag"
-msgstr " 内部エラー、タグがありません "
-
-msgid "Argument for"
-msgstr " 以下に対する引数 "
-
-msgid "not found."
-msgstr " が見つかりません "
-
-msgid "Internal error:  NULL tag"
-msgstr " 内部エラー： NULL タグ "
-
-msgid "internal error"
-msgstr " 内部エラー "
-
-msgid "Inconsistent arg count for"
-msgstr " 以下に対する不整合な引数の数 "
-
-msgid "Entry for"
-msgstr " 以下に対する項目　 "
-
-msgid "="
-msgstr " = "
-
-msgid "already defined to be"
-msgstr " は既に以下のように定義されています "
-
-msgid "found encoding"
-msgstr " 見つけられたエンコーディング "
-
 msgid "%s must be a character string or a file/raw connection"
 msgstr ""
 " %s は文字列ベクトルかファイル、もしくはコネクションでなければなりません "
@@ -1026,9 +884,6 @@ msgstr " ストリームデータを読めません "
 msgid "invalid index in object stream lookup"
 msgstr " オブジェクトストリームの検索で不正なインデックスがあります "
 
-msgid "processing %s"
-msgstr " %s を処理中 "
-
 msgid "expanding %s"
 msgstr " %s を展開中 "
 
@@ -1063,38 +918,18 @@ msgstr " 'file' は文字列ベクトルかコネクションでなければな�
 msgid "unimplemented encoding"
 msgstr " 実装されていないエンコード "
 
-msgid "file"
-msgstr " ファイル "
-
 msgid "Found %s, possibly from %s"
 msgstr " %s が見つかりました（おそらく %s から） "
-
-msgid "%s (%s)"
-msgstr " %s (%s) "
-
-msgid "ssname"
-msgstr " ssname "
-
-msgid "language"
-msgstr " language "
-
-msgid "cannot be opened"
-msgstr " オープンできません "
 
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
 
-msgid "Testing examples for package"
+#, fuzzy
+msgid "Testing examples for package %s"
 msgstr " パッケージに対する例をテストしています "
 
-msgid "comparing"
-msgstr " 比較中 "
-
-msgid "to"
-msgstr " へ "
-
-msgid "..."
-msgstr " ... "
+msgid "comparing %s to %s ..."
+msgstr ""
 
 msgid "OK"
 msgstr "OK "
@@ -1105,77 +940,29 @@ msgstr " 結果が参照結果と異なります "
 msgid "no examples found for package %s"
 msgstr " パッケージ %s に対する例文が見つかりません "
 
-msgid "Running specific tests for package"
+#, fuzzy
+msgid "Running specific tests for package %s"
 msgstr " 指定されたテストをパッケージに対して実行中 "
 
-msgid "Running"
+#, fuzzy
+msgid "Running %s"
 msgstr " 実行中 "
 
-msgid "Running vignettes for package"
+#, fuzzy
+msgid "Running vignettes for package %s"
 msgstr " パッケージのビニエットを実行中 "
 
-msgid "Comparing"
-msgstr " 比較中 "
-
-msgid "creation of"
-msgstr " 以下の作成 "
-
-msgid "failed"
-msgstr " 失敗 "
+msgid "Comparing %s to %s ..."
+msgstr ""
 
 msgid "no parsed files found"
 msgstr " パースファイルが見つかりません "
 
-msgid "creating"
-msgstr " 作成中 "
-
-msgid "running code in"
-msgstr " 以下の中にあるコードを実行中 "
-
 msgid "FAILED"
 msgstr " 失敗 "
 
-msgid "running strict specific tests"
-msgstr " 厳格な指定テストを実行中 "
-
-msgid "running sloppy specific tests"
-msgstr " いい加減(sloppy)な指定テストを実行中 "
-
-msgid "running regression tests"
-msgstr " 回帰テストを実行中 "
-
-msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
-msgstr " 'reg-plot.ps'  と 'reg-plot.ps.save' を比較中... "
-
-msgid "running tests of plotting Latin-1"
-msgstr " Latin-1 のプロットテストを実行中 "
-
-msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
-msgstr ""
-" もし Latin もしくは UTF-8 ロケールを使用していなければ、失敗かある種の差異が"
-"予想されます "
-
-msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
-msgstr " 'reg-plot-latin1.ps'  と 'reg-plot-latin1.ps.save' を比較中... "
-
-msgid "running tests of consistency of as/is.*"
-msgstr " as/is.* の一貫性テストの実行中 "
-
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr " ランダムな偏差の生成テストを実行中 -- 失敗する事もあります "
-
-msgid "running tests of primitives"
-msgstr " プリミティブのテストの実行中 "
-
-msgid "running regexp regression tests"
-msgstr " regexp 回帰テストの実行中 "
-
-msgid "running tests to possibly trigger segfaults"
-msgstr " 可能性のある trigger segfaults のテストを実行中 "
-
-#, fuzzy
-msgid "not installing"
-msgstr " 以下にインストール中: "
 
 msgid "R CMD build failed"
 msgstr ""
@@ -1241,32 +1028,6 @@ msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
 
 #, fuzzy
-msgid "Foreign function call without 'PACKAGE' argument:"
-msgid_plural "Foreign function calls without 'PACKAGE' argument:"
-msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
-
-#, fuzzy
-msgid "Foreign function call with empty 'PACKAGE' argument:"
-msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
-msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
-
-#, fuzzy
-msgid "Foreign function call with 'PACKAGE' argument in a base package:"
-msgid_plural ""
-"Foreign function calls with 'PACKAGE' argument in a base package:"
-msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
-
-#, fuzzy
-msgid "Foreign function call with 'PACKAGE' argument in a different package:"
-msgid_plural ""
-"Foreign function calls with 'PACKAGE' argument in a different package:"
-msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
-
-msgid "Undeclared package in foreign function calls"
-msgid_plural "Undeclared packages in foreign function calls"
-msgstr[0] ""
-
-#, fuzzy
 msgid "Obsolete package %s in Rd xrefs"
 msgid_plural "Obsolete packages %s in Rd xrefs"
 msgstr[0] " もう使われていない %s が Rd xrefs　中にあります "
@@ -1281,11 +1042,6 @@ msgid "Unknown package %s in Rd xrefs"
 msgid_plural "Unknown packages %s in Rd xrefs"
 msgstr[0] " Rd xrefs 中に未知のパッケージがあります "
 
-#, fuzzy
-msgid "Missing link in documentation object %s:"
-msgid_plural "Missing links in documentation object %s:"
-msgstr[0] " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
-
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] " 注意: %d 個の Latin-1 コードの文字が見つかりました "
@@ -1298,15 +1054,6 @@ msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
 msgstr[0] " 注意: %d 個の bytes コードの文字が見つかりました "
 
-#, fuzzy
-msgid "Warning: found non-ASCII string"
-msgid_plural "Warning: found non-ASCII strings"
-msgstr[0] " 警告: 未知のオプションです "
-
-msgid "Warning: large data file saved inefficiently:"
-msgid_plural "Warning: large data files saved inefficiently:"
-msgstr[0] ""
-
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"
 msgstr[0] " ファイル '%s' 中に警告: "
@@ -1315,30 +1062,33 @@ msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
 msgstr[0] " 以下の関数中に大局的かもしれない 'T' もしくは 'F' がありました: "
 
-msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+#, fuzzy
+msgid ""
+"Found possibly global 'T' or 'F' in the examples of the following Rd file:"
 msgid_plural ""
-"Found possibly global 'T' or 'F' in the following Rd example files:"
+"Found possibly global 'T' or 'F' in the examepls of the following Rd files:"
 msgstr[0] ""
 " 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありました: "
 
-msgid "Found .Internal call in the following function:"
+#, fuzzy
+msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
 
 #, fuzzy
-msgid "Found .Internal call in methods for the following S4 generic:"
+msgid "Found a.Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
 
 #, fuzzy
-msgid "Found .Internal call in methods for the following reference class:"
+msgid "Found a .Internal call in methods for the following reference class:"
 msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
 
 #, fuzzy
-msgid "Generics without method in %s: %s"
-msgid_plural "Generics without methods in %s: %s"
+msgid "Generic without any methods in %s: %s"
+msgid_plural "Generics without any methods in %s: %s"
 msgstr[0] " メソッドを伴わない Generics があります "
 
 #, fuzzy
@@ -1357,65 +1107,271 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] " '%s' ('%s'行')を再エンコード出来ません "
 
-msgid "Found the following file with a non-portable file name:\n"
-msgid_plural "Found the following files with non-portable file names:\n"
-msgstr[0] ""
-
-msgid "Found the following directory with the name of a check directory:\n"
-msgid_plural ""
-"Found the following directories with names of check directories:\n"
-msgstr[0] ""
-
-msgid "Found the following directory with the name of a Rd2pdf directory:\n"
-msgid_plural ""
-"Found the following directories with names of Rd2pdf directories:\n"
-msgstr[0] ""
-
-msgid ""
-"Found the following directory with the name of a version control directory:\n"
-msgid_plural ""
-"Found the following directories with names of version control directories:\n"
-msgstr[0] ""
-
-msgid "Found the following CITATION file in a non-standard place:\n"
-msgid_plural "Found the following CITATION files in a non-standard place:\n"
-msgstr[0] ""
-
-msgid "Found the following file with non-ASCII characters:\n"
-msgid_plural "Found the following files with non-ASCII characters:\n"
-msgstr[0] ""
-
-msgid "Package vignette( without corresponding PDF:\n"
-msgid_plural "Package vignettes without corresponding PDFs:\n"
-msgstr[0] ""
-
-msgid "  Non-ASCII package vignette without specified encoding:\n"
-msgid_plural "  Non-ASCII package vignettes without specified encoding:\n"
-msgstr[0] ""
-
-msgid "  Unused file in 'inst/doc' which is pointless or misleading"
-msgid_plural "  Unused files in 'inst/doc' which are pointless or misleading"
-msgstr[0] ""
-
-msgid "  Package vignette which is not in its specified encoding:\n"
-msgid_plural "  Package vignettes which are not in their specified encoding:\n"
-msgstr[0] ""
-
-#, fuzzy
-msgid "Found the following executable file:"
-msgid_plural "Found the following executable files:"
-msgstr[0] ""
-" 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありました: "
-
-msgid ""
-"Found the following directory with a name of a multi-arch build directory:\n"
-msgid_plural ""
-"Found the following directories with names of multi-arch build directories:\n"
-msgstr[0] ""
-
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#, fuzzy
+#~ msgid "Foreign function call without 'PACKAGE' argument:"
+#~ msgid_plural "Foreign function calls without 'PACKAGE' argument:"
+#~ msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+#~ msgid "Foreign function call with empty 'PACKAGE' argument:"
+#~ msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
+#~ msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+#~ msgid "Foreign function call with 'PACKAGE' argument in a base package:"
+#~ msgid_plural ""
+#~ "Foreign function calls with 'PACKAGE' argument in a base package:"
+#~ msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+#~ msgid ""
+#~ "Foreign function call with 'PACKAGE' argument in a different package:"
+#~ msgid_plural ""
+#~ "Foreign function calls with 'PACKAGE' argument in a different package:"
+#~ msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+#~ msgid "Warning: found non-ASCII string"
+#~ msgid_plural "Warning: found non-ASCII strings"
+#~ msgstr[0] " 警告: 未知のオプションです "
+
+#, fuzzy
+#~ msgid "Found the following executable file:"
+#~ msgid_plural "Found the following executable files:"
+#~ msgstr[0] ""
+#~ " 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありまし"
+#~ "た: "
+
+#~ msgid "name"
+#~ msgstr " 名前 "
+
+#~ msgid "code"
+#~ msgstr " コード "
+
+#~ msgid "docs"
+#~ msgstr " ドキュメント "
+
+#, fuzzy
+#~ msgid "\\VignetteDepends{}"
+#~ msgstr " ビニエット: "
+
+#~ msgid "Invalid package name."
+#~ msgstr " 不正なパッケージ名です "
+
+#~ msgid "This is the name of a base package."
+#~ msgstr " これはbaseパッケージの名前です "
+
+#~ msgid "This name was used for a base package and is remapped by library()."
+#~ msgstr ""
+#~ " この名前は既にbaseパッケージで使われていますので，library()により再配置さ"
+#~ "れました． "
+
+#~ msgid "package must be loaded"
+#~ msgstr " パッケージがロードされなければなりません "
+
+#~ msgid ","
+#~ msgstr " , "
+
+#~ msgid "lib"
+#~ msgstr " lib "
+
+#~ msgid "pkg"
+#~ msgstr " pkg "
+
+#~ msgid "packageStartupMessage"
+#~ msgstr " packageStartupMessage "
+
+#, fuzzy
+#~ msgid "installed.packages"
+#~ msgstr " 不正なパッケージです "
+
+#~ msgid "Good practice"
+#~ msgstr " 良い方法です。 "
+
+#, fuzzy
+#~ msgid "\\name"
+#~ msgstr " 名前 "
+
+#~ msgid "NEWS"
+#~ msgstr "NEWS "
+
+#~ msgid "DESCRIPTION"
+#~ msgstr "DESCRIPTION "
+
+#~ msgid "doc/"
+#~ msgstr " doc/ "
+
+#~ msgid "demo/"
+#~ msgstr " demo/ "
+
+#~ msgid "file"
+#~ msgstr " ファイル "
+
+#~ msgid "%s (%s)"
+#~ msgstr " %s (%s) "
+
+#~ msgid "ssname"
+#~ msgstr " ssname "
+
+#~ msgid "language"
+#~ msgstr " language "
+
+#~ msgid "processing"
+#~ msgstr " 処理中 "
+
+#, fuzzy
+#~ msgid "package directory"
+#~ msgstr " パッケージ dir "
+
+#~ msgid "does not exist"
+#~ msgstr " は存在しません "
+
+#~ msgid "Unrecognized search field:"
+#~ msgstr " 認識できない検索フィールド: "
+
+#~ msgid "Help on topic '%s' was found in the following packages:"
+#~ msgstr " '%s' に関するヘルプが以下のパッケージに見つかりました: "
+
+#~ msgid "ERROR:"
+#~ msgstr " エラー: "
+
+#~ msgid "running 'zip' failed"
+#~ msgstr " 'zip' の実行に失敗しました "
+
+#~ msgid "packaged installation of"
+#~ msgstr " 以下のパッケージ化されたインストール "
+
+#~ msgid "as"
+#~ msgstr " として "
+
+#~ msgid "installing via 'install.libs.R' to"
+#~ msgstr " 'install.libs.R' を用いて、以下にインストール中: "
+
+#~ msgid "installing to"
+#~ msgstr " 以下にインストール中: "
+
+#, fuzzy
+#~ msgid "running 'src/Makefile.win' ..."
+#~ msgstr " src/Makefile.win を実行中 "
+
+#~ msgid "ERROR: failed to lock directory"
+#~ msgstr " エラー：ディレクトリをロックできません "
+
+#~ msgid ""
+#~ "for modifying\n"
+#~ "Try removing"
+#~ msgstr ""
+#~ " 変更中 \n"
+#~ " 除去試みています "
+
+#~ msgid "ERROR: failed to create lock directory"
+#~ msgstr " エラー：ロックディレクトリを生成することが出来ません "
+
+#~ msgid "finding HTML links ..."
+#~ msgstr "HTML リンクを検索... "
+
+#~ msgid "finding level-2 HTML links ..."
+#~ msgstr " level-2 HTML リンクを検索... "
+
+#~ msgid "Internal error, no tag"
+#~ msgstr " 内部エラー、タグがありません "
+
+#~ msgid "Argument for"
+#~ msgstr " 以下に対する引数 "
+
+#~ msgid "not found."
+#~ msgstr " が見つかりません "
+
+#~ msgid "Internal error:  NULL tag"
+#~ msgstr " 内部エラー： NULL タグ "
+
+#~ msgid "internal error"
+#~ msgstr " 内部エラー "
+
+#~ msgid "Inconsistent arg count for"
+#~ msgstr " 以下に対する不整合な引数の数 "
+
+#~ msgid "Entry for"
+#~ msgstr " 以下に対する項目　 "
+
+#~ msgid "="
+#~ msgstr " = "
+
+#~ msgid "already defined to be"
+#~ msgstr " は既に以下のように定義されています "
+
+#~ msgid "found encoding"
+#~ msgstr " 見つけられたエンコーディング "
+
+#~ msgid "cannot be opened"
+#~ msgstr " オープンできません "
+
+#~ msgid "comparing"
+#~ msgstr " 比較中 "
+
+#~ msgid "to"
+#~ msgstr " へ "
+
+#~ msgid "..."
+#~ msgstr " ... "
+
+#~ msgid "Comparing"
+#~ msgstr " 比較中 "
+
+#~ msgid "creation of"
+#~ msgstr " 以下の作成 "
+
+#~ msgid "failed"
+#~ msgstr " 失敗 "
+
+#~ msgid "creating"
+#~ msgstr " 作成中 "
+
+#~ msgid "running code in"
+#~ msgstr " 以下の中にあるコードを実行中 "
+
+#~ msgid "running strict specific tests"
+#~ msgstr " 厳格な指定テストを実行中 "
+
+#~ msgid "running sloppy specific tests"
+#~ msgstr " いい加減(sloppy)な指定テストを実行中 "
+
+#~ msgid "running regression tests"
+#~ msgstr " 回帰テストを実行中 "
+
+#~ msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
+#~ msgstr " 'reg-plot.ps'  と 'reg-plot.ps.save' を比較中... "
+
+#~ msgid "running tests of plotting Latin-1"
+#~ msgstr " Latin-1 のプロットテストを実行中 "
+
+#~ msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
+#~ msgstr ""
+#~ " もし Latin もしくは UTF-8 ロケールを使用していなければ、失敗かある種の差"
+#~ "異が予想されます "
+
+#~ msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
+#~ msgstr " 'reg-plot-latin1.ps'  と 'reg-plot-latin1.ps.save' を比較中... "
+
+#~ msgid "running tests of consistency of as/is.*"
+#~ msgstr " as/is.* の一貫性テストの実行中 "
+
+#~ msgid "running tests of primitives"
+#~ msgstr " プリミティブのテストの実行中 "
+
+#~ msgid "running regexp regression tests"
+#~ msgstr " regexp 回帰テストの実行中 "
+
+#~ msgid "running tests to possibly trigger segfaults"
+#~ msgstr " 可能性のある trigger segfaults のテストを実行中 "
+
+#, fuzzy
+#~ msgid "not installing"
+#~ msgstr " 以下にインストール中: "
 
 #~ msgid ":"
 #~ msgstr " ： "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:52\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -460,9 +460,6 @@ msgstr "Argumentos formais diferem (no valores padrão?)"
 
 msgid "Formal arguments differ: (%s), (%s)"
 msgstr "Argumentos formais diferem: (%s), (%s)"
-
-msgid ","
-msgstr ","
 
 msgid "Value classes differ: %s, %s"
 msgstr "Valores das classes difere: %s, %s"
@@ -970,9 +967,6 @@ msgstr ""
 msgid "expanding the signature to include omitted arguments in definition: %s"
 msgstr ""
 
-msgid "= \"missing\""
-msgstr ""
-
 msgid ""
 "methods can add arguments to the generic %s only if '...' is an argument to "
 "the generic"
@@ -1463,6 +1457,9 @@ msgstr "\", mas não é        uma função genérica: i ="
 
 msgid ", funs ="
 msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "; gnames ="
 msgstr ""

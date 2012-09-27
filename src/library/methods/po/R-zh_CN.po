@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:52\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -359,9 +359,6 @@ msgstr "正式参数不相对(缺省值不一样？)"
 
 msgid "Formal arguments differ: (%s), (%s)"
 msgstr "正式参数不相对: (%s), (%s)"
-
-msgid ","
-msgstr ","
 
 msgid "Value classes differ: %s, %s"
 msgstr "值类别不相对: %s, %s"
@@ -790,9 +787,6 @@ msgstr "方法定义里所忽略的正式参数(%s)不能存在于标记"
 
 msgid "expanding the signature to include omitted arguments in definition: %s"
 msgstr "在定义里扩展标记来包括进忽略了的参数：%s"
-
-msgid "= \"missing\""
-msgstr "= \"missing\""
 
 msgid ""
 "methods can add arguments to the generic %s only if '...' is an argument to "
@@ -1292,6 +1286,9 @@ msgstr "\",但不是泛型函数：i ="
 
 msgid ", funs ="
 msgstr ", funs ="
+
+msgid ","
+msgstr ","
 
 msgid "; gnames ="
 msgstr "; gnames ="
@@ -1853,6 +1850,9 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
+
+#~ msgid "= \"missing\""
+#~ msgstr "= \"missing\""
 
 #~ msgid "found"
 #~ msgstr "找到了"

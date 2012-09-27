@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:25\n"
+"POT-Creation-Date: 2012-09-27 12:20\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -53,11 +53,14 @@ msgstr "文件目录'%s'不含R编码"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "目录'%s'没有Rd对象"
 
+#, fuzzy
 msgid ""
-"Functions/methods with usage in documentation object '%s' but not in code:"
+"Functions or methods with usage in documentation object '%s' but not in code:"
 msgstr "函数/文件的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
-msgid "Data sets with usage in documentation object '%s' but not in code:"
+#, fuzzy
+msgid ""
+"Data set or sets with usage in documentation object '%s' but not in code:"
 msgstr "数据集的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 msgid "Argument names in code not in docs:"
@@ -93,20 +96,11 @@ msgstr "使用手冊对象'%s'里的S4类别codoc配合有错误:"
 msgid "Slots for class '%s'"
 msgstr "'%s'类别的槽"
 
-msgid "name"
-msgstr "名字"
-
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr "使用手冊对象'%s'里的数据codoc配合错误:"
 
 msgid "Variables in data frame '%s'"
 msgstr "数据框'%s'里的变量"
-
-msgid "code"
-msgstr "编码"
-
-msgid "docs"
-msgstr "文件"
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr "使用手冊对象'%s'有未公开的参数"
@@ -128,12 +122,6 @@ msgstr "使用手冊对象'%s'有些\\usage不对:"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr "使用手冊对象'%s'里S3方法用全名显示出来:"
-
-msgid "unable to create"
-msgstr "无法建立"
-
-msgid "unable to write code files"
-msgstr "无法写编码文件"
 
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "你必需设定'package', 'dir'或'file'三个中的一个"
@@ -177,21 +165,8 @@ msgstr ""
 "标头从属(\\VignetteDepends{}条目)必需包含在DESCRIPTION文件里的Depends/"
 "Suggests/Imports条目中."
 
-#, fuzzy
-msgid "\\VignetteDepends{}"
-msgstr "插图："
-
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
-
-msgid "Invalid package name."
-msgstr "程辑包名不对."
-
-msgid "This is the name of a base package."
-msgstr "这是基本程辑包名."
-
-msgid "This name was used for a base package and is remapped by library()."
-msgstr "这个名字由基本程辑包所用，被library()重新对应."
 
 msgid "Unknown encoding"
 msgstr "没有这种编码"
@@ -294,13 +269,14 @@ msgstr "执照文件指示器无效：%s"
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
 
-msgid "package must be loaded"
-msgstr "必需载入程序包。"
-
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
 msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
+
+#, fuzzy
+msgid "Missing link or links in documentation object '%s':"
+msgstr "使用手冊对象'%s'缺少联结:"
 
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
@@ -316,9 +292,6 @@ msgstr "文件%s:"
 msgid "%s has wrong argument list %s"
 msgstr "%s的参数串列%s不对"
 
-msgid ","
-msgstr ","
-
 msgid "%s calls:"
 msgstr "%s调用："
 
@@ -327,38 +300,25 @@ msgid ""
 "%s and %s, respectively."
 msgstr "程序包启动函数需要有两个名字分别为%s和%s的参数"
 
-msgid "lib"
-msgstr "lib"
-
-msgid "pkg"
-msgstr "pkg"
-
 msgid "Package startup functions should not change the search path."
 msgstr "程序包启动函数不应该改变搜索路径"
 
 msgid "Package startup functions should use %s to generate messages."
 msgstr "程序包启动函数应该用%s来生成消息"
 
-msgid "packageStartupMessage"
-msgstr "packageStartupMessage"
-
 #, fuzzy
 msgid "Package startup functions should not call %s."
 msgstr "程序包启动函数不应该改变搜索路径"
 
 #, fuzzy
-msgid "installed.packages"
-msgstr "程辑包无效."
-
-#, fuzzy
 msgid "See section %s in '%s'."
 msgstr "参见?.onAttach 里的%s章节"
 
-msgid "Good practice"
-msgstr "良好实践"
+msgid "unable to create"
+msgstr "无法建立"
 
-msgid "?.onAttach"
-msgstr ""
+msgid "unable to write code files"
+msgstr "无法写编码文件"
 
 msgid "package 'methods' is used but not declared"
 msgstr "用了'methods'这个程辑包却没有被声明"
@@ -410,10 +370,6 @@ msgstr "参数'document'必需是字符串或联结"
 #, fuzzy
 msgid "missing/empty %s field in '%s'"
 msgstr "'%s'里缺少或有空白的\\name域"
-
-#, fuzzy
-msgid "\\name"
-msgstr "名字"
 
 #, fuzzy
 msgid "Rd files must have a non-empty %s."
@@ -481,7 +437,8 @@ msgstr "'%s'值无效：%s"
 msgid "Only one Rd section per %s is supported."
 msgstr "每\\Sexpr只支持一个Rd章节"
 
-msgid "unable to create temp directory"
+#, fuzzy
+msgid "unable to create temp directory %s"
 msgstr "无法建立temp目录"
 
 msgid ""
@@ -537,8 +494,8 @@ msgstr "无法拷贝索引至'%s'"
 msgid "cannot create directory '%s'"
 msgstr "无法建立目录'%s'"
 
-msgid "processing"
-msgstr "处理"
+msgid "processing %s"
+msgstr "处理%s "
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
@@ -575,11 +532,13 @@ msgstr "不能对缺省JSS式样进行修改"
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "--compact-vignettes的值不对，用\"qpdf\""
 
-msgid "Error: cannot rename directory to"
+#, fuzzy
+msgid "Error: cannot rename directory to %s"
 msgstr "错误：无法改变目录名字为"
 
-msgid "cannot link from"
-msgstr ""
+#, fuzzy
+msgid "cannot link from %s"
+msgstr "无法打开目录'%s'"
 
 msgid "-l option without value"
 msgstr "-l选项一定得有值"
@@ -599,21 +558,11 @@ msgstr "错误：没有设定程序包"
 msgid "ERROR: cannot create check dir %s"
 msgstr "错误：无法建立检查目录%s"
 
-#, fuzzy
-msgid "package directory"
-msgstr "程序包目录"
-
-msgid "does not exist"
-msgstr "不存在"
-
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
 
 msgid "No files in this directory"
 msgstr "目录里没有任何文件"
-
-msgid "Unrecognized search field:"
-msgstr "无法识别这个搜索字段："
 
 msgid "No results found"
 msgstr "找不到任何结果"
@@ -629,9 +578,6 @@ msgstr "说明页面："
 
 msgid "No help found for topic %s in any package."
 msgstr "没有在任何程序包里找到关于%s的主题"
-
-msgid "Help on topic '%s' was found in the following packages:"
-msgstr "在以下这些程序包里找到了关于'%s'主题的帮助"
 
 msgid "No package index found for package %s"
 msgstr "程序包%s里没有索引"
@@ -651,18 +597,6 @@ msgstr "程序包%s里没有任何文件"
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "能够查看的文件限制于帮助文件，%s, %s 和%s下的文件和程序包%s里的文件"
-
-msgid "NEWS"
-msgstr "NEWS"
-
-msgid "DESCRIPTION"
-msgstr "DESCRIPTION"
-
-msgid "doc/"
-msgstr "doc/"
-
-msgid "demo/"
-msgstr "demo/"
 
 msgid "unsupported URL %s"
 msgstr "不支持URL %s"
@@ -694,34 +628,16 @@ msgstr "打不开httpd服务器"
 msgid "cannot read index information in file '%s'"
 msgstr "无法从文件'%s'中读取索引信息"
 
-msgid "ERROR:"
-msgstr "错误："
-
 msgid "error reading file '%s'"
 msgstr "读取文件'%s'时出了错"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "这看起来好象是捆绑软件--已经不存在了"
 
-msgid "running 'zip' failed"
-msgstr "调用'zip'失败"
-
-msgid "packaged installation of"
-msgstr "程辑包安装"
-
-msgid "as"
-msgstr "如"
-
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Administration Manual'"
 msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理手册'"
-
-msgid "installing via 'install.libs.R' to"
-msgstr "用'install.libs.R'安装到"
-
-msgid "installing to"
-msgstr "安装至"
 
 #, fuzzy
 msgid "generating debug symbols (%s)"
@@ -734,10 +650,6 @@ msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
 msgstr "R包含目录是空的--也许你需要安装R-devel.rpm或类似的程序包"
-
-#, fuzzy
-msgid "running 'src/Makefile.win' ..."
-msgstr "调用src/Makefile.win ..."
 
 msgid "no source files found"
 msgstr "找不到源程序文件"
@@ -752,9 +664,6 @@ msgstr "无法建立临时性目录"
 msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "错误：--merge-multiarch只适用于单独压缩包"
 
-msgid "only one architecture so ignoring '--merge-multiarch'"
-msgstr ""
-
 msgid "invalid package"
 msgstr "程辑包无效."
 
@@ -768,27 +677,8 @@ msgstr "错误：无法进入目录"
 msgid "ERROR: no permission to install to directory"
 msgstr "错误：没有在这个目录里安装的许可"
 
-msgid "ERROR: failed to lock directory"
-msgstr "错误：无法锁住目录"
-
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-"为了修改\n"
-"试一下撤除"
-
-msgid "ERROR: failed to create lock directory"
-msgstr "错误：无法建锁住的目录"
-
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
-
-msgid "finding HTML links ..."
-msgstr "搜寻HTML链结…"
-
-msgid "finding level-2 HTML links ..."
-msgstr "搜寻二级HTML链结…"
 
 msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
@@ -875,36 +765,6 @@ msgstr ""
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
 
-msgid "Internal error, no tag"
-msgstr "内部错误，没有标签"
-
-msgid "Argument for"
-msgstr "参数用于"
-
-msgid "not found."
-msgstr "找不到"
-
-msgid "Internal error:  NULL tag"
-msgstr "内部错误：NULL标签"
-
-msgid "internal error"
-msgstr "内部错误"
-
-msgid "Inconsistent arg count for"
-msgstr "参数数目有矛盾"
-
-msgid "Entry for"
-msgstr "项目为"
-
-msgid "="
-msgstr "="
-
-msgid "already defined to be"
-msgstr "已经定义为"
-
-msgid "found encoding"
-msgstr "找到编码"
-
 msgid "%s must be a character string or a file/raw connection"
 msgstr "%s必需是字符串或原联结"
 
@@ -972,9 +832,6 @@ msgstr "无法读取流数据"
 msgid "invalid index in object stream lookup"
 msgstr "对象流查找索引无效"
 
-msgid "processing %s"
-msgstr "处理%s "
-
 msgid "expanding %s"
 msgstr "展开%s"
 
@@ -1009,38 +866,18 @@ msgstr "参数'file'必需是字符串或联结"
 msgid "unimplemented encoding"
 msgstr "还没有实现的编码"
 
-msgid "file"
-msgstr "文件"
-
 msgid "Found %s, possibly from %s"
 msgstr "找到了%s,可能是从%s来的"
-
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
-msgid "ssname"
-msgstr "ssname"
-
-msgid "language"
-msgstr "语言"
-
-msgid "cannot be opened"
-msgstr "打不开"
 
 msgid "testing '%s' failed"
 msgstr "试用'%s'失败了"
 
-msgid "Testing examples for package"
+#, fuzzy
+msgid "Testing examples for package %s"
 msgstr "试验程序包范例"
 
-msgid "comparing"
-msgstr "比较"
-
-msgid "to"
-msgstr "向"
-
-msgid "..."
-msgstr "…"
+msgid "comparing %s to %s ..."
+msgstr ""
 
 msgid "OK"
 msgstr "好"
@@ -1051,75 +888,29 @@ msgstr "结果与参考结果不一样"
 msgid "no examples found for package %s"
 msgstr "程序包%s没有示例"
 
-msgid "Running specific tests for package"
+#, fuzzy
+msgid "Running specific tests for package %s"
 msgstr "执行特定的检验程序"
 
-msgid "Running"
+#, fuzzy
+msgid "Running %s"
 msgstr "执行"
 
-msgid "Running vignettes for package"
+#, fuzzy
+msgid "Running vignettes for package %s"
 msgstr "执行小文品给程序包"
 
-msgid "Comparing"
-msgstr "比较"
-
-msgid "creation of"
-msgstr "建造"
-
-msgid "failed"
-msgstr "失败"
+msgid "Comparing %s to %s ..."
+msgstr ""
 
 msgid "no parsed files found"
 msgstr "没有找到句法分析过的文件"
 
-msgid "creating"
-msgstr "建造"
-
-msgid "running code in"
-msgstr "调用程序于"
-
 msgid "FAILED"
 msgstr "失败"
 
-msgid "running strict specific tests"
-msgstr "执行严格检验"
-
-msgid "running sloppy specific tests"
-msgstr "执行粗步检验"
-
-msgid "running regression tests"
-msgstr "执行回归检验"
-
-msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
-msgstr "比较'reg-plot.ps'和'reg-plot.ps.save' …"
-
-msgid "running tests of plotting Latin-1"
-msgstr "执行Latin-1画图检验"
-
-msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
-msgstr "即使不是在Latin或UTF-8环境中也会出现失败或与其不用的形状"
-
-msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
-msgstr "将'reg-plot-latin1.ps'与'reg-plot-latin1.ps.save' 比较…"
-
-msgid "running tests of consistency of as/is.*"
-msgstr "执行as/is.* 一致性检验"
-
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr "执行随机偏离检验--偶尔会失败"
-
-msgid "running tests of primitives"
-msgstr "执行本原检验"
-
-msgid "running regexp regression tests"
-msgstr "执行正规表现回归检验"
-
-msgid "running tests to possibly trigger segfaults"
-msgstr "执行触发程序段故障检验"
-
-#, fuzzy
-msgid "not installing"
-msgstr "安装至"
 
 msgid "R CMD build failed"
 msgstr ""
@@ -1185,32 +976,6 @@ msgid "parsing '%s'"
 msgstr "文名分析'%s'"
 
 #, fuzzy
-msgid "Foreign function call without 'PACKAGE' argument:"
-msgid_plural "Foreign function calls without 'PACKAGE' argument:"
-msgstr[0] "外函数调用时没有设定'package'这一参数:"
-
-#, fuzzy
-msgid "Foreign function call with empty 'PACKAGE' argument:"
-msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
-msgstr[0] "外函数调用时没有设定'package'这一参数:"
-
-#, fuzzy
-msgid "Foreign function call with 'PACKAGE' argument in a base package:"
-msgid_plural ""
-"Foreign function calls with 'PACKAGE' argument in a base package:"
-msgstr[0] "外函数调用时没有设定'package'这一参数:"
-
-#, fuzzy
-msgid "Foreign function call with 'PACKAGE' argument in a different package:"
-msgid_plural ""
-"Foreign function calls with 'PACKAGE' argument in a different package:"
-msgstr[0] "外函数调用时没有设定'package'这一参数:"
-
-msgid "Undeclared package in foreign function calls"
-msgid_plural "Undeclared packages in foreign function calls"
-msgstr[0] ""
-
-#, fuzzy
 msgid "Obsolete package %s in Rd xrefs"
 msgid_plural "Obsolete packages %s in Rd xrefs"
 msgstr[0] "Rd xrefs里程序包%s过时了"
@@ -1225,11 +990,6 @@ msgid "Unknown package %s in Rd xrefs"
 msgid_plural "Unknown packages %s in Rd xrefs"
 msgstr[0] "Rd xrefs里包含了不知来源的程序包%s"
 
-#, fuzzy
-msgid "Missing link in documentation object %s:"
-msgid_plural "Missing links in documentation object %s:"
-msgstr[0] "使用手冊对象'%s'缺少联结:"
-
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] "注意：发现%d个标志着Latin – 1的字符串"
@@ -1242,15 +1002,6 @@ msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
 msgstr[0] "注意：发现%d个标志为\"bytes\"的字符串"
 
-#, fuzzy
-msgid "Warning: found non-ASCII string"
-msgid_plural "Warning: found non-ASCII strings"
-msgstr[0] "警告：没有这种选项"
-
-msgid "Warning: large data file saved inefficiently:"
-msgid_plural "Warning: large data files saved inefficiently:"
-msgstr[0] ""
-
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"
 msgstr[0] "文件'%s'里有警告："
@@ -1259,29 +1010,32 @@ msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
 
-msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+#, fuzzy
+msgid ""
+"Found possibly global 'T' or 'F' in the examples of the following Rd file:"
 msgid_plural ""
-"Found possibly global 'T' or 'F' in the following Rd example files:"
+"Found possibly global 'T' or 'F' in the examepls of the following Rd files:"
 msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 
-msgid "Found .Internal call in the following function:"
+#, fuzzy
+msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "下面的函数调用了.Internal:"
 
 #, fuzzy
-msgid "Found .Internal call in methods for the following S4 generic:"
+msgid "Found a.Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "下面的函数调用了.Internal:"
 
 #, fuzzy
-msgid "Found .Internal call in methods for the following reference class:"
+msgid "Found a .Internal call in methods for the following reference class:"
 msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] "下面的函数调用了.Internal:"
 
 #, fuzzy
-msgid "Generics without method in %s: %s"
-msgid_plural "Generics without methods in %s: %s"
+msgid "Generic without any methods in %s: %s"
+msgid_plural "Generics without any methods in %s: %s"
 msgstr[0] "没有方法的同属函数在"
 
 #, fuzzy
@@ -1298,64 +1052,265 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "无法重新编码'%s'%s行"
 
-msgid "Found the following file with a non-portable file name:\n"
-msgid_plural "Found the following files with non-portable file names:\n"
-msgstr[0] ""
-
-msgid "Found the following directory with the name of a check directory:\n"
-msgid_plural ""
-"Found the following directories with names of check directories:\n"
-msgstr[0] ""
-
-msgid "Found the following directory with the name of a Rd2pdf directory:\n"
-msgid_plural ""
-"Found the following directories with names of Rd2pdf directories:\n"
-msgstr[0] ""
-
-msgid ""
-"Found the following directory with the name of a version control directory:\n"
-msgid_plural ""
-"Found the following directories with names of version control directories:\n"
-msgstr[0] ""
-
-msgid "Found the following CITATION file in a non-standard place:\n"
-msgid_plural "Found the following CITATION files in a non-standard place:\n"
-msgstr[0] ""
-
-msgid "Found the following file with non-ASCII characters:\n"
-msgid_plural "Found the following files with non-ASCII characters:\n"
-msgstr[0] ""
-
-msgid "Package vignette( without corresponding PDF:\n"
-msgid_plural "Package vignettes without corresponding PDFs:\n"
-msgstr[0] ""
-
-msgid "  Non-ASCII package vignette without specified encoding:\n"
-msgid_plural "  Non-ASCII package vignettes without specified encoding:\n"
-msgstr[0] ""
-
-msgid "  Unused file in 'inst/doc' which is pointless or misleading"
-msgid_plural "  Unused files in 'inst/doc' which are pointless or misleading"
-msgstr[0] ""
-
-msgid "  Package vignette which is not in its specified encoding:\n"
-msgid_plural "  Package vignettes which are not in their specified encoding:\n"
-msgstr[0] ""
-
-#, fuzzy
-msgid "Found the following executable file:"
-msgid_plural "Found the following executable files:"
-msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
-
-msgid ""
-"Found the following directory with a name of a multi-arch build directory:\n"
-msgid_plural ""
-"Found the following directories with names of multi-arch build directories:\n"
-msgstr[0] ""
-
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#, fuzzy
+#~ msgid "Foreign function call without 'PACKAGE' argument:"
+#~ msgid_plural "Foreign function calls without 'PACKAGE' argument:"
+#~ msgstr[0] "外函数调用时没有设定'package'这一参数:"
+
+#, fuzzy
+#~ msgid "Foreign function call with empty 'PACKAGE' argument:"
+#~ msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
+#~ msgstr[0] "外函数调用时没有设定'package'这一参数:"
+
+#, fuzzy
+#~ msgid "Foreign function call with 'PACKAGE' argument in a base package:"
+#~ msgid_plural ""
+#~ "Foreign function calls with 'PACKAGE' argument in a base package:"
+#~ msgstr[0] "外函数调用时没有设定'package'这一参数:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Foreign function call with 'PACKAGE' argument in a different package:"
+#~ msgid_plural ""
+#~ "Foreign function calls with 'PACKAGE' argument in a different package:"
+#~ msgstr[0] "外函数调用时没有设定'package'这一参数:"
+
+#, fuzzy
+#~ msgid "Warning: found non-ASCII string"
+#~ msgid_plural "Warning: found non-ASCII strings"
+#~ msgstr[0] "警告：没有这种选项"
+
+#, fuzzy
+#~ msgid "Found the following executable file:"
+#~ msgid_plural "Found the following executable files:"
+#~ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
+
+#~ msgid "name"
+#~ msgstr "名字"
+
+#~ msgid "code"
+#~ msgstr "编码"
+
+#~ msgid "docs"
+#~ msgstr "文件"
+
+#, fuzzy
+#~ msgid "\\VignetteDepends{}"
+#~ msgstr "插图："
+
+#~ msgid "Invalid package name."
+#~ msgstr "程辑包名不对."
+
+#~ msgid "This is the name of a base package."
+#~ msgstr "这是基本程辑包名."
+
+#~ msgid "This name was used for a base package and is remapped by library()."
+#~ msgstr "这个名字由基本程辑包所用，被library()重新对应."
+
+#~ msgid "package must be loaded"
+#~ msgstr "必需载入程序包。"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "lib"
+#~ msgstr "lib"
+
+#~ msgid "pkg"
+#~ msgstr "pkg"
+
+#~ msgid "packageStartupMessage"
+#~ msgstr "packageStartupMessage"
+
+#, fuzzy
+#~ msgid "installed.packages"
+#~ msgstr "程辑包无效."
+
+#~ msgid "Good practice"
+#~ msgstr "良好实践"
+
+#, fuzzy
+#~ msgid "\\name"
+#~ msgstr "名字"
+
+#~ msgid "NEWS"
+#~ msgstr "NEWS"
+
+#~ msgid "DESCRIPTION"
+#~ msgstr "DESCRIPTION"
+
+#~ msgid "doc/"
+#~ msgstr "doc/"
+
+#~ msgid "demo/"
+#~ msgstr "demo/"
+
+#~ msgid "file"
+#~ msgstr "文件"
+
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#~ msgid "ssname"
+#~ msgstr "ssname"
+
+#~ msgid "language"
+#~ msgstr "语言"
+
+#~ msgid "processing"
+#~ msgstr "处理"
+
+#, fuzzy
+#~ msgid "package directory"
+#~ msgstr "程序包目录"
+
+#~ msgid "does not exist"
+#~ msgstr "不存在"
+
+#~ msgid "Unrecognized search field:"
+#~ msgstr "无法识别这个搜索字段："
+
+#~ msgid "Help on topic '%s' was found in the following packages:"
+#~ msgstr "在以下这些程序包里找到了关于'%s'主题的帮助"
+
+#~ msgid "ERROR:"
+#~ msgstr "错误："
+
+#~ msgid "running 'zip' failed"
+#~ msgstr "调用'zip'失败"
+
+#~ msgid "packaged installation of"
+#~ msgstr "程辑包安装"
+
+#~ msgid "as"
+#~ msgstr "如"
+
+#~ msgid "installing via 'install.libs.R' to"
+#~ msgstr "用'install.libs.R'安装到"
+
+#~ msgid "installing to"
+#~ msgstr "安装至"
+
+#, fuzzy
+#~ msgid "running 'src/Makefile.win' ..."
+#~ msgstr "调用src/Makefile.win ..."
+
+#~ msgid "ERROR: failed to lock directory"
+#~ msgstr "错误：无法锁住目录"
+
+#~ msgid ""
+#~ "for modifying\n"
+#~ "Try removing"
+#~ msgstr ""
+#~ "为了修改\n"
+#~ "试一下撤除"
+
+#~ msgid "ERROR: failed to create lock directory"
+#~ msgstr "错误：无法建锁住的目录"
+
+#~ msgid "finding HTML links ..."
+#~ msgstr "搜寻HTML链结…"
+
+#~ msgid "finding level-2 HTML links ..."
+#~ msgstr "搜寻二级HTML链结…"
+
+#~ msgid "Internal error, no tag"
+#~ msgstr "内部错误，没有标签"
+
+#~ msgid "Argument for"
+#~ msgstr "参数用于"
+
+#~ msgid "not found."
+#~ msgstr "找不到"
+
+#~ msgid "Internal error:  NULL tag"
+#~ msgstr "内部错误：NULL标签"
+
+#~ msgid "internal error"
+#~ msgstr "内部错误"
+
+#~ msgid "Inconsistent arg count for"
+#~ msgstr "参数数目有矛盾"
+
+#~ msgid "Entry for"
+#~ msgstr "项目为"
+
+#~ msgid "="
+#~ msgstr "="
+
+#~ msgid "already defined to be"
+#~ msgstr "已经定义为"
+
+#~ msgid "found encoding"
+#~ msgstr "找到编码"
+
+#~ msgid "cannot be opened"
+#~ msgstr "打不开"
+
+#~ msgid "comparing"
+#~ msgstr "比较"
+
+#~ msgid "to"
+#~ msgstr "向"
+
+#~ msgid "..."
+#~ msgstr "…"
+
+#~ msgid "Comparing"
+#~ msgstr "比较"
+
+#~ msgid "creation of"
+#~ msgstr "建造"
+
+#~ msgid "failed"
+#~ msgstr "失败"
+
+#~ msgid "creating"
+#~ msgstr "建造"
+
+#~ msgid "running code in"
+#~ msgstr "调用程序于"
+
+#~ msgid "running strict specific tests"
+#~ msgstr "执行严格检验"
+
+#~ msgid "running sloppy specific tests"
+#~ msgstr "执行粗步检验"
+
+#~ msgid "running regression tests"
+#~ msgstr "执行回归检验"
+
+#~ msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
+#~ msgstr "比较'reg-plot.ps'和'reg-plot.ps.save' …"
+
+#~ msgid "running tests of plotting Latin-1"
+#~ msgstr "执行Latin-1画图检验"
+
+#~ msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
+#~ msgstr "即使不是在Latin或UTF-8环境中也会出现失败或与其不用的形状"
+
+#~ msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
+#~ msgstr "将'reg-plot-latin1.ps'与'reg-plot-latin1.ps.save' 比较…"
+
+#~ msgid "running tests of consistency of as/is.*"
+#~ msgstr "执行as/is.* 一致性检验"
+
+#~ msgid "running tests of primitives"
+#~ msgstr "执行本原检验"
+
+#~ msgid "running regexp regression tests"
+#~ msgstr "执行正规表现回归检验"
+
+#~ msgid "running tests to possibly trigger segfaults"
+#~ msgstr "执行触发程序段故障检验"
+
+#, fuzzy
+#~ msgid "not installing"
+#~ msgstr "安装至"
 
 #~ msgid ":"
 #~ msgstr "："

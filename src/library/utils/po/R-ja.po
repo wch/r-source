@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:43\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -208,9 +208,6 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "help(\"citation\")"
-msgstr ""
-
 msgid "m < 0"
 msgstr " m < 0 "
 
@@ -279,9 +276,6 @@ msgstr " 以下の呼び出しに伴う環境でブラウジング：  "
 #, fuzzy
 msgid "'dump' is not an object of class %s"
 msgstr " 'dump' はクラス 'dump.frames' のオブジェクトではありません "
-
-msgid "dump.frames"
-msgstr ""
 
 msgid "Message:"
 msgstr " メッセージ： "
@@ -389,9 +383,6 @@ msgstr ""
 
 msgid "you could try %s"
 msgstr " %s を使えたかもしれません "
-
-msgid "??"
-msgstr " ?? "
 
 msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
@@ -1289,6 +1280,9 @@ msgstr[0] " 不正なローマ数字です: %s "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "??"
+#~ msgstr " ?? "
 
 #~ msgid "call"
 #~ msgstr " call "

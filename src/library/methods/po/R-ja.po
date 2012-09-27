@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:52\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-02-26 14:07+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -420,9 +420,6 @@ msgstr " 形式的引数が異なります(既定値で?) "
 
 msgid "Formal arguments differ: (%s), (%s)"
 msgstr " 形式的引数が異なります：(%s), (%s) "
-
-msgid ","
-msgstr " , "
 
 msgid "Value classes differ: %s, %s"
 msgstr " 値のクラスが異なります： %s, %s "
@@ -917,9 +914,6 @@ msgstr ""
 
 msgid "expanding the signature to include omitted arguments in definition: %s"
 msgstr " シグナチャを定義中で使われなかった引数を含むように拡張中：%s\t "
-
-msgid "= \"missing\""
-msgstr " = \"missing\" "
 
 msgid ""
 "methods can add arguments to the generic %s only if '...' is an argument to "
@@ -1492,6 +1486,9 @@ msgstr " \", しかしながらこれは総称的関数ではありません: i 
 
 msgid ", funs ="
 msgstr " , funs = "
+
+msgid ","
+msgstr " , "
 
 msgid "; gnames ="
 msgstr " ; gnames = "
@@ -2139,6 +2136,9 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
 " クラス %s の定義は指定された位置 %s にありません、%s に関する定義です "
+
+#~ msgid "= \"missing\""
+#~ msgstr " = \"missing\" "
 
 #~ msgid "found"
 #~ msgstr " が見付かりました "

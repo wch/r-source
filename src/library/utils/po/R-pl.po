@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:43\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -211,9 +211,6 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "help(\"citation\")"
-msgstr ""
-
 msgid "m < 0"
 msgstr "m < 0"
 
@@ -282,9 +279,6 @@ msgstr "Przeglądanie w środowisku z wywołaniem:"
 #, fuzzy
 msgid "'dump' is not an object of class %s"
 msgstr "'dump' nie jest obiektem klasy 'dump.frames'"
-
-msgid "dump.frames"
-msgstr ""
 
 msgid "Message:"
 msgstr "Wiadomość:"
@@ -392,9 +386,6 @@ msgstr "Brak dokumentacji dla %s we wskazanych pakietach oraz bibliotekach:"
 
 msgid "you could try %s"
 msgstr "mógłbyś spróbować %s"
-
-msgid "??"
-msgstr "??"
 
 msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
@@ -1329,6 +1320,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet '%s' jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety '%s' są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety '%s' są w użyciu i nie zostaną zainstalowane"
+
+#~ msgid "??"
+#~ msgstr "??"
 
 #~ msgid "call"
 #~ msgstr "wezwanie"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:52\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -412,9 +412,6 @@ msgstr "Formalne argumenty różnią się (w wartościach domyślnych?)"
 
 msgid "Formal arguments differ: (%s), (%s)"
 msgstr "Formalne argumenty różnią się: (%s), (%s)"
-
-msgid ","
-msgstr ","
 
 msgid "Value classes differ: %s, %s"
 msgstr "Wartości klas różnią się: %s, %s"
@@ -911,9 +908,6 @@ msgstr ""
 msgid "expanding the signature to include omitted arguments in definition: %s"
 msgstr ""
 "rozszerzanie sygnatury aby uwzględnić pominięte argumenty w definicji: %s"
-
-msgid "= \"missing\""
-msgstr "= \"missing\""
 
 msgid ""
 "methods can add arguments to the generic %s only if '...' is an argument to "
@@ -1482,6 +1476,9 @@ msgstr "\", ale nie jest ogólną funkcją: i ="
 
 msgid ", funs ="
 msgstr ", funs ="
+
+msgid ","
+msgstr ","
 
 msgid "; gnames ="
 msgstr "; gnames ="
@@ -2176,6 +2173,9 @@ msgstr[1] ""
 "brak definicji klasy %s we wskazanym położeniu, %s, definicja(e): %s"
 msgstr[2] ""
 "brak definicji klasy %s we wskazanym położeniu, %s, definicja(e): %s"
+
+#~ msgid "= \"missing\""
+#~ msgstr "= \"missing\""
 
 #~ msgid "found"
 #~ msgstr "znaleziono"

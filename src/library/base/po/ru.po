@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:24+0100\n"
+"POT-Creation-Date: 2012-09-27 11:21+0100\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -207,7 +207,7 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/envir.c:1899 src/main/envir.c:2116 src/main/envir.c:2237
 #: src/main/envir.c:2496 src/main/envir.c:2703 src/main/envir.c:2717
 #: src/main/envir.c:2724 src/main/envir.c:2740 src/main/envir.c:3303
-#: src/main/errors.c:1025 src/main/eval.c:269 src/main/eval.c:2034
+#: src/main/errors.c:1026 src/main/eval.c:269 src/main/eval.c:2034
 #: src/main/eval.c:2063 src/main/eval.c:2067 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
@@ -274,9 +274,9 @@ msgstr "неподдерживаемая версия Windows"
 #: src/gnuwin32/extra.c:264 src/main/character.c:593 src/main/colors.c:83
 #: src/main/connections.c:3291 src/main/context.c:640 src/main/context.c:659
 #: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
-#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:957
-#: src/main/errors.c:1058 src/main/errors.c:1083 src/main/errors.c:1088
-#: src/main/errors.c:1360 src/main/seq.c:188 src/main/seq.c:342
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:958
+#: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
+#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
 #: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
 #: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
 #: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
@@ -1488,15 +1488,15 @@ msgstr "неправильный аргумент 'mode'"
 msgid "applies only to lists and vectors"
 msgstr "применимо только к спискам и векторам"
 
-#: src/main/coerce.c:77 src/main/errors.c:1195
+#: src/main/coerce.c:77 src/main/errors.c:1197
 msgid "NAs introduced by coercion"
 msgstr "в результате преобразования созданы NA"
 
-#: src/main/coerce.c:79 src/main/errors.c:1196
+#: src/main/coerce.c:79 src/main/errors.c:1198
 msgid "inaccurate integer conversion in coercion"
 msgstr "вынужденное неточное целочисленное преобразование"
 
-#: src/main/coerce.c:81 src/main/errors.c:1197
+#: src/main/coerce.c:81 src/main/errors.c:1199
 msgid "imaginary parts discarded in coercion"
 msgstr "мнимые части убраны при преобразовании"
 
@@ -1669,7 +1669,7 @@ msgstr "не могу поменять тип хранения фактора"
 msgid "bad hsv to rgb color conversion"
 msgstr "неправильная конвертация цвета из hsv в rgb"
 
-#: src/main/colors.c:959 src/main/errors.c:1181 src/main/logic.c:171
+#: src/main/colors.c:959 src/main/errors.c:1183 src/main/logic.c:171
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
@@ -3229,7 +3229,7 @@ msgstr ""
 msgid "Error: "
 msgstr "Ошибка: "
 
-#: src/main/errors.c:687 src/main/errors.c:1312
+#: src/main/errors.c:687 src/main/errors.c:1314
 msgid "In addition: "
 msgstr "Вдобавок: "
 
@@ -3241,90 +3241,90 @@ msgstr "неправильный параметр \"error\"\n"
 msgid "Execution halted\n"
 msgstr "Выполнение остановлено\n"
 
-#: src/main/errors.c:1027
+#: src/main/errors.c:1028
 msgid "'msg1' must be a character string"
 msgstr "'msg1' должен быть текстовой строкой"
 
-#: src/main/errors.c:1029
+#: src/main/errors.c:1030
 msgid "'msg2' must be a character string"
 msgstr "'msg2' должен быть текстовой строкой"
 
-#: src/main/errors.c:1124
+#: src/main/errors.c:1126
 msgid " [invalid string in stop(.)]"
 msgstr " [неправильная строка в stop(.)]"
 
-#: src/main/errors.c:1150
+#: src/main/errors.c:1152
 msgid " [invalid string in warning(.)]"
 msgstr " [неправильная строка в warning(.)]"
 
-#: src/main/errors.c:1165
+#: src/main/errors.c:1167
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "у \"%s\" неправильное количество аргументов"
 
-#: src/main/errors.c:1171 src/main/errors.c:1186
+#: src/main/errors.c:1173 src/main/errors.c:1188
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "эта особенность в %s не реализована"
 
-#: src/main/errors.c:1180
+#: src/main/errors.c:1182
 msgid "invalid number of arguments"
 msgstr "неправильное количество аргументов"
 
-#: src/main/errors.c:1183
+#: src/main/errors.c:1185
 msgid "time-series/vector length mismatch"
 msgstr "несоответствие длины временного ряда/вектора"
 
-#: src/main/errors.c:1184
+#: src/main/errors.c:1186
 msgid "incompatible arguments"
 msgstr "несовместимые аргументы"
 
-#: src/main/errors.c:1187
+#: src/main/errors.c:1189
 msgid "unknown error (report this!)"
 msgstr "неизвестная ошибка (сообщите о ней!)"
 
-#: src/main/errors.c:1199
+#: src/main/errors.c:1201
 msgid "unknown warning (report this!)"
 msgstr "неизвестное предупреждение (сообщите о нем!)"
 
-#: src/main/errors.c:1277
+#: src/main/errors.c:1279
 msgid "No function to return from, jumping to top level"
 msgstr "Нет функции для возврата, перехожу на верхний уровень"
 
-#: src/main/errors.c:1293
+#: src/main/errors.c:1295
 msgid "top level inconsistency?"
 msgstr "противоречивость верхнего уровня?"
 
-#: src/main/errors.c:1470
+#: src/main/errors.c:1472
 msgid "bad handler data"
 msgstr "неправильный данные обработчика"
 
-#: src/main/errors.c:1620
+#: src/main/errors.c:1622
 msgid "error message not a string"
 msgstr "сообщение об ошибке не является строкой"
 
-#: src/main/errors.c:1695
+#: src/main/errors.c:1697
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "несоответствие обработчика или перезагрузочного стека в старой перезагрузке"
 
-#: src/main/errors.c:1721 src/main/errors.c:1737
+#: src/main/errors.c:1723 src/main/errors.c:1739
 msgid "bad error message"
 msgstr "неправильное сообщение об ошибке"
 
-#: src/main/errors.c:1779
+#: src/main/errors.c:1781
 msgid "bad restart"
 msgstr "неправильная перезагрузка"
 
-#: src/main/errors.c:1811
+#: src/main/errors.c:1813
 msgid "restart not on stack"
 msgstr "перезагрузка не в стеке"
 
-#: src/main/errors.c:1828
+#: src/main/errors.c:1830
 msgid "not in a try context"
 msgstr "не в контексте 'try'"
 
-#: src/main/errors.c:1841
+#: src/main/errors.c:1843
 msgid "error message must be a character string"
 msgstr "сообщение об ошибке должно быть текстовой строкой"
 

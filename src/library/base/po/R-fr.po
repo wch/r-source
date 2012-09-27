@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:24\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -946,9 +946,6 @@ msgstr ""
 "Plus d'information disponible dans les vignettes suivantes dans le "
 "répertoire %s :"
 
-msgid "doc"
-msgstr "doc"
-
 msgid "Description:"
 msgstr "Description :"
 
@@ -1860,6 +1857,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "doc"
+#~ msgstr "doc"
 
 #~ msgid "'by' must specify valid column(s)"
 #~ msgstr "'by' doit spécifier une / des colonne(s) correcte(s)"

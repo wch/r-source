@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:43\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -208,9 +208,6 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "help(\"citation\")"
-msgstr ""
-
 msgid "m < 0"
 msgstr "m < 0"
 
@@ -277,9 +274,6 @@ msgstr "在調用环境里浏览:"
 #, fuzzy
 msgid "'dump' is not an object of class %s"
 msgstr "'dump'必需是类别为'dump.框s'的对象"
-
-msgid "dump.frames"
-msgstr ""
 
 msgid "Message:"
 msgstr "訊息:"
@@ -383,9 +377,6 @@ msgstr "在指定的程序包和图书馆里没有与%s有关的说明书:"
 
 msgid "you could try %s"
 msgstr "你可以用用%s"
-
-msgid "??"
-msgstr "??"
 
 msgid ""
 "Help for topic %s is not in any loaded package but can be found in the "
@@ -1233,6 +1224,9 @@ msgstr[0] "罗马数字不对：%s"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid "??"
+#~ msgstr "??"
 
 #~ msgid "call"
 #~ msgstr "调用"

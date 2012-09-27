@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:52\n"
+"POT-Creation-Date: 2012-09-27 12:03\n"
 "PO-Revision-Date: 2012-03-15 11:56-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -408,9 +408,6 @@ msgstr "Формальные аргументы различаются (по умалчиваемым значениям?)"
 
 msgid "Formal arguments differ: (%s), (%s)"
 msgstr "Формальные аргументы различаются: (%s), (%s)"
-
-msgid ","
-msgstr ","
 
 msgid "Value classes differ: %s, %s"
 msgstr "Значения классов различаются: %s, %s"
@@ -908,9 +905,6 @@ msgstr ""
 msgid "expanding the signature to include omitted arguments in definition: %s"
 msgstr ""
 "расширяю идентификатор для включения опущенных аргументов в определении: %s"
-
-msgid "= \"missing\""
-msgstr "= \"отсутствует\""
 
 msgid ""
 "methods can add arguments to the generic %s only if '...' is an argument to "
@@ -1473,6 +1467,9 @@ msgstr "\", но не является  общей функцией: i ="
 
 msgid ", funs ="
 msgstr ", funs ="
+
+msgid ","
+msgstr ","
 
 msgid "; gnames ="
 msgstr "; gnames ="
@@ -2162,6 +2159,9 @@ msgstr[1] ""
 "нет определения класса %s в указанной позиции, %s, определение(-я): %s"
 msgstr[2] ""
 "нет определения класса %s в указанной позиции, %s, определение(-я): %s"
+
+#~ msgid "= \"missing\""
+#~ msgstr "= \"отсутствует\""
 
 #~ msgid "found"
 #~ msgstr "найдено"
