@@ -301,7 +301,7 @@ function(dir, outDir)
         for(f in codeFiles) {
             tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "")
             if(length(bad <- which(is.na(tmp)))) {
-                warning(sprintf(ngettext(sum(bad),
+                warning(sprintf(ngettext(length(bad),
                                          "unable to re-encode %s line %s",
                                          "unable to re-encode %s lines %s"),
                                 basename(f), paste(bad, collapse=",")),
