@@ -51,7 +51,8 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
   tools.  This ensures that the strings for simple translation are
   unique in the file (as \pkg{GNU Gettext} requires), but does not do so
   for \code{ngettext} calls (and the rules are not stated in the Gettext
-  manual).
+  manual, but \command{msgfmt} complains if there is duplication between
+  the sets.).
 
   If applied to the \pkg{base} package, this also looks in the \file{.R}
   files in \file{\var{\link{R_HOME}}/share/R}.

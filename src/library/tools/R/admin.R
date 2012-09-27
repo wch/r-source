@@ -304,7 +304,8 @@ function(dir, outDir)
                 warning(sprintf(ngettext(length(bad),
                                          "unable to re-encode %s line %s",
                                          "unable to re-encode %s lines %s"),
-                                basename(f), paste(bad, collapse=",")),
+                                sQuote(basename(f)),
+                                paste(bad, collapse = ", ")),
                         domain = NA, call. = FALSE)
                 tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "",
                              sub = "byte")
@@ -610,7 +611,8 @@ function(dir, outDir, keep.source = TRUE)
 
     for(srcfile in vigns$docs[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
-        message("processing ", sQuote(basename(srcfile)))
+        message(gettextf("processing %s", sQuote(basename(srcfile))),
+                domain = NA)
         texfile <- paste0(base, ".tex")
         tryCatch(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
                                quiet = TRUE, keep.source = keep.source,

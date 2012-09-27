@@ -68,7 +68,8 @@ massageExamples <-
         if (pkg == "grDevices" && nm == "postscript") next
         ## Latin-1 examples are treated separat
         if (pkg == "graphics" && nm == "text") next
-        if(!file.exists(file)) stop("file ", file, " cannot be opened")
+        if(!file.exists(file))
+            stop("file ", file, " cannot be opened", domain = NA)
         lines <- readLines(file)
         have_examples <- any(grepl("_ Examples _|### \\*+ Examples",
                                    lines, perl = TRUE, useBytes = TRUE))
@@ -216,8 +217,8 @@ testInstalledPackages <-
         if (res) {
             status <- 1L
             msg <- gettextf("testing '%s' failed", pkg)
-            if (errorsAreFatal) stop(msg, domain=NA, call.=FALSE)
-            else warning(msg, domain=NA, call.=FALSE, immediate.=TRUE)
+            if (errorsAreFatal) stop(msg, domain = NA, call. = FALSE)
+            else warning(msg, domain = NA, call. = FALSE, immediate. = TRUE)
         }
     }
     return(invisible(status))
@@ -236,7 +237,8 @@ testInstalledPackage <-
     strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", "FALSE"))
 
     if (1 %in% types) {
-        message("Testing examples for package ", sQuote(pkg))
+        message(gettextf("Testing examples for package %s", sQuote(pkg)),
+                domain = NA)
         Rfile <- .createExdotR(pkg, pkgdir, silent = TRUE)
         if (length(Rfile)) {
             outfile <- paste0(pkg, "-Ex.Rout")
@@ -262,8 +264,9 @@ testInstalledPackage <-
             }
             if (file.exists(savefile)) {
                if (file.exists(savefile)) {
-                    message("  comparing ", sQuote(outfile), " to ",
-                            sQuote(basename(savefile)), " ...", appendLF = FALSE)
+                   message(gettextf("  comparing %s to %s ...",
+                                    sQuote(outfile), sQuote(basename(savefile))),
+                           appendLF = FALSE, domain = NA)
                     res <- Rdiff(outfile, savefile)
                     if (!res) message(" OK")
                     else if(strict)
@@ -272,8 +275,9 @@ testInstalledPackage <-
             } else {
                 prevfile <- paste(outfile, "prev", sep = "." )
                 if (file.exists(prevfile)) {
-                    message("  comparing ", sQuote(outfile), " to ",
-                            sQuote(basename(prevfile)), " ...", appendLF = FALSE)
+                    message(gettextf("  comparing %s to %s ...",
+                            sQuote(outfile), sQuote(basename(prevfile))),
+                            appendLF = FALSE, domain = NA)
                     res <- Rdiff(outfile, prevfile)
                     if (!res) message(" OK")
                 }
@@ -291,10 +295,11 @@ testInstalledPackage <-
         ## system(paste("cp -pr", file.path(d, "*"), this))
         file.copy(Sys.glob(file.path(d, "*")), this, recursive = TRUE)
         setwd(this)
-        message("Running specific tests for package ", sQuote(pkg))
+        message(gettextf("Running specific tests for package %s",
+                         sQuote(pkg)), domain = NA)
         Rfiles <- dir(".", pattern="\\.R$")
         for(f in Rfiles) {
-            message("  Running ", sQuote(f))
+            message(gettextf("  Running %s", sQuote(f)), domain = NA)
             outfile <- paste0(f, "out")
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                          "CMD BATCH --vanilla --no-timing", Ropts,
@@ -308,8 +313,9 @@ testInstalledPackage <-
             }
             savefile <- paste(outfile, "save", sep = "." )
             if (file.exists(savefile)) {
-                message("  comparing ", sQuote(outfile), " to ",
-                        sQuote(savefile), " ...", appendLF = FALSE)
+                message(gettextf("  comparing %s to %s ...",
+                                 sQuote(outfile), sQuote(savefile)),
+                        appendLF = FALSE, domain = NA)
                 res <- Rdiff(outfile, savefile)
                 if (!res) message(" OK")
             }
@@ -318,7 +324,8 @@ testInstalledPackage <-
     }
 
     if (3 %in% types && file_test("-d", d <- file.path(pkgdir, "doc"))) {
-        message("Running vignettes for package ", sQuote(pkg))
+        message(gettextf("Running vignettes for package %s", sQuote(pkg)),
+                domain = NA)
         checkVignettes(pkg, lib.loc, latex = FALSE, weave =TRUE)
     }
 
@@ -356,12 +363,13 @@ testInstalledPackage <-
                 else sprintf(" [%ds/%ds]", round(sum(td[-3L])), round(td[3L]))
             }
         }
-        message(td2)
+        message(td2, domain = NA)
         if (!is.null(Log)) cat(td2, "\n", sep = "",  file = Log)
     }
     runone <- function(f)
     {
-        message("  Running ", sQuote(f),  appendLF = FALSE)
+        message(gettextf("  Running %s", sQuote(f)),
+                appendLF = FALSE, domain = NA)
         if(!is.null(Log))
             cat("  Running ", sQuote(f), sep = "", file = Log)
         outfile <- paste0(f, "out")
@@ -384,8 +392,9 @@ testInstalledPackage <-
         }
         savefile <- paste(outfile, "save", sep = "." )
         if (file.exists(savefile)) {
-            message("  Comparing ", sQuote(outfile), " to ",
-                    sQuote(savefile), " ...", appendLF = FALSE)
+            message(gettextf("  Comparing %s to %s ...",
+                             sQuote(outfile), sQuote(savefile)),
+                    appendLF = FALSE, domain = NA)
             if(!is.null(Log))
                 cat("  Comparing ", sQuote(outfile), " to ",
                     sQuote(savefile), " ...", sep = "", file = Log)
@@ -415,7 +424,7 @@ testInstalledPackage <-
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --no-timing --vanilla --slave", f)
         if (system(cmd)) {
-            warning("creation of ", sQuote(Rfile), " failed")
+            warning("creation of ", sQuote(Rfile), " failed", domain = NA)
             if (!is.null(Log))
                 cat("Warning: creation of ", sQuote(Rfile), " failed\n",
                     sep = "", file = Log)
@@ -488,14 +497,14 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         if (!file.exists(f)) {
             if (!file.exists(fin <- paste0(f, "in")))
                 stop("file ", sQuote(f), " not found", domain = NA)
-            message("creating ", sQuote(f))
+            message("creating ", sQuote(f), domain = NA)
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                          "CMD BATCH --no-timing --vanilla --slave", fin)
             if (system(cmd))
-                stop("creation of ", sQuote(f), " failed")
+                stop("creation of ", sQuote(f), " failed", domain = NA)
             on.exit(unlink(f))
         }
-        message("  running code in ", sQuote(f))
+        message("  running code in ", sQuote(f), domain = NA)
         outfile <- paste0(f, "out")
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla --no-timing",
@@ -516,8 +525,9 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         }
         savefile <- paste(outfile, "save", sep = "." )
         if (file.exists(savefile)) {
-            message("  comparing ", sQuote(outfile), " to ",
-                    sQuote(savefile), " ...", appendLF = FALSE)
+            message(gettextf("  comparing %s to %s ...",
+                             sQuote(outfile), sQuote(savefile)),
+                    appendLF = FALSE, domain = NA)
             res <- Rdiff(outfile, savefile, TRUE)
             if (!res) message(" OK")
             else if (!diffOK) return(1L)
@@ -528,41 +538,41 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
     on.exit(setwd(owd))
 
     if (scope %in% c("basic", "both")) {
-        message("running strict specific tests")
+        message("running strict specific tests", domain = NA)
         for (f in tests1) if (runone(f)) return(1L)
-        message("running sloppy specific tests")
+        message("running sloppy specific tests", domain = NA)
         for (f in tests2) runone(f, TRUE)
-        message("running regression tests")
+        message("running regression tests", domain = NA)
         for (f in tests3) {
             if (runone(f)) return(invisible(1L))
             if (f == "reg-plot") {
                 message("  comparing 'reg-plot.ps' to 'reg-plot.ps.save' ...",
-                        appendLF = FALSE)
+                        appendLF = FALSE, domain = NA)
                 system("diff reg-plot.ps reg-plot.ps.save")
                 message("OK")
             }
         }
         runone("reg-tests-3", TRUE)
-        message("running tests of plotting Latin-1")
-        message("  expect failure or some differences if not in a Latin or UTF-8 locale")
+        message("running tests of plotting Latin-1", domain = NA)
+        message("  expect failure or some differences if not in a Latin or UTF-8 locale", domain = NA)
 
         runone("reg-plot-latin1", TRUE, FALSE)
         message("  comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ...",
-                appendLF = FALSE)
+                appendLF = FALSE, domain = NA)
         system("diff reg-plot-latin1.ps reg-plot-latin1.ps.save")
         message("OK")
     }
 
     if (scope %in% c("devel", "both")) {
-        message("running tests of consistency of as/is.*")
+        message("running tests of consistency of as/is.*", domain = NA)
         runone("isas-tests")
         message("running tests of random deviate generation -- fails occasionally")
         runone("p-r-random-tests", TRUE)
-        message("running tests of primitives")
+        message("running tests of primitives", domain = NA)
         if (runone("primitives")) return(invisible(1L))
-        message("running regexp regression tests")
+        message("running regexp regression tests", domain = NA)
         if (runone("utf8-regex", inC = FALSE)) return(invisible(1L))
-        message("running tests to possibly trigger segfaults")
+        message("running tests to possibly trigger segfaults", domain = NA)
         if (runone("no-segfault")) return(invisible(1L))
     }
 

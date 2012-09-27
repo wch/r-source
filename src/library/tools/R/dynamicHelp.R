@@ -91,7 +91,9 @@ httpd <- function(path, query, ...)
             		types = args$types <- strsplit(query[i], ";")[[1L]],
             		package = args$package <- strsplit(query[i], ";")[[1L]],
             		lib.loc = args$lib.loc <- strsplit(query[i], ";")[[1L]],
-            		warning("Unrecognized search field: ", names(query)[i]))
+            		warning("Unrecognized search field: ", names(query)[i],
+                                domain = NA)
+                       )
             args$fields <- fields
             args$use_UTF8 <- TRUE
             do.call(help.search, args)
@@ -274,7 +276,11 @@ httpd <- function(path, query, ...)
 
             return(list(payload =
                         paste("<p>",
-                              gettextf("Help on topic '%s' was found in the following packages:", topic),
+                              ## for languages with multiple plurals ....
+                              sprintf(ngettextf(length(packages):
+                                                "Help on topic '%s' was found in the following package:",
+                                                "Help on topic '%s' was found in the following packages:"
+                                                ), topic),
                               "</p><dl>\n",
                               packages, "</dl>", sep="", collapse="\n")
                         ))

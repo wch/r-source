@@ -122,7 +122,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     ## .po file might be newer than .mo
     for (f in pofiles) {
         lang <- sub("^R-(.*)[.]po$", "\\1", basename(f))
-        message("  R-", lang, ":", domain = NA, appendLF = FALSE)
+        message("  R-", lang, ":", appendLF = FALSE, domain = NA)
         ## This seems not to update the file dates.
         cmd <- paste("msgmerge --update", f, shQuote(potfile))
         if(system(cmd) != 0L) {
@@ -132,7 +132,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         res <- checkPoFile(f, TRUE)
         if(nrow(res)) {
             print(res)
-            message("not installing")
+            message("not installing", domain = NA)
             next
         }
         dest <- file.path(stem, lang, "LC_MESSAGES")
@@ -184,7 +184,8 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
              if(!is.null(copyright))
                  sprintf('--copyright-holder="%s"', copyright),
              if(!is.null(bugs))
-                 sprintf('--msgid-bugs-address="%s"', bugs))
+                 sprintf('--msgid-bugs-address="%s"', bugs),
+             if(is_base) "-C") # avoid messages about .y
     cmd <- paste(c(cmd, cfiles), collapse=" ")
     if(system(cmd) != 0L) stop("running xgettext failed", domain = NA)
     setwd(od)
@@ -205,7 +206,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
         res <- checkPoFile(f, TRUE)
         if(nrow(res)) {
             print(res)
-            message("not installing")
+            message("not installing", domain = NA)
             next
         }
         dest <- file.path(stem, lang, "LC_MESSAGES")

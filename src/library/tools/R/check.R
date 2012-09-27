@@ -63,7 +63,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if(useJunctions) Sys.junction(from, to)
             else file.copy(from, to, recursive = TRUE)
         } else file.symlink(from, to)
-        if (!res) stop("cannot link from ", from)
+        if (!res) stop(gettextf("cannot link from %s", from), domain = NA)
     }
 
     pi <- .split_description(.read_description(file.path(pkgdir, "DESCRIPTION")))
@@ -2113,9 +2113,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if(!any) warningLog(Log)
                 any <- TRUE
                 msg <- ngettext(nb,
-                         "  Non-ASCII package vignette without specified encoding:\n",
-                         "  Non-ASCII package vignettes without specified encoding:\n", domain = NA)
-                printLog(Log, msg)
+                         "Non-ASCII package vignette without specified encoding:\n",
+                         "Non-ASCII package vignettes without specified encoding:\n", domain = NA)
+                printLog(Log, "  ", msg)
                 printLog(Log,
                          paste(c(paste("  ",
                                        sQuote(basename(bad_vignettes))),
@@ -2134,9 +2134,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if(!any) warningLog(Log)
                 any <- TRUE
                 msg <- ngettext(nb,
-                                "  Unused file in 'inst/doc' which is pointless or misleading",
-                                "  Unused files in 'inst/doc' which are pointless or misleading", domain = NA)
-                printLog(Log,
+                                "Unused file in 'inst/doc' which is pointless or misleading",
+                                "Unused files in 'inst/doc' which are pointless or misleading", domain = NA)
+                printLog(Log, "  ",
                          paste(msg,
                                "  as they will be re-created from the vignettes:", "",
                                sep = "\n"))
@@ -2184,9 +2184,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if(!any) warningLog(Log)
                 any <- TRUE
                 msg <- ngettext(nb,
-                                "  Package vignette which is not in its specified encoding:\n",
-                                "  Package vignettes which are not in their specified encoding:\n", domain = NA)
-                printLog(Log, msg)
+                                "Package vignette which is not in its specified encoding:\n",
+                                "Package vignettes which are not in their specified encoding:\n", domain = NA)
+                printLog(Log, "  ", msg)
                 printLog(Log,
                          paste(c(paste("  ",
                                        sQuote(basename(bad_vignettes))),
@@ -3483,7 +3483,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             pkg <- file.path(dir, pkgname0)
         }
         if (!dir.exists(pkg))
-            stop("package directory ", sQuote(pkg), " does not exist")
+            stop(gettexf("package directory %s does not exist",
+                         sQuote(pkg)), domain = NA)
         setwd(pkg)
         pkgdir <- getwd()
         thispkg_src_subdirs <- thispkg_subdirs

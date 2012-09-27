@@ -751,7 +751,7 @@ function(x, ...)
         attr(x, "functions_in_usages_not_in_code")
     if(length(functions_in_usages_not_in_code)) {
         for(fname in names(functions_in_usages_not_in_code)) {
-            writeLines(gettextf("Functions/methods with usage in documentation object '%s' but not in code:",
+            writeLines(gettextf("Functions or methods with usage in documentation object '%s' but not in code:",
                                 fname))
             .pretty_print(unique(functions_in_usages_not_in_code[[fname]]))
             writeLines("")
@@ -762,7 +762,7 @@ function(x, ...)
         attr(x, "data_sets_in_usages_not_in_code")
     if(length(data_sets_in_usages_not_in_code)) {
         for(fname in names(data_sets_in_usages_not_in_code)) {
-            writeLines(gettextf("Data sets with usage in documentation object '%s' but not in code:",
+            writeLines(gettextf("Data with usage in documentation object '%s' but not in code:",
                                 fname))
             .pretty_print(unique(data_sets_in_usages_not_in_code[[fname]]))
             writeLines("")
@@ -1231,8 +1231,7 @@ function(x, ...)
     .fmt <- function(nm) {
         docObj <- x[[nm]]
         ## FIXME singular or plural?
-        c(gettextf("Data codoc mismatches from documentation object '%s':",
-                   nm),
+        c(gettextf("Data codoc mismatches from documentation object '%s':", nm),
           gettextf("Variables in data frame '%s'", docObj[["name"]]),
           strwrap(gettextf("Code: %s", format_args(docObj[["code"]])),
                   indent = 2L, exdent = 8L),
@@ -1842,11 +1841,11 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         file <- tempfile()
         on.exit(unlink(file))
-        if(!file.create(file)) stop("unable to create ", file)
+        if(!file.create(file)) stop("unable to create ", file, domain = NA)
         if(!all(.file_append_ensuring_LFs(file,
                                           list_files_with_type(code_dir,
                                                                "code"))))
-            stop("unable to write code files")
+            stop("unable to write code files", domain = NA)
     }
     else if(!missing(file)) {
         pkg <- enc <- NA
@@ -2896,12 +2895,12 @@ function(dfile)
         if(!is_base_package) {
             if(val %in% standard_package_names$base)
                 tmp <- c(tmp,
-                         c(gettext("Invalid package name."),
-                           gettext("This is the name of a base package.")))
+                         c("Invalid package name.",
+                           "This is the name of a base package."))
             else if(val %in% standard_package_names$stubs)
                 tmp <- c(tmp,
-                         c(gettext("Invalid package name."),
-                           gettext("This name was used for a base package and is remapped by library().")))
+                         c("Invalid package name.",
+                           "This name was used for a base package and is remapped by library()."))
         }
         if(length(tmp))
             out$bad_package <- tmp
@@ -3492,7 +3491,7 @@ function(package, lib.loc = NULL)
     checkMethodUsagePackage <- function (pack, ...) {
 	pname <- paste("package", pack, sep = ":")
 	if (!pname %in% search())
-	    stop("package must be loaded")
+	    stop("package must be loaded", domain = NA)
 	checkMethodUsageEnv(if (pack %in% loadedNamespaces())
 			    getNamespace(pack) else as.environment(pname), ...)
     }
@@ -3722,10 +3721,8 @@ function(x, ...)
     xx <- x$bad
     if(length(xx)) {
         .fmt <- function(i) {
-            c(sprintf(ngettext(length(xx)>1,
-                               "Missing link in documentation object %s:",
-                               "Missing links in documentation object %s:"),
-                      sQuote(names(xx)[i])),
+            c(gettextf("Missing link or links in documentation object '%s':",
+                       names(xx)[i]),
               ## NB, link might be empty, and was in mvbutils
               .pretty_format(unique(xx[[i]])),
               "")
@@ -5145,8 +5142,8 @@ function(x, ...)
       },
       if(length(x$bad_examples)) {
           msg <- ngettext(length(x$bad_examples),
-                          "Found possibly global 'T' or 'F' in the following Rd example file:",
-                          "Found possibly global 'T' or 'F' in the following Rd example files:"
+                          "Found possibly global 'T' or 'F' in the examples of the following Rd file:",
+                          "Found possibly global 'T' or 'F' in the examepls of the following Rd files:"
                           )
           c(strwrap(msg),
             paste(" ", x$bad_examples))
@@ -5261,7 +5258,7 @@ function(x, ...)
 {
     out <- if(length(x$bad_closures)) {
         msg <- ngettext(length(x$bad_closures),
-                        "Found .Internal call in the following function:",
+                        "Found a .Internal call in the following function:",
                         "Found .Internal calls in the following functions:"
                         )
         out <- c(strwrap(msg), .pretty_format(x$bad_closures))
@@ -5272,14 +5269,14 @@ function(x, ...)
     } else character()
     if(length(x$bad_S4methods)) {
         msg <- ngettext(length(x$bad_S4methods),
-                        "Found .Internal call in methods for the following S4 generic:",
+                        "Found a.Internal call in methods for the following S4 generic:",
                         "Found .Internal calls in methods for the following S4 generics:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_S4methods))
     }
     if(length(x$bad_refs)) {
         msg <- ngettext(length(x$bad_refs),
-                        "Found .Internal call in methods for the following reference class:",
+                        "Found a .Internal call in methods for the following reference class:",
                         "Found .Internal calls in methods for the following reference classes:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_refs))
@@ -5384,7 +5381,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
             if(!silent) message(geterrmessage())
         } else print(tmp, minlevel = minlevel)
     }
-    if(length(bad)) bad <- sQuote(sub(".*/","", bad))
+    if(length(bad)) bad <- sQuote(sub(".*/", "", bad))
     if(length(bad) > 1L)
         cat("problems found in ", paste(bad, collapse=", "), "\n", sep="")
     else if(length(bad))
@@ -5957,8 +5954,9 @@ function(env, verbose = getOption("verbose"))
     }) {
 	if(verbose)
             message(sprintf(ngettext(sum(!ok),
-                                     "Generics without method in %s: %s",
-                                     "Generics without methods in %s: %s"),
+                                     "Generic without any methods in %s: %s",
+                                     "Generics without any methods in %s: %s"),
+                            format(env),
                             paste(sQuote(r[!ok]), collapse = ", ")),
                     domain = NA)
 	r[ok]

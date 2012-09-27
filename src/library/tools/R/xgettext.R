@@ -69,7 +69,13 @@ function(dir, verbose = FALSE, asCall = TRUE)
                  e <- e[!names(e) %in% c("call.", "immediate.", "domain")]
              if(asCall) {
                  if(!suppress) strings <<- c(strings, as.character(e)[-1L])
-             } else for(i in seq_along(e)) find_strings2(e[[i]], suppress)
+             } else {
+                 if(as.character(e[[1L]]) == "gettextf") {
+                     e <- match.call(gettextf, e)
+                     e <- e["fmt"] # just look at fmt arg
+                 }
+                 for(i in seq_along(e)) find_strings2(e[[i]], suppress)
+             }
         } else if(is.recursive(e))
             for(i in seq_along(e)) Recall(e[[i]])
     }
@@ -123,9 +129,12 @@ function(dir, verbose = FALSE)
         if(is.call(e) && is.name(e[[1L]])
            && as.character(e[[1L]]) %in% "ngettext") {
 	    e <- match.call(ngettext, e)
-	    if (is.character(e[["msg1"]]) && is.character(e[["msg2"]]))
-	    	strings <<- c(strings, list(c(msg1=e[["msg1"]],
-	    				      msg2=e[["msg2"]])))
+            domain <- e[["domain"]]
+            suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
+	    if (!suppress &&
+                is.character(e[["msg1"]]) && is.character(e[["msg2"]]))
+	    	strings <<- c(strings, list(c(msg1 = e[["msg1"]],
+	    				      msg2 = e[["msg2"]])))
         } else if(is.recursive(e))
             for(i in seq_along(e)) Recall(e[[i]])
     }

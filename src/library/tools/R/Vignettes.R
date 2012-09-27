@@ -36,7 +36,8 @@ function(package, dir, lib.loc = NULL,
     if(workdir == "tmp") {
         tmpd <- tempfile("Sweave")
         if(!dir.create(tmpd))
-            stop("unable to create temp directory ", tmpd)
+            stop(gettextf("unable to create temp directory %s ", sQuote(tmpd)),
+                 domain = NA)
         setwd(tmpd)
     }
     else {

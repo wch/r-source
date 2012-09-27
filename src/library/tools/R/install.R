@@ -215,11 +215,11 @@
     }
 
     starsmsg <- function(stars, ...)
-        message(stars, " ", ..., domain=NA)
+        message(stars, " ", ..., domain = NA)
 
     errmsg <- function(...)
     {
-        message("ERROR: ", ...)
+        message("ERROR: ", ..., domain = NA)
         do_exit_on_error()
     }
 
@@ -336,13 +336,13 @@
                                 paste(curPkg, collapse = " ")))
             setwd(owd)
             if (res)
-                message("running 'zip' failed")
+                message("running 'zip' failed", domain = NA)
             else
                 message("packaged installation of ",
-                        sQuote(pkg_name), " as ", filename)
+                        sQuote(pkg_name), " as ", filename, domain = NA)
         }
         if (Sys.getenv("_R_INSTALL_NO_DONE_") != "yes") {
-            message("")  # ensure next starts on a new line, for R CMD check
+            message("", domain = NA)  # ensure next starts on a new line, for R CMD check
             starsmsg(stars, "DONE (", pkg_name, ")")
         }
 
@@ -424,7 +424,8 @@
         {
             ## install.lib.R allows customization of the libs installation process
             if (file.exists("install.libs.R")) {
-                message("installing via 'install.libs.R' to ", instdir)
+                message("installing via 'install.libs.R' to ", instdir,
+                        domain = NA)
                 ## the following variables are defined to be available,
                 ## and to prevent abuse we don't expose anything else
                 local.env <- local({ SHLIB_EXT <- SHLIB_EXT
@@ -443,7 +444,7 @@
             if (length(files)) {
                 libarch <- if (nzchar(arch)) paste0("libs", arch) else "libs"
                 dest <- file.path(instdir, libarch)
-                message('installing to ', dest)
+                message('installing to ', dest, domain = NA)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
                 ## not clear if this is still necessary, but sh version did so
@@ -661,7 +662,7 @@
                     makefiles <- f
                 if (file.exists("Makefile.win")) {
                     makefiles <- c("Makefile.win", makefiles)
-                    message("  running 'src/Makefile.win' ...")
+                    message("  running 'src/Makefile.win' ...", domain = NA)
                     res <- system(paste("make --no-print-directory",
                                         paste("-f", shQuote(makefiles), collapse = " ")))
                     if (res == 0) shlib_install(instdir, rarch)
@@ -1323,7 +1324,7 @@
         } else if (a == "--dsym") {
             dsym <- TRUE
         } else if (substr(a, 1, 1) == "-") {
-            message("Warning: unknown option ", sQuote(a))
+            message("Warning: unknown option ", sQuote(a), domain = NA)
         } else pkgs <- c(pkgs, a)
         args <- args[-1L]
     }
@@ -1391,7 +1392,8 @@
             on.exit()
             return(invisible())
         }
-        message("only one architecture so ignoring '--merge-multiarch'")
+        message("only one architecture so ignoring '--merge-multiarch'",
+                domain = NA)
     }
 
     ## now unpack tarballs and do some basic checks
@@ -1501,13 +1503,15 @@
     {
         if (file.exists(lockdir)) {
             message("ERROR: failed to lock directory ", sQuote(lib),
-                    " for modifying\nTry removing ", sQuote(lockdir))
+                    " for modifying\nTry removing ", sQuote(lockdir),
+                    domain = NA)
             do_cleanup_tmpdir()
             q("no", status = 3, runLast = FALSE)
         }
         dir.create(lockdir, recursive = TRUE)
         if (!dir.exists(lockdir)) {
-            message("ERROR: failed to create lock directory ", sQuote(lockdir))
+            message("ERROR: failed to create lock directory ", sQuote(lockdir),
+                    domain = NA)
             do_cleanup_tmpdir()
             q("no", status = 3, runLast = FALSE)
         }
@@ -2008,13 +2012,13 @@
     ## FIXME: add this lib to lib.loc?
     if ("html" %in% types) {
         ## may be slow, so add a message
-        if (!silent) message("    finding HTML links ...", appendLF = FALSE)
+        if (!silent) message("    finding HTML links ...", appendLF = FALSE, domain = NA)
         Links <- findHTMLlinks(outDir, level = 0:1)
         if (!silent) message(" done")
         .Links2 <- function() {
-            message("\n    finding level-2 HTML links ...", appendLF = FALSE)
+            message("\n    finding level-2 HTML links ...", appendLF = FALSE, domain = NA)
             Links2 <- findHTMLlinks(level = 2)
-            message(" done")
+            message(" done", domain = NA)
             Links2
         }
         delayedAssign("Links2", .Links2())
@@ -2036,7 +2040,7 @@
         invokeRestart("muffleWarning")
     }
     .ehandler <- function(e) {
-        message("") # force newline
+        message("", domain = NA) # force newline
         unlink(ff)
         stop(conditionMessage(e), domain = NA, call. = FALSE)
     }

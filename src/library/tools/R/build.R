@@ -915,7 +915,8 @@ get_exclude_patterns <- function()
         ## Now correct the package name (PR#9266)
         if (pkgname != intname) {
             if (!file.rename(pkgname, intname)) {
-                message("Error: cannot rename directory to ", sQuote(intname))
+                message(gettextf("Error: cannot rename directory to %s",
+                                 sQuote(intname)), domain = NA)
                 do_exit(1L)
             }
             pkgname <- intname
