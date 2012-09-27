@@ -2055,8 +2055,8 @@ function(x, ...)
     if (length(zz)) {
         zz <- unique(zz)
         msg <- ngettext(length(zz),
-                        "Undeclared package in foreign function calls",
-                        "Undeclared packages in foreign function calls",
+                        "Undeclared package in foreign function calls:",
+                        "Undeclared packages in foreign function calls:",
                         domain = NA)
         res <- c(res, msg, paste("  ", paste(sQuote(sort(zz)), collapse = ", ")))
     }

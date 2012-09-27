@@ -2671,8 +2671,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                              ": warning: .* is used uninitialized",
                              ": warning: .* set but not used",
                              ": warning: unused",
-                             "missing links?:",
-                             "missing link\\(s\\):")
+                             # these are from era of static HTML
+                             "missing links?:")
                 ## Warnings spotted by gcc with
                 ## '-Wimplicit-function-declaration', which is
                 ## implied by '-Wall'.  Currently only accessible
