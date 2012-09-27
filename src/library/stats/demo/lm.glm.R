@@ -12,8 +12,8 @@ ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
 trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
 group <- gl(2,10, labels=c("Ctl","Trt"))
 weight <- c(ctl,trt)
-anova(lm(weight~group))
-summary(lm(weight~group-1))
+anova  (lm(weight~group))
+summary(lm(weight~group -1))
 
 
 ## Birth Weight Data (Page 14)
@@ -23,11 +23,13 @@ birthw <- c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,
 	    3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,
 	    2412, 2991, 2875, 3231)
 sex <- gl(2,12, labels=c("M","F"))
-plot(age, birthw, col=as.numeric(sex), main="Dobson's Birth Weight Data")
-lines(lowess(age[sex=='F'], birthw[sex=='F']), col=1)
-lines(lowess(age[sex=='M'], birthw[sex=='M']), col=2)
+plot(age, birthw, col=as.numeric(sex), pch=3*as.numeric(sex),
+     main="Dobson's Birth Weight Data")
+lines(lowess(age[sex=='M'], birthw[sex=='M']), col=1)
+lines(lowess(age[sex=='F'], birthw[sex=='F']), col=2)
+legend("topleft", levels(sex), col=1:2, pch=3*(1:2), lty=1, bty="n")
 
-summary(l1 <- lm(birthw ~ sex + age), correlation=TRUE)
+summary(l1 <- lm(birthw ~ sex + age),    correlation=TRUE)
 summary(l0 <- lm(birthw ~ sex + age -1), correlation=TRUE)
 anova(l1,l0)
 summary(li <- lm(birthw ~ sex + sex:age -1), correlation=TRUE)
@@ -44,19 +46,19 @@ anova(z0,zz)
 ## Poisson Regression Data (Page 42)
 x <- c(-1,-1,0,0,0,0,1,1,1)
 y <- c(2,3,6,7,8,9,10,12,15)
-summary(glm(y~x,family=poisson(link="identity")))
+summary(glm(y~x, family=poisson(link="identity")))
 
 
 ## Calorie Data (Page 45)
 calorie <- data.frame(
-		      carb = c(33,40,37,27,30,43,34,48,30,38,
-		      50,51,30,36,41,42,46,24,35,37),
-		      age  = c(33,47,49,35,46,52,62,23,32,42,
-		      31,61,63,40,50,64,56,61,48,28),
-		      wgt  = c(100, 92,135,144,140,101, 95,101, 98,105,
-		      108, 85,130,127,109,107,117,100,118,102),
-		      prot = c(14,15,18,12,15,15,14,17,15,14,
-		      17,19,19,20,15,16,18,13,18,14))
+    carb = c(33,40,37,27,30,43,34,48,30,38,
+	     50,51,30,36,41,42,46,24,35,37),
+    age	 = c(33,47,49,35,46,52,62,23,32,42,
+	     31,61,63,40,50,64,56,61,48,28),
+    wgt	 = c(100, 92,135,144,140,101, 95,101, 98,105,
+	     108, 85,130,127,109,107,117,100,118,102),
+    prot = c(14,15,18,12,15,15,14,17,15,14,
+	     17,19,19,20,15,16,18,13,18,14))
 summary(lmcal <- lm(carb~age+wgt+prot, data= calorie))
 
 
