@@ -1108,7 +1108,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                               sprintf("tools:::.check_dotInternal(dir = \"%s\",details=%s)\n", pkgdir, details))
             out4 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
             ## Hmisc, gooJSON, quantmod give spurious output
-            if (!any(grepl("^Found .Internal call", out4))) out4 <- NULL
+            if (!any(grepl("^Found .* .Internal call", out4))) out4 <- NULL
         }
 
         if (length(out1) || length(out2) || length(out3) || length(out4)) {
@@ -1122,7 +1122,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (length(out3))
                 printLog0(Log, paste(c(out3, ""), collapse = "\n"))
             if (length(out4)) {
-                first <- grep("^Found .Internal call", out4)[1L]
+                first <- grep("^Found .* .Internal call", out4)[1L]
                 if(first > 1L) out4 <- out4[-seq_len(first-1)]
                 printLog0(Log, paste(c(out4, "", ""), collapse = "\n"))
                 wrapLog(c("Packages should not call .Internal():",
