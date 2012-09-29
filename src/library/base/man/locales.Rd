@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -55,6 +55,8 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   POSIX.  \code{"LC_MESSAGES"} will be \code{"C"} on systems that do not
   support message translation, and is not supported on Windows.  Trying
   to use an unsupported category is an error for \code{Sys.setlocale}.
+  Note that \code{"LC_MESSAGES"} is overruled by the \code{"LANGUAGE"}
+  environment variable if that is set, see also \code{\link{LANGUAGE}}.
 
   Note that setting category \code{"LC_ALL"} sets only
   \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and
