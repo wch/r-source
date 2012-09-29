@@ -3483,8 +3483,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             pkg <- file.path(dir, pkgname0)
         }
         if (!dir.exists(pkg))
-            stop(gettexf("package directory %s does not exist",
-                         sQuote(pkg)), domain = NA)
+            stop(gettextf("package directory %s does not exist",
+                          sQuote(pkg)), domain = NA)
         setwd(pkg)
         pkgdir <- getwd()
         thispkg_src_subdirs <- thispkg_subdirs
