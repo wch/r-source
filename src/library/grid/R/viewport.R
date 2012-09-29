@@ -246,8 +246,12 @@ is.viewport <- function(vp) {
 # Some classes derived from viewport
 #############
 
+viewportorpath <- function(x) {
+    is.viewport(x) || inherits(x, "vpPath")
+}
+
 vpListFromList <- function(vps) {
-  if (all(sapply(vps, is.viewport, simplify=TRUE))) {
+  if (all(sapply(vps, viewportorpath, simplify=TRUE))) {
     class(vps) <- c("vpList", "viewport")
     vps
   } else {
@@ -264,7 +268,7 @@ vpList <- function(...) {
 # Viewports will be pushed in series
 vpStack <- function(...) {
   vps <- list(...)
-  if (all(sapply(vps, is.viewport, simplify=TRUE))) {
+  if (all(sapply(vps, viewportorpath, simplify=TRUE))) {
     class(vps) <- c("vpStack", "viewport")
     vps
   } else {
@@ -274,7 +278,7 @@ vpStack <- function(...) {
 
 # Viewports will be pushed as a tree
 vpTree <- function(parent, children) {
-  if (is.viewport(parent) && inherits(children, "vpList")) {
+  if (viewportorpath(parent) && inherits(children, "vpList")) {
     tree <- list(parent=parent, children=children)
     class(tree) <- c("vpTree", "viewport")
     tree

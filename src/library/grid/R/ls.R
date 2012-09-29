@@ -544,7 +544,7 @@ updateVPPath.vpPopListing <- function(x, vppath) {
 
 updateVPPath.vpTreeListing <- function(x, vppath) {
     incPath(vppath,
-            paste(x$parent, .grid.pathSep,
+            paste(updateVPPath(x$parent, ""), .grid.pathSep,
                   updateVPPath(x$children, ""), sep=""))
 }
 
@@ -584,7 +584,7 @@ flatListing.gTreeListing <- function(x, gDepth=0, vpDepth=0,
          type=c(class(x)[1L], flatChildren$type))
 }
 
-flatListing.vpTreeListing <- function(x, gDepth=0, vpDepth=0,
+OLDflatListing.vpTreeListing <- function(x, gDepth=0, vpDepth=0,
                                       gPath="", vpPath="") {
     # Increase vpDepth and vpPath
     flatChildren <- flatListing(x$children, gDepth, incDepth(vpDepth, 1),
@@ -595,6 +595,25 @@ flatListing.vpTreeListing <- function(x, gDepth=0, vpDepth=0,
          gPath=c(gPath, flatChildren$gPath),
          vpPath=c(vpPath, flatChildren$vpPath),
          type=c(class(x)[1L], flatChildren$type))
+}
+
+flatListing.vpTreeListing <- function(x, gDepth=0, vpDepth=0,
+                                      gPath="", vpPath="") {
+    flatParent <- flatListing(x$parent, gDepth, vpDepth,
+                              gPath, vpPath)
+    depth <- attr(x$parent, "depth")
+    if (is.null(depth)) {
+        depth <- 1
+    }
+    # Increase vpDepth and vpPath
+    flatChildren <- flatListing(x$children, gDepth, incDepth(vpDepth, depth),
+                                gPath, updateVPPath(x$parent, vpPath))
+    list(name=c(flatParent$name, flatChildren$name),
+         gDepth=c(flatParent$gDepth, flatChildren$gDepth),
+         vpDepth=c(flatParent$vpDepth, flatChildren$vpDepth),
+         gPath=c(flatParent$gPath, flatChildren$gPath),
+         vpPath=c(flatParent$vpPath, flatChildren$vpPath),
+         type=c(flatParent$type, flatChildren$type))
 }
 
 flatListing.vpNameTreeListing <- function(x, gDepth=0, vpDepth=0,

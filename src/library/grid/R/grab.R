@@ -60,6 +60,12 @@ vpExists.vpTree <- function(vp) {
   vpExists(vp$parent)
 }
 
+# Handle vpPaths in a vpStack or vpTree
+# Not a problem to downViewport() to a viewport that already exists
+vpExists.vpPath <- function(vp) {
+    FALSE
+}
+
 wrap <- function(x) {
   UseMethod("wrap")
 }

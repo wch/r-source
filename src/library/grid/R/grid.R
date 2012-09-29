@@ -82,6 +82,11 @@ push.vp.vpTree <- function(vp, recording) {
   push.vp(vp$children, recording)
 }
 
+# "push"ing a vpPath is just a downViewport(..., strict=TRUE)
+push.vp.vpPath <- function(vp, recording) {
+    downViewport(vp, strict=TRUE, recording)
+}
+
 push.viewport <- function(..., recording=TRUE) {
   .Deprecated("pushViewport")
   pushViewport(..., recording=recording)
