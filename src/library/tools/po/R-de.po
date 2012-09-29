@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:20\n"
+"POT-Creation-Date: 2012-09-29 11:09\n"
 "PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -60,8 +60,7 @@ msgstr ""
 "Code"
 
 #, fuzzy
-msgid ""
-"Data set or sets with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr "Datensätze mit Anleitung im Dokuobjekt '%s', jedoch nicht im Code"
 
 msgid "Argument names in code not in docs:"
@@ -578,6 +577,10 @@ msgstr "Fehler: keine Pakete angegeben"
 
 msgid "ERROR: cannot create check dir %s"
 msgstr "Fehler: kann  Verzeichnis %s für Check nicht erzeugen"
+
+#, fuzzy
+msgid "package directory %s does not exist"
+msgstr "Verzeichnis '%s' existiert nicht"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

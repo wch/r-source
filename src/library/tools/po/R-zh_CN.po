@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:20\n"
+"POT-Creation-Date: 2012-09-29 11:09\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -59,8 +59,7 @@ msgid ""
 msgstr "函数/文件的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 #, fuzzy
-msgid ""
-"Data set or sets with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr "数据集的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 msgid "Argument names in code not in docs:"
@@ -557,6 +556,10 @@ msgstr "错误：没有设定程序包"
 
 msgid "ERROR: cannot create check dir %s"
 msgstr "错误：无法建立检查目录%s"
+
+#, fuzzy
+msgid "package directory %s does not exist"
+msgstr "不存在'%s'这个文件目录"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

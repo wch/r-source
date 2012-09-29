@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:20\n"
+"POT-Creation-Date: 2012-09-29 11:09\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -57,8 +57,7 @@ msgstr ""
 "はメソッド: "
 
 #, fuzzy
-msgid ""
-"Data set or sets with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr ""
 " ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはないデータセッ"
 "ト: "
@@ -595,6 +594,10 @@ msgstr " エラー：パッケージが指定されていません "
 
 msgid "ERROR: cannot create check dir %s"
 msgstr " エラー：チェックディレクトリ '%s' を生成することが出来ません "
+
+#, fuzzy
+msgid "package directory %s does not exist"
+msgstr " ディレクトリ '%s' が存在しません "
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

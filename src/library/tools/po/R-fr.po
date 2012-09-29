@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:20\n"
+"POT-Creation-Date: 2012-09-29 11:09\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -62,8 +62,7 @@ msgstr ""
 "pas dans le code :"
 
 #, fuzzy
-msgid ""
-"Data set or sets with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr ""
 "Jeux de données avec 'usage' dans la documentation de l'objet '%s', mais pas "
 "dans le code :"
@@ -601,6 +600,10 @@ msgstr "Erreur : aucun package spécifié"
 
 msgid "ERROR: cannot create check dir %s"
 msgstr "ERREUR : impossible de créer le répertoire de vérification %s"
+
+#, fuzzy
+msgid "package directory %s does not exist"
+msgstr "le répertoire '%s' n'existe pas"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

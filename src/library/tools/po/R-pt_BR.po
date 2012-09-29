@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:20\n"
+"POT-Creation-Date: 2012-09-29 11:09\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -56,8 +56,7 @@ msgstr ""
 "Funções/métodos com uso no objeto de documentação '%s' mas não no código:"
 
 #, fuzzy
-msgid ""
-"Data set or sets with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr ""
 "Arquivos de dados com uso no objeto de documentação '%s' mas não no código:"
 
@@ -539,6 +538,10 @@ msgstr ""
 
 msgid "ERROR: cannot create check dir %s"
 msgstr ""
+
+#, fuzzy
+msgid "package directory %s does not exist"
+msgstr "diretório '%s' não existe"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

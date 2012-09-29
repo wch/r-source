@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:20\n"
+"POT-Creation-Date: 2012-09-29 11:09\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -63,8 +63,7 @@ msgstr ""
 "다 "
 
 #, fuzzy
-msgid ""
-"Data set or sets with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr ""
 "객체 '%s' 에 대한 데이터셋의 사용법이 문서화 되어 있으나 코드에는 없습니다 "
 
@@ -580,6 +579,10 @@ msgstr "에러: 지정된 패키지들이 없습니다 "
 
 msgid "ERROR: cannot create check dir %s"
 msgstr "에러: 체크 디렉토리 '%s' 를 작성할 수가 없습니다"
+
+#, fuzzy
+msgid "package directory %s does not exist"
+msgstr "디렉토리 '%s' 가 존재하지 않습니다 "
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

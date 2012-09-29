@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:20\n"
+"POT-Creation-Date: 2012-09-29 11:09\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -62,8 +62,7 @@ msgid ""
 msgstr "Функции/методы использованы в объекте документации '%s', но не в коде:"
 
 #, fuzzy
-msgid ""
-"Data set or sets with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr "Данные использованы в объекте документации '%s', но не в коде:"
 
 msgid "Argument names in code not in docs:"
@@ -584,6 +583,10 @@ msgstr "Ошибка: пакеты не определены"
 
 msgid "ERROR: cannot create check dir %s"
 msgstr "ОШИБКА: не могу создать проверочную директорию %s"
+
+#, fuzzy
+msgid "package directory %s does not exist"
+msgstr "папка '%s' не существует"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

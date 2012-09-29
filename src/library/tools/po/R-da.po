@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:20\n"
+"POT-Creation-Date: 2012-09-29 11:09\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,8 +56,7 @@ msgstr ""
 "Funktioner/metoder med brug i dokumentationsobjekt »%s« men ikke i kode:"
 
 #, fuzzy
-msgid ""
-"Data set or sets with usage in documentation object '%s' but not in code:"
+msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr "Datasæts med brug i dokumentationsobjekt »%s« men ikke i kode:"
 
 msgid "Argument names in code not in docs:"
@@ -544,6 +543,10 @@ msgstr ""
 
 msgid "ERROR: cannot create check dir %s"
 msgstr ""
+
+#, fuzzy
+msgid "package directory %s does not exist"
+msgstr "mappe »%s« findes ikke"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
