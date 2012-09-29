@@ -1,2601 +1,3155 @@
-# # File R_HOME/src/library/stats/po/R-ko.po
-# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
-# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
-# # Distributed under GPL 2 or later
-# #
+# File R_HOME/src/library/stats/po/R-ko.po
+# Korean translations for R-Base
+# Copyright (C) 2012 THE R'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the R package
+# Maintainer: Chel Hee Lee (Korean, R Development Translation Team)
+# Email: <gnustats@gmail.com> or <chl948@mail.usask.ca>
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-10 13:59\n"
-"PO-Revision-Date: 2005-05-26 15:05+0900\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
+"PO-Revision-Date: 2012-09-26 22:33-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team:  <gnustats@gmail.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "models are not all fitted to the same number of observations"
-msgstr "model는 모두 동일 사이즈의 데이터 세트에 적용시킬수 없습니다"
+msgstr "models are not all fitted to the same number of observations"
 
+# translated on 2012-09-26
 msgid "empty model supplied"
-msgstr "비어있는 모델이 제공되어졌습니다"
+msgstr "비어있는 모델이 제공되었습니다"
 
+# translated on 2012-09-26
 msgid "'acf' must be of length two or more"
-msgstr "'acf'는 2 이상의 길이가 나오지 않으면 되지 않습니다"
+msgstr "'acf'는 반드시 둘 또는 그 이상의 길이 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "object not interpretable as a factor"
-msgstr "오브젝트는 인자로서 해석 할수 없습니다"
+msgstr "객체는 요인으로서 해석할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
-msgstr "레벨이 없는 모델은 적용시킬수 없습니다('alpha'는 0이면 안됩니다)"
+msgstr "레벨(level)없이 모델들을 적합할 수 없습니다 ('alpha'는 반드시 0 또는 FALSE이어야 합니다)."
 
+# translated on 2012-09-26
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
-msgstr ""
-"'alpha', 'beta' 그리고 'gamma'는 단위 사이의 내부에 있을 필요가 있습니다"
+msgstr "'alpha', 'beta' 그리고 'gamma'는 반드시 단위 구간내에 있어야 합니다."
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "data must be non-zero for multiplicative Holt-Winters."
-msgstr ""
-"곱셈적 Holt-Winters 모델에서 데이터는 non-negative가 아니면 되지 않습니다"
+msgstr "배수적 Holt-Winters에서는 데이터는 반드시 0이 아니어야 합니다."
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "need at least 2 periods to compute seasonal start values."
-msgstr "계절적 개시값을 계산하기에는 적어도 3개가 필요합니다"
+msgstr "계절절 개시값을 연산하기 위해서는 최소한 2개의 주기를 필요로 합니다."
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid length(x)"
-msgstr "멤버의 길이가 무효입니다"
+msgstr "유효하지 않은 length(x)입니다"
 
+# translated on 2012-09-26
 msgid "optimization difficulties: %s"
-msgstr ""
+msgstr "최적화 실패: %s"
 
+# translated on 2012-09-26
 msgid "optimization failure"
-msgstr ""
+msgstr "최적화 실패"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "time series has no or less than 2 periods"
-msgstr "시계열이 없거나, 3기간 미만입니다"
+msgstr "시계열의 기간이 없거나 2 기간 미만입니다"
 
+# translated on 2012-09-26
 msgid "the series is entirely NA"
-msgstr "계열은 NA값만 입니다"
+msgstr "본 계열은 NA 값들 뿐입니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "frequency must be a positive integer >= 2 for BSM"
-msgstr "BSM 에서 빈도는 positive 정수가 아니면 되지 않습니다"
+msgstr "BSM에서 빈도는 반드시 2 이상의 양의 정수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "only implemented for univariate time series"
-msgstr "일변양시계열에만 실제 적용되어 있습니다"
+msgstr "오로지 일변량 시계열에만 실행이 됩니다"
 
+# translated on 2012-09-26
 msgid "'x' must be numeric"
-msgstr "'x'는 수치가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "the first value of the time series must not be missing"
-msgstr "시계열의 최초의 값은 결손하지 않으면 안됩니다"
+msgstr "시계열의 첫번째값은 반드시 누락되어서는 안됩니다"
 
+# translated on 2012-09-26
 msgid "all parameters were fixed"
 msgstr "모든 파라미터가 고정되어 있었습니다"
 
+# translated on 2012-09-26
 msgid "possible convergence problem: optim gave code="
-msgstr "수렴에 관한 문제의 가능성: optim는 이하의 code=를 주었습니다"
+msgstr "수렴문제에 대한 가능성: optim은 다음과 같이 code=를 주었습니다"
 
+# translated on 2012-09-26
 msgid "no factors in the fitted model"
-msgstr "적용시킨 모델중에는 인자가 없습니다"
+msgstr "적합된 모델에는 요인들이 없습니다"
 
+# translated on 2012-09-26
 msgid "'which' specified no factors"
-msgstr "'which'는 어떠한 인자도 지정하지 않았습니다"
+msgstr "'which'는 아무런 요인들도 지정하지 않았습니다"
 
+# translated on 2012-09-26
 msgid "'which' specified some non-factors which will be dropped"
-msgstr "'which'는 제거되어야 할 non-factos를 지정했습니다"
+msgstr "'which'는 삭제되어야 할 일부 비요인들을 지정했습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'lag.max' must be at least 0"
-msgstr "'lag.max'는 적어도 1 입니다"
+msgstr "'lag.max'는 반드시 최소한 0 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'lag.max' must be at least 1"
-msgstr "'lag.max'는 적어도 1 입니다"
+msgstr "'lag.max'는 최소한 1이어야 합니다"
 
+# translated on 2012-09-26
 msgid "NAs in 'x'"
-msgstr "'x'에서 NA값이 있습니다"
+msgstr "'x'에 NA들이 있습니다"
 
+# translated on 2012-09-26
 msgid "x$lag must have at least 1 column"
-msgstr "x$lag는 적어도 1열을 포함하지 않으면 되지 않습니다"
+msgstr "x$lag은 반드시 최소 1개의 열을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "can use ci.type=\"ma\" only if first lag is 0"
-msgstr "최초 lag가 0 일때만  ci.type=\"ma\"를 사용할수가 있습니다"
+msgstr "첫번째 래그가 0 일때만 ci.type=\"ma\"를 사용하세요"
 
+# translated on 2012-09-26
 msgid "univariate time series only"
-msgstr "일변양시계열만 입니다"
+msgstr "일변량 시계열 전용입니다"
 
+# translated on 2012-09-26
 msgid "no terms in scope"
-msgstr "scope에 항이 없습니다"
+msgstr "스코프에 항들이 없습니다"
 
+# translated on 2012-09-26
 msgid "no terms in scope for adding to object"
-msgstr "오브젝트에 첨가해야 할 항이 scope중에 있지 않습니다"
+msgstr "객체에 추가해야할 항목이 스코프내에 없습니다"
 
+# translated on 2012-09-26
 msgid "number of rows in use has changed: remove missing values?"
-msgstr "사용중의 행수가 변했습니다: 결손값을 제거합니까?"
+msgstr "사용중인 행들의 개수가 변했습니다: 결측치들을 제거할까요?"
 
+# translated on 2012-09-26
 msgid "attempting model selection on an essentially perfect fit is nonsense"
-msgstr ""
+msgstr "근본적으로 완벽한 적합에 대한 모델선택에 대한 시도는 의미가 없습니다"
 
+# translated on 2012-09-26
 msgid "using the %d/%d rows from a combined fit"
-msgstr "결합한 적합로부터 %d/%d행을 사용합니다"
+msgstr "결합된 적합으로부터 %d/%d 행들을 사용합니다"
 
+# translated on 2012-09-26
 msgid "F test assumes quasi%s family"
-msgstr "F test는 동일한 %s패밀리입니다"
+msgstr "F 테스트는 쿼시%s 패밀리를 가정합니다"
 
+# translated on 2012-09-26
 msgid "no 'add1' method implemented for \"mlm\" models"
-msgstr "\"mlm\" 모델에서 'add1'메소드는 실제 적용되지 않습니다"
+msgstr "\"mlm\" 모델들을 위한 'add1' 메소드는 구현되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "scope is not a subset of term labels"
-msgstr "scope는 label항의 부분 집합이 아닙니다"
+msgstr "scope는 항 labels의 부분집합이 아닙니다"
 
+# translated on 2012-09-26
 msgid "no 'drop1' method for \"mlm\" models"
-msgstr "메소드 'drop1'는 mlm 모델에서 실제 적용되어 있지 않습니다"
+msgstr "\"mlm\" 모델들을 위한 'drop1' 메소드가 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "F test assumes 'quasi%s' family"
-msgstr "F test는 동일한 %s패밀리입니다"
+msgstr "F 테스트는 'quasi%s' 패밀리를 가정합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "lower scope has term(s) %s not included in model"
-msgstr "하위의 scpoe는 모델에서 포함하고 되지 않습니다"
+msgstr "하위 스코프는 모델에 포함되어 있지 않은 항 %s(들)을 가지고 있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "upper scope does not include model term(s) %s"
-msgstr "상위의 scope는 모델을 포함하고 있지 않습니다"
+msgstr "상위 스코프는 모델의 항 %s (들)을 포함하고 있지 않습니다"
 
+# translated on 2012-09-26
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
-msgstr ""
-"AIC는 이 모델에서 정의 되지 않습니다, 따라서 'step'를 진행시킬 수가 없습니다"
+msgstr "이 모델에 대한 AIC는 아직 정의되지 않았습니다, 따라서 'step'을 계속 진행할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'A' must be an array or table"
-msgstr "'x'는 행렬이거나 데이터 프레임이 아니면 되지 않습니다"
+msgstr "'A'는 반드시 배열 또는 테이블이어야 합니다"
 
+# translated on 2012-09-26
 msgid ""
 "length of FUN, %d,\n"
 " does not match the length of the margins, %d"
-msgstr "FUN 길이 %d는 마진의 길이%d와 match하지 않습니다"
+msgstr ""
+"FUN의 길이, %d,\n"
+" 마진의 길이 %d와 일치하지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "no rows to aggregate"
-msgstr "비교해야할 모델이 없습니다"
+msgstr "합쳐야 할 행들이 없습니다"
 
+# translated on 2012-09-26
 msgid "'by' must be a list"
-msgstr "'by'는 list가 아니면 되지 않습니다"
+msgstr "'by'는 반드시 리스트이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "arguments must have same length"
-msgstr "인수는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "인수들은 반드시 동일한 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "'formula' missing or incorrect"
-msgstr "'formula'가 없거나 부정확합니다"
+msgstr "'formula'가 누락되거나 정확하지 않습니다"
 
+# translated on 2012-09-26
 msgid "'formula' must have both left and right hand sides"
-msgstr "모델식('formula')은 좌변과 우변의 쌍방을 가지지 않으면 안됩니다"
+msgstr "'formula'는 반드시 좌변과 우변을 함께 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "cannot change frequency from %g to %g"
-msgstr "빈도를 %g로부터 %g까지 변경 할수 없습니다"
+msgstr "빈도를 %g에서 %g로 바꿀 수 없습니다"
 
+# translated on 2012-09-26
 msgid "'x' must be coefficient matrix/data frame"
-msgstr "'x' 계수 행렬/데이터 프레임이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 계수 행렬/데이터 프레임이어야 합니다"
 
+# translated on 2012-09-26
 msgid "option \"show.coef.Pvalues\" is invalid: assuming TRUE"
-msgstr "옵션 \"shsow.coef.Pvalues\"는 무효입니다: TRUE를 가정합니다"
+msgstr "잘못된 옵션 \"show.coef.Pvalues\"입니다: TRUE를 가정합니다"
 
+# translated on 2012-09-26
 msgid "'P.values' is TRUE, but 'has.Pvalue' is not"
-msgstr "'P.values'는 TRUE이지만, 'has.Pvalue'는 그렇지는 않습니다"
+msgstr "'P.values'는 TRUE이지만, 'has.Pvalue'는 그렇지 않습니다"
 
+# translated on 2012-09-26
 msgid "wrong k / cs.ind"
-msgstr "잘못한 k /  cs.ind입니다"
+msgstr "잘못된 k / cs.ind"
 
+# translated on 2012-09-26
 msgid "option \"show.signif.stars\" is invalid: assuming TRUE"
-msgstr "옵션\"show.signif.stars\"는 무효입니다 : TRUE를 가정합니다"
+msgstr "잘못된 옵션 \"show.signif.stars\" 입니다: TRUE를 가정합니다"
 
+# translated on 2012-09-26
 msgid "'anova' object must have colnames"
-msgstr "'anova'오브젝트는 colnames를 가지지 않으면 안됩니다"
+msgstr "'anova' 객체는 반드시 colnames를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "'conf.level' must be a single number between 0 and 1"
-msgstr "'conf.level'는 0 과 1의 사이의 단일 수치가 아니면 되지 않습니다"
+msgstr "'conf.level'는 반드시 0과 1 사이의 단일 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "not enough 'x' observations"
 msgstr "관측값 'x'의 개수가 불충분합니다"
 
+# translated on 2012-09-26
 msgid "not enough 'y' observations"
 msgstr "관측값 'y'의 개수가 불충분합니다"
 
+# translated on 2012-09-26
 msgid "samples differ in location: cannot compute confidence set, returning NA"
-msgstr ""
-"samples의 위치가 다릅니다: 신뢰 집합을 계산 할 수 없습니다. NA값을 돌려줍니다"
+msgstr "샘플들의 위치가 다릅니다: 신뢰집합을 계산할 수 없으므로, NA를 돌려줍니다"
 
+# translated on 2012-09-26
 msgid "cannot compute confidence set, returning NA"
-msgstr "신뢰 집합을 계산 할수 없습니다.NA값을 돌려줍니다"
+msgstr "신뢰집합을 계산할 수 없으므로, NA를 돌려줍니다"
 
+# translated on 2012-09-26
 msgid "cannot compute asymptotic confidence set or estimator"
-msgstr "점최근 소신뢰집합, 또는 추정값을 계산할 수가 없습니다"
+msgstr "점근적 신뢰집합 또는 추정량을 계산할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "cannot compute estimate, returning NA"
-msgstr "추정값을 계산 할수 없습니다, NA값을 돌려줍니다"
+msgstr "추정량을 계산할 수 없으므로, NA를 돌려줍니다"
 
+# translated on 2012-09-26
 msgid "cannot compute exact p-value with ties"
-msgstr "ties가 있기때문에, 정확한 p값을 돌려줍니다"
+msgstr "동일한 값들의 존재로 인하여 정확한 p-값을 계산할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "cannot compute exact confidence intervals with ties"
-msgstr "ties가 있기때문에, 정확한 신뢰 구간을 계산할 수가 없습니다"
+msgstr "동일한 값들에 대한 정확한 신뢰구간을 구할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "grouping factor must have exactly 2 levels"
-msgstr "그룹화 인자는 꼭 2 levels을 가지지 않으면 안됩니다"
+msgstr "그룹화 인자는 반드시 정확히 두개의 수준을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "weights are not supported in a multistratum aov() fit"
-msgstr ""
+msgstr "다층 aov() 적합에서 가중치는 지원되지 않습니다"
 
+# translated on 2012-09-26
 msgid "Error() model is singular"
-msgstr "Error()모델은 특이합니다"
+msgstr "Error() 모델은 특이합니다"
 
+# translated on 2012-09-26
 msgid "the 'split' argument must be a list"
-msgstr "'split' 인수는 리스트가 아니면 되지 않습니다"
+msgstr "'split' 인수는 반드시 리스트이어야 합니다"
 
+# translated on 2012-09-26
 msgid "unknown name(s) in the 'split' list"
-msgstr "'split' 리스트에서 알수없는 이름입니다"
+msgstr "'split' 리스트에서 알 수 없는 이름(들)"
 
+# translated on 2012-09-26
 msgid "'coef' must define a contrast, i.e., sum to 0"
-msgstr ""
-"'coef'는 대비를 정의 하지 않으면 되지 않습니다, 즉 총계는 0이 될 필요가 있습"
-"니다"
+msgstr "'coef'는 반드시 대조를 정의해야 합니다, 즉, 합이 0 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'coef' must have same length as 'contrast.obj'"
-msgstr "'coef'는 contrast.obj와 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'coef'는 반드시 'contrast.obj'와 같은 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "each element of '%s' must be logical"
-msgstr "'%s'의 각 요소는 진위값이 아니면 되지 않습니다"
+msgstr "'%s'의 각요소는 반드시 논리값이어야 합니다"
 
+# translated on 2012-09-26
 msgid "the contrast defined is empty (has no TRUE elements)"
-msgstr "정의될 대비는 비어 있습니다 (TRUE 요소가 없습니다)"
+msgstr "정의된 대조가 비어있습니다 (TRUE 요소들을 가지지 않습니다)"
 
+# translated on 2012-09-26
 msgid "columns of 'contrast.obj' must define a contrast (sum to zero)"
-msgstr "'contrast.obj'의 열은 대비(총계가 0)를 정의 하지 않으면 되지 않습니다"
+msgstr "'contrast.obj'의 열들은 반드시 대조를 정의해야 합니다 (합이 0 이어야 합니다)"
 
+# translated on 2012-09-26
 msgid "no degrees of freedom for residuals"
-msgstr "residuals에 자유도가 없습니다"
+msgstr "잔차에 대한 자유도가 없습니다"
 
+# translated on 2012-09-26
 msgid "'object' does not include an error 'qr' component"
-msgstr "'object'는 에러'qr'요소를 포함하고는 있지 않습니다"
+msgstr "'object'는 에러 'qr' 요소를 포함하지 않습니다"
 
+# translated on 2012-09-26
 msgid "Refitting model to allow projection"
-msgstr ""
+msgstr "프로젝션을 허용하기 위하여 모델을 다시 적합합니다"
 
+# translated on 2012-09-26
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
-msgstr "'contrast.obj'의 열은 대비(총계가 0)를 정의하지 않으면 되지 않습니다"
+msgstr "'contrast.obj'의 열들은 반드시 대조를 정의해야 합니다 (합이 0 이어야 합니다)"
 
+# translated on 2012-09-26
 msgid "collapsing to unique 'x' values"
-msgstr "유일한 'x'값을 얻기 위해서 축소했습니다"
+msgstr "유일한 'x'값들로 좁히고 있습니다"
 
+# translated on 2012-09-26
 msgid "invalid interpolation method"
-msgstr "무효인 보간법입니다"
+msgstr "잘못된 보간법입니다"
 
+# translated on 2012-09-26
 msgid "need at least two non-NA values to interpolate"
-msgstr "보간을 위해서 적어도 2개의 non-NA값이 필요합니다"
+msgstr "보간을 위해서는 NA가 아닌 최소 두개 이상의 값들이 필요합니다"
 
+# translated on 2012-09-26
 msgid "zero non-NA points"
-msgstr "non-NA 포인트입니다"
+msgstr "zero non-NA points"
 
+# translated on 2012-09-26
 msgid "'approx' requires n >= 1"
-msgstr "'approx'는 n >= 1 인것을 필요로 합니다"
+msgstr "'approx'는 n >= 1을 요구합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid length(xout)"
-msgstr "멤버의 길이가 무효입니다"
+msgstr "유효하지 않은 length(xout)입니다"
 
+# translated on 2012-09-26
 msgid "'order.max' must be >= 1"
-msgstr "'order.max'는 1 이상의 아니면 되지 않습니다"
+msgstr "'order.max'는 반드시 1 이상이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'order.max' must be < 'n.used'"
-msgstr "'order.max'는 1 이상의 아니면 되지 않습니다"
+msgstr "'order.max'는 반드시 'n.used' 보다 작아야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'n.ahead' must be at least 1"
-msgstr "'lag.max'는 적어도 1 입니다"
+msgstr "'n.ahead'는 반드시 최소한 1 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "number of series in 'object' and 'newdata' do not match"
-msgstr "'object'안의 계열의 수와 'newdata'가 일치하지 않습니다"
+msgstr "'object' 내의 계열의 수와 'newdata'가 일치하지 않습니다"
 
+# translated on 2012-09-26
 msgid "'se.fit' not yet implemented for multivariate models"
-msgstr "'se.fit'는 다변양모델에서 실제 적용되어있지 않습니다"
+msgstr "다변량 모델들을 위한 'se.fit'는 아직 구현되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "Burg's algorithm only implemented for univariate series"
-msgstr "Burg의 알고니즘은 일변양계열에만 실제 적용되어 있습니다"
+msgstr "Burg의 알고리즘은 오로지 일변량 계열에만 사용됩니다"
 
+# translated on 2012-09-26
 msgid "MLE only implemented for univariate series"
-msgstr "MLE는 일변양계열에만 실제 적용되어 있습니다"
+msgstr "MLE는 오로지 일변량 계열에서만 사용됩니다"
 
+# translated on 2012-09-26
 msgid "'order.max' must be >= 0"
-msgstr "'order.max'는 non-negative이어야만 합니다"
+msgstr "'order.max'는 반드시 0 이상이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'order' must be a non-negative numeric vector of length 3"
-msgstr "'order'는 길이 3의 non-negative 수치 벡터가 아니면 되지 않습니다"
+msgstr "'order'는 반드시 길이가 3이고 음이 아닌 숫자 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'seasonal' must be a list with component 'order'"
-msgstr "'seasonal' 요소에 'order'를 갖춘 리스트가 아니면 되지 않습니다"
+msgstr "'seasonal'은 반드시 구성요소 'order'를 가진 리스트이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
-msgstr ""
-"'seasonal$order'는 길이 3의 non-negative의 벡터값이 아니면 되지 않습니다"
+msgstr "'seasonal$order'은 반드시 길이가 3이고 음이 아닌 숫자 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "'x'와 'xreg'의 길이가 일치하지 않습니다"
 
+# translated on 2012-09-26
 msgid "wrong length for 'fixed'"
-msgstr "'fixed'에는 잘못한 길이입니다"
+msgstr "wrong length for 'fixed'"
 
+# translated on 2012-09-26
 msgid "some AR parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
-"몇개의 AR 파라미터는 고정되어 있습니다; transform.pars = FALSE를 설정했습니다"
+msgstr "일부 AR 파라미터들은 고정되어 있습니다: transform.pars = FALSE 으로 설정합니다"
 
+# translated on 2012-09-26
 msgid "too few non-missing observations"
-msgstr "결손이 아닌 관측값이 너무 적습니다"
+msgstr "결측되지 않은 관측값들이 너무 적습니다"
 
+# translated on 2012-09-26
 msgid "'init' is of the wrong length"
-msgstr "'init'는 잘못한 길이입니다"
+msgstr "'init'의 길이가 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "non-stationary AR part"
-msgstr "AR 부분이 비정상입니다"
+msgstr "불안정적인 AR 부분"
 
+# translated on 2012-09-26
 msgid "non-stationary seasonal AR part"
-msgstr "계절적인 AR 부분이 비정상입니다"
+msgstr "불안정적인 계절적 AR 부분"
 
+# translated on 2012-09-26
 msgid "non-stationary AR part from CSS"
-msgstr "CSS로부터 비정상 AR의 부분입니다"
+msgstr "CSS로부터 불안정적인 AR 부분"
 
+# translated on 2012-09-26
 msgid "non-stationary seasonal AR part from CSS"
-msgstr "CSS로부터 비정상의 계절적 AR부분입니다"
+msgstr "CSS로부터 불안정적인 계절적 AR 부분"
 
+# translated on 2012-09-26
 msgid "'xreg' and 'newxreg' have different numbers of columns"
-msgstr "'xreg'와 'newxreg'는 다른 열수를 가집니다"
+msgstr "'xreg'와 'newxreg'는 가지고 있는 열의 개수가 다릅니다"
 
+# translated on 2012-09-26
 msgid "MA part of model is not invertible"
-msgstr "모델의 MA 부분은 가역이 아닙니다"
+msgstr "모델의 MA 부분은 가역적이지 않습니다"
 
+# translated on 2012-09-26
 msgid "seasonal MA part of model is not invertible"
-msgstr "모델의 계절적인 MA 부분은 가역이 아닙니다"
+msgstr "모델의 계절적인 MA 부분은 가역적이지 않습니다"
 
+# translated on 2012-09-26
 msgid "converting non-invertible initial MA values"
-msgstr "비가역적인 초기 MA값을 변환합니다"
+msgstr "비가역적인 초기의 MA 값들을 변환합니다"
 
+# translated on 2012-09-26
 msgid "some ARMA parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
-"몇개의 ARMA 파라미터를 고정했습니다: tramsform.pars = FALSE라고 했습니다"
+msgstr "일부 ARMA 파라미터들은 고정되어 있습니다: transform.pars = FALSE 로 설정합니다"
 
+# translated on 2012-09-26
 msgid "'xreg' is collinear"
-msgstr "'xreq'는 공선형입니다"
+msgstr "'xreg'은 공선형입니다"
 
+# translated on 2012-09-26
 msgid "NAs present: setting 'delta' to -1"
-msgstr "NA가 있습니다: 'delta'를 -1이라고 했습니다"
+msgstr "NA가 존재합니다: 'delta'를 -1로 설정합니다"
 
+# translated on 2012-09-26
 msgid "transformed ARMA parameters were fixed"
-msgstr "변형된 ARMA 파라미터가 고정되었습니다"
+msgstr "변형된 ARMA 파라미터들은 고정되어 있습니다"
 
+# translated on 2012-09-26
 msgid "need at least 2 data points"
-msgstr "적어도 2개의 데이터점이 필요합니다"
+msgstr "최소한 2개 이상의 데이터 포인트들이 필요합니다"
 
+# translated on 2012-09-26
 msgid "invalid 'x'"
-msgstr "무효인 'x'"
+msgstr "잘못된 'x'"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid 'nb'"
-msgstr "무효인 'x'"
+msgstr "잘못된 'nb'"
 
+# translated on 2012-09-26
 msgid "sample is too sparse to find TD"
-msgstr "sample이 너무 부족하기 때문에 TD를 검색해낼 수가 없습니다"
+msgstr "샘플이 드물어 TD를 찾을 수 없습니다"
 
+# translated on 2012-09-26
 msgid "sample is too sparse to find alph2"
-msgstr "sample이 너무 부족하기 때문에 alph2를 검색해낼 수가 없습니다"
+msgstr "샘플이 너무 드물어 alph2를 찾을 수 없습니다"
 
+# translated on 2012-09-26
 msgid "no solution in the specified range of bandwidths"
-msgstr "지정된 bandwidth의 범위내에서 해법은 없습니다"
+msgstr "지정된 bandwidth의 범위내에 해법이 없습니다"
 
+# translated on 2012-09-26
 msgid "increasing bw.SJ() search interval (%d) to [%.4g,%.4g]"
-msgstr ""
+msgstr "bw.SJ()의 검색간격 (%d)을 [%.4g,%.4g]로 늘립니다"
 
+# translated on 2012-09-26
 msgid "minimum occurred at one end of the range"
-msgstr "최소치가 범위의 끝점에 있었습니다"
+msgstr "최소값이 범위 한쪽 끝에 존재합니다"
 
+# translated on 2012-09-26
 msgid "'x' must be a list with at least 2 elements"
-msgstr "'x'는 적어도 2개의 요소를 가지는 리스트가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 최소한 2개의 요소들을 가지는 리스트이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' and 'g' must have the same length"
-msgstr "'x'와 'g'는 동일 길이를 가지지 않으면 되지 않습니다"
+msgstr "'x'와 'g'는 반드시 같은 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "all observations are in the same group"
-msgstr "모든 관측값이 동일 group에 있습니다"
+msgstr "모든 관측값들이 같은 그룹내에 있습니다"
 
+# translated on 2012-09-26
 msgid "there must be at least 2 observations in each group"
-msgstr "각 group에 적어도 2개의 관측값이 아니면 되지 않습니다"
+msgstr "각 그룹에 최소한 2개의 관측값들이 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must be nonnegative and integer"
-msgstr "'x'는 non-negative 정수가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 음수가 아닌 정수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'n' must be a positive integer >= 'x'"
-msgstr "'n'는 'x'이상의 positive정수가 아니면 되지 않습니다"
+msgstr "'n'는 반드시 'x' 보다 크거나 같은 양의 정수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "incorrect length of 'x'"
-msgstr "'x'의 길이가 정확하지 않습니다"
+msgstr "'x'의 길이가 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "'p' must be a single number between 0 and 1"
-msgstr "'p'는 0과 1 사이의 단일의 수치가 아니면 되지 않습니다"
+msgstr "'p'는 반드시 0과 1 사이의 단일 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "length of choices must be 2"
-msgstr "선택한 길이는 2가 나오지 않으면 되지 않습니다"
+msgstr "choices의 길이는 반드시 2이어야 합니다"
 
+# translated on 2012-09-26
 msgid "object '%s' has no scores"
-msgstr "오브젝트'%s'는 scores를 가지지 않습니다"
+msgstr "객체 '%s'는 스코어를 가지지 않습니다"
 
+# translated on 2012-09-26
 msgid "'scale' is outside [0, 1]"
-msgstr "'scale'가 [0,1]외 입니다"
+msgstr "'scale'이 [0, 1]의 밖에 있습니다"
 
+# translated on 2012-09-26
 msgid "biplots are not defined for complex PCA"
-msgstr "biplots는 복잡한 PCA용으로 정의 되어 있지 않습니다"
+msgstr "biplots은 복잡한 PCA에 정의되어 있지 않습니다"
 
+# translated on 2012-09-26
 msgid "unequal number of rows in 'cancor'"
-msgstr "'cancor'로 열수가 동일하지는 않습니다"
+msgstr "'cancor'내에 있는 행의 개수가 같지 않습니다"
 
+# translated on 2012-09-26
 msgid "dimension 0 in 'x' or 'y'"
 msgstr "'x' 또는 'y'의 차원이 0입니다"
 
+# translated on 2012-09-26
 msgid "'x' has rank 0"
-msgstr "'x'는 rank가 0입니다"
+msgstr "'x'는 계수 0을 가집니다"
 
+# translated on 2012-09-26
 msgid "'y' has rank 0"
-msgstr "'y'는 rank가 0입니다"
+msgstr "'y'는 계수 0을 가집니다"
 
+# translated on 2012-09-26
 msgid "'x' and 'y' must have the same length"
-msgstr "'x' 그리고 'y'는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'x'와 'y'는 반드시 같은 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' and 'y' must have at least 2 levels"
-msgstr "'x' 그리고 'y'는 적어도 2개의 levels을 가지지 않으면 되지 않습니다"
+msgstr "'x'와 'y'는 반드시 최소한 2개의 수준을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr "'x'의 모든 사항은 non-negative로 유한하지 않으면 되지 않습니다"
+msgstr "'x'의 모든 항목들은 반드시 음수가 아니고 유한해야 합니다"
 
+# translated on 2012-09-26
 msgid "at least one entry of 'x' must be positive"
-msgstr "'x'가 적어도 하나의 항목은 positive이 아니면 되지 않습니다"
+msgstr "'x'의 항목들중 최소한 한개는 반드시 양수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "cannot compute simulated p-value with zero marginals"
-msgstr "주변화가 0의 p-valuef를 시뮬레이션으로 계산할 수가 없습니다"
+msgstr "cannot compute simulated p-value with zero marginals"
 
+# translated on 2012-09-26
 msgid "'x' must at least have 2 elements"
-msgstr "'x'는 적어도 2개의 요소를 가지지 않으면 되지 않습니다"
+msgstr "'x'는 반드시 최소한 2개의 요소들을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' and 'p' must have the same number of elements"
-msgstr "'x' 그리고 'p'는 동일 수의 요소를 가지지 않으면 되지 않습니다"
+msgstr "'x'와 'p'는 반드시 같은 수의 요소들을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "probabilities must be non-negative."
-msgstr "확률은 non-negative가 나오지 않으면 되지 않습니다"
+msgstr "확률값들은 반드시 음수가 아니어야 합니다."
 
+# translated on 2012-09-26
 msgid "probabilities must sum to 1."
-msgstr "확률의 총계는 1이 나오지 않으면 되지 않습니다"
+msgstr "확률값들의 합은 반드시 1이어야 합니다."
 
+# translated on 2012-09-26
 msgid "Chi-squared approximation may be incorrect"
-msgstr "카이 자승 근사는 부정확할지도 모릅니다"
+msgstr "카이제곱 근사값은 정확하지 않을 수도 있습니다"
 
+# translated on 2012-09-26
 msgid "NA values not allowed in 'd'"
-msgstr "'d'에서 NA값은 허용되지 않습니다"
+msgstr "'d'에서 NA 값들은 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "distances must be result of 'dist' or a square matrix"
-msgstr "거리는 'dist'의 결과 또는 정방 행렬이 필요가 있습니다"
+msgstr "거리들은 반드시 'dist'의 결과 또는 정방행렬이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid value of 'n'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "'n'의 값이 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "'k' must be in {1, 2, ..  n - 1}"
-msgstr "'k'는 {1,2,...n - 1}내에 있을 필요가 있습니다"
+msgstr "'k'는 반드시 {1, 2, ..  n - 1}내에 있어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "only %d of the first %d eigenvalues are > 0"
-msgstr "최초의 %d개의 고유치 중 몇개인가는 negative입니다"
+msgstr "처음 %2$d개의 고유값들 중에서 오로지 %1$d개 만이 0 보다 큽니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "initial value is not in the interior of the feasible region"
-msgstr "실행 가능한 초기값이 아닙니다"
+msgstr "초기값이 실행 가능한 영역의 내부에 있지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "Barrier algorithm ran out of iterations and did not converge"
-msgstr "알고리즘은 수렴하지 않았습니다"
+msgstr "Barrier 알고리즘이 최대 반복에 도달했으며 수렴하지 않았습니다"
 
+# translated on 2012-09-26
 msgid "Objective function increased at outer iteration %d"
-msgstr ""
+msgstr "Objective function increased at outer iteration %d"
 
+# translated on 2012-09-26
 msgid "Objective function decreased at outer iteration %d"
-msgstr ""
+msgstr "Objective function decreased at outer iteration %d"
 
+# translated on 2012-09-26
 msgid "contrasts not defined for %d degrees of freedom"
-msgstr "대비는 자유도 %d에서는 정의 되지 않습니다"
+msgstr "대조는 %d의 자유도에서는 정의되지 않습니다"
 
-msgid ""
-"orthogonal polynomials cannot be represented accurately enough for %d "
-"degrees of freedom"
-msgstr "자유도 %d에서 orthogonal 다항식을 충분히 정확하게 표현 할 수 없습니다"
+# translated on 2012-09-26
+msgid "orthogonal polynomials cannot be represented accurately enough for %d degrees of freedom"
+msgstr "자유도가 %d이기 때문에 직교다항식을 정확하게 표현할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "'scores' argument is of the wrong length"
-msgstr "'scores' 인수는 잘못한 길이입니다"
+msgstr "'scores' 인수는 잘못된 길이를 가지고 있습니다"
 
+# translated on 2012-09-26
 msgid "'scores' must all be different numbers"
-msgstr "'scores'는 모두 다른 수가 아니면 되지 않습니다"
+msgstr "'scores'는 반드시 모두 다른 수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'degree' must be at least 1"
-msgstr "차수는 적어도 1이 나오지 않으면 되지 않습니다"
+msgstr "'degree'는 반드시 최소한 1이어야 합니다"
 
+# translated on 2012-09-26
 msgid "missing values are not allowed in 'poly'"
-msgstr "결측치 'poly'에서는 허용되지 않습니다"
+msgstr "'poly'에서는 결측값들을 허용하지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'degree' must be less than number of unique points"
-msgstr "'degree'는 점의 수미만이 아니면 되지 않습니다"
+msgstr "'degree'는 반드시 유일한 점들의 개수보다 적어야 합니다"
 
+# translated on 2012-09-26
 msgid "must supply one or more vectors"
-msgstr "하나 이상의 벡터를 주지 않으면 되지 않습니다"
+msgstr "하나 또는 그 이상의 벡터들을 반드시 제공해야 합니다"
 
+# translated on 2012-09-26
 msgid "arguments must have the same length"
-msgstr "인수는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "인수들은 반드시 같은 길이를 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "contrasts apply only to factors"
-msgstr "대비는 인자에만 적용할수 없지 않습니다"
+msgstr "대조는 반드시 인자들에만 적용합니다"
 
+# translated on 2012-09-26
 msgid "contrasts can be applied only to factors with 2 or more levels"
-msgstr "대비는 두개 이상의 레벨을 가지는 인자에만 적용할 수 없지 않습니다"
+msgstr "대조는 2 또는 그 이상의 수준을 가지는 요인들에 한하여만 적용할 수 있습니다"
 
+# translated on 2012-09-26
 msgid "wrong number of contrast matrix rows"
-msgstr "대비 행렬의 행수가 잘못되어 있습니다"
+msgstr "대조 행렬의 행의 수가 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "singular contrast matrix"
-msgstr "특이한 대비 행렬입니다"
+msgstr "특이한 대조행렬입니다"
 
+# translated on 2012-09-26
 msgid "numeric contrasts or contrast name expected"
-msgstr "수치 대비이거나 대비명이 예측되어 있습니다"
+msgstr "수치대조 또는 대조명들이 기대되어집니다"
 
+# translated on 2012-09-26
 msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr ""
+msgstr "contr*(.., sparse=TRUE)는 올바르게 설치된 패키지 \"Matrix\"를 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "not enough degrees of freedom to define contrasts"
-msgstr "대비를 정의 하기 위해서 충분한 자유도가 아닙니다"
+msgstr "대조를 정의하기 위한 충분한 자유도가 아닙니다"
 
+# translated on 2012-09-26
 msgid "baseline group number out of range"
-msgstr "baseline의 그룹수가 범위를 넘어가고 있습니다"
+msgstr "기준 그룹수가 범위밖입니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid 'use' argument"
-msgstr "무효인 'data'인수입니다"
+msgstr "잘못된 'use' 인수"
 
+# translated on 2012-09-26
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
-msgstr "'x' 그리고 'y'의 양쪽 모두를 주어지거나, 행렬형태의 'x'를 주어집니다"
+msgstr "'x'와 'y' 모두 또는 행렬과 같은 형태의 'x'를 제공합니다"
 
+# translated on 2012-09-26
 msgid "'y' must be numeric"
-msgstr "'y'는 수치가 아니면 되지 않습니다"
+msgstr "'y'는 반드시 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' is empty"
-msgstr "'x'는 비어 있습니다"
+msgstr "'x'가 비어있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "both 'x' and 'y' must be non-empty"
-msgstr "'x'와 'w'의 길이는 일치하지 않으면 되지 않습니다"
+msgstr "'x'와 'y' 모두는 반드시 비어있지 않아야 합니다"
 
+# translated on 2012-09-26
 msgid "cannot handle 'pairwise.complete.obs'"
-msgstr "'pairwise.complete.obs'를 취급할 수가 없습니다"
+msgstr "'pairwise.complete.obs'를 다룰 수 없습니다"
 
+# translated on 2012-09-26
 msgid "'V' is not a square numeric matrix"
-msgstr "'V'는 수치 정방 행렬이 아닙니다"
+msgstr "'V'는 숫자형 정방행렬이 아닙니다"
 
+# translated on 2012-09-26
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
-msgstr ""
+msgstr "diag(.)은 0 또는 NA 항목들을 가집니다; 따라서 유한하지 않은 결과는 의심스럽습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'x' must be a numeric vector"
-msgstr "'y' 수치 벡터가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 숫자형 벡터이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'y' must be a numeric vector"
-msgstr "'y' 수치 벡터가 아니면 되지 않습니다"
+msgstr "'y'는 반드시 숫자형 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "not enough finite observations"
 msgstr "유한한 관측값이 충분히 없습니다"
 
+# translated on 2012-09-26
 msgid "Cannot compute exact p-value with ties"
-msgstr "ties 때문에 정확한 p값을 계산할 수가 없습니다"
+msgstr "동일한 값들의 존재로 인하여 정확한 p-값들을 연산할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "Cannot compute exact p-values with ties"
-msgstr "ties 때문에 정확한 p값을 계산할 수가 없습니다"
+msgstr "동일한 값들의 존재로 인하여 정확한 p-값들을 연산할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "'formula' missing or invalid"
-msgstr "모델식이 없거나 부적절합니다"
+msgstr "'formula'가 누락되었거나 유효하지 않습니다"
 
+# translated on 2012-09-26
 msgid "invalid formula"
-msgstr "무효인 모델식입니다"
+msgstr "유효하지 않은 모델식입니다"
 
+# translated on 2012-09-26
 msgid "'x' must be a matrix or a data frame"
-msgstr "'x'는 행렬이거나 데이터 프레임이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 행렬 또는 데이터 프레임이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must contain finite values only"
-msgstr "'x'는 유한한 값만 포함하지 않으면 안됩니다"
+msgstr "'x'는 반드시 유한한 값들만을 포함해야 합니다"
 
+# translated on 2012-09-26
 msgid "length of 'wt' must equal the number of rows in 'x'"
-msgstr "'wt'의 길이는 'x'의 행수에 동일하지 않으면 되지 않습니다"
+msgstr "'wt'의 길이는 반드시 'x'안의 행의 수와 같아야 합니다"
 
+# translated on 2012-09-26
 msgid "weights must be non-negative and not all zero"
-msgstr "중량감은 non-negative이고, 모두가 0이면 안됩니다"
+msgstr "가중치는 반드시 음수가 아니어야 하고 모두 0이 아니어야 합니다"
 
+# translated on 2012-09-26
 msgid "length of 'center' must equal the number of columns in 'x'"
-msgstr "'center'의 길이는 'x'의 열수에 동일한것이 없으면 되지 않습니다"
+msgstr "'center'의 길이는 반드시 'x'내의 열의 개수와 같아야 합니다"
 
+# translated on 2012-09-26
 msgid "invalid 'tree' (merge component)"
-msgstr "무효인 'tree'(merge 성분)입니다"
+msgstr "잘못된 'tree' (구성요소들을 합칩니다)"
 
+# translated on 2012-09-26
 msgid "either 'k' or 'h' must be specified"
-msgstr "'k' 이거나 'h'가 지정되지 않으면 안됩니다"
+msgstr "'k' 또는 'h' 중 하나는 반드시 지정되어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "the 'height' component of 'tree' is not sorted (increasingly)"
-msgstr ""
-"'tree'의 'height'요소는 승순에 sort되어 있지 않습니다.\n"
-"최초로 as.hclust()를 적용하는 것을 고려해 주십시오"
+msgstr "'tree'의 'height'라는 구성요소는 정렬될 수 없습니다 (오름차순)"
 
+# translated on 2012-09-26
 msgid "elements of 'k' must be between 1 and %d"
-msgstr "'k'의 요소는 1과 %d의 사이에 없으면 되지 않습니다"
+msgstr "'k'의 요소들은 반드시 1과 %d에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'merge' and 'height' do not fit!"
-msgstr "'merge' 그리고 'height'가 적합하고 있지 않습니다!"
+msgstr "'merge'와 'height'가 적합하지 않습니다!"
 
+# translated on 2012-09-26
 msgid "dendrogram node with non-positive #{branches}"
-msgstr "지수가 non-positive이 아닌 dendrogram입니다"
+msgstr "dendrogram node with non-positive #{branches}"
 
+# translated on 2012-09-26
 msgid "midcache() of non-binary dendrograms only partly implemented"
-msgstr ""
-"non-binary인 dendrograms의 midcache()는 부분적인것만 실제 적용되지 않습니다"
+msgstr "이진이 아닌 덴드로그램의 midcache()가 부분적으로 적용되었습니다"
 
+# translated on 2012-09-26
 msgid "non-leaf subtree of length 0"
-msgstr "길이 0의 non-leaf인 subtree입니다"
+msgstr "길이가 0인 잎이 없는 서브트리입니다"
 
+# translated on 2012-09-26
 msgid "'order.dendrogram' requires a dendrogram"
-msgstr "'order.dendrogram'는 dendrogram을 필요로 합니다"
+msgstr "'order.dendrogram'는 덴드로그램을 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "we require a dendrogram"
-msgstr "dendrogram이 필요합니다"
+msgstr "덴드로그램이 필요합니다"
 
+# translated on 2012-09-26
 msgid "invalid (length 0) node in dendrogram"
-msgstr "dendrogram에 부적절한(길이 0)노드가 있습니다"
+msgstr "덴드로그램에 잘못된 길이 0인 노드가 있습니다"
 
+# translated on 2012-09-26
 msgid "dendrogram non-leaf node with non-positive #{branches}"
-msgstr "지수가 non-positive dendrogram의 #{non-leaf}노드입니다"
+msgstr "dendrogram non-leaf node with non-positive #{branches}"
 
+# translated on 2012-09-26
 msgid "'height' must be at least %g, the maximal height of its components"
-msgstr ""
+msgstr "'height'는 반드시 최소한 해당 구성요소의 최대 height인 %g이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'X' is not a dendrogram"
-msgstr "'X'는 dendrogram이 아닙니다"
+msgstr "'X'는 덴드로그램이 아닙니다"
 
+# translated on 2012-09-26
 msgid "'x' must be a numeric matrix"
-msgstr "'x'는 수치 행렬이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 숫자형 행렬이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must have at least 2 rows and 2 columns"
-msgstr "'x'는 적어도 2행과 2열을 가지지 않으면 안됩니다"
+msgstr "'x'는 반드시 최소한 2행 2열을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "'margins' must be a numeric vector of length 2"
-msgstr "'margins'는 길이 2의 수치 벡터가 아니면 되지 않습니다"
+msgstr "'margins'은 반드시 길이 2인 숫자형 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "row dendrogram ordering gave index of wrong length"
-msgstr "행 dendrogram의 순서는 잘못한 길이가 인덱스로 주었습니다"
+msgstr "row dendrogram ordering gave index of wrong length"
 
+# translated on 2012-09-26
 msgid "Colv = \"Rowv\" but nrow(x) != ncol(x)"
-msgstr "Colv = \"Rowv\"입니다만,  nrow(x) != ncol(x)입니다"
+msgstr "Colv = \"Rowv\" 그러나 nrow(x) != ncol(x)입니다"
 
+# translated on 2012-09-26
 msgid "column dendrogram ordering gave index of wrong length"
-msgstr "열 dendrogram의 순서는 잘못한 길이가 인덱스로 주었습니다"
+msgstr "column dendrogram ordering gave index of wrong length"
 
+# translated on 2012-09-26
 msgid "'ColSideColors' must be a character vector of length ncol(x)"
-msgstr "'ColSideColors'는 길이가 ncol(x)의 문자 벡터가 아니면 되지 않습니다"
+msgstr "'ColSideColors'는 반드시 길이 ncol(x)인 문자형 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
-msgstr "'RowSideColors' nrows(x)의 문자벡터가 아니면 되지 않습니다"
+msgstr "'RowSideColors'는 반드시 길이 nrow(x)인 문자형 벡터이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "non-matched further arguments are disregarded"
-msgstr "불필요한 인수는 버려졌습니다"
+msgstr "일치하지 않는 추가적인 인수들은 무시될 것입니다"
 
+# translated on 2012-09-26
 msgid "argument 'x' must be numeric"
-msgstr "인수 'x'는 수치가 아니면 되지 않습니다"
+msgstr "인수 'x'는 반드시 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' contains missing values"
-msgstr "'x'는 결측치를 포함하고 있습니다"
+msgstr "'x'는 결측치들을 포함하고 있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'x' and 'weights' have unequal length"
-msgstr "'x'와 'g'는 동일 길이를 가지지 않으면 되지 않습니다"
+msgstr "'x'와 'weights'는 동일한 길이를 가지지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'weights' must all be finite"
-msgstr "예측자는 모두 수치가 아니면 되지 않습니다"
+msgstr "'weights'는 반드시 유한 해야합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'weights' must not be negative"
-msgstr "'x'는 non-negative가 나오지 않으면 되지 않습니다"
+msgstr "'weights'는 반드시 음수가 되어서는 안됩니다"
 
+# translated on 2012-09-26
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr ""
+msgstr "sum(weights) != 1  -- 이것은 정확한 확률밀도를 얻지 못할 것입니다"
 
+# translated on 2012-09-26
 msgid "need at least 2 points to select a bandwidth automatically"
-msgstr ""
-"bandwidth를 자동적으로 선택하기 위해서 적어도 두개의 point가 필요합니다"
+msgstr "bandwidth를 자동으로 선택하기 위해서는 최소한 두개의 점들이 필요합니다"
 
+# translated on 2012-09-26
 msgid "unknown bandwidth rule"
-msgstr "알수 없는 bandwidth 규칙입니다"
+msgstr "알 수 없는 bandwidth 규칙입니다"
 
+# translated on 2012-09-26
 msgid "non-finite 'bw'"
-msgstr "'bw'가 유한하지는 않습니다"
+msgstr "'bw'가 유한하지 않습니다"
 
+# translated on 2012-09-26
 msgid "'bw' is not positive."
-msgstr "'bw'가 유한하지는 않습니다"
+msgstr "'bw'가 양수가 아닙니다."
 
+# translated on 2012-09-26
 msgid "non-finite 'from'"
-msgstr "'from'가 유한하지는 않습니다"
+msgstr "'from'가 유한하지 않습니다"
 
+# translated on 2012-09-26
 msgid "non-finite 'to'"
-msgstr "'to'가 유한하지는 않습니다"
+msgstr "'to'가 유한하지 않습니다"
 
+# translated on 2012-09-26
 msgid "invalid formula in deriv"
-msgstr "'deriv'에 부적절한 식이 있습니다"
+msgstr "deriv에 유효하지 않은 모델식이 있습니다"
 
+# translated on 2012-09-26
 msgid "'x' is not a vector"
-msgstr "'x'는 vector가 아닙니다"
+msgstr "'x'는 벡터가 아닙니다"
 
+# translated on 2012-09-26
 msgid "bad value for 'lag' or 'differences'"
-msgstr "'lag' 또는 'differences'에는 부적절한 값입니다"
+msgstr "'lag' 또는 'differences'에 잘못된 값이 있습니다"
 
+# translated on 2012-09-26
 msgid "'xi' has not the right length"
 msgstr "'xi'는 정확한 길이를 가지고 있지 않습니다"
 
+# translated on 2012-09-26
 msgid "invalid value of length(x)"
-msgstr ""
+msgstr "length(x)의 값이 잘못되었습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "incorrect dimensions for 'xi'"
-msgstr "'x'의 길이가 정확하지 않습니다"
+msgstr "'xi'의 차원이 정확하지 않습니다"
 
+# translated on 2012-09-26
 msgid "'x' is not a vector or matrix"
 msgstr "'x'는 벡터 또는 행렬이 아닙니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "extra argument(s) %s will be disregarded"
-msgstr "불필요한 인수는 버려졌습니다"
+msgstr "추가적인 인수(들) %s은 무시되어 질 것입니다"
 
+# translated on 2012-09-26
 msgid "invalid distance method"
-msgstr "무효인 거리 method입니다"
+msgstr "distance method가 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "ambiguous distance method"
-msgstr "애매한 거리 method입니다"
+msgstr "distance method가 분명히 규정되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "non-square matrix"
-msgstr "non-square 행렬이 아닙니다"
+msgstr "정방행렬이 아닙니다"
 
+# translated on 2012-09-26
 msgid "x[] and prob[] must be equal length vectors."
-msgstr "x[] 그리고 prob[]는 동일한 길이가 벡터가 아니면 되지 않습니다"
+msgstr "x[]와 prob[]는 반드시 같은 길이의 벡터이어야 합니다."
 
+# translated on 2012-09-26
 msgid "probabilities cannot be negative nor all 0."
-msgstr "확률은 negative가 될수가 없거나 또한 모두가 0으로 될수가 없습니다"
+msgstr "확률값은 음수가 될 수 없을 뿐더러 모두 0이 될 수 없습니다."
 
+# translated on 2012-09-26
 msgid "'x' must be non-negative"
-msgstr "'x'는 non-negative가 나오지 않으면 되지 않습니다"
+msgstr "'x'는 반드시 음수가 아니어야 합니다"
 
+# translated on 2012-09-26
 msgid "size != sum(x), i.e. one is wrong"
-msgstr "size가 sum(x)와 다릅니다.즉 어느쪽인가는 이상합니다"
+msgstr "size != sum(x), 즉 어느 한쪽이 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "'prob' and 'mu' both specified"
-msgstr "'prob' 그리고 'mu'의 쌍방이 지정되었습니다"
+msgstr "'prob'와 'mu' 모두가 지정되었습니다"
 
+# translated on 2012-09-26
 msgid "some terms will have NAs due to the limits of the method"
-msgstr "메소드의 한계를 위해서 몇개의 항은 NA값을 가질것입니다"
+msgstr "일부 항들은 메소드의 한계로 인하여 NA들을 가지게 될 것입니다"
 
+# translated on 2012-09-26
 msgid "'x' must have 1 or more non-missing values"
-msgstr "'x'는 하나 이상의 non-missing값을 가지지 않으면 안됩니다"
+msgstr "'x'는 반드시 1 또는 그 이상의 결측되지 않은 값들을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "wrong embedding dimension"
-msgstr "잘못한 매입차원 입니다"
+msgstr "wrong embedding dimension"
 
+# translated on 2012-09-26
 msgid "'covmat' is not a valid covariance list"
-msgstr "'convmat'는 유효한 공분산 리스트가 아닙니다"
+msgstr "'covmat'는 유효한 공분산 리스트가 아닙니다"
 
+# translated on 2012-09-26
 msgid "neither 'x' nor 'covmat' supplied"
-msgstr "'x' 또한 'covmat'도 주어지고 있지 않습니다"
+msgstr "'x'와 'covmat' 모두 주어지지 않았습니다"
 
+# translated on 2012-09-26
 msgid "response not allowed in formula"
 msgstr "모델식에서 허용되지 않는 응답입니다"
 
+# translated on 2012-09-26
 msgid "factor analysis applies only to numerical variables"
-msgstr "인자 분석법은 수치 변수에만 적용할수가 없지 않습니다"
+msgstr "요인분석은 오로지 숫자형 변수들에만 적용됩니다"
 
+# translated on 2012-09-26
 msgid "'covmat' is of unknown type"
-msgstr "'covmat'는 알수 없은 유형입니다"
+msgstr "'covmat'은 알 수 없는 유형입니다"
 
+# translated on 2012-09-26
 msgid "requested scores without an 'x' matrix"
-msgstr "'x' 행렬이 없이 요구된 scores입니다"
+msgstr "'x' 행렬이 없이 요청된 스코어들입니다"
 
+# translated on 2012-09-26
 msgid "factor analysis requires at least three variables"
-msgstr "인자 분석법은 적어도 3개의 변수를 필요로 합니다"
+msgstr "요인분석은 최소한 세개의 변수들으르 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "%d factors is too many for %d variables"
-msgstr "%d개 인자는 %d개의 변수에 대해서 너무 많습니다"
+msgstr "%d개의 요인들은 %d개의 변수들에 비해 너무 많습니다"
 
+# translated on 2012-09-26
 msgid "'start' must have %d rows"
-msgstr "'srart'는 %d 행을 가지지 않으면 안됩니다"
+msgstr "'start'는 반드시 %d개의 행을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "no starting values supplied"
-msgstr "초기값이 주어지고 있지 않습니다"
+msgstr "초기값이 주어지지 않았습니다"
 
+# translated on 2012-09-26
 msgid "unable to optimize from these starting value(s)"
-msgstr "이러한 초기값으로부터 최적화를 할수가 없습니다"
+msgstr "이러한 초기값(들)로부터는 최적화 할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid argument 'lambda'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 인수 'lambda'"
 
+# translated on 2012-09-26
 msgid "link not recognised"
-msgstr "인정 받지 않는 link입니다"
+msgstr "link not recognised"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "link \"%s\" not available for poisson family; available links are %s"
-msgstr ""
-"link\"%s\"는 포아송 패밀리에서 이용할수가 없습니다: 이용 할수 있는 link는\n"
-"\"identity\",\"log\" 및 \"sqrt\" 입니다"
+msgstr "링크 \"%s\"는 포아송 패밀리에서 사용할 수 없습니다; 사용가능한 링크들은 %s입니다"
 
+# translated on 2012-09-26
 msgid "negative values not allowed for the Poisson family"
-msgstr "포아송 패밀리에서 negative 값은 허용되지 않습니다"
+msgstr "포이송 패밀리에서 음의 값들은 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "ignoring prior weights"
-msgstr ""
+msgstr "사전 가중치를 무시합니다"
 
-#, fuzzy
-msgid ""
-"link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr ""
-"link \"%s\"는 동일한 포아송 패밀리에서 이용 할수가 없습니다. 이용 할수있는 "
-"link는 \n"
-"\"identity\",\"log\" 그리고 \"sqrt\" 입니다"
+# translated on 2012-09-26
+msgid "link \"%s\" not available for quasipoisson family; available links are %s"
+msgstr "링크 \"%s\"는 쿼시포아송 페밀리에서 사용할 수 없습니다; 사용이 가능한 링크들은 %s입니다"
 
+# translated on 2012-09-26
 msgid "negative values not allowed for the quasiPoisson family"
-msgstr "동일한 포아송 패밀리에는 negative의 값은 허용되지 않습니다"
+msgstr "쿼시포아송 페밀리에서 음의 값들은 허용되지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr ""
-"링크\"%s\"는 정규 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있는 "
-"link는 \n"
-"\"inverse\", \"log\" 그리고 \"identity\"입니다"
+msgstr "링크 \"%s\"는 가우시안 페밀리에서 사용할 수 없습니다; 사용이 가능한 링크들은 %s입니다"
 
+# translated on 2012-09-26
 msgid "cannot find valid starting values: please specify some"
-msgstr "유효한 초기값을 검색해낼 수가 없습니다: 무엇인가를 지정해주십시오"
+msgstr "유효한 초기값들을 찾을 수 없습니다: 다른 값들을 지정해주세요"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr ""
-"link\"%s\"는 포아송 패밀리에서 이용할수가 없습니다: 이용 할수 있는 link는\n"
-"\"identity\",\"log\" 및 \"sqrt\" 입니다"
+msgstr "링크 \"%s\"는 바이노미얼 페밀리에서 사용할 수 없습니다; 사용가능한 링크들은 %s입니다"
 
+# translated on 2012-09-26
 msgid "y values must be 0 <= y <= 1"
-msgstr "y의 값은 [0,1]사이에 아니면 되지 않습니다"
+msgstr "y의 값들은 반드시 0 <= y <= 1을 충족해야 합니다"
 
+# translated on 2012-09-26
 msgid "non-integer #successes in a binomial glm!"
-msgstr "2항 glm로 정수가 아닌 성공수가 있었습니다!"
+msgstr "바이노미얼 glm에서 성공의 회수가 정수가 아닌 수가 있습니다!"
 
+# translated on 2012-09-26
 msgid "non-integer counts in a binomial glm!"
-msgstr "2항 glm로 정수가 아닌 카운터가 있었습니다!"
+msgstr "바이노미얼 glm에서 정수가 아닌 수가 있습니다!"
 
+# translated on 2012-09-26
 msgid "for the binomial family, y must be a vector of 0 and 1's"
-msgstr "2항 패밀리에서는 y는 0과 1으로부터 되는 vector가 아니면 되지 않습니다."
+msgstr "바이노미얼 페밀리에서 y는 반드시 0과 1로만 구성된 벡터이어야 합니다"
 
-msgid ""
-"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
-msgstr "또는 1열이 성공수, 2열이 실패수인 2열의 행렬입니다"
+# translated on 2012-09-26
+msgid "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgstr "또는 첫번째 열이 성공의 횟수 그리고 두번째 열이 실패의 횟수인 2개의 열로된 행렬입니다"
 
+# translated on 2012-09-26
 msgid "cannot simulate from non-integer prior.weights"
-msgstr ""
+msgstr "정수가 아닌 prior.weights으로부터 시뮬레이션을 할 수 없습니다"
 
-#, fuzzy
-msgid ""
-"link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr ""
-"link \"%s\"는 동일한 포아송 패밀리에서 이용 할수가 없습니다. 이용 할수있는 "
-"link는 \n"
-"\"identity\",\"log\" 그리고 \"sqrt\" 입니다"
+# translated on 2012-09-26
+msgid "link \"%s\" not available for quasibinomial family; available links are %s"
+msgstr "링크 \"%s\"는 쿼시 바이노미얼 페밀리에서 사용할 수 없습니다; 사용가능한 링크들은 %s입니다"
 
+# translated on 2012-09-26
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
-msgstr "동일한 2항 패밀리에 대해서 y는 0과 1의 vector가 아니면 되지 않습니다"
+msgstr "쿼시바이노미얼 페밀리에서 y는 반드시 0과 1로만 구성된 벡터이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr ""
-"link\"%s\"는 감마 패밀리에서 이용 할수 있는 링크가 아닙니다.이용 할 수 있"
-"는 \n"
-"link \"inverse\",\"log\" 그리고 \"identity\"입니다"
+msgstr "링크 \"%s\"는 감마  페밀리에서 사용할 수 없습니다; 사용가능한 링크들은 %s입니다"
 
+# translated on 2012-09-26
 msgid "non-positive values not allowed for the gamma family"
-msgstr "정확하지 않는 값은 gamma family에서 허용되지 않습니다"
+msgstr "감마페밀리에서 양수가 아닌 값들은 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "using weights as shape parameters"
-msgstr ""
+msgstr "shape 파라미터로서 가중치를 사용합니다"
 
-#, fuzzy
-msgid ""
-"link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr ""
-"링크\"%s\"는 정규 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있는 "
-"link는 \n"
-"\"inverse\", \"log\" 그리고 \"identity\"입니다"
+# translated on 2012-09-26
+msgid "link \"%s\" not available for inverse.gaussian family; available links are %s"
+msgstr "링크 \"%s\"는 역가우시안 페밀리에서는 사용할 수 없습니다; 사용가능한 링크들은 %s입니다"
 
+# translated on 2012-09-26
 msgid "positive values only allowed for the inverse.gaussian family"
-msgstr "역정규 패밀리에서 정의값만 허용되지 않습니다"
+msgstr "역감마 페밀리에서 오로지 양수인 값들만 허용됩니다"
 
+# translated on 2012-09-26
 msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
-msgstr ""
+msgstr "'inverse.gaussian' 페밀리에서는 CRAN 패키지 'SuppDists'를 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "using weights as inverse variances"
-msgstr ""
+msgstr "역분산으로서 가중치를 사용합니다"
 
-msgid ""
-"'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
-"\"mu^2\", \"mu^3\" and \"constant\""
-msgstr ""
-"분산('variance') \"%s\"는 무효입니다.\n"
-"가능한 분산은 \"mu(1-mu)\" \"mu\" \"mu^2\" \n"
-"\"\", \"mu^3\", 와 \"constant\"입니다"
+# translated on 2012-09-26
+msgid "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and \"constant\""
+msgstr "'variance' \"%s\" 은 유효하지 않습니다: 가능한 값들은 \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" 그리고 \"constant\"입니다"
 
+# translated on 2012-09-26
 msgid "length mismatch in convolution"
-msgstr "포선 길이가 일치하고 있지 않습니다"
+msgstr "length mismatch in convolution"
 
+# translated on 2012-09-26
 msgid "missing values in 'filter'"
-msgstr "'filter'에서 결손값이 있습니다"
+msgstr "'filter'에 결측치들이 있습니다"
 
+# translated on 2012-09-26
 msgid "'filter' is longer than time series"
 msgstr "'filter'는 시계열보다 깁니다"
 
+# translated on 2012-09-26
 msgid "argument 'sides' must be 1 or 2"
-msgstr "인수 sides는 1 또는 2가 나오지 않으면 되지 않습니다"
+msgstr "인수 'sides'는 반드시 1 또는 2이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'circular' must be logical and not NA"
-msgstr ""
+msgstr "'circular'는 반드시 논리값이어야 하며 NA이어서는 안됩니다"
 
+# translated on 2012-09-26
 msgid "length of 'init' must equal length of 'filter'"
-msgstr "'init'의 길이는 'filter'의 길이에 동일하지 않으면 되지 않습니다"
+msgstr "'init'의 길이는 반드시 'filter'의 길이와 같아야 합니다"
 
+# translated on 2012-09-26
 msgid "'init'; must have 1 or %d cols"
-msgstr "'init'; 1 또는 %d개의 cols를 가지지 않으면 안됩니다"
+msgstr "'init'; 반드시 1 또는 %d개의 열을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must have at least 2 rows and columns"
-msgstr "'x'는 적어도 2개의 행 그리고 열을 가지지 않으면 안됩니다"
+msgstr "'x'는 반드시 최소한 2개의 행과 열을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' has entries too large to be integer"
 msgstr "'x'는 정수라고 하기에는 너무나 많은 항목을 가지고 있습니다"
 
+# translated on 2012-09-26
 msgid "'x' has been rounded to integer:"
-msgstr "'x'는 정수에 반올림할수가 있었습니다"
+msgstr "'x'는 다음과 같은 정수로 반올림되었습니다:"
 
+# translated on 2012-09-26
 msgid "if 'x' is not a matrix, 'y' must be given"
-msgstr "'x'가 행렬이 아니면 'y'를 주어지지 않으면 되지 않습니다"
+msgstr "만약 'x'가 행렬이 아니면, 'y'는 반드시 주어져야 합니다"
 
+# translated on 2012-09-26
 msgid "'mult' must be integer >= 2, typically = 30"
-msgstr "'mult'는 2 이상의 정수 (전형적으로 = 30)가 나오지 않으면 되지 않습니다"
+msgstr "'mult'는 반드시 2이상의 정수이어야 하며 일반적으로는 30입니다"
 
+# translated on 2012-09-26
 msgid "alternative must be \"two.sided\", \"less\" or \"greater\""
-msgstr ""
-"alternativer는 \"two.sided\", \"less\" 또는 \"greater\"가 나오지 않으면 되지 "
-"않습니다"
+msgstr "대안으로 될 수 있는 것은 반드시 \"two.sided\", \"less\" 또는 \"greater\"이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'or' must be a single number between 0 and Inf"
-msgstr "'or'는 단일의 수치 또는 0 과 inf 간의 단일의 수가 아니면 되지 않습니다"
+msgstr "'or'는 반드시 0과 Inf 사이의 단일 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "need 2 or more non-zero row marginals"
-msgstr ""
+msgstr "2 혹은 그 이상의 0이 아닌 행 마지널들이 필요합니다"
 
+# translated on 2012-09-26
 msgid "need 2 or more non-zero column marginals"
-msgstr ""
+msgstr "2 혹은 그 이상의 0이 아닌 열 마지널들이 필요합니다"
 
+# translated on 2012-09-26
 msgid "'hybrid' is ignored for a 2 x 2 table"
-msgstr ""
+msgstr "2 x 2 분할표에서 'hybrid'는 무시됩니다"
 
+# translated on 2012-09-26
 msgid "all groups must contain data"
-msgstr "모든 group는 데이터를 포함하지 않으면 안됩니다"
+msgstr "모든 그룹들은 반드시 데이터를 포함하고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "all group levels must be finite"
-msgstr "group의 레벨은 모두 유한하지 않으면 되지 않습니다"
+msgstr "모든 그룹 수준들은 반드시 유한해야 합니다"
 
+# translated on 2012-09-26
 msgid "not enough observations"
-msgstr "충분한 관측값이 없습니다"
+msgstr "관측치의 개수가 충분하지 않습니다"
 
+# translated on 2012-09-26
 msgid "NA's are not allowed in groups or blocks"
-msgstr "'NA'는 그룹이나 블록에서는 허용되지 않습니다"
+msgstr "NA's are not allowed in groups or blocks"
 
+# translated on 2012-09-26
 msgid "y, groups and blocks must have the same length"
-msgstr "y, groups 그리고 블록은 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "y, groups 그리고 blocks은 반드시 같은 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "not an unreplicated complete block design"
-msgstr "반복이 없는 완전한 블록 디자인이 아닙니다"
+msgstr "반복이 없는 완전한 블락디자인이 아닙니다"
 
+# translated on 2012-09-26
 msgid "formula missing"
 msgstr "모델식이 없습니다"
 
+# translated on 2012-09-26
 msgid "incorrect specification for 'formula'"
-msgstr "모델식('formula')의 지정이 부정확합니다"
+msgstr "'formula'에 대한 지정이 올바르지 않습니다"
 
+# translated on 2012-09-26
 msgid "nothing to tabulate"
-msgstr "평면으로 하는것이 아무것도 없습니다"
+msgstr "테이블화 할 것이 아무것도 없습니다"
 
+# translated on 2012-09-26
 msgid "incorrect specification for 'row.vars'"
-msgstr "'row.vars'의 지정이 부정확합니다"
+msgstr "'row.vars' 지정이 올바르지 않습니다"
 
+# translated on 2012-09-26
 msgid "incorrect specification for 'col.vars'"
-msgstr "'col.vars'의 지정이 부정확합니다"
+msgstr "'col.vars'의 지정이 올바르지 않습니다"
 
+# translated on 2012-09-26
 msgid "interactions are not allowed"
 msgstr "상호작용은 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "'formula' has '.' in both left and right hand side"
-msgstr "모델이('formula')이 우변과 좌변의 쌍방으로  '.'를 가지고 있습니다"
+msgstr "'formula'의 좌변과 우변 모두 '.'을 가지고 있습니다"
 
+# translated on 2012-09-26
 msgid "incorrect variable names in rhs of formula"
-msgstr "모델식의 우변에 부정확한 변수명이 있습니다"
+msgstr "모델식의 우변에 올바르지 않은 변수명들이 있습니다"
 
+# translated on 2012-09-26
 msgid "incorrect variable names in lhs of formula"
-msgstr "모델식의 좌변에 부정확한 변수명이 있습니다"
+msgstr "모델식의 좌변에 올바르지 않은 변수명들이 있습니다"
 
+# translated on 2012-09-26
 msgid "cannot use dots in formula with given data"
-msgstr "데이터에서 주어진 모델식의 dots 기법을 사용할수 없습니다"
+msgstr "주어진 데이터와 함께 쓰이는 모델식에 dots 기법을 사용할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "'x' must be an \"ftable\" object"
-msgstr "'x' \"ftable\" 오브젝트가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 \"ftable\" 객체내에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'file' must be a character string or connection"
-msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
+msgstr "'file'은 반드시 문자열이거나 커넥션 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'row.var.names' missing"
 msgstr "'row.var.names'가 없습니다"
 
+# translated on 2012-09-26
 msgid "'col.vars' missing or incorrect"
-msgstr "'col.vars'가 없거나 부정확합니다"
+msgstr "'col.vars'가 없거나 올바르지 않습니다"
 
+# translated on 2012-09-26
 msgid "'family' not recognized"
-msgstr "'family'를 확인 할수 없습니다"
+msgstr "'family'를 인식할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid 'method' argument"
-msgstr "무효인 'data'인수입니다"
+msgstr "잘못된 'method' 인수"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'weights' must be a numeric vector"
-msgstr "'y' 수치 벡터가 아니면 되지 않습니다"
+msgstr "'weights'는 반드시 숫자 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "negative weights not allowed"
-msgstr "negative 중량감은 허용되지 않습니다"
+msgstr "음의 가중치는 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "number of offsets is %d should equal %d (number of observations)"
-msgstr ""
-"offsets의 수는 %d입니다만, %d(관측값의 수)에 동일 하지 않으면 되지 않습니다"
+msgstr "오프셋의 개수는 %d이지만 관측치의 개수 %d와 동일해야 합니다"
 
-msgid ""
-"fitting to calculate the null deviance did not converge -- increase maxit?"
-msgstr ""
+# translated on 2012-09-26
+msgid "fitting to calculate the null deviance did not converge -- increase maxit?"
+msgstr "null 편차를 연산하는 적합은 수렴하지 않습니다 -- maxit를 늘려봄이 어떨까요?"
 
+# translated on 2012-09-26
 msgid "value of 'epsilon' must be > 0"
-msgstr "'epsilon'의 값은 아니면 되지 않습니다"
+msgstr "'epsilon'의 값은 반드시 0 보다 커야합니다"
 
+# translated on 2012-09-26
 msgid "maximum number of iterations must be > 0"
-msgstr "반복의 최대수는 negative이 아니면 되지 않습니다"
+msgstr "최대 반복수는 반드시 0 보다 커야 합니다"
 
+# translated on 2012-09-26
 msgid "'family' argument seems not to be a valid family object"
-msgstr "'family'인수는 유효한 패밀리 오브젝트는 아닌것 같습니다"
+msgstr "'family'인수는 유효한 패밀리 객체가 아닌 것 같습니다"
 
+# translated on 2012-09-26
 msgid "invalid linear predictor values in empty model"
-msgstr "비어 있는 모델에서 무효인 선형 예측자입니다"
+msgstr "비어 있는 모델에 잘못된 선형 예측값입니다"
 
+# translated on 2012-09-26
 msgid "invalid fitted means in empty model"
-msgstr "비어 있는 모델에서 무효인 적용시키고 평균입니다"
+msgstr "비어 있는 모델에 잘 못 적합된 평균값이 있습니다"
 
-msgid ""
-"length of 'start' should equal %d and correspond to initial coefs for %s"
-msgstr ""
-"'start'의 길이는 %d에 동일할 필요가 있습니다. 그리고 %s에 대한 초기 coefs에 "
-"대응해야\n"
-"만 합니다:"
+# translated on 2012-09-26
+msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
+msgstr "'start'의 길이는 %d와 같아야 하며 %s에 대한 초기 계수값에 상응해야 합니다"
 
+# translated on 2012-09-26
 msgid "NAs in V(mu)"
-msgstr "V(mu)에서 NA가 있습니다"
+msgstr "V(mu)에 NA가 있습니다"
 
+# translated on 2012-09-26
 msgid "0s in V(mu)"
-msgstr "V(mu)에서 0가 있습니다"
+msgstr "V(mu)에 0가 있습니다"
 
+# translated on 2012-09-26
 msgid "NAs in d(mu)/d(eta)"
-msgstr "D(mu)/d(eta)에서 NA가 있습니다"
+msgstr "D(mu)/d(eta)에 NA가 있습니다"
 
+# translated on 2012-09-26
 msgid "no observations informative at iteration"
-msgstr "반복에 두고 의미가 있는 관측값이 없습니다"
+msgstr "no observations informative at iteration"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "non-finite coefficients at iteration %d"
-msgstr "반복에 두고 유한하지 않는 계수를 얻을 수 있었습니다"
+msgstr "%d번째 반복에서 유한하지 않은 계수를 얻었습니다"
 
+# translated on 2012-09-26
 msgid "X matrix has rank %d, but only %d observations"
-msgstr "X의 행렬는 link %d이지만, %d 관측값만 가지고 있습니다"
+msgstr "X 행렬은 계수 %d를 가지고 있으나, %d개의 관측치밖에 없습니다"
 
-msgid ""
-"no valid set of coefficients has been found: please supply starting values"
-msgstr "계수의 유효한 세트가 검색되지 않았습니다: 초기값을 주십시오"
+# translated on 2012-09-26
+msgid "no valid set of coefficients has been found: please supply starting values"
+msgstr "유효한 계수들의 집합을 찾을 수 없습니다: 초기값들을 제공해주세요"
 
+# translated on 2012-09-26
 msgid "step size truncated due to divergence"
-msgstr "발산했기 때문에, step size를 잘릴 수가 있었습니다"
+msgstr "수렴하지 않았기 때문에 step size가 잘렸습니다"
 
+# translated on 2012-09-26
 msgid "inner loop 1; cannot correct step size"
 msgstr "내부 루프 1; step size를 정정할 수가 없습니다"
 
+# translated on 2012-09-26
 msgid "step size truncated: out of bounds"
-msgstr "step size가 잘라졌습니다: 한계를 넘어갔습니다"
+msgstr "step size가 잘라졌습니다: 범위를 벗어났습니다"
 
+# translated on 2012-09-26
 msgid "inner loop 2; cannot correct step size"
 msgstr "내부 루프 2; step size를 정정할 수가 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "glm.fit: algorithm did not converge"
-msgstr "알고리즘은 수렴하지 않았습니다"
+msgstr "glm.fit: 알고리즘이 수렴하지 않았습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "glm.fit: algorithm stopped at boundary value"
-msgstr "알고리즘은 경계값으로 정지했습니다"
+msgstr "glm.fit: 알고리즘이 경계값에서 중단되었습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
-msgstr "수치적으로 0 또는 1인 확률이 초래해졌습니다"
+msgstr "glm.fit: 적합된 확률들이 수치적으로 0 또는 1일 수 있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "glm.fit: fitted rates numerically 0 occurred"
-msgstr "수치적으로 0인 적용시키고 비율이 초래해졌습니다"
+msgstr "glm.fit: 적합된 비율들이 수치적으로 0 일 수 있습니다"
 
+# translated on 2012-09-26
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
-msgstr "'anova.glm'에의 다음의 인수는 무효이고, 제거 되었습니다"
+msgstr "'anova.glm'에 전달된 다음의 인수들은 잘못되었고 제거 되었습니다:"
 
+# translated on 2012-09-26
 msgid ","
 msgstr ","
 
+# translated on 2012-09-26
 msgid "using F test with a %s family is inappropriate"
-msgstr ""
+msgstr "%s 패밀리 F 테스트를 사용하는 것은 부적절합니다"
 
+# translated on 2012-09-26
 msgid "using F test with a fixed dispersion is inappropriate"
-msgstr ""
+msgstr "고정된 분산의 값을 이용하는 F 테스트는 부적절합니다"
 
+# translated on 2012-09-26
 msgid "models with response"
-msgstr "응답"
+msgstr "응답을 가진 모델들"
 
+# translated on 2012-09-26
 msgid "removed because response differs from model 1"
-msgstr "응답이 모델 1과 다르므로 제거해졌습니다"
+msgstr "응답이 모델 1과 다르기 때문에 제거되었습니다"
 
+# translated on 2012-09-26
 msgid "models were not all fitted to the same size of dataset"
-msgstr "model는 모두 동일 사이즈의 데이터 세트에 적용시킬수 없습니다"
+msgstr "models were not all fitted to the same size of dataset"
 
+# translated on 2012-09-26
 msgid "using F test with a '%s' family is inappropriate"
-msgstr ""
+msgstr "'%s' 패밀리에 F 테스트를 사용하는 것은 부적절합니다"
 
+# translated on 2012-09-26
 msgid "observations with zero weight not used for calculating dispersion"
-msgstr "중량감이 0의 관측값이 표준편차의 계산으로 사용되지 않습니다"
+msgstr "가중치가 없는 관측치들은 분산 계산을 목적으로 사용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "invalid clustering method"
-msgstr "무효인 clustering 메소드입니다"
+msgstr "클러스터링 메소드가 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "ambiguous clustering method"
-msgstr "애매한 clustering 메소드입니다"
+msgstr "클러스터링 메소드가 정확히 지정되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "invalid dissimilarities"
-msgstr "무효인 비유사도입니다"
+msgstr "비유사도가 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "size cannot be NA nor exceed 65536"
-msgstr ""
+msgstr "크기는 NA이어서도 안되며 65536를 초과해서도 안됩니다"
 
+# translated on 2012-09-26
 msgid "must have n >= 2 objects to cluster"
-msgstr "cluster해야할 2 이상의 오브젝트가 필요합니다"
+msgstr "클러스터를 하기 위해서는 반드시 2개 이상의 객체들을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "invalid length of members"
-msgstr "멤버의 길이가 무효입니다"
+msgstr "멤버들의 길이가 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "invalid dendrogram"
-msgstr "무효인 dendrogram입니다"
+msgstr "덴드로그램이 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "'merge' component in dendrogram must be integer"
-msgstr "dengrogram의 'merge'구성요소은 정수가 아니면 되지 않습니다"
+msgstr "덴드로그램의 'merge' 요소는 반드시 정수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "argument 'x' cannot be coerced to class \"hclust\""
-msgstr "인수'x'를 클래스 \"hclust\"에 강제 변환 할수 없습니다"
+msgstr "인수 'x'는 클래스 \"hclust\"로 강제변환할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "Consider providing an as.hclust.%s() method"
-msgstr ""
-"다음과 같은 메소드 함수를 제공하는 것을 고려 해주십시오:as.hclust. %s()"
+msgstr "as.hclust.%s() 메소드를 제공하는 것을 고려해보세요"
 
+# translated on 2012-09-26
 msgid "need dendrograms where all leaves have labels"
-msgstr "모두 leaves이 라벨을 가지는 dendrograms이 필요합니다"
+msgstr "모든 leaves가 라벨들을 가진 덴드로그램을 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "'k' and 'h' must be a scalar"
-msgstr "'k' 그리고 'h'는 scalar가 아니면 되지 않습니다"
+msgstr "'k'와 'h'는 반드시 스칼라이어야 합니다"
 
+# translated on 2012-09-26
 msgid "specify exactly one of 'k' and 'h'"
-msgstr "'k' 그리고 'h'의 꼭 1개를 지정해주십시오"
+msgstr "'k'와 'h' 중 정확히 한개를 지정해야 합니다"
 
+# translated on 2012-09-26
 msgid "k must be between 2 and %d"
-msgstr "k는 2와 %d의 사이에 없으면 되지 않습니다"
+msgstr "k는 반드시 2와 %d 사이에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "specify exactly one of 'which' and 'x'"
-msgstr "꼭 하나의 'which'와 'x'를 지정해 주십시오"
+msgstr "'which'와 'x' 중 정확히 한개를 지정해야 합니다"
 
+# translated on 2012-09-26
 msgid "all elements of 'which' must be between 1 and %d"
-msgstr "'which'의 모든 요소는 1과 %d의 사이에 없으면 되지 않습니다"
+msgstr "'which'의 모든 요소는 반드시 1과 %d의 사이에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "invalid parameter values"
-msgstr "무효인 파라미터 값입니다"
+msgstr "파라미터의 값들이 잘못되었습니다"
 
+# translated on 2012-09-26
 msgid "a limit is missing"
-msgstr "한계가 없습니다"
+msgstr "limit이 빠져있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "missing values not allowed"
-msgstr "결측치 'poly'에서는 허용되지 않습니다"
+msgstr "결측값들은 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "'r' is less than 1"
-msgstr "'r'은 1미만입니다"
+msgstr "'r'은 1 보다 적습니다"
 
+# translated on 2012-09-26
 msgid "'m' is less than 1"
-msgstr "'m'은 1미만입니다"
+msgstr "'m'은 1 보다 적습니다"
 
+# translated on 2012-09-26
 msgid "'r' is less than 0"
-msgstr "'r'은 0미만입니다"
+msgstr "'r'은 0 보다 적습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'m' must be numeric with non-negative integers"
-msgstr "'x'는 non-negative 정수가 아니면 되지 않습니다"
+msgstr "'m'은 반드시 음의 정수가 아닌 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "unknown named kernel"
-msgstr "알수 없는 이름의 kernel입니다"
+msgstr "이름을 알 수 없는 커널입니다"
 
+# translated on 2012-09-26
 msgid "'coef' must be a vector"
-msgstr "'coef'는 vector가 아니면 되지 않습니다"
+msgstr "'coef'는 반드시 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'coef' does not have the correct length"
-msgstr "'coef'의 길이가 올바르지 않습니다"
+msgstr "'coef'는 정확한 길이를 가지고 있지 않습니다"
 
+# translated on 2012-09-26
 msgid "coefficients do not add to 1"
 msgstr "계수의 총계는 1이 아닙니다"
 
+# translated on 2012-09-26
 msgid "'k' is not a kernel"
-msgstr "'k'는 kernel이 아닙니다"
+msgstr "'k'는 커널이 아닙니다"
 
+# translated on 2012-09-26
 msgid "'x' is shorter than kernel 'k'"
-msgstr "'x'는 kernel 'k'보다 짧습니다"
+msgstr "'x'는 커널 'k'보다 짧습니다"
 
+# translated on 2012-09-26
 msgid "'kernapply' is not available for object 'x'"
-msgstr "'kernapply'는 오브젝트 'x'에 때문에 이용 할수가 없습니다"
+msgstr "객체 'x'에 'kernapply'는 사용할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'x' is not a kernel"
-msgstr "'k'는 kernel이 아닙니다"
+msgstr "'x'는 커널이 아닙니다"
 
+# translated on 2012-09-26
 msgid "empty cluster: try a better set of initial centers"
-msgstr "비어 있는 cluster; 보다 좋은 초기 중심을 시도합시다"
+msgstr "빈 클러스터: 더 나은 초기 중심값을 지정해 보세요"
 
+# translated on 2012-09-26
 msgid "did not converge in %d iterations"
-msgstr "%d를 돌려주었습니만, 한꺼번에 묶지 못했습니다"
+msgstr "%d번 반복을 했으나 수렴하지 않았습니다"
 
+# translated on 2012-09-26
 msgid "number of cluster centres must lie between 1 and nrow(x)"
-msgstr "cluster 중심의 수는 1과 nrow(x)의 사이에 없으면 되지 않습니다"
+msgstr "크러스터 중심의 개수는 반드시 1과 nrow(x) 사이에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "did not converge in"
-msgstr "한꺼번에 묶지 않습니다"
+msgstr "수렴하지 않았습니다"
 
+# translated on 2012-09-26
 msgid "iterations"
 msgstr "반복"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid nrow(x)"
-msgstr "무효인 'x'"
+msgstr "유효하지 않은 nrow(x)"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid ncol(x)"
-msgstr "무효인 'x'"
+msgstr "유효하지 않은 ncol(x)"
 
+# translated on 2012-09-26
 msgid "'centers' must be a number or a matrix"
-msgstr "중심('centers')은 수치 또는 행렬이 아니면 되지 않습니다"
+msgstr "'centers'는 반드시 숫자 또는 행렬이어야 합니다"
 
+# translated on 2012-09-26
 msgid "more cluster centers than distinct data points."
-msgstr "다른 데이터 점보다 많은 cluster 중심이 있습니다"
+msgstr "구분되는 데이터 포인트들보다 더 많은 클러스터 중심들이 있습니다."
 
+# translated on 2012-09-26
 msgid "initial centers are not distinct"
-msgstr "중심의 초기값에 동일한 것이 있습니다"
+msgstr "initial centers are not distinct"
 
+# translated on 2012-09-26
 msgid "more cluster centers than data points"
-msgstr "데이터 점보다 많은 cluster 중심이 있습니다"
+msgstr "데이터 포인트들보다 더 많은 클러스터 중심들이 있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'invalid value of 'k'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "'잘못된 'k'의 값"
 
+# translated on 2012-09-26
 msgid "'iter.max' must be positive"
-msgstr "'iter.max'는 positive이 아니면 되지 않습니다"
+msgstr "'iter.max'는 반드시 양수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "must have same number of columns in 'x' and 'centers'"
-msgstr "'x' 그리고 중심('centers')의 열수는 동일하지 않으면 되지 않습니다"
+msgstr "'x'와 'centers'내에 반드시 동일한 수의 열을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "not enough 'x' data"
-msgstr "'x' 데이터의 수가 충분하지는 않습니다"
+msgstr "'x' 데이터의 수가 충분하지 않습니다"
 
+# translated on 2012-09-26
 msgid "not enough 'y' data"
-msgstr "'y' 데이터의 수가 충분하지는 않습니다"
+msgstr "'y' 데이터의 수가 충분하지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "cannot compute exact p-values with ties"
-msgstr "ties가 있기때문에, 정확한 p값을 돌려줍니다"
+msgstr "동일한 값들의 존재로 인하여 정확한 p-값들을 연산할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "p-values will be approximate in the presence of ties"
-msgstr ""
+msgstr "같은 값들의 존재로 인하여 p-값은 근사치일것입니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'y' must be numeric or a function or a string naming a valid function"
-msgstr "'y'는 수치 또는 유효한 함수의 이름인 문자열이 아니면 안됩니다"
+msgstr "'y'는 반드시 숫자 혹은 함수 혹은 유효한 함수를 이름짓는 문자열이어야 합니다"
 
+# translated on 2012-09-26
 msgid "ties should not be present for the Kolmogorov-Smirnov test"
-msgstr ""
+msgstr "Kolmogorov-Smirnov 테스트에서는 중복되는 값들이 없어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid ""
 "numeric y must be supplied.\n"
 "For density estimation use density()"
 msgstr ""
-"y를 제공하지 않으면 되지 않습니다. \n"
-"밀도의 추정에는 density()를 사용합시다"
+"숫자 y가 반드시 제공되어야 합니다.\n"
+"밀도추정시에는 density()를 사용하세요"
 
+# translated on 2012-09-26
 msgid "'k' is not an integer"
 msgstr "'k'는 정수가 아닙니다"
 
+# translated on 2012-09-26
 msgid "method = '%s' is not supported. Using 'qr'"
-msgstr ""
-"method = '%s'는 서포트 되어있지 않습니다.  \n"
-"'qt'를 사용합니다"
+msgstr "method = '%s'는 지원되지 않습니다. 'qr'을 이용하세요"
 
+# translated on 2012-09-26
 msgid "number of offsets is %d, should equal %d (number of observations)"
-msgstr ""
-"offsets의 수는 %d입니다만, %d(관측값의 수)에 동일하지 않으면 되지 않습니다"
+msgstr "오프셋의 수는 %d이며, 관측치의 개수 %d와 동일해야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must be a matrix"
-msgstr "'x'는 행렬이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 행렬이어야 합니다"
 
+# translated on 2012-09-26
 msgid "0 (non-NA) cases"
-msgstr "(비 NA값)cases가 0 입니다"
+msgstr "0 (non-NA) cases"
 
+# translated on 2012-09-26
 msgid "incompatible dimensions"
-msgstr "모순된 차원입니다"
+msgstr "incompatible dimensions"
 
+# translated on 2012-09-26
 msgid "singular fit encountered"
-msgstr "특이한 적용시켜 조우했습니다"
+msgstr "특이한 적합이 발생했습니다"
 
+# translated on 2012-09-26
 msgid "missing or negative weights not allowed"
-msgstr "결손 또는 negative의 중량감은 허용되지 않습니다"
+msgstr "누락되거나 음의 가중치들은 허용되지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid 'lm' object:  no 'terms' component"
-msgstr "무효인 'lm'오브젝트: 항('terms') 혹은 'qr'성분이 없습니다"
+msgstr "잘못된 'lm' 객체:  'terms' 구성요소가 없습니다"
 
+# translated on 2012-09-26
 msgid "calling summary.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "summary.lm(<fake-lm-object>)를 호출하고 있습니다 ..."
 
+# translated on 2012-09-26
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
-msgstr "오브젝트중의 나머지 자유도는 이 'lm'가 아니라고 시사합니다"
+msgstr "객체내의 잔차 자유도는 이것이 \"lm\" 적합이 아니라는 것을 시사합니다"
 
+# translated on 2012-09-26
 msgid ""
 "lm object does not have a proper 'qr' component.\n"
 " Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
+"lm 객체가 올바른 'qr' 구성요소를 가지고 있지 않습니다.\n"
+" Rank zero 또는  lm(.., qr=FALSE)를 사용할 수 없습니다."
 
+# translated on 2012-09-26
 msgid "family '"
-msgstr ""
+msgstr "페밀리 '"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "' not implemented"
-msgstr "유형 '%s'는 실제 적용되지 않습니다"
+msgstr "' 구현되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "calling anova.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "anova.lm(<fake-lm-object>) 호출중입니다..."
 
+# translated on 2012-09-26
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
-msgstr ""
+msgstr "근본적으로 완전한 적합에 대한 ANOVA F-테스트들은 신뢰할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "removed because response differs from"
-msgstr "(을)를 가지는 모델을 제거 했습니다. 응답이하와 다르기 때문입니다"
+msgstr "응답이 다음의 내용들과 다르기 때문에 제거되었습니다: "
 
+# translated on 2012-09-26
 msgid "model 1"
 msgstr "모델 1"
 
+# translated on 2012-09-26
 msgid "calling predict.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "predict.lm(<fake-lm-object>)를 호출중입니다..."
 
+# translated on 2012-09-26
 msgid "prediction from a rank-deficient fit may be misleading"
-msgstr ""
-"링크(rank-deficient)가 떨어지고 한 상태에서의 적용시키고를 하고 있으므로 잘못"
-"한 예측을 하고 있을\n"
-"가능성이 있습니다"
+msgstr "prediction from a rank-deficient fit may be misleading"
 
+# translated on 2012-09-26
 msgid "Predictions on current data refer to _future_ responses"
-msgstr ""
+msgstr "현재 데이터에 의한 예측은 _future_ responses을 참조합니다"
 
-msgid ""
-"Assuming prediction variance inversely proportional to weights used for "
-"fitting"
-msgstr ""
+# translated on 2012-09-26
+msgid "Assuming prediction variance inversely proportional to weights used for fitting"
+msgstr "예측 분산은 적합을 하는데 사용된 가중치의 역수에 비례한다고 가정합니다"
 
+# translated on 2012-09-26
 msgid "Assuming constant prediction variance even though model fit is weighted"
-msgstr ""
+msgstr "모델적합에 가중치가 사용되었을지라도 예측분산은 일정하다고 가정합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'weights' as formula should be one-sided"
-msgstr "'x'는 non-negative가 나오지 않으면 되지 않습니다"
+msgstr "'weights' as formula should be one-sided"
 
+# translated on 2012-09-26
 msgid "'object' has no 'effects' component"
-msgstr "오브젝트는 효과성분을 가지지 않습니다"
+msgstr "'object'는 'effects' 구성요소를 가지고 있지 않습니다"
 
+# translated on 2012-09-26
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
-msgstr "'se,fit' 인수는 \"mlm\"의 오브젝트에 대해서는 실제 적용되지 않습니다"
+msgstr "\"mlm\" 객체들에 대한 'se.fit' 인수는 아직 적용되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "invalid model QR matrix"
-msgstr ""
+msgstr "잘못된 모델 QR 분해행렬입니다"
 
+# translated on 2012-09-26
 msgid "non-NA residual length does not match cases used in fitting"
-msgstr ""
-"NA가 나오지 않는 나머지 길이가 적용시키고자 사용된 cases와 일치하지 않습니다"
+msgstr "NA가 아닌 잔차길이는 적합에 사용된 케이스들과 일치하지 않습니다"
 
+# translated on 2012-09-26
 msgid "too few cases, n < k"
-msgstr "cases가 너무 적습니다, n < k"
+msgstr "케이스가 너무 적습니다, n < k"
 
+# translated on 2012-09-26
 msgid "predictors must all be numeric"
-msgstr "예측자는 모두 수치가 아니면 되지 않습니다"
+msgstr "설명변수들은 모두 수치형이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'degree' must be 0, 1 or 2"
-msgstr "'degree'는 0,1 또는 2 입니다"
+msgstr "'degree'는 반드시 0,1 또는 2 입니다"
 
+# translated on 2012-09-26
 msgid "both 'span' and 'enp.target' specified: 'span' will be used"
-msgstr "'span'와 'enp.target'의 쌍방이 지정되었습니다.'span'가 사용됩니다"
+msgstr "'span'과 'enp.target' 모두 지정되었습니다: 'span'이 사용될 것입니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid 'control' argument"
-msgstr "무효인 대비 인수('contrasts.arg')입니다"
+msgstr "잘못된 'control' 인수"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid NCOL(X)"
-msgstr "무효인 'x'"
+msgstr "유효하지 않은 NCOL(X)"
 
+# translated on 2012-09-26
 msgid "only 1-4 predictors are allowed"
-msgstr "1-4개의 예측자만에 허용되지 않습니다"
+msgstr "오로지 1-4 설명변수들만이 허용됩니다"
 
+# translated on 2012-09-26
 msgid "invalid 'y'"
-msgstr "무효인 'y'"
+msgstr "유효하지 않은 'y'"
 
-msgid ""
-"specified the square of a factor predictor to be dropped when degree = 1"
-msgstr ""
-"degree = 1 때에는, 인자 predictor 평방은 버리고 가는것이 지시 받았습니다"
+# translated on 2012-09-26
+msgid "specified the square of a factor predictor to be dropped when degree = 1"
+msgstr "specified the square of a factor predictor to be dropped when degree = 1"
 
-msgid ""
-"specified the square of a predictor to be dropped with only one numeric "
-"predictor"
-msgstr ""
-"유일개의 수치 예측자를 가지는 예측자의 평방은 버리고 가는것이 지시받았습니다"
+# translated on 2012-09-26
+msgid "specified the square of a predictor to be dropped with only one numeric predictor"
+msgstr "specified the square of a predictor to be dropped with only one numeric predictor"
 
+# translated on 2012-09-26
 msgid "specified parametric for all predictors"
-msgstr "모든 예측자가 parametric과 지정되었습니다"
+msgstr "specified parametric for all predictors"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid argument 'span'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 인수 'span'"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid argument 'cell'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 인수 'cell'"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid argument 'degree'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 인수 'degree'"
 
+# translated on 2012-09-26
 msgid "first argument must be a \"loess\" object"
-msgstr "최초의 인수는\"loess\" 오브젝트가 아니면 되지 않습니다"
+msgstr "첫번째 인수는 반드시 \"loess\" 객체이어야 합니다"
 
+# translated on 2012-09-26
 msgid "no models to compare"
-msgstr "비교해야할 모델이 없습니다"
+msgstr "비교할 모델들이 없습니다"
 
+# translated on 2012-09-26
 msgid "extra arguments discarded"
-msgstr "불필요한 인수는 버려졌습니다"
+msgstr "추가적인 인수들이 버려졌습니다"
 
+# translated on 2012-09-26
 msgid "logLik.lm only handles single responses"
-msgstr ""
+msgstr "logLik.lm는 한개의 응답변수만을 오로지 다룹니다"
 
+# translated on 2012-09-26
 msgid "no \"nobs\" attribute is available"
-msgstr ""
+msgstr "\"nobs\" 속성을 사용할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "no 'nobs' method is available"
-msgstr "'x'에 대해서 적용 가능한 'as.stepfun'메소드는 없습니다"
+msgstr "'nobs' 메소드를 실행할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "'start' and 'table' must be same length"
-msgstr "'start'와 'table'는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'start'와 'table'는 반드시 같은 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "this should not happen"
-msgstr "이것은 있을 수가 있지 않는 것입니다"
+msgstr "이것은 있을 수 없습니다"
 
+# translated on 2012-09-26
 msgid "algorithm did not converge"
-msgstr "알고리즘은 수렴하지 않았습니다"
+msgstr "알고리즘이 수렴하지 않았습니다"
 
+# translated on 2012-09-26
 msgid "incorrect specification of 'table' or 'start'"
-msgstr "'table' 또는 'start'의 부정확한 지정입니다"
+msgstr "'table' 또는 'start'의 잘못된 지정입니다"
 
+# translated on 2012-09-26
 msgid "%d missing values deleted"
-msgstr "%d개의 결손값이 삭제되었습니다"
+msgstr "%d개의 결측치들이 삭제되었습니다"
 
+# translated on 2012-09-26
 msgid "'X' matrix has %d responses, 'Y' has %d responses"
-msgstr "'x'행렬은 %d에 응답,'y'는 %d에 응답을 가지고 있습니다"
+msgstr "'X' 행렬은 %d개의 응답들을 가지고 있고, 'Y'는 %d개의 응답들을 가지고 있습니다"
 
+# translated on 2012-09-26
 msgid "%d responses, but only %d variables"
-msgstr "%d개의 변수밖에 없습니다만, %d의 응답이 있습니다"
+msgstr "%d개의 응답들 중에서, 오로지 %d개의 변수들이 있습니다"
 
+# translated on 2012-09-26
 msgid "number of weights = %d should equal %d (number of responses)"
-msgstr "중량감의 수는 %d입니다만, %d(응답의 수)에 동일하지 않으면 안됩니다"
+msgstr "가중치의 개수는 %d개 이며 응답변수들의 개수 %d와 동일해야 합니다"
 
+# translated on 2012-09-26
 msgid "'X' matrix was collinear"
-msgstr "'X' 행렬은 동일 선상이었습니다"
+msgstr "'X' 행렬은 공선형이었습니다"
 
+# translated on 2012-09-26
 msgid "missing observations deleted"
-msgstr "결손한 관측값은 삭제되었습니다"
+msgstr "결측치들이 삭제되었습니다"
 
+# translated on 2012-09-26
 msgid "observations with 0 weight not used in calculating standard deviation"
-msgstr "중량감이 0의 관측값은 표준 편차의 계산으로 사용되지 않습니다"
+msgstr "가중치가 없는 관측치들은 표준편차를 계산하는데 사용되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "observations with 0 weights not used"
-msgstr "중량감이 0의 관측값은 사용되지 않습니다"
+msgstr "가중치가 없는 관측치들은 사용되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "'low' and 'high' cannot be both TRUE"
-msgstr "'low' 그리고 'high'의 양쪽 모두가 TRUE로 될수가 없습니다"
+msgstr "'low'와 'high'는 모두 TRUE 일 수 없습니다"
 
+# translated on 2012-09-26
 msgid "need multiple response"
 msgstr "다중 응답을 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "object must be of class \"manova\" or \"maov\""
-msgstr ""
-"오브젝트는 클래스 \"manova\" 또는  \"maov\"가 나오지 않으면 되지 않습니다"
+msgstr "객체는 반드시 클래스 \"manova\" 또는 \"maov\"이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "need multiple responses"
 msgstr "다중 응답을 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "residuals have rank %d < %d"
-msgstr "나머지 링크(rank)는 %d < %d 를 가집니다"
+msgstr "잔차들은 %2$d 보다 작은 계수 %1$d를 가집니다"
 
+# translated on 2012-09-26
 msgid "NAs are not allowed"
 msgstr "NA는 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "each dimension in table must be >= 2"
-msgstr "테이블의 각 차원은 2 이상일 필요가 있습니다"
+msgstr "테이블의 각 차원은 반드시 2 이상이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must be a 3-dimensional array"
-msgstr "'x'는 3차원 배열이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 3-차원 배열이어야 합니다"
 
+# translated on 2012-09-26
 msgid "if 'x' is not an array, 'y' must be given"
-msgstr "'x'가 배열이 아니면, 'y'가 주어지지 않으면 안됩니다"
+msgstr "만약 'x'가 배열이 아니면, 'y'는 반드시 주어져야 합니다"
 
+# translated on 2012-09-26
 msgid "if 'x' is not an array, 'z' must be given"
-msgstr "'x'가 배열이 아니면,'z'가 주어지지 않으면 안됩니다"
+msgstr "만약 'x'가 배열이 아니면, 'z'는 반드시 주어져야 합니다"
 
+# translated on 2012-09-26
 msgid "'x', 'y', and 'z' must have the same length"
-msgstr "'x', 'y' 그리고 'z'는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'x', 'y', 그리고 'z'는 반드시 같은 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "sample size in each stratum must be > 1"
-msgstr "각 층의 sample size는 > 1 일 필요가 있습니다"
+msgstr "각 층별로 샘플의 크기는 반드시 1 보다 커야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must be square with at least two rows and columns"
-msgstr "'x'는 정방행렬로, 적어도 2개의 행과 열을 가지지 않으면 되지 않습니다"
+msgstr "'x'는 반드시 최소한 두개의 열과 행을 가진 정방행렬이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' and 'y' must have the same number of levels (minimum 2)"
-msgstr "'x' 그리고 'y'는 동일 수의 레벨(최저 2)을 가지지 않으면 되지 않습니다"
+msgstr "'x'와 'y'는 반드시 동일 수의 레벨(최저 2)을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "need numeric data"
 msgstr "수치 데이터가 필요합니다"
 
+# translated on 2012-09-26
 msgid "medpolish() did not converge in %d iterations"
-msgstr "%d 회 돌려주었습니다만, medpolish()가 연속으로 묶지 못하였습니다"
+msgstr "%d번의 반복에도 불구하고 medpolish()는 수렴하지 않았습니다"
 
+# translated on 2012-09-26
 msgid "'mlm' objects with weights are not supported"
-msgstr "중량감 포함의 'mlm' 오브젝트는 서포트 되고 있지 않습니다"
+msgstr "'mlm' objects with weights are not supported"
 
+# translated on 2012-09-26
 msgid "X does not define a subspace of M"
-msgstr "x는 m의 부분 공간을 정의 하지 않습니다"
+msgstr "X는 M의 부분공간을 정의하지 않습니다"
 
+# translated on 2012-09-26
 msgid "residuals have rank"
-msgstr "나머지는 link를 가집니다"
+msgstr "잔차들은 계수를 가집니다"
 
+# translated on 2012-09-26
 msgid "<"
 msgstr "<"
 
+# translated on 2012-09-26
 msgid "'model.tables' is not implemented for multiple responses"
-msgstr "'model.tables'는 다중 응답에 대해서 실제 적용되지 않습니다"
+msgstr "다중응답들에 대해서 'model.tables'은 아직 적용되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "type '%s' is not implemented yet"
-msgstr "유형 '%s'는 실제 적용되지 않습니다"
+msgstr "유형 '%s'는 아직 구현되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "this fit does not inherit from \"lm\""
-msgstr ""
+msgstr "이 적합은 \"lm\"으로부터 상속받은 것이 아닙니다"
 
+# translated on 2012-09-26
 msgid "'cterms' argument must match terms in model object"
-msgstr ""
-"'cterms' 파라미터는 모델 오브젝트중의 항에 적합하지 않으면 되지 않습니다"
+msgstr "'cterms' 인수는 반드시 모델객체의 항들과 일치해야 합니다"
 
+# translated on 2012-09-26
 msgid "Design is unbalanced - use se.contrast() for se's"
-msgstr ""
-"설계는 균형을 잃게 할 수 있습니다. se를 위해서 \n"
-"se.contrast()를 사용합니다"
+msgstr "불균형 디자인입니다 - 표준오차를 계산하기 위해서는 se.contrast()를 사용하세요"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "design is unbalanced so cannot proceed"
-msgstr ""
-"설계는 균형을 잃게 할 수 있습니다. se를 위해서 \n"
-"se.contrast()를 사용합니다"
+msgstr "디자인이 불균형하여 계속해서 진행할 수 없습니다"
 
+# translated on 2012-09-26
 msgid ""
 "Standard error information not returned as design is unbalanced. \n"
 "Standard errors can be obtained through 'se.contrast'."
 msgstr ""
-"설계로서 돌려주어지고 않는 표준 오차 정보는 불균형입니다\n"
-"표준 오차는 'se.countast'에 의해 얻을 수 있습니다"
+"표준오차 정보는 디자인이 불균형하여 돌려지지 않습니다. \n"
+"표준오차는 'se.contrast'를 이용하여 얻을 수 있습니다."
 
+# translated on 2012-09-26
 msgid "SEs for type '%s' are not yet implemented"
-msgstr "형태'%s'에 대한 SEs는 실제 적요되지 않습니다"
+msgstr "유형 '%s'에 대한 표준오차는 아직 구현되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "na.action must be a function"
-msgstr "na.action는 함수가 아니면 되지 않습니다"
+msgstr "na.action은 반드시 함수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "non-factors ignored:"
-msgstr "인자가 아닌 겻은 무시 되었습니다"
+msgstr "다음의 비인자들이 무시되었습니다:"
 
+# translated on 2012-09-26
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
-msgstr "eff.aovlist: non-orthogonal의 차이는 올바르지 않게 반응할것입니다"
+msgstr "eff.aovlist: 비직교대조는 잘못된 답을 줄 것입니다"
 
+# translated on 2012-09-26
 msgid "cannot create a formula from a zero-column data frame"
-msgstr ""
+msgstr "열의 개수가 0인 데이터 프레임으로부터는 모델식을 생성할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "no terms component nor attribute"
-msgstr "terms 요소가 없습니다"
+msgstr "항들의 구성요소도 아니고 속성도 아닙니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'termlabels' must be a character vector of length at least one"
-msgstr "'ColSideColors'는 길이가 ncol(x)의 문자 벡터가 아니면 되지 않습니다"
+msgstr "'termlabels'는 반드시 최소한 길이가 하나인 문자 벡터이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'termobj' must be a object of class \"terms\""
-msgstr "중심('centers')은 수치 또는 행렬이 아니면 되지 않습니다"
+msgstr "'termobj'는 반드시 클래스 \"terms\"의 객체이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
-msgstr "변수 '%s'에 클래스 \"%s\" 이지만, 클래스 \"%s\"가 주어졌습니다"
+msgstr "변수 '%s'가 유형 \"%s\"으로 적합되나 유형 \"%s\"이 제공되었습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "variables %s were specified with different types from the fit"
-msgstr "변수 %s는 적용시키기 위한 것과는 다른 클래스로서 지정되었습니다"
+msgstr "변수 %s는 적합으로부터 나온 다른 유형으로 명시되었습니다"
 
+# translated on 2012-09-26
 msgid "'data' must be a data.frame, not a matrix or an array"
-msgstr "'data'는 행렬이나 배열은 아니고, data.frame이 아니면 되지 않습니다"
+msgstr "'data'는 반드시 행렬 또는 배열이 아닌 데이터 프레임이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
-msgstr ""
-"'newdata'는 행렬이나 배열은 아니고, 데이터 프레임이 아니면 되지 않습니다"
+msgstr "'newdata'는 %d개의 행을 가지지만 변수(들)은 %d개의 행을 가짐을 알게 되었습니다"
 
+# translated on 2012-09-26
 msgid "character variable '%s' changed to a factor"
-msgstr "변수 '%s'는 인자가 아닙니다"
+msgstr "문자형 변수 '%s'가 요인으로 변경되었습니다"
 
+# translated on 2012-09-26
 msgid "variable '%s' is not a factor"
-msgstr "변수 '%s'는 인자가 아닙니다"
+msgstr "변수 '%s'는 요인이 아닙니다"
 
+# translated on 2012-09-26
 msgid "factor '%s' has new level(s) %s"
-msgstr "인자 '%s'에는 새로운 레벨(level(s) %s가 있습니다"
+msgstr "요인 '%s'은 새로운 수준(들) %s을 가집니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'offset' must be numeric"
-msgstr "'x'는 수치가 아니면 되지 않습니다"
+msgstr "'offset'은 반드시 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "model frame and formula mismatch in model.matrix()"
-msgstr "model.matrix()로 모델 프레임과 모델식의 편성이 적당하지 않습니다"
+msgstr "model.matrix()에서 모델프레임과 모델식이 일치하지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "variable '%s' converted to a factor"
-msgstr "변수 '%s'는 인자가 아닙니다"
+msgstr "변수 '%s'가 요인으로 변환되었습니다"
 
+# translated on 2012-09-26
 msgid "invalid 'contrasts.arg' argument"
-msgstr "무효인 대비 인수('contrasts.arg')입니다"
+msgstr "잘못된 'contrasts.arg' 인수"
 
+# translated on 2012-09-26
 msgid "variable '%s' is absent, its contrast will be ignored"
-msgstr "변수'%s'는 존재하지 않습니다, 대비는 무시됩니다"
+msgstr "변수 '%s'는 존재하지 않습니다, 따라서 이에 대한 대조는 무시될 것입니다"
 
+# translated on 2012-09-26
 msgid "using type=\"numeric\" with a factor response will be ignored"
-msgstr ""
+msgstr "인자 응답을 가진 type=\"numeric\"은 무시될 것입니다"
 
+# translated on 2012-09-26
 msgid "invalid response type"
-msgstr "무효인 응답 유형입니다"
+msgstr "유효하지 않은 응답유형입니다"
 
+# translated on 2012-09-26
 msgid "invalid 'data' argument"
-msgstr "무효인 'data'인수입니다"
+msgstr "유효하지 않은 'data' 인수입니다"
 
+# translated on 2012-09-26
 msgid "all times contain an NA"
-msgstr "모든 시간이 NA값을 포함하고 있습니다"
+msgstr "all times contain an NA"
 
+# translated on 2012-09-26
 msgid "missing values in object"
-msgstr "오브젝트에 결손값이 있습니다"
+msgstr "객체안에 결측치들이 있습니다"
 
+# translated on 2012-09-26
 msgid "invalid argument 'omit'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 인수 'omit'"
 
+# translated on 2012-09-26
 msgid "'print.level' must be in {0,1,2}"
-msgstr "'print.level'는 (0,1,2)에 있지 않습니다"
+msgstr "'print.level'은 반드시 {0,1,2} 안에 있어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'interval' must be a vector of length 2"
-msgstr "'margins'는 길이 2의 수치 벡터가 아니면 되지 않습니다"
+msgstr "'interval'은 반드시 길이 2인 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "lower < upper  is not fulfilled"
-msgstr "lower < upper가 되어 있지 않습니다"
+msgstr "lower < upper  이라는 조건을 만족하지 않습니다"
 
+# translated on 2012-09-26
 msgid "f.lower = f(lower) is NA"
-msgstr ""
+msgstr "f.lower = f(lower)는 NA입니다"
 
+# translated on 2012-09-26
 msgid "f.upper = f(upper) is NA"
-msgstr ""
+msgstr "f.upper = f(upper)는 NA입니다"
 
+# translated on 2012-09-26
 msgid "f() values at end points not of opposite sign"
-msgstr "f()의 end point에서의 값이 다른 부호를 가지지 않습니다"
+msgstr "f() values at end points not of opposite sign"
 
+# translated on 2012-09-26
 msgid "_NOT_ converged in"
-msgstr "연속으로 묶지 않았습니다"
+msgstr "_NOT_ converged in"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "control argument must be a named list"
-msgstr "'split' 인수는 리스트가 아니면 되지 않습니다"
+msgstr "조정 인수는 반드시 이름이 주어진 리스트이어야 합니다"
 
+# translated on 2012-09-26
 msgid "Logical 'hessian' argument not allowed.  See documentation."
-msgstr ""
+msgstr "논리적 'hessian' 인수는 허용되지 않습니다.  문서를 살펴보세요."
 
+# translated on 2012-09-26
 msgid "'params' has wrong length"
-msgstr "'parames'는 잘못한 길이입니다"
+msgstr "'params'은 잘못된 길이를 가지고 있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'varying' must be in seq_along(pars)"
-msgstr "'varying'는 1:length(pars)에 없으면 되지 않습니다"
+msgstr "'varying'은 반드시 seq_along(pars)내에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'varying' has wrong length"
-msgstr "'varying'가 잘못한 길이입니다"
+msgstr "'varying'는 잘못된 길이를 가지고 있습니다"
 
+# translated on 2012-09-26
 msgid "'varying' must be logical, integer or character"
-msgstr "'varying'는 논리값, 정수 또는 문자가 아니면 되지 않습니다"
+msgstr "'varying'는 반드시 논리값, 정수, 또는 문자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "invalid argument to 'getProfile'"
-msgstr "'getProfile'에서 무효인 인수입니다"
+msgstr "'getProfile'에 잘못된 인수입니다"
 
+# translated on 2012-09-26
 msgid "cannot recognize parameter name"
-msgstr "파라미터의 이름을 확인 할수 없습니다"
+msgstr "파라미터 이름을 인식할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "levels truncated to positive values only"
-msgstr "레벨 poitive 값인만큼 축소되었습니다"
+msgstr "levels truncated to positive values only"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "setVarying : 'vary' length must match length of parameters"
-msgstr ""
-"setVarying: vary 길이는 파라미터의 길이에 일치하지 않으면 되지 않습니다"
+msgstr "setVarying : 'vary'의 길이는 반드시 파라미터들의 개수와 일치해야 합니다"
 
+# translated on 2012-09-26
 msgid "singular gradient matrix at initial parameter estimates"
-msgstr "파라미터의 초기 추정값으로 구매 행렬이 특이합니다"
+msgstr "초기 파라미터 추정치를 가진 특이 그래디언트 행렬입니다"
 
+# translated on 2012-09-26
 msgid "unrecognized control element(s) named `"
-msgstr ""
+msgstr "다음의 이름을 가진 인식되지 않은 제어 요소(들) `"
 
+# translated on 2012-09-26
 msgid "' ignored"
-msgstr ""
+msgstr "' 무시되었습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'data' must be a list or an environment"
-msgstr "'newdata'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"
+msgstr "'data'는 반드시 리스트 또는 환경이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "No starting values specified"
-msgstr "초기값이 주어지고 있지 않습니다"
+msgstr "초기값이 지정되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "parameters without starting value in 'data':"
-msgstr ""
+msgstr "'data'에 초기값이 없는 파라미터들:"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "fitting parameters"
-msgstr "모든 파라미터가 고정되어 있었습니다"
+msgstr "적합 파라미터들"
 
+# translated on 2012-09-26
 msgid "without any variables"
-msgstr ""
+msgstr "아무런 변수들 없이"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "no parameters to fit"
-msgstr "모든 파라미터가 고정되어 있었습니다"
+msgstr "적합할 파라미터들이 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "argument 'subset' will be ignored"
-msgstr "인수 sides는 1 또는 2가 나오지 않으면 되지 않습니다"
+msgstr "인수 'subset'는 무시될 것입니다"
 
+# translated on 2012-09-26
 msgid "argument 'na.action' will be ignored"
-msgstr ""
+msgstr "인수 'na.action'가 무시될 것입니다"
 
+# translated on 2012-09-26
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
-msgstr ""
+msgstr "만약 알고리즘 = \"port\"이라면 상한 또는 하한들이 무시됩니다"
 
+# translated on 2012-09-26
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
-msgstr "\"nls\" 오브젝트를 위한 REML 대수우도를 계산할 수 없습니다"
+msgstr "\"nls\" 객체들에 대한 REML log-likelihood를 계산할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "anova is only defined for sequences of \"nls\" objects"
-msgstr "anonva는 \"nls\"오브젝트의 계열에 대해서만 정의 되어 있습니다"
+msgstr "\"nls\" 객체들의 수열에 대해서만 anova가 정의되어 있습니다"
 
+# translated on 2012-09-26
 msgid "'anova' is only defined for sequences of \"nls\" objects"
-msgstr "'anova'는  \"nls\" 오브젝트의 계열에 대해서만 정의 되어 있습니다"
+msgstr "\"nls\" 객체들의 수열에 대해서만 'anova'가 정의되어 있습니다"
 
+# translated on 2012-09-26
 msgid "formula '%s' must be of the form '~expr'"
-msgstr "식 '%s'는 '~expr'가 나오지 않으면 되지 않습니다"
+msgstr "모델식 '%s'은 반드시 '~expr'의 형식을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'%s' cannot be of mode '%s'"
-msgstr "'%s'는 모드 '%s'로는 될 수 없습니다"
+msgstr "'%s'은 모드 '%s'일 수 없습니다"
 
+# translated on 2012-09-26
 msgid "a two-sided formula is required"
-msgstr ""
+msgstr "양변이 존재하는 모델식을 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "not enough groups"
-msgstr "충분하지 않는 group입니다"
+msgstr "not enough groups"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "bounds can only be used with method L-BFGS-B (or Brent)"
-msgstr "bounds는 L-BFGS-B method이라고 하는것만 사용할 수가 없습니다"
+msgstr "bounds can only be used with method L-BFGS-B (or Brent)"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "unknown names in control:"
-msgstr "알수 없는 이름의 kernel입니다"
+msgstr "컨트롤에 알 수 없는 이름들:"
 
+# translated on 2012-09-26
 msgid "read the documentation for 'trace' more carefully"
-msgstr "'trace'에 대한 해설을 보다 주의 깊게 읽어 주십시오"
+msgstr "'trace'에 대한 문서를 좀더 주의깊게 읽어보세요"
 
+# translated on 2012-09-26
 msgid "'trace != 0' needs 'REPORT >= 1'"
-msgstr ""
+msgstr "'trace != 0'는 'REPORT >= 1'를 필요로 합니다"
 
-msgid ""
-"method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
-msgstr ""
-"L-BFGS-B method는 'reltol' 그리고 'abstol'대신에 \n"
-"'factr' (와 'pgtol')를 사용합니다"
+# translated on 2012-09-26
+msgid "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
+msgstr "메소드 L-BFGS-B은 'reltol' and 'abstol' 대신에 'factr' (그리고 'pgtol') 를 사용합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "one-diml optimization by Nelder-Mead is unreliable:"
-msgstr ""
-"Nelder-Mead method에 의한 1 차원 최적화는 인정 할수가 없습니다: optimize를 사"
-"용해 주십시오"
+msgstr "Nelder-Mead에 의한 1-차원 최적화는 신뢰할 수 없습니다:"
 
+# translated on 2012-09-26
 msgid "use \"Brent\" or optimize() directly"
-msgstr ""
+msgstr "\"Brent\" 또는 optimize()를 직접적으로 사용하세요"
 
+# translated on 2012-09-26
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
-msgstr ""
+msgstr "method = \"Brent\"는 1차원 최적화에서만 사용할 수 있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'lower' and 'upper' must be finite values"
-msgstr "'k' 그리고 'h'는 scalar가 아니면 되지 않습니다"
+msgstr "'lower'와 'upper'는 반드시 유한한 값이어야 합니다"
 
+# translated on 2012-09-26
 msgid "Pooling of SD is incompatible with paired tests"
-msgstr ""
+msgstr "표준편차들을 풀링하는 것은 대응두표본 테스트에 부적합합니다"
 
+# translated on 2012-09-26
 msgid "'x' must have 2 columns"
-msgstr "'x'는 2개의 열을 가지지 않으면 안됩니다"
+msgstr "'x'는 반드시 2개의 열을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' and 'n' must have the same length"
-msgstr "'x'와 'n'는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'x'와 'n'은 반드시 같은 길이를 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "too few groups"
 msgstr "그룹이 너무 적습니다"
 
+# translated on 2012-09-26
 msgid "Not plotting observations with leverage one:"
-msgstr ""
+msgstr "레버리지가 있어 플랏팅을 할 수 없는 관측치들:"
 
+# translated on 2012-09-26
 msgid "use only with \"lm\" objects"
-msgstr "\"lm\" 오브젝트에 대해서만 사용해주십시오"
+msgstr "오로지 \"lm\" 객체들과 함께 사용해주세요"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'which' must be in 1:6"
-msgstr "'which'는 1:4에서 없으면 되지 않습니다"
+msgstr "'which'는 반드시 1:6 내에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'id.n' must be in {1,..,%d}"
-msgstr "'id.n' {1,..,%d}에서 없으면 되지 않습니다"
+msgstr "'id.n'는 반드시 {1,..,%d} 내에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "hat values (leverages) are all ="
-msgstr ""
+msgstr "hat values (leverages) are all ="
 
+# translated on 2012-09-26
 msgid "and there are no factor predictors; no plot no. 5"
-msgstr ""
+msgstr "그리고 예측인자들이 없습니다; 따라서 5번째 플랏이 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'x' and 'T' have incompatible length"
-msgstr "'x'와 'g'는 동일 길이를 가지지 않으면 되지 않습니다"
+msgstr "'x'와 'T'는 적합한 길이를 가지고 있지 않습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'x' must be finite, nonnegative, and integer"
-msgstr "'x'는 non-negative 정수가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 유한하고, 음수가 아닌 정수이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'T' must be nonnegative"
-msgstr "'x'는 non-negative가 나오지 않으면 되지 않습니다"
+msgstr "'T'는 반드시 음수이어서는 안됩니다"
 
+# translated on 2012-09-26
 msgid "not enough data"
-msgstr "적당한 데이타가 없습니다"
+msgstr "not enough data"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "The case k > 2 is unimplemented"
-msgstr "유형 '%s'는 실제 적용되지 않습니다"
+msgstr "k > 2 인 경우는 아직 구현되지 않았습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'r' must be a single positive number"
-msgstr "'ratio'는 단일의 positive의 수가 아니면 되지 않습니다"
+msgstr "'r'은 반드시 단일 양의 숫자이어야 합니다"
 
-msgid ""
-"exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
-msgstr ""
-"'n', 'delta','sd', 'power','sig.level에서 꼭 하나가 NULL이 나오지 않으면 되"
-"지 않습니다"
+# translated on 2012-09-26
+msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
+msgstr "'n', 'delta','sd', 'power','sig.level에서 꼭 하나가 NULL이 나오지 않으면 되지 않습니다"
 
+# translated on 2012-09-26
 msgid "'sig.level' must be numeric in [0, 1]"
-msgstr "'sig.level'는 [0,1]에서 숫자가 아니면 되지 않습니다"
+msgstr "'sig.level'은 반드시 [0, 1] 내에 있어야 하는 숫자입니다"
 
+# translated on 2012-09-26
 msgid "internal error"
-msgstr "외부 에러 입니다"
+msgstr "내부 에러"
 
+# translated on 2012-09-26
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
-msgstr ""
-"'n', 'p1','p2','power'및 'sig.level'중에서 꼭 하나가 NULL이 나오지 않으면 되"
-"지 않습니다"
+msgstr "정확하게 'n', 'p1', 'p2', 'power', 그리고 'sig.level' 중 하나는 반드시 NULL이어야 합니다"
 
-msgid ""
-"exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
-"level' must be NULL"
-msgstr ""
-"'group', 'n', 'between.var', 'within.var','power' 및 'sig.level'중 꼭 하나"
-"가 \n"
-"NULL가 아니면 안됩니다"
+# translated on 2012-09-26
+msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
+msgstr "정확하게 'groups', 'n', 'between.var', 'within.var', 'power', 그리고 'sig.level' 중 하나는 반드시 NULL 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "number of groups must be at least 2"
-msgstr "그룹의 수는 적어도 2 입니다"
+msgstr "그룹의 수는 반드시 최소한 2 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "number of observations in each group must be at least 2"
-msgstr "각 그룹의 관측값의 수는 적어도 2 나오지 않으면 되지 않습니다"
+msgstr "각 그룹의 관측값의 수는 반드시 최소한 2 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'nterms' is missing with no default"
-msgstr "'nterms'가 결손하고 있어, 기정값도 없습니다"
+msgstr "'nterms'는 기본값 없이 누락되어 있습니다"
 
+# translated on 2012-09-26
 msgid "'ppr' applies only to numerical variables"
-msgstr "'ppr'는 수치 변수에만 적용 할수 없지 않습니다"
+msgstr "'ppr'는 오로지 숫자형 변수들에만 적용할 수 있습니다"
 
+# translated on 2012-09-26
 msgid "mismatched 'x' and 'y'"
-msgstr "'x' 그리고 'y'가 match 하지 않습니다"
+msgstr "'x'와 'y'가 일치하지 않습니다"
 
+# translated on 2012-09-26
 msgid "wrong number of columns in 'x'"
-msgstr "'x'에서 열수가 잘못되어 있습니다"
+msgstr "'x'에 잘못된 열의 수가 있습니다"
 
+# translated on 2012-09-26
 msgid "cannot rescale a constant/zero column to unit variance"
-msgstr ""
+msgstr "상수/제로 열을 단위분산 척도로 조정할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "PCA applies only to numerical variables"
-msgstr "PCA 는 수치 변수에만 적용 할수 없지 않습니다"
+msgstr "PCA는 오로지 숫자형 변수들에만 적용됩니다"
 
+# translated on 2012-09-26
 msgid "no scores are available: refit with 'retx=TRUE'"
-msgstr ""
-"어떠한 scores도 이용 할수 없습니다: 'retx=TRUE'를 다시 적용시켜주십시오"
+msgstr "no scores are available: refit with 'retx=TRUE'"
 
+# translated on 2012-09-26
 msgid "'newdata' must be a matrix or data frame"
-msgstr "'newdata'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"
+msgstr "'newdata'는 반드시 행렬 또는 데이터 프레임이어야 합니다"
 
-msgid ""
-"'newdata' does not have named columns matching one or more of the original "
-"columns"
-msgstr ""
-"'newdata'는 original의 열의 하나 이상과 일치하는 열을 지정하고 있지 않습니다"
+# translated on 2012-09-26
+msgid "'newdata' does not have named columns matching one or more of the original columns"
+msgstr "'newdata' does not have named columns matching one or more of the original columns"
 
+# translated on 2012-09-26
 msgid "'newdata' does not have the correct number of columns"
-msgstr "'coef'의 길이가 적절하지 않습니다"
+msgstr "'newdata'는 올바른 열의 수를 가지고 있지 않습니다"
 
+# translated on 2012-09-26
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
-msgstr "'x'와 'covmat'의 쌍방이 주어졌습니다. 'x'는 무시됩니다"
+msgstr "'x'와 'covmat' 모두 주어졌습니다: 따라서 'x'는 무시될 것입니다"
 
+# translated on 2012-09-26
 msgid "'princomp' can only be used with more units than variables"
-msgstr "'princomp'에서 cases는 변수로부터 많지 않으면 되지 않습니다"
+msgstr "'princomp'는 오로지 변수의 개수보다 관측개체의 수가 더 많은 경우에 사용됩니다"
 
+# translated on 2012-09-26
 msgid "cannot use cor=TRUE with a constant variable"
-msgstr ""
+msgstr "cor=TRUE 를 상수변수와 함께 사용할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "covariance matrix is not non-negative definite"
-msgstr "공분산 행렬이 비부치정부호가 아닙니다"
+msgstr "covariance matrix is not non-negative definite"
 
+# translated on 2012-09-26
 msgid "argument does not include a 'qr' component"
-msgstr "인수는 'qr'요소을 포함하고 있지 않습니다"
+msgstr "인수는 'qr' 구성요소를 포함하고 있지 않습니다"
 
+# translated on 2012-09-26
 msgid "argument does not include an 'effects' component"
-msgstr "인수는 'effects'요소를 포함하고 있지 않습니다"
+msgstr "인수는 'effects' 구성요소를 포함하고 있지 않습니다"
 
+# translated on 2012-09-26
 msgid "'proj' is not implemented for \"mlm\" fits"
-msgstr "'proj'는 \"mlm\"에 의한 실제 적용되지 있지 않습니다"
+msgstr "\"mlm\" 적합에 대한 'proj'은 구현되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "'proj' is not implemented for multiple responses"
-msgstr "'proj'는 다중 응답에 대해서는 실제 적용되지 않습니다"
+msgstr "다중응답에 대해서 'proj'은 아직 구현되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "table 'x' should have 2 entries"
-msgstr ""
+msgstr "테이블 'x'는 2개의 항목을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "elements of 'n' must be positive"
-msgstr "'n'의 요소는 poitive가 아니면 되지 않습니다"
+msgstr "'n'의 요소들은 반드시 양수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "elements of 'x' must be nonnegative"
-msgstr "'x'의 요소는 non-negative이 아니면 되지 않습니다"
+msgstr "'x'의 요소들은 반드시 음수이어서는 안됩니다"
 
+# translated on 2012-09-26
 msgid "elements of 'x' must not be greater than those of 'n'"
-msgstr "'x'의 요소는 'n'보다 크면 안됩니다"
+msgstr "'x'의 요소들은 반드시 'n'의 요소들보다 커서는 안됩니다"
 
+# translated on 2012-09-26
 msgid "'p' must have the same length as 'x' and 'n'"
-msgstr "'p'는 'x' 그리고 'n'와 같은 길이가 나오지 않으면 되지 않습니다"
+msgstr "'p'는 반드시 'x'와 'n'과 같은 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "elements of 'p' must be in (0,1)"
-msgstr "'p'의 요소는 (0,1)안에 없으면 되지 않습니다"
+msgstr "'p'의 요소들은 반드시 (0,1)내에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "y is empty or has only NAs"
-msgstr "'y' 비어 있거나 NA값만 가지고 있지 않습니다"
+msgstr "y는 비어있거나 혹은 오로지 NA만을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "NA's are not allowed in 'groups' or 'blocks'"
-msgstr "'NA는 'groups' 이나 'blocks'에서는 허용되지 않습니다"
+msgstr "NA는 'groups' 또는 'blocks'내에서 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr "'y', 'groups' 그리고 'block'은 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'y', 'groups' 그리고 'blocks'는 반드시 같은 길이를 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'formula' missing"
-msgstr "'formula'가 잘못되었습니다"
+msgstr "'formula'가 빠져있습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "factors are not allowed"
-msgstr "상호작용은 허용되지 않습니다"
+msgstr "요인들은 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
-msgstr "'na.rm'가 FALSE 이라면, 결손값 그리고 NaN는 허용되지 않습니다"
+msgstr "만약 'na.rm'가 FALSE 이면, 결측값들과 NaN들은 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "'probs' outside [0,1]"
 msgstr "'probs'가 범위[0,1]외입니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid argument 'n'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 인수 'n'"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid argument 'r'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 인수 'r'"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid argument 'c'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 인수 'c'"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "인수는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "인수들 'r'과 'c'는 반드시 동일한 합계를 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'relevel' only for factors"
 msgstr "'relevel'는 인자 전용입니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'ref' must be of length one"
-msgstr "'acf'는 2 이상의 길이가 나오지 않으면 되지 않습니다"
+msgstr "'ref'는 반드시 길이가 하나이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'ref' must be an existing level"
-msgstr "'ref'는 기존의 수준이 아니면 되지 않습니다"
+msgstr "'ref'는 반드시 존재하는 수준이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "ref = %d must be in 1L:%d"
-msgstr "ref = %d는 1:%d에 없으면 되지 않습니다"
+msgstr "ref = %d는 반드시 1L:%d내에 있어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'sep' must be a character string"
-msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
+msgstr "'sep'는 반드시 문자열이어야 합니다"
 
+# translated on 2012-09-26
 msgid "Failed to guess time-varying variables from their names"
-msgstr ""
+msgstr "이름으로부터 시간에 의존하는 변수들인지 추측하는데 실패했습니다"
 
+# translated on 2012-09-26
 msgid "'varying' arguments must be the same length"
-msgstr "'varying' 인수는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'varying' 인수들은 반드시 같은 길이이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'times' is wrong length"
-msgstr "'times'의 길이가 잘못하고 있습니다"
+msgstr "'times' is wrong length"
 
+# translated on 2012-09-26
 msgid "there are records with missing times, which will be dropped."
-msgstr "시간이 결손한 기록이 있기 때문에 제거합니다"
+msgstr "there are records with missing times, which will be dropped."
 
+# translated on 2012-09-26
 msgid "some constant variables (%s) are really varying"
-msgstr "다음의 정수 변수(%s)s는 실제로 변화하고 있습니다"
+msgstr "일부 상수 변수들 (%s)은 실제로 변하고 있습니다"
 
+# translated on 2012-09-26
 msgid "no 'reshapeWide' attribute, must specify 'varying'"
-msgstr ""
+msgstr "'reshapeWide'이라는 속성은 없으며, 'varying'를 반드시 지정해야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'varying' must be nonempty list or vector"
-msgstr "'varying'는 논리값, 정수 또는 문자가 아니면 되지 않습니다"
+msgstr "'varying'는 반드시 비어있지 않은 리스트 또는 벡터이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "length of v.names does not evenly divide length of varying"
-msgstr "FUN 길이 %d는 마진의 길이%d와 match하지 않습니다"
+msgstr "v.names 의 길이는 varying의 길이를 대등하게 나눌 수 없습니다"
 
-msgid ""
-"length of varying must be the product of length of v.names and length of "
-"times"
-msgstr ""
+# translated on 2012-09-26
+msgid "length of varying must be the product of length of v.names and length of times"
+msgstr "varying의 길이는 반드시 v.names의 길이와 times의 길이의 곱과 일치해야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "invalid value of 'k'"
-msgstr "무효인 인수 'omit'입니다"
+msgstr "잘못된 'k'의 값"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'k' must be positive"
-msgstr "'iter.max'는 positive이 아니면 되지 않습니다"
+msgstr "'k'는 반드시 양수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'k' must be odd!  Changing 'k' to"
-msgstr "'k'는 홀수가 아니면 되지 않습니다! 'k' 이하와 같이 변경합니다"
+msgstr "'k'는 반드시 홀수이어야 합니다!  'k'를 다음과 같이 변경합니다"
 
+# translated on 2012-09-26
 msgid "'k' is bigger than 'n'!  Changing 'k' to"
-msgstr "'k'는 'n'보다 큽니다! 'k' 이하와 같이 변경합니다"
+msgstr "'k'는 'n'보다 큽니다!  'k'를 다음과 같이 변경합니다"
 
+# translated on 2012-09-26
 msgid "bandwidth 'k' must be >= 1 and odd!"
-msgstr "밴드폭 'k'는 1 이상으로 홀수가 아니면 되지 않습니다"
+msgstr "bandwidth 'k' must be >= 1 and odd!"
 
+# translated on 2012-09-26
 msgid "argument 'object' has an impossible length"
-msgstr "인수 'object'는 있을 수 있지 않은 길이를 가집니다"
+msgstr "인수 'object'는 불가능한 길이를 가집니다"
 
+# translated on 2012-09-26
 msgid "no 'getInitial' method found for \"%s\" objects"
-msgstr "\"%s\"오브젝트에 메소드'getInitial'가 검색되지 않았습니다"
+msgstr "\"%s\" 객체에 대해여 'getInitial' 메소드를 찾을 수 없습니다"
 
+# translated on 2012-09-26
 msgid "sample size must be between 3 and 5000"
-msgstr "sample size는 3 과 5000 사이에 없으면 되지 않습니다"
+msgstr "샘플 크기는 반드시 3과 5000 사이에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "all 'x' values are identical"
-msgstr "모든 'x' 값이 동일합니다"
+msgstr "모든 'x' 값들이 동일합니다"
 
+# translated on 2012-09-26
 msgid "ifault=%d. This should not happen"
-msgstr "ifault=%d. 이것은 있을수 있지 않는것입니다"
+msgstr "ifault=%d. 이것은 있을 수 없습니다"
 
+# translated on 2012-09-26
 msgid "attempt to smooth non-numeric values"
-msgstr "수치가 아닌것을 smoothing 하려고 했습니다"
+msgstr "attempt to smooth non-numeric values"
 
+# translated on 2012-09-26
 msgid "attempt to smooth NA values"
-msgstr "NA값을 smoothing 하려고 했습니다"
+msgstr "attempt to smooth NA values"
 
+# translated on 2012-09-26
 msgid "wrong endrule"
-msgstr "잘못한 단점규칙입니다"
+msgstr "wrong endrule"
 
+# translated on 2012-09-26
 msgid "invalid 'control.spar'"
-msgstr "무효인 'control.spar'입니다"
+msgstr "유효하지 않은 'control.spar'입니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "missing or infinite values in inputs are not allowed"
-msgstr "결손 또는 negative의 중량감은 허용되지 않습니다"
+msgstr "입력에 있어서 결측 또는 무한 값들은 허용되지 않습니다"
 
+# translated on 2012-09-26
 msgid "lengths of 'x' and 'w' must match"
-msgstr "'x'와 'w'의 길이는 일치하지 않으면 되지 않습니다"
+msgstr "'x'와 'w'의 길이는 반드시 일치해야 합니다"
 
+# translated on 2012-09-26
 msgid "all weights should be non-negative"
-msgstr "중량감은 모두 non-negative 일 필요가 있습니다"
+msgstr "모든 가중치들은 반드시 음수이어서는 안됩니다"
 
+# translated on 2012-09-26
 msgid "some weights should be positive"
-msgstr "어떠한 중량감는 poitive 일 ��요가 있습니다"
+msgstr "일부 가중치들은 양수이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'tol' must be strictly positive and finite"
-msgstr "'ratio'는 단일의 positive의 수가 아니면 되지 않습니다"
+msgstr "'tol'은 반드시 스트릭트하게 양수이고 유한해야 합니다"
 
+# translated on 2012-09-26
 msgid "need at least four unique 'x' values"
-msgstr "'x'값에는 적어도 4게의 다른 값이 필요합니다"
+msgstr "최소한 중복되지 않는 네개의 'x'값들을 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "'cv' must not be NA when 'df' is specified"
-msgstr ""
+msgstr "'cv'는 'df'가 지정되었을 때에는 반드시 NA이어서는 안됩니다"
 
+# translated on 2012-09-26
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
-msgstr "유일하지 않는 'x'값에 의한 크로스 확인은 문제가 있을지도 모릅니다"
+msgstr "crossvalidation with non-unique 'x' values seems doubtful"
 
+# translated on 2012-09-26
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
-msgstr ""
+msgstr "'all.knots'는 TRUE 입니다; 'nknots' 지정은 무시됩니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'nknots' must be numeric (in {1,..,n})"
-msgstr "'nknots'는 n이하의 수치가 아니면 되지 않습니다"
+msgstr "'nknots'는 반드시 범위 ({1,..,n})내의 숫자이어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'nknots' must be at least 1"
-msgstr "'lag.max'는 적어도 1 입니다"
+msgstr "'nknots'는 반드시 최소한 1이어야 합니다"
 
+# translated on 2012-09-26
 msgid "cannot use more inner knots than unique 'x' values"
-msgstr "유일이 되는 'x'값보다 내부 결절점을 사용할 수가 없습니다"
+msgstr "cannot use more inner knots than unique 'x' values"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'spar' must be of length 1"
-msgstr "'acf'는 2 이상의 길이가 나오지 않으면 되지 않습니다"
+msgstr "'spar'는 반드시 길이가 1 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr ""
+msgstr "'df'와 'cv'가 모두 지정되어 있습니다; 따라서 나중의 것은 무시될 것입니다"
 
+# translated on 2012-09-26
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
-msgstr ""
-"자유도 1 < df < n 를 주지 않으면 되지 않습니다.\n"
-"여기서  n = #{유일한 x} =\""
+msgstr "you must supply 1 < df <= n,  n = #{unique x} ="
 
+# translated on 2012-09-26
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
-msgstr "NA lev[]; 아마도 smoothing 파라메타 'spar'가 너무 큽니다"
+msgstr "NA lev[]; probably smoothing parameter 'spar' way too large!"
 
+# translated on 2012-09-26
 msgid "setting df = 1  __use with care!__"
-msgstr "df = 1의 설정은 주의해서 사용하지 않으면 안됩니다!"
+msgstr "setting df = 1  __use with care!__"
 
+# translated on 2012-09-26
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
-msgstr ""
+msgstr "need result of smooth.spline(*, keep.data=TRUE)"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "type = \"partial\" is not yet implemented"
-msgstr "형태'%s'에 대한 SEs는 실제 적요되지 않습니다"
+msgstr "type = \"partial\"는 아직 구현되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "not a valid \"smooth.spline\" object"
-msgstr "유효한 \"smooth.spline\" 오브젝트가 아닙니다"
+msgstr "유효한 \"smooth.spline\" 객체가 아닙니다"
 
+# translated on 2012-09-26
 msgid "'y' must be numeric vector"
-msgstr "'y' 수치 벡터가 아니면 되지 않습니다"
+msgstr "'y'는 반드시 숫자형 벡터이어야 합니다"
 
+# translated on 2012-09-26
 msgid "number of observations in 'x' and 'y' must match."
-msgstr "'x' 그리고 'y'의 관측값의 수는 일치하지 않으면 되지 않습니다"
+msgstr "'x'와 'y'내의 관측값들의 개수는 반드시 일치해야 합니다."
 
+# translated on 2012-09-26
 msgid "number of weights must match number of observations."
-msgstr "중량감의 수는 관측값의 수와 일치할 필요가 있습니다"
+msgstr "가중치들의 개수는 반드시 관측치의 개수와 반드시 일치해야 합니다"
 
+# translated on 2012-09-26
 msgid "'span' must be between 0 and 1."
-msgstr "'span'는 0 과 1의 사이에 없으면 되지 않습니다"
+msgstr "'span'은 반드시 0과 1 사이에 있어야 합니다."
 
+# translated on 2012-09-26
 msgid "'x' must be between 0 and 1 for periodic smooth"
-msgstr "periodic smooth를 위해서 'x'는 0과 1사이에 있을 필요가 있습니다"
+msgstr "'x' must be between 0 and 1 for periodic smooth"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "no finite observations"
-msgstr "유한한 관측값이 충분히 없습니다"
+msgstr "유한한 관측값들이 아닙니다"
 
+# translated on 2012-09-26
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"
-msgstr "NA, NaN 및 Inf의 관측값은 삭제되었습니다"
+msgstr "NA, NaN 그리고/또는 Inf를 가지는 관측치(들)은 삭제되었습니다"
 
+# translated on 2012-09-26
 msgid "'p' must be between 0 and 0.5"
-msgstr "'p'는 0과 0.5의 사이에 없으면 되지 않습니다"
+msgstr "'p'는 반드시 0과 0.5 사이에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "length of 'p' must be 1 or equal the number of columns of 'x'"
-msgstr "'p'의 길이는 1 또는 'x'의 열수에 동일하지 않으면 되지 않습니다"
+msgstr "'p'의 길이는 반드시 1 또는 'x'의 열의 개수와 같아야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must be a time series or an ar() fit"
-msgstr "'x'는 시계열 또는 ar()를 적용시킬 결과일 필요가 있습니다"
+msgstr "'x'는 반드시 시계열이거나 ar() 적합이어야 합니다"
 
+# translated on 2012-09-26
 msgid "must specify 'spans' or a valid kernel"
-msgstr "'span' 또는 유효한 kernel을 지정하지 않으면 되지 않습니다"
+msgstr "반드시 'spans' 또는 유효한 커널을 지정해야 합니다"
 
+# translated on 2012-09-26
 msgid "coverage probability out of range [0,1)"
-msgstr "coverage 확률이 범위 [0,1]외입니다"
+msgstr "커버리지 확률이 범위 [0,1)외입니다"
 
+# translated on 2012-09-26
 msgid "spline: first and last y values differ - using y[1] for both"
-msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위해서 사용합니다"
+msgstr "spline: 첫번째와 마지막 y 값들이 다릅니다 - 양쪽에 y[1]를 사용합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'spline' requires n >= 1"
-msgstr "'approx'는 n >= 1 인것을 필요로 합니다"
+msgstr "'spline'은 n >= 1를 요구합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "spline: first and last y values differ - using y[1L] for both"
-msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위해서 사용합니다"
+msgstr "spline: 첫번째와 마지막 y값들이 다릅니다 - 양쪽에 y[1L]를 사용합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'deriv' must be between 0 and 3"
-msgstr "'p'는 0과 0.5의 사이에 없으면 되지 않습니다"
+msgstr "'deriv'는 반드시 0과 3 사이에 있어야 합니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "'deriv' must be between 0 and 2"
-msgstr "'p'는 0과 0.5의 사이에 없으면 되지 않습니다"
+msgstr "'deriv'는 반드시 0 과 2 사이에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must be *strictly* increasing (non - NA)"
-msgstr ""
+msgstr "'x'는 반드시 *스트릭트하게* 증가해야 합니다 (non - NA)"
 
+# translated on 2012-09-26
 msgid "stepfun: 'x' must be ordered increasingly"
-msgstr "stepfun: 'x'는 승순에 줄지어 있을 필요가 있습니다"
+msgstr "stepfun: 'x'는 반드시 오름차순이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must have length >= 1"
-msgstr "splinefun:무효인 보간법입니다"
+msgstr "'x'는 반드시 1 이상인 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "'y' must be one longer than 'x'"
-msgstr "'y'는 'x'보다 1만 길지 않으면 안됩니다"
+msgstr "'y'는 반드시 'x' 보다 하나 더 길어야 합니다"
 
+# translated on 2012-09-26
 msgid "no 'as.stepfun' method available for 'x'"
-msgstr "'x'에 대해서 적용 가능한 'as.stepfun'메소드는 없습니다"
+msgstr "'x'에 'as.stepfun' 메소드를 사용할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "not a valid step function"
-msgstr "적절한 계단함수가 아닙니다"
+msgstr "not a valid step function"
 
+# translated on 2012-09-26
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
-msgstr "'plot.stepfun'가 잘못한 유형의 인수 'x'로 불렸습니다"
+msgstr "'plot.stepfun' called with wrong type of argument 'x'"
 
+# translated on 2012-09-26
 msgid "must be 0 or 1"
-msgstr "0 또는 1이 나오지 않으면 되지 않습니다"
+msgstr "반드시 0 또는 1 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "only univariate series are allowed"
 msgstr "일변량 계열만이 허용됩니다"
 
+# translated on 2012-09-26
 msgid "series is not periodic or has less than two periods"
-msgstr "계열은 주기적인 아닌것 또는 2개 미만의 period만을 가지지 않습니다"
+msgstr "계열이 주기적이 아니거나 두개의 기간들보다 적습니다"
 
+# translated on 2012-09-26
 msgid "unknown string value for s.window"
-msgstr "s.window에 대한 알수 없는 문자열입니다"
+msgstr "s.window에 알 수 없는 문자열 값입니다"
 
+# translated on 2012-09-26
 msgid "'cutpoints' must be unique in 0 < cuts < 1, but are ="
-msgstr ""
-"'cutpoints'는 0 < cuts < 1 중에서 중복이 있어서는 안됩니다만, 동일한 것이 있"
-"습니다"
+msgstr "'cutpoints'는 반드시 중복되지 않는 0 < cuts < 1이어야 하는데, 다음과 같습니다 ="
 
+# translated on 2012-09-26
 msgid "'cutpoints' must be unique, but are ="
-msgstr "'cutpoints'는 유일하여야만 합니다, 그러나 동일한것이 있습니다"
+msgstr "'cutpoints'는 반드시 중복되지 않아야 하는데, 다음과 같습니다 ="
 
+# translated on 2012-09-26
 msgid "'x' must be between -1 and 1"
-msgstr "'x'는 -1과 1의 사이에 없으면 되지 않습니다"
+msgstr "'x'는 반드시 -1과 1 사이에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "'x' must be between %s and %s"
-msgstr "'x'는 %s과 %s의 사이에 없으면 되지 않습니다"
+msgstr "'x'는 반드시 %s와 %s 사이에 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "number of 'cutpoints' must be one less than number of symbols"
-msgstr "'cutpoints'의 수는 기호의 수부터 하나 적지 않으면 되지 않습니다"
+msgstr "'cutpoints'의 개수는 반드시 심볼들의 개수보다 하나 작아야 합니다"
 
+# translated on 2012-09-26
 msgid "number of 'cutpoints' must be one more than number of symbols"
-msgstr "'cutpoints'의 수는 기호의 수부터 하나 많지 않으면 되지 않습니다"
+msgstr "'cutpoints'의 개수는 반드시 심볼들의 개수보다 하나 커야 합니다"
 
+# translated on 2012-09-26
 msgid "must have 2 'symbols' for logical 'x' argument"
-msgstr "논리적인 'x' 인수에 대해서는 2 개의 심벌이 필요합니다"
+msgstr "논리적 'x' 인수에 대해서 반드시 2개의 'symbols'을 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "invalid 'abbr.colnames'"
-msgstr "무효인 'abbr.colnames'입니다"
+msgstr "유효하지 않은 'abbr.colnames'"
 
+# translated on 2012-09-26
 msgid "'mu' must be a single number"
-msgstr "'mn'는 단일의 수치가 아니면 되지 않습니다"
+msgstr "'mu'은 반드시 단일 숫자이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'y' is missing for paired test"
-msgstr "대검정으로 'y'가 결손하고 있습니다"
+msgstr "'y' is missing for paired test"
 
+# translated on 2012-09-26
 msgid "data are essentially constant"
-msgstr "데이터는 본질적으로 정수입니다"
+msgstr "데이터는 근본적으로 상수입니다"
 
+# translated on 2012-09-26
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
-msgstr "'main'는 TRUE, FALSE, NULL 또는 문자가 나오지 않으면 되지 않습니다"
+msgstr "'main'은 반드시 TRUE, FALSE, NULL 또는 문자 (벡터)이어야 합니다."
 
+# translated on 2012-09-26
 msgid "x is not a vector or univariate time series"
-msgstr "x 는 벡터 또는 일변양시계열이 아닙니다"
+msgstr "x는 벡터 또는 단변량 시계열이 아닙니다"
 
+# translated on 2012-09-26
 msgid "singularities in regression"
-msgstr "특이한 회귀입니다"
+msgstr "singularities in regression"
 
+# translated on 2012-09-26
 msgid "'ts' object must have one or more observations"
-msgstr "'ts' 오브젝트는 하나 또는 그 이상의 관측값을 가지지 않으면 안됩니다"
+msgstr "'ts' 객체는 반드시 하나 또는 그 이상의 관측치를 가집니다"
 
+# translated on 2012-09-26
 msgid "'start' cannot be after 'end'"
-msgstr "'ts' 오브젝트는 하나 또는 그 이상의 관측값을 가지지 않으면 안됩니다"
+msgstr "'start'는 'end' 뒤에 위치할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "no time series supplied"
-msgstr "시계열이 주어지고 있지 않습니다"
+msgstr "no time series supplied"
 
+# translated on 2012-09-26
 msgid "not all series have the same frequency"
-msgstr "모든 계열의 빈도가 동일하지는 않습니다"
+msgstr "모든 계열들이 같은 빈도를 가지지 않습니다"
 
+# translated on 2012-09-26
 msgid "non-intersecting series"
-msgstr "공통 부분이 없는 계열입니다"
+msgstr "non-intersecting series"
 
+# translated on 2012-09-26
 msgid "non-time series not of the correct length"
-msgstr "올바른 길이가 나오지 않는 비시계열입니다"
+msgstr "올바른 길이를 가지는 비시계열이 아닙니다"
 
+# translated on 2012-09-26
 msgid "time series contains internal NAs"
-msgstr "시계열은 내부에 NA값을 포함하고 있습니다"
+msgstr "time series contains internal NAs"
 
+# translated on 2012-09-26
 msgid "series is corrupt, with no 'tsp' attribute"
-msgstr ""
+msgstr "계열에 오류가 있고, 'tsp' 속성을 가지지 않습니다"
 
+# translated on 2012-09-26
 msgid "series is corrupt: length %d with 'tsp' implying %d"
-msgstr ""
+msgstr "계열에 오류가 있습니다: 'tsp'와 함께 길이 %d는 %d를 의미합니다"
 
+# translated on 2012-09-26
 msgid "cannot plot more than 10 series as \"multiple\""
-msgstr "10 계열을 넘어가는 다중 plot은 할수가 없습니다"
+msgstr " \"multiple\"으로 인하여 10개 이상의 계열은 플랏할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "scatter plots only for univariate time series"
-msgstr "살포그림은 일변양시계열용입니다"
+msgstr "스캐터 플랏은 단변량 시계열에서만 사용됩니다"
 
+# translated on 2012-09-26
 msgid "'xy.labels' must be logical or character"
-msgstr "'xy.labels'는 논리값 또는 문자입니다"
+msgstr "'xy.labels'은 반드시 논리값 또는 문자입니다"
 
+# translated on 2012-09-26
 msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
-msgstr ""
-"'frequenecy' 그리고  'deltat'의 양쪽 모두 주어졌습니다만,모순되고 있습니다"
+msgstr "'frequency' and 'deltat' are both supplied and are inconsistent"
 
+# translated on 2012-09-26
 msgid "Frequency not changed"
 msgstr "빈도는 변경되지 않습니다"
 
+# translated on 2012-09-26
 msgid "bad value for 'start'"
-msgstr "'start' 이라고 하기에는 안되는 값입니다"
+msgstr "'start'에 잘못된 값입니다"
 
+# translated on 2012-09-26
 msgid "'start' value not changed"
-msgstr "'start'은 변경되지 않습니다"
+msgstr "'start' 값은 변경되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "bad value for 'end'"
-msgstr "'end' 이라고 하기에는 안되는 값입니다"
+msgstr "'end'에 잘못된 값입니다"
 
+# translated on 2012-09-26
 msgid "'end' value not changed"
-msgstr "종료시간 'end'은 변경되지 않습니다"
+msgstr "'end' 값은 변경되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "'start' > 'end'"
 msgstr "'start' > 'end'"
 
+# translated on 2012-09-26
 msgid "extending time series when replacing values"
-msgstr "값이 치환 할때, 시계열을 확대했습니다"
+msgstr "값이 치환될때 시계열을 확장합니다"
 
+# translated on 2012-09-26
 msgid "times to be replaced do not match"
-msgstr "치환해야 할 시간이 match이 되지 않습니다"
+msgstr "치환해야할 시간들이 일치하지 않습니다"
 
+# translated on 2012-09-26
 msgid "no replacement values supplied"
-msgstr "치환해야 할 값이 없습니다"
+msgstr "치환값들이 제공되지 않았습니다"
 
+# translated on 2012-09-26
 msgid "too many replacement values supplied"
-msgstr "치환해야 할 값이 너무 많습니다"
+msgstr "너무 많은 치환값들이 제공되었습니다"
 
-msgid ""
-"number of values supplied is not a sub-multiple of the number of values to "
-"be replaced"
-msgstr ""
-"주어진 값의 수는 옮겨놓을 수 있어야 할 값의 수를 정수로 나눈것이 되지 있지 않"
-"습니다"
+# translated on 2012-09-26
+msgid "number of values supplied is not a sub-multiple of the number of values to be replaced"
+msgstr "제공되어진 값들의 개수는 대체되어야 할 값들의 개수의 배수가 아닙니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "only replacement of elements is allowed"
-msgstr "치환해야 할 값이 너무 많습니다"
+msgstr "오로지 치환해야할 요소들만이 허용됩니다"
 
+# translated on 2012-09-26
 msgid "'model' must be list"
-msgstr "'model'는 리스트일 필요가 있습니다"
+msgstr "'model'은 반드시 리스트이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'ar' part of model is not stationary"
-msgstr "모델의 'ar'부분이 정상이 아닙니다"
+msgstr "모델의 'ar' 부분이 비유동적이지 않습니다"
 
+# translated on 2012-09-26
 msgid "burn-in 'n.start' must be as long as 'ar + ma'"
-msgstr "burn-in 회수('n.start')는 길이 'ar + ma'일 필요가 있습니다"
+msgstr "burn-in 'n.start' must be as long as 'ar + ma'"
 
+# translated on 2012-09-26
 msgid "'model$order' must be of length 3"
-msgstr "'model$order'는 길이 3 나오지 않으면 되지 않습니다"
+msgstr "'model$order'은 반드시 길이가 3 이어야 합니다"
 
+# translated on 2012-09-26
 msgid "inconsistent specification of 'ar' order"
-msgstr "'ar' 차수가 모순된 지정입니다"
+msgstr "'ar' 차수의 잘못된 지정"
 
+# translated on 2012-09-26
 msgid "inconsistent specification of 'ma' order"
-msgstr "'ma' 차수가 모순된 지정입니다"
+msgstr "'ma' 차수의 잘못된 지정"
 
+# translated on 2012-09-26
 msgid "number of differences must be a positive integer"
-msgstr "계차의 수는 positive 정수가 아니면 되지 않습니다"
+msgstr "차이의 개수는 반드시 양의 정수이어야 합니다"
 
+# translated on 2012-09-26
 msgid "'start.innov' is too short: need %d points"
-msgstr ""
+msgstr "'start.innov'는 너무 짧습니다: %d개의 포인트들을 더 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "insufficient observations"
-msgstr "관측값의 수가 불충분합니다 "
+msgstr "관측값의 수가 불충분합니다"
 
+# translated on 2012-09-26
 msgid "need an object with call component"
-msgstr "호출 요소를 가지는 오브젝트가 필요합니다"
+msgstr "호출 요소를 가지는 객체가 필요합니다"
 
+# translated on 2012-09-26
 msgid "'ratio' must be a single positive number"
-msgstr "'ratio'는 단일의 positive의 수가 아니면 되지 않습니다"
+msgstr "'ratio'는 반드시 단일 양의 숫자입니다"
 
+# translated on 2012-09-26
 msgid "'x' and 'w' must have the same length"
-msgstr "'x'와 'w'는 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'x'와 'w'는 반드시 같은 길이를 가져야 합니다"
 
+# translated on 2012-09-26
 msgid "not enough (finite) 'x' observations"
-msgstr "(유한한）'x'의 관측값이 충분하지는 않습니다"
+msgstr "(유한한）'x'의 관측값이 충분하지 않습니다"
 
+# translated on 2012-09-26
 msgid "Requested conf.level not achievable"
-msgstr ""
+msgstr "요청된 conf.level은 달성 불가능입니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "cannot compute confidence interval when all observations are tied"
-msgstr "zeroes 값 때문에, 정확한 신뢰 구간을 계산할 수 없습니다"
+msgstr "모든 관측값들이 동일한 경우에는 신뢰구간을 구할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "cannot compute exact confidence interval with ties"
-msgstr "time가 있으므로, 정확한 신뢰 구간을 계산할수가 없습니다 "
+msgstr "동일한 값들에 대한 신뢰구간을 계산할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "cannot compute exact p-value with zeroes"
-msgstr "zeroes 값 때문에 수가 없습니다, 정확한 p 값을 계산할 수가 없습니다"
+msgstr "0값들을 가지고 정확한 p-값을 계산할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "cannot compute exact confidence interval with zeroes"
-msgstr "zeroes 값 때문에, 정확한 신뢰 구간을 계산할 수 없습니다"
+msgstr "0값들에 대한 정확한 신뢰구간을 계산할 수 없습니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "must supply either 'formula' or 'data'"
-msgstr "하나 이상의 벡터를 주지 않으면 되지 않습니다"
+msgstr "반드시 'formula' 또는 'data' 중 하나를 제공해야 합니다"
 
+# translated on 2012-09-26
 msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
-msgstr ""
+msgstr "xtabs(*, sparse=TRUE)는 오로지 2원 분할표에만 적용됩니다"
 
+# translated on 2012-09-26
 msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr ""
+msgstr "xtabs(*, sparse=TRUE)는 올바르게 설치된 패키지 \"Matrix\"를 필요로 합니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit an asymptotic regression model"
-msgstr "점근회귀 모델이 적용시키고자, 다른 입력값이 너무 적습니다"
+msgstr "점근적 회귀 모델을 적합하기에는 너무 적은 숫자의 중복되지 않는 입력값들이 있습니다"
 
+# translated on 2012-09-26
 msgid "cannot fit an asymptotic regression model to these data"
-msgstr "이러한 데이터에는 점근회귀 모델을 적용시킬 수가 없습니다"
+msgstr "이러한 데이터에 점근적 회귀모델을 적합할 수 없습니다"
 
+# translated on 2012-09-26
 msgid "too few observations to fit an asymptotic regression model"
-msgstr "점근회귀 모델이 적용시키고, 관측값의 수가 너무 적습니다"
+msgstr "점근적 회귀 모델을 적합하기에는 너무 적은 관측치들이 있습니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit the 'asympOff' model"
-msgstr "'asympOff'모델이 적용시키고, 다른 입력값이 너무 적습니다"
+msgstr "'asympOff' 모델을 적합시기에는 너무 적은 개수의 중복되지 않은 입력값들이 있습니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit the 'asympOrig' model"
-msgstr "'asympOrig'모델이 적용시키고, 다른 입력값이 너무 적습니다"
+msgstr "'asympOrig' 모델을 적합하기에 너무 적은 개수의 중복되지 않은 입력 값들이 있습니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit a biexponential"
-msgstr "biexponential 모델이 적용시키고, 다른 입력값이 너무 적습니다"
+msgstr "biexponential을 적합하기에 너무 적은 개수의 중복되지 않는 입력값들이 있습니다"
 
+# translated on 2012-09-26
 msgid "must have length of response = length of second argument to 'SSfol'"
-msgstr "'SSfol'의 제2인수의 길이는 응답 변수의 길이와 동일한 필요가 있습니다"
+msgstr "must have length of response = length of second argument to 'SSfol'"
 
+# translated on 2012-09-26
 msgid "must have at least 4 observations to fit an 'SSfol' model"
-msgstr "'SSfol'모델이 적용시키기에는, 적어도 4개의 관측값이 필요합니다"
+msgstr "'SSfol' 모델을 적합하기 위해서는 반드시 최소한 4개의 관측치들을 가지고 있어야 합니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit a four-parameter logistic"
-msgstr "4변수 logistic 모델이 적용시키기에는,다른 입력값이 너무 적습니다"
+msgstr "4개의 파라미터를 가지는 로지스틱을 적합하기 위해서는 너무 적은 개수의 중복되지 않은 입력값들이 있습니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit a logistic model"
-msgstr "logistic 모델이 적용시키기에는, 다른 입력값이 너무 적습니다"
+msgstr "로지스틱 모델을 적합하기에는 너무 적은 개수의 중복되지 않은 입력값이 있습니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit a Michaelis-Menten model"
-msgstr "'Michaelis-Menten 모델이 적용시키기에는, 다른 입력값이 너무 적습니다"
+msgstr "Michaelis-Menten 모델을 적합시키기에는 너무 적은 개수의 중복되지 않는 입력값들이 있습니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit the Gompertz model"
-msgstr "Compertz 모델이 적용시키기에는, 다른 입력값이 너무 적습니다"
+msgstr "Gompertz 모델을 적합하기에는 너무 적은 개수의 중복되지 않는 입력값들이 있습니다"
 
+# translated on 2012-09-26
 msgid "too few distinct input values to fit the Weibull growth model"
-msgstr "Weibull 성장 모델이 적용시키기에는 다른 입력값이 너무 적습니다"
+msgstr "Weibull growth 모델을 적합하기에는 너무 적은 개수의 중복되지 않는 입력값들이 있습니다"
 
+# translated on 2012-09-26
 msgid "all 'x' values must be non-negative to fit the Weibull growth model"
-msgstr ""
-"Weibull 성장 모델이 적용시키기에는 모든'x'값은 non-negative가 나오지 않으면 "
-"되지 않습니다"
+msgstr "Weibull growth 모델을 적합하기 위해서는 모든 'x' 값들은 반드시 음수이어서는 안됩니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
-msgstr[0] "개의 에러 terms가 있습니다. 하나만 허용됩니다"
+msgstr[0] "%d개의 에러 항들이 있습니다: 오로지 1개만이 허용됩니다"
 
-#, fuzzy
+# translated on 2012-09-26
 msgid "extra argument %s is not a \"%s\""
 msgid_plural "extra arguments %s are not \"%s\"s"
-msgstr[0] "불필요한 인수는 버려졌습니다"
+msgstr[0] "추가적인 인수 %s는 \"%s\"가 아닙니다"
 
+# translated on 2012-09-26
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
-msgstr[0] ""
+msgstr[0] "누락으로 인하여 %d개의 관측치들이 삭제되었습니다"
 
+# translated on 2012-09-26
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "모델식에서 파라미터 %s가 없습니다"

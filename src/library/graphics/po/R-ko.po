@@ -1,454 +1,446 @@
-# # File R_HOME/src/library/graphics/po/R-ko.po
-# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
-# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
-# # Distributed under GPL 2 or later
-# #
+# File R_HOME/src/library/graphics/po/R-ko.po
+# Korean translations for R-Base
+# Copyright (C) 2012 THE R'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the R package
+# Maintainer: Chel Hee Lee (Korean, R Development Translation Team)
+# Email: <gnustats@gmail.com> or <chl948@mail.usask.ca>
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-07-31 12:46\n"
-"PO-Revision-Date: 2005-05-25 15:04+0900\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
+"PO-Revision-Date: 2012-09-25 11:03-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team:  <gnustats@gmail.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "'a' is overridden by 'reg'"
-msgstr ""
+msgstr "'a'는 'reg'에 의해서 무시되어졌습니다"
 
 msgid "only using the first two of %d regression coefficients"
-msgstr ""
+msgstr "%d개의 회귀계수들 중에서 처음 두개만을 사용합니다"
 
 msgid "'a' and 'b' are overridden by 'coef'"
-msgstr ""
+msgstr "'a'와 'b'가 'coef'에 의해서 무시되어졌습니다"
 
 msgid "one of 'x1' and 'y1' must be given"
-msgstr ""
+msgstr "'x1'와 'y1' 중 하나는 반드시 주어져야 합니다"
 
 msgid "'x' must be a 2-d contingency table"
-msgstr "'x'는 2-d 전분할표가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 2-차원 분할표이어야 합니다"
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr "'x'의 모든 항목은 non-negative 그리고 유한한 값이 아니면 되지 않습니다"
+msgstr "'x'의 모든 항목은 0 이상의 값을 가지는 유한값이어야 합니다"
 
 msgid "at least one entry of 'x' must be positive"
-msgstr "'x'가 적어도 하나의 항목은 positive가 아니면 되지 않습니다"
+msgstr "'x'의 항목들중 최소 하나 이상은 반드시 양수이어야 합니다"
 
 msgid "incorrect 'col': must be length 2"
-msgstr "'col'이 잘못되었습니다: 2의 길이 이어야만 합니다"
+msgstr "'col'은 잘못되었습니다: 길이가 반드시 2 이어야 합니다"
 
 msgid "only for 1-D table"
-msgstr ""
+msgstr "1-차원 테이블 전용"
 
-#, fuzzy
 msgid "'side' must be in {1:4}"
-msgstr "'side'는 범위{1,2,3,4}에서 없으면 되지 않습니다"
+msgstr "'side'는 반드시 {1:4} 내에 있어야 합니다"
 
 msgid "invalid 'axp'"
-msgstr "무효인 'axp' 입니다"
+msgstr "유효하지 않은 'axp'"
 
 msgid "invalid 'log'"
-msgstr "무효인 'log' 입니다"
+msgstr "유효하지 않은 'log'"
 
-#, fuzzy
 msgid "invalid positive 'axp[3]'"
-msgstr "무효인 정의 'axp[3]' 입니다"
+msgstr "유효하지 않은 양의 값을 가지는 'axp[3]'"
 
 msgid "invalid 'usr'"
-msgstr "무효인 'usr' 입니다"
+msgstr "유효하지 않은 'usr'"
 
 msgid "'height' must be a vector or a matrix"
-msgstr "'heigth'는 벡터 또는 행렬이 아니면 되지 않습니다"
+msgstr "'height'는 반드시 벡터 또는 행렬이어야 합니다"
 
 msgid "Cannot use shading lines in bars when log scale is used"
-msgstr ""
+msgstr "로그 스케일 사용시에는 막대에 그림자선 기능을 사용할 수 없습니다"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr ""
+msgstr "로그 스케일 에러: 최소한 한개의 'height + offset'의 값이 음수입니다"
 
 msgid "log scale error: 'xlim' <= 0"
-msgstr ""
+msgstr "로그 스케일 에러: 'xlim' <= 0"
 
 msgid "log scale error: 'ylim' <= 0"
-msgstr ""
+msgstr "로그 스케일 에러: 'ylim' <= 0"
 
 msgid "incorrect number of names"
-msgstr "이름의 수가 이상합니다"
+msgstr "잘못된 이름의 수"
 
 msgid "invalid first argument"
-msgstr "최초의 인수가 무효입니다"
+msgstr "첫번째 인수가 잘못되었습니다"
 
 msgid "'formula' missing or incorrect"
-msgstr "'formula'가 없거나 부적절합니다"
+msgstr "'formula'가 누락되었거나 부정확합니다"
 
 msgid "'at' must have same length as 'z$n', i.e."
-msgstr "'at'는 'z$n'와 동일 길이를 가지지 않으면 안됩니다"
+msgstr "'at'은 반드시 'z$n'와 같은 길이를 가져야 합니다, 즉"
 
 msgid "invalid boxplot widths"
-msgstr "boxplot의 폭이 무효입니다"
+msgstr "유효하지 않은 boxplot 너비들"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr ""
+msgstr "일부 표식들이 hinges ('box')들 밖에 놓였습니다: notch=FALSE 로 설정해보세요"
 
 msgid "'formula' should specify exactly two variables"
-msgstr ""
+msgstr "'formula'는 정확하게 두개의 변수들을 지정해야 합니다"
 
 msgid "dependent variable should be a factor"
-msgstr ""
+msgstr "종속 변수는 반드시 요인이어야 합니다"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr ""
+msgstr "y 축은 누적확률 스케일이므로, 'ylim' 반드시 [0,1] 범위내에 있어야 합니다"
 
 msgid "no 'z' matrix specified"
-msgstr "'z' 행렬이 지정되어 있지 않습니다"
+msgstr "'z' 행렬이 지정되지 않았습니다"
 
 msgid "increasing 'x' and 'y' values expected"
-msgstr "'x' 그리고 'y'의 값은 승순이 아니면 되지 않습니다"
+msgstr "'x'와 'y' 값들은 오름차순이어야 합니다"
 
 msgid "no proper 'z' matrix specified"
-msgstr "적절한 'z'행렬이 지정되어 있지 않습니다"
+msgstr "올바른 'z' 행렬이 지정되지 않았습니다"
 
 msgid "invalid conditioning formula"
-msgstr "조건부의 모델식이 잘못되어지고 있습니다"
+msgstr "유효하지 않은 조건부 모델식입니다"
 
 msgid "incompatible variable lengths"
-msgstr "변수의 길이가 모순되고 있습니다"
+msgstr "변수의 길이들이 일치하지 않습니다"
 
 msgid "'number' must be integer >= 1"
-msgstr "'number'는 1 이상의 정수가 아니면 되지 않습니다"
+msgstr "'number'는 반드시 1 이상의 정수이어야 합니다"
 
 msgid "'overlap' must be < 1 (and typically >= 0)."
-msgstr ""
-"'overlap'는 1 미만(그리고 전형적으로 >=0)가 나오지 않으면 되지 않습니다"
+msgstr "'overlap'은 반드시 1 보다 작아야 합니다 (그리고 일반적으로는 0 보다 크거나 같습니다)."
 
 msgid "invalid 'given.values'"
-msgstr "'given.values'가 무효입니다"
+msgstr "유효하지 않은 'given.values'"
 
 msgid "rows * columns too small"
-msgstr "행수 * 열수가 너무 작습니다"
+msgstr "rows * columns의 값이 너무 작습니다"
 
 msgid "Missing rows"
-msgstr "행이 이상합니다"
+msgstr "누락된 행들"
 
-#, fuzzy
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
-msgstr "'expr'는 'x'를 포함한 함수 또는 표현식이 아니면 되지 않습니다"
+msgstr "'expr'는 반드시 함수, 또는 '%s'를 포함하는 표현식 혹은 호출이어야 합니다"
 
 msgid "'add' will be ignored as there is no existing plot"
-msgstr ""
+msgstr "기존의 플랏이 없기 때문에 'add'는 무시될 것입니다"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
-msgstr "'from'와 'to'는 정확한 값이 되어어야만 합니다. 그리고 log=\"x\"입니다"
+msgstr "'from'과 'to'는 log=\"x\"를 위해서 반드시 0 보다 커야 합니다"
 
 msgid "'expr' did not evaluate to an object of length 'n'"
-msgstr ""
+msgstr "'expr'는 길이 'n'을 가지는 객체를 평가하지 않았습니다"
 
 msgid "wrong method"
-msgstr "잘못된 메소드입니다"
+msgstr "잘못된 메소드"
 
 msgid "Must specify 'breaks' in hist(<POSIXt>)"
-msgstr ""
+msgstr "hist(<POSIXt>) 사용시 'breaks'를 반드시 지정해야 합니다"
 
 msgid "invalid specification of 'breaks'"
-msgstr "'breaks'의 지정이 무효입니다"
+msgstr "'breaks'의 지정이 잘못되었습니다"
 
 msgid "Must specify 'breaks' in hist(<Date>)"
-msgstr ""
+msgstr "hist(<Date>) 사용시 반드시 'breaks'를 지정해야 합니다"
 
-#, fuzzy
 msgid "'x' must be a numeric vector or matrix"
-msgstr "'y'는 수치 벡터가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 수치형 벡터 또는 행렬이어야 합니다"
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
-msgstr ""
+msgstr "'x'는 벡터도 아니고 행렬도 아닙니다: as.numeric(x)를 사용하세요"
 
 msgid "'x' must be an array"
-msgstr "'x'는 배열이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 배열이어야 합니다"
 
 msgid "'x' must be 2- or 3-dimensional"
-msgstr "'x'는 2차원 또는 3차원이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 2- 또는 3-차원이어야 합니다"
 
 msgid "table for each stratum must be 2 by 2"
-msgstr "각 층에 대한 테이블은 2 x 2 가 나오지 않으면 되지 않습니다"
+msgstr "각 층에 대한 테이블은 반드시 2 행 2열이어야 합니다"
 
 msgid "'conf.level' must be a single number between 0 and 1"
-msgstr "'conf.level' 0과 1의 사이의 단일 수치가 아니면 되지 않습니다"
+msgstr "'conf.level'은 반드시 0과 1 사이의 단일 숫자이어야 합니다"
 
 msgid "incorrect 'margin' specification"
-msgstr "정확하지 않는 'margin'의 지정입니다"
+msgstr "'margin' 지정이 잘못되었습니다"
 
 msgid "incorrect geometry specification"
-msgstr "정확하지 않는 치수(geometry)의 지정입니다"
+msgstr "geometry 지정이 잘못되었습니다"
 
 msgid "'x' must be numeric"
-msgstr "'x'는 수치가 아니면 되지 않습니다"
+msgstr "'x'는 반드시 숫자이어야 합니다"
 
-#, fuzzy
 msgid "invalid length(x)"
-msgstr "무효인 'log' 입니다"
+msgstr "유효하지 않은 length(x)"
 
 msgid "'nclass' not used when 'breaks' is specified"
-msgstr "'breaks'가 지정되었을때 'nclass'는 사용되지 않습니다"
+msgstr "'nclass'는 'breaks'가 지정된 때에는 사용되지 않습니다"
 
 msgid "'include.lowest' ignored as 'breaks' is not a vector"
-msgstr "'breaks'가 벡터는 아니기 때문에 'include.lowest'는 무시됩니다"
+msgstr "'include.lowest'는 'breaks'가 벡터가 아니므로 무시되어집니다"
 
 msgid "unknown 'breaks' algorithm"
-msgstr "알수 없는 'breaks' 알고니즘입니다"
+msgstr "알 수 없는 'breaks' 알고리즘"
 
 msgid "invalid number of 'breaks'"
-msgstr "'breaks'의 수가 무효입니다"
+msgstr "'breaks'의 개수가 잘못되었습니다"
 
 msgid "hist.default: pretty() error, breaks="
-msgstr "hist.default: pretty()의 사이 차이입니다. 분할점 ="
+msgstr "hist.default: pretty() 에러, breaks="
 
-#, fuzzy
 msgid "invalid length(breaks)"
-msgstr "무효인 좌표장입니다"
+msgstr "유효하지 않은 length(breaks)"
 
 msgid "'breaks' are not strictly increasing"
-msgstr "'break'가 엄밀히 말하자면, 증가가 아닙니다"
+msgstr "'breaks' are not strictly increasing"
 
 msgid "'probability' is an alias for '!freq', however they differ."
-msgstr "'probability'는 '!freq'의 별명입니다만, 그것들은 차이가 납니다"
+msgstr "'probability'는 '!freq'의 또 다른이름이지만 , 그것들은 다릅니다."
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr ""
-"'x'의 일부분을 계산하지 않는다. 'breaks'가 'x'의 범위 전체에 영향을 미치고 있"
-"지 않습니다"
+msgstr "일부 'x'는 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 커버하지 않기 때문일 것입니다"
 
 msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
-msgstr "plot의 영역이 오류입니다 -- 차라리 freq=FALSE를 사용해주십시오"
+msgstr "플랏에 AREAS가 잘못되었습니다 -- freq=FALSE 사용해보세요"
 
 msgid "'x' is wrongly structured"
-msgstr "'x'는 부적절한 구조를 가집니다"
+msgstr "'x'는 잘못된 구조를 가지고 있습니다"
 
 msgid "argument must be matrix-like"
-msgstr "인수는 행렬의 형태가 아니면 되지 않습니다"
+msgstr "인수는 반드시 행렬과 같은 구조이어야 합니다"
 
 msgid "'x' and 'y' values must be finite and non-missing"
-msgstr ""
+msgstr "'x'와 'y' 값들은 반드시 유한하고 누락되어서는 안됩니다"
 
 msgid "'z' must be a matrix"
-msgstr "'z'는 행렬이 아니면 되지 않습니다"
+msgstr "'z'는 반드시 행렬이어야 합니다"
 
 msgid "invalid z limits"
-msgstr "무효인 z의 한계입니다"
+msgstr "유효하지 않은 z limits"
 
 msgid "must have one more break than colour"
-msgstr "분할점의 수는 색의 수보다 하나가 많지 않으면 안됩니다"
+msgstr "분할점의 수는 반드시 색상의 수보다 하나가 많아야 합니다"
 
 msgid "breaks must all be finite"
-msgstr "분할점은 모두 유한하지 않으면 되지 않습니다"
+msgstr "분할점은 반드시 유한개이어야 합니다"
 
-#, fuzzy
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
-msgstr "z의 차원이 length(x)(+1) x length(y)(+1)가 아닙니다"
+msgstr "z의 차원이 length(x)(-1) times length(y)(-1)와 같지 않습니다"
 
 msgid "useRaster=TRUE can only be used with a regular grid"
-msgstr ""
+msgstr "useRaster=TRUE는 오로지 일반 그리드와 함께 사용할 수 있습니다"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
-msgstr ""
-"'respect'는 'mat'와 동일 차원의 논리값 또는 행렬이 아니면 되지 않습니다"
+msgstr "'respect'는 반드시 논리적이거나 'mat'과 동일한 차원을 가지는 행렬이어야 합니다"
 
 msgid ""
 "layout matrix must contain at least one reference\n"
 "to each of the values {1..n}; here  n ="
 msgstr ""
-"layout 행렬은 값{1..n}의 각 값을 적어도 1회 참조하지 않으면 되지 않습니다"
+"layout matrix must contain at least one reference\n"
+"to each of the values {1..n}; here  n ="
 
 msgid "invalid title"
-msgstr "무효인 title입니다"
+msgstr "잘못된 제목"
 
 msgid "'legend' is of length 0"
-msgstr ""
+msgstr "'legend'의 길이가 0 입니다"
 
 msgid "invalid coordinate lengths"
-msgstr "무효인 좌표장입니다"
+msgstr "유효하지 않은 좌표 길이들"
 
 msgid "'text.width' must be numeric, >= 0"
-msgstr "'text.width'는 비부(>=0)의 수치가 아니면 되지 않습니다"
+msgstr "'text.width'는 반드시 0 보다 크거나 같은 숫자이어야 합니다"
 
 msgid "horizontal specification overrides: Number of columns :="
-msgstr "수표 방향의 지정은 무효로 되어있습니다: 열의 수 :="
+msgstr "수평방향 지정은 무시합니다: 열의 수 :="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
-msgstr ""
+msgstr "그려진 선분들이 없는 경우에는 'merge = TRUE'는 아무런 효과를 가지지 않습니다"
 
-#, fuzzy
 msgid "not using pch[2..] since pch[1L] has multiple chars"
-msgstr "pch[1]이 많은 문자를 포함하기 때문에 pch[2..]를 사용하지 않습니다"
+msgstr "pch[1L]은 여러 문자들을 포함하기 때문에 pch[2..]를 사용하지 않습니다"
 
 msgid "must specify at least one of 'x' and 'y'"
-msgstr "'x' 그리고 'y'에 하나를 지정하지 않으면 되지 않습니다"
+msgstr "반드시 'x'와 'y' 중 적어도 하나를 정해야 합니다"
 
 msgid "'x' and 'y' must have same number of rows"
-msgstr "'x'그리고 'y'는 동일 수의 행을 가지지 않으면 안됩니다"
+msgstr "'x'와 'y'는 반드시 같은 수의 행을 가져야 합니다"
 
 msgid "'x' and 'y' must have only 1 or the same number of columns"
-msgstr "'x' 그리고 'y'는 단지 1 또는 동일 수의 열을 가지지 않으면 안됩니다"
+msgstr "'x'와 'y'는 반드시 1개 또는 같은 수의 열을 가져야 합니다"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr ""
+msgstr "기본 'pch'는 열의 수보다 적기 때문에 재사용됩니다"
 
 msgid "missing values in contingency table"
 msgstr "분할표에 결측치가 있습니다"
 
 msgid "'x' must not have 0 dimensionality"
-msgstr "'x'의 차원은 0로 되지 않습니다"
+msgstr "'x'는 0 차원을 가질 수 없습니다"
 
 msgid "extra argument(s) %s will be disregarded"
-msgstr "여분의 인수(복수)%s는 무시됩니다"
+msgstr "여분의 인수(들) %s은 무시되어 질 것입니다"
 
 msgid "invalid 'shade' specification"
-msgstr "무효인 'shade'의 지정입니다"
+msgstr "잘못된 'shade' 지정입니다"
 
 msgid "length of 'sort' does not conform to 'dim(x)'"
-msgstr "'sort'의 길이는 dim(x)에 합치하지 않습니다"
+msgstr "'sort'의 길이가 'dim(x)'와 일치하지 않습니다"
 
 msgid "non-numeric argument to 'pairs'"
-msgstr "'pairs'에 비수치의 인수가 주어졌습니다"
+msgstr "'pairs'에 숫자가 아닌 형태의 인수가 주어졌습니다"
 
 msgid "only one column in the argument to 'pairs'"
-msgstr "'pairs'의 인수는 다만 하나의 열만 가지지 않습니다"
+msgstr "only one column in the argument to 'pairs'"
 
 msgid "the 'panel' function made a new plot"
-msgstr "'panel' 함수는 신규의 plot로 작성했습니다"
+msgstr "'panel' 함수는 새로운 플랏을 만들었습니다"
 
 msgid "surface extends beyond the box"
-msgstr ""
+msgstr "surface extends beyond the box"
 
 msgid "'x' values must be positive."
-msgstr "'x'의 값은 positive가 아니면 되지 않습니다"
+msgstr "'x' 값들은 반드시 양수이어야 합니다."
 
 msgid "invalid table 'x'"
-msgstr "테이블 'x'는 부적절합니다"
+msgstr "잘못된 분할표 'x'"
 
 msgid "cannot handle more than one 'x' coordinate"
-msgstr "두개 이상의 'x'좌표를 취급할 수 없습니다"
+msgstr "두 개 이상의 'x' 좌표를 다룰 수 없습니다"
 
 msgid "must have a response variable"
-msgstr "응답 변수를 가지지 않으면 안됩니다"
+msgstr "응답변수를 반드시 가져야 합니다"
 
 msgid "'plot.data.frame' applied to non data frame"
-msgstr "'plot.data.frame'가 데이터 프레임이 아닌것에 적용되었습니다"
+msgstr "'plot.data.frame'가 데이터 프레임이 아닌 것에 적용되었습니다"
 
 msgid "'y' must be a numeric vector"
-msgstr "'y'는 수치 벡터가 아니면 되지 않습니다"
+msgstr "'y'는 반드시 숫자형 벡터이어야 합니다"
 
 msgid "'x' must be a data frame"
-msgstr "'x'는 데이터 프레임이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 데이터 프레임이어야 합니다"
 
 msgid "all columns/components of 'x' must be factors"
-msgstr "'x'의 모든 열 또는 요소는 인자가 아니면 되지 않습니다"
+msgstr "'x'의 모든 열들/요소들은 반드시 요인들이어야 합니다"
 
 msgid "some levels of the factors are empty"
-msgstr "인자의 레벨에 비어있습니다"
+msgstr "요인들의 일부 수준들이 비어있습니다"
 
 msgid "'x' must be a dataframe or a formula"
-msgstr "'x'는 데이터 프레임 또는 모델식이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 데이터 프레임 또는 모델식이어야 합니다"
 
 msgid "a variable in 'y' is not numeric"
-msgstr "'y'의 변수에서 수치가 아닌것이 있습니다"
+msgstr "'y' 내의 변수에 숫자가 아닌 것이 있습니다"
 
 msgid "there must be at least one numeric variable!"
-msgstr "적어도 하나의 수치 변수가 없으면 되지 않습니다!"
+msgstr "적어도 하나 이상의 숫자형 변수가 있어야 합니다!"
 
 msgid "cannot hatch with logarithmic scale active"
-msgstr "활성화 대수적 scale로 해치할수가 없습니다 "
+msgstr "cannot hatch with logarithmic scale active"
 
 msgid "Invalid fill rule for graphics path"
-msgstr ""
+msgstr "그래픽 경로에 대한 잘못된 fill 규칙입니다"
 
 msgid "invalid rectangle specification"
-msgstr "무효인 직사각형의 지정입니다"
+msgstr "잘못된 직사각형 지정"
 
 msgid "some values will be clipped"
-msgstr "몇개의 값이 생략됩니다"
+msgstr "일부 값들은 잘려나갈 것입니다"
 
 msgid "invalid screen number"
-msgstr "무효인 screen수입니다"
+msgstr "잘못된 스크린 번호"
 
 msgid "'figs' must be a vector or a matrix with 4 columns"
-msgstr "'figs'는 벡터 또는 4열의 행렬이 아니면 되지 않습니다"
+msgstr "'figs'는 반드시 벡터 또는 4개의 열을 가진 행렬이어야 합니다"
 
 msgid "'figs' must specify at least one screen"
-msgstr "'figs'는 적어도 하나의 screen을 지정하지 않으면 되지 않습니다"
+msgstr "'figs'는 최소한 하나 이상의 스크린을 반드시 지정해야 합니다"
 
 msgid "'nrpoints' should be numeric scalar with value >= 0."
-msgstr ""
+msgstr "'nrpoints'는 0 이상의 값을 가지는 수치형 스칼라이어야 합니다"
 
 msgid "a 2-way table has to be specified"
-msgstr ""
+msgstr "2-차원 분할표가 반드시 지정되어야 합니다"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
-msgstr ""
+msgstr "x 축은 누적확률 스케일이므로, 'xlim'은 반드시 [0,1]내에 존재해야 합니다"
 
 msgid "'x' must be a matrix or a data frame"
-msgstr "'x'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"
+msgstr "'x'는 반드시 행렬 또는 데이터 프레임이어야 합니다"
 
 msgid "data in 'x' must be numeric"
-msgstr "'x'의 데이터는 수치가 아니면 되지 않습니다"
+msgstr "'x'의 데이터는 반드시 숫자이어야 합니다"
 
 msgid "nrow * ncol <  number of observations"
-msgstr "nrow * ncol는 관찰값의 수미만이 아니면 되지 않습니다"
+msgstr "nrow * ncol < 관찰값의 개수"
 
 msgid "labels do not make sense for a single location"
-msgstr "labels는 location가 하나만 때에는 무의미합니다"
+msgstr "단일 위치에 대한 레이블은 아무런 의미가 없습니다"
 
 msgid "'locations' must be a 2-column matrix."
-msgstr "'locations'는 2열의 행렬이 아니면 되지 않습니다"
+msgstr "'locations'은 반드시 2개의 열을 가진 행렬이어야 합니다."
 
 msgid "number of rows of 'locations' and 'x' must be equal."
-msgstr "'locations'의 행수와 'x'는 동일하지 않으면 되지 않습니다"
+msgstr "'locations'의 행의 개수와 'x'는 반드시 일치해야 합니다."
 
 msgid "length of 'angles' must equal 'ncol(x)'"
-msgstr "'angles'의 길이는 'ncol(x)'와 동일하지 않으면 되지 않습니다"
+msgstr "'angles'의 길이는 반드시 'ncol(x)'와 일치해야 합니다"
 
 msgid "no non-missing values"
-msgstr "모두 결손값입니다"
+msgstr "누락된 값들이 없습니다"
 
 msgid "'scale' must be positive"
-msgstr "'scale'는 positive 값이 아니면 되지 않습니다"
+msgstr "'scale'은 반드시 양수이어야 합니다"
 
 msgid "invalid plotting method"
-msgstr "무효인 plot 메소드입니다"
+msgstr "유효하지 않은 플랏팅 메소드입니다"
 
 msgid "'at' must have length equal to the number %d of groups"
-msgstr "'at'는 그룹의 %d 수와 동일 길이를 가지지 않으면 안됩니다"
+msgstr "'at' must have length equal to the number %d of groups"
 
-#, fuzzy
 msgid "formula missing or incorrect"
-msgstr "'formula'가 없거나 부적절합니다"
+msgstr "formula가 누락되었거나 정확하지 않습니다"
 
 msgid "'number' must have same length as 'x' and 'y'"
-msgstr "'number'는 'x' 그리고 'y'와 동일 길이가 나오지 않으면 되지 않습니다"
+msgstr "'number'는 반드시 'x'와 'y'와 동일한 길이를 가지고 있어야 합니다"
 
 msgid "exactly one symbol type must be specified"
-msgstr "반드시 하나의 심벌 유형을 지정하지 않으면 되지 않습니다"
+msgstr "반드시 하나의 심볼 유형을 지정해야만 합니다"
 
 msgid "x log scale:  xinch() is non-sense"
-msgstr "x는 log scale: xinch()는 non-sense입니다"
+msgstr "x 로그척도:  xinch()는 아무런 의미가 없습니다"
 
 msgid "y log scale:  yinch() is non-sense"
-msgstr "y는 log scale:  yinch() non-sense입니다"
+msgstr "y 로그척도:  yinch()는 아무런 의미가 없습니다"
 
 msgid "log scale:  xyinch() is non-sense"
-msgstr "log scale: xyinch()는 non-sense입니다"
+msgstr "로그척도:  xyinch()는 아무런 의미가 없습니다"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
-msgstr[0] "하나가 어긋나고 값(%s)이 boxplot %d로부터 제외해졌습니다"
+msgstr[0] "박스플랏 %2$d에서 이상값 (%1$s)들은 그려지지 않습니다"
 
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
-msgstr[0] ""
+msgstr[0] "인수 %s는  다음에 사용되지 않았습니다"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr ""

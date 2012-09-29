@@ -1,0 +1,1775 @@
+# Karl Ove Hufthammer <karl@huftis.org>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.1\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-08-06 10:53\n"
+"PO-Revision-Date: 2012-09-28 22:18+0200\n"
+"Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
+"Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.4\n"
+
+msgid "'%s' is defunct."
+msgstr "«%s» er ikkje lenger i bruk."
+
+msgid "Use '%s' instead."
+msgstr "Bruk i staden «%s»."
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "Sjå help(\"Defunct\") og help(\"%s-defunct\")."
+
+msgid "See help(\"Defunct\")"
+msgstr "Sjå help(\"Defunct\")"
+
+msgid "'%s' is deprecated."
+msgstr "«%s» er forelda."
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "Sjå help(\"Deprecated\") og help(\"%s-deprecated\")."
+
+msgid "See help(\"Deprecated\")"
+msgstr "Sjå help(\"Deprecated\")"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "argument til «La.svd» må vera numeriske eller komplekse"
+
+msgid "infinite or missing values in 'x'"
+msgstr "uendelege eller manglande verdiar i «x»"
+
+msgid "0 extent dimensions"
+msgstr "dimensjonar av storleik 0"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "«nu» må vera 0, nrow(x) eller ncol(x)"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "«nv» må vera 0, nrow(x) eller ncol(x)"
+
+msgid "second argument must be a list"
+msgstr "det andre argumentet må vera ei liste"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "«iconvlist» er ikkje tilgjengeleg på dette systemet"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr ""
+"«kind» må vera ein teiknstreng av lengd 1 (slumptalsgenerator som skal "
+"brukast)."
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "«%s» er ikkje ei gyldig kortform av ein slumptalsgenerator"
+
+msgid "'normal.kind' must be a character string of length 1"
+msgstr "«normal.kind» må vera ein teiknstreng av lengd 1"
+
+msgid "'%s' is not a valid choice"
+msgstr "«%s» er ikkje eit gyldig val"
+
+msgid "Buggy version of Kinderman-Ramage generator used"
+msgstr "Versjon av Kinderman–Ramage-generator som har feil brukt"
+
+msgid "Buggy version of Kinderman-Ramage generator is not allowed"
+msgstr "Versjon av Kinderman–Ramage-generator som har feil kan ikkje brukast"
+
+msgid "malformed version string"
+msgstr "ugyldig versjonsstreng"
+
+msgid "target is %s, current is %s"
+msgstr "målet er «%s» og gjeldande er «%s»"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) må ha lengd større enn 0"
+
+msgid "'X' must have named dimnames"
+msgstr "«X» må namn namngjevne «dimnames»"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "ikkje alle elementa i «MARGIN» er namn på dimensjonar"
+
+msgid "use of 0-length dim is deprecated"
+msgstr "bruk av «dim» med lengd 0 er forelda"
+
+msgid "'dim' specifies too large an array"
+msgstr "«dim» definerer for stort array-objekt"
+
+msgid "incorrect value for 'MARGIN'"
+msgstr "ugyldig verdi av «MARGIN»"
+
+msgid "you cannot be serious"
+msgstr "det meiner du ikkje"
+
+msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+msgstr "*** «pos = 1» er ikkje mogleg – set «pos = 2»."
+
+msgid "*** Note that 'pos=1' will give an error in the future"
+msgstr "*** Merk at «pos = 1» vil gje feilmelding i framtida."
+
+msgid "file '%s' not found"
+msgstr "fann ikkje fila «%s»"
+
+msgid "invalid 'name' argument"
+msgstr "ugyldig «name»-argument"
+
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr ""
+"pakken «%s» er kravd av «%s», som kanskje ikkje fungerer skikkeleg lenger"
+
+msgid "package %s is required by %s so will not be detached"
+msgstr "pakken «%s» er kravd av «%s», og vert derfor ikkje kopla frå"
+
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
+msgstr ""
+"Feil ved %s i %s() for «%s» – detaljar:\n"
+"  kall: %s\n"
+"  feil: %s"
+
+msgid "namespace cannot be unloaded:"
+msgstr "namnerom kan ikkje lastast ut:"
+
+msgid "converted to character string"
+msgstr "gjort om til teiknstreng"
+
+msgid "replaced regular expression pattern '[' by  '\\\\['"
+msgstr "bytte ut regulært uttrykk «[» med «\\\\[»"
+
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "bytte ut «[<-» med «\\\\[<-» i regulært uttrykk"
+
+msgid "RHS must be list"
+msgstr "høgresida må vera ei liste"
+
+msgid "an object with that name already exists"
+msgstr "det finst alt eit objekt med dette namnet"
+
+msgid "autoloader did not find '%s' in '%s'"
+msgstr "autolastaren fann ikkje «%s» i «%s»"
+
+msgid "invalid argument values in 'backsolve'"
+msgstr "ugyldige argumentverdiar i «backsolve»"
+
+msgid "invalid value of ncol(x)"
+msgstr "ugyldig verdi for ncol(x)"
+
+msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+msgstr "singulær matrise i «backsolve». Første null i diagonalen [%d]."
+
+msgid "complex matrices not permitted at present"
+msgstr "komplekse matriser er førebels ikkje støtta"
+
+msgid "non-numeric argument to 'chol'"
+msgstr "ikkje-numeriske argument til «chol»"
+
+msgid "non-square matrix in 'chol'"
+msgstr "ikkje-kvadratisk matrise i «chol»"
+
+msgid "non-matrix argument to 'chol'"
+msgstr "ikkje-matrise-argument i «chol»"
+
+msgid "invalid nrow(x)"
+msgstr "ugyldig nrow(x)"
+
+msgid "matrix not positive definite"
+msgstr "matrisa er ikkje positiv definitt"
+
+msgid "non-positive definite matrix in 'chol'"
+msgstr "ikkje-positiv definitt matrise i «chol»"
+
+msgid "non-numeric argument to 'chol2inv'"
+msgstr "ikkje-numerisk argument til «chol2inv»"
+
+msgid "invalid 'size' argument in 'chol2inv'"
+msgstr "ugyldig «size»-argument i «chol2inv»"
+
+msgid "singular matrix in 'chol2inv'"
+msgstr "singulær matrise i «chol2inv»"
+
+msgid "'x' must be an array of at least two dimensions"
+msgstr "«x» må vera eit array-objekt med minst to dimensjonar"
+
+msgid "invalid 'dims'"
+msgstr "ugyldige «dims»-verdiar"
+
+msgid "bad handler specification"
+msgstr "ugyldig handsamarspesifikasjon"
+
+msgid "no 'restart' '%s' found"
+msgstr "ingen «restart» «%s» funnen"
+
+msgid "not an interactive session"
+msgstr "ikkje ei interaktiv økt"
+
+msgid "not a valid restart specification"
+msgstr "ikkje ein gyldig omstartsdefinisjon"
+
+msgid "argument 'where' of length 0"
+msgstr "argument «where» av lengd 0"
+
+msgid "argument 'object' must deparse to a single character string"
+msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
+
+msgid "'origin' must be one of 'start', 'current' or 'end'"
+msgstr "«origin» må vera éin av «start», «current» og «end»"
+
+msgid "can only truncate an open connection"
+msgstr "kan berre trunkera eit ope samband"
+
+msgid "can only write vector objects"
+msgstr "kan berre skriva vektorobjekt"
+
+msgid "can only write character objects"
+msgstr "kan berre skriva teiknobjekt"
+
+msgid "supplied timeout must be NULL or a non-negative number"
+msgstr "den oppgjevne tidsgrensa må vera NULL eller eit ikkje-negativt tal"
+
+msgid "'from' must be raw or character"
+msgstr "«from» må vera «raw» eller «character»"
+
+msgid "'x' must be numeric"
+msgstr "«x» må vera numerisk"
+
+msgid "invalid number of intervals"
+msgstr "ugyldig tal på interval"
+
+msgid "'breaks' are not unique"
+msgstr "«breaks» er ikkje unike"
+
+msgid "labels/breaks length conflict"
+msgstr "ikkje samsvar mellom lengd på «labels» og «breaks»"
+
+msgid "invalid 'row.names' length"
+msgstr "ugyldig «row.names»-lengd"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "duplikatverdiar i «row.names» er ikkje tillatne"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "manglande verdiar i «row.names» er ikkje tillatne"
+
+msgid "invalid 'dimnames' given for data frame"
+msgstr "ugyldig «dimnames» oppgjeve for dataramme"
+
+msgid "cannot coerce class '%s' into a data.frame"
+msgstr "kan ikkje gjera klassen «%s» om til ei dataramme"
+
+msgid "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr "ugyldig «row.names» (lengd %d for ei dataramme med %d rader)"
+
+msgid "supplied %d row names for %d rows"
+msgstr "%d radnamn oppgjevne for %d rader"
+
+msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
+msgstr "options(\"stringsAsFactors\") ikkje sett til TRUE eller FALSE"
+
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
+msgstr "ikkje samsvar i radnamn i argument til «data.frame», element %d"
+
+msgid "some row.names duplicated:"
+msgstr "nokre «row.names» er duplikatar:"
+
+msgid ","
+msgstr ","
+
+msgid "--> row.names NOT used"
+msgstr "→ «row.names» IKKJE burkt"
+
+msgid "row names contain missing values"
+msgstr "radnamn inneheld manglande verdiar"
+
+msgid "duplicate row.names:"
+msgstr "duplikatverdiar i «row.names»:"
+
+msgid "arguments imply differing number of rows:"
+msgstr "argumenta impliserer forskjellige tal på rader:"
+
+msgid "row.names should specify one of the variables"
+msgstr "«row.names» bør spesifisera éin av variablane"
+
+msgid "row names supplied are of the wrong length"
+msgstr "dei oppgjevne radnamna har feil lengd"
+
+msgid "row names were found from a short variable and have been discarded"
+msgstr "radnamn vart funnen i ein kortvariabel, og vart forkasta"
+
+msgid "named arguments other than 'drop' are discouraged"
+msgstr "namngjevne argument utanom «drop» er ikkje tilrådd"
+
+msgid "drop argument will be ignored"
+msgstr "«drop»-argumentet vert ignorert"
+
+msgid "undefined columns selected"
+msgstr "udefinerte kolonnar valde"
+
+msgid "named arguments other than 'exact' are discouraged"
+msgstr "namngjevne argument utanom «exact» er ikkje tilrådd"
+
+msgid "named arguments are discouraged"
+msgstr "namngjevne argument er ikkje tilrådd"
+
+msgid "rhs is the wrong length for indexing by a logical matrix"
+msgstr "høgresida har feil lengd for indeksering av ei logisk matrise"
+
+msgid "only logical matrix subscripts are allowed in replacement"
+msgstr "berre indeksar med logiske matriser kan brukast i utbytingselement"
+
+msgid "need 0, 1, or 2 subscripts"
+msgstr "treng 0, 1 eller 2 indeksar"
+
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr ""
+"manglande verdiar er ikkje tillatne i indekserte tildelingar av datarammer"
+
+msgid "non-existent rows not allowed"
+msgstr "ikkje-eksisterande rader er ikkje tillatne"
+
+msgid "column name \"\" cannot match any column"
+msgstr "kolonnenamnet \"\" kan ikkje definera nokon kolonne"
+
+msgid "new columns would leave holes after existing columns"
+msgstr "nye kolonnar ville etterlata hol etter eksisterande kolonnar"
+
+msgid "duplicate subscripts for columns"
+msgstr "dupliserte indeksar for kolonnar"
+
+msgid "replacement has %d rows, data has %d"
+msgstr "erstattingsobjektet har %d rader, mens dataa har %d"
+
+msgid "replacement has %d items, need %d"
+msgstr "erstattingsobjektet har %d rader, men må ha %d"
+
+msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr "erstattingselement %d er ei matrise/dataramme med %d rader – treng %d"
+
+msgid "replacement element %d has %d rows, need %d"
+msgstr "erstattingselement %d har %d rader, men må ha %d"
+
+msgid "replacement element %d has %d rows to replace %d rows"
+msgstr "erstattingselement %d har %d rader for å erstatta %d rader"
+
+msgid "%d rows in value to replace %d rows"
+msgstr "%d rader i verdi for å erstatta %d rader"
+
+msgid "replacement data has %d rows to replace %d rows"
+msgstr "erstattingsobjektet har %d rader for å erstatta %d rader"
+
+msgid "provided %d variables to replace %d variables"
+msgstr "oppgav %d variablar for å erstatta %d variablar"
+
+msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+msgstr "berre gyldige kall er «x[[j]] <- verdi» eller «x[[i,j]] <- verdi»"
+
+msgid "replacing element in non-existent column:"
+msgstr "byt ut element i ikkje-eksisterande kolonne:"
+
+msgid "only a single element should be replaced"
+msgstr "berre eit enkeltelement skal erstattast"
+
+msgid "names do not match previous names"
+msgstr "namna er ikkje i samsvar med dei gamle namna"
+
+msgid "numbers of columns of arguments do not match"
+msgstr "talet på argumentkolonnar er ikkje like"
+
+msgid "invalid list argument: all variables should have the same length"
+msgstr "ugyldig listeargument: alle variablar må vera like lange"
+
+msgid "data frame with 0 columns and %d rows"
+msgstr "dataramme med 0 kolonnar og %d rader"
+
+msgid "<0 rows> (or 0-length row.names)"
+msgstr "<0 rader> (eller row.names av lengd null)"
+
+msgid "non-numeric variable in data frame:"
+msgstr "ikkje numerisk variabel i dataramme:"
+
+msgid "only defined for equally-sized data frames"
+msgstr "berre definert for datarammer av lik storleik"
+
+msgid "list of length %d not meaningful"
+msgstr "liste av lengd %d gjev ikkje meining"
+
+msgid "only defined on a data frame with all numeric variables"
+msgstr "berre definert på dataramme med berre numeriske variablar"
+
+msgid "character string is not in a standard unambiguous format"
+msgstr "teiknstrengen er ikkje i eit standard utvetydig format"
+
+msgid "'origin' must be supplied"
+msgstr "må oppgje «origin»"
+
+msgid "do not know how to convert '%s' to class \"Date\""
+msgstr "kan ikkje konvertera «%s» til klassen «Date»"
+
+msgid "'%s' is not a \"date\" object"
+msgstr "«%s» er ikkje eit «date»-objekt"
+
+msgid "'%s' is not a \"dates\" object"
+msgstr "«%s» er ikkje eit «dates»-objekt"
+
+msgid "binary + is not defined for Date objects"
+msgstr "binær-«+» er ikkje definert for «Date»-objekt"
+
+msgid "Can only subtract from Date objects"
+msgstr "Kan berre trekkja frå «Date»-objekt"
+
+msgid "unary - is not defined for Date objects"
+msgstr "unær-«-» er ikkje definert for «Date»-objekt"
+
+msgid "can only subtract numbers from Date objects"
+msgstr "kan berre trekkja frå tal frå «Date»-objekt"
+
+msgid "unary"
+msgstr "unær-"
+
+msgid "not defined for Date objects"
+msgstr "ikkje definert for «Date»-objekt"
+
+msgid "'from' must be specified"
+msgstr "«from» må oppgjevast"
+
+msgid "'from' must be a Date object"
+msgstr "«from» må vera eit «Date»-objekt"
+
+msgid "'from' must be of length 1"
+msgstr "«from» må ha lengd 1"
+
+msgid "'to' must be a Date object"
+msgstr "«to» må vera eit «Date»-objekt"
+
+msgid "'to' must be of length 1"
+msgstr "«to» må ha lengd 1"
+
+msgid "'length.out' must be of length 1"
+msgstr "«length.out» må ha lengd 1"
+
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "nøyaktig to av «to», «by» og «length.out»/«along.with» må oppgjevast"
+
+msgid "'by' must be of length 1"
+msgstr "«by» må ha lengd 1"
+
+msgid "invalid 'by' string"
+msgstr "ugyldig «by»-verdi"
+
+msgid "invalid string for 'by'"
+msgstr "ugyldig verdi for «by»"
+
+msgid "invalid mode for 'by'"
+msgstr "ugyldig «mode» for «by»"
+
+msgid "'by' is NA"
+msgstr "«by» er NA"
+
+msgid "'x' must be a date-time object"
+msgstr "«x» må vera eit dato–klokkeslett-objekt"
+
+msgid "invalid specification of 'breaks'"
+msgstr "ugyldig «breaks»-verdiar"
+
+msgid "'origin' must be of length one"
+msgstr "«origin» må ha lengd 1"
+
+msgid "'lag' and 'differences' must be integers >= 1"
+msgstr "«lag» og «differences» må vera heiltal større eller lik 1"
+
+msgid "do not know how to convert '%s' to class \"POSIXlt\""
+msgstr "kan ikkje gjera om «%s» til klassen «POSIXlt»"
+
+msgid "do not know how to convert '%s' to class \"POSIXct\""
+msgstr "kan ikkje gjera om «%s» til klassen «POSIXct»"
+
+msgid "wrong class"
+msgstr "feil klasse"
+
+msgid "binary '+' is not defined for \"POSIXt\" objects"
+msgstr "binær-«+» er ikkje definert for «POSIXlt»-objekt"
+
+msgid "Can only subtract from POSIXt objects"
+msgstr "Kan berre trekkja frå frå «POSIXt»-objekt"
+
+msgid "unary '-' is not defined for \"POSIXt\" objects"
+msgstr "unær-«-» er ikkje definert for «POSIXt»-objekt"
+
+msgid "can only subtract numbers from POSIXt objects"
+msgstr "kan berre trekkja frå tal frå «POSIXt»-objekt"
+
+msgid "unary '%s' not defined for \"POSIXt\" objects"
+msgstr "unær-«%s» er ikkje definert for «POSIXt»-objekt"
+
+msgid "'%s' not defined for \"POSIXt\" objects"
+msgstr "«%s» er ikkje definert for «POSIXt»-objekt"
+
+msgid "'tzone' attributes are inconsistent"
+msgstr "«tzone»-attributta er inkonsistente"
+
+msgid "'tim' is not character or numeric"
+msgstr "«tim» er ikkje teiknstreng eller numerisk"
+
+msgid "need explicit units for numeric conversion"
+msgstr "treng eksplisitte einingar for numerisk talomgjering"
+
+msgid "invalid units specified"
+msgstr "ugyldige einingar oppgjevne"
+
+msgid "unary '%s' not defined for \"difftime\" objects"
+msgstr "unær-«%s» er ikkje definert for «difftime»-objekt"
+
+msgid "'%s' not defined for \"difftime\" objects"
+msgstr "«%s» er ikkje definert for «difftime»-objekt"
+
+msgid "both arguments of * cannot be \"difftime\" objects"
+msgstr "begge argumenta til «*» kan ikkje vera «difftime»-objekt"
+
+msgid "second argument of / cannot be a \"difftime\" object"
+msgstr "det andre argumentet til «/» kan ikkje vera eit «difftime»-objekt"
+
+msgid "'from' must be a POSIXt object"
+msgstr "«from» må vera eit «POSIXt»-objekt"
+
+msgid "'to' must be a POSIXt object"
+msgstr "«to» må vera eit «POSIXt»-objekt"
+
+msgid "'file' must be a character string or connection"
+msgstr "«file» må vera ein teiknstreng eller eit samband"
+
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+"Ugyldig DCF-format.\n"
+"Vanlege linjer må ha ein tagg.\n"
+"Ugyldige linjer begynner med:\n"
+"%s"
+
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
+msgstr ""
+"Ugyldig DCF-format.\n"
+"Framhaldslinjer kan ikkje starta ein post.\n"
+"Ugyldige linjer begynner med:\n"
+"%s"
+
+msgid "'x' must be a square matrix"
+msgstr "«x» må vera ei kvadratisk matrise"
+
+msgid "determinant not currently defined for complex matrices"
+msgstr "determinanten er p.t. ikkje definert for komplekse matriser"
+
+msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
+msgstr "«nrow» eller «ncol» kan ikkje vera oppgjevne når «x» er ei matrise"
+
+msgid "'x' is an array, but not 1D."
+msgstr "«x» er eit array, men ikkje éindimensjonalt"
+
+msgid "only matrix diagonals can be replaced"
+msgstr "kan berre byta ut matrisediagonalar"
+
+msgid "replacement diagonal has wrong length"
+msgstr "erstattingsdiagonalen har feil lengd"
+
+msgid "MARGIN ="
+msgstr "MARGIN ="
+
+msgid "is invalid for dim ="
+msgstr "er ugyldig for dim ="
+
+msgid "must pass a package name, DLLInfo or DllInfoReference object"
+msgstr ""
+"må oversenda eit pakkenamn eller «DLLInfo»- eller «DLLInfoReference»-objekt"
+
+msgid "No DLL currently loaded with name or path"
+msgstr "Ingen DLL lasta med namn eller filadresse"
+
+msgid "multiple DLLs match '%s'. Using '%s'"
+msgstr "fleire DLL-ar passar til «%s». Brukar «%s»."
+
+msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+msgstr "må oppgje DLL via eit «DLLInfo»-objekt. Sjå «getLoadedDLLs()»."
+
+msgid "function is not in a namespace, so cannot locate associated DLL"
+msgstr "funksjonen er ikkje i eit namnerom, så kan ikkje lasta tilknytt DLL"
+
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr ""
+"ser etter DLL for innebygde rutinekall, men ingen DLL-ar i namnerommet til "
+"kallet"
+
+msgid "0 x 0 matrix"
+msgstr "0 × 0-matrise"
+
+msgid "non-square matrix in 'eigen'"
+msgstr "ikkje-kvadratisk matrise i «eigen»"
+
+msgid "'ch' returned code %d in 'eigen'"
+msgstr "«ch» returnerte koden «%d» i «eigen»"
+
+msgid "'rs' returned code %d in 'eigen'"
+msgstr "«rs» returnerte koden %d i «eigen»"
+
+msgid "'cg' returned code %d in 'eigen'"
+msgstr "«cg» returnerte koden %d i «eigen»"
+
+msgid "'rg' returned code %d in 'eigen'"
+msgstr "«rg» returnerte koden %d i «eigen»"
+
+msgid "invalid labels; length %d should be 1 or %d"
+msgstr "ugyldige merkelappar – lengd %d må vera 1 eller %d"
+
+msgid "number of levels differs"
+msgstr "talet på nivå er forskjellig"
+
+msgid "not meaningful for factors"
+msgstr "gjev ikkje meining for faktorar"
+
+msgid "level sets of factors are different"
+msgstr "nivåa til faktorane er forskjellige"
+
+msgid "invalid factor level, NAs generated"
+msgstr "ugyldige faktornivå – NA-verdiar genererte"
+
+msgid "invalid factor level, NA generated"
+msgstr "ugyldige faktornivå – NA-verdi generert"
+
+msgid "'%s' is not meaningful for ordered factors"
+msgstr "«%s» gjev ikkje meining for ordna faktorar"
+
+msgid "'%s' not defined for ordered factors"
+msgstr "«%s» er ikkje definert for ordna faktorar"
+
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
+msgstr ""
+"«%s» gjev berre meining for ordna faktorar viss alle argumenta har same nivå"
+
+msgid "no files to copy to"
+msgstr "ingen filer å kopiera til"
+
+msgid "attempt to copy a directory to itself"
+msgstr "prøvde å kopiera ei mappe til seg sjølv"
+
+msgid "more 'from' files than 'to' files"
+msgstr "fleire «from»-filer enn «to»-filer"
+
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr ""
+"«recursive» vert ikkje brukt, sidan «to» ikkje er ei enkeltmappe som finst "
+"frå før"
+
+msgid "file can not be copied both 'from' and 'to'"
+msgstr "fil kan ikkje kopierast både «from» og «to»"
+
+msgid "no files to link from"
+msgstr "ingen filer å lenkja frå"
+
+msgid "no files/directory to link to"
+msgstr "ingen filer/mapper å lenkja til"
+
+msgid "no files to link to"
+msgstr "ingen filer å lenkja til"
+
+msgid "'package' must be of length 1"
+msgstr "«package» må ha lengd 1"
+
+msgid "no file found"
+msgstr "fann ingen filer"
+
+msgid "invalid 'path' argument"
+msgstr "ugyldig «path»-argument"
+
+msgid "invalid 'time' argument"
+msgstr "ugyldig «time»-argument"
+
+msgid "'vec' contains NAs"
+msgstr "«vec» inneheld NA-verdiar"
+
+msgid "'vec' must be sorted non-decreasingly"
+msgstr "«vec» må vera sortert aukande rekkjefølgja"
+
+msgid "using the first element of 'value' of type expression"
+msgstr "brukar første element av «value» i uttrykket"
+
+msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
+msgstr "«mode» må vera «double» («real»), «integer» eller «character»"
+
+msgid "coercing argument to \"character\" for format=\"s\""
+msgstr "tvingar argument til «character» for «format=\"s\"»"
+
+msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr "«format» må vera éin av «f», «e», «E», «g», «G», «fg» eller «s»"
+
+msgid "'digits' reduced to"
+msgstr "«digits» redusert til"
+
+msgid "'flag' can contain only '0+- #'"
+msgstr "«flag» kan berre innehalda «0+- #»"
+
+msgid "corrupt data frame: columns will be truncated or padded with NAs"
+msgstr "ugyldig dataramme: kolonnar vert trunkerte eller fylde med NA-verdiar"
+
+msgid "'zero.print' has length > 1"
+msgstr "«zero.print» har lengd > 1"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr "«zero.print» må vera ein teiknstreng, ein boolsk verdi eller NULL"
+
+msgid "'subset' must evaluate to logical"
+msgstr "«subset» må evaluerast til ein logisk vektor"
+
+msgid "'subset' must be logical"
+msgstr "«subset» må vera ein logisk vektor"
+
+msgid "value for '"
+msgstr "fann ikkje verdi for «"
+
+msgid "' not found"
+msgstr "»"
+
+msgid "all arguments must be named"
+msgstr "alle argumenta må ha namn"
+
+msgid "match distance components must be non-negative"
+msgstr "treffavstandskomponentane må vera ikkje-negative"
+
+msgid "unknown match distance components ignored"
+msgstr "ukjende treffavstandskomponentar – ikkje brukte"
+
+msgid "unknown cost components ignored"
+msgstr "ukjend kostnadskomponentar – ikkje brukte"
+
+msgid "cost components must be non-negative"
+msgstr "kostnadskomponentane må vera ikkje-negative"
+
+msgid "%s and %s must have the same length"
+msgstr "%s og %s må ha same lengd"
+
+msgid "need non-overlapping matches for %s"
+msgstr "treng ikkje-overlappande treff for %s"
+
+msgid "missing replacement values are not allowed"
+msgstr "manglande erstattingselement ikkje mogleg"
+
+msgid "must have replacement values for matches"
+msgstr "må har erstattingsverdiar for treff"
+
+msgid "value does not provide any replacement values"
+msgstr "verdien gjev ikkje nokon erstattingsverdiar"
+
+msgid "must have replacements for non-matches"
+msgstr "må har erstattingsverdiar for ikkje-treff"
+
+msgid "must have replacements for matches"
+msgstr "må har erstattingsverdiar for treff"
+
+msgid "norm '%s' currently always uses exact = FALSE"
+msgstr "norma «%s» brukar alltid «exact = FALSE»"
+
+msgid "triangular matrix should be square"
+msgstr "trekantmatrise må vera kvadratisk"
+
+msgid "'object' must be a list"
+msgstr "«object» må vera ei liste"
+
+msgid "'keep.source' is deprecated and will be ignored"
+msgstr "«keep.source» er forelda, og vert ikkje brukt"
+
+msgid "package %s has not been installed properly"
+msgstr "pakken «%s» er ikkje skikkeleg installert"
+
+msgid "package %s was built before R 2.10.0: please re-install it"
+msgstr "pakken «%s» vart bygd før R 2.10.0 – reinstaller han"
+
+msgid "This is R %s, package %s needs %s %s"
+msgstr "Dette er R %s, men pakken %s treng %s %s"
+
+msgid "package %s was built under R version %s"
+msgstr "pakken %s vart bygd under R versjon %s"
+
+msgid "package %s was built for %s"
+msgstr "pakken %s vart bygd for %s"
+
+msgid "package %s is not installed for 'arch=%s'"
+msgstr "pakken %s er ikkje installert for «arch = %s»"
+
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
+msgstr "pakken %s har lisensvilkår som du må godta i ei interaktiv økt"
+
+msgid "Package %s has a license that you need to accept after viewing"
+msgstr "Pakken %s har lisensvilkår som du må godta etter at du har lese"
+
+msgid ""
+"Package %s has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+"Pakken %s har lisensvilkår som du må godta:\n"
+"Ifølgje DESCRIPTION-fila er vilkåra"
+
+msgid "License"
+msgstr "Lisensvilkår"
+
+msgid "License for package %s not accepted"
+msgstr "Lisensvilkåra for pakken %s ikkje godtekne"
+
+msgid "Attaching package: %s"
+msgstr "Koplar til pakke: %s"
+
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr "«verbose» og «quietly» er begge sanne – brukar «verbose»"
+
+msgid "invalid package name"
+msgstr "ugyldig pakkenamn"
+
+msgid "there is no package called %s"
+msgstr "det finst ingen «%s»-pakke"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr "fann ingen bibliotektre i «lib.loc»"
+
+msgid "%s is not a valid installed package"
+msgstr "«%s» er ikkje ein gyldig installert pakke"
+
+msgid "%s not found on search path, using pos = 2"
+msgstr "fann ikkje «%s» i søkjestigen – brukar «pos = 2»"
+
+msgid "package/namespace load failed for %s"
+msgstr "feil ved lasting av pakke/namnerom for «%s»"
+
+msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgstr ""
+"pakken «%s» har ikkje eit namnerom (NAMESPACE), og må installerast på nytt"
+
+msgid "package %s already present in search()"
+msgstr "pakken «%s» er allereie tilgjengeleg i «search()»"
+
+msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
+msgstr "«DESCRIPTION» har eit «Encoding»-felt, og omkoding er ikkje mogleg"
+
+msgid "%sPackages in library %s:"
+msgstr "«%s» pakkar i biblioteket «%s»:"
+
+msgid "no packages found"
+msgstr "fann ingen pakkar"
+
+msgid "R packages available"
+msgstr "R-pakkar tilgjengeleg"
+
+msgid "DLL %s not found: maybe not installed for this architecture?"
+msgstr "fann ikkje DLL «%s»: kanskje ikkje installert for denne arkitekturen?"
+
+msgid "shared object %s not found"
+msgstr "fann ikkje delt objekt «%s»"
+
+msgid "DLL %s already loaded"
+msgstr "DLL-en «%s» alt lasta"
+
+msgid "shared object '%s' already loaded"
+msgstr "det delte objektet «%s» er alt lasta"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr "no «dyn.load(\"%s\")» …"
+
+msgid "no DLL was specified"
+msgstr "ingen DLL definert"
+
+msgid "no shared object was specified"
+msgstr "inkje delt objekt definert"
+
+msgid "DLL %s was not loaded"
+msgstr "DLL-en «%s» vart ikkje lasta"
+
+msgid "shared object %s was not loaded"
+msgstr "det delte objektet «%s» vart ikkje lasta"
+
+msgid "DLL %s not found"
+msgstr "fann ikkje DLL-en «%s»"
+
+msgid "shared object '%s' not found"
+msgstr "fann ikkje det delte objektet «%s»"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr "no «dyn.unload(\"%s\")» …"
+
+msgid "Loading required package: %s"
+msgstr "Lastar nødvendig pakke: %s"
+
+msgid "none of the packages are loaded"
+msgstr "ingen av pakkane er lasta"
+
+msgid ""
+"package %s found more than once,\n"
+"using the one found in %s"
+msgstr ""
+"fann pakken «%s» meir enn éin gong –\n\n"
+"brukar versjonen i «%s»"
+
+msgid ""
+"Further information is available in the following vignettes in directory %s:"
+msgstr "Du finn meir informasjon i vignette i mappa «%s»:"
+
+msgid "doc"
+msgstr "doc"
+
+msgid "Description:"
+msgstr "Skildring:"
+
+msgid "Index:"
+msgstr "Indeks:"
+
+msgid "Information on package %s"
+msgstr "Informasjon om pakken «%s»"
+
+msgid "Documentation for package %s"
+msgstr "Dokumentasjon for pakken «%s»"
+
+msgid "package %s required by %s could not be found"
+msgstr "fann ikkje pakken «%s» som «%s» treng"
+
+msgid "package %s %s was found, but %s %s is required by %s"
+msgstr "fann pakken «%s %s», men «%s %s» trengst av «%s»"
+
+msgid "package %s could not be loaded"
+msgstr "klarte ikkje lasta pakken «%s»"
+
+msgid "package %s %s is loaded, but %s %s is required by %s"
+msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
+
+msgid "empty (zero-byte) input file"
+msgstr "tom innfil (0 byte)"
+
+msgid "input has been corrupted, with LF replaced by CR"
+msgstr "ugyldig inndata, men LF erstatta med CR"
+
+msgid ""
+"file %s has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+"fila «%s» har magisk tal «%s»\n"
+"   Bruk av «save»-versjon under 1 er forelda"
+
+msgid "bad 'file' argument"
+msgstr "ugyldig «file»-argument"
+
+msgid "'file' must be specified"
+msgstr "må definera «file»"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr "Bruk av «save»-versjonar under 2 er forelda"
+
+msgid "nothing specified to be save()d"
+msgstr "ikkje definert kva som skal lagrast"
+
+msgid "'file' must be non-empty string"
+msgstr "«file» må vera ein ikkje-tom teiknstreng"
+
+msgid "'compress' must be logical or character"
+msgstr "«compress» må vera boolsk eller teikn"
+
+msgid "'compress = \"%s\"' is invalid"
+msgstr "«compress = \"%s\"» er ikkje gyldig"
+
+msgid "bad file argument"
+msgstr "ugyldig «file»-argument"
+
+msgid "can only save to a binary connection"
+msgstr "kan berre lagra til binærsamband"
+
+msgid "image could not be renamed and is left in"
+msgstr "klarte ikkje endra namn på biletfil"
+
+msgid "[Previously saved workspace restored]"
+msgstr "[Tidlegare arbeidsområde gjenoppretta]"
+
+msgid "Attempting to load the environment %s"
+msgstr "Prøver å lasta omgjevnaden «%s»"
+
+msgid "not found: using .GlobalEnv instead"
+msgstr "fann ikkje: brukar i staden .GlobalEnv"
+
+msgid "invalid 'category' argument"
+msgstr "ugyldig «category»-argument"
+
+msgid "must specify formal argument names to vectorize"
+msgstr "må oppgje namn på formelle argument til «vectorize»"
+
+msgid "'arg' must be NULL or a character vector"
+msgstr "«arg» må vera NULL eller ein teiknvektor"
+
+msgid "'arg' must be of length 1"
+msgstr "«arg» må ha eitt element"
+
+msgid "'arg' must be of length >= 1"
+msgstr "«arg» må ha minst eitt element"
+
+msgid "'arg' should be one of %s"
+msgstr "«arg» skal vera éin av %s"
+
+msgid "there is more than one match in 'match.arg'"
+msgstr "det finst meir enn eitt treff i «match.arg»"
+
+msgid "no match"
+msgstr "ingen treff"
+
+msgid "'input' must have length 1"
+msgstr "«input» må ha eitt element"
+
+msgid "'input' and 'target' must be character vectors"
+msgstr "«input» og «target» må vera teiknvektorar"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "«%s» er ikkje ein funksjon, eit teikn eller eit symbol"
+
+msgid "found non-function '%s'"
+msgstr "fann ikkje-funksjon «%s»"
+
+msgid "attempt to set rownames on object with no dimensions"
+msgstr "prøvde å definera radnamn på objekt utan dimensjonar"
+
+msgid "attempt to set colnames on object with less than two dimensions"
+msgstr "prøvde å definera kolonnenamn på objekt med mindre enn to dimensjonar"
+
+msgid "invalid value of nrow(x)"
+msgstr "ugyldig «nrow(x)»-verdi"
+
+msgid "argument is not numeric or logical: returning NA"
+msgstr "argumentet er ikkje numerisk eller boolsk: returnerer NA"
+
+msgid "'trim' must be numeric of length one"
+msgstr "«trim» må vera numerisk og ha eitt element"
+
+msgid "trimmed means are not defined for complex data"
+msgstr "trimma snitt er ikkje definerte for komplekse tal"
+
+msgid "'by' must specify uniquely valid column(s)"
+msgstr "«by» må definera unike, gyldige kolonnar"
+
+msgid "'by' must match numbers of columns"
+msgstr "«by» må vera i samsvar med talet på kolonnar"
+
+msgid "'by' must match number of columns"
+msgstr "«by» må vera i samsvar med talet på kolonnar"
+
+msgid "'by' must specify column(s) as numbers, names or logical"
+msgstr "«by» må definera kolonnar som tal, namn eller boolske verdiar"
+
+msgid "'by' must specify valid column(s)"
+msgstr "«by» må definera gyldige kolonnar"
+
+msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr "«by.x» og «by.y» må definera forskjellige tal på kolonnar"
+
+msgid "additional arguments ignored in message()"
+msgstr "ignorerte ekstraargument i message()"
+
+msgid "(loaded the methods namespace)"
+msgstr "(lasta «methods»-namnerommet)"
+
+msgid ""
+"Tracing functions requires the methods package, but unable to load methods "
+"namespace"
+msgstr ""
+"Sporfunksjonar krev «methods»-pakken, men klarte ikkje lasta "
+"«methods»-namnerommet"
+
+msgid "Expected a single logical value for the S4 state flag"
+msgstr "Venta éin boolsk verdi for S4-tilstandsflagget"
+
+msgid "Expected a single logical value for the S3 state flag"
+msgstr "Venta éin boolsk verdi for S3-tilstandsflagget"
+
+msgid "invalid to change the storage mode of a factor"
+msgstr "kan ikkje endra lagringsmodus til ein faktor"
+
+msgid "'%s' is not an exported object from 'namespace:%s'"
+msgstr "«%s» er ikkje eit eksportert objekt frå «namespace:%s»"
+
+msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
+msgstr ""
+"køyrer .First.lib() for pakken %s, sidan .onLoad/.onAttach ikkje vart funne"
+
+msgid "namespace is already attached"
+msgstr "namnerommet er alt kopla til"
+
+msgid "%s not found"
+msgstr "fann ikkje «%s»"
+
+msgid "namespace %s is already sealed in loadNamespace"
+msgstr "namnerommet «%s» er alt forsegla i «loadNamespace»"
+
+msgid "failed to assign RegisteredNativeSymbol for"
+msgstr "klarte ikkje tildela RegisteredNativeSymbol for"
+
+msgid "to"
+msgstr "til"
+
+msgid "since"
+msgstr "sidan"
+
+msgid "is already defined in the"
+msgstr "alt er definert i"
+
+msgid "namespace"
+msgstr "namnerommet"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr "klarte ikkje tildela NativeSymbolInfo for"
+
+msgid "package %s does not have a namespace"
+msgstr "pakken «%s» har ikkje noko namnerom"
+
+msgid "unable to load R code in package %s"
+msgstr "klarte ikkje lasta R-kode i pakken «%s»"
+
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"%s"
+msgstr ""
+"exportClassPattern spesifisert i NAMESPACE, men ingen samsvarande klassar i "
+"pakken "
+"%s"
+
+msgid "in package %s classes %s were specified for export but not defined"
+msgstr ""
+"i pakken «%s» er klassane «%s» spesifiserte for eksport, men er ikkje "
+"definerte"
+
+msgid "No function found corresponding to methods exports from %s for: %s"
+msgstr "Fann ingen funksjon som svarar til metodeeksportar frå %s for: %s"
+
+msgid "in %s methods for export not found: %s"
+msgstr "i %s-metodar for eksport ikkje funne: %s"
+
+msgid "multiple methods tables found for %s"
+msgstr "fann fleire metodetabellar for %s"
+
+msgid "failed to find metadata object for %s"
+msgstr "fann ikkje metadataobjekt for %s"
+
+msgid "in package %s methods %s were specified for export but not defined"
+msgstr ""
+"i pakken «%s» er metodane «%s» spesifiserte for eksport, men er ikkje "
+"definerte"
+
+msgid "Loading required namespace: %s"
+msgstr "Lastar nødvendig namnerom: %s"
+
+msgid "not found"
+msgstr "fann ikkje"
+
+msgid "not loading a namespace"
+msgstr "lastar ikkje eit namnerom"
+
+msgid "namespace %s is imported by %s so cannot be unloaded"
+msgstr "namnerommet «%s» er importert av «%s», og kan derfor ikkje lastast ut"
+
+msgid "not a namespace"
+msgstr "ikkje eit namnerom"
+
+msgid "operation not allowed on base namespace"
+msgstr "operasjon ikkje tillaten på base-namnerom"
+
+msgid "duplicate import names"
+msgstr "dupliserte importnamn"
+
+msgid "replacing local value with import %s when loading %s"
+msgstr "byt ut lokal verdi med import «%s» ved lasting av «%s»"
+
+msgid "cannot import into a sealed namespace"
+msgstr "kan ikkje importera til eit forsegla namnerom"
+
+msgid "replacing previous import %s when loading %s"
+msgstr "byt ut førre import «%s» ved lasting av «%s»"
+
+msgid "invalid import target"
+msgstr "ugyldig importeringsmål"
+
+msgid "found methods to import for function %s but not the generic itself"
+msgstr ""
+"fann metodar for import for funksjonen «%s», men ikkje for den generiske "
+"funksjonen sjølv"
+
+msgid "No methods found in \"%s\" for requests: %s"
+msgstr "Fann ingen metodar i «%s» for førespurnader: %s"
+
+msgid "requested methods not found in environment/package %s: %s"
+msgstr "fann ikkje førespurde metodar i omgjevnaden/pakken «%s»: %s"
+
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
+msgstr ""
+"Fann ingen generisk funksjon som svarar til førespurde importerte metodar for "
+"«%s» frå pakken «%s» (feilformaterte eksportar?)"
+
+msgid "cannot add to exports of a sealed namespace"
+msgstr "kan ikkje leggja til i eksportar til forsegla namnerom"
+
+msgid "undefined exports:"
+msgstr "udefinerte eksportar:"
+
+msgid "package %s has no NAMESPACE file"
+msgstr "pakken «%s» har inga NAMESPACE-fil"
+
+msgid "empty name in directive '%s' in NAMESPACE file"
+msgstr "tomt namn i direktivet «%s» i NAMESPACE-fila"
+
+msgid "duplicated symbol names %s in useDynlib(\"%s\")"
+msgstr "dupliserte symbolnamn %s i useDynlib(\"%s\")"
+
+msgid "bad 'S3method' directive: %s"
+msgstr "ugyldig «S3method»-direktiv: %s"
+
+msgid "too many 'S3method' directives"
+msgstr "for mange «S3method»-direktiv"
+
+msgid "unknown namespace directive: %s"
+msgstr "ukjent namneromdirektiv: %s"
+
+msgid "S3 method %s was declared but not found"
+msgstr "S3-metoden «%s» er deklarert, men finst ikkje"
+
+msgid "bad method"
+msgstr "ugyldig metode"
+
+msgid "object '%s' not found whilst loading namespace '%s'"
+msgstr "fann ikkje objektet «%s» ved lasting av namnerommet «%s»"
+
+msgid "found an S4 version of %s so it has not been imported correctly"
+msgstr "fann ein S4-versjon «%s», så han er ikkje rett importert"
+
+msgid "'%s' is not implemented yet"
+msgstr "«%s» er ikkje implementert enno"
+
+msgid "argument '%s' is not used (yet)"
+msgstr "argumentet «%s» er ikkje brukt (enno)"
+
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "«x» kan ikkje gjerast om til «octmode»"
+
+msgid "'x' cannot be coerced to hexmode"
+msgstr "«x» kan ikkje gjerast om til «hexmode»"
+
+msgid "no arguments"
+msgstr "ingen argument"
+
+msgid "an argument will be fractionally recycled"
+msgstr "eit argument vert delvis resirkulert"
+
+msgid "invalid 'n' value"
+msgstr "ugyldig n-verdi"
+
+msgid "'shrink.sml' must be numeric > 0"
+msgstr "«shrink.sml» må vera numerisk og positiv"
+
+msgid "'min.n' must be non-negative integer <= n"
+msgstr "«min.n» må vera eit ikkje-negativt heiltal ≤ n"
+
+msgid "'high.u.bias' must be non-negative numeric"
+msgstr "«high.u.bias» må vera numerisk og ikkje-negativ"
+
+msgid "'u5.bias' must be non-negative numeric"
+msgstr "«u5.bias» må vera numerisk og ikkje negativ"
+
+msgid "'eps.correct' must be 0, 1, or 2"
+msgstr "«eps.correct» må vera 0, 1 eller 2"
+
+msgid "invalid ncol(x)"
+msgstr "ugyldig ncol(x)"
+
+msgid "first argument must be a QR decomposition"
+msgstr "det første argumentet må vera ei QR-dekomponering"
+
+msgid "invalid nrow(qr$qr)"
+msgstr "ugyldig nrow(qr$qr)"
+
+msgid "invalid ncol(qr$qr)"
+msgstr "ugyldig ncol(qr$qr)"
+
+msgid "invalid ncol(qr$rank)"
+msgstr "ugyldig ncol(qr$rank)"
+
+msgid "invalid ncol(y)"
+msgstr "ugyldig ncol(y)"
+
+msgid "'qr' and 'y' must have the same number of rows"
+msgstr "«qr» og «y» må ha like mange rader"
+
+msgid "exact singularity in 'qr.coef'"
+msgstr "eksakt singularitet i «qr.coef»"
+
+msgid "argument is not a QR decomposition"
+msgstr "argumentet er ikkje ei QT-dekomponering"
+
+msgid "invalid NCOL(y)"
+msgstr "ugyldig NCOL(y)"
+
+msgid "not implemented for complex 'qr'"
+msgstr "ikkje implementert for kompleks «qr»"
+
+msgid "not supported for LAPACK QR"
+msgstr "ikkje støtta for LAPACK-QR"
+
+msgid "'k' is too large"
+msgstr "«k» er for stor"
+
+msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr "treng større verdiar av «ncol» på grunn av pivotering"
+
+msgid "invalid NCOL(R)"
+msgstr "ugyldig NCOL(R)"
+
+msgid "'x' must be an atomic vector"
+msgstr "«x» må vera ein atomsk vektor"
+
+msgid "invalid 'rle' structure"
+msgstr "ugyldig «rle»-struktur"
+
+msgid "... must contain names or character strings"
+msgstr "… må innehalda namn eller teiknstrengar"
+
+msgid "incorrect length for 'group'"
+msgstr "ugyldig lengd på «group»"
+
+msgid "missing values for 'group'"
+msgstr "manglande verdiar for «group»"
+
+msgid "not a data frame"
+msgstr "ikkje ei dataramme"
+
+msgid "length of 'center' must equal the number of columns of 'x'"
+msgstr "lengda av «center» må vera lik talet på kolonnar til «x»"
+
+msgid "length of 'scale' must equal the number of columns of 'x'"
+msgstr "lengda av «scale» må vera lik talet på kolonnar til «x»"
+
+msgid "either specify 'nmax' or 'n', but not both."
+msgstr "oppgje «nmax» eller «n», men ikkje begge"
+
+msgid "argument 'length.out' must be of length 1"
+msgstr "argumentet «length.out» må ha lengd 1"
+
+msgid "first element used of 'length.out' argument"
+msgstr "det første element i «length.out» vert brukt"
+
+msgid "extra argument(s) %s will be disregarded"
+msgstr "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+msgid "invalid (to - from)/by in seq(.)"
+msgstr "ugyldig (to - from)/by i seq(.)"
+
+msgid "wrong sign in 'by' argument"
+msgstr "feil forteikn i «by»-argument"
+
+msgid "'by' argument is much too small"
+msgstr "«by»-argumentet er for lite"
+
+msgid "length must be non-negative number"
+msgstr "lengda må vera eit ikkje-negativt tal"
+
+msgid "too many arguments"
+msgstr "for mange argument"
+
+msgid "'compress' is ignored unless 'file' is a file name"
+msgstr "«compress» vert ignorert med mindre «file» er eit filnamn"
+
+msgid "'connection' must be a connection"
+msgstr "«connection» må vera eit samband"
+
+msgid "'file' must be NULL or an already open connection"
+msgstr "«file» må vera NULL eller eit samband som er ope"
+
+msgid "cannot split the message connection"
+msgstr "kan ikkje dela opp meldingssamband"
+
+msgid "'file' must be NULL, a connection or a character string"
+msgstr "«file» må vera NULL, eit samband eller ein teiknstreng"
+
+msgid "this is the \"qr\" method for the generic function solve()"
+msgstr "dette er «qr»-metoden for den generiske funksjonen «solve»"
+
+msgid "singular matrix 'a' in 'solve'"
+msgstr "singulær matrise «a» i «solve»"
+
+msgid "only square matrices can be inverted"
+msgstr "berre kvadratiske matriser kan inverterast"
+
+msgid "'b' must be compatible with 'a'"
+msgstr "«b» må vera kompatibel med «a»"
+
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
+msgstr "«solve.default» kalla med eit «qr»-objekt: bruk «qr.solve»"
+
+msgid "singular matrix 'a' in solve"
+msgstr "singulær matrise «a» i «solve»"
+
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
+msgstr ""
+"«decreasing» må vera ein boolske vektor med eitt element.\n"
+"Meinte du å bruka «partial»-argumentet?"
+
+msgid "'index.return' only for non-factors"
+msgstr "«index.return» berre for ikkje-faktorar"
+
+msgid "'x' must be atomic"
+msgstr "«x» må vera atomsk"
+
+msgid "'index.return' only for 'na.last = NA'"
+msgstr "«index.return» berre for «na.last = NA»"
+
+msgid "unsupported options for partial sorting"
+msgstr "ikkje-støtta val for delvis sortering"
+
+msgid "non-finite 'partial'"
+msgstr "ikkje-endeleg «partial»"
+
+msgid "argument lengths differ"
+msgstr "argumentlengda er forskjellige"
+
+msgid ""
+"'x' must be atomic for 'sort.list'\n"
+"Have you called 'sort' on a list?"
+msgstr ""
+"«x» må vera atomsk for «sort.list».\n"
+"Har du kalla «sort» på ei liste?"
+
+msgid "method=\"quick\" is only for numeric 'x'"
+msgstr "«method=\"quick\"» er berre for numerisk «x»"
+
+msgid "method=\"radix\" is only for integer 'x'"
+msgstr "«method=\"radix\"» er berre for numerisk «x»"
+
+msgid "'local' must be TRUE, FALSE or an environment"
+msgstr "«local» må vera TRUE, FALSE eller ein omgjevnad"
+
+msgid "'echo' must be logical"
+msgstr "«echo» må vera boolsk"
+
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr "«verbose» er TRUE, men det er ikkje «echo» – køyrer «echo <- TRUE»"
+
+msgid "unable to find a plausible encoding"
+msgstr "klarte ikkje finna ei sannsynleg teiknkoding"
+
+msgid "encoding = \"%s\" chosen"
+msgstr "valde «encoding = \"%s\"»"
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr "«chdir = TRUE» gjev ikkje meining for nettadresser"
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "kan ikkje køyra «chdir» sidan gjeldande mappe er ukjend"
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr "«chdir = TRUE» gjev ikkje meining for eit samband"
+
+msgid "'%s' is not an existing file"
+msgstr "«%s» er ikkje ei fil som finst"
+
+msgid "Timestamp of '"
+msgstr "Endringstidspunkt til «"
+
+msgid "' has changed"
+msgstr "» er endra"
+
+msgid "additional arguments ignored in stop()"
+msgstr "fleire argument ignorerte i stop()"
+
+msgid "is not"
+msgstr "er ikkje"
+
+msgid "all"
+msgstr "alle"
+
+msgid "TRUE"
+msgstr "TRUE"
+
+msgid "additional arguments ignored in warning()"
+msgstr "fleire argument ignorerte i warning()"
+
+msgid "incorrect value for 'x'"
+msgstr "ugyldig verdi for «x»"
+
+msgid "'x' and 'y' must have the same length"
+msgstr "«x» og «y» må ha same lengd"
+
+msgid "incorrect values of 'indent' and 'width'"
+msgstr "ugyldige verdiar til «indent» og «width»"
+
+msgid "probably wrong encoding in names(.) of column"
+msgstr "truleg feil teiknkoding for names(.) til kolonne"
+
+msgid "'nv' must be 0 or ncol(x)"
+msgstr "«nv» må vera 0 eller ncol(x)"
+
+msgid "error %d in 'dsvdc'"
+msgstr "feil %d i «dsvdc»"
+
+msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
+msgstr "STATS er lengre enn storleiken til «dim(x)[MARGIN]»"
+
+msgid "STATS does not recycle exactly across MARGIN"
+msgstr "STATS kan ikkje resirkulerast fullstendig over MARGIN"
+
+msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr "length(STATS) eller dim(STATS) er ikkje i samsvar med dim(x)[MARGIN]"
+
+msgid "nothing to tabulate"
+msgstr "ingenting å tabulera"
+
+msgid "all arguments must have the same length"
+msgstr "alle argumenta må ha same lengd"
+
+msgid "attempt to make a table with >= 2^31 elements"
+msgstr "forsøk på å laga tabell med ≥ 2³¹ element"
+
+msgid "'object' must inherit from class \"table\""
+msgstr "«object» må arva frå klassen «table»"
+
+msgid "'x' must inherit from class \"summary.table\""
+msgstr "«x» må arva frå klassen «summary.table»"
+
+msgid "cannot coerce into a table"
+msgstr "kan ikkje gjerast om til tabell"
+
+msgid "'x' is not an array"
+msgstr "«x» er ikkje eit array"
+
+msgid "'bin' must be numeric or a factor"
+msgstr "«bin» må vera numerisk eller ein faktor"
+
+msgid "invalid value of length(bin)"
+msgstr "ugyldig verdi for length(bin)"
+
+msgid "invalid value of nbins"
+msgstr "ugyldig verdi for nbins"
+
+msgid "'INDEX' is of length zero"
+msgstr "«INDEX» har lengd 0"
+
+msgid "arguments must have same length"
+msgstr "argumenta må vera like lange"
+
+msgid "handler must be a function"
+msgstr "handsamaren må vera ein funksjon"
+
+msgid "no such element '%s'"
+msgstr "elementet «%s» finst ikkje"
+
+msgid "Removing"
+msgstr "Fjernar"
+
+msgid "Registering evaluate as low-level callback"
+msgstr "Registrerer «evaluate» som lågnivå-callback"
+
+msgid "user"
+msgstr "brukar"
+
+msgid "system"
+msgstr "system"
+
+msgid "elapsed"
+msgstr "brukt"
+
+msgid "'width' must be positive"
+msgstr "«width» må vera positiv"
+
+msgid "No traceback available"
+msgstr "Tilbakesporing finst ikkje"
+
+msgid "invalid version specification"
+msgstr "ugyldig versjonsspesifikasjon"
+
+msgid "wrong argument"
+msgstr "feil argument"
+
+msgid "invalid value"
+msgstr "ugyldig verdi"
+
+msgid "unary '%s' not defined for \"numeric_version\" objects"
+msgstr "unær-«%s» er ikkje definert for «numeric_version»-objekt"
+
+msgid "'%s' not defined for \"numeric_version\" objects"
+msgstr "«%s» er ikkje definert for «numeric_version»-objekt"
+
+msgid "not defined for numeric_version objects"
+msgstr "ikkje definert for «numeric_version»-objekt"
+
+msgid "<0 elements>"
+msgstr "<0 element>"
+
+msgid "invalid 'digits'"
+msgstr "ugyldig «digits»-verdi"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+"argumenta «show.output.on.console», «minimized» og «invisible» gjeld berre "
+"Windows"
+
+msgid "'intern' must be TRUE or FALSE"
+msgstr "«intern» må vera TRUE eller FALSE"
+
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr "«ignore.stdout» må vera TRUE eller FALSE"
+
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr "«ignore.stderr» må vera TRUE eller FALSE"
+
+msgid "'wait' must be TRUE or FALSE"
+msgstr "«wait» må vera TRUE eller FALSE"
+
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "«input» må vera ein teiknvektor eller «NULL»"
+
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr "argumenta «minimized» og «invisible» gjeld berre Windows"
+
+msgid "setting stdout = TRUE"
+msgstr "set «stdout =TRUE»"
+
+msgid "'stdout' must be of length 1"
+msgstr "«stdout» må ha lengd 1"
+
+msgid "'stderr' must be of length 1"
+msgstr "«stderr» må ha lengd 1"
+
+msgid "'which' was not found on this platform"
+msgstr "fann ikkje «which» på denne plattforma"
+
+msgid "fewer 'from' files than 'to' files"
+msgstr "færre «from»-filer enn «to»-filer"
+
+msgid "link '%s' already exists"
+msgstr "lenkja «%s» finst frå før"
+
+msgid "failed to create directory for link '%s"
+msgstr "klarte ikkje oppretta mappe for lenkja «%s»"
+
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr "«show.output.on.console» må vera TRUE eller FALSE"
+
+msgid "'minimized' must be TRUE or FALSE"
+msgstr "«minimized» må vera TRUE eller FALSE"
+
+msgid "'invisible' must be TRUE or FALSE"
+msgstr "«invisible» må vera TRUE eller FALSE"
+
+msgid "'%s' could not be run"
+msgstr "klarte ikkje køyra «%s»"
+
+msgid "'%s' execution failed with error code %d"
+msgstr "feil ved køyring av «%s» – feilkode %d"
+
+msgid "-l option without value"
+msgstr "«-l»-val utan verdi"
+
+msgid "ERROR: no packages specified"
+msgstr "FEIL: ingen pakkar valde"
+
+msgid "Removing from library"
+msgstr "Fjernar frå bibliotek"
+
+msgid "ERROR: cannot cd to directory"
+msgstr "FEIL: kan ikkje gå inn i mappe"
+
+msgid "ERROR: no permission to remove from directory"
+msgstr "FEIL: manglar løyve til å fjerna frå mappe"
+
+msgid "T used instead of TRUE"
+msgstr "T brukt i staden for TRUE"
+
+msgid "F used instead of FALSE"
+msgstr "F brukt i staden for FALSE"
+
+msgid "items"
+msgstr "element"
+
+msgid "have been removed from the search path"
+msgstr "har blitt fjerna frå søkjestigen"
+
+msgid "cannot find namespace environment"
+msgstr "finn ikkje namnerom-omgjevnad"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "kjenner ikkje deparse-valet «%s»"
+msgstr[1] "kjenner ikkje deparse-vala «%s»"
+
+msgid "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0] "biblioteket «%s» inneheld ikkje nokon pakkar"
+msgstr[1] "biblioteka «%s» inneheld ikkje nokon pakkar"
+
+msgid "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
+msgstr[0] "pakken «%s» er ikkje lasta"
+msgstr[1] "pakkane «%s» er ikkje lasta"
+
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "det finst ikkje nokon pakke med namnet"
+msgstr[1] "det finst ikkje nokon pakkar med namna"
+
+msgid "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0] "fann ikkje objektet «%s»"
+msgstr[1] "fann ikkje objekta «%s»"
+
+msgid ""
+"Function found when exporting methods from the namespace %s which is not S4 "
+"generic: %s"
+msgid_plural ""
+"Functions found when exporting methods from the namespace %s which are not "
+"S4 generic: %s"
+msgstr[0] ""
+"Fann funksjon som ikkje er S4-generisk ved eksportering av metodar frå "
+"namnerommet «%s»: %s"
+msgstr[1] ""
+"Fann funksjonar som ikkje er S4-generiske ved eksportering av metodar frå "
+"namnerommet «%s»: %s"
+
+msgid "class %s is not exported by 'namespace:%s'"
+msgid_plural "classes %s are not exported by 'namespace:%s'"
+msgstr[0] "klassen «%s» er ikkje eksportert av «namespace:%s»"
+msgstr[1] "klassane «%s» er ikkje eksporterte av «namespace:%s»"
+
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0] "objektet «%s» er ikkje eksportert av «namespace:%s»"
+msgstr[1] "objekteta «%s» er ikkje eksporterte av «namespace:%s»"
+
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
+msgstr[0] "den førre eksporten «%s» vert bytt ut"
+msgstr[1] "dei førre eksportane «%s» vert bytte ut"
+
+msgid "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0] "S3-metoden «%s» er deklarert i NAMESPACE, men vart ikkje funnen"
+msgstr[1] "S3-metodane «%s» er deklarerte i NAMESPACE, men vart ikkje funnen"
+
+msgid "Warning message:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] "Åtvaring:\n"
+msgstr[1] "Åtvaringar:\n"
+
+

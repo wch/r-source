@@ -1,21 +1,21 @@
 # Translation of R Gui to Norwegian Nynorsk
 # Copyright (C) YEAR The R Foundation
 # This file is distributed under the same license as the R package.
-# Karl Ove Hufthammer <karl@huftis.org>, 2010, 2011.
 #
+# Karl Ove Hufthammer <karl@huftis.org>, 2010, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-07-27 08:56+0100\n"
-"PO-Revision-Date: 2011-01-28 10:51+0100\n"
+"PO-Revision-Date: 2012-09-28 22:17+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.1\n"
+"X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: console.c:1167 console.c:1209
@@ -54,12 +54,13 @@ msgstr "Lagra konsollinhaldet til"
 
 #: console.c:2228
 msgid "Scrolling.\n"
-msgstr "Rulling.\n"
+msgstr "Rulling:\n"
 
 #: console.c:2229
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr ""
-"  Tastatur: Page Up, Page Down, Ctrl + piltastar, Ctrl + Home, Ctrl + End,\n"
+"  Tastatur: «Page Up», «Page Down», «Ctrl + piltastar», «Ctrl + Home», «Ctrl "
+"+ End».\n"
 
 #: console.c:2230
 msgid ""
@@ -71,7 +72,7 @@ msgstr ""
 
 #: console.c:2231
 msgid "Editing.\n"
-msgstr "Redigering.\n"
+msgstr "Redigering:\n"
 
 #: console.c:2232
 msgid "  Moving the cursor: \n"
@@ -79,23 +80,24 @@ msgstr "  Flytting av skrivemerket: \n"
 
 #: console.c:2233
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
-msgstr "     «Pil venstre» eller «Ctrl + B»: flytt eitt teikn bakover;\n"
+msgstr "     «Pil venstre» eller «Ctrl + B»: flytt eitt teikn bakover.\n"
 
 #: console.c:2234
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
-msgstr "     «Pil høgre» eller «Ctrl + F»: flytt eitt teikn framover;\n"
+msgstr "     «Pil høgre» eller «Ctrl + F»: flytt eitt teikn framover.\n"
 
 #: console.c:2235
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
-msgstr "     «Home» eller «Ctrl + A»: gå til starten av linja;\n"
+msgstr "     «Home» eller «Ctrl + A»: gå til starten av linja.\n"
 
 #: console.c:2236
 msgid "     End or Ctrl+E: go to end of line;\n"
-msgstr "     «End» eller «Ctrl + E»: gå til slutten av linja;\n"
+msgstr "     «End» eller «Ctrl + E»: gå til slutten av linja.\n"
 
 #: console.c:2237
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
-msgstr "  Loggen: «Pil opp» og «Pil ned», eller «Ctrl + P» og «Ctrl + N»\n"
+msgstr ""
+"  Kommandologgen: «Pil opp» og «Pil ned», eller «Ctrl + P» og «Ctrl + N».\n"
 
 #: console.c:2238
 msgid "  Deleting:\n"
@@ -103,11 +105,11 @@ msgstr "  Sletting:\n"
 
 #: console.c:2239
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
-msgstr "     «Delete» eller «Ctrl + D»: slett gjeldande teikn eller utval;\n"
+msgstr "     «Delete» eller «Ctrl + D»: slett gjeldande teikn eller utval.\n"
 
 #: console.c:2240
 msgid "     Backspace: delete preceding character;\n"
-msgstr "     «Rettetast»: slett førre teikn;\n"
+msgstr "     «Rettetast»: slett førre teikn.\n"
 
 #: console.c:2241
 msgid ""
@@ -118,16 +120,16 @@ msgstr ""
 
 #: console.c:2242
 msgid "     Ctrl+U: delete all text from current line.\n"
-msgstr "     «Ctrl + U»: Slett all teksten frå den gjeldande linja.\n"
+msgstr "     «Ctrl + U»: slett all teksten frå den gjeldande linja.\n"
 
 #: console.c:2243
 msgid "  Copy and paste.\n"
-msgstr "  Kopiering og innliming.\n"
+msgstr "  Kopiering og innliming:\n"
 
 #: console.c:2244
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     Bruk musa (med venstre museknapp inne) for å merkje teksten.\n"
+msgstr "     Bruk musa (med venstre museknapp inne) for å merkja teksten.\n"
 
 #: console.c:2245
 msgid ""
@@ -142,11 +144,13 @@ msgid ""
 "(if any)  \n"
 msgstr ""
 "     «Shift + Insert», «Ctrl + V» eller «Ctrl +Y» for å lima inn innhaldet "
-"frå utklippstavla\n"
+"frå\n"
 
 #: console.c:2247
 msgid "     to the console, Ctrl+X first copy then paste\n"
-msgstr "     til konsollen, «Ctrl + X» først kopiera og så lima inn\n"
+msgstr ""
+"     utklippstavla til konsollen og «Ctrl + X» for først å kopiera og så "
+"lima inn.\n"
 
 #: console.c:2248
 msgid "  Misc:\n"
@@ -179,7 +183,7 @@ msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
 msgstr ""
-"  Bruk «Ctrl + W» for å slå funksjonen av eller på.\n"
+"  Bruk «Ctrl + W» for å slå denne funksjonen av eller på.\n"
 "\n"
 
 #: console.c:2254
@@ -200,12 +204,11 @@ msgstr ""
 
 #: console.c:2256
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr "Du kan bruka dei vanlige Windows-snarvegane for å byta til\n"
+msgstr "Du kan bruka dei vanlige Windows-snarvegane for å byta til grafikk-\n"
 
 #: console.c:2257
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
-msgstr ""
-"grafikkeininga («Ctrl + Tab» eller «Ctrl + F6» i MDI, og «Alt + Tab» i SDI)"
+msgstr "vindauget («Ctrl + Tab» eller «Ctrl + F6» i MDI, og «Alt + Tab» i SDI)"
 
 #: dataentry.c:223 dataentry.c:1851 dataentry.c:1854 dataentry.c:1885
 msgid "invalid argument"
@@ -358,7 +361,7 @@ msgstr "Lim inn \tCTRL+V"
 
 #: dataentry.c:1801
 msgid "Delete\tDEL"
-msgstr "Søett\tDEL"
+msgstr "Slett\tDEL"
 
 #: dataentry.c:1804
 msgid "Cell widths ..."
@@ -709,7 +712,7 @@ msgstr "Kan berre dra og sleppa .R-, .RData- og .rda-filer"
 
 #: rui.c:859 rui.c:1144
 msgid "Paste commands only"
-msgstr "Berre lim inn kommandoar"
+msgstr "Lim inn berre kommandoar"
 
 #: rui.c:860 rui.c:1094
 msgid "Copy and paste"
@@ -737,7 +740,7 @@ msgstr "Vel CRAN-plassering …"
 
 #: rui.c:911
 msgid "Select repositories..."
-msgstr "Vel arkiv …"
+msgstr "Vel pakkebrønnar …"
 
 #: rui.c:913
 msgid "Install package(s)..."
@@ -825,7 +828,7 @@ msgstr "Lagra arbeidsområde"
 
 #: rui.c:1098
 msgid "Stop current computation"
-msgstr "Stop gjeldande utrekning"
+msgstr "Stopp gjeldande utrekning"
 
 #: rui.c:1121
 msgid "Source R code..."
@@ -1101,9 +1104,10 @@ msgstr "Som metafil\tCTRL+w"
 msgid "Print...\tCTRL+P"
 msgstr "Skriv ut …\tCTRL+P"
 
+# Skal vera stor forbokstav her.
 #: ../library/grDevices/src/devWindows.c:1647
 msgid "close Device"
-msgstr "lukk eining"
+msgstr "Lukk eining"
 
 #: ../library/grDevices/src/devWindows.c:1648
 msgid "History"

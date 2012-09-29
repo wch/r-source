@@ -1,0 +1,86 @@
+# File R_HOME/src/library/parallel/po/ko.po
+# Korean translations for R-Base
+# Copyright (C) 2012 THE R'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the R package
+# Maintainer: Chel Hee Lee (Korean, R Development Translation Team)
+# Email: <gnustats@gmail.com> or <chl948@mail.usask.ca>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.2\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-13 10:32+0100\n"
+"PO-Revision-Date: 2012-09-25 18:00-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team:  <gnustats@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: fork.c:135
+#: fork.c:138
+msgid "unable to create a pipe"
+msgstr "파이프를 생성할 수 없습니다"
+
+#: fork.c:149
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr "포크할 수 없는데, 가능한 이유: %s"
+
+#: fork.c:178
+msgid "memory allocation error"
+msgstr "메모리 할당 오류"
+
+#: fork.c:216
+msgid "only children can send data to the master process"
+msgstr "오로지 children만이 데이터를 마스터 프로세스에 전송할 수 있습니다"
+
+#: fork.c:218
+msgid "there is no pipe to the master process"
+msgstr "마스터 프로세스로 연결된 파이프가 없습니다"
+
+#: fork.c:220
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr "보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
+
+#: fork.c:229
+#: fork.c:236
+msgid "write error, closing pipe to the master"
+msgstr "쓰기 에러, 마스터에 연결된 파이프를 닫습니다"
+
+#: fork.c:249
+msgid "only the master process can send data to a child process"
+msgstr "오로지 마스터 프로세스만이 데이터를 자식 프로세스에 전송할 수 있습니다"
+
+#: fork.c:256
+#, c-format
+msgid "child %d does not exist"
+msgstr "child %d가 존재하지 않습니다"
+
+#: fork.c:262
+msgid "write error"
+msgstr "쓰기 에러"
+
+#: fork.c:342
+#: fork.c:464
+#, c-format
+msgid "error '%s' in select"
+msgstr "선택하는 중에 에러 '%s'"
+
+#: fork.c:548
+msgid "mckill failed"
+msgstr "mckill 실패했습니다"
+
+#: fork.c:558
+msgid "mcexit can only be used in a child process"
+msgstr "mcexit는 자식 프로세스에서만 오로지 사용될 수 있습니다"
+
+#: fork.c:578
+msgid "mcexit failed"
+msgstr "mcexit 실패했습니다"
+

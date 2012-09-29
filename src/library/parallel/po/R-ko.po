@@ -1,0 +1,117 @@
+# File R_HOME/src/library/parallel/po/R-ko.po
+# Korean translations for R-Base
+# Copyright (C) 2012 THE R'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the R package
+# Maintainer: Chel Hee Lee (Korean, R Development Translation Team)
+# Email: <gnustats@gmail.com> or <chl948@mail.usask.ca>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.2\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 13:10\n"
+"PO-Revision-Date: 2012-09-25 17:12-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team:  <gnustats@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "invalid value of 'seed'"
+msgstr "'seed'의 값이 잘못되었습니다"
+
+msgid "need at least one argument"
+msgstr "최소한 하나이상의 인수를 필요로 합니다"
+
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr "길이가 0인 입력은 길이가 0이 아닌 입력들과 혼용될 수 없습니다"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X)의 길이는 반드시 양수이어야 합니다"
+
+msgid "'X' must have named dimnames"
+msgstr "'X'는 반드시 명명된 dimnames를 가져야 합니다"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "'MARGIN'의 모든 요소들이 차원들의 이름은 아닙니다"
+
+msgid "no cluster supplied and none is registered"
+msgstr "어떠한 클러스터도 제공되지 않았고 등록되지 않았습니다"
+
+msgid "not a valid cluster"
+msgstr "유효한 클러스터가 아닙니다"
+
+msgid "unknown cluster type"
+msgstr "알 수 없는 클러스터 유형입니다"
+
+msgid "socket cluster with %d nodes on hosts %s"
+msgstr "호스트 %2$s의 %1$d개의 노드들이 있는 소켓 클러스터"
+
+msgid ","
+msgstr ","
+
+msgid "socket cluster with %d nodes on host %s"
+msgstr "호스트 %2$s에 %1$d개의 노드들이 있는 소켓 클러스터"
+
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "pid %2$d인 호스트 %1$s에 있는 소켓 클러스터의 노드"
+
+msgid "host"
+msgstr "호스트"
+
+msgid "'nnodes' must be >= 1"
+msgstr "'nnodes'는 반드시 1 이상이어야 합니다"
+
+msgid "invalid 'child' argument"
+msgstr "잘못된 'child' 인수"
+
+msgid "'children' must be a list of processes or a single process"
+msgstr "'children'은 반드시 프로세스들의 목록이거나 단일 프로세스이어야 합니다"
+
+msgid "'process' must be of the class \"process\""
+msgstr "'process'는 반드시 클래스 \"process\"이어야 합니다"
+
+msgid "'child' must be a valid child process"
+msgstr "'child'는 반드시 유효한 자식 프로세스이어야 합니다"
+
+msgid "'what' must be a character or raw vector"
+msgstr "'what'은 반드시 문자 혹은 raw 벡터이어야 합니다"
+
+msgid "'mc.cores' must be >= 1"
+msgstr "'mc.cores'는 반드시 1 이상이어야 합니다"
+
+msgid "%d function calls resulted in an error"
+msgstr "%d번의 함수호출 결과 에러가 발생했습니다"
+
+msgid "all scheduled cores encountered errors in user code"
+msgstr "모든 예약된 코어들은 사용자 코드에 있는 에러를 접하게 되었습니다"
+
+msgid "invalid 'jobs' argument"
+msgstr "잘못된 'jobs' 인수"
+
+msgid "'v' must be a vector"
+msgstr "'v'는 반드시 벡터이어야 합니다"
+
+msgid "some results may be missing, folded or caused an error"
+msgstr "일부 결과가 누락될 수 도 있어, 오류를 접했거나 발생시켰습니다"
+
+msgid "fork clusters are not supported on Windows"
+msgstr "포크 클러스터는 윈도우즈에서 지원되지 않습니다"
+
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "'mc.cores' > 1 은 윈도우즈에서 지원되지 않습니다"
+
+msgid ""
+"scheduled core %s encountered error in user code, all values of the job will "
+"be affected"
+msgid_plural ""
+"scheduled cores %s encountered errors in user code, all values of the jobs "
+"will be affected"
+msgstr[0] ""
+"예약된 코어들 %s이 사용자 코드에 있는 에러를 접하게 되어, 본 작업의 모든 값들"
+"이 영향을 받게 될 것입니다"
