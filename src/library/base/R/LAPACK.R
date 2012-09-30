@@ -24,7 +24,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
     x <- as.matrix(x)
     n <- nrow(x)
     p <- ncol(x)
-    if(!n || !p) stop("0 extent dimensions")
+    if(!n || !p) stop("a dimension is zero")
 
     if(is.complex(x)) {
         if(nu == 0L) {

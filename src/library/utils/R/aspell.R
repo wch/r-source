@@ -28,7 +28,7 @@ function(files, filter, control = list(), encoding = "unknown",
 
     program <- aspell_find_program(program)
     if(is.na(program))
-        stop("No suitable spell check program found.")
+        stop("No suitable spell-checker program found")
 
     ## Be nice.
     if(inherits(files, "Rd"))
@@ -469,9 +469,9 @@ function(which = NULL, dir = NULL, drop = "\\references",
          program = NULL, dictionaries = aspell_dictionaries_R)
 {
     files <- character()
-    
+
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
-    
+
     if(is.null(which)) {
         which <- tools:::.get_standard_package_names()$base
         # CHANGES.Rd could be dropped from checks in the future;
@@ -691,7 +691,7 @@ function(ifile, encoding = "unknown", ignore = character())
     },
                gregexpr("\t", lines[lines_in_pd], fixed = TRUE),
                nchar(lines[lines_in_pd]))
-    names(tab) <- lines_in_pd        
+    names(tab) <- lines_in_pd
 
     lines[lines_in_pd] <- gsub("[^\t]", " ", lines[lines_in_pd])
     lines[-lines_in_pd] <- ""
@@ -723,7 +723,7 @@ function(ifile, encoding = "unknown", ignore = character())
             substring(lines[line2], 1L, col2) <- texts[n]
         }
     }
-    
+
     for(re in ignore[nzchar(ignore)])
         lines <- blank_out_regexp_matches(lines, re)
 
@@ -735,7 +735,7 @@ function(file, encoding = "unknown")
 {
     ## The message strings considered are the string constants subject to
     ## translation in gettext-family calls (see below for details).
-    
+
     oop <- options(keep.source = TRUE)
     on.exit(options(oop))
 
@@ -744,7 +744,7 @@ function(file, encoding = "unknown")
 
     pd <- getParseData(exprs)
 
-    ## Function for computing grandparent ids.    
+    ## Function for computing grandparent ids.
     parents <- pd$parent
     names(parents) <- pd$id
     gpids <- function(ids)
@@ -753,9 +753,9 @@ function(file, encoding = "unknown")
     ind <- (pd$token == "SYMBOL_FUNCTION_CALL") &
         !is.na(match(pd$text,
                      c("warning", "stop",
-                       "message", "packageStartupMessage", 
+                       "message", "packageStartupMessage",
                        "gettext", "gettextf", "ngettext")))
-    
+
     funs <- pd$text[ind]
 
     ids <- gpids(pd$id[ind])
@@ -786,7 +786,7 @@ function(file, encoding = "unknown")
 
     extract_message_strings <- function(fun, call, table) {
         ## Matching a call containing ... gives
-        ##   Error in match.call(message, call) : 
+        ##   Error in match.call(message, call) :
         ##   ... used in a situation where it doesn't exist
         ## so eliminate these.
         ## (Note that we also drop "..." strings.)
@@ -827,7 +827,7 @@ function(which = NULL, dir = NULL,
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
     if(is.null(which))
         which <- tools:::.get_standard_package_names()$base
-    
+
     files <-
         unlist(lapply(file.path(dir, "src", "library", which, "R"),
                       tools::list_files_with_type,
@@ -845,7 +845,7 @@ function(which = NULL, dir = NULL,
 }
 
 ## For spell-checking R files in a package.
-  
+
 aspell_package_R_files <-
 function(dir, ignore = character(),
          control = list(), program = NULL, dictionaries = character())
@@ -877,7 +877,7 @@ function(dir, ignore = character(),
         }
     }
 
-    program <- aspell_find_program(program)    
+    program <- aspell_find_program(program)
 
     aspell(files,
            filter = list("R", ignore = ignore),
@@ -895,7 +895,7 @@ function(dir, ignore = character(),
 ## See also tools:::checkPoFile().
 
 aspell_filter_db$pot <-
-function (ifile, encoding = "unknown", ignore = character()) 
+function (ifile, encoding = "unknown", ignore = character())
 {
     lines <- readLines(ifile, encoding = encoding)
 
@@ -925,7 +925,7 @@ function (ifile, encoding = "unknown", ignore = character())
     ## Could replace backslash escapes for blanks and percent escapes by
     ## blanks, similar to what the R text filter does.
     ## </FIXME>
-    
+
     for(re in ignore[nzchar(ignore)])
         lines <- blank_out_regexp_matches(lines, re)
 
@@ -949,7 +949,7 @@ function(dir, ignore = character(),
         encoding <- "unknown"
 
     program <- aspell_find_program(program)
-    
+
     aspell(files,
            filter = list("pot", ignore = ignore),
            control = control,
@@ -976,7 +976,7 @@ function(which = NULL, dir = NULL,
                      file.path(dir, "src", "library",
                                which, "po", which))
     files <- files[file_test("-f", files)]
-    
+
     program <- aspell_find_program(program)
 
     aspell(files,
@@ -1016,9 +1016,9 @@ function(dir, ignore = character(),
                 aspell_find_dictionaries(d, file.path(dir, ".aspell"))
         }
     }
-    
+
     program <- aspell_find_program(program)
-    
+
     aspell(files,
            filter = list("pot", ignore = ignore),
            control = control,
@@ -1036,7 +1036,7 @@ function(ifile, encoding, keep = c("Title", "Description"))
     line_has_tags <- grepl("^[^[:blank:]][^:]*:", lines)
     tags <- sub(":.*", "", lines[line_has_tags])
     lines <- split(lines, cumsum(line_has_tags))
-    ind <- is.na(match(tags, keep)) 
+    ind <- is.na(match(tags, keep))
     lines[ind] <- lapply(lines[ind], function(s) rep.int("", length(s)))
     unlist(lines, use.names = FALSE)
 }
@@ -1055,7 +1055,7 @@ function(dir,
         encoding <- "unknown"
 
     program <- aspell_find_program(program)
-    
+
     aspell(files,
            filter = "dcf",
            control = control,
@@ -1092,7 +1092,7 @@ function(x, out, language = "en", program = NULL)
     ## no encoding information in the personal dictionary), or Ispell
     ## (which cannot handle UTF-8)?
     ## </FIXME>
-    
+
     if(names(program) == "aspell") {
         header <- sprintf("personal_ws-1.1 %s %d UTF-8",
                           language, length(x))

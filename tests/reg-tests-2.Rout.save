@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-08-26 r60438) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -2536,7 +2536,7 @@ x3  0.81       -0.97
 15     72
 Warning message:
 In `[.data.frame`(women, "height", drop = FALSE) :
-  drop argument will be ignored
+  'drop' argument will be ignored
 > women["height", drop = TRUE]   # ditto
    height
 1      58
@@ -2556,7 +2556,7 @@ In `[.data.frame`(women, "height", drop = FALSE) :
 15     72
 Warning message:
 In `[.data.frame`(women, "height", drop = TRUE) :
-  drop argument will be ignored
+  'drop' argument will be ignored
 > women[,"height", drop = FALSE] # no warning
    height
 1      58
@@ -5771,7 +5771,7 @@ z 3
   height weight
 1     58    115
 Warning message:
-In `[.data.frame`(w, , drop = TRUE) : drop argument will be ignored
+In `[.data.frame`(w, , drop = TRUE) : 'drop' argument will be ignored
 > w[1,]
   height weight
 1     58    115

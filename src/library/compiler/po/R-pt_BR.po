@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -71,7 +71,8 @@ msgstr "nenhuma associação para atribuição '<<-' para '%s'"
 msgid "wrong number of arguments to '%s'"
 msgstr "número de argumentos inválidos para '%s'"
 
-msgid "more than one default provided in switch call"
+#, fuzzy
+msgid "more than one default provided in switch() call"
 msgstr "mais de um valor default fornecido na chamada de switch"
 
 msgid "cannot compile a non-function"

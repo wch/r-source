@@ -60,7 +60,7 @@ power.t.test <-
 	sig.level <- uniroot(function(sig.level) eval(p.body) - power,
 		      c(1e-10,1-1e-10))$root
     else # Shouldn't happen
-	stop("internal error")
+	stop("internal error", domain = NA)
     NOTE <- switch(type,
 		   paired = "n is number of *pairs*, sd is std.dev. of *differences* within pairs",
 		   two.sample = "n is number in *each* group", NULL)
@@ -127,7 +127,7 @@ power.prop.test <-
 	sig.level <- uniroot(function(sig.level) eval(p.body) - power,
 		      c(1e-10,1-1e-10))$root
     else # Shouldn't happen
-	stop("internal error")
+	stop("internal error", domain = NA)
 
     NOTE <- "n is number in *each* group"
 

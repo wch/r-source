@@ -42,7 +42,7 @@ reshape <-
                         substr(nms, regexpr(re,nms) + 1L, 10000L))
 
         if (ncol(nn) != 2L)
-            stop("Failed to guess time-varying variables from their names")
+            stop("failed to guess time-varying variables from their names")
 
 
         vn <- unique(nn[,1])
@@ -249,12 +249,12 @@ reshape <-
                    varying <- guess(varying)
                else {
                    if (length(varying) %% length(v.names))
-                       stop("length of v.names does not evenly divide length of varying")
+                       stop("length of 'v.names' does not evenly divide length of 'varying'")
                    ntimes <- length(varying) %/% length(v.names)
                    if (missing(times))
                        times <- seq_len(ntimes)
                    else if (length(times) != ntimes)
-                       stop("length of varying must be the product of length of v.names and length of times")
+                       stop("length of 'varying' must be the product of length of 'v.names' and length of 'times'")
                    varying <- split(varying, rep(v.names, ntimes))
                    attr(varying, "v.names") <- v.names
                    attr(varying, "times") <- times

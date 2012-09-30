@@ -61,7 +61,8 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
     b <- 1.23 * scale * n^(-1/9)
     c1 <- 1/(2*sqrt(pi)*n)
     TD  <- -TDh(b)
-    if(!is.finite(TD) || TD <= 0) stop("sample is too sparse to find TD")
+    if(!is.finite(TD) || TD <= 0)
+        stop("sample is too sparse to find TD", domain = NA)
     if(method == "dpi")
         res <- (c1/SDh((2.394/(n * TD))^(1/7)))^(1/5)
     else {
@@ -70,7 +71,8 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
             hmax <- 1.144 * scale * n^(-1/5)
         }
         alph2 <- 1.357*(SDh(a)/TD)^(1/7)
-        if(!is.finite(alph2)) stop("sample is too sparse to find alph2")
+        if(!is.finite(alph2))
+            stop("sample is too sparse to find alph2", domain  = NA)
         itry <- 1L
 	while (fSD(lower) * fSD(upper) > 0) {
 	    if(itry > 99L || !bnd.Miss) # 1.2 ^ 99 = 69'014'979 .. enough

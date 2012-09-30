@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-06-25 r59637) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin11.4.0/x86_64 (64-bit)
@@ -1011,7 +1011,7 @@ List of 7
 > hist(islands, breaks=c(12,20,36,80,200,1000,17000), freq = TRUE,
 +      main = "WRONG histogram") # and warning
 Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = angle,  :
-  the AREAS in the plot are wrong -- rather use freq=FALSE
+  the AREAS in the plot are wrong -- rather use 'freq = FALSE'
 > 
 > require(stats)
 > set.seed(14)
@@ -2931,7 +2931,7 @@ List of 3
 function (xy = 1, warn.log = TRUE) 
 {
     if (warn.log && (par("xlog") || par("ylog"))) 
-        warning("log scale:  xyinch() is non-sense")
+        warning("log scale:  xyinch() is nonsense")
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -55,19 +55,24 @@ msgstr "'start' e 'end' devo essere distinti e in [0, 1]"
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' deve essere uno scalre o 'sRGB'"
 
-msgid "Color space converter:"
+#, fuzzy
+msgid "Color space converter: %s"
 msgstr "Convertitore spazio colore:"
 
-msgid "Reference white:"
+#, fuzzy
+msgid "Reference white: %s"
 msgstr "Bianco di riferimento:"
 
-msgid "display gamma"
+#, fuzzy
+msgid "display gamma = %s"
 msgstr "mostra gamma"
 
-msgid "'from' must be a colorConverter or string"
+#, fuzzy
+msgid "'from' must be a \"colorConverter\" object or a string"
 msgstr "'from' deve essere un colorConverter o una stringa"
 
-msgid "'to' must be a colorConverter or string"
+#, fuzzy
+msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr "'to' deve essere un colorConverter o una stringa"
 
 #, fuzzy
@@ -78,7 +83,8 @@ msgstr "'from.ref.white' non in accordo con la definizione di"
 msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.refwhite' non in accordo con la definizione di"
 
-msgid "color spaces use different reference whites."
+#, fuzzy
+msgid "color spaces use different reference whites"
 msgstr "spazi colori usano binachi di riferimento differenti."
 
 #, fuzzy
@@ -106,15 +112,12 @@ msgstr "'device' dovrebbe essere una funzione"
 msgid "no device to print from"
 msgstr "nessun dispositivo da cui stampare"
 
-msgid "can only print from screen device"
+#, fuzzy
+msgid "can only print from a screen device"
 msgstr "posso stampare solo da dispositivi schermo"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr ""
-
-#, fuzzy
-msgid "can only print from a screen device"
-msgstr "posso stampare solo da dispositivi schermo"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
@@ -157,7 +160,8 @@ msgstr "non posso re-inizializzare '%s' perché non esistente"
 msgid "invalid options in '%s'"
 msgstr "opzioni non valide in '%s'"
 
-msgid "NOT changing"
+#, fuzzy
+msgid "NOT changing %s"
 msgstr "NON cambio"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
@@ -172,9 +176,6 @@ msgstr "argomento 'family' non valido"
 #, fuzzy
 msgid "invalid 'file'"
 msgstr "argomento 'family' non valido"
-
-msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr ""
 
 msgid "invalid PDF version"
 msgstr "versione PDF non valida"
@@ -234,7 +235,7 @@ msgstr ""
 msgid "status %d in running command '%s'"
 msgstr ""
 
-msgid "range too small for min.n"
+msgid "range too small for 'min.n'"
 msgstr ""
 
 msgid "A raster matrix must be character, or numeric, or logical"
@@ -421,6 +422,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+
+#~ msgid "can only print from screen device"
+#~ msgstr "posso stampare solo da dispositivi schermo"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "interattività del device quartz() ridotta senza un manager eventi"

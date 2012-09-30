@@ -245,7 +245,7 @@ function(..., recursive = FALSE)
 {
     args <- list(...)
     if(!all(sapply(args, inherits, "person")))
-        warning(gettextf("method is just applicable to %s objects",
+        warning(gettextf("method is only applicable to %s objects",
                          sQuote("person")),
                 domain = NA)
     args <- lapply(args, unclass)
@@ -884,7 +884,7 @@ function(..., recursive = FALSE)
 {
     args <- list(...)
     if(!all(sapply(args, inherits, "bibentry")))
-        warning(gettextf("method is just applicable to %s objects",
+        warning(gettextf("method is only applicable to %s objects",
                          sQuote("bibentry")),
                 domain = NA)
     args <- lapply(args, unclass)

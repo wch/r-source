@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:54\n"
+"POT-Creation-Date: 2012-09-30 16:22\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,16 +23,16 @@ msgstr ""
 msgid "object not interpretable as a factor"
 msgstr ""
 
-msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
+msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)"
 msgstr ""
 
-msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
+msgid "'alpha', 'beta' and 'gamma' must be within the unit interval"
 msgstr ""
 
-msgid "data must be non-zero for multiplicative Holt-Winters."
+msgid "data must be non-zero for multiplicative Holt-Winters"
 msgstr ""
 
-msgid "need at least 2 periods to compute seasonal start values."
+msgid "need at least 2 periods to compute seasonal start values"
 msgstr ""
 
 msgid "invalid length(x)"
@@ -65,7 +65,7 @@ msgstr ""
 msgid "all parameters were fixed"
 msgstr ""
 
-msgid "possible convergence problem: optim gave code = %d %d"
+msgid "possible convergence problem: 'optim' gave code = %d and message %s"
 msgstr ""
 
 msgid "no factors in the fitted model"
@@ -272,9 +272,6 @@ msgstr ""
 msgid "'order.max' must be >= 0"
 msgstr ""
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr ""
-
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr ""
 
@@ -345,12 +342,6 @@ msgid "invalid 'x'"
 msgstr ""
 
 msgid "invalid 'nb'"
-msgstr ""
-
-msgid "sample is too sparse to find TD"
-msgstr ""
-
-msgid "sample is too sparse to find alph2"
 msgstr ""
 
 msgid "no solution in the specified range of bandwidths"
@@ -554,9 +545,6 @@ msgstr ""
 msgid "Cannot compute exact p-value with ties"
 msgstr ""
 
-msgid "Cannot compute exact p-values with ties"
-msgstr ""
-
 msgid "'formula' missing or invalid"
 msgstr ""
 
@@ -578,7 +566,7 @@ msgstr ""
 msgid "length of 'center' must equal the number of columns in 'x'"
 msgstr ""
 
-msgid "invalid 'tree' (merge component)"
+msgid "invalid 'tree' ('merge' component)"
 msgstr ""
 
 msgid "either 'k' or 'h' must be specified"
@@ -605,7 +593,7 @@ msgstr ""
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr ""
 
-msgid "we require a dendrogram"
+msgid "'reorder.dendrogram' requires a dendrogram"
 msgstr ""
 
 msgid "invalid (length 0) node in dendrogram"
@@ -719,7 +707,7 @@ msgstr ""
 msgid "x[] and prob[] must be equal length vectors."
 msgstr ""
 
-msgid "probabilities cannot be negative nor all 0."
+msgid "probabilities cannot be negative nor all 0"
 msgstr ""
 
 msgid "'x' must be non-negative"
@@ -773,7 +761,7 @@ msgstr ""
 msgid "link \"%s\" not available for poisson family; available links are %s"
 msgstr ""
 
-msgid "negative values not allowed for the Poisson family"
+msgid "negative values not allowed for the 'Poisson' family"
 msgstr ""
 
 msgid "ignoring prior weights"
@@ -782,7 +770,7 @@ msgstr ""
 msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
 
-msgid "negative values not allowed for the quasiPoisson family"
+msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr ""
 
 msgid "link \"%s\" not available for gaussian family; available links are %s"
@@ -803,7 +791,7 @@ msgstr ""
 msgid "non-integer counts in a binomial glm!"
 msgstr ""
 
-msgid "for the binomial family, y must be a vector of 0 and 1's\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgid "for the 'binomial' family, y must be a vector of 0 and 1's\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 
 msgid "cannot simulate from non-integer prior.weights"
@@ -812,13 +800,13 @@ msgstr ""
 msgid "link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
 
-msgid "for the quasibinomial family, y must be a vector of 0 and 1's\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgid "for the 'quasibinomial' family, y must be a vector of 0 and 1's\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
 
-msgid "non-positive values not allowed for the gamma family"
+msgid "non-positive values not allowed for the 'gamma' family"
 msgstr ""
 
 msgid "using weights as shape parameters"
@@ -827,10 +815,10 @@ msgstr ""
 msgid "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
 
-msgid "positive values only allowed for the inverse.gaussian family"
+msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr ""
 
-msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
 msgstr ""
 
 msgid "using weights as inverse variances"
@@ -896,10 +884,10 @@ msgstr ""
 msgid "not enough observations"
 msgstr ""
 
-msgid "NA's are not allowed in groups or blocks"
+msgid "NA's are not allowed in 'groups' or 'blocks'"
 msgstr ""
 
-msgid "y, groups and blocks must have the same length"
+msgid "'y', 'groups' and 'blocks' must have the same length"
 msgstr ""
 
 msgid "not an unreplicated complete block design"
@@ -923,7 +911,7 @@ msgstr ""
 msgid "interactions are not allowed"
 msgstr ""
 
-msgid "'formula' has '.' in both left and right hand side"
+msgid "'formula' has '.' in both left and right hand sides"
 msgstr ""
 
 msgid "incorrect variable names in rhs of formula"
@@ -962,7 +950,7 @@ msgstr ""
 msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr ""
 
-msgid "fitting to calculate the null deviance did not converge -- increase maxit?"
+msgid "fitting to calculate the null deviance did not converge -- increase 'maxit'?"
 msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
@@ -992,7 +980,7 @@ msgstr ""
 msgid "NAs in d(mu)/d(eta)"
 msgstr ""
 
-msgid "no observations informative at iteration"
+msgid "no observations informative at iteration %d"
 msgstr ""
 
 msgid "non-finite coefficients at iteration %d"
@@ -1178,10 +1166,7 @@ msgstr ""
 msgid "not enough 'y' data"
 msgstr ""
 
-msgid "cannot compute exact p-values with ties"
-msgstr ""
-
-msgid "p-values will be approximate in the presence of ties"
+msgid "p-value will be approximate in the presence of ties"
 msgstr ""
 
 msgid "'y' must be numeric or a function or a string naming a valid function"
@@ -1229,10 +1214,7 @@ msgstr ""
 msgid "lm object does not have a proper 'qr' component.\n Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
 
-msgid "family '"
-msgstr ""
-
-msgid "' not implemented"
+msgid "family '%s' not implemented"
 msgstr ""
 
 msgid "calling anova.lm(<fake-lm-object>) ..."
@@ -1247,10 +1229,10 @@ msgstr ""
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
 
-msgid "Predictions on current data refer to _future_ responses"
+msgid "predictions on current data refer to _future_ responses"
 msgstr ""
 
-msgid "Assuming prediction variance inversely proportional to weights used for fitting"
+msgid "assuming prediction variance inversely proportional to weights used for fitting"
 msgstr ""
 
 msgid "Assuming constant prediction variance even though model fit is weighted"
@@ -1322,7 +1304,7 @@ msgstr ""
 msgid "extra arguments discarded"
 msgstr ""
 
-msgid "logLik.lm only handles single responses"
+msgid "'logLik.lm' does not support multiple responses"
 msgstr ""
 
 msgid "no \"nobs\" attribute is available"
@@ -1352,13 +1334,10 @@ msgstr ""
 msgid "'low' and 'high' cannot be both TRUE"
 msgstr ""
 
-msgid "need multiple response"
+msgid "need multiple responses"
 msgstr ""
 
 msgid "object must be of class %s or %s"
-msgstr ""
-
-msgid "need multiple responses"
 msgstr ""
 
 msgid "residuals have rank %d < %d"
@@ -1478,7 +1457,7 @@ msgstr ""
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr ""
 
-msgid "using type=\"numeric\" with a factor response will be ignored"
+msgid "using type = \"numeric\" with a factor response will be ignored"
 msgstr ""
 
 msgid "invalid response type"
@@ -1514,10 +1493,10 @@ msgstr ""
 msgid "f() values at end points not of opposite sign"
 msgstr ""
 
-msgid "control argument must be a named list"
+msgid "'control' argument must be a named list"
 msgstr ""
 
-msgid "Logical 'hessian' argument not allowed.  See documentation."
+msgid "logical 'hessian' argument not allowed.  See documentation."
 msgstr ""
 
 msgid "'params' has wrong length"
@@ -1550,7 +1529,7 @@ msgstr ""
 msgid "'data' must be a list or an environment"
 msgstr ""
 
-msgid "No starting values specified"
+msgid "no starting values specified"
 msgstr ""
 
 msgid "parameters without starting value in 'data': %s"
@@ -1565,7 +1544,7 @@ msgstr ""
 msgid "argument 'na.action' will be ignored"
 msgstr ""
 
-msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
@@ -1613,7 +1592,7 @@ msgstr ""
 msgid "'lower' and 'upper' must be finite values"
 msgstr ""
 
-msgid "Pooling of SD is incompatible with paired tests"
+msgid "pooling of SD is incompatible with paired tests"
 msgstr ""
 
 msgid "'x' must have 2 columns"
@@ -1625,7 +1604,7 @@ msgstr ""
 msgid "too few groups"
 msgstr ""
 
-msgid "Not plotting observations with leverage one:\n  %s"
+msgid "not plotting observations with leverage one:\n  %s"
 msgstr ""
 
 msgid "use only with \"lm\" objects"
@@ -1652,7 +1631,7 @@ msgstr ""
 msgid "not enough data"
 msgstr ""
 
-msgid "The case k > 2 is unimplemented"
+msgid "the case k > 2 is unimplemented"
 msgstr ""
 
 msgid "'r' must be a single positive number"
@@ -1662,9 +1641,6 @@ msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
 msgid "'sig.level' must be numeric in [0, 1]"
-msgstr ""
-
-msgid "internal error"
 msgstr ""
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
@@ -1715,7 +1691,7 @@ msgstr ""
 msgid "'princomp' can only be used with more units than variables"
 msgstr ""
 
-msgid "cannot use cor=TRUE with a constant variable"
+msgid "cannot use 'cor = TRUE' with a constant variable"
 msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
@@ -1725,9 +1701,6 @@ msgid "argument does not include a 'qr' component"
 msgstr ""
 
 msgid "argument does not include an 'effects' component"
-msgstr ""
-
-msgid "'proj' is not implemented for \"mlm\" fits"
 msgstr ""
 
 msgid "'proj' is not implemented for multiple responses"
@@ -1752,12 +1725,6 @@ msgid "elements of 'p' must be in (0,1)"
 msgstr ""
 
 msgid "y is empty or has only NAs"
-msgstr ""
-
-msgid "NA's are not allowed in 'groups' or 'blocks'"
-msgstr ""
-
-msgid "'y', 'groups' and 'blocks' must have the same length"
 msgstr ""
 
 msgid "'formula' missing"
@@ -1799,7 +1766,7 @@ msgstr ""
 msgid "'sep' must be a character string"
 msgstr ""
 
-msgid "Failed to guess time-varying variables from their names"
+msgid "failed to guess time-varying variables from their names"
 msgstr ""
 
 msgid "'varying' arguments must be the same length"
@@ -1820,10 +1787,10 @@ msgstr ""
 msgid "'varying' must be nonempty list or vector"
 msgstr ""
 
-msgid "length of v.names does not evenly divide length of varying"
+msgid "length of 'v.names' does not evenly divide length of 'varying'"
 msgstr ""
 
-msgid "length of varying must be the product of length of v.names and length of times"
+msgid "length of 'varying' must be the product of length of 'v.names' and length of 'times'"
 msgstr ""
 
 msgid "invalid value of 'k'"
@@ -1859,7 +1826,7 @@ msgstr ""
 msgid "attempt to smooth NA values"
 msgstr ""
 
-msgid "wrong endrule"
+msgid "invalid 'endrule' argument"
 msgstr ""
 
 msgid "invalid 'control.spar'"
@@ -1889,7 +1856,7 @@ msgstr ""
 msgid "'cv' must not be NA when 'df' is specified"
 msgstr ""
 
-msgid "crossvalidation with non-unique 'x' values seems doubtful"
+msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr ""
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
@@ -1919,7 +1886,7 @@ msgstr ""
 msgid "setting df = 1  __use with care!__"
 msgstr ""
 
-msgid "need result of smooth.spline(*, keep.data=TRUE)"
+msgid "need result of smooth.spline(keep.data = TRUE)"
 msgstr ""
 
 msgid "type = \"partial\" is not yet implemented"
@@ -2093,7 +2060,7 @@ msgstr ""
 msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
 msgstr ""
 
-msgid "Frequency not changed"
+msgid "'frequency' not changed"
 msgstr ""
 
 msgid "bad value for 'start'"
@@ -2162,7 +2129,7 @@ msgstr ""
 msgid "not enough (finite) 'x' observations"
 msgstr ""
 
-msgid "Requested conf.level not achievable"
+msgid "requested conf.level not achievable"
 msgstr ""
 
 msgid "cannot compute confidence interval when all observations are tied"
@@ -2175,6 +2142,9 @@ msgid "cannot compute exact p-value with zeroes"
 msgstr ""
 
 msgid "cannot compute exact confidence interval with zeroes"
+msgstr ""
+
+msgid "Requested conf.level not achievable"
 msgstr ""
 
 msgid "must supply either 'formula' or 'data'"
@@ -2275,8 +2245,8 @@ msgid_plural "unable to optimize from these starting values"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "'init'; must have 1 column"
-msgid_plural "'init'; must have 1 or %d columns"
+msgid        "'init' must have 1 column"
+msgid_plural "'init' must have 1 or %d columns"
 msgstr[0]    ""
 msgstr[1]    ""
 

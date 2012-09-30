@@ -21,7 +21,7 @@ function(x, g, p.adjust.method = p.adjust.methods, pool.sd = !paired,
          paired = FALSE, alternative = c("two.sided", "less", "greater"), ...)
 {
     if (paired & pool.sd)
-        stop("Pooling of SD is incompatible with paired tests")
+        stop("pooling of SD is incompatible with paired tests")
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
     g <- factor(g)
     p.adjust.method <- match.arg(p.adjust.method)

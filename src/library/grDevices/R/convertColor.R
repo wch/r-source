@@ -67,16 +67,16 @@ make.rgb <-
 }
 
 print.colorConverter <- function(x,...) {
-    cat(gettext("Color space converter: "), x$name, "\n", sep="")
+    cat(gettextf("Color space converter: %s", x$name), "\n", sep="")
     if (!is.null(x$reference.white))
-        cat(gettext("Reference white: "), x$reference.white, "\n", sep="")
+        cat(gettextf("Reference white: %s", x$reference.white), "\n", sep="")
     invisible(x)
 }
 
 print.RGBcolorConverter <- function(x,...) {
     print.colorConverter(x, ...)
     if (!is.null(x$gamma))
-        cat(gettext("display gamma"), " = ", x$gamma, "\n", sep="")
+        cat(gettextf("display gamma = %s", format(x$gamma)), "\n", sep="")
     invisible(x)
 }
 
@@ -211,11 +211,11 @@ convertColor <-
   if (is.character(from))
       from <- colorspaces[[match.arg(from,names(colorspaces))]]
   if (!inherits(from,"colorConverter"))
-      stop("'from' must be a colorConverter or string")
+      stop("'from' must be a \"colorConverter\" object or a string")
   if (is.character(to))
       to <- colorspaces[[match.arg(to,names(colorspaces))]]
   if (!inherits(to,"colorConverter"))
-      stop("'to' must be a colorConverter or string")
+      stop("'to' must be a \"colorConverter\" object or a string")
 
   ## Need a reference white. If both the definition and the argument
   ## specify one they must agree.
@@ -268,7 +268,7 @@ convertColor <-
   if (!isTRUE(all.equal(from.ref.white, to.ref.white))) {
       mc <- match.call()
       if (is.null(mc$from.ref.white) || is.null(mc$to.ref.white))
-          warning("color spaces use different reference whites.")
+          warning("color spaces use different reference whites")
       xyz <- chromaticAdaptation(xyz, from.ref.white, to.ref.white)
   }
 

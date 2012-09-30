@@ -33,7 +33,7 @@ layout <-
     ## check that each value in 1..n is mentioned
     for (i in 1L:num.figures)
 	if (match(i, mat, nomatch=0L) == 0L)
-            stop(gettextf("layout matrix must contain at least one reference\nto each of the values {1..n}; here  n = %d\n",
+            stop(gettextf("layout matrix must contain at least one reference\nto each of the values {1 ... %d}\n",
                           num.figures), domain = NA)
 
     dm <- dim(mat)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:33\n"
 "PO-Revision-Date: 2012-03-15 11:57-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -25,7 +25,8 @@ msgstr "неправильное значение 'seed'"
 msgid "need at least one argument"
 msgstr "нужен хотя бы один аргумент"
 
-msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+#, fuzzy
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr "Нулевой ввод нельзя смешивать с ненулевым"
 
 msgid "dim(X) must have a positive length"
@@ -37,7 +38,8 @@ msgstr "'X' должен иметь именованные dimnames"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "не все элементы 'MARGIN' -- имена измерений"
 
-msgid "no cluster supplied and none is registered"
+#, fuzzy
+msgid "no cluster 'cl' supplied and none is registered"
 msgstr "кластера нет и ничего не зарегистрировано"
 
 msgid "not a valid cluster"
@@ -45,12 +47,6 @@ msgstr "неправильный кластер"
 
 msgid "unknown cluster type"
 msgstr "неизвестный тип кластера"
-
-msgid "socket cluster with %d nodes on hosts %s"
-msgstr "кластер-приемник с %d узлами на хосте %s"
-
-msgid "socket cluster with %d nodes on host %s"
-msgstr "кластер-приемник с %d узлами на хосте %s"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "узел на кластере-приемнике на хосте %s с pid %d"
@@ -65,7 +61,7 @@ msgid "'children' must be a list of processes or a single process"
 msgstr "'children' должен быть списком процессов или одним процессом"
 
 #, fuzzy
-msgid "'process' must be of the class %s"
+msgid "'process' must be of class %s"
 msgstr "'process' должен быть класса \"process\""
 
 msgid "'child' must be a valid child process"
@@ -83,6 +79,9 @@ msgstr "вызовы функции %d привели к ошибке"
 msgid "all scheduled cores encountered errors in user code"
 msgstr "все запланированные ядра столкнулись с ошибкой в пользовательском коде"
 
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr "Нулевой ввод нельзя смешивать с ненулевым"
+
 msgid "invalid 'jobs' argument"
 msgstr "неправильный аргумент 'jobs'"
 
@@ -99,6 +98,13 @@ msgstr "разветвленные кластеры под винды не поддерживаются"
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "'mc.cores' > 1 не поддерживается под Windows"
 
+#, fuzzy
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "кластер-приемник с %d узлами на хосте %s"
+msgstr[1] "кластер-приемник с %d узлами на хосте %s"
+msgstr[2] "кластер-приемник с %d узлами на хосте %s"
+
 msgid ""
 "scheduled core %s encountered error in user code, all values of the job will "
 "be affected"
@@ -114,6 +120,9 @@ msgstr[1] ""
 msgstr[2] ""
 "запланированные ядра %s столкнулись с ошибкой в пользовательском коде, будут "
 "затронуты все значения работ"
+
+#~ msgid "socket cluster with %d nodes on hosts %s"
+#~ msgstr "кластер-приемник с %d узлами на хосте %s"
 
 #~ msgid ","
 #~ msgstr ","

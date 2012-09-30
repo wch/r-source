@@ -32,7 +32,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 {
     dropInf <- function(x, h) {
 	if(any(isInf <- h >= 1.0)) {
-            warning(gettextf("Not plotting observations with leverage one:\n  %s",
+            warning(gettextf("not plotting observations with leverage one:\n  %s",
                              paste(which(isInf), collapse=", ")),
                     call. = FALSE, domain = NA)
 	    x[isInf] <- NaN

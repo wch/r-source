@@ -204,15 +204,15 @@ function(x, ..., value)
        if(length(..1) < 2L) {
            if(is.character(value) && length(value) == 1L)
                value <- unclass(as.numeric_version(value))[[1L]]
-           else if(!is.integer(value)) stop("invalid value")
+           else if(!is.integer(value)) stop("invalid 'value'")
        } else {
            value <- as.integer(value)
-           if(length(value) != 1L) stop("invalid value")
+           if(length(value) != 1L) stop("invalid 'value'")
        }
        z[[..1]] <- value
    } else {
        value <- as.integer(value)
-       if(length(value) != 1L) stop("invalid value")
+       if(length(value) != 1L) stop("invalid 'value'")
        z[[..1]][..2] <- value
    }
    structure(z, class = oldClass(x))

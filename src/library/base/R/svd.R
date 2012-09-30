@@ -23,7 +23,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
     dx <- dim(x)
     n <- dx[1L]
     p <- dx[2L]
-    if(!n || !p) stop("0 extent dimensions")
+    if(!n || !p) stop("a dimension is zero")
     if (is.complex(x)) {
         res <- La.svd(x, nu, nv)
         return(list(d = res$d, u = if(nu) res$u, v = if(nv) Conj(t(res$vt))))
@@ -80,7 +80,8 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 		  info = integer(1L),
 		  DUP = FALSE)[c("d","u","v","info")]
     if(z$info)
-	stop(gettextf("error %d in 'dsvdc'", z$info), domain = NA)
+	stop(gettextf("error %d in LINPACK subroutine 'dsvdc'", z$info),
+             domain = NA)
     z$d <- z$d[seq_len(min(n, p))]
     if(nv && nv < p) z$v <- z$v[, 1L:nv, drop = FALSE]
     z[c("d", if(nu) "u", if(nv) "v")]

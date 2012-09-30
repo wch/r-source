@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "infinite or missing values in 'x'"
 msgstr ""
 
-msgid "0 extent dimensions"
+msgid "a dimension is zero"
 msgstr ""
 
 msgid "'nu' must be 0, nrow(x) or ncol(x)"
@@ -65,12 +65,6 @@ msgstr ""
 msgid "'%s' is not a valid choice"
 msgstr ""
 
-msgid "Buggy version of Kinderman-Ramage generator used"
-msgstr ""
-
-msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-msgstr ""
-
 msgid "malformed version string"
 msgstr ""
 
@@ -95,9 +89,6 @@ msgstr ""
 msgid "incorrect value for 'MARGIN'"
 msgstr ""
 
-msgid "you cannot be serious"
-msgstr ""
-
 msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
 msgstr ""
 
@@ -119,7 +110,7 @@ msgstr ""
 msgid "%s failed in %s() for '%s', details:\n  call: %s\n  error: %s"
 msgstr ""
 
-msgid "namespace cannot be unloaded:"
+msgid "%s namespace cannot be unloaded:"
 msgstr ""
 
 msgid "%s converted to character string"
@@ -131,7 +122,7 @@ msgstr ""
 msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
 msgstr ""
 
-msgid "RHS must be list"
+msgid "'value' must be a list"
 msgstr ""
 
 msgid "an object with that name already exists"
@@ -206,7 +197,7 @@ msgstr ""
 msgid "can only write character objects"
 msgstr ""
 
-msgid "supplied timeout must be NULL or a non-negative number"
+msgid "'timeout' must be NULL or a non-negative number"
 msgstr ""
 
 msgid "'from' must be raw or character"
@@ -221,7 +212,7 @@ msgstr ""
 msgid "'breaks' are not unique"
 msgstr ""
 
-msgid "labels/breaks length conflict"
+msgid "lengths of 'breaks' and 'labels' differ"
 msgstr ""
 
 msgid "invalid 'row.names' length"
@@ -236,7 +227,7 @@ msgstr ""
 msgid "invalid 'dimnames' given for data frame"
 msgstr ""
 
-msgid "cannot coerce class \"%s\" into a data.frame"
+msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -245,25 +236,19 @@ msgstr ""
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
 
-msgid "some row.names duplicated:"
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "--> row.names NOT used"
+msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr ""
 
 msgid "row names contain missing values"
 msgstr ""
 
-msgid "duplicate row.names:"
+msgid "duplicate row.names: %s"
 msgstr ""
 
 msgid "arguments imply differing number of rows: %s"
 msgstr ""
 
-msgid "row.names should specify one of the variables"
+msgid "'row.names' should specify one of the variables"
 msgstr ""
 
 msgid "row names supplied are of the wrong length"
@@ -275,7 +260,7 @@ msgstr ""
 msgid "named arguments other than 'drop' are discouraged"
 msgstr ""
 
-msgid "drop argument will be ignored"
+msgid "'drop' argument will be ignored"
 msgstr ""
 
 msgid "undefined columns selected"
@@ -290,7 +275,7 @@ msgstr ""
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
 
-msgid "rhs is the wrong length"
+msgid "'value' is the wrong length"
 msgstr ""
 
 msgid "unsupported matrix index in replacement"
@@ -365,16 +350,16 @@ msgstr ""
 msgid "'%s' is not a \"dates\" object"
 msgstr ""
 
-msgid "binary + is not defined for Date objects"
+msgid "binary + is not defined for \"Date\" objects"
 msgstr ""
 
-msgid "Can only subtract from Date objects"
+msgid "can only subtract from \"Date\" objects"
 msgstr ""
 
-msgid "unary - is not defined for Date objects"
+msgid "unary - is not defined for \"Date\" objects"
 msgstr ""
 
-msgid "can only subtract numbers from Date objects"
+msgid "can only subtract numbers from \"Date\" objects"
 msgstr ""
 
 msgid "unary %s not defined for \"Date\" objects"
@@ -386,13 +371,13 @@ msgstr ""
 msgid "'from' must be specified"
 msgstr ""
 
-msgid "'from' must be a Date object"
+msgid "'from' must be a \"Date\" object"
 msgstr ""
 
 msgid "'from' must be of length 1"
 msgstr ""
 
-msgid "'to' must be a Date object"
+msgid "'to' must be a \"Date\" object"
 msgstr ""
 
 msgid "'to' must be of length 1"
@@ -437,13 +422,13 @@ msgstr ""
 msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr ""
 
-msgid "Can only subtract from POSIXt objects"
+msgid "can only subtract from \"POSIXt\" objects"
 msgstr ""
 
 msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr ""
 
-msgid "can only subtract numbers from POSIXt objects"
+msgid "can only subtract numbers from \"POSIXt\" objects"
 msgstr ""
 
 msgid "unary '%s' not defined for \"POSIXt\" objects"
@@ -476,10 +461,10 @@ msgstr ""
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr ""
 
-msgid "'from' must be a POSIXt object"
+msgid "'from' must be a \"POSIXt\" object"
 msgstr ""
 
-msgid "'to' must be a POSIXt object"
+msgid "'to' must be a \"POSIXt\" object"
 msgstr ""
 
 msgid "'file' must be a character string or connection"
@@ -494,13 +479,13 @@ msgstr ""
 msgid "'x' must be a square matrix"
 msgstr ""
 
-msgid "determinant not currently defined for complex matrices"
+msgid "'determinant' not currently defined for complex matrices"
 msgstr ""
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
 msgstr ""
 
-msgid "'x' is an array, but not 1D."
+msgid "'x' is an array, but not one-dimensional."
 msgstr ""
 
 msgid "only matrix diagonals can be replaced"
@@ -539,19 +524,10 @@ msgstr ""
 msgid "too large a matrix for EISPACK"
 msgstr ""
 
-msgid "'ch' returned code %d in 'eigen'"
+msgid "'%s' returned code %d in 'eigen'"
 msgstr ""
 
-msgid "'rs' returned code %d in 'eigen'"
-msgstr ""
-
-msgid "'cg' returned code %d in 'eigen'"
-msgstr ""
-
-msgid "'rg' returned code %d in 'eigen'"
-msgstr ""
-
-msgid "invalid labels; length %d should be 1 or %d"
+msgid "invalid 'labels'; length %d should be 1 or %d"
 msgstr ""
 
 msgid "number of levels differs"
@@ -561,9 +537,6 @@ msgid "not meaningful for factors"
 msgstr ""
 
 msgid "level sets of factors are different"
-msgstr ""
-
-msgid "invalid factor level, NAs generated"
 msgstr ""
 
 msgid "invalid factor level, NA generated"
@@ -620,7 +593,7 @@ msgstr ""
 msgid "'vec' must be sorted non-decreasingly"
 msgstr ""
 
-msgid "using the first element of 'value' of type expression"
+msgid "using the first element of 'value' of type \"expression\""
 msgstr ""
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
@@ -645,9 +618,6 @@ msgid "'zero.print' has length > 1"
 msgstr ""
 
 msgid "'zero.print' must be character, logical or NULL"
-msgstr ""
-
-msgid "'subset' must evaluate to logical"
 msgstr ""
 
 msgid "'subset' must be logical"
@@ -719,22 +689,19 @@ msgstr ""
 msgid "package %s was built for %s"
 msgstr ""
 
-msgid "package %s is not installed for 'arch=%s'"
+msgid "package %s is not installed for 'arch = %s'"
 msgstr ""
 
 msgid "package %s has a license that you need to accept in an interactive session"
 msgstr ""
 
-msgid "Package %s has a license that you need to accept after viewing"
+msgid "package %s has a license that you need to accept after viewing"
 msgstr ""
 
-msgid "Package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is"
+msgid "package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is"
 msgstr ""
 
-msgid "License"
-msgstr ""
-
-msgid "License for package %s not accepted"
+msgid "license for package %s not accepted"
 msgstr ""
 
 msgid "Attaching package: %s"
@@ -758,10 +725,10 @@ msgstr ""
 msgid "%s not found on search path, using pos = 2"
 msgstr ""
 
-msgid "package/namespace load failed for %s"
+msgid "package or namespace load failed for %s"
 msgstr ""
 
-msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgid "package %s does not have a namespace and should be re-installed"
 msgstr ""
 
 msgid "package %s already present in search()"
@@ -857,16 +824,16 @@ msgstr ""
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr ""
 
-msgid "file %s has magic number '%s'\n   Use of save versions prior to 2 is deprecated"
+msgid "file %s has magic number '%s'"
+msgstr ""
+
+msgid "Use of save versions prior to 2 is deprecated"
 msgstr ""
 
 msgid "bad 'file' argument"
 msgstr ""
 
 msgid "'file' must be specified"
-msgstr ""
-
-msgid "Use of save versions prior to 2 is deprecated"
 msgstr ""
 
 msgid "nothing specified to be save()d"
@@ -896,13 +863,13 @@ msgstr ""
 msgid "Attempting to load the environment %s"
 msgstr ""
 
-msgid "not found: using .GlobalEnv instead"
+msgid "Specified environment not found: using '.GlobalEnv' instead"
 msgstr ""
 
 msgid "invalid 'category' argument"
 msgstr ""
 
-msgid "must specify formal argument names to vectorize"
+msgid "must specify names of formal arguments for 'vectorize'"
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -935,10 +902,10 @@ msgstr ""
 msgid "found non-function '%s'"
 msgstr ""
 
-msgid "attempt to set rownames on object with no dimensions"
+msgid "attempt to set 'rownames' on an object with no dimensions"
 msgstr ""
 
-msgid "attempt to set colnames on object with less than two dimensions"
+msgid "attempt to set 'colnames' on an object with less than two dimensions"
 msgstr ""
 
 msgid "argument is not numeric or logical: returning NA"
@@ -965,10 +932,7 @@ msgstr ""
 msgid "additional arguments ignored in message()"
 msgstr ""
 
-msgid "(loaded the methods namespace)"
-msgstr ""
-
-msgid "Tracing functions requires the methods package, but unable to load methods namespace"
+msgid "tracing functions requires the 'methods' package, but unable to load the 'methods' namespace"
 msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
@@ -986,7 +950,7 @@ msgstr ""
 msgid "%s not found"
 msgstr ""
 
-msgid "namespace %s is already sealed in loadNamespace"
+msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr ""
 
 msgid "failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace"
@@ -1004,13 +968,13 @@ msgstr ""
 msgid "unable to load R code in package %s"
 msgstr ""
 
-msgid "exportClassPattern specified in NAMESPACE but no matching classes in package %s"
+msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"
 msgstr ""
 
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr ""
 
-msgid "No function found corresponding to methods exports from %s for: %s"
+msgid "no function found corresponding to methods exports from %s for: %s"
 msgstr ""
 
 msgid "in %s methods for export not found: %s"
@@ -1073,10 +1037,10 @@ msgstr ""
 msgid "undefined exports: %s"
 msgstr ""
 
-msgid "package %s has no NAMESPACE file"
+msgid "package %s has no 'NAMESPACE' file"
 msgstr ""
 
-msgid "empty name in directive '%s' in NAMESPACE file"
+msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr ""
 
 msgid "duplicated symbol names %s in useDynLib(\"%s\")"
@@ -1109,10 +1073,10 @@ msgstr ""
 msgid "argument '%s' is not used (yet)"
 msgstr ""
 
-msgid "'x' cannot be coerced to 'octmode'"
+msgid "'x' cannot be coerced to \"octmode\""
 msgstr ""
 
-msgid "'x' cannot be coerced to hexmode"
+msgid "'x' cannot be coerced to \"hexmode\""
 msgstr ""
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1271,10 +1235,10 @@ msgstr ""
 msgid "'x' must be atomic for 'sort.list'\nHave you called 'sort' on a list?"
 msgstr ""
 
-msgid "method=\"quick\" is only for numeric 'x'"
+msgid "method = \"quick\" is only for numeric 'x'"
 msgstr ""
 
-msgid "method=\"radix\" is only for integer 'x'"
+msgid "method = \"radix\" is only for integer 'x'"
 msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -1304,7 +1268,7 @@ msgstr ""
 msgid "'%s' is not an existing file"
 msgstr ""
 
-msgid "Timestamp of %s has chamged"
+msgid "Timestamp of %s has changed"
 msgstr ""
 
 msgid "additional arguments ignored in stop()"
@@ -1325,10 +1289,13 @@ msgstr ""
 msgid "probably wrong encoding in names(.) of column"
 msgstr ""
 
+msgid ","
+msgstr ""
+
 msgid "'nv' must be 0 or ncol(x)"
 msgstr ""
 
-msgid "error %d in 'dsvdc'"
+msgid "error %d in LINPACK subroutine 'dsvdc'"
 msgstr ""
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
@@ -1355,7 +1322,7 @@ msgstr ""
 msgid "'x' must inherit from class %s"
 msgstr ""
 
-msgid "cannot coerce into a table"
+msgid "cannot coerce to a table"
 msgstr ""
 
 msgid "'x' is not an array"
@@ -1379,10 +1346,10 @@ msgstr ""
 msgid "no such element '%s'"
 msgstr ""
 
-msgid "Removing"
+msgid "Removing %s"
 msgstr ""
 
-msgid "Registering evaluate as low-level callback"
+msgid "Registering 'evaluate' as low-level callback"
 msgstr ""
 
 msgid "user"
@@ -1406,7 +1373,7 @@ msgstr ""
 msgid "wrong argument"
 msgstr ""
 
-msgid "invalid value"
+msgid "invalid 'value'"
 msgstr ""
 
 msgid "unary '%s' not defined for \"numeric_version\" objects"
@@ -1494,21 +1461,6 @@ msgid "ERROR: cannot cd to directory"
 msgstr ""
 
 msgid "ERROR: no permission to remove from directory"
-msgstr ""
-
-msgid "T used instead of TRUE"
-msgstr ""
-
-msgid "F used instead of FALSE"
-msgstr ""
-
-msgid "items"
-msgstr ""
-
-msgid "have been removed from the search path"
-msgstr ""
-
-msgid "cannot find namespace environment"
 msgstr ""
 
 msgid        "deparse option %s is not recognized"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -58,19 +58,24 @@ msgstr ""
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma'는 scalar 또는 'sRGB'가 나오지 않으면 되지 않습니다"
 
-msgid "Color space converter:"
+#, fuzzy
+msgid "Color space converter: %s"
 msgstr "Color 스페이스 변환기:"
 
-msgid "Reference white:"
+#, fuzzy
+msgid "Reference white: %s"
 msgstr "기준 백색:"
 
-msgid "display gamma"
+#, fuzzy
+msgid "display gamma = %s"
 msgstr "gamma 디스플레이"
 
-msgid "'from' must be a colorConverter or string"
+#, fuzzy
+msgid "'from' must be a \"colorConverter\" object or a string"
 msgstr "'from'는 colorConverter 또는 string가 나오지 않으면 되지 않습니다"
 
-msgid "'to' must be a colorConverter or string"
+#, fuzzy
+msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr "'to'는 colorConverter 또는 string가 나오지 않으면 되지 않습니다"
 
 #, fuzzy
@@ -81,7 +86,8 @@ msgstr "'from.ref.white'가 이하의 정의와 일치합니다"
 msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.ref.white'가 이하의 정의와 일치하지 않습니다"
 
-msgid "color spaces use different reference whites."
+#, fuzzy
+msgid "color spaces use different reference whites"
 msgstr "color spaves는 다른 기준 백색이 사용되고 있습니다"
 
 #, fuzzy
@@ -110,15 +116,12 @@ msgstr "'device'는 함수가 아니면 되지 않습니다"
 msgid "no device to print from"
 msgstr "이하로부터 프린트 하기위한 디바이스가 없습니다"
 
-msgid "can only print from screen device"
+#, fuzzy
+msgid "can only print from a screen device"
 msgstr "screen 디바이스로부터만 print가 할수 없습니다"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr ""
-
-#, fuzzy
-msgid "can only print from a screen device"
-msgstr "screen 디바이스로부터만 print가 할수 없습니다"
 
 msgid "dev.control() called without an open graphics device"
 msgstr ""
@@ -165,7 +168,8 @@ msgstr "존재하지 않는 '%s'를 reset할수 없습니다"
 msgid "invalid options in '%s'"
 msgstr "이하의 부적절한 옵션입니다"
 
-msgid "NOT changing"
+#, fuzzy
+msgid "NOT changing %s"
 msgstr "변경하지 않습니다"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
@@ -180,9 +184,6 @@ msgstr "부적절한 'family' 인수입니다"
 #, fuzzy
 msgid "invalid 'file'"
 msgstr "부적절한 'family' 인수입니다"
-
-msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr ""
 
 msgid "invalid PDF version"
 msgstr "부적절한 PDF의 버전입니다"
@@ -242,7 +243,7 @@ msgstr ""
 msgid "status %d in running command '%s'"
 msgstr ""
 
-msgid "range too small for min.n"
+msgid "range too small for 'min.n'"
 msgstr ""
 
 msgid "A raster matrix must be character, or numeric, or logical"
@@ -424,6 +425,9 @@ msgstr[0] "%d개의 올바르지 않는 y의 값이 대수 plot로부터 제외�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d개의 올바르지 않는 x의 값이 대수 plot로부터 제외해졌습니다"
+
+#~ msgid "can only print from screen device"
+#~ msgstr "screen 디바이스로부터만 print가 할수 없습니다"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr ""

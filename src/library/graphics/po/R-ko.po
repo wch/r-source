@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -133,7 +133,8 @@ msgstr "'given.values'가 무효입니다"
 msgid "rows * columns too small"
 msgstr "행수 * 열수가 너무 작습니다"
 
-msgid "Missing rows"
+#, fuzzy
+msgid "Missing rows: %s"
 msgstr "행이 이상합니다"
 
 #, fuzzy
@@ -224,7 +225,8 @@ msgstr ""
 "'x'의 일부분을 계산하지 않는다. 'breaks'가 'x'의 범위 전체에 영향을 미치고 있"
 "지 않습니다"
 
-msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
+#, fuzzy
+msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr "plot의 영역이 오류입니다 -- 차라리 freq=FALSE를 사용해주십시오"
 
 msgid "'x' is wrongly structured"
@@ -245,7 +247,8 @@ msgstr "무효인 z의 한계입니다"
 msgid "must have one more break than colour"
 msgstr "분할점의 수는 색의 수보다 하나가 많지 않으면 안됩니다"
 
-msgid "breaks must all be finite"
+#, fuzzy
+msgid "'breaks' must all be finite"
 msgstr "분할점은 모두 유한하지 않으면 되지 않습니다"
 
 #, fuzzy
@@ -262,11 +265,12 @@ msgstr ""
 #, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n = %d"
+"to each of the values {1 ... %d}"
 msgstr ""
 "layout 행렬은 값{1..n}의 각 값을 적어도 1회 참조하지 않으면 되지 않습니다"
 
-msgid "invalid title"
+#, fuzzy
+msgid "invalid 'title'"
 msgstr "무효인 title입니다"
 
 msgid "'legend' is of length 0"
@@ -397,7 +401,8 @@ msgstr "'x'는 행렬 또는 데이터 프레임이 아니면 되지 않습니�
 msgid "data in 'x' must be numeric"
 msgstr "'x'의 데이터는 수치가 아니면 되지 않습니다"
 
-msgid "nrow * ncol <  number of observations"
+#, fuzzy
+msgid "'nrow * ncol' is less than the number of observations"
 msgstr "nrow * ncol는 관찰값의 수미만이 아니면 되지 않습니다"
 
 msgid "labels do not make sense for a single location"
@@ -434,13 +439,16 @@ msgstr "'number'는 'x' 그리고 'y'와 동일 길이가 나오지 않으면 �
 msgid "exactly one symbol type must be specified"
 msgstr "반드시 하나의 심벌 유형을 지정하지 않으면 되지 않습니다"
 
-msgid "x log scale:  xinch() is non-sense"
+#, fuzzy
+msgid "x log scale:  xinch() is nonsense"
 msgstr "x는 log scale: xinch()는 non-sense입니다"
 
-msgid "y log scale:  yinch() is non-sense"
+#, fuzzy
+msgid "y log scale:  yinch() is nonsense"
 msgstr "y는 log scale:  yinch() non-sense입니다"
 
-msgid "log scale:  xyinch() is non-sense"
+#, fuzzy
+msgid "log scale:  xyinch() is nonsense"
 msgstr "log scale: xyinch()는 non-sense입니다"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"

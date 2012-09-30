@@ -156,7 +156,7 @@ plot.histogram <-
 	if(is.logical(x$equidist)) x$equidist
 	else { h <- diff(x$breaks) ; diff(range(h)) < 1e-7 * mean(h) }
     if(freq && !equidist)
-	warning("the AREAS in the plot are wrong -- rather use freq=FALSE")
+	warning("the AREAS in the plot are wrong -- rather use 'freq = FALSE'")
 
     y <- if (freq) x$counts else { ## x$density -- would be enough, but
 	## for back compatibility

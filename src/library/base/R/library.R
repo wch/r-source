@@ -103,7 +103,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(nzchar(r_arch)
            && file.exists(file.path(pkgpath, "libs"))
            && !file.exists(file.path(pkgpath, "libs", r_arch)))
-            stop(gettextf("package %s is not installed for 'arch=%s'",
+            stop(gettextf("package %s is not installed for 'arch = %s'",
                           sQuote(pkgname), r_arch),
                  call. = FALSE, domain = NA)
     }
@@ -125,7 +125,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             lfiles <- file.path(pkgpath, c("LICENSE", "LICENCE"))
             lfiles <- lfiles[file.exists(lfiles)]
             if(length(lfiles)) {
-                message(gettextf("Package %s has a license that you need to accept after viewing", sQuote(pkg)), domain = NA)
+                message(gettextf("package %s has a license that you need to accept after viewing", sQuote(pkg)), domain = NA)
                 readline("press RETURN to view license")
                 encoding <- pkgInfo$DESCRIPTION["Encoding"]
                 if(is.na(encoding)) encoding <- ""
@@ -133,13 +133,13 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(encoding == "latin1") encoding <- "cp1252"
                 file.show(lfiles[1L], encoding = encoding)
             } else {
-                message(gettextf("Package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is", sQuote(pkg)), domain = NA)
-                message(pkgInfo$DESCRIPTION["License"])
+                message(gettextf("package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is", sQuote(pkg)), domain = NA)
+                message(pkgInfo$DESCRIPTION["License"], domain = NA)
             }
             choice <- menu(c("accept", "decline"),
                            title = paste("License for", sQuote(pkg)))
             if(choice != 1)
-                stop(gettextf("License for package %s not accepted",
+                stop(gettextf("license for package %s not accepted",
                               sQuote(package)), domain = NA, call. = FALSE)
             dir.create(dirname(personal_file), showWarnings=FALSE)
             writeLines(c(agreed, pkg), personal_file)
@@ -304,7 +304,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if (inherits(tt, "try-error"))
                     if (logical.return)
                         return(FALSE)
-                    else stop(gettextf("package/namespace load failed for %s",
+                    else stop(gettextf("package or namespace load failed for %s",
                                        sQuote(package)),
                               call. = FALSE, domain = NA)
                 else {
@@ -324,7 +324,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         return(invisible(.packages()))
                 }
             } else
-            stop(gettextf("package %s does not have a NAMESPACE and should be re-installed",
+            stop(gettextf("package %s does not have a namespace and should be re-installed",
                           sQuote(package)), domain = NA)
 	}
 	if (verbose && !newpackage)

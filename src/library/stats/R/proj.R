@@ -36,7 +36,7 @@ proj.default <- function(object, onedf = TRUE, ...)
 proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 {
     if(inherits(object, "mlm"))
-	stop("'proj' is not implemented for \"mlm\" fits")
+	stop("'proj' is not implemented for multiple responses")
     rank <- object$rank
     if(rank > 0) {
 	prj <- proj.default(object, onedf = TRUE)[, 1L:rank, drop = FALSE]

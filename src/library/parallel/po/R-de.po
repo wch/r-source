@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:33\n"
 "PO-Revision-Date: 2012-03-06 09:20+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <r-core@r-project.org>\n"
@@ -22,7 +22,8 @@ msgstr "unzulässiger Wert für 'seed'"
 msgid "need at least one argument"
 msgstr "benötige mindestens ein Argument"
 
-msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+#, fuzzy
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 "Eingaben mit Länge Null können nicht mit Eingaben anderer Länge\n"
 "gemischt werden"
@@ -36,7 +37,8 @@ msgstr "'X' muss benannte Dimensionsnamen haben"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nicht alle Elemente von 'MARGIN' sind Dimensionsnamen"
 
-msgid "no cluster supplied and none is registered"
+#, fuzzy
+msgid "no cluster 'cl' supplied and none is registered"
 msgstr "kein Cluster angegeben und keiner registriert"
 
 msgid "not a valid cluster"
@@ -44,12 +46,6 @@ msgstr "kein zulässiger Cluster"
 
 msgid "unknown cluster type"
 msgstr "unbekannter Clustertyp"
-
-msgid "socket cluster with %d nodes on hosts %s"
-msgstr "Socketcluster mit %d Knoten auf den Systemen %s"
-
-msgid "socket cluster with %d nodes on host %s"
-msgstr "Socketcluster mit %d Knoten auf System %s"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "Knoten des Socketclusters auf System %s mit PID %d"
@@ -65,7 +61,7 @@ msgstr ""
 "'children' muss eine Liste von Prozessen oder ein einzelner Prozess sein"
 
 #, fuzzy
-msgid "'process' must be of the class %s"
+msgid "'process' must be of class %s"
 msgstr "'process' muss aus der  Klasse \"process\" sein"
 
 msgid "'child' must be a valid child process"
@@ -83,6 +79,11 @@ msgstr "%d Funktionsaufrufe endeten in einem Fehler"
 msgid "all scheduled cores encountered errors in user code"
 msgstr "alle verplanten Kerne berichten Fehler im Benutzerkode"
 
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"Eingaben mit Länge Null können nicht mit Eingaben anderer Länge\n"
+"gemischt werden"
+
 msgid "invalid 'jobs' argument"
 msgstr "unzulässiges 'jobs' Argument"
 
@@ -99,6 +100,12 @@ msgstr "Fork-Cluster sind unter Windows nicht unterstützt"
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "'mc.cores' > 1 ist unter Windows nicht unterstützt"
 
+#, fuzzy
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "Socketcluster mit %d Knoten auf System %s"
+msgstr[1] "Socketcluster mit %d Knoten auf System %s"
+
 msgid ""
 "scheduled core %s encountered error in user code, all values of the job will "
 "be affected"
@@ -111,6 +118,9 @@ msgstr[0] ""
 msgstr[1] ""
 "eingeplante Kerne %s berichten Fehler in Benutzerkode, alle Werte der Jobs "
 "werden betroffen sein"
+
+#~ msgid "socket cluster with %d nodes on hosts %s"
+#~ msgstr "Socketcluster mit %d Knoten auf den Systemen %s"
 
 #~ msgid ","
 #~ msgstr ","

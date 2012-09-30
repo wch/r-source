@@ -49,7 +49,7 @@ Vectorize <- function(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
     if (!length(vectorize.args)) return(FUN)
 
     if (!all(vectorize.args %in% arg.names))
-    	stop("must specify formal argument names to vectorize")
+    	stop("must specify names of formal arguments for 'vectorize'")
 
     FUNV <- function() { ## will set the formals below
         args <- lapply(as.list(match.call())[-1L], eval, parent.frame())

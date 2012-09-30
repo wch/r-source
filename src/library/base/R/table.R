@@ -209,17 +209,12 @@ is.table <- function(x) inherits(x, "table")
 as.table <- function(x, ...) UseMethod("as.table")
 as.table.default <- function(x, ...)
 {
-    if(is.table(x))
-	return(x)
+    if(is.table(x)) return(x)
     else if(is.array(x) || is.numeric(x)) {
 	x <- as.array(x)
-	if(any(dim(x) == 0L))
-	    stop("cannot coerce into a table")
-	structure(class = c("table", oldClass(x)),
-		  provideDimnames(x))
-    }
-    else
-	stop("cannot coerce into a table")
+	if(any(dim(x) == 0L)) stop("cannot coerce to a table")
+	structure(class = c("table", oldClass(x)), provideDimnames(x))
+    } else stop("cannot coerce to a table")
 }
 
 prop.table <- function(x, margin = NULL)

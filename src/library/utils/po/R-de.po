@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2012-09-10 14:39+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -30,7 +30,8 @@ msgstr "keine Doku für %s in Paket %s gefunden"
 msgid "document not found"
 msgstr "Dokument nicht gefunden"
 
-msgid "A search query has been submitted to"
+#, fuzzy
+msgid "A search query has been submitted to %s"
 msgstr "Eine Suchanfrage wurde gesendet an"
 
 msgid "The results page should open in your browser shortly"
@@ -42,7 +43,8 @@ msgstr "Referenz auf unbekannten Abschnitt %s"
 msgid "no Sweave file with name %s found"
 msgstr "keine Sweave-Datei namens %s gefunden"
 
-msgid "%d Sweave files for basename %s found:"
+#, fuzzy
+msgid "%d Sweave files for basename %s found"
 msgstr "%d Sweave Dateien für Basisnamen %s gefunden:"
 
 msgid "more than one syntax specification found, using the first one"
@@ -101,7 +103,8 @@ msgstr "Wert der 'strip.white' Option sollte in Kleinbuchstaben sein"
 msgid "elements of 'what' after the first will be ignored"
 msgstr "Elemente von 'what' nach dem ersten werden ignoriert"
 
-msgid "No suitable spell check program found."
+#, fuzzy
+msgid "No suitable spell-checker program found"
 msgstr "Keine passende Rechtschreibprüfung gefunden."
 
 msgid "Filter '%s' is not available."
@@ -125,6 +128,9 @@ msgstr ""
 "Ausführen von aspell ist fehlgeschlagen.\n"
 "Meldung: %s"
 
+msgid "No suitable spell check program found."
+msgstr "Keine passende Rechtschreibprüfung gefunden."
+
 msgid ""
 "Use <code> %s </code> \n"
 " to list the vignettes in all <strong>available</strong> packages."
@@ -136,7 +142,8 @@ msgstr ""
 msgid "No vignettes found by %s"
 msgstr "Keine Vignetten gefunden durch"
 
-msgid "Package %s: DESCRIPTION not found"
+#, fuzzy
+msgid "Package %s: DESCRIPTION file not found"
 msgstr "Paket %s: DESCRIPTION nicht gefunden"
 
 msgid "'file' must be NULL, a character string or a connection"
@@ -164,7 +171,8 @@ msgstr "Nutze entweder %s oder %s aber nicht beide."
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "Es ist empfohlen %s/%s anstelle von %s/%s/%s zu nutzen."
 
-msgid "method is just applicable to %s objects"
+#, fuzzy
+msgid "method is only applicable to %s objects"
 msgstr "Methode kann gerade auf %s Objekte angewendet werden"
 
 #, fuzzy
@@ -211,16 +219,11 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "m < 0"
-msgstr "m < 0"
-
-msgid "n < m"
-msgstr "n < m"
-
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN' muss eine Funktion oder NULL sein"
 
-msgid "Can't handle S4 methods yet"
+#, fuzzy
+msgid "cannot handle S4 methods yet"
 msgstr "Kann noch nicht mit S4 Methoden umgehen"
 
 msgid "'package' must be a character string or NULL"
@@ -256,14 +259,11 @@ msgstr "falsches Argument für 'dataentry'"
 msgid "could not restore type information"
 msgstr "konnte Typinformation nicht wieder herstellen"
 
-msgid "modes argument ignored"
-msgstr "modes Argument ignoriert"
+msgid "'modes' argument ignored"
+msgstr "'modes' Argument ignoriert"
 
 msgid "'names' argument ignored"
 msgstr "'names' Argument ignoriert"
-
-msgid "'modes' argument ignored"
-msgstr "'modes' Argument ignoriert"
 
 msgid "could not restore variables properly"
 msgstr "konnte Variablen nicht angemessen wieder herstellen"
@@ -329,7 +329,12 @@ msgstr "bearbeitete Zeilennamen enthalten Duplikate und werden ignoriert"
 msgid "invalid input matrix"
 msgstr "unzulässige Eingabematrix"
 
-msgid "class(es) of 'name' will be discarded"
+#, fuzzy
+msgid "class of 'name' will be discarded"
+msgstr "Klasse(n) von 'name' wird verworfen"
+
+#, fuzzy
+msgid "classes of 'name' will be discarded"
 msgstr "Klasse(n) von 'name' wird verworfen"
 
 msgid "cannot edit NULL row names"
@@ -350,11 +355,9 @@ msgstr "Zeilennummer fehlt"
 msgid "'fix' requires a name"
 msgstr "'fix' beötigt einen Namen"
 
-msgid "too many list items (at most up to number 26)"
+#, fuzzy
+msgid "too many list items (at most up to %d)"
 msgstr "zu viele Listenpunke (höchstens 26!)"
-
-msgid "too many list items (at most up to number 3899)"
-msgstr "zu viele Listenelemente (höchstens 3899!)"
 
 msgid "no vector columns were selected"
 msgstr "keine Vektorspalten ausgewählt"
@@ -446,32 +449,14 @@ msgstr "falsche Typspezifikation"
 msgid "argument 'help.db' is deprecated"
 msgstr "Argument 'help.db' ist veraltet"
 
-msgid "Packages {readRDS() sequentially}:"
-msgstr "Pakete {readRDS() sequentiell}:"
-
-msgid "."
-msgstr "."
-
 msgid "could not find package %s"
 msgstr "konnte Paket %s nicht finden"
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "Paket %s hat leere hsearch Daten - seltsam"
 
-msgid "reencoding ..."
-msgstr "rekodieren ..."
-
-msgid "done"
-msgstr "fertig"
-
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "entferne alle Ein<räge mit unzulässigen multi-byte Charakterdaten"
-
-msgid "saving the database ..."
-msgstr "speichere die Datenbank ..."
-
-msgid "... database rebuilt"
-msgstr "... Datenbank erneuert"
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
@@ -527,8 +512,8 @@ msgstr "DESCRIPTIN von Paket '%s' fehlt oder zerstört"
 msgid "cannot update HTML package index"
 msgstr "kann HTML Paketindex nicht aktualisieren"
 
-msgid "Making packages.html  ..."
-msgstr "Erzeuge packages.html ..."
+msgid "done"
+msgstr "fertig"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
@@ -593,9 +578,10 @@ msgstr "keine R Objekte spezifiziert oder verfügbar"
 msgid "directory '%s' already exists"
 msgstr "Verzeichnis '%s' exisitiert bereits"
 
+#, fuzzy
 msgid ""
-"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
-"the code_files= argument"
+"generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the 'code_files' argument"
 msgstr ""
 "Generische Funktionen und andere S4 Objekte (z.B. '%s') können nicht "
 "gedumped werden: nutze code_files= Argument"
@@ -603,7 +589,8 @@ msgstr ""
 msgid "unable to access index for repository %s"
 msgstr "kann nicht auf den Index für das Repository %s zugreifen"
 
-msgid "Invalid 'filters' argument."
+#, fuzzy
+msgid "invalid 'filters' argument."
 msgstr "unzulässiges 'filters' Argument"
 
 msgid "package '%s' in library '%s' will not be updated"
@@ -775,7 +762,8 @@ msgstr "kein Objket namens '%s' anzuzeigen"
 msgid "'file' must be \"\" or an open connection object"
 msgstr "'file' muss \"\" oder eine bereits geöffnetes Verbindungsobjekt sein"
 
-msgid "must have max > min"
+#, fuzzy
+msgid "must have 'max' > 'min'"
 msgstr "es muss max > min sein"
 
 #, fuzzy
@@ -900,7 +888,8 @@ msgstr "die ersten 5 Zeilen sind leer: gebe auf"
 msgid "relist() requires recursively unlisted objects."
 msgstr "relist() benötigt rekursive ungelistete Objekte"
 
-msgid "The flesh argument does not contain a skeleton attribute."
+#, fuzzy
+msgid "The 'flesh' argument does not contain a skeleton attribute."
 msgstr "Das flesh Argument enthält kein Gerüstattribut"
 
 msgid ""
@@ -911,9 +900,6 @@ msgstr ""
 
 msgid "cannot coerce 'x' to roman"
 msgstr "kann 'x' nicht nach Roman unwandeln"
-
-msgid "length mismatch: bug in code!"
-msgstr "Längen passen nicht: Fehler im Code!"
 
 msgid "no valid packages were specified"
 msgstr "keine gültigen Pakete angegeben"
@@ -1038,7 +1024,8 @@ msgstr "ungültige Zahlen in 'quote'"
 msgid "invalid 'quote' specification"
 msgstr "unzulässige Spezifikation für 'quote'"
 
-msgid "col.names = NA makes no sense when row.names = FALSE"
+#, fuzzy
+msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
 msgstr "col.names = NA hat keinen Sinn, wenn row.names = FALSE"
 
 msgid "invalid 'col.names' specification"
@@ -1285,8 +1272,8 @@ msgstr[0] "letzter Eintrag unvollständig, %d Zeilen verworfen"
 msgstr[1] "letzter Eintrag unvollständig, %d Zeilen verworfen"
 
 #, fuzzy
-msgid "Invalid roman numeral: %s"
-msgid_plural "Invalid roman numerals: %s"
+msgid "invalid roman numeral: %s"
+msgid_plural "invalid roman numerals: %s"
 msgstr[0] "Ungültige römische Zahl(en): %s"
 msgstr[1] "Ungültige römische Zahl(en): %s"
 
@@ -1294,6 +1281,39 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "m < 0"
+#~ msgstr "m < 0"
+
+#~ msgid "n < m"
+#~ msgstr "n < m"
+
+#~ msgid "modes argument ignored"
+#~ msgstr "modes Argument ignoriert"
+
+#~ msgid "too many list items (at most up to number 3899)"
+#~ msgstr "zu viele Listenelemente (höchstens 3899!)"
+
+#~ msgid "Packages {readRDS() sequentially}:"
+#~ msgstr "Pakete {readRDS() sequentiell}:"
+
+#~ msgid "."
+#~ msgstr "."
+
+#~ msgid "reencoding ..."
+#~ msgstr "rekodieren ..."
+
+#~ msgid "saving the database ..."
+#~ msgstr "speichere die Datenbank ..."
+
+#~ msgid "... database rebuilt"
+#~ msgstr "... Datenbank erneuert"
+
+#~ msgid "Making packages.html  ..."
+#~ msgstr "Erzeuge packages.html ..."
+
+#~ msgid "length mismatch: bug in code!"
+#~ msgstr "Längen passen nicht: Fehler im Code!"
 
 #~ msgid "??"
 #~ msgstr "??"

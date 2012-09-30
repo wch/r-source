@@ -38,7 +38,7 @@ factor <- function(x = character(), levels, labels = levels,
     nl <- length(labels)
     nL <- length(levels)
     if(!any(nl == c(1L, nL)))
-	stop(gettextf("invalid labels; length %d should be 1 or %d", nl, nL),
+	stop(gettextf("invalid 'labels'; length %d should be 1 or %d", nl, nL),
 	     domain = NA)
     levels(f) <- ## nl == nL or 1
 	if (nl == nL) as.character(labels)
@@ -209,7 +209,7 @@ Ops.factor <- function(e1, e2)
     if (is.factor(value)) value <- levels(value)[value]
     m <- match(value, lx)
     if (any(is.na(m) & !is.na(value)))
-	warning("invalid factor level, NAs generated")
+	warning("invalid factor level, NA generated")
     class(x) <- NULL
     x[...] <- m
     attr(x,"levels") <- lx

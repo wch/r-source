@@ -23,7 +23,7 @@ subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
     else {
 	e <- substitute(subset)
 	r <- eval(e, x, parent.frame())
-        if(!is.logical(r)) stop("'subset' must evaluate to logical")
+        if(!is.logical(r)) stop("'subset' must be logical")
 	r <- r & !is.na(r)
     }
     if(missing(select))

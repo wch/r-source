@@ -134,7 +134,7 @@ dev.print <- function(device = postscript, ...)
     nm <- names(current.device)[1L]
     if(nm == "null device") stop("no device to print from")
     if(!dev.displaylist())
-        stop("can only print from screen device")
+        stop("can only print from a screen device")
     oc <- match.call()
     oc[[1L]] <- as.name("dev.copy")
     oc$device <- device

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "document not found"
 msgstr ""
 
-msgid "A search query has been submitted to"
+msgid "A search query has been submitted to %s"
 msgstr ""
 
 msgid "The results page should open in your browser shortly"
@@ -41,7 +41,7 @@ msgstr ""
 msgid "no Sweave file with name %s found"
 msgstr ""
 
-msgid "%d Sweave files for basename %s found:"
+msgid "%d Sweave files for basename %s found"
 msgstr ""
 
 msgid "more than one syntax specification found, using the first one"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "elements of 'what' after the first will be ignored"
 msgstr ""
 
-msgid "No suitable spell check program found."
+msgid "No suitable spell-checker program found"
 msgstr ""
 
 msgid "Filter '%s' is not available."
@@ -116,6 +116,9 @@ msgid ""
 "%s"
 msgstr ""
 
+msgid "No suitable spell check program found."
+msgstr ""
+
 msgid ""
 "Use <code> %s </code> \n"
 " to list the vignettes in all <strong>available</strong> packages."
@@ -124,7 +127,7 @@ msgstr ""
 msgid "No vignettes found by %s"
 msgstr ""
 
-msgid "Package %s: DESCRIPTION not found"
+msgid "Package %s: DESCRIPTION file not found"
 msgstr ""
 
 msgid "'file' must be NULL, a character string or a connection"
@@ -150,7 +153,7 @@ msgstr ""
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr ""
 
-msgid "method is just applicable to %s objects"
+msgid "method is only applicable to %s objects"
 msgstr ""
 
 msgid "all arguments must be of class %s"
@@ -196,16 +199,10 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "m < 0"
-msgstr ""
-
-msgid "n < m"
-msgstr ""
-
 msgid "'FUN' must be a function or NULL"
 msgstr ""
 
-msgid "Can't handle S4 methods yet"
+msgid "cannot handle S4 methods yet"
 msgstr ""
 
 msgid "'package' must be a character string or NULL"
@@ -241,13 +238,10 @@ msgstr ""
 msgid "could not restore type information"
 msgstr ""
 
-msgid "modes argument ignored"
+msgid "'modes' argument ignored"
 msgstr ""
 
 msgid "'names' argument ignored"
-msgstr ""
-
-msgid "'modes' argument ignored"
 msgstr ""
 
 msgid "could not restore variables properly"
@@ -309,7 +303,10 @@ msgstr ""
 msgid "invalid input matrix"
 msgstr ""
 
-msgid "class(es) of 'name' will be discarded"
+msgid "class of 'name' will be discarded"
+msgstr ""
+
+msgid "classes of 'name' will be discarded"
 msgstr ""
 
 msgid "cannot edit NULL row names"
@@ -330,10 +327,7 @@ msgstr ""
 msgid "'fix' requires a name"
 msgstr ""
 
-msgid "too many list items (at most up to number 26)"
-msgstr ""
-
-msgid "too many list items (at most up to number 3899)"
+msgid "too many list items (at most up to %d)"
 msgstr ""
 
 msgid "no vector columns were selected"
@@ -418,12 +412,6 @@ msgstr ""
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
-msgid "Packages {readRDS() sequentially}:"
-msgstr ""
-
-msgid "."
-msgstr ""
-
 #, fuzzy
 msgid "could not find package %s"
 msgstr "paketler yüklenemedi"
@@ -431,19 +419,7 @@ msgstr "paketler yüklenemedi"
 msgid "package %s has empty hsearch data - strangely"
 msgstr ""
 
-msgid "reencoding ..."
-msgstr ""
-
-msgid "done"
-msgstr ""
-
 msgid "removing all entries with invalid multi-byte character data"
-msgstr ""
-
-msgid "saving the database ..."
-msgstr ""
-
-msgid "... database rebuilt"
 msgstr ""
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
@@ -496,7 +472,7 @@ msgstr ""
 msgid "cannot update HTML package index"
 msgstr ""
 
-msgid "Making packages.html  ..."
+msgid "done"
 msgstr ""
 
 msgid "menu() cannot be used non-interactively"
@@ -560,14 +536,14 @@ msgid "directory '%s' already exists"
 msgstr ""
 
 msgid ""
-"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
-"the code_files= argument"
+"generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the 'code_files' argument"
 msgstr ""
 
 msgid "unable to access index for repository %s"
 msgstr ""
 
-msgid "Invalid 'filters' argument."
+msgid "invalid 'filters' argument."
 msgstr ""
 
 msgid "package '%s' in library '%s' will not be updated"
@@ -722,7 +698,7 @@ msgstr ""
 msgid "'file' must be \"\" or an open connection object"
 msgstr ""
 
-msgid "must have max > min"
+msgid "must have 'max' > 'min'"
 msgstr ""
 
 msgid "'pb' is not from class %s"
@@ -841,7 +817,7 @@ msgstr ""
 msgid "relist() requires recursively unlisted objects."
 msgstr ""
 
-msgid "The flesh argument does not contain a skeleton attribute."
+msgid "The 'flesh' argument does not contain a skeleton attribute."
 msgstr ""
 
 msgid ""
@@ -850,9 +826,6 @@ msgid ""
 msgstr ""
 
 msgid "cannot coerce 'x' to roman"
-msgstr ""
-
-msgid "length mismatch: bug in code!"
 msgstr ""
 
 msgid "no valid packages were specified"
@@ -969,7 +942,7 @@ msgstr ""
 msgid "invalid 'quote' specification"
 msgstr ""
 
-msgid "col.names = NA makes no sense when row.names = FALSE"
+msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
 msgstr ""
 
 msgid "invalid 'col.names' specification"
@@ -1184,8 +1157,8 @@ msgid_plural "last record incomplete, %d lines discarded"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Invalid roman numeral: %s"
-msgid_plural "Invalid roman numerals: %s"
+msgid "invalid roman numeral: %s"
+msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
 msgstr[1] ""
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:54\n"
+"POT-Creation-Date: 2012-09-30 16:22\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -34,20 +34,24 @@ msgstr "'acf' должен быть длиной два или более"
 msgid "object not interpretable as a factor"
 msgstr "объект не интерпретируется как фактор"
 
-msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
+#, fuzzy
+msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)"
 msgstr ""
 "не могу подогнать модели без уровней ('alpha' не должна быть нулем или "
 "FALSE)."
 
-msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
+#, fuzzy
+msgid "'alpha', 'beta' and 'gamma' must be within the unit interval"
 msgstr "'alpha', 'beta' и 'gamma' должны быть внутри единичного интервала."
 
-msgid "data must be non-zero for multiplicative Holt-Winters."
+#, fuzzy
+msgid "data must be non-zero for multiplicative Holt-Winters"
 msgstr ""
 "данные должны быть неотрицательными для мультипликативного варианта метода "
 "Холта-Винтерса."
 
-msgid "need at least 2 periods to compute seasonal start values."
+#, fuzzy
+msgid "need at least 2 periods to compute seasonal start values"
 msgstr ""
 "нужны по крайней мере 3 периода, чтобы вычислить стартовые значения сезона."
 
@@ -83,7 +87,7 @@ msgid "all parameters were fixed"
 msgstr "все параметры были фиксированными"
 
 #, fuzzy
-msgid "possible convergence problem: optim gave code = %d %d"
+msgid "possible convergence problem: 'optim' gave code = %d and message %s"
 msgstr "возможно, проблема сходимости: 'optim' выдал код="
 
 msgid "no factors in the fitted model"
@@ -300,9 +304,6 @@ msgstr "MLE разработан только для одномерных серий"
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' должен быть >= 0"
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr "алгоритм Бурга разработан только для одномерных серий"
-
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' должен быть неотрицательным числовым вектором длины 3"
 
@@ -381,12 +382,6 @@ msgstr "неправильный 'x'"
 #, fuzzy
 msgid "invalid 'nb'"
 msgstr "неправильный 'x'"
-
-msgid "sample is too sparse to find TD"
-msgstr "выборка слишком редка, чтобы найти TD"
-
-msgid "sample is too sparse to find alph2"
-msgstr "выборка слишком редка, чтобы найти alph2"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "в указанном диапазоне решений нет"
@@ -596,9 +591,6 @@ msgstr "недостаточно конечных наблюдений"
 msgid "Cannot compute exact p-value with ties"
 msgstr "Есть совпадающие значения: не могу высчитать точное p-значение"
 
-msgid "Cannot compute exact p-values with ties"
-msgstr "Есть совпадающие значения: не могу высчитать точные p-значения"
-
 msgid "'formula' missing or invalid"
 msgstr "'formula' пропущена либо неправильная"
 
@@ -620,7 +612,8 @@ msgstr "все веса должны быть неотрицательными и не все -- нулевыми"
 msgid "length of 'center' must equal the number of columns in 'x'"
 msgstr "длина 'center' должна равняться количеству колонок в 'x'"
 
-msgid "invalid 'tree' (merge component)"
+#, fuzzy
+msgid "invalid 'tree' ('merge' component)"
 msgstr "неправильный 'tree' (компонент слияния)"
 
 msgid "either 'k' or 'h' must be specified"
@@ -647,8 +640,9 @@ msgstr "безлистное дерево нулевой длины"
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.дендрограмма' требует дендрограмму"
 
-msgid "we require a dendrogram"
-msgstr "нам нужна дендрограмма"
+#, fuzzy
+msgid "'reorder.dendrogram' requires a dendrogram"
+msgstr "'order.дендрограмма' требует дендрограмму"
 
 msgid "invalid (length 0) node in dendrogram"
 msgstr "неправильный (длина = 0) узел дендрограммы"
@@ -764,7 +758,8 @@ msgstr ""
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] и prob[] должны векторами одинаковой длины."
 
-msgid "probabilities cannot be negative nor all 0."
+#, fuzzy
+msgid "probabilities cannot be negative nor all 0"
 msgstr "вероятности не могут быть ни отрицательными, ни все равными нулю."
 
 msgid "'x' must be non-negative"
@@ -821,7 +816,8 @@ msgstr ""
 "функция связи \"%s\" недоступна для пуассоновского семейства; доступны "
 "функции %s"
 
-msgid "negative values not allowed for the Poisson family"
+#, fuzzy
+msgid "negative values not allowed for the 'Poisson' family"
 msgstr "отрицательные значения в пуассоновском семействе не разрешены"
 
 msgid "ignoring prior weights"
@@ -833,7 +829,8 @@ msgstr ""
 "функция связи \"%s\" недоступна для квази-пуассоновского семейства; доступны "
 "функции %s"
 
-msgid "negative values not allowed for the quasiPoisson family"
+#, fuzzy
+msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr "отрицательные значения для квази-пуассоновского семейства не разрешены"
 
 msgid "link \"%s\" not available for gaussian family; available links are %s"
@@ -860,7 +857,7 @@ msgstr "не целочисленные счетчики в биномиальном 'glm'!"
 
 #, fuzzy
 msgid ""
-"for the binomial family, y must be a vector of 0 and 1's\n"
+"for the 'binomial' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 "или 2-колонная матрица где колонка 1 -- это кол-во успехов, а колонка 2 -- "
@@ -877,7 +874,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"for the quasibinomial family, y must be a vector of 0 and 1's\n"
+"for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 "или 2-колонная матрица где колонка 1 -- это кол-во успехов, а колонка 2 -- "
@@ -887,7 +884,8 @@ msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
 "функция связи \"%s\" недоступна для гамма-семейства; доступны функции %s"
 
-msgid "non-positive values not allowed for the gamma family"
+#, fuzzy
+msgid "non-positive values not allowed for the 'gamma' family"
 msgstr "неположительные значения не разрешены для гамма-семейства"
 
 msgid "using weights as shape parameters"
@@ -899,11 +897,13 @@ msgstr ""
 "функция связи \"%s\" недоступна для обратно-гауссового семейства; доступны "
 "функции %s"
 
-msgid "positive values only allowed for the inverse.gaussian family"
+#, fuzzy
+msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr ""
 "только положительные значения разрешены для обратно-гауссового семейства"
 
-msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+#, fuzzy
+msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
 msgstr "Необходим пакет 'SuppDists' из CRAN для семейства 'inverse.gaussian'"
 
 msgid "using weights as inverse variances"
@@ -974,11 +974,11 @@ msgstr "все уровни групп должны быть конечными"
 msgid "not enough observations"
 msgstr "недостаточно наблюдений"
 
-msgid "NA's are not allowed in groups or blocks"
-msgstr "NA's не разрешены в группах или блоках"
+msgid "NA's are not allowed in 'groups' or 'blocks'"
+msgstr "NAs не разрешены в 'groups' и 'blocks'"
 
-msgid "y, groups and blocks must have the same length"
-msgstr "y, группы и блоки должны иметь одну длину"
+msgid "'y', 'groups' and 'blocks' must have the same length"
+msgstr "'y', 'groups' и 'blocks' должны иметь одну длину"
 
 msgid "not an unreplicated complete block design"
 msgstr "не нереплицированный полноблочный дизайн"
@@ -1001,7 +1001,8 @@ msgstr "неправильное указание 'col.vars'"
 msgid "interactions are not allowed"
 msgstr "взаимодействия не разрешены"
 
-msgid "'formula' has '.' in both left and right hand side"
+#, fuzzy
+msgid "'formula' has '.' in both left and right hand sides"
 msgstr "у 'formula' есть '.' и слева, и справа"
 
 msgid "incorrect variable names in rhs of formula"
@@ -1041,7 +1042,7 @@ msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr "количество смещений %d, а должно быть %d (количество наблюдений)"
 
 msgid ""
-"fitting to calculate the null deviance did not converge -- increase maxit?"
+"fitting to calculate the null deviance did not converge -- increase 'maxit'?"
 msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
@@ -1072,7 +1073,8 @@ msgstr "Нули в V(mu)"
 msgid "NAs in d(mu)/d(eta)"
 msgstr "NAs в d(mu)/d(eta)"
 
-msgid "no observations informative at iteration"
+#, fuzzy
+msgid "no observations informative at iteration %d"
 msgstr "нет наблюдений, информативных для итерации"
 
 msgid "non-finite coefficients at iteration %d"
@@ -1266,10 +1268,8 @@ msgstr "недостаточно данных 'x'"
 msgid "not enough 'y' data"
 msgstr "недостаточно данных 'y'"
 
-msgid "cannot compute exact p-values with ties"
-msgstr "не могу подсчитать точные p-values при наличии повторяющихся значений"
-
-msgid "p-values will be approximate in the presence of ties"
+#, fuzzy
+msgid "p-value will be approximate in the presence of ties"
 msgstr "p-values будут примерными в присутствии повторяющихся значений"
 
 msgid "'y' must be numeric or a function or a string naming a valid function"
@@ -1328,10 +1328,8 @@ msgstr ""
 "у объекта lm object нет правильного 'qr' компонента.\n"
 " Потому что нулевой ранг или не надо было использовать lm(.., qr=FALSE)."
 
-msgid "family '"
-msgstr "семейство '"
-
-msgid "' not implemented"
+#, fuzzy
+msgid "family '%s' not implemented"
 msgstr "' не реализовано"
 
 msgid "calling anova.lm(<fake-lm-object>) ..."
@@ -1346,12 +1344,14 @@ msgstr "вызываю predict.lm(<fake-lm-object>) ..."
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "предсказание от вырожденной подгонки может быть неправильным"
 
-msgid "Predictions on current data refer to _future_ responses"
+#, fuzzy
+msgid "predictions on current data refer to _future_ responses"
 msgstr ""
 "Предсказания на основе текущих данных указывают на _будущие_ зависимости"
 
+#, fuzzy
 msgid ""
-"Assuming prediction variance inversely proportional to weights used for "
+"assuming prediction variance inversely proportional to weights used for "
 "fitting"
 msgstr ""
 "Предполагаю дисперсию для предсказания обратно пропорциональной весам, "
@@ -1435,8 +1435,9 @@ msgstr "нет моделей для сравнения"
 msgid "extra arguments discarded"
 msgstr "дополнительные аргументы отброшены"
 
-msgid "logLik.lm only handles single responses"
-msgstr ""
+#, fuzzy
+msgid "'logLik.lm' does not support multiple responses"
+msgstr "'proj' для множественных откликов не реализован"
 
 msgid "no \"nobs\" attribute is available"
 msgstr "недоступен атрибут \"nobs\""
@@ -1467,15 +1468,12 @@ msgstr "наблюдения с нулевым весом не использованы"
 msgid "'low' and 'high' cannot be both TRUE"
 msgstr "'low' и 'high' не могут оба быть TRUE"
 
-msgid "need multiple response"
-msgstr "нужен множественный отклик"
+msgid "need multiple responses"
+msgstr "нужны множественные отклики"
 
 #, fuzzy
 msgid "object must be of class %s or %s"
 msgstr "объект должен быть класса \"manova\" или \"maov\""
-
-msgid "need multiple responses"
-msgstr "нужны множественные отклики"
 
 msgid "residuals have rank %d < %d"
 msgstr "остатки имеют ранг %d < %d"
@@ -1602,7 +1600,8 @@ msgstr "неправильный аргумент 'contrasts.arg'"
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "переменная '%s' отсутствует, ее контраст будет проигнорирован"
 
-msgid "using type=\"numeric\" with a factor response will be ignored"
+#, fuzzy
+msgid "using type = \"numeric\" with a factor response will be ignored"
 msgstr ""
 "использование type=\"numeric\" с зависимой переменной-фактором будет "
 "пропущено"
@@ -1640,11 +1639,12 @@ msgstr "f.upper = f(upper) -- это NA"
 msgid "f() values at end points not of opposite sign"
 msgstr "f() значений на концевых точках не противоположного знака"
 
-msgid "control argument must be a named list"
+#, fuzzy
+msgid "'control' argument must be a named list"
 msgstr "аргумент 'control' должен быть именованным списком"
 
 #, fuzzy
-msgid "Logical 'hessian' argument not allowed.  See documentation."
+msgid "logical 'hessian' argument not allowed.  See documentation."
 msgstr "Логический аргумент 'hessian' не разрешен. См. документацию."
 
 msgid "'params' has wrong length"
@@ -1677,7 +1677,8 @@ msgstr "сингулярная градиентная матрица в оценке начальных параметров"
 msgid "'data' must be a list or an environment"
 msgstr "'data' должны быть списком либо окружением"
 
-msgid "No starting values specified"
+#, fuzzy
+msgid "no starting values specified"
 msgstr "Не заданы стартовые значения"
 
 #, fuzzy
@@ -1693,7 +1694,8 @@ msgstr "аргумент 'subset' будет пропущен"
 msgid "argument 'na.action' will be ignored"
 msgstr "аргумент 'na.action' будет пропущен"
 
-msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+#, fuzzy
+msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "Верхние и нижние границы игнорируются, пока алгоритм не = \"port\""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
@@ -1747,7 +1749,8 @@ msgstr "метод = \"Brent\" доступен только для одномерной оптимизации"
 msgid "'lower' and 'upper' must be finite values"
 msgstr "'lower' и 'upper' должны быть конечными значениями"
 
-msgid "Pooling of SD is incompatible with paired tests"
+#, fuzzy
+msgid "pooling of SD is incompatible with paired tests"
 msgstr "Собирание SD несовместимо с парными тестами"
 
 msgid "'x' must have 2 columns"
@@ -1761,7 +1764,7 @@ msgstr "слишком мало групп"
 
 #, fuzzy
 msgid ""
-"Not plotting observations with leverage one:\n"
+"not plotting observations with leverage one:\n"
 "  %s"
 msgstr "Наблюдения с единичной трансляцией не рисую:"
 
@@ -1792,7 +1795,8 @@ msgstr "'T' должен быть неотрицательным"
 msgid "not enough data"
 msgstr "недостаточно данных"
 
-msgid "The case k > 2 is unimplemented"
+#, fuzzy
+msgid "the case k > 2 is unimplemented"
 msgstr "Случай k > 2 не реализован"
 
 msgid "'r' must be a single positive number"
@@ -1805,9 +1809,6 @@ msgstr ""
 
 msgid "'sig.level' must be numeric in [0, 1]"
 msgstr "'sig.level' должен быть числом в [0, 1]"
-
-msgid "internal error"
-msgstr "внутренняя ошибка"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1869,7 +1870,8 @@ msgstr ""
 "'princomp' может быть использовано только если наблюдений больше чем "
 "переменных"
 
-msgid "cannot use cor=TRUE with a constant variable"
+#, fuzzy
+msgid "cannot use 'cor = TRUE' with a constant variable"
 msgstr "не могу использовать cor=TRUE с постоянной переменной"
 
 msgid "covariance matrix is not non-negative definite"
@@ -1880,9 +1882,6 @@ msgstr "аргумент не включает компонент 'qr'"
 
 msgid "argument does not include an 'effects' component"
 msgstr "аргумент не включает компонент 'effects'"
-
-msgid "'proj' is not implemented for \"mlm\" fits"
-msgstr "'proj' для \"mlm\" подгонок не реализован"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj' для множественных откликов не реализован"
@@ -1907,12 +1906,6 @@ msgstr "элементы 'p' должны быть в (0,1)"
 
 msgid "y is empty or has only NAs"
 msgstr "y пусто или включает лишь NAs"
-
-msgid "NA's are not allowed in 'groups' or 'blocks'"
-msgstr "NAs не разрешены в 'groups' и 'blocks'"
-
-msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr "'y', 'groups' и 'blocks' должны иметь одну длину"
 
 msgid "'formula' missing"
 msgstr "'formula' пропущена"
@@ -1953,7 +1946,8 @@ msgstr "ref = %d должен быть в пределах 1L:%d"
 msgid "'sep' must be a character string"
 msgstr "'sep' должен быть текстовой строкой"
 
-msgid "Failed to guess time-varying variables from their names"
+#, fuzzy
+msgid "failed to guess time-varying variables from their names"
 msgstr "Не получилось создать временнЫе переменные из их имен"
 
 msgid "'varying' arguments must be the same length"
@@ -1974,12 +1968,14 @@ msgstr "нет атрибута 'reshapeWide', надо задать 'varying'"
 msgid "'varying' must be nonempty list or vector"
 msgstr "'varying' должен быть непустым списком или вектором"
 
-msgid "length of v.names does not evenly divide length of varying"
+#, fuzzy
+msgid "length of 'v.names' does not evenly divide length of 'varying'"
 msgstr "длина 'v.names' не делится без остатка длиной 'varying'"
 
+#, fuzzy
 msgid ""
-"length of varying must be the product of length of v.names and length of "
-"times"
+"length of 'varying' must be the product of length of 'v.names' and length of "
+"'times'"
 msgstr ""
 "длина 'varying' должна быть произведением длины 'v.names' и длины 'times'"
 
@@ -2019,8 +2015,9 @@ msgstr "попытка сгладить нечисловые значения"
 msgid "attempt to smooth NA values"
 msgstr "попытка сгладить пропущенные значения"
 
-msgid "wrong endrule"
-msgstr "неправильное конечное правило"
+#, fuzzy
+msgid "invalid 'endrule' argument"
+msgstr "недопустимый аргумент 'use'"
 
 msgid "invalid 'control.spar'"
 msgstr "неправильный 'control.spar'"
@@ -2050,7 +2047,8 @@ msgstr "нужны как минимум 4 уникальных значения 'x'"
 msgid "'cv' must not be NA when 'df' is specified"
 msgstr "'cv' не может быть NA в случае, когда указан 'df'"
 
-msgid "crossvalidation with non-unique 'x' values seems doubtful"
+#, fuzzy
+msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr "кросс-валидация с неуникальными значениями 'x' выглядит сомнительно"
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
@@ -2082,7 +2080,8 @@ msgstr "NA lev[]; возможно, сглаживающий параметр 'spar' слишком велик!"
 msgid "setting df = 1  __use with care!__"
 msgstr "устанавливаю df = 1  __использовать с осторожностью!__"
 
-msgid "need result of smooth.spline(*, keep.data=TRUE)"
+#, fuzzy
+msgid "need result of smooth.spline(keep.data = TRUE)"
 msgstr "нужен результат smooth.spline(*, keep.data=TRUE)"
 
 msgid "type = \"partial\" is not yet implemented"
@@ -2261,7 +2260,8 @@ msgstr "'xy.labels' должны быть символами или логическими"
 msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
 msgstr "'frequency' и 'deltat' указаны оба и несовместимы"
 
-msgid "Frequency not changed"
+#, fuzzy
+msgid "'frequency' not changed"
 msgstr "Частота не изменилась"
 
 msgid "bad value for 'start'"
@@ -2334,7 +2334,8 @@ msgstr "'x' и 'w' должны иметь одинаковую длину"
 msgid "not enough (finite) 'x' observations"
 msgstr "недостаточно (конечных) данных 'x'"
 
-msgid "Requested conf.level not achievable"
+#, fuzzy
+msgid "requested conf.level not achievable"
 msgstr "Заданный доверительный интервал не достигнут"
 
 msgid "cannot compute confidence interval when all observations are tied"
@@ -2348,6 +2349,9 @@ msgstr "не могу высчитать точное p-значение при наличии нулей"
 
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "не могу высчитать точный доверительный интервал при наличии нулей"
+
+msgid "Requested conf.level not achievable"
+msgstr "Заданный доверительный интервал не достигнут"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "нужно указать либо 'formula', либо 'data'"
@@ -2490,8 +2494,8 @@ msgstr[1] "не могу оптимизировать, начиная с этих стартовых значени(й)"
 msgstr[2] "не могу оптимизировать, начиная с этих стартовых значени(й)"
 
 #, fuzzy
-msgid "'init'; must have 1 column"
-msgid_plural "'init'; must have 1 or %d columns"
+msgid "'init' must have 1 column"
+msgid_plural "'init' must have 1 or %d columns"
 msgstr[0] "'init' должен иметь 1 или %d колонок"
 msgstr[1] "'init' должен иметь 1 или %d колонок"
 msgstr[2] "'init' должен иметь 1 или %d колонок"
@@ -2618,6 +2622,46 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' слишком короткий: нужно %d точек"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точек"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
+
+#~ msgid "Burg's algorithm only implemented for univariate series"
+#~ msgstr "алгоритм Бурга разработан только для одномерных серий"
+
+#~ msgid "sample is too sparse to find TD"
+#~ msgstr "выборка слишком редка, чтобы найти TD"
+
+#~ msgid "sample is too sparse to find alph2"
+#~ msgstr "выборка слишком редка, чтобы найти alph2"
+
+#~ msgid "Cannot compute exact p-values with ties"
+#~ msgstr "Есть совпадающие значения: не могу высчитать точные p-значения"
+
+#~ msgid "we require a dendrogram"
+#~ msgstr "нам нужна дендрограмма"
+
+#~ msgid "NA's are not allowed in groups or blocks"
+#~ msgstr "NA's не разрешены в группах или блоках"
+
+#~ msgid "y, groups and blocks must have the same length"
+#~ msgstr "y, группы и блоки должны иметь одну длину"
+
+#~ msgid "cannot compute exact p-values with ties"
+#~ msgstr ""
+#~ "не могу подсчитать точные p-values при наличии повторяющихся значений"
+
+#~ msgid "family '"
+#~ msgstr "семейство '"
+
+#~ msgid "need multiple response"
+#~ msgstr "нужен множественный отклик"
+
+#~ msgid "internal error"
+#~ msgstr "внутренняя ошибка"
+
+#~ msgid "'proj' is not implemented for \"mlm\" fits"
+#~ msgstr "'proj' для \"mlm\" подгонок не реализован"
+
+#~ msgid "wrong endrule"
+#~ msgstr "неправильное конечное правило"
 
 #~ msgid "upper scope does not include model term(s) %s"
 #~ msgstr "верхняя область действия не включает выражени(я) модели %s"

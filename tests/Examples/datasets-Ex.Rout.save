@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-07-13 r59807) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -2749,9 +2749,9 @@ AIC: 428.78
 Number of Fisher Scoring iterations: 4
 
 > plot(modUnif) # 4 plots, with warning about  h_ii ~= 1
-Warning: Not plotting observations with leverage one:
+Warning: not plotting observations with leverage one:
   1, 10, 19, 28, 37, 46, 55, 64
-Warning: Not plotting observations with leverage one:
+Warning: not plotting observations with leverage one:
   1, 10, 19, 28, 37, 46, 55, 64
 > 
 > 

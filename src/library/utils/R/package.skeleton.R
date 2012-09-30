@@ -160,7 +160,7 @@ package.skeleton <-
             objItem <- get(item, envir = environment)
             if(is.function(objItem))  {
                 if(isS4(objItem))
-                    stop(gettextf("Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the code_files= argument", item), domain = NA)
+                    stop(gettextf("generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument", item), domain = NA)
                 dump(item,
                      file = file.path(code_dir, sprintf("%s.R", list0[item])))
             }

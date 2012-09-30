@@ -22,9 +22,9 @@ trace <- function(what, tracer, exit, at, print, signature, where = topenv(paren
     if(needsAttach) {
         ns <- try(loadNamespace("methods"))
         if(isNamespace(ns))
-            message("(loaded the methods namespace)")
+            message("(loaded the methods namespace)", domain = NA)
         else
-            stop("Tracing functions requires the methods package, but unable to load methods namespace")
+            stop("tracing functions requires the 'methods' package, but unable to load the 'methods' namespace")
     }
     else if(nargs() == 1L)
         return(.primTrace(what))

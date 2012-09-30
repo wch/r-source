@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -53,19 +53,24 @@ msgstr "'start'和'end'不能相等，而且必需在[0, 1] 之间。"
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma'的值要么是数量，要么是'sRGB'"
 
-msgid "Color space converter:"
+#, fuzzy
+msgid "Color space converter: %s"
 msgstr "颜色空间转换器:"
 
-msgid "Reference white:"
+#, fuzzy
+msgid "Reference white: %s"
 msgstr "白色参考:"
 
-msgid "display gamma"
+#, fuzzy
+msgid "display gamma = %s"
 msgstr "显示gamma"
 
-msgid "'from' must be a colorConverter or string"
+#, fuzzy
+msgid "'from' must be a \"colorConverter\" object or a string"
 msgstr "'from'要么是颜色转换器，要么是字符串"
 
-msgid "'to' must be a colorConverter or string"
+#, fuzzy
+msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr "'to'要么是颜色转换器，要么是字符串"
 
 #, fuzzy
@@ -76,7 +81,8 @@ msgstr "'from.ref.white'同下面这个定义有冲突"
 msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.ref.white'同下面这个定义有冲突"
 
-msgid "color spaces use different reference whites."
+#, fuzzy
+msgid "color spaces use different reference whites"
 msgstr "颜色空间不能使用不同的白色参考。"
 
 msgid "'name' must be a character vector"
@@ -103,14 +109,11 @@ msgstr "'device'必需是函数"
 msgid "no device to print from"
 msgstr "没有可以打印的装置"
 
-msgid "can only print from screen device"
+msgid "can only print from a screen device"
 msgstr "只可以从屏幕装置打印"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "至少需要设定'width'和'height'中的一个"
-
-msgid "can only print from a screen device"
-msgstr "只可以从屏幕装置打印"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "在没有打开图形装置前是不能调用dev.control()的"
@@ -151,7 +154,8 @@ msgstr "还不存在的'%s'是不能被重新设定的"
 msgid "invalid options in '%s'"
 msgstr "'%s'里的选择项出错"
 
-msgid "NOT changing"
+#, fuzzy
+msgid "NOT changing %s"
 msgstr "不更换"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
@@ -165,9 +169,6 @@ msgstr "'family'参数不对"
 
 msgid "invalid 'file'"
 msgstr "'file'不对"
-
-msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr "不再需要'maxRasters'，将之忽略"
 
 msgid "invalid PDF version"
 msgstr "PDF版本不对"
@@ -221,7 +222,8 @@ msgstr "输出的格式不对"
 msgid "status %d in running command '%s'"
 msgstr "调用命令'%s'的运行状况为%d"
 
-msgid "range too small for min.n"
+#, fuzzy
+msgid "range too small for 'min.n'"
 msgstr "min.n的范围太小了"
 
 msgid "A raster matrix must be character, or numeric, or logical"
@@ -395,6 +397,12 @@ msgstr[0] "对数图里略过%d个小于等于零的y值"
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "对数图里略过%d个小于等于零的z值"
+
+#~ msgid "can only print from screen device"
+#~ msgstr "只可以从屏幕装置打印"
+
+#~ msgid "'maxRasters' is no longer needed, and will be ignored"
+#~ msgstr "不再需要'maxRasters'，将之忽略"
 
 #~ msgid "invalid value for 'antialias'"
 #~ msgstr "'antialias'的值不对"

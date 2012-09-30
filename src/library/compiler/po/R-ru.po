@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2011-10-18 19:28-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -74,7 +74,8 @@ msgstr "нет глобального связывания для назначе
 msgid "wrong number of arguments to '%s'"
 msgstr "неправильное число аргументов для '%s'"
 
-msgid "more than one default provided in switch call"
+#, fuzzy
+msgid "more than one default provided in switch() call"
 msgstr "более чем одно значение по-умолчанию в вызове switch"
 
 msgid "cannot compile a non-function"

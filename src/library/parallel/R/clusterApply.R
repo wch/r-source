@@ -103,7 +103,7 @@ clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
     if (RECYCLE) {
         vlen <- max(n)
         if(vlen && min(n) == 0L)
-            stop("Zero-length inputs cannot be mixed with those of non-zero length")
+            stop("zero-length inputs cannot be mixed with those of non-zero length")
         if (!all(n == vlen))
             for (i in seq_along(args)) # why not lapply?
                 args[[i]] <- rep(args[[i]], length.out = vlen)

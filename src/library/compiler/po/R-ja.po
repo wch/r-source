@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2011-04-01 13:28+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -72,7 +72,8 @@ msgstr " '%s' に対する '<<-' 付値の明示されたバインディング�
 msgid "wrong number of arguments to '%s'"
 msgstr " '%s' に対する引数の数が違います "
 
-msgid "more than one default provided in switch call"
+#, fuzzy
+msgid "more than one default provided in switch() call"
 msgstr " スイッチ呼び出しの中で, デフォルト選択肢が２つ以上あります "
 
 msgid "cannot compile a non-function"

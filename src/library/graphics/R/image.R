@@ -86,7 +86,7 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 	if (length(breaks) != length(col) + 1)
 	    stop("must have one more break than colour")
 	if (any(!is.finite(breaks)))
-	    stop("breaks must all be finite")
+	    stop("'breaks' must all be finite")
         ## spatstat passes a factor matrix here, but .bincode converts.
         zi <- .bincode(z, breaks, TRUE, TRUE) - 1L
     }

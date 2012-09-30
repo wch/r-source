@@ -73,9 +73,9 @@ check.options <-
                                      "differ between new and previous"),
                             if(any(do.keep)) {
                                 paste("\n\t ==> ",
-                                      gettext("NOT changing "),
-                                      paste(sQuote(names(prev[do.keep])),
-                                            collapse=" & "),
+                                      gettextf("NOT changing %s",
+                                              paste(sQuote(names(prev[do.keep])),
+                                                    collapse=" & ")),
                                       sep = "")} else "",
                             domain = NA, call. = FALSE)
 		}
@@ -318,7 +318,8 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(useKerning)) new$useKerning <- useKerning
     if(!missing(fillOddEven)) new$fillOddEven <- fillOddEven
     if(!missing(maxRasters))
-        warning("'maxRasters' is no longer needed, and will be ignored")
+        warning("'maxRasters' is no longer needed, and will be ignored",
+                domain = NA)
     if(!missing(compress)) new$compress <- compress
 
     old <- check.options(new, name.opt = ".PDF.Options", envir = .PSenv)

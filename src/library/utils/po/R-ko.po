@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -33,7 +33,8 @@ msgstr "%s 에 대한 문서를 패키지 %s 로부터 찾을 수 없습니다"
 msgid "document not found"
 msgstr "문서를 찾을 수 없습니다 "
 
-msgid "A search query has been submitted to"
+#, fuzzy
+msgid "A search query has been submitted to %s"
 msgstr "서치쿼리가 다음부분으로 넘겨졌습니다 "
 
 msgid "The results page should open in your browser shortly"
@@ -45,7 +46,8 @@ msgstr "reference to unknown chunk %s"
 msgid "no Sweave file with name %s found"
 msgstr "%s 라는 이름을 가진 Sweave 파일을 찾을 수 없습니다 "
 
-msgid "%d Sweave files for basename %s found:"
+#, fuzzy
+msgid "%d Sweave files for basename %s found"
 msgstr "%d Sweave 파일들이 베이스네임 %s 와 관련이 있습니다: "
 
 msgid "more than one syntax specification found, using the first one"
@@ -104,7 +106,8 @@ msgstr "'strip.white' 옵션의 값은 반드시 소문자 이어야합니다 "
 msgid "elements of 'what' after the first will be ignored"
 msgstr "첫번째 다음에 오는 'what' 요소들은 모두 무시될 것입니다 "
 
-msgid "No suitable spell check program found."
+#, fuzzy
+msgid "No suitable spell-checker program found"
 msgstr "적절한 스펠링 체크 프로그램을 찾지 못했습니다 "
 
 msgid "Filter '%s' is not available."
@@ -128,6 +131,9 @@ msgstr ""
 "aspell 프로그램이 아래와 같은 이유로 실패했습니다: \n"
 "%s"
 
+msgid "No suitable spell check program found."
+msgstr "적절한 스펠링 체크 프로그램을 찾지 못했습니다 "
+
 msgid ""
 "Use <code> %s </code> \n"
 " to list the vignettes in all <strong>available</strong> packages."
@@ -139,7 +145,8 @@ msgstr ""
 msgid "No vignettes found by %s"
 msgstr "비니에트를 찾을 수 없습니다 "
 
-msgid "Package %s: DESCRIPTION not found"
+#, fuzzy
+msgid "Package %s: DESCRIPTION file not found"
 msgstr "패키지 %s: DESCRIPTION 파일을 찾을 수 없습니다 "
 
 msgid "'file' must be NULL, a character string or a connection"
@@ -167,7 +174,8 @@ msgstr "%s 혹은 %s 중 하나를 이용하세요 "
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "%s/%s 를 이용하는 것이 %s/%s/%s 를 사용하는 것보다 권장됩니다."
 
-msgid "method is just applicable to %s objects"
+#, fuzzy
+msgid "method is only applicable to %s objects"
 msgstr "%s 객체들에만 적용이 가능한 메소드입니다 "
 
 #, fuzzy
@@ -214,16 +222,11 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "m < 0"
-msgstr "m < 0"
-
-msgid "n < m"
-msgstr "n < m"
-
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN' 은 함수 혹은 NULL 이어야 합니다 "
 
-msgid "Can't handle S4 methods yet"
+#, fuzzy
+msgid "cannot handle S4 methods yet"
 msgstr "아직은 S4 메소드들을 처리할 수 없습니다 "
 
 msgid "'package' must be a character string or NULL"
@@ -259,14 +262,11 @@ msgstr "'dataentry' 에 잘못된 인수입니다 "
 msgid "could not restore type information"
 msgstr "유형정보를 복구할 수 없습니다 "
 
-msgid "modes argument ignored"
-msgstr "modes argument ignored"
+msgid "'modes' argument ignored"
+msgstr "'modes' 인수가 무시되었습니다 "
 
 msgid "'names' argument ignored"
 msgstr "'names' 인수가 무시되었습니다 "
-
-msgid "'modes' argument ignored"
-msgstr "'modes' 인수가 무시되었습니다 "
 
 msgid "could not restore variables properly"
 msgstr "변수들을 올바르게 복구할 수 없습니다 "
@@ -331,7 +331,12 @@ msgstr "편집된 열의 이름들이 중복되어 무시될 것입니다 "
 msgid "invalid input matrix"
 msgstr "입력된 행렬이 올바르지 않습니다"
 
-msgid "class(es) of 'name' will be discarded"
+#, fuzzy
+msgid "class of 'name' will be discarded"
+msgstr "'name' 라는 클래스(들)이 제거 될 것입니다 "
+
+#, fuzzy
+msgid "classes of 'name' will be discarded"
 msgstr "'name' 라는 클래스(들)이 제거 될 것입니다 "
 
 msgid "cannot edit NULL row names"
@@ -352,11 +357,9 @@ msgstr "라이넘버가 없습니다 "
 msgid "'fix' requires a name"
 msgstr "'fix' 는 이름이 필요합니다 "
 
-msgid "too many list items (at most up to number 26)"
+#, fuzzy
+msgid "too many list items (at most up to %d)"
 msgstr "너무 많은 리스트 항목들입니다 (최대 26개까지)"
-
-msgid "too many list items (at most up to number 3899)"
-msgstr "너무 많은 리스트 항목들입니다 (최대 3899 개까지)"
 
 msgid "no vector columns were selected"
 msgstr "벡터형식의 열들이 선택되었습니다 "
@@ -445,33 +448,15 @@ msgstr "올바르지 않은 유형정보입니다 "
 msgid "argument 'help.db' is deprecated"
 msgstr "인수 'help.db' 가 누락되었습니다 "
 
-msgid "Packages {readRDS() sequentially}:"
-msgstr "Packages {readRDS() sequentially}:"
-
-msgid "."
-msgstr "."
-
 msgid "could not find package %s"
 msgstr "패키지 %s 를 찾을 수 없습니다 "
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr "패키지 %s 는 비어있는 hsearch 데이터 입니다 - 이상합니다 "
 
-msgid "reencoding ..."
-msgstr "재인코딩중입니다 ... "
-
-msgid "done"
-msgstr "완료 "
-
 msgid "removing all entries with invalid multi-byte character data"
 msgstr ""
 "유효하지 않은 멀티바이트 문자 데이터를 가진 모든 엔트리를 제거중입니다 "
-
-msgid "saving the database ..."
-msgstr "데이터베이스를 저장중입니다 ..."
-
-msgid "... database rebuilt"
-msgstr "... 데이터베이스가 재구축되었습니다 "
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
@@ -531,8 +516,8 @@ msgstr "패키지 '%s'의 DESCRIPTION 파일이 없거나 손상되었습니다 
 msgid "cannot update HTML package index"
 msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"
 
-msgid "Making packages.html  ..."
-msgstr "packages.html  을 만들고 있습니다 ... "
+msgid "done"
+msgstr "완료 "
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() 는 인터랙티브하게 사용할 수 없습니다 "
@@ -595,9 +580,10 @@ msgstr "R 객체들이 지정될 수 없거나 사용가능하지 않습니다 "
 msgid "directory '%s' already exists"
 msgstr "디렉토리 '%s' 는 이미 존재합니다"
 
+#, fuzzy
 msgid ""
-"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
-"the code_files= argument"
+"generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the 'code_files' argument"
 msgstr ""
 "제네릭 함수들과 다른 S4 객체들 (즉, '%s')는 버려질 수 없습니다; 다음을 이용하"
 "세요the code_files= argument "
@@ -605,7 +591,8 @@ msgstr ""
 msgid "unable to access index for repository %s"
 msgstr "저장소 %s 에 대한 인덱스에 접근할 수 없습니다"
 
-msgid "Invalid 'filters' argument."
+#, fuzzy
+msgid "invalid 'filters' argument."
 msgstr "'filters' 인자가 잘못되었습니다 "
 
 msgid "package '%s' in library '%s' will not be updated"
@@ -774,7 +761,8 @@ msgstr "'%s' 이라는 이름의 객체는 보여지지 않습니다"
 msgid "'file' must be \"\" or an open connection object"
 msgstr "'file' 은 반드시 \"\" 혹은 열린 커넥션 객체이어야 합니다"
 
-msgid "must have max > min"
+#, fuzzy
+msgid "must have 'max' > 'min'"
 msgstr "반드시 max > min 이어야 합니다 "
 
 #, fuzzy
@@ -899,7 +887,8 @@ msgstr "첫번째 다섯개의 열들의 정보가 없습니다: 중단합니다
 msgid "relist() requires recursively unlisted objects."
 msgstr "relist() 는 unlisted 객체들의 재귀적인 호출이 필요합니다 "
 
-msgid "The flesh argument does not contain a skeleton attribute."
+#, fuzzy
+msgid "The 'flesh' argument does not contain a skeleton attribute."
 msgstr "flesh 인자는 skeleton 속성을 가지고 있지 않습니다."
 
 msgid ""
@@ -911,9 +900,6 @@ msgstr ""
 
 msgid "cannot coerce 'x' to roman"
 msgstr "'x' 를  roman 으로 강제변환 할 수 없습니다 "
-
-msgid "length mismatch: bug in code!"
-msgstr "길이가 일치하지 않습니다: 코드내의 버그입니다!"
 
 msgid "no valid packages were specified"
 msgstr "유효한 패키지들이 지정되지 않았습니다 "
@@ -1036,7 +1022,8 @@ msgstr " 'quote' 에 잘못된 값이 있습니다 "
 msgid "invalid 'quote' specification"
 msgstr "'quote' 지정이 잘못되었습니다 "
 
-msgid "col.names = NA makes no sense when row.names = FALSE"
+#, fuzzy
+msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
 msgstr "col.names = NA 는 row.names = FALSE 일때 아무런 의미가 없습니다 "
 
 msgid "invalid 'col.names' specification"
@@ -1251,13 +1238,46 @@ msgid_plural "last record incomplete, %d lines discarded"
 msgstr[0] "마지막 레코드는 완성되지 않았으며, %d 라인들이 삭제되었습니다 "
 
 #, fuzzy
-msgid "Invalid roman numeral: %s"
-msgid_plural "Invalid roman numerals: %s"
+msgid "invalid roman numeral: %s"
+msgid_plural "invalid roman numerals: %s"
 msgstr[0] "Invalid roman numeral(s): %s"
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+
+#~ msgid "m < 0"
+#~ msgstr "m < 0"
+
+#~ msgid "n < m"
+#~ msgstr "n < m"
+
+#~ msgid "modes argument ignored"
+#~ msgstr "modes argument ignored"
+
+#~ msgid "too many list items (at most up to number 3899)"
+#~ msgstr "너무 많은 리스트 항목들입니다 (최대 3899 개까지)"
+
+#~ msgid "Packages {readRDS() sequentially}:"
+#~ msgstr "Packages {readRDS() sequentially}:"
+
+#~ msgid "."
+#~ msgstr "."
+
+#~ msgid "reencoding ..."
+#~ msgstr "재인코딩중입니다 ... "
+
+#~ msgid "saving the database ..."
+#~ msgstr "데이터베이스를 저장중입니다 ..."
+
+#~ msgid "... database rebuilt"
+#~ msgstr "... 데이터베이스가 재구축되었습니다 "
+
+#~ msgid "Making packages.html  ..."
+#~ msgstr "packages.html  을 만들고 있습니다 ... "
+
+#~ msgid "length mismatch: bug in code!"
+#~ msgstr "길이가 일치하지 않습니다: 코드내의 버그입니다!"
 
 #~ msgid "??"
 #~ msgstr "??"

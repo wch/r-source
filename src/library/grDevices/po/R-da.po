@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2012-01-28 17:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,19 +49,24 @@ msgstr "»start« og »end« skal være unik og i [0, 1]."
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "»gamma« skal være en skala eller »sRGB«"
 
-msgid "Color space converter:"
+#, fuzzy
+msgid "Color space converter: %s"
 msgstr "Omdannelsesprogram for farverum:"
 
-msgid "Reference white:"
+#, fuzzy
+msgid "Reference white: %s"
 msgstr "Hvid reference:"
 
-msgid "display gamma"
+#, fuzzy
+msgid "display gamma = %s"
 msgstr "vis gamma"
 
-msgid "'from' must be a colorConverter or string"
+#, fuzzy
+msgid "'from' must be a \"colorConverter\" object or a string"
 msgstr "»from« skal være en colorConverter eller streng"
 
-msgid "'to' must be a colorConverter or string"
+#, fuzzy
+msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr "»to« skal være en colorConverter eller streng"
 
 #, fuzzy
@@ -72,7 +77,8 @@ msgstr "»from.ref.white« er ikke enig med definitionen for"
 msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "»to.ref.white« er ikke enig med definitionen for"
 
-msgid "color spaces use different reference whites."
+#, fuzzy
+msgid "color spaces use different reference whites"
 msgstr "farverum bruger forskellige hvide referencer."
 
 msgid "'name' must be a character vector"
@@ -99,14 +105,11 @@ msgstr "»device« skal være en funktion"
 msgid "no device to print from"
 msgstr "ingen enhed at udskrive fra"
 
-msgid "can only print from screen device"
-msgstr "kan kun udskrive fra skærmenhed"
+msgid "can only print from a screen device"
+msgstr "kan kun udskrive fra en skærmenhed"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "skal angive en af »width« og »height«"
-
-msgid "can only print from a screen device"
-msgstr "kan kun udskrive fra en skærmenhed"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.controll() kaldt uden en åben grafikenhed"
@@ -147,7 +150,8 @@ msgstr "kan ikke nulstille ikkeeksisterende »%s«"
 msgid "invalid options in '%s'"
 msgstr "ugyldige indstillinger i »%s«"
 
-msgid "NOT changing"
+#, fuzzy
+msgid "NOT changing %s"
 msgstr "ændrer sig IKKE"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
@@ -161,9 +165,6 @@ msgstr "ugyldigt argument for »family«"
 
 msgid "invalid 'file'"
 msgstr "ugyldig »file«"
-
-msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr "»maxRasters« er ikke længere krævet, og vil blive ignoreret"
 
 msgid "invalid PDF version"
 msgstr "ugyldig PDF-version"
@@ -216,7 +217,8 @@ msgstr "Ugyldigt uddataformat"
 msgid "status %d in running command '%s'"
 msgstr "status %d i kørende kommando »%s«"
 
-msgid "range too small for min.n"
+#, fuzzy
+msgid "range too small for 'min.n'"
 msgstr "interval for lille for min.n"
 
 msgid "A raster matrix must be character, or numeric, or logical"
@@ -396,3 +398,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z værdi <= 0 udeladt fra logaritmisk plot"
 msgstr[1] "%d z værdier <= 0 udeladt fra logaritmisk plot"
+
+#~ msgid "can only print from screen device"
+#~ msgstr "kan kun udskrive fra skærmenhed"
+
+#~ msgid "'maxRasters' is no longer needed, and will be ignored"
+#~ msgstr "»maxRasters« er ikke længere krævet, og vil blive ignoreret"

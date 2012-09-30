@@ -24,7 +24,7 @@ assign("default", NULL, envir = .reg)
 defaultCluster <- function(cl = NULL)
 {
     if(is.null(cl)) cl <- get("default", envir = .reg)
-    if(is.null(cl)) stop("no cluster supplied and none is registered")
+    if(is.null(cl)) stop("no cluster 'cl' supplied and none is registered")
     checkCluster(cl)
     cl
 }

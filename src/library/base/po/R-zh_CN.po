@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:25\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -44,8 +44,8 @@ msgstr "'La.svd'的参数必需是数值或复数值"
 msgid "infinite or missing values in 'x'"
 msgstr "'x'里有无穷值或遗漏值"
 
-msgid "0 extent dimensions"
-msgstr "零扩充维度"
+msgid "a dimension is zero"
+msgstr ""
 
 msgid "'nu' must be 0, nrow(x) or ncol(x)"
 msgstr "'nu'的值必需是零，nrow(x) 或ncol(x)"
@@ -71,12 +71,6 @@ msgstr "'normal.kind'必需是字符串，而且其长度只能为一。"
 msgid "'%s' is not a valid choice"
 msgstr "%s'不是正当的选择"
 
-msgid "Buggy version of Kinderman-Ramage generator used"
-msgstr "Kinderman-Ramage任意数产生器可能有虫。"
-
-msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-msgstr "不能用有虫的Kinderman-Ramage任意数产生器。"
-
 msgid "malformed version string"
 msgstr "版本字串格式有错"
 
@@ -101,9 +95,6 @@ msgstr "'dim'的值太大"
 
 msgid "incorrect value for 'MARGIN'"
 msgstr "'MARGIN'的值有错"
-
-msgid "you cannot be serious"
-msgstr "你是不是在耍我？"
 
 msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
 msgstr "*** 'pos=1'不可能对；以'pos=2'代而用之。"
@@ -133,7 +124,8 @@ msgstr ""
 "  调用: %s\n"
 "  错误: %s"
 
-msgid "namespace cannot be unloaded:"
+#, fuzzy
+msgid "%s namespace cannot be unloaded:"
 msgstr "无法卸下名字空间："
 
 #, fuzzy
@@ -146,8 +138,9 @@ msgstr "正规表现'['被换成'\\\\['"
 msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
 msgstr "正规表现'[<-'被换成'\\\\[<-'"
 
-msgid "RHS must be list"
-msgstr "等式右边必需是串列"
+#, fuzzy
+msgid "'value' must be a list"
+msgstr "'object'必需是串列"
 
 msgid "an object with that name already exists"
 msgstr "对象的名字已经存在"
@@ -222,7 +215,8 @@ msgstr "只能写矢量对象"
 msgid "can only write character objects"
 msgstr "只能写字符对象"
 
-msgid "supplied timeout must be NULL or a non-negative number"
+#, fuzzy
+msgid "'timeout' must be NULL or a non-negative number"
 msgstr "提供的超时值要么是NULL，要么是非负数"
 
 msgid "'from' must be raw or character"
@@ -237,8 +231,8 @@ msgstr "间隔数目不对"
 msgid "'breaks' are not unique"
 msgstr "'breaks' 的值有重复"
 
-msgid "labels/breaks length conflict"
-msgstr "label/breaks两个参数的长度不一样"
+msgid "lengths of 'breaks' and 'labels' differ"
+msgstr ""
 
 msgid "invalid 'row.names' length"
 msgstr "'row.names'的长度不对"
@@ -253,7 +247,7 @@ msgid "invalid 'dimnames' given for data frame"
 msgstr "数据框的'dimnames'给得不对"
 
 #, fuzzy
-msgid "cannot coerce class \"%s\" into a data.frame"
+msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr "不能把'%s'类别强迫变成数据框"
 
 #, fuzzy
@@ -263,26 +257,23 @@ msgstr "options('stringsAsFactors') 只能取TRUE或FALSE值"
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "'data.frame'参数里%d单元中行名不匹配"
 
-msgid "some row.names duplicated:"
+#, fuzzy
+msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "某些row.names有重复："
-
-msgid ","
-msgstr "，"
-
-msgid "--> row.names NOT used"
-msgstr "--> row.names不再有用"
 
 msgid "row names contain missing values"
 msgstr "行名里有遗漏值"
 
-msgid "duplicate row.names:"
+#, fuzzy
+msgid "duplicate row.names: %s"
 msgstr "row.names有重复:"
 
 #, fuzzy
 msgid "arguments imply differing number of rows: %s"
 msgstr "参数值意味着不同的行数"
 
-msgid "row.names should specify one of the variables"
+#, fuzzy
+msgid "'row.names' should specify one of the variables"
 msgstr "row.names必需指定一个变数"
 
 msgid "row names supplied are of the wrong length"
@@ -294,7 +285,8 @@ msgstr "短变数里找到了行名，因此不用"
 msgid "named arguments other than 'drop' are discouraged"
 msgstr "除了'drop'之外最好不用带名字的参数"
 
-msgid "drop argument will be ignored"
+#, fuzzy
+msgid "'drop' argument will be ignored"
 msgstr "忽略drop参数"
 
 msgid "undefined columns selected"
@@ -310,7 +302,7 @@ msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
 
 #, fuzzy
-msgid "rhs is the wrong length"
+msgid "'value' is the wrong length"
 msgstr "行名长度不对"
 
 #, fuzzy
@@ -389,16 +381,20 @@ msgstr "'%s'不是\"dates\"对象"
 msgid "'%s' is not a \"dates\" object"
 msgstr "'%s'不是\"dates\"对象"
 
-msgid "binary + is not defined for Date objects"
+#, fuzzy
+msgid "binary + is not defined for \"Date\" objects"
 msgstr "二进列的+法对Date对象不适用"
 
-msgid "Can only subtract from Date objects"
+#, fuzzy
+msgid "can only subtract from \"Date\" objects"
 msgstr "只能从Date对象减"
 
-msgid "unary - is not defined for Date objects"
+#, fuzzy
+msgid "unary - is not defined for \"Date\" objects"
 msgstr "一进列的-法对Date对象不适用"
 
-msgid "can only subtract numbers from Date objects"
+#, fuzzy
+msgid "can only subtract numbers from \"Date\" objects"
 msgstr "只能从Date对象那儿减数值"
 
 #, fuzzy
@@ -412,13 +408,15 @@ msgstr "对Date对象不适用"
 msgid "'from' must be specified"
 msgstr "'from'一定得给值"
 
-msgid "'from' must be a Date object"
+#, fuzzy
+msgid "'from' must be a \"Date\" object"
 msgstr "'from'一定得是Date对象"
 
 msgid "'from' must be of length 1"
 msgstr "'from'的长度必需为一"
 
-msgid "'to' must be a Date object"
+#, fuzzy
+msgid "'to' must be a \"Date\" object"
 msgstr "'to'一定得是Date对象"
 
 msgid "'to' must be of length 1"
@@ -464,13 +462,15 @@ msgstr "类别不对"
 msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr "二进列'+'法不适用于\"POSIXt\" 的对象"
 
-msgid "Can only subtract from POSIXt objects"
+#, fuzzy
+msgid "can only subtract from \"POSIXt\" objects"
 msgstr "只能从POSIXt对象那儿减"
 
 msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr "一进列的'-'法对\"POSIXt\"对象不适用"
 
-msgid "can only subtract numbers from POSIXt objects"
+#, fuzzy
+msgid "can only subtract numbers from \"POSIXt\" objects"
 msgstr "只能从POSIXt对象那儿减数值"
 
 msgid "unary '%s' not defined for \"POSIXt\" objects"
@@ -503,10 +503,12 @@ msgstr "*法的两个参数不能同时都是\"difftime\" 对象"
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "/法的第二个参数不能是\"difftime\" 对象"
 
-msgid "'from' must be a POSIXt object"
+#, fuzzy
+msgid "'from' must be a \"POSIXt\" object"
 msgstr "'from'一定得是POSIXt对象"
 
-msgid "'to' must be a POSIXt object"
+#, fuzzy
+msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to'一定得是POSIXt对象"
 
 msgid "'file' must be a character string or connection"
@@ -537,13 +539,15 @@ msgstr ""
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
 
-msgid "determinant not currently defined for complex matrices"
+#, fuzzy
+msgid "'determinant' not currently defined for complex matrices"
 msgstr "目前还不能算复数矩阵的行列式"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
 msgstr "如果'x'是矩阵的话不能直接设定'nrow'或'ncol'"
 
-msgid "'x' is an array, but not 1D."
+#, fuzzy
+msgid "'x' is an array, but not one-dimensional."
 msgstr "'x'阵列，却不是一维的"
 
 msgid "only matrix diagonals can be replaced"
@@ -587,19 +591,12 @@ msgstr "eigen里的矩阵不是正方形的"
 msgid "too large a matrix for EISPACK"
 msgstr ""
 
-msgid "'ch' returned code %d in 'eigen'"
-msgstr "'eigen'里'ch'回覆了代码%d"
-
-msgid "'rs' returned code %d in 'eigen'"
+#, fuzzy
+msgid "'%s' returned code %d in 'eigen'"
 msgstr "'eigen'里'rs'回覆了代码%d"
 
-msgid "'cg' returned code %d in 'eigen'"
-msgstr "'eigen'里'cg'回覆了代码%d"
-
-msgid "'rg' returned code %d in 'eigen'"
-msgstr "'eigen'里'rg'回覆了代码%d"
-
-msgid "invalid labels; length %d should be 1 or %d"
+#, fuzzy
+msgid "invalid 'labels'; length %d should be 1 or %d"
 msgstr "标记不对；长度%d应该是一或%d"
 
 msgid "number of levels differs"
@@ -610,9 +607,6 @@ msgstr "对因子没有意义"
 
 msgid "level sets of factors are different"
 msgstr "因子的层次集不同"
-
-msgid "invalid factor level, NAs generated"
-msgstr "因子层次有错，产生NA"
 
 msgid "invalid factor level, NA generated"
 msgstr "因子层次有错，产生了NA"
@@ -671,7 +665,8 @@ msgstr "'vec'内有NA值"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'的顺序一定得从小到大"
 
-msgid "using the first element of 'value' of type expression"
+#, fuzzy
+msgid "using the first element of 'value' of type \"expression\""
 msgstr "用种类表现'value'的第一个元素"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
@@ -700,9 +695,6 @@ msgstr "'zero.print'的长度一定得大于一"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print'只能取字符，逻辑或NULL值"
-
-msgid "'subset' must evaluate to logical"
-msgstr "'subset'必需可以被评估成为逻辑值"
 
 msgid "'subset' must be logical"
 msgstr "'subset'必需是逻辑值"
@@ -774,7 +766,8 @@ msgstr "程辑包%s是用R版本%s 来建造的"
 msgid "package %s was built for %s"
 msgstr "程辑包%s是为%s建造的"
 
-msgid "package %s is not installed for 'arch=%s'"
+#, fuzzy
+msgid "package %s is not installed for 'arch = %s'"
 msgstr "程辑包%s没有安装在'arch=%s'中"
 
 #, fuzzy
@@ -783,22 +776,19 @@ msgid ""
 msgstr "程辑包％s的许可证要求你在交互式会议时先接受它"
 
 #, fuzzy
-msgid "Package %s has a license that you need to accept after viewing"
+msgid "package %s has a license that you need to accept after viewing"
 msgstr "程辑包％s的许可证要求你在看完后接受它"
 
 #, fuzzy
 msgid ""
-"Package %s has a license that you need to accept:\n"
+"package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
 "程辑包％s的许可证要求你接受它:\n"
 "按照DESCRIPTION文件它是"
 
-msgid "License"
-msgstr "许可证"
-
 #, fuzzy
-msgid "License for package %s not accepted"
+msgid "license for package %s not accepted"
 msgstr "程辑包％s的许可证没有被接受"
 
 msgid "Attaching package: %s"
@@ -822,10 +812,12 @@ msgstr "%s不是有效的已经安装了的程序包"
 msgid "%s not found on search path, using pos = 2"
 msgstr "在搜索路径上找不到%s，用pos=2"
 
-msgid "package/namespace load failed for %s"
+#, fuzzy
+msgid "package or namespace load failed for %s"
 msgstr "%s程辑包/名字空间载入失败，"
 
-msgid "package %s does not have a NAMESPACE and should be re-installed"
+#, fuzzy
+msgid "package %s does not have a namespace and should be re-installed"
 msgstr "程辑包%s没有名字空间，应该重新安装"
 
 msgid "package %s already present in search()"
@@ -926,21 +918,17 @@ msgstr "空的(零字节)输入文件"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "输入有破损，LF被CR取代"
 
-msgid ""
-"file %s has magic number '%s'\n"
-"   Use of save versions prior to 2 is deprecated"
+msgid "file %s has magic number '%s'"
 msgstr ""
-"%s文件的魔号是%s\n"
-"   在R版本2号之前的保存功能不再有用"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr "在R版本2号之前的保存功能不再有用"
 
 msgid "bad 'file' argument"
 msgstr "'file'参数不对"
 
 msgid "'file' must be specified"
 msgstr "必需设定'file'的值"
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr "在R版本2号之前的保存功能不再有用"
 
 msgid "nothing specified to be save()d"
 msgstr "没有指定要save()的东西"
@@ -970,13 +958,15 @@ msgstr "[原来保存的工作空间已还原]"
 msgid "Attempting to load the environment %s"
 msgstr "试图载入%s环境"
 
-msgid "not found: using .GlobalEnv instead"
+#, fuzzy
+msgid "Specified environment not found: using '.GlobalEnv' instead"
 msgstr "找不到：用.GlobalEnv"
 
 msgid "invalid 'category' argument"
 msgstr "'category'参数有错"
 
-msgid "must specify formal argument names to vectorize"
+#, fuzzy
+msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "矢量化之前必需设定正式参数"
 
 msgid "'arg' must be NULL or a character vector"
@@ -1009,10 +999,12 @@ msgstr "'%s'不是函数，也不是字符，也不是符號"
 msgid "found non-function '%s'"
 msgstr "找到个非函数'%s'"
 
-msgid "attempt to set rownames on object with no dimensions"
+#, fuzzy
+msgid "attempt to set 'rownames' on an object with no dimensions"
 msgstr "不能给没有维度的对象设行名"
 
-msgid "attempt to set colnames on object with less than two dimensions"
+#, fuzzy
+msgid "attempt to set 'colnames' on an object with less than two dimensions"
 msgstr "不能给维度小于二的对名设列名"
 
 msgid "argument is not numeric or logical: returning NA"
@@ -1040,12 +1032,10 @@ msgstr "'by.x'和'by.y'设定了不同数目的列"
 msgid "additional arguments ignored in message()"
 msgstr "message()里附加参数略过不用"
 
-msgid "(loaded the methods namespace)"
-msgstr "(载入了methods名字空间)"
-
+#, fuzzy
 msgid ""
-"Tracing functions requires the methods package, but unable to load methods "
-"namespace"
+"tracing functions requires the 'methods' package, but unable to load the "
+"'methods' namespace"
 msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时候出了错"
 
 msgid "invalid to change the storage mode of a factor"
@@ -1063,7 +1053,8 @@ msgstr "已经连接上名字空间了"
 msgid "%s not found"
 msgstr "%s不存在"
 
-msgid "namespace %s is already sealed in loadNamespace"
+#, fuzzy
+msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "名字空间%s已经在loadNamespace封條了"
 
 #, fuzzy
@@ -1090,14 +1081,15 @@ msgstr "程辑包%s里的R写碼载入失败"
 
 #, fuzzy
 msgid ""
-"exportClassPattern specified in NAMESPACE but no matching classes in package "
-"%s"
+"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
+"package %s"
 msgstr "虽然exportClassPattern在NAMESPACE有设定但它在%s程辑包中没有类别定义"
 
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "在%s程辑包中%s类别指定被用于出口，但它的定义并不存在"
 
-msgid "No function found corresponding to methods exports from %s for: %s"
+#, fuzzy
+msgid "no function found corresponding to methods exports from %s for: %s"
 msgstr "从%s导出功能里找不到适用于%s的相应方法"
 
 msgid "in %s methods for export not found: %s"
@@ -1166,10 +1158,12 @@ msgstr "不能在封闭名字空间里进行出口加入"
 msgid "undefined exports: %s"
 msgstr "出口不存在："
 
-msgid "package %s has no NAMESPACE file"
+#, fuzzy
+msgid "package %s has no 'NAMESPACE' file"
 msgstr "程辑包%s 没有NAMESPACE这一文件"
 
-msgid "empty name in directive '%s' in NAMESPACE file"
+#, fuzzy
+msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "NAMESPACE文件里'%s'指示中有空的名字"
 
 #, fuzzy
@@ -1204,10 +1198,12 @@ msgstr "'%s'还没有编程实现"
 msgid "argument '%s' is not used (yet)"
 msgstr "'%s' 参数现在还没有用"
 
-msgid "'x' cannot be coerced to 'octmode'"
+#, fuzzy
+msgid "'x' cannot be coerced to \"octmode\""
 msgstr "不能强迫把'x'改变成'octmode'"
 
-msgid "'x' cannot be coerced to hexmode"
+#, fuzzy
+msgid "'x' cannot be coerced to \"hexmode\""
 msgstr "不能强迫把'x'改变成'hexmode'"
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1375,10 +1371,12 @@ msgstr ""
 "'sort.list'的'x'必需为原子值\n"
 "你是不是在串列上调用了'sort'函数？"
 
-msgid "method=\"quick\" is only for numeric 'x'"
+#, fuzzy
+msgid "method = \"quick\" is only for numeric 'x'"
 msgstr "method=\"quick\"只适用于数值的'x'"
 
-msgid "method=\"radix\" is only for integer 'x'"
+#, fuzzy
+msgid "method = \"radix\" is only for integer 'x'"
 msgstr " method=\"radix\"只适用于整数的'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -1409,7 +1407,7 @@ msgid "'%s' is not an existing file"
 msgstr "'%s'不存在"
 
 #, fuzzy
-msgid "Timestamp of %s has chamged"
+msgid "Timestamp of %s has changed"
 msgstr "时间戳'"
 
 msgid "additional arguments ignored in stop()"
@@ -1430,10 +1428,14 @@ msgstr "'indent'和'width'的值有错"
 msgid "probably wrong encoding in names(.) of column"
 msgstr "列名称的编码可能不对"
 
+msgid ","
+msgstr "，"
+
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv'的值必需为零或为ncol(x)"
 
-msgid "error %d in 'dsvdc'"
+#, fuzzy
+msgid "error %d in LINPACK subroutine 'dsvdc'"
 msgstr "'dsvdc'里的%d有错"
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
@@ -1462,7 +1464,8 @@ msgstr "'object'必需从\"table\"繼承类别"
 msgid "'x' must inherit from class %s"
 msgstr "'x'必需从\"summary.table\"繼承类别"
 
-msgid "cannot coerce into a table"
+#, fuzzy
+msgid "cannot coerce to a table"
 msgstr "不能强迫变表"
 
 msgid "'x' is not an array"
@@ -1488,10 +1491,12 @@ msgstr "處置程式必需是函数"
 msgid "no such element '%s'"
 msgstr "没有这样的单元'%s'"
 
-msgid "Removing"
+#, fuzzy
+msgid "Removing %s"
 msgstr "删除"
 
-msgid "Registering evaluate as low-level callback"
+#, fuzzy
+msgid "Registering 'evaluate' as low-level callback"
 msgstr "把评估登记为低阶回叫"
 
 msgid "user"
@@ -1516,7 +1521,8 @@ msgstr "版本设定不对"
 msgid "wrong argument"
 msgstr "参数不对"
 
-msgid "invalid value"
+#, fuzzy
+msgid "invalid 'value'"
 msgstr "无效值"
 
 msgid "unary '%s' not defined for \"numeric_version\" objects"
@@ -1609,21 +1615,6 @@ msgstr "错误：无法更换到目录"
 
 msgid "ERROR: no permission to remove from directory"
 msgstr "错误：没有从目录里删除的许可"
-
-msgid "T used instead of TRUE"
-msgstr "用T代替TRUE"
-
-msgid "F used instead of FALSE"
-msgstr "用F代替FALSE "
-
-msgid "items"
-msgstr "项目"
-
-msgid "have been removed from the search path"
-msgstr "在搜索路径上被删除"
-
-msgid "cannot find namespace environment"
-msgstr "找不到名字空间环境"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
@@ -1748,6 +1739,70 @@ msgstr[0] "用T代替TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "T used instead of TRUE"
+#~ msgstr "用T代替TRUE"
+
+#~ msgid "F used instead of FALSE"
+#~ msgstr "用F代替FALSE "
+
+#~ msgid "cannot find namespace environment"
+#~ msgstr "找不到名字空间环境"
+
+#~ msgid "items"
+#~ msgstr "项目"
+
+#~ msgid "have been removed from the search path"
+#~ msgstr "在搜索路径上被删除"
+
+#~ msgid "0 extent dimensions"
+#~ msgstr "零扩充维度"
+
+#~ msgid "Buggy version of Kinderman-Ramage generator used"
+#~ msgstr "Kinderman-Ramage任意数产生器可能有虫。"
+
+#~ msgid "Buggy version of Kinderman-Ramage generator is not allowed"
+#~ msgstr "不能用有虫的Kinderman-Ramage任意数产生器。"
+
+#~ msgid "you cannot be serious"
+#~ msgstr "你是不是在耍我？"
+
+#~ msgid "RHS must be list"
+#~ msgstr "等式右边必需是串列"
+
+#~ msgid "labels/breaks length conflict"
+#~ msgstr "label/breaks两个参数的长度不一样"
+
+#~ msgid "--> row.names NOT used"
+#~ msgstr "--> row.names不再有用"
+
+#~ msgid "'ch' returned code %d in 'eigen'"
+#~ msgstr "'eigen'里'ch'回覆了代码%d"
+
+#~ msgid "'cg' returned code %d in 'eigen'"
+#~ msgstr "'eigen'里'cg'回覆了代码%d"
+
+#~ msgid "'rg' returned code %d in 'eigen'"
+#~ msgstr "'eigen'里'rg'回覆了代码%d"
+
+#~ msgid "invalid factor level, NAs generated"
+#~ msgstr "因子层次有错，产生NA"
+
+#~ msgid "'subset' must evaluate to logical"
+#~ msgstr "'subset'必需可以被评估成为逻辑值"
+
+#~ msgid "License"
+#~ msgstr "许可证"
+
+#~ msgid ""
+#~ "file %s has magic number '%s'\n"
+#~ "   Use of save versions prior to 2 is deprecated"
+#~ msgstr ""
+#~ "%s文件的魔号是%s\n"
+#~ "   在R版本2号之前的保存功能不再有用"
+
+#~ msgid "(loaded the methods namespace)"
+#~ msgstr "(载入了methods名字空间)"
 
 #~ msgid "doc"
 #~ msgstr "文件"

@@ -54,7 +54,7 @@ function (groups = NULL, n = NULL, between.var = NULL, within.var = NULL,
     else if (is.null(sig.level))
 	sig.level <- uniroot(function(sig.level) eval(p.body) - power,
 			     c(1e-10, 1 - 1e-10))$root
-    else stop("internal error")
+    else stop("internal error", domain = NA)
     NOTE <- "n is number in each group"
     METHOD <- "Balanced one-way analysis of variance power calculation"
     structure(list(groups = groups, n = n, between.var = between.var,

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-28 08:32\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2012-09-27 21:45-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team:  <gnustats@gmail.com>\n"
@@ -80,7 +80,8 @@ msgstr "'%s'로의 '<<-' 할당에 대한 바인딩을 찾을 수 없습니다"
 msgid "wrong number of arguments to '%s'"
 msgstr "'%s'에 대한 인수들의 개수가 잘못되었습니다"
 
-msgid "more than one default provided in switch call"
+#, fuzzy
+msgid "more than one default provided in switch() call"
 msgstr "스위치 호출에서 1개 이상의 기본값이 제공됩니다"
 
 msgid "cannot compile a non-function"

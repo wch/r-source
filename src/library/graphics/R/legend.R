@@ -42,16 +42,14 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
         par(xpd=xpd)
     }
     title <- as.graphicsAnnot(title)
-    if(length(title) > 1) stop("invalid title")
+    if(length(title) > 1) stop("invalid 'title'")
     legend <- as.graphicsAnnot(legend)
     n.leg <- if(is.call(legend)) 1 else length(legend)
     if(n.leg == 0) stop("'legend' is of length 0")
     auto <-
 	if (is.character(x))
-	    match.arg(x, c("bottomright", "bottom", "bottomleft",
-			   "left",
-			   "topleft", "top", "topright",
-			   "right", "center"))
+	    match.arg(x, c("bottomright", "bottom", "bottomleft", "left",
+			   "topleft", "top", "topright", "right", "center"))
 	else NA
 
     if (is.na(auto)) {

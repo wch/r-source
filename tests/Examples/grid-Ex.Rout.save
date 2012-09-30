@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2011-11-17 r57686)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i686-pc-linux-gnu (32-bit)
 
@@ -1060,7 +1060,7 @@ List of 6
  $ vpDepth: num [1:8] 0 0 1 2 0 1 2 2
  $ gPath  : chr [1:8] "" "parent" "parent" "parent" ...
  $ vpPath : chr [1:8] "" "" "vp1" "vp1::vp2" ...
- $ type   : chr [1:8] "gTreeListing" "vpTreeListing" "vpListing" "vpUpListing" ...
+ $ type   : chr [1:8] "gTreeListing" "vpListing" "vpListing" "vpUpListing" ...
  - attr(*, "class")= chr "flatGridListing"
 > 
 > 
@@ -1863,10 +1863,10 @@ vp1::vp2
 > pushViewport(vp)
 > lapply(trace, function(t) grid.lines(t$x, t$y, gp=gpar(col="red")))
 [[1]]
-lines[GRID.lines.969] 
+lines[GRID.lines.971] 
 
 [[2]]
-lines[GRID.lines.970] 
+lines[GRID.lines.972] 
 
 > popViewport()
 > 
@@ -1881,7 +1881,7 @@ lines[GRID.lines.970]
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.632 0.022 2.682 0 0 
+Time elapsed:  2.57 0.154 2.747 0 0 
 > grDevices::dev.off()
 null device 
           1 

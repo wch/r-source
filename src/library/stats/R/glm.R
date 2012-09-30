@@ -111,7 +111,7 @@ glm <- function(formula, family = gaussian, data, weights,
                       control = control, intercept = TRUE))
         ## That fit might not have converged ....
         if(!fit2$converged)
-            warning("fitting to calculate the null deviance did not converge -- increase maxit?")
+            warning("fitting to calculate the null deviance did not converge -- increase 'maxit'?")
         fit$null.deviance <- fit2$deviance
     }
     if(model) fit$model <- mf
@@ -231,7 +231,8 @@ glm.fit <-
 
             if (all(!good)) {
                 conv <- FALSE
-                warning("no observations informative at iteration ", iter)
+                warning(gettextf("no observations informative at iteration %d",
+                                 iter), domain = NA)
                 break
             }
             z <- (eta - offset)[good] + (y - mu)[good]/mu.eta.val[good]

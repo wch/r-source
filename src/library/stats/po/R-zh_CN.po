@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:54\n"
+"POT-Creation-Date: 2012-09-30 16:22\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -29,16 +29,20 @@ msgstr "'acf'的长度必需是一或二"
 msgid "object not interpretable as a factor"
 msgstr "不能把对象解释成因子"
 
-msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
+#, fuzzy
+msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)"
 msgstr "无法拟合没有层次的模型('alpha'不能为0或FALSE) 。"
 
-msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
+#, fuzzy
+msgid "'alpha', 'beta' and 'gamma' must be within the unit interval"
 msgstr "'alpha', 'beta'和'gamma'必需在单位区间内。"
 
-msgid "data must be non-zero for multiplicative Holt-Winters."
+#, fuzzy
+msgid "data must be non-zero for multiplicative Holt-Winters"
 msgstr "乘法Holt-Winters的数据不能是零"
 
-msgid "need at least 2 periods to compute seasonal start values."
+#, fuzzy
+msgid "need at least 2 periods to compute seasonal start values"
 msgstr "计算季節性初始值至少需要两个周期的数据"
 
 #, fuzzy
@@ -73,7 +77,7 @@ msgid "all parameters were fixed"
 msgstr "所有参数值都是固定的"
 
 #, fuzzy
-msgid "possible convergence problem: optim gave code = %d %d"
+msgid "possible convergence problem: 'optim' gave code = %d and message %s"
 msgstr "可能遇到了收斂问题：optim信息code="
 
 msgid "no factors in the fitted model"
@@ -285,9 +289,6 @@ msgstr "MLE只为单变量序列实现"
 msgid "'order.max' must be >= 0"
 msgstr "'order.max'必需大于等于零"
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr "Burg的算法只为单变量序列实现"
-
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order'必需是长度为三的非负数值矢量"
 
@@ -361,12 +362,6 @@ msgstr "'x'不对"
 #, fuzzy
 msgid "invalid 'nb'"
 msgstr "'x'不对"
-
-msgid "sample is too sparse to find TD"
-msgstr "样本太稀疏，找不到TD"
-
-msgid "sample is too sparse to find alph2"
-msgstr "样本太稀疏，找不到alph2"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "在设定的頻寬值域内找不到解答"
@@ -573,9 +568,6 @@ msgstr "有限值的观察量不够"
 msgid "Cannot compute exact p-value with ties"
 msgstr "无法给连结计算精確p值"
 
-msgid "Cannot compute exact p-values with ties"
-msgstr "无法给连结計算精確p值"
-
 msgid "'formula' missing or invalid"
 msgstr "'formula'遺漏或有错"
 
@@ -597,7 +589,8 @@ msgstr "权数必需为非负值，而且不能全部都为零"
 msgid "length of 'center' must equal the number of columns in 'x'"
 msgstr "'center'的长度必需同'x'的列数相同"
 
-msgid "invalid 'tree' (merge component)"
+#, fuzzy
+msgid "invalid 'tree' ('merge' component)"
 msgstr "'tree'不对(将组件合并)"
 
 msgid "either 'k' or 'h' must be specified"
@@ -624,8 +617,9 @@ msgstr "长度为零的非叶子树"
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.dendrogram'必需用在系統樹圖上"
 
-msgid "we require a dendrogram"
-msgstr "需要系統樹圖"
+#, fuzzy
+msgid "'reorder.dendrogram' requires a dendrogram"
+msgstr "'order.dendrogram'必需用在系統樹圖上"
 
 msgid "invalid (length 0) node in dendrogram"
 msgstr "系統樹圖里的节点不对(长度为零)"
@@ -739,7 +733,8 @@ msgstr ""
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[]和prob[]必需是长度相等的矢量。"
 
-msgid "probabilities cannot be negative nor all 0."
+#, fuzzy
+msgid "probabilities cannot be negative nor all 0"
 msgstr "機率不能是负数，也不能全都是零。"
 
 msgid "'x' must be non-negative"
@@ -794,7 +789,8 @@ msgstr "没有这样的鏈結"
 msgid "link \"%s\" not available for poisson family; available links are %s"
 msgstr "Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
-msgid "negative values not allowed for the Poisson family"
+#, fuzzy
+msgid "negative values not allowed for the 'Poisson' family"
 msgstr "Poisson分布族不能用负数"
 
 msgid "ignoring prior weights"
@@ -804,7 +800,8 @@ msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr "quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
-msgid "negative values not allowed for the quasiPoisson family"
+#, fuzzy
+msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr "quasiPoisson分布族不能用负数"
 
 msgid "link \"%s\" not available for gaussian family; available links are %s"
@@ -827,7 +824,7 @@ msgstr "二项通用线性模型里出现了非整数的计数!"
 
 #, fuzzy
 msgid ""
-"for the binomial family, y must be a vector of 0 and 1's\n"
+"for the 'binomial' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
 
@@ -840,14 +837,15 @@ msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的�
 
 #, fuzzy
 msgid ""
-"for the quasibinomial family, y must be a vector of 0 and 1's\n"
+"for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
-msgid "non-positive values not allowed for the gamma family"
+#, fuzzy
+msgid "non-positive values not allowed for the 'gamma' family"
 msgstr "gamma分布族不允许有负值"
 
 msgid "using weights as shape parameters"
@@ -857,10 +855,12 @@ msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr "inverse.gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結%s"
 
-msgid "positive values only allowed for the inverse.gaussian family"
+#, fuzzy
+msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "inverse.gaussian分布族只允许正值"
 
-msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+#, fuzzy
+msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
 msgstr "'inverse.gaussian'分布族需要CRAN程序包'SuppDists'"
 
 msgid "using weights as inverse variances"
@@ -931,10 +931,10 @@ msgstr "所有组的层次都必需是有限的"
 msgid "not enough observations"
 msgstr "观察量不够"
 
-msgid "NA's are not allowed in groups or blocks"
-msgstr "分组或区组里不能有NA"
+msgid "NA's are not allowed in 'groups' or 'blocks'"
+msgstr "'groups'或'blocks'里不能有NA"
 
-msgid "y, groups and blocks must have the same length"
+msgid "'y', 'groups' and 'blocks' must have the same length"
 msgstr "'y', 'groups'和'blocks'的长度必需相同"
 
 msgid "not an unreplicated complete block design"
@@ -958,7 +958,8 @@ msgstr "'col.vars'设定不对"
 msgid "interactions are not allowed"
 msgstr "不允许有交互作用项"
 
-msgid "'formula' has '.' in both left and right hand side"
+#, fuzzy
+msgid "'formula' has '.' in both left and right hand sides"
 msgstr "'formula'的公式左右两边都有'.'"
 
 msgid "incorrect variable names in rhs of formula"
@@ -998,7 +999,7 @@ msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr "偏置的个数是%d，应该同观察量的个数%d相等"
 
 msgid ""
-"fitting to calculate the null deviance did not converge -- increase maxit?"
+"fitting to calculate the null deviance did not converge -- increase 'maxit'?"
 msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
@@ -1029,7 +1030,8 @@ msgstr "V(mu) 里有零"
 msgid "NAs in d(mu)/d(eta)"
 msgstr "d(mu)/d(eta) 里有NA"
 
-msgid "no observations informative at iteration"
+#, fuzzy
+msgid "no observations informative at iteration %d"
 msgstr "观察量不含信息，于迭代"
 
 msgid "non-finite coefficients at iteration %d"
@@ -1221,10 +1223,8 @@ msgstr "'x'数据不够"
 msgid "not enough 'y' data"
 msgstr "'y'数据不够"
 
-msgid "cannot compute exact p-values with ties"
-msgstr "无法精確計算带连结的p值"
-
-msgid "p-values will be approximate in the presence of ties"
+#, fuzzy
+msgid "p-value will be approximate in the presence of ties"
 msgstr "有连结的时候P-值将近似"
 
 msgid "'y' must be numeric or a function or a string naming a valid function"
@@ -1280,10 +1280,8 @@ msgstr ""
 "lm对象的'qr'组件不对。\n"
 " 其秩零，要么不应该调用lm(.., qr=FALSE)."
 
-msgid "family '"
-msgstr "族'"
-
-msgid "' not implemented"
+#, fuzzy
+msgid "family '%s' not implemented"
 msgstr "'还没有实现"
 
 msgid "calling anova.lm(<fake-lm-object>) ..."
@@ -1298,11 +1296,13 @@ msgstr "调用predict.lm(<fake-lm-object>) ..."
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"
 
-msgid "Predictions on current data refer to _future_ responses"
+#, fuzzy
+msgid "predictions on current data refer to _future_ responses"
 msgstr "用当前数据得到的预测结果对_未来_反应有用"
 
+#, fuzzy
 msgid ""
-"Assuming prediction variance inversely proportional to weights used for "
+"assuming prediction variance inversely proportional to weights used for "
 "fitting"
 msgstr "假设预测的方差同在拟和时所用的衡量成负比"
 
@@ -1379,8 +1379,9 @@ msgstr "没有可用来比较的模型"
 msgid "extra arguments discarded"
 msgstr "额外参数不用"
 
-msgid "logLik.lm only handles single responses"
-msgstr ""
+#, fuzzy
+msgid "'logLik.lm' does not support multiple responses"
+msgstr "'proj'还没有为多反应实现"
 
 msgid "no \"nobs\" attribute is available"
 msgstr "没有\"nobs\"这个属性"
@@ -1409,15 +1410,12 @@ msgstr "权数为零的观察量略过不用"
 msgid "'low' and 'high' cannot be both TRUE"
 msgstr "'low'和'high'不能同时都为TRUE"
 
-msgid "need multiple response"
+msgid "need multiple responses"
 msgstr "需要多个反应"
 
 #, fuzzy
 msgid "object must be of class %s or %s"
 msgstr "对象必需是\"manova\"或\"maov\"的类别"
-
-msgid "need multiple responses"
-msgstr "需要多个反应"
 
 msgid "residuals have rank %d < %d"
 msgstr "残差的秩 %d < %d"
@@ -1543,7 +1541,8 @@ msgstr "'contrasts.arg'参数不对"
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "没有变量'%s'，因此它的对比略过不用"
 
-msgid "using type=\"numeric\" with a factor response will be ignored"
+#, fuzzy
+msgid "using type = \"numeric\" with a factor response will be ignored"
 msgstr "在因子反应上用type=\"numeric\"的这一选项没有效果"
 
 msgid "invalid response type"
@@ -1579,11 +1578,12 @@ msgstr "f.upper = f(upper)的值为NA "
 msgid "f() values at end points not of opposite sign"
 msgstr "位于极点边的f()值之正负号不相反"
 
-msgid "control argument must be a named list"
+#, fuzzy
+msgid "'control' argument must be a named list"
 msgstr "控制参数必需是串列"
 
 #, fuzzy
-msgid "Logical 'hessian' argument not allowed.  See documentation."
+msgid "logical 'hessian' argument not allowed.  See documentation."
 msgstr "不能有逻辑值的`hessian'参数。请参考说明书。' "
 
 msgid "'params' has wrong length"
@@ -1616,7 +1616,8 @@ msgstr "参数初始估计值里有奇异梯度矩阵"
 msgid "'data' must be a list or an environment"
 msgstr "'data'必需是串列或是环境"
 
-msgid "No starting values specified"
+#, fuzzy
+msgid "no starting values specified"
 msgstr "没有设定初始值"
 
 #, fuzzy
@@ -1632,7 +1633,8 @@ msgstr "参数'subset'略过不用"
 msgid "argument 'na.action' will be ignored"
 msgstr "参数'na.action'略过不用"
 
-msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+#, fuzzy
+msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
@@ -1684,7 +1686,8 @@ msgstr " method = \"Brent\" 只适用于一维优化"
 msgid "'lower' and 'upper' must be finite values"
 msgstr "'lower'和'upper'必需都是有限值"
 
-msgid "Pooling of SD is incompatible with paired tests"
+#, fuzzy
+msgid "pooling of SD is incompatible with paired tests"
 msgstr "成双检验与合并SD不兼容"
 
 msgid "'x' must have 2 columns"
@@ -1698,7 +1701,7 @@ msgstr "组数不够"
 
 #, fuzzy
 msgid ""
-"Not plotting observations with leverage one:\n"
+"not plotting observations with leverage one:\n"
 "  %s"
 msgstr "不对杠杆效果为一的点绘图"
 
@@ -1729,7 +1732,8 @@ msgstr "'T'必需为非负数"
 msgid "not enough data"
 msgstr "数据不够"
 
-msgid "The case k > 2 is unimplemented"
+#, fuzzy
+msgid "the case k > 2 is unimplemented"
 msgstr "还没有实现k > 2情况"
 
 msgid "'r' must be a single positive number"
@@ -1741,9 +1745,6 @@ msgstr "'n', 'delta', 'sd', 'power',和'sig.level'之中只能有一个取NULL�
 
 msgid "'sig.level' must be numeric in [0, 1]"
 msgstr "'sig.level'必需是在[0, 1] 里的数值"
-
-msgid "internal error"
-msgstr "内部错误"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "'n', 'p1', 'p2', 'power',和'sig.level'之中只能有一个取NULL值"
@@ -1799,7 +1800,8 @@ msgstr "同时提供了'x'和'covmat': 'x'略过不用"
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp'只能在单位比变量多的情况下使用"
 
-msgid "cannot use cor=TRUE with a constant variable"
+#, fuzzy
+msgid "cannot use 'cor = TRUE' with a constant variable"
 msgstr "cor=TRUE不能用于常数变量用"
 
 msgid "covariance matrix is not non-negative definite"
@@ -1810,9 +1812,6 @@ msgstr "参数不包含'qr'组件"
 
 msgid "argument does not include an 'effects' component"
 msgstr "参数不包含'effects'组件"
-
-msgid "'proj' is not implemented for \"mlm\" fits"
-msgstr "'proj'还没有为\"mlm\"拟合实现"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj'还没有为多反应实现"
@@ -1837,12 +1836,6 @@ msgstr "'p'的单元必需在(0,1)里"
 
 msgid "y is empty or has only NAs"
 msgstr "y是空的或只含NA"
-
-msgid "NA's are not allowed in 'groups' or 'blocks'"
-msgstr "'groups'或'blocks'里不能有NA"
-
-msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr "'y', 'groups'和'blocks'的长度必需相同"
 
 msgid "'formula' missing"
 msgstr "没有'formula'"
@@ -1883,7 +1876,8 @@ msgstr "ref = %d必需在1L:%d里"
 msgid "'sep' must be a character string"
 msgstr "'sep'必需是字符串"
 
-msgid "Failed to guess time-varying variables from their names"
+#, fuzzy
+msgid "failed to guess time-varying variables from their names"
 msgstr "没有能够从它们的名字里来猜测时变参数"
 
 msgid "'varying' arguments must be the same length"
@@ -1904,12 +1898,14 @@ msgstr "没有'reshapeWide'这个属性，必需设定varying'"
 msgid "'varying' must be nonempty list or vector"
 msgstr "'varying'必需是非空串列或矢量"
 
-msgid "length of v.names does not evenly divide length of varying"
+#, fuzzy
+msgid "length of 'v.names' does not evenly divide length of 'varying'"
 msgstr "v.names的长度不能双数分除varying的长度"
 
+#, fuzzy
 msgid ""
-"length of varying must be the product of length of v.names and length of "
-"times"
+"length of 'varying' must be the product of length of 'v.names' and length of "
+"'times'"
 msgstr "varying的长度必需是v.names和times长度的乘積"
 
 #, fuzzy
@@ -1948,8 +1944,9 @@ msgstr "不能平滑非数值数据"
 msgid "attempt to smooth NA values"
 msgstr "不能平滑NA值"
 
-msgid "wrong endrule"
-msgstr "尺尾不对"
+#, fuzzy
+msgid "invalid 'endrule' argument"
+msgstr "'use'参数不对"
 
 msgid "invalid 'control.spar'"
 msgstr "'control.spar'不对"
@@ -1979,7 +1976,8 @@ msgstr "至少需要四个相互不同的'x'值"
 msgid "'cv' must not be NA when 'df' is specified"
 msgstr "当'df'有定义时'cv'不能是NA"
 
-msgid "crossvalidation with non-unique 'x' values seems doubtful"
+#, fuzzy
+msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr "用有重复的'x'来做crossvalidation好象不太对"
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
@@ -2010,7 +2008,8 @@ msgstr "NA lev[];很可能平滑参数'spar'的值太大了!"
 msgid "setting df = 1  __use with care!__"
 msgstr "设定df = 1， _小心使用!_"
 
-msgid "need result of smooth.spline(*, keep.data=TRUE)"
+#, fuzzy
+msgid "need result of smooth.spline(keep.data = TRUE)"
 msgstr "需要的是.spline(*, keep.data=TRUE) 的运算结果"
 
 msgid "type = \"partial\" is not yet implemented"
@@ -2185,7 +2184,8 @@ msgstr "'xy.labels'必需是逻辑值或是字符"
 msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
 msgstr "'frequency'和'deltat'都被设定，但它们的值相互矛盾"
 
-msgid "Frequency not changed"
+#, fuzzy
+msgid "'frequency' not changed"
 msgstr "頻率没有变化"
 
 msgid "bad value for 'start'"
@@ -2256,7 +2256,8 @@ msgstr "'x'和'w'的长度必需相同"
 msgid "not enough (finite) 'x' observations"
 msgstr "(有限)'x'观察量数目不够"
 
-msgid "Requested conf.level not achievable"
+#, fuzzy
+msgid "requested conf.level not achievable"
 msgstr "无法达到所要求的conf.level"
 
 msgid "cannot compute confidence interval when all observations are tied"
@@ -2270,6 +2271,9 @@ msgstr "有0时无法計算精確的p值"
 
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "有零时无法計算精確的置信区间"
+
+msgid "Requested conf.level not achievable"
+msgstr "无法达到所要求的conf.level"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "至少要提供'formula'和'data'中间的一个"
@@ -2370,8 +2374,8 @@ msgid_plural "unable to optimize from these starting values"
 msgstr[0] "无法用这些初始值进行最佳化运算"
 
 #, fuzzy
-msgid "'init'; must have 1 column"
-msgid_plural "'init'; must have 1 or %d columns"
+msgid "'init' must have 1 column"
+msgid_plural "'init' must have 1 or %d columns"
 msgstr[0] "'init'; 必需有一个或%d个列"
 
 #, fuzzy
@@ -2460,6 +2464,45 @@ msgstr[0] "删除了含NA, NaN或Inf的观察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d 个点"
+
+#~ msgid "Burg's algorithm only implemented for univariate series"
+#~ msgstr "Burg的算法只为单变量序列实现"
+
+#~ msgid "sample is too sparse to find TD"
+#~ msgstr "样本太稀疏，找不到TD"
+
+#~ msgid "sample is too sparse to find alph2"
+#~ msgstr "样本太稀疏，找不到alph2"
+
+#~ msgid "Cannot compute exact p-values with ties"
+#~ msgstr "无法给连结計算精確p值"
+
+#~ msgid "we require a dendrogram"
+#~ msgstr "需要系統樹圖"
+
+#~ msgid "NA's are not allowed in groups or blocks"
+#~ msgstr "分组或区组里不能有NA"
+
+#~ msgid "y, groups and blocks must have the same length"
+#~ msgstr "'y', 'groups'和'blocks'的长度必需相同"
+
+#~ msgid "cannot compute exact p-values with ties"
+#~ msgstr "无法精確計算带连结的p值"
+
+#~ msgid "family '"
+#~ msgstr "族'"
+
+#~ msgid "need multiple response"
+#~ msgstr "需要多个反应"
+
+#~ msgid "internal error"
+#~ msgstr "内部错误"
+
+#~ msgid "'proj' is not implemented for \"mlm\" fits"
+#~ msgstr "'proj'还没有为\"mlm\"拟合实现"
+
+#~ msgid "wrong endrule"
+#~ msgstr "尺尾不对"
 
 #~ msgid "upper scope does not include model term(s) %s"
 #~ msgstr "模型上範疇里没有这些词条%s "

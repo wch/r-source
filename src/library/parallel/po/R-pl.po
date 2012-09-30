@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:33\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -23,7 +23,8 @@ msgstr "niepoprawna wartość 'seed'"
 msgid "need at least one argument"
 msgstr "potrzeba co najmniej jednego argumentu"
 
-msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+#, fuzzy
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 "Wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
 "długości"
@@ -37,7 +38,8 @@ msgstr "'X' musi mieć nazwane wymiary"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
 
-msgid "no cluster supplied and none is registered"
+#, fuzzy
+msgid "no cluster 'cl' supplied and none is registered"
 msgstr "Klaster nie został dostarczony oraz żaden nie jest zarejestrowany"
 
 msgid "not a valid cluster"
@@ -45,12 +47,6 @@ msgstr "nie jest poprawnym klastrem"
 
 msgid "unknown cluster type"
 msgstr "nieznany typ klastra"
-
-msgid "socket cluster with %d nodes on hosts %s"
-msgstr "gniazdo klastra z %d węzłami na hostach %s"
-
-msgid "socket cluster with %d nodes on host %s"
-msgstr "gniazdo klastra z %d węzłami na hoscie %s"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "węzeł gniazda klastra na hoscie %s z pid %d"
@@ -65,7 +61,7 @@ msgid "'children' must be a list of processes or a single process"
 msgstr "'children' musi być listą procesów lub pojedynczym procesem"
 
 #, fuzzy
-msgid "'process' must be of the class %s"
+msgid "'process' must be of class %s"
 msgstr "'process' musi być klasy \"process\""
 
 msgid "'child' must be a valid child process"
@@ -83,6 +79,11 @@ msgstr "wywołania funkcji %d spowodowało błąd"
 msgid "all scheduled cores encountered errors in user code"
 msgstr "wszystkie zaplanowane jądra napotkały błędy w kodzie użytkownika"
 
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"Wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
+"długości"
+
 msgid "invalid 'jobs' argument"
 msgstr "niepoprawny argument 'jobs'"
 
@@ -99,6 +100,13 @@ msgstr "rozgałęzione klastry nie są obsługiwane w systemie Windows"
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "'mc.cores' > 1 nie jest wspierane w systemach Windows"
 
+#, fuzzy
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "gniazdo klastra z %d węzłami na hoscie %s"
+msgstr[1] "gniazdo klastra z %d węzłami na hoscie %s"
+msgstr[2] "gniazdo klastra z %d węzłami na hoscie %s"
+
 msgid ""
 "scheduled core %s encountered error in user code, all values of the job will "
 "be affected"
@@ -114,6 +122,9 @@ msgstr[1] ""
 msgstr[2] ""
 "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na "
 "wszystkie wartości zadań"
+
+#~ msgid "socket cluster with %d nodes on hosts %s"
+#~ msgstr "gniazdo klastra z %d węzłami na hostach %s"
 
 #~ msgid ","
 #~ msgstr ","

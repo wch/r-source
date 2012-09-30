@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:33\n"
 "PO-Revision-Date: 2012-03-06 21:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -24,7 +24,8 @@ msgstr "valeur incorrecte pour 'seed'"
 msgid "need at least one argument"
 msgstr "au moins un argument est requis"
 
-msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+#, fuzzy
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 "Les entrées de longueur nulle ne peuvent être mélangées à celles de longueur "
 "non nulle"
@@ -38,7 +39,8 @@ msgstr "'X' doit avoir des dimnames nommés"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "les éléments de 'MARGIN' ne sont pas tous des noms de dimensions"
 
-msgid "no cluster supplied and none is registered"
+#, fuzzy
+msgid "no cluster 'cl' supplied and none is registered"
 msgstr "pas de grappe fournie et aucune n'est enregistrée"
 
 msgid "not a valid cluster"
@@ -46,12 +48,6 @@ msgstr "groupe de processus invalide"
 
 msgid "unknown cluster type"
 msgstr "groupe de processus de type inconnu"
-
-msgid "socket cluster with %d nodes on hosts %s"
-msgstr "groupe de processus socket avec %d noeuds sur les hôtes %s"
-
-msgid "socket cluster with %d nodes on host %s"
-msgstr "groupe de processus socket avec %d noeuds sur l'hôte %s"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "noeud d'un groupe de processus socket sur l'hôte %s avec le pid %d"
@@ -66,7 +62,7 @@ msgid "'children' must be a list of processes or a single process"
 msgstr "'children' doit être une liste de processus ou un seul processus"
 
 #, fuzzy
-msgid "'process' must be of the class %s"
+msgid "'process' must be of class %s"
 msgstr "'process' doit être de classe \"process\""
 
 msgid "'child' must be a valid child process"
@@ -86,6 +82,11 @@ msgstr ""
 "tous les coeurs qui ont été programmés ont trouvé des erreurs dans le code "
 "utilisateur"
 
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"Les entrées de longueur nulle ne peuvent être mélangées à celles de longueur "
+"non nulle"
+
 msgid "invalid 'jobs' argument"
 msgstr "argument 'jobs' incorrect"
 
@@ -104,6 +105,12 @@ msgstr ""
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "'mc.cores' > 1 n'est pas supporté sous Windows"
 
+#, fuzzy
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "groupe de processus socket avec %d noeuds sur l'hôte %s"
+msgstr[1] "groupe de processus socket avec %d noeuds sur l'hôte %s"
+
 msgid ""
 "scheduled core %s encountered error in user code, all values of the job will "
 "be affected"
@@ -116,6 +123,9 @@ msgstr[0] ""
 msgstr[1] ""
 "les coeurs programmés %s ont rencontré des erreurs dans le code utilisateur, "
 "toutes les valeurs pour ces tâches seront affectées"
+
+#~ msgid "socket cluster with %d nodes on hosts %s"
+#~ msgstr "groupe de processus socket avec %d noeuds sur les hôtes %s"
 
 #~ msgid ","
 #~ msgstr ","

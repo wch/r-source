@@ -44,10 +44,10 @@ ks.test <-
         z <- cumsum(ifelse(order(w) <= n.x, 1 / n.x, - 1 / n.y))
         if(length(unique(w)) < (n.x + n.y)) {
             if (exact) {
-                warning("cannot compute exact p-values with ties")
+                warning("cannot compute exact p-value with ties")
                 exact <- FALSE
             } else
-                warning("p-values will be approximate in the presence of ties")
+                warning("p-value will be approximate in the presence of ties")
             z <- z[c(which(diff(sort(w)) != 0), n.x + n.y)]
             TIES <- TRUE
         }

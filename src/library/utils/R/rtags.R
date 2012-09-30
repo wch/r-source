@@ -150,7 +150,7 @@ rtags.file <-
     tokens <- lapply(elist, expr2token)
     startlines <- sapply(attr(elist, "srcref"), "[", 1L)
     if (length(tokens) != length(startlines))
-        stop("length mismatch: bug in code!")
+        stop("length mismatch: bug in code!", domain = NA)
     keep <- sapply(tokens, length) == 1L
     if (!any(keep)) return(invisible())
     tokens <- unlist(tokens[keep])

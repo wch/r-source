@@ -19,7 +19,7 @@
 cutree <- function(tree, k=NULL, h=NULL)
 {
     if(is.null(n1 <- nrow(tree$merge)) || n1 < 1)
-        stop("invalid 'tree' (merge component)")
+        stop("invalid 'tree' ('merge' component)")
     n <- n1 + 1
     if(is.null(k) && is.null(h))
         stop("either 'k' or 'h' must be specified")

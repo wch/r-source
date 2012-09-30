@@ -200,9 +200,9 @@ SweaveReadFile <- function(file, syntax, encoding = "")
             stop(gettextf("no Sweave file with name %s found",
                           sQuote(file[1L])), domain = NA)
         else if (length(f) > 1L)
-            stop(paste(gettextf("%d Sweave files for basename %s found:",
+            stop(paste(gettextf("%d Sweave files for basename %s found",
                                 length(f), sQuote(file[1L])),
-                       paste("\n         ", f, collapse="")),
+                       paste(":\n         ", f, collapse="")),
                  domain = NA)
     }
 

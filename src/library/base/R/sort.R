@@ -136,11 +136,11 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
         if(is.numeric(x))
             return(sort(x, na.last = na.last, decreasing = decreasing,
                         method = "quick", index.return = TRUE)$ix)
-        else stop("method=\"quick\" is only for numeric 'x'")
+        else stop("method = \"quick\" is only for numeric 'x'")
     }
     if(method == "radix") {
         if(!typeof(x) == "integer") # we do want to allow factors here
-            stop("method=\"radix\" is only for integer 'x'")
+            stop("method = \"radix\" is only for integer 'x'")
         if(is.na(na.last))
             return(.Internal(radixsort(x[!is.na(x)], TRUE, decreasing)))
         else

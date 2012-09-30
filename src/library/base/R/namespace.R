@@ -306,7 +306,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                environmentIsLocked(ns)
             ns <- asNamespace(ns, base.OK = FALSE)
             if (namespaceIsSealed(ns))
-                stop(gettextf("namespace %s is already sealed in loadNamespace",
+                stop(gettextf("namespace %s is already sealed in 'loadNamespace'",
                               sQuote(getNamespaceName(ns))),
                      call. = FALSE, domain = NA)
             lockEnvironment(ns, TRUE)
@@ -550,7 +550,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             if( length(pClasses) ) {
                 good <- vapply(pClasses, methods:::isClass, NA, where = ns)
                 if( !any(good) && length(nsInfo$exportClassPatterns))
-                    warning(gettextf("exportClassPattern specified in NAMESPACE but no matching classes in package %s", sQuote(package)),
+                    warning(gettextf("'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s", sQuote(package)),
                             call. = FALSE, domain = NA)
                 expClasses <- c(expClasses, pClasses[good])
             }
@@ -576,7 +576,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             if(length(addGenerics)) {
                 nowhere <- sapply(addGenerics, function(what) !exists(what, mode = "function", envir = ns))
                 if(any(nowhere)) {
-                    warning(gettextf("No function found corresponding to methods exports from %s for: %s",
+                    warning(gettextf("no function found corresponding to methods exports from %s for: %s",
                                      sQuote(package),
                                      paste(sQuote(sort(unique(addGenerics[nowhere]))), collapse = ", ")),
                          domain = NA, call. = FALSE)
@@ -1134,7 +1134,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 	    parse(con, srcfile=NULL)
         } else parse(nsFile, srcfile=NULL)
     else if (mustExist)
-        stop(gettextf("package %s has no NAMESPACE file", sQuote(package)),
+        stop(gettextf("package %s has no 'NAMESPACE' file", sQuote(package)),
              domain = NA)
     else directives <- NULL
     exports <- character()
@@ -1154,7 +1154,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 	asChar <- function(cc) {
 	    r <- as.character(cc)
 	    if(any(r == ""))
-		stop(gettextf("empty name in directive '%s' in NAMESPACE file",
+		stop(gettextf("empty name in directive '%s' in 'NAMESPACE' file",
 			      as.character(e[[1L]])),
 		     domain = NA)
 	    r

@@ -95,7 +95,7 @@ smooth.spline <-
 	stop("'cv' must not be NA when 'df' is specified")
     CV <- !is.na(cv) && cv
     if(CV && nx < n)
-        warning("crossvalidation with non-unique 'x' values seems doubtful")
+        warning("cross-validation with non-unique 'x' values seems doubtful")
     r.ux <- ux[nx] - ux[1L]
     xbar <- (ux - ux[1L])/r.ux           # scaled to [0,1]
     if(all.knots) {
@@ -218,7 +218,7 @@ smooth.spline <-
 
 fitted.smooth.spline <- function(object, ...) {
     if(!is.list(dat <- object$data))
-        stop("need result of smooth.spline(*, keep.data=TRUE)")
+        stop("need result of smooth.spline(keep.data = TRUE)")
     ## note that object$x == unique(sort(object$data$x))
     object$y[match(dat$x, object$x)]
 }
@@ -229,7 +229,7 @@ residuals.smooth.spline <-
 {
     type <- match.arg(type)
     if(!is.list(dat <- object$data))
-        stop("need result of smooth.spline(*, keep.data=TRUE)")
+        stop("need result of smooth.spline(keep.data = TRUE)")
     r <- dat$y - object$y[match(dat$x, object$x)]
     ## this rest is `as' residuals.lm() :
     res <- switch(type,

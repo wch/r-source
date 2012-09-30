@@ -2533,7 +2533,7 @@ notifyBadAssignFun <- function(fun, cntxt) {
 
 notifyMultipleSwitchDefaults <- function(ndflt, cntxt)
     if (! suppressAll(cntxt))
-        cntxt$warn(gettext("more than one default provided in switch call"),
+        cntxt$warn(gettext("more than one default provided in switch() call"),
                    cntxt)
 
 

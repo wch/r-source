@@ -23,12 +23,12 @@ manova <- function(...)
     result <- eval(fcall, parent.frame())
     if(inherits(result, "aovlist")) {
         for(i in seq_along(result)) {
-            if(!inherits(result[[i]], "maov")) stop("need multiple response")
+            if(!inherits(result[[i]], "maov")) stop("need multiple responses")
             class(result[[i]]) <- c("manova", oldClass(result[[i]]))
         }
         attr(result, "call") <- Call
     } else {
-        if(!inherits(result, "maov")) stop("need multiple response")
+        if(!inherits(result, "maov")) stop("need multiple responses")
         class(result) <- c("manova", oldClass(result))
         result$call <- Call
     }

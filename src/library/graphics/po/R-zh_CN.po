@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -129,7 +129,8 @@ msgstr "'given.values'值不对"
 msgid "rows * columns too small"
 msgstr "行 * 列的结果太小"
 
-msgid "Missing rows"
+#, fuzzy
+msgid "Missing rows: %s"
 msgstr "缺少行"
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
@@ -216,7 +217,8 @@ msgstr "'probability'是'!freq'的化名，因此它们应该是一样的。"
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "有些'x'值没有被计数；有可能是因为'breaks'没有跨距整个'x'的范围"
 
-msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
+#, fuzzy
+msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr "图形的面积不对 -- 用freq=FALSE"
 
 msgid "'x' is wrongly structured"
@@ -237,7 +239,8 @@ msgstr "z的限制不对"
 msgid "must have one more break than colour"
 msgstr "数据间隔的数目必需比颜色要多一个"
 
-msgid "breaks must all be finite"
+#, fuzzy
+msgid "'breaks' must all be finite"
 msgstr "数据间隔值不能有无限的"
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
@@ -253,10 +256,11 @@ msgstr "'respect'要么是逻辑值，要么是同'mat'大小一样的矩阵"
 #, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n = %d"
+"to each of the values {1 ... %d}"
 msgstr "格式矩阵至少要有对{1..n}里每一个值的参考值；但这里n ="
 
-msgid "invalid title"
+#, fuzzy
+msgid "invalid 'title'"
 msgstr "标题不对"
 
 msgid "'legend' is of length 0"
@@ -386,7 +390,8 @@ msgstr "'x'要么是矩阵，要么是数据框"
 msgid "data in 'x' must be numeric"
 msgstr "'x'里的数据必需为数值"
 
-msgid "nrow * ncol <  number of observations"
+#, fuzzy
+msgid "'nrow * ncol' is less than the number of observations"
 msgstr "nrow乘ncol不能小于观测量的数目"
 
 msgid "labels do not make sense for a single location"
@@ -422,13 +427,16 @@ msgstr "'number'的长度必需同'x'和'y'的长度相同"
 msgid "exactly one symbol type must be specified"
 msgstr "只能设定一个符号种类"
 
-msgid "x log scale:  xinch() is non-sense"
+#, fuzzy
+msgid "x log scale:  xinch() is nonsense"
 msgstr "x对数尺度：xinch()没有意义"
 
-msgid "y log scale:  yinch() is non-sense"
+#, fuzzy
+msgid "y log scale:  yinch() is nonsense"
 msgstr "y对数尺度：yinch()没有意义"
 
-msgid "log scale:  xyinch() is non-sense"
+#, fuzzy
+msgid "log scale:  xyinch() is nonsense"
 msgstr "对数尺度：xyinch()没有意义"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"

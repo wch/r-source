@@ -136,7 +136,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
             f <- available_packages_filters_db[[f[1L]]]
         }
         if(!is.function(f))
-            stop("Invalid 'filters' argument.")
+            stop("invalid 'filters' argument.")
         res <- f(res)
     }
 

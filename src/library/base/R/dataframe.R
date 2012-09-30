@@ -138,7 +138,7 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
 }
 
 as.data.frame.default <- function(x, ...)
-    stop(gettextf("cannot coerce class \"%s\" into a data.frame",
+    stop(gettextf("cannot coerce class \"%s\" to a data.frame",
                   deparse(class(x))),
          domain = NA)
 
@@ -379,9 +379,9 @@ data.frame <-
 	else function(current, new, i) {
 	    if(is.null(current)) {
 		if(anyDuplicated(new)) {
-		    warning("some row.names duplicated: ",
-                            paste(which(duplicated(new)), collapse=","),
-                            " --> row.names NOT used")
+		    warning(gettextf("some row.names duplicated: %s --> row.names NOT used",
+                                     paste(which(duplicated(new)), collapse=",")),
+                            domain = NA)
 		    current
 		} else new
 	    } else current
@@ -398,9 +398,10 @@ data.frame <-
             if(any(is.na(row.names)))
                 stop("row names contain missing values")
             if(anyDuplicated(row.names))
-                stop("duplicate row.names: ",
-                     paste(unique(row.names[duplicated(row.names)]),
-                           collapse = ", "))
+                stop(gettextf("duplicate row.names: %s",
+                              paste(unique(row.names[duplicated(row.names)]),
+                                    collapse = ", ")),
+                     domain = NA)
         } else row.names <- integer()
 	return(structure(list(), names = character(),
                          row.names = row.names,
@@ -495,7 +496,7 @@ data.frame <-
                 row.names <- match(row.names, vnames, 0L)
             if(length(row.names) != 1L ||
                row.names < 1L || row.names > length(vnames))
-                stop("row.names should specify one of the variables")
+                stop("'row.names' should specify one of the variables")
             i <- row.names
             row.names <- value[[i]]
             value <- value[ - i]
@@ -513,9 +514,10 @@ data.frame <-
         if(any(is.na(row.names)))
             stop("row names contain missing values")
         if(anyDuplicated(row.names))
-            stop("duplicate row.names: ",
-                 paste(unique(row.names[duplicated(row.names)]),
-                       collapse = ", "))
+            stop(gettextf("duplicate row.names: %s",
+                          paste(unique(row.names[duplicated(row.names)]),
+                                collapse = ", ")),
+                 domain = NA)
     }
     attr(value, "row.names") <- row.names
     attr(value, "class") <- "data.frame"
@@ -537,7 +539,7 @@ data.frame <-
         warning("named arguments other than 'drop' are discouraged")
 
     if(Narg < 3L) {  # list-like indexing or matrix indexing
-        if(!mdrop) warning("drop argument will be ignored")
+        if(!mdrop) warning("'drop' argument will be ignored")
 	if(missing(i)) return(x)
 	if(is.matrix(i))
 	    return(as.matrix(x)[i])  # desperate measures
@@ -741,7 +743,7 @@ data.frame <-
                 if(N > 1L && N < nreplace && (nreplace %% N) == 0L)
                     value <- rep(value, length.out = nreplace)
                 if(N > 1L && (length(value) != nreplace))
-                    stop("rhs is the wrong length")
+                    stop("'value' is the wrong length")
                 n <- 0L
                 nv <- nrow(x)
                 for(v in seq_len(dim(i)[2L])) {

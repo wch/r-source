@@ -115,7 +115,7 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     ## bump it up if below acceptable threshold
     while (init.n < min.n) {
         init.i <- init.i - 1L
-        if (init.i == 0) stop("range too small for min.n")
+        if (init.i == 0) stop("range too small for 'min.n'")
         init.at <- calcSteps(steps[[init.i]])
         init.n <- length(init.at) - 1L
     }

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -122,7 +122,7 @@ msgstr ""
 msgid "rows * columns too small"
 msgstr ""
 
-msgid "Missing rows"
+msgid "Missing rows: %s"
 msgstr ""
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
@@ -206,7 +206,7 @@ msgstr ""
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr ""
 
-msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
+msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr ""
 
 msgid "'x' is wrongly structured"
@@ -227,7 +227,7 @@ msgstr ""
 msgid "must have one more break than colour"
 msgstr ""
 
-msgid "breaks must all be finite"
+msgid "'breaks' must all be finite"
 msgstr ""
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
@@ -239,10 +239,10 @@ msgstr ""
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 
-msgid "layout matrix must contain at least one reference\nto each of the values {1..n}; here  n = %d"
+msgid "layout matrix must contain at least one reference\nto each of the values {1 ... %d}"
 msgstr ""
 
-msgid "invalid title"
+msgid "invalid 'title'"
 msgstr ""
 
 msgid "'legend' is of length 0"
@@ -371,7 +371,7 @@ msgstr ""
 msgid "data in 'x' must be numeric"
 msgstr ""
 
-msgid "nrow * ncol <  number of observations"
+msgid "'nrow * ncol' is less than the number of observations"
 msgstr ""
 
 msgid "labels do not make sense for a single location"
@@ -407,13 +407,13 @@ msgstr ""
 msgid "exactly one symbol type must be specified"
 msgstr ""
 
-msgid "x log scale:  xinch() is non-sense"
+msgid "x log scale:  xinch() is nonsense"
 msgstr ""
 
-msgid "y log scale:  yinch() is non-sense"
+msgid "y log scale:  yinch() is nonsense"
 msgstr ""
 
-msgid "log scale:  xyinch() is non-sense"
+msgid "log scale:  xyinch() is nonsense"
 msgstr ""
 
 msgid        "Outlier (%s) in boxplot %d is not drawn"

@@ -390,7 +390,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
     .Call(C_port_ivset, 1, iv, v)
     if (length(control)) {
 	if (!is.list(control) || is.null(nms <- names(control)))
-	    stop("control argument must be a named list")
+	    stop("'control' argument must be a named list")
 	## remove those components that do not apply here
 	for(noN in intersect(nms, c("tol", "minFactor", "warnOnly", "printEval")))
 	    control[[noN]] <- NULL
@@ -496,7 +496,7 @@ nls <-
             if(missing(start)) {
                 if(algorithm == "plinear")
                     ## TODO: only specify values for the non-lin. parameters
-                    stop("No starting values specified")
+                    stop("no starting values specified")
                 ## Provide some starting values instead of erroring out later;
                 ## '1' seems slightly better than 0 (which is often invalid):
                 warning("No starting values specified for some parameters.\n",
@@ -594,7 +594,7 @@ nls <-
     ## Iterate
     if (algorithm != "port") {
 	if (!missing(lower) || !missing(upper))
-	    warning('Upper or lower bounds ignored unless algorithm = "port"')
+	    warning('upper and lower bounds ignored unless algorithm = "port"')
         convInfo <- .Call(C_nls_iter, m, ctrl, trace)
 	nls.out <- list(m = m, convInfo = convInfo,
 			data = substitute(data), call = match.call())

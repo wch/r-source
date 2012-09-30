@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:33\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 msgid "need at least one argument"
 msgstr ""
 
-msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 
 msgid "dim(X) must have a positive length"
@@ -29,19 +29,13 @@ msgstr ""
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr ""
 
-msgid "no cluster supplied and none is registered"
+msgid "no cluster 'cl' supplied and none is registered"
 msgstr ""
 
 msgid "not a valid cluster"
 msgstr ""
 
 msgid "unknown cluster type"
-msgstr ""
-
-msgid "socket cluster with %d nodes on hosts %s"
-msgstr ""
-
-msgid "socket cluster with %d nodes on host %s"
 msgstr ""
 
 msgid "node of a socket cluster on host %s with pid %d"
@@ -56,7 +50,7 @@ msgstr ""
 msgid "'children' must be a list of processes or a single process"
 msgstr ""
 
-msgid "'process' must be of the class %s"
+msgid "'process' must be of class %s"
 msgstr ""
 
 msgid "'child' must be a valid child process"
@@ -74,6 +68,9 @@ msgstr ""
 msgid "all scheduled cores encountered errors in user code"
 msgstr ""
 
+msgid "Zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+
 msgid "invalid 'jobs' argument"
 msgstr ""
 
@@ -88,6 +85,11 @@ msgstr ""
 
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr ""
+
+msgid        "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0]    ""
+msgstr[1]    ""
 
 msgid        "scheduled core %s encountered error in user code, all values of the job will be affected"
 msgid_plural "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"

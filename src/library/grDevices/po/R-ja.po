@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2011-10-22 19:11+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -50,19 +50,24 @@ msgstr ""
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr " 'gamma' はスカラーまたは 'sRGB' でなければなりません "
 
-msgid "Color space converter:"
+#, fuzzy
+msgid "Color space converter: %s"
 msgstr " 色空間変換器: "
 
-msgid "Reference white:"
+#, fuzzy
+msgid "Reference white: %s"
 msgstr " 基準白色: "
 
-msgid "display gamma"
+#, fuzzy
+msgid "display gamma = %s"
 msgstr " ガンマ補正 "
 
-msgid "'from' must be a colorConverter or string"
+#, fuzzy
+msgid "'from' must be a \"colorConverter\" object or a string"
 msgstr " 'from' は colorConverter または文字列でなければなりません "
 
-msgid "'to' must be a colorConverter or string"
+#, fuzzy
+msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr " 'to' は colorConverter または文字列でなければなりません "
 
 #, fuzzy
@@ -73,7 +78,8 @@ msgstr " 'from.ref.white' が以下の定義と一致しません:  "
 msgid "'to.ref.white' disagrees with definition of %s"
 msgstr " 'to.ref.white' が以下の定義と一致しません： "
 
-msgid "color spaces use different reference whites."
+#, fuzzy
+msgid "color spaces use different reference whites"
 msgstr " 色空間(color spaces)は異なった基準白色を使っています "
 
 msgid "'name' must be a character vector"
@@ -100,14 +106,11 @@ msgstr " 'device' は関数でなければなりません "
 msgid "no device to print from"
 msgstr " 以下からプリントするためのデバイスがありません:  "
 
-msgid "can only print from screen device"
-msgstr " スクリーンデバイスからしかプリントすることが出来ません "
+msgid "can only print from a screen device"
+msgstr " スクリーンデバイスからは印刷しか出来ません "
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr " 'width' と 'height' のどちらか一つを指定する必要があります "
-
-msgid "can only print from a screen device"
-msgstr " スクリーンデバイスからは印刷しか出来ません "
 
 msgid "dev.control() called without an open graphics device"
 msgstr ""
@@ -151,7 +154,8 @@ msgstr " 存在しない '%s' をリセットすることは出来ません "
 msgid "invalid options in '%s'"
 msgstr " '%s' 中に不正なオプションがあります  "
 
-msgid "NOT changing"
+#, fuzzy
+msgid "NOT changing %s"
 msgstr " 変更しません "
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
@@ -165,9 +169,6 @@ msgstr " 不正な 'family' 引数です "
 
 msgid "invalid 'file'"
 msgstr " 不正な 'file' です "
-
-msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr " 'maxRasters'はもう不要です。今後は無視されます。 "
 
 msgid "invalid PDF version"
 msgstr " 不正な PDF のバージョンです "
@@ -220,7 +221,8 @@ msgstr " 不正な出力書式です "
 msgid "status %d in running command '%s'"
 msgstr " 状態 %d が命令 '%s' 実行中に起きました "
 
-msgid "range too small for min.n"
+#, fuzzy
+msgid "range too small for 'min.n'"
 msgstr " min.n に対しては小さすぎるレンジです "
 
 msgid "A raster matrix must be character, or numeric, or logical"
@@ -397,6 +399,12 @@ msgstr[0] " %d 個の正でない y の値が対数プロットから除かれ�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] " %d 個の正でない x の値が対数プロットから除かれました "
+
+#~ msgid "can only print from screen device"
+#~ msgstr " スクリーンデバイスからしかプリントすることが出来ません "
+
+#~ msgid "'maxRasters' is no longer needed, and will be ignored"
+#~ msgstr " 'maxRasters'はもう不要です。今後は無視されます。 "
 
 #~ msgid "The 'gamma' argument is deprecated and has no effect"
 #~ msgstr " 引数 'gamma' は廃止予定です、適用されません "

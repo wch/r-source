@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -26,7 +26,8 @@ msgstr " '%s' に対するドキュメントがパッケージ  '%s' 中に見�
 msgid "document not found"
 msgstr " ドキュメントが見付かりません "
 
-msgid "A search query has been submitted to"
+#, fuzzy
+msgid "A search query has been submitted to %s"
 msgstr " 検索問い合わせが以下に発行されました  "
 
 msgid "The results page should open in your browser shortly"
@@ -38,7 +39,8 @@ msgstr " 未知のチャンク '%s' の参照  "
 msgid "no Sweave file with name %s found"
 msgstr " 名前が '%s' の Sweave ファイルはありません "
 
-msgid "%d Sweave files for basename %s found:"
+#, fuzzy
+msgid "%d Sweave files for basename %s found"
 msgstr " %d 個の Sweve ファイルが基本名 '%s' に対して見付かりました: "
 
 msgid "more than one syntax specification found, using the first one"
@@ -97,7 +99,8 @@ msgstr " 'strip.white' オプションの値は小文字でなければなりま
 msgid "elements of 'what' after the first will be ignored"
 msgstr " 'what' の要素の最初のもの以降は無視されます "
 
-msgid "No suitable spell check program found."
+#, fuzzy
+msgid "No suitable spell-checker program found"
 msgstr " 適当なスペルチェックプログラムが見つかりません． "
 
 msgid "Filter '%s' is not available."
@@ -121,6 +124,9 @@ msgstr ""
 " aspellの実行は失敗しました: \n"
 " %s "
 
+msgid "No suitable spell check program found."
+msgstr " 適当なスペルチェックプログラムが見つかりません． "
+
 msgid ""
 "Use <code> %s </code> \n"
 " to list the vignettes in all <strong>available</strong> packages."
@@ -132,7 +138,8 @@ msgstr ""
 msgid "No vignettes found by %s"
 msgstr " ビニエット(vignette)が見付かりません "
 
-msgid "Package %s: DESCRIPTION not found"
+#, fuzzy
+msgid "Package %s: DESCRIPTION file not found"
 msgstr " パッケージ %s: DESCRIPTION が見つかりません "
 
 msgid "'file' must be NULL, a character string or a connection"
@@ -159,7 +166,8 @@ msgstr " %s か %s のどちらかを使いますが，両方ではありませ�
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr " %s/%s の代わりに %s/%s/%s を使うことをおすすめします． "
 
-msgid "method is just applicable to %s objects"
+#, fuzzy
+msgid "method is only applicable to %s objects"
 msgstr " メソッドは %s オブジェクトだけに適用可能です． "
 
 #, fuzzy
@@ -208,16 +216,11 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-msgid "m < 0"
-msgstr " m < 0 "
-
-msgid "n < m"
-msgstr " n < m "
-
 msgid "'FUN' must be a function or NULL"
 msgstr " 'FUN' は関数か NULL でなければなりません "
 
-msgid "Can't handle S4 methods yet"
+#, fuzzy
+msgid "cannot handle S4 methods yet"
 msgstr "S4メソッドはまだ扱えません "
 
 msgid "'package' must be a character string or NULL"
@@ -255,14 +258,11 @@ msgstr " 'dataentry' に対する誤った引数 "
 msgid "could not restore type information"
 msgstr " 型情報を再構成出来ませんでした "
 
-msgid "modes argument ignored"
-msgstr " モード引数が無視されます "
+msgid "'modes' argument ignored"
+msgstr " 'modes' 引数は無視されます "
 
 msgid "'names' argument ignored"
 msgstr " 'names' 引数は無視されます "
-
-msgid "'modes' argument ignored"
-msgstr " 'modes' 引数は無視されます "
 
 msgid "could not restore variables properly"
 msgstr " 変数を正しく再構成できませんでした "
@@ -328,7 +328,12 @@ msgstr " 編集された行名は重複しており、無視されます "
 msgid "invalid input matrix"
 msgstr " 不正な入力行列 "
 
-msgid "class(es) of 'name' will be discarded"
+#, fuzzy
+msgid "class of 'name' will be discarded"
+msgstr " 'name'のクラスは破棄されます "
+
+#, fuzzy
+msgid "classes of 'name' will be discarded"
 msgstr " 'name'のクラスは破棄されます "
 
 msgid "cannot edit NULL row names"
@@ -349,11 +354,9 @@ msgstr " 行番号が欠けています "
 msgid "'fix' requires a name"
 msgstr " 'fix' は名前を必要とします "
 
-msgid "too many list items (at most up to number 26)"
+#, fuzzy
+msgid "too many list items (at most up to %d)"
 msgstr " リストの項目が多すぎます（最大でも26です） "
-
-msgid "too many list items (at most up to number 3899)"
-msgstr " リストの項目が多すぎます（最大でも3899です） "
 
 msgid "no vector columns were selected"
 msgstr " ベクタの列が選択されていません "
@@ -444,32 +447,14 @@ msgstr " 不正確なタイプ指定です "
 msgid "argument 'help.db' is deprecated"
 msgstr " 引数 'help.db' は廃止されました  "
 
-msgid "Packages {readRDS() sequentially}:"
-msgstr " パッケージ {readRDS() sequentially}: "
-
-msgid "."
-msgstr " . "
-
 msgid "could not find package %s"
 msgstr " パッケージ %s を見付けることが出来ませんでした "
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr " パッケージ %s は空の hsearch データを持っています - 奇妙ですが "
 
-msgid "reencoding ..."
-msgstr " エンコーディングし直しています ... "
-
-msgid "done"
-msgstr " 完了 "
-
 msgid "removing all entries with invalid multi-byte character data"
 msgstr " 不正な多バイト文字データを持つ全ての項目を取り除いています "
-
-msgid "saving the database ..."
-msgstr " データベースを保存しています ... "
-
-msgid "... database rebuilt"
-msgstr " ...データベースの再構築 "
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
@@ -528,8 +513,8 @@ msgstr ""
 msgid "cannot update HTML package index"
 msgstr " HTML パッケージ索引を更新出来ません "
 
-msgid "Making packages.html  ..."
-msgstr " packages.htmlの作成 "
+msgid "done"
+msgstr " 完了 "
 
 msgid "menu() cannot be used non-interactively"
 msgstr " menu() は対話的にしか使用できません "
@@ -592,9 +577,10 @@ msgstr " 如何なる R オブジェクトも指定されていないか利用�
 msgid "directory '%s' already exists"
 msgstr " ディレクトリ '%s' は既に存在します "
 
+#, fuzzy
 msgid ""
-"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
-"the code_files= argument"
+"generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the 'code_files' argument"
 msgstr ""
 " ジェネリック関数と他のS4オブジェクト（例えば %s）をダンプできません。 "
 "code_files = argumentを使ってください。 "
@@ -602,7 +588,8 @@ msgstr ""
 msgid "unable to access index for repository %s"
 msgstr " リポジトリー %s に対する索引にアクセスできません "
 
-msgid "Invalid 'filters' argument."
+#, fuzzy
+msgid "invalid 'filters' argument."
 msgstr " 不正な 'filters' 引数 "
 
 #, fuzzy
@@ -783,7 +770,8 @@ msgstr ""
 " 'file' は空文字列(\"\")か、開かれたコネクションオブジェクトでなければなりま"
 "せん "
 
-msgid "must have max > min"
+#, fuzzy
+msgid "must have 'max' > 'min'"
 msgstr " max > minである必要があります "
 
 #, fuzzy
@@ -917,7 +905,8 @@ msgstr " 冒頭の５行が空です： お手上げです "
 msgid "relist() requires recursively unlisted objects."
 msgstr " relist() は再帰的に非リスト化されたオブジェクトを必要とします "
 
-msgid "The flesh argument does not contain a skeleton attribute."
+#, fuzzy
+msgid "The 'flesh' argument does not contain a skeleton attribute."
 msgstr " flesh 引数はスケルトン属性を含みません "
 
 msgid ""
@@ -929,9 +918,6 @@ msgstr ""
 
 msgid "cannot coerce 'x' to roman"
 msgstr " 'x' をローマンに変換できません "
-
-msgid "length mismatch: bug in code!"
-msgstr " 長さが一致しません：コードにバグ！ "
 
 msgid "no valid packages were specified"
 msgstr " 有効なパッケージが指定されませんでした "
@@ -1057,7 +1043,8 @@ msgstr " 'quote' 中に不正な数値があります "
 msgid "invalid 'quote' specification"
 msgstr " 不正な 'quote' 指定です "
 
-msgid "col.names = NA makes no sense when row.names = FALSE"
+#, fuzzy
+msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
 msgstr " row.names = FALSE の時は col.names = NA は無意味です "
 
 msgid "invalid 'col.names' specification"
@@ -1273,13 +1260,46 @@ msgid_plural "last record incomplete, %d lines discarded"
 msgstr[0] " 最後の記録が不完全で、%d 行が捨て去られました "
 
 #, fuzzy
-msgid "Invalid roman numeral: %s"
-msgid_plural "Invalid roman numerals: %s"
+msgid "invalid roman numeral: %s"
+msgid_plural "invalid roman numerals: %s"
 msgstr[0] " 不正なローマ数字です: %s "
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "m < 0"
+#~ msgstr " m < 0 "
+
+#~ msgid "n < m"
+#~ msgstr " n < m "
+
+#~ msgid "modes argument ignored"
+#~ msgstr " モード引数が無視されます "
+
+#~ msgid "too many list items (at most up to number 3899)"
+#~ msgstr " リストの項目が多すぎます（最大でも3899です） "
+
+#~ msgid "Packages {readRDS() sequentially}:"
+#~ msgstr " パッケージ {readRDS() sequentially}: "
+
+#~ msgid "."
+#~ msgstr " . "
+
+#~ msgid "reencoding ..."
+#~ msgstr " エンコーディングし直しています ... "
+
+#~ msgid "saving the database ..."
+#~ msgstr " データベースを保存しています ... "
+
+#~ msgid "... database rebuilt"
+#~ msgstr " ...データベースの再構築 "
+
+#~ msgid "Making packages.html  ..."
+#~ msgstr " packages.htmlの作成 "
+
+#~ msgid "length mismatch: bug in code!"
+#~ msgstr " 長さが一致しません：コードにバグ！ "
 
 #~ msgid "??"
 #~ msgstr " ?? "

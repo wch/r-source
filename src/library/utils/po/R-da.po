@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,8 @@ msgstr "ingen dokumentation for %s fundet i pakke %s"
 msgid "document not found"
 msgstr "dokument blev ikke fundet"
 
-msgid "A search query has been submitted to"
+#, fuzzy
+msgid "A search query has been submitted to %s"
 msgstr "En søgeforespørgsel er blevet sendt til"
 
 msgid "The results page should open in your browser shortly"
@@ -39,7 +40,8 @@ msgstr "reference til ukendt klump %s"
 msgid "no Sweave file with name %s found"
 msgstr "ingen Sweavefil med navnet %s blev fundet"
 
-msgid "%d Sweave files for basename %s found:"
+#, fuzzy
+msgid "%d Sweave files for basename %s found"
 msgstr "%d Sweavefiler for basisnavn %s blev fundet:"
 
 msgid "more than one syntax specification found, using the first one"
@@ -98,7 +100,8 @@ msgstr "værdien af indstillingen »strip.white« skal være med små bogstaver"
 msgid "elements of 'what' after the first will be ignored"
 msgstr "elementer for »what« efter den første vil blive ignoreret"
 
-msgid "No suitable spell check program found."
+#, fuzzy
+msgid "No suitable spell-checker program found"
 msgstr "Intet egnet stavekontrolprogram blev fundet."
 
 msgid "Filter '%s' is not available."
@@ -122,6 +125,9 @@ msgstr ""
 "Kørsel af aspell mislykkedes med diagnosen:\n"
 "%s"
 
+msgid "No suitable spell check program found."
+msgstr "Intet egnet stavekontrolprogram blev fundet."
+
 #, fuzzy
 msgid ""
 "Use <code> %s </code> \n"
@@ -134,7 +140,8 @@ msgstr ""
 msgid "No vignettes found by %s"
 msgstr "Ingen vignetter fundet af"
 
-msgid "Package %s: DESCRIPTION not found"
+#, fuzzy
+msgid "Package %s: DESCRIPTION file not found"
 msgstr "Pakke %s: BESKRIVELSE blev ikke fundet"
 
 msgid "'file' must be NULL, a character string or a connection"
@@ -161,7 +168,8 @@ msgstr "Brug enten %s eller %s men ikke begge."
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "Det anbefales at bruge %s/%s i stedet for %s/%s/%s."
 
-msgid "method is just applicable to %s objects"
+#, fuzzy
+msgid "method is only applicable to %s objects"
 msgstr "metode kan bruges for %s-objekter"
 
 #, fuzzy
@@ -208,18 +216,11 @@ msgid ""
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
-#, fuzzy
-msgid "m < 0"
-msgstr "m < 0"
-
-#, fuzzy
-msgid "n < m"
-msgstr "n < m"
-
 msgid "'FUN' must be a function or NULL"
 msgstr "»FUN« skal være en funktion eller NULL"
 
-msgid "Can't handle S4 methods yet"
+#, fuzzy
+msgid "cannot handle S4 methods yet"
 msgstr "Kan ikke håndtere S4-metoder endnu"
 
 msgid "'package' must be a character string or NULL"
@@ -255,13 +256,10 @@ msgstr ""
 msgid "could not restore type information"
 msgstr ""
 
-msgid "modes argument ignored"
+msgid "'modes' argument ignored"
 msgstr ""
 
 msgid "'names' argument ignored"
-msgstr ""
-
-msgid "'modes' argument ignored"
 msgstr ""
 
 msgid "could not restore variables properly"
@@ -323,7 +321,10 @@ msgstr ""
 msgid "invalid input matrix"
 msgstr ""
 
-msgid "class(es) of 'name' will be discarded"
+msgid "class of 'name' will be discarded"
+msgstr ""
+
+msgid "classes of 'name' will be discarded"
 msgstr ""
 
 msgid "cannot edit NULL row names"
@@ -344,10 +345,7 @@ msgstr ""
 msgid "'fix' requires a name"
 msgstr ""
 
-msgid "too many list items (at most up to number 26)"
-msgstr ""
-
-msgid "too many list items (at most up to number 3899)"
+msgid "too many list items (at most up to %d)"
 msgstr ""
 
 msgid "no vector columns were selected"
@@ -433,31 +431,13 @@ msgstr ""
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
-msgid "Packages {readRDS() sequentially}:"
-msgstr ""
-
-msgid "."
-msgstr ""
-
 msgid "could not find package %s"
 msgstr ""
 
 msgid "package %s has empty hsearch data - strangely"
 msgstr ""
 
-msgid "reencoding ..."
-msgstr ""
-
-msgid "done"
-msgstr ""
-
 msgid "removing all entries with invalid multi-byte character data"
-msgstr ""
-
-msgid "saving the database ..."
-msgstr ""
-
-msgid "... database rebuilt"
 msgstr ""
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
@@ -510,7 +490,7 @@ msgstr ""
 msgid "cannot update HTML package index"
 msgstr ""
 
-msgid "Making packages.html  ..."
+msgid "done"
 msgstr ""
 
 msgid "menu() cannot be used non-interactively"
@@ -574,15 +554,16 @@ msgid "directory '%s' already exists"
 msgstr ""
 
 msgid ""
-"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
-"the code_files= argument"
+"generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the 'code_files' argument"
 msgstr ""
 
 msgid "unable to access index for repository %s"
 msgstr ""
 
-msgid "Invalid 'filters' argument."
-msgstr ""
+#, fuzzy
+msgid "invalid 'filters' argument."
+msgstr "Ugyldigt argument for »filter«."
 
 msgid "package '%s' in library '%s' will not be updated"
 msgstr ""
@@ -735,7 +716,7 @@ msgstr ""
 msgid "'file' must be \"\" or an open connection object"
 msgstr ""
 
-msgid "must have max > min"
+msgid "must have 'max' > 'min'"
 msgstr ""
 
 msgid "'pb' is not from class %s"
@@ -855,7 +836,7 @@ msgstr ""
 msgid "relist() requires recursively unlisted objects."
 msgstr ""
 
-msgid "The flesh argument does not contain a skeleton attribute."
+msgid "The 'flesh' argument does not contain a skeleton attribute."
 msgstr ""
 
 msgid ""
@@ -864,9 +845,6 @@ msgid ""
 msgstr ""
 
 msgid "cannot coerce 'x' to roman"
-msgstr ""
-
-msgid "length mismatch: bug in code!"
 msgstr ""
 
 msgid "no valid packages were specified"
@@ -984,7 +962,7 @@ msgstr ""
 msgid "invalid 'quote' specification"
 msgstr ""
 
-msgid "col.names = NA makes no sense when row.names = FALSE"
+msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
 msgstr ""
 
 msgid "invalid 'col.names' specification"
@@ -1201,8 +1179,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, fuzzy
-msgid "Invalid roman numeral: %s"
-msgid_plural "Invalid roman numerals: %s"
+msgid "invalid roman numeral: %s"
+msgid_plural "invalid roman numerals: %s"
 msgstr[0] "ugyldig værdi for %s: %s"
 msgstr[1] "ugyldig værdi for %s: %s"
 
@@ -1210,6 +1188,14 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "m < 0"
+#~ msgstr "m < 0"
+
+#, fuzzy
+#~ msgid "n < m"
+#~ msgstr "n < m"
 
 #~ msgid "call"
 #~ msgstr "kald"

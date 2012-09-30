@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:25\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,8 +40,8 @@ msgstr "argument for 'La.svd' skal være numerisk eller kompleks"
 msgid "infinite or missing values in 'x'"
 msgstr "uendelig eller manglende værdier i 'x'"
 
-msgid "0 extent dimensions"
-msgstr "0 omfangsdimensioner"
+msgid "a dimension is zero"
+msgstr ""
 
 msgid "'nu' must be 0, nrow(x) or ncol(x)"
 msgstr "'nu' skal være 0, nrow(x) eller ncol(x)"
@@ -67,12 +67,6 @@ msgstr "'normal.kind' skal være en tegnstreng af længde 1"
 msgid "'%s' is not a valid choice"
 msgstr "'%s' er ikke et gyldigt valg"
 
-msgid "Buggy version of Kinderman-Ramage generator used"
-msgstr "Fejlramt version af Kinderman-Ramage-generatoren brugt"
-
-msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-msgstr "Fejlramt version af Kinderman-Ramage-generatoren er ikke tilladt"
-
 msgid "malformed version string"
 msgstr "forkert udformet versionsstreng"
 
@@ -97,9 +91,6 @@ msgstr "'dim' angiver en for stor array"
 
 msgid "incorrect value for 'MARGIN'"
 msgstr "ukorrekt værdi for 'MARGIN'"
-
-msgid "you cannot be serious"
-msgstr "det mener du ikke"
 
 msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
 msgstr "*** 'pos=1' er ikke mulig; angiver 'pos=2' indtil videre."
@@ -128,7 +119,8 @@ msgstr ""
 "  kald: %s\n"
 "  fejl: %s"
 
-msgid "namespace cannot be unloaded:"
+#, fuzzy
+msgid "%s namespace cannot be unloaded:"
 msgstr "navnerum kan ikke deaktiveres:"
 
 #, fuzzy
@@ -141,8 +133,9 @@ msgstr "erstattede regulært udtryksmønster '[' med '\\\\['"
 msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
 msgstr "erstattede '[<-' med '\\\\[<-' i regulært udtryksmønster"
 
-msgid "RHS must be list"
-msgstr "RHS skal være liste"
+#, fuzzy
+msgid "'value' must be a list"
+msgstr "'object' skal være en liste"
 
 msgid "an object with that name already exists"
 msgstr "et objekt med det navn findes allerede"
@@ -216,7 +209,8 @@ msgstr "kan kun skrive vektorobjekter"
 msgid "can only write character objects"
 msgstr "kan kun skrive tegnobjekter"
 
-msgid "supplied timeout must be NULL or a non-negative number"
+#, fuzzy
+msgid "'timeout' must be NULL or a non-negative number"
 msgstr "angivet tidsudløb skal være NULL eller et tal der ikke er negativt"
 
 msgid "'from' must be raw or character"
@@ -231,8 +225,8 @@ msgstr "ugyldigt antal intervaller"
 msgid "'breaks' are not unique"
 msgstr "'breaks' er ikke unikke"
 
-msgid "labels/breaks length conflict"
-msgstr "længdekonflikt for etiketter/skift"
+msgid "lengths of 'breaks' and 'labels' differ"
+msgstr ""
 
 msgid "invalid 'row.names' length"
 msgstr "ugyldig længde for 'row.names'"
@@ -247,7 +241,7 @@ msgid "invalid 'dimnames' given for data frame"
 msgstr "ugyldige 'dimnames' angivet for dataramme"
 
 #, fuzzy
-msgid "cannot coerce class \"%s\" into a data.frame"
+msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr "kan ikke tvinge klasse '%s' ind i en data.frame"
 
 #, fuzzy
@@ -257,26 +251,23 @@ msgstr "tilvalg('stringsAsFactors') ikke angivet til SAND eller FALSK"
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "forskellige rækkenavne i argumenter for 'data.frame', punkt %d"
 
-msgid "some row.names duplicated:"
+#, fuzzy
+msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "nogle row.names duplikeret:"
-
-msgid ","
-msgstr ","
-
-msgid "--> row.names NOT used"
-msgstr "--> row.names IKKE brugt"
 
 msgid "row names contain missing values"
 msgstr "rækkenavne indeholder manglende værdier"
 
-msgid "duplicate row.names:"
+#, fuzzy
+msgid "duplicate row.names: %s"
 msgstr "duplikate row.names:"
 
 #, fuzzy
 msgid "arguments imply differing number of rows: %s"
 msgstr "argumenter antyder forskelligt antal rækker:"
 
-msgid "row.names should specify one of the variables"
+#, fuzzy
+msgid "'row.names' should specify one of the variables"
 msgstr "row.names skal angive en af variablerne"
 
 msgid "row names supplied are of the wrong length"
@@ -288,7 +279,8 @@ msgstr "rækkenavne blev fundet fra en kort variabel og er blevet fjernet"
 msgid "named arguments other than 'drop' are discouraged"
 msgstr "navngivet argumenter udover 'drop' frarådes"
 
-msgid "drop argument will be ignored"
+#, fuzzy
+msgid "'drop' argument will be ignored"
 msgstr "drop-argumenter vil blive ignoreret"
 
 msgid "undefined columns selected"
@@ -304,7 +296,7 @@ msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
 
 #, fuzzy
-msgid "rhs is the wrong length"
+msgid "'value' is the wrong length"
 msgstr "rækkenavne angivet er af forkert længde"
 
 #, fuzzy
@@ -384,16 +376,20 @@ msgstr "'%s' er ikke et »date«-objekt"
 msgid "'%s' is not a \"dates\" object"
 msgstr "'%s' er ikke et »dates«-objekt"
 
-msgid "binary + is not defined for Date objects"
+#, fuzzy
+msgid "binary + is not defined for \"Date\" objects"
 msgstr "binær + er ikke defineret for Date-objekter"
 
-msgid "Can only subtract from Date objects"
+#, fuzzy
+msgid "can only subtract from \"Date\" objects"
 msgstr "Kan kun fratrække fra Date-objekter"
 
-msgid "unary - is not defined for Date objects"
+#, fuzzy
+msgid "unary - is not defined for \"Date\" objects"
 msgstr "unære - er ikke defineret for Date-objekter"
 
-msgid "can only subtract numbers from Date objects"
+#, fuzzy
+msgid "can only subtract numbers from \"Date\" objects"
 msgstr "kan kun fratrække tal fra Date-objekter"
 
 #, fuzzy
@@ -407,13 +403,15 @@ msgstr "ikke defineret for Date-objekter"
 msgid "'from' must be specified"
 msgstr "'from' skal angives"
 
-msgid "'from' must be a Date object"
+#, fuzzy
+msgid "'from' must be a \"Date\" object"
 msgstr "'from' skal være et Date-objekt"
 
 msgid "'from' must be of length 1"
 msgstr "'from' skal være af længde 1"
 
-msgid "'to' must be a Date object"
+#, fuzzy
+msgid "'to' must be a \"Date\" object"
 msgstr "'to' skal være et Date-objekt"
 
 msgid "'to' must be of length 1"
@@ -460,13 +458,15 @@ msgstr "forkert klasse"
 msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr "binær '+' er ikke defineret for »POSIXt«-objekter"
 
-msgid "Can only subtract from POSIXt objects"
+#, fuzzy
+msgid "can only subtract from \"POSIXt\" objects"
 msgstr "Kan kun fratrække fra POSIXt-objekter"
 
 msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr "unær '-' er ikke defineret for »POSIXt-«-objekter"
 
-msgid "can only subtract numbers from POSIXt objects"
+#, fuzzy
+msgid "can only subtract numbers from \"POSIXt\" objects"
 msgstr "kan kun fratrække tal fra POSIXt-objekter"
 
 msgid "unary '%s' not defined for \"POSIXt\" objects"
@@ -499,10 +499,12 @@ msgstr "begge argumenter for * kan ikke være »difftime«-objekter"
 msgid "second argument of / cannot be a \"difftime\" object"
 msgstr "andet argument af / kan ikke være et »difftime«-objekt"
 
-msgid "'from' must be a POSIXt object"
+#, fuzzy
+msgid "'from' must be a \"POSIXt\" object"
 msgstr "'from' skal være et POSIXt-objekt"
 
-msgid "'to' must be a POSIXt object"
+#, fuzzy
+msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' skal være et POSIXt-objekt"
 
 msgid "'file' must be a character string or connection"
@@ -533,13 +535,15 @@ msgstr ""
 msgid "'x' must be a square matrix"
 msgstr "'x' skal være en kvadratisk matrix"
 
-msgid "determinant not currently defined for complex matrices"
+#, fuzzy
+msgid "'determinant' not currently defined for complex matrices"
 msgstr "determinanten er aktuelt ikke defineret for komplekse matricer"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
 msgstr "'nrow' eller 'ncol' kan ikke angives når 'x' er en matrix"
 
-msgid "'x' is an array, but not 1D."
+#, fuzzy
+msgid "'x' is an array, but not one-dimensional."
 msgstr "'x' er en array, men ikke 1D."
 
 msgid "only matrix diagonals can be replaced"
@@ -584,19 +588,12 @@ msgstr "ikkekvadratisk matrix i 'eigen'"
 msgid "too large a matrix for EISPACK"
 msgstr ""
 
-msgid "'ch' returned code %d in 'eigen'"
-msgstr "'ch' returnerede kode %d i 'eigen'"
-
-msgid "'rs' returned code %d in 'eigen'"
+#, fuzzy
+msgid "'%s' returned code %d in 'eigen'"
 msgstr "'rs' returnerede kode %d i 'eigen'"
 
-msgid "'cg' returned code %d in 'eigen'"
-msgstr "'cg' returnerede kode %d i 'eigen'"
-
-msgid "'rg' returned code %d in 'eigen'"
-msgstr "'rg' returnerede kode %d i 'eigen'"
-
-msgid "invalid labels; length %d should be 1 or %d"
+#, fuzzy
+msgid "invalid 'labels'; length %d should be 1 or %d"
 msgstr "ugyldige etiketter; længde %d skal være 1 eller %d"
 
 msgid "number of levels differs"
@@ -607,9 +604,6 @@ msgstr "ikke meningsfuldt for faktorer"
 
 msgid "level sets of factors are different"
 msgstr "niveausæt for faktorer er forskellige"
-
-msgid "invalid factor level, NAs generated"
-msgstr "ugyldigt faktorniveau, NA'er oprettet"
 
 msgid "invalid factor level, NA generated"
 msgstr "ugyldigt faktorniveau, NA oprettet"
@@ -671,7 +665,8 @@ msgstr "'vec' indeholder NA'er"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' skal sorteres ikkefaldende"
 
-msgid "using the first element of 'value' of type expression"
+#, fuzzy
+msgid "using the first element of 'value' of type \"expression\""
 msgstr "bruger det første element for 'value' for typeudtryk"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
@@ -699,9 +694,6 @@ msgstr "'zero.print' har længde > 1"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print' skal være tegn, logisk eller NULL"
-
-msgid "'subset' must evaluate to logical"
-msgstr "'subset' skal evaluere til logisk"
 
 msgid "'subset' must be logical"
 msgstr "'subset' skal være logisk"
@@ -773,27 +765,28 @@ msgstr "pakke %s blev bygget under R version %s"
 msgid "package %s was built for %s"
 msgstr "pakke %s blev bygget for %s"
 
-msgid "package %s is not installed for 'arch=%s'"
+#, fuzzy
+msgid "package %s is not installed for 'arch = %s'"
 msgstr "pakke %s er ikke installeret for 'arch=%s'"
 
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
 msgstr "pakke %s har en licens, som du skal acceptere i en alternativ session"
 
-msgid "Package %s has a license that you need to accept after viewing"
+#, fuzzy
+msgid "package %s has a license that you need to accept after viewing"
 msgstr "Pakke %s har en licens, som du skal acceptere efter visning"
 
+#, fuzzy
 msgid ""
-"Package %s has a license that you need to accept:\n"
+"package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
 "Pakke %s har en licens, som du skal acceptere:\n"
 "ifølge DESCRIPTION-filen er det"
 
-msgid "License"
-msgstr "Licens"
-
-msgid "License for package %s not accepted"
+#, fuzzy
+msgid "license for package %s not accepted"
 msgstr "Licens for pakke %s er ikke accepteret"
 
 msgid "Attaching package: %s"
@@ -817,10 +810,12 @@ msgstr "%s er ikke en gyldig installeret pakke"
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s ikke fundet på søgesti, bruger pos = 2"
 
-msgid "package/namespace load failed for %s"
+#, fuzzy
+msgid "package or namespace load failed for %s"
 msgstr "indlæsning af pakke/navnerum fejlede for %s"
 
-msgid "package %s does not have a NAMESPACE and should be re-installed"
+#, fuzzy
+msgid "package %s does not have a namespace and should be re-installed"
 msgstr "pakke %s har ikke et NAVNERUM og skal geninstalleres"
 
 msgid "package %s already present in search()"
@@ -923,21 +918,17 @@ msgstr "tom (zerobyte) inddatafil"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "inddata er blevet ødelagt, med LF erstattet af CR"
 
-msgid ""
-"file %s has magic number '%s'\n"
-"   Use of save versions prior to 2 is deprecated"
+msgid "file %s has magic number '%s'"
 msgstr ""
-"fil %s har magisk tal '%s'\n"
-"   Brug af save-versioner før 2 er forældet"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr "Brug af save-versioner før 2 er forældet"
 
 msgid "bad 'file' argument"
 msgstr "ugyldigt 'file'-argument"
 
 msgid "'file' must be specified"
 msgstr "'file' skal være angivet"
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr "Brug af save-versioner før 2 er forældet"
 
 msgid "nothing specified to be save()d"
 msgstr ""
@@ -967,13 +958,14 @@ msgstr "[Tidligere gemt arbejdsrum gendannet]"
 msgid "Attempting to load the environment %s"
 msgstr "Forsøger at indlæse miljøet %s"
 
-msgid "not found: using .GlobalEnv instead"
+#, fuzzy
+msgid "Specified environment not found: using '.GlobalEnv' instead"
 msgstr "ikke fundet: bruger .GlobalEnv i stedet for"
 
 msgid "invalid 'category' argument"
 msgstr "ugyldigt 'category'-argument"
 
-msgid "must specify formal argument names to vectorize"
+msgid "must specify names of formal arguments for 'vectorize'"
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -1006,10 +998,10 @@ msgstr ""
 msgid "found non-function '%s'"
 msgstr ""
 
-msgid "attempt to set rownames on object with no dimensions"
+msgid "attempt to set 'rownames' on an object with no dimensions"
 msgstr ""
 
-msgid "attempt to set colnames on object with less than two dimensions"
+msgid "attempt to set 'colnames' on an object with less than two dimensions"
 msgstr ""
 
 msgid "argument is not numeric or logical: returning NA"
@@ -1036,12 +1028,9 @@ msgstr ""
 msgid "additional arguments ignored in message()"
 msgstr ""
 
-msgid "(loaded the methods namespace)"
-msgstr ""
-
 msgid ""
-"Tracing functions requires the methods package, but unable to load methods "
-"namespace"
+"tracing functions requires the 'methods' package, but unable to load the "
+"'methods' namespace"
 msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
@@ -1059,7 +1048,7 @@ msgstr ""
 msgid "%s not found"
 msgstr ""
 
-msgid "namespace %s is already sealed in loadNamespace"
+msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr ""
 
 msgid ""
@@ -1084,14 +1073,14 @@ msgid "unable to load R code in package %s"
 msgstr ""
 
 msgid ""
-"exportClassPattern specified in NAMESPACE but no matching classes in package "
-"%s"
+"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
+"package %s"
 msgstr ""
 
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr ""
 
-msgid "No function found corresponding to methods exports from %s for: %s"
+msgid "no function found corresponding to methods exports from %s for: %s"
 msgstr ""
 
 msgid "in %s methods for export not found: %s"
@@ -1157,10 +1146,11 @@ msgstr ""
 msgid "undefined exports: %s"
 msgstr ""
 
-msgid "package %s has no NAMESPACE file"
-msgstr ""
+#, fuzzy
+msgid "package %s has no 'NAMESPACE' file"
+msgstr "pakke %s er ikke indlæst"
 
-msgid "empty name in directive '%s' in NAMESPACE file"
+msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr ""
 
 msgid "duplicated symbol names %s in useDynLib(\"%s\")"
@@ -1193,10 +1183,10 @@ msgstr ""
 msgid "argument '%s' is not used (yet)"
 msgstr ""
 
-msgid "'x' cannot be coerced to 'octmode'"
+msgid "'x' cannot be coerced to \"octmode\""
 msgstr ""
 
-msgid "'x' cannot be coerced to hexmode"
+msgid "'x' cannot be coerced to \"hexmode\""
 msgstr ""
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1360,10 +1350,10 @@ msgid ""
 "Have you called 'sort' on a list?"
 msgstr ""
 
-msgid "method=\"quick\" is only for numeric 'x'"
+msgid "method = \"quick\" is only for numeric 'x'"
 msgstr ""
 
-msgid "method=\"radix\" is only for integer 'x'"
+msgid "method = \"radix\" is only for integer 'x'"
 msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -1393,7 +1383,7 @@ msgstr ""
 msgid "'%s' is not an existing file"
 msgstr ""
 
-msgid "Timestamp of %s has chamged"
+msgid "Timestamp of %s has changed"
 msgstr ""
 
 msgid "additional arguments ignored in stop()"
@@ -1414,10 +1404,13 @@ msgstr ""
 msgid "probably wrong encoding in names(.) of column"
 msgstr ""
 
+msgid ","
+msgstr ","
+
 msgid "'nv' must be 0 or ncol(x)"
 msgstr ""
 
-msgid "error %d in 'dsvdc'"
+msgid "error %d in LINPACK subroutine 'dsvdc'"
 msgstr ""
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
@@ -1445,8 +1438,9 @@ msgstr "'object' skal være en liste"
 msgid "'x' must inherit from class %s"
 msgstr ""
 
-msgid "cannot coerce into a table"
-msgstr ""
+#, fuzzy
+msgid "cannot coerce to a table"
+msgstr "kan ikke tvinge klasse '%s' ind i en data.frame"
 
 msgid "'x' is not an array"
 msgstr ""
@@ -1471,10 +1465,10 @@ msgstr ""
 msgid "no such element '%s'"
 msgstr ""
 
-msgid "Removing"
+msgid "Removing %s"
 msgstr ""
 
-msgid "Registering evaluate as low-level callback"
+msgid "Registering 'evaluate' as low-level callback"
 msgstr ""
 
 msgid "user"
@@ -1499,8 +1493,9 @@ msgstr "ugyldig specifikation for 'breaks'"
 msgid "wrong argument"
 msgstr ""
 
-msgid "invalid value"
-msgstr ""
+#, fuzzy
+msgid "invalid 'value'"
+msgstr "ugyldigt antal intervaller"
 
 msgid "unary '%s' not defined for \"numeric_version\" objects"
 msgstr ""
@@ -1582,8 +1577,9 @@ msgstr ""
 msgid "-l option without value"
 msgstr ""
 
+#, fuzzy
 msgid "ERROR: no packages specified"
-msgstr ""
+msgstr "ingen DLL angivet"
 
 msgid "Removing from library"
 msgstr ""
@@ -1592,21 +1588,6 @@ msgid "ERROR: cannot cd to directory"
 msgstr ""
 
 msgid "ERROR: no permission to remove from directory"
-msgstr ""
-
-msgid "T used instead of TRUE"
-msgstr ""
-
-msgid "F used instead of FALSE"
-msgstr ""
-
-msgid "items"
-msgstr ""
-
-msgid "have been removed from the search path"
-msgstr ""
-
-msgid "cannot find namespace environment"
 msgstr ""
 
 msgid "deparse option %s is not recognized"
@@ -1757,6 +1738,52 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "0 extent dimensions"
+#~ msgstr "0 omfangsdimensioner"
+
+#~ msgid "Buggy version of Kinderman-Ramage generator used"
+#~ msgstr "Fejlramt version af Kinderman-Ramage-generatoren brugt"
+
+#~ msgid "Buggy version of Kinderman-Ramage generator is not allowed"
+#~ msgstr "Fejlramt version af Kinderman-Ramage-generatoren er ikke tilladt"
+
+#~ msgid "you cannot be serious"
+#~ msgstr "det mener du ikke"
+
+#~ msgid "RHS must be list"
+#~ msgstr "RHS skal være liste"
+
+#~ msgid "labels/breaks length conflict"
+#~ msgstr "længdekonflikt for etiketter/skift"
+
+#~ msgid "--> row.names NOT used"
+#~ msgstr "--> row.names IKKE brugt"
+
+#~ msgid "'ch' returned code %d in 'eigen'"
+#~ msgstr "'ch' returnerede kode %d i 'eigen'"
+
+#~ msgid "'cg' returned code %d in 'eigen'"
+#~ msgstr "'cg' returnerede kode %d i 'eigen'"
+
+#~ msgid "'rg' returned code %d in 'eigen'"
+#~ msgstr "'rg' returnerede kode %d i 'eigen'"
+
+#~ msgid "invalid factor level, NAs generated"
+#~ msgstr "ugyldigt faktorniveau, NA'er oprettet"
+
+#~ msgid "'subset' must evaluate to logical"
+#~ msgstr "'subset' skal evaluere til logisk"
+
+#~ msgid "License"
+#~ msgstr "Licens"
+
+#~ msgid ""
+#~ "file %s has magic number '%s'\n"
+#~ "   Use of save versions prior to 2 is deprecated"
+#~ msgstr ""
+#~ "fil %s har magisk tal '%s'\n"
+#~ "   Brug af save-versioner før 2 er forældet"
 
 #~ msgid "doc"
 #~ msgstr "dok"

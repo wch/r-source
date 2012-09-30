@@ -622,7 +622,7 @@ window.default <- function(x, start = NULL, end = NULL,
     } else {
         thin <- 1
         yfreq <- xfreq
-        warning("Frequency not changed")
+        warning("'frequency' not changed")
     }
     start <- if(is.null(start))
 	xtsp[1L]

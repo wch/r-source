@@ -478,7 +478,9 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
                   },
                   if(!is.null(object$family$simulate))
                       object$family$simulate(object, nsim)
-                  else stop("family '", fam, "' not implemented"))
+                  else stop(gettextf("family '%s' not implemented", fam),
+                            domain = NA)
+                  )
 
     if(!is.list(val)) {
         dim(val) <- c(n, nsim)
@@ -681,13 +683,12 @@ predict.lm <-
     interval <- match.arg(interval)
     if (interval == "prediction") {
         if (missing(newdata))
-            warning("Predictions on current data refer to _future_ responses\n")
-        if (missing(newdata) && missing(weights))
-        {
+            warning("predictions on current data refer to _future_ responses\n")
+        if (missing(newdata) && missing(weights)) {
             w <-  weights.default(object)
             if (!is.null(w)) {
                 weights <- w
-                warning("Assuming prediction variance inversely proportional to weights used for fitting\n")
+                warning("assuming prediction variance inversely proportional to weights used for fitting\n")
             }
         }
         if (!missing(newdata) && missing(weights) && !is.null(object$weights) && missing(pred.var))

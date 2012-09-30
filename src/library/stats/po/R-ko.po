@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:54\n"
+"POT-Creation-Date: 2012-09-30 16:22\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -32,20 +32,21 @@ msgid "object not interpretable as a factor"
 msgstr "오브젝트는 인자로서 해석 할수 없습니다"
 
 #, fuzzy
-msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
+msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)"
 msgstr "레벨이 없는 모델은 적용시킬수 없습니다('alpha'는 0이면 안됩니다)"
 
-msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
+#, fuzzy
+msgid "'alpha', 'beta' and 'gamma' must be within the unit interval"
 msgstr ""
 "'alpha', 'beta' 그리고 'gamma'는 단위 사이의 내부에 있을 필요가 있습니다"
 
 #, fuzzy
-msgid "data must be non-zero for multiplicative Holt-Winters."
+msgid "data must be non-zero for multiplicative Holt-Winters"
 msgstr ""
 "곱셈적 Holt-Winters 모델에서 데이터는 non-negative가 아니면 되지 않습니다"
 
 #, fuzzy
-msgid "need at least 2 periods to compute seasonal start values."
+msgid "need at least 2 periods to compute seasonal start values"
 msgstr "계절적 개시값을 계산하기에는 적어도 3개가 필요합니다"
 
 #, fuzzy
@@ -82,7 +83,7 @@ msgid "all parameters were fixed"
 msgstr "모든 파라미터가 고정되어 있었습니다"
 
 #, fuzzy
-msgid "possible convergence problem: optim gave code = %d %d"
+msgid "possible convergence problem: 'optim' gave code = %d and message %s"
 msgstr "수렴에 관한 문제의 가능성: optim는 이하의 code=를 주었습니다"
 
 msgid "no factors in the fitted model"
@@ -303,9 +304,6 @@ msgstr "MLE는 일변양계열에만 실제 적용되어 있습니다"
 msgid "'order.max' must be >= 0"
 msgstr "'order.max'는 non-negative이어야만 합니다"
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr "Burg의 알고니즘은 일변양계열에만 실제 적용되어 있습니다"
-
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order'는 길이 3의 non-negative 수치 벡터가 아니면 되지 않습니다"
 
@@ -382,12 +380,6 @@ msgstr "무효인 'x'"
 #, fuzzy
 msgid "invalid 'nb'"
 msgstr "무효인 'x'"
-
-msgid "sample is too sparse to find TD"
-msgstr "sample이 너무 부족하기 때문에 TD를 검색해낼 수가 없습니다"
-
-msgid "sample is too sparse to find alph2"
-msgstr "sample이 너무 부족하기 때문에 alph2를 검색해낼 수가 없습니다"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "지정된 bandwidth의 범위내에서 해법은 없습니다"
@@ -601,10 +593,6 @@ msgstr "유한한 관측값이 충분히 없습니다"
 msgid "Cannot compute exact p-value with ties"
 msgstr "ties 때문에 정확한 p값을 계산할 수가 없습니다"
 
-#, fuzzy
-msgid "Cannot compute exact p-values with ties"
-msgstr "ties 때문에 정확한 p값을 계산할 수가 없습니다"
-
 msgid "'formula' missing or invalid"
 msgstr "모델식이 없거나 부적절합니다"
 
@@ -626,7 +614,8 @@ msgstr "중량감은 non-negative이고, 모두가 0이면 안됩니다"
 msgid "length of 'center' must equal the number of columns in 'x'"
 msgstr "'center'의 길이는 'x'의 열수에 동일한것이 없으면 되지 않습니다"
 
-msgid "invalid 'tree' (merge component)"
+#, fuzzy
+msgid "invalid 'tree' ('merge' component)"
 msgstr "무효인 'tree'(merge 성분)입니다"
 
 msgid "either 'k' or 'h' must be specified"
@@ -657,8 +646,9 @@ msgstr "길이 0의 non-leaf인 subtree입니다"
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.dendrogram'는 dendrogram을 필요로 합니다"
 
-msgid "we require a dendrogram"
-msgstr "dendrogram이 필요합니다"
+#, fuzzy
+msgid "'reorder.dendrogram' requires a dendrogram"
+msgstr "'order.dendrogram'는 dendrogram을 필요로 합니다"
 
 msgid "invalid (length 0) node in dendrogram"
 msgstr "dendrogram에 부적절한(길이 0)노드가 있습니다"
@@ -778,7 +768,8 @@ msgstr ""
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] 그리고 prob[]는 동일한 길이가 벡터가 아니면 되지 않습니다"
 
-msgid "probabilities cannot be negative nor all 0."
+#, fuzzy
+msgid "probabilities cannot be negative nor all 0"
 msgstr "확률은 negative가 될수가 없거나 또한 모두가 0으로 될수가 없습니다"
 
 msgid "'x' must be non-negative"
@@ -837,7 +828,8 @@ msgstr ""
 "link\"%s\"는 포아송 패밀리에서 이용할수가 없습니다: 이용 할수 있는 link는\n"
 "\"identity\",\"log\" 및 \"sqrt\" 입니다"
 
-msgid "negative values not allowed for the Poisson family"
+#, fuzzy
+msgid "negative values not allowed for the 'Poisson' family"
 msgstr "포아송 패밀리에서 negative 값은 허용되지 않습니다"
 
 msgid "ignoring prior weights"
@@ -851,7 +843,8 @@ msgstr ""
 "link는 \n"
 "\"identity\",\"log\" 그리고 \"sqrt\" 입니다"
 
-msgid "negative values not allowed for the quasiPoisson family"
+#, fuzzy
+msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr "동일한 포아송 패밀리에는 negative의 값은 허용되지 않습니다"
 
 #, fuzzy
@@ -881,7 +874,7 @@ msgstr "2항 glm로 정수가 아닌 카운터가 있었습니다!"
 
 #, fuzzy
 msgid ""
-"for the binomial family, y must be a vector of 0 and 1's\n"
+"for the 'binomial' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "또는 1열이 성공수, 2열이 실패수인 2열의 행렬입니다"
 
@@ -898,7 +891,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"for the quasibinomial family, y must be a vector of 0 and 1's\n"
+"for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "또는 1열이 성공수, 2열이 실패수인 2열의 행렬입니다"
 
@@ -909,7 +902,8 @@ msgstr ""
 "는 \n"
 "link \"inverse\",\"log\" 그리고 \"identity\"입니다"
 
-msgid "non-positive values not allowed for the gamma family"
+#, fuzzy
+msgid "non-positive values not allowed for the 'gamma' family"
 msgstr "정확하지 않는 값은 gamma family에서 허용되지 않습니다"
 
 msgid "using weights as shape parameters"
@@ -923,11 +917,13 @@ msgstr ""
 "link는 \n"
 "\"inverse\", \"log\" 그리고 \"identity\"입니다"
 
-msgid "positive values only allowed for the inverse.gaussian family"
+#, fuzzy
+msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "역정규 패밀리에서 정의값만 허용되지 않습니다"
 
-msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
-msgstr ""
+#, fuzzy
+msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
+msgstr "역정규 패밀리에서 정의값만 허용되지 않습니다"
 
 msgid "using weights as inverse variances"
 msgstr ""
@@ -1000,11 +996,11 @@ msgstr "group의 레벨은 모두 유한하지 않으면 되지 않습니다"
 msgid "not enough observations"
 msgstr "충분한 관측값이 없습니다"
 
-msgid "NA's are not allowed in groups or blocks"
-msgstr "'NA'는 그룹이나 블록에서는 허용되지 않습니다"
+msgid "NA's are not allowed in 'groups' or 'blocks'"
+msgstr "'NA는 'groups' 이나 'blocks'에서는 허용되지 않습니다"
 
-msgid "y, groups and blocks must have the same length"
-msgstr "y, groups 그리고 블록은 동일 길이가 나오지 않으면 되지 않습니다"
+msgid "'y', 'groups' and 'blocks' must have the same length"
+msgstr "'y', 'groups' 그리고 'block'은 동일 길이가 나오지 않으면 되지 않습니다"
 
 msgid "not an unreplicated complete block design"
 msgstr "반복이 없는 완전한 블록 디자인이 아닙니다"
@@ -1027,7 +1023,8 @@ msgstr "'col.vars'의 지정이 부정확합니다"
 msgid "interactions are not allowed"
 msgstr "상호작용은 허용되지 않습니다"
 
-msgid "'formula' has '.' in both left and right hand side"
+#, fuzzy
+msgid "'formula' has '.' in both left and right hand sides"
 msgstr "모델이('formula')이 우변과 좌변의 쌍방으로  '.'를 가지고 있습니다"
 
 msgid "incorrect variable names in rhs of formula"
@@ -1070,7 +1067,7 @@ msgstr ""
 "offsets의 수는 %d입니다만, %d(관측값의 수)에 동일 하지 않으면 되지 않습니다"
 
 msgid ""
-"fitting to calculate the null deviance did not converge -- increase maxit?"
+"fitting to calculate the null deviance did not converge -- increase 'maxit'?"
 msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
@@ -1104,7 +1101,8 @@ msgstr "V(mu)에서 0가 있습니다"
 msgid "NAs in d(mu)/d(eta)"
 msgstr "D(mu)/d(eta)에서 NA가 있습니다"
 
-msgid "no observations informative at iteration"
+#, fuzzy
+msgid "no observations informative at iteration %d"
 msgstr "반복에 두고 의미가 있는 관측값이 없습니다"
 
 #, fuzzy
@@ -1305,11 +1303,7 @@ msgstr "'x' 데이터의 수가 충분하지는 않습니다"
 msgid "not enough 'y' data"
 msgstr "'y' 데이터의 수가 충분하지는 않습니다"
 
-#, fuzzy
-msgid "cannot compute exact p-values with ties"
-msgstr "ties가 있기때문에, 정확한 p값을 돌려줍니다"
-
-msgid "p-values will be approximate in the presence of ties"
+msgid "p-value will be approximate in the presence of ties"
 msgstr ""
 
 #, fuzzy
@@ -1369,11 +1363,8 @@ msgid ""
 " Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
 
-msgid "family '"
-msgstr ""
-
 #, fuzzy
-msgid "' not implemented"
+msgid "family '%s' not implemented"
 msgstr "유형 '%s'는 실제 적용되지 않습니다"
 
 msgid "calling anova.lm(<fake-lm-object>) ..."
@@ -1391,11 +1382,11 @@ msgstr ""
 "한 예측을 하고 있을\n"
 "가능성이 있습니다"
 
-msgid "Predictions on current data refer to _future_ responses"
+msgid "predictions on current data refer to _future_ responses"
 msgstr ""
 
 msgid ""
-"Assuming prediction variance inversely proportional to weights used for "
+"assuming prediction variance inversely proportional to weights used for "
 "fitting"
 msgstr ""
 
@@ -1480,8 +1471,9 @@ msgstr "비교해야할 모델이 없습니다"
 msgid "extra arguments discarded"
 msgstr "불필요한 인수는 버려졌습니다"
 
-msgid "logLik.lm only handles single responses"
-msgstr ""
+#, fuzzy
+msgid "'logLik.lm' does not support multiple responses"
+msgstr "'proj'는 다중 응답에 대해서는 실제 적용되지 않습니다"
 
 msgid "no \"nobs\" attribute is available"
 msgstr ""
@@ -1511,17 +1503,14 @@ msgstr "중량감이 0의 관측값은 사용되지 않습니다"
 msgid "'low' and 'high' cannot be both TRUE"
 msgstr "'low' 그리고 'high'의 양쪽 모두가 TRUE로 될수가 없습니다"
 
-msgid "need multiple response"
+#, fuzzy
+msgid "need multiple responses"
 msgstr "다중 응답을 필요로 합니다"
 
 #, fuzzy
 msgid "object must be of class %s or %s"
 msgstr ""
 "오브젝트는 클래스 \"manova\" 또는  \"maov\"가 나오지 않으면 되지 않습니다"
-
-#, fuzzy
-msgid "need multiple responses"
-msgstr "다중 응답을 필요로 합니다"
 
 msgid "residuals have rank %d < %d"
 msgstr "나머지 링크(rank)는 %d < %d 를 가집니다"
@@ -1659,7 +1648,7 @@ msgstr "무효인 대비 인수('contrasts.arg')입니다"
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "변수'%s'는 존재하지 않습니다, 대비는 무시됩니다"
 
-msgid "using type=\"numeric\" with a factor response will be ignored"
+msgid "using type = \"numeric\" with a factor response will be ignored"
 msgstr ""
 
 msgid "invalid response type"
@@ -1697,10 +1686,10 @@ msgid "f() values at end points not of opposite sign"
 msgstr "f()의 end point에서의 값이 다른 부호를 가지지 않습니다"
 
 #, fuzzy
-msgid "control argument must be a named list"
+msgid "'control' argument must be a named list"
 msgstr "'split' 인수는 리스트가 아니면 되지 않습니다"
 
-msgid "Logical 'hessian' argument not allowed.  See documentation."
+msgid "logical 'hessian' argument not allowed.  See documentation."
 msgstr ""
 
 msgid "'params' has wrong length"
@@ -1738,7 +1727,7 @@ msgid "'data' must be a list or an environment"
 msgstr "'newdata'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"
 
 #, fuzzy
-msgid "No starting values specified"
+msgid "no starting values specified"
 msgstr "초기값이 주어지고 있지 않습니다"
 
 msgid "parameters without starting value in 'data': %s"
@@ -1755,7 +1744,7 @@ msgstr "인수 sides는 1 또는 2가 나오지 않으면 되지 않습니다"
 msgid "argument 'na.action' will be ignored"
 msgstr ""
 
-msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
@@ -1814,7 +1803,7 @@ msgstr ""
 msgid "'lower' and 'upper' must be finite values"
 msgstr "'k' 그리고 'h'는 scalar가 아니면 되지 않습니다"
 
-msgid "Pooling of SD is incompatible with paired tests"
+msgid "pooling of SD is incompatible with paired tests"
 msgstr ""
 
 msgid "'x' must have 2 columns"
@@ -1827,7 +1816,7 @@ msgid "too few groups"
 msgstr "그룹이 너무 적습니다"
 
 msgid ""
-"Not plotting observations with leverage one:\n"
+"not plotting observations with leverage one:\n"
 "  %s"
 msgstr ""
 
@@ -1862,7 +1851,7 @@ msgid "not enough data"
 msgstr "적당한 데이타가 없습니다"
 
 #, fuzzy
-msgid "The case k > 2 is unimplemented"
+msgid "the case k > 2 is unimplemented"
 msgstr "유형 '%s'는 실제 적용되지 않습니다"
 
 #, fuzzy
@@ -1877,9 +1866,6 @@ msgstr ""
 
 msgid "'sig.level' must be numeric in [0, 1]"
 msgstr "'sig.level'는 [0,1]에서 숫자가 아니면 되지 않습니다"
-
-msgid "internal error"
-msgstr "외부 에러 입니다"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1940,7 +1926,7 @@ msgstr "'x'와 'covmat'의 쌍방이 주어졌습니다. 'x'는 무시됩니다"
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp'에서 cases는 변수로부터 많지 않으면 되지 않습니다"
 
-msgid "cannot use cor=TRUE with a constant variable"
+msgid "cannot use 'cor = TRUE' with a constant variable"
 msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
@@ -1951,9 +1937,6 @@ msgstr "인수는 'qr'요소을 포함하고 있지 않습니다"
 
 msgid "argument does not include an 'effects' component"
 msgstr "인수는 'effects'요소를 포함하고 있지 않습니다"
-
-msgid "'proj' is not implemented for \"mlm\" fits"
-msgstr "'proj'는 \"mlm\"에 의한 실제 적용되지 있지 않습니다"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj'는 다중 응답에 대해서는 실제 적용되지 않습니다"
@@ -1978,12 +1961,6 @@ msgstr "'p'의 요소는 (0,1)안에 없으면 되지 않습니다"
 
 msgid "y is empty or has only NAs"
 msgstr "'y' 비어 있거나 NA값만 가지고 있지 않습니다"
-
-msgid "NA's are not allowed in 'groups' or 'blocks'"
-msgstr "'NA는 'groups' 이나 'blocks'에서는 허용되지 않습니다"
-
-msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr "'y', 'groups' 그리고 'block'은 동일 길이가 나오지 않으면 되지 않습니다"
 
 msgid "'formula' missing"
 msgstr "'formula'가 잘못되었습니다"
@@ -2032,7 +2009,7 @@ msgstr "ref = %d는 1:%d에 없으면 되지 않습니다"
 msgid "'sep' must be a character string"
 msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
 
-msgid "Failed to guess time-varying variables from their names"
+msgid "failed to guess time-varying variables from their names"
 msgstr ""
 
 msgid "'varying' arguments must be the same length"
@@ -2055,12 +2032,12 @@ msgid "'varying' must be nonempty list or vector"
 msgstr "'varying'는 논리값, 정수 또는 문자가 아니면 되지 않습니다"
 
 #, fuzzy
-msgid "length of v.names does not evenly divide length of varying"
+msgid "length of 'v.names' does not evenly divide length of 'varying'"
 msgstr "FUN 길이 %d는 마진의 길이%d와 match하지 않습니다"
 
 msgid ""
-"length of varying must be the product of length of v.names and length of "
-"times"
+"length of 'varying' must be the product of length of 'v.names' and length of "
+"'times'"
 msgstr ""
 
 #, fuzzy
@@ -2100,8 +2077,9 @@ msgstr "수치가 아닌것을 smoothing 하려고 했습니다"
 msgid "attempt to smooth NA values"
 msgstr "NA값을 smoothing 하려고 했습니다"
 
-msgid "wrong endrule"
-msgstr "잘못한 단점규칙입니다"
+#, fuzzy
+msgid "invalid 'endrule' argument"
+msgstr "무효인 'data'인수입니다"
 
 msgid "invalid 'control.spar'"
 msgstr "무효인 'control.spar'입니다"
@@ -2133,7 +2111,8 @@ msgstr "'x'값에는 적어도 4게의 다른 값이 필요합니다"
 msgid "'cv' must not be NA when 'df' is specified"
 msgstr ""
 
-msgid "crossvalidation with non-unique 'x' values seems doubtful"
+#, fuzzy
+msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr "유일하지 않는 'x'값에 의한 크로스 확인은 문제가 있을지도 모릅니다"
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
@@ -2168,7 +2147,7 @@ msgstr "NA lev[]; 아마도 smoothing 파라메타 'spar'가 너무 큽니다"
 msgid "setting df = 1  __use with care!__"
 msgstr "df = 1의 설정은 주의해서 사용하지 않으면 안됩니다!"
 
-msgid "need result of smooth.spline(*, keep.data=TRUE)"
+msgid "need result of smooth.spline(keep.data = TRUE)"
 msgstr ""
 
 #, fuzzy
@@ -2352,7 +2331,8 @@ msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
 msgstr ""
 "'frequenecy' 그리고  'deltat'의 양쪽 모두 주어졌습니다만,모순되고 있습니다"
 
-msgid "Frequency not changed"
+#, fuzzy
+msgid "'frequency' not changed"
 msgstr "빈도는 변경되지 않습니다"
 
 msgid "bad value for 'start'"
@@ -2426,7 +2406,7 @@ msgstr "'x'와 'w'는 동일 길이가 나오지 않으면 되지 않습니다"
 msgid "not enough (finite) 'x' observations"
 msgstr "(유한한）'x'의 관측값이 충분하지는 않습니다"
 
-msgid "Requested conf.level not achievable"
+msgid "requested conf.level not achievable"
 msgstr ""
 
 #, fuzzy
@@ -2441,6 +2421,9 @@ msgstr "zeroes 값 때문에 수가 없습니다, 정확한 p 값을 계산할 �
 
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "zeroes 값 때문에, 정확한 신뢰 구간을 계산할 수 없습니다"
+
+msgid "Requested conf.level not achievable"
+msgstr ""
 
 #, fuzzy
 msgid "must supply either 'formula' or 'data'"
@@ -2545,8 +2528,8 @@ msgid_plural "unable to optimize from these starting values"
 msgstr[0] "이러한 초기값으로부터 최적화를 할수가 없습니다"
 
 #, fuzzy
-msgid "'init'; must have 1 column"
-msgid_plural "'init'; must have 1 or %d columns"
+msgid "'init' must have 1 column"
+msgid_plural "'init' must have 1 or %d columns"
 msgstr[0] "'init'; 1 또는 %d개의 cols를 가지지 않으면 안됩니다"
 
 #, fuzzy
@@ -2634,6 +2617,44 @@ msgstr[0] "NA, NaN 및 Inf의 관측값은 삭제되었습니다"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid "Burg's algorithm only implemented for univariate series"
+#~ msgstr "Burg의 알고니즘은 일변양계열에만 실제 적용되어 있습니다"
+
+#~ msgid "sample is too sparse to find TD"
+#~ msgstr "sample이 너무 부족하기 때문에 TD를 검색해낼 수가 없습니다"
+
+#~ msgid "sample is too sparse to find alph2"
+#~ msgstr "sample이 너무 부족하기 때문에 alph2를 검색해낼 수가 없습니다"
+
+#, fuzzy
+#~ msgid "Cannot compute exact p-values with ties"
+#~ msgstr "ties 때문에 정확한 p값을 계산할 수가 없습니다"
+
+#~ msgid "we require a dendrogram"
+#~ msgstr "dendrogram이 필요합니다"
+
+#~ msgid "NA's are not allowed in groups or blocks"
+#~ msgstr "'NA'는 그룹이나 블록에서는 허용되지 않습니다"
+
+#~ msgid "y, groups and blocks must have the same length"
+#~ msgstr "y, groups 그리고 블록은 동일 길이가 나오지 않으면 되지 않습니다"
+
+#, fuzzy
+#~ msgid "cannot compute exact p-values with ties"
+#~ msgstr "ties가 있기때문에, 정확한 p값을 돌려줍니다"
+
+#~ msgid "need multiple response"
+#~ msgstr "다중 응답을 필요로 합니다"
+
+#~ msgid "internal error"
+#~ msgstr "외부 에러 입니다"
+
+#~ msgid "'proj' is not implemented for \"mlm\" fits"
+#~ msgstr "'proj'는 \"mlm\"에 의한 실제 적용되지 있지 않습니다"
+
+#~ msgid "wrong endrule"
+#~ msgstr "잘못한 단점규칙입니다"
 
 #, fuzzy
 #~ msgid "upper scope does not include model term(s) %s"

@@ -145,7 +145,7 @@ de <- function(..., Modes=list(), Names=NULL)
 	}
 	else {
 	    if( (length(Names) != length(Modes)) && length(Modes) ) {
-		warning("modes argument ignored")
+		warning("'modes' argument ignored")
 		Modes <- list()
 	    }
 	    odata <- vector("list", length=length(Names))

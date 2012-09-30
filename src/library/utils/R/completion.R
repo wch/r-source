@@ -665,12 +665,9 @@ functionArgs <-
               tryCatch(methods(fun),
                        warning = function(w) {},
                        error = function(e) {}))
-    if (S4methods)
-        warning("Can't handle S4 methods yet")
+    if (S4methods) warning("cannot handle S4 methods yet")
     allArgs <- unique(unlist(lapply(fun, argNames)))
-    ans <-
-        grep(sprintf("^%s", makeRegexpSafe(text)),
-             allArgs, value = TRUE)
+    ans <- grep(sprintf("^%s", makeRegexpSafe(text)), allArgs, value = TRUE)
     if (length(ans) && !is.null(add.args))
         ans <- sprintf("%s%s", ans, add.args)
     c(specialFunArgs, ans)

@@ -54,11 +54,11 @@ rownames <- function(x, do.NULL = TRUE, prefix = "row")
         if(is.null(dn)) {
             if(is.null(value)) return(x)
             if((nd <- length(dim(x))) < 1L)
-                stop("attempt to set rownames on object with no dimensions")
+                stop("attempt to set 'rownames' on an object with no dimensions")
             dn <- vector("list", nd)
         }
         if(length(dn) < 1L)
-            stop("attempt to set rownames on object with no dimensions")
+            stop("attempt to set 'rownames' on an object with no dimensions")
         if(is.null(value)) dn[1L] <- list(NULL) else dn[[1L]] <- value
         dimnames(x) <- dn
     }
@@ -89,11 +89,11 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
         if(is.null(dn)) {
             if(is.null(value)) return(x)
             if((nd <- length(dim(x))) < 2L)
-                stop("attempt to set colnames on object with less than two dimensions")
+                stop("attempt to set 'colnames' on an object with less than two dimensions")
             dn <- vector("list", nd)
         }
         if(length(dn) < 2L)
-            stop("attempt to set colnames on object with less than two dimensions")
+            stop("attempt to set 'colnames' on an object with less than two dimensions")
         if(is.null(value)) dn[2L] <- list(NULL) else dn[[2L]] <- value
         dimnames(x) <- dn
     }

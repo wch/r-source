@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2011-10-15 15:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -54,19 +54,24 @@ msgstr "'start' et 'end' doivent être différents et dans [0, 1]."
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' doit être une valeur simple ou 'sRGB'"
 
-msgid "Color space converter:"
+#, fuzzy
+msgid "Color space converter: %s"
 msgstr "Convertisseur de l'espace des couleurs :"
 
-msgid "Reference white:"
+#, fuzzy
+msgid "Reference white: %s"
 msgstr "Blanc de référence :"
 
-msgid "display gamma"
+#, fuzzy
+msgid "display gamma = %s"
 msgstr "gamma d'affichage"
 
-msgid "'from' must be a colorConverter or string"
+#, fuzzy
+msgid "'from' must be a \"colorConverter\" object or a string"
 msgstr "'from' doit être un colorConverter ou une chaîne de caractères"
 
-msgid "'to' must be a colorConverter or string"
+#, fuzzy
+msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr "'to' doit être un colorConverter ou une chaîne de caractères"
 
 #, fuzzy
@@ -77,7 +82,8 @@ msgstr "'from.ref.white' en désaccord avec la définition de"
 msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.ref.white' en désaccord avec la définition de"
 
-msgid "color spaces use different reference whites."
+#, fuzzy
+msgid "color spaces use different reference whites"
 msgstr "les espaces de couleurs utilisent différents blancs de référence."
 
 msgid "'name' must be a character vector"
@@ -104,14 +110,11 @@ msgstr "'device' doit être une fonction"
 msgid "no device to print from"
 msgstr "aucun périphérique d'où imprimer"
 
-msgid "can only print from screen device"
+msgid "can only print from a screen device"
 msgstr "seul un périphérique écran peut être imprimé"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "il faut spécifier 'width' ou 'height'"
-
-msgid "can only print from a screen device"
-msgstr "seul un périphérique écran peut être imprimé"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() appelé sans périphérique graphique ouvert"
@@ -153,7 +156,8 @@ msgstr "impossible de réinitialiser '%s' car il n'existe pas"
 msgid "invalid options in '%s'"
 msgstr "options incorrectes dans '%s'"
 
-msgid "NOT changing"
+#, fuzzy
+msgid "NOT changing %s"
 msgstr "NE change(nt) PAS"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
@@ -169,9 +173,6 @@ msgstr "argument 'family' incorrect"
 
 msgid "invalid 'file'"
 msgstr "argument 'file' incorrect"
-
-msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr "'maxRasters' n'est plus nécessaire, et il sera ignoré"
 
 msgid "invalid PDF version"
 msgstr "version de PDF incorrecte"
@@ -224,7 +225,8 @@ msgstr "Format de sortie incorrect"
 msgid "status %d in running command '%s'"
 msgstr "statut %d dans la commande en cours d'exécution '%s'"
 
-msgid "range too small for min.n"
+#, fuzzy
+msgid "range too small for 'min.n'"
 msgstr "étendue des valeurs trop petite pour min.n"
 
 msgid "A raster matrix must be character, or numeric, or logical"
@@ -415,6 +417,12 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
+
+#~ msgid "can only print from screen device"
+#~ msgstr "seul un périphérique écran peut être imprimé"
+
+#~ msgid "'maxRasters' is no longer needed, and will be ignored"
+#~ msgstr "'maxRasters' n'est plus nécessaire, et il sera ignoré"
 
 #~ msgid "The 'gamma' argument is deprecated and has no effect"
 #~ msgstr "L'argument 'gamma' est obsolète et n'a aucun effet"

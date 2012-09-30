@@ -163,9 +163,10 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
         if(unload) {
             tryCatch(unloadNamespace(pkgname),
                      error = function(e)
-                     warning(sQuote(pkgname),
-                             " namespace cannot be unloaded:\n  ",
-                             conditionMessage(e), call. = FALSE))
+                     warning(gettextf("%s namespace cannot be unloaded:\n  ",
+                                      sQuote(pkgname)),
+                             conditionMessage(e),
+                             call. = FALSE, domain = NA))
         }
     } else {
         if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(env))

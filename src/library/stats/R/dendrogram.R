@@ -582,7 +582,7 @@ reorder <- function(x, ...) UseMethod("reorder")
 reorder.dendrogram <- function(x, wts, agglo.FUN = sum, ...)
 {
     if( !inherits(x, "dendrogram") )
-	stop("we require a dendrogram")
+	stop("'reorder.dendrogram' requires a dendrogram")
     agglo.FUN <- match.fun(agglo.FUN)
     oV <- function(x, wts) {
 	if(is.leaf(x)) {

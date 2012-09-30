@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-09-30 14:25\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -40,8 +40,8 @@ msgstr " 'La.svd' への引数は数値か複素数でなければなりませ�
 msgid "infinite or missing values in 'x'"
 msgstr " 'x' に無限値か欠測値があります "
 
-msgid "0 extent dimensions"
-msgstr " 範囲が 0 の次元です "
+msgid "a dimension is zero"
+msgstr ""
 
 msgid "'nu' must be 0, nrow(x) or ncol(x)"
 msgstr " 'nu' は 0 , nrow(x) または ncol(x) でなければなりません "
@@ -67,12 +67,6 @@ msgstr " 'normal.kind' は長さ 1 の文字列でなければなりません "
 msgid "'%s' is not a valid choice"
 msgstr " '%s' は有効な選択ではありません "
 
-msgid "Buggy version of Kinderman-Ramage generator used"
-msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版を使います "
-
-msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版は使えません "
-
 msgid "malformed version string"
 msgstr " 正しい書式のバージョン文字列ではありません "
 
@@ -97,9 +91,6 @@ msgstr " 'dim' は余りに大きな配列を指定しています "
 
 msgid "incorrect value for 'MARGIN'"
 msgstr " 'MARGIN' に対する不正確な値です "
-
-msgid "you cannot be serious"
-msgstr " 本気ですか？ "
 
 msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
 msgstr " *** 'pos=1' は不可能です。今は 'pos=2' と設定します "
@@ -130,7 +121,8 @@ msgstr ""
 " call: %s \n"
 " error: %s "
 
-msgid "namespace cannot be unloaded:"
+#, fuzzy
+msgid "%s namespace cannot be unloaded:"
 msgstr " 名前空間をアンロード出来ません: "
 
 #, fuzzy
@@ -143,8 +135,9 @@ msgstr " 正規表現パターン '[' を '\\\\[' で置き換えました "
 msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
 msgstr " 正規表現パターン '[<-' を '\\\\[<-' で置き換えました "
 
-msgid "RHS must be list"
-msgstr " 右辺はリストでなければなりません "
+#, fuzzy
+msgid "'value' must be a list"
+msgstr " 'object' はリストでなければなりません "
 
 msgid "an object with that name already exists"
 msgstr " その名前のオブジェクトは既に存在します "
@@ -220,7 +213,8 @@ msgstr " ベクトルオブジェクトしか書き込めません "
 msgid "can only write character objects"
 msgstr " 文字オブジェクトしか書き込めません "
 
-msgid "supplied timeout must be NULL or a non-negative number"
+#, fuzzy
+msgid "'timeout' must be NULL or a non-negative number"
 msgstr " タイムアウトは NULL か非負の数値でなければなりません "
 
 msgid "'from' must be raw or character"
@@ -235,8 +229,8 @@ msgstr " 誤った区間数です "
 msgid "'breaks' are not unique"
 msgstr " 'breaks' が一意的ではありません "
 
-msgid "labels/breaks length conflict"
-msgstr " ラベルまたは分割点の長さが矛盾しています "
+msgid "lengths of 'breaks' and 'labels' differ"
+msgstr ""
 
 msgid "invalid 'row.names' length"
 msgstr " 無効な 'row.names' 長です "
@@ -251,7 +245,7 @@ msgid "invalid 'dimnames' given for data frame"
 msgstr " データフレームに無効な 'dimnames' が与えられました "
 
 #, fuzzy
-msgid "cannot coerce class \"%s\" into a data.frame"
+msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr " クラス \"%s\" はデータフレームに強制変換できません "
 
 #, fuzzy
@@ -262,26 +256,23 @@ msgstr ""
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr " 'data.frame' の引数中の行名(項目 %d)が不適当です "
 
-msgid "some row.names duplicated:"
+#, fuzzy
+msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr " row.names が重複しています： "
-
-msgid ","
-msgstr " , "
-
-msgid "--> row.names NOT used"
-msgstr " --> row.names は使われません "
 
 msgid "row names contain missing values"
 msgstr " 列名は欠測値を含んでいます "
 
-msgid "duplicate row.names:"
+#, fuzzy
+msgid "duplicate row.names: %s"
 msgstr " row.names が重複しています： "
 
 #, fuzzy
 msgid "arguments imply differing number of rows: %s"
 msgstr " 引数は異なった列数を意味します: "
 
-msgid "row.names should specify one of the variables"
+#, fuzzy
+msgid "'row.names' should specify one of the variables"
 msgstr " row.names は変数の一つを指定するべきです "
 
 msgid "row names supplied are of the wrong length"
@@ -293,7 +284,8 @@ msgstr " 列名は短い変数から見つけられ、捨て去られました "
 msgid "named arguments other than 'drop' are discouraged"
 msgstr " 'drop'以外での名前付き引数は推奨されません "
 
-msgid "drop argument will be ignored"
+#, fuzzy
+msgid "'drop' argument will be ignored"
 msgstr " drop 引数は無視されます "
 
 msgid "undefined columns selected"
@@ -309,7 +301,7 @@ msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
 
 #, fuzzy
-msgid "rhs is the wrong length"
+msgid "'value' is the wrong length"
 msgstr " 与えられた列名は誤った長さです "
 
 #, fuzzy
@@ -388,16 +380,20 @@ msgstr " '%s' は \"date\" オブジェクトではありません "
 msgid "'%s' is not a \"dates\" object"
 msgstr " '%s' は \"dates\" オブジェクトではありません "
 
-msgid "binary + is not defined for Date objects"
+#, fuzzy
+msgid "binary + is not defined for \"Date\" objects"
 msgstr " Dtate オブジェクトに対しては二項演算 + は定義されていません "
 
-msgid "Can only subtract from Date objects"
+#, fuzzy
+msgid "can only subtract from \"Date\" objects"
 msgstr " Date オブジェクトからしか引くことはできません "
 
-msgid "unary - is not defined for Date objects"
+#, fuzzy
+msgid "unary - is not defined for \"Date\" objects"
 msgstr " 単項演算 - は Date オブジェクトに対しては定義されていません "
 
-msgid "can only subtract numbers from Date objects"
+#, fuzzy
+msgid "can only subtract numbers from \"Date\" objects"
 msgstr " Date オブジェクトからは数値しか引けません "
 
 #, fuzzy
@@ -411,13 +407,15 @@ msgstr " は Date オブジェクトに対しては定義されていません "
 msgid "'from' must be specified"
 msgstr " 'from' を指定しなければなりません "
 
-msgid "'from' must be a Date object"
+#, fuzzy
+msgid "'from' must be a \"Date\" object"
 msgstr " 'from' は Date オブジェクトでなければなりません "
 
 msgid "'from' must be of length 1"
 msgstr " 'from' は長さ 1 でなければなりません "
 
-msgid "'to' must be a Date object"
+#, fuzzy
+msgid "'to' must be a \"Date\" object"
 msgstr " 'to' は Date オブジェクトでなければなりません "
 
 msgid "'to' must be of length 1"
@@ -465,13 +463,15 @@ msgstr " 間違ったクラスです "
 msgid "binary '+' is not defined for \"POSIXt\" objects"
 msgstr " \"POSIXt\" オブジェクトには二項演算 + は定義されていません "
 
-msgid "Can only subtract from POSIXt objects"
+#, fuzzy
+msgid "can only subtract from \"POSIXt\" objects"
 msgstr " POSIXt オブジェクトからしか引けません "
 
 msgid "unary '-' is not defined for \"POSIXt\" objects"
 msgstr " 単項演算 - は \"POSIXt\" オブジェクトに対しては定義されていません "
 
-msgid "can only subtract numbers from POSIXt objects"
+#, fuzzy
+msgid "can only subtract numbers from \"POSIXt\" objects"
 msgstr " POSIXt オブジェクトからは数値しか引くことができません "
 
 msgid "unary '%s' not defined for \"POSIXt\" objects"
@@ -507,10 +507,12 @@ msgid "second argument of / cannot be a \"difftime\" object"
 msgstr ""
 " 割り算 / の第二引数は \"difftime\" オブジェクトであることができません "
 
-msgid "'from' must be a POSIXt object"
+#, fuzzy
+msgid "'from' must be a \"POSIXt\" object"
 msgstr " 'from' は POSIXt オブジェクトでなければなりません "
 
-msgid "'to' must be a POSIXt object"
+#, fuzzy
+msgid "'to' must be a \"POSIXt\" object"
 msgstr " 'to' は POSIXt のオブジェクトでなければなりません "
 
 msgid "'file' must be a character string or connection"
@@ -539,13 +541,15 @@ msgstr ""
 msgid "'x' must be a square matrix"
 msgstr " 'x' は正方行列でなければなりません "
 
-msgid "determinant not currently defined for complex matrices"
+#, fuzzy
+msgid "'determinant' not currently defined for complex matrices"
 msgstr " 行列式は現在複素行列には定義されていません "
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
 msgstr " 'x'が行列の時は'nrow'と'ncol'は指定できません "
 
-msgid "'x' is an array, but not 1D."
+#, fuzzy
+msgid "'x' is an array, but not one-dimensional."
 msgstr " 'x'は行列ですが、一次元ではありません "
 
 msgid "only matrix diagonals can be replaced"
@@ -595,19 +599,12 @@ msgstr " 'eigen' に非正方行列が与えられました "
 msgid "too large a matrix for EISPACK"
 msgstr ""
 
-msgid "'ch' returned code %d in 'eigen'"
-msgstr " 'eigen' で 'ch' がコード %d を返しました "
-
-msgid "'rs' returned code %d in 'eigen'"
+#, fuzzy
+msgid "'%s' returned code %d in 'eigen'"
 msgstr " 'eigen' で 'rs' がコード %d を返しました "
 
-msgid "'cg' returned code %d in 'eigen'"
-msgstr " 'eigen' で 'cg' がコード %d を返しました "
-
-msgid "'rg' returned code %d in 'eigen'"
-msgstr " 'eigen' で 'rg' がコード %d を返しました "
-
-msgid "invalid labels; length %d should be 1 or %d"
+#, fuzzy
+msgid "invalid 'labels'; length %d should be 1 or %d"
 msgstr " 無効なラベルです。長さ %d は 1 または %d であるべきです "
 
 msgid "number of levels differs"
@@ -618,9 +615,6 @@ msgstr " 因子に対しては無意味です "
 
 msgid "level sets of factors are different"
 msgstr " 因子の水準セットが異なっています "
-
-msgid "invalid factor level, NAs generated"
-msgstr " 不正な因子水準です。NA が発生しました "
 
 msgid "invalid factor level, NA generated"
 msgstr " 不正な因子水準です。NA が発生しました "
@@ -682,7 +676,8 @@ msgstr " 'vec' は NA 値を含んでいます "
 msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければいけません "
 
-msgid "using the first element of 'value' of type expression"
+#, fuzzy
+msgid "using the first element of 'value' of type \"expression\""
 msgstr " タイプ表現 'value' の最初の要素だけを使います "
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
@@ -714,9 +709,6 @@ msgstr " 'zero.print' は長さ > 1 を持ちます "
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr " 'zero.print' は文字、論理値、または NULL でなければなりません "
-
-msgid "'subset' must evaluate to logical"
-msgstr " 'subset' は論理値として評価されなければなりません "
 
 msgid "'subset' must be logical"
 msgstr " 'subset' は論理値でなければなりません "
@@ -789,7 +781,8 @@ msgstr " パッケージ '%s' はバージョン %s の R の下で造られま�
 msgid "package %s was built for %s"
 msgstr " パッケージ '%s' は %s に対して造られました "
 
-msgid "package %s is not installed for 'arch=%s'"
+#, fuzzy
+msgid "package %s is not installed for 'arch = %s'"
 msgstr " パッケージ '%s' は 'arch=%s' に対してインストールされていません "
 
 msgid ""
@@ -798,20 +791,20 @@ msgstr ""
 " パッケージ '%s'を使うには対話的セッションでライセンスを受諾する必要がありま"
 "す "
 
-msgid "Package %s has a license that you need to accept after viewing"
+#, fuzzy
+msgid "package %s has a license that you need to accept after viewing"
 msgstr " パッケージ '%s' を使うにはライセンスを確認して受諾する必要があります "
 
+#, fuzzy
 msgid ""
-"Package %s has a license that you need to accept:\n"
+"package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
 " パッケージ '%s' を使うにはライセンスを受諾する必要があります。Description"
 "ファイルによれば、以下の通りです:  "
 
-msgid "License"
-msgstr " ライセンス "
-
-msgid "License for package %s not accepted"
+#, fuzzy
+msgid "license for package %s not accepted"
 msgstr " パッケージ '%s' のライセンスは受諾されていません "
 
 msgid "Attaching package: %s"
@@ -835,10 +828,12 @@ msgstr " '%s' は有効なインストール済みパッケージではありま
 msgid "%s not found on search path, using pos = 2"
 msgstr " '%s' は検索パス上には見つかりませんでした。pos = 2 を使用します "
 
-msgid "package/namespace load failed for %s"
+#, fuzzy
+msgid "package or namespace load failed for %s"
 msgstr " '%s' に対するパッケージもしくは名前空間のロードが失敗しました "
 
-msgid "package %s does not have a NAMESPACE and should be re-installed"
+#, fuzzy
+msgid "package %s does not have a namespace and should be re-installed"
 msgstr ""
 " パッケージ '%s' は名前空間を持っていません。再インストールする必要がありま"
 "す。 "
@@ -949,21 +944,17 @@ msgstr " 空の（0バイトの）入力ファイルです "
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr " 入力は混乱しています。LF が CR で置き換えられています "
 
-msgid ""
-"file %s has magic number '%s'\n"
-"   Use of save versions prior to 2 is deprecated"
+msgid "file %s has magic number '%s'"
 msgstr ""
-" ファイル '%s' はマジックナンバー '%s' を持ちます \n"
-" 　　バージョン2より前のセーブは廃止予定です "
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr " 二回以前の保存バージョンの使用は廃止予定です "
 
 msgid "bad 'file' argument"
 msgstr " 誤った 'file' 引数です "
 
 msgid "'file' must be specified"
 msgstr " 'file' が指定されなければなりません "
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr " 二回以前の保存バージョンの使用は廃止予定です "
 
 msgid "nothing specified to be save()d"
 msgstr " save()されるべきものがありません "
@@ -993,13 +984,15 @@ msgstr " [以前にセーブされたワークスペースを復帰します] "
 msgid "Attempting to load the environment %s"
 msgstr " 環境 '%s' をロードしようとしています "
 
-msgid "not found: using .GlobalEnv instead"
+#, fuzzy
+msgid "Specified environment not found: using '.GlobalEnv' instead"
 msgstr " 見付かりません： .GlobalEnv を代わりに使います "
 
 msgid "invalid 'category' argument"
 msgstr " 無効な 'category' 引数です "
 
-msgid "must specify formal argument names to vectorize"
+#, fuzzy
+msgid "must specify names of formal arguments for 'vectorize'"
 msgstr " ベクトル化するためには仮引数名を指定しなければなりません "
 
 msgid "'arg' must be NULL or a character vector"
@@ -1032,10 +1025,12 @@ msgstr " '%s' は関数、文字、またはシンボルではありません "
 msgid "found non-function '%s'"
 msgstr " 関数でない '%s' が見付かりました "
 
-msgid "attempt to set rownames on object with no dimensions"
+#, fuzzy
+msgid "attempt to set 'rownames' on an object with no dimensions"
 msgstr " 次元無しのオブジェクトに行名を設定しようとしました "
 
-msgid "attempt to set colnames on object with less than two dimensions"
+#, fuzzy
+msgid "attempt to set 'colnames' on an object with less than two dimensions"
 msgstr " 次元が 2 未満のオブジェクトに列名を設定しようとしました "
 
 msgid "argument is not numeric or logical: returning NA"
@@ -1063,12 +1058,10 @@ msgstr " 'by.x' そして 'by.y' は異なった列数を指定しています "
 msgid "additional arguments ignored in message()"
 msgstr " message() で追加引数は無視されました "
 
-msgid "(loaded the methods namespace)"
-msgstr " (メソッドの名前空間をロードしました) "
-
+#, fuzzy
 msgid ""
-"Tracing functions requires the methods package, but unable to load methods "
-"namespace"
+"tracing functions requires the 'methods' package, but unable to load the "
+"'methods' namespace"
 msgstr ""
 " トレース関数は methods パッケージを必要としていますが、その名前空間をロード"
 "できません "
@@ -1091,7 +1084,8 @@ msgstr " 名前空間は既に付加されています "
 msgid "%s not found"
 msgstr " %s を見付けることができません "
 
-msgid "namespace %s is already sealed in loadNamespace"
+#, fuzzy
+msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr " 名前空間 '%s' は既に loadNamespace 中に封印(seal)されています "
 
 #, fuzzy
@@ -1116,9 +1110,10 @@ msgstr " パッケージ '%s' は名前空間を持っていません "
 msgid "unable to load R code in package %s"
 msgstr " パッケージ '%s' 中の R コードをロードできません "
 
+#, fuzzy
 msgid ""
-"exportClassPattern specified in NAMESPACE but no matching classes in package "
-"%s"
+"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
+"package %s"
 msgstr ""
 "NAMESPACEの中で exportClassPattern が指定されましたが、%s パッケージには該当"
 "するクラスがありません "
@@ -1128,7 +1123,8 @@ msgstr ""
 " パッケージ '%s' 中のクラス %s をエクスポートするように指定されていますが定義"
 "されていません "
 
-msgid "No function found corresponding to methods exports from %s for: %s"
+#, fuzzy
+msgid "no function found corresponding to methods exports from %s for: %s"
 msgstr " %s から %s へエクスポートされるメソッドに対応する関数がありません "
 
 msgid "in %s methods for export not found: %s"
@@ -1204,10 +1200,12 @@ msgstr " 封印された名前空間のエクスポートへ加えることが�
 msgid "undefined exports: %s"
 msgstr " 未定義のエクスポートです： "
 
-msgid "package %s has no NAMESPACE file"
+#, fuzzy
+msgid "package %s has no 'NAMESPACE' file"
 msgstr " パッケージ '%s' は NAMESPACE ファイルを持っていません "
 
-msgid "empty name in directive '%s' in NAMESPACE file"
+#, fuzzy
+msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr " NAMESPACE ファイル中の directive '%s' 中には名前がありません "
 
 #, fuzzy
@@ -1245,10 +1243,12 @@ msgstr " '%s' はまだ実装されていません "
 msgid "argument '%s' is not used (yet)"
 msgstr " 引数 '%s' は(まだ)使用されていません "
 
-msgid "'x' cannot be coerced to 'octmode'"
+#, fuzzy
+msgid "'x' cannot be coerced to \"octmode\""
 msgstr " 'x' は 'octmode' に強制変換できません "
 
-msgid "'x' cannot be coerced to hexmode"
+#, fuzzy
+msgid "'x' cannot be coerced to \"hexmode\""
 msgstr " 'x' は hexmode に強制変換できません "
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1420,10 +1420,12 @@ msgstr ""
 " 'x' は 'sort.list' に対してはアトミックでなければなりません。 \n"
 " 'sort' をリストに対して呼び出しましたか？ "
 
-msgid "method=\"quick\" is only for numeric 'x'"
+#, fuzzy
+msgid "method = \"quick\" is only for numeric 'x'"
 msgstr " method=\"quick は数値の 'x' 専用です "
 
-msgid "method=\"radix\" is only for integer 'x'"
+#, fuzzy
+msgid "method = \"radix\" is only for integer 'x'"
 msgstr " method=\"radix\" は整数値の 'x'  専用です "
 
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -1455,7 +1457,7 @@ msgid "'%s' is not an existing file"
 msgstr " '%s' は既存のファイルではありません "
 
 #, fuzzy
-msgid "Timestamp of %s has chamged"
+msgid "Timestamp of %s has changed"
 msgstr " タイムスタンプ ( ' "
 
 msgid "additional arguments ignored in stop()"
@@ -1476,10 +1478,14 @@ msgstr " 'indent' と 'width' に対する値が不正です "
 msgid "probably wrong encoding in names(.) of column"
 msgstr " おそらく列の names(.) 中に間違ったエンコーディングがあります "
 
+msgid ","
+msgstr " , "
+
 msgid "'nv' must be 0 or ncol(x)"
 msgstr " 'nv' は 0 か ncol(x) でなければなりません "
 
-msgid "error %d in 'dsvdc'"
+#, fuzzy
+msgid "error %d in LINPACK subroutine 'dsvdc'"
 msgstr " 'dsvdc' 中にエラー %d があります "
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
@@ -1508,7 +1514,8 @@ msgstr " 'object' はクラス \"table\" を継承しなければなりません
 msgid "'x' must inherit from class %s"
 msgstr " 'x' はクラス \"summary.table\" を継承しなければなりません "
 
-msgid "cannot coerce into a table"
+#, fuzzy
+msgid "cannot coerce to a table"
 msgstr " テーブルに強制変換できません "
 
 msgid "'x' is not an array"
@@ -1534,10 +1541,12 @@ msgstr " ハンドラーは関数でなければなりません "
 msgid "no such element '%s'"
 msgstr " そのような要素 '%s' はありません "
 
-msgid "Removing"
+#, fuzzy
+msgid "Removing %s"
 msgstr " 以下を取除きます： "
 
-msgid "Registering evaluate as low-level callback"
+#, fuzzy
+msgid "Registering 'evaluate' as low-level callback"
 msgstr " 登録(Registering)は低レベルのコールバックとして評価されます "
 
 msgid "user"
@@ -1562,7 +1571,8 @@ msgstr " 無効なバージョンの指定です "
 msgid "wrong argument"
 msgstr " 間違った引数です "
 
-msgid "invalid value"
+#, fuzzy
+msgid "invalid 'value'"
 msgstr " 無効な値です "
 
 msgid "unary '%s' not defined for \"numeric_version\" objects"
@@ -1656,21 +1666,6 @@ msgstr " エラー：ディレクトリーに変更できません "
 
 msgid "ERROR: no permission to remove from directory"
 msgstr " エラー：このディレクトリーから抹消する許可がありません "
-
-msgid "T used instead of TRUE"
-msgstr " TRUE の代わりに T が使われました "
-
-msgid "F used instead of FALSE"
-msgstr " FALSE の代わりに F が使われました "
-
-msgid "items"
-msgstr " 項目 "
-
-msgid "have been removed from the search path"
-msgstr " 検索パスから抹消されています "
-
-msgid "cannot find namespace environment"
-msgstr " 名前空間環境を見つけられません "
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
@@ -1801,6 +1796,70 @@ msgstr[0] " TRUE の代わりに T が使われました "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "T used instead of TRUE"
+#~ msgstr " TRUE の代わりに T が使われました "
+
+#~ msgid "F used instead of FALSE"
+#~ msgstr " FALSE の代わりに F が使われました "
+
+#~ msgid "cannot find namespace environment"
+#~ msgstr " 名前空間環境を見つけられません "
+
+#~ msgid "items"
+#~ msgstr " 項目 "
+
+#~ msgid "have been removed from the search path"
+#~ msgstr " 検索パスから抹消されています "
+
+#~ msgid "0 extent dimensions"
+#~ msgstr " 範囲が 0 の次元です "
+
+#~ msgid "Buggy version of Kinderman-Ramage generator used"
+#~ msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版を使います "
+
+#~ msgid "Buggy version of Kinderman-Ramage generator is not allowed"
+#~ msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版は使えません "
+
+#~ msgid "you cannot be serious"
+#~ msgstr " 本気ですか？ "
+
+#~ msgid "RHS must be list"
+#~ msgstr " 右辺はリストでなければなりません "
+
+#~ msgid "labels/breaks length conflict"
+#~ msgstr " ラベルまたは分割点の長さが矛盾しています "
+
+#~ msgid "--> row.names NOT used"
+#~ msgstr " --> row.names は使われません "
+
+#~ msgid "'ch' returned code %d in 'eigen'"
+#~ msgstr " 'eigen' で 'ch' がコード %d を返しました "
+
+#~ msgid "'cg' returned code %d in 'eigen'"
+#~ msgstr " 'eigen' で 'cg' がコード %d を返しました "
+
+#~ msgid "'rg' returned code %d in 'eigen'"
+#~ msgstr " 'eigen' で 'rg' がコード %d を返しました "
+
+#~ msgid "invalid factor level, NAs generated"
+#~ msgstr " 不正な因子水準です。NA が発生しました "
+
+#~ msgid "'subset' must evaluate to logical"
+#~ msgstr " 'subset' は論理値として評価されなければなりません "
+
+#~ msgid "License"
+#~ msgstr " ライセンス "
+
+#~ msgid ""
+#~ "file %s has magic number '%s'\n"
+#~ "   Use of save versions prior to 2 is deprecated"
+#~ msgstr ""
+#~ " ファイル '%s' はマジックナンバー '%s' を持ちます \n"
+#~ " 　　バージョン2より前のセーブは廃止予定です "
+
+#~ msgid "(loaded the methods namespace)"
+#~ msgstr " (メソッドの名前空間をロードしました) "
 
 #~ msgid "doc"
 #~ msgstr " ドキュメント "

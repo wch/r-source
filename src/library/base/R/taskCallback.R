@@ -136,7 +136,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
             }
             if(length(discard)) {
                 if(.verbose)
-                    cat(gettext("Removing"), paste(discard, collapse=", "), "\n")
+                    cat(gettextf("Removing %s", paste(discard, collapse=", ")), "\n")
                 idx <- is.na(match(names(handlers), discard))
                 if(length(idx))
                     handlers <<- handlers[idx]
@@ -155,7 +155,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
         function(name = "R-taskCallbackManager", verbose = .verbose)
         {
             if(verbose)
-                cat(gettext("Registering evaluate as low-level callback\n"))
+                cat(gettext("Registering 'evaluate' as low-level callback\n"))
             id <- addTaskCallback(evaluate, name = name)
             registered <<- TRUE
             id

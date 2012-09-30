@@ -83,7 +83,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  double(2*n),
 			  ierr = integer(1L))
 	    if (z$ierr)
-		stop(gettextf("'ch' returned code %d in 'eigen'", z$ierr),
+		stop(gettextf("'%s' returned code %d in 'eigen'", "ch", z$ierr),
                      domain = NA)
 	    if(!only.values)
 		z$vectors <- matrix(complex(real=z$vectors,
@@ -101,7 +101,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  dbl.n,
 			  ierr = integer(1L))
 	    if (z$ierr)
-		stop(gettextf("'rs' returned code %d in 'eigen'", z$ierr),
+		stop(gettextf("'%s' returned code %d in 'eigen'", "rs", z$ierr),
                      domain = NA)
 	}
 	ord <- sort.list(z$values, decreasing = TRUE)
@@ -125,7 +125,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  dbl.n,
 			  ierr = integer(1L))
 	    if (z$ierr)
-		stop(gettextf("'cg' returned code %d in 'eigen'", z$ierr),
+		stop(gettextf("'%s' returned code %d in 'eigen'", "cg", z$ierr),
                      domain = NA)
 	    z$values <- complex(real=z$values,imaginary=z$ivalues)
 	    if(!only.values)
@@ -145,7 +145,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  dbl.n,
 			  ierr = integer(1L))
 	    if (z$ierr)
-		stop(gettextf("'rg' returned code %d in 'eigen'", z$ierr),
+		stop(gettextf("'%s' returned code %d in 'eigen'", "rg", z$ierr),
                      domain = NA)
 	    ind <- z$ivalues > 0L
 	    if(any(ind)) {#- have complex (conjugated) values

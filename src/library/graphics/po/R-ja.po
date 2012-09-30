@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2011-10-22 08:06+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -130,7 +130,8 @@ msgstr " 'given.values' が無効です "
 msgid "rows * columns too small"
 msgstr " 行数 * 列数が小さすぎます "
 
-msgid "Missing rows"
+#, fuzzy
+msgid "Missing rows: %s"
 msgstr " 行が欠けています "
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
@@ -220,7 +221,8 @@ msgstr ""
 " 'x' の一部分が数えられていません。多分 'breaks' が 'x' の範囲全体をカバーし"
 "ていません "
 
-msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
+#, fuzzy
+msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr " プロットの領域が誤まりです。むしろ freq=FALSE を使用して下さい "
 
 msgid "'x' is wrongly structured"
@@ -241,7 +243,8 @@ msgstr " 無効な z の限界です "
 msgid "must have one more break than colour"
 msgstr " 分割点の数は色の数よりも一つ多くなければなりません "
 
-msgid "breaks must all be finite"
+#, fuzzy
+msgid "'breaks' must all be finite"
 msgstr " 分割点はすべて有限でなければなりません "
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
@@ -258,12 +261,13 @@ msgstr ""
 #, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n = %d"
+"to each of the values {1 ... %d}"
 msgstr ""
 " レイアウト行列は値 {1..n} の各値を、少なくとも一回参照 \n"
 " しなければなりません; ここで n = "
 
-msgid "invalid title"
+#, fuzzy
+msgid "invalid 'title'"
 msgstr " 無効なタイトルです "
 
 msgid "'legend' is of length 0"
@@ -393,7 +397,8 @@ msgstr " 'x' は行列かデータフレームでなければなりません "
 msgid "data in 'x' must be numeric"
 msgstr " 'x' 中のデータは数値でなければなりません "
 
-msgid "nrow * ncol <  number of observations"
+#, fuzzy
+msgid "'nrow * ncol' is less than the number of observations"
 msgstr " nrow * ncol は観察値の数未満でなければなりません "
 
 msgid "labels do not make sense for a single location"
@@ -429,13 +434,16 @@ msgstr " 'number' は 'x' および 'y' と同じ長さでなければなりま�
 msgid "exactly one symbol type must be specified"
 msgstr " 丁度一つのシンボルタイプを指定しなければなりません "
 
-msgid "x log scale:  xinch() is non-sense"
+#, fuzzy
+msgid "x log scale:  xinch() is nonsense"
 msgstr " x は対数スケール: xinch() はナンセンスです "
 
-msgid "y log scale:  yinch() is non-sense"
+#, fuzzy
+msgid "y log scale:  yinch() is nonsense"
 msgstr " y は対数スケール: yinch() はナンセンスです "
 
-msgid "log scale:  xyinch() is non-sense"
+#, fuzzy
+msgid "log scale:  xyinch() is nonsense"
 msgstr " 対数スケール: xyinch() はナンセンスです "
 
 msgid "Outlier (%s) in boxplot %d is not drawn"

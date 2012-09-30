@@ -161,7 +161,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 STATISTIC <- c(S = q)
                 if(TIES && exact){
                     exact <- FALSE
-                    warning("Cannot compute exact p-values with ties")
+                    warning("Cannot compute exact p-value with ties")
                 }
                 PVAL <-
                     switch(alternative,

@@ -60,7 +60,7 @@ as.octmode <- function(x)
         z <- strtoi(x, 8L)
         if(!any(is.na(z) | z < 0)) return(structure(z, class="octmode"))
     }
-    stop("'x' cannot be coerced to 'octmode'")
+    stop("'x' cannot be coerced to \"octmode\"")
 }
 
 ## BioC packages cellHTS2 and flowCore misuse this for doubles,
@@ -110,7 +110,7 @@ as.hexmode <- function(x)
         z <- strtoi(x, 16L)
         if(!any(is.na(z) | z < 0)) return(structure(z, class = "hexmode"))
     }
-    stop("'x' cannot be coerced to hexmode")
+    stop("'x' cannot be coerced to \"hexmode\"")
 }
 
 

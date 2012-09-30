@@ -43,7 +43,7 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
         stop("not enough data")
 
     if (k > 2L)
-        stop("The case k > 2 is unimplemented")
+        stop("the case k > 2 is unimplemented")
 
     if(!missing(r) && (length(r) > 1 || is.na(r) || r < 0 ))
         stop ("'r' must be a single positive number")

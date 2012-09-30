@@ -545,7 +545,7 @@ model.response <- function (data, type = "any")
 	if (is.list(data) | is.data.frame(data)) {
 	    v <- data[[1L]]
 	    if (type == "numeric" && is.factor(v)) {
-		warning('using type="numeric" with a factor response will be ignored')
+		warning('using type = "numeric" with a factor response will be ignored')
 	    } else if (type == "numeric" | type == "double")
 		storage.mode(v) <- "double"
 	    else if (type != "any") stop("invalid response type")

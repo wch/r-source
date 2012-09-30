@@ -32,13 +32,11 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 
     ##S : Change if (simplify = TRUE) return an array/matrix {not a 'vector'}
     stopifnot(length(m) == 1L)
-    if(m < 0)
-	stop("m < 0")
+    if(m < 0) stop("m < 0", domain = NA)
     if(is.numeric(x) && length(x) == 1L && x > 0 && trunc(x) == x)
 	x <- seq_len(x)
     n <- length(x)
-    if(n < m)
-	stop("n < m")
+    if(n < m) stop("n < m", domain = NA)
     m <- as.integer(m)
     e <- 0
     h <- m

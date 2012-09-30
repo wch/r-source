@@ -154,7 +154,7 @@ dmultinom <- function(x, size=NULL, prob, log = FALSE)
     K <- length(prob)
     if(length(x) != K) stop("x[] and prob[] must be equal length vectors.")
     if(any(prob < 0) || (s <- sum(prob)) == 0)
-	stop("probabilities cannot be negative nor all 0.")
+	stop("probabilities cannot be negative nor all 0")
     prob <- prob / s
 
     x <- as.integer(x + 0.5)

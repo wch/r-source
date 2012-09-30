@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2011-10-07 15:46+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -52,19 +52,24 @@ msgstr "'start' und 'end' müssen unterschiedlich und in [0, 1] sein"
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' muss ein Skalar oder 'sRGB' sein"
 
-msgid "Color space converter:"
+#, fuzzy
+msgid "Color space converter: %s"
 msgstr "Farbraumkonverter:"
 
-msgid "Reference white:"
+#, fuzzy
+msgid "Reference white: %s"
 msgstr "Referenz-Weiß:"
 
-msgid "display gamma"
+#, fuzzy
+msgid "display gamma = %s"
 msgstr "Gamma für Display"
 
-msgid "'from' must be a colorConverter or string"
+#, fuzzy
+msgid "'from' must be a \"colorConverter\" object or a string"
 msgstr "'from' muss ein Farbkonvertierer oder eine Zeichenkette sein"
 
-msgid "'to' must be a colorConverter or string"
+#, fuzzy
+msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr "'to' muss ein Farbkonvertierer oder eine Zeichenkette sein"
 
 #, fuzzy
@@ -75,7 +80,8 @@ msgstr "'from.ref.white' stimmt nicht Überein mit der Definition von"
 msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.ref.white' stimmt nicht Überein mit der Definition von"
 
-msgid "color spaces use different reference whites."
+#, fuzzy
+msgid "color spaces use different reference whites"
 msgstr "Farbräume nutzen unterschiedliches Referenz-Weiß"
 
 msgid "'name' must be a character vector"
@@ -102,14 +108,11 @@ msgstr "'device' sollte eine Funktion sein"
 msgid "no device to print from"
 msgstr "kein Device um es zu drucken"
 
-msgid "can only print from screen device"
+msgid "can only print from a screen device"
 msgstr "kann nur aus Screen-Device drucken"
 
 msgid "need to specify one of 'width' and 'height'"
 msgstr "entweder 'width' oder 'heigth' müssen angegeben werden"
-
-msgid "can only print from a screen device"
-msgstr "kann nur aus Screen-Device drucken"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() ohne geöffnetes Grafik-Device aufgerufen"
@@ -151,7 +154,8 @@ msgstr "kann nicht existierendes ' %s' nicht zurücksetzen"
 msgid "invalid options in '%s'"
 msgstr "ungültige Optionen in '%s'"
 
-msgid "NOT changing"
+#, fuzzy
+msgid "NOT changing %s"
 msgstr "NICHT ändernd"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
@@ -165,9 +169,6 @@ msgstr "ungültiges 'family' Argument"
 
 msgid "invalid 'file'"
 msgstr "ungültiges 'file' Argument"
-
-msgid "'maxRasters' is no longer needed, and will be ignored"
-msgstr "'maxRasters' wird nicht mehr benötigt, wird deshalb ignoriert"
 
 msgid "invalid PDF version"
 msgstr "ungültige PDF Version"
@@ -220,7 +221,8 @@ msgstr "ungültiges Ausgabeformat"
 msgid "status %d in running command '%s'"
 msgstr "Status %d im laufenden Kommando '%s'"
 
-msgid "range too small for min.n"
+#, fuzzy
+msgid "range too small for 'min.n'"
 msgstr "Spannweite zu klein für min.n"
 
 msgid "A raster matrix must be character, or numeric, or logical"
@@ -402,6 +404,12 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z Wert <= 0 ausgelassen in logarithmischem Plot"
 msgstr[1] "%d z Werte <= 0 ausgelassen in logarithmischem Plot"
+
+#~ msgid "can only print from screen device"
+#~ msgstr "kann nur aus Screen-Device drucken"
+
+#~ msgid "'maxRasters' is no longer needed, and will be ignored"
+#~ msgstr "'maxRasters' wird nicht mehr benötigt, wird deshalb ignoriert"
 
 #~ msgid "The 'gamma' argument is deprecated and has no effect"
 #~ msgstr "Das 'gamma' Argument ist veraltet und hat keinen Effekt"

@@ -128,11 +128,10 @@ print.SOCKcluster <- function(x, ...)
 {
     nc <- length(x)
     hosts <- unique(sapply(x, "[[", "host"))
-    msg <- if (length(hosts) > 1L)
-        gettextf("socket cluster with %d nodes on hosts %s", nc,
-                 paste(sQuote(hosts), collapse = ", "))
-    else
-        gettextf("socket cluster with %d nodes on host %s", nc, sQuote(hosts))
+    msg <- sprintf(ngettext(length(hosts),
+                            "socket cluster with %d nodes on host %s",
+                            "socket cluster with %d nodes on hosts %s"),
+                   nc, paste(sQuote(hosts), collapse = ", "))
     cat(msg, "\n", sep = "")
     invisible(x)
 }

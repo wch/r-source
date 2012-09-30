@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-09-19 r60762) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6680,7 +6680,7 @@ List of 12
  $ dev.resids:function (y, mu, wt)  
  $ aic       :function (y, n, mu, wt, dev)  
  $ mu.eta    :function (eta)  
- $ initialize:  expression({     if (any(y <= 0))          stop("non-positive values not allowed for the gamma family")     n <- rep.int(1, nobs)     mustart <- y })
+ $ initialize:  expression({     if (any(y <= 0))          stop("non-positive values not allowed for the 'gamma' family")     n <- rep.int(1, nobs)     mustart <- y })
  $ validmu   :function (mu)  
  $ valideta  :function (eta)  
  $ simulate  :function (object, nsim)  
@@ -12319,7 +12319,7 @@ $residual.scale
 > wfit <- lm(y ~ x, weights = w)
 > predict(fit, interval = "prediction")
 Warning in predict.lm(fit, interval = "prediction") :
-  Predictions on current data refer to _future_ responses
+  predictions on current data refer to _future_ responses
 
           fit        lwr         upr
 1  -0.6270917 -2.6311852  1.37700188
@@ -12339,10 +12339,10 @@ Warning in predict.lm(fit, interval = "prediction") :
 15  1.2801229 -0.7562734  3.31651909
 > predict(wfit, interval = "prediction")
 Warning in predict.lm(wfit, interval = "prediction") :
-  Predictions on current data refer to _future_ responses
+  predictions on current data refer to _future_ responses
 
 Warning in predict.lm(wfit, interval = "prediction") :
-  Assuming prediction variance inversely proportional to weights used for fitting
+  assuming prediction variance inversely proportional to weights used for fitting
 
           fit        lwr        upr
 1  -0.6795401 -2.7152943  1.3562142

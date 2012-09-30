@@ -282,12 +282,12 @@ summary.POSIXlt <- function(object, digits = 15, ...)
                          secs = x, mins = 60*x, hours = 60*60*x,
                          days = 60*60*24*x, weeks = 60*60*24*7*x))
     if(!inherits(e1, "POSIXt"))
-        stop("Can only subtract from POSIXt objects")
+        stop("can only subtract from \"POSIXt\" objects")
     if (nargs() == 1) stop("unary '-' is not defined for \"POSIXt\" objects")
     if(inherits(e2, "POSIXt")) return(difftime(e1, e2))
     if (inherits(e2, "difftime")) e2 <- coerceTimeUnit(e2)
     if(!is.null(attr(e2, "class")))
-        stop("can only subtract numbers from POSIXt objects")
+        stop("can only subtract numbers from \"POSIXt\" objects")
     e1 <- as.POSIXct(e1)
     .POSIXct(unclass(e1) - e2, attr(e1, "tzone"))
 }
@@ -669,12 +669,12 @@ seq.POSIXt <-
     function(from, to, by, length.out = NULL, along.with = NULL, ...)
 {
     if (missing(from)) stop("'from' must be specified")
-    if (!inherits(from, "POSIXt")) stop("'from' must be a POSIXt object")
+    if (!inherits(from, "POSIXt")) stop("'from' must be a \"POSIXt\" object")
     cfrom <- as.POSIXct(from)
     if(length(cfrom) != 1L) stop("'from' must be of length 1")
     tz <- attr(cfrom , "tzone")
     if (!missing(to)) {
-        if (!inherits(to, "POSIXt")) stop("'to' must be a POSIXt object")
+        if (!inherits(to, "POSIXt")) stop("'to' must be a \"POSIXt\" object")
         if (length(as.POSIXct(to)) != 1) stop("'to' must be of length 1")
     }
     if (!missing(along.with)) {

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46\n"
+"POT-Creation-Date: 2012-09-30 14:26\n"
 "PO-Revision-Date: 2011-10-07 15:38+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -132,7 +132,8 @@ msgstr "ungültige 'given.values'"
 msgid "rows * columns too small"
 msgstr " Zeilen * Spalten zu klein"
 
-msgid "Missing rows"
+#, fuzzy
+msgid "Missing rows: %s"
 msgstr "fehlende Zeilen"
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
@@ -223,7 +224,8 @@ msgstr ""
 "einige 'x' nicht gezählt: evtl. überdecken die 'breaks' nicht den gesamten "
 "Bereich von 'x'"
 
-msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
+#, fuzzy
+msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr "Die FLÄCHEN im Plot sind falsch -- lieber freq=FALSE benutzen"
 
 msgid "'x' is wrongly structured"
@@ -244,7 +246,8 @@ msgstr "unzulässige Grenzen für z"
 msgid "must have one more break than colour"
 msgstr "es muss eine Stützstelle mehr gebe als Farben"
 
-msgid "breaks must all be finite"
+#, fuzzy
+msgid "'breaks' must all be finite"
 msgstr "alle Stützstellen müssen endlich sein"
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
@@ -261,12 +264,13 @@ msgstr ""
 #, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
-"to each of the values {1..n}; here  n = %d"
+"to each of the values {1 ... %d}"
 msgstr ""
 "Die Layout-Matrix muss zumindest eine Referenz auf\n"
 "jeden der Werte {1..n} enthalten: hier n ="
 
-msgid "invalid title"
+#, fuzzy
+msgid "invalid 'title'"
 msgstr "unzulässiger Titel"
 
 msgid "'legend' is of length 0"
@@ -400,7 +404,8 @@ msgstr "'x' muss eine Matrix oder ein Dataframe sein"
 msgid "data in 'x' must be numeric"
 msgstr "die Daten in 'x' müssen nummerisch sein"
 
-msgid "nrow * ncol <  number of observations"
+#, fuzzy
+msgid "'nrow * ncol' is less than the number of observations"
 msgstr "nrow * ncol < Anzahl der Beobachtungen"
 
 msgid "labels do not make sense for a single location"
@@ -436,13 +441,16 @@ msgstr "'number' muss die selbe Länge haben wie 'x' und 'y'"
 msgid "exactly one symbol type must be specified"
 msgstr "genau ein Symboltyp muss angegeben werden"
 
-msgid "x log scale:  xinch() is non-sense"
+#, fuzzy
+msgid "x log scale:  xinch() is nonsense"
 msgstr "x ist logarithmische Skala: xinch() ergibt keinen Sinn"
 
-msgid "y log scale:  yinch() is non-sense"
+#, fuzzy
+msgid "y log scale:  yinch() is nonsense"
 msgstr "y ist logarithmische Skala: yinch() ergibt keinen Sinn"
 
-msgid "log scale:  xyinch() is non-sense"
+#, fuzzy
+msgid "log scale:  xyinch() is nonsense"
 msgstr "logarithmische Skala: xyinch ergibt keinen Sinn"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 17:54\n"
+"POT-Creation-Date: 2012-09-30 16:22\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -25,18 +25,22 @@ msgstr " 'acf' は 2 以上の長さでなければなりません "
 msgid "object not interpretable as a factor"
 msgstr " オブジェクトは因子として解釈できません "
 
-msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)."
+#, fuzzy
+msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)"
 msgstr ""
 " 水準のないモデルは当てはめられません('alpha' は 0 またはFALSEであってはいけ"
 "ません) "
 
-msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
+#, fuzzy
+msgid "'alpha', 'beta' and 'gamma' must be within the unit interval"
 msgstr " 'alpha', 'beta' そして 'gamma' は単位区間の内部にある必要があります "
 
-msgid "data must be non-zero for multiplicative Holt-Winters."
+#, fuzzy
+msgid "data must be non-zero for multiplicative Holt-Winters"
 msgstr " 乗法的 Holt-Winters モデルではデータは非ゼロでなければなりません "
 
-msgid "need at least 2 periods to compute seasonal start values."
+#, fuzzy
+msgid "need at least 2 periods to compute seasonal start values"
 msgstr " 季節的な開始値を計算するには少なくとも 2 期間が必要です "
 
 #, fuzzy
@@ -71,7 +75,7 @@ msgid "all parameters were fixed"
 msgstr " すべてのパラメータが固定されていました "
 
 #, fuzzy
-msgid "possible convergence problem: optim gave code = %d %d"
+msgid "possible convergence problem: 'optim' gave code = %d and message %s"
 msgstr " 収束に関する問題の可能性: optim は以下のコードを与えました： "
 
 msgid "no factors in the fitted model"
@@ -287,9 +291,6 @@ msgstr " MLE は一変量系列にだけ実装されています "
 msgid "'order.max' must be >= 0"
 msgstr " 'order.max' は >= 0 でなければなりません "
 
-msgid "Burg's algorithm only implemented for univariate series"
-msgstr " Burg のアルゴリズムは、一変量系列にだけ実装されています "
-
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr " 'order' は長さ 3 の非負の数値ベクトルでなければなりません "
 
@@ -367,12 +368,6 @@ msgstr " 無効な 'x' "
 #, fuzzy
 msgid "invalid 'nb'"
 msgstr " 無効な 'x' "
-
-msgid "sample is too sparse to find TD"
-msgstr " サンプルが疎過ぎるため TD を見つけることができません "
-
-msgid "sample is too sparse to find alph2"
-msgstr " サンプルが疎過ぎるため alph2 を見つけることができません "
 
 msgid "no solution in the specified range of bandwidths"
 msgstr " 指定されたバンド幅の範囲内には解はありません "
@@ -581,9 +576,6 @@ msgstr " 有限な観測値が十分にありません "
 msgid "Cannot compute exact p-value with ties"
 msgstr " タイのため正確な p 値を計算することができません "
 
-msgid "Cannot compute exact p-values with ties"
-msgstr " タイのため正確な p 値を計算することができません "
-
 msgid "'formula' missing or invalid"
 msgstr " モデル式('formula')が無いか不正です "
 
@@ -605,7 +597,8 @@ msgstr " 重みは非負であり、全てがゼロであってはいけませ�
 msgid "length of 'center' must equal the number of columns in 'x'"
 msgstr " 'center'の長さは 'x' の列数に等しく無ければなりません "
 
-msgid "invalid 'tree' (merge component)"
+#, fuzzy
+msgid "invalid 'tree' ('merge' component)"
 msgstr " 無効な'tree'(merge 成分)です "
 
 msgid "either 'k' or 'h' must be specified"
@@ -633,8 +626,9 @@ msgstr " 長さ 0 の葉ではないサブツリーです "
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr " 'order.dendrogram' はデンドログラムを必要とします "
 
-msgid "we require a dendrogram"
-msgstr " デンドログラムが必要です "
+#, fuzzy
+msgid "'reorder.dendrogram' requires a dendrogram"
+msgstr " 'order.dendrogram' はデンドログラムを必要とします "
 
 msgid "invalid (length 0) node in dendrogram"
 msgstr " デンドログラム中に不正な(長さ0)ノードがあります "
@@ -749,7 +743,8 @@ msgstr ""
 msgid "x[] and prob[] must be equal length vectors."
 msgstr " x[] と prob[] は等しい長さのベクトルでなければなりません "
 
-msgid "probabilities cannot be negative nor all 0."
+#, fuzzy
+msgid "probabilities cannot be negative nor all 0"
 msgstr " 確率は負になれませんし、全てが 0 にはなり得ません "
 
 msgid "'x' must be non-negative"
@@ -806,7 +801,8 @@ msgstr ""
 " リンク '%s' はポアソンファミリには利用できません。利用できるリンクは %s で"
 "す "
 
-msgid "negative values not allowed for the Poisson family"
+#, fuzzy
+msgid "negative values not allowed for the 'Poisson' family"
 msgstr " ポアソンファミリには負の値は許されません "
 
 msgid "ignoring prior weights"
@@ -818,7 +814,8 @@ msgstr ""
 " リンク\"%s\"は疑似ポアソンファミリには利用できません。利用できるリンクは %s "
 "です "
 
-msgid "negative values not allowed for the quasiPoisson family"
+#, fuzzy
+msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr " 疑似ポアッソンファミリには負の値は許されません "
 
 msgid "link \"%s\" not available for gaussian family; available links are %s"
@@ -845,7 +842,7 @@ msgstr " 二項 glm で整数でないカウントがありました! "
 
 #, fuzzy
 msgid ""
-"for the binomial family, y must be a vector of 0 and 1's\n"
+"for the 'binomial' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr " もしくは、第一列が成功数、第二列が失敗数である 2 列の行列です "
 
@@ -860,7 +857,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"for the quasibinomial family, y must be a vector of 0 and 1's\n"
+"for the 'quasibinomial' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr " もしくは、第一列が成功数、第二列が失敗数である 2 列の行列です "
 
@@ -869,7 +866,8 @@ msgstr ""
 " リンク\"%s\"はガンマファミリに利用できるリンクではありません。利用できるリン"
 "クは %s です "
 
-msgid "non-positive values not allowed for the gamma family"
+#, fuzzy
+msgid "non-positive values not allowed for the 'gamma' family"
 msgstr " 正でない値はガンマファミリには許されません "
 
 msgid "using weights as shape parameters"
@@ -881,10 +879,12 @@ msgstr ""
 " リンク\"%s\"は正規ファミリに利用できるリンクではありません。利用できるリンク"
 "は %s です "
 
-msgid "positive values only allowed for the inverse.gaussian family"
+#, fuzzy
+msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr " 逆正規ファミリでは正の値しか許されません "
 
-msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
+#, fuzzy
+msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
 msgstr ""
 " 'inverse.gaussian' ファミリには CRAN パッケージ 'SuppDists' が必要です "
 
@@ -957,11 +957,11 @@ msgstr " グループのレベルはすべて有限でなければなりませ�
 msgid "not enough observations"
 msgstr " 十分な観測値がありません "
 
-msgid "NA's are not allowed in groups or blocks"
-msgstr " NA はグループやブロック中には許されません "
+msgid "NA's are not allowed in 'groups' or 'blocks'"
+msgstr " NA は 'groups' や 'blocks' 中には許されません "
 
-msgid "y, groups and blocks must have the same length"
-msgstr " y, グループ及びブロックは同じ長さでなければなりません "
+msgid "'y', 'groups' and 'blocks' must have the same length"
+msgstr " 'y', 'groups' 及び 'blocks' は同じ長さでなければなりません "
 
 msgid "not an unreplicated complete block design"
 msgstr " 繰り返しの無い完全なブロックデザインではありません "
@@ -984,7 +984,8 @@ msgstr " 'col.vars' の指定が不正確です "
 msgid "interactions are not allowed"
 msgstr " 交互作用は許されません "
 
-msgid "'formula' has '.' in both left and right hand side"
+#, fuzzy
+msgid "'formula' has '.' in both left and right hand sides"
 msgstr " モデル式('formula') が右辺と左辺の双方に '.' を持っています "
 
 msgid "incorrect variable names in rhs of formula"
@@ -1025,7 +1026,7 @@ msgstr ""
 " オフセットの数は %d ですが、%d (観測値の数)に等しくなければなりません "
 
 msgid ""
-"fitting to calculate the null deviance did not converge -- increase maxit?"
+"fitting to calculate the null deviance did not converge -- increase 'maxit'?"
 msgstr ""
 
 msgid "value of 'epsilon' must be > 0"
@@ -1058,7 +1059,8 @@ msgstr " V(mu) 中に 0 があります "
 msgid "NAs in d(mu)/d(eta)"
 msgstr " D(mu)/d(eta) 中に NA があります "
 
-msgid "no observations informative at iteration"
+#, fuzzy
+msgid "no observations informative at iteration %d"
 msgstr " 繰り返しにおいて意味のある観測値がありません "
 
 msgid "non-finite coefficients at iteration %d"
@@ -1251,10 +1253,8 @@ msgstr " 'x' データの数が十分ではありません "
 msgid "not enough 'y' data"
 msgstr " 'y' データの数が十分ではありません "
 
-msgid "cannot compute exact p-values with ties"
-msgstr " タイがあるため、正確な p 値を計算することができません "
-
-msgid "p-values will be approximate in the presence of ties"
+#, fuzzy
+msgid "p-value will be approximate in the presence of ties"
 msgstr " タイがあるため、p値は近似値になります "
 
 msgid "'y' must be numeric or a function or a string naming a valid function"
@@ -1313,10 +1313,8 @@ msgstr ""
 " lm オブジェクトは適切な 'qr' 成分を持ちません． \n"
 " ランクがゼロか lm(.., qr=FALSE) を使うべきではありませんでした． "
 
-msgid "family '"
-msgstr " ファミリ ' "
-
-msgid "' not implemented"
+#, fuzzy
+msgid "family '%s' not implemented"
 msgstr " ’ は実装されていません "
 
 msgid "calling anova.lm(<fake-lm-object>) ..."
@@ -1333,11 +1331,13 @@ msgstr ""
 " ランク落ちした状態での当てはめをしているので誤った予測をしている可能性があり"
 "ます "
 
-msgid "Predictions on current data refer to _future_ responses"
+#, fuzzy
+msgid "predictions on current data refer to _future_ responses"
 msgstr " 現在のデータによる予測は未来の応答値を参照しています "
 
+#, fuzzy
 msgid ""
-"Assuming prediction variance inversely proportional to weights used for "
+"assuming prediction variance inversely proportional to weights used for "
 "fitting"
 msgstr " 予測誤差は、当てはめに用いられた重みの逆数に比例すると仮定します "
 
@@ -1414,8 +1414,9 @@ msgstr " 比較すべきモデルがありません "
 msgid "extra arguments discarded"
 msgstr " 余計な引数は捨てられました "
 
-msgid "logLik.lm only handles single responses"
-msgstr ""
+#, fuzzy
+msgid "'logLik.lm' does not support multiple responses"
+msgstr " 'proj' は多重応答に対しては実装されていません "
 
 msgid "no \"nobs\" attribute is available"
 msgstr " いかなる \"nobs\" 属性も利用不能です "
@@ -1444,15 +1445,12 @@ msgstr " 重みが 0 の観測値は使用されません "
 msgid "'low' and 'high' cannot be both TRUE"
 msgstr " 'low' そして 'high' の両方が TRUE にはなれません "
 
-msgid "need multiple response"
+msgid "need multiple responses"
 msgstr " 多重応答を必要とします "
 
 #, fuzzy
 msgid "object must be of class %s or %s"
 msgstr " オブジェクトはクラス \"manova\" か \"maov\" でなければなりません "
-
-msgid "need multiple responses"
-msgstr " 多重応答を必要とします "
 
 msgid "residuals have rank %d < %d"
 msgstr " 残差はランク %d < %d を持ちます "
@@ -1581,7 +1579,8 @@ msgstr " 無効な 'contrasts.arg' 引数です "
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr " 変数 '%s' は存在しません。その対比は無視されます "
 
-msgid "using type=\"numeric\" with a factor response will be ignored"
+#, fuzzy
+msgid "using type = \"numeric\" with a factor response will be ignored"
 msgstr " 因子応答を持つ type=\"numeric\" の使用は無視されるでしょう "
 
 msgid "invalid response type"
@@ -1617,11 +1616,12 @@ msgstr " f.upper = f(upper) がNAです "
 msgid "f() values at end points not of opposite sign"
 msgstr " f() の端点での値が異なった符号を持ちません "
 
-msgid "control argument must be a named list"
+#, fuzzy
+msgid "'control' argument must be a named list"
 msgstr " 制御引数は名前付きリストでなければなりません "
 
 #, fuzzy
-msgid "Logical 'hessian' argument not allowed.  See documentation."
+msgid "logical 'hessian' argument not allowed.  See documentation."
 msgstr " 論理値の `hessian' は許されません。ドキュメントを見てください。 "
 
 msgid "'params' has wrong length"
@@ -1654,7 +1654,8 @@ msgstr " パラメータの初期値で勾配行列が特異です "
 msgid "'data' must be a list or an environment"
 msgstr " 'data' はリストか環境でなければなりません "
 
-msgid "No starting values specified"
+#, fuzzy
+msgid "no starting values specified"
 msgstr " 初期値が与えられていません "
 
 #, fuzzy
@@ -1670,7 +1671,8 @@ msgstr " 引数'subset'は無視されます "
 msgid "argument 'na.action' will be ignored"
 msgstr " 引数'na.action'は無視されます "
 
-msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+#, fuzzy
+msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr " algorithm = \"port\" でない限り上限もしくは下限は無視されます "
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
@@ -1724,7 +1726,8 @@ msgstr " method = \"Brent\"は一次元最適化でのみ使えます。 "
 msgid "'lower' and 'upper' must be finite values"
 msgstr " 'lower'と'upper'は有限の値でなければなりません "
 
-msgid "Pooling of SD is incompatible with paired tests"
+#, fuzzy
+msgid "pooling of SD is incompatible with paired tests"
 msgstr "SDのプールは対応ありの検定では使えません "
 
 msgid "'x' must have 2 columns"
@@ -1738,7 +1741,7 @@ msgstr " グループが少なすぎます "
 
 #, fuzzy
 msgid ""
-"Not plotting observations with leverage one:\n"
+"not plotting observations with leverage one:\n"
 "  %s"
 msgstr " てこ比1の観測データはプロットしません "
 
@@ -1769,7 +1772,8 @@ msgstr " 'T' は非負でなければなりません "
 msgid "not enough data"
 msgstr " 十分なデータがありません "
 
-msgid "The case k > 2 is unimplemented"
+#, fuzzy
+msgid "the case k > 2 is unimplemented"
 msgstr " k > 2 の場合はまだ実装されていません "
 
 msgid "'r' must be a single positive number"
@@ -1783,9 +1787,6 @@ msgstr ""
 
 msgid "'sig.level' must be numeric in [0, 1]"
 msgstr " 'sig.level' は [0,1] 中の数字でなければなりません "
-
-msgid "internal error"
-msgstr " 内部エラーです "
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
@@ -1843,7 +1844,8 @@ msgstr " 'x' と 'covmat' の双方が与えられました。'x' は無視さ�
 msgid "'princomp' can only be used with more units than variables"
 msgstr " 'princomp' では，ケースは変数より多くなければなりません "
 
-msgid "cannot use cor=TRUE with a constant variable"
+#, fuzzy
+msgid "cannot use 'cor = TRUE' with a constant variable"
 msgstr " cor=TRUE を定数変数とともに使うことができません "
 
 msgid "covariance matrix is not non-negative definite"
@@ -1854,9 +1856,6 @@ msgstr " 引数は 'qr' 成分を含んでいません "
 
 msgid "argument does not include an 'effects' component"
 msgstr " 引数は 'effects' 成分を含んでいません "
-
-msgid "'proj' is not implemented for \"mlm\" fits"
-msgstr " 'proj' は \"mlm\" による当てはめに対しては実装されていません "
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr " 'proj' は多重応答に対しては実装されていません "
@@ -1881,12 +1880,6 @@ msgstr " 'p' の要素は (0,1) 中になければなりません "
 
 msgid "y is empty or has only NAs"
 msgstr " y は空か、または NA 値しか持っていません "
-
-msgid "NA's are not allowed in 'groups' or 'blocks'"
-msgstr " NA は 'groups' や 'blocks' 中には許されません "
-
-msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr " 'y', 'groups' 及び 'blocks' は同じ長さでなければなりません "
 
 msgid "'formula' missing"
 msgstr " モデル式('formula')がありません "
@@ -1927,7 +1920,8 @@ msgstr " ref = %d は 1L:%d 中になければなりません: "
 msgid "'sep' must be a character string"
 msgstr " 'sep'は文字列でなければなりません "
 
-msgid "Failed to guess time-varying variables from their names"
+#, fuzzy
+msgid "failed to guess time-varying variables from their names"
 msgstr " 時間依存変数を名前から推測できませんでした "
 
 msgid "'varying' arguments must be the same length"
@@ -1948,12 +1942,14 @@ msgstr " 'reshapeWide' 属性がありません。'varying' を指定しなけ�
 msgid "'varying' must be nonempty list or vector"
 msgstr " 'varying' は空でないリストまたはベクトルでなければなりません "
 
-msgid "length of v.names does not evenly divide length of varying"
+#, fuzzy
+msgid "length of 'v.names' does not evenly divide length of 'varying'"
 msgstr " v.names の長さは varing で割り切れません "
 
+#, fuzzy
 msgid ""
-"length of varying must be the product of length of v.names and length of "
-"times"
+"length of 'varying' must be the product of length of 'v.names' and length of "
+"'times'"
 msgstr ""
 " varying の長さは v.names の長さと times の長さの積でなければなりません "
 
@@ -1993,8 +1989,9 @@ msgstr " 数値でないものを平滑化しようとしました "
 msgid "attempt to smooth NA values"
 msgstr " NA 値を平滑化しようとしました "
 
-msgid "wrong endrule"
-msgstr "  誤った端点規則です "
+#, fuzzy
+msgid "invalid 'endrule' argument"
+msgstr " 無効な 'use' 引数です "
 
 msgid "invalid 'control.spar'"
 msgstr " 無効な 'control.spar' です "
@@ -2024,7 +2021,8 @@ msgstr " 'x' には少なくとも 4 つの異なる値が必要です "
 msgid "'cv' must not be NA when 'df' is specified"
 msgstr " 'df' が特定されているので、'cv' は NA になってはいけません "
 
-msgid "crossvalidation with non-unique 'x' values seems doubtful"
+#, fuzzy
+msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr ""
 " 一意でない 'x' 値によるクロスバリデーションは問題があるかも知れません "
 
@@ -2057,7 +2055,8 @@ msgstr " Na lev[ ]; おそらく平滑化パラメ‐タ 'spar'が大きすぎ�
 msgid "setting df = 1  __use with care!__"
 msgstr " df = 1 と設定しました。注意して使ってください！ "
 
-msgid "need result of smooth.spline(*, keep.data=TRUE)"
+#, fuzzy
+msgid "need result of smooth.spline(keep.data = TRUE)"
 msgstr " smooth.spline(*, keep.data=TRUE) の結果が必要です "
 
 msgid "type = \"partial\" is not yet implemented"
@@ -2236,7 +2235,8 @@ msgid "'frequency' and 'deltat' are both supplied and are inconsistent"
 msgstr ""
 " 頻度('frequency')と 'deltat' の双方が与えられましたが、矛盾しています "
 
-msgid "Frequency not changed"
+#, fuzzy
+msgid "'frequency' not changed"
 msgstr " 頻度は変更されません "
 
 msgid "bad value for 'start'"
@@ -2309,7 +2309,8 @@ msgstr " 'x' と 'w' は同じ長さでなければなりません "
 msgid "not enough (finite) 'x' observations"
 msgstr " (有限な) 'x' の観察値の数が十分ではありません "
 
-msgid "Requested conf.level not achievable"
+#, fuzzy
+msgid "requested conf.level not achievable"
 msgstr " 要求された conf.level は達成不能です "
 
 msgid "cannot compute confidence interval when all observations are tied"
@@ -2323,6 +2324,9 @@ msgstr " ゼロ値のため、正確な p 値を計算することができま�
 
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr " ゼロ値のため、正確な信頼区間を計算することができません "
+
+msgid "Requested conf.level not achievable"
+msgstr " 要求された conf.level は達成不能です "
 
 msgid "must supply either 'formula' or 'data'"
 msgstr " 'formula' か 'data' のどちらかを与えなければなりません "
@@ -2424,8 +2428,8 @@ msgid_plural "unable to optimize from these starting values"
 msgstr[0] " これらの初期値からは最適化ができません "
 
 #, fuzzy
-msgid "'init'; must have 1 column"
-msgid_plural "'init'; must have 1 or %d columns"
+msgid "'init' must have 1 column"
+msgid_plural "'init' must have 1 or %d columns"
 msgstr[0] " 'init'; 1 もしくは %d 個の cols を持たなければなりません "
 
 #, fuzzy
@@ -2515,6 +2519,45 @@ msgstr[0] " NA, NaN および(または) Inf の観測値は削除されまし�
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "Burg's algorithm only implemented for univariate series"
+#~ msgstr " Burg のアルゴリズムは、一変量系列にだけ実装されています "
+
+#~ msgid "sample is too sparse to find TD"
+#~ msgstr " サンプルが疎過ぎるため TD を見つけることができません "
+
+#~ msgid "sample is too sparse to find alph2"
+#~ msgstr " サンプルが疎過ぎるため alph2 を見つけることができません "
+
+#~ msgid "Cannot compute exact p-values with ties"
+#~ msgstr " タイのため正確な p 値を計算することができません "
+
+#~ msgid "we require a dendrogram"
+#~ msgstr " デンドログラムが必要です "
+
+#~ msgid "NA's are not allowed in groups or blocks"
+#~ msgstr " NA はグループやブロック中には許されません "
+
+#~ msgid "y, groups and blocks must have the same length"
+#~ msgstr " y, グループ及びブロックは同じ長さでなければなりません "
+
+#~ msgid "cannot compute exact p-values with ties"
+#~ msgstr " タイがあるため、正確な p 値を計算することができません "
+
+#~ msgid "family '"
+#~ msgstr " ファミリ ' "
+
+#~ msgid "need multiple response"
+#~ msgstr " 多重応答を必要とします "
+
+#~ msgid "internal error"
+#~ msgstr " 内部エラーです "
+
+#~ msgid "'proj' is not implemented for \"mlm\" fits"
+#~ msgstr " 'proj' は \"mlm\" による当てはめに対しては実装されていません "
+
+#~ msgid "wrong endrule"
+#~ msgstr "  誤った端点規則です "
 
 #~ msgid "upper scope does not include model term(s) %s"
 #~ msgstr " 上位のスコープはモデル項 %s を含んでいません "

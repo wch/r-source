@@ -69,7 +69,7 @@ logLik.glm <- function(object, ...)
 logLik.lm <- function(object, REML = FALSE, ...)
 {
     if(inherits(object, "mlm"))
-        stop("logLik.lm only handles single responses")
+        stop("'logLik.lm' does not support multiple responses")
     res <- object$residuals # not resid(object) because of NA methods
     p <- object$rank
     N <- length(res)

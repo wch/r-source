@@ -115,7 +115,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                c(-Inf, diffs[ql+1])
                            })
                 if (achieved.alpha - alpha > alpha/2){
-                    warning("Requested conf.level not achievable")
+                    warning("requested conf.level not achievable")
                     conf.level<- 1 - signif(achieved.alpha, 2)
                 }
                 attr(cint, "conf.level") <- conf.level
@@ -191,7 +191,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                   }
                   if(1 - conf.level < alpha*0.75) {
                     conf.level <- 1 - alpha
-                    warning("Requested conf.level not achievable")
+                    warning("requested conf.level not achievable")
                   }
                   l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
                                zq=qnorm(alpha/2, lower.tail=FALSE))$root
@@ -205,7 +205,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                   }
                   if(1 - conf.level < alpha*0.75) {
                     conf.level <- 1 - alpha
-                    warning("Requested conf.level not achievable")
+                    warning("requested conf.level not achievable")
                   }
                   l <- uniroot(wdiff, c(mumin, mumax), tol = 1e-4,
                                zq = qnorm(alpha, lower.tail = FALSE))$root
@@ -217,7 +217,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                   }
                   if (1 - conf.level < alpha*0.75) {
                     conf.level <- 1 - alpha
-                    warning("Requested conf.level not achievable")
+                    warning("requested conf.level not achievable")
                   }
                   u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
                                zq = qnorm(alpha))$root

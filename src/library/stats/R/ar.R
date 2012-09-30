@@ -23,16 +23,15 @@ ar <-
               na.action = na.fail, series = deparse(substitute(x)), ...)
 {
     res <- switch(match.arg(method),
-        "yule-walker" = ar.yw(x, aic=aic, order.max=order.max,
-                  na.action = na.action, series=series, ...),
-	"burg" = ar.burg(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series, ...),
-	"ols" = ar.ols(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series, ...),
- 	"mle" = ar.mle(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series, ...),
-        "yw" = ar.yw(x, aic=aic, order.max=order.max,
-                  na.action = na.action, series=series, ...)
+                  yw =,
+                  "yule-walker" = ar.yw(x, aic = aic, order.max = order.max,
+                  na.action = na.action, series = series, ...),
+                  "burg" = ar.burg(x, aic = aic, order.max = order.max,
+                  na.action = na.action, series = series, ...),
+                  "ols" = ar.ols(x, aic = aic, order.max = order.max,
+                  na.action = na.action, series = series, ...),
+                  "mle" = ar.mle(x, aic = aic, order.max = order.max,
+                  na.action = na.action, series = series, ...)
    )
     res$call <- match.call()
     res
@@ -538,8 +537,6 @@ ar.burg.default <-
                    demean = TRUE, series = NULL, var.method = 1L, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
-    if (!is.null(dim(x)))
-        stop("Burg's algorithm only implemented for univariate series")
     if (ists <- is.ts(x)) xtsp <- tsp(x)
     x <- na.action(as.ts(x))
     if(any(is.na(x))) stop("NAs in 'x'")
