@@ -75,7 +75,7 @@ open.srcfile <- function(con, line, ...) {
 	if (!is.null(srcfile$timestamp)
 	    && !is.na(srcfile$timestamp)
 	    && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
-            warning(gettextf("Timestamp of %s has chamged", sQuote(srcfile$filename)),
+            warning(gettextf("Timestamp of %s has changed", sQuote(srcfile$filename)),
                     call. = FALSE, domain = NA)
 	if (is.null(srcfile$encoding)) encoding <- getOption("encoding")
 	else encoding <- srcfile$encoding
