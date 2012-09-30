@@ -351,19 +351,19 @@ static void GetRNGkind(SEXP seeds)
     if (seeds == R_UnboundValue) return;
     if (!isInteger(seeds)) {
 	if (seeds == R_MissingArg) /* How can this happen? */
-	    error(_(".Random.seed is a missing argument with no default"));
-	error(_(".Random.seed is not an integer vector but of type '%s'"),
+	    error(_("'.Random.seed' is a missing argument with no default"));
+	error(_("'.Random.seed' is not an integer vector but of type '%s'"),
 		type2char(TYPEOF(seeds)));
     }
     is = INTEGER(seeds);
     tmp = is[0];
     /* avoid overflow here: max current value is 705 */
     if (tmp == NA_INTEGER || tmp < 0 || tmp > 1000)
-	error(_(".Random.seed[1] is not a valid integer"));
+	error(_("'.Random.seed[1]' is not a valid integer"));
     newRNG = (RNGtype) (tmp % 100);
     newN01 = (N01type) (tmp / 100);
     if (newN01 > KINDERMAN_RAMAGE)
-	error(_(".Random.seed[0] is not a valid Normal type"));
+	error(_("'.Random.seed[1]' is not a valid Normal type"));
     switch(newRNG) {
     case WICHMANN_HILL:
     case MARSAGLIA_MULTICARRY:
@@ -375,10 +375,10 @@ static void GetRNGkind(SEXP seeds)
 	break;
     case USER_UNIF:
 	if(!User_unif_fun)
-	    error(_(".Random.seed[1] = 5 but no user-supplied generator"));
+	    error(_("'.Random.seed[1] = 5' but no user-supplied generator"));
 	break;
     default:
-	error(_(".Random.seed[1] is not a valid RNG kind (code)"));
+	error(_("'.Random.seed[1]' is not a valid RNG kind"));
     }
     RNG_kind = newRNG; N01_kind = newN01;
     return;
@@ -400,7 +400,7 @@ void GetRNGstate()
 	len_seed = RNG_Table[RNG_kind].n_seed;
 	/* Not sure whether this test is needed: wrong for USER_UNIF */
 	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
-	    error(_(".Random.seed has wrong length"));
+	    error(_("'.Random.seed' has wrong length"));
 	if(LENGTH(seeds) == 1 && RNG_kind != USER_UNIF)
 	    Randomize(RNG_kind);
 	else {
@@ -467,7 +467,7 @@ static void Norm_kind(N01type kind)
        mapped to an unsigned integer type. */
     if (kind == -1) kind = N01_DEFAULT;
     if (kind > KINDERMAN_RAMAGE)
-	error(_("invalid Normal type in RNGkind"));
+	error(_("invalid Normal type in 'RNGkind'"));
     if (kind == USER_NORM) {
 	User_norm_fun = R_FindSymbol("user_norm_rand", "", NULL);
 	if (!User_norm_fun) error(_("'user_norm_rand' not in load table"));

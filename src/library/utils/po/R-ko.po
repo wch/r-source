@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2012-09-30 21:59\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -333,10 +333,6 @@ msgstr "입력된 행렬이 올바르지 않습니다"
 
 #, fuzzy
 msgid "class of 'name' will be discarded"
-msgstr "'name' 라는 클래스(들)이 제거 될 것입니다 "
-
-#, fuzzy
-msgid "classes of 'name' will be discarded"
 msgstr "'name' 라는 클래스(들)이 제거 될 것입니다 "
 
 msgid "cannot edit NULL row names"
@@ -1245,6 +1241,10 @@ msgstr[0] "Invalid roman numeral(s): %s"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+
+#, fuzzy
+#~ msgid "classes of 'name' will be discarded"
+#~ msgstr "'name' 라는 클래스(들)이 제거 될 것입니다 "
 
 #~ msgid "m < 0"
 #~ msgstr "m < 0"

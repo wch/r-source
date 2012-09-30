@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2012-09-30 21:59\n"
 "PO-Revision-Date: 2012-02-26 14:23+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -330,10 +330,6 @@ msgstr " 不正な入力行列 "
 
 #, fuzzy
 msgid "class of 'name' will be discarded"
-msgstr " 'name'のクラスは破棄されます "
-
-#, fuzzy
-msgid "classes of 'name' will be discarded"
 msgstr " 'name'のクラスは破棄されます "
 
 msgid "cannot edit NULL row names"
@@ -1267,6 +1263,10 @@ msgstr[0] " 不正なローマ数字です: %s "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#, fuzzy
+#~ msgid "classes of 'name' will be discarded"
+#~ msgstr " 'name'のクラスは破棄されます "
 
 #~ msgid "m < 0"
 #~ msgstr " m < 0 "

@@ -791,7 +791,7 @@ size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n)
     if(wc) {
 	for(p = s; ; p+=m) {
 	    m = Rmbrtowc(wc+res, p);
-	    if(m < 0) error(_("invalid input in Rmbstowcs"));
+	    if(m < 0) error(_("invalid input in 'Rmbstowcs'"));
 	    if(m <= 0) break;
 	    res++;
 	    if(res >= n) break;
@@ -799,7 +799,7 @@ size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n)
     } else {
 	for(p = s; ; p+=m) {
 	    m  = Rmbrtowc(NULL, p);
-	    if(m < 0) error(_("invalid input in Rmbstowcs"));
+	    if(m < 0) error(_("invalid input in 'Rmbstowcs'"));
 	    if(m <= 0) break;
 	    res++;
 	}

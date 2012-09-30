@@ -1912,7 +1912,7 @@ static void CheckFormalArgs(SEXP formlist, SEXP _new, YYLTYPE *lloc)
 {
     while (formlist != R_NilValue) {
 	if (TAG(formlist) == _new) {
-	    error(_("Repeated formal argument '%s' on line %d"), CHAR(PRINTNAME(_new)),
+	    error(_("repeated formal argument '%s' on line %d"), CHAR(PRINTNAME(_new)),
 								 lloc->first_line);
 	}
 	formlist = CDR(formlist);
@@ -3193,7 +3193,7 @@ static void recordParents( int parent, yyltype * childs, int nchilds){
 			continue ;
 		/*  This shouldn't happen... */
 		if (loc.id < 0 || loc.id > identifier) {
-		    error(_("Internal parser error at line %d"),  ParseState.xxlineno);
+		    error(_("internal parser error at line %d"),  ParseState.xxlineno);
 		}
 		ID_PARENT( (childs[ii]).id ) = parent  ;
 	}

@@ -46,7 +46,7 @@ static SEXP icumsum(SEXP x, SEXP s)
 	if (ix[i] == NA_INTEGER) break;
 	sum += ix[i];
 	if(sum > INT_MAX || sum < 1 + INT_MIN) { /* INT_MIN is NA_INTEGER */
-	    warning(_("Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"));
+	    warning(_("integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"));
 	    break;
 	}
 	is[i] = (int) sum;
@@ -175,11 +175,13 @@ SEXP attribute_hidden do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return ccumprod(t, s);
 	    break;
 	case 3: /* cummax */
+	    errorcall(call, _("'cummin' not defined for complex numbers"));
+	    break;
 	case 4: /* cummin */
-	    errorcall(call, _("min/max not defined for complex numbers"));
+	    errorcall(call, _("'cummax' not defined for complex numbers"));
 	    break;
 	default:
-	    errorcall(call, _("unknown cumxxx function"));
+	    errorcall(call, "unknown cumxxx function");
 	}
     } else if( ( isInteger(CAR(args)) || isLogical(CAR(args)) ) &&
 	       PRIMVAL(op) != 2) {

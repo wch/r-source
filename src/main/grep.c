@@ -2408,7 +2408,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_CAPTURECOUNT, 
 			  &capture_count);
 	if(info_code < 0)
-	    error(_("pcre_fullinfo returned '%d' "), info_code);
+	    error(_("'pcre_fullinfo' returned '%d' "), info_code);
 	ovector_size = (capture_count + 1) * 3;
 	ovector = (int *) malloc(ovector_size*sizeof(int));
 	SEXP thisname;

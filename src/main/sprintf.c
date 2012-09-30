@@ -91,7 +91,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     {									\
 	int nc = snprintf(bit, MAXLINE+1, fmtp, _X_);			\
 	if (nc > MAXLINE)						\
-	    error(_("required resulting string length %d is > maximal %d"), \
+	    error(_("required resulting string length %d is greater than maximal %d"), \
 		  nc, MAXLINE);						\
     }
 

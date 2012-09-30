@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2012-09-30 21:59\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -304,9 +304,6 @@ msgid "invalid input matrix"
 msgstr ""
 
 msgid "class of 'name' will be discarded"
-msgstr ""
-
-msgid "classes of 'name' will be discarded"
 msgstr ""
 
 msgid "cannot edit NULL row names"

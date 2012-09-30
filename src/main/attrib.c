@@ -769,12 +769,12 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(getAttrib(CAR(args), R_NamesSymbol) == R_NilValue) {
 	    /* S4 class w/o a names slot or attribute */
 	    if(TYPEOF(CAR(args)) == S4SXP)
-		error(_("Class '%s' has no 'names' slot"), klass);
+		error(_("class '%s' has no 'names' slot"), klass);
 	    else
-		warning(_("Class '%s' has no 'names' slot; assigning a names attribute will create an invalid object"), klass);
+		warning(_("class '%s' has no 'names' slot; assigning a names attribute will create an invalid object"), klass);
 	}
 	else if(TYPEOF(CAR(args)) == S4SXP)
-	    error(_("Illegal to use names()<- to set the 'names' slot in a non-vector class ('%s')"), klass);
+	    error(_("invalid to use names()<- to set the 'names' slot in a non-vector class ('%s')"), klass);
 	/* else, go ahead, but can't check validity of replacement*/
     }
     if (CADR(args) != R_NilValue) {
@@ -1134,7 +1134,7 @@ SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* calls, e.g., levels<-.factor() */
 	return(ans);
     if(!isNull(CADR(args)) && any_duplicated(CADR(args), FALSE))
-	warningcall(call, _("duplicated levels will not be allowed in factors anymore"));
+	warningcall(call, "duplicated levels in factors are deprecated");
 /* TODO errorcall(call, _("duplicated levels are not allowed in factors anymore")); */
     PROTECT(args = ans);
     if (NAMED(CAR(args)) > 1) SETCAR(args, duplicate(CAR(args)));
@@ -1613,7 +1613,7 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP  nlist, object, ans, klass;
 
     if(!isMethodsDispatchOn())
-	error(_("formal classes cannot be used without the methods package"));
+	error(_("formal classes cannot be used without the 'methods' package"));
     nlist = CADR(args);
     /* Do some checks here -- repeated in R_do_slot, but on repeat the
      * test expression should kick out on the first element. */

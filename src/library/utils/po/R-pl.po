@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2012-09-30 21:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -333,10 +333,6 @@ msgstr "niepoprawna macierz wejściowa"
 
 #, fuzzy
 msgid "class of 'name' will be discarded"
-msgstr "klasy \"name' będą odrzucone"
-
-#, fuzzy
-msgid "classes of 'name' will be discarded"
 msgstr "klasy \"name' będą odrzucone"
 
 msgid "cannot edit NULL row names"
@@ -1307,6 +1303,10 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet '%s' jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety '%s' są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety '%s' są w użyciu i nie zostaną zainstalowane"
+
+#, fuzzy
+#~ msgid "classes of 'name' will be discarded"
+#~ msgstr "klasy \"name' będą odrzucone"
 
 #~ msgid "m < 0"
 #~ msgstr "m < 0"

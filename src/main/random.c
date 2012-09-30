@@ -104,7 +104,7 @@ SEXP attribute_hidden do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND1(4, rt);
 	    RAND1(5, rsignrank);
 	default:
-	    error(_("internal error in do_random1"));
+	    error("internal error in do_random1");
 	}
 	if (naflag)
 	    warning(_("NAs produced"));
@@ -195,7 +195,7 @@ SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND2(12, rnchisq);
 	    RAND2(13, rnbinom_mu);
 	default:
-	    error(_("internal error in do_random2"));
+	    error("internal error in do_random2");
 	}
 	if (naflag)
 	    warning(_("NAs produced"));
@@ -282,7 +282,7 @@ SEXP attribute_hidden do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch (PRIMVAL(op)) {
 	    RAND3(0, rhyper);
 	default:
-	    error(_("internal error in do_random3"));
+	    error("internal error in do_random3");
 	}
 	if (naflag)
 	    warning(_("NAs produced"));

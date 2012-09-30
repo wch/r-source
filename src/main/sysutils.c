@@ -1418,7 +1418,7 @@ void attribute_hidden InitTempDir()
 	sprintf(tmp1, "%s/RtmpXXXXXX", tm);
 #endif
 	tmp = mkdtemp(tmp1);
-	if(!tmp) R_Suicide(_("cannot mkdir R_TempDir"));
+	if(!tmp) R_Suicide(_("cannot create 'R_TempDir'"));
 #ifndef Win32
 # ifdef HAVE_SETENV
 	if(setenv("R_SESSION_TMPDIR", tmp, 1))
@@ -1441,7 +1441,7 @@ void attribute_hidden InitTempDir()
     size_t len = strlen(tmp) + 1;
     p = (char *) malloc(len);
     if(!p)
-	R_Suicide(_("cannot allocate R_TempDir"));
+	R_Suicide(_("cannot allocate 'R_TempDir'"));
     else {
 	R_TempDir = p;
 	strcpy(R_TempDir, tmp);

@@ -226,7 +226,7 @@ SEXP alloc3DArray(SEXPTYPE mode, int nrow, int ncol, int nface)
 	error(_("negative extents to 3D array"));
 #ifndef LONG_VECTOR_SUPPORT
     if ((double)nrow * (double)ncol * (double)nface > INT_MAX)
-	error(_("alloc3Darray: too many elements specified"));
+	error(_("'alloc3Darray': too many elements specified"));
 #endif
     n = ((R_xlen_t) nrow) * ncol * nface;
     PROTECT(s = allocVector(mode, n));
@@ -251,7 +251,7 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
 	dn *= INTEGER(dims)[i];
 #ifndef LONG_VECTOR_SUPPORT
 	if(dn > INT_MAX)
-	    error(_("allocArray: too many elements specified by 'dims'"));
+	    error(_("'allocArray': too many elements specified by 'dims'"));
 #endif
 	n *= INTEGER(dims)[i];
     }
@@ -435,7 +435,8 @@ SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* This is the dimensions vector */
     x = CAR(args);
     if (!isInteger(x) || LENGTH(x) != 2)
-	error(_("a matrix-like object is required as argument to 'row/col'"));
+	error(_("a matrix-like object is required as argument to '%s'"),
+	      (PRIMVAL(op) == 2) ? "col" : "row");
 
     nr = INTEGER(x)[0];
     nc = INTEGER(x)[1];
@@ -1104,7 +1105,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (streql(translateChar(STRING_ELT(dnna, j)),
 			   this)) {pp[i] = j; break;}
 	    if (j >= n)
-		error(_("perm[%d] does not match a dimension name"), i+1);
+		error(_("'perm[%d]' does not match a dimension name"), i+1);
 	}
     } else {
 	PROTECT(perm = coerceVector(perm, INTSXP));

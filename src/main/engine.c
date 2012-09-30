@@ -1383,7 +1383,7 @@ void GEPath(double *x, double *y,
 {
     /* safety check: this will be NULL if the device did not set it. */
     if (!dd->dev->path) {
-	warning(_("Path rendering is not implemented for this device"));
+	warning(_("path rendering is not implemented for this device"));
 	return;
     }
     /* FIXME: what about clipping? (if the device can't) 
@@ -1422,7 +1422,7 @@ void GERaster(unsigned int *raster, int w, int h,
 {
     /* safety check: this will be NULL if the device did not set it. */
     if (!dd->dev->raster) {
-	warning(_("Raster rendering is not implemented for this device"));
+	warning(_("raster rendering is not implemented for this device"));
 	return;
     }
 
@@ -1446,7 +1446,7 @@ SEXP GECap(pGEDevDesc dd)
 {
     /* safety check: this will be NULL if the device did not set it. */
     if (!dd->dev->cap) {
-	warning(_("Raster capture is not available for this device"));
+	warning(_("raster capture is not available for this device"));
 	return R_NilValue;
     }
     return dd->dev->cap(dd->dev);
@@ -2767,7 +2767,7 @@ void GEplayDisplayList(pGEDevDesc dd)
 	     */
 	    if (!GEcheckState(dd)) {
 		plotok = 0;
-		warning(_("Display list redraw incomplete"));
+		warning(_("display list redraw incomplete"));
 	    }
 	    theList = CDR(theList);
 	}

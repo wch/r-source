@@ -1184,7 +1184,7 @@ Rboolean isNAcol(SEXP col, int index, int ncol)
 	else if (isReal(col))
 	    result = !R_FINITE(REAL(col)[index % ncol]);
 	else
-	    error(_("Invalid color specification"));
+	    error(_("invalid color specification"));
     }
     return result;
 }

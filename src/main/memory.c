@@ -2854,7 +2854,7 @@ void *R_chk_calloc(size_t nelem, size_t elsize)
 #endif
     p = calloc(nelem, elsize);
     if(!p) /* problem here is that we don't have a format for size_t. */
-	error(_("Calloc could not allocate memory (%.0f of %u bytes)"),
+	error(_("'Calloc' could not allocate memory (%.0f of %u bytes)"),
 	      (double) nelem, elsize);
     return(p);
 }
@@ -2865,7 +2865,7 @@ void *R_chk_realloc(void *ptr, size_t size)
     /* Protect against broken realloc */
     if(ptr) p = realloc(ptr, size); else p = malloc(size);
     if(!p)
-	error(_("Realloc could not re-allocate memory (%.0f bytes)"), 
+	error(_("'Realloc' could not re-allocate memory (%.0f bytes)"), 
 	      (double) size);
     return(p);
 }

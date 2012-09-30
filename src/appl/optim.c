@@ -57,14 +57,14 @@ static void genptry(int n, double *p, double *ptry, double scale, void *ex)
 	PROTECT(x = allocVector(REALSXP, n));
 	for (i = 0; i < n; i++) {
 	    if (!R_FINITE(p[i]))
-		error(_("non-finite value supplied by optim"));
+		error(_("non-finite value supplied by 'optim'"));
 	    REAL(x)[i] = p[i] * (OS->parscale[i]);
 	}
 	SETCADR(OS->R_gcall, x);
 	PROTECT_WITH_INDEX(s = eval(OS->R_gcall, OS->R_env), &ipx);
 	REPROTECT(s = coerceVector(s, REALSXP), ipx);
 	if(LENGTH(s) != n)
-	    error(_("candidate point in optim evaluated to length %d not %d"),
+	    error(_("candidate point in 'optim' evaluated to length %d not %d"),
 		  LENGTH(s), n);
 	for (i = 0; i < n; i++)
 	    ptry[i] = REAL(s)[i] / (OS->parscale[i]);
@@ -486,7 +486,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 	case 2:	    Rprintf("Method: Polak Ribiere\n");		break;
 	case 3:	    Rprintf("Method: Beale Sorenson\n");	break;
 	default:
-	    error(_("unknown 'type' in CG method of optim"));
+	    error(_("unknown 'type' in \"CG\" method of 'optim'"));
 	}
     }
     c = vect(n); g = vect(n); t = vect(n);
@@ -554,7 +554,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 			break;
 
 		    default:
-			error(_("unknown type in CG method of optim"));
+			error(_("unknown type in \"CG\" method of 'optim'"));
 		    }
 		    c[i] = g[i];
 		}

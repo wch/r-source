@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2012-09-30 21:59\n"
 "PO-Revision-Date: 2012-09-10 14:39+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -331,10 +331,6 @@ msgstr "unzulässige Eingabematrix"
 
 #, fuzzy
 msgid "class of 'name' will be discarded"
-msgstr "Klasse(n) von 'name' wird verworfen"
-
-#, fuzzy
-msgid "classes of 'name' will be discarded"
 msgstr "Klasse(n) von 'name' wird verworfen"
 
 msgid "cannot edit NULL row names"
@@ -1281,6 +1277,10 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#, fuzzy
+#~ msgid "classes of 'name' will be discarded"
+#~ msgstr "Klasse(n) von 'name' wird verworfen"
 
 #~ msgid "m < 0"
 #~ msgstr "m < 0"

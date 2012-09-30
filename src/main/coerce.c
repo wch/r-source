@@ -2384,7 +2384,7 @@ SEXP substitute(SEXP lang, SEXP rho)
 		    return t;
 		}
 		else if (TYPEOF(t) == DOTSXP)
-		    error(_("... used in an incorrect context"));
+		    error(_("'...' used in an incorrect context"));
 		if (rho != R_GlobalEnv)
 		    return t;
 	    }
@@ -2425,7 +2425,7 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 	    else if (TYPEOF(h) == DOTSXP)
 		h = substituteList(h, R_NilValue);
 	    else
-		error(_("... used in an incorrect context"));
+		error(_("'...' used in an incorrect context"));
 	} else {
 	    h = substitute(CAR(el), rho);
 	    if (isLanguage(el))

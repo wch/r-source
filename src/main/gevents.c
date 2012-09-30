@@ -121,7 +121,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    gd = GEgetDevice(devNum);
 	    dd = gd->dev;
 	    if (dd->gettingEvent)
-	    	error(_("recursive use of getGraphicsEvent not supported"));
+	    	error(_("recursive use of 'getGraphicsEvent' not supported"));
 	    if (dd->eventEnv != R_NilValue) {
 	        if (dd->eventHelper) dd->eventHelper(dd, 1);
 	        dd->gettingEvent = TRUE;

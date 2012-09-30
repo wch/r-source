@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2012-09-30 21:59\n"
 "PO-Revision-Date: 2012-03-15 12:09-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -335,10 +335,6 @@ msgstr "неправильная вводная матрица"
 
 #, fuzzy
 msgid "class of 'name' will be discarded"
-msgstr "класс(ы) у \"name' будут пропущены"
-
-#, fuzzy
-msgid "classes of 'name' will be discarded"
 msgstr "класс(ы) у \"name' будут пропущены"
 
 msgid "cannot edit NULL row names"
@@ -1302,6 +1298,10 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#, fuzzy
+#~ msgid "classes of 'name' will be discarded"
+#~ msgstr "класс(ы) у \"name' будут пропущены"
 
 #~ msgid "m < 0"
 #~ msgstr "m < 0"

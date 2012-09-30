@@ -767,9 +767,9 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 0) {
 	for(int i = 0; i < 6; i++)
 	    if(nlen[i] == 0)
-		error(_("zero length component in non-empty POSIXlt structure"));
+		error(_("zero-length component in non-empty \"POSIXlt\" structure"));
 	if(nlen[8] == 0)
-	    error(_("zero length component in non-empty POSIXlt structure"));
+	    error(_("zero-length component in non-empty \"POSIXlt\" structure"));
     }
     /* coerce fields to integer or real */
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
@@ -859,7 +859,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 0) {
 	for(i = 0; i < 9; i++)
 	    if(nlen[i] == 0)
-		error(_("zero length component in non-empty POSIXlt structure"));
+		error(_("zero-length component in non-empty \"POSIXlt\" structure"));
     }
     if(n > 0) N = (m > n) ? m:n; else N = 0;
     PROTECT(ans = allocVector(STRSXP, N));
@@ -1167,9 +1167,9 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 0) {
 	for(i = 3; i < 6; i++)
 	    if(nlen[i] == 0)
-		error(_("zero length component in non-empty POSIXlt structure"));
+		error(_("zero-length component in non-empty \"POSIXlt\" structure"));
 	if(nlen[8] == 0)
-	    error(_("zero length component in non-empty POSIXlt structure"));
+	    error(_("zero-length component in non-empty \"POSIXlt\" structure"));
     }
     /* coerce relevant fields to integer */
     for(i = 3; i < 6; i++)

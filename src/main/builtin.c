@@ -952,8 +952,8 @@ static SEXP setDflt(SEXP arg, SEXP dflt)
     	SEXP dflt1, dflt2;
     	PROTECT(dflt1 = deparse1line(dflt, TRUE));
     	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
-    	error(_("duplicate switch defaults: '%s' and '%s'"), CHAR(STRING_ELT(dflt1, 0)),
-    	                                                   CHAR(STRING_ELT(dflt2, 0)));
+    	error(_("duplicate 'switch' defaults: '%s' and '%s'"), 
+	      CHAR(STRING_ELT(dflt1, 0)), CHAR(STRING_ELT(dflt2, 0)));
     	UNPROTECT(2); /* won't get here, but just for good form */
     }
     return(CAR(arg));

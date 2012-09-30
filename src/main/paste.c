@@ -115,7 +115,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(x, j, coerceVector(xj, STRSXP));
 
 	    if (!isString(VECTOR_ELT(x, j)))
-		error(_("non-string argument to Internal paste"));
+		error(_("non-string argument to internal 'paste'"));
 	}
 	if(xlength(VECTOR_ELT(x, j)) > maxlen)
 	    maxlen = xlength(VECTOR_ELT(x, j));

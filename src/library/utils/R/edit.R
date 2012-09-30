@@ -179,9 +179,7 @@ edit.matrix <-
     logicals <- is.logical(name)
     if (logicals) mode(name) <- "character"
     if(is.object(name) || isS4(name))
-        warning(ngetext(length(class(name)),
-                        "class of 'name' will be discarded",
-                        "classes of 'name' will be discarded"),
+        warning("class of 'name' will be discarded",
                 call. = FALSE, immediate. = TRUE)
 
     dn <- dimnames(name)

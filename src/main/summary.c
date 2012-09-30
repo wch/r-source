@@ -60,7 +60,7 @@ static Rboolean isum(int *x, R_xlen_t n, int *value, Rboolean narm, SEXP call)
 	}
     }
     if(s > INT_MAX || s < R_INT_MIN){
-	warningcall(call, _("Integer overflow - use sum(as.numeric(.))"));
+	warningcall(call, _("integer overflow - use sum(as.numeric(.))"));
 	*value = NA_INTEGER;
     }
     else *value = (int) s;

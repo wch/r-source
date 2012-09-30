@@ -261,7 +261,7 @@ SEXP do_Rprof(SEXP args)
 
 #ifdef BC_PROFILING
     if (bc_profiling) {
-	warning(_("can't use R profiling while byte code profiling"));
+	warning("cannot use R profiling while byte code profiling");
 	return R_NilValue;
     }
 #endif
@@ -3167,7 +3167,7 @@ typedef int BCODE;
 #else
 #define BEGIN_MACHINE  loop: switch(*pc++)
 #endif
-#define LASTOP  default: error(_("Bad opcode"))
+#define LASTOP  default: error(_("bad opcode"))
 #define INITIALIZE_MACHINE()
 
 #define NEXT() goto loop
@@ -4797,12 +4797,11 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
        if (TYPEOF(value) == STRSXP) {
 	   int i, n, which;
 	   if (names == R_NilValue)
-	       errorcall(call, _("numeric EXPR required for switch() "
-				 "without named alternatives"));
+	       errorcall(call, _("numeric EXPR required for 'switch' without named alternatives"));
 	   if (TYPEOF(coffsets) != INTSXP)
-	       errorcall(call, _("bad character switch offsets"));
+	       errorcall(call, "bad character 'switch' offsets");
 	   if (TYPEOF(names) != STRSXP || LENGTH(names) != LENGTH(coffsets))
-	       errorcall(call, _("bad switch names"));
+	       errorcall(call, "bad 'switch' names");
 	   n = LENGTH(names);
 	   which = n - 1;
 	   for (i = 0; i < n - 1; i++)
@@ -4816,7 +4815,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
        else {
 	   int which = asInteger(value) - 1;
 	   if (TYPEOF(ioffsets) != INTSXP)
-	       errorcall(call, _("bad numeric switch offsets"));
+	       errorcall(call, "bad numeric 'switch' offsets");
 	   if (which < 0 || which >= LENGTH(ioffsets))
 	       which = LENGTH(ioffsets) - 1;
 	   pc = codebase + INTEGER(ioffsets)[which];
@@ -5147,11 +5146,11 @@ SEXP attribute_hidden do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
 
     constBuf = CAR(args);
     if (TYPEOF(constBuf) != VECSXP)
-	error(_("constBuf must be a generic vector"));
+	error(_("constant buffer must be a generic vector"));
 
     constCount = asInteger(CADR(args));
     if (constCount < 0 || constCount >= LENGTH(constBuf))
-	error(_("bad constCount value"));
+	error("bad constCount value");
 
     x = CADDR(args);
 

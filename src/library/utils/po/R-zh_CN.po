@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2012-09-30 21:59\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -325,10 +325,6 @@ msgstr "输入矩阵不对"
 
 #, fuzzy
 msgid "class of 'name' will be discarded"
-msgstr "'name'的类别将被略过不用"
-
-#, fuzzy
-msgid "classes of 'name' will be discarded"
 msgstr "'name'的类别将被略过不用"
 
 msgid "cannot edit NULL row names"
@@ -1210,6 +1206,10 @@ msgstr[0] "罗马数字不对：%s"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#, fuzzy
+#~ msgid "classes of 'name' will be discarded"
+#~ msgstr "'name'的类别将被略过不用"
 
 #~ msgid "m < 0"
 #~ msgstr "m < 0"

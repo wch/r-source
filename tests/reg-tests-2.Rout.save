@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-09-30 r60842) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1457,7 +1457,7 @@ Y    4   10   16   22
 > sink(type="message")
 > sink()
 > try(log("a"))
-Error in log("a") : Non-numeric argument to mathematical function
+Error in log("a") : non-numeric argument to mathematical function
 > 
 > ## capture all the output to a file.
 > zz <- file("all.Rout", open="wt")
@@ -1471,7 +1471,7 @@ Error in log("a") : Non-numeric argument to mathematical function
      description class mode text isopen can read can write
 > stopifnot(nrow(foo) == 0)
 > try(log("a"))
-Error in log("a") : Non-numeric argument to mathematical function
+Error in log("a") : non-numeric argument to mathematical function
 > unlink("all.Rout")
 > ## many of these were untested before 1.4.0.
 > 
@@ -1673,7 +1673,7 @@ In sum(x, x) : Integer overflow - use sum(as.numeric(.))
 > sum(c(x, x)) # did warn
 [1] NA
 Warning message:
-In sum(c(x, x)) : Integer overflow - use sum(as.numeric(.))
+In sum(c(x, x)) : integer overflow - use sum(as.numeric(.))
 > (z <- sum(x, x, 0.0)) # was NA in 1.4.1
 [1] 2147483648
 > typeof(z)

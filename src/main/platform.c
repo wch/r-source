@@ -593,7 +593,7 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 #else
-    warning(_("symlinks are not supported on this platform"));
+    warning(_("symbolic links are not supported on this platform"));
     return allocVector(LGLSXP, n);
 #endif
 }
@@ -2060,7 +2060,7 @@ SEXP attribute_hidden do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    memcpy(&in.s_addr, *(hp->h_addr_list), sizeof (in.s_addr));
 	    strcpy(ip, inet_ntoa(in));
 	} else {
-	    warning(_("unknown format returned by gethostbyname"));
+	    warning(_("unknown format returned by C function 'gethostbyname'"));
 	}
 	ans = mkString(ip);
     }
