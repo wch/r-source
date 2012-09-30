@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: R-2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-29 10:15+0100\n"
-"PO-Revision-Date: 2012-09-10 14:38+0200\n"
+"PO-Revision-Date: 2012-09-30 11:20+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -2716,11 +2716,11 @@ msgid "symbol '%s' is too long"
 msgstr "symbol '%s' ist zu lang"
 
 #: src/main/dotcode.c:154
-#, fuzzy
 msgid ""
 "first argument must be a string (of length 1) or native symbol reference"
 msgstr ""
-"'name' muss entweder Zeichenkette der Länge 1 oder native Symbolreferenz sein"
+"erstes Argument muss entweder Zeichenkette der Länge 1 oder native "
+"Symbolreferenz sein"
 
 #: src/main/dotcode.c:198 src/main/dotcode.c:562
 msgid "too many arguments in foreign function call"

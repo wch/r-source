@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-10 13:59\n"
-"PO-Revision-Date: 2012-09-07 16:55+0200\n"
+"PO-Revision-Date: 2012-09-30 11:18+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -372,9 +372,8 @@ msgstr "benötige zumindest 2 Datenpunkte"
 msgid "invalid 'x'"
 msgstr "unzulässiges 'x'"
 
-#, fuzzy
 msgid "invalid 'nb'"
-msgstr "unzulässiges 'x'"
+msgstr "unzulässiges 'nb'"
 
 msgid "sample is too sparse to find TD"
 msgstr "Stichprobe ist zu dünn, um TD zu finden"
@@ -739,9 +738,8 @@ msgstr "falsche Dimensionen für 'xi'"
 msgid "'x' is not a vector or matrix"
 msgstr "'x' ist weder Vektor noch Matrix"
 
-#, fuzzy
 msgid "extra argument(s) %s will be disregarded"
-msgstr "zusätzliche Argumente verworfen"
+msgstr "zusätzliche(s) Argument(e) %s nicht benutzt"
 
 msgid "invalid distance method"
 msgstr "unzulässige Distanzmethode"
