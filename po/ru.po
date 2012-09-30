@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-29 10:15+0100\n"
-"PO-Revision-Date: 2012-03-15 11:17-0500\n"
+"PO-Revision-Date: 2012-09-30 14:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -521,9 +521,9 @@ msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): файл '%s' не существует\n"
 
 #: src/gnuwin32/system.c:967
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
-msgstr "ВНИМАНИЕ: '%s' значение неправильное: пропущено"
+msgstr "ВНИМАНИЕ: значение R_MAX_MEM_SIZE неправильное: пропущено\n"
 
 #: src/gnuwin32/system.c:999
 msgid "WARNING: no max-mem-size given\n"
@@ -1088,9 +1088,8 @@ msgid "'x' must be numeric"
 msgstr "'x' должен быть числом"
 
 #: src/main/array.c:1417
-#, fuzzy
 msgid "'dim' specifies too large an array"
-msgstr "указанный размер вектора слишком велик"
+msgstr "'dim' определяет слишком большую многомерную матрицу"
 
 #: src/main/array.c:1489 src/main/attrib.c:925
 msgid "'dimnames' applied to non-array"
@@ -2133,9 +2132,8 @@ msgid "'con' is not an output rawConnection"
 msgstr "'con' не является выходным rawConnection"
 
 #: src/main/connections.c:2485
-#, fuzzy
 msgid "too many characters for text connection"
-msgstr "не могу выделить память для текстового соединения"
+msgstr "слишком много символов для текстового соединения"
 
 #: src/main/connections.c:2490
 msgid "cannot allocate memory for text connection"
@@ -2317,9 +2315,8 @@ msgstr ""
 "writeChar: запрошено больше символов, чем есть в строке -- буду обнулять"
 
 #: src/main/connections.c:4354
-#, fuzzy
 msgid "maximum number of pushback lines exceeded"
-msgstr "превышено максимальное количество цветов"
+msgstr "превышено максимальное количество возвращаемых в поток строк"
 
 #: src/main/connections.c:4360 src/main/connections.c:4364
 #: src/main/connections.c:4400 src/main/connections.c:4406
@@ -2348,9 +2345,8 @@ msgid "no sink to remove"
 msgstr "нет 'sink' для удаления"
 
 #: src/main/connections.c:4605
-#, fuzzy
 msgid "there is no connection NA"
-msgstr "соединение %d не существует"
+msgstr "соединение NA не существует"
 
 #: src/main/connections.c:4607
 #, c-format
@@ -2707,12 +2703,11 @@ msgid "symbol '%s' is too long"
 msgstr "символ '%s' слишком длинен"
 
 #: src/main/dotcode.c:154
-#, fuzzy
 msgid ""
 "first argument must be a string (of length 1) or native symbol reference"
 msgstr ""
-"'имя' должно быть строкой (единичной длины) или естественной символьной "
-"ссылкой"
+"первый аргумент должен быть строкой (единичной длины) или естественной "
+"символьной ссылкой"
 
 #: src/main/dotcode.c:198 src/main/dotcode.c:562
 msgid "too many arguments in foreign function call"
@@ -2720,9 +2715,9 @@ msgstr "слишком много аргументов при вызове вн�
 
 #: src/main/dotcode.c:260 src/main/dotcode.c:265 src/main/dotcode.c:270
 #: src/main/dotcode.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" not available for %s() for package \"%s\""
-msgstr "%s недоступен на этом устройстве"
+msgstr "\"%s\" недоступен для %s() в пакете \"%s\""
 
 #: src/main/dotcode.c:280
 #, c-format
@@ -2854,7 +2849,7 @@ msgstr "неправильный режим (%s) для передачи в Fort
 
 #: src/main/dotcode.c:1675
 msgid "pairlists are passed as SEXP as from R 2.15.0"
-msgstr ""
+msgstr "списки пар передаются как SEXP начиная с R 2.15.0"
 
 #: src/main/dotcode.c:2389
 #, c-format
@@ -3400,7 +3395,7 @@ msgstr "Ошибка в "
 #: src/main/errors.c:584
 #, c-format
 msgid " (from %s) : "
-msgstr ""
+msgstr " (из %s) : "
 
 #: src/main/errors.c:635 src/main/errors.c:641
 #, c-format
@@ -3716,9 +3711,9 @@ msgid "invalid sequence argument in for loop"
 msgstr "неправильная последовательность аргументов в цикле 'for'"
 
 #: src/main/eval.c:4319 src/main/names.c:1225
-#, fuzzy, c-format
+#, c-format
 msgid "there is no .Internal function '%s'"
-msgstr "нет внутренней функции \"%s\""
+msgstr "нет функции .Internal \"%s\""
 
 #: src/main/eval.c:4426 src/main/eval.c:4749 src/main/eval.c:4791
 msgid "bad function"
@@ -5418,14 +5413,13 @@ msgstr "не могу создать каталог '%ls' по причине '%
 
 #: src/main/platform.c:2276 src/main/platform.c:2433
 msgid "too deep nesting"
-msgstr ""
+msgstr "слишком глубоко"
 
 #: src/main/platform.c:2284 src/main/platform.c:2297 src/main/platform.c:2315
 #: src/main/platform.c:2333 src/main/platform.c:2449 src/main/platform.c:2462
 #: src/main/platform.c:2482 src/main/platform.c:2502
-#, fuzzy
 msgid "over-long path length"
-msgstr "конфликтующие длины параметров"
+msgstr "слишком длинный путь"
 
 #: src/main/platform.c:2304
 #, c-format
@@ -5949,13 +5943,13 @@ msgid "too few column labels"
 msgstr "слишком мало меток колонок"
 
 #: src/main/printarray.c:485
-#, fuzzy, c-format
+#, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
 msgstr[0] ""
-" [ достигнута getOption(\"max.print\") -- последняя %d строка пропущена ]]\n"
-msgstr[1] " [ достигнута getOption(\"max.print\") -- пропущено %d строки ]]\n"
-msgstr[2] " [ достигнута getOption(\"max.print\") -- пропущено %d строк ]]\n"
+" [ достигнута getOption(\"max.print\") -- последняя %d строка пропущена ]\n"
+msgstr[1] " [ достигнута getOption(\"max.print\") -- пропущено %d строки ]\n"
+msgstr[2] " [ достигнута getOption(\"max.print\") -- пропущено %d строк ]\n"
 
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
@@ -6278,9 +6272,8 @@ msgid "scan() expected '%s', got '%s'"
 msgstr "'scan()' ожидает '%s', а не '%s'"
 
 #: src/main/scan.c:568 src/main/scan.c:715
-#, fuzzy
 msgid "too many items"
-msgstr "слишком много аргументов"
+msgstr "слишком много элементов"
 
 #: src/main/scan.c:654
 msgid "empty 'what' specified"
@@ -6386,9 +6379,9 @@ msgid "incorrect type for second argument"
 msgstr "неправильный тип второго аргумента"
 
 #: src/main/seq.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "attempt to replicate an object of type '%s'"
-msgstr "попытка размножить не-вектор"
+msgstr "попытка размножить объект типа '%s'"
 
 #: src/main/seq.c:514 src/main/seq.c:521 src/main/seq.c:648 src/main/seq.c:828
 #, c-format
@@ -6806,9 +6799,8 @@ msgid "unsupported type"
 msgstr "неподдерживаемый тип"
 
 #: src/main/sprintf.c:484
-#, fuzzy
 msgid "'fmt' must be length 1"
-msgstr "'fromLast' должен быть единичной длины"
+msgstr "'fmt' должен быть единичной длины"
 
 #: src/main/startup.c:65
 msgid "R_LibraryFileName: buffer too small"
@@ -7361,9 +7353,8 @@ msgid "warning message truncated to 255 chars"
 msgstr "предупреждающее сообщение сокращено до 255 символов"
 
 #: src/main/util.c:1750
-#, fuzzy
 msgid "all arguments must be named"
-msgstr "атрибуты должны быть именованы"
+msgstr "все аргументы должны быть именованы"
 
 #: src/main/util.c:1822
 msgid "ICU is not supported on this build"
@@ -7763,7 +7754,7 @@ msgstr "ведущий минор порядка %d не является пол
 
 #: src/modules/lapack/Lapack.c:905
 msgid "the matrix is either rank-deficient or indefinite"
-msgstr ""
+msgstr "матрица или с недостаточным рангом, или неопределенная"
 
 #: src/modules/lapack/Lapack.c:927 src/modules/lapack/Lapack.c:948
 #: src/modules/lapack/Lapack.c:984 src/modules/lapack/Lapack.c:1037
@@ -7796,9 +7787,9 @@ msgid "'b' must be a numeric matrix"
 msgstr "'b' должен быть числовой матрицей"
 
 #: src/modules/lapack/Lapack.c:1016
-#, fuzzy, c-format
+#, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
-msgstr "функция Lapack 'dgesv': система в точности сингулярная"
+msgstr "Подпрограмма Lapack %s: система в точности сингулярная: U[%d,%d] = 0"
 
 #: src/modules/lapack/Lapack.c:1023
 #, c-format
