@@ -627,15 +627,21 @@ function(x, style = "text", .bibstyle=NULL, ...)
 }
 
 .bibentry_expand_crossrefs <-
-function(x)
+function(x, more = list())
 {
+    y <- if(length(more))
+        do.call(c, c(list(x), more))
+    else
+        x
+    
     x <- unclass(x)
+    y <- unclass(y)
 
     crossrefs <- lapply(x, `[[`, "crossref")
     pc <- which(vapply(crossrefs, length, 0L) > 0L)
 
     if(length(pc)) {
-        keys <- lapply(x, attr, "key")
+        keys <- lapply(y, attr, "key")
         keys[!vapply(keys, length, 0L)] <- ""
         keys <- unlist(keys)
         pk <- match(unlist(crossrefs[pc]), keys)
@@ -655,7 +661,7 @@ function(x)
                 u
             },
                 x[pc[ok]],
-                x[pk[ok]])
+                y[pk[ok]])
         ## Now check entries with crossrefs for completeness.
         ## Ignore bad entries with a warning.
         status <- lapply(x[pc],
