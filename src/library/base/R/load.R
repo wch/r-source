@@ -32,11 +32,11 @@ load <- function (file, envir = parent.frame())
             if(grepl("RD[ABX][12]\r", magic))
                 stop("input has been corrupted, with LF replaced by CR")
             ## Not a version 2 magic number, so try the pre-R-1.4.0 code
-            warning(gettextf("file %s has magic number '%s'\n",
-                             sQuote(basename(file)),
-                             gsub("[\n\r]*", "", magic)),
+            warning(sprintf("file %s has magic number '%s'\n",
+                            sQuote(basename(file)),
+                            gsub("[\n\r]*", "", magic)),
                     "  ",
-                    gettext("Use of save versions prior to 2 is deprecated"),
+                    "Use of save versions prior to 2 is deprecated",
                     domain = NA, call. = FALSE)
             return(.Internal(load(file, envir)))
         }
@@ -61,7 +61,7 @@ save <- function(..., list = character(),
         ascii <- opts$ascii
     if (missing(version)) version <- opts$version
     if (!is.null(version) && version < 2)
-        warning("Use of save versions prior to 2 is deprecated")
+        warning("Use of save versions prior to 2 is deprecated", domain = NA)
 
     if(missing(list) && !length(list(...)))
 	warning("nothing specified to be save()d")

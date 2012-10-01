@@ -412,6 +412,8 @@
      
       \item Functions \code{traceOn()} and \code{traceOff()} in package
       \pkg{methods} are now defunct.
+  
+      \item Function \code{CRAN.packages()} is finally defunct.
     }
   }
 
