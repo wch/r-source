@@ -505,15 +505,16 @@ function(pkgdir, outfile, title, batch = FALSE,
         "{\\textbf{\\huge ", title, "}}\n",
         "\\par\\bigskip{\\large \\today}\n",
         "\\end{center}\n", sep = "", file = out)
-    if (description && file.exists(f <- file.path(pkgdir, "DESCRIPTION")))
-        .DESCRIPTION_to_latex(f, out)
-    ## running on the sources of a base package will have DESCRIPTION.in,
-    ## only.
-    if (description &&
-        file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
-        version <- readLines(file.path(pkgdir, "../../../VERSION"))
-        .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION.in"),
-                              out, version)
+    if(description) {
+        if(file.exists(f <- file.path(pkgdir, "DESCRIPTION")))
+            .DESCRIPTION_to_latex(f, out)
+        else if(file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
+            ## running on the sources of a base package will have
+            ## DESCRIPTION.in, only.
+            version <- readLines(file.path(pkgdir, "../../../VERSION"))
+            .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION.in"),
+                                  out, version)
+        }
     }
 
     ## Rd2.tex part 2: body
