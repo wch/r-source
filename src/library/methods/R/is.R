@@ -206,7 +206,7 @@ setIs <-
     if(length(whereIs))
       whereIs[[1L]]
     else {
-        warning(gettextf("Class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
+        warning(gettextf("class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
                          .dQ(class), sQuote(classDef@package), purpose,
                          sQuote(getPackageName(where, FALSE))),
                 call. = FALSE, domain = NA)
@@ -223,7 +223,7 @@ setIs <-
     if((is.null(classDef1) || is.null(classDef2)) &&
        !(isVirtualClass(class1) && isVirtualClass(class2)))
         return(c(.msg(class1, class2), ": ",
-             gettext("Both classes must be defined")))
+             gettext("both classes must be defined")))
     if(slotTests) {
         slots2 <- classDef2@slots
         if(length(slots2)) {

@@ -48,7 +48,7 @@ self from reference class thisClass.'
 
 installClassMethod <- function(def, self, me, selfEnv, thisClass) {
     if(!is(def, "refMethodDef")) {  #should not happen? => need warning
-        warning(gettextf("Method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class.",
+        warning(sprintf("method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class.",
                          me, thisClass@className),
                 domain = NA)
         def <-makeClassMethod(def, me, thisClass@className, "", objects(thisClass@refMethods, all.names = TRUE))
@@ -111,7 +111,7 @@ makeClassMethod <- function(def, name, Class, superClassMethod = "", allMethods)
         declared <- .declaredMethods(def)
         ## look for invalid declared methods
         if(length(declared) && any(! declared %in% allMethods))
-            warning(gettextf("Methods declared in usingMethods() but not found: %s",
+            warning(gettextf("methods declared in usingMethods() but not found: %s",
                 paste0(declared[! declared %in% allMethods], collapse = ", ")))
         depends <- c(declared, depends)
     }
@@ -210,7 +210,7 @@ initRefFields <- function(.Object, classDef, selfEnv, args) {
         elNames <- names(elements)
         for(super in supers) {
             if(!is(super, "refClass")) {
-                warning(gettextf("Unnamed arguments to $new() must be objects from a reference class; got an object of class %s",
+                warning(gettextf("unnamed arguments to $new() must be objects from a reference class; got an object of class %s",
                                  dQuote(class(super))),
                         domain = NA)
                 next
@@ -279,7 +279,7 @@ Class.  No effect on the object itself.
                  for(field in names(fieldClasses)) {
                      current <- get(field, envir = selfEnv)
                      if(!is(current, fieldClasses[[field]]))
-                         stop(gettextf("The class of field %s in the object is not compatible with the desired class %s in the target",
+                         stop(gettextf("the class of field %s in the object is not compatible with the desired class %s in the target",
                                        sQuote(field),
                                        dQuote(fieldClasses[[field]])),
                               domain = NA)
@@ -294,7 +294,7 @@ Class.  No effect on the object itself.
                                dQuote(Class)),
                       domain = NA)
              else
-                 stop("Invalid Class argument:  should be a single string")
+                 stop("invalid 'Class' argument:  should be a single string")
          },
          import =   function(value, Class = class(value)) {
              '
@@ -316,7 +316,7 @@ that class itself, but then you could just overrwite the object).
                  for(field in names(classDef@fieldClasses)) {
                      current <- get(field, envir = env)
                      if(!is(current, fieldClasses[[field]]))
-                         stop(gettextf("The class of field %s in the object is not compatible with the desired class %s in the target",
+                         stop(gettextf("the class of field %s in the object is not compatible with the desired class %s in the target",
                                        sQuote(field),
                                        dQuote(fieldClasses[[field]])),
                               domain = NA)
@@ -488,7 +488,7 @@ getRefSuperClasses <- function(classes, classDefs) {
     if(nargs() == 0)
         return(objects(methodsEnv, all.names = TRUE))
     if(methods:::.classDefIsLocked(def))
-        stop(gettextf("The definition of class %s in package %s is locked, methods may not be redefined",
+        stop(gettextf("the definition of class %s in package %s is locked, methods may not be redefined",
                       dQuote(def@className),
                       sQuote(def@package)),
              domain = NA)
@@ -498,7 +498,7 @@ getRefSuperClasses <- function(classes, classDefs) {
         methodDefs <- methodDefs[[1]]
     mnames <- names(methodDefs)
     if(is.null(mnames) || !all(nzchar(mnames)))
-        stop("Arguments to methods() must be named, or one named list")
+        stop("arguments to methods() must be named, or one named list")
     ## look for methods to remove (new definition is NULL)
     removeThese <- sapply(methodDefs, is.null)
     if(any(removeThese)) {
@@ -565,7 +565,7 @@ c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
             writeLines(.refMethodDoc(topic, env))
         }
         else {
-            cat(gettextf("Topic %s is not a method name in class %s\nThe class definition follows\n",
+            cat(gettextf("topic %s is not a method name in class %s\nThe class definition follows\n",
                          sQuote(topic),
                          dQuote(className)))
             show(def)
@@ -583,7 +583,7 @@ accessors = function(...) {
         list(get = paste0("get", names), set = paste0("set", names))
     }
     if(methods:::.classDefIsLocked(def))
-        stop(gettextf("The definition of class %s in package %s is locked, fields may not be modified",
+        stop(gettextf("the definition of class %s in package %s is locked so fields may not be modified",
                       dQuote(def@className),
                       sQuote(def@package)),
              domain = NA)
@@ -651,7 +651,7 @@ accessors = function(...) {
         for(field in newNames[hasFields])
             ## the new field class must be a subclass of the old
             if(is.na(match(fieldList[[field]], c(extends(value[[field]]),"ANY"))))
-                stop(gettextf("The overriding class (\"%s\") of field %s is not a subclass of the existing field definition (\"%s\")",
+                stop(gettextf("the overriding class (\"%s\") of field %s is not a subclass of the existing field definition (\"%s\")",
                               value[[field]],
                               sQuote(field),
                               fieldList[[field]]),
@@ -681,8 +681,7 @@ accessors = function(...) {
             else {
                 selfEnv <- as.environment(.self)
                 if(bindingIsLocked(metaName, selfEnv))
-                    stop(gettextf("Field %s is read-only",
-                                  sQuote(thisField)),
+                    stop(gettextf("field %s is read-only", sQuote(thisField)),
                          domain = NA)
                 else {
                     dummyField <<- value
@@ -729,14 +728,13 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
                                      else if(is.character(what))
                                          getClass(what, where = where)
                                      else
-                                         stop(gettextf(
-                                                       "The contains= argument should be the names of superclasses:  got an element of class %s",
+                                         stop(gettextf("the 'contains' argument should be the names of superclasses:  got an element of class %s",
                                                        dQuote(class(what))),
                                               domain = NA)
                                  })
         missingDefs <- sapply(superClassDefs, is.null)
         if(any(missingDefs))
-            stop(gettextf("No definition found for inherited class: %s",
+            stop(gettextf("no definition found for inherited class: %s",
                           paste0('"',contains[missingDefs], '"', collapse = ", ")),
                  domain = NA)
         superClasses <- unlist(lapply(superClassDefs,
@@ -772,12 +770,12 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
         ## 2. a binding function
         if(is.character(thisField)) {
             if(length(thisField) != 1)
-                stop(gettextf("Single class name needed for field %s, got a character vector of length %d",
+                stop(gettextf("a single class name is needed for field %s, got a character vector of length %d",
                               sQuote(thisName),
                               length(thisField)),
                      domain = NA)
             if(is.null(getClassDef(thisField, where = where)))
-                stop(gettextf("Class %s for field %s is not defined",
+                stop(gettextf("class %s for field %s is not defined",
                               dQuote(thisField),
                               sQuote(thisName)),
                      domain = NA)
@@ -796,7 +794,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
                 .makeActiveBinding(thisField)
         }
         else
-            stop(gettextf("Field %s was supplied as an object of class %s; must be a class name or a binding function",
+            stop(gettextf("field %s was supplied as an object of class %s; must be a class name or a binding function",
                           sQuote(thisName),
                           dQuote(class(thisField))),
                  domain = NA)
@@ -857,7 +855,7 @@ insertClassMethods <- function(methods, Class, value, fieldNames, returnAll) {
         returnMethods[[method]] <- def
     }
     if(is.na(check) && .methodsIsLoaded())
-        message(gettextf("Code for methods in class %s was not checked for suspicious field assignments (recommended package %s not available?)",
+        message(gettextf("code for methods in class %s was not checked for suspicious field assignments (recommended package %s not available?)",
                          dQuote(Class),
                          sQuote("codetools"))
                 , domain = NA)
@@ -890,13 +888,13 @@ setRefClass <- function(Class, fields = character(),
             fieldNames <- names(fields)
             if(is.null(fieldNames) ||
                !all(nzchar(fieldNames)))
-                stop("A list argument for fields must have nonempty names for all the fields")
+                stop("a list argument for 'fields' must have nonempty names for all the fields")
         }
         else
             fieldNames <- character()
     }
     else
-        stop(gettextf("Argument fields must be a list of the field classes or definitions, or else just the names of the fields; got an object of class %s",
+        stop(gettextf("argument 'fields' must be a list of the field classes or definitions or the names of the fields; got an object of class %s",
                       dQuote(class(fields))),
              domain = NA)
     theseMethods <- names(methods) # non-inherited, for processing later
@@ -941,12 +939,12 @@ getRefClass <- function(Class, where = topenv(parent.frame())) {
     else if(is.character(Class)) {
         classDef <- getClass(Class, where = where)
         if(!is(classDef, "refClassRepresentation"))
-            stop(gettextf("Class %s is defined but is not a reference class",
+            stop(gettextf("class %s is defined but is not a reference class",
                           dQuote(Class)),
                  domain = NA)
     }
     else
-        stop(gettextf("Class must be a reference class representation or a character string; got an object of class %s",
+        stop(gettextf("class must be a reference class representation or a character string; got an object of class %s",
                       dQuote(class(Class))),
              domain = NA)
     value <- new("refObjectGenerator")
@@ -961,7 +959,8 @@ refClassFields <- function(Class) {
     if(is(ClassDef, "refClassRepresentation"))
         ClassDef@fieldClasses
     else
-        stop("Not a reference class:", ClassDef@name)
+        stop(gettextf("not a reference class: %s", ClassDef@name),
+             domain = NA)
 }
 
 refClassMethods <- function(Class) {
@@ -969,7 +968,8 @@ refClassMethods <- function(Class) {
     if(is(ClassDef, "refClassRepresentation"))
         value <- as.list(ClassDef@refMethods)
     else
-        stop("Not a reference class:", ClassDef@name)
+        stop(gettextf("not a reference class: %s", ClassDef@name),
+             domain = NA)
     ## possibly temporary:  return methods to pure functions
     for(i in seq_along(value))
         value[[i]] <- as(value[[i]], "function")
@@ -980,8 +980,8 @@ showClassMethod <- function(object) {
     cl <- class(object)
     cat("Class method definition")
     if(!.identC(cl, "refMethodDef"))
-        cat(gettextf(" (class %s)", dQuote(cl)))
-    cat(gettextf(" for method %s()\n", object@name))
+        cat(sprintf(" (class %s)", dQuote(cl)))
+    cat(sprintf(" for method %s()\n", object@name))
     show(as(object, "function"))
     if(length(object@mayCall))
         .printNames("Methods used: ", object@mayCall)
@@ -1096,7 +1096,7 @@ all.equal.environment <- function(target, current, ...) {
     locals <- names(assigned$locals)
     localsAreFields <- match(locals, fieldNames, 0) > 0
     if(any(localsAreFields))
-        warning(gettextf("Local assignment to field name will not change the field:\n    %s\n Did you mean to use \"<<-\"? ( in method %s for class %s)",
+        warning(gettextf("local assignment to field name will not change the field:\n    %s\n Did you mean to use \"<<-\"? ( in method %s for class %s)",
                 paste(unlist(assigned$locals)[localsAreFields], collapse="; "), methodName, className),
                 domain = NA)
     globals <- names(assigned$globals)
@@ -1104,12 +1104,12 @@ all.equal.environment <- function(target, current, ...) {
     ## error except in $initialize())
     globalsNotFields <- is.na(match(globals, c(fieldNames, ".self")))
     if(any(globalsNotFields))
-        warning(gettextf("Non-local assignment to non-field names (possibly misspelled?)\n    %s\n( in method %s for class %s)",
+        warning(gettextf("non-local assignment to non-field names (possibly misspelled?)\n    %s\n( in method %s for class %s)",
                 paste(unlist(assigned$globals)[globalsNotFields], collapse="; "), methodName, className),
                 domain = NA)
     globalsInMethods <- match(globals, methodNames, 0) > 0
     if(any(globalsInMethods))
-        stop(gettextf("Non-local assignment to method names is not allowed\n    %s\n( in method %s for class %s)",
+        stop(gettextf("non-local assignment to method names is not allowed\n    %s\n( in method %s for class %s)",
                 paste(unlist(assigned$globals)[globalsInMethods], collapse="; "), methodName, className),
                 domain = NA)
     !any(localsAreFields) && !any(globalsNotFields)
@@ -1149,9 +1149,9 @@ all.equal.environment <- function(target, current, ...) {
     fields <- c(...)
     if(is.character(fields) && all(nzchar(fields))) {}
     else
-        stop("Arguments must all be character string names of fields")
+        stop("arguments must all be character string names of fields")
     if(.classDefIsLocked(def))
-        stop(gettextf("The definition of class %s in package %s is locked, fields may not be modified",
+        stop(gettextf("the definition of class %s in package %s is locked so fields may not be modified",
                       dQuote(def@className),
                       sQuote(def@package)),
              domain = NA)
@@ -1159,7 +1159,7 @@ all.equal.environment <- function(target, current, ...) {
     className <- def@className
     for(what in fields) {
         if(what %in% lockedFields) {
-            warning(gettextf("Field %s is already locked", sQuote(what)),
+            warning(gettextf("field %s is already locked", sQuote(what)),
                     domain = NA)
             next
         }
@@ -1174,7 +1174,7 @@ all.equal.environment <- function(target, current, ...) {
                 env[[what]] <- .makeDefaultBinding(current@field,
                     current@className, TRUE, environment(current))[[what]]
             else
-                stop(gettextf("Field %s of class %s has a non-default binding and cannot be locked",
+                stop(gettextf("field %s of class %s has a non-default binding and cannot be locked",
                               sQuote(what),
                               dQuote(className)),
                      domain = NA)

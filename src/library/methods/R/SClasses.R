@@ -65,7 +65,7 @@ setClass <-
             else { # update class definition
                 classDef <- getClassDef(Class, where = where)
                 if(is.null(classDef))
-                  stop(gettextf("Internal error: definition of class %s not properly assigned",
+                  stop(sprintf("internal error: definition of class %s not properly assigned",
                                 dQuote(Class)),
                        domain = NA)
             }
@@ -349,7 +349,7 @@ removeClass <-  function(Class, where = topenv(parent.frame())) {
        classEnv <- .classEnv(Class, where, FALSE)
         classWhere <- findClass(Class, where = classEnv)
         if(length(classWhere) == 0L) {
-            warning(gettextf("Class definition for %s not found (no action taken)",
+            warning(gettextf("class definition for %s not found (no action taken)",
                              dQuote(Class)),
                     domain = NA)
             return(FALSE)
@@ -509,13 +509,12 @@ validObject <- function(object, test = FALSE, complete = FALSE)
 	if(test)
 	    errors
 	else {
-	    msg <- gettextf("invalid class %s object:",
-                            dQuote(Class))
+	    msg <- gettextf("invalid class %s object", dQuote(Class))
 	    if(length(errors) > 1L)
-		stop(paste(msg,
-			   paste(paste(seq_along(errors), errors, sep=": ")),
+		stop(paste(paste0(msg, ":"),
+                           paste(seq_along(errors), errors, sep=": "),
 			   collapse = "\n"), domain = NA)
-	    else stop(msg, " ", errors, domain = NA)
+	    else stop(msg, ": ", errors, domain = NA)
 	}
     }
     else
@@ -723,7 +722,7 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
             classDef <- getClassDef(Class) # but won't likely succeed over previous
         if(nzchar(unique)) {
             if(is(classDef, "classRepresentation"))
-                stop(gettextf("Class %s is defined, with package %s, but no corresponding metadata object was found (not exported?)",
+                stop(gettextf("class %s is defined, with package %s, but no corresponding metadata object was found (not exported?)",
                               dQuote(Class),
                               sQuote(classDef@package)),
                      domain = NA)
@@ -794,12 +793,12 @@ names(.indirectAbnormalClasses) <- .AbnormalTypes
   if(length(type) == 0)
     return(classes)
   if(length(type) > 1)
-    stop(gettextf("Class definition cannot extend more than one of these data types: %s",
+    stop(gettextf("class definition cannot extend more than one of these data types: %s",
 		  paste0('"',type, '"', collapse = ", ")),
          domain = NA)
   class <- .indirectAbnormalClasses[type]
   if(is.na(class))
-    stop(gettextf("Sorry, abnormal type %s is not supported as a superclass of a class definition",
+    stop(gettextf("abnormal type %s is not supported as a superclass of a class definition",
                   dQuote(type)),
          domain = NA)
   ## this message USED TO BE PRINTED: reminds programmers that
@@ -888,14 +887,14 @@ className <- function(class, package) {
                 package <- classDef@package
             else if(length(classDef) > 1L) {
                 pkgs <- sapply(classDef, function(cl)cl@package)
-                warning(gettextf("Multiple class definitions for %s from packages: %s; picking the first",
+                warning(gettextf("multiple class definitions for %s from packages: %s; picking the first",
                                  dQuote(className),
                                  paste(sQuote(pkgs), collapse = ", ")),
                         domain = NA)
                 package <- pkgs[[1L]]
             }
             else
-                stop(gettextf("No package name supplied and no class definition found for %s",
+                stop(gettextf("no package name supplied and no class definition found for %s",
                               dQuote(className)),
                      domain = NA)
         }
@@ -927,7 +926,7 @@ classGeneratorFunction <- function(classDef, env = topenv(parent.frame())) {
             classDef <- getClass(classDef)
     }
     else
-        stop("argument classDef must be a class definition or the name of a class")
+        stop("argument 'classDef' must be a class definition or the name of a class")
     fun <- function(...)NULL
     ## put the class name with package attribute into new()
     body(fun) <- substitute(new(CLASS, ...),

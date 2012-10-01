@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-10-01 08:55+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -41,22 +41,15 @@ msgstr ""
 "当函数'%2$s'方法串列来用的，类别为\"%1$s\" 的对象缺少\"allMethods\"这么一个"
 "槽。"
 
-#: methods_list_dispatch.c:358
-#, c-format
-msgid ""
-"S language method selection got an error when called from internal dispatch "
-"for function '%s'"
-msgstr "在为函数'%s'进行内部調度时S语言方法选择出了错"
-
 #: methods_list_dispatch.c:433
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "没有为'%s'找到适用的泛型函数"
 
 #: methods_list_dispatch.c:436
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"No generic function definition found for '%s' in the supplied environment"
+"no generic function definition found for '%s' in the supplied environment"
 msgstr "在提供的环境里'%s'没有同属函数定义"
 
 #: methods_list_dispatch.c:471
@@ -145,12 +138,6 @@ msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr "在方法选择时函数'%s'不能有无默认方法的递归使用"
 
-#: methods_list_dispatch.c:661
-msgid ""
-"internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
-"frame of the method call"
-msgstr "'callNextMethod'内部错误：方法调用框里没有为'.nextMethod'定义"
-
 #: methods_list_dispatch.c:692
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
@@ -179,26 +166,35 @@ msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s'必需是单一字符串(现在它是类别为\"%s\"的对象)"
 
 #: methods_list_dispatch.c:876
-msgid "Class should be either a character-string name or a class definition"
+#, fuzzy
+msgid "class should be either a character-string name or a class definition"
 msgstr "类别必需是字符串名字或类别定义"
 
 #: methods_list_dispatch.c:955
-#, c-format
-msgid "Failed to get the generic for the primitive \"%s\""
+#, fuzzy, c-format
+msgid "failed to get the generic for the primitive \"%s\""
 msgstr "没有能够为原始\"%s\"找到同属函数"
 
 #: methods_list_dispatch.c:961
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Expected a generic function or a primitive for dispatch, got an object of "
+"expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
 msgstr "需要的是同属函数或原始函数，现在得到的却是类别为\"%s\"的对象"
 
-#: methods_list_dispatch.c:973
-#, c-format
-msgid ""
-"Generic \"%s\" seems not to have been initialized for table dispatch---need "
-"to have .SigArgs and .AllMtable assigned in its environment"
-msgstr ""
-"同属函数\"%s\"没有为表台调度进行初始化--.SigArgs 和.AllMtable 这两个量都需要"
-"在它的环境里有定义"
+#~ msgid ""
+#~ "S language method selection got an error when called from internal "
+#~ "dispatch for function '%s'"
+#~ msgstr "在为函数'%s'进行内部調度时S语言方法选择出了错"
+
+#~ msgid ""
+#~ "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
+#~ "frame of the method call"
+#~ msgstr "'callNextMethod'内部错误：方法调用框里没有为'.nextMethod'定义"
+
+#~ msgid ""
+#~ "Generic \"%s\" seems not to have been initialized for table dispatch---"
+#~ "need to have .SigArgs and .AllMtable assigned in its environment"
+#~ msgstr ""
+#~ "同属函数\"%s\"没有为表台调度进行初始化--.SigArgs 和.AllMtable 这两个量都需"
+#~ "要在它的环境里有定义"

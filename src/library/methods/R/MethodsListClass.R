@@ -161,7 +161,7 @@
                         return(value)
                 }
                 else
-                    stop(gettextf("initialize method returned an object of class %s instead of the required class %s",
+                    stop(gettextf("'initialize' method returned an object of class %s instead of the required class %s",
                                   paste(dQuote(class(value)), collapse=", "),
                                   dQuote(class(.Object))),
                          domain = NA)
@@ -251,7 +251,7 @@
               })
     setMethod("show", "classGeneratorFunction", where = envir,
               function(object) {
-                  cat(gettextf("Class generator function for class %s from package %s\n",
+                  cat(gettextf("class generator function for class %s from package %s\n",
                                dQuote(object@className),
                                sQuote(object@package)))
                   show(as(object, "function"))

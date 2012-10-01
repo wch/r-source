@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-10-01 08:55+0100\n"
 "PO-Revision-Date: 2011-03-27 22:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -45,24 +45,15 @@ msgstr ""
 " pas de \"allMethods\" slot trouvé dans l'objet de classe \"%s\" utilisé "
 "comme liste de methodes pour la fonction '%s'"
 
-#: methods_list_dispatch.c:358
-#, c-format
-msgid ""
-"S language method selection got an error when called from internal dispatch "
-"for function '%s'"
-msgstr ""
-"la méthode de sélection du langage S a généré une erreur lors de l'appel du "
-"dispatcheur interne pour la fonction '%s'"
-
 #: methods_list_dispatch.c:433
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "pas de définition de fonction générique trouvée pour '%s'"
 
 #: methods_list_dispatch.c:436
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"No generic function definition found for '%s' in the supplied environment"
+"no generic function definition found for '%s' in the supplied environment"
 msgstr ""
 "Pas de définition de fonction générique trouvée pour '%s' dans "
 "l'environnement fourni"
@@ -169,14 +160,6 @@ msgstr ""
 "utilisation récursive de la fonction '%s' dans la sélection de méthode, avec "
 "aucune méthode définie par défaut"
 
-#: methods_list_dispatch.c:661
-msgid ""
-"internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
-"frame of the method call"
-msgstr ""
-"erreur interne dans 'callNextMethod' : '.nextMethod' n'a pas été assigné "
-"dans le cadre de la méthode d'appel"
-
 #: methods_list_dispatch.c:692
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
@@ -213,34 +196,47 @@ msgstr ""
 "est renvoyé)"
 
 #: methods_list_dispatch.c:876
-msgid "Class should be either a character-string name or a class definition"
+#, fuzzy
+msgid "class should be either a character-string name or a class definition"
 msgstr ""
 "Class doit être soit un nom sous forme de chaîne de caractères, soit une "
 "définition de classe"
 
 #: methods_list_dispatch.c:955
-#, c-format
-msgid "Failed to get the generic for the primitive \"%s\""
+#, fuzzy, c-format
+msgid "failed to get the generic for the primitive \"%s\""
 msgstr "Impossible de trouver la fonction générique pour la primitive \"%s\""
 
 #: methods_list_dispatch.c:961
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Expected a generic function or a primitive for dispatch, got an object of "
+"expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
 msgstr ""
 "Une fonction générique ou une primitive était attendue pour le dispatching, "
 "un objet de classe \"%s\" est renvoyé à la place"
 
-#: methods_list_dispatch.c:973
-#, c-format
-msgid ""
-"Generic \"%s\" seems not to have been initialized for table dispatch---need "
-"to have .SigArgs and .AllMtable assigned in its environment"
-msgstr ""
-"La fonction générique \"%s\" ne semble pas avoir été initialisée pour la "
-"table de dispatching--.SigArgs et .AllMtable doivent être assignés dans son "
-"environnement"
+#~ msgid ""
+#~ "S language method selection got an error when called from internal "
+#~ "dispatch for function '%s'"
+#~ msgstr ""
+#~ "la méthode de sélection du langage S a généré une erreur lors de l'appel "
+#~ "du dispatcheur interne pour la fonction '%s'"
+
+#~ msgid ""
+#~ "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
+#~ "frame of the method call"
+#~ msgstr ""
+#~ "erreur interne dans 'callNextMethod' : '.nextMethod' n'a pas été assigné "
+#~ "dans le cadre de la méthode d'appel"
+
+#~ msgid ""
+#~ "Generic \"%s\" seems not to have been initialized for table dispatch---"
+#~ "need to have .SigArgs and .AllMtable assigned in its environment"
+#~ msgstr ""
+#~ "La fonction générique \"%s\" ne semble pas avoir été initialisée pour la "
+#~ "table de dispatching--.SigArgs et .AllMtable doivent être assignés dans "
+#~ "son environnement"
 
 #~ msgid "no '%s' object in environment of function '%s'"
 #~ msgstr "pas d'objet '%s' dans l'environnement de la fonction '%s'"

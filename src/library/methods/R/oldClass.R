@@ -35,7 +35,7 @@ setOldClass <- function(Classes, prototype = NULL,
                   removeClass(clName, where = where) # so Recall() will work
             }
             else
-              stop(gettextf("argument S4Class must be a class definition:  got an object of class %s",
+              stop(gettextf("argument 'S4Class' must be a class definition: got an object of class %s",
                             dQuote(class(S4Class))),
                    domain = NA)
         }
@@ -98,7 +98,7 @@ setOldClass <- function(Classes, prototype = NULL,
                 setClass(cl, contains = prevClass, prototype = prototype, where = where)
             else { #exceptionally, we allow an S3 object from the S3 class as prototype
                 if(.class1(prototype) != mainClass)
-                  stop(gettextf('The S3 class of the prototype, "%s", is undefined; only allowed when this is the S3 class being registered ("%s")', .class1(prototype), mainClass), domain = NA)
+                  stop(gettextf('the S3 class of the prototype, "%s", is undefined; only allowed when this is the S3 class being registered ("%s")', .class1(prototype), mainClass), domain = NA)
                 setClass(cl, contains = prevClass, where = where)
                 useP <- FALSE
             }
@@ -118,8 +118,7 @@ setOldClass <- function(Classes, prototype = NULL,
 
 .restoreClass <- function(def, where) {
     cl <- def@className
-    message(gettextf("Restoring definition of class %s",
-                     dQuote(cl)),
+    message(gettextf("restoring definition of class %s", dQuote(cl)),
             domain = NA)
     if(isClass(cl, where = where))
        removeClass(cl, where = where)
@@ -179,7 +178,7 @@ setOldClass <- function(Classes, prototype = NULL,
         bad <- character()
         for(what in n2[match(n2, n1, 0) > 0])
           if(!extends(elNamed(slots1, what), elNamed(slots2, what))) {
-              message(gettextf("Slot %s: class %s should extend class %s",
+              message(gettextf("slot %s: class %s should extend class %s",
                                sQuote(what),
                                dQuote(elNamed(slots1, what)),
                                dQuote(elNamed(slots2, what))),
@@ -250,7 +249,7 @@ S3Class <- function(object) {
     if(is.null(value)) {
         if(isS4(object)) {
             if(is.na(match(".Data", names(getClass(class(object))@slots))))
-                stop(gettextf("S3Class only defined for extensions of %s or classes with a data part:  not true of class %s",
+                stop(gettextf("'S3Class' only defined for extensions of %s or classes with a data part:  not true of class %s",
                               dQuote("oldClass"),
                               dQuote(class(object))),
                      domain = NA)
@@ -280,7 +279,7 @@ S3Class <- function(object) {
         current <- attr(object, ".S3Class")
         if(is.null(current)) {
             if(is.na(match(value, .BasicClasses)))
-               stop(gettextf("S3Class can only be assigned to S4 objects that extend \"oldClass\"; not true of class %s",
+               stop(gettextf("'S3Class' can only assign to S4 objects that extend \"oldClass\"; not true of class %s",
                              dQuote(class(object))),
                     domain = NA)
             mode(object) <- value ## may still fail, a further check would be good

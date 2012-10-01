@@ -36,7 +36,7 @@ traceOn <-
   ## `tracer' is called on entry, and the function or expression `exit' on exit.
   function(what, tracer = browseAll, exit = NULL)
 {
-    warning("'traceOn' is deprecated: use the function 'trace' in the 'methods' package instead")
+    warning("'traceOn' is deprecated: use the function 'trace' in the 'methods' package instead", domain = NA)
     name <- what; def <- what
     if(is.function(name))
         name <- as.character(substitute(what))
@@ -82,7 +82,7 @@ traceOn <-
 traceOff <-
   ## turn off tracing of this function
   function(what) {
-    warning("'traceOff' is deprecated: use the function 'untrace' in the 'methods' package instead")
+    warning("'traceOff' is deprecated: use the function 'untrace' in the 'methods' package instead", domain = NA)
     name <- what; def <- what
     if(is.function(name))
       name <- as.character(substitute(what))

@@ -62,7 +62,7 @@
     if(refCase) {
         ## some error checking
         if(!is.null(signature))
-            stop("Argument signature= is not meaningful for tracing reference methods")
+            stop("argument 'signature' is not meaningful for tracing reference methods")
         .where <- where # to avoid substituting where in the eval() below
         ## A reference class object or its class or its generator
         if(is(.where, "refObjectGenerator") && !classMethod)
@@ -135,10 +135,10 @@
         pname <- temp$pname
     }
     if(what %in% .InvalidTracedFunctions)
-        stop(gettextf("Tracing the internal function %s is not allowed",
+        stop(gettextf("tracing the internal function %s is not allowed",
                       sQuote(what)))
     if(.traceTraceState) {
-        message(".TraceWithMethods: after computing what, whereF")
+        message(".TraceWithMethods: after computing what, whereF", domain = NA)
         browser()
     }
     if(nargs() == 1)
@@ -162,7 +162,7 @@
         fdef <- if(is.primitive(def))  getGeneric(what, TRUE, where) else def
         def <- selectMethod(what, signature, fdef = fdef, optional = TRUE)
         if(is.null(def)) {
-            warning(gettextf("Can't untrace method for %s; no method defined for this signature: %s",
+            warning(gettextf("cannot untrace method for %s; no method defined for this signature: %s",
                              sQuote(what),
                              paste(signature, collapse = ", ")),
                     domain = NA)
@@ -173,7 +173,7 @@
     }
     if(untrace) {
         if(.traceTraceState) {
-            message(".TraceWithMethods: untrace case")
+            message(".TraceWithMethods: untrace case", domain = NA)
             browser()
         }
 
@@ -240,7 +240,7 @@
     }
     global <- identical(whereF, .GlobalEnv)
     if(.traceTraceState) {
-        message(".TraceWithMethods: about to assign or setMethod")
+        message(".TraceWithMethods: about to assign or setMethod", domain = NA)
         browser()
     }
     if(is.null(signature)) {
@@ -563,8 +563,7 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
   if(isClass(as.character(traceClassName)))
     return(as.character(traceClassName))
   if(verbose)
-    message(gettextf("Constructing traceable class %s",
-                     dQuote(traceClassName)),
+    message(sprintf("Constructing traceable class %s", dQuote(traceClassName)),
             domain = NA)
   env <- .classEnv(className)
   if(environmentIsLocked(env)) {
@@ -595,7 +594,7 @@ utils::globalVariables("fdef")
             f <- .primname(f)
         }
         else
-            stop("A function for argument 'f' must be a generic function")
+            stop("a function for argument 'f' must be a generic function")
     }
     else {
         f <- switch(f, "as.double" =, "as.real" = "as.numeric", f)
@@ -624,14 +623,14 @@ utils::globalVariables("fdef")
     possible <- sort(table(unlist(lapply(allObjects, find))), decreasing = TRUE)
     message <- ""
     if(length(possible) == 0)
-        stop("None of the objects in the source code could be found:  need to attach or specify the package")
+        stop("none of the objects in the source code could be found:  need to attach or specify the package")
     else if(length(possible) > 1L) {
         global <- match(".GlobalEnv", names(possible), 0)
         if(global > 0) {
             possible <- possible[-global] # even if it's the most common
         }
         if(length(possible) > 1L)
-            warning(gettextf("Objects found in multiple packages: using %s and ignoring %s",
+            warning(gettextf("objects found in multiple packages: using %s and ignoring %s",
                              sQuote(names(possible[[1L]])),
                              paste(sQuote(names(possible[-1L])),
                                    collapse = ", ")),
@@ -656,7 +655,7 @@ evalSource <- function(source, package = "", lock = TRUE, cache = FALSE) {
             envns <- envp
         }
         if(is.null(envp))
-            stop(gettextf("Package %s is not attached and no namespace found for it",
+            stop(gettextf("package %s is not attached and no namespace found for it",
                           sQuote(package)),
                  domain = NA)
     }
@@ -718,7 +717,7 @@ insertSource <- function(source, package = "",
                 envp <- tryCatch(as.environment(pname), error = function(cond)NULL)
                 if(is.null(envp))
                     stop(gettextf(
-                     "Can't find an environment corresponding to package name \'%s\"",
+                     "cannot find an environment corresponding to package name \'%s\"",
                      package), domain = NA)
             }
             envns <- tryCatch(asNamespace(package), error = function(cond)NULL)
@@ -733,7 +732,7 @@ insertSource <- function(source, package = "",
             envns <- tryCatch(asNamespace(package), error = function(cond)NULL)
     }
     if(nzchar(envPackage) && envPackage != package)
-        warning(gettextf("Supplied package, %s, differs from package inferred from source, %s",
+        warning(gettextf("supplied package, %s, differs from package inferred from source, %s",
                          sQuote(package), sQuote(envPackage)),
                 domain = NA)
     packageSlot(env) <- package
@@ -744,7 +743,7 @@ insertSource <- function(source, package = "",
     if(!missing(functions)) {
         notThere <- is.na(match(functions, allObjects))
         if(any(notThere)) {
-            warning(gettextf("Can't insert these (not found in source): %s",
+            warning(gettextf("cannot insert these (not found in source): %s",
                     paste('"',functions[notThere],'"',
                           sep = "", collapse = ", ")),
                     domain = NA)
@@ -756,7 +755,7 @@ insertSource <- function(source, package = "",
          function(fname) (length(grep(fname, .mnames, fixed = TRUE)) == 0)
         )
         if(any(notThere)) {
-            warning(gettextf("Can't insert methods for these functions (methods table not found in source): %s",
+            warning(gettextf("cannot insert methods for these functions (methods table not found in source): %s",
                     paste('"',methods[notThere],'"',
                           sep = "", collapse = ", ")),
                     domain = NA)
@@ -814,14 +813,14 @@ insertSource <- function(source, package = "",
             newObjects <- c(newObjects, this)
     }
     if(length(notTraceable) > 0)
-        message(gettextf("Non-function objects aren't currently inserted (not traceable): %s",
-                 paste(notTraceable, collapse = ", ")), domain = NA)
+        message(gettextf("Non-function objects are not currently inserted (not traceable): %s",
+                         paste(notTraceable, collapse = ", ")), domain = NA)
     if(length(newObjects) > 0)
-        message(gettextf("New functions aren't currently inserted (not untraceable): %s",
-                 paste(newObjects, collapse = ", ")), domain = NA)
+        message(gettextf("New functions are not currently inserted (not untraceable): %s",
+                         paste(newObjects, collapse = ", ")), domain = NA)
     if(length(objectsDone) > 0)
         message(gettextf("Modified functions inserted through trace(): %s",
-                 paste(objectsDone, collapse = ", ")), domain = NA)
+                         paste(objectsDone, collapse = ", ")), domain = NA)
     for(i in seq_along(methods)) {
         .copyMethods(methods[[i]], methodNames[[i]], env, envp)
     }
@@ -845,7 +844,7 @@ insertSource <- function(source, package = "",
     table <- get(tableName, envir=env)
     fdef <- getGeneric(f, where = envwhere)
     if(!is(fdef, "genericFunction")) {
-        message(gettextf("%s() is not a generic function in the target environment--methods will not be inserted",
+        message(gettextf("%s() is not a generic function in the target environment -- methods will not be inserted",
                          f), domain = NA)
         return(NULL)
     }
@@ -873,7 +872,7 @@ insertSource <- function(source, package = "",
 }
 
 .copyClass <- function(class, env, envwhere) {
-    message("Pretend we inserted class ",class)
+    message("Pretend we inserted class ", class, domain = NA)
 }
 
 .findNewDefForTrace <- function(what, signature, env, package) {
@@ -881,7 +880,7 @@ insertSource <- function(source, package = "",
         if(exists(what, envir = env, inherits = FALSE))
             newObject <- get(what, envir = env)
         else
-            stop(gettextf("No definition for object %s found in tracing environment",
+            stop(gettextf("no definition for object %s found in tracing environment",
                           sQuote(what), source),
                  domain = NA)
     }
@@ -900,13 +899,13 @@ insertSource <- function(source, package = "",
             table <- get(table, envir = env)
         }
         else
-            stop(gettextf("Does not seem to be a method table for generic %s in tracing environment",
+            stop(gettextf("does not seem to be a method table for generic %s in tracing environment",
                           sQuote(what)),
                  domain = NA)
         if(exists(signature, envir = table, inherits = FALSE))
           newObject <- get(signature, envir = table)
         else
-          stop(gettextf("No method in methods table for %s for signature %s",
+          stop(gettextf("no method in methods table for %s for signature %s",
                         sQuote(what),
                         sQuote(signature)),
                domain = NA)

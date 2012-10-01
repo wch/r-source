@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-10-01 08:55+0100\n"
 "PO-Revision-Date: 2011-03-25 14:54+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -43,24 +43,15 @@ msgstr ""
 " クラス \"%s\" のオブジェクト(関数 '%s' に対するメソッドリストとして使われる)"
 "中に \"allMethods\" スロットが見付かりませんでした "
 
-#: methods_list_dispatch.c:358
-#, c-format
-msgid ""
-"S language method selection got an error when called from internal dispatch "
-"for function '%s'"
-msgstr ""
-" S 言語のメソッド選択は、関数 '%s' に対する内部割り当てから呼び出されるとエ"
-"ラーになります "
-
 #: methods_list_dispatch.c:433
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr " '%s' に対する総称的な関数定義はありません "
 
 #: methods_list_dispatch.c:436
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"No generic function definition found for '%s' in the supplied environment"
+"no generic function definition found for '%s' in the supplied environment"
 msgstr " 与えられた環境中には '%s' に対する総称的な関数定義はありません  "
 
 #: methods_list_dispatch.c:471
@@ -158,14 +149,6 @@ msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr " 既定メソッド無しの、メソッド選択時の関数 '%s' の再帰的使用です  "
 
-#: methods_list_dispatch.c:661
-msgid ""
-"internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
-"frame of the method call"
-msgstr ""
-" 'callNextMethod' 中に内部エラー： '.nextMethod' はメソッド呼び出しのフレーム"
-"で代入されていません "
-
 #: methods_list_dispatch.c:692
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
@@ -197,31 +180,44 @@ msgstr ""
 " '%s' は単一の文字列でなければなりません(クラス \"%s\" のオブジェクトでした) "
 
 #: methods_list_dispatch.c:876
-msgid "Class should be either a character-string name or a class definition"
+#, fuzzy
+msgid "class should be either a character-string name or a class definition"
 msgstr " クラスは文字列の名前かクラス定義のどちらかでなければなりません "
 
 #: methods_list_dispatch.c:955
-#, c-format
-msgid "Failed to get the generic for the primitive \"%s\""
+#, fuzzy, c-format
+msgid "failed to get the generic for the primitive \"%s\""
 msgstr " プリミティブな \"%s\" に対する総称(generic)を得るのに失敗しました "
 
 #: methods_list_dispatch.c:961
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Expected a generic function or a primitive for dispatch, got an object of "
+"expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
 msgstr ""
 " メソッド割り当てに対する総称的もしくはプリミティブな関数を期待しましたが、得"
 "られたのはクラス \"%s\" のオブジェクトでした "
 
-#: methods_list_dispatch.c:973
-#, c-format
-msgid ""
-"Generic \"%s\" seems not to have been initialized for table dispatch---need "
-"to have .SigArgs and .AllMtable assigned in its environment"
-msgstr ""
-" 総称的な \"%s\" は table dispatch のために初期化されていないようです---  ."
-"SigArgs と.AllMtable がその環境中に付値されている必要があります "
+#~ msgid ""
+#~ "S language method selection got an error when called from internal "
+#~ "dispatch for function '%s'"
+#~ msgstr ""
+#~ " S 言語のメソッド選択は、関数 '%s' に対する内部割り当てから呼び出されると"
+#~ "エラーになります "
+
+#~ msgid ""
+#~ "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
+#~ "frame of the method call"
+#~ msgstr ""
+#~ " 'callNextMethod' 中に内部エラー： '.nextMethod' はメソッド呼び出しのフ"
+#~ "レームで代入されていません "
+
+#~ msgid ""
+#~ "Generic \"%s\" seems not to have been initialized for table dispatch---"
+#~ "need to have .SigArgs and .AllMtable assigned in its environment"
+#~ msgstr ""
+#~ " 総称的な \"%s\" は table dispatch のために初期化されていないようで"
+#~ "す---  .SigArgs と.AllMtable がその環境中に付値されている必要があります "
 
 #~ msgid "no '%s' object in environment of function '%s'"
 #~ msgstr " '%s' オブジェクトがありません(関数 '%s' の環境中に) "

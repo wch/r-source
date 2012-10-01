@@ -95,7 +95,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
           keepSlots <- slotNames(S3Class[[1L]])
     }
     if(!(defltS3Class || extends(classDef, S3Class)))
-      stop(gettextf("The S3Class argument must be a superclass of %s:  not true of class %s", dQuote(class(object)), dQuote(S3Class)), domain = NA)
+      stop(gettextf("the 'S3Class' argument must be a superclass of %s:  not true of class %s", dQuote(class(object)), dQuote(S3Class)), domain = NA)
     if(strictS3)
       keepSlots <- keepSlots[is.na(match(keepSlots, ".S3Class"))]
     deleteSlots = slotNames(classDef)
@@ -115,7 +115,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
     S3Class <- .S3Class(value)
     def <- getClassDef(S3Class[[1L]])
     if(is.null(def) || !extends(def, needClass[[1L]]))
-      stop(gettextf("Replacement value must extend class %s, got %s", dQuote(needClass), dQuote(S3Class[[1L]])), domain = NA)
+      stop(gettextf("replacement value must extend class %s, got %s", dQuote(needClass), dQuote(S3Class[[1L]])), domain = NA)
     slots <- slotNames(class(object))
     if(!strictS3) {
         fromValue <- names(attributes(value))
@@ -144,7 +144,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
                  from
              }
              else
-                 stop(gettextf("Replacement value must be of class %s, got one of class %s",
+                 stop(gettextf("replacement value must be of class %s, got one of class %s",
                                dQuote(CLASS),
                                dQuote(class(value)[[1L]])))
 
@@ -156,7 +156,7 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
 }
 
 .ErrorReplace <- function(from, to, value)
-    stop(gettextf("no 'replace' method was defined for as(x, \"%s\") <- value for class %s",
+    stop(gettextf("no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s",
                   to, dQuote(class(from))), domain = NA)
 
 .objectSlotNames <- function(object) {
@@ -264,7 +264,7 @@ makeExtends <- function(Class, to,
                 body(replace, envir = packageEnv) <-
                     substitute({
                         if(!is(value, TO))
-                            stop(gettextf("the computation: as(object,\"%s\") <- value is valid when object has class %s only if is(value, \"%s\") is TRUE (class(value) was %s)\n",
+                            stop(gettextf("the computation: 'as(object,\"%s\") <- value' is valid when object has class %s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)\n",
                                  TO, dQuote(FROM), TO, dQuote(class(value))), domain = NA)
                         value
                     }, list(FROM = Class, TO = to))
@@ -298,7 +298,7 @@ makeExtends <- function(Class, to,
         else
             replace <- .ErrorReplace
         if(identical(replace, .ErrorReplace))
-            warning(gettextf("there is no automatic definition for as(object, \"%s\") <- value when object has class %s and no 'replace' argument was supplied; replacement will be an error",
+            warning(gettextf("there is no automatic definition for 'as(object, \"%s\") <- value' when object has class %s and no 'replace' argument was supplied; replacement will be an error",
                              to, dQuote(Class)), domain = NA)
     }
     else if(is(replace, "function")) {

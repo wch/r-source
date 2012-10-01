@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-10-01 08:55+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -43,24 +43,15 @@ msgstr ""
 "nie znaleziono gniazd \"allMethods\" w obiekcie klasy \"%s\" użytej jako "
 "listy metod dla funkcji '%s'"
 
-#: methods_list_dispatch.c:358
-#, c-format
-msgid ""
-"S language method selection got an error when called from internal dispatch "
-"for function '%s'"
-msgstr ""
-"wybór metody języka S spowodował błąd kiedy został wywołany z wewnętrznego "
-"wysyłania dla funkcji '%s'"
-
 #: methods_list_dispatch.c:433
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "nie znaleziono ogólnej definicji funkcji dla '%s'"
 
 #: methods_list_dispatch.c:436
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"No generic function definition found for '%s' in the supplied environment"
+"no generic function definition found for '%s' in the supplied environment"
 msgstr ""
 "Nie znaleziono ogólnej definicji funkcji dla '%s' w dostarczonym środowisku"
 
@@ -161,14 +152,6 @@ msgstr ""
 "rekursywne użycie funkcji '%s' w wyborze metody, z brakiem określonej metody "
 "domyślnej"
 
-#: methods_list_dispatch.c:661
-msgid ""
-"internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
-"frame of the method call"
-msgstr ""
-"błąd wewnętrzny w 'callNextMethod': '.nextMethod' nie została przydzielona w "
-"strukturze wywołania metody"
-
 #: methods_list_dispatch.c:692
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
@@ -199,28 +182,41 @@ msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' musi być pojedynczym ciągiem (otrzymano obiekt klasy \"%s\")"
 
 #: methods_list_dispatch.c:876
-msgid "Class should be either a character-string name or a class definition"
+#, fuzzy
+msgid "class should be either a character-string name or a class definition"
 msgstr "Klasa powinna być albo nazwą tekstową albo definicją klasy"
 
 #: methods_list_dispatch.c:955
-#, c-format
-msgid "Failed to get the generic for the primitive \"%s\""
+#, fuzzy, c-format
+msgid "failed to get the generic for the primitive \"%s\""
 msgstr "Nie udało się uzyskać ogólnej funkcji dla typu prymitywnego \"%s\""
 
 #: methods_list_dispatch.c:961
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Expected a generic function or a primitive for dispatch, got an object of "
+"expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
 msgstr ""
 "Oczekiwano ogólnej funkcji lub typu prymitywnego dla wysyłania, otrzymano "
 "obiekt klasy \"%s\""
 
-#: methods_list_dispatch.c:973
-#, c-format
-msgid ""
-"Generic \"%s\" seems not to have been initialized for table dispatch---need "
-"to have .SigArgs and .AllMtable assigned in its environment"
-msgstr ""
-"Ogólny \"%s\" wydaje się nie być zainicjalizowany dla tabeli wysyłki---"
-"potrzeba mieć '.SigArgs' oraz '.AllMtable' przypisane w jego środowisku"
+#~ msgid ""
+#~ "S language method selection got an error when called from internal "
+#~ "dispatch for function '%s'"
+#~ msgstr ""
+#~ "wybór metody języka S spowodował błąd kiedy został wywołany z "
+#~ "wewnętrznego wysyłania dla funkcji '%s'"
+
+#~ msgid ""
+#~ "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
+#~ "frame of the method call"
+#~ msgstr ""
+#~ "błąd wewnętrzny w 'callNextMethod': '.nextMethod' nie została "
+#~ "przydzielona w strukturze wywołania metody"
+
+#~ msgid ""
+#~ "Generic \"%s\" seems not to have been initialized for table dispatch---"
+#~ "need to have .SigArgs and .AllMtable assigned in its environment"
+#~ msgstr ""
+#~ "Ogólny \"%s\" wydaje się nie być zainicjalizowany dla tabeli wysyłki---"
+#~ "potrzeba mieć '.SigArgs' oraz '.AllMtable' przypisane w jego środowisku"

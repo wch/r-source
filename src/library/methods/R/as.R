@@ -51,8 +51,8 @@ as <-
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
                 if(identical(ext, FALSE))
-                    stop(gettextf("internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
-                                  dQuote(thisClass), Class),
+                    stop(sprintf("internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
+                                 dQuote(thisClass), Class),
                          domain = NA)
                 else if(identical(ext, TRUE))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
@@ -256,7 +256,7 @@ setAs <-
                     ll <- list(quote(from), quote(value))
                     names(ll) <- args
                     replace <- substituteDirect(replace, ll)
-                    warning(gettextf("argument names in replace changed to agree with 'coerce<-' generic:\n%s", paste(deparse(replace), sep="\n    ")),
+                    warning(gettextf("argument names in 'replace' changed to agree with 'coerce<-' generic:\n%s", paste(deparse(replace), sep="\n    ")),
                             domain = NA)
                 }
                 method <- eval(function(from, to, value)NULL)
@@ -333,14 +333,15 @@ setAs <-
   setMethod("coerce", c("ANY", "NULL"), method, where = where)
   body(method) <- quote({
             if(length(from) != 1)
-              warning("ambiguous object (length!=1) to coerce to \"name\"")
+                warning("ambiguous object (length != 1) to coerce to \"name\"")
             as.name(from)
         })
   setMethod("coerce", c("ANY","name"), method, where = where)
   ## not accounted for and maybe not needed:  real, pairlist, double
 }
 
-.basicCoerceMethod <- function(from, to, strict = TRUE) stop("undefined coerce method")
+.basicCoerceMethod <- function(from, to, strict = TRUE)
+    stop("undefined 'coerce' method")
 
 .makeAsMethod <- function(expr, simple, Class, ClassDef, where) {
     if(is(expr, "function")) {

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-09-30 r60842) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-09-30 r60843) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6901,9 +6901,9 @@ F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10
 + }
 > library("methods")# (not needed here)
 > assertErrorPrint( getMethod(ls, "bar", fdef=ls) )
-Asserted Error: No generic function found for 'ls' 
+Asserted Error: no generic function found for 'ls' 
 > assertErrorPrint( getMethod(show, "bar") )
-Asserted Error: No method found for function 'show' and signature bar 
+Asserted Error: no method found for function 'show' and signature bar 
 > ## R < 2.15.1 gave
 > ##   cannot coerce type 'closure' to vector of type 'character'
 > 

@@ -155,7 +155,7 @@
         if(is.list(el) && length(el) > 1)
             setOldClass(el[[1L]], prototype = el[[2L]],  where = envir)
         else
-            warning("OOPS: something wrong with line ",i, " in .OldClassesPrototypes")
+            warning(gettextf("OOPS: something wrong with line %d in '.OldClassesPrototypes'", i), domain = NA)
     }
     setGeneric("slotsFromS3", where = envir)
     ## the method for "oldClass" is really a constant, just hard to express that way
@@ -327,7 +327,7 @@
               {
                   switch(typeof(from),
                          S4 =
-                         stop(gettextf("Class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent",
+                         stop(gettextf("class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent",
                                        dQuote(class(from))),
                               domain = NA),
                          .notS4(from) )
@@ -342,7 +342,7 @@
                       cl <- .class1(from)
                       classDef <- getClass(cl)
                       if(identical(classDef@virtual, TRUE))
-                        stop(gettextf("Class %s is VIRTUAL; not meaningful to create an S4 object from this class",
+                        stop(gettextf("class %s is VIRTUAL; not meaningful to create an S4 object from this class",
                                       dQuote(cl)),
                              domain = NA)
                       pr <- classDef@prototype
@@ -351,7 +351,7 @@
                       if(match(".Data", names(slots), 0L) > 0L) {
                           data <- unclass(from)
                           if(!is(data, slots[[".Data"]]))
-                            stop(gettextf("Object must be a valid data part for class %s; not true of type %s", dQuote(cl), dQuote(class(data))),
+                            stop(gettextf("object must be a valid data part for class %s; not true of type %s", dQuote(cl), dQuote(class(data))),
                                  domain = NA)
                           value@.Data <- unclass(from)
                       }
@@ -415,7 +415,7 @@
                     .Object <- .mergeAttrs(as.matrix(dat), .Object, dots)
                 }
                 else
-                  stop("Cannot specify matrix() arguments when specifying .Data")
+                  stop("cannot specify matrix() arguments when specifying '.Data'")
             }
         }
         else if(is.matrix(data) && na == 2 + length(dots))
@@ -457,7 +457,7 @@
                     .Object <- .mergeAttrs(as.array(dat), .Object, dots)
                 }
                 else
-                  stop("Cannot specify array() arguments when specifying .Data")
+                  stop("cannot specify array() arguments when specifying '.Data'")
             }
         }
         else if(is.array(data) && na == 2 + length(dots))
@@ -596,13 +596,13 @@
                               i <- c(i, iii)
                       }
                       if(length(i)>1)
-                          stop("Can't have more than one unnamed argument as environment")
+                          stop("cannot have more than one unnamed argument as environment")
                       if(length(i) == 1) {
                           selfEnv <- args[[i]]
                           args <- args[-i]
                           objs <- objs[-i]
                           if(!is(selfEnv, "environment"))
-                              stop("Unnamed argument to new() must be an environment for the new object")
+                              stop("unnamed argument to new() must be an environment for the new object")
                           selfEnv <- as.environment(selfEnv)
                       }
                       ## else, no environment superclasses

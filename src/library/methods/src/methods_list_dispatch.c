@@ -355,9 +355,9 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist, SEXP f_env)
     }
     val = R_tryEvalSilent(e, Methods_Namespace, &check_err);
     if(check_err)
-	error(_("S language method selection got an error when called from internal dispatch for function '%s'"),
+	error("S language method selection got an error when called from internal dispatch for function '%s'",
 	      check_symbol_or_string(fname, TRUE,
-				  "Function name for method selection called internally"));
+				     "Function name for method selection called internally"));
     UNPROTECT(1);
     return val;
 }
@@ -433,7 +433,7 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package)
 		error(_("no generic function definition found for '%s'"),
 		  CHAR(asChar(name)));
 	    else
-		error(_("No generic function definition found for '%s' in the supplied environment"),
+		error(_("no generic function definition found for '%s' in the supplied environment"),
 		  CHAR(asChar(name)));
 	}
 	value = R_NilValue;
@@ -658,7 +658,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     */
     op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
     if(op == R_UnboundValue)
-	error(_("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call"));
+	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
     /* If "..." is an argument, need to pass it down to next method;
      * (this was motivated by issues with match.call; are these still
      * valid in rev. 2.12 ? )*/
@@ -873,7 +873,7 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
 	    return value;
     }
     else if(TYPEOF(class) != S4SXP) {
-	error(_("Class should be either a character-string name or a class definition"));
+	error(_("class should be either a character-string name or a class definition"));
 	return R_NilValue; /* NOT REACHED */
     } else /* assumes a class def, but might check */
 	return class;
@@ -952,13 +952,13 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     case SPECIALSXP: case BUILTINSXP:
 	PROTECT(fdef = R_primitive_generic(fdef)); nprotect++;
 	if(TYPEOF(fdef) != CLOSXP) {
-	    error(_("Failed to get the generic for the primitive \"%s\""), CHAR(asChar(fname)));
+	    error(_("failed to get the generic for the primitive \"%s\""), CHAR(asChar(fname)));
 	    return R_NilValue;
 	}
 	f_env = CLOENV(fdef);
 	break;
     default:
-	error(_("Expected a generic function or a primitive for dispatch, got an object of class \"%s\""),
+	error(_("expected a generic function or a primitive for dispatch, got an object of class \"%s\""),
 	      class_string(fdef));
     }
     PROTECT(mtable = findVarInFrame(f_env, R_allmtable)); nprotect++;
@@ -970,7 +970,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     PROTECT(siglength = findVarInFrame(f_env, R_siglength)); nprotect++;
     if(sigargs == R_UnboundValue || siglength == R_UnboundValue ||
        mtable == R_UnboundValue)
-	error(_("Generic \"%s\" seems not to have been initialized for table dispatch---need to have .SigArgs and .AllMtable assigned in its environment"));
+	error("generic \"%s\" seems not to have been initialized for table dispatch---need to have '.SigArgs' and '.AllMtable' assigned in its environment");
     nargs = asInteger(siglength);
     PROTECT(classes = NEW_LIST(nargs)); nprotect++;
     if (nargs > LENGTH(sigargs))

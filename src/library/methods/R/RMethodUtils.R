@@ -44,7 +44,7 @@
     }
     if(missing(fdef)) {
         if(missing(fdefault))
-            stop(gettextf("Must supply either a generic function or a function as default for %s",
+            stop(gettextf("must supply either a generic function or a function as default for %s",
                           sQuote(f)),
                  domain = NA)
         else if(is.primitive(fdefault)) {
@@ -449,7 +449,7 @@ getGeneric <-
         else if(is.primitive(f))
             return(genericForPrimitive(.primname(f)))
         else
-            stop("Argument f must be a string, generic function, or primitive: got an ordinary function")
+            stop("argument 'f' must be a string, generic function, or primitive: got an ordinary function")
     }
     value <- if(missing(where))
 	.getGeneric(f, , package) else
@@ -722,8 +722,8 @@ getMethodsMetaData <- function(f, where = topenv(parent.frame()))
     if(is.null(fdef))
         return(NULL)
     if(.noMlists()) {
-        warning(gettextf("Methods list objects are not maintained in this version of R:  request for function %s may return incorrect information",
-                         sQuote(fdef@generic)),
+        warning(sprintf("Methods list objects are not maintained in this version of R:  request for function %s may return incorrect information",
+                        sQuote(fdef@generic)),
                 domain = NA)
     }
     mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
@@ -810,7 +810,7 @@ getGenerics <- function(where, searchForm = FALSE)
     funNames <- gsub(".__T__(.*):([^:]+)", "\\1", these)
     if(length(funNames) == 0L &&
        length(these[substr(these, 1L, 6L) == ".__M__"]))
-        warning(gettextf("Package %s seems to have out-of-date methods; need to reinstall from source",
+        warning(sprintf("package %s seems to have out-of-date methods; need to reinstall from source",
                          sQuote(getPackageName(where[[1L]]))))
     packageNames <- gsub(".__T__(.*):([^:]+(.*))", "\\2", these)
     attr(funNames, "package") <- packageNames
@@ -1227,7 +1227,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
         else if(is(mi, "MethodsList"))
             mi <- Recall(mi, f)
         else
-            stop(gettextf("internal error: Bad methods list object in fixing methods for primitive function %s",
+            stop(sprintf("internal error: Bad methods list object in fixing methods for primitive function %s",
                           sQuote(f)),
                  domain = NA)
         methods[[i]] <- mi
@@ -1257,7 +1257,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 .ChangeFormals <- function(def, defForArgs, msg = "<unidentified context>")
 {
     if(!is(def, "function"))
-        stop(gettextf("trying to change the formal arguments in %s, in an object of class %s; expected a function definition",
+        stop(gettextf("trying to change the formal arguments in %s in an object of class %s; expected a function definition",
                       msg, dQuote(class(def))),
              domain = NA)
     if(!is(defForArgs, "function"))
@@ -1305,7 +1305,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
         value <- list(env)
         repeat {
             if(identical(env, emptyenv()))
-                stop("botched namespace: failed to find 'base' namespace in its parents")
+                stop("botched namespace: failed to find 'base' namespace in its parents", domain = NA)
             env <- parent.env(env)
             value <- c(value, list(env))
             if(isBaseNamespace(env))
@@ -1477,7 +1477,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
                 else if(is(x, "genericFunction"))
                     x@generic
                 else
-		    stop(gettextf("invalid element in the groupMembers slot (class %s)",
+		    stop(gettextf("invalid element in the \"groupMembers\" slot (class %s)",
 				  dQuote(class(x))),
                          domain = NA)
             })
@@ -1584,7 +1584,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
     classes <- unique(unlist(lapply(dots, methods:::.class1)))
     method <-methods:::.selectDotsMethod(classes, .MTable, .AllMTable)
     if(is.null(method))
-        stop(gettextf("No method or default matching the \"...\" arguments in %s",
+        stop(gettextf("no method or default matching the \"...\" arguments in %s",
                       deparse(sys.call(sys.parent()), nlines = 1)), domain = NA)
     assign(".Method", method, envir = env)
     eval(.dotsCall, env)
@@ -1616,7 +1616,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
     direct <- match(classes, methods, 0L) > 0L
     if(all(direct)) {
         if(length(classes) > 1L) {
-            warning("multiple direct matches: ", .pasteC(classes), "; using the first of these")
+            warning(gettextf("multiple direct matches: %s; using the first of these", .pasteC(classes)), domain = NA)
             classes <- classes[1L]
         }
         else if(length(classes) == 0L)
@@ -1662,7 +1662,8 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
     else {
         classes <- found[which.min(distances)]
         if(length(classes) > 1L) {
-            warning("multiple equivalent inherited matches: ", .pasteC(classes), "; using the first of these")
+            warning(gettextf("multiple equivalent inherited matches: %s; using the first of these",
+                             .pasteC(classes)), domain = NA)
             classes <- classes[1L]
         }
         method <- get(classes,envir = mtable)
@@ -1743,14 +1744,14 @@ if(FALSE) {
                 ## this is only a warning because it just might
                 ## be the result of identical class defs (e.g., from setOldClass()
                 msgs <- c(msgs,
-                          gettextf("Multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)",
+                          gettextf("multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)",
                                    dQuote(classi), sQuote(pkgi),
                                    paste(dQuote(get(classi, envir = .classTable)), collapse = ", ")))
                 level <- c(level, 2) #warn
             }
             else {
                 msgs <- c(msgs,
-                          gettextf("Multiple definitions exist for class %s; should specify one of them (%s), e.g. by className()",
+                          gettextf("multiple definitions exist for class %s; should specify one of them (%s), e.g. by className()",
                                    dQuote(classi),
                                    paste(dQuote(get(classi, envir = .classTable)), collapse = ", ")))
             }
@@ -1765,7 +1766,7 @@ if(FALSE) {
             }
             if(is.null(classDefi)) {
                 classDefi <- getClassDef
-                msgi <- gettextf("No definition found for class %s",
+                msgi <- gettextf("no definition found for class %s",
                                  dQuote(classi))
                 ## ensure only one error message
                 if(length(level) && any(level == 3))
@@ -1812,13 +1813,13 @@ if(FALSE) {
     actions <- get(actionListName, envir = where)
     ## check sanity:  methods must be loaded
     if(! "package:methods" %in% search()) {
-        warning("Trying to execute load actions without methods package")
+        warning("trying to execute load actions without 'methods' package")
         library(methods)
     }
     for(what in actions) {
         aname <- .actionMetaName(what)
         if(!exists(aname, envir = where, inherits = FALSE)) {
-            warning(gettextf("Missing  function for load action: %s", what))
+            warning(gettextf("missing function for load action: %s", what))
             next
         }
         f <- get(aname, envir = where)
@@ -1826,7 +1827,7 @@ if(FALSE) {
                             list(FUN = f, WHERE = where)), where)
         if(is(value, "error")) {
             callString <- deparse(value$call)[[1]]
-            stop(gettextf("Error in load action %s for package %s: %s: %s",
+            stop(gettextf("error in load action %s for package %s: %s: %s",
                           aname, getPackageName(where), callString, value$message))
         }
     }
@@ -1906,7 +1907,9 @@ getLoadActions <- function(where = topenv(parent.frame())) {
     if(length(actions)) {
         allExists <- sapply(actions, function(what) exists(.actionMetaName(what), envir = where, inherits = FALSE))
         if(!all(allExists)) {
-            warning(gettextf("Some actions missing: %s", paste(actions[!allExists], collapse =", ")))
+            warning(gettextf("some actions are missing: %s",
+                             paste(actions[!allExists], collapse =", ")),
+                    domain = NA)
             actions <- actions[allExists]
         }
         allFuns <- lapply(actions, function(what) get(.actionMetaName(what), envir = where))

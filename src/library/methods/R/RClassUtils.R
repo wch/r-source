@@ -520,7 +520,7 @@ assignClassDef <-
           if(force)
             .assignOverBinding(mname, def, where, FALSE)
           else
-            stop(gettextf("Class %s has a locked definition in package %s",
+            stop(gettextf("class %s has a locked definition in package %s",
                           dQuote(Class), sQuote(getPackageName(where))))
       }
       else
@@ -684,7 +684,7 @@ reconcilePropertiesAndPrototype <-
           for(cl in superClasses) {
               clDef <- getClassDef(cl, where = where)
               if(is.null(clDef))
-                stop(gettextf("No definition was found for superclass %s in the specification of class %s",
+                stop(gettextf("no definition was found for superclass %s in the specification of class %s",
                               dQuote(cl), dQuote(name)),
                      domain = NA)
               thisDataPart <-  .validDataPartClass(clDef, where, dataPartClass)
@@ -1965,7 +1965,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         ## it is possible one  of these is inconsistent, but unlikely
         ## and we will get here often from multiple setOldClass(...)'s
         if(warnLevel)
-            warning(gettextf("A specification for S3 class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class",
+            warning(gettextf("the specification for S3 class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class",
                              dQuote(def@className),
                              sQuote(def@package),
                              sQuote(prev@package)),
@@ -1979,7 +1979,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         dups <- match(supers, multipleClasses(), 0) > 0
         if(any(dups)) {
             if(warnLevel)
-                warning(gettextf("Some super classes of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s",
+                warning(gettextf("some superclasses of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s",
                                  dQuote(def@className),
                                  sQuote(def@package),
                                  sQuote(prev@package)),
@@ -2004,7 +2004,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
             return(FALSE)
     }
     if(warnLevel)
-        warning(gettextf("A specification for class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class",
+        warning(gettextf("the specification for class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class",
                          dQuote(def@className),
                          sQuote(def@package),
                          sQuote(prev@package)),
@@ -2245,7 +2245,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
   if(length(includeSubclasses) == 1)
     includeSubclasses <- rep.int(includeSubclasses, length(classes))
   if(!is(includeSubclasses, "logical") || length(includeSubclasses) != length(classes))
-    stop("argument includeSubclasses must be a logical, either one value or a vector of the same length as argument classes")
+    stop("argument 'includeSubclasses' must be a logical, either one value or a vector of the same length as argument 'classes'")
   value <- matrix(0,0,0)
   for(i in seq_along(classes)) {
     class <- classes[[i]] # to allow for package attribute
@@ -2254,7 +2254,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
   }
   abbr <- match(as.integer(abbreviate), 0:3)-1
   if(length(abbr) != 1 || is.na(abbr))
-    stop("Argument abbreviate must be 0, 1, 2, or 3")
+    stop("argument 'abbreviate' must be 0, 1, 2, or 3")
   if(abbr %% 2)
     dimnames(value)[[1]] <- base::abbreviate(dimnames(value)[[1]])
   if(abbr %/% 2)
@@ -2288,7 +2288,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
         if(isTRUE(short)) abbreviate(nodes)
         else if(is.character(short)) {
             if(length(short) != length(nodes))
-                stop(gettextf("Needed the supplied labels vector of length %n, got %n",
+                stop(gettextf("needed the supplied labels vector of length %d, got %d",
                               length(nodes), length(short)), domain = NA)
             else short
         } else nodes

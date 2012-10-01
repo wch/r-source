@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-27 12:03\n"
+"POT-Creation-Date: 2012-10-01 09:21\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,9 @@ msgstr ""
 msgid "replacement value is not a matrix"
 msgstr "erstatningsværdi er ikke en matrix"
 
-msgid "OOPS: something wrong with line"
+#, fuzzy
+msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
 msgstr "UPS: Noget galt med linjen"
-
-msgid "in .OldClassesPrototypes"
-msgstr "i .OldClassesPrototypes"
 
 msgid ""
 "unnamed argument to initialize() for S3 class must have a class definition; "
@@ -36,33 +34,40 @@ msgstr ""
 "unavngivet argument skal udvide enten S3-klassen eller klassen for "
 "datadelen; ikke gældende for klasse %s"
 
+#, fuzzy
 msgid ""
-"Class %s does not have an S3 data part, and so is of type \"S4\"; no S3 "
+"class %s does not have an S3 data part, and so is of type \"S4\"; no S3 "
 "equivalent"
 msgstr ""
 "Klasse %s har ikke en S3-datadel, og er således af type »S4«; ingen "
 "tilsvarende S3"
 
+#, fuzzy
 msgid ""
-"Class %s is VIRTUAL; not meaningful to create an S4 object from this class"
+"class %s is VIRTUAL; not meaningful to create an S4 object from this class"
 msgstr ""
 "Klasse %s er VIRTUEL;  ikke meningsfuldt at oprette et S4-objekt fra denne "
 "klasse"
 
-msgid "Object must be a valid data part for class %s; not true of type %s"
+#, fuzzy
+msgid "object must be a valid data part for class %s; not true of type %s"
 msgstr ""
 "Objekt skal være en gyldig datadel for klasse %s; ikke gældende for type %s"
 
-msgid "Cannot specify matrix() arguments when specifying .Data"
+#, fuzzy
+msgid "cannot specify matrix() arguments when specifying '.Data'"
 msgstr "Kan ikke angive matrix()-argumenter når der angives .Data"
 
-msgid "Cannot specify array() arguments when specifying .Data"
+#, fuzzy
+msgid "cannot specify array() arguments when specifying '.Data'"
 msgstr "Kan ikke angive array()-argumenter når der angives .Data"
 
-msgid "Can't have more than one unnamed argument as environment"
+#, fuzzy
+msgid "cannot have more than one unnamed argument as environment"
 msgstr "Kan ikke have mere end et unavngivet argument som miljø"
 
-msgid "Unnamed argument to new() must be an environment for the new object"
+#, fuzzy
+msgid "unnamed argument to new() must be an environment for the new object"
 msgstr "Unavngivet argument for new() skal være et miljø for det nye objekt"
 
 msgid ""
@@ -77,18 +82,23 @@ msgstr ""
 "S3Part() er kun defineret for klasser opsat af setOldClass(), grundlæggende "
 "klasser eller underklasser af disse: gælder ikke klasse %s"
 
-msgid "The S3Class argument must be a superclass of %s:  not true of class %s"
+#, fuzzy
+msgid ""
+"the 'S3Class' argument must be a superclass of %s:  not true of class %s"
 msgstr ""
 "S3Class-argumentet skal være en overklasse af %s: gælder ikke for klasse %s"
 
-msgid "Replacement value must extend class %s, got %s"
+#, fuzzy
+msgid "replacement value must extend class %s, got %s"
 msgstr "Erstatningsværdi skal udvide klasse %s, fik %s"
 
 #, fuzzy
-msgid "Replacement value must be of class %s, got one of class %s"
+msgid "replacement value must be of class %s, got one of class %s"
 msgstr "Erstatningsværdi skal udvide klasse %s, fik %s"
 
-msgid "no 'replace' method was defined for as(x, \"%s\") <- value for class %s"
+#, fuzzy
+msgid ""
+"no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s"
 msgstr ""
 "ingen 'replace'-metode blev defineret for as(x, \"%s\") <- værdi for klasse "
 "%s"
@@ -99,14 +109,14 @@ msgid ""
 msgstr ""
 
 msgid ""
-"the computation: as(object,\"%s\") <- value is valid when object has class "
-"%s only if is(value, \"%s\") is TRUE (class(value) was %s)"
+"the computation: 'as(object,\"%s\") <- value' is valid when object has class "
+"%s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)"
 msgstr ""
 
 msgid ""
-"there is no automatic definition for as(object, \"%s\") <- value when object "
-"has class %s and no 'replace' argument was supplied; replacement will be an "
-"error"
+"there is no automatic definition for 'as(object, \"%s\") <- value' when "
+"object has class %s and no 'replace' argument was supplied; replacement will "
+"be an error"
 msgstr ""
 
 msgid ""
@@ -147,7 +157,7 @@ msgid "Creating a new generic function for %s in %s"
 msgstr ""
 
 msgid ""
-"No generic version of %s on package %s is allowed;\n"
+"no generic version of %s on package %s is allowed;\n"
 "   a new generic will be assigned for %s"
 msgstr ""
 
@@ -157,11 +167,7 @@ msgstr ""
 msgid "generic function %s not found for removal"
 msgstr ""
 
-msgid ""
-"internal error: did not get a valid generic function object for function %s"
-msgstr ""
-
-msgid "A function for argument 'f' must be a generic function"
+msgid "a function for argument 'f' must be a generic function"
 msgstr ""
 
 msgid "the environment %s is locked; cannot assign methods for function %s"
@@ -173,7 +179,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"copying the generic function %s to environment %s, because the previous "
+"Copying the generic function %s to environment %s, because the previous "
 "version was in a sealed namespace (%s)"
 msgstr ""
 
@@ -184,11 +190,6 @@ msgid "Creating a generic function from function %s in %s"
 msgstr ""
 
 msgid "Creating a generic function for %s from package %s in %s"
-msgstr ""
-
-msgid ""
-"apparent internal error: a generic function was found for \"%s\", but no "
-"corresponding object was found searching from \"%s\""
 msgstr ""
 
 msgid ""
@@ -210,7 +211,7 @@ msgid ""
 "invalid method definition: expected a function, got an object of class %s"
 msgstr ""
 
-msgid "Function supplied as argument 'f' must be a generic"
+msgid "function supplied as argument 'f' must be a generic"
 msgstr ""
 
 msgid "no generic function %s found"
@@ -222,27 +223,10 @@ msgstr ""
 msgid "no environment or package corresponding to argument where=%s"
 msgstr ""
 
-msgid "No generic function found for '%s'"
+msgid "no generic function found for '%s'"
 msgstr ""
 
-msgid "No method found for function '%s' and signature %s"
-msgstr ""
-
-msgid "Warning:  using defunct methods list search"
-msgstr ""
-
-msgid ""
-"apparent inconsistency in the methods for function %s; argument %s in the "
-"signature corresponds to %s in the methods list object"
-msgstr ""
-
-msgid ""
-"no S4 method for function %s and signature %s; consider getS3method() if you "
-"wanted the S3 method"
-msgstr ""
-
-msgid ""
-"no method defined in methods list object for function %s and signature %s"
+msgid "no method found for function '%s' and signature %s"
 msgstr ""
 
 msgid "'file' must be a character string or a connection"
@@ -254,19 +238,13 @@ msgid ""
 "(extract a subset of the methods list instead)"
 msgstr ""
 
-msgid "No method for %s matches class %s"
+msgid "no method for %s matches class %s"
 msgstr ""
 
-msgid "No method found for signature %s"
+msgid "no method found for signature %s"
 msgstr ""
 
 msgid "%s has no methods defined"
-msgstr ""
-
-msgid "selectMethod(): mlist is not an environment or NULL :"
-msgstr ""
-
-msgid "** should no longer happen!"
 msgstr ""
 
 msgid ""
@@ -284,7 +262,7 @@ msgstr ""
 msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr ""
 
-msgid "restoring default function definition of %s"
+msgid "Restoring default function definition of %s"
 msgstr ""
 
 msgid ""
@@ -292,10 +270,10 @@ msgid ""
 "S4 generic function (class %s)"
 msgstr ""
 
-msgid "function %s is already a group generic; no change"
+msgid "Function %s is already a group generic; no change"
 msgstr ""
 
-msgid "function %s is a group generic; do not call it directly"
+msgid "Function %s is a group generic; do not call it directly"
 msgstr ""
 
 msgid ""
@@ -320,40 +298,37 @@ msgid ""
 "implicit form"
 msgstr ""
 
-msgid "Must provide an environment table; got class %s"
+msgid "must provide an environment table; got class %s"
 msgstr ""
 
-msgid "Original function is prohibited as a generic function"
+msgid "original function is prohibited as a generic function"
 msgstr ""
 
 msgid "not both functions!"
 msgstr ""
 
-msgid "Classes: %s, %s"
-msgstr ""
-
 msgid "argument %s is not S4"
 msgstr ""
 
-msgid "Formal arguments differ (in default values?)"
+msgid "formal arguments differ (in default values?)"
 msgstr ""
 
-msgid "Formal arguments differ: (%s), (%s)"
+msgid "formal arguments differ: (%s), (%s)"
 msgstr ""
 
-msgid "Value classes differ: %s, %s"
+msgid "value classes differ: %s, %s"
 msgstr ""
 
-msgid "Signatures differ:  (%s), (%s)"
+msgid "signatures differ:  (%s), (%s)"
 msgstr ""
 
-msgid "Package slots  differ: %s, %s"
+msgid "package slots  differ: %s, %s"
 msgstr ""
 
-msgid "Groups differ: %s, %s"
+msgid "groups differ: %s, %s"
 msgstr ""
 
-msgid "Generic names differ: %s, %s"
+msgid "generic names differ: %s, %s"
 msgstr ""
 
 msgid ""
@@ -364,7 +339,7 @@ msgstr ""
 msgid "non-generic function '%s' given to findMethods()"
 msgstr ""
 
-msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
+msgid "only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr ""
 
 msgid "\""
@@ -415,7 +390,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Default method must be a method definition, a primitive or NULL: got an "
+"default method must be a method definition, a primitive or NULL: got an "
 "object of class %s"
 msgstr ""
 
@@ -448,7 +423,7 @@ msgid ""
 "(%d)"
 msgstr ""
 
-msgid "No generic function found corresponding to %s"
+msgid "no generic function found corresponding to %s"
 msgstr ""
 
 msgid "skipping methods list element %s of unexpected class %s"
@@ -459,10 +434,10 @@ msgid ""
 "deprecated."
 msgstr ""
 
-msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+msgid "in %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr ""
 
-msgid "Use %s instead."
+msgid "use %s instead."
 msgstr ""
 
 msgid "invalid object for formal method definition: type %s"
@@ -472,7 +447,7 @@ msgid "missing package slot (%s) in object of class %s (package info added)"
 msgstr ""
 
 msgid ""
-"initialize method returned an object of class %s instead of the required "
+"'initialize' method returned an object of class %s instead of the required "
 "class %s"
 msgstr ""
 
@@ -482,7 +457,7 @@ msgstr ""
 msgid "Notes: %s."
 msgstr ""
 
-msgid "Class generator function for class %s from package %s"
+msgid "class generator function for class %s from package %s"
 msgstr ""
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
@@ -543,7 +518,7 @@ msgstr ""
 msgid "assigning as %s a class representation with internal name %s"
 msgstr ""
 
-msgid "Class %s has a locked definition in package %s"
+msgid "class %s has a locked definition in package %s"
 msgstr ""
 
 msgid "'externalptr' objects cannot be initialized from new()"
@@ -559,7 +534,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"No definition was found for superclass %s in the specification of class %s"
+"no definition was found for superclass %s in the specification of class %s"
 msgstr ""
 
 msgid "conflicting definition of data part: .Data = %s, superclass implies %s"
@@ -636,17 +611,17 @@ msgid "unable to find an environment containing class %s"
 msgstr ""
 
 msgid ""
-"A specification for S3 class %s in package %s seems equivalent to one from "
+"the specification for S3 class %s in package %s seems equivalent to one from "
 "package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
 msgid ""
-"Some super classes of class %s in package %s have duplicate definitions.  "
+"some superclasses of class %s in package %s have duplicate definitions.  "
 "This definition is not being treated as equivalent to that from package %s"
 msgstr ""
 
 msgid ""
-"A specification for class %s in package %s seems equivalent to one from "
+"the specification for class %s in package %s seems equivalent to one from "
 "package %s and is not turning on duplicate class definitions for this class"
 msgstr ""
 
@@ -672,14 +647,14 @@ msgid "no class %s found as expected in removing subclass %s"
 msgstr ""
 
 msgid ""
-"argument includeSubclasses must be a logical, either one value or a vector "
-"of the same length as argument classes"
+"argument 'includeSubclasses' must be a logical, either one value or a vector "
+"of the same length as argument 'classes'"
 msgstr ""
 
-msgid "Argument abbreviate must be 0, 1, 2, or 3"
+msgid "argument 'abbreviate' must be 0, 1, 2, or 3"
 msgstr ""
 
-msgid "Needed the supplied labels vector of length %n, got %n"
+msgid "needed the supplied labels vector of length %d, got %d"
 msgstr ""
 
 msgid ""
@@ -687,7 +662,7 @@ msgid ""
 "currently traced; the function used will have tracing removed"
 msgstr ""
 
-msgid "Must supply either a generic function or a function as default for %s"
+msgid "must supply either a generic function or a function as default for %s"
 msgstr ""
 
 msgid ""
@@ -735,8 +710,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Argument f must be a string, generic function, or primitive: got an ordinary "
-"function"
+"argument 'f' must be a string, generic function, or primitive: got an "
+"ordinary function"
 msgstr ""
 
 msgid "methods cannot be defined for the primitive function %s"
@@ -749,12 +724,7 @@ msgid "Empty function name in .getGeneric"
 msgstr ""
 
 msgid ""
-"Methods list objects are not maintained in this version of R:  request for "
-"function %s may return incorrect information"
-msgstr ""
-
-msgid ""
-"Package %s seems to have out-of-date methods; need to reinstall from source"
+"package %s seems to have out-of-date methods; need to reinstall from source"
 msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
@@ -769,12 +739,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"internal error: Bad methods list object in fixing methods for primitive "
-"function %s"
-msgstr ""
-
-msgid ""
-"trying to change the formal arguments in %s, in an object of class %s; "
+"trying to change the formal arguments in %s in an object of class %s; "
 "expected a function definition"
 msgstr ""
 
@@ -799,56 +764,51 @@ msgid ""
 "arguments: %s"
 msgstr ""
 
-msgid "botched namespace: failed to find 'base' namespace in its parents"
-msgstr ""
-
 msgid "got a negative maximum number of frames to look at"
 msgstr ""
 
 msgid "%s is not a generic function (or not visible here)"
 msgstr ""
 
-msgid "invalid element in the groupMembers slot (class %s)"
+msgid "invalid element in the \"groupMembers\" slot (class %s)"
 msgstr ""
 
 msgid "argument f must be a generic function with signature \"...\""
 msgstr ""
 
-msgid "No method or default matching the \"...\" arguments in %s"
+msgid "no method or default matching the \"...\" arguments in %s"
 msgstr ""
 
-msgid "multiple direct matches:"
+msgid "multiple direct matches: %s; using the first of these"
 msgstr ""
 
-msgid "; using the first of these"
-msgstr ""
-
-msgid "multiple equivalent inherited matches:"
+msgid "multiple equivalent inherited matches: %s; using the first of these"
 msgstr ""
 
 msgid "single string; got an object of class %s"
 msgstr ""
 
 msgid ""
-"Multiple definitions exist for class %s, but the supplied package (%s) is "
+"multiple definitions exist for class %s, but the supplied package (%s) is "
 "not one of them (%s)"
 msgstr ""
 
 msgid ""
-"Multiple definitions exist for class %s; should specify one of them (%s), e."
+"multiple definitions exist for class %s; should specify one of them (%s), e."
 "g. by className()"
 msgstr ""
 
-msgid "No definition found for class %s"
+#, fuzzy
+msgid "no definition found for class %s"
+msgstr "\", fik en af klasse \""
+
+msgid "trying to execute load actions without 'methods' package"
 msgstr ""
 
-msgid "Trying to execute load actions without methods package"
+msgid "missing function for load action: %s"
 msgstr ""
 
-msgid "Missing  function for load action: %s"
-msgstr ""
-
-msgid "Error in load action %s for package %s: %s: %s"
+msgid "error in load action %s for package %s: %s: %s"
 msgstr ""
 
 msgid "non-function action: %s"
@@ -857,7 +817,7 @@ msgstr ""
 msgid "action function %s has no arguments, should have at least 1"
 msgstr ""
 
-msgid "Some actions missing: %s"
+msgid "some actions are missing: %s"
 msgstr ""
 
 msgid "%s has a sealed class definition and cannot be redefined"
@@ -866,9 +826,6 @@ msgstr ""
 msgid ""
 "only arguments 'Class' and 'where' can be supplied when argument "
 "'representation' is a 'classRepresentation' object"
-msgstr ""
-
-msgid "Internal error: definition of class %s not properly assigned"
 msgstr ""
 
 msgid ""
@@ -911,13 +868,13 @@ msgid ""
 "class %s; is(value, \"%s\") is not TRUE"
 msgstr ""
 
-msgid "Class definition for %s not found (no action taken)"
+msgid "class definition for %s not found (no action taken)"
 msgstr ""
 
 msgid "class %s has multiple definitions visible; only the first removed"
 msgstr ""
 
-msgid "invalid class %s object:"
+msgid "invalid class %s object"
 msgstr ""
 
 msgid "validity method must be NULL or a function of one argument"
@@ -942,39 +899,28 @@ msgid "duplicated slot names: %s"
 msgstr ""
 
 msgid ""
-"Class %s is defined, with package %s, but no corresponding metadata object "
+"class %s is defined, with package %s, but no corresponding metadata object "
 "was found (not exported?)"
 msgstr ""
 
 msgid "no definition of %s to use for %s"
 msgstr ""
 
-msgid "Class definition cannot extend more than one of these data types: %s"
+msgid "class definition cannot extend more than one of these data types: %s"
 msgstr ""
 
-msgid ""
-"Sorry, abnormal type %s is not supported as a superclass of a class "
-"definition"
+msgid "abnormal type %s is not supported as a superclass of a class definition"
 msgstr ""
 
-msgid "Multiple class definitions for %s from packages: %s; picking the first"
+msgid "multiple class definitions for %s from packages: %s; picking the first"
 msgstr ""
 
-msgid "No package name supplied and no class definition found for %s"
+msgid "no package name supplied and no class definition found for %s"
 msgstr ""
 
-msgid "argument classDef must be a class definition or the name of a class"
-msgstr ""
-
-msgid ""
-"'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
-"instead"
-msgstr ""
-
-msgid ""
-"'traceOff' is deprecated: use the function 'untrace' in the 'methods' "
-"package instead"
-msgstr ""
+#, fuzzy
+msgid "argument 'classDef' must be a class definition or the name of a class"
+msgstr "Erstatningsværdi skal udvide klasse %s, fik %s"
 
 msgid "no function %s found"
 msgstr ""
@@ -983,11 +929,6 @@ msgid "no non-generic function %s found"
 msgstr ""
 
 msgid "%s is not one of the element names"
-msgstr ""
-
-msgid ""
-"internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata "
-"asserts that the 'is' relation is FALSE"
 msgstr ""
 
 msgid "no method or default for coercing %s to %s"
@@ -1018,14 +959,14 @@ msgid ""
 msgstr ""
 
 msgid ""
-"argument names in replace changed to agree with 'coerce<-' generic:\n"
+"argument names in 'replace' changed to agree with 'coerce<-' generic:\n"
 "%s"
 msgstr ""
 
-msgid "ambiguous object (length!=1) to coerce to \"name\""
+msgid "ambiguous object (length != 1) to coerce to \"name\""
 msgstr ""
 
-msgid "undefined coerce method"
+msgid "undefined 'coerce' method"
 msgstr ""
 
 msgid ""
@@ -1068,36 +1009,33 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Class %s is defined (with package slot %s) but no metadata object found to "
+"class %s is defined (with package slot %s) but no metadata object found to "
 "revise %s information---not exported?  Making a copy in package %s"
 msgstr ""
 
 msgid "class %s cannot extend class %s"
 msgstr ""
 
-msgid "Both classes must be defined"
+msgid "both classes must be defined"
 msgstr ""
 
 msgid "invalid index for function argument"
 msgstr ""
 
-msgid "No function definition found for %s"
+msgid "no function definition found for %s"
 msgstr ""
 
-msgid "Need a definition for the method here"
+msgid "need a definition for the method here"
 msgstr ""
 
-msgid "Skeleton of method written to"
+msgid "Skeleton of method written to %s"
 msgstr ""
 
-msgid "connection"
-msgstr ""
-
-msgid "Invalid object in meta table of methods for %s, label %s, had class %s"
+msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 
 msgid ""
-"Invalid mlist element for signature %s at level %d (should be methods list "
+"invalid mlist element for signature %s at level %d (should be methods list "
 "or method, had class %s)"
 msgstr ""
 
@@ -1105,18 +1043,18 @@ msgid "bad method object stored in method table, class %s"
 msgstr ""
 
 msgid ""
-"Invalid object in methods table (%s), expected a method, got an object of "
+"invalid object in methods table (%s), expected a method, got an object of "
 "class %s"
 msgstr ""
 
-msgid "Invalid or unset methods table in generic function \""
+msgid "invalid or unset methods table in generic function \""
 msgstr ""
 
-msgid "Trying to find a methods table in a non-generic function"
+msgid "trying to find a methods table in a non-generic function"
 msgstr ""
 
 msgid ""
-"The \"ambiguousMethodSelection\" option should be a function to be called as "
+"the \"ambiguousMethodSelection\" option should be a function to be called as "
 "the condition action; got an object of class %s"
 msgstr ""
 
@@ -1125,7 +1063,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Note: Method with signature %s chosen for function %s,\n"
+"Note: method with signature %s chosen for function %s,\n"
 " target signature %s.\n"
 " %s would also be valid"
 msgstr ""
@@ -1133,66 +1071,44 @@ msgstr ""
 msgid "unable to find an inherited method for function %s for signature %s"
 msgstr ""
 
-msgid ""
-"Internal error in finding inherited methods; didn't return a unique method"
-msgstr ""
-
-msgid "Failed to find expected group generic function:"
+msgid "failed to find expected group generic function:"
 msgstr ""
 
 msgid ""
-"Invalid group generic function in search for inherited method (class %s)"
+"invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 
-msgid "Invalid methods table request"
-msgstr ""
-
-msgid "Trying to check signature length of group generic \""
-msgstr ""
-
-msgid "\", but it is not a group generic"
-msgstr ""
-
-msgid "Trying to check signature length of generic \""
-msgstr ""
-
-msgid "\", but it is not a  generic function: i ="
-msgstr ""
-
-msgid ", funs ="
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "; gnames ="
-msgstr ""
-
-msgid "Something weird:  inconsistent number of args in methods table strings:"
-msgstr ""
-
-msgid "(using the largest value)"
-msgstr ""
-
-msgid "No methods table for generic %s from package %s in package %s"
-msgstr ""
-
-msgid "Undefined classes ("
-msgstr ""
-
-msgid ") will be ignored, for argument"
+msgid "invalid methods table request"
 msgstr ""
 
 msgid ""
-"Argument \"signatures\" must be a character matrix whose rows are method "
+"trying to check signature length of group generic '%s', but it is not a "
+"group generic"
+msgstr ""
+
+msgid ""
+"trying to check signature length of generic '%s', but it is not a generic "
+"function: i = %d, funs = %s, gnames = %s"
+msgstr ""
+
+msgid "no methods table for generic %s from package %s in package %s"
+msgstr ""
+
+msgid "undefined classes (%s) will be ignored for argument '%s'"
+msgstr ""
+
+msgid ""
+"argument 'signatures' must be a character matrix whose rows are method "
 "signatures"
 msgstr ""
 
 msgid "not allowed to have test==TRUE and an S4Class definition"
 msgstr ""
 
-msgid "argument S4Class must be a class definition:  got an object of class %s"
-msgstr ""
+#, fuzzy
+msgid ""
+"argument 'S4Class' must be a class definition: got an object of class %s"
+msgstr "Erstatningsværdi skal udvide klasse %s, fik %s"
 
 msgid ""
 "inconsistent old-style class information for %s; the class is defined but "
@@ -1200,14 +1116,15 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
+"the S3 class of the prototype, \"%s\", is undefined; only allowed when this "
 "is the S3 class being registered (\"%s\")"
 msgstr ""
 
-msgid "Restoring definition of class %s"
-msgstr ""
+#, fuzzy
+msgid "restoring definition of class %s"
+msgstr "\", fik en af klasse \""
 
-msgid "Slot %s: class %s should extend class %s"
+msgid "slot %s: class %s should extend class %s"
 msgstr ""
 
 msgid ""
@@ -1235,15 +1152,15 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"S3Class only defined for extensions of %s or classes with a data part:  not "
-"true of class %s"
+"'S3Class' only defined for extensions of %s or classes with a data part:  "
+"not true of class %s"
 msgstr ""
 "S3Part() er kun defineret for klasser opsat af setOldClass(), grundlæggende "
 "klasser eller underklasser af disse: gælder ikke klasse %s"
 
 msgid ""
-"S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
-"true of class %s"
+"'S3Class' can only assign to S4 objects that extend \"oldClass\"; not true "
+"of class %s"
 msgstr ""
 
 msgid "Created a package name, %s, when none found"
@@ -1259,16 +1176,11 @@ msgid "%s is not a valid field or method name for reference class %s"
 msgstr ""
 
 msgid ""
-"Method %s from class %s was not processed into a class method until being "
-"installed.  Possible corruption of the methods in the class."
-msgstr ""
-
-msgid ""
 "a call to superClass() is in the method %s but there is no superclass "
 "definition of this method for class %s"
 msgstr ""
 
-msgid "Methods declared in usingMethods() but not found: %s"
+msgid "methods declared in usingMethods() but not found: %s"
 msgstr ""
 
 msgid "%s is not a reference class"
@@ -1279,7 +1191,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"Unnamed arguments to $new() must be objects from a reference class; got an "
+"unnamed arguments to $new() must be objects from a reference class; got an "
 "object of class %s"
 msgstr "Unavngivet argument for new() skal være et miljø for det nye objekt"
 
@@ -1287,14 +1199,14 @@ msgid "%s is not a valid field or method name for this class"
 msgstr ""
 
 msgid ""
-"The class of field %s in the object is not compatible with the desired class "
+"the class of field %s in the object is not compatible with the desired class "
 "%s in the target"
 msgstr ""
 
 msgid "%s is not a defined class in this environment"
 msgstr ""
 
-msgid "Invalid Class argument:  should be a single string"
+msgid "invalid 'Class' argument:  should be a single string"
 msgstr ""
 
 msgid "%s is not one of the reference super classes for this object"
@@ -1309,29 +1221,30 @@ msgid "%s is not a field in this class"
 msgstr ""
 
 msgid ""
-"The definition of class %s in package %s is locked, methods may not be "
+"the definition of class %s in package %s is locked, methods may not be "
 "redefined"
 msgstr ""
 
-msgid "Arguments to methods() must be named, or one named list"
-msgstr ""
+#, fuzzy
+msgid "arguments to methods() must be named, or one named list"
+msgstr "Unavngivet argument for new() skal være et miljø for det nye objekt"
 
 msgid ""
-"Topic %s is not a method name in class %s\n"
+"topic %s is not a method name in class %s\n"
 "The class definition follows"
 msgstr ""
 
 msgid ""
-"The definition of class %s in package %s is locked, fields may not be "
+"the definition of class %s in package %s is locked so fields may not be "
 "modified"
 msgstr ""
 
 msgid ""
-"The overriding class (\"%s\") of field %s is not a subclass of the existing "
+"the overriding class (\"%s\") of field %s is not a subclass of the existing "
 "field definition (\"%s\")"
 msgstr ""
 
-msgid "Field %s is read-only"
+msgid "field %s is read-only"
 msgstr ""
 
 msgid ""
@@ -1339,85 +1252,84 @@ msgid ""
 "class %s)"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"The contains= argument should be the names of superclasses:  got an element "
+"the 'contains' argument should be the names of superclasses:  got an element "
 "of class %s"
 msgstr ""
+"S3Class-argumentet skal være en overklasse af %s: gælder ikke for klasse %s"
 
-msgid "No definition found for inherited class: %s"
+msgid "no definition found for inherited class: %s"
 msgstr ""
 
 msgid ""
-"Single class name needed for field %s, got a character vector of length %d"
+"a single class name is needed for field %s, got a character vector of length "
+"%d"
 msgstr ""
 
-msgid "Class %s for field %s is not defined"
+msgid "class %s for field %s is not defined"
 msgstr ""
 
 msgid ""
-"Field %s was supplied as an object of class %s; must be a class name or a "
+"field %s was supplied as an object of class %s; must be a class name or a "
 "binding function"
 msgstr ""
 
 msgid ""
-"Code for methods in class %s was not checked for suspicious field "
+"code for methods in class %s was not checked for suspicious field "
 "assignments (recommended package %s not available?)"
 msgstr ""
 
-msgid "A list argument for fields must have nonempty names for all the fields"
+msgid ""
+"a list argument for 'fields' must have nonempty names for all the fields"
 msgstr ""
 
 msgid ""
-"Argument fields must be a list of the field classes or definitions, or else "
-"just the names of the fields; got an object of class %s"
+"argument 'fields' must be a list of the field classes or definitions or the "
+"names of the fields; got an object of class %s"
 msgstr ""
 
-msgid "Class %s is defined but is not a reference class"
+msgid "class %s is defined but is not a reference class"
 msgstr ""
 
 msgid ""
-"Class must be a reference class representation or a character string; got an "
+"class must be a reference class representation or a character string; got an "
 "object of class %s"
 msgstr ""
 
-msgid "Not a reference class:"
-msgstr ""
-
-msgid "(class %s)"
-msgstr ""
-
-msgid "for method %s()"
-msgstr ""
+#, fuzzy
+msgid "not a reference class: %s"
+msgstr "\", fik en af klasse \""
 
 msgid ""
-"Local assignment to field name will not change the field:\n"
+"local assignment to field name will not change the field:\n"
 "    %s\n"
 " Did you mean to use \"<<-\"? ( in method %s for class %s)"
 msgstr ""
 
 msgid ""
-"Non-local assignment to non-field names (possibly misspelled?)\n"
+"non-local assignment to non-field names (possibly misspelled?)\n"
 "    %s\n"
 "( in method %s for class %s)"
 msgstr ""
 
 msgid ""
-"Non-local assignment to method names is not allowed\n"
+"non-local assignment to method names is not allowed\n"
 "    %s\n"
 "( in method %s for class %s)"
 msgstr ""
 
-msgid "Arguments must all be character string names of fields"
+msgid "arguments must all be character string names of fields"
 msgstr ""
 
-msgid "Field %s is already locked"
+msgid "field %s is already locked"
 msgstr ""
 
-msgid "Field %s of class %s has a non-default binding and cannot be locked"
+msgid "field %s of class %s has a non-default binding and cannot be locked"
 msgstr ""
 
 msgid ""
-"invalid ignore= argument; should be a class definition or a character "
+"invalid 'ignore' argument; should be a class definition or a character "
 "vector, got an object of class %s"
 msgstr ""
 
@@ -1430,7 +1342,7 @@ msgid ""
 "object of class %s"
 msgstr ""
 
-msgid "Argument signature= is not meaningful for tracing reference methods"
+msgid "argument 'signature' is not meaningful for tracing reference methods"
 msgstr ""
 
 msgid "%s is not a method for reference class %s"
@@ -1439,25 +1351,16 @@ msgstr ""
 msgid "argument 'what' should be the name of a function"
 msgstr ""
 
-msgid "Tracing the internal function %s is not allowed"
-msgstr ""
-
-msgid ".TraceWithMethods: after computing what, whereF"
+msgid "tracing the internal function %s is not allowed"
 msgstr ""
 
 msgid "no function definition for %s found"
 msgstr ""
 
-msgid "Can't untrace method for %s; no method defined for this signature: %s"
-msgstr ""
-
-msgid ".TraceWithMethods: untrace case"
+msgid "cannot untrace method for %s; no method defined for this signature: %s"
 msgstr ""
 
 msgid "the method for %s for this signature was not being traced"
-msgstr ""
-
-msgid ".TraceWithMethods: about to assign or setMethod"
 msgstr ""
 
 msgid ""
@@ -1488,22 +1391,19 @@ msgid ""
 "setting a method over the binding of symbol %s in environment/package %s"
 msgstr ""
 
-msgid "Constructing traceable class %s"
-msgstr ""
-
 msgid ""
 "Environment of class %s is locked; using global environment for new class"
 msgstr ""
 
 msgid ""
-"None of the objects in the source code could be found:  need to attach or "
+"none of the objects in the source code could be found:  need to attach or "
 "specify the package"
 msgstr ""
 
-msgid "Objects found in multiple packages: using %s and ignoring %s"
+msgid "objects found in multiple packages: using %s and ignoring %s"
 msgstr ""
 
-msgid "Package %s is not attached and no namespace found for it"
+msgid "package %s is not attached and no namespace found for it"
 msgstr ""
 
 msgid ""
@@ -1511,51 +1411,48 @@ msgid ""
 "object of class %s"
 msgstr ""
 
-msgid "Can't find an environment corresponding to package name '%s\""
+msgid "cannot find an environment corresponding to package name '%s\""
 msgstr ""
 
-msgid "Supplied package, %s, differs from package inferred from source, %s"
+msgid "supplied package, %s, differs from package inferred from source, %s"
 msgstr ""
 
-msgid "Can't insert these (not found in source): %s"
+msgid "cannot insert these (not found in source): %s"
 msgstr ""
 
 msgid ""
-"Can't insert methods for these functions (methods table not found in "
+"cannot insert methods for these functions (methods table not found in "
 "source): %s"
 msgstr ""
 
-msgid "Non-function objects aren't currently inserted (not traceable): %s"
+msgid "Non-function objects are not currently inserted (not traceable): %s"
 msgstr ""
 
-msgid "New functions aren't currently inserted (not untraceable): %s"
+msgid "New functions are not currently inserted (not untraceable): %s"
 msgstr ""
 
 msgid "Modified functions inserted through trace(): %s"
 msgstr ""
 
 msgid ""
-"%s() is not a generic function in the target environment--methods will not "
+"%s() is not a generic function in the target environment -- methods will not "
 "be inserted"
 msgstr ""
 
 msgid "Methods inserted for function %s(): %s"
 msgstr ""
 
-msgid "Pretend we inserted class"
-msgstr ""
-
-msgid "No definition for object %s found in tracing environment"
+msgid "no definition for object %s found in tracing environment"
 msgstr ""
 
 msgid "multiple generics match pattern, using table %s"
 msgstr ""
 
 msgid ""
-"Does not seem to be a method table for generic %s in tracing environment"
+"does not seem to be a method table for generic %s in tracing environment"
 msgstr ""
 
-msgid "No method in methods table for %s for signature %s"
+msgid "no method in methods table for %s for signature %s"
 msgstr ""
 
 msgid "not a package name: %s"
@@ -1645,8 +1542,8 @@ msgid_plural "found %d equally good next methods"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Selecting %d method of min. distance"
-msgid_plural "Selecting %d methods of min. distance"
+msgid "Selecting %d method of minimum distance"
+msgid_plural "Selecting %d methods of minimum distance"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1671,6 +1568,9 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "in .OldClassesPrototypes"
+#~ msgstr "i .OldClassesPrototypes"
 
 #~ msgid "Replacement value must be of class \""
 #~ msgstr "Erstatningsværdi skal være af klasse \""
