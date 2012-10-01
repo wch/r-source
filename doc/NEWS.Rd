@@ -395,6 +395,12 @@
   
       \item \code{tools::checkPoFile()} unprotected too early in its C
       code and so segfaulted from time to time.
+      
+      \item The Fortran code underlying \code{nlminb()} could
+      infinite-loop if any of the input functions returned \code{NA} or
+      \code{NaN}.  This is now an error for the gradient or Hessian, and
+      a warning for the function (with the value replaced by
+      \code{Inf}).  (In part, \PR{15052}.)
     }
   }
 }
