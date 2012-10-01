@@ -23,12 +23,13 @@ sessionData <-
   ## return the index of the session data in the search list,
   ## attaching it if it is not attached
   function() {
-    value <- match(".Session", search())
-    if(is.na(value)) {
-      attach(NULL, name=".Session")
+      .Deprecated()
       value <- match(".Session", search())
-    }
-    value
+      if(is.na(value)) {
+          attach(NULL, name=".Session")
+          value <- match(".Session", search())
+      }
+      value
   }
 
 traceOn <-
@@ -36,7 +37,7 @@ traceOn <-
   ## `tracer' is called on entry, and the function or expression `exit' on exit.
   function(what, tracer = browseAll, exit = NULL)
 {
-    warning("'traceOn' is deprecated: use the function 'trace' in the 'methods' package instead")
+    .Deprecated("methods::trace")
     name <- what; def <- what
     if(is.function(name))
         name <- as.character(substitute(what))
@@ -82,7 +83,7 @@ traceOn <-
 traceOff <-
   ## turn off tracing of this function
   function(what) {
-    warning("'traceOff' is deprecated: use the function 'untrace' in the 'methods' package instead")
+    .Deprecated("methods::untrace")
     name <- what; def <- what
     if(is.function(name))
       name <- as.character(substitute(what))
@@ -98,6 +99,7 @@ browseAll <-
   ## continues after the call to browseAll.  Computations done
   ## in the frames will have no effect.
   function() {
-    utils::dump.frames(".BrowserStack")
-    utils::debugger(.BrowserStack)
+      .Deprecated()
+      utils::dump.frames(".BrowserStack")
+      utils::debugger(.BrowserStack)
   }

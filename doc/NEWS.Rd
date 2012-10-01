@@ -208,6 +208,10 @@
       \item The \sQuote{internal function} \code{kappa.tri()} has been
       renamed to \code{.kappa_tri()} so it is not inadvertently called
       as a method for class \code{"tri"}.
+      
+      \item Functions \code{sessionData()} and \code{browseAll()} in
+      package \pkg{methods} are on a help page describing them as
+      \sQuote{deprecated} and are now formally deprecated.
     }
   }
 
