@@ -4058,13 +4058,6 @@ static void yyerror(const char *s)
     char ParseErrorMsg[PARSE_ERROR_SIZE];
     SEXP filename;
     char ParseErrorFilename[PARSE_ERROR_SIZE];
- #if 0
- /* these are just here to trigger the internationalization */
-    _("input"); 	
-    _("macro");
-    _("conditional");
-    _("section header");
-#endif 
    
     xxWarnNewline();	/* post newline warning if necessary */
     
@@ -4619,7 +4612,7 @@ SEXP C_deparseRd(SEXP e, SEXP state)
     Rboolean escape;
 
     if(!isString(e) || length(e) != 1) 
-    	error(_("deparseRd only supports deparsing character elements"));
+    	error(_("'deparseRd' only supports deparsing character elements"));
     e = STRING_ELT(e, 0);
     
     if(!isInteger(state) || length(state) != 5) error(_("bad state"));
@@ -4632,7 +4625,7 @@ SEXP C_deparseRd(SEXP e, SEXP state)
     
     if (xxmode != LATEXLIKE && xxmode != RLIKE && xxmode != VERBATIM && xxmode != COMMENTMODE 
      && xxmode != INOPTION  && xxmode != UNKNOWNMODE)
-    	error(_("bad text mode %d in deparseRd"), xxmode);
+    	error(_("bad text mode %d in 'deparseRd'"), xxmode);
     
     for (c = CHAR(e), outlen=0; *c; c++) {
     	outlen++;

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-01 11:33+0100\n"
 "PO-Revision-Date: 2011-11-29 09:07+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,14 +63,6 @@ msgstr ""
 #, c-format
 msgid "afm file '%s' could not be opened"
 msgstr "afm-fil '%s' kunne ikke åbnes"
-
-#: devPS.c:589
-msgid "FontBBox could not be parsed"
-msgstr "FontBBox kunne ikke fortolkes"
-
-#: devPS.c:597
-msgid "CharInfo could not be parsed"
-msgstr "Tegninfo kunne ikke fortolkes"
 
 #: devPS.c:627
 msgid "unknown AFM entity encountered"
@@ -155,7 +147,8 @@ msgid "failed to load encoding file '%s'"
 msgstr "kunne ikke indlæse kodningsfil '%s'"
 
 #: devPS.c:1441 devPS.c:1474
-msgid "Invalid font name or more than one font name"
+#, fuzzy
+msgid "invalid font name or more than one font name"
 msgstr "Ugyldigt skriftnavn eller mere end et skriftnavn"
 
 #: devPS.c:1594 devPS.c:1629
@@ -183,26 +176,31 @@ msgid "Corrupt loaded encodings;  encoding not recorded"
 msgstr "Ødelagte indlæste kodninger;  kodning ikke optaget"
 
 #: devPS.c:2397
-msgid "Failed to record device encoding"
+#, fuzzy
+msgid "failed to record device encoding"
 msgstr "Kunne ikke optage enhedskodning"
 
 #: devPS.c:2566
-msgid "Object .ps.prolog is not a character vector"
+#, fuzzy
+msgid "object '.ps.prolog' is not a character vector"
 msgstr "Object.ps.prolog er ikke en tegnvektor"
 
 #: devPS.c:2639 devPS.c:6410 devWindows.c:784
-msgid "Invalid line end"
+#, fuzzy
+msgid "invalid line end"
 msgstr "Ugyldig linjeafslutning"
 
 #: devPS.c:2658 devPS.c:6429 devWindows.c:797
-msgid "Invalid line join"
+#, fuzzy
+msgid "invalid line join"
 msgstr "Ugyldig linjeforbindelse"
 
 # http://en.wikipedia.org/wiki/Miter_joint
 # må være gering på dansk
 # http://www.denstoredanske.dk/It,_teknik_og_naturvidenskab/Teknik/Boring,_s%C3%A6nkning_og_rivning/gering
 #: devPS.c:2666
-msgid "Invalid line mitre"
+#, fuzzy
+msgid "invalid line mitre"
 msgstr "Ugyldig linjegering"
 
 #: devPS.c:2875 devPS.c:3769 devPS.c:4217 devPS.c:4244 devPS.c:5252
@@ -232,15 +230,18 @@ msgid "failed to load encoding file in %s()"
 msgstr "kunne ikke indlæse kodningsfil i %s()"
 
 #: devPS.c:3179 devPS.c:3242 devPS.c:5956 devPS.c:6011 devPS.c:7635
-msgid "Invalid font type"
+#, fuzzy
+msgid "invalid font type"
 msgstr "Ugyldig skrifttype"
 
 #: devPS.c:3203
-msgid "Failed to initialise default PostScript font"
+#, fuzzy
+msgid "failed to initialise default PostScript font"
 msgstr "Kunne ikke initialisere standardskriften for PostScript"
 
 #: devPS.c:3269
-msgid "Failed to initialise additional PostScript fonts"
+#, fuzzy
+msgid "failed to initialise additional PostScript fonts"
 msgstr "Kunne ikke initialisere yderligere PostScript-skrifter"
 
 #: devPS.c:3285
@@ -252,7 +253,8 @@ msgid "'command' is too long"
 msgstr "'kommando' er for lang"
 
 #: devPS.c:3295
-msgid "postscript(print.it=TRUE) used with an empty print command"
+#, fuzzy
+msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "postscript(print.it=TRUE) brugt med en tom print-kommando"
 
 #: devPS.c:3344
@@ -288,14 +290,14 @@ msgstr ""
 "    %s"
 
 #: devPS.c:3757
-#, c-format
-msgid "CID family '%s' not included in PostScript device"
+#, fuzzy, c-format
+msgid "CID family '%s' not included in postscript() device"
 msgstr "CID-familie '%s' er ikke inkluderet i PostScript-enhed"
 
 # 91%
 #: devPS.c:3775 devPS.c:3786 devPS.c:4224 devPS.c:4254 devPS.c:4359
-#, c-format
-msgid "family '%s' not included in PostScript device"
+#, fuzzy, c-format
+msgid "family '%s' not included in postscript() device"
 msgstr "familie '%s' er ikke inkluderet i PostScript-enhed"
 
 #: devPS.c:4299
@@ -338,12 +340,14 @@ msgid "invalid foreground/background color (xfig)"
 msgstr "ugyldig forgrund- eller baggrundsfarve (xfig)"
 
 #: devPS.c:4783
-msgid "Only Type 1 fonts supported for XFig"
+#, fuzzy
+msgid "only Type 1 fonts supported for XFig"
 msgstr "Kun Type 1-skrifter understøttet for XFig"
 
 # 79%
 #: devPS.c:4796
-msgid "Failed to initialise default XFig font"
+#, fuzzy
+msgid "failed to initialise default XFig font"
 msgstr "Kunne ikke initialisere standardskriften for XFig"
 
 #: devPS.c:4833
@@ -374,16 +378,19 @@ msgid "failed to increase 'maxRaster'"
 msgstr "kan ikke øge 'maxRaster'"
 
 #: devPS.c:5562
-msgid "Unable to allocate raster image"
+#, fuzzy
+msgid "unable to allocate raster image"
 msgstr "Kan ikke allokere raster-billede"
 
 # 77%
 #: devPS.c:5763
-msgid "Corrupt loaded encodings;  font not added"
+#, fuzzy
+msgid "corrupt loaded encodings;  font not added"
 msgstr "Ødelagte indlæste kodninger;  skrift ikke tilføjet"
 
 #: devPS.c:5772
-msgid "Failed to record device encoding; font not added"
+#, fuzzy
+msgid "failed to record device encoding; font not added"
 msgstr "Kunne ikke optage enhedskodning: skrifttype ikke tilføjet"
 
 #: devPS.c:5883
@@ -396,12 +403,14 @@ msgstr "kunne ikke indlæse standardkodning"
 
 # 79%
 #: devPS.c:5979
-msgid "Failed to initialise default PDF font"
+#, fuzzy
+msgid "failed to initialise default PDF font"
 msgstr "Kunne ikke initialisere standardskriften for PDF"
 
 # 81%
 #: devPS.c:6034
-msgid "Failed to initialise additional PDF fonts"
+#, fuzzy
+msgid "failed to initialise additional PDF fonts"
 msgstr "Kunne ikke initialisere yderligere PDF-skrifter"
 
 # 75%
@@ -424,7 +433,8 @@ msgid "invalid foreground/background color (pdf)"
 msgstr "ugyldig forgrund- eller baggrundsfarve (pdf)"
 
 #: devPS.c:6258
-msgid "Invalid alpha value in PDF"
+#, fuzzy
+msgid "invalid 'alpha' value in PDF"
 msgstr "Ugyldig alfaværdi i PDF"
 
 #: devPS.c:6283
@@ -436,7 +446,8 @@ msgid "unknown 'colormodel', using 'srgb'"
 msgstr "ukendt 'colormodel', bruger 'srgb'"
 
 #: devPS.c:6575
-msgid "Failed to load sRGB colorspace file"
+#, fuzzy
+msgid "failed to load sRGB colorspace file"
 msgstr "Kunne ikke indlæse sRGB-farverumsfil"
 
 #: devPS.c:6839
@@ -466,11 +477,13 @@ msgstr ""
 "  luk venligst PDF-enheden ned"
 
 #: devPS.c:7660 devPS.c:8022 devPS.c:8069
-msgid "Failed to find or load PDF font"
+#, fuzzy
+msgid "failed to find or load PDF font"
 msgstr "Kunne ikke finde eller indlæse PDF-skrift"
 
 #: devPS.c:7844 devPS.c:7977
-msgid "Failed to find or load PDF CID font"
+#, fuzzy
+msgid "failed to find or load PDF CID font"
 msgstr "Kunne ikke finde eller indlæse PDF CID-skrift"
 
 #: devPS.c:8208 devPS.c:8212 devPS.c:8372 devPS.c:8376
@@ -519,11 +532,13 @@ msgid "invalid Quartz device size"
 msgstr "ugyldig Quartz-enhedsstørrelse"
 
 #: devQuartz.c:1414
-msgid "Unable to create device description."
+#, fuzzy
+msgid "unable to create device description"
 msgstr "Kan ikke oprette enhedsbeskrivelse."
 
 #: devQuartz.c:1464
-msgid "Unable to create Quartz device target, given type may not be supported."
+#, fuzzy
+msgid "unable to create Quartz device target, given type may not be supported"
 msgstr ""
 "Kan ikke oprette Quartz-enhedsmål, angivet type er måske ikke understøttet."
 
@@ -545,12 +560,14 @@ msgid "'%%' is not allowed in file name"
 msgstr "'%%' er ikke tilladt i filnavnet"
 
 #: devWindows.c:604
-msgid "Invalid font specification"
+#, fuzzy
+msgid "invalid font specification"
 msgstr "Ugyldig skriftspecifikation"
 
 # 77%
 #: devWindows.c:643
-msgid "Font family not found in Windows font database"
+#, fuzzy
+msgid "font family not found in Windows font database"
 msgstr "Skriftfamilie ikke fundet i Windows-skriftdatabasen"
 
 #: devWindows.c:1074
@@ -567,10 +584,6 @@ msgstr "ingen plot-historik!"
 msgid "filename too long in %s() call"
 msgstr "filnavn er for langt i %s()-kald"
 
-#: devWindows.c:1799 devWindows.c:1834 devWindows.c:1868
-msgid "Unable to load Rbitmap.dll"
-msgstr "Kan ikke indlæse Rbitmap.dll"
-
 #: devWindows.c:1804 devWindows.c:1843 devWindows.c:1877
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
@@ -578,12 +591,13 @@ msgstr "'bredde=%d, højde=%d' er usandsynlige værdier i billedpunkter"
 
 #: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
 #: devWindows.c:1880 devWindows.c:1885
-msgid "Unable to allocate bitmap"
+#, fuzzy
+msgid "unable to allocate bitmap"
 msgstr "Kan ikke allokere bitmap"
 
 #: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
-#, c-format
-msgid "Unable to open file '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open file '%s' for writing"
 msgstr "Kan ikke åbne fil '%s' for skrivning"
 
 #: devWindows.c:1840
@@ -599,12 +613,13 @@ msgid "filename too long in win.metafile() call"
 msgstr "filnavn for langt i win.metafile()-kald"
 
 #: devWindows.c:1916
-#, c-format
-msgid "Unable to open metafile '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open metafile '%s' for writing"
 msgstr "Kan ikke åben metafil '%s' for skrivning"
 
 #: devWindows.c:1918
-msgid "Unable to open clipboard to write metafile"
+#, fuzzy
+msgid "unable to open clipboard to write metafile"
 msgstr "Kan ikke åbne udklipsholder for at skrive metafil"
 
 #: devWindows.c:2129
@@ -674,10 +689,6 @@ msgstr "Umuligt at indlæse Rbitmap.dll"
 msgid "invalid 'width' or 'height'"
 msgstr "ugyldig 'bredde' eller 'højde'"
 
-#: devWindows.c:3841
-msgid "Unable to load winCairo.dll: was it built?"
-msgstr "Kan ikke indlæse winCairo.dll: blev den bygget?"
-
 #: devices.c:43
 msgid "argument must have positive length"
 msgstr ""
@@ -700,6 +711,24 @@ msgstr "Ikke et understøttet skema, ingen billeddata skrevet"
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "ugyldigt 'fil'-argument"
+
+#~ msgid "Invalid line end"
+#~ msgstr "Ugyldig linjeafslutning"
+
+#~ msgid "Invalid line join"
+#~ msgstr "Ugyldig linjeforbindelse"
+
+#~ msgid "Unable to load Rbitmap.dll"
+#~ msgstr "Kan ikke indlæse Rbitmap.dll"
+
+#~ msgid "Unable to load winCairo.dll: was it built?"
+#~ msgstr "Kan ikke indlæse winCairo.dll: blev den bygget?"
+
+#~ msgid "FontBBox could not be parsed"
+#~ msgstr "FontBBox kunne ikke fortolkes"
+
+#~ msgid "CharInfo could not be parsed"
+#~ msgstr "Tegninfo kunne ikke fortolkes"
 
 #~ msgid "unable to start NULL device"
 #~ msgstr "kan ikke starte NULL-enhed"

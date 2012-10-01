@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-01 11:33+0100\n"
 "PO-Revision-Date: 2012-03-05 21:58+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -62,14 +62,6 @@ msgstr ""
 #, c-format
 msgid "afm file '%s' could not be opened"
 msgstr "afm Datei '%s' konnte nicht geöffnet werden"
-
-#: devPS.c:589
-msgid "FontBBox could not be parsed"
-msgstr "Die FontBBox konnte nicht geparsed werden"
-
-#: devPS.c:597
-msgid "CharInfo could not be parsed"
-msgstr "CharInfo konnte nicht geparsed werden"
 
 #: devPS.c:627
 msgid "unknown AFM entity encountered"
@@ -155,7 +147,8 @@ msgid "failed to load encoding file '%s'"
 msgstr "Laden der Kodierungsdatei '%s' fehlgeschlagen"
 
 #: devPS.c:1441 devPS.c:1474
-msgid "Invalid font name or more than one font name"
+#, fuzzy
+msgid "invalid font name or more than one font name"
 msgstr "Ungültiger Zeichensatzname, oder mehr als einer"
 
 #: devPS.c:1594 devPS.c:1629
@@ -187,23 +180,28 @@ msgid "Corrupt loaded encodings;  encoding not recorded"
 msgstr "Beschädigte geladene Kodierung; Kodierung nicht aufgezeichnet"
 
 #: devPS.c:2397
-msgid "Failed to record device encoding"
+#, fuzzy
+msgid "failed to record device encoding"
 msgstr "Speichern der Gerätekodierung fehlgeschlagen"
 
 #: devPS.c:2566
-msgid "Object .ps.prolog is not a character vector"
+#, fuzzy
+msgid "object '.ps.prolog' is not a character vector"
 msgstr "Das Objekt .ps.prolog ist keine Zeichenkette"
 
 #: devPS.c:2639 devPS.c:6410 devWindows.c:784
-msgid "Invalid line end"
+#, fuzzy
+msgid "invalid line end"
 msgstr "Unzulässiges Zeilenende"
 
 #: devPS.c:2658 devPS.c:6429 devWindows.c:797
-msgid "Invalid line join"
+#, fuzzy
+msgid "invalid line join"
 msgstr "Unzulässige Zeilenverbindung"
 
 #: devPS.c:2666
-msgid "Invalid line mitre"
+#, fuzzy
+msgid "invalid line mitre"
 msgstr "Unzulässige Zeilenkappung"
 
 #: devPS.c:2875 devPS.c:3769 devPS.c:4217 devPS.c:4244 devPS.c:5252
@@ -235,15 +233,18 @@ msgid "failed to load encoding file in %s()"
 msgstr "Laden der Kodierungsdatei in %s() fehlgeschlagen"
 
 #: devPS.c:3179 devPS.c:3242 devPS.c:5956 devPS.c:6011 devPS.c:7635
-msgid "Invalid font type"
+#, fuzzy
+msgid "invalid font type"
 msgstr "Unzulässiger Zeichensatztyp"
 
 #: devPS.c:3203
-msgid "Failed to initialise default PostScript font"
+#, fuzzy
+msgid "failed to initialise default PostScript font"
 msgstr "Konnte den stabdard Postscriptzeichensatz nicht initialisieren"
 
 #: devPS.c:3269
-msgid "Failed to initialise additional PostScript fonts"
+#, fuzzy
+msgid "failed to initialise additional PostScript fonts"
 msgstr "Konnte zusätzliche PostScript Zeichensätze nicht initialisieren"
 
 #: devPS.c:3285
@@ -255,7 +256,8 @@ msgid "'command' is too long"
 msgstr "'command' ist zu lang"
 
 #: devPS.c:3295
-msgid "postscript(print.it=TRUE) used with an empty print command"
+#, fuzzy
+msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "postscript(print.it=TRUE) mit leerem Druckkommando benutzt"
 
 #: devPS.c:3344
@@ -291,13 +293,13 @@ msgstr ""
 "    %s"
 
 #: devPS.c:3757
-#, c-format
-msgid "CID family '%s' not included in PostScript device"
+#, fuzzy, c-format
+msgid "CID family '%s' not included in postscript() device"
 msgstr "Die CID Familie '%s' ist nicht im PostScript-Gerät enthalten"
 
 #: devPS.c:3775 devPS.c:3786 devPS.c:4224 devPS.c:4254 devPS.c:4359
-#, c-format
-msgid "family '%s' not included in PostScript device"
+#, fuzzy, c-format
+msgid "family '%s' not included in postscript() device"
 msgstr "Die Familie '%s' ist nicht im PostScript-Gerät enthalten<"
 
 #: devPS.c:4299
@@ -339,11 +341,13 @@ msgid "invalid foreground/background color (xfig)"
 msgstr "ungültige Vorder-/Hintergrundfarbe (xfig)"
 
 #: devPS.c:4783
-msgid "Only Type 1 fonts supported for XFig"
+#, fuzzy
+msgid "only Type 1 fonts supported for XFig"
 msgstr "Es werden nur Type 1 Zeichensätze für XFig unterstützt"
 
 #: devPS.c:4796
-msgid "Failed to initialise default XFig font"
+#, fuzzy
+msgid "failed to initialise default XFig font"
 msgstr "Konnte den Standard-Zeichensatz für XFig nicht initialisieren"
 
 #: devPS.c:4833
@@ -374,15 +378,18 @@ msgid "failed to increase 'maxRaster'"
 msgstr "konnte 'maxRaster' nicht vergrößern"
 
 #: devPS.c:5562
-msgid "Unable to allocate raster image"
+#, fuzzy
+msgid "unable to allocate raster image"
 msgstr "kann Rasterimage nicht allokieren"
 
 #: devPS.c:5763
-msgid "Corrupt loaded encodings;  font not added"
+#, fuzzy
+msgid "corrupt loaded encodings;  font not added"
 msgstr "Geladene Kodierungen sind beschädigt; Zeichensatz nicht hinzugefügt"
 
 #: devPS.c:5772
-msgid "Failed to record device encoding; font not added"
+#, fuzzy
+msgid "failed to record device encoding; font not added"
 msgstr "Konnte Gerätekodierung nicht feststellen; Zeichensatz nicht hizugefügt"
 
 #: devPS.c:5883
@@ -394,11 +401,13 @@ msgid "failed to load default encoding"
 msgstr "konnte Standardkodierung nicht laden"
 
 #: devPS.c:5979
-msgid "Failed to initialise default PDF font"
+#, fuzzy
+msgid "failed to initialise default PDF font"
 msgstr "Konnte den Standard-Zeichensatz für PDF nicht initialisieren"
 
 #: devPS.c:6034
-msgid "Failed to initialise additional PDF fonts"
+#, fuzzy
+msgid "failed to initialise additional PDF fonts"
 msgstr "Konnte zusätzliche PDF Zeichensätze nicht initialisieren"
 
 #: devPS.c:6047
@@ -419,7 +428,8 @@ msgid "invalid foreground/background color (pdf)"
 msgstr "ungültige Vorder-/Hintergrundfarbe (pdf)"
 
 #: devPS.c:6258
-msgid "Invalid alpha value in PDF"
+#, fuzzy
+msgid "invalid 'alpha' value in PDF"
 msgstr "unzulässiger alpha Wert in PDF"
 
 #: devPS.c:6283
@@ -431,7 +441,8 @@ msgid "unknown 'colormodel', using 'srgb'"
 msgstr "unbekanntes 'colormodel', nutze 'srgb'"
 
 #: devPS.c:6575
-msgid "Failed to load sRGB colorspace file"
+#, fuzzy
+msgid "failed to load sRGB colorspace file"
 msgstr "Laden der sRGB Farbraumdatei fehlgeschlagen"
 
 #: devPS.c:6839
@@ -461,11 +472,13 @@ msgstr ""
 " bitte das PDF gerät schließen"
 
 #: devPS.c:7660 devPS.c:8022 devPS.c:8069
-msgid "Failed to find or load PDF font"
+#, fuzzy
+msgid "failed to find or load PDF font"
 msgstr "Konnte PDF Zeichensatz nicht finden oder nicht laden"
 
 #: devPS.c:7844 devPS.c:7977
-msgid "Failed to find or load PDF CID font"
+#, fuzzy
+msgid "failed to find or load PDF CID font"
 msgstr "Konnte PDF CID Zeichensatz nicht finden oder nicht laden"
 
 #: devPS.c:8208 devPS.c:8212 devPS.c:8372 devPS.c:8376
@@ -513,11 +526,13 @@ msgid "invalid Quartz device size"
 msgstr "unzulässige Größe für Quartz-Gerät"
 
 #: devQuartz.c:1414
-msgid "Unable to create device description."
+#, fuzzy
+msgid "unable to create device description"
 msgstr "Kann keine Gerätebeschreibung erzeugen."
 
 #: devQuartz.c:1464
-msgid "Unable to create Quartz device target, given type may not be supported."
+#, fuzzy
+msgid "unable to create Quartz device target, given type may not be supported"
 msgstr ""
 "Kann das Quartz-Gerät als Ziel nicht erzeugen, angegebener Typ evtl. nicht "
 "unterstützt."
@@ -540,11 +555,13 @@ msgid "'%%' is not allowed in file name"
 msgstr "'%%' ist in Dateinamen nicht erlaubt"
 
 #: devWindows.c:604
-msgid "Invalid font specification"
+#, fuzzy
+msgid "invalid font specification"
 msgstr "Unzulässige Zeichensatzspezifikation"
 
 #: devWindows.c:643
-msgid "Font family not found in Windows font database"
+#, fuzzy
+msgid "font family not found in Windows font database"
 msgstr "Zeichensatzfamilie in der Windows Zeichensatzdatenbank nicht gefunden"
 
 #: devWindows.c:1074
@@ -560,10 +577,6 @@ msgstr "keine Plot-Historie"
 msgid "filename too long in %s() call"
 msgstr "Dateiname im Aufruf von %s() zu lang"
 
-#: devWindows.c:1799 devWindows.c:1834 devWindows.c:1868
-msgid "Unable to load Rbitmap.dll"
-msgstr "Kann Rbitmap.dll nicht laden"
-
 #: devWindows.c:1804 devWindows.c:1843 devWindows.c:1877
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
@@ -571,12 +584,13 @@ msgstr "'width=%d, height=%d'sind unwahrscheinliche Pixelzahlen"
 
 #: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
 #: devWindows.c:1880 devWindows.c:1885
-msgid "Unable to allocate bitmap"
+#, fuzzy
+msgid "unable to allocate bitmap"
 msgstr "kann Bitmap nicht allozieren"
 
 #: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
-#, c-format
-msgid "Unable to open file '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open file '%s' for writing"
 msgstr "Kann Datei '%s' nicht zum Schreiben öffnen"
 
 #: devWindows.c:1840
@@ -592,12 +606,13 @@ msgid "filename too long in win.metafile() call"
 msgstr "Dateiname zu lang in win.metafile() Aufruf"
 
 #: devWindows.c:1916
-#, c-format
-msgid "Unable to open metafile '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open metafile '%s' for writing"
 msgstr "Kann Metafile '%s' nicht zum Schreiben öffnen<"
 
 #: devWindows.c:1918
-msgid "Unable to open clipboard to write metafile"
+#, fuzzy
+msgid "unable to open clipboard to write metafile"
 msgstr "Kann die Zwischenablage nicht zum Schreiben eines Metafiles öffnen"
 
 #: devWindows.c:2129
@@ -666,10 +681,6 @@ msgstr "Kann Rbitmap.dll nicht laden"
 msgid "invalid 'width' or 'height'"
 msgstr "unzulässige 'with' oder 'height'"
 
-#: devWindows.c:3841
-msgid "Unable to load winCairo.dll: was it built?"
-msgstr "Kann winCairo.dll nicht laden: wurde sie erstellt?"
-
 #: devices.c:43
 msgid "argument must have positive length"
 msgstr ""
@@ -692,6 +703,24 @@ msgstr "Nicht unterstütztes Schema, keine Abbilddatei geschrieben"
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "unzulässiges 'file' Argument"
+
+#~ msgid "Invalid line end"
+#~ msgstr "Unzulässiges Zeilenende"
+
+#~ msgid "Invalid line join"
+#~ msgstr "Unzulässige Zeilenverbindung"
+
+#~ msgid "Unable to load Rbitmap.dll"
+#~ msgstr "Kann Rbitmap.dll nicht laden"
+
+#~ msgid "Unable to load winCairo.dll: was it built?"
+#~ msgstr "Kann winCairo.dll nicht laden: wurde sie erstellt?"
+
+#~ msgid "FontBBox could not be parsed"
+#~ msgstr "Die FontBBox konnte nicht geparsed werden"
+
+#~ msgid "CharInfo could not be parsed"
+#~ msgstr "CharInfo konnte nicht geparsed werden"
 
 #~ msgid "unable to start NULL device"
 #~ msgstr "kann das NULL Device nicht starten"

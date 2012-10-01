@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-01 11:33+0100\n"
 "PO-Revision-Date: 2012-03-15 11:26-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -67,14 +67,6 @@ msgstr ""
 #, c-format
 msgid "afm file '%s' could not be opened"
 msgstr "afm-файл '%s' не открывается"
-
-#: devPS.c:589
-msgid "FontBBox could not be parsed"
-msgstr "FontBBox не разбирается"
-
-#: devPS.c:597
-msgid "CharInfo could not be parsed"
-msgstr "CharInfo не разбирается"
 
 #: devPS.c:627
 msgid "unknown AFM entity encountered"
@@ -159,7 +151,8 @@ msgid "failed to load encoding file '%s'"
 msgstr "не могу загрузить файл кодировки '%s'"
 
 #: devPS.c:1441 devPS.c:1474
-msgid "Invalid font name or more than one font name"
+#, fuzzy
+msgid "invalid font name or more than one font name"
 msgstr "Неправильное имя шрифта или больше одного имени шрифта"
 
 #: devPS.c:1594 devPS.c:1629
@@ -187,23 +180,28 @@ msgid "Corrupt loaded encodings;  encoding not recorded"
 msgstr "Повреждены загруженные кодировки; кодировка не записана"
 
 #: devPS.c:2397
-msgid "Failed to record device encoding"
+#, fuzzy
+msgid "failed to record device encoding"
 msgstr "Не вышло записать кодировку устройства"
 
 #: devPS.c:2566
-msgid "Object .ps.prolog is not a character vector"
+#, fuzzy
+msgid "object '.ps.prolog' is not a character vector"
 msgstr "Объект .ps.prolog не является символьным вектором"
 
 #: devPS.c:2639 devPS.c:6410 devWindows.c:784
-msgid "Invalid line end"
+#, fuzzy
+msgid "invalid line end"
 msgstr "Неправильный конец строки"
 
 #: devPS.c:2658 devPS.c:6429 devWindows.c:797
-msgid "Invalid line join"
+#, fuzzy
+msgid "invalid line join"
 msgstr "Неправильное соединение линий"
 
 #: devPS.c:2666
-msgid "Invalid line mitre"
+#, fuzzy
+msgid "invalid line mitre"
 msgstr "Неправильный конец линии"
 
 #: devPS.c:2875 devPS.c:3769 devPS.c:4217 devPS.c:4244 devPS.c:5252
@@ -233,15 +231,18 @@ msgid "failed to load encoding file in %s()"
 msgstr "не могу загрузить файл кодировки в %s()"
 
 #: devPS.c:3179 devPS.c:3242 devPS.c:5956 devPS.c:6011 devPS.c:7635
-msgid "Invalid font type"
+#, fuzzy
+msgid "invalid font type"
 msgstr "Неправильный тип шрифта"
 
 #: devPS.c:3203
-msgid "Failed to initialise default PostScript font"
+#, fuzzy
+msgid "failed to initialise default PostScript font"
 msgstr "Не удалось инициализировать шрифт PostScript по умолчанию"
 
 #: devPS.c:3269
-msgid "Failed to initialise additional PostScript fonts"
+#, fuzzy
+msgid "failed to initialise additional PostScript fonts"
 msgstr "Не удалось инициализировать дополнительные шрифты PostScript"
 
 #: devPS.c:3285
@@ -253,7 +254,8 @@ msgid "'command' is too long"
 msgstr "'command' слишком длинная"
 
 #: devPS.c:3295
-msgid "postscript(print.it=TRUE) used with an empty print command"
+#, fuzzy
+msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "postscript(print.it=TRUE) использован с пустой командой печати"
 
 #: devPS.c:3344
@@ -289,13 +291,13 @@ msgstr ""
 "    %s"
 
 #: devPS.c:3757
-#, c-format
-msgid "CID family '%s' not included in PostScript device"
+#, fuzzy, c-format
+msgid "CID family '%s' not included in postscript() device"
 msgstr "CID-семейство '%s' не включено в PostScript-устройство"
 
 #: devPS.c:3775 devPS.c:3786 devPS.c:4224 devPS.c:4254 devPS.c:4359
-#, c-format
-msgid "family '%s' not included in PostScript device"
+#, fuzzy, c-format
+msgid "family '%s' not included in postscript() device"
 msgstr "семейство '%s' не включено в PostScript-устройство"
 
 #: devPS.c:4299
@@ -337,11 +339,13 @@ msgid "invalid foreground/background color (xfig)"
 msgstr "неправильный цвет переднего/заднего плана (xfig)"
 
 #: devPS.c:4783
-msgid "Only Type 1 fonts supported for XFig"
+#, fuzzy
+msgid "only Type 1 fonts supported for XFig"
 msgstr "Только шрифты Type 1 поддерживаются в XFig"
 
 #: devPS.c:4796
-msgid "Failed to initialise default XFig font"
+#, fuzzy
+msgid "failed to initialise default XFig font"
 msgstr "Не удалось инициализировать шрифт XFig по умолчанию"
 
 #: devPS.c:4833
@@ -372,15 +376,18 @@ msgid "failed to increase 'maxRaster'"
 msgstr "не могу увеличить 'maxRaster'"
 
 #: devPS.c:5562
-msgid "Unable to allocate raster image"
+#, fuzzy
+msgid "unable to allocate raster image"
 msgstr "Не могу разместить растровое изображение"
 
 #: devPS.c:5763
-msgid "Corrupt loaded encodings;  font not added"
+#, fuzzy
+msgid "corrupt loaded encodings;  font not added"
 msgstr "Повреждены загруженные кодировки; шрифт не добавлен"
 
 #: devPS.c:5772
-msgid "Failed to record device encoding; font not added"
+#, fuzzy
+msgid "failed to record device encoding; font not added"
 msgstr "Не могу записать кодировку устройства; шрифт не добавлен"
 
 #: devPS.c:5883
@@ -392,11 +399,13 @@ msgid "failed to load default encoding"
 msgstr "не могу загрузить кодировку по умолчанию"
 
 #: devPS.c:5979
-msgid "Failed to initialise default PDF font"
+#, fuzzy
+msgid "failed to initialise default PDF font"
 msgstr "Не удалось инициализировать шрифт PDF по умолчанию"
 
 #: devPS.c:6034
-msgid "Failed to initialise additional PDF fonts"
+#, fuzzy
+msgid "failed to initialise additional PDF fonts"
 msgstr "Не удалось инициализировать дополнительные шрифты PDF"
 
 #: devPS.c:6047
@@ -417,7 +426,8 @@ msgid "invalid foreground/background color (pdf)"
 msgstr "неправильный цвет переднего/заднего плана (pdf)"
 
 #: devPS.c:6258
-msgid "Invalid alpha value in PDF"
+#, fuzzy
+msgid "invalid 'alpha' value in PDF"
 msgstr "Неправильное alpha-значение в PDF"
 
 #: devPS.c:6283
@@ -429,7 +439,8 @@ msgid "unknown 'colormodel', using 'srgb'"
 msgstr "неизвестная 'colormodel', использую 'srgb'"
 
 #: devPS.c:6575
-msgid "Failed to load sRGB colorspace file"
+#, fuzzy
+msgid "failed to load sRGB colorspace file"
 msgstr "Не удалось загрузить файл цветового пространства sRGB"
 
 #: devPS.c:6839
@@ -459,11 +470,13 @@ msgstr ""
 "  пожалуйста, выключите PDFdevice"
 
 #: devPS.c:7660 devPS.c:8022 devPS.c:8069
-msgid "Failed to find or load PDF font"
+#, fuzzy
+msgid "failed to find or load PDF font"
 msgstr "Не удалось найти или загрузить шрифт PDF"
 
 #: devPS.c:7844 devPS.c:7977
-msgid "Failed to find or load PDF CID font"
+#, fuzzy
+msgid "failed to find or load PDF CID font"
 msgstr "Не удалось найти или загрузить CID-шрифт PDF"
 
 #: devPS.c:8208 devPS.c:8212 devPS.c:8372 devPS.c:8376
@@ -511,11 +524,13 @@ msgid "invalid Quartz device size"
 msgstr "неправильный размер устройства Quartz"
 
 #: devQuartz.c:1414
-msgid "Unable to create device description."
+#, fuzzy
+msgid "unable to create device description"
 msgstr "Не могу создать описание устройства."
 
 #: devQuartz.c:1464
-msgid "Unable to create Quartz device target, given type may not be supported."
+#, fuzzy
+msgid "unable to create Quartz device target, given type may not be supported"
 msgstr ""
 "Не могу создать целевое устройство Quartz, указанный тип не может быть "
 "поддержан."
@@ -538,11 +553,13 @@ msgid "'%%' is not allowed in file name"
 msgstr "'%%' в имени файла не разрешается"
 
 #: devWindows.c:604
-msgid "Invalid font specification"
+#, fuzzy
+msgid "invalid font specification"
 msgstr "Неправильное указание шрифта"
 
 #: devWindows.c:643
-msgid "Font family not found in Windows font database"
+#, fuzzy
+msgid "font family not found in Windows font database"
 msgstr "Семейство шрифтов не найдено в базе данных шрифтов Windows"
 
 #: devWindows.c:1074
@@ -558,10 +575,6 @@ msgstr "нет истории графиков!"
 msgid "filename too long in %s() call"
 msgstr "слишком длинное имя файла в вызове %s()"
 
-#: devWindows.c:1799 devWindows.c:1834 devWindows.c:1868
-msgid "Unable to load Rbitmap.dll"
-msgstr "Не могу загрузить Rbitmap.dll"
-
 #: devWindows.c:1804 devWindows.c:1843 devWindows.c:1877
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
@@ -569,12 +582,13 @@ msgstr "не похоже, что 'width=%d, height=%d' в пикселях"
 
 #: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
 #: devWindows.c:1880 devWindows.c:1885
-msgid "Unable to allocate bitmap"
+#, fuzzy
+msgid "unable to allocate bitmap"
 msgstr "Не могу разместить bitmap"
 
 #: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
-#, c-format
-msgid "Unable to open file '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open file '%s' for writing"
 msgstr "Не могу открыть файл '%s' для записи"
 
 #: devWindows.c:1840
@@ -590,12 +604,13 @@ msgid "filename too long in win.metafile() call"
 msgstr "слишком длинное имя файла в вызове win.metafile()"
 
 #: devWindows.c:1916
-#, c-format
-msgid "Unable to open metafile '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open metafile '%s' for writing"
 msgstr "Не могу открыть метафайл '%s' для записи"
 
 #: devWindows.c:1918
-msgid "Unable to open clipboard to write metafile"
+#, fuzzy
+msgid "unable to open clipboard to write metafile"
 msgstr "Не могу открыть буфер обмена для записи метафайла"
 
 #: devWindows.c:2129
@@ -664,10 +679,6 @@ msgstr "Невозможно загрузить Rbitmap.dll"
 msgid "invalid 'width' or 'height'"
 msgstr "неправильная 'width' или 'height'"
 
-#: devWindows.c:3841
-msgid "Unable to load winCairo.dll: was it built?"
-msgstr "Не могу загрузить winCairo.dll: его действительно собрали?"
-
 #: devices.c:43
 msgid "argument must have positive length"
 msgstr ""
@@ -690,6 +701,24 @@ msgstr "Схема не поддерживается, данные изображения не записаны"
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент 'file'"
+
+#~ msgid "Invalid line end"
+#~ msgstr "Неправильный конец строки"
+
+#~ msgid "Invalid line join"
+#~ msgstr "Неправильное соединение линий"
+
+#~ msgid "Unable to load Rbitmap.dll"
+#~ msgstr "Не могу загрузить Rbitmap.dll"
+
+#~ msgid "Unable to load winCairo.dll: was it built?"
+#~ msgstr "Не могу загрузить winCairo.dll: его действительно собрали?"
+
+#~ msgid "FontBBox could not be parsed"
+#~ msgstr "FontBBox не разбирается"
+
+#~ msgid "CharInfo could not be parsed"
+#~ msgstr "CharInfo не разбирается"
 
 #~ msgid "unable to start NULL device"
 #~ msgstr "не могу запустить NULL-устройство"

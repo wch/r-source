@@ -601,7 +601,7 @@ static char *SaveFontSpec(SEXP sxp, int offset)
 {
     char *s;
     if(!isString(sxp) || length(sxp) <= offset)
-	error(_("Invalid font specification"));
+	error(_("invalid font specification"));
     s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
     strcpy(s, CHAR(STRING_ELT(sxp, offset)));
     return s;
@@ -640,7 +640,7 @@ static char* translateFontFamily(const char* family) {
 	    }
 	}
 	if (!found)
-	    warning(_("Font family not found in Windows font database"));
+	    warning(_("font family not found in Windows font database"));
     }
     UNPROTECT(4);
     return result;
@@ -781,7 +781,7 @@ static void SetLineStyle(const pGEcontext gc, pDevDesc dd)
 	xd->lend = PS_ENDCAP_SQUARE;
 	break;
     default:
-	error(_("Invalid line end"));
+	error(_("invalid line end"));
     }
     switch (gc->ljoin) {
     case GE_ROUND_JOIN:
@@ -794,7 +794,7 @@ static void SetLineStyle(const pGEcontext gc, pDevDesc dd)
 	xd->ljoin = PS_JOIN_BEVEL;
 	break;
     default:
-	error(_("Invalid line join"));
+	error(_("invalid line join"));
     }
 
     xd->lmitre = gc->lmitre;
@@ -1559,7 +1559,7 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
 				    Document | StandardWindow | Menubar |
 				    VScrollbar | HScrollbar | CanvasSize)
 		)) {
-	    warning("Unable to open window");
+	    warning("unable to open window");
 	    return FALSE;
 	}
     }
@@ -1785,7 +1785,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	xd->fast = 0; /* use scalable line widths */
 	xd->gawin = newprinter(MM_PER_INCH * w, MM_PER_INCH * h, &dsp[10]);
 	if (!xd->gawin) {
-	    warning("Unable to open printer");
+	    warning("unable to open printer");
 	    return FALSE;
 	}
     } else if (!strncmp(dsp, "png:", 4) || !strncmp(dsp,"bmp:", 4)) {
@@ -1796,7 +1796,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 				       (dsp[0]=='p') ? "png" : "bmp");
 	strcpy(xd->filename, R_ExpandFileName(dsp+4));
 	if (!Load_Rbitmap_Dll()) {
-	    warning(_("Unable to load Rbitmap.dll"));
+	    warning("unable to load Rbitmap.dll");
 	    return FALSE;
 	}
 
@@ -1809,18 +1809,18 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	  if required depth > 1
 	*/
 	if ((xd->gawin = newbitmap(w, h, 256)) == NULL) {
-	    warning(_("Unable to allocate bitmap"));
+	    warning(_("unable to allocate bitmap"));
 	    return FALSE;
 	}
 	xd->bm = xd->gawin;
 	if ((xd->bm2 = newbitmap(w, h, 256)) == NULL) {
-	    warning(_("Unable to allocate bitmap"));
+	    warning(_("unable to allocate bitmap"));
 	    return FALSE;
 	}
 	snprintf(buf, 600, xd->filename, 1);
 	if ((xd->fp = R_fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
-	    warning(_("Unable to open file '%s' for writing"), buf);
+	    warning(_("unable to open file '%s' for writing"), buf);
 	    return FALSE;
 	}
 	xd->have_alpha = TRUE;
@@ -1831,7 +1831,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	xd->kind = JPEG;
 	if (!p) return FALSE;
 	if (!Load_Rbitmap_Dll()) {
-	    warning(_("Unable to load Rbitmap.dll"));
+	    warning("unable to load Rbitmap.dll");
 	    return FALSE;
 	}
 	*p = '\0';
@@ -1843,18 +1843,18 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	    warning(_("'width=%d, height=%d' are unlikely values in pixels"),
 		    (int)w, (int) h);
 	if((xd->gawin = newbitmap(w, h, 256)) == NULL) {
-	    warning(_("Unable to allocate bitmap"));
+	    warning(_("unable to allocate bitmap"));
 	    return FALSE;
 	}
 	xd->bm = xd->gawin;
 	if ((xd->bm2 = newbitmap(w, h, 256)) == NULL) {
-	    warning(_("Unable to allocate bitmap"));
+	    warning(_("unable to allocate bitmap"));
 	    return FALSE;
 	}
 	snprintf(buf, 600, xd->filename, 1);
 	if ((xd->fp = R_fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
-	    warning(_("Unable to open file '%s' for writing"), buf);
+	    warning(_("unable to open file '%s' for writing"), buf);
 	    return FALSE;
 	}
 	xd->have_alpha = TRUE;
@@ -1865,7 +1865,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	xd->kind = TIFF;
 	if (!p) return FALSE;
 	if (!Load_Rbitmap_Dll()) {
-	    warning(_("Unable to load Rbitmap.dll"));
+	    warning("unable to load Rbitmap.dll");
 	    return FALSE;
 	}
 	*p = '\0';
@@ -1877,12 +1877,12 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	    warning(_("'width=%d, height=%d' are unlikely values in pixels"),
 		    (int) w, (int) h);
 	if((xd->gawin = newbitmap(w, h, 256)) == NULL) {
-	    warning(_("Unable to allocate bitmap"));
+	    warning(_("unable to allocate bitmap"));
 	    return FALSE;
 	}
 	xd->bm = xd->gawin;
 	if ((xd->bm2 = newbitmap(w, h, 256)) == NULL) {
-	    warning(_("Unable to allocate bitmap"));
+	    warning(_("unable to allocate bitmap"));
 	    return FALSE;
 	}
 	xd->have_alpha = TRUE;
@@ -1899,7 +1899,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	if (ls > ld)
 	    return FALSE;
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':'))) {
-	    warning("Invalid specification for file name in win.metafile()");
+	    warning("invalid specification for file name in win.metafile()");
 	    return FALSE;
 	}
 	if(ld > ls && strlen(&dsp[ls + 1]) >= 512)
@@ -1913,9 +1913,9 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	xd->fast = 0; /* use scalable line widths */
 	if (!xd->gawin) {
 	    if(ld > ls)
-		warning(_("Unable to open metafile '%s' for writing"), buf);
+		warning(_("unable to open metafile '%s' for writing"), buf);
 	    else
-		warning(_("Unable to open clipboard to write metafile"));
+		warning(_("unable to open clipboard to write metafile"));
 	    return FALSE;
 	}
     }
@@ -2163,7 +2163,7 @@ static void GA_NewPage(const pGEcontext gc,
     if ((xd->kind == METAFILE) && xd->needsave) {
 	char buf[600];
 	if (strlen(xd->filename) == 0)
-	    error(_("A clipboard metafile can store only one figure."));
+	    error(_("a clipboard metafile can store only one figure."));
 	else {
 	    del(xd->gawin);
 	    snprintf(buf, 600, xd->filename, xd->npage);
@@ -2178,7 +2178,7 @@ static void GA_NewPage(const pGEcontext gc,
 	SaveAsBitmap(dd, xd->res_dpi);
 	snprintf(buf, 600, xd->filename, xd->npage);
 	if ((xd->fp = R_fopen(buf, "wb")) == NULL)
-	    error(_("Unable to open file '%s' for writing"), buf);
+	    error(_("unable to open file '%s' for writing"), buf);
     }
     if (xd->kind == TIFF && xd->needsave) {
 	SaveAsBitmap(dd, xd->res_dpi);
@@ -3410,7 +3410,7 @@ SEXP savePlot(SEXP args)
     if(!dd) error(_("invalid device in 'savePlot'"));
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
-	error(_("invalid filename argument in savePlot"));
+	error(_("invalid filename argument in 'savePlot'"));
     /* in 2.8.0 this will always be passed as native, but be conserative */
     fn = translateChar(STRING_ELT(filename, 0));
     type = CADDR(args);
@@ -3838,7 +3838,7 @@ static int Load_Rcairo_Dll()
 SEXP devCairo(SEXP args)
 {
     if (!Load_Rcairo_Dll())
-	error(_("Unable to load winCairo.dll: was it built?"));
+	error("unable to load winCairo.dll: was it built?");
     else (R_devCairo)(args);
     return R_NilValue;
 }

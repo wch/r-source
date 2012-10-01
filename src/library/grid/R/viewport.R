@@ -323,7 +323,8 @@ vpPathFromVector <- function(names) {
   if (any(bad <- !is.character(names)))
       stop(ngettext(sum(bad),
                     "Invalid viewport name",
-                    "Invalid viewport name"), domain = NA)
+                    "Invalid viewport names"),
+           domain = NA)
   path <- list(path=if (n==1) NULL else
                paste(names[seq_len(n-1L)], collapse=.grid.pathSep),
                name=names[n],

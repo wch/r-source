@@ -149,11 +149,11 @@ gPathFromVector <- function(names) {
   if (any(bad <- !is.character(names)))
       stop(ngettext(sum(bad),
                     "Invalid grob name",
-                    "Invalid grob name"), domain = NA)
-  path <- list(path=if (n==1) NULL else
-               paste(names[1L:(n-1)], collapse=.grid.pathSep),
-               name=names[n],
-               n=n)
+                    "Invalid grob names"),
+           domain = NA)
+  path <- list(path = if (n==1) NULL else
+               paste(names[1L:(n-1)], collapse = .grid.pathSep),
+               name = names[n], n = n)
   class(path) <- c("gPath", "path")
   path
 }

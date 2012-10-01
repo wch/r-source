@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46+0100\n"
+"POT-Creation-Date: 2012-10-01 11:17+0100\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -20,10 +20,6 @@ msgstr ""
 #: base.c:38
 msgid "no base graphics system is registered"
 msgstr ""
-
-#: base.c:297
-msgid "Event GE_ScalePS requires a single numeric value"
-msgstr " イベント GE_ScalePS は単一の数値を必要とします "
 
 #: base.c:328 base.c:335 base.c:343
 #, fuzzy
@@ -40,7 +36,8 @@ msgid "attempt to plot on null device"
 msgstr " 存在しないデバイスにプロットしようとしました "
 
 #: graphics.c:1830
-msgid "outer margins too large (fig.region too small)"
+#, fuzzy
+msgid "outer margins too large (figure region too small)"
 msgstr " 外側マージンが大きすぎます（fig.region が小さすぎます） "
 
 #: graphics.c:1832
@@ -56,8 +53,8 @@ msgid "plot region too large"
 msgstr " plot 領域が大きすぎます "
 
 #: graphics.c:1883
-#, c-format
-msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
+#, fuzzy, c-format
+msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr " 値の相対範囲 =%4.0f * EPS は小さいです (軸 %d) "
 
 #: graphics.c:1935
@@ -70,37 +67,39 @@ msgstr " 軸の限界が有限ではありません [GScale(%g,%g,%d, .); log=%d
 msgid "axis style \"%c\" unimplemented"
 msgstr " 軸のスタイル \"%c\" はまだ実装されていません "
 
-#: graphics.c:2204 graphics.c:2562
-msgid "No graphics device is active"
+#: graphics.c:2203
+#, fuzzy
+msgid "no graphics device is active"
 msgstr " 現在有効なグラフィックデバイスがありません "
 
-#: graphics.c:2399
+#: graphics.c:2398
 msgid "plot.new has not been called yet"
 msgstr " まだ plot.new が呼ばれていません "
 
-#: graphics.c:2401
+#: graphics.c:2400
 msgid "invalid graphics state"
 msgstr " グラフィックスの状態が不正です "
 
-#: graphics.c:2801 graphics.c:2837
-msgid "unable to allocate memory (in GPolygon)"
-msgstr " メモリ確保ができません (GPolygon) "
+#: graphics.c:2561
+msgid "No graphics device is active"
+msgstr " 現在有効なグラフィックデバイスがありません "
 
-#: graphics.c:3021
+#: graphics.c:3020
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr " 長さゼロの arrow は角度が不定ですので，スキップされました "
 
-#: graphics.c:3102
+#: graphics.c:3101
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr " par(\"bty\") = '%c' が不正です：box() は描画されません "
 
-#: graphics.c:3119
+#: graphics.c:3118
 msgid "invalid argument to GBox"
 msgstr " GBox の引数が不正です "
 
-#: graphics.c:3364
-msgid "Metric information not available for this device"
+#: graphics.c:3363
+#, fuzzy
+msgid "metric information not available for this device"
 msgstr " このデバイスに対してメトリック情報は利用できません "
 
 #: par-common.c:138
@@ -135,11 +134,13 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr " \"mfg\" の パラメータ \"j\" が範囲外です "
 
 #: par.c:447
-msgid "value of nr in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr " \"mfg\" の中の nr の値は不正で無視されます "
 
 #: par.c:449
-msgid "value of nc in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr " \"mfg\" の中の nc の値は不正で無視されます "
 
 #: par.c:475
@@ -195,7 +196,8 @@ msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
 
 #: plot.c:285
-msgid "invalid 'vfont' value [typeface]"
+#, fuzzy, c-format
+msgid "invalid 'vfont' value [typeface %d]"
 msgstr " 'vfont' の値が不正です [typeface] "
 
 #: plot.c:309
@@ -259,9 +261,12 @@ msgstr " 軸の番号 %d が不正です "
 msgid "'hadj' must be of length one"
 msgstr " 'hadj' は長さ1でなくてはなりません "
 
-#: plot.c:865 plot.c:2392
-msgid "zero length 'padj' specified"
-msgstr " 長さゼロの 'padj' が指定されています "
+#: plot.c:865 plot.c:2073 plot.c:2350 plot.c:2356 plot.c:2363 plot.c:2371
+#: plot.c:2378 plot.c:2385 plot.c:2392 plot.c:2399 plot.c:2407 plot.c:2414
+#: plot.c:3132
+#, fuzzy, c-format
+msgid "zero-length '%s' specified"
+msgstr " 長さゼロの 'side' が指定されています "
 
 #: plot.c:934
 msgid "'labels' is supplied and not 'at'"
@@ -319,14 +324,6 @@ msgstr " 四番目の引数が不正です "
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr " 長さ0と非0の座標は一緒に使えません "
 
-#: plot.c:1780
-msgid "unable to allocate memory (in GPath)"
-msgstr " メモリ確保ができません (GPath中) "
-
-#: plot.c:1786
-msgid "invalid x or y (in GPath)"
-msgstr " 不正な x または y (GPath中) "
-
 #: plot.c:1903
 msgid "invalid arrow head length"
 msgstr " 矢印のやじり部分の長さが不正です "
@@ -339,49 +336,9 @@ msgstr " 矢印のやじり部分の角度が不正です "
 msgid "invalid arrow head specification"
 msgstr " 矢印のやじり部分の指定が不正です "
 
-#: plot.c:2073 plot.c:3132
-msgid "zero length 'labels'"
-msgstr " 長さゼロの 'labels' が指定されています "
-
 #: plot.c:2147
 msgid "no coordinates were supplied"
 msgstr " 座標が提供されていません "
-
-#: plot.c:2350
-msgid "zero length 'text' specified"
-msgstr " 長さゼロの 'text' が指定されています "
-
-#: plot.c:2356
-msgid "zero length 'side' specified"
-msgstr " 長さゼロの 'side' が指定されています "
-
-#: plot.c:2363
-msgid "zero length 'line' specified"
-msgstr " 長さゼロの 'line' が指定されています "
-
-#: plot.c:2371
-msgid "zero length 'outer' specified"
-msgstr " 長さゼロの 'outer' が指定されています "
-
-#: plot.c:2378
-msgid "zero length 'at' specified"
-msgstr " 長さゼロの 'at' が指定されています "
-
-#: plot.c:2385
-msgid "zero length 'adj' specified"
-msgstr " 長さゼロの 'adj' が指定されています "
-
-#: plot.c:2399
-msgid "zero length 'cex' specified"
-msgstr " 長さゼロの 'cex' が指定されています "
-
-#: plot.c:2407
-msgid "zero length 'col' specified"
-msgstr " 長さゼロの 'col' が指定されています "
-
-#: plot.c:2414
-msgid "zero length 'font' specified"
-msgstr " 長さゼロの 'font' が指定されています "
 
 #: plot.c:2770
 msgid "invalid a=, b= specification"
@@ -399,13 +356,10 @@ msgstr " 'a' と 'b'  は有限でなければなりません "
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
 
-#: plot.c:2985
-msgid "invalid number of points in locator()"
+#: plot.c:2985 plot.c:3121
+#, fuzzy, c-format
+msgid "invalid number of points in %s"
 msgstr " locator 関数の点の個数が不正です "
-
-#: plot.c:3121
-msgid "invalid number of points in identify()"
-msgstr " identify 関数の点の個数が不正です "
 
 #: plot.c:3123
 msgid "incorrect argument type"
@@ -473,29 +427,33 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr " thermometers データが不正です（3または4列必要です） "
 
 #: plot.c:3785
-#, c-format
-msgid "invalid thermometers[,%s]"
+#, fuzzy, c-format
+msgid "invalid 'thermometers[, %s]'"
 msgstr " thermometers [,%s] が不正です "
 
 #: plot.c:3788
-#, c-format
-msgid "thermometers[,%s] not in [0,1] -- may look funny"
+#, fuzzy, c-format
+msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "  thermometers[,%s] が [0,1] 範囲外 ‐ 奇妙に見えるかも知れません "
 
 #: plot.c:3791
-msgid "invalid thermometers[,1:2]"
+#, fuzzy
+msgid "invalid 'thermometers[, 1:2]'"
 msgstr " thermometers [,1:2] が不正です "
 
 #: plot.c:3830
-msgid "invalid boxplots data (need 5 columns)"
+#, fuzzy
+msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr " boxplot のデータが不正です（5列必要です） "
 
 #: plot.c:3839
-msgid "boxplots[,5] outside [0,1] -- may look funny"
+#, fuzzy
+msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr " boxplots[,5] が [0,1] の範囲外にあるのは変です "
 
 #: plot.c:3841
-msgid "invalid boxplots[, 1:4]"
+#, fuzzy
+msgid "invalid 'boxplots[, 1:4]'"
 msgstr " boxplot[,1:4] が不正です "
 
 #: plot.c:3887
@@ -506,10 +464,6 @@ msgstr " シンボル記号の型が不正です "
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr " '%s' 引数の長さが不正です "
-
-#: plot.c:3951
-msgid "unable to allocate memory (in xspline)"
-msgstr " メモリ確保ができません (xspline 中) "
 
 #: plot3d.c:183 plot3d.c:1923
 msgid "insufficient 'x' or 'y' values"
@@ -609,3 +563,51 @@ msgstr " z 変数の値が全部 NA です "
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""
+
+#~ msgid "unable to allocate memory (in GPolygon)"
+#~ msgstr " メモリ確保ができません (GPolygon) "
+
+#~ msgid "invalid number of points in identify()"
+#~ msgstr " identify 関数の点の個数が不正です "
+
+#~ msgid "Event GE_ScalePS requires a single numeric value"
+#~ msgstr " イベント GE_ScalePS は単一の数値を必要とします "
+
+#~ msgid "zero length 'padj' specified"
+#~ msgstr " 長さゼロの 'padj' が指定されています "
+
+#~ msgid "unable to allocate memory (in GPath)"
+#~ msgstr " メモリ確保ができません (GPath中) "
+
+#~ msgid "invalid x or y (in GPath)"
+#~ msgstr " 不正な x または y (GPath中) "
+
+#~ msgid "zero length 'labels'"
+#~ msgstr " 長さゼロの 'labels' が指定されています "
+
+#~ msgid "zero length 'text' specified"
+#~ msgstr " 長さゼロの 'text' が指定されています "
+
+#~ msgid "zero length 'line' specified"
+#~ msgstr " 長さゼロの 'line' が指定されています "
+
+#~ msgid "zero length 'outer' specified"
+#~ msgstr " 長さゼロの 'outer' が指定されています "
+
+#~ msgid "zero length 'at' specified"
+#~ msgstr " 長さゼロの 'at' が指定されています "
+
+#~ msgid "zero length 'adj' specified"
+#~ msgstr " 長さゼロの 'adj' が指定されています "
+
+#~ msgid "zero length 'cex' specified"
+#~ msgstr " 長さゼロの 'cex' が指定されています "
+
+#~ msgid "zero length 'col' specified"
+#~ msgstr " 長さゼロの 'col' が指定されています "
+
+#~ msgid "zero length 'font' specified"
+#~ msgstr " 長さゼロの 'font' が指定されています "
+
+#~ msgid "unable to allocate memory (in xspline)"
+#~ msgstr " メモリ確保ができません (xspline 中) "

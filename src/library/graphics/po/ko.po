@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46+0100\n"
+"POT-Creation-Date: 2012-10-01 11:17+0100\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -23,10 +23,6 @@ msgstr ""
 #: base.c:38
 msgid "no base graphics system is registered"
 msgstr ""
-
-#: base.c:297
-msgid "Event GE_ScalePS requires a single numeric value"
-msgstr "이벤트 GE_ScalePS는 단일 수치를 필요로 합니다"
 
 #: base.c:328 base.c:335 base.c:343
 #, fuzzy
@@ -43,7 +39,8 @@ msgid "attempt to plot on null device"
 msgstr "존재하지 않는 장치에 그리기를 시도하였습니다"
 
 #: graphics.c:1830
-msgid "outer margins too large (fig.region too small)"
+#, fuzzy
+msgid "outer margins too large (figure region too small)"
 msgstr "외부 여백이 너무 큽니다 (fig.region가 너무 작습니다)"
 
 #: graphics.c:1832
@@ -59,8 +56,8 @@ msgid "plot region too large"
 msgstr "plot 영역이 너무 큽니다"
 
 #: graphics.c:1883
-#, c-format
-msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
+#, fuzzy, c-format
+msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "값의 상대 범위 = %4.0f * EPS는 작습니다 (축 %d)"
 
 #: graphics.c:1935
@@ -73,37 +70,39 @@ msgstr "축의 한계가 유한하지 않습니다 [GScale (%g,%g, %d,); log = %
 msgid "axis style \"%c\" unimplemented"
 msgstr "축 스타일 \"%c\"는 아직 구현되지 않았습니다"
 
-#: graphics.c:2204 graphics.c:2562
-msgid "No graphics device is active"
+#: graphics.c:2203
+#, fuzzy
+msgid "no graphics device is active"
 msgstr "현재 유효한 그래픽 장치가 없습니다"
 
-#: graphics.c:2399
+#: graphics.c:2398
 msgid "plot.new has not been called yet"
 msgstr "아직 plot.new가 호출되지 않았습니다"
 
-#: graphics.c:2401
+#: graphics.c:2400
 msgid "invalid graphics state"
 msgstr "그래픽 상태가 올바르지 않습니다"
 
-#: graphics.c:2801 graphics.c:2837
-msgid "unable to allocate memory (in GPolygon)"
-msgstr "(GPolygon에서) 메모리를 확보할 수 없습니다"
+#: graphics.c:2561
+msgid "No graphics device is active"
+msgstr "현재 유효한 그래픽 장치가 없습니다"
 
-#: graphics.c:3021
+#: graphics.c:3020
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "길이가 0 인 arrow는 각도를 정할 수 없으므로, 지나 갑니다"
 
-#: graphics.c:3102
+#: graphics.c:3101
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\") = '%c'는 잘못되었습니다：box()를 그릴 수 없습니다"
 
-#: graphics.c:3119
+#: graphics.c:3118
 msgid "invalid argument to GBox"
 msgstr "GBox의 인수가 잘못되었습니다"
 
-#: graphics.c:3364
-msgid "Metric information not available for this device"
+#: graphics.c:3363
+#, fuzzy
+msgid "metric information not available for this device"
 msgstr "이 장치에 대한 메트릭 정보를 사용할 수 없습니다"
 
 #: par-common.c:138
@@ -138,11 +137,13 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\"의 파라미터  \"j\"가 범위밖입니다"
 
 #: par.c:447
-msgid "value of nr in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" 안의 nr의 값은 잘못되어 무시됩니다"
 
 #: par.c:449
-msgid "value of nc in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\"안의  nc의 값은 잘못되어 무시됩니다"
 
 #: par.c:475
@@ -198,7 +199,8 @@ msgid "invalid '%s' value"
 msgstr "'%s' 의 값이 잘못되었습니다 "
 
 #: plot.c:285
-msgid "invalid 'vfont' value [typeface]"
+#, fuzzy, c-format
+msgid "invalid 'vfont' value [typeface %d]"
 msgstr "'vfont'의 값이 잘못되었습니다 [typeface]"
 
 #: plot.c:309
@@ -262,9 +264,12 @@ msgstr "축의 번호 %d이 잘못되었습니다"
 msgid "'hadj' must be of length one"
 msgstr "'hadj'는 1의 길이어야 합니다"
 
-#: plot.c:865 plot.c:2392
-msgid "zero length 'padj' specified"
-msgstr "길이가 0 인 'padj'이 지정되어 있습니다"
+#: plot.c:865 plot.c:2073 plot.c:2350 plot.c:2356 plot.c:2363 plot.c:2371
+#: plot.c:2378 plot.c:2385 plot.c:2392 plot.c:2399 plot.c:2407 plot.c:2414
+#: plot.c:3132
+#, fuzzy, c-format
+msgid "zero-length '%s' specified"
+msgstr "길이가 0 인 'side'가 지정되어 있습니다"
 
 #: plot.c:934
 msgid "'labels' is supplied and not 'at'"
@@ -322,14 +327,6 @@ msgstr "네번째 인수가 잘못되었습니다"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "길이 0이 아닌 자표와 0의 좌표는 함께 사용될 수 없습니다"
 
-#: plot.c:1780
-msgid "unable to allocate memory (in GPath)"
-msgstr "메모리가 확보될 수 없습니다 (GPath중에서)"
-
-#: plot.c:1786
-msgid "invalid x or y (in GPath)"
-msgstr "잘못된 x 또는 y 입니다 (GPath중에서)"
-
 #: plot.c:1903
 msgid "invalid arrow head length"
 msgstr "화살표 머리 부분의 길이가 잘못되었습니다"
@@ -342,49 +339,9 @@ msgstr "화살표 머리 부분의 각도가 잘못되었습니다"
 msgid "invalid arrow head specification"
 msgstr "화살표 머리 부분의 지정이 잘못되었습니다"
 
-#: plot.c:2073 plot.c:3132
-msgid "zero length 'labels'"
-msgstr "길이가 0 인 'labels'가 지정되어 있습니다"
-
 #: plot.c:2147
 msgid "no coordinates were supplied"
 msgstr "좌표가 제공되지 않았습니다"
-
-#: plot.c:2350
-msgid "zero length 'text' specified"
-msgstr "길이가 0 인 'text'가 지정되어 있습니다"
-
-#: plot.c:2356
-msgid "zero length 'side' specified"
-msgstr "길이가 0 인 'side'가 지정되어 있습니다"
-
-#: plot.c:2363
-msgid "zero length 'line' specified"
-msgstr "길이가 0 인 'line'가 지정되어 있습니다"
-
-#: plot.c:2371
-msgid "zero length 'outer' specified"
-msgstr "길이가 0 인 'outer'가 지정되어 있습니다"
-
-#: plot.c:2378
-msgid "zero length 'at' specified"
-msgstr "길이가 0 인 'at'가 지정되어 있습니다"
-
-#: plot.c:2385
-msgid "zero length 'adj' specified"
-msgstr "길이가 0 인 'adj'지정되어 있습니다"
-
-#: plot.c:2399
-msgid "zero length 'cex' specified"
-msgstr "길이가 0 인 'cex'가 지정되어 있습니다"
-
-#: plot.c:2407
-msgid "zero length 'col' specified"
-msgstr "길이가 0 인 'col'가 지정되어 있습니다"
-
-#: plot.c:2414
-msgid "zero length 'font' specified"
-msgstr "길이가 0 인 'font'가 지정되어 있습니다"
 
 #: plot.c:2770
 msgid "invalid a=, b= specification"
@@ -402,13 +359,10 @@ msgstr "'a'와 'b'는 유한해야합니다"
 msgid "invalid '%s' argument"
 msgstr "'%s' 인수가 잘못되었습니다 "
 
-#: plot.c:2985
-msgid "invalid number of points in locator()"
+#: plot.c:2985 plot.c:3121
+#, fuzzy, c-format
+msgid "invalid number of points in %s"
 msgstr "locator()함수로 점의 개수가 잘못되었습니다"
-
-#: plot.c:3121
-msgid "invalid number of points in identify()"
-msgstr "identify()함수로 점의 개수가 잘못되었습니다"
 
 #: plot.c:3123
 msgid "incorrect argument type"
@@ -476,29 +430,33 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "thermometers 데이터가 잘못되었습니다 (3 또는 4열이 필요합니다)"
 
 #: plot.c:3785
-#, c-format
-msgid "invalid thermometers[,%s]"
+#, fuzzy, c-format
+msgid "invalid 'thermometers[, %s]'"
 msgstr "thermometers[, %s]가 잘못되었습니다"
 
 #: plot.c:3788
-#, c-format
-msgid "thermometers[,%s] not in [0,1] -- may look funny"
+#, fuzzy, c-format
+msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "thermometers[, %s]가 [0,1] 범위외 -- 이상하게 보일지도 모릅니다"
 
 #: plot.c:3791
-msgid "invalid thermometers[,1:2]"
+#, fuzzy
+msgid "invalid 'thermometers[, 1:2]'"
 msgstr "thermometers[,1:2]가 부적절합니다"
 
 #: plot.c:3830
-msgid "invalid boxplots data (need 5 columns)"
+#, fuzzy
+msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "boxplots의 데이터가 부적절합니다(5열이 필요합니다)"
 
 #: plot.c:3839
-msgid "boxplots[,5] outside [0,1] -- may look funny"
+#, fuzzy
+msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "boxplots[, 5]가 [0,1]의 범위외에 있는것이 이상합니다"
 
 #: plot.c:3841
-msgid "invalid boxplots[, 1:4]"
+#, fuzzy
+msgid "invalid 'boxplots[, 1:4]'"
 msgstr "boxplots[, 1:4]가 부적절합니다"
 
 #: plot.c:3887
@@ -509,10 +467,6 @@ msgstr "심벌의 유형이 부적절합니다"
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "'%s'인수의 길이가 잘못되었습니다"
-
-#: plot.c:3951
-msgid "unable to allocate memory (in xspline)"
-msgstr "메모리를 확보할 수 없습니다 (xspline에서)"
 
 #: plot3d.c:183 plot3d.c:1923
 msgid "insufficient 'x' or 'y' values"
@@ -612,3 +566,51 @@ msgstr "z 변수의 값이 전부 NA 입니다"
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""
+
+#~ msgid "unable to allocate memory (in GPolygon)"
+#~ msgstr "(GPolygon에서) 메모리를 확보할 수 없습니다"
+
+#~ msgid "invalid number of points in identify()"
+#~ msgstr "identify()함수로 점의 개수가 잘못되었습니다"
+
+#~ msgid "Event GE_ScalePS requires a single numeric value"
+#~ msgstr "이벤트 GE_ScalePS는 단일 수치를 필요로 합니다"
+
+#~ msgid "zero length 'padj' specified"
+#~ msgstr "길이가 0 인 'padj'이 지정되어 있습니다"
+
+#~ msgid "unable to allocate memory (in GPath)"
+#~ msgstr "메모리가 확보될 수 없습니다 (GPath중에서)"
+
+#~ msgid "invalid x or y (in GPath)"
+#~ msgstr "잘못된 x 또는 y 입니다 (GPath중에서)"
+
+#~ msgid "zero length 'labels'"
+#~ msgstr "길이가 0 인 'labels'가 지정되어 있습니다"
+
+#~ msgid "zero length 'text' specified"
+#~ msgstr "길이가 0 인 'text'가 지정되어 있습니다"
+
+#~ msgid "zero length 'line' specified"
+#~ msgstr "길이가 0 인 'line'가 지정되어 있습니다"
+
+#~ msgid "zero length 'outer' specified"
+#~ msgstr "길이가 0 인 'outer'가 지정되어 있습니다"
+
+#~ msgid "zero length 'at' specified"
+#~ msgstr "길이가 0 인 'at'가 지정되어 있습니다"
+
+#~ msgid "zero length 'adj' specified"
+#~ msgstr "길이가 0 인 'adj'지정되어 있습니다"
+
+#~ msgid "zero length 'cex' specified"
+#~ msgstr "길이가 0 인 'cex'가 지정되어 있습니다"
+
+#~ msgid "zero length 'col' specified"
+#~ msgstr "길이가 0 인 'col'가 지정되어 있습니다"
+
+#~ msgid "zero length 'font' specified"
+#~ msgstr "길이가 0 인 'font'가 지정되어 있습니다"
+
+#~ msgid "unable to allocate memory (in xspline)"
+#~ msgstr "메모리를 확보할 수 없습니다 (xspline에서)"

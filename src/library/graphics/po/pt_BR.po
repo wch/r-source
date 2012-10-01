@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46+0100\n"
+"POT-Creation-Date: 2012-10-01 11:17+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -20,10 +20,6 @@ msgstr ""
 #: base.c:38
 msgid "no base graphics system is registered"
 msgstr ""
-
-#: base.c:297
-msgid "Event GE_ScalePS requires a single numeric value"
-msgstr "Evento GE_ScalePS requer um único valor numérico"
 
 #: base.c:328 base.c:335 base.c:343
 #, fuzzy
@@ -40,7 +36,8 @@ msgid "attempt to plot on null device"
 msgstr "tentativa de gerar gráfico em um dispositivo nulo"
 
 #: graphics.c:1830
-msgid "outer margins too large (fig.region too small)"
+#, fuzzy
+msgid "outer margins too large (figure region too small)"
 msgstr "margens externas muito grandes (região para figura muito pequena)"
 
 #: graphics.c:1832
@@ -56,8 +53,8 @@ msgid "plot region too large"
 msgstr "região de gráfico muito grande"
 
 #: graphics.c:1883
-#, c-format
-msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
+#, fuzzy, c-format
+msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "limite relativo dos valores =%4.0f * EPS, é pequeno (eixo %d)"
 
 #: graphics.c:1935
@@ -70,37 +67,39 @@ msgstr "limites de eixo não finitos [GScale(%g,%g,%d, .); log=%d]"
 msgid "axis style \"%c\" unimplemented"
 msgstr "estilo de eixo \"%c\" não implementado"
 
-#: graphics.c:2204 graphics.c:2562
-msgid "No graphics device is active"
+#: graphics.c:2203
+#, fuzzy
+msgid "no graphics device is active"
 msgstr "Nenhum dispositivo gráfico está ativo"
 
-#: graphics.c:2399
+#: graphics.c:2398
 msgid "plot.new has not been called yet"
 msgstr "plot.new ainda não foi chamado"
 
-#: graphics.c:2401
+#: graphics.c:2400
 msgid "invalid graphics state"
 msgstr "estado gráfico inválido"
 
-#: graphics.c:2801 graphics.c:2837
-msgid "unable to allocate memory (in GPolygon)"
-msgstr "não foi possível alocar memória (em GPolygon)"
+#: graphics.c:2561
+msgid "No graphics device is active"
+msgstr "Nenhum dispositivo gráfico está ativo"
 
-#: graphics.c:3021
+#: graphics.c:3020
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "flexa de comprimento zero tem ângulo indeterminado e foi pulada"
 
-#: graphics.c:3102
+#: graphics.c:3101
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "parâmetro inválido par(\"bty\") = '%c'; nenhum box() desenhado"
 
-#: graphics.c:3119
+#: graphics.c:3118
 msgid "invalid argument to GBox"
 msgstr "argumento inválido para GBox"
 
-#: graphics.c:3364
-msgid "Metric information not available for this device"
+#: graphics.c:3363
+#, fuzzy
+msgid "metric information not available for this device"
 msgstr "informação métrica não disponível para este dispositivo"
 
 #: par-common.c:138
@@ -135,11 +134,13 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "parâmetro  \"j\" em \"mfg\" fora dos limites"
 
 #: par.c:447
-msgid "value of nr in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "valor de nr em \"mfg\" está errado e vai ser ignorado"
 
 #: par.c:449
-msgid "value of nc in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "valor de nc em \"mfg\" está errado e vai ser ignorado"
 
 #: par.c:475
@@ -195,7 +196,8 @@ msgid "invalid '%s' value"
 msgstr "valor de '%s' inválido"
 
 #: plot.c:285
-msgid "invalid 'vfont' value [typeface]"
+#, fuzzy, c-format
+msgid "invalid 'vfont' value [typeface %d]"
 msgstr "valor de 'vfont' inválido [typeface]"
 
 #: plot.c:309
@@ -259,9 +261,12 @@ msgstr "número de eixo inválido %d"
 msgid "'hadj' must be of length one"
 msgstr "'hadj' deve ter comprimento 1"
 
-#: plot.c:865 plot.c:2392
-msgid "zero length 'padj' specified"
-msgstr "'padj' de comprimento zero especificado"
+#: plot.c:865 plot.c:2073 plot.c:2350 plot.c:2356 plot.c:2363 plot.c:2371
+#: plot.c:2378 plot.c:2385 plot.c:2392 plot.c:2399 plot.c:2407 plot.c:2414
+#: plot.c:3132
+#, fuzzy, c-format
+msgid "zero-length '%s' specified"
+msgstr "'side' de comprimento zero foi especificado"
 
 #: plot.c:934
 msgid "'labels' is supplied and not 'at'"
@@ -320,14 +325,6 @@ msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr ""
 "não é possível misturar coordenadas de comprimento zero com de não-zero"
 
-#: plot.c:1780
-msgid "unable to allocate memory (in GPath)"
-msgstr "não foi possível alocar memória (em GPath)"
-
-#: plot.c:1786
-msgid "invalid x or y (in GPath)"
-msgstr "x ou y inválido (em GPath)"
-
 #: plot.c:1903
 msgid "invalid arrow head length"
 msgstr "comprimento de ponta da flexa inválido"
@@ -340,49 +337,9 @@ msgstr "ângulo de ponta da flexa inválido"
 msgid "invalid arrow head specification"
 msgstr "especificação de ponta da flexa inválida"
 
-#: plot.c:2073 plot.c:3132
-msgid "zero length 'labels'"
-msgstr "'labels' de comprimento zero"
-
 #: plot.c:2147
 msgid "no coordinates were supplied"
 msgstr "nenhuma coordenada foi especificada"
-
-#: plot.c:2350
-msgid "zero length 'text' specified"
-msgstr "'text' de comprimento zero foi especificado"
-
-#: plot.c:2356
-msgid "zero length 'side' specified"
-msgstr "'side' de comprimento zero foi especificado"
-
-#: plot.c:2363
-msgid "zero length 'line' specified"
-msgstr "'line' de comprimento zero foi especificado"
-
-#: plot.c:2371
-msgid "zero length 'outer' specified"
-msgstr "'outer' de comprimento zero foi especificado"
-
-#: plot.c:2378
-msgid "zero length 'at' specified"
-msgstr "'at' de comprimento zero foi especificado"
-
-#: plot.c:2385
-msgid "zero length 'adj' specified"
-msgstr "'adj' de comprimento zero foi especificado"
-
-#: plot.c:2399
-msgid "zero length 'cex' specified"
-msgstr "'cex' de comprimento zero foi especificado"
-
-#: plot.c:2407
-msgid "zero length 'col' specified"
-msgstr "'col' de comprimento zero foi especificado"
-
-#: plot.c:2414
-msgid "zero length 'font' specified"
-msgstr "'font' de comprimento zero foi especificado"
 
 #: plot.c:2770
 msgid "invalid a=, b= specification"
@@ -400,13 +357,10 @@ msgstr "'a' e 'b' devem ser finitos"
 msgid "invalid '%s' argument"
 msgstr "argumento '%s' inválido"
 
-#: plot.c:2985
-msgid "invalid number of points in locator()"
+#: plot.c:2985 plot.c:3121
+#, fuzzy, c-format
+msgid "invalid number of points in %s"
 msgstr "número de pontos inválidos em locator()"
-
-#: plot.c:3121
-msgid "invalid number of points in identify()"
-msgstr "número de pontos inválidos em identify()"
 
 #: plot.c:3123
 msgid "incorrect argument type"
@@ -474,29 +428,33 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "dados de termômetro inválidos (3 ou 4 colunas necessárias)"
 
 #: plot.c:3785
-#, c-format
-msgid "invalid thermometers[,%s]"
+#, fuzzy, c-format
+msgid "invalid 'thermometers[, %s]'"
 msgstr "thermometers[,%s] inválidos"
 
 #: plot.c:3788
-#, c-format
-msgid "thermometers[,%s] not in [0,1] -- may look funny"
+#, fuzzy, c-format
+msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "thermometers[,%s] não estão em [0,1] - pode não dar um bom resultado"
 
 #: plot.c:3791
-msgid "invalid thermometers[,1:2]"
+#, fuzzy
+msgid "invalid 'thermometers[, 1:2]'"
 msgstr "thermometers[,1:2] inválidos"
 
 #: plot.c:3830
-msgid "invalid boxplots data (need 5 columns)"
+#, fuzzy
+msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "dados de boxplots inválidos (5 colunas necessárias)"
 
 #: plot.c:3839
-msgid "boxplots[,5] outside [0,1] -- may look funny"
+#, fuzzy
+msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "boxplots[,5] fora do intervalo [0,1] - pode não dar um bom resultado"
 
 #: plot.c:3841
-msgid "invalid boxplots[, 1:4]"
+#, fuzzy
+msgid "invalid 'boxplots[, 1:4]'"
 msgstr "boxplots[, 1:4] inválidos"
 
 #: plot.c:3887
@@ -507,10 +465,6 @@ msgstr "tipo de símbolo inválido"
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "comprimento errado para argumento '%s'"
-
-#: plot.c:3951
-msgid "unable to allocate memory (in xspline)"
-msgstr "não foi possível alocar memória (em xspline)"
 
 #: plot3d.c:183 plot3d.c:1923
 msgid "insufficient 'x' or 'y' values"
@@ -610,3 +564,51 @@ msgstr "todos os valore de z são NA"
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""
+
+#~ msgid "unable to allocate memory (in GPolygon)"
+#~ msgstr "não foi possível alocar memória (em GPolygon)"
+
+#~ msgid "invalid number of points in identify()"
+#~ msgstr "número de pontos inválidos em identify()"
+
+#~ msgid "Event GE_ScalePS requires a single numeric value"
+#~ msgstr "Evento GE_ScalePS requer um único valor numérico"
+
+#~ msgid "zero length 'padj' specified"
+#~ msgstr "'padj' de comprimento zero especificado"
+
+#~ msgid "unable to allocate memory (in GPath)"
+#~ msgstr "não foi possível alocar memória (em GPath)"
+
+#~ msgid "invalid x or y (in GPath)"
+#~ msgstr "x ou y inválido (em GPath)"
+
+#~ msgid "zero length 'labels'"
+#~ msgstr "'labels' de comprimento zero"
+
+#~ msgid "zero length 'text' specified"
+#~ msgstr "'text' de comprimento zero foi especificado"
+
+#~ msgid "zero length 'line' specified"
+#~ msgstr "'line' de comprimento zero foi especificado"
+
+#~ msgid "zero length 'outer' specified"
+#~ msgstr "'outer' de comprimento zero foi especificado"
+
+#~ msgid "zero length 'at' specified"
+#~ msgstr "'at' de comprimento zero foi especificado"
+
+#~ msgid "zero length 'adj' specified"
+#~ msgstr "'adj' de comprimento zero foi especificado"
+
+#~ msgid "zero length 'cex' specified"
+#~ msgstr "'cex' de comprimento zero foi especificado"
+
+#~ msgid "zero length 'col' specified"
+#~ msgstr "'col' de comprimento zero foi especificado"
+
+#~ msgid "zero length 'font' specified"
+#~ msgstr "'font' de comprimento zero foi especificado"
+
+#~ msgid "unable to allocate memory (in xspline)"
+#~ msgstr "não foi possível alocar memória (em xspline)"

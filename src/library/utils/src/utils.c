@@ -93,7 +93,7 @@ SEXP nsl(SEXP hostname)
 	    memcpy(&in.s_addr, *(hp->h_addr_list), sizeof (in.s_addr));
 	    strcpy(ip, inet_ntoa(in));
 	} else {
-	    warning(_("unknown format returned by gethostbyname"));
+	    warning(_("unknown format returned by 'gethostbyname'"));
 	}
 	ans = mkString(ip);
     }

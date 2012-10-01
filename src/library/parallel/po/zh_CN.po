@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2012-10-01 10:57+0100\n"
 "PO-Revision-Date: 2012-02-29 14:00+0000\n"
 "Last-Translator: Fei Chen <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -64,25 +64,28 @@ msgid "error '%s' in select"
 msgstr "选择时出了'%s'这样一个错"
 
 #: fork.c:552
-msgid "mckill failed"
+#, fuzzy
+msgid "'mckill' failed"
 msgstr "mckill失败"
 
 #: fork.c:562
-msgid "mcexit can only be used in a child process"
+#, fuzzy
+msgid "'mcexit' can only be used in a child process"
 msgstr "mcexit只能用于子进程"
 
 #: fork.c:583
-msgid "mcexit failed"
+#, fuzzy
+msgid "'mcexit' failed"
 msgstr "mcexit失败"
 
 #: fork.c:605 fork.c:614
-msgid "Invalid CPU affinity specification"
+msgid "invalid CPU affinity specification"
 msgstr ""
 
 #: fork.c:625
-msgid "Requested CPU set is too large for this system"
+msgid "requested CPU set is too large for this system"
 msgstr ""
 
 #: fork.c:648
-msgid "Retrieving CPU affinity set failed"
+msgid "retrieving CPU affinity set failed"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46+0100\n"
+"POT-Creation-Date: 2012-10-01 11:17+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -21,10 +21,6 @@ msgstr ""
 #: base.c:38
 msgid "no base graphics system is registered"
 msgstr ""
-
-#: base.c:297
-msgid "Event GE_ScalePS requires a single numeric value"
-msgstr "事件 GE_ScalePS 需要單一數值"
 
 #: base.c:328 base.c:335 base.c:343
 #, fuzzy
@@ -41,7 +37,8 @@ msgid "attempt to plot on null device"
 msgstr "試圖於 null 裝置上繪圖"
 
 #: graphics.c:1830
-msgid "outer margins too large (fig.region too small)"
+#, fuzzy
+msgid "outer margins too large (figure region too small)"
 msgstr "外側版邊太大 (fig.region 太小)"
 
 #: graphics.c:1832
@@ -57,8 +54,8 @@ msgid "plot region too large"
 msgstr "繪圖區太大"
 
 #: graphics.c:1883
-#, c-format
-msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
+#, fuzzy, c-format
+msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "相對範圍值 =%4.0f * EPS太小 (座標 %d)"
 
 #: graphics.c:1935
@@ -71,37 +68,39 @@ msgstr "座標範圍不能無限大 [GScale(%g,%g,%d, .); log=%d]"
 msgid "axis style \"%c\" unimplemented"
 msgstr "座標形式 \"%c\" 尚未實作"
 
-#: graphics.c:2204 graphics.c:2562
-msgid "No graphics device is active"
+#: graphics.c:2203
+#, fuzzy
+msgid "no graphics device is active"
 msgstr "沒有活動中的繪圖裝置"
 
-#: graphics.c:2399
+#: graphics.c:2398
 msgid "plot.new has not been called yet"
 msgstr "plot.new 還沒有被呼叫"
 
-#: graphics.c:2401
+#: graphics.c:2400
 msgid "invalid graphics state"
 msgstr "繪圖狀態不正確"
 
-#: graphics.c:2801 graphics.c:2837
-msgid "unable to allocate memory (in GPolygon)"
-msgstr "無法配置記憶體 (GPolygon)"
+#: graphics.c:2561
+msgid "No graphics device is active"
+msgstr "沒有活動中的繪圖裝置"
 
-#: graphics.c:3021
+#: graphics.c:3020
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "零長度箭頭的角度不定，因此忽略不用"
 
-#: graphics.c:3102
+#: graphics.c:3101
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\")='%c' 不正確; 取消繪製 box()"
 
-#: graphics.c:3119
+#: graphics.c:3118
 msgid "invalid argument to GBox"
 msgstr "GBox 引數不正確"
 
-#: graphics.c:3364
-msgid "Metric information not available for this device"
+#: graphics.c:3363
+#, fuzzy
+msgid "metric information not available for this device"
 msgstr "無法取得這個裝置的度量資訊"
 
 #: par-common.c:138
@@ -136,11 +135,13 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\" 中的參數 \"j\" 超出範圍"
 
 #: par.c:447
-msgid "value of nr in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" 中的 nr 值不正確，忽略不用"
 
 #: par.c:449
-msgid "value of nc in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" 中的 nc 值不正確，忽略不用"
 
 #: par.c:475
@@ -196,7 +197,8 @@ msgid "invalid '%s' value"
 msgstr "'%s' 值不正確"
 
 #: plot.c:285
-msgid "invalid 'vfont' value [typeface]"
+#, fuzzy, c-format
+msgid "invalid 'vfont' value [typeface %d]"
 msgstr "'vfont' 值不正確 [typeface]"
 
 #: plot.c:309
@@ -260,9 +262,12 @@ msgstr "座標數目 %d 不正確"
 msgid "'hadj' must be of length one"
 msgstr "'hadj' 的長度必須是 1"
 
-#: plot.c:865 plot.c:2392
-msgid "zero length 'padj' specified"
-msgstr "'padj' 長度不能為零"
+#: plot.c:865 plot.c:2073 plot.c:2350 plot.c:2356 plot.c:2363 plot.c:2371
+#: plot.c:2378 plot.c:2385 plot.c:2392 plot.c:2399 plot.c:2407 plot.c:2414
+#: plot.c:3132
+#, fuzzy, c-format
+msgid "zero-length '%s' specified"
+msgstr "'side' 長度不能設成零"
 
 #: plot.c:934
 msgid "'labels' is supplied and not 'at'"
@@ -320,14 +325,6 @@ msgstr "第四個引數不正確"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "無法將長度為零與非零的座標混合"
 
-#: plot.c:1780
-msgid "unable to allocate memory (in GPath)"
-msgstr "無法配置記憶體 (在 GPath 中)"
-
-#: plot.c:1786
-msgid "invalid x or y (in GPath)"
-msgstr "無效的 x 或 y (在 GPath 中)"
-
 #: plot.c:1903
 msgid "invalid arrow head length"
 msgstr "箭頭長度不正確"
@@ -340,49 +337,9 @@ msgstr "箭頭角度不正確"
 msgid "invalid arrow head specification"
 msgstr "箭頭設定不正確"
 
-#: plot.c:2073 plot.c:3132
-msgid "zero length 'labels'"
-msgstr "'labels' 的長度不能為零"
-
 #: plot.c:2147
 msgid "no coordinates were supplied"
 msgstr "沒有座標"
-
-#: plot.c:2350
-msgid "zero length 'text' specified"
-msgstr "'text' 長度不能設成零"
-
-#: plot.c:2356
-msgid "zero length 'side' specified"
-msgstr "'side' 長度不能設成零"
-
-#: plot.c:2363
-msgid "zero length 'line' specified"
-msgstr "'line' 長度不能設成零"
-
-#: plot.c:2371
-msgid "zero length 'outer' specified"
-msgstr "'outer' 長度不能設成零"
-
-#: plot.c:2378
-msgid "zero length 'at' specified"
-msgstr "'at' 長度不能設成零"
-
-#: plot.c:2385
-msgid "zero length 'adj' specified"
-msgstr "'adj' 長度不能設成零"
-
-#: plot.c:2399
-msgid "zero length 'cex' specified"
-msgstr "'cex' 長度不能設成零"
-
-#: plot.c:2407
-msgid "zero length 'col' specified"
-msgstr "'col' 長度不能設成零"
-
-#: plot.c:2414
-msgid "zero length 'font' specified"
-msgstr "'font' 長度不能設成零"
 
 #: plot.c:2770
 msgid "invalid a=, b= specification"
@@ -400,13 +357,10 @@ msgstr "'a' 和 'b' 的值必須是有限的"
 msgid "invalid '%s' argument"
 msgstr "'%s' 引數不正確"
 
-#: plot.c:2985
-msgid "invalid number of points in locator()"
+#: plot.c:2985 plot.c:3121
+#, fuzzy, c-format
+msgid "invalid number of points in %s"
 msgstr "locator() 中點的數目不正確"
-
-#: plot.c:3121
-msgid "invalid number of points in identify()"
-msgstr "identify() 中點的數目不正確"
 
 #: plot.c:3123
 msgid "incorrect argument type"
@@ -474,29 +428,33 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "溫度計資料不正確 (需要三或四欄)"
 
 #: plot.c:3785
-#, c-format
-msgid "invalid thermometers[,%s]"
+#, fuzzy, c-format
+msgid "invalid 'thermometers[, %s]'"
 msgstr "溫度計[,%s] 不正確"
 
 #: plot.c:3788
-#, c-format
-msgid "thermometers[,%s] not in [0,1] -- may look funny"
+#, fuzzy, c-format
+msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "溫度計[,%s] 在 [0,1] 範圍外 -- 看起來會有點不正確"
 
 #: plot.c:3791
-msgid "invalid thermometers[,1:2]"
+#, fuzzy
+msgid "invalid 'thermometers[, 1:2]'"
 msgstr "溫度計[,1:2]"
 
 #: plot.c:3830
-msgid "invalid boxplots data (need 5 columns)"
+#, fuzzy
+msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "boxplots 資料不正確 (需要五欄)"
 
 #: plot.c:3839
-msgid "boxplots[,5] outside [0,1] -- may look funny"
+#, fuzzy
+msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "boxplots[,5] 在 [0,1] 範圍外 -- 看起來會有點不正確"
 
 #: plot.c:3841
-msgid "invalid boxplots[, 1:4]"
+#, fuzzy
+msgid "invalid 'boxplots[, 1:4]'"
 msgstr "boxplots[, 1:4] 不正確"
 
 #: plot.c:3887
@@ -507,10 +465,6 @@ msgstr "符號類型不正確"
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "'%s' 引數的長度不正確"
-
-#: plot.c:3951
-msgid "unable to allocate memory (in xspline)"
-msgstr "無法配置記憶體 (在 xspline 中)"
 
 #: plot3d.c:183 plot3d.c:1923
 msgid "insufficient 'x' or 'y' values"
@@ -610,3 +564,51 @@ msgstr "所有的 z 值都是 NA"
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""
+
+#~ msgid "unable to allocate memory (in GPolygon)"
+#~ msgstr "無法配置記憶體 (GPolygon)"
+
+#~ msgid "invalid number of points in identify()"
+#~ msgstr "identify() 中點的數目不正確"
+
+#~ msgid "Event GE_ScalePS requires a single numeric value"
+#~ msgstr "事件 GE_ScalePS 需要單一數值"
+
+#~ msgid "zero length 'padj' specified"
+#~ msgstr "'padj' 長度不能為零"
+
+#~ msgid "unable to allocate memory (in GPath)"
+#~ msgstr "無法配置記憶體 (在 GPath 中)"
+
+#~ msgid "invalid x or y (in GPath)"
+#~ msgstr "無效的 x 或 y (在 GPath 中)"
+
+#~ msgid "zero length 'labels'"
+#~ msgstr "'labels' 的長度不能為零"
+
+#~ msgid "zero length 'text' specified"
+#~ msgstr "'text' 長度不能設成零"
+
+#~ msgid "zero length 'line' specified"
+#~ msgstr "'line' 長度不能設成零"
+
+#~ msgid "zero length 'outer' specified"
+#~ msgstr "'outer' 長度不能設成零"
+
+#~ msgid "zero length 'at' specified"
+#~ msgstr "'at' 長度不能設成零"
+
+#~ msgid "zero length 'adj' specified"
+#~ msgstr "'adj' 長度不能設成零"
+
+#~ msgid "zero length 'cex' specified"
+#~ msgstr "'cex' 長度不能設成零"
+
+#~ msgid "zero length 'col' specified"
+#~ msgstr "'col' 長度不能設成零"
+
+#~ msgid "zero length 'font' specified"
+#~ msgstr "'font' 長度不能設成零"
+
+#~ msgid "unable to allocate memory (in xspline)"
+#~ msgstr "無法配置記憶體 (在 xspline 中)"

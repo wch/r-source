@@ -444,9 +444,9 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 	    posIntCheck(INTEGER(value)[2], what);
 	    posIntCheck(INTEGER(value)[3], what);
 	    if(nrow != INTEGER(value)[2])
-		warning(_("value of nr in \"mfg\" is wrong and will be ignored"));
+		warning(_("value of 'nr' in \"mfg\" is wrong and will be ignored"));
 	    if(ncol != INTEGER(value)[3])
-		warning(_("value of nc in \"mfg\" is wrong and will be ignored"));
+		warning(_("value of 'nc' in \"mfg\" is wrong and will be ignored"));
 	}
 	R_DEV_2(lastFigure) = nrow*ncol;
 	/*R_DEV__(mfind) = 1;*/

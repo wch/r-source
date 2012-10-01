@@ -586,7 +586,7 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 
 	case FontBBox:
 	    if (!GetFontBBox(buf, metrics)) {
-		warning(_("FontBBox could not be parsed"));
+		warning("'FontBBox' could not be parsed");
 		goto pserror;
 	    }
 	    break;
@@ -594,7 +594,7 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 	case C:
 	    if (mode != StartFontMetrics) goto pserror;
 	    if (!GetCharInfo(buf, metrics, charnames, encnames, reencode)) {
-		warning(_("CharInfo could not be parsed"));
+		warning("'CharInfo' could not be parsed");
 		goto pserror;
 	    }
 	    break;
@@ -1438,7 +1438,7 @@ findLoadedFont(const char *name, const char *encoding, Rboolean isPDF)
 SEXP Type1FontInUse(SEXP name, SEXP isPDF)
 {
     if (!isString(name) || LENGTH(name) > 1)
-	error(_("Invalid font name or more than one font name"));
+	error(_("invalid font name or more than one font name"));
     return ScalarLogical(
 	findLoadedFont(CHAR(STRING_ELT(name, 0)), NULL, asLogical(isPDF))
 	!= NULL);
@@ -1471,7 +1471,7 @@ static cidfontfamily findLoadedCIDFont(const char *family, Rboolean isPDF)
 SEXP CIDFontInUse(SEXP name, SEXP isPDF)
 {
     if (!isString(name) || LENGTH(name) > 1)
-	error(_("Invalid font name or more than one font name"));
+	error(_("invalid font name or more than one font name"));
     return ScalarLogical(
 	findLoadedCIDFont(CHAR(STRING_ELT(name, 0)), asLogical(isPDF))
 	!= NULL);
@@ -2383,7 +2383,7 @@ static void PSEncodeFonts(FILE *fp, PostScriptDesc *pd)
 		encoding = findEncoding(fonts->family->encoding->encpath,
 					pd->encodings, FALSE);
 		if (!encoding)
-		    warning(_("Corrupt loaded encodings;  encoding not recorded"));
+		    warning(_("corrupt loaded encodings;  encoding not recorded"));
 		else {
 		    /*
 		     * Record encoding on device's list of encodings so
@@ -2394,7 +2394,7 @@ static void PSEncodeFonts(FILE *fp, PostScriptDesc *pd)
 		    if (enclist)
 			pd->encodings = enclist;
 		    else
-			warning(_("Failed to record device encoding"));
+			warning(_("failed to record device encoding"));
 		}
 	    } else {
 		/*
@@ -2563,7 +2563,7 @@ static void PSFileHeader(FILE *fp,
 	}
     }
     if(!isString(prolog))
-	error(_("Object .ps.prolog is not a character vector"));
+	error(_("object '.ps.prolog' is not a character vector"));
     fprintf(fp, "%% begin .ps.prolog\n");
     for (i = 0; i < length(prolog); i++)
 	fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
@@ -2636,7 +2636,7 @@ static void PostScriptSetLineEnd(FILE *fp, R_GE_lineend lend)
 	lineend = 2;
 	break;
     default:
-	error(_("Invalid line end"));
+	error(_("invalid line end"));
     }
     fprintf(fp, "%1d setlinecap\n", lineend);
 }
@@ -2655,7 +2655,7 @@ static void PostScriptSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
 	linejoin = 2;
 	break;
     default:
-	error(_("Invalid line join"));
+	error(_("invalid line join"));
     }
     fprintf(fp, "%1d setlinejoin\n", linejoin);
 }
@@ -2663,7 +2663,7 @@ static void PostScriptSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
 static void PostScriptSetLineMitre(FILE *fp, double linemitre)
 {
     if (linemitre < 1)
-	error(_("Invalid line mitre"));
+	error(_("invalid line mitre"));
     fprintf(fp, "%.2f setmiterlimit\n", linemitre);
 }
 
@@ -3176,7 +3176,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		 * AND if we do, we should free
 		 */
 		PS_cleanup(3, dd, pd);
-		error(_("Invalid font type"));
+		error(_("invalid font type"));
 	    }
 	}
     }
@@ -3200,7 +3200,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     }
     if (!gotFont) {
 	PS_cleanup(3, dd, pd);
-	error(_("Failed to initialise default PostScript font"));
+	error(_("failed to initialise default PostScript font"));
     }
 
     /*
@@ -3239,7 +3239,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 			 * Should NOT get here.
 			 */
 			PS_cleanup(4, dd, pd);
-			error(_("Invalid font type"));
+			error(_("invalid font type"));
 		    }
 		}
 		/*
@@ -3266,7 +3266,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	}
 	if (gotFonts < nfonts) {
 	    PS_cleanup(4, dd, pd);
-	    error(_("Failed to initialise additional PostScript fonts"));
+	    error(_("failed to initialise additional PostScript fonts"));
 	}
     }
     /*****************************
@@ -3292,7 +3292,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     strcpy(pd->command, cmd);
     if (printit && strlen(cmd) == 0) {
 	PS_cleanup(4, dd, pd);
-	error(_("postscript(print.it=TRUE) used with an empty print command"));
+	error(_("'postscript(print.it=TRUE)' used with an empty 'print' command"));
     }
     strcpy(pd->command, cmd);
 
@@ -3754,7 +3754,7 @@ static FontMetricInfo
 	/* (Type 1!) symbol font */
 	result = &(fontfamily->symfont->metrics);
     } else
-	error(_("CID family '%s' not included in PostScript device"),
+	error(_("CID family '%s' not included in postscript() device"),
 	      family);
     return result;
 }
@@ -3772,7 +3772,7 @@ static FontMetricInfo *metricInfo(const char *family, int face,
 	}
 	result = &(fontfamily->fonts[face-1]->metrics);
     } else
-	error(_("family '%s' not included in PostScript device"), family);
+	error(_("family '%s' not included in postscript() device"), family);
     return result;
 }
 
@@ -3783,7 +3783,7 @@ static char *convname(const char *family, PostScriptDesc *pd) {
     if (fontfamily)
 	result = fontfamily->encoding->convname;
     else
-	error(_("family '%s' not included in PostScript device"), family);
+	error(_("family '%s' not included in postscript() device"), family);
     return result;
 }
 
@@ -4221,7 +4221,7 @@ static int translateFont(char *family, int style, PostScriptDesc *pd)
     if (fontfamily) {
 	result = (fontIndex - 1)*5 + style;
     } else {
-	warning(_("family '%s' not included in PostScript device"), family);
+	warning(_("family '%s' not included in postscript() device"), family);
     }
     return result;
 }
@@ -4251,7 +4251,7 @@ static int translateCIDFont(char *family, int style, PostScriptDesc *pd)
 	 */
 	result = (numFonts(pd->fonts)*5) + (fontIndex - 1)*5 + style;
     } else {
-	warning(_("family '%s' not included in PostScript device"), family);
+	warning(_("family '%s' not included in postscript() device"), family);
     }
     return result;
 }
@@ -4356,7 +4356,7 @@ static void PS_Text0(double x, double y, const char *str, int enc,
 						  pd->cidfonts,
 						  &fontIndex);
 	if(!cidfont)
-	    error(_("family '%s' not included in PostScript device"),
+	    error(_("family '%s' not included in postscript() device"),
 		  gc->fontfamily);
 
 	if (!dd->hasTextUTF8 &&
@@ -4580,7 +4580,7 @@ static int XF_SetColor(int color, XFigDesc *pd)
     for (i = 0; i < pd->nXFigColors; i++)
 	if(color == pd->XFigColors[i]) return i;
     if(pd->nXFigColors == 534)
-	error(_("run out of colors in xfig()"));
+	error(_("ran out of colors in xfig()"));
     /* new colour */
     fprintf(pd->psfp, "0 %d #%02x%02x%02x\n", pd->nXFigColors,
 	    R_RED(color), R_GREEN(color), R_BLUE(color));
@@ -4780,7 +4780,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	if (isType1Font(family, PostScriptFonts, NULL)) {
 	    font = addFont(family, FALSE, pd->encodings);
 	} else {
-	    error(_("Only Type 1 fonts supported for XFig"));
+	    error(_("only Type 1 fonts supported for XFig"));
 	}
     }
     if (font) {
@@ -4793,7 +4793,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if (!gotFont) {
 	free(dd);
 	free(pd);
-	error(_("Failed to initialise default XFig font"));
+	error(_("failed to initialise default XFig font"));
     }
 
     /* Deal with paper and plot size and orientation */
@@ -5559,7 +5559,7 @@ static int addRaster(rcolorPtr raster, int w, int h,
     newRaster = malloc(w*h*sizeof(rcolor));
 
     if (!newRaster)
-	error(_("Unable to allocate raster image"));
+	error(_("unable to allocate raster image"));
 
     for (i = 0; i < w*h; i++) {
 	newRaster[i] = raster[i];
@@ -5760,7 +5760,7 @@ static Rboolean addPDFDevicefont(type1fontfamily family,
 	    encoding = findEncoding(family->encoding->encpath,
 				    pd->encodings, TRUE);
 	    if (!encoding) {
-		warning(_("Corrupt loaded encodings;  font not added"));
+		warning(_("corrupt loaded encodings;  font not added"));
 	    } else {
 		encodinglist enclist = addDeviceEncoding(encoding,
 							 pd->encodings);
@@ -5769,7 +5769,7 @@ static Rboolean addPDFDevicefont(type1fontfamily family,
 		    pd->encodings = enclist;
 		    result = TRUE;
 		} else
-		    warning(_("Failed to record device encoding; font not added"));
+		    warning(_("failed to record device encoding; font not added"));
 	    }
 	}
     }
@@ -5953,7 +5953,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		/*
 		 * Should NOT get here.
 		 */
-		error(_("Invalid font type"));
+		error(_("invalid font type"));
 	    }
 	}
     }
@@ -5976,7 +5976,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if (!gotFont) {
 	PDFcleanup(3, pd);
 	free(dd);
-	error(_("Failed to initialise default PDF font"));
+	error(_("failed to initialise default PDF font"));
     }
 
     /*
@@ -6008,7 +6008,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 			/*
 			 * Should NOT get here.
 			 */
-			error(_("Invalid font type"));
+			error(_("invalid font type"));
 		    }
 		}
 		/*
@@ -6031,7 +6031,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	if (gotFonts < nfonts) {
 	    PDFcleanup(4, pd);
 	    free(dd);
-	    error(_("Failed to initialise additional PDF fonts"));
+	    error(_("failed to initialise additional PDF fonts"));
 	}
     }
     /*****************************
@@ -6255,7 +6255,7 @@ static int alphaIndex(int alpha, short *alphas) {
 	    found = 1;
     }
     if (!found)
-	error(_("Invalid alpha value in PDF"));
+	error(_("invalid 'alpha' value in PDF"));
     return i;
 }
 
@@ -6407,7 +6407,7 @@ static void PDFSetLineEnd(FILE *fp, R_GE_lineend lend)
 	lineend = 2;
 	break;
     default:
-	error(_("Invalid line end"));
+	error(_("invalid line end"));
     }
     fprintf(fp, "%1d J\n", lineend);
 }
@@ -6426,7 +6426,7 @@ static void PDFSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
 	linejoin = 2;
 	break;
     default:
-	error(_("Invalid line join"));
+	error(_("invalid line join"));
     }
     fprintf(fp, "%1d j\n", linejoin);
 }
@@ -6572,7 +6572,7 @@ static void PDFwritesRGBcolorspace(PDFDesc *pd)
              R_Home, FILESEP, FILESEP, FILESEP, FILESEP,
 	     pd->useCompression ? "srgb.flate" : "srgb");
     if (!(fp = R_fopen(R_ExpandFileName(buf), "rb")))
-        error(_("Failed to load sRGB colorspace file"));
+        error(_("failed to load sRGB colorspace file"));
     size_t res = fread(buf, 1, BUFSIZE2, fp);
     res = fwrite(buf, 1, res, pd->pdffp);
     fclose(fp);
@@ -6836,7 +6836,7 @@ static void PDF_endfile(PDFDesc *pd)
 		findDeviceEncoding(fontlist->family->encoding->encpath,
 				   pd->encodings, &encIndex);
 	    if (!encoding)
-		error(_("Corrupt encodings in PDF device"));
+		error(_("corrupt encodings in PDF device"));
 	    for (i = 0; i < 5; i++) {
 		if (nfonts >= 100 || pd->fontUsed[nfonts]) {
 		    type1fontinfo fn = fontlist->family->fonts[i];
@@ -7632,7 +7632,7 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
 		    /*
 		     * Should NOT get here.
 		     */
-		    error(_("Invalid font type"));
+		    error(_("invalid font type"));
 		}
 	    }
 	    /*
@@ -7657,7 +7657,7 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
 	    }
 	}
 	if (!(fontfamily || cidfontfamily))
-	    error(_("Failed to find or load PDF font"));
+	    error(_("failed to find or load PDF font"));
     } else {
 	if (isType1Font(family, PDFFonts, pd->defaultFont))
 	    num = 1 + face;
@@ -7841,7 +7841,7 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 	    }
 	}
 	if (!cidfont)
-	    error(_("Failed to find or load PDF CID font"));
+	    error(_("failed to find or load PDF CID font"));
 	if(!dd->hasTextUTF8 &&
 	   !strcmp(locale2charset(NULL), cidfont->encoding)) {
 	    PDF_SetFill(gc->col, dd);
@@ -7974,7 +7974,7 @@ static FontMetricInfo
 	    }
 	}
 	if (!fontfamily)
-	    error(_("Failed to find or load PDF CID font"));
+	    error(_("failed to find or load PDF CID font"));
     } else {
 	result = &(pd->cidfonts->cidfamily->symfont->metrics);
     }
@@ -8019,7 +8019,7 @@ static FontMetricInfo
 	    }
 	}
 	if (!fontfamily)
-	    error(_("Failed to find or load PDF font"));
+	    error(_("failed to find or load PDF font"));
     } else {
 	result = &(pd->fonts->family->fonts[face-1]->metrics);
     }
@@ -8066,7 +8066,7 @@ static char
 	    }
 	}
 	if (!fontfamily)
-	    error(_("Failed to find or load PDF font"));
+	    error(_("failed to find or load PDF font"));
     }
     return result;
 }

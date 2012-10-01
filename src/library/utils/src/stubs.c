@@ -142,7 +142,7 @@ static void R_de_Init(void)
 
     de_init = -1;
     if(strcmp(R_GUIType, "none") == 0) {
-	warning(_("X11 module is not available under this GUI"));
+	warning(_("X11 is not available"));
 	return;
     }
     int res = R_moduleCdynload("R_de", 1, 1);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-01 11:33+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -63,15 +63,6 @@ msgstr ""
 #: devPS.c:559
 #, fuzzy, c-format
 msgid "afm file '%s' could not be opened"
-msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
-
-#: devPS.c:589
-msgid "FontBBox could not be parsed"
-msgstr ""
-
-#: devPS.c:597
-#, fuzzy
-msgid "CharInfo could not be parsed"
 msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
 
 #: devPS.c:627
@@ -162,7 +153,8 @@ msgid "failed to load encoding file '%s'"
 msgstr "encode 파일을 적재하는데 실패되었습니다"
 
 #: devPS.c:1441 devPS.c:1474
-msgid "Invalid font name or more than one font name"
+#, fuzzy
+msgid "invalid font name or more than one font name"
 msgstr "무효의 font명 또는 1개를 넘는 font명 입니다"
 
 #: devPS.c:1594 devPS.c:1629
@@ -190,23 +182,28 @@ msgid "Corrupt loaded encodings;  encoding not recorded"
 msgstr "오류가 있는 것을 적재한 encoding; 기록하지 않는 encoding 입니다"
 
 #: devPS.c:2397
-msgid "Failed to record device encoding"
+#, fuzzy
+msgid "failed to record device encoding"
 msgstr "encode 디바이스를 기록하는것을 실패했습니다"
 
 #: devPS.c:2566
-msgid "Object .ps.prolog is not a character vector"
+#, fuzzy
+msgid "object '.ps.prolog' is not a character vector"
 msgstr "오브젝트 ps.prolog는 문자 벡터가 아닙니다"
 
 #: devPS.c:2639 devPS.c:6410 devWindows.c:784
-msgid "Invalid line end"
+#, fuzzy
+msgid "invalid line end"
 msgstr "무효의 라인 종점입니다"
 
 #: devPS.c:2658 devPS.c:6429 devWindows.c:797
-msgid "Invalid line join"
+#, fuzzy
+msgid "invalid line join"
 msgstr "무효인 라인 조인입니다"
 
 #: devPS.c:2666
-msgid "Invalid line mitre"
+#, fuzzy
+msgid "invalid line mitre"
 msgstr "무효의 라인 mitre입니다"
 
 #: devPS.c:2875 devPS.c:3769 devPS.c:4217 devPS.c:4244 devPS.c:5252
@@ -237,15 +234,17 @@ msgstr "encode 파일을 적재하는데 실패되었습니다"
 
 #: devPS.c:3179 devPS.c:3242 devPS.c:5956 devPS.c:6011 devPS.c:7635
 #, fuzzy
-msgid "Invalid font type"
+msgid "invalid font type"
 msgstr "무효의 font 명세입니다"
 
 #: devPS.c:3203
-msgid "Failed to initialise default PostScript font"
+#, fuzzy
+msgid "failed to initialise default PostScript font"
 msgstr "default PostScript font를 초기화하는데 실패되었습니다"
 
 #: devPS.c:3269
-msgid "Failed to initialise additional PostScript fonts"
+#, fuzzy
+msgid "failed to initialise additional PostScript fonts"
 msgstr "추가의 PostScript font를 초기화하는데 실패되었습니다"
 
 #: devPS.c:3285
@@ -257,7 +256,8 @@ msgid "'command' is too long"
 msgstr "'command'는 너무 깁니다"
 
 #: devPS.c:3295
-msgid "postscript(print.it=TRUE) used with an empty print command"
+#, fuzzy
+msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr ""
 "비어 있는 print command와 함께 사용되는 postscript 입니다(print.it=TRUE)"
 
@@ -293,12 +293,12 @@ msgstr ""
 
 #: devPS.c:3757
 #, fuzzy, c-format
-msgid "CID family '%s' not included in PostScript device"
+msgid "CID family '%s' not included in postscript() device"
 msgstr "PostScript 디바이스에 포함하지 않는 family %s 입니다"
 
 #: devPS.c:3775 devPS.c:3786 devPS.c:4224 devPS.c:4254 devPS.c:4359
 #, fuzzy, c-format
-msgid "family '%s' not included in PostScript device"
+msgid "family '%s' not included in postscript() device"
 msgstr "PostScript 디바이스에 포함하지 않는 family %s 입니다"
 
 #: devPS.c:4299
@@ -342,12 +342,12 @@ msgid "invalid foreground/background color (xfig)"
 msgstr "무효의 foreground/background 색(xfig)"
 
 #: devPS.c:4783
-msgid "Only Type 1 fonts supported for XFig"
+msgid "only Type 1 fonts supported for XFig"
 msgstr ""
 
 #: devPS.c:4796
 #, fuzzy
-msgid "Failed to initialise default XFig font"
+msgid "failed to initialise default XFig font"
 msgstr "default PostScript font를 초기화하는데 실패되었습니다"
 
 #: devPS.c:4833
@@ -380,15 +380,17 @@ msgstr "font 리스트를 할당하는데 실패되었습니다"
 
 #: devPS.c:5562
 #, fuzzy
-msgid "Unable to allocate raster image"
+msgid "unable to allocate raster image"
 msgstr "bitmap 할당 할수가 없습니다"
 
 #: devPS.c:5763
-msgid "Corrupt loaded encodings;  font not added"
+#, fuzzy
+msgid "corrupt loaded encodings;  font not added"
 msgstr "적재한 encodings를 corrupt 시켜주십시오; font는 증가하지 않습니다"
 
 #: devPS.c:5772
-msgid "Failed to record device encoding; font not added"
+#, fuzzy
+msgid "failed to record device encoding; font not added"
 msgstr "디바이스 encode를 기록하는것이 실패했습니다;font가 추가하지 않았습니다"
 
 #: devPS.c:5883
@@ -402,12 +404,12 @@ msgstr "encode 파일을 적재하는데 실패되었습니다"
 
 #: devPS.c:5979
 #, fuzzy
-msgid "Failed to initialise default PDF font"
+msgid "failed to initialise default PDF font"
 msgstr "default PostScript font를 초기화하는데 실패되었습니다"
 
 #: devPS.c:6034
 #, fuzzy
-msgid "Failed to initialise additional PDF fonts"
+msgid "failed to initialise additional PDF fonts"
 msgstr "추가의 PostScript font를 초기화하는데 실패되었습니다"
 
 #: devPS.c:6047
@@ -430,7 +432,8 @@ msgid "invalid foreground/background color (pdf)"
 msgstr "무효의 foreground /background색(pdf) 입니다"
 
 #: devPS.c:6258
-msgid "Invalid alpha value in PDF"
+#, fuzzy
+msgid "invalid 'alpha' value in PDF"
 msgstr "PDF에서 무효의 alpha 값입니다"
 
 #: devPS.c:6283
@@ -443,7 +446,7 @@ msgstr ""
 
 #: devPS.c:6575
 #, fuzzy
-msgid "Failed to load sRGB colorspace file"
+msgid "failed to load sRGB colorspace file"
 msgstr "encode 파일을 적재하는데 실패되었습니다"
 
 #: devPS.c:6839
@@ -473,12 +476,13 @@ msgstr ""
 " PDFdevice를 shut down 헤주십시오"
 
 #: devPS.c:7660 devPS.c:8022 devPS.c:8069
-msgid "Failed to find or load PDF font"
+#, fuzzy
+msgid "failed to find or load PDF font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
 #: devPS.c:7844 devPS.c:7977
 #, fuzzy
-msgid "Failed to find or load PDF CID font"
+msgid "failed to find or load PDF CID font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
 #: devPS.c:8208 devPS.c:8212 devPS.c:8372 devPS.c:8376
@@ -530,11 +534,11 @@ msgstr "savePlot의 무효인 디비이스입니다"
 
 #: devQuartz.c:1414
 #, fuzzy
-msgid "Unable to create device description."
+msgid "unable to create device description"
 msgstr "디바이스 PostSscript를 시작할수 없습니다"
 
 #: devQuartz.c:1464
-msgid "Unable to create Quartz device target, given type may not be supported."
+msgid "unable to create Quartz device target, given type may not be supported"
 msgstr ""
 
 #: devQuartz.c:1588
@@ -556,11 +560,13 @@ msgid "'%%' is not allowed in file name"
 msgstr ""
 
 #: devWindows.c:604
-msgid "Invalid font specification"
+#, fuzzy
+msgid "invalid font specification"
 msgstr "무효의 font 명세입니다"
 
 #: devWindows.c:643
-msgid "Font family not found in Windows font database"
+#, fuzzy
+msgid "font family not found in Windows font database"
 msgstr "Font 패밀리는 Windows font 데이타베이스로 검색되지 않았습니다"
 
 #: devWindows.c:1074
@@ -576,10 +582,6 @@ msgstr "plot history가 없습니다!"
 msgid "filename too long in %s() call"
 msgstr "%s() 호출에 대해서 너무 긴 파일명입니다"
 
-#: devWindows.c:1799 devWindows.c:1834 devWindows.c:1868
-msgid "Unable to load Rbitmap.dll"
-msgstr "Rbitmap.dll를 적재 할수가 없습니다"
-
 #: devWindows.c:1804 devWindows.c:1843 devWindows.c:1877
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
@@ -587,12 +589,13 @@ msgstr ""
 
 #: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
 #: devWindows.c:1880 devWindows.c:1885
-msgid "Unable to allocate bitmap"
+#, fuzzy
+msgid "unable to allocate bitmap"
 msgstr "bitmap 할당 할수가 없습니다"
 
 #: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
-#, c-format
-msgid "Unable to open file '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open file '%s' for writing"
 msgstr "쓰기 위해서 파일 '%s'을 열수가 없습니다"
 
 #: devWindows.c:1840
@@ -609,12 +612,13 @@ msgid "filename too long in win.metafile() call"
 msgstr "win.metafile()에 대해 너무 긴 파일명입니다"
 
 #: devWindows.c:1916
-#, c-format
-msgid "Unable to open metafile '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open metafile '%s' for writing"
 msgstr "쓰기 위해서 metafile '%s'를 열 수가 없습니다"
 
 #: devWindows.c:1918
-msgid "Unable to open clipboard to write metafile"
+#, fuzzy
+msgid "unable to open clipboard to write metafile"
 msgstr "metafile를 쓰기 위해서 clipboard를 열수가 없습니다"
 
 #: devWindows.c:2129
@@ -688,11 +692,6 @@ msgstr "Rbitmap.dll를 적재하는데 가능하지 않습니다"
 msgid "invalid 'width' or 'height'"
 msgstr "devWindow에서 무효인 폭 또는 높이 입니다"
 
-#: devWindows.c:3841
-#, fuzzy
-msgid "Unable to load winCairo.dll: was it built?"
-msgstr "Rbitmap.dll를 적재 할수가 없습니다"
-
 #: devices.c:43
 msgid "argument must have positive length"
 msgstr ""
@@ -715,6 +714,23 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "무효의 문자열 인수입니다"
+
+#~ msgid "Invalid line end"
+#~ msgstr "무효의 라인 종점입니다"
+
+#~ msgid "Invalid line join"
+#~ msgstr "무효인 라인 조인입니다"
+
+#~ msgid "Unable to load Rbitmap.dll"
+#~ msgstr "Rbitmap.dll를 적재 할수가 없습니다"
+
+#, fuzzy
+#~ msgid "Unable to load winCairo.dll: was it built?"
+#~ msgstr "Rbitmap.dll를 적재 할수가 없습니다"
+
+#, fuzzy
+#~ msgid "CharInfo could not be parsed"
+#~ msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
 
 #~ msgid "unable to start NULL device"
 #~ msgstr "NULL 디바이스를 시작할수가 없습니다"

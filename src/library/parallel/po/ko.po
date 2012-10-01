@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:54+0100\n"
+"POT-Creation-Date: 2012-10-01 10:57+0100\n"
 "PO-Revision-Date: 2012-09-25 18:00-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team:  <gnustats@gmail.com>\n"
@@ -71,25 +71,28 @@ msgid "error '%s' in select"
 msgstr "선택하는 중에 에러 '%s'"
 
 #: fork.c:552
-msgid "mckill failed"
+#, fuzzy
+msgid "'mckill' failed"
 msgstr "mckill 실패했습니다"
 
 #: fork.c:562
-msgid "mcexit can only be used in a child process"
+#, fuzzy
+msgid "'mcexit' can only be used in a child process"
 msgstr "mcexit는 자식 프로세스에서만 오로지 사용될 수 있습니다"
 
 #: fork.c:583
-msgid "mcexit failed"
+#, fuzzy
+msgid "'mcexit' failed"
 msgstr "mcexit 실패했습니다"
 
 #: fork.c:605 fork.c:614
-msgid "Invalid CPU affinity specification"
+msgid "invalid CPU affinity specification"
 msgstr ""
 
 #: fork.c:625
-msgid "Requested CPU set is too large for this system"
+msgid "requested CPU set is too large for this system"
 msgstr ""
 
 #: fork.c:648
-msgid "Retrieving CPU affinity set failed"
+msgid "retrieving CPU affinity set failed"
 msgstr ""

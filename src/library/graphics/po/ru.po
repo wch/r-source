@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46+0100\n"
+"POT-Creation-Date: 2012-10-01 11:17+0100\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -25,10 +25,6 @@ msgstr ""
 #: base.c:38
 msgid "no base graphics system is registered"
 msgstr ""
-
-#: base.c:297
-msgid "Event GE_ScalePS requires a single numeric value"
-msgstr "Событие GE_ScalePS требует единичного числового значения"
 
 #: base.c:328 base.c:335 base.c:343
 #, fuzzy
@@ -45,7 +41,8 @@ msgid "attempt to plot on null device"
 msgstr "попытка рисовать на null-устройстве"
 
 #: graphics.c:1830
-msgid "outer margins too large (fig.region too small)"
+#, fuzzy
+msgid "outer margins too large (figure region too small)"
 msgstr "внешние края слишком велики (fig.region слишком мал)"
 
 #: graphics.c:1832
@@ -61,8 +58,8 @@ msgid "plot region too large"
 msgstr "область графика слишком велика"
 
 #: graphics.c:1883
-#, c-format
-msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
+#, fuzzy, c-format
+msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "относительный размах значений =%4.0f * EPS мал (ось %d)"
 
 #: graphics.c:1935
@@ -75,37 +72,39 @@ msgstr "неопределенные границы осей [GScale(%g,%g,%d, .
 msgid "axis style \"%c\" unimplemented"
 msgstr "стиль оси \"%c\" не разработан"
 
-#: graphics.c:2204 graphics.c:2562
-msgid "No graphics device is active"
+#: graphics.c:2203
+#, fuzzy
+msgid "no graphics device is active"
 msgstr "Нет активного графического устройства"
 
-#: graphics.c:2399
+#: graphics.c:2398
 msgid "plot.new has not been called yet"
 msgstr "'plot.new' пока не вызван"
 
-#: graphics.c:2401
+#: graphics.c:2400
 msgid "invalid graphics state"
 msgstr "неправильное графическое состояние"
 
-#: graphics.c:2801 graphics.c:2837
-msgid "unable to allocate memory (in GPolygon)"
-msgstr "не могу разместить память (в GPolygon)"
+#: graphics.c:2561
+msgid "No graphics device is active"
+msgstr "Нет активного графического устройства"
 
-#: graphics.c:3021
+#: graphics.c:3020
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "стрелка нулевой длины имеет неопределенный угол и поэтому пропущена"
 
-#: graphics.c:3102
+#: graphics.c:3101
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "неправильный par(\"bty\") = '%c'; не нарисован box()"
 
-#: graphics.c:3119
+#: graphics.c:3118
 msgid "invalid argument to GBox"
 msgstr "неправильный аргумент для GBox"
 
-#: graphics.c:3364
-msgid "Metric information not available for this device"
+#: graphics.c:3363
+#, fuzzy
+msgid "metric information not available for this device"
 msgstr "Метрическая информация для этого устройства недоступна"
 
 #: par-common.c:138
@@ -140,11 +139,13 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "параметр \"j\" в \"mfg\" выходит за пределы"
 
 #: par.c:447
-msgid "value of nr in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "значение 'nr' в \"mfg\" неправильное и будет пропущено"
 
 #: par.c:449
-msgid "value of nc in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "значение 'nc' в \"mfg\" неправильное и будет пропущено"
 
 #: par.c:475
@@ -200,7 +201,8 @@ msgid "invalid '%s' value"
 msgstr "неправильное значение '%s'"
 
 #: plot.c:285
-msgid "invalid 'vfont' value [typeface]"
+#, fuzzy, c-format
+msgid "invalid 'vfont' value [typeface %d]"
 msgstr "неправильный значение 'vfont' [typeface]"
 
 #: plot.c:309
@@ -264,9 +266,12 @@ msgstr "неправильное количество осей %d"
 msgid "'hadj' must be of length one"
 msgstr "'hadj' должен быть единичной длины"
 
-#: plot.c:865 plot.c:2392
-msgid "zero length 'padj' specified"
-msgstr "указан 'padj' нулевой длины"
+#: plot.c:865 plot.c:2073 plot.c:2350 plot.c:2356 plot.c:2363 plot.c:2371
+#: plot.c:2378 plot.c:2385 plot.c:2392 plot.c:2399 plot.c:2407 plot.c:2414
+#: plot.c:3132
+#, fuzzy, c-format
+msgid "zero-length '%s' specified"
+msgstr "указана нулевая длина 'side'"
 
 #: plot.c:934
 msgid "'labels' is supplied and not 'at'"
@@ -324,14 +329,6 @@ msgstr "неправильный четвертый аргумент"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "не могу смешивать координаты нулевой длины с ненулевыми"
 
-#: plot.c:1780
-msgid "unable to allocate memory (in GPath)"
-msgstr "не могу разместить память (в GPath)"
-
-#: plot.c:1786
-msgid "invalid x or y (in GPath)"
-msgstr "неправильный x или y (в GPath)"
-
 #: plot.c:1903
 msgid "invalid arrow head length"
 msgstr "неправильная длина наконечника стрелки"
@@ -344,49 +341,9 @@ msgstr "неправильный угол наконечника стрелки"
 msgid "invalid arrow head specification"
 msgstr "неправильное определение наконечника стрелки"
 
-#: plot.c:2073 plot.c:3132
-msgid "zero length 'labels'"
-msgstr "нулевые 'labels'"
-
 #: plot.c:2147
 msgid "no coordinates were supplied"
 msgstr "не указаны координаты"
-
-#: plot.c:2350
-msgid "zero length 'text' specified"
-msgstr "указана нулевая длина 'text'"
-
-#: plot.c:2356
-msgid "zero length 'side' specified"
-msgstr "указана нулевая длина 'side'"
-
-#: plot.c:2363
-msgid "zero length 'line' specified"
-msgstr "указан нулевая длина 'line'"
-
-#: plot.c:2371
-msgid "zero length 'outer' specified"
-msgstr "указана нулевая длина 'outer'"
-
-#: plot.c:2378
-msgid "zero length 'at' specified"
-msgstr "указана нулевая длина 'at'"
-
-#: plot.c:2385
-msgid "zero length 'adj' specified"
-msgstr "указана нулевая длина 'adj'"
-
-#: plot.c:2399
-msgid "zero length 'cex' specified"
-msgstr "указана нулевая длина 'cex'"
-
-#: plot.c:2407
-msgid "zero length 'col' specified"
-msgstr "указана нулевая длина 'col'"
-
-#: plot.c:2414
-msgid "zero length 'font' specified"
-msgstr "указана нулевая длина 'font'"
 
 #: plot.c:2770
 msgid "invalid a=, b= specification"
@@ -404,13 +361,10 @@ msgstr "'a' и 'b' должны быть конечными"
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
 
-#: plot.c:2985
-msgid "invalid number of points in locator()"
+#: plot.c:2985 plot.c:3121
+#, fuzzy, c-format
+msgid "invalid number of points in %s"
 msgstr "неправильное количество точек в locator()"
-
-#: plot.c:3121
-msgid "invalid number of points in identify()"
-msgstr "неправильное количество точек в identify()"
 
 #: plot.c:3123
 msgid "incorrect argument type"
@@ -478,29 +432,33 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "неправильные данные о градусниках (нужно 3 или 4 колонки)"
 
 #: plot.c:3785
-#, c-format
-msgid "invalid thermometers[,%s]"
+#, fuzzy, c-format
+msgid "invalid 'thermometers[, %s]'"
 msgstr "неправильные 'thermometers[,%s]'"
 
 #: plot.c:3788
-#, c-format
-msgid "thermometers[,%s] not in [0,1] -- may look funny"
+#, fuzzy, c-format
+msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "'thermometers[,%s]' вне [0,1] -- может странно выглядеть"
 
 #: plot.c:3791
-msgid "invalid thermometers[,1:2]"
+#, fuzzy
+msgid "invalid 'thermometers[, 1:2]'"
 msgstr "неправильные 'thermometers[,1:2]'"
 
 #: plot.c:3830
-msgid "invalid boxplots data (need 5 columns)"
+#, fuzzy
+msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "неправильные данные о ящиках-с-усами (нужно 5 колонок)"
 
 #: plot.c:3839
-msgid "boxplots[,5] outside [0,1] -- may look funny"
+#, fuzzy
+msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "'boxplots[,5]' вне [0,1] -- может странно выглядеть"
 
 #: plot.c:3841
-msgid "invalid boxplots[, 1:4]"
+#, fuzzy
+msgid "invalid 'boxplots[, 1:4]'"
 msgstr "неправильные 'boxplots[, 1:4]'"
 
 #: plot.c:3887
@@ -511,10 +469,6 @@ msgstr "неправильный тип символа"
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "неправильная длина аргумента '%s''"
-
-#: plot.c:3951
-msgid "unable to allocate memory (in xspline)"
-msgstr "не могу разместить память (в xspline)"
 
 #: plot3d.c:183 plot3d.c:1923
 msgid "insufficient 'x' or 'y' values"
@@ -614,3 +568,51 @@ msgstr "все значения z являются NA"
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""
+
+#~ msgid "unable to allocate memory (in GPolygon)"
+#~ msgstr "не могу разместить память (в GPolygon)"
+
+#~ msgid "invalid number of points in identify()"
+#~ msgstr "неправильное количество точек в identify()"
+
+#~ msgid "Event GE_ScalePS requires a single numeric value"
+#~ msgstr "Событие GE_ScalePS требует единичного числового значения"
+
+#~ msgid "zero length 'padj' specified"
+#~ msgstr "указан 'padj' нулевой длины"
+
+#~ msgid "unable to allocate memory (in GPath)"
+#~ msgstr "не могу разместить память (в GPath)"
+
+#~ msgid "invalid x or y (in GPath)"
+#~ msgstr "неправильный x или y (в GPath)"
+
+#~ msgid "zero length 'labels'"
+#~ msgstr "нулевые 'labels'"
+
+#~ msgid "zero length 'text' specified"
+#~ msgstr "указана нулевая длина 'text'"
+
+#~ msgid "zero length 'line' specified"
+#~ msgstr "указан нулевая длина 'line'"
+
+#~ msgid "zero length 'outer' specified"
+#~ msgstr "указана нулевая длина 'outer'"
+
+#~ msgid "zero length 'at' specified"
+#~ msgstr "указана нулевая длина 'at'"
+
+#~ msgid "zero length 'adj' specified"
+#~ msgstr "указана нулевая длина 'adj'"
+
+#~ msgid "zero length 'cex' specified"
+#~ msgstr "указана нулевая длина 'cex'"
+
+#~ msgid "zero length 'col' specified"
+#~ msgstr "указана нулевая длина 'col'"
+
+#~ msgid "zero length 'font' specified"
+#~ msgstr "указана нулевая длина 'font'"
+
+#~ msgid "unable to allocate memory (in xspline)"
+#~ msgstr "не могу разместить память (в xspline)"

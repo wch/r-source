@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 07:46+0100\n"
+"POT-Creation-Date: 2012-10-01 11:17+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -21,10 +21,6 @@ msgstr ""
 #: base.c:38
 msgid "no base graphics system is registered"
 msgstr ""
-
-#: base.c:297
-msgid "Event GE_ScalePS requires a single numeric value"
-msgstr "Hendinga «GE_ScalePS» tek nøyaktig éin talverdi"
 
 #: base.c:328 base.c:335 base.c:343
 #, fuzzy
@@ -41,7 +37,8 @@ msgid "attempt to plot on null device"
 msgstr "forsøk på å plotta på nulleininga"
 
 #: graphics.c:1830
-msgid "outer margins too large (fig.region too small)"
+#, fuzzy
+msgid "outer margins too large (figure region too small)"
 msgstr "ytremargane er for store (figurområdet vert for lite)"
 
 #: graphics.c:1832
@@ -57,8 +54,8 @@ msgid "plot region too large"
 msgstr "plotteområdet er for stort"
 
 #: graphics.c:1883
-#, c-format
-msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
+#, fuzzy, c-format
+msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "relativt verdiområde = %4.0f × EPS er lite (akse %d)"
 
 #: graphics.c:1935
@@ -71,37 +68,39 @@ msgstr "uendelege aksegrenser [GScale(%g,%g,%d, .); log=%d]"
 msgid "axis style \"%c\" unimplemented"
 msgstr "aksestilen «%c» er ikkje implementert"
 
-#: graphics.c:2204 graphics.c:2562
-msgid "No graphics device is active"
+#: graphics.c:2203
+#, fuzzy
+msgid "no graphics device is active"
 msgstr "Inga verksam grafikkeining"
 
-#: graphics.c:2399
+#: graphics.c:2398
 msgid "plot.new has not been called yet"
 msgstr "plot.new er ikkje kalla enno"
 
-#: graphics.c:2401
+#: graphics.c:2400
 msgid "invalid graphics state"
 msgstr "ugyldig grafikktilstand"
 
-#: graphics.c:2801 graphics.c:2837
-msgid "unable to allocate memory (in GPolygon)"
-msgstr "klarte ikkje reservera minne (i GPolygon)"
+#: graphics.c:2561
+msgid "No graphics device is active"
+msgstr "Inga verksam grafikkeining"
 
-#: graphics.c:3021
+#: graphics.c:3020
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "pil av lengd null har ikkje-unik vinkel, og vert derfor ikkje teikna"
 
-#: graphics.c:3102
+#: graphics.c:3101
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ugyldig par(\"bty\") = '%c' (ingen box() teikna)"
 
-#: graphics.c:3119
+#: graphics.c:3118
 msgid "invalid argument to GBox"
 msgstr "ugyldig argument til GBox"
 
-#: graphics.c:3364
-msgid "Metric information not available for this device"
+#: graphics.c:3363
+#, fuzzy
+msgid "metric information not available for this device"
 msgstr "Metrikkinformasjon ikkje tilgjengeleg for eininga"
 
 #: par-common.c:138
@@ -136,11 +135,13 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "parameteren «j» i «mfg» ligg utanfor gyldig verdiområde"
 
 #: par.c:447
-msgid "value of nr in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "verdien «nr» i «mfg» er feil, og vert ikkje brukt"
 
 #: par.c:449
-msgid "value of nc in \"mfg\" is wrong and will be ignored"
+#, fuzzy
+msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "verdien «nc» i «mfg» er feil, og vert ikkje brukt"
 
 #: par.c:475
@@ -196,7 +197,8 @@ msgid "invalid '%s' value"
 msgstr "ugyldig «%s»-verdi"
 
 #: plot.c:285
-msgid "invalid 'vfont' value [typeface]"
+#, fuzzy, c-format
+msgid "invalid 'vfont' value [typeface %d]"
 msgstr "gyldig «vfont»-verdi [typeface]"
 
 #: plot.c:309
@@ -260,9 +262,12 @@ msgstr "ugyldig aksetal %d"
 msgid "'hadj' must be of length one"
 msgstr "«hadj» må ha lengd 1"
 
-#: plot.c:865 plot.c:2392
-msgid "zero length 'padj' specified"
-msgstr "«padj» av lengd null"
+#: plot.c:865 plot.c:2073 plot.c:2350 plot.c:2356 plot.c:2363 plot.c:2371
+#: plot.c:2378 plot.c:2385 plot.c:2392 plot.c:2399 plot.c:2407 plot.c:2414
+#: plot.c:3132
+#, fuzzy, c-format
+msgid "zero-length '%s' specified"
+msgstr "«side» av lengd null oppgjeven"
 
 #: plot.c:934
 msgid "'labels' is supplied and not 'at'"
@@ -320,14 +325,6 @@ msgstr "ugyldig fjerdeargument"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "kan ikkje blanda koordinatar av lengd null og lengd ulik null"
 
-#: plot.c:1780
-msgid "unable to allocate memory (in GPath)"
-msgstr "klarte ikkje reservera minne (i GPath)"
-
-#: plot.c:1786
-msgid "invalid x or y (in GPath)"
-msgstr "ugyldig x eller y (i GPath)"
-
 #: plot.c:1903
 msgid "invalid arrow head length"
 msgstr "ugyldig lengd på pilhovud"
@@ -340,49 +337,9 @@ msgstr "ugyldig vinkel på pilhovud"
 msgid "invalid arrow head specification"
 msgstr "ugyldig pilhovud-val"
 
-#: plot.c:2073 plot.c:3132
-msgid "zero length 'labels'"
-msgstr "«labels» av lengd null"
-
 #: plot.c:2147
 msgid "no coordinates were supplied"
 msgstr "ingen koordinatar oppgjevne"
-
-#: plot.c:2350
-msgid "zero length 'text' specified"
-msgstr "«text» av lengd null oppgjeven"
-
-#: plot.c:2356
-msgid "zero length 'side' specified"
-msgstr "«side» av lengd null oppgjeven"
-
-#: plot.c:2363
-msgid "zero length 'line' specified"
-msgstr "«line» av lengd null oppgjeven"
-
-#: plot.c:2371
-msgid "zero length 'outer' specified"
-msgstr "«outer» av lengd null oppgjeven"
-
-#: plot.c:2378
-msgid "zero length 'at' specified"
-msgstr "«at» av lengd null oppgjeven"
-
-#: plot.c:2385
-msgid "zero length 'adj' specified"
-msgstr "«adj» av lengd null oppgjeven"
-
-#: plot.c:2399
-msgid "zero length 'cex' specified"
-msgstr "«cex» av lengd null oppgjeven"
-
-#: plot.c:2407
-msgid "zero length 'col' specified"
-msgstr "«col» av lengd null oppgjeven"
-
-#: plot.c:2414
-msgid "zero length 'font' specified"
-msgstr "«font» av lengd null oppgjeven"
 
 #: plot.c:2770
 msgid "invalid a=, b= specification"
@@ -400,13 +357,10 @@ msgstr "«a» og «b» må vera endelege"
 msgid "invalid '%s' argument"
 msgstr "ugyldig «%s»-argument"
 
-#: plot.c:2985
-msgid "invalid number of points in locator()"
+#: plot.c:2985 plot.c:3121
+#, fuzzy, c-format
+msgid "invalid number of points in %s"
 msgstr "ugyldig tal på punkt i locator()"
-
-#: plot.c:3121
-msgid "invalid number of points in identify()"
-msgstr "ugyldig tal på punkt i identify()"
 
 #: plot.c:3123
 msgid "incorrect argument type"
@@ -474,29 +428,33 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "ugyldige termometerdata (treng 3 eller 4 kolonnar)"
 
 #: plot.c:3785
-#, c-format
-msgid "invalid thermometers[,%s]"
+#, fuzzy, c-format
+msgid "invalid 'thermometers[, %s]'"
 msgstr "ugyldige termometer[,%s]"
 
 #: plot.c:3788
-#, c-format
-msgid "thermometers[,%s] not in [0,1] -- may look funny"
+#, fuzzy, c-format
+msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "termometer[,%s] ikkje i området [0,1] – kan sjå rart ut"
 
 #: plot.c:3791
-msgid "invalid thermometers[,1:2]"
+#, fuzzy
+msgid "invalid 'thermometers[, 1:2]'"
 msgstr "ugyldige termometer[,1:2]"
 
 #: plot.c:3830
-msgid "invalid boxplots data (need 5 columns)"
+#, fuzzy
+msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "ugyldige boksplott-data (treng 5 kolonnar)"
 
 #: plot.c:3839
-msgid "boxplots[,5] outside [0,1] -- may look funny"
+#, fuzzy
+msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "boksplott[,5] utanfor området [0,1] – kan sjå rart ut"
 
 #: plot.c:3841
-msgid "invalid boxplots[, 1:4]"
+#, fuzzy
+msgid "invalid 'boxplots[, 1:4]'"
 msgstr "ugyldige boksplott[, 1:4]"
 
 #: plot.c:3887
@@ -507,10 +465,6 @@ msgstr "ugyldig symboltype"
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "ugyldig lengd på «%s»-argument"
-
-#: plot.c:3951
-msgid "unable to allocate memory (in xspline)"
-msgstr "klarte ikkje reservera minne (i xspline)"
 
 #: plot3d.c:183 plot3d.c:1923
 msgid "insufficient 'x' or 'y' values"
@@ -610,3 +564,51 @@ msgstr "alle z-verdiane er NA-verdiar"
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""
+
+#~ msgid "unable to allocate memory (in GPolygon)"
+#~ msgstr "klarte ikkje reservera minne (i GPolygon)"
+
+#~ msgid "invalid number of points in identify()"
+#~ msgstr "ugyldig tal på punkt i identify()"
+
+#~ msgid "Event GE_ScalePS requires a single numeric value"
+#~ msgstr "Hendinga «GE_ScalePS» tek nøyaktig éin talverdi"
+
+#~ msgid "zero length 'padj' specified"
+#~ msgstr "«padj» av lengd null"
+
+#~ msgid "unable to allocate memory (in GPath)"
+#~ msgstr "klarte ikkje reservera minne (i GPath)"
+
+#~ msgid "invalid x or y (in GPath)"
+#~ msgstr "ugyldig x eller y (i GPath)"
+
+#~ msgid "zero length 'labels'"
+#~ msgstr "«labels» av lengd null"
+
+#~ msgid "zero length 'text' specified"
+#~ msgstr "«text» av lengd null oppgjeven"
+
+#~ msgid "zero length 'line' specified"
+#~ msgstr "«line» av lengd null oppgjeven"
+
+#~ msgid "zero length 'outer' specified"
+#~ msgstr "«outer» av lengd null oppgjeven"
+
+#~ msgid "zero length 'at' specified"
+#~ msgstr "«at» av lengd null oppgjeven"
+
+#~ msgid "zero length 'adj' specified"
+#~ msgstr "«adj» av lengd null oppgjeven"
+
+#~ msgid "zero length 'cex' specified"
+#~ msgstr "«cex» av lengd null oppgjeven"
+
+#~ msgid "zero length 'col' specified"
+#~ msgstr "«col» av lengd null oppgjeven"
+
+#~ msgid "zero length 'font' specified"
+#~ msgstr "«font» av lengd null oppgjeven"
+
+#~ msgid "unable to allocate memory (in xspline)"
+#~ msgstr "klarte ikkje reservera minne (i xspline)"

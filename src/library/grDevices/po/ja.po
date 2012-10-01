@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-01 11:33+0100\n"
 "PO-Revision-Date: 2012-02-26 14:10+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -65,14 +65,6 @@ msgstr ""
 #, c-format
 msgid "afm file '%s' could not be opened"
 msgstr " afm ファイル '%s' を開くことができませんでした "
-
-#: devPS.c:589
-msgid "FontBBox could not be parsed"
-msgstr " FontBBox を構文解析できませんでした "
-
-#: devPS.c:597
-msgid "CharInfo could not be parsed"
-msgstr " CharInfo を構文解析できませんでした "
 
 #: devPS.c:627
 msgid "unknown AFM entity encountered"
@@ -158,7 +150,8 @@ msgid "failed to load encoding file '%s'"
 msgstr " エンコーディングファイル '%s' をロードできませんでした "
 
 #: devPS.c:1441 devPS.c:1474
-msgid "Invalid font name or more than one font name"
+#, fuzzy
+msgid "invalid font name or more than one font name"
 msgstr " 一つもしくは複数のフォント名が不正です "
 
 #: devPS.c:1594 devPS.c:1629
@@ -194,23 +187,28 @@ msgstr ""
 "ませんでした "
 
 #: devPS.c:2397
-msgid "Failed to record device encoding"
+#, fuzzy
+msgid "failed to record device encoding"
 msgstr " デバイスのエンコーディングを記録することに失敗しました "
 
 #: devPS.c:2566
-msgid "Object .ps.prolog is not a character vector"
+#, fuzzy
+msgid "object '.ps.prolog' is not a character vector"
 msgstr " オブジェクト .ps.prolog は文字列ベクトルではありません "
 
 #: devPS.c:2639 devPS.c:6410 devWindows.c:784
-msgid "Invalid line end"
+#, fuzzy
+msgid "invalid line end"
 msgstr " 行末が不正です "
 
 #: devPS.c:2658 devPS.c:6429 devWindows.c:797
-msgid "Invalid line join"
+#, fuzzy
+msgid "invalid line join"
 msgstr " 行のつながりが不正です "
 
 #: devPS.c:2666
-msgid "Invalid line mitre"
+#, fuzzy
+msgid "invalid line mitre"
 msgstr " 不正な line mitre です "
 
 #: devPS.c:2875 devPS.c:3769 devPS.c:4217 devPS.c:4244 devPS.c:5252
@@ -240,15 +238,18 @@ msgid "failed to load encoding file in %s()"
 msgstr " %s() 中にエンコーディングファイををロードできませんでした "
 
 #: devPS.c:3179 devPS.c:3242 devPS.c:5956 devPS.c:6011 devPS.c:7635
-msgid "Invalid font type"
+#, fuzzy
+msgid "invalid font type"
 msgstr " 不正なフォントタイプです "
 
 #: devPS.c:3203
-msgid "Failed to initialise default PostScript font"
+#, fuzzy
+msgid "failed to initialise default PostScript font"
 msgstr " 既定のポストスクリプトフォントの初期化に失敗しました "
 
 #: devPS.c:3269
-msgid "Failed to initialise additional PostScript fonts"
+#, fuzzy
+msgid "failed to initialise additional PostScript fonts"
 msgstr " 追加のポストスクリプトフォントの初期化に失敗しました "
 
 #: devPS.c:3285
@@ -260,7 +261,8 @@ msgid "'command' is too long"
 msgstr " 'command' が長すぎます "
 
 #: devPS.c:3295
-msgid "postscript(print.it=TRUE) used with an empty print command"
+#, fuzzy
+msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr " postscript(print.it=TRUE)　が空の描画命令とともに使われました "
 
 #: devPS.c:3344
@@ -296,13 +298,13 @@ msgstr ""
 " %s "
 
 #: devPS.c:3757
-#, c-format
-msgid "CID family '%s' not included in PostScript device"
+#, fuzzy, c-format
+msgid "CID family '%s' not included in postscript() device"
 msgstr " ポストスクリプトデバイス中に CID ファミリ '%s' は含まれていません "
 
 #: devPS.c:3775 devPS.c:3786 devPS.c:4224 devPS.c:4254 devPS.c:4359
-#, c-format
-msgid "family '%s' not included in PostScript device"
+#, fuzzy, c-format
+msgid "family '%s' not included in postscript() device"
 msgstr " ポストスクリプトデバイス中にフォントファミリ '%s' は含まれていません "
 
 #: devPS.c:4299
@@ -345,11 +347,13 @@ msgid "invalid foreground/background color (xfig)"
 msgstr " 不正な前景/背景色です (xfig) "
 
 #: devPS.c:4783
-msgid "Only Type 1 fonts supported for XFig"
+#, fuzzy
+msgid "only Type 1 fonts supported for XFig"
 msgstr " XFig に対しては Type 1 フォントだけがサポートされています "
 
 #: devPS.c:4796
-msgid "Failed to initialise default XFig font"
+#, fuzzy
+msgid "failed to initialise default XFig font"
 msgstr " 既定の XFig フォントの初期化に失敗しました "
 
 #: devPS.c:4833
@@ -380,16 +384,19 @@ msgid "failed to increase 'maxRaster'"
 msgstr " 'maxRaster'を増やすことはできませんでした "
 
 #: devPS.c:5562
-msgid "Unable to allocate raster image"
+#, fuzzy
+msgid "unable to allocate raster image"
 msgstr " ラスター画像を割り当てられません "
 
 #: devPS.c:5763
-msgid "Corrupt loaded encodings;  font not added"
+#, fuzzy
+msgid "corrupt loaded encodings;  font not added"
 msgstr ""
 " ロードされたエンコーディングが破損しています；　　フォントは追加されません "
 
 #: devPS.c:5772
-msgid "Failed to record device encoding; font not added"
+#, fuzzy
+msgid "failed to record device encoding; font not added"
 msgstr ""
 " デバイスエンコーディングの記録に失敗しました；　フォントは追加されません "
 
@@ -402,11 +409,13 @@ msgid "failed to load default encoding"
 msgstr " 既定のエンコーディングのロードに失敗しました "
 
 #: devPS.c:5979
-msgid "Failed to initialise default PDF font"
+#, fuzzy
+msgid "failed to initialise default PDF font"
 msgstr " 既定の PDF フォントの初期化に失敗しました "
 
 #: devPS.c:6034
-msgid "Failed to initialise additional PDF fonts"
+#, fuzzy
+msgid "failed to initialise additional PDF fonts"
 msgstr " 追加の PDF フォントの初期化に失敗しました "
 
 #: devPS.c:6047
@@ -427,7 +436,8 @@ msgid "invalid foreground/background color (pdf)"
 msgstr " 不正な前景/背景色 (pdf) "
 
 #: devPS.c:6258
-msgid "Invalid alpha value in PDF"
+#, fuzzy
+msgid "invalid 'alpha' value in PDF"
 msgstr " PDF 中に不正なアルファ値 "
 
 #: devPS.c:6283
@@ -439,7 +449,8 @@ msgid "unknown 'colormodel', using 'srgb'"
 msgstr " 未知の 'colormodel'です。'srgb' を使います "
 
 #: devPS.c:6575
-msgid "Failed to load sRGB colorspace file"
+#, fuzzy
+msgid "failed to load sRGB colorspace file"
 msgstr " sRGB 色空間ファイルのロードに失敗しました "
 
 #: devPS.c:6839
@@ -469,11 +480,13 @@ msgstr ""
 " PDF デバイスを閉じてください "
 
 #: devPS.c:7660 devPS.c:8022 devPS.c:8069
-msgid "Failed to find or load PDF font"
+#, fuzzy
+msgid "failed to find or load PDF font"
 msgstr " PDF フォントが見付からないかロードできませんでした "
 
 #: devPS.c:7844 devPS.c:7977
-msgid "Failed to find or load PDF CID font"
+#, fuzzy
+msgid "failed to find or load PDF CID font"
 msgstr " PDF CID フォントが見付からないかロードできませんでした "
 
 #: devPS.c:8208 devPS.c:8212 devPS.c:8372 devPS.c:8376
@@ -521,11 +534,13 @@ msgid "invalid Quartz device size"
 msgstr " 不正なQuarts デバイスサイズ "
 
 #: devQuartz.c:1414
-msgid "Unable to create device description."
+#, fuzzy
+msgid "unable to create device description"
 msgstr " デバイスの内容を作成できませんでした "
 
 #: devQuartz.c:1464
-msgid "Unable to create Quartz device target, given type may not be supported."
+#, fuzzy
+msgid "unable to create Quartz device target, given type may not be supported"
 msgstr "Quartzデバイスを作成できません。与えられた型はサポートされていません "
 
 #: devQuartz.c:1588
@@ -546,11 +561,13 @@ msgid "'%%' is not allowed in file name"
 msgstr " '%%' はファイル名には利用できません "
 
 #: devWindows.c:604
-msgid "Invalid font specification"
+#, fuzzy
+msgid "invalid font specification"
 msgstr " 不正なフォント指定 "
 
 #: devWindows.c:643
-msgid "Font family not found in Windows font database"
+#, fuzzy
+msgid "font family not found in Windows font database"
 msgstr " Windows のフォントデータベースにフォントファミリが見付かりません "
 
 #: devWindows.c:1074
@@ -566,10 +583,6 @@ msgstr " 描画履歴がありません "
 msgid "filename too long in %s() call"
 msgstr " 呼出し %s() 中に長すぎるファイル名  "
 
-#: devWindows.c:1799 devWindows.c:1834 devWindows.c:1868
-msgid "Unable to load Rbitmap.dll"
-msgstr " Rbitmap.dll　をロードできませんでした "
-
 #: devWindows.c:1804 devWindows.c:1843 devWindows.c:1877
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
@@ -577,12 +590,13 @@ msgstr " 'width=%d, height=%d' はピクセル単位でありそうもない値�
 
 #: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
 #: devWindows.c:1880 devWindows.c:1885
-msgid "Unable to allocate bitmap"
+#, fuzzy
+msgid "unable to allocate bitmap"
 msgstr " ビットマップを割り当てられません "
 
 #: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
-#, c-format
-msgid "Unable to open file '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open file '%s' for writing"
 msgstr " ファイル '%s' を書込み用に開くことができません "
 
 #: devWindows.c:1840
@@ -598,12 +612,13 @@ msgid "filename too long in win.metafile() call"
 msgstr " 呼出し win.metafile() 中に長すぎるファイル名 "
 
 #: devWindows.c:1916
-#, c-format
-msgid "Unable to open metafile '%s' for writing"
+#, fuzzy, c-format
+msgid "unable to open metafile '%s' for writing"
 msgstr " メタファイル '%s' を書込み用に開くことができません "
 
 #: devWindows.c:1918
-msgid "Unable to open clipboard to write metafile"
+#, fuzzy
+msgid "unable to open clipboard to write metafile"
 msgstr " メタファイルを書込むためにクリップボードを開くことができません "
 
 #: devWindows.c:2129
@@ -672,10 +687,6 @@ msgstr " Rbitmap.dll をロードできません "
 msgid "invalid 'width' or 'height'"
 msgstr " 不正な幅か高さ "
 
-#: devWindows.c:3841
-msgid "Unable to load winCairo.dll: was it built?"
-msgstr " winCairo.dllをロードできませんでした。ビルドされていますか? "
-
 #: devices.c:43
 msgid "argument must have positive length"
 msgstr ""
@@ -699,6 +710,24 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr " 不正な 'file' 引数 "
+
+#~ msgid "Invalid line end"
+#~ msgstr " 行末が不正です "
+
+#~ msgid "Invalid line join"
+#~ msgstr " 行のつながりが不正です "
+
+#~ msgid "Unable to load Rbitmap.dll"
+#~ msgstr " Rbitmap.dll　をロードできませんでした "
+
+#~ msgid "Unable to load winCairo.dll: was it built?"
+#~ msgstr " winCairo.dllをロードできませんでした。ビルドされていますか? "
+
+#~ msgid "FontBBox could not be parsed"
+#~ msgstr " FontBBox を構文解析できませんでした "
+
+#~ msgid "CharInfo could not be parsed"
+#~ msgstr " CharInfo を構文解析できませんでした "
 
 #~ msgid "unable to start NULL device"
 #~ msgstr " Null デバイスは開始できません "
