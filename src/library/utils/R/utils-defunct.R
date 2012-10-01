@@ -29,3 +29,11 @@ zip.file.extract <- function(file, zipname = "R.zip",
 			     unzip = getOption("unzip"), dir = tempdir())
 .Defunct("unzip")
 ## </entry>
+
+## <entry>
+## Deprecated in 2.2.0
+## Defunct in 2.16.0
+CRAN.packages <- function(CRAN = getOption("repos"), method,
+                          contriburl = contrib.url(CRAN))
+    .Defunct("available.packages")
+## </entry>
