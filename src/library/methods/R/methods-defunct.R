@@ -20,5 +20,14 @@
 ## <entry>
 ## Deprecated in 2.10.0
 ## Defunct in 2.11.0
-trySilent <- function(expr) .Defunct("try(silent=TRUE)")
+trySilent <- function(expr) .Defunct("try(silent = TRUE)")
+## </entry>
+
+## <entry>
+## Defunct in 2.16.0
+traceOn <-function(what, tracer = browseAll, exit = NULL) {
+    browseAll <- function() .Defunct()
+    .Defunct("trace")
+}
+traceOff <-function(whatL) .Defunct("untrace")
 ## </entry>

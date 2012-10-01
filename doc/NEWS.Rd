@@ -409,6 +409,9 @@
 
       \item The \code{.Fortran()} entry point \code{"dqrls"} which has
       not been used by \R since version 2.15.1 is no longer available.
+     
+      \item Functions \code{traceOn()} and \code{traceOff()} in package
+      \pkg{methods} are now defunct.
     }
   }
 
@@ -763,6 +766,10 @@
       \item The \sQuote{internal function} \code{kappa.tri()} has been
       renamed to \code{.kappa_tri()} so it is not inadvertently called
       as a method for class \code{"tri"}.
+      
+      \item Functions \code{sessionData()} and \code{browseAll()} in
+      package \pkg{methods} are on a help page describing them as
+      \sQuote{deprecated} and are now formally deprecated.
     }
   }
 
