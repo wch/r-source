@@ -1,6 +1,6 @@
 % File src/library/utils/man/INSTALL.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
@@ -12,7 +12,7 @@
 }
 \arguments{
   \item{pkgs}{a space-separated list with the path names of the packages to be
-    installed.}
+    installed.  See \sQuote{Details}.}
   \item{lib}{the path name of the \R library tree to install to.  Also
     accepted in the form \samp{--library=lib}.  Paths including spaces should
     be quoted, using the conventions for the shell in use.}
