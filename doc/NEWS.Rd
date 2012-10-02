@@ -405,6 +405,10 @@
       \code{NaN}.  This is now an error for the gradient or Hessian, and
       a warning for the function (with the value replaced by
       \code{Inf}).  (In part, \PR{15052}.)
+
+      \item The code for creating \code{coerce()} methods could
+      generate false notes about ambiguous selection; the notes have
+      been suppressed for this function.
     }
   }
 }
