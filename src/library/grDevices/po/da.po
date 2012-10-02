@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 11:33+0100\n"
+"POT-Creation-Date: 2012-10-02 09:46+0100\n"
 "PO-Revision-Date: 2011-11-29 09:07+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,7 +172,8 @@ msgid "cannot load afm file '%s'"
 msgstr "kan ikke indlæse afm-fil '%s'"
 
 #: devPS.c:2386
-msgid "Corrupt loaded encodings;  encoding not recorded"
+#, fuzzy
+msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "Ødelagte indlæste kodninger;  kodning ikke optaget"
 
 #: devPS.c:2397
@@ -321,7 +322,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr "fejlede i tekstomdannelse til kodning '%s'"
 
 #: devPS.c:4583
-msgid "run out of colors in xfig()"
+#, fuzzy
+msgid "ran out of colors in xfig()"
 msgstr "løb ud af farver i xfig()"
 
 #: devPS.c:4612
@@ -451,7 +453,8 @@ msgid "failed to load sRGB colorspace file"
 msgstr "Kunne ikke indlæse sRGB-farverumsfil"
 
 #: devPS.c:6839
-msgid "Corrupt encodings in PDF device"
+#, fuzzy
+msgid "corrupt encodings in PDF device"
 msgstr "Ødelagte kodninger i PDF-enhed"
 
 #: devPS.c:6920
@@ -528,7 +531,8 @@ msgid "invalid 'file' argument"
 msgstr "ugyldigt 'fil'-argument"
 
 #: devQuartz.c:1386
-msgid "invalid Quartz device size"
+#, fuzzy
+msgid "invalid quartz() device size"
 msgstr "ugyldig Quartz-enhedsstørrelse"
 
 #: devQuartz.c:1414
@@ -538,7 +542,8 @@ msgstr "Kan ikke oprette enhedsbeskrivelse."
 
 #: devQuartz.c:1464
 #, fuzzy
-msgid "unable to create Quartz device target, given type may not be supported"
+msgid ""
+"unable to create quartz() device target, given type may not be supported"
 msgstr ""
 "Kan ikke oprette Quartz-enhedsmål, angivet type er måske ikke understøttet."
 
@@ -631,7 +636,8 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Ikke nok hukommelse for at ændre størrelse. Deaktiverer alfablanding"
 
 #: devWindows.c:2166
-msgid "A clipboard metafile can store only one figure."
+#, fuzzy
+msgid "a clipboard metafile can store only one figure."
 msgstr "En metafil for udklipsholderen kan kun lagre en figur."
 
 # 76%
@@ -661,7 +667,8 @@ msgid "invalid device in 'savePlot'"
 msgstr "ugyldig enhed i 'savePlot'"
 
 #: devWindows.c:3413
-msgid "invalid filename argument in savePlot"
+#, fuzzy
+msgid "invalid filename argument in 'savePlot'"
 msgstr "ugyldigt filnavnsargument i savePlot"
 
 #: devWindows.c:3418
@@ -704,7 +711,8 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr "QuartzBitmap_Output - kan ikke åbne fil '%s'"
 
 #: qdBitmap.c:94
-msgid "Not a supported scheme, no image data written"
+#, fuzzy
+msgid "not a supported scheme, no image data written"
 msgstr "Ikke et understøttet skema, ingen billeddata skrevet"
 
 #: stubs.c:114

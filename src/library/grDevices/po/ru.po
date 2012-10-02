@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 11:33+0100\n"
+"POT-Creation-Date: 2012-10-02 09:46+0100\n"
 "PO-Revision-Date: 2012-03-15 11:26-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -176,7 +176,8 @@ msgid "cannot load afm file '%s'"
 msgstr "не могу загрузить afm-файл '%s'"
 
 #: devPS.c:2386
-msgid "Corrupt loaded encodings;  encoding not recorded"
+#, fuzzy
+msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "Повреждены загруженные кодировки; кодировка не записана"
 
 #: devPS.c:2397
@@ -321,7 +322,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr "не удалась конверсия текста в кодировку '%s'"
 
 #: devPS.c:4583
-msgid "run out of colors in xfig()"
+#, fuzzy
+msgid "ran out of colors in xfig()"
 msgstr "не хватило цветов в xfig()"
 
 #: devPS.c:4612
@@ -444,7 +446,8 @@ msgid "failed to load sRGB colorspace file"
 msgstr "Не удалось загрузить файл цветового пространства sRGB"
 
 #: devPS.c:6839
-msgid "Corrupt encodings in PDF device"
+#, fuzzy
+msgid "corrupt encodings in PDF device"
 msgstr "Поврежденные кодировки в устройстве PDF"
 
 #: devPS.c:6920
@@ -520,7 +523,8 @@ msgid "invalid 'file' argument"
 msgstr "неправильный аргумент 'file'"
 
 #: devQuartz.c:1386
-msgid "invalid Quartz device size"
+#, fuzzy
+msgid "invalid quartz() device size"
 msgstr "неправильный размер устройства Quartz"
 
 #: devQuartz.c:1414
@@ -530,7 +534,8 @@ msgstr "Не могу создать описание устройства."
 
 #: devQuartz.c:1464
 #, fuzzy
-msgid "unable to create Quartz device target, given type may not be supported"
+msgid ""
+"unable to create quartz() device target, given type may not be supported"
 msgstr ""
 "Не могу создать целевое устройство Quartz, указанный тип не может быть "
 "поддержан."
@@ -622,7 +627,8 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Не хватает памяти для масштабирования. Отключаю alpha-blending"
 
 #: devWindows.c:2166
-msgid "A clipboard metafile can store only one figure."
+#, fuzzy
+msgid "a clipboard metafile can store only one figure."
 msgstr "Метафайл в буфере обмена может хранить только одну фигуру."
 
 #: devWindows.c:2172
@@ -651,7 +657,8 @@ msgid "invalid device in 'savePlot'"
 msgstr "неправильное устройство в 'savePlot'"
 
 #: devWindows.c:3413
-msgid "invalid filename argument in savePlot"
+#, fuzzy
+msgid "invalid filename argument in 'savePlot'"
 msgstr "неправильный аргумент имени файла в savePlot"
 
 #: devWindows.c:3418
@@ -694,7 +701,8 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr "QuartzBitmap_Output - не могу открыть файл '%s'"
 
 #: qdBitmap.c:94
-msgid "Not a supported scheme, no image data written"
+#, fuzzy
+msgid "not a supported scheme, no image data written"
 msgstr "Схема не поддерживается, данные изображения не записаны"
 
 #: stubs.c:114

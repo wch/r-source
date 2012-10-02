@@ -61,7 +61,7 @@ grid.ls <- function(x=NULL, grobs=TRUE, viewports=FALSE, fullNames=FALSE,
     } else if (is.function(print)) {
         print(listing, ...)
     } else {
-        stop("Invalid 'print' argument")
+        stop("invalid 'print' argument")
     }
     invisible(listing)
 }
@@ -89,7 +89,7 @@ gridList.default <- function(x, grobs=TRUE, viewports=FALSE,
         result <- character()
         class(result) <- "gridListing"
     } else {
-        stop("Invalid object in listing")
+        stop("invalid object in 'listing'")
     }
     result
 }
@@ -685,7 +685,7 @@ nestedListing <- function(x, gindent="  ", vpindent=gindent) {
     }
 
     if (!inherits(x, "flatGridListing"))
-        stop("Invalid listing")
+        stop("invalid listing")
     cat(paste(makePrefix(gindent, x$gDepth),
               makePrefix(vpindent, x$vpDepth),
               x$name, sep=""),
@@ -713,7 +713,7 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
     }
 
     if (!inherits(x, "flatGridListing"))
-        stop("Invalid listing")
+        stop("invalid 'listing'")
     vpListings <- seq_along(x$name) %in% grep("^vp", x$type)
     paths <- x$vpPath
     # Only if viewport listings

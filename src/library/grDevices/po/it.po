@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 11:33+0100\n"
+"POT-Creation-Date: 2012-10-02 09:46+0100\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -169,7 +169,8 @@ msgid "cannot load afm file '%s'"
 msgstr "non posso leggere file afm '%s'"
 
 #: devPS.c:2386
-msgid "Corrupt loaded encodings;  encoding not recorded"
+#, fuzzy
+msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "Encoding caricato danneggiato; encoding non registrato"
 
 #: devPS.c:2397
@@ -312,7 +313,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr ""
 
 #: devPS.c:4583
-msgid "run out of colors in xfig()"
+#, fuzzy
+msgid "ran out of colors in xfig()"
 msgstr "usati tutti i colori in xfig()"
 
 #: devPS.c:4612
@@ -438,7 +440,8 @@ msgid "failed to load sRGB colorspace file"
 msgstr "caricamento file encoding fallito"
 
 #: devPS.c:6839
-msgid "Corrupt encodings in PDF device"
+#, fuzzy
+msgid "corrupt encodings in PDF device"
 msgstr "Encoding danneggiato nel dispositivo PDF"
 
 #: devPS.c:6920
@@ -517,7 +520,7 @@ msgstr "argomento stringa non valido"
 
 #: devQuartz.c:1386
 #, fuzzy
-msgid "invalid Quartz device size"
+msgid "invalid quartz() device size"
 msgstr "dispositivo non valido in savePlot"
 
 #: devQuartz.c:1414
@@ -526,7 +529,8 @@ msgid "unable to create device description"
 msgstr "impossibile aprire dispositivo PostScript"
 
 #: devQuartz.c:1464
-msgid "unable to create Quartz device target, given type may not be supported"
+msgid ""
+"unable to create quartz() device target, given type may not be supported"
 msgstr ""
 
 #: devQuartz.c:1588
@@ -619,7 +623,8 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Memoria insufficiente per resize. Chiudo il dispositivo"
 
 #: devWindows.c:2166
-msgid "A clipboard metafile can store only one figure."
+#, fuzzy
+msgid "a clipboard metafile can store only one figure."
 msgstr "Gli appunti possono memorizzare una sola figura."
 
 #: devWindows.c:2172
@@ -650,7 +655,8 @@ msgid "invalid device in 'savePlot'"
 msgstr "dispositivo non valido in savePlot"
 
 #: devWindows.c:3413
-msgid "invalid filename argument in savePlot"
+#, fuzzy
+msgid "invalid filename argument in 'savePlot'"
 msgstr "nome file non valido in savePlot"
 
 #: devWindows.c:3418
@@ -695,7 +701,7 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr ""
 
 #: qdBitmap.c:94
-msgid "Not a supported scheme, no image data written"
+msgid "not a supported scheme, no image data written"
 msgstr ""
 
 #: stubs.c:114

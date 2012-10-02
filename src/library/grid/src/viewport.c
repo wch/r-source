@@ -314,7 +314,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 	!R_FINITE(yINCHES) || 
 	!R_FINITE(vpWidthCM) || 
 	!R_FINITE(vpHeightCM))
-	error(_("Non-finite location and/or size for viewport"));
+	error(_("non-finite location and/or size for viewport"));
     /* Determine justification required
      */
     justification(vpWidthCM, vpHeightCM, vpl.hjust, vpl.vjust,

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:25\n"
+"POT-Creation-Date: 2012-10-02 09:46\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -918,12 +918,6 @@ msgstr "空的(零字节)输入文件"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "输入有破损，LF被CR取代"
 
-msgid "file %s has magic number '%s'"
-msgstr ""
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr "在R版本2号之前的保存功能不再有用"
-
 msgid "bad 'file' argument"
 msgstr "'file'参数不对"
 
@@ -1739,6 +1733,9 @@ msgstr[0] "用T代替TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "Use of save versions prior to 2 is deprecated"
+#~ msgstr "在R版本2号之前的保存功能不再有用"
 
 #~ msgid "T used instead of TRUE"
 #~ msgstr "用T代替TRUE"

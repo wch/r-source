@@ -39,18 +39,18 @@ valid.charjust <- function(just) {
     just <- as.integer(match(just[1L], c("left", "right", "bottom", "top",
                                         "centre", "center")) - 1)
     if (any(is.na(just)))
-      stop("Invalid justification")
+      stop("invalid justification")
   } else if (length(just) > 1) {
     # first value must be one of "left", "right", "centre", or "center"
     just[1L] <- as.integer(match(just[1L], c("left", "right", "bottom", "top",
                                            "centre", "center")) - 1)
     if (!(just[1L] %in% c(0, 1, 4, 5)))
-      stop("Invalid horizontal justification")
+      stop("invalid horizontal justification")
     # second value must be one of "bottom", "top", "centre", or "center"
     just[2L] <- as.integer(match(just[2L], c("left", "right", "bottom", "top",
                                            "centre", "center")) - 1)
     if (!(just[2L] %in% c(2, 3, 4, 5)))
-      stop("Invalid vertical justification")
+      stop("invalid vertical justification")
     just <- as.integer(just)
   }
   # Extend to length 2 if necessary
@@ -71,7 +71,7 @@ valid.charjust <- function(just) {
             switch(just[2L] + 1, NA, NA, 0, 1, 0.5, 0.5))
   # Final paranoid check
   if (any(is.na(just)))
-    stop("Invalid justification")
+    stop("invalid justification")
   just
 }
 
@@ -88,11 +88,11 @@ valid.numjust <- function(just) {
 }
 
 valid.just <- function(just) {
-  if (is.character(just)) 
+  if (is.character(just))
     valid.charjust(just)
   else {
     valid.numjust(as.numeric(just))
-  } 
+  }
 }
 
 resolveHJust <- function(just, hjust) {

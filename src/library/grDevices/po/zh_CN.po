@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 11:33+0100\n"
+"POT-Creation-Date: 2012-10-02 09:46+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -169,7 +169,8 @@ msgid "cannot load afm file '%s'"
 msgstr "无法载入afm文本'%s'"
 
 #: devPS.c:2386
-msgid "Corrupt loaded encodings;  encoding not recorded"
+#, fuzzy
+msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "载入的编码损坏了; 没有记录编码"
 
 #: devPS.c:2397
@@ -312,7 +313,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr "文字转换到编码'%s'时出了错"
 
 #: devPS.c:4583
-msgid "run out of colors in xfig()"
+#, fuzzy
+msgid "ran out of colors in xfig()"
 msgstr "xfig()里的颜色不够"
 
 #: devPS.c:4612
@@ -435,7 +437,8 @@ msgid "failed to load sRGB colorspace file"
 msgstr "无法载入sRGB色彩文件"
 
 #: devPS.c:6839
-msgid "Corrupt encodings in PDF device"
+#, fuzzy
+msgid "corrupt encodings in PDF device"
 msgstr "PDF装置里的编码坏了"
 
 #: devPS.c:6920
@@ -511,7 +514,8 @@ msgid "invalid 'file' argument"
 msgstr "'file'参数不对"
 
 #: devQuartz.c:1386
-msgid "invalid Quartz device size"
+#, fuzzy
+msgid "invalid quartz() device size"
 msgstr "石英装置大小不对"
 
 #: devQuartz.c:1414
@@ -521,7 +525,8 @@ msgstr "无法建立设备描述文件"
 
 #: devQuartz.c:1464
 #, fuzzy
-msgid "unable to create Quartz device target, given type may not be supported"
+msgid ""
+"unable to create quartz() device target, given type may not be supported"
 msgstr "无法建立石英装置，可能不支持所提供的种类"
 
 #: devQuartz.c:1588
@@ -611,7 +616,8 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "内存不够，无法重新修改大小. 关闭alpha混合"
 
 #: devWindows.c:2166
-msgid "A clipboard metafile can store only one figure."
+#, fuzzy
+msgid "a clipboard metafile can store only one figure."
 msgstr "剪輯板元文本只能保存一个图片."
 
 #: devWindows.c:2172
@@ -640,7 +646,8 @@ msgid "invalid device in 'savePlot'"
 msgstr "'savePlot'装置出错"
 
 #: devWindows.c:3413
-msgid "invalid filename argument in savePlot"
+#, fuzzy
+msgid "invalid filename argument in 'savePlot'"
 msgstr "savePlot文本名字参数不对"
 
 #: devWindows.c:3418
@@ -683,7 +690,8 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr " QuartzBitmap_Output - 打不开'%s'文件"
 
 #: qdBitmap.c:94
-msgid "Not a supported scheme, no image data written"
+#, fuzzy
+msgid "not a supported scheme, no image data written"
 msgstr "不支持这个规划，因此没有写任何图象数据"
 
 #: stubs.c:114

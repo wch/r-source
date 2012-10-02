@@ -32,7 +32,7 @@ applyEdit <- function(x, edit) {
     x
   } else {
     if (!is.gEdit(edit))
-      stop("Invalid 'edit' information")
+      stop("invalid 'edit' information")
     # Intended to handle whether edit has gPath spec or not
     newx <- do.call("editGrob", c(list(x), edit))
     # If edit was specified for non-existent child, newx will be NULL
@@ -64,7 +64,7 @@ applyEdits <- function(x, edits) {
       applyEdit(x, edits)
     else {
       if (!inherits(edits, "gEditList"))
-        stop("Invalid 'edit' information")
+        stop("invalid 'edit' information")
       for (i in edits)
         x <- applyEdits(x, i)
       x

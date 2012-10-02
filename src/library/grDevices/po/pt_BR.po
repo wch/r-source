@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 11:33+0100\n"
+"POT-Creation-Date: 2012-10-02 09:46+0100\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -173,8 +173,9 @@ msgid "cannot load afm file '%s'"
 msgstr ""
 
 #: devPS.c:2386
-msgid "Corrupt loaded encodings;  encoding not recorded"
-msgstr ""
+#, fuzzy
+msgid "corrupt loaded encodings;  encoding not recorded"
+msgstr "falha ao alocar informação de codificação"
 
 #: devPS.c:2397
 #, fuzzy
@@ -309,7 +310,7 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr ""
 
 #: devPS.c:4583
-msgid "run out of colors in xfig()"
+msgid "ran out of colors in xfig()"
 msgstr ""
 
 #: devPS.c:4612
@@ -431,8 +432,9 @@ msgid "failed to load sRGB colorspace file"
 msgstr "falha ao carregar arquivo de codificação '%s'"
 
 #: devPS.c:6839
-msgid "Corrupt encodings in PDF device"
-msgstr ""
+#, fuzzy
+msgid "corrupt encodings in PDF device"
+msgstr "falha ao alocar informação de codificação"
 
 #: devPS.c:6920
 msgid "increasing the PDF version to 1.3"
@@ -505,7 +507,7 @@ msgid "invalid 'file' argument"
 msgstr ""
 
 #: devQuartz.c:1386
-msgid "invalid Quartz device size"
+msgid "invalid quartz() device size"
 msgstr ""
 
 #: devQuartz.c:1414
@@ -514,7 +516,8 @@ msgid "unable to create device description"
 msgstr "falha ao alocar informação de codificação"
 
 #: devQuartz.c:1464
-msgid "unable to create Quartz device target, given type may not be supported"
+msgid ""
+"unable to create quartz() device target, given type may not be supported"
 msgstr ""
 
 #: devQuartz.c:1588
@@ -602,7 +605,7 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr ""
 
 #: devWindows.c:2166
-msgid "A clipboard metafile can store only one figure."
+msgid "a clipboard metafile can store only one figure."
 msgstr ""
 
 #: devWindows.c:2172
@@ -631,7 +634,7 @@ msgid "invalid device in 'savePlot'"
 msgstr ""
 
 #: devWindows.c:3413
-msgid "invalid filename argument in savePlot"
+msgid "invalid filename argument in 'savePlot'"
 msgstr ""
 
 #: devWindows.c:3418
@@ -673,7 +676,7 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr ""
 
 #: qdBitmap.c:94
-msgid "Not a supported scheme, no image data written"
+msgid "not a supported scheme, no image data written"
 msgstr ""
 
 #: stubs.c:114

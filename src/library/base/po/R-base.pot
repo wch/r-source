@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:25\n"
+"POT-Creation-Date: 2012-10-02 09:46\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -822,12 +822,6 @@ msgid "empty (zero-byte) input file"
 msgstr ""
 
 msgid "input has been corrupted, with LF replaced by CR"
-msgstr ""
-
-msgid "file %s has magic number '%s'"
-msgstr ""
-
-msgid "Use of save versions prior to 2 is deprecated"
 msgstr ""
 
 msgid "bad 'file' argument"

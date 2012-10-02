@@ -60,7 +60,7 @@ convertUnit <- function(x, unitTo, axisFrom="x", typeFrom="location",
   if (!is.unit(x))
     stop("'x' argument must be a unit object")
   if (is.na(whatfrom) || is.na(whatto))
-    stop("Invalid 'axis' or 'type'")
+    stop("invalid 'axis' or 'type'")
   value <- grid.Call(L_convert, x, as.integer(whatfrom),
                  as.integer(whatto), valid.units(unitTo))
   if (!valueOnly)
@@ -189,7 +189,7 @@ valid.data <- function(units, data) {
         for (i in (1L:n)[str.units])
             if (!(length(data) >= i &&
                   (is.character(data[[i]]) || is.language(data[[i]]))))
-                stop("No string supplied for 'strwidth/height' unit")
+                stop("no string supplied for 'strwidth/height' unit")
     # Make sure that a grob has been specified
     grob.units <- grobUnit(units)
     if (any(grob.units))
@@ -197,7 +197,7 @@ valid.data <- function(units, data) {
             if (!(length(data) >= i &&
                   (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
                    is.character(data[[i]]))))
-                stop("No 'grob' supplied for 'grobwidth/height' unit")
+                stop("no 'grob' supplied for 'grobwidth/height' unit")
             if (is.character(data[[i]]))
                 data[[i]] <- gPathDirect(data[[i]])
             if (inherits(data[[i]], "gPath"))
@@ -206,7 +206,7 @@ valid.data <- function(units, data) {
         }
     # Make sure that where no data is required, the data is NULL
     if (!all(sapply(data[!(str.units | grob.units)], is.null)))
-        stop("Non-NULL value supplied for plain unit")
+        stop("non-NULL value supplied for plain unit")
     data
 }
 
@@ -232,32 +232,32 @@ unit.arithmetic <- function(func.name, arg1, arg2=NULL) {
 Ops.unit <- function(e1, e2) {
   ok <- switch(.Generic, "+"=TRUE, "-"=TRUE, "*"=TRUE, FALSE)
   if (!ok)
-    stop(gettextf("Operator '%s' not meaningful for units", .Generic),
+    stop(gettextf("operator '%s' not meaningful for units", .Generic),
          domain = NA)
   if (.Generic == "*")
     # can only multiply a unit by a scalar
     if (nzchar(.Method[1L])) {
       if (nzchar(.Method[2L]))
-        stop("Only one operand may be a unit")
+        stop("only one operand may be a unit")
       else if (is.numeric(e2))
         # NOTE that we always put the scalar first
         # Use as.numeric to force e2 to be REAL
         unit.arithmetic(.Generic, as.numeric(e2), e1)
       else
-        stop("Non-unit operand must be numeric")
+        stop("non-unit operand must be numeric")
     } else {
       if (is.numeric(e1))
         # Use as.numeric to force e1 to be REAL
         unit.arithmetic(.Generic, as.numeric(e1), e2)
       else
-        stop("Non-unit operand must be numeric")
+        stop("non-unit operand must be numeric")
     }
   else
     # Check that both arguments are units
     if (nzchar(.Method[1L]) && nzchar(.Method[2L]))
       unit.arithmetic(.Generic, e1, e2)
     else
-      stop("Both operands must be units")
+      stop("both operands must be units")
 }
 
 ## <FIXME>
@@ -299,7 +299,7 @@ unit.pmax <- function(...) {
   x <- list(...)
   numargs <- length(x)
   if (numargs == 0L)
-    stop("Zero arguments where at least one expected")
+    stop("no arguments where at least one expected")
   # how long will the result be?
   maxlength <- 0L
   for (i in seq_len(numargs))
@@ -399,12 +399,12 @@ print.unit <- function(x, ...) {
   # Allow for negative integer index
   if (any(index < 0)) {
       if (any(index > 0))
-          stop("Cannot mix signs of indices")
+          stop("cannot mix signs of indices")
       else
           index <- (1L:this.length)[index]
   }
   if (top && any(index > this.length))
-    stop("Index out of bounds (unit subsetting)")
+    stop("index out of bounds ('unit' subsetting)")
   cl <- class(x)
   units <- attr(x, "unit")
   valid.units <- attr(x, "valid.unit")
@@ -431,12 +431,12 @@ print.unit <- function(x, ...) {
   # Allow for negative integer index
   if (any(index < 0)) {
       if (any(index > 0))
-          stop("Cannot mix signs of indices")
+          stop("cannot mix signs of indices")
       else
           index <- (1L:this.length)[index]
   }
   if (top && any(index > this.length))
-    stop("Index out of bounds (unit arithmetic subsetting)")
+    stop("index out of bounds (unit arithmetic subsetting)")
 
   repSummaryUnit <- function(x, n) {
       newUnits <- lapply(seq_len(n), function(z) { get(x$fname)(x$arg1) })
@@ -464,12 +464,12 @@ print.unit <- function(x, ...) {
   # Allow for negative integer index
   if (any(index < 0)) {
       if (any(index > 0))
-          stop("Cannot mix signs of indices")
+          stop("cannot mix signs of indices")
       else
           index <- (1L:this.length)[index]
   }
   if (top && any(index > this.length))
-    stop("Index out of bounds (unit list subsetting)")
+    stop("index out of bounds (unit list subsetting)")
   cl <- class(x)
   result <- unclass(x)[(index - 1) %% this.length + 1]
   class(result) <- cl
@@ -496,7 +496,7 @@ print.unit <- function(x, ...) {
 unit.c <- function(...) {
     x <- list(...)
     if (!all(sapply(x, is.unit)))
-        stop("It is invalid to combine unit objects with other types")
+        stop("it is invalid to combine 'unit' objects with other types")
     listUnit <- function(x) {
         inherits(x, "unit.list") ||
         inherits(x, "unit.arithmetic")
@@ -534,7 +534,7 @@ unit.list.from.list <- function(x) {
 
 rep.unit <- function(x, times=1, length.out=NA, each=1, ...) {
     if (length(x) == 0)
-        stop("Invalid unit object")
+        stop("invalid 'unit' object")
 
     # Determine an approprite index, then call subsetting code
     repIndex <- rep(seq_along(x), times=times, length.out=length.out, each=each)
@@ -544,7 +544,7 @@ rep.unit <- function(x, times=1, length.out=NA, each=1, ...) {
 # Vestige from when rep() was not generic
 unit.rep <- function (x, ...)
 {
-  warning("unit.rep has been deprecated in favour of a unit method for the generic rep function")
+  warning("'unit.rep' has been deprecated in favour of a unit method for the generic rep function", domain = NA)
   rep(x, ...)
 }
 
@@ -572,7 +572,7 @@ length.unit.arithmetic <- function(x) {
 
 # Vestige of when length was not generic
 unit.length <- function(unit) {
-   warning("unit.length has been deprecated in favour of a unit method for the generic length function")
+   warning("'unit.length' has been deprecated in favour of a unit method for the generic length function", domain = NA)
    length(unit)
 }
 
@@ -636,7 +636,7 @@ convertTheta <- function(theta) {
                north=90,
                west=180,
                south=270,
-               stop("Invalid theta"))
+               stop("invalid 'theta'"))
     else
         # Ensure theta in [0, 360)
         theta <- as.numeric(theta) %% 360

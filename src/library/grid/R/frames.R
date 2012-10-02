@@ -131,7 +131,7 @@ gridList.frame <- function(x, grobs=TRUE, viewports=FALSE,
                                 fullNames=fullNames,
                                 recursive=recursive),
                        result,
-                       gridList(n, 
+                       gridList(n,
                                 grobs=grobs, viewports=viewports,
                                 fullNames=fullNames,
                                 recursive=recursive))
@@ -212,9 +212,9 @@ grid.place <- function(gPath, grob,
 placeGrob <- function(frame, grob,
                       row=NULL, col=NULL) {
   if (!inherits(frame, "frame"))
-    stop("Invalid 'frame'")
+    stop("invalid 'frame'")
   if (!is.grob(grob))
-    stop("Invalid 'grob'")
+    stop("invalid 'grob'")
   dim <- frameDim(frame)
   if (is.null(row))
     row <- c(1, dim[1L])
@@ -226,7 +226,7 @@ placeGrob <- function(frame, grob,
     col <- rep(col, 2)
   if (min(row) < 1 || max(row) > dim[1L] ||
       min(col) < 1 || max(col) > dim[2L])
-    stop("Invalid 'row' and/or 'col' (no such cell in frame layout)")
+    stop("invalid 'row' and/or 'col' (no such cell in frame layout)")
   cgrob <- cellGrob(col, row, NULL, grob, FALSE,
                     cellViewport(col, row, NULL))
   addGrob(frame, cgrob)
@@ -271,7 +271,7 @@ new.col <- function(side, col, col.before, col.after, ncol) {
     # It is also an error to specify a single col outside 1..ncol+1
     else
       if (col < 1 || col > ncol + 1)
-        stop("Invalid 'col' specification")
+        stop("invalid 'col' specification")
       else
         result <- col == ncol+1
   }
@@ -314,7 +314,7 @@ new.row <- function(side, row, row.before, row.after, nrow) {
     # It is also an error to specify a single row outside 1..nrow+1
     else
       if (row < 1 || row > nrow + 1)
-        stop("Invalid 'row' specification")
+        stop("invalid 'row' specification")
       else
         result <- row == nrow+1
   }
@@ -403,9 +403,9 @@ packGrob <- function(frame, grob,
                      force.width=FALSE, force.height=FALSE,
                      border=NULL, dynamic=FALSE) {
   if (!inherits(frame, "frame"))
-    stop("Invalid 'frame'")
+    stop("invalid 'frame'")
   if (!is.grob(grob))
-    stop("Invalid 'grob'")
+    stop("invalid 'grob'")
   # col/row can be given as a range, but I only want to know
   # about the min and max
   if (!is.null(col) & length(col) > 1) {
@@ -448,7 +448,7 @@ packGrob <- function(frame, grob,
     ncs <- 1
   }
   if (ncs != 1)
-    stop("Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'")
+    stop("cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'")
   nrs <- num.row.specs(side, row, row.before, row.after)
   # If user does not specify a row, assume it is all rows
   if (nrs == 0) {
@@ -462,7 +462,7 @@ packGrob <- function(frame, grob,
     nrs <- 1
   }
   if (nrs != 1)
-    stop("Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'")
+    stop("must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'")
 
   # (ii) Determine that location and check that it is valid
   new.col <- new.col(side, col, col.before, col.after, ncol)

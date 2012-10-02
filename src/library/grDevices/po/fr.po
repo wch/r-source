@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 11:33+0100\n"
+"POT-Creation-Date: 2012-10-02 09:46+0100\n"
 "PO-Revision-Date: 2012-03-06 21:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -178,7 +178,8 @@ msgid "cannot load afm file '%s'"
 msgstr "impossible de lire fichier afm '%s'"
 
 #: devPS.c:2386
-msgid "Corrupt loaded encodings;  encoding not recorded"
+#, fuzzy
+msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "Encodages chargés corrompus : encodage non enregistré"
 
 #: devPS.c:2397
@@ -325,7 +326,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr "erreur dans la conversion du texte vers l'encodage '%s'"
 
 #: devPS.c:4583
-msgid "run out of colors in xfig()"
+#, fuzzy
+msgid "ran out of colors in xfig()"
 msgstr "trop de couleurs pour xfig()"
 
 #: devPS.c:4612
@@ -449,7 +451,8 @@ msgid "failed to load sRGB colorspace file"
 msgstr "Echec de chargement de l'espace de couleur sRGB"
 
 #: devPS.c:6839
-msgid "Corrupt encodings in PDF device"
+#, fuzzy
+msgid "corrupt encodings in PDF device"
 msgstr "Encodage corrompus dans le périphérique PDF"
 
 #: devPS.c:6920
@@ -525,7 +528,8 @@ msgid "invalid 'file' argument"
 msgstr "argument 'file' incorrect"
 
 #: devQuartz.c:1386
-msgid "invalid Quartz device size"
+#, fuzzy
+msgid "invalid quartz() device size"
 msgstr "taille de périphérique Quartz incorrecte"
 
 #: devQuartz.c:1414
@@ -535,7 +539,8 @@ msgstr "impossible une description du périphérique."
 
 #: devQuartz.c:1464
 #, fuzzy
-msgid "unable to create Quartz device target, given type may not be supported"
+msgid ""
+"unable to create quartz() device target, given type may not be supported"
 msgstr ""
 "Impossible de créer le périphérique cible Quartz, le type fourni n'est peut-"
 "être pas supporté."
@@ -631,7 +636,8 @@ msgstr ""
 "désactivé"
 
 #: devWindows.c:2166
-msgid "A clipboard metafile can store only one figure."
+#, fuzzy
+msgid "a clipboard metafile can store only one figure."
 msgstr "Un presse-papier metafile ne peut stocker qu'une seule figure"
 
 #: devWindows.c:2172
@@ -660,7 +666,8 @@ msgid "invalid device in 'savePlot'"
 msgstr "périphérique incorrect dans 'savePlot'"
 
 #: devWindows.c:3413
-msgid "invalid filename argument in savePlot"
+#, fuzzy
+msgid "invalid filename argument in 'savePlot'"
 msgstr "argument nom de fichier incorrect dans savePlot"
 
 #: devWindows.c:3418
@@ -703,7 +710,8 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr "QuartzBitmap_Output - impossible d'ouvrir le fichier '%s'"
 
 #: qdBitmap.c:94
-msgid "Not a supported scheme, no image data written"
+#, fuzzy
+msgid "not a supported scheme, no image data written"
 msgstr "Le schéma n'est pas supporté, aucune donnée d'image n'est écrite"
 
 #: stubs.c:114

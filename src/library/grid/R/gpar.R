@@ -39,7 +39,7 @@ validGP <- function(gpars) {
   # Check a (non-NULL) gpar is not of length 0
   check.length <- function(gparname) {
     if (length(gpars[[gparname]]) == 0)
-      stop(gettextf("gpar element '%s' must not be length 0", gparname),
+      stop(gettextf("'gpar' element '%s' must not be length 0", gparname),
            domain = NA)
   }
   # Check a gpar is numeric and not NULL
@@ -61,7 +61,7 @@ validGP <- function(gpars) {
   numnotnull("lex")
   # gamma defunct in 2.7.0
   if ("gamma" %in% names(gpars)) {
-    warning("'gamma' gpar is defunct")
+    warning("'gamma' 'gpar' element is defunct")
     gpars$gamma <- NULL
   }
   numnotnull("alpha")
@@ -103,12 +103,12 @@ validGP <- function(gpars) {
   numnotnull("linemitre")
   if (!is.na(match("linemitre", names(gpars)))) {
     if (any(gpars$linemitre < 1))
-      stop("Invalid 'linemitre' value")
+      stop("invalid 'linemitre' value")
   }
   # alpha should be 0 to 1
   if (!is.na(match("alpha", names(gpars)))) {
     if (any(gpars$alpha < 0 || gpars$alpha > 1))
-      stop("Invalid 'alpha' value")
+      stop("invalid 'alpha' value")
   }
   # font should be integer and not NULL
   if (!is.na(match("font", names(gpars)))) {
@@ -133,7 +133,7 @@ validGP <- function(gpars) {
   # Illegal to specify both font and fontface
   if (!is.na(match("fontface", names(gpars)))) {
     if (!is.na(match("font", names(gpars))))
-      stop("Must specify only one of 'font' and 'fontface'")
+      stop("must specify only one of 'font' and 'fontface'")
     if (is.null(gpars$fontface))
       gpars$font <- NULL
     else {
@@ -155,7 +155,7 @@ validGP <- function(gpars) {
                                 cyrillic=5,
                                 cyrillic.oblique=6,
                                 EUC=7,
-                                stop("Invalid font face"))
+                                stop("invalid font face"))
         gpars$font <- as.integer(temp.num)
       }
     }
@@ -186,11 +186,11 @@ validGP <- function(gpars) {
 
 set.gpar <- function(gp) {
   if (!is.gpar(gp))
-    stop("Argument must be a 'gpar' object")
+    stop("argument must be a 'gpar' object")
   temp <- grid.Call(L_getGPar)
   # gamma defunct in 2.7.0
   if ("gamma" %in% names(gp)) {
-      warning("'gamma' gpar is defunct")
+      warning("'gamma' 'gpar' element is defunct")
       gp$gamma <- NULL
   }
   # Special case "cex" (make it cumulative)
@@ -225,10 +225,10 @@ get.gpar <- function(names=NULL) {
   } else {
     if (!is.character(names) ||
         !all(names %in% .grid.gpar.names))
-      stop("Must specify only valid 'gpar' names")
+      stop("must specify only valid 'gpar' names")
     # gamma deprecated
     if ("gamma" %in% names) {
-      warning("'gamma' gpar is defunct")
+      warning("'gamma' 'gpar' element is defunct")
       names <- names[-match("gamma", names)]
     }
     result <- unclass(grid.Call(L_getGPar))[names]

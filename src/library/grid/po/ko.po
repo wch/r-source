@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-02 09:51+0100\n"
 "PO-Revision-Date: 2012-03-09 06:45+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -20,11 +20,13 @@ msgstr ""
 "X-Generator: Pootle 2.1.6\n"
 
 #: grid.c:214
-msgid "Cannot clip to rotated viewport"
+#, fuzzy
+msgid "cannot clip to rotated viewport"
 msgstr "회전시킨 보임창에 고정시킬 수 없습니다 "
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+#, fuzzy
+msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "최상단의 보임창에 띄울 수 없습니다 (그리드와 그래픽 출력을 혼용하고 있지 않습"
 "니까?) "
@@ -34,23 +36,28 @@ msgid "attempt to plot on null device"
 msgstr "널 디바이스에 플랏을 시도합니다 "
 
 #: grid.c:1232
-msgid "There is no layout defined"
+#, fuzzy
+msgid "there is no layout defined"
 msgstr "정의된 레이아웃이 없습니다 "
 
 #: grid.c:1452
-msgid "Polygon edge not found (zero-width or zero-height?)"
+#, fuzzy
+msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "다각형의 끝점을 찾을 수 없습니다 (높이 혹은 너비가 0 인가요?)"
 
 #: grid.c:1461
-msgid "Polygon edge not found"
+#, fuzzy
+msgid "polygon edge not found"
 msgstr "다각형의 끝점을 찾을 수 없습니다 "
 
 #: grid.c:1615
-msgid "Require at least two points to draw arrow"
+#, fuzzy
+msgid "require at least two points to draw arrow"
 msgstr "화살표를 그리기 위해서는 최소한 2개의 점이 필요합니다 "
 
 #: grid.c:1931
-msgid "Non-finite control point in Xspline"
+#, fuzzy
+msgid "non-finite control point in Xspline"
 msgstr "Xspline 에서 유한하지 않은 컨트롤 포인트입니다 "
 
 #: grid.c:2796
@@ -62,15 +69,18 @@ msgid "invalid plotting symbol"
 msgstr "플랏 기호가 잘못되었습니다 "
 
 #: grid.c:3372
-msgid "Unable to clip to rotated rectangle"
+#, fuzzy
+msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형에 고정시킬 수 없습니다 "
 
 #: layout.c:587
-msgid "invalid layout.pos.row"
+#, fuzzy
+msgid "invalid 'layout.pos.row'"
 msgstr "layout.pos.row 가 잘못되었습니다 "
 
 #: layout.c:591
-msgid "invalid layout.pos.col"
+#, fuzzy
+msgid "invalid 'layout.pos.col'"
 msgstr "layout.pos.col 이 잘못되었습니다 "
 
 #: matrix.c:49
@@ -78,16 +88,19 @@ msgid "singular transformation matrix"
 msgstr "비정칙 변환행렬 "
 
 #: state.c:169
-msgid "Unable to store grid state.  Too many devices open?"
+#, fuzzy
+msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
 "그리드 상태를 저장할 수 없습니다. 너무 많은 장치들을 열고 있는것은 아닙니까? "
 
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-msgid "Unimplemented unit function"
+#, fuzzy
+msgid "unimplemented unit function"
 msgstr "구현되지 않은 unit 함수  "
 
 #: unit.c:893 unit.c:1639
-msgid "Illegal unit or unit not yet implemented"
+#, fuzzy
+msgid "invalid unit or unit not yet implemented"
 msgstr "unit 의 잘못된 사용이거나, 구현되지 않은 unit 입니다 "
 
 #: unit.c:1798
@@ -95,15 +108,18 @@ msgid "Invalid unit"
 msgstr "unit 이 잘못되었습니다 "
 
 #: unit.c:1814
-msgid "Units must be character"
+#, fuzzy
+msgid "'units' must be character"
 msgstr "unit 이 문자형일 필요는 없습니다 "
 
 #: unit.c:1817
-msgid "Units must be of length > 0"
+#, fuzzy
+msgid "'units' must be of length > 0"
 msgstr "unit 의 길이는 0 보다 커야 합니다 "
 
 #: viewport.c:317
-msgid "Non-finite location and/or size for viewport"
+#, fuzzy
+msgid "non-finite location and/or size for viewport"
 msgstr "보임창에 유한하지 않은 위치 혹은 사이즈 입니다 "
 
 #~ msgid "Invalid circle radius (must be non-negative)"

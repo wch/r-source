@@ -303,7 +303,7 @@ calcCurveGrob <- function(x, debug) {
 
     # Outlaw identical end points
     if (any(x1 == x2 & y1 == y2))
-        stop("End points must not be identical")
+        stop("end points must not be identical")
 
     # Rep locations to allow multiple curves from single call
     maxn <- max(length(x1),

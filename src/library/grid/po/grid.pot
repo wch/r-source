@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-02 09:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: grid.c:214
-msgid "Cannot clip to rotated viewport"
+msgid "cannot clip to rotated viewport"
 msgstr ""
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 
 #: grid.c:952
@@ -30,23 +30,23 @@ msgid "attempt to plot on null device"
 msgstr ""
 
 #: grid.c:1232
-msgid "There is no layout defined"
+msgid "there is no layout defined"
 msgstr ""
 
 #: grid.c:1452
-msgid "Polygon edge not found (zero-width or zero-height?)"
+msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
 #: grid.c:1461
-msgid "Polygon edge not found"
+msgid "polygon edge not found"
 msgstr ""
 
 #: grid.c:1615
-msgid "Require at least two points to draw arrow"
+msgid "require at least two points to draw arrow"
 msgstr ""
 
 #: grid.c:1931
-msgid "Non-finite control point in Xspline"
+msgid "non-finite control point in Xspline"
 msgstr ""
 
 #: grid.c:2796
@@ -58,15 +58,15 @@ msgid "invalid plotting symbol"
 msgstr ""
 
 #: grid.c:3372
-msgid "Unable to clip to rotated rectangle"
+msgid "unable to clip to rotated rectangle"
 msgstr ""
 
 #: layout.c:587
-msgid "invalid layout.pos.row"
+msgid "invalid 'layout.pos.row'"
 msgstr ""
 
 #: layout.c:591
-msgid "invalid layout.pos.col"
+msgid "invalid 'layout.pos.col'"
 msgstr ""
 
 #: matrix.c:49
@@ -74,15 +74,15 @@ msgid "singular transformation matrix"
 msgstr ""
 
 #: state.c:169
-msgid "Unable to store grid state.  Too many devices open?"
+msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
 
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-msgid "Unimplemented unit function"
+msgid "unimplemented unit function"
 msgstr ""
 
 #: unit.c:893 unit.c:1639
-msgid "Illegal unit or unit not yet implemented"
+msgid "invalid unit or unit not yet implemented"
 msgstr ""
 
 #: unit.c:1798
@@ -90,13 +90,13 @@ msgid "Invalid unit"
 msgstr ""
 
 #: unit.c:1814
-msgid "Units must be character"
+msgid "'units' must be character"
 msgstr ""
 
 #: unit.c:1817
-msgid "Units must be of length > 0"
+msgid "'units' must be of length > 0"
 msgstr ""
 
 #: viewport.c:317
-msgid "Non-finite location and/or size for viewport"
+msgid "non-finite location and/or size for viewport"
 msgstr ""

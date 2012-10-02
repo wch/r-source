@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-02 09:51+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -18,11 +18,13 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #: grid.c:214
-msgid "Cannot clip to rotated viewport"
+#, fuzzy
+msgid "cannot clip to rotated viewport"
 msgstr "Nie można przypiąć do obróconego okienka ekranu"
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+#, fuzzy
+msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "Nie można wyświetlić okienka ekranu na wierzchu (siatka oraz wyjście grafiki "
 "pomieszały się?)"
@@ -32,24 +34,29 @@ msgid "attempt to plot on null device"
 msgstr "próba rysowania na pustym urządzeniu"
 
 #: grid.c:1232
-msgid "There is no layout defined"
+#, fuzzy
+msgid "there is no layout defined"
 msgstr "Nie określono układu"
 
 #: grid.c:1452
-msgid "Polygon edge not found (zero-width or zero-height?)"
+#, fuzzy
+msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 "Nie znaleziono krawędzi wielokąta (zerowa szerokość lub zerowa wysokość?)"
 
 #: grid.c:1461
-msgid "Polygon edge not found"
+#, fuzzy
+msgid "polygon edge not found"
 msgstr "Nie znaleziono krawędzi wielokąta"
 
 #: grid.c:1615
-msgid "Require at least two points to draw arrow"
+#, fuzzy
+msgid "require at least two points to draw arrow"
 msgstr "Wymaga co najmniej dwu punktów, aby narysować strzałkę"
 
 #: grid.c:1931
-msgid "Non-finite control point in Xspline"
+#, fuzzy
+msgid "non-finite control point in Xspline"
 msgstr "Nieskończony punkt kontrolny w Xspline"
 
 #: grid.c:2796
@@ -61,15 +68,18 @@ msgid "invalid plotting symbol"
 msgstr "Nieprawidłowy rysowany symbol"
 
 #: grid.c:3372
-msgid "Unable to clip to rotated rectangle"
+#, fuzzy
+msgid "unable to clip to rotated rectangle"
 msgstr "Nie można przypiąć do obróconego prostokąta"
 
 #: layout.c:587
-msgid "invalid layout.pos.row"
+#, fuzzy
+msgid "invalid 'layout.pos.row'"
 msgstr "niepoprawny 'layout.pos.row'"
 
 #: layout.c:591
-msgid "invalid layout.pos.col"
+#, fuzzy
+msgid "invalid 'layout.pos.col'"
 msgstr "niepoprawny 'layout.pos.col'"
 
 #: matrix.c:49
@@ -77,15 +87,18 @@ msgid "singular transformation matrix"
 msgstr "osobliwa macierz transformacyjna"
 
 #: state.c:169
-msgid "Unable to store grid state.  Too many devices open?"
+#, fuzzy
+msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "Nie można zachować stanu siatki. Zbyt duża liczba otwartych okien?"
 
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-msgid "Unimplemented unit function"
+#, fuzzy
+msgid "unimplemented unit function"
 msgstr "Niezaimplementowana jednostkowa funkcja"
 
 #: unit.c:893 unit.c:1639
-msgid "Illegal unit or unit not yet implemented"
+#, fuzzy
+msgid "invalid unit or unit not yet implemented"
 msgstr ""
 "Niedozwolona jednostka lub jednostka nie została jeszcze zaimplementowana"
 
@@ -94,13 +107,16 @@ msgid "Invalid unit"
 msgstr "Niepoprawna jednostka"
 
 #: unit.c:1814
-msgid "Units must be character"
+#, fuzzy
+msgid "'units' must be character"
 msgstr "Jednostki muszą być znakiem"
 
 #: unit.c:1817
-msgid "Units must be of length > 0"
+#, fuzzy
+msgid "'units' must be of length > 0"
 msgstr "Jednostki muszą mieć długość > 0"
 
 #: viewport.c:317
-msgid "Non-finite location and/or size for viewport"
+#, fuzzy
+msgid "non-finite location and/or size for viewport"
 msgstr "Nieskończone położenie oraz/lub rozmiar okna ekranu"

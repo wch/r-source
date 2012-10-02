@@ -72,7 +72,7 @@ wrap <- function(x) {
 
 wrap.default <- function(x) {
   if (!is.null(x))
-    stop("Invalid display list element")
+    stop("invalid display list element")
   NULL
 }
 

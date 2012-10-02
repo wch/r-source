@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:25\n"
+"POT-Creation-Date: 2012-10-02 09:46\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -930,12 +930,6 @@ msgstr "empty (zero-byte) input file"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "input has been corrupted, with LF replaced by CR"
 
-msgid "file %s has magic number '%s'"
-msgstr ""
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr "Use of save versions prior to 2 is deprecated"
-
 msgid "bad 'file' argument"
 msgstr "잘못한 'file' 인수입니다"
 
@@ -1771,6 +1765,9 @@ msgstr[0] "TRUE 대신 T 가 사용되었습니다 "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#~ msgid "Use of save versions prior to 2 is deprecated"
+#~ msgstr "Use of save versions prior to 2 is deprecated"
 
 #~ msgid "T used instead of TRUE"
 #~ msgstr "TRUE 대신 T 가 사용되었습니다 "

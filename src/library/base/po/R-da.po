@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:25\n"
+"POT-Creation-Date: 2012-10-02 09:46\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -918,12 +918,6 @@ msgstr "tom (zerobyte) inddatafil"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "inddata er blevet ødelagt, med LF erstattet af CR"
 
-msgid "file %s has magic number '%s'"
-msgstr ""
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr "Brug af save-versioner før 2 er forældet"
-
 msgid "bad 'file' argument"
 msgstr "ugyldigt 'file'-argument"
 
@@ -1738,6 +1732,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "Use of save versions prior to 2 is deprecated"
+#~ msgstr "Brug af save-versioner før 2 er forældet"
 
 #~ msgid "0 extent dimensions"
 #~ msgstr "0 omfangsdimensioner"

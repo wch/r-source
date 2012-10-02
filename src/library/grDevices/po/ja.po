@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 11:33+0100\n"
+"POT-Creation-Date: 2012-10-02 09:46+0100\n"
 "PO-Revision-Date: 2012-02-26 14:10+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -181,7 +181,8 @@ msgid "cannot load afm file '%s'"
 msgstr " afm ファイル '%s' をロードできませんでした "
 
 #: devPS.c:2386
-msgid "Corrupt loaded encodings;  encoding not recorded"
+#, fuzzy
+msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr ""
 " ロードされたエンコーディングが破損しています；　　エンコーディングは記録され"
 "ませんでした "
@@ -328,7 +329,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr " テキストをエンコーディング '%s' に変換することに失敗しました "
 
 #: devPS.c:4583
-msgid "run out of colors in xfig()"
+#, fuzzy
+msgid "ran out of colors in xfig()"
 msgstr " xfig() 中で色数が多すぎました "
 
 #: devPS.c:4612
@@ -454,7 +456,8 @@ msgid "failed to load sRGB colorspace file"
 msgstr " sRGB 色空間ファイルのロードに失敗しました "
 
 #: devPS.c:6839
-msgid "Corrupt encodings in PDF device"
+#, fuzzy
+msgid "corrupt encodings in PDF device"
 msgstr " PDF デバイス中に破損したエンコーディング "
 
 #: devPS.c:6920
@@ -530,7 +533,8 @@ msgid "invalid 'file' argument"
 msgstr " 不正な 'file' 引数 "
 
 #: devQuartz.c:1386
-msgid "invalid Quartz device size"
+#, fuzzy
+msgid "invalid quartz() device size"
 msgstr " 不正なQuarts デバイスサイズ "
 
 #: devQuartz.c:1414
@@ -540,7 +544,8 @@ msgstr " デバイスの内容を作成できませんでした "
 
 #: devQuartz.c:1464
 #, fuzzy
-msgid "unable to create Quartz device target, given type may not be supported"
+msgid ""
+"unable to create quartz() device target, given type may not be supported"
 msgstr "Quartzデバイスを作成できません。与えられた型はサポートされていません "
 
 #: devQuartz.c:1588
@@ -630,7 +635,8 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr " メモリ不足でサイズ変更できません。alpha blending を停止します "
 
 #: devWindows.c:2166
-msgid "A clipboard metafile can store only one figure."
+#, fuzzy
+msgid "a clipboard metafile can store only one figure."
 msgstr " クリップボードメタファイルは一つの図だけを保管できます "
 
 #: devWindows.c:2172
@@ -659,7 +665,8 @@ msgid "invalid device in 'savePlot'"
 msgstr " savePlot 中に不正なデバイス "
 
 #: devWindows.c:3413
-msgid "invalid filename argument in savePlot"
+#, fuzzy
+msgid "invalid filename argument in 'savePlot'"
 msgstr " savePlot 中に不正なファイル名引数 "
 
 #: devWindows.c:3418
@@ -702,7 +709,8 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr "QuartzBitmap_Output - ファイル'%s'を開けません "
 
 #: qdBitmap.c:94
-msgid "Not a supported scheme, no image data written"
+#, fuzzy
+msgid "not a supported scheme, no image data written"
 msgstr ""
 " サポートされていないスキーム(scheme)なのでイメージデータは書き出されません "
 

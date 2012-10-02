@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-15 17:47+0100\n"
+"POT-Creation-Date: 2012-10-02 09:51+0100\n"
 "PO-Revision-Date: 2011-10-18 19:36-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -22,11 +22,13 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: grid.c:214
-msgid "Cannot clip to rotated viewport"
+#, fuzzy
+msgid "cannot clip to rotated viewport"
 msgstr "Не могу обрезать для повернутой оконницы"
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+#, fuzzy
+msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "Не могу извлечь оконницу верхнего уровня (выводы grid и graphics смешались?)"
 
@@ -35,23 +37,28 @@ msgid "attempt to plot on null device"
 msgstr "попытка чертить на нулевом устройстве"
 
 #: grid.c:1232
-msgid "There is no layout defined"
+#, fuzzy
+msgid "there is no layout defined"
 msgstr "Нет заданного эскиза"
 
 #: grid.c:1452
-msgid "Polygon edge not found (zero-width or zero-height?)"
+#, fuzzy
+msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Край многоугольника не найден (нулевая ширина или высота?)"
 
 #: grid.c:1461
-msgid "Polygon edge not found"
+#, fuzzy
+msgid "polygon edge not found"
 msgstr "Край многоугольника не найден"
 
 #: grid.c:1615
-msgid "Require at least two points to draw arrow"
+#, fuzzy
+msgid "require at least two points to draw arrow"
 msgstr "Надо как минимум две точки, чтобы нарисовать стрелку"
 
 #: grid.c:1931
-msgid "Non-finite control point in Xspline"
+#, fuzzy
+msgid "non-finite control point in Xspline"
 msgstr "Не-конечная контрольная точка в Xspline"
 
 #: grid.c:2796
@@ -63,15 +70,18 @@ msgid "invalid plotting symbol"
 msgstr "неправильный символ графика"
 
 #: grid.c:3372
-msgid "Unable to clip to rotated rectangle"
+#, fuzzy
+msgid "unable to clip to rotated rectangle"
 msgstr "Не могу обрезать повернутый четырехугольник"
 
 #: layout.c:587
-msgid "invalid layout.pos.row"
+#, fuzzy
+msgid "invalid 'layout.pos.row'"
 msgstr "неправильный layout.pos.row"
 
 #: layout.c:591
-msgid "invalid layout.pos.col"
+#, fuzzy
+msgid "invalid 'layout.pos.col'"
 msgstr "неправильный layout.pos.col"
 
 #: matrix.c:49
@@ -79,15 +89,18 @@ msgid "singular transformation matrix"
 msgstr "сингулярная трансформационная матрица"
 
 #: state.c:169
-msgid "Unable to store grid state.  Too many devices open?"
+#, fuzzy
+msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "Не могу сохранить состояние grid. Открыто слишком много устройств?"
 
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-msgid "Unimplemented unit function"
+#, fuzzy
+msgid "unimplemented unit function"
 msgstr "Не разработанная единичная функция"
 
 #: unit.c:893 unit.c:1639
-msgid "Illegal unit or unit not yet implemented"
+#, fuzzy
+msgid "invalid unit or unit not yet implemented"
 msgstr "Неправильная или не разработанная единица"
 
 #: unit.c:1798
@@ -95,15 +108,18 @@ msgid "Invalid unit"
 msgstr "Неправильная единица"
 
 #: unit.c:1814
-msgid "Units must be character"
+#, fuzzy
+msgid "'units' must be character"
 msgstr "Единицы должен быть буквами"
 
 #: unit.c:1817
-msgid "Units must be of length > 0"
+#, fuzzy
+msgid "'units' must be of length > 0"
 msgstr "Единицы должны быть длиной > 0"
 
 #: viewport.c:317
-msgid "Non-finite location and/or size for viewport"
+#, fuzzy
+msgid "non-finite location and/or size for viewport"
 msgstr "Не-конечное положение и/или размер оконницы"
 
 #~ msgid "Invalid circle radius (must be non-negative)"

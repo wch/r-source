@@ -41,7 +41,7 @@ grobName <- function(grob=NULL, prefix="GRID") {
         grobAutoName(prefix)
     else {
         if (!is.grob(grob))
-            stop("Invalid 'grob' argument")
+            stop("invalid 'grob' argument")
         else
             grobAutoName(prefix, class(grob)[1L])
     }
@@ -58,7 +58,7 @@ checkvpSlot <- function(vp) {
     if (!inherits(vp, "viewport") &&
         !inherits(vp, "vpPath") &&
         !is.character(vp))
-      stop("Invalid 'vp' slot")
+      stop("invalid 'vp' slot")
   # For interactive use, allow user to specify
   # vpPath directly (i.e., w/o calling vpPath)
   if (is.character(vp))
@@ -78,7 +78,7 @@ checkgpSlot <- function(gp) {
   # gp must be a gpar
   if (!is.null(gp))
     if (!inherits(gp, "gpar"))
-      stop("Invalid 'gp' slot")
+      stop("invalid 'gp' slot")
 }
 
 validDetails <- function(x) {
@@ -110,7 +110,7 @@ grob <- function(..., name=NULL, gp=NULL, vp=NULL, cl=NULL) {
   g <- list(..., name=name, gp=gp, vp=vp)
   if (!is.null(cl) &&
       !is.character(cl))
-    stop("Invalid 'grob' class")
+    stop("invalid 'grob' class")
   class(g) <- c(cl, "grob", "gDesc")
   validGrob(g)
 }
@@ -145,11 +145,9 @@ print.grob <- function(x, ...) {
 gPathFromVector <- function(names) {
   n <- length(names)
   if (n < 1L)
-    stop("A 'grob' path must contain at least one 'grob' name")
+    stop("a 'grob' path must contain at least one 'grob' name")
   if (any(bad <- !is.character(names)))
-      stop(ngettext(sum(bad),
-                    "Invalid grob name",
-                    "Invalid grob names"),
+      stop(ngettext(sum(bad), "invalid grob name", "invalid grob names"),
            domain = NA)
   path <- list(path = if (n==1) NULL else
                paste(names[1L:(n-1)], collapse = .grid.pathSep),
@@ -191,7 +189,7 @@ as.gList <- function(x) {
     } else if (is.gList(x)) {
         result <- x
     } else {
-        stop("Unable to coerce to gList")
+        stop("unable to coerce to \"gList\"")
     }
     result
 }
@@ -207,7 +205,7 @@ gList <- function(...) {
         class(gl) <- c("gList")
         return(gl)
     } else {
-        stop("Only 'grobs' allowed in 'gList'")
+        stop("only 'grobs' allowed in \"gList\"")
     }
 }
 
@@ -219,7 +217,7 @@ addToGList.default <- function(x, gList) {
   if (is.null(x))
     gList
   else
-    stop("Invalid element to add to 'gList'")
+    stop("invalid element to add to \"gList\"")
 }
 
 addToGList.grob <- function(x, gList) {
@@ -264,10 +262,10 @@ childName <- function(x) {
 
 setChildren <- function(x, children) {
   if (!inherits(x, "gTree"))
-    stop("Can only set 'children' for a 'gTree'")
+    stop("can only set 'children' for a \"gTree\"")
   if (!is.null(children) &&
       !inherits(children, "gList"))
-    stop("'children' must be a 'gList'")
+    stop("'children' must be a \"gList\"")
   # Thin out NULL children
   if (!is.null(children)) {
     cl <- class(children)
@@ -288,7 +286,7 @@ setChildren <- function(x, children) {
 
 childNames <- function(gTree) {
   if (!inherits(gTree, "gTree"))
-    stop("It is only valid to get 'children' from a 'gTree'")
+    stop("it is only valid to get 'children' from a \"gTree\"")
   gTree$childrenOrder
 }
 
@@ -315,7 +313,7 @@ gTree <- function(..., name=NULL, gp=NULL, vp=NULL,
   gt <- list(..., name=name, gp=gp, vp=vp)
   if (!is.null(cl) &&
       !is.character(cl))
-    stop("Invalid 'gTree' class")
+    stop("invalid \"gTree\" class")
   class(gt) <- c(cl, "gTree", "grob", "gDesc")
   gt <- validGrob(gt, childrenvp)
   gt <- setChildren(gt, children)
@@ -365,9 +363,9 @@ grid.get <- function(gPath, strict=FALSE, grep=FALSE, global=FALSE,
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
-    stop("Invalid 'gPath'")
+    stop("invalid 'gPath'")
   if (!is.logical(grep))
-    stop("Invalid 'grep' value")
+    stop("invalid 'grep' value")
   grep <- rep(grep, length.out=depth(gPath))
   getDLfromGPath(gPath, strict, grep, global)
 }
@@ -382,16 +380,16 @@ grid.gget <- function(..., grep=TRUE, global=TRUE) {
 getGrob <- function(gTree, gPath, strict=FALSE,
                     grep=FALSE, global=FALSE) {
   if (!inherits(gTree, "gTree"))
-    stop("It is only valid to get a child from a 'gTree'")
+    stop("it is only valid to get a child from a \"gTree\"")
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
-    stop("Invalid 'gPath'")
+    stop("invalid 'gPath'")
   if (depth(gPath) == 1 && strict) {
     gTree$children[[gPath$name]]
   } else {
     if (!is.logical(grep))
-      stop("Invalid 'grep' value")
+      stop("invalid 'grep' value")
     grep <- rep(grep, length.out=depth(gPath))
     getGTree(gTree, NULL, gPath, strict, grep, global)
   }
@@ -404,9 +402,9 @@ grid.set <- function(gPath, newGrob, strict=FALSE, grep=FALSE,
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
-    stop("Invalid 'gPath'")
+    stop("invalid 'gPath'")
   if (!is.logical(grep))
-    stop("Invalid 'grep' value")
+    stop("invalid 'grep' value")
   grep <- rep(grep, length.out=depth(gPath))
   result <- setDLfromGPath(gPath, newGrob, strict, grep)
   # result$index will be non-zero if matched the gPath
@@ -429,15 +427,15 @@ grid.set <- function(gPath, newGrob, strict=FALSE, grep=FALSE,
 # nor is it valid to specify a global destination (i.e., no global arg)
 setGrob <- function(gTree, gPath, newGrob, strict=FALSE, grep=FALSE) {
   if (!inherits(gTree, "gTree"))
-    stop("It is only valid to set a child of a 'gTree'")
+    stop("it is only valid to set a child of a \"gTree\"")
   if (!inherits(newGrob, "grob"))
-    stop("It is only valid to set a 'grob' as child of a 'gTree'")
+    stop("it is only valid to set a 'grob' as child of a \"gTree\"")
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
-    stop("Invalid 'gPath'")
+    stop("invalid 'gPath'")
   if (!is.logical(grep))
-    stop("Invalid 'grep' value")
+    stop("invalid 'grep' value")
   grep <- rep(grep, length.out=depth(gPath))
   if (depth(gPath) == 1 && strict) {
     # gPath must specify an existing child
@@ -469,9 +467,9 @@ grid.add <- function(gPath, child, strict=FALSE,
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
-    stop("Invalid 'gPath'")
+    stop("invalid 'gPath'")
   if (!is.logical(grep))
-    stop("Invalid 'grep' value")
+    stop("invalid 'grep' value")
   grep <- rep(grep, length.out=depth(gPath))
   addDLfromGPath(gPath, child, strict, grep, global, redraw)
 }
@@ -480,7 +478,7 @@ grid.add <- function(gPath, child, strict=FALSE,
 addGrob <- function(gTree, child, gPath=NULL, strict=FALSE,
                     grep=FALSE, global=FALSE, warn=TRUE) {
     if (!inherits(child, "grob"))
-        stop("It is only valid to add a 'grob' to a 'gTree'")
+        stop("it is only valid to add a 'grob' to a \"gTree\"")
     if (is.null(gPath)) {
         addToGTree(gTree, child)
     } else {
@@ -488,9 +486,9 @@ addGrob <- function(gTree, child, gPath=NULL, strict=FALSE,
             gPath <- gPathDirect(gPath)
         # Only makes sense to specify a gPath for a gTree
         if (!inherits(gTree, "gTree"))
-            stop("It is only valid to add a child to a 'gTree'")
+            stop("it is only valid to add a child to a \"gTree\"")
         if (!is.logical(grep))
-            stop("Invalid 'grep' value")
+            stop("invalid 'grep' value")
         grep <- rep(grep, length.out=depth(gPath))
         # result will be NULL if no match
         result <- addGTree(gTree, child, NULL, gPath, strict, grep, global)
@@ -515,9 +513,9 @@ grid.remove <- function(gPath, warn=TRUE, strict=FALSE,
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
-    stop("Invalid 'gPath'")
+    stop("invalid 'gPath'")
   if (!is.logical(grep))
-    stop("Invalid 'grep' value")
+    stop("invalid 'grep' value")
   grep <- rep(grep, length.out=depth(gPath))
   if (depth(gPath) == 1) {
     removeNameFromDL(gPath$name, strict, grep, global, warn, redraw)
@@ -541,13 +539,13 @@ grid.gremove <- function(..., grep=TRUE, global=TRUE) {
 removeGrob <- function(gTree, gPath, strict=FALSE,
                        grep=FALSE, global=FALSE, warn=TRUE) {
     if (!inherits(gTree, "gTree"))
-        stop("It is only valid to remove a child from a 'gTree'")
+        stop("it is only valid to remove a child from a \"gTree\"")
     if (is.character(gPath))
         gPath <- gPathDirect(gPath)
     if (!inherits(gPath, "gPath"))
-        stop("Invalid 'gPath'")
+        stop("invalid 'gPath'")
     if (!is.logical(grep))
-        stop("Invalid 'grep' value")
+        stop("invalid 'grep' value")
     grep <- rep(grep, length.out=depth(gPath))
     if (depth(gPath) == 1) {
         # result will be NULL if no match
@@ -580,9 +578,9 @@ grid.edit <- function(gPath, ..., strict=FALSE,
   if (is.character(gPath))
     gPath <- gPathDirect(gPath)
   if (!inherits(gPath, "gPath"))
-    stop("Invalid 'gPath'")
+    stop("invalid 'gPath'")
   if (!is.logical(grep))
-    stop("Invalid 'grep' value")
+    stop("invalid 'grep' value")
   grep <- rep(grep, length.out=depth(gPath))
   specs <- list(...)
   editDLfromGPath(gPath, specs, strict, grep, global, redraw)
@@ -605,9 +603,9 @@ editGrob <- function(grob, gPath=NULL, ..., strict=FALSE,
             gPath <- gPathDirect(gPath)
         # Only makes sense to specify a gPath for a gTree
         if (!inherits(grob, "gTree"))
-            stop("It is only valid to edit a child of a 'gTree'")
+            stop("it is only valid to edit a child of a \"gTree\"")
         if (!is.logical(grep))
-            stop("Invalid 'grep' value")
+            stop("invalid 'grep' value")
         grep <- rep(grep, length.out=depth(gPath))
         # result will be NULL if no match
         result <- editGTree(grob, specs, NULL, gPath, strict, grep, global)
@@ -638,7 +636,7 @@ editDetails.default <- function(x, specs) {
 editDetails.gTree <- function(x, specs) {
   # Disallow editing children or childrenOrder slots directly
   if (any(specs %in% c("children", "childrenOrder")))
-    stop("It is invalid to directly edit the 'children' or 'childrenOrder' slot")
+    stop("it is invalid to directly edit the 'children' or 'childrenOrder' slot")
   x
 }
 
@@ -749,7 +747,7 @@ growResult <- function(result, x) {
 # Should only be when result is NULL
 growResult.default <- function(result, x) {
   if (!is.null(result))
-    stop("Invalid 'result'")
+    stop("invalid 'result'")
   x
 }
 
@@ -947,7 +945,7 @@ setGTree <- function(gTree, pathsofar, gPath, newGrob, strict, grep) {
             gTree$children[[newGrob$name]] <- newGrob
             found <- TRUE
           } else {
-            stop("The new 'grob' must have the same name as the old 'grob'")
+            stop("the new 'grob' must have the same name as the old 'grob'")
           }
         } else {
           if (is.null(pathsofar))
@@ -971,7 +969,7 @@ setGTree <- function(gTree, pathsofar, gPath, newGrob, strict, grep) {
                 gTree$children[[newGrob$name]] <- newGrob
                 found <- TRUE
             } else {
-                stop("The new 'grob' must have the same name as the old 'grob'")
+                stop("the new 'grob' must have the same name as the old 'grob'")
             }
           }
         # Otherwise recurse down child
@@ -1007,7 +1005,7 @@ setGrobFromGPath.gTree <- function(grob, pathsofar, gPath, newGrob,
       if (match(grob$name, newGrob$name, nomatch=0L))
         newGrob
       else
-        stop("The new 'grob' must have the same name as the old 'grob'")
+        stop("the new 'grob' must have the same name as the old 'grob'")
     else
       if (strict)
         NULL
@@ -1060,7 +1058,7 @@ editThisGrob <- function(grob, specs) {
         else
           grob[[i]] <- specs[[i]]
       else
-        warning(gettextf("Slot '%s' not found", i), domain = NA)
+        warning(gettextf("slot '%s' not found", i), domain = NA)
   # Check grob slots are ok before trying to do anything with them
   # in editDetails
   # grob$childrenvp may be non-NULL for a gTree
@@ -1219,7 +1217,7 @@ editDLfromGPath <- function(gPath, specs, strict, grep, global, redraw) {
 # Assume that child is a grob
 addToGTree <- function(gTree, child) {
   if (!inherits(gTree, "gTree"))
-    stop("It is only valid to add a child to a 'gTree'")
+    stop("it is only valid to add a child to a \"gTree\"")
   gTree$children[[child$name]] <- child
   # Handle case where child name already exists (so will be overwritten)
   if (old.pos <- match(child$name, gTree$childrenOrder, nomatch=0))
@@ -1252,7 +1250,7 @@ addGrobFromGPath.grob <- function(grob, child,
     NULL
   else {
     if (nameMatch(gPath$name, grob$name, grep))
-      stop("It is only valid to add a child to a 'gTree'")
+      stop("it is only valid to add a child to a \"gTree\"")
     else
       NULL
   }
@@ -1371,7 +1369,7 @@ addDLfromGPath <- function(gPath, child, strict, grep, global, redraw) {
     index <- index + 1
   }
   if (!found)
-    stop(gettextf("gPath (%s) not found", gPath), domain = NA)
+    stop(gettextf("'gPath' (%s) not found", gPath), domain = NA)
   else if (redraw)
     draw.all()
 }
@@ -1382,7 +1380,7 @@ addDLfromGPath <- function(gPath, child, strict, grep, global, redraw) {
 
 removeFromGTree <- function(gTree, name, grep) {
   if (!inherits(gTree, "gTree"))
-    stop("It is only valid to remove a child from a 'gTree'")
+    stop("it is only valid to remove a child from a \"gTree\"")
   if (grep) {
     old.pos <- grep(name, gTree$childrenOrder)
     if (length(old.pos) == 0L)
@@ -1675,7 +1673,7 @@ findGrobinDL <- function(name) {
     index <- index + 1
   }
   if (is.null(result))
-    stop(gettextf("Grob '%s' not found", name), domain = NA)
+    stop(gettextf("grob '%s' not found", name), domain = NA)
   result
 }
 
@@ -1688,7 +1686,7 @@ findGrobinChildren <- function(name, children) {
     index <- index + 1
   }
   if (is.null(result))
-    stop(gettextf("Grob '%s' not found", name), domain = NA)
+    stop(gettextf("grob '%s' not found", name), domain = NA)
   result
 }
 
@@ -1712,7 +1710,7 @@ grid.draw <- function(x, recording=TRUE) {
 grid.draw.default <- function(x, recording) {
   # Allow for "holes" in the DL if a grob has been removed
   if (!is.null(x))
-    stop("Invalid element in the display list")
+    stop("invalid element in the display list")
 }
 
 grid.draw.viewport <- function(x, recording) {
@@ -1942,7 +1940,8 @@ drawDetails.grob <- function(x, recording) {
 }
 
 grid.copy <- function(grob) {
-  warning("This function is redundant and will disappear in future versions.")
+  warning("this function is redundant and will disappear in future versions",
+          domain = NA)
   grob
 }
 

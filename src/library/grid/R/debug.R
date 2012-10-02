@@ -366,7 +366,7 @@ showVPmatrix <- function(vp, cvpt, depth, col, fill,
         paths <- leafPaths(vp)
     } else {
         # Should not happen
-        stop("How did we get here?")
+        stop("how did we get here?")
     }
     firstPath <- 0
     while (length(paths) - firstPath > 0) {
@@ -412,7 +412,7 @@ showViewport <- function(vp=NULL, recurse=TRUE, depth=NULL,
     if (is.null(vp))
         vp <- cvpt
     if (newpage == FALSE && leaves == TRUE)
-        stop("Must start new page if showing leaves separately")
+        stop("must start new page if showing leaves separately")
     if (newpage) {
         grid.newpage()
     }

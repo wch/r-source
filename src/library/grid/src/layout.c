@@ -584,11 +584,11 @@ Rboolean checkPosRowPosCol(SEXP vp, SEXP parent)
     if (!isNull(viewportLayoutPosRow(vp)) &&
 	(INTEGER(viewportLayoutPosRow(vp))[0] < 1 ||
 	 INTEGER(viewportLayoutPosRow(vp))[1] > nrow))
-        error(_("invalid layout.pos.row"));
+        error(_("invalid 'layout.pos.row'"));
     if (!isNull(viewportLayoutPosCol(vp)) &&
 	(INTEGER(viewportLayoutPosCol(vp))[0] < 1 ||
 	 INTEGER(viewportLayoutPosCol(vp))[1] > ncol))
-        error(_("invalid layout.pos.col"));
+        error(_("invalid 'layout.pos.col'"));
     return TRUE;
 }
 

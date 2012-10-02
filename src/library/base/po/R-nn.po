@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:25\n"
+"POT-Creation-Date: 2012-10-02 09:46\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -919,12 +919,6 @@ msgstr "tom innfil (0 byte)"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "ugyldig inndata, men LF erstatta med CR"
 
-msgid "file %s has magic number '%s'"
-msgstr ""
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr "Bruk av «save»-versjonar under 2 er forelda"
-
 msgid "bad 'file' argument"
 msgstr "ugyldig «file»-argument"
 
@@ -1780,6 +1774,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#~ msgid "Use of save versions prior to 2 is deprecated"
+#~ msgstr "Bruk av «save»-versjonar under 2 er forelda"
 
 #~ msgid "T used instead of TRUE"
 #~ msgstr "T brukt i staden for TRUE"

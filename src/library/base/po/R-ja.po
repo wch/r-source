@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:25\n"
+"POT-Creation-Date: 2012-10-02 09:46\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -944,12 +944,6 @@ msgstr " 空の（0バイトの）入力ファイルです "
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr " 入力は混乱しています。LF が CR で置き換えられています "
 
-msgid "file %s has magic number '%s'"
-msgstr ""
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr " 二回以前の保存バージョンの使用は廃止予定です "
-
 msgid "bad 'file' argument"
 msgstr " 誤った 'file' 引数です "
 
@@ -1796,6 +1790,9 @@ msgstr[0] " TRUE の代わりに T が使われました "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "Use of save versions prior to 2 is deprecated"
+#~ msgstr " 二回以前の保存バージョンの使用は廃止予定です "
 
 #~ msgid "T used instead of TRUE"
 #~ msgstr " TRUE の代わりに T が使われました "

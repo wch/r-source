@@ -39,33 +39,33 @@ valid.viewport <- function(x, y, width, height, just,
       length(width) > 1 || length(height) > 1)
     stop("'x', 'y', 'width', and 'height' must all be units of length 1")
   if (!is.gpar(gp))
-    stop("Invalid graphics parameters")
+    stop("invalid 'gp' value")
   if (!is.logical(clip))
     clip <- switch(as.character(clip),
                    on=TRUE,
                    off=NA,
                    inherit=FALSE,
-                   stop("Invalid 'clip' value"))
+                   stop("invalid 'clip' value"))
   if (!is.numeric(xscale) || length(xscale) != 2 ||
       any(!is.finite(xscale)))
-    stop("Invalid 'xscale' in viewport")
+    stop("invalid 'xscale' in viewport")
   if (!is.numeric(yscale) || length(yscale) != 2 ||
       any(!is.finite(yscale)))
-    stop("Invalid 'yscale' in viewport")
+    stop("invalid 'yscale' in viewport")
   if (!is.numeric(angle) || length(angle) != 1 ||
       !is.finite(angle))
-    stop("Invalid 'angle' in viewport")
+    stop("invalid 'angle' in viewport")
   if (!(is.null(layout) || is.layout(layout)))
-    stop("Invalid 'layout' in viewport")
+    stop("invalid 'layout' in viewport")
   if (!is.null(layout.pos.row)) {
     layout.pos.row <- as.integer(range(layout.pos.row))
     if (any(!is.finite(layout.pos.row)))
-      stop("Invalid 'layout.pos.row' in viewport")
+      stop("invalid 'layout.pos.row' in viewport")
   }
   if (!is.null(layout.pos.col)) {
     layout.pos.col <- as.integer(range(layout.pos.col))
     if (any(!is.finite(layout.pos.col)))
-      stop("Invalid 'layout.pos.col' in viewport")
+      stop("invalid 'layout.pos.col' in viewport")
   }
   # If name is NULL then we give it a default
   # Otherwise it should be a valid R name
@@ -255,7 +255,7 @@ vpListFromList <- function(vps) {
     class(vps) <- c("vpList", "viewport")
     vps
   } else {
-    stop("Only viewports allowed in 'vpList'")
+    stop("only viewports allowed in 'vpList'")
   }
 }
 
@@ -272,7 +272,7 @@ vpStack <- function(...) {
     class(vps) <- c("vpStack", "viewport")
     vps
   } else {
-    stop("Only viewports allowed in 'vpStack'")
+    stop("only viewports allowed in 'vpStack'")
   }
 }
 
@@ -319,11 +319,11 @@ setvpgpar.vpTree <- function(vp) {
 vpPathFromVector <- function(names) {
   n <- length(names)
   if (n < 1)
-    stop("A viewport path must contain at least one viewport name")
+    stop("a viewport path must contain at least one viewport name")
   if (any(bad <- !is.character(names)))
       stop(ngettext(sum(bad),
-                    "Invalid viewport name",
-                    "Invalid viewport names"),
+                    "invalid viewport name",
+                    "invalid viewport names"),
            domain = NA)
   path <- list(path=if (n==1) NULL else
                paste(names[seq_len(n-1L)], collapse=.grid.pathSep),
@@ -391,12 +391,12 @@ dataViewport <- function(xData = NULL, yData = NULL,
     extension <- rep(extension, length.out = 2)
     if (is.null(xscale)) {
         if (is.null(xData))
-            stop("Must specify at least one of 'x' or 'xscale'")
+            stop("must specify at least one of 'x' or 'xscale'")
         xscale <- extendrange(xData, f = extension[1L])
     }
     if (is.null(yscale)) {
         if (is.null(yData))
-            stop("Must specify at least one of 'y' or 'yscale'")
+            stop("must specify at least one of 'y' or 'yscale'")
         yscale <- extendrange(yData, f = extension[2L])
     }
     viewport(xscale = xscale, yscale = yscale, ...)

@@ -23,12 +23,12 @@ arrow <- function(angle=30, length=unit(0.25, "inches"),
                   ends="last", type="open") {
     angle <- as.numeric(angle)
     if (!is.unit(length))
-        stop("'length' must be a unit object")
+        stop("'length' must be a 'unit' object")
     ends <- as.integer(match(ends, c("first", "last", "both")))
     type <- as.integer(match(type, c("open", "closed")))
     if (any(is.na(ends)) || any(is.na(type)) ||
         length(ends) == 0 || length(type) == 0)
-        stop("Invalid 'ends' or 'type' argument")
+        stop("invalid 'ends' or 'type' argument")
     a <- list(angle=angle, length=length,
               ends=ends, type=type)
     class(a) <- "arrow"
@@ -215,7 +215,7 @@ validDetails.polyline <- function(x) {
       !is.unit(x$y))
       stop("'x' and 'y' must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
-      stop("It is invalid to specify both 'id' and 'id.lengths'")
+      stop("it is invalid to specify both 'id' and 'id.lengths'")
   if (length(x$x) != length(x$y))
       stop("'x' and 'y' must be same length")
   if (!is.null(x$id) && (length(x$id) != length(x$x)))
@@ -401,18 +401,18 @@ validDetails.arrows <- function(x) {
       (!is.null(x$y) && !is.unit(x$y)))
     stop("'x' and 'y' must be units or NULL")
   if (!is.unit(x$length))
-    stop("'length' must be a unit object")
+    stop("'length' must be a 'unit' object")
   x$ends <- as.integer(match(x$ends, c("first", "last", "both")))
   x$type <- as.integer(match(x$type, c("open", "closed")))
   if (any(is.na(x$ends)) || any(is.na(x$type)))
-    stop("Invalid 'ends' or 'type' argument")
+    stop("invalid 'ends' or 'type' argument")
   x
 }
 
 drawDetails.arrows <- function(x, recording=TRUE) {
   if (is.null(x$x)) { # y should be null too
     if (!is.null(x$y))
-      stop("Corrupt 'arrows' object")
+      stop("corrupt 'arrows' object")
     lineThing <- getGrob(x, childNames(x))
     # This could be done via method dispatch, but that really
     # seemed like overkill
@@ -481,7 +481,7 @@ drawDetails.arrows <- function(x, recording=TRUE) {
 widthDetails.arrows <- function(x) {
   if (is.null(x$x)) { # y should be null too
     if (!is.null(x$y))
-      stop("Corrupt 'arrows' object")
+      stop("corrupt 'arrows' object")
     lineThing <- getGrob(x, childNames(x))
     widthDetails(lineThing)
   } else {
@@ -496,7 +496,7 @@ widthDetails.arrows <- function(x) {
 heightDetails.arrows <- function(x) {
   if (is.null(x$x)) { # y should be null too
     if (!is.null(x$y))
-      stop("Corrupt 'arrows' object")
+      stop("corrupt 'arrows' object")
     lineThing <- getGrob(x, childNames(x))
     heightDetails(lineThing)
   } else {
@@ -514,7 +514,7 @@ arrowsGrob <- function(x=c(0.25, 0.75), y=0.5,
                         angle=30, length=unit(0.25, "inches"),
                         ends="last", type="open",
                         name=NULL, gp=gpar(), vp=NULL) {
-    warning("grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions.")
+    warning("grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions", domain = NA)
   if (is.null(grob)) {
     if (!is.unit(x))
       x <- unit(x, default.units)
@@ -533,7 +533,7 @@ arrowsGrob <- function(x=c(0.25, 0.75), y=0.5,
     if (!(inherits(grob, "lines") ||
           inherits(grob, "segments") ||
           inherits(grob, "line.to")))
-      stop("The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob")
+      stop("the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob")
     x <- y <- NULL
   }
   gTree(x=x, y=y, children=if (is.null(grob)) NULL else gList(grob),
@@ -567,7 +567,7 @@ validDetails.polygon <- function(x) {
       !is.unit(x$y))
     stop("'x' and 'y' must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
-    stop("It is invalid to specify both 'id' and 'id.lengths'")
+    stop("it is invalid to specify both 'id' and 'id.lengths'")
   if (length(x$x) != length(x$y))
     stop("'x' and 'y' must be same length")
   if (!is.null(x$id) && (length(x$id) != length(x$x)))
@@ -663,7 +663,7 @@ validDetails.pathgrob <- function(x) {
     if (!is.unit(x$x) || !is.unit(x$y))
         stop("'x' and 'y' must be units")
     if (!is.null(x$id) && !is.null(x$id.lengths))
-        stop("It is invalid to specify both 'id' and 'id.lengths'")
+        stop("it is invalid to specify both 'id' and 'id.lengths'")
     if (length(x$x) != length(x$y))
         stop("'x' and 'y' must be same length")
     if (!is.null(x$id) && (length(x$id) != length(x$x)))
@@ -756,7 +756,7 @@ validDetails.xspline <- function(x) {
       !is.unit(x$y))
     stop("x and y must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
-    stop("It is invalid to specify both 'id' and 'id.lengths'")
+    stop("it is invalid to specify both 'id' and 'id.lengths'")
   nx <- length(x$x)
   ny <- length(x$y)
   if (nx != ny)
@@ -772,7 +772,7 @@ validDetails.xspline <- function(x) {
   if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
       stop("invalid 'arrow' argument")
   if (any(x$shape < -1 || x$shape > 1))
-    stop("shape must be between -1 and 1")
+    stop("'shape' must be between -1 and 1")
   x$open <- as.logical(x$open)
   # Force all first and last shapes to be 0 for open xsplines
   if (x$open) {
@@ -927,13 +927,13 @@ splinegrob <- function(x) {
                 shape=1, repEnds=FALSE,
                 arrow=x$arrow, name=x$name, gp=x$gp)
 }
-  
+
 validDetails.beziergrob <- function(x) {
     if (!is.unit(x$x) ||
         !is.unit(x$y))
         stop("x and y must be units")
     if (!is.null(x$id) && !is.null(x$id.lengths))
-        stop("It is invalid to specify both 'id' and 'id.lengths'")
+        stop("it is invalid to specify both 'id' and 'id.lengths'")
     nx <- length(x$x)
     ny <- length(x$y)
     if (nx != ny)
@@ -948,7 +948,7 @@ validDetails.beziergrob <- function(x) {
         x$id.lengths <- as.integer(x$id.lengths)
     if (is.null(x$id) && is.null(x$id.lengths)) {
         if (length(x$x) != 4)
-            stop("Must have exactly 4 control points")            
+            stop("must have exactly 4 control points")
     } else {
         if (is.null(x$id)) {
             id <- rep(1L:n, x$id.lengths)
@@ -957,13 +957,13 @@ validDetails.beziergrob <- function(x) {
         }
         xper <- split(x$x, id)
         if (any(sapply(xper, length) != 4))
-            stop("Must have exactly 4 control points per Bezier curve")
+            stop("must have exactly 4 control points per Bezier curve")
     }
     if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
         stop("invalid 'arrow' argument")
     x
 }
-    
+
 drawDetails.beziergrob <- function(x, recording=TRUE) {
     drawDetails(splinegrob(x))
 }
@@ -986,14 +986,14 @@ heightDetails.beziergrob <- function(x) {
 
 bezierGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
                        id=NULL, id.lengths=NULL,
-                       default.units="npc", arrow=NULL, 
+                       default.units="npc", arrow=NULL,
                        name=NULL, gp=gpar(), vp=NULL) {
     if (!is.unit(x))
         x <- unit(x, default.units)
     if (!is.unit(y))
         y <- unit(y, default.units)
-    grob(x=x, y=y, 
-         id=id, id.lengths=id.lengths, arrow=arrow, 
+    grob(x=x, y=y,
+         id=id, id.lengths=id.lengths, arrow=arrow,
          name=name, gp=gp, vp=vp, cl="beziergrob")
 }
 
@@ -1008,7 +1008,7 @@ bezierPoints <- function(x) {
     xsplinePoints(sg)
 }
 
-  
+
 ######################################
 # CIRCLE primitive
 ######################################
@@ -1367,7 +1367,7 @@ validDetails.text <- function(x) {
     stop("'x' and 'y' must be units")
   x$rot <- as.numeric(x$rot)
   if (!all(is.finite(x$rot)) || length(x$rot) == 0)
-    stop("Invalid 'rot' value")
+    stop("invalid 'rot' value")
   valid.just(x$just)
   if (!is.null(x$hjust))
     x$hjust <- as.numeric(x$hjust)
@@ -1499,7 +1499,7 @@ validDetails.points <- function(x) {
       !is.unit(x$size))
     stop("'x', 'y' and 'size' must be units")
   if (length(x$x) != length(x$y))
-    stop("'x' and 'y' must be unit objects and have the same length")
+    stop("'x' and 'y' must be 'unit' objects and have the same length")
   x$pch <- valid.pch(x$pch)
   x
 }

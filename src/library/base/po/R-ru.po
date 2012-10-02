@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:25\n"
+"POT-Creation-Date: 2012-10-02 09:46\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -931,12 +931,6 @@ msgstr "пустой (ноль бит) входной файл"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "ввод поврежден, LF заменен на CR"
 
-msgid "file %s has magic number '%s'"
-msgstr ""
-
-msgid "Use of save versions prior to 2 is deprecated"
-msgstr "Использование сохраненных версий, более ранних чем 2, не одобряется"
-
 msgid "bad 'file' argument"
 msgstr "неправильный аргумент 'file'"
 
@@ -1818,6 +1812,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "Use of save versions prior to 2 is deprecated"
+#~ msgstr "Использование сохраненных версий, более ранних чем 2, не одобряется"
 
 #~ msgid "T used instead of TRUE"
 #~ msgstr "T использовано вместо TRUE"

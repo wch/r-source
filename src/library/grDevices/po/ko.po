@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 11:33+0100\n"
+"POT-Creation-Date: 2012-10-02 09:46+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -178,7 +178,8 @@ msgid "cannot load afm file '%s'"
 msgstr "afm file %s를 읽을 수가 없습니다"
 
 #: devPS.c:2386
-msgid "Corrupt loaded encodings;  encoding not recorded"
+#, fuzzy
+msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "오류가 있는 것을 적재한 encoding; 기록하지 않는 encoding 입니다"
 
 #: devPS.c:2397
@@ -322,7 +323,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr ""
 
 #: devPS.c:4583
-msgid "run out of colors in xfig()"
+#, fuzzy
+msgid "ran out of colors in xfig()"
 msgstr "xfig() 에서 colors를 전부 소모 해주십시오"
 
 #: devPS.c:4612
@@ -450,7 +452,8 @@ msgid "failed to load sRGB colorspace file"
 msgstr "encode 파일을 적재하는데 실패되었습니다"
 
 #: devPS.c:6839
-msgid "Corrupt encodings in PDF device"
+#, fuzzy
+msgid "corrupt encodings in PDF device"
 msgstr "PDF 디바이스에서의 Corrupt가 있는 encode 입니다"
 
 #: devPS.c:6920
@@ -529,7 +532,7 @@ msgstr "무효의 문자열 인수입니다"
 
 #: devQuartz.c:1386
 #, fuzzy
-msgid "invalid Quartz device size"
+msgid "invalid quartz() device size"
 msgstr "savePlot의 무효인 디비이스입니다"
 
 #: devQuartz.c:1414
@@ -538,7 +541,8 @@ msgid "unable to create device description"
 msgstr "디바이스 PostSscript를 시작할수 없습니다"
 
 #: devQuartz.c:1464
-msgid "unable to create Quartz device target, given type may not be supported"
+msgid ""
+"unable to create quartz() device target, given type may not be supported"
 msgstr ""
 
 #: devQuartz.c:1588
@@ -631,7 +635,8 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "불충분한 메모리 때문에 사이즈 변경합니다. Killing 디바이스"
 
 #: devWindows.c:2166
-msgid "A clipboard metafile can store only one figure."
+#, fuzzy
+msgid "a clipboard metafile can store only one figure."
 msgstr "clipboard metafile은 단지 하나의 figure만을 저장할수가 있습니다"
 
 #: devWindows.c:2172
@@ -662,7 +667,8 @@ msgid "invalid device in 'savePlot'"
 msgstr "savePlot의 무효인 디비이스입니다"
 
 #: devWindows.c:3413
-msgid "invalid filename argument in savePlot"
+#, fuzzy
+msgid "invalid filename argument in 'savePlot'"
 msgstr "savaPlot에서 무효인 파일명 인수입니다"
 
 #: devWindows.c:3418
@@ -707,7 +713,7 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr ""
 
 #: qdBitmap.c:94
-msgid "Not a supported scheme, no image data written"
+msgid "not a supported scheme, no image data written"
 msgstr ""
 
 #: stubs.c:114

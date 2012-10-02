@@ -19,11 +19,11 @@
 
 validDetails.functiongrob <- function(x, ...) {
     if (x$n < 1)
-        stop("Invalid 'n'")
+        stop("invalid 'n'")
     if (!(is.character(x$range) && x$range %in% c("x", "y")))
         x$range <- as.numeric(x$range)
     if (!is.function(x$f))
-        stop("Invalid 'f'")
+        stop("invalid 'f'")
     x
 }
 
