@@ -913,6 +913,8 @@
     }
   }
   which <- which[[1L]]
+  if(identical(as.character(generic), "coerce"))
+      return(which) # as() computations not currently consistent w. selection (R 2.15.2)
   selected <- names(methods)[[which]]
   ## FIXME (?): This is not shown to the user
   msg <- sprintf(ngettext(length(candidates),
