@@ -1454,11 +1454,20 @@ binaries for OS X for a base distribution and a large number of
 add-on packages from @acronym{CRAN} to run on OS X 10.[567].
 
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
-double-click on the icon.  Note that Tcl/Tk and the compilers
-need to be installed separately if needed.
+double-click on the icon.  Note that Tcl/Tk needs to be installed
+separately if needed, from @url{http://cran.r-project.org/bin/macosx/tools/}.
 
 See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
+
+Note that if you want to install packages with code that needs to be
+compiled you will need @command{Xcode}@footnote{from the App Store or
+Apple's developer site depending on the version of OS X.} and compilers
+which match the ones used to compile @R{}.  These are currently called
+@command{gcc}, @command{g++} and @command{gfortran}, and need to accept
+the Apple extension of the @option{-arch} flag.  Suitable compilers can
+be downloaded from @url{http://cran.r-project.org/bin/macosx/tools/}
+(@command{gfortran} and @url{http://r.research.att.com/tools/}.
 
 For building from source, see @ref{Mac OS X}.
 
@@ -1777,6 +1786,10 @@ default for @acronym{CRAN} builds of R.  These OS X binary package
 files have the extension @samp{tgz}.  The R.app GUI provides for
 installation of either binary or source packages, from @acronym{CRAN} or
 local files.
+
+Installing package which do not contain compiled code should work with
+no additional tools.  For those which need compilation, see the comments
+under @ref{Installing R under (Mac) OS X}.
 
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
 @subsection Customizing package compilation
