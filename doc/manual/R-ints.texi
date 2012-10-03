@@ -1967,8 +1967,17 @@ arguments.  For example, @code{axis} is defined as
 
 @example
 @group
-axis <- function(side, at = NULL, labels = NULL, ...)
-    .Internal(axis(side, at, labels, ...))
+axis <- function (side, at = NULL, labels = TRUE, tick = TRUE, line = NA, 
+    pos = NA, outer = FALSE, font = NA, lty = "solid", lwd = 1, 
+    lwd.ticks = lwd, col = NULL, col.ticks = NULL, hadj = NA, 
+    padj = NA, ...) 
+@{
+    if (is.null(col) && length(list(...)) && !is.null(fg <- list(...)$fg))
+        col <- fg
+    .Internal(axis(side, at, as.graphicsAnnot(labels), tick, 
+        line, pos, outer, font, lty, lwd, lwd.ticks, col, col.ticks, 
+        hadj, padj, ...))
+@}
 @end group
 @end example
 
