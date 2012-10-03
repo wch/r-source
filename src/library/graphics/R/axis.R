@@ -23,28 +23,27 @@ axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
                  hadj = NA, padj = NA, ...)
 {
     ## we need to do this as the C code processes 'col' before '...'
-    if(is.null(col) && !missing(...) && !is.null(fg <- list(...)$fg)) {
+    if(is.null(col) && !missing(...) && !is.null(fg <- list(...)$fg))
         ## help(par) 'fg' says this should work
         col <- fg
-    }
     ## watch out: some people do things like
     ## axis(1, at = my.at <- 10^(1L:5), labels = formatC(my.at, format="fg"))
     ## which depends on the order of evaluation of the args.
     invisible(.External.graphics(C_axis, side, at, as.graphicsAnnot(labels),
-                       tick, line, pos, outer, font, lty, lwd, lwd.ticks,
-                       col, col.ticks, hadj, padj, ...))
+          tick, line, pos, outer, font, lty, lwd, lwd.ticks,
+          col, col.ticks, hadj, padj, ...))
 }
 
 
-Axis <- function(x=NULL, at=NULL, ..., side, labels=NULL)
+Axis <- function(x = NULL, at = NULL, ..., side, labels = NULL)
 {
     if (!is.null(x)) UseMethod("Axis", x)
     else if (!is.null(at)) UseMethod("Axis", at)
-    else axis(side=side, at=at, labels=labels, ...)
+    else axis(side = side, at = at, labels = labels, ...)
 }
 
-Axis.default <- function(x=NULL, at=NULL, ..., side, labels=NULL)
-    axis(side=side, at=at, labels=labels, ...)
+Axis.default <- function(x = NULL, at = NULL, ..., side, labels = NULL)
+    axis(side = side, at = at, labels = labels, ...)
 
 Axis.table <- function(x, at, ..., side = 1, labels)
 {

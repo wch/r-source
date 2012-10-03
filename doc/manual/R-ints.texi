@@ -1979,14 +1979,23 @@ or directly accessible in which case it is printed in @R{} as
 
 Functions using @code{.Internal()} wrapped in a closure are in general
 preferred as this ensures standard handling of named and default
-arguments.  For example, @code{axis} is defined as
+arguments.  For example, @code{grep} is defined as
 
 @example
 @group
-axis <- function(side, at = NULL, labels = NULL, ...)
-    .Internal(axis(side, at, labels, ...))
+grep <- 
+function (pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE, 
+         fixed = FALSE, useBytes = FALSE, invert = FALSE) 
+@{
+    if (!is.character(x)) x <- structure(as.character(x), names = names(x))
+    .Internal(grep(as.character(pattern), x, ignore.case, value, 
+                   perl, fixed, useBytes, invert))
+@}
+
 @end group
 @end example
+and the use of @code{as.character} allows methods to be dispatched (for
+example, for factors).
 
 However, for reasons of convenience and also efficiency (as there is
 some overhead in using the @code{.Internal} interface wrapped in a
