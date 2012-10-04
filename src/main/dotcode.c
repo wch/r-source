@@ -42,7 +42,7 @@
 #endif
 
 /* Was 'name' prior to 2.13.0, then .NAME, but checked as
-   'name' up to 2.15.2'. */
+   'name' up to 2.15.1. */
 static void check1arg2(SEXP arg, SEXP call, const char *formal)
 {
     if (TAG(arg) == R_NilValue) return;

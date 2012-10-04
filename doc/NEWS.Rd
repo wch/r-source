@@ -488,6 +488,9 @@
       \command{R.app} are now available to front-ends on all
       Unix-alikes: one has been added for the interface to
       \code{View()}.
+      
+      \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
+      although it was contrary to the documentation.  It is now an error.
     }
   }
 
@@ -541,9 +544,6 @@
       \code{authors@R} field of the \file{DESCRIPTION} file, it tries
       harder to do so in the encoding specified for the package (rather
       than using ASCII escapes).
-      
-      \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
-      although it was contrary to the documentation.  It is now an error.
 
       \item Fix in package \pkg{grid} for pushing a viewport into a
       layout cell, where the layout is within a viewport that has zero
@@ -734,6 +734,14 @@
     \itemize{
       \item The limit for \code{R_alloc} on 64-bit platforms has been
       raised to just under 32GB (from just under 16GB).
+
+      \item The misuse of \code{.C("name", ..., PACKAGE = foo)} where
+      \code{foo} is an arbitrary \R object is now an error.  (Seen in
+      package \pkg{coxphf} and elsewhere.)
+
+      The misuse \code{.C"name",(..., PACKAGE = "")} (see in package
+      \pkg{RProtoBuf} is now warned about in \command{R CMD check},
+      and will be an error in future.
     }
   }
   
@@ -913,10 +921,6 @@
       \item \code{smooth.spline()} did not check that a specified
       numeric \code{spar} was of length 1, and gave corrupt results if
       it was of length 0.
-
-      \item The misuse of \code{.C("name", ..., PACKAGE = foo)} where
-      \code{foo} is an arbitrary \R object is now an error.  (Seen in
-      package \pkg{coxphf} and elsewhere.)
 
       \item Protection added to \code{do_system}. (\PR{15025})
 
