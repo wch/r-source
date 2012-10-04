@@ -1046,7 +1046,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                             "for use only by R itself",
                             "and subject to change without notice.")
                 else
-                    wrapLog("See the chapter 'System and foreign language interfaces of the 'Writing R Extensions' manual.\n")
+                    wrapLog("See the chapter 'System and foreign language interfaces' of the 'Writing R Extensions' manual.\n")
             } else resultLog(Log, "OK")
         }
     }
