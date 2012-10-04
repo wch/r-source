@@ -1058,7 +1058,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if(!is_base_pkg && any(grepl("in a base package:", out)))
                     wrapLog("Packages should not make .C/.Call/.Fortran",
                             "calls to base packages.",
-                            "They is not part of the API,",
+                            "They are not part of the API,",
                             "for use only by R itself",
                             "and subject to change without notice.")
                 else

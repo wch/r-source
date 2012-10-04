@@ -352,11 +352,6 @@
       \file{.o} file in which the calls occur.
 
       Such calls can terminate the \R process which loads the package.
-
-      \item \command{R CMD check} now checks for \code{.C()},
-      \code{.Call()}, \code{.External()} and \code{.Fortran()} calls in
-      other packages, and gives a warning on those found from \R itself
-      (which are not part of the API and change without notice).
       
       \item The location of the build and check environment files can
       now be specified by the environment variables
@@ -726,6 +721,12 @@
       \file{.hgignore}, \file{.hgtags}, \file{.htaccess},
       \file{.latex2html-init}, \file{.project}, \file{.seed},
       \file{.settings}, \file{.tm_properties} and various leftovers.
+
+      \item \command{R CMD check} now checks for \code{.C()},
+      \code{.Call()}, \code{.External()} and \code{.Fortran()} calls in
+      other packages, and gives a warning on those found from \R itself
+      (which are not part of the API and change without notice: many
+      will changed for \R 2.16.0).
     }
   }
 
@@ -965,6 +966,10 @@
       \code{NaN}.  This is now an error for the gradient or Hessian, and
       a warning for the function (with the value replaced by
       \code{Inf}).  (In part, \PR{15052}.)
+
+      \item The code for creating \code{coerce()} methods could
+      generate false notes about ambiguous selection; the notes have
+      been suppressed for this function.
     }
   }
 }
