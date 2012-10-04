@@ -166,6 +166,12 @@
       \file{.hgignore}, \file{.hgtags}, \file{.htaccess},
       \file{.latex2html-init}, \file{.project}, \file{.seed},
       \file{.settings}, \file{.tm_properties} and various leftovers.
+
+      \item \command{R CMD check} now checks for \code{.C()},
+      \code{.Call()}, \code{.External()} and \code{.Fortran()} calls in
+      other packages, and gives a warning on those found from \R itself
+      (which are not part of the API and change without notice: many
+      will changed for \R 2.16.0).
     }
   }
 
