@@ -40,6 +40,15 @@
 #define max(a, b) ((a > b)?(a):(b))
 #endif
 
+/* Was 'name' prior to 2.13.0, then .NAME, but checked as
+   'name' up to 2.15.1. */
+static void check1arg2(SEXP arg, SEXP call, const char *formal)
+{
+    if (TAG(arg) == R_NilValue) return;
+    warningcall(call, "the first argument should not be named");
+ }
+
+
 
 /* These are set during the first call to do_dotCode() below. */
 
@@ -508,7 +517,7 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-//    check1arg(args, call, ".NAME");
+    check1arg2(args, call, ".NAME");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
     fun = (R_ExternalRoutine) ofun;
@@ -551,7 +560,8 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-//    check1arg(args, call, ".NAME");
+    check1arg2(args, call, ".NAME");
+
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call, env);
     args = CDR(args);
@@ -1395,7 +1405,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     char symName[MaxSymbolBytes], encname[101];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-//    check1arg(args, call, ".NAME");
+    check1arg2(args, call, ".NAME");
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
 	NaokSymbol = install("NAOK");
 	DupSymbol = install("DUP");
@@ -1646,7 +1656,8 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    break;
 	case VECSXP:
-	    if (Fort) error(_("invalid mode to pass to Fortran (arg %d)"), na + 1);
+	    if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"),
+			    type2char(t), na + 1);
 	    /* Used read-only, so this is safe */
 #ifdef USE_RINTERNALS
 	    cargs[na] = (void*) DATAPTR(s);
@@ -2453,11 +2464,11 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
     int i, j, n;
 
     if (!isFunction((SEXP)func))
-	error(_("invalid function in call_R"));
+	error("invalid function in call_R");
     if (nargs < 0)
-	error(_("invalid argument count in call_R"));
+	error("invalid argument count in call_R");
     if (nres < 0)
-	error(_("invalid return value count in call_R"));
+	error("invalid return value count in call_R");
     PROTECT(pcall = call = allocList((int) nargs + 1));
     SET_TYPEOF(call, LANGSXP);
     SETCAR(pcall, (SEXP)func);

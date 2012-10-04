@@ -179,6 +179,14 @@
     \itemize{
       \item The limit for \code{R_alloc} on 64-bit platforms has been
       raised to just under 32GB (from just under 16GB).
+
+      \item The misuse of \code{.C("name", ..., PACKAGE = foo)} where
+      \code{foo} is an arbitrary \R object is now an error.  (Seen in
+      package \pkg{coxphf} and elsewhere.)
+
+      The misuse \code{.C"name",(..., PACKAGE = "")} (see in package
+      \pkg{RProtoBuf} is now warned about in \command{R CMD check},
+      and will be an error in future.
     }
   }
   
@@ -358,10 +366,6 @@
       \item \code{smooth.spline()} did not check that a specified
       numeric \code{spar} was of length 1, and gave corrupt results if
       it was of length 0.
-
-      \item The misuse of \code{.C("name", ..., PACKAGE = foo)} where
-      \code{foo} is an arbitrary \R object is now an error.  (Seen in
-      package \pkg{coxphf} and elsewhere.)
 
       \item Protection added to \code{do_system}. (\PR{15025})
 
