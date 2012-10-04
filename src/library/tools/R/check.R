@@ -1055,8 +1055,14 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                    ) warningLog(Log)
                 else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
-                wrapLog("See the chapter 'System and foreign language interfaces'",
-                        "of the 'Writing R Extensions' manual.\n")
+                if(!is_base_pkg && any(grepl("in a base package:", out)))
+                    wrapLog("Packages should not make .C/.Call/.Fortran",
+                            "calls to base packages.",
+                            "They is not part of the API,",
+                            "for use only by R itself",
+                            "and subject to change without notice.")
+                else
+                    wrapLog("See the chapter 'System and foreign language interfaces of the 'Writing R Extensions' manual.\n")
             } else resultLog(Log, "OK")
         }
     }
