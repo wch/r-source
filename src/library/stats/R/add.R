@@ -691,24 +691,6 @@ step <- function(object, scope, scale = 0,
 		 direction = c("both", "backward", "forward"),
 		 trace = 1, keep = NULL, steps = 1000, k = 2, ...)
 {
-#     fixFormulaObject <- function(object) {
-# 	tt <- terms(object)
-# 	tmp <- attr(tt, "term.labels")
-# 	if (!attr(tt, "intercept"))
-# 	    tmp <- c(tmp, "0")
-# 	if (!length(tmp))
-# 	    tmp <- "1"
-#         tmp <- paste("~", paste(tmp, collapse = " + "))
-#         form <- formula(object) # some formulae have no lhs
-#         tmp <- if(length(form) > 2) paste(deparse(form[[2L]]), tmp)
-#         ## must be as.character as deparse gives spurious ()
-# 	if (length(offset <- attr(tt, "offset")))
-# 	    tmp <- paste(tmp, as.character(attr(tt, "variables")[offset + 1]),
-# 			 sep = " + ")
-# 	form <- formula(tmp)
-#         environment(form) <- environment(tt)
-#         form
-#     }
     mydeviance <- function(x, ...)
     {
         dev <- deviance(x)
@@ -790,6 +772,8 @@ step <- function(object, scope, scale = 0,
     bAIC <- bAIC[2L]
     if(is.na(bAIC))
         stop("AIC is not defined for this model, so 'step' cannot proceed")
+    if(bAIC == -Inf)
+        stop("AIC is -infinity for this model, so 'step' cannot proceed")
     nm <- 1
     ## Terms <- fit$terms
     if(trace) {

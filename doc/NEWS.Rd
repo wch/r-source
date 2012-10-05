@@ -654,6 +654,9 @@
       
       \item \code{chol(pivot = TRUE, LINPACK = FALSE)} is now available
       using LAPACK 3.2 subroutine \code{DPSTRF}.
+      
+      \item \code{step()} no longer tries to improve a model with
+      AIC of \code{-Inf} (a perfect fit).
     }
   }
 
