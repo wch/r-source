@@ -1838,7 +1838,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[0] = OBJECT(CAR(args));
 	break;
     case 51:		/* isS4 */
-	LOGICAL(ans)[0] = IS_S4_OBJECT(CAR(args));
+	LOGICAL(ans)[0] = IS_S4_OBJECT(CAR(args)) != 0;
 	break;
 /* no longer used: is.data.frame is R code
     case 80:
