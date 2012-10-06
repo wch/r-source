@@ -597,7 +597,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
     check_detritus <- function()
     {
-        checkingLog(Log, "left-over files")
+        checkingLog(Log, "for left-over files")
         files <- dir(".", full.names = TRUE, recursive = TRUE)
         bad <- grep("svn-commit[.].*tmp$", files, value = TRUE)
         if (length(bad)) {
