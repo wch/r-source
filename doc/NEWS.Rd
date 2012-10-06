@@ -187,8 +187,8 @@
       \code{foo} is an arbitrary \R object is now an error.  (Seen in
       package \pkg{coxphf} and elsewhere.)
 
-      The misuse \code{.C"name",(..., PACKAGE = "")} (see in package
-      \pkg{RProtoBuf} is now warned about in \command{R CMD check},
+      The misuse \code{.C("name",..., PACKAGE = "")} (seen in package
+      \pkg{RProtoBuf}) is now warned about in \command{R CMD check},
       and will be an error in future.
     }
   }
