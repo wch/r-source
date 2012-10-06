@@ -260,6 +260,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (R_check_permissions) check_permissions(allfiles)
             check_meta()  # Check DESCRIPTION meta-information.
             check_top_level()
+            check_detritus()
             check_indices()
             check_subdirectories(haveR, subdirs)
             ## Check R code for non-ASCII chars which
@@ -593,6 +594,23 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     "See manual 'Writing R Extensions'.\n")
         } else resultLog(Log, "OK")
     }
+
+    check_detritus <- function()
+    {
+        checkingLog(Log, "left-over files")
+        files <- dir(".", full.names = TRUE, recursive = TRUE)
+        bad <- grep("svn-commit[.].*tmp$", files, value = TRUE)
+        if (length(bad)) {
+            bad <- sub("^[.]/", "", bad)
+            noteLog(Log)
+            printLog(Log,
+                     "The following files look like leftovers:\n",
+                     paste(strwrap(paste(sQuote(bad), collapse = ", "),
+                                   indent = 2, exdent = 2), collapse = "\n"),
+                     "\nPlease remove them from your package.\n")
+        } else resultLog(Log, "OK")
+    }
+
 
     check_indices <- function()
     {
