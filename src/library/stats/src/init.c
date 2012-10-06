@@ -78,7 +78,6 @@ static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, IN
 static R_NativePrimitiveArgType lowess_t[] = {REALSXP, REALSXP, INTSXP, REALSXP,
 				       INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 
-static R_NativePrimitiveArgType massdist_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, REALSXP, REALSXP, INTSXP};
 static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
 						   INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
@@ -145,7 +144,6 @@ static const R_CMethodDef CEntries[]  = {
     CDEF(band_den_bin),
     CDEF(loglin),
     CDEF(lowess),
-    CDEF(massdist),
     CDEF(spline_coef),
     CDEF(spline_eval),
     {NULL, NULL, 0}
@@ -154,6 +152,7 @@ static const R_CMethodDef CEntries[]  = {
 SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
 SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
 SEXP DoubleCentre(SEXP A);
+SEXP BinDist(SEXP x, SEXP weights, SEXP slo, SEXP sup, SEXP sn);
 
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
@@ -197,6 +196,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"Cdqrls", (DL_FUNC) &Cdqrls, 3},
     {"Cdist", (DL_FUNC) &Cdist, 4},
     CALLDEF(DoubleCentre, 1),
+    CALLDEF(BinDist, 5),
     {NULL, NULL, 0}
 };
 
