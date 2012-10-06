@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2002   The R Core Team.
+ *  Copyright (C) 1997-2012   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,31 +17,25 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#include <math.h>
-#include "mva.h"
+#include "Rinternals.h"
 
-/* Double Centering for Classical Multidimensional Scaling */
-
-void dblcen(double *a, int *na)
+/* NB: this does not duplicate A */
+SEXP DoubleCentre(SEXP A)
 {
-    double sum;
-    int n, i, j;
+    int i, j, n = nrows(A);
+    double *a = REAL(A), sum;
 
-    n = *na;
-    for(i=0 ; i<n ; i++) {
+    for(i = 0 ; i < n ; i++) {
 	sum = 0;
-	for(j=0 ; j<n ; j++)
-	    sum += a[i+j*n];
+	for(j = 0 ; j < n ; j++) sum += a[i+j*n];
 	sum /= n;
-	for(j=0 ; j<n ; j++)
-	    a[i+j*n] -= sum;
+	for(j = 0 ; j < n ; j++) a[i+j*n] -= sum;
     }
-    for(j=0 ; j<n ; j++) {
+    for(j = 0 ; j < n ; j++) {
 	sum = 0;
-	for(i=0 ; i<n ; i++)
-	    sum += a[i+j*n];
+	for(i = 0 ; i < n ; i++) sum += a[i+j*n];
 	sum /= n;
-	for(i=0 ; i<n ; i++)
-	    a[i+j*n] -= sum;
+	for(i = 0 ; i < n ; i++) a[i+j*n] -= sum;
     }
+    return A;
 }

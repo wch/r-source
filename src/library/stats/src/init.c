@@ -121,7 +121,6 @@ static const R_CMethodDef CEntries[]  = {
     {"Rsm_3", (DL_FUNC) &Rsm_3, 5},
     {"Rsm_S", (DL_FUNC) &Rsm_S, 5},
     {"tukeyline", (DL_FUNC) &tukeyline, 6},
-    {"dblcen", (DL_FUNC) &dblcen, 2},
     {"R_distance", (DL_FUNC) &R_distance, 7},
     {"acf", (DL_FUNC) &acf, 6},
     {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
@@ -154,7 +153,9 @@ static const R_CMethodDef CEntries[]  = {
 
 SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
 SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
+SEXP DoubleCentre(SEXP A);
 
+#define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_CallMethodDef CallEntries[] = {
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
@@ -195,6 +196,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_rWishart", (DL_FUNC) &R_rWishart, 3},
     {"Cdqrls", (DL_FUNC) &Cdqrls, 3},
     {"Cdist", (DL_FUNC) &Cdist, 4},
+    CALLDEF(DoubleCentre, 1),
     {NULL, NULL, 0}
 };
 

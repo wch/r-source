@@ -20,8 +20,6 @@
 #include <R.h>
 #include <Rinternals.h>
 
-void dblcen(double *a, int *na);
-
 void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 		int *method, double *p);
 /* double R_euclidean(double *x, int nr, int nc, int i1, int i2);
