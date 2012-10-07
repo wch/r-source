@@ -43,6 +43,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     if(is.na(n) || n > 46340) stop("invalid value of 'n'")
     if((k <- as.integer(k)) > n - 1 || k < 1)
         stop("'k' must be in {1, 2, ..  n - 1}")
+    ## NB: this alters argument x, which is OK as it is re-assigned.
     x <- .Call(C_DoubleCentre, x)
 
     if(add) { ## solve the additive constant problem

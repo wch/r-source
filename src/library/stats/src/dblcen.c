@@ -24,21 +24,21 @@
 /* NB: this does not duplicate A */
 SEXP DoubleCentre(SEXP A)
 {
-    int i, j, n = nrows(A);
-    double *a = REAL(A), sum;
-    size_t N = n;
+    int n = nrows(A);
+    double *a = REAL(A);
+    size_t N = n; /* avoid integer overflow with long vectors */
 
-    for(i = 0 ; i < n ; i++) {
-	sum = 0;
-	for(j = 0 ; j < n ; j++) sum += a[i+j*N];
+    for(int i = 0; i < n; i++) {
+	double sum = 0;
+	for(int j = 0; j < n; j++) sum += a[i+j*N];
 	sum /= n;
-	for(j = 0 ; j < n ; j++) a[i+j*N] -= sum;
+	for(int j = 0; j < n; j++) a[i+j*N] -= sum;
     }
-    for(j = 0 ; j < n ; j++) {
-	sum = 0;
-	for(i = 0 ; i < n ; i++) sum += a[i+j*N];
+    for(int j = 0; j < n; j++) {
+	double sum = 0;
+	for(int i = 0; i < n; i++) sum += a[i+j*N];
 	sum /= n;
-	for(i = 0 ; i < n ; i++) a[i+j*N] -= sum;
+	for(int i = 0; i < n; i++) a[i+j*N] -= sum;
     }
     return A;
 }
