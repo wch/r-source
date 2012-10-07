@@ -30,52 +30,9 @@
 
 #include <R_ext/Arith.h>
 
-#ifdef UNUSED
-#include <R_ext/Applic.h>
-
-void massdist(double *x,
-	      double *xmass, /* AB: new variable */
-	      int *nx,
-	      double *xlow, double *xhigh,
-	      double *y, int *ny)
-{
-    double fx, xdelta, xmi, xpos;   /* AB */
-    int i, ix, ixmax, ixmin;
-
-    ixmin = 0;
-    ixmax = *ny - 2;
-    /* AB: line deleted */
-    xdelta = (*xhigh - *xlow) / (*ny - 1);
-
-    for(i=0; i < *ny ; i++)
-	y[i] = 0;
-
-    for(i=0; i < *nx ; i++) {
-	if(R_FINITE(x[i])) {
-	    xpos = (x[i] - *xlow) / xdelta;
-	    ix = (int) floor(xpos);
-	    fx = xpos - ix;
-	    xmi = xmass[i];   /* AB: new line  */
-	    if(ixmin <= ix && ix <= ixmax) {
-		y[ix] += (1 - fx) * xmi;   /* AB */
-		y[ix + 1] += fx * xmi; /* AB */
-	    }
-	    else if(ix == -1) {
-		y[0] += fx * xmi;  /* AB */
-	    }
-	    else if(ix == ixmax + 1) {
-		y[ix] += (1 - fx) * xmi;  /* AB */
-	    }
-	}
-    }
-
-    /* AB: lines deleted */
-}
-#endif
-
 #include <Rinternals.h>
 
-/* NB: this only works in the lower half of y, but pads wit zeros. */
+/* NB: this only works in the lower half of y, but pads with zeros. */
 SEXP BinDist(SEXP sx, SEXP sw, SEXP slo, SEXP shi, SEXP sn)
 {
     PROTECT(sx = coerceVector(sx, REALSXP)); 
