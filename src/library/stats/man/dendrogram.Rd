@@ -59,7 +59,7 @@ is.leaf(object)
 \arguments{
   \item{object}{any \R object that can be made into one of class
     \code{"dendrogram"}.}
-  \item{x,y}{object(s) of class \code{"dendrogram"}.}
+  \item{x, y}{object(s) of class \code{"dendrogram"}.}
   \item{hang}{numeric scalar indicating how the \emph{height} of leaves
     should be computed from the heights of their parents; see
     \code{\link{plot.hclust}}.}
@@ -169,12 +169,13 @@ is.leaf(object)
   \code{rev.dendrogram} simply returns the dendrogram \code{x} with
   reversed nodes, see also \code{\link{reorder.dendrogram}}.
 
-  The \code{\link{merge}(x,y, ...)} method allows to join two (or more!)
+  The \code{\link{merge}(x, y, ...)} method which merges two or more
   dendrograms into a new one which has \code{x} and \code{y} (and
   optional further arguments) as branches.
 
-  \code{is.leaf(object)} is logical indicating if \code{object} is a
+  \code{is.leaf(object)} returns logical indicating if \code{object} is a
   leaf (the most simple dendrogram).
+
   \code{plotNode()} and \code{plotNodeLimit()} are helper functions.
 }
 \note{
@@ -189,8 +190,7 @@ is.leaf(object)
   Some operations on dendrograms (including plotting) make use of
   recursion.  For very deep trees It may be necessary to increase
   \code{\link{options}("expressions")}: if you do you are likely to need
-  to set the C stack size larger than the OS default if possible
-  (which it is not on Windows).
+  to set the C stack size larger than the default where possible.
 }
 \seealso{
   \code{\link{dendrapply}} for applying a function to \emph{each} node.
