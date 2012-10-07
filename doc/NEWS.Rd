@@ -11,7 +11,7 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item There is a subtle change in behaviour for numeric index
-      values \code{2^31} and larger.  These never used to be legitimate
+      values \eqn{2^{31}}{2^31} and larger.  These never used to be legitimate
       and so were treated as \code{NA}, sometimes with a warning.  They
       are now legal for long vectors so there is no longer a warning,
       and \code{x[2^31] <- y} will now extend the vector on a 64-bit
@@ -23,7 +23,7 @@
       \command{limit} in \command{csh}), to set limits on overall memory
       consumption of an \R process, particularly in a multi-user
       environment.  A number of packages need a limit of at least 4GB of
-      virtual memory.
+      virtual memory to load.
 
       64-bit Windows builds of \R are by default limited in memory usage
       to the amount of RAM installed: this limit can be changed by
@@ -104,10 +104,10 @@
       Previously, it only worked in the other direction.
       (Contributed by Charlie Friedemann, \PR{14939}.)
 
-      \item The \code{cite()} and \code{citeNatbib()} functions have
+      \item New functions \code{cite()} and \code{citeNatbib()} have
       been added, to allow generation of in-text citations from
-      \code{"bibentry"} objects.  A \code{cite()} function may be
-      added to \code{bibstyle()} environments.
+      \code{"bibentry"} objects.  A \code{cite()} function may be added
+      to \code{bibstyle()} environments.
 
       \item A \code{sort()} method has been added for \code{"bibentry"}
       objects.
@@ -204,10 +204,8 @@
       session.
       
       \item The functions \code{.C()}, \code{.Call()},
-      \code{.External()} and \code{.Fortran()} now check that they are
-      called with an unnamed first argument: the formal arguments were
-      changed from \code{name=} to \code{.NAME=} in \R 2.13.0, but some
-      packages were still using the old name.
+      \code{.External()} and \code{.Fortran()} now give an error (rather
+      than a warning) if called with a named first argument.
       
       \item \code{Sweave()} by default now reports the locations in
       the source file(s) of each chunk.
@@ -278,11 +276,11 @@
       found for complex \code{svd()}).
 
       \item \code{dist()} can produce dissimilarity objects for more
-      than 65536 rows (but for example \code{cmdscale()} and
-      \code{hclust()} cannot process such objects).
+      than 65536 rows (but for example \code{hclust()} cannot process
+      such objects).
 
       \item \code{serialize()} to a raw vector is no longer limited in
-      size on 64-bit platforms.
+      size (except by resources) on 64-bit platforms.
 
       \item The C-level function \code{R_alloc} can now allocate
       \eqn{2^{35}}{2^35} or more bytes on 64-bit platforms.
@@ -293,7 +291,7 @@
       \item Many calls to \code{.C()} have been replaced by
       \code{.Call()} to allow long vectors to be supported (now or in
       the future).  Regrettably several packages had copied the non-API
-      \code{.C()} calls and so fail.
+      \code{.C()} calls and so failed.
 
       \item \code{.C()} and \code{.Fortran()} do not accept long vector
       inputs.  This is a precaution as it is very unlikely that existing
@@ -339,7 +337,7 @@
       \item A foreign function call (\code{.C()} etc) in a package
       without a \code{PACKAGE} argument will only look in the first DLL
       specified in the \file{NAMESPACE} file of the package rather than
-      searching all loaded DLLs.  A few packages need \code{PACKAGE}
+      searching all loaded DLLs.  A few packages needed \code{PACKAGE}
       arguments added.
     }
   }
@@ -538,7 +536,7 @@
       \item When \command{R CMD build} is run in an encoding other than
       the one specified in the package's \file{DESCRIPTION} file it
       tries harder to expand the \code{authors@R} field in the specified
-      encoding.  (PR{14958}.)
+      encoding.  (\PR{14958}.)
 
       \item If \command{R CMD INSTALL} is required to expand the
       \code{authors@R} field of the \file{DESCRIPTION} file, it tries
@@ -654,6 +652,13 @@
       
       \item \code{chol(pivot = TRUE, LINPACK = FALSE)} is now available
       using LAPACK 3.2 subroutine \code{DPSTRF}.
+      
+      \item The functions \code{.C()}, \code{.Call()},
+      \code{.External()} and \code{.Fortran()} now check that they are
+      called with an unnamed first argument: the formal arguments were
+      changed from \code{name=} to \code{.NAME=} in \R 2.13.0, but some
+      packages were still using the old name.  This is currently a
+      warning, but will be an error in future.
       
       \item \code{step()} no longer tries to improve a model with
       AIC of \code{-Inf} (a perfect fit).
@@ -961,7 +966,7 @@
       against compiler optimization. (\PR{15011}.)
 
       \item Long custom line types would sometimes segfault on the
-      cairographics-based devices. (PR{15055}.)
+      cairographics-based devices. (\PR{15055}.)
   
       \item \code{tools::checkPoFile()} unprotected too early in its C
       code and so segfaulted from time to time.
