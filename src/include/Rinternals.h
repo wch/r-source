@@ -45,9 +45,14 @@ extern "C" {
 
 typedef unsigned char Rbyte;
 
-/* type for length of vectors etc */
+/* type for length of (standard, not long) vectors etc */
 typedef int R_len_t;
 #define R_LEN_T_MAX INT_MAX
+
+/* this is defined by config.h and Rconfig.h, and sets SIZEOF_SIZE_T */
+#ifndef R_CONFIG_H
+# include <Rconfig.h>
+#endif
 
 #if ( SIZEOF_SIZE_T > 4 )
 # define LONG_VECTOR_SUPPORT
@@ -69,15 +74,12 @@ typedef int R_len_t;
  * influenced structures, with the exception of LGLSXP,
  * INTSXP, REALSXP, CPLXSXP and STRSXP which are the
  * element types for S-like data objects.
-
- * Note that the gap of 11 and 12 below is because of
- * the withdrawal of native "factor" and "ordered" types.
  *
  *			--> TypeTable[] in ../main/util.c for  typeof()
  */
 
 /*  These exact numeric values are seldom used, but they are, e.g., in
- *  ../main/subassign.c
+ *  ../main/subassign.c, and they are serialized.
 */
 #ifndef enum_SEXPTYPE
 /* NOT YET using enum:
@@ -101,6 +103,7 @@ typedef unsigned int SEXPTYPE;
 #define BUILTINSXP   8	  /* builtin non-special forms */
 #define CHARSXP	     9	  /* "scalar" string type (internal only)*/
 #define LGLSXP	    10	  /* logical vectors */
+/* 11 and 12 were factors and ordered factors in the 1990s */
 #define INTSXP	    13	  /* integer vectors */
 #define REALSXP	    14	  /* real variables */
 #define CPLXSXP	    15	  /* complex variables */
