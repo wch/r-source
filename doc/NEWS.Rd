@@ -228,11 +228,6 @@
       
       \item \code{monthplot()} gains parameters to control the look of
       the reference lines.  (Suggestion of Ian McLeod.)
-      
-      \item \code{spline()} and \code{splinefun()} gain a new method
-      \code{"hyman"}, an implementation of Hyman's method of
-      constructing monotonic interpolation splines.  (Contributed
-      by Simon Wood and Rob Hyndman.)
 
       \item Added support for new \code{\%~\%} relation
       (\dQuote{is distributed as}) in plotmath.
@@ -662,6 +657,11 @@
       
       \item \code{step()} no longer tries to improve a model with
       AIC of \code{-Inf} (a perfect fit).
+      
+      \item \code{spline()} and \code{splinefun()} gain a new method
+      \code{"hyman"}, an implementation of Hyman's method of
+      constructing monotonic interpolation splines.  (Contributed
+      by Simon Wood and Rob Hyndman.)
     }
   }
 

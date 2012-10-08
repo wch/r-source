@@ -49,7 +49,7 @@ typedef unsigned char Rbyte;
 typedef int R_len_t;
 #define R_LEN_T_MAX INT_MAX
 
-/* this is defined by config.h and Rconfig.h, and sets SIZEOF_SIZE_T */
+/* this is defined by config.h and Rconfig.h, and both set SIZEOF_SIZE_T */
 #ifndef R_CONFIG_H
 # include <Rconfig.h>
 #endif
@@ -861,7 +861,7 @@ void R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
 			  SEXP (*phook)(SEXP, SEXP), SEXP pdata);
 
 #ifdef NEED_CONNECTION_PSTREAMS
-/* The connection interface is not yet available to packages.  To
+/* The connection interface is not available to packages.  To
    allow limited use of connection pointers this defines the opaque
    pointer type. */
 #ifndef HAVE_RCONNECTION_TYPEDEF
