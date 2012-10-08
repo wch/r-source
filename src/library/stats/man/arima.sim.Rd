@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima.sim.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima.sim}
@@ -18,9 +18,10 @@ arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, \dots),
 \arguments{
   \item{model}{A list with component \code{ar} and/or \code{ma} giving
     the AR and MA coefficients respectively.  Optionally a component
-    \code{order} can be used. An empty list gives an ARIMA(0, 0, 0)
+    \code{order} can be used.  An empty list gives an ARIMA(0, 0, 0)
     model, that is white noise.}
-  \item{n}{length of output series, before un-differencing.}
+  \item{n}{length of output series, before un-differencing.  A stricly
+    positive integer.}
   \item{rand.gen}{optional: a function to generate the innovations.}
   \item{innov}{an optional times series of innovations.  If not
     provided, \code{rand.gen} is used.}
