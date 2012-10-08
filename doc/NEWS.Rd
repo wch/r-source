@@ -100,8 +100,20 @@
       \item \code{chol(pivot = TRUE, LINPACK = FALSE)} is now available
       using LAPACK 3.2 subroutine \code{DPSTRF}.
       
+      \item The functions \code{.C()}, \code{.Call()},
+      \code{.External()} and \code{.Fortran()} now check that they are
+      called with an unnamed first argument: the formal arguments were
+      changed from \code{name=} to \code{.NAME=} in \R 2.13.0, but some
+      packages were still using the old name.  This is currently a
+      warning, but will be an error in future.
+      
       \item \code{step()} no longer tries to improve a model with
       AIC of \code{-Inf} (a perfect fit).
+      
+      \item \code{spline()} and \code{splinefun()} gain a new method
+      \code{"hyman"}, an implementation of Hyman's method of
+      constructing monotonic interpolation splines.  (Contributed
+      by Simon Wood and Rob Hyndman.)
     }
   }
 
@@ -406,7 +418,7 @@
       against compiler optimization. (\PR{15011}.)
 
       \item Long custom line types would sometimes segfault on the
-      cairographics-based devices. (PR{15055}.)
+      cairographics-based devices. (\PR{15055}.)
   
       \item \code{tools::checkPoFile()} unprotected too early in its C
       code and so segfaulted from time to time.
