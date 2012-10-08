@@ -1,17 +1,17 @@
 There is a hierarchy of check targets:
 
-make check
+     make check
 
 for all builders.  If this works one can be reasonably happy R is working
 and do `make install' (or the equivalent).
 
-make check-devel
+    make check-devel
 
 for people changing the code: this runs things like the demos and
 no-segfault which might be broken by code changes, and checks on the
 documentation (effectively R CMD check on each of the base packages).
 
-make check-all
+    make check-all
 
 runs all the checks, those in check-devel plus tests of the recommended
 packages.
@@ -23,8 +23,12 @@ running these tests.  For example, some of the tests on 'nlme' depend
 on 'Hmisc', and there are a number of cross references from help page
 to CRAN packages.
 
+If a check fails there will almost always be a .Rout.fail file with
+the problematic output, so looking at the tail of that file should
+help pinpoint the problem.
 
-		--- Historical Information ----
+
+	---------- Historical Information -----------
 
 In this directory, various tests on R are run automatically.
 This is the recommended way to check if R has been built successfully on
