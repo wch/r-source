@@ -199,6 +199,10 @@ src/library/stats/src/loessf.f
 
 	In part Copyright (c) 1989, 1992 by AT&T
 
+src/library/stats/R/spline.R
+
+	In part, Copyright (C) 2002 Simon N. Wood
+
 src/library/tcltk/exec/{hierarchy,util*,widget}.tcl
 
 	Copyright (c) various dates Jeffrey Hobbs
