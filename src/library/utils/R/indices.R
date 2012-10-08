@@ -133,9 +133,12 @@ print.packageDescription <-
 
 # Simple convenience functions
 
-maintainer <- function(pkg) {
+maintainer <- function(pkg)
+{
     force(pkg)
-    gsub("\n", " ",packageDescription(pkg)$Maintainer, fixed = TRUE)
+    desc <- packageDescription(pkg)
+    if(is.list(desc)) gsub("\n", " ", desc$Maintainer, fixed = TRUE)
+    else NA_character_
 }
 
 packageVersion <- function(pkg, lib.loc = NULL)

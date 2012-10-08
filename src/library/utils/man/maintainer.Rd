@@ -1,6 +1,6 @@
 % File src/library/utils/man/maintainer.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{maintainer}
@@ -16,9 +16,7 @@
 maintainer(pkg)
 }
 \arguments{
-   \item{pkg}{
-     Character. The name of a single package.
-}
+   \item{pkg}{Character string.  The name of a single package.}
 }
 \details{
    Accesses the package description to return the name and email address of
@@ -32,12 +30,13 @@ maintainer(pkg)
 }
 \value{
    A character string giving the name and email address of the maintainer
-   of the package.
+   of the package, or \code{NA} if no such package is installed.
 }
 
 \author{
  David Scott <d.scott@auckland.ac.nz> from code on R-help originally
- due to Charlie Sharpsteen <source@sharpsteen.net>.
+ due to Charlie Sharpsteen <source@sharpsteen.net>; multiple corrections
+ by R-core.
 }
 \references{
   \url{https://stat.ethz.ch/pipermail/r-help/2010-February/230027.html}

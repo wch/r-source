@@ -1993,4 +1993,10 @@ stopifnot(inherits(try(arima.sim(list(order = c(1,0,0), ar = 0.7), n = 0)),
 ## one too long in R < 2.15.2
 
 
+## maintainer()
+maintainer('stats')
+maintainer("impossible_package_name")
+## gave an error in R < 2.15.2
+
+
 proc.time()

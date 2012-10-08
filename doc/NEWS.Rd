@@ -621,7 +621,9 @@
       
       \item The HTML manuals now use directional single quotes.
       
-      \item \code{maintainer()} now converts embedded new lines to spaces.
+      \item \code{maintainer()} now converts embedded new lines to
+      spaces.  It no longer gives a non-obvious error for non-installed
+      packages.
       
       \item The \code{X11()} device has some protection against
       being used with forked processes \emph{via} package \pkg{parallel}.
