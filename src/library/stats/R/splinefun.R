@@ -19,9 +19,10 @@
 #### 'spline' and 'splinefun' are very similar --- keep in sync!
 ####  also consider ``compatibility'' with  'approx' and 'approxfun'
 
-splinefun <- function(x, y=NULL,
-                      method = c("fmm", "periodic", "natural", "monoH.FC"),
-                      ties = mean)
+splinefun <-
+    function(x, y = NULL,
+             method = c("fmm", "periodic", "natural", "monoH.FC", "hyman"),
+             ties = mean)
 {
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
@@ -50,9 +51,15 @@ splinefun <- function(x, y=NULL,
         return(splinefunH0(x = x, y = y, m = m, dx = dx))
     }
     ## else
-    iMeth <- match(method, c("periodic", "natural", "fmm", "monoH.FC"))
+    iMeth <- match(method, c("periodic", "natural", "fmm",
+                             "monoH.FC", "hyman"))
+    if(iMeth == 5L) {
+        dy <- diff(y)
+        if(!(all(dy > 0) || all(dy < 0)))
+            stop("'y' must be strictly increasing or decreasing")
+    }
     z <- .C(C_spline_coef,
-	    method=as.integer(iMeth),
+	    method=as.integer(min(3L, iMeth)),
 	    n=nx,
 	    x=x,
 	    y=y,
@@ -60,13 +67,14 @@ splinefun <- function(x, y=NULL,
 	    c=double(nx),
 	    d=double(nx),
 	    e=double(if(iMeth == 1) nx else 0))
-    rm(x,y,nx,method,iMeth,ties)
+    if(iMeth == 5L) z <- spl_coef_conv(hyman_filter(z))
+    rm(x, y, nx, method, iMeth, ties)
     z$e <- NULL
-    function(x, deriv = 0) {
+    function(x, deriv = 0L) {
 	deriv <- as.integer(deriv)
-	if (deriv < 0 || deriv > 3)
+	if (deriv < 0L || deriv > 3L)
 	    stop("'deriv' must be between 0 and 3")
-	if (deriv > 0) {
+	if (deriv > 0L) {
 	    ## For deriv >= 2, using approx() should be faster, but doing it correctly
 	    ## for all three methods is not worth the programmer's time...
 	    z0 <- double(z$n)
