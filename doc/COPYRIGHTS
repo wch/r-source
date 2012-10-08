@@ -428,7 +428,6 @@ src/main/Rstrptime.h
    Distributed under the GNU Library General Public License
    version 2 or later.
 
-po/*.po
 src/library/*/po/*.po
 
    Some of the translations are (C) the translator as marked in the files.
