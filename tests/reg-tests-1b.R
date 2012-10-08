@@ -1895,4 +1895,10 @@ as.data.frame(LETTERS[1:10])
 ## second failed in 2.15.1.
 
 
+## maintainer()
+maintainer('stats')
+maintainer("impossible_package_name")
+## gave an error in R < 2.15.2
+
+
 proc.time()
