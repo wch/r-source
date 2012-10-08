@@ -1979,8 +1979,18 @@ if(is.na(z[2]) || is.na(z10[2])) {
 } else stopifnot(z[2] > z10[2])
 ## Previous test ould be defeated by compiler optimization.
 
+
+##
 options(max.print=.Machine$integer.max)
 1 ## segfaulted because of integer overflow
 stopifnot(identical(.Machine$integer.max, getOption("max.print")))
+##
+
+## corner cases for arima.sim(), in part PR#15068
+stopifnot(length(arima.sim(list(order = c(0,0,0)), n = 10)) == 10)
+stopifnot(inherits(try(arima.sim(list(order = c(1,0,0), ar = 0.7), n = 0)),
+                   "try-error"))
+## one too long in R < 2.15.2
+
 
 proc.time()

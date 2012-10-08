@@ -980,6 +980,9 @@
       \item The code for creating \code{coerce()} methods could
       generate false notes about ambiguous selection; the notes have
       been suppressed for this function.
+
+      \item \code{arima.sim()} could give too long an output in some
+      corner cases (in part, \PR{15068}).
     }
   }
 }

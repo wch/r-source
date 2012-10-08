@@ -765,6 +765,7 @@ arima.sim <- function(model, n, rand.gen = rnorm,
                       start.innov = rand.gen(n.start, ...), ...)
 {
     if(!is.list(model)) stop("'model' must be list")
+    if(n <= 0L) stop("'n' must be strictly positive")
     p <- length(model$ar)
     if(p) {
         minroots <- min(Mod(polyroot(c(1, -model$ar))))
@@ -788,13 +789,13 @@ arima.sim <- function(model, n, rand.gen = rnorm,
                               "'start.innov' is too short: need %d point",
                               "'start.innov' is too short: need %d points"),
                      n.start), domain = NA)
-    x <- ts(c(start.innov[1L:n.start], innov[1L:n]), start = 1 - n.start)
+    x <- ts(c(start.innov[seq_len(n.start)], innov[1L:n]), start = 1 - n.start)
     if(length(model$ma)) {
         x <- filter(x, c(1, model$ma), sides = 1L)
         x[seq_along(model$ma)] <- 0 # rather than NA
     }
     if(length(model$ar)) x <- filter(x, model$ar, method = "recursive")
-    if(n.start > 0) x <- x[-(1L:n.start)]
+    if(n.start > 0) x <- x[-(seq_len(n.start))]
     if(d > 0) x <- diffinv(x, differences = d)
     as.ts(x)
 }
