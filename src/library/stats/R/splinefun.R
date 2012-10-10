@@ -55,8 +55,8 @@ splinefun <-
                              "monoH.FC", "hyman"))
     if(iMeth == 5L) {
         dy <- diff(y)
-        if(!(all(dy > 0) || all(dy < 0)))
-            stop("'y' must be strictly increasing or decreasing")
+        if(!(all(dy >= 0) || all(dy <= 0)))
+            stop("'y' must be increasing or decreasing")
     }
     z <- .Call(C_SplineCoef, min(3L, iMeth), x, y)
     if(iMeth == 5L) z <- spl_coef_conv(hyman_filter(z))
