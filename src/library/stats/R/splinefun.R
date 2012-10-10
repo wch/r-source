@@ -55,8 +55,8 @@ splinefun <-
                              "monoH.FC", "hyman"))
     if(iMeth == 5L) {
         dy <- diff(y)
-        if(!(all(dy > 0) || all(dy < 0)))
-            stop("'y' must be strictly increasing or decreasing")
+        if(!(all(dy >= 0) || all(dy <= 0)))
+            stop("'y' must be increasing or decreasing")
     }
     z <- .C(C_spline_coef,
 	    method=as.integer(min(3L, iMeth)),

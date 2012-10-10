@@ -42,8 +42,8 @@ spline <-
     }
     if(method == 4L) {
         dy <- diff(y)
-        if(!(all(dy > 0) || all(dy < 0)))
-            stop("'y' must be strictly increasing or decreasing")
+        if(!(all(dy >= 0) || all(dy <= 0)))
+            stop("'y' must be increasing or decreasing")
     }
 
     if(missing(xout)) xout <- seq.int(xmin, xmax, length.out = n)

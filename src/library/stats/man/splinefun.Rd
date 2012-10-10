@@ -24,12 +24,11 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
 splinefunH(x, y, m)
 }
 \arguments{
-  \item{x,y}{vectors giving the coordinates of the points to be
+  \item{x, y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
     specified: see \code{\link{xy.coords}}.
     
-    \code{y} must be strictly increasing or decreasing
-    for \code{method = "hyman"}.
+    \code{y} must be increasing or decreasing for \code{method = "hyman"}.
   }
   \item{m}{(for \code{splinefunH()}): vector of \emph{slopes}
     \eqn{m_i}{m[i]} at the points \eqn{(x_i,y_i)}{(x[i],y[i])}; these
