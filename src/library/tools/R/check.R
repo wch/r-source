@@ -1936,7 +1936,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if(any(keep)) {
                     printLog(Log, "Examples with CPU or elapsed time > 5s\n")
                     times <- capture.output(format(times[keep, ]))
-                    printLog(Log, paste(times, collapse="\n"))
+                    printLog(Log, paste(times, collapse="\n"), "\n")
                 }
             }
             TRUE
