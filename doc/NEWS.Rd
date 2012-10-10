@@ -662,8 +662,8 @@
       
       \item \code{spline()} and \code{splinefun()} gain a new method
       \code{"hyman"}, an implementation of Hyman's method of
-      constructing monotonic interpolation splines.  (Contributed
-      by Simon Wood and Rob Hyndman.)
+      constructing monotonic interpolation splines.  (Based on
+      contributions of Simon Wood and Rob Hyndman.)
     }
   }
 
