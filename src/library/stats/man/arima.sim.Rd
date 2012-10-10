@@ -20,7 +20,7 @@ arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, \dots),
     the AR and MA coefficients respectively.  Optionally a component
     \code{order} can be used.  An empty list gives an ARIMA(0, 0, 0)
     model, that is white noise.}
-  \item{n}{length of output series, before un-differencing.  A stricly
+  \item{n}{length of output series, before un-differencing.  A strictly
     positive integer.}
   \item{rand.gen}{optional: a function to generate the innovations.}
   \item{innov}{an optional times series of innovations.  If not
