@@ -1927,6 +1927,18 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     printLog0(Log, paste(c("", out, ""), collapse = "\n"))
                 resultLog(Log, "OK")
             }
+            if (do_timings) {
+                tfile <- paste0(pkgname, "-Ex.timings")
+                times <- read.table(tfile, header = TRUE, row.names = 1)
+                o <- order(times[[1]]+times[[2]], decreasing = TRUE)
+                times <- times[o, ]
+                keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
+                if(any(keep)) {
+                    printLog(Log, "Examples with CPU or elapsed time > 5s\n")
+                    times <- capture.output(format(times[keep, ]))
+                    printLog(Log, paste(times, collapse="\n"))
+                }
+            }
             TRUE
         }
 
