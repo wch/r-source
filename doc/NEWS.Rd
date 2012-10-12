@@ -277,9 +277,6 @@
     
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{anova.glm} with \code{test="Rao"} didn't work when models included an 
-      offset. (Reported by Søren Feodor Nielsen.) 
-
       \item On Windows, starting \command{Rterm} via \command{R.exe}
       caused Ctrl-C to misbehave.  (\PR{14948})
 
@@ -440,6 +437,9 @@
 
       \item \code{arima.sim()} could give too long an output in some
       corner cases (in part, \PR{15068}).
+      
+      \item \code{anova.glm()} with \code{test = "Rao"} didn't work when
+      models included an offset. (Reported by Søren Feodor Nielsen.)
     }
   }
 }
