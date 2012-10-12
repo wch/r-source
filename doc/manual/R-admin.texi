@@ -4092,21 +4092,42 @@ There are also FreeBSD packages for a small eclectic collection of
 @cindex OS X
 
 You can build @R{} as a Unix application on OS X using the Apple
-Developer Tools (`Xcode') and a version of @command{gfortran}.  (Recent
-versions of Xcode need `Command Line Tools for Xcode'.)  You may also
-need to install an X sub-system or configure with @option{--without-x}.
-The X window manager is part of the standard OS X distribution.  You
-will also need a version of @command{gfortran} and @code{libreadline}
-(or configure with @option{--without-readline}).
+Developer Tools (`Xcode') and a version of @command{gfortran}.  (Some
+recent versions of Xcode need `Command Line Tools for Xcode'.) You will
+also need a version of @command{gfortran} and @code{libreadline} (or
+configure with @option{--without-readline}).
 
-For more information on how to find these tools please read the
+You may also want to install an X sub-system or configure with
+@option{--without-x}: X is part of the standard OS X distribution in
+versions prior to Mountain Lion, but not always installed.  For Mountain
+Lion, see @uref{http://xquartz.macosforge.org/}: some people prefer to
+use XQuartz on earlier versions instead of the Apple version.
+
+For more information on how to find these and other useful tools please
+read the
 @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for
-Mac OS X @acronym{FAQ}}.
+Mac OS X @acronym{FAQ}}.  It is possible to use non-Apple compilers
+which do not support @option{-arch}, but changes will be need to the
+instructions here (and they are not supported by the @acronym{CRAN}
+binary distribution of @R{}).
+
+In principle @R{} can be built for 10.4.x but this has not be tested
+recently: 10.5.8 (Leopard) is the earliest version currently tested.
+
+To use the @code{quartz()} graphics device you need to configure with
+
+@example
+--with-aqua
+@end example
+
+@noindent
+and most people will want to do that: @code{quartz()} then becomes the
+default device when running @R{} at the console and X would only be used
+for the data editor/viewer.
 
 @cindex BLAS library
 @cindex LAPACK library
-The @code{vecLib} library can be used @emph{via} the (default)
-configuration options
+The @code{vecLib} library can be used @emph{via} the configuration options
 
 @example
 --with-blas="-framework vecLib" --with-lapack
@@ -4114,21 +4135,17 @@ configuration options
 
 @noindent
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
-routines.  Building @R{} without these options @emph{via}
-
-@example
---without-blas --without-lapack
-@end example
-
-@noindent
-can be done (and is provided as an alternative in the binary
-distribution).
+routines.  (Use of @code{vecLib} without @option{--with-lapack} has
+resulted in segfaults.)  You can replace @code{vecLib} by
+@code{Accelerate}: in recent versions of OS X the former is a wrapper
+for the latter.
 
 @menu
 * 32-bit builds::               
 * 64-bit builds::               
 * Snow Leopard::                
 * Lion::                        
+* Mountain Lion::               
 * Frameworks::                  
 @end menu
 
@@ -4149,6 +4166,8 @@ OBJC='gcc-4.2 -arch i386'
 @noindent
 in @file{config.site} or on the @command{configure} command line.
 
+For recent compilers (but not those on Leopard) the default is likely to
+be 64-bit.
 
 
 @node 64-bit builds, Snow Leopard, 32-bit builds, Mac OS X
@@ -4166,7 +4185,9 @@ OBJC='gcc-4.2 -arch x86_64'
 @end example
 
 @noindent
-in @file{config.site} or on the @command{configure} command line.
+in @file{config.site} or on the @command{configure} command line.  With
+recent compilers this may be the default but it is safest to specify
+@option{-arch} explicitly.
 
 @node Snow Leopard, Lion, 64-bit builds, Mac OS X
 @subsection Snow Leopard
@@ -4188,7 +4209,7 @@ OBJC='gcc -arch x86_64'
 LIBS=-L/usr/X11/lib
 @end example
 
-@node Lion, Frameworks, Snow Leopard, Mac OS X
+@node Lion, Mountain Lion, Snow Leopard, Mac OS X
 @subsection Lion
 
 With Xcode 4.2 and later you need to install a package named like
@@ -4214,7 +4235,12 @@ with Xcode, but these do need to be supplemented by a Fortran compiler
 front end, and @command{clang} can also be used (and @command{clang++}
 for C++).
 
-@node Frameworks,  , Lion, Mac OS X
+@node Mountain Lion, Frameworks, Lion, Mac OS X
+@subsection Mountain Lion
+
+See the notes on Lion: currently Xcode (4.5) is similar for the two versions.
+
+@node Frameworks,  , Mountain Lion, Mac OS X
 @subsection Frameworks
 
 The @acronym{CRAN} build of @R{} is installed as a framework, which is
@@ -4226,7 +4252,7 @@ selected by option
 @end example
 
 The second line of options is only needed if you want to build @R{} for
-use with @code{R.app} Console, and imply @option{--enable-R-shlib} to
+use with @code{R.app} console, and imply @option{--enable-R-shlib} to
 build @R{} as a shared/dynamic library.  These options configure @R{} to
 be built and installed as a framework called @file{R.framework}.  The
 default installation path for @file{R.framework} is
