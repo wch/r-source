@@ -1455,11 +1455,13 @@ account used to install @R{}.
 
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
 binaries for OS X for a base distribution and a large number of
-add-on packages from @acronym{CRAN} to run on OS X 10.[567].
+add-on packages from @acronym{CRAN} to run on OS X 10.[5678] (Leopard,
+Snow Leopard, Lion, Mountain Lion).
 
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
-double-click on the icon.  Note that Tcl/Tk needs to be installed
-separately if needed, from @url{http://cran.r-project.org/bin/macosx/tools/}.
+double-click on the icon.  Note that (X11-based) Tcl/Tk needs to be
+installed separately if needed, from
+@uref{http://cran.r-project.org/bin/macosx/tools/}.
 
 See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
@@ -1470,10 +1472,10 @@ Apple's developer site depending on the version of OS X.} and compilers
 which match the ones used to compile @R{}.  These are currently called
 @command{gcc}, @command{g++} and @command{gfortran}, and need to accept
 the Apple extension of the @option{-arch} flag.  Suitable compilers can
-be downloaded from @url{http://cran.r-project.org/bin/macosx/tools/}
-(@command{gfortran} and @url{http://r.research.att.com/tools/}.
+be downloaded from @uref{http://cran.r-project.org/bin/macosx/tools/}
+(@command{gfortran}) and @uref{http://r.research.att.com/tools/}.
 
-For building from source, see @ref{Mac OS X}.
+For building @R{} from source, see @ref{Mac OS X}.
 
 
 @node Running R, Add-on packages, Installing R under (Mac) OS X, Top
@@ -1794,6 +1796,10 @@ local files.
 Installing package which do not contain compiled code should work with
 no additional tools.  For those which need compilation, see the comments
 under @ref{Installing R under (Mac) OS X}.
+
+Package @pkg{rJava} and those which depend on it need a Java runtime
+installed: for Mountain Lion see @ref{Mountain Lion}.
+
 
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
 @subsection Customizing package compilation
@@ -2733,8 +2739,11 @@ suitable code can be compiled.  These tests will fail if
 @code{cairo} was built statically (unusual).  Most systems with
 @code{Gtk+} 2.8 or later installed will have suitable libraries.  OS X
 comes with none of these libraries, but @code{cairo} support (without
-@code{Pango}) has been added to the binary distribution:
-@code{pkg-config} is still needed and can be installed from the sources.
+@code{Pango}) has been added to the binary distribution (see
+@uref{http://r.research.att.com/libs/} you need @code{fontconfig},
+@code{freetype} and @code{pixman} too): @code{pkg-config} is still
+needed when building @R{} from source and can be installed from its
+sources.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  On
@@ -2837,7 +2846,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.10 have been tested (including most versions
+Versions of Tcl/Tk up to 8.5.12 have been tested (including most versions
 of 8.4.x, but not recently).
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
@@ -2940,9 +2949,9 @@ position-independent code), and that is not checked.
 Some enhanced @acronym{BLAS}es are compiler-system-specific
 (@code{sunperf} on Solaris@footnote{Using the Oracle Solaris Studio
 @command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
-@code{vecLib} on OS X).  The correct incantation for these is usually
-found @emph{via} @option{--with-blas} with no value on the appropriate
-platforms.
+@code{vecLib}/@code{Accelerate} on OS X).  The correct incantation for
+these is usually found @emph{via} @option{--with-blas} with no value on
+the appropriate platforms.
 
 Some of the external @acronym{BLAS}es are multi-threaded.  One issue is
 that @R{} profiling (which uses the @code{SIGPROF} signal) may cause
@@ -3234,9 +3243,9 @@ run-time library path or @command{ld.so} cache).
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{sunperf} on Solaris, @code{vecLib} on OS X and ACML on
-@cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2 is
-required. 
+as @code{sunperf} on Solaris, @code{vecLib}/@code{Accelerate} on OS X
+and ACML on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK
+version 3.2 is required.
 
 However, the likely performance gains are thought to be small (and may
 be negative), and the default is not to search for a suitable LAPACK
@@ -4111,7 +4120,12 @@ which do not support @option{-arch}, but changes will be need to the
 instructions here (and they are not supported by the @acronym{CRAN}
 binary distribution of @R{}).
 
-In principle @R{} can be built for 10.4.x but this has not be tested
+Pre-compiled versions of many of the @ref{Useful libraries and programs}
+are available from @uref{http://r.research.att.com/libs/}.  You will
+most likely want at least @code{jpeg}, @code{libpng}, @code{readline}
+and @code{tiff}.
+
+In principle @R{} can be built for 10.4.x but this has not been tested
 recently: 10.5.8 (Leopard) is the earliest version currently tested.
 
 To use the @code{quartz()} graphics device you need to configure with
@@ -4213,7 +4227,7 @@ LIBS=-L/usr/X11/lib
 @subsection Lion
 
 With Xcode 4.2 and later you need to install a package named like
-@url{http://r.research.att.com/@/tools/@/gcc-42-5666.3-darwin11.pkg} to
+@uref{http://r.research.att.com/@/tools/@/gcc-42-5666.3-darwin11.pkg} to
 provide compilers named @command{gcc-4.2}, @command{g++-4.2} and
 @command{gfortran-4.2}.  These default to 64-bit, so for a 64-bit build
 @file{config.site} in the top-level build directory should contain
@@ -4239,6 +4253,21 @@ for C++).
 @subsection Mountain Lion
 
 See the notes on Lion: currently Xcode (4.5) is similar for the two versions.
+
+Mountain Lion currently does not come with a Java runtime installed, and
+an upgrade to Mountain Lion removes one if already installed.  It is
+intended to be installed at first use.  If you will want to use @R{} with
+packages using @pkg{rJava}, check Java is installed before starting to
+build @R{} by running
+
+@example
+java -version
+@end example
+
+@noindent
+in a @command{Terminal} window.  If Java is not installed this should
+prompt you to install it.
+@c http://osxdaily.com/2012/08/01/install-java-in-os-x-mountain-lion/
 
 @node Frameworks,  , Mountain Lion, Mac OS X
 @subsection Frameworks
