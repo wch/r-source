@@ -49,7 +49,8 @@ typedef unsigned char Rbyte;
 typedef int R_len_t;
 #define R_LEN_T_MAX INT_MAX
 
-/* this is defined by config.h and Rconfig.h, and both set SIZEOF_SIZE_T */
+/* both config.h and Rconfig.h set SIZEOF_SIZE_T, but Rconfig.h is
+   skipped if config.h has already been included. */
 #ifndef R_CONFIG_H
 # include <Rconfig.h>
 #endif
