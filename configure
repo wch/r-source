@@ -29594,11 +29594,8 @@ $as_echo "yes" >&6; }
 $as_echo "yes" >&6; }
       ## for vecLib we have a work-around by using cblas_..._sub
       use_veclib_g95fix=yes
-      ## The fix may not work with internal lapack, because
-      ## the lapack dylib won't have the fixed functions.
-      ## those are available to the lapack module only.
-      #      use_lapack=yes
-      #	     with_lapack=""
+      ## The fix may not work with internal lapack, but
+      ## is more likely to in R >= 2.15.2.
     else
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -36143,11 +36140,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36146: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36143: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36150: \$? = $ac_status" >&5
+   echo "$as_me:36147: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36242,11 +36239,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36245: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36242: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36249: \$? = $ac_status" >&5
+   echo "$as_me:36246: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36294,11 +36291,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36297: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36294: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36301: \$? = $ac_status" >&5
+   echo "$as_me:36298: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
