@@ -63,7 +63,7 @@ lcm(x)
 \references{
   Murrell, P. R. (1999) Layouts: A mechanism for arranging plots on a page.
   \emph{Journal of Computational and Graphical Statistics},
-  \bold{8}, 121-134.
+  \bold{8}, 121--134.
 
   Chapter 5 of Paul Murrell's Ph.D. thesis.
 

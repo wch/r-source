@@ -59,9 +59,6 @@
       which is representable as an integer (as often happens for package
       \CRANpkg{Matrix}), this is converted to an integer.
 
-      \item On Windows, the C stack size has been increased to 64MB (it
-      has been 10MB since the days of 32MB RAM systems).
-
       On other OSes the stack size is set at run time rather than when
       compiling.
 
@@ -664,6 +661,9 @@
       \code{"hyman"}, an implementation of Hyman's method of
       constructing monotonic interpolation splines.  (Based on
       contributions of Simon Wood and Rob Hyndman.)
+
+      \item On Windows, the C stack size has been increased to 64MB (it
+      has been 10MB since the days of 32MB RAM systems).
     }
   }
 
