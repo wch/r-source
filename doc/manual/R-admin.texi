@@ -4150,9 +4150,9 @@ The @code{vecLib} library can be used @emph{via} the configuration options
 @noindent
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
 routines.  (Use of @code{vecLib} without @option{--with-lapack} has
-resulted in segfaults.)  You can replace @code{vecLib} by
-@code{Accelerate}: in recent versions of OS X the former is a wrapper
-for the latter.
+resulted in segfaults: there is workaround as from @R{} 2.15.2.)  You
+can replace @code{vecLib} by @code{Accelerate}: in recent versions of OS
+X the former is a wrapper for the latter.
 
 Note that the Apple versions of GCC (and those on
 @uref{http://r.research.att.com}) are based on version 4.2 from

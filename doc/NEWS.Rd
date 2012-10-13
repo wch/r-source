@@ -992,6 +992,10 @@
       \item \code{as.data.frame.matrix()} could return invalid data 
       frame with no \code{row.names} attribute for 0-row matrix. (Reported 
       by Hervé Pagès.)
+      
+      \item Compilation with the \code{vecLib} or \code{Accelerate}
+      frameworks on OS X without using that also for LAPACK is more
+      likely to be successful.
     }
   }
 }

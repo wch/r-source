@@ -2685,11 +2685,8 @@ fi
       AC_MSG_RESULT([yes])
       ## for vecLib we have a work-around by using cblas_..._sub
       use_veclib_g95fix=yes
-      ## The fix may not work with internal lapack, because
-      ## the lapack dylib won't have the fixed functions.
-      ## those are available to the lapack module only.
-      #      use_lapack=yes
-      #	     with_lapack=""
+      ## The fix may not work with internal lapack, but
+      ## is more likely to in R >= 2.15.2.
     else
       AC_MSG_RESULT([no])
       BLAS_LIBS=
