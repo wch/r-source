@@ -988,6 +988,10 @@
       
       \item \code{anova.glm()} with \code{test = "Rao"} didn't work when
       models included an offset. (Reported by Søren Feodor Nielsen.)
+
+      \item \code{as.data.frame.matrix()} could return invalid data 
+      frame with no \code{row.names} attribute for 0-row matrix. (Reported 
+      by Hervé Pagès.)
     }
   }
 }

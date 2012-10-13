@@ -271,7 +271,8 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...,
 	for(i in ic)
 	    value[[i]] <- as.vector(x[,i])
     }
-    if(length(row.names) != nrows)
+    ## Explicitly check for NULL in case nrows==0
+    if(is.null(row.names) || length(row.names) != nrows)
 	row.names <- .set_row_names(nrows)
     if(length(collabs) == ncols)
 	names(value) <- collabs
