@@ -1,6 +1,6 @@
 % File src/library/graphics/man/layout.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{layout}
@@ -61,9 +61,9 @@ lcm(x)
   \code{layout} returns the number of figures, \eqn{N}, see above.
 }
 \references{
-  Murrell, P. R. (1999) Layouts: A mechanism for arranging plots on a page. 
+  Murrell, P. R. (1999) Layouts: A mechanism for arranging plots on a page.
   \emph{Journal of Computational and Graphical Statistics},
-  \bold{8}, 121-134. 
+  \bold{8}, 121--134.
 
   Chapter 5 of Paul Murrell's Ph.D. thesis.
 

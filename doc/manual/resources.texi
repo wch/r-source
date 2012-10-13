@@ -86,7 +86,7 @@ binaries, with the master site at @uref{http://CRAN.R-project.org/} and
 information on daily mirrors available from
 
 @quotation
-@uref{http://cran.r-project.org/mirrors.html}
+@uref{http://CRAN.R-project.org/mirrors.html}
 @end quotation
 
 @node Bug-tracking system,  , Archives, Top

@@ -116,6 +116,9 @@
       \code{"hyman"}, an implementation of Hyman's method of
       constructing monotonic interpolation splines.  (Based on
       contributions of Simon Wood and Rob Hyndman.)
+
+      \item On Windows, the C stack size has been increased to 64MB (it
+      has been 10MB since the days of 32MB RAM systems).
     }
   }
 

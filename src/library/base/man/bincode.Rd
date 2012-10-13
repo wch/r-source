@@ -12,10 +12,9 @@
 \usage{
 .bincode(x, breaks, right = TRUE, include.lowest = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{a numeric vector which is to be converted to a factor by cutting.}
-  \item{breaks}{either a numeric vector of two or more cut points.}
+  \item{breaks}{a numeric vector of two or more cut points.}
   \item{include.lowest}{logical, indicating if an \sQuote{x[i]} equal to
     the lowest (or highest, for \code{right = FALSE}) \sQuote{breaks}
     value should be included.}
@@ -25,6 +24,8 @@
 \value{
   An integer vector of the same length as \code{x} indicating which bin
   each element falls into (the leftmost bin being bin \code{1}).
+  Infinite, \code{NaN} and \code{NA} elements of \code{x} are mapped to
+  \code{NA} codes.
 }
 \seealso{
   \code{\link{cut}}, \code{\link{tabulate}}

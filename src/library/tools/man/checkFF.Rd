@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkFF.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkFF}
@@ -38,10 +38,18 @@ checkFF(package, dir, file, lib.loc = NULL,
   a character string, not what class of object the symbol resolves to
   at run-time.
   
-  \emph{If} the package has a namespace and \emph{if} that contains a
-  \code{useDynLib} directive, calls in top-level functions in the
-  package are not reported as their symbols will be preferentially
-  looked up in the DLL named in the first \code{useDynLib} directive.
+  If the package has a namespace which contains a \code{useDynLib}
+  directive, calls in top-level functions in the package are not
+  reported as their symbols will be preferentially looked up in the DLL
+  named in the first \code{useDynLib} directive.
+  
+  As from \R 2.15.2, this also checks that calls with \code{PACKAGE}
+  specified are to the same package, and reports separately those which
+  are in base packages and those which are in other packages (and if
+  those packages are specified in the \file{DESCRIPTION} file).  Direct
+  calls to the FORTRAN entry points for LINPACK in \R itself are not
+  reported (but this does not include modifications of LINPACK routines
+  such as \code{dqrls}).
 }
 \value{
   An object of class \code{"checkFF"}, which currently is a list of the

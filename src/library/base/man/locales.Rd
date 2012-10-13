@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -55,7 +55,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   POSIX.  \code{"LC_MESSAGES"} will be \code{"C"} on systems that do not
   support message translation, and is not supported on Windows.  Trying
   to use an unsupported category is an error for \code{Sys.setlocale}.
-
+  
   Note that setting category \code{"LC_ALL"} sets only
   \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and
   \code{"LC_TIME"}.
@@ -67,6 +67,10 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   \code{Sys.setlocale("LC_TYPE", )}, if that implies a different
   character set) during a session may not work and are likely to lead to
   some confusion.
+
+  Note that the \env{\link{LANGUAGE}} environment variable has
+  precedence over code{"LC_MESSAGES"} in selecting the language of
+  message translation on most \R platforms.
 }
 \value{
   A character string of length one describing the locale in use (after
@@ -89,15 +93,14 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   anomalously, so gives a warning.  Input conversions
   in \R itself are unaffected, but the reading and writing of ASCII
   \code{\link{save}} files will be, as may packages.
-#ifdef unix
-  Setting it temporarily to produce graphical or text output may work
-  well enough, but \code{\link{options}(OutDec)} is often preferable.
-#endif
-#ifdef windows
+  
+  Setting it temporarily on a Unix-alike to produce graphical or text
+  output may work well enough, but \code{\link{options}(OutDec)} is
+  often preferable.
+  
   Almost all the output routines used by \R itself under Windows ignore
   the setting of \code{"LC_NUMERIC"} since they make use of the Trio
   library which is not internationalized.
-#endif
 }
 
 \note{

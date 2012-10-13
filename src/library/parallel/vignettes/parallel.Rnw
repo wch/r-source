@@ -128,9 +128,8 @@ processes.  They can be created in one of three ways:
 
 \item Using OS-level facilities to set up a means to send tasks to
   other members of a group of machines.  There are several ways to do
-  that, and for example package \CRANpkg{snow} can make use of PVM
-  (`parallel virtual machine') and MPI (`message passing interface')
-  using \R{} packages \CRANpkg{rpvm} and \CRANpkg{Rmpi} respectively.
+  that, and for example package \CRANpkg{snow} can make use of MPI
+  (`message passing interface') using \R{} package \CRANpkg{Rmpi}.
   Communication overheads can dominate computation times in this
   approach, so it is most often used on tightly-coupled networks of
   computers with high-speed interconnects.
@@ -141,8 +140,7 @@ processes.  They can be created in one of three ways:
 
   It will not be considered further in this vignette, but those parts
   of \pkg{parallel} which provide \CRANpkg{snow}-like functions will
-  accept \CRANpkg{snow} clusters including MPI clusters (and although PVM
-  and NWS clusters have not been tested, they should also work).
+  accept \CRANpkg{snow} clusters including MPI clusters.
 \end{enumerate}
 
 The landscape of parallel computing has changed with the advent of
@@ -780,7 +778,7 @@ Aliased functions \code{collect} and \code{parallel} are no longer provided.
 POSIX, and did not provide a means to set the timeout on the workers.
 This resulted in process interlocks on Solaris.
 
-\code{makeCluster} creates PVM, MPI or NWS clusters by calling \CRANpkg{snow}.
+\code{makeCluster} creates MPI or NWS clusters by calling \CRANpkg{snow}.
 
 \code{makePSOCKcluster} has been streamlined, as package \pkg{parallel} is in
 a known location on all systems, and \command{Rscript} is these days

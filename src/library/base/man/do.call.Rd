@@ -1,6 +1,6 @@
 % File src/library/base/man/do.call.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{do.call}
@@ -39,6 +39,10 @@ do.call(what, args, quote = FALSE, envir = parent.frame())
 }
 \value{
   The result of the (evaluated) function call.
+}
+\section{Warning}{
+  This should not be used to attempt to evade restrictions on the use of
+  \code{.Internal} and other non-API calls.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
