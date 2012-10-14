@@ -15,6 +15,10 @@ Changes from grid_2.15.0 to grid_2.16.0:
     "vpList", or "vpTree" (i.e., mixing of viewports
     and "vpPaths").
 
+4.  New functions grid.reorder() and reorderGrob() to  
+    modify the order in which the children of a gTree 
+    are drawn.
+
 
 Changes from grid_2.14.0 to grid_2.15.0:
 --------------------------------------

@@ -1945,3 +1945,62 @@ grid.copy <- function(grob) {
   grob
 }
 
+###############################
+# Reordering grobs
+
+# Reorder the children of a gTree
+# Order may be specified as a character vector
+#   Character vector MUST name existing children
+# Order may be specified as a numeric vector
+#   (which makes it easy to say something like
+#    "make last child the first child")
+#   Numeric vector MUST be within range 1:numChildren
+# Only unique order values used
+# Any children NOT specified by order are appended to
+#   front or back of order (depending on 'front' argument)
+# Order is ALWAYS back-to-front
+reorderGrob <- function(x, order, back=TRUE) {
+    if (!inherits(x, "gTree"))
+        stop("can only reorder 'children' for a \"gTree\"")
+    order <- unique(order)
+    oldOrder <- x$childrenOrder
+    N <- length(oldOrder)
+    if (is.character(order)) {
+        # Convert to numeric
+        order <- match(order, x$childrenOrder)
+    }
+    if (is.numeric(order)) {
+        if (any(!is.finite(order)) ||
+            !(all(order %in% 1:N))) {
+            stop("Invalid 'order'")
+        }
+        if (back) {
+            newOrder <- c(x$childrenOrder[order],
+                          x$childrenOrder[-order])
+        } else {
+            newOrder <- c(x$childrenOrder[-order],
+                          x$childrenOrder[order])            
+        }
+    }
+    x$childrenOrder <- newOrder
+    x
+}
+
+# Reorder the children of a gTree on the display list
+# (identified by a gPath)
+# NOTE that it is possible for this operation to produce a grob
+# that no longer draws (because it relies on another grob that
+# used to be drawn before it, e.g., when the width of grob "b"
+# is calculated from the width of grob "a")
+# Do NOT allow reordering of grobs on the display list
+# (it is not even clear what should happen in terms of reordering
+#  grobs mixed with viewports PLUS the potential for ending up with
+#  something that will not draw is pretty high)
+# IF you want to reorder the grobs on the DL, do a grid.grab()
+# first and then reorder the children of the resulting gTree
+grid.reorder <- function(gPath, order, back=TRUE, redraw=TRUE) {
+    grob <- grid.get(gPath)
+    grid.set(gPath, reorderGrob(grob, order, back=back),
+             redraw=redraw)
+}
+    
