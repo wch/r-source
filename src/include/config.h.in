@@ -39,8 +39,8 @@
    */
 #undef HAVE_ALLOCA_H
 
-/* Define if you have the Aqua headers and libraries, and want the Aqua GUI
-   components and quartz() device to be built. */
+/* Define if you have the Aqua headers and libraries, and want to include
+   support for R.app and for the quartz() device to be built. */
 #undef HAVE_AQUA
 
 /* Define to 1 if you have the `argz_count' function. */
@@ -1068,6 +1068,11 @@
 
 /* Define to 1 if the X Window System is missing or not being used. */
 #undef X_DISPLAY_MISSING
+
+/* Enable large inode numbers on Mac OS X 10.5.  */
+#ifndef _DARWIN_USE_64_BIT_INODE
+# define _DARWIN_USE_64_BIT_INODE 1
+#endif
 
 /* Number of bits in a file offset, on hosts where this is settable. */
 #undef _FILE_OFFSET_BITS

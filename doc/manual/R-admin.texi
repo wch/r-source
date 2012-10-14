@@ -4133,6 +4133,11 @@ To use the @code{quartz()} graphics device you need to configure with
 becomes the default device when running @R{} at the console and X would
 only be used for the data editor/viewer.
 
+Use @option{--without-aqua} if you want a standard Unix-alike build:
+apart from disabling @code{quartz()} and the ability to use the build
+with @code{R.app}, it also changes the default location of the personal
+library (see @code{?.libPaths()}).
+
 @cindex BLAS library
 @cindex LAPACK library
 The @code{vecLib} library can be used @emph{via} the configuration options
@@ -4281,18 +4286,16 @@ The @acronym{CRAN} build of @R{} is installed as a framework, which is
 selected by option
 
 @example
-./configure --with-blas='-framework vecLib' --with-lapack \
-  --with-aqua --enable-R-framework
+./configure --enable-R-framework
 @end example
 
-The second line of options is only needed if you want to build @R{} for
-use with @code{R.app} console, and imply @option{--enable-R-shlib} to
-build @R{} as a shared/dynamic library.  These options configure @R{} to
-be built and installed as a framework called @file{R.framework}.  The
-default installation path for @file{R.framework} is
-@file{/Library/Frameworks} but this can be changed at configure time by
-specifying the flag @option{--enable-R-framework[=@var{DIR}]} or at
-install time as
+This is only needed if you want to build @R{} for use with the
+@code{R.app} console, and implies @option{--enable-R-shlib} to build
+@R{} as a dynamic library.  This option configures @R{} to be built and
+installed as a framework called @file{R.framework}.  The default
+installation path for @file{R.framework} is @file{/Library/Frameworks}
+but this can be changed at configure time by specifying the flag
+@option{--enable-R-framework[=@var{DIR}]} or at install time as
 
 @example
 make prefix=/where/you/want/R.framework/to/go install

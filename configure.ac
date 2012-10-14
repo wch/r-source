@@ -2140,15 +2140,18 @@ case "${host_os}" in
     ##	      above add -fobjc-exceptions where possible, but
     ##	      they don't check that the exceptions are available.
     R_AQUA
+    ## That sets HAVE_AQUA, which is used to enable support of R.app
+    ## and also in C headers and files related to quartz()
   ;;
   *)
     use_aqua=no
   ;;
 esac
-## Now used only in etc/Renviron to set the personal library,
-## and in grDevices to select building quartz()
+## Now used:
+## - to compile src/unix/aqua.c
+## - in etc/Renviron to set the personal library,
+## - in grDevices to select building quartz()
 AM_CONDITIONAL(BUILD_AQUA, [test "x${use_aqua}" = xyes])
-AC_SUBST(use_aqua)
 
 ## Tcl/Tk.
 R_TCLTK

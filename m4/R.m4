@@ -1783,7 +1783,8 @@ fi
 if test "${use_aqua}" = yes; then
   AC_DEFINE(HAVE_AQUA, 1,
             [Define if you have the Aqua headers and libraries,
-             and want the Aqua GUI components and quartz() device to be built.])
+             and want to include support for R.app 
+	     and for the quartz() device to be built.])
 fi
 ])# R_AQUA
 
