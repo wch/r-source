@@ -4129,15 +4129,9 @@ In principle @R{} can be built for 10.4.x but this has not been tested
 recently: 10.5.8 (Leopard) is the earliest version currently tested.
 
 To use the @code{quartz()} graphics device you need to configure with
-
-@example
---with-aqua
-@end example
-
-@noindent
-and most people will want to do that: @code{quartz()} then becomes the
-default device when running @R{} at the console and X would only be used
-for the data editor/viewer.
+@option{--with-aqua} (which is the default): @code{quartz()} then
+becomes the default device when running @R{} at the console and X would
+only be used for the data editor/viewer.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4150,7 +4144,7 @@ The @code{vecLib} library can be used @emph{via} the configuration options
 @noindent
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
 routines.  (Use of @code{vecLib} without @option{--with-lapack} has
-resulted in segfaults: there is workaround as from @R{} 2.15.2.)  You
+resulted in segfaults: there is a workaround as from @R{} 2.15.2.)  You
 can replace @code{vecLib} by @code{Accelerate}: in recent versions of OS
 X the former is a wrapper for the latter.
 
@@ -4224,11 +4218,11 @@ So for a 64-bit build of @R{} you need a file @file{config.site} in the
 top-level build directory containing
 
 @example
-CC='gcc -arch x86_64'
-CXX='g++ -arch x86_64'
-F77='gfortran -arch x86_64'
-FC='gfortran -arch x86_64'
-OBJC='gcc -arch x86_64'
+CC='gcc-4.2 -arch x86_64'
+CXX='g++-4.2 -arch x86_64'
+F77='gfortran-4.2 -arch x86_64'
+FC='gfortran-4.2 -arch x86_64'
+OBJC='gcc-4.2 -arch x86_64'
 LIBS=-L/usr/X11/lib
 @end example
 
