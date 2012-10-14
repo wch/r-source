@@ -444,7 +444,7 @@
 /* Define to 1 if you have the `log2' function. */
 #undef HAVE_LOG2
 
-/* Define if you have the 'long double' type. (For intl) */
+/* Define if you wish to use the 'long double' type. */
 #undef HAVE_LONG_DOUBLE
 
 /* Define to 1 if the system has the type `long long int'. (For intl) */

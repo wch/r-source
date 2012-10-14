@@ -844,8 +844,23 @@ esac
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(double)
-AC_CHECK_SIZEOF(long double)
 AC_CHECK_SIZEOF(size_t)
+AC_ARG_ENABLE([long-double],
+[AS_HELP_STRING([--enable-long-double],[use long double type @<:@yes@:>@])],
+[if test "${enableval}" = no; then
+  use_long_double=no
+else
+  use_long_double=yes
+fi],
+[use_long_double=yes])
+
+dnl also used in intl.
+if test "x${use_long_double}" = xyes; then 
+  AC_DEFINE(HAVE_LONG_DOUBLE, 1, [Define if you wish to use the 'long double' type.])
+  AC_CHECK_SIZEOF(long double)
+else
+  AC_MSG_WARN([Not using the 'long double' type])
+fi
 
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG

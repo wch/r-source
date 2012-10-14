@@ -1,14 +1,15 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
+\alias{.Machine}
+\concept{long double}
 \title{Numerical Characteristics of the Machine}
 \usage{
 .Machine
 }
-\alias{.Machine}
 \description{
   \code{.Machine} is a variable holding information on the numerical
   characteristics of the machine \R is running on, such as the largest
@@ -58,7 +59,8 @@
     with truncating arithmetic.  It is 1 if floating-point arithmetic
     truncates and more than \code{double digits} base-\code{double.base} digits
     participate in the post-normalization shift of the floating-point
-    significand in multiplication, and 0 otherwise.}
+    significand in multiplication, and 0 otherwise.\cr
+    Normally \code{0}.}
   \item{double.ulp.digits}{the largest negative integer \code{i} such
     that \code{1 + double.base ^ i != 1}, except that it is bounded below by
     \code{-(double.digits + 3)}.  Normally \code{-52}.}
@@ -83,17 +85,18 @@
     type.  Will be zero if there is no such type, otherwise usually
     \code{8}.}
   \item{sizeof.longdouble}{the number of bytes in a C \code{long double}
-    type.  Will be zero if there is no such type, otherwise possibly
+    type.  Will be zero if there is no such type (or its use was
+    disabled when \R was built), otherwise possibly
     \code{12} (most 32-bit builds) or \code{16} (most 64-bit builds).}
   \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}
 }
 \details{
-  The algorithm is based on Cody's (1988) subroutine MACHAR.  As
-  all current implementations of \R use 32-bit integers and almost all
-  use IEC 60559 floating-point (double precision) arithmetic, all but
-  the last two values are the same for almost all \R builds.
+  The algorithm is based on Cody's (1988) subroutine MACHAR.  As all
+  current implementations of \R use 32-bit integers and use IEC 60559
+  floating-point (double precision) arithmetic, all but the last two
+  values are the same for almost all \R builds.
 
   Note that on most platforms smaller positive values than
   \code{.Machine$double.xmin} can occur.  On a typical \R platform the
@@ -101,7 +104,7 @@
 }
 \note{
   \code{sizeof.longdouble} only tells you the amount of storage
-  allocated for a long double (which are used internally by \R for
+  allocated for a long double (which are normally used internally by \R for
   accumulators in e.g. \code{\link{sum}}, and can be read by
   \code{\link{readBin}}).  Often what is stored is the 80-bit extended
   double type of IEC 60559, padded to the double alignment used on the

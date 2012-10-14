@@ -3668,7 +3668,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    switch (size) {
 	    case sizeof(double):
 	    case sizeof(float):
-#if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
+#if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 	    case sizeof(long double):
 #endif
 		break;
@@ -3745,7 +3745,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		    case sizeof(float):
 			REAL(ans)[i] = (double)*((float *)buf);
 			break;
-#if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
+#if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 		    case sizeof(long double):
 			REAL(ans)[i] = (double)*((long double *)buf);
 			break;
@@ -3887,7 +3887,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    switch (size) {
 	    case sizeof(double):
 	    case sizeof(float):
-#if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
+#if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 	    case sizeof(long double):
 #endif
 		break;
@@ -3968,7 +3968,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		break;
 	    }
-#if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
+#if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 	    case sizeof(long double):
 	    {
 		/* some systems have problems with memcpy from

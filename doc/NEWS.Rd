@@ -517,9 +517,8 @@
     \itemize{
       \item There is again support for building without using the C
       \sQuote{long double} type.  This is required by C99, but system
-      implementations can be slow or flawed.  Simply undefine
-      \code{HAVE_LONG_DOUBLE} in \file{src/include/config.h} after
-      configuration.
+      implementations can be slow or flawed.  Use \command{configure}
+      option \option{--disable-long-double}.
     }
   }
 

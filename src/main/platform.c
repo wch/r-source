@@ -120,7 +120,11 @@ static void Init_R_Machine(SEXP rho)
     SET_VECTOR_ELT(ans, 15, ScalarInteger(SIZEOF_LONG_LONG));
 
     SET_STRING_ELT(nms, 16, mkChar("sizeof.longdouble"));
+#ifdef HAVE_LONG_DOUBLE
     SET_VECTOR_ELT(ans, 16, ScalarInteger(SIZEOF_LONG_DOUBLE));
+#else
+    SET_VECTOR_ELT(ans, 16, ScalarInteger(0));
+#endif
 
     SET_STRING_ELT(nms, 17, mkChar("sizeof.pointer"));
     SET_VECTOR_ELT(ans, 17, ScalarInteger(sizeof(SEXP)));

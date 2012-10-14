@@ -1382,9 +1382,9 @@ AC_DEFUN([gt_TYPE_LONGDOUBLE],
          ], ,
          gt_cv_c_long_double=yes, gt_cv_c_long_double=no)
      fi])
-  if test $gt_cv_c_long_double = yes; then
-    AC_DEFINE(HAVE_LONG_DOUBLE, 1, [Define if you have the 'long double' type.  (For intl)])
-  fi
+dnl if test $gt_cv_c_long_double = yes; then
+dnl    AC_DEFINE(HAVE_LONG_DOUBLE, 1, [Define if you have the 'long double' type.  (For intl)])
+dnl  fi
 ])
 # longlong.m4 serial 8
 dnl Copyright (C) 1999-2006 Free Software Foundation, Inc.
