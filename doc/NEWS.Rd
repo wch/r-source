@@ -59,10 +59,7 @@
       which is representable as an integer (as often happens for package
       \CRANpkg{Matrix}), this is converted to an integer.
 
-      On other OSes the stack size is set at run time rather than when
-      compiling.
-
-      \item Matrix indexing of dataframes by two column numeric indices
+      \item Matrix indexing of dataframes by two-column numeric indices
       is now supported for replacement as well as extraction.
 
       \item \code{setNames()} now has a default for its \code{object}
@@ -126,10 +123,10 @@
       interactions (and no longer attempts to plot interaction terms).
 
       \item The parser now incorporates code from Romain Francois'
-      parser package, to support more detailed computation on the
-      code, such as syntax highlighting, comment-based documentation,
-      etc.  Functions \code{getParseData()} and \code{getParseText()}
-      access the data.
+      \CRANpkg{parser} package, to support more detailed computation on
+      the code, such as syntax highlighting, comment-based
+      documentation, etc.  Functions \code{getParseData()} and
+      \code{getParseText()} access the data.
 
       \item There is a new function \code{rep_len()} analogous to
       \code{rep.int()} for when speed is required (and names are not).
@@ -190,7 +187,7 @@
       \item \code{sample.int()} has some support for  \eqn{n \ge
 	2^{31}}{n >= 2^31}: see its help for the limitations.
 
-      A different algorithm is used for \code{n, size, replace = FALSE,
+      A different algorithm is used for \code{(n, size, replace = FALSE,
 	prob = NULL)} for \code{n > 1e7} and \code{size <= n/2}.  This
       is much faster and uses less memory, but does give different results.
       
@@ -909,7 +906,7 @@
       vector was too long for \eqn{2^{30}}{2^30} or more).
       
       \item \code{parallel::stopCluster()} now works with MPI
-      clusters without \pkg{snow} being on the search path.
+      clusters without \CRANpkg{snow} being on the search path.
       
       \item \code{terms.formula()} could exhaust the stack, and the
       stack check did not always catch this before the segfault.
