@@ -56,7 +56,6 @@ SEXP GetColNames(SEXP dimnames)
 	return R_NilValue;
 }
 
-/* Package matrix uses this .Internal with 5 args: should have 7 */
 SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, ans, snr, snc, dimnames;
@@ -1371,13 +1370,13 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     dim <- as.integer(dim)
     vl <- prod(dim)
     if (length(data) != vl) {
-        if (vl > .Machine$integer.max) 
+        if (vl > .Machine$integer.max)
             stop("'dim' specifies too large an array")
         data <- rep(data, length.out = vl)
     }
-    if (length(dim)) 
+    if (length(dim))
         dim(data) <- dim
-    if (is.list(dimnames) && length(dimnames)) 
+    if (is.list(dimnames) && length(dimnames))
         dimnames(data) <- dimnames
     data
 }
@@ -1418,7 +1417,7 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nans = (R_len_t) d;
     } else {
 	// tmp message so do not translate.
-	warning("use of 0-length dim is deprecated"); 
+	warning("use of 0-length dim is deprecated");
 	nans = 1;
     }
 
@@ -1487,7 +1486,7 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else if (TYPEOF(dimnames) == VECSXP && LENGTH(dimnames))
 	error(_("'dimnames' applied to non-array"));
-	
+
     UNPROTECT(2);
     return ans;
 }
