@@ -158,9 +158,9 @@ gridList.gTree <- function(x, grobs=TRUE, viewports=FALSE,
     class(name) <- c("grobListing", "gridVectorListing", "gridListing")
     if (recursive) {
         # Allow for grobs=FALSE but viewports=TRUE
-        result <- gridList(x$children,
-                          grobs=grobs, viewports=viewports,
-                          fullNames=fullNames, recursive=recursive)
+        result <- gridList(x$children[x$childrenOrder],
+                           grobs=grobs, viewports=viewports,
+                           fullNames=fullNames, recursive=recursive)
         if (viewports && !is.null(x$childrenvp)) {
             # Bit dodgy this bit
             # Emulates an "upViewport" on the DL
