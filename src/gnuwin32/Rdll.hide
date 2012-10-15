@@ -292,7 +292,6 @@
  Rf_check1arg
  Rf_check_stack_balance
  Rf_convertToC
- Rf_copyListMatrix
  Rf_d1mach
  Rf_deparse1s
  Rf_evalList

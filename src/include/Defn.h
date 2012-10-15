@@ -289,7 +289,7 @@ extern int putenv(char *string);
 #endif
 
 #define HSIZE	   4119	/* The size of the hash table for symbols */
-#define MAXIDSIZE 10000	/* Largest symbol size, 
+#define MAXIDSIZE 10000	/* Largest symbol size,
 			   in bytes excluding terminator.
 			   Was 256 prior to 2.13.0, now just a sanity check.
 			*/
@@ -668,6 +668,7 @@ extern0 SEXP	R_RestartStack;	/* Stack of available restarts */
 extern0 Rboolean R_warn_partial_match_args   INI_as(FALSE);
 extern0 Rboolean R_warn_partial_match_dollar INI_as(FALSE);
 extern0 Rboolean R_warn_partial_match_attr INI_as(FALSE);
+extern0 Rboolean R_warn_partial_match_args_no_dots INI_as(FALSE);
 extern0 Rboolean R_ShowWarnCalls INI_as(FALSE);
 extern0 Rboolean R_ShowErrorCalls INI_as(FALSE);
 extern0 int	R_NShowCalls INI_as(50);
@@ -768,7 +769,6 @@ extern Rboolean known_to_be_utf8 INI_as(FALSE);
 # define ComplexFromLogical	Rf_ComplexFromLogical
 # define ComplexFromReal	Rf_ComplexFromReal
 # define ComplexFromString	Rf_ComplexFromString
-# define copyListMatrix		Rf_copyListMatrix
 # define copyMostAttribNoTs	Rf_copyMostAttribNoTs
 # define CustomPrintValue	Rf_CustomPrintValue
 # define DataFrameClass		Rf_DataFrameClass
@@ -962,7 +962,6 @@ void CheckFormals(SEXP);
 void R_check_locale(void);
 void check_stack_balance(SEXP op, int save);
 void CleanEd(void);
-void copyListMatrix(SEXP, SEXP, Rboolean);
 void copyMostAttribNoTs(SEXP, SEXP);
 void CustomPrintValue(SEXP, SEXP);
 void DataFrameClass(SEXP);
