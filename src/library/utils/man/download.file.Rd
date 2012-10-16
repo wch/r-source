@@ -26,10 +26,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     file is saved.  Tilde-expansion is performed.}
 
   \item{method}{Method to be used for downloading files.  Currently
-    download methods \code{"internal"}, \code{"wget"}, \code{"curl"}
-    and \code{"lynx"} are available, and there is a value \code{"auto"}: see
-    \sQuote{Details}.  The method can also be set through the option
-    \code{"download.file.method"}: see \code{\link{options}()}.}
+    download methods \code{"internal"}, \code{"wget"}, \code{"curl"} and
+    \code{"lynx"} are available, and there is a value \code{"auto"}: see
+    \sQuote{Details} and \sQuote{Note}.
+
+    The method can also be set through the option
+    \code{"download.file.method"}: see \code{\link{options}()}.
+  }
 
   \item{quiet}{If \code{TRUE}, suppress status messages (if any), and
     the progress bar.}
@@ -136,7 +139,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 \note{
   Methods \code{"wget"} and \code{"lynx"} are mainly for historical
   compatibility, but they and \code{"curl"} can be used for URLs
-  (e.g. \samp{https://} URLs or those than use cookies) which the
+  (e.g. \samp{https://} URLs or those that use cookies) which the
   internal method does not support.  They will block all other activity
   on the \R process.
 
@@ -144,6 +147,15 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   call is made to the tool given by \code{method}, and the respective
   program must be installed on your system and be in the search path for
   executables.
+
+  \command{wget} (\url{http://www.gnu.org/software/wget/}) is commonly
+  installed on Unix-alikes (but not OS X). Windows binaries are
+  available from Cygwin, gnuwin32 and elsewhere.
+
+  \command{curl} (\url{http://curl.haxx.se/}) is installed on OS X and
+  commonly on Unix-alikes.  Windows binaries are available at that URL.
+
+  \command{lynx} (\url{http://lynx.browser.org/} is of historical interest.
 }
 \section{Setting Proxies}{
   This applies to the internal code only.
