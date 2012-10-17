@@ -4060,12 +4060,13 @@ the configure flag @option{--disable-largefile} was needed (since
 
 Rainer Hurling has reported success on @cputype{amd64} FreeBSD 9.0 (and
 on earlier versions in the past), and Brian Ripley tested
-@cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of (Mac) OS X) is
-based on FreeBSD we find testing on Darwin tends to pick up most
+@cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of (Mac) OS X)
+is based on FreeBSD we find testing on Darwin tends to pick up most
 potential problems on FreeBSD.  However, FreeBSD lacks adequate
-collation support for multi-byte locales (but a port of ICU is
-available), and does not yet implement C99 complex math functions (for
-which @R{}'s substitutes are used).
+character type (e.g.@: which are alphabetic) and collation support for
+multi-byte locales (but a port of ICU is available), and does not yet
+implement C99 complex math functions (for which @R{}'s substitutes are
+used).
 
 The native BSD @command{make} suffices to build @R{} but a number of
 packages require @acronym{GNU} @command{make}, despite the
@@ -4095,6 +4096,10 @@ Then @R{} itself can be built by something like
 
 There are also FreeBSD packages for a small eclectic collection of
 @acronym{CRAN} packages.
+
+Beware that the lack of adequate support for non-ASCII characters in
+UTF-8 locales has many consequences in @R{}: for example names will not
+be recognized as alphabetic by @code{make.names}.
 
 @node Mac OS X, Solaris, FreeBSD, Platform notes
 @section (Mac) OS X
