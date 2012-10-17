@@ -7,7 +7,7 @@
 \title{ R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R VERSION 2.15.1 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.15.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The \code{X11()} window gains an icon: the
@@ -365,7 +365,7 @@
       vector was too long for \eqn{2^{30}}{2^30} or more).
       
       \item \code{parallel::stopCluster()} now works with MPI
-      clusters without \pkg{snow} being on the search path.
+      clusters without \CRANpkg{snow} being on the search path.
       
       \item \code{terms.formula()} could exhaust the stack, and the
       stack check did not always catch this before the segfault.
