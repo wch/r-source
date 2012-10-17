@@ -548,7 +548,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R VERSION 2.15.1 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.15.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The \code{X11()} window gains an icon: the
