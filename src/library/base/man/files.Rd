@@ -89,8 +89,11 @@ Sys.junction(from, to)
   to the limitations of the OS's corresponding system call (see
   something like \command{man 2 rename} on a Unix-alike): in particular
   in the interpretation of \sQuote{file}: most platforms will not rename
-  files across file systems.  (On Windows, \code{file.rename} nowadays
-  works across volumes for files but not directories.)
+  files across file systems.  (On Windows, \code{file.rename} can move
+  files but not directories between volumes.)  On platforms which allow
+  directories to be renamed, typically neither or both of \code{from}
+  and \code{to} must a directory, and if \code{to} exists it must be an
+  empty directory.
 
   \code{file.append} attempts to append the files named by its
   second argument to those named by its first.  The \R subscript
@@ -149,9 +152,9 @@ Sys.junction(from, to)
   and \file{foo\\} \emph{are} invalid on Windows) has undefined consequences.
 }
 
-\section{Symbolic links on Windows}{
-  Symbolic links in the sense of POSIX file systems do not exist on
-  Windows: however, NTFS file systems support two similar concepts.
+\section{Symbolic links on Windows}{ Symbolic links in the sense of
+  POSIX file systems do not exist on Windows: however, NTFS file systems
+  support two similar concepts.
 
   Windows 2000 and later have \sQuote{junctions} (or
   \sQuote{junction points}), unfortunately without a public API.  They
@@ -167,16 +170,16 @@ Sys.junction(from, to)
   \code{from}.
   
   A version of symbolic linking to files/directories was implemented
-  starting with Vista, and \code{file.symlink} makes use of that interface since
-  \R 2.15.0.  However, it has restrictions (apart from the OS
-  restriction) that are crippling.  First, the user needs permission to
-  make symbolic links, and that permission is not normally granted
-  except to Administrator accounts (note: not users with Administrator
-  rights): further many users report that whereas the Policy Editor
-  appears to be able to grant such rights, the API still reports
-  insufficient permissions.  Second, the interface needs to know if
-  \code{from} is a file or a directory (and it need not yet exist): we
-  have implemented this to allow linking from a directory only if it
+  starting with Vista, and \code{file.symlink} makes use of that
+  interface since \R 2.15.0.  However, it has restrictions (apart from
+  the OS version restriction) which are crippling.  First, the user
+  needs permission to make symbolic links, and that permission is not
+  normally granted except to Administrator accounts (note: not users
+  with Administrator rights): further many users report that whereas the
+  Policy Editor appears to be able to grant such rights, the API still
+  reports insufficient permissions.  Second, the interface needs to know
+  if \code{from} is a file or a directory (and it need not yet exist):
+  we have implemented this to allow linking from a directory only if it
   currently exists.
 
   Care is needed with removing a junction (and most likely also a

@@ -38,6 +38,13 @@ make.names(names, unique = FALSE, allow_ = TRUE)
   appended to them.  Duplicated values are altered by
   \code{\link{make.unique}}.
 }
+
+\section{Warning}{
+  Some OSes, notably FreeBSD, report extremely incorrect information about
+  which characters are alphabetic in some locales (typically, all
+  multi-byte locales including UTF-8 locales).  However, \R provides
+  substitutes on Windows, OS X and AIX.
+}
 \note{
   Prior to \R version 1.9.0, underscores were not valid in variable names,
   and code that relies on them being converted to dots will no longer
