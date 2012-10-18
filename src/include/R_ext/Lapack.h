@@ -18,9 +18,9 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* 
+/*
    C declarations of LAPACK Fortran subroutines included in R.
-   
+
    Part of the API.
  */
 
@@ -49,16 +49,16 @@ extern "C" {
 #define La_extern extern
 #endif
 
-/* Utilities for Lapack-using packages : */
+// Utilities for Lapack-using packages :
+// ------------------------------------
 
 /* matrix norms: converting typstr[]  to one of {'M', 'O', 'I', 'F'}
  * or signal error(): */
-// La_extern char La_norm_type(const char *typstr);
+La_extern char La_norm_type(const char *typstr);
 
 /* matrix (reciprocal) condition numbers: convert typstr[]  to 'O'(ne) or 'I'(nf)
  * or signal error(): */
-// La_extern char La_rcond_type(const char *typstr);
-
+La_extern char La_rcond_type(const char *typstr);
 
 
 /* Selected Double Precision Lapack Routines
