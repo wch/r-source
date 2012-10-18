@@ -1,6 +1,6 @@
 % File src/library/stats/man/Normal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Normal}
@@ -75,7 +75,7 @@ rnorm(n, mean = 0, sd = 1)
   For \code{qnorm}, the code is a C translation of
 
   Wichura, M. J. (1988)
-  Algorithm AS 241: The Percentage Points of the Normal Distribution.
+  Algorithm AS 241: The percentage points of the normal distribution.
   \emph{Applied Statistics}, \bold{37}, 477--484.
 
   For \code{rnorm}, see \link{RNG} for how to select the algorithm and
