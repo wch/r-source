@@ -7,14 +7,15 @@
 	###  Here's a solution	(see R-help mailing list, Dec 9, 2010):	 ###
 	##================================================================##
 
-##' We want to catch *and* save both errors and warnings, and in the case of
+##' Catch *and* save both errors and warnings, and in the case of
 ##' a warning, also keep the computed result.
 ##'
-##' @title tryCatch both warnings and errors
-##' @param expr
+##' @title tryCatch both warnings (with value) and errors
+##' @param expr an \R expression to evaluate
 ##' @return a list with 'value' and 'warning', where
 ##'   'value' may be an error caught.
-##' @author Martin Maechler;  Copyright (C) 2010 The R Core Team
+##' @author Martin Maechler;
+##' Copyright (C) 2010-2012  The R Core Team
 tryCatch.W.E <- function(expr)
 {
     W <- NULL
