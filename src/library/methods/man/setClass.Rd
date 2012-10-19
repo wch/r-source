@@ -24,25 +24,27 @@ setClass(Class, representation, prototype, contains=character(),
 }
 \arguments{
   \item{Class}{character string name for the class.}
-  \item{representation}{ a named list of the slots that the new class should have, the names giving the names of the slots and the corresponding elements being the character string names of  the corresponding classes.
-     Usually a call to
-    the \code{\link{representation}} function.
+  \item{representation}{a named \code{\link{list}} of the slots that the
+    new class should have, the names giving the names of the slots and
+    the corresponding elements being the character string names of  the
+    corresponding classes.  Usually a call to the
+    \code{\link{representation}} function.
 
-Backward compatibility and compatibility with S-Plus allows unnamed
-elements for superclasses, but the recommended style is to use the
-\code{contains=} argument instead.}
+    Backward compatibility and compatibility with S-Plus allows unnamed
+    elements for superclasses, but the recommended style is to use the
+    \code{contains=} argument instead.}
   \item{prototype}{ an object providing the default
     data for the slots in this class.  By default, each will be the
     prototype object for the superclass.  If provided, using a call to
     \code{\link{prototype}} will carry out some checks. }
-  \item{contains}{ the names (and optionally package slots) for the \emph{superclasses} of this class.
-      }
-  \item{where}{ the
-    environment in which to store the
-    definition.  Should not be supplied in standard use.  For calls to \code{setClass()} appearing in the
-    source code for a package, will default to the namespace of
-    the package.  For calls typed or sourced at the top level in a
-    session, will default to the global environment.
+  \item{contains}{ the names (and optionally package slots) for the
+    \emph{superclasses} of this class.  Use \code{"VIRTUAL"} to define a
+    virtual class.}
+  \item{where}{ the environment in which to store the definition.
+    Should not be supplied in standard use.  For calls to
+    \code{setClass()} appearing in the source code for a package, will
+    default to the namespace of the package.  For calls typed or sourced
+    at the top level in a session, will default to the global environment.
   }
   \item{validity}{ if supplied, should be a validity-checking method
     for objects from this class (a function that returns \code{TRUE} if
@@ -59,16 +61,14 @@ elements for superclasses, but the recommended style is to use the
     the name of the package in which the class definition is assigned.
   }
   \item{S3methods}{if \code{TRUE}, S3 methods may be written for this
-      class.  S3 generic functions and primitives will
-      dispatch an S3 method defined for this class, given an S4 object
-      from the class or from a subclass of it, provided no S4
-      method and no more
-      direct S3 method is found.  This argument should rarely be used:
-      It is not needed for
-      classes that are defined via \code{\link{setOldClass}} or for
-      classes that extend such classes, which will nearly always be
-      the case when S3 methods are relevant.
-    }
+    class.  S3 generic functions and primitives will dispatch an S3
+    method defined for this class, given an S4 object from the class or
+    from a subclass of it, provided no S4 method and no more direct S3
+    method is found.  This argument should rarely be used:
+    It is not needed for classes that are defined via
+    \code{\link{setOldClass}} or for classes that extend such classes,
+    which will nearly always be the case when S3 methods are relevant.
+  }
 }
 
 \value{
