@@ -548,6 +548,15 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R VERSION 2.15.2 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{beta(a, b)} could overflow in its calculations when
+      at least one of \code{a} and \code{b} was less than one.  (\PR{15075})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R VERSION 2.15.2}{
   \subsection{NEW FEATURES}{
     \itemize{

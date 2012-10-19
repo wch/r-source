@@ -1999,4 +1999,9 @@ maintainer("impossible_package_name")
 ## gave an error in R < 2.15.2
 
 
+## PR#15075 and more
+stopifnot(is.finite(c(beta(0.01, 171), beta(171, 0.01), beta(1e-200, 1e-200))))
+## each overflowed to +Inf during calculations in R <= 2.15.2
+
+
 proc.time()
