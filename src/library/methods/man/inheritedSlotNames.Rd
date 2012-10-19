@@ -50,7 +50,7 @@ if(require("Matrix")) {
 % cached anyway :
 ## detach package we've attached above:
 for(n in rev(which(is.na(match(search(), .srch)))))
-    detach(pos = n)
+   try( detach(pos = n) )
 }% end{dontrun}
 }
 \keyword{classes}

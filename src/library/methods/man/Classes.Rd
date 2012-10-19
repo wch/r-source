@@ -154,8 +154,7 @@
 \section{Virtual classes; Basic classes}{
 
       Classes exist for which no actual objects can be created by a
-      call to \code{\link{new}}, the
-      \emph{virtual} classes, in fact a
+      call to \code{\link{new}}, the \emph{virtual} classes, in fact a
       very important programming tool.  They are used to group together
       ordinary classes that want to share some programming behavior,
       without necessarily restricting how the behavior is implemented.
@@ -171,7 +170,7 @@
       definition is otherwise sealed).
 
       There are a number of \sQuote{basic} classes, corresponding to the
-      ordinary kinds of data occurring in R.  For example,
+      ordinary kinds of data occurring in \R.  For example,
       \code{"numeric"} is a class corresponding to numeric vectors.
       The other vector basic classes are \code{"logical"}, \code{"integer"},
       \code{"complex"}, \code{"character"},  \code{"raw"}, \code{"list"}
