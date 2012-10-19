@@ -549,10 +549,20 @@
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{lgamma(x)} for very small \code{x} (in the
+      denormalized range) is no longer \code{Inf} with a warning.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{beta(a, b)} could overflow in its calculations when
       at least one of \code{a} and \code{b} was less than one.  (\PR{15075})
+
+      \item \code{lbeta(a, b)} no longer gives \code{NaN} if \code{a} or
+      \code{b} is very small (in the denormalized range).
     }
   }
 }

@@ -74,8 +74,8 @@ double beta(double a, double b)
 //	return gammafn(a) * gammafn(b) / gammafn(a+b);
 	/* All the terms are positive, and all can be large for large
 	   or small arguments.  They are never much less than one.
-	   gammafn(x) can still overflow for x ~ 1e-308.
-	   No point in using lbeta as that uses log(this formula).
+	   gammafn(x) can still overflow for x ~ 1e-308, 
+	   but the result would too. 
 	*/
 	return (1 / gammafn(a+b)) * gammafn(a) * gammafn(b);
     } else {

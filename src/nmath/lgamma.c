@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 The R Core Team
+ *  Copyright (C) 2000-2012 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -78,8 +78,8 @@ double lgammafn_sign(double x, int *sgn)
 
     y = fabs(x);
 
-    if (y <= 10)
-	return log(fabs(gammafn(x)));
+    if (y < 1e-306) return -log(x); // denormalized range, R change
+    if (y <= 10) return log(fabs(gammafn(x)));
     /*
       ELSE  y = |x| > 10 ---------------------- */
 
