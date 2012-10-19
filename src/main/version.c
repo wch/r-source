@@ -78,7 +78,9 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(names, 9, mkChar("day"));
     SET_VECTOR_ELT(value, 9, mkString(R_DAY));
     SET_STRING_ELT(names, 10, mkChar("svn rev"));
-    SET_VECTOR_ELT(value, 10, mkString(R_SVN_REVISION));
+
+    sprintf(buf,"%d", R_SVN_REVISION);
+    SET_VECTOR_ELT(value, 10, mkString(buf));
     SET_STRING_ELT(names, 11, mkChar("language"));
     SET_VECTOR_ELT(value, 11, mkString("R"));
 
@@ -107,7 +109,10 @@ void attribute_hidden PrintVersion(char *s)
 
 void attribute_hidden PrintVersionString(char *s)
 {
-    if(strcmp(R_SVN_REVISION, "unknown") == 0) {
+    char R_SVN_char[8];
+    sprintf(R_SVN_char, "%d", R_SVN_REVISION);
+
+    if(strcmp(R_SVN_char, "unknown") == 0) {
 	sprintf(s, "R version %s.%s %s (%s-%s-%s)",
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     } else if(strlen(R_STATUS) == 0) {
@@ -115,11 +120,11 @@ void attribute_hidden PrintVersionString(char *s)
 		R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
     } else if(strcmp(R_STATUS, "Under development (unstable)") == 0) {
 	sprintf(s, "R %s (%s-%s-%s r%s)",
-		R_STATUS, R_YEAR, R_MONTH, R_DAY, R_SVN_REVISION);
+		R_STATUS, R_YEAR, R_MONTH, R_DAY, R_SVN_char);
     } else {
 	sprintf(s, "R version %s.%s %s (%s-%s-%s r%s)",
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
-		R_SVN_REVISION);
+		R_SVN_char);
     }
 }
 
