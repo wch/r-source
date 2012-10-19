@@ -569,7 +569,7 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
-      and hence usable as e.g. \code{#if R_SVN_REVSION < 70000}
+      and hence usable as e.g. \code{#if R_SVN_REVSION < 70000}.
     }
   }
 }
