@@ -133,22 +133,22 @@
 
       \item The undocumented use \code{rep(NULL, length.out = n)} for
       \code{n > 0} (which returns \code{NULL}) now gives a warning.
-      
+
       \item \code{demo()} gains an \code{encoding} argument for those
       packages with non-ASCII demos: it defaults to the package encoding
       where there is one.
-      
+
       \item \code{strwrap()} converts inputs with a marked encoding to
       the current locale: previously it made some attempt to pass
       through as bytes inputs invalid in the current locale.
-      
+
       \item Specifying both \code{rate} and \code{scale} to
       \code{[dpar]gamma} is a warning (if they are essentially the same
       value) or an error.
 
       \item \code{merge()} works in more cases where the data frames
       include matrices.  (Wish of \PR{14974}.)
-      
+
       \item \code{optimize()} and \code{uniroot()} no longer use a
       shared parameter object across calls.  (\code{nlm()},
       \code{nlminb()} and \code{optim()} with numerical derivatives
@@ -162,45 +162,45 @@
       argument which can be used to make them much more efficient when
       it is known that there are only a small number of unique entries.
       This is done automatically for factors.
-      
+
       \item Functions \code{rbinom()}, \code{rgeom()}, \code{rhyper()},
       \code{rpois()}, \code{rnbinom(),} \code{rsignrank()} and
       \code{rwilcox()} now return integer (not double) vectors.  This
-      halves the storage requirements for large simulations.      
-      
+      halves the storage requirements for large simulations.
+
       \item \code{sort()}, \code{sort.int()} and \code{sort.list()} now
       use radix sorting for factors of less than 100,000 levels when
       \code{method} is not supplied.  So does \code{order()} if called
       with a single factor, unless \code{na.last = NA}.
-      
+
       \item \code{diag()} as used to generate a diagonal matrix has been
       re-written in C for speed and less memory usage.  It now forces
       the result to be numeric in the case \code{diag(x)} since it is
       said to have \sQuote{zero off-diagonal entries}.
-      
+
       \item \code{backsolve()} (and \code{forwardsolve()}) are now
       internal functions, for speed and support for large matrices.
-      
+
       \item More matrix algebra functions (e.g. \code{chol()} and
       \code{solve()}) accept logical matrices (and coerce to numeric).
-     
+
       \item \code{sample.int()} has some support for  \eqn{n \ge
 	2^{31}}{n >= 2^31}: see its help for the limitations.
 
       A different algorithm is used for \code{(n, size, replace = FALSE,
 	prob = NULL)} for \code{n > 1e7} and \code{size <= n/2}.  This
       is much faster and uses less memory, but does give different results.
-      
+
       \item \code{approxfun()} and \code{splinefun()} now return a
       wrapper to an internal function in the \pkg{stats} namespace
       rather than a \code{.C()} or \code{.Call()} call.  This is more
       likely to work if the function is saved and used in a different
       session.
-      
+
       \item The functions \code{.C()}, \code{.Call()},
       \code{.External()} and \code{.Fortran()} now give an error (rather
       than a warning) if called with a named first argument.
-      
+
       \item \code{Sweave()} by default now reports the locations in
       the source file(s) of each chunk.
 
@@ -219,13 +219,13 @@
 
       \item \code{gray()} and \code{gray.colors()} finally allow
       \code{alpha} to be specified.
-      
+
       \item \code{monthplot()} gains parameters to control the look of
       the reference lines.  (Suggestion of Ian McLeod.)
 
       \item Added support for new \code{\%~\%} relation
       (\dQuote{is distributed as}) in plotmath.
-      
+
       \item \code{domain = NA} is accepted by \code{gettext()} and
       \code{ngettext()}, analogously to \code{stop()} etc.
     }
@@ -276,7 +276,7 @@
 
       \item \code{agrep()} and \code{grep()} will return double vectors
       of indices for long vector inputs.
-      
+
       \item Many calls to \code{.C()} have been replaced by
       \code{.Call()} to allow long vectors to be supported (now or in
       the future).  Regrettably several packages had copied the non-API
@@ -286,12 +286,12 @@
       inputs.  This is a precaution as it is very unlikely that existing
       code will have been written to handle long vectors (and the \R
       wrappers often assume that \code{length(x)} is an integer).
-      
+
       \item Most of the methods for \code{sort()} work for long vectors.
 
       \code{rank()}, \code{sort.list()} and \code{order()} support
       long vectors (slowly except for radix sorting).
-      
+
       \item \code{sample()} can do uniform sampling from a long vector.
     }
   }
@@ -311,13 +311,13 @@
       searched faster.  This does mean that \code{.C} / \code{.Fortran}
       / \code{.Call} calls copied from earlier versions of \R may no
       longer work -- but they were never part of the API.
-      
+
       \item Many \code{.Call()} calls in package \pkg{base} have been
       migrated to \code{.Internal()} calls.
-      
+
       \item \code{solve()} makes fewer copies, especially when \code{b}
       is a vector rather than a matrix.
-      
+
       \item \code{eigen()} makes fewer copies if the input has dimnames.
 
       \item Most of the linear algebra functions make fewer copies when
@@ -339,7 +339,7 @@
       \file{.o} file in which the calls occur.
 
       Such calls can terminate the \R process which loads the package.
-      
+
       \item The location of the build and check environment files can
       now be specified by the environment variables
       \env{R_BUILD_ENVIRON} and \env{R_CHECK_ENVIRON}, respectively.
@@ -350,7 +350,7 @@
 
       \item \command{R CMD build} now omits Eclipse's \file{.metadata}
       directories, and \command{R CMD check} warns if it finds them.
-      
+
       \item \command{R CMD check} now does some checks on functions
       defined within reference classes, including of \code{.Call()} etc
       calls.
@@ -378,11 +378,11 @@
 
       \item Calling \code{rep()} or \code{rep.int()} on a pairlist or
       other non-vector object is now an error.
-      
+
       \item Several non-API entry points have been transferred to
       packages (e.g. \code{R_zeroin2}) or replaced by different non-API
       entry points (e.g. \code{R_tabulate}).
-      
+
       \item The \sQuote{internal} graphics device invoked by
       \code{.Call("R_GD_nullDevice", package = "grDevices")} has
       been removed: use \code{pdf(file = NULL)} instead.
@@ -391,10 +391,10 @@
 
       \item The \code{.Fortran()} entry point \code{"dqrls"} which has
       not been used by \R since version 2.15.1 is no longer available.
-     
+
       \item Functions \code{traceOn()} and \code{traceOff()} in package
       \pkg{methods} are now defunct.
-  
+
       \item Function \code{CRAN.packages()} is finally defunct.
     }
   }
@@ -466,16 +466,16 @@
       \code{start} and \code{end} as \code{size_t} to allow them to work
       with longer vectors on 64-bit platforms.  Code using them should
       be recompiled.
-      
+
       \item A few recently added C entry points were missing the
       remapping to \code{Rf_}, notably \code{[dpq]nbinom_mu}.  Packages
       using them need to be reinstalled.
-      
+
       \item Some of the interface pointers formerly available only to
       \command{R.app} are now available to front-ends on all
       Unix-alikes: one has been added for the interface to
       \code{View()}.
-      
+
       \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
       although it was contrary to the documentation.  It is now an error.
     }
@@ -504,7 +504,7 @@
 
       \item The translations form a separate group in the Windows
       installer, so can be omitted if desired.
-      
+
       \item The markup for many messages has been changed to make them
       easier to translate, incorporating suggestions from Łukasz Daniel.
     }
@@ -537,7 +537,7 @@
       (likewise for height).  The layout column widths (or row heights)
       in this case were being calculated with non-finite values.
       (Reported by Winston Chang.)
-      
+
       \item \code{solve(A, b)} for a vector \code{b} gave the answer
       names from \code{colnames(A)} for \code{LINPACK = TRUE} but not in
       the default case.
@@ -555,7 +555,7 @@
       denormalized range) is no longer \code{Inf} with a warning.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{beta(a, b)} could overflow in its calculations when
@@ -563,6 +563,13 @@
 
       \item \code{lbeta(a, b)} no longer gives \code{NaN} if \code{a} or
       \code{b} is very small (in the denormalized range).
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
+      and hence usable as e.g. \code{#if R_SVN_REVSION < 70000}
     }
   }
 }
@@ -613,7 +620,7 @@
 
       \item Misuse of \code{rep()} on undocumented types of objects
       (e.g. calls) is now reported as an error.
-      
+
       \item The included LAPACK has been updated to 3.4.1, with some
       patches from the current SVN sources.  (\emph{Inter alia}, this
       resolves \PR{14692}.)
@@ -630,23 +637,23 @@
       \item New function \code{.bincode()}, a \sQuote{bare-bones}
       version of \code{cut.default(labels = FALSE)} for use in packages
       with \code{image()} methods.
-      
+
       \item The HTML manuals now use directional single quotes.
-      
+
       \item \code{maintainer()} now converts embedded new lines to
       spaces.  It no longer gives a non-obvious error for non-installed
       packages.
-      
+
       \item The \code{X11()} device has some protection against
       being used with forked processes \emph{via} package \pkg{parallel}.
-      
+
       \item Setting the environment variable \env{R_OSX_VALGRIND} (to
       any value) allows \R to be run under \command{valgrind} on Mac OS
       10.6 and 10.7 (\command{valgrind} currently has very limited
       support for 10.8), provided \code{system()} is not used (directly
       or indirectly).  This should not be needed for \command{valgrind}
       >= 3.8.1.
-      
+
       \item The \code{model.frame()} method for \code{"lm"} uses
       \code{xlevels}: this is safer if \code{data} was supplied or
       \code{model = FALSE} was used and the levels of factors used in
@@ -654,24 +661,24 @@
 
       Similarly, \code{model.frame(fm, data=<data>)} copies across
       the variables used for safe prediction from the fit.
-      
+
       \item Functions such as \code{parLapply()} in package
       \pkg{parallel} can make use of a default cluster if one is set.
       (Reported by Martin Morgan.)
-      
+
       \item \code{chol(pivot = TRUE, LINPACK = FALSE)} is now available
       using LAPACK 3.2 subroutine \code{DPSTRF}.
-      
+
       \item The functions \code{.C()}, \code{.Call()},
       \code{.External()} and \code{.Fortran()} now check that they are
       called with an unnamed first argument: the formal arguments were
       changed from \code{name=} to \code{.NAME=} in \R 2.13.0, but some
       packages were still using the old name.  This is currently a
       warning, but will be an error in future.
-      
+
       \item \code{step()} no longer tries to improve a model with
       AIC of \code{-Inf} (a perfect fit).
-      
+
       \item \code{spline()} and \code{splinefun()} gain a new method
       \code{"hyman"}, an implementation of Hyman's method of
       constructing monotonic interpolation splines.  (Based on
@@ -687,19 +694,19 @@
       \item \code{array()} is now implemented in C code (for speed) when
       \code{data} is atomic or an unclassed list (so it is known that
       \code{as.vector(data)} will have no class to be used by \code{rep()}).
-      
+
       \item \code{rep()} is faster and uses less memory,
       substantially so in some common cases (e.g. if \code{times} is of
       length one or \code{length.out} is given, and \code{each = 1}).
-      
+
       \item \code{findInterval()}, \code{tabulate()}, \code{cut()},
       \code{hist()} and \code{image.default()} all use \code{.Call()}
       and are more efficient.
-      
+
       \item \code{duplicated()}, \code{unique()} and similar now
       support vectors of lengths above \eqn{2^{29}}{2^29} on 64-bit
       platforms.
-      
+
       \item Omitting \code{PACKAGE} in \code{.C()} etc calls was
       supposed to make use of the DLL from the namespace within which
       the enclosing function was defined.  It was less successful in
@@ -729,12 +736,12 @@
       \item \command{R CMD check} (if checking subdirectories) checks
       that the \R code in any demos is ASCII and can be parsed, and
       warns if not.
-      
+
       \item When \code{R CMD Rd2pdf} is used with \file{inputenx.sty},
       it allows further characters (mainly for Eastern European
       languages) by including \file{ix-utf8enc.dfu} (if available).
       (Wish of \PR{14989}.)
-      
+
       \item \command{R CMD build} now omits several types of hidden
       files/directories, including \file{inst/doc/.Rinstignore},
       \file{vignettes/.Rinstignore}, (\file{.Rinstignore} should be at
@@ -767,7 +774,7 @@
       in \command{R CMD check}, and will be an error in future.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
       \item Use of \code{array()} with a 0-length \code{dim} argument is
@@ -785,22 +792,22 @@
 
       \item Entry point \code{rcont2} is no longer part of the API, and
       will move to package \pkg{stats} in \R 2.16.0.
-      
+
       \item The \sQuote{internal} graphics device invoked by
       \code{.Call("R_GD_nullDevice", package = "grDevices")} is about to
       be removed: use \code{pdf(file = NULL)} instead.
-      
+
       \item \code{eigen(EISPACK = TRUE)},
       \code{chol(pivot = FALSE, LINPACK = TRUE)},
       \code{chol2inv(LINPACK = TRUE)}, \code{solve(LINPACK = TRUE)} and
       \code{svd(LINPACK = TRUE)} are deprecated and give a warning.
 
       They were provided for compatibility with \R 1.7.0 (Mar 2003)!
-      
+
       \item The \sQuote{internal function} \code{kappa.tri()} has been
       renamed to \code{.kappa_tri()} so it is not inadvertently called
       as a method for class \code{"tri"}.
-      
+
       \item Functions \code{sessionData()} and \code{browseAll()} in
       package \pkg{methods} are on a help page describing them as
       \sQuote{deprecated} and are now formally deprecated.
@@ -830,14 +837,14 @@
       \item There is a new \command{configure} option
       \option{--with-libtiff} (mainly in case the system installation
       needs to be avoided).
-      
+
       \item LAPACK 3.4.1 does use some Fortran 90 features, so
       \command{g77} no longer suffices.
-      
+
       \item If an external LAPACK is used, it must be version 3.2 or later.
     }
  }
-    
+
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}
@@ -893,17 +900,17 @@
 
       \item \code{lchoose()} and \code{choose()} could overflow the C
       stack and crash \R.
-      
+
       \item When given a 0-byte file and asked to keep source
       references, \code{parse()} read input from \code{stdin()}
-      instead.      
-      
+      instead.
+
       \item \code{pdf(compress = TRUE)} did not delete temporary files
       it created until the end of the \R session.  (\PR{14991})
-      
+
       \item \code{logLik()} did not detect the error of applying it
       to a multiple-response linear model.  (\PR{15000})
-      
+
       \item \code{file.copy(recursive = TRUE)} did not always report
       \code{FALSE} for a failure two or more directories deep.
 
@@ -913,34 +920,34 @@
       \item \code{smooth.spline()} used \code{DUP = FALSE} which allowed
       its compiled C code to change the function: this was masked by the
       default byte-compilation. (\PR{14965}.)
-      
-      \item In Windows, the GUI preferences for foreground color were 
+
+      \item In Windows, the GUI preferences for foreground color were
       not always respected.  (Reported by Benjamin Wells.)
-      
+
       \item On OS X, the Quartz versions of the bitmap devices did not
       respect \code{antialias = "none"}.  (\PR{15006}.)
-      
+
       \item \code{unique()} and similar would infinite-loop if called on
       a vector of length > \eqn{2^{29}}{2^29} (but reported that the
       vector was too long for \eqn{2^{30}}{2^30} or more).
-      
+
       \item \code{parallel::stopCluster()} now works with MPI
       clusters without \CRANpkg{snow} being on the search path.
-      
+
       \item \code{terms.formula()} could exhaust the stack, and the
       stack check did not always catch this before the segfault.
       (\PR{15013})
-      
+
       \item \code{sort.list(method = "radix")} could give incorrect
       results on certain compilers (seen with \command{clang} on Mac OS
       10.7 and \command{Xcode 4.4.1}).
-      
+
       \item \code{backsolve(T, b)} gave incorrect results when
       \code{nrows(b) > ncols(T)} and \code{b} had more than one column.
 
       It could segfault or give nonsense if \code{k} was specified as
       more than \code{ncols(T)}.
-      
+
       \item \code{smooth.spline()} did not check that a specified
       numeric \code{spar} was of length 1, and gave corrupt results if
       it was of length 0.
@@ -949,24 +956,24 @@
 
       \item Printing of vectors with names > 1000 characters now works
       correctly rather than truncating. (\PR{15028})
-      
+
       \item \code{qr()} for a complex matrix did not pivot the column names.
 
       \item \code{--with-blas='-framework vecLib'} now also works on OS X 10.8.
-      
+
       \item \command{R CMD check} no longer fails with an error if
       a \file{DESCRIPTION} file incorrectly contains a blank line.
       (Reported by Bill Dunlap.)
-      
+
       \item \code{install.packages(type = "both")} could call
-      \code{chooseCRANmirror()} twice.      
-      
+      \code{chooseCRANmirror()} twice.
+
       \item \code{lm.wfit()} could segfault in \R 2.15.1 if all the
       weights were zero. (\PR{15044})
-      
+
       \item A malformed package name could cause \command{R CMD INSTALL}
       to write outside the target library.
-      
+
       \item Some of the quality control functions
       (e.g. \code{tools::checkFF()}) were wrongly identifying the source
       of S4 methods in a package and so not checking them.
@@ -978,16 +985,16 @@
       \code{NAMESPACE} file could be confused and fail to find generics
       when importing from multiple packages (reported and fixed by
       Michael Lawrence).
-      
+
       \item The detection of the C stack direction is better protected
       against compiler optimization. (\PR{15011}.)
 
       \item Long custom line types would sometimes segfault on the
       cairographics-based devices. (\PR{15055}.)
-  
+
       \item \code{tools::checkPoFile()} unprotected too early in its C
       code and so segfaulted from time to time.
-      
+
       \item The Fortran code underlying \code{nlminb()} could
       infinite-loop if any of the input functions returned \code{NA} or
       \code{NaN}.  This is now an error for the gradient or Hessian, and
@@ -1000,14 +1007,14 @@
 
       \item \code{arima.sim()} could give too long an output in some
       corner cases (in part, \PR{15068}).
-      
+
       \item \code{anova.glm()} with \code{test = "Rao"} didn't work when
       models included an offset. (Reported by Søren Feodor Nielsen.)
 
-      \item \code{as.data.frame.matrix()} could return invalid data 
-      frame with no \code{row.names} attribute for 0-row matrix. (Reported 
+      \item \code{as.data.frame.matrix()} could return invalid data
+      frame with no \code{row.names} attribute for 0-row matrix. (Reported
       by Hervé Pagès.)
-      
+
       \item Compilation with the \code{vecLib} or \code{Accelerate}
       frameworks on OS X without using that also for LAPACK is more
       likely to be successful.
@@ -3863,7 +3870,7 @@
 
       \item \code{download.file()} can be now used with external methods
       even if there are spaces in the URL or the target filename.
-      
+
       \item The first formal argument of \code{.C()}, \code{.Fortran()},
       \code{.Call()} and \code{.External()} is now referred to a
       \code{.NAME} rather than \code{name}: however actual calls should

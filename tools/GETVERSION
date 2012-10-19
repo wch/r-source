@@ -40,7 +40,7 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo "#define R_YEAR   \"${y}\""
   echo "#define R_MONTH  \"${m}\""
   echo "#define R_DAY    \"${d}\""
-  echo "#define R_SVN_REVISION \"${svn_rev}\""
+  echo "#define R_SVN_REVISION ${svn_rev}"
 ## Using 1-digit year stops problems with leading zeros
 #  echo "#define R_FILEVERSION    ${maj},${pl}${sl},${y1}${m}${d},0"
   echo "#define R_FILEVERSION    ${maj},${pl}${sl},${svn_rev},0"
@@ -50,4 +50,4 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo '#endif'
   echo
   echo "#endif /* not R_VERSION_H */")
-    
+
