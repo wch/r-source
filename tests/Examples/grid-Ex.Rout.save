@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-10-19 r60966) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i686-pc-linux-gnu (32-bit)
@@ -1286,6 +1286,39 @@ List of 6
 > 
 > 
 > cleanEx()
+> nameEx("grid.reorder")
+> ### * grid.reorder
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.reorder
+> ### Title: Reorder the children of a gTree
+> ### Aliases: grid.reorder reorderGrob
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> # gTree with two children, "red-rect" and "blue-rect" (in that order)
+> gt <- gTree(children=gList(
++                 rectGrob(gp=gpar(col=NA, fill="red"),
++                          width=.8, height=.2, name="red-rect"),
++                 rectGrob(gp=gpar(col=NA, fill="blue"),
++                          width=.2, height=.8, name="blue-rect")),
++             name="gt")
+> grid.newpage()
+> grid.draw(gt)
+> # Spec entire order as numeric (blue-rect, red-rect)
+> grid.reorder("gt", 2:1)
+> # Spec entire order as character
+> grid.reorder("gt", c("red-rect", "blue-rect"))
+> # Only spec the one I want behind as character
+> grid.reorder("gt", "blue-rect")
+> # Only spec the one I want in front as character
+> grid.reorder("gt", "blue-rect", back=FALSE)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("grid.roundrect")
 > ### * grid.roundrect
 > 
@@ -1863,10 +1896,10 @@ vp1::vp2
 > pushViewport(vp)
 > lapply(trace, function(t) grid.lines(t$x, t$y, gp=gpar(col="red")))
 [[1]]
-lines[GRID.lines.971] 
+lines[GRID.lines.972] 
 
 [[2]]
-lines[GRID.lines.972] 
+lines[GRID.lines.973] 
 
 > popViewport()
 > 
