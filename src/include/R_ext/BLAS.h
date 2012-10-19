@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-5 The R Core Team.
+ *  Copyright (C) 2003-12 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,12 +17,19 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/*
+   C declarations of BLAS Fortran subroutines always available in R.
+
+   Part of the API.
+
+   R packages that use these should have PKG_LIBS in src/Makevars include 
+   $(BLAS_LIBS) $(FLIBS)
+ */
+
 /* Part of the API */
 
 #ifndef R_BLAS_H
 #define R_BLAS_H
-/* C declarations of BLAS routines.  R packages that use these should have */
-/* src/Makevars declare PKG_LIBS = $(BLAS_LIBS) $(FLIBS) */
 
 #include <R_ext/RS.h>		/* for F77_... */
 #include <R_ext/Complex.h>	/* for Rcomplex */
@@ -31,6 +38,7 @@
 extern "C" {
 #endif
 
+// never defined in R itself.
 #ifndef BLAS_extern
 #define BLAS_extern extern
 #endif

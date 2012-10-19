@@ -20,31 +20,33 @@
 
 /*
    C declarations of LAPACK Fortran subroutines included in R.
+   Just those used (currently or previously) by C routines in R itself.
 
    Part of the API.
+
+   R packages that use these should have PKG_LIBS in src/Makevars include 
+   $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
  */
 
 
 #ifndef R_LAPACK_H
 #define R_LAPACK_H
-/* C declarations of BLAS routines.  R packages that use these should have */
-/* src/Makevars declare PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS) */
 
 #include <R_ext/RS.h>		/* for F77_... */
 #include <R_ext/Complex.h>	/* for Rcomplex */
 #include <R_ext/BLAS.h>
 
 /*
-  LAPACK function names are [zds]<name>(), where d denotes the real
-  version of the function, z the complex version and
-  s the symmetric (and real) version. Only the d<name> functions are
-  documented.
+  LAPACK function names are [dz]<name>(), where d denotes the real
+  version of the function, z the complex version.  (Only
+  double-precision versions are used in R.)
 */
 
 #ifdef	__cplusplus
 extern "C" {
 #endif
 
+// Never defined by R itself.
 #ifndef La_extern
 #define La_extern extern
 #endif
