@@ -44,8 +44,8 @@ cut(x, \dots)
   data is divided into \code{breaks} pieces of equal length, and then
   the outer limits are moved away by 0.1\% of the range to ensure that
   the extreme values both fall within the break intervals.  (If \code{x}
-  is a constant vector, equal-length intervals are created that cover
-  the single value.)
+  is a constant vector, equal-length intervals are created, one of
+  which includes the single value.)
 
   If a \code{labels} parameter is specified, its values are used
   to name the factor levels.  If none is specified, the factor
@@ -64,7 +64,9 @@ cut(x, \dots)
 }
 \value{
   A \code{\link{factor}} is returned, unless \code{labels = FALSE} which
-  results in the mere integer level codes.
+  results in an integer vector of level codes.
+  
+  Values which fall outside the range of \code{breaks} are coded as \code{NA}.
 }
 \note{
   Instead of \code{table(cut(x, br))}, \code{hist(x, br, plot = FALSE)} is
