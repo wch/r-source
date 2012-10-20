@@ -16,7 +16,7 @@ cut(x, \dots)
 \alias{cut.default}
 \arguments{
   \item{x}{a numeric vector which is to be converted to a factor by cutting.}
-  \item{breaks}{either a numeric vector of two or more cut points or a
+  \item{breaks}{either a numeric vector of two or more unique cut points or a
     single number (greater than or equal to 2) giving the number of
     intervals into which \code{x} is to be cut.}
   \item{labels}{labels for the levels of the resulting category.  By default,
@@ -58,15 +58,16 @@ cut(x, \dots)
   between any pair of  endpoints: if this fails labels such as
   \code{"Range3"} will be used.
 
-  The default method will sort \code{breaks}, but other methods are not
-  required to and \code{labels} will correspond to the intervals after
-  sorting.
+  The default method will sort a numeric vector of \code{breaks}, but
+  other methods are not required to and \code{labels} will correspond to
+  the intervals after sorting.
 }
 \value{
   A \code{\link{factor}} is returned, unless \code{labels = FALSE} which
   results in an integer vector of level codes.
   
-  Values which fall outside the range of \code{breaks} are coded as \code{NA}.
+  Values which fall outside the range of \code{breaks} are coded as
+  \code{NA}, as are \code{NaN} and \code{NA} values.
 }
 \note{
   Instead of \code{table(cut(x, br))}, \code{hist(x, br, plot = FALSE)} is
