@@ -26,7 +26,8 @@
 \details{
   This is a \sQuote{barebones} version of \code{cut.default(labels =
     FALSE)} intended for use in other functions which have checked the
-  arguments passed.
+  arguments passed.  (Note the different order of the arguments they have
+  in common.)
 
   Unlike \code{\link{cut}}, the \code{breaks} do not need to be unique.
   An input can only fall into a zero-length interval if it is closed
@@ -42,4 +43,14 @@
 \seealso{
   \code{\link{cut}}, \code{\link{tabulate}}
 }
+\examples{
+## An example with non-unique breaks:
+x <- c(0, 0.01, 0.5, 0.99, 1)
+b <- c(0, 0, 1, 1)
+.bincode(x, b, TRUE)
+.bincode(x, b, FALSE)
+.bincode(x, b, TRUE, TRUE)
+.bincode(x, b, FALSE, TRUE)
+}
+
 \keyword{category}
