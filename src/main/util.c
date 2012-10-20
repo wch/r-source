@@ -1877,6 +1877,10 @@ bincode(double *x, R_xlen_t n, double *breaks, int nb,
     int lo, hi, nb1 = nb - 1, new;
     int lft = !right;
 
+    /* This relies on breaks being sorted, so wise to check that */
+    for(int i = 1; i < nb; i++)
+	if(breaks[i-1] > breaks[i]) error(_("'breaks' is not sorted"));
+
     for(R_xlen_t i = 0; i < n; i++) {
 	code[i] = NA_INTEGER;
 	if(!ISNAN(x[i])) {
