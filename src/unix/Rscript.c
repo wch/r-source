@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "R scripting front-end version %s.%s (%s-%s-%s)\n", 
 			R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
 	    else 
-		fprintf(stderr, "R scripting front-end version %s.%s %s (%s-%s-%s r%s)\n", 
+		fprintf(stderr, "R scripting front-end version %s.%s %s (%s-%s-%s r%d)\n", 
 			R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
 			R_SVN_REVISION);
 	    exit(0);
