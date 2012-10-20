@@ -23,10 +23,10 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
                      main = NULL, col.term = 2, lwd.term = 1.5,
                      col.se = "orange", lty.se = 2, lwd.se = 1,
                      col.res= "gray", cex = 1, pch = par("pch"),
-                     col.smth = "darkred",lty.smth = 2,span.smth = 2/3,
+                     col.smth = "darkred", lty.smth = 2, span.smth = 2/3,
                      ask = dev.interactive() && nb.fig < n.tms,
                      use.factor.levels = TRUE, smooth = NULL,
-                     ylim = "common", ...)
+                     ylim = "common", plot = TRUE,  ...)
 {
     which.terms <- terms
     terms <- ## need if(), since predict.coxph() has non-NULL default terms :
@@ -79,6 +79,49 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
 	else
 	    as.character(term)
     }
+
+    in.mf <- nmt %in% names(mf)
+    is.fac <- sapply(nmt, function(i) i %in% names(mf) && is.factor(mf[, i]))
+
+    if (!plot) {
+        outlist <- vector("list", sum(in.mf))
+        for (i in 1L:n.tms) {
+            if (!in.mf[i]) next
+            ## add element to output list
+            if (is.fac[i]) {
+                ff <- mf[, nmt[i]]
+                if (!is.null(model$na.action))
+                    ff <- naresid(model$na.action, ff)
+                xx <- factor(levels(ff), levels = levels(ff)) # retain order
+                ww <- match(tempx, ff[,1])
+            }
+            else {
+                xx <- carrier(cn[[i]])
+                if (!is.null(use.rows)) xx <- xx[use.rows]
+                ww <- match(sort(unique(xx)), xx)
+            }
+            outlist[[i]] <- if (se)
+                data.frame(x = xx[ww], y = tms[ww,i], se = terms$se.fit[ww,i])
+            else data.frame(x = xx[ww], y = tms[ww,i])
+        }
+        attr(outlist, "constant") <- attr(terms, "constant")
+        names(outlist) <- (sapply(cn, carrier.name))[in.mf]
+        return(outlist)
+    }
+    ## Defaults:
+    if (!is.null(smooth))
+      smooth <- match.fun(smooth)
+    if (is.null(ylabs))
+	ylabs <- paste("Partial for",nmt)
+    if (is.null(main))
+        main <- ""
+    else if(is.logical(main))
+        main <- if(main) deparse(model$call, 500) else ""
+    else if(!is.character(main))
+        stop("'main' must be TRUE, FALSE, NULL or character (vector).")
+    main <- rep_len(main, n.tms) # recycling
+
+
     if (is.null(xlabs))
         xlabs <- unlist(lapply(cn,carrier.name))
 
@@ -86,8 +129,6 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
 	pres <- residuals(model, "partial")
         if (!is.null(which.terms)) pres <- pres[, which.terms, drop = FALSE]
     }
-    in.mf <- nmt %in% names(mf)
-    is.fac <- sapply(nmt, function(i) i %in% names(mf) && is.factor(mf[, i]))
 
     se.lines <- function(x, iy, i, ff = 2) {
         tt <- ff * terms$se.fit[iy, i]

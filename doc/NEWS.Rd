@@ -228,6 +228,11 @@
 
       \item \code{domain = NA} is accepted by \code{gettext()} and
       \code{ngettext()}, analogously to \code{stop()} etc.
+      
+      \item \code{termplot()} gains a new argument \code{plot = FALSE}
+      which returns information to allows the plots to be modified for
+      use as part of other plots, but does not plot them.
+      (Contributed by Terry Therneau, \PR{15076}.)
     }
   }
 
