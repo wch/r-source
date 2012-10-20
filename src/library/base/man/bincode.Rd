@@ -17,21 +17,26 @@
     binning.}
   \item{breaks}{a numeric vector of two or more cut points, sorted in
     increasing order.}
+  \item{right}{logical, indicating if the intervals should be closed on
+    the right (and open on the left) or vice versa.}
   \item{include.lowest}{logical, indicating if an \sQuote{x[i]} equal to
     the lowest (or highest, for \code{right = FALSE}) \sQuote{breaks}
     value should be included in the first (or last) bin.}
-  \item{right}{logical, indicating if the intervals should be closed on
-    the right (and open on the left) or vice versa.}
 }
 \details{
   This is a \sQuote{barebones} version of \code{cut.default(labels =
     FALSE)} intended for use in other functions which have checked the
   arguments passed.
+
+  Unlike \code{\link{cut}}, the \code{breaks} do not need to be unique.
+  An input can only fall into a zero-length interval if it is closed
+  at both ends, so only if \code{include.lowest = TRUE} and it is the
+  first (or last for \code{right = FALSE}) interval.
 }
 \value{
   An integer vector of the same length as \code{x} indicating which bin
   each element falls into (the leftmost bin being bin \code{1}).
-  Infinite, \code{NaN} and \code{NA} elements of \code{x} are mapped to
+  \code{NaN} and \code{NA} elements of \code{x} are mapped to
   \code{NA} codes, as are values outside range of \code{breaks}.
 }
 \seealso{
