@@ -1,8 +1,8 @@
 
-R version 2.15.1 Patched (2012-07-07 r59751) -- "Roasted Marshmallows"
+R version 2.15.2 RC (2012-10-19 r60974) -- "Trick or Treat"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin11.4.2/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -30,7 +30,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 4000
+[1] 4100
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
