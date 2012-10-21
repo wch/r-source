@@ -483,6 +483,8 @@
 
       \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
       although it was contrary to the documentation.  It is now an error.
+      
+      \item Entry point \code{rcont2} has been removed.
     }
   }
 

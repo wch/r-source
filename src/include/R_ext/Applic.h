@@ -199,10 +199,6 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 		 double shrink_sml, double high_u_fact[],
 		 int eps_correction, int return_bounds);
 
-/* appl/rcont.c: API prior to R 2.15.2, used in package bnlearn */
-void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
-	    double *fact, int *jwork, int *matrix);
-
 /* appl/uncmin.c : used in packages nlme, pcaPP */
 void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	    double *xpls, double *fpls, double *gpls, int *itrmcd,
