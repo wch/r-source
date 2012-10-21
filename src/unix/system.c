@@ -250,13 +250,9 @@ int Rf_initialize_R(int ac, char **av)
 	    }
 	    if(!strcmp(p, "none"))
 		useX11 = FALSE; // not allowed from R.sh
-	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
-		; // not allowed from R.sh
 #ifdef HAVE_AQUA
-	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
-		useaqua = TRUE; // not allowed from R.sh
-	    else if(!strcmp(p, "cocoa") || !strcmp(p, "Cocoa"))
-		useaqua = TRUE; // but 'cocaa' is used by R.app
+	    else if(!strcmp(p, "aqua"))
+		useaqua = TRUE; // not allowed from R.sh but used by R.app
 #endif
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
