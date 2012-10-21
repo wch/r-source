@@ -563,11 +563,15 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{beta(a, b)} could overflow in its calculations when
-      at least one of \code{a} and \code{b} was less than one.  (\PR{15075})
+      \item \code{beta(a, b)} could overflow to infinity in its
+      calculations when one of \code{a} and \code{b} was less than one.
+      (\PR{15075}) 
 
       \item \code{lbeta(a, b)} no longer gives \code{NaN} if \code{a} or
       \code{b} is very small (in the denormalized range).
+      
+      \item \code{bquote()} is now able to substitute default arguments in
+      single-argument functions.  (\PR{15077})
     }
   }
 

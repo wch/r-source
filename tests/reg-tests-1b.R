@@ -2004,4 +2004,11 @@ stopifnot(is.finite(c(beta(0.01, 171), beta(171, 0.01), beta(1e-200, 1e-200))))
 ## each overflowed to +Inf during calculations in R <= 2.15.2
 
 
+## PR#15077
+default <- 1; z <- eval(bquote(function(y = .(default)) y))
+zz <- function(y = 1) y
+stopifnot(identical(args(z), args(zz))) # zz has attributes
+## was not substituted in R <= 2.15.2
+
+
 proc.time()
