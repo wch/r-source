@@ -48,7 +48,7 @@ image(x, \dots)
     y axis.  Default to the \sQuote{call names} of \code{x} or \code{y}, or to
     \code{""} if these were unspecified.}
   \item{breaks}{a set of breakpoints for the colours: must give one more
-    breakpoint than colour.}
+    breakpoint than colour and be sorted in increasing order.}
   \item{oldstyle}{logical. If true the midpoints of the colour intervals
     are equally spaced, and \code{zlim[1]} and \code{zlim[2]} were taken
     to be midpoints.  The default is to have colour intervals of equal
