@@ -69,8 +69,8 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
   Reading Massachusetts: Addison-Wesley.
 }
 \seealso{
-  \code{\link{lowess}};
-  \code{\link{loess}},
+  \code{\link{runmed}} for running medians;
+  \code{\link{lowess}} and \code{\link{loess}};
   \code{\link{supsmu}} and
   \code{\link{smooth.spline}}.
 }
