@@ -81,7 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.14.0} or later).  It is biased towards users of 64-bit Windows.
+(@samp{2.15.0} or later).  It is biased towards users of 64-bit Windows.
 
 
 @newchap{}
@@ -183,7 +183,7 @@ of the taskbar (Vista and earlier).  Right-click each shortcut, select
 Properties... and change the `Start in' field to your working directory.
 
 On some systems you will have two shortcuts, one for 32-bit with a label
-starting @code{R} and one for 64-bit starting @code{R x64}
+starting @code{R i386} and one for 64-bit starting @code{R x64}
 (@pxref{Should I run 32-bit or 64-bit R?})
 
 You may also want to add command-line arguments at the end of the
@@ -305,8 +305,8 @@ versions around if you wish.
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
 of your home directory, @file{R\win64-library\@var{x.y}} on 64-bit
 builds), you will need to update that too when the minor version of R
-changes (e.g.@: from 2.14.2 to 2.15.0).  A simple way to do so is to
-copy (say) @file{R\win-library\2.14} to @file{R\win-library\2.15} before
+changes (e.g.@: from 2.15.2 to 2.16.0).  A simple way to do so is to
+copy (say) @file{R\win-library\2.15} to @file{R\win-library\2.16} before
 running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 
@@ -374,9 +374,8 @@ console or pager contents.)
 You can print help files from the pager or HTML browser.
 
 @item
-If you have LaTeX installed and a PostScript or PDF printing system you
-can print help files by @code{help(fn_name, help_type="postscript")} (or
-@code{"PDF"}).
+If you have LaTeX installed and a PDF printing system you
+can print help files by @code{help(fn_name, help_type="PDF")}.
 @end itemize
 
 
@@ -889,7 +888,7 @@ edit the @env{PATH}.
 The element you want to add to the path is something like
 
 @example
-c:\Program Files\R\R-2.14.0\bin\x64
+c:\Program Files\R\R-2.16.0\bin\x64
 @end example
 
 @noindent
@@ -960,7 +959,7 @@ Polish,
 Portuguese (Brazil),
 Portuguese (Portugal),
 Russian,
-Slovenian
+Slovenian,
 Spanish (Spain)
 and Ukranian.
 
@@ -1126,10 +1125,10 @@ CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
 packages for each minor (2.x) version will be stored in a separate area,
-so for R 2.15.? the files are in @file{bin/windows/contrib/2.15}.
+so for R 2.16.? the files are in @file{bin/windows/contrib/2.16}.
 
 Note that the binary versions on CRAN are unsupported: see
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.15/@/ReadMe},
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.16/@/ReadMe},
 which also gives the locations of a few other binary packages.
 
 If there is no binary package or that is not up-to-date or you prefer
@@ -1227,7 +1226,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found.  See
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.15/@/ReadMe} for a
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.16/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2},
 @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
 of the packages connecting to databases).
@@ -1237,25 +1236,18 @@ of the packages connecting to databases).
 @section Package TclTk does not work.
 
 For package @code{tcltk} to work (try @code{demo(tkdensity)} or
-@code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
-installed.  This is an optional part of the installation, although it is
-selected by default.  If the message is
-@example
-Tcl/Tk support files were not installed
-@end example
-the optional files were not installed, and you need to go back to the
-installer and install them.
+@code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl/Tk
+installed.  This part of the R installation, so it should be there.
 
-Alternatively, if you have the environment variable @env{MY_TCLTK} set
-to a non-empty value, it is assumed that you want to use a different
-Tcl/Tk 8.5.x installation with the path to its @file{bin} directory
-given by value of @env{MY_TCLTK}, and that this is set up correctly
-(with @env{TCL_LIBRARY} set if needed).  In that case you do not need
-the Tcl/Tk support files installed (but they can be).  Note that you do
-need 8.5.x and not 8.4.x nor (a pre-release of) 8.6.0, and you do need
-the architecture to match, that is a 32-bit or 64-bit build of Tcl/Tk to
-match the R build in use.  (There is no guarantee that a 64-bit build
-will work: it depends on the layout it uses.)
+However, if you have the environment variable @env{MY_TCLTK} set to a
+non-empty value, it is assumed that you want to use a different Tcl/Tk
+8.5.x installation with the path to its @file{bin} directory given by
+value of @env{MY_TCLTK}, and that this is set up correctly (with
+@env{TCL_LIBRARY} set if needed).  Note that you do need 8.5.x and not
+8.4.x nor (a pre-release of) 8.6.0, and you do need the architecture to
+match, that is a 32-bit or 64-bit build of Tcl/Tk to match the R build
+in use.  (There is no guarantee that a 64-bit build will work: it
+depends on the layout it uses.)
 
 In the past several package authors have suggested using ActiveTcl
 (@uref{http://www.activestate.com/@/Products/@/activetcl/}) as a way to
@@ -1387,16 +1379,15 @@ than the one you are using.  You can check on the package's HTML page on
 CRAN, and update your R if needed.
 
 Your R might be too old.  Binary packages for the 2.x series are built
-(if possible) whilst 2.(x+1) is current, e.g.@: once 2.15.0 is released,
-binary packages for 2.13.x will be frozen.  You can always try
+(if possible) whilst 2.(x+1) is current, e.g.@: once 2.16.0 is released,
+binary packages for 2.14.x will be frozen.  You can always try
 installing from the sources.
 
 @node No binary packages appear to be available for my version of R, How do I build my package for both 32- and 64-bit R?, Package xxx is out of date for Windows, Packages
 @section No binary packages appear to be available for my version of R
 
 How old is it?  The CRAN policy is to archive binary packages two years
-after the 2.x series is closed (so for example those for 2.9.y will be
-archived in October 2011).
+after the 2.x series is closed.  Other repositories may do so sooner.
 
 If you are using an R version that old we advise you to update your R,
 but you do also have the option of installing packages from their
@@ -1515,9 +1506,10 @@ The graphics system asks Windows for the number of pixels per inch in
 the X and Y directions, and uses that to size graphics (which in R are
 in units of inches).  Sometimes the answer is a complete invention, and
 in any case Windows will not know exactly how the horizontal and
-vertical size have been set on a CRT.  You can specify correct values
-either in the call to @code{windows} or as options: see @code{?windows}.
-(Typically these are of the order of 100.)
+vertical size have been set on a monitor which allows them to be
+adjusted.  You can specify correct values either in the call to
+@code{windows} or as options: see @code{?windows}.  (Typically these are
+of the order of 100.)
 
 On one of our systems, the screen height was reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x 1200
@@ -1548,13 +1540,16 @@ there are many): the user can then enter one or more characters and hit
 @kbd{TAB} again.
 
 What is it `completing'?  There are two modes: within an unterminated
-(single- or double-) quoted expression it completes file paths.
-Otherwise, it is completing R expressions: most obviously it will match
-visible R object names and keywords, so @kbd{apr} folloed by @kbd{TAB}
-will (in a vanilla session) complete to @code{apropos}.  After a
-function name and parenthesis (e.g.@: @kbd{apropos(}) it will complete
-argument names (and @kbd{=}), and after @kbd{$} or @kbd{@@} it will
-complete list components or slot names respectively.
+(single- or double-) quoted expression it completes file
+paths.@footnote{It does not have a complete understanding of Windows
+file paths, but can complete most relative or absolute file paths,
+including drives and spaces. Relative paths on drives are not handled,
+for example.}  Otherwise, it is completing R expressions: most obviously
+it will match visible R object names and keywords, so @kbd{apr} folloed
+by @kbd{TAB} will (in a vanilla session) complete to @code{apropos}.
+After a function name and parenthesis (e.g.@: @kbd{apropos(}) it will
+complete argument names (and @kbd{=}), and after @kbd{$} or @kbd{@@} it
+will complete list components or slot names respectively.
 
 This feature can be turned off: @command{Rgui} has two menu items to do
 so, and setting the environment variable @env{R_COMPLETION} to
@@ -1915,7 +1910,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2012-02-01
+@set LASTEDIT 2012-10-22
 @ifhtml
 @html
 <hr WIDTH="100%">
