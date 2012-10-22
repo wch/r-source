@@ -71,6 +71,7 @@ The current version of this document is @value{VERSION}.
 * Package Structure::           
 * Files::                       
 * Graphics Devices::            
+* GUI consoles::                
 * Tools::                       
 * R coding standards::          
 * Testing R code::              
@@ -2673,7 +2674,7 @@ specifications (the last being the current directory on drive
 @c unlink          Wchar   ~
 
 
-@node Graphics Devices, Tools, Files, Top
+@node Graphics Devices, GUI consoles, Files, Top
 @chapter Graphics
 
 @R{}'s graphics internals were revised for version 1.4.0 (and tidied up
@@ -3540,7 +3541,143 @@ pre-empted in the graphics engine (but for example the handling of
 
 [At least pointers to documentation.]
 
-@node Tools, R coding standards, Graphics Devices, Top
+@node GUI consoles, Tools, Graphics Devices, Top
+@chapter GUI consoles
+
+The standard @R{} front-ends are programs which run in a terminal, but
+there are several ways to provide a GUI console.
+
+This can be done by a package which is loaded from terminal-based @R{}
+and launches a console as part of its startup code or by the user
+running a specific function: package @pkg{Rcmdr} is a well-known example
+with a Tk-based GUI.
+
+There used to be a Gtk-based console invoked by @command{R --gui=GNOME}:
+this relied on special-casing in the front-end shell script to launch a
+different executable.  There still is @command{R --gui=Tk}, which starts
+terminal-based @R{} and runs @code{tcltk::tkStartGui()} as part of the
+modified startup sequence.
+
+However, the main way to run a GUI console is to launch a separate
+program which runs embedded @R{}: this is done by @command{Rgui.exe} on
+Windows and @command{R.app} on Mac OS X.  The first is an integral part
+of @R{} and the code for the console is currently in @file{R.dll}.
+
+@menu
+* R.app::                       
+@end menu
+
+@node R.app,  , GUI consoles, GUI consoles
+@section R.app
+
+@command{R.app} is a Mac OS X application which provides a console.  Its
+sources are a separate project, and its binaries link to an @R{}
+installation which it runs as a dynamic library @file{libR.dylib}.  The
+standard @acronym{CRAN} distribution of @R{} for OS X bundles the GUI
+and @R{} itself, but installing the GUI is optional and either component
+can be updated separately.
+
+@command{R.app} relies on @file{libR.dylib} being in a specific place,
+and hence on @R{} having been built and installed as a Mac OS X
+`framework'.  Specifically, it uses
+@file{/Library/Frameworks/R.framework/R}.  This is a symbolic link, as
+frameworks can contain multiple versions of @R{}.  It eventually
+resolves to
+@file{/Library/Frameworks/R.framework/Versions/Current/Resources/lib/libR.dylib},
+which is (in the @acronym{CRAN} distribution) a `fat' binary containing
+multiple sub-architectures.
+
+Mac OS X applications are directory trees, but each @command{R.app}
+contains a front-end written in Objective-C for one sub-architecture: in
+the standard distribution there are separate applications for 32- and
+64-bit Intel architectures.
+
+Originally the @R{} sources contained quite a lot of code used only by
+the OS X GUI, but this has now almost entirely been migrated to
+@command{R.app}.
+
+@command{R.app} starts @R{} as an embedded application with a
+command-line which includes @option{--gui=aqua} (see below).  It uses
+most of the interface pointers defined in the header
+@file{Rinterface.h}, plus private interface pointers in files
+@file{src/main/sysutils.c} and @file{src/unix/aqua.c}.  It adds an
+environment it calls @code{tools:RGUI} to the second position in the
+search path.  This contains a number of utility functions used to
+support the menu items, for example @code{package.manager()}, and
+functions @code{q()} and @code{auit()} which mask those in package
+@pkg{base}---the custom versions save the history in a way specific to
+@code{R.app}.
+
+There is a @command{configure} option @option{--with-aqua} for @R{}
+which customizes the way @R{} is built: this is distinct from the
+@option{--enable-R-framework} option which installs @R{} as a framework
+needed for use with @code{R.app}.  The option @option{--with-aqua} is
+the default on Mac OS X.  It sets the macro @code{HAVE_AQUA} in
+@file{config.h} and the make variable @code{BUILD_AQUA_TRUE}.  These
+have several consquences:
+
+@itemize
+@item
+The @code{quartz()} device is built (other than as a stub) in package
+@pkg{grDevices}:  this needs an Objective-C compiler.  Then
+@code{quartz()} can be used with terminal @R{} provided the latter has
+access to the Mac OS X screen.
+
+@item
+File @code{src/unix/aqua.c} is compiled.  This now only contains an
+interface pointer which is used to tell the the @pkg{grDevices} graphics
+package that @command{R.app} is already running a Quartz event loop and
+hence the @code{quartz()} device(s) do not need to.
+
+@item
+@code{capabilities("aqua")} is set to @code{TRUE}.
+
+@item
+There is support for setting a `busy' indicator whilst waiting for
+@code{system()} to return.
+
+@item
+@code{R_ProcessEvents} is inhibited in a forked child from package
+@pkg{parallel}.  The associated callback in @code{R.app} does things
+which should not be done in a child, and forking forks the whole process
+including the console.
+
+@item
+There is support for starting the embedded @R{} with the option
+@option{--gui=aqua}: when this is done the global C variable
+@code{useaqua} is set to a true value.  This has consequences:
+
+@itemize
+@item
+The @R{} session is asserted to be interactive @emph{via} @code{R_Interactive}.
+
+@item 
+@code{.Platform$GUI} is set to @code{"AQUA"}.
+
+@item
+The use of the OS's @code{system} function (including by @code{system()}
+and @code{system2()}, and to launch editors and pagers) is replaced by a
+version in @code{R.app} (which by default just calls the OS's
+@code{system} with various signal handlers reset).
+
+@end itemize
+
+@item
+If either @R{} was started by @option{--gui=aqua} or @R{} is running in
+a terminal which is not of type @samp{dumb}, the standard output to
+files @file{stdout} and @file{stderr} is directed through the C function
+@code{Rstd_WriteConsoleEx}.  This uses ANSI terminal escapes to render
+lines sent to @code{stderr} as bold on @code{stdout}.
+
+@item
+For historical reasons the startup option @code{-psn} is allowed but
+ignored.
+
+@end itemize
+
+
+
+@node Tools, R coding standards, GUI consoles, Top
 @chapter Tools
 
 The behavior of @command{R CMD check} can be controlled through a
@@ -3720,7 +3857,7 @@ Default: false.
 Should the @file{vign_test} directory be removed if the test is successful?
 Default: true.
 @item _R_CHECK_REPLACING_IMPORTS_
-Should warnings about replacing imports be reported?  These mainly come
+Should warnings about replacing imports be reported?  These on come
 from auto-generated @file{NAMESPACE} files in other packages.
 Default: false.
 @item _R_CHECK_UNSAFE_CALLS_
@@ -4164,29 +4301,29 @@ See also @uref{http://www.cs.uiowa.edu/~luke/talks/useR10.pdf}.
 @section Large matrices
 
 Matrices are stored as vectors and so were also limited to 2^31-1
-elements.  Now longer vectors are allowed, this raises the question if
-larger matrices should be either allowed or supported.  The main problem
-is matrix algebra which is almost entirely done by FORTRAN code, not
-uncommonly calling external BLAS or LAPACK routines.  For FORTRAN code
-compiled as part of @R{} it may be possible simply to set the default
-integer size to be 64-bit (it is not clear if this can be done
-portably), and some external software (e.g.@: AMD's ACML) is available
-in versions compiled with 64-bit integers.
+elements.  Now longer vectors are allowed, matrices with more elements
+are supported provided that each of the dimensions is no more than
+2^31-1.  Howver, not all applications can be supported.
 
-Some (but not all) FORTRAN compilers (e.g.@: @command{gfortran}) have
-flags to compile code with @code{INTEGER} as 64-bit, and even amongst
-those which do, care is needed that any external functions which are
-called have versions for 64-bit integers and the correct versions are
-called.
+The main problem is linear algebra, on done by FORTRAN code compiled
+with 32-bit @code{INTEGER}.  Although not guaranteed, it seems that all
+the compilers currently used with @R{} on a 64-bit platform allow
+matrices each of whose dimensions is less than 2^31 but with more than
+2^31 elements, and index them correctly, and a substantial part of the
+support software (such as @acronym{BLAS} and @acronym{LAPACK}) also
+work.
 
-It is also possible that some existing code when compiled with 32-bit
-@code{INTEGER} on a 64-bit platform would allow matrices each of whose
-dimensions is less than 2^31 but with more than 2^31 elements.
+There are exceptions: for example some complex @acronym{LAPACK})
+auxiliary routines do use a single @code{INTEGER} index and hence
+overflow silently and seqfault or give incorrect results.  One example
+is @code{svd()} on a complex matrix.
 
-However, it does seem that for the foreseeable future anything but the
-most trivial matrix algebra on gigabyte matrices will be too slow to be
-contemplated, not least under the single-thread implementation supplied by
-@R{}.
+Since this is implementation-dependent, it is possible that optimized
+@acronym{BLAS} and @acronym{LAPACK} may have further restrictions,
+although none have yet been encountered.  For matrix algebra on large
+matrices one almost certainly wants a machine with a lot of RAM (100s of
+gigabytes), many cores and a multi-threaded @acronym{BLAS}.
+
 
 
 @node Function and variable index, Concept index, Current and future directions, Top
