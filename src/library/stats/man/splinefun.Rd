@@ -27,7 +27,7 @@ splinefunH(x, y, m)
   \item{x, y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
     specified: see \code{\link{xy.coords}}.
-    
+
     \code{y} must be increasing or decreasing for \code{method = "hyman"}.
   }
   \item{m}{(for \code{splinefunH()}): vector of \emph{slopes}
@@ -184,18 +184,41 @@ x. <- sort(runif(n)) ; y. <- cumsum(abs(rnorm(n)))
 plot(x.,y.)
 curve(splinefun(x.,y.)(x), add = TRUE, col = 2, n = 1001)
 curve(splinefun(x.,y., method = "monoH.FC")(x), add = TRUE, col = 3, n = 1001)
-curve(splinefun(x.,y., method = "hyman")(x), add = TRUE, col = 4, n = 1001)
+curve(splinefun(x.,y., method = "hyman")   (x), add = TRUE, col = 4, n = 1001)
 legend("topleft",
        paste0("splinefun( \"", c("fmm", "monoH.FC", "hyman"), "\" )"),
-       col = 2:4, lty = 1)
+       col = 2:4, lty = 1, bty="n")
 
 ## and one from Fritsch and Carlson (1980), Dougherty et al (1989)
 x. <- c(7.09, 8.09, 8.19, 8.7, 9.2, 10, 12, 15, 20)
 f <- c(0, 2.76429e-5, 4.37498e-2, 0.169183, 0.469428, 0.943740,
        0.998636, 0.999919, 0.999994)
+s0 <- splinefun(x., f)
+s1 <- splinefun(x., f, method = "monoH.FC")
+s2 <- splinefun(x., f, method = "hyman")
 plot(x., f, ylim = c(-0.2, 1.2))
-curve(splinefun(x., f)(x), add = TRUE, col = 2, n = 1001)
-curve(splinefun(x., f, method = "hyman")(x), add = TRUE, col = 4, n = 1001)
+curve(s0(x), add = TRUE, col = 2, n = 1001) -> m0
+curve(s1(x), add = TRUE, col = 3, n = 1001)
+curve(s2(x), add = TRUE, col = 4, n = 1001)
+legend("right",
+       paste0("splinefun( \"", c("fmm", "monoH.FC", "hyman"), "\" )"),
+       col = 2:4, lty = 1, bty="n")
+
+## they seem identical, but are not quite:
+xx <- m0$x
+plot(xx, s1(xx) - s2(xx), type = "l",  col=2, lwd=2,
+     main = "Difference   monoH.FC - hyman"); abline(h=0, lty=3)
+
+x <- xx[xx < 10.2] ## full range: x <- xx .. does not show enough
+ccol <- adjustcolor(2:4, 0.8)
+matplot(x, cbind(s0(x, deriv=2), s1(x, deriv=2), s2(x, deriv=2))^2,
+        lwd = 2, col=ccol, type="l", ylab = quote({{f*second}(x)}^2),
+        main = expression({{f*second}(x)}^2 ~" for the three 'splines'"))
+legend("topright",
+       paste0("splinefun( \"", c("fmm", "monoH.FC", "hyman"), "\" )"),
+       lwd=2, col = ccol, lty = 1:3, bty="n")
+## --> "hyman" has slightly smaller  Integral f''(x)^2 dx  than "FC",
+## here, and both are 'much worse' than the regular fmm spline.
 }
 \keyword{math}
 \keyword{dplot}
