@@ -560,6 +560,9 @@
     \itemize{
       \item \code{lgamma(x)} for very small \code{x} (in the
       denormalized range) is no longer \code{Inf} with a warning.
+      
+      \item \code{image()} now sorts an unsorted \code{breaks} vector,
+      with a warning.
     }
   }
 

@@ -87,7 +87,11 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 	    stop("must have one more break than colour")
 	if (any(!is.finite(breaks)))
 	    stop("'breaks' must all be finite")
-        ## spatstat passes a factor matrix here, but .bincode converts.
+        if (is.unsorted(breaks)) {
+            warning("unsorted 'breaks' will be sorted before use")
+            breaks <- sort(breaks)
+        }
+        ## spatstat passes a factor matrix here, but .bincode converts to double
         zi <- .bincode(z, breaks, TRUE, TRUE) - 1L
     }
     if (!add)
