@@ -97,8 +97,10 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \code{canvas} colour and then the current background colour (which can
   be transparent or semi-transparent).  Off-screen devices have no
   canvas colour, and so start with a transparent background where
-  possible (e.g. \code{type="png"} and \code{type="tiff"}) -- otherwise
-  it appears that a solid white canvas is assumed in the Quartz code.
+  possible (e.g. \code{type = "png"} and \code{type = "tiff"}) --
+  otherwise it appears that a solid white canvas is assumed in the
+  Quartz code.  PNG and TIFF files are saved with a dark grey matte
+  which will show up in some viewers, including \command{Preview}.
 
   \code{title} can be used for on-screen output.  It must be a single
   character string with an optional integer printf-style format that
