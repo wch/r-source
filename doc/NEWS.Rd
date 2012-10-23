@@ -233,6 +233,11 @@
       which returns information to allows the plots to be modified for
       use as part of other plots, but does not plot them.
       (Contributed by Terry Therneau, \PR{15076}.)
+      
+      \item \code{quartz.save()}, formerly an undocumented part of
+      \command{R.app}, is now available to copy a device to a
+      \code{quartz()} device.  \code{dev.copy2pdf()} optionally does
+      this for PDF output: \code{quartz.save()} defaults to PNG.
     }
   }
 
@@ -250,9 +255,9 @@
       now work: others may return the error \sQuote{long vectors not
       supported yet}.  Some of these are because they explicitly work
       with integer indices (e.g. \code{anyDuplicated()} and
-      \code{match()}) or because other limits (e.g. of character strings
-      or matrix dimensions) would be exceeded or the operations would be
-      extremely slow.
+      \code{match()}) or because of other limits (e.g. of character
+      strings or matrix dimensions) would be exceeded or the operations
+      would be extremely slow.
 
       \item \code{length()} returns a double for long vectors, and
       lengths can be set to \eqn{2^{31}}{2^31} or more by the
