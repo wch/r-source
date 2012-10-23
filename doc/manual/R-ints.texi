@@ -3614,7 +3614,7 @@ which customizes the way @R{} is built: this is distinct from the
 needed for use with @code{R.app}.  The option @option{--with-aqua} is
 the default on Mac OS X.  It sets the macro @code{HAVE_AQUA} in
 @file{config.h} and the make variable @code{BUILD_AQUA_TRUE}.  These
-have several consquences:
+have several consequences:
 
 @itemize
 @item
@@ -4326,7 +4326,7 @@ See also @uref{http://www.cs.uiowa.edu/~luke/talks/useR10.pdf}.
 Matrices are stored as vectors and so were also limited to 2^31-1
 elements.  Now longer vectors are allowed, matrices with more elements
 are supported provided that each of the dimensions is no more than
-2^31-1.  Howver, not all applications can be supported.
+2^31-1.  However, not all applications can be supported.
 
 The main problem is linear algebra, on done by FORTRAN code compiled
 with 32-bit @code{INTEGER}.  Although not guaranteed, it seems that all
@@ -4338,7 +4338,7 @@ work.
 
 There are exceptions: for example some complex @acronym{LAPACK})
 auxiliary routines do use a single @code{INTEGER} index and hence
-overflow silently and seqfault or give incorrect results.  One example
+overflow silently and segfault or give incorrect results.  One example
 is @code{svd()} on a complex matrix.
 
 Since this is implementation-dependent, it is possible that optimized
