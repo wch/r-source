@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -129,6 +129,10 @@ tiff(filename = "Rplot\%03d.tiff",
   backend which will never use a palette and normally creates a larger
   32-bit ARGB file---this may work better for specialist uses with
   semi-transparent colours.
+  
+  Quartz-produced PNG and TIFF plots with a transparent background are
+  recorded with a dark grey matte which will show up in some viewers,
+  including \command{Preview} on OS X.
 }
 
 \value{
