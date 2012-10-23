@@ -49,11 +49,6 @@
 */
 
 DL_FUNC ptr_GetQuartzParameters;
-// Remove rest eventually
-DL_FUNC ptr_do_wsbrowser, ptr_do_browsepkgs, ptr_do_datamanger, 
-    ptr_do_packagemanger, ptr_do_hsbrowser;
-int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
-
 
 
 /* called from Mac-GUI/RController.m, before packages are loaded.
