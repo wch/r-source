@@ -3633,6 +3633,11 @@ hence the @code{quartz()} device(s) do not need to.
 @code{capabilities("aqua")} is set to @code{TRUE}.
 
 @item
+The default path for a personal library directory is set as
+@file{~/Library/R/x.y/library}.
+@c This is done in @file{etc/Renviron}.
+
+@item
 There is support for setting a `busy' indicator whilst waiting for
 @code{system()} to return.
 
@@ -3652,7 +3657,25 @@ There is support for starting the embedded @R{} with the option
 The @R{} session is asserted to be interactive @emph{via} @code{R_Interactive}.
 
 @item 
-@code{.Platform$GUI} is set to @code{"AQUA"}.
+@code{.Platform$GUI} is set to @code{"AQUA"}.  That has consequences:
+@itemize
+@item 
+The environment variable @env{DISPLAY} is set to @samp{:0} if not
+already set.
+
+@item
+@file{/usr/local/bin} is appended to @env{PATH} since that is where
+@command{gfortran} is installed.
+
+@item
+The default HTML browser is switched to the one in @command{R.app}.
+
+@item
+Various widgets are switched to the versions provided in
+@command{R.app}: these include graphical menus, the data editor (but not
+the data viewer used by @code{View()}) and the workspace browser invoked
+by @code{browseEnv()}.
+@end itemize
 
 @item
 The use of the OS's @code{system} function (including by @code{system()}
@@ -3671,7 +3694,7 @@ lines sent to @code{stderr} as bold on @code{stdout}.
 
 @item
 For historical reasons the startup option @code{-psn} is allowed but
-ignored.
+ignored.  (It seems that in 2003, @samp{r27492}, this was added by Finder.)
 
 @end itemize
 
