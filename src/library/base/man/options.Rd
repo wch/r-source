@@ -327,7 +327,7 @@ getOption(x, default = NULL)
       100\dots8170, default 1000.}
 
     \item{\code{nwarnings}:}{the limit for the number of warnings kept
-      when \code{warm = 0}, default 50.  This will discard messages if
+      when \code{warn = 0}, default 50.  This will discard messages if
       called whilst they are being collected.}
 
     \item{\code{width}:}{controls the maximum number of columns on a
