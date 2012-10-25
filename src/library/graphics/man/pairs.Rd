@@ -26,7 +26,7 @@ pairs(x, \dots)
       row1attop = TRUE, gap = 1, log = "")
 }
 \arguments{
-  \item{x}{the coordinates of points given as numeric columns of a 
+  \item{x}{the coordinates of points given as numeric columns of a
     matrix or dataframe.  Logical and factor columns are converted to
     numeric in the same way that \code{\link{data.matrix}} does.
   }
@@ -48,13 +48,13 @@ pairs(x, \dots)
     the contents of each panel of the display.}
   \item{\dots}{
     arguments to be passed to or from methods.
-    
+
     Also, \link{graphical parameters} can be given as can arguments to
     \code{plot} such as \code{main}.  \code{par("oma")} will be set
     appropriately unless specified.
   }
-  \item{lower.panel, upper.panel}{separate panel functions to be used
-    below and above the diagonal respectively.}
+  \item{lower.panel, upper.panel}{separate panel functions (or
+    \code{NULL}) to be used below and above the diagonal respectively.}
   \item{diag.panel}{optional \code{function(x, \dots)} to be
     applied on the diagonals.}
   \item{text.panel}{optional \code{function(x, y, labels, cex,
@@ -76,6 +76,8 @@ pairs(x, \dots)
   \code{x} as \code{x} and \code{y}: the diagonal panel function (if
   any) is passed a single column, and the \code{text.panel} function is
   passed a single \code{(x, y)} location and the column name.
+  Setting some of these panel functions to \code{\link{NULL}} is
+  equivalent to \emph{not} drawing anything there.
 
   The \link{graphical parameters} \code{pch} and \code{col} can be used
   to specify a vector of plotting symbols and colors to be used in the
@@ -112,6 +114,8 @@ pairs(~ Fertility + Education + Catholic, data = swiss,
       subset = Education < 20, main = "Swiss data, Education < 20")
 
 pairs(USJudgeRatings)
+## show only lower triangle (and suppress labeling for whatever reason):
+pairs(USJudgeRatings, text.panel=NULL, upper.panel=NULL)
 
 ## put histograms on the diagonal
 panel.hist <- function(x, ...)
@@ -142,6 +146,6 @@ panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...)
 pairs(USJudgeRatings, lower.panel=panel.smooth, upper.panel=panel.cor)
 
 pairs(iris[-5], log = "xy") # plot all variables on log scale
-pairs(iris, log = 1:4)
+pairs(iris, log = 1:4) # log the first four
 }
 \keyword{hplot}

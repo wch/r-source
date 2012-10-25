@@ -48,9 +48,10 @@ function (x, labels, panel = points, ...,
           cex.labels = NULL, font.labels = 1,
           row1attop = TRUE, gap = 1, log = "")
 {
-    textPanel <-
-        function(x = 0.5, y = 0.5, txt, cex, font)
-            text(x, y, txt, cex = cex, font = font)
+    if(doText <- missing(text.panel) || is.function(text.panel))
+	textPanel <-
+	    function(x = 0.5, y = 0.5, txt, cex, font)
+		text(x, y, txt, cex = cex, font = font)
 
     localAxis <- function(side, x, y, xpd, bg, col=NULL, main, oma, ...) {
       ## Explicitly ignore any color argument passed in as
@@ -97,12 +98,13 @@ function (x, labels, panel = points, ...,
 
     nc <- ncol(x)
     if (nc < 2) stop("only one column in the argument to 'pairs'")
-    has.labs <- TRUE
-    if (missing(labels)) {
-        labels <- colnames(x)
-        if (is.null(labels)) labels <- paste("var", 1L:nc)
+    if(doText) {
+	if (missing(labels)) {
+	    labels <- colnames(x)
+	    if (is.null(labels)) labels <- paste("var", 1L:nc)
+	}
+	else if(is.null(labels)) doText <- FALSE
     }
-    else if(is.null(labels)) has.labs <- FALSE
     oma <- if("oma" %in% nmdots) dots$oma
     main <- if("main" %in% nmdots) dots$main
     if (is.null(oma))
@@ -132,7 +134,7 @@ function (x, labels, panel = points, ...,
                 mfg <- par("mfg")
                 if(i == j) {
                     if (has.diag) localDiagPanel(as.vector(x[, i]), ...)
-                    if (has.labs) {
+		    if (doText) {
                         par(usr = c(0, 1, 0, 1))
                         if(is.null(cex.labels)) {
                             l.wid <- strwidth(labels, "user")

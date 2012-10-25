@@ -228,16 +228,20 @@
 
       \item \code{domain = NA} is accepted by \code{gettext()} and
       \code{ngettext()}, analogously to \code{stop()} etc.
-      
+
       \item \code{termplot()} gains a new argument \code{plot = FALSE}
       which returns information to allows the plots to be modified for
       use as part of other plots, but does not plot them.
       (Contributed by Terry Therneau, \PR{15076}.)
-      
+
       \item \code{quartz.save()}, formerly an undocumented part of
       \command{R.app}, is now available to copy a device to a
       \code{quartz()} device.  \code{dev.copy2pdf()} optionally does
       this for PDF output: \code{quartz.save()} defaults to PNG.
+
+      \item The default method of \code{pairs()} now allows
+      \code{text.panel = NULL} and the use of \code{<foo>.panel = NULL}
+      is now documented.
     }
   }
 
@@ -488,7 +492,7 @@
 
       \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
       although it was contrary to the documentation.  It is now an error.
-      
+
       \item Entry point \code{rcont2} has been removed.
     }
   }
@@ -565,7 +569,7 @@
     \itemize{
       \item \code{lgamma(x)} for very small \code{x} (in the
       denormalized range) is no longer \code{Inf} with a warning.
-      
+
       \item \code{image()} now sorts an unsorted \code{breaks} vector,
       with a warning.
     }
@@ -575,11 +579,11 @@
     \itemize{
       \item \code{beta(a, b)} could overflow to infinity in its
       calculations when one of \code{a} and \code{b} was less than one.
-      (\PR{15075}) 
+      (\PR{15075})
 
       \item \code{lbeta(a, b)} no longer gives \code{NaN} if \code{a} or
       \code{b} is very small (in the denormalized range).
-      
+
       \item \code{bquote()} is now able to substitute default arguments in
       single-argument functions.  (\PR{15077})
     }
