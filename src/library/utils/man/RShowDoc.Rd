@@ -1,6 +1,6 @@
 % File src/library/utils/man/RShowDoc.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RShowDoc}
@@ -25,9 +25,8 @@ RShowDoc(what, type = c("pdf", "html", "txt"), package)
   \code{COPYING} (the GPL licence), any of the licenses in
   \file{share/licenses}, \code{FAQ} (also available as
   \code{R-FAQ}), and the files in \file{\var{\link{R_HOME}}/doc}.
-#ifdef windows
-  The \R for Windows FAQ is specified by \code{rw-FAQ}.
-#endif
+
+  Only on Windows, the \R for Windows FAQ is specified by \code{rw-FAQ}.
 
   If \code{package} is supplied, documentation is looked for in the
   \file{doc} and top-level directories of an installed package of that name.
