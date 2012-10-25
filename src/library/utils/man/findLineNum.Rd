@@ -42,7 +42,7 @@ setBreakpoint(srcfile, line, nameonly = TRUE,
 
 \details{
   The \code{findLineNum} function searches through all objects in
-  environment \code{envir}, it's parent, grandparent, etc., all the way
+  environment \code{envir}, its parent, grandparent, etc., all the way
   back to \code{lastenv}.
 
   \code{lastenv} defaults to the global environment if

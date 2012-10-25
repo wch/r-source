@@ -47,7 +47,7 @@ is.relistable(x)
   mathematical functions in \R, including \code{\link{optim}} and
   \code{\link{nlm}} can only operate on functions whose domain is
   a vector.  \R has \code{\link{unlist}()} to convert nested list
-  objects into a vector representation.  \code{relist()}, it's methods and
+  objects into a vector representation.  \code{relist()}, its methods and
   the functionality mentioned here provide the inverse operation to convert
   vectors back to the convenient structural representation.
   This allows structured functions (such as \code{optim()}) to have simple
