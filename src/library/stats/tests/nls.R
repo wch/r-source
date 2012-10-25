@@ -33,9 +33,8 @@ logistInit <- function(mCall, LHS, data) {
     if (Asym != max(xy[,"y"])) Asym <- -Asym  # negative asymptote
     xmid <- NLSstClosestX(xy, 0.5 * Asym)
     scal <- NLSstClosestX(xy, 0.75 * Asym) - xmid
-    value <- c(Asym, xmid, scal)
-    names(value) <- mCall[c("Asym", "xmid", "scal")]
-    value
+    setNames(c(Asym, xmid, scal),
+	     mCall[c("Asym", "xmid", "scal")])
 }
 logist <- selfStart(logist, initial = logistInit) ##-> Error in R 1.5.0
 str(logist)
