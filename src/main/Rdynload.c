@@ -119,14 +119,10 @@
 # define HAVE_DYNAMIC_LOADING
 #endif
 
-#ifdef __APPLE_CC__
-# define HAVE_DYNAMIC_LOADING
-#endif
 
 /* The following code loads in a compatibility module written by Luke
    Tierney to support S version 4 on Hewlett-Packard machines.	The
    relevant defines are set up by autoconf. */
-
 
 #ifdef HAVE_DYNAMIC_LOADING
 

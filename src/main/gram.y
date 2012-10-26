@@ -28,7 +28,7 @@
 #include "Parse.h"
 #include <R_ext/Print.h>
 
-#if !defined(__STDC_ISO_10646__) && (defined(__APPLE_CC__) || defined(__FreeBSD__))
+#if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__))
 /* This may not be 100% true (see the comment in rlocales.h),
    but it seems true in normal locales */
 # define __STDC_ISO_10646__

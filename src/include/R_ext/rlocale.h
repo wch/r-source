@@ -74,7 +74,7 @@ extern int Ri18n_wcswidth (const wchar_t *, size_t);
  * Therefore Japanese "Buraian.Ripuri-" of "Brian Ripley" is
  * shown of hex-string.:-)
  * We define alternatives to be used if
- * defined(Win32) || defined(__APPLE_CC__) || defined(_AIX)
+ * defined(Win32) || defined(__APPLE__) || defined(_AIX)
  */
 extern wctype_t Ri18n_wctype(const char *);
 extern int      Ri18n_iswctype(wint_t, wctype_t);
