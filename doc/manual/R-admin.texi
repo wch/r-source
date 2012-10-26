@@ -3763,6 +3763,24 @@ Older versions of this manual (for @R{} < 2.10.0) contain notes on
 platforms such as HP-UX, IRIX and Alpha/OSF1 for which we have had no
 recent reports.
 
+C macros to select particular platforms can be tricky to track down
+(there is a fair amount of misinformation on the Web).  The Wiki
+(currently) at @uref{http://sourceforge.net/p/predef/wiki/Home/} can be
+helpful.  The @R{} sources currently use
+@example
+AIX: _AIX
+Cygwin: __CYGWIN__
+FreeBSD: __FreeBSD__
+HP-UX: __hpux__, __hpux
+IRIX: sgi, __sgi
+Linux: __linux__
+Mac OS X: __APPLE__, __APPLE_CC__
+NetBSD: __NetBSD__
+OpenBSD: __OpenBSD__
+Solaris: __sun, sun
+Windows: _WIN32, _WIN64
+@end example
+
 @menu
 * X11 issues::                  
 * Linux::                       
