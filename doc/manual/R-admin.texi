@@ -3774,7 +3774,7 @@ FreeBSD: __FreeBSD__
 HP-UX: __hpux__, __hpux
 IRIX: sgi, __sgi
 Linux: __linux__
-Mac OS X: __APPLE__, __APPLE_CC__
+Mac OS X: __APPLE__
 NetBSD: __NetBSD__
 OpenBSD: __OpenBSD__
 Solaris: __sun, sun
