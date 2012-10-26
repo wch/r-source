@@ -35,8 +35,6 @@
   Formally part of ../unix/sys-common.c.
  */
 
-/* The __APPLE__ and __APPLE_CC__ defines are for OS X */
-
 /*
  * FILESYSTEM INTERACTION
  */
@@ -275,7 +273,7 @@ SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 FILE *R_popen(const char *command, const char *type)
 {
     FILE *fp;
-#ifdef __APPLE_CC__
+#ifdef __APPLE__
     /* Luke recommends this to fix PR#1140 */
     sigset_t ss;
     sigemptyset(&ss);
@@ -296,7 +294,7 @@ FILE *R_popen(const char *command, const char *type)
 int R_system(const char *command)
 {
     int res;
-#ifdef __APPLE_CC__
+#ifdef __APPLE__
     /* Luke recommends this to fix PR#1140 */
     sigset_t ss;
     sigemptyset(&ss);

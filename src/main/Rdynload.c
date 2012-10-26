@@ -120,10 +120,6 @@
 # define HAVE_DYNAMIC_LOADING
 #endif
 
-#ifdef __APPLE_CC__
-# define HAVE_DYNAMIC_LOADING
-#endif
-
 
 #ifdef CACHE_DLL_SYM  /* Used on Windows */
 #define MAX_CACHE	100
