@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-10-22 r60997) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-10-26 r61019) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -284,12 +284,6 @@ lm2  6 336.3417
 > 
 > dexp(1) - exp(-1) #-> 0
 [1] 0
-> 
-> ## a fast way to generate *sorted*  U[0,1]  random numbers:
-> rsunif <- function(n) { n1 <- n+1
-+    cE <- cumsum(rexp(n1)); cE[seq_len(n)]/cE[n1] }
-> plot(rsunif(1000), ylim=0:1, pch=".")
-> abline(0,1/(1000+1), col=adjustcolor(1, 0.5))
 > 
 > 
 > 
@@ -3707,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4e3fd88>
+<environment: 0x7f836e0e8b20>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4707,7 +4701,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x739e288>
+<bytecode: 0x7f837074fc38>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method="kendall"),
@@ -4717,13 +4711,9 @@ function (V)
 > C1 <- cov(swiss)
 > range(eigen(C1, only.values=TRUE)$values) # 6.19        1921
 [1]    6.191249 1921.562488
-> 
-> ## swM := "swiss" with  3 "missing"s :
 > swM <- swiss
-> swM[1,2] <- swM[7,3] <- swM[25,5] <- NA
-> 
-> ## Consider all 5 "use" cases :
-> (C. <- cov(swM)) # use="everything"  quite a few NA's in cov.matrix
+> swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
+> try(cov(swM)) # Error: missing obs...
                  Fertility Agriculture Examination  Education Catholic
 Fertility        156.04250          NA          NA -79.729510       NA
 Agriculture             NA          NA          NA         NA       NA
@@ -4738,18 +4728,14 @@ Examination                    NA
 Education               -2.781684
 Catholic                       NA
 Infant.Mortality         8.483802
-> try(cov(swM, use = "all")) # Error: missing obs...
-Error in cov(swM, use = "all") : missing observations in cov/cor
 > C2 <- cov(swM, use = "complete")
-> stopifnot(identical(C2, cov(swM, use = "na.or.complete")))
 > range(eigen(C2, only.values=TRUE)$values) # 6.46        1930
 [1]    6.462385 1930.505982
 > C3 <- cov(swM, use = "pairwise")
 > range(eigen(C3, only.values=TRUE)$values) # 6.19        1938
 [1]    6.194469 1938.033663
 > 
-> ## Kendall's tau doesn't change so much..
-> symnum(Rc <- cor(swM,   method = "kendall", use = "complete"))
+> symnum(cor(swM, method = "kendall", use = "complete"))
                  F A Ex Ed C I
 Fertility        1            
 Agriculture        1          
@@ -4759,7 +4745,8 @@ Catholic             .     1
 Infant.Mortality             1
 attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
-> symnum(Rp <- cor(swM,   method = "kendall", use = "pairwise"))
+> ## Kendall's tau doesn't change much:
+> symnum(cor(swiss, method = "kendall"))
                  F A Ex Ed C I
 Fertility        1            
 Agriculture        1          
@@ -4769,30 +4756,6 @@ Catholic             .     1
 Infant.Mortality .           1
 attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
-> symnum(R. <- cor(swiss, method = "kendall"))
-                 F A Ex Ed C I
-Fertility        1            
-Agriculture        1          
-Examination      . . 1        
-Education        . . .  1     
-Catholic             .     1  
-Infant.Mortality .           1
-attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
-> 
-> ## "pairwise" is closer componentwise,
-> summary(abs(c(1 - Rp/R.)))
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-0.00000 0.00000 0.04481 0.09573 0.15210 0.53940 
-> summary(abs(c(1 - Rc/R.)))
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-0.00000 0.02020 0.08482 0.50670 0.16190 7.08500 
-> 
-> ## but "complete" is closer in Eigen space:
-> EV <- function(m) eigen(m, only.values=TRUE)$values
-> summary(abs(1 - EV(Rp)/EV(R.)) / abs(1 - EV(Rc)/EV(R.)))
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.8942  1.1460  1.2450  1.3730  1.3720  2.3270 
 > 
 > 
 > 
@@ -6725,8 +6688,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x3ec7830>
-<environment: 0x916a920>
+<bytecode: 0x7f836dc4ea78>
+<environment: 0x7f8372d38958>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7127,7 +7090,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x9902b10>
+<environment: 0x7f8372f18740>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11650,26 +11613,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x3f1f440>
-<environment: 0xc943430>
+<bytecode: 0x7f836dc4c2e8>
+<environment: 0x7f8373260320>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x3f1f4b0>
-<environment: 0xc943430>
+<bytecode: 0x7f836dc4c278>
+<environment: 0x7f8373260320>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x3f1f520>
-<environment: 0xc943430>
+<bytecode: 0x7f836dc4c208>
+<environment: 0x7f8373260320>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x3f1f6e0>
-<environment: 0xc943430>
+<bytecode: 0x7f836dc4cff0>
+<environment: 0x7f8373260320>
 
 $name
 [1] "identity"
@@ -11680,14 +11643,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0xc9443e8>
-<environment: 0x9d10c28>
+<bytecode: 0x7f8373261278>
+<environment: 0x7f8373239bf0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0xc944500>
-<environment: 0x9d10c28>
+<bytecode: 0x7f8373261390>
+<environment: 0x7f8373239bf0>
 
 > 
 > 
@@ -15434,8 +15397,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x4dd0ad8>
-<environment: 0xc1a5c58>
+<bytecode: 0x7f836dc5b668>
+<environment: 0x7f8371829b88>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17651,7 +17614,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  22.468 0.691 23.945 0 0 
+Time elapsed:  12.096 1.303 13.571 0 0 
 > grDevices::dev.off()
 null device 
           1 
