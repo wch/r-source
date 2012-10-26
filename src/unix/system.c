@@ -95,7 +95,9 @@ void R_setStartTime(void); /* in sys-unix.c */
     and main/sysutils.c (for system).
 */
 Rboolean useaqua = FALSE;
+
 // This should have been fixed a long time ago ....
+// Finally in Sep 2012 R.app sets ptr_R_FlushConsole
 #include <R_ext/Rdynload.h>
 DL_FUNC ptr_do_flushconsole;
 void R_FlushConsole(void) {
@@ -265,13 +267,9 @@ int Rf_initialize_R(int ac, char **av)
 	    }
 	    if(!strcmp(p, "none"))
 		useX11 = FALSE; // not allowed from R.sh
-	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
-		; // not allowed from R.sh
 #ifdef HAVE_AQUA
-	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
-		useaqua = TRUE; // not allowed from R.sh
-	    else if(!strcmp(p, "cocoa") || !strcmp(p, "Cocoa"))
-		useaqua = TRUE; // but 'cocaa' is used by R.app
+	    else if(!strcmp(p, "aqua"))
+		useaqua = TRUE; // not allowed from R.sh but used by R.app
 #endif
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
@@ -298,15 +296,15 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef HAVE_X11
     if(useX11) R_GUIType = "X11";
 #endif /* HAVE_X11 */
+
 #ifdef HAVE_AQUA
-    if(useaqua)
-	R_GUIType = "AQUA";
+    if(useaqua) R_GUIType = "AQUA";
 #endif
+
 #ifdef HAVE_TCLTK
-    if(useTk) {
-	R_GUIType = "Tk";
-    }
+    if(useTk) R_GUIType = "Tk";
 #endif
+
     R_common_command_line(&ac, av, Rp);
     while (--ac) {
 	if (**++av == '-') {
@@ -422,7 +420,8 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef HAVE_AQUA
     /* for Aqua and non-dumb terminal use callbacks instead of connections
        and pretty-print warnings/errors (ESS = dumb terminal) */
-    if(useaqua || (R_Interactive && getenv("TERM") && strcmp(getenv("TERM"),"dumb"))) {
+    if(useaqua || 
+       (R_Interactive && getenv("TERM") && strcmp(getenv("TERM"), "dumb"))) {
 	R_Outputfile = NULL;
 	R_Consolefile = NULL;
 	ptr_R_WriteConsoleEx = Rstd_WriteConsoleEx;
@@ -478,8 +477,7 @@ int R_EditFiles(int nfile, const char **file, const char **title,
 	    R_ShowMessage(_("WARNING: Only editing the first in the list of files"));
 
 #if defined(HAVE_AQUA)
-	if (ptr_R_EditFile)
-	    ptr_R_EditFile((char *) file[0]);
+	if (ptr_R_EditFile) ptr_R_EditFile((char *) file[0]);
 	else
 #endif
 	{

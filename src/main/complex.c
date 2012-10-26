@@ -66,11 +66,11 @@
 
 /* GCC has problems with header files on e.g. Solaris.
    That OS defines the imaginary type, but GCC does not.
-   Probably needed elsewhere, e.g. AIX.
+   Probably needed elsewhere, e.g. AIX, HP-UX (PR#15083)
    And use on Win32/64 suppresses warnings.
-   The warning is also seen on Mac OS 10.5.
+   The warning is also seen on Mac OS 10.5, but not later.
 */
-#if defined(__GNUC__) && (defined(__sun__) || defined(Win32))
+#if defined(__GNUC__) && (defined(__sun__) || defined(__hpux__) || defined(Win32))
 # undef  I
 # define I (__extension__ 1.0iF)
 #endif

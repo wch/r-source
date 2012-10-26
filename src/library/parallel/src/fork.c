@@ -35,10 +35,6 @@
 
 #include <R.h>
 #include <Rinternals.h>
-#include <Rconfig.h> /* for AQUA */
-#if HAVE_AQUA
-# include <R_ext/Rdynload.h>
-#endif
 
 #ifndef FILE_LOG
 /* use printf instead of Rprintf for debugging to avoid forked console interactions */

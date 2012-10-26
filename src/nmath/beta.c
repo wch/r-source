@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 The R Core Team
+ *  Copyright (C) 2000-2012 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,16 +65,20 @@ double beta(double a, double b)
 
     if (a < 0 || b < 0)
 	ML_ERR_return_NAN
-    else if (a == 0 || b == 0) {
+    else if (a == 0 || b == 0)
 	return ML_POSINF;
-    }
-    else if (!R_FINITE(a) || !R_FINITE(b)) {
+    else if (!R_FINITE(a) || !R_FINITE(b))
 	return 0;
-    }
 
-    if (a + b < xmax) /* ~= 171.61 for IEEE */
-	return gammafn(a) * gammafn(b) / gammafn(a+b);
-    else {
+    if (a + b < xmax) {/* ~= 171.61 for IEEE */
+//	return gammafn(a) * gammafn(b) / gammafn(a+b);
+	/* All the terms are positive, and all can be large for large
+	   or small arguments.  They are never much less than one.
+	   gammafn(x) can still overflow for x ~ 1e-308, 
+	   but the result would too. 
+	*/
+	return (1 / gammafn(a+b)) * gammafn(a) * gammafn(b);
+    } else {
 	double val = lbeta(a, b);
 	if (val < lnsml) {
 	    /* a and/or b so big that beta underflows */

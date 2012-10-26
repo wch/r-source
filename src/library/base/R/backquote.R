@@ -18,13 +18,15 @@
 
 ## quote() is .Primitive
 
+### PR15077: need to substitute in a length-one pairlist, so
+### handle pairlists first
 bquote <- function(expr, where=parent.frame())
 {
     unquote <- function(e)
-        if (length(e) <= 1L) e
+        if (is.pairlist(e)) as.pairlist(lapply(e, unquote))
+        else if (length(e) <= 1L) e
         else if (e[[1L]] == as.name(".")) eval(e[[2L]], where)
-        else if (is.pairlist(e)) as.pairlist(lapply(e,unquote))
-        else as.call(lapply(e,unquote))
+        else as.call(lapply(e, unquote))
 
     unquote(substitute(expr))
 }
