@@ -182,7 +182,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 	.Internal(wsbrowser(as.integer(IDS),IsRoot,Container,
 			    as.integer(ItemsPerContainer),as.integer(ParentID),
 			    NAMES,TYPES,DIMS))
-        invsible()
+        invisible()
     }
 }
 
