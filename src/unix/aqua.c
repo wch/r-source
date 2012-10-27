@@ -40,14 +40,7 @@ extern Rboolean useaqua; /* from src/unix/system.c */
 
 
 DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
-    ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
-    ptr_do_packagemanger, ptr_do_hsbrowser, ptr_do_selectlist;
-
-// R.app used to set this, so keep it for now in case it does.
-DL_FUNC ptr_do_flushconsole;
-
-/* And from Rinterface.h: */
-extern void (*ptr_R_FlushConsole)(void);
+    ptr_do_dataentry, ptr_do_selectlist;
 
 
 /* called from Mac-GUI/RController.m, before packages are loaded.
@@ -78,7 +71,8 @@ QuartzFunctions_t *getQuartzFunctions(void)
 
 SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_wsbrowser(call, op, args, env));
+    if(ptr_do_wsbrowser) return ptr_do_wsbrowser(call, op, args, env);
+    error("only HTML-based workspace browser is available");
 }
 
 #if defined(HAVE_X11)
@@ -95,39 +89,17 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-SEXP do_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_browsepkgs(call, op, args, env);
-}
-
-
-SEXP do_datamanger(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_datamanger(call, op, args, env);
-}
-
-
-SEXP do_hsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_hsbrowser(call, op, args, env);
-}
-
-SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ptr_do_packagemanger(call, op, args, env);
-}
-
+/* And from Rinterface.h: */
+extern void (*ptr_R_FlushConsole)(void);
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     if(ptr_R_FlushConsole) ptr_R_FlushConsole();
-    else if(ptr_do_flushconsole) // but the args are unused in R.app.
-	ptr_do_flushconsole(call, op, args, env);
     return R_NilValue;
 }
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_selectlist(call, op, args, env));
+    return ptr_do_selectlist(call, op, args, env);
 }
 
 // to be set by R.app
