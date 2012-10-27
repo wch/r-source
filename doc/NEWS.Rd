@@ -242,10 +242,15 @@
       \item The default method of \code{pairs()} now allows
       \code{text.panel = NULL} and the use of \code{<foo>.panel = NULL}
       is now documented.
+
+      \item \code{setRefClass()} and \code{getRefClass()} now return
+      class generator functions, similar to \code{setClass()}, but
+      stil with the reference fields and methods as before
+      (suggestion of Romain Francois).
     }
   }
 
-  \subsection{LONG VECTORS}{
+  \Subsection{LONG VECTORS}{
     \itemize{
       \item There is support for vectors longer than \eqn{2^{31}-1}{2^31
       - 1} elements on 64-bit platforms.  This applies to raw, logical,

@@ -1,10 +1,10 @@
 ## simple call, only field names
 fg <- setRefClass("foo", c("bar", "flag"))
-f1 <- new("foo")
-f1$bar
-f1 <- fg$new(flag = "testing")
+f0 <- new("foo")  # deprecated, but should still work
+f1 <- fg(flag = "testing")
 f1$bar <- 1
 stopifnot(identical(f1$bar, 1))
+## add method
 fg$methods(showAll = function() c(bar, flag))
 stopifnot(all.equal(f1$showAll(), c(1, "testing")))
 str(f1)
@@ -32,7 +32,7 @@ stopifnot(is(tryCatch(ff$flag <- "new", error = function(e)e), "error"))
 
 ## test against generator
 
-f2 <- fg$new(bar = pi, flag = "flag test")
+f2 <- fg(bar = pi, flag = "flag test")
 ## identical does not return TRUE if *contents* of env are identical
 stopifnot(identical(ff$bar, f2$bar), identical(ff$flag, f2$flag))
 ## but flag was now assigned once
@@ -84,19 +84,19 @@ foo2 <- setRefClass("foo2", list(b2 = "numeric", flag = "ratedChar",
                 }))
 ## now lock the flag field; should still allow one write
 foo2$lock("flag")
-f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"),
+f2 <- foo2(bar = -3, flag = as("ANY", "ratedChar"),
                b2 = ff$bar, tag = 1.5)
 ## but not a second one
 stopifnot(is(tryCatch(f2$flag <- "Try again",
          error = function(e)e), "error"))
 str(f2)
-f22 <- foo2$new(bar = f2$bar)
+f22 <- foo2(bar = f2$bar)
 ## same story if assignment follows the initialization
 f22$flag <- f2$flag
 stopifnot(is(tryCatch(f22$flag <- "Try again",
          error = function(e)e), "error"))
 ## Exporting superclass object
-f22 <- fg$new(bar = f2$bar, flag = f2$flag)
+f22 <- fg(bar = f2$bar, flag = f2$flag)
 f2e <- f2$export("foo")
 stopifnot(identical(f2e$bar, f22$bar), identical(f2e$flag, f22$flag),
           identical(class(f2e), class(f22)))
@@ -117,8 +117,8 @@ foo3 <- setRefClass("foo3", fields = list(flag2 = "ratedChar"),
                 incr
             }))
 
-f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"), b2 =  1:3)
-f3 <- foo3$new()
+f2 <- foo2(bar = -3, flag = as("ANY", "ratedChar"), b2 =  1:3)
+f3 <- foo3()
 f3$import(f2)
 stopifnot(all.equal(f3$b2, f2$b2), all.equal(f3$bar, f2$bar),
           all.equal(f3$flag, f2$flag))
@@ -132,24 +132,29 @@ stopifnot(is(tryCatch(f3$flag <- "Try again",
 str(f3)
 
 ## importing the same class (not very useful but documented to work)
-f3 <- foo3$new()
-f4 <- foo3$new(bar = -3, flag = as("More", "ratedChar"), b2 =  1:3, flag2 = f2$flag)
+f3 <- foo3()
+f4 <- foo3(bar = -3, flag = as("More", "ratedChar"), b2 =  1:3, flag2 = f2$flag)
 f3$import(f4)
 stopifnot(identical(f3$bar, f4$bar),
           identical(f3$flag, f4$flag),
           identical(f3$b2, f4$b2),
           identical(f3$flag2, f4$flag2))
 
-## similar to $import() but using superclass object in the $new() call
+## similar to $import() but using superclass object in the generator call
 ## The explicitly supplied flag= should override and be allowed
 ## by the default $initialize()
-f3b <- foo3$new(f2, flag = as("Other", "ratedChar"),
+f3b <- foo3(f2, flag = as("Other", "ratedChar"),
                 flag2 = as("More", "ratedChar"))
 ## check that inherited and direct field assignments worked
 stopifnot(identical(f3b$tag, f2$tag),
           identical(f3b$flag, as("Other", "ratedChar")),
           identical(f3b$flag2, as("More", "ratedChar")))
-
+## the $new() method should match the generator function
+f3b <- foo3$new(f2, flag = as("Other", "ratedChar"),
+                flag2 = as("More", "ratedChar"))
+stopifnot(identical(f3b$tag, f2$tag),
+          identical(f3b$flag, as("Other", "ratedChar")),
+          identical(f3b$flag2, as("More", "ratedChar")))
 ## a class with an initialize method, and an extra slot (legal, not a good idea)
 setOldClass(c("simple.list", "list"))
 fg4 <- setRefClass("foo4",
@@ -171,7 +176,7 @@ foo5 <- setRefClass("foo5", fields = list(),
                     methods = list(bar = function(test)
                     paste("*",test,"*")))
 
-f5 <- foo5$new()
+f5 <- foo5()
 stopifnot(identical( f5$bar("xxx"), paste("*","xxx", "*")))
 
 
@@ -180,7 +185,7 @@ abGen <- setRefClass("ab",
                   fields = list(a = "ANY",
                   b = function(x) if(missing(x)) a else {a <<- x; x}))
 
-ab1 <- abGen$new(a = 1)
+ab1 <- abGen(a = 1)
 
 stopifnot(identical(ab1$a, 1), identical(ab1$b, 1))
 
@@ -220,7 +225,7 @@ mEditor <- setRefClass("matrixEditor",
      }
      ))
 xMat <- matrix(1:12,4,3)
-xx <- mEditor$new(data = xMat)
+xx <- mEditor(data = xMat)
 xx$edit(2, 2, 0)
 xx$data
 xx$undo()
@@ -293,7 +298,7 @@ mv$methods( counts = function() {
 })
 
 
-ff <- mv$new( data = xMat)
+ff <- mv( data = xMat)
 stopifnot(identical(markViewer, "ON")) # check initialize
 ff$edit(2,2,0)
 ff$data
@@ -308,14 +313,14 @@ stopifnot(identical(markViewer, "OFF")) #check finalize
 viewerPlus <- setRefClass("viewerPlus",
                    fields = list( text = "character",
                       viewer = "matrixViewer"))
-ff <- mv$new( data = xMat)
-v1 <- viewerPlus$new(text = letters, viewer = ff)
+ff <- mv( data = xMat)
+v1 <- viewerPlus(text = letters, viewer = ff)
 v2 <- v1$copy()
 v3 <- v1$copy(TRUE)
 v2$text <- "Hello, world"
 v2$viewer$data <- t(xMat) # change a field in v2$viewer
 v3$text <- LETTERS
-v3$viewer <- mv$new( data = matrix(nrow=1,ncol=1))
+v3$viewer <- mv( data = matrix(nrow=1,ncol=1))
 ## with a deep copy all is protected, with a shallow copy
 ## the environment of a copied field remains the same,
 ## but replacing the whole field should be local
@@ -345,11 +350,11 @@ refClassA <- setRefClass("refClassA", methods=list(foo=function() "A"))
 refClassB <- setRefClass("refClassB", contains="refClassA")
 mnames <- objects(getClass("refClassB")@refMethods)
 refClassB$methods(foo=function() callSuper())
-stopifnot(identical(refClassB$new()$foo(), "A"))
+stopifnot(identical(refClassB()$foo(), "A"))
 mnames2 <- objects(getClass("refClassB")@refMethods)
 stopifnot(identical(mnames2[is.na(match(mnames2,mnames))], "foo#refClassA"))
 refClassB$methods(foo=function() paste(callSuper(), "Version 2"))
-stopifnot(identical(refClassB$new()$foo(), "A Version 2"))
+stopifnot(identical(refClassB()$foo(), "A Version 2"))
 stopifnot(identical(mnames2, objects(getClass("refClassB")@refMethods)))
 
 if(methods:::.hasCodeTools()) {
@@ -378,7 +383,7 @@ rm(ctxt)
 
 
 ## tests related to subclassing environments.  These really test code in the core, viz. builtin.c
-a <- refClassA$new()
+a <- refClassA()
 ev <- new.env(parent = a) # parent= arg
 stopifnot(is.environment(ev))
 foo <- function()"A"; environment(foo) <- a # environment of function
@@ -437,7 +442,7 @@ TestClass <- setRefClass ("TestClass",
        print = function ()  {cat(text)},
        initialize = function(text = "", ...) callSuper(text = paste(text, ":", sep=""),...)
   ))
-tt <- TestClass$new("hello world")
+tt <- TestClass("hello world")
 stopifnot(identical(tt$text, "hello world:"))
 ## now a subclass with another field & another layer of callSuper()
 TestClass2 <- setRefClass("TestClass2",
@@ -447,9 +452,9 @@ TestClass2 <- setRefClass("TestClass2",
           initialize = function(..., version = 0L)
               callSuper(..., version = version+1L))
   )
-tt <- TestClass2$new("test", version = 1L)
+tt <- TestClass2("test", version = 1L)
 stopifnot(identical(tt$text, "test:"), identical(tt$version, as.integer(2)))
-tt <- TestClass2$new(version=3L) # default text
+tt <- TestClass2(version=3L) # default text
 stopifnot(identical(tt$text, ":"), identical(tt$version, as.integer(4)))
 
 
@@ -462,10 +467,10 @@ stopifnot(identical(tt$text, ":"), identical(tt$version, as.integer(4)))
 }
 
 mEditor$methods(change = .changeAllFields)
-xx <- mEditor$new(data = xMat)
+xx <- mEditor(data = xMat)
 xx$edit(2, 2, 0)
 
-yy <- mEditor$new(data = xMat+1)
+yy <- mEditor(data = xMat+1)
 yy$change(xx)
 stopifnot(identical(yy$data, xx$data), identical(yy$edits, xx$edits))
 
@@ -483,14 +488,11 @@ stopifnot(is(tryCatch(evr$methods(foo = function()"..."), error = function(e)e),
 ##getRefClass() method and function should work with either
 ## a class name or a class representation (bug report 14600)
 tg <- setRefClass("tg", fields = "a")
-t1 <- tg$new(a=1)
+t1 <- tg(a=1)
 tgg <- t1$getRefClass()
 tggg <- getRefClass("tg")
 stopifnot(identical(tgg$def, tggg$def),
           identical(tg$def, tgg$def))
-## TODO:  the className returned by setRefClass should have
-## a package attribute, which would allow:
-##          identical(tg$className, tgg$className))
 
 ## this used to fail in initFieldArgs() from partial matching "self"
 selfClass <- setRefClass("selfClass",
@@ -499,4 +501,4 @@ selfClass <- setRefClass("selfClass",
         )
     )
 
-stopifnot(identical(selfClass$new(self="B", super="A", sub="C")$self, "B"))
+stopifnot(identical(selfClass(self="B", super="A", sub="C")$self, "B"))
