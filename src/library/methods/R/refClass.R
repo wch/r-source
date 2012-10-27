@@ -460,9 +460,20 @@ makeEnvRefMethods <- function() {
     setMethod("$", "envRefClass", .dollarForEnvRefClass, where = envir)
     setMethod("$<-", "envRefClass", .dollarGetsForEnvRefClass, where = envir)
     setMethod("show", "envRefClass", function(object) object$show())
-    ## next call is touchy:  setRefClass() returns an object of class
+    setClass("refObjectGenerator") # a temporary virtual class to allow the next definition
+    ## the refClassGenerator class
+    setClass("refClassGeneratorFunction", representation(generator ="refObjectGenerator"),
+             contains = c("classGeneratorFunction", "refClass"), where = envir)
+
+    setMethod("$", "refClassGeneratorFunction",
+              function(x, name) eval.parent(substitute(x@generator$name)), where = envir)
+
+    setMethod("$<-", "refClassGeneratorFunction",
+              function(x, name, value) eval.parent(substitute(x@generator$name <- value)),
+              where = envir)
+    ## next call is touchy:  setRefClass() uses an object of class
     ## refObjectGenerator, but the class should have been defined before
-    ## the return value is constructed.
+    ## that object is created.
     setRefClass("refObjectGenerator",
                 fields = list(def = "ANY", className = "ANY"),
                 methods = .GeneratorMethods)
@@ -470,7 +481,7 @@ makeEnvRefMethods <- function() {
               function(object) showRefClassDef(object), where = envir)
     setMethod("show", "refObjectGenerator",
               function(object) showRefClassDef(object$def, "Generator object for class"),
-                where = envir)
+              where = envir)
     setMethod("show", "refMethodDef", showClassMethod, where = envir)
 }
 
@@ -909,13 +920,15 @@ setRefClass <- function(Class, fields = character(),
         assign(what, info[[what]])
     ## temporarily assign an ordinary class definition
     ## to allow the checks and defaults from setClass to be applied
-    setClass(Class, contains = superClasses,
+    ## and to get the classGeneratorFunction
+    ## Note:  the classGeneratorFunction has the class name, not the explicit definition
+    classFun <- setClass(Class, contains = superClasses,
              where = where, ...)
     ## kludge: as.environment fails on an empty list
     asEnv <- function(x) {
         if(length(x)) as.environment(x) else new.env(FALSE)
     }
-    ## now, override that with the complete definition
+    ## now, override the class definiton with the complete definition
     classDef <- new("refClassRepresentation",
                     getClassDef(Class, where = where),
                     fieldClasses = fieldClasses,
@@ -923,12 +936,13 @@ setRefClass <- function(Class, fields = character(),
                     fieldPrototypes = asEnv(fieldPrototypes),
                     refSuperClasses = refSuperClasses)
     assignClassDef(Class, classDef, where)
-    value <- new("refObjectGenerator")
-    env <- as.environment(value)
+    generator <- new("refObjectGenerator")
+    env <- as.environment(generator)
     env$def <- classDef
     env$className <- Class
     .declareVariables(classDef, where)
-    value
+    value <- new("refClassGeneratorFunction", classFun, generator = generator)
+    invisible(value)
 }
 
 getRefClass <- function(Class, where = topenv(parent.frame())) {
@@ -947,11 +961,14 @@ getRefClass <- function(Class, where = topenv(parent.frame())) {
         stop(gettextf("class must be a reference class representation or a character string; got an object of class %s",
                       dQuote(class(Class))),
              domain = NA)
-    value <- new("refObjectGenerator")
-    env <- as.environment(value)
+    generator <- new("refObjectGenerator")
+    env <- as.environment(generator)
     env$className <- Class
     env$def <- classDef
-    value
+    classFun <- classGeneratorFunction(Class, where)
+    ## but, the package is always from the class definition, not the local environment
+    classFun@package <- classDef@package
+    new("refClassGeneratorFunction", classFun, generator = generator)
 }
 
 refClassFields <- function(Class) {
@@ -1231,3 +1248,15 @@ getMethodsAndAccessors <- function(Class) {
     accs <- sapply(ff, function(what) is(what, "activeBindingFunction") && !is(what, "defaultBindingFunction"))
     c(as.list(def@refMethods), as.list(ff)[accs])
 }
+
+## ## the refClassGenerator class
+## setClass("refClassGeneratorFunction", representation(generator ="refObjectGenerator"),
+##          contains = c("classGeneratorFunction", "refClass"))
+
+## setMethod("$", "refClassGeneratorFunction",
+##           function(x, name) eval.parent(substitute(x@generator$name)))
+
+## setMethod("$<-", "refClassGeneratorFunction",
+##           function(x, name, value) eval.parent(substitute(x@generator$name <- value)))
+
+
