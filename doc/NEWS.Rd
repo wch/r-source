@@ -586,6 +586,9 @@
 
       \item \code{bquote()} is now able to substitute default arguments in
       single-argument functions.  (\PR{15077})
+
+      \item \code{browseEnv(html = FALSE)} would segfault if called from
+      \R (not \command{R.app}) on a CRAN-style Mac OS X build of \R.
     }
   }
 
