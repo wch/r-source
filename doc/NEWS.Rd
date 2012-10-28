@@ -250,7 +250,7 @@
     }
   }
 
-  \Subsection{LONG VECTORS}{
+  \subsection{LONG VECTORS}{
     \itemize{
       \item There is support for vectors longer than \eqn{2^{31}-1}{2^31
       - 1} elements on 64-bit platforms.  This applies to raw, logical,
