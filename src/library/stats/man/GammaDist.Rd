@@ -89,12 +89,23 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
       1/Gamma(a) integral_0^x t^(a-1) exp(-t) dt}
   \eqn{P(a, x)} is \code{pgamma(x, a)}.  Other authors (for example
   Karl Pearson in his 1922 tables) omit the normalizing factor,
-  defining the incomplete gamma function as \code{pgamma(x, a) * gamma(a)}.
-  A few use the \sQuote{upper} incomplete gamma function, the integral
-  from \eqn{x} to \eqn{\infty}{infinity} which can be computed by
-  \code{pgamma(x, a, lower=FALSE) * gamma(a)}, or its normalized
-  version. See also
-  \url{http://en.wikipedia.org/wiki/Incomplete_gamma_function}.
+  defining the incomplete gamma function \eqn{\gamma(a,x)} as
+  \eqn{\gamma(a,x) = \int_0^x t^{a-1} e^{-t} dt,}{gamma(a,x) =
+    integral_0^x t^(a-1) exp(-t) dt,} i.e., \code{pgamma(x, a) * gamma(a)}.
+  Yet other use the \sQuote{upper} incomplete gamma function,
+  \deqn{\Gamma(a,x) = \int_x^\infty t^{a-1} e^{-t} dt,}{Gamma(a,x) =
+    integral_x^Inf t^(a-1) exp(-t) dt,}
+  which can be computed by
+  \code{pgamma(x, a, lower=FALSE) * gamma(a)}.
+
+  Note however that \code{pgamma(x, a, ..)} currently requires \eqn{a > 0},
+  whereas the incomplete gamma function is also defined for negative
+  \eqn{a}.  In that case, you can use \code{gamma_inc(a,x)} (for
+  \eqn{\Gamma(a,x)}) from package \pkg{gsl}.
+
+  See also
+  \url{http://en.wikipedia.org/wiki/Incomplete_gamma_function}, or
+  \url{http://dlmf.nist.gov/8.2#i}.
 }
 \source{
   \code{dgamma} is computed via the Poisson density, using code contributed
@@ -135,6 +146,9 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Abramowitz, M. and Stegun, I. A. (1972)
   \emph{Handbook of Mathematical Functions.} New York: Dover.
   Chapter 6: Gamma and Related Functions.
+
+  NIST Digital Library of Mathematical Functions.
+  \url{http://dlmf.nist.gov/}, section 8.2.
 }
 \seealso{
   \code{\link{gamma}} for the gamma function.
