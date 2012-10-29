@@ -1749,7 +1749,7 @@ popgrobvp <- function(vp) {
 
 popgrobvp.viewport <- function(vp) {
   # NOTE that the grob's vp may be a vpStack/List/Tree
-  popViewport(depth(vp), recording=FALSE)
+  upViewport(depth(vp), recording=FALSE)
 }
 
 popgrobvp.vpPath <- function(vp) {
@@ -1768,76 +1768,104 @@ pushvpgp <- function(x) {
   }
 }
 
+makeContext <- function(x) {
+    UseMethod("makeContext")
+}
+
+makeContext.default <- function(x) {
+    x
+}
+
+makeContent <- function(x) {
+    UseMethod("makeContent")
+}
+
+makeContent.default <- function(x) {
+    x
+}
+
 preDraw.grob <- function(x) {
-  # automatically push/pop the viewport and set/unset the gpar
-  pushvpgp(x)
-  preDrawDetails(x)
+    # Allow customisation of x$vp
+    x <- makeContext(x)
+    # automatically push/pop the viewport and set/unset the gpar
+    pushvpgp(x)
+    preDrawDetails(x)
+    x
 }
 
 preDraw.gTree <- function(x) {
-  # Make this gTree the "current grob" for evaluation of
-  # grobwidth/height units via gPath
-  # Do this as a .Call.graphics to get it onto the base display list
-  grid.Call.graphics(L_setCurrentGrob, x)
-  # automatically push/pop the viewport
-  pushvpgp(x)
-  # Push then "up" childrenvp
-  if (!is.null(x$childrenvp)) {
-    # Save any x$gp gpar settings
-    tempgp <- grid.Call(L_getGPar)
-    pushViewport(x$childrenvp, recording=FALSE)
-    upViewport(depth(x$childrenvp), recording=FALSE)
-    # reset the x$gp gpar settings
-    # The upViewport above may have overwritten them with
-    # the previous vp$gp settings
-    grid.Call.graphics(L_setGPar, tempgp)
-  }
-  preDrawDetails(x)
+    # Allow customisation of x$vp (and x$childrenvp)
+    x <- makeContext(x)
+    # Make this gTree the "current grob" for evaluation of
+    # grobwidth/height units via gPath
+    # Do this as a .Call.graphics to get it onto the base display list
+    grid.Call.graphics(L_setCurrentGrob, x)
+    # automatically push/pop the viewport
+    pushvpgp(x)
+    # Push then "up" childrenvp
+    if (!is.null(x$childrenvp)) {
+        # Save any x$gp gpar settings
+        tempgp <- grid.Call(L_getGPar)
+        pushViewport(x$childrenvp, recording=FALSE)
+        upViewport(depth(x$childrenvp), recording=FALSE)
+        # reset the x$gp gpar settings
+        # The upViewport above may have overwritten them with
+        # the previous vp$gp settings
+        grid.Call.graphics(L_setGPar, tempgp)
+    }
+    preDrawDetails(x)
+    x
 }
 
 postDraw <- function(x) {
-  UseMethod("postDraw")
+    UseMethod("postDraw")
 }
 
 postDraw.grob <- function(x) {
-  postDrawDetails(x)
-  if (!is.null(x$vp))
-    popgrobvp(x$vp)
+    postDrawDetails(x)
+    if (!is.null(x$vp))
+        popgrobvp(x$vp)
 }
 
 drawGrob <- function(x) {
-  # Temporarily turn off the grid DL so that
-  # nested calls to drawing code do not get recorded
-  dlon <- grid.Call(L_setDLon, FALSE)
-  # If get error or user-interrupt, need to reset state
-  # Need to turn grid DL back on (if it was on)
-  on.exit(grid.Call(L_setDLon, dlon))
-  # Save current gpar
-  tempgpar <- grid.Call(L_getGPar)
-  # If get error or user-interrupt, need to reset state
-  # Need to restore current grob (gtree predraw sets current grob)
-  # Need to restore gpar settings (set by gtree itself and/or its vp)
-  # This does not need to be a grid.Call.graphics() because
-  # we are nested within a recordGraphics()
-  # Do not call set.gpar because set.gpar accumulates cex
-  on.exit(grid.Call(L_setGPar, tempgpar), add=TRUE)
-  preDraw(x)
-  # Do any class-specific drawing
-  drawDetails(x, recording=FALSE)
-  postDraw(x)
+    # Temporarily turn off the grid DL so that
+    # nested calls to drawing code do not get recorded
+    dlon <- grid.Call(L_setDLon, FALSE)
+    # If get error or user-interrupt, need to reset state
+    # Need to turn grid DL back on (if it was on)
+    on.exit(grid.Call(L_setDLon, dlon))
+    # Save current gpar
+    tempgpar <- grid.Call(L_getGPar)
+    # If get error or user-interrupt, need to reset state
+    # Need to restore current grob (gtree predraw sets current grob)
+    # Need to restore gpar settings (set by gtree itself and/or its vp)
+    # This does not need to be a grid.Call.graphics() because
+    # we are nested within a recordGraphics()
+    # Do not call set.gpar because set.gpar accumulates cex
+    on.exit(grid.Call(L_setGPar, tempgpar), add=TRUE)
+    # Setting up the drawing context may involve modifying the grob
+    # (typically only x$vp) but the modified grob is needed for postDraw()
+    x <- preDraw(x)
+    # Allow customisation of x
+    # (should only return a basic grob that has a drawDetails()
+    #  method, otherwise nothing will be drawn)
+    x <- makeContent(x)
+    # Do any class-specific drawing
+    drawDetails(x, recording=FALSE)
+    postDraw(x)
 }
 
 grid.draw.grob <- function(x, recording=TRUE) {
-  engineDLon <- grid.Call(L_getEngineDLon)
-  if (engineDLon)
-    recordGraphics(drawGrob(x),
-                   list(x=x),
-                   getNamespace("grid"))
-  else
-    drawGrob(x)
-  if (recording)
-    record(x)
-  invisible()
+    engineDLon <- grid.Call(L_getEngineDLon)
+    if (engineDLon)
+        recordGraphics(drawGrob(x),
+                       list(x=x),
+                       getNamespace("grid"))
+    else
+        drawGrob(x)
+    if (recording)
+        record(x)
+    invisible()
 }
 
 drawGList <- function(x) {
@@ -1851,98 +1879,250 @@ drawGList <- function(x) {
 }
 
 grid.draw.gList <- function(x, recording=TRUE) {
-  engineDLon <- grid.Call(L_getEngineDLon)
-  if (engineDLon)
-    recordGraphics(drawGList(x),
-                   list(x=x),
-                   getNamespace("grid"))
-  else
-    drawGList(x)
-  invisible()
+    engineDLon <- grid.Call(L_getEngineDLon)
+    if (engineDLon)
+        recordGraphics(drawGList(x),
+                       list(x=x),
+                       getNamespace("grid"))
+    else
+        drawGList(x)
+    invisible()
 }
 
 drawGTree <- function(x) {
-  # Temporarily turn off the grid DL so that
-  # nested calls to drawing code do not get recorded
-  dlon <- grid.Call(L_setDLon, FALSE)
-  # If get error or user-interrupt, need to reset state
-  # Need to turn grid DL back on (if it was on)
-  on.exit(grid.Call(L_setDLon, dlon))
-  # Save current grob and current gpar
-  tempgrob <- grid.Call(L_getCurrentGrob)
-  tempgpar <- grid.Call(L_getGPar)
-  # If get error or user-interrupt, need to reset state
-  # Need to restore current grob (gtree predraw sets current grob)
-  # Need to restore gpar settings (set by gtree itself and/or its vp)
-  # This does not need to be a grid.Call.graphics() because
-  # we are nested within a recordGraphics()
-  # Do not call set.gpar because set.gpar accumulates cex
-  on.exit({ grid.Call(L_setGPar, tempgpar)
-            grid.Call(L_setCurrentGrob, tempgrob)
-          }, add=TRUE)
-  preDraw(x)
-  # Do any class-specific drawing
-  drawDetails(x, recording=FALSE)
-  # Draw all children IN THE RIGHT ORDER
-  for (i in x$childrenOrder)
-    grid.draw(x$children[[i]], recording=FALSE)
-  postDraw(x)
+    # Temporarily turn off the grid DL so that
+    # nested calls to drawing code do not get recorded
+    dlon <- grid.Call(L_setDLon, FALSE)
+    # If get error or user-interrupt, need to reset state
+    # Need to turn grid DL back on (if it was on)
+    on.exit(grid.Call(L_setDLon, dlon))
+    # Save current grob and current gpar
+    tempgrob <- grid.Call(L_getCurrentGrob)
+    tempgpar <- grid.Call(L_getGPar)
+    # If get error or user-interrupt, need to reset state
+    # Need to restore current grob (gtree predraw sets current grob)
+    # Need to restore gpar settings (set by gtree itself and/or its vp)
+    # This does not need to be a grid.Call.graphics() because
+    # we are nested within a recordGraphics()
+    # Do not call set.gpar because set.gpar accumulates cex
+    on.exit({ grid.Call(L_setGPar, tempgpar)
+              grid.Call(L_setCurrentGrob, tempgrob)
+            }, add=TRUE)
+    # Setting up the drawing context may involve modifying the grob
+    # (typically only x$vp) but the modified grob is needed for postDraw()
+    x <- preDraw(x)
+    # Allow customisation of x (should be confined to x$children)
+    x <- makeContent(x)
+    # Do any class-specific drawing
+    drawDetails(x, recording=FALSE)
+    # Draw all children IN THE RIGHT ORDER
+    for (i in x$childrenOrder)
+      grid.draw(x$children[[i]], recording=FALSE)
+    postDraw(x)
 }
 
 grid.draw.gTree <- function(x, recording=TRUE) {
-  engineDLon <- grid.Call(L_getEngineDLon)
-  if (engineDLon)
-    recordGraphics(drawGTree(x),
-                   list(x=x),
-                   getNamespace("grid"))
-  else
-    drawGTree(x)
-  if (recording)
-    record(x)
-  invisible()
+    engineDLon <- grid.Call(L_getEngineDLon)
+    if (engineDLon)
+        recordGraphics(drawGTree(x),
+                       list(x=x),
+                       getNamespace("grid"))
+    else
+        drawGTree(x)
+    if (recording)
+        record(x)
+    invisible()
 }
 
 draw.all <- function() {
-  grid.newpage(recording=FALSE)
-  dl.index <- grid.Call(L_getDLindex)
-  if (dl.index > 1)
-    # Start at 2 because first element is viewport[ROOT]
-    for (i in 2:dl.index) {
-      grid.draw(grid.Call(L_getDLelt, as.integer(i - 1)),
-                recording=FALSE)
-    }
+    grid.newpage(recording=FALSE)
+    dl.index <- grid.Call(L_getDLindex)
+    if (dl.index > 1)
+        # Start at 2 because first element is viewport[ROOT]
+        for (i in 2:dl.index) {
+            grid.draw(grid.Call(L_getDLelt, as.integer(i - 1)),
+                      recording=FALSE)
+        }
 }
 
 draw.details <- function(x, recording) {
-  .Deprecated("drawDetails")
-  UseMethod("drawDetails")
+    .Deprecated("drawDetails")
+    UseMethod("drawDetails")
 }
 
 preDrawDetails <- function(x) {
-  UseMethod("preDrawDetails")
+    UseMethod("preDrawDetails")
 }
 
 preDrawDetails.grob <- function(x) {
 }
 
 postDrawDetails <- function(x) {
-  UseMethod("postDrawDetails")
+    UseMethod("postDrawDetails")
 }
 
 postDrawDetails.grob <- function(x) {
 }
 
 drawDetails <- function(x, recording) {
-  UseMethod("drawDetails")
+    UseMethod("drawDetails")
 }
 
 drawDetails.grob <- function(x, recording) {
 }
 
 grid.copy <- function(grob) {
-  warning("this function is redundant and will disappear in future versions",
-          domain = NA)
-  grob
+    warning("this function is redundant and will disappear in future versions",
+            domain = NA)
+    grob
+}
+
+################################
+# Flattening a grob
+
+force <- function(x) {
+    UseMethod("force")
+}
+
+# The default action is to leave 'x' untouched
+# BUT it is also necessary to enforce the drawing context
+# for viewports and vpPaths
+force.default <- function(x) {
+    grid.draw(x, recording=FALSE)
+    x
+}
+
+# This allows 'x' to be modified, but may not
+# change 'x' at all
+force.grob <- function(x) {
+    # Copy of the original object to allow a "revert"
+    originalX <- x
+    # Same set up as drawGrob()
+    dlon <- grid.Call(L_setDLon, FALSE)
+    on.exit(grid.Call(L_setDLon, dlon))
+    tempgpar <- grid.Call(L_getGPar)
+    on.exit(grid.Call(L_setGPar, tempgpar), add=TRUE)
+    # Same drawing context set up as drawGrob() 
+    # including enforcing the drawing context
+    x <- preDraw(x)
+    # Same drawing content set up as drawGrob() ...
+    x <- makeContent(x)
+    # BUT NO DRAWING
+    # Same context clean up as drawGrob()
+    postDraw(x)
+    # If 'x' has not changed, just return original 'x'
+    # Also, do not bother with saving original
+    # If 'x' has changed ...
+    if (!identical(x, originalX)) {
+        # Store the original object to allow a "revert"
+        x$.ORIGINAL <- originalX
+        # Return the 'x' that would have been drawn
+        # This will typically be a standard R primitive
+        # (which do not have makeContext() or makeContent()
+        #  methods, only drawDetails())
+        # BUT ot be safe add "forcedgrob" class so that subsequent
+        # draws will NOT run makeContext() or makeContent()
+        # methods
+        class(x) <- c("forcedgrob", class(x))
+    }
+    x
+}
+
+# This allows 'x' to be modified, but may not
+# change 'x' at all
+force.gTree <- function(x) {
+    # Copy of the original object to allow a "revert"
+    originalX <- x
+    # Same set up as drawGTree()
+    dlon <- grid.Call(L_setDLon, FALSE)
+    on.exit(grid.Call(L_setDLon, dlon))
+    tempgrob <- grid.Call(L_getCurrentGrob)
+    tempgpar <- grid.Call(L_getGPar)
+    on.exit({ grid.Call(L_setGPar, tempgpar)
+              grid.Call(L_setCurrentGrob, tempgrob)
+            }, add=TRUE)
+    # Same drawing context set up as drawGTree(),
+    # including enforcing the drawing context
+    x <- preDraw(x)
+    # Same drawing content set up as drawGTree() ...
+    x <- makeContent(x)
+    # Ensure that children are also forced
+    x$children <- do.call("gList", lapply(x$children, force))
+    # BUT NO DRAWING
+    # Same context clean up as drawGTree()
+    postDraw(x)
+    # If 'x' has changed ...
+    if (!identical(x, originalX)) {
+        # Store the original object to allow a "revert"
+        x$.ORIGINAL <- originalX
+        # Return the 'x' that would have been drawn 
+        # This will typically be a vanilla gTree with children to draw
+        # (which will not have makeContext() or makeContent() methods)
+        # BUT to be safe add "forcedgrob" class so that subsequent
+        # draws will NOT run makeContext() or makeContent()
+        # methods
+        class(x) <- c("forcedgrob", class(x))
+    }
+    x
+}
+
+# A "forcedgrob" does NOT modify context or content at
+# drawing time
+makeContext.forcedgrob <- function(x) x
+
+makeContent.forcedgrob <- function(x) x
+
+# NOTE that things will get much trickier if allow
+# grid.force(gPath = ...)
+grid.force <- function(redraw=TRUE) {
+    dl.index <- grid.Call(L_getDLindex)
+    if (dl.index > 1) {
+        # Start at 2 because first element is viewport[ROOT]
+        for (i in 2:dl.index) {
+            grid.Call(L_setDLindex, as.integer(i - 1))
+            grid.Call(L_setDLelt,
+                      force(grid.Call(L_getDLelt, as.integer(i - 1))))
+        }
+        grid.Call(L_setDLindex, dl.index)
+    }
+    if (redraw) {
+        draw.all()
+    }
+}
+
+revert <- function(x) {
+    UseMethod("revert")
+}
+
+revert.default <- function(x) {
+    x
+}
+
+# Only need to revert "forcedgrob"s
+revert.forcedgrob <- function(x) {
+    x$.ORIGINAL
+}
+
+# No need for recursion for gTree because if top-level grob
+# changed its children then top-level grob will have retained
+# revert version of its entire self (including children)
+
+# NOTE that things will get much trickier if allow
+# grid.revert(gPath = ...)
+grid.revert <- function(redraw=TRUE) {
+    dl.index <- grid.Call(L_getDLindex)
+    if (dl.index > 1) {
+        # Start at 2 because first element is viewport[ROOT]
+        for (i in 2:dl.index) {
+            grid.Call(L_setDLindex, as.integer(i - 1))
+            grid.Call(L_setDLelt,
+                      revert(grid.Call(L_getDLelt, as.integer(i - 1))))
+        }
+        grid.Call(L_setDLindex, dl.index)
+    }
+    if (redraw) {
+        draw.all()
+    }
 }
 
 ###############################

@@ -288,7 +288,7 @@ int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
 	 * and width/height(grob) is pure null
 	 */
 	if (unitUnit(unit, index) == L_GROBWIDTH) {
-	    SEXP grob, width;
+	    SEXP grob, updatedgrob, width;
 	    SEXP widthPreFn, widthFn, widthPostFn, findGrobFn;
 	    SEXP R_fcall0, R_fcall1, R_fcall2, R_fcall3;
 	    SEXP savedgpar, savedgrob;
@@ -324,17 +324,17 @@ int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
 		UNPROTECT(2);
 	    }
 	    PROTECT(R_fcall1 = lang2(widthPreFn, grob));
-	    eval(R_fcall1, R_gridEvalEnv);
-	    PROTECT(R_fcall2 = lang2(widthFn, grob));
+            PROTECT(updatedgrob = eval(R_fcall1, R_gridEvalEnv));
+	    PROTECT(R_fcall2 = lang2(widthFn, updatedgrob));
 	    PROTECT(width = eval(R_fcall2, R_gridEvalEnv));
 	    result = pureNullUnit(width, 0, dd);
-	    PROTECT(R_fcall3 = lang2(widthPostFn, grob));
+	    PROTECT(R_fcall3 = lang2(widthPostFn, updatedgrob));
 	    eval(R_fcall3, R_gridEvalEnv);
 	    setGridStateElement(dd, GSS_GPAR, savedgpar);
 	    setGridStateElement(dd, GSS_CURRGROB, savedgrob);
-	    UNPROTECT(10);
+	    UNPROTECT(11);
 	} else if (unitUnit(unit, index) == L_GROBHEIGHT) {
-	    SEXP grob, height;
+	    SEXP grob, updatedgrob, height;
 	    SEXP heightPreFn, heightFn, heightPostFn, findGrobFn;
 	    SEXP R_fcall0, R_fcall1, R_fcall2, R_fcall3;
 	    SEXP savedgpar, savedgrob;
@@ -370,15 +370,15 @@ int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
 		UNPROTECT(2);
 	    }
 	    PROTECT(R_fcall1 = lang2(heightPreFn, grob));
-	    eval(R_fcall1, R_gridEvalEnv);
-	    PROTECT(R_fcall2 = lang2(heightFn, grob));
+	    PROTECT(updatedgrob = eval(R_fcall1, R_gridEvalEnv));
+	    PROTECT(R_fcall2 = lang2(heightFn, updatedgrob));
 	    PROTECT(height = eval(R_fcall2, R_gridEvalEnv));
 	    result = pureNullUnit(height, 0, dd);
-	    PROTECT(R_fcall3 = lang2(heightPostFn, grob));
+	    PROTECT(R_fcall3 = lang2(heightPostFn, updatedgrob));
 	    eval(R_fcall3, R_gridEvalEnv);
 	    setGridStateElement(dd, GSS_GPAR, savedgpar);
 	    setGridStateElement(dd, GSS_CURRGROB, savedgrob);
-	    UNPROTECT(10);
+	    UNPROTECT(11);
 	} else
 	    result = unitUnit(unit, index) == L_NULL;
     }
@@ -445,7 +445,7 @@ double evaluateGrobUnit(double value, SEXP grob,
     SEXP preFn,  postFn, findGrobFn;
     SEXP evalFnx = R_NilValue, evalFny = R_NilValue;
     SEXP R_fcall0, R_fcall1, R_fcall2x, R_fcall2y, R_fcall3;
-    SEXP savedgpar, savedgrob;
+    SEXP savedgpar, savedgrob, updatedgrob;
     SEXP unitx = R_NilValue, unity = R_NilValue;
     double result = 0.0;
     Rboolean protectedGrob = FALSE;
@@ -531,7 +531,7 @@ double evaluateGrobUnit(double value, SEXP grob,
     /* Call preDraw(grob) 
      */
     PROTECT(R_fcall1 = lang2(preFn, grob));
-    eval(R_fcall1, R_gridEvalEnv);
+    PROTECT(updatedgrob = eval(R_fcall1, R_gridEvalEnv));
     /* 
      * The call to preDraw may have pushed viewports and/or
      * enforced gpar settings, SO we need to re-establish the
@@ -566,20 +566,20 @@ double evaluateGrobUnit(double value, SEXP grob,
 	{
 	    SEXP val;
 	    PROTECT(val = ScalarReal(value));
-	    PROTECT(R_fcall2x = lang3(evalFnx, grob, val));
+	    PROTECT(R_fcall2x = lang3(evalFnx, updatedgrob, val));
 	    PROTECT(unitx = eval(R_fcall2x, R_gridEvalEnv));
-	    PROTECT(R_fcall2y = lang3(evalFny, grob, val));
+	    PROTECT(R_fcall2y = lang3(evalFny, updatedgrob, val));
 	    PROTECT(unity = eval(R_fcall2y, R_gridEvalEnv));
 	}
 	break;
     case 2:
-	PROTECT(R_fcall2x = lang2(evalFnx, grob));
+	PROTECT(R_fcall2x = lang2(evalFnx, updatedgrob));
 	PROTECT(unitx = eval(R_fcall2x, R_gridEvalEnv));
 	break;
     case 3:
     case 4:
     case 5:
-	PROTECT(R_fcall2y = lang2(evalFny, grob));
+	PROTECT(R_fcall2y = lang2(evalFny, updatedgrob));
 	PROTECT(unity = eval(R_fcall2y, R_gridEvalEnv));
 	break;
     }
@@ -652,7 +652,7 @@ double evaluateGrobUnit(double value, SEXP grob,
     }
     /* Call postDraw(grob)
      */
-    PROTECT(R_fcall3 = lang2(postFn, grob));
+    PROTECT(R_fcall3 = lang2(postFn, updatedgrob));
     eval(R_fcall3, R_gridEvalEnv);
     /* 
      * Restore the saved gpar state and grob
@@ -664,13 +664,13 @@ double evaluateGrobUnit(double value, SEXP grob,
     switch(evalType) {
     case 0:
     case 1:
-	UNPROTECT(13);
+	UNPROTECT(14);
 	break;
     case 2:
     case 3:
     case 4:
     case 5:
-	UNPROTECT(9);
+	UNPROTECT(10);
     }
     /* Return the transformed width
      */

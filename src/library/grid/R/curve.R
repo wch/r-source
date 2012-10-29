@@ -254,7 +254,7 @@ cbDiagram <- function(x1, y1, x2, y2, cps) {
                 gp=gpar(col="blue"))
 }
 
-straightCurve <- function(x1, y1, x2, y2, arrow, gp, debug) {
+straightCurve <- function(x1, y1, x2, y2, arrow, debug) {
     if (debug) {
         xm <- (x1 + x2)/2
         ym <- (y1 + y2)/2
@@ -263,10 +263,12 @@ straightCurve <- function(x1, y1, x2, y2, arrow, gp, debug) {
 
     segmentsGrob(x1, y1, x2, y2,
                  default.units="inches",
-                 arrow=arrow,
-                 gp=gp)
+                 arrow=arrow, name="segment")
 }
 
+# Return a gTree (even if it only has one grob as a child)
+# because that is the only way to get more than one child
+# to draw
 calcCurveGrob <- function(x, debug) {
     x1 <- x$x1
     x2 <- x$x2
@@ -281,7 +283,6 @@ calcCurveGrob <- function(x, debug) {
     inflect <- x$inflect
     arrow <- x$arrow
     open <- x$open
-    gp <- x$gp
 
     # Calculate a set of control points based on:
     # 'curvature', ' angle', and 'ncp',
@@ -294,7 +295,8 @@ calcCurveGrob <- function(x, debug) {
     # about the origin.
 
     # Do everything in inches to make things easier.
-    # Once this is a drawDetails method, the conversions will not be an
+    # Because this is within a makeContent() method,
+    # the conversions will not be an
     # issue (in terms of device resizes).
     x1 <- convertX(x1, "inches", valueOnly=TRUE)
     y1 <- convertY(y1, "inches", valueOnly=TRUE)
@@ -314,16 +316,18 @@ calcCurveGrob <- function(x, debug) {
     y1 <- rep(y1, length.out=maxn)
     x2 <- rep(x2, length.out=maxn)
     y2 <- rep(y2, length.out=maxn)
-
+    if (!is.null(arrow))
+        arrow <- rep(arrow, length.out=maxn)
+    
     if (curvature == 0) {
-        straightCurve(x1, y1, x2, y2, arrow, gp, debug)
+        children <- gList(straightCurve(x1, y1, x2, y2, arrow, debug))
     } else {
         # Treat any angle less than 1 or greater than 179 degrees
         # as a straight line
         # Takes care of some nasty limit effects as well as simplifying
         # things
         if (angle < 1 || angle > 179) {
-            straightCurve(x1, y1, x2, y2, arrow, gp, debug)
+            children <- gList(straightCurve(x1, y1, x2, y2, arrow, debug))
         } else {
             # Handle 'square' vertical and horizontal lines
             # separately
@@ -331,21 +335,21 @@ calcCurveGrob <- function(x, debug) {
                 subset <- x1 == x2 | y1 == y2
                 straightGrob <- straightCurve(x1[subset], y1[subset],
                                                x2[subset], y2[subset],
-                                               arrow, gp, debug)
+                                               arrow, debug)
                 # Remove these from the curves to draw
                 x1 <- x1[!subset]
                 x2 <- x2[!subset]
                 y1 <- y1[!subset]
                 y2 <- y2[!subset]
-                arrow <- arrow[!subset]
-                gp <- gp[!subset]
+                if (!is.null(arrow))
+                    arrow <- arrow[!subset]
             } else {
                 straightGrob <- NULL
             }
             ncurve <- length(x1)
             # If nothing to draw, we're done
             if (ncurve == 0) {
-                straightGrob
+                children <- gList(straightGrob)
             } else {
                 if (inflect) {
                     xm <- (x1 + x2)/2
@@ -395,11 +399,11 @@ calcCurveGrob <- function(x, debug) {
                                       rep(0, ncurve), shape2,
                                       rep(0, ncurve)),
                                     arrow=arrow, open=open,
-                                    gp=gp)
+                                    name="xspline")
                     if (is.null(straightGrob)) {
-                        splineGrob
+                        children <- gList(splineGrob)
                     } else {
-                        gList(straightGrob, splineGrob)
+                        children <- gList(straightGrob, splineGrob)
                     }
                 } else {
                     shape <- rep(rep(shape, length.out=ncp), ncurve)
@@ -431,16 +435,18 @@ calcCurveGrob <- function(x, debug) {
                                               shape=c(rep(0, ncurve), shape,
                                                 rep(0, ncurve)),
                                               arrow=arrow, open=open,
-                                              gp=gp)
+                                              name="xspline")
                     if (is.null(straightGrob)) {
-                        splineGrob
+                        children <- gList(splineGrob)
                     } else {
-                        gList(straightGrob, splineGrob)
+                        children <- gList(straightGrob, splineGrob)
                     }
                 }
             }
         }
     }
+    gTree(children=children,
+          name=x$name, gp=x$gp, vp=x$vp)
 }
 
 validDetails.curve <- function(x) {
@@ -462,24 +468,42 @@ validDetails.curve <- function(x) {
     x
 }
 
-drawDetails.curve <- function(x, ...) {
-    grid.draw(calcCurveGrob(x, x$debug))
+makeContent.curve <- function(x) {
+    calcCurveGrob(x, x$debug)
 }
 
 xDetails.curve <- function(x, theta) {
-    xDetails(calcCurveGrob(x, FALSE), theta)
+    cg <- calcCurveGrob(x, FALSE)
+    # Could do better here
+    # (result for more than 1 child is basically to give up)
+    if (length(cg$children) == 1)
+        xDetails(cg$children[[1]], theta)
+    else
+        xDetails(cg, theta)
 }
 
 yDetails.curve <- function(x, theta) {
-    yDetails(calcCurveGrob(x, FALSE), theta)
+    cg <- calcCurveGrob(x, FALSE)
+    if (length(cg$children) == 1)
+        yDetails(cg$children[[1]], theta)
+    else
+        yDetails(cg, theta)
 }
 
 widthDetails.curve <- function(x) {
-    widthDetails(calcCurveGrob(x, FALSE))
+    cg <- calcCurveGrob(x, FALSE)
+    if (length(cg$children) == 1)
+        widthDetails(cg$children[[1]])
+    else
+        widthDetails(cg)
 }
 
 heightDetails.curve <- function(x) {
-    heightDetails(calcCurveGrob(x, FALSE))
+    cg <- calcCurveGrob(x, FALSE)
+    if (length(cg$children) == 1)
+        heightDetails(cg$children[[1]])
+    else
+        heightDetails(cg)
 }
 
 curveGrob <- function(x1, y1, x2, y2, default.units="npc",
@@ -498,12 +522,12 @@ curveGrob <- function(x1, y1, x2, y2, default.units="npc",
         x2 <- unit(x2, default.units)
     if (!is.unit(y2))
         y2 <- unit(y2, default.units)
-    grob(x1=x1, y1=y1, x2=x2, y2=y2,
-         curvature=curvature, angle=angle, ncp=ncp,
-         shape=shape, square=square, squareShape=squareShape,
-         inflect=inflect, arrow=arrow, open=open, debug=debug,
-         name=name, gp=gp, vp=vp,
-         cl="curve")
+    gTree(x1=x1, y1=y1, x2=x2, y2=y2,
+          curvature=curvature, angle=angle, ncp=ncp,
+          shape=shape, square=square, squareShape=squareShape,
+          inflect=inflect, arrow=arrow, open=open, debug=debug,
+          name=name, gp=gp, vp=vp,
+          cl="curve")
 }
 
 grid.curve <- function(...) {

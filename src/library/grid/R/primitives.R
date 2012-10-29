@@ -35,12 +35,27 @@ arrow <- function(angle=30, length=unit(0.25, "inches"),
     a
 }
 
+length.arrow <- function(x) {
+    max(do.call("max", lapply(x, length)),
+                length(x$length))
+}
+
+rep.arrow <- function(x, ...) {
+    maxn <- length(x)
+    newa <- list(angle=rep(x$angle, length.out=maxn),
+                 length=rep(x$length, length.out=maxn),
+                 ends=rep(x$ends, length.out=maxn),
+                 type=rep(x$type, length.out=maxn))
+    newa <- lapply(newa, rep, ...)
+    class(newa) <- "arrow"
+    newa
+}
+
 # Method for subsetting "arrow" objects
 `[.arrow` <- function(x, index, ...) {
     if (length(index) == 0)
         return(NULL)
-    maxn <- max(do.call("max", lapply(x, length)),
-                length(x$length))
+    maxn <- length(x)
     newa <- list(angle=rep(x$angle, length.out=maxn),
                  length=rep(x$length, length.out=maxn),
                  ends=rep(x$ends, length.out=maxn),
@@ -920,12 +935,11 @@ splinegrob <- function(x) {
     xx <- convertX(x$x, "inches", valueOnly=TRUE)
     yy <- convertY(x$y, "inches", valueOnly=TRUE)
     sp <- splinePoints(xx, yy, xsplineIndex(x))
-    # NOTE: do NOT set vp=x$vp because this function is always
-    # called AFTER x$vp has been enforced
     xsplineGrob(sp$x, sp$y, default.units="inches",
                 id=x$id, id.lengths=x$id.lengths,
                 shape=1, repEnds=FALSE,
-                arrow=x$arrow, name=x$name, gp=x$gp)
+                arrow=x$arrow, name=x$name,
+                gp=x$gp, vp=x$vp)
 }
 
 validDetails.beziergrob <- function(x) {
@@ -964,8 +978,8 @@ validDetails.beziergrob <- function(x) {
     x
 }
 
-drawDetails.beziergrob <- function(x, recording=TRUE) {
-    drawDetails(splinegrob(x))
+makeContent.beziergrob <- function(x) {
+    splinegrob(x)
 }
 
 xDetails.beziergrob <- function(x, theta) {

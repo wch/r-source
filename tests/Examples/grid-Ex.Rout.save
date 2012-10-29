@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-10-19 r60966) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-10-28 r61038) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i686-pc-linux-gnu (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -690,6 +690,27 @@ NULL
 > 
 > 
 > cleanEx()
+> nameEx("grid.delay")
+> ### * grid.delay
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.delay
+> ### Title: Encapsulate calculations and generating a grob
+> ### Aliases: grid.delay delayGrob
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> grid.delay({
++               w <- convertWidth(unit(1, "inches"), "npc")
++               rectGrob(width=w)
++             },
++             list())
+> 
+> 
+> 
+> cleanEx()
 > nameEx("grid.draw")
 > ### * grid.draw
 > 
@@ -733,6 +754,39 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > grid.edit("xa", at = 1:4/5)
 > # Now it should work
 > try(grid.edit(gPath("xa", "ticks"), gp = gpar(col="green")))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("grid.force")
+> ### * grid.force
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.force
+> ### Title: Force a grob into its components
+> ### Aliases: grid.force grid.revert
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> grid.newpage()
+> pushViewport(viewport(width=.5, height=.5))
+> grid.xaxis()
+> grid.ls()
+GRID.text.248
+GRID.xaxis.249
+> grid.force()
+> grid.ls()
+GRID.text.248
+GRID.xaxis.249
+  major
+  ticks
+  labels
+> grid.revert()
+> grid.ls()
+GRID.text.248
+GRID.xaxis.249
 > 
 > 
 > 
@@ -1569,14 +1623,14 @@ List of 6
 > 
 > ### ** Examples
 > 
-> showViewport(viewport(width=.5, height=.5))
+> showViewport(viewport(width=.5, height=.5, name="vp"))
 > 
-> showViewport(vpStack(viewport(width=.5, height=.5),
-+                      viewport(width=.5, height=.5)),
+> showViewport(vpStack(viewport(width=.5, height=.5, name="vp1"),
++                      viewport(width=.5, height=.5, name="vp2")),
 +              newpage=TRUE)
 > 
-> showViewport(vpStack(viewport(width=.5, height=.5),
-+                      viewport(width=.5, height=.5)),
+> showViewport(vpStack(viewport(width=.5, height=.5, name="vp1"),
++                      viewport(width=.5, height=.5, name="vp2")),
 +              fill=rgb(1:0, 0:1, 0, .1),
 +              newpage=TRUE)
 > 
@@ -1894,13 +1948,7 @@ vp1::vp2
 > grid.draw(xg)
 > trace <- xsplinePoints(xg)
 > pushViewport(vp)
-> lapply(trace, function(t) grid.lines(t$x, t$y, gp=gpar(col="red")))
-[[1]]
-lines[GRID.lines.972] 
-
-[[2]]
-lines[GRID.lines.973] 
-
+> invisible(lapply(trace, function(t) grid.lines(t$x, t$y, gp=gpar(col="red"))))
 > popViewport()
 > 
 > grid.newpage()
@@ -1914,7 +1962,7 @@ lines[GRID.lines.973]
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.57 0.154 2.747 0 0 
+Time elapsed:  3.704 0.052 4.014 0 0 
 > grDevices::dev.off()
 null device 
           1 

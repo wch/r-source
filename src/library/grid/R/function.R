@@ -40,9 +40,10 @@ genXY <- function(x) {
     x$f(input)
 }
 
-drawDetails.functiongrob <- function(x, ...) {
+makeContent.functiongrob <- function(x) {
     xy <- genXY(x)
-    grid.lines(xy$x, xy$y, default.units=x$units)
+    linesGrob(xy$x, xy$y, default.units=x$units,
+              name=x$name, gp=x$gp, vp=x$vp)
 }
 
 xDetails.functiongrob <- function(x, theta) {

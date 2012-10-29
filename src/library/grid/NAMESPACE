@@ -19,7 +19,7 @@ export(
        "gpar", "get.gpar",
        "grid.collection",
        "grid.copy", "grid.display.list", "grid.draw",
-       "grid.record", "grid.DLapply",
+       "grid.record", "grid.delay", "grid.DLapply",
        "grid.grill",
        "grid.layout", "grid.locator",
        "grid.newpage",
@@ -46,6 +46,7 @@ export(
        "downViewport", "upViewport", "seekViewport",
        "showViewport",
 
+       "makeContext", "makeContent",
        "drawDetails", "preDrawDetails", "postDrawDetails",
        "editDetails",
        "validDetails",
@@ -66,6 +67,7 @@ export(
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
        "gEdit", "gEditList", "applyEdit", "applyEdits",
        "grid.grab", "grid.grabExpr",
+       "grid.force", "grid.revert",
        "grid.reorder", "reorderGrob",
        "grid.cap",
        "setChildren",
@@ -152,8 +154,6 @@ S3method("downViewport", "vpPath")
 
 S3method("drawDetails", "arrows")
 S3method("drawDetails", "circle")
-S3method("drawDetails", "curve")
-S3method("drawDetails", "functiongrob")
 S3method("drawDetails", "grob")
 S3method("drawDetails", "line.to")
 S3method("drawDetails", "lines")
@@ -163,13 +163,9 @@ S3method("drawDetails", "pathgrob")
 S3method("drawDetails", "polygon")
 S3method("drawDetails", "polyline")
 S3method("drawDetails", "xspline")
-S3method("drawDetails", "beziergrob")
 S3method("drawDetails", "rect")
-S3method("drawDetails", "roundrect")
 S3method("drawDetails", "segments")
 S3method("drawDetails", "text")
-S3method("drawDetails", "xaxis")
-S3method("drawDetails", "yaxis")
 
 S3method("editDetails", "default")
 S3method("editDetails", "xaxis")
@@ -194,8 +190,6 @@ S3method("gridList", "vpTree")
 S3method("gridList", "vpPath")
 S3method("gridList", "pop")
 S3method("gridList", "up")
-S3method("gridList", "frame")
-S3method("gridList", "cellGrob")
 
 S3method("grobHeight", "grob")
 S3method("grobHeight", "gList")
@@ -247,10 +241,8 @@ S3method("preDraw", "grob")
 S3method("preDraw", "gTree")
 
 S3method("preDrawDetails", "grob")
-S3method("preDrawDetails", "roundrect")
 
 S3method("postDrawDetails", "grob")
-S3method("postDrawDetails", "roundrect")
 
 S3method("record", "default")
 S3method("record", "grob")
@@ -365,8 +357,28 @@ S3method("dim", "layout")
 
 # S3 method for generic rep (in base)
 S3method("rep", "unit")
+S3method("rep", "arrow")
 
 # S3 method for generic length (in base)
 S3method("length", "unit")
 S3method("length", "unit.arithmetic")
 S3method("length", "unit.list")
+S3method("length", "arrow")
+
+S3method("makeContent", "beziergrob")
+S3method("makeContent", "roundrect")
+S3method("makeContent", "curve")
+S3method("makeContent", "functiongrob")
+S3method("makeContent", "delayedgrob")
+S3method("makeContent", "xaxis")
+S3method("makeContent", "yaxis")
+S3method("makeContent", "forcedgrob")
+
+S3method("makeContext", "roundrect")
+S3method("makeContext", "frame")
+S3method("makeContext", "cellGrob")
+S3method("makeContext", "forcedgrob")
+
+S3method("force", "default")
+S3method("force", "grob")
+S3method("force", "gTree")

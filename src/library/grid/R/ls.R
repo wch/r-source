@@ -108,6 +108,10 @@ gridList.grob <- function(x, grobs=TRUE, viewports=FALSE,
         result <- character()
         class(result) <- "gridListing"
     }
+    if (viewports) {
+        # Call makeContext() to get x$vp at drawing time
+        x <- makeContext(x)                
+    }    
     if (viewports && !is.null(x$vp)) {
         # Bit dodgy this bit
         # Emulates an "upViewport" on the DL
@@ -156,6 +160,10 @@ gridList.gTree <- function(x, grobs=TRUE, viewports=FALSE,
         name <- x$name
     }
     class(name) <- c("grobListing", "gridVectorListing", "gridListing")
+    if (viewports) {
+        # Call makeContext() to get x$vp and x$childrenvp at drawing time
+        x <- makeContext(x)                
+    }
     if (recursive) {
         # Allow for grobs=FALSE but viewports=TRUE
         result <- gridList(x$children[x$childrenOrder],

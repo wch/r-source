@@ -40,14 +40,15 @@ grid.frame <- function(layout=NULL, name=NULL, gp=gpar(), vp=NULL,
   invisible(fg)
 }
 
-preDrawDetails.frame <- function(x) {
-  if (!is.null(x$framevp))
-    pushViewport(x$framevp, recording=FALSE)
-}
-
-postDrawDetails.frame <- function(x) {
-  if (!is.null(x$framevp))
-    upViewport(recording=FALSE)
+makeContext.frame <- function(x) {
+    if (!is.null(x$framevp)) {
+        if (!is.null(x$vp)) {
+            x$vp <- vpStack(x$vp, x$framevp)
+        } else {
+            x$vp <- x$framevp
+        }
+    }
+    x
 }
 
 widthDetails.frame <- function(x) {
@@ -72,74 +73,6 @@ frameDim <- function(frame) {
       layout.ncol(viewport.layout(frame$framevp)))
 }
 
-# Get the framevp slot to show up in grid.ls() output
-# Minor mod of gridList.gTree() with childrenvp actions
-# replaced by framevp actions
-gridList.frame <- function(x, grobs=TRUE, viewports=FALSE,
-                           fullNames=FALSE, recursive=TRUE) {
-    if (fullNames) {
-        name <- as.character(x)
-    } else {
-        name <- x$name
-    }
-    class(name) <- c("grobListing", "gridVectorListing", "gridListing")
-    if (recursive) {
-        # Allow for grobs=FALSE but viewports=TRUE
-        result <- gridList(x$children,
-                          grobs=grobs, viewports=viewports,
-                          fullNames=fullNames, recursive=recursive)
-        if (viewports && !is.null(x$framevp)) {
-            # Bit dodgy this bit
-            # Emulates an "upViewport" on the DL
-            n <- depth(x$framevp)
-            class(n) <- "up"
-            result <- list(gridList(x$framevp,
-                                    grobs=grobs, viewports=viewports,
-                                    fullNames=fullNames,
-                                    recursive=recursive),
-                           result,
-                           gridList(n,
-                                    grobs=grobs, viewports=viewports,
-                                    fullNames=fullNames,
-                                    recursive=recursive))
-            class(result) <- c("gridListListing", "gridListing")
-        }
-        if (grobs) {
-            result <- list(parent=name,
-                           children=result)
-            class(result) <- c("gTreeListing", "gridTreeListing",
-                               "gridListing")
-        } else if (!viewports) {
-            result <- character()
-            class(result) <- "gridListing"
-        }
-    } else {
-        if (grobs) {
-            result <- name
-        } else {
-            result <- character()
-            class(result) <- "gridListing"
-        }
-    }
-    if (viewports && !is.null(x$vp)) {
-        # Bit dodgy this bit
-        # Emulates an "upViewport" on the DL
-        n <- depth(x$vp)
-        class(n) <- "up"
-        result <- list(gridList(x$vp,
-                                grobs=grobs, viewports=viewports,
-                                fullNames=fullNames,
-                                recursive=recursive),
-                       result,
-                       gridList(n,
-                                grobs=grobs, viewports=viewports,
-                                fullNames=fullNames,
-                                recursive=recursive))
-        class(result) <- c("gridListListing", "gridListing")
-    }
-    result
-}
-
 ################
 # cellGrob class
 ################
@@ -160,14 +93,15 @@ cellGrob <- function(col, row, border, grob, dynamic, vp) {
         children=gList(grob), cellvp=vp, cl="cellGrob")
 }
 
-preDrawDetails.cellGrob <- function(x) {
-  if (!is.null(x$cellvp))
-    pushViewport(x$cellvp, recording=FALSE)
-}
-
-postDrawDetails.cellGrob <- function(x) {
-  if (!is.null(x$cellvp))
-    upViewport(depth(x$cellvp), recording=FALSE)
+makeContext.cellGrob <- function(x) {
+    if (!is.null(x$cellvp)) {
+        if (!is.null(x$vp)) {
+            x$vp <- vpStack(x$vp, x$cellvp)
+        } else {
+            x$vp <- x$cellvp
+        }
+    }
+    x
 }
 
 # For dynamically packed grobs, need to be able to
@@ -184,15 +118,6 @@ heightDetails.cellGrob <- function(x) {
     unit(1, "grobheight", gPath(x$children[[1L]]$name))
   else
     unit(1, "grobheight", x$children[[1L]])
-}
-
-# Get the cellvp slot to show up in grid.ls() output
-gridList.cellGrob <- function(x, grobs=TRUE, viewports=FALSE,
-                              fullNames=FALSE, recursive=TRUE) {
-    # Hack:  replace the (unused) vp slot with the cellvp slot
-    # THEN call gridList.gTree()
-    x$vp <- x$cellvp
-    gridList.gTree(x, grobs, viewports, fullNames, recursive)
 }
 
 ################

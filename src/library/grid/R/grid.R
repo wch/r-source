@@ -489,3 +489,30 @@ recordGrob <- function(expr, list,
   grob(expr=substitute(expr), list=list,
        name=name, gp=gp, vp=vp, cl="recordedGrob")
 }
+
+# Must only generate a grob, not modify drawing context
+makeContent.delayedgrob <- function(x) {
+    grob <- eval(x$expr, x$list, getNamespace("grid"))
+    if (is.grob(grob)) {
+        children <- gList(grob)
+    } else if (is.gList(grob)) {
+        children <- grob
+    } else {
+        stop("'expr' must return a grob or gList")
+    }
+    x <- setChildren(x, children)
+    x
+}
+
+grid.delay <- function(expr, list,
+                       name=NULL, gp=NULL, vp=NULL) {
+    grid.draw(gTree(expr=substitute(expr), list=list,
+                    name=name, gp=gp, vp=vp, cl="delayedgrob"))
+}
+
+delayGrob <- function(expr, list,
+                      name=NULL, gp=NULL, vp=NULL) {
+    gTree(expr=substitute(expr), list=list,
+          name=name, gp=gp, vp=vp, cl="delayedgrob")
+}
+    

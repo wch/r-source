@@ -22,6 +22,27 @@ Changes from grid_2.15.0 to grid_2.16.0:
 5.  Bug fix for grid.ls() to report children of a gTree
     in the correct order.
 
+6.  New makeContext() and makeContent() "hook" functions
+    to allow alternative method for creating custom grobs.
+
+7.  Standard behaviour for grobs is now to use upViewport()
+    rather than popViewport() on the 'vp' slot.
+
+8.  New grid.force() function to provide access to grobs 
+    that are generated only at drawing time (for grobs that 
+    use the new makeContent() hook).
+
+9.  New grid.revert() function to revert the effect of 
+    grid.force().
+
+10. Implementation of "xaxis", "yaxis", "frame", "cellGrob",
+    "roundrect", "beziergrob", "curve", and "functiongrob"
+    changed to use makeContext() and makeContent() hooks.
+
+11. New grid.delay() and delayGrob() functions;  analogues
+    of grid.record() and recordGrob() that are implemented
+    via makeContent() hooks.
+
 
 Changes from grid_2.14.0 to grid_2.15.0:
 --------------------------------------
