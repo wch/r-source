@@ -93,12 +93,6 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \code{"packageInfo"}.  The structure of this class may change in
   future versions.  When used with the default value (\code{NULL}) for
   \code{lib.loc}, the attached packages are searched before the libraries.
-
-  In versions of \R{} prior to 2.14.0, a \code{.First.lib} function 
-  would be called when a package without a namespace was attached.
-  As of 2.14.0, all functions have namespaces; see 
-  \code{\link{.onLoad}} for current behaviour, and \sQuote{Writing R Extensions}
-  for a description of the older mechanism.
 }
 \value{
   Normally \code{library} returns (invisibly) the list of attached

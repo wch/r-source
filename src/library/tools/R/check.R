@@ -1417,10 +1417,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             out <- R_runR("tools:::.check_package_datasets('.')", R_opts2)
             out <- grep("Loading required package", out,
                         invert = TRUE, value = TRUE)
-            out <- grep("Warning: running .First.lib()", out,
-                        invert = TRUE, value = TRUE, fixed = TRUE)
-            out <- grep("using .First.lib()", out,
-                        invert = TRUE, value = TRUE, fixed = TRUE)
             out <- grep("Warning: changing locked binding", out,
                         invert = TRUE, value = TRUE, fixed = TRUE)
            if (length(out)) {

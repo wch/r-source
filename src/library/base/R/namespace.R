@@ -266,6 +266,9 @@ loadNamespace <- function (package, lib.loc = NULL,
                                 warn = FALSE)
                 if(grepl("# Default NAMESPACE created by R", ns[1L],
                          useBytes = TRUE)) {
+                    if (pkgname == Sys.getenv("R_INSTALL_PKG"))
+                        message(sprintf("running .First.lib() for namespace %s as .onLoad was not found", sQuote(pkgname)), domain = NA)
+
                     fn <- get(".First.lib", envir = env, inherits = FALSE)
                     fn(libname, pkgname)
                 }
@@ -841,7 +844,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
     ns <- asNamespace(ns)
     nsname <- getNamespaceName(ns)
     impvars <- if (missing(vars)) {
-        ## certain things should never be imported
+        ## certain things should never be imported:
+        ## but most of these are never exported (exception: .Last.lib)
         stoplist <- c(".__NAMESPACE__.", ".__S3MethodsTable__.",
                       ".packageName", ".First.lib", ".Last.lib",
                       ".onLoad", ".onAttach", ".conflicts.OK", ".noGenerics")
