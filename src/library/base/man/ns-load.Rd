@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-load}
@@ -53,9 +53,8 @@ unloadNamespace(ns)
   help page explains the details of how a particular installed package
   comes to be chosen.  After loading, \code{loadNamespace} looks for a
   hook function named \code{\link{.onLoad}} as an internal variable in
-  the namespace (it should not be exported).  This function is called
-  with the same arguments as \code{.First.lib}.  Partial loading is used
-  to support installation with the \option{--lazy} option.
+  the namespace (it should not be exported).  Partial loading is used
+  to support installation with lazy-loading.
 
   \code{loadNamespace} does not attach the namespace it loads to the
   search path.  \code{attachNamespace} can be used to attach a frame
