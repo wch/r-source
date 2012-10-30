@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 09:46\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -974,9 +974,6 @@ msgid "invalid to change the storage mode of a factor"
 msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr ""
-
-msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
 msgid "namespace is already attached"
