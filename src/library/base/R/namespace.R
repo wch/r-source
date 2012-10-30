@@ -104,24 +104,29 @@ getExportedValue <- function(ns, name) {
 
 .Firstlib_as_onLoad <-
     c(## automatically detected as calls to library.dynam
-      "AnalyzeFMRI", "BPHO","Bmix", "BradleyTerry", "CHsharp",
-      "CorrBin", "Covpath", "DDHFm", "DIME", "EMD", "ExPD2D",
-      "GWASExactHW", "IFP", "LowRankQP", "MAMSE", "NORMT3", "OPE",
-      "ORMDR", "PKfit", "PSCN", "Peaks", "RANN", "RSvgDevice",
-      "Rsundials", "SigWinR", "SpherWave", "TAHMMAnnot", "bear",
-      "bise", "biseVec", "bisoreg", "bitops", "cclust", "cheb",
+
+      "AnalyzeFMRI", "BPHO","Bmix", "BioPhysConnectoR",
+      "BradleyTerry", "CHsharp", "CorrBin", "Covpath", "DDHFm",
+      "DIME", "EMD", "ExPD2D", "GWASExactHW", "ICE", "IFP",
+      "LowRankQP", "MAMSE", "MISA", "NORMT3", "OPE", "ORMDR", "PKfit",
+      "POT", "PSCN", "PSM", "Peaks", "RANN", "RSvgDevice",
+      "ReadImages","Rsundials", "SpherWave", "TAHMMAnnot", "aceapck",
+      "adephylo", "bclust", "bear", "bise", "biseVec", "bisoreg",
+      "bitops", "boolfun", "caTools", "cat", "cclust", "cheb",
       "coenoflex", "dblcens", "dynCorr", "dynamo", "envelope",
       "exactLoglinTest", "fMultivar", "fdim", "fpow", "gibbs.met",
-      "hapsim", "hbmem", "hier.part", "ifs", "imputeMDR", "infotheo",
-      "intcox", "integrOmics", "ivivc", "lasso2", "lazy", "ljr",
-      "maxLinear", "mlegp", "mpa", "mvnmle", "nbpMatching", "npst",
-      "opefimor", "pamctdp", "panel", "pbivnorm", "poibin",
-      "polspline", "popgen", "ppMeasures", "predbayescor",
-      "predmixcor", "proptest", "ringscale", "rqmcmb2", "rsdepth",
-      "rvmbinary", "sampfling", "seqCBS", "spc", "stab", "stepwise",
-      "surv2sample", "survivalROC", "svmpath", "uncompress", "wombsoft",
+      "gRc", "hapsim", "hbmem", "hier.part", "ifs", "imputeMDR",
+      "infotheo", "intcox", "integrOmics", "ivivc", "lasso2", "lazy",
+      "ljr", "maxLinear", "mcga","mlegp", "mpa", "mspath", "mvnmle",
+      "nbpMatching", "nlstools","npst", "nsRFA", "opefimor",
+      "pamctdp", "panel", "pbivnorm", "poibin", "polspline", "popgen",
+      "ppMeasures", "predbayescor", "predmixcor", "proptest", "ref",
+      "rich", "ringscale", "rqmcmb2", "rsdepth", "rvmbinary",
+      "sampfling", "seqCBS", "spc", "stab", "stepwise", "surv2sample",
+      "survivalROC", "svmpath", "tdm", "uncompress", "wavelets", "wombsoft",
+
       ## Manually checked
-      "CarbonEL", "amei", "trex", "tripack")
+      "CarbonEL", "Rniftilib", "amei", "distory", "trex", "tripack")
 
 attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 {
