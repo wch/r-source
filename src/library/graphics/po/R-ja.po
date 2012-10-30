@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:26\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2011-10-22 08:06+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -246,6 +246,9 @@ msgstr " 分割点の数は色の数よりも一つ多くなければなりま�
 #, fuzzy
 msgid "'breaks' must all be finite"
 msgstr " 分割点はすべて有限でなければなりません "
+
+msgid "unsorted 'breaks' will be sorted before use"
+msgstr ""
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr " z の次元が length(x)(-1) × length(y)(-1) ではありません "

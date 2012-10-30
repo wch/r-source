@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 10:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2012-03-05 22:01+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -195,6 +195,9 @@ msgstr "unzulässiges Objekt in die Displayliste eingefügt"
 msgid "invalid modification of the display list"
 msgstr "Unzulässige Modifikation der Display-Liste"
 
+msgid "'expr' must return a grob or gList"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'grob' argument"
 msgstr "unzulässiges 'grob' argument"
@@ -322,6 +325,14 @@ msgstr "Grob '%s' nicht gefunden"
 #, fuzzy
 msgid "invalid element in the display list"
 msgstr "unzulässiges Element in der Display-Liste"
+
+#, fuzzy
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr "kann nur 'children' für einen 'gTree' setzen"
+
+#, fuzzy
+msgid "Invalid 'order'"
+msgstr "ungültiger 'frame'"
 
 msgid "'l' must be a layout"
 msgstr "'l' muss ein Layout sein"

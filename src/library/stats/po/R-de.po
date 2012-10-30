@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 16:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2012-03-06 09:25+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -142,6 +142,12 @@ msgid "F test assumes 'quasi%s' family"
 msgstr "F-Test unterstellt 'quasi%s' Familie"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+"AIC ist für dieses Modell nicht definiert, deshalb kann 'step' nicht "
+"fortfahren"
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 "AIC ist für dieses Modell nicht definiert, deshalb kann 'step' nicht "
 "fortfahren"
@@ -2122,7 +2128,7 @@ msgstr ""
 "spline: erster und letzter y Wert unterscheiden sich - benutze y[1] für beide"
 
 #, fuzzy
-msgid "'y' must be strictly increasing or decreasing"
+msgid "'y' must be increasing or decreasing"
 msgstr "'x' muss *streng* ansteigend sein (nicht NA)"
 
 msgid "'spline' requires n >= 1"
@@ -2297,6 +2303,10 @@ msgstr "nur Elemente dürfen ersetzt werden"
 
 msgid "'model' must be list"
 msgstr "'model' muss einen Liste sein"
+
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'tol' muss strikt positiv und endlich sein"
 
 msgid "'ar' part of model is not stationary"
 msgstr "'ar' Teil des Modells ist nicht stationär"

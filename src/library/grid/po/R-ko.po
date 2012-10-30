@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 10:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -199,6 +199,9 @@ msgstr "display 리스트상에서 부적절한 오브젝트가 삽입되었습�
 msgid "invalid modification of the display list"
 msgstr "display 리스트에서 부적절한 요소가 있습니다"
 
+msgid "'expr' must return a grob or gList"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'grob' argument"
 msgstr "부적절한 'rot' 값입니다"
@@ -324,6 +327,14 @@ msgstr "Grob '%s'가 검색되지 않습니다"
 #, fuzzy
 msgid "invalid element in the display list"
 msgstr "display 리스트에서 부적절한 요소가 있습니다"
+
+#, fuzzy
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr "'gTree'에는 'children'만을 세트할수 없지 않습니다"
+
+#, fuzzy
+msgid "Invalid 'order'"
+msgstr "부적절한 'frame'입니다"
 
 msgid "'l' must be a layout"
 msgstr "'l'는 layout가 나오지 않으면 되지 않습니다"

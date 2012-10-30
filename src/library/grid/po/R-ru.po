@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 10:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2012-03-15 11:27-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -200,6 +200,9 @@ msgstr "Неправильный объект вставлен в список изображений"
 msgid "invalid modification of the display list"
 msgstr "Неправильное изменение в списке изображений"
 
+msgid "'expr' must return a grob or gList"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'grob' argument"
 msgstr "неправильный аргумент 'grob'"
@@ -325,6 +328,14 @@ msgstr "Grob '%s' не найден"
 #, fuzzy
 msgid "invalid element in the display list"
 msgstr "Неправильный элемент в списке изображений"
+
+#, fuzzy
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr "Могу только определить 'children' для 'gTree'"
+
+#, fuzzy
+msgid "Invalid 'order'"
+msgstr "Неправильная 'frame'"
 
 msgid "'l' must be a layout"
 msgstr "'l' должен быть эскизом"

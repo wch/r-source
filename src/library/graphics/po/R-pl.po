@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:26\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -252,6 +252,9 @@ msgstr "potrzeba mieć o jedną przerwę więcej niż jest kolorów"
 #, fuzzy
 msgid "'breaks' must all be finite"
 msgstr "wszystkie przerwy muszą być skończone"
+
+msgid "unsorted 'breaks' will be sorted before use"
+msgstr ""
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "wymiary 'z' nie są równe 'length(x)(-1) * length(y)(-1)'"

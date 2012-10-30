@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:26\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -250,6 +250,9 @@ msgstr "분할점의 수는 색의 수보다 하나가 많지 않으면 안됩�
 #, fuzzy
 msgid "'breaks' must all be finite"
 msgstr "분할점은 모두 유한하지 않으면 되지 않습니다"
+
+msgid "unsorted 'breaks' will be sorted before use"
+msgstr ""
 
 #, fuzzy
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"

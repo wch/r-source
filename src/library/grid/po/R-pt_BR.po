@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 10:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -192,6 +192,9 @@ msgstr "Objeto inválido inserido na lista de exibição"
 msgid "invalid modification of the display list"
 msgstr "Elemento Inválido na lista de exibição"
 
+msgid "'expr' must return a grob or gList"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'grob' argument"
 msgstr "Argumento 'grob' inválido"
@@ -317,6 +320,14 @@ msgstr "Grob '%s' não encontrado"
 #, fuzzy
 msgid "invalid element in the display list"
 msgstr "Elemento Inválido na lista de exibição"
+
+#, fuzzy
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr "Só é permitido definir 'children' para uma 'gTree'"
+
+#, fuzzy
+msgid "Invalid 'order'"
+msgstr "'frame' inválido"
 
 msgid "'l' must be a layout"
 msgstr "'l' deve ser um layout"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 16:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -137,6 +137,11 @@ msgid "F test assumes 'quasi%s' family"
 msgstr " F テストは 'quasi%s' ファミリを仮定しています "
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+" AIC はこのモデルには定義されません、従って 'step' を進めることができません "
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 " AIC はこのモデルには定義されません、従って 'step' を進めることができません "
 
@@ -2103,7 +2108,7 @@ msgstr ""
 " spline: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します "
 
 #, fuzzy
-msgid "'y' must be strictly increasing or decreasing"
+msgid "'y' must be increasing or decreasing"
 msgstr " 'x'は厳密に増加している必要があります (non - NA) "
 
 msgid "'spline' requires n >= 1"
@@ -2278,6 +2283,10 @@ msgstr " 置き換えるべき値が多すぎます "
 
 msgid "'model' must be list"
 msgstr " 'model' はリストである必要があります "
+
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "  'tol' は正で有限な数値でなければなりません "
 
 msgid "'ar' part of model is not stationary"
 msgstr " モデルの 'ar' 部分が定常ではありません "

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 16:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -149,6 +149,10 @@ msgid "F test assumes 'quasi%s' family"
 msgstr "Тест Фишера предполагает семейство 'quasi%s'"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr "AIC для этой модели не определена, поэтому 'step' не работает"
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr "AIC для этой модели не определена, поэтому 'step' не работает"
 
 msgid "'A' must be an array or table"
@@ -2128,7 +2132,7 @@ msgstr ""
 "spline: первое и последнее значения y различны -- использую y[1] для обоих"
 
 #, fuzzy
-msgid "'y' must be strictly increasing or decreasing"
+msgid "'y' must be increasing or decreasing"
 msgstr "'x' должно *только* увеличиваться (не - NA)"
 
 msgid "'spline' requires n >= 1"
@@ -2303,6 +2307,10 @@ msgstr "разрешены только замены элементов"
 
 msgid "'model' must be list"
 msgstr "'model' должна быть списком"
+
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'tol' должен быть ненулевым положительным и конечным"
 
 msgid "'ar' part of model is not stationary"
 msgstr "'ar'-часть модели нестационарна"

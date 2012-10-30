@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 16:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -142,6 +142,11 @@ msgid "F test assumes 'quasi%s' family"
 msgstr "il test F assume una famiglia 'quasi%s'"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+"l'AIC non è definito per questo modello, quindi 'step' non può procedere"
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 "l'AIC non è definito per questo modello, quindi 'step' non può procedere"
 
@@ -2190,7 +2195,7 @@ msgstr ""
 "spline: il primo e l'ultimo valore di y sono diversi - uso y[1] per entrambi"
 
 #, fuzzy
-msgid "'y' must be strictly increasing or decreasing"
+msgid "'y' must be increasing or decreasing"
 msgstr "'vec' deve essere ordinata in modo non-decrescente"
 
 #, fuzzy
@@ -2369,6 +2374,10 @@ msgstr "indicati troppo valori da sostituire"
 
 msgid "'model' must be list"
 msgstr "'model' deve essere di tipo list"
+
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'ratio' deve essere un numero positivo"
 
 msgid "'ar' part of model is not stationary"
 msgstr "la parte 'ar' del modello non è stazionaria"

@@ -875,8 +875,10 @@
 		    ## </NOTE>
 		} else {
 		    cat("",
-			'.First.lib <- function(lib, pkg) NULL',
+                        '.onLoad <- function (libname, pkgname) NULL',
+                        '.onAttach <- function (libname, pkgname) NULL',
 			'.Last.lib <- function(libpath) NULL',
+			'.onUnload <- function(libpath) NULL',
 			sep = "\n",
 			file = file.path(instdir, "R", pkg_name), append = TRUE)
 		}

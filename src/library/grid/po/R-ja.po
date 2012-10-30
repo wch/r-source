@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 10:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2012-02-26 14:01+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -199,6 +199,9 @@ msgstr " ディスプレイリスト上に不正なオブジェクトが挿入�
 msgid "invalid modification of the display list"
 msgstr " ディスプレイリストの中に不正な要素があります "
 
+msgid "'expr' must return a grob or gList"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'grob' argument"
 msgstr " 不正な 'grob' 引数です "
@@ -325,6 +328,14 @@ msgstr " Grob '%s' が見つかりません "
 #, fuzzy
 msgid "invalid element in the display list"
 msgstr " ディスプレイリストの中に不正な要素があります "
+
+#, fuzzy
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr " 'gTree' には 'children' しかセットできません "
+
+#, fuzzy
+msgid "Invalid 'order'"
+msgstr " 不正な 'frame' です "
 
 msgid "'l' must be a layout"
 msgstr " 'l' は layout でなければなりません "

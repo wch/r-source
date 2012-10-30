@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 16:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -147,6 +147,11 @@ msgid "F test assumes 'quasi%s' family"
 msgstr "F test는 동일한 %s패밀리입니다"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+"AIC는 이 모델에서 정의 되지 않습니다, 따라서 'step'를 진행시킬 수가 없습니다"
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 "AIC는 이 모델에서 정의 되지 않습니다, 따라서 'step'를 진행시킬 수가 없습니다"
 
@@ -2195,7 +2200,7 @@ msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위해서 사용합니다"
 
 #, fuzzy
-msgid "'y' must be strictly increasing or decreasing"
+msgid "'y' must be increasing or decreasing"
 msgstr "'vec'는 비감소 순서에 소트되어 있지 않으면 되지 않습니다"
 
 #, fuzzy
@@ -2375,6 +2380,10 @@ msgstr "치환해야 할 값이 너무 많습니다"
 
 msgid "'model' must be list"
 msgstr "'model'는 리스트일 필요가 있습니다"
+
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'ratio'는 단일의 positive의 수가 아니면 되지 않습니다"
 
 msgid "'ar' part of model is not stationary"
 msgstr "모델의 'ar'부분이 정상이 아닙니다"

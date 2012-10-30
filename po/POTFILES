@@ -3,7 +3,6 @@
 
 src/appl/optim.c
 src/appl/pretty.c
-src/appl/rcont.c
 src/appl/strsignif.c
 src/gnuwin32/dynload.c
 src/gnuwin32/extra.c

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 16:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -139,6 +139,10 @@ msgid "F test assumes 'quasi%s' family"
 msgstr "F检验假設'quasi%s'家族"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
 
 msgid "'A' must be an array or table"
@@ -2055,7 +2059,7 @@ msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 第一个和最后一个y的值不相等-两个用y[1]"
 
 #, fuzzy
-msgid "'y' must be strictly increasing or decreasing"
+msgid "'y' must be increasing or decreasing"
 msgstr "'x'必需*严格*增加(非NA)"
 
 msgid "'spline' requires n >= 1"
@@ -2225,6 +2229,10 @@ msgstr "只能提供替换值"
 
 msgid "'model' must be list"
 msgstr "'model'必需是串列"
+
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'tol'必需是有限的正数"
 
 msgid "'ar' part of model is not stationary"
 msgstr "模型的'ar'部分不平穩"

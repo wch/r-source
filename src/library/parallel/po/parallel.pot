@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 10:57+0100\n"
+"POT-Creation-Date: 2012-10-30 08:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,73 +17,73 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fork.c:139 fork.c:142
+#: fork.c:135 fork.c:138
 msgid "unable to create a pipe"
 msgstr ""
 
-#: fork.c:153
+#: fork.c:149
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr ""
 
-#: fork.c:182
+#: fork.c:178
 msgid "memory allocation error"
 msgstr ""
 
-#: fork.c:220
+#: fork.c:216
 msgid "only children can send data to the master process"
 msgstr ""
 
-#: fork.c:222
+#: fork.c:218
 msgid "there is no pipe to the master process"
 msgstr ""
 
-#: fork.c:224
+#: fork.c:220
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 
-#: fork.c:233 fork.c:240 fork.c:570
+#: fork.c:229 fork.c:236 fork.c:566
 msgid "write error, closing pipe to the master"
 msgstr ""
 
-#: fork.c:253
+#: fork.c:249
 msgid "only the master process can send data to a child process"
 msgstr ""
 
-#: fork.c:260
+#: fork.c:256
 #, c-format
 msgid "child %d does not exist"
 msgstr ""
 
-#: fork.c:266
+#: fork.c:262
 msgid "write error"
 msgstr ""
 
-#: fork.c:346 fork.c:468
+#: fork.c:342 fork.c:464
 #, c-format
 msgid "error '%s' in select"
 msgstr ""
 
-#: fork.c:552
+#: fork.c:548
 msgid "'mckill' failed"
 msgstr ""
 
-#: fork.c:562
+#: fork.c:558
 msgid "'mcexit' can only be used in a child process"
 msgstr ""
 
-#: fork.c:583
+#: fork.c:579
 msgid "'mcexit' failed"
 msgstr ""
 
-#: fork.c:605 fork.c:614
+#: fork.c:601 fork.c:610
 msgid "invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:625
+#: fork.c:621
 msgid "requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:648
+#: fork.c:644
 msgid "retrieving CPU affinity set failed"
 msgstr ""

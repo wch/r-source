@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 10:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -194,6 +194,9 @@ msgstr "显示列里所插入的对象不对"
 msgid "invalid modification of the display list"
 msgstr "显示单修改得不对"
 
+msgid "'expr' must return a grob or gList"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'grob' argument"
 msgstr "'grob'参数值不对"
@@ -319,6 +322,14 @@ msgstr "不存在Grob'%s'这个值"
 #, fuzzy
 msgid "invalid element in the display list"
 msgstr "显示单里的成分不对"
+
+#, fuzzy
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr "'gTree'只能给'children'设定值"
+
+#, fuzzy
+msgid "Invalid 'order'"
+msgstr "'frame'的值不对"
 
 msgid "'l' must be a layout"
 msgstr "'l'必需为布局"

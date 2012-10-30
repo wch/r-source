@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 16:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -142,6 +142,12 @@ msgid "F test assumes 'quasi%s' family"
 msgstr "Test Fishera zakłada rodzinę 'quasi%s'"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+"AIC nie jest zdefiniowane dla tego modelu, tak więc 'step' nie może zostać "
+"wykonany"
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 "AIC nie jest zdefiniowane dla tego modelu, tak więc 'step' nie może zostać "
 "wykonany"
@@ -2147,7 +2153,7 @@ msgstr ""
 "obu"
 
 #, fuzzy
-msgid "'y' must be strictly increasing or decreasing"
+msgid "'y' must be increasing or decreasing"
 msgstr "'x' musi być *ściśle* rosnące (nie - NA)"
 
 msgid "'spline' requires n >= 1"
@@ -2321,6 +2327,10 @@ msgstr "dozwolona jest tylko zamiana elementów"
 
 msgid "'model' must be list"
 msgstr "'model' musi być listą"
+
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'tol' musi być ściśle dodatnie i skończone"
 
 msgid "'ar' part of model is not stationary"
 msgstr "część 'ar' modelu nie jest stacjonarna"

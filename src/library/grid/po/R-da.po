@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 10:22\n"
+"POT-Creation-Date: 2012-10-30 08:34\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -175,6 +175,9 @@ msgstr ""
 msgid "invalid modification of the display list"
 msgstr ""
 
+msgid "'expr' must return a grob or gList"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'grob' argument"
 msgstr "Ugyldig »grob«"
@@ -280,6 +283,13 @@ msgstr ""
 
 msgid "invalid element in the display list"
 msgstr ""
+
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr ""
+
+#, fuzzy
+msgid "Invalid 'order'"
+msgstr "Ugyldig »frame«"
 
 msgid "'l' must be a layout"
 msgstr ""
