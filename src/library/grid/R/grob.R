@@ -2178,9 +2178,9 @@ reorderGrob <- function(x, order, back=TRUE) {
 #  something that will not draw is pretty high)
 # IF you want to reorder the grobs on the DL, do a grid.grab()
 # first and then reorder the children of the resulting gTree
-grid.reorder <- function(gPath, order, back=TRUE, redraw=TRUE) {
-    grob <- grid.get(gPath)
-    grid.set(gPath, reorderGrob(grob, order, back=back),
-             redraw=redraw)
+grid.reorder <- function(gPath, order, back=TRUE, grep=FALSE, redraw=TRUE) {
+    grob <- grid.get(gPath, grep=grep)
+    grid.set(gPath, reorderGrob(grob, order, back=back), 
+             grep=grep, redraw=redraw)
 }
     

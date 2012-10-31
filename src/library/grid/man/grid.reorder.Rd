@@ -11,7 +11,7 @@
   Change the order in which the children of a gTree get drawn.
 }
 \usage{
-grid.reorder(gPath, order, back=TRUE, redraw=TRUE)
+grid.reorder(gPath, order, back=TRUE, grep=FALSE, redraw=TRUE)
 reorderGrob(x, order, back=TRUE)
 }
 \arguments{
@@ -23,6 +23,7 @@ reorderGrob(x, order, back=TRUE)
     to all children of the gTree (see Details).}
   \item{back}{Controls what happens when the \code{order} does not
     specify all children of the gTree (see Details).}
+  \item{grep}{Should the \code{gPath} be treated as a regular expression?}
   \item{redraw}{Should the modified scene be redrawn?}
 }
 \details{
