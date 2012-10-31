@@ -2943,7 +2943,6 @@ in the sources.  However, not all versions of @R{} will read the
 * Load hooks::                  
 * useDynLib::                   
 * An example::                  
-* Summary -- converting an existing package::  
 * Namespaces with S4 classes and methods::  
 @end menu
 
@@ -3268,7 +3267,7 @@ space.
 @c for customizing it, is available from
 @c @uref{http://www.omegahat.org/@/examples/@/RDotCall}.
 
-@node An example, Summary -- converting an existing package, useDynLib, Package namespaces
+@node An example, Namespaces with S4 classes and methods, useDynLib, Package namespaces
 @subsection An example
 
 As an example consider two packages named @pkg{foo} and @pkg{bar}.  The
@@ -3340,37 +3339,7 @@ in @pkg{bar} the function @code{c} is defined to be equivalent to
 @code{sum}, but in @pkg{foo} the variable @code{c} refers to the
 standard function @code{c} in @pkg{base}.
 
-@node Summary -- converting an existing package, Namespaces with S4 classes and methods, An example, Package namespaces
-@subsection Summary -- converting an existing package
-
-To summarize, converting a pre-2.14.0 package to use a namespace involves
-several simple steps:
-
-@itemize @bullet
-@item
-Identify the public definitions and place them in @code{export} directives.
-@item
-Identify S3-style method definitions and write corresponding
-@code{S3method} declarations.
-@item
-Identify dependencies and replace any @code{require} calls by
-@code{import} directives (and make appropriate changes in the
-@code{Depends} and @code{Imports} fields of the @file{DESCRIPTION}
-file).
-@item
-Replace a @code{.First.lib} function with
-@code{.onLoad}/@code{.onAttach} functions or use a @code{useDynLib}
-directive in the @file{NAMESPACE} file.
-@end itemize
-
-The first two of these are done automatically, but a package author
-can usually improve on @R{}'s guesswork.
-
-@command{R CMD build} will add a basic @file{NAMESPACE} file to a
-package.  If this is edited, do remove the first line (as the comment in
-the file says).
-
-@node Namespaces with S4 classes and methods,  , Summary -- converting an existing package, Package namespaces
+@node Namespaces with S4 classes and methods,  , An example, Package namespaces
 @subsection Namespaces with S4 classes and methods
 
 Some additional steps are needed for packages which make use of formal
@@ -3384,7 +3353,7 @@ the @pkg{stats4} package has
 @findex exportMethods
 
 @example
-export(mle)
+export(mle) # exporting methods implicitly exports the generic
 importFrom("graphics", plot)
 importFrom("stats", optim, qchisq)
 ## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
