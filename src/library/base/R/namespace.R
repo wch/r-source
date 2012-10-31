@@ -102,31 +102,6 @@ getExportedValue <- function(ns, name) {
     get(name, envir = asNamespace(pkg), inherits = FALSE)
 }
 
-.Firstlib_as_onLoad <-
-    c(## automatically detected as calls to library.dynam
-
-      "BPHO","Bmix", "BioPhysConnectoR", "CHsharp", "CorrBin",
-      "Covpath", "DDHFm", "DIME", "EMD", "ExPD2D", "GWASExactHW",
-      "ICE", "IFP", "LowRankQP", "MAMSE", "MISA", "NORMT3", "OPE",
-      "ORMDR", "PKfit", "POT", "PSCN", "PSM", "Peaks", "RANN",
-      "RSvgDevice", "ReadImages","Rsundials", "SpherWave",
-      "TAHMMAnnot", "adephylo", "bclust", "bear", "bise", "biseVec",
-      "bisoreg", "bitops", "boolfun", "caTools", "cclust", "cheb",
-      "coenoflex", "dblcens", "dynCorr", "dynamo", "envelope",
-      "exactLoglinTest", "fMultivar", "fdim", "fpow", "gibbs.met",
-      "gRc", "hapsim", "hbmem", "hier.part", "ifs", "imputeMDR",
-      "infotheo", "intcox", "integrOmics", "ivivc", "lasso2", "lazy",
-      "ljr", "maxLinear", "mcga","mlegp", "mpa", "mspath", "mvnmle",
-      "nbpMatching", "nlstools","npst", "nsRFA", "opefimor",
-      "pamctdp", "panel", "pbivnorm", "popgen", "ppMeasures",
-      "predbayescor", "predmixcor", "proptest", "ref", "rich",
-      "ringscale", "rqmcmb2", "rsdepth", "rvmbinary", "sampfling",
-      "seqCBS", "spc", "stab", "stepwise", "surv2sample",
-      "survivalROC", "svmpath", "tdm", "uncompress", "wavelets",
-      "wombsoft",
-
-      ## Manually checked
-      "CarbonEL", "Rniftilib", "amei", "distory", "trex", "tripack")
 
 attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 {
@@ -142,8 +117,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
                               conditionMessage(res)),
                      call. = FALSE, domain = NA)
             }
-        } else if (!nsname %in% .Firstlib_as_onLoad &&
-                   !exists(".onLoad", envir = ns, inherits = FALSE) &&
+        } else if (!exists(".onLoad", envir = ns, inherits = FALSE) &&
                    !exists(".onAttach", envir = ns, inherits = FALSE) &&
                    exists(".First.lib", envir = env, inherits = FALSE)) {
             ## ignore .First.lib except for auto-generated NAMESPACEs
@@ -233,20 +207,6 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   deparse(conditionCall(res))[1L],
                                   conditionMessage(res)),
                          call. = FALSE, domain = NA)
-                }
-            } else if (pkgname %in% .Firstlib_as_onLoad &&
-                       !exists(".onLoad", envir = env, inherits = FALSE) &&
-                       exists(".First.lib", envir = env, inherits = FALSE)) {
-                ## ignore .First.lib except for auto-generated NAMESPACEs
-                ns <- readLines(file.path(libname, pkgname, "NAMESPACE"),
-                                warn = FALSE)
-                if(grepl("# Default NAMESPACE created by R", ns[1L],
-                         useBytes = TRUE)) {
-                    if (pkgname == Sys.getenv("R_INSTALL_PKG"))
-                        message(sprintf("running .First.lib() for namespace %s as .onLoad was not found", sQuote(pkgname)), domain = NA)
-
-                    fn <- get(".First.lib", envir = env, inherits = FALSE)
-                    fn(libname, pkgname)
                 }
             }
         }
