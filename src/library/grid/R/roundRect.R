@@ -119,7 +119,7 @@ rrpoints <- function(x) {
 makeContent.roundrect <- function(x) {
     boundary <- rrpoints(x)
     polygonGrob(boundary$x, boundary$y,
-                gp=x$gp, vp=x$vp)
+                name=x$name, gp=x$gp, vp=x$vp)
 }
 
 xDetails.roundrect <- function(x, theta) {
