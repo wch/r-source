@@ -105,25 +105,25 @@ getExportedValue <- function(ns, name) {
 .Firstlib_as_onLoad <-
     c(## automatically detected as calls to library.dynam
 
-      "AnalyzeFMRI", "BPHO","Bmix", "BioPhysConnectoR",
-      "BradleyTerry", "CHsharp", "CorrBin", "Covpath", "DDHFm",
-      "DIME", "EMD", "ExPD2D", "GWASExactHW", "ICE", "IFP",
-      "LowRankQP", "MAMSE", "MISA", "NORMT3", "OPE", "ORMDR", "PKfit",
-      "POT", "PSCN", "PSM", "Peaks", "RANN", "RSvgDevice",
-      "ReadImages","Rsundials", "SpherWave", "TAHMMAnnot", "aceapck",
-      "adephylo", "bclust", "bear", "bise", "biseVec", "bisoreg",
-      "bitops", "boolfun", "caTools", "cat", "cclust", "cheb",
+      "BPHO","Bmix", "BioPhysConnectoR", "CHsharp", "CorrBin",
+      "Covpath", "DDHFm", "DIME", "EMD", "ExPD2D", "GWASExactHW",
+      "ICE", "IFP", "LowRankQP", "MAMSE", "MISA", "NORMT3", "OPE",
+      "ORMDR", "PKfit", "POT", "PSCN", "PSM", "Peaks", "RANN",
+      "RSvgDevice", "ReadImages","Rsundials", "SpherWave",
+      "TAHMMAnnot", "adephylo", "bclust", "bear", "bise", "biseVec",
+      "bisoreg", "bitops", "boolfun", "caTools", "cclust", "cheb",
       "coenoflex", "dblcens", "dynCorr", "dynamo", "envelope",
       "exactLoglinTest", "fMultivar", "fdim", "fpow", "gibbs.met",
       "gRc", "hapsim", "hbmem", "hier.part", "ifs", "imputeMDR",
       "infotheo", "intcox", "integrOmics", "ivivc", "lasso2", "lazy",
       "ljr", "maxLinear", "mcga","mlegp", "mpa", "mspath", "mvnmle",
       "nbpMatching", "nlstools","npst", "nsRFA", "opefimor",
-      "pamctdp", "panel", "pbivnorm", "poibin", "polspline", "popgen",
-      "ppMeasures", "predbayescor", "predmixcor", "proptest", "ref",
-      "rich", "ringscale", "rqmcmb2", "rsdepth", "rvmbinary",
-      "sampfling", "seqCBS", "spc", "stab", "stepwise", "surv2sample",
-      "survivalROC", "svmpath", "tdm", "uncompress", "wavelets", "wombsoft",
+      "pamctdp", "panel", "pbivnorm", "popgen", "ppMeasures",
+      "predbayescor", "predmixcor", "proptest", "ref", "rich",
+      "ringscale", "rqmcmb2", "rsdepth", "rvmbinary", "sampfling",
+      "seqCBS", "spc", "stab", "stepwise", "surv2sample",
+      "survivalROC", "svmpath", "tdm", "uncompress", "wavelets",
+      "wombsoft",
 
       ## Manually checked
       "CarbonEL", "Rniftilib", "amei", "distory", "trex", "tripack")
