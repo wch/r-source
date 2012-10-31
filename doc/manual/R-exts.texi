@@ -766,20 +766,7 @@ may not be usable in some locales and may display incorrectly in others.
 
 @findex library.dynam
 Various @R{} functions in a package can be used to initialize and
-clean up.  @xref{Load hooks}.@footnote{Prior to @R{}
-version 2.14.0, the @code{.First.lib} and @code{.Last.lib} functions
-handled these tasks in packages without namespaces.  (In current @R{}
-versions, @emph{all} packages have namespaces.)  To help with
-conversion of old packages, here is how they were handled: It was
-conventional to define these functions in a file called @file{zzz.R}.
-If @code{.First.lib} was defined in a package, it was called with
-arguments @code{libname} and @code{pkgname} after the package was
-loaded and attached.  A common use was to call @code{library.dynam}
-inside @code{.First.lib} to load compiled code: another use was to
-call some functions with side effects.  If @code{.Last.lib} existed in
-a package it was called (with argument the full path to the installed
-package) just before the package was detached.}
-
+clean up.  @xref{Load hooks}.
 
 The @file{man} subdirectory should contain (only) documentation files
 for the objects in the package in @dfn{R documentation} (Rd) format.
@@ -3371,9 +3358,9 @@ Identify dependencies and replace any @code{require} calls by
 @code{Depends} and @code{Imports} fields of the @file{DESCRIPTION}
 file).
 @item
-Replace @code{.First.lib} functions with @code{.onLoad}/@code{.onAttach}
-functions or use a @code{useDynLib} directive in the @file{NAMESPACE}
-file.
+Replace a @code{.First.lib} function with
+@code{.onLoad}/@code{.onAttach} functions or use a @code{useDynLib}
+directive in the @file{NAMESPACE} file.
 @end itemize
 
 The first two of these are done automatically, but a package author
