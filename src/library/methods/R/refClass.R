@@ -460,27 +460,27 @@ makeEnvRefMethods <- function() {
     setMethod("$", "envRefClass", .dollarForEnvRefClass, where = envir)
     setMethod("$<-", "envRefClass", .dollarGetsForEnvRefClass, where = envir)
     setMethod("show", "envRefClass", function(object) object$show())
-    setClass("refObjectGenerator") # a temporary virtual class to allow the next definition
+    setClass("refGeneratorSlot") # a temporary virtual class to allow the next definition
     ## the refClassGenerator class
-    setClass("refClassGeneratorFunction", representation(generator ="refObjectGenerator"),
+    setClass("refObjectGenerator", representation(generator ="refGeneratorSlot"),
              contains = c("classGeneratorFunction", "refClass"), where = envir)
 
-    setMethod("$", "refClassGeneratorFunction",
+    setMethod("$", "refObjectGenerator",
               function(x, name) eval.parent(substitute(x@generator$name)), where = envir)
 
-    setMethod("$<-", "refClassGeneratorFunction",
+    setMethod("$<-", "refObjectGenerator",
               function(x, name, value) eval.parent(substitute(x@generator$name <- value)),
               where = envir)
     ## next call is touchy:  setRefClass() uses an object of class
-    ## refObjectGenerator, but the class should have been defined before
+    ## refGeneratorSlot, but the class should have been defined before
     ## that object is created.
-    setRefClass("refObjectGenerator",
+    setRefClass("refGeneratorSlot",
                 fields = list(def = "ANY", className = "ANY"),
                 methods = .GeneratorMethods)
     setMethod("show", "refClassRepresentation",
               function(object) showRefClassDef(object), where = envir)
     setMethod("show", "refObjectGenerator",
-              function(object) showRefClassDef(object$def, "Generator object for class"),
+              function(object) showRefClassDef(object$def, "Generator for class"),
               where = envir)
     setMethod("show", "refMethodDef", showClassMethod, where = envir)
 }
@@ -936,12 +936,12 @@ setRefClass <- function(Class, fields = character(),
                     fieldPrototypes = asEnv(fieldPrototypes),
                     refSuperClasses = refSuperClasses)
     assignClassDef(Class, classDef, where)
-    generator <- new("refObjectGenerator")
+    generator <- new("refGeneratorSlot")
     env <- as.environment(generator)
     env$def <- classDef
     env$className <- Class
     .declareVariables(classDef, where)
-    value <- new("refClassGeneratorFunction", classFun, generator = generator)
+    value <- new("refObjectGenerator", classFun, generator = generator)
     invisible(value)
 }
 
@@ -961,14 +961,14 @@ getRefClass <- function(Class, where = topenv(parent.frame())) {
         stop(gettextf("class must be a reference class representation or a character string; got an object of class %s",
                       dQuote(class(Class))),
              domain = NA)
-    generator <- new("refObjectGenerator")
+    generator <- new("refGeneratorSlot")
     env <- as.environment(generator)
     env$className <- Class
     env$def <- classDef
     classFun <- classGeneratorFunction(Class, where)
     ## but, the package is always from the class definition, not the local environment
     classFun@package <- classDef@package
-    new("refClassGeneratorFunction", classFun, generator = generator)
+    new("refObjectGenerator", classFun, generator = generator)
 }
 
 refClassFields <- function(Class) {
@@ -1248,15 +1248,3 @@ getMethodsAndAccessors <- function(Class) {
     accs <- sapply(ff, function(what) is(what, "activeBindingFunction") && !is(what, "defaultBindingFunction"))
     c(as.list(def@refMethods), as.list(ff)[accs])
 }
-
-## ## the refClassGenerator class
-## setClass("refClassGeneratorFunction", representation(generator ="refObjectGenerator"),
-##          contains = c("classGeneratorFunction", "refClass"))
-
-## setMethod("$", "refClassGeneratorFunction",
-##           function(x, name) eval.parent(substitute(x@generator$name)))
-
-## setMethod("$<-", "refClassGeneratorFunction",
-##           function(x, name, value) eval.parent(substitute(x@generator$name <- value)))
-
-

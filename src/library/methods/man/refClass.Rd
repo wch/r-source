@@ -13,9 +13,9 @@
 \alias{activeBindingFunction-class}
 \alias{defaultBindingFunction-class}
 \alias{uninitializedField-class}
-\alias{refClassGeneratorFunction-class}
 \alias{refClassRepresentation-class}
 \alias{refObjectGenerator-class}
+\alias{refGeneratorSlot-class}
 \alias{refClass-class}
 \alias{refObject-class}
 \alias{refMethodDef-class}
@@ -483,7 +483,7 @@ implementation may use such names for special purposes.
 \section{Reference Class Generators}{
 The call to \code{setRefClass} defines the specified class and
 returns a \dQuote{generator function} object for that class.
-This object has class \code{"refClassGeneratorFunction"}; it inherits
+This object has class \code{"refObjectGenerator"}; it inherits
 from \code{"function"} via \code{"classGeneratorFunction"} and can be
 called to generate new objects from the reference class.
 
@@ -493,10 +493,10 @@ It can be used to invoke reference methods and access fields in the usual way, b
 instead of being implemented directly as an environment it has a
 subsidiary generator object as a slot, a
 standard reference object (of class
-\code{"refObjectGenerator"}).
+\code{"refGeneratorSlot"}).
 Note that if one wanted to extend the reference class generator
 capability with a subclass, this should be done by subclassing
-\code{"refObjectGenerator"}, not \code{"refClassGeneratorFunction"}.
+\code{"refGeneratorSlot"}, not \code{"refObjectGenerator"}.
 
 The fields are \code{def}, the class definition, and \code{className},
 the character string name of the class.
