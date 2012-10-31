@@ -1,5 +1,5 @@
 Name,Country,City,URL,Host,Maintainer,OK,CountryCode
-0-Cloud,0-Cloud,0-Cloud,http://cran.rstudio.com/,"Rstudio, automatic redirection to servers worldwide","winston # stdout.org",0,
+0-Cloud,0-Cloud,0-Cloud,http://cran.rstudio.com/,"Rstudio, automatic redirection to servers worldwide","winston # stdout.org",1,
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
 "Argentina (Mendoza)",Argentina,Mendoza,http://r.mirror.mendoza-conicet.gob.ar/,"CONICET Mendoza","pcastorino # Mendoza-conicet.gob.ar",1,ar
 "Australia (Canberra)",Australia,Canberra,http://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au
@@ -26,9 +26,9 @@ Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catoli
 "Colombia (Cali)",Colombia,Cali,http://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co
 Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"dotsrc.org, Aalborg","mirror # dotsrc.org",1,dk
 Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnica del Litoral","jrodrig # espol.edu.ec",1,ec
-"France (Toulouse)",France,Toulouse,http://cran.cict.fr/,"CICT, Toulouse","David Allouche <allouche # tlse.toulouse.inra.fr>",0,fr
 "France (Lyon 1)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr
 "France (Lyon 2)",France,Lyon,http://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr
+"France (Montpellier)",France,Montpellier,http://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
 "Germany (Falkenstein)",Germany,Falkenstein,http://mirror.layerjet.com/cran,layerjet.com,"Elton Chung <elton # layerjet.com>",1,de
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
