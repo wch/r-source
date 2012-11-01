@@ -2754,10 +2754,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
 
                 ## look for warnings with auto-generated NAMESPACE files.
-                if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
-                    ll <- grep("running .First.lib() for", lines0,
-                               fixed = TRUE, value = TRUE)
-                }
+                ll <- if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
+                    grep("running .First.lib() for", lines0,
+                         fixed = TRUE, value = TRUE)
+                } else character()
                 if (length(lines) || (length(ll) && as_cran)) {
                     lines <- unique(c(lines, ll))
                     warningLog(Log, "Found the following significant warnings:")
