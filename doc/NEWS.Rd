@@ -245,7 +245,7 @@
 
       \item \code{setRefClass()} and \code{getRefClass()} now return
       class generator functions, similar to \code{setClass()}, but
-      stil with the reference fields and methods as before
+      still with the reference fields and methods as before
       (suggestion of Romain Francois).
     }
   }
