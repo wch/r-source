@@ -2703,7 +2703,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                              ": warning: .* is used uninitialized",
                              ": warning: .* set but not used",
                              ": warning: unused",
-                             "^running [.]First[.]lib",
                              # these are from era of static HTML
                              "missing links?:")
                 ## Warnings spotted by gcc with
@@ -2808,17 +2807,20 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
 
-
                 ## look for warnings with auto-generated NAMESPACE files.
-                if (as_cran && file.exists(file.path(pkgdir, "NAMESPACE"))) {
+                if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
                     ll <- grep("running .First.lib() for package", lines0,
                                fixed = TRUE, value = TRUE)
-                    lines <- c(lines, ll)
                 }
-                if (length(lines)) {
-		    lines <- unique(lines)
+                if (length(lines) || (length(ll) && check_incoming)) {
+                    lines <- unique(c(lines, ll))
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
+                    printLog0(Log, sprintf("See %s for details.\n",
+                                           sQuote(outfile)))
+                } else if(length(ll)) {
+                    noteLog(Log, "Found the following significant note:")
+                    printLog0(Log, .format_lines_with_indent(ll), "\n")
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
                 } else resultLog(Log, "OK")
@@ -3383,9 +3385,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
-    ## FIXME: change to TRUE below once 2.14.0 has been out for a year
     warn_on_namespace <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_WARN_ON_NAMESPACE_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_WARN_ON_NAMESPACE_", "TRUE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
