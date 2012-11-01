@@ -267,6 +267,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                                 warn = FALSE)
                 if(grepl("# Default NAMESPACE created by R", ns[1L],
                          useBytes = TRUE)) {
+                    message(sprintf("running .First.lib() for namespace %s as .onLoad was not found", sQuote(pkgname)), domain = NA)
                     fn <- get(".First.lib", envir = env, inherits = FALSE)
                     fn(libname, pkgname)
                 }
@@ -1321,7 +1322,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         parseDirective(e)
 
        # need to preserve the names on dynlibs, so unique() is not appropriate.
-    dynlibs <- dynlibs[!duplicated(dynlibs)]  
+    dynlibs <- dynlibs[!duplicated(dynlibs)]
     list(imports = imports, exports = exports, exportPatterns = exportPatterns,
          importClasses = importClasses, importMethods = importMethods,
          exportClasses = exportClasses,  exportMethods = exportMethods,

@@ -2636,6 +2636,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
                 if (install != "check")
                     lines <- readLines(outfile, warn = FALSE)
+
+                lines0 <- lines
                 warn_re <- c("^WARNING:",
                              "^Warning:",
                              ## <FIXME>
@@ -2751,10 +2753,20 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
 
-                if (length(lines)) {
-		    lines <- unique(lines)
+                ## look for warnings with auto-generated NAMESPACE files.
+                if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
+                    ll <- grep("running .First.lib() for", lines0,
+                               fixed = TRUE, value = TRUE)
+                }
+                if (length(lines) || (length(ll) && as_cran)) {
+                    lines <- unique(c(lines, ll))
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
+                    printLog0(Log, sprintf("See %s for details.\n",
+                                           sQuote(outfile)))
+                } else if(length(ll)) {
+                    noteLog(Log, "Found the following significant note:")
+                    printLog0(Log, .format_lines_with_indent(ll), "\n")
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
                 } else resultLog(Log, "OK")
