@@ -21,12 +21,11 @@ get <-
               inherits = TRUE)
     .Internal(get(x, envir, mode, inherits))
 
-mget <- function(x, envir, mode = "any",
-                 ifnotfound= list(function(x)
-                 stop(gettextf("value for %s not found", sQuote(x)),
-                      call. = FALSE, domain = NA)),
-          inherits = FALSE)
-     .Internal(mget(x, envir, mode, ifnotfound, inherits))
+mget <- function(x, envir, mode = "any", ifnotfound, inherits = FALSE)
+    .Internal(mget(x, envir, mode,
+                   if(missing(ifnotfound))
+                   list(function(x) stop(gettextf("value for %s not found", sQuote(x)))) else ifnotfound,
+                   inherits))
 
 ## DB's proposed name "getSlotOrComponent" is more precise but harder to type
 getElement <- function(object, name) {
