@@ -267,7 +267,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                                 warn = FALSE)
                 if(grepl("# Default NAMESPACE created by R", ns[1L],
                          useBytes = TRUE)) {
-                    message(sprintf("running .First.lib() for namespace %s as .onLoad was not found", sQuote(pkgname)), domain = NA)
+                    if (pkgname == Sys.getenv("R_INSTALL_PKG"))
+                        message(sprintf("running .First.lib() for namespace %s as .onLoad was not found", sQuote(pkgname)), domain = NA)
                     fn <- get(".First.lib", envir = env, inherits = FALSE)
                     fn(libname, pkgname)
                 }
