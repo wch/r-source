@@ -6,6 +6,7 @@
 \name{quartz}
 \alias{quartz}
 \alias{quartz.options}
+\alias{quartz.save}
 
 \title{MacOS X Quartz Device}
 \description{
