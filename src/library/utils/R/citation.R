@@ -1058,11 +1058,6 @@ function(package = "base", lib.loc = NULL, auto = NULL)
 
     author <- meta$`Authors@R`
     ## <FIXME>
-    ## Temporarily support Author@R fields ...
-    if(is.null(author))
-        author <- meta$`Author@R`
-    ## </FIXME>
-    ## <FIXME>
     ## Older versions took persons with no roles as "implied" authors.
     ## So for now check whether Authors@R gives any authors; if not fall
     ## back to the plain text Author field.
