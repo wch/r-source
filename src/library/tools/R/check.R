@@ -2807,12 +2807,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
 
-                ## look for warnings with auto-generated NAMESPACE files.
-                ## there should no longer be such files ....
-                ll <- if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
-                    grep("running .First.lib() for package", lines0,
-                         fixed = TRUE, value = TRUE)
-                } else character()
+                ## look for notes with auto-generated NAMESPACE files.
+                ll <- grep("running .First.lib() for package", lines0,
+                           fixed = TRUE, value = TRUE)
                 if (length(lines) || (length(ll) && check_incoming)) {
                     lines <- unique(c(lines, ll))
                     warningLog(Log, "Found the following significant warnings:")
