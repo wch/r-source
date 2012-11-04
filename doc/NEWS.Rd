@@ -579,6 +579,13 @@
       with a warning.
     }
   }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
+      and hence usable as e.g. \code{#if R_SVN_REVSION < 70000}.
+    }
+  }
   
   \subsection{BUG FIXES}{
     \itemize{
@@ -594,13 +601,6 @@
 
       \item \code{browseEnv(html = FALSE)} would segfault if called from
       \R (not \command{R.app}) on a CRAN-style Mac OS X build of \R.
-    }
-  }
-
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
-      and hence usable as e.g. \code{#if R_SVN_REVSION < 70000}.
     }
   }
 }
