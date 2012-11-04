@@ -1971,7 +1971,8 @@ following types of package distributions:
 @item 
 @code{"source"}: located at @file{src/contrib} and containing
 @file{.tar.gz} files.  Other forms of compression can be used, e.g.@:
-@file{.tar.bz2} or @file{.tar.xz} files.
+@file{.tar.bz2} or @file{.tar.xz} files.  Complete repositories contain
+the sources corresponding to any binary packages.
 
 @item 
 @code{"win.binary"}: located at @file{bin/windows/contrib/@var{x.y}} for
@@ -1997,6 +1998,9 @@ files you will need @file{PACKAGES.gz}.)
 
 To add your repository to the list offered by @code{setRepositories()},
 see the help file for that function.
+
+Incomplete repositories are better specified @emph{via} a
+@code{contriburl} argument than @emph{via} being set as a repository.
 
 A repository can contain subdirectories, when the descriptions in the
 @file{PACKAGES} file of packages in subdirectories must include a line
