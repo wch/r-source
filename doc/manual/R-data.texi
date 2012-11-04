@@ -69,6 +69,7 @@ The current version of this document is @value{VERSION}.
 * Importing from other statistical systems::  
 * Relational databases::        
 * Binary files::                
+* Image files::                 
 * Connections::                 
 * Network interfaces::          
 * Reading Excel spreadsheets::  
@@ -1725,7 +1726,7 @@ differences.
 @c within a data frame and PostgreSQL types.
 
 
-@node Binary files, Connections, Relational databases, Top
+@node Binary files, Image files, Relational databases, Top
 @chapter Binary files
 @cindex Binary files
 
@@ -1794,7 +1795,50 @@ ODBC driver (and the Visual FoxPro driver can also be used via
 @code{odbcDriverConnect}).
 @findex odbcConnectDbase
 
-@node Connections, Network interfaces, Binary files, Top
+@node Image files, Connections, Binary files, Top
+@chapter Image files
+
+A particular class of binary files are those representing images, and a
+not uncommon request is to read such a file into @R{} as a matrix.
+
+There are many formats for image files (most with lots of variants), and
+it may be necessary to use external conversion software to first convert
+the image into one of the formats for which a package currently provides
+an @R{} reader.  A versatile example of such software is ImageMagick and
+its fork GraphicsMagick.  These provide command-line programs
+@command{convert} and @command{gm convert} to convert images from one
+format to another: what formats they can input is determined when they
+are compiled, and the supported formats can be listed by
+@command{convert -list format}.
+
+Package @CRANpkg{pixmap} has a function @code{read.pnm} to read `portable
+anymap' images in PBM (black/white), PGM (grey) and PPM (RGB colour)
+formats.  These are also known as `netpbm' formats.
+
+Packages @CRANpkg{bmp}, @CRANpkg{jpeg} and @CRANpkg{png} read the
+formats after which they are named.  The grandly named @CRANpkg{ReadImages}
+package reads only JPEG and PNG. See also packages @CRANpkg{biOps},
+@CRANpkg{Momocs} and @CRANpkg{digitize}, and  Bioconductor package
+@pkg{EBImage}.
+
+TIFF is more a meta-format, a wrapper within which a very large variety
+of image formats can be embedded.  Packages @CRANpkg{rtiff} and
+@CRANpkg{tiff} can read some of the sub-formats (depending on the
+external @code{libtiff} software againsts which they are compiled).
+There some facilities for specialized sub-formats, for example in
+Bioconductor package @pkg{beadarray}.
+
+Raster files are common in the geographical sciences, and package
+@CRANpkg{rgdal} provides an interface to GDAL which provides some
+faciliites of its own to read raster files and links to many others.
+Which formats it supports is determined when GDAL is compiled: use
+@code{gdalDrivers()} to see what these are for the build you are using.
+It can be useful for uncommon formats such as JPEG 2000 (which is a
+different format from JPEG, and not currently supported in the Mac OS X
+nor Windows binary versions of @pkg{rgdal}).
+
+
+@node Connections, Network interfaces, Image files, Top
 @chapter Connections
 
 @cindex Connections
@@ -2245,7 +2289,7 @@ project at @uref{http://www.omegahat.org/RSCORBA/}.
 
 The most common R data import/export question seems to be `how do I read
 an Excel spreadsheet'.  This chapter collects together advice and
-options given earlier.  Note that most of the advice is for pre-Excel
+save given earlier.  Note that most of the advice is for pre-Excel
 2007 spreadsheets and not the later @file{.xlsx} format.
 
 @findex read.csv
