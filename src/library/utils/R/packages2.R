@@ -373,43 +373,48 @@ install.packages <-
     } else if (getOption("install.packages.check.source", "yes") %in% "yes"
                && (type %in% "win.binary" || substr(type, 1L, 10L) == "mac.binary")) {
         if (missing(contriburl) && is.null(available) && !is.null(repos)) {
-            contriburl <- contrib.url(repos, "source")
+            contriburl2 <- contrib.url(repos, "source")
 	    # The line above may have changed the repos option, so..
             if (missing(repos)) repos <- getOption("repos")
-            av1 <-
-                available.packages(contriburl = contriburl, method = method)
-            pkgs <- getDependencies(pkgs, dependencies, av1, lib)
-            ## Now see what we can get as binary packages.
-            available <-
-                available.packages(contriburl = contrib.url(repos, type), method = method)
-            bins <- pkgs[pkgs %in% row.names(available)]
-            ## so a package might only be available as source,
-            ## or it might be later in source.
-            ## FIXME: might only want to check on the same repository,
-            ## allowing for CRANextras.
-            na <- pkgs[!pkgs %in% bins]
-            if (length(na)) {
-                msg <-
-                    sprintf(ngettext(length(na),
-                                     "package %s is available as a source package but not as a binary",
-                                     "packages %s are available as source packages but not as binaries"),
-                            paste(sQuote(na), collapse=", "))
-                cat("\n   ", msg, "\n\n", sep = "")
-            }
-            binvers <- available[bins, "Version"]
-            srcvers <- av1[bins, "Version"]
-            later <- binvers < srcvers
-            if(any(later)) {
-                msg <- ngettext(sum(later),
-                                 "There is a binary version available (and will be installed) but the source version is later",
-                                 "There are binary versions available (and will be installed) but the source versions are later")
-                cat("\n",
-                    paste(strwrap(msg, indent = 2, exdent = 2), collapse = "\n"),
-                    ":\n", sep = "")
-                print(data.frame(`binary` = binvers, `source` = srcvers,
-                                 row.names = bins,
-                                 check.names = FALSE)[later, ])
-                cat("\n")
+            av1 <- try(suppressWarnings(available.packages(contriburl = contriburl2, method = method)), silent = TRUE)
+            if(inherits(av1, "try-error")) {
+                message("source repository is unavailable to check versions")
+                available <-
+                    available.packages(contriburl = contrib.url(repos, type), method = method)
+            } else {
+                pkgs <- getDependencies(pkgs, dependencies, av1, lib)
+                ## Now see what we can get as binary packages.
+                available <-
+                    available.packages(contriburl = contrib.url(repos, type), method = method)
+                bins <- pkgs[pkgs %in% row.names(available)]
+                ## so a package might only be available as source,
+                ## or it might be later in source.
+                ## FIXME: might only want to check on the same repository,
+                ## allowing for CRANextras.
+                na <- pkgs[!pkgs %in% bins]
+                if (length(na)) {
+                    msg <-
+                        sprintf(ngettext(length(na),
+                                         "package %s is available as a source package but not as a binary",
+                                         "packages %s are available as source packages but not as binaries"),
+                                paste(sQuote(na), collapse=", "))
+                    cat("\n   ", msg, "\n\n", sep = "")
+                }
+                binvers <- available[bins, "Version"]
+                srcvers <- av1[bins, "Version"]
+                later <- binvers < srcvers
+                if(any(later)) {
+                    msg <- ngettext(sum(later),
+                                    "There is a binary version available (and will be installed) but the source version is later",
+                                    "There are binary versions available (and will be installed) but the source versions are later")
+                    cat("\n",
+                        paste(strwrap(msg, indent = 2, exdent = 2), collapse = "\n"),
+                        ":\n", sep = "")
+                    print(data.frame(`binary` = binvers, `source` = srcvers,
+                                     row.names = bins,
+                                     check.names = FALSE)[later, ])
+                    cat("\n")
+                }
             }
         }
     }
