@@ -50,7 +50,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     the first element of \code{\link{.libPaths}()}.
   }
   \item{repos}{
-    character vector, the base URLs of the repositories
+    character vector, the base URL(s) of the repositories
     to use, e.g., the URL of a CRAN mirror such as
     \code{"http://cran.us.r-project.org"}.
 
@@ -59,10 +59,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{contriburl}{
     URL(s) of the contrib sections of the repositories.  Use this
-    argument only if your repository mirror is incomplete, e.g., because
-    you burned only the \file{contrib} section on a CD.  Overrides
-    argument \code{repos}.  As with \code{repos}, can also be \code{NULL}
-    to install from local files.
+    argument if your repository mirror is incomplete, e.g., because
+    you burned only the \file{contrib} section on a CD, or only have
+    binary packages.  Overrides argument \code{repos}.  As with
+    \code{repos}, can also be \code{NULL} to install from local files.
   }
   \item{method}{
     download method, see \code{\link{download.file}}.
@@ -228,6 +228,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 \preformatted{
       options(install.packages.check.source = "no")
 }
+  and should be if there is a partial repository containing only binary
+  files.
 }
 \value{
   Invisible \code{NULL}.
