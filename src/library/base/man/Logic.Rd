@@ -1,6 +1,6 @@
 % File src/library/base/man/Logic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Logic}
@@ -24,12 +24,12 @@ isTRUE(x)
 \alias{Logic}
 \alias{isTRUE}
 \description{
-  These operators act on logical and number-like vectors.
+  These operators act on raw, logical and number-like vectors.
 }
 \arguments{
-  \item{x, y}{logical or \sQuote{number-like} vectors (i.e., of type
-    \code{\link{double}} (class \code{\link{numeric}}), \code{\link{integer}},
-    \code{\link{complex}} or \code{\link{raw}}), or objects for
+  \item{x, y}{raw or logical or \sQuote{number-like} vectors (i.e., of types
+    \code{\link{double}} (class \code{\link{numeric}}), \code{\link{integer}}
+    and \code{\link{complex}})), or objects for
     which methods have been written.}
 }
 \details{
