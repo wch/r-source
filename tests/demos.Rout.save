@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-09-30 r60842) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-04 r61084) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin11.4.0/x86_64 (64-bit)
+Platform: x86_64-apple-darwin11.4.2/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -58,18 +58,15 @@ Type 'q()' to quit R.
 > 	###  Here's a solution	(see R-help mailing list, Dec 9, 2010):	 ###
 > 	##================================================================##
 > 
-> ##' We want to catch *and* save both errors and warnings, and in the case of
+> ##' Catch *and* save both errors and warnings, and in the case of
 > ##' a warning, also keep the computed result.
 > ##'
-> ##' @title tryCatch both warnings and errors
-> ##' @param expr
+> ##' @title tryCatch both warnings (with value) and errors
+> ##' @param expr an \R expression to evaluate
 > ##' @return a list with 'value' and 'warning', where
 > ##'   'value' may be an error caught.
-> ##' @author Martin Maechler
-> 
-> #  Copyright (C) 2010 The R Core Team
-> 
-> 
+> ##' @author Martin Maechler;
+> ##' Copyright (C) 2010-2012  The R Core Team
 > tryCatch.W.E <- function(expr)
 + {
 +     W <- NULL
@@ -119,8 +116,8 @@ List of 2
 +     "\n\t starting with 'is.' :\t  ",
 +     sum(grepl("^is\\.", ls.base[base.is.f])), "\n", sep = "")
 
-Number of base objects:		1275
-Number of functions in base:	1225
+Number of base objects:		1278
+Number of functions in base:	1229
 	 starting with 'is.' :	  50
 
 > ## 0.14  : 31
@@ -1523,5 +1520,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.696 0.059 1.806 0 0 
+Time elapsed:  1.682 0.062 1.783 0 0 
 > 
