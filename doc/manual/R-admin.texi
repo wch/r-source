@@ -1972,7 +1972,9 @@ following types of package distributions:
 @code{"source"}: located at @file{src/contrib} and containing
 @file{.tar.gz} files.  Other forms of compression can be used, e.g.@:
 @file{.tar.bz2} or @file{.tar.xz} files.  Complete repositories contain
-the sources corresponding to any binary packages.
+the sources corresponding to any binary packages, and in any case it is
+wise to have a @file{src/contrib} area with a possibly empty
+@file{PACKAGES} file.
 
 @item 
 @code{"win.binary"}: located at @file{bin/windows/contrib/@var{x.y}} for
