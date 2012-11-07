@@ -108,6 +108,8 @@ isTRUE(x)
   arguments.
 
   \code{\link{Syntax}} for operator precedence.
+  
+  \code{\link{bitwAnd}} for bitwise versions for integer vectors.
 }
 \examples{
 y <- 1 + (x <- stats::rpois(50, lambda=1.5) / 4 - 1)

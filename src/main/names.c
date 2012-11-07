@@ -907,6 +907,8 @@ FUNTAB R_FunTab[] =
 {"bitwiseNot",	do_bitwise, 	2,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"bitwiseOr",	do_bitwise, 	3,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"bitwiseXor",	do_bitwise, 	4,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"bitwiseShiftL", do_bitwise, 	5,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"bitwiseShiftR",  do_bitwise, 	6,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"serialize",	do_serialize, 	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"serializeb",	do_serialize, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"unserialize",	do_serialize, 	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},

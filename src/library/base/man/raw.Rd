@@ -1,6 +1,6 @@
 % File src/library/base/man/raw.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2004-2010 R Core Team
+% Copyright 2004-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{raw}
@@ -52,6 +52,8 @@ is.raw(x)
 }
 \seealso{
   \code{\link{charToRaw}}, \code{\link{rawShift}}, etc.
+
+  \code{\link{bitwAnd}} for bitwise operations on raw vectors.
 }
 \examples{
 xx <- raw(2)

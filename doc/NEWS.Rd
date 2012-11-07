@@ -247,6 +247,10 @@
       class generator functions, similar to \code{setClass()}, but
       still with the reference fields and methods as before
       (suggestion of Romain Francois).
+      
+      \item New functions \code{bitwNot}, \code{bitwAnd}, \code{bitwOr} and
+      \code{bitwXor}, using the internal interfaces previously used for
+      classes \code{"octmode"} and \code{"hexmode"}.
     }
   }
 

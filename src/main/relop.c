@@ -641,37 +641,104 @@ static SEXP raw_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 
 static SEXP bitwiseNot(SEXP a)
 {
-    R_xlen_t  i, m = XLENGTH(a);
-    SEXP ans = allocVector(INTSXP, m);
-    for(i = 0; i < m; i++) INTEGER(ans)[i] =  ~INTEGER(a)[i];
+    int np = 0;
+    if(isReal(a)) {a = PROTECT(coerceVector(a, INTSXP)); np++;}
+    R_xlen_t i, m = XLENGTH(a);
+    SEXP ans = allocVector(TYPEOF(a), m);
+    switch(TYPEOF(a)) {
+    case INTSXP:
+	for(i = 0; i < m; i++) {
+	    int aa = INTEGER(a)[i];
+	    INTEGER(ans)[i] = (aa == NA_INTEGER) ? aa : ~aa;
+	}
+	break;
+    default:
+	UNIMPLEMENTED_TYPE("bitNot", a);
+    }
+    if(np) UNPROTECT(np);
     return ans;
 }
 
 #define mymax(x, y) ((x >= y) ? x : y)
+
+#define BIT(op, name) \
+    int np = 0; \
+    if(isReal(a)) {a = PROTECT(coerceVector(a, INTSXP)); np++;} \
+    if(isReal(b)) {b = PROTECT(coerceVector(b, INTSXP)); np++;} \
+    if (TYPEOF(a) != TYPEOF(b)) error(_("'a' and 'b' must have the same type"));  \
+    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b), mn = (m && n) ? mymax(m, n) : 0;  \
+    SEXP ans = allocVector(TYPEOF(a), mn); \
+    switch(TYPEOF(a)) { \
+    case INTSXP: \
+	for(i = 0; i < mn; i++) { \
+	    int aa = INTEGER(a)[i%m], bb =  INTEGER(b)[i%n]; \
+	    INTEGER(ans)[i] = (aa == NA_INTEGER || bb == NA_INTEGER) ? NA_INTEGER : aa op bb; \
+	} \
+	break; \
+    default: \
+	UNIMPLEMENTED_TYPE(name, a); \
+    } \
+    if(np) UNPROTECT(np); \
+    return ans
+
 static SEXP bitwiseAnd(SEXP a, SEXP b)
 {
-    R_xlen_t  i, m = XLENGTH(a), n = XLENGTH(b), mn = (m && n) ? mymax(m, n) : 0;
-    SEXP ans = allocVector(INTSXP, mn);
-    for(i = 0; i < mn; i++)
-	INTEGER(ans)[i] = INTEGER(a)[i%m] & INTEGER(b)[i%n];
-    return ans;
+    BIT(&, "bitwAnd");
 }
 
 static SEXP bitwiseOr(SEXP a, SEXP b)
 {
-    R_xlen_t  i, m = XLENGTH(a), n = XLENGTH(b), mn = (m && n) ? mymax(m, n) : 0;
-    SEXP ans = allocVector(INTSXP, mn);
-    for(i = 0; i < mn; i++)
-	INTEGER(ans)[i] = INTEGER(a)[i%m] | INTEGER(b)[i%n];
-    return ans;
+    BIT(|, "bitwOr");
 }
 
 static SEXP bitwiseXor(SEXP a, SEXP b)
 {
-    R_xlen_t i,  m = XLENGTH(a), n = XLENGTH(b), mn = (m && n) ? mymax(m, n) : 0;
-    SEXP ans = allocVector(INTSXP, mn);
-    for(i = 0; i < mn; i++)
-	INTEGER(ans)[i] = INTEGER(a)[i%m] ^ INTEGER(b)[i%n];
+    BIT(^, "bitwXor");
+}
+
+static SEXP bitwiseShiftL(SEXP a, SEXP b)
+{
+    int np = 0;
+    if(isReal(a)) {a = PROTECT(coerceVector(a, INTSXP)); np++;}
+    if(!isInteger(b)) {b = PROTECT(coerceVector(b, INTSXP)); np++;}
+    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b), 
+	mn = (m && n) ? mymax(m, n) : 0;
+    SEXP ans = allocVector(TYPEOF(a), mn);
+    switch(TYPEOF(a)) {
+    case INTSXP:
+	for(i = 0; i < mn; i++) {
+	    int aa = INTEGER(a)[i%m], bb = INTEGER(b)[i%n];
+	    INTEGER(ans)[i] = 
+		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa << bb);
+	}
+	break;
+    default:
+	UNIMPLEMENTED_TYPE("bitShiftL", a);
+    }
+    if(np) UNPROTECT(np);
+    return ans;
+}
+
+static SEXP bitwiseShiftR(SEXP a, SEXP b)
+{
+    int np = 0;
+    if(isReal(a)) {a = PROTECT(coerceVector(a, INTSXP)); np++;}
+    if(!isInteger(b)) {b = PROTECT(coerceVector(b, INTSXP)); np++;}
+    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b), 
+	mn = (m && n) ? mymax(m, n) : 0;
+    SEXP ans = allocVector(TYPEOF(a), mn);
+    switch(TYPEOF(a)) {
+    case INTSXP:
+	for(i = 0; i < mn; i++) {
+	    int aa = INTEGER(a)[i%m], bb = INTEGER(b)[i%n];
+	    INTEGER(ans)[i] = 
+		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa >> bb);
+	}
+	break;
+    default:
+	UNIMPLEMENTED_TYPE("bitShiftR", a);
+    }
+    if(np) UNPROTECT(np);
     return ans;
 }
 
@@ -684,6 +751,8 @@ SEXP attribute_hidden do_bitwise(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2: ans = bitwiseNot(CAR(args)); break;
     case 3: ans = bitwiseOr(CAR(args), CADR(args)); break;
     case 4: ans = bitwiseXor(CAR(args), CADR(args)); break;
+    case 5: ans = bitwiseShiftL(CAR(args), CADR(args)); break;
+    case 6: ans = bitwiseShiftR(CAR(args), CADR(args)); break;
     }
     return ans;
 }

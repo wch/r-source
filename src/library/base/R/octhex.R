@@ -60,7 +60,7 @@ as.octmode <- function(x)
         z <- strtoi(x, 8L)
         if(!any(is.na(z) | z < 0)) return(structure(z, class="octmode"))
     }
-    stop("'x' cannot be coerced to \"octmode\"")
+    stop("'x' cannot be coerced to class \"octmode\"")
 }
 
 ## BioC packages cellHTS2 and flowCore misuse this for doubles,
@@ -110,26 +110,18 @@ as.hexmode <- function(x)
         z <- strtoi(x, 16L)
         if(!any(is.na(z) | z < 0)) return(structure(z, class = "hexmode"))
     }
-    stop("'x' cannot be coerced to \"hexmode\"")
+    stop("'x' cannot be coerced to class \"hexmode\"")
 }
 
 
-`!.octmode` <- function(a)
-    as.octmode(.Internal(bitwiseNot(as.octmode(a))))
+`!.octmode` <- function(a) as.octmode(bitwNot(as.octmode(a)))
 
-`&.octmode` <- function(a, b)
-    as.octmode(.Internal(bitwiseAnd(as.octmode(a), as.octmode(b))))
-`|.octmode` <- function(a, b)
-    as.octmode(.Internal(bitwiseOr(as.octmode(a), as.octmode(b))))
-xor.octmode <- function(a, b)
-    as.octmode(.Internal(bitwiseXor(as.octmode(a), as.octmode(b))))
+`&.octmode` <- function(a, b) as.octmode(bitwAnd(as.octmode(a), as.octmode(b)))
+`|.octmode` <- function(a, b) as.octmode(bitwOr(as.octmode(a), as.octmode(b)))
+xor.octmode <- function(a, b) as.octmode(bitwXor(as.octmode(a), as.octmode(b)))
 
-`!.hexmode` <- function(a)
-    as.hexmode(.Internal(bitwiseNot(as.hexmode(a))))
+`!.hexmode` <- function(a) as.hexmode(bitwNot(as.hexmode(a)))
 
-`&.hexmode` <- function(a, b)
-    as.hexmode(.Internal(bitwiseAnd(as.hexmode(a), as.hexmode(b))))
-`|.hexmode` <- function(a, b)
-    as.hexmode(.Internal(bitwiseOr(as.hexmode(a), as.hexmode(b))))
-xor.hexmode <- function(a, b)
-    as.hexmode(.Internal(bitwiseXor(as.hexmode(a), as.hexmode(b))))
+`&.hexmode` <- function(a, b) as.hexmode(bitwAnd(as.hexmode(a), as.hexmode(b)))
+`|.hexmode` <- function(a, b) as.hexmode(bitwOr(as.hexmode(a), as.hexmode(b)))
+xor.hexmode <- function(a, b) as.hexmode(bitwXor(as.hexmode(a), as.hexmode(b)))
