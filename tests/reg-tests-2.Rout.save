@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-09-30 r60843) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-06 r61087) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -7002,6 +7002,7 @@ $`a.b:c`
 [1] 4 2 3 1
 > ## Differences first documented in R 2.15.2
 > 
+> 
 > ## PR#15028: names longer than cutoff NB (= 1000)
 > NB <- 1000
 > lns <- capture.output(
@@ -7013,4 +7014,18 @@ $`a.b:c`
 [1] "255 "   "1000 "  "30000 "
 > ## *values* were cutoff when printed
 > 
+> ## allows deparse limits to be set
+> form <- reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + reallylongnamex2 + reallylongnamex3
+> form
+reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + reallylongnamex2 + 
+    reallylongnamex3
+> op <- options(deparse.cutoff=80)
+> form
+reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + reallylongnamex2 + reallylongnamex3
+> options(deparse.cutoff=50)
+> form
+reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + 
+    reallylongnamex2 + reallylongnamex3
+> options(op)
+> ## fixed to 60 in R < 2.16.0
 > 

@@ -96,6 +96,11 @@ getOption(x, default = NULL)
       that the change takes effect before the base package is
       initialized (see \code{\link{Startup}}).}
 
+    \item{\code{deparse.cutoff}:}{integer value controlling the
+      printing of language constructs which are \code{\link{deparse}}d.
+      Default \code{60}.
+    }
+      
     \item{\code{deparse.max.lines}:}{controls the number of lines used
       when deparsing in \code{\link{traceback}}, \code{\link{browser}},
       and upon entry to a function whose debugging flag is set.

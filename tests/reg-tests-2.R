@@ -2653,6 +2653,7 @@ sort.list(z, na.last = NA, method = "quick")
 sort.list(z, na.last = NA, method = "radix")
 ## Differences first documented in R 2.15.2
 
+
 ## PR#15028: names longer than cutoff NB (= 1000)
 NB <- 1000
 lns <- capture.output(
@@ -2663,3 +2664,12 @@ lns <- capture.output(
 sub("^ +", '', lns[2* 1:3])
 ## *values* were cutoff when printed
 
+## allows deparse limits to be set
+form <- reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + reallylongnamex2 + reallylongnamex3
+form
+op <- options(deparse.cutoff=80)
+form
+options(deparse.cutoff=50)
+form
+options(op)
+## fixed to 60 in R < 2.16.0

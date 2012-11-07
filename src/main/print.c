@@ -100,6 +100,7 @@ void PrintDefaults(void)
     R_print.gap = 1;
     R_print.width = GetOptionWidth();
     R_print.useSource = USESOURCE;
+    R_print.cutoff = GetOptionCutoff();
 }
 
 SEXP attribute_hidden do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -188,7 +189,7 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
     int i;
     SEXP t = getAttrib(s, R_SrcrefSymbol);
     if (!isInteger(t) || !useSource)
-	t = deparse1(s, 0, useSource | DEFAULTDEPARSE);
+	t = deparse1w(s, 0, useSource | DEFAULTDEPARSE);
     else {
         PROTECT(t = lang2(install("as.character"), t));
         t = eval(t, R_BaseEnv);
@@ -632,7 +633,7 @@ static void PrintExpression(SEXP s)
     SEXP u;
     int i, n;
 
-    u = deparse1(s, 0, R_print.useSource | DEFAULTDEPARSE);
+    u = deparse1w(s, 0, R_print.useSource | DEFAULTDEPARSE);
     n = LENGTH(u);
     for (i = 0; i < n; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i))); /*translated */

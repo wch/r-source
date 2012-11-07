@@ -1,6 +1,6 @@
 % File src/library/base/man/print.default.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{print.default}
@@ -60,6 +60,10 @@
   Attributes are printed respecting their class(es), using the values of
   \code{digits} to \code{print.default}, but using the default values
   (for the methods called) of the other arguments.
+
+  Option \code{width} controls the printing of vectors, matrices and
+  arrays, and option \code{deparse.cutoff} controls the printing of
+  language objects such as calls and formulae.
 
   When the \pkg{methods} package is attached, \code{print} will call
   \code{\link{show}} for \R objects with formal classes if called

@@ -47,6 +47,7 @@ typedef struct {
     SEXP na_string;
     SEXP na_string_noquote;
     int useSource;
+    int cutoff; // for deparsed language objects
 } R_print_par_t;
 extern R_print_par_t R_print;
 

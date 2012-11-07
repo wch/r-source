@@ -251,6 +251,10 @@
       \item New functions \code{bitwNot}, \code{bitwAnd}, \code{bitwOr} and
       \code{bitwXor}, using the internal interfaces previously used for
       classes \code{"octmode"} and \code{"hexmode"}.
+
+      \item New option \code{"deparse.cutof"} to control the deparsing
+      of language objects such as calls and formulae when printing.
+      (From a comment by Sarah Goslee.)
     }
   }
 
