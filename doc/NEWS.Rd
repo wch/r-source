@@ -248,13 +248,17 @@
       still with the reference fields and methods as before
       (suggestion of Romain Francois).
       
-      \item New functions \code{bitwNot}, \code{bitwAnd}, \code{bitwOr} and
-      \code{bitwXor}, using the internal interfaces previously used for
-      classes \code{"octmode"} and \code{"hexmode"}.
+      \item New functions \code{bitwNot()}, \code{bitwAnd()},
+      \code{bitwOr()} and \code{bitwXor()}, using the internal
+      interfaces previously used for classes \code{"octmode"} and
+      \code{"hexmode"}.
+
+      Also \code{bitwShiftL()} and \code{bitwShiftR()} for shifting bits
+      in elements of integer vectors.
 
       \item New option \code{"deparse.cutof"} to control the deparsing
       of language objects such as calls and formulae when printing.
-      (From a comment by Sarah Goslee.)
+      (Suggested by a comment of Sarah Goslee.)
     }
   }
 
