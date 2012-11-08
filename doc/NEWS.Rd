@@ -256,7 +256,7 @@
       Also \code{bitwShiftL()} and \code{bitwShiftR()} for shifting bits
       in elements of integer vectors.
 
-      \item New option \code{"deparse.cutof"} to control the deparsing
+      \item New option \code{"deparse.cutoff"} to control the deparsing
       of language objects such as calls and formulae when printing.
       (Suggested by a comment of Sarah Goslee.)
     }
