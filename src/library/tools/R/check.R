@@ -2753,7 +2753,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
                 ## look for notes with auto-generated NAMESPACE files.
-                ll <- grep("running .First.lib() for package", lines0,
+                ll <- grep("running .First.lib() for", lines0,
                            fixed = TRUE, value = TRUE)
                 if (length(lines) || (length(ll) && as_cran)) {
                     lines <- unique(c(lines, ll))
