@@ -714,6 +714,9 @@ be included).  Normally this file is missing and the corresponding
 information is automatically generated from the documentation sources
 (using @code{tools::Rdindex()}) when installing from source.
 
+The file is part of the information given by @code{library(help =
+@var{pkgname})}.
+
 Rather than editing this file, it is preferable to put customized
 information about the package into an overview man page
 (@pxref{Documenting packages}) and/or a vignette (@pxref{Writing package
