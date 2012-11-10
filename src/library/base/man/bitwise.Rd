@@ -11,7 +11,7 @@
 \alias{bitwShiftL}
 \alias{bitwShiftR}
 
-\title{Bitwise Logical Operaations}
+\title{Bitwise Logical Operations}
 \description{
   Logical operations on integer vectors with elements viewed as sets of bits.
 }

@@ -1824,13 +1824,13 @@ package reads only JPEG and PNG. See also packages @CRANpkg{biOps},
 TIFF is more a meta-format, a wrapper within which a very large variety
 of image formats can be embedded.  Packages @CRANpkg{rtiff} and
 @CRANpkg{tiff} can read some of the sub-formats (depending on the
-external @code{libtiff} software againsts which they are compiled).
+external @code{libtiff} software against which they are compiled).
 There some facilities for specialized sub-formats, for example in
 Bioconductor package @pkg{beadarray}.
 
 Raster files are common in the geographical sciences, and package
 @CRANpkg{rgdal} provides an interface to GDAL which provides some
-faciliites of its own to read raster files and links to many others.
+facilities of its own to read raster files and links to many others.
 Which formats it supports is determined when GDAL is compiled: use
 @code{gdalDrivers()} to see what these are for the build you are using.
 It can be useful for uncommon formats such as JPEG 2000 (which is a
