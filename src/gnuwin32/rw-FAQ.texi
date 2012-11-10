@@ -658,8 +658,8 @@ privileges into a system area.  Sysadmins could set policies for user
 accounts, and you might for example have needed to be a `Power User' to
 install software at all.
 
-Vista and later normally disable the Administrator account and expects
-software installation to done by an account which is in the local
+Vista and later normally disable the Administrator account and expect
+software installation to be done by an account which is in the local
 Administrator group with `admin approval mode' turned on.  (The
 Administrator account by default has it turned off.)  Unlike (say)
 Windows XP, such accounts do not run programs with full administrator
