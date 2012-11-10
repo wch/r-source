@@ -82,6 +82,9 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   This can be controlled by setting the option \code{collapse} to
   \code{FALSE} (default) or \code{TRUE}, respectively.  (Printing in R
   style always collapses to a single call.)
+
+  It is possible to subscript bibentry objects by their keys (which are
+  used for character subscripts if the names are \code{NULL}).
   
   There is also a \code{\link{toBibtex}} method for direct conversion to
   BibTeX.
@@ -209,6 +212,7 @@ bref <- c(
 ## Combining and subsetting
 c(rref, bref)
 bref[2]
+bref["boot-book"]
 
 ## Extracting fields
 bref$author

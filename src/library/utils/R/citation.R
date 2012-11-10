@@ -535,13 +535,37 @@ function(x, force = FALSE)
 bibentry_attribute_names <-
     c("bibtype", "textVersion", "header", "footer", "key")
 
+.bibentry_get_key <-
+function(x)
+{
+    keys <- lapply(unclass(x), attr, "key")
+    keys[!vapply(keys, length, 0L)] <- ""
+    unlist(keys)
+}
+
 `[[.bibentry` <-
 `[.bibentry` <-
 function(x, i)
 {
-    rval <- unclass(x)[i]
-    class(rval) <- class(x)
-    rval
+    cl <- class(x)
+    class(x) <- NULL
+    ## For character subscripting, use keys if there are no names.
+    ## Note that creating bibentries does not add the keys as names:
+    ## assuming that both can independently be set, we would need to
+    ## track whether names were auto-generated or not.
+    ## (We could consider providing a names() getter which returns given
+    ## names or keys as used for character subscripting, though).
+    if(is.character(i) && is.null(names(x)))
+        names(x) <- .bibentry_get_key(x)
+    y <- x[i]
+    if(!all(ok <- sapply(y, length) > 0L)) {
+        warning("subscript out of bounds")
+        y <- y[ok]
+    }
+    if(!length(y))
+        stop("no elements selected")
+    class(y) <- cl
+    y
 }
 
 bibentry_format_styles <-
@@ -641,10 +665,7 @@ function(x, more = list())
     pc <- which(vapply(crossrefs, length, 0L) > 0L)
 
     if(length(pc)) {
-        keys <- lapply(y, attr, "key")
-        keys[!vapply(keys, length, 0L)] <- ""
-        keys <- unlist(keys)
-        pk <- match(unlist(crossrefs[pc]), keys)
+        pk <- match(unlist(crossrefs[pc]), .bibentry_get_key(y))
         ## If an entry has a crossref we cannot resolve it might still
         ## be complete: we could warn about the bad crossref ...
         ok <- !is.na(pk)
