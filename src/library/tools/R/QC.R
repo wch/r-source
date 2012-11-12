@@ -2662,10 +2662,11 @@ function(dir, force_suggests = TRUE)
             m <- reqs %in% standard_package_names$stubs
             if(length(reqs[!m])) {
                 bad <- reqs[!m]
-                bad1 <-  bad[! bad %in% suggests]
+                ## EDanalysis has a package in all of Depends, Imports, Suggests.
+                bad1 <-  bad[bad %in% c(depends, imports)]
                 if(length(bad1))
                     bad_depends$required_but_not_installed <- bad1
-                bad2 <-  bad[bad %in% suggests]
+                bad2 <-  setdiff(bad, bad1)
                 if(length(bad2))
                     bad_depends$suggested_but_not_installed <- bad2
             }
