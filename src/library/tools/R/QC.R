@@ -2636,6 +2636,7 @@ function(dir, force_suggests = TRUE)
 
     depends <- sapply(ldepends, `[[`, 1L)
     imports <- sapply(limports, `[[`, 1L)
+    links <- sapply(llinks, `[[`, 1L)
     suggests <- sapply(lsuggests, `[[`, 1L)
 
     standard_package_names <- .get_standard_package_names()
@@ -2663,7 +2664,7 @@ function(dir, force_suggests = TRUE)
             if(length(reqs[!m])) {
                 bad <- reqs[!m]
                 ## EDanalysis has a package in all of Depends, Imports, Suggests.
-                bad1 <-  bad[bad %in% c(depends, imports)]
+                bad1 <-  bad[bad %in% c(depends, imports, links)]
                 if(length(bad1))
                     bad_depends$required_but_not_installed <- bad1
                 bad2 <-  setdiff(bad, bad1)

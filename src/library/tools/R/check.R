@@ -2185,20 +2185,28 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                      "  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored\n")
         }
         if ("Makefile" %in% dir(vigns$dir)) {
-            lines <- readLines(file.path(vigns$dir, "Makefile"), warn = FALSE)
+            f <- file.path(vigns$dir, "Makefile")
+            lines <- readLines(f, warn = FALSE)
             ## remove comment lines
             lines <- grep("^[[:space:]]*#", lines, invert = TRUE, value = TRUE)
             if(any(grepl("[^/]R +CMD", lines))) {
                 if(!any) warningLog(Log)
                 any <- TRUE
                 printLog(Log,
-                         "  Found 'R CMD' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/R\" CMD'\n")
+                         "  Found 'R CMD' in Makefile: should be '\"$(R_HOME)/bin/R\" CMD'\n")
             }
+            contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
+            if(any(grepl("\r", contents, fixed = TRUE, useBytes = TRUE))) {
+                if(!any) warningLog(Log)
+                any <- TRUE
+                printLog(Log, "Found Makefile with CR or CRLF line endings:\n")
+                printLog(Log, "some Unix 'make' programs require LF line endings.\n")
+           }
             if(any(grepl("[^/]Rscript", lines))) {
                 if(!any) warningLog(Log)
                 any <- TRUE
                 printLog(Log,
-                         "  Found 'Rscript' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/Rscript\"'\n")
+                         "  Found 'Rscript' in Makefile: should be '\"$(R_HOME)/bin/Rscript\"'\n")
             }
         }
 

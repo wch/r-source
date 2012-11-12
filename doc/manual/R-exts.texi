@@ -2470,9 +2470,9 @@ running version of @R{}.}.  Finally, if there is a @file{Makefile} and
 it has a @samp{clean:} target, @command{make clean} is run.
 
 All the usual @emph{caveats} about including a @file{Makefile} apply.
-It must be portable (no @acronym{GNU} extensions) and must work
-correctly with a parallel @command{make}: too many authors have written
-things like
+It must be portable (no @acronym{GNU} extensions), use LF line endings
+and must work correctly with a parallel @command{make}: too many authors
+have written things like
 
 @example
 ## BAD EXAMPLE
