@@ -5560,37 +5560,8 @@ function(dir)
     }
 
     ## Check for possibly mis-spelled field names.
-    fields <-
-        unique(c(tools:::.get_standard_repository_db_fields(),
-                 "MD5sum",
-                 "Authors@R", "Author", "Copyright", "Description",
-                 "Encoding", "Language", "Maintainer", "Title", "URL",
-                 "SystemRequirements", "Type",
-                 "BugReports",
-                 "Collate", "Collate.unix", "Collate.windows",
-                 "Contact",
-                 "LazyData", "LazyLoad",
-                 "KeepSource",
-                 "ByteCompile",
-                 "ZipData",
-                 "BuildVignettes",
-                 "Classification/ACM",
-                 "Classification/JEL",
-                 "Classification/MSC",
-                 "Date/Publication",
-                 "Built",
-                 "Packaged",
-                 "Repository",
-                 "Path",
-                 "Date",
-                 ## Others
-                 "LastChangedDate",
-                 "LastChangedRevision",
-                 "RcppModules",
-                 "biocViews"
-                 ))
     nms <- names(meta)
-    nms <- nms[is.na(match(nms, fields)) &
+    nms <- nms[is.na(match(nms, .get_standard_DESCRIPTION_fields())) &
                !grepl("^(X-CRAN|Repository/R-Forge)", nms)]
     if(length(nms))
         out$fields <- nms

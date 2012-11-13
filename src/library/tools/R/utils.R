@@ -913,6 +913,84 @@ function()
       "Depends", "Imports", "LinkingTo", "Suggests", "Enhances",
       "OS_type", "License", "Archs")
 
+### ** .get_standard_DESCRIPTION_fields
+
+.get_standard_DESCRIPTION_fields <-
+function()
+{
+    unique(c(tools:::.get_standard_repository_db_fields(),
+             ## Extract from R-exts via
+             ## .get_DESCRIPTION_fields_in_R_exts():
+             c("Author",
+               "Authors@R",
+               "BugReports",
+               "BuildKeepEmpty",
+               "BuildManual", 
+               "BuildResaveData",
+               "BuildVignettes",
+               "Built",
+               "ByteCompile", 
+               "Classification/ACM",
+               "Classification/JEL",
+               "Classification/MSC", 
+               "Collate",
+               "Collate.unix",
+               "Collate.windows",
+               "Contact",
+               "Copyright", 
+               "Date",
+               "Depends",
+               "Description",
+               "Encoding",
+               "Enhances",
+               "Imports", 
+               "KeepSource",
+               "Language",
+               "LazyData",
+               "LazyDataCompression", 
+               "LazyLoad",
+               "License",
+               "LinkingTo",
+               "MailingList",
+               "Maintainer", 
+               "Note",
+               "OS_type",
+               "Package",
+               "Packaged",
+               "Priority",
+               "Suggests", 
+               "SystemRequirements",
+               "Title",
+               "Type",
+               "URL",
+               "Version",
+               "ZipData"),
+             ## Others: adjust as needed.
+             c("Archs",
+               "Repository",
+               "Path",
+               "MD5sum",
+               "Date/Publication",
+               "LastChangedDate",
+               "LastChangedRevision",
+               "RcppModules",
+               "biocViews")
+             ))
+}
+
+### ** .get_DESCRIPTION_fields_in_R_exts
+
+.get_DESCRIPTION_fields_in_R_exts <-
+function(texi = NULL)
+{
+    if(is.null(texi))
+        texi <- file.path(.R_top_srcdir_from_Rd(),
+                          "doc", "manual", "R-exts.texi")
+    lines <- readLines(texi)
+    re <- "^@c DESCRIPTION field "
+    sort(unique(sub(re, "", lines[grepl(re, lines)])))
+}
+
 ### ** .is_ASCII
 
 .is_ASCII <-
