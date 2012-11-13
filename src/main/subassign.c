@@ -640,6 +640,12 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    ii = gi(indx, i);
 	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
+
+	    /* set NAMED on RHS value to 2 if used more than once
+	       (PR15098) */
+	    if (i >= ny && NAMED(VECTOR_ELT(y, i % ny)) < 2)
+		SET_NAMED(VECTOR_ELT(y, i % ny), 2);
+
 	    SET_VECTOR_ELT(x, ii, VECTOR_ELT(y, i % ny));
 	}
 	break;
@@ -946,6 +952,13 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	break;
     case 1919: /* vector <- vector */
 
+	/* set NAMED or RHS values to 2 if they might be used more
+	   than once (PR15098)*/
+	if (ny < ncs * nrs)
+	    for (R_xlen_t i = 0; i < ny; i++)
+		if (NAMED(VECTOR_ELT(y, i)) < 2)
+		    SET_NAMED(VECTOR_ELT(y, i), 2);
+
 	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER(sc)[j];
 	    if (jj == NA_INTEGER) continue;
@@ -1156,6 +1169,11 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    break;
 
 	case 1919: /* vector <- vector */
+
+	    /* set NAMED on RHS value to 2 if used more than once
+	       (PR15098) */
+	    if (i >= ny && NAMED(VECTOR_ELT(y, i % ny)) < 2)
+		SET_NAMED(VECTOR_ELT(y, i % ny), 2);
 
 	    SET_VECTOR_ELT(x, ii, VECTOR_ELT(y, i % ny));
 	    break;

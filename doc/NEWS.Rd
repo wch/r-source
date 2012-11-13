@@ -554,6 +554,10 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \samp{[[<-} for generic vectors needed to increment
+      \code{NAMED} count when RHS is used more than
+      once. (\PR{15098}.)
+
       \item When \command{R CMD build} is run in an encoding other than
       the one specified in the package's \file{DESCRIPTION} file it
       tries harder to expand the \code{authors@R} field in the specified
