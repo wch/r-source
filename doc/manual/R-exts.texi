@@ -948,8 +948,8 @@ for use by the @code{citation} function.
 @findex AUTHORS
 @findex COPYRIGHTS
 Another file sometimes needed in @file{inst} is @file{AUTHORS} or
-@file{COPYRIGHTS} file specify the authors or copyright holders when
-this is too complex to put in the @file{DESCRIPTION} file.
+@file{COPYRIGHTS} to specify the authors or copyright holders when this
+is too complex to put in the @file{DESCRIPTION} file.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
