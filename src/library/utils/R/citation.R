@@ -422,8 +422,8 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
     BibTeX_names <- names(tools:::BibTeX_entry_field_db)
 
     args <- c(list(...), other)
-    if(length(args) < 1L)
-        stop("at least one field has to be specified")
+    if(!length(args))
+        return(structure(list(), class = "bibentry"))
     if(any(sapply(names(args), .is_not_nonempty_text)))
         stop("all fields have to be named")
 
@@ -538,6 +538,7 @@ bibentry_attribute_names <-
 .bibentry_get_key <-
 function(x)
 {
+    if(!length(x)) return(character())
     keys <- lapply(unclass(x), attr, "key")
     keys[!vapply(keys, length, 0L)] <- ""
     unlist(keys)
@@ -547,6 +548,8 @@ function(x)
 `[.bibentry` <-
 function(x, i)
 {
+    if(!length(x)) return(x)
+    
     cl <- class(x)
     class(x) <- NULL
     ## For character subscripting, use keys if there are no names.
@@ -562,8 +565,6 @@ function(x, i)
         warning("subscript out of bounds")
         y <- y[ok]
     }
-    if(!length(y))
-        stop("no elements selected")
     class(y) <- cl
     y
 }
@@ -586,11 +587,11 @@ function(style)
 }
 
 format.bibentry <-
-function(x, style = "text", .bibstyle=NULL, ...)
+function(x, style = "text", .bibstyle = NULL, ...)
 {
     style <- .bibentry_match_format_style(style)
 
-    x <- sort(x, .bibstyle=.bibstyle)
+    x <- sort(x, .bibstyle = .bibstyle)
     x$.index <- as.list(seq_along(x))
 
     .format_bibentry_via_Rd <- function(f) {
@@ -631,23 +632,25 @@ function(x, style = "text", .bibstyle=NULL, ...)
           )
     }
 
-    switch(style,
-           "text" = .format_bibentry_via_Rd(tools::Rd2txt),
-           "html" = .format_bibentry_via_Rd(tools::Rd2HTML),
-           "latex" = .format_bibentry_via_Rd(tools::Rd2latex),
-           "Bibtex" = {
-               unlist(lapply(x,
-                             function(y)
-                             paste(toBibtex(y), collapse = "\n")))
-           },
-           "textVersion" = {
-               out <- lapply(unclass(x), attr, "textVersion")
-               out[!sapply(out, length)] <- ""
-               unlist(out)
-           },
-           "citation" = .format_bibentry_as_citation(x),
-           "R" = .format_bibentry_as_R_code(x, ...)
-           )
+    out <-
+        switch(style,
+               "text" = .format_bibentry_via_Rd(tools::Rd2txt),
+               "html" = .format_bibentry_via_Rd(tools::Rd2HTML),
+               "latex" = .format_bibentry_via_Rd(tools::Rd2latex),
+               "Bibtex" = {
+                   unlist(lapply(x,
+                                 function(y)
+                                 paste(toBibtex(y), collapse = "\n")))
+               },
+               "textVersion" = {
+                   out <- lapply(unclass(x), attr, "textVersion")
+                   out[!sapply(out, length)] <- ""
+                   unlist(out)
+               },
+               "citation" = .format_bibentry_as_citation(x),
+               "R" = .format_bibentry_as_R_code(x, ...)
+               )
+    as.character(out)
 }
 
 .bibentry_expand_crossrefs <-
@@ -711,7 +714,7 @@ function(x, style = "text", .bibstyle = NULL, ...)
 
     if(style == "R") {
         writeLines(format(x, "R", collapse = TRUE))
-    } else {
+    } else if(length(x)) {
         y <- format(x, style, .bibstyle)
         if(style == "citation") {
             ## Printing in citation style does extra headers/footers
@@ -756,6 +759,8 @@ function(cname, cargs)
 .format_bibentry_as_R_code <-
 function(x, collapse = FALSE)
 {
+    if(!length(x)) return("bibentry()")
+    
     x$.index <- NULL
 
     ## There are two subleties for constructing R calls giving a given
@@ -847,6 +852,8 @@ function(x)
 `$.bibentry` <-
 function(x, name)
 {
+    if(!length(x)) return(NULL)
+    
     ## <COMMENT Z>
     ## Extract internal list elements, return list if length > 1, vector
     ## otherwise (to mirror the behaviour of the input format for
@@ -949,8 +956,11 @@ function(object, ...)
         return(rval)
     }
 
-    object$.index <- NULL
-    rval <- head(unlist(lapply(object, format_bibentry1)), -1L)
+    if(length(object)) {
+        object$.index <- NULL
+        rval <- head(unlist(lapply(object, format_bibentry1)), -1L)
+    } else
+        rval <- character()
     class(rval) <- "Bibtex"
     rval
 }
@@ -959,6 +969,22 @@ sort.bibentry <-
 function(x, decreasing = FALSE, .bibstyle = NULL, ...)
     x[ order( tools::bibstyle(.bibstyle)$sortKeys(x),
               decreasing = decreasing) ]
+
+rep.bibentry <-
+function(x, ...)
+{
+    y <- NextMethod("rep")
+    class(y) <- class(x)
+    y
+}
+
+unique.bibentry <-
+function(x, ...)
+{
+    y <- NextMethod("unique")
+    class(y) <- class(x)
+    y
+}
 
 ######################################################################
 
