@@ -481,7 +481,7 @@ this specification; in @R{} 2.14.0 or later, the @samp{Author} and
 building or installing.
 
 @findex COPYRIGHTS
-An optional @samp{Copyrights} field can be used where the copyright
+An optional @samp{Copyright} field can be used where the copyright
 holder(s) are not the authors.  If necessary, this can refer to a file:
 the convention is to use file @file{inst/COPYRIGHTS}.
 
