@@ -347,9 +347,14 @@ BugReports: http://pkgname.bugtracker.url
 The format is that of a `Debian Control File' (see the help for
 @samp{read.dcf} and
 @uref{http://www.debian.org/@/doc/@/debian-policy/@/ch-controlfields.html}:
-@R{} does not require encoding in UTF-8).  Continuation lines (for
-example, for descriptions longer than one line) start with a space or
-tab.  The @samp{Package}, @samp{Version}, @samp{License},
+@R{} does not require encoding in UTF-8 and does not support comments
+sarting with @samp{#}).  Fields start with an ASCII name immediately
+followed by a colon: the value starts after the colon and a space.
+Continuation lines (for example, for descriptions longer than one line)
+start with a space or tab.  Field names are case-sensitive: all those
+used by @R{} are capitalized.
+
+The @samp{Package}, @samp{Version}, @samp{License},
 @samp{Description}, @samp{Title}, @samp{Author}, and @samp{Maintainer}
 fields are mandatory, all other fields are optional.  For @R{} 2.14.0 or
 later, @samp{Author} and @samp{Maintainer} can be auto-generated from
@@ -468,14 +473,19 @@ package ``authors'' (in particular specifying their precise
 @emph{roles}), via suitable @R{} code.  The roles can include
 @samp{"aut"} (author) for full authors, @samp{"cre"} (creator) for the
 package maintainer, and @samp{"ctb"} (contributor) for other
-contributors, among others.  See @code{?person} for more information.
-Note that no role is assumed by default.  Auto-generated package
-citation information takes advantage of this specification; in @R{}
-2.14.0 or later, the @samp{Author} and @samp{Maintainer} fields are
-auto-generated from it if needed when building@footnote{at least if this
-is done in a locale which matches the package encoding.} or
-installing@footnote{installation generates an ASCII version prior to
-@R{} 2.16.0.}.
+contributors, @samp{"cph"} (copyright holder), among others.  See
+@code{?person} for more information.  Note that no role is assumed by
+default.  Auto-generated package citation information takes advantage of
+this specification; in @R{} 2.14.0 or later, the @samp{Author} and
+@samp{Maintainer} fields are auto-generated from it if needed when
+building@footnote{at least if this is done in a locale which matches the
+package encoding.} or installing@footnote{installation generates an
+ASCII version prior to @R{} 2.16.0.}.
+
+@findex COPYRIGHTS
+An optional @samp{Copyrights} field can be used where the copyright
+holder(s) are not the authors.  If necessary, this can refer to a file:
+the convention is to use file @file{inst/COPYRIGHTS}.
 
 Several optional fields take @emph{logical values}: these can be
 specified as @samp{yes}, @samp{true}, @samp{no} or @samp{false}:
@@ -614,10 +624,10 @@ be included in every binary distribution of @R{}) have a @samp{Priority}
 field with value @samp{base} or @samp{recommended}, respectively.  These
 priorities must not be used by other packages.
 
-An @samp{Collate} field can be used for controlling the
-collation order for the @R{} code files in a package when these are
-processed for package installation.  The default is to collate according
-to the @samp{C} locale.  If present, the collate specification must list
+A @samp{Collate} field can be used for controlling the collation order
+for the @R{} code files in a package when these are processed for
+package installation.  The default is to collate according to the
+@samp{C} locale.  If present, the collate specification must list
 @emph{all} @R{} code files in the package (taking possible OS-specific
 subdirectories into account, see @ref{Package subdirectories}) as a
 whitespace separated list of file paths relative to the @file{R}
@@ -625,7 +635,7 @@ subdirectory.
 @c % double quotes are not allowed in path names, for Windows
 Paths containing white space or quotes need to be quoted.  An
 OS-specific collation field (@samp{Collate.unix} or
-@samp{Collate.windows}) will be used instead of @samp{Collate}.
+@samp{Collate.windows}) will be used in preference to @samp{Collate}.
 
 The @samp{LazyData} logical field controls whether the @R{} datasets use
 lazy-loading.  A @samp{LazyLoad} field was used in versions prior to
@@ -692,16 +702,24 @@ subject classifications should be comma-separated lists of the
 respective classification codes, e.g., @samp{Classification/ACM: G.4,
 H.2.8, I.5.1}.
 
-Finally, an @samp{Language} field can be used to indicate if
-the package documentation is not in English: this should be a
-comma-separated list of standard (not private use or grandfathered) IETF
-language tags as currently defined by RFC 5646
+An @samp{Language} field can be used to indicate if the package
+documentation is not in English: this should be a comma-separated list
+of standard (not private use or grandfathered) IETF language tags as
+currently defined by RFC 5646
 (@uref{http://tools.ietf.org/@/html/@/rfc5646}, see also
 @uref{http://en.wikipedia.org/@/wiki/@/IETF_language_tag}), i.e., use
 language subtags which in essence are 2-letter ISO 639-1
 (@uref{http://en.wikipedia.@/org/@/wiki/@/ISO_639-1}) or 3-letter ISO
 639-3 (@uref{http://en.wikipedia.@/org/@/wiki/@/ISO_639-3}) language
 codes.
+
+There is no restriction on the use of other fields not mentioned here
+(but using other capitalizations of these field names would cause
+confusion).  Fields @code{Note}, @code{Contact} (for contacting the
+authors/developers) and @code{MailingList} are in common use. Some
+repositories (including @acronym{CRAN} and R-forge) add their own
+fields.
+
 
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
@@ -926,6 +944,12 @@ in the installed package.
 @cindex citation
 One thing you might like to add to @file{inst} is a @file{CITATION} file
 for use by the @code{citation} function.
+
+@findex AUTHORS
+@findex COPYRIGHTS
+Another file sometimes needed in @file{inst} is @file{AUTHORS} or
+@file{COPYRIGHTS} file specify the authors or copyright holders when
+this is too complex to put in the @file{DESCRIPTION} file.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
