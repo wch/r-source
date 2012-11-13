@@ -366,10 +366,12 @@ For maximal portability, the @file{DESCRIPTION} file should be written
 entirely in @acronym{ASCII} --- if this is not possible it must contain
 an @samp{Encoding} field (see below).
 
+@c DESCRIPTION field Package
 The mandatory @samp{Package} field gives the name of the package.  This
 should contain only letters, numbers and dot, have at least two
 characters and start with a letter and not end in a dot.
 
+@c DESCRIPTION field Version
 The mandatory @samp{Version} field gives the version of the package.
 This is a sequence of at least @emph{two} (and usually three)
 non-negative integers separated by single @samp{.} or @samp{-}
@@ -377,6 +379,7 @@ characters.  The canonical form is as shown in the example, and a
 version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
 were @samp{0.1-0}.
 
+@c DESCRIPTION field License
 The mandatory @samp{License} field should specify the license of the
 package in a standardized form.  Alternatives are indicated @emph{via}
 vertical bars.  Individual specifications must be one of
@@ -442,15 +445,19 @@ Please ensure that the license you choose also covers any dependencies
 important that any restrictions on the use of such dependencies are
 evident to people reading your @file{DESCRIPTION} file.
 
+@c DESCRIPTION field Description
 The mandatory @samp{Description} field should give a comprehensive
 description of what the package does.  One can use several (complete)
 sentences, but only one paragraph.
 
+@c DESCRIPTION field Title
 The mandatory @samp{Title} field should give a short description of the
 package. Some package listings may truncate the title to 65 characters.
 It should be capitalized, not use any markup, not have any continuation
 lines, and not end in a period.
 
+@c DESCRIPTION field Author
+@c DESCRIPTION field Authors@R
 The mandatory @samp{Author} field describes who wrote @emph{the
 package}.  It is a plain text field intended for human readers, but not
 for automatic processing (such as extracting the email addresses of all
@@ -459,6 +466,7 @@ significant contributors must be included: if you wrote an @R{} wrapper
 for the work of others included in the @file{src} directory, you are not
 the sole (and maybe not even the main) author.
 
+@c DESCRIPTION field Maintainer
 The mandatory @samp{Maintainer} field should give a @emph{single} name
 with a @emph{valid} (RFC 2822) email address in angle brackets (for
 sending bug reports etc.).  It should not end in a period or comma.  For
@@ -483,6 +491,7 @@ package encoding.} or installing@footnote{installation generates an
 ASCII version prior to @R{} 2.16.0.}.
 
 @findex COPYRIGHTS
+@c DESCRIPTION field Copyright
 An optional @samp{Copyright} field can be used where the copyright
 holder(s) are not the authors.  If necessary, this can refer to a file:
 the convention is to use file @file{inst/COPYRIGHTS}.
@@ -491,10 +500,13 @@ Several optional fields take @emph{logical values}: these can be
 specified as @samp{yes}, @samp{true}, @samp{no} or @samp{false}:
 capitalized values are also accepted.
 
+@c DESCRIPTION field Date
 The @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
 format conforming to the ISO 8601 standard.
 
+@c DESCRIPTION field Depends
+@c DESCRIPTION field SystemRequirements
 The @samp{Depends} field gives a comma-separated list of package names
 which this package depends on.  The package name may be optionally
 followed by a comment in parentheses.  The comment should contain a
@@ -525,6 +537,7 @@ It makes no sense to declare a dependence on @code{R} without a version
 specification, nor on the package @pkg{base}: this is an @R{} package
 and @pkg{base} is always available.
 
+@c DESCRIPTION field Imports
 The @samp{Imports} field lists packages whose namespaces are
 imported from (as specified in the @file{NAMESPACE} file) but which do
 not need to be attached.  Namespaces accessed by the @samp{::} and
@@ -538,6 +551,7 @@ should not also be in the @samp{Imports} field.  Version requirements
 can be specified, but will @strong{not} be checked when the namespace is
 loaded (whereas they are checked by @command{R CMD check}).
 
+@c DESCRIPTION field Suggests
 The @samp{Suggests} field uses the same syntax as @samp{Depends} and
 lists packages that are not necessarily needed.  This includes packages
 used only in examples, tests or vignettes (@pxref{Writing package
@@ -552,6 +566,7 @@ suggested package available (and it may not even be possible to install
 it for that platform), so it is helpful if the use of suggested packages
 is made conditional @emph{via} @code{if(require(@var{pkgname}))}).
 
+@c DESCRIPTION field Enhances
 Finally, the @samp{Enhances} field lists packages ``enhanced'' by the
 package at hand, e.g., by providing methods for classes from these
 packages, or ways to handle objects from these packages (so several
@@ -607,23 +622,29 @@ complete and accurate: it is for example used to compute which packages
 depend on an updated package and which packages can safely be installed
 in parallel.
 
+@c DESCRIPTION field URL
 The @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
 author or a page where additional material describing the software can
 be found.  These @acronym{URL}s are converted to active hyperlinks in
 @acronym{CRAN} package listings.
 
+@c DESCRIPTION field BugReports
 The @samp{BugReports} field may contain a single
 @acronym{URL} to which bug reports about the package should be
 submitted.  This @acronym{URL} will be used by @code{bug.reports}
 instead of sending an email to the maintainer.
 
+@c DESCRIPTION field Priority
 Base and recommended packages (i.e., packages contained in the @R{}
 source distribution or available from @acronym{CRAN} and recommended to
 be included in every binary distribution of @R{}) have a @samp{Priority}
 field with value @samp{base} or @samp{recommended}, respectively.  These
 priorities must not be used by other packages.
 
+@c DESCRIPTION field Collate
+@c DESCRIPTION field Collate.unix
+@c DESCRIPTION field Collate.windows
 A @samp{Collate} field can be used for controlling the collation order
 for the @R{} code files in a package when these are processed for
 package installation.  The default is to collate according to the
@@ -637,21 +658,26 @@ Paths containing white space or quotes need to be quoted.  An
 OS-specific collation field (@samp{Collate.unix} or
 @samp{Collate.windows}) will be used in preference to @samp{Collate}.
 
+@c DESCRIPTION field LazyData
+@c DESCRIPTION field LazyLoad
 The @samp{LazyData} logical field controls whether the @R{} datasets use
 lazy-loading.  A @samp{LazyLoad} field was used in versions prior to
 2.14.0, but now is ignored.
 
+@c DESCRIPTION field KeepSource
 The @samp{KeepSource} logical field controls if the package code is sourced
 using @code{keep.source = TRUE} or @code{FALSE}: it might be needed
 exceptionally for a package designed to always be used with
 @code{keep.source = TRUE}.
 
+@c DESCRIPTION field ByteCompile
 The @samp{ByteCompile} logical field controls if the package code is
 byte-compiled on installation: the default is currently not to, so this
 may be useful for a package known to benefit particularly from
 byte-compilation (which can take quite a long time and increases the
 installed size of the package).
 
+@c DESCRIPTION field ZipData
 The @samp{ZipData} logical field used to control whether the automatic
 Windows build would zip up the data directory or not: set this to
 @samp{no} if your package will not work with a zipped data directory.
@@ -659,12 +685,14 @@ Windows build would zip up the data directory or not: set this to
 2.13.0: but it might still be needed if the package can be installed
 under earlier versions of @R{}.)
 
+@c DESCRIPTION field BuildVignettes
 The @samp{BuildVignettes} logical field can be set to a false value to stop
 @command{R CMD build} from attempting to rebuild the vignettes, as well
 as preventing @command{R CMD check} from testing this.  This should only
 be used exceptionally, for example if the PDFs need large figures which
 are not part of the package sources.
 
+@c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
 used as the encoding of the @file{DESCRIPTION} file itself and of the
@@ -677,19 +705,26 @@ unless one is actually needed: doing so makes the package @emph{less}
 portable.  If a package has a specified encoding, you should run
 @command{R CMD build} etc in a locale using that encoding.)
 
+@c DESCRIPTION field OS_type
 The @samp{OS_type} field specifies the OS(es) for which the
 package is intended.  If present, it should be one of @code{unix} or
 @code{windows}, and indicates that the package can only be installed
 on a platform with @samp{.Platform$OS.type} having that value.
 
+@c DESCRIPTION field Type
 The @samp{Type} field specifies the type of the package:
 @pxref{Package types}.
 
+@c DESCRIPTION field Built
+@c DESCRIPTION field Packaged
 @quotation Note
 There should be no @samp{Built} or @samp{Packaged} fields, as these are
 added by the package management tools.
 @end quotation
 
+@c DESCRIPTION field Classification/ACM
+@c DESCRIPTION field Classification/JEL
+@c DESCRIPTION field Classification/MSC
 One can add subject classifications for the content of the package using
 the fields @samp{Classification/ACM} (using the Computing
 Classification System of the Association for Computing Machinery,
@@ -702,6 +737,7 @@ subject classifications should be comma-separated lists of the
 respective classification codes, e.g., @samp{Classification/ACM: G.4,
 H.2.8, I.5.1}.
 
+@c DESCRIPTION field Language
 An @samp{Language} field can be used to indicate if the package
 documentation is not in English: this should be a comma-separated list
 of standard (not private use or grandfathered) IETF language tags as
@@ -713,6 +749,9 @@ language subtags which in essence are 2-letter ISO 639-1
 639-3 (@uref{http://en.wikipedia.@/org/@/wiki/@/ISO_639-3}) language
 codes.
 
+@c DESCRIPTION field Note
+@c DESCRIPTION field Contact
+@c DESCRIPTION field MailingList
 There is no restriction on the use of other fields not mentioned here
 (but using other capitalizations of these field names would cause
 confusion).  Fields @code{Note}, @code{Contact} (for contacting the
@@ -1061,6 +1100,7 @@ Package @pkg{tools} has a couple of functions to help with data images:
 @code{resaveRdaFiles} will re-save with a different type of compression,
 including choosing the best type for that particular image.
 
+@c DESCRIPTION field LazyDataCompression
 Some packages using @samp{LazyData} will benefit from using a form of
 compression other than @command{gzip} in the installed lazy-loading
 database.  This can be selected by the @option{--data-compress} option
@@ -2020,8 +2060,7 @@ that of a standard package, nor one of the defunct standard packages
 that all packages mentioned in @code{library} or @code{require}s or from
 which the @file{NAMESPACE} file imports or are called @emph{via}
 @code{::} or @code{:::} are listed (in @samp{Depends}, @samp{Imports},
-@samp{Suggests} or @samp{Contains}): this is not an exhaustive check of
-the actual imports.
+@samp{Suggests}): this is not an exhaustive check of the actual imports.
 
 @item
 Available index information (in particular, for demos and vignettes) is
@@ -2293,6 +2332,7 @@ it installs the current package into a temporary library tree, but any
 dependent packages need to be installed in an available library tree
 (see the Note: at the top of this section).
 
+@c DESCRIPTION field BuildManual
 Similarly, if the @file{.Rd} documentation files contain any
 @code{\Sexpr} macros (@pxref{Dynamic pages}), the package will be
 temporarily installed to execute them.  Post-execution binary copies of
@@ -2305,6 +2345,7 @@ are unable to install the package.)  This can be suppressed by the
 option @option{--no-manual} or if package's description contains
 @samp{BuildManual: no} or similar.
 
+@c DESCRIPTION field BuildKeepEmpty
 One of the checks that @command{R CMD build} runs is for empty source
 directories.  These are in most (but not all) cases unintentional, if
 they are intentional use the option @option{--keep-empty-dirs} (or set
@@ -2312,6 +2353,7 @@ the environment variable @env{_R_BUILD_KEEP_EMPTY_DIRS_} to @samp{TRUE},
 or have a @samp{BuildKeepEmpty} field with a true value in the
 @file{DESCRIPTION} file).
 
+@c DESCRIPTION field BuildResaveData
 The @option{--resave-data} option allows saved images (@file{.rda} and
 @file{.RData} files) in the @file{data} directory to be optimized for
 size.  It will also compress tabular files and convert @file{.R} files
@@ -3683,8 +3725,7 @@ UTF-8 and mark it as such.  This applies also to character strings in
 datasets: they can be prepared using @code{\uxxxx} escapes or encoded in
 UTF-8 in a UTF-8 locale, or even converted to UTF-8 via @samp{iconv()}.
 If you do this, make sure you have @samp{R (>= 2.10)} (or later) in the
-@samp{Depends:} field of the @file{DESCRIPTION} file.
-
+@samp{Depends} field of the @file{DESCRIPTION} file.
 
 @R{} sessions running in non-UTF-8 locales will if possible re-encode
 such strings for display (and this is done by @command{RGui} on Windows,
@@ -4102,9 +4143,9 @@ The @file{CITATION} file should itself produce no output when
 @section Package types
 
 The @file{DESCRIPTION} file has an optional field @code{Type} which if
-missing is assumed to be @code{Package}, the sort of extension discussed
+missing is assumed to be @samp{Package}, the sort of extension discussed
 so far in this chapter.  Currently one other type is recognized; there
-used also to be a @code{Translation} type.
+used also to be a @samp{Translation} type.
 
 @menu
 * Frontend::                    
@@ -4114,7 +4155,7 @@ used also to be a @code{Translation} type.
 @subsection Frontend
 
 This is a rather general mechanism, designed for adding new front-ends
-such as the former @pkg{gnomeGUI} package (see the @samp{Archive} area on
+such as the former @pkg{gnomeGUI} package (see the @file{Archive} area on
 @acronym{CRAN}).  If a @file{configure} file is found in the top-level
 directory of the package it is executed, and then if a @code{Makefile}
 is found (often generated by @file{configure}), @code{make} is called.
@@ -7588,8 +7629,9 @@ The author of @pkg{packB} is responsible for ensuring that
 provide some automated tools to simplify exporting larger numbers of
 routines.
 
+@c DESCRIPTION field LinkingTo
 A package that wishes to make use of header files in other packages needs
-to declare them as a comma-separated list in the field @code{LinkingTo}
+to declare them as a comma-separated list in the field @samp{LinkingTo}
 in the @file{DESCRIPTION} file.  For example
 
 @example
