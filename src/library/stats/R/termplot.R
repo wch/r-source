@@ -93,9 +93,8 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
                 if (!is.null(model$na.action))
                     ff <- naresid(model$na.action, ff)
                 xx <- factor(levels(ff), levels = levels(ff)) # retain order
-                ww <- match(tempx, ff[,1])
-            }
-            else {
+                ww <- match(tempx, ff[, 1L])
+            } else {
                 xx <- carrier(cn[[i]])
                 if (!is.null(use.rows)) xx <- xx[use.rows]
                 ww <- match(sort(unique(xx)), xx)
@@ -171,7 +170,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
 	if (is.fac[i]) {
 	    ff <- mf[, nmt[i]]
             if (!is.null(model$na.action))
-              ff <- naresid(model$na.action, ff)
+                ff <- naresid(model$na.action, ff)
 	    ll <- levels(ff)
 	    xlims <- range(seq_along(ll)) + c(-.5, .5)
             xx <- as.numeric(ff) ##need if rug or partial
@@ -186,9 +185,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
             else
                 axis(1)
 	    for(j in seq_along(ll)) {
-		ww <- which(ff==ll[j])[c(1,1)]
+		ww <- which(ff == ll[j])[c(1, 1)]
 		jf <- j + c(-.4, .4)
-		lines(jf,tms[ww, i], col = col.term, lwd = lwd.term, ...)
+		lines(jf, tms[ww, i], col = col.term, lwd = lwd.term, ...)
 		if(se) se.lines(jf, iy = ww, i = i)
 	    }
 	}
