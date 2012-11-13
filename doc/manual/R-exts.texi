@@ -483,7 +483,7 @@ package encoding.} or installing@footnote{installation generates an
 ASCII version prior to @R{} 2.16.0.}.
 
 @findex COPYRIGHTS
-An optional @samp{Copyrights} field can be used where the copyright
+An optional @samp{Copyright} field can be used where the copyright
 holder(s) are not the authors.  If necessary, this can refer to a file:
 the convention is to use file @file{inst/COPYRIGHTS}.
 
