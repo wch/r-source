@@ -348,7 +348,7 @@ The format is that of a `Debian Control File' (see the help for
 @samp{read.dcf} and
 @uref{http://www.debian.org/@/doc/@/debian-policy/@/ch-controlfields.html}:
 @R{} does not require encoding in UTF-8 and does not support comments
-sarting with @samp{#}).  Fields start with an ASCII name immediately
+starting with @samp{#}).  Fields start with an ASCII name immediately
 followed by a colon: the value starts after the colon and a space.
 Continuation lines (for example, for descriptions longer than one line)
 start with a space or tab.  Field names are case-sensitive: all those
