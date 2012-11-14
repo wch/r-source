@@ -2875,7 +2875,7 @@ function(dfile)
         if(is.na(db["Maintainer"]) &&
            !is.null(s <- attr(res, "Maintainer")))
             db["Maintainer"] <- s
-        attributes(res) <- NULL
+        mostattributes(res) <- NULL     # Keep names.
         out <- c(out, res)
     }
 
