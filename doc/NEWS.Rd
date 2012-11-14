@@ -27,6 +27,10 @@
   
   \subsection{BUG FIXES}{
     \itemize{
+      \item \samp{[[<-} for generic vectors needed to increment
+      \code{NAMED} count when RHS is used more than
+      once. (\PR{15098}.)
+
       \item \code{beta(a, b)} could overflow to infinity in its
       calculations when one of \code{a} and \code{b} was less than one.
       (\PR{15075}) 
