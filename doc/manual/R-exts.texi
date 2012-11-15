@@ -6763,7 +6763,8 @@ Error: segfault from C stack overflow
 @noindent
 However, C stack overflows are fatal under Windows and normally defeat
 attempts at debugging on that platform.  Further, the size of the stack
-is set when @R{} is compiled (normally to 10MB).
+is set when @R{} is compiled (normally to 64MB, but to 10MB prior to
+@R{} 2.15.2).
 
 If you have a crash which gives a core dump you can use something like
 
