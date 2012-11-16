@@ -418,13 +418,14 @@ The string @samp{Unlimited}, meaning that there are no restrictions on
 distribution or use other than those imposed by relevant laws (including
 copyright laws).
 @end itemize
-If a package license @emph{extends} a base FOSS license (e.g., using
-GPL-3 or AGPL-3 with an attribution clause), the extension should be
-placed in file @file{LICENSE} (or @file{LICENCE}), and the string
-@samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively) should be
-appended to the corresponding individual license specification.
+If a package license restricts a base FOSS license (where permitted,
+e.g., using GPL-3 or AGPL-3 with an attribution clause), the additional
+terms should be placed in file @file{LICENSE} (or @file{LICENCE}), and
+the string @samp{+ file LICENSE} (or @samp{+ file LICENCE},
+respectively) should be appended to the corresponding individual license
+specification.
 
-Examples for standardized specifications include
+Examples of standardized specifications include
 @example
 License: GPL-2
 License: GPL (>= 2) | BSD
