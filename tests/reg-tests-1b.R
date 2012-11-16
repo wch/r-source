@@ -2011,4 +2011,13 @@ stopifnot(identical(args(z), args(zz))) # zz has attributes
 ## was not substituted in R <= 2.15.2
 
 
+## PR#15098
+x <- list()
+x[1:2] <- list(1)
+x[[1]][] <- 2  # change part of first component of x
+x   # second component of x should not be affected
+stopifnot(identical(x[[2]], 1))
+## was  2  in R <= 2.15.2  ("NAMED")
+
+
 proc.time()
