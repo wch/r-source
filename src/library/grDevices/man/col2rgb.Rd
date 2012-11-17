@@ -36,6 +36,8 @@ col2rgb(col, alpha = FALSE)
 \author{Martin Maechler}
 \seealso{
   \code{\link{rgb}}, \code{\link{colors}}, \code{\link{palette}}, etc.
+
+  The newer, more flexible interface, \code{\link{convertColor}()}.
 }
 \examples{
 col2rgb("peachpuff")

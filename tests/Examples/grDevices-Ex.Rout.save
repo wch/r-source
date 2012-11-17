@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-04-12 r58988) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-16 r61126) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1583,6 +1583,17 @@ List of 150
 [13] "azure"         "azure1"        "azure2"        "azure3"       
 [17] "azure4"        "beige"         "bisque"        "bisque1"      
 > 
+> length(cl. <- colors(TRUE))
+[1] 502
+> ## only 502 of the 657 named ones
+> 
+> ## ----------- Show all named colors and more:
+> demo("colors")
+
+
+	demo(colors)
+	---- ~~~~~~
+
 > ### ----------- Show (almost) all named colors ---------------------
 > 
 > ## 1) with traditional 'graphics' package:
@@ -1595,8 +1606,9 @@ List of 150
 +     plot(1:m,1:m, type="n", axes=FALSE)
 +     text(col(cm), rev(row(cm)), cm,  col = cl, cex=cex, srt=srt)
 + }
+
 > showCols1()
-> 
+
 > ## 2) with 'grid' package:
 > showCols2 <- function(bg = "grey", cex = 0.75, rot = 30) {
 +     m <- ceiling(sqrt(n <- length(cl <- colors())))
@@ -1608,13 +1620,115 @@ List of 150
 +     grid.text(cm, x = col(cm)/m, y = rev(row(cm))/m, rot = rot,
 +               vp=vp, gp=gpar(cex = cex, col = cm))
 + }
+
 > showCols2()
 Loading required package: grid
+
 > showCols2(bg = "gray33")
+
+> ###
+> 
+> ##' @title Comparing Colors
+> ##' @param col
+> ##' @param nrow
+> ##' @param ncol
+> ##' @param txt.col
+> ##' @return the grid layout, invisibly
+> ##' @author Marius Hofert, originally
+> plotCol <- function(col, nrow=1, ncol=ceiling(length(col) / nrow),
++                     txt.col="black") {
++     stopifnot(nrow >= 1, ncol >= 1)
++     if(length(col) > nrow*ncol)
++         warning("some colors will not be shown")
++     require(grid)
++     grid.newpage()
++     gl <- grid.layout(nrow, ncol)
++     pushViewport(viewport(layout=gl))
++     ic <- 1
++     for(i in 1:nrow) {
++         for(j in 1:ncol) {
++             pushViewport(viewport(layout.pos.row=i, layout.pos.col=j))
++             grid.rect(gp= gpar(fill=col[ic]))
++             grid.text(col[ic], gp=gpar(col=txt.col))
++             upViewport()
++             ic <- ic+1
++         }
++     }
++     upViewport()
++     invisible(gl)
++ }
+
+> ## A Chocolate Bar of colors:
+> plotCol(c("#CC8C3C", paste0("chocolate", 2:4),
++           paste0("darkorange", c("",1:2)), paste0("darkgoldenrod", 1:2),
++           "orange", "orange1", "sandybrown", "tan1", "tan2"),
++         nrow=2)
+
+> ##' Find close R colors() to a given color {original by Marius Hofert)
+> ##' using Euclidean norm in (HSV / RGB / ...) color space
+> nearRcolor <- function(rgb, cSpace = c("hsv", "rgb255", "Luv", "Lab"),
++                        dist = switch(cSpace, "hsv" = 0.10, "rgb255" = 30,
++                        "Luv" = 15, "Lab" = 12))
++ {
++     if(is.character(rgb)) rgb <- col2rgb(rgb)
++     stopifnot(length(rgb <- as.vector(rgb)) == 3)
++     Rcol <- col2rgb(.cc <- colors())
++     uniqC <- !duplicated(t(Rcol)) # gray9 == grey9 (etc)
++     Rcol <- Rcol[, uniqC] ; .cc <- .cc[uniqC]
++     cSpace <- match.arg(cSpace)
++     convRGB2 <- function(Rgb, to)
++         t(convertColor(t(Rgb), from="sRGB", to=to, scale.in=255))
++     ## the transformation,  rgb{0..255} --> cSpace :
++     TransF <- switch(cSpace,
++                      "rgb255" = identity,
++                      "hsv" = rgb2hsv,
++                      "Luv" = function(RGB) convRGB2(RGB, "Luv"),
++                      "Lab" = function(RGB) convRGB2(RGB, "Lab"))
++     d <- sqrt(colSums((TransF(Rcol) - as.vector(TransF(rgb)))^2))
++     iS <- sort.list(d[near <- d <= dist])# sorted: closest first
++     setNames(.cc[near][iS], format(d[near][iS], digits=3))
++ }
+
+> nearRcolor(col2rgb("tan2"), "rgb")
+         0.0         21.1         25.8         29.5 
+      "tan2"       "tan1" "sandybrown"    "sienna1" 
+
+> nearRcolor(col2rgb("tan2"), "hsv")
+      0.0000       0.0410       0.0618       0.0638       0.0667       0.0766 
+      "tan2"    "sienna2"     "coral2"    "tomato2"       "tan1"      "coral" 
+      0.0778       0.0900       0.0912       0.0918 
+   "sienna1" "sandybrown"     "coral1"     "tomato" 
+
+> nearRcolor(col2rgb("tan2"), "Luv")
+        0.00         7.42         7.48        12.41        13.69 
+      "tan2"       "tan1" "sandybrown"    "orange3"    "orange2" 
+
+> nearRcolor(col2rgb("tan2"), "Lab")
+        0.00         5.56         8.08        11.31 
+      "tan2"       "tan1" "sandybrown"       "peru" 
+
+> nearRcolor("#334455")
+         0.0867 
+"darkslategray" 
+
+> ## Now, consider choosing a color by looking in the
+> ## neighborhood of one you know :
+> 
+> plotCol(nearRcolor("deepskyblue", "rgb", dist=50))
+
+> plotCol(nearRcolor("deepskyblue", dist=.1))
+
+> plotCol(nearRcolor("tomato", "rgb", dist= 50), nrow=3)
+
+> plotCol(nearRcolor("tomato", "hsv", dist=.12), nrow=3)
+
+> plotCol(nearRcolor("tomato", "Luv", dist= 25), nrow=3)
+
+> plotCol(nearRcolor("tomato", "Lab", dist= 18), nrow=3)
+> ## -----------
 > 
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
 detaching ‘package:grid’
@@ -1650,10 +1764,11 @@ detaching ‘package:grid’
 > 
 > ### ** Examples
 > 
-> require(graphics); require(stats) # for na.omit
-> par(mfrow=c(2,2))
 > ## The displayable colors from four planes of Lab space
-> ab <- expand.grid(a=(-10:15)*10,b=(-15:10)*10)
+> ab <- expand.grid(a=(-10:15)*10,
++                   b=(-15:10)*10)
+> require(graphics); require(stats) # for na.omit
+> par(mfrow=c(2,2), mar = .1+c(3,3,3,.5), mgp = c(2, .8, 0))
 > 
 > Lab <- cbind(L=20,ab)
 > srgb <- convertColor(Lab,from="Lab",to="sRGB",clip=NA)
@@ -1687,36 +1802,29 @@ detaching ‘package:grid’
 > image((-10:15)*10,(-15:10)*10,matrix(1:(26*26),ncol=26),col=cols,
 +   xlab="a",ylab="b",main="Lab: L=80")
 > 
-> (cols <- t(col2rgb(palette())))
-     red green blue
-[1,]   0     0    0
-[2,] 255     0    0
-[3,]   0   205    0
-[4,]   0     0  255
-[5,]   0   255  255
-[6,] 255     0  255
-[7,] 255   255    0
-[8,] 190   190  190
-> zapsmall(lab <- convertColor(cols,from="sRGB",to="Lab",scale.in=255))
-            L       a.x          b
-[1,]  0.00000   0.00000    0.00000
-[2,] 53.48418  80.01027   67.38407
-[3,] 71.91841 -73.33548   70.41134
-[4,] 32.24075  78.82042 -107.93632
-[5,] 91.01106 -48.46075  -14.29081
-[6,] 60.50231  97.95195  -60.51490
-[7,] 97.14950 -21.36677   94.42044
-[8,] 76.97594   0.00000    0.00000
-> round(convertColor(lab,from="Lab",to="sRGB",scale.out=255))
-     [,1] [,2] [,3]
-[1,]    0    0    0
-[2,]  255    0    0
-[3,]    0  205    0
-[4,]    0    0  255
-[5,]    0  255  255
-[6,]  255    0  255
-[7,]  255  255    0
-[8,]  190  190  190
+> cols <- t(col2rgb(palette())); rownames(cols) <- palette(); cols
+        red green blue
+black     0     0    0
+red     255     0    0
+green3    0   205    0
+blue      0     0  255
+cyan      0   255  255
+magenta 255     0  255
+yellow  255   255    0
+gray    190   190  190
+> zapsmall(lab <- convertColor(cols,from="sRGB",to="Lab", scale.in=255))
+               L       a.x          b
+black    0.00000   0.00000    0.00000
+red     53.48418  80.01027   67.38407
+green3  71.91841 -73.33548   70.41134
+blue    32.24075  78.82042 -107.93632
+cyan    91.01106 -48.46075  -14.29081
+magenta 60.50231  97.95195  -60.51490
+yellow  97.14950 -21.36677   94.42044
+gray    76.97594   0.00000    0.00000
+> stopifnot(all.equal(cols, # converting back.. getting the original:
++    round(convertColor(lab, from="Lab",to="sRGB", scale.out=255)),
++                     check.attributes=FALSE))
 > 
 > 
 > 
@@ -2011,6 +2119,83 @@ character(0)
 > 
 > # Single Color
 > hist(stats::rnorm(1000), col = hcl(240))
+> 
+> ## Exploring the hcl() color space {in its mapping to R's sRGB colors}:
+> demo(hclColors)
+
+
+	demo(hclColors)
+	---- ~~~~~~~~~
+
+> ### ------ hcl() explorations
+> 
+> hcl.wheel <-
++     function(chroma = 35, lums = 0:100, hues = 1:360, asp = 1,
++              p.cex = 0.6, do.label = FALSE, rev.lum = FALSE,
++              fixup = TRUE)
++ {
++     ## Purpose: show chroma "sections" of hcl() color space; see  ?hcl
++     ## ----------------------------------------------------------------------
++     ## Arguments: chroma: can be vector -> multiple plots are done,
++     ##            lums, hues, fixup : all corresponding to hcl()'s args
++     ##            rev.lum: logical indicating if luminance
++     ## 			should go from outer to inner
++     ## ----------------------------------------------------------------------
++     ## Author: Martin Maechler, Date: 24 Jun 2005
++ 
++     require("graphics")
++     stopifnot(is.numeric(lums), lums >= 0, lums <= 100,
++               is.numeric(hues), hues >= 0, hues <= 360,
++               is.numeric(chroma), chroma >= 0, (nch <- length(chroma)) >= 1)
++     if(is.unsorted(hues)) hues <- sort(hues)
++     if(nch > 1) {
++         op <- par(mfrow= n2mfrow(nch), mar = c(0,0,0,0))
++         on.exit(par(op))
++     }
++     for(i.c in 1:nch) {
++         plot(-1:1,-1:1, type="n", axes = FALSE, xlab="",ylab="", asp = asp)
++         ## main = sprintf("hcl(h = <angle>, c = %g)", chroma[i.c]),
++         text(0.4, 0.99, paste("chroma =", format(chroma[i.c])),
++              adj = 0, font = 4)
++         l.s <- (if(rev.lum) rev(lums) else lums) / max(lums) # <= 1
++         for(ang in hues) { # could do all this using outer() instead of for()...
++             a. <- ang * pi/180
++             z.a <- exp(1i * a.)
++             cols <- hcl(ang, c = chroma[i.c], l = lums, fixup = fixup)
++             points(l.s * z.a, pch = 16, col = cols, cex = p.cex)
++             ##if(do."text") : draw the 0,45,90,... angle "lines"
++             if(do.label)
++                 text(z.a*1.05, labels = ang, col = cols[length(cols)/2],
++                      srt = ang)
++         }
++         if(!fixup) ## show the outline
++             lines(exp(1i * hues * pi/180))
++    }
++    invisible()
++ }
+
+> ## and now a few interesting calls :
+> 
+> hcl.wheel() # and watch it redraw when you fiddle with the graphic window
+
+> hcl.wheel(rev.lum= TRUE) # ditto
+
+> hcl.wheel(do.lab = TRUE) # ditto
+
+> ## Now watch:
+> hcl.wheel(ch = c(25,35,45,55))
+
+> hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.4)
+
+> hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, fixup = FALSE)
+
+> hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE)
+
+> if(dev.interactive()) # new "graphics window" -- to compare with previous :
++     dev.new()
+
+> hcl.wheel(ch = seq(10, 90, by = 10), p.cex = 0.3, rev.lum = TRUE, fixup=FALSE)
+> 
 > 
 > 
 > 
@@ -3518,7 +3703,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.35 0.151 3.815 0 0 
+Time elapsed:  35.818 0.784 36.809 0 0 
 > grDevices::dev.off()
 null device 
           1 

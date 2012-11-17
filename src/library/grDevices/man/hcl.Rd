@@ -73,8 +73,8 @@ Workshop on Distributed Statistical Computing (DSC 2003), March 20-22,
   in future.
 }
 \seealso{
-\code{\link{hsv}},
-\code{\link{rgb}}.
+  \code{\link{hsv}},
+  \code{\link{rgb}}.
 }
 \examples{
 require(graphics)
@@ -119,6 +119,10 @@ csphd(hcl(h = seq(120, 0, length = 4) - 30))
 
 # Single Color
 hist(stats::rnorm(1000), col = hcl(240))
+
+## Exploring the hcl() color space {in its mapping to R's sRGB colors}:
+demo(hclColors)
+
 }
 \keyword{color}
 \keyword{dplot}

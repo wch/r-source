@@ -16,7 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-colors <- function() .External2(C_colors)
+colors <- function(distinct = FALSE) {
+    c <- .External2(C_colors)
+    if(distinct) c[!duplicated(t(col2rgb(c)))] else c
+}
 colours <- colors
 col2rgb <- function(col, alpha=FALSE) {
   result <- .External2(C_col2rgb, col)

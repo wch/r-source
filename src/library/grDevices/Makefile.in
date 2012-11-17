@@ -1,19 +1,18 @@
 #
 # ${R_HOME}/src/library/grDevices/Makefile
+pkg = grDevices
 
 VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../../..
-subdir = src/library/grDevices
+subdir = src/library/$(pkg)
 
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
-
-pkg = grDevices
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
@@ -24,7 +23,7 @@ DEFPKGS = NULL
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR1 mkdesc instdirs
+	@$(MAKE) mkR1 mkdesc mkdemos instdirs
 	@$(MAKE) mksrc
 @BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) mklazy
 @BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) mklazycomp

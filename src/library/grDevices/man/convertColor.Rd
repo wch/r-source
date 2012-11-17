@@ -33,7 +33,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   created by \code{\link{colorConverter}} or \code{\link{make.rgb}}.
   Built-in color spaces may be referenced by strings: \code{"XYZ"},
   \code{"sRGB"}, \code{"Apple RGB"}, \code{"CIE RGB"}, \code{"Lab"},
-  \code{"Luv"}. The converters for these colour spaces are in the object
+  \code{"Luv"}.  The converters for these colour spaces are in the object
   \code{colorspaces}.
 
   The \code{"sRGB"} color space is that used by standard PC monitors.
@@ -60,7 +60,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   controls what is done to out-of-range colors.
 }
 \value{
-  A 3-row matrix whose columns specify the colors.
+  A 3-column matrix whose rows specify the colors.
 }
 
 \references{
@@ -77,10 +77,11 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   \code{\link{make.rgb}} for specifying other colour spaces.
 }
 \examples{
-require(graphics); require(stats) # for na.omit
-par(mfrow=c(2,2))
 ## The displayable colors from four planes of Lab space
-ab <- expand.grid(a=(-10:15)*10,b=(-15:10)*10)
+ab <- expand.grid(a=(-10:15)*10,
+                  b=(-15:10)*10)
+require(graphics); require(stats) # for na.omit
+par(mfrow=c(2,2), mar = .1+c(3,3,3,.5), mgp = c(2, .8, 0))
 
 Lab <- cbind(L=20,ab)
 srgb <- convertColor(Lab,from="Lab",to="sRGB",clip=NA)
@@ -114,8 +115,10 @@ cols <- rgb(srgb[,1],srgb[,2],srgb[,3])
 image((-10:15)*10,(-15:10)*10,matrix(1:(26*26),ncol=26),col=cols,
   xlab="a",ylab="b",main="Lab: L=80")
 
-(cols <- t(col2rgb(palette())))
-zapsmall(lab <- convertColor(cols,from="sRGB",to="Lab",scale.in=255))
-round(convertColor(lab,from="Lab",to="sRGB",scale.out=255))
+cols <- t(col2rgb(palette())); rownames(cols) <- palette(); cols
+zapsmall(lab <- convertColor(cols,from="sRGB",to="Lab", scale.in=255))
+stopifnot(all.equal(cols, # converting back.. getting the original:
+   round(convertColor(lab, from="Lab",to="sRGB", scale.out=255)),
+                    check.attributes=FALSE))
 }
 \keyword{color}

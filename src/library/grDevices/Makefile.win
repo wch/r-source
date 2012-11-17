@@ -1,6 +1,7 @@
 #-*- Makefile -*-
 #
 # ${R_HOME}/src/library/grDevices/Makefile.win
+pkg = grDevices
 
 srcdir = .
 top_srcdir = ../../..
@@ -8,8 +9,6 @@ top_srcdir = ../../..
 top_builddir = ../../..
 
 include $(top_builddir)/Makeconf
-
-pkg = grDevices
 
 R_OSTYPE = windows
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
@@ -19,7 +18,7 @@ DEFPKGS = NULL
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR1 mkdesc instdirs
+	@$(MAKE) -f Makefile.win mkR1 mkdesc mkdemos instdirs
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazycomp
 	@gzip -9f $(top_builddir)/library/grDevices/afm/*.afm

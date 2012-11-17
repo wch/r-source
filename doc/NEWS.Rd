@@ -247,7 +247,7 @@
       class generator functions, similar to \code{setClass()}, but
       still with the reference fields and methods as before
       (suggestion of Romain Francois).
-      
+
       \item New functions \code{bitwNot()}, \code{bitwAnd()},
       \code{bitwOr()} and \code{bitwXor()}, using the internal
       interfaces previously used for classes \code{"octmode"} and
@@ -259,6 +259,11 @@
       \item New option \code{"deparse.cutoff"} to control the deparsing
       of language objects such as calls and formulae when printing.
       (Suggested by a comment of Sarah Goslee.)
+
+      \item \code{colors()} gains an argument \code{distinct}.
+
+      \item New \code{demo(colors)} and \code{demo(hclColors)}, with
+      utility functions.
     }
   }
 
@@ -602,12 +607,12 @@
       and hence usable as e.g. \code{#if R_SVN_REVISION < 70000}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{beta(a, b)} could overflow to infinity in its
       calculations when one of \code{a} and \code{b} was less than one.
-      (\PR{15075}) 
+      (\PR{15075})
 
       \item \code{lbeta(a, b)} no longer gives \code{NaN} if \code{a} or
       \code{b} is very small (in the denormalized range).
@@ -821,7 +826,7 @@
       in \command{R CMD check}, and will be an error in future.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
       \item Use of \code{array()} with a 0-length \code{dim} argument is
@@ -891,7 +896,7 @@
       \item If an external LAPACK is used, it must be version 3.2 or later.
     }
  }
-    
+
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, starting \command{Rterm} via \command{R.exe}
@@ -950,7 +955,7 @@
 
       \item When given a 0-byte file and asked to keep source
       references, \code{parse()} read input from \code{stdin()}
-      instead.      
+      instead.
 
       \item \code{pdf(compress = TRUE)} did not delete temporary files
       it created until the end of the \R session.  (\PR{14991})
@@ -968,7 +973,7 @@
       its compiled C code to change the function: this was masked by the
       default byte-compilation. (\PR{14965}.)
 
-      \item In Windows, the GUI preferences for foreground color were 
+      \item In Windows, the GUI preferences for foreground color were
       not always respected.  (Reported by Benjamin Wells.)
 
       \item On OS X, the Quartz versions of the bitmap devices did not
@@ -1013,7 +1018,7 @@
       (Reported by Bill Dunlap.)
 
       \item \code{install.packages(type = "both")} could call
-      \code{chooseCRANmirror()} twice.      
+      \code{chooseCRANmirror()} twice.
 
       \item \code{lm.wfit()} could segfault in \R 2.15.1 if all the
       weights were zero. (\PR{15044})
@@ -1038,7 +1043,7 @@
 
       \item Long custom line types would sometimes segfault on the
       cairographics-based devices. (\PR{15055}.)
-  
+
       \item \code{tools::checkPoFile()} unprotected too early in its C
       code and so segfaulted from time to time.
 
@@ -1058,8 +1063,8 @@
       \item \code{anova.glm()} with \code{test = "Rao"} didn't work when
       models included an offset. (Reported by Søren Feodor Nielsen.)
 
-      \item \code{as.data.frame.matrix()} could return invalid data 
-      frame with no \code{row.names} attribute for 0-row matrix. (Reported 
+      \item \code{as.data.frame.matrix()} could return invalid data
+      frame with no \code{row.names} attribute for 0-row matrix. (Reported
       by Hervé Pagès.)
 
       \item Compilation with the \code{vecLib} or \code{Accelerate}
@@ -3917,7 +3922,7 @@
 
       \item \code{download.file()} can be now used with external methods
       even if there are spaces in the URL or the target filename.
- 
+
       \item The first formal argument of \code{.C()}, \code{.Fortran()},
       \code{.Call()} and \code{.External()} is now referred to a
       \code{.NAME} rather than \code{name}: however actual calls should
