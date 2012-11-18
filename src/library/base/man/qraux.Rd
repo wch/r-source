@@ -1,6 +1,7 @@
 % File src/library/base/man/qraux.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2011 R Core Team
+% Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{QR.Auxiliaries}
@@ -53,6 +54,11 @@ qr.R(qr, complete = FALSE)
   columns.  When \code{Dvec} is specified, each column of \bold{Q} is
   multiplied by the corresponding value in \code{Dvec}.
 
+  Note that \code{qr.Q(qr,*)} is a special case of
+  \code{\link{qr.qy}(qr,y)} (with a \dQuote{diagonal} \code{y}), and
+  \code{qr.X(qr,*)} is basically \code{\link{qr.qy}(qr, R)} (apart from
+  pivoting and \code{dimnames} setting).
+
  \code{qr.R} returns \bold{R}.  This may be pivoted, e.g., if
  \code{a <- qr(x)} then \code{x[, a$pivot]} = \bold{QR}.  The number of
  rows of \bold{R} is either \code{nrow(X)} or \code{ncol(X)} (and may
@@ -70,8 +76,9 @@ Q <- qr.Q(qrstr) # dim(Q) == dim(x)
 R <- qr.R(qrstr) # dim(R) == ncol(x)
 X <- qr.X(qrstr) # X == x
 range(X - as.matrix(x))# ~ < 6e-12
-## X == Q \%*\% R if there has been no pivoting, as here.
-Q \%*\% R
+## X == Q \%*\% R if there has been no pivoting, as here:
+all.equal(unname(X),
+          unname(Q \%*\% R))
 
 # example of pivoting
 x <- cbind(int = 1,
