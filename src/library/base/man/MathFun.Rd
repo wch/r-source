@@ -1,6 +1,7 @@
 % File src/library/base/man/Math.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
+% Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{MathFun}
@@ -12,9 +13,10 @@ sqrt(x)
 \alias{abs}
 \alias{sqrt}
 \description{
-  These functions compute miscellaneous mathematical functions.
-  The naming follows the standard for computer languages
-  such as C or Fortran.
+  \code{abs(x)} computes the absolute value of x, \code{sqrt(x)} computes the
+  (principal) square root of x, \eqn{\sqrt{x}}.% Details for complex x are below
+
+  The naming follows the standard for computer languages such as C or Fortran.
 }
 \arguments{
   \item{x}{a numeric or \code{\link{complex}} vector or array.}
