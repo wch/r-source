@@ -1,6 +1,7 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2012 R Core Team
+% Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{Extract}
@@ -272,7 +273,7 @@ x$i <- value
   Thus the default behaviour is to use partial matching only when
   extracting from recursive objects (except environments) by \code{$}.
   Even in that case, warnings can be switched on by
-  \code{\link{options}(warnPartialMatchAttr = TRUE)}.
+  \code{\link{options}(warnPartialMatchDollar = TRUE)}.
 
   Neither empty (\code{""}) nor \code{NA} indices match any names, not
   even empty nor missing names.  If any object has no names or
@@ -304,8 +305,8 @@ x$i <- value
 
   \code{\link{Syntax}} for operator precedence, and the
   \emph{R Language} reference manual about indexing details.
-  
-  
+
+
   \code{\link{NULL}} for details of indexing null objects.
 }
 %% Fixme: Link (to html in 'help.start()', pdf from 'ref manual',
@@ -357,6 +358,14 @@ e1[["a"]]
 e1[["b"]] <- 20
 e1$b
 ls(e1)
+
+## partial matching - possibly with warning :
+stopifnot(identical(li$p, pi))
+op <- options(warnPartialMatchDollar = TRUE)
+stopifnot( identical(li$p, pi), #-- a warning
+  inherits(tryCatch (li$p, warning=identity), "warning"))
+## revert the warning option:
+if(is.null(op[[1]])) op[[1]] <- FALSE; options(op)
 }
 \keyword{array}
 \keyword{list}
