@@ -162,7 +162,7 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 }
 % donttest, as access to ports might be denied.  Tested in the 'tests' directory
 \examples{\donttest{
-## Use option cl.core to choose an appropriate cluster size.
+## Use option cl.cores to choose an appropriate cluster size.
 cl <- makeCluster(getOption("cl.cores", 2))
 
 clusterApply(cl, 1:2, get("+"), 3)
