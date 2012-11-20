@@ -1,6 +1,6 @@
 % File src/library/base/man/write.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{write}
@@ -12,7 +12,7 @@ write(x, file = "data",
 }
 \alias{write}
 \arguments{
-  \item{x}{the data to be written out.}
+  \item{x}{the data to be written out, usually an atomic vector.}
   \item{file}{A connection, or a character string naming the file to write to.
     If \code{""}, print to the standard output connection.
 #ifdef unix
@@ -46,7 +46,7 @@ write(x, file = "data",
 }
 \examples{
 # create a 2 by 5 matrix
-x <- matrix(1:10,ncol=5)
+x <- matrix(1:10, ncol = 5)
 
 # the file data contains x, two rows, five cols
 # 1 3 5 7 9 will form the first row
