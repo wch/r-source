@@ -16,7 +16,7 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \arguments{
   \item{X}{an atomic object, typically a vector.}
-  \item{INDEX}{list of one of more factors, each of same length as
+  \item{INDEX}{list of one or more factors, each of same length as
     \code{X}.  The elements are coerced to factors by \code{\link{as.factor}}.}
   \item{FUN}{the function to be applied, or \code{NULL}.  In the case of
     functions like \code{+}, \code{\%*\%}, etc., the function name must
