@@ -1,6 +1,6 @@
 % File src/library/stats/man/aggregate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aggregate}
@@ -30,7 +30,8 @@ aggregate(x, \dots)
 \arguments{
   \item{x}{an R object.}
   \item{by}{a list of grouping elements, each as long as the variables
-    in \code{x}.}
+    in the data frame \code{x}.  The elements are coerced to factors
+    before use.} 
   \item{FUN}{a function to compute the summary statistics which can be
     applied to all data subsets.}
   \item{simplify}{a logical indicating whether results should be
@@ -59,7 +60,7 @@ aggregate(x, \dots)
   \code{aggregate} is a generic function with methods for data frames
   and time series.
   
-  The default method \code{aggregate.default} uses the time series
+  The default method, \code{aggregate.default}, uses the time series
   method if \code{x} is a time series, and otherwise coerces \code{x}
   to a data frame and calls the data frame method.
 
