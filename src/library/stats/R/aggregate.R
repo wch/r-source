@@ -43,7 +43,7 @@ function(x, by, FUN, ..., simplify = TRUE)
     }
     if(!is.list(by))
         stop("'by' must be a list")
-    if(is.null(names(by)))
+    if(is.null(names(by)) && length(by))
         names(by) <- paste("Group", seq_along(by), sep = ".")
     else {
         nam <- names(by)
@@ -81,8 +81,7 @@ function(x, by, FUN, ..., simplify = TRUE)
                                 all(sapply(cl, function(x) identical(x, cl1))))
                                 class(ans) <- cl1
                         } else if(len > 1L)
-                            ans <- matrix(unlist(ans,
-                                                 recursive = FALSE),
+                            ans <- matrix(unlist(ans, recursive = FALSE),
                                           nrow = nry,
                                           ncol = len,
                                           byrow = TRUE,
@@ -131,7 +130,7 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
         ##              paste(setdiff(names(data), rhs), collapse = ","))
         ## formula[[2L]] <- parse(text = lhs)[[1L]]
         ## </NOTE>
-      
+
         ## New logic May 2012 --pd
 
         ## Dot expansion:
@@ -140,14 +139,14 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
 
         ## This version uses terms() to get the rhs variables, which means
         ## that it will NOT remove a variable from the expansion if a
-        ## transformation of it is on the RHS of the formula. 
+        ## transformation of it is on the RHS of the formula.
 
         rhs <- as.list(attr(terms(formula[-2L]),"variables")[-1])
         lhs <- as.call(c(quote(cbind),
                          setdiff(lapply(names(data), as.name),
                                  rhs)
                          )
-                       )      
+                       )
         formula[[2L]] <- lhs
         m[[2L]] <- formula
     }
@@ -155,7 +154,7 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
 
     if(is.matrix(mf[[1L]])) {
         ## LHS is a cbind() combo, convert to data frame and fix names.
-        ## Commented out May 2012 (seems to work without it) -- pd 
+        ## Commented out May 2012 (seems to work without it) -- pd
 	##lhs <- setNames(as.data.frame(mf[[1L]]),
 	##		as.character(m[[2L]][[2L]])[-1L])
         lhs <- as.data.frame(mf[[1L]])
