@@ -81,11 +81,16 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   individual calls with \code{c()} if there is more than one bibentry.
   This can be controlled by setting the option \code{collapse} to
   \code{FALSE} (default) or \code{TRUE}, respectively.  (Printing in R
-  style always collapses to a single call.)
+  style always collapses to a single call.)  Further, for the
+  \code{"citation"} style, \code{format()}'s optional argument
+  \code{citation.bibtex.max} (with default
+  \code{\link{getOption}("citation.bibtex.max")} which defaults to 1)
+  determines for up to how many citation bibentrys text style is shown
+  together with with bibtex, automatically.
 
   It is possible to subscript bibentry objects by their keys (which are
   used for character subscripts if the names are \code{NULL}).
-  
+
   There is also a \code{\link{toBibtex}} method for direct conversion to
   BibTeX.
 }
@@ -100,7 +105,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{Article:}{An article from a journal or magazine.}
     \item{Book:}{A book with an explicit publisher.}
     \item{InBook:}{A part of a book, which may be a chapter (or section
-      or whatever) and/or a range of pages.}  
+      or whatever) and/or a range of pages.}
     \item{InCollection:}{A part of a book having its own title.}
     \item{InProceedings:}{An article in a conference proceedings.}
     \item{Manual:}{Technical documentation like a software manual.}
@@ -121,13 +126,13 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{address:}{The address of the publisher or other type of
       institution.}
 
-    \item{author:}{The name(s) of the author(s), either 
+    \item{author:}{The name(s) of the author(s), either
       as a character string in the format described in the LaTeX book,
       or a \code{\link{person}} object.}
 
     \item{booktitle:}{Title of a book, part of which is being cited.}
     \item{chapter:}{A chapter (or section or whatever) number.}
-    
+
     \item{editor:}{Name(s) of editor(s), same format as \code{author}.}
 
     \item{institution:}{The publishing institution of a technical report.}
@@ -141,17 +146,17 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
       or of a work in a series.}
 
     \item{pages:}{One or more page numbers or range of numbers.}
-    
+
     \item{publisher:}{The publisher's name.}
-    
+
     \item{school:}{The name of the school where a thesis was written.}
-    
+
     \item{series:}{The name of a series or set of books.}
-    
+
     \item{title:}{The work's title.}
-    
+
     \item{volume:}{The volume of a journal or multi-volume book.}
-    
+
     \item{year:}{The year of publication.}
   }
 }

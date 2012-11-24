@@ -25,7 +25,7 @@
     op.utils <-
 	list(help.try.all.packages = FALSE,
 	     help.search.types = c("vignette", "demo", "help"),
-	     internet.info = 2,
+             citation.bibtex.max = 1, internet.info = 2,
 	     pkgType = .Platform$pkgType,
 	     str = list(strict.width = "no", digits.d = 3, vec.len = 4),
 	     demo.ask = "default", example.ask = "default",

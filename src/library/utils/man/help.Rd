@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{help}
@@ -24,7 +24,7 @@ help(topic, package = NULL, lib.loc = NULL,
    character vector the topic is taken to be the value of the only
    element.  Otherwise \code{topic} must be a name or a \link{reserved}
    word (if syntactically valid) or character string.
-   
+
    See \sQuote{Details} for what happens if this is omitted.
  }
  \item{package}{a name or character vector giving the packages to look
@@ -97,7 +97,7 @@ help(topic, package = NULL, lib.loc = NULL,
   first on the search path is used.  (For HTML help the menu will be an
   HTML page, otherwise a graphical menu if possible if
   \code{\link{getOption}("menu.graphics")} is true, the default.)
-  
+
   Note that HTML help does not make use of \code{lib.loc}: it will
   always look first in the attached packages and then along
   \code{.libPaths()}.
@@ -150,7 +150,7 @@ help(topic, package = NULL, lib.loc = NULL,
 }
 \seealso{
   \code{\link[=Question]{?}} for shortcuts to help topics.
-  
+
   \code{\link{help.search}()} or \code{\link{??}} for finding help pages
   on a vague topic;
   \code{\link{help.start}()} which opens the HTML version of the \R
@@ -171,6 +171,12 @@ help(lapply)
 
 help("for")             # or ?"for", but quotes/backticks are needed
 
+\donttest{try({# requires working TeX installation:
+ help(dgamma, help_type = "pdf")
+ ## -> nicely formatted pdf -- including math formula -- for help(dgamma):
+ system2(getOption("pdfviewer"), "dgamma.pdf", wait=FALSE)
+})
+}
 \donttest{help(package="splines") # get help even when package is not loaded}
 
 topi <- "women"

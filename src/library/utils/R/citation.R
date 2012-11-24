@@ -549,7 +549,7 @@ function(x)
 function(x, i)
 {
     if(!length(x)) return(x)
-    
+
     cl <- class(x)
     class(x) <- NULL
     ## For character subscripting, use keys if there are no names.
@@ -587,7 +587,8 @@ function(style)
 }
 
 format.bibentry <-
-function(x, style = "text", .bibstyle = NULL, ...)
+    function(x, style = "text", .bibstyle = NULL,
+	     citation.bibtex.max = getOption("citation.bibtex.max", 1), ...)
 {
     style <- .bibentry_match_format_style(style)
 
@@ -609,7 +610,7 @@ function(x, style = "text", .bibstyle = NULL, ...)
     }
 
     .format_bibentry_as_citation <- function(x) {
-        bibtex <- length(x) < 2L
+        bibtex <- length(x) <= citation.bibtex.max
 
         c(paste(strwrap(attr(x, "mheader")), collapse = "\n"),
           unlist(lapply(x, function(y) {
@@ -660,7 +661,7 @@ function(x, more = list())
         do.call(c, c(list(x), more))
     else
         x
-    
+
     x <- unclass(x)
     y <- unclass(y)
 
@@ -707,15 +708,14 @@ function(x, more = list())
     x
 }
 
-print.bibentry <-
-function(x, style = "text", .bibstyle = NULL, ...)
+print.bibentry <- function(x, style = "text", .bibstyle = NULL, ...)
 {
     style <- .bibentry_match_format_style(style)
 
     if(style == "R") {
-        writeLines(format(x, "R", collapse = TRUE))
+	writeLines(format(x, "R", collapse = TRUE, ...))
     } else if(length(x)) {
-        y <- format(x, style, .bibstyle)
+	y <- format(x, style, .bibstyle, ...)
         if(style == "citation") {
             ## Printing in citation style does extra headers/footers
             ## (which however may be empty), so it is handled
@@ -760,7 +760,7 @@ function(cname, cargs)
 function(x, collapse = FALSE)
 {
     if(!length(x)) return("bibentry()")
-    
+
     x$.index <- NULL
 
     ## There are two subleties for constructing R calls giving a given
@@ -853,7 +853,7 @@ function(x)
 function(x, name)
 {
     if(!length(x)) return(NULL)
-    
+
     ## <COMMENT Z>
     ## Extract internal list elements, return list if length > 1, vector
     ## otherwise (to mirror the behaviour of the input format for
