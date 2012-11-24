@@ -2019,5 +2019,13 @@ x   # second component of x should not be affected
 stopifnot(identical(x[[2]], 1))
 ## was  2  in R <= 2.15.2  ("NAMED")
 
+## PR#15115
+a <- as.name("abc")
+f <- call("==", a, 1L)
+for (i in 2:5) 
+   f <- call("+", f, call("==", a, i))
+abc <- 2
+stopifnot(eval(f) == 1)
+## Was 0 in 2.15.2 because the i was not duplicated
 
 proc.time()

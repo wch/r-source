@@ -2274,7 +2274,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* This is a primitive SPECIALSXP */
 SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP rest, evargs, rfun;
+    SEXP rest, evargs, rfun, tmp;
 
     if (length(args) < 1) errorcall(call, _("'name' is missing"));
     check1arg(args, call, "name");
@@ -2288,8 +2288,12 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (streql(str, ".Internal")) error("illegal usage");
     PROTECT(rfun = install(str));
     PROTECT(evargs = duplicate(CDR(args)));
-    for (rest = evargs; rest != R_NilValue; rest = CDR(rest))
-	SETCAR(rest, eval(CAR(rest), rho));
+    for (rest = evargs; rest != R_NilValue; rest = CDR(rest)) {
+        PROTECT(tmp = eval(CAR(rest), rho));
+        if (NAMED(tmp)) tmp = duplicate(tmp);
+	SETCAR(rest, tmp);
+	UNPROTECT(1);
+    }
     rfun = LCONS(rfun, evargs);
     UNPROTECT(3);
     return (rfun);

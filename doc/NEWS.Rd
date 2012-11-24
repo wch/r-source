@@ -625,6 +625,9 @@
       \item On Windows, warnings about opening a file or pipe with a
       non-ASCII description were sometimes output in UTF-8 rather than
       in the current locale's character set.
+      
+      \item The \code{call()} function did not duplicate its arguments. 
+      (\PR{15115})
     }
   }
 }
