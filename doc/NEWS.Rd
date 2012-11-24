@@ -6,7 +6,6 @@
 \name{NEWS}
 \title{ R News}
 \encoding{UTF-8}
-
 \section{\Rlogo CHANGES IN R VERSION 2.15.2 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -43,6 +42,13 @@
 
       \item \code{browseEnv(html = FALSE)} would segfault if called from
       \R (not \command{R.app}) on a CRAN-style Mac OS X build of \R.
+
+      \item \samp{[[<-} for lists (generic vectors) needed to increment
+      \code{NAMED} count when RHS is used more than once. (\PR{15098})
+
+      \item On Windows, warnings about opening a file or pipe with a
+      non-ASCII description were sometimes output in UTF-8 rather than
+      in the current locale's character set.
     }
   }
 }
