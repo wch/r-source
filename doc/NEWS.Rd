@@ -559,10 +559,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \samp{[[<-} for generic vectors needed to increment
-      \code{NAMED} count when RHS is used more than
-      once. (\PR{15098}.)
-
       \item When \command{R CMD build} is run in an encoding other than
       the one specified in the package's \file{DESCRIPTION} file it
       tries harder to expand the \code{authors@R} field in the specified
@@ -622,6 +618,13 @@
 
       \item \code{browseEnv(html = FALSE)} would segfault if called from
       \R (not \command{R.app}) on a CRAN-style Mac OS X build of \R.
+
+      \item \samp{[[<-} for lists (generic vectors) needed to increment
+      \code{NAMED} count when RHS is used more than once. (\PR{15098})
+
+      \item On Windows, warnings about opening a file or pipe with a
+      non-ASCII description were sometimes output in UTF-8 rather than
+      in the current locale's character set.
     }
   }
 }
