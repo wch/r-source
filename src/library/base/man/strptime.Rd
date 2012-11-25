@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -21,7 +21,7 @@
 
 \method{as.character}{POSIXt}(x, \dots)
 
-strftime(x, format="", tz = "", usetz = FALSE, \dots)
+strftime(x, format = "", tz = "", usetz = FALSE, \dots)
 strptime(x, format, tz = "")
 }
 \arguments{
@@ -220,12 +220,13 @@ strptime(x, format, tz = "")
   correctly.
 
   Remember that in most timezones some times do not occur and some occur
-  twice because of transitions to/from summer time.  \code{strptime}
-  does not validate such times (it does not assume a specific timezone),
-  but conversion by \code{\link{as.POSIXct}}) will do so.  Conversion by
-  \code{strftime} and formatting/printing uses OS facilities and may
-  (and does on Windows) return nonsensical results for non-existent
-  times at DST transitions.
+  twice because of transitions to/from \sQuote{daylight saving} (also
+  known a \sQuote{summer}) time.  \code{strptime} does not validate such
+  times (it does not assume a specific timezone), but conversion by
+  \code{\link{as.POSIXct}}) will do so.  Conversion by \code{strftime}
+  and formatting/printing uses OS facilities and may (and does on
+  Windows) return nonsensical results for non-existent times at DST
+  transitions.
 }
 \references{
   International Organization for Standardization (2004, 2000, 1988, 1997,
@@ -233,6 +234,7 @@ strptime(x, format, tz = "")
   \emph{ISO 8601.  Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
   For links to versions available on-line see (at the time of writing)
+  \url{http://dotat.at/tmp/ISO_8601-2004_E.pdf} abd
   \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the
   current official version, see
   \url{http://www.iso.org/iso/en/prods-services/popstds/datesandtime.html}.
