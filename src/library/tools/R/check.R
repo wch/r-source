@@ -2294,7 +2294,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     out2 <- R_runR(cmd, R_opts2)
                     if(length(out2)) {
                         print_time(t1b, t2b, NULL)
-                        cat(" differences from ", sQuote(basename(savefile)),
+                        cat("\ndifferences from ", sQuote(basename(savefile)),
                             "\n", sep = "")
                         writeLines(c(out2, ""))
                     } else {
