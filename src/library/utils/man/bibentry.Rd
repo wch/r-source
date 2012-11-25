@@ -85,7 +85,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \code{"citation"} style, \code{format()}'s optional argument
   \code{citation.bibtex.max} (with default
   \code{\link{getOption}("citation.bibtex.max")} which defaults to 1)
-  determines for up to how many citation bibentrys text style is shown
+  determines for up to how many citation bibentries text style is shown
   together with with bibtex, automatically.
 
   It is possible to subscript bibentry objects by their keys (which are
