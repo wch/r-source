@@ -192,10 +192,10 @@ detach("package:splines")
 # if the package name is in a character vector, use
 pkg <- "splines"
 library(pkg, character.only = TRUE)
-detach(pos = match(paste("package", pkg, sep=":"), search()))
+detach(pos = match(paste("package", pkg, sep = ":"), search()))
 
 require(pkg, character.only = TRUE)
-detach(pos = match(paste("package", pkg, sep=":"), search()))
+detach(pos = match(paste("package", pkg, sep = ":"), search()))
 
 require(nonexistent)        # FALSE
 \dontrun{

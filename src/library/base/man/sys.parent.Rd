@@ -140,7 +140,7 @@ t1 <- function() {
     cat("current frame is", sys.nframe(), "\n")
     str(sys.calls()) ## list with two components t1() and t2()
     cat("parents are frame numbers", sys.parents(), "\n") ## 0 1
-    print(ls(envir=sys.frame(-1))) ## [1] "aa" "t2"
+    print(ls(envir = sys.frame(-1))) ## [1] "aa" "t2"
     invisible()
   }
   t2()

@@ -14,7 +14,7 @@
 \usage{
 readChar(con, nchars, useBytes = FALSE)
 
-writeChar(object, con, nchars = nchar(object, type="chars"),
+writeChar(object, con, nchars = nchar(object, type = "chars"),
           eos = "", useBytes = FALSE)
 }
 \arguments{
@@ -83,7 +83,7 @@ writeChar(object, con, nchars = nchar(object, type="chars"),
   strings, but not \R >= 2.8.0.  \code{readChar} was commonly used to
   read fixed-size zero-padded byte fields for which \code{readBin} was
   unsuitable.  \code{readChar} can still be used for such fields if
-  there are no embedded nuls: otherwise \code{readBin(what="raw")}
+  there are no embedded nuls: otherwise \code{readBin(what = "raw")}
   provides an alternative.
   
   \code{nchars} will be interpreted in bytes not characters in a
@@ -107,8 +107,8 @@ writeChar(object, con, nchars = nchar(object, type="chars"),
 zz <- file("testchar", "wb")
 x <- c("a", "this will be truncated", "abc")
 nc <- c(3, 10, 3)
-writeChar(x, zz, nc, eos=NULL)
-writeChar(x, zz, eos="\r\n")
+writeChar(x, zz, nc, eos = NULL)
+writeChar(x, zz, eos = "\r\n")
 close(zz)
 
 zz <- file("testchar", "rb")

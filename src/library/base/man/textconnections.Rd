@@ -109,9 +109,9 @@ close(zz)
 
 zz <- textConnection("foo", "w")
 writeLines(c("testit1", "testit2"), zz)
-cat("testit3 ", file=zz)
+cat("testit3 ", file = zz)
 isIncomplete(zz)
-cat("testit4\n", file=zz)
+cat("testit4\n", file = zz)
 isIncomplete(zz)
 close(zz)
 foo

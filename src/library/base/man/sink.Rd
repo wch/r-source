@@ -45,7 +45,7 @@ sink.number(type = c("output", "message"))
   \code{\link{warning}} and \code{\link{stop}}) can be diverted by
   \code{sink(type = "message")} (see below).
 
-  \code{sink()} or \code{sink(file=NULL)} ends the last diversion (of
+  \code{sink()} or \code{sink(file = NULL)} ends the last diversion (of
   the specified type).  There is a stack of diversions for normal
   output, so output reverts to the previous diversion (if there was
   one).  The stack is of up to 21 connections (20 diversions).
@@ -102,12 +102,12 @@ sink()
 unlink("sink-examp.txt")
 \dontrun{
 ## capture all the output to a file.
-zz <- file("all.Rout", open="wt")
+zz <- file("all.Rout", open = "wt")
 sink(zz)
-sink(zz, type="message")
+sink(zz, type = "message")
 try(log("a"))
 ## back to the console
-sink(type="message")
+sink(type = "message")
 sink()
 try(log("a"))
 }}

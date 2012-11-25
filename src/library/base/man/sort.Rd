@@ -140,17 +140,17 @@ x; sort(x); sort(x, partial = c(10, 15))
 median.default # shows you another example for 'partial'
 
 ## illustrate 'stable' sorting (of ties):
-sort(c(10:3,2:12), method = "sh", index.return=TRUE) # is stable
+sort(c(10:3, 2:12), method = "sh", index.return = TRUE) # is stable
 ## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
 ## $ix: 9  8 10  7 11  6 12  5 13  4 14  3 15  2 16  1 17 18 19
-sort(c(10:3,2:12), method = "qu", index.return=TRUE) # is not
+sort(c(10:3, 2:12), method = "qu", index.return = TRUE) # is not
 ## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
 ## $ix: 9 10  8  7 11  6 12  5 13  4 14  3 15 16  2 17  1 18 19
 
 x <- c(1:3, 3:5, 10)
-is.unsorted(x)                # FALSE: is sorted
-is.unsorted(x, strictly=TRUE) # TRUE : is not (and cannot be)
-                              # sorted strictly
+is.unsorted(x)                  # FALSE: is sorted
+is.unsorted(x, strictly = TRUE) # TRUE : is not (and cannot be)
+                                # sorted strictly
 \dontrun{
 ## Small speed comparison simulation:
 N <- 2000

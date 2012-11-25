@@ -74,10 +74,10 @@ cat(shQuote(test), "\n")
 tryit <- paste("use the", sQuote("-c"), "switch\nlike this")
 cat(shQuote(tryit), "\n")
 \dontrun{system(paste("echo", shQuote(tryit)))}
-cat(shQuote(tryit, type="csh"), "\n")
+cat(shQuote(tryit, type = "csh"), "\n")
 
 ## Windows-only example.
 perlcmd <- 'print "Hello World\\n";'
-\dontrun{shell(paste("perl -e", shQuote(perlcmd, type="cmd")))}
+\dontrun{shell(paste("perl -e", shQuote(perlcmd, type = "cmd")))}
 }
 \keyword{utilities}

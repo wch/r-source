@@ -58,7 +58,7 @@ alist(\dots)
   functions, this returns the concatenation of the list of formal
   arguments and the function body.  For expressions, the list of
   constituent elements is returned.  \code{as.list} is generic, and as
-  the default method calls \code{\link{as.vector}(mode="list")} for a
+  the default method calls \code{\link{as.vector}(mode = "list")} for a
   non-list, methods for \code{as.vector} may be invoked.  \code{as.list}
   turns a factor into a list of one-element factors.  Attributes may
   be dropped unless the argument already is a list or expression.  (This
@@ -109,7 +109,7 @@ alist(\dots)
 require(graphics)
 
 # create a plotting structure
-pts <- list(x=cars[,1], y=cars[,2])
+pts <- list(x = cars[,1], y = cars[,2])
 plot(pts)
 
 is.pairlist(.Options)  # a user-level pairlist
@@ -120,7 +120,7 @@ vector("list", 5)
 # Argument lists
 f <- function() x
 # Note the specification of a "..." argument:
-formals(f) <- al <- alist(x=, y=2+3, \dots=)
+formals(f) <- al <- alist(x = , y = 2+3, \dots = )
 f
 al
 

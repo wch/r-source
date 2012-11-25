@@ -7,7 +7,7 @@
 \title{Express Table Entries as Fraction of Marginal Table}
 \concept{proportions}
 \usage{
-prop.table(x, margin=NULL)
+prop.table(x, margin = NULL)
 }
 \alias{prop.table}
 \arguments{
@@ -27,8 +27,8 @@ prop.table(x, margin=NULL)
 \seealso{\code{\link{margin.table}}}
 
 \examples{
-m <- matrix(1:4,2)
+m <- matrix(1:4, 2)
 m
-prop.table(m,1)
+prop.table(m, 1)
 }
 \keyword{ array }

@@ -65,7 +65,7 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
 x <- "ab\bc\ndef"
 print(x)
 cat(x) # interprets escapes
-cat(encodeString(x), "\n", sep="") # similar to print()
+cat(encodeString(x), "\n", sep = "") # similar to print()
 
 factor(x) # makes use of this to print the levels
 

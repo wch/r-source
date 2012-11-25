@@ -16,9 +16,9 @@ argument or a condition argument.  These functions can be used to
 retrieve either of these arguments.
 }
 \usage{
-browserText(n=1)
-browserCondition(n=1)
-browserSetDebug(n=1)
+browserText(n = 1)
+browserCondition(n = 1)
+browserSetDebug(n = 1)
 }
 \arguments{
   \item{n}{The number of contexts to skip over, it must be non-negative.}

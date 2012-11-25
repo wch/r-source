@@ -11,7 +11,7 @@
   the environment where \code{browser} was called from.
 }
 \usage{
-browser(text="", condition=NULL, expr=TRUE, skipCalls=0L)
+browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
 }
 \arguments{
   \item{text}{a text string that can be retrieved once the browser is invoked.}

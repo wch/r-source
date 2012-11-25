@@ -185,7 +185,7 @@
 \examples{
 require(utils)
 
-d.fr <- data.frame(x=1:9, y=stats::rnorm(9))
+d.fr <- data.frame(x = 1:9, y = stats::rnorm(9))
 class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
 
 methods("Math")

@@ -84,7 +84,7 @@ tempdir()
 \examples{\donttest{
 tempfile(c("ab", "a b c"))   # give file name with spaces in!
 
-tempfile("plot", fileext=c(".ps", ".pdf"))
+tempfile("plot", fileext = c(".ps", ".pdf"))
 
 tempdir() # works on all platforms with a platform-dependent result
 }}

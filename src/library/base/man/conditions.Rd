@@ -170,9 +170,9 @@ restartFormals(r)
    to find the restart.
 
    New restarts for \code{withRestarts} can be specified in several ways.
-   The simplest is in \code{name=function} form where the function is
+   The simplest is in \code{name = function} form where the function is
    the handler to call when the restart is invoked.  Another simple
-   variant is as \code{name=string} where the string is stored in the
+   variant is as \code{name = string} where the string is stored in the
    \code{description} field of the restart object returned by
    \code{findRestart}; in this case the handler ignores its arguments
    and returns \code{NULL}.  The most flexible form of a restart
@@ -205,15 +205,15 @@ restartFormals(r)
 }
 
 \examples{
-tryCatch(1, finally=print("Hello"))
+tryCatch(1, finally = print("Hello"))
 e <- simpleError("test error")
 \dontrun{
  stop(e)
- tryCatch(stop(e), finally=print("Hello"))
- tryCatch(stop("fred"), finally=print("Hello"))
+ tryCatch(stop(e), finally = print("Hello"))
+ tryCatch(stop("fred"), finally = print("Hello"))
 }
-tryCatch(stop(e), error = function(e) e, finally=print("Hello"))
-tryCatch(stop("fred"),  error = function(e) e, finally=print("Hello"))
+tryCatch(stop(e), error = function(e) e, finally = print("Hello"))
+tryCatch(stop("fred"),  error = function(e) e, finally = print("Hello"))
 withCallingHandlers({ warning("A"); 1+2 }, warning = function(w) {})
 \dontrun{
  { withRestarts(stop("A"), abort = function() {}); 1 }

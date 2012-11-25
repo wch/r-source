@@ -56,8 +56,8 @@ data.matrix(frame, rownames.force = NA)
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
 \examples{
-DF <- data.frame(a=1:3, b=letters[10:12],
-                 c=seq(as.Date("2004-01-01"), by = "week", len = 3),
+DF <- data.frame(a = 1:3, b = letters[10:12],
+                 c = seq(as.Date("2004-01-01"), by = "week", len = 3),
                  stringsAsFactors = TRUE)
 data.matrix(DF[1:2])
 data.matrix(DF)

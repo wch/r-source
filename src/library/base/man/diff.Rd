@@ -37,7 +37,7 @@ diff(x, \dots)
   \code{\link{NA}}'s propagate.
 }
 \value{
-  If \code{x} is a vector of length \code{n} and \code{differences=1},
+  If \code{x} is a vector of length \code{n} and \code{differences = 1},
   then the computed result is equal to the successive differences
   \code{x[(1+lag):n] - x[1:(n-lag)]}.
 

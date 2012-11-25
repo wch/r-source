@@ -71,7 +71,7 @@ default.stringsAsFactors()
   subsetting will force column names in the result to be unique.
 
   \code{data.frame} converts each of its arguments to a data frame by
-  calling \code{\link{as.data.frame}(optional=TRUE)}.  As that is a
+  calling \code{\link{as.data.frame}(optional = TRUE)}.  As that is a
   generic function, methods can be written to change the behaviour of
   arguments according to their classes: \R comes with many such methods.
   Character variables passed to \code{data.frame} are converted to
@@ -131,22 +131,22 @@ default.stringsAsFactors()
 }
 \examples{
 L3 <- LETTERS[1:3]
-(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, replace=TRUE)))
+(d <- data.frame(cbind(x = 1, y = 1:10), fac = sample(L3, 10, replace = TRUE)))
 
 ## The same with automatic column names:
-data.frame(cbind(  1,   1:10),     sample(L3, 10, replace=TRUE))
+data.frame(cbind(  1,   1:10),     sample(L3, 10, replace = TRUE))
 
 is.data.frame(d)
 
 ## do not convert to factor, using I() :
 (dd <- cbind(d, char = I(letters[1:10])))
-rbind(class=sapply(dd, class), mode=sapply(dd, mode))
+rbind(class = sapply(dd, class), mode = sapply(dd, mode))
 
 stopifnot(1:10 == row.names(d))# {coercion}
 
 (d0  <- d[, FALSE]) # NULL data frame with 10 rows
 (d.0 <- d[FALSE, ]) # <0 rows> data frame  (3 cols)
-(d00 <- d0[FALSE,])  # NULL data frame with 0 rows
+(d00 <- d0[FALSE, ])  # NULL data frame with 0 rows
 }
 \keyword{classes}
 \keyword{methods}

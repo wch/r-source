@@ -45,7 +45,7 @@ require(stats)
 \dontrun{
 exT <- function(n = 10000) {
   # Purpose: Test if system.time works ok;   n: loop size
-  system.time(for(i in 1:n) x <- mean(rt(1000, df=4)))
+  system.time(for(i in 1:n) x <- mean(rt(1000, df = 4)))
 }
 #-- Try to interrupt one of the following (using Ctrl-C / Escape):
 exT()                 #- about 4 secs on a 2.5GHz Xeon

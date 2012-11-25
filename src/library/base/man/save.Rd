@@ -14,7 +14,7 @@
 
   \code{save.image()} is just a short-cut for \sQuote{save my current
     workspace},
-  i.e., \code{save(list = ls(all=TRUE), file = ".RData")}.  It is also what
+  i.e., \code{save(list = ls(all = TRUE), file = ".RData")}.  It is also what
   happens with \code{\link{q}("yes")}.
 }
 \usage{
@@ -163,7 +163,7 @@ unlink("xy.RData")
 unlink(".RData")
 
 # set save defaults using option:
-options(save.defaults=list(ascii=TRUE, safe=FALSE))
+options(save.defaults = list(ascii = TRUE, safe = FALSE))
 save.image()
 unlink(".RData")
 }

@@ -44,7 +44,7 @@ commandArgs(trailingOnly = FALSE)
 commandArgs()
 ## Spawn a copy of this application as it was invoked,
 ## subject to shell quoting issues
-## system(paste(commandArgs(), collapse=" "))
+## system(paste(commandArgs(), collapse = " "))
 }
 \keyword{environment}
 \keyword{sysdata}

@@ -123,13 +123,13 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 }
 \details{
   If you set \code{format} it overrides the setting of \code{mode}, so
-  \code{formatC(123.45, mode="double", format="d")} gives \code{123}.
+  \code{formatC(123.45, mode = "double", format = "d")} gives \code{123}.
 
   The rendering of scientific format is platform-dependent: some systems
   use \code{n.ddde+nnn} or \code{n.dddenn} rather than \code{n.ddde+nn}.
 
   \code{formatC} does not necessarily align the numbers on the decimal
-  point, so \code{formatC(c(6.11, 13.1), digits=2, format="fg")} gives
+  point, so \code{formatC(c(6.11, 13.1), digits = 2, format = "fg")} gives
   \code{c("6.1", " 13")}.  If you want common formatting for several
   numbers, use \code{\link{format}}.
 
@@ -167,23 +167,23 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 }
 \examples{
 xx  <- pi * 10^(-5:4)
-cbind(format(xx, digits=4), formatC(xx))
+cbind(format(xx, digits = 4), formatC(xx))
 cbind(formatC(xx, width = 9, flag = "-"))
 cbind(formatC(xx, digits = 5, width = 8, format = "f", flag = "0"))
-cbind(format(xx, digits=4), formatC(xx, digits = 4, format = "fg"))
+cbind(format(xx, digits = 4), formatC(xx, digits = 4, format = "fg"))
 
 formatC(    c("a", "Abc", "no way"), width = -7)  # <=> flag = "-"
-formatC(c((-1:1)/0,c(1,100)*pi), width=8, digits=1)
+formatC(c((-1:1)/0,c(1,100)*pi), width = 8, digits = 1)
 
 ## note that some of the results here depend on the implementation
 ## of long-double arithmetic, which is platform-specific.
 xx <- c(1e-12,-3.98765e-10,1.45645e-69,1e-70,pi*1e37,3.44e4)
 ##       1        2             3        4      5       6
 formatC(xx)
-formatC(xx, format="fg")       # special "fixed" format.
-formatC(xx[1:4], format="f", digits=75) #>> even longer strings
+formatC(xx, format = "fg")       # special "fixed" format.
+formatC(xx[1:4], format = "f", digits = 75) #>> even longer strings
 
-formatC(c(3.24, 2.3e-6), format="f", digits=11, drop0trailing=TRUE)
+formatC(c(3.24, 2.3e-6), format = "f", digits = 11, drop0trailing = TRUE)
 
 r <- c("76491283764.97430", "29.12345678901", "-7.1234", "-100.1","1123")
 ## American:
@@ -191,8 +191,8 @@ prettyNum(r, big.mark = ",")
 ## Some Europeans:
 prettyNum(r, big.mark = "'", decimal.mark = ",")
 
-(dd <- sapply(1:10, function(i)paste((9:0)[1:i],collapse="")))
-prettyNum(dd, big.mark="'")
+(dd <- sapply(1:10, function(i) paste((9:0)[1:i], collapse = "")))
+prettyNum(dd, big.mark = "'")
 
 ## examples of 'small.mark'
 pN <- stats::pnorm(1:7, lower.tail = FALSE)
@@ -203,21 +203,21 @@ cbind(ff <- format(1.2345 + 10^(0:5), width = 11, big.mark = "'"))
 ## all with same width (one more than the specified minimum)
 
 ## individual formatting to common width:
-fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
+fc <- formatC(1.234 + 10^(0:8), format = "fg", width = 11, big.mark = "'")
 cbind(fc)
 
 ## complex numbers:
 r <- 10.0000001; rv <- (r/10)^(1:10)
 (zv <- (rv + 1i*rv))
-op <- options(digits=7) ## (system default)
+op <- options(digits = 7) ## (system default)
 (pnv <- prettyNum(zv))
 stopifnot(pnv == "1+1i", pnv == format(zv),
-          pnv == prettyNum(zv, drop0trailing=TRUE))
+          pnv == prettyNum(zv, drop0trailing = TRUE))
 ## more digits change the picture:
-options(digits=8)
+options(digits = 8)
 head(fv <- format(zv), 3)
 prettyNum(fv)
-prettyNum(fv, drop0trailing=TRUE) # a bit nicer
+prettyNum(fv, drop0trailing = TRUE) # a bit nicer
 options(op)
 }
 \keyword{character}

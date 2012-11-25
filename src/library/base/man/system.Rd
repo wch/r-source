@@ -129,7 +129,7 @@ system(command, intern = FALSE,
   sent to the terminal unless \code{ignore.stderr = TRUE}.  They can be
   captured (in the most likely shells) by
 \preformatted{
-    system("some command 2>&1", intern=TRUE)
+    system("some command 2>&1", intern = TRUE)
 }
   
   For GUIs, what happens to output sent to \file{stdout} or
@@ -194,7 +194,7 @@ system(command, intern = FALSE,
     \item What happens to \code{stdout} and \code{stderr} when not
     captured depends on how \R is running: Windows batch commands behave
     like a Unix-alike, but from the Windows GUI they are
-    generally lost.  \code{system(intern=TRUE)} captures \file{stderr}
+    generally lost.  \code{system(intern = TRUE)} captures \file{stderr}
     when run from the Windows GUI console unless \code{ignore.stderr =
       TRUE}.
 

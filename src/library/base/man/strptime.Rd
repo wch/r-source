@@ -283,7 +283,7 @@ strptime(x, "\%m/\%d/\%y \%H:\%M:\%S")
 ## time with fractional seconds
 z <- strptime("20/2/06 11:16:16.683", "\%d/\%m/\%y \%H:\%M:\%OS")
 z # prints without fractional seconds
-op <- options(digits.secs=3)
+op <- options(digits.secs = 3)
 z
 options(op)
 

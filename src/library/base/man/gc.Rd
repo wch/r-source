@@ -20,8 +20,8 @@ gcinfo(verbose)
 \description{
   A call of \code{gc} causes a garbage collection to take place.
   \code{gcinfo} sets a flag so that
-  automatic collection is either silent (\code{verbose=FALSE}) or
-  prints memory usage statistics (\code{verbose=TRUE}).
+  automatic collection is either silent (\code{verbose = FALSE}) or
+  prints memory usage statistics (\code{verbose = TRUE}).
 }
 \details{
   A call of \code{gc} causes a garbage collection to take place.
@@ -60,7 +60,7 @@ gcinfo(verbose)
   \code{NA} denoting no limit).
 
   The final two columns show the maximum space used since the last call
-  to \code{gc(reset=TRUE)} (or since \R started).
+  to \code{gc(reset = TRUE)} (or since \R started).
   
   \code{gcinfo} returns the previous value of the flag.
 }

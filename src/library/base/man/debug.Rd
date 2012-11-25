@@ -7,8 +7,8 @@
 \name{debug}
 \title{Debug a Function}
 \usage{
-debug(fun, text="", condition=NULL)
-debugonce(fun, text="", condition=NULL)
+debug(fun, text = "", condition = NULL)
+debugonce(fun, text = "", condition = NULL)
 undebug(fun)
 isdebugged(fun)
 }
@@ -75,7 +75,7 @@ isdebugged(fun)
   In order to debug S4 methods (see \code{\link{Methods}}), you
   need to use \code{\link{trace}}, typically calling \code{\link{browser}},
   e.g., as \cr
-  \code{trace("plot", browser, exit=browser, signature = c("track", "missing"))}
+  \code{trace("plot", browser, exit = browser, signature = c("track", "missing"))}
 
   The number of lines printed for the deparsed call when a function is
   entered for debugging can be limited by setting

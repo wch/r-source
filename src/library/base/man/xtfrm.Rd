@@ -27,8 +27,8 @@ xtfrm(x)
 \details{
   This is a special case of ranking, but as a less general function than
   \code{\link{rank}} is more suitable to be made generic.  The default
-  method is similar to \code{rank(x, ties.method="min",
-    na.last="keep")}, so \code{NA} values are given rank \code{NA} and all
+  method is similar to \code{rank(x, ties.method = "min",
+    na.last = "keep")}, so \code{NA} values are given rank \code{NA} and all
   tied values are given equal integer rank.
 
   The \code{\link{factor}} method extracts the codes.  The

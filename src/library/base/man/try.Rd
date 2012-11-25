@@ -28,7 +28,7 @@ try(expr, silent = FALSE)
   in case of an error contains the error message.)
 
   \code{try} is implemented using \code{\link{tryCatch}}; for
-  programming, instead of \code{try(expr, silent=TRUE)}, something like
+  programming, instead of \code{try(expr, silent = TRUE)}, something like
   \code{tryCatch(expr, error = function(e) e)} (or other simple
   error handler functions) may be more efficient and flexible.
 }
@@ -61,7 +61,7 @@ set.seed(123)
 x <- stats::rnorm(50)
 doit <- function(x)
 {
-    x <- sample(x, replace=TRUE)
+    x <- sample(x, replace = TRUE)
     if(length(unique(x)) > 30) mean(x)
     else stop("too few unique points")
 }

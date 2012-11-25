@@ -26,8 +26,8 @@ zapsmall(x, digits = getOption("digits"))
 }
 \examples{
 x2 <- pi * 100^(-1:3)
-print(x2 / 1000, digits=4)
-zapsmall(x2 / 1000, digits=4)
+print(x2 / 1000, digits = 4)
+zapsmall(x2 / 1000, digits = 4)
 
 zapsmall(exp(1i*0:4*pi/2))
 }

@@ -36,7 +36,7 @@ besselY(x, nu)
 }
 \value{
   Numeric vector of the same length of \code{x} with the (scaled, if
-  \code{expon.scaled=TRUE}) values of the corresponding Bessel function.
+  \code{expon.scaled = TRUE}) values of the corresponding Bessel function.
 }
 \details{
   If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},
@@ -74,14 +74,14 @@ nus <- c(0:5, 10, 20)
 x <- seq(0, 4, length.out = 501)
 plot(x, x, ylim = c(0, 6), ylab = "", type = "n",
      main = "Bessel Functions  I_nu(x)")
-for(nu in nus) lines(x, besselI(x, nu=nu), col = nu+2)
-legend(0, 6, legend = paste("nu=", nus), col = nus+2, lwd = 1)
+for(nu in nus) lines(x, besselI(x, nu = nu), col = nu + 2)
+legend(0, 6, legend = paste("nu=", nus), col = nus + 2, lwd = 1)
 
 x <- seq(0, 40, length.out = 801); yl <- c(-.8, .8)
 plot(x, x, ylim = yl, ylab = "", type = "n",
      main = "Bessel Functions  J_nu(x)")
-for(nu in nus) lines(x, besselJ(x, nu=nu), col = nu+2)
-legend(32,-.18, legend = paste("nu=", nus), col = nus+2, lwd = 1)
+for(nu in nus) lines(x, besselJ(x, nu = nu), col = nu + 2)
+legend(32,-.18, legend = paste("nu=", nus), col = nus + 2, lwd = 1)
 
 ## Negative nu's :
 xx <- 2:7
@@ -96,25 +96,25 @@ legend(5, 200, legend = paste("x=", xx), col=seq(xx), lty=seq(xx))
 par(op)
 
 x0 <- 2^(-20:10)
-plot(x0, x0^-8, log="xy", ylab="",type="n",
+plot(x0, x0^-8, log = "xy", ylab = "", type = "n",
      main = "Bessel Functions  J_nu(x)  near 0\n log - log  scale")
-for(nu in sort(c(nus, nus+.5)))
-    lines(x0, besselJ(x0, nu=nu), col = nu+2)
-legend(3, 1e50, legend = paste("nu=", paste(nus, nus+.5, sep=",")),
+for(nu in sort(c(nus, nus+0.5)))
+    lines(x0, besselJ(x0, nu = nu), col = nu + 2)
+legend(3, 1e50, legend = paste("nu=", paste(nus, nus+0.5, sep=",")),
        col = nus + 2, lwd = 1)
 
-plot(x0, x0^-8, log="xy", ylab="", type="n",
+plot(x0, x0^-8, log = "xy", ylab = "", type = "n",
      main = "Bessel Functions  K_nu(x)  near 0\n log - log  scale")
-for(nu in sort(c(nus, nus+.5)))
-    lines(x0, besselK(x0, nu=nu), col = nu+2)
-legend(3, 1e50, legend = paste("nu=", paste(nus, nus+.5, sep=",")),
+for(nu in sort(c(nus, nus+0.5)))
+    lines(x0, besselK(x0, nu = nu), col = nu + 2)
+legend(3, 1e50, legend = paste("nu=", paste(nus, nus + 0.5, sep = ",")),
        col = nus + 2, lwd = 1)
 
 x <- x[x > 0]
 plot(x, x, ylim=c(1e-18, 1e11), log = "y", ylab = "", type = "n",
      main = "Bessel Functions  K_nu(x)")
-for(nu in nus) lines(x, besselK(x, nu=nu), col = nu+2)
-legend(0, 1e-5, legend=paste("nu=", nus), col = nus+2, lwd = 1)
+for(nu in nus) lines(x, besselK(x, nu = nu), col = nu + 2)
+legend(0, 1e-5, legend=paste("nu=", nus), col = nus + 2, lwd = 1)
 
 yl <- c(-1.6, .6)
 plot(x, x, ylim = yl, ylab = "", type = "n",

@@ -11,7 +11,7 @@
   Return the \R home directory.
 }
 \usage{
-R.home(component="home")
+R.home(component = "home")
 }
 \arguments{
   \item{component}{As well as \code{"home"} which gives the \R home

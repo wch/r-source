@@ -11,7 +11,7 @@
   statistic.
 }
 \usage{
-sweep(x, MARGIN, STATS, FUN="-", check.margin=TRUE, \dots)
+sweep(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, \dots)
 }
 \arguments{
   \item{x}{an array.}

@@ -40,7 +40,7 @@ traceback(x = NULL, max.lines = getOption("deparse.max.lines"))
   
   If \code{x} is numeric, then the current stack is printed, skipping
   \code{x} entries at the top of the stack.  For example,
-  \code{options(error=function() traceback(2))} will print the stack
+  \code{options(error = function() traceback(2))} will print the stack
   at the time of the error, skipping the call to \code{traceback()}
   and the error function that called it.
   
@@ -75,6 +75,6 @@ bar
 ## Ah, this is the culprit ...
 
 ## This will print the stack trace at the time of the error.
-options(error=function() traceback(2))
+options(error = function() traceback(2))
 }
 \keyword{programming}

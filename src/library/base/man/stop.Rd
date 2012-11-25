@@ -36,7 +36,7 @@ geterrmessage()
   handler is used.  The default behaviour (the \code{NULL}
   error-handler) in interactive use is to return to the top level
   prompt or the top level browser, and in non-interactive use to
-  (effectively) call \code{\link{q}("no", status=1, runLast=FALSE}).
+  (effectively) call \code{\link{q}("no", status = 1, runLast = FALSE}).
   The default handler stores the error message in a buffer; it can be
   retrieved by \code{geterrmessage()}.  It also stores a trace of
   the call stack that can be retrieved by \code{\link{traceback}()}.

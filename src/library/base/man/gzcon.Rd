@@ -32,7 +32,7 @@ gzcon(con, level = 6, allowNonCompressed = TRUE)
 
   Compressed output will contain embedded NUL bytes, and so \code{con}
   is not permitted to be a \code{\link{textConnection}} opened with
-  \code{open="w"}.  Use a writable \code{\link{rawConnection}} to
+  \code{open = "w"}.  Use a writable \code{\link{rawConnection}} to
   compress data into a variable.
 
   The original connection becomes unusable: any object pointing to it will

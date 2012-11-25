@@ -66,7 +66,7 @@ load(file, envir = parent.frame())
 \examples{
 ## save all data
 xx <- pi # to ensure there is some data
-save(list = ls(all=TRUE), file= "all.RData")
+save(list = ls(all = TRUE), file= "all.RData")
 rm(xx)
 
 ## restore the saved values to the current environment

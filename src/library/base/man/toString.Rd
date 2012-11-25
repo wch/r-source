@@ -47,6 +47,6 @@ toString(x, \dots)
 \examples{
 x <- c("a", "b", "aaaaaaaaaaa")
 toString(x)
-toString(x, width=8)
+toString(x, width = 8)
 }
 \keyword{utilities}

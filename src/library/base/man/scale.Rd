@@ -48,10 +48,10 @@ scale(x, center = TRUE, scale = TRUE)
   The root-mean-square for a (possibly centered) column is defined as
   \eqn{\sqrt{\sum(x^2)/(n-1)}}{sqrt(sum(x^2)/(n-1))}, where \eqn{x} is
   a vector of the non-missing values and \eqn{n} is the number of
-  non-missing values.  In the case \code{center=TRUE}, this is the
+  non-missing values.  In the case \code{center = TRUE}, this is the
   same as the standard deviation, but in general it is not.  (To scale
   by the standard deviations without centering, use
-  \code{scale(x,center=FALSE,scale=apply(x,2,sd,na.rm=TRUE))}.)
+  \code{scale(x, center = FALSE, scale = apply(x, 2, sd, na.rm = TRUE))}.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -66,8 +66,8 @@ scale(x, center = TRUE, scale = TRUE)
 }
 \examples{
 require(stats)
-x <- matrix(1:10, ncol=2)
-(centered.x <- scale(x, scale=FALSE))
-cov(centered.scaled.x <- scale(x))# all 1
+x <- matrix(1:10, ncol = 2)
+(centered.x <- scale(x, scale = FALSE))
+cov(centered.scaled.x <- scale(x)) # all 1
 }
 \keyword{array}

@@ -58,7 +58,7 @@ unsplit(value, f, drop = FALSE)
   The value returned from \code{split} is a list of vectors containing
   the values for the groups.  The components of the list are named by
   the levels of \code{f} (after converting to a factor, or if already a
-  factor and \code{drop=TRUE}, dropping unused levels).
+  factor and \code{drop = TRUE}, dropping unused levels).
 
   The replacement forms return their right hand side.  \code{unsplit}
   returns a vector or data frame for which \code{split(x, f)} equals
@@ -107,7 +107,7 @@ l <- split(airquality, g)
 l <- lapply(l, transform, Oz.Z = scale(Ozone))
 aq2 <- unsplit(l, g)
 head(aq2)
-with(aq2, tapply(Oz.Z,  Month, sd, na.rm=TRUE))
+with(aq2, tapply(Oz.Z,  Month, sd, na.rm = TRUE))
  
 
 ### Split a matrix into a list by columns

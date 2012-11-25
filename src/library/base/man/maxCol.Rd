@@ -10,7 +10,7 @@
   Find the maximum position for each row of a matrix, breaking ties at random.
 }
 \usage{
-max.col(m, ties.method=c("random", "first", "last"))
+max.col(m, ties.method = c("random", "first", "last"))
 }
 \arguments{
   \item{m}{numerical matrix}

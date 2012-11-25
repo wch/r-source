@@ -155,14 +155,14 @@ h9 \%*\% x              # = y
 A <- matrix(runif(12), 4)
 b <- 1:4
 qr.solve(A, b) # or solve(qr(A), b)
-solve(qr(A, LAPACK=TRUE), b)
+solve(qr(A, LAPACK = TRUE), b)
 # this is a least-squares solution, cf. lm(b ~ 0 + A)
 
 ## underdetermined system
 A <- matrix(runif(12), 3)
 b <- 1:3
 qr.solve(A, b)
-solve(qr(A, LAPACK=TRUE), b)
+solve(qr(A, LAPACK = TRUE), b)
 # solutions will have one zero, not necessarily the same one
 }
 \keyword{algebra}

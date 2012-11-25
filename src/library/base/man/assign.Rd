@@ -77,7 +77,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
 }
 \examples{
 for(i in 1:6) { #-- Create objects  'r.1', 'r.2', ... 'r.6' --
- nam <- paste("r",i, sep=".")
+ nam <- paste("r", i, sep = ".")
  assign(nam, 1:i)
 }
 ls(pattern = "^r..$")

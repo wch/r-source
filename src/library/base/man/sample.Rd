@@ -94,7 +94,7 @@ x <- 1:12
 # a random permutation
 sample(x)
 # bootstrap resampling -- only if length(x) > 1 !
-sample(x, replace=TRUE)
+sample(x, replace = TRUE)
 
 # 100 Bernoulli trials
 sample(c(0,1), 100, replace = TRUE)

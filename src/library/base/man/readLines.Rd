@@ -71,9 +71,9 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   \code{\link{scan}}}
 
 \examples{
-cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file="ex.data",
-    sep="\n")
-readLines("ex.data", n=-1)
+cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = "ex.data",
+    sep = "\n")
+readLines("ex.data", n = -1)
 unlink("ex.data") # tidy up
 
 ## difference in blocking
@@ -90,7 +90,7 @@ unlink("test1") # tidy up
 
 \dontrun{
 # read a 'Windows Unicode' file 
-A <- readLines(file("Unicode.txt", encoding="UCS-2LE"))
+A <- readLines(file("Unicode.txt", encoding = "UCS-2LE"))
 unique(Encoding(A)) # will most likely be UTF-8
 }}
 \keyword{file}

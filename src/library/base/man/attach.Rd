@@ -106,6 +106,6 @@ detach("women")
 summary(women$height)   # unchanged
 
 \dontrun{## create an environment on the search path and populate it
-sys.source("myfuns.R", envir=attach(NULL, name="myfuns"))
+sys.source("myfuns.R", envir = attach(NULL, name = "myfuns"))
 }}
 \keyword{data}

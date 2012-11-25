@@ -73,7 +73,7 @@ substring(text, first, last = 1000000L) <- value
   display.  That does not really work (you want to limit the width, not
   the number of characters, so it would be better to use
   \code{\link{strtrim}}), but at least make sure you use the default
-  \code{nchar(type="c")}.
+  \code{nchar(type = "c")}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -84,11 +84,11 @@ substring(text, first, last = 1000000L) <- value
  \code{\link{strsplit}}, \code{\link{paste}}, \code{\link{nchar}}.
 }
 \examples{
-substr("abcdef",2,4)
-substring("abcdef",1:6,1:6)
+substr("abcdef", 2,4)
+substring("abcdef" ,1:6, 1:6)
 ## strsplit is more efficient ...
 
-substr(rep("abcdef",4),1:4,4:5)
+substr(rep("abcdef", 4), 1:4, 4:5)
 x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")
 substr(x, 2, 5)
 substring(x, 2, 4:6)

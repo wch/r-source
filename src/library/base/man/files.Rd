@@ -210,8 +210,8 @@ Sys.junction(from, to)
 }
 
 \examples{
-cat("file A\n", file="A")
-cat("file B\n", file="B")
+cat("file A\n", file = "A")
+cat("file B\n", file = "B")
 file.append("A", "B")
 file.create("A")
 file.append("A", rep("B", 10))
@@ -226,7 +226,7 @@ file.remove("B")
 file.symlink(file.path("..", c("A", "B")), ".")
 setwd("..")
 #endif
-unlink("tmp", recursive=TRUE)
+unlink("tmp", recursive = TRUE)
 file.remove("A", "B", "C")
 }
 \keyword{file}
