@@ -87,7 +87,7 @@ list.files(R.home())
 ## Only files starting with a-l or r
 ## Note that a-l is locale-dependent, but using case-insensitive
 ## matching makes it unambiguous in English locales
-dir("../..", pattern = "^[a-lr]", full.names=TRUE, ignore.case = TRUE)
+dir("../..", pattern = "^[a-lr]", full.names = TRUE, ignore.case = TRUE)
 
 list.dirs(R.home("doc"))
 }

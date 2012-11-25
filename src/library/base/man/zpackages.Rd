@@ -38,7 +38,7 @@
 }
 \author{
   R core;
-  Guido Masarotto for the \code{all.available=TRUE} part of
+  Guido Masarotto for the \code{all.available = TRUE} part of
   \code{.packages}.
 }
 \seealso{

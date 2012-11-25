@@ -43,7 +43,7 @@ interaction(\dots, drop = FALSE, sep = ".", lex.order = FALSE)
 \seealso{
   \code{\link{factor}};
   \code{\link{:}} where \code{f:g} is similar to
-  \code{interaction(f, g, sep=":")} when \code{f} and  \code{g} are factors.
+  \code{interaction(f, g, sep = ":")} when \code{f} and  \code{g} are factors.
 }
 \examples{
 a <- gl(2, 4, 8)

@@ -53,15 +53,15 @@ rapply(object, f, classes = "ANY", deflt = NULL,
   (\code{rapply} is only described briefly there.)
 }
 \examples{
-X <- list(list(a=pi, b=list(c=1:1)), d="a test")
-rapply(X, function(x) x, how="replace")
-rapply(X, sqrt, classes="numeric", how="replace")
-rapply(X, nchar, classes="character",
-       deflt = as.integer(NA), how="list")
-rapply(X, nchar, classes="character",
-       deflt = as.integer(NA), how="unlist")
-rapply(X, nchar, classes="character", how="unlist")
-rapply(X, log, classes="numeric", how="replace", base=2)
+X <- list(list(a = pi, b = list(c = 1:1)), d = "a test")
+rapply(X, function(x) x, how = "replace")
+rapply(X, sqrt, classes = "numeric", how = "replace")
+rapply(X, nchar, classes = "character",
+       deflt = as.integer(NA), how = "list")
+rapply(X, nchar, classes = "character",
+       deflt = as.integer(NA), how = "unlist")
+rapply(X, nchar, classes = "character", how = "unlist")
+rapply(X, log, classes = "numeric", how = "replace", base = 2)
 }
 \keyword{iteration}
 \keyword{list}

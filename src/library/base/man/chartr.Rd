@@ -72,7 +72,7 @@ toupper(x)
 .simpleCap <- function(x) {
     s <- strsplit(x, " ")[[1]]
     paste(toupper(substring(s, 1,1)), substring(s, 2),
-          sep="", collapse=" ")
+          sep = "", collapse = " ")
 }
 .simpleCap("the quick red fox jumps over the lazy brown dog")
 ## ->  [1] "The Quick Red Fox Jumps Over The Lazy Brown Dog"
@@ -86,14 +86,14 @@ capwords <- function(s, strict = FALSE) {
 }
 capwords(c("using AIC for model selection"))
 ## ->  [1] "Using AIC For Model Selection"
-capwords(c("using AIC", "for MODEL selection"), strict=TRUE)
+capwords(c("using AIC", "for MODEL selection"), strict = TRUE)
 ## ->  [1] "Using Aic"  "For Model Selection"
 ##                ^^^        ^^^^^
 ##               'bad'       'good'
 
 ## -- Very simple insecure crypto --
 rot <- function(ch, k = 13) {
-   p0 <- function(...) paste(c(...), collapse="")
+   p0 <- function(...) paste(c(...), collapse = "")
    A <- c(letters, LETTERS, " '")
    I <- seq_len(k); chartr(p0(A), p0(c(A[-I], A[I])), ch)
 }

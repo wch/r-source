@@ -115,7 +115,7 @@ rbind(x,y,z)[, order(x, -xtfrm(cy), z)]
 
 ## Sorting data frames:
 dd <- transform(data.frame(x,y,z),
-                z = factor(z, labels=LETTERS[9:1]))
+                z = factor(z, labels = LETTERS[9:1]))
 ## Either as above {for factor 'z' : using internal coding}:
 dd[ order(x, -y, z) ,]
 ## or along 1st column, ties along 2nd, ... *arbitrary* no.{columns}:
@@ -145,18 +145,18 @@ z <- cbind(a, b)
 
 \dontrun{
 ##  speed examples for long vectors:
-x <- factor(sample(letters, 1e6, replace=TRUE))
+x <- factor(sample(letters, 1e6, replace = TRUE))
 system.time(o <- sort.list(x)) ## 0.4 secs
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(x, method="quick", na.last=NA)) # 0.1 sec
+system.time(o <- sort.list(x, method = "quick", na.last = NA)) # 0.1 sec
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(x, method="radix")) # 0.01 sec
+system.time(o <- sort.list(x, method = "radix")) # 0.01 sec
 stopifnot(!is.unsorted(x[o]))
-xx <- sample(1:26, 1e7, replace=TRUE)
-system.time(o <- sort.list(xx, method="radix")) # 0.1 sec
-xx <- sample(1:100000, 1e7, replace=TRUE)
-system.time(o <- sort.list(xx, method="radix")) # 0.5 sec
-system.time(o <- sort.list(xx, method="quick", na.last=NA)) # 1.3 sec
+xx <- sample(1:26, 1e7, replace = TRUE)
+system.time(o <- sort.list(xx, method = "radix")) # 0.1 sec
+xx <- sample(1:100000, 1e7, replace = TRUE)
+system.time(o <- sort.list(xx, method = "radix")) # 0.5 sec
+system.time(o <- sort.list(xx, method = "quick", na.last = NA)) # 1.3 sec
 }}
 \keyword{univar}
 \keyword{manip}

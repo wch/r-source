@@ -93,7 +93,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
   Latin-1 or UTF-8 locale.
 }
 \examples{
-cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")
+cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file = "xyz.Rdmped")
 # parse 3 statements from the file "xyz.Rdmped"
 parse(file = "xyz.Rdmped", n = 3)
 unlink("xyz.Rdmped")

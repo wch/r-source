@@ -163,8 +163,8 @@ format(2^31-1)
 format(2^31-1, scientific = TRUE)
 
 ## a list
-z <- list(a=letters[1:3], b=(-pi+0i)^((-2:2)/2), c=c(1,10,100,1000),
-          d=c("a", "longer", "character", "string"))
+z <- list(a = letters[1:3], b = (-pi+0i)^((-2:2)/2), c = c(1,10,100,1000),
+          d = c("a", "longer", "character", "string"))
 format(z, digits = 2)
 format(z, digits = 2, justify = "left", trim = FALSE)
 }

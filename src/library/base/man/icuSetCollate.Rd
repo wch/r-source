@@ -54,8 +54,8 @@ icuSetCollate(...)
   Only the first three are likely to be of interest except to those with a 
   detailed understanding of collation and specialized requirements.
 
-  Some examples are \code{case_level="on", strength="primary"} to ignore
-  accent differences and \code{alternate_handling="shifted"} to ignore
+  Some examples are \code{case_level = "on", strength = "primary"} to ignore
+  accent differences and \code{alternate_handling = "shifted"} to ignore
   space and punctuation characters.
 
   Note that these settings have no effect if collation is set to the
@@ -75,10 +75,10 @@ icuSetCollate(...)
 ## these examples depend on having ICU available, and on the locale
 x <- c("Aarhus", "aarhus", "safe", "test", "Zoo")
 sort(x)
-icuSetCollate(case_first="upper"); sort(x)
-icuSetCollate(case_first="lower"); sort(x)
+icuSetCollate(case_first = "upper"); sort(x)
+icuSetCollate(case_first = "lower"); sort(x)
 
-icuSetCollate(locale="da_DK", case_first="default"); sort(x)
-icuSetCollate(locale="et_EE"); sort(x)
+icuSetCollate(locale = "da_DK", case_first = "default"); sort(x)
+icuSetCollate(locale = "et_EE"); sort(x)
 }}
 \keyword{ utilities }

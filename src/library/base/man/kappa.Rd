@@ -20,7 +20,7 @@ kappa(z, \dots)
 \method{kappa}{lm}(z, \dots)
 \method{kappa}{qr}(z, \dots)
 
-.kappa_tri(z, exact = FALSE, LINPACK = TRUE, norm=NULL, \dots)
+.kappa_tri(z, exact = FALSE, LINPACK = TRUE, norm = NULL, \dots)
 
 rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 }

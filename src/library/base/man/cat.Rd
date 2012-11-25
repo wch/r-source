@@ -92,13 +92,12 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   which concatenates into a string.
 }
 \examples{
-iter <- stats::rpois(1, lambda=10)
+iter <- stats::rpois(1, lambda = 10)
 ## print an informative message
 cat("iteration = ", iter <- iter + 1, "\n")
 
 ## 'fill' and label lines:
-cat(paste(letters, 100* 1:26), fill = TRUE,
-    labels = paste("{",1:10,"}:",sep=""))
+cat(paste(letters, 100* 1:26), fill = TRUE, labels = paste0("{", 1:10, "}:"))
 }
 \keyword{print}
 \keyword{file}

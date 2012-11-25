@@ -112,7 +112,7 @@ tracingState(on = NULL)
   traced function, so it will typically involve arguments or local
   objects in the traced function.  An expression of this form is useful
   if you only want to interact when certain conditions apply (and in
-  this case you probably want to supply \code{print=FALSE} in the call
+  this case you probably want to supply \code{print = FALSE} in the call
   to \code{trace} also).
 
   When the \code{at} argument is supplied, it can be a vector of
@@ -150,7 +150,7 @@ tracingState(on = NULL)
   all the previous tracing and then edit, call \code{untrace} before the next
   call to \code{trace}.  Editing may be combined with automatic
   tracing; just supply the other arguments such as \code{tracer}, and
-  the \code{edit} argument as well.  The \code{edit=TRUE} argument
+  the \code{edit} argument as well.  The \code{edit = TRUE} argument
   uses the default editor (see \code{\link{edit}}).
 
   Tracing primitive functions (builtins and specials) from the base
@@ -229,14 +229,14 @@ f <- function(x, y) {
 
 ## arrange to call the browser on entering and exiting
 ## function f
-trace("f", quote(browser(skipCalls=4)),
-      exit = quote(browser(skipCalls=4)))
+trace("f", quote(browser(skipCalls = 4)),
+      exit = quote(browser(skipCalls = 4)))
 
 ## instead, conditionally assign some data, and then browse
 ## on exit, but only then.  Don't bother me otherwise
 
 trace("f", quote(if(any(y < 0)) yOrig <- y),
-      exit = quote(if(exists("yOrig")) browser(skipCalls=4)),
+      exit = quote(if(exists("yOrig")) browser(skipCalls = 4)),
       print = FALSE)
 
 ## Enter the browser just before stop() is called.  First, find
@@ -247,7 +247,7 @@ as.list(body(f)[[3]])
 
 ## Now call the browser there
 
-trace("f", quote(browser(skipCalls=4)), at=list(c(3,4)))
+trace("f", quote(browser(skipCalls = 4)), at = list(c(3,4)))
 
 ## trace a utility function, with recover so we
 ## can browse in the calling functions as well.

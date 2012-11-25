@@ -49,7 +49,7 @@ is.null(x)
 is.null(list())    # FALSE (on purpose!)
 is.null(integer(0))# F
 is.null(logical(0))# F
-as.null(list(a=1,b='c'))
+as.null(list(a = 1, b = 'c'))
 }
 \keyword{attribute}
 \keyword{manip}

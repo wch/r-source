@@ -141,7 +141,7 @@ getOption(x, default = NULL)
       that case.  The functions \code{\link{dump.frames}} and
       \code{\link{recover}} provide alternatives that allow post-mortem
       debugging.  Note that these need to specified as e.g.
-      \code{options(error=utils::recover)} in startup files such as
+      \code{options(error = utils::recover)} in startup files such as
       \file{\link{.Rprofile}}.}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
@@ -558,7 +558,7 @@ getOption(x, default = NULL)
       prompt for a CRAN mirror.  To avoid this do set the CRAN mirror,
       by something like
       \code{local({r <- getOption("repos"); r["CRAN"] <- "http://my.local.cran";
-                   options(repos=r)})}.
+                   options(repos = r)})}.
 
       Note that you can add more repositories (Bioconductor and
       Omegahat, notably) using \code{\link{setRepositories}()}.
@@ -625,9 +625,9 @@ old.o
 options(check.bounds = TRUE, warn = 1)
 x <- NULL; x[4] <- "yes" # gives a warning
 
-options(digits=5)
+options(digits = 5)
 print(1e5)
-options(scipen=3); print(1e5)
+options(scipen = 3); print(1e5)
 
 options(op)     # reset (all) initial options
 options("digits")
@@ -637,7 +637,7 @@ options(contrasts = c("contr.helmert", "contr.poly"))
 }
 
 \dontrun{## on error, terminate the R session with error status 66
-options(error = quote(q("no", status=66, runLast=FALSE)))
+options(error = quote(q("no", status = 66, runLast = FALSE)))
 stop("test it")
 }
 
@@ -647,7 +647,7 @@ options(error = recover)
 ## allows to call debugger() afterwards, see ?debugger:
 options(error = dump.frames)
 ## A possible setting for non-interactive sessions
-options(error = quote({dump.frames(to.file=TRUE); q()}))
+options(error = quote({dump.frames(to.file = TRUE); q()}))
 }
 
   # Compare the two ways to get an option and use it

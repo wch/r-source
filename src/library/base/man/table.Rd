@@ -143,12 +143,12 @@ all.equal(dimnames(tab), dimnames(UCBAdmissions))
 
 a <- rep(c(NA, 1/0:3), 10)
 table(a)
-table(a, exclude=NULL)
+table(a, exclude = NULL)
 b <- factor(rep(c("A","B","C"), 10))
 table(b)
-table(b, exclude="B")
-d <- factor(rep(c("A","B","C"), 10), levels=c("A","B","C","D","E"))
-table(d, exclude="B")
+table(b, exclude = "B")
+d <- factor(rep(c("A","B","C"), 10), levels = c("A","B","C","D","E"))
+table(d, exclude = "B")
 print(table(b,d), zero.print = ".")
 
 ## NA counting:
@@ -157,15 +157,15 @@ d. <- addNA(d)
 d.[1:7]
 table(d.) # ", exclude = NULL" is not needed
 ## i.e., if you want to count the NA's of 'd', use
-table(d, useNA="ifany")
+table(d, useNA = "ifany")
 
 ## Two-way tables with NA counts. The 3rd variant is absurd, but shows
 ## something that cannot be done using exclude or useNA. 
 with(airquality,
-   table(OzHi=Ozone > 80, Month, useNA="ifany"))
+   table(OzHi = Ozone > 80, Month, useNA = "ifany"))
 with(airquality,
-   table(OzHi=Ozone > 80, Month, useNA="always"))
+   table(OzHi = Ozone > 80, Month, useNA = "always"))
 with(airquality,
-   table(OzHi=Ozone > 80, addNA(Month)))
+   table(OzHi = Ozone > 80, addNA(Month)))
 }
 \keyword{category}

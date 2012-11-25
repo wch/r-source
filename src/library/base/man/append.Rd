@@ -27,7 +27,7 @@ append(x, values, after = length(x))
   Wadsworth & Brooks/Cole.
 }
 \examples{
-append(1:5, 0:1, after=3)
+append(1:5, 0:1, after = 3)
 }
 \keyword{manip}
 \concept{insert}

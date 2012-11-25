@@ -42,11 +42,11 @@ prmatrix(x, rowlab =, collab =,
   \code{\link{print.default}}, and other \code{\link{print}} methods.
 }
 \examples{
-prmatrix(m6 <- diag(6), rowlab = rep("",6), collab =rep("",6))
+prmatrix(m6 <- diag(6), rowlab = rep("",6), collab = rep("",6))
 
 chm <- matrix(scan(system.file("help", "AnIndex", package = "splines"),
                    what = ""), , 2, byrow = TRUE)
 chm  # uses print.matrix()
-prmatrix(chm, collab = paste("Column",1:3), right=TRUE, quote=FALSE)
+prmatrix(chm, collab = paste("Column", 1:3), right = TRUE, quote = FALSE)
 }
 \keyword{print}

@@ -122,7 +122,7 @@ addNA(x, ifany = FALSE)
   for the levels to be excluded.
 
   The codes of a factor may contain \code{\link{NA}}.  For a numeric
-  \code{x}, set \code{exclude=NULL} to make \code{\link{NA}} an extra
+  \code{x}, set \code{exclude = NULL} to make \code{\link{NA}} an extra
   level (prints as \code{<NA>}); by default, this is the last level.
 
   If \code{NA} is a level, the way to set a code to be missing (as
@@ -202,12 +202,12 @@ addNA(x, ifany = FALSE)
   levels, and \code{\link{unclass}} to get integer codes.
 }
 \examples{
-(ff <- factor(substring("statistics", 1:10, 1:10), levels=letters))
+(ff <- factor(substring("statistics", 1:10, 1:10), levels = letters))
 as.integer(ff)  # the internal codes
 (f. <- factor(ff))# drops the levels that do not occur
-ff[, drop=TRUE] # the same, more transparently
+ff[, drop = TRUE] # the same, more transparently
 
-factor(letters[1:20], labels="letter")
+factor(letters[1:20], labels = "letter")
 
 class(ordered(4:1)) # "ordered", inheriting from "factor"
 z <- factor(LETTERS[3:1], ordered = TRUE)
@@ -229,7 +229,7 @@ is.na(x)
 ## Using addNA()
 Month <- airquality$Month
 table(addNA(Month))
-table(addNA(Month, ifany=TRUE))
+table(addNA(Month, ifany = TRUE))
 }
 \keyword{category}
 \keyword{NA}

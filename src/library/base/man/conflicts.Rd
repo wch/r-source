@@ -21,8 +21,8 @@ conflicts(where = search(), detail = FALSE)
     object of the same name.  This helps discover unintentional masking.
 }
 \value{
-    If \code{detail=FALSE}, a character vector of masked objects.
-    If \code{detail=TRUE}, a list of character vectors giving the masked or
+    If \code{detail = FALSE}, a character vector of masked objects.
+    If \code{detail = TRUE}, a list of character vectors giving the masked or
     masking objects in that member of the search path.  Empty vectors are
     omitted.
 }
@@ -37,6 +37,6 @@ conflicts(, TRUE)
 # [1] "lm"
 
 ## Remove things from your "workspace" that mask others:
-remove(list = conflicts(detail=TRUE)$.GlobalEnv)
+remove(list = conflicts(detail = TRUE)$.GlobalEnv)
 }
 \keyword{utilities}

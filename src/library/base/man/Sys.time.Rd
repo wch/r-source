@@ -45,7 +45,7 @@ Sys.Date()
 \examples{\donttest{
 Sys.time()
 ## print with possibly greater accuracy:
-op <- options(digits.secs=6)
+op <- options(digits.secs = 6)
 Sys.time()
 options(op)
 

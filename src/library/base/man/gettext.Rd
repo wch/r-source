@@ -85,14 +85,14 @@ msgstr[1] ""
 
 miss <- c("one", "or", "another")
 cat(ngettext(length(miss), "variable", "variables"),
-    paste(sQuote(miss), collapse=", "),
+    paste(sQuote(miss), collapse = ", "),
     ngettext(length(miss), "contains", "contain"), "missing values\n")
 
 ## better for translators would be to use
 cat(sprintf(ngettext(length(miss),
                      "variable \%s contains missing values\n",
                      "variables \%s contain missing values\n"),
-            paste(sQuote(miss), collapse=", ")))
+            paste(sQuote(miss), collapse = ", ")))
 }
 \keyword{ utilities }
 \keyword{ character }

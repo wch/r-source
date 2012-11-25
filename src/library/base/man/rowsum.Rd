@@ -59,7 +59,7 @@ rowsum(x, group, reorder = TRUE, \dots)
 \examples{
 require(stats)
 
-x <- matrix(runif(100), ncol=5)
+x <- matrix(runif(100), ncol = 5)
 group <- sample(1:8, 20, TRUE)
 (xsum <- rowsum(x, group))
 ## Slower versions

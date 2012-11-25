@@ -47,7 +47,7 @@ as.POSIXlt(x, tz = "", \dots)
   \item{format}{character string giving a date-time format as used
     by \code{\link{strptime}}.}
   \item{origin}{a date-time object, or something which can be coerced by
-    \code{as.POSIXct(tz="GMT")} to such an object.}
+    \code{as.POSIXct(tz = "GMT")} to such an object.}
 }
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
@@ -153,14 +153,14 @@ months(now); weekdays(now)    # see ?months
 ## (the origin used by SAS)
 z <- 1472562988
 # ways to convert this
-as.POSIXct(z, origin="1960-01-01")                # local
-as.POSIXct(z, origin="1960-01-01", tz="GMT")      # in UTC
-as.POSIXct(z, origin=ISOdatetime(1960,1,1,0,0,0)) # local
+as.POSIXct(z, origin = "1960-01-01")                # local
+as.POSIXct(z, origin = "1960-01-01", tz = "GMT")    # in UTC
+as.POSIXct(z, origin = ISOdatetime(1960,1,1,0,0,0)) # local
 ISOdatetime(1960,1,1,0,0,0) + z                   # local
 
 ## SPSS dates (R-help 2006-02-16)
 z <- c(10485849600, 10477641600, 10561104000, 10562745600)
-as.Date(as.POSIXct(z, origin="1582-10-14", tz="GMT"))
+as.Date(as.POSIXct(z, origin = "1582-10-14", tz = "GMT"))
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in UTC
 }
@@ -175,7 +175,7 @@ as.POSIXlt(Sys.time(), "Australia/Darwin")
 
 cols <- c("code", "coordinates", "TZ", "comments")
 tmp <- read.delim(file.path(R.home("share"), "zoneinfo", "zone.tab"),
-                  header = FALSE, comment.char="#", col.names = cols)
+                  header = FALSE, comment.char = "#", col.names = cols)
 if(interactive()) View(tmp)
 #endif
 }

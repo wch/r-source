@@ -232,12 +232,12 @@ sprintf("\%.9g", 1e6 * pi) # -> "fixed"
 sprintf("\%G", 1e-6 * pi)
 
 ## no truncation:
-sprintf("\%1.f",101)
+sprintf("\%1.f", 101)
 
 ## re-use one argument three times, show difference between \%x and \%X
 xx <- sprintf("\%1$d \%1$x \%1$X", 0:15)
-xx <- matrix(xx, dimnames=list(rep("", 16), "\%d\%x\%X"))
-noquote(format(xx, justify="right"))
+xx <- matrix(xx, dimnames = list(rep("", 16), "\%d\%x\%X"))
+noquote(format(xx, justify = "right"))
 
 ## More sophisticated:
 
@@ -245,7 +245,7 @@ sprintf("min 10-char string '\%10s'",
         c("a", "ABC", "and an even longer one"))
 
 n <- 1:18
-sprintf(paste("e with \%2d digits = \%.",n,"g",sep=""), n, exp(1))
+sprintf(paste("e with \%2d digits = \%.", n, "g", sep = ""), n, exp(1))
 
 ## Using arguments out of order
 sprintf("second \%2$1.0f, first \%1$5.2f, third \%3$1.0f", pi, 2, 3)

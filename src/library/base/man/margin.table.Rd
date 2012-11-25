@@ -11,7 +11,7 @@
   entries for a given index.
 }
 \usage{
-margin.table(x, margin=NULL)
+margin.table(x, margin = NULL)
 }
 \arguments{
   \item{x}{an array}

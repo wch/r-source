@@ -35,7 +35,7 @@ socketSelect(socklist, write = FALSE, timeout = NULL)
 \examples{
 \dontrun{
 ## test whether socket connection s is available for writing or reading
-socketSelect(list(s,s),c(TRUE,FALSE),timeout=0)
+socketSelect(list(s, s), c(TRUE, FALSE), timeout = 0)
 }
 }
 \keyword{connection}

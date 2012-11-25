@@ -67,7 +67,7 @@ mostattributes(obj) <- value
 \seealso{\code{\link{attr}}.
 }
 \examples{
-x <- cbind(a=1:3, pi=pi) # simple matrix w/ dimnames
+x <- cbind(a = 1:3, pi = pi) # simple matrix with dimnames
 attributes(x)
 
 ## strip an object's attributes:

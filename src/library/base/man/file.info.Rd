@@ -109,7 +109,7 @@ file.info(\dots)
 ncol(finf <- file.info(dir()))# at least six
 \dontrun{finf # the whole list}
 ## Those that are more than 100 days old :
-finf[difftime(Sys.time(), finf[,"mtime"], units="days") > 100 , 1:4]
+finf[difftime(Sys.time(), finf[,"mtime"], units = "days") > 100 , 1:4]
 
 file.info("no-such-file-exists")
 }

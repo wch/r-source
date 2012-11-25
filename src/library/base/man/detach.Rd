@@ -46,7 +46,7 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE,
   quoted name of an item on the search list such as \code{package:tools}.
 
   If a package has a namespace, detaching it does not by default unload
-  the namespace (and may not even with \code{unload=TRUE}), and
+  the namespace (and may not even with \code{unload = TRUE}), and
   detaching will not in general unload any dynamically loaded compiled
   code (DLLs).  Further, registered S3 methods from the namespace will
   not be removed.  If you use \code{\link{library}} on a package whose
@@ -87,7 +87,7 @@ detach(package:splines)
 library(splines)
 pkg <- "package:splines"
 \dontshow{
-stopifnot(inherits(tryCatch(detach(pkg), error=function(.).),  "error"))
+stopifnot(inherits(tryCatch(detach(pkg), error = function(.).),  "error"))
 }
 detach(pkg, character.only = TRUE)
 
@@ -97,13 +97,13 @@ detach(2) # 'pos' used for 'name'
 
 ## an example of the name argument to attach
 ## and of detaching a database named by a character vector
-attach_and_detach <- function(db, pos=2)
+attach_and_detach <- function(db, pos = 2)
 {
    name <- deparse(substitute(db))
-   attach(db, pos=pos, name=name)
+   attach(db, pos = pos, name = name)
    print(search()[pos])
    detach(name, character.only = TRUE)
 }
-attach_and_detach(women, pos=3)
+attach_and_detach(women, pos = 3)
 }
 \keyword{data}

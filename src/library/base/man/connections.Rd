@@ -153,7 +153,7 @@ isIncomplete(con)
   For \code{fifo} the description is the path of the fifo.  (Windows
   does not have fifos, so attempts to use this function there are an
   error.  It was possible to use \code{file} with fifos prior to \R
-  2.10.0, but \code{raw=TRUE} is now required for reading, and
+  2.10.0, but \code{raw = TRUE} is now required for reading, and
   \code{fifo} was always the documented interface.) % PR#14366
 
   All platforms support \code{file}, \code{pipe}, \code{gzfile},
@@ -534,18 +534,18 @@ unlink("ex.bz2")
 ## An example of a file open for reading and writing
 Tfile <- file("test1", "w+")
 c(isOpen(Tfile, "r"), isOpen(Tfile, "w")) # both TRUE
-cat("abc\ndef\n", file=Tfile)
+cat("abc\ndef\n", file = Tfile)
 readLines(Tfile)
-seek(Tfile, 0, rw="r") # reset to beginning
+seek(Tfile, 0, rw = "r") # reset to beginning
 readLines(Tfile)
-cat("ghi\n", file=Tfile)
+cat("ghi\n", file = Tfile)
 readLines(Tfile)
 close(Tfile)
 unlink("test1")
 
 ## We can do the same thing with an anonymous file.
 Tfile <- file()
-cat("abc\ndef\n", file=Tfile)
+cat("abc\ndef\n", file = Tfile)
 readLines(Tfile)
 close(Tfile)
 
@@ -574,20 +574,20 @@ writeLines(c("450, 390, 467, 654,  30, 542, 334, 432, 421,",
 357, 497, 493, 550, 549, 467, 575, 578, 342,
 446, 547, 534, 495, 979, 479}
 # Then read this by
-scan(pipe("sed -e s/,$// data2_"), sep=",")
+scan(pipe("sed -e s/,$// data2_"), sep = ",")
 \dontshow{unlink("data2_")}
 
 # convert decimal point to comma in output: see also write.table
 # both R strings and (probably) the shell need \ doubled
 zz <- pipe(paste("sed s/\\\\\\\\./,/ >", "outfile"), "w")
-cat(format(round(stats::rnorm(48), 4)), fill=70, file = zz)
+cat(format(round(stats::rnorm(48), 4)), fill = 70, file = zz)
 close(zz)
-file.show("outfile", delete.file=TRUE)
+file.show("outfile", delete.file = TRUE)
 
 ## example for a machine running a finger daemon
 
 con <- socketConnection(port = 79, blocking = TRUE)
-writeLines(paste(system("whoami", intern=TRUE), "\r", sep=""), con)
+writeLines(paste0(system("whoami", intern = TRUE), "\r"), con)
 gsub(" *$", "", readLines(con))
 close(con)
 }
@@ -596,7 +596,7 @@ close(con)
 \dontrun{
 ## Two R processes communicating via non-blocking sockets
 # R process 1
-con1 <- socketConnection(port = 6011, server=TRUE)
+con1 <- socketConnection(port = 6011, server = TRUE)
 writeLines(LETTERS, con1)
 close(con1)
 
@@ -613,9 +613,9 @@ close(con2)
 
 ## examples of use of encodings
 # write a file in UTF-8
-cat(x, file = (con <- file("foo", "w", encoding="UTF-8"))); close(con)
+cat(x, file = (con <- file("foo", "w", encoding = "UTF-8"))); close(con)
 # read a 'Windows Unicode' file
-A <- read.table(con <- file("students", encoding="UCS-2LE")); close(con)
+A <- read.table(con <- file("students", encoding = "UCS-2LE")); close(con)
 }}
 \keyword{file}
 \keyword{connection}

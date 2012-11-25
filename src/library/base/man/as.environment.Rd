@@ -22,7 +22,7 @@ as.environment(x)
     search list.
 
     If it is a list, the equivalent of \code{\link{list2env}(x,
-      parent=emptyenv())} is returned.
+      parent = emptyenv())} is returned.
 
     If \code{\link{is.object}(x)} is true and it has a \code{\link{class}}
     for which an \code{as.environment} method is found, that is used.

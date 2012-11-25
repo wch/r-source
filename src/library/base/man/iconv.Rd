@@ -135,7 +135,7 @@ x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")
 Encoding(x) <- "latin1"
 x
 try(iconv(x, "latin1", "ASCII//TRANSLIT"))  # platform-dependent
-iconv(x, "latin1", "ASCII", sub="byte")
+iconv(x, "latin1", "ASCII", sub = "byte")
 ## and for Windows' 'Unicode'
 str(xx <- iconv(x, "latin1", "UTF-16LE", toRaw = TRUE))
 iconv(xx, "UTF-16LE", "UTF-8")

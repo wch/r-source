@@ -97,7 +97,7 @@
 
   Both \code{[} and \code{[[} extraction methods partially match row
   names.  By default neither partially match column names, but
-  \code{[[} will unless \code{exact=TRUE}.  If you want to do exact
+  \code{[[} will unless \code{exact = TRUE}.  If you want to do exact
   matching on row names use \code{\link{match}} as in the examples.
 }
 \section{Coercion}{
@@ -162,7 +162,7 @@ sw[, 1]      # a (unnamed) vector
 sw[[1]]      # the same
 
 sw[1,]       # a one-row data frame
-sw[1,, drop=TRUE]  # a list
+sw[1,, drop = TRUE]  # a list
 
 sw["C", ] # partially matches
 sw[match("C", row.names(sw)), ] # no exact match
@@ -174,7 +174,7 @@ stopifnot(identical(sw[,1], sw[[1]]),
           identical(sw[,1, drop = FALSE], sw[1]),
           is.data.frame(sw[1]), dim(sw[1] ) == c(5,1),
           is.data.frame(sw[1,]),dim(sw[1,]) == c(1,4),
-          is.list(s1 <- sw[1,, drop=TRUE]), identical(s1$Fertility, 80.2))
+          is.list(s1 <- sw[1,, drop = TRUE]), identical(s1$Fertility, 80.2))
 }
 swiss[ c(1, 1:2), ]   # duplicate row, unique row names are created
 
@@ -189,12 +189,12 @@ sw$new4 <- 1:5
 sapply(sw, class)
 sw$new4 <- NULL              # delete the column
 sw
-sw[6:8] <- list(letters[10:14], NULL, aa=1:5)
+sw[6:8] <- list(letters[10:14], NULL, aa = 1:5)
 # update col. 6, delete 7, append
 sw
 
 ## matrices in a data frame
-A <- data.frame(x=1:3, y=I(matrix(4:6)), z=I(matrix(letters[1:9],3,3)))
+A <- data.frame(x = 1:3, y = I(matrix(4:6)), z = I(matrix(letters[1:9], 3, 3)))
 A[1:3, "y"] # a matrix
 A[1:3, "z"] # a matrix
 A[, "y"]    # a matrix
@@ -211,12 +211,12 @@ as.data.frame.avector <- as.data.frame.vector
   r
 }
 
-d <- data.frame(i= 0:7, f= gl(2,4),
-                u= structure(11:18, unit = "kg", class="avector"))
+d <- data.frame(i = 0:7, f = gl(2,4),
+                u = structure(11:18, unit = "kg", class = "avector"))
 str(d[2:4, -1]) # 'u' keeps its "unit"
 \dontshow{
 stopifnot(identical(d[2:4,-1][,"u"],
-       structure(12:14, unit = "kg", class = "avector")))
+                    structure(12:14, unit = "kg", class = "avector")))
 }
 }
 \keyword{array}

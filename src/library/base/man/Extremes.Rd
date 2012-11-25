@@ -132,10 +132,10 @@ pmin(quantile(x), cH) # has names
 plot(x, pmin(cH, pmax(-cH, x)), type='b', main= "Huber's function")
 
 cut01 <- function(x) pmax(pmin(x, 1), 0)
-curve(      x^2 - 1/4, -1.4, 1.5, col=2)
-curve(cut01(x^2 - 1/4), col="blue", add=TRUE, n=500)
+curve(      x^2 - 1/4, -1.4, 1.5, col = 2)
+curve(cut01(x^2 - 1/4), col = "blue", add = TRUE, n = 500)
 ## pmax(), pmin() preserve attributes of *first* argument
-D <- diag(x=(3:1)/4) ; n0 <- numeric()
+D <- diag(x = (3:1)/4) ; n0 <- numeric()
 stopifnot(identical(D,  cut01(D) ),
           identical(n0, cut01(n0)),
           identical(n0, cut01(NULL)),

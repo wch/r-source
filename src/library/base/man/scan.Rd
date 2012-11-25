@@ -30,7 +30,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     current working directory (given by \code{\link{getwd}()}),
     unless it specifies an \emph{absolute} path.
     Tilde-expansion is performed where supported.
-    When running \R from a script, \code{file="stdin"} can be used to
+    When running \R from a script, \code{file = "stdin"} can be used to
     refer to the process's \code{stdin} file stream.
 
     As from \R 2.10.0 this can be a compressed file (see \code{\link{file}}).
@@ -213,7 +213,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   fields (which might be skipping character fields).
 
   Note that since \code{sep} is a separator and not a terminator,
-  reading a file by \code{scan("foo", sep="\\n", blank.lines.skip=FALSE)}
+  reading a file by \code{scan("foo", sep = "\\n", blank.lines.skip = FALSE)}
   will give an empty final line if the file ends in a linefeed and not if
   it does not.  This might not be what you expected; see also
   \code{\link{readLines}}.
@@ -284,16 +284,16 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   a few at a time from a connection.
 }
 \examples{
-cat("TITLE extra line", "2 3 5 7", "11 13 17", file="ex.data", sep="\n")
-pp <- scan("ex.data", skip = 1, quiet= TRUE)
+cat("TITLE extra line", "2 3 5 7", "11 13 17", file = "ex.data", sep = "\n")
+pp <- scan("ex.data", skip = 1, quiet = TRUE)
 scan("ex.data", skip = 1)
-scan("ex.data", skip = 1, nlines=1) # only 1 line after the skipped one
+scan("ex.data", skip = 1, nlines = 1) # only 1 line after the skipped one
 scan("ex.data", what = list("","","")) # flush is F -> read "7"
 scan("ex.data", what = list("","",""), flush = TRUE)
 unlink("ex.data") # tidy up
 
 ## "inline" usage
-scan(text="1 2 3")
+scan(text = "1 2 3")
 
 }
 \keyword{file}

@@ -208,12 +208,12 @@ x$i <- value
 \section{Environments}{
   Both \code{$} and \code{[[} can be applied to environments.  Only
   character indices are allowed and no partial matching is done.  The
-  semantics of these operations are those of \code{get(i, env=x,
-    inherits=FALSE)}.  If no match is found then \code{NULL} is
+  semantics of these operations are those of \code{get(i, env = x,
+    inherits = FALSE)}.  If no match is found then \code{NULL} is
   returned.  The replacement versions, \code{$<-} and \code{[[<-}, can
   also be used.  Again, only character arguments are allowed.  The
-  semantics in this case are those of \code{assign(i, value, env=x,
-    inherits=FALSE)}.  Such an assignment will either create a new
+  semantics in this case are those of \code{assign(i, value, env = x,
+    inherits = FALSE)}.  Such an assignment will either create a new
   binding or change the existing binding in \code{x}.
 }
 
@@ -233,8 +233,8 @@ x$i <- value
 \section{Argument matching}{
   Note that these operations do not match their index arguments in the
   standard way: argument names are ignored and positional matching only is
-  used.  So \code{m[j=2,i=1]} is equivalent to \code{m[2,1]} and
-  \strong{not} to \code{m[1,2]}.
+  used.  So \code{m[j = 2, i = 1]} is equivalent to \code{m[2, 1]} and
+  \strong{not} to \code{m[1, 2]}.
 
   This may not be true for methods defined for them; for example it is
   not true for the \code{data.frame} methods described in
@@ -363,7 +363,7 @@ ls(e1)
 stopifnot(identical(li$p, pi))
 op <- options(warnPartialMatchDollar = TRUE)
 stopifnot( identical(li$p, pi), #-- a warning
-  inherits(tryCatch (li$p, warning=identity), "warning"))
+  inherits(tryCatch (li$p, warning = identity), "warning"))
 ## revert the warning option:
 if(is.null(op[[1]])) op[[1]] <- FALSE; options(op)
 }

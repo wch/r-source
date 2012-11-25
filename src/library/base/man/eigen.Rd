@@ -65,7 +65,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     contain the eigenvectors of \code{x}, or \code{NULL} if
     \code{only.values} is \code{TRUE}.
 
-    For \code{eigen(, symmetric = FALSE, EISPACK =TRUE)} the choice of
+    For \code{eigen(, symmetric = FALSE, EISPACK = TRUE)} the choice of
     length of the eigenvectors is not defined by EISPACK.  In all other
     cases the vectors are normalized to unit length.
 

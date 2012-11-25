@@ -36,7 +36,7 @@ quarters(x, abbreviate)
 \method{quarters}{Date}(x, \dots)
 
 julian(x, \dots)
-\method{julian}{POSIXt}(x, origin = as.POSIXct("1970-01-01", tz="GMT"), \dots)
+\method{julian}{POSIXt}(x, origin = as.POSIXct("1970-01-01", tz = "GMT"), \dots)
 \method{julian}{Date}(x, origin = as.Date("1970-01-01"), \dots)
 }
 \arguments{

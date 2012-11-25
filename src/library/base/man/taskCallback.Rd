@@ -87,7 +87,7 @@ will be called on the completion of the next top-level task.
   \url{http://developer.r-project.org/TaskHandlers.pdf}
 }
 \examples{
- times <- function(total = 3, str="Task a") {
+times <- function(total = 3, str = "Task a") {
    ctr <- 0
 
    function(expr, value, ok, visible) {

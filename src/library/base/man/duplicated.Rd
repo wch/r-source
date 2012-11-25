@@ -47,7 +47,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
        \code{x}.}
   \item{fromLast}{logical indicating if duplication should be considered
     from the reverse side, i.e., the last (or rightmost) of identical
-    elements would correspond to \code{duplicated=FALSE}.}
+    elements would correspond to \code{duplicated = FALSE}.}
   \item{nmax}{the maximum number of unique items expected.}
   \item{\dots}{arguments for particular methods.}
   \item{MARGIN}{the array margin to be held fixed: see
@@ -66,7 +66,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   different when at least one of \code{duplicated} and
   \code{anyDuplicated} has a relevant method.
 
-  \code{duplicated(x, fromLast=TRUE)} is equivalent to but faster than
+  \code{duplicated(x, fromLast = TRUE)} is equivalent to but faster than
   \code{rev(duplicated(rev(x)))}.
 
   The data frame method works by pasting together a character
@@ -76,7 +76,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
 
   The array method calculates for each element of the sub-array
   specified by \code{MARGIN} if the remaining dimensions are identical
-  to those for an earlier (or later, when \code{fromLast=TRUE}) element
+  to those for an earlier (or later, when \code{fromLast = TRUE}) element
   (in row-major order).  This would most commonly be used to find
   duplicated rows (the default) or columns (with \code{MARGIN = 2}).
   Note that \code{MARGIN = 0} returns an array of the same

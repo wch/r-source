@@ -124,22 +124,22 @@ identical(0., -0.) # TRUE, i.e. not differentiated
 identical(0., -0., num.eq = FALSE)
 ## similar:
 identical(NaN, -NaN) # TRUE
-identical(NaN, -NaN, single.NA=FALSE) # differ on bit-level
+identical(NaN, -NaN, single.NA = FALSE) # differ on bit-level
 ## for functions:
 f <- function(x) x
 f
 g <- compiler::cmpfun(f)
 g
 identical(f, g)
-identical(f, g, ignore.bytecode=FALSE)
+identical(f, g, ignore.bytecode = FALSE)
 \dontshow{
-m0 <- m <- structure(cbind(I=1, a=1:3), foo = "bar", class = "matrix")
+m0 <- m <- structure(cbind(I = 1, a = 1:3), foo = "bar", class = "matrix")
 attributes(m0) <- rev(attributes(m))
 names(attributes(m0)) # 'dim' remains first, interestingly...
 
-stopifnot(identical(0, -0),     !identical(0, -0, num.eq=FALSE),
-          identical(NaN, -NaN), !identical(NaN, -NaN, single.NA=FALSE),
-          identical(m, m0),     !identical(m, m0, attrib.as.set=FALSE) )
+stopifnot(identical(0, -0),     !identical(0, -0, num.eq = FALSE),
+          identical(NaN, -NaN), !identical(NaN, -NaN, single.NA = FALSE),
+          identical(m, m0),     !identical(m, m0, attrib.as.set = FALSE) )
 }
 }
 \keyword{ programming }

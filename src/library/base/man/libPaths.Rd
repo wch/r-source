@@ -100,7 +100,7 @@
   updated value.
 
   For consistency, the paths are always normalized by
-  \code{\link{normalizePath}(winslash="/")}.
+  \code{\link{normalizePath}(winslash = "/")}.
 }
 \value{
   A character vector of file paths.

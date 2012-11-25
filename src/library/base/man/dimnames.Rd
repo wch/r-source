@@ -17,7 +17,7 @@
 dimnames(x)
 dimnames(x) <- value
 
-provideDimnames(x, sep="", base = list(LETTERS))
+provideDimnames(x, sep = "", base = list(LETTERS))
 }
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}

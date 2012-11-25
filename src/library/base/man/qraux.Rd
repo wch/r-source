@@ -82,8 +82,8 @@ all.equal(unname(X),
 
 # example of pivoting
 x <- cbind(int = 1,
-           b1=rep(1:0, each=3), b2=rep(0:1, each=3),
-           c1=rep(c(1,0,0), 2), c2=rep(c(0,1,0), 2), c3=rep(c(0,0,1),2))
+           b1 = rep(1:0, each = 3), b2 = rep(0:1, each = 3),
+           c1 = rep(c(1,0,0), 2), c2 = rep(c(0,1,0), 2), c3 = rep(c(0,0,1),2))
 x # is singular, columns "b2" and "c3" are "extra"
 a <- qr(x)
 zapsmall(qr.R(a)) # columns are int b1 c1 c2 b2 c3

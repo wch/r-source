@@ -87,8 +87,8 @@ getenv(\dots)
 read.table.url(url, method,\dots)
 scan.url(url, file = tempfile(), method, \dots)
 source.url(url, file = tempfile(), method, \dots)
-httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
-           file=tempfile(), drop.ctrl.z=TRUE)
+httpclient(url, port = 80, error.is.fatal = TRUE, check.MIME.type = TRUE,
+           file = tempfile(), drop.ctrl.z = TRUE)
 parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 % </Removed 1.4.0>
 % Removed in 1.5.0

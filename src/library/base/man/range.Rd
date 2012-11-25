@@ -35,7 +35,7 @@ range(\dots, na.rm = FALSE)
 
   If \code{finite} is \code{TRUE}, the minimum
   and maximum of all finite values is computed, i.e.,
-  \code{finite=TRUE} \emph{includes} \code{na.rm=TRUE}.
+  \code{finite = TRUE} \emph{includes} \code{na.rm = TRUE}.
 
   A special situation occurs when there is no (after omission
   of \code{NA}s) nonempty argument left, see \code{\link{min}}.% Extremes.Rd

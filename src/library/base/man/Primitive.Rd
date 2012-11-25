@@ -27,7 +27,7 @@
   All primitive functions are in the base namespace.
 
   This function is almost never used: \code{`name`} or, more carefully,
-  \code{\link{get}(name, envir=baseenv())} work equally well and do
+  \code{\link{get}(name, envir = baseenv())} work equally well and do
   not depend on knowing which functions are primitive (which does change
   as \R evolves).
 }

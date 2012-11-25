@@ -22,7 +22,7 @@ capabilities(what = NULL)
   Capabilities \code{"jpeg"}, \code{"png"} and \code{"tiff"} refer to
   the X11-based versions of these devices.  If
   \code{capabilities("aqua")} is true, then these devices with
-  \code{type="quartz"} will be available, and out-of-the-box will be the
+  \code{type = "quartz"} will be available, and out-of-the-box will be the
   default type.  Thus for example the \code{\link{tiff}} device will be
   available if \code{capabilities("aqua") || capabilities("tiff")} if
   the defaults are unchanged.
