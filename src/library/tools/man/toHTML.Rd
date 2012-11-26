@@ -31,7 +31,7 @@ is designed to display lists in the \R{} help system.
 \code{\link{HTMLheader}}
 }
 \examples{
-cat(toHTML(demo(package="base")), sep="\n")
+cat(toHTML(demo(package = "base")), sep = "\n")
 }
 \keyword{ utilities }
 \keyword{ documentation }

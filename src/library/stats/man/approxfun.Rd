@@ -12,10 +12,10 @@
   or a function performing the linear (or constant) interpolation.
 }
 \usage{
-approx   (x, y = NULL, xout, method = "linear", n=50,
+approx   (x, y = NULL, xout, method = "linear", n = 50,
           yleft, yright, rule = 1, f = 0, ties = mean)
 
-approxfun(x, y = NULL,       method  ="linear",
+approxfun(x, y = NULL,       method = "linear",
           yleft, yright, rule = 1, f = 0, ties = mean)
 }
 \arguments{
@@ -110,11 +110,11 @@ plot(approxfun(x, y, rule = 2:1), 0, 11,
 
 x <- c(2,2:4,4,4,5,5,7,7,7)
 y <- c(1:6, 5:4, 3:1)
-approx(x,y, xout=x)$y # warning
-(ay <- approx(x,y, xout=x, ties = "ordered")$y)
+approx(x, y, xout = x)$y # warning
+(ay <- approx(x, y, xout = x, ties = "ordered")$y)
 stopifnot(ay == c(2,2,3,6,6,6,4,4,1,1,1))
-approx(x,y, xout=x, ties = min)$y
-approx(x,y, xout=x, ties = max)$y
+approx(x, y, xout = x, ties = min)$y
+approx(x, y, xout = x, ties = max)$y
 
 %%-- MM has nice utility plotting -- do in demo ?
 }

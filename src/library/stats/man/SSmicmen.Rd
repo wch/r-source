@@ -37,7 +37,7 @@ PurTrt <- Puromycin[ Puromycin$state == "treated", ]
 SSmicmen(PurTrt$conc, 200, 0.05)  # response only
 Vm <- 200; K <- 0.05
 SSmicmen(PurTrt$conc, Vm, K)      # response and gradient
-print(getInitial(rate ~ SSmicmen(conc, Vm, K), data = PurTrt), digits=3)
+print(getInitial(rate ~ SSmicmen(conc, Vm, K), data = PurTrt), digits = 3)
 ## Initial values are in fact the converged values
 fm1 <- nls(rate ~ SSmicmen(conc, Vm, K), data = PurTrt)
 summary(fm1)

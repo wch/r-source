@@ -103,7 +103,7 @@ db <- news()
 news(Version == "2.11.0" & grepl("^BUG", Category) & grepl("PR#", Text),
      db = db)
 ## Which categories have been in use? % R-core maybe should standardize a bit more
-sort(table(db[,"Category"]), decreasing=TRUE)
+sort(table(db[, "Category"]), decreasing = TRUE)
 ## Entries with version >= 2.10.1 (including "2.10.1 patched"):
 table(news(Version >= "2.10.1", db = db)$Version)
 }}

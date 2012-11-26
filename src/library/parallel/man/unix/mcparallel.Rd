@@ -126,9 +126,9 @@ q <- mcparallel(1:20)
 res <- mccollect(list(p, q))
 
 p <- mcparallel(1:10)
-mccollect(p, wait=FALSE, 10) # will retrieve the result (since it's fast)
-mccollect(p, wait=FALSE)     # will signal the job as terminating
-mccollect(p, wait=FALSE)     # there is no longer such a job
+mccollect(p, wait = FALSE, 10) # will retrieve the result (since it's fast)
+mccollect(p, wait = FALSE)     # will signal the job as terminating
+mccollect(p, wait = FALSE)     # there is no longer such a job
 
 \dontshow{set.seed(123, "L'Ecuyer"); mc.reset.stream()}
 # a naive parallel lapply can be created using mcparallel alone:

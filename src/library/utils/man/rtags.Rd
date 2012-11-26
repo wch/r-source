@@ -33,7 +33,7 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
   }
   \item{keep.re}{ A regular expression further restricting \code{src}
     (the files to be indexed).  For example, specifying
-    \code{keep.re="/R/[^/]*\\\\.R$"} will only retain files with
+    \code{keep.re = "/R/[^/]*\\\\.R$"} will only retain files with
     extension \code{.R} inside a directory named \code{R}.
   } 
   \item{ofile}{ Passed on to \code{\link{cat}} as the \code{file}

@@ -48,6 +48,6 @@ aAdobe <- Adobe_glyphs[keep, 1]
 aLatin2 <- aAdobe[match(latin2, aUnicode)]
 ## all matches
 bLatin2 <- lapply(1:256, function(x) aAdobe[aUnicode == latin2[x]])
-format(bLatin2, justify="none")
+format(bLatin2, justify = "none")
 }
 \keyword{datasets}

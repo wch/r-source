@@ -34,7 +34,7 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 
   \code{drop.terms} removes variables from the right-hand side of the
   model. There is also a \code{"[.terms"} method to perform the same
-  function (with \code{keep.response=TRUE}).
+  function (with \code{keep.response = TRUE}).
 
   \code{reformulate} creates a formula from a character vector.
 }

@@ -53,7 +53,7 @@ local({
         a <- attributes(n)
         i <<- i+1
         attr(n, "nodePar") <-
-            c(a$nodePar, list(lab.col = mycols[i], lab.font= i\%\%3))
+            c(a$nodePar, list(lab.col = mycols[i], lab.font = i\%\%3))
       }
       n
   }
@@ -61,7 +61,7 @@ local({
   i <- 0
  })
 dL <- dendrapply(dhc21, colLab)
-op <- par(mfrow=2:1)
+op <- par(mfrow = 2:1)
  plot(dhc21)
  plot(dL) ## --> colored labels!
 par(op)

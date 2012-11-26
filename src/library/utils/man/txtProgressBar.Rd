@@ -89,6 +89,6 @@ testit <- function(x = sort(runif(20)), ...)
 }
 testit()
 testit(runif(10))
-testit(style=3)
+testit(style = 3)
 }}
 \keyword{utilities}

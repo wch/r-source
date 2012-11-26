@@ -16,11 +16,11 @@
   restrictions imposed by the dendrogram is carried out.
 }
 \usage{
-heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
+heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
         distfun = dist, hclustfun = hclust,
         reorderfun = function(d,w) reorder(d,w),
         add.expr, symm = FALSE, revC = identical(Colv, "Rowv"),
-        scale=c("row", "column", "none"), na.rm = TRUE,
+        scale = c("row", "column", "none"), na.rm = TRUE,
         margins = c(5, 5), ColSideColors, RowSideColors,
         cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
         labRow = NULL, labCol = NULL, main = NULL,
@@ -62,7 +62,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     \code{"none"} otherwise.}
   \item{na.rm}{logical indicating whether \code{NA}'s should be removed.}
   \item{margins}{numeric vector of length 2 containing the margins
-    (see \code{\link{par}(mar= *)}) for column and row names, respectively.}
+    (see \code{\link{par}(mar = *)}) for column and row names, respectively.}
   \item{ColSideColors}{(optional) character vector of length \code{ncol(x)}
     containing the color names for a horizontal side bar that may be used to
     annotate the columns of \code{x}.}
@@ -95,7 +95,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     Rowv)}, in the row case.
   If either is missing, as by default, then the ordering of the
   corresponding dendrogram is by the mean value of the rows/columns,
-  i.e., in the case of rows, \code{Rowv <- rowMeans(x, na.rm=na.rm)}.
+  i.e., in the case of rows, \code{Rowv <- rowMeans(x, na.rm = na.rm)}.
   If either is \code{\link{NA}}, \emph{no reordering} will be done for
   the corresponding side.
 
@@ -116,7 +116,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   \code{heatmap()} uses \code{\link{layout}} and draws the
   \code{\link{image}} in the lower right corner of a 2x2 layout.
   Consequentially, it can \bold{not} be used in a multi column/row
-  layout, i.e., when \code{\link{par}(mfrow= *)} or \code{(mfcol= *)}
+  layout, i.e., when \code{\link{par}(mfrow = *)} or \code{(mfcol = *)}
   has been called.
 }
 \value{
@@ -136,40 +136,40 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 \examples{
 require(graphics); require(grDevices)
 x  <- as.matrix(mtcars)
-rc <- rainbow(nrow(x), start=0, end=.3)
-cc <- rainbow(ncol(x), start=0, end=.3)
-hv <- heatmap(x, col = cm.colors(256), scale="column",
-              RowSideColors = rc, ColSideColors = cc, margins=c(5,10),
-              xlab = "specification variables", ylab= "Car Models",
+rc <- rainbow(nrow(x), start = 0, end = .3)
+cc <- rainbow(ncol(x), start = 0, end = .3)
+hv <- heatmap(x, col = cm.colors(256), scale = "column",
+              RowSideColors = rc, ColSideColors = cc, margins = c(5,10),
+              xlab = "specification variables", ylab =  "Car Models",
               main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
 utils::str(hv) # the two re-ordering index vectors
 
 ## no column dendrogram (nor reordering) at all:
-heatmap(x, Colv = NA, col = cm.colors(256), scale="column",
-        RowSideColors = rc, margins=c(5,10),
-        xlab = "specification variables", ylab= "Car Models",
+heatmap(x, Colv = NA, col = cm.colors(256), scale = "column",
+        RowSideColors = rc, margins = c(5,10),
+        xlab = "specification variables", ylab =  "Car Models",
         main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
 \testonly{
 ## no row dendrogram (nor reordering) at all:
-heatmap(x, Rowv = NA, col = cm.colors(256), scale="column",
-        ColSideColors = cc, margins=c(5,10),
-        xlab = "xlab", ylab= "ylab")# no main
+heatmap(x, Rowv = NA, col = cm.colors(256), scale = "column",
+        ColSideColors = cc, margins = c(5,10),
+        xlab = "xlab", ylab =  "ylab")# no main
 }
 ## "no nothing"
-heatmap(x, Rowv = NA, Colv = NA, scale="column",
+heatmap(x, Rowv = NA, Colv = NA, scale = "column",
         main = "heatmap(*, NA, NA) ~= image(t(x))")
 %% also want example using the `add.exp' argument!
 
 round(Ca <- cor(attitude), 2)
 symnum(Ca) # simple graphic
-heatmap(Ca,             symm = TRUE, margins=c(6,6))# with reorder()
-heatmap(Ca, Rowv=FALSE, symm = TRUE, margins=c(6,6))# _NO_ reorder()
+heatmap(Ca,               symm = TRUE, margins = c(6,6)) # with reorder()
+heatmap(Ca, Rowv = FALSE, symm = TRUE, margins = c(6,6)) # _NO_ reorder()
 ## slightly artificial with color bar, without and with ordering:
 cc <- rainbow(nrow(Ca))
-heatmap(Ca, Rowv=FALSE, symm = TRUE, RowSideColors=cc, ColSideColors=cc,
-	margins=c(6,6))
-heatmap(Ca,		symm = TRUE, RowSideColors=cc, ColSideColors=cc,
-	margins=c(6,6))
+heatmap(Ca, Rowv = FALSE, symm = TRUE, RowSideColors = cc, ColSideColors = cc,
+	margins = c(6,6))
+heatmap(Ca,		symm = TRUE, RowSideColors = cc, ColSideColors = cc,
+	margins = c(6,6))
 
 ## For variable clustering, rather use distance based on cor():
 symnum( cU <- cor(USJudgeRatings) )

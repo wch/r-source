@@ -15,7 +15,7 @@
   This package contains tools for manipulating R packages and their
   documentation.
 
-  For a complete list of functions, use \code{library(help="tools")}.
+  For a complete list of functions, use \code{library(help = "tools")}.
 
 }
 \author{

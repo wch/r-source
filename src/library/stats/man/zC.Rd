@@ -40,14 +40,14 @@ C(object, contr, how.many, \dots)
 }
 \examples{
 ## reset contrasts to defaults
-options(contrasts=c("contr.treatment", "contr.poly"))
+options(contrasts = c("contr.treatment", "contr.poly"))
 tens <- with(warpbreaks, C(tension, poly, 1))
 \donttest{attributes(tens)}
 ## tension SHOULD be an ordered factor, but as it is not we can use
-aov(breaks ~ wool + tens + tension, data=warpbreaks)
+aov(breaks ~ wool + tens + tension, data = warpbreaks)
 
 ## show the use of ...  The default contrast is contr.treatment here
-summary(lm(breaks ~ wool + C(tension, base=2), data=warpbreaks))
+summary(lm(breaks ~ wool + C(tension, base = 2), data = warpbreaks))
 
 
 # following on from help(esoph)

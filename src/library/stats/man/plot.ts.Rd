@@ -35,15 +35,15 @@
 
   \item{panel}{a \code{function(x, col, bg, pch, type, ...)} which gives the
     action to be carried out in each panel of the display for
-    \code{plot.type="multiple"}.  The default is \code{lines}.}
+    \code{plot.type = "multiple"}.  The default is \code{lines}.}
 
-  \item{nc}{the number of columns to use when \code{type="multiple"}.
+  \item{nc}{the number of columns to use when \code{type = "multiple"}.
     Defaults to 1 for up to 4 series, otherwise to 2.}
   \item{yax.flip}{logical indicating if the y-axis (ticks and numbering)
     should flip from side 2 (left) to 4 (right) from series to series
-    when \code{type="multiple"}.}
+    when \code{type = "multiple"}.}
   \item{mar.multi, oma.multi}{the (default) \code{\link{par}} settings
-    for \code{plot.type="multiple"}.  Modify with care!}
+    for \code{plot.type = "multiple"}.  Modify with care!}
   \item{axes}{logical indicating if x- and y- axes should be drawn.}
   \item{\dots}{additional graphical arguments, see \code{\link{plot}},
     \code{\link{plot.default}} and \code{\link{par}}.}
@@ -76,14 +76,14 @@ title("plot(ts(..), axes=FALSE, ann=FALSE, frame.plot=TRUE, mar..., oma...)")
 
 z <- window(z[,1:3], end = c(1969,12))
 plot(z, type = "b")    # multiple
-plot(z, plot.type="single", lty=1:3, col=4:2)
+plot(z, plot.type = "single", lty = 1:3, col = 4:2)
 
 ## A phase plot:
-plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col="blue",
+plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col = "blue",
      main = "Lag plot of New Haven temperatures")
 ## a clearer way to do this would be
 \dontrun{
-plot(nhtemp, lag(nhtemp, 1), cex = .8, col="blue",
+plot(nhtemp, lag(nhtemp, 1), cex = .8, col = "blue",
      main = "Lag plot of New Haven temperatures")
 }
 
@@ -93,7 +93,7 @@ plot(lag(sunspots, 1), sunspots, pch = ".")
 SMI <- EuStockMarkets[, "SMI"]
 plot(lag(SMI,  1), SMI, pch = ".")
 plot(lag(SMI, 20), SMI, pch = ".", log = "xy",
-     main = "4 weeks lagged SMI stocks -- log scale", xy.lines= TRUE)
+     main = "4 weeks lagged SMI stocks -- log scale", xy.lines =  TRUE)
 }
 \keyword{hplot}
 \keyword{ts}

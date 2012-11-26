@@ -132,7 +132,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 ## see also JohnsonJohnson, Nile and AirPassengers
 require(graphics)
 
-trees <- window(treering, start=0)
+trees <- window(treering, start = 0)
 (fit <- StructTS(trees, type = "level"))
 plot(trees)
 lines(fitted(fit), col = "green")
@@ -145,6 +145,6 @@ plot(cbind(fitted(fit), resids=resid(fit)), main = "UK gas consumption")
 
 ## keep some parameters fixed; trace optimizer:
 StructTS(log10(UKgas), type = "BSM", fixed = c(0.1,0.001,NA,NA),
-         optim.control = list(trace=TRUE))
+         optim.control = list(trace = TRUE))
 }
 \keyword{ts}

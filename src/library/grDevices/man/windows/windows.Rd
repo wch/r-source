@@ -69,7 +69,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     pixels.  Negative values are taken from the opposite edge of the
     monitor.  Missing values (the default) mean take the default from the
     \file{\link{Rconsole}} file, which in turn defaults to
-    \code{xpos=-25, ypos=0}: this puts the right edge of the window 25
+    \code{xpos = -25, ypos = 0}: this puts the right edge of the window 25
     pixels from the right edge of the monitor.}
   \item{buffered}{logical.  Should the screen output be double-buffered?
     Default \code{TRUE}.}
@@ -143,7 +143,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \code{options("windowsTimeout")} to a vector of two integers before
   opening the device.
  
-  Line widths as controlled by \code{par(lwd=)} are in multiples of
+  Line widths as controlled by \code{par(lwd =)} are in multiples of
   1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
 
   For \code{win.metafile} only one plot is allowed per file, and Windows
@@ -196,9 +196,9 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 \section{Fonts}{
   The fonts used for text drawn in a Windows device may be controlled in
   two ways.  The file \code{R_HOME\\etc\\\link{Rdevga}} can be used to
-  specify mappings for \code{par(font=)} (or the \pkg{grid} equivalent).
+  specify mappings for \code{par(font =)} (or the \pkg{grid} equivalent).
   Alternatively, a font family can be specified by a non-empty
-  \code{family} argument (or by e.g. \code{par(family=)} in the graphics
+  \code{family} argument (or by e.g. \code{par(family =)} in the graphics
   package) and this will be used for fonts 1:4 via the Windows font
   database (see \code{\link{windowsFonts}}).
 
@@ -232,7 +232,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     \item Line widths are as a multiple of 1/96 inch, with a minimum of
     one pixel. 
     \item The minimum radius of a circle is 1 pixel.
-    \item \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
+    \item \code{pch = "."} with \code{cex = 1} corresponds to a rectangle of sides
     the larger of one pixel and 0.01 inch.
     \item Colours are interpreted via the unprofiled colour mapping of
     the graphics card -- this is \emph{assumed} to conform to sRGB.

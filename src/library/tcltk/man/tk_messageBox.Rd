@@ -25,7 +25,7 @@ tk_messageBox(type = c("ok", "okcancel", "yesno", "yesnocancel",
   \item{default}{character. The name of the button to be used as the
     default.}
   \item{\dots}{additional named arguments to be passed to the Tk
-    function of this name.  An example is \code{icon="warning"}.}
+    function of this name.  An example is \code{icon = "warning"}.}
 }
 \value{
   A character string giving the name of the button pressed.

@@ -151,7 +151,7 @@ princomp(~ ., data = USArrests, cor = TRUE)
 ## NA-handling
 USArrests[1, 2] <- NA
 pc.cr <- princomp(~ Murder + Assault + UrbanPop,
-                  data = USArrests, na.action=na.exclude, cor = TRUE)
+                  data = USArrests, na.action = na.exclude, cor = TRUE)
 \donttest{pc.cr$scores[1:5, ]}
 
 ## (Simple) Robust PCA:

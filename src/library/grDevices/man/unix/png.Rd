@@ -221,15 +221,15 @@ tiff(filename = "Rplot\%03d.tiff",
 ## and cairo or an X11 display or a Mac OS X display is available.
 
 ## copy current plot to a (large) PNG file
-\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)}
+\dontrun{dev.print(png, file = "myplot.png", width = 1024, height = 768)}
 \donttest{
-png(file="myplot.png", bg="transparent")
+png(file = "myplot.png", bg = "transparent")
 plot(1:10)
-rect(1, 5, 3, 7, col="white")
+rect(1, 5, 3, 7, col = "white")
 dev.off()
 
 ## will make myplot1.jpeg and myplot2.jpeg
-jpeg(file="myplot\%d.jpeg")
+jpeg(file = "myplot\%d.jpeg")
 example(rect)
 dev.off()
 }}

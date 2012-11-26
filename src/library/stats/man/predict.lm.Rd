@@ -28,7 +28,8 @@
   \item{interval}{Type of interval calculation.}
   \item{level}{Tolerance/confidence level}
   \item{type}{Type of prediction (response or model term).}
-  \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
+  \item{terms}{If \code{type = "terms"}, which terms (default is all
+    terms), a \code{\link{character}} vector.}
   \item{na.action}{function determining what should be done with missing
     values in \code{newdata}.  The default is to predict \code{NA}.}
   \item{pred.var}{the variance(s) for future observations to be assumed
@@ -117,10 +118,10 @@ y <- x + rnorm(15)
 predict(lm(y ~ x))
 new <- data.frame(x = seq(-3, 3, 0.5))
 predict(lm(y ~ x), new, se.fit = TRUE)
-pred.w.plim <- predict(lm(y ~ x), new, interval="prediction")
-pred.w.clim <- predict(lm(y ~ x), new, interval="confidence")
+pred.w.plim <- predict(lm(y ~ x), new, interval = "prediction")
+pred.w.clim <- predict(lm(y ~ x), new, interval = "confidence")
 matplot(new$x,cbind(pred.w.clim, pred.w.plim[,-1]),
-        lty=c(1,2,2,3,3), type="l", ylab="predicted y")
+        lty = c(1,2,2,3,3), type = "l", ylab = "predicted y")
 
 ## Prediction intervals, special cases
 ##  The first three of these throw warnings

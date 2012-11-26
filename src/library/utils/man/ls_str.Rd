@@ -71,7 +71,7 @@ lsf.str(pos = length(search()), pattern = "file")
 
 ## demonstrating that  ls.str() works inside functions
 ## ["browser/debug mode"]:
-tt <- function(x, y=1) { aa <- 7; r <- x + y; ls.str() }
+tt <- function(x, y = 1) { aa <- 7; r <- x + y; ls.str() }
 (nms <- sapply(strsplit(capture.output(tt(2))," *: *"), `[`, 1))
 stopifnot(nms == c("aa", "r","x","y"))
 }

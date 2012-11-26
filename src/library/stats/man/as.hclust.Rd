@@ -35,16 +35,16 @@ as.hclust(x, \dots)
   \code{\link[cluster]{diana}} and \code{\link[cluster]{agnes}}
 }
 \examples{
-x <- matrix(rnorm(30), ncol=3)
-hc <- hclust(dist(x), method="complete")
+x <- matrix(rnorm(30), ncol = 3)
+hc <- hclust(dist(x), method = "complete")
 
-if(require("cluster", quietly=TRUE)) {# is a recommended package
-  ag <- agnes(x, method="complete")
+if(require("cluster", quietly = TRUE)) {# is a recommended package
+  ag <- agnes(x, method = "complete")
   hcag <- as.hclust(ag)
   ## The dendrograms order slightly differently:
-  op <- par(mfrow=c(1,2))
-  plot(hc) ;  mtext("hclust", side=1)
-  plot(hcag); mtext("agnes",  side=1)
+  op <- par(mfrow = c(1,2))
+  plot(hc) ;  mtext("hclust", side = 1)
+  plot(hcag); mtext("agnes",  side = 1)
 }
 }
 \keyword{multivariate}

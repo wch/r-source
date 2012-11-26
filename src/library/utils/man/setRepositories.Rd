@@ -53,7 +53,7 @@ setRepositories(graphics = getOption("menu.graphics"),
 }
 \note{
   This does \strong{not} set the list of repositories at startup: to do
-  so set \code{\link{options}(repos=)} in a start up file (see help topic
+  so set \code{\link{options}(repos =)} in a start up file (see help topic
   \link{Startup}).
 }
 \value{

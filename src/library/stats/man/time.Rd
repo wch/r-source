@@ -26,7 +26,7 @@
 }
 \usage{
 time(x, \dots)
-\method{time}{default}(x, offset=0, \dots)
+\method{time}{default}(x, offset = 0, \dots)
 
 cycle(x, \dots)
 frequency(x, \dots)
@@ -63,6 +63,6 @@ require(graphics)
 
 cycle(presidents)
 # a simple series plot
-plot(as.vector(time(presidents)), as.vector(presidents), type="l")
+plot(as.vector(time(presidents)), as.vector(presidents), type = "l")
 }
 \keyword{ts}

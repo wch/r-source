@@ -72,14 +72,14 @@ debugger(dump = last.dump)
 }
 \examples{
 \dontrun{
-options(error=quote(dump.frames("testdump", TRUE)))
+options(error = quote(dump.frames("testdump", TRUE)))
 
 f <- function() {
     g <- function() stop("test dump.frames")
     g()
 }
 f()   # will generate a dump on file "testdump.rda"
-options(error=NULL)
+options(error = NULL)
 
 ## possibly in another R session
 load("testdump.rda")
@@ -109,7 +109,7 @@ Enter an environment number, or 0 to exit
 Selection: 0
 
 ## A possible setting for non-interactive sessions
-options(error=quote({dump.frames(to.file=TRUE); q()}))
+options(error = quote({dump.frames(to.file = TRUE); q()}))
 }}
 \keyword{utilities}
 \keyword{error}

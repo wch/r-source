@@ -16,7 +16,7 @@
   methods for analyzing it.
 }
 \usage{
-hclust(d, method = "complete", members=NULL)
+hclust(d, method = "complete", members = NULL)
 
 \method{plot}{hclust}(x, labels = NULL, hang = 0.1,
      axes = TRUE, frame.plot = FALSE, ann = TRUE,
@@ -48,7 +48,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
 
   \item{labels}{A character vector of labels for the leaves of the
     tree. By default the row names or row numbers of the original data are
-    used. If \code{labels=FALSE} no labels at all are plotted.}
+    used. If \code{labels = FALSE} no labels at all are plotted.}
 
   \item{axes, frame.plot, ann}{logical flags as in \code{\link{plot.default}}.}
   \item{main, sub, xlab, ylab}{character strings for
@@ -132,7 +132,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   measure, or equivalently the resulting dendrograms can have so called
   \emph{inversions} (which are hard to interpret).
 
-  If \code{members!=NULL}, then \code{d} is taken to be a
+  If \code{members != NULL}, then \code{d} is taken to be a
   dissimilarity matrix between clusters instead of dissimilarities
   between singletons and \code{members} gives the number of observations
   per cluster.  This way the hierarchical cluster algorithm can be

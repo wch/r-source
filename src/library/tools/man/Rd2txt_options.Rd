@@ -57,7 +57,7 @@ Duncan Murdoch
 \examples{
 saveOpts <- Rd2txt_options()
 saveOpts
-Rd2txt_options(minIndent=4)
+Rd2txt_options(minIndent = 4)
 Rd2txt_options()
 Rd2txt_options(saveOpts)
 Rd2txt_options()

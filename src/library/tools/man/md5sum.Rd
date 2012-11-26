@@ -28,7 +28,7 @@ md5sum(files)
   \code{\link{checkMD5sums}}
 }
 \examples{
-as.vector(md5sum(dir(R.home(), pattern="^COPY", full.names=TRUE)))
+as.vector(md5sum(dir(R.home(), pattern = "^COPY", full.names = TRUE)))
 }
 \keyword{utilities}
 

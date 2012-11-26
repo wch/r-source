@@ -124,7 +124,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 
 % Differences seen on 32-bit Linux at -O3
 \examples{
-\testonly{od <- options(digits=5)}
+\testonly{od <- options(digits = 5)}
 require(graphics)
 
 ## Seasonal Holt-Winters

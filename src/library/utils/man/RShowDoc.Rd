@@ -42,10 +42,10 @@ RShowDoc(what, type = c("pdf", "html", "txt"), package)
 }
 \examples{\dontrun{
 RShowDoc("R-lang")
-RShowDoc("FAQ", type="html")
-RShowDoc("frame", package="grid")
-RShowDoc("changes.txt", package="grid")
-RShowDoc("NEWS", package="MASS")
+RShowDoc("FAQ", type = "html")
+RShowDoc("frame", package = "grid")
+RShowDoc("changes.txt", package = "grid")
+RShowDoc("NEWS", package = "MASS")
 }}
 \keyword{documentation}
 

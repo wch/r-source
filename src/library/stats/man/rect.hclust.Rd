@@ -40,8 +40,8 @@ require(graphics)
 
 hca <- hclust(dist(USArrests))
 plot(hca)
-rect.hclust(hca, k=3, border="red")
-x <- rect.hclust(hca, h=50, which=c(2,7), border=3:4)
+rect.hclust(hca, k = 3, border = "red")
+x <- rect.hclust(hca, h = 50, which = c(2,7), border = 3:4)
 x
 }
 \keyword{aplot}

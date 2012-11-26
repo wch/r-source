@@ -65,7 +65,7 @@ rc.options(\dots)
         addition to the time overhead associated with loading.  For this
         reason, this feature is disabled by default. }
 
-      \item{\code{S3}:}{ when \code{args=TRUE}, activates completion on
+      \item{\code{S3}:}{ when \code{args = TRUE}, activates completion on
         arguments of all S3 methods (otherwise just the generic, which
         usually has very few arguments) }
 
@@ -78,14 +78,14 @@ rc.options(\dots)
       \item{\code{help}:}{ enables completion of help requests starting
         with a question mark, by looking inside help index files }
 
-      \item{\code{argdb}:}{ when \code{args=TRUE}, completion is
+      \item{\code{argdb}:}{ when \code{args = TRUE}, completion is
         attempted on function arguments.  Generally, the list of valid
         arguments is determined by dynamic calls to \code{\link{args}}.
         While this gives results that are technically correct, the use
         of the \code{\dots} argument often hides some useful arguments.
         To give more flexibility in this regard, an optional table of
         valid arguments names for specific functions is retained
-        internally.  Setting \code{argdb=TRUE} enables preferential
+        internally.  Setting \code{argdb = TRUE} enables preferential
         lookup in this internal data base for functions with an entry in
         it.  Of course, this is useful only when the data base contains
         information about the function of interest.  Some functions are

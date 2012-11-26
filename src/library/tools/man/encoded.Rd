@@ -38,11 +38,11 @@ x <- "fa\xE7ile"
 encoded_text_to_latex(x, "latin1")
 \dontrun{
 ## create a tex file to show the upper half of 8-bit charsets
-x <- rawToChar(as.raw(160:255), multiple=TRUE)
-(x <- matrix(x, ncol=16, byrow=TRUE))
+x <- rawToChar(as.raw(160:255), multiple = TRUE)
+(x <- matrix(x, ncol = 16, byrow = TRUE))
 xx <- x
 xx[] <- encoded_text_to_latex(x, "latin1") # or latin2 or latin9
-xx <- apply(xx, 1, paste, collapse="&")
+xx <- apply(xx, 1, paste, collapse = "&")
 con <- file("test-encoding.tex", "w")
 header <- c(
 "\\\\documentclass{article}",
@@ -54,7 +54,7 @@ header <- c(
 "\\\\Tabular{cccccccccccccccc}{")
 trailer <- c("}", "\\\\end{Details}", "\\\\end{document}")
 writeLines(header, con)
-writeLines(paste(xx, "\\\\", sep=""), con)
+writeLines(paste0(xx, "\\\\"), con)
 writeLines(trailer, con)
 close(con)
 ## and some UTF_8 chars
@@ -62,14 +62,14 @@ x <- intToUtf8(as.integer(
     c(160:383,0x0192,0x02C6,0x02C7,0x02CA,0x02D8,
       0x02D9, 0x02DD, 0x200C, 0x2018, 0x2019, 0x201C,
       0x201D, 0x2020, 0x2022, 0x2026, 0x20AC)),
-               multiple=TRUE)
-x <- matrix(x, ncol=16, byrow=TRUE)
+               multiple = TRUE)
+x <- matrix(x, ncol = 16, byrow = TRUE)
 xx <- x
 xx[] <- encoded_text_to_latex(x, "UTF-8")
-xx <- apply(xx, 1, paste, collapse="&")
+xx <- apply(xx, 1, paste, collapse = "&")
 con <- file("test-utf8.tex", "w")
 writeLines(header, con)
-writeLines(paste(xx, "\\\\", sep=""), con)
+writeLines(paste(xx, "\\\\", sep = ""), con)
 writeLines(trailer, con)
 close(con)
 }}

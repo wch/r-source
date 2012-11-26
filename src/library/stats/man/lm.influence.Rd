@@ -74,7 +74,7 @@ lm.influence(model, do.coef = TRUE)
   Note that cases with \code{weights == 0} are \emph{dropped} (contrary
   to the situation in S).
 
-  If a model has been fitted with \code{na.action=na.exclude} (see
+  If a model has been fitted with \code{na.action = na.exclude} (see
   \code{\link{na.exclude}}), cases excluded in the fit \emph{are}
   considered here.
 }

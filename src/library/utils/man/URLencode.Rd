@@ -41,7 +41,7 @@ URLdecode(URL)
 \examples{
 (y <- URLencode("a url with spaces and / and @"))
 URLdecode(y)
-(y <- URLencode("a url with spaces and / and @", reserved=TRUE))
+(y <- URLencode("a url with spaces and / and @", reserved = TRUE))
 URLdecode(y)
 URLdecode("ab\%20cd")
 }

@@ -66,7 +66,7 @@ dmultinom(x, size = NULL, prob, log = FALSE)
 %% but does not return 2-vectors
 }
 \examples{
-rmultinom(10, size = 12, prob=c(0.1,0.2,0.8))
+rmultinom(10, size = 12, prob = c(0.1,0.2,0.8))
 
 pr <- c(1,3,6,10) # normalization not necessary for generation
 rmultinom(10, 20, prob = pr)

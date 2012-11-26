@@ -69,7 +69,7 @@ Yield <- c(101, 373, 398, 291, 312, 106, 265, 450, 106, 306, 324, 449,
 aovdat <- data.frame(Block, A, B, C, Yield)
 
 old <- getOption("contrasts")
-options(contrasts=c("contr.helmert", "contr.poly"))
+options(contrasts = c("contr.helmert", "contr.poly"))
 (fit <- aov(Yield ~ A*B*C + Error(Block), data = aovdat))
 eff.aovlist(fit)
 options(contrasts = old)

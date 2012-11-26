@@ -50,7 +50,7 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 }
 \details{
   There is a \code{summary} method for contingency table objects created
-  by \code{table} or \code{xtabs(*, sparse=FALSE)}, which gives basic
+  by \code{table} or \code{xtabs(*, sparse = FALSE)}, which gives basic
   information and performs a chi-squared test for independence of
   factors (note that the function \code{\link{chisq.test}} currently
   only handles 2-d tables).
@@ -60,11 +60,11 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
   works if the lhs does not give counts.
 }
 \value{
-  By default, when \code{sparse=FALSE},
+  By default, when \code{sparse = FALSE},
   a contingency table in array representation of S3 class \code{c("xtabs",
     "table")}, with a \code{"call"} attribute storing the matched call.
 
-  When \code{sparse=TRUE}, a sparse numeric matrix, specifically an
+  When \code{sparse = TRUE}, a sparse numeric matrix, specifically an
   object of S4 class %\linkS4class{dgTMatrix}
   \code{\link[Matrix:dgTMatrix-class]{dgTMatrix}} from package
   \CRANpkg{Matrix}.
@@ -106,9 +106,9 @@ if(require("Matrix")) {
  ## similar to "nlme"s  'ergoStool' :
  d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
                       Subj = gl(9,4, 36*4))
- print(xtabs(~ Type + Subj, data=d.ergo)) # 4 replicates each
+ print(xtabs(~ Type + Subj, data = d.ergo)) # 4 replicates each
  set.seed(15) # a subset of cases:
- print(xtabs(~ Type + Subj, data=d.ergo[sample(36, 10),], sparse=TRUE))
+ print(xtabs(~ Type + Subj, data = d.ergo[sample(36, 10),], sparse = TRUE))
 
  ## Hypothetical two level setup:
  inner <- factor(sample(letters[1:25], 100, replace = TRUE))

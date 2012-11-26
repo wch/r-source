@@ -79,7 +79,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   mixture of betas (Johnson \emph{et al}, 1995, pp. 502--3).
 
   The central \code{pbeta} uses a C translation (and enhancement for
-  \code{log_p=TRUE}) of
+  \code{log_p = TRUE}) of
 
   Didonato, A. and Morris, A., Jr, (1992)
   Algorithm 708: Significant digit computation of the incomplete beta
@@ -136,7 +136,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   \code{\link{beta}} for the Beta function.
 }
 \examples{
-x <- seq(0, 1, length=21)
+x <- seq(0, 1, length = 21)
 dbeta(x, 1, 1)
 pbeta(x, 1, 1)
 }

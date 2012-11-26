@@ -21,7 +21,7 @@ getCall(x, \dots)
  \item{formula.}{Changes to the formula -- see \code{update.formula} for
    details.}
  \item{\dots}{Additional arguments to the call, or arguments with
-   changed values. Use \code{name=NULL} to remove the argument \code{name}.}
+   changed values. Use \code{name = NULL} to remove the argument \code{name}.}
  \item{evaluate}{If true evaluate the new call else return the call.}
 }
 \description{

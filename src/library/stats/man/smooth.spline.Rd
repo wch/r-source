@@ -39,7 +39,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
    spaced in \code{1:n}, see also the next argument \code{nknots}.}
  \item{nknots}{integer giving the number of knots to use when
-   \code{all.knots=FALSE}.  Per default, this is less than \eqn{n}, the
+   \code{all.knots = FALSE}.  Per default, this is less than \eqn{n}, the
    number of unique \code{x} values for \eqn{n > 49}.}
  \item{keep.data}{logical specifying if the input data should be kept
    in the result.  If \code{TRUE} (as per default), fitted values and
@@ -133,7 +133,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   there are duplicated points in \code{x}.  However, it is ambiguous what
   leave-one-out cross-validation means with duplicated points, and the
   internal code uses an approximation that involves leaving out groups
-  of duplicated points.  \code{cv=TRUE} is best avoided in that case.
+  of duplicated points.  \code{cv = TRUE} is best avoided in that case.
 }
 \note{
   The default \code{all.knots = FALSE} and \code{nknots = NULL} entails
@@ -222,23 +222,23 @@ attach(cars)
 plot(speed, dist, main = "data(cars)  &  smoothing splines")
 cars.spl <- smooth.spline(speed, dist)
 (cars.spl)
-## This example has duplicate points, so avoid cv=TRUE
+## This example has duplicate points, so avoid cv = TRUE
 \dontshow{
   stopifnot(cars.spl $ w == table(speed)) # weights = multiplicities
-  utils::str(cars.spl, digits=5, vec.len=6)
+  utils::str(cars.spl, digits = 5, vec.len = 6)
   cars.spl$fit
 }
 lines(cars.spl, col = "blue")
-lines(smooth.spline(speed, dist, df=10), lty=2, col = "red")
+lines(smooth.spline(speed, dist, df = 10), lty = 2, col = "red")
 legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
                "s( * , df = 10)"), col = c("blue","red"), lty = 1:2,
-       bg='bisque')
+       bg = 'bisque')
 detach()
 
 
 ## Residual (Tukey Anscombe) plot:
 plot(residuals(cars.spl) ~ fitted(cars.spl))
-abline(h = 0, col="gray")
+abline(h = 0, col = "gray")
 
 ## consistency check:
 stopifnot(all.equal(cars$dist,
@@ -246,17 +246,17 @@ stopifnot(all.equal(cars$dist,
 
 ##-- artificial example
 y18 <- c(1:3,5,4,7:3,2*(2:5),rep(10,4))
-xx  <- seq(1,length(y18), len=201)
+xx  <- seq(1,length(y18), len = 201)
 (s2  <- smooth.spline(y18)) # GCV
 (s02  <- smooth.spline(y18, spar = 0.2))
-(s02. <- smooth.spline(y18, spar = 0.2, cv=NA))
-plot(y18, main=deparse(s2$call), col.main=2)
+(s02. <- smooth.spline(y18, spar = 0.2, cv = NA))
+plot(y18, main = deparse(s2$call), col.main = 2)
 lines(s2, col = "gray"); lines(predict(s2, xx), col = 2)
 lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 
 \dontshow{
 stopifnot(all.equal(predict(s02, xx),
-		    predict(s02., xx), tol= 1e-15))
+		    predict(s02., xx), tol = 1e-15))
 }
 \donttest{
 ## The following shows the problematic behavior of 'spar' searching:

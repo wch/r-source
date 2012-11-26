@@ -137,10 +137,10 @@ ks.test(x+2, "pgamma", 3, 2, alternative = "gr")
 
 # test if x is stochastically larger than x2
 x2 <- rnorm(50, -1)
-plot(ecdf(x), xlim=range(c(x, x2)))
-plot(ecdf(x2), add=TRUE, lty="dashed")
-t.test(x, x2, alternative="g")
-wilcox.test(x, x2, alternative="g")
-ks.test(x, x2, alternative="l")
+plot(ecdf(x), xlim = range(c(x, x2)))
+plot(ecdf(x2), add = TRUE, lty = "dashed")
+t.test(x, x2, alternative = "g")
+wilcox.test(x, x2, alternative = "g")
+ks.test(x, x2, alternative = "l")
 }
 \keyword{htest}

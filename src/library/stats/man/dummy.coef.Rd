@@ -56,9 +56,9 @@ dummy.coef(object, \dots)
 \seealso{\code{\link{aov}}, \code{\link{model.tables}}}
 
 \examples{
-options(contrasts=c("contr.helmert", "contr.poly"))
+options(contrasts = c("contr.helmert", "contr.poly"))
 ## From Venables and Ripley (2002) p.165.
-utils::data(npk, package="MASS")
+utils::data(npk, package = "MASS")
 npk.aov <- aov(yield ~ block + N*P*K, npk)
 dummy.coef(npk.aov)
 

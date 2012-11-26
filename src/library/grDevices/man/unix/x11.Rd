@@ -65,7 +65,7 @@ X11.options(\dots, reset = FALSE)
   
   \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
-    e.g. \code{xpos=-100} says the top right corner should be 100 pixels
+    e.g. \code{xpos = -100} says the top right corner should be 100 pixels
     from the right edge of the screen.  If \code{NA} (the default),
     successive devices are cascaded in 20 pixel steps from the top left.
     See also \sQuote{Resources}.}
@@ -159,7 +159,7 @@ X11.options(\dots, reset = FALSE)
 
   An initial/default font family for the device can be specified via
   the \code{fonts} argument, but if a device-independent R graphics font
-  family is specified (e.g., via \code{par(family=)} in the graphics
+  family is specified (e.g., via \code{par(family =)} in the graphics
   package), the X11 device makes use of the X11 font database (see
   \code{X11Fonts}) to convert the R graphics font family to an
   X11-specific font family description.  If \code{family} is supplied as
@@ -260,7 +260,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   black/white.  The palette is shared between all X11 clients, so it can
   be necessary to limit the number of colours used by \R.
 
-  The default for \code{type="Xlib"} is to use the best possible colour
+  The default for \code{type = "Xlib"} is to use the best possible colour
   model for the visual of the X11 server: these days this will almost
   always be \sQuote{truecolor}.  This can be overridden by the
   \code{colortype} argument of \code{X11.options}.  \bold{Note:} All
@@ -268,7 +268,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   \code{png} and \code{tiff} devices share a \code{colortype} which is
   set when the first device to be opened.  To change the
   \code{colortype} you need to close \emph{all} open such devices, and
-  then use \code{X11.options(colortype=)}.
+  then use \code{X11.options(colortype =)}.
 
   The colortype types are tried in the order \code{"true"},
   \code{"pseudo"}, \code{"gray"} and \code{"mono"} (black or white
@@ -286,7 +286,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   revert to \code{"mono"}.  For \code{"gray"} the search starts at 256
   grays for a display with depth greater than 8, otherwise with half
   the available colours.  For \code{"pseudo.cube"} the maximum cube size
-  is set by \code{X11.options(maxcolorsize=)} and defaults to
+  is set by \code{X11.options(maxcolorsize =)} and defaults to
   256.  With that setting the largest cube tried is 4 levels each for
   RGB, using 64 colours in the palette.
 
@@ -336,7 +336,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
 \examples{\dontrun{
 ## put something like this is your .Rprofile to customize the defaults
 setHook(packageEvent("grDevices", "onLoad"),
-        function(...) grDevices::X11.options(width=8, height=6, xpos=0,
-                                             pointsize=10))
+        function(...) grDevices::X11.options(width = 8, height = 6, xpos = 0,
+                                             pointsize = 10))
 }}
 \keyword{device}

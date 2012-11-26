@@ -12,8 +12,8 @@ amount of time used by different \R functions.
 }
 \usage{
 summaryRprof(filename = "Rprof.out", chunksize = 5000,
-              memory=c("none","both","tseries","stats"),
-              index=2, diff=TRUE, exclude=NULL)
+              memory = c("none", "both", "tseries", "stats"),
+              index = 2, diff = TRUE, exclude = NULL)
 }
 \arguments{
   \item{filename}{Name of a file produced by \code{Rprof()}}

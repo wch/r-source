@@ -47,7 +47,7 @@ determinant(x, logarithm = TRUE, \dots)
 unlist(determinant(x))
 det(x)
 
-det(print(cbind(1,1:3,c(2,0,1))))
+det(print(cbind(1, 1:3, c(2,0,1))))
 }
 
 \keyword{array}

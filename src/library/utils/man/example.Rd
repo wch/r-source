@@ -45,7 +45,7 @@ example(topic, package = NULL, lib.loc = NULL,
     running a package's examples.  This is currently equivalent to
     \code{setRNG = \{RNGkind("default", "default"); set.seed(1)\}}.}
   \item{ask}{logical (or \code{"default"}) indicating if
-    \code{\link{devAskNewPage}(ask=TRUE)} should be called
+    \code{\link{devAskNewPage}(ask = TRUE)} should be called
     before graphical output happens from the example code.  The value
     \code{"default"} (the factory-fresh default) means to ask if
     \code{echo == TRUE} and the graphics device appears to be
@@ -89,7 +89,7 @@ example(topic, package = NULL, lib.loc = NULL,
 \examples{
 example(InsectSprays)
 ## force use of the standard package 'stats':
-example("smooth", package="stats", lib.loc=.Library)
+example("smooth", package = "stats", lib.loc = .Library)
 
 ## set RNG *before* example as when R CMD check is run:
 
@@ -106,8 +106,8 @@ x1; x2
 
 ## Exploring examples code:
 ## How large are the examples of "lm...()" functions?
-lmex <- sapply(apropos("^lm", mode="function"),
-               example, character.only=TRUE, give.lines=TRUE)
+lmex <- sapply(apropos("^lm", mode = "function"),
+               example, character.only = TRUE, give.lines = TRUE)
 sapply(lmex, length)
 }
 \keyword{documentation}

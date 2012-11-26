@@ -26,17 +26,17 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            stringsAsFactors = default.stringsAsFactors(),
            fileEncoding = "", encoding = "unknown", text)
 
-read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
-         fill = TRUE, comment.char="", \dots)
+read.csv(file, header = TRUE, sep = ",", quote = "\"", dec = ".",
+         fill = TRUE, comment.char = "", \dots)
 
-read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",",
-          fill = TRUE, comment.char="", \dots)
+read.csv2(file, header = TRUE, sep = ";", quote = "\"", dec = ",",
+          fill = TRUE, comment.char = "", \dots)
 
-read.delim(file, header = TRUE, sep = "\t", quote="\"", dec=".",
-           fill = TRUE, comment.char="", \dots)
+read.delim(file, header = TRUE, sep = "\t", quote = "\"", dec = ".",
+           fill = TRUE, comment.char = "", \dots)
 
-read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
-            fill = TRUE, comment.char="", \dots)
+read.delim2(file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
+            fill = TRUE, comment.char = "", \dots)
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
@@ -324,7 +324,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
 \examples{
 ## using count.fields to handle unknown maximum number of fields
-## when fill=TRUE
+## when fill = TRUE
 test1 <- c(1:5, "6,7", "8,9,10")
 tf <- tempfile()
 writeLines(test1, tf)
@@ -338,7 +338,7 @@ unlink(tf)
 ## "Inline" data set, using text=
 ## Notice that leading and trailing empty lines are auto-trimmed
 
-read.table(header=TRUE, text="
+read.table(header = TRUE, text = "
 a b
 1 2
 3 4

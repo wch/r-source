@@ -35,8 +35,8 @@
   \code{\link{princomp}}
 }
 \examples{
-summary(pc.cr <- princomp(USArrests, cor=TRUE))
-print(summary(princomp(USArrests, cor=TRUE),
+summary(pc.cr <- princomp(USArrests, cor = TRUE))
+print(summary(princomp(USArrests, cor = TRUE),
               loadings = TRUE, cutoff = 0.2), digits = 2)
 }
 \keyword{multivariate}

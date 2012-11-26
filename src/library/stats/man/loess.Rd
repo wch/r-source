@@ -41,7 +41,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
     locally?  Terms can be specified by name, number or as a logical
     vector of the same length as the number of predictors.}
   \item{drop.square}{for fits with more than one predictor and
-    \code{degree=2}, should the quadratic term be dropped for particular
+    \code{degree = 2}, should the quadratic term be dropped for particular
     predictors?  Terms are specified in the same way as for
     \code{parametric}.}
   \item{normalize}{should the predictors be normalized to a common scale

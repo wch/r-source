@@ -65,7 +65,7 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 \value{
   A list of class \code{"ar"} with the following elements:
   \item{order}{The order of the fitted model.  This is chosen by
-    minimizing the AIC if \code{aic=TRUE}, otherwise it is
+    minimizing the AIC if \code{aic = TRUE}, otherwise it is
     \code{order.max}.}
   \item{ar}{Estimated autoregression coefficients for the fitted
     model.}
@@ -101,13 +101,13 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
     Analysis.} Springer Verlag, NY, pp. 368--370.
 }
 \examples{
-ar(lh, method="burg")
+ar(lh, method = "burg")
 ar.ols(lh)
 ar.ols(lh, FALSE, 4) # fit ar(4)
 
 ar.ols(ts.union(BJsales, BJsales.lead))
 
 x <- diff(log(EuStockMarkets))
-ar.ols(x, order.max=6, demean=FALSE, intercept=TRUE)
+ar.ols(x, order.max = 6, demean = FALSE, intercept = TRUE)
 }
 \keyword{ts}

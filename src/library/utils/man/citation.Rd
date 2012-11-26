@@ -99,8 +99,8 @@ readCitationFile(file, meta = NULL)
 citation()
 
 ## references for a package -- might not have these installed
-if(nchar(system.file(package="lattice"))) citation("lattice")
-if(nchar(system.file(package="foreign"))) citation("foreign")
+if(nchar(system.file(package = "lattice"))) citation("lattice")
+if(nchar(system.file(package = "foreign"))) citation("foreign")
 
 ## extract the bibtex entry from the return value
 x <- citation()

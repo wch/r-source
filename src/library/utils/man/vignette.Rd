@@ -83,10 +83,10 @@ edit(v1)
 Stangle(v1$file)
 
 ## A package can have more than one vignette (package grid has several):
-vignette(package="grid")
+vignette(package = "grid")
 vignette("rotated")
 ## The same, but without searching for it:
-vignette("rotated", package="grid")
+vignette("rotated", package = "grid")
 }
 }
 \keyword{documentation}

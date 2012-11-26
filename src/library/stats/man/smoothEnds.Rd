@@ -51,7 +51,7 @@ col3 <- c("midnightblue","blue","steelblue")
 plot(y, main = "Running Medians -- runmed(*, k=7, end.rule = X)")
 lines(ys, col = "light gray")
 matlines(cbind(s7k,s7.,s7m), lwd= 1.5, lty = 1, col = col3)
-legend(1,470, paste("endrule",c("keep","constant","median"),sep=" = "),
+legend(1,470, paste("endrule", c("keep","constant","median"), sep = " = "),
        col = col3, lwd = 1.5, lty = 1)
 
 stopifnot(identical(s7m, smoothEnds(s7k, 7)))

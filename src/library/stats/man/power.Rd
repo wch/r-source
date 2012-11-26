@@ -42,6 +42,6 @@ power(lambda = 1)
 }
 \examples{
 power()
-quasi(link=power(1/3))[c("linkfun", "linkinv")]
+quasi(link = power(1/3))[c("linkfun", "linkinv")]
 }
 \keyword{models}

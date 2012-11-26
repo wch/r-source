@@ -18,7 +18,7 @@ This package contains functions for statistical calculations
 and random number generation.
 
 For a complete
-list of functions, use \code{library(help="stats")}.
+list of functions, use \code{library(help = "stats")}.
 
 }
 \author{

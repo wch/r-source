@@ -14,7 +14,7 @@
   that often, only \code{x} needs to be specified.
 }
 \usage{
-printCoefmat(x, digits=max(3, getOption("digits") - 2),
+printCoefmat(x, digits = max(3, getOption("digits") - 2),
              signif.stars = getOption("show.signif.stars"),
              signif.legend = signif.stars,
              dig.tst = max(1, min(5, digits - 1)),
@@ -34,7 +34,8 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
     of long coefficient tables.  It defaults to the
     \code{show.signif.stars} slot of \code{\link{options}}.}
   \item{signif.legend}{logical; if \code{TRUE}, a legend for the 
-    \sQuote{significance stars} is printed provided \code{signif.stars=TRUE}.}
+    \sQuote{significance stars} is printed provided \code{signif.stars =
+      TRUE}.}
   \item{dig.tst}{minimum number of significant digits for the test statistics,
     see \code{tst.ind}.}
   \item{cs.ind}{indices (integer) of column numbers which are (like)
@@ -76,8 +77,8 @@ colnames(cmat) <- c("Estimate", "Std.Err", "Z value", "Pr(>z)")
 printCoefmat(cmat[,1:3])
 printCoefmat(cmat)
 options(show.coef.Pvalues = FALSE)
-printCoefmat(cmat, digits=2)
-printCoefmat(cmat, digits=2, P.values = TRUE)
+printCoefmat(cmat, digits = 2)
+printCoefmat(cmat, digits = 2, P.values = TRUE)
 options(show.coef.Pvalues = TRUE)# revert
 }
 \keyword{print}

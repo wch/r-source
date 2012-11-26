@@ -70,12 +70,12 @@ combn(c(1,1,1,1,2,2,2,3,3,4), 3, tabulate, nbins = 4)
 
 ## Compute support points and (scaled) probabilities for a
 ## Multivariate-Hypergeometric(n = 3, N = c(4,3,2,1)) p.f.:
-# table.mat(t(combn(c(1,1,1,1,2,2,2,3,3,4), 3, tabulate,nbins=4)))
+# table.mat(t(combn(c(1,1,1,1,2,2,2,3,3,4), 3, tabulate, nbins = 4)))
 
 ## Assuring the identity
 for(n in 1:7)
  for(m in 0:n) stopifnot(is.array(cc <- combn(n, m)),
-                         dim(cc) == c(m, choose(n,m)))
+                         dim(cc) == c(m, choose(n, m)))
 }
 \keyword{utilities}
 \keyword{iteration}

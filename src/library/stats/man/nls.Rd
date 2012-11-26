@@ -266,8 +266,8 @@ y <- 100 + 10 * exp(x / 2) + rnorm(x)/10
 nlmod <- nls(y ~  Const + A * exp(B * x))
 
 plot(x,y, main = "nls(*), data, true function and fit, n=100")
-curve(100 + 10 * exp(x / 2), col=4, add = TRUE)
-lines(x, predict(nlmod), col=2)
+curve(100 + 10 * exp(x / 2), col = 4, add = TRUE)
+lines(x, predict(nlmod), col = 2)
 
 
 ## The muscle dataset in MASS is from an experiment on muscle
@@ -286,7 +286,7 @@ with(muscle, table(Strip)) # 2,3 or 4 obs per strip
 ## ignoring that alpha and beta might vary with Strip.
 
 musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
-              start = list(th=1), algorithm="plinear")
+              start = list(th = 1), algorithm = "plinear")
 summary(musc.1)
 
 ## Then we use nls' indexing feature for parameters in non-linear
@@ -298,7 +298,7 @@ summary(musc.1)
 b <- coef(musc.1)
 musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th),
               muscle,
-              start = list(a=rep(b[2],21), b=rep(b[3],21), th=b[1]))
+              start = list(a = rep(b[2],21), b = rep(b[3],21), th = b[1]))
 summary(musc.2)
 \testonly{options(od)}
 }

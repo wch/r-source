@@ -156,7 +156,7 @@ density(x, \dots)
 \examples{
 require(graphics)
 
-plot(density(c(-20,rep(0,98),20)), xlim = c(-4,4))# IQR = 0
+plot(density(c(-20, rep(0,98), 20)), xlim = c(-4, 4))# IQR = 0
 
 # The Old Faithful geyser data
 d <- density(faithful$eruptions, bw = "sj")
@@ -186,22 +186,23 @@ fit <- density(xx)
 N <- 1e6
 x.new <- rnorm(N, sample(xx, size = N, replace = TRUE), fit$bw)
 plot(fit)
-lines(density(x.new), col="blue")
+lines(density(x.new), col = "blue")
 
 
 (kernels <- eval(formals(density.default)$kernel))
 
 ## show the kernels in the R parametrization
 plot (density(0, bw = 1), xlab = "",
-      main="R's density() kernels with bw = 1")
+      main = "R's density() kernels with bw = 1")
 for(i in 2:length(kernels))
    lines(density(0, bw = 1, kernel =  kernels[i]), col = i)
 legend(1.5,.4, legend = kernels, col = seq(kernels),
        lty = 1, cex = .8, y.intersp = 1)
 
 ## show the kernels in the S parametrization
-plot(density(0, from=-1.2, to=1.2, width=2, kernel="gaussian"), type="l",
-     ylim = c(0, 1), xlab="", main="R's density() kernels with width = 1")
+plot(density(0, from = -1.2, to = 1.2, width = 2, kernel = "gaussian"),
+     type = "l", ylim = c(0, 1), xlab = "",
+     main = "R's density() kernels with width = 1")
 for(i in 2:length(kernels))
    lines(density(0, width = 2, kernel =  kernels[i]), col = i)
 legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)

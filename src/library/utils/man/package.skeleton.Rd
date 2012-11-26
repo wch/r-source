@@ -91,13 +91,13 @@ require(stats)
 ## two functions and two "data sets" :
 f <- function(x,y) x+y
 g <- function(x,y) x-y
-d <- data.frame(a=1, b=2)
+d <- data.frame(a = 1, b = 2)
 e <- rnorm(1000)
 \dontshow{
   owd <- getwd()
   setwd(tempdir())
 }
-package.skeleton(list=c("f","g","d","e"), name="mypkg")
+package.skeleton(list = c("f","g","d","e"), name = "mypkg")
 \dontshow{ setwd(owd) }
 }
 \keyword{file}

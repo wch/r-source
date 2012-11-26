@@ -48,11 +48,11 @@ readRegistry("SOFTWARE\\\\R-core", maxdepth = 3)
 
 gmt <- file.path("SOFTWARE", "Microsoft", "Windows NT",
                  "CurrentVersion", "Time Zones",
-                 "GMT Standard Time", fsep="\\\\")
+                 "GMT Standard Time", fsep = "\\\\")
 readRegistry(gmt, "HLM")
 
 ## on a 64-bit R need this to find 32-bit JAGS
-readRegistry("SOFTWARE\\\\JAGS-1.0.3", maxdepth = 3, view="32")
+readRegistry("SOFTWARE\\\\JAGS-1.0.3", maxdepth = 3, view = "32")
 
 ## See if there is a 64-bit user install
 readRegistry("SOFTWARE\\\\R-core\\\\R64", "HCU", maxdepth = 2)

@@ -74,12 +74,12 @@ qqplot(y, rt(300, df = 5))
 qqnorm(precip, ylab = "Precipitation [in/yr] for 70 US cities")
 
 ## "QQ-Chisquare" : --------------------------
-y <- rchisq(500, df=3)
+y <- rchisq(500, df = 3)
 ## Q-Q plot for Chi^2 data against true theoretical distribution:
-qqplot(qchisq(ppoints(500), df=3), y,
-       main = expression("Q-Q plot for" ~~ {chi^2}[nu==3]))
-qqline(y, distribution = function(p) qchisq(p, df=3),
-       prob = c(0.1, 0.6), col=2)
+qqplot(qchisq(ppoints(500), df = 3), y,
+       main = expression("Q-Q plot for" ~~ {chi^2}[nu == 3]))
+qqline(y, distribution = function(p) qchisq(p, df = 3),
+       prob = c(0.1, 0.6), col = 2)
 mtext("qqline(*, dist = qchisq(., df=3), prob = c(0.1, 0.6))")
 }
 \keyword{hplot}

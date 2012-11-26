@@ -119,7 +119,7 @@ drop1(object, scope, \dots)
 \section{Warning}{
   The model fitting must apply the models to the same dataset. Most
   methods will attempt to use a subset of the data with no missing
-  values for any of the variables if \code{na.action=na.omit}, but
+  values for any of the variables if \code{na.action = na.omit}, but
   this may give biased results.  Only use these functions with data
   containing missing values with great care.
 
@@ -132,18 +132,18 @@ drop1(object, scope, \dots)
   \code{\link{extractAIC}}, \code{\link{anova}}
 }
 \examples{
-\testonly{od <- options(digits=5)}
+\testonly{od <- options(digits = 5)}
 require(graphics); require(utils)
 ## following example(swiss)
 lm1 <- lm(Fertility ~ ., data = swiss)
 add1(lm1, ~ I(Education^2) + .^2)
-drop1(lm1, test="F")  # So called 'type II' anova
+drop1(lm1, test = "F")  # So called 'type II' anova
 
 ## following example(glm)
 \dontshow{example(glm, echo = FALSE)}
-drop1(glm.D93, test="Chisq")
-drop1(glm.D93, test="F")
-add1(glm.D93, scope=~outcome*treatment, test="Rao") ## Pearson Chi-square 
+drop1(glm.D93, test = "Chisq")
+drop1(glm.D93, test = "F")
+add1(glm.D93, scope = ~outcome*treatment, test = "Rao") ## Pearson Chi-square 
 \testonly{options(od)}
 }
 \keyword{models}

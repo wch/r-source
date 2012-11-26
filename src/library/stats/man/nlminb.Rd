@@ -165,11 +165,9 @@ flb <- function(x)
     { p <- length(x); sum(c(1, rep(4, p-1)) * (x - c(1, x[-p])^2)^2) }
 ## 25-dimensional box constrained
 ## par[24] is *not* at boundary
-nlminb(rep(3, 25), flb,
-          lower=rep(2, 25),
-          upper=rep(4, 25))
+nlminb(rep(3, 25), flb, lower = rep(2, 25), upper = rep(4, 25))
 ## trying to use a too small tolerance:
-r <- nlminb(rep(3, 25), flb, control = list(rel.tol=1e-16))
+r <- nlminb(rep(3, 25), flb, control = list(rel.tol = 1e-16))
 stopifnot(grepl("rel.tol", r$message))
 }}
 \keyword{optimize}

@@ -92,14 +92,14 @@ lines(x1, col = "red")    # go long if the short crosses the long upwards
 lines(x2, col = "green")  # and go short otherwise
 
 ## More interesting kernels
-kd <- kernel("daniell", c(3,3))
+kd <- kernel("daniell", c(3, 3))
 kd # note the unusual indexing
 kd[-2:2]
-plot(kernel("fejer", 100, r=6))
+plot(kernel("fejer", 100, r = 6))
 plot(kernel("modified.daniell", c(7,5,3)))
 
 # Reproduce example 10.4.3 from Brockwell and Davis (1991)
-spectrum(sunspot.year, kernel=kernel("daniell", c(11,7,3)), log="no")
+spectrum(sunspot.year, kernel = kernel("daniell", c(11,7,3)), log = "no")
 }
 \keyword{ts}
 

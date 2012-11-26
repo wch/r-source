@@ -16,7 +16,7 @@
 }
 \usage{
 getSrcFilename(x, full.names = FALSE, unique = TRUE)
-getSrcDirectory(x, unique=TRUE) 
+getSrcDirectory(x, unique = TRUE) 
 getSrcref(x)
 getSrcLocation(x, which = c("line", "column", "byte", "parse"),
                first = TRUE)
@@ -40,7 +40,7 @@ getSrcLocation(x, which = c("line", "column", "byte", "parse"),
 }
 \details{
   Each statement of a function will have its own source reference if
-  \code{options(keep.source=TRUE)}.  These functions retrieve all of them.
+  \code{options(keep.source = TRUE)}.  These functions retrieve all of them.
 
   The components are as follows:
   \describe{

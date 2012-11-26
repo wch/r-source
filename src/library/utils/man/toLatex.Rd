@@ -16,8 +16,8 @@
 \usage{
 toBibtex(object, \dots)
 toLatex(object, \dots)
-\S3method{print}{Bibtex}(x, prefix="", \dots)
-\S3method{print}{Latex}(x, prefix="", \dots)
+\S3method{print}{Bibtex}(x, prefix = "", \dots)
+\S3method{print}{Latex}(x, prefix = "", \dots)
 }
 \arguments{
   \item{object}{object of a class for which a \code{toBibtex} or

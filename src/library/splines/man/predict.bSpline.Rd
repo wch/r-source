@@ -19,11 +19,11 @@
   argument missing, then plots the resulting \code{xyVector} with
   \code{type = "l"}.}
 \usage{
-\method{predict}{bSpline}(object, x, nseg=50, deriv=0, \dots)
-\method{predict}{nbSpline}(object, x, nseg=50, deriv=0, \dots)
-\method{predict}{pbSpline}(object, x, nseg=50, deriv=0, \dots)
-\method{predict}{npolySpline}(object, x, nseg=50, deriv=0, \dots)
-\method{predict}{ppolySpline}(object, x, nseg=50, deriv=0, \dots)
+\method{predict}{bSpline}(object, x, nseg = 50, deriv = 0, \dots)
+\method{predict}{nbSpline}(object, x, nseg = 50, deriv = 0, \dots)
+\method{predict}{pbSpline}(object, x, nseg = 50, deriv = 0, \dots)
+\method{predict}{npolySpline}(object, x, nseg = 50, deriv = 0, \dots)
+\method{predict}{ppolySpline}(object, x, nseg = 50, deriv = 0, \dots)
 }
 \arguments{
   \item{object}{An object that inherits from the \code{bSpline} or the

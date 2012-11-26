@@ -84,7 +84,7 @@ quartz.options(\dots, reset = FALSE)
 
 
   If a device-independent \R graphics font family is specified
-  (e.g., via \code{par(family=)} in the graphics package),
+  (e.g., via \code{par(family =)} in the graphics package),
   the Quartz device makes use of the Quartz font database
   (see \code{quartzFonts}) to convert the R graphics font family
   to a Quartz-specific font family description.

@@ -45,10 +45,10 @@ monthplot(x, \dots)
   \item{choice}{Which series of an \code{stl} or \code{StructTS} object?}
   \item{\dots}{Arguments to be passed to the default method or
     graphical parameters.}
-  \item{axes}{Should axes be drawn (ignored if \code{add=TRUE})?}
+  \item{axes}{Should axes be drawn (ignored if \code{add = TRUE})?}
   \item{type}{Type of plot.  The default is to join the points with
     lines, and \code{"h"} is for histogram-like vertical lines.}
-  \item{box}{Should a box be drawn (ignored if \code{add=TRUE}?}
+  \item{box}{Should a box be drawn (ignored if \code{add = TRUE}?}
   \item{add}{Should thus just add on an existing plot.}
 }
 \details{

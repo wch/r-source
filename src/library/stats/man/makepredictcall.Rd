@@ -54,7 +54,7 @@ require(graphics)
 fm <- lm(weight ~ poly(height, 2), data = women)
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 ht <- seq(57, 73, len = 200)
-lines(ht, predict(fm, data.frame(height=ht)))
+lines(ht, predict(fm, data.frame(height = ht)))
 
 ## see also example(cars)
 

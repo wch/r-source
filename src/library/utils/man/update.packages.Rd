@@ -75,7 +75,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   }
   \item{instPkgs}{
     by default all installed packages,
-    \code{\link{installed.packages}(lib.loc=lib.loc)}.  A subset can be 
+    \code{\link{installed.packages}(lib.loc = lib.loc)}.  A subset can be 
     specified; currently this must be in the same (character matrix)
     format as returned by \code{installed.packages()}.
   }

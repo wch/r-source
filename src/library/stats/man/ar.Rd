@@ -18,7 +18,7 @@
 \title{Fit Autoregressive Models to Time Series}
 \usage{
 ar(x, aic = TRUE, order.max = NULL,
-   method=c("yule-walker", "burg", "ols", "mle", "yw"),
+   method = c("yule-walker", "burg", "ols", "mle", "yw"),
    na.action, series, \dots)
 
 ar.burg(x, \dots)
@@ -52,7 +52,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
   \item{order.max}{Maximum order (or order) of model to fit. Defaults
     to the smaller of \eqn{N-1} and \eqn{10\log_{10}(N)}{10*log10(N)}
     where \eqn{N} is the number of observations
-    except for \code{method="mle"} where it is the minimum of this
+    except for \code{method = "mle"} where it is the minimum of this
     quantity and 12.}
 
   \item{method}{Character string giving the method used to fit the
@@ -119,7 +119,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
   For \code{ar} and its methods a list of class \code{"ar"} with
   the following elements:
   \item{order}{The order of the fitted model.  This is chosen by
-    minimizing the AIC if \code{aic=TRUE}, otherwise it is \code{order.max}.}
+    minimizing the AIC if \code{aic = TRUE}, otherwise it is \code{order.max}.}
   \item{ar}{Estimated autoregression coefficients for the fitted model.}
   \item{var.pred}{The prediction variance: an estimate of the portion of the
     variance of the time series that is not explained by the
@@ -185,16 +185,16 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 
 \examples{
 ar(lh)
-ar(lh, method="burg")
-ar(lh, method="ols")
+ar(lh, method = "burg")
+ar(lh, method = "ols")
 ar(lh, FALSE, 4) # fit ar(4)
 
 (sunspot.ar <- ar(sunspot.year))
-predict(sunspot.ar, n.ahead=25)
+predict(sunspot.ar, n.ahead = 25)
 ## try the other methods too
 
 ar(ts.union(BJsales, BJsales.lead))
 ## Burg is quite different here, as is OLS (see ar.ols)
-ar(ts.union(BJsales, BJsales.lead), method="burg")
+ar(ts.union(BJsales, BJsales.lead), method = "burg")
 }
 \keyword{ts}

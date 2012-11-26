@@ -71,7 +71,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   zero in computer arithmetic.  So \code{rgamma} can well return values
   which will be represented as zero.  (This will also happen for very
   large values of \code{scale} since the actual generation is done for
-  \code{scale=1}.)
+  \code{scale = 1}.)
 }
 % Have caught all currently known problems; hence no longer say:
 %   Similarly, \code{qgamma} has a very hard job for
@@ -96,7 +96,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \deqn{\Gamma(a,x) = \int_x^\infty t^{a-1} e^{-t} dt,}{Gamma(a,x) =
     integral_x^Inf t^(a-1) exp(-t) dt,}
   which can be computed by
-  \code{pgamma(x, a, lower=FALSE) * gamma(a)}.
+  \code{pgamma(x, a, lower = FALSE) * gamma(a)}.
 
   Note however that \code{pgamma(x, a, ..)} currently requires \eqn{a > 0},
   whereas the incomplete gamma function is also defined for negative
@@ -159,10 +159,10 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   distribution.
 }
 \examples{
--log(dgamma(1:4, shape=1))
+-log(dgamma(1:4, shape = 1))
 p <- (1:9)/10
-pgamma(qgamma(p,shape=2), shape=2)
-1 - 1/exp(qgamma(p, shape=1))
+pgamma(qgamma(p,shape = 2), shape = 2)
+1 - 1/exp(qgamma(p, shape = 1))
 
 \donttest{# even for shape = 0.001 about half the mass is on numbers
 # that cannot be represented accurately (and most of those as zero)

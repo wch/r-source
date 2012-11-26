@@ -50,6 +50,6 @@ sessionInfo(package = NULL)
 }
 \examples{\donttest{
 sessionInfo()
-toLatex(sessionInfo(), locale=FALSE)
+toLatex(sessionInfo(), locale = FALSE)
 }}
 \keyword{misc}

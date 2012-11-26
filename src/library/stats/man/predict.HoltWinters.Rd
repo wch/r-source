@@ -11,7 +11,7 @@
   the Holt-Winters method.
 }
 \usage{
-\method{predict}{HoltWinters}(object, n.ahead=1, prediction.interval = FALSE,
+\method{predict}{HoltWinters}(object, n.ahead = 1, prediction.interval = FALSE,
        level = 0.95, ...)
 }
 \arguments{

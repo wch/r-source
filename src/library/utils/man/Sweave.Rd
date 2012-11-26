@@ -117,8 +117,8 @@ Stangle(file, driver = Rtangle(),
 \examples{
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
 
-## enforce par(ask=FALSE)
-options(device.ask.default=FALSE)
+## enforce par(ask = FALSE)
+options(device.ask.default = FALSE)
 
 ## create a LaTeX file
 Sweave(testfile)

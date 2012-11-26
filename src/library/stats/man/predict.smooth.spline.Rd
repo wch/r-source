@@ -30,7 +30,7 @@
 require(graphics)
 
 attach(cars)
-cars.spl <- smooth.spline(speed, dist, df=6.4)
+cars.spl <- smooth.spline(speed, dist, df = 6.4)
 \dontshow{
 print.default(cars.spl)
 }
@@ -48,20 +48,20 @@ i.kn <- match(kn, xx)# indices of knots within xx
 op <- par(mfrow = c(2,2))
 plot(speed, dist, xlim = range(xx), main = "Smooth.spline & derivatives")
 lines(pp <- predict(cars.spl, xx), col = "red")
-points(kn, pp$y[i.kn], pch = 3, col="dark red")
+points(kn, pp$y[i.kn], pch = 3, col = "dark red")
 mtext("s(x)", col = "red")
 for(d in 1:3){
   n <- length(pp$x)
-  plot(pp$x, diff.quot(pp$x,pp$y), type = 'l', xlab="x", ylab="",
+  plot(pp$x, diff.quot(pp$x,pp$y), type = 'l', xlab = "x", ylab = "",
        col = "blue", col.main = "red",
-       main= paste0("s",paste(rep("'",d), collapse=""),"(x)"))
+       main= paste0("s" ,paste(rep("'",d), collapse = ""),"(x)"))
   mtext("Difference quotient approx.(last)", col = "blue")
   lines(pp <- predict(cars.spl, xx, deriv = d), col = "red")
 \dontshow{
   print(pp)
 }
-  points(kn, pp$y[i.kn], pch = 3, col="dark red")
-  abline(h=0, lty = 3, col = "gray")
+  points(kn, pp$y[i.kn], pch = 3, col = "dark red")
+  abline(h = 0, lty = 3, col = "gray")
 }
 detach(); par(op)
 }

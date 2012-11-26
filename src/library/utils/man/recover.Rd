@@ -10,7 +10,7 @@
 \description{
   This function allows the user to browse directly on any of the
   currently active function calls, and is suitable as an error option.
-  The expression \code{options(error=recover)} will make this
+  The expression \code{options(error = recover)} will make this
   the error option.
 }
 \usage{

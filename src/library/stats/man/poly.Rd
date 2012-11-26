@@ -78,13 +78,13 @@ polym(\dots, degree = 1, raw = FALSE)
 }
 
 \examples{
-od <- options(digits=3) # avoid too much visual clutter
+od <- options(digits = 3) # avoid too much visual clutter
 (z <- poly(1:10, 3))
 predict(z, seq(2, 4, 0.5))
 zapsmall(poly(seq(4, 6, 0.5), 3, coefs = attr(z, "coefs")))
 
-zapsmall(polym(1:4, c(1, 4:6), degree=3)) # or just poly()
-zapsmall(poly(cbind(1:4, c(1, 4:6)), degree=3))
+zapsmall(polym(1:4, c(1, 4:6), degree = 3)) # or just poly()
+zapsmall(poly(cbind(1:4, c(1, 4:6)), degree = 3))
 options(od)
 }
 \keyword{math}

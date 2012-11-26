@@ -147,12 +147,12 @@ plot(lm.SR, panel = panel.smooth)
 ## Gives a smoother curve
 plot(lm.SR, panel = function(x,y) panel.smooth(x, y, span = 1))
 
-par(mfrow=c(2,1))# same oma as above
+par(mfrow = c(2,1))# same oma as above
 plot(lm.SR, which = 1:2, sub.caption = "Saving Rates, n=50, p=5")
 
 \dontshow{
 ## An example with *long* formula that needs abbreviation:
-for(i in 1:5) assign(paste("long.var.name",i,sep="."), runif(10))
+for(i in 1:5) assign(paste("long.var.name", i, sep = "."), runif(10))
 plot(lm(long.var.name.1 ~
         long.var.name.2 + long.var.name.3 + long.var.name.4 + long.var.name.5))
 }
