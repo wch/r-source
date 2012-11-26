@@ -1,5 +1,5 @@
 
-R version 2.15.2 Patched (2012-11-26 r61154) -- "Trick or Treat"
+R version 2.15.2 Patched (2012-11-26 r61165) -- "Trick or Treat"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1db4ed8>
+<environment: 0x1780f48>
 
 $showURLs
 [1] FALSE
@@ -112,7 +112,7 @@ $code_quote
 $underline_titles
 [1] TRUE
 
-> Rd2txt_options(minIndent=4)
+> Rd2txt_options(minIndent = 4)
 > Rd2txt_options()
 $width
 [1] 80
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1db4ed8>
+<environment: 0x1780f48>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1db4ed8>
+<environment: 0x1780f48>
 
 $showURLs
 [1] FALSE
@@ -232,7 +232,7 @@ $underline_titles
 +     pages = "211-252"))
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +        .init = TRUE)
-<environment: 0x207bf58>
+<environment: 0x1a47738>
 > print(refs, .bibstyle = "unsorted")    
 R Core Team (2010). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -266,7 +266,7 @@ of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
 > aLatin2 <- aAdobe[match(latin2, aUnicode)]
 > ## all matches
 > bLatin2 <- lapply(1:256, function(x) aAdobe[aUnicode == latin2[x]])
-> format(bLatin2, justify="none")
+> format(bLatin2, justify = "none")
   [1] ""                          "controlSTX"               
   [3] "controlSOT"                "controlETX"               
   [5] "controlEOT"                "controlENQ"               
@@ -515,11 +515,11 @@ attr(,"match.length")
 [1] "fa{\\c c}ile"
 > ## Not run: 
 > ##D ## create a tex file to show the upper half of 8-bit charsets
-> ##D x <- rawToChar(as.raw(160:255), multiple=TRUE)
-> ##D (x <- matrix(x, ncol=16, byrow=TRUE))
+> ##D x <- rawToChar(as.raw(160:255), multiple = TRUE)
+> ##D (x <- matrix(x, ncol = 16, byrow = TRUE))
 > ##D xx <- x
 > ##D xx[] <- encoded_text_to_latex(x, "latin1") # or latin2 or latin9
-> ##D xx <- apply(xx, 1, paste, collapse="&")
+> ##D xx <- apply(xx, 1, paste, collapse = "&")
 > ##D con <- file("test-encoding.tex", "w")
 > ##D header <- c(
 > ##D "\\documentclass{article}",
@@ -531,7 +531,7 @@ attr(,"match.length")
 > ##D "\\Tabular{cccccccccccccccc}{")
 > ##D trailer <- c("}", "\\end{Details}", "\\end{document}")
 > ##D writeLines(header, con)
-> ##D writeLines(paste(xx, "\\", sep=""), con)
+> ##D writeLines(paste0(xx, "\\"), con)
 > ##D writeLines(trailer, con)
 > ##D close(con)
 > ##D ## and some UTF_8 chars
@@ -539,14 +539,14 @@ attr(,"match.length")
 > ##D     c(160:383,0x0192,0x02C6,0x02C7,0x02CA,0x02D8,
 > ##D       0x02D9, 0x02DD, 0x200C, 0x2018, 0x2019, 0x201C,
 > ##D       0x201D, 0x2020, 0x2022, 0x2026, 0x20AC)),
-> ##D                multiple=TRUE)
-> ##D x <- matrix(x, ncol=16, byrow=TRUE)
+> ##D                multiple = TRUE)
+> ##D x <- matrix(x, ncol = 16, byrow = TRUE)
 > ##D xx <- x
 > ##D xx[] <- encoded_text_to_latex(x, "UTF-8")
-> ##D xx <- apply(xx, 1, paste, collapse="&")
+> ##D xx <- apply(xx, 1, paste, collapse = "&")
 > ##D con <- file("test-utf8.tex", "w")
 > ##D writeLines(header, con)
-> ##D writeLines(paste(xx, "\\", sep=""), con)
+> ##D writeLines(paste(xx, "\\", sep = ""), con)
 > ##D writeLines(trailer, con)
 > ##D close(con)
 > ## End(Not run)
@@ -618,8 +618,8 @@ attr(,"class")
 > tmp <- tempfile()
 > dir.create(tmp)
 > 
-> pDL <- pkgDepends("tools",local=FALSE)
-> installFoundDepends(pDL$Found, destdir=tmp)
+> pDL <- pkgDepends("tools", local = FALSE)
+> installFoundDepends(pDL$Found, destdir = tmp)
 NULL
 > 
 > 
@@ -637,7 +637,7 @@ NULL
 > 
 > ### ** Examples
 > 
-> as.vector(md5sum(dir(R.home(), pattern="^COPY", full.names=TRUE)))
+> as.vector(md5sum(dir(R.home(), pattern = "^COPY", full.names = TRUE)))
 [1] "eb723b61539feef013de476e68b5c50a"
 > 
 > 
@@ -759,7 +759,7 @@ NULL
 > 
 > ### ** Examples
 > 
-> cat(toHTML(demo(package="base")), sep="\n")
+> cat(toHTML(demo(package = "base")), sep = "\n")
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><title>R: R</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -886,7 +886,7 @@ attr(,"class")
 > ## Not run: 
 > ##D write_PACKAGES("c:/myFolder/myRepository")  # on Windows
 > ##D write_PACKAGES("/pub/RWin/bin/windows/contrib/2.9",
-> ##D                type="win.binary")  # on Linux
+> ##D                type = "win.binary")  # on Linux
 > ## End(Not run)
 > 
 > 
@@ -911,7 +911,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.368 0.01 0.38 0 0 
+Time elapsed:  0.369 0.01 0.381 0 0 
 > grDevices::dev.off()
 null device 
           1 

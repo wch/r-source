@@ -1,5 +1,5 @@
 
-R version 2.15.2 Patched (2012-11-26 r61154) -- "Trick or Treat"
+R version 2.15.2 Patched (2012-11-26 r61165) -- "Trick or Treat"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -149,14 +149,14 @@ F-statistic: 1.298e+04 on 5 and 9 DF,  p-value: < 2.2e-16
 > ## example of safe prediction
 > plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 > ht <- seq(57, 73, length.out = 200)
-> lines(ht, predict(fm1, data.frame(height=ht)))
+> lines(ht, predict(fm1, data.frame(height = ht)))
 Warning in bs(height, degree = 3L, knots = c(62.6666666666667, 67.3333333333333 :
   some 'x' values beyond boundary knots may cause ill-conditioned bases
 > ## Don't show: 
 > ## Consistency:
 > x <- c(1:3,5:6)
 > stopifnot(identical(bs(x), bs(x, df = 3)),
-+           identical(bs(x, df=4), bs(x, df=4, knots=NULL)),# not true till 2.15.2
++           identical(bs(x, df = 4), bs(x, df = 4, knots = NULL)),# not true till 2.15.2
 +           !is.null(kk <- attr(bs(x), "knots")),# not true till 1.5.1
 +           length(kk) == 0)
 > ## End Don't show
@@ -258,12 +258,12 @@ F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 > ## example of safe prediction
 > plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 > ht <- seq(57, 73, length.out = 200)
-> lines(ht, predict(fm1, data.frame(height=ht)))
+> lines(ht, predict(fm1, data.frame(height = ht)))
 > ## Don't show: 
 > ## Consistency:
 > x <- c(1:3,5:6)
 > stopifnot(identical(ns(x), ns(x, df = 1)),
-+           identical(ns(x, df=2), ns(x, df=2, knots=NULL)),# not true till 2.15.2
++           identical(ns(x, df = 2), ns(x, df = 2, knots = NULL)),# not true till 2.15.2
 +           !is.null(kk <- attr(ns(x), "knots")),# not true till 1.5.1
 +           length(kk) == 0)
 > ## End Don't show
@@ -475,7 +475,7 @@ attr(,"class")
 [3,] 0.0000000 0.0000000 0.1666667 0.6666667 0.1666667 0.0000000
 [4,] 0.0000000 0.0000000 0.0000000 0.1666667 0.6666667 0.1666667
 > ## "visualize" band structure
-> Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse=TRUE)))
+> Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))
 <sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient
 34 x 36 sparse Matrix of class "dgCMatrix"
                                                                              
@@ -515,16 +515,16 @@ attr(,"class")
 [34,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 4 1
 > 
 > knots <- c(1,1.8,3:5,6.5,7,8.1,9.2,10)# 10 => 10-4 = 6 Basis splines
-> x <- seq(min(knots)-1, max(knots)+1, length.out=501)
-> bb <- splineDesign(knots, x=x, outer.ok = TRUE)
+> x <- seq(min(knots)-1, max(knots)+1, length.out = 501)
+> bb <- splineDesign(knots, x = x, outer.ok = TRUE)
 > 
-> plot(range(x), c(0,1), type="n", xlab="x", ylab="",
-+      main= "B-splines - sum to 1 inside inner knots")
-> mtext(expression(B[j](x) *"  and "* sum(B[j](x), j==1, 6)), adj=0)
-> abline(v=knots, lty=3, col="light gray")
-> abline(v=knots[c(4,length(knots)-3)], lty=3, col="gray10")
-> lines(x, rowSums(bb), col="gray", lwd=2)
-> matlines(x, bb, ylim = c(0,1), lty=1)
+> plot(range(x), c(0,1), type = "n", xlab = "x", ylab = "",
++      main =  "B-splines - sum to 1 inside inner knots")
+> mtext(expression(B[j](x) *"  and "* sum(B[j](x), j == 1, 6)), adj = 0)
+> abline(v = knots, lty = 3, col = "light gray")
+> abline(v = knots[c(4,length(knots)-3)], lty = 3, col = "gray10")
+> lines(x, rowSums(bb), col = "gray", lwd = 2)
+> matlines(x, bb, ylim = c(0,1), lty = 1)
 > 
 > 
 > 
@@ -609,7 +609,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.69 0.055 2.761 0 0 
+Time elapsed:  2.708 0.049 2.772 0 0 
 > grDevices::dev.off()
 null device 
           1 
