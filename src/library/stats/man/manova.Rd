@@ -38,10 +38,10 @@ manova(\dots)
 }
 \examples{
 ## From Venables and Ripley (2002) p.165.
-utils::data(npk, package="MASS")
+utils::data(npk, package = "MASS")
 
 ## Set orthogonal contrasts.
-op <- options(contrasts=c("contr.helmert", "contr.poly"))
+op <- options(contrasts = c("contr.helmert", "contr.poly"))
 
 ## Fake a 2nd response variable
 npk2 <- within(npk, foo <- rnorm(24))

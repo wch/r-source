@@ -40,8 +40,8 @@ influence.measures(model)
 rstandard(model, \dots)
 \method{rstandard}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
           sd = sqrt(deviance(model)/df.residual(model)), \dots)
-\method{rstandard}{glm}(model, infl=influence(model, do.coef=FALSE),
-          type=c("deviance","pearson"), \dots)
+\method{rstandard}{glm}(model, infl = influence(model, do.coef = FALSE),
+          type = c("deviance", "pearson"), \dots)
 
 rstudent(model, \dots)
 \method{rstudent}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
@@ -192,7 +192,7 @@ yh <- c(2.48, .73, -.04, -1.44, -1.32, 0)
 summary(lmH <- lm(yh ~ xh))
 (im <- influence.measures(lmH))
 plot(xh,yh, main = "Huber's data: L.S. line and influential obs.")
-abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch=20, col=2)
+abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch = 20, col = 2)
 
 ## Irwin's data [Williams 1987]
 xi <- 1:5

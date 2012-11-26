@@ -105,7 +105,7 @@ write_PACKAGES(dir = ".", fields = NULL,
 \dontrun{
 write_PACKAGES("c:/myFolder/myRepository")  # on Windows
 write_PACKAGES("/pub/RWin/bin/windows/contrib/2.9",
-               type="win.binary")  # on Linux
+               type = "win.binary")  # on Linux
 }}
 \keyword{file}
 \keyword{utilities}

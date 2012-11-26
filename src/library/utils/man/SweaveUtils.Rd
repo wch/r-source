@@ -25,11 +25,11 @@
 RtangleWritedoc(object, chunk)
 RweaveChunkPrefix(options)
 RweaveEvalWithOpt(expr, options)
-RweaveLatexFinish(object, error=FALSE)
+RweaveLatexFinish(object, error = FALSE)
 RweaveLatexOptions(options)
 RweaveTryStop(err, options)
 SweaveHooks(options, run = FALSE, envir = .GlobalEnv)
-makeRweaveLatexCodeRunner(evalFunc=RweaveEvalWithOpt)
+makeRweaveLatexCodeRunner(evalFunc = RweaveEvalWithOpt)
 }
 \author{Friedrich Leisch, with contributions by Seth Falcon}
 \seealso{The \code{\link{Sweave}}, \code{\link{RweaveLatex}} help pages.

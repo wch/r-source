@@ -57,17 +57,17 @@ is.relistable(x)
   variance-covariance matrix and a mean vector.  It would be most convenient to
   represent it as a list containing a vector and a matrix.  A typical parameter
   might look like
-\preformatted{      list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0))).}
+\preformatted{      list(mean = c(0, 1), vcov = cbind(c(1, 1), c(1, 0))).}
   However, \code{\link{optim}} cannot operate on functions that take
   lists as input; it only likes numeric vectors.  The solution is
-  conversion. Given a function \code{mvdnorm(x, mean, vcov, log=FALSE)}
+  conversion. Given a function \code{mvdnorm(x, mean, vcov, log = FALSE)}
   which computes the required probability density, then
-\preformatted{        ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))
+\preformatted{        ipar <- list(mean = c(0, 1), vcov = c bind(c(1, 1), c(1, 0)))
         initial.param <- as.relistable(ipar)
 
         ll <- function(param.vector)
         {
-           param <- relist(param.vector, skeleton=ipar))
+           param <- relist(param.vector, skeleton = ipar))
            -sum(mvdnorm(x, mean = param$mean, vcov = param$vcov,
                         log = TRUE))
         }
@@ -105,7 +105,7 @@ is.relistable(x)
   \code{\link{unlist}}%, ..... MORE ?
 }
 \examples{
- ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))
+ ipar <- list(mean = c(0, 1), vcov = cbind(c(1, 1), c(1, 0)))
  initial.param <- as.relistable(ipar)
  ul <- unlist(initial.param)
  relist(ul)

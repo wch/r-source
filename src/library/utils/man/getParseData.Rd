@@ -15,7 +15,7 @@ will attach detailed information on the object it has parsed.  These
 functions retrieve that information.
 }
 \usage{
-getParseData(x, includeText=NA)
+getParseData(x, includeText = NA)
 getParseText(parseData, id)
 }
 \arguments{

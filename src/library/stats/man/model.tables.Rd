@@ -59,15 +59,15 @@ model.tables(x, \dots)
 
 \examples{\donttest{
 ## From Venables and Ripley (2002) p.165.
-utils::data(npk, package="MASS")
+utils::data(npk, package = "MASS")
 
-options(contrasts=c("contr.helmert", "contr.treatment"))
+options(contrasts = c("contr.helmert", "contr.treatment"))
 npk.aov <- aov(yield ~ block + N*P*K, npk)
 model.tables(npk.aov, "means", se = TRUE)
 
 ## as a test, not particularly sensible statistically
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
-model.tables(npk.aovE, se=TRUE)
+model.tables(npk.aovE, se = TRUE)
 model.tables(npk.aovE, "means")
 }}
 \keyword{models}

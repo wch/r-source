@@ -99,7 +99,7 @@ quasipoisson(link = "log")
   names: when given as a character string all the links known to
   \code{\link{make.link}} are accepted.
 
-  This is potentially ambiguous: supplying \code{link=logit} could mean
+  This is potentially ambiguous: supplying \code{link = logit} could mean
   the unquoted name of a link or the value of object \code{logit}.  It
   is interpreted if possible as the name of an allowed link, then
   as an object.  (You can force the interpretation to always be the value of
@@ -182,13 +182,13 @@ counts <- c(18,17,15,20,10,20,25,13,12)
 outcome <- gl(3,1,9)
 treatment <- gl(3,3)
 d.AD <- data.frame(treatment, outcome, counts)
-glm.qD93 <- glm(counts ~ outcome + treatment, family=quasipoisson())
+glm.qD93 <- glm(counts ~ outcome + treatment, family = quasipoisson())
 \donttest{
 glm.qD93
-anova(glm.qD93, test="F")
+anova(glm.qD93, test = "F")
 summary(glm.qD93)
 ## for Poisson results use
-anova(glm.qD93, dispersion = 1, test="Chisq")
+anova(glm.qD93, dispersion = 1, test = "Chisq")
 summary(glm.qD93, dispersion = 1)
 }
 
@@ -211,18 +211,18 @@ binomial(logexp(3))
 ## to get the null deviance right.
 
 ## Binomial with identity link: often not a good idea.
-\dontrun{binomial(link=make.link("identity"))}
+\dontrun{binomial(link = make.link("identity"))}
 
 ## tests of quasi
 x <- rnorm(100)
 y <- rpois(100, exp(1+x))
-glm(y ~x, family=quasi(variance="mu", link="log"))
+glm(y ~ x, family = quasi(variance = "mu", link = "log"))
 # which is the same as
-glm(y ~x, family=poisson)
-glm(y ~x, family=quasi(variance="mu^2", link="log"))
-\dontrun{glm(y ~x, family=quasi(variance="mu^3", link="log")) # fails}
+glm(y ~ x, family = poisson)
+glm(y ~ x, family = quasi(variance = "mu^2", link = "log"))
+\dontrun{glm(y ~ x, family = quasi(variance = "mu^3", link = "log")) # fails}
 y <- rbinom(100, 1, plogis(x))
 # needs to set a starting value for the next fit
-glm(y ~x, family=quasi(variance="mu(1-mu)", link="logit"), start=c(0,1))
+glm(y ~ x, family = quasi(variance = "mu(1-mu)", link = "logit"), start = c(0,1))
 }
 \keyword{models}

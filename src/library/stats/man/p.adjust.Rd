@@ -120,7 +120,7 @@ p.adjust.methods
 require(graphics)
 
 set.seed(123)
-x <- rnorm(50, mean=c(rep(0,25),rep(3,25)))
+x <- rnorm(50, mean = c(rep(0,25),rep(3,25)))
 p <- 2*pnorm( sort(-abs(x)))
 
 round(p, 3)
@@ -138,9 +138,9 @@ noquote(apply(p.adj, 2, format.pval, digits = 3))
 
 
 ## and a graphic:
-matplot(p, p.adj, ylab="p.adjust(p, meth)", type = "l", asp=1, lty=1:6,
+matplot(p, p.adj, ylab="p.adjust(p, meth)", type = "l", asp = 1, lty = 1:6,
         main = "P-value adjustments")
-legend(.7,.6, p.adjust.M, col=1:6, lty=1:6)
+legend(.7,.6, p.adjust.M, col = 1:6, lty = 1:6)
 
 ## Can work with NA's:
 pN <- p; iN <- c(46,47); pN[iN] <- NA

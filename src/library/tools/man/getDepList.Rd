@@ -53,7 +53,7 @@ pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE,
       names which are the URLs for the repositories in which packages
       were found and the elements themselves are vectors of package
       names which were found in the respective repositories.  If
-      \code{local=TRUE}, the \code{Found} element will always be empty.}
+      \code{local = TRUE}, the \code{Found} element will always be empty.}
     \item{R}{Any R version dependencies.}
   }
     

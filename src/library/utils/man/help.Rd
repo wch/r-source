@@ -174,17 +174,17 @@ help("for")             # or ?"for", but quotes/backticks are needed
 \donttest{try({# requires working TeX installation:
  help(dgamma, help_type = "pdf")
  ## -> nicely formatted pdf -- including math formula -- for help(dgamma):
- system2(getOption("pdfviewer"), "dgamma.pdf", wait=FALSE)
+ system2(getOption("pdfviewer"), "dgamma.pdf", wait = FALSE)
 })
 }
-\donttest{help(package="splines") # get help even when package is not loaded}
+\donttest{help(package = "splines") # get help even when package is not loaded}
 
 topi <- "women"
 help(topi)
 
-try(help("bs", try.all.packages=FALSE)) # reports not found (an error)
-help("bs", try.all.packages=TRUE)       # reports can be found
-                                        # in package 'splines'
+try(help("bs", try.all.packages = FALSE)) # reports not found (an error)
+help("bs", try.all.packages = TRUE)       # reports can be found
+                                          # in package 'splines'
 
 \donttest{## For programmatic use:
 topic <- "family"; pkg_ref <- "stats"

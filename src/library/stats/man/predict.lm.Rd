@@ -28,7 +28,7 @@
   \item{interval}{Type of interval calculation.}
   \item{level}{Tolerance/confidence level}
   \item{type}{Type of prediction (response or model term).}
-  \item{terms}{If \code{type="terms"}, which terms (default is all
+  \item{terms}{If \code{type = "terms"}, which terms (default is all
     terms), a \code{\link{character}} vector.}
   \item{na.action}{function determining what should be done with missing
     values in \code{newdata}.  The default is to predict \code{NA}.}
@@ -118,10 +118,10 @@ y <- x + rnorm(15)
 predict(lm(y ~ x))
 new <- data.frame(x = seq(-3, 3, 0.5))
 predict(lm(y ~ x), new, se.fit = TRUE)
-pred.w.plim <- predict(lm(y ~ x), new, interval="prediction")
-pred.w.clim <- predict(lm(y ~ x), new, interval="confidence")
+pred.w.plim <- predict(lm(y ~ x), new, interval = "prediction")
+pred.w.clim <- predict(lm(y ~ x), new, interval = "confidence")
 matplot(new$x,cbind(pred.w.clim, pred.w.plim[,-1]),
-        lty=c(1,2,2,3,3), type="l", ylab="predicted y")
+        lty = c(1,2,2,3,3), type = "l", ylab = "predicted y")
 
 ## Prediction intervals, special cases
 ##  The first three of these throw warnings
@@ -135,12 +135,12 @@ predict(wfit, new, interval = "prediction", weights = (new$x)^2)
 predict(wfit, new, interval = "prediction", weights = ~x^2)
 
 ##-- From  aov(.) example ---- predict(.. terms)
-utils::data(npk, package="MASS")
+utils::data(npk, package = "MASS")
 npk.aov <- aov(yield ~ block + N*P*K, npk)
-(termL <- attr(terms(npk.aov),"term.labels"))
-(pt <- predict(npk.aov, type="terms"))
-pt. <- predict(npk.aov, type="terms", terms = termL[1:4])
+(termL <- attr(terms(npk.aov), "term.labels"))
+(pt <- predict(npk.aov, type = "terms"))
+pt. <- predict(npk.aov, type = "terms", terms = termL[1:4])
 stopifnot(all.equal(pt[,1:4], pt.,
-                    check.attr=FALSE, tol = 1e-12))
+                    check.attr = FALSE, tol = 1e-12))
 }
 \keyword{regression}

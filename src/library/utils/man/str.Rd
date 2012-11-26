@@ -21,13 +21,13 @@ str(object, \dots)
     width = getOption("width"), nest.lev = 0,
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)),
                        collapse = ".."),
-    comp.str="$ ", no.list = FALSE, envir = baseenv(),
+    comp.str = "$ ", no.list = FALSE, envir = baseenv(),
     strict.width = strO$strict.width,
     formatNum = strO$formatNum, list.len = 99, \dots)
 
 strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
            formatNum = function(x, ...)
-                       format(x, trim=TRUE, drop0trailing=TRUE, ...))
+                       format(x, trim = TRUE, drop0trailing = TRUE, ...))
 }
 \description{
   Compactly display the internal \bold{str}ucture of an \R object, a
@@ -81,7 +81,7 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
     Defaults to the \code{strict.width} component of option \code{"str"}
     (see \code{\link{options}}) which defaults to \code{"no"} for back
     compatibility reasons; \code{"wrap"} uses
-    \code{\link{strwrap}(*, width=width)} whereas \code{"cut"} cuts
+    \code{\link{strwrap}(*, width = width)} whereas \code{"cut"} cuts
     directly to \code{width}.  Note that a small \code{vec.length}
     may be better than setting \code{strict.width = "wrap"}.}
   \item{formatNum}{a function such as \code{\link{format}} for
@@ -128,8 +128,8 @@ need.dev <-
 ch <- letters[1:12]; is.na(ch) <- 3:5
 str(ch) # character NA's
 
-str(list(a="A", L = as.list(1:100)), list.len = 9)
-nchar(longch <- paste(rep(letters,100), collapse=""))
+str(list(a = "A", L = as.list(1:100)), list.len = 9)
+nchar(longch <- paste(rep(letters,100), collapse = ""))
 str(longch)
 str(longch, nchar.max = 52)
 
@@ -146,7 +146,7 @@ options(op)
 
 \dontshow{
  ##-- Some "crazy" objects
- str(array(1:5, dim=20))
+ str(array(1:5, dim = 20))
  str(factor(character(0)))
  str(as.data.frame(NULL))
 }
@@ -161,7 +161,7 @@ if(!had.stats4)
 ## S4 classes :
 require(stats4)
 x <- 0:10; y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
-ll <- function(ymax=15, xh=6)
+ll <- function(ymax = 15, xh = 6)
       -sum(dpois(y, lambda=ymax/(1+x/xh), log=TRUE))
 fit <- mle(ll)
 str(fit)

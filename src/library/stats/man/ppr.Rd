@@ -128,7 +128,7 @@ method functions.
 \item{residuals}{the residuals, as a matrix if \code{q > 1}.}
 \item{smod}{internal work array, which includes the ridge functions
   evaluated at the training set points.}
-\item{model}{(only if \code{model=TRUE}) the model frame.}
+\item{model}{(only if \code{model = TRUE}) the model frame.}
 }
 \details{
   The basic method is given by Friedman (1984), and is essentially the
@@ -205,12 +205,12 @@ summary(rock.ppr)
 #    term 1    term 2
 # 1.6079271 0.5460971
 
-par(mfrow=c(3,2))# maybe: , pty="s")
-plot(rock.ppr, main="ppr(log(perm)~ ., nterms=2, max.terms=5)")
-plot(update(rock.ppr, bass=5), main = "update(..., bass = 5)")
-plot(update(rock.ppr, sm.method="gcv", gcvpen=2),
+par(mfrow = c(3,2))# maybe: , pty = "s")
+plot(rock.ppr, main = "ppr(log(perm)~ ., nterms=2, max.terms=5)")
+plot(update(rock.ppr, bass = 5), main = "update(..., bass = 5)")
+plot(update(rock.ppr, sm.method = "gcv", gcvpen = 2),
      main = "update(..., sm.method=\"gcv\", gcvpen=2)")
-cbind(perm=rock$perm, prediction=round(exp(predict(rock.ppr)), 1))
+cbind(perm = rock$perm, prediction = round(exp(predict(rock.ppr)), 1))
 detach()
 }
 \keyword{regression}

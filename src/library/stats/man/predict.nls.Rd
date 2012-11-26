@@ -72,7 +72,7 @@
   if it was supplied.
 }
 \examples{
-\testonly{od <- options(digits=5)}
+\testonly{od <- options(digits = 5)}
 require(graphics)
 
 fm <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)

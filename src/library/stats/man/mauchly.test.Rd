@@ -52,7 +52,7 @@ mauchly.test(object, ...)
   invariant to parametrization of the quotient space \code{M/X}).
 
   The common use of this test is in repeated measurements designs, with
-  \code{X=~1}. This is almost, but not quite the same as testing for
+  \code{X = ~1}. This is almost, but not quite the same as testing for
   compound symmetry in the untransformed covariance matrix.
 
   Notice that the defaults involve \code{p}, which is calculated
@@ -84,13 +84,13 @@ mauchly.test(object, ...)
 utils::example(SSD) # Brings in the mlmfit and reacttime objects
 
 ### traditional test of intrasubj. contrasts
-mauchly.test(mlmfit, X=~1)
+mauchly.test(mlmfit, X = ~1)
 
 ### tests using intra-subject 3x2 design
-idata <- data.frame(deg=gl(3,1,6, labels=c(0,4,8)),
-                    noise=gl(2,3,6, labels=c("A","P")))
+idata <- data.frame(deg = gl(3, 1, 6, labels = c(0,4,8)),
+                    noise = gl(2, 3, 6, labels = c("A","P")))
 mauchly.test(mlmfit, X = ~ deg + noise, idata = idata)
-mauchly.test(mlmfit, M = ~ deg + noise, X = ~ noise, idata=idata)
+mauchly.test(mlmfit, M = ~ deg + noise, X = ~ noise, idata = idata)
 }
 \keyword{htest}
 \keyword{models}

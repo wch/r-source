@@ -55,9 +55,9 @@ Rprofmem(filename = "Rprofmem.out", append = FALSE, threshold = 0)
 }
 \examples{\dontrun{
 ## not supported unless R is compiled to support it.
-Rprofmem("Rprofmem.out", threshold=1000)
+Rprofmem("Rprofmem.out", threshold = 1000)
 example(glm)
 Rprofmem(NULL)
-noquote(readLines("Rprofmem.out", n=5))
+noquote(readLines("Rprofmem.out", n = 5))
 }}
 \keyword{utilities}

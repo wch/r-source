@@ -28,7 +28,7 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   \item{span}{smoothness parameter for \code{loess}.}
   \item{degree}{degree of local polynomial used.}
   \item{family}{if \code{"gaussian"} fitting is by least-squares, and if
-    \code{family="symmetric"} a re-descending M estimator is used.}
+    \code{family = "symmetric"} a re-descending M estimator is used.}
   \item{xlab}{label for x axis.}
   \item{ylab}{label for y axis.}
   \item{ylim}{the y limits of the plot.}
@@ -62,6 +62,6 @@ require(graphics)
 with(cars, scatter.smooth(speed, dist))
 ## or with dotted thick smoothed line results :
 with(cars, scatter.smooth(speed, dist, lpars =
-                    list(col="red", lwd=3, lty=3)))
+                    list(col = "red", lwd = 3, lty = 3)))
 }
 \keyword{smooth}

@@ -17,7 +17,7 @@
 }
 \usage{
 checkPoFile(f, strictPlural = FALSE)
-checkPoFiles(language, dir=".")
+checkPoFiles(language, dir = ".")
 }
 \arguments{
   \item{f}{a character string giving a single filepath.}

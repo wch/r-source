@@ -115,17 +115,17 @@ gnp <- ts(cumsum(1 + round(rnorm(100), 2)),
 plot(gnp) # using 'plot.ts' for time-series plot
 
 ## Multivariate
-z <- ts(matrix(rnorm(300), 100, 3), start=c(1961, 1), frequency=12)
+z <- ts(matrix(rnorm(300), 100, 3), start = c(1961, 1), frequency = 12)
 class(z)
 plot(z)
-plot(z, plot.type="single", lty=1:3)
+plot(z, plot.type = "single", lty = 1:3)
 
 ## A phase plot:
-plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col="blue",
+plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col = "blue",
      main = "Lag plot of New Haven temperatures")
 ## a clearer way to do this would be
 \dontrun{
-plot(nhtemp, lag(nhtemp, 1), cex = .8, col="blue",
+plot(nhtemp, lag(nhtemp, 1), cex = .8, col = "blue",
      main = "Lag plot of New Haven temperatures")
 }}
 \keyword{ts}

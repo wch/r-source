@@ -58,7 +58,7 @@ filter(x, filter, method = c("convolution", "recursive"),
   where \code{o} is the offset: see \code{sides} for how it is determined.
 }
 \note{
-  \code{\link{convolve}(, type="filter")} uses the FFT for computations
+  \code{\link{convolve}(, type = "filter")} uses the FFT for computations
   and so \emph{may} be faster for long filters on univariate series,
   but it does not return a time series (and so the  time alignment is
   unclear), nor does it handle missing values.  \code{filter} is

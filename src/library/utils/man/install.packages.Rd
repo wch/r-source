@@ -249,7 +249,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   single package, and for multiple packages when \code{Ncpus > 1L}.
   Finally locking (and restoration on error) can be suppressed by
   \option{--no-lock}.
-  % and also options(install.lock=FALSE) in an \R startup file.
+  % and also options(install.lock = FALSE) in an \R startup file.
 
   For a Mac OS X or Windows binary install, no locking is done by
   default.  Setting argument \code{lock} to \code{TRUE} (it defaults to

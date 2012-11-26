@@ -142,17 +142,17 @@ cite("R, boot-package", refs)
 
 ## Cite numerically
 savestyle <- tools::getBibstyle()
-tools::bibstyle("JSSnumbered", .init=TRUE,
+tools::bibstyle("JSSnumbered", .init = TRUE,
          fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
          cite = function(key, bib, ...) 
-         	citeNatbib(key, bib, mode="numbers",
+         	citeNatbib(key, bib, mode = "numbers",
          	    bibpunct = c("[", "]", ";", "n", "", ","), ...)               
          )
-cite("R, boot-package", refs, textual=TRUE)
+cite("R, boot-package", refs, textual = TRUE)
 refs
 
 ## restore the old style
-tools::bibstyle(savestyle, .default=TRUE)
+tools::bibstyle(savestyle, .default = TRUE)
 }
 \keyword{ utilities }
 \keyword{ documentation }

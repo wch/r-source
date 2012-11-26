@@ -78,6 +78,6 @@ summary(CC.aov, split = list("N:P" = list(L.L = 1, Q = 2:4)))
 # split on just one var
 summary(CC.aov, split = list(P = list(lin = 1, quad = 2)))
 summary(CC.aov, split = list(P = list(lin = 1, quad = 2)),
-        expand.split=FALSE)}
+        expand.split = FALSE)}
 \keyword{models}
 \keyword{regression}

@@ -41,8 +41,8 @@ write.csv2(\dots)
   \item{sep}{the field separator string.  Values within each row of
     \code{x} are separated by this string.}
   \item{eol}{the character(s) to print at the end of each line (row).
-    For example, \code{eol="\r\n"} will produce Windows' line endings on
-    a Unix-alike OS, and \code{eol="\r"} will produce files as expected by
+    For example, \code{eol = "\r\n"} will produce Windows' line endings on
+    a Unix-alike OS, and \code{eol = "\r"} will produce files as expected by
     Excel:mac 2004.}
   \item{na}{the string to use for missing values in the data.}
   \item{dec}{the string to use for decimal points in numeric or complex
@@ -72,7 +72,7 @@ write.csv2(\dots)
 }
 \details{
   If the table has no columns the rownames will be written only if
-  \code{row.names=TRUE}, and \emph{vice versa}.
+  \code{row.names = TRUE}, and \emph{vice versa}.
 
   Real and complex numbers are written to the maximal possible precision.
 
@@ -99,7 +99,7 @@ write.csv2(\dots)
 
   In almost all cases the conversion of numeric quantities is governed
   by the option \code{"scipen"} (see \code{\link{options}}), but with
-  the internal equivalent of \code{digits=15}.  For finer control, use
+  the internal equivalent of \code{digits = 15}.  For finer control, use
   \code{\link{format}} to make a character matrix/data frame, and call
   \code{write.table} on that.
 
@@ -149,7 +149,7 @@ write.csv2(\dots)
   There is an IETF RFC4180 (\url{http://tools.ietf.org/html/rfc4180})
   for CSV files, which mandates comma as the separator and CRLF line
   endings.  \code{write.csv} writes compliant files on Windows: use
-  \code{eol="\r\n"} on other platforms.
+  \code{eol = "\r\n"} on other platforms.
 }
 \note{
   \code{write.table} can be slow for data frames with large numbers

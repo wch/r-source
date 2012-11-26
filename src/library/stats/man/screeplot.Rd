@@ -42,8 +42,8 @@ require(graphics)
 (pc.cr <- princomp(USArrests, cor = TRUE))  # inappropriate
 screeplot(pc.cr)
 
-fit <- princomp(covmat=Harman74.cor)
+fit <- princomp(covmat = Harman74.cor)
 screeplot(fit)
-screeplot(fit, npcs=24, type="lines")
+screeplot(fit, npcs = 24, type = "lines")
 }
 \keyword{multivariate}

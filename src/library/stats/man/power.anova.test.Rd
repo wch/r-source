@@ -46,18 +46,17 @@ power.anova.test(groups = NULL, n = NULL,
 \seealso{\code{\link{anova}}, \code{\link{lm}}, \code{\link{uniroot}}}
 
 \examples{
-power.anova.test(groups=4, n=5, between.var=1, within.var=3)
+power.anova.test(groups = 4, n = 5, between.var = 1, within.var = 3)
 # Power = 0.3535594
 
-power.anova.test(groups=4, between.var=1, within.var=3,
-                 power=.80)
+power.anova.test(groups = 4, between.var = 1, within.var = 3,
+                 power = .80)
 # n = 11.92613
 
 ## Assume we have prior knowledge of the group means:
 groupmeans <- c(120, 130, 140, 150)
 power.anova.test(groups = length(groupmeans),
-                 between.var=var(groupmeans),
-                 within.var=500, power=.90) # n = 15.18834
-
+                 between.var = var(groupmeans),
+                 within.var = 500, power = .90) # n = 15.18834
 }
 \keyword{htest}

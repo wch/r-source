@@ -33,6 +33,6 @@ NLSstAsymptotic(xy)
 Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
 print(NLSstAsymptotic(sortedXyData(expression(age),
                                    expression(height),
-                                   Lob.329)), digits=3)
+                                   Lob.329)), digits = 3)
 }
 \keyword{manip}

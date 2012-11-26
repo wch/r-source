@@ -147,7 +147,7 @@ terms(fo)
 
 environment(fo)
 environment(as.formula("y ~ x"))
-environment(as.formula("y ~ x", env=new.env()))
+environment(as.formula("y ~ x", env = new.env()))
 
 
 ## Create a formula for a model with a large number of variables:

@@ -6,7 +6,7 @@
 \name{mahalanobis}
 \title{Mahalanobis Distance}
 \usage{
-mahalanobis(x, center, cov, inverted=FALSE, ...)
+mahalanobis(x, center, cov, inverted = FALSE, ...)
 }
 \alias{mahalanobis}
 \arguments{
@@ -40,9 +40,9 @@ stopifnot(mahalanobis(x, 0, diag(ncol(x))) == rowSums(x*x))
 
 Sx <- cov(x)
 D2 <- mahalanobis(x, colMeans(x), Sx)
-plot(density(D2, bw=.5),
+plot(density(D2, bw = 0.5),
      main="Squared Mahalanobis distances, n=100, p=3") ; rug(D2)
-qqplot(qchisq(ppoints(100), df=3), D2,
+qqplot(qchisq(ppoints(100), df = 3), D2,
        main = expression("Q-Q plot of Mahalanobis" * ~D^2 *
                          " vs. quantiles of" * ~ chi[3]^2))
 abline(0, 1, col = 'gray')

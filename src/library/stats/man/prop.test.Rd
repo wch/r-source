@@ -113,7 +113,7 @@ prop.test(x, n, p = NULL,
 \seealso{\code{\link{binom.test}} for an \emph{exact} test of a binomial
   hypothesis.}
 \examples{
-heads <- rbinom(1, size=100, prob = .5)
+heads <- rbinom(1, size = 100, prob = .5)
 prop.test(heads, 100)          # continuity correction TRUE by default
 prop.test(heads, 100, correct = FALSE)
 

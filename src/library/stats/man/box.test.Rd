@@ -61,6 +61,6 @@ Box.test(x, lag = 1, type = c("Box-Pierce", "Ljung-Box"), fitdf = 0)
 \examples{
 x <- rnorm (100)
 Box.test (x, lag = 1)
-Box.test (x, lag = 1, type="Ljung")
+Box.test (x, lag = 1, type = "Ljung")
 }
 \keyword{ts}

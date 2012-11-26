@@ -87,7 +87,7 @@ cov2cor(V)
   pairs for that pair of variables.   For \code{cov} and \code{var},
   \code{"pairwise.complete.obs"} only works with the \code{"pearson"}
   method.
-  Note that (the equivalent of) \code{var(double(0), use=*)} gives
+  Note that (the equivalent of) \code{var(double(0), use = *)} gives
   \code{NA} for \code{use = "everything"} and \code{"na.or.complete"},
   and gives an error in the other cases.
 
@@ -104,8 +104,8 @@ cov2cor(V)
   data do not necessarily come from a bivariate normal distribution.\cr
   For \code{cov()}, a non-Pearson method is unusual but available for
   the sake of completeness.  Note that \code{"spearman"} basically
-  computes \code{cor(R(x), R(y))} (or \code{cov(.,.)}) where
-  \code{R(u) := rank(u, na.last="keep")}. In the case of missing values, the
+  computes \code{cor(R(x), R(y))} (or \code{cov(.,.)}) where \code{R(u)
+  := rank(u, na.last = "keep")}. In the case of missing values, the
   ranks are calculated depending on the value of \code{use}, either
   based on complete observations, or based on pairwise completeness with
   reranking for each pair.
@@ -160,20 +160,20 @@ cor(cbind(P = Cl[i], S = clS[i], K = clK[i]))
 ##           to become the correlation matrix.
 cov2cor # see the function definition {and learn ..}
 stopifnot(all.equal(Cl, cov2cor(cov(longley))),
-          all.equal(cor(longley, method="kendall"),
-            cov2cor(cov(longley, method="kendall"))))
+          all.equal(cor(longley, method = "kendall"),
+            cov2cor(cov(longley, method = "kendall"))))
 
 ##--- Missing value treatment:
 % "everything", "all.obs", "complete.obs", "na.or.complete", "pairwise.complete.obs"
 C1 <- cov(swiss)
-range(eigen(C1, only.values=TRUE)$values) # 6.19        1921
+range(eigen(C1, only.values = TRUE)$values) # 6.19        1921
 swM <- swiss
 swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
 try(cov(swM)) # Error: missing obs...
 C2 <- cov(swM, use = "complete")
-range(eigen(C2, only.values=TRUE)$values) # 6.46        1930
+range(eigen(C2, only.values = TRUE)$values) # 6.46        1930
 C3 <- cov(swM, use = "pairwise")
-range(eigen(C3, only.values=TRUE)$values) # 6.19        1938
+range(eigen(C3, only.values = TRUE)$values) # 6.19        1938
 
 symnum(cor(swM, method = "kendall", use = "complete"))
 ## Kendall's tau doesn't change much:

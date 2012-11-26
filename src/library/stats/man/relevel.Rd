@@ -33,8 +33,8 @@ relevel(x, ref, \dots)
 }
 
 \examples{
-warpbreaks$tension <- relevel(warpbreaks$tension, ref="M")
-summary(lm(breaks ~ wool + tension, data=warpbreaks))
+warpbreaks$tension <- relevel(warpbreaks$tension, ref = "M")
+summary(lm(breaks ~ wool + tension, data = warpbreaks))
 }
 \keyword{utilities}
 \keyword{models}

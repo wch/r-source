@@ -103,7 +103,7 @@ x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
 colnames(x) <- c("x", "y")
 (cl <- kmeans(x, 2))
 plot(x, col = cl$cluster)
-points(cl$centers, col = 1:2, pch = 8, cex=2)
+points(cl$centers, col = 1:2, pch = 8, cex = 2)
 
 # sum of squares
 ss <- function(x) sum(scale(x, scale = FALSE)^2)

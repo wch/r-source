@@ -32,7 +32,7 @@ installFoundDepends(depPkgList, ...)
 tmp <- tempfile()
 dir.create(tmp)
 
-pDL <- pkgDepends("tools",local=FALSE)
-installFoundDepends(pDL$Found, destdir=tmp)
+pDL <- pkgDepends("tools", local = FALSE)
+installFoundDepends(pDL$Found, destdir = tmp)
 }
 \keyword{utilities}

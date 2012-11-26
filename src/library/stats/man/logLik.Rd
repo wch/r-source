@@ -92,7 +92,7 @@ utils::str(logLik(lmx))
 logLik(fm1)
 logLik(fm1, REML = TRUE)
 
-utils::data(Orthodont, package="nlme")
+utils::data(Orthodont, package = "nlme")
 fm1 <- lm(distance ~ Sex * age, Orthodont)
 logLik(fm1)
 logLik(fm1, REML = TRUE)

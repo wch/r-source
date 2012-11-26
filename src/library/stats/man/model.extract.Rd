@@ -48,11 +48,11 @@ model.weights(x)
 \seealso{\code{\link{model.frame}}, \code{\link{offset}}}
 
 \examples{
-a <- model.frame(cbind(ncases,ncontrols) ~ agegp+tobgp+alcgp, data=esoph)
+a <- model.frame(cbind(ncases,ncontrols) ~ agegp + tobgp + alcgp, data = esoph)
 model.extract(a, "response")
 stopifnot(model.extract(a, "response") == model.response(a))
 
-a <- model.frame(ncases/(ncases+ncontrols) ~ agegp+tobgp+alcgp,
+a <- model.frame(ncases/(ncases+ncontrols) ~ agegp + tobgp + alcgp,
                  data = esoph, weights = ncases+ncontrols)
 model.response(a)
 model.extract(a, "weights")

@@ -47,11 +47,11 @@ reshapeLong(x,jvars,  ilev = row.names(x),
 plot.mts(x, plot.type = c("multiple", "single"), panel = lines,
          log = "", col = par("col"),  bg = NA, pch = par("pch"),
          cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
-         ann = par("ann"),  xlab = "Time", type = "l", main=NULL,
-         oma=c(6, 0, 5, 0), \dots)
+         ann = par("ann"),  xlab = "Time", type = "l", main = NULL,
+         oma = c(6, 0, 5, 0), \dots)
 % </Removed 1.8.0>
 % Removed in 1.9.0
-print.coefmat(x, digits=max(3, getOption("digits") - 2),
+print.coefmat(x, digits = max(3, getOption("digits") - 2),
               signif.stars = getOption("show.signif.stars"),
               dig.tst = max(1, min(5, digits - 1)),
               cs.ind, tst.ind, zap.ind = integer(0),

@@ -100,8 +100,8 @@ round(ftable(sweep(addmargins(mB, 1, list(list(All = sum, N = sqsm))), 2,
 
 ## Zero.Printing table+margins:
 set.seed(1)
-x <- sample( 1:7, 20, replace=TRUE)
-y <- sample( 1:7, 20, replace=TRUE)
+x <- sample( 1:7, 20, replace = TRUE)
+y <- sample( 1:7, 20, replace = TRUE)
 tx <- addmargins( table(x, y) )
 print(tx, zero.print = ".")
 }

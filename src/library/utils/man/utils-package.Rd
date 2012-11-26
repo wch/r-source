@@ -17,7 +17,7 @@ R utility functions
 This package contains a collection of utility functions.
 
 For a complete
-list, use \code{library(help="utils")}.
+list, use \code{library(help = "utils")}.
 
 }
 \author{

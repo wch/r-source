@@ -51,7 +51,7 @@ can be used to specify a completely new style environment.
 
 To find the name of the default style, use \code{getBibstyle()}. To
 retrieve an existing style without setting it as the default, use 
-\code{bibstyle(style, .default=FALSE)}.  To modify an existing style,
+\code{bibstyle(style, .default = FALSE)}.  To modify an existing style,
 specify \code{style} and some named entries via \code{...}.
 (Modifying the default \code{"JSS"} style is discouraged.)  Setting
 \code{style} to \code{NULL} or leaving it missing will retrieve the

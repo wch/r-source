@@ -28,7 +28,7 @@ capture.output(\dots, file = NULL, append = FALSE)
   \code{file = NULL} all output will be lost.
 }
 \value{
-  A character string (if \code{file=NULL}), or invisible \code{NULL}.
+  A character string (if \code{file = NULL}), or invisible \code{NULL}.
 }
 
 \seealso{ \code{\link{sink}}, \code{\link{textConnection}} }
@@ -42,7 +42,7 @@ capture.output({1+1; 2+2})
 \dontrun{
 ## on Unix with enscript available
 ps <- pipe("enscript -o tempout.ps","w")
-capture.output(example(glm), file=ps)
+capture.output(example(glm), file = ps)
 close(ps)
 }
 }

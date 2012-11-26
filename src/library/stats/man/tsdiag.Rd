@@ -46,7 +46,7 @@ tsdiag(fit)
 
 ## see also examples(arima)
 
-(fit <- StructTS(log10(JohnsonJohnson), type="BSM"))
+(fit <- StructTS(log10(JohnsonJohnson), type = "BSM"))
 tsdiag(fit)
 }}
 \keyword{ts}

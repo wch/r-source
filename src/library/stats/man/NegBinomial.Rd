@@ -106,12 +106,12 @@ summary(1 - cumsum(dnbinom(x, size = 2, prob = 1/2)) /
 
 x <- 0:15
 size <- (1:20)/4
-persp(x,size, dnb <- outer(x, size, function(x,s) dnbinom(x,s, prob= 0.4)),
-      xlab = "x", ylab = "s", zlab="density", theta = 150)
+persp(x,size, dnb <- outer(x, size, function(x,s) dnbinom(x, s, prob = 0.4)),
+      xlab = "x", ylab = "s", zlab = "density", theta = 150)
 title(tit <- "negative binomial density(x,s, pr = 0.4)  vs.  x & s")
 
-image  (x,size, log10(dnb), main= paste("log [",tit,"]"))
-contour(x,size, log10(dnb),add=TRUE)
+image  (x, size, log10(dnb), main = paste("log [", tit, "]"))
+contour(x, size, log10(dnb), add = TRUE)
 
 ## Alternative parametrization
 x1 <- rnbinom(500, mu = 4, size = 1)

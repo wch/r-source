@@ -15,10 +15,10 @@
   forecasting or smoothing.
 }
 \usage{
-KalmanLike(y, mod, nit = 0, fast=TRUE)
-KalmanRun(y, mod, nit = 0, fast=TRUE)
+KalmanLike(y, mod, nit = 0, fast = TRUE)
+KalmanRun(y, mod, nit = 0, fast = TRUE)
 KalmanSmooth(y, mod, nit = 0)
-KalmanForecast(n.ahead = 10, mod, fast=TRUE)
+KalmanForecast(n.ahead = 10, mod, fast = TRUE)
 makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{

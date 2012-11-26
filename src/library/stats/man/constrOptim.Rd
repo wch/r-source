@@ -63,7 +63,7 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
   negative value.
 
   The gradient function \code{grad} must be supplied except with
-  \code{method="Nelder-Mead"}.  It should take arguments matching
+  \code{method = "Nelder-Mead"}.  It should take arguments matching
   those of \code{f} and return a vector containing the gradient.
 
 }
@@ -82,7 +82,7 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
 }
 
 \seealso{
-  \code{\link{optim}}, especially \code{method="L-BFGS-B"} which
+  \code{\link{optim}}, especially \code{method = "L-BFGS-B"} which
   does box-constrained optimisation.
 }
 
@@ -102,9 +102,9 @@ grr <- function(x) { ## Gradient of 'fr'
 
 optim(c(-1.2,1), fr, grr)
 #Box-constraint, optimum on the boundary
-constrOptim(c(-1.2,0.9), fr, grr, ui=rbind(c(-1,0),c(0,-1)), ci=c(-1,-1))
-#  x<=0.9,  y-x>0.1
-constrOptim(c(.5,0), fr, grr, ui=rbind(c(-1,0),c(1,-1)), ci=c(-0.9,0.1))
+constrOptim(c(-1.2,0.9), fr, grr, ui = rbind(c(-1,0), c(0,-1)), ci = c(-1,-1))
+#  x <= 0.9,  y - x > 0.1
+constrOptim(c(.5,0), fr, grr, ui = rbind(c(-1,0), c(1,-1)), ci = c(-0.9,0.1))
 
 
 ## Solves linear and quadratic programming problems
@@ -115,15 +115,15 @@ constrOptim(c(.5,0), fr, grr, ui=rbind(c(-1,0),c(1,-1)), ci=c(-0.9,0.1))
 fQP <- function(b) {-sum(c(0,5,0)*b)+0.5*sum(b*b)}
 Amat       <- matrix(c(-4,-3,0,2,1,0,0,-2,1),3,3)
 bvec       <- c(-8,2,0)
-constrOptim(c(2,-1,-1), fQP, NULL, ui=t(Amat),ci=bvec)
+constrOptim(c(2,-1,-1), fQP, NULL, ui = t(Amat), ci = bvec)
 # derivative
 gQP <- function(b) {-c(0,5,0)+b}
-constrOptim(c(2,-1,-1), fQP, gQP, ui=t(Amat), ci=bvec)
+constrOptim(c(2,-1,-1), fQP, gQP, ui = t(Amat), ci = bvec)
 
 ## Now with maximisation instead of minimisation
 hQP <- function(b) {sum(c(0,5,0)*b)-0.5*sum(b*b)}
-constrOptim(c(2,-1,-1), hQP, NULL, ui=t(Amat), ci=bvec,
-            control=list(fnscale=-1))
+constrOptim(c(2,-1,-1), hQP, NULL, ui = t(Amat), ci = bvec,
+            control = list(fnscale = -1))
 }}
 \keyword{optimize}
 

@@ -49,7 +49,7 @@ ppoints(n, a = ifelse(n <= 10, 3/8, 1/2))
 \examples{
 ppoints(4) # the same as  ppoints(1:4)
 ppoints(10)
-ppoints(10, a=1/2)
+ppoints(10, a = 1/2)
 }
 \keyword{dplot}
 \keyword{arith}

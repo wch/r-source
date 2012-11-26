@@ -12,7 +12,7 @@
 }
 \usage{
 pairwise.wilcox.test(x, g, p.adjust.method = p.adjust.methods,
-                      paired=FALSE, \dots)
+                      paired = FALSE, \dots)
 }
 \arguments{
   \item{x}{ response vector. }

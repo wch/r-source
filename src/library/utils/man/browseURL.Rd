@@ -58,11 +58,11 @@ browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
   (see \code{\link{URLencode}}).  This can be tricky for file URLs,
   where the format accepted can depend on the browser and OS.
 
-  To suppress showing URLs altogether, set \code{browser="false"}.
+  To suppress showing URLs altogether, set \code{browser = "false"}.
 }
 \examples{
 \dontrun{## for KDE users who want to open files in a new tab
-options(browser="kfmclient newTab") 
+options(browser = "kfmclient newTab") 
 browseURL("http://www.r-project.org")
 }}
 #endif
@@ -77,12 +77,12 @@ browseURL("http://www.r-project.org")
   paths: others do not accept that.  All seem to accept \code{\\} as a
   path separator even though the RFC1738 standard requires \code{/}.
 
-  To suppress showing URLs altogether, set \code{browser="false"}.
+  To suppress showing URLs altogether, set \code{browser = "false"}.
 }
 \examples{
 \dontrun{browseURL("http://www.r-project.org")
 browseURL("file://d:/R/R-2.5.1/doc/html/index.html",
-          browser="C:/Program Files/Mozilla Firefox/firefox.exe")
+          browser = "C:/Program Files/Mozilla Firefox/firefox.exe")
 }}
 #endif
 \keyword{file}

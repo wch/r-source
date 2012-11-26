@@ -52,11 +52,11 @@ reacttime <- matrix(c(
 540, 600, 540, 480, 720, 780,
 480, 420, 540, 540, 660, 780),
 ncol = 6, byrow = TRUE,
-dimnames=list(subj=1:10,
-              cond=c("deg0NA", "deg4NA", "deg8NA",
-                     "deg0NP", "deg4NP", "deg8NP")))
+dimnames = list(subj = 1:10,
+              cond = c("deg0NA", "deg4NA", "deg8NA",
+                       "deg0NP", "deg4NP", "deg8NP")))
 
-mlmfit <- lm(reacttime~1)
+mlmfit <- lm(reacttime ~ 1)
 SSD(mlmfit)
 estVar(mlmfit)
 }
