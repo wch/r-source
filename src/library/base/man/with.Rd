@@ -66,8 +66,8 @@ with(anorexia, {
 
 
 aq <- within(airquality, {     # Notice that multiple vars can be changed
-    lOzone<-log(Ozone)
-    Month<-factor(month.abb[Month])
+    lOzone <- log(Ozone)
+    Month <- factor(month.abb[Month])
     cTemp <- round((Temp - 32) * 5/9, 1) # From Fahrenheit to Celsius
     rm(Day, Temp)
 })
