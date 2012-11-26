@@ -58,7 +58,7 @@ cbind(x, x.)
 op <- par(bg = adjustcolor("goldenrod",offset = -rep(.4,4)), xpd = NA)
 plot(0:9,0:9, type = "n",axes = FALSE, xlab = "",ylab = "",
      main = "adjustcolor() -> translucent")
-text(1:8, labels = paste(x,"++", sep = ""), col = x., cex = 8)
+text(1:8, labels = paste0(x,"++"), col = x., cex = 8)
 par(op)
 
 ## and

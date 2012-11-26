@@ -149,11 +149,11 @@ x <- seq(.1, 4, length.out = 201); dx <- diff(x)[1]
 par(mfrow = c(2, 3))
 for (ch in c("", "l","di","tri","tetra","penta")) {
   is.deriv <- nchar(ch) >= 2
-  nm <- paste(ch, "gamma", sep = "")
+  nm <- paste0(ch, "gamma")
   if (is.deriv) {
     dy <- diff(y) / dx # finite difference
     der <- which(ch == c("di","tri","tetra","penta")) - 1
-    nm2 <- paste("psigamma(*, deriv = ", der,")", sep = "")
+    nm2 <- paste0("psigamma(*, deriv = ", der,")")
     nm  <- if(der >= 2) nm2 else paste(nm, nm2, sep = " ==\n")
     y <- psigamma(x, deriv = der)
   } else {

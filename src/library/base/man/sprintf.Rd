@@ -245,7 +245,7 @@ sprintf("min 10-char string '\%10s'",
         c("a", "ABC", "and an even longer one"))
 
 n <- 1:18
-sprintf(paste("e with \%2d digits = \%.", n, "g", sep = ""), n, exp(1))
+sprintf(paste0("e with \%2d digits = \%.", n, "g"), n, exp(1))
 
 ## Using arguments out of order
 sprintf("second \%2$1.0f, first \%1$5.2f, third \%3$1.0f", pi, 2, 3)

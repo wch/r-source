@@ -40,7 +40,7 @@ Adobe_glyphs
 \examples{
 ## find Adobe names for ISOLatin2 chars.
 latin2 <- charset_to_Unicode[, "ISOLatin2"]
-aUnicode <- as.numeric(paste("0x", Adobe_glyphs$unicode, sep=""))
+aUnicode <- as.numeric(paste0("0x", Adobe_glyphs$unicode))
 keep <- aUnicode \%in\% latin2
 aUnicode <- aUnicode[keep]
 aAdobe <- Adobe_glyphs[keep, 1]

@@ -59,7 +59,7 @@ help.start(update = FALSE, gui = "irrelevant",
 \dontrun{
 #ifdef unix
 ## the 'remote' arg can be tested by
-help.start(remote=paste("file://", R.home(), sep=""))
+help.start(remote = paste0("file://", R.home()))
 #endif
 }}
 \keyword{documentation}

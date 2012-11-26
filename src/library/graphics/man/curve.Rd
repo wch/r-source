@@ -137,8 +137,7 @@ curve(chippy, -8, 7, n = 2001)
 plot (chippy, -8, -5)
 
 for(ll in c("", "x", "y", "xy"))
-   curve(log(1+x), 1, 100, log = ll,
-         sub = paste("log= '", ll, "'", sep = ""))
+   curve(log(1+x), 1, 100, log = ll, sub = paste0("log = '", ll, "'"))
 par(op)
 }
 \keyword{hplot}

@@ -204,13 +204,13 @@ leg.txt <- c("a one", "a two")
 
 par(mfrow = c(2,2))
 for(ll in c("","x","y","xy")) {
-  plot(2:10, log = ll, main = paste("log = '",ll,"'", sep = ""))
-  abline(1,1)
-  lines(2:3,3:4, col = 2) #
-  points(2,2, col = 3)    #
-  rect(2,3,3,2, col = 4)
-  text(c(3,3),2:3, c("rect(2,3,3,2, col=4)",
-                     "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0,.3))
+  plot(2:10, log = ll, main = paste0("log = '", ll, "'"))
+  abline(1, 1)
+  lines(2:3, 3:4, col = 2) #
+  points(2, 2, col = 3)    #
+  rect(2, 3, 3, 2, col = 4)
+  text(c(3,3), 2:3, c("rect(2,3,3,2, col=4)",
+                      "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0,.3))
   legend(list(x = 2,y = 8), legend = leg.txt, col = 2:3, pch = 1:2,
          lty = 1, merge = TRUE)#, trace = TRUE)
 }

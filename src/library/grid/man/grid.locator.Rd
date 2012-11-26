@@ -57,7 +57,7 @@ if (interactive()) {
     grid.points(click.locn$x, click.locn$y, pch=16, size=unit(1, "mm"))
     clickx <- unittrim(click.locn$x)
     clicky <- unittrim(click.locn$y)
-    grid.text(paste("(", clickx, ", ", clicky, ")", sep=""),
+    grid.text(paste0("(", clickx, ", ", clicky, ")"),
               click.locn$x + unit(2, "mm"), click.locn$y,
               just="left")
   }

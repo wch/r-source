@@ -332,7 +332,7 @@ writeLines(test1, tf)
 read.csv(tf, fill = TRUE) # 1 column
 ncol <- max(count.fields(tf, sep = ","))
 read.csv(tf, fill = TRUE, header = FALSE,
-         col.names = paste("V", seq_len(ncol), sep = ""))
+         col.names = paste0("V", seq_len(ncol)))
 unlink(tf)
 
 ## "Inline" data set, using text=
