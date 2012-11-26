@@ -10766,14 +10766,14 @@ Performs ``transfer of sign'' and is defined as @eqn{|x| *
 Returns the value of @var{x} rounded to @var{digits} decimal digits
 (after the decimal point).
 
-This is the function used by @R{}'s @code{round()}.
+This is the function used by @R{}'s @code{signif()}.
 @end deftypefun
 
 @deftypefun double fround (double @var{x}, double @var{digits})
 Returns the value of @var{x} rounded to @var{digits} @emph{significant}
 decimal digits.
 
-This is the function used by @R{}'s @code{signif()}.
+This is the function used by @R{}'s @code{round()}.
 @end deftypefun
 
 @deftypefun double ftrunc (double @var{x})
