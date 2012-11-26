@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-26 r61156) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -42,9 +42,9 @@ Type 'q()' to quit R.
 > ##D 
 > ##D ## The classic 'airline model', by full ML
 > ##D (fit <- arima(log10(AirPassengers), c(0, 1, 1),
-> ##D               seasonal = list(order=c(0, 1 ,1), period=12)))
+> ##D               seasonal = list(order = c(0, 1 ,1), period = 12)))
 > ##D update(fit, method = "CSS")
-> ##D update(fit, x=window(log10(AirPassengers), start = 1954))
+> ##D update(fit, x = window(log10(AirPassengers), start = 1954))
 > ##D pred <- predict(fit, n.ahead = 24)
 > ##D tl <- pred$pred - 1.96 * pred$se
 > ##D tu <- pred$pred + 1.96 * pred$se
@@ -53,14 +53,14 @@ Type 'q()' to quit R.
 > ##D ## full ML fit is the same if the series is reversed, CSS fit is not
 > ##D ap0 <- rev(log10(AirPassengers))
 > ##D attributes(ap0) <- attributes(AirPassengers)
-> ##D arima(ap0, c(0, 1, 1), seasonal = list(order=c(0, 1 ,1), period=12))
-> ##D arima(ap0, c(0, 1, 1), seasonal = list(order=c(0, 1 ,1), period=12),
+> ##D arima(ap0, c(0, 1, 1), seasonal = list(order = c(0, 1 ,1), period = 12))
+> ##D arima(ap0, c(0, 1, 1), seasonal = list(order = c(0, 1 ,1), period = 12),
 > ##D       method = "CSS")
 > ##D 
 > ##D ## Structural Time Series
 > ##D ap <- log10(AirPassengers) - 2
-> ##D (fit <- StructTS(ap, type= "BSM"))
-> ##D par(mfrow=c(1,2))
+> ##D (fit <- StructTS(ap, type = "BSM"))
+> ##D par(mfrow = c(1,2))
 > ##D plot(cbind(ap, fitted(fit)), plot.type = "single")
 > ##D plot(cbind(ap, tsSmooth(fit)), plot.type = "single")
 > ## End(Not run)
@@ -701,7 +701,7 @@ Test of the hypothesis that 5 factors are sufficient.
 The chi square statistic is 186.82 on 166 degrees of freedom.
 The p-value is 0.128 
 > Harman74.FA <- factanal(factors = 5, covmat = Harman74.cor,
-+                         rotation="promax")
++                         rotation = "promax")
 > print(Harman74.FA$loadings, sort = TRUE)
 
 Loadings:
@@ -919,13 +919,13 @@ sigma^2 estimated as 23676:  log likelihood = -387.7,  aic = 783.41
 > pred <-
 +    predict(arima(window(NileNA, 1871, 1890), c(2,0,0)), n.ahead = 20)
 > lines(pred$pred, lty = 3, col = "red")
-> lines(pred$pred + 2*pred$se, lty=2, col="blue")
-> lines(pred$pred - 2*pred$se, lty=2, col="blue")
+> lines(pred$pred + 2*pred$se, lty = 2, col = "blue")
+> lines(pred$pred - 2*pred$se, lty = 2, col = "blue")
 > pred <-
 +    predict(arima(window(NileNA, 1871, 1930), c(2,0,0)), n.ahead = 20)
 > lines(pred$pred, lty = 3, col = "red")
-> lines(pred$pred + 2*pred$se, lty=2, col="blue")
-> lines(pred$pred - 2*pred$se, lty=2, col="blue")
+> lines(pred$pred + 2*pred$se, lty = 2, col = "blue")
+> lines(pred$pred - 2*pred$se, lty = 2, col = "blue")
 > 
 > ## Structural time series models
 > par(mfrow = c(3, 1))
@@ -1325,7 +1325,7 @@ sigma^2 estimated as 0.001476:  log likelihood = 349.73,  aic = -685.46
 > ## Better labels:
 > yr <- floor(tt <- time(mdeaths))
 > plot(mdeaths, fdeaths,
-+      xy.labels = paste(month.abb[12*(tt - yr)], yr-1900, sep="'"))
++      xy.labels = paste(month.abb[12*(tt - yr)], yr-1900, sep = "'"))
 > 
 > 
 > 
@@ -1451,7 +1451,7 @@ Private Education   -0.293625 -0.0399168  0.000000  0.017388  0.000000
 > nam <- names(VADeaths)
 > d.VAD <- data.frame(
 +  Drate = dr,
-+  age = rep(ordered(rownames(VADeaths)),length.out=n),
++  age = rep(ordered(rownames(VADeaths)), length.out = n),
 +  gender= gl(2,5,n, labels= c("M", "F")),
 +  site =  gl(2,10,  labels= c("rural", "urban")))
 > coplot(Drate ~ as.numeric(age) | gender * site, data = d.VAD,
@@ -1492,13 +1492,13 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > par(mfrow = c(2,1)); plot(WWWusage); plot(work)
 > ## Not run: 
 > ##D require(stats)
-> ##D aics <- matrix(, 6, 6, dimnames=list(p=0:5, q=0:5))
+> ##D aics <- matrix(, 6, 6, dimnames = list(p = 0:5, q = 0:5))
 > ##D for(q in 1:5) aics[1, 1+q] <- arima(WWWusage, c(0,1,q),
 > ##D     optim.control = list(maxit = 500))$aic
 > ##D for(p in 1:5)
 > ##D    for(q in 0:5) aics[1+p, 1+q] <- arima(WWWusage, c(p,1,q),
 > ##D        optim.control = list(maxit = 500))$aic
-> ##D round(aics - min(aics, na.rm=TRUE), 2)
+> ##D round(aics - min(aics, na.rm = TRUE), 2)
 > ## End(Not run)
 > 
 > 
@@ -1613,7 +1613,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 +   ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
 +   ## or   ff[[2]] <- as.name(paste0("y", i))
 +   ##      ff[[3]] <- as.name(paste0("x", i))
-+   mods[[i]] <- lmi <- lm(ff, data= anscombe)
++   mods[[i]] <- lmi <- lm(ff, data = anscombe)
 +   print(anova(lmi))
 + }
 Analysis of Variance Table
@@ -1677,14 +1677,14 @@ x4          0.4999091  0.1178189 4.243028 0.002164602
 
 > 
 > ## Now, do what you should have done in the first place: PLOTS
-> op <- par(mfrow=c(2,2), mar=.1+c(4,4,1,1), oma= c(0,0,2,0))
+> op <- par(mfrow = c(2,2), mar = 0.1+c(4,4,1,1), oma =  c(0,0,2,0))
 > for(i in 1:4) {
 +   ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
-+   plot(ff, data=anscombe, col="red", pch=21, bg = "orange", cex = 1.2,
-+        xlim=c(3,19), ylim=c(3,13))
-+   abline(mods[[i]], col="blue")
++   plot(ff, data = anscombe, col = "red", pch = 21, bg = "orange", cex = 1.2,
++        xlim = c(3,19), ylim = c(3,13))
++   abline(mods[[i]], col = "blue")
 + }
-> mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex=1.5)
+> mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex = 1.5)
 > par(op)
 > 
 > 
@@ -1906,8 +1906,8 @@ F-statistic: 131.9 on 1 and 48 DF,  p-value: 2.259e-15
 > d <- seq(0, 25, length.out = 200)
 > for(degree in 1:4) {
 +   fm <- lm(dist ~ poly(speed, degree), data = cars)
-+   assign(paste("cars", degree, sep="."), fm)
-+   lines(d, predict(fm, data.frame(speed=d)), col = degree)
++   assign(paste("cars", degree, sep = "."), fm)
++   lines(d, predict(fm, data.frame(speed = d)), col = degree)
 + }
 > anova(cars.1, cars.2, cars.3, cars.4)
 Analysis of Variance Table
@@ -2292,7 +2292,7 @@ ne60
   6   4   7   8   4   4   4   5   6   5   4   4   4   5   4   4   4   8   5   4 
 276 282 288 
   4   6   6 
-> plot(names(te), te, type="h", main = f.tit, xlab = "Eruption time (sec)")
+> plot(names(te), te, type = "h", main = f.tit, xlab = "Eruption time (sec)")
 > 
 > plot(faithful[, -3], main = f.tit,
 +      xlab = "Eruption time (min)",
@@ -2379,7 +2379,7 @@ F-statistic:  4354 on 4 and 34 DF,  p-value: < 2.2e-16
 > ### ** Examples
 > 
 > require(stats)
-> model1 <- glm(case ~ spontaneous+induced, data=infert,family=binomial())
+> model1 <- glm(case ~ spontaneous+induced, data = infert, family = binomial())
 > summary(model1)
 
 Call:
@@ -2408,7 +2408,7 @@ Number of Fisher Scoring iterations: 4
 
 > ## adjusted for other potential confounders:
 > summary(model2 <- glm(case ~ age+parity+education+spontaneous+induced,
-+                 data=infert,family=binomial()))
++                      data = infert, family = binomial()))
 
 Call:
 glm(formula = case ~ age + parity + education + spontaneous + 
@@ -2441,7 +2441,7 @@ Number of Fisher Scoring iterations: 4
 > ## Really should be analysed by conditional logistic regression
 > ## which is in the survival package
 > if(require(survival)){
-+   model3 <- clogit(case~spontaneous+induced+strata(stratum),data=infert)
++   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
 +   print(summary(model3))
 +   detach()# survival (conflicts)
 + }
@@ -2488,10 +2488,10 @@ detaching ‘package:splines’
 > ### ** Examples
 > 
 > dni3 <- dimnames(iris3)
-> ii <- data.frame(matrix(aperm(iris3, c(1,3,2)), ncol=4,
+> ii <- data.frame(matrix(aperm(iris3, c(1,3,2)), ncol = 4,
 +                         dimnames = list(NULL, sub(" L.",".Length",
 +                                         sub(" W.",".Width", dni3[[2]])))),
-+     Species = gl(3, 50, labels=sub("S", "s", sub("V", "v", dni3[[3]]))))
++     Species = gl(3, 50, labels = sub("S", "s", sub("V", "v", dni3[[3]]))))
 > all.equal(ii, iris) # TRUE
 [1] TRUE
 > 
@@ -2669,11 +2669,11 @@ Model 2: Speed ~ Run + Expt
 > 
 > ## Not run: 
 > ##D require(stats); require(graphics)
-> ##D nott <- window(nottem, end=c(1936,12))
-> ##D fit <- arima(nott,order=c(1,0,0), list(order=c(2,1,0), period=12))
-> ##D nott.fore <- predict(fit, n.ahead=36)
+> ##D nott <- window(nottem, end = c(1936,12))
+> ##D fit <- arima(nott,order = c(1,0,0), list(order = c(2,1,0), period = 12))
+> ##D nott.fore <- predict(fit, n.ahead = 36)
 > ##D ts.plot(nott, nott.fore$pred, nott.fore$pred+2*nott.fore$se,
-> ##D         nott.fore$pred-2*nott.fore$se, gpars=list(col=c(1,1,4,4)))
+> ##D         nott.fore$pred-2*nott.fore$se, gpars = list(col = c(1,1,4,4)))
 > ## End(Not run)
 > 
 > 
@@ -2831,7 +2831,7 @@ Warning: not plotting observations with leverage one:
 > ### ** Examples
 > 
 > require(graphics)
-> pairs(quakes, main = "Fiji Earthquakes, N = 1000", cex.main=1.2, pch=".")
+> pairs(quakes, main = "Fiji Earthquakes, N = 1000", cex.main = 1.2, pch = ".")
 > 
 > 
 > 
@@ -2901,8 +2901,8 @@ mean of the differences
    0.00    1.05    1.30    1.58    1.70    4.60 
 > stripchart(sleep1, method = "stack", xlab = "hours",
 +            main = "Sleep prolongation (n = 10)")
-> boxplot(sleep1, horizontal=TRUE, add=TRUE,
-+         at = .6, pars=list(boxwex = .5, staplewex = .25))
+> boxplot(sleep1, horizontal = TRUE, add = TRUE,
++         at = .6, pars = list(boxwex = 0.5, staplewex = 0.25))
 > 
 > 
 > 
@@ -3421,7 +3421,7 @@ Residual standard error: 1.663 on 4 degrees of freedom
 +       data = CO2, subset = Plant == pp)
 + }
 > ## check the coefficients by plant
-> print(sapply(fmlist, coef), digits=3)
+> print(sapply(fmlist, coef), digits = 3)
         Qn1    Qn2    Qn3   Qc1    Qc3    Qc2    Mn3    Mn2   Mn1   Mc2     Mc3
 Asym  38.14  42.87  44.23 36.43  40.68  39.82  28.48  32.13 34.08 13.56   18.54
 lrc  -34.28 -29.66 -37.63 -9.90 -11.54 -51.53 -17.37 -29.04 -8.81 -1.98 -136.11
@@ -3436,7 +3436,7 @@ c0   -5.14
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.872 0.112 3.348 0 0 
+Time elapsed:  3.532 0.065 3.671 0 0 
 > grDevices::dev.off()
 null device 
           1 
