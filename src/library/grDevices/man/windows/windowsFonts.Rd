@@ -61,7 +61,7 @@ windowsFonts(JP1 = windowsFont("MS Mincho"),
              JP3 = windowsFont("Arial Unicode MS"))
 plot(1:10)
 text(5, 2, "\u{4E10}\u{4E00}\u{4E01}", family = "JP1")
-text(7, 2, "\u{4E10}\u{4E00}\u{4E01}", family = "JP1", font=2)
+text(7, 2, "\u{4E10}\u{4E00}\u{4E01}", family = "JP1", font = 2)
 text(5, 1.5, "\u{4E10}\u{4E00}\u{4E01}", family = "JP2")
 text(9, 2, "\u{5100}", family = "JP3")
 }}

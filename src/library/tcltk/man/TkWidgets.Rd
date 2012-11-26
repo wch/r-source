@@ -106,9 +106,9 @@ ttktreeview(parent, ...)
 ## into an interactive R session with the tcltk package loaded
 
 tt <- tktoplevel()
-label.widget <- tklabel(tt, text="Hello, World!")
-button.widget <- tkbutton(tt, text="Push",
-                          command=function()cat("OW!\n"))
+label.widget <- tklabel(tt, text = "Hello, World!")
+button.widget <- tkbutton(tt, text = "Push",
+                          command = function()cat("OW!\n"))
 tkpack(label.widget, button.widget) # geometry manager
                                     # see Tk-commands
 

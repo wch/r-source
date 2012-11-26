@@ -42,7 +42,7 @@ tk_select.list(choices, preselect = NULL, multiple = FALSE, title = NULL)
 \seealso{
   \code{\link{select.list}} (a text version except on Windows and the
   Mac OS X GUI),
-  \code{\link{menu}} (whose \code{graphics=TRUE} mode uses this
+  \code{\link{menu}} (whose \code{graphics = TRUE} mode uses this
   on most Unix-alikes).
 }
 \keyword{utilities}

@@ -52,12 +52,12 @@ However, if the global environment contains a variable named
 instead. See the \code{\link{getWindowsHandles}} man page for a
 discussion of the optional arguments to that function.
 
-When \code{action="restore"} is used with \code{windows} unspecified,
+When \code{action = "restore"} is used with \code{windows} unspecified,
 \code{minimized = TRUE} is added to the argument list of
 \code{\link{getWindowsHandles}} so that minimized windows will be restored.
 
 In MDI mode, by default tiling and cascading will happen within the R
-GUI frame. However, if \code{outer=TRUE}, tiling is done on the system
+GUI frame. However, if \code{outer = TRUE}, tiling is done on the system
 desktop. This will generally not give desirable results if any R child
 windows are included within \code{windows}.
 
@@ -79,7 +79,7 @@ Duncan Murdoch
 arrangeWindows("v")
 # This default is useful only in SDI mode:  it will tile any Firefox window 
 # along with the R windows
-.arrangeWindowsDefaults <- list(c("R", "all"), pattern=c("", "Firefox"))
+.arrangeWindowsDefaults <- list(c("R", "all"), pattern = c("", "Firefox"))
 arrangeWindows("v")
 }
 }

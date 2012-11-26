@@ -75,7 +75,7 @@ is.tkwin(x)
 tclvalue(x)
 tclvalue(x) <- value
 
-tclVar(init="")
+tclVar(init = "")
 \method{as.character}{tclVar}(x, ...)
 \method{tclvalue}{tclVar}(x)
 \method{tclvalue}{tclVar}(x) <- value
@@ -94,7 +94,7 @@ tclObj(x) <- value
 \method{tclObj}{tclVar}(x)
 \method{tclObj}{tclVar}(x) <- value
 
-as.tclObj(x, drop=FALSE)
+as.tclObj(x, drop = FALSE)
 is.tclObj(x)
 
 \method{as.character}{tclObj}(x, ...)
@@ -137,12 +137,12 @@ tclRequire(package, warn = TRUE)
   accepts arguments in the form of a named list of \code{tclObj}
   objects. 
 
-  \code{.Tcl.args} converts an R argument list of \code{tag=value} pairs
+  \code{.Tcl.args} converts an R argument list of \code{tag = value} pairs
   to the Tcl \code{-option value} style, thus
   enabling a simple translation between the two languages. To send a
   value with no preceding option flag to Tcl, just use an untagged
   argument. In the rare case one needs an option with no subsequent
-  value \code{tag=NULL} can be used. Most values are just converted to
+  value \code{tag = NULL} can be used. Most values are just converted to
   character mode and inserted in the command string, but window objects
   are passed using their ID string, and callbacks are passed via the
   result of \code{.Tcl.callback}. Tags are converted to option flags
@@ -269,7 +269,7 @@ tclRequire(package, warn = TRUE)
 .Tcl("format \"\%s\\n\" \"Hello, World!\"")
 f <- function()cat("HI!\n")
 .Tcl.callback(f)
-.Tcl.args(text="Push!", command=f) # NB: Different address
+.Tcl.args(text = "Push!", command = f) # NB: Different address
 
 xyzzy <- tclVar(7913)
 tclvalue(xyzzy)
@@ -278,8 +278,8 @@ as.character(xyzzy)
 tcl("set", as.character(xyzzy))
 
 top <- tktoplevel() # a Tk widget, see Tk-widgets
-ls(envir=top$env, all=TRUE)
-ls(envir=.TkRoot$env, all=TRUE)# .Tcl.args put a callback ref in here
+ls(envir = top$env, all = TRUE)
+ls(envir = .TkRoot$env, all = TRUE) # .Tcl.args put a callback ref in here
 }
 }
 \keyword{ misc }

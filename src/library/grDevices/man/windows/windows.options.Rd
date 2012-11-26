@@ -48,8 +48,8 @@ windows.options(\dots, reset = FALSE)
 ## put something like this is your .Rprofile to customize the defaults
 setHook(packageEvent("grDevices", "onLoad"),
         function(...)
-            grDevices::windows.options(width=8, height=6,
-                                       xpos=0, pointsize=10,
-                                       bitmap.aa.win="cleartype"))
+            grDevices::windows.options(width = 8, height = 6,
+                                       xpos = 0, pointsize = 10,
+                                       bitmap.aa.win = "cleartype"))
 }}
 \keyword{device}

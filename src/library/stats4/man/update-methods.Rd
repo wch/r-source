@@ -18,7 +18,7 @@
 \arguments{
  \item{object}{An existing fit.}
  \item{\dots}{Additional arguments to the call, or arguments with
-   changed values. Use \code{name=NULL} to remove the argument \code{name}.}
+   changed values. Use \code{name = NULL} to remove the argument \code{name}.}
  \item{evaluate}{If true evaluate the new call else return the call.}
 }
 \section{Methods}{
@@ -31,10 +31,10 @@
 \examples{
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
-ll <- function(ymax=15, xhalf=6)
-    -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
+ll <- function(ymax = 15, xhalf = 6)
+    -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE))
 fit <- mle(ll)
 ## note the recorded call contains ..1, a problem with S4 dispatch
-update(fit, fixed=list(xhalf=3))
+update(fit, fixed = list(xhalf = 3))
 }
 \keyword{methods}
