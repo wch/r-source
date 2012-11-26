@@ -21,11 +21,11 @@
 is.raster(x)
 as.raster(x, \dots)
 
-\method{as.raster}{logical}(x, max=1, \dots)
-\method{as.raster}{numeric}(x, max=1, \dots)
-\method{as.raster}{character}(x, max=1, \dots)
-\method{as.raster}{matrix}(x, max=1, \dots)
-\method{as.raster}{array}(x, max=1, \dots)
+\method{as.raster}{logical}(x, max = 1, \dots)
+\method{as.raster}{numeric}(x, max = 1, \dots)
+\method{as.raster}{character}(x, max = 1, \dots)
+\method{as.raster}{matrix}(x, max = 1, \dots)
+\method{as.raster}{array}(x, max = 1, \dots)
 }
 \arguments{
   \item{x}{
@@ -73,22 +73,22 @@ as.raster(x, \dots)
 \examples{
 # A red gradient
 as.raster(matrix(hcl(0, 80, seq(50, 80, 10)),
-                 nrow=4, ncol=5))
+                 nrow = 4, ncol = 5))
 
 # Vectors are 1-column matrices ...
 #   character vectors are color names ...
 as.raster(hcl(0, 80, seq(50, 80, 10)))
 #   numeric vectors are greyscale ...
-as.raster(1:5, max=5)
+as.raster(1:5, max = 5)
 #   locigal vectors are black and white ...
 as.raster(1:10 \%\% 2 == 0)
 
 # ... unless nrow/ncol are supplied ...
-as.raster(1:10 \%\% 2 == 0, nrow=1)
+as.raster(1:10 \%\% 2 == 0, nrow = 1)
 
 # Matrix can also be logical or numeric ...
-as.raster(matrix(c(TRUE, FALSE), nrow=3, ncol=2))
-as.raster(matrix(1:3/4, nrow=3, ncol=4))
+as.raster(matrix(c(TRUE, FALSE), nrow = 3, ncol = 2))
+as.raster(matrix(1:3/4, nrow = 3, ncol = 4))
 
 # An array can be 3-plane numeric (R, G, B planes) ...
 as.raster(array(c(0:1, rep(0.5, 4)), c(2, 1, 3)))
@@ -97,7 +97,7 @@ as.raster(array(c(0:1, rep(0.5, 4)), c(2, 1, 3)))
 as.raster(array(c(0:1, rep(0.5, 6)), c(2, 1, 4)))
 
 # subsetting
-r <- as.raster(matrix(colors()[1:100], ncol=10))
+r <- as.raster(matrix(colors()[1:100], ncol = 10))
 r[, 2]
 r[2:4, 2:5]
 

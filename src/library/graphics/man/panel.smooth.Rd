@@ -34,7 +34,7 @@ panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"),
 }
 \examples{
 pairs(swiss, panel = panel.smooth, pch = ".")# emphasize the smooths
-pairs(swiss, panel = panel.smooth, lwd = 2, cex= 1.5, col="blue")# hmm...
+pairs(swiss, panel = panel.smooth, lwd = 2, cex= 1.5, col = "blue")# hmm...
 }
 \keyword{hplot}
 \keyword{dplot}

@@ -37,7 +37,7 @@ blues9
 \details{
   \code{densCols} computes and returns the set of colors that will be
   used in plotting, calling \code{\link[KernSmooth]{bkde2D}(*,
-  bandwidth, gridsize=nbin, ..)} from package \CRANpkg{KernSmooth}.
+  bandwidth, gridsize = nbin, ..)} from package \CRANpkg{KernSmooth}.
 
   \code{blues9} is a set of 9 color shades of blue used as the default in
   plotting.
@@ -55,11 +55,11 @@ blues9
 }
 \author{Florian Hahne at FHCRC, originally}
 \examples{
-x1  <- matrix(rnorm(1e3), ncol=2)
-x2  <- matrix(rnorm(1e3, mean=3, sd=1.5), ncol=2)
+x1  <- matrix(rnorm(1e3), ncol = 2)
+x2  <- matrix(rnorm(1e3, mean = 3, sd = 1.5), ncol = 2)
 x   <- rbind(x1,x2)
 
 dcols <- densCols(x)
-graphics::plot(x, col = dcols, pch=20, main = "n = 1000")
+graphics::plot(x, col = dcols, pch = 20, main = "n = 1000")
 }
 \keyword{dplot}

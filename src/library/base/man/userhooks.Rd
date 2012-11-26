@@ -104,6 +104,6 @@ packageEvent(pkgname,
 }
 \examples{
 setHook(packageEvent("grDevices", "onLoad"),
-        function(...) grDevices::ps.options(horizontal=FALSE)) 
+        function(...) grDevices::ps.options(horizontal = FALSE)) 
 }
 \keyword{utilities}

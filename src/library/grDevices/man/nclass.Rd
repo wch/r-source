@@ -37,7 +37,7 @@ nclass.FD(x)
 
   \code{nclass.FD} uses the Freedman-Diaconis choice based on the
   inter-quartile range (\code{\link{IQR}}) unless that's zero where it
-  reverts to \code{\link{mad}(x, constant=2)} and when that is \eqn{0}
+  reverts to \code{\link{mad}(x, constant = 2)} and when that is \eqn{0}
   as well, returns \code{1}.
 }
 \references{

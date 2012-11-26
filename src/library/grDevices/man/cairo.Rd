@@ -75,7 +75,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
-  \code{file} (or set \code{onefile=TRUE}) the file will contain the
+  \code{file} (or set \code{onefile = TRUE}) the file will contain the
   last page plotted.
 
   There is full support of transparency, but using this is one of the

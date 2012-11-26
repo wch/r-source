@@ -289,7 +289,7 @@ options(op)
 
 ## timezones are not portable, but 'EST5EDT' comes pretty close.
 (x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
-               "\%Y-\%m-\%d \%H:\%M:\%S", tz="EST5EDT"))
+               "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT"))
 attr(x, "tzone")
 
 ## An RFC 822 header (Eastern Canada, during DST)

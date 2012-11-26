@@ -6,7 +6,7 @@
 \name{gc}
 \title{Garbage Collection}
 \usage{
-gc(verbose = getOption("verbose"), reset=FALSE)
+gc(verbose = getOption("verbose"), reset = FALSE)
 gcinfo(verbose)
 }
 \alias{gc}
@@ -81,6 +81,6 @@ gcinfo(verbose = FALSE)#-- don't show it anymore
 
 gc(TRUE)
 
-gc(reset=TRUE)
+gc(reset = TRUE)
 }}
 \keyword{environment}

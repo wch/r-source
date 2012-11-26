@@ -68,7 +68,7 @@ graphics.off()
   tried in turn.  Only named arguments are passed to the device, and
   then only if they match the argument list of the device.  Even so,
   care is needed with the interpretation of e.g. \code{width}, and for
-  the standard bitmap devices \code{units="in", res=72} is forced if
+  the standard bitmap devices \code{units = "in", res = 72} is forced if
   neither is supplied but both \code{width} and \code{height} are.
 }
 \value{
@@ -108,7 +108,7 @@ plot(rnorm(10))
 dev.set(dev.prev())
 abline(0,1)# through the 1:10 points
 dev.set(dev.next())
-abline(h=0, col="gray")# for the residual plot
+abline(h = 0, col = "gray")# for the residual plot
 dev.set(dev.prev())
 dev.off(); dev.off()#- close the two X devices
 }

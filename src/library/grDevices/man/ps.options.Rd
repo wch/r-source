@@ -64,9 +64,9 @@ ps.options(bg = "pink")
 utils::str(ps.options())
 
 ### ---- error checking of arguments: ----
-ps.options(width=0:12, onefile=0, bg=pi)
+ps.options(width = 0:12, onefile = 0, bg = pi)
 # override the check for 'width', but not 'bg':
-ps.options(width=0:12, bg=pi, override.check = c(TRUE,FALSE))
+ps.options(width = 0:12, bg = pi, override.check = c(TRUE,FALSE))
 utils::str(ps.options())
 ps.options(reset = TRUE) # back to factory-fresh
 }

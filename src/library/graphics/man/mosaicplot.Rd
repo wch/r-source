@@ -49,8 +49,8 @@ mosaicplot(x, \dots)
     vertical split.}
   \item{color}{logical or (recycling) vector of colors for color
     shading, used only when \code{shade} is \code{FALSE}, or \code{NULL}
-    (default).  By default, grey boxes are drawn.  \code{color=TRUE}
-    uses a gamma-corrected grey palette.  \code{color=FALSE} gives empty
+    (default).  By default, grey boxes are drawn.  \code{color = TRUE}
+    uses a gamma-corrected grey palette.  \code{color = FALSE} gives empty
     boxes with no shading.}
   \item{shade}{a logical indicating whether to produce extended mosaic
     plots, or a numeric vector of at most 5 distinct positive numbers

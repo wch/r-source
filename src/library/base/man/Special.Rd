@@ -139,10 +139,10 @@ lfactorial(10000)
 ## this will generate loss of precision warnings, so turn off
 op <- options("warn")
 options(warn = -1)
-x <- sort(c(seq(-3,4, length.out=201), outer(0:-3, (-1:1)*1e-6, "+")))
-plot(x, gamma(x), ylim=c(-20,20), col="red", type="l", lwd=2,
-     main=expression(Gamma(x)))
-abline(h=0, v=-3:0, lty=3, col="midnightblue")
+x <- sort(c(seq(-3,4, length.out = 201), outer(0:-3, (-1:1)*1e-6, "+")))
+plot(x, gamma(x), ylim = c(-20,20), col = "red", type = "l", lwd = 2,
+     main = expression(Gamma(x)))
+abline(h = 0, v = -3:0, lty = 3, col = "midnightblue")
 options(op)
 
 x <- seq(.1, 4, length.out = 201); dx <- diff(x)[1]
@@ -153,9 +153,9 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
   if (is.deriv) {
     dy <- diff(y) / dx # finite difference
     der <- which(ch == c("di","tri","tetra","penta")) - 1
-    nm2 <- paste("psigamma(*, deriv = ", der,")",sep='')
+    nm2 <- paste("psigamma(*, deriv = ", der,")", sep = "")
     nm  <- if(der >= 2) nm2 else paste(nm, nm2, sep = " ==\n")
-    y <- psigamma(x, deriv=der)
+    y <- psigamma(x, deriv = der)
   } else {
     y <- get(nm)(x)
   }
@@ -171,12 +171,12 @@ for (n in -4:10) cat(fN(n),":", fN(choose(n, k= -2:max(3,n+2))), "\n")
 
 ## R code version of choose()  [simplistic; warning for k < 0]:
 mychoose <- function(r,k)
-    ifelse(k <= 0, (k==0),
+    ifelse(k <= 0, (k == 0),
            sapply(k, function(k) prod(r:(r-k+1))) / factorial(k))
 k <- -1:6
-cbind(k=k, choose(1/2, k), mychoose(1/2, k))
+cbind(k = k, choose(1/2, k), mychoose(1/2, k))
 
-## Binomial theorem for n=1/2 ;
+## Binomial theorem for n = 1/2 ;
 ## sqrt(1+x) = (1+x)^(1/2) = sum_{k=0}^Inf  choose(1/2, k) * x^k :
 k <- 0:10 # 10 is sufficient for ~ 9 digit precision:
 sqrt(1.25)

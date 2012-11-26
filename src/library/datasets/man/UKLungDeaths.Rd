@@ -35,6 +35,6 @@ plot(mdeaths, fdeaths)
 ## Better labels:
 yr <- floor(tt <- time(mdeaths))
 plot(mdeaths, fdeaths,
-     xy.labels = paste(month.abb[12*(tt - yr)], yr-1900, sep="'"))
+     xy.labels = paste(month.abb[12*(tt - yr)], yr-1900, sep = "'"))
 }
 \keyword{datasets}

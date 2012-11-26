@@ -38,7 +38,7 @@ clip(x1, x2, y1, y2)
 }
 \examples{
 x <- rnorm(1000)
-hist(x, xlim=c(-4,4))
+hist(x, xlim = c(-4,4))
 usr <- par("usr")
 clip(usr[1], -2, usr[3], usr[4])
 hist(x, col = 'red', add = TRUE)

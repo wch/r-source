@@ -52,7 +52,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   The position of \code{main} defaults to being vertically centered in
   (outer) margin 3 and justified horizontally according to
   \code{par("adj")} on the plot region (device region for
-  \code{outer=TRUE}).
+  \code{outer = TRUE}).
 
   The positions of \code{xlab}, \code{ylab} and \code{sub} are
   \code{line} (default for \code{xlab} and \code{ylab} being
@@ -75,8 +75,8 @@ plot(cars, main = "") # here, could use main directly
 title(main = "Stopping Distance versus Speed")
 
 plot(cars, main = "")
-title(main = list("Stopping Distance versus Speed", cex=1.5,
-                  col="red", font=3))
+title(main = list("Stopping Distance versus Speed", cex = 1.5,
+                  col = "red", font = 3))
 
 ## Specifying "..." :
 plot(1, col.axis = "sky blue", col.lab = "thistle")

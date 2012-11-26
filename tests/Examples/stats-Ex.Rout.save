@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-10-26 r61019) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-24 r61144) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -4373,7 +4373,7 @@ treatment3  -0.3919928  0.39199279
 > 
 > utils::example(factor)
 
-factor> (ff <- factor(substring("statistics", 1:10, 1:10), levels=letters))
+factor> (ff <- factor(substring("statistics", 1:10, 1:10), levels = letters))
  [1] s t a t i s t i c s
 Levels: a b c d e f g h i j k l m n o p q r s t u v w x y z
 
@@ -4384,11 +4384,11 @@ factor> (f. <- factor(ff))# drops the levels that do not occur
  [1] s t a t i s t i c s
 Levels: a c i s t
 
-factor> ff[, drop=TRUE] # the same, more transparently
+factor> ff[, drop = TRUE] # the same, more transparently
  [1] s t a t i s t i c s
 Levels: a c i s t
 
-factor> factor(letters[1:20], labels="letter")
+factor> factor(letters[1:20], labels = "letter")
  [1] letter1  letter2  letter3  letter4  letter5  letter6  letter7  letter8 
  [9] letter9  letter10 letter11 letter12 letter13 letter14 letter15 letter16
 [17] letter17 letter18 letter19 letter20
@@ -4434,7 +4434,7 @@ factor> table(addNA(Month))
    5    6    7    8    9 <NA> 
   31   30   31   31   30    0 
 
-factor> table(addNA(Month, ifany=TRUE))
+factor> table(addNA(Month, ifany = TRUE))
 
  5  6  7  8  9 
 31 30 31 31 30 

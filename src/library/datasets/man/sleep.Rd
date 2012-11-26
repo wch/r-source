@@ -53,7 +53,7 @@ sleep1 <- with(sleep, extra[group == 2] - extra[group == 1])
 summary(sleep1)
 stripchart(sleep1, method = "stack", xlab = "hours",
            main = "Sleep prolongation (n = 10)")
-boxplot(sleep1, horizontal=TRUE, add=TRUE,
-        at = .6, pars=list(boxwex = .5, staplewex = .25))
+boxplot(sleep1, horizontal = TRUE, add = TRUE,
+        at = .6, pars = list(boxwex = 0.5, staplewex = 0.25))
 }
 \keyword{datasets}

@@ -57,7 +57,7 @@ strheight(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
 }
 \examples{
 str.ex <- c("W","w","I",".","WwI.")
-op <- par(pty='s'); plot(1:100,1:100, type="n")
+op <- par(pty = 's'); plot(1:100, 1:100, type = "n")
 sw <- strwidth(str.ex); sw
 all.equal(sum(sw[1:4]), sw[5])
 #- since the last string contains the others
@@ -74,7 +74,7 @@ shL <- strheight(all.lett, units = "inches") * 72 # 'big points'
 table(shL) # all have same heights ...
 mean(shL)/par("cin")[2] # around 0.6
 
-(swL <- strwidth(all.lett, units="inches") * 72) # 'big points'
+(swL <- strwidth(all.lett, units = "inches") * 72) # 'big points'
 split(all.lett, factor(round(swL, 2)))
 
 sumex <- expression(sum(x[i], i=1,n), e^{i * pi} == -1)

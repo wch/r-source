@@ -36,7 +36,7 @@ setGraphicsEventEnv(which = dev.cur(), env)
 }
 \details{
 These functions allow user input from some graphics devices (currently
-only the \code{windows()} and \code{X11(type="Xlib")} screen displays
+only the \code{windows()} and \code{X11(type = "Xlib")} screen displays
 in base \R{}). Event handlers may be installed to respond to events
 involving the mouse or keyboard.
 
@@ -108,9 +108,9 @@ event environment for the graphics device.
 \author{Duncan Murdoch}
 \examples{
 \donttest{
-savepar <- par(ask=FALSE)
-dragplot <- function(..., xlim=NULL, ylim=NULL, xaxs="r", yaxs="r") {
-    plot(..., xlim=xlim, ylim=ylim, xaxs=xaxs, yaxs=yaxs)
+savepar <- par(ask = FALSE)
+dragplot <- function(..., xlim = NULL, ylim = NULL, xaxs = "r", yaxs = "r") {
+    plot(..., xlim = xlim, ylim = ylim, xaxs = xaxs, yaxs = yaxs)
     startx <- NULL
     starty <- NULL
     usr <- NULL
@@ -131,8 +131,8 @@ dragplot <- function(..., xlim=NULL, ylim=NULL, xaxs="r", yaxs="r") {
         devset()
         deltax <- diff(grconvertX(c(startx,x), "ndc", "user"))
         deltay <- diff(grconvertY(c(starty,y), "ndc", "user"))
-        plot(..., xlim=usr[1:2]-deltax, xaxs="i",
-                  ylim=usr[3:4]-deltay, yaxs="i")
+        plot(..., xlim = usr[1:2]-deltax, xaxs = "i",
+                  ylim = usr[3:4]-deltay, yaxs = "i")
         NULL
     }
     
@@ -146,7 +146,7 @@ dragplot <- function(..., xlim=NULL, ylim=NULL, xaxs="r", yaxs="r") {
         NULL
     }
     
-    setGraphicsEventHandlers(prompt="Click and drag, hit q to quit",
+    setGraphicsEventHandlers(prompt = "Click and drag, hit q to quit",
                      onMouseDown = dragmousedown,
                      onMouseUp = mouseup,
                      onKeybd = keydown)

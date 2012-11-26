@@ -45,13 +45,13 @@ plot(NileNA)
 pred <-
    predict(arima(window(NileNA, 1871, 1890), c(2,0,0)), n.ahead = 20)
 lines(pred$pred, lty = 3, col = "red")
-lines(pred$pred + 2*pred$se, lty=2, col="blue")
-lines(pred$pred - 2*pred$se, lty=2, col="blue")
+lines(pred$pred + 2*pred$se, lty = 2, col = "blue")
+lines(pred$pred - 2*pred$se, lty = 2, col = "blue")
 pred <-
    predict(arima(window(NileNA, 1871, 1930), c(2,0,0)), n.ahead = 20)
 lines(pred$pred, lty = 3, col = "red")
-lines(pred$pred + 2*pred$se, lty=2, col="blue")
-lines(pred$pred - 2*pred$se, lty=2, col="blue")
+lines(pred$pred + 2*pred$se, lty = 2, col = "blue")
+lines(pred$pred - 2*pred$se, lty = 2, col = "blue")
 
 ## Structural time series models
 par(mfrow = c(3, 1))

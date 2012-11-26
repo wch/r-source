@@ -33,7 +33,8 @@ pretty(x, \dots)
   \item{eps.correct}{integer code, one of \{0,1,2\}. If non-0, an
     \emph{epsilon correction} is made at the boundaries such that
     the result boundaries will be outside \code{range(x)}; in the
-    \emph{small} case, the correction is only done if \code{eps.correct >=2}.}
+    \emph{small} case, the correction is only done if \code{eps.correct
+       >= 2}.}
   \item{\dots}{further arguments for methods.}
 }
 \description{

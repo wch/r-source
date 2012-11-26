@@ -52,13 +52,13 @@ sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
 matplot(sines, type = "b", pch = 21:23, col = 2:5, bg = 2:5,
         main = "Using an 'opaque ('translucent') color palette")
 
-x. <- adjustcolor(x, offset=c(0.5,0.5,0.5, 0), # <- "more white"
-                  transform=diag(c(.7, .7, .7, 0.6)))
+x. <- adjustcolor(x, offset = c(0.5,0.5,0.5, 0), # <- "more white"
+                  transform = diag(c(.7, .7, .7, 0.6)))
 cbind(x, x.)
-op <- par(bg=adjustcolor("goldenrod",offset=-rep(.4,4)), xpd=NA)
-plot(0:9,0:9, type="n",axes=FALSE, xlab="",ylab="",
-     main="adjustcolor() -> translucent")
-text(1:8, labels=paste(x,"++",sep=""), col=x., cex=8)
+op <- par(bg = adjustcolor("goldenrod",offset = -rep(.4,4)), xpd = NA)
+plot(0:9,0:9, type = "n",axes = FALSE, xlab = "",ylab = "",
+     main = "adjustcolor() -> translucent")
+text(1:8, labels = paste(x,"++", sep = ""), col = x., cex = 8)
 par(op)
 
 ## and

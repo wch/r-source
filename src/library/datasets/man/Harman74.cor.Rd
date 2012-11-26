@@ -22,7 +22,7 @@ require(stats)
 (Harman74.FA <- factanal(factors = 1, covmat = Harman74.cor))
 for(factors in 2:5) print(update(Harman74.FA, factors = factors))
 Harman74.FA <- factanal(factors = 5, covmat = Harman74.cor,
-                        rotation="promax")
+                        rotation = "promax")
 print(Harman74.FA$loadings, sort = TRUE)
 }
 \keyword{datasets}

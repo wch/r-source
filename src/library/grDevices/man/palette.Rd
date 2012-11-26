@@ -47,8 +47,8 @@ require(graphics)
 palette()               # obtain the current palette
 palette(rainbow(6))     # six color rainbow
 
-(palette(gray(seq(0,.9,len=25)))) # gray scales; print old palette
-matplot(outer(1:100,1:30), type='l', lty=1,lwd=2, col=1:30,
+(palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
+matplot(outer(1:100,1:30), type = 'l', lty = 1,lwd = 2, col = 1:30,
         main = "Gray Scales Palette",
         sub = "palette(gray(seq(0,.9,len=25)))")
 palette("default")      # reset back to the default
@@ -58,10 +58,10 @@ palette("default")      # reset back to the default
 mycols <- adjustcolor(palette(), alpha.f = 0.3)
 opal <- palette(mycols)
 x <- rnorm(1000); xy <- cbind(x, 3*x + rnorm(1000))
-plot (xy, lwd=2,
+plot (xy, lwd = 2,
        main = "Alpha-Transparency Palette\n alpha = 0.3")
 xy[,1] <- -xy[,1]
-points(xy, col=8, pch=16, cex = 1.5)
+points(xy, col = 8, pch = 16, cex = 1.5)
 palette("default")
 }
 \keyword{color}

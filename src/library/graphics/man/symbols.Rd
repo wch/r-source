@@ -122,7 +122,7 @@ z <- runif(10)
 z3 <- cbind(z, 2*runif(10), runif(10))
 symbols(x, y, thermometers = cbind(.5, 1, z), inches = .5, fg = 1:10)
 symbols(x, y, thermometers = z3, inches = FALSE)
-text(x,y, apply(format(round(z3, digits=2)), 1, paste, collapse = ","),
+text(x,y, apply(format(round(z3, digits = 2)), 1, paste, collapse = ","),
      adj = c(-.2,0), cex = .75, col = "purple", xpd = NA)
 
 ## Note that  example(trees)  shows more sensible plots!

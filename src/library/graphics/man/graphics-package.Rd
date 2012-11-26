@@ -19,7 +19,7 @@ R functions for base graphics
   \link[=grid-package]{grid} graphics. 
 
   For a complete list of functions with individual help pages,
-  use \code{library(help="graphics")}.
+  use \code{library(help = "graphics")}.
 }
 \author{
   R Core Team and contributors worldwide

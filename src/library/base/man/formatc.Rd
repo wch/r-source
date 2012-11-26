@@ -47,7 +47,7 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
     \code{width} are unspecified, \code{width} defaults to 1,
     otherwise to \code{digits + 1}.  \code{width = 0} will use
     \code{width = digits}, \code{width < 0} means left
-    justify the number in this field (equivalent to \code{flag ="-"}).
+    justify the number in this field (equivalent to \code{flag = "-"}).
     If necessary, the result will have more characters than
     \code{width}.  For character data this is interpreted in characters
     (not bytes nor display width).
