@@ -119,7 +119,7 @@ par(\dots, no.readonly = FALSE)
   Parameters are queried by giving one or more character vectors of
   parameter names to \code{par}.
 
-  \code{par()} (no arguments) or \code{par(no.readonly=TRUE)} is used to
+  \code{par()} (no arguments) or \code{par(no.readonly = TRUE)} is used to
   get \emph{all} the graphical parameters (as a named list).  Their
   names are currently taken from the unexported variable
   \code{graphics:::.Pars}.
@@ -217,7 +217,7 @@ par(\dots, no.readonly = FALSE)
     }
     \item{\code{bg}}{The color to be used for the background of the
       device region.  When called from \code{par()} it also sets
-      \code{new=FALSE}. See section \sQuote{Color Specification} for
+      \code{new = FALSE}. See section \sQuote{Color Specification} for
       suitable values.  For many devices the initial value is set from
       the \code{bg} argument of the device, and for the rest it is
       normally \code{"white"}.
@@ -313,7 +313,7 @@ par(\dots, no.readonly = FALSE)
         y2)} which gives the (NDC) coordinates of the figure region in
       the display region of the device. If you set this, unlike S, you
       start a new plot, so to add to an existing plot use
-      \code{new=TRUE} as well.}
+      \code{new = TRUE} as well.}
     \item{\code{fin}}{The figure region dimensions,
       \code{(width,height)}, in inches. If you set this, unlike S, you
       start a new plot.}
@@ -528,10 +528,10 @@ par(\dots, no.readonly = FALSE)
       \code{"usr"} coordinates are log10-transformed here!)
 
       \describe{
-        \item{n=1}{will produce tick marks at \eqn{10^j} for integer \eqn{j},}
-        \item{n=2}{gives marks  \eqn{k 10^j} with
+        \item{n = 1}{will produce tick marks at \eqn{10^j} for integer \eqn{j},}
+        \item{n = 2}{gives marks  \eqn{k 10^j} with
 	  \eqn{k \in \{1, 5\}}{k in {1,5}},}
-        \item{n=3}{gives marks  \eqn{k 10^j} with
+        \item{n = 3}{gives marks  \eqn{k 10^j} with
 	  \eqn{k \in \{1, 2, 5\}}{k in {1,2,5}}.}
       }
       See \code{\link{axTicks}()} for a pure \R implementation of this.
@@ -691,17 +691,17 @@ plot(1:2, xaxs = "i") # 'inner axis' w/o extra space
 par(c("usr", "xaxp"))
 
 ( nr.prof <-
-  c(prof.pilots=16,lawyers=11,farmers=10,salesmen=9,physicians=9,
-    mechanics=6,policemen=6,managers=6,engineers=5,teachers=4,
-    housewives=3,students=3,armed.forces=1))
+  c(prof.pilots = 16,lawyers = 11,farmers = 10,salesmen = 9,physicians = 9,
+    mechanics = 6,policemen = 6,managers = 6,engineers = 5,teachers = 4,
+    housewives = 3,students = 3,armed.forces = 1))
 par(las = 3)
 barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
 par(las = 0)# reset to default
 
 require(grDevices) # for gray
 ## 'fg' use:
-plot(1:12, type = "b", main="'fg' : axes, ticks and box in gray",
-     fg = gray(0.7), bty="7" , sub=R.version.string)
+plot(1:12, type = "b", main = "'fg' : axes, ticks and box in gray",
+     fg = gray(0.7), bty = "7" , sub = R.version.string)
 
 ex <- function() {
    old.par <- par(no.readonly = TRUE) # all par settings which

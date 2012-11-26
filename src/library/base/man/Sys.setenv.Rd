@@ -34,7 +34,7 @@ Sys.unsetenv(x)
   \code{"="}.  Windows does, but the facilities provided by \R may not
   handle these correctly so they should be avoided.  Most platforms
   allow setting an environment variable to \code{""}, but Windows does
-  not, and there \code{Sys.setenv(FOO="")} unsets \env{FOO}.
+  not, and there \code{Sys.setenv(FOO = "")} unsets \env{FOO}.
   
   There may be system-specific limits on the maximum length of the values
   of individual environment variables or of all environment variables.
@@ -64,7 +64,7 @@ Sys.unsetenv(x)
   environment variables used by \R.
 }
 \examples{
-print(Sys.setenv(R_TEST="testit", "A+C"=123))  # `A+C` could also be used
+print(Sys.setenv(R_TEST = "testit", "A+C" = 123))  # `A+C` could also be used
 Sys.getenv("R_TEST")
 #ifdef windows
 Sys.unsetenv("R_TEST")
@@ -72,7 +72,7 @@ Sys.unsetenv("R_TEST")
 #ifdef unix
 Sys.unsetenv("R_TEST")  # may warn and not succeed
 #endif
-Sys.getenv("R_TEST", unset=NA)
+Sys.getenv("R_TEST", unset = NA)
 }
 \keyword{environment}
 \keyword{utilities}

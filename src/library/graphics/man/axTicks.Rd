@@ -41,7 +41,7 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
   specify all three (as non-NULL), the graphics environment is not used
   at all.  Note that the meaning of \code{axp} differs significantly
   when \code{log} is \code{TRUE}; see the documentation on
-  \code{\link{par}(xaxp=.)}.
+  \code{\link{par}(xaxp = .)}.
 
   \code{axTicks()} can be used an \R interface to the C function
   \code{CreateAtVector()} in \file{..../src/main/plot.c}
@@ -76,15 +76,15 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
 op <- par(mfrow = c(3,1))
 for(x in 9999*c(1,2,8)) {
     plot(x,9, log = "x")
-    cat(formatC(par("xaxp"), width=5),";", T <- axTicks(1),"\n")
-    rug(T, col= adjustcolor("red", 0.5), lwd = 4)
+    cat(formatC(par("xaxp"), width = 5),";", T <- axTicks(1),"\n")
+    rug(T, col =  adjustcolor("red", 0.5), lwd = 4)
 }
 par(op)
 
 x <- 9.9*10^(-3:10)
 plot(x, 1:14, log = "x")
 axTicks(1) # now length 5, in R <= 2.13.x gave the following
-axTicks(1, nintLog=Inf) # rather too many
+axTicks(1, nintLog = Inf) # rather too many
 
 ## An example using axTicks() without reference to an existing plot
 ## (copying R's internal procedures for setting axis ranges etc.),
@@ -92,21 +92,21 @@ axTicks(1, nintLog=Inf) # rather too many
 ## standard logarithmic y axis labels
 ylims <- c(0.2, 88)
 get_axp <- function(x) 10^c(ceiling(x[1]), floor(x[2]))
-## mimic par("yaxs")=="i"
+## mimic par("yaxs") == "i"
 usr.i <- log10(ylims)
-(aT.i <- axTicks(side=2, usr=usr.i,
-                 axp=c(get_axp(usr.i), n=3), log=TRUE, nintLog=5))
-## mimic (default) par("yaxs")=="r"
+(aT.i <- axTicks(side = 2, usr = usr.i,
+                 axp = c(get_axp(usr.i), n = 3), log = TRUE, nintLog = 5))
+## mimic (default) par("yaxs") == "r"
 usr.r <- extendrange(r = log10(ylims), f = 0.04)
-(aT.r <- axTicks(side=2, usr=usr.r,
-                 axp=c(get_axp(usr.r),3), log=TRUE, nintLog=5))
+(aT.r <- axTicks(side = 2, usr = usr.r,
+                 axp = c(get_axp(usr.r), 3), log = TRUE, nintLog = 5))
 
 ## Prove that we got it right :
-plot(0:1,ylims,log="y",yaxs="i")
-stopifnot(all.equal(aT.i, axTicks(side=2)))
+plot(0:1, ylims, log = "y", yaxs = "i")
+stopifnot(all.equal(aT.i, axTicks(side = 2)))
 
-plot(0:1,ylims,log="y",yaxs="r")
-stopifnot(all.equal(aT.r, axTicks(side=2)))
+plot(0:1, ylims, log = "y" ,yaxs = "r")
+stopifnot(all.equal(aT.r, axTicks(side = 2)))
 }
 \keyword{dplot}
 

@@ -53,8 +53,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     strings parallel to the axis, justification of the end nearest the
     axis otherwise).}
   \item{padj}{adjustment for each tick label \emph{perpendicular} to the
-    reading direction.  For labels parallel to the axes, \code{padj=0}
-    means right or top alignment, and \code{padj=1} means left or bottom
+    reading direction.  For labels parallel to the axes, \code{padj = 0}
+    means right or top alignment, and \code{padj = 1} means left or bottom
     alignment.  This can be a vector given a value for each string, and
     will be recycled as necessary.
 
@@ -90,8 +90,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \code{at}, but will be clipped at the plot region.  By default, only
   ticks which are drawn from points within the plot region (up to a
   tolerance for rounding error) are plotted, but the ticks and their
-  labels may well extend outside the plot region.  Use \code{xpd=TRUE}
-  or \code{xpd=NA} to allow axes to extend further.
+  labels may well extend outside the plot region.  Use \code{xpd = TRUE}
+  or \code{xpd = NA} to allow axes to extend further.
 
   When \code{at = NULL}, pretty tick mark locations are computed internally
   (the same way \code{\link{axTicks}(side)} would) from
@@ -102,7 +102,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 
   If \code{labels} is not specified, the numeric values supplied or
   calculated for \code{at} are converted to character strings as if they
-  were a numeric vector printed by \code{\link{print.default}(digits=7)}.
+  were a numeric vector printed by \code{\link{print.default}(digits = 7)}.
 
   The code tries hard not to draw overlapping tick labels, and so will
   omit labels where they would abut or overlap previously drawn labels.
@@ -129,7 +129,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \code{\link{Axis}} for a generic interface.
 
   \code{\link{axTicks}} returns the axis tick locations
-  corresponding to \code{at=NULL}; \code{\link{pretty}} is more flexible
+  corresponding to \code{at = NULL}; \code{\link{pretty}} is more flexible
   for computing pretty tick coordinates and does \emph{not} depend on
   (nor adapt to) the coordinate system in use.
 
@@ -152,11 +152,11 @@ plot(1:7, rnorm(7), main = "axis() examples",
      type = "s", xaxt = "n", frame = FALSE, col = "red")
 axis(1, 1:7, LETTERS[1:7], col.axis = "blue")
 # unusual options:
-axis(4, col = "violet", col.axis="dark violet", lwd = 2)
+axis(4, col = "violet", col.axis = "dark violet", lwd = 2)
 axis(3, col = "gold", lty = 2, lwd = 0.5)
 
 # one way to have a custom x axis
 plot(1:10, xaxt = "n")
-axis(1, xaxp=c(2, 9, 7))
+axis(1, xaxp = c(2, 9, 7))
 }
 \keyword{aplot}

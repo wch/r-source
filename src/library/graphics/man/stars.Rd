@@ -108,7 +108,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
 }
 \value{
   Returns the locations of the plots in a two column matrix, invisibly
-  when \code{plot=TRUE}.
+  when \code{plot = TRUE}.
 }
 \author{Thomas S. Dye}
 \seealso{
@@ -131,11 +131,11 @@ require(grDevices)
 stars(mtcars[, 1:7], key.loc = c(14, 2),
       main = "Motor Trend Cars : stars(*, full = F)", full = FALSE)
 stars(mtcars[, 1:7], key.loc = c(14, 1.5),
-      main = "Motor Trend Cars : full stars()",flip.labels=FALSE)
+      main = "Motor Trend Cars : full stars()", flip.labels = FALSE)
 
 ## 'Spider' or 'Radar' plot:
 stars(mtcars[, 1:7], locations = c(0,0), radius = FALSE,
-      key.loc=c(0,0), main="Motor Trend Cars", lty = 2)
+      key.loc = c(0,0), main = "Motor Trend Cars", lty = 2)
 
 ## Segment Diagrams:
 palette(rainbow(12, s = 0.6, v = 0.75))
@@ -143,7 +143,7 @@ stars(mtcars[, 1:7], len = 0.8, key.loc = c(12, 1.5),
       main = "Motor Trend Cars", draw.segments = TRUE)
 stars(mtcars[, 1:7], len = 0.6, key.loc = c(1.5, 0),
       main = "Motor Trend Cars", draw.segments = TRUE,
-      frame.plot=TRUE, nrow = 4, cex = .7)
+      frame.plot = TRUE, nrow = 4, cex = .7)
 
 ## scale linearly (not affinely) to [0, 1]
 USJudge <- apply(USJudgeRatings, 2, function(x) x/max(x))
@@ -163,17 +163,17 @@ text(loc, Snam, col = "blue", cex = 0.8, xpd = TRUE)
 stars(USJudge, draw.segments = TRUE, scale = FALSE, key.loc = c(13,1.5))
 
 ## 'Spider':
-stars(USJudgeRatings, locations=c(0,0), scale=FALSE,radius = FALSE,
-      col.stars=1:10, key.loc = c(0,0), main="US Judges rated")
+stars(USJudgeRatings, locations = c(0,0), scale = FALSE,radius  =  FALSE,
+      col.stars = 1:10, key.loc = c(0,0), main = "US Judges rated")
 ## Same as above, but with colored lines instead of filled polygons.
-stars(USJudgeRatings, locations=c(0,0), scale=FALSE,radius = FALSE,
-      col.lines=1:10, key.loc = c(0,0), main="US Judges rated")
+stars(USJudgeRatings, locations = c(0,0), scale = FALSE,radius  =  FALSE,
+      col.lines = 1:10, key.loc = c(0,0), main = "US Judges rated")
 ## 'Radar-Segments'
-stars(USJudgeRatings[1:10,], locations = 0:1, scale=FALSE,
-      draw.segments = TRUE, col.segments=0, col.stars=1:10,key.loc= 0:1,
-       main="US Judges 1-10 ")
+stars(USJudgeRatings[1:10,], locations = 0:1, scale = FALSE,
+      draw.segments = TRUE, col.segments = 0, col.stars = 1:10, key.loc =  0:1,
+      main = "US Judges 1-10 ")
 palette("default")
-stars(cbind(1:16,10*(16:1)),draw.segments=TRUE,
+stars(cbind(1:16,10*(16:1)), draw.segments = TRUE,
       main = "A Joke -- do *not* use symbols on 2D data!")
 }
 \keyword{hplot}

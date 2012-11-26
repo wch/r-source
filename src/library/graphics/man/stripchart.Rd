@@ -24,7 +24,7 @@ stripchart(x, \dots)
 \method{stripchart}{default}(x, method = "overplot", jitter = 0.1, offset = 1/3,
            vertical = FALSE, group.names, add = FALSE,
            at = NULL, xlim = NULL, ylim = NULL,
-           ylab=NULL, xlab=NULL, dlab="", glab="",
+           ylab = NULL, xlab = NULL, dlab = "", glab = "",
            log = "", pch = 0, col = par("fg"), cex = par("cex"), 
            axes = TRUE, frame.plot = axes, \dots)
 }
@@ -52,7 +52,7 @@ stripchart(x, \dots)
     overplotted, but it is also possible to specify \code{"jitter"} to
     jitter the points, or \code{"stack"} have coincident points
     stacked.  The last method only makes sense for very granular data.}
-  \item{jitter}{when \code{method="jitter"} is used, \code{jitter}
+  \item{jitter}{when \code{method = "jitter"} is used, \code{jitter}
     gives the amount of jittering applied.}
   \item{offset}{when stacking is used, points are stacked this many
     line-heights (symbol widths) apart.}

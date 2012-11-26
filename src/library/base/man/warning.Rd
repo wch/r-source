@@ -81,13 +81,13 @@ suppressWarnings(expr)
   of messages.
 }
 \examples{
-\dontshow{oldopt <- options(warn=1)}
+\dontshow{oldopt <- options(warn = 1)}
 testit <- function() warning("testit")
 testit() ## shows call
 testit <- function() warning("problem in testit", call. = FALSE)
 testit() ## no call
 suppressWarnings(warning("testit"))
-\dontshow{eigenval <- 10 ^ -stats::rnorm(1, mean=6)
+\dontshow{eigenval <- 10 ^ -stats::rnorm(1, mean = 6)
 if(eigenval < 1.e-7) warning("system near singular")
 options(oldopt)}
 }

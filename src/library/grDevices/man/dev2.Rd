@@ -107,7 +107,7 @@ dev.control(displaylist = c("inhibit", "enable"))
   \code{dev.copy2eps}.  This will not be appropriate unless the device
   specifies dimensions in inches, in particular not for
   \code{png}, \code{jpeg}, \code{tiff} and \code{bmp} unless
-  \code{units="inches"} is specified.
+  \code{units = "inches"} is specified.
 }
 \note{
   Most devices (including all screen devices) have a display list
@@ -132,10 +132,10 @@ dev.control(displaylist = c("inhibit", "enable"))
 \examples{
 \dontrun{
 x11() # on a Unix-alike
-plot(rnorm(10), main="Plot 1")
-dev.copy(device=x11)
+plot(rnorm(10), main = "Plot 1")
+dev.copy(device = x11)
 mtext("Copy 1", 3)
-dev.print(width=6, height=6, horizontal=FALSE) # prints it
+dev.print(width = 6, height = 6, horizontal = FALSE) # prints it
 dev.off(dev.prev())
 dev.off()
 }

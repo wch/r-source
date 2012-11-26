@@ -89,7 +89,7 @@ barplot(height, \dots)
     \code{horiz} is true) axis is drawn.}
   \item{axisnames}{logical.  If \code{TRUE}, and if there are
     \code{names.arg} (see above), the
-    other axis is drawn (with \code{lty=0}) and labeled.}
+    other axis is drawn (with \code{lty = 0}) and labeled.}
   \item{cex.axis}{expansion factor for numeric axis labels.}
   \item{cex.names}{expansion factor for axis names (bar labels).}
   \item{inside}{logical.  If \code{TRUE}, the lines which divide
@@ -135,17 +135,17 @@ barplot(height, \dots)
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
-  \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},
+  \code{\link{plot}(\dots, type = "h")}, \code{\link{dotchart}},
   \code{\link{hist}}.
 }
 \examples{
 require(grDevices) # for colours
-tN <- table(Ni <- stats::rpois(100, lambda=5))
-r <- barplot(tN, col=rainbow(20))
+tN <- table(Ni <- stats::rpois(100, lambda = 5))
+r <- barplot(tN, col = rainbow(20))
 #- type = "h" plotting *is* 'bar'plot
-lines(r, tN, type='h', col='red', lwd=2)
+lines(r, tN, type = 'h', col = 'red', lwd = 2)
 
-barplot(tN, space = 1.5, axisnames=FALSE,
+barplot(tN, space = 1.5, axisnames = FALSE,
         sub = "barplot(..., space= 1.5, axisnames = FALSE)")
 
 barplot(VADeaths, plot = FALSE)
@@ -165,7 +165,7 @@ mybarcol <- "gray20"
 mp <- barplot(hh, beside = TRUE,
         col = c("lightblue", "mistyrose",
                 "lightcyan", "lavender"),
-        legend = colnames(VADeaths), ylim= c(0,100),
+        legend = colnames(VADeaths), ylim = c(0,100),
         main = "Death Rates in Virginia", font.main = 4,
         sub = "Faked upper 2*sigma error bars", col.sub = mybarcol,
         cex.names = 1.5)
@@ -181,11 +181,11 @@ title(main = list("Death Rates in Virginia", font = 4))
 
 # border :
 barplot(VADeaths, border = "dark blue") % lwd = 2 << not passed
-%notyet barplot(VADeaths, inside = FALSE, main = "barplot(*, inside=FALSE)")
+%notyet barplot(VADeaths, inside = FALSE, main = "barplot(*, inside = FALSE)")
 
 # log scales (not much sense here):
-barplot(tN, col=heat.colors(12), log = "y")
-barplot(tN, col=gray.colors(20), log = "xy")
+barplot(tN, col = heat.colors(12), log = "y")
+barplot(tN, col = gray.colors(20), log = "xy")
 
 # args.legend
 barplot(height = cbind(x = c(465, 91) / 465 * 100,

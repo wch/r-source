@@ -12,7 +12,7 @@ structure(.Data, \dots)
 \arguments{
   \item{.Data}{an object which will have
     various attributes attached to it.}
-  \item{\dots}{attributes, specified in \code{tag=value}
+  \item{\dots}{attributes, specified in \code{tag = value}
     form, which will be attached to data.}
 }
 \description{
@@ -30,7 +30,7 @@ structure(.Data, \dots)
 
   It is possible to give the same tag more than once, in which case the
   last value assigned wins.  As with other ways of assigning attributes,
-  using \code{tag=NULL} removes attribute \code{tag} from \code{.Data} if
+  using \code{tag = NULL} removes attribute \code{tag} from \code{.Data} if
   it is present.
 }
 \seealso{

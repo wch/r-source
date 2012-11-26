@@ -18,7 +18,7 @@
 \arguments{
   \item{x}{a numeric matrix.}
   \item{use.cols}{logical indicating if columns (by default) or rows
-    (\code{use.cols=FALSE}) should be plotted.}
+    (\code{use.cols = FALSE}) should be plotted.}
   \item{\dots}{Further arguments to \code{\link{boxplot}}.}
 }
 \value{

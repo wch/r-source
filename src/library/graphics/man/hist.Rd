@@ -74,16 +74,16 @@ hist(x, \dots)
   \item{nclass}{numeric (integer).  For S(-PLUS) compatibility only,
     \code{nclass} is equivalent to \code{breaks} for a scalar or
     character argument.}  
-  \item{warn.unused}{logical.  If \code{plot=FALSE} and 
-    \code{warn.unused=TRUE}, a warning will be issued when graphical
+  \item{warn.unused}{logical.  If \code{plot = FALSE} and 
+    \code{warn.unused = TRUE}, a warning will be issued when graphical
     parameters are passed to \code{hist.default()}.}
   \item{\dots}{further arguments and \link{graphical parameters} passed to
     \code{\link{plot.histogram}} and thence to \code{\link{title}} and
-    \code{\link{axis}} (if \code{plot=TRUE}).}
+    \code{\link{axis}} (if \code{plot = TRUE}).}
 }
 \description{
   The generic function \code{hist} computes a histogram of the given
-  data values.  If \code{plot=TRUE}, the resulting object of
+  data values.  If \code{plot = TRUE}, the resulting object of
   \link{class} \code{"histogram"} is plotted by
   \code{\link{plot.histogram}}, before it is returned.
 }
@@ -160,25 +160,25 @@ hist(x, \dots)
 }
 
 \examples{
-op <- par(mfrow=c(2, 2))
+op <- par(mfrow = c(2, 2))
 hist(islands)
-utils::str(hist(islands, col="gray", labels = TRUE))
+utils::str(hist(islands, col = "gray", labels = TRUE))
 
-hist(sqrt(islands), breaks = 12, col="lightblue", border="pink")
+hist(sqrt(islands), breaks = 12, col = "lightblue", border = "pink")
 ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
 r <- hist(sqrt(islands), breaks = c(4*0:5, 10*3:5, 70, 100, 140),
-          col='blue1')
-text(r$mids, r$density, r$counts, adj=c(.5, -.5), col='blue3')
+          col = 'blue1')
+text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = 'blue3')
 sapply(r[2:3], sum)
 sum(r$density * diff(r$breaks)) # == 1
 lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
 par(op)
 
 require(utils) # for str
-str(hist(islands, breaks=12, plot= FALSE)) #-> 10 (~= 12) breaks
-str(hist(islands, breaks=c(12,20,36,80,200,1000,17000), plot = FALSE))
+str(hist(islands, breaks = 12, plot =  FALSE)) #-> 10 (~= 12) breaks
+str(hist(islands, breaks = c(12,20,36,80,200,1000,17000), plot = FALSE))
 
-hist(islands, breaks=c(12,20,36,80,200,1000,17000), freq = TRUE,
+hist(islands, breaks = c(12,20,36,80,200,1000,17000), freq = TRUE,
      main = "WRONG histogram") # and warning
 
 require(stats)
@@ -186,7 +186,7 @@ set.seed(14)
 x <- rchisq(100, df = 4)
 \dontshow{op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))}
 ## Comparing data with a model distribution should be done with qqplot()!
-qqplot(x, qchisq(ppoints(x), df = 4)); abline(0,1, col = 2, lty = 2)
+qqplot(x, qchisq(ppoints(x), df = 4)); abline(0, 1, col = 2, lty = 2)
 
 ## if you really insist on using hist() ... :
 hist(x, freq = FALSE, ylim = c(0, 0.2))

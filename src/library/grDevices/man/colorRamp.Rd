@@ -37,7 +37,7 @@ colorRampPalette(colors, \dots)
   The conversion formulas in this function do not appear to be
   completely accurate and the color ramp may not reach the extreme
   values in Lab space.  Future changes in the \R color model may change
-  the colors produced with \code{space="Lab"}.
+  the colors produced with \code{space = "Lab"}.
 }
 \value{
   \code{colorRamp} returns a \code{\link{function}} that maps values between 0 and 1

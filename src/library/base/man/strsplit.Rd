@@ -115,7 +115,7 @@ unlist(strsplit("a.b.c", ".", fixed = TRUE))
 
 ## a useful function: rev() for strings
 strReverse <- function(x)
-        sapply(lapply(strsplit(x, NULL), rev), paste, collapse="")
+        sapply(lapply(strsplit(x, NULL), rev), paste, collapse = "")
 strReverse(c("abc", "Statistics"))
 
 ## get the first names of the members of R-core

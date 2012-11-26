@@ -91,7 +91,7 @@ matplot(nu, t(outer(xx, nu, besselI)), type = "l", ylim = c(-50, 200),
         main = expression(paste("Bessel ", I[nu](x), " for fixed ", x,
                                 ",  as ", f(nu))),
         xlab = expression(nu))
-abline(v=0, col = "light gray", lty = 3)
+abline(v = 0, col = "light gray", lty = 3)
 legend(5, 200, legend = paste("x=", xx), col=seq(xx), lty=seq(xx))
 par(op)
 
@@ -111,7 +111,7 @@ legend(3, 1e50, legend = paste("nu=", paste(nus, nus + 0.5, sep = ",")),
        col = nus + 2, lwd = 1)
 
 x <- x[x > 0]
-plot(x, x, ylim=c(1e-18, 1e11), log = "y", ylab = "", type = "n",
+plot(x, x, ylim = c(1e-18, 1e11), log = "y", ylab = "", type = "n",
      main = "Bessel Functions  K_nu(x)")
 for(nu in nus) lines(x, besselK(x, nu = nu), col = nu + 2)
 legend(0, 1e-5, legend=paste("nu=", nus), col = nus + 2, lwd = 1)

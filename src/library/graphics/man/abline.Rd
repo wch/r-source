@@ -29,10 +29,10 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
 \details{
   Typical usages are
 \preformatted{abline(a, b, untf = FALSE, \dots)
-abline(h=, untf = FALSE, \dots)
-abline(v=, untf = FALSE, \dots)
-abline(coef=, untf = FALSE, \dots)
-abline(reg=, untf = FALSE, \dots)
+abline(h =, untf = FALSE, \dots)
+abline(v =, untf = FALSE, \dots)
+abline(coef =, untf = FALSE, \dots)
+abline(reg =, untf = FALSE, \dots)
 }
   The first form specifies the line in intercept/slope form
   (alternatively \code{a} can be specified on its own and is taken to
@@ -75,21 +75,21 @@ abline(reg=, untf = FALSE, \dots)
   \code{\link{par}}.
 }
 \examples{
-## Setup up coordinate system (with x==y aspect ratio):
-plot(c(-2,3), c(-1,5), type = "n", xlab="x", ylab="y", asp = 1)
+## Setup up coordinate system (with x == y aspect ratio):
+plot(c(-2,3), c(-1,5), type = "n", xlab = "x", ylab = "y", asp = 1)
 ## the x- and y-axis, and an integer grid
-abline(h=0, v=0, col = "gray60")
+abline(h = 0, v = 0, col = "gray60")
 text(1,0, "abline( h = 0 )", col = "gray60", adj = c(0, -.1))
-abline(h = -1:5, v = -2:3, col = "lightgray", lty=3)
-abline(a=1, b=2, col = 2)
-text(1,3, "abline( 1, 2 )", col=2, adj=c(-.1,-.1))
+abline(h = -1:5, v = -2:3, col = "lightgray", lty = 3)
+abline(a = 1, b = 2, col = 2)
+text(1,3, "abline( 1, 2 )", col = 2, adj = c(-.1,-.1))
 
 ## Simple Regression Lines:
 require(stats)
 sale5 <- c(6, 4, 9, 7, 6, 12, 8, 10, 9, 13)
 plot(sale5)
 abline(lsfit(1:10,sale5))
-abline(lsfit(1:10,sale5, intercept = FALSE), col= 4) # less fitting
+abline(lsfit(1:10,sale5, intercept = FALSE), col = 4) # less fitting
 
 z <- lm(dist ~ speed, data = cars)
 plot(cars)

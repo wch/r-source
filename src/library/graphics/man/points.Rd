@@ -36,10 +36,10 @@ points(x, \dots)
     \item{\code{pch}}{plotting \sQuote{character}, i.e., symbol to use.
       This can either be a single character or an integer code for one
       of a set of graphics symbols.  The full set of S symbols is
-      available with \code{pch=0:18}, see the examples below.
+      available with \code{pch = 0:18}, see the examples below.
       (NB: \R uses circles instead of the octagons used in S.)
 
-      Value \code{pch="."} (equivalently \code{pch = 46}) is handled
+      Value \code{pch = "."} (equivalently \code{pch = 46}) is handled
       specially.  It is a rectangle of side 0.01 inch (scaled by
       \code{cex}).  In addition, if \code{cex = 1} (the default), each
       side is at least one pixel (1/72 inch on the \code{\link{pdf}},
@@ -52,7 +52,7 @@ points(x, \dots)
     }
     \item{\code{col}}{color code or name, see \code{\link{par}}.}
     \item{\code{bg}}{background (fill) color for the open plot
-      symbols given by \code{pch=21:25}.}
+      symbols given by \code{pch = 21:25}.}
     \item{\code{cex}}{character (or symbol) expansion: a numerical vector.
       This works as a multiple of \code{\link{par}("cex")}.}
     \item{\code{lwd}}{line width for drawing symbols see \code{\link{par}}.}
@@ -89,37 +89,37 @@ points(x, \dots)
 
 % SVG support in browsers is patchy, e.g. not Konqueror
 %  \if{html}{\figure{pch.svg}{options: width=100\%}}
-  \if{html}{\figure{pch.png}{Illustration of pch=0:25}}
+  \if{html}{\figure{pch.png}{Illustration of pch = 0:25}}
   \if{latex}{\figure{pch.pdf}{options: width=15cm}}
 
   The following  \R plotting symbols are can be obtained with
-  \code{pch=19:25}: those with \code{21:25} can be colored and
+  \code{pch = 19:25}: those with \code{21:25} can be colored and
   filled with different colors: \code{col} gives the border color
   and \code{bg} the background color
   \if{html}{(which is \samp{"grey"} in the figure)}
   \if{latex}{(which is \samp{"grey"} in the figure)}
   \itemize{
-    \item \code{pch=19}: solid circle,
-    \item \code{pch=20}: bullet (smaller solid circle,
+    \item \code{pch = 19}: solid circle,
+    \item \code{pch = 20}: bullet (smaller solid circle,
     2/3 the size of \code{19}),
-    \item \code{pch=21}: filled circle,
-    \item \code{pch=22}: filled square,
-    \item \code{pch=23}: filled diamond,
-    \item \code{pch=24}: filled triangle point-up,
-    \item \code{pch=25}: filled triangle point down.
+    \item \code{pch = 21}: filled circle,
+    \item \code{pch = 22}: filled square,
+    \item \code{pch = 23}: filled diamond,
+    \item \code{pch = 24}: filled triangle point-up,
+    \item \code{pch = 25}: filled triangle point down.
   }
   Note that all of these both fill the shape and draw a border.  Some
   care in interpretation is needed when semi-transparent colours are
   used for both fill and border (and the result might be device-specific
   and even viewer-specific for \code{\link{pdf}}).
 
-  The difference between \code{pch=16} and \code{pch=19} is that the
+  The difference between \code{pch = 16} and \code{pch = 19} is that the
   latter uses a border and so is perceptibly larger when \code{lwd} is
   large relative to \code{cex}.
 
-  Values \code{pch=26:31} are currently unused and \code{pch=32:127}
+  Values \code{pch = 26:31} are currently unused and \code{pch = 32:127}
   give the ASCII characters.  In a single-byte locale
-  \code{pch=128:255} give the corresponding character (if any) in
+  \code{pch = 128:255} give the corresponding character (if any) in
   the locale's character set.  Where supported by the OS, negative
   values specify a Unicode point, so e.g. \code{-0x2642L}
   is a \sQuote{male sign} and \code{-0x20ACL} is the Euro.
@@ -144,7 +144,7 @@ points(x, \dots)
 }
 \note{
   A single-byte encoding may include the characters in
-  \code{pch=128:255}, and if it does, a font may not include all (or
+  \code{pch = 128:255}, and if it does, a font may not include all (or
   even any) of them.
 
   Not all negative numbers are valid as Unicode points, and no check is
@@ -173,17 +173,17 @@ points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
 op <- par(bg = "light blue")
-x <- seq(0,2*pi, len=51)
+x <- seq(0,2*pi, len = 51)
 ## something "between type='b' and type='o'":
-plot(x, sin(x), type="o", pch=21, bg=par("bg"), col = "blue", cex=.6,
- main='plot(..., type="o", pch=21, bg=par("bg"))')
+plot(x, sin(x), type = "o", pch = 21, bg = par("bg"), col = "blue", cex = .6,
+ main = 'plot(..., type="o", pch=21, bg=par("bg"))')
 par(op)
 
 \dontrun{
 ## The figure was produced by calls like
-png("pch.png", height=0.7, width = 7, res = 100, units="in")
+png("pch.png", height = 0.7, width = 7, res = 100, units = "in")
 par(mar = rep(0,4))
-plot(c(-1, 26), 0:1, type="n", axes= FALSE)
+plot(c(-1, 26), 0:1, type = "n", axes = FALSE)
 text(0:25, 0.6, 0:25, cex = 0.5)
 points(0:25, rep(0.3, 26), pch = 0:25, bg = "grey")
 }
@@ -205,8 +205,7 @@ pchShow <-
     ry <- dd + range(iy <- 3 + (k-1)- ipch \%\% k)
     pch <- as.list(ipch) # list with integers & strings
     if(nex > 0) pch[26+ 1:nex] <- as.list(extras)
-    plot(rx, ry, type="n", axes = FALSE, xlab = "", ylab = "",
-         main = main)
+    plot(rx, ry, type = "n", axes  =  FALSE, xlab = "", ylab = "", main = main)
     abline(v = ix, h = iy, col = "lightgray", lty = "dotted")
     for(i in 1:np) {
       pc <- pch[[i]]
@@ -224,23 +223,24 @@ pchShow(NULL, cex = 4, cextext = 0, main = NULL)
 \donttest{
 ## ------------ test code for various pch specifications -------------
 # Try this in various font families (including Hershey)
-# and locales.  Use sign=-1 asserts we want Latin-1.
+# and locales.  Use sign = -1 asserts we want Latin-1.
 # Standard cases in a MBCS locale will not plot the top half.
-TestChars <- function(sign=1, font=1, ...)
+TestChars <- function(sign = 1, font = 1, ...)
 {
    MB <- l10n_info()$MBCS
    r <- if(font == 5) { sign <- 1; c(32:126, 160:254)
        } else if(MB) 32:126 else 32:255
    if (sign == -1) r <- c(32:126, 160:255)
-   par(pty="s")
-   plot(c(-1,16), c(-1,16), type="n", xlab="",ylab="", xaxs="i", yaxs="i",
-        main=sprintf("sign = \%d, font = \%d", sign,font))
-   grid(17, 17, lty=1) ; mtext(paste("MBCS:", MB))
-   for(i in r) try(points(i\%\%16, i\%/\%16, pch=sign*i, font=font,...))
+   par(pty = "s")
+   plot(c(-1,16), c(-1,16), type = "n", xlab = "", ylab = "",
+        xaxs = "i", yaxs = "i",
+        main = sprintf("sign = \%d, font = \%d", sign, font))
+   grid(17, 17, lty = 1) ; mtext(paste("MBCS:", MB))
+   for(i in r) try(points(i\%\%16, i\%/\%16, pch = sign*i, font = font,...))
 }
 TestChars()
-try(TestChars(sign=-1))
-TestChars(font=5) # Euro might be at 160 (0+10*16).  Mac OS has apple at 240 (0+15*16).
-try(TestChars(-1, font=2))# bold
+try(TestChars(sign = -1))
+TestChars(font = 5) # Euro might be at 160 (0+10*16).  Mac OS has apple at 240 (0+15*16).
+try(TestChars(-1, font = 2))# bold
 }}
 \keyword{aplot}

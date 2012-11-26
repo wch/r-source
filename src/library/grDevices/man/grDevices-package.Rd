@@ -18,7 +18,7 @@
   This package contains functions which support both
   \link[=graphics-package]{base} and \link[=grid-package]{grid} graphics.
 
-  For a complete list of functions, use \code{library(help="grDevices")}.
+  For a complete list of functions, use \code{library(help = "grDevices")}.
 
 }
 \author{

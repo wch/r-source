@@ -37,7 +37,7 @@
   \code{\link{data.frame}}
 }
 \examples{
-plot(OrchardSprays[1], method="jitter")
+plot(OrchardSprays[1], method = "jitter")
 plot(OrchardSprays[c(4,1)])
 plot(OrchardSprays)
 

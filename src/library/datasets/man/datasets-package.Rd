@@ -14,7 +14,7 @@ The R Datasets Package
 Base R datasets
 }
 \details{This package contains a variety of datasets.  For a complete
-list, use \code{library(help="datasets")}.
+list, use \code{library(help = "datasets")}.
 }
 \author{
 R Core Team and contributors worldwide

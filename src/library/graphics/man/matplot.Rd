@@ -45,7 +45,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
     through 9, 0) then the lowercase and uppercase letters.
 %%__FIXME__ Which of the following is still true; what's the "right" UI ?
 %  To mix special plotting symbols (those specified by integers) and
-%  plotting characters, either use character escapes \code{pch="Xe002"}
+%  plotting characters, either use character escapes \code{pch = "Xe002"}
 %  or figure out the numeric equivalent of the ASCII character,
 %  \code{pch=c(88,2)}.
   }
@@ -54,7 +54,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
     This works as a multiple of \code{\link{par}("cex")}.  \code{NULL} is
     equivalent to \code{1.0}. }
   \item{bg}{vector of background (fill) colors for the open plot
-    symbols given by \code{pch=21:25} as in \code{\link{points}}.  The
+    symbols given by \code{pch = 21:25} as in \code{\link{points}}.  The
     default \code{NA} corresponds to the one of the underlying function
     \code{\link{plot.xy}}.}
   \item{xlab, ylab}{titles for x and y axes, as in \code{\link{plot}}.}
@@ -89,7 +89,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
 
   Because plotting symbols are drawn with lines and because these
   functions may be changing the line style, you should probably specify
-  \code{lty=1} when using plotting symbols.
+  \code{lty = 1} when using plotting symbols.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -124,7 +124,7 @@ table(iris$Species) # is data.frame with 'Species' factor
 iS <- iris$Species == "setosa"
 iV <- iris$Species == "versicolor"
 op <- par(bg = "bisque")
-matplot(c(1, 8), c(0, 4.5), type= "n", xlab = "Length", ylab = "Width",
+matplot(c(1, 8), c(0, 4.5), type =  "n", xlab = "Length", ylab = "Width",
         main = "Petal and Sepal Dimensions in Iris Blossoms")
 matpoints(iris[iS,c(1,3)], iris[iS,c(2,4)], pch = "sS", col = c(2,4))
 matpoints(iris[iV,c(1,3)], iris[iV,c(2,4)], pch = "vV", col = c(2,4))
@@ -138,8 +138,8 @@ iris.S <- array(NA, dim = c(50,4,3),
                 dimnames = list(NULL, nam.var, nam.spec))
 for(i in 1:3) iris.S[,,i] <- data.matrix(iris[1:50+50*(i-1), -5])
 
-matplot(iris.S[,"Petal.Length",], iris.S[,"Petal.Width",], pch="SCV",
-        col = rainbow(3, start = .8, end = .1),
+matplot(iris.S[,"Petal.Length",], iris.S[,"Petal.Width",], pch = "SCV",
+        col = rainbow(3, start = 0.8, end = 0.1),
         sub = paste(c("S", "C", "V"), dimnames(iris.S)[[3]],
                     sep = "=", collapse= ",  "),
         main = "Fisher's Iris Data")

@@ -32,7 +32,7 @@ x <- 1:5
 extendrange(x)          # 0.8  5.2
 extendrange(x, f= 0.01) # 0.96 5.04
 ## Use 'r' if you have it already:
-stopifnot(identical(extendrange(r=r),
+stopifnot(identical(extendrange(r = r),
                     extendrange(x)))
 }
 \keyword{dplot}

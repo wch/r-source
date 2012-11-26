@@ -116,7 +116,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{fonts} argument.
 
   If a device-independent \R graphics font family is specified (e.g., via
-  \code{par(family=)} in the graphics package), the PDF device makes use
+  \code{par(family = )} in the graphics package), the PDF device makes use
   of the PostScript font mappings to convert the \R graphics font family
   to a PDF-specific font family description.  (See the
   documentation for \code{\link{pdfFonts}}.)
@@ -159,8 +159,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   supported by Acrobat 5 in 2001; it is very unlikely not to be
   supported in a current viewer.)
 
-  Line widths as controlled by \code{par(lwd=)} are in multiples of
-  1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
+  Line widths as controlled by \code{par(lwd = )} are in multiples of
+  1/96 inch.  Multiples less than 1 are allowed.  \code{pch = "."} with
   \code{cex = 1} corresponds to a square of side 1/72 inch, which is
   also the \sQuote{pixel} size assumed for graphics parameters such as
   \code{"cra"}.
@@ -173,7 +173,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   than \code{0.1} or too large to give a total margin of 0.5 inch, it is
   reset to the corresponding paper dimension minus 0.5.  Thus if you
   want the default behaviour of \code{\link{postscript}} use
-  \code{pdf(paper="a4r", width=0, height=0)} to centre the device region
+  \code{pdf(paper = "a4r", width = 0, height = 0)} to centre the device region
   on a landscape A4 page with 0.25 inch margins.
 
   When the background colour is fully transparent (as is the initial
@@ -307,25 +307,25 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 \examples{
 \dontrun{
 ## Test function for encodings
-TestChars <- function(encoding="ISOLatin1", ...)
+TestChars <- function(encoding = "ISOLatin1", ...)
 {
-    pdf(encoding=encoding, ...)
-    par(pty="s")
-    plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="",
-         xaxs="i", yaxs="i")
+    pdf(encoding = encoding, ...)
+    par(pty = "s")
+    plot(c(-1,16), c(-1,16), type = "n", xlab = "", ylab = "",
+         xaxs = "i", yaxs = "i")
          title(paste("Centred chars in encoding", encoding))
-    grid(17, 17, lty=1)
+    grid(17, 17, lty = 1)
     for(i in c(32:255)) {
         x <- i \%\% 16
         y <- i \%/\% 16
-        points(x, y, pch=i)
+        points(x, y, pch = i)
     }
     dev.off()
 }
 ## there will be many warnings.
 TestChars("ISOLatin2")
 ## this does not view properly in older viewers.
-TestChars("ISOLatin2", family="URWHelvetica")
+TestChars("ISOLatin2", family = "URWHelvetica")
 ## works well for viewing in gs-based viewers, and often in xpdf.
 }}
 \keyword{device}

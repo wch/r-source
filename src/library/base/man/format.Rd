@@ -148,7 +148,7 @@ format(x, \dots)
 format(1:10)
 format(1:10, trim = TRUE)
 
-zz <- data.frame("(row names)"= c("aaaaa", "b"), check.names=FALSE)
+zz <- data.frame("(row names)"= c("aaaaa", "b"), check.names = FALSE)
 format(zz)
 format(zz, justify = "left")
 

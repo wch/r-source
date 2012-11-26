@@ -129,7 +129,7 @@ pmin(5:1, pi) #->  5  numbers
 x <- sort(rnorm(100));  cH <- 1.35
 pmin(cH, quantile(x)) # no names
 pmin(quantile(x), cH) # has names
-plot(x, pmin(cH, pmax(-cH, x)), type='b', main= "Huber's function")
+plot(x, pmin(cH, pmax(-cH, x)), type = "b", main =  "Huber's function")
 
 cut01 <- function(x) pmax(pmin(x, 1), 0)
 curve(      x^2 - 1/4, -1.4, 1.5, col = 2)

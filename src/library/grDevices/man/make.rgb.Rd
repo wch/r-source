@@ -15,7 +15,7 @@
 make.rgb(red, green, blue, name = NULL, white = "D65",
          gamma = 2.2)
 
-colorConverter(toXYZ, fromXYZ, name, white=NULL)
+colorConverter(toXYZ, fromXYZ, name, white = NULL)
 }
 \arguments{
   \item{red,green,blue}{Chromaticity (xy or xyY) of RGB primaries}
@@ -39,7 +39,7 @@ colorConverter(toXYZ, fromXYZ, name, white=NULL)
 
   The display gamma is most commonly 2.2, though 1.8 is used for Apple RGB.
   The sRGB standard specifies a more complicated function that is close
-  to a gamma of 2.2; \code{gamma="sRGB"} uses this function.
+  to a gamma of 2.2; \code{gamma = "sRGB"} uses this function.
 
   Colour spaces other than RGB can be specified directly by giving
   conversions to and from XYZ tristimulus coordinates.
@@ -60,9 +60,9 @@ colorConverter(toXYZ, fromXYZ, name, white=NULL)
   }
 }
 \examples{
-(pal <- make.rgb(red=  c(0.6400, 0.3300),
-                 green=c(0.2900, 0.6000),
-                 blue= c(0.1500, 0.0600),
+(pal <- make.rgb(red =   c(0.6400, 0.3300),
+                 green = c(0.2900, 0.6000),
+                 blue =  c(0.1500, 0.0600),
                  name = "PAL/SECAM RGB"))
 
 ## converter for sRGB in #rrggbb format
@@ -78,12 +78,12 @@ hexcolor <- colorConverter(toXYZ = function(hex,...) {
                            white = "D65", name = "#rrggbb")
 
 (cols <- t(col2rgb(palette())))
-zapsmall(luv <- convertColor(cols,from="sRGB", to="Luv", scale.in=255))
-(hex <- convertColor(luv, from="Luv",  to=hexcolor, scale.out=NULL))
+zapsmall(luv <- convertColor(cols,from = "sRGB", to = "Luv", scale.in = 255))
+(hex <- convertColor(luv, from = "Luv",  to = hexcolor, scale.out = NULL))
 
 ## must make hex a matrix before using it
-(cc <- round(convertColor(as.matrix(hex), from= hexcolor, to= "sRGB",
-                          scale.in=NULL, scale.out=255)))
+(cc <- round(convertColor(as.matrix(hex), from = hexcolor, to = "sRGB",
+                          scale.in = NULL, scale.out = 255)))
 stopifnot(cc == cols)
 }
 \keyword{color}

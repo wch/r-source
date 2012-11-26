@@ -51,8 +51,8 @@ plot(cars, xlab = "Speed (mph)", ylab = "Stopping distance (ft)",
 d <- seq(0, 25, length.out = 200)
 for(degree in 1:4) {
   fm <- lm(dist ~ poly(speed, degree), data = cars)
-  assign(paste("cars", degree, sep="."), fm)
-  lines(d, predict(fm, data.frame(speed=d)), col = degree)
+  assign(paste("cars", degree, sep = "."), fm)
+  lines(d, predict(fm, data.frame(speed = d)), col = degree)
 }
 anova(cars.1, cars.2, cars.3, cars.4)
 }

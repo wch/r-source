@@ -139,7 +139,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   set the defaults as \code{horizontal = FALSE, onefile = FALSE, paper =
     "special"}.  Note that the bounding box is for the \emph{device}
   region: if you find the white space around the plot region excessive,
-  reduce the margins of the figure region via \code{\link{par}(mar=)}.
+  reduce the margins of the figure region via \code{\link{par}(mar = )}.
 
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
@@ -154,8 +154,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \R graphics font family names (see the documentation for
   \code{\link{postscriptFonts}}).
 
-  Line widths as controlled by \code{par(lwd=)} are in multiples of
-  1/96 inch: multiples less than 1 are allowed.  \code{pch="."} with
+  Line widths as controlled by \code{par(lwd = )} are in multiples of
+  1/96 inch: multiples less than 1 are allowed.  \code{pch = "."} with
   \code{cex = 1} corresponds to a square of side 1/72 inch, which is
   also the \sQuote{pixel} size assumed for graphics parameters such as
   \code{"cra"}.
@@ -170,12 +170,12 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 \section{Families}{
   Font families are collections of fonts covering the five font faces,
   (conventionally plain, bold, italic, bold-italic and symbol) selected
-  by the graphics parameter \code{\link{par}(font=)} or the grid
-  parameter \code{\link{gpar}(fontface=)}.  Font families can be
+  by the graphics parameter \code{\link{par}(font = )} or the grid
+  parameter \code{\link{gpar}(fontface = )}.  Font families can be
   specified either as an an initial/default font family for the device
   via the \code{family} argument or after the device is opened by
-  the graphics parameter \code{\link{par}(family=)} or the grid
-  parameter \code{\link{gpar}(fontfamily=)}.  Families which will be
+  the graphics parameter \code{\link{par}(family = )} or the grid
+  parameter \code{\link{gpar}(fontfamily = )}.  Families which will be
   used in addition to the initial family must be specified in the
   \code{fonts} argument when the device is opened.
 
@@ -213,9 +213,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 
   Viewers and embedding applications frequently substitute fonts for
   those specified in the family, and the substitute will often have
-  slightly different font metrics. \code{useKerning=TRUE} spaces the
+  slightly different font metrics. \code{useKerning = TRUE} spaces the
   letters in the string using kerning corrections for the intended
-  family: this may look uglier than \code{useKerning=FALSE}.
+  family: this may look uglier than \code{useKerning = FALSE}.
 }
 
 \section{Encodings}{
@@ -325,7 +325,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     when the device is closed.  Note that the plot file is not deleted
     unless \code{command} arranges to delete it.
 
-    \item \code{file=""} or \code{file="|cmd"} can be used to print
+    \item \code{file = ""} or \code{file = "|cmd"} can be used to print
     using a pipe.  Failure to open the command will probably be reported
     to the terminal but not to \R, in which case close the
     device by \code{dev.off} immediately.
@@ -333,7 +333,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 #ifdef windows
   On Windows the default
   \code{"printcmd"} is empty and will give an error if
-  \code{print.it=TRUE} is used.  Suitable commands to spool a PostScript
+  \code{print.it = TRUE} is used.  Suitable commands to spool a PostScript
   file to a printer can be found in \file{RedMon} suite available from
   \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be
   run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
@@ -412,12 +412,12 @@ postscript("|lp -dlw")
 dev.off()              # plot will appear on printer
 #endif
 #ifdef windows
-options(printcmd='redpr -P"\\\\printhost\\lw"')
-postscript(file=tempfile("Rps."), print.it=TRUE)
+options(printcmd = 'redpr -P"\\\\printhost\\lw"')
+postscript(file = tempfile("Rps."), print.it = TRUE)
 # produce the desired graph(s)
 dev.off()              # send plot file to the printer
 ## alternative using GSView 4.x
-options(printcmd='/GhostGum/gsview/gsprint -query')
+options(printcmd = '/GhostGum/gsview/gsprint -query')
 #endif
 
 # for URW PostScript devices
@@ -430,18 +430,18 @@ postscript("cm_test.eps", width = 4.0, height = 3.0,
 ## The resultant postscript file can be used by dvips -Ppfb -j0.
 
 ## To test out encodings, you can use
-TestChars <- function(encoding="ISOLatin1", family="URWHelvetica")
+TestChars <- function(encoding = "ISOLatin1", family = "URWHelvetica")
 {
-    postscript(encoding=encoding, family=family)
-    par(pty="s")
-    plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="",
-         xaxs="i", yaxs="i")
+    postscript(encoding = encoding, family = family)
+    par(pty = "s")
+    plot(c(-1,16), c(-1,16), type = "n", xlab = "", ylab = "",
+         xaxs = "i", yaxs = "i")
     title(paste("Centred chars in encoding", encoding))
-    grid(17, 17, lty=1)
+    grid(17, 17, lty = 1)
     for(i in c(32:255)) {
         x <- i \%\% 16
         y <- i \%/\% 16
-        points(x, y, pch=i)
+        points(x, y, pch = i)
     }
     dev.off()
 }
@@ -452,7 +452,7 @@ TestChars("ISOLatin2")
 TestChars("WinAnsi")
 }
 \dontshow{
-xx <- seq(0, 7, length=701)
+xx <- seq(0, 7, length = 701)
 yy <- sin(xx)/xx; yy[1] <- 1
 plot(xx,yy)                     # produce the desired graph(s)
 }

@@ -29,7 +29,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   use of \code{\link{plotmath}} is not supported.
 
   Line widths are ignored except when setting the spacing of line textures.
-  \code{pch="."} corresponds to a square of side 1pt.
+  \code{pch = "."} corresponds to a square of side 1pt.
 
   This device does not support colour (nor does the PicTeX package),
   and all colour settings are ignored.
@@ -83,7 +83,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
 require(graphics)
 
 pictex()
-plot(1:11,(-5:5)^2, type='b', main="Simple Example Plot")
+plot(1:11,(-5:5)^2, type = 'b', main = "Simple Example Plot")
 dev.off()
 ##--------------------
 \dontrun{

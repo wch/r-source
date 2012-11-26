@@ -34,9 +34,9 @@ arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30,
     y0[i])} and the point \code{(x1[i],y1[i])}.  The coordinate vectors
   will be recycled to the length of the longest.
 
-  If \code{code=1} an arrowhead is drawn at \code{(x0[i],y0[i])} and if
-  \code{code=2} an arrowhead is drawn at \code{(x1[i],y1[i])}.  If
-  \code{code=3} a head is drawn at both ends of the arrow.  Unless
+  If \code{code = 1} an arrowhead is drawn at \code{(x0[i],y0[i])} and if
+  \code{code = 2} an arrowhead is drawn at \code{(x1[i],y1[i])}.  If
+  \code{code = 3} a head is drawn at both ends of the arrow.  Unless
   \code{length = 0}, when no head is drawn.
 
   The \link{graphical parameters} \code{col}, \code{lty} and \code{lwd}
@@ -63,11 +63,11 @@ arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30,
 \examples{
 x <- stats::runif(12); y <- stats::rnorm(12)
 i <- order(x,y); x <- x[i]; y <- y[i]
-plot(x,y, main="arrows(.) and segments(.)")
+plot(x,y, main = "arrows(.) and segments(.)")
 ## draw arrows from point to point :
 s <- seq(length(x)-1)# one shorter than data
-arrows(x[s], y[s], x[s+1], y[s+1], col= 1:3)
+arrows(x[s], y[s], x[s+1], y[s+1], col = 1:3)
 s <- s[-length(s)]
-segments(x[s], y[s], x[s+2], y[s+2], col= 'pink')
+segments(x[s], y[s], x[s+2], y[s+2], col = 'pink')
 }
 \keyword{aplot}

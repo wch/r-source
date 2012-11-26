@@ -64,7 +64,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
 
   Note that a vector \code{adj} has a different meaning from
   \code{\link{text}}.  \code{adj = 0.5} will centre the string, but for
-  \code{outer=TRUE} on the device region rather than the plot region.
+  \code{outer = TRUE} on the device region rather than the plot region.
 
   Parameter \code{las} will determine the orientation of the string(s).
   For strings plotted perpendicular to the axis the default justification
@@ -92,16 +92,16 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \code{\link{plotmath}} for details on mathematical annotation.
 }
 \examples{
-plot(1:10, (-4:5)^2, main="Parabola Points", xlab="xlab")
+plot(1:10, (-4:5)^2, main = "Parabola Points", xlab = "xlab")
 mtext("10 of them")
 for(s in 1:4)
     mtext(paste("mtext(..., line= -1, {side, col, font} = ",s,
           ", cex = ", (1+s)/2, ")"), line = -1,
-          side=s, col=s, font=s, cex= (1+s)/2)
+          side = s, col = s, font = s, cex = (1+s)/2)
 mtext("mtext(..., line= -2)", line = -2)
-mtext("mtext(..., line= -2, adj = 0)", line = -2, adj =0)
+mtext("mtext(..., line= -2, adj = 0)", line = -2, adj = 0)
 ##--- log axis :
-plot(1:10, exp(1:10), log='y', main="log='y'", xlab="xlab")
-for(s in 1:4) mtext(paste("mtext(...,side=",s,")"), side=s)
+plot(1:10, exp(1:10), log = 'y', main = "log='y'", xlab = "xlab")
+for(s in 1:4) mtext(paste("mtext(...,side=", s ,")"), side = s)
 }
 \keyword{aplot}
