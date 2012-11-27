@@ -1,5 +1,5 @@
 
-R version 2.15.2 Patched (2012-11-26 r61154) -- "Trick or Treat"
+R version 2.15.2 Patched (2012-11-27 r61171) -- "Trick or Treat"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1881,7 +1881,7 @@ lines[GRID.lines.970]
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.049 0.029 2.091 0 0 
+Time elapsed:  2.052 0.027 2.091 0 0 
 > grDevices::dev.off()
 null device 
           1 
