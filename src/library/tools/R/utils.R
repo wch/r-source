@@ -528,8 +528,6 @@ function(val) {
     }
 }
 
-
-
 ### ** .eval_with_capture
 
 .eval_with_capture <-
@@ -579,6 +577,18 @@ function(file1, file2)
     ## Use a fast version of file.append() that ensures LF between
     ## files.
     .Call(codeFilesAppend, file1, file2)
+}
+
+### ** .file_path_relative_to_dir
+
+.file_path_relative_to_dir <-
+function(x, dir)
+{
+    if(any(ind <- (substring(x, 1L, nchar(dir)) == dir))) {
+        ## Assume .Platform$file.sep is a single character.
+        x[ind] <- substring(x, nchar(dir) + 2L)
+    }
+    x
 }
 
 ### ** .find_calls

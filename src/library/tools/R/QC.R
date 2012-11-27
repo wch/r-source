@@ -32,6 +32,7 @@
 ## .checkFF
 ## .check_package_code_shlib
 ## .check_package_code_startup_functions
+## .check_package_code_assign_to_globalenv
 ## .check_code_usage_in_package
 ## .check_T_and_F
 ## .check_dotInternal
@@ -4574,6 +4575,94 @@ function(dir)
     invisible(x)
 }
 
+### * .check_package_code_assign_to_globalenv
+
+.check_package_code_assign_to_globalenv <-
+function(dir)
+{
+    dfile <- file.path(dir, "DESCRIPTION")
+    enc <- if(file.exists(dfile))
+        .read_description(dfile)["Encoding"] else NA
+    
+    code_files <-
+        list_files_with_type(file.path(dir, "R"),
+                             "code",
+                             OS_subdirs = c("unix", "windows"))
+
+    calls <-
+        lapply(code_files,
+               function(f) {
+                   tryCatch(.get_assignments_to_globalenv_in_file(f, enc),
+                            error = identity)
+               })
+    names(calls) <- .file_path_relative_to_dir(code_files, dir)
+    calls <- Filter(function(e) length(e) && !inherits(e, "error"),
+                    calls)
+    class(calls) <- "check_package_code_assign_to_globalenv"
+    calls
+}
+
+format.check_package_code_assign_to_globalenv <-
+function(x, ...)
+{
+    if(!length(x)) return(character())
+
+    .fmt_entries_for_file <- function(calls, f) {
+        c(gettextf("File %s:", sQuote(f)),
+          paste0("  ",
+                 unlist(lapply(calls,
+                               function(e)
+                               paste(deparse(e), collapse = "\n")))))
+    }
+
+    c("Found the following assignments to the global environment:",
+      unlist(Map(.fmt_entries_for_file, x, names(x))),
+      "")
+}
+
+print.check_package_code_assign_to_globalenv <-
+function(x, ...)
+{
+    writeLines(format(x))
+    invisible(x)
+}
+
+.get_assignments_to_globalenv_in_file <-
+function(f, encoding = NA)
+{
+    if(!file.info(f)$size) return()
+    calls <- list()
+    exprs <- suppressWarnings({
+        if(!is.na(encoding) &&
+           !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+            lines <- iconv(readLines(f, warn = FALSE), from =
+                           encoding, to = "", sub = "byte")
+            parse(text = lines)
+        } else parse(f)
+    })
+    .find_calls(exprs,
+                function(e) {
+                    if(!is.call(e) ||
+                       as.character(e[[1L]]) != "assign")
+                        return(FALSE)
+                    e <- e[as.character(e) != "..."]
+                    ## Capture assignments to global env unless to
+                    ## .Random.seed.
+                    mc <- match.call(base::assign, e)
+                    ## (This may fail for conditionalized code not meant
+                    ## for R [e.g., argument 'where'].)
+                    ((mc$x != ".Random.seed") &&
+                     ((is.name(pos <- mc$pos) &&
+                       as.character(pos) == ".GlobalEnv") ||
+                      (is.call(pos) &&
+                       as.character(pos) == "globalenv") ||
+                      (is.name(env <- mc$envir) &&
+                       as.character(env) == ".GlobalEnv") ||
+                      (is.call(env) &&
+                       as.character(env) == "globalenv")))
+                },
+                recursive = TRUE)
+}
 
 ### * .check_packages_used
 

@@ -1108,7 +1108,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                               pkgdir))
         out1 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
 
-        out2 <- out3 <- out4 <- NULL
+        out2 <- out3 <- out4 <- out5 <- NULL
 
         if (!is_base_pkg && R_check_unsafe_calls) {
             Rcmd <- "options(warn=1);tools:::.check_package_code_tampers(\"R\")"
@@ -1135,7 +1135,15 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (!any(grepl("^Found.* .Internal call", out4))) out4 <- NULL
         }
 
-        if (length(out1) || length(out2) || length(out3) || length(out4)) {
+        if(R_check_code_assign_to_globalenv) {
+            Rcmd <- paste("options(warn=1)\n",
+                          sprintf("tools:::.check_package_code_assign_to_globalenv(dir = \"%s\")\n",
+                                  pkgdir))
+            out5 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+        }
+
+        if (length(out1) || length(out2) || length(out3) ||
+            length(out4) || length(out5)) {
             if (length(out4)) warningLog(Log) else noteLog(Log)
             if (length(out1))
                 printLog0(Log, paste(c(out1, ""), collapse = "\n"))
@@ -1154,6 +1162,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           "for use only by R itself",
                           "and subject to change without notice."))
             }
+            if (length(out5))
+                printLog0(Log, paste(c(out5, ""), collapse = "\n"))
+            
         } else resultLog(Log, "OK")
     }
 
@@ -3373,6 +3384,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         nzchar(Sys.which(Sys.getenv("R_QPDF", "qpdf")))
     R_check_doc_sizes2 <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES2_", "FALSE"))
+    R_check_code_assign_to_globalenv <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_CODE_ASSIGN_TO_GLOBALENV_",
+                                         "FALSE"))
 
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
