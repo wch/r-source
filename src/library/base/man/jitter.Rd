@@ -22,7 +22,7 @@ jitter(x, factor = 1, amount = NULL)
   Add a small amount of noise to a numeric vector.
 }
 \value{
-  \code{jitter(x,\dots)} returns a numeric of the same length as
+  \code{jitter(x, \dots)} returns a numeric of the same length as
   \code{x}, but with an \code{amount} of noise added in order to break
   ties. 
 }
@@ -56,10 +56,10 @@ jitter(x, factor = 1, amount = NULL)
   \code{\link{rug}} which you may want to combine with \code{jitter}.
 }
 \examples{
-round(jitter(c(rep(1,3),  rep(1.2, 4), rep(3,3))), 3)
+round(jitter(c(rep(1, 3), rep(1.2, 4), rep(3, 3))), 3)
 ## These two 'fail' with S-plus 3.x:
 jitter(rep(0, 7))
-jitter(rep(10000,5))
+jitter(rep(10000, 5))
 }
 \keyword{dplot}
 \keyword{utilities}

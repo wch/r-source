@@ -132,16 +132,16 @@ deriv((y ~ sin(cos(x) * y)), c("x","y"), func = TRUE)
 ## function with defaulted arguments:
 (fx <- deriv(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
              function(b0, b1, th, x = 1:7){} ) )
-fx(2,3,4)
+fx(2, 3, 4)
 
 ## Higher derivatives
 deriv3(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
      c("b0", "b1", "th", "x") )
 
 ## Higher derivatives:
-DD <- function(expr,name, order = 1) {
+DD <- function(expr, name, order = 1) {
    if(order < 1) stop("'order' must be >= 1")
-   if(order == 1) D(expr,name)
+   if(order == 1) D(expr, name)
    else DD(D(expr, name), name, order - 1)
 }
 DD(expression(sin(x^2)), "x", 3)

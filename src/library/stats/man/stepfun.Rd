@@ -43,7 +43,7 @@ as.stepfun(x, \dots)
 \description{
   Given the vectors \eqn{(x_1, \ldots, x_n)}{(x[1], \dots, x[n])} and
   \eqn{(y_0,y_1,\ldots, y_n)}{(y[0], y[1], \dots, y[n])} (one value
-  more!), \code{stepfun(x,y,\dots)} returns an interpolating
+  more!), \code{stepfun(x, y, \dots)} returns an interpolating
   \sQuote{step} function, say \code{fn}. I.e., \eqn{fn(t) =
     c}\eqn{_i}{[i]} (constant) for \eqn{t \in (x_i, x_{i+1})}{t in (
     x[i], x[i+1])} and at the abscissa values, if (by default)
@@ -91,9 +91,9 @@ as.stepfun(x, \dots)
   \code{\link{approxfun}} and \code{\link{splinefun}}.
 }
 \examples{
-y0 <- c(1.,2.,4.,3.)
+y0 <- c(1., 2., 4., 3.)
 sfun0  <- stepfun(1:3, y0, f = 0)
-sfun.2 <- stepfun(1:3, y0, f = .2)
+sfun.2 <- stepfun(1:3, y0, f = 0.2)
 sfun1  <- stepfun(1:3, y0, f = 1)
 sfun1c <- stepfun(1:3, y0, right = TRUE) # hence f=1
 sfun0
@@ -108,7 +108,7 @@ x0 <- seq(0.5, 3.5, by = 0.25)
 rbind(x = x0, f.f0 = sfun0(x0), f.f02 = sfun.2(x0),
       f.f1 = sfun1(x0), f.f1c = sfun1c(x0))
 ## Identities :
-stopifnot(identical(y0[-1], sfun0 (1:3)),# right = FALSE
-          identical(y0[-4], sfun1c(1:3)))# right = TRUE
+stopifnot(identical(y0[-1], sfun0 (1:3)), # right = FALSE
+          identical(y0[-4], sfun1c(1:3))) # right = TRUE
 }
 \keyword{dplot}

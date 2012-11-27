@@ -32,6 +32,6 @@ smokers  <- c( 83, 90, 129, 70 )
 patients <- c( 86, 93, 136, 82 )
 prop.test(smokers, patients)
 prop.trend.test(smokers, patients)
-prop.trend.test(smokers, patients,c(0,0,0,1))
+prop.trend.test(smokers, patients, c(0,0,0,1))
 }
 \keyword{htest}

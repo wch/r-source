@@ -45,7 +45,7 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
 
   \code{axTicks()} can be used an \R interface to the C function
   \code{CreateAtVector()} in \file{..../src/main/plot.c}
-  which is called by \code{\link{axis}(side,*)} when no argument
+  which is called by \code{\link{axis}(side, *)} when no argument
   \code{at} is specified.
   The delicate case, \code{log = TRUE}, now makes use of
   \code{\link{axisTicks}} (in package \pkg{grDevices}) unless
@@ -73,9 +73,9 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
            identical(axTicks(2), axTicks(4)))
 
 ## Show how axTicks() and axis() correspond :
-op <- par(mfrow = c(3,1))
-for(x in 9999*c(1,2,8)) {
-    plot(x,9, log = "x")
+op <- par(mfrow = c(3, 1))
+for(x in 9999 * c(1, 2, 8)) {
+    plot(x, 9, log = "x")
     cat(formatC(par("xaxp"), width = 5),";", T <- axTicks(1),"\n")
     rug(T, col =  adjustcolor("red", 0.5), lwd = 4)
 }
@@ -105,7 +105,7 @@ usr.r <- extendrange(r = log10(ylims), f = 0.04)
 plot(0:1, ylims, log = "y", yaxs = "i")
 stopifnot(all.equal(aT.i, axTicks(side = 2)))
 
-plot(0:1, ylims, log = "y" ,yaxs = "r")
+plot(0:1, ylims, log = "y", yaxs = "r")
 stopifnot(all.equal(aT.r, axTicks(side = 2)))
 }
 \keyword{dplot}

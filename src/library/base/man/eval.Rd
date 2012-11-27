@@ -104,13 +104,13 @@ a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, -1), list(b = 5))        # == 12
 ev <- function() {
    e1 <- parent.frame()
    ## Evaluate a in e1
-   aa <- eval(expression(a),e1)
+   aa <- eval(expression(a), e1)
    ## evaluate the expression bound to a in e1
    a <- expression(x+y)
    list(aa = aa, eval = eval(a, e1))
 }
 tst.ev <- function(a = 7) { x <- pi; y <- 1; ev() }
-tst.ev()#-> aa : 7,  eval : 4.14
+tst.ev()  #-> aa : 7,  eval : 4.14
 
 a <- list(a = 3, b = 4)
 with(a, a <- 5) # alters the copy of a from the list, discarded.

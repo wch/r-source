@@ -111,7 +111,7 @@ r == "white"
 stopifnot(r[] == r,
           identical(r[3:5], colors()[3:5]))
 r[2:4] <- "black"
-stopifnot(identical(r[1:4, 1], as.raster(c("white", rep("black",3)))))
+stopifnot(identical(r[1:4, 1], as.raster(c("white", rep("black", 3)))))
 }% end{tests}
 }
 \keyword{ dplot }

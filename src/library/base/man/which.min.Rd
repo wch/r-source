@@ -48,7 +48,7 @@ which.max(x)
   of ties).
 }
 \examples{
-x <- c(1:4,0:5,11)
+x <- c(1:4, 0:5, 11)
 which.min(x)
 which.max(x)
 

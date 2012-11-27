@@ -50,7 +50,7 @@ summary(model2 <- glm(case ~ age+parity+education+spontaneous+induced,
 if(require(survival)){
   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
   print(summary(model3))
-  detach()# survival (conflicts)
+  detach()  # survival (conflicts)
 }
 }
 \keyword{datasets}

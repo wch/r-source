@@ -77,7 +77,7 @@ storage.mode(x) <- value
 \examples{
 require(stats)
 
-sapply(options(),mode)
+sapply(options(), mode)
 
 cex3 <- c("NULL", "1", "1:1", "1i", "list(1)", "data.frame(x = 1)",
   "pairlist(pi)", "c", "lm", "formals(lm)[[1]]",  "formals(lm)[[2]]",

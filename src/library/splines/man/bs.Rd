@@ -70,10 +70,10 @@ ht <- seq(57, 73, length.out = 200)
 lines(ht, predict(fm1, data.frame(height = ht)))
 \dontshow{
 ## Consistency:
-x <- c(1:3,5:6)
+x <- c(1:3, 5:6)
 stopifnot(identical(bs(x), bs(x, df = 3)),
-          identical(bs(x, df = 4), bs(x, df = 4, knots = NULL)),# not true till 2.15.2
-          !is.null(kk <- attr(bs(x), "knots")),# not true till 1.5.1
+          identical(bs(x, df = 4), bs(x, df = 4, knots = NULL)), # not true till 2.15.2
+          !is.null(kk <- attr(bs(x), "knots")), # not true till 1.5.1
           length(kk) == 0)
 }}
 \keyword{smooth}

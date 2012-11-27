@@ -286,7 +286,7 @@ par(\dots, no.readonly = FALSE)
       Note that \code{c(\link{strwidth}(ch), \link{strheight}(ch))} for
       a given string \code{ch} is usually much more precise.}
     \item{\code{din}}{\emph{\bold{R.O.}}; the device dimensions,
-      \code{(width,height)}, in inches.  See also
+      \code{(width, height)}, in inches.  See also
       \code{\link{dev.size}}, which is updated immediately when an
       on-screen device windows is re-sized.}
     \item{\code{err}}{(\emph{Unimplemented}; \R is silent when points
@@ -315,7 +315,7 @@ par(\dots, no.readonly = FALSE)
       start a new plot, so to add to an existing plot use
       \code{new = TRUE} as well.}
     \item{\code{fin}}{The figure region dimensions,
-      \code{(width,height)}, in inches. If you set this, unlike S, you
+      \code{(width, height)}, in inches. If you set this, unlike S, you
       start a new plot.}
     \item{\code{font}}{An integer which specifies which font to use for
       text.  If possible, device drivers arrange so that 1 corresponds
@@ -479,7 +479,7 @@ par(\dots, no.readonly = FALSE)
       Some functions such as \code{\link{points}} accept a vector of values
       which are recycled.
     }
-    \item{\code{pin}}{The current plot dimensions, \code{(width,height)},
+    \item{\code{pin}}{The current plot dimensions, \code{(width, height)},
       in inches.}
     \item{\code{plt}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the coordinates of the plot region as fractions of the
@@ -691,12 +691,12 @@ plot(1:2, xaxs = "i") # 'inner axis' w/o extra space
 par(c("usr", "xaxp"))
 
 ( nr.prof <-
-  c(prof.pilots = 16,lawyers = 11,farmers = 10,salesmen = 9,physicians = 9,
-    mechanics = 6,policemen = 6,managers = 6,engineers = 5,teachers = 4,
-    housewives = 3,students = 3,armed.forces = 1))
+c(prof.pilots = 16, lawyers = 11, farmers = 10, salesmen = 9, physicians = 9,
+  mechanics = 6, policemen = 6, managers = 6, engineers = 5, teachers = 4,
+  housewives = 3, students = 3, armed.forces = 1))
 par(las = 3)
 barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
-par(las = 0)# reset to default
+par(las = 0)  # reset to default
 
 require(grDevices) # for gray
 ## 'fg' use:

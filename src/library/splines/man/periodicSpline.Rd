@@ -44,7 +44,7 @@ frm <- data.frame( xx, yy )
 pispl <- periodicSpline( xx, yy, period = 2 * pi)
 \donttest{pispl}
 pispl2 <- periodicSpline( yy ~ xx, frm, period = 2 * pi )
-stopifnot(all.equal(pispl, pispl2))# pispl and pispl2 are the same
+stopifnot(all.equal(pispl, pispl2))  # pispl and pispl2 are the same
 
 plot( pispl )          # displays over one period
 points( yy ~ xx, col = "brown")

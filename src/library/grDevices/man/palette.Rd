@@ -35,7 +35,7 @@ palette(value)
 \seealso{
   \code{\link{colors}} for the vector of built-in named colors;
   \code{\link{hsv}}, \code{\link{gray}}, \code{\link{rainbow}},
-  \code{\link{terrain.colors}},\dots to construct colors.
+  \code{\link{terrain.colors}}, \dots to construct colors.
 
   \code{\link{adjustcolor}}, e.g., for tweaking existing palettes;
   \code{\link{colorRamp}} to interpolate colors, making custom palettes;
@@ -48,9 +48,9 @@ palette()               # obtain the current palette
 palette(rainbow(6))     # six color rainbow
 
 (palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
-matplot(outer(1:100,1:30), type = 'l', lty = 1,lwd = 2, col = 1:30,
+matplot(outer(1:100, 1:30), type = "l", lty = 1,lwd = 2, col = 1:30,
         main = "Gray Scales Palette",
-        sub = "palette(gray(seq(0,.9,len=25)))")
+        sub = "palette(gray(seq(0, .9, len=25)))")
 palette("default")      # reset back to the default
 
 ## on a device where alpha-transparency is supported,

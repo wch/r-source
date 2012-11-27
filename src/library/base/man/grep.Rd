@@ -243,8 +243,8 @@ regexec(pattern, text, ignore.case = FALSE,
 grep("[a-z]", letters)
 
 txt <- c("arm","foot","lefroo", "bafoobar")
-if(length(i <- grep("foo",txt)))
-   cat("'foo' appears at least once in\n\t",txt,"\n")
+if(length(i <- grep("foo", txt)))
+   cat("'foo' appears at least once in\n\t", txt, "\n")
 i # 2 and 4
 txt[i]
 
@@ -287,10 +287,10 @@ findArgs <- function(env, pattern) {
 findArgs("package:base", "warn")
 
 ## trim trailing white space
-str <- 'Now is the time      '
-sub(' +$', '', str)  ## spaces only
-sub('[[:space:]]+$', '', str) ## white space, POSIX-style
-sub('\\\\s+$', '', str, perl = TRUE) ## Perl-style white space
+str <- "Now is the time      "
+sub(" +$", "", str)  ## spaces only
+sub("[[:space:]]+$", "", str) ## white space, POSIX-style
+sub("\\\\s+$", "", str, perl = TRUE) ## Perl-style white space
 
 ## capitalizing
 txt <- "a test of capitalizing"

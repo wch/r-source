@@ -136,9 +136,9 @@ coplot(lat ~ long | depth, data = quakes, given.v = given.depth, rows = 1)
 ## Conditioning on 2 variables:
 ll.dm <- lat ~ long | depth * mag
 coplot(ll.dm, data = quakes)
-coplot(ll.dm, data = quakes, number = c(4,7), show.given = c(TRUE,FALSE))
-coplot(ll.dm, data = quakes, number = c(3,7),
-       overlap = c(-.5,.1)) # negative overlap DROPS values
+coplot(ll.dm, data = quakes, number = c(4, 7), show.given = c(TRUE, FALSE))
+coplot(ll.dm, data = quakes, number = c(3, 7),
+       overlap = c(-.5, .1)) # negative overlap DROPS values
 
 ## given two factors
 Index <- seq(length = nrow(warpbreaks)) # to get nicer default labels

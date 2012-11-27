@@ -14,7 +14,7 @@
 convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
 }
 \arguments{
-  \item{x,y}{numeric sequences \emph{of the same length} to be
+  \item{x, y}{numeric sequences \emph{of the same length} to be
     convolved.}
   \item{conj}{logical; if \code{TRUE}, take the complex \emph{conjugate}
     before back-transforming (default, and used for usual convolution).}
@@ -37,7 +37,7 @@ convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
   \code{x} and \code{y} is given by \code{convolve(x, rev(y), type = "o")}.
 }
 \value{
-  If \code{r <- convolve(x,y, type = "open")}
+  If \code{r <- convolve(x, y, type = "open")}
   and \code{n <- length(x)}, \code{m <- length(y)}, then
   \deqn{r_k = \sum_{i} x_{k-m+i} y_{i}}{r[k] = sum(i; x[k-m+i] * y[i])}
   where the sum is over all valid indices \eqn{i}, for
@@ -61,12 +61,12 @@ require(graphics)
 
 x <- c(0,0,0,100,0,0,0)
 y <- c(0,0,1, 2 ,1,0,0)/4
-zapsmall(convolve(x,y))         #  *NOT* what you first thought.
+zapsmall(convolve(x, y))         #  *NOT* what you first thought.
 zapsmall(convolve(x, y[3:5], type = "f")) # rather
 x <- rnorm(50)
 y <- rnorm(50)
 # Circular convolution *has* this symmetry:
-all.equal(convolve(x,y, conj = FALSE), rev(convolve(rev(y),x)))
+all.equal(convolve(x, y, conj = FALSE), rev(convolve(rev(y),x)))
 
 n <- length(x <- -20:24)
 y <- (x-10)^2/1000 + rnorm(x)/8
@@ -74,7 +74,7 @@ y <- (x-10)^2/1000 + rnorm(x)/8
 Han <- function(y) # Hanning
        convolve(y, c(1,2,1)/4, type = "filter")
 
-plot(x,y, main="Using  convolve(.) for Hanning filters")
+plot(x, y, main = "Using  convolve(.) for Hanning filters")
 lines(x[-c(1  , n)      ], Han(y), col = "red")
 lines(x[-c(1:2, (n-1):n)], Han(Han(y)), lwd = 2, col = "dark blue")
 }

@@ -78,7 +78,7 @@ abbreviate(x, 2)
 abbreviate(x, 2, strict = TRUE) # >> 1st and 3rd are == "ab"
 
 (st.abb <- abbreviate(state.name, 2))
-table(nchar(st.abb))# out of 50, 3 need 4 letters :
+table(nchar(st.abb)) # out of 50, 3 need 4 letters :
 as <- abbreviate(state.name, 3, strict = TRUE)
 as[which(as == "Mss")]
 \dontshow{stopifnot(which(as == "Mss") == c(21,24,25))

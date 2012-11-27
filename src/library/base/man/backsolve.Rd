@@ -45,7 +45,7 @@ forwardsolve(l, x, k=ncol(l), upper.tri=FALSE, transpose=FALSE)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Dongarra, J. J., Bunch,J. R.,  Moler, C. B. and  Stewart, G. W. (1978)
+  Dongarra, J. J., Bunch, J. R.,  Moler, C. B. and  Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 }
 \seealso{

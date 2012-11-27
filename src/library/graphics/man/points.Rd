@@ -168,12 +168,12 @@ points(x, \dots)
 }
 \examples{
 require(stats) # for rnorm
-plot(-4:4, -4:4, type = "n")# setting up coord. system
+plot(-4:4, -4:4, type = "n")  # setting up coord. system
 points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
 op <- par(bg = "light blue")
-x <- seq(0,2*pi, len = 51)
+x <- seq(0, 2*pi, len = 51)
 ## something "between type='b' and type='o'":
 plot(x, sin(x), type = "o", pch = 21, bg = par("bg"), col = "blue", cex = .6,
  main = 'plot(..., type="o", pch=21, bg=par("bg"))')
@@ -240,7 +240,7 @@ TestChars <- function(sign = 1, font = 1, ...)
 }
 TestChars()
 try(TestChars(sign = -1))
-TestChars(font = 5) # Euro might be at 160 (0+10*16).  Mac OS has apple at 240 (0+15*16).
-try(TestChars(-1, font = 2))# bold
+TestChars(font = 5)  # Euro might be at 160 (0+10*16).  Mac OS has apple at 240 (0+15*16).
+try(TestChars(-1, font = 2))  # bold
 }}
 \keyword{aplot}

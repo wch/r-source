@@ -51,7 +51,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   and 6.6.2 \eqn{I_x(a,b) = B_x(a,b) / B(a,b)} where
   \eqn{B(a,b) = B_1(a,b)} is the Beta function (\code{\link{beta}}).
 
-  \eqn{I_x(a,b)} is \code{pbeta(x,a,b)}.
+  \eqn{I_x(a,b)} is \code{pbeta(x, a, b)}.
 
   The noncentral Beta distribution (with \code{ncp} \eqn{ = \lambda})
   is defined (Johnson et al, 1995, pp. 502) as the distribution of

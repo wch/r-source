@@ -14,7 +14,8 @@
 line(x, y)
 }
 \arguments{
-  \item{x,y}{the arguments can be any way of specifying x-y pairs.}
+  \item{x, y}{the arguments can be any way of specifying x-y pairs.  See
+    \code{\link{xy.coords}}.}
 }
 \value{
   An object of class \code{"tukeyline"}.

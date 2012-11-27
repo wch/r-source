@@ -363,7 +363,7 @@ rc.options(\dots)
   If you are uncomfortable with unsolicited evaluation of pieces of
   code, you should set \code{ops = FALSE}.  Otherwise, trying to
   complete \code{foo@ba} will evaluate \code{foo}, trying to complete
-  \code{foo[i,1:10]$ba} will evaluate \code{foo[i,1:10]}, etc.  This
+  \code{foo[i, 1:10]$ba} will evaluate \code{foo[i, 1:10]}, etc.  This
   should not be too bad, as explicit function calls (involving
   parentheses) are not evaluated in this manner.  However, this
   \emph{will} affect lazy loaded symbols (and presumably other promise

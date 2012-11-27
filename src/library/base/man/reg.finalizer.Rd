@@ -36,7 +36,7 @@
 }
 \examples{
 f <- function(e) print("cleaning....")
-g <- function(x){ e <- environment(); reg.finalizer(e,f) }
+g <- function(x){ e <- environment(); reg.finalizer(e, f) }
 g()
 invisible(gc()) # trigger cleanup
 }

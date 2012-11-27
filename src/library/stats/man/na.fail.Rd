@@ -64,7 +64,7 @@ na.omit(DF)
 m <- as.matrix(DF)
 na.omit(m)
 stopifnot(all(na.omit(1:3) == 1:3))  # does not affect objects with no NA's
-try(na.fail(DF))#> Error: missing values in ...
+try(na.fail(DF))   #> Error: missing values in ...
 
 options("na.action")
 }

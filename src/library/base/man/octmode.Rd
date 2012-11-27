@@ -61,7 +61,7 @@ as.octmode(x)
   strings to integers.
 }
 \examples{
-(on <- as.octmode(c(16,32, 127:129))) # "020" "040" "177" "200" "201"
+(on <- as.octmode(c(16, 32, 127:129))) # "020" "040" "177" "200" "201"
 unclass(on[3:4]) # subsetting
 
 ## manipulate file modes

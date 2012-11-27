@@ -48,7 +48,7 @@ list2env(x, envir = NULL, parent = parent.frame(),
   The (semantical) \dQuote{inverse}: \code{\link{as.list.environment}}.
 }
 \examples{
-L <- list(a = 1, b = 2:4, p = pi, ff = gl(3,4,labels = LETTERS[1:3]))
+L <- list(a = 1, b = 2:4, p = pi, ff = gl(3, 4, labels = LETTERS[1:3]))
 e <- list2env(L)
 ls(e)
 stopifnot(ls(e) == sort(names(L)),
@@ -63,7 +63,7 @@ stopifnot(identical(L [sort.list(names(L ))],
 
 ## now add to e -- can be seen as a fast "multi-assign":
 list2env(list(abc = LETTERS, note = "just an example",
-              df = data.frame(x = rnorm(20), y = rbinom(20,1, pr = 0.2))),
+              df = data.frame(x = rnorm(20), y = rbinom(20, 1, pr = 0.2))),
          envir = e)
 utils::ls.str(e)
 }

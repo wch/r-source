@@ -81,8 +81,8 @@ tclVar(init = "")
 \method{tclvalue}{tclVar}(x) <- value
 
 tclArray()
-\method{[[}{tclArray}(x,...)
-\method{[[}{tclArray}(x,...) <- value
+\method{[[}{tclArray}(x, ...)
+\method{[[}{tclArray}(x, ...) <- value
 \method{$}{tclArray}(x, i)
 \method{$}{tclArray}(x, i) <- value
 

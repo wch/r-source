@@ -81,7 +81,7 @@ x <- seq(0, 40, length.out = 801); yl <- c(-.8, .8)
 plot(x, x, ylim = yl, ylab = "", type = "n",
      main = "Bessel Functions  J_nu(x)")
 for(nu in nus) lines(x, besselJ(x, nu = nu), col = nu + 2)
-legend(32,-.18, legend = paste("nu=", nus), col = nus + 2, lwd = 1)
+legend(32, -.18, legend = paste("nu=", nus), col = nus + 2, lwd = 1)
 
 ## Negative nu's :
 xx <- 2:7
@@ -126,7 +126,7 @@ for(nu in nus){
 legend(25, -.5, legend = paste("nu=", nus), col = nus+2, lwd = 1)
 
 ## negative nu in bessel_Y -- was bogus for a long time
-curve(besselY(x, -0.1), 0, 10, ylim = c(-3,1), ylab = '')
+curve(besselY(x, -0.1), 0, 10, ylim = c(-3,1), ylab = "")
 for(nu in c(seq(-0.2, -2, by = -0.1)))
   curve(besselY(x, nu), add = TRUE)
 title(expression(besselY(x, nu) * "   " *

@@ -44,7 +44,7 @@ as.function(x, \dots)
   argument lists, etc.
 }
 \examples{
-as.function(alist(a = , b = 2 ,a+b))
+as.function(alist(a = , b = 2, a+b))
 as.function(alist(a = , b = 2, a+b))(3)
 }
 \keyword{programming}

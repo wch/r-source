@@ -133,7 +133,7 @@ books <- data.frame(
 
 (m1 <- merge(authors, books, by.x = "surname", by.y = "name"))
 (m2 <- merge(books, authors, by.x = "name", by.y = "surname"))
-stopifnot(as.character(m1[,1]) == as.character(m2[,1]),
+stopifnot(as.character(m1[, 1]) == as.character(m2[, 1]),
           all.equal(m1[, -1], m2[, -1][ names(m1)[-1] ]),
           dim(merge(m1, m2, by = integer(0))) == c(36, 10))
 

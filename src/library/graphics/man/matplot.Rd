@@ -47,7 +47,7 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
 %  To mix special plotting symbols (those specified by integers) and
 %  plotting characters, either use character escapes \code{pch = "Xe002"}
 %  or figure out the numeric equivalent of the ASCII character,
-%  \code{pch=c(88,2)}.
+%  \code{pch = c(88, 2)}.
   }
   \item{col}{vector of colors.  Colors are used cyclically.}
   \item{cex}{vector of character expansion sizes, used cyclically.
@@ -138,7 +138,7 @@ iris.S <- array(NA, dim = c(50,4,3),
                 dimnames = list(NULL, nam.var, nam.spec))
 for(i in 1:3) iris.S[,,i] <- data.matrix(iris[1:50+50*(i-1), -5])
 
-matplot(iris.S[,"Petal.Length",], iris.S[,"Petal.Width",], pch = "SCV",
+matplot(iris.S[, "Petal.Length",], iris.S[, "Petal.Width",], pch = "SCV",
         col = rainbow(3, start = 0.8, end = 0.1),
         sub = paste(c("S", "C", "V"), dimnames(iris.S)[[3]],
                     sep = "=", collapse= ",  "),

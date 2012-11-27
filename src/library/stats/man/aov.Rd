@@ -105,7 +105,7 @@ aov(terms(yield ~ block + N * P + K, keep.order = TRUE), npk)
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 npk.aovE
 summary(npk.aovE)
-options(op)# reset to previous
+options(op)  # reset to previous
 }
 \keyword{models}
 \keyword{regression}

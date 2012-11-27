@@ -83,12 +83,12 @@ lfactorial(x)
 
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and the logarithms of their absolute values.  Note that
-  \code{choose(n,k)} is defined for all real numbers \eqn{n} and integer
+  \code{choose(n, k)} is defined for all real numbers \eqn{n} and integer
   \eqn{k}.  For \eqn{k \ge 1} it is defined as
   \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)\dots(n-k+1) / k!},
   as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
   Non-integer values of \code{k} are rounded to an integer, with a warning.
-  \cr \code{choose(*,k)} uses direct arithmetic (instead of
+  \cr \code{choose(*, k)} uses direct arithmetic (instead of
   \code{[l]gamma} calls) for small \code{k}, for speed and accuracy
   reasons.  Note the function \code{\link[utils]{combn}} (package
   \pkg{utils}) for enumeration of all possible combinations.
@@ -139,13 +139,13 @@ lfactorial(10000)
 ## this will generate loss of precision warnings, so turn off
 op <- options("warn")
 options(warn = -1)
-x <- sort(c(seq(-3,4, length.out = 201), outer(0:-3, (-1:1)*1e-6, "+")))
+x <- sort(c(seq(-3, 4, length.out = 201), outer(0:-3, (-1:1)*1e-6, "+")))
 plot(x, gamma(x), ylim = c(-20,20), col = "red", type = "l", lwd = 2,
      main = expression(Gamma(x)))
 abline(h = 0, v = -3:0, lty = 3, col = "midnightblue")
 options(op)
 
-x <- seq(.1, 4, length.out = 201); dx <- diff(x)[1]
+x <- seq(0.1, 4, length.out = 201); dx <- diff(x)[1]
 par(mfrow = c(2, 3))
 for (ch in c("", "l","di","tri","tetra","penta")) {
   is.deriv <- nchar(ch) >= 2
@@ -167,10 +167,10 @@ par(mfrow = c(1, 1))
 
 ## "Extended" Pascal triangle:
 fN <- function(n) formatC(n, width=2)
-for (n in -4:10) cat(fN(n),":", fN(choose(n, k= -2:max(3,n+2))), "\n")
+for (n in -4:10) cat(fN(n),":", fN(choose(n, k = -2:max(3, n+2))), "\n")
 
 ## R code version of choose()  [simplistic; warning for k < 0]:
-mychoose <- function(r,k)
+mychoose <- function(r, k)
     ifelse(k <= 0, (k == 0),
            sapply(k, function(k) prod(r:(r-k+1))) / factorial(k))
 k <- -1:6

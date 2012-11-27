@@ -57,7 +57,7 @@ blues9
 \examples{
 x1  <- matrix(rnorm(1e3), ncol = 2)
 x2  <- matrix(rnorm(1e3, mean = 3, sd = 1.5), ncol = 2)
-x   <- rbind(x1,x2)
+x   <- rbind(x1, x2)
 
 dcols <- densCols(x)
 graphics::plot(x, col = dcols, pch = 20, main = "n = 1000")

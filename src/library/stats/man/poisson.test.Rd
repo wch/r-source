@@ -68,7 +68,7 @@ poisson.test(x, T = 1, r = 1,
 poisson.test(137, 24.19893)
 
 ## eba1977, compare Fredericia to other three cities for ages 55-59
-poisson.test(c(11,6+8+7),c(800, 1083+1050+878))
+poisson.test(c(11, 6+8+7), c(800, 1083+1050+878))
 }
 \keyword{htest}
 

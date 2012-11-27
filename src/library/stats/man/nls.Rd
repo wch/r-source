@@ -296,9 +296,8 @@ summary(musc.1)
 ## Note that with indexed parameters, the starting values must be
 ## given in a list (with names):
 b <- coef(musc.1)
-musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th),
-              muscle,
-              start = list(a = rep(b[2],21), b = rep(b[3],21), th = b[1]))
+musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
+              start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
 summary(musc.2)
 \testonly{options(od)}
 }

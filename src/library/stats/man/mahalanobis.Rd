@@ -32,7 +32,7 @@ require(graphics)
 
 ma <- cbind(1:6, 1:3)
 (S <-  var(ma))
-mahalanobis(c(0,0), 1:2, S)
+mahalanobis(c(0, 0), 1:2, S)
 
 x <- matrix(rnorm(100*3), ncol = 3)
 stopifnot(mahalanobis(x, 0, diag(ncol(x))) == rowSums(x*x))

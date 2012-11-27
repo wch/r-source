@@ -14,7 +14,7 @@
   Create a vector of \code{n} contiguous colors.
 }
 \usage{
-rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, alpha = 1)
+rainbow(n, s = 1, v = 1, start = 0, end = max(1, n - 1)/n, alpha = 1)
 heat.colors(n, alpha = 1)
 terrain.colors(n, alpha = 1)
 topo.colors(n, alpha = 1)
@@ -23,7 +23,7 @@ cm.colors(n, alpha = 1)
 \arguments{
   \item{n}{the number of colors (\eqn{\ge 1}) to be in the
     palette.}
-  \item{s,v}{the \sQuote{saturation} and \sQuote{value} to be used
+  \item{s, v}{the \sQuote{saturation} and \sQuote{value} to be used
     to complete the HSV color descriptions.}
   \item{start}{the (corrected) hue in [0,1] at which the rainbow
     begins.}
@@ -34,7 +34,7 @@ cm.colors(n, alpha = 1)
 \details{
   Conceptually, all of these functions actually use (parts of) a line
   cut out of the 3-dimensional color space, parametrized by
-  \code{\link{hsv}(h,s,v)}, and hence,
+  \code{\link{hsv}(h, s, v)}, and hence
   equispaced hues in RGB space tend to cluster at
   the red, green and blue primaries.
 
@@ -62,12 +62,12 @@ cm.colors(n, alpha = 1)
 \examples{
 require(graphics)
 # A Color Wheel
-pie(rep(1,12), col=rainbow(12))
+pie(rep(1, 12), col = rainbow(12))
 
 ##------ Some palettes ------------
 demo.pal <-
   function(n, border = if (n < 32) "light gray" else NA,
-           main = paste("color palettes;  n=",n),
+           main = paste("color palettes;  n=", n),
            ch.col = c("rainbow(n, start=.7, end=.1)", "heat.colors(n)",
                       "terrain.colors(n)", "topo.colors(n)",
                       "cm.colors(n)"))

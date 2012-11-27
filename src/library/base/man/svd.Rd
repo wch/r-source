@@ -92,7 +92,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
 }
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
-X <- hilbert(9)[,1:6]
+X <- hilbert(9)[, 1:6]
 (s <- svd(X))
 D <- diag(s$d)
 s$u \%*\% D \%*\% t(s$v) #  X = U D V'

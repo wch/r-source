@@ -12,7 +12,7 @@
   perspective plots such as \code{\link{persp}}.
 }
 \usage{
-trans3d(x,y,z, pmat)
+trans3d(x, y, z, pmat)
 }
 \arguments{
   \item{x, y, z}{numeric vectors of equal length, specifying points in

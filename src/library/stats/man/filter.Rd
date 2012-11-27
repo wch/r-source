@@ -76,6 +76,6 @@ filter(x, rep(1, 3))
 filter(x, rep(1, 3), sides = 1)
 filter(x, rep(1, 3), sides = 1, circular = TRUE)
 
-filter(presidents, rep(1,3))
+filter(presidents, rep(1, 3))
 }
 \keyword{ts}

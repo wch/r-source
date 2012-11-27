@@ -15,7 +15,7 @@ identify(x, \dots)
          tolerance = 0.25, \dots)
 }
 \arguments{
-  \item{x,y}{coordinates of points in a scatter plot.  Alternatively, any
+  \item{x, y}{coordinates of points in a scatter plot.  Alternatively, any
     object which defines coordinates (a plotting structure, time
     series etc: see \code{\link{xy.coords}}) can be given as \code{x},
     and \code{y} left missing.}

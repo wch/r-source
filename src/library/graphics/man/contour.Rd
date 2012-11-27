@@ -29,7 +29,7 @@ contour(x, \dots)
         add = FALSE, \dots)
 }
 \arguments{
-  \item{x,y}{locations of grid lines at which the values in \code{z} are
+  \item{x, y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
     spaced values from 0 to 1 are used.  If \code{x} is a \code{list},
     its components \code{x$x} and \code{x$y} are used for \code{x}
@@ -92,7 +92,7 @@ contour(x, \dots)
 
   Alternatively, use \code{\link[lattice:levelplot]{contourplot}} from the
   \CRANpkg{lattice} package where the \code{\link{formula}} notation allows
-  to use vectors \code{x,y,z} of the same length.
+  to use vectors \code{x, y, z} of the same length.
 
   There is limited control over the axes and frame as arguments
   \code{col}, \code{lwd} and \code{lty} refer to the contour lines
@@ -138,10 +138,10 @@ for(f in pi^(0:3))
 
 rx <- range(x <- 10*1:nrow(volcano))
 ry <- range(y <- 10*1:ncol(volcano))
-ry <- ry + c(-1,1) * (diff(rx) - diff(ry))/2
+ry <- ry + c(-1, 1) * (diff(rx) - diff(ry))/2
 tcol <- terrain.colors(12)
 par(opar); opar <- par(pty = "s", bg = "lightcyan")
-plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
+plot(x = 0, y = 0, type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
 u <- par("usr")
 rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
 contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
@@ -151,7 +151,7 @@ abline(h = 200*0:4, v = 200*0:4, col = "lightgray", lty = 2, lwd = 0.1)
 
 ## contourLines produces the same contour lines as contour
 line.list <- contourLines(x, y, volcano)
-plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
+plot(x = 0, y = 0, type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
 u <- par("usr")
 rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
 contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,

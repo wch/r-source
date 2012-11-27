@@ -54,8 +54,7 @@ plot(dd, main = "random dendrogram 'dd'")
 
 op <- par(mfcol = 1:2)
 plot(dd.reorder, main = "reorder(dd, 10:1)")
-plot(reorder(dd,10:1, agglo.FUN= mean),
-     main = "reorder(dd, 10:1, mean)")
+plot(reorder(dd, 10:1, agglo.FUN = mean), main = "reorder(dd, 10:1, mean)")
 par(op)
 }
 \keyword{manip}

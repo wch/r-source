@@ -32,7 +32,7 @@ mosaicplot(x, \dots)
     best created by the \code{table()} command.}
   \item{main}{character string for the mosaic title.}
   \item{sub}{character string for the mosaic sub-title (at bottom).}
-  \item{xlab,ylab}{x- and y-axis labels used for the plot; by default,
+  \item{xlab, ylab}{x- and y-axis labels used for the plot; by default,
     the first and second element of \code{names(dimnames(X))} (i.e., the
     name of the first and second variable in \code{X}).}
   \item{sort}{vector ordering of the variables, containing a permutation

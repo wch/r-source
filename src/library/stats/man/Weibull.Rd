@@ -68,7 +68,7 @@ rweibull(n, shape, scale = 1)
   the \link{Exponential} which is a special case of the Weibull distribution.
 }
 \examples{
-x <- c(0,rlnorm(50))
+x <- c(0, rlnorm(50))
 all.equal(dweibull(x, shape = 1), dexp(x))
 all.equal(pweibull(x, shape = 1, scale = pi), pexp(x, rate = 1/pi))
 ## Cumulative hazard H():

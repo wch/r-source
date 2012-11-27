@@ -28,13 +28,13 @@
 }
 \examples{
 require(stats); require(graphics)
-par(mfrow = c(2,2))
+par(mfrow = c(2, 2))
 plot(Nile)
 acf(Nile)
 pacf(Nile)
 ar(Nile) # selects order 2
 cpgram(ar(Nile)$resid)
-par(mfrow = c(1,1))
+par(mfrow = c(1, 1))
 arima(Nile, c(2, 0, 0))
 
 ## Now consider missing values, following Durbin & Koopman
@@ -43,12 +43,12 @@ NileNA[c(21:40, 61:80)] <- NA
 arima(NileNA, c(2, 0, 0))
 plot(NileNA)
 pred <-
-   predict(arima(window(NileNA, 1871, 1890), c(2,0,0)), n.ahead = 20)
+   predict(arima(window(NileNA, 1871, 1890), c(2, 0, 0)), n.ahead = 20)
 lines(pred$pred, lty = 3, col = "red")
 lines(pred$pred + 2*pred$se, lty = 2, col = "blue")
 lines(pred$pred - 2*pred$se, lty = 2, col = "blue")
 pred <-
-   predict(arima(window(NileNA, 1871, 1930), c(2,0,0)), n.ahead = 20)
+   predict(arima(window(NileNA, 1871, 1930), c(2, 0, 0)), n.ahead = 20)
 lines(pred$pred, lty = 3, col = "red")
 lines(pred$pred + 2*pred$se, lty = 2, col = "blue")
 lines(pred$pred - 2*pred$se, lty = 2, col = "blue")

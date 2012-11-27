@@ -16,8 +16,8 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
 }
 \arguments{
   \item{color}{A matrix whose rows specify colors. }
-  \item{from,to }{Input and output color spaces.  See \sQuote{Details} below.}
-  \item{from.ref.white,to.ref.white}{Reference whites or \code{NULL}
+  \item{from, to}{Input and output color spaces.  See \sQuote{Details} below.}
+  \item{from.ref.white, to.ref.white}{Reference whites or \code{NULL}
     if these are built in to the definition, as for RGB
     spaces. \code{D65} is the default, see \sQuote{Details} for others.
   }

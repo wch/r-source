@@ -112,7 +112,7 @@ anova(mlmfit, mlmfit0, M = ~ deg + noise, X = ~ noise,
 anova(mlmfit, mlmfit0, M = ~ deg + noise, X = ~ deg,
       idata = idata, test = "Spherical" )
 
-f <- factor(rep(1:2,5)) # bogus, just for illustration
+f <- factor(rep(1:2, 5)) # bogus, just for illustration
 mlmfit2 <- update(mlmfit, ~f)
 anova(mlmfit2, mlmfit, mlmfit0, X = ~1, test = "Spherical")
 anova(mlmfit2, X = ~1, test = "Spherical")

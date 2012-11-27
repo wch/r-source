@@ -83,7 +83,7 @@ rlogis(n, location = 0, scale = 1)
   \link{Distributions} for other standard distributions.
 }
 \examples{
-var(rlogis(4000, 0, scale = 5))# approximately (+/- 3)
+var(rlogis(4000, 0, scale = 5))  # approximately (+/- 3)
 pi^2/3 * 5^2
 }
 \keyword{distribution}

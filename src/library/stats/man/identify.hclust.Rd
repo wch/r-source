@@ -65,7 +65,7 @@ identify(hci, function(k) print(table(iris[k,5])))
 get(getOption("device"))() # << make that narrow (& small)
                            # and *beside* 1st one
 nD <- dev.cur()            # to be for the barplot
-dev.set(dev.prev())# old one for dendrogram
+dev.set(dev.prev())  # old one for dendrogram
 plot(hci)
 ## select subtrees in dendrogram and "see" the species distribution:
 identify(hci, function(k) barplot(table(iris[k,5]), col = 2:4), DEV.FUN = nD)

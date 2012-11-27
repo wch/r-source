@@ -106,11 +106,11 @@ plot(1:10)
 x11()
 plot(rnorm(10))
 dev.set(dev.prev())
-abline(0,1)# through the 1:10 points
+abline(0, 1) # through the 1:10 points
 dev.set(dev.next())
-abline(h = 0, col = "gray")# for the residual plot
+abline(h = 0, col = "gray") # for the residual plot
 dev.set(dev.prev())
-dev.off(); dev.off()#- close the two X devices
+dev.off(); dev.off() #- close the two X devices
 }
 }
 \keyword{device}

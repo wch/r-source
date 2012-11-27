@@ -153,7 +153,7 @@ require(grDevices) # for trans3d
 
 x <- seq(-10, 10, length= 30)
 y <- x
-f <- function(x,y) { r <- sqrt(x^2+y^2); 10 * sin(r)/r }
+f <- function(x, y) { r <- sqrt(x^2+y^2); 10 * sin(r)/r }
 z <- outer(x, y, f)
 z[is.na(z)] <- 1
 op <- par(bg = "white")
@@ -192,7 +192,7 @@ persp(x, y, z, theta = 135, phi = 30, col = "green3", scale = FALSE,
 par(bg = "white")
 x <- seq(-1.95, 1.95, length = 30)
 y <- seq(-1.95, 1.95, length = 35)
-z <- outer(x, y, function(a,b) a*b^2)
+z <- outer(x, y, function(a, b) a*b^2)
 nrz <- nrow(z)
 ncz <- ncol(z)
 # Create a function interpolating colors in the range of specified colors

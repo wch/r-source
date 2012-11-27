@@ -16,7 +16,7 @@ contourLines(x = seq(0, 1, length.out = nrow(z)),
              levels = pretty(range(z, na.rm = TRUE), nlevels))
 }
 \arguments{
-  \item{x,y}{locations of grid lines at which the values in \code{z} are
+  \item{x, y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
     spaced values from 0 to 1 are used.  If \code{x} is a \code{list},
     its components \code{x$x} and \code{x$y} are used for \code{x}

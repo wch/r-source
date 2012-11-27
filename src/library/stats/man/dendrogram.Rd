@@ -206,7 +206,7 @@ str(dend1)          # "str()" method
 str(dend1, max = 2, last.str =  "'") # only the first two sub-levels
 oo <- options(str.dendrogram.last = "\\\\") # yet another possibility
 str(dend1, max = 2) # only the first two sub-levels
-options(oo)# .. resetting them
+options(oo)  # .. resetting them
 
 op <- par(mfrow =  c(2,2), mar = c(5,2,1,4))
 plot(dend1)
@@ -228,7 +228,7 @@ plot(dend2$upper, nodePar = list(pch = c(1,7), col = 2:1))
 ##  dend2$lower is *NOT* a dendrogram, but a list of .. :
 plot(dend2$lower[[3]], nodePar = list(col = 4), horiz = TRUE, type = "tr")
 ## "inner" and "leaf" edges in different type & color :
-plot(dend2$lower[[2]], nodePar = list(col = 1),# non empty list
+plot(dend2$lower[[2]], nodePar = list(col = 1),   # non empty list
      edgePar = list(lty = 1:2, col = 2:1), edge.root = TRUE)
 par(op)
 d3 <- dend2$lower[[2]][[2]][[1]]

@@ -32,7 +32,7 @@ savePlot(filename = "Rplot",
 
   If \code{filename} does not include a dot (\sQuote{.}), savePlot
   will add the file type as an extension; that is, the filename will
-  be set to \code{paste(filename,type,".")}. If a dot is present in
+  be set to \code{paste(filename, type, sep = ".")}. If a dot is present in
   \code{filename}, the filename is assumed to include an extension and
   is used without change.
 

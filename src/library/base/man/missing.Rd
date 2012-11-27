@@ -47,12 +47,12 @@ as an argument to a function.
   \code{\link{NA}} for missing values in data.
 }
 \examples{
-myplot <- function(x,y) {
+myplot <- function(x, y) {
                 if(missing(y)) {
                         y <- x
                         x <- 1:length(y)
                 }
-                plot(x,y)
+                plot(x, y)
         }
 }
 \keyword{programming}

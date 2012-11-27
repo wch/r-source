@@ -83,7 +83,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
 require(graphics)
 
 pictex()
-plot(1:11,(-5:5)^2, type = 'b', main = "Simple Example Plot")
+plot(1:11, (-5:5)^2, type = "b", main = "Simple Example Plot")
 dev.off()
 ##--------------------
 \dontrun{

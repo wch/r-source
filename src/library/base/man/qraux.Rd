@@ -63,13 +63,13 @@ qr.R(qr, complete = FALSE)
   \code{\link{qr.qy}}.
 }
 \examples{
-p <- ncol(x <- LifeCycleSavings[,-1]) # not the 'sr'
+p <- ncol(x <- LifeCycleSavings[, -1]) # not the 'sr'
 qrstr <- qr(x)   # dim(x) == c(n,p)
 qrstr $ rank # = 4 = p
 Q <- qr.Q(qrstr) # dim(Q) == dim(x)
 R <- qr.R(qrstr) # dim(R) == ncol(x)
 X <- qr.X(qrstr) # X == x
-range(X - as.matrix(x))# ~ < 6e-12
+range(X - as.matrix(x))  # ~ < 6e-12
 ## X == Q \%*\% R if there has been no pivoting, as here.
 Q \%*\% R
 
@@ -84,8 +84,8 @@ a$pivot
 pivI <- sort.list(a$pivot) # the inverse permutation
 all.equal (x,            qr.Q(a) \%*\% qr.R(a)) # no, no
 stopifnot(
- all.equal(x[, a$pivot], qr.Q(a) \%*\% qr.R(a)),        # TRUE
- all.equal(x           , qr.Q(a) \%*\% qr.R(a)[, pivI]))# TRUE, too!
+ all.equal(x[, a$pivot], qr.Q(a) \%*\% qr.R(a)),          # TRUE
+ all.equal(x           , qr.Q(a) \%*\% qr.R(a)[, pivI]))  # TRUE too!
 }
 \keyword{algebra}
 \keyword{array}

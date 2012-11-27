@@ -43,6 +43,6 @@ foo()      # 0
 foo(, , 3) # 3
 foo(z = 3) # 1, even though this is the same call
 
-nargs()# not really meaningful
+nargs()  # not really meaningful
 }
 \keyword{programming}

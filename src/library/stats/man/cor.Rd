@@ -104,7 +104,7 @@ cov2cor(V)
   data do not necessarily come from a bivariate normal distribution.\cr
   For \code{cov()}, a non-Pearson method is unusual but available for
   the sake of completeness.  Note that \code{"spearman"} basically
-  computes \code{cor(R(x), R(y))} (or \code{cov(.,.)}) where \code{R(u)
+  computes \code{cor(R(x), R(y))} (or \code{cov(., .)}) where \code{R(u)
   := rank(u, na.last = "keep")}. In the case of missing values, the
   ranks are calculated depending on the value of \code{use}, either
   based on complete observations, or based on pairwise completeness with
@@ -136,12 +136,12 @@ cov2cor(V)
   \code{\link{sd}} for standard deviation (vectors).
 }
 \examples{
-var(1:10)# 9.166667
+var(1:10)  # 9.166667
 
-var(1:5,1:5)# 2.5
+var(1:5, 1:5) # 2.5
 
 ## Two simple vectors
-cor(1:10,2:11)# == 1
+cor(1:10, 2:11) # == 1
 
 ## Correlation Matrix of Multivariate sample:
 (Cl <- cor(longley))

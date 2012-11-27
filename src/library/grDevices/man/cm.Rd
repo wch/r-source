@@ -16,7 +16,7 @@ cm(x)
   \item{x}{numeric vector}
 }
 \examples{
-cm(1)# = 2.54
+cm(1)  # = 2.54
 
 ## Translate *from* cm *to* inches:
 

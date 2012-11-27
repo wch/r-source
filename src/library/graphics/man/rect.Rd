@@ -67,7 +67,7 @@ plot(c(100, 250), c(300, 450), type = "n", xlab = "", ylab = "",
 i <- 4*(0:10)
 ## draw rectangles with bottom left (100, 300)+i
 ## and top right (150, 380)+i
-rect(100+i, 300+i, 150+i, 380+i, col = rainbow(11, start = .7,end = .1))
+rect(100+i, 300+i, 150+i, 380+i, col = rainbow(11, start = 0.7, end = 0.1))
 rect(240-i, 320+i, 250-i, 410+i, col = heat.colors(11), lwd = i/5)
 ## Background alternating  ( transparent / "bg" ) :
 j <- 10*(0:5)

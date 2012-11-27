@@ -19,7 +19,7 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
     the length of the box away from the box. A value of zero causes
     the whiskers
     to extend to the data extremes (and no outliers be returned).}
-  \item{do.conf,do.out}{logicals; if \code{FALSE}, the \code{conf} or
+  \item{do.conf, do.out}{logicals; if \code{FALSE}, the \code{conf} or
     \code{out} component respectively will be empty in the result.}
 }
 \description{
@@ -102,7 +102,7 @@ stopifnot(r$out == c(1000, -Inf, Inf))
  q13 <- sapply(sapply(nn, seq), quantile, probs = c(1,3)/4, names = FALSE)
  m <- t(rbind(q13,hin))[, c(1,3,2,4)]
  dimnames(m) <- list(paste(nn), c("q1","lH", "q3","uH"))
- stopifnot(m[n4 == 1, 1:2] == (nn[n4 == 1] + 3)/4,# quart. = hinge
+ stopifnot(m[n4 == 1, 1:2] == (nn[n4 == 1] + 3)/4,   # quart. = hinge
            m[n4 == 1, 3:4] == (3*nn[n4 == 1] + 1)/4,
            m[,"lH"] == ( (nn+3) \%/\% 2) / 2,
            m[,"uH"] == ((3*nn+2)\%/\% 2) / 2)

@@ -24,7 +24,7 @@ bindtextdomain(domain, dirname = NULL)
   \item{domain}{The \sQuote{domain} for the translation.}
   \item{n}{a non-negative integer.}
   \item{msg1}{the message to be used in English for \code{n = 1}.}
-  \item{msg2}{the message to be used in English for \code{n = 0, 2, 3,\dots}.}
+  \item{msg2}{the message to be used in English for \code{n = 0, 2, 3, \dots}.}
   \item{dirname}{The directory in which to find translated message
     catalogs for the domain.}
 }

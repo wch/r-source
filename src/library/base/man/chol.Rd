@@ -127,7 +127,7 @@ crossprod(Q[, order(pivot)]) # recover m
 
 
 ## now for a non-positive-definite matrix
-( m <- matrix(c(5,-5,-5,3),2,2) )
+( m <- matrix(c(5,-5,-5,3), 2, 2) )
 try(chol(m))  # fails
 (Q <- chol(m, pivot = TRUE)) # warning
 crossprod(Q)  # not equal to m

@@ -49,11 +49,11 @@ ls("Autoloads")
 
 x <- sort(stats::rnorm(12))
 y <- x^2
-is <- interpSpline(x,y)
+is <- interpSpline(x, y)
 search() ## now has splines
 detach("package:splines")
 search()
-is2 <- interpSpline(x,y+x)
+is2 <- interpSpline(x, y+x)
 search() ## and again
 detach("package:splines")
 }

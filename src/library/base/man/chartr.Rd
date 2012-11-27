@@ -71,7 +71,7 @@ toupper(x)
 
 .simpleCap <- function(x) {
     s <- strsplit(x, " ")[[1]]
-    paste(toupper(substring(s, 1,1)), substring(s, 2),
+    paste(toupper(substring(s, 1, 1)), substring(s, 2),
           sep = "", collapse = " ")
 }
 .simpleCap("the quick red fox jumps over the lazy brown dog")
@@ -79,8 +79,8 @@ toupper(x)
 
 ## and the better, more sophisticated version:
 capwords <- function(s, strict = FALSE) {
-    cap <- function(s) paste(toupper(substring(s,1,1)),
-                  {s <- substring(s,2); if(strict) tolower(s) else s},
+    cap <- function(s) paste(toupper(substring(s, 1, 1)),
+                  {s <- substring(s, 2); if(strict) tolower(s) else s},
                              sep = "", collapse = " " )
     sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
 }
@@ -102,7 +102,7 @@ pw <- "my secret pass phrase"
 (crypw <- rot(pw, 13)) #-> you can send this off
 
 ## now ``decrypt'' :
-rot(crypw, 54 - 13)# -> the original:
+rot(crypw, 54 - 13) # -> the original:
 stopifnot(identical(pw, rot(crypw, 54 - 13)))
 }
 \keyword{character}

@@ -39,7 +39,7 @@ print.anova.lm(.)
 % </Removed 1.2.0>
 % Removed in 1.5.0
 reshapeWide(x, i, j, val, jnames = levels(j))
-reshapeLong(x,jvars,  ilev = row.names(x),
+reshapeLong(x, jvars,  ilev = row.names(x),
             jlev = names(x)[jvars], iname = "reshape.i",
             jname = "reshape.j", vname = "reshape.v")
 % </Removed 1.5.0>

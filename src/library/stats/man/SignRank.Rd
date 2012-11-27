@@ -22,7 +22,7 @@ qsignrank(p, n, lower.tail = TRUE, log.p = FALSE)
 rsignrank(nn, n)
 }
 \arguments{
-  \item{x,q}{vector of quantiles.}
+  \item{x, q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{nn}{number of observations. If \code{length(nn) > 1}, the length
     is taken to be the number required.}
@@ -66,8 +66,8 @@ require(graphics)
 par(mfrow = c(2,2))
 for(n in c(4:5,10,40)) {
   x <- seq(0, n*(n+1)/2, length = 501)
-  plot(x, dsignrank(x, n = n), type = 'l',
-       main = paste("dsignrank(x,n=", n, ")"))
+  plot(x, dsignrank(x, n = n), type = "l",
+       main = paste0("dsignrank(x, n = ", n, ")"))
 }
 \dontshow{
 p <- c(1, 1, 1, 2, 2:6, 8, 10, 11, 13, 15, 17, 20, 22, 24,
