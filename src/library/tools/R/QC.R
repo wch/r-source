@@ -5655,8 +5655,35 @@ function(dir)
     if(length(nms))
         out$fields <- nms
 
+    ## Check for CRAN repository db overrides and possible conflicts.
+    con <- url(sprintf("%s/src/contrib/PACKAGES.in", CRAN))
+    odb <- read.dcf(con)
+    close(con)
+    entry <- odb[odb[, "Package"] == meta["Package"], ]
+    entry <- entry[!is.na(entry) & (names(entry) != "Package")]    
+    if(length(entry)) {
+        fmt <- function(s)
+            unlist(lapply(s,
+                          function(e) {
+                              paste(strwrap(e, indent = 2L, exdent = 4L),
+                                    collapse = "\n")
+                          }))
+        ## Report all overrides for visual inspection.
+        entry <- fmt(sprintf("  %s: %s", names(entry), entry))
+        out$overrides <- entry
+        fields <- intersect(names(meta), names(entry))
+        if(length(fields)) {
+            ## Find fields where package metadata and repository
+            ## overrides are in conflict.
+            ind <- ! unlist(Map(identical,
+                                fmt(sprintf("  %s: %s", fields, meta[fields])),
+                                entry[fields]))
+            if(any(ind))
+                out$conflicts <- fields[ind]
+        }
+    }
+    
     out
-
 }
 
 format.check_package_CRAN_incoming <-
@@ -5705,6 +5732,13 @@ function(x, ...)
       if(length(y <- x$fields)) {
           c("Possibly mis-spelled fields in DESCRIPTION:",
             sprintf("  %s", paste(sQuote(y), collapse = " ")))
+      },
+      if(length(y <- x$overrides)) {
+          c("CRAN repository db overrides:", y)
+      },
+      if(length(y <- x$conflicts)) {
+          sprintf("CRAN repository db conflicts: %s",
+                  sQuote(y))
       }
       )
 }
