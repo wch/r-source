@@ -41,7 +41,7 @@ data.class(matrix(x, ncol = 13))      # has a dim attribute
 data.class(list(x))                   # the same as mode(x)
 data.class(x)                         # the same as mode(x)
 
-stopifnot(data.class(1:2) == "numeric")# compatibility "rule"
+stopifnot(data.class(1:2) == "numeric") # compatibility "rule"
 }
 \keyword{classes}
 \keyword{methods}

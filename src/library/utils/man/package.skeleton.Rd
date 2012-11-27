@@ -89,8 +89,8 @@ package.skeleton(name = "anRpackage", list,
 \examples{
 require(stats)
 ## two functions and two "data sets" :
-f <- function(x,y) x+y
-g <- function(x,y) x-y
+f <- function(x, y) x+y
+g <- function(x, y) x-y
 d <- data.frame(a = 1, b = 2)
 e <- rnorm(1000)
 \dontshow{

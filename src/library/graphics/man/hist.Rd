@@ -167,8 +167,8 @@ utils::str(hist(islands, col = "gray", labels = TRUE))
 hist(sqrt(islands), breaks = 12, col = "lightblue", border = "pink")
 ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
 r <- hist(sqrt(islands), breaks = c(4*0:5, 10*3:5, 70, 100, 140),
-          col = 'blue1')
-text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = 'blue3')
+          col = "blue1")
+text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = "blue3")
 sapply(r[2:3], sum)
 sum(r$density * diff(r$breaks)) # == 1
 lines(r, lty = 3, border = "purple") # -> lines.histogram(*)

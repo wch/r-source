@@ -18,7 +18,7 @@
 \usage{
 heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
         distfun = dist, hclustfun = hclust,
-        reorderfun = function(d,w) reorder(d,w),
+        reorderfun = function(d, w) reorder(d, w),
         add.expr, symm = FALSE, revC = identical(Colv, "Rowv"),
         scale = c("row", "column", "none"), na.rm = TRUE,
         margins = c(5, 5), ColSideColors, RowSideColors,
@@ -46,7 +46,7 @@ heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
     when \code{Rowv} or \code{Colv} are not dendrograms.  Defaults to
     \code{\link{hclust}}. Should take as argument a result of \code{distfun}
     and return an object to which \code{\link{as.dendrogram}} can be applied.}
-  \item{reorderfun}{function(d,w) of dendrogram and weights for
+  \item{reorderfun}{\code{function(d, w)} of dendrogram and weights for
     reordering the row and column dendrograms.  The default uses
     \code{\link{reorder.dendrogram}}.}
   \item{add.expr}{expression that will be evaluated after the call to
@@ -153,7 +153,7 @@ heatmap(x, Colv = NA, col = cm.colors(256), scale = "column",
 ## no row dendrogram (nor reordering) at all:
 heatmap(x, Rowv = NA, col = cm.colors(256), scale = "column",
         ColSideColors = cc, margins = c(5,10),
-        xlab = "xlab", ylab =  "ylab")# no main
+        xlab = "xlab", ylab =  "ylab")  # no main
 }
 ## "no nothing"
 heatmap(x, Rowv = NA, Colv = NA, scale = "column",

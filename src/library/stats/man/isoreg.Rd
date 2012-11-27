@@ -55,7 +55,7 @@ isoreg(x, y = NULL)
   Barlow, R. E., Bartholomew, D. J., Bremner, J. M., and Brunk, H. D. (1972)
   \emph{Statistical inference under order restrictions}; Wiley, London.
 
-  Robertson, T., Wright,F. T. and Dykstra, R. L. (1988)
+  Robertson, T., Wright, F. T. and Dykstra, R. L. (1988)
   \emph{Order Restricted Statistical Inference}; Wiley, New York.
 }
 %%\author{Original C code by Brian Ripley; all else: Martin Maechler}
@@ -69,7 +69,7 @@ require(graphics)
 (ir <- isoreg(c(1,0,4,3,3,5,4,2,0)))
 plot(ir, plot.type = "row")
 
-(ir3 <- isoreg(y3 <- c(1,0,4,3,3,5,4,2, 3)))# last "3", not "0"
+(ir3 <- isoreg(y3 <- c(1,0,4,3,3,5,4,2, 3))) # last "3", not "0"
 (fi3 <- as.stepfun(ir3))
 (ir4 <- isoreg(1:10, y4 <- c(5, 9, 1:2, 5:8, 3, 8)))
 cat(sprintf("R^2 = \%.2f\n",

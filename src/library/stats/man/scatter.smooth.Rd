@@ -21,7 +21,7 @@ loess.smooth(x, y, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"), evaluation = 50, \dots)
 }
 \arguments{
-  \item{x,y}{the \code{x} and \code{y} arguments provide the x and y
+  \item{x, y}{the \code{x} and \code{y} arguments provide the x and y
     coordinates for the plot.  Any reasonable way of defining the
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
     for details.}

@@ -99,8 +99,8 @@ for(n in c(2,5,10,20,50)) {
    x <- stats::rnorm(n)
    cat(n,":", sum(x^2),"\n")
 }
-f = factor(sample(letters[1:5], 10, replace=TRUE))
-for( i in unique(f) ) print(i)
+f <- factor(sample(letters[1:5], 10, replace = TRUE))
+for(i in unique(f)) print(i)
 }
 \keyword{programming}
 \keyword{iteration}

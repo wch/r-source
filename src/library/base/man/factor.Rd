@@ -164,7 +164,7 @@ addNA(x, ifany = FALSE)
   There are \code{"factor"} and \code{"ordered"} methods for the
   \link{group generic} \code{\link[=S3groupGeneric]{Ops}} which
   provide methods for the \link{Comparison} operators,
-  and for the \code{\link{min}},\code{\link{max}}, and
+  and for the \code{\link{min}}, \code{\link{max}}, and
   \code{\link{range}} generics in \code{\link[=S3groupGeneric]{Summary}}
   of \code{"ordered"}.  (The rest of the groups and the
   \code{\link[=S3groupGeneric]{Math}} group generate an error as they
@@ -203,9 +203,9 @@ addNA(x, ifany = FALSE)
 }
 \examples{
 (ff <- factor(substring("statistics", 1:10, 1:10), levels = letters))
-as.integer(ff)  # the internal codes
-(f. <- factor(ff))# drops the levels that do not occur
-ff[, drop = TRUE] # the same, more transparently
+as.integer(ff)      # the internal codes
+(f. <- factor(ff))  # drops the levels that do not occur
+ff[, drop = TRUE]   # the same, more transparently
 
 factor(letters[1:20], labels = "letter")
 

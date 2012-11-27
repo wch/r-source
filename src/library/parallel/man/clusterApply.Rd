@@ -171,7 +171,7 @@ clusterExport(cl, "xx")
 clusterCall(cl, function(y) xx + y, 2)
 
 ## Use clusterMap like an mapply example
-clusterMap(cl, function(x,y) seq_len(x) + y,
+clusterMap(cl, function(x, y) seq_len(x) + y,
           c(a =  1, b = 2, c = 3), c(A = 10, B = 0, C = -10))
 
 

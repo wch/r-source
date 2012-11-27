@@ -44,7 +44,7 @@ pairs(x, \dots)
     will cause cases with missing values in any of the variables to be
     omitted entirely.}
   \item{labels}{the names of the variables.}
-  \item{panel}{\code{function(x,y,\dots)} which is used to plot
+  \item{panel}{\code{function(x, y, \dots)} which is used to plot
     the contents of each panel of the display.}
   \item{\dots}{
     arguments to be passed to or from methods.

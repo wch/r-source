@@ -58,8 +58,8 @@ colorRampPalette(colors, \dots)
 
 \examples{
 ## Both return a *function* :
-colorRamp(c("red","green"))( (0:4)/4 ) ## (x) , x in [0,1]
-colorRampPalette(c("blue","red"))( 4 ) ## (n)
+colorRamp(c("red", "green"))( (0:4)/4 ) ## (x) , x in [0,1]
+colorRampPalette(c("blue", "red"))( 4 ) ## (n)
 \dontshow{## special case, invalid in R <= 2.15.0:
 bb <- colorRampPalette(2)(4)
 stopifnot(bb[1] == bb)

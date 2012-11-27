@@ -53,11 +53,11 @@ checkNEWS(file = file.path(R.home(), "NEWS"))
   examples \file{ONEWS}, \file{OONEWS} and perhaps in packages).
 }
 \examples{\donttest{
-NEWStr  <- readNEWS(trace = TRUE)# chop = "first" ( = "first non-empty")
+NEWStr  <- readNEWS(trace = TRUE)  # chop = "first" ( = "first non-empty")
 ## keep the full NEWS entry text i.e. "no chopping":
 NEWStrA <- readNEWS(chop = "keepAll")
 object.size(NEWStr)
-object.size(NEWStrA) ## (no chopping) ==> about double the size
+object.size(NEWStrA)    # (no chopping) ==> about double the size
 
 str(NEWStr, max.level = 3)
 

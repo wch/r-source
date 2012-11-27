@@ -46,10 +46,10 @@ is.null(x)
   Wadsworth & Brooks/Cole.
 }
 \examples{
-is.null(list())    # FALSE (on purpose!)
-is.null(integer(0))# F
-is.null(logical(0))# F
-as.null(list(a = 1, b = 'c'))
+is.null(list())     # FALSE (on purpose!)
+is.null(integer(0)) # FALSE
+is.null(logical(0)) # FALSE
+as.null(list(a = 1, b = "c"))
 }
 \keyword{attribute}
 \keyword{manip}

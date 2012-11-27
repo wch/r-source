@@ -161,7 +161,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 \examples{
 -log(dgamma(1:4, shape = 1))
 p <- (1:9)/10
-pgamma(qgamma(p,shape = 2), shape = 2)
+pgamma(qgamma(p, shape = 2), shape = 2)
 1 - 1/exp(qgamma(p, shape = 1))
 
 \donttest{# even for shape = 0.001 about half the mass is on numbers

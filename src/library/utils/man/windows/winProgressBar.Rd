@@ -57,7 +57,7 @@ setWinProgressBar(pb, value, title = NULL, label = NULL)
 pb <- winProgressBar("test progress bar", "Some information in \%",
                      0, 100, 50)
 Sys.sleep(0.5)
-u <- c(0, sort(runif(20, 0 ,100)), 100)
+u <- c(0, sort(runif(20, 0, 100)), 100)
 for(i in u) {
     Sys.sleep(0.1)
     info <- sprintf("\%d\%\% done", round(i))

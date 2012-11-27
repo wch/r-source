@@ -15,7 +15,7 @@
   The function \code{droplevels} is used to drop unused levels from a factor or, more commonly, from factors in a data frame.
 }
 \usage{
-\S3method{droplevels}{factor}(x,\dots)
+\S3method{droplevels}{factor}(x, \dots)
 \S3method{droplevels}{data.frame}(x, except, \dots)
 }
 \arguments{

@@ -160,7 +160,7 @@ par(op)
 
 ## Manual spline evaluation --- demo the coefficients :
 .x <- splinecoef$x
-u <- seq(3,6, by = 0.25)
+u <- seq(3, 6, by = 0.25)
 (ii <- findInterval(u, .x))
 dx <- u - .x[ii]
 f.u <- with(splinecoef,
@@ -170,10 +170,10 @@ stopifnot(all.equal(f(u), f.u))
 ## An example with ties (non-unique  x values):
 set.seed(1); x <- round(rnorm(30), 1); y <- sin(pi * x) + rnorm(30)/10
 plot(x, y, main = "spline(x,y)  when x has ties")
-lines(spline(x,y, n= 201), col = 2)
+lines(spline(x, y, n = 201), col = 2)
 ## visualizes the non-unique ones:
 tx <- table(x); mx <- as.numeric(names(tx[tx > 1]))
-ry <- matrix(unlist(tapply(y, match(x,mx), range, simplify = FALSE)),
+ry <- matrix(unlist(tapply(y, match(x, mx), range, simplify = FALSE)),
              ncol = 2, byrow = TRUE)
 segments(mx, ry[, 1], mx, ry[, 2], col = "blue", lwd = 2)
 
@@ -181,10 +181,10 @@ segments(mx, ry[, 1], mx, ry[, 2], col = "blue", lwd = 2)
 n <- 20
 set.seed(11)
 x. <- sort(runif(n)) ; y. <- cumsum(abs(rnorm(n)))
-plot(x.,y.)
-curve(splinefun(x.,y.)(x), add = TRUE, col = 2, n = 1001)
-curve(splinefun(x.,y., method = "monoH.FC")(x), add = TRUE, col = 3, n = 1001)
-curve(splinefun(x.,y., method = "hyman")   (x), add = TRUE, col = 4, n = 1001)
+plot(x., y.)
+curve(splinefun(x., y.)(x), add = TRUE, col = 2, n = 1001)
+curve(splinefun(x., y., method = "monoH.FC")(x), add = TRUE, col = 3, n = 1001)
+curve(splinefun(x., y., method = "hyman")   (x), add = TRUE, col = 4, n = 1001)
 legend("topleft",
        paste0("splinefun( \"", c("fmm", "monoH.FC", "hyman"), "\" )"),
        col = 2:4, lty = 1, bty = "n")

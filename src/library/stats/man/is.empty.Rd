@@ -23,7 +23,7 @@ is.empty.model(x)
   \code{TRUE} if the model is empty
 }
 
-\seealso{ \code{\link{lm}},\code{\link{glm}}}
+\seealso{\code{\link{lm}}, \code{\link{glm}}}
 
 \examples{
 y <- rnorm(20)

@@ -126,6 +126,6 @@ plot(stmR, set.pars = NULL)
 (iO <- which(stmR $ weights  < 1e-8)) # 10 were considered outliers
 sts <- stmR$time.series
 points(time(sts)[iO], 0.8* sts[,"remainder"][iO], pch = 4, col = "red")
-par(op)# reset
+par(op)   # reset
 }
 \keyword{ts}

@@ -84,7 +84,7 @@ system.test(.)
 getenv(\dots)
 % </Removed 1.3.0>
 % Removed in 1.4.0
-read.table.url(url, method,\dots)
+read.table.url(url, method, \dots)
 scan.url(url, file = tempfile(), method, \dots)
 source.url(url, file = tempfile(), method, \dots)
 httpclient(url, port = 80, error.is.fatal = TRUE, check.MIME.type = TRUE,

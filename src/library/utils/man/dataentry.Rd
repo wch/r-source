@@ -192,7 +192,7 @@ de(\dots, Modes = list(), Names = NULL)
 }
 \examples{
 # call data entry with variables x and y
-\dontrun{data.entry(x,y)}
+\dontrun{data.entry(x, y)}
 }
 \keyword{utilities}
 \keyword{file}

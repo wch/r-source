@@ -95,7 +95,7 @@ if(.Platform$OS.type == "unix") {
    system.test <- function(...) { system(paste("test", ...)) == 0 }
    dir.exists <- function(dir)
        sapply(dir, function(d) system.test("-d", d))
-   dir.exists(c(R.home(), "/tmp", "~", "/NO"))# > T T T F
+   dir.exists(c(R.home(), "/tmp", "~", "/NO")) # > T T T F
 }
 }
 \keyword{file}

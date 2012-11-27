@@ -57,7 +57,7 @@ A list with the following named components:
 \examples{
 \dontshow{utils::example("lm", echo = FALSE)}
 ##-- Using the same data as the lm(.) example:
-lsD9 <- lsfit(x = unclass(gl(2,10)), y = weight)
+lsD9 <- lsfit(x = unclass(gl(2, 10)), y = weight)
 ls.print(lsD9)
 }
 \keyword{regression}

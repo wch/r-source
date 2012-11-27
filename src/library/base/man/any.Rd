@@ -58,7 +58,7 @@ any(\dots, na.rm = FALSE)
   \code{\link{all}}, the \sQuote{complement} of \code{any}.
 }
 \examples{
-range(x <- sort(round(stats::rnorm(10) - 1.2,1)))
+range(x <- sort(round(stats::rnorm(10) - 1.2, 1)))
 if(any(x < 0)) cat("x contains negative values\n")
 }
 \keyword{logic}

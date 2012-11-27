@@ -29,6 +29,6 @@ nlevels(x)
   \code{\link{levels}}, \code{\link{factor}}.
 }
 \examples{
-nlevels(gl(3,7)) # = 3
+nlevels(gl(3, 7)) # = 3
 }
 \keyword{category}

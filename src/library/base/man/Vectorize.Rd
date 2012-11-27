@@ -49,7 +49,7 @@ vrep(times = 1:4, x = 4:1)
 vrep <- Vectorize(rep.int, "times")
 vrep(times = 1:4, x = 42)
 
-f <- function(x = 1:3, y) c(x,y)
+f <- function(x = 1:3, y) c(x, y)
 vf <- Vectorize(f, SIMPLIFY = FALSE)
 f(1:3, 1:3)
 vf(1:3, 1:3)

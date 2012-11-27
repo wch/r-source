@@ -136,11 +136,11 @@ nlminb(start = x0, sumsq, y = y)
 y <- c( 0, 2, 0, -2, 0)
 nlminb(start = x0, sumsq, lower = -1, upper = 1, y = y)
 # try using the gradient
-sumsq.g <- function(x,y) 2*(x-y)
+sumsq.g <- function(x, y) 2*(x-y)
 nlminb(start = x0, sumsq, sumsq.g,
        lower = -1, upper = 1, y = y)
 # now use the hessian, too
-sumsq.h <- function(x,y) diag(2, nrow = length(x))
+sumsq.h <- function(x, y) diag(2, nrow = length(x))
 nlminb(start = x0, sumsq, sumsq.g, sumsq.h,
        lower = -1, upper = 1, y = y)
 

@@ -53,7 +53,7 @@ rgb2hsv(r, g = NULL, b = NULL, maxColorValue = 255)
 6 * hc["h",] # the hues are equispaced
 
 \testonly{set.seed(151)}
-(rgb3 <- floor(256 * matrix(stats::runif(3*12), 3,12)))
+(rgb3 <- floor(256 * matrix(stats::runif(3*12), 3, 12)))
 (hsv3 <- rgb2hsv(rgb3))
 ## Consistency :
 stopifnot(rgb3 == col2rgb(hsv(h = hsv3[1,], s = hsv3[2,], v = hsv3[3,])),
@@ -67,7 +67,7 @@ rgb2hsvR <- function(rgb, gamma = 1, maxColorValue = 255)
     d <- dim(rgb)
     if(d[1] != 3) stop("rgb matrix must have 3 rows")
     n <- d[2]
-    if(n == 0) return(cbind(c(h = 1,s = 1,v = 1))[,0])
+    if(n == 0) return(cbind(c(h = 1, s = 1, v = 1))[,0])
     rgb <- rgb/maxColorValue
     if(gamma != 1) rgb <- rgb ^ (1/gamma)
 

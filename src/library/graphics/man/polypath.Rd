@@ -16,7 +16,7 @@ polypath(x, y = NULL,
          rule = "winding", \dots)
 }
 \arguments{
-  \item{x,y}{vectors containing the coordinates of the vertices
+  \item{x, y}{vectors containing the coordinates of the vertices
     of the path.}
    \item{col}{the color for filling the path. The default,
      \code{NA}, is to leave paths unfilled, unless \code{density} is

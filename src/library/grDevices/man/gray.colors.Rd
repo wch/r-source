@@ -44,7 +44,7 @@ grey.colors(n, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL)
 \examples{
 require(graphics)
 
-pie(rep(1,12), col = gray.colors(12))
+pie(rep(1, 12), col = gray.colors(12))
 barplot(1:12, col = gray.colors(12))
 }
 \keyword{color}

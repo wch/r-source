@@ -67,10 +67,10 @@ is.call(call) #-> FALSE: Functions are NOT calls
 
 ## set up a function call to round with argument 10.5
 cl <- call("round", 10.5)
-is.call(cl)# TRUE
+is.call(cl) # TRUE
 cl
 ## such a call can also be evaluated.
-eval(cl)# [1] 10
+eval(cl) # [1] 10
 
 A <- 10.5
 call("round", A)        # round(10.5)

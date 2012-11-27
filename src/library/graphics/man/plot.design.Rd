@@ -70,11 +70,11 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   of designed experiments.}
 \examples{
 require(stats)
-plot.design(warpbreaks)# automatic for data frame with one numeric var.
+plot.design(warpbreaks)  # automatic for data frame with one numeric var.
 
 Form <- breaks ~ wool + tension
 summary(fm1 <- aov(Form, data = warpbreaks))
-plot.design(       Form, data = warpbreaks, col = 2)# same as above
+plot.design(       Form, data = warpbreaks, col = 2)  # same as above
 
 ## More than one y :
 utils::str(esoph)

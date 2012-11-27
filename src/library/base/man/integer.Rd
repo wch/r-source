@@ -74,7 +74,7 @@ is.integer(x)
 }
 \examples{
 ## as.integer() truncates:
-x <- pi * c(-1:1,10)
+x <- pi * c(-1:1, 10)
 as.integer(x)
 
 is.integer(1) # is FALSE !

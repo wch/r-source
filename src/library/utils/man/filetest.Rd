@@ -22,7 +22,7 @@ file_test(op, x, y)
     Binary tests are \code{"-nt"} (strictly newer than, using the modification
     dates) and \code{"-ot"} (strictly older than): in both cases the
     test is false unless both files exist.}
-  \item{x,y}{character vectors giving file paths.}
+  \item{x, y}{character vectors giving file paths.}
 }
 \details{
   \sQuote{Existence} here means being on the file system and accessible

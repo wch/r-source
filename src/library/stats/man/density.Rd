@@ -156,7 +156,7 @@ density(x, \dots)
 \examples{
 require(graphics)
 
-plot(density(c(-20, rep(0,98), 20)), xlim = c(-4, 4))# IQR = 0
+plot(density(c(-20, rep(0,98), 20)), xlim = c(-4, 4))  # IQR = 0
 
 # The Old Faithful geyser data
 d <- density(faithful$eruptions, bw = "sj")

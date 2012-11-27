@@ -57,7 +57,7 @@ if(interactive()) {
    ## create some interesting objects :
    ofa <- ordered(4:1)
    ex1 <- expression(1+ 0:9)
-   ex3 <- expression(u,v, 1+ 0:9)
+   ex3 <- expression(u, v, 1+ 0:9)
    example(factor, echo = FALSE)
    example(table, echo = FALSE)
    example(ftable, echo = FALSE)

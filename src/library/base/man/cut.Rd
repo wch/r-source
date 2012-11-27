@@ -95,7 +95,7 @@ table(cut(Z, breaks = -6:6))
 sum(table(cut(Z, breaks = -6:6, labels = FALSE)))
 sum(graphics::hist(Z, breaks = -6:6, plot = FALSE)$counts)
 
-cut(rep(1,5),4)#-- dummy
+cut(rep(1,5), 4) #-- dummy
 tx0 <- c(9, 4, 6, 5, 3, 10, 5, 3, 5)
 x <- rep(0:8, tx0)
 stopifnot(table(x) == tx0)

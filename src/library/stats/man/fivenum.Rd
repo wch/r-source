@@ -31,7 +31,7 @@ fivenum(x, na.rm = TRUE)
   \code{\link{range}}.
 }
 \examples{
-fivenum(c(rnorm(100),-1:1/0))
+fivenum(c(rnorm(100), -1:1/0))
 }
 \keyword{univar}
 \keyword{robust}

@@ -25,7 +25,7 @@ kappa(z, \dots)
 rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 }
 \arguments{
-  \item{z,x}{A matrix or a the result of \code{\link{qr}} or a fit from
+  \item{z, x}{A matrix or a the result of \code{\link{qr}} or a fit from
     a class inheriting from \code{"lm"}.}
   \item{exact}{logical.  Should the result be exact?}
   \item{norm}{character string, specifying the matrix norm with respect
@@ -112,14 +112,14 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \code{\link{qr}} for the \eqn{QR} one.
 }
 \examples{
-kappa(x1 <- cbind(1,1:10))# 15.71
+kappa(x1 <- cbind(1, 1:10)) # 15.71
 kappa(x1, exact = TRUE)        # 13.68
-kappa(x2 <- cbind(x1,2:11))# high! [x2 is singular!]
+kappa(x2 <- cbind(x1, 2:11)) # high! [x2 is singular!]
 
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 sv9 <- svd(h9 <- hilbert(9))$ d
-kappa(h9)# pretty high!
+kappa(h9)  # pretty high!
 kappa(h9, exact = TRUE) == max(sv9) / min(sv9)
-kappa(h9, exact = TRUE) / kappa(h9) # .677 (i.e., rel.error = 32\%)
+kappa(h9, exact = TRUE) / kappa(h9)  # 0.677 (i.e., rel.error = 32\%)
 }
 \keyword{math}

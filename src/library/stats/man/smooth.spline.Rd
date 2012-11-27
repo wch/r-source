@@ -157,7 +157,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \item{data}{only if \code{keep.data = TRUE}: itself a
     \code{\link{list}} with components \code{x}, \code{y} and \code{w}
     of the same length.  These are the original \eqn{(x_i,y_i,w_i),
-      i=1,\dots,n}, values where \code{data$x} may have repeated values and
+      i = 1, \dots, n}, values where \code{data$x} may have repeated values and
     hence be longer than the above \code{x} component; see details.
     }
   \item{lev}{(when \code{cv} was not \code{NA}) leverages, the diagonal
@@ -245,8 +245,8 @@ stopifnot(all.equal(cars$dist,
                     fitted(cars.spl) + residuals(cars.spl)))
 
 ##-- artificial example
-y18 <- c(1:3,5,4,7:3,2*(2:5),rep(10,4))
-xx  <- seq(1,length(y18), len = 201)
+y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
+xx  <- seq(1, length(y18), len = 201)
 (s2  <- smooth.spline(y18)) # GCV
 (s02  <- smooth.spline(y18, spar = 0.2))
 (s02. <- smooth.spline(y18, spar = 0.2, cv = NA))

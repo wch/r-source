@@ -64,7 +64,7 @@ lm.D9
 summary(lm.D90 <- update(lm.D9, . ~ . - 1))
 options(contrasts = c("contr.helmert", "contr.poly"))
 update(lm.D9)
-getCall(lm.D90)# "through the origin"
+getCall(lm.D90)  # "through the origin"
 
 options(oldcon)
 }

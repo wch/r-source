@@ -65,7 +65,7 @@ require(utils)
 %% FIXME: Do something more sensible (non-random data) !!
 set.seed(129)
 n <- 7 ; p <- 2
-X <- matrix(rnorm(n * p), n,p) # no intercept!
+X <- matrix(rnorm(n * p), n, p) # no intercept!
 y <- rnorm(n)
 w <- rnorm(n)^2
 

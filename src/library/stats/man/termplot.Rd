@@ -102,9 +102,9 @@ require(graphics)
 had.splines <- "package:splines" \%in\% search()
 if(!had.splines) rs <- require(splines)
 x <- 1:100
-z <- factor(rep(LETTERS[1:4],25))
+z <- factor(rep(LETTERS[1:4], 25))
 y <- rnorm(100, sin(x/10)+as.numeric(z))
-model <- glm(y ~ ns(x,6) + z)
+model <- glm(y ~ ns(x, 6) + z)
 
 par(mfrow = c(2,2)) ## 2 x 2 plots for same model :
 termplot(model, main = paste("termplot( ", deparse(model$call)," ...)"))

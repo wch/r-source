@@ -54,7 +54,7 @@ morley
 require(stats); require(graphics)
 michelson <- transform(morley,
                        Expt = factor(Expt), Run = factor(Run))
-xtabs(~ Expt + Run, data = michelson)# 5 x 20 balanced (two-way)
+xtabs(~ Expt + Run, data = michelson)  # 5 x 20 balanced (two-way)
 plot(Speed ~ Expt, data = michelson,
      main = "Speed of Light Data", xlab = "Experiment No.")
 fm <- aov(Speed ~ Run + Expt, data = michelson)

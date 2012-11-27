@@ -80,9 +80,9 @@ ftable(A)
 ftable(addmargins(A))
 
 # Non-commutative functions - note differences between resulting tables:
-ftable(addmargins(A, c(1,3),
+ftable(addmargins(A, c(1, 3),
        FUN = list(Sum = sum, list(Min = min, Max = max))))
-ftable(addmargins(A, c(3,1),
+ftable(addmargins(A, c(3, 1),
        FUN = list(list(Min = min, Max = max), Sum = sum)))
 
 # Weird function needed to return the N when computing percentages
@@ -96,7 +96,7 @@ round(sweep(addmargins(B, 2, list(list(All = sum, N = sqsm))), 1,
 # A total over Bee requires formation of the Bee-margin first:
 mB <-  addmargins(B, 2, FUN = list(list(Total = sum)))
 round(ftable(sweep(addmargins(mB, 1, list(list(All = sum, N = sqsm))), 2,
-                   apply(mB,2,sum)/100, "/")), 1)
+                   apply(mB, 2, sum)/100, "/")), 1)
 
 ## Zero.Printing table+margins:
 set.seed(1)

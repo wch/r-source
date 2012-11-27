@@ -58,8 +58,8 @@ lsf.str(pos = -1, envir, \dots)
 \examples{
 require(stats)
 
-lsf.str()#- how do the functions look like which I am using?
-ls.str(mode = "list") #- what are the structured objects I have defined?
+lsf.str()  #- how do the functions look like which I am using?
+ls.str(mode = "list")   #- what are the structured objects I have defined?
 
 ## create a few objects
 example(glm, echo = FALSE)

@@ -17,7 +17,7 @@ image(x, \dots)
       breaks, oldstyle = FALSE, useRaster, \dots)
 }
 \arguments{
-  \item{x,y}{locations of grid lines at which the values in \code{z} are
+  \item{x, y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be finite, non-missing and in (strictly)
     ascending order.  By default, equally
     spaced values from 0 to 1 are used.  If \code{x} is a \code{list},

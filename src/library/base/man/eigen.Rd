@@ -98,7 +98,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Smith, B. T, Boyle, J. M., Dongarra, J. J., Garbow, B. S., Ikebe,Y.,
+  Smith, B. T., Boyle, J. M., Dongarra, J. J., Garbow, B. S., Ikebe, Y.,
   Klema, V., and  Moler, C. B. (1976).
   \emph{Matrix Eigensystems Routines -- EISPACK Guide}.
   Springer-Verlag Lecture Notes in Computer Science \bold{6}.
@@ -124,16 +124,16 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   decomposition is much more efficient: \code{\link{det}}.
 }
 \examples{
-eigen(cbind(c(1,-1),c(-1,1)))
-eigen(cbind(c(1,-1),c(-1,1)), symmetric = FALSE)
+eigen(cbind(c(1,-1), c(-1,1)))
+eigen(cbind(c(1,-1), c(-1,1)), symmetric = FALSE)
 # same (different algorithm).
 
-eigen(cbind(1,c(1,-1)), only.values = TRUE)
-eigen(cbind(-1,2:1)) # complex values
-eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real Eigen values
+eigen(cbind(1, c(1,-1)), only.values = TRUE)
+eigen(cbind(-1, 2:1)) # complex values
+eigen(print(cbind(c(0, 1i), c(-1i, 0)))) # Hermite ==> real Eigenvalues
 ## 3 x 3:
-eigen(cbind( 1,3:1,1:3))
-eigen(cbind(-1,c(1:2,0),0:2)) # complex values
+eigen(cbind( 1, 3:1, 1:3))
+eigen(cbind(-1, c(1:2,0), 0:2)) # complex values
 
 }
 \keyword{algebra}

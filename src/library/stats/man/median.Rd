@@ -42,8 +42,8 @@ median(x, na.rm = FALSE)
 }
 \seealso{\code{\link{quantile}} for general quantiles.}
 \examples{
-median(1:4)# = 2.5 [even number]
-median(c(1:3,100,1000))# = 3 [odd, robust]
+median(1:4)                # = 2.5 [even number]
+median(c(1:3, 100, 1000))  # = 3 [odd, robust]
 }
 \keyword{univar}
 \keyword{robust}

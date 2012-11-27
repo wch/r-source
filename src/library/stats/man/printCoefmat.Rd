@@ -55,7 +55,7 @@ printCoefmat(x, digits = max(3, getOption("digits") - 2),
   \item{has.Pvalue}{logical; if \code{TRUE}, the last column of \code{x}
     contains P values; in that case, it is printed if and only if
     \code{P.values} (above) is true.}
-  \item{eps.Pvalue}{number,..}
+  \item{eps.Pvalue}{number, ..}
   \item{na.print}{a character string to code \code{\link{NA}} values in
     printed output.}
  \item{\dots}{further arguments for \code{\link{print}}.}
@@ -71,14 +71,14 @@ printCoefmat(x, digits = max(3, getOption("digits") - 2),
 }
 \examples{
 cmat <- cbind(rnorm(3, 10), sqrt(rchisq(3, 12)))
-cmat <- cbind(cmat, cmat[,1]/cmat[,2])
-cmat <- cbind(cmat, 2*pnorm(-cmat[,3]))
+cmat <- cbind(cmat, cmat[, 1]/cmat[, 2])
+cmat <- cbind(cmat, 2*pnorm(-cmat[, 3]))
 colnames(cmat) <- c("Estimate", "Std.Err", "Z value", "Pr(>z)")
-printCoefmat(cmat[,1:3])
+printCoefmat(cmat[, 1:3])
 printCoefmat(cmat)
-options(show.coef.Pvalues = FALSE)
+op <- options(show.coef.Pvalues = FALSE)
 printCoefmat(cmat, digits = 2)
 printCoefmat(cmat, digits = 2, P.values = TRUE)
-options(show.coef.Pvalues = TRUE)# revert
+options(op) # restore
 }
 \keyword{print}

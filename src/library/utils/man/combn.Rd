@@ -40,7 +40,7 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
 \value{
   a \code{\link{list}} or \code{\link{array}}, see the \code{simplify}
   argument above.  In the latter case, the identity
-  \code{dim(combn(n,m)) == c(m, choose(n,m))} holds.
+  \code{dim(combn(n, m)) == c(m, choose(n, m))} holds.
 }
 \references{
   Nijenhuis, A. and Wilf, H.S. (1978)
@@ -61,9 +61,9 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
 \examples{
 combn(letters[1:4], 2)
 (m <- combn(10, 5, min))   # minimum value in each combination
-mm <- combn(15, 6, function(x) matrix(x, 2,3))
-stopifnot(round(choose(10,5)) == length(m),
-          c(2,3, round(choose(15,6))) == dim(mm))
+mm <- combn(15, 6, function(x) matrix(x, 2, 3))
+stopifnot(round(choose(10, 5)) == length(m),
+          c(2,3, round(choose(15, 6))) == dim(mm))
 
 ## Different way of encoding points:
 combn(c(1,1,1,1,2,2,2,3,3,4), 3, tabulate, nbins = 4)

@@ -196,10 +196,10 @@ abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch = 20, col = 2)
 
 ## Irwin's data [Williams 1987]
 xi <- 1:5
-yi <- c(0,2,14,19,30) # number of mice responding to dose xi
-mi <- rep(40, 5)      # number of mice exposed
+yi <- c(0,2,14,19,30)    # number of mice responding to dose xi
+mi <- rep(40, 5)         # number of mice exposed
 summary(lmI <- glm(cbind(yi, mi -yi) ~ xi, family = binomial))
-signif(cooks.distance(lmI), 3)# ~= Ci in Table 3, p.184
+signif(cooks.distance(lmI), 3)   # ~= Ci in Table 3, p.184
 (imI <- influence.measures(lmI))
 stopifnot(all.equal(imI$infmat[,"cook.d"],
           cooks.distance(lmI)))

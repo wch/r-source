@@ -41,9 +41,9 @@ col2rgb(col, alpha = FALSE)
 }
 \examples{
 col2rgb("peachpuff")
-col2rgb(c(blu = "royalblue", reddish = "tomato")) # names kept
+col2rgb(c(blu = "royalblue", reddish = "tomato"))  # names kept
 
-col2rgb(1:8)# the ones from the palette() :
+col2rgb(1:8)  # the ones from the palette() :
 
 col2rgb(paste0("gold", 1:4))
 
@@ -54,7 +54,7 @@ col2rgb(c(red = "red", palette =  1:3, hex = "#abcdef"))
 ##-- NON-INTRODUCTORY examples --
 
 grC <- col2rgb(paste0("gray", 0:100))
-table(print(diff(grC["red",])))# '2' or '3': almost equidistant
+table(print(diff(grC["red",])))  # '2' or '3': almost equidistant
 ## The 'named' grays are in between {"slate gray" is not gray, strictly}
 col2rgb(c(g66 = "gray66", darkg =  "dark gray", g67 = "gray67",
           g74 = "gray74", gray  =       "gray", g75 = "gray75",
@@ -62,9 +62,9 @@ col2rgb(c(g66 = "gray66", darkg =  "dark gray", g67 = "gray67",
 
 crgb <- col2rgb(cc <- colors())
 colnames(crgb) <- cc
-t(crgb)## The whole table
+t(crgb)  # The whole table
 
-ccodes <- c(256^(2:0) \%*\% crgb)## = internal codes
+ccodes <- c(256^(2:0) \%*\% crgb)  # = internal codes
 ## How many names are 'aliases' of each other:
 table(tcc <- table(ccodes))
 length(uc <- unique(sort(ccodes))) # 502
@@ -77,7 +77,7 @@ utils::str(cl)
 \dontrun{
  if(require(xgobi)) { ## Look at the color cube dynamically :
    tc <- t(crgb[, !duplicated(ccodes)])
-   table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])# (397, 105)
+   table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
    xgobi(tc, color = c("gold", "gray")[1 + is.gray])
  }
 }

@@ -44,7 +44,7 @@ coefficients(object, \dots)
   Wadsworth & Brooks/Cole.
 }
 \examples{
-x <- 1:5; coef(lm(c(1:3,7,6) ~ x))
+x <- 1:5; coef(lm(c(1:3, 7, 6) ~ x))
 }
 \keyword{regression}
 \keyword{models}

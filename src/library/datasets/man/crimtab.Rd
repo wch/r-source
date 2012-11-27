@@ -82,7 +82,7 @@ dim(crimtab)
 utils::str(crimtab)
 ## for nicer printing:
 local({cT <- crimtab
-       colnames(cT) <- substring(colnames(cT), 2,3)
+       colnames(cT) <- substring(colnames(cT), 2, 3)
        print(cT, zero.print = " ")
 })
 

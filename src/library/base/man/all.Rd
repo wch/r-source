@@ -47,7 +47,7 @@ all(\dots, na.rm = FALSE)
 \note{
   That \code{all(logical(0))} is true is a useful convention:
   it ensures that
-\preformatted{all(all(x), all(y)) == all(x,y)
+\preformatted{all(all(x), all(y)) == all(x, y)
 }
   even if \code{x} has length zero.
 }

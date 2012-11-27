@@ -12,7 +12,7 @@ prmatrix(x, rowlab =, collab =,
 }
 \arguments{
   \item{x}{numeric or character matrix.}
-  \item{rowlab,collab}{(optional) character vectors giving row or column
+  \item{rowlab, collab}{(optional) character vectors giving row or column
     names respectively.  By default, these are taken from
     \code{\link{dimnames}(x)}.}
   \item{quote}{logical; if \code{TRUE} and \code{x} is of mode
@@ -42,7 +42,7 @@ prmatrix(x, rowlab =, collab =,
   \code{\link{print.default}}, and other \code{\link{print}} methods.
 }
 \examples{
-prmatrix(m6 <- diag(6), rowlab = rep("",6), collab = rep("",6))
+prmatrix(m6 <- diag(6), rowlab = rep("", 6), collab = rep("", 6))
 
 chm <- matrix(scan(system.file("help", "AnIndex", package = "splines"),
                    what = ""), , 2, byrow = TRUE)

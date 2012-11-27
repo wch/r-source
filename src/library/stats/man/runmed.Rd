@@ -102,7 +102,7 @@ require(graphics)
 utils::example(nhtemp)
 myNHT <- as.vector(nhtemp)
 myNHT[20] <- 2 * nhtemp[20]
-plot(myNHT, type = "b", ylim = c(48,60), main = "Running Medians Example")
+plot(myNHT, type = "b", ylim = c(48, 60), main = "Running Medians Example")
 lines(runmed(myNHT, 7), col = "red")
 
 ## special: multiple y values for one x
@@ -116,15 +116,15 @@ y <- ys <- (-20:20)^2
 y [c(1,10,21,41)] <- c(150, 30, 400, 450)
 all(y == runmed(y, 1)) # 1-neighbourhood <==> interpolation
 plot(y) ## lines(y, lwd = .1, col = "light gray")
-lines(lowess(seq(y),y, f = .3), col = "brown")
+lines(lowess(seq(y), y, f = 0.3), col = "brown")
 lines(runmed(y, 7), lwd = 2, col = "blue")
-lines(runmed(y,11), lwd = 2, col = "red")
+lines(runmed(y, 11), lwd = 2, col = "red")
 
 ## Lowess is not robust
 y <- ys ; y[21] <- 6666 ; x <- seq(y)
 col <- c("black", "brown","blue")
 plot(y, col = col[1])
-lines(lowess(x,y, f = .3), col = col[2])
+lines(lowess(x, y, f = 0.3), col = col[2])
 %% predict(loess(y ~ x, span = 0.3, degree=1, family = "symmetric"))
 %% gives 6-line warning but does NOT break down
 lines(runmed(y, 7),      lwd = 2, col = col[3])

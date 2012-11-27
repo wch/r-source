@@ -344,7 +344,7 @@ stopifnot(identical(names(nx[1]), "Abc"),
         is.null(names(nx[["Abc"]])), is.null(names(nx[[2]])))
 }
 ## recursive indexing into lists
-z <- list(a = list(b = 9, c = 'hello'), d = 1:5)
+z <- list(a = list(b = 9, c = "hello"), d = 1:5)
 unlist(z)
 z[[c(1, 2)]]
 z[[c(1, 2, 1)]]  # both "hello"

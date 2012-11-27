@@ -18,7 +18,7 @@ xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
 \arguments{
   \item{x, y}{the x and y coordinates of a set of points.
     Alternatively, a single argument \code{x} can be provided.}
-  \item{xlab,ylab}{names for the x and y variables to be extracted.}
+  \item{xlab, ylab}{names for the x and y variables to be extracted.}
   \item{log}{character, \code{"x"}, \code{"y"} or both, as for
     \code{\link{plot}}.  Sets negative values to \code{\link{NA}} and
     gives a warning.}

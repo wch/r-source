@@ -84,8 +84,8 @@ substring(text, first, last = 1000000L) <- value
  \code{\link{strsplit}}, \code{\link{paste}}, \code{\link{nchar}}.
 }
 \examples{
-substr("abcdef", 2,4)
-substring("abcdef" ,1:6, 1:6)
+substr("abcdef", 2, 4)
+substring("abcdef", 1:6, 1:6)
 ## strsplit is more efficient ...
 
 substr(rep("abcdef", 4), 1:4, 4:5)

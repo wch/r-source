@@ -40,7 +40,7 @@ isSymmetric(object, \dots)
 \examples{
 isSymmetric(D3 <- diag(3)) # -> TRUE
 
-D3[2,1] <- 1e-100
+D3[2, 1] <- 1e-100
 D3
 isSymmetric(D3) # TRUE
 isSymmetric(D3, tol = 0) # FALSE for zero-tolerance

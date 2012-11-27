@@ -102,10 +102,10 @@ f1 <- function(x, y = x)             { x <- x + 1; y }
 s1 <- function(x, y = substitute(x)) { x <- x + 1; y }
 s2 <- function(x, y) { if(missing(y)) y <- substitute(x); x <- x + 1; y }
 a <- 10
-f1(a)# 11
-s1(a)# 11
-s2(a)# a
-typeof(s2(a))# "symbol"
+f1(a)  # 11
+s1(a)  # 11
+s2(a)  # a
+typeof(s2(a))  # "symbol"
 }
 \keyword{programming}
 \keyword{data}

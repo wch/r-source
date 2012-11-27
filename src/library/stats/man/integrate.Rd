@@ -104,12 +104,12 @@ integrate(Vectorize(f), 0, 1)  ## correct
 integrate(function(x) rep(2.0, length(x)), 0, 1)  ## correct
 
 ## integrate can fail if misused
-integrate(dnorm,0,2)
-integrate(dnorm,0,20)
-integrate(dnorm,0,200)
-integrate(dnorm,0,2000)
-integrate(dnorm,0,20000) ## fails on many systems
-integrate(dnorm,0,Inf)   ## works
+integrate(dnorm, 0, 2)
+integrate(dnorm, 0, 20)
+integrate(dnorm, 0, 200)
+integrate(dnorm, 0, 2000)
+integrate(dnorm, 0, 20000) ## fails on many systems
+integrate(dnorm, 0, Inf)   ## works
 }
 \keyword{math}
 \keyword{utilities}

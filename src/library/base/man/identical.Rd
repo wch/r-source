@@ -82,7 +82,7 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   uncompiled).  To check whether two different compiles are equal, you
   should compare the results of \code{\link{disassemble}()}.
 
-  Note that \code{identical(x,y,FALSE,FALSE,FALSE,FALSE)} pickily tests for
+  Note that \code{identical(x, y, FALSE, FALSE, FALSE, FALSE)} pickily tests for
   very exact equality.
 }
 \value{
@@ -108,7 +108,7 @@ identical(1, as.integer(1)) ## FALSE, stored as different types
 
 x <- 1.0; y <- 0.99999999999
 ## how to test for object equality allowing for numeric fuzz :
-(E <- all.equal(x,y))
+(E <- all.equal(x, y))
 isTRUE(E) # which is simply defined to just use
 identical(TRUE, E)
 ## If all.equal thinks the objects are different, it returns a

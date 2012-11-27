@@ -125,24 +125,24 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
 \examples{
 require(stats)
 set.seed(753)
-(bx.p <- boxplot(split(rt(100, 4), gl(5,20))))
-op <- par(mfrow =  c(2,2))
+(bx.p <- boxplot(split(rt(100, 4), gl(5, 20))))
+op <- par(mfrow =  c(2, 2))
 bxp(bx.p, xaxt = "n")
 bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4, boxfill = 1:5)
 bxp(bx.p, notch = TRUE, boxfill = "lightblue", frame = FALSE,
     outl = FALSE, main = "bxp(*, frame= FALSE, outl= FALSE)")
 bxp(bx.p, notch = TRUE, boxfill = "lightblue", border = 2:6,
     ylim = c(-4,4), pch = 22, bg = "green", log = "x",
-    main = "... log='x', ylim=*")
+    main = "... log = 'x', ylim = *")
 par(op)
-op <- par(mfrow= c(1,2))
+op <- par(mfrow = c(1, 2))
 
 ## single group -- no label
 boxplot (weight ~ group, data = PlantGrowth, subset = group == "ctrl")
 ## with label
 bx <- boxplot(weight ~ group, data = PlantGrowth,
               subset = group == "ctrl", plot = FALSE)
-bxp(bx,show.names=TRUE)
+bxp(bx, show.names=TRUE)
 par(op)
 
 %% examples for new (S+ like) features

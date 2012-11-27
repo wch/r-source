@@ -68,7 +68,7 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
   \item{series}{The name of the series \code{x}.}
   \item{snames}{The series names for a multivariate time series.}
   
-  The lag \code{k} value returned by \code{ccf(x,y)} estimates the
+  The lag \code{k} value returned by \code{ccf(x, y)} estimates the
   correlation between \code{x[t+k]} and \code{y[t]}.
 
   The result is returned invisibly if \code{plot} is \code{TRUE}.

@@ -143,7 +143,7 @@ require(grDevices) # for colours
 tN <- table(Ni <- stats::rpois(100, lambda = 5))
 r <- barplot(tN, col = rainbow(20))
 #- type = "h" plotting *is* 'bar'plot
-lines(r, tN, type = 'h', col = 'red', lwd = 2)
+lines(r, tN, type = "h", col = "red", lwd = 2)
 
 barplot(tN, space = 1.5, axisnames = FALSE,
         sub = "barplot(..., space= 1.5, axisnames = FALSE)")
@@ -170,7 +170,7 @@ mp <- barplot(hh, beside = TRUE,
         sub = "Faked upper 2*sigma error bars", col.sub = mybarcol,
         cex.names = 1.5)
 segments(mp, hh, mp, hh + 2*sqrt(1000*hh/100), col = mybarcol, lwd = 1.5)
-stopifnot(dim(mp) == dim(hh))# corresponding matrices
+stopifnot(dim(mp) == dim(hh))  # corresponding matrices
 mtext(side = 1, at = colMeans(mp), line = -2,
       text = paste("Mean", formatC(colMeans(hh))), col = "red")
 

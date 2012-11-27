@@ -14,7 +14,7 @@
 line(x, y)
 }
 \arguments{
-  \item{x,y}{the arguments can be any way of specifying x-y pairs.  See
+  \item{x, y}{the arguments can be any way of specifying x-y pairs.  See
     \code{\link{xy.coords}}.}
 }
 \details{

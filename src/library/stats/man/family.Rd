@@ -166,9 +166,9 @@ quasipoisson(link = "log")
 \examples{
 require(utils) # for str
 
-nf <- gaussian()# Normal family
+nf <- gaussian()  # Normal family
 nf
-str(nf)# internal STRucture
+str(nf)
 
 gf <- Gamma()
 gf

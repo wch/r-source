@@ -92,7 +92,7 @@ ii <- setNames(0:8, 0:8)
 symnum(ii, cut =  2*(0:4), sym = c(".", "-", "+", "$"))
 symnum(ii, cut =  2*(0:4), sym = c(".", "-", "+", "$"), show.max = TRUE)
 
-symnum(1:12 \%\% 3 == 0)# --> "|" = TRUE, "." = FALSE  for logical
+symnum(1:12 \%\% 3 == 0)  # --> "|" = TRUE, "." = FALSE  for logical
 
 ## Pascal's Triangle modulo 2 -- odd and even numbers:
 N <- 38

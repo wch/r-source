@@ -284,7 +284,7 @@ runif(1); .Random.seed[1:6]; runif(1); .Random.seed[1:6]
 rm(.Random.seed); runif(1); .Random.seed[1:6]
 
 ok <- RNGkind()
-RNGkind("Wich")# (partial string matching on 'kind')
+RNGkind("Wich")  # (partial string matching on 'kind')
 
 ## This shows how 'runif(.)' works for Wichmann-Hill,
 ## using only R functions:
@@ -305,7 +305,7 @@ stopifnot(
 
 ## ----
 .Random.seed
-RNGkind("Super")#matches  "Super-Duper"
+RNGkind("Super") # matches  "Super-Duper"
 RNGkind()
 .Random.seed # new, corresponding to  Super-Duper
 

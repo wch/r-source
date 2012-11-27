@@ -96,7 +96,7 @@ summary(fit, split = list(B = 1:2), expand.split = TRUE)
 ## Now look at all three interaction contrasts
 cont <- c(1, -1)[A] * cbind(c(1, -1, 0), c(1, 0, -1), c(0, 1, -1))[B,]
 se.contrast(fit, cont)  # same, due to balance.
-rm(A,B,score)
+rm(A, B, score)
 
 
 ## multi-stratum example where efficiencies play a role

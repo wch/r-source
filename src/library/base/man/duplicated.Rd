@@ -59,8 +59,8 @@ anyDuplicated(x, incomparables = FALSE, \dots)
 
   For the default methods, and whenever there are equivalent method
   definitions for \code{duplicated} and \code{anyDuplicated},
-  \code{anyDuplicated(x,...)} is a \dQuote{generalized} shortcut for
-  \code{any(duplicated(x,...))}, in the sense that it returns the
+  \code{anyDuplicated(x, ...)} is a \dQuote{generalized} shortcut for
+  \code{any(duplicated(x, ...))}, in the sense that it returns the
   \emph{index} \code{i} of the first duplicated entry \code{x[i]} if
   there is one, and \code{0} otherwise.  Their behaviours may be
   different when at least one of \code{duplicated} and

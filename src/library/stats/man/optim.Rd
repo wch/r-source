@@ -310,7 +310,7 @@ eurodistmat <- as.matrix(eurodist)
 
 distance <- function(sq) {  # Target function
     sq2 <- embed(sq, 2)
-    sum(eurodistmat[cbind(sq2[,2],sq2[,1])])
+    sum(eurodistmat[cbind(sq2[,2], sq2[,1])])
 }
 
 genseq <- function(sq) {  # Generate new candidate sequence

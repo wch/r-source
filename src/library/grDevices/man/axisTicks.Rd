@@ -59,16 +59,16 @@ require("graphics")
 plot(10*(0:10)); (pu <- par("usr"))
 aX <- function(side, at, ...)
     axis(side, at = at, labels = FALSE, lwd.ticks = 2, col.ticks = 2, tck = 0.05, ...)
-aX(1, print(xa <- axisTicks(pu[1:2], log = FALSE)))# x axis
-aX(2, print(ya <- axisTicks(pu[3:4], log = FALSE)))# y axis
+aX(1, print(xa <- axisTicks(pu[1:2], log = FALSE)))  # x axis
+aX(2, print(ya <- axisTicks(pu[3:4], log = FALSE)))  # y axis
 
 axisTicks(pu[3:4], log = FALSE, n = 10)
 
 plot(10*(0:10), log = "y"); (pu <- par("usr"))
-aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))# y axis
+aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))  # y axis
 
 plot(2^(0:9), log = "y"); (pu <- par("usr"))
-aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))# y axis
+aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))  # y axis
 
 }
 \keyword{dplot}

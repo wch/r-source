@@ -32,7 +32,7 @@
       heaviest) within diet.
     }
     \item{Diet}{
-      a factor with levels 1,\dots,4 indicating which
+      a factor with levels 1, \dots, 4 indicating which
       experimental diet the chick received.
     }
   }

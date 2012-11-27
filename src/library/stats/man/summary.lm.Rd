@@ -87,10 +87,10 @@
 \examples{
 \dontshow{utils::example("lm", echo = FALSE)}
 ##-- Continuing the  lm(.) example:
-coef(lm.D90)# the bare coefficients
-sld90 <- summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept
+coef(lm.D90)  # the bare coefficients
+sld90 <- summary(lm.D90 <- lm(weight ~ group -1))  # omitting intercept
 sld90
-coef(sld90)# much more
+coef(sld90)  # much more
 }
 \keyword{regression}
 \keyword{models}

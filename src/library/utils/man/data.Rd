@@ -124,10 +124,10 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
 }
 \examples{
 require(utils)
-data()                       # list all available data sets
-try(data(package = "rpart") )# list the data sets in the rpart package
-data(USArrests, "VADeaths")  # load the data sets 'USArrests' and 'VADeaths'
-help(USArrests)              # give information on data set 'USArrests'
+data()                         # list all available data sets
+try(data(package = "rpart") )  # list the data sets in the rpart package
+data(USArrests, "VADeaths")    # load the data sets 'USArrests' and 'VADeaths'
+help(USArrests)                # give information on data set 'USArrests'
 }
 \keyword{documentation}
 \keyword{datasets}

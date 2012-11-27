@@ -104,30 +104,30 @@ require(stats)
 
 (ii <- order(x <- c(1,1,3:1,1:4,3), y <- c(9,9:1), z <- c(2,1:9)))
 ## 6  5  2  1  7  4 10  8  3  9
-rbind(x,y,z)[,ii] # shows the reordering (ties via 2nd & 3rd arg)
+rbind(x, y, z)[,ii] # shows the reordering (ties via 2nd & 3rd arg)
 
 ## Suppose we wanted descending order on y.
 ## A simple solution for numeric 'y' is
-rbind(x,y,z)[, order(x, -y, z)]
+rbind(x, y, z)[, order(x, -y, z)]
 ## More generally we can make use of xtfrm
 cy <- as.character(y)
-rbind(x,y,z)[, order(x, -xtfrm(cy), z)]
+rbind(x, y, z)[, order(x, -xtfrm(cy), z)]
 
 ## Sorting data frames:
-dd <- transform(data.frame(x,y,z),
+dd <- transform(data.frame(x, y, z),
                 z = factor(z, labels = LETTERS[9:1]))
 ## Either as above {for factor 'z' : using internal coding}:
-dd[ order(x, -y, z) ,]
+dd[ order(x, -y, z), ]
 ## or along 1st column, ties along 2nd, ... *arbitrary* no.{columns}:
-dd[ do.call(order, dd) ,]
+dd[ do.call(order, dd), ]
 
-set.seed(1)# reproducible example:
+set.seed(1)  # reproducible example:
 d4 <- data.frame(x = round(   rnorm(100)), y = round(10*runif(100)),
                  z = round( 8*rnorm(100)), u = round(50*runif(100)))
-(d4s <- d4[ do.call(order, d4) ,])
-(i <- which(diff(d4s[,3]) == 0))
+(d4s <- d4[ do.call(order, d4), ])
+(i <- which(diff(d4s[, 3]) == 0))
 #   in 2 places, needed 3 cols to break ties:
-d4s[ rbind(i,i+1), ]
+d4s[ rbind(i, i+1), ]
 
 ## rearrange matched vectors so that the first is in ascending order
 x <- c(5:1, 6:8, 12:9)

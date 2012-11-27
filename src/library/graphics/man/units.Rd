@@ -24,13 +24,13 @@ yinch(y = 1, warn.log = TRUE)
 xyinch(xy = 1, warn.log = TRUE)
 }
 \arguments{
-  \item{x,y}{numeric vector}
+  \item{x, y}{numeric vector}
   \item{xy}{numeric of length 1 or 2.}
   \item{warn.log}{logical; if \code{TRUE}, a warning is printed in case
     of active log scale.}
 }
 \examples{
-all(c(xinch(),yinch()) == xyinch()) # TRUE
+all(c(xinch(), yinch()) == xyinch()) # TRUE
 xyinch()
 xyinch #- to see that is really   delta{"usr"} / "pin"
 
@@ -39,7 +39,7 @@ xyinch #- to see that is really   delta{"usr"} / "pin"
 with(mtcars, {
     plot(mpg, disp, pch = 19, main = "Motor Trend Cars")
     text(mpg + xinch(0.12), disp, row.names(mtcars),
-         adj = 0, cex = .7, col = 'blue')
+         adj = 0, cex = .7, col = "blue")
     })
 }
 \keyword{dplot}

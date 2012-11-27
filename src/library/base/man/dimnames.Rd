@@ -104,8 +104,8 @@ stopifnot(identical(A0, provideDimnames(A)))
 strd <- function(x) utils::str(dimnames(x))
 strd(provideDimnames(A, base= list(letters[-(1:9)], tail(LETTERS))))
 strd(provideDimnames(A, base= list(letters[-(1:9)], tail(LETTERS))))
-strd(provideDimnames(N, base= list(letters[-(1:9)], tail(LETTERS))))# recycling
-strd(provideDimnames(A, base= list(c("AA","BB"))))# recycling on both levels
+strd(provideDimnames(N, base= list(letters[-(1:9)], tail(LETTERS)))) # recycling
+strd(provideDimnames(A, base= list(c("AA","BB")))) # recycling on both levels
 }
 \keyword{array}
 \keyword{manip}

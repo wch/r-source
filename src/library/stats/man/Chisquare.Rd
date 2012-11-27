@@ -120,7 +120,7 @@ require(graphics)
 
 dchisq(1, df = 1:3)
 pchisq(1, df =  3)
-pchisq(1, df =  3, ncp = 0:4)# includes the above
+pchisq(1, df =  3, ncp = 0:4)  # includes the above
 
 x <- 1:10
 ## Chi-squared(df = 2) is a special exponential distribution
@@ -139,7 +139,7 @@ op <- par(mfrow = c(3,3), mar = c(3,3,1,1)+.1, mgp = c(1.5,.6,0),
 for(df in 2^(4*rnorm(9))) {
   plot(pp, sort(pchisq(rr <- rchisq(n, df = df, ncp = L), df = df, ncp = L)),
        ylab = "pchisq(rchisq(.),.)", pch = ".")
-  mtext(paste("df = ",formatC(df, digits = 4)), line =  -2, adj = 0.05)
+  mtext(paste("df = ", formatC(df, digits = 4)), line =  -2, adj = 0.05)
   abline(0, 1, col = 2)
 }
 mtext(expression("P-P plots : Noncentral  "*

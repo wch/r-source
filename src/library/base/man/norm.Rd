@@ -57,7 +57,7 @@ norm(x, type = c("O", "I", "F", "M", "2"))
 }
 \references{
   Anderson, E., et al. (1994).
-  \emph{LAPACK User's Guide,}
+  \emph{LAPACK User's Guide},
   2nd edition, SIAM, Philadelphia.
 }
 \seealso{

@@ -69,10 +69,10 @@ ht <- seq(57, 73, length.out = 200)
 lines(ht, predict(fm1, data.frame(height = ht)))
 \dontshow{
 ## Consistency:
-x <- c(1:3,5:6)
+x <- c(1:3, 5:6)
 stopifnot(identical(ns(x), ns(x, df = 1)),
-          identical(ns(x, df = 2), ns(x, df = 2, knots = NULL)),# not true till 2.15.2
-          !is.null(kk <- attr(ns(x), "knots")),# not true till 1.5.1
+          identical(ns(x, df = 2), ns(x, df = 2, knots = NULL)), # not true till 2.15.2
+          !is.null(kk <- attr(ns(x), "knots")), # not true till 1.5.1
           length(kk) == 0)
 }
 }

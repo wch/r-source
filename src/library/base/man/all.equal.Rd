@@ -45,7 +45,7 @@ attr.all.equal(target, current,
     separately from the \code{attributes}).}
 }
 \description{
-    \code{all.equal(x,y)} is a utility to compare \R objects \code{x}
+    \code{all.equal(x, y)} is a utility to compare \R objects \code{x}
     and \code{y} testing \sQuote{near equality}.  If they are different,
     comparison is still made to some extent, and a report of the
     differences is returned.    Don't use \code{all.equal} directly in
@@ -98,9 +98,9 @@ all.equal(pi, 355/113)
 
 d45 <- pi*(1/4 + 1:10)
 stopifnot(
-all.equal(tan(d45), rep(1,10)))        # TRUE, but
-all      (tan(d45) == rep(1,10))       # FALSE, since not exactly
-all.equal(tan(d45), rep(1,10), tol = 0)  # to see difference
+all.equal(tan(d45), rep(1, 10)))          # TRUE, but
+all      (tan(d45) == rep(1, 10))         # FALSE, since not exactly
+all.equal(tan(d45), rep(1, 10), tol = 0)  # to see difference
 }
 \keyword{programming}% is.*
 \keyword{utilities}

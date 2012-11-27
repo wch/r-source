@@ -142,10 +142,10 @@ is.data.frame(d)
 (dd <- cbind(d, char = I(letters[1:10])))
 rbind(class = sapply(dd, class), mode = sapply(dd, mode))
 
-stopifnot(1:10 == row.names(d))# {coercion}
+stopifnot(1:10 == row.names(d))  # {coercion}
 
-(d0  <- d[, FALSE]) # NULL data frame with 10 rows
-(d.0 <- d[FALSE, ]) # <0 rows> data frame  (3 cols)
+(d0  <- d[, FALSE])   # NULL data frame with 10 rows
+(d.0 <- d[FALSE, ])   # <0 rows> data frame  (3 cols)
 (d00 <- d0[FALSE, ])  # NULL data frame with 0 rows
 }
 \keyword{classes}

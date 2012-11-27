@@ -99,7 +99,7 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 ## Build a db of all R news entries.
 db <- news()
 \dontshow{
-  vv <- capture.output(db)# without an error
+  vv <- capture.output(db)  # without an error
 }
 \donttest{% <- is not sensibly diff-ed against previous versions
 ## Bug fixes with PR number in 2.11.0.

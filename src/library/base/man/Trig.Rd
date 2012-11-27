@@ -69,7 +69,7 @@ atan2(y, x)
   Wadsworth & Brooks/Cole.
 
   Abramowitz, M. and Stegun, I. A. (1972). \emph{Handbook of
-    Mathematical Functions,} New York: Dover.\cr
+    Mathematical Functions}. New York: Dover.\cr
   Chapter 4. Elementary Transcendental Functions: Logarithmic,
   Exponential, Circular and Hyperbolic Functions
  }

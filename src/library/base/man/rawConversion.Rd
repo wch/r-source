@@ -45,7 +45,7 @@ packBits(x, type = c("raw", "integer"))
   multibyte locale, e.g. one using UTF-8. \link{Long vectors} are
   allowed if \code{multiple} is true.
 
-  \code{rawShift(x,n)} shift the bits in \code{x} by \code{n} positions
+  \code{rawShift(x, n)} shift the bits in \code{x} by \code{n} positions
   to the right, see the argument \code{n}, above.
 
   \code{rawToBits} returns a raw vector of 8 times the length of a raw

@@ -80,7 +80,7 @@ print(x, \dots)
 \examples{
 require(stats)
 
-ts(1:20)#-- print is the "Default function" --> print.ts(.) is called
+ts(1:20)  #-- print is the "Default function" --> print.ts(.) is called
 for(i in 1:3) print(1:i)
 
 ## Printing of factors
@@ -94,7 +94,7 @@ esoph$alcgp[1:12]
 set.seed(521)
 t1 <- round(abs(rt(200, df = 1.8)))
 t2 <- round(abs(rt(200, df = 1.4)))
-table(t1,t2) # simple
-print(table(t1,t2), zero.print = ".")# nicer to read
+table(t1, t2) # simple
+print(table(t1, t2), zero.print = ".") # nicer to read
 }
 \keyword{print}

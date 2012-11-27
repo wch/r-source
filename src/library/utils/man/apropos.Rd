@@ -69,12 +69,12 @@ apropos("GLM", ignore.case = FALSE) # not one
 apropos("lq")
 
 cor <- 1:pi
-find("cor")        #> ".GlobalEnv"   "package:stats"
-find("cor", numeric=TRUE) # numbers with these names
-find("cor", numeric=TRUE, mode="function")# only the second one
+find("cor")                         #> ".GlobalEnv"   "package:stats"
+find("cor", numeric = TRUE)                     # numbers with these names
+find("cor", numeric = TRUE, mode = "function")  # only the second one
 rm(cor)
 
-\dontrun{apropos(".", mode="list") # a long list}
+\dontrun{apropos(".", mode="list")  # a long list}
 
 # need a DOUBLE backslash '\\\\' (in case you don't see it anymore)
 apropos("\\\\[")

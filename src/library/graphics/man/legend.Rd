@@ -185,7 +185,7 @@ title("legend(..., lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
       cex.main = 1.1)
 legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
        text.col = "green4", lty = c(2, -1, 1), pch = c(-1, 3, 4),
-       merge = TRUE, bg = 'gray90')
+       merge = TRUE, bg = "gray90")
 
 ## right-justifying a set of labels: thanks to Uwe Ligges
 x <- 1:5; y1 <- 1/x; y2 <- 2/x
@@ -212,7 +212,7 @@ for(ll in c("","x","y","xy")) {
   text(c(3,3), 2:3, c("rect(2,3,3,2, col=4)",
                       "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0,.3))
   legend(list(x = 2,y = 8), legend = leg.txt, col = 2:3, pch = 1:2,
-         lty = 1, merge = TRUE)#, trace = TRUE)
+         lty = 1, merge = TRUE)   #, trace = TRUE)
 }
 par(mfrow = c(1,1))
 
@@ -222,9 +222,9 @@ plot(x, sin(x), type = "l", col = 2, xlab = expression(phi),
      ylab = expression(f(phi)))
 abline(h = -1:1, v = pi/2*(-6:6), col = "gray90")
 lines(x, cos(x), col = 3, lty = 2)
-ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))# 2 ways
+ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))  # 2 ways
 utils::str(legend(-3, .9, ex.cs1, lty = 1:2, plot = FALSE,
-           adj = c(0, .6)))# adj y !
+           adj = c(0, .6)))  # adj y !
 legend(-3, .9, ex.cs1, lty = 1:2, col = 2:3,  adj = c(0, .6))
 
 require(stats)
@@ -265,7 +265,7 @@ points(x, y, pch = 21, bg = "white")
 legend(.4,1, "sin(c x)", pch = 21, pt.bg = "white", lty = 1, col = "blue")
 
 ## legends with titles at different locations
-plot(x, y, type = 'n')
+plot(x, y, type = "n")
 legend("bottomright", "(x,y)", pch = 1, title = "bottomright")
 legend("bottom", "(x,y)", pch = 1, title = "bottom")
 legend("bottomleft", "(x,y)", pch = 1, title = "bottomleft")

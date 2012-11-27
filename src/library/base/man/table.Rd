@@ -120,7 +120,7 @@ is.table(x)
 \examples{
 require(stats) # for rpois and xtabs
 ## Simple frequency distribution
-table(rpois(100,5))
+table(rpois(100, 5))
 ## Check the design:
 with(warpbreaks, table(wool, tension))
 table(state.division, state.region)
@@ -149,7 +149,7 @@ table(b)
 table(b, exclude = "B")
 d <- factor(rep(c("A","B","C"), 10), levels = c("A","B","C","D","E"))
 table(d, exclude = "B")
-print(table(b,d), zero.print = ".")
+print(table(b, d), zero.print = ".")
 
 ## NA counting:
 is.na(d) <- 3:4
