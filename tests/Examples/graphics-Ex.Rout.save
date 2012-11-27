@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-26 r61156) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-27 r61168) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -44,14 +44,14 @@ Type 'q()' to quit R.
 > text(1,0, "abline( h = 0 )", col = "gray60", adj = c(0, -.1))
 > abline(h = -1:5, v = -2:3, col = "lightgray", lty = 3)
 > abline(a = 1, b = 2, col = 2)
-> text(1,3, "abline( 1, 2 )", col = 2, adj = c(-.1,-.1))
+> text(1,3, "abline( 1, 2 )", col = 2, adj = c(-.1, -.1))
 > 
 > ## Simple Regression Lines:
 > require(stats)
 > sale5 <- c(6, 4, 9, 7, 6, 12, 8, 10, 9, 13)
 > plot(sale5)
-> abline(lsfit(1:10,sale5))
-> abline(lsfit(1:10,sale5, intercept = FALSE), col = 4) # less fitting
+> abline(lsfit(1:10, sale5))
+> abline(lsfit(1:10, sale5, intercept = FALSE), col = 4) # less fitting
 > 
 > z <- lm(dist ~ speed, data = cars)
 > plot(cars)
@@ -78,13 +78,13 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > x <- stats::runif(12); y <- stats::rnorm(12)
-> i <- order(x,y); x <- x[i]; y <- y[i]
+> i <- order(x, y); x <- x[i]; y <- y[i]
 > plot(x,y, main = "arrows(.) and segments(.)")
 > ## draw arrows from point to point :
-> s <- seq(length(x)-1)# one shorter than data
+> s <- seq(length(x)-1)  # one shorter than data
 > arrows(x[s], y[s], x[s+1], y[s+1], col = 1:3)
 > s <- s[-length(s)]
-> segments(x[s], y[s], x[s+2], y[s+2], col = 'pink')
+> segments(x[s], y[s], x[s+2], y[s+2], col = "pink")
 > 
 > 
 > 
@@ -136,9 +136,9 @@ Hair    Brown Blue Hazel Green
 +            identical(axTicks(2), axTicks(4)))
 > 
 > ## Show how axTicks() and axis() correspond :
-> op <- par(mfrow = c(3,1))
-> for(x in 9999*c(1,2,8)) {
-+     plot(x,9, log = "x")
+> op <- par(mfrow = c(3, 1))
+> for(x in 9999 * c(1, 2, 8)) {
++     plot(x, 9, log = "x")
 +     cat(formatC(par("xaxp"), width = 5),";", T <- axTicks(1),"\n")
 +     rug(T, col =  adjustcolor("red", 0.5), lwd = 4)
 + }
@@ -176,7 +176,7 @@ Hair    Brown Blue Hazel Green
 > plot(0:1, ylims, log = "y", yaxs = "i")
 > stopifnot(all.equal(aT.i, axTicks(side = 2)))
 > 
-> plot(0:1, ylims, log = "y" ,yaxs = "r")
+> plot(0:1, ylims, log = "y", yaxs = "r")
 > stopifnot(all.equal(aT.r, axTicks(side = 2)))
 > 
 > 
@@ -275,7 +275,7 @@ Hair    Brown Blue Hazel Green
 > tN <- table(Ni <- stats::rpois(100, lambda = 5))
 > r <- barplot(tN, col = rainbow(20))
 > #- type = "h" plotting *is* 'bar'plot
-> lines(r, tN, type = 'h', col = 'red', lwd = 2)
+> lines(r, tN, type = "h", col = "red", lwd = 2)
 > 
 > barplot(tN, space = 1.5, axisnames = FALSE,
 +         sub = "barplot(..., space= 1.5, axisnames = FALSE)")
@@ -309,7 +309,7 @@ Hair    Brown Blue Hazel Green
 +         sub = "Faked upper 2*sigma error bars", col.sub = mybarcol,
 +         cex.names = 1.5)
 > segments(mp, hh, mp, hh + 2*sqrt(1000*hh/100), col = mybarcol, lwd = 1.5)
-> stopifnot(dim(mp) == dim(hh))# corresponding matrices
+> stopifnot(dim(mp) == dim(hh))  # corresponding matrices
 > mtext(side = 1, at = colMeans(mp), line = -2,
 +       text = paste("Mean", formatC(colMeans(hh))), col = "red")
 > 
@@ -350,7 +350,7 @@ Hair    Brown Blue Hazel Green
 > 
 > ### ** Examples
 > 
-> plot(1:7, abs(stats::rnorm(7)), type = 'h', axes = FALSE)
+> plot(1:7, abs(stats::rnorm(7)), type = "h", axes = FALSE)
 > axis(1, at = 1:7, labels = letters[1:7])
 > box(lty = '1373', col = 'red')
 > 
@@ -455,7 +455,7 @@ Warning in bxp(list(stats = c(7, 11, 14, 18.5, 23, 7, 12, 16.5, 18, 21,  :
 > 
 > require(stats)
 > set.seed(753)
-> (bx.p <- boxplot(split(rt(100, 4), gl(5,20))))
+> (bx.p <- boxplot(split(rt(100, 4), gl(5, 20))))
 $stats
             [,1]        [,2]        [,3]        [,4]        [,5]
 [1,] -1.66391873 -2.02625162 -2.12785004 -2.76510496 -1.70034047
@@ -481,7 +481,7 @@ $group
 $names
 [1] "1" "2" "3" "4" "5"
 
-> op <- par(mfrow =  c(2,2))
+> op <- par(mfrow =  c(2, 2))
 > bxp(bx.p, xaxt = "n")
 > bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4, boxfill = 1:5)
 Warning in bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4, boxfill = 1:5) :
@@ -492,18 +492,18 @@ Warning in bxp(bx.p, notch = TRUE, boxfill = "lightblue", frame = FALSE,  :
   some notches went outside hinges ('box'): maybe set notch=FALSE
 > bxp(bx.p, notch = TRUE, boxfill = "lightblue", border = 2:6,
 +     ylim = c(-4,4), pch = 22, bg = "green", log = "x",
-+     main = "... log='x', ylim=*")
++     main = "... log = 'x', ylim = *")
 Warning in bxp(bx.p, notch = TRUE, boxfill = "lightblue", border = 2:6,  :
   some notches went outside hinges ('box'): maybe set notch=FALSE
 > par(op)
-> op <- par(mfrow= c(1,2))
+> op <- par(mfrow = c(1, 2))
 > 
 > ## single group -- no label
 > boxplot (weight ~ group, data = PlantGrowth, subset = group == "ctrl")
 > ## with label
 > bx <- boxplot(weight ~ group, data = PlantGrowth,
 +               subset = group == "ctrl", plot = FALSE)
-> bxp(bx,show.names=TRUE)
+> bxp(bx, show.names=TRUE)
 > par(op)
 > 
 > z <- split(rnorm(1000), rpois(1000, 2.2))
@@ -639,10 +639,10 @@ temperature no yes
 > 
 > rx <- range(x <- 10*1:nrow(volcano))
 > ry <- range(y <- 10*1:ncol(volcano))
-> ry <- ry + c(-1,1) * (diff(rx) - diff(ry))/2
+> ry <- ry + c(-1, 1) * (diff(rx) - diff(ry))/2
 > tcol <- terrain.colors(12)
 > par(opar); opar <- par(pty = "s", bg = "lightcyan")
-> plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
+> plot(x = 0, y = 0, type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
 > u <- par("usr")
 > rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
 > contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
@@ -652,7 +652,7 @@ temperature no yes
 > 
 > ## contourLines produces the same contour lines as contour
 > line.list <- contourLines(x, y, volcano)
-> plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
+> plot(x = 0, y = 0, type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
 > u <- par("usr")
 > rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
 > contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
@@ -715,9 +715,9 @@ temperature no yes
 > ## Conditioning on 2 variables:
 > ll.dm <- lat ~ long | depth * mag
 > coplot(ll.dm, data = quakes)
-> coplot(ll.dm, data = quakes, number = c(4,7), show.given = c(TRUE,FALSE))
-> coplot(ll.dm, data = quakes, number = c(3,7),
-+        overlap = c(-.5,.1)) # negative overlap DROPS values
+> coplot(ll.dm, data = quakes, number = c(4, 7), show.given = c(TRUE, FALSE))
+> coplot(ll.dm, data = quakes, number = c(3, 7),
++        overlap = c(-.5, .1)) # negative overlap DROPS values
 > 
 > ## given two factors
 > Index <- seq(length = nrow(warpbreaks)) # to get nicer default labels
@@ -793,7 +793,7 @@ temperature no yes
 > ### ** Examples
 > 
 > dotchart(VADeaths, main = "Death Rates in Virginia - 1940")
-> op <- par(xaxs = "i")# 0 -- 100%
+> op <- par(xaxs = "i")  # 0 -- 100%
 > dotchart(t(VADeaths), xlim = c(0,100),
 +          main = "Death Rates in Virginia - 1940")
 > par(op)
@@ -815,7 +815,7 @@ temperature no yes
 > ### ** Examples
 > 
 > require(grDevices) # for colours
-> filled.contour(volcano, color = terrain.colors, asp = 1)# simple
+> filled.contour(volcano, color = terrain.colors, asp = 1) # simple
 > 
 > x <- 10*1:nrow(volcano)
 > y <- 10*1:ncol(volcano)
@@ -825,7 +825,7 @@ temperature no yes
 +     plot.axes = { axis(1, seq(100, 800, by = 100))
 +                   axis(2, seq(100, 600, by = 100)) },
 +     key.title = title(main = "Height\n(meters)"),
-+     key.axes = axis(4, seq(90, 190, by = 10)))# maybe also asp = 1
++     key.axes = axis(4, seq(90, 190, by = 10)))  # maybe also asp = 1
 > mtext(paste("filled.contour(.) from", R.version.string),
 +       side = 1, line = 4, adj = 1, cex = .66)
 > 
@@ -833,7 +833,7 @@ temperature no yes
 > a <- expand.grid(1:20, 1:20)
 > b <- matrix(a[,1] + a[,2], 20)
 > filled.contour(x = 1:20, y = 1:20, z = b,
-+                plot.axes = { axis(1); axis(2); points(10,10) })
++                plot.axes = { axis(1); axis(2); points(10, 10) })
 > 
 > ## Persian Rug Art:
 > x <- y <- seq(-4*pi, 4*pi, len = 27)
@@ -905,7 +905,7 @@ Female Yes                89  17 202 131  94  24
 > plot(1:3)
 > grid(NA, 5, lwd = 2) # grid only in y-direction
 > 
-> ## maybe change the desired number of tick marks:  par(lab = c(mx,my,7))
+> ## maybe change the desired number of tick marks:  par(lab = c(mx, my, 7))
 > op <- par(mfcol = 1:2)
 > with(iris,
 +      {
@@ -913,8 +913,8 @@ Female Yes                89  17 202 131  94  24
 +           xlim = c(4, 8), ylim = c(2, 4.5), panel.first = grid(),
 +           main = "with(iris,  plot(...., panel.first = grid(), ..) )")
 +      plot(Sepal.Length, Sepal.Width, col = as.integer(Species),
-+           panel.first = grid(3, lty = 1,lwd = 2),
-+           main = "... panel.first = grid(3, lty = 1,lwd = 2), ..")
++           panel.first = grid(3, lty = 1, lwd = 2),
++           main = "... panel.first = grid(3, lty = 1, lwd = 2), ..")
 +      }
 +     )
 > par(op)
@@ -975,8 +975,8 @@ List of 7
 > hist(sqrt(islands), breaks = 12, col = "lightblue", border = "pink")
 > ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
 > r <- hist(sqrt(islands), breaks = c(4*0:5, 10*3:5, 70, 100, 140),
-+           col = 'blue1')
-> text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = 'blue3')
++           col = "blue1")
+> text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = "blue3")
 > sapply(r[2:3], sum)
      counts intensities 
   48.000000    0.215625 
@@ -1141,8 +1141,8 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > xhist <- hist(x, breaks = seq(-3,3,0.5), plot = FALSE)
 > yhist <- hist(y, breaks = seq(-3,3,0.5), plot = FALSE)
 > top <- max(c(xhist$counts, yhist$counts))
-> xrange <- c(-3,3)
-> yrange <- c(-3,3)
+> xrange <- c(-3, 3)
+> yrange <- c(-3, 3)
 > nf <- layout(matrix(c(2,0,1,3),2,2,byrow = TRUE), c(3,1), c(1,3), TRUE)
 > layout.show(nf)
 > 
@@ -1153,7 +1153,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > par(mar = c(3,0,1,1))
 > barplot(yhist$counts, axes = FALSE, xlim = c(0, top), space = 0, horiz = TRUE)
 > 
-> par(def.par)#- reset to default
+> par(def.par)  #- reset to default
 > 
 > 
 > 
@@ -1192,7 +1192,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +       cex.main = 1.1)
 > legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
 +        text.col = "green4", lty = c(2, -1, 1), pch = c(-1, 3, 4),
-+        merge = TRUE, bg = 'gray90')
++        merge = TRUE, bg = "gray90")
 > 
 > ## right-justifying a set of labels: thanks to Uwe Ligges
 > x <- 1:5; y1 <- 1/x; y2 <- 2/x
@@ -1219,7 +1219,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +   text(c(3,3), 2:3, c("rect(2,3,3,2, col=4)",
 +                       "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0,.3))
 +   legend(list(x = 2,y = 8), legend = leg.txt, col = 2:3, pch = 1:2,
-+          lty = 1, merge = TRUE)#, trace = TRUE)
++          lty = 1, merge = TRUE)   #, trace = TRUE)
 + }
 > par(mfrow = c(1,1))
 > 
@@ -1229,9 +1229,9 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +      ylab = expression(f(phi)))
 > abline(h = -1:1, v = pi/2*(-6:6), col = "gray90")
 > lines(x, cos(x), col = 3, lty = 2)
-> ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))# 2 ways
+> ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))  # 2 ways
 > utils::str(legend(-3, .9, ex.cs1, lty = 1:2, plot = FALSE,
-+            adj = c(0, .6)))# adj y !
++            adj = c(0, .6)))  # adj y !
 List of 2
  $ rect:List of 4
   ..$ w   : num 1.2
@@ -1290,7 +1290,7 @@ List of 2
 > legend(.4,1, "sin(c x)", pch = 21, pt.bg = "white", lty = 1, col = "blue")
 > 
 > ## legends with titles at different locations
-> plot(x, y, type = 'n')
+> plot(x, y, type = "n")
 > legend("bottomright", "(x,y)", pch = 1, title = "bottomright")
 > legend("bottom", "(x,y)", pch = 1, title = "bottom")
 > legend("bottomleft", "(x,y)", pch = 1, title = "bottomleft")
@@ -1388,7 +1388,7 @@ List of 2
 +                 dimnames = list(NULL, nam.var, nam.spec))
 > for(i in 1:3) iris.S[,,i] <- data.matrix(iris[1:50+50*(i-1), -5])
 > 
-> matplot(iris.S[,"Petal.Length",], iris.S[,"Petal.Width",], pch = "SCV",
+> matplot(iris.S[, "Petal.Length",], iris.S[, "Petal.Width",], pch = "SCV",
 +         col = rainbow(3, start = 0.8, end = 0.1),
 +         sub = paste(c("S", "C", "V"), dimnames(iris.S)[[3]],
 +                     sep = "=", collapse= ",  "),
@@ -1460,13 +1460,13 @@ List of 2
 > plot(1:10, (-4:5)^2, main = "Parabola Points", xlab = "xlab")
 > mtext("10 of them")
 > for(s in 1:4)
-+     mtext(paste("mtext(..., line= -1, {side, col, font} = ",s,
++     mtext(paste("mtext(..., line= -1, {side, col, font} = ", s,
 +           ", cex = ", (1+s)/2, ")"), line = -1,
 +           side = s, col = s, font = s, cex = (1+s)/2)
 > mtext("mtext(..., line= -2)", line = -2)
 > mtext("mtext(..., line= -2, adj = 0)", line = -2, adj = 0)
 > ##--- log axis :
-> plot(1:10, exp(1:10), log = 'y', main = "log='y'", xlab = "xlab")
+> plot(1:10, exp(1:10), log = "y", main = "log =\"y\"", xlab = "xlab")
 > for(s in 1:4) mtext(paste("mtext(...,side=", s ,")"), side = s)
 > 
 > 
@@ -1542,8 +1542,8 @@ List of 2
 > 
 > ### ** Examples
 > 
-> pairs(swiss, panel = panel.smooth, pch = ".")# emphasize the smooths
-> pairs(swiss, panel = panel.smooth, lwd = 2, cex= 1.5, col = "blue")# hmm...
+> pairs(swiss, panel = panel.smooth, pch = ".")  # emphasize the smooths
+> pairs(swiss, panel = panel.smooth, lwd = 2, cex = 1.5, col = "blue")  # hmm...
 > 
 > 
 > 
@@ -1589,9 +1589,9 @@ $xaxp
 
 > 
 > ( nr.prof <-
-+   c(prof.pilots = 16,lawyers = 11,farmers = 10,salesmen = 9,physicians = 9,
-+     mechanics = 6,policemen = 6,managers = 6,engineers = 5,teachers = 4,
-+     housewives = 3,students = 3,armed.forces = 1))
++ c(prof.pilots = 16, lawyers = 11, farmers = 10, salesmen = 9, physicians = 9,
++   mechanics = 6, policemen = 6, managers = 6, engineers = 5, teachers = 4,
++   housewives = 3, students = 3, armed.forces = 1))
  prof.pilots      lawyers      farmers     salesmen   physicians    mechanics 
           16           11           10            9            9            6 
    policemen     managers    engineers     teachers   housewives     students 
@@ -1600,7 +1600,7 @@ armed.forces
            1 
 > par(las = 3)
 > barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
-> par(las = 0)# reset to default
+> par(las = 0)  # reset to default
 > 
 > require(grDevices) # for gray
 > ## 'fg' use:
@@ -1622,7 +1622,7 @@ armed.forces
 > showLty <- function(ltys, xoff = 0, ...) {
 +    stopifnot((n <- length(ltys)) >= 1)
 +    op <- par(mar = rep(.5,4)); on.exit(par(op))
-+    plot(0:1,0:1, type = "n", axes = FALSE, ann = FALSE)
++    plot(0:1, 0:1, type = "n", axes = FALSE, ann = FALSE)
 +    y <- (n:1)/(n+1)
 +    clty <- as.character(ltys)
 +    mytext <- function(x,y, txt) text(x, y, txt, adj = c(0, -.3), cex = 0.8, ...)
@@ -1631,7 +1631,7 @@ armed.forces
 +    abline(h = y, lty = ltys, lwd = 2, ...); mytext(1/8+xoff, y, paste(clty," lwd = 2"))
 + }
 > showLty(c("solid", "dashed", "dotted", "dotdash", "longdash", "twodash"))
-> par(new = TRUE)## the same:
+> par(new = TRUE)  # the same:
 > showLty(c("solid", "44", "13", "1343", "73", "2262"), xoff = .2, col = 2)
 > showLty(c("11", "22", "33", "44",   "12", "13", "14",   "21", "31"))
 > 
@@ -1660,7 +1660,7 @@ armed.forces
 > 
 > x <- seq(-10, 10, length= 30)
 > y <- x
-> f <- function(x,y) { r <- sqrt(x^2+y^2); 10 * sin(r)/r }
+> f <- function(x, y) { r <- sqrt(x^2+y^2); 10 * sin(r)/r }
 > z <- outer(x, y, f)
 > z[is.na(z)] <- 1
 > op <- par(bg = "white")
@@ -1704,7 +1704,7 @@ armed.forces
 > par(bg = "white")
 > x <- seq(-1.95, 1.95, length = 30)
 > y <- seq(-1.95, 1.95, length = 35)
-> z <- outer(x, y, function(a,b) a*b^2)
+> z <- outer(x, y, function(a, b) a*b^2)
 > nrz <- nrow(z)
 > ncz <- ncol(z)
 > # Create a function interpolating colors in the range of specified colors
@@ -1748,11 +1748,11 @@ armed.forces
 > pie(pie.sales, col = gray(seq(0.4, 1.0, length = 6)))
 > pie(pie.sales, density = 10, angle = 15 + 10 * 1:6)
 > pie(pie.sales, clockwise = TRUE, main = "pie(*, clockwise = TRUE)")
-> segments(0,0, 0,1, col= "red", lwd = 2)
-> text(0,1, "init.angle = 90", col= "red")
+> segments(0, 0, 0, 1, col = "red", lwd = 2)
+> text(0, 1, "init.angle = 90", col = "red")
 > 
 > n <- 200
-> pie(rep(1,n), labels = "", col = rainbow(n), border = NA,
+> pie(rep(1, n), labels = "", col = rainbow(n), border = NA,
 +     main = "pie(*, labels=\"\", col=rainbow(n), border=NA,..")
 > 
 > 
@@ -1777,8 +1777,8 @@ armed.forces
 > plot(sin, -pi, 2*pi) # see ?plot.function
 > 
 > ## Discrete Distribution Plot:
-> plot(table(rpois(100,5)), type = "h", col = "red", lwd = 10,
-+      main = "rpois(100,lambda=5)")
+> plot(table(rpois(100, 5)), type = "h", col = "red", lwd = 10,
++      main = "rpois(100, lambda = 5)")
 > 
 > ## Simple quantiles/ECDF, see ecdf() {library(stats)} for a better one:
 > plot(x <- sort(rnorm(47)), type = "s", main = "plot(x, type = \"s\")")
@@ -1824,7 +1824,7 @@ armed.forces
 > 
 > Speed <- cars$speed
 > Distance <- cars$dist
-> plot(Speed, Distance, panel.first = grid(8,8),
+> plot(Speed, Distance, panel.first = grid(8, 8),
 +      pch = 0, cex = 1.2, col = "blue")
 > plot(Speed, Distance,
 +      panel.first = lines(stats::lowess(Speed, Distance), lty = "dashed"),
@@ -1837,20 +1837,20 @@ armed.forces
 > for (tp in c("p","l","b",  "c","o","h",  "s","S","n")) {
 +    plot(y ~ x, type = tp, main = paste0("plot(*, type = \"", tp, "\")"))
 +    if(tp == "S") {
-+       lines(x,y, type = "s", col = "red", lty = 2)
++       lines(x, y, type = "s", col = "red", lty = 2)
 +       mtext("lines(*, type = \"s\", ...)", col = "red", cex = 0.8)
 +    }
 + }
 > par(op)
 > 
 > ##--- Log-Log Plot  with  custom axes
-> lx <- seq(1,5, length = 41)
+> lx <- seq(1, 5, length = 41)
 > yl <- expression(e^{-frac(1,2) * {log[10](x)}^2})
 > y <- exp(-.5*lx^2)
 > op <- par(mfrow = c(2,1), mar = par("mar")+c(0,1,0,0))
 > plot(10^lx, y, log = "xy", type = "l", col = "purple",
 +      main = "Log-Log plot", ylab = yl, xlab = "x")
-> plot(10^lx, y, log = "xy", type = "o", pch = '.', col = "forestgreen",
+> plot(10^lx, y, log = "xy", type = "o", pch = ".", col = "forestgreen",
 +      main = "Log-Log plot with custom axes", ylab = yl, xlab = "x",
 +      axes = FALSE, frame.plot = TRUE)
 > my.at <- 10^(1:5)
@@ -1876,7 +1876,7 @@ armed.forces
 > ### ** Examples
 > 
 > require(stats)
-> plot.design(warpbreaks)# automatic for data frame with one numeric var.
+> plot.design(warpbreaks)  # automatic for data frame with one numeric var.
 > 
 > Form <- breaks ~ wool + tension
 > summary(fm1 <- aov(Form, data = warpbreaks))
@@ -1886,7 +1886,7 @@ tension      2   2034  1017.1   7.537 0.00138 **
 Residuals   50   6748   135.0                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-> plot.design(       Form, data = warpbreaks, col = 2)# same as above
+> plot.design(       Form, data = warpbreaks, col = 2)  # same as above
 > 
 > ## More than one y :
 > utils::str(esoph)
@@ -1922,13 +1922,13 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### ** Examples
 > 
 > require(grDevices)
-> plot(weight ~ group, data = PlantGrowth)         # numeric vector ~ factor
-> plot(cut(weight, 2) ~ group, data = PlantGrowth) # factor ~ factor
+> plot(weight ~ group, data = PlantGrowth)           # numeric vector ~ factor
+> plot(cut(weight, 2) ~ group, data = PlantGrowth)   # factor ~ factor
 > ## passing "..." to spineplot() eventually:
 > plot(cut(weight, 3) ~ group, data = PlantGrowth,
 +      col = hcl(c(0, 120, 240), 50, 70))
 > 
-> plot(PlantGrowth$group, axes = FALSE, main = "no axes")# extremely silly
+> plot(PlantGrowth$group, axes = FALSE, main = "no axes")  # extremely silly
 > 
 > 
 > 
@@ -2028,7 +2028,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1d25e70>
+<bytecode: 0x288ae70>
 <environment: namespace:graphics>
 > 
 > 
@@ -2096,12 +2096,12 @@ attr(,"class")
 > ### ** Examples
 > 
 > require(stats) # for rnorm
-> plot(-4:4, -4:4, type = "n")# setting up coord. system
+> plot(-4:4, -4:4, type = "n")  # setting up coord. system
 > points(rnorm(200), rnorm(200), col = "red")
 > points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 > 
 > op <- par(bg = "light blue")
-> x <- seq(0,2*pi, len = 51)
+> x <- seq(0, 2*pi, len = 51)
 > ## something "between type='b' and type='o'":
 > plot(x, sin(x), type = "o", pch = 21, bg = par("bg"), col = "blue", cex = .6,
 +  main = 'plot(..., type="o", pch=21, bg=par("bg"))')
@@ -2164,32 +2164,32 @@ attr(,"class")
 > 
 > ### ** Examples
 > 
-> x <- c(1:9,8:1)
-> y <- c(1,2*(5:3),2,-1,17,9,8,2:9)
-> op <- par(mfcol = c(3,1))
-> for(xpd in c(FALSE,TRUE,NA)) {
+> x <- c(1:9, 8:1)
+> y <- c(1, 2*(5:3), 2, -1, 17, 9, 8, 2:9)
+> op <- par(mfcol = c(3, 1))
+> for(xpd in c(FALSE, TRUE, NA)) {
 +   plot(1:10, main = paste("xpd =", xpd))
 +   box("figure", col = "pink", lwd = 3)
-+   polygon(x,y, xpd = xpd, col = "orange", lty = 2, lwd = 2, border = "red")
++   polygon(x, y, xpd = xpd, col = "orange", lty = 2, lwd = 2, border = "red")
 + }
 > par(op)
 > 
 > n <- 100
 > xx <- c(0:n, n:0)
-> yy <- c(c(0,cumsum(stats::rnorm(n))), rev(c(0,cumsum(stats::rnorm(n)))))
+> yy <- c(c(0, cumsum(stats::rnorm(n))), rev(c(0, cumsum(stats::rnorm(n)))))
 > plot   (xx, yy, type = "n", xlab = "Time", ylab = "Distance")
 > polygon(xx, yy, col = "gray", border = "red")
 > title("Distance Between Brownian Motions")
 > 
 > # Multiple polygons from NA values
 > # and recycling of col, border, and lty
-> op <- par(mfrow = c(2,1))
-> plot(c(1,9), 1:2, type = "n")
+> op <- par(mfrow = c(2, 1))
+> plot(c(1, 9), 1:2, type = "n")
 > polygon(1:9, c(2,1,2,1,1,2,1,2,1),
 +         col = c("red", "blue"),
 +         border = c("green", "yellow"),
 +         lwd = 3, lty = c("dashed", "solid"))
-> plot(c(1,9), 1:2, type = "n")
+> plot(c(1, 9), 1:2, type = "n")
 > polygon(1:9, c(2,1,2,1,NA,2,1,2,1),
 +         col = c("red", "blue"),
 +         border = c("green", "yellow"),
@@ -2197,7 +2197,7 @@ attr(,"class")
 > par(op)
 > 
 > # Line-shaded polygons
-> plot(c(1,9), 1:2, type = "n")
+> plot(c(1, 9), 1:2, type = "n")
 > polygon(1:9, c(2,1,2,1,NA,2,1,2,1),
 +         density = c(10, 20), angle = c(-45, 45))
 > 
@@ -2306,7 +2306,7 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > i <- 4*(0:10)
 > ## draw rectangles with bottom left (100, 300)+i
 > ## and top right (150, 380)+i
-> rect(100+i, 300+i, 150+i, 380+i, col = rainbow(11, start = .7,end = .1))
+> rect(100+i, 300+i, 150+i, 380+i, col = rainbow(11, start = 0.7, end = 0.1))
 > rect(240-i, 320+i, 250-i, 410+i, col = heat.colors(11), lwd = i/5)
 > ## Background alternating  ( transparent / "bg" ) :
 > j <- 10*(0:5)
@@ -2345,7 +2345,7 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > 
 > ### ** Examples
 > 
-> require(stats)# both 'density' and its default method
+> require(stats)  # both 'density' and its default method
 > with(faithful, {
 +     plot(density(eruptions, bw = 0.15))
 +     rug(eruptions)
@@ -2369,16 +2369,16 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > 
 > if (interactive()) {
 + par(bg = "white")           # default is likely to be transparent
-+ split.screen(c(2,1))        # split display into two screens
-+ split.screen(c(1,3), screen = 2) # now split the bottom half into 3
++ split.screen(c(2, 1))       # split display into two screens
++ split.screen(c(1, 3), screen = 2) # now split the bottom half into 3
 + screen(1) # prepare screen 1 for output
 + plot(10:1)
 + screen(4) # prepare screen 4 for output
 + plot(10:1)
 + close.screen(all = TRUE)    # exit split-screen mode
 + 
-+ split.screen(c(2,1))        # split display into two screens
-+ split.screen(c(1,2),2)      # split bottom half in two
++ split.screen(c(2, 1))       # split display into two screens
++ split.screen(c(1, 2), 2)    # split bottom half in two
 + plot(1:10)                  # screen 3 is active, draw plot
 + erase.screen()              # forgot label, erase and redraw
 + plot(1:10, ylab = "ylab 3")
@@ -2410,10 +2410,10 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > ### ** Examples
 > 
 > x <- stats::runif(12); y <- stats::rnorm(12)
-> i <- order(x,y); x <- x[i]; y <- y[i]
+> i <- order(x, y); x <- x[i]; y <- y[i]
 > plot(x, y, main = "arrows(.) and segments(.)")
 > ## draw arrows from point to point :
-> s <- seq(length(x)-1)# one shorter than data
+> s <- seq(length(x)-1)  # one shorter than data
 > arrows(x[s], y[s], x[s+1], y[s+1], col= 1:3)
 > s <- s[-length(s)]
 > segments(x[s], y[s], x[s+2], y[s+2], col= 'pink')
@@ -2433,34 +2433,33 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > 
 > ### ** Examples
 > 
->   ## A largish data set
->   n <- 10000
->   x1  <- matrix(rnorm(n), ncol = 2)
->   x2  <- matrix(rnorm(n, mean = 3, sd = 1.5), ncol = 2)
->   x   <- rbind(x1,x2)
+> ## A largish data set
+> n <- 10000
+> x1  <- matrix(rnorm(n), ncol = 2)
+> x2  <- matrix(rnorm(n, mean = 3, sd = 1.5), ncol = 2)
+> x   <- rbind(x1, x2)
 > 
->   oldpar <- par(mfrow = c(2,2))
->   smoothScatter(x, nrpoints = 0)
+> oldpar <- par(mfrow = c(2, 2))
+> smoothScatter(x, nrpoints = 0)
 KernSmooth 2.23 loaded
 Copyright M. P. Wand 1997-2009
->   smoothScatter(x)
+> smoothScatter(x)
 > 
->   ## a different color scheme:
->   Lab.palette <-
-+       colorRampPalette(c("blue", "orange", "red"), space = "Lab")
->   smoothScatter(x, colramp = Lab.palette)
+> ## a different color scheme:
+> Lab.palette <- colorRampPalette(c("blue", "orange", "red"), space = "Lab")
+> smoothScatter(x, colramp = Lab.palette)
 > 
->   ## somewhat similar, using identical smoothing computations,
->   ## but considerably *less* efficient for really large data:
->   plot(x, col = densCols(x), pch = 20)
+> ## somewhat similar, using identical smoothing computations,
+> ## but considerably *less* efficient for really large data:
+> plot(x, col = densCols(x), pch = 20)
 > 
->   ## use with pairs:
->   par(mfrow = c(1,1))
->   y <- matrix(rnorm(40000), ncol = 4) + 3*rnorm(10000)
->   y[, c(2,4)] <-  -y[, c(2,4)]
->   pairs(y, panel = function(...) smoothScatter(..., nrpoints = 0, add = TRUE))
+> ## use with pairs:
+> par(mfrow = c(1, 1))
+> y <- matrix(rnorm(40000), ncol = 4) + 3*rnorm(10000)
+> y[, c(2,4)] <-  -y[, c(2,4)]
+> pairs(y, panel = function(...) smoothScatter(..., nrpoints = 0, add = TRUE))
 > 
->   par(oldpar)
+> par(oldpar)
 > 
 > 
 > 
@@ -2573,8 +2572,8 @@ temperature no yes
 +       main = "Motor Trend Cars : full stars()", flip.labels = FALSE)
 > 
 > ## 'Spider' or 'Radar' plot:
-> stars(mtcars[, 1:7], locations = c(0,0), radius = FALSE,
-+       key.loc = c(0,0), main = "Motor Trend Cars", lty = 2)
+> stars(mtcars[, 1:7], locations = c(0, 0), radius = FALSE,
++       key.loc = c(0, 0), main = "Motor Trend Cars", lty = 2)
 > 
 > ## Segment Diagrams:
 > palette(rainbow(12, s = 0.6, v = 0.75))
@@ -2587,7 +2586,7 @@ temperature no yes
 > ## scale linearly (not affinely) to [0, 1]
 > USJudge <- apply(USJudgeRatings, 2, function(x) x/max(x))
 > Jnam <- row.names(USJudgeRatings)
-> Snam <- abbreviate(substring(Jnam,1,regexpr("[,.]",Jnam) - 1), 7)
+> Snam <- abbreviate(substring(Jnam, 1, regexpr("[,.]",Jnam) - 1), 7)
 > stars(USJudge, labels = Jnam, scale = FALSE,
 +       key.loc = c(13, 1.5), main = "Judge not ...", len = 0.8)
 > stars(USJudge, labels = Snam, scale = FALSE,
@@ -2602,17 +2601,17 @@ temperature no yes
 > stars(USJudge, draw.segments = TRUE, scale = FALSE, key.loc = c(13,1.5))
 > 
 > ## 'Spider':
-> stars(USJudgeRatings, locations = c(0,0), scale = FALSE,radius  =  FALSE,
-+       col.stars = 1:10, key.loc = c(0,0), main = "US Judges rated")
+> stars(USJudgeRatings, locations = c(0, 0), scale = FALSE, radius  =  FALSE,
++       col.stars = 1:10, key.loc = c(0, 0), main = "US Judges rated")
 > ## Same as above, but with colored lines instead of filled polygons.
-> stars(USJudgeRatings, locations = c(0,0), scale = FALSE,radius  =  FALSE,
-+       col.lines = 1:10, key.loc = c(0,0), main = "US Judges rated")
+> stars(USJudgeRatings, locations = c(0, 0), scale = FALSE, radius  =  FALSE,
++       col.lines = 1:10, key.loc = c(0, 0), main = "US Judges rated")
 > ## 'Radar-Segments'
 > stars(USJudgeRatings[1:10,], locations = 0:1, scale = FALSE,
 +       draw.segments = TRUE, col.segments = 0, col.stars = 1:10, key.loc =  0:1,
 +       main = "US Judges 1-10 ")
 > palette("default")
-> stars(cbind(1:16,10*(16:1)), draw.segments = TRUE,
+> stars(cbind(1:16, 10*(16:1)), draw.segments = TRUE,
 +       main = "A Joke -- do *not* use symbols on 2D data!")
 > 
 > 
@@ -2706,33 +2705,33 @@ temperature no yes
 > ### ** Examples
 > 
 > str.ex <- c("W","w","I",".","WwI.")
-> op <- par(pty = 's'); plot(1:100, 1:100, type = "n")
+> op <- par(pty = "s"); plot(1:100, 1:100, type = "n")
 > sw <- strwidth(str.ex); sw
 [1] 3.2600930 2.4934186 0.9600698 0.9600698 7.6736512
 > all.equal(sum(sw[1:4]), sw[5])
 [1] TRUE
 > #- since the last string contains the others
 > 
-> sw.i <- strwidth(str.ex, "inches"); 25.4 * sw.i # width in [mm]
+> sw.i <- strwidth(str.ex, "inches"); 25.4 * sw.i  # width in [mm]
 [1] 3.996267 3.056467 1.176867 1.176867 9.406467
 > unique(sw / sw.i)
 [1] 20.72093 20.72093
 > # constant factor: 1 value
-> mean(sw.i / strwidth(str.ex, "fig")) / par('fin')[1] # = 1: are the same
+> mean(sw.i / strwidth(str.ex, "fig")) / par('fin')[1]  # = 1: are the same
 [1] 1
 > 
 > ## See how letters fall in classes
 > ##  -- depending on graphics device and font!
 > all.lett <- c(letters, LETTERS)
-> shL <- strheight(all.lett, units = "inches") * 72 # 'big points'
-> table(shL) # all have same heights ...
+> shL <- strheight(all.lett, units = "inches") * 72  # 'big points'
+> table(shL)  # all have same heights ...
 shL
 8.616 
    52 
 > mean(shL)/par("cin")[2] # around 0.6
 [1] 43.08
 > 
-> (swL <- strwidth(all.lett, units = "inches") * 72) # 'big points'
+> (swL <- strwidth(all.lett, units = "inches") * 72)  # 'big points'
  [1]  6.672  6.672  6.000  6.672  6.672  3.336  6.672  6.672  2.664  2.664
 [11]  6.000  2.664  9.996  6.672  6.672  6.672  6.672  3.996  6.000  3.336
 [21]  6.672  6.000  8.664  6.000  6.000  6.000  8.004  8.004  8.664  8.664
@@ -2780,7 +2779,7 @@ $`11.33`
 > strheight(sumex)
 [1] 8.057449 3.420738
 > 
-> par(op)#- reset to previous setting
+> par(op)  #- reset to previous setting
 > 
 > 
 > 
@@ -2810,10 +2809,10 @@ $`11.33`
 +               cex = .2, cex.fact = 1, size = .035, seg.lwd = .8)
 > 
 > 
-> sunflowerplot(x = sort(2*round(rnorm(100))), y = round(rnorm(100),0),
+> sunflowerplot(x = sort(2*round(rnorm(100))), y = round(rnorm(100), 0),
 +               main = "Sunflower Plot of Rounded N(0,1)")
 > ## Similarly using a "xyTable" argument:
-> xyT <- xyTable(x = sort(2*round(rnorm(100))), y = round(rnorm(100),0),
+> xyT <- xyTable(x = sort(2*round(rnorm(100))), y = round(rnorm(100), 0),
 +                digits = 3)
 > utils::str(xyT, vec.len = 20)
 List of 3
@@ -2823,7 +2822,7 @@ List of 3
 > sunflowerplot(xyT, main = "2nd Sunflower Plot of Rounded N(0,1)")
 > 
 > ## A 'marked point process' {explicit 'number' argument}:
-> sunflowerplot(rnorm(100), rnorm(100), number = rpois(n = 100,lambda = 2),
+> sunflowerplot(rnorm(100), rnorm(100), number = rpois(n = 100, lambda = 2),
 +               main = "Sunflower plot (marked point process)",
 +               rotate = TRUE, col = "blue4")
 > 
@@ -2849,7 +2848,7 @@ List of 3
 > z3 <- cbind(z, 2*runif(10), runif(10))
 > symbols(x, y, thermometers = cbind(.5, 1, z), inches = .5, fg = 1:10)
 > symbols(x, y, thermometers = z3, inches = FALSE)
-> text(x,y, apply(format(round(z3, digits = 2)), 1, paste, collapse = ","),
+> text(x, y, apply(format(round(z3, digits = 2)), 1, paste, collapse = ","),
 +      adj = c(-.2,0), cex = .75, col = "purple", xpd = NA)
 > 
 > ## Note that  example(trees)  shows more sensible plots!
@@ -2921,7 +2920,7 @@ List of 3
 > 
 > ### ** Examples
 > 
-> all(c(xinch(),yinch()) == xyinch()) # TRUE
+> all(c(xinch(), yinch()) == xyinch()) # TRUE
 [1] TRUE
 > xyinch()
 [1] 1.5000000 0.4185559
@@ -2933,7 +2932,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x30dd8d8>
+<bytecode: 0x356a6a8>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2941,7 +2940,7 @@ function (xy = 1, warn.log = TRUE)
 > with(mtcars, {
 +     plot(mpg, disp, pch = 19, main = "Motor Trend Cars")
 +     text(mpg + xinch(0.12), disp, row.names(mtcars),
-+          adj = 0, cex = .7, col = 'blue')
++          adj = 0, cex = .7, col = "blue")
 +     })
 > 
 > 
@@ -3012,7 +3011,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.845 0.144 7.026 0 0 
+Time elapsed:  6.791 0.125 6.957 0 0 
 > grDevices::dev.off()
 null device 
           1 

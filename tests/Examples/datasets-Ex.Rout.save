@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-26 r61156) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-27 r61168) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -42,25 +42,25 @@ Type 'q()' to quit R.
 > ##D 
 > ##D ## The classic 'airline model', by full ML
 > ##D (fit <- arima(log10(AirPassengers), c(0, 1, 1),
-> ##D               seasonal = list(order = c(0, 1 ,1), period = 12)))
+> ##D               seasonal = list(order = c(0, 1, 1), period = 12)))
 > ##D update(fit, method = "CSS")
 > ##D update(fit, x = window(log10(AirPassengers), start = 1954))
 > ##D pred <- predict(fit, n.ahead = 24)
 > ##D tl <- pred$pred - 1.96 * pred$se
 > ##D tu <- pred$pred + 1.96 * pred$se
-> ##D ts.plot(AirPassengers, 10^tl, 10^tu, log = "y", lty = c(1,2,2))
+> ##D ts.plot(AirPassengers, 10^tl, 10^tu, log = "y", lty = c(1, 2, 2))
 > ##D 
 > ##D ## full ML fit is the same if the series is reversed, CSS fit is not
 > ##D ap0 <- rev(log10(AirPassengers))
 > ##D attributes(ap0) <- attributes(AirPassengers)
-> ##D arima(ap0, c(0, 1, 1), seasonal = list(order = c(0, 1 ,1), period = 12))
-> ##D arima(ap0, c(0, 1, 1), seasonal = list(order = c(0, 1 ,1), period = 12),
+> ##D arima(ap0, c(0, 1, 1), seasonal = list(order = c(0, 1, 1), period = 12))
+> ##D arima(ap0, c(0, 1, 1), seasonal = list(order = c(0, 1, 1), period = 12),
 > ##D       method = "CSS")
 > ##D 
 > ##D ## Structural Time Series
 > ##D ap <- log10(AirPassengers) - 2
 > ##D (fit <- StructTS(ap, type = "BSM"))
-> ##D par(mfrow = c(1,2))
+> ##D par(mfrow = c(1, 2))
 > ##D plot(cbind(ap, fitted(fit)), plot.type = "single")
 > ##D plot(cbind(ap, tsSmooth(fit)), plot.type = "single")
 > ## End(Not run)
@@ -230,7 +230,7 @@ Residual standard error: 0.008649 on 4 degrees of freedom
 Multiple R-squared: 0.999,	Adjusted R-squared: 0.9988 
 F-statistic:  4192 on 1 and 4 DF,  p-value: 3.409e-07 
 
-> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
+> opar <- par(mfrow = c(2, 2), oma = c(0, 0, 1.1, 0))
 > plot(fm1)
 > par(opar)
 > 
@@ -762,7 +762,7 @@ spray        5   2669   533.8    34.7 <2e-16 ***
 Residuals   66   1015    15.4                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
+> opar <- par(mfrow = c(2, 2), oma = c(0, 0, 1.1, 0))
 > plot(fm1)
 > fm2 <- aov(sqrt(count) ~ spray, data = InsectSprays)
 > summary(fm2)
@@ -873,7 +873,7 @@ F-statistic: 5.756 on 4 and 45 DF,  p-value: 0.0007904
 > ### ** Examples
 > 
 > require(stats); require(graphics)
-> par(mfrow = c(2,2))
+> par(mfrow = c(2, 2))
 > plot(Nile)
 > acf(Nile)
 > pacf(Nile)
@@ -888,7 +888,7 @@ Coefficients:
 
 Order selected 2  sigma^2 estimated as  21247 
 > cpgram(ar(Nile)$resid)
-> par(mfrow = c(1,1))
+> par(mfrow = c(1, 1))
 > arima(Nile, c(2, 0, 0))
 
 Call:
@@ -917,12 +917,12 @@ s.e.  0.1273  0.1323    39.5037
 sigma^2 estimated as 23676:  log likelihood = -387.7,  aic = 783.41
 > plot(NileNA)
 > pred <-
-+    predict(arima(window(NileNA, 1871, 1890), c(2,0,0)), n.ahead = 20)
++    predict(arima(window(NileNA, 1871, 1890), c(2, 0, 0)), n.ahead = 20)
 > lines(pred$pred, lty = 3, col = "red")
 > lines(pred$pred + 2*pred$se, lty = 2, col = "blue")
 > lines(pred$pred - 2*pred$se, lty = 2, col = "blue")
 > pred <-
-+    predict(arima(window(NileNA, 1871, 1930), c(2,0,0)), n.ahead = 20)
++    predict(arima(window(NileNA, 1871, 1930), c(2, 0, 0)), n.ahead = 20)
 > lines(pred$pred, lty = 3, col = "red")
 > lines(pred$pred + 2*pred$se, lty = 2, col = "blue")
 > lines(pred$pred - 2*pred$se, lty = 2, col = "blue")
@@ -1268,10 +1268,10 @@ Admit      Male Female
 > require(stats); require(graphics)
 > ## work with pre-seatbelt period to identify a model, use logs
 > work <- window(log10(UKDriverDeaths), end = 1982+11/12)
-> par(mfrow = c(3,1))
+> par(mfrow = c(3, 1))
 > plot(work); acf(work); pacf(work)
-> par(mfrow = c(1,1))
-> (fit <- arima(work, c(1,0,0), seasonal = list(order= c(1,0,0))))
+> par(mfrow = c(1, 1))
+> (fit <- arima(work, c(1, 0, 0), seasonal = list(order = c(1, 0, 0))))
 
 Call:
 arima(x = work, order = c(1, 0, 0), seasonal = list(order = c(1, 0, 0)))
@@ -1284,13 +1284,13 @@ s.e.  0.0764  0.0637     0.0131
 sigma^2 estimated as 0.00157:  log likelihood = 300.85,  aic = -593.7
 > z <- predict(fit, n.ahead = 24)
 > ts.plot(log10(UKDriverDeaths), z$pred, z$pred+2*z$se, z$pred-2*z$se,
-+         lty = c(1,3,2,2), col = c("black", "red", "blue", "blue"))
++         lty = c(1, 3, 2, 2), col = c("black", "red", "blue", "blue"))
 > 
 > ## now see the effect of the explanatory variables
 > X <- Seatbelts[, c("kms", "PetrolPrice", "law")]
 > X[, 1] <- log10(X[, 1]) - 4
-> arima(log10(Seatbelts[, "drivers"]), c(1,0,0),
-+       seasonal = list(order= c(1,0,0)), xreg = X)
+> arima(log10(Seatbelts[, "drivers"]), c(1, 0, 0),
++       seasonal = list(order = c(1, 0, 0)), xreg = X)
 
 Call:
 arima(x = log10(Seatbelts[, "drivers"]), order = c(1, 0, 0), seasonal = list(order = c(1, 
@@ -1452,8 +1452,8 @@ Private Education   -0.293625 -0.0399168  0.000000  0.017388  0.000000
 > d.VAD <- data.frame(
 +  Drate = dr,
 +  age = rep(ordered(rownames(VADeaths)), length.out = n),
-+  gender= gl(2,5,n, labels= c("M", "F")),
-+  site =  gl(2,10,  labels= c("rural", "urban")))
++  gender = gl(2, 5, n, labels = c("M", "F")),
++  site =  gl(2, 10, labels = c("rural", "urban")))
 > coplot(Drate ~ as.numeric(age) | gender * site, data = d.VAD,
 +        panel = panel.smooth, xlab = "VADeaths data - Given: gender")
 > summary(aov.VAD <- aov(Drate ~ .^2, data = d.VAD))
@@ -1467,7 +1467,7 @@ gender:site  1     73    73.0  27.422  0.00636 **
 Residuals    4     11     2.7                     
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
+> opar <- par(mfrow = c(2, 2), oma = c(0, 0, 1.1, 0))
 > plot(aov.VAD)
 > par(opar)
 > 
@@ -1489,14 +1489,14 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > require(graphics)
 > work <- diff(WWWusage)
-> par(mfrow = c(2,1)); plot(WWWusage); plot(work)
+> par(mfrow = c(2, 1)); plot(WWWusage); plot(work)
 > ## Not run: 
 > ##D require(stats)
 > ##D aics <- matrix(, 6, 6, dimnames = list(p = 0:5, q = 0:5))
-> ##D for(q in 1:5) aics[1, 1+q] <- arima(WWWusage, c(0,1,q),
+> ##D for(q in 1:5) aics[1, 1+q] <- arima(WWWusage, c(0, 1, q),
 > ##D     optim.control = list(maxit = 500))$aic
 > ##D for(p in 1:5)
-> ##D    for(q in 0:5) aics[1+p, 1+q] <- arima(WWWusage, c(p,1,q),
+> ##D    for(q in 0:5) aics[1+p, 1+q] <- arima(WWWusage, c(p, 1, q),
 > ##D        optim.control = list(maxit = 500))$aic
 > ##D round(aics - min(aics, na.rm = TRUE), 2)
 > ## End(Not run)
@@ -1677,11 +1677,11 @@ x4          0.4999091  0.1178189 4.243028 0.002164602
 
 > 
 > ## Now, do what you should have done in the first place: PLOTS
-> op <- par(mfrow = c(2,2), mar = 0.1+c(4,4,1,1), oma =  c(0,0,2,0))
+> op <- par(mfrow = c(2, 2), mar = 0.1+c(4,4,1,1), oma =  c(0, 0, 2, 0))
 > for(i in 1:4) {
 +   ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
 +   plot(ff, data = anscombe, col = "red", pch = 21, bg = "orange", cex = 1.2,
-+        xlim = c(3,19), ylim = c(3,13))
++        xlim = c(3, 19), ylim = c(3, 13))
 +   abline(mods[[i]], col = "blue")
 + }
 > mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex = 1.5)
@@ -1845,7 +1845,7 @@ F-statistic: 59.86 on 1 and 28 DF,  p-value: 1.988e-08
 +     points(hours[is.act], temp[is.act], col = 2, cex = .8)
 +   })
 + }
-> op <- par(mfrow = c(2,1), mar = c(3,3,4,2), mgp = .9* 2:0)
+> op <- par(mfrow = c(2, 1), mar = c(3, 3, 4, 2), mgp = 0.9 * 2:0)
 >  beaver.plot(beaver1, ylim = yl)
 >  beaver.plot(beaver2, ylim = yl)
 > par(op)
@@ -2004,7 +2004,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
   ..$ : chr [1:22] "142.24" "144.78" "147.32" "149.86" ...
 > ## for nicer printing:
 > local({cT <- crimtab
-+        colnames(cT) <- substring(colnames(cT), 2,3)
++        colnames(cT) <- substring(colnames(cT), 2, 3)
 +        print(cT, zero.print = " ")
 + })
      42 44 47 49 52 54 57 60 62 65 67 70 72 75 77 80 82 85 87 90 93 95
@@ -2233,7 +2233,7 @@ NLG    2.203710
 PTE  200.482000
 > 
 > ## These relations hold:
-> euro == signif(euro,6) # [6 digit precision in Euro's definition]
+> euro == signif(euro, 6) # [6 digit precision in Euro's definition]
  ATS  BEF  DEM  ESP  FIM  FRF  IEP  ITL  LUF  NLG  PTE 
 TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE 
 > all(euro.cross == outer(1/euro, euro))
@@ -2443,7 +2443,7 @@ Number of Fisher Scoring iterations: 4
 > if(require(survival)){
 +   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
 +   print(summary(model3))
-+   detach()# survival (conflicts)
++   detach()  # survival (conflicts)
 + }
 Loading required package: survival
 Loading required package: splines
@@ -2585,7 +2585,7 @@ F-statistic: 330.3 on 6 and 9 DF,  p-value: 4.984e-10
 > require(stats); require(graphics)
 > michelson <- transform(morley,
 +                        Expt = factor(Expt), Run = factor(Run))
-> xtabs(~ Expt + Run, data = michelson)# 5 x 20 balanced (two-way)
+> xtabs(~ Expt + Run, data = michelson)  # 5 x 20 balanced (two-way)
     Run
 Expt 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
    1 1 1 1 1 1 1 1 1 1  1  1  1  1  1  1  1  1  1  1  1
@@ -2670,7 +2670,7 @@ Model 2: Speed ~ Run + Expt
 > ## Not run: 
 > ##D require(stats); require(graphics)
 > ##D nott <- window(nottem, end = c(1936,12))
-> ##D fit <- arima(nott,order = c(1,0,0), list(order = c(2,1,0), period = 12))
+> ##D fit <- arima(nott, order = c(1,0,0), list(order = c(2,1,0), period = 12))
 > ##D nott.fore <- predict(fit, n.ahead = 36)
 > ##D ts.plot(nott, nott.fore$pred, nott.fore$pred+2*nott.fore$se,
 > ##D         nott.fore$pred-2*nott.fore$se, gpars = list(col = c(1,1,4,4)))
@@ -3314,7 +3314,7 @@ Coefficients:
  Mean   :28.15                 
  3rd Qu.:34.00                 
  Max.   :70.00                 
-> opar <- par(mfrow = c(1,2), oma = c(0, 0, 1.1, 0))
+> opar <- par(mfrow = c(1, 2), oma = c(0, 0, 1.1, 0))
 > plot(breaks ~ tension, data = warpbreaks, col = "lightgray",
 +      varwidth = TRUE, subset = wool == "A", main = "Wool A")
 > plot(breaks ~ tension, data = warpbreaks, col = "lightgray",
@@ -3399,7 +3399,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > coplot(uptake ~ conc | Plant, data = CO2, show.given = FALSE, type = "b")
 > ## fit the data for the first plant
 > fm1 <- nls(uptake ~ SSasymp(conc, Asym, lrc, c0),
-+    data = CO2, subset = Plant == 'Qn1')
++    data = CO2, subset = Plant == "Qn1")
 > summary(fm1)
 
 Formula: uptake ~ SSasymp(conc, Asym, lrc, c0)
@@ -3436,7 +3436,7 @@ c0   -5.14
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.532 0.065 3.671 0 0 
+Time elapsed:  3.495 0.076 3.62 0 0 
 > grDevices::dev.off()
 null device 
           1 

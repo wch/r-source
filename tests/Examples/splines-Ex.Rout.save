@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-26 r61162) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-27 r61168) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -154,10 +154,10 @@ Warning in bs(height, degree = 3L, knots = c(62.6666666666667, 67.3333333333333 
   some 'x' values beyond boundary knots may cause ill-conditioned bases
 > ## Don't show: 
 > ## Consistency:
-> x <- c(1:3,5:6)
+> x <- c(1:3, 5:6)
 > stopifnot(identical(bs(x), bs(x, df = 3)),
-+           identical(bs(x, df = 4), bs(x, df = 4, knots = NULL)),# not true till 2.15.2
-+           !is.null(kk <- attr(bs(x), "knots")),# not true till 1.5.1
++           identical(bs(x, df = 4), bs(x, df = 4, knots = NULL)), # not true till 2.15.2
++           !is.null(kk <- attr(bs(x), "knots")), # not true till 1.5.1
 +           length(kk) == 0)
 > ## End Don't show
 > 
@@ -261,10 +261,10 @@ F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 > lines(ht, predict(fm1, data.frame(height = ht)))
 > ## Don't show: 
 > ## Consistency:
-> x <- c(1:3,5:6)
+> x <- c(1:3, 5:6)
 > stopifnot(identical(ns(x), ns(x, df = 1)),
-+           identical(ns(x, df = 2), ns(x, df = 2, knots = NULL)),# not true till 2.15.2
-+           !is.null(kk <- attr(ns(x), "knots")),# not true till 1.5.1
++           identical(ns(x, df = 2), ns(x, df = 2, knots = NULL)), # not true till 2.15.2
++           !is.null(kk <- attr(ns(x), "knots")), # not true till 1.5.1
 +           length(kk) == 0)
 > ## End Don't show
 > 
@@ -289,7 +289,7 @@ F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 > frm <- data.frame( xx, yy )
 > pispl <- periodicSpline( xx, yy, period = 2 * pi)
 > pispl2 <- periodicSpline( yy ~ xx, frm, period = 2 * pi )
-> stopifnot(all.equal(pispl, pispl2))# pispl and pispl2 are the same
+> stopifnot(all.equal(pispl, pispl2))  # pispl and pispl2 are the same
 > 
 > plot( pispl )          # displays over one period
 > points( yy ~ xx, col = "brown")
@@ -514,7 +514,7 @@ attr(,"class")
 [33,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 4 1 .
 [34,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 4 1
 > 
-> knots <- c(1,1.8,3:5,6.5,7,8.1,9.2,10)# 10 => 10-4 = 6 Basis splines
+> knots <- c(1,1.8,3:5,6.5,7,8.1,9.2,10)  # 10 => 10-4 = 6 Basis splines
 > x <- seq(min(knots)-1, max(knots)+1, length.out = 501)
 > bb <- splineDesign(knots, x = x, outer.ok = TRUE)
 > 
@@ -609,7 +609,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.874 0.054 2.944 0 0 
+Time elapsed:  2.874 0.058 2.951 0 0 
 > grDevices::dev.off()
 null device 
           1 

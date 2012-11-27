@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-26 r61156) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-11-27 r61168) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -192,7 +192,7 @@ $allowed
 > matplot(sines, type = "b", pch = 21:23, col = 2:5, bg = 2:5,
 +         main = "Using an 'opaque ('translucent') color palette")
 > 
-> x. <- adjustcolor(x, offset = c(0.5,0.5,0.5, 0), # <- "more white"
+> x. <- adjustcolor(x, offset = c(0.5, 0.5, 0.5, 0), # <- "more white"
 +                   transform = diag(c(.7, .7, .7, 0.6)))
 > cbind(x, x.)
      x         x.         
@@ -204,15 +204,15 @@ $allowed
 [6,] "magenta" "#FF80FF99"
 [7,] "yellow"  "#FFFF8099"
 [8,] "gray"    "#FFFFFF99"
-> op <- par(bg = adjustcolor("goldenrod",offset = -rep(.4,4)), xpd = NA)
-> plot(0:9,0:9, type = "n",axes = FALSE, xlab = "",ylab = "",
+> op <- par(bg = adjustcolor("goldenrod", offset = -rep(.4, 4)), xpd = NA)
+> plot(0:9, 0:9, type = "n", axes = FALSE, xlab = "", ylab = "",
 +      main = "adjustcolor() -> translucent")
 > text(1:8, labels = paste0(x,"++"), col = x., cex = 8)
 > par(op)
 > 
 > ## and
 > 
-> (M <- cbind( rbind( matrix(1/3, 3,3), 0), c(0,0,0,1)))
+> (M <- cbind( rbind( matrix(1/3, 3, 3), 0), c(0, 0, 0, 1)))
           [,1]      [,2]      [,3] [,4]
 [1,] 0.3333333 0.3333333 0.3333333    0
 [2,] 0.3333333 0.3333333 0.3333333    0
@@ -353,7 +353,7 @@ $allowed
 > stopifnot(r[] == r,
 +           identical(r[3:5], colors()[3:5]))
 > r[2:4] <- "black"
-> stopifnot(identical(r[1:4, 1], as.raster(c("white", rep("black",3)))))
+> stopifnot(identical(r[1:4, 1], as.raster(c("white", rep("black", 3)))))
 > ## End Don't show
 > 
 > 
@@ -379,9 +379,9 @@ $allowed
 [1]   0.6  11.4  -4.0 104.0
 > aX <- function(side, at, ...)
 +     axis(side, at = at, labels = FALSE, lwd.ticks = 2, col.ticks = 2, tck = 0.05, ...)
-> aX(1, print(xa <- axisTicks(pu[1:2], log = FALSE)))# x axis
+> aX(1, print(xa <- axisTicks(pu[1:2], log = FALSE)))  # x axis
 [1]  2  4  6  8 10
-> aX(2, print(ya <- axisTicks(pu[3:4], log = FALSE)))# y axis
+> aX(2, print(ya <- axisTicks(pu[3:4], log = FALSE)))  # y axis
 [1]   0  20  40  60  80 100
 > 
 > axisTicks(pu[3:4], log = FALSE, n = 10)
@@ -391,12 +391,12 @@ $allowed
 Warning in xy.coords(x, y, xlabel, ylabel, log) :
   1 y value <= 0 omitted from logarithmic plot
 [1]  0.60 11.40  0.96  2.04
-> aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))# y axis
+> aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))  # y axis
 [1]  10  20  50 100
 > 
 > plot(2^(0:9), log = "y"); (pu <- par("usr"))
 [1]  0.6400000 10.3600000 -0.1083708  2.8176408
-> aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))# y axis
+> aX(2, print(ya <- axisTicks(pu[3:4], log = TRUE)))  # y axis
 [1]   1   2   5  10  20  50 100 200 500
 > 
 > 
@@ -508,7 +508,7 @@ $out
 >  q13 <- sapply(sapply(nn, seq), quantile, probs = c(1,3)/4, names = FALSE)
 >  m <- t(rbind(q13,hin))[, c(1,3,2,4)]
 >  dimnames(m) <- list(paste(nn), c("q1","lH", "q3","uH"))
->  stopifnot(m[n4 == 1, 1:2] == (nn[n4 == 1] + 3)/4,# quart. = hinge
+>  stopifnot(m[n4 == 1, 1:2] == (nn[n4 == 1] + 3)/4,   # quart. = hinge
 +            m[n4 == 1, 3:4] == (3*nn[n4 == 1] + 1)/4,
 +            m[,"lH"] == ( (nn+3) %/% 2) / 2,
 +            m[,"uH"] == ((3*nn+2)%/% 2) / 2)
@@ -625,7 +625,7 @@ $ch
 > 
 > ### ** Examples
 > 
-> cm(1)# = 2.54
+> cm(1)  # = 2.54
 [1] 2.54
 > 
 > ## Translate *from* cm *to* inches:
@@ -653,13 +653,13 @@ $ch
 red    255
 green  218
 blue   185
-> col2rgb(c(blu = "royalblue", reddish = "tomato")) # names kept
+> col2rgb(c(blu = "royalblue", reddish = "tomato"))  # names kept
       blu reddish
 red    65     255
 green 105      99
 blue  225      71
 > 
-> col2rgb(1:8)# the ones from the palette() :
+> col2rgb(1:8)  # the ones from the palette() :
       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
 red      0  255    0    0    0  255  255  190
 green    0    0  205    0  255    0  255  190
@@ -686,7 +686,7 @@ blue    0        0        0        0 239
 > ##-- NON-INTRODUCTORY examples --
 > 
 > grC <- col2rgb(paste0("gray", 0:100))
-> table(print(diff(grC["red",])))# '2' or '3': almost equidistant
+> table(print(diff(grC["red",])))  # '2' or '3': almost equidistant
   [1] 3 2 3 2 3 2 3 2 3 3 2 3 2 3 2 3 2 3 2 3 3 2 3 2 3 2 3 2 3 3 2 3 2 3 2 3 2
  [38] 3 2 3 3 2 3 2 3 2 3 2 3 2 3 3 2 3 2 3 2 3 2 3 3 2 3 2 3 2 3 2 3 3 2 3 2 3
  [75] 2 3 2 3 2 3 3 2 3 2 3 2 3 2 3 2 3 3 2 3 2 3 2 3 2 3
@@ -704,7 +704,7 @@ blue  168   169 171 189  190 191 209   211 212
 > 
 > crgb <- col2rgb(cc <- colors())
 > colnames(crgb) <- cc
-> t(crgb)## The whole table
+> t(crgb)  # The whole table
                      red green blue
 white                255   255  255
 aliceblue            240   248  255
@@ -1364,7 +1364,7 @@ yellow3              205   205    0
 yellow4              139   139    0
 yellowgreen          154   205   50
 > 
-> ccodes <- c(256^(2:0) %*% crgb)## = internal codes
+> ccodes <- c(256^(2:0) %*% crgb)  # = internal codes
 > ## How many names are 'aliases' of each other:
 > table(tcc <- table(ccodes))
 
@@ -1482,7 +1482,7 @@ List of 150
 > ## Not run: 
 > ##D  if(require(xgobi)) { ## Look at the color cube dynamically :
 > ##D    tc <- t(crgb[, !duplicated(ccodes)])
-> ##D    table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])# (397, 105)
+> ##D    table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])  # (397, 105)
 > ##D    xgobi(tc, color = c("gold", "gray")[1 + is.gray])
 > ##D  }
 > ## End(Not run)
@@ -1503,14 +1503,14 @@ List of 150
 > ### ** Examples
 > 
 > ## Both return a *function* :
-> colorRamp(c("red","green"))( (0:4)/4 ) ## (x) , x in [0,1]
+> colorRamp(c("red", "green"))( (0:4)/4 ) ## (x) , x in [0,1]
        [,1]   [,2] [,3]
 [1,] 255.00   0.00    0
 [2,] 191.25  63.75    0
 [3,] 127.50 127.50    0
 [4,]  63.75 191.25    0
 [5,]   0.00 255.00    0
-> colorRampPalette(c("blue","red"))( 4 ) ## (n)
+> colorRampPalette(c("blue", "red"))( 4 ) ## (n)
 [1] "#0000FF" "#5500AA" "#AA0055" "#FF0000"
 > ## Don't show: 
 > ## special case, invalid in R <= 2.15.0:
@@ -1844,7 +1844,7 @@ gray    76.97594   0.00000    0.00000
 > 
 > x1  <- matrix(rnorm(1e3), ncol = 2)
 > x2  <- matrix(rnorm(1e3, mean = 3, sd = 1.5), ncol = 2)
-> x   <- rbind(x1,x2)
+> x   <- rbind(x1, x2)
 > 
 > dcols <- densCols(x)
 KernSmooth 2.23 loaded
@@ -1874,11 +1874,11 @@ Copyright M. P. Wand 1997-2009
 > ##D x11()
 > ##D plot(rnorm(10))
 > ##D dev.set(dev.prev())
-> ##D abline(0,1)# through the 1:10 points
+> ##D abline(0, 1) # through the 1:10 points
 > ##D dev.set(dev.next())
-> ##D abline(h = 0, col = "gray")# for the residual plot
+> ##D abline(h = 0, col = "gray") # for the residual plot
 > ##D dev.set(dev.prev())
-> ##D dev.off(); dev.off()#- close the two X devices
+> ##D dev.off(); dev.off() #- close the two X devices
 > ## End(Not run)
 > 
 > 
@@ -2059,7 +2059,7 @@ character(0)
 > 
 > require(graphics)
 > 
-> pie(rep(1,12), col = gray.colors(12))
+> pie(rep(1, 12), col = gray.colors(12))
 > barplot(1:12, col = gray.colors(12))
 > 
 > 
@@ -2219,7 +2219,7 @@ character(0)
 > 
 > ## Red tones:
 > n <- 20;  y <- -sin(3*pi*((1:n)-1/2)/n)
-> op <- par(mar = rep(1.5,4))
+> op <- par(mar = rep(1.5, 4))
 > plot(y, axes = FALSE, frame.plot = TRUE,
 +      xlab = "", ylab = "", pch = 21, cex = 30,
 +      bg = rainbow(n, start = .85, end = .1),
@@ -2251,12 +2251,12 @@ Reference white: D65
 display gamma = 2.2
 > 
 > ## converter for sRGB in #rrggbb format
-> hexcolor <- colorConverter(toXYZ = function(hex,...) {
+> hexcolor <- colorConverter(toXYZ = function(hex, ...) {
 +                             rgb <- t(col2rgb(hex))/255
 +                             colorspaces$sRGB$toXYZ(rgb, ...) },
-+                            fromXYZ = function(xyz,...) {
++                            fromXYZ = function(xyz, ...) {
 +                               rgb <- colorspaces$sRGB$fromXYZ(xyz, ..)
-+                               rgb <- round(rgb,5)
++                               rgb <- round(rgb, 5)
 +                               if (min(rgb) < 0 || max(rgb) > 1)
 +                                    as.character(NA)
 +                               else rgb(rgb[1], rgb[2], rgb[3])},
@@ -2272,7 +2272,7 @@ display gamma = 2.2
 [6,] 255     0  255
 [7,] 255   255    0
 [8,] 190   190  190
-> zapsmall(luv <- convertColor(cols,from = "sRGB", to = "Luv", scale.in = 255))
+> zapsmall(luv <- convertColor(cols, from = "sRGB", to = "Luv", scale.in = 255))
             L         u          v
 [1,]  0.00000   0.00000    0.00000
 [2,] 53.48418 175.36468   37.80017
@@ -2388,9 +2388,9 @@ Sturges   Scott      FD
 > 
 > (palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
 [1] "red"     "yellow"  "green"   "cyan"    "blue"    "magenta"
-> matplot(outer(1:100,1:30), type = 'l', lty = 1,lwd = 2, col = 1:30,
+> matplot(outer(1:100, 1:30), type = "l", lty = 1,lwd = 2, col = 1:30,
 +         main = "Gray Scales Palette",
-+         sub = "palette(gray(seq(0,.9,len=25)))")
++         sub = "palette(gray(seq(0, .9, len=25)))")
 > palette("default")      # reset back to the default
 > 
 > ## on a device where alpha-transparency is supported,
@@ -2421,12 +2421,12 @@ Sturges   Scott      FD
 > 
 > require(graphics)
 > # A Color Wheel
-> pie(rep(1,12), col=rainbow(12))
+> pie(rep(1, 12), col = rainbow(12))
 > 
 > ##------ Some palettes ------------
 > demo.pal <-
 +   function(n, border = if (n < 32) "light gray" else NA,
-+            main = paste("color palettes;  n=",n),
++            main = paste("color palettes;  n=", n),
 +            ch.col = c("rainbow(n, start=.7, end=.1)", "heat.colors(n)",
 +                       "terrain.colors(n)", "topo.colors(n)",
 +                       "cm.colors(n)"))
@@ -2538,7 +2538,7 @@ List of 18
 > require(graphics)
 > 
 > pictex()
-> plot(1:11,(-5:5)^2, type = 'b', main = "Simple Example Plot")
+> plot(1:11, (-5:5)^2, type = "b", main = "Simple Example Plot")
 > dev.off()
 pdf 
   2 
@@ -2596,15 +2596,15 @@ pdf
 > plot(1:10, type="n", xlab="", ylab="", main = "plot math & numbers")
 > theta <- 1.23 ; mtext(bquote(hat(theta) == .(theta)), line= .25)
 > for(i in 2:9)
-+     text(i,i+1, substitute(list(xi,eta) == group("(",list(x,y),")"),
-+                            list(x=i, y=i+1)))
++     text(i, i+1, substitute(list(xi, eta) == group("(",list(x,y),")"),
++                             list(x = i, y = i+1)))
 > ## note that both of these use calls rather than expressions.
 > ##
-> text(1,10,  "Derivatives:", adj=0)
-> text(1,9.6, expression(
-+  "             first: {f * minute}(x) " == {f * minute}(x)), adj=0)
-> text(1,9.0, expression(
-+  "     second: {f * second}(x) "        == {f * second}(x)), adj=0)
+> text(1, 10,  "Derivatives:", adj = 0)
+> text(1, 9.6, expression(
++  "             first: {f * minute}(x) " == {f * minute}(x)), adj = 0)
+> text(1, 9.0, expression(
++  "     second: {f * second}(x) "        == {f * second}(x)), adj = 0)
 > 
 > 
 > plot(1:10, 1:10)
@@ -2620,27 +2620,27 @@ pdf
 > 
 > ## some other useful symbols
 > plot.new(); plot.window(c(0,4), c(15,1))
-> text(1, 1, "universal", adj=0); text(2.5, 1,  "\\042")
+> text(1, 1, "universal", adj = 0); text(2.5, 1,  "\\042")
 > text(3, 1, expression(symbol("\042")))
-> text(1, 2, "existential", adj=0); text(2.5, 2,  "\\044")
+> text(1, 2, "existential", adj = 0); text(2.5, 2,  "\\044")
 > text(3, 2, expression(symbol("\044")))
-> text(1, 3, "suchthat", adj=0); text(2.5, 3,  "\\047")
+> text(1, 3, "suchthat", adj = 0); text(2.5, 3,  "\\047")
 > text(3, 3, expression(symbol("\047")))
-> text(1, 4, "therefore", adj=0); text(2.5, 4,  "\\134")
+> text(1, 4, "therefore", adj = 0); text(2.5, 4,  "\\134")
 > text(3, 4, expression(symbol("\134")))
-> text(1, 5, "perpendicular", adj=0); text(2.5, 5,  "\\136")
+> text(1, 5, "perpendicular", adj = 0); text(2.5, 5,  "\\136")
 > text(3, 5, expression(symbol("\136")))
-> text(1, 6, "circlemultiply", adj=0); text(2.5, 6,  "\\304")
+> text(1, 6, "circlemultiply", adj = 0); text(2.5, 6,  "\\304")
 > text(3, 6, expression(symbol("\304")))
-> text(1, 7, "circleplus", adj=0); text(2.5, 7,  "\\305")
+> text(1, 7, "circleplus", adj = 0); text(2.5, 7,  "\\305")
 > text(3, 7, expression(symbol("\305")))
-> text(1, 8, "emptyset", adj=0); text(2.5, 8,  "\\306")
+> text(1, 8, "emptyset", adj = 0); text(2.5, 8,  "\\306")
 > text(3, 8, expression(symbol("\306")))
-> text(1, 9, "angle", adj=0); text(2.5, 9,  "\\320")
+> text(1, 9, "angle", adj = 0); text(2.5, 9,  "\\320")
 > text(3, 9, expression(symbol("\320")))
-> text(1, 10, "leftangle", adj=0); text(2.5, 10,  "\\341")
+> text(1, 10, "leftangle", adj = 0); text(2.5, 10,  "\\341")
 > text(3, 10, expression(symbol("\341")))
-> text(1, 11, "rightangle", adj=0); text(2.5, 11,  "\\361")
+> text(1, 11, "rightangle", adj = 0); text(2.5, 11,  "\\361")
 > text(3, 11, expression(symbol("\361")))
 > 
 > 
@@ -3338,7 +3338,7 @@ List of 18
 > 
 > ### ** Examples
 > 
-> rgb(0,1,0)
+> rgb(0, 1, 0)
 [1] "#00FF00"
 > 
 > rgb((0:15)/15, green = 0, blue = 0, names = paste("red", 0:15, sep = "."))
@@ -3347,7 +3347,7 @@ List of 18
     red.8     red.9    red.10    red.11    red.12    red.13    red.14    red.15 
 "#880000" "#990000" "#AA0000" "#BB0000" "#CC0000" "#DD0000" "#EE0000" "#FF0000" 
 > 
-> rgb(0, 0:12, 0, max = 255)# integer input
+> rgb(0, 0:12, 0, max = 255) # integer input
  [1] "#000000" "#000100" "#000200" "#000300" "#000400" "#000500" "#000600"
  [8] "#000700" "#000800" "#000900" "#000A00" "#000B00" "#000C00"
 > 
@@ -3387,7 +3387,7 @@ v    1 1.0000000 1.0000000  1.0 1.0000000 1.0000000
 > ## Don't show: 
 > set.seed(151)
 > ## End Don't show
-> (rgb3 <- floor(256 * matrix(stats::runif(3*12), 3,12)))
+> (rgb3 <- floor(256 * matrix(stats::runif(3*12), 3, 12)))
      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
 [1,]  122  137  116  244   20  153  191  250  134   117    27   202
 [2,]  221  113  210  200  218  151   64  182  195   103   218   254
@@ -3413,7 +3413,7 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 +     d <- dim(rgb)
 +     if(d[1] != 3) stop("rgb matrix must have 3 rows")
 +     n <- d[2]
-+     if(n == 0) return(cbind(c(h = 1,s = 1,v = 1))[,0])
++     if(n == 0) return(cbind(c(h = 1, s = 1, v = 1))[,0])
 +     rgb <- rgb/maxColorValue
 +     if(gamma != 1) rgb <- rgb ^ (1/gamma)
 + 
@@ -3551,7 +3551,7 @@ NULL
 > 
 > ### ** Examples
 > 
-> xyTable(iris[,3:4], digits = 6)
+> xyTable(iris[, 3:4], digits = 6)
 $x
   [1] 1.0 1.1 1.2 1.3 1.3 1.3 1.4 1.4 1.4 1.5 1.5 1.5 1.5 1.6 1.6 1.6 1.7 1.7
  [19] 1.7 1.7 1.9 1.9 3.0 3.3 3.5 3.6 3.7 3.8 3.9 3.9 3.9 4.0 4.0 4.0 4.1 4.1
@@ -3703,7 +3703,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  16.834 0.516 17.494 0 0 
+Time elapsed:  16.931 0.417 17.467 0 0 
 > grDevices::dev.off()
 null device 
           1 
