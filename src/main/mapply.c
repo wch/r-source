@@ -23,7 +23,7 @@
 
 #include <Defn.h>
 
-SEXP attribute_hidden 
+SEXP attribute_hidden
 do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -32,6 +32,18 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, j, m, named, zero = 0;
     R_xlen_t *lengths, *counters, longest = 0;
     SEXP vnames, fcall = R_NilValue,  mindex, nindex, tmp1, tmp2, ans;
+    static SEXP length_op = NULL;
+
+    /* Store the .Primitive for 'length' for DispatchOrEval to use. */
+    if (length_op == NULL) {
+	SEXP R_lengthSymbol = install("length");
+	length_op = eval(R_lengthSymbol, R_BaseEnv);
+	if (TYPEOF(length_op) != BUILTINSXP) {
+	    length_op = NULL;
+	    error("'length' is not a BUILTIN");
+	}
+	R_PreserveObject(length_op);
+    }
 
     m = length(varyingArgs);
     vnames = PROTECT(getAttrib(varyingArgs, R_NamesSymbol));
@@ -39,7 +51,15 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     lengths = (R_xlen_t *)  R_alloc(m, sizeof(R_xlen_t));
     for(i = 0; i < m; i++){
-	lengths[i] = xlength(VECTOR_ELT(varyingArgs, i));
+	int dispatch_ok = 0;
+	tmp1 = VECTOR_ELT(varyingArgs, i);
+	if (isObject(tmp1)) { // possibly dispatch on  length():
+	    PROTECT(tmp2 = list1(tmp1)); // DispatchOrEval() needs 'args', a pairlist
+	    dispatch_ok = DispatchOrEval(call, length_op, "length",
+					 tmp2, rho, &ans, 0, 1);
+	    UNPROTECT(1);
+	}
+	lengths[i] = dispatch_ok ? asInteger(ans) : xlength(tmp1);
 	if(lengths[i] == 0) zero++;
 	if (lengths[i] > longest) longest = lengths[i];
     }
@@ -88,7 +108,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < longest; i++) {
 	for(j = 0; j < m; j++) {
 	    counters[j] = (++counters[j] > lengths[j]) ? 1 : counters[j];
-	    if (realIndx) 
+	    if (realIndx)
 		REAL(VECTOR_ELT(nindex, j))[0] = (double) counters[j];
 	    else
 		INTEGER(VECTOR_ELT(nindex, j))[0] = (int) counters[j];

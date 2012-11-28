@@ -588,6 +588,7 @@ if( identical(f, L$A) )
     stop("Oops! f is identical to L$A, even though not touched!")
 ## did not duplicate in 2.0.0 <= Rversion <= 2.11.1
 
+
 ## prototypes for virtual classes:  NULL if legal, otherwise 1st member
 ## OptionalPosixct above includes NULL
 stopifnot(is.null(getClass("OptionalPOSIXct")@prototype))
@@ -596,4 +597,17 @@ setClassUnion("IntOrChar", c("integer", "character"))
 stopifnot(is.integer(getClass("IntOrChar")@prototype))
 ## produced an error < 2.15.0
 stopifnot(identical(isGeneric("&&"), FALSE))
+
+
+## mapply() on S4 objects with a "non-primitive" length() method
+setClass("A", representation(aa="integer"))
+aa <- 11:16
+a <- new("A", aa=aa)
+setMethod(length, "A", function(x) length(x@aa))
+setMethod(`[[`,   "A", function(x, i, j, ...) x@aa[[i]])
+stopifnot(length(a) == 6, identical(a[[5]], aa[[5]]),
+	  identical(mapply(`*`, aa, rep(1:3, 2)),
+		    mapply(`*`, a,  rep(1:3, 2))))
+## Up to R 2.15.2, internally 'a' is treated as if it was of length 1
+## because internal dispatch did not work for length().
 

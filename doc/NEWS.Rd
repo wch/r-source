@@ -625,9 +625,13 @@
       \item On Windows, warnings about opening a file or pipe with a
       non-ASCII description were sometimes output in UTF-8 rather than
       in the current locale's character set.
-      
-      \item The \code{call()} function did not duplicate its arguments. 
+
+      \item The \code{call()} function did not duplicate its arguments.
       (\PR{15115})
+
+      \item \code{mapply(F, a1, ..)} now also works when \code{a1} (or a
+      further such argument) needs a non-primitive \code{length()}
+      method. (Reported by Hervé Pagès; with a patch)
     }
   }
 }
