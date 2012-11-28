@@ -14,8 +14,9 @@
 }
 \usage{DNase}
 \format{
-  This object of class \code{c("nfnGroupedData", "nfGroupedData",
-    "groupedData", "data.frame")} containing the following columns:
+  An object of class
+  \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
+  containing the following columns:
   \describe{
     \item{Run}{
       an ordered factor with levels \code{10} < \dots < \code{3}

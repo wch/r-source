@@ -48,8 +48,9 @@ rep.int(x, times)
 }
 
 \details{
-  The default behaviour is as if the call was \code{rep(x, times = 1,
-    length.out = NA, each = 1)}.  Normally just one of the additional
+  The default behaviour is as if the call was
+\preformatted{  rep(x, times = 1, length.out = NA, each = 1)
+}.  Normally just one of the additional
   arguments is specified, but if \code{each} is specified with either
   of the other two, its replication is performed first, and then that
   implied by \code{times} or \code{length.out}.

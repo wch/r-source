@@ -76,8 +76,8 @@ keys will have been processed, so \code{shift-a} will be passed as
 \code{"A"}.  The following special keys may also be passed to the handler:
 \itemize{
      \item Control keys, passed as \code{"Ctrl-A"}, etc.
-     \item Navigation keys, passed as one of \code{"Left", "Up", "Right", "Down",
-     "PgUp", "PgDn", "End", "Home"}
+     \item Navigation keys, passed as one of\cr
+     \code{"Left", "Up", "Right", "Down", "PgUp", "PgDn", "End", "Home"}
      \item Edit keys, passed as one of \code{"Ins", "Del"}
      \item Function keys, passed as one of \code{"F1", "F2", ...}
 }

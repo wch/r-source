@@ -63,7 +63,9 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \eqn{Var(X) = \alpha\sigma^2}{Var(X) = a*s^2}.
 
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
-  is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
+  is
+\preformatted{-pgamma(t, ..., lower = FALSE, log = TRUE)
+}
 
   Note that for smallish values of \code{shape} (and moderate
   \code{scale}) a large parts of the mass of the Gamma distribution is

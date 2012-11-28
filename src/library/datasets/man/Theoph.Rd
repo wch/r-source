@@ -12,8 +12,9 @@
   an experiment on the pharmacokinetics of theophylline.}
 \usage{Theoph}
 \format{
-  This object of class \code{c("nfnGroupedData", "nfGroupedData",
-    "groupedData", "data.frame")} containing the following columns:
+  An object of class
+  \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
+  containing the following columns:
   \describe{
     \item{Subject}{
       an ordered factor with levels \code{1}, \dots, \code{12}

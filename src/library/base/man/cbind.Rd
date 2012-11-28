@@ -29,7 +29,7 @@ rbind(\dots, deparse.level = 1)
     arguments to \code{\link{data.frame}} such as \code{stringsAsFactors}.)}
   \item{deparse.level}{integer controlling the construction of labels in
     the case of non-matrix-like arguments (for the default method):\cr
-    \code{deparse.level = 0} constructs no labels; the default,
+    \code{deparse.level = 0} constructs no labels; the default,\cr
     \code{deparse.level = 1 or 2} constructs labels from the argument
     names, see the \sQuote{Value} section below.}
 }

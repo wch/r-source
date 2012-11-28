@@ -19,9 +19,9 @@ dependsOnPkgs(pkgs,
 \arguments{
   \item{pkgs}{a character vector of package names.}
   \item{dependencies}{a character vector listing the types of
-    dependencies, a subset of \code{c("Depends", "Imports", "LinkingTo",
-      "Suggests", "Enhances")}.  Character string \code{"all"} is
-    shorthand for that vector.}
+    dependencies, a subset of
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+    Character string \code{"all"} is shorthand for that vector.}
   \item{recursive}{logical: should reverse dependencies of reverse
     dependencies (and so on) be included?}
   \item{lib.loc}{a character vector of \R library trees, or \code{NULL}
