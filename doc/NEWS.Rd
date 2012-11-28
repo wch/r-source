@@ -582,6 +582,10 @@
 
       \item \code{La.svd()} accepts logical matrices (as documented, and
       as \code{svd()} did).
+
+      \item \code{mapply(F, a1, ..)} now also works when \code{a1} (or a
+      further such argument) needs a non-primitive \code{length()}
+      method. (Reported by Hervé Pagès; with a patch)
     }
   }
 }
@@ -628,10 +632,6 @@
 
       \item The \code{call()} function did not duplicate its arguments.
       (\PR{15115})
-
-      \item \code{mapply(F, a1, ..)} now also works when \code{a1} (or a
-      further such argument) needs a non-primitive \code{length()}
-      method. (Reported by Hervé Pagès; with a patch)
     }
   }
 }
