@@ -51,8 +51,10 @@ rweibull(n, shape, scale = 1)
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
-  is \code{-pweibull(t, a, b, lower = FALSE, log = TRUE)} which is just
-  \eqn{H(t) = {(t/b)}^a}{H(t) = (t/b)^a}.
+  is
+\preformatted{-pweibull(t, a, b, lower = FALSE, log = TRUE)
+}
+  which is just \eqn{H(t) = {(t/b)}^a}{H(t) = (t/b)^a}.
 }
 \source{
   \code{[dpq]weibull} are calculated directly from the definitions.

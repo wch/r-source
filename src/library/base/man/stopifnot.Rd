@@ -25,8 +25,9 @@ stopifnot(\dots)
   checking of functions, in particular to make them easier to read.
 
   \code{stopifnot(A, B)} is conceptually equivalent to
-  \code{\{ if(any(is.na(A)) || !all(A)) stop(...) ;
-           if(any(is.na(B)) || !all(B)) stop(...) \}}.
+\preformatted{\{   if(any(is.na(A)) || !all(A)) stop(...) ;
+      if(any(is.na(B)) || !all(B)) stop(...) \}
+}
 }
 \value{
   (\code{\link{NULL}} if all statements in \code{\dots} are \code{TRUE}.)

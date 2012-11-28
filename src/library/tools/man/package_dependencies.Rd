@@ -21,17 +21,18 @@ package_dependencies(packages = NULL, db,
     \url{http://cran.R-project.org/web/packages/packages.rds}.
 }
   \item{which}{a character vector listing the types of
-    dependencies, a subset of \code{c("Depends", "Imports", "LinkingTo",
-      "Suggests", "Enhances")}.  Character string \code{"all"} is
-    shorthand for that vector, character string \code{"most"} 
-    for the same vector without \code{"Enhances"}.
-}
+    dependencies, a subset of
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+    Character string \code{"all"} is shorthand for that vector,
+    character string \code{"most"} for the same vector without
+    \code{"Enhances"}.
+  }
   \item{recursive}{logical: should (reverse) dependencies of (reverse)
     dependencies (and so on) be included?
-}
-  \item{reverse}{logical: if \code{FALSE} (default), regular dependencies are calculated,
-  otherwise reverse dependencies.
-}
+  }
+  \item{reverse}{logical: if \code{FALSE} (default), regular
+    dependencies are calculated, otherwise reverse dependencies. 
+  }
 }
 \value{
 Named list with one element for each package in argument \code{packages},

@@ -29,7 +29,9 @@ SSfol(Dose, input, lKe, lKa, lCl)
 \value{
   a numeric vector of the same length as \code{input}, which is the
   value of the expression
-  \code{Dose * exp(lKe+lKa-lCl) * (exp(-exp(lKe)*input)-exp(-exp(lKa)*input)) / (exp(lKa)-exp(lKe))}.
+\preformatted{Dose * exp(lKe+lKa-lCl) * (exp(-exp(lKe)*input) - exp(-exp(lKa)*input))
+    / (exp(lKa) - exp(lKe))
+}
 
   If all of the arguments \code{lKe}, \code{lKa}, and \code{lCl} are
   names of objects, the gradient matrix with respect to these names is

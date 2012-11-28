@@ -88,9 +88,10 @@ srcref(srcfile, lloc)
 
   The \code{srcref} function produces an object of class
   \code{srcref}, which describes a range of characters in a \code{
-  srcfile}.  The \code{lloc} value gives the following values: \code{c
-  (first_line, first_byte, last_line, last_byte, first_column,
-  last_column, first_parsed, last_parsed)}. Bytes (elements 2, 4) and
+    srcfile}.  The \code{lloc} value gives the following values:
+\preformatted{c(first_line, first_byte, last_line, last_byte, first_column,
+  last_column, first_parsed, last_parsed)
+}. Bytes (elements 2, 4) and
   columns (elements 5, 6) may be different due to multibyte
   characters.  If only four values are given, the columns and bytes
   are assumed to match.  Lines (elements 1, 3) and parsed lines (

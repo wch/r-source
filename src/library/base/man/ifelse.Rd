@@ -42,8 +42,8 @@ is \code{TRUE} or \code{FALSE}.
   values selected from \code{yes} and \code{no}.
 
   Sometimes it is better to use a construction such as
-  \code{(tmp <- yes; tmp[!test] <- no[!test]; tmp)}, possibly extended
-  to handle missing values in \code{test}.
+\preformatted{  (tmp <- yes; tmp[!test] <- no[!test]; tmp)
+}, possibly extended to handle missing values in \code{test}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

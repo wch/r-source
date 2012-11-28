@@ -78,8 +78,9 @@ unit(x, units, data=NULL)
   
   The \code{data} argument must be a list when the \code{unit.length()}
   is greater than 1.  For example,
-  \code{unit(rep(1, 3), c("npc", "strwidth", "inches"),
-        data=list(NULL, "my string", NULL))}.
+\preformatted{  unit(rep(1, 3), c("npc", "strwidth", "inches"),
+  data = list(NULL, "my string", NULL))
+}.
       
   It is possible to subset unit objects in the normal way
   (e.g., \code{unit(1:5, "npc")[2:4]}), but a special function

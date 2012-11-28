@@ -20,7 +20,8 @@ package \pkg{natbib}.
 cite(keys, bib, ...)
 citeNatbib(keys, bib, textual = FALSE, before = NULL, after = NULL, 
            mode = c("authoryear", "numbers", "super"), abbreviate = TRUE, 
-           longnamesfirst = TRUE, bibpunct = c("(", ")", ";", "a", "", ","), previous)
+           longnamesfirst = TRUE,
+           bibpunct = c("(", ")", ";", "a", "", ","), previous)
 }
 \arguments{
   \item{keys}{

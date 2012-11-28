@@ -13,8 +13,9 @@
 }
 \usage{Orange}
 \format{
-  This object of class \code{c("nfnGroupedData", "nfGroupedData",
-    "groupedData", "data.frame")} containing the following columns:
+  An object of class
+  \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
+  containing the following columns:
   \describe{
     \item{Tree}{
       an ordered factor indicating the tree on which the measurement is

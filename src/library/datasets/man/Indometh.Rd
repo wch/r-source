@@ -14,8 +14,9 @@
 }
 \usage{Indometh}
 \format{
-  This object of class \code{c("nfnGroupedData", "nfGroupedData",
-    "groupedData", "data.frame")} containing the following columns:
+  An object of class
+  \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
+  containing the following columns:
  \describe{
     \item{Subject}{
       an ordered factor with containing the subject codes.  The

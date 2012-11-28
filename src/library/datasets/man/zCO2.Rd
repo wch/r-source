@@ -14,8 +14,9 @@
 }
 \usage{CO2}
 \format{
-  This object of class \code{c("nfnGroupedData", "nfGroupedData",
-    "groupedData", "data.frame")} containing the following columns:
+  An object of class
+  \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")} 
+  containing the following columns:
   \describe{
     \item{Plant}{
       an ordered factor with levels
