@@ -2025,13 +2025,16 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     expr = CAR(args);
     env = CADR(args);
     encl = CADDR(args);
+    SEXPTYPE tEncl = TYPEOF(encl);
     if (isNull(encl)) {
 	/* This is supposed to be defunct, but has been kept here
 	   (and documented as such) */
 	encl = R_BaseEnv;
     } else if ( !isEnvironment(encl) &&
-		!isEnvironment((encl = simple_as_environment(encl))) )
-	error(_("invalid '%s' argument"), "enclos");
+		!isEnvironment((encl = simple_as_environment(encl))) ) {
+	error(_("invalid '%s' argument of type '%s'"), 
+	      "enclos", type2char(tEncl));
+    }
     if(IS_S4_OBJECT(env) && (TYPEOF(env) == S4SXP))
 	env = R_getS4DataSlot(env, ANYSXP); /* usually an ENVSXP */
     switch(TYPEOF(env)) {
@@ -2060,11 +2063,13 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("numeric 'envir' arg not of length one"));
 	frame = asInteger(env);
 	if (frame == NA_INTEGER)
-	    error(_("invalid '%s' argument"), "envir");
+	    error(_("invalid '%s' argument of type '%s'"), 
+		  "envir", type2char(TYPEOF(env)));
 	PROTECT(env = R_sysframe(frame, R_GlobalContext));
 	break;
     default:
-	error(_("invalid '%s' argument"), "envir");
+	error(_("invalid '%s' argument of type '%s'"), 
+	      "envir", type2char(TYPEOF(env)));
     }
 
     /* isLanguage include NILSXP, and that does not need to be

@@ -70,7 +70,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Note that for smallish values of \code{shape} (and moderate
   \code{scale}) a large parts of the mass of the Gamma distribution is
   on values of \eqn{x} so near zero that they will be represented as
-  zero in computer arithmetic.  So \code{rgamma} can well return values
+  zero in computer arithmetic.  So \code{rgamma} may well return values
   which will be represented as zero.  (This will also happen for very
   large values of \code{scale} since the actual generation is done for
   \code{scale = 1}.)
@@ -80,23 +80,22 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 %   small \code{scale}, and warns of potential unreliability for
 %   \code{scale < 1e-10}.
 \note{
-  The S parametrization is via \code{shape} and \code{rate}: S has no
-  \code{scale} parameter.  Prior to \R 2.16.0 \code{scale} took
-  precedence over \code{rate}, but now it is an error to supply both.
+  The S (Becker \emph{et al} (1988) parametrization was via \code{shape}
+  and \code{rate}: S had no \code{scale} parameter.  Prior to \R 2.16.0
+  \code{scale} took precedence over \code{rate}, but now it is an error
+  to supply both.
 
   \code{pgamma} is closely related to the incomplete gamma function.  As
   defined by Abramowitz and Stegun 6.5.1 (and by \sQuote{Numerical
     Recipes}) this is
-  \deqn{P(a,x) = \frac{1}{\Gamma(a)} \int_0^x t^{a-1} e^{-t} dt}{P(a,x) =
-      1/Gamma(a) integral_0^x t^(a-1) exp(-t) dt}
+  \deqn{P(a,x) = \frac{1}{\Gamma(a)} \int_0^x t^{a-1} e^{-t} dt}{P(a,x) = 1/Gamma(a) integral_0^x t^(a-1) exp(-t) dt}
   \eqn{P(a, x)} is \code{pgamma(x, a)}.  Other authors (for example
   Karl Pearson in his 1922 tables) omit the normalizing factor,
   defining the incomplete gamma function \eqn{\gamma(a,x)} as
   \eqn{\gamma(a,x) = \int_0^x t^{a-1} e^{-t} dt,}{gamma(a,x) =
     integral_0^x t^(a-1) exp(-t) dt,} i.e., \code{pgamma(x, a) * gamma(a)}.
   Yet other use the \sQuote{upper} incomplete gamma function,
-  \deqn{\Gamma(a,x) = \int_x^\infty t^{a-1} e^{-t} dt,}{Gamma(a,x) =
-    integral_x^Inf t^(a-1) exp(-t) dt,}
+  \deqn{\Gamma(a,x) = \int_x^\infty t^{a-1} e^{-t} dt,}{Gamma(a,x) = integral_x^Inf t^(a-1) exp(-t) dt,}
   which can be computed by
   \code{pgamma(x, a, lower = FALSE) * gamma(a)}.
 
