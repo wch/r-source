@@ -3424,6 +3424,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         R_check_doc_sizes2 <- TRUE
         R_check_suggests_only <- TRUE
         warn_on_namespace <- TRUE
+        R_check_code_assign_to_globalenv <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.

@@ -3963,6 +3963,11 @@ Default: true.
 @item _R_CHECK_WARN_ON_NAMESPACE_
 Should the absence of a namespace be a warning rather than a note?
 Default: false, except for CRAN submission checks.
+
+@item _R_CHECK_CODE_ASSIGN_TO_GLOBALENV_
+Should the package code be checked for assignments to the global
+environment?
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
@@ -3976,6 +3981,7 @@ _R_CHECK_SUGGESTS_ONLY_=TRUE
 _R_CHECK_NO_RECOMMENDED_=TRUE
 _R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
 _R_CHECK_DOC_SIZES2_=TRUE
+_R_CHECK_CODE_ASSIGN_TO_GLOBALENV_=TRUE
 @end example
 
 @noindent
