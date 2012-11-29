@@ -20,7 +20,7 @@ detectCores(all.tests = FALSE, logical = FALSE)
 \arguments{
   \item{all.tests}{Logical: if true apply all known tests.}
   \item{logical}{Logical: if possible, use the number of physical CPUs/cores
-    (if \code{FALSE}) or logical CPUs (if \code{TRUE}.}
+    (if \code{FALSE}) or logical CPUs (if \code{TRUE}).}
 }
 \details{
   This attempts to detect the number of CPU cores in the current
