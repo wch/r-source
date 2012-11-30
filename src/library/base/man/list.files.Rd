@@ -1,6 +1,6 @@
 % File src/library/base/man/list.files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{list.files}
@@ -35,7 +35,7 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
   \item{recursive}{logical.  Should the listing recurse into directories?}
   \item{ignore.case}{logical.  Should pattern-matching be case-insensitive?}
   \item{include.dirs}{logical.  Should subdirectory names be included in
-    recursive listings?  (There always are in non-recursive ones).}
+    recursive listings?  (They always are in non-recursive ones).}
 }
 \description{
   These functions produce a character vector of the names of files or
@@ -52,7 +52,7 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
 
   \code{list.dirs} implicitly has \code{all.files = TRUE}, and if
   \code{recursive = TRUE}, the answer includes \code{path} itself
-  (provided it is a readable directory). 
+  (provided it is a readable directory).
 }
 \author{Ross Ihaka, Brian Ripley}
 \note{
@@ -70,8 +70,8 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
 #endif
 }
 \seealso{\code{\link{file.info}}, \code{\link{file.access}}
-  and \code{\link{files}} for many more file handling functions and 
-  \code{\link{file.choose}} 
+  and \code{\link{files}} for many more file handling functions and
+  \code{\link{file.choose}}
 #ifdef windows
   and \code{\link{choose.files}}
 #endif
