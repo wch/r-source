@@ -264,6 +264,10 @@
 
       \item New \code{demo(colors)} and \code{demo(hclColors)}, with
       utility functions.
+
+      \item \code{list.files()} (aka \code{dir()}) gains a new optional
+      argument \code{no..} which allows to exclude \code{"."} and
+      \code{".."} from listings.
     }
   }
 

@@ -745,7 +745,7 @@ FUNTAB R_FunTab[] =
 {"file.symlink",do_filesymlink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.link",	do_filelink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.copy",	do_filecopy,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"list.files",	do_listfiles,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
+{"list.files",	do_listfiles,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"list.dirs",	do_listdirs,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.exists", do_fileexists,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.choose", do_filechoose,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -950,7 +950,7 @@ FUNTAB R_FunTab[] =
 /* also used in eval.c */
 SEXP attribute_hidden R_Primitive(const char *primname)
 {
-    for (int i = 0; R_FunTab[i].name; i++) 
+    for (int i = 0; R_FunTab[i].name; i++)
 	if (strcmp(primname, R_FunTab[i].name) == 0) { /* all names are ASCII */
 	    if ((R_FunTab[i].eval % 100 )/10)
 		return R_NilValue; /* it is a .Internal */
@@ -1159,7 +1159,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 #if CHECK_INTERNALS < 2
 	    && strcmp(ns, "Matrix")
 #endif
-	    && strcmp(ns, "base") && strcmp(ns, "tools") 
+	    && strcmp(ns, "base") && strcmp(ns, "tools")
 	    && strcmp(ns, "utils") && strcmp(ns, "compiler"))
 	    errorcall(call,
 		      ".Internal(%s()) called from namespace '%s'\n", fn, ns);
