@@ -390,6 +390,9 @@
       \item \command{R CMD check} now does some checks on functions
       defined within reference classes, including of \code{.Call()} etc
       calls.
+
+      \item \command{R CMD check --as-cran} notes assignments to the
+      global environment.
     }
   }
 
