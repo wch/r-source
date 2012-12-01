@@ -26,7 +26,7 @@ deltat    <- function(x, ...) UseMethod("deltat")
 
 ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
 	       deltat = 1, ts.eps  =  getOption("ts.eps"),
-               class = if(nseries > 1) c("mts", "ts") else "ts",
+	       class = if(nseries > 1) c("mts", "ts", "matrix") else "ts",
                names = if(!is.null(dimnames(data))) colnames(data)
                else paste("Series", seq(nseries))
                )

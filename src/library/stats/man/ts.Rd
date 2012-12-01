@@ -45,7 +45,7 @@ is.ts(x)
     \code{ts.eps}.}
   \item{class}{class to be given to the result, or none if \code{NULL}
     or \code{"none"}.  The default is \code{"ts"} for a single series,
-    \code{c("mts", "ts")} for multiple series.}
+    \code{c("mts", "ts", "matrix")} for multiple series.}
   \item{names}{a character vector of names for the series in a multiple
     series: defaults to the colnames of \code{data}, or \code{Series 1},
     \code{Series 2}, \dots.}
@@ -117,6 +117,7 @@ plot(gnp) # using 'plot.ts' for time-series plot
 ## Multivariate
 z <- ts(matrix(rnorm(300), 100, 3), start = c(1961, 1), frequency = 12)
 class(z)
+head(z) # as "matrix"
 plot(z)
 plot(z, plot.type = "single", lty = 1:3)
 

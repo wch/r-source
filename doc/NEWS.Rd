@@ -268,6 +268,9 @@
       \item \code{list.files()} (aka \code{dir()}) gains a new optional
       argument \code{no..} which allows to exclude \code{"."} and
       \code{".."} from listings.
+
+      \item multivariate time series are also of class \code{"matrix"}
+      now; consequently, \code{head()}, e.g., is more useful.
     }
   }
 
