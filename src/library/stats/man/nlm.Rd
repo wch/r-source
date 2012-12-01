@@ -18,16 +18,19 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
   using a Newton-type algorithm.  See the references for details.
 }
 \arguments{
-  \item{f}{the function to be minimized.  If the function value has
-    an attribute called \code{gradient} or both \code{gradient} and
-    \code{hessian} attributes, these will be used in the calculation of
-    updated parameter values.  Otherwise, numerical derivatives are
-    used. \code{\link{deriv}} returns a function with suitable
-    \code{gradient} attribute.  This should be a function of a vector of
-    the length of \code{p} followed by any other arguments specified
-    by the \code{\dots} argument.}
+  \item{f}{the function to be minimized, returning a single numeric
+    value.  This should be a function with first argument a vector of
+    the length of \code{p} followed by any other arguments specified by
+    the \code{\dots} argument.
+
+    If the function value has an attribute called \code{gradient} or
+    both \code{gradient} and \code{hessian} attributes, these will be
+    used in the calculation of updated parameter values.  Otherwise,
+    numerical derivatives are used. \code{\link{deriv}} returns a
+    function with suitable \code{gradient} attribute and optionally a
+    \code{hessian} attribute.}
   \item{p}{starting parameter values for the minimization.}
-  \item{\dots}{additional arguments to \code{f}.}
+  \item{\dots}{additional arguments to be passed to \code{f}.}
   \item{hessian}{if \code{TRUE}, the hessian of \code{f}
     at the minimum is returned.}
   \item{typsize}{an estimate of the size of each parameter
@@ -72,8 +75,9 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
   From the three methods available in the original source, we always use
   method \dQuote{1} which is line search.
 
-  The functions supplied must always return finite (including not
-  \code{NA} and not \code{NaN}) values.
+  The functions supplied should always return finite (including not
+  \code{NA} and not \code{NaN}) values: for the function value itself
+  non-finite values are replaced by the maximum positive value with a warning.
   
   The parameter vector passed to \code{f} and \code{hessian} has special
   semantics and is shared between calls.  The functions should not copy it.
@@ -120,7 +124,6 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
 }
 \seealso{
   \code{\link{optim}} and \code{\link{nlminb}}.
-
   
   \code{\link{constrOptim}} for constrained optimization, 
   \code{\link{optimize}} for one-dimensional
