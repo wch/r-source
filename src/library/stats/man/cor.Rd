@@ -167,17 +167,33 @@ stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 % "everything", "all.obs", "complete.obs", "na.or.complete", "pairwise.complete.obs"
 C1 <- cov(swiss)
 range(eigen(C1, only.values = TRUE)$values) # 6.19        1921
-swM <- swiss
-swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
-try(cov(swM)) # Error: missing obs...
-C2 <- cov(swM, use = "complete")
-range(eigen(C2, only.values = TRUE)$values) # 6.46        1930
-C3 <- cov(swM, use = "pairwise")
-range(eigen(C3, only.values = TRUE)$values) # 6.19        1938
 
-symnum(cor(swM, method = "kendall", use = "complete"))
+## swM := "swiss" with  3 "missing"s :
+swM <- swiss
+colnames(swM) <- abbreviate(colnames(swiss), min=6)
+swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
+
+## Consider all 5 "use" cases :
+(C. <- cov(swM)) # use="everything"  quite a few NA's in cov.matrix
+try(cov(swM, use = "all")) # Error: missing obs...
+C2 <- cov(swM, use = "complete")
+stopifnot(identical(C2, cov(swM, use = "na.or.complete")))
+range(eigen(C2, only.values = TRUE)$values) # 6.46   1930
+C3 <- cov(swM, use = "pairwise")
+range(eigen(C3, only.values = TRUE)$values) # 6.19   1938
+
 ## Kendall's tau doesn't change much:
-symnum(cor(swiss, method = "kendall"))
+symnum(Rc <- cor(swM, method = "kendall", use = "complete"))
+symnum(Rp <- cor(swM, method = "kendall", use = "pairwise"))
+symnum(R. <- cor(swiss, method = "kendall"))
+
+## "pairwise" is closer componentwise,
+summary(abs(c(1 - Rp/R.)))
+summary(abs(c(1 - Rc/R.)))
+
+## but "complete" is closer in Eigen space:
+EV <- function(m) eigen(m, only.values=TRUE)$values
+summary(abs(1 - EV(Rp)/EV(R.)) / abs(1 - EV(Rc)/EV(R.)))
 }
 \keyword{univar}
 \keyword{multivariate}

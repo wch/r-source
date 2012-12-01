@@ -1,6 +1,6 @@
 % File src/library/stats/man/Exponential.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Exponential}
@@ -49,7 +49,7 @@ rexp(n, rate = 1)
   from numerically stable versions of the definitions.
 
   \code{rexp} uses
-  
+
   Ahrens, J. H. and Dieter, U. (1972).
   Computer methods for sampling from the exponential and normal distributions.
   \emph{Communications of the ACM}, \bold{15}, 873--882.
@@ -77,5 +77,11 @@ rexp(n, rate = 1)
 }
 \examples{
 dexp(1) - exp(-1) #-> 0
+
+## a fast way to generate *sorted*  U[0,1]  random numbers:
+rsunif <- function(n) { n1 <- n+1
+   cE <- cumsum(rexp(n1)); cE[seq_len(n)]/cE[n1] }
+plot(rsunif(1000), ylim=0:1, pch=".")
+abline(0,1/(1000+1), col=adjustcolor(1, 0.5))
 }
 \keyword{distribution}
