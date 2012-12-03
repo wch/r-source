@@ -146,7 +146,7 @@
 	if (inherits(x,"tclVar")) return(as.tclObj(ls(unclass(x)$env)))
         if (isCallback(x)){
 	    # Jump through some hoops to protect from GC...
-	    ref <- local({value <- x; envir < -pframe; environment()})
+	    ref <- local({value <- x; envir <- pframe; environment()})
             callback <- makeCallback(get("value",envir = ref),
 		                     get("envir",envir = ref))
             assign(callback, ref, envir = current.win$env)

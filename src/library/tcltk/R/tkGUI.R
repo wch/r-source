@@ -63,7 +63,7 @@ tkStartGUI <- function() {
 	pkglist <- .packages(all.available=TRUE)
         lvar <- tclVar()
 	tclObj(lvar) <- pkglist
-	box <- tklistbox(tt < -tktoplevel(),
+	box <- tklistbox(tt <- tktoplevel(),
 		listvariable=lvar, selectmode="multiple")
 	load <- function() {
 	   s <- as.integer(tkcurselection(box))
@@ -108,7 +108,7 @@ tkStartGUI <- function() {
             if (length(s) == 0) return
             nm <- as.name(s)
             print(eval(substitute(help(nm))))
-            tclvalue(txtvar) < -""
+            tclvalue(txtvar) <- ""
         }
         tkpack(label,side="left")
         tkpack(entry,side="left")
