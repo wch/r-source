@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-print.htest <- function(x, digits = 4, quote = TRUE, prefix = "", ...)
+print.htest <- function(x, digits = 4L, quote = TRUE, prefix = "", ...)
 {
     cat("\n")
     cat(strwrap(x$method, prefix = "\t"), sep="\n")

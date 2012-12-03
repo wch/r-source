@@ -101,7 +101,7 @@ kernel <- function (coef, m = 2, r, name="unknown")
     }
 }
 
-print.tskernel <- function (x, digits = max(3,getOption("digits")-3), ...)
+print.tskernel <- function (x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     m <- x$m
     y <- x[i <- -m:m]
@@ -112,7 +112,8 @@ print.tskernel <- function (x, digits = max(3,getOption("digits")-3), ...)
 }
 
 plot.tskernel <-
-    function(x, type = "h", xlab = "k", ylab = "W[k]", main=attr(x,"name"), ...)
+    function(x, type = "h", xlab = "k", ylab = "W[k]",
+             main = attr(x,"name"), ...)
 {
     i <- -x$m:x$m
     plot(i, x[i], type = type, xlab = xlab, ylab = ylab, main = main, ...)

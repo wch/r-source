@@ -351,7 +351,7 @@ arima <- function(x, order = c(0, 0, 0),
 
 
 print.Arima <-
-    function (x, digits = max(3, getOption("digits") - 3), se = TRUE, ...)
+    function (x, digits = max(3L, getOption("digits") - 3L), se = TRUE, ...)
 {
     cat("\nCall:", deparse(x$call, width.cutoff = 75L), "", sep = "\n")
     if (length(x$coef)) {

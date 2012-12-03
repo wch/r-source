@@ -94,7 +94,7 @@ print.TukeyHSD <- function(x, digits = getOption("digits"), ...)
     attr(xx, "orig.call") <- attr(xx, "conf.level") <- attr(xx, "ordered") <- NULL
     xx[] <- lapply(xx, function(z, digits)
                {z[, "p adj"] <- round(z[, "p adj"], digits); z},
-                   digits=digits)
+                   digits = digits)
     print.default(xx, digits, ...)
     invisible(x)
 }

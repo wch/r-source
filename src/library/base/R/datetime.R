@@ -238,7 +238,7 @@ print.POSIXlt <- function(x, ...)
     invisible(x)
 }
 
-summary.POSIXct <- function(object, digits = 15, ...)
+summary.POSIXct <- function(object, digits = 15L, ...)
 {
     x <- summary.default(unclass(object), digits = digits, ...)
     if(m <- match("NA's", names(x), 0)) {
@@ -535,7 +535,7 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
         print(y)
     }
     else
-        cat("Time difference of ", format(unclass(x), digits=digits), " ",
+        cat("Time difference of ", format(unclass(x), digits = digits), " ",
             attr(x, "units"), "\n", sep = "")
 
     invisible(x)

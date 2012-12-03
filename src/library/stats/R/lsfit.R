@@ -16,7 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
+lsfit <- function(x, y, wt = NULL, intercept = TRUE, tolerance = 1e-07,
+                  yname = NULL)
 {
     ## find names of x variables (design matrix)
 
@@ -24,7 +25,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     y <- as.matrix(y)
     xnames <- colnames(x)
     if( is.null(xnames) ) {
-	if(ncol(x)==1) xnames <- "X"
+	if(ncol(x) == 1L) xnames <- "X"
 	else xnames <- paste0("X", 1L:ncol(x))
     }
     if( intercept ) {
@@ -227,7 +228,7 @@ ls.diag <- function(ls.out)
 		cov.scaled=covmat.scaled, cov.unscaled=covmat.unscaled))
 }
 
-ls.print <- function(ls.out, digits=4, print.it=TRUE)
+ls.print <- function(ls.out, digits = 4L, print.it = TRUE)
 {
     ## calculate residuals to be used
 
@@ -237,7 +238,7 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
 	    warning("observations with 0 weights not used")
 	resids <- resids * ls.out$wt^0.5
     }
-    n <- apply(resids, 2L, length)-colSums(is.na(resids))
+    n <- apply(resids, 2L, length) - colSums(is.na(resids))
     lsqr <- ls.out$qr
     p <- lsqr$rank
 
@@ -245,7 +246,7 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
 
     if(ls.out$intercept) {
 	if(is.matrix(lsqr$qt))
-	    totss <- colSums(lsqr$qt[-1, ]^2)
+	    totss <- colSums(lsqr$qt[-1L, ]^2)
 	else totss <- sum(lsqr$qt[-1L]^2)
 	degfree <- p - 1
     } else {
@@ -311,5 +312,5 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
     }
     names(coef.table) <- Ynames
 
-    invisible(list(summary=summary, coef.table=coef.table))
+    invisible(list(summary = summary, coef.table = coef.table))
 }

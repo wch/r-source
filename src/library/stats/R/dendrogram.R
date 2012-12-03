@@ -214,7 +214,7 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
 }
 
 str.dendrogram <-
-function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
+function (object, max.level = NA, digits.d = 3L, give.attr = FALSE,
           wid = getOption("width"), nest.lev = 0, indent.str = "",
           last.str = getOption("str.dendrogram.last"), stem = "--", ...)
 {
@@ -226,7 +226,7 @@ function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
     pasteLis <- function(lis, dropNam, sep = " = ") {
 	## drop uninteresting "attributes" here
 	lis <- lis[!(names(lis) %in% dropNam)]
-	fl <- sapply(lis, format, digits=digits.d)
+	fl <- sapply(lis, format, digits = digits.d)
 	paste(paste(names(fl), fl, sep = sep), collapse = ", ")
     }
 
@@ -244,7 +244,7 @@ function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
 		at <- paste(",", at)
 	}
 	cat("[dendrogram w/ ", le, " branches and ", memb, " members at h = ",
-            format(hgt, digits=digits.d), if(give.attr) at,
+            format(hgt, digits = digits.d), if(give.attr) at,
             "]", if(!is.na(max.level) && nest.lev == max.level)" ..", "\n",
             sep = "")
 	if (is.na(max.level) || nest.lev < max.level) {

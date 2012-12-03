@@ -337,7 +337,7 @@ replications <- function(formula, data = NULL, na.action)
     if(balance) unlist(z) else z
 }
 
-print.tables_aov <- function(x, digits = 4, ...)
+print.tables_aov <- function(x, digits = 4L, ...)
 {
     tables.aov <- x$tables
     n.aov <- x$n

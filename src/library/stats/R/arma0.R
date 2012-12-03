@@ -240,7 +240,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     res
 }
 
-print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
+print.arima0 <- function(x, digits = max(3L, getOption("digits") - 3L),
                          se = TRUE, ...)
 {
     cat("\nCall:", deparse(x$call, width.cutoff = 75L), "", sep = "\n")

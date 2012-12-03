@@ -1374,7 +1374,7 @@ print.data.frame <-
 	cat(gettext("<0 rows> (or 0-length row.names)\n"))
     } else {
 	## format.<*>() : avoiding picking up e.g. format.AsIs
-	m <- as.matrix(format.data.frame(x, digits=digits, na.encode=FALSE))
+	m <- as.matrix(format.data.frame(x, digits = digits, na.encode = FALSE))
 	if(!isTRUE(row.names))
 	    dimnames(m)[[1L]] <- if(identical(row.names,FALSE))
 		rep.int("", n) else row.names

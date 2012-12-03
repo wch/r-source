@@ -19,7 +19,7 @@
 sunflowerplot <- function(x, ...) UseMethod("sunflowerplot")
 
 sunflowerplot.default <-
-    function(x, y = NULL, number, log = "", digits = 6,
+    function(x, y = NULL, number, log = "", digits = 6L,
              xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
              add = FALSE, rotate = FALSE,
              pch = 16, cex = 0.8, cex.fact =  1.5, col = par("col"), bg = NA,

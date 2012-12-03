@@ -153,11 +153,11 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     res
 }
 
-print.StructTS <- function(x, digits = max(3, getOption("digits") - 3), ...)
+print.StructTS <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     cat("\nCall:", deparse(x$call, width.cutoff = 75L), "", sep = "\n")
     cat("Variances:\n")
-    print.default(x$coef, print.gap = 2L, digits=digits)
+    print.default(x$coef, print.gap = 2L, digits = digits)
     invisible(x)
 }
 
@@ -174,7 +174,7 @@ predict.StructTS <- function(object, n.ahead = 1L, se.fit = TRUE, ...)
     else return(pred)
 }
 
-tsdiag.StructTS <- function(object, gof.lag = 10, ...)
+tsdiag.StructTS <- function(object, gof.lag = 10L, ...)
 {
     ## plot standardized residuals, acf of residuals, Ljung-Box p-values
     oldpar <- par(mfrow = c(3, 1))

@@ -167,7 +167,7 @@ summary.table <- function(object, ...)
 }
 
 print.summary.table <-
-function(x, digits = max(1, getOption("digits") - 3), ...)
+function(x, digits = max(1L, getOption("digits") - 3L), ...)
 {
     if(!inherits(x, "summary.table"))
 	stop(gettextf("'x' must inherit from class %s",

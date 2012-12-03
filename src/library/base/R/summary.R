@@ -19,7 +19,7 @@
 summary <- function (object, ...) UseMethod("summary")
 
 summary.default <-
-    function(object, ..., digits = max(3, getOption("digits") - 3))
+    function(object, ..., digits = max(3L, getOption("digits") - 3L))
 {
     if(is.factor(object))
 	return(summary.factor(object, ...))
@@ -115,7 +115,7 @@ summary.matrix <- function(object, ...) {
 }
 
 summary.data.frame <-
-    function(object, maxsum = 7, digits = max(3, getOption("digits") - 3), ...)
+    function(object, maxsum = 7L, digits = max(3L, getOption("digits") - 3L), ...)
 {
     ncw <- function(x) {
         z <- nchar(x, type="w")
@@ -127,7 +127,7 @@ summary.data.frame <-
     }
     # compute results to full precision.
     z <- lapply(X = as.list(object), FUN = summary,
-                maxsum = maxsum, digits = 12, ...)
+                maxsum = maxsum, digits = 12L, ...)
     nv <- length(object)
     nm <- names(object)
     lw <- numeric(nv)

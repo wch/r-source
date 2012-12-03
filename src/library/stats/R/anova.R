@@ -24,16 +24,16 @@ stat.anova <-
 {
     test <- match.arg(test)
     dev.col <- match("Deviance", colnames(table))
-    if (test=="Rao") dev.col <- match("Rao", colnames(table))
+    if (test == "Rao") dev.col <- match("Rao", colnames(table))
     if (is.na(dev.col)) dev.col <- match("Sum of Sq", colnames(table))
     switch(test,
-	   "Rao"=,"LRT"=,"Chisq" = {
+	   "Rao" = ,"LRT" = ,"Chisq" = {
                dfs <- table[, "Df"]
                vals <- table[, dev.col]/scale * sign(dfs)
 	       vals[dfs %in% 0] <- NA
                vals[!is.na(vals) & vals < 0] <- NA # rather than p = 0
 	       cbind(table,
-                     "Pr(>Chi)" = pchisq(vals, abs(dfs), lower.tail=FALSE)
+                     "Pr(>Chi)" = pchisq(vals, abs(dfs), lower.tail = FALSE)
                      )
 	   },
 	   "F" = {
@@ -43,7 +43,7 @@ stat.anova <-
                Fvalue[!is.na(Fvalue) & Fvalue < 0] <- NA # rather than p = 0
 	       cbind(table,
                      F = Fvalue,
-		     "Pr(>F)" = pf(Fvalue, abs(dfs), df.scale, lower.tail=FALSE)
+		     "Pr(>F)" = pf(Fvalue, abs(dfs), df.scale, lower.tail = FALSE)
                      )
 	   },
 	   "Cp" = { # depends on the type of object.
@@ -58,11 +58,11 @@ stat.anova <-
 }
 
 printCoefmat <-
-    function(x, digits = max(3, getOption("digits") - 2),
+    function(x, digits = max(3L, getOption("digits") - 2L),
 	     signif.stars = getOption("show.signif.stars"),
              signif.legend = signif.stars,
-	     dig.tst = max(1, min(5, digits - 1)),
-	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0L),
+	     dig.tst = max(1L, min(5L, digits - 1L)),
+	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(),
 	     P.values = NULL,
 	     has.Pvalue = nc >= 4 && substr(colnames(x)[nc], 1, 3) == "Pr(",
              eps.Pvalue = .Machine$double.eps,
@@ -111,8 +111,8 @@ printCoefmat <-
 	    ## #{digits} BEFORE decimal point -- for min/max. value:
 	    digmin <- 1 + if(length(acs <- acs[ia & acs != 0]))
 		floor(log10(range(acs[acs != 0], finite = TRUE))) else 0
-            Cf[,cs.ind] <- format(round(coef.se, max(1,digits-digmin)),
-                                  digits=digits)
+            Cf[,cs.ind] <- format(round(coef.se, max(1L, digits - digmin)),
+                                  digits = digits)
         }
     }
     if(length(tst.ind))
@@ -132,7 +132,7 @@ printCoefmat <-
     if(length(not.both.0 <- which(x0 & !is.na(x0)))) {
 	## not.both.0==TRUE:  xm !=0, but Cf[] is: --> fix these:
 	Cf[okP][not.both.0] <- format(xm[okP][not.both.0],
-                                      digits = max(1, digits-1))
+                                      digits = max(1L, digits - 1L))
     }
     if(any(ina)) Cf[ina] <- na.print
     if(P.values) {
@@ -159,7 +159,7 @@ printCoefmat <-
     invisible(x)
 }
 
-print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
+print.anova <- function(x, digits = max(getOption("digits") - 2L, 3L),
                         signif.stars = getOption("show.signif.stars"), ...)
 {
     if (!is.null(heading <- attr(x, "heading")))

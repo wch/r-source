@@ -265,7 +265,7 @@ influence.measures <- function(model)
     ans
 }
 
-print.infl <- function(x, digits = max(3, getOption("digits") - 4), ...)
+print.infl <- function(x, digits = max(3L, getOption("digits") - 4L), ...)
 {
     ## `x' : as the result of  influence.measures(.)
     cat("Influence measures of\n\t", deparse(x$call),":\n\n")
@@ -276,7 +276,8 @@ print.infl <- function(x, digits = max(3, getOption("digits") - 4), ...)
     invisible(x)
 }
 
-summary.infl <- function(object, digits = max(2, getOption("digits") - 5), ...)
+summary.infl <-
+    function(object, digits = max(2L, getOption("digits") - 5L), ...)
 {
     ## object must be as the result of	influence.measures(.)
     is.inf <- object$is.inf
@@ -293,8 +294,8 @@ summary.infl <- function(object, digits = max(2, getOption("digits") - 5), ...)
 	dimnames(imat)[[1L]] <- rownam[is.star]
 	chmat <- format(round(imat, digits = digits))
 	cat("\n")
-	print(array(paste0(chmat, c("","_*")[1+is.inf]),
-		    dimnames = dimnames(imat), dim=dim(imat)),
+	print(array(paste0(chmat, c("", "_*")[1L + is.inf]),
+		    dimnames = dimnames(imat), dim = dim(imat)),
 	      quote = FALSE)
 	invisible(imat)
     } else {

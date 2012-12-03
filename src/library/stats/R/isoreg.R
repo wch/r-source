@@ -53,7 +53,7 @@ print.isoreg <- function(x, digits = getOption("digits"), ...)
   if(x$isOrd) cat("  initially ordered 'x'\n")
   else { cat("  (x,y) ordering:"); str(x$ord) }
   cat("  and further components ")
-  str(x[1L:4], digits.d = 3 + max(0,digits - 7))
+  str(x[1L:4], digits.d = 3L + max(0L, digits - 7L))
   invisible(x)
 }
 
@@ -75,7 +75,7 @@ plot.isoreg <-
 	     par.fit = list(col = "red", cex = 1.5, pch = 13, lwd = 1.5),
 	     mar = if(both) .1 + c(3.5,2.5,1,1) else par("mar"),
 	     mgp = if(both) c(1.6, 0.7, 0) else par("mgp"),
-	     grid = length(x$x) < 12,
+	     grid = length(x$x) < 12L,
 	     ...)
 {
     plot.type <- match.arg(plot.type)

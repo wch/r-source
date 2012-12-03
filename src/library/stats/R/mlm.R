@@ -98,20 +98,20 @@ proj.matrix <- function(X, orth=FALSE){
 ## qr() will miss the cases where a row has all near-zeros,
 ## sensibly in some ways, annoying in others...
 
-Rank  <- function(X, tol=1e-7)
-    qr(zapsmall(X, digits=-log10(tol)+5),
+Rank  <- function(X, tol = 1e-7)
+    qr(zapsmall(X, digits = -log10(tol)+5),
        tol=tol, LAPACK=FALSE)$rank
 
-Thin.row <- function(X, tol=1e-7) {
-    X <- zapsmall(X, digits=-log10(tol)+5)
-    QR <- qr(t(X), tol=tol, LAPACK=FALSE)
-    X[QR$pivot[seq_len(QR$rank)],,drop=FALSE]
+Thin.row <- function(X, tol = 1e-7) {
+    X <- zapsmall(X, digits = -log10(tol)+5)
+    QR <- qr(t(X), tol = tol, LAPACK = FALSE)
+    X[QR$pivot[seq_len(QR$rank)], , drop = FALSE]
 }
 
-Thin.col <- function(X, tol=1e-7) {
-    X <- zapsmall(X, digits=-log10(tol)+5)
-    QR <- qr(X, tol=tol, LAPACK=FALSE)
-    X[,QR$pivot[seq_len(QR$rank)],drop=FALSE]
+Thin.col <- function(X, tol = 1e-7) {
+    X <- zapsmall(X, digits = -log10(tol)+5)
+    QR <- qr(X, tol = tol, LAPACK = FALSE)
+    X[,QR$pivot[seq_len(QR$rank)], drop = FALSE]
 }
 
 
@@ -279,7 +279,7 @@ anova.mlm <-
             sph <- sphericity(ssd, T=T, Sigma=Sigma)
             epsnote <- c(paste(format(c("Greenhouse-Geisser epsilon:",
                                         "Huynh-Feldt epsilon:")),
-                               format(c(sph$GG.eps, sph$HF.eps),digits=4)),
+                               format(c(sph$GG.eps, sph$HF.eps), digits = 4L)),
                          "")
 
             Psi <- T %*% Sigma %*% t(T)
@@ -493,7 +493,7 @@ anova.mlmlist <- function (object, ...,
         sph <- sphericity(resssd[[bigmodel]],T=T,Sigma=Sigma)
         epsnote <- c(paste(format(c("Greenhouse-Geisser epsilon:",
                            "Huynh-Feldt epsilon:")),
-                         format(c(sph$GG.eps, sph$HF.eps),digits=4)),
+                         format(c(sph$GG.eps, sph$HF.eps), digits = 4L)),
                      "")
 
         Psi <- T %*% Sigma %*% t(T)
@@ -506,14 +506,14 @@ anova.mlmlist <- function (object, ...,
             Fval <- s2/sph$sigma
             stats[i,1L:3] <- abs(c(Fval, df[i]*pp, df.res*pp))
         }
-        stats[,4] <- pf(stats[,1], stats[,2], stats[,3], lower.tail=FALSE)
+        stats[,4] <- pf(stats[,1], stats[,2], stats[,3], lower.tail = FALSE)
         stats[,5] <- pf(stats[,1],
                         stats[,2]*sph$GG.eps, stats[,3]*sph$GG.eps,
-                        lower.tail=FALSE)
+                        lower.tail = FALSE)
         stats[,6] <- pf(stats[,1],
                         stats[,2]*min(1,sph$HF.eps),
                         stats[,3]*min(1,sph$HF.eps),
-                        lower.tail=FALSE)
+                        lower.tail = FALSE)
         table <- cbind(table, stats)
     }
     else if(!is.null(test)) {

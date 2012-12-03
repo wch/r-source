@@ -119,7 +119,7 @@ print.Date <- function(x, max = NULL, ...)
     invisible(x)
 }
 
-summary.Date <- function(object, digits = 12, ...)
+summary.Date <- function(object, digits = 12L, ...)
 {
     x <- summary.default(unclass(object), digits = digits, ...)
     if(m <- match("NA's", names(x), 0)) {

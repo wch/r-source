@@ -44,7 +44,7 @@ summary.princomp <- function(object, loadings = FALSE, cutoff = 0.1, ...)
 }
 
 print.summary.princomp <-
-    function(x, digits = 3, loadings = x$print.loadings, cutoff = x$cutoff,
+    function(x, digits = 3L, loadings = x$print.loadings, cutoff = x$cutoff,
              ...)
 {
     vars <- x$sdev^2

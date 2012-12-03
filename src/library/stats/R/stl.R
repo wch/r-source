@@ -113,7 +113,7 @@ summary.stl <- function(object, digits = getOption("digits"), ...)
     iqr <- apply(cbind(STL = object$time.series,
                        data = object$time.series %*% rep(1,3)),
 		 2L, IQR)
-    print(rbind(format(iqr, digits = max(2, digits - 3)),
+    print(rbind(format(iqr, digits = max(2L, digits - 3L)),
 		"   %"= format(round(100 * iqr / iqr["data"], 1))),
 	  quote = FALSE)
     cat("\n Weights:")

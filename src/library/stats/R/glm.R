@@ -381,7 +381,7 @@ glm.fit <-
 }
 
 
-print.glm <- function(x, digits = max(3, getOption("digits") - 3), ...)
+print.glm <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     cat("\nCall:  ",
 	paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
@@ -389,7 +389,7 @@ print.glm <- function(x, digits = max(3, getOption("digits") - 3), ...)
         cat("Coefficients")
         if(is.character(co <- x$contrasts))
             cat("  [contrasts: ",
-                apply(cbind(names(co),co), 1L, paste, collapse="="), "]")
+                apply(cbind(names(co),co), 1L, paste, collapse = "="), "]")
         cat(":\n")
         print.default(format(x$coefficients, digits = digits),
                       print.gap = 2, quote = FALSE)
@@ -404,7 +404,7 @@ print.glm <- function(x, digits = max(3, getOption("digits") - 3), ...)
 }
 
 
-anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
+anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
 {
     ## check for multiple objects
     dotargs <- list(...)
@@ -720,7 +720,7 @@ summary.glm <- function(object, dispersion = NULL,
 }
 
 print.summary.glm <-
-    function (x, digits = max(3, getOption("digits") - 3),
+    function (x, digits = max(3L, getOption("digits") - 3L),
 	      symbolic.cor = x$symbolic.cor,
 	      signif.stars = getOption("show.signif.stars"), ...)
 {
@@ -731,8 +731,8 @@ print.summary.glm <-
 	x$deviance.resid <- setNames(quantile(x$deviance.resid, na.rm = TRUE),
 				     c("Min", "1Q", "Median", "3Q", "Max"))
     }
-    xx <- zapsmall(x$deviance.resid, digits + 1)
-    print.default(xx, digits = digits, na.print = "", print.gap = 2)
+    xx <- zapsmall(x$deviance.resid, digits + 1L)
+    print.default(xx, digits = digits, na.print = "", print.gap = 2L)
 
     if(length(x$aliased) == 0L) {
         cat("\nNo Coefficients\n")
@@ -760,12 +760,12 @@ print.summary.glm <-
 	apply(cbind(paste(format(c("Null","Residual"), justify="right"),
                           "deviance:"),
 		    format(unlist(x[c("null.deviance","deviance")]),
-			   digits = max(5, digits+1)), " on",
+			   digits = max(5L, digits + 1L)), " on",
 		    format(unlist(x[c("df.null","df.residual")])),
 		    " degrees of freedom\n"),
 	      1L, paste, collapse = " "), sep = "")
     if(nzchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep = "")
-    cat("AIC: ", format(x$aic, digits = max(4, digits+1)),"\n\n",
+    cat("AIC: ", format(x$aic, digits = max(4L, digits + 1L)),"\n\n",
 	"Number of Fisher Scoring iterations: ", x$iter,
 	"\n", sep = "")
 
@@ -783,7 +783,8 @@ print.summary.glm <-
 	    if(is.logical(symbolic.cor) && symbolic.cor) {# NULL < 1.7.0 objects
 		print(symnum(correl, abbr.colnames = NULL))
 	    } else {
-		correl <- format(round(correl, 2), nsmall = 2, digits = digits)
+		correl <- format(round(correl, 2L), nsmall = 2L,
+                                 digits = digits)
 		correl[!lower.tri(correl)] <- ""
 		print(correl[-1, -p, drop=FALSE], quote = FALSE)
 	    }

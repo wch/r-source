@@ -697,7 +697,7 @@ summary.nls <-
                      cat("\nNumber of iterations",
                          if(isConv) "to convergence:" else "till stop:", finIter,
                          "\nAchieved convergence tolerance:",
-                         format(finTol, digits=digits),"\n")
+                         format(finTol, digits = digits),"\n")
                  if(!isConv)
                      cat("Reason stopped:", stopMessage, "\n")
              }
@@ -706,7 +706,7 @@ summary.nls <-
     invisible()
 }
 
-print.nls <- function(x, digits = max(3, getOption("digits") - 3), ...)
+print.nls <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     cat("Nonlinear regression model\n")
     cat("  model: ", deparse(formula(x)), "\n")
@@ -720,7 +720,7 @@ print.nls <- function(x, digits = max(3, getOption("digits") - 3), ...)
 }
 
 print.summary.nls <-
-  function (x, digits = max(3, getOption("digits") - 3),
+  function (x, digits = max(3L, getOption("digits") - 3L),
             symbolic.cor = x$symbolic.cor,
             signif.stars = getOption("show.signif.stars"), ...)
 {
@@ -742,7 +742,7 @@ print.summary.nls <-
 	    if(is.logical(symbolic.cor) && symbolic.cor) {
 		print(symnum(correl, abbr.colnames = NULL))
             } else {
-                correl <- format(round(correl, 2), nsmall = 2, digits = digits)
+                correl <- format(round(correl, 2), nsmall = 2L, digits = digits)
                 correl[!lower.tri(correl)] <- ""
                 print(correl[-1, -p, drop=FALSE], quote = FALSE)
             }

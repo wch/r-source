@@ -378,14 +378,14 @@ pointwise <- function(results, coverage)
     list(fit = fit, lower = fit - lim, upper = fit + lim)
 }
 
-print.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
+print.loess <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n")
 	dput(cl, control=NULL)
     }
     cat("\nNumber of Observations:", x$n, "\n")
-    cat("Equivalent Number of Parameters:", format(round(x$enp, 2)), "\n")
+    cat("Equivalent Number of Parameters:", format(round(x$enp, 2L)), "\n")
     cat("Residual",
 	if(x$pars$family == "gaussian")"Standard Error:" else "Scale Estimate:",
 	format(signif(x$s, digits)), "\n")
@@ -398,7 +398,8 @@ summary.loess <- function(object, ...)
     object
 }
 
-print.summary.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
+print.summary.loess <-
+    function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n")
@@ -409,7 +410,7 @@ print.summary.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
     if(x$pars$family == "gaussian")
 	cat("Residual Standard Error:", format(signif(x$s, digits)), "\n")
     else cat("Residual Scale Estimate:", format(signif(x$s, digits)), "\n")
-    cat("Trace of smoother matrix:", format(round(x$trace.hat, 2)), "\n")
+    cat("Trace of smoother matrix:", format(round(x$trace.hat, 2L)), "\n")
     cat("\nControl settings:\n")
     cat("  normalize: ", x$pars$normalize, "\n")
     cat("  span	    : ", format(x$pars$span), "\n")

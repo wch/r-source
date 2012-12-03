@@ -235,7 +235,7 @@ factanal.fit.mle <-
     ans
 }
 
-print.loadings <- function(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
+print.loadings <- function(x, digits = 3L, cutoff = 0.1, sort = FALSE, ...)
 {
     Lambda <- unclass(x)
     p <- nrow(Lambda)

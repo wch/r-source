@@ -390,8 +390,9 @@ summary.aov <- function(object, intercept = FALSE, split,
 }
 
 print.summary.aov <-
-    function(x, digits = max(3, getOption("digits") - 3), symbolic.cor = FALSE,
-             signif.stars = getOption("show.signif.stars"),	...)
+    function(x, digits = max(3L, getOption("digits") - 3L),
+             symbolic.cor = FALSE,
+             signif.stars = getOption("show.signif.stars"), ...)
 {
     if (length(x) == 1L)
         print(x[[1L]], digits = digits, symbolic.cor = symbolic.cor,

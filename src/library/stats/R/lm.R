@@ -249,14 +249,14 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 	   df.residual = n - z$rank))
 }
 
-print.lm <- function(x, digits = max(3, getOption("digits") - 3), ...)
+print.lm <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     cat("\nCall:\n",
-	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
+	paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep="")
     if(length(coef(x))) {
         cat("Coefficients:\n")
-        print.default(format(coef(x), digits=digits),
-                      print.gap = 2, quote = FALSE)
+        print.default(format(coef(x), digits = digits),
+                      print.gap = 2L, quote = FALSE)
     } else cat("No coefficients\n")
     cat("\n")
     invisible(x)
@@ -350,7 +350,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
 }
 
 print.summary.lm <-
-    function (x, digits = max(3, getOption("digits") - 3),
+    function (x, digits = max(3L, getOption("digits") - 3L),
               symbolic.cor = x$symbolic.cor,
 	      signif.stars = getOption("show.signif.stars"),	...)
 {
@@ -367,7 +367,7 @@ print.summary.lm <-
 	    structure(apply(t(resid), 1L, quantile),
 		      dimnames = list(nam, dimnames(resid)[[2L]]))
 	else  {
-            zz <- zapsmall(quantile(resid), digits + 1)
+            zz <- zapsmall(quantile(resid), digits + 1L)
             structure(zz, names = nam)
         }
 	print(rq, digits = digits, ...)
@@ -391,20 +391,22 @@ print.summary.lm <-
             coefs[!aliased, ] <- x$coefficients
         }
 
-        printCoefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
+        printCoefmat(coefs, digits = digits, signif.stars = signif.stars,
+                     na.print = "NA", ...)
     }
     ##
     cat("\nResidual standard error:",
 	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
     if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
     if (!is.null(x$fstatistic)) {
-	cat("Multiple R-squared:", formatC(x$r.squared, digits=digits))
-	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,digits=digits),
-	    "\nF-statistic:", formatC(x$fstatistic[1L], digits=digits),
+	cat("Multiple R-squared:", formatC(x$r.squared, digits = digits))
+	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared, digits = digits),
+	    "\nF-statistic:", formatC(x$fstatistic[1L], digits = digits),
 	    "on", x$fstatistic[2L], "and",
 	    x$fstatistic[3L], "DF,  p-value:",
 	    format.pval(pf(x$fstatistic[1L], x$fstatistic[2L],
-                           x$fstatistic[3L], lower.tail = FALSE), digits=digits),
+                           x$fstatistic[3L], lower.tail = FALSE),
+                        digits = digits),
 	    "\n")
     }
     correl <- x$correlation

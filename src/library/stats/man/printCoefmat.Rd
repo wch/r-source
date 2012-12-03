@@ -19,7 +19,7 @@ printCoefmat(x, digits = max(3, getOption("digits") - 2),
              signif.legend = signif.stars,
              dig.tst = max(1, min(5, digits - 1)),
              cs.ind = 1L:k, tst.ind = k + 1L,
-             zap.ind = integer(0), P.values = NULL,
+             zap.ind = integer(), P.values = NULL,
              has.Pvalue = nc >= 4L &&
                           substr(colnames(x)[nc], 1L, 3L) == "Pr(",
              eps.Pvalue = .Machine$double.eps,
