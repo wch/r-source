@@ -38,7 +38,7 @@ format(x, \dots)
     leading blanks for justification are suppressed.}
   \item{digits}{how many significant digits are to be used for
     numeric and complex \code{x}.  The default, \code{NULL}, uses
-    \code{\link{getOption}(digits)}.  This is a suggestion: enough decimal
+    \code{\link{getOption}("digits")}.  This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits, and also to satisfy \code{nsmall}.
     (For the interpretation for complex numbers see \code{\link{signif}}.)}

@@ -18,7 +18,7 @@ format.info(x, digits = NULL, nsmall = 0)
    \code{\link{format}(x, \dots)}.}
   \item{digits}{how many significant digits are to be used for
     numeric and complex \code{x}.  The default, \code{NULL}, uses
-    \code{\link{getOption}(digits)}.}
+    \code{\link{getOption}("digits")}.}
   \item{nsmall}{ (see \code{\link{format}(\dots, nsmall)}).}
 }
 
