@@ -2411,7 +2411,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if(file.exists(man_file)) unlink(man_file)
             args <- c( "Rd2pdf ", Rd2pdf_opts,
                       paste0("--build-dir=", shQuote(build_dir)),
-                      "--no-clean", "-o ", man_file , topdir)
+                      "--no-clean", "-o ", man_file , shQuote(topdir))
             res <- run_Rcmd(args,  "Rdlatex.log")
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
