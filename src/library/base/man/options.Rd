@@ -100,7 +100,7 @@ getOption(x, default = NULL)
       printing of language constructs which are \code{\link{deparse}}d.
       Default \code{60}.
     }
-      
+
     \item{\code{deparse.max.lines}:}{controls the number of lines used
       when deparsing in \code{\link{traceback}}, \code{\link{browser}},
       and upon entry to a function whose debugging flag is set.
@@ -263,13 +263,13 @@ getOption(x, default = NULL)
       source location that is highest on the stack (the most recent
       call) will be printed.  \code{"bottom"} will print the location
       of the earliest call found on the stack.
-      
+
       Integer values can select other entries.  The value \code{0}
       corresponds to \code{"top"} and positive values count down the
       stack from there.  The value \code{-1} corresponds to
-      \code{"bottom"} and negative values count up from there.  
+      \code{"bottom"} and negative values count up from there.
       }
-      
+
     \item{\code{show.error.messages}:}{a logical.  Should error messages
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
@@ -482,6 +482,10 @@ getOption(x, default = NULL)
     \item{\code{ccaddress}:}{default Cc: address used by
       \code{\link{create.post}} (and hence\code{\link{bug.report}} and
       \code{\link{help.request}}).  Can be \code{FALSE} or \code{""}.}
+
+    \item{\code{citation.bibtex.max}:}{default 1; the maximal number of
+      bibentries (\code{\link{bibentry}}) in a \code{\link{citation}} for
+      which the bibtex version is printed in addition to the text one.
 
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
