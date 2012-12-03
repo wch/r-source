@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE, p=2)
+dist <- function(x, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
 {
     ## account for possible spellings of euclid?an
     if(!is.na(pmatch(method, "euclidian")))
@@ -95,7 +95,7 @@ print.dist <-
 {
     if(length(x)) {
 	if(is.null(diag))
-	    diag <-	 if(is.null(a <- attr(x, "Diag"))) FALSE else a
+	    diag <- if(is.null(a <- attr(x, "Diag"))) FALSE else a
 	if(is.null(upper))
 	    upper <- if(is.null(a <- attr(x,"Upper"))) FALSE else a
 
@@ -112,7 +112,7 @@ print.dist <-
 	print(if(diag || upper) cf else cf[-1, -attr(x, "Size"), drop = FALSE],
 	      quote = FALSE, right = right, ...)
     } else {
-	cat(data.class(x),"(0)\n", sep='')
+	cat(data.class(x),"(0)\n", sep = "")
     }
     invisible(x)
 }

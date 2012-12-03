@@ -121,7 +121,7 @@ function(expr, envir, doEval = TRUE)
                           dQuote(class(f)), sQuote(deparse(expr))),
                  domain = NA)
         h <- .tryHelp(f)
-        if(is.null(h)) 
+        if(is.null(h))
             stop(gettextf("no methods for %s and no documentation for it as a function",
                           sQuote(f)),
                  domain = NA)
@@ -168,7 +168,7 @@ function(expr, envir, doEval = TRUE)
         if(methods::is(method, "MethodDefinition")) {
             sigClasses <- method@defined
             if(length(sigClasses) < length(sigNames))
-                sigClasses<-
+                sigClasses <-
                     c(sigClasses,
                       rep.int("ANY", length(sigNames) - length(sigClasses)))
         }

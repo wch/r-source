@@ -72,7 +72,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
                           "xtabs(*, sparse=TRUE)"),
                  domain = NA)
         ## loadNamespace(.) is very quick, once it *is* loaded:
-	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
+	if(is.null(tryCatch(loadNamespace("Matrix"), error = function(e)NULL)))
             stop(gettextf("%s needs package 'Matrix' correctly installed",
                           "xtabs(*, sparse=TRUE)"),
                  domain = NA)

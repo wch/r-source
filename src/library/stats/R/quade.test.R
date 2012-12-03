@@ -31,9 +31,9 @@ function(y, groups, blocks, ...)
             stop("NA's are not allowed in 'groups' or 'blocks'")
         if(any(diff(c(length(y), length(groups), length(blocks))) != 0L))
             stop("'y', 'groups' and 'blocks' must have the same length")
-        DNAME <- paste(DNAME, ", ",
-                       deparse(substitute(groups)), " and ",
-                       deparse(substitute(blocks)), sep = "")
+        DNAME <- paste0(DNAME, ", ",
+                        deparse(substitute(groups)), " and ",
+                        deparse(substitute(blocks)))
         if(any(table(groups, blocks) != 1))
             stop("not an unreplicated complete block design")
         groups <- factor(groups)

@@ -313,8 +313,8 @@ coplot <-
               xpd=NA, font = par("font.lab"), cex = par("cex.lab"))
     }
     else { ## i. e. !show.given
-	mtext(xlab[2L], 3, line = 3.25, outer= TRUE, at= 0.5*f.col, xpd=NA,
-              font = par("font.lab"), cex = par("cex.lab"))
+	mtext(xlab[2L], 3, line = 3.25, outer = TRUE, at = 0.5*f.col,
+              xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
     }
     if(have.b) {
 	if(length(ylab) == 1L)

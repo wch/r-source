@@ -197,8 +197,7 @@ kernapply.tskernel <- function (x, k, ...)
     n <- k$m
     xx <- c(rep(0,n), x[-x$m:x$m], rep(0,n))
     coef <- kernapply(xx, k, circular = TRUE)
-    m <- length(coef)%/%2L
-    kernel(coef[(m+1L):length(coef)],m,
-           paste("Composite(", attr(x, "name"), ",",
-                 attr(k, "name"), ")", sep=""))
+    m <- length(coef) %/% 2L
+    kernel(coef[(m+1L):length(coef)], m,
+           paste0("Composite(", attr(x, "name"), ",", attr(k, "name"), ")"))
 }

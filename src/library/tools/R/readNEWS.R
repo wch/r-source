@@ -84,10 +84,10 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	## Purpose: parse one section (e.g., "BUG FIXES") of NEWS
 	## Arguments: ll: lines of text (character vector)
 	nl <- length(ll)
-	if(trace) cat("	    section '", kind,"' : ", nl, " lines", sep="")
+	if(trace) cat("	    section '", kind,"' : ", nl, " lines", sep = "")
 
 	## if(trace) cat(head(ll, min(3, nl)), if(nl > 5) ".............", "", sep="\n")
-	## if (nl > 3) if(trace) cat(tail(ll, min(2, nl-3)), "", sep="\n")
+	## if (nl > 3) if(trace) cat(tail(ll, min(2, nl-3)), "", sep = "\n")
 
 	iS <- grep(E.prefix, ll)
 	if(trace) cat("	 with ", length(iS), "entries\n")
@@ -167,9 +167,9 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     if(trace) {
         if(is.character(tfile))
             cat("successfully read ", nl, " lines from ",
-                sQuote(tfile), "\n", sep="")
+                sQuote(tfile), "\n", sep = "")
         else
-            cat("successfully read ", nl, " lines\n", sep="")
+            cat("successfully read ", nl, " lines\n", sep = "")
     }
 
     s.pre <- "^\t*\\*[\t ]+ " ##  REGEXP prefix used to identify series begin

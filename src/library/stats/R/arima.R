@@ -375,7 +375,7 @@ print.Arima <-
         cat("\nsigma^2 estimated as ",
             format(x$sigma2, digits = digits),
             ":  part log likelihood = ", format(round(x$loglik,2)),
-            "\n", sep="")
+            "\n", sep = "")
     invisible(x)
 }
 
@@ -438,13 +438,13 @@ makeARIMA <- function(phi, theta, Delta, kappa = 1e6)
     if(p > 0) T[1L:p, 1L] <- phi
     if(r > 1L) {
         ind <- 2:r
-        T[cbind(ind-1L, ind)]<- 1
+        T[cbind(ind-1L, ind)] <- 1
     }
     if(d > 0L) {
         T[r+1L, ] <- Z
         if(d > 1L) {
             ind <- r + 2:d
-            T[cbind(ind, ind-1)]<- 1
+            T[cbind(ind, ind-1)] <- 1
         }
     }
     if(q < r - 1L) theta <- c(theta, rep(0, r-1L-q))

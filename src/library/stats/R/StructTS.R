@@ -177,7 +177,7 @@ predict.StructTS <- function(object, n.ahead = 1L, se.fit = TRUE, ...)
 tsdiag.StructTS <- function(object, gof.lag = 10, ...)
 {
     ## plot standardized residuals, acf of residuals, Ljung-Box p-values
-    oldpar<- par(mfrow = c(3, 1))
+    oldpar <- par(mfrow = c(3, 1))
     on.exit(par(oldpar))
     rs <- object$residuals
     stdres <- rs

@@ -73,8 +73,7 @@ package.dependencies <-
                     x1 <- format(x1, justify="right")
                     x2 <- paste(x1[4:6], collapse=".")
                     x1 <- paste(x1[1L:3], collapse=".")
-                    comptext <- paste("'", x1, "' ", op,
-                                      " '", x2, "'", sep = "")
+                    comptext <- paste0("'", x1, "' ", op, " '", x2, "'")
                     compres <- try(eval(parse(text = comptext)))
                     if(!inherits(compres, "try-error")) {
                         z[k] <- compres

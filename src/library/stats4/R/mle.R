@@ -96,7 +96,7 @@ setMethod("summary", "mle", function(object, ...){
     cmat <- cbind(Estimate = object@coef,
                   `Std. Error` = sqrt(diag(object@vcov)))
     m2logL <- 2*object@min
-    new("summary.mle", call=object@call, coef=cmat, m2logL= m2logL)
+    new("summary.mle", call = object@call, coef = cmat, m2logL = m2logL)
 })
 
 setGeneric("profile")

@@ -1074,7 +1074,7 @@ completeSubclasses <-
     }
     subclasses <- .walkClassGraph(classDef, "subclasses", where)
     if(!missing(class2) && length(classDef@contains)) {
-        strictBy <-TRUE
+        strictBy <- TRUE
         contains <-
             .transitiveExtends(class2, classDef@className, extensionDef, classDef@contains, strictBy)
         ## insert the new is relationship, but without any recursive completion

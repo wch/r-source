@@ -79,7 +79,7 @@ format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 	fixp <- expo >= -3 | (expo == -4 & digits>1)
 	if(any( fixp)) rr[ fixp] <- format(pv[ fixp], digits=digits, ...)
 	if(any(!fixp)) rr[!fixp] <- format(pv[!fixp], digits=digits, ...)
-	r[!is0]<- rr
+	r[!is0] <- rr
     }
     if(any(is0)) {
 	digits <- max(1,digits-2)

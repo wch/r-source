@@ -732,7 +732,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
     res <- switch(type,
 		"source" = paste(gsub("/$", "", repos), "src", "contrib", sep = "/"),
                 "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", mac.subtype, "contrib", ver, sep = "/"),
-                "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/")
+                "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep = "/")
                )
     res
 }
@@ -745,11 +745,12 @@ getCRANmirrors <- function(all=FALSE, local.only=FALSE)
         ## try to handle explicitly failure to connect to CRAN.
         con <- url("http://cran.r-project.org/CRAN_mirrors.csv")
         m <- try(open(con, "r"), silent = TRUE)
-        if(!inherits(m, "try-error")) m <- try(read.csv(con, as.is=TRUE))
+        if(!inherits(m, "try-error")) m <- try(read.csv(con, as.is = TRUE))
         close(con)
     }
     if(is.null(m) || inherits(m, "try-error"))
-        m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
+        m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"),
+                      as.is = TRUE)
     if(!all) m <- m[as.logical(m$OK), ]
     m
 }

@@ -42,10 +42,10 @@ makeJSS <- function()
 	    sub("([^.?!])$", "\\1.", string)
 
 	# Separate args by sep, add a period at the end.
-	sentence <- function(..., sep=", ") {
+	sentence <- function(..., sep = ", ") {
 	    strings <- c(...)
 	    if (length(strings)) {
-		addPeriod(paste(strings, collapse=sep))
+		addPeriod(paste(strings, collapse = sep))
 	    }
 	}
 
@@ -95,8 +95,9 @@ makeJSS <- function()
 	fmtTechreportnumber <- labelclean(prefix="Technical Report ")
 	fmtUrl <- label(prefix="\\url{", suffix="}")
 	fmtTitle <- function(title)
-	    if (length(title)) paste("\\dQuote{",
-				     addPeriod(collapse(cleanupLatex(title))), "}", sep="")
+	    if (length(title))
+                paste0("\\dQuote{",
+                      addPeriod(collapse(cleanupLatex(title))), "}")
 
 	fmtYear <- function(year) {
 	    if (!length(year)) year <- "????"
@@ -172,7 +173,7 @@ makeJSS <- function()
 	    if (length(book$publisher)) {
 		result <- collapse(book$publisher)
 		if (length(book$address))
-		    result <- paste(result, collapse(book$address), sep=", ")
+		    result <- paste(result, collapse(book$address), sep = ", ")
 		result
 	    }
 	}
@@ -181,14 +182,14 @@ makeJSS <- function()
 	    if (length(paper$organization)) {
 		result <- collapse(cleanupLatex(paper$organization))
 		if (length(paper$address))
-		    result <- paste(result, collapse(cleanupLatex(paper$address)), sep=", ")
+		    result <- paste(result, collapse(cleanupLatex(paper$address)), sep =", ")
 		result
 	    }
 	}
 
 	formatArticle <- function(paper) {
 	    collapse(c(fmtPrefix(paper),
-	             sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	             sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		     fmtTitle(paper$title),
 		     sentence(fmtBook(paper$journal), volNum(paper), fmtPages(paper$pages)),
 		     sentence(fmtISSN(paper$issn), extraInfo(paper))))
@@ -200,7 +201,7 @@ makeJSS <- function()
 		authors <- editorList(book)
 
 	    collapse(c(fmtPrefix(book),
-	               sentence(authors, fmtYear(book$year), sep=" "),
+	               sentence(authors, fmtYear(book$year), sep = " "),
 		       sentence(fmtBtitle(book$title), bookVolume(book), fmtEdition(book$edition)),
 		       sentence(bookPublisher(book)),
 		       sentence(fmtISBN(book$isbn), extraInfo(book))))
@@ -214,7 +215,7 @@ makeJSS <- function()
 		editors <- NULL
 	    }
 	    collapse(c(fmtPrefix(paper),
-	               sentence(authors, fmtYear(paper$year), sep=" "),
+	               sentence(authors, fmtYear(paper$year), sep =" "),
 		       fmtTitle(paper$title),
 		       paste("In", sentence(editors, fmtBtitle(paper$booktitle), bookVolume(paper),
 					    fmtChapter(paper$chapter),
@@ -225,7 +226,7 @@ makeJSS <- function()
 
 	formatIncollection <- function(paper) {
 	    collapse(c(fmtPrefix(paper),
-	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	               sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		       fmtTitle(paper$title),
 		       paste("In", sentence(editorList(paper), fmtBtitle(paper$booktitle), bookVolume(paper),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
@@ -235,7 +236,7 @@ makeJSS <- function()
 
 	formatInProceedings <- function(paper)
 	    collapse(c(fmtPrefix(paper),
-	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	               sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		       fmtTitle(paper$title),
 		       paste("In", sentence(editorList(paper), fmtBtitle(paper$booktitle), bookVolume(paper),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
@@ -244,7 +245,7 @@ makeJSS <- function()
 
 	formatManual <- function(paper) {
 	    collapse(c(fmtPrefix(paper),
-	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	               sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		       sentence(fmtBtitle(paper$title), bookVolume(paper), fmtEdition(paper$edition)),
 		       sentence(procOrganization(paper)),
 		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
@@ -252,7 +253,7 @@ makeJSS <- function()
 
 	formatMastersthesis <- function(paper) {
 	    collapse(c(fmtPrefix(paper),
-	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	               sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		       sentence(fmtBtitle(paper$title)),
 		       sentence("Master's thesis", fmtSchool(paper$school), fmtAddress(paper$address)),
 		       sentence(extraInfo(paper))))
@@ -260,7 +261,7 @@ makeJSS <- function()
 
 	formatPhdthesis <- function(paper) {
 	    collapse(c(fmtPrefix(paper),
-	    	       sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    	       sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		       sentence(fmtBtitle(paper$title)),
 		       sentence("PhD thesis", fmtSchool(paper$school), fmtAddress(paper$address)),
 		       sentence(extraInfo(paper))))
@@ -268,7 +269,7 @@ makeJSS <- function()
 
 	formatMisc <- function(paper) {
 	    collapse(c(fmtPrefix(paper),
-	               sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	               sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		       fmtTitle(paper$title),
 		       sentence(fmtHowpublished(paper$howpublished)),
 		       sentence(extraInfo(paper))))
@@ -278,7 +279,7 @@ makeJSS <- function()
 	    if (is.null(book$editor)) editor <- "Anonymous (ed.)"
 	    else editor <- editorList(book)
 	    collapse(c(fmtPrefix(book), # not paper
-	    	       sentence(editor, fmtYear(book$year), sep=" "),
+	    	       sentence(editor, fmtYear(book$year), sep = " "),
 		       sentence(fmtBtitle(book$title), bookVolume(book)),
 		       sentence(procOrganization(book)),
 		       sentence(fmtISBN(book$isbn), fmtISSN(book$issn),
@@ -287,7 +288,7 @@ makeJSS <- function()
 
 	formatTechreport <- function(paper) {
 	    collapse(c(fmtPrefix(paper),
-	    	       sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    	       sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		       fmtTitle(paper$title),
 		       sentence(fmtTechreportnumber(paper$number),
 				fmtInstitution(paper$institution),
@@ -297,7 +298,7 @@ makeJSS <- function()
 
 	formatUnpublished <- function(paper) {
 	    collapse(c(fmtPrefix(paper),
-	    	       sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+	    	       sentence(authorList(paper), fmtYear(paper$year), sep = " "),
 		       fmtTitle(paper$title),
 		       sentence(extraInfo(paper))))
 	}

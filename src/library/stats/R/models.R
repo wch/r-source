@@ -37,7 +37,7 @@ formula.default <- function (x, env = parent.frame(), ...)
 }
 formula.formula <- function(x, ...) x
 formula.terms <- function(x, ...) {
-    env<- environment(x)
+    env <- environment(x)
     attributes(x) <- list(class="formula")
     if (!is.null(env))
     	environment(x) <- env
@@ -83,7 +83,7 @@ print.formula <- function(x, showEnv = !identical(e, .GlobalEnv), ...)
     ## as.character gives a vector.
     if(as.character(ans[[1L]])[1L] == "~") {
 	class(ans) <- "formula"
-        environment(ans)<-environment(x)
+        environment(ans) <- environment(x)
     }
     ans
 }
@@ -93,9 +93,9 @@ as.formula <- function(object, env = parent.frame())
     if(inherits(object, "formula"))
         object
     else {
-        rval<-formula(object,env=baseenv())
+        rval <- formula(object, env = baseenv())
         if (identical(environment(rval), baseenv()) || !missing(env))
-            environment(rval)<-env
+            environment(rval) <- env
         rval
     }
 }
@@ -178,13 +178,13 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 }
 
 
-`[.terms` <-function (termobj, i)
+`[.terms` <- function (termobj, i)
 {
     resp <- if (attr(termobj, "response")) termobj[[2L]] else NULL
     newformula <- attr(termobj, "term.labels")[i]
     if (length(newformula) == 0L) newformula <- "1"
     newformula <- reformulate(newformula, resp, attr(termobj, "intercept"))
-    environment(newformula)<-environment(termobj)
+    environment(newformula) <- environment(termobj)
     terms(newformula, specials = names(attr(termobj, "specials")))
 }
 

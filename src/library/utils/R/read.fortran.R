@@ -17,57 +17,58 @@
 #  http://www.r-project.org/Licenses/
 
 
-read.fortran<-function(file, format, ...,as.is=TRUE, colClasses=NA){
+read.fortran <- function(file, format, ..., as.is = TRUE, colClasses = NA)
+{
 
-     processFormat<-function(format){
-       format<-toupper(format)
-       template<-"^([0-9]*)([FXAI])([0-9]*)\\.?([0-9]*)"
-       reps<-as.numeric(sub(template,"\\1",format))
-       types<-sub(template, "\\2", format)
-       lengths<-as.numeric(sub(template, "\\3", format))
-       decimals<-as.numeric(sub(template, "\\4", format))
+    processFormat <- function(format){
+        format <- toupper(format)
+        template <- "^([0-9]*)([FXAI])([0-9]*)\\.?([0-9]*)"
+        reps <- as.numeric(sub(template,"\\1",format))
+        types <- sub(template, "\\2", format)
+        lengths <- as.numeric(sub(template, "\\3", format))
+        decimals <- as.numeric(sub(template, "\\4", format))
 
-       reps[is.na(reps)]<-1L
-       lengths[is.na(lengths) & types=="X"]<-1L
+        reps[is.na(reps)] <- 1L
+        lengths[is.na(lengths) & types=="X"] <- 1L
 
-       charskip<-types=="X"
-       lengths[charskip]<-reps[charskip]*lengths[charskip]
-       reps[charskip]<-1
+        charskip <- types=="X"
+        lengths[charskip] <- reps[charskip]*lengths[charskip]
+        reps[charskip] <- 1
 
-       if (any(is.na(lengths)))
-         stop("missing lengths for some fields")
+        if (any(is.na(lengths)))
+            stop("missing lengths for some fields")
 
-       lengths<-rep(lengths,reps)
-       types<-rep(types,reps)
-       decimals<-rep(decimals,reps)
-       types<- match(types, c("F","D","X","A","I"))
+        lengths <- rep(lengths,reps)
+        types <- rep(types,reps)
+        decimals <- rep(decimals,reps)
+        types <-  match(types, c("F","D","X","A","I"))
 
-       if (any(!is.na(decimals) & types>2L))
-         stop("invalid format")
-       colClasses <- c("numeric", "numeric", NA,
-                       if(as.is) "character" else NA, "integer")[types]
-       colClasses <- colClasses[!(types==3L)]
-       decimals <-   decimals  [!(types==3L)]
-       lengths[types==3]<- -lengths[types==3L]
+        if (any(!is.na(decimals) & types>2L))
+            stop("invalid format")
+        colClasses  <-  c("numeric", "numeric", NA,
+                          if(as.is) "character" else NA, "integer")[types]
+        colClasses  <-  colClasses[!(types==3L)]
+        decimals  <-    decimals  [!(types==3L)]
+        lengths[types==3] <-  -lengths[types==3L]
 
-       list(lengths,colClasses,decimals)
-     }
+        list(lengths,colClasses,decimals)
+    }
 
-     if(is.list(format)){
-       ff<-lapply(format,processFormat)
-       widths<-lapply(ff,"[[",1L)
-       if (is.na(colClasses))
-         colClasses<-do.call("c",lapply(ff,"[[",2L))
-       decimals<-do.call("c",lapply(ff,"[[",3L))
-     } else {
-       ff<-processFormat(format)
-       widths<-ff[[1L]]
-       if (is.na(colClasses))
-         colClasses<-ff[[2L]]
-       decimals<-ff[[3L]]
-     }
-     rval<-read.fwf(file,widths=widths, ..., colClasses=colClasses)
-     for(i in which(!is.na(decimals)))
-       rval[,i]<-rval[,i]*(10^-decimals[i])
-     rval
+    if(is.list(format)){
+        ff <- lapply(format,processFormat)
+        widths <- lapply(ff,"[[",1L)
+        if (is.na(colClasses))
+            colClasses <- do.call("c",lapply(ff,"[[",2L))
+        decimals <- do.call("c",lapply(ff,"[[",3L))
+    } else {
+        ff <- processFormat(format)
+        widths <- ff[[1L]]
+        if (is.na(colClasses))
+            colClasses <- ff[[2L]]
+        decimals <- ff[[3L]]
+    }
+    rval <- read.fwf(file,widths=widths, ..., colClasses=colClasses)
+    for(i in which(!is.na(decimals)))
+        rval[,i] <- rval[,i]*(10^-decimals[i])
+    rval
 }

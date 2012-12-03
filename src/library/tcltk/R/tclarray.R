@@ -28,7 +28,7 @@ tclArray <- function() {
     name <- as.character(x)
     i <- paste(...,sep=",")
     rval <- .External(.C_RTcl_GetArrayElem, name, i)
-    if (!is.null(rval)) class(rval)<-"tclObj"
+    if (!is.null(rval)) class(rval) <- "tclObj"
     rval
 }
 
@@ -48,7 +48,7 @@ tclArray <- function() {
     name <- as.character(x)
     i <- as.character(i)
     rval <- .External(.C_RTcl_GetArrayElem, name, i)
-    if (!is.null(rval)) class(rval)<-"tclObj"
+    if (!is.null(rval)) class(rval) <- "tclObj"
     rval
 }
 

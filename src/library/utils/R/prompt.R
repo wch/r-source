@@ -87,7 +87,7 @@ function(object, filename = NULL, name = NULL,
                               ## need to backtick symbols
                               paste(deparse(argls[[i]],
                                             backtick = TRUE,
-                                            width.cutoff= 500L),
+                                            width.cutoff = 500L),
                                     collapse="\n")))
         if(i != n) Call <- paste0(Call, ", ")
     }

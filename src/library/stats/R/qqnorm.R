@@ -19,9 +19,9 @@
 qqnorm <- function(y, ...) UseMethod("qqnorm")
 
 qqnorm.default <-
-    function(y, ylim, main="Normal Q-Q Plot",
-	     xlab="Theoretical Quantiles", ylab="Sample Quantiles",
-	     plot.it=TRUE, datax = FALSE, ...)
+    function(y, ylim, main = "Normal Q-Q Plot",
+	     xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
+	     plot.it = TRUE, datax = FALSE, ...)
 {
     if(has.na <- any(ina <- is.na(y))) { ## keep NA's in proper places
         yN <- y
@@ -38,9 +38,9 @@ qqnorm.default <-
     }
     if(plot.it)
         if (datax)
-            plot(y, x, main= main, xlab= ylab, ylab=xlab, xlim = ylim, ...)
+            plot(y, x, main = main, xlab = ylab, ylab = xlab, xlim = ylim, ...)
         else
-            plot(x, y, main= main, xlab= xlab, ylab= ylab, ylim= ylim, ...)
+            plot(x, y, main = main, xlab = xlab, ylab = ylab, ylim = ylim, ...)
     invisible(if(datax) list(x = y, y = x) else list(x = x, y = y))
 }
 

@@ -110,8 +110,8 @@ gridList.grob <- function(x, grobs=TRUE, viewports=FALSE,
     }
     if (viewports) {
         # Call makeContext() to get x$vp at drawing time
-        x <- makeContext(x)                
-    }    
+        x <- makeContext(x)
+    }
     if (viewports && !is.null(x$vp)) {
         # Bit dodgy this bit
         # Emulates an "upViewport" on the DL
@@ -162,7 +162,7 @@ gridList.gTree <- function(x, grobs=TRUE, viewports=FALSE,
     class(name) <- c("grobListing", "gridVectorListing", "gridListing")
     if (viewports) {
         # Call makeContext() to get x$vp and x$childrenvp at drawing time
-        x <- makeContext(x)                
+        x <- makeContext(x)
     }
     if (recursive) {
         # Allow for grobs=FALSE but viewports=TRUE
@@ -495,8 +495,7 @@ updateVPDepth.vpTreeListing <- function(x, vpdepth) {
 
 incPath <- function(oldpath, addition) {
     if (nchar(oldpath) > 0) {
-        paste(oldpath, .grid.pathSep,
-              as.character(addition), sep="")
+        paste0(oldpath, .grid.pathSep, as.character(addition))
     } else {
         as.character(addition)
     }
@@ -552,8 +551,8 @@ updateVPPath.vpPopListing <- function(x, vppath) {
 
 updateVPPath.vpTreeListing <- function(x, vppath) {
     incPath(vppath,
-            paste(updateVPPath(x$parent, ""), .grid.pathSep,
-                  updateVPPath(x$children, ""), sep=""))
+            paste0(updateVPPath(x$parent, ""), .grid.pathSep,
+                   updateVPPath(x$children, "")))
 }
 
 flatListing <- function(x, gDepth=0, vpDepth=0, gPath="", vpPath="") {
@@ -694,10 +693,10 @@ nestedListing <- function(x, gindent="  ", vpindent=gindent) {
 
     if (!inherits(x, "flatGridListing"))
         stop("invalid listing")
-    cat(paste(makePrefix(gindent, x$gDepth),
-              makePrefix(vpindent, x$vpDepth),
-              x$name, sep=""),
-        sep="\n")
+    cat(paste0(makePrefix(gindent, x$gDepth),
+               makePrefix(vpindent, x$vpDepth),
+               x$name),
+        sep = "\n")
 }
 
 pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
@@ -706,7 +705,7 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
         emptyPath <- nchar(path) == 0
         ifelse(emptyPath,
                name,
-               paste(path, name, sep=.grid.pathSep))
+               paste(path, name, sep = .grid.pathSep))
     }
 
     padPrefix <- function(path, maxLen) {
@@ -744,7 +743,7 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
 				     appendToPrefix(x$gPath[!vpListings],
 						    x$name[!vpListings]))
     }
-    cat(paths, sep="\n")
+    cat(paths, sep = "\n")
 }
 
 grobPathListing <- function(x, ...) {

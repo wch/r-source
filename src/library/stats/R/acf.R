@@ -19,7 +19,7 @@
 acf <-
     function (x, lag.max = NULL,
               type = c("correlation", "covariance", "partial"),
-              plot = TRUE, na.action = na.fail, demean= TRUE, ...)
+              plot = TRUE, na.action = na.fail, demean = TRUE, ...)
 {
     type <- match.arg(type)
     if(type == "partial") {
@@ -246,7 +246,7 @@ print.acf <- function(x, digits=3, ...)
     type <- match(x$type, c("correlation", "covariance", "partial"))
     msg <- c("Autocorrelations", "Autocovariances", "Partial autocorrelations")
     cat("\n", msg[type]," of series ", sQuote(x$series), ", by lag\n\n",
-        sep="")
+        sep = "")
     nser <- ncol(x$lag)
     if(type != 2) x$acf <- round(x$acf, digits)
     if(nser == 1) {

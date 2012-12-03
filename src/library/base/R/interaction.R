@@ -37,7 +37,7 @@ interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
             if(lex.order) {
                 ll <- length(lvs)
                 ans <- ans + ll * if1
-                lvs <- paste(rep(l, each= ll), rep(lvs, length(l)), sep=sep)
+                lvs <- paste(rep(l, each = ll), rep(lvs, length(l)), sep=sep)
             } else {
                 ans <- ans * length(l) + if1
                 lvs <- paste(rep(l, length(lvs)),

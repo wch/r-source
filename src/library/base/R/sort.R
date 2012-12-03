@@ -161,7 +161,7 @@ xtfrm.Surv <- function(x)
     if(ncol(x) == 2L) order(x[,1L], x[,2L]) else order(x[,1L], x[,2L], x[,3L]) # needed by 'party'
 xtfrm.AsIs <- function(x)
 {
-    if(length(cl<- class(x)) > 1) oldClass(x) <- cl[-1L]
+    if(length(cl <- class(x)) > 1) oldClass(x) <- cl[-1L]
     NextMethod("xtfrm")
 }
 

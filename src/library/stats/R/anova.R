@@ -116,11 +116,10 @@ printCoefmat <-
         }
     }
     if(length(tst.ind))
-	Cf[, tst.ind]<- format(round(xm[, tst.ind], digits = dig.tst),
-                               digits = digits)
-    if(any(r.ind <- !((1L:nc) %in%
-                      c(cs.ind, tst.ind, if(has.Pvalue) nc))))
-	for(i in which(r.ind)) Cf[, i] <- format(xm[, i], digits=digits)
+	Cf[, tst.ind] <- format(round(xm[, tst.ind], digits = dig.tst),
+                                digits = digits)
+    if(any(r.ind <- !((1L:nc) %in% c(cs.ind, tst.ind, if(has.Pvalue) nc))))
+	for(i in which(r.ind)) Cf[, i] <- format(xm[, i], digits = digits)
     ok[, tst.ind] <- FALSE
     okP <- if(has.Pvalue) ok[, -nc] else ok
     ## we need to find out where Cf is zero.  We can't use as.numeric

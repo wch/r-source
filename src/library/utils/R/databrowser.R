@@ -196,8 +196,8 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 
     bold <- function(ch) paste0("<b>",ch,"</b>")
     ital <- function(ch) paste0("<i>",ch,"</i>")
-    entry<- function(ch) paste0("<td>",ch,"</td>")
-    Par	 <- function(ch) paste0("<P>",ch,"</P>")
+    entry <- function(ch) paste0("<td>",ch,"</td>")
+    Par	<- function(ch) paste0("<P>",ch,"</P>")
     Trow <- function(N, ...) {
 	if(length(list(...)) != N) stop("wrong number of table row entries")
 	paste("<tr>", ..., "</tr>\n")

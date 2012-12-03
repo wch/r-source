@@ -216,7 +216,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
         makeNamespace <- function(name, version = NULL, lib = NULL) {
             impenv <- new.env(parent = .BaseNamespaceEnv, hash = TRUE)
-            attr(impenv, "name") <- paste("imports", name, sep=":")
+            attr(impenv, "name") <- paste("imports", name, sep = ":")
             env <- new.env(parent = impenv, hash = TRUE)
             name <- as.character(as.name(name))
             version <- as.character(version)
@@ -225,7 +225,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             assign("spec", c(name = name,version = version), envir = info)
             setNamespaceInfo(env, "exports", new.env(hash = TRUE, parent = baseenv()))
             dimpenv <- new.env(parent = baseenv(), hash = TRUE)
-            attr(dimpenv, "name") <- paste("lazydata", name, sep=":")
+            attr(dimpenv, "name") <- paste("lazydata", name, sep = ":")
             setNamespaceInfo(env, "lazydata", dimpenv)
             setNamespaceInfo(env, "imports", list("base" = TRUE))
             ## this should be an absolute path
@@ -501,8 +501,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   paste(expClasses[missingClasses],
                                         collapse = ", ")),
                          domain = NA)
-                expClasses <- paste(methods:::classMetaName(""), expClasses,
-                                    sep = "")
+                expClasses <- paste0(methods:::classMetaName(""), expClasses)
             }
             ## process methods metadata explicitly exported or
             ## implied by exporting the generic function.

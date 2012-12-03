@@ -56,7 +56,7 @@ warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
         cond <- args[[1L]]
         if(nargs() > 1L)
             cat(gettext("additional arguments ignored in warning()"),
-                "\n", sep="", file = stderr())
+                "\n", sep = "", file = stderr())
         message <- conditionMessage(cond)
         call <- conditionCall(cond)
         withRestarts({

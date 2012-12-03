@@ -17,7 +17,8 @@
 #  http://www.r-project.org/Licenses/
 
 reshape <-
-    function(data, varying= NULL, v.names= NULL, timevar = "time", idvar = "id",
+    function(data, varying = NULL, v.names = NULL, timevar = "time",
+             idvar = "id",
              ids = 1L:NROW(data), times = seq_along(varying[[1L]]),
              drop = NULL, direction, new.row.names = NULL,
              sep = ".",
@@ -102,7 +103,7 @@ reshape <-
             rval <- d
 
             if (length(times) == 1L) {
-                if (drop.idvar) rval[, idvar]<-NULL
+                if (drop.idvar) rval[, idvar] <- NULL
                 return(rval)
             }
             if (is.null(new.row.names))
@@ -123,7 +124,7 @@ reshape <-
             }
 
             ## if we created a temporary id variable, drop it
-            if (drop.idvar) rval[, idvar]<-NULL
+            if (drop.idvar) rval[, idvar] <- NULL
 
             attr(rval,"reshapeLong") <- undoInfo
             return(rval)
@@ -154,7 +155,7 @@ reshape <-
         times <- unique(data[, timevar])
         if (any(is.na(times)))
             warning("there are records with missing times, which will be dropped.")
-        undoInfo$times<-times
+        undoInfo$times <- times
 
         if (is.null(v.names))
             v.names <- names(data)[!(names(data) %in% c(timevar, idvar, orig.idvar))]

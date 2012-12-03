@@ -143,7 +143,8 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
         drop <- n > maxl
         cat(if(drop)paste(format(n),""), T0,
             paste(if(drop)c(lev[1L:max(1,maxl-1)],"...",if(maxl > 1) lev[n])
-                      else lev, collapse= colsep), "\n", sep="")
+                      else lev, collapse = colsep),
+            "\n", sep = "")
     }
     invisible(x)
 }
@@ -194,7 +195,7 @@ Ops.factor <- function(e1, e2)
 `[.factor` <- function(x, ..., drop = FALSE)
 {
     y <- NextMethod("[")
-    attr(y,"contrasts")<-attr(x,"contrasts")
+    attr(y,"contrasts") <- attr(x,"contrasts")
     attr(y,"levels") <- attr(x,"levels")
     class(y) <- oldClass(x)
     lev <- levels(x)

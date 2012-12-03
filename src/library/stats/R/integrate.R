@@ -16,10 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-integrate<- function(f, lower, upper, ..., subdivisions = 100L,
-		     rel.tol = .Machine$double.eps^.25,
-		     abs.tol = rel.tol, stop.on.error = TRUE,
-		     keep.xy = FALSE, aux = NULL)
+integrate <- function(f, lower, upper, ..., subdivisions = 100L,
+                      rel.tol = .Machine$double.eps^.25,
+                      abs.tol = rel.tol, stop.on.error = TRUE,
+                      keep.xy = FALSE, aux = NULL)
 {
     f <- match.fun(f)
     ff <- function(x) f(x, ...)

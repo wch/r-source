@@ -57,7 +57,7 @@ plot.design <-
 	    }
 	}
         if(axes && xaxt != "n")
-            axis(1, at = 1L:k, names(stats), xaxt= xaxt, tick = xtick,
+            axis(1, at = 1L:k, names(stats), xaxt = xaxt, tick = xtick,
                  mgp = {p <- par("mgp"); c(p[1L], if(xtick) p[2L] else 0, 0)},
                  ...)
     } ## .plot.des()

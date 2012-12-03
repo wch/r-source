@@ -17,7 +17,7 @@
 #  http://www.r-project.org/Licenses/
 
 rank <- function(x, na.last = TRUE,
-		 ties.method=c("average", "first", "random", "max", "min"))
+		 ties.method = c("average", "first", "random", "max", "min"))
 {
     nas <- is.na(x)
     nm <- names(x)
@@ -27,7 +27,7 @@ rank <- function(x, na.last = TRUE,
     xx <- x[!nas]
     ## we pass length(xx) to allow
     y <- switch(ties.method,
-		"average"= , "min"= , "max" =
+		"average" = , "min" = , "max" =
 		.Internal(rank(xx, length(xx), ties.method)),
 		"first" = sort.list(sort.list(xx)),
 		"random" = sort.list(order(xx, stats::runif(sum(!nas)))))

@@ -154,7 +154,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                         if (continuity) den <- den + 1
 			r <- 1 - q/den
 			pt(r / sqrt((1 - r^2)/(n-2)), df = n-2,
-			   lower.tail= !lower.tail)
+			   lower.tail = !lower.tail)
 		    }
                 }
                 q <- (n^3 - n) * (1 - r) / 6

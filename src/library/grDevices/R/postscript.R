@@ -65,9 +65,8 @@ check.options <-
                     if(!any(ii)) next
 		    doubt <- doubt | ii
 		    do.keep <- ii & !override.check
-		    warning(paste(sQuote(paste(fn,"(",names(prev[ii]),")",
-                                               sep="")),
-                                  collapse=" and "), " ",
+		    warning(paste(sQuote(paste0(fn, "(", names(prev[ii]), ")" )),
+                                  collapse = " and "), " ",
                             ngettext(as.integer(sum(ii)),
                                      "differs between new and previous",
                                      "differ between new and previous"),
@@ -507,16 +506,16 @@ setFonts <- function(fonts, fontNames, fontDBname) {
 printFont <- function(font) UseMethod("printFont")
 
 printFont.Type1Font <- function(font)
-    paste(font$family, "\n    (", paste(font$metrics, collapse=" "),
-          "\n    ", font$encoding, "\n", sep="")
+    paste0(font$family, "\n    (", paste(font$metrics, collapse = " "),
+           "\n    ", font$encoding, "\n")
 
 printFont.CIDFont <- function(font)
-    paste(font$family, "\n    (", paste(font$metrics, collapse=" "),
-          ")\n    ", font$CMap, "\n    ", font$encoding, "\n", sep="")
+    paste0(font$family, "\n    (", paste(font$metrics, collapse = " "),
+           ")\n    ", font$CMap, "\n    ", font$encoding, "\n")
 
 printFonts <- function(fonts)
     cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
-              sep="", collapse=""))
+              sep = "", collapse = ""))
 
 # If no arguments specified, return entire font database
 # If no named arguments specified, all args should be font names
@@ -662,7 +661,7 @@ assign(".PostScript.Options",
 	 command    = "default",
          colormodel = "srgb",
          useKerning = TRUE,
-         fillOddEven= FALSE), envir = .PSenv)
+         fillOddEven = FALSE), envir = .PSenv)
 assign(".PostScript.Options.default",
        get(".PostScript.Options", envir = .PSenv),
        envir = .PSenv)
@@ -986,12 +985,11 @@ embedFonts <- function(file, # The ps or pdf file to convert
         gsexe <- shortPathName(gsexe)
     tmpfile <- tempfile("Rembed")
     if (length(fontpaths))
-        fontpaths <- paste("-sFONTPATH=",
-                           paste(fontpaths, collapse=.Platform$path.sep),
-                           sep="")
-    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format,
-                 " -sOutputFile=", tmpfile, " ", fontpaths, " ",
-                 options, " ", file, sep = "")
+        fontpaths <- paste0("-sFONTPATH=",
+                           paste(fontpaths, collapse =.Platform$path.sep))
+    cmd <- paste0(gsexe, " -dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format,
+                  " -sOutputFile=", tmpfile, " ", fontpaths, " ",
+                  options, " ", file)
     ret <- system(cmd)
     if(ret != 0)
         stop(gettextf("status %d in running command '%s'", ret, cmd),

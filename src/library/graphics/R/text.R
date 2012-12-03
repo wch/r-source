@@ -29,7 +29,7 @@ function(x, y = NULL, labels = seq_along(x),
     labels <- as.graphicsAnnot(labels)
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
-                   fontindex= pmatch(vfont[2L], Hershey$fontindex))
+                   fontindex = pmatch(vfont[2L], Hershey$fontindex))
     .External.graphics(C_text, xy.coords(x,y, recycle = TRUE), labels,
                        adj, pos, offset, vfont, cex, col, font, ...)
     invisible()

@@ -284,7 +284,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
         ans$residuals <- r
         ans$df <- c(0L, n, length(ans$aliased))
         ans$coefficients <- matrix(NA, 0L, 4L)
-        dimnames(ans$coefficients)<-
+        dimnames(ans$coefficients) <-
             list(NULL, c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
         ans$sigma <- sqrt(resvar)
         ans$r.squared <- ans$adj.r.squared <- 0
@@ -324,7 +324,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     ans$residuals <- r
     ans$coefficients <-
 	cbind(est, se, tval, 2*pt(abs(tval), rdf, lower.tail = FALSE))
-    dimnames(ans$coefficients)<-
+    dimnames(ans$coefficients) <-
 	list(names(z$coefficients)[Qr$pivot[p1]],
 	     c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
     ans$aliased <- is.na(coef(object))  # used in print method
@@ -352,7 +352,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
 print.summary.lm <-
     function (x, digits = max(3, getOption("digits") - 3),
               symbolic.cor = x$symbolic.cor,
-	      signif.stars= getOption("show.signif.stars"),	...)
+	      signif.stars = getOption("show.signif.stars"),	...)
 {
     cat("\nCall:\n", # S has ' ' instead of '\n'
 	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -581,7 +581,7 @@ anova.lm <- function(object, ...)
     if(attr(object$terms,"intercept")) table <- table[-1, ]
     structure(table, heading = c("Analysis of Variance Table\n",
 		     paste("Response:", deparse(formula(object)[[2L]]))),
-	      class= c("anova", "data.frame"))# was "tabular"
+	      class = c("anova", "data.frame"))# was "tabular"
 }
 
 anova.lmlist <- function (object, ..., scale = 0, test = "F")
@@ -622,7 +622,7 @@ anova.lmlist <- function (object, ..., scale = 0, test = "F")
 
     title <- "Analysis of Variance Table\n"
     topnote <- paste("Model ", format(1L:nmodels),": ",
-		     variables, sep="", collapse="\n")
+		     variables, sep = "", collapse = "\n")
 
     ## calculate test statistic if needed
 

@@ -51,7 +51,7 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
         warning(sprintf("method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class.",
                          me, thisClass@className),
                 domain = NA)
-        def <-makeClassMethod(def, me, thisClass@className, "", objects(thisClass@refMethods, all.names = TRUE))
+        def <- makeClassMethod(def, me, thisClass@className, "", objects(thisClass@refMethods, all.names = TRUE))
         .checkFieldsInMethod(def, names(thisClass@fieldClasses))
         ## cache the analysed method definition
         assign(me, def, envir = thisClass@refMethods)

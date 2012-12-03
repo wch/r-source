@@ -35,7 +35,7 @@
             "",
             "If 'file' is omitted 'Rprof.out' is used",
             "",
-            "Report bugs at bugs.r-project.org .", sep="\n")
+            "Report bugs at bugs.r-project.org .", sep = "\n")
     }
 
     if (is.null(args)) {
@@ -62,7 +62,7 @@
                 "Copyright (C) 1997-2010 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
-                sep="\n")
+                sep = "\n")
             do_exit(0L)
         } else if (a == "--total") {
             byself <- FALSE

@@ -488,7 +488,7 @@ Rd2txt <-
         if(inEqn) txt <- txt_eqn(txt)
         txt <- fsub('"\\{"', '"{"', txt)
         ## \dots gets left in noquote.Rd
-        txt <-fsub("\\dots",  "...", txt)
+        txt <- fsub("\\dots",  "...", txt)
         put(txt)
     }
 

@@ -50,8 +50,8 @@ all.equal.numeric <-
     msg <- if(check.attributes)
 	attr.all.equal(target, current, tolerance=tolerance, scale=scale, ...)
     if(data.class(target) != data.class(current)) {
-	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
-			    data.class(current), sep = ""))
+	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
+                             data.class(current)))
 	return(msg)
     }
 
@@ -61,8 +61,8 @@ all.equal.numeric <-
     if(lt != lc) {
 	## *replace* the 'Lengths' msg[] from attr.all.equal():
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
-	msg <- c(msg, paste(if(cplx)"Complex" else "Numeric",
-			    ": lengths (", lt, ", ", lc, ") differ", sep = ""))
+	msg <- c(msg, paste0(if(cplx)"Complex" else "Numeric",
+                             ": lengths (", lt, ", ", lc, ") differ"))
 	return(msg)
     }
     ## remove atttributes (remember these are both numeric or complex vectors)
@@ -106,17 +106,18 @@ all.equal.character <-
 {
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     if(data.class(target) != data.class(current)) {
-	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
-			    data.class(current), sep = ""))
+	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
+                             data.class(current)))
 	return(msg)
     }
     lt <- length(target)
     lc <- length(current)
     if(lt != lc) {
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
-	msg <- c(msg, paste("Lengths (", lt, ", ", lc,
-		     ") differ (string compare on first ", ll <- min(lt, lc),
-		     ")", sep = ""))
+	msg <- c(msg,
+                 paste0("Lengths (", lt, ", ", lc,
+                        ") differ (string compare on first ",
+                        ll <- min(lt, lc), ")"))
 	ll <- seq_len(ll)
 	target <- target[ll]
 	current <- current[ll]
@@ -217,17 +218,17 @@ all.equal.raw <-
 {
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     if(data.class(target) != data.class(current)) {
-	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
-			    data.class(current), sep = ""))
+	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
+                             data.class(current)))
 	return(msg)
     }
     lt <- length(target)
     lc <- length(current)
     if(lt != lc) {
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
-	msg <- c(msg, paste("Lengths (", lt, ", ", lc,
-		     ") differ (comparison on first ", ll <- min(lt, lc),
-		     " components)", sep = ""))
+	msg <- c(msg, paste0("Lengths (", lt, ", ", lc,
+                             ") differ (comparison on first ",
+                             ll <- min(lt, lc), " components)"))
 	ll <- seq_len(ll)
 	target <- target[ll]
 	current <- current[ll]
@@ -257,8 +258,8 @@ attr.all.equal <- function(target, current,
     if(mode(target) != mode(current))
 	msg <- paste0("Modes: ", mode(target), ", ", mode(current))
     if(length(target) != length(current))
-	msg <- c(msg, paste("Lengths: ", length(target), ", ",
-			    length(current), sep = ""))
+	msg <- c(msg,
+                 paste0("Lengths: ", length(target), ", ", length(current)))
     ax <- attributes(target)
     ay <- attributes(current)
     if(check.names) {

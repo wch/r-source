@@ -20,7 +20,7 @@ pretty <- function(x, ...) UseMethod("pretty")
 
 
 pretty.default <-
-    function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
+    function(x, n = 5, min.n = n %/% 3, shrink.sml = 0.75,
              high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
              eps.correct = 0, ...)
 {

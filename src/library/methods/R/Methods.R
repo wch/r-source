@@ -486,7 +486,7 @@ setMethod <-
     ## where to insert the methods in generic
     if(identical(gwhere, baseenv())) {
         allWhere <- findFunction(f, where = where)
-        generics <-logical(length(allWhere))
+        generics <- logical(length(allWhere))
         if(length(allWhere)) { # put methods into existing generic
             for(i in seq_along(allWhere)) {
                 fi <- get(f, allWhere[[i]])

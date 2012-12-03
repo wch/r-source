@@ -25,8 +25,8 @@ mode <- function(x) {
 		      "call"))
     if(is.name(x)) "name" else
     switch(tx <- typeof(x),
-	   double=, integer= "numeric",# 'real=' dropped, 2000/Jan/14
-	   closure=, builtin=, special= "function",
+	   double =, integer = "numeric", # 'real=' dropped, 2000/Jan/14
+	   closure =, builtin =, special = "function",
 	   ## otherwise
 	   tx)
 }
@@ -49,7 +49,7 @@ mode <- function(x) {
 
 storage.mode <- function(x)
     switch(tx <- typeof(x),
-	   closure=, builtin=, special= "function",
+	   closure = , builtin = , special = "function",
 	   ## otherwise
 	   tx)
 

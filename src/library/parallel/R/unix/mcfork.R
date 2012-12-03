@@ -25,7 +25,7 @@
 mc_pids <- new.env()
 assign("pids", integer(), envir = mc_pids)
 clean_pids <- function(e)
-    if(length(pids<- get("pids", envir = e))) tools::pskill(pids, tools::SIGKILL)
+    if(length(pids <- get("pids", envir = e))) tools::pskill(pids, tools::SIGKILL)
 
 mcfork <- function() {
     r <- .Call(C_mc_fork)

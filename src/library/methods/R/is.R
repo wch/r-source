@@ -256,7 +256,7 @@ setIs <-
 }
 
 ".newDirectSuperclass<-" <- function(contains, class2, superclasses2, value) {
-    superclasses <-names(contains)
+    superclasses <- names(contains)
     if(length(superclasses2) == 0 || length(superclasses) == 0 ||
        all(is.na(match(superclasses2, superclasses))))
       elNamed(contains, class2) <- value

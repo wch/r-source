@@ -66,7 +66,7 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 
     if(simplify) { # use atomic vector/array instead of list
 ##S	if(use.arr)
-	    out <- matrix(r, nrow= len.r, ncol= count) # matrix for now
+	    out <- matrix(r, nrow = len.r, ncol = count) # matrix for now
 ##S	else {
 ##S	    if(count > 1) {
 ##S		out <- vector(storage.mode(r), len.r * count)

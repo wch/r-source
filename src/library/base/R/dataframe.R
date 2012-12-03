@@ -467,7 +467,7 @@ data.frame <-
                     xi[[j]] <- structure(rep(xi1, length.out = nr),
                                          class = class(xi1))
                 else if(inherits(xi1, "Date") || inherits(xi1, "POSIXct"))
-                    xi[[j]] <-rep(xi1, length.out = nr)
+                    xi[[j]] <- rep(xi1, length.out = nr)
                 else {
                     fixed <- FALSE
                     break
@@ -1522,7 +1522,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
     }
     for(j in seq_along(cn)) {
 	left <- if(!lscalar) e1[[j]] else e1
-	right <-if(!rscalar) e2[[j]] else e2
+	right <- if(!rscalar) e2[[j]] else e2
 	value[[j]] <- eval(f)
     }
     if(.Generic %in% c("+","-","*","/","%%","%/%") ) {

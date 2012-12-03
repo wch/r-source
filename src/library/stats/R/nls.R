@@ -714,7 +714,7 @@ print.nls <- function(x, digits = max(3, getOption("digits") - 3), ...)
     print(x$m$getAllPars(), digits = digits, ...)
     cat(" ", if(!is.null(x$weights) && diff(range(x$weights))) "weighted ",
 	"residual sum-of-squares: ", format(x$m$deviance(), digits = digits),
-	"\n", sep = '')
+	"\n", sep = "")
     .p.nls.convInfo(x, digits = digits)
     invisible(x)
 }
@@ -725,7 +725,8 @@ print.summary.nls <-
             signif.stars = getOption("show.signif.stars"), ...)
 {
     cat("\nFormula: ",
-	paste(deparse(x$formula), sep = "\n", collapse = "\n"), "\n", sep = "")
+	paste(deparse(x$formula), sep = "\n", collapse = "\n"),
+        "\n", sep = "")
     df <- x$df
     rdf <- df[2L]
     cat("\nParameters:\n")
@@ -750,7 +751,7 @@ print.summary.nls <-
 
     .p.nls.convInfo(x, digits = digits)
 
-    if(nzchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep = "")
     cat("\n")
     invisible(x)
 }
@@ -883,7 +884,7 @@ anovalist.nls <- function (object, ..., test = NULL)
     ## construct table and title
     title <- "Analysis of Variance Table\n"
     topnote <- paste("Model ", format(1L:nmodels),": ",
-		     models, sep="", collapse="\n")
+		     models, sep = "", collapse = "\n")
 
     ## calculate test statistic if needed
     structure(table, heading = c(title, topnote),

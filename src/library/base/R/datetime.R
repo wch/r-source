@@ -425,7 +425,7 @@ ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
     if(min(sapply(list(year, month, day, hour, min, sec), length)) == 0L)
         .POSIXct(numeric(), tz=tz)
     else {
-        x <- paste(year, month, day, hour, min, sec, sep="-")
+        x <- paste(year, month, day, hour, min, sec, sep = "-")
         as.POSIXct(strptime(x, "%Y-%m-%d-%H-%M-%OS", tz=tz), tz=tz)
     }
 }
@@ -473,7 +473,7 @@ difftime <-
     switch(units,
            "secs" = .difftime(z, units="secs"),
            "mins" = .difftime(z/60, units="mins"),
-           "hours"= .difftime(z/3600, units="hours"),
+           "hours" = .difftime(z/3600, units="hours"),
            "days" = .difftime(z/86400, units="days"),
            "weeks" = .difftime(z/(7*86400), units="weeks")
            )
@@ -530,13 +530,13 @@ format.difftime <- function(x,...) paste(format(unclass(x),...), units(x))
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
     if(is.array(x) || length(x) > 1L) {
-        cat("Time differences in ", attr(x, "units"), "\n", sep="")
+        cat("Time differences in ", attr(x, "units"), "\n", sep = "")
         y <- unclass(x); attr(y, "units") <- NULL
         print(y)
     }
     else
         cat("Time difference of ", format(unclass(x), digits=digits), " ",
-            attr(x, "units"), "\n", sep="")
+            attr(x, "units"), "\n", sep = "")
 
     invisible(x)
 }
@@ -560,7 +560,7 @@ Ops.difftime <- function(e1, e2)
                days = 60*60*24*x, weeks = 60*60*24*7*x)
     }
     if (nargs() == 1) {
-        switch(.Generic, "+"= {}, "-" = {e1[] <- -unclass(e1)},
+        switch(.Generic, "+" = {}, "-" = {e1[] <- -unclass(e1)},
                stop(gettextf("unary '%s' not defined for \"difftime\" objects",
                              .Generic), domain = NA, call. = FALSE)
                )
@@ -618,9 +618,8 @@ Ops.difftime <- function(e1, e2)
 Math.difftime <- function (x, ...)
 {
     switch(.Generic,
-           'abs'=, 'sign'=,
-           'floor'=, 'ceiling'=, 'trunc'=,
-           'round'=, 'signif'= {
+           "abs" =, "sign" =, "floor" =, "ceiling" =, "trunc" =,
+           "round" =, "signif" = {
                units <- attr(x, "units")
                .difftime(NextMethod(), units)
            },
@@ -885,7 +884,7 @@ trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"), ...)
 	switch(units,
 	       "secs" = {x$sec <- trunc(x$sec)},
 	       "mins" = {x$sec[] <- 0},
-	       "hours"= {x$sec[] <- 0; x$min[] <- 0L},
+	       "hours" = {x$sec[] <- 0; x$min[] <- 0L},
                ## start of day need not be on the same DST.
 	       "days" = {x$sec[] <- 0; x$min[] <- 0L; x$hour[] <- 0L; x$isdst[] <- -1L}
 	       )
@@ -899,7 +898,7 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
     units <- match.arg(units)
     x <- as.POSIXct(x)
     x <- x + switch(units,
-                    "secs" = 0.5, "mins" = 30, "hours"= 1800, "days" = 43200)
+                    "secs" = 0.5, "mins" = 30, "hours" = 1800, "days" = 43200)
     trunc.POSIXt(x, units = units)
 }
 

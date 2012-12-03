@@ -57,7 +57,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
-	    cat("trying +", tt, "\n", sep='')
+	    cat("trying +", tt, "\n", sep = "")
 	    utils::flush.console()
 	}
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
@@ -383,7 +383,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
-	    cat("trying -", tt, "\n", sep='')
+	    cat("trying -", tt, "\n", sep = "")
 	    utils::flush.console()
         }
         nfit <- update(object, as.formula(paste("~ . -", tt)),
@@ -778,7 +778,7 @@ step <- function(object, scope, scale = 0,
     ## Terms <- fit$terms
     if(trace) {
 	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
-	    cut.string(deparse(formula(fit))), "\n\n", sep='')
+	    cut.string(deparse(formula(fit))), "\n\n", sep = "")
         utils::flush.console()
     }
 
@@ -842,7 +842,7 @@ step <- function(object, scope, scale = 0,
 	bAIC <- bAIC[2L]
 	if(trace) {
 	    cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
-		cut.string(deparse(formula(fit))), "\n\n", sep='')
+		cut.string(deparse(formula(fit))), "\n\n", sep = "")
             utils::flush.console()
         }
         ## add a tolerance as dropping 0-df terms might increase AIC slightly

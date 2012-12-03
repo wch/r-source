@@ -94,7 +94,7 @@ hclust <- function(d, method="complete", members=NULL)
 		      iib = integer(n))
 
     tree <- list(merge = cbind(hcass$iia[1L:(n-1)], hcass$iib[1L:(n-1)]),
-		 height= hcl$crit[1L:(n-1)],
+		 height = hcl$crit[1L:(n-1)],
 		 order = hcass$order,
 		 labels = attr(d, "Labels"),
                  method = METHODS[method],
@@ -198,7 +198,7 @@ as.hclust.twins <- function(x, ...)
 print.hclust <- function(x, ...)
 {
     if(!is.null(x$call))
-        cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
+        cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     if(!is.null(x$method))
         cat("Cluster method   :", x$method, "\n")
     if(!is.null(x$dist.method))

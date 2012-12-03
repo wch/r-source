@@ -64,10 +64,10 @@ densCols <- function(x, y=NULL, nbin=128, bandwidth,
     ybin <- cut(x[,2], mkBreaks(map$x2), labels=FALSE)
 
     dens <- map$fhat[cbind(xbin, ybin)]
-    dens[is.na(dens)]<- 0
+    dens[is.na(dens)] <- 0
 
     ## transform densities to colors
-    colpal <- cut(dens, length(dens), labels=FALSE)
+    colpal <- cut(dens, length(dens), labels = FALSE)
     cols   <- rep(NA_character_, length(select))
     cols[select] <- colramp(length(dens))[colpal]
 

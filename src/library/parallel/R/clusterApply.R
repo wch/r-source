@@ -254,7 +254,7 @@ parApply <- function(cl = NULL, X, MARGIN, FUN, ...)
     s.ans  <- ds[MARGIN]
     d.call <- d[-MARGIN]
     d.ans  <- d[MARGIN]
-    dn.call<- dn[-MARGIN]
+    dn.call <- dn[-MARGIN]
     dn.ans <- dn[MARGIN]
     ## dimnames(X) <- NULL
 

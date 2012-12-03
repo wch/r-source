@@ -372,7 +372,7 @@ glm.fit <-
 	##     ^^ is only initialize()d for "binomial" [yuck!]
     list(coefficients = coef, residuals = residuals, fitted.values = mu,
 	 effects = if(!EMPTY) fit$effects, R = if(!EMPTY) Rmat, rank = rank,
-	 qr = if(!EMPTY) structure(fit[c("qr", "rank", "qraux", "pivot", "tol")], class="qr"),
+	 qr = if(!EMPTY) structure(fit[c("qr", "rank", "qraux", "pivot", "tol")], class = "qr"),
          family = family,
 	 linear.predictors = eta, deviance = dev, aic = aic.model,
 	 null.deviance = nulldev, iter = iter, weights = wt,
@@ -381,22 +381,22 @@ glm.fit <-
 }
 
 
-print.glm <- function(x, digits= max(3, getOption("digits") - 3), ...)
+print.glm <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:  ",
-	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
+	paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
     if(length(coef(x))) {
         cat("Coefficients")
         if(is.character(co <- x$contrasts))
             cat("  [contrasts: ",
                 apply(cbind(names(co),co), 1L, paste, collapse="="), "]")
         cat(":\n")
-        print.default(format(x$coefficients, digits=digits),
+        print.default(format(x$coefficients, digits = digits),
                       print.gap = 2, quote = FALSE)
     } else cat("No coefficients\n\n")
     cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
         x$df.residual, "Residual\n")
-    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep = "")
     cat("Null Deviance:	   ",	format(signif(x$null.deviance, digits)),
 	"\nResidual Deviance:", format(signif(x$deviance, digits)),
 	"\tAIC:", format(signif(x$aic, digits)), "\n")
@@ -462,7 +462,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
         if(is.null(y)) { ## code from residuals.glm
             mu.eta <- object$family$mu.eta
             eta <- object$linear.predictors
-            y <-   object$fitted.values + object$residuals * mu.eta(eta)
+            y <- object$fitted.values + object$residuals * mu.eta(eta)
         }
 	for(i in seq_len(nvars-1L)) {
 	    ## explanatory variables up to i are kept in the model
@@ -512,10 +512,10 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 			    c("Df", "Deviance", "Resid. Df", "Resid. Dev"))
     if (doscore)
       table <- cbind(table, Rao=c(NA,score))
-    title <- paste("Analysis of Deviance Table", "\n\nModel: ",
-		   object$family$family, ", link: ", object$family$link,
-		   "\n\nResponse: ", as.character(varlist[-1L])[1L],
-		   "\n\nTerms added sequentially (first to last)\n\n", sep="")
+    title <- paste0("Analysis of Deviance Table", "\n\nModel: ",
+                    object$family$family, ", link: ", object$family$link,
+                    "\n\nResponse: ", as.character(varlist[-1L])[1L],
+                    "\n\nTerms added sequentially (first to last)\n\n")
 
     ## calculate test statistics if needed
 
@@ -537,7 +537,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 	table <- stat.anova(table=table, test=test, scale=dispersion,
 			    df.scale=df.dispersion, n=NROW(x))
     }
-    structure(table, heading = title, class= c("anova", "data.frame"))
+    structure(table, heading = title, class = c("anova", "data.frame"))
 }
 
 
@@ -607,7 +607,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 
     title <- "Analysis of Deviance Table\n"
     topnote <- paste("Model ", format(1L:nmodels),": ",
-		     variables, sep="", collapse="\n")
+		     variables, sep = "", collapse = "\n")
 
     ## calculate test statistic if needed
 
@@ -725,14 +725,14 @@ print.summary.glm <-
 	      signif.stars = getOption("show.signif.stars"), ...)
 {
     cat("\nCall:\n",
-	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
+	paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
     cat("Deviance Residuals: \n")
     if(x$df.residual > 5) {
-	x$deviance.resid <- setNames(quantile(x$deviance.resid,na.rm=TRUE),
+	x$deviance.resid <- setNames(quantile(x$deviance.resid, na.rm = TRUE),
 				     c("Min", "1Q", "Median", "3Q", "Max"))
     }
     xx <- zapsmall(x$deviance.resid, digits + 1)
-    print.default(xx, digits=digits, na.print = "", print.gap = 2)
+    print.default(xx, digits = digits, na.print = "", print.gap = 2)
 
     if(length(x$aliased) == 0L) {
         cat("\nNo Coefficients\n")
@@ -751,8 +751,8 @@ print.summary.glm <-
                             dimnames=list(cn, colnames(coefs)))
             coefs[!aliased, ] <- x$coefficients
         }
-        printCoefmat(coefs, digits=digits, signif.stars=signif.stars,
-                     na.print="NA", ...)
+        printCoefmat(coefs, digits = digits, signif.stars = signif.stars,
+                     na.print = "NA", ...)
     }
     ##
     cat("\n(Dispersion parameter for ", x$family$family,
@@ -760,14 +760,14 @@ print.summary.glm <-
 	apply(cbind(paste(format(c("Null","Residual"), justify="right"),
                           "deviance:"),
 		    format(unlist(x[c("null.deviance","deviance")]),
-			   digits= max(5, digits+1)), " on",
+			   digits = max(5, digits+1)), " on",
 		    format(unlist(x[c("df.null","df.residual")])),
 		    " degrees of freedom\n"),
-	      1L, paste, collapse=" "), sep="")
-    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
-    cat("AIC: ", format(x$aic, digits= max(4, digits+1)),"\n\n",
+	      1L, paste, collapse = " "), sep = "")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep = "")
+    cat("AIC: ", format(x$aic, digits = max(4, digits+1)),"\n\n",
 	"Number of Fisher Scoring iterations: ", x$iter,
-	"\n", sep="")
+	"\n", sep = "")
 
     correl <- x$correlation
     if(!is.null(correl)) {
@@ -809,7 +809,7 @@ residuals.glm <-
     type <- match.arg(type)
     y <- object$y
     r <- object$residuals
-    mu	<- object$fitted.values
+    mu <- object$fitted.values
     wts <- object$prior.weights
     switch(type,
            deviance=,pearson=,response=

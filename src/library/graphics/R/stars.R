@@ -198,7 +198,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
                   1 - (lab.angl[k] - 270*deg) / (180*deg)
                   )
 	    text(label.x[k], label.y[k],
-                 labels= key.labels[k], cex = cex, adj = text.adj)
+                 labels = key.labels[k], cex = cex, adj = text.adj)
 	}
     } # Unit key is drawn and labelled
 

@@ -460,26 +460,26 @@ anova.mlmlist <- function (object, ...,
 
     table <- data.frame(resdf, df, resdet)
     variables <- lapply(objects, function(x)
-                        paste(deparse(formula(x)), collapse="\n") )
+                        paste(deparse(formula(x)), collapse = "\n") )
     dimnames(table) <- list(seq_len(nmodels),
                             c("Res.Df", "Df", "Gen.var."))
 
     title <- "Analysis of Variance Table\n"
     topnote <- paste("Model ", format(seq_len(nmodels)),": ",
-		     variables, sep="", collapse="\n")
+		     variables, sep = "", collapse = "\n")
     transformnote <- if (!missing(T))
-        c("\nContrast matrix", apply(format(T), 1L, paste, collapse=" "))
+        c("\nContrast matrix", apply(format(T), 1L, paste, collapse = " "))
     else
         c(
           if (!Xmis)
           c("\nContrasts orthogonal to",
-            if (is.matrix(orig.X))  apply(format(X), 2L, paste, collapse=" ")
+            if (is.matrix(orig.X))  apply(format(X), 2L, paste, collapse = " ")
             else deparse(formula(orig.X)),"",
             if (!Mmis)
             c("\nContrasts spanned by",
-              if (is.matrix(orig.M))  apply(format(M), 2L, paste, collapse=" ")
-              else deparse(formula(orig.M)),""
-              )
+              if (is.matrix(orig.M))  apply(format(M), 2L, paste, collapse = " ")
+              else deparse(formula(orig.M)),
+              "")
             )
           )
     epsnote <- NULL

@@ -57,9 +57,9 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     if (is.null(p) && (k == 1))
 	p <- .5
     if (!is.null(p)) {
-	DNAME <- paste(DNAME, ", null ",
+	DNAME <- paste0(DNAME, ", null ",
 		       if(k == 1) "probability " else "probabilities ",
-		       deparse(substitute(p)), sep = "")
+		       deparse(substitute(p)))
 	if (length(p) != l)
 	    stop("'p' must have the same length as 'x' and 'n'")
 	p <- p[OK]

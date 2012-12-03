@@ -64,7 +64,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
             else
                 stop("number of 'cutpoints' must be one more than number of symbols")
 
-	iS <- cut(x, breaks=cutpoints, include.lowest=TRUE, labels= FALSE)
+	iS <- cut(x, breaks = cutpoints, include.lowest = TRUE, labels = FALSE)
 	if(any(ii <- is.na(iS))) {
 	    ##-- can get 0, if x[i]== minc  --- only case ?
 	    iS[which(ii)[!is.na(x[ii]) & (abs(x[ii] - minc) < eps)]] <- 1#-> symbol[1L]
@@ -102,7 +102,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	if((is.logical(abbr.colnames) || is.numeric(abbr.colnames))
 	   && abbr.colnames) {
 	    dimnames(ans)[[2L]] <-
-		abbreviate(dimnames(ans)[[2L]], minlength= abbr.colnames)
+		abbreviate(dimnames(ans)[[2L]], minlength = abbr.colnames)
 	    ## dropped further abbrev. depending on getOption("width")
 	}
 	else if(is.null(abbr.colnames) || is.null(dimnames(ans)[[2L]]))

@@ -125,7 +125,7 @@ tcrossprod <- function(x, y=NULL) .Internal(tcrossprod(x,y))
 
 t <- function(x) UseMethod("t")
 ## t.default is <primitive>
-t.data.frame<- function(x)
+t.data.frame <- function(x)
 {
     x <- as.matrix(x)
     NextMethod("t")

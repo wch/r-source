@@ -197,7 +197,7 @@ function(formula, data = parent.frame(), ..., subset,
             on.exit(devAskNewPage(oask))
 	}
         if(length(xn)) {
-            if( !is.null(xlab<- dots[["xlab"]]) )
+            if( !is.null(xlab <- dots[["xlab"]]) )
                 dots <- dots[-match("xlab", names(dots))]
             for (i in xn) {
                 xl <- if(is.null(xlab)) i else xlab

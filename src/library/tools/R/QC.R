@@ -555,7 +555,7 @@ function(package, dir, lib.loc = NULL,
     names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
 
     ## pkg-defunct.Rd is not expected to list arguments
-    ind <- db_names %in% paste(package_name, "defunct", sep="-")
+    ind <- db_names %in% paste(package_name, "defunct", sep = "-")
     db <- db[!ind]
     db_names <- db_names[!ind]
 
@@ -626,10 +626,9 @@ function(package, dir, lib.loc = NULL,
         ## Replacement functions.
         if(length(replace_exprs)) {
             replace_funs <-
-                paste(sapply(replace_exprs,
+                paste0(sapply(replace_exprs,
                              function(e) as.character(e[[2L]][[1L]])),
-                      "<-",
-                      sep = "")
+                      "<-")
             replace_funs <- .transform_S3_method_markup(replace_funs)
             functions <- c(functions, replace_funs)
             ind <- (replace_funs %in% functions_in_code)
@@ -1354,10 +1353,9 @@ function(package, dir, lib.loc = NULL)
         ## Replacement functions.
         if(length(replace_exprs)) {
             replace_funs <-
-                paste(sapply(replace_exprs,
+                paste0(sapply(replace_exprs,
                              function(e) as.character(e[[2L]][[1L]])),
-                      "<-",
-                      sep = "")
+                      "<-")
             functions <- c(functions, replace_funs)
             arg_names_in_usage <-
                 c(arg_names_in_usage,
@@ -1717,10 +1715,9 @@ function(package, dir, lib.loc = NULL)
                                  .is_call_from_replacement_function_usage))
         if(any(ind)) {
             replace_funs <-
-                paste(sapply(exprs[ind],
-                             function(e) as.character(e[[2L]][[1L]])),
-                      "<-",
-                      sep = "")
+                paste0(sapply(exprs[ind],
+                              function(e) as.character(e[[2L]][[1L]])),
+                       "<-")
             functions <- c(functions, replace_funs)
         }
 
@@ -2926,11 +2923,10 @@ function(dfile)
         depends <- .strip_whitespace(unlist(strsplit(val, ",")))
         bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()
         dep_regexp <-
-            paste("^[[:space:]]*",
-                  paste0("(R|", valid_package_name_regexp, ")"),
-                  "([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?",
-                  "[[:space:]]*$",
-                  sep = "")
+            paste0("^[[:space:]]*",
+                   paste0("(R|", valid_package_name_regexp, ")"),
+                   "([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?",
+                   "[[:space:]]*$")
         for(dep in depends) {
             if(!grepl(dep_regexp, dep)) {
                 ## Entry does not match the regexp.
@@ -3835,8 +3831,8 @@ function(x, ...)
                           "Warning: found non-ASCII strings",
                           domain = NA)
           c(msg,
-            paste(iconv0(x$unknown[, 1L], "", "ASCII", sub = "byte"),
-                  " in object '", x$unknown[, 2L], "'", sep = ""))
+            paste0(iconv0(x$unknown[, 1L], "", "ASCII", sub = "byte"),
+                   " in object '", x$unknown[, 2L], "'"))
       })
 }
 
@@ -4113,7 +4109,7 @@ function(dir, respect_quotes = FALSE)
                 wrong_things <- c(wrong_things, f)
         }
     }
-    if(length(wrong_things)) cat(wrong_things, sep="\n")
+    if(length(wrong_things)) cat(wrong_things, sep = "\n")
     invisible(wrong_things)
 }
 
@@ -4583,7 +4579,7 @@ function(dir)
     dfile <- file.path(dir, "DESCRIPTION")
     enc <- if(file.exists(dfile))
         .read_description(dfile)["Encoding"] else NA
-    
+
     code_files <-
         list_files_with_type(file.path(dir, "R"),
                              "code",
@@ -5070,7 +5066,7 @@ function(package, dir, lib.loc = NULL)
         ## check they have a matching vignette
         Rfiles[sapply(Rfiles,
                       function(x) any(file.exists(paste(sub("[.]R$", "", x),
-                                                        vign_exts, sep="."))))]
+                                                        vign_exts, sep = "."))))]
         else Rfiles
     } else character()
     .check_packages_used_helper(db, Rfiles)
@@ -5474,9 +5470,9 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     }
     if(length(bad)) bad <- sQuote(sub(".*/", "", bad))
     if(length(bad) > 1L)
-        cat("problems found in ", paste(bad, collapse=", "), "\n", sep="")
+        cat("problems found in ", paste(bad, collapse=", "), "\n", sep = "")
     else if(length(bad))
-        cat("problem found in ", bad, "\n", sep="")
+        cat("problem found in ", bad, "\n", sep = "")
     invisible()
 }
 
@@ -5662,7 +5658,7 @@ function(dir)
     ## For now (2012-11-28), PACKAGES.in is all ASCII, so there is no
     ## need to re-encode.  Eventually, it might be in UTF-8 ...
     entry <- odb[odb[, "Package"] == meta["Package"], ]
-    entry <- entry[!is.na(entry) & (names(entry) != "Package")]    
+    entry <- entry[!is.na(entry) & (names(entry) != "Package")]
     if(length(entry)) {
         fmt <- function(s)
             unlist(lapply(s,
@@ -5684,7 +5680,7 @@ function(dir)
                 out$conflicts <- fields[ind]
         }
     }
-    
+
     out
 }
 
@@ -5729,7 +5725,7 @@ function(x, ...)
           c("Possibly mis-spelled words in DESCRIPTION:",
             sprintf("  %s (%s)",
                     names(s),
-                    lapply(s, paste, collapse = ", ")))          
+                    lapply(s, paste, collapse = ", ")))
       },
       if(length(y <- x$fields)) {
           c("Possibly mis-spelled fields in DESCRIPTION:",
@@ -5954,7 +5950,7 @@ function()
 {
     l10n <- l10n_info()
     enc <- if(l10n[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
-    cat("charset: ", enc, "\n", sep="")
+    cat("charset: ", enc, "\n", sep = "")
     invisible()
 }
 
@@ -6072,7 +6068,7 @@ function(env, verbose = getOption("verbose"))
 		       tryCatch(methods::hasMethods(g, where = env),
 				error = identity))
 	if(any(hasErr <- sapply(hasM, inherits, what = "error"))) {
-            dq <- function(ch) paste('"', ch ,'"', sep='')
+            dq <- function(ch) paste0('"', ch ,'"')
             rErr <- r[hasErr]
             pkgs <- r@package[hasErr]
             ## FIXME: This warning should not happen here when called
@@ -6082,7 +6078,8 @@ function(env, verbose = getOption("verbose"))
                              format(env),
                              "hasMethods(g, env)",
                              paste(sQuote(rErr), collapse = ", "),
-                             paste0("  importFrom(", paste(dq(pkgs), dq(rErr), sep=", "),
+                             paste0("  importFrom(",
+                                    paste(dq(pkgs), dq(rErr), sep =", "),
                                     ")\n")
                              ),
                     domain = NA)

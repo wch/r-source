@@ -292,12 +292,12 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
     if(any(interp))
 	y[interp] <- .Fortran(C_bvalus,
 			      n	  = as.integer(n),
-			      knot= as.double(object$knot),
-			      coef= as.double(object$coef),
-			      nk  = as.integer(object$nk),
-			      x	  = as.double(xs[interp]),
-			      s	  = double(n),
-			      order= as.integer(deriv))$s
+			      knot = as.double(object$knot),
+			      coef = as.double(object$coef),
+			      nk = as.integer(object$nk),
+			      x	= as.double(xs[interp]),
+			      s	= double(n),
+			      order = as.integer(deriv))$s
     if(any(extrap)) {
 	xrange <- c(object$min, object$min + object$range)
 	if(deriv == 0) {

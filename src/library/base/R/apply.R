@@ -43,8 +43,8 @@ apply <- function(X, MARGIN, FUN, ...)
     s.call <- ds[-MARGIN]
     s.ans  <- ds[MARGIN]
     d.call <- d[-MARGIN]
-    d.ans  <- d[MARGIN]
-    dn.call<- dn[-MARGIN]
+    d.ans <- d[MARGIN]
+    dn.call <- dn[-MARGIN]
     dn.ans <- dn[MARGIN]
     ## dimnames(X) <- NULL
 

@@ -57,7 +57,7 @@ summary.default <-
 	sumry[, 1L] <- format(as.integer(ll))
 	sumry
     }
-    else c(Length= length(object), Class= class(object), Mode= mode(object))
+    else c(Length = length(object), Class = class(object), Mode = mode(object))
     class(value) <- c("summaryDefault", "table")
     value
 }
@@ -149,8 +149,8 @@ summary.data.frame <-
             wcn <- ncw(cn)
             pad0 <- floor((wid - wcn)/2)
             pad1 <- wid - wcn - pad0
-            cn <- paste(substring(blanks, 1L, pad0), cn,
-                        substring(blanks, 1L, pad1), sep = "")
+            cn <- paste0(substring(blanks, 1L, pad0), cn,
+                         substring(blanks, 1L, pad1))
             nm[i] <- paste(cn, collapse="  ")
             z[[i]] <- sms
         } else {

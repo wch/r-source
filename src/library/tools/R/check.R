@@ -436,7 +436,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         non_ASCII_files <-
             allfiles[grepl("[^-A-Za-z0-9._!#$%&+,;=@^(){}\'[\\]]", #
                            basename(allfiles), perl = TRUE)]
-        if (nb <-length(non_ASCII_files)) {
+        if (nb <- length(non_ASCII_files)) {
             warningLog(Log)
             msg <- ngettext(nb,
                             "Found the following file with a non-portable file name:\n",
@@ -1164,7 +1164,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             }
             if (length(out5))
                 printLog0(Log, paste(c(out5, ""), collapse = "\n"))
-            
+
         } else resultLog(Log, "OK")
     }
 
@@ -1926,9 +1926,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 checkingLog(Log, "differences from ",
                             sQuote(basename(exout)),
                             " to ", sQuote(basename(exsave)))
-                cmd <- paste("invisible(tools::Rdiff('",
-                             exout, "', '", exsave, "',TRUE,TRUE))",
-                             sep = "")
+                cmd <- paste0("invisible(tools::Rdiff('",
+                              exout, "', '", exsave, "',TRUE,TRUE))")
                 out <- R_runR(cmd, R_opts2)
                 if(length(out))
                     printLog0(Log, paste(c("", out, ""), collapse = "\n"))
@@ -2048,9 +2047,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             extra <- c(extra, paste0('Log="', tf, '"'))
             ## might be diff-ing results against tests/*.R.out.save
             ## so force LANGUAGE=en
-            cmd <- paste("tools:::.runPackageTestsR(",
-                         paste(extra, collapse=", "),
-                         ")", sep = "")
+            cmd <- paste0("tools:::.runPackageTestsR(",
+                         paste(extra, collapse = ", "), ")")
             t1 <- proc.time()
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
@@ -2267,11 +2265,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 cat("  ", sQuote(basename(v)),
                     if(nzchar(enc)) paste("using", sQuote(enc)),
                     "...")
-                Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
-                              basename(v), "', '", vigns$dir, "'",
-                              if (nzchar(enc))
-                              paste0(", encoding = '", enc, "'"),
-                              ")", sep = "")
+                Rcmd <- paste0("options(warn=1)\ntools:::.run_one_vignette('",
+                               basename(v), "', '", vigns$dir, "'",
+                               if (nzchar(enc))
+                                   paste0(", encoding = '", enc, "'"),
+                               ")")
                 outfile <- paste0(basename(v), ".log")
                 t1b <- proc.time()
                 status <- R_runR(Rcmd,
@@ -2299,9 +2297,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                 } else if (file.exists(savefile)) {
-                    cmd <- paste("invisible(tools::Rdiff('",
-                                 outfile, "', '", savefile, "',TRUE,TRUE))",
-                                 sep = "")
+                    cmd <- paste0("invisible(tools::Rdiff('",
+                                 outfile, "', '", savefile, "',TRUE,TRUE))")
                     out2 <- R_runR(cmd, R_opts2)
                     if(length(out2)) {
                         print_time(t1b, t2b, NULL)
@@ -2361,9 +2358,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 ## we could use clean = FALSE, but that would not be
                 ## testing what R CMD build uses.
                 Rcmd <- "options(warn=1)\nlibrary(tools)\n"
-                Rcmd <- paste(Rcmd, "buildVignettes(dir = '",
-                              file.path(pkgoutdir, "vign_test", pkgname0),
-                              "')", sep = "")
+                Rcmd <- paste0(Rcmd, "buildVignettes(dir = '",
+                               file.path(pkgoutdir, "vign_test", pkgname0),
+                               "')")
                 t1 <- proc.time()
                 outfile <- tempfile()
                 status <- R_runR(Rcmd, R_opts2, jitstr,
@@ -2433,9 +2430,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     file.copy(latex_file, paste0(pkgname, "-manual.tex"))
                 warningLog(Log)
                 printLog(Log,
-                         paste("LaTeX errors when creating PDF version.\n",
-                               "This typically indicates Rd problems.\n",
-                               sep = ""))
+                         paste0("LaTeX errors when creating PDF version.\n",
+                                "This typically indicates Rd problems.\n"))
                 ## If possible, indicate the problems found.
                 if (file.exists(latex_log)) {
                     lines <- .get_LaTeX_errors_from_log_file(latex_log)
@@ -2737,9 +2733,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                                  ": warning: incompatible implicit declaration of built-in function")
                 }
 
-                warn_re <- paste("(",
-                                 paste(warn_re, collapse = "|"),
-                                 ")", sep = "")
+                warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
 
@@ -2801,9 +2795,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           "Assigned GOTO statement at \\(1\\)",
                           "arithmetic IF statement at \\(1\\)",
                           "Nonconforming tab character (in|at)")
-                    warn_re <- paste("(",
-                                     paste(warn_re, collapse = "|"),
-                                     ")", sep = "")
+                    warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
                     lines <- grep(warn_re, lines, invert = TRUE, value = TRUE)
                 }
 
@@ -3326,9 +3318,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (length(archs) > 1L)
                 for (arch in archs) {
                     if (arch == rarch) next
-                    cmd <- paste(file.path(R.home(), "bin", "R"),
-                                 " --arch=", arch,
-                                 " --version > /dev/null", sep = "")
+                    cmd <- paste0(file.path(R.home(), "bin", "R"),
+                                  " --arch=", arch,
+                                  " --version > /dev/null")
                     if (system(cmd)) archs <- archs[archs != arch]
                 }
         }

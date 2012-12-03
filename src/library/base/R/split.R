@@ -69,7 +69,7 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
     x
 }
 
-unsplit <-function (value, f, drop = FALSE)
+unsplit <- function (value, f, drop = FALSE)
 {
     len <- length(if (is.list(f)) f[[1L]] else f)
     if (is.data.frame(value[[1L]])) {

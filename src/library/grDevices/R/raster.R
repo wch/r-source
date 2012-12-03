@@ -37,7 +37,7 @@ is.raster <- function(x)
 as.raster <- function(x, ...)
     UseMethod("as.raster")
 
-as.raster.raster<- function(x, ...)  x
+as.raster.raster <- function(x, ...)  x
 
 as.raster.logical <- function(x, max=1, ...)
     as.raster(matrix(x, ...), max)

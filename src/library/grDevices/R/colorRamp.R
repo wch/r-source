@@ -17,60 +17,51 @@
 #  http://www.r-project.org/Licenses/
 
 
-colorRampPalette<-function(colors,...)
+colorRampPalette <- function(colors,...)
 {
-    ramp<-colorRamp(colors,...)
+    ramp <- colorRamp(colors,...)
     function(n) {
-        x <- ramp(seq.int(0, 1, length.out=n))
-        rgb(x[,1], x[,2], x[,3], maxColorValue=255)
+        x <- ramp(seq.int(0, 1, length.out = n))
+        rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)
     }
 
 }
 
-colorRamp<-function(colors, bias=1, space=c("rgb","Lab"),
-                    interpolate=c("linear","spline"))
+colorRamp <- function(colors, bias = 1, space = c("rgb","Lab"),
+                    interpolate = c("linear","spline"))
 {
-    if (bias<=0) stop("'bias' must be positive")
-    colors<-t(col2rgb(colors)/255)
-    space<-match.arg(space)
-    interpolate<-match.arg(interpolate)
+    if (bias <= 0) stop("'bias' must be positive")
+    colors <- t(col2rgb(colors)/255)
+    space <- match.arg(space)
+    interpolate <- match.arg(interpolate)
 
-    if (space=="Lab"){
-        colors<-convertColor(colors, from="sRGB", to="Lab")
-        ## apply(colors,2,srgb2lab)
-    }
+    if (space == "Lab")
+        colors <- convertColor(colors, from = "sRGB", to = "Lab")
 
 
-    interpolate<-switch(interpolate, linear=stats::approxfun, spline=stats::splinefun)
+    interpolate <- switch(interpolate, linear=stats::approxfun, spline=stats::splinefun)
 
     if((nc <- nrow(colors)) == 1L) {
-        colors <- colors[c(1L,1L) ,]
+        colors <- colors[c(1L, 1L) ,]
         nc <- 2L
     }
-    x <- seq.int(0, 1, length.out= nc)^bias
-    palette<-c(interpolate(x, colors[,1]),
-               interpolate(x, colors[,2]),
-               interpolate(x, colors[,3]))
+    x <- seq.int(0, 1, length.out = nc)^bias
+    palette <- c(interpolate(x, colors[, 1L]),
+                 interpolate(x, colors[, 2L]),
+                 interpolate(x, colors[, 3L]))
 
     roundcolor <- function(rgb) ## careful to preserve matrix:
 	pmax(pmin(rgb, 1), 0)
 
-    if (space=="Lab"){
-
-        function(x) {
+    if (space == "Lab")
+        function(x)
             roundcolor(convertColor(cbind(palette[[1L]](x),
                                           palette[[2L]](x),
-                                          palette[[3L]](x)),from="Lab",to="sRGB"))*255
-        }
-
-    } else {
-
-        function(x) {
+                                          palette[[3L]](x)),
+                                    from = "Lab", to = "sRGB"))*255
+    else
+        function(x)
             roundcolor(cbind(palette[[1L]](x),
                              palette[[2L]](x),
                              palette[[3L]](x)))*255
-        }
-
-    }
-
 }

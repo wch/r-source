@@ -188,21 +188,22 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	    usr <- par("usr")
 	    inset <- rep_len(inset, 2)
 	    insetx <- inset[1L]*(usr[2L] - usr[1L])
-	    left <- switch(auto, "bottomright"=,
-			   "topright"=, "right" = usr[2L] - w - insetx,
-			   "bottomleft"=, "left"=, "topleft"= usr[1L] + insetx,
-			   "bottom"=, "top"=, "center"= (usr[1L] + usr[2L] - w)/2)
+	    left <- switch(auto, "bottomright" =,
+			   "topright" =, "right" = usr[2L] - w - insetx,
+			   "bottomleft" =, "left" =, "topleft" = usr[1L] + insetx,
+			   "bottom" =, "top" =, "center" = (usr[1L] + usr[2L] - w)/2)
 	    insety <- inset[2L]*(usr[4L] - usr[3L])
-	    top <- switch(auto, "bottomright"=,
-			  "bottom"=, "bottomleft"= usr[3L] + h + insety,
-			  "topleft"=, "top"=, "topright" = usr[4L] - insety,
-			  "left"=, "right"=, "center" = (usr[3L] + usr[4L] + h)/2)
+	    top <- switch(auto, "bottomright" =,
+			  "bottom" =, "bottomleft" = usr[3L] + h + insety,
+			  "topleft" =, "top" =, "topright" = usr[4L] - insety,
+			  "left" =, "right" =, "center" = (usr[3L] + usr[4L] + h)/2)
 	}
     }
 
     if (plot && bty != "n") { ## The legend box :
 	if(trace)
-	    catn("  rect2(",left,",",top,", w=",w,", h=",h,", ...)",sep="")
+	    catn("  rect2(", left, ",", top,", w=", w, ", h=", h, ", ...)",
+                 sep = "")
 	rect2(left, top, dx = w, dy = h, col = bg, density = NULL,
               lwd = box.lwd, lty = box.lty, border = box.col)
     }
@@ -238,16 +239,17 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	    catn("  segments2(",xt[ok.l] + x.off*xchar, ",", yt[ok.l],
 		 ", dx=", seg.len*xchar, ", dy=0, ...)")
 	if(plot)
-	    segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx= seg.len*xchar, dy=0,
+	    segments2(xt[ok.l] + x.off*xchar, yt[ok.l],
+                      dx = seg.len*xchar, dy = 0,
 		      lty = lty[ok.l], lwd = lwd[ok.l], col = col[ok.l])
 	# if (!merge)
 	xt <- xt + (seg.len+x.off) * xchar
     }
     if (has.pch) {			#- draw points -------------------
-	pch   <- rep_len(pch, n.leg)
+	pch <- rep_len(pch, n.leg)
 	pt.bg <- rep_len(pt.bg, n.leg)
-	pt.cex<- rep_len(pt.cex, n.leg)
-	pt.lwd<- rep_len(pt.lwd, n.leg)
+	pt.cex <- rep_len(pt.cex, n.leg)
+	pt.lwd <- rep_len(pt.lwd, n.leg)
 	ok <- !is.na(pch) & (is.character(pch) | pch >= 0)
 	x1 <- (if(merge && do.lines) xt-(seg.len/2)*xchar else xt)[ok]
 	y1 <- yt[ok]

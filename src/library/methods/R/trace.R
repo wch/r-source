@@ -104,7 +104,7 @@
                 pname <- temp$pname
             }
             else if(is.call(fname) && identical(fname[[1L]], as.name("::"))) {
-                whereF <-as.character(fname[[2L]])
+                whereF <- as.character(fname[[2L]])
                 require(whereF, character.only = TRUE)
                 whereF <- as.environment(paste("package", whereF, sep=":"))
                 pname <-  fname[[2L]]

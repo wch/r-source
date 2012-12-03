@@ -154,10 +154,9 @@ function(contents, packageName, outFile)
     ## <NOTE>
     ## This has 'html' hard-wired.
     ## Note that slashes etc. should be fine for URLs.
-    URLs <- paste("../../../library/", packageName, "/html/",
-                  file_path_sans_ext(contents[ , "File"]),
-                  ".html",
-                  sep = "")
+    URLs <- paste0("../../../library/", packageName, "/html/",
+                   file_path_sans_ext(contents[ , "File"]),
+                   ".html")
     ## </NOTE>
 
     if(is.data.frame(contents))
@@ -288,7 +287,7 @@ function(package, dir, lib.loc = NULL)
         ## with a DB of the parsed (and platform processed, see
         ## above) Rd objects.
         db_file <- file.path(dir, "help", package)
-        if(file_test("-f", paste(db_file, "rdx", sep="."))) {
+        if(file_test("-f", paste(db_file, "rdx", sep = "."))) {
             db <- fetchRdDB(db_file)
             pathfile <- file.path(dir, "help", "paths.rds")
             if(file.exists(pathfile)) names(db) <- readRDS(pathfile)

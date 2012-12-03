@@ -94,10 +94,10 @@ topo.colors <- function (n, alpha = 1)
 	j <- n %/% 3
 	k <- n %/% 3
 	i <- n - j - k
-	c(if(i > 0) hsv(h= seq.int(from= 43/60, to= 31/60, length.out = i), alpha=alpha),
-	  if(j > 0) hsv(h= seq.int(from= 23/60, to= 11/60, length.out = j), alpha=alpha),
-	  if(k > 0) hsv(h= seq.int(from= 10/60, to=  6/60, length.out = k), alpha=alpha,
-			s= seq.int(from= 1,	to= 0.3,   length.out = k), v = 1))
+	c(if(i > 0) hsv(h = seq.int(from = 43/60, to = 31/60, length.out = i), alpha = alpha),
+	  if(j > 0) hsv(h = seq.int(from = 23/60, to = 11/60, length.out = j), alpha = alpha),
+	  if(k > 0) hsv(h = seq.int(from = 10/60, to =  6/60, length.out = k), alpha = alpha,
+			s = seq.int(from = 1, to = 0.3, length.out = k), v = 1))
     } else character()
 }
 
@@ -124,7 +124,8 @@ heat.colors <- function (n, alpha = 1)
 	i <- n - j
 	c(rainbow(i, start = 0, end = 1/6, alpha = alpha),
 	  if (j > 0)
-	  hsv(h = 1/6, s = seq.int(from= 1-1/(2*j), to= 1/(2*j), length.out = j),
+	  hsv(h = 1/6,
+              s = seq.int(from = 1-1/(2*j), to = 1/(2*j), length.out = j),
 	      v = 1, alpha = alpha))
     } else character()
 }

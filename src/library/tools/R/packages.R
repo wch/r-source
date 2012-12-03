@@ -63,10 +63,10 @@ function(dir = ".", fields = NULL,
                 desci <- desc[i, !(is.na(desc[i, ]) | (desc[i, ] == "")),
                               drop = FALSE]
                 write.dcf(desci, file = out)
-                if(nzchar(path)) cat("Path: ", path, "\n", sep="", file = out)
+                if(nzchar(path)) cat("Path: ", path, "\n", sep = "", file = out)
                 cat("\n", file = out)
                 write.dcf(desci, file = outgz)
-                if(nzchar(path)) cat("Path: ", path, "\n", sep="", file = outgz)
+                if(nzchar(path)) cat("Path: ", path, "\n", sep = "", file = outgz)
                 cat("\n", file = outgz)
             }
             nfields <- nfields + nrow(desc)

@@ -35,9 +35,9 @@ ecdf <- function (x)
     rval
 }
 
-print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
+print.ecdf <- function (x, digits = getOption("digits") - 2, ...)
 {
-    numform <- function(x) paste(formatC(x, digits=digits), collapse=", ")
+    numform <- function(x) paste(formatC(x, digits = digits), collapse = ", ")
     cat("Empirical CDF \nCall: ")
     print(attr(x, "call"), ...)
     n <- length(xx <- environment(x)$"x")

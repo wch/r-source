@@ -83,12 +83,12 @@ stl <- function(x, s.window,
 	z$seasonal <- tapply(z$seasonal, which.cycle, mean)[which.cycle]
     }
     remainder <- as.vector(x) - z$seasonal - z$trend
-    y <- cbind(seasonal=z$seasonal, trend=z$trend, remainder=remainder)
-    res <- list(time.series = ts(y, start=start(x), frequency = period),
-		weights=z$weights, call=match.call(),
+    y <- cbind(seasonal = z$seasonal, trend = z$trend, remainder = remainder)
+    res <- list(time.series = ts(y, start = start(x), frequency = period),
+		weights = z$weights, call = match.call(),
 		win = c(s = s.window, t = t.window, l = l.window),
 		deg = c(s = s.degree, t = t.degree, l = l.degree),
-		jump= c(s = s.jump,   t = t.jump,   l = l.jump),
+		jump = c(s = s.jump, t = t.jump, l = l.jump),
 		inner = z$ni, outer = z$no)
     class(res) <- "stl"
     res

@@ -16,7 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-unname <- function (obj, force= FALSE) {
+unname <- function (obj, force = FALSE)
+{
     if (!is.null(names(obj)))
         names(obj) <- NULL
     if (!is.null(dimnames(obj)) && (force || !is.data.frame(obj)))

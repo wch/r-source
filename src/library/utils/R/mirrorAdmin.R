@@ -50,7 +50,7 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
     invisible(z)
 }
 
-checkCRAN <-function(method)
+checkCRAN <- function(method)
 {
     master <- available.packages(contrib.url("http://cran.R-project.org"),
                                  method=method)

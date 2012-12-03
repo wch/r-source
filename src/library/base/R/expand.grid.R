@@ -47,8 +47,8 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
         for(i in iArgs) {
             x <- args[[i]]
             if(KEEP.OUT.ATTRS)
-                dn[[i]] <- paste(nmc[i], "=", if(is.numeric(x)) format(x) else x,
-                                 sep = "")
+                dn[[i]] <-
+                    paste0(nmc[i], "=", if(is.numeric(x)) format(x) else x)
             nx <- length(x)
             orep <- orep/nx
             x <- x[rep.int(rep.int(seq_len(nx),

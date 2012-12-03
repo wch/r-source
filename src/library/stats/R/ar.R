@@ -181,7 +181,7 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
             cat("\nIntercept: ", format(xint, digits = digits),
                 ## FIXME? asy.se.coef  *only* exists for  ar.ols (??)
                 " (", format(x$asy.se.coef$x.mean, digits = digits),
-                ") ", "\n", sep="")
+                ") ", "\n", sep = "")
         cat("\nOrder selected", x$order, " sigma^2 estimated as ",
             format(x$var.pred, digits = digits),"\n")
 

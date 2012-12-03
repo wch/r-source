@@ -48,7 +48,7 @@ simplify2array <- function(x, higher = TRUE)
 
         } else if(prod(d <- c(common.len, n)) == length(r))
             array(r, dim = d,
-                  dimnames= if(!(is.null(n1 <- names(x[[1L]])) &
+                  dimnames = if(!(is.null(n1 <- names(x[[1L]])) &
                   is.null(n2 <- names(x)))) list(n1,n2))
         else x
     }

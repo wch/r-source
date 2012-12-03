@@ -111,7 +111,7 @@ massageExamples <-
     }
 
     cat(readLines(file.path(R.home("share"), "R", "examples-footer.R")),
-        sep="\n", file = out)
+        sep = "\n", file = out)
 }
 
 ## compares 2 files
@@ -168,8 +168,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
                 sep = "")
         if (Log) {
             i <- which(diff)
-            out <- paste(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i],
-                         sep = "")
+            out <- paste0(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i])
             list(status = 1L, out = out)
         } else 1L
     } else {
@@ -289,7 +288,7 @@ testInstalledPackage <-
 
     ## FIXME merge with code in .runPackageTests
     if (2 %in% types && file_test("-d", d <- file.path(pkgdir, "tests"))) {
-        this <- paste(pkg, "tests", sep="-")
+        this <- paste(pkg, "tests", sep = "-")
         unlink(this, recursive = TRUE)
         dir.create(this)
         ## system(paste("cp -pr", file.path(d, "*"), this))
@@ -308,7 +307,7 @@ testInstalledPackage <-
             else paste("LANGUAGE=C", cmd)
            res <- system(cmd)
             if (res) {
-                file.rename(outfile, paste(outfile, "fail", sep="."))
+                file.rename(outfile, paste(outfile, "fail", sep = "."))
                 return(invisible(1L))
             }
             savefile <- paste(outfile, "save", sep = "." )
@@ -387,7 +386,7 @@ testInstalledPackage <-
         t2 <- proc.time()
         print_time(t1, t2, Log)
         if (res) {
-            file.rename(outfile, paste(outfile, "fail", sep="."))
+            file.rename(outfile, paste(outfile, "fail", sep = "."))
             return(1L)
         }
         savefile <- paste(outfile, "save", sep = "." )
@@ -519,7 +518,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         } else cmd <- paste(extra, cmd)
         res <- system(cmd)
         if (res) {
-            file.rename(outfile, paste(outfile, "fail", sep="."))
+            file.rename(outfile, paste(outfile, "fail", sep = "."))
             message("FAILED")
             return(1L)
         }
@@ -609,7 +608,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
     ## unloading 'grid' kills all devices
     ## tcltk is unhappy to have its DLL unloaded repeatedly
     exclusions <- c("grid", "tcltk")
-    exclusions <- paste("package", exclusions, sep=":")
+    exclusions <- paste("package", exclusions, sep = ":")
     while(length(deps)) {
         unl <- unlist(deps)
         for(i in seq_along(deps)) {
@@ -664,7 +663,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
                 "Copyright (C) 2000-2010 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
-                sep="\n")
+                sep = "\n")
             do_exit()
         }
         Usage()

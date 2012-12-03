@@ -181,8 +181,9 @@ addmargins <-
     ##
     if(!quiet && !miss.FUN && n.sid > 1) {
 	cat("Margins computed over dimensions\nin the following order:\n")
+        ## FIXME: what is paste(i) supposed to do?
 	for(i in seq_len(n.sid))
-	    cat(paste(i), ": ", names(dimnames(A))[margin[i]], "\n", sep="")
+	    cat(paste(i), ": ", names(dimnames(A))[margin[i]], "\n", sep = "")
     }
     new.A
 }

@@ -50,11 +50,10 @@ pdf_bytes_digits <-
     charToRaw("0123456789")
 
 pdf_bytes_in_keywords <-
-    charToRaw(paste("*'\"",
+    charToRaw(paste0("*'\"",
                     "0123456789",
                     paste(LETTERS, collapse = ""),
-                    paste(letters, collapse = ""),
-                    sep = ""))
+                    paste(letters, collapse = "")))
 
 pdf_bytes_in_numerics_not_digits <-
     charToRaw("+-.")
@@ -73,7 +72,7 @@ do.call(rbind,
              "B5" =        c( 516L,  729L),
              "letter" =    c( 612L,  792L),
              "tabloid" =   c( 792L, 1224L),
-             "ledger"=     c(1224L,  792L),
+             "ledger" =    c(1224L,  792L),
              "legal" =     c( 612L, 1008L),
              "statement" = c( 396L,  612L),
              "executive" = c( 540L,  720L),

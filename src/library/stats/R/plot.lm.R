@@ -127,7 +127,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
     if (show[1L]) {
 	ylim <- range(r, na.rm=TRUE)
 	if(id.n > 0)
-	    ylim <- extendrange(r= ylim, f = 0.08)
+	    ylim <- extendrange(r = ylim, f = 0.08)
         dev.hold()
 	plot(yh, r, xlab = l.fit, ylab = "Residuals", main = main,
 	     ylim = ylim, type = "n", ...)
@@ -194,7 +194,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
  	rsp <- dropInf( r.w/(s * sqrt(1 - hii)), hii )
 	ylim <- range(rsp, na.rm = TRUE)
 	if (id.n > 0) {
-	    ylim <- extendrange(r= ylim, f = 0.08)
+	    ylim <- extendrange(r = ylim, f = 0.08)
 	    show.rsp <- order(-cook)[iid]
 	}
         do.plot <- TRUE

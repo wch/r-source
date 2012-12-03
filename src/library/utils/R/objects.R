@@ -17,7 +17,7 @@
 #  http://www.r-project.org/Licenses/
 
 ## findGeneric(fname) :  is 'fname' the name of an S3 generic ?
-##			[internal function used only in this file]
+##			[unexported function used only in this file]
 findGeneric <- function(fname, envir)
 {
     if(!exists(fname, mode = "function", envir = envir)) return("")
@@ -453,11 +453,11 @@ print.getAnywhere <- function(x, ...)
 }
 
 argsAnywhere <- function(x) {
-        name<-as.character(substitute(x))
-        fs<-do.call(getAnywhere, list(name))
-        if (sum(!fs$dups)==0)
+        name <- as.character(substitute(x))
+        fs <- do.call(getAnywhere, list(name))
+        if (sum(!fs$dups) == 0L)
             return(NULL)
-        if (sum(!fs$dups)>1)
+        if (sum(!fs$dups) > 1L)
             sapply(fs$objs[!fs$dups],
                    function(f) if (is.function(f)) args(f))
         else args(fs$objs[[1L]])

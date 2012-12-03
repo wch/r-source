@@ -42,7 +42,7 @@ function(..., domain = NULL, appendLF = TRUE)
     }
     defaultHandler <- function(c) {
         ## Maybe use special connection here?
-        cat(conditionMessage(c), file=stderr(), sep="")
+        cat(conditionMessage(c), file=stderr(), sep = "")
     }
     withRestarts({
         signalCondition(cond)

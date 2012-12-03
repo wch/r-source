@@ -613,7 +613,7 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
 	if(inherits(o, "error")) {
 	    cat(## FIXME: only works with "C" (or English) LC_MESSAGES locale!
 		if(length(grep("missing|not found", o$message)))
-		"<missing>" else o$message, "\n", sep = '')
+		"<missing>" else o$message, "\n", sep = "")
 	}
 	else
 	    do.call(str, c(list(o), strargs),

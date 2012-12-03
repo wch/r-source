@@ -37,13 +37,12 @@ newPSOCKnode <- function(machine = "localhost", ...,
     useXDR <- getClusterOption("useXDR", options)
 
     ## build the local command for starting the worker
-    env <- paste("MASTER=", master,
+    env <- paste0("MASTER=", master,
                  " PORT=", port,
                  " OUT=", outfile,
                  " TIMEOUT=", timeout,
                  " METHODS=", methods,
-                 " XDR=", useXDR,
-                 sep="")
+                 " XDR=", useXDR)
     arg <- "parallel:::.slaveRSOCK()"
     rscript <- if (getClusterOption("homogeneous", options)) {
         shQuote(getClusterOption("rscript", options))

@@ -58,7 +58,7 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
 	    update <- readMyLine("The following installed packages are out-of-date:\n",
 				 paste(strwrap(rownames(old),
 					       width = 0.7 *getOption("width"),
-					       indent= 0.15*getOption("width")),
+					       indent = 0.15*getOption("width")),
 				       collapse="\n"),
 				 "would you like to update now?")
 	    if (yes(update)) update.packages(oldPkgs = old, ask = FALSE)

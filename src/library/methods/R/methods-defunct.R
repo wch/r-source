@@ -25,9 +25,9 @@ trySilent <- function(expr) .Defunct("try(silent = TRUE)")
 
 ## <entry>
 ## Defunct in 2.16.0
-traceOn <-function(what, tracer = browseAll, exit = NULL) {
+traceOn <- function(what, tracer = browseAll, exit = NULL) {
     browseAll <- function() .Defunct()
     .Defunct("trace")
 }
-traceOff <-function(whatL) .Defunct("untrace")
+traceOff <- function(whatL) .Defunct("untrace")
 ## </entry>

@@ -36,8 +36,7 @@ httpd <- function(path, query, ...)
         if(!length(files))
             out <- c(out, gettext("No files in this directory"))
         else {
-            urls <- paste('<a href="', base, '/', files, '">', files, '</a>',
-                          sep = "")
+            urls <- paste0('<a href="', base, '/', files, '">', files, '</a>')
             out <- c(out, "<dl>",
                      paste0("<dd>", mono(iconv(urls, "", "UTF-8")), "</dd>"),
                      "</dl>")
@@ -180,7 +179,7 @@ httpd <- function(path, query, ...)
                "pdf" = "application/pdf",
                "eps" =,
                "ps" = "application/postscript", # in GLMMGibbs, mclust
-               "sgml"= "text/sgml", # in RGtk2
+               "sgml" = "text/sgml", # in RGtk2
                "xml" = "text/xml",  # in RCurl
                "text/plain")
     }
@@ -192,10 +191,7 @@ httpd <- function(path, query, ...)
 
     error_page <- function(msg)
         list(payload =
-             paste(HTMLheader("httpd error"),
-                   msg,
-                   "\n</body></html>",
-                   sep = ""))
+             paste0(HTMLheader("httpd error"), msg, "\n</body></html>"))
 
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
     if (grepl("R\\.css$", path) && !grepl(cssRegexp, path))
@@ -243,17 +239,17 @@ httpd <- function(path, query, ...)
 	    return(list(payload = error_page(msg)))
 	} else if (length(file) == 1L) {
 	    path <- dirname(dirname(file))
-	    file <- paste('../../', basename(path), '/html/',
-                          basename(file), '.html', sep='')
+	    file <- paste0('../../', basename(path), '/html/',
+                           basename(file), '.html')
             ## cat("redirect to", file, "\n")
             ## We need to do this because there are static HTML pages
             ## with links to "<file>.html" for topics in the same
             ## package, and if we served one of such a page as a link from
             ## a different package those links on the page would not work.
-	    return(list(payload = paste('Redirect to <a href="', file, '">"',
-                        basename(file), '"</a>', sep=''),
+	    return(list(payload = paste0('Redirect to <a href="', file, '">"',
+                                         basename(file), '"</a>'),
 	    		"content-type" = 'text/html',
-	    		header = paste('Location: ', file, sep=''),
+	    		header = paste0('Location: ', file),
 	    		"status code" = 302L)) # temporary redirect
 	} else if (length(file) > 1L) {
             paths <- dirname(dirname(file))
@@ -272,7 +268,7 @@ httpd <- function(path, query, ...)
                               basename(paths),
                               '/html/00Index.html">', basename(paths),
                               '</a> in library ', dirname(paths), ")</dd>",
-                              sep="", collapse="\n")
+                              sep = "", collapse = "\n")
 
             return(list(payload =
                         paste("<p>",
@@ -282,7 +278,7 @@ httpd <- function(path, query, ...)
                                                "Help on topic '%s' was found in the following packages:"
                                                ), topic),
                               "</p><dl>\n",
-                              packages, "</dl>", sep="", collapse="\n")
+                              packages, "</dl>", sep = "", collapse = "\n")
                         ))
         }
     } else if (grepl(fileRegexp, path)) {
@@ -331,16 +327,16 @@ httpd <- function(path, query, ...)
                               try.all.packages = TRUE)
                 if (length(files)) {
                     path <- dirname(dirname(files))
-                    files <- paste('/library/', basename(path), '/html/',
-                                   basename(files), '.html', sep='')
+                    files <- paste0('/library/', basename(path), '/html/',
+                                    basename(files), '.html')
                     msg <- c(msg, "<br>",
                              "However, you might be looking for one of",
                              "<p></p>",
-                             paste('<p><a href="', files, '">',
-                                   mono(files), "</a></p>", sep="")
+                             paste0('<p><a href="', files, '">',
+                                    mono(files), "</a></p>")
                              )
                 }
-                return(error_page(paste(msg, collapse ="\n")))
+                return(error_page(paste(msg, collapse = "\n")))
             }
             helpdoc <- tmp
         }
@@ -369,8 +365,7 @@ httpd <- function(path, query, ...)
             file <- paste0(docdir, rest)
             if(isTRUE(file.info(file)$isdir))
                 return(.HTMLdirListing(file,
-                                       paste("/library/", pkg, "/doc", rest,
-                                             sep = ""),
+                                       paste0("/library/", pkg, "/doc", rest),
                                        up))
             else
                 return(list(file = file, "content-type" = mime_type(rest)))
@@ -383,13 +378,13 @@ httpd <- function(path, query, ...)
     } else if (grepl(demoRegexp, path)) {
     	pkg <- sub(demoRegexp, "\\1", path)
 
-    	url <- paste("http://127.0.0.1:", httpdPort,
+    	url <- paste0("http://127.0.0.1:", httpdPort,
                       "/doc/html/Search?package=",
-                      pkg, "&agrep=FALSE&types=demo", sep="")
-    	return(list(payload = paste('Redirect to <a href="', url,
-    				'">help.search()</a>', sep=''),
+                      pkg, "&agrep=FALSE&types=demo")
+    	return(list(payload = paste0('Redirect to <a href="', url,
+    				'">help.search()</a>'),
 		    		"content-type" = 'text/html',
-		    		header = paste('Location: ', url, sep=''),
+		    		header = paste0('Location: ', url),
 	    		"status code" = 302L)) # temporary redirect
     } else if (grepl(demosRegexp, path)) {
 	    pkg <- sub(demosRegexp, "\\1", path)
@@ -401,11 +396,11 @@ httpd <- function(path, query, ...)
     	pkg <- sub(DemoRegexp, "\\1", path)
     	demo <- sub(DemoRegexp, "\\2", path)
     	demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
-	return( list(payload = paste("Demo '", pkg, "::", demo,
+	return( list(payload = paste0("Demo '", pkg, "::", demo,
 				"' was run in the console.",
 				" To repeat, type 'demo(",
 				pkg, "::", demo,
-				")' in the console.", sep="")) )
+				")' in the console.")) )
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)
     	formatted <- toHTML(news(package = pkg),

@@ -88,11 +88,11 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
               }
               if (is.null(uci)) {
                   u[u < 0] <- NA
-                  uci <- min(sigma[which(u == min(u, na.rm=TRUE))])
+                  uci <- min(sigma[which(u == min(u, na.rm = TRUE))])
               }
               if (is.null(lci)) {
                   l[l <= 0] <- NA
-                  lci <- max(sigma[which(l == min(l, na.rm=TRUE))])
+                  lci <- max(sigma[which(l == min(l, na.rm = TRUE))])
               }
               ## The process of the statistics does not need to be
               ## monotone in sigma: check this and interchange quantiles.
@@ -100,9 +100,9 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                   l <- absigma - qansari(alpha/2,  m, n)
                   u <- absigma - qansari(1 - alpha/2, m, n)
                   u[u < 0] <- NA
-                  uci <- min(sigma[which(u == min(u, na.rm=TRUE))])
+                  uci <- min(sigma[which(u == min(u, na.rm = TRUE))])
                   l[l <= 0] <- NA
-                  lci <- max(sigma[which(l == min(l, na.rm=TRUE))])
+                  lci <- max(sigma[which(l == min(l, na.rm = TRUE))])
                }
                c(uci, lci)
             }
@@ -117,13 +117,9 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 absigma <-
                     sapply(sigma + c(diff(sigma)/2,
                                      sigma[length(sigma)]*1.01), ab)
-                switch(alternative, two.sided = {
-                    cci(alpha)
-                }, greater= {
-                    c(cci(alpha*2)[1L], Inf)
-                }, less= {
-                    c(0, cci(alpha*2)[2L])
-                })
+                switch(alternative, two.sided = cci(alpha),
+                       greater = c(cci(alpha*2)[1L], Inf),
+                       less = c(0, cci(alpha*2)[2L]))
             }
             attr(cint, "conf.level") <- conf.level
             u <- absigma - qansari(0.5, m, n)
@@ -210,13 +206,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     sort(c(u, l))
                 }
                 srange <- range(c(srangepos, srangeneg), na.rm=FALSE)
-                cint <- switch(alternative, two.sided = {
-                    ccia(alpha)
-                }, greater= {
-                    c(ccia(alpha*2)[1L], Inf)
-                }, less= {
-                    c(0, ccia(alpha*2)[2L])
-                })
+                cint <- switch(alternative,
+                               two.sided = ccia(alpha),
+                               greater = c(ccia(alpha*2)[1L], Inf),
+                               less = c(0, ccia(alpha*2)[2L]) )
                 attr(cint, "conf.level") <- conf.level
                 ## Check if the statistic exceeds both quantiles first.
                 statu <- ab2(srange[1L], zq=0)

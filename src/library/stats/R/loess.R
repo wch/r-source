@@ -107,7 +107,7 @@ simpleLoess <-
     storage.mode(weights) <- "double"
     max.kd <-  max(N, 200)
     robust <- rep(1, N)
-    divisor<- rep(1, D)
+    divisor <- rep(1, D)
     if(normalize && D > 1L) {
 	trim <- ceiling(0.1 * N)
 	divisor <-
@@ -134,7 +134,7 @@ simpleLoess <-
 	else if(surface == "interpolate" && statistics == "approximate")
 	    statistics <- if(trace.hat == "exact") "1.approx"
             else "2.approx" # trace.hat == "approximate"
-	surf.stat <- paste(surface, statistics, sep="/")
+	surf.stat <- paste(surface, statistics, sep = "/")
         if (length(span) != 1L) stop("invalid argument 'span'")
         if (length(cell) != 1L) stop("invalid argument 'cell'")
         if (length(degree) != 1L) stop("invalid argument 'degree'")
@@ -503,8 +503,8 @@ anova.loess <- function(object, ...)
     ans <- data.frame(ENP = round(enp,2L), RSS = rss, "F-value" = Fvalue,
 		      "Pr(>F)" = pr, check.names = FALSE)
     attr(ans, "heading") <-
-	paste(descr, "\n\n", "Analysis of Variance:   denominator df ",
-	      format(round(dfden, 2L)), "\n", sep = "")
+	paste0(descr, "\n\n", "Analysis of Variance:   denominator df ",
+               format(round(dfden, 2L)), "\n")
     class(ans) <- c("anova", "data.frame")
     ans
 }

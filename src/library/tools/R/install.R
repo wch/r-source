@@ -132,7 +132,7 @@
             paste0("for this one it is ",
                    ifelse(static_html, "--html", "--no-html"), "."),
             "",
-            "Report bugs at bugs.r-project.org .", sep="\n")
+            "Report bugs at bugs.r-project.org .", sep = "\n")
     }
 
     do_cleanup <- function()
@@ -479,7 +479,7 @@
             args <- c(shargs, "-o", paste0(pkg_name, SHLIB_EXT), srcs)
             if (WINDOWS && debug) args <- c(args, "--debug")
             if (debug) message("about to run ",
-                               "R CMD SHLIB ", paste(args, collapse= " "),
+                               "R CMD SHLIB ", paste(args, collapse = " "),
                                domain = NA)
             if (.shlib_internal(args) == 0L) {
                 if(WINDOWS) {
@@ -499,7 +499,7 @@
             ## FIXME: is this needed?
             ## set R_LIBS to include the current installation directory
             rlibs <- Sys.getenv("R_LIBS")
-            rlibs <- if (nzchar(rlibs)) paste(lib, rlibs, sep=.Platform$path.sep) else lib
+            rlibs <- if (nzchar(rlibs)) paste(lib, rlibs, sep = .Platform$path.sep) else lib
             Sys.setenv(R_LIBS = rlibs)
             ## This is needed
             .libPaths(c(lib, .libPaths()))
@@ -647,7 +647,7 @@
                 paths <- find.package(lpkgs, quiet=TRUE)
                 if (length(paths)) {
                     clink_cppflags <- paste(paste0('-I"', paths, '/include"'),
-                                            collapse=" ")
+                                            collapse = " ")
                     Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
                 }
             } else clink_cppflags <- ""
@@ -736,7 +736,7 @@
                                    if(file.exists(site)) site,
                                    "Makefile")
                     if (file.exists(f <- path.expand(paste("~/.R/Makevars",
-                                                           Sys.getenv("R_PLATFORM"), sep="-"))))
+                                                           Sys.getenv("R_PLATFORM"), sep = "-"))))
                         makefiles <- c(makefiles, f)
                     else if (file.exists(f <- path.expand("~/.R/Makevars")))
                         makefiles <- c(makefiles, f)
@@ -804,7 +804,7 @@
                 olddesc <- grep("^Archs:", olddesc,
                                 invert = TRUE, value = TRUE, useBytes = TRUE)
                 newdesc <- c(olddesc,
-                             paste("Archs:", paste(dirs, collapse=", "))
+                             paste("Archs:", paste(dirs, collapse = ", "))
                              )
                 writeLines(newdesc, descfile, useBytes = TRUE)
             }
@@ -1157,7 +1157,7 @@
     if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
-        args <- paste(args, collapse=" ")
+        args <- paste(args, collapse = " ")
         args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     }
     args0 <- args
@@ -1224,7 +1224,7 @@
                 "Copyright (C) 2000-2010 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
-                sep="\n")
+                sep = "\n")
             q("no", runLast = FALSE)
         } else if (a %in% c("-c", "--clean")) {
             clean <- TRUE
@@ -1478,7 +1478,7 @@
         if (WINDOWS) {
             ## file.access is unreliable on Windows
             ## the only known reliable way is to try it
-            fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep="_"))
+            fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep = "_"))
             unlink(fn, recursive = TRUE) # precaution
             res <- try(dir.create(fn, showWarnings = FALSE))
             if (inherits(res, "try-error") || !res) ok <- FALSE
@@ -1551,14 +1551,14 @@
 
     if (debug)
         starsmsg(stars, "build_help_types=",
-                 paste(build_help_types, collapse=" "))
+                 paste(build_help_types, collapse = " "))
 
     if (debug)
         starsmsg(stars, "DBG: 'R CMD INSTALL' now doing do_install()")
 
     for(pkg in allpkgs) {
         if (pkglock) {
-            lockdir <- file.path(lib, paste("00LOCK", basename(pkg), sep="-"))
+            lockdir <- file.path(lib, paste("00LOCK", basename(pkg), sep = "-"))
             mk_lockdir(lockdir)
         }
         do_install(pkg)
@@ -1598,10 +1598,10 @@
             "  -d, --debug		build a debug DLL",
             "",
             "Report bugs at bugs@r-project.org .",
-            sep="\n")
+            sep = "\n")
 
     ## FIXME shQuote here?
-    p1 <- function(...) paste(..., collapse=" ")
+    p1 <- function(...) paste(..., collapse = " ")
 
     WINDOWS <- .Platform$OS.type == "windows"
     if (!WINDOWS) {
@@ -1663,7 +1663,7 @@
                 "Copyright (C) 2000-2011 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
-                sep="\n")
+                sep = "\n")
             return(0L)
         } else if (a %in% c("-n", "--dry-run")) {
             dry_run <- TRUE
@@ -1715,7 +1715,7 @@
         args <- args[-1L]
     }
 
-    if (length(objs)) objs <- paste0(objs, OBJ_EXT, collapse=" ")
+    if (length(objs)) objs <- paste0(objs, OBJ_EXT, collapse = " ")
 
     if (WINDOWS) {
         if (rarch == "/x64" &&
@@ -1728,7 +1728,7 @@
     } else {
         if (file.exists(f <- path.expand(paste("~/.R/Makevars",
                                                Sys.getenv("R_PLATFORM"),
-                                               sep="-"))))
+                                               sep = "-"))))
             makefiles <- c(makefiles, f)
         else if (file.exists(f <- path.expand("~/.R/Makevars")))
             makefiles <- c(makefiles, f)
@@ -1812,9 +1812,9 @@
         cat(paste(HTMLheader(title, Rhome="../../..",
                              up="../../../doc/html/packages.html",
                              css = "R.css"),
-                  collapse="\n"),
+                  collapse = "\n"),
            '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
-            version, '</h2>\n\n', sep ='', file = conn)
+            version, '</h2>\n\n', sep = "", file = conn)
 
 	cat('<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>\n', file=conn)
 	if (file.exists(file.path(outDir, "doc")))
@@ -1822,13 +1822,13 @@
 		'browse <a href="../doc">directory</a>.</li>\n', file=conn)
 	if (file.exists(file.path(outDir, "demo")))
 	    cat('<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>\n',
-		 sep = '', file=conn)
+		 sep = "", file=conn)
 	if (file.exists(file.path(outDir, "NEWS")))
 	    cat('<li><a href="../NEWS">Package NEWS</a>.</li>\n',
-		 sep = '', file=conn)
+		 sep = "", file=conn)
 
         cat('</ul>\n\n<h2>Help Pages</h2>\n\n\n',
-            sep ='', file = conn)
+            sep ="", file = conn)
     }
 
     firstLetterCategory <- function(x)
@@ -1994,7 +1994,7 @@
             shown <<- TRUE
         }
         ## 'example' is always last, so 5+space
-        cat(type, rep(" ", max(0L, 6L - nchar(type))), sep="")
+        cat(type, rep(" ", max(0L, 6L - nchar(type))), sep = "")
     }
 
     dirname <- c("html", "latex", "R-ex")
@@ -2009,7 +2009,7 @@
     for(type in types)
         dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
 
-    cat("  converting help for package ", sQuote(pkg), "\n", sep="")
+    cat("  converting help for package ", sQuote(pkg), "\n", sep = "")
 
     ## FIXME: add this lib to lib.loc?
     if ("html" %in% types) {
@@ -2149,7 +2149,7 @@ function(name="", version = "0.0")
                  '        BLOCK "040904E4"',
                  '        BEGIN'))
     cat("            VALUE \"FileDescription\", \"DLL for R package `", name,"'\\0\"\n",
-        "            VALUE \"FileVersion\", \"", version, "\\0\"\n", sep="")
+        "            VALUE \"FileVersion\", \"", version, "\\0\"\n", sep = "")
     writeLines(c(
                  '            VALUE "Compiled under R Version", R_MAJOR "." R_MINOR " (" R_YEAR "-" R_MONTH "-" R_DAY ")\\0"',
                  '            VALUE "Project info", "http://www.r-project.org\\0"',

@@ -84,7 +84,7 @@ splineDesign <-
     ## stopifnot(length(ii) == length(jj))
 
     if(sparse) {
-	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
+	if(is.null(tryCatch(loadNamespace("Matrix"), error = function(e)NULL)))
 	    stop(gettextf("%s needs package 'Matrix' correctly installed",
                           "splineDesign(*, sparse=TRUE)"),
                  domain = NA)

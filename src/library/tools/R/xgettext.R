@@ -96,7 +96,7 @@ function(dir, verbose = FALSE, asCall = TRUE)
 print.xgettext <-
 function(x, ...)
 {
-    cat(x, sep="\n")
+    cat(x, sep = "\n")
     invisible(x)
 }
 
@@ -106,7 +106,7 @@ function(x, ...)
     lapply(x, function(x)
            cat("\nmsgid        = ", x[1L],
                "\nmsgid_plural = ", x[2L],
-               "\n", sep=""))
+               "\n", sep = ""))
     invisible(x)
 }
 

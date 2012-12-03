@@ -20,9 +20,9 @@
 
 
 .Tcl <- function(...)
-    structure(.External(.C_dotTcl, ...), class="tclObj")
+    structure(.External(.C_dotTcl, ...), class = "tclObj")
 .Tcl.objv <- function(objv)
-    structure(.External(.C_dotTclObjv, objv), class="tclObj")
+    structure(.External(.C_dotTclObjv, objv), class = "tclObj")
 
 .Tcl.callback <- function(...)
     .External(.C_dotTclcallback, ...)
@@ -53,7 +53,7 @@
 
     makeCallback <- function(x, e) {
 	if (is.expression(x))
-	    paste(lapply(x,makeAtomicCallback, e),collapse=";")
+	    paste(lapply(x, makeAtomicCallback, e), collapse = ";")
 	else
 	    makeAtomicCallback(x, e)
     }
@@ -66,11 +66,11 @@
 	if (inherits(x,"tclVar")) return(ls(unclass(x)$env))
         if (isCallback(x)){
 	    # Jump through some hoops to protect from GC...
-	    ref <- local({value<-x; envir<-pframe; environment()})
-            callback <- makeCallback(get("value",envir=ref),
-		                     get("envir",envir=ref))
+	    ref <- local({value <- x; envir <- pframe; environment()})
+            callback <- makeCallback(get("value",envir = ref),
+		                     get("envir",envir = ref))
 	    callback <- paste("{", callback, "}")
-            assign(callback, ref, envir=current.win$env)
+            assign(callback, ref, envir = current.win$env)
             return(callback)
         }
         ## quoting hell...
@@ -98,12 +98,12 @@
     ## resort .TkRoot. What a mess!
 
     current.win <-
-        if (exists("win", envir=parent.frame()))
-            get("win", envir=parent.frame())
+        if (exists("win", envir = parent.frame()))
+            get("win", envir = parent.frame())
         else .TkRoot
 
     val <- sapply(val, val2string)
-    paste(as.vector(rbind(nm, val)), collapse=" ")
+    paste(as.vector(rbind(nm, val)), collapse = " ")
 }
 
 .Tcl.args.objv <- function(...) {
@@ -133,7 +133,7 @@
 
     makeCallback <- function(x, e) {
 	if (is.expression(x))
-	    paste(lapply(x,makeAtomicCallback, e),collapse=";")
+	    paste(lapply(x,makeAtomicCallback, e),collapse = ";")
 	else
 	    makeAtomicCallback(x, e)
     }
@@ -146,13 +146,13 @@
 	if (inherits(x,"tclVar")) return(as.tclObj(ls(unclass(x)$env)))
         if (isCallback(x)){
 	    # Jump through some hoops to protect from GC...
-	    ref <- local({value<-x; envir<-pframe; environment()})
-            callback <- makeCallback(get("value",envir=ref),
-		                     get("envir",envir=ref))
-            assign(callback, ref, envir=current.win$env)
-            return(as.tclObj(callback, drop=TRUE))
+	    ref <- local({value <- x; envir < -pframe; environment()})
+            callback <- makeCallback(get("value",envir = ref),
+		                     get("envir",envir = ref))
+            assign(callback, ref, envir = current.win$env)
+            return(as.tclObj(callback, drop = TRUE))
         }
-        as.tclObj(x, drop=TRUE)
+        as.tclObj(x, drop = TRUE)
     }
 
     val <- list(...)
@@ -171,37 +171,37 @@
 
 .Tk.ID <- function(win) win$ID
 
-.Tk.newwin <- function(ID){
-    win <- list(ID=ID, env=evalq(new.env(),.GlobalEnv))
+.Tk.newwin <- function(ID) {
+    win <- list(ID = ID, env = evalq(new.env(), .GlobalEnv))
     evalq(num.subwin <- 0, win$env)
     class(win) <- "tkwin"
     win
 }
 
 .Tk.subwin <- function(parent) {
-    ID <- paste(parent$ID,evalq(num.subwin<-num.subwin+1, parent$env),
-                sep=".")
-    win<-.Tk.newwin(ID)
-    assign(ID, win, envir=parent$env)
-    assign("parent", parent, envir=win$env)
+    ID <- paste(parent$ID, evalq(num.subwin <- num.subwin + 1, parent$env),
+                sep = ".")
+    win <- .Tk.newwin(ID)
+    assign(ID, win, envir = parent$env)
+    assign("parent", parent, envir = win$env)
     win
 }
 
 tkdestroy  <- function(win) {
     tcl("destroy", win)
     ID <- .Tk.ID(win)
-    env <- get("parent", envir=win$env)$env
-    if (exists(ID, envir=env, inherits=FALSE))
-        rm(list=ID, envir=env)
+    env <- get("parent", envir = win$env)$env
+    if (exists(ID, envir = env, inherits = FALSE))
+        rm(list = ID, envir = env)
 }
 
 is.tkwin <- function(x) inherits(x, "tkwin")
 
-tclVar <- function(init="") {
+tclVar <- function(init = "") {
    n <- evalq(TclVarCount <- TclVarCount + 1, .TkRoot$env)
    name <- paste0("::RTcl", n)
-   l <- list(env=new.env())
-   assign(name,NULL,envir=l$env)
+   l <- list(env = new.env())
+   assign(name,NULL,envir = l$env)
    reg.finalizer(l$env,function(env)tcl("unset",ls(env)))
    class(l)<-"tclVar"
    tclvalue(l) <- init
@@ -263,7 +263,7 @@ as.raw.tclObj <- function(x, ...)
 
 is.tclObj <- function(x) inherits(x, "tclObj")
 
-as.tclObj <- function(x, drop=FALSE) {
+as.tclObj <- function(x, drop = FALSE) {
     if (is.tclObj(x)) return(x)
     z <- switch(storage.mode(x),
                 character = .External(.C_RTcl_ObjFromCharVector, x, drop),
@@ -286,7 +286,7 @@ tclServiceMode <- function(on = NULL)
 #----
 
 .TkRoot <- .Tk.newwin("")
-tclvar  <- structure(NULL,class="tclvar")
+tclvar  <- structure(NULL,class = "tclvar")
 evalq(TclVarCount <- 0, .TkRoot$env)
 
 
@@ -335,13 +335,13 @@ ttksizegrip    <- function(parent, ...) tkwidget(parent, "ttk::sizegrip", ...)
 ttktreeview    <- function(parent, ...) tkwidget(parent, "ttk::treeview", ...)
 
 
-tktoplevel    <- function(parent=.TkRoot,...) {
+tktoplevel    <- function(parent = .TkRoot,...) {
     w <- tkwidget(parent,"toplevel",...)
     ID <- .Tk.ID(w)
     tkbind(w, "<Destroy>",
            function() {
-               if (exists(ID, envir=parent$env, inherits=FALSE))
-                   rm(list=ID, envir=parent$env)
+               if (exists(ID, envir = parent$env, inherits = FALSE))
+                   rm(list = ID, envir = parent$env)
                tkbind(w, "<Destroy>","")
            })
     w
@@ -391,7 +391,7 @@ tkgrab.set     <- function(...) tcl("grab", "set", ...)
 tkgrab.status  <- function(...) tcl("grab", "status", ...)
 
 tkimage.cget     <- function(...) tcl("image","cget",...)
-tkimage.configure<- function(...) tcl("image","configure",...)
+tkimage.configure <- function(...) tcl("image","configure",...)
 tkimage.create   <- function(...) tcl("image","create",...)
 tkimage.names    <- function(...) tcl("image","names",...)
 
@@ -403,13 +403,13 @@ tkXselection.handle <- function(...) tcl("selection", "handle", ...)
 tkXselection.own    <- function(...) tcl("selection", "own", ...)
 
 tkwait.variable  <- function(...) tcl("tkwait", "variable", ...)
-tkwait.visibility<- function(...) tcl("tkwait", "visibility", ...)
+tkwait.visibility <- function(...) tcl("tkwait", "visibility", ...)
 tkwait.window    <- function(...) tcl("tkwait", "window", ...)
 
 ## Standard dialogs
 tkgetOpenFile    <- function(...) tcl("tk_getOpenFile", ...)
 tkgetSaveFile    <- function(...) tcl("tk_getSaveFile", ...)
-tkchooseDirectory<- function(...) tcl("tk_chooseDirectory", ...)
+tkchooseDirectory <- function(...) tcl("tk_chooseDirectory", ...)
 tkmessageBox     <- function(...) tcl("tk_messageBox", ...)
 tkdialog         <- function(...) tcl("tk_dialog", ...)
 tkpopup          <- function(...) tcl("tk_popup", ...)
@@ -449,7 +449,7 @@ tkwm.iconposition    <- function(...) tcl("wm", "iconposition", ...)
 tkwm.iconwindow      <- function(...) tcl("wm", "iconwindow ", ...)
 tkwm.maxsize         <- function(...) tcl("wm", "maxsize", ...)
 tkwm.minsize         <- function(...) tcl("wm", "minsize", ...)
-tkwm.overrideredirect<- function(...) tcl("wm", "overrideredirect", ...)
+tkwm.overrideredirect <- function(...) tcl("wm", "overrideredirect", ...)
 tkwm.positionfrom    <- function(...) tcl("wm", "positionfrom", ...)
 tkwm.protocol        <- function(...) tcl("wm", "protocol", ...)
 tkwm.resizable       <- function(...) tcl("wm", "resizable", ...)
@@ -513,7 +513,7 @@ tkdeselect      <- function(widget, ...) tcl(widget, "deselect", ...)
 tkdlineinfo     <- function(widget, ...) tcl(widget, "dlineinfo", ...)
 tkdtag          <- function(widget, ...) tcl(widget, "dtag", ...)
 tkdump          <- function(widget, ...) tcl(widget, "dump", ...)
-tkentryconfigure<- function(widget, ...) tcl(widget, "entryconfigure", ...)
+tkentryconfigure <- function(widget, ...) tcl(widget, "entryconfigure", ...)
 tkentrycget     <- function(widget, ...) tcl(widget, "entrycget", ...)
 tkfind          <- function(widget, ...) tcl(widget, "find", ...)
 tkflash         <- function(widget, ...) tcl(widget, "flash", ...)
@@ -583,17 +583,17 @@ tktag.ranges    <- function(widget, ...) tcl(widget, "tag", "ranges", ...)
 tktag.remove    <- function(widget, ...) tcl(widget, "tag", "remove", ...)
 tktype          <- function(widget, ...) tcl(widget, "type", ...)
 tkunpost        <- function(widget, ...) tcl(widget, "unpost", ...)
-tkwindow.cget     <-function(widget, ...)tcl(widget, "window", "cget", ...)
-tkwindow.configure<-function(widget, ...)tcl(widget,"window","configure",...)
-tkwindow.create   <-function(widget, ...)tcl(widget, "window", "create", ...)
-tkwindow.names    <-function(widget, ...)tcl(widget, "window", "names", ...)
+tkwindow.cget   <- function(widget, ...) tcl(widget, "window", "cget", ...)
+tkwindow.configure <- function(widget, ...) tcl(widget,"window","configure",...)
+tkwindow.create  <- function(widget, ...) tcl(widget, "window", "create", ...)
+tkwindow.names  <- function(widget, ...) tcl(widget, "window", "names", ...)
 tkxview         <- function(widget, ...) tcl(widget, "xview", ...)
-tkxview.moveto  <- function(widget, ...)tcl(widget, "xview", "moveto", ...)
-tkxview.scroll  <-function(widget, ...)tcl(widget, "xview", "scroll", ...)
+tkxview.moveto  <- function(widget, ...) tcl(widget, "xview", "moveto", ...)
+tkxview.scroll  <- function(widget, ...) tcl(widget, "xview", "scroll", ...)
 tkyposition     <- function(widget, ...) tcl(widget, "ypositions", ...)
 tkyview         <- function(widget, ...) tcl(widget, "yview", ...)
-tkyview.moveto  <- function(widget, ...)tcl(widget, "yview", "moveto", ...)
-tkyview.scroll  <- function(widget, ...)tcl(widget, "yview", "scroll", ...)
+tkyview.moveto  <- function(widget, ...) tcl(widget, "yview", "moveto", ...)
+tkyview.scroll  <- function(widget, ...) tcl(widget, "yview", "scroll", ...)
 
 
 
@@ -607,19 +607,19 @@ tkpager <- function(file, header, title, delete.file)
         tkwm.title(tt, if (length(title))
                    title[(i-1L) %% length(title)+1L] else "")
 ###        courier font comes out awfully small on some systems
-###        txt <- tktext(tt, bg="grey90", font="courier")
-        txt <- tktext(tt, bg="grey90")
-        scr <- tkscrollbar(tt, repeatinterval=5,
-                           command=function(...)tkyview(txt,...))
-	tkconfigure(txt,yscrollcommand=function(...)tkset(scr,...))
-        tkpack(txt, side="left", fill="both", expand=TRUE)
-        tkpack(scr, side="right", fill="y")
+###        txt <- tktext(tt, bg = "grey90", font = "courier")
+        txt <- tktext(tt, bg = "grey90")
+        scr <- tkscrollbar(tt, repeatinterval = 5,
+                           command = function(...)tkyview(txt,...))
+	tkconfigure(txt,yscrollcommand = function(...)tkset(scr,...))
+        tkpack(txt, side = "left", fill = "both", expand = TRUE)
+        tkpack(scr, side = "right", fill = "y")
 
         chn <- tcl("open", zfile)
         tkinsert(txt, "end", gsub("_\b","",tclvalue(tcl("read", chn))))
         tcl("close", chn)
 
-        tkconfigure(txt, state="disabled")
+        tkconfigure(txt, state = "disabled")
         tkmark.set(txt,"insert","0.0")
         tkfocus(txt)
 

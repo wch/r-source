@@ -555,7 +555,7 @@
         found <- integer()
         nm <- names(methods)
         for(i in seq_along(methods)) {
-            m <-methods[[i]]
+            m <- methods[[i]]
             if(is.environment(m)) {
                 methods[[i]] <- .checkDuplicateMethodClasses(classDefs, m, nm[[i]])
                 found <- c(found, i)
@@ -1557,7 +1557,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
     ok <- if(fname %in% c("coerce", "coerce<-"))
 	match(colnames(sigs), "from", 0) > 0 else rep.int(TRUE, ncol(sigs))
     for(j in seq_len(ncol(sigs))) {
-      classesj <-unique(sigs[,j])
+      classesj <- unique(sigs[,j])
       .undefClasses <- character()
       subclasses <- .relevantClasses(classesj, !virtual, where, ok[[j]])
       nj <- length(subclasses)

@@ -71,9 +71,9 @@ splinefun <-
 	    z0 <- double(z$n)
 	    z[c("y", "b", "c")] <-
 		switch(deriv,
-		       list(y=	 z$b, b = 2*z$c, c = 3*z$d), # deriv = 1
-		       list(y= 2*z$c, b = 6*z$d, c =	z0), # deriv = 2
-		       list(y= 6*z$d, b =    z0, c =	z0)) # deriv = 3
+		       list(y =	 z$b , b = 2*z$c, c = 3*z$d), # deriv = 1
+		       list(y = 2*z$c, b = 6*z$d, c =	z0), # deriv = 2
+		       list(y = 6*z$d, b =    z0, c =	z0)) # deriv = 3
 	    z[["d"]] <- z0
 	}
         ## yout[j] := y[i] + dx*(b[i] + dx*(c[i] + dx* d_i))

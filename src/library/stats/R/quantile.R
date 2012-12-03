@@ -101,10 +101,10 @@ quantile.default <-
         qs <- factor(qs, levels = seq_along(lx), labels = lx, ordered = TRUE)
     if(names && np > 0L) {
 	dig <- max(2L, getOption("digits"))
-	names(qs) <- paste(## formatC is slow for long probs
-			   if(np < 100) formatC(100*probs, format = "fg", width = 1, digits = dig)
-			   else format(100 * probs, trim = TRUE, digits = dig),
-			   "%", sep = "")
+	names(qs) <- paste0(## formatC is slow for long probs
+                            if(np < 100) formatC(100*probs, format = "fg", width = 1, digits = dig)
+                            else format(100 * probs, trim = TRUE, digits = dig),
+                            "%")
     }
     if(na.p) { # do this more elegantly (?!)
         o.pr[p.ok] <- qs

@@ -62,7 +62,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
        vfont <- if(.Call(C_contourDef)) NULL else c("sans serif", "plain")
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
-                   fontindex= pmatch(vfont[2L], Hershey$fontindex))
+                   fontindex = pmatch(vfont[2L], Hershey$fontindex))
     if (!is.null(labels))
         labels <- as.character(labels)
     .External.graphics(C_contour, x, y, z, levels, labels, labcex, drawlabels,

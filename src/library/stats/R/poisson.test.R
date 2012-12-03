@@ -57,7 +57,7 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
 
         RVAL$data.name <- DNAME
         RVAL$statistic <- c(count1 = x[1L])
-        RVAL$parameter <- c("expected count1"= sum(x) * r * T[1L]/sum(T * c(1, r)))
+        RVAL$parameter <- c("expected count1" = sum(x) * r * T[1L]/sum(T * c(1, r)))
         RVAL$estimate  <- c("rate ratio" = (x[1L]/T[1L])/(x[2L]/T[2L]))
         pp <- RVAL$conf.int
         RVAL$conf.int <- pp/(1 - pp)*T[2L]/T[1L]

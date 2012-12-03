@@ -83,7 +83,7 @@ summary.stepfun <- function(object, ...)
     print(summ(knots(object)))
     cat(if(n > 6L) "\n" else "  ", "and	", n+1L,
         " plateau levels (y) ", if(n <= 6L) "at\n" else "with summary\n",
-        sep="")
+        sep  = "")
     print(summ(eval(expression(c(yleft,y)), envir = environment(object))))
     invisible()
 }
@@ -149,15 +149,15 @@ plot.stepfun <-
 	segments(ti.l, y, ti.r, y, col=col.hor, lty=lty, lwd=lwd, ...)
     else {
         if(missing(ylim)) ylim <- range(c(y,Fn.kn))
-	plot(NA,NA, type="n", xlim=xlim, ylim=ylim,
-	     xlab=xlab, ylab=ylab, main= main, ...)
-	segments(ti.l, y, ti.r, y, col=col.hor, lty=lty, lwd=lwd)
+	plot(NA, NA, type = "n", xlim = xlim, ylim = ylim,
+	     xlab = xlab, ylab = ylab, main = main, ...)
+	segments(ti.l, y, ti.r, y, col = col.hor, lty = lty, lwd = lwd)
     }
     if(do.points)
-	points(xval, Fn.kn, pch=pch, col=col.points, cex=cex.points)
+	points(xval, Fn.kn, pch = pch, col = col.points, cex = cex.points)
 
     if(verticals)
-	segments(xval, y[-n], xval, y[-1L], col=col.vert, lty=lty, lwd=lwd)
+	segments(xval, y[-n], xval, y[-1L], col = col.vert, lty = lty, lwd = lwd)
     invisible(list(t = ti, y = y))
 }
 

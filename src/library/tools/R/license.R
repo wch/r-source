@@ -90,18 +90,16 @@ function()
     operators <- c("<", "<=", ">", ">=", "==", "!=")
     re_for_numeric_version <- .standard_regexps()$valid_numeric_version
     re_for_single_version_spec <-
-        paste("[[:space:]]*",
+        paste0("[[:space:]]*",
               re_or(operators),
               "[[:space:]]*",
               re_for_numeric_version,
-              "[[:space:]]*",
-              sep = "")
+              "[[:space:]]*")
     re_for_version_spec <-
-        paste("\\(",
+        paste0("\\(",
               paste0("(", re_for_single_version_spec, ",)*"),
               re_for_single_version_spec,
-              "\\)",
-              sep = "")
+              "\\)")
     re_for_free_or_open_software_spec <-
         re_or(c(re_or(license_names_or_abbrevs_without_version),
                 ## We currently considers names or abbrevs of versioned
@@ -110,19 +108,17 @@ function()
                 ## version spec should be provided in case it matters.
                 ## Let us use the interpretation that no version spec
                 ## means "any version" (which is correct for GPL).
-                paste(re_or(license_names_or_abbrevs_with_version),
+                paste0(re_or(license_names_or_abbrevs_with_version),
                       "[[:space:]]*",
-                      paste0("(", re_for_version_spec, ")*"),
-                      sep = ""),
+                      paste0("(", re_for_version_spec, ")*")),
                 ## Also allow for things like
                 ##   GNU General Public License version 2
                 ##   Apache License Version 2.0
                 ## as one can argue that these are really the full names
                 ## of these licenses.
-                re_or(paste(license_db$Name[has_version],
+                re_or(paste0(license_db$Name[has_version],
                             "[[:space:]]+([Vv]ersion[[:space:]]+)?",
-                            license_db$Version[has_version],
-                            sep = ""))))
+                            license_db$Version[has_version]))))
 
     re_for_license_short_spec <- re_or(license_short_specs)
     re_for_license_file <- "file LICEN[CS]E"
@@ -428,7 +424,7 @@ function(x)
         if(any(ind)) {
             s <- sub("[[:space:]]*\\([[:space:]]*", " \\(",
                      components[ind])
-            s <- sub("[[:space:]]*\\)", "\\)", s)            
+            s <- sub("[[:space:]]*\\)", "\\)", s)
             s <- gsub("[[:space:]]*,[[:space:]]*", ", ", s)
             ## Really re_or(operators) ...
             s <- gsub("[[:space:]]+(<=?|>=?|==|!=)", " \\1", s)

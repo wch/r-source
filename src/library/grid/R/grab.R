@@ -35,7 +35,7 @@ current.vpList <- function() {
     vpListFromNode(cpvp)
 }
 
-current.vpNames <-function() {
+current.vpNames <- function() {
   ls(grid.Call(L_currentViewport)$children)
 }
 

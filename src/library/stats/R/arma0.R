@@ -259,12 +259,12 @@ print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
             format(x$sigma2, digits = digits),
             ":  log likelihood = ", format(round(x$loglik,2)),
             ",  aic = ", format(round(x$aic,2)),
-            "\n", sep="")
+            "\n", sep = "")
     else
         cat("\nsigma^2 estimated as ",
             format(x$sigma2, digits = digits),
             ":  part log likelihood = ", format(round(x$loglik,2)),
-            "\n", sep="")
+            "\n", sep = "")
     invisible(x)
 }
 
@@ -325,7 +325,7 @@ arima0.diag <- function(...) .Defunct()
 tsdiag.Arima <- tsdiag.arima0 <- function(object, gof.lag = 10, ...)
 {
     ## plot standardized residuals, acf of residuals, Ljung-Box p-values
-    oldpar<- par(mfrow = c(3, 1))
+    oldpar <- par(mfrow = c(3, 1))
     on.exit(par(oldpar))
     rs <- object$residuals
     stdres <- rs/sqrt(object$sigma2)

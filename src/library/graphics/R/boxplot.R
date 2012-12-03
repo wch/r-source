@@ -46,8 +46,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     cl <- if(all(cls == cls[1L])) cls[1L] else NULL
     for(i in 1L:n)
 	groups[i] <- list(boxplot.stats(unclass(groups[[i]]), range)) # do.conf=notch)
-    stats <- matrix(0, nrow=5L, ncol=n)
-    conf  <- matrix(0, nrow=2L, ncol=n)
+    stats <- matrix(0, nrow = 5L, ncol = n)
+    conf  <- matrix(0, nrow = 2L, ncol = n)
     ng <- out <- group <- numeric(0L)
     ct <- 1
     for(i in groups) {
@@ -105,8 +105,8 @@ boxplot.formula <-
     boxplot(split(mf[[response]], mf[-response]), ...)
 }
 
-bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
-		notch.frac = 0.5, log = "", border=par("fg"),
+bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
+                outline = TRUE, notch.frac = 0.5, log = "", border = par("fg"),
 		pars = NULL, frame.plot = axes, horizontal = FALSE,
 		add = FALSE, at = NULL, show.names = NULL, ...)
 {
@@ -150,16 +150,16 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 		       lty = medlty[i], lwd = medlwd[i], col = medcol[i],
                        lend = 1) ## avoid oerlap by butt line endings.
 	    xypoints(x, stats[3L],
-		     pch = medpch[i], cex = medcex[i], col= medcol[i], bg = medbg[i])
+		     pch = medpch[i], cex = medcex[i], col = medcol[i], bg = medbg[i])
 	    ## Whiskers
 	    xysegments(rep.int(x, 2), stats[c(1,5)],
 		       rep.int(x, 2), stats[c(2,4)],
 		       lty = whisklty[i], lwd = whisklwd[i], col = whiskcol[i])
 	    xysegments(rep.int(xP(x, -wid * staplewex[i]), 2), stats[c(1,5)],
 		       rep.int(xP(x, +wid * staplewex[i]), 2), stats[c(1,5)],
-		       lty= staplelty[i], lwd= staplelwd[i], col= staplecol[i])
+		       lty = staplelty[i], lwd = staplelwd[i], col = staplecol[i])
 	    ## finally the box borders
-	    xypolygon(xx, yy, lty= boxlty[i], lwd= boxlwd[i], border= boxcol[i])
+	    xypolygon(xx, yy, lty = boxlty[i], lwd = boxlwd[i], border = boxcol[i])
 
 	    if ((nout <- length(out))) { ## Outliers
 		xysegments(rep(x - wid * outwex, nout), out,
@@ -280,11 +280,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 
     ok <- TRUE
     for(i in 1L:n)
-	ok <- ok & bplt(at[i], wid = width[i],
-			stats= z$stats[,i],
-			out  = z$out[z$group==i],
-			conf = z$conf[,i],
-			notch= notch, xlog = xlog, i = i)
+	ok <- ok & bplt(at[i], wid = width[i], stats = z$stats[,i],
+                        out = z$out[z$group == i], conf = z$conf[,i],
+			notch = notch, xlog = xlog, i = i)
     if(!ok)
 	warning("some notches went outside hinges ('box'): maybe set notch=FALSE")
 

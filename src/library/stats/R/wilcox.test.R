@@ -101,13 +101,13 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                achieved.alpha <- 2*psignrank(trunc(qu)-1,n)
                                c(diffs[qu], diffs[ql+1])
                            },
-                           "greater"= {
+                           "greater" = {
                                qu <- qsignrank(alpha, n)
                                if(qu == 0) qu <- 1
                                achieved.alpha <- psignrank(trunc(qu)-1,n)
                                c(diffs[qu], +Inf)
                            },
-                           "less"= {
+                           "less" = {
                                qu <- qsignrank(alpha, n)
                                if(qu == 0) qu <- 1
                                ql <- n*(n+1)/2 - qu
@@ -116,7 +116,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                            })
                 if (achieved.alpha - alpha > alpha/2){
                     warning("requested conf.level not achievable")
-                    conf.level<- 1 - signif(achieved.alpha, 2)
+                    conf.level <- 1 - signif(achieved.alpha, 2)
                 }
                 attr(cint, "conf.level") <- conf.level
 		ESTIMATE <- c("(pseudo)median" = median(diffs))
@@ -282,13 +282,13 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                achieved.alpha <- 2*pwilcox(trunc(qu)-1,n.x,n.y)
                                c(diffs[qu], diffs[ql + 1])
                            },
-                           "greater"= {
+                           "greater" = {
                                qu <- qwilcox(alpha, n.x, n.y)
                                if(qu == 0) qu <- 1
                                achieved.alpha <- pwilcox(trunc(qu)-1,n.x,n.y)
                                c(diffs[qu], +Inf)
                            },
-                           "less"= {
+                           "less" = {
                                qu <- qwilcox(alpha, n.x, n.y)
                                if(qu == 0) qu <- 1
                                ql <- n.x*n.y - qu
@@ -364,22 +364,25 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                             f.lower = f.lower, f.upper = f.upper,
                             tol = 1e-4, zq = zq)$root
                 }
-                cint <- switch(alternative, "two.sided" = {
-                    l <- root(zq=qnorm(alpha/2, lower.tail=FALSE))
-                    u <- root(zq=qnorm(alpha/2))
-                    c(l, u)
-                }, "greater"= {
-                    l <- root(zq=qnorm(alpha, lower.tail=FALSE))
-                    c(l, +Inf)
-                }, "less"= {
-                    u <- root(zq=qnorm(alpha))
-                    c(-Inf, u)
-                })
+                cint <- switch(alternative,
+                               "two.sided" = {
+                                   l <- root(zq = qnorm(alpha/2, lower.tail = FALSE))
+                                   u <- root(zq = qnorm(alpha/2))
+                                   c(l, u)
+                               },
+                               "greater" = {
+                                   l <- root(zq = qnorm(alpha, lower.tail = FALSE))
+                                   c(l, +Inf)
+                               },
+                               "less" = {
+                                   u <- root(zq = qnorm(alpha))
+                                   c(-Inf, u)
+                               })
                 attr(cint, "conf.level") <- conf.level
 		correct <- FALSE # no continuity correction for estimate
 		ESTIMATE <- c("difference in location" =
-			      uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-				      zq=0)$root)
+			      uniroot(wdiff, c(mumin, mumax), tol = 1e-4,
+				      zq = 0)$root)
             }
 
             if(exact && TIES) {
@@ -403,7 +406,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                   list(conf.int = cint,
                        estimate = ESTIMATE))
     class(RVAL) <- "htest"
-    return(RVAL)
+    RVAL
 }
 
 wilcox.test.formula <-
