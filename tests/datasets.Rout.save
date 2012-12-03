@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-03-05 r58592)
+R Under development (unstable) (2012-12-03 r61192) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -95,7 +95,7 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	176 o
   ..$ : NULL
   ..$ : chr [1:4] "DAX" "SMI" "CAC" "FTSE"
  - attr(*, "tsp")= num [1:3] 1991 1999 260
- - attr(*, "class")= chr [1:2] "mts" "ts"
+ - attr(*, "class")= chr [1:3] "mts" "ts" "matrix"
 
 ** structure of dataset Formaldehyde
 'data.frame':	6 obs. of  2 variables:
