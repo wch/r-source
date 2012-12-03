@@ -87,7 +87,7 @@ chromaticAdaptation <- function(xyz, from, to) {
                    -0.08081,  0.04570, 0.91822), nrow = 3L, byrow = TRUE)
     nWhite <- colnames(white.points)
     from <- c2to3(white.points[, match.arg(from, nWhite)])
-    to   <- c2to3(white.points[, match.arg(to,   nWhite)])
+    to   <- c2to3(white.points[, match.arg(to, nWhite)])
     from.cone <- drop(from %*% Ma)
     to.cone   <- drop(to %*% Ma)
     ## M <- Ma %*% diag(to.cone/from.cone) %*% solve(Ma)
@@ -209,11 +209,11 @@ convertColor <-
              scale.in = 1, scale.out = 1, clip = TRUE)
 {
   if (is.character(from))
-      from <- colorspaces[[match.arg(from,names(colorspaces))]]
+      from <- colorspaces[[match.arg(from, names(colorspaces))]]
   if (!inherits(from,"colorConverter"))
       stop("'from' must be a \"colorConverter\" object or a string")
   if (is.character(to))
-      to <- colorspaces[[match.arg(to,names(colorspaces))]]
+      to <- colorspaces[[match.arg(to, names(colorspaces))]]
   if (!inherits(to,"colorConverter"))
       stop("'to' must be a \"colorConverter\" object or a string")
 

@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-vector <- function(mode = "logical", length = 0L).Internal(vector(mode, length))
+vector <- function(mode = "logical", length = 0L) .Internal(vector(mode, length))
 logical <- function(length = 0L) .Internal(vector("logical", length))
 character <- function(length = 0L) .Internal(vector("character", length))
 integer <- function(length = 0L) .Internal(vector("integer", length))

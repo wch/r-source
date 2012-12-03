@@ -61,7 +61,7 @@ all.equal.numeric <-
     if(lt != lc) {
 	## *replace* the 'Lengths' msg[] from attr.all.equal():
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
-	msg <- c(msg, paste0(if(cplx)"Complex" else "Numeric",
+	msg <- c(msg, paste0(if(cplx) "Complex" else "Numeric",
                              ": lengths (", lt, ", ", lc, ") differ"))
 	return(msg)
     }

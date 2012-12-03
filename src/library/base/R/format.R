@@ -64,7 +64,7 @@ format.default <-
     }
 }
 
-format.pval <- function(pv, digits = max(1, getOption("digits")-2),
+format.pval <- function(pv, digits = max(1, getOption("digits") - 2),
 			eps = .Machine$double.eps, na.form = "NA", ...)
 {
     ## Format  P values; auxiliary for print.summary.[g]lm(.)
@@ -82,7 +82,7 @@ format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 	r[!is0] <- rr
     }
     if(any(is0)) {
-	digits <- max(1,digits-2)
+	digits <- max(1, digits - 2)
 	if(any(!is0)) {
 	    nc <- max(nchar(rr, type="w"))
 	    if(digits > 1 && digits+6 > nc)
@@ -175,7 +175,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 		     if(format == "f") {
 			 2L + pmax(xEx, 0L)
 		     } else {# format == "fg"
-			 pmax(xEx, digits,digits+(-xEx)+1L) +
+			 pmax(xEx, digits, digits + (-xEx) + 1L) +
 			     ifelse(flag != "", nchar(flag, "b"), 0L) + 1L
 		     }
 	     } else # format == "g" or "e":

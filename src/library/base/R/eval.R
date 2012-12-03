@@ -25,9 +25,9 @@ eval <-
                        parent.frame() else baseenv())
     .Internal(eval(expr, envir, enclos))
 
-eval.parent <- function(expr, n = 1){
+eval.parent <- function(expr, n = 1) {
     p <- parent.frame(n + 1)
-    eval(expr , p)
+    eval(expr, p)
 }
 
 evalq <-

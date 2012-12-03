@@ -26,9 +26,9 @@ summary.default <-
     else if(is.matrix(object))
 	return(summary.matrix(object, digits = digits, ...))
 
-    value <- if(is.logical(object))# scalar or array!
+    value <- if(is.logical(object)) # scalar or array!
 	c(Mode = "logical",
-          {tb <- table(object, exclude=NULL)# incl. NA s
+          {tb <- table(object, exclude = NULL) # incl. NA s
            if(!is.null(n <- dimnames(tb)[[1L]]) && any(iN <- is.na(n)))
                dimnames(tb)[[1L]][iN] <- "NA's"
            tb

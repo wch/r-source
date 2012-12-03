@@ -31,10 +31,7 @@
     ## Eek! (See .Tcl.args.objv for explanation)
     pframe <- parent.frame(3)
     ## Convert argument tags to option names (i.e. stick "-" in front)
-    name2opt <- function(x)
-        if ( x != "")
-            paste0("-",x)
-        else ""
+    name2opt <- function(x) if ( x != "") paste0("-", x) else ""
 
     isCallback <- function(x)
 	is.function(x) || is.call(x) || is.expression(x)
@@ -62,13 +59,13 @@
     ## everything else is converted to strings
     val2string <- function(x) {
         if (is.null(x)) return("")
-        if (is.tkwin(x)){current.win <<- x ; return (.Tk.ID(x))}
+        if (is.tkwin(x)){ current.win <<- x ; return (.Tk.ID(x)) }
 	if (inherits(x,"tclVar")) return(ls(unclass(x)$env))
         if (isCallback(x)){
 	    # Jump through some hoops to protect from GC...
 	    ref <- local({value <- x; envir <- pframe; environment()})
-            callback <- makeCallback(get("value",envir = ref),
-		                     get("envir",envir = ref))
+            callback <- makeCallback(get("value", envir = ref),
+		                     get("envir", envir = ref))
 	    callback <- paste("{", callback, "}")
             assign(callback, ref, envir = current.win$env)
             return(callback)
@@ -84,11 +81,8 @@
     val <- list(...)
     nm <- names(val)
 
-    if (length(val) == 0L) return("")
-    nm <- if (is.null(nm))
-        rep("", length(val))
-    else
-        sapply(nm, name2opt)
+    if (!length(val)) return("")
+    nm <- if (is.null(nm)) rep("", length(val)) else sapply(nm, name2opt)
 
     ## This is a bit dodgy: we need to ensure that callbacks don't get
     ## garbage collected, so we try registering them with the relevant
@@ -133,7 +127,7 @@
 
     makeCallback <- function(x, e) {
 	if (is.expression(x))
-	    paste(lapply(x,makeAtomicCallback, e),collapse = ";")
+	    paste(lapply(x, makeAtomicCallback, e), collapse = ";")
 	else
 	    makeAtomicCallback(x, e)
     }
@@ -147,8 +141,8 @@
         if (isCallback(x)){
 	    # Jump through some hoops to protect from GC...
 	    ref <- local({value <- x; envir <- pframe; environment()})
-            callback <- makeCallback(get("value",envir = ref),
-		                     get("envir",envir = ref))
+            callback <- makeCallback(get("value", envir = ref),
+		                     get("envir", envir = ref))
             assign(callback, ref, envir = current.win$env)
             return(as.tclObj(callback, drop = TRUE))
         }
@@ -198,12 +192,12 @@ tkdestroy  <- function(win) {
 is.tkwin <- function(x) inherits(x, "tkwin")
 
 tclVar <- function(init = "") {
-   n <- evalq(TclVarCount <- TclVarCount + 1, .TkRoot$env)
+   n <- evalq(TclVarCount <- TclVarCount + 1L, .TkRoot$env)
    name <- paste0("::RTcl", n)
    l <- list(env = new.env())
-   assign(name,NULL,envir = l$env)
-   reg.finalizer(l$env,function(env)tcl("unset",ls(env)))
-   class(l)<-"tclVar"
+   assign(name, NULL, envir = l$env)
+   reg.finalizer(l$env, function(env) tcl("unset", ls(env)))
+   class(l) <- "tclVar"
    tclvalue(l) <- init
    l
 }
@@ -286,7 +280,7 @@ tclServiceMode <- function(on = NULL)
 #----
 
 .TkRoot <- .Tk.newwin("")
-tclvar  <- structure(NULL,class = "tclvar")
+tclvar  <- structure(NULL, class = "tclvar")
 evalq(TclVarCount <- 0, .TkRoot$env)
 
 
@@ -604,14 +598,14 @@ tkpager <- function(file, header, title, delete.file)
     for ( i in seq_along(file) ) {
         zfile <- file[[i]]
         tt <- tktoplevel()
-        tkwm.title(tt, if (length(title))
-                   title[(i-1L) %% length(title)+1L] else "")
+        tkwm.title(tt,
+                   if (length(title)) title[(i-1L) %% length(title)+1L] else "")
 ###        courier font comes out awfully small on some systems
 ###        txt <- tktext(tt, bg = "grey90", font = "courier")
         txt <- tktext(tt, bg = "grey90")
         scr <- tkscrollbar(tt, repeatinterval = 5,
-                           command = function(...)tkyview(txt,...))
-	tkconfigure(txt,yscrollcommand = function(...)tkset(scr,...))
+                           command = function(...) tkyview(txt,...))
+	tkconfigure(txt, yscrollcommand = function(...) tkset(scr,...))
         tkpack(txt, side = "left", fill = "both", expand = TRUE)
         tkpack(scr, side = "right", fill = "y")
 
@@ -620,7 +614,7 @@ tkpager <- function(file, header, title, delete.file)
         tcl("close", chn)
 
         tkconfigure(txt, state = "disabled")
-        tkmark.set(txt,"insert","0.0")
+        tkmark.set(txt, "insert", "0.0")
         tkfocus(txt)
 
         if (delete.file) tcl("file", "delete", zfile)

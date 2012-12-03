@@ -31,7 +31,7 @@ blues9 <- c("#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6",
     if (missing(bandwidth)) { ## cheap
 	bandwidth <- diff(apply(x, 2, quantile,
 				probs = c(0.05, 0.95),
-                                na.rm = TRUE, names=FALSE)) / 25
+                                na.rm = TRUE, names = FALSE)) / 25
 	bandwidth[bandwidth==0] <- 1
     }
     else {
@@ -45,8 +45,8 @@ blues9 <- c("#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6",
     rv
 }
 
-densCols <- function(x, y=NULL, nbin=128, bandwidth,
-		     colramp=colorRampPalette(blues9[-(1:3)]))
+densCols <- function(x, y = NULL, nbin = 128, bandwidth,
+		     colramp = colorRampPalette(blues9[-(1:3)]))
 {
     ## similar as in plot.default
     xy <- xy.coords(x, y)
@@ -60,8 +60,8 @@ densCols <- function(x, y=NULL, nbin=128, bandwidth,
 
     ## bin  x- and y- values
     mkBreaks <- function(u) u - diff(range(u))/(length(u)-1)/2
-    xbin <- cut(x[,1], mkBreaks(map$x1), labels=FALSE)
-    ybin <- cut(x[,2], mkBreaks(map$x2), labels=FALSE)
+    xbin <- cut(x[,1], mkBreaks(map$x1), labels = FALSE)
+    ybin <- cut(x[,2], mkBreaks(map$x2), labels = FALSE)
 
     dens <- map$fhat[cbind(xbin, ybin)]
     dens[is.na(dens)] <- 0

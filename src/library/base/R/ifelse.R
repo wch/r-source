@@ -18,7 +18,7 @@
 
 ifelse <- function (test, yes, no)
 {
-    if(is.atomic(test))# do not lose attributes
+    if(is.atomic(test)) # do not lose attributes
 	storage.mode(test) <- "logical"
     else ## typically a "class"; storage.mode<-() typically fails
 	test <- if(isS4(test)) as(test, "logical") else as.logical(test)
