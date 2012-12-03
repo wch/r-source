@@ -2019,13 +2019,27 @@ x   # second component of x should not be affected
 stopifnot(identical(x[[2]], 1))
 ## was  2  in R <= 2.15.2  ("NAMED")
 
+
 ## PR#15115
 a <- as.name("abc")
 f <- call("==", a, 1L)
-for (i in 2:5) 
+for (i in 2:5)
    f <- call("+", f, call("==", a, i))
 abc <- 2
 stopifnot(eval(f) == 1)
 ## Was 0 in 2.15.2 because the i was not duplicated
+
+
+## TukeyHSD with na.omit = na.exclude, see
+## https://stat.ethz.ch/pipermail/r-help/2012-October/327119.html
+br <- warpbreaks
+br[br$tension == "M", "breaks"] <- NA
+fit1 <- aov(breaks ~ wool + tension, data = br)
+TukeyHSD(fit1, "tension", ordered = TRUE)
+fit2 <- aov(breaks ~ wool + tension, data = br, na.action = na.exclude)
+(z <- TukeyHSD(fit2, "tension", ordered = TRUE))
+stopifnot(!is.na(z$tension))
+## results were NA in R <= 2.15.2
+
 
 proc.time()

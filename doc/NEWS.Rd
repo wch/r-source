@@ -642,6 +642,10 @@
 
       \item The \code{call()} function did not duplicate its arguments.
       (\PR{15115})
+      
+      \item \code{TukeyHSD()} could give \code{NA} results with some
+      \samp{na.action} methods such as \code{na.exclude()}.
+      (Hinted at on R-help by John Fox.)
     }
   }
 }
