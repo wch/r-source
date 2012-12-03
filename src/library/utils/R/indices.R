@@ -125,7 +125,7 @@ print.packageDescription <-
     cat("\n-- File:", attr(x, "file"), "\n")
     if(!is.null(attr(x, "fields"))){
         cat("-- Fields read: ")
-        cat(attr(x, "fields"), sep=", ")
+        cat(attr(x, "fields"), sep = ", ")
         cat("\n")
     }
     invisible(x)
@@ -186,9 +186,8 @@ function(x, ...)
     outConn <- file(outFile, open = "w")
     first <- TRUE
     for(pkg in names(out)) {
-        writeLines(paste(ifelse(first, "", "\n"), x$title,
-                         " in package ", sQuote(pkg), ":\n",
-                         sep = ""),
+        writeLines(paste0(ifelse(first, "", "\n"), x$title,
+                          " in package ", sQuote(pkg), ":\n"),
                    outConn)
         writeLines(formatDL(out[[pkg]][, "Item"],
                             out[[pkg]][, "Title"]),

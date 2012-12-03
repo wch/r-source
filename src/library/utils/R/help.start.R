@@ -65,8 +65,8 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
         stop("'browser' must be a non-empty character string")
     if (WINDOWS) {
         ## No shell used, but spaces are possible
-        return(system(paste('"', browser, '" ',
-                            if(encodeIfNeeded) URLencode(url) else url, sep=""),
+        return(system(paste0('"', browser, '" ',
+                             if(encodeIfNeeded) URLencode(url) else url),
                       wait = FALSE))
     }
 
@@ -89,10 +89,9 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
                "galeon" = paste("-x", quotedUrl),
                "kfmclient" = paste("openURL", quotedUrl),
                "mozilla" =, "opera" =, "firefox" = {
-                   paste("-remote \"openURL(",
+                   paste0("-remote \"openURL(",
                          ## Quote ',' and ')' ...
-                         gsub("([,)$])", "%\\1", url), ")\"",
-                         sep = "")
+                         gsub("([,)$])", "%\\1", url), ")\"")
                }, quotedUrl)
     else quotedUrl
     system(paste(browser, remoteCmd, "> /dev/null 2>&1 ||",

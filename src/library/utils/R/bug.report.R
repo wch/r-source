@@ -68,7 +68,7 @@ bug.report <- function(subject = "", address,
             "to open.  The information above may be useful in your report. If the web\n",
             "page doesn't work, you should send email to the maintainer,\n",
             DESC$Maintainer, ".\n",
-            sep="")
+            sep = "")
         flush.console()
         Sys.sleep(2)
         browseURL(DESC$BugReports)

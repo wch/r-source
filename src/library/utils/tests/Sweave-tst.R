@@ -18,8 +18,8 @@
 
 .proctime00 <- proc.time()
 library(utils)
-options(digits=5) # to avoid trivial printed differences
-options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
+options(digits = 5) # to avoid trivial printed differences
+options(show.signif.stars = FALSE) # avoid fancy quotes in o/p
 
 SweaveTeX <- function(file, ...) {
     if(!file.exists(file))
@@ -31,7 +31,7 @@ SweaveTeX <- function(file, ...) {
     readLines(texF)
 }
 
-p0 <- function(...) paste(..., sep="")
+p0 <- paste0
 latexEnv <- function(lines, name) {
     stopifnot(is.character(lines), is.character(name),
 	      length(lines) >= 2, length(name) == 1)

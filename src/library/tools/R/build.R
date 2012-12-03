@@ -47,7 +47,7 @@ printLog <- function(Log, ...)
     quotes <- function(x) gsub("'([^']*)'", sQuote("\\1"), x)
     args <- lapply(list(...), quotes)
     do.call(cat, c(args, sep = ""))
-    if (Log$con > 0L) do.call(cat, c(args, sep = "", file=Log$con))
+    if (Log$con > 0L) do.call(cat, c(args, sep = "", file = Log$con))
 }
 
 printLog0 <- function(Log, ...)
@@ -135,7 +135,7 @@ writeDefaultNamespace <-
 		     c("",
 		       "# Import all packages listed as Imports or Depends",
 		       "import(",
-		       paste(" ", pkgs, collapse=",\n"),
+		       paste(" ", pkgs, collapse = ",\n"),
 		       ")")),
     	       filename)
 }
@@ -242,7 +242,7 @@ get_exclude_patterns <- function()
             "  --compact-vignettes   same as --compact-vignettes=qpdf",
             "  --md5                 add MD5 sums",
            "",
-            "Report bugs at bugs.r-project.org .", sep="\n")
+            "Report bugs at bugs.r-project.org .", sep = "\n")
     }
 
     add_build_stamp_to_description_file <- function(ldpath) {
@@ -284,7 +284,7 @@ get_exclude_patterns <- function()
 	res <- shell_with_capture(cmd, args)
 	if (res$status) {
 	    printLog(Log, "      -----------------------------------\n")
-	    printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
+	    printLog(Log, paste(c(res$stdout, ""),  collapse = "\n"))
 	    printLog(Log, "      -----------------------------------\n")
 	    unlink(libdir, recursive = TRUE)
 	    printLog(Log, "ERROR: package installation failed\n")
@@ -337,10 +337,10 @@ get_exclude_patterns <- function()
                 creatingLog(Log, "vignettes")
                 R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
                 if (!is.na(R_LIBS)) {
-                    on.exit(Sys.setenv(R_LIBS = R_LIBS), add=TRUE)
+                    on.exit(Sys.setenv(R_LIBS = R_LIBS), add = TRUE)
                     Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
                 } else {
-                    on.exit(Sys.unsetenv("R_LIBS"), add=TRUE)
+                    on.exit(Sys.unsetenv("R_LIBS"), add = TRUE)
                     Sys.setenv(R_LIBS = libdir)
                 }
                 cmd <- file.path(R.home("bin"), "Rscript")
@@ -355,7 +355,7 @@ get_exclude_patterns <- function()
                 Sys.setenv(PATH = oPATH)
                 if (res$status) {
                     resultLog(Log, "ERROR")
-                    printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
+                    printLog(Log, paste(c(res$stdout, ""),  collapse = "\n"))
                     do_exit(1L)
                 } else {
                     ## Do any of the .R files which will be generated
@@ -538,11 +538,13 @@ get_exclude_patterns <- function()
     }
 
     build_Rd_db <- function(pkgdir, libdir, desc) {
-    	db <- .build_Rd_db(pkgdir, stages=NULL, os=c("unix", "windows"), step=1)
+    	db <- .build_Rd_db(pkgdir, stages = NULL,
+                           os = c("unix", "windows"), step = 1)
     	if (!length(db)) return(FALSE)
 
     	# Strip the pkgdir off the names
-    	names(db) <- substring(names(db), nchar(file.path(pkgdir, "man", ""))+1)
+    	names(db) <- substring(names(db),
+                               nchar(file.path(pkgdir, "man", "")) + 1L)
 
 	containsSexprs <-
             which(sapply(db, function(Rd) getDynamicFlags(Rd)["\\Sexpr"]))
@@ -603,9 +605,9 @@ get_exclude_patterns <- function()
     }
     fix_nonLF_in_make_files <- function(pkgname, Log) {
         fix_nonLF_in_files(pkgname,
-                           paste("^",c("Makefile", "Makefile.in", "Makefile.win",
+                           paste0("^",c("Makefile", "Makefile.in", "Makefile.win",
                                        "Makevars", "Makevars.in", "Makevars.win"),
-                                 "$", sep=""), Log)
+                                 "$"), Log)
     }
 
     find_empty_dirs <- function(d)
@@ -633,7 +635,7 @@ get_exclude_patterns <- function()
         }
     }
 
-    fixup_R_dep <- function(pkgname, ver="2.10")
+    fixup_R_dep <- function(pkgname, ver = "2.10")
     {
         desc <- .read_description(file.path(pkgname, "DESCRIPTION"))
         Rdeps <- .split_description(desc)$Rdepends2
@@ -742,9 +744,9 @@ get_exclude_patterns <- function()
                 lapply(tabs, function(nm) {
                     x <- readLines(nm, warn = FALSE)
                     nm3 <- paste(nm, c("gz", "bz2", "xz"), sep = ".")
-                    con <- gzfile(nm3[1L], "wb", compression=9); writeLines(x, con); close(con)
-                    con <- bzfile(nm3[2L], "wb", compression=9); writeLines(x, con); close(con)
-                    con <- xzfile(nm3[3L], "wb", compression=9); writeLines(x, con); close(con)
+                    con <- gzfile(nm3[1L], "wb", compression = 9L); writeLines(x, con); close(con)
+                    con <- bzfile(nm3[2L], "wb", compression = 9L); writeLines(x, con); close(con)
+                    con <- xzfile(nm3[3L], "wb", compression = 9L); writeLines(x, con); close(con)
                     sizes <- file.info(nm3)$size * c(0.9, 1, 1)
                     ind <- which.min(sizes)
                     if(ind > 1) OK <<- FALSE
@@ -789,7 +791,7 @@ get_exclude_patterns <- function()
     if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
-        args <- paste(args, collapse=" ")
+        args <- paste(args, collapse = " ")
         args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     }
 
@@ -807,7 +809,7 @@ get_exclude_patterns <- function()
                 "Copyright (C) 1997-2011 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
-                sep="\n")
+                sep = "\n")
             do_exit(0L)
         } else if (a == "--force") {
             force <- TRUE
@@ -996,7 +998,7 @@ get_exclude_patterns <- function()
                              "in an installed package")
                 printLog(Log, paste(strwrap(msg, indent = 0L, exdent = 2L),
                                     collapse = "\n"), "\n")
-                unlink(d, recursive=TRUE)
+                unlink(d, recursive = TRUE)
             }
         }
         ## remove subarch build directories

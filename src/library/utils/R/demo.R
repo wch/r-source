@@ -49,12 +49,11 @@ function(topic, package = NULL, lib.loc = NULL,
 	colnames(db) <- c("Package", "LibPath", "Item", "Title")
 
 	footer <- if(missing(package))
-	    paste("Use ",
-		  sQuote(paste("demo(package =",
-			       ".packages(all.available = TRUE))")),
-		  "\n",
-		  "to list the demos in all *available* packages.",
-		  sep = "")
+	    paste0("Use ",
+                   sQuote(paste("demo(package =",
+                                ".packages(all.available = TRUE))")),
+                   "\n",
+                   "to list the demos in all *available* packages.")
 	else
 	    NULL
 	y <- list(title = "Demos", header = NULL, results = db,
@@ -113,8 +112,8 @@ function(topic, package = NULL, lib.loc = NULL,
     if (echo) {
 	cat("\n\n",
 	    "\tdemo(", topic, ")\n",
-	    "\t---- ", rep.int("~", nchar(topic, type="w")), "\n",
-	    sep="")
+	    "\t---- ", rep.int("~", nchar(topic, type = "w")), "\n",
+	    sep = "")
 	if(ask && interactive())
 	    readline("\nType  <Return>	 to start : ")
     }

@@ -265,7 +265,7 @@ package.skeleton <-
             list0[!ok] <- paste0("z", list0[!ok])
         ## now on Mac/Windows lower/uppercase will collide too
         list1 <- tolower(list0)
-        list2 <- make.unique(list1, sep="_")
+        list2 <- make.unique(list1, sep = "_")
         changed <- (list2 != list1)
         list0[changed] <- list2[changed]
         list0

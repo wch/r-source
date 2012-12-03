@@ -41,8 +41,8 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
     {
         ## FIXME: should this look for Sys.getenv('TAR')?
         ## Leopard has GNU tar, SL has BSD tar.
-        xcode <- system(paste("tar zxf \"", path.expand(what), "\" -C \"",
-                              path.expand(where), "\"", sep=''), intern=FALSE)
+        xcode <- system(paste0("tar zxf \"", path.expand(what), "\" -C \"",
+                               path.expand(where), "\""), intern=FALSE)
         if (xcode)
             warning(gettextf("'tar' returned non-zero exit code %d", xcode),
                     domain = NA, call. = FALSE)
@@ -86,7 +86,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         instPath <- file.path(lib, pkgname)
         if(identical(lock, "pkglock") || isTRUE(lock)) {
 	    lockdir <- if(identical(lock, "pkglock"))
-                file.path(lib, paste("00LOCK", pkgname, sep="-"))
+                file.path(lib, paste("00LOCK", pkgname, sep = "-"))
             else file.path(lib, "00LOCK")
 	    if (file.exists(lockdir)) {
                 stop(gettextf("ERROR: failed to lock directory %s for modifying\nTry removing %s",

@@ -45,20 +45,20 @@ select.list <-
             cat(title, "\n", sep = "")
         def <- if(is.null(preselect)) rep(FALSE, nc)
         else choices %in% preselect
-        op <- paste(format(seq_len(nc)), ": ",
-                    ifelse(def, "+", " "), " ", choices, sep="")
+        op <- paste0(format(seq_len(nc)), ": ",
+                     ifelse(def, "+", " "), " ", choices)
         if(nc > 10L) {
             fop <- format(op)
             nw <- nchar(fop[1L], "w") + 2L
             ncol <- getOption("width") %/% nw
             if(ncol > 1L)
                 op <- paste(fop, c(rep("  ", ncol - 1L), "\n"),
-                            sep ="", collapse="")
-            cat("", op, sep="\n")
-        } else cat("", op, "", sep="\n")
+                            sep = "", collapse="")
+            cat("", op, sep = "\n")
+        } else cat("", op, "", sep = "\n")
         cat(gettext("Enter one or more numbers separated by spaces, or an empty line to cancel\n"))
 	repeat {
-            res <- tryCatch(scan("", what=0, quiet=TRUE, nlines=1),
+            res <- tryCatch(scan("", what = 0, quiet = TRUE, nlines = 1),
                             error = identity)
 	    if(!inherits(res, "error")) break
 	    cat(gettext("Invalid input, please try again\n"))

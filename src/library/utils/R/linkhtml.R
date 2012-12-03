@@ -28,10 +28,10 @@ make.packages.html <-
             nm <- libs[i]
             if (nm == .Library) {
                 cat('<li>Contents of the <a href="#lib-', i, '">',
-                    'standard</a> library</li>\n', sep="", file = out)
+                    'standard</a> library</li>\n', sep = "", file = out)
             } else {
                 cat('<li>Contents of <a href="#lib-', i, '">', nm,
-                    '</a></li>\n', sep="", file = out)
+                    '</a></li>\n', sep = "", file = out)
             }
         }
         cat("</ul>\n</div>\n", file = out)
@@ -110,8 +110,7 @@ make.packages.html <-
         nm <- sort(names(table(first)))
         if(use_alpha) {
             writeLines("<p align=\"center\">", out)
-            writeLines(paste("<a href=\"#pkgs-", nm, "\">", nm, "</a>",
-                             sep = ""), out)
+            writeLines(paste0("<a href=\"#pkgs-", nm, "\">", nm, "</a>"), out)
             writeLines("</p>\n", out)
         }
         cat('<p><table width="100%" summary="R Package list>\n', file = out)
@@ -125,7 +124,7 @@ make.packages.html <-
                 cat('<tr align="left" valign="top" id="lib-"', i, '">\n',
                     '<td width="25%"><a href="', lib0, '/', i,
                     '/html/00Index.html">', i, "</a></td><td>", title,
-                    "</td></tr>\n", file=out, sep="")
+                    "</td></tr>\n", file = out, sep = "")
                 if (WINDOWS) {
                     npkgs <- npkgs + 1L
                     if(verbose) setWinProgressBar(pb, npkgs)

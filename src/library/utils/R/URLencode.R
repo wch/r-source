@@ -20,15 +20,14 @@ URLencode <- function(URL, reserved = FALSE)
 {
     ## It is unsafe to use ranges here as collation is locale-dependent.
     ## We want to do this on characters and not on bytes.
-    OK <- paste("[^-ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    OK <- paste0("[^-ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		"abcdefghijklmnopqrstuvwxyz0123456789$_.+!*'(),",
-		if(!reserved) ";/?:@=&", "]", sep="")
+		if(!reserved) ";/?:@=&", "]")
     x <- strsplit(URL, "")[[1L]]
     z <- grep(OK, x)
     if(length(z)) {
         y <- sapply(x[z], function(x)
-                    paste0("%", as.character(charToRaw(x)),
-                          collapse = ""))
+                    paste0("%", as.character(charToRaw(x)), collapse = ""))
         x[z] <- y
     }
     paste(x, collapse="")

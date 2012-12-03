@@ -41,9 +41,9 @@ function(topic, package = NULL, lib.loc = NULL,
                 browser <- if (.Platform$GUI == "AQUA") {
                     get("aqua.browser", envir = as.environment("tools:RGUI"))
                 } else getOption("browser")
- 		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
-                                "/library/", package, "/html/00Index.html",
-                                sep = ""), browser)
+ 		browseURL(paste0("http://127.0.0.1:", tools:::httpdPort,
+                                 "/library/", package, "/html/00Index.html"),
+                          browser)
                 return(invisible())
             } else return(library(help = package, lib.loc = lib.loc,
                                   character.only = TRUE))
@@ -122,27 +122,26 @@ print.help_files_with_topic <- function(x, ...)
         if (type == "html" && tools:::httpdPort > 0L) {
             path <- file.path(tempdir(), ".R/doc/html")
             dir.create(path, recursive = TRUE, showWarnings = FALSE)
-            out <- paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-                         '<html><head><title>R: help</title>\n',
-                         '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
-                         '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
-                         '</head><body>\n\n<hr>\n', sep="")
+            out <- paste0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+                          '<html><head><title>R: help</title>\n',
+                          '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
+                          '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
+                          '</head><body>\n\n<hr>\n')
             out <- c(out, '<p>', msg, '</p><br>')
             out <- c(out, '<table width="100%" summary="R Package list">\n',
                      '<tr align="left" valign="top">\n',
                      '<td width="25%">Package</td><td>Library</td></tr>\n')
             pkgs <- basename(paths)
-            links <- paste('<a href="http://127.0.0.1:', tools:::httpdPort,
-                           '/library/', pkgs, '/help/', topic, '">',
-                           pkgs, '</a>', sep = "")
-            out <- c(out, paste('<tr align="left" valign="top">\n',
+            links <- paste0('<a href="http://127.0.0.1:', tools:::httpdPort,
+                            '/library/', pkgs, '/help/', topic, '">',
+                            pkgs, '</a>')
+            out <- c(out, paste0('<tr align="left" valign="top">\n',
                                 '<td>', links, '</td><td>',
-                                dirname(paths), '</td></tr>\n',
-                                sep = ""))
+                                dirname(paths), '</td></tr>\n'))
             out <- c(out, "</table>\n</p>\n<hr>\n</body></html>")
             writeLines(out, file.path(path, "all.available.html"))
-            browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
-                            "/doc/html/all.available.html", sep=""), browser)
+            browseURL(paste0("http://127.0.0.1:", tools:::httpdPort,
+                             "/doc/html/all.available.html"), browser)
         } else {
             writeLines(c(strwrap(msg), "",
                          paste(" ",
@@ -153,8 +152,8 @@ print.help_files_with_topic <- function(x, ...)
     } else {
         if(length(paths) > 1L) {
             if (type == "html" && tools:::httpdPort > 0L) { # Redo the search if dynamic help is running
-		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
-                                "/library/NULL/help/", topic, sep=""), browser)
+		browseURL(paste0("http://127.0.0.1:", tools:::httpdPort,
+                                 "/library/NULL/help/", topic), browser)
 		return(invisible(x))
 	    }
             file <- paths[1L]
@@ -195,9 +194,9 @@ print.help_files_with_topic <- function(x, ...)
 		path <- dirname(file)
 		dirpath <- dirname(path)
 		pkgname <- basename(dirpath)
-		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
-                                "/library/", pkgname, "/html/", basename(file),
-                                ".html", sep = ""), browser)
+		browseURL(paste0("http://127.0.0.1:", tools:::httpdPort,
+                                 "/library/", pkgname, "/html/", basename(file),
+                                 ".html"), browser)
             } else {
                 warning("HTML help is unavailable", call. = FALSE)
                 att <- attributes(x)
@@ -266,7 +265,7 @@ print.help_files_with_topic <- function(x, ...)
         stop(gettextf("invalid %s argument", sQuote("file")), domain = NA)
     pkgname <- basename(dirpath)
     RdDB <- file.path(path, pkgname)
-    if(!file.exists(paste(RdDB, "rdx", sep=".")))
+    if(!file.exists(paste(RdDB, "rdx", sep = ".")))
         stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
     tools:::fetchRdDB(RdDB, basename(file))
 }

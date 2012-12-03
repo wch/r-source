@@ -601,8 +601,7 @@ printhsearchInternal  <- function(x, ...)
 				       "using", matchtype, "matching:")),
 			 "\n"),
 		       outConn)
-	    dbnam <- paste(dbtemp[, "Package"], "::", dbtemp[ , "topic"],
-			   sep = "")
+	    dbnam <- paste0(dbtemp[, "Package"], "::", dbtemp[ , "topic"])
 	    dbtit <- paste0(dbtemp[ , "title"])
 	    writeLines(formatDL(dbnam, dbtit), outConn)
 	    writeLines(c("\n",

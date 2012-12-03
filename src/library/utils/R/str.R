@@ -35,7 +35,7 @@ str.data.frame <- function(object, ...)
 
     cat("'data.frame':	", nrow(object), " obs. of  ",
 	(p <- length(object)), " variable", if(p != 1)"s", if(p > 0)":",
-	"\n",sep="")
+	"\n", sep = "")
 
     ## calling next method, usually  str.default:
     if(length(l <- list(...)) && any("give.length" == names(l)))
@@ -143,7 +143,7 @@ str.default <-
 		ss[iLong] <- paste0(substr(sL, 1, k),"..")
 	    }
 	}
-	cat(ss, sep="\n")
+	cat(ss, sep = "\n")
 	return(invisible())
     }
 
@@ -216,18 +216,18 @@ str.default <-
 			      object=object, simplify = FALSE)
 	    cat("Reference class", " '", paste(cl, collapse = "', '"),
 		"' [package \"", attr(cl,"package"), "\"] with ",
-		length(a)," fields\n", sep="")
+		length(a)," fields\n", sep = "")
 	} else {
 	    a <- sapply(methods::.slotNames(object), methods::slot,
 			object=object, simplify = FALSE)
 	    cat("Formal class", " '", paste(cl, collapse = "', '"),
 		"' [package \"", attr(cl,"package"), "\"] with ",
-		length(a)," slots\n", sep="")
+		length(a)," slots\n", sep = "")
 	}
 	if(isRef) {
 	    strSub(a, no.list=TRUE, give.length=give.length,
 		   nest.lev = nest.lev + 1)
-	    cat(indent.str, "and ", length(meths), " methods,", sep="")
+	    cat(indent.str, "and ", length(meths), " methods,", sep = "")
 	    if(length(oMeths)) {
 		cat(" of which", length(oMeths), "are possibly relevant")
 		if (is.na(max.level) || nest.lev < max.level)
@@ -235,7 +235,7 @@ str.default <-
 			strwrap(paste(oMeths, collapse=", "),
 				indent = 2, exdent = 2,
 				prefix = indent.str, width=width),# exdent = nind),
-			sep="\n")
+			sep = "\n")
 		else cat("\n")
 	    }
 	    if(length(sNms)) {
@@ -260,14 +260,14 @@ str.default <-
 	if(le == 0) {
 	    if(is.d.f) std.attr <- c(std.attr, "class", "row.names")
 	    else cat(" ", if(!is.null(names(object))) "Named ",
-		     if(i.pl)"pair", "list()\n",sep="")
+		     if(i.pl)"pair", "list()\n", sep = "")
 	} else { # list, length >= 1 :
 	    if(irregCl <- has.class && identical(object[[1L]], object)) {
 		le <- length(object <- unclass(object))
 		std.attr <- c(std.attr, "class")
 	    }
 	    if(no.list || (has.class &&
-			   any(sapply(paste("str", cl, sep="."),
+			   any(sapply(paste("str", cl, sep = "."),
 					#use sys.function(.) ..
 				      function(ob)exists(ob, mode= "function",
 							 inherits= TRUE))))) {
@@ -276,7 +276,7 @@ str.default <-
 	    } else { # need as.character here for double lengths.
 		cat(if(i.pl) "Dotted pair list" else
 		    if(irregCl) paste(pClass(cl), "hidden list") else "List",
-		    " of ", as.character(le), "\n", sep="")
+		    " of ", as.character(le), "\n", sep = "")
 	    }
 	    if (is.na(max.level) || nest.lev < max.level) {
 		nam.ob <-
@@ -285,7 +285,7 @@ str.default <-
 			   format(nam.ob, width = max.ncnam, justify="left")
 		       }
 		for (i in seq_len(min(list.len,le) ) ) {
-		    cat(indent.str, comp.str, nam.ob[i], ":", sep="")
+		    cat(indent.str, comp.str, nam.ob[i], ":", sep = "")
 		    envir <- # pass envir for 'promise' components:
 			if(typeof(object[[i]]) == "promise") {
 			    structure(object, nam= as.name(nam.ob[i]))
@@ -417,7 +417,7 @@ str.default <-
 	    ## suitable method and use that.
 	} else if(has.class) {
 	    cat("Class", if(length(cl) > 1) "es",
-		" '", paste(cl, collapse = "', '"), "' ", sep="")
+		" '", paste(cl, collapse = "', '"), "' ", sep = "")
 	    ## If there's a str.<method>, it should have been called before!
 	    uo <- unclass(object)
 	    if(!is.null(attributes(uo)$class)) {
@@ -426,7 +426,7 @@ str.default <-
 		    class(uo) <- NULL
 		    "unclass()-immune"
 		} else if(!is.object(object)) "not-object")
-		if(!is.null(xtr)) cat("{",xtr,"} ", sep="")
+		if(!is.null(xtr)) cat("{",xtr,"} ", sep = "")
 	    }
 	    strSub(uo, indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
 	    return(invisible())
@@ -547,7 +547,7 @@ str.default <-
 
 	cat(if(give.head) paste0(str1, " "),
 	    formObj(if(ile >= 1) object[seq_len(ile)] else if(v.len > 0) object),
-	    if(le > v.len) " ...", "\n", sep="")
+	    if(le > v.len) " ...", "\n", sep = "")
 
     } ## else (not function nor list)----------------------------------------
 
@@ -555,9 +555,9 @@ str.default <-
 	nam <- names(a)
 	for (i in seq_along(a))
 	    if (all(nam[i] != std.attr)) {# only `non-standard' attributes:
-		cat(indent.str, paste0('- attr(*, "',nam[i],'")='),sep="")
-		strSub(a[[i]], give.length=give.length,
-		       indent.str= paste(indent.str,".."), nest.lev= nest.lev+1)
+		cat(indent.str, paste0('- attr(*, "', nam[i], '")='), sep = "")
+		strSub(a[[i]], give.length = give.length,
+		       indent.str = paste(indent.str, ".."), nest.lev = nest.lev+1)
 	    }
     }
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects
@@ -613,7 +613,7 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
 	if(inherits(o, "error")) {
 	    cat(## FIXME: only works with "C" (or English) LC_MESSAGES locale!
 		if(length(grep("missing|not found", o$message)))
-		"<missing>" else o$message, "\n", sep='')
+		"<missing>" else o$message, "\n", sep = '')
 	}
 	else
 	    do.call(str, c(list(o), strargs),

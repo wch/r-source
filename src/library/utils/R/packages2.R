@@ -136,15 +136,13 @@ install.packages <-
 
         if(length(pkgs) == 1L && length(configure.args) &&
            length(names(configure.args)) == 0L)
-            return(paste("--configure-args=",
-                         shQuote(paste(configure.args, collapse = " ")),
-                         sep = ""))
+            return(paste0("--configure-args=",
+                          shQuote(paste(configure.args, collapse = " "))))
 
         if (length(configure.args) && length(names(configure.args))
               && pkg %in% names(configure.args))
-            config <- paste("--configure-args=",
-                            shQuote(paste(configure.args[[ pkg ]], collapse = " ")),
-                            sep = "")
+            config <- paste0("--configure-args=",
+                             shQuote(paste(configure.args[[ pkg ]], collapse = " ")))
         else
             config <- character()
 
@@ -161,15 +159,13 @@ install.packages <-
 
         if(length(pkgs) == 1L && length(configure.vars) &&
            length(names(configure.vars)) == 0L)
-            return(paste("--configure-vars=",
-                         shQuote(paste(configure.vars, collapse = " ")),
-                         sep = ""))
+            return(paste0("--configure-vars=",
+                          shQuote(paste(configure.vars, collapse = " "))))
 
         if (length(configure.vars) && length(names(configure.vars))
               && pkg %in% names(configure.vars))
-            config <- paste("--configure-vars=",
-                            shQuote(paste(configure.vars[[ pkg ]], collapse = " ")),
-                            sep = "")
+            config <- paste0("--configure-vars=",
+                             shQuote(paste(configure.vars[[ pkg ]], collapse = " ")))
         else
             config <- character()
 
@@ -222,7 +218,7 @@ install.packages <-
         ## the only known reliable way is to try it
         ok <- file.info(lib)$isdir %in% TRUE # dir might not exist, PR#14311
         if(ok) {
-            fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep="_"))
+            fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep = "_"))
             unlink(fn, recursive = TRUE) # precaution
             res <- try(dir.create(fn, showWarnings = FALSE))
             if(inherits(res, "try-error") || !res) ok <- FALSE
@@ -479,7 +475,7 @@ install.packages <-
             Sys.setenv(R_LIBS = libpath)
             on.exit(Sys.setenv(R_LIBS = oldrlibs))
         } else
-            cmd0 <- paste(paste("R_LIBS", shQuote(libpath), sep="="), cmd0)
+            cmd0 <- paste(paste("R_LIBS", shQuote(libpath), sep = "="), cmd0)
 
     if (is.character(clean))
         cmd0 <- paste(cmd0, clean)
@@ -582,7 +578,7 @@ install.packages <-
                     paste("\t@echo begin installing package", sQuote(pkg)),
                     paste0("\t@", cmd, " && touch ", pkg, ".ts"),
                     paste0("\t@cat ", pkg, ".out"),
-                    "", sep="\n", file = conn)
+                    "", sep = "\n", file = conn)
             }
             close(conn)
             ## system(paste("cat ", mfile))

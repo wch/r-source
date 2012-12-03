@@ -179,12 +179,12 @@ print.findLineNumResult <- function(x, steps=TRUE, ...) {
     	    !identical(line, x[[i]]$line)) {
     	    filename <- x[[i]]$filename
     	    line <- x[[i]]$line
-    	    cat(filename, "#", line, ":\n", sep="")
+    	    cat(filename, "#", line, ":\n", sep = "")
     	}
-        cat(" ", x[[i]]$name, if (steps) paste(" step ", paste(x[[i]]$at, collapse=",")) else "", sep="")
+        cat(" ", x[[i]]$name, if (steps) paste(" step ", paste(x[[i]]$at, collapse=",")) else "", sep = "")
         if (!is.null(x[[i]]$signature))
-            cat(" signature ", paste(x[[i]]$signature, collapse=","), sep="")
-        cat(" in ", format(x[[i]]$env), "\n", sep="")
+            cat(" signature ", paste(x[[i]]$signature, collapse=","), sep = "")
+        cat(" in ", format(x[[i]]$env), "\n", sep = "")
     }
 }
 

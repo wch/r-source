@@ -36,6 +36,6 @@ print.object_size <-
                 "Mb" =, "MB" = paste(round(x/1024^2, 1L), "Mb"),
                 "Gb" =, "GB" = paste(round(x/1024^3, 1L), "Gb")
                 )
-    if(quote) print.default(y, ...) else cat(y, "\n", sep="")
+    if(quote) print.default(y, ...) else cat(y, "\n", sep = "")
     invisible(x)
 }

@@ -90,12 +90,11 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
 
         footer <- if(missing(package))
-            paste("Use ",
-                  sQuote(paste("data(package =",
-                               ".packages(all.available = TRUE))")),
-                  "\n",
-                  "to list the data sets in all *available* packages.",
-                  sep = "")
+            paste0("Use ",
+                   sQuote(paste("data(package =",
+                                ".packages(all.available = TRUE))")),
+                   "\n",
+                   "to list the data sets in all *available* packages.")
         else
             NULL
         y <- list(title = "Data sets", header = NULL, results = db,

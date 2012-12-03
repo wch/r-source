@@ -49,9 +49,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
             if(length(res0)) rownames(res0) <- res0[, "Package"]
         } else {
             dest <- file.path(tempdir(),
-                              paste("repos_",
-                                    URLencode(repos, TRUE),
-                                    ".rds", sep=""))
+                              paste0("repos_", URLencode(repos, TRUE), ".rds"))
             if(file.exists(dest)) {
                 res0 <- readRDS(dest)
             } else {
@@ -106,7 +104,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
             if ("Path" %in% colnames(res0)) {
                 rp <- rep.int(repos, nrow(res0))
                 path <- res0[, "Path"]
-                rp[!is.na(path)] <- paste(repos, path[!is.na(path)], sep="/")
+                rp[!is.na(path)] <- paste(repos, path[!is.na(path)], sep = "/")
             } else rp <- repos
             res0 <- cbind(res0[, fields, drop = FALSE], Repository = rp)
             res <- rbind(res, res0)
@@ -660,12 +658,11 @@ download.packages <- function(pkgs, destdir, available = NULL,
             if (substr(type, 1L, 10L) == "mac.binary") type <- "mac.binary"
             ## in Oct 2009 we introduced file names in PACKAGES files
             File <- available[ok, "File"]
-            fn <- paste(p, "_", available[ok, "Version"],
-                        switch(type,
-                               "source" = ".tar.gz",
-                               "mac.binary" = ".tgz",
-                               "win.binary" = ".zip"),
-                        sep = "")
+            fn <- paste0(p, "_", available[ok, "Version"],
+                         switch(type,
+                                "source" = ".tar.gz",
+                                "mac.binary" = ".tgz",
+                                "win.binary" = ".zip"))
             have_fn <- !is.na(File)
             fn[have_fn] <- File[have_fn]
             repos <- available[ok, "Repository"]
@@ -690,7 +687,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                     warning(gettextf("package %s does not exist on the local repository", sQuote(p)),
                             domain = NA, immediate. = TRUE)
             } else {
-                url <- paste(repos, fn, sep="/")
+                url <- paste(repos, fn, sep = "/")
                 destfile <- file.path(destdir, fn)
 
                 res <- try(download.file(url, destfile, method, mode="wb", ...))
@@ -733,7 +730,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
         type <- "mac.binary"
     }
     res <- switch(type,
-		"source" = paste(gsub("/$", "", repos), "src", "contrib", sep="/"),
+		"source" = paste(gsub("/$", "", repos), "src", "contrib", sep = "/"),
                 "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", mac.subtype, "contrib", ver, sep = "/"),
                 "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/")
                )
