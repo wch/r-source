@@ -467,7 +467,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     }
                 }
                 if (!OK) errorLog(Log)
-                else if(!any) warningLog(Log)
+                else if(!any) noteLog(Log)
             }
             msg <- ngettext(length(bad_files),
                             "Found the following non-portable file path:\n",
@@ -477,7 +477,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             printLog(Log, .format_lines_with_indent(bad_files), "\n\n")
             wrapLog("Tarballs are only required to store paths of up to 100",
                     "bytes and cannot store those of more than 255 bytes,",
-                    "with restrictions including of 100 bytes for the",
+                    "with restrictions including to 100 bytes for the",
                     "final component.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
