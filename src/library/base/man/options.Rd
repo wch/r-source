@@ -485,7 +485,7 @@ getOption(x, default = NULL)
 
     \item{\code{citation.bibtex.max}:}{default 1; the maximal number of
       bibentries (\code{\link{bibentry}}) in a \code{\link{citation}} for
-      which the bibtex version is printed in addition to the text one.
+      which the bibtex version is printed in addition to the text one.}
 
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
