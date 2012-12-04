@@ -611,6 +611,19 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item The default for \env{TAR} on Windows for \command{R CMD
+	build} has been changed to be \samp{internal} if no
+      \command{tar} command is on the path.
+
+      This enables most packages to be built \sQuote{out of the box}
+      without \command{Rtools}: the main exceptions are those which need
+      to be installed to re-build vignettes and need \command{Rtools}
+      for installation.
+    }
+  }
+  
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
