@@ -288,7 +288,11 @@ may be used in URLs and so must be @acronym{ASCII} and not contain
 utilities do not accept spaces in file paths): non-English alphabetic
 characters cannot be guaranteed to be supported in all locales.  It
 would be good practice to avoid the shell metacharacters
-@code{()@{@}'[]$}.
+@code{()@{@}'[]$}.  In addition, packages are normally distributed as
+tarballs, and these have a limit on path lengths (including the package
+name): for maximal portability 100 bytes, and definitely 255 bytes with
+a path separator in the first 155 bytes and no more than 100 bytes from
+the end.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
