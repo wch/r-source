@@ -118,7 +118,7 @@ addmargins <-
 	## BxC, August 2003
 
 	## Make sure that FUN is a list
-	if(class(FUN) != "list") FUN <- list(FUN)
+	if(!inherits(FUN, "list")) FUN <- list(FUN)
 
 	## Useful constants
 	d <- dim(A)

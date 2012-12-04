@@ -33,7 +33,7 @@ recordPlot <- function()
 
 replayPlot <- function(x)
 {
-    if(class(x) != "recordedplot")
+    if(!inherits(x, "recordedplot"))
         stop(gettextf("argument is not of class %s",
                       dQuote("recordedplot")),
              domain = NA)

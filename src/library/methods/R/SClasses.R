@@ -336,7 +336,7 @@ slotNames <- function(x)
 .slotNames <- function(x)
 {
     classDef <-
-	getClassDef(if(identical(class(x), "character") && length(x) == 1L) x else class(x))
+	getClassDef(if(is.character(x) && length(x) == 1L) x else class(x))
     if(is.null(classDef))
 	character()
     else

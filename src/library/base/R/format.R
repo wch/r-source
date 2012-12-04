@@ -237,7 +237,7 @@ format.data.frame <- function(x, ..., justify = "none")
 	}
     }
     for(i in 1L:nc) {
-	if(is.character(rval[[i]]) && class(rval[[i]]) == "character")
+	if(is.character(rval[[i]]) && inherits(rval[[i]], "character"))
 	    oldClass(rval[[i]]) <- "AsIs"
     }
     cn <- names(x)

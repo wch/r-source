@@ -44,7 +44,7 @@ debugger <- function(dump = last.dump)
         rm(.obj, .selection)
         browser()
     }
-    if (class(dump) != "dump.frames") {
+    if (!inherits(dump, "dump.frames")) {
         cat(gettextf("'dump' is not an object of class %s\n",
                      dQuote("dump.frames")))
         return(invisible())

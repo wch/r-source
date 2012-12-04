@@ -4472,12 +4472,12 @@ function(f, encoding = NA)
     } else parse(f)
     for(e in exprs) {
         if((length(e) > 2L) &&
-           (class(x <- e[[1L]]) == "name") &&
+	   (is.name(x <- e[[1L]])) &&
            (as.character(x) %in%
             c("<-", "=")) &&
            (as.character(y <- e[[2L]]) %in%
             c(".First.lib", ".onAttach", ".onLoad")) &&
-           (class(z <- e[[3L]]) == "call") &&
+	   (is.call(z <- e[[3L]])) &&
            (as.character(z[[1L]]) == "function")) {
             new <- list(z)
             names(new) <- as.character(y)

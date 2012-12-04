@@ -463,7 +463,7 @@ data.frame <-
                 xi1 <- xi[[j]]
                 if(is.vector(xi1) || is.factor(xi1))
                     xi[[j]] <- rep(xi1, length.out = nr)
-                else if(is.character(xi1) && class(xi1) == "AsIs")
+		else if(is.character(xi1) && inherits(xi1, "AsIs"))
                     xi[[j]] <- structure(rep(xi1, length.out = nr),
                                          class = class(xi1))
                 else if(inherits(xi1, "Date") || inherits(xi1, "POSIXct"))

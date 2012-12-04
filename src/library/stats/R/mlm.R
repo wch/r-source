@@ -135,8 +135,8 @@ mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
     if (missing(T)){
         orig.X <- X
         orig.M <- M
-        if (class(M) == "formula") M <- model.matrix(M, idata)
-        if (class(X) == "formula") X <- model.matrix(X, idata)
+	if (inherits(M, "formula")) M <- model.matrix(M, idata)
+	if (inherits(X, "formula")) X <- model.matrix(X, idata)
         if (Rank(cbind(M,X)) != Rank(M))
             stop("X does not define a subspace of M")
     }
@@ -190,8 +190,8 @@ sphericity <- function(object, Sigma=diag(nrow=p),
     p <- ncol(object$SSD)
 
     if (missing(T)){
-        if (class(M) == "formula") M <- model.matrix(M, idata)
-        if (class(X) == "formula") X <- model.matrix(X, idata)
+	if (inherits(M, "formula")) M <- model.matrix(M, idata)
+	if (inherits(X, "formula")) X <- model.matrix(X, idata)
         if (Rank(cbind(M,X)) != Rank(M))
             stop("X does not define a subspace of M")
     }
@@ -227,8 +227,8 @@ anova.mlm <-
         if (missing(T)){
             orig.M <- M # keep for printing
             orig.X <- X
-            if (class(M) == "formula") M <- model.matrix(M, idata)
-            if (class(X) == "formula") X <- model.matrix(X, idata)
+	    if (inherits(M, "formula")) M <- model.matrix(M, idata)
+	    if (inherits(X, "formula")) X <- model.matrix(X, idata)
             if (Rank(cbind(M,X)) != Rank(M))
                 stop("X does not define a subspace of M")
         }
@@ -420,8 +420,8 @@ anova.mlmlist <- function (object, ...,
     if (missing(T)){
         orig.M <- M # keep for printing
         orig.X <- X
-        if (class(M) == "formula") M <- model.matrix(M, idata)
-        if (class(X) == "formula") X <- model.matrix(X, idata)
+	if (inherits(M, "formula")) M <- model.matrix(M, idata)
+	if (inherits(X, "formula")) X <- model.matrix(X, idata)
         if (Rank(cbind(M,X)) != Rank(M))
             stop("X does not define a subspace of M")
     }

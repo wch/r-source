@@ -348,34 +348,36 @@
         if(length(at) > 0) {
             if(is.null(tracer))
                 stop("cannot use 'at' argument without a trace expression")
-            else if(class(fBody) != "{")
+            else if(!inherits(fBody, "{"))
                 stop("cannot use 'at' argument unless the function body has the form '{ ... }'")
             for(i in at) {
-                if(print)
-                    expri <- substitute({.doTrace(TRACE, MSG); EXPR},
-                                        list(TRACE = tracer,
+		fBody[[i]] <-
+		    if(print)
+			substitute({.doTrace(TRACE, MSG); EXPR},
+                                   list(TRACE = tracer,
                                         MSG = paste("step",paste(i, collapse=",")),
                                         EXPR = fBody[[i]]))
-                else
-                    expri <- substitute({.doTrace(TRACE); EXPR},
-                                        list(TRACE=tracer, EXPR = fBody[[i]]))
-                fBody[[i]] <- expri
+		    else
+			substitute({.doTrace(TRACE); EXPR},
+                                   list(TRACE=tracer, EXPR = fBody[[i]]))
             }
         }
         else if(!is.null(tracer)){
-            if(print)
-                fBody <- substitute({.doTrace(TRACE, MSG); EXPR},
+	    fBody <-
+		if(print)
+		    substitute({.doTrace(TRACE, MSG); EXPR},
                                     list(TRACE = tracer, MSG = paste("on entry"), EXPR = fBody))
-            else
-                fBody <- substitute({.doTrace(TRACE); EXPR},
+		else
+		    substitute({.doTrace(TRACE); EXPR},
                                     list(TRACE=tracer, EXPR = fBody))
         }
         if(!is.null(exit)) {
-            if(print)
-                exit <- substitute(.doTrace(EXPR, MSG),
+	    exit <-
+		if(print)
+		    substitute(.doTrace(EXPR, MSG),
                                    list(EXPR = exit, MSG = paste("on exit")))
-            else
-                exit <- substitute(.doTrace(EXPR),
+		else
+		    substitute(.doTrace(EXPR),
                                    list(EXPR = exit))
             fBody <- substitute({on.exit(TRACE); BODY},
                                 list(TRACE=exit, BODY=fBody))
