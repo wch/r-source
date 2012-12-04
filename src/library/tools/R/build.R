@@ -186,7 +186,7 @@ get_exclude_patterns <- function()
     }
 
     ## This version of shell_with_capture merges stdout and stderr
-    ## Used to install package and build vignettes.
+    ## Used to run R to install package and build vignettes.
     shell_with_capture <- function (command, args) {
         outfile <- tempfile("xshell")
         on.exit(unlink(outfile))
@@ -437,16 +437,23 @@ get_exclude_patterns <- function()
             setwd("src")
             messageLog(Log, "cleaning src")
             if (WINDOWS) {
+                have_make <- nzchar(Sys.which(Sys.getenv("MAKE", "make")))
                 if (file.exists("Makefile.win")) {
-                    Ssystem(Sys.getenv("MAKE", "make"), "-f Makefile.win clean")
+                    if (have_make)
+                        Ssystem(Sys.getenv("MAKE", "make"), "-f Makefile.win clean")
+                    else warning("unable to run 'make clean' in 'src'",
+                                 domain = NA)
                 } else {
                     if (file.exists("Makevars.win")) {
-                        makefiles <- paste()
-                        makefiles <- paste("-f",
-                                           shQuote(file.path(R.home("share"), "make", "clean.mk")),
+                        if (have_make) {
+                            makefiles <- paste()
+                            makefiles <- paste("-f",
+                                               shQuote(file.path(R.home("share"), "make", "clean.mk")),
                                            "-f Makevars.win")
-                        Ssystem(Sys.getenv("MAKE", "make"),
-                                c(makefiles, "clean"))
+                            Ssystem(Sys.getenv("MAKE", "make"),
+                                    c(makefiles, "clean"))
+                        } else warning("unable to run 'make clean' in 'src'",
+                                       domain = NA)
                     }
                     ## Also cleanup possible Unix leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
@@ -488,11 +495,14 @@ get_exclude_patterns <- function()
         ## was cleanup.win used).
         if (WINDOWS) {
             if (file.exists("cleanup.win")) {
-                Sys.setenv(R_PACKAGE_NAME = pkgname)
-                Sys.setenv(R_PACKAGE_DIR = pkgdir)
-                Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
-                messageLog(Log, "running 'cleanup.win'")
-                Ssystem("sh", "./cleanup.win")
+                ## check we have sh.exe first
+                if (nzchar(Sys.which("sh.exe"))) {
+                    Sys.setenv(R_PACKAGE_NAME = pkgname)
+                    Sys.setenv(R_PACKAGE_DIR = pkgdir)
+                    Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
+                    messageLog(Log, "running 'cleanup.win'")
+                    Ssystem("sh", "./cleanup.win")
+                }
             }
         } else if (file_test("-x", "cleanup")) {
             Sys.setenv(R_PACKAGE_NAME = pkgname)
@@ -1032,7 +1042,8 @@ get_exclude_patterns <- function()
         if(!nzchar(TAR)) {
             ## The tar.exe in Rtools has --force-local by default,
             ## but this enables people to use Cygwin or MSYS tar.
-            TAR <- if (WINDOWS) "tar --force-local" else "internal"
+            TAR <- if (WINDOWS && nzchar(Sys.which("tar"))) "tar --force-local"
+                   else "internal"
         }
         res <- utils::tar(filepath, pkgname, compression = "gzip",
                           compression_level = 9, tar = TAR)
