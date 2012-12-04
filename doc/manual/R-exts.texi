@@ -2005,13 +2005,16 @@ using these utilities.
 @end quotation
 
 @quotation Note to Windows users
-@code{R CMD build} may require you to have installed the Windows toolset
-(see the ``R Installation and Administration'' manual) and have it in
-your path, and @code{R CMD check} will make use of it if present.  You
-may need to set @env{TMPDIR} to point to a suitable writable directory
-with a path not containing spaces -- use forward slashes for the
-separators.  Also, the directory needs to be on a case-honouring file
-system (some network-mounted file systems are not).
+@code{R CMD build} will make use of the Windows toolset (see the ``R
+Installation and Administration'' manual) if present and in your path,
+and it is required for packages which need it to install (including
+those with @file{configure.win} or @file{cleanup.win} scripts or a
+@file{src} directory).  
+
+You may need to set @env{TMPDIR} to point to a suitable writable
+directory with a path not containing spaces -- use forward slashes for
+the separators.  Also, the directory needs to be on a case-honouring
+file system (some network-mounted file systems are not).
 @end quotation
 
 
@@ -2022,12 +2025,12 @@ system (some network-mounted file systems are not).
 @findex R CMD check
 Using @code{R CMD check}, the @R{} package checker, one can test whether
 @emph{source} @R{} packages work correctly.  It can be run on one or
-more directories, or gzipped package @command{tar}
-archives@footnote{This may require @acronym{GNU} @command{tar}: the
-command used can be set with environment variable @env{TAR}.}  with
-extension @file{.tar.gz} or @file{.tgz}.  (Some platforms may allow
-other forms of compression and extensions @file{.tar.bz2} and
-@file{.tar.xz}.)
+more directories, or compressed package @command{tar} archives with
+extension @file{.tar.gz}, @file{.tgz}, @file{.tar.bz2} or
+@file{.tar.xz}.
+
+It is strongly recommended that the final checks are run on a
+@command{tar} archive prepared by @command{R CMD build}.
 
 This runs a series of checks, including
 
@@ -2272,7 +2275,14 @@ to check the primary sub-architecture, and then to use something like
 @command{R --arch=x86_64 CMD check --extra-arch} or (Windows)
 @command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run for each
 additional sub-architecture just the checks@footnote{loading, examples,
-tests, vignettes} which differ by sub-architecture.
+tests, vignettes} which differ by sub-architecture.  (This approach is
+required for packages which are installed by @command{R CMD INSTALL
+--merge-multiarch}.)
+
+Where packages need additional commands to install all the
+sub-architectures these can be supplied by e.g.@:
+@option{--install-args=--force-biarch}.
+       
 @end quotation
 
 
@@ -2285,10 +2295,9 @@ tests, vignettes} which differ by sub-architecture.
 @cindex tarballs
 Packages may be distributed in source form as ``tarballs''
 (@file{.tar.gz} files) or in binary form. The source form can be
-installed on all platforms with suitable tools and is the usual form
-for Unix-like systems; the binary form is platform-specific, and is
-more common distribution form for the Windows and Mac
-platforms.
+installed on all platforms with suitable tools and is the usual form for
+Unix-like systems; the binary form is platform-specific, and is the more
+common distribution form for the Windows and Mac platforms.
 
 Using @command{R CMD build}, the @R{} package builder, one can build @R{}
 package tarballs from their sources (for example, for subsequent release).
@@ -2296,8 +2305,9 @@ package tarballs from their sources (for example, for subsequent release).
 Prior to actually building the package in the standard gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
 particular, it is tested whether object indices exist and can be assumed
-to be up-to-date, and C, C++ and FORTRAN source files and relevant make
-files are tested and converted to LF line-endings if necessary.
+to be up-to-date, and C, C++ and FORTRAN source files and relevant
+makefiles in a @file{src} directory are tested and converted to LF
+line-endings if necessary.
 
 Run-time checks whether the package works correctly should be performed
 using @command{R CMD check} prior to invoking the final build procedure.
@@ -2325,9 +2335,10 @@ starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak} or
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
 
+@c DESCRIPTION field BuildVignettes
 Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
-option@footnote{or the package's description contains
-@samp{BuildVignettes: no} or similar.}, it will attempt to rebuild the
+option (or the package's @file{DESCRIPTION} contains
+@samp{BuildVignettes: no} or similar), it will attempt to rebuild the
 vignettes (@pxref{Writing package vignettes}) in the package.  To do so
 it installs the current package into a temporary library tree, but any
 dependent packages need to be installed in an available library tree
@@ -2343,7 +2354,7 @@ macros, a @file{.pdf} version of the package manual will be built and
 installed in the @file{build/} subdirectory.  (This allows
 @acronym{CRAN} or other repositories to display the manual even if they
 are unable to install the package.)  This can be suppressed by the
-option @option{--no-manual} or if package's description contains
+option @option{--no-manual} or if package's @file{DESCRIPTION} contains
 @samp{BuildManual: no} or similar.
 
 @c DESCRIPTION field BuildKeepEmpty
@@ -2385,12 +2396,12 @@ Note that prior to @R{} 2.13.0, @command{R CMD build} did some cleaning in
 the supplied source directory, but this was undocumented and is no
 longer done.
 
-@command{R CMD build} requires a suitable @command{tar} program that can
+@command{R CMD build} looks a suitable @command{tar} program that can
 produce a compressed tarball: almost certainly one will have been found
 when @R{} was configured on a Unix-alike (and the Windows toolset
-contains one), but if there are problems, set the environment variable
-@env{TAR} to the path to a suitable program or to @code{"internal"} if
-none is available.
+contains one), but if an unsuitable one is found, set the environment
+variable @env{TAR} to the path to a suitable program or to
+@code{"internal"} if none is available.
 
 @node Building binary packages,  , Building package tarballs, Checking and building packages
 @subsection Building binary packages
