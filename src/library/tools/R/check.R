@@ -383,7 +383,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         allfiles <- dir(".", all.files = TRUE,
                         full.names = TRUE, recursive = TRUE)
         allfiles <- c(allfiles, unique(dirname(allfiles)))
-        allfiles <- sub("^./", "", allfiles)
+        allfiles <- af <- sub("^./", "", allfiles)
         ignore_re <- paste0("(", paste(ignore, collapse = "|"), ")")
         allfiles <- grep(ignore_re, allfiles, invert = TRUE, value = TRUE)
 
@@ -415,7 +415,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             do_exit(1L)
         }
 
-
         ## Next check for name clashes on case-insensitive file systems
         ## (that is on Windows and (by default) on Mac OS X).
 
@@ -436,7 +435,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         non_ASCII_files <-
             allfiles[grepl("[^-A-Za-z0-9._!#$%&+,;=@^(){}\'[\\]]", #
                            basename(allfiles), perl = TRUE)]
+        any <- FALSE
         if (nb <- length(non_ASCII_files)) {
+            any <- TRUE
             warningLog(Log)
             msg <- ngettext(nb,
                             "Found the following file with a non-portable file name:\n",
@@ -447,7 +448,42 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             wrapLog("These are not fully portable file names.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
-        } else resultLog(Log, "OK")
+        }
+
+        ## now check lengths, as tarballs can only record up to 100 bytes
+        ## plus perhaps 155 bytes as a prefix
+        af <- file.path(pkgname, af)
+        lens <- nchar(af, "b")
+        if (any(lens > 100L)) {
+            bad_files <- af[lens > 100L]
+            OK <- TRUE
+            if (any(lens > 255L)) OK <- FALSE
+            else { # check if can be splt
+                for (f in bad_files) {
+                    name <- charToRaw(f)
+                    s <- max(which(name[1:155] == charToRaw("/")))
+                    if(is.infinite(s) || s+100 < length(name)) {
+                        OK <- FALSE; break
+                    }
+                }
+                if (!OK) errorLog(Log)
+                else if(!any) warningLog(Log)
+            }
+            msg <- ngettext(length(bad_files),
+                            "Found the following non-portable file path:\n",
+                            "Found the following non-portable file paths:\n",
+                            domain = NA)
+            wrapLog(msg)
+            printLog(Log, .format_lines_with_indent(bad_files), "\n\n")
+            wrapLog("Tarballs are only required to store paths of up to 100",
+                    "bytes and cannot store those of more than 255 bytes,",
+                    "with restrictions including of 100 bytes for the",
+                    "final component.\n",
+                    "See section 'Package structure'",
+                    "in the 'Writing R Extensions' manual.\n")
+            if (!OK) do_exit(1L)
+        }
+        if (!any) resultLog(Log, "OK")
 
         allfiles
     }
