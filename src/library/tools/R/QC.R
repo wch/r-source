@@ -4243,56 +4243,24 @@ function(x, ...)
 .check_package_code_shlib <-
 function(dir)
 {
-    ## <NOTE>
-    ## This is very similar to what happens with checkTnF() etc.
-    ## We should really have a more general-purpose tree walker.
-    ## </NOTE>
-
-    dfile <- file.path(dir, "..", "DESCRIPTION")
-    enc <- if(file.exists(dfile))
-        .read_description(dfile)["Encoding"] else NA
-
-    ## Workhorse function.
-    filter <- function(file) {
-        exprs <- if(!is.na(enc) &&
-                    !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-            ## Previous use of con <- file(file, encoding=enc) was intolerant
-            ## so do what .install_package_code_files does.
-            lines <- iconv(readLines(file, warn = FALSE), from = enc, to = "",
-                           sub = "byte")
-	    parse(text = lines)
-	} else parse(file)
-        ## assume that if locale if 'C' we can read encodings unchanged.
-        .find_calls(exprs,
-                    function(e) {
-                        ((length(e) > 1L)
-                         && (as.character(e[[1L]]) %in%
-                             c("library.dynam", "library.dynam.unload"))
-                         && is.character(e[[2L]])
-                         && grepl("\\.(so|sl|dll)$", e[[2L]]))
-},
-                    recursive = TRUE)
+    predicate <- function(e) {
+        ((length(e) > 1L)
+         && (as.character(e[[1L]]) %in%
+             c("library.dynam", "library.dynam.unload"))
+         && is.character(e[[2L]])
+         && grepl("\\.(so|sl|dll)$", e[[2L]]))
     }
 
-    code_files <-
-        list_files_with_type(dir, "code",
-                             OS_subdirs = c("unix", "windows"))
-    x <- lapply(code_files, filter)
-    names(x) <- code_files
-    x <- x[sapply(x, length) > 0L]
+    x <- Filter(length,
+                .find_calls_in_package_code(dir, predicate,
+                                            recursive = TRUE))
 
     ## Because we really only need this for calling from R CMD check, we
     ## produce output here in case we found something.
-    for(fname in names(x)) {
-        writeLines(gettextf("File '%s':", fname))
-        xfname <- x[[fname]]
-        for(i in seq_along(xfname)) {
-            writeLines(strwrap(gettextf("found %s",
-                                        paste(deparse(xfname[[i]]),
-                                              collapse = "")),
-                               indent = 2L, exdent = 4L))
-        }
-    }
+    if(length(x))
+        writeLines(c(unlist(Map(.format_calls_in_file, x, names(x))),
+                     ""))
+    ## (Could easily provide format() and print() methods ...)
 
     invisible(x)
 }
@@ -4302,11 +4270,6 @@ function(dir)
 .check_package_code_startup_functions <-
 function(dir)
 {
-    ## Similar to .check_package_code_shlib():
-    dfile <- file.path(dir, "DESCRIPTION")
-    enc <- if(file.exists(dfile))
-        .read_description(dfile)["Encoding"] else NA
-
     bad_call_names <-
         unlist(.bad_call_names_in_startup_functions)
 
@@ -4349,20 +4312,17 @@ function(dir)
         out
     }
 
-    code_files <-
-        list_files_with_type(file.path(dir, "R"), "code",
-                             OS_subdirs = c("unix", "windows"))
-    x <- lapply(code_files, .get_startup_function_calls_in_file, enc)
-    ## Be a little fancy.
-    names(x) <- substring(code_files, nchar(dirname(dir)) + 2L)
-    x <- Filter(length,
-                lapply(x,
-                       function(e)
-                       Filter(length,
-                              Map(.check_startup_function,
-                                  e, names(e)))))
-    class(x) <- "check_package_code_startup_functions"
-    x
+    calls <- .find_calls_in_package_code(dir,
+                                         .worker =
+                                         .get_startup_function_calls_in_file)
+    calls <- Filter(length,
+                    lapply(calls,
+                           function(e)
+                           Filter(length,
+                                  Map(.check_startup_function,
+                                      e, names(e)))))
+    class(calls) <- "check_package_code_startup_functions"
+    calls
 }
 
 format.check_package_code_startup_functions <-
@@ -4463,18 +4423,14 @@ function(x, ...)
 ## </FIXME>
 
 .get_startup_function_calls_in_file <-
-function(f, encoding = NA)
+function(file, encoding = NA)
 {
-    if(!file.info(f)$size) return()
+    exprs <- .parse_code_file(file, encoding)
+
+    ## Use a custom gatherer rather than .find_calls() with a suitable
+    ## predicate so that we record the name of the startup function in
+    ## which the calls were found.
     calls <- list()
-    exprs <- if(!is.na(encoding) &&
-                !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-        ## Previous use of con <- file(f, encoding=encoding) was intolerant
-        ## so do what .install_package_code_files does.
-        lines <- iconv(readLines(f, warn = FALSE), from = encoding, to = "",
-                           sub = "byte")
-        parse(text = lines)
-    } else parse(f)
     for(e in exprs) {
         if((length(e) > 2L) &&
 	   (is.name(x <- e[[1L]])) &&
@@ -4525,58 +4481,37 @@ function(x)
 .check_package_code_tampers <-
 function(dir)
 {
-    dfile <- file.path(dir, "..", "DESCRIPTION")
-    enc <- if(file.exists(dfile))
-        .read_description(dfile)["Encoding"] else NA
-    pkgname <- if(file.exists(dfile)) .read_description(dfile)["Package"] else ""
+    dfile <- file.path(dir, "DESCRIPTION")
+    pkgname <- if(file.exists(dfile))
+        .read_description(dfile)["Package"] else ""
 
-    ## Workhorse function.
-    filter <- function(file) {
-        exprs <- if(!is.na(enc) &&
-                    !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-            lines <- iconv(readLines(file, warn = FALSE), from = enc, to = "",
-                           sub = "byte")
-	    parse(text = lines)
-	} else parse(file)
-        check_fun <- function(e)
-        {
-            if(length(e) <= 1L) return(FALSE)
-            if(as.character(e[[1L]])[1L] %in% "unlockBinding") {
-                e3 <- as.character(e[[3L]])
-                if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[3L]][[2L]])
-                return(e3 != pkgname)
-            }
-            if((as.character(e[[1L]])[1L] %in% ".Internal") &&
-               as.character(e[[2L]][[1L]]) == "unlockBinding") return(TRUE)
-            if(as.character(e[[1L]])[1L] %in% "assignInNamespace") {
-                e3 <- as.character(e[[4L]])
-                if (e3 == "asNamespace") e3 <- as.character(e[[4L]][[2L]])
-                return(e3 != pkgname)
-            }
-            FALSE
+    predicate <- function(e) {
+        if(length(e) <= 1L) return(FALSE)
+        if(as.character(e[[1L]])[1L] %in% "unlockBinding") {
+            e3 <- as.character(e[[3L]])
+            if (e3[[1L]] == "asNamespace") e3 <- as.character(e[[3L]][[2L]])
+            return(e3 != pkgname)
         }
-        .find_calls(exprs, check_fun, recursive = TRUE)
+        if((as.character(e[[1L]])[1L] %in% ".Internal") &&
+           as.character(e[[2L]][[1L]]) == "unlockBinding") return(TRUE)
+        if(as.character(e[[1L]])[1L] %in% "assignInNamespace") {
+            e3 <- as.character(e[[4L]])
+            if (e3 == "asNamespace") e3 <- as.character(e[[4L]][[2L]])
+            return(e3 != pkgname)
+        }
+        FALSE
     }
 
-    code_files <-
-        list_files_with_type(dir, "code",
-                             OS_subdirs = c("unix", "windows"))
-    x <- lapply(code_files, filter)
-    names(x) <- code_files
-    x <- x[sapply(x, length) > 0L]
+    x <- Filter(length,
+                .find_calls_in_package_code(dir, predicate,
+                                            recursive = TRUE))
 
     ## Because we really only need this for calling from R CMD check, we
     ## produce output here in case we found something.
-    for(fname in names(x)) {
-        writeLines(gettextf("File '%s':", fname))
-        xfname <- x[[fname]]
-        for(i in seq_along(xfname)) {
-            writeLines(strwrap(gettextf("found %s",
-                                        paste(deparse(xfname[[i]]),
-                                              collapse = "")),
-                               indent = 2L, exdent = 4L))
-        }
-    }
+    if(length(x))
+        writeLines(c(unlist(Map(.format_calls_in_file, x, names(x))),
+                     ""))
+    ## (Could easily provide format() and print() methods ...)
 
     invisible(x)
 }
@@ -4586,24 +4521,38 @@ function(dir)
 .check_package_code_assign_to_globalenv <-
 function(dir)
 {
-    dir <- file_path_as_absolute(dir)
-    
-    dfile <- file.path(dir, "DESCRIPTION")
-    enc <- if(file.exists(dfile))
-        .read_description(dfile)["Encoding"] else NA
+    predicate <- function(e) {
+        if(!is.call(e) || as.character(e[[1L]]) != "assign")
+            return(FALSE)
+        e <- e[as.character(e) != "..."]
+        ## Capture assignments to global env unless to .Random.seed.
+        mc <- match.call(base::assign, e)
+        ## (This may fail for conditionalized code not meant for R
+        ## [e.g., argument 'where'].)
+        ((mc$x != ".Random.seed") &&
+         ((is.name(pos <- mc$pos) &&
+           as.character(pos) == ".GlobalEnv") ||
+          (is.call(pos) &&
+           as.character(pos) == "globalenv") ||
+          (is.numeric(pos) && pos == 1) ||
+          (is.name(env <- mc$envir) &&
+           as.character(env) == ".GlobalEnv") ||
+          (is.call(env) &&
+           as.character(env) == "globalenv")))
+    }
 
-    code_files <-
-        list_files_with_type(file.path(dir, "R"),
-                             "code",
-                             OS_subdirs = c("unix", "windows"))
+    ## Set up a worker using tryCatch() (see above for reasons why).
+    ## <FIXME>
+    ## Perhaps we should more simply handle this inside the predicate
+    ## function, and return FALSE if match.call() fails?
+    worker <- function(file, encoding) {
+        tryCatch(.find_calls_in_file(file, encoding, predicate,
+                                     recursive = TRUE),
+                 error = identity)
+    }
+    ## </FIXME>
 
-    calls <-
-        lapply(code_files,
-               function(f) {
-                   tryCatch(.get_assignments_to_globalenv_in_file(f, enc),
-                            error = identity)
-               })
-    names(calls) <- .file_path_relative_to_dir(code_files, dirname(dir))
+    calls <- .find_calls_in_package_code(dir, .worker = worker)
     calls <- Filter(function(e) length(e) && !inherits(e, "error"),
                     calls)
     class(calls) <- "check_package_code_assign_to_globalenv"
@@ -4627,53 +4576,59 @@ function(x, ...)
     invisible(x)
 }
 
-.get_assignments_to_globalenv_in_file <-
-function(f, encoding = NA)
-{
-    if(!file.info(f)$size) return()
-    calls <- list()
-    exprs <- suppressWarnings({
-        if(!is.na(encoding) &&
-           !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-            lines <- iconv(readLines(f, warn = FALSE), from =
-                           encoding, to = "", sub = "byte")
-            parse(text = lines)
-        } else parse(f)
-    })
-    .find_calls(exprs,
-                function(e) {
-                    if(!is.call(e) ||
-                       as.character(e[[1L]]) != "assign")
-                        return(FALSE)
-                    e <- e[as.character(e) != "..."]
-                    ## Capture assignments to global env unless to
-                    ## .Random.seed.
-                    mc <- match.call(base::assign, e)
-                    ## (This may fail for conditionalized code not meant
-                    ## for R [e.g., argument 'where'].)
-                    ((mc$x != ".Random.seed") &&
-                     ((is.name(pos <- mc$pos) &&
-                       as.character(pos) == ".GlobalEnv") ||
-                      (is.call(pos) &&
-                       as.character(pos) == "globalenv") ||
-                      (is.name(env <- mc$envir) &&
-                       as.character(env) == ".GlobalEnv") ||
-                      (is.call(env) &&
-                       as.character(env) == "globalenv")))
-                },
-                recursive = TRUE)
-}
+## <FIXME>
+## Unused ...
+##
+## .get_assignments_to_globalenv_in_file <-
+## function(f, encoding = NA)
+## {
+##     if(!file.info(f)$size) return()
+##     calls <- list()
+##     exprs <- suppressWarnings({
+##         if(!is.na(encoding) &&
+##            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+##             lines <- iconv(readLines(f, warn = FALSE), from =
+##                            encoding, to = "", sub = "byte")
+##             parse(text = lines)
+##         } else parse(f)
+##     })
+##     .find_calls(exprs,
+##                 function(e) {
+##                     if(!is.call(e) ||
+##                        as.character(e[[1L]]) != "assign")
+##                         return(FALSE)
+##                     e <- e[as.character(e) != "..."]
+##                     ## Capture assignments to global env unless to
+##                     ## .Random.seed.
+##                     mc <- match.call(base::assign, e)
+##                     ## (This may fail for conditionalized code not meant
+##                     ## for R [e.g., argument 'where'].)
+##                     ((mc$x != ".Random.seed") &&
+##                      ((is.name(pos <- mc$pos) &&
+##                        as.character(pos) == ".GlobalEnv") ||
+##                       (is.call(pos) &&
+##                        as.character(pos) == "globalenv") ||
+##                       (is.numeric(pos) && pos == 1) ||
+##                       (is.name(env <- mc$envir) &&
+##                        as.character(env) == ".GlobalEnv") ||
+##                       (is.call(env) &&
+##                        as.character(env) == "globalenv")))
+##                 },
+##                 recursive = TRUE)
+## }
+##
+## </FIXME>
 
 ### * .check_package_code_attach
 
 .check_package_code_attach <-
 function(dir)
 {
-    calls <- 
-        .find_calls_in_package_code(dir,
-                                    function(e)
-                                    as.character(e[[1L]]) == "attach",
-                                    recursive = TRUE)
+    predicate <- function(e)
+        as.character(e[[1L]]) == "attach"
+    
+    calls <- .find_calls_in_package_code(dir, predicate,
+                                         recursive = TRUE)
     calls <- Filter(length, calls)
     class(calls) <- "check_package_code_attach"
     calls

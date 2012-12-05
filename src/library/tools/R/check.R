@@ -1128,7 +1128,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     {
         checkingLog(Log, "R code for possible problems")
         if (!is_base_pkg) {
-            Rcmd <- "options(warn=1);tools:::.check_package_code_shlib(\"R\")"
+            Rcmd <- paste("options(warn=1)\n",
+                          sprintf("tools:::.check_package_code_shlib(dir = \"%s\")\n",
+                                  pkgdir))
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 errorLog(Log)
@@ -1150,10 +1152,11 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         out2 <- out3 <- out4 <- out5 <- out6 <- NULL
 
         if (!is_base_pkg && R_check_unsafe_calls) {
-            Rcmd <- "options(warn=1);tools:::.check_package_code_tampers(\"R\")"
+            Rcmd <- paste("options(warn=1)\n",
+                          sprintf("tools:::.check_package_code_tampers(dir = \"%s\")\n",
+                                  pkgdir))
             out2 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         }
-
 
         if (R_check_use_codetools && do_install) {
             Rcmd <-
@@ -1198,7 +1201,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                           paste(c("Found the following possibly unsafe calls:",
                                   out2, ""), collapse = "\n"))
             if (length(out3))
-                printLog0(Log, paste(c(out3, ""), collapse = "\n"))
+                printLog0(Log, paste(c(out3, "", ""), collapse = "\n"))
             if (length(out4)) {
                 first <- grep("^Found.* .Internal call", out4)[1L]
                 if(first > 1L) out4 <- out4[-seq_len(first-1)]
