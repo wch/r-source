@@ -2042,4 +2042,11 @@ stopifnot(!is.na(z$tension))
 ## results were NA in R <= 2.15.2
 
 
+## recursive listing of directories
+p <- file.path(R.home(), "share","texmf") # always exists, readable
+lfri <- list.files(p, recursive=TRUE, include.dirs=TRUE)
+stopifnot(!is.na(match(c("tex", "bibtex"), lfri)))
+## failed for a few days, unnoticed, in the development version of R
+
+
 proc.time()
