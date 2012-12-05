@@ -467,7 +467,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     }
                 }
                 if (!OK) errorLog(Log)
-                else if(!any) noteLog(Log)
+                else if(!any) {
+                    noteLog(Log)
+                    any <- TRUE
+                }
             }
             msg <- ngettext(length(bad_files),
                             "Found the following non-portable file path:\n",
