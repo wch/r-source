@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-11 R Core Team
+% Copyright 2009-12 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -54,7 +54,13 @@ tar(tarfile, files = NULL,
   \samp{--acls}, \option{--exclude-backups}, \option{--exclude-vcs} (and
   similar) and on Windows \option{--force-local} (so drives can be
   included in filepaths: however, this is the default for the
-  \command{Rtools} \command{tar}).
+  \command{Rtools} \command{tar}).  For GNU \command{tar},
+  \option{--format=ustar} forces a more portable format (the current
+  default in version 1.26 is \option{--format=gnu}, but the manual says
+  the intention is to change to \option{--format=pax} which GNU
+  incorectly calls \sQuote{POSIX} -- it was never part of the POSIX
+  standard for \command{tar}).  For libarchive \command{tar},
+  \option{--format=ustar} is more portable than the default.
 }
 
 \value{
@@ -74,28 +80,37 @@ tar(tarfile, files = NULL,
 
   Known problems arise from
   \itemize{
-    \item The handling of file names of more than 100 bytes.  These were
+    \item The handling of file paths of more than 100 bytes.  These were
     unsupported in early versions of \command{tar}, and supported in one
     way by POSIX \command{tar} and in another by GNU \command{tar}.  The
-    internal implementation uses the POSIX way which supports up to 255
-    bytes (depending on the path), and warns on paths of more than 100
-    bytes.
+    internal implementation uses the \sQuote{ustar} way from the 1998
+    POSIX standard which supports up to 255 bytes (depending on the
+    path: in particular the final component is limited to 100 bytes),
+    and warns on paths of more than 100 bytes.
+
+    Most formats do not record the encoding of file paths.
 
     \item (File) links.  \command{tar} was developed on an OS that used
-    hard links, and physical files that were referred to more than one
+    hard links, and physical files that were referred to more than once
     in the list of files to be included were included only once, the
     remaining instances being added as links.  Later a means to include
     symbolic links was added.  The internal implementation supports
     symbolic links (on OSes that support them), only.  Of course, the
     question arises as to how links should be unpacked on OSes that do
-    not support them: for reqular files, at least, file copies can be used.
+    not support them: for reqular files, at least, file copies can be
+    used.
+
+    Names of links in the \sQuote{ustar} format are restricted to 100
+    bytes.
 
     \item Header fields, in particular the padding to be used when
     fields are not full or not used.  POSIX did define the correct
     behaviour but commonly used implementations did (and still do)
     not comply.
+
+    \item File sizes.  The \sQuote{ustar} format is restricted to 8GB.
   }
-  For portability, avoid file paths of more than 100 bytes, and links
+  For portability, avoid file paths of more than 100 bytes and all links
   (especially hard links and symbolic links to directories).
 
   The internal implementation writes only the blocks of 512 bytes
