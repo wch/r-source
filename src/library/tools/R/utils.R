@@ -593,24 +593,58 @@ function(x, dir)
 ### ** .find_calls
 
 .find_calls <-
-function(x, f = NULL, recursive = FALSE)
+function(x, predicate = NULL, recursive = FALSE)
 {
     x <- as.list(x)
 
-    predicate <- if(is.null(f))
+    f <- if(is.null(predicate))
         function(e) is.call(e)
     else
-        function(e) is.call(e) && f(e)
+        function(e) is.call(e) && predicate(e)
 
-    if(!recursive) return(Filter(predicate, x))
+    if(!recursive) return(Filter(f, x))
 
     calls <- list()
     gatherer <- function(e) {
-        if(predicate(e)) calls <<- c(calls, list(e))
+        if(f(e)) calls <<- c(calls, list(e))
         if(is.recursive(e))
             for(i in seq_along(e)) gatherer(e[[i]])
     }
     gatherer(x)
+    
+    calls
+}
+
+### ** .find_calls_in_file
+
+.find_calls_in_file <-
+function(file, encoding = NA, predicate = NULL, recursive = FALSE)
+{
+    .find_calls(.parse_code_file(file, encoding), predicate, recursive)
+}
+
+### ** .find_calls_in_package_code
+
+.find_calls_in_package_code <-
+function(dir, predicate = NULL, recursive = FALSE, .worker = NULL)
+{
+    dir <- file_path_as_absolute(dir)
+
+    dfile <- file.path(dir, "DESCRIPTION")
+    encoding <- if(file.exists(dfile))
+        .read_description(dfile)["Encoding"] else NA
+
+    if(is.null(.worker))
+        .worker <- function(file, encoding)
+            .find_calls_in_file(file, encoding, predicate, recursive)
+    
+    code_files <-
+        list_files_with_type(file.path(dir, "R"), "code",
+                             OS_subdirs = c("unix", "windows"))
+    calls <- lapply(code_files, .worker, encoding)
+    names(calls) <-
+        .file_path_relative_to_dir(code_files, dirname(dir))
+    
     calls
 }
 
@@ -927,7 +961,7 @@ function()
 .get_standard_DESCRIPTION_fields <-
 function()
 {
-    unique(c(tools:::.get_standard_repository_db_fields(),
+    unique(c(.get_standard_repository_db_fields(),
              ## Extract from R-exts via
              ## .get_DESCRIPTION_fields_in_R_exts():
              c("Author",
@@ -1306,6 +1340,26 @@ function(packages = NULL, FUN, ...)
     names(out) <- packages
     out
 }
+
+### .parse_code_file
+
+.parse_code_file <-
+function(file, encoding = NA)
+{
+    if(!file.info(file)$size) return()
+    suppressWarnings({
+        if(!is.na(encoding) &&
+           !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+            ## Previous use of con <- file(file, encoding = encoding)
+            ## was intolerant so do what .install_package_code_files()
+            ## does.
+            lines <- iconv(readLines(file, warn = FALSE),
+                           from = encoding, to = "", sub = "byte")
+            parse(text = lines)
+        } else parse(file)
+    })
+}
+
 
 ### ** .read_Rd_lines_quietly
 
