@@ -1,6 +1,6 @@
 % File src/library/utils/man/PkgUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{PkgUtils}
@@ -19,8 +19,7 @@
   \item{pkgdirs}{a list of names of directories with sources of \R
     add-on packages.  For \code{check} these can also be the filenames of
     compressed \command{tar} archives with extension \file{.tar.gz},
-    \file{.tgz}, \file{.tar.bz2} or \file{.tar.xz} (where supported by
-    \command{tar}).}
+    \file{.tgz}, \file{.tar.bz2} or \file{.tar.xz}.}
   \item{options}{further options to control the processing, or for
     obtaining information about usage and version of the utility.}
 }
@@ -42,10 +41,14 @@
   \env{_R_BUILD_COMPACT_VIGNETTES_}: see \sQuote{Writing \R Extensions}.
   Many of the checks in \command{R CMD check} can be turned off or on by
   environment variables: see Chapter 6 of the \sQuote{R Internals} manual.
-  
-  \command{R CMD build} uses the external \command{tar} program given by
-  the \env{TAR} environment variable (which is set when \R was
-  configured on a Unix-alike).
+
+  By default \command{R CMD build} uses the \code{"internal"} option to
+  \code{\link{tar}} to prepare the tarball.  An external \command{tar}
+  program can be specified by the \env{R_BUILD_TAR} environment
+  variable.  This will be faster for very large packages, and can be
+  needed for packages with long path names (over 100 bytes) or very
+  large files (over 8GB): however, the resulting tarball may not be
+  portable.
   
   \command{R CMD check} by default unpacks tarballs by the internal
   \code{\link{untar}} function: if needed an external \command{tar}

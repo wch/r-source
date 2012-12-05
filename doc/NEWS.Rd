@@ -400,6 +400,13 @@
 
       \item \command{R CMD check --as-cran} notes assignments to the
       global environment and calls to \code{attach()}.
+
+      \item \command{R CMD build} by default uses the internal method of
+      \code{tar()} to prepare the tarball.  This is more likely to
+      produce a tarball compatible with \command{R CMD INSTALL} and
+      \command{R CMD check}: an external \command{tar} program,
+      including options, can be specified \emph{via} the environment
+      variable \env{R_BUILD_TAR}.
     }
   }
 
