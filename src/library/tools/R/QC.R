@@ -4441,21 +4441,26 @@ function(x, ...)
          output = c("cat", "message", "print", "writeLines"),
          unsafe = c("installed.packages", "utils::installed.packages"))
 
-.get_startup_function_calls <-
-function(dir, all = FALSE)
-{
-    dfile <- file.path(dir, "DESCRIPTION")
-    if(is.na(encoding <- .read_description(dfile)["Encoding"]))
-        encoding <- NA
-    files <- if(all)
-        list_files_with_type(file.path(dir, "R"), "code")
-    else
-        list_files_with_type(file.path(dir, "R"), "code",
-                             OS_subdirs = c("unix", "windows"))
-    calls <-
-        lapply(files, .get_startup_function_calls_in_file, encoding)
-    as.list(unlist(calls, recursive = FALSE))
-}
+## <FIXME>
+## Unused?
+##
+## .get_startup_function_calls <-
+## function(dir, all = FALSE)
+## {
+##     dfile <- file.path(dir, "DESCRIPTION")
+##     if(is.na(encoding <- .read_description(dfile)["Encoding"]))
+##         encoding <- NA
+##     files <- if(all)
+##         list_files_with_type(file.path(dir, "R"), "code")
+##     else
+##         list_files_with_type(file.path(dir, "R"), "code",
+##                              OS_subdirs = c("unix", "windows"))
+##     calls <-
+##         lapply(files, .get_startup_function_calls_in_file, encoding)
+##     as.list(unlist(calls, recursive = FALSE))
+## }
+##
+## </FIXME>
 
 .get_startup_function_calls_in_file <-
 function(f, encoding = NA)
@@ -4487,24 +4492,29 @@ function(f, encoding = NA)
     calls
 }
 
-.get_top_level_calls <-
-function(e)
-{
-    if(!length(e)) return(list())
-    exprs <- list(e)
-    while((length(exprs) == 1L) &&
-          (length(e <- exprs[[1L]]) >= 1L) &&
-          e[[1L]] == as.name("{"))
-        exprs <- as.list(e)[-1L]
-    exprs
-}
-
-.get_top_level_call_names <-
-function(e)
-{
-    if(!length(e)) return(character())
-    .call_names(.get_top_level_calls(e))
-}
+## <FIXME>
+## Unused?
+##
+## .get_top_level_calls <-
+## function(e)
+## {
+##     if(!length(e)) return(list())
+##     exprs <- list(e)
+##     while((length(exprs) == 1L) &&
+##           (length(e <- exprs[[1L]]) >= 1L) &&
+##           e[[1L]] == as.name("{"))
+##         exprs <- as.list(e)[-1L]
+##     exprs
+## }
+##
+## .get_top_level_call_names <-
+## function(e)
+## {
+##     if(!length(e)) return(character())
+##     .call_names(.get_top_level_calls(e))
+## }
+##
+## </FIXME>
 
 .call_names <-
 function(x)
@@ -4576,6 +4586,8 @@ function(dir)
 .check_package_code_assign_to_globalenv <-
 function(dir)
 {
+    dir <- file_path_as_absolute(dir)
+    
     dfile <- file.path(dir, "DESCRIPTION")
     enc <- if(file.exists(dfile))
         .read_description(dfile)["Encoding"] else NA
@@ -4591,7 +4603,7 @@ function(dir)
                    tryCatch(.get_assignments_to_globalenv_in_file(f, enc),
                             error = identity)
                })
-    names(calls) <- .file_path_relative_to_dir(code_files, dir)
+    names(calls) <- .file_path_relative_to_dir(code_files, dirname(dir))
     calls <- Filter(function(e) length(e) && !inherits(e, "error"),
                     calls)
     class(calls) <- "check_package_code_assign_to_globalenv"
@@ -5326,11 +5338,10 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             v <- get(o, envir = code_env)
             calls <- .find_calls(v, recursive = TRUE)
             if(!length(calls)) return()
-            cnames <- .call_names(calls)
             calls <- calls[.call_names(calls) == ".Internal"]
-            calls2 <- lapply(calls, "[", 2)
+            calls2 <- lapply(calls, "[", 2L)
             calls3 <-
-                sapply(calls2, function(x) sub("\\(.*", "", deparse(x)[1]))
+                sapply(calls2, function(x) sub("\\(.*", "", deparse(x)[1L]))
             internals <<- c(internals, calls3)
         })
     }
