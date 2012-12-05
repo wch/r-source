@@ -1144,7 +1144,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                               pkgdir))
         out1 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
 
-        out2 <- out3 <- out4 <- out5 <- NULL
+        out2 <- out3 <- out4 <- out5 <- out6 <- NULL
 
         if (!is_base_pkg && R_check_unsafe_calls) {
             Rcmd <- "options(warn=1);tools:::.check_package_code_tampers(\"R\")"
@@ -1178,8 +1178,15 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             out5 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
 
+        if(R_check_code_attach) {
+            Rcmd <- paste("options(warn=1)\n",
+                          sprintf("tools:::.check_package_code_attach(dir = \"%s\")\n",
+                                  pkgdir))
+            out6 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+        }
+
         if (length(out1) || length(out2) || length(out3) ||
-            length(out4) || length(out5)) {
+            length(out4) || length(out5) || length(out6)) {
             if (length(out4)) warningLog(Log) else noteLog(Log)
             if (length(out1))
                 printLog0(Log, paste(c(out1, ""), collapse = "\n"))
@@ -1200,6 +1207,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             }
             if (length(out5))
                 printLog0(Log, paste(c(out5, ""), collapse = "\n"))
+            if (length(out6))
+                printLog0(Log, paste(c(out6, ""), collapse = "\n"))
 
         } else resultLog(Log, "OK")
     }
@@ -3415,6 +3424,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
     R_check_code_assign_to_globalenv <-
         config_val_to_logical(Sys.getenv("_R_CHECK_CODE_ASSIGN_TO_GLOBALENV_",
                                          "FALSE"))
+    R_check_code_attach <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_CODE_ATTACH_", "FALSE"))
 
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
@@ -3453,6 +3464,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         R_check_suggests_only <- TRUE
         warn_on_namespace <- TRUE
         R_check_code_assign_to_globalenv <- TRUE
+        R_check_code_attach <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.

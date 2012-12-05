@@ -399,7 +399,7 @@
       calls.
 
       \item \command{R CMD check --as-cran} notes assignments to the
-      global environment.
+      global environment and calls to \code{attach()}.
     }
   }
 

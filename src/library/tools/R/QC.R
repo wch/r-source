@@ -4615,16 +4615,8 @@ function(x, ...)
 {
     if(!length(x)) return(character())
 
-    .fmt_entries_for_file <- function(calls, f) {
-        c(gettextf("File %s:", sQuote(f)),
-          paste0("  ",
-                 unlist(lapply(calls,
-                               function(e)
-                               paste(deparse(e), collapse = "\n")))))
-    }
-
     c("Found the following assignments to the global environment:",
-      unlist(Map(.fmt_entries_for_file, x, names(x))),
+      unlist(Map(.format_calls_in_file, x, names(x))),
       "")
 }
 
@@ -4670,6 +4662,38 @@ function(f, encoding = NA)
                        as.character(env) == "globalenv")))
                 },
                 recursive = TRUE)
+}
+
+### * .check_package_code_attach
+
+.check_package_code_attach <-
+function(dir)
+{
+    calls <- 
+        .find_calls_in_package_code(dir,
+                                    function(e)
+                                    as.character(e[[1L]]) == "attach",
+                                    recursive = TRUE)
+    calls <- Filter(length, calls)
+    class(calls) <- "check_package_code_attach"
+    calls
+}
+
+format.check_package_code_attach <-
+function(x, ...)
+{
+    if(!length(x)) return(character())
+
+    c("Found the following calls to attach():",
+      unlist(Map(.format_calls_in_file, x, names(x))),
+      "")
+}
+
+print.check_package_code_attach <-
+function(x, ...)
+{
+    writeLines(format(x))
+    invisible(x)
 }
 
 ### * .check_packages_used
@@ -6027,6 +6051,18 @@ function(txt, re)
         txt <- substring(txt, epos + 1L)
     }
     paste0(out, txt)
+}
+
+### ** .format_calls_in_file
+
+.format_calls_in_file <-
+function(calls, f)
+{
+    c(gettextf("File %s:", sQuote(f)),
+      paste0("  ",
+             unlist(lapply(calls,
+                           function(e)
+                           paste(deparse(e), collapse = "\n")))))
 }
 
 ### ** .functions_to_be_ignored_from_usage
