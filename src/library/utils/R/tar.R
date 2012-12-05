@@ -27,12 +27,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         stop("invalid 'tarfile' argument")
 
     TAR <- tar
-    if (!nzchar(TAR) && .Platform$OS.type == "windows") {
-        ## FIXME: use Sys.which instead
-        res <- tryCatch(system("tar.exe --version", intern = TRUE),
-                        error = identity)
-        if (!inherits(res, "error")) TAR <- "tar.exe"
-    }
+    if (!nzchar(TAR) && .Platform$OS.type == "windows" &&
+        nzchar(Sys.which("tar.exe"))) TAR <- "tar.exe"
     if (!nzchar(TAR) || TAR == "internal")
         return(untar2(tarfile, files, list, exdir))
 
