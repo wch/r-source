@@ -2984,8 +2984,9 @@ function(x, ...)
         writeLines(c(gettext("These fields must have ASCII values."), ""))
     }
 
-    any <- .show_check_package_description_authors_at_R_field_results(x)
-    if(any) writeLines("")
+    s <- .format_check_package_description_authors_at_R_field_results(x)
+    if(length(s))
+        writeLines(c(s, ""))
 
     if(length(x$missing_required_fields)) {
         writeLines(gettext("Required fields missing:"))
@@ -3040,7 +3041,7 @@ function(x, ...)
 }
 
 .check_package_description_authors_at_R_field <-
-function(aar)
+function(aar, strict = FALSE)
 {
     out <- list()
     if(is.na(aar)) return(out)
@@ -3058,8 +3059,18 @@ function(aar)
         } else {
             if(s == "")
                 out$bad_authors_at_R_field_has_no_author <- TRUE
-            else
+            else {
                 attr(out, "Author") <- s
+                if(strict) {
+                    ## Specifically check for persons with missing or
+                    ## non-standard roles.
+                    s <- format(aar[sapply(aar,
+                                           utils:::.format_person_for_plain_author_spec)
+                                    == ""])
+                    if(length(s))
+                        out$bad_authors_at_R_field_has_author_without_role <- s
+                }
+            }
         }
         s <- tryCatch(utils:::.format_authors_at_R_field_for_maintainer(aar),
                       error = identity)
@@ -3076,34 +3087,34 @@ function(aar)
     out
 }
 
-.show_check_package_description_authors_at_R_field_results <-
+.format_check_package_description_authors_at_R_field_results <-
 function(x)
 {
-    any <- FALSE
-    if(length(bad <- x[["bad_authors_at_R_field"]])) {
-        writeLines(c(gettext("Malformed Authors@R field:"),
-                     paste(" ", bad)))
-        any <- TRUE
-    }
-    if(length(bad <- x[["bad_authors_at_R_field_for_author"]])) {
-        writeLines(c(gettext("Cannot extract Author field from Authors@R field:"),
-                     paste(" ", bad)))
-        any <- TRUE
-    }
-    if(length(x[["bad_authors_at_R_field_has_no_author"]])) {
-        writeLines(gettext("Authors@R field gives no person with author role."))
-        any <- TRUE
-    }
-    if(length(bad <- x[["bad_authors_at_R_field_for_maintainer"]])) {
-        writeLines(c(gettext("Cannot extract Maintainer field from Authors@R field:"),
-                     paste(" ", bad)))
-        any <- TRUE
-    }
-    if(length(x[["bad_authors_at_R_field_has_no_maintainer"]])) {
-        writeLines(gettext("Authors@R field gives no person with maintainer role and email address."))
-        any <- TRUE
-    }
-    any
+    c(character(),
+      if(length(bad <- x[["bad_authors_at_R_field"]])) {
+          c(gettext("Malformed Authors@R field:"),
+            paste(" ", bad))
+      },
+      if(length(bad <- x[["bad_authors_at_R_field_for_author"]])) {
+          c(gettext("Cannot extract Author field from Authors@R field:"),
+            paste(" ", bad))
+      },
+      if(length(x[["bad_authors_at_R_field_has_no_author"]])) {
+          gettext("Authors@R field gives no person with author role.")
+      },
+      if(length(bad <-
+                x[["bad_authors_at_R_field_has_author_without_role"]])) {
+          c(gettext("Authors@R field gives persons with no valid roles:"),
+            paste(" ", bad))
+      },
+      if(length(bad <- x[["bad_authors_at_R_field_for_maintainer"]])) {
+          c(gettext("Cannot extract Maintainer field from Authors@R field:"),
+            paste(" ", bad))
+      },
+      if(length(x[["bad_authors_at_R_field_has_no_maintainer"]])) {
+          gettext("Authors@R field gives no person with maintainer role and email address.")
+      }
+      )
 }
 
 ### * .check_package_description_encoding
@@ -4384,8 +4395,7 @@ function(x, ...)
               exdent = 2L),
       gettextf("See section %s in '%s'.",
                sQuote("Good practice"),
-               "?.onAttach"),
-      ""
+               "?.onAttach")
       )
 }
 
@@ -4509,8 +4519,7 @@ function(dir)
     ## Because we really only need this for calling from R CMD check, we
     ## produce output here in case we found something.
     if(length(x))
-        writeLines(c(unlist(Map(.format_calls_in_file, x, names(x))),
-                     ""))
+        writeLines(unlist(Map(.format_calls_in_file, x, names(x))))
     ## (Could easily provide format() and print() methods ...)
 
     invisible(x)
@@ -4565,8 +4574,7 @@ function(x, ...)
     if(!length(x)) return(character())
 
     c("Found the following assignments to the global environment:",
-      unlist(Map(.format_calls_in_file, x, names(x))),
-      "")
+      unlist(Map(.format_calls_in_file, x, names(x))))
 }
 
 print.check_package_code_assign_to_globalenv <-
@@ -4640,8 +4648,7 @@ function(x, ...)
     if(!length(x)) return(character())
 
     c("Found the following calls to attach():",
-      unlist(Map(.format_calls_in_file, x, names(x))),
-      "")
+      unlist(Map(.format_calls_in_file, x, names(x))))
 }
 
 print.check_package_code_attach <-

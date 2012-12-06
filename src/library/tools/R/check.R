@@ -560,7 +560,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
             errorLog(Log)
-            printLog(Log, paste(out, collapse="\n"), "\n")
+            printLog(Log, paste(out, collapse = "\n"), "\n")
             do_exit(1L)
         }
         any <- FALSE
@@ -570,7 +570,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         if (length(out)) {
             warningLog(Log)
             any <- TRUE
-            printLog(Log, paste(out, collapse="\n"), "\n")
+            printLog(Log, paste(out, collapse = "\n"), "\n")
         }
 
         ## Check the license.
@@ -601,21 +601,21 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     if (!any) noteLog(Log)
                 }
                 any <- TRUE
-                printLog(Log, paste(out, collapse="\n"), "\n")
+                printLog(Log, paste(out, collapse = "\n"), "\n")
             }
         }
 
-        ## Check Authors@R in case it was not checked as part of
-        ## .check_package_description().
+        ## .check_package_description() only checks Authors@R "if needed",
+        ## and does not check for persons with no valid roles.
         db <- .read_description(dfile)
-        if(!is.na(aar <- db["Authors@R"]) &&
-           !is.na(db["Author"]) &&
-           !is.na(db["Maintainer"])) {
-            out <- .check_package_description_authors_at_R_field(aar)
+        if(!is.na(aar <- db["Authors@R"])) {
+            out <- .check_package_description_authors_at_R_field(aar,
+                                                                 strict = TRUE)
             if(length(out)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
-                .show_check_package_description_authors_at_R_field_results(out)
+                out <- .format_check_package_description_authors_at_R_field_results(out)
+                printLog(Log, paste(out, collapse = "\n"), "\n")
             }
         }
 
@@ -677,7 +677,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if(length(out)) {
                     if(!any) warningLog(Log)
                     any <- TRUE
-                    printLog(Log, paste(c(out, ""), collapse="\n"))
+                    printLog(Log, paste(c(out, ""), collapse = "\n"))
                 }
             }
         }
@@ -688,7 +688,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if(length(out)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
-                printLog(Log, paste(c(out, ""), collapse="\n"))
+                printLog(Log, paste(c(out, ""), collapse = "\n"))
             }
         }
         if (any)
@@ -803,7 +803,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if(length(out)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
-                printLog(Log, paste(c(out, ""), collapse="\n"))
+                printLog(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog("Please remove or rename the files.\n",
                         "See section 'Package subdirectories'",
                         "in the 'Writing R Extensions' manual.\n")
@@ -916,7 +916,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                     wrapLog("Found the following non-empty",
                             "subdirectories of 'inst' also",
                             "used by R:\n")
-                    printLog(Log, paste(c(suspect, ""), collapse="\n"))
+                    printLog(Log, paste(c(suspect, ""), collapse = "\n"))
                     wrapLog("It is recommended not to interfere",
                             "with package subdirectories used by R.\n")
                 }
@@ -1193,29 +1193,40 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6)) {
+            ini <- character()
             if (length(out4)) warningLog(Log) else noteLog(Log)
-            if (length(out1))
+            if (length(out1)) {
                 printLog0(Log, paste(c(out1, ""), collapse = "\n"))
-            if (length(out2))
+                ini <- ""
+            }
+            if (length(out2)) {
                 printLog0(Log,
-                          paste(c("Found the following possibly unsafe calls:",
-                                  out2, ""), collapse = "\n"))
-            if (length(out3))
-                printLog0(Log, paste(c(out3, "", ""), collapse = "\n"))
+                          paste(c(ini,
+                                  "Found the following possibly unsafe calls:",
+                                  out2, ""),
+                                collapse = "\n"))
+                ini <- ""
+            }
+            if (length(out3)) {
+                printLog0(Log, paste(c(ini, out3, ""), collapse = "\n"))
+                ini <- ""
+            }
             if (length(out4)) {
                 first <- grep("^Found.* .Internal call", out4)[1L]
                 if(first > 1L) out4 <- out4[-seq_len(first-1)]
-                printLog0(Log, paste(c(out4, "", ""), collapse = "\n"))
+                printLog0(Log, paste(c(ini, out4, "", ""), collapse = "\n"))
                 wrapLog(c("Packages should not call .Internal():",
                           "it is not part of the API,",
                           "for use only by R itself",
                           "and subject to change without notice."))
+                ini <- ""
             }
-            if (length(out5))
-                printLog0(Log, paste(c(out5, ""), collapse = "\n"))
+            if (length(out5)) {
+                printLog0(Log, paste(c(ini, out5, ""), collapse = "\n"))
+                ini <- ""
+            }
             if (length(out6))
-                printLog0(Log, paste(c(out6, ""), collapse = "\n"))
-
+                printLog0(Log, paste(c(ini, out6, ""), collapse = "\n"))
         } else resultLog(Log, "OK")
     }
 
@@ -1993,7 +2004,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if(any(keep)) {
                     printLog(Log, "Examples with CPU or elapsed time > 5s\n")
                     times <- capture.output(format(times[keep, ]))
-                    printLog(Log, paste(times, collapse="\n"), "\n")
+                    printLog(Log, paste(times, collapse = "\n"), "\n")
                 }
             }
             TRUE
@@ -2487,7 +2498,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if (file.exists(latex_log)) {
                     lines <- .get_LaTeX_errors_from_log_file(latex_log)
                     printLog(Log, "LaTeX errors found:\n")
-                    printLog0(Log, paste(c(lines, ""), collapse="\n"))
+                    printLog0(Log, paste(c(lines, ""), collapse = "\n"))
                 }
                 unlink(build_dir, recursive = TRUE)
                 ## for Windows' sake: errors can make it unwritable
