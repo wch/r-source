@@ -290,8 +290,8 @@ characters cannot be guaranteed to be supported in all locales.  It
 would be good practice to avoid the shell metacharacters
 @code{()@{@}'[]$}.  In addition, packages are normally distributed as
 tarballs, and these have a limit on path lengths (including the package
-name): for maximal portability 100 bytes, and less portably 255 bytes
-with a final component of no more than 100 bytes.
+name): for maximal portability 100 bytes, and less portably up to 256
+bytes with a final component of no more than 100 bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
