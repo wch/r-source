@@ -151,15 +151,4 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   set up a repository.
 }
 
-\examples{
-
-\dontrun{
-install.packages(
-    c("XML_0.99-5.tar.gz",
-      "../../Interfaces/Perl/RSPerl_0.8-0.tar.gz"),
-    repos = NULL,
-    configure.args = c(XML = '--with-xml-config=xml-config',
-                       RSPerl = "--with-modules='IO Fcntl'"))
-}
-}
 \keyword{utilities}
