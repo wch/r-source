@@ -47,6 +47,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
         data <- eval(model$call$data, envir)
     if (is.null(data))
         data <- mf
+    ## maybe rather use naresid() as for factor variables.
     use.rows <- if (NROW(tms) < NROW(data))
         match(rownames(tms), rownames(data)) ## else NULL
     nmt <- colnames(tms)
@@ -88,20 +89,25 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
         for (i in 1L:n.tms) {
             if (!in.mf[i]) next
             ## add element to output list
+            ## ww = index to rows in the data, selecting one of each unique
+            ##        predictor value
             if (is.fac[i]) {
-                ff <- mf[, nmt[i]]
+                ff <- mf[, nmt[i]]  #copy 3 lines from the plot section
                 if (!is.null(model$na.action))
                     ff <- naresid(model$na.action, ff)
-                xx <- factor(levels(ff), levels = levels(ff)) # retain order
-                ww <- match(tempx, ff[, 1L])
-            } else {
+                xx <- ff[[1]]  #data frame to variable
+                # "nomatch' in case there is a level not in the data
+                ww <- match(levels(xx), xx, nomatch = 0L)
+            }
+            else {
                 xx <- carrier(cn[[i]])
                 if (!is.null(use.rows)) xx <- xx[use.rows]
                 ww <- match(sort(unique(xx)), xx)
             }
             outlist[[i]] <- if (se)
-                data.frame(x = xx[ww], y = tms[ww,i], se = terms$se.fit[ww,i])
-            else data.frame(x = xx[ww], y = tms[ww,i])
+                data.frame(x = xx[ww], y = tms[ww,i], se = terms$se.fit[ww,i],
+                           row.names = NULL)
+            else data.frame(x = xx[ww], y = tms[ww,i], row.names = NULL)
         }
         attr(outlist, "constant") <- attr(terms, "constant")
         names(outlist) <- (sapply(cn, carrier.name))[in.mf]
