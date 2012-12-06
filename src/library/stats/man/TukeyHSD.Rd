@@ -59,7 +59,7 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   If \code{which} specifies non-factor terms these will be dropped with
   a warning: if no terms are left this is a an error.
   
-  In \R 2.15.2 and earler the reults were \code{NA} for fits with
+  In \R 2.15.2 and earlier the results were \code{NA} for fits with
   \code{na.action} methods such as \code{\link{na.exclude}}.
 }
 \value{

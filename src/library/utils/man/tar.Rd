@@ -58,7 +58,7 @@ tar(tarfile, files = NULL,
   \option{--format=ustar} forces a more portable format (the current
   default in version 1.26 is \option{--format=gnu}, but the manual says
   the intention is to change to \option{--format=pax} which GNU
-  incorectly calls \sQuote{POSIX} -- it was never part of the POSIX
+  incorrectly calls \sQuote{POSIX} -- it was never part of the POSIX
   standard for \command{tar}).  For libarchive \command{tar},
   \option{--format=ustar} is more portable than the default.
 }
@@ -97,7 +97,7 @@ tar(tarfile, files = NULL,
     symbolic links was added.  The internal implementation supports
     symbolic links (on OSes that support them), only.  Of course, the
     question arises as to how links should be unpacked on OSes that do
-    not support them: for reqular files, at least, file copies can be
+    not support them: for regular files, at least, file copies can be
     used.
 
     Names of links in the \sQuote{ustar} format are restricted to 100
