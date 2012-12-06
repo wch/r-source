@@ -451,13 +451,13 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         }
 
         ## now check lengths, as tarballs can only record up to 100 bytes
-        ## plus perhaps 155 bytes as a prefix
+        ## plus perhaps 155 bytes as a prefix plus /
         af <- file.path(pkgname, af)
         lens <- nchar(af, "b")
         if (any(lens > 100L)) {
             bad_files <- af[lens > 100L]
             OK <- TRUE
-            if (any(lens > 255L)) OK <- FALSE
+            if (any(lens > 256L)) OK <- FALSE
             else { # check if can be splt
                 for (f in bad_files) {
                     name <- charToRaw(f)
@@ -479,7 +479,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             wrapLog(msg)
             printLog(Log, .format_lines_with_indent(bad_files), "\n\n")
             wrapLog("Tarballs are only required to store paths of up to 100",
-                    "bytes and cannot store those of more than 255 bytes,",
+                    "bytes and cannot store those of more than 256 bytes,",
                     "with restrictions including to 100 bytes for the",
                     "final component.\n",
                     "See section 'Package structure'",
