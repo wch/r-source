@@ -325,15 +325,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   set up a repository.
 }
 
-\examples{
-
-\dontrun{
-install.packages(
-    c("XML_0.99-5.tar.gz",
-      "../../Interfaces/Perl/RSPerl_0.8-0.tar.gz"),
-    repos = NULL,
-    configure.args = c(XML = '--with-xml-config=xml-config',
-                       RSPerl = "--with-modules='IO Fcntl'"))
-}
-}
+\examples{\dontrun{
+## A Linux example for Fedora's layout
+install.packages(c("ncdf4", "RNetCDF"),
+    configure.args =
+       c(RNetCDF = "'--configure-args=--with-netcdf-include=/usr/include/udunits2"'))
+}}
 \keyword{utilities}
