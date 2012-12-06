@@ -670,6 +670,9 @@
       \item \code{TukeyHSD()} could give \code{NA} results with some
       \samp{na.action} methods such as \code{na.exclude()}.
       (Hinted at on R-help by John Fox.)
+
+      \item The deprecated \code{svd(X, LINPACK = TRUE)} could alter
+      \code{X} in \R 2.15.[12].  (Reported by Bill Dunlap.)
     }
   }
 }
