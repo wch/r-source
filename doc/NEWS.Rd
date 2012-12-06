@@ -58,13 +58,16 @@
       \item On Windows, warnings about opening a file or pipe with a
       non-ASCII description were sometimes output in UTF-8 rather than
       in the current locale's character set.
-      
-      \item The \code{call()} function did not duplicate its arguments. 
+
+      \item The \code{call()} function did not duplicate its arguments.
       (\PR{15115})
       
       \item \code{TukeyHSD()} could give \code{NA} results with some
       \samp{na.action} methods such as \code{na.exclude()}.
       (Hinted at on R-help by John Fox.)
+ 
+      \item The deprecated \code{svd(X, LINPACK = TRUE)} could alter
+      \code{X} in \R 2.15.[12].  (Reported by Bill Dunlap.)
     }
   }
 }

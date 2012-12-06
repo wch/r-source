@@ -28,15 +28,15 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
         res <- La.svd(x, nu, nv)
         return(list(d = res$d, u = if(nu) res$u, v = if(nv) Conj(t(res$vt))))
     }
-    if(!is.double(x))
-	storage.mode(x) <- "double"
     if (!LINPACK) {
+        if(!is.double(x)) storage.mode(x) <- "double"
         res <- La.svd(x, nu, nv)
         return(list(d = res$d, u = if(nu) res$u, v = if(nv) t(res$vt)))
     }
 
     ## LINPACK only from here on.
     warning("LINPACK = TRUE is deprecated", domain = NA)
+    storage.mode(x) <- "double"
     n <- as.integer(n)
     if(is.na(n)) stop("invalid nrow(x)")
     p <- as.integer(p)
