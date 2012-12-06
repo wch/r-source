@@ -980,8 +980,17 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = duplicate(x));
     for(i = 0; i < len; i++) {
 	s = STRING_ELT(x, i);
-	if(na || s != NA_STRING)
-	    SET_STRING_ELT(ans, i, mkChar(EncodeString(s, w, quote, (Rprt_adj) justify)));
+	if(na || s != NA_STRING) {
+	    cetype_t ienc = getCharCE(s);
+	    if(ienc == CE_UTF8) {
+		const char *ss = EncodeString(s, w-1000000, quote, 
+					      (Rprt_adj) justify);
+		SET_STRING_ELT(ans, i, mkCharCE(ss, ienc));
+	    } else {
+		const char *ss = EncodeString(s, w, quote, (Rprt_adj) justify);
+		SET_STRING_ELT(ans, i, mkChar(ss));
+	    }
+	}
     }
     UNPROTECT(1);
     return ans;

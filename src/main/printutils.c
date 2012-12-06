@@ -423,7 +423,9 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 {
     int b, b0, i, j, cnt;
     const char *p; char *q, buf[11];
-    cetype_t ienc = CE_NATIVE;
+    cetype_t ienc = getCharCE(s);
+    Rboolean useUTF8 = w < 0;
+    if (w < 0) w = w + 1000000;
 
     /* We have to do something like this as the result is returned, and
        passed on by EncodeElement -- so no way could be end user be
@@ -440,7 +442,6 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
     } else {
 #ifdef Win32
 	if(WinUTF8out) {
-	    ienc = getCharCE(s);
 	    if(ienc == CE_UTF8) {
 		p = CHAR(s);
 		i = Rstrlen(s, quote);
@@ -460,6 +461,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 #endif
 	{
 	    if(IS_BYTES(s)) {
+		ienc = CE_NATIVE;
 		p = CHAR(s);
 		cnt = (int) strlen(p);
 		const char *q;
@@ -478,7 +480,12 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		*qq = '\0';
 		p = pp;
 		i = cnt;
+	    } else if (useUTF8 && ienc == CE_UTF8) {
+		p = CHAR(s);
+		i = Rstrlen(s, quote);
+		cnt = LENGTH(s);
 	    } else {
+		ienc = CE_NATIVE;
 		p = translateChar(s);
 		if(p == CHAR(s)) {
 		    i = Rstrlen(s, quote);

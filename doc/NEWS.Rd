@@ -269,8 +269,12 @@
       argument \code{no..} which allows to exclude \code{"."} and
       \code{".."} from listings.
 
-      \item multivariate time series are also of class \code{"matrix"}
-      now; consequently, \code{head()}, e.g., is more useful.
+      \item Multiple time series are also of class \code{"matrix"};
+      consequently, \code{head()}, e.g., is more useful.
+
+      \item \code{encodeString()} preserves UTF-8 marked encodings.
+      Thus if factor levels are marked as UTF-8 an attempt is made to
+      print them in UTF-8 in \command{RGui} on Windows.
     }
   }
 
