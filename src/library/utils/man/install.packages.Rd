@@ -328,7 +328,6 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 \examples{\dontrun{
 ## A Linux example for Fedora's layout
 install.packages(c("ncdf4", "RNetCDF"),
-    configure.args =
-       c(RNetCDF = "'--configure-args=--with-netcdf-include=/usr/include/udunits2"'))
+  configure.args = c(RNetCDF = "--with-netcdf-include=/usr/include/udunits2"))
 }}
 \keyword{utilities}
