@@ -84,7 +84,7 @@ tar(tarfile, files = NULL,
     unsupported in early versions of \command{tar}, and supported in one
     way by POSIX \command{tar} and in another by GNU \command{tar}.  The
     internal implementation uses the \sQuote{ustar} way from the 1998
-    POSIX standard which supports up to 255 bytes (depending on the
+    POSIX standard which supports up to 256 bytes (depending on the
     path: in particular the final component is limited to 100 bytes),
     and warns on paths of more than 100 bytes.
 
