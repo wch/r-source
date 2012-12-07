@@ -256,8 +256,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         haveR <- dir.exists("R") && !extra_arch
 
         if (!extra_arch) {
-            allfiles <- check_file_names()
-            if (R_check_permissions) check_permissions(allfiles)
             check_meta()  # Check DESCRIPTION meta-information.
             check_top_level()
             check_detritus()
@@ -3714,6 +3712,9 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             if (R_check_executables) check_executables()
 
             check_dot_files(check_incoming)
+
+            allfiles <- check_file_names()
+            if (R_check_permissions) check_permissions(allfiles)
 
             if (do_install) {
                 check_install()
