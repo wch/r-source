@@ -3713,8 +3713,10 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
 
             check_dot_files(check_incoming)
 
+	    setwd(pkgdir)
             allfiles <- check_file_names()
             if (R_check_permissions) check_permissions(allfiles)
+	    setwd(startdir)
 
             if (do_install) {
                 check_install()
