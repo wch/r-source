@@ -33,6 +33,7 @@
 ## .check_package_code_shlib
 ## .check_package_code_startup_functions
 ## .check_package_code_assign_to_globalenv
+## .check_package_code_attach
 ## .check_code_usage_in_package
 ## .check_T_and_F
 ## .check_dotInternal
@@ -4411,27 +4412,6 @@ function(x, ...)
          output = c("cat", "message", "print", "writeLines"),
          unsafe = c("installed.packages", "utils::installed.packages"))
 
-## <FIXME>
-## Unused?
-##
-## .get_startup_function_calls <-
-## function(dir, all = FALSE)
-## {
-##     dfile <- file.path(dir, "DESCRIPTION")
-##     if(is.na(encoding <- .read_description(dfile)["Encoding"]))
-##         encoding <- NA
-##     files <- if(all)
-##         list_files_with_type(file.path(dir, "R"), "code")
-##     else
-##         list_files_with_type(file.path(dir, "R"), "code",
-##                              OS_subdirs = c("unix", "windows"))
-##     calls <-
-##         lapply(files, .get_startup_function_calls_in_file, encoding)
-##     as.list(unlist(calls, recursive = FALSE))
-## }
-##
-## </FIXME>
-
 .get_startup_function_calls_in_file <-
 function(file, encoding = NA)
 {
@@ -4457,30 +4437,6 @@ function(file, encoding = NA)
     }
     calls
 }
-
-## <FIXME>
-## Unused?
-##
-## .get_top_level_calls <-
-## function(e)
-## {
-##     if(!length(e)) return(list())
-##     exprs <- list(e)
-##     while((length(exprs) == 1L) &&
-##           (length(e <- exprs[[1L]]) >= 1L) &&
-##           e[[1L]] == as.name("{"))
-##         exprs <- as.list(e)[-1L]
-##     exprs
-## }
-##
-## .get_top_level_call_names <-
-## function(e)
-## {
-##     if(!length(e)) return(character())
-##     .call_names(.get_top_level_calls(e))
-## }
-##
-## </FIXME>
 
 .call_names <-
 function(x)
@@ -4535,10 +4491,11 @@ function(dir)
             return(FALSE)
         e <- e[as.character(e) != "..."]
         ## Capture assignments to global env unless to .Random.seed.
-        mc <- match.call(base::assign, e)
         ## (This may fail for conditionalized code not meant for R
         ## [e.g., argument 'where'].)
-        ((mc$x != ".Random.seed") &&
+        mc <- tryCatch(match.call(base::assign, e), error = identity)
+        (!inherits(mc, "error") &&
+         (mc$x != ".Random.seed") &&
          ((is.name(pos <- mc$pos) &&
            as.character(pos) == ".GlobalEnv") ||
           (is.call(pos) &&
@@ -4550,20 +4507,9 @@ function(dir)
            as.character(env) == "globalenv")))
     }
 
-    ## Set up a worker using tryCatch() (see above for reasons why).
-    ## <FIXME>
-    ## Perhaps we should more simply handle this inside the predicate
-    ## function, and return FALSE if match.call() fails?
-    worker <- function(file, encoding) {
-        tryCatch(.find_calls_in_file(file, encoding, predicate,
-                                     recursive = TRUE),
-                 error = identity)
-    }
-    ## </FIXME>
-
-    calls <- .find_calls_in_package_code(dir, .worker = worker)
-    calls <- Filter(function(e) length(e) && !inherits(e, "error"),
-                    calls)
+    calls <- Filter(length,
+                    .find_calls_in_package_code(dir, predicate,
+                                                recursive = TRUE))
     class(calls) <- "check_package_code_assign_to_globalenv"
     calls
 }
@@ -4584,49 +4530,6 @@ function(x, ...)
     invisible(x)
 }
 
-## <FIXME>
-## Unused ...
-##
-## .get_assignments_to_globalenv_in_file <-
-## function(f, encoding = NA)
-## {
-##     if(!file.info(f)$size) return()
-##     calls <- list()
-##     exprs <- suppressWarnings({
-##         if(!is.na(encoding) &&
-##            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-##             lines <- iconv(readLines(f, warn = FALSE), from =
-##                            encoding, to = "", sub = "byte")
-##             parse(text = lines)
-##         } else parse(f)
-##     })
-##     .find_calls(exprs,
-##                 function(e) {
-##                     if(!is.call(e) ||
-##                        as.character(e[[1L]]) != "assign")
-##                         return(FALSE)
-##                     e <- e[as.character(e) != "..."]
-##                     ## Capture assignments to global env unless to
-##                     ## .Random.seed.
-##                     mc <- match.call(base::assign, e)
-##                     ## (This may fail for conditionalized code not meant
-##                     ## for R [e.g., argument 'where'].)
-##                     ((mc$x != ".Random.seed") &&
-##                      ((is.name(pos <- mc$pos) &&
-##                        as.character(pos) == ".GlobalEnv") ||
-##                       (is.call(pos) &&
-##                        as.character(pos) == "globalenv") ||
-##                       (is.numeric(pos) && pos == 1) ||
-##                       (is.name(env <- mc$envir) &&
-##                        as.character(env) == ".GlobalEnv") ||
-##                       (is.call(env) &&
-##                        as.character(env) == "globalenv")))
-##                 },
-##                 recursive = TRUE)
-## }
-##
-## </FIXME>
-
 ### * .check_package_code_attach
 
 .check_package_code_attach <-
@@ -4635,9 +4538,9 @@ function(dir)
     predicate <- function(e)
         as.character(e[[1L]]) == "attach"
     
-    calls <- .find_calls_in_package_code(dir, predicate,
-                                         recursive = TRUE)
-    calls <- Filter(length, calls)
+    calls <- Filter(length,
+                    .find_calls_in_package_code(dir, predicate,
+                                                recursive = TRUE))
     class(calls) <- "check_package_code_attach"
     calls
 }
