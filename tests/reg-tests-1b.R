@@ -1839,6 +1839,28 @@ by(a, a["ppg.id"], function(x){
 })
 ## failed in 2.15.0
 
+
+## model.frame.lm could be fooled if factor levels were re-ordered
+A <- warpbreaks
+fm1 <- lm(breaks ~ wool*tension, data = A, model = TRUE)
+fm2 <- lm(breaks ~ wool*tension, data = A, model = FALSE)
+A$tension <- factor(warpbreaks$tension, levels = c("H", "M", "L"))
+stopifnot(identical(model.frame(fm1), model.frame(fm2)))
+stopifnot(identical(model.frame(fm1), model.frame(fm1, data = A)))
+stopifnot(identical(model.matrix(fm1), model.matrix(fm2)))
+## not true before 2.15.2
+
+
+## model.frame.lm did not make use of predvars
+library(splines)
+fm <- lm(weight ~ ns(height, 3), data = women)
+m1 <- model.frame(fm)[1:3, ]
+m2 <- model.frame(fm, data = women[1:3, ])
+# attributes will differ
+stopifnot(identical(as.vector(m1[,2]), as.vector(m2[,2])))
+## differed in R < 2.15.2
+
+
 ## JMC's version of class<- did not work as documented. (PR#14942)
 x <- 1:10
 class(x) <- character()
@@ -1865,6 +1887,16 @@ sunflowerplot( Sepal.Length ~ Sepal.Width, data = iris, xlab = "A")
 ## failed in 2.15.1
 
 
+## misuse of alloca
+for(n in c(200, 722, 1000)) x <- rWishart(1, n, diag(n))
+## failed in various ways in R <= 2.15.1
+
+
+## undocumented used of rep(NULL), from matplot()
+stopifnot(identical(rep(NULL, length.out = 4), NULL))
+## now gives a warning.
+
+
 ## PR14974
 a.factor <- as.factor(rep(letters[1:2], 2))
 b.factor <- as.factor(rep(c(1:2), each = 2))
@@ -1879,12 +1911,62 @@ stopifnot(is.na(ans[["y"]][4,]))
 ## only set the first column of ans[["y"]] to NA.
 
 
+## PR14967
+stopifnot(qgeom(1e-20, prob = 0.1) >= 0)
+## was -1 in R 2.15.1
+
+
+## Regression test for r60116:7
+(p1 <- parse(text="exp(-0.5*u**2)", srcfile=NULL))
+(p2 <- parse(text="exp(-0.5*u^2)",  srcfile=NULL))
+stopifnot(identical(p1, p2))
+## p1 was expression(exp((-0.5 * u)^2))
+
+
 ## backsolve with k < nrows(rhs)
 r <- rbind(c(1,2,3),c(0,1,1),c(0,0,2))
 b <- c(8,4,2,1)
 x <- backsolve(r, cbind(b,b))
 stopifnot(identical(x[,1], x[,2]))
-## used elements (4,1), (2,1), (2,2) for second column.
+## 2.15.1 used elements (4,1), (2,1), (2,2) for second column.
+
+
+## Matrix oddly assumes that solve() drops NULL dimanmes
+A <- diag(3)
+dimnames(A) <- list(NULL, NULL)
+sA <- solve(A)
+stopifnot(is.null(dimnames(sA)))
+# and expm inverts a logical matrix, even though this is not as documented.
+Q <- matrix(c(FALSE, TRUE, TRUE, FALSE), 2, 2)
+is.numeric(Q) # FALSE
+solve(Q)
+## failed in pre-2.16.0, which interpreted 'numeric' correctly.
+
+
+## tests of rowsum() with names and for factor groups
+set.seed(123)
+x <- matrix(runif(100), ncol=5)
+group <- sample(1:8, 20, TRUE)
+(xsum <- rowsum(x, group))
+colnames(x) <- letters[16:20]
+(xsum <- rowsum(x, group))
+rowsum(as.data.frame(x), group)
+group <- factor(group)
+(xsum <- rowsum(x, group))
+stopifnot(sapply(dimnames(xsum), is.character))
+rowsum(as.data.frame(x), group)
+## one version had factor row names.
+
+
+## Rather pointless usage in PR#15044
+set.seed(42)
+n <- 10
+y <- rnorm(n)
+x <- rnorm(n)
+w <- rep(0, n)
+lm.wfit(cbind(1, x), y, w)
+## segfaulted in 2.15.1, only
+
 
 ## as.data.frame() methods should preferably not barf on an 'nm' arg
 ## reported by Bill Dunlap
@@ -1893,6 +1975,20 @@ as.data.frame(1:10, nm="OneToTen")
 as.data.frame(LETTERS[1:10], nm="FirstTenLetters")
 as.data.frame(LETTERS[1:10])
 ## second failed in 2.15.1.
+
+
+##
+options(max.print=.Machine$integer.max)
+1 ## segfaulted because of integer overflow
+stopifnot(identical(.Machine$integer.max, getOption("max.print")))
+##
+
+
+## corner cases for arima.sim(), in part PR#15068
+stopifnot(length(arima.sim(list(order = c(0,0,0)), n = 10)) == 10)
+stopifnot(inherits(try(arima.sim(list(order = c(1,0,0), ar = 0.7), n = 0)),
+                   "try-error"))
+## one too long in R < 2.15.2
 
 
 ## maintainer()
@@ -1911,6 +2007,52 @@ default <- 1; z <- eval(bquote(function(y = .(default)) y))
 zz <- function(y = 1) y
 stopifnot(identical(args(z), args(zz))) # zz has attributes
 ## was not substituted in R <= 2.15.2
+
+
+## PR#15098
+x <- list()
+x[1:2] <- list(1)
+x[[1]][] <- 2  # change part of first component of x
+x   # second component of x should not be affected
+stopifnot(identical(x[[2]], 1))
+## was  2  in R <= 2.15.2  ("NAMED")
+
+
+## PR#15115
+a <- as.name("abc")
+f <- call("==", a, 1L)
+for (i in 2:5)
+   f <- call("+", f, call("==", a, i))
+abc <- 2
+stopifnot(eval(f) == 1)
+## Was 0 in 2.15.2 because the i was not duplicated
+
+
+## TukeyHSD with na.omit = na.exclude, see
+## https://stat.ethz.ch/pipermail/r-help/2012-October/327119.html
+br <- warpbreaks
+br[br$tension == "M", "breaks"] <- NA
+fit1 <- aov(breaks ~ wool + tension, data = br)
+TukeyHSD(fit1, "tension", ordered = TRUE)
+fit2 <- aov(breaks ~ wool + tension, data = br, na.action = na.exclude)
+(z <- TukeyHSD(fit2, "tension", ordered = TRUE))
+stopifnot(!is.na(z$tension))
+## results were NA in R <= 2.15.2
+
+
+## recursive listing of directories
+p <- file.path(R.home(), "share","texmf") # always exists, readable
+lfri <- list.files(p, recursive=TRUE, include.dirs=TRUE)
+stopifnot(!is.na(match(c("tex", "bibtex"), lfri)))
+## failed for a few days, unnoticed, in the development version of R
+
+
+## In R 2.15.[12] this changed X
+## (https://stat.ethz.ch/pipermail/r-devel/2012-December/065339.html)
+X <- matrix(c(1,2,3, 5,7,11, 13,17,19), 3, 3)
+s <- svd(X, LINPACK = TRUE) # gives deprecation warning
+stopifnot(identical(X, matrix(c(1,2,3, 5,7,11, 13,17,19), 3, 3)))
+## but not in R-devel nor 2.15.2 patched
 
 
 proc.time()
