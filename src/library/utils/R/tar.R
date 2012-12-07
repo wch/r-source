@@ -184,7 +184,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         }
         type <- block[157L]
         ctype <- rawToChar(type)
-        if(type == 0L || ctype == "0") {
+        if(type %in% c(0L, 7L) || ctype == "0") {
+            ## regular or high-performance file
             if(!is.null(lname)) {name <- lname; lname <- NULL}
             contents <- c(contents, name)
             remain <- size
@@ -208,7 +209,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 Sys.chmod(name, mode, FALSE) # override umask
                 .Call("R_setFileTime", name, ft, PACKAGE = "base")
             }
-        } else if(ctype %in% c("1", "2")) { # hard and symbolic links
+        } else if(ctype %in% c("1", "2")) {
+            ## hard and symbolic links
             contents <- c(contents, name)
             ns <- max(which(block[158:257] > 0))
             name2 <- rawToChar(block[157L + seq_len(ns)])
@@ -243,17 +245,18 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                    }
                 }
             }
+            ## 3 and 4 are devices
         } else if(ctype == "5") {
+            ## directory
             contents <- c(contents, name)
             if(!list) {
                 mydir.create(name)
                 Sys.chmod(name, mode, TRUE) # FIXME: check result
-                ## not much point, since dir will be populated afterwards
-                ## .Call("R_setFileTime", name, ft)
+                ## no point is setting time, as dir will be populated later.
             }
+            ## 6 is a fifo
         } else if(ctype %in% c("L", "K")) {
-            ## This is a GNU extension that should no longer be
-            ## in use, but it is.
+            ## These are GNU extensions that are widely supported
             name_size <- 512L * ceiling(size/512L)
             block <- readBin(con, "raw", n = name_size)
             if(length(block) < name_size)
@@ -265,7 +268,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 llink <- rawToChar(block[seq_len(ns)])
         } else if(ctype %in% c("x", "g") && grepl("^PaxHeader", name)) {
             ## pax headers misused by bsdtar.
-            warn1 <- c(warn1, "skipping mis-used pax headers")
+            warn1 <- c(warn1, "skipping pax headers")
             readBin(con, "raw", n = 512L*ceiling(size/512L))
         } else stop("unsupported entry type ", sQuote(ctype))
     }
@@ -326,9 +329,10 @@ tar <- function(tarfile, files = NULL,
         if(info$isdir && !grepl("/$", f)) f <- paste0(f, "/")
         name <- charToRaw(f)
         if(length(name) > 100L) {
-            if(length(name) > 255L) stop("file path is too long")
+            ## best possible case: 155+/+100
+            if(length(name) > 256L) stop("file path is too long")
             s <- max(which(name[1:155] == charToRaw("/")))
-            if(is.infinite(s) || s+100 < length(name))
+            if(is.infinite(s) || s + 100L < length(name))
                 stop("file path is too long")
             warning("storing paths of more than 100 bytes is not portable:\n  ",
                     sQuote(f), domain = NA)
