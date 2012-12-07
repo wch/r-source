@@ -1841,7 +1841,7 @@ A$tension <- factor(warpbreaks$tension, levels = c("H", "M", "L"))
 stopifnot(identical(model.frame(fm1), model.frame(fm2)))
 stopifnot(identical(model.frame(fm1), model.frame(fm1, data = A)))
 stopifnot(identical(model.matrix(fm1), model.matrix(fm2)))
-## not true before 2.16.0
+## not true before 2.15.2
 
 
 ## model.frame.lm did not make use of predvars
@@ -1851,7 +1851,7 @@ m1 <- model.frame(fm)[1:3, ]
 m2 <- model.frame(fm, data = women[1:3, ])
 # attributes will differ
 stopifnot(identical(as.vector(m1[,2]), as.vector(m2[,2])))
-## differed in R < 2.16.0
+## differed in R < 2.15.2
 
 
 ## JMC's version of class<- did not work as documented. (PR#14942)
@@ -1985,6 +1985,7 @@ options(max.print=.Machine$integer.max)
 1 ## segfaulted because of integer overflow
 stopifnot(identical(.Machine$integer.max, getOption("max.print")))
 ##
+
 
 ## corner cases for arima.sim(), in part PR#15068
 stopifnot(length(arima.sim(list(order = c(0,0,0)), n = 10)) == 10)
