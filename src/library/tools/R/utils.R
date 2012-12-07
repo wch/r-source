@@ -1668,6 +1668,26 @@ function(expr)
     yy
 }
 
+### ** .unpacked_source_repository_apply
+
+.unpacked_source_repository_apply <-
+function(dir, fun, ..., verbose = FALSE)
+{
+    dir <- file_path_as_absolute(dir)
+    
+    dfiles <- Sys.glob(file.path(dir, "*", "DESCRIPTION"))
+
+    results <-
+        lapply(dirname(dfiles),
+               function(dir) {
+                   if(verbose)
+                       message(sprintf("processing %s", basename(dir)))
+                   fun(dir, ...)
+               })
+    names(results) <- basename(dirname(dfiles))
+    results
+}
+
 ### ** .wrong_args
 
 .wrong_args <-
