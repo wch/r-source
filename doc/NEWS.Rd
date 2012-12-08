@@ -673,6 +673,10 @@
 
       \item The deprecated \code{svd(X, LINPACK = TRUE)} could alter
       \code{X} in \R 2.15.[12].  (Reported by Bill Dunlap.)
+      
+      \item In Windows, \code{file.link()} and \code{file.symlink()}
+      used the link name twice, so would always fail. (Reported
+      by Rui Barradas/Oliver Soong).      
     }
   }
 }

@@ -561,9 +561,10 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t *from, *to;
+	    wchar_t from[PATH_MAX+1], *to;
 	    struct _stati64 sb;
-	    from = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
+	    from[PATH_MAX] = L'\0';
+	    wcsncpy(from, filenameToWchar(STRING_ELT(f1, i%n1), TRUE), PATH_MAX);
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
 	    _wstati64(from, &sb);
 	    int isDir = (sb.st_mode & S_IFDIR) > 0;
@@ -631,9 +632,9 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t *from, *to;
-
-	    from = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
+	    wchar_t from[PATH_MAX+1], *to;
+	    from[PATH_MAX] = L'\0';
+	    wcsncpy(from, filenameToWchar(STRING_ELT(f1, i%n1), TRUE), PATH_MAX);
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
 	    LOGICAL(ans)[i] = CreateHardLinkW(to, from, NULL) != 0;
 	    if(!LOGICAL(ans)[i]) {
