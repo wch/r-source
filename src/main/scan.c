@@ -79,6 +79,7 @@ typedef struct {
     int save; /* = 0; */
     Rboolean isLatin1; /* = FALSE */
     Rboolean isUTF8; /* = FALSE */
+    Rboolean atStart;
     char convbuf[100];
 } LocalData;
 
@@ -436,11 +437,16 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
  donefill:
     /* strip trailing white space, if desired and if item is non-null */
     bufp = &buffer->data[m];
-   if (strip && m > mm) {
+    if (strip && m > mm) {
 	do {c = (int)*--bufp;} while(m-- > mm && Rspace(c));
 	bufp++;
     }
     *bufp = '\0';
+    /* Remove UTF-8 BOM */
+    if(d->atStart && utf8locale && 
+       !memcmp(buffer->data, "\xef\xbb\xbf", 3))
+	memmove(buffer->data, buffer->data+3, strlen(buffer->data) + 1);
+    d->atStart = FALSE;
     *bch = filled;
     return buffer->data;
 }
@@ -899,8 +905,10 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     i = asInteger(file);
     data.con = getConnection(i);
     if(i == 0) {
+	data.atStart = FALSE;
 	data.ttyflag = 1;
     } else {
+	data.atStart = (nskip == 0);
 	data.ttyflag = 0;
 	data.wasopen = data.con->isopen;
 	if(!data.wasopen) {

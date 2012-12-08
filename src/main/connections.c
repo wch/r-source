@@ -252,7 +252,9 @@ void set_iconv(Rconnection con)
 	   Was Windows-only until 2.12.0, but we now require iconv.
 	 */
 	Rboolean useUTF8 = !utf8locale && con->UTF8out;
-	tmp = Riconv_open(useUTF8 ? "UTF-8" : "", con->encname);
+	const char *enc = 
+	    streql(con->encname, "UTF-8-BOM") ? "UTF-8" : con->encname;
+	tmp = Riconv_open(useUTF8 ? "UTF-8" : "", enc);
 	if(tmp != (void *)-1) con->inconv = tmp;
 	else set_iconv_error(con, con->encname, useUTF8 ? "UTF-8" : "");
 	con->EOF_signalled = FALSE;
@@ -263,6 +265,8 @@ void set_iconv(Rconnection con)
 	   glibc's iconv cannot. Aargh ... */
 	if(streql(con->encname, "UCS-2LE") || 
 	   streql(con->encname, "UTF-16LE")) con->inavail = -2;
+	/* Discaard BOM */
+	if(streql(con->encname, "UTF-8-BOM")) con->inavail = -3;
     }
     if(con->canwrite) {
 	size_t onb = 25;
@@ -382,7 +386,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 int dummy_fgetc(Rconnection con)
 {
     int c;
-    Rboolean checkBOM = FALSE;
+    Rboolean checkBOM = FALSE, checkBOM8 = FALSE;
 
     if(con->inconv) {
 	if(con->navail <= 0) {
@@ -395,6 +399,10 @@ int dummy_fgetc(Rconnection con)
 	    if(con->inavail == -2) {
 		con->inavail = 0;
 		checkBOM = TRUE;
+	    }
+	    if(con->inavail == -3) {
+		con->inavail = 0;
+		checkBOM8 = TRUE;
 	    }
 	    p = con->iconvbuff + con->inavail;
 	    for(i = con->inavail; i < 25; i++) {
@@ -410,6 +418,12 @@ int dummy_fgetc(Rconnection con)
 	       ((int)con->iconvbuff[1] & 0xff) == 254) {
 		con->inavail -= (short) 2;
 		memmove(con->iconvbuff, con->iconvbuff+2, con->inavail);
+	    }
+	    if(inew == 0) return R_EOF;
+	    if(checkBOM && con->inavail >= 3 &&
+	       !memcmp(con->iconvbuff, "\xef\xbb\xbf", 3)) {
+		con->inavail -= (short) 3;
+		memmove(con->iconvbuff, con->iconvbuff+3, con->inavail);
 	    }
 	    ib = con->iconvbuff; inb = con->inavail;
 	    ob = con->oconvbuff; onb = 50;
@@ -3353,7 +3367,11 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(c != '\n') buf[nbuf++] = (char) c; else break;
 	}
 	buf[nbuf] = '\0';
-	SET_STRING_ELT(ans, nread, mkCharCE(buf, oenc));
+	/* Remove UTF-8 BOM */
+	const char *qbuf = buf;
+	if (nread == 0 && utf8locale &&
+	    !memcmp(buf, "\xef\xbb\xbf", 3)) qbuf = buf + 3;
+	SET_STRING_ELT(ans, nread, mkCharCE(qbuf, oenc));
 	if(c == R_EOF) goto no_more_lines;
     }
     if(!wasopen) {endcontext(&cntxt); con->close(con);}

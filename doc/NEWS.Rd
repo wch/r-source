@@ -275,6 +275,15 @@
       \item \code{encodeString()} preserves UTF-8 marked encodings.
       Thus if factor levels are marked as UTF-8 an attempt is made to
       print them in UTF-8 in \command{RGui} on Windows.
+      
+      \item \code{readLines()} and \code{scan()} (and hence
+      \code{read.table()}) in a UTF-8 locale now discard a UTF-8
+      byte-order-mark (BOM).  Such BOMs are allowed but not recommended
+      by the Unicode Standard: however Microsoft applications can
+      produce them and so they are sometimes found on websites.
+
+      The encoding name \code{"UTF-8-BOM"} for a connection will
+      ensure that a UTF-8 BOM is discarded.
     }
   }
 
