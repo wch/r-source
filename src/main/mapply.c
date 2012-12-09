@@ -31,7 +31,6 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP f = CAR(args), varyingArgs = CADR(args), constantArgs = CADDR(args);
     int m, zero = 0;
     R_xlen_t *lengths, *counters, longest = 0;
-    SEXP fcall = R_NilValue;
     static SEXP length_op = NULL;
 
     m = length(varyingArgs);
@@ -82,12 +81,15 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
        f(dots[[1]][[4]], dots[[2]][[4]], dots[[3]][[4]], d=7)
     */
 
+    SEXP fcall = R_NilValue; // -Wall
     if (constantArgs == R_NilValue)
-	PROTECT(fcall = R_NilValue);
+	;
     else if(isVectorList(constantArgs))
-	PROTECT(fcall = VectorToPairList(constantArgs));
+	fcall = VectorToPairList(constantArgs);
     else
 	error(_("argument 'MoreArgs' of 'mapply' is not a list"));
+    PROTECT_INDEX fi;
+    PROTECT_WITH_INDEX(fcall, &fi);
 
     Rboolean realIndx = longest > INT_MAX;
     for(int j = m - 1; j >= 0; j--) {
@@ -97,14 +99,13 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 				  VECTOR_ELT(mindex, j)));
 	SEXP tmp2 = PROTECT(lang3(R_Bracket2Symbol, tmp1,
 				  VECTOR_ELT(nindex, j)));
-	UNPROTECT(3); // includes previous fcall
-	PROTECT(fcall = LCONS(tmp2, fcall));
+	REPROTECT(fcall = LCONS(tmp2, fcall), fi);
+	UNPROTECT(2);
 	if (named && CHAR(STRING_ELT(vnames, j))[0] != '\0')
 	    SET_TAG(fcall, install(translateChar(STRING_ELT(vnames, j))));
     }
 
-    UNPROTECT(1);
-    PROTECT(fcall = LCONS(f, fcall));
+    REPROTECT(fcall = LCONS(f, fcall), fi);
 
     SEXP ans = PROTECT(allocVector(VECSXP, longest));
 
