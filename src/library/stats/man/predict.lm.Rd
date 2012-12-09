@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.lm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.lm}
@@ -58,11 +58,11 @@
 
   If \code{newdata} is omitted the predictions are based on the data
   used for the fit.  In that case how cases with missing values in the
-  original fit is determined by the \code{na.action} argument of that
+  original fit are handled is determined by the \code{na.action} argument of that
   fit.  If \code{na.action = na.omit} omitted cases will not appear in
-  the residuals, whereas if \code{na.action = na.exclude} they will
+  the predictions, whereas if \code{na.action = na.exclude} they will
   appear (in predictions, standard errors or interval limits),
-  with residual value \code{NA}.  See also \code{\link{napredict}}.
+  with value \code{NA}.  See also \code{\link{napredict}}.
 
   The prediction intervals are for a single observation at each case in
   \code{newdata} (or by default, the data used for the fit) with error
