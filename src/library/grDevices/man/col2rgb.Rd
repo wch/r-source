@@ -13,11 +13,12 @@
 col2rgb(col, alpha = FALSE)
 }
 \arguments{
-  \item{col}{vector of any of the three kind of \R colors, i.e., either
-    a color name (an element of \code{\link{colors}()}), a hexadecimal
-    string of the form \code{"#rrggbb"} or \code{"#rrggbbaa"} (see
-    \code{\link{rgb}}), or an integer \code{i} meaning
-      \code{palette()[i]}.  Non-string values are coerced to integer.}
+  \item{col}{vector of any of the three kinds of \R color specifications,
+    i.e., either a color name (as listed by \code{\link{colors}()}), a
+    hexadecimal string of the form \code{"#rrggbb"} or
+    \code{"#rrggbbaa"} (see \code{\link{rgb}}), or a positive
+    integer \code{i} meaning \code{\link{palette}()[i]} or \code{0} (see
+    \sQuote{Details}).  Non-character values are coerced to integers.}
   \item{alpha}{logical value indicating whether alpha channel (opacity)
     values should be returned.}
 }
@@ -25,13 +26,15 @@ col2rgb(col, alpha = FALSE)
   For integer colors, \code{0} is shorthand for the current
   \code{\link{par}("bg")} (and hence is only relevant to base graphics
   and not grid graphics, and is an error if \pkg{graphics} is not
-  loaded), and \code{\link{NA}} means transparent.
+  loaded: like \code{par} it will open a device if none is open),
+  and \code{\link{NA}} means transparent.
 
   For character colors, \code{"NA"} is equivalent to \code{NA}, transparent.
 }
 \value{
-  an integer matrix with three or four rows and number of columns the length
-  (and names if any) as \code{col}.
+  an integer matrix with three or four  (for\code{alpha = TRUE}) rows
+  and number of columns the length of \code{col}.  If \code{col} has
+  names these are used as the column names of the return value.
 }
 \author{Martin Maechler}
 \seealso{
@@ -41,14 +44,14 @@ col2rgb(col, alpha = FALSE)
 }
 \examples{
 col2rgb("peachpuff")
-col2rgb(c(blu = "royalblue", reddish = "tomato"))  # names kept
+col2rgb(c(blu = "royalblue", reddish = "tomato"))  # note: colnames
 
-col2rgb(1:8)  # the ones from the palette() :
+col2rgb(1:8)  # the ones from the palette() (if the default)
 
 col2rgb(paste0("gold", 1:4))
 
 col2rgb("#08a0ff")
-## all three kind of colors mixed :
+## all three kind of color specifications mixed :
 col2rgb(c(red = "red", palette =  1:3, hex = "#abcdef"))
 
 ##-- NON-INTRODUCTORY examples --

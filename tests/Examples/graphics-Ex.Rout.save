@@ -1176,10 +1176,10 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +              "Versicolor Petals", "Versicolor Sepals")
 > y.leg <- c(4.5, 3, 2.1, 1.4, .7)
 > cexv  <- c(1.2, 1, 4/5, 2/3, 1/2)
-> matplot(c(1,8), c(0,4.5), type = "n", xlab = "Length", ylab = "Width",
+> matplot(c(1, 8), c(0, 4.5), type = "n", xlab = "Length", ylab = "Width",
 +         main = "Petal and Sepal Dimensions in Iris Blossoms")
 > for (i in seq(cexv)) {
-+   text  (1, y.leg[i]-.1, paste("cex=", formatC(cexv[i])), cex = .8, adj = 0)
++   text  (1, y.leg[i] - 0.1, paste("cex=", formatC(cexv[i])), cex = 0.8, adj = 0)
 +   legend(3, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 + }
 > 
@@ -1188,9 +1188,9 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
 > points(x, cos(x), pch = 3, col = 4)
 > lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
-> title("legend(..., lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
+> title("legend(..., lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE)",
 +       cex.main = 1.1)
-> legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
+> legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3, 4, 6),
 +        text.col = "green4", lty = c(2, -1, 1), pch = c(-1, 3, 4),
 +        merge = TRUE, bg = "gray90")
 > 
@@ -1209,15 +1209,15 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > ##--- log scaled Examples ------------------------------
 > leg.txt <- c("a one", "a two")
 > 
-> par(mfrow = c(2,2))
+> par(mfrow = c(2, 2))
 > for(ll in c("","x","y","xy")) {
 +   plot(2:10, log = ll, main = paste0("log = '", ll, "'"))
 +   abline(1, 1)
-+   lines(2:3, 3:4, col = 2) #
-+   points(2, 2, col = 3)    #
++   lines(2:3, 3:4, col = 2)
++   points(2, 2, col = 3)
 +   rect(2, 3, 3, 2, col = 4)
 +   text(c(3,3), 2:3, c("rect(2,3,3,2, col=4)",
-+                       "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0,.3))
++                       "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0, 0.3))
 +   legend(list(x = 2,y = 8), legend = leg.txt, col = 2:3, pch = 1:2,
 +          lty = 1, merge = TRUE)   #, trace = TRUE)
 + }
@@ -1231,7 +1231,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > lines(x, cos(x), col = 3, lty = 2)
 > ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))  # 2 ways
 > utils::str(legend(-3, .9, ex.cs1, lty = 1:2, plot = FALSE,
-+            adj = c(0, .6)))  # adj y !
++            adj = c(0, 0.6)))  # adj y !
 List of 2
  $ rect:List of 4
   ..$ w   : num 1.2
@@ -1241,7 +1241,7 @@ List of 2
  $ text:List of 2
   ..$ x: num [1:2] -2.29 -2.29
   ..$ y: num [1:2] 0.816 0.733
-> legend(-3, .9, ex.cs1, lty = 1:2, col = 2:3,  adj = c(0, .6))
+> legend(-3, 0.9, ex.cs1, lty = 1:2, col = 2:3,  adj = c(0, 0.6))
 > 
 > require(stats)
 > x <- rexp(100, rate = .5)
@@ -1250,7 +1250,7 @@ List of 2
 > abline(v = median(x), col = 3, lty = 3, lwd = 2)
 > ex12 <- expression(bar(x) == sum(over(x[i], n), i == 1, n),
 +                    hat(x) == median(x[i], i == 1, n))
-> utils::str(legend(4.1, 30, ex12, col = 2:3, lty = 2:3, lwd=  2))
+> utils::str(legend(4.1, 30, ex12, col = 2:3, lty = 2:3, lwd = 2))
 List of 2
  $ rect:List of 4
   ..$ w   : num 4.27
@@ -1304,7 +1304,7 @@ List of 2
 > legend("center", "(x,y)", pch = 1, title = "center")
 > 
 > # using text.font (and text.col):
-> op <- par(mfrow = c(2, 2), mar = rep(2.1,4))
+> op <- par(mfrow = c(2, 2), mar = rep(2.1, 4))
 > c6 <- terrain.colors(10)[1:6]
 > for(i in 1:4) {
 +    plot(1, type = "n", axes = FALSE, ann = FALSE); title(paste("text.font =",i))

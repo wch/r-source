@@ -39,9 +39,11 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     \code{fill} is specified).}
   \item{lty, lwd}{the line types and widths for lines appearing in the
     legend.  One of these two \emph{must} be specified for line drawing.}
-  \item{pch}{the plotting symbols appearing in the legend, either as
-    vector of 1-character strings, or one (multi character)
-    string.  \emph{Must} be specified for symbol drawing.}
+  \item{pch}{the plotting symbols appearing in the legend, as a non-negative
+    numeric vector (see \code{\link{points}}, but unlike there negative
+    values are omitted) or a vector of 1-character strings, or one
+    multi-character string.  \emph{Must} be specified for symbol
+    drawing.}
   \item{angle}{angle of shading lines.}
   \item{density}{the density of shading lines, if numeric and
     positive. If \code{NULL} or negative or \code{NA} color filling
@@ -169,10 +171,10 @@ leg.txt <- c("Setosa     Petals", "Setosa     Sepals",
              "Versicolor Petals", "Versicolor Sepals")
 y.leg <- c(4.5, 3, 2.1, 1.4, .7)
 cexv  <- c(1.2, 1, 4/5, 2/3, 1/2)
-matplot(c(1,8), c(0,4.5), type = "n", xlab = "Length", ylab = "Width",
+matplot(c(1, 8), c(0, 4.5), type = "n", xlab = "Length", ylab = "Width",
         main = "Petal and Sepal Dimensions in Iris Blossoms")
 for (i in seq(cexv)) {
-  text  (1, y.leg[i]-.1, paste("cex=", formatC(cexv[i])), cex = .8, adj = 0)
+  text  (1, y.leg[i] - 0.1, paste("cex=", formatC(cexv[i])), cex = 0.8, adj = 0)
   legend(3, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 }
 
@@ -181,9 +183,9 @@ x <- seq(-pi, pi, len = 65)
 plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
 points(x, cos(x), pch = 3, col = 4)
 lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
-title("legend(..., lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
+title("legend(..., lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE)",
       cex.main = 1.1)
-legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
+legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3, 4, 6),
        text.col = "green4", lty = c(2, -1, 1), pch = c(-1, 3, 4),
        merge = TRUE, bg = "gray90")
 
@@ -202,15 +204,15 @@ text(temp$rect$left + temp$rect$w, temp$text$y,
 ##--- log scaled Examples ------------------------------
 leg.txt <- c("a one", "a two")
 
-par(mfrow = c(2,2))
+par(mfrow = c(2, 2))
 for(ll in c("","x","y","xy")) {
   plot(2:10, log = ll, main = paste0("log = '", ll, "'"))
   abline(1, 1)
-  lines(2:3, 3:4, col = 2) #
-  points(2, 2, col = 3)    #
+  lines(2:3, 3:4, col = 2)
+  points(2, 2, col = 3)
   rect(2, 3, 3, 2, col = 4)
   text(c(3,3), 2:3, c("rect(2,3,3,2, col=4)",
-                      "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0,.3))
+                      "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0, 0.3))
   legend(list(x = 2,y = 8), legend = leg.txt, col = 2:3, pch = 1:2,
          lty = 1, merge = TRUE)   #, trace = TRUE)
 }
@@ -224,8 +226,8 @@ abline(h = -1:1, v = pi/2*(-6:6), col = "gray90")
 lines(x, cos(x), col = 3, lty = 2)
 ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))  # 2 ways
 utils::str(legend(-3, .9, ex.cs1, lty = 1:2, plot = FALSE,
-           adj = c(0, .6)))  # adj y !
-legend(-3, .9, ex.cs1, lty = 1:2, col = 2:3,  adj = c(0, .6))
+           adj = c(0, 0.6)))  # adj y !
+legend(-3, 0.9, ex.cs1, lty = 1:2, col = 2:3,  adj = c(0, 0.6))
 
 require(stats)
 x <- rexp(100, rate = .5)
@@ -234,7 +236,7 @@ abline(v = mean(x),   col = 2, lty = 2, lwd = 2)
 abline(v = median(x), col = 3, lty = 3, lwd = 2)
 ex12 <- expression(bar(x) == sum(over(x[i], n), i == 1, n),
                    hat(x) == median(x[i], i == 1, n))
-utils::str(legend(4.1, 30, ex12, col = 2:3, lty = 2:3, lwd=  2))
+utils::str(legend(4.1, 30, ex12, col = 2:3, lty = 2:3, lwd = 2))
 
 ## 'Filled' boxes -- for more, see example(plot.factor)
 op <- par(bg = "white") # to get an opaque box for the legend
@@ -279,7 +281,7 @@ legend("right", "(x,y)", pch = 1, title = "right")
 legend("center", "(x,y)", pch = 1, title = "center")
 
 # using text.font (and text.col):
-op <- par(mfrow = c(2, 2), mar = rep(2.1,4))
+op <- par(mfrow = c(2, 2), mar = rep(2.1, 4))
 c6 <- terrain.colors(10)[1:6]
 for(i in 1:4) {
    plot(1, type = "n", axes = FALSE, ann = FALSE); title(paste("text.font =",i))

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/palette.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{palette}
@@ -29,8 +29,8 @@ palette(value)
   Currently, the only built-in palette is \code{"default"}.
 }
 \value{
-  The palette which \emph{was} in effect.  This is \code{\link{invisible}}
-  unless the argument is omitted.
+  A character vector giving the palette which \emph{was} in effect.
+  This is \code{\link{invisible}} unless the argument is omitted.
 }
 \seealso{
   \code{\link{colors}} for the vector of built-in named colors;
