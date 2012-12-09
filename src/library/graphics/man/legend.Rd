@@ -39,11 +39,11 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     \code{fill} is specified).}
   \item{lty, lwd}{the line types and widths for lines appearing in the
     legend.  One of these two \emph{must} be specified for line drawing.}
-  \item{pch}{the plotting symbols appearing in the legend, as a non-negative
-    numeric vector (see \code{\link{points}}, but unlike there negative
-    values are omitted) or a vector of 1-character strings, or one
-    multi-character string.  \emph{Must} be specified for symbol
-    drawing.}
+  \item{pch}{the plotting symbols appearing in the legend, as
+    numeric vector or a vector of 1-character strings (see
+    \code{\link{points}}). Unlike \code{points}, this can all be
+    specified as a single multi-character string.  \emph{Must} be
+    specified for symbol drawing.}
   \item{angle}{angle of shading lines.}
   \item{density}{the density of shading lines, if numeric and
     positive. If \code{NULL} or negative or \code{NA} color filling
@@ -135,6 +135,10 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   line with their background color \code{pt.bg}, if applicable.
 
   See the examples for how to right-justify labels.
+  
+  Version of \R prior to 2.16.0 omitted negative \code{pch} values:
+  since they are not used for Unicode points, values \code{-31:-1} are
+  silently omitted, as are \code{NA} and \code{""} values.
 }
 \value{
   A list with list components
@@ -183,10 +187,10 @@ x <- seq(-pi, pi, len = 65)
 plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
 points(x, cos(x), pch = 3, col = 4)
 lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
-title("legend(..., lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE)",
+title("legend(..., lty = c(2, -1, 1), pch = c(NA, 3, 4), merge = TRUE)",
       cex.main = 1.1)
 legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3, 4, 6),
-       text.col = "green4", lty = c(2, -1, 1), pch = c(-1, 3, 4),
+       text.col = "green4", lty = c(2, -1, 1), pch = c(NA, 3, 4),
        merge = TRUE, bg = "gray90")
 
 ## right-justifying a set of labels: thanks to Uwe Ligges

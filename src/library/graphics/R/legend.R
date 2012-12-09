@@ -135,13 +135,14 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 
     if(has.pch) {
 	if(is.character(pch) && !is.na(pch[1L]) &&
-           nchar(pch[1L], type="c") > 1) {
+           nchar(pch[1L], type = "c") > 1) {
 	    if(length(pch) > 1)
 		warning("not using pch[2..] since pch[1L] has multiple chars")
-	    np <- nchar(pch[1L], type="c")
+	    np <- nchar(pch[1L], type = "c")
 	    pch <- substr(rep.int(pch[1L], np), 1L:np, 1L:np)
 	}
-##D	if(!merge) dx.pch <- x.intersp/2 * xchar
+        ## this coercion was documented but not done in R < 2.16.0
+        if(!is.character(pch)) pch <- as.integer(pch)
     }
 
     if (is.na(auto)) {
@@ -170,7 +171,6 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	h <- (n.legpercol + !is.null(title)) * ychar + yc
 	w0 <- text.width + (x.intersp + 1) * xchar
 	if(mfill)	w0 <- w0 + dx.fill
-##D	if(has.pch && !merge)	w0 <- w0 + dx.pch
 	if(do.lines)		w0 <- w0 + (seg.len + x.off)*xchar
 	w <- ncol*w0 + .5* xchar
 	if (!is.null(title)
@@ -250,7 +250,14 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	pt.bg <- rep_len(pt.bg, n.leg)
 	pt.cex <- rep_len(pt.cex, n.leg)
 	pt.lwd <- rep_len(pt.lwd, n.leg)
-	ok <- !is.na(pch) & (is.character(pch) | pch >= 0)
+        ok <- !is.na(pch)
+        if (!is.character(pch)) {
+            ## R < 2.16.0 omitted pch < 0
+            ok <- ok & (pch >= 0 | pch <= -32)
+        } else {
+            ## like points
+            ok <- ok & nzchar(pch)
+        }
 	x1 <- (if(merge && do.lines) xt-(seg.len/2)*xchar else xt)[ok]
 	y1 <- yt[ok]
 	if(trace)

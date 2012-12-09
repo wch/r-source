@@ -284,6 +284,11 @@
 
       The encoding name \code{"UTF-8-BOM"} for a connection will
       ensure that a UTF-8 BOM is discarded.
+
+      \item \code{mapply(FUN, a1, ..)} now also works when \code{a1} (or
+      a further such argument) needs a \code{length()} method (which the
+      documented arguments never do).  (Requested by Hervé Pagès; with a
+      patch.)
     }
   }
 
@@ -612,10 +617,9 @@
 
       \item \code{La.svd()} accepts logical matrices (as documented, and
       as \code{svd()} did).
-
-      \item \code{mapply(F, a1, ..)} now also works when \code{a1} (or a
-      further such argument) needs a non-primitive \code{length()}
-      method. (Reported by Hervé Pagès; with a patch)
+      
+      \item \code{legend()} now accepts negative \code{pch} values, in
+      the same way \code{points()} long has.
     }
   }
 }
