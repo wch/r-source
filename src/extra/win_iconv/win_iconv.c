@@ -110,7 +110,7 @@ static int win_iconv_open(rec_iconv_t *cd, const char *tocode, const char *fromc
 static int win_iconv_close(iconv_t cd);
 static size_t win_iconv(iconv_t cd, const char **inbuf, size_t *inbytesleft, char **outbuf, size_t *outbytesleft);
 
-static int load_mlang();
+static int load_mlang(void);
 static int make_csconv(const char *name, csconv_t *cv);
 static int name_to_codepage(const char *name);
 static uint utf16_to_ucs4(const ushort *wbuf);
@@ -707,7 +707,7 @@ static LCIDTORFC1766A LcidToRfc1766A;
 static RFC1766TOLCIDA Rfc1766ToLcidA;
 
 static int
-load_mlang()
+load_mlang(void)
 {
     HMODULE h;
     if (ConvertINetString != NULL)
@@ -803,84 +803,107 @@ win_iconv(iconv_t _cd, const char **inbuf, size_t *inbytesleft,
 
     if (inbuf == NULL || *inbuf == NULL)
     {
-	if (outbuf != NULL && *outbuf != NULL && cd->to.flush != NULL)
-	{
-	    tomode = cd->to.mode;
-	    outsize = cd->to.flush(&cd->to, (uchar *)*outbuf, *outbytesleft);
-	    if (outsize == -1)
-	    {
-		cd->to.mode = tomode;
-		return (size_t)(-1);
-	    }
-	    *outbuf += outsize;
-	    *outbytesleft -= outsize;
-	}
-	cd->from.mode = 0;
-	cd->to.mode = 0;
-	return 0;
+        if (outbuf != NULL && *outbuf != NULL && cd->to.flush != NULL)
+        {
+            tomode = cd->to.mode;
+            outsize = cd->to.flush(&cd->to, (uchar *)*outbuf, *outbytesleft);
+            if (outsize == -1)
+            {
+                if ((cd->to.flags & FLAG_IGNORE) && errno != E2BIG)
+                {
+                    outsize = 0;
+                }
+                else
+                {
+                    cd->to.mode = tomode;
+                    return (size_t)(-1);
+                }
+            }
+            *outbuf += outsize;
+            *outbytesleft -= outsize;
+        }
+        cd->from.mode = 0;
+        cd->to.mode = 0;
+        return 0;
     }
 
     while (*inbytesleft != 0)
     {
-	frommode = cd->from.mode;
-	tomode = cd->to.mode;
-	wsize = MB_CHAR_MAX;
+        frommode = cd->from.mode;
+        tomode = cd->to.mode;
+        wsize = MB_CHAR_MAX;
 
-	insize = cd->from.mbtowc(&cd->from, (const uchar *)*inbuf, *inbytesleft, wbuf, &wsize);
-	if (insize == -1)
-	{
-	    cd->from.mode = frommode;
-	    return (size_t)(-1);
-	}
+        insize = cd->from.mbtowc(&cd->from, (const uchar *)*inbuf, *inbytesleft, wbuf, &wsize);
+        if (insize == -1)
+        {
+            if (cd->to.flags & FLAG_IGNORE)
+            {
+                cd->from.mode = frommode;
+                insize = 1;
+                wsize = 0;
+            }
+            else
+            {
+                cd->from.mode = frommode;
+                return (size_t)(-1);
+            }
+        }
 
-	if (wsize == 0)
-	{
-	    *inbuf += insize;
-	    *inbytesleft -= insize;
-	    continue;
-	}
+        if (wsize == 0)
+        {
+            *inbuf += insize;
+            *inbytesleft -= insize;
+            continue;
+        }
 
-	if (cd->from.compat != NULL)
-	{
-	    wc = utf16_to_ucs4(wbuf);
-	    cp = cd->from.compat;
-	    for (i = 0; cp[i].in != 0; ++i)
-	    {
-		if ((cp[i].flag & COMPAT_IN) && cp[i].out == wc)
-		{
-		    ucs4_to_utf16(cp[i].in, wbuf, &wsize);
-		    break;
-		}
-	    }
-	}
+        if (cd->from.compat != NULL)
+        {
+            wc = utf16_to_ucs4(wbuf);
+            cp = cd->from.compat;
+            for (i = 0; cp[i].in != 0; ++i)
+            {
+                if ((cp[i].flag & COMPAT_IN) && cp[i].out == wc)
+                {
+                    ucs4_to_utf16(cp[i].in, wbuf, &wsize);
+                    break;
+                }
+            }
+        }
 
-	if (cd->to.compat != NULL)
-	{
-	    wc = utf16_to_ucs4(wbuf);
-	    cp = cd->to.compat;
-	    for (i = 0; cp[i].in != 0; ++i)
-	    {
-		if ((cp[i].flag & COMPAT_OUT) && cp[i].in == wc)
-		{
-		    ucs4_to_utf16(cp[i].out, wbuf, &wsize);
-		    break;
-		}
-	    }
-	}
+        if (cd->to.compat != NULL)
+        {
+            wc = utf16_to_ucs4(wbuf);
+            cp = cd->to.compat;
+            for (i = 0; cp[i].in != 0; ++i)
+            {
+                if ((cp[i].flag & COMPAT_OUT) && cp[i].in == wc)
+                {
+                    ucs4_to_utf16(cp[i].out, wbuf, &wsize);
+                    break;
+                }
+            }
+        }
 
-	outsize = cd->to.wctomb(&cd->to, wbuf, wsize, (uchar *)*outbuf,
-				*outbytesleft);
-	if (outsize == -1)
-	{
-	    cd->from.mode = frommode;
-	    cd->to.mode = tomode;
-	    return (size_t)(-1);
-	}
+        outsize = cd->to.wctomb(&cd->to, wbuf, wsize, (uchar *)*outbuf, *outbytesleft);
+        if (outsize == -1)
+        {
+            if ((cd->to.flags & FLAG_IGNORE) && errno != E2BIG)
+            {
+                cd->to.mode = tomode;
+                outsize = 0;
+            }
+            else
+            {
+                cd->from.mode = frommode;
+                cd->to.mode = tomode;
+                return (size_t)(-1);
+            }
+        }
 
-	*inbuf += insize;
-	*outbuf += outsize;
-	*inbytesleft -= insize;
-	*outbytesleft -= outsize;
+        *inbuf += insize;
+        *outbuf += outsize;
+        *inbytesleft -= insize;
+        *outbytesleft -= outsize;
     }
 
     return 0;
