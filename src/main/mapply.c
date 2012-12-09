@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-11   The R Core Team
+ *  Copyright (C) 2003-12   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,20 +23,16 @@
 
 #include <Defn.h>
 
-
 SEXP attribute_hidden
 do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 {
 
-    int i, j, m, *lengths, *counters, named, longest = 0, zero = 0;
-    SEXP vnames, fcall = R_NilValue,  mindex, nindex, tmp1, tmp2, ans;
-
-    m = length(varyingArgs);
-    vnames = PROTECT(getAttrib(varyingArgs, R_NamesSymbol));
-    named = vnames != R_NilValue;
+    int m = length(varyingArgs), *lengths, *counters, longest = 0, zero = 0;
+    SEXP vnames = PROTECT(getAttrib(varyingArgs, R_NamesSymbol));
+    Rboolean named = vnames != R_NilValue;
 
     lengths = (int *)  R_alloc(m, sizeof(int));
-    for(i = 0; i < m; i++){
+    for(int i = 0; i < m; i++) {
 	lengths[i] = length(VECTOR_ELT(varyingArgs, i));
 	if(lengths[i] == 0) zero++;
 	if (lengths[i] > longest) longest = lengths[i];
@@ -45,56 +41,54 @@ do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 	error(_("Zero-length inputs cannot be mixed with those of non-zero length"));
 
     counters = (int *) R_alloc(m, sizeof(int));
-    for(i = 0; i < m; counters[i++] = 0);
+    memset(counters, 0, m * sizeof(int));
 
-    mindex = PROTECT(allocVector(VECSXP, m));
-    nindex = PROTECT(allocVector(VECSXP, m));
+    SEXP mindex = PROTECT(allocVector(VECSXP, m));
+    SEXP nindex = PROTECT(allocVector(VECSXP, m));
 
     /* build a call like
        f(dots[[1]][[4]], dots[[2]][[4]], dots[[3]][[4]], d=7)
     */
 
+    SEXP fcall = R_NilValue; // -Wall
     if (constantArgs == R_NilValue)
-	PROTECT(fcall = R_NilValue);
+	;
     else if(isVectorList(constantArgs))
-	PROTECT(fcall = VectorToPairList(constantArgs));
+	fcall = VectorToPairList(constantArgs);
     else
 	error(_("argument 'MoreArgs' of 'mapply' is not a list"));
+    PROTECT_INDEX fi;
+    PROTECT_WITH_INDEX(fcall, &fi);
 
-    for(j = m - 1; j >= 0; j--) {
+    for(int j = m - 1; j >= 0; j--) {
 	SET_VECTOR_ELT(mindex, j, ScalarInteger(j + 1));
 	SET_VECTOR_ELT(nindex, j, allocVector(INTSXP, 1));
-	PROTECT(tmp1 = lang3(R_Bracket2Symbol,
-			     install("dots"),
-			     VECTOR_ELT(mindex, j)));
-	PROTECT(tmp2 = lang3(R_Bracket2Symbol,
-			     tmp1,
-			     VECTOR_ELT(nindex, j)));
-	UNPROTECT(3);
-	PROTECT(fcall = LCONS(tmp2, fcall));
+	SEXP tmp1 = PROTECT(lang3(R_Bracket2Symbol, install("dots"),
+				  VECTOR_ELT(mindex, j)));
+	SEXP tmp2 = PROTECT(lang3(R_Bracket2Symbol, tmp1,
+				  VECTOR_ELT(nindex, j)));
+	REPROTECT(fcall = LCONS(tmp2, fcall), fi);
+	UNPROTECT(2);
 	if (named && CHAR(STRING_ELT(vnames, j))[0] != '\0')
 	    SET_TAG(fcall, install(translateChar(STRING_ELT(vnames, j))));
     }
 
-    UNPROTECT(1);
-    PROTECT(fcall = LCONS(f, fcall));
+    REPROTECT(fcall = LCONS(f, fcall), fi);
 
-    PROTECT(ans = allocVector(VECSXP, longest));
+    SEXP ans = PROTECT(allocVector(VECSXP, longest));
 
-    for(i = 0; i < longest; i++) {
-	for(j = 0; j < m; j++) {
+    for(int i = 0; i < longest; i++) {
+	for(int j = 0; j < m; j++) {
 	    counters[j] = (++counters[j] > lengths[j]) ? 1 : counters[j];
 	    INTEGER(VECTOR_ELT(nindex, j))[0] = counters[j];
 	}
 	SET_VECTOR_ELT(ans, i, eval(fcall, rho));
     }
 
-    for(j = 0; j < m; j++) {
+    for(int j = 0; j < m; j++)
 	if (counters[j] != lengths[j])
 	    warning(_("longer argument not a multiple of length of shorter"));
-    }
 
     UNPROTECT(5);
-
-    return(ans);
+    return ans;
 }
