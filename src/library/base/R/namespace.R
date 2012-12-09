@@ -1334,11 +1334,8 @@ registerS3methods <- function(info, package, env)
                 stop(gettextf("object '%s' not found whilst loading namespace '%s'",
                               genname, package), call. = FALSE, domain = NA)
             genfun <- get(genname, envir = parent.env(envir))
-            if(.isMethodsDispatchOn() && methods:::is(genfun, "genericFunction")) {
-		genfun <- methods:::finalDefaultMethod(genfun@default)
-                warning(gettextf("found an S4 version of %s so it has not been imported correctly",
-                                 sQuote(genname)), call. = FALSE, domain = NA)
-            }
+            if(.isMethodsDispatchOn() && methods:::is(genfun, "genericFunction"))
+		genfun <- genfun@default  # nearly always, the S3 generic
             if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }
