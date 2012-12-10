@@ -392,6 +392,20 @@
     }
   }
 
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The transitional support for installing packages without
+      namespaces (required since \R 2.14.0) has been removed.
+      \command{R CMD build} will still add a namespace, but a
+      \code{.First.lib()} function will need to be converted.
+
+      \command{R CMD INSTALL} no longer adds a namespace, and a
+      \code{.First.lib()} function in a package will be ignored.
+      [The latter as from ca Dec 21.]
+    }
+  }
+  
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now gives a warning rather than a
