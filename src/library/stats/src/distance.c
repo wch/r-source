@@ -19,8 +19,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* As from R 2.16.0 this might need long vectors for result. */
-
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

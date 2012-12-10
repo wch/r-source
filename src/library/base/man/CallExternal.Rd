@@ -74,7 +74,7 @@
   not use this in your own code: such symbols are not part of the API
   and may be changed without warning.
   
-  \code{PACKAGE = ""} is accepted, but will become an error in \R 2.16.0.
+  \code{PACKAGE = ""} is accepted, but will become an error in future.
 }
 
 \references{

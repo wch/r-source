@@ -194,7 +194,7 @@
   not use this in your own code: such symbols are not part of the API
   and may be changed without warning.
   
-  \code{PACKAGE = ""} is accepted, but will become an error in \R 2.16.0.
+  \code{PACKAGE = ""} is accepted, but will become an error in future.
   
   The way \link{pairlist}s were passed by \code{.C} prior to \R 2.15.0
   was not as documented.  This has been corrected, but the

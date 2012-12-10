@@ -41,7 +41,7 @@
 /* This macro pulls out the common code in copying an atomic vector.
    The special handling of the scalar case (__n__ == 1) seems to make
    a small but measurable difference, at least for some cases
-   and when (as prior to 2.16.0) a for() loop was used.
+   and when (in R 2.15.x) a for() loop was used.
 */
 #define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from) do {\
   int __n__ = LENGTH(from);\

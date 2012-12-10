@@ -260,7 +260,7 @@
       \code{.Call()}, \code{.External()} and \code{.Fortran()} calls in
       other packages, and gives a warning on those found from \R itself
       (which are not part of the API and change without notice: many
-      will changed for \R 2.16.0).
+      will changed for \R 3.0.0).
     }
   }
 
@@ -293,7 +293,7 @@
       explicitly.
 
       \item Entry point \code{rcont2} is no longer part of the API, and
-      will move to package \pkg{stats} in \R 2.16.0.
+      will move to package \pkg{stats} in \R 3.0.0.
 
       \item The \sQuote{internal} graphics device invoked by
       \code{.Call("R_GD_nullDevice", package = "grDevices")} is about to

@@ -7137,7 +7137,7 @@ package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.  However, prior to @R{} 2.16.0 the detection of
+directive will be used.  However, prior to @R{} 2.15.2 the detection of
 the correct namespace is unreliable and you are strongly recommended to
 use the @code{PACKAGE} argument for packages to be used with earlier
 versions of @R{}.

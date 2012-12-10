@@ -2368,7 +2368,7 @@ use of 32-bit integers (especially in FORTRAN code).  On all builds of
 @R{}, the maximum length (number of elements) of a vector is
 @math{2^{31}-1}, about 2 billion, and on 64-bit builds the size of a
 block of memory allocated is limited to @math{2^{35}-16} bytes (8GB).
-These will be raised in @R{} 2.16.0.
+These will be raised in @R{} 3.0.0.
 
 @node The standalone Rmath library, Essential and useful other programs under a Unix-alike, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
