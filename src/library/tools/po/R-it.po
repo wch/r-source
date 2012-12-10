@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 13:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -242,6 +242,9 @@ msgstr ""
 msgid "Authors@R field gives no person with author role."
 msgstr ""
 
+msgid "Authors@R field gives persons with no valid roles:"
+msgstr ""
+
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr ""
 
@@ -282,9 +285,6 @@ msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
-msgstr ""
-
-msgid "found %s"
 msgstr ""
 
 msgid "File %s:"

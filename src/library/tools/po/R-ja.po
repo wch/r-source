@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 13:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -255,6 +255,10 @@ msgstr "Authors@RフィールドからAuthorフィールドを抽出できませ
 msgid "Authors@R field gives no person with author role."
 msgstr "Authors@Rフィールドに役割が明示された人がいません "
 
+#, fuzzy
+msgid "Authors@R field gives persons with no valid roles:"
+msgstr "Authors@Rフィールドに役割が明示された人がいません "
+
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Authors@RフィールドからMaintainerフィールドを抽出できません: "
 
@@ -299,9 +303,6 @@ msgid ""
 msgstr ""
 " マニュアル 'Writing R Extensions' の節 'Cross-references' 中の情報を参照して"
 "ください． "
-
-msgid "found %s"
-msgstr " %s が見つかりました "
 
 msgid "File %s:"
 msgstr " ファイル '%s'： "
@@ -1113,6 +1114,9 @@ msgstr[0] " '%s' ('%s'行')を再エンコード出来ません "
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "found %s"
+#~ msgstr " %s が見つかりました "
 
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"

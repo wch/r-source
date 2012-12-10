@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1198,9 +1198,6 @@ msgstr "неправильный метод"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "в процессе загрузки пространства имен '%s' объект '%s' не найден"
 
-msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr "найдена S4-версия %s и поэтому она не загружена правильно"
-
 msgid "'%s' is not implemented yet"
 msgstr "'%s' пока не разработан"
 
@@ -1208,11 +1205,11 @@ msgid "argument '%s' is not used (yet)"
 msgstr "аргумент '%s' не используется (пока)"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"octmode\""
+msgid "'x' cannot be coerced to class \"octmode\""
 msgstr "'x' нельзя преобразовать в 'octmode'"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"hexmode\""
+msgid "'x' cannot be coerced to class \"hexmode\""
 msgstr "'x' нельзя преобразовать в 'hexmode'"
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1809,6 +1806,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "found an S4 version of %s so it has not been imported correctly"
+#~ msgstr "найдена S4-версия %s и поэтому она не загружена правильно"
 
 #~ msgid "Use of save versions prior to 2 is deprecated"
 #~ msgstr "Использование сохраненных версий, более ранних чем 2, не одобряется"

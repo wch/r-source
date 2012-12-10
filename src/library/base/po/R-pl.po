@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1218,9 +1218,6 @@ msgstr "zła metoda"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "nie znaleziono obiektu '%s' podczas ładowania przestrzeni nazw '%s'"
 
-msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr "znaleziono wersję S4 '%s' tak więc nie został poprawnie zaimportowany"
-
 msgid "'%s' is not implemented yet"
 msgstr "'%s' nie jest jeszcze zaimplementowane"
 
@@ -1228,11 +1225,11 @@ msgid "argument '%s' is not used (yet)"
 msgstr "argument '%s' nie jest (jeszcze) użyty"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"octmode\""
+msgid "'x' cannot be coerced to class \"octmode\""
 msgstr "'x' nie może zostać zamienione na system ósemkowy"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"hexmode\""
+msgid "'x' cannot be coerced to class \"hexmode\""
 msgstr "'x' nie może zostać zamienione na system szesnastkowy 'hexmode'"
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1831,6 +1828,10 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+#~ msgid "found an S4 version of %s so it has not been imported correctly"
+#~ msgstr ""
+#~ "znaleziono wersję S4 '%s' tak więc nie został poprawnie zaimportowany"
 
 #~ msgid "Use of save versions prior to 2 is deprecated"
 #~ msgstr "Użycie wersji zapisu wcześniejszych niż 2 jest przestarzałe"

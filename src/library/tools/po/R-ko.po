@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 13:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -252,6 +252,10 @@ msgstr "Authors@R 항목에서 Author 항목을 뽑아낼 수 없습니다: "
 msgid "Authors@R field gives no person with author role."
 msgstr "Authors@R field gives no person with author role."
 
+#, fuzzy
+msgid "Authors@R field gives persons with no valid roles:"
+msgstr "Authors@R field gives no person with author role."
+
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Authors@R 항목에서 Maintainer 의 항목을 뽑아낼 수 없습니다: "
 
@@ -297,9 +301,6 @@ msgid ""
 msgstr ""
 "'Writing R Extensions' 매뉴얼의 'Cross-references' 의 섹션에 기술된 내용을 확"
 "인하세요 "
-
-msgid "found %s"
-msgstr "%s 를 찾았습니다 "
 
 msgid "File %s:"
 msgstr "파일 %s: "
@@ -1088,6 +1089,9 @@ msgstr[0] "'%s' 줄들 %s 를 재인코딩할 수 없습니다 "
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니다 "
+
+#~ msgid "found %s"
+#~ msgstr "%s 를 찾았습니다 "
 
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 13:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -261,6 +261,10 @@ msgstr "Impossible d'extraire le champ 'Author' du champ 'Authors@R' :"
 msgid "Authors@R field gives no person with author role."
 msgstr "Le champ 'Authors@R' ne renvoie aucune personne avec un rôle d'auteur."
 
+#, fuzzy
+msgid "Authors@R field gives persons with no valid roles:"
+msgstr "Le champ 'Authors@R' ne renvoie aucune personne avec un rôle d'auteur."
+
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Impossible d'extraire le champ 'Maintainer' du champ 'Authors@R' :"
 
@@ -307,9 +311,6 @@ msgid ""
 msgstr ""
 "Voyez l'information dans la section 'Croos-references' du manuel 'Writing R "
 "Extensions'."
-
-msgid "found %s"
-msgstr "trouvé(s) %s"
 
 msgid "File %s:"
 msgstr "Fichier %s :"
@@ -1140,6 +1141,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "found %s"
+#~ msgstr "trouvé(s) %s"
 
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"

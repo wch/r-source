@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1180,9 +1180,6 @@ msgstr "方法有错"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "在载入名字空间的时候没有找到'%s'对象"
 
-msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr "找到了%s的S4版本，因此它没有被正确地被引进"
-
 msgid "'%s' is not implemented yet"
 msgstr "'%s'还没有编程实现"
 
@@ -1190,11 +1187,11 @@ msgid "argument '%s' is not used (yet)"
 msgstr "'%s' 参数现在还没有用"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"octmode\""
+msgid "'x' cannot be coerced to class \"octmode\""
 msgstr "不能强迫把'x'改变成'octmode'"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"hexmode\""
+msgid "'x' cannot be coerced to class \"hexmode\""
 msgstr "不能强迫把'x'改变成'hexmode'"
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1730,6 +1727,9 @@ msgstr[0] "用T代替TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "found an S4 version of %s so it has not been imported correctly"
+#~ msgstr "找到了%s的S4版本，因此它没有被正确地被引进"
 
 #~ msgid "Use of save versions prior to 2 is deprecated"
 #~ msgstr "在R版本2号之前的保存功能不再有用"

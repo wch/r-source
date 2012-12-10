@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1251,9 +1251,6 @@ msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr ""
 "l'objet '%s' est introuvable pendant le chargement de l'espace de noms '%s'"
 
-msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr "une version S4 de %s est trouvée, donc l'importation est incorrecte"
-
 msgid "'%s' is not implemented yet"
 msgstr "'%s' n'est pas encore implémenté"
 
@@ -1261,11 +1258,11 @@ msgid "argument '%s' is not used (yet)"
 msgstr "l'argument '%s' n'est pas (encore) utilisé"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"octmode\""
+msgid "'x' cannot be coerced to class \"octmode\""
 msgstr "impossible de convertir automatiquement 'x' en 'octmode'"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"hexmode\""
+msgid "'x' cannot be coerced to class \"hexmode\""
 msgstr "impossible de convertir automatiquement 'x' en mode hexadécimal"
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1841,6 +1838,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "found an S4 version of %s so it has not been imported correctly"
+#~ msgstr "une version S4 de %s est trouvée, donc l'importation est incorrecte"
 
 #~ msgid "Use of save versions prior to 2 is deprecated"
 #~ msgstr "L'utilisation d'une version antérieure à 2 est obsolète"

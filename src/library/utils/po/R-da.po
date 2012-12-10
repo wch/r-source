@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 21:59\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,14 +176,14 @@ msgstr "metode kan bruges for %s-objekter"
 msgid "all arguments must be of class %s"
 msgstr "alle argumenter skal være af klasse »person«"
 
-msgid "at least one field has to be specified"
-msgstr "mindst et felt skal angives"
-
 msgid "all fields have to be named"
 msgstr "alle felter skal navngives"
 
 msgid "%s has to be one of %s"
 msgstr "%s skal være en af %s"
+
+msgid "subscript out of bounds"
+msgstr ""
 
 msgid "%s should be one of %s"
 msgstr "%s skal være en af %s"
@@ -660,6 +660,9 @@ msgstr ""
 msgid "Do you want to attempt to install these from sources?"
 msgstr ""
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
 
@@ -906,6 +909,9 @@ msgid "'tarfile' must be a character string or a connection"
 msgstr ""
 
 msgid "incomplete block on file"
+msgstr ""
+
+msgid "invalid name field in tarball"
 msgstr ""
 
 msgid "checksum error for entry '%s'"
@@ -1185,6 +1191,9 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "at least one field has to be specified"
+#~ msgstr "mindst et felt skal angives"
 
 #, fuzzy
 #~ msgid "m < 0"

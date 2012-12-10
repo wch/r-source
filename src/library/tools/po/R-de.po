@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 13:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -251,6 +251,10 @@ msgstr "Kann kein Author Feld aus dem Authors@R Feld extrahieren:"
 msgid "Authors@R field gives no person with author role."
 msgstr "Das Authors@R Feld enthält keine Person mit Autorenrolle"
 
+#, fuzzy
+msgid "Authors@R field gives persons with no valid roles:"
+msgstr "Das Authors@R Feld enthält keine Person mit Autorenrolle"
+
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Kann kein Maintainer Feld aus dem Authors@R Feld extrahieren:"
 
@@ -296,9 +300,6 @@ msgid ""
 msgstr ""
 "Bitte im 'Writing R Extensions' Handbuch im Abschnitt über Kreuzreferenzen "
 "nachsehen!"
-
-msgid "found %s"
-msgstr "'%s' gefunden"
 
 msgid "File %s:"
 msgstr "Datei %s:"
@@ -1110,6 +1111,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "found %s"
+#~ msgstr "'%s' gefunden"
 
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"

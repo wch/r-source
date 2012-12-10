@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1190,9 +1190,6 @@ msgstr "ugyldig metode"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "fann ikkje objektet «%s» ved lasting av namnerommet «%s»"
 
-msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr "fann ein S4-versjon «%s», så han er ikkje rett importert"
-
 msgid "'%s' is not implemented yet"
 msgstr "«%s» er ikkje implementert enno"
 
@@ -1200,11 +1197,11 @@ msgid "argument '%s' is not used (yet)"
 msgstr "argumentet «%s» er ikkje brukt (enno)"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"octmode\""
+msgid "'x' cannot be coerced to class \"octmode\""
 msgstr "«x» kan ikkje gjerast om til «octmode»"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"hexmode\""
+msgid "'x' cannot be coerced to class \"hexmode\""
 msgstr "«x» kan ikkje gjerast om til «hexmode»"
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1770,6 +1767,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#~ msgid "found an S4 version of %s so it has not been imported correctly"
+#~ msgstr "fann ein S4-versjon «%s», så han er ikkje rett importert"
 
 #~ msgid "Use of save versions prior to 2 is deprecated"
 #~ msgstr "Bruk av «save»-versjonar under 2 er forelda"

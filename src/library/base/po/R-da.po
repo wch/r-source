@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1165,20 +1165,19 @@ msgstr ""
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr ""
 
-msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr ""
-
 msgid "'%s' is not implemented yet"
 msgstr ""
 
 msgid "argument '%s' is not used (yet)"
 msgstr ""
 
-msgid "'x' cannot be coerced to \"octmode\""
-msgstr ""
+#, fuzzy
+msgid "'x' cannot be coerced to class \"octmode\""
+msgstr "kan ikke tvinge klasse '%s' ind i en data.frame"
 
-msgid "'x' cannot be coerced to \"hexmode\""
-msgstr ""
+#, fuzzy
+msgid "'x' cannot be coerced to class \"hexmode\""
+msgstr "kan ikke tvinge klasse '%s' ind i en data.frame"
 
 msgid "using ... with FUN = \"*\" is an error"
 msgstr ""

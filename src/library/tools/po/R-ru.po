@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 13:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -254,6 +254,10 @@ msgstr "Не могу вынуть поле Author из поля Authors@R:"
 msgid "Authors@R field gives no person with author role."
 msgstr "В поле Authors@R нет никого в роли автора."
 
+#, fuzzy
+msgid "Authors@R field gives persons with no valid roles:"
+msgstr "В поле Authors@R нет никого в роли автора."
+
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Не могу вынуть поле Maintainer из поля Authors@R:"
 
@@ -299,9 +303,6 @@ msgid ""
 msgstr ""
 "См. информацию в секции 'Cross-references' руководства 'Writing R "
 "Extensions'."
-
-msgid "found %s"
-msgstr "найден %s"
 
 msgid "File %s:"
 msgstr "Файл %s:"
@@ -1127,6 +1128,9 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "found %s"
+#~ msgstr "найден %s"
 
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 21:59\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -182,14 +182,14 @@ msgstr "%s 객체들에만 적용이 가능한 메소드입니다 "
 msgid "all arguments must be of class %s"
 msgstr "모든 인수는 \"person\" 이라는 클래스 내에 정의되어 있어야 합니다"
 
-msgid "at least one field has to be specified"
-msgstr "최소한 한 개 이상의 항목이 명시되어야 합니다"
-
 msgid "all fields have to be named"
 msgstr "모든 항목들에 이름이 주어져야 합니다 "
 
 msgid "%s has to be one of %s"
 msgstr "%s 은 %s 중에 하나이어야 합니다 "
+
+msgid "subscript out of bounds"
+msgstr ""
 
 msgid "%s should be one of %s"
 msgstr "%s 은 %s 중 하나이어야 합니다"
@@ -698,6 +698,9 @@ msgstr "type == \"both\" 는 'repos = NULL' 와 함께 사용할 수 없습니�
 msgid "Do you want to attempt to install these from sources?"
 msgstr ""
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "Windows 에 MacOS X 의 바이너리 패키지를 설치할 수 없습니다 "
 
@@ -963,6 +966,9 @@ msgstr "'tarfile' 은 문자열이거나 커넥션이어야 합니다 "
 
 msgid "incomplete block on file"
 msgstr "incomplete block on file"
+
+msgid "invalid name field in tarball"
+msgstr ""
 
 msgid "checksum error for entry '%s'"
 msgstr "항목 '%s' 에 대한 checksum 에러입니다"
@@ -1241,6 +1247,9 @@ msgstr[0] "Invalid roman numeral(s): %s"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s 는 사용중이며 설치되지 않을 것입니다 "
+
+#~ msgid "at least one field has to be specified"
+#~ msgstr "최소한 한 개 이상의 항목이 명시되어야 합니다"
 
 #, fuzzy
 #~ msgid "classes of 'name' will be discarded"

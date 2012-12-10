@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 21:59\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2012-03-06 22:16+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -184,14 +184,14 @@ msgstr "la méthode n'est applicable qu'à des objets %s"
 msgid "all arguments must be of class %s"
 msgstr "tous les arguments doivent être de la classe \"person\""
 
-msgid "at least one field has to be specified"
-msgstr "il faut spécifier au moins un champ"
-
 msgid "all fields have to be named"
 msgstr "tous les champs doivent être nommés"
 
 msgid "%s has to be one of %s"
 msgstr "%s doit être l'un de %s"
+
+msgid "subscript out of bounds"
+msgstr ""
 
 msgid "%s should be one of %s"
 msgstr "%s doit être l'un de %s"
@@ -715,6 +715,9 @@ msgstr "type == \"both\" ne peut être utilisé avec 'repos = NULL'"
 msgid "Do you want to attempt to install these from sources?"
 msgstr ""
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
 
@@ -990,6 +993,9 @@ msgstr "'tarfile' doit être une chaîne de caractères ou une connexion"
 
 msgid "incomplete block on file"
 msgstr "bloc incomplet dans le fichier"
+
+msgid "invalid name field in tarball"
+msgstr ""
 
 msgid "checksum error for entry '%s'"
 msgstr "erreur checksum pour l'entrée '%s'"
@@ -1302,6 +1308,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages %s sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "at least one field has to be specified"
+#~ msgstr "il faut spécifier au moins un champ"
 
 #, fuzzy
 #~ msgid "classes of 'name' will be discarded"

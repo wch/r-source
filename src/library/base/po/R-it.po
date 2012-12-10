@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -1265,11 +1265,6 @@ msgstr "metodo non corretto"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "oggetto '%s' non trovato durante il caricamento del namespace '%s'"
 
-#, fuzzy
-msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr ""
-"trovata una versione S4 di '%s' quindi non è stato importato correttamente"
-
 msgid "'%s' is not implemented yet"
 msgstr "'%s' non ancora implementato"
 
@@ -1277,11 +1272,11 @@ msgid "argument '%s' is not used (yet)"
 msgstr "argomento '%s' non (ancora) usato"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"octmode\""
+msgid "'x' cannot be coerced to class \"octmode\""
 msgstr "non posso trasformarlo in una table"
 
 #, fuzzy
-msgid "'x' cannot be coerced to \"hexmode\""
+msgid "'x' cannot be coerced to class \"hexmode\""
 msgstr "non posso trasformarlo in una table"
 
 msgid "using ... with FUN = \"*\" is an error"
@@ -1863,6 +1858,11 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#, fuzzy
+#~ msgid "found an S4 version of %s so it has not been imported correctly"
+#~ msgstr ""
+#~ "trovata una versione S4 di '%s' quindi non è stato importato correttamente"
 
 #, fuzzy
 #~ msgid "T used instead of TRUE"

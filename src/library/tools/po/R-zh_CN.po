@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 13:34\n"
+"POT-Creation-Date: 2012-12-10 10:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -241,6 +241,10 @@ msgstr "无法从Authors@R 域中抽取作者域"
 msgid "Authors@R field gives no person with author role."
 msgstr "Authors@R域没有提供有作者作用的人"
 
+#, fuzzy
+msgid "Authors@R field gives persons with no valid roles:"
+msgstr "Authors@R域没有提供有作者作用的人"
+
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "无法从Authors@R 抽取维修人域"
 
@@ -281,9 +285,6 @@ msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
 msgstr "请参考'如何写R附加软件'说明书中'交叉引用'这一段。"
-
-msgid "found %s"
-msgstr "找到了%s"
 
 msgid "File %s:"
 msgstr "文件%s:"
@@ -1058,6 +1059,9 @@ msgstr[0] "无法重新编码'%s'%s行"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "found %s"
+#~ msgstr "找到了%s"
 
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"
