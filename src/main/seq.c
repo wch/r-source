@@ -607,7 +607,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(args = matchArgs(ap, args, call));
 
     x = CAR(args);
-    /* supported in R < 2.16.0 */
+    /* supported in R 2.15.x */
     if (TYPEOF(x) == LISTSXP)
 	errorcall(call, "replication of pairlists is defunct");
 

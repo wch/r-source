@@ -1933,7 +1933,7 @@ stopifnot(is.null(dimnames(sA)))
 Q <- matrix(c(FALSE, TRUE, TRUE, FALSE), 2, 2)
 is.numeric(Q) # FALSE
 solve(Q)
-## failed in pre-2.16.0, which interpreted 'numeric' correctly.
+## failed in R-devel, which interpreted 'numeric' correctly.
 
 
 ## tests of rowsum() with names and for factor groups

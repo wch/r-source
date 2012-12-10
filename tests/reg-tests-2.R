@@ -2621,7 +2621,7 @@ assertErrorPrint( getMethod(show, "bar") )
 
 
 ## corner cases for array
-# allowed, gave non-array prior for 2.16.0
+# allowed, gave non-array in 2.15.x
 try(array(1, integer()))
 # if no dims, an error to supply dimnames
 try(array(1, integer(), list(1, 2)))
@@ -2672,4 +2672,4 @@ form
 options(deparse.cutoff=50)
 form
 options(op)
-## fixed to 60 in R < 2.16.0
+## fixed to 60 in R 2.15.x

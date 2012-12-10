@@ -6909,7 +6909,7 @@ Asserted Error: no method found for function 'show' and signature bar
 > 
 > 
 > ## corner cases for array
-> # allowed, gave non-array prior for 2.16.0
+> # allowed, gave non-array in 2.15.x
 > try(array(1, integer()))
 Error in array(1, integer()) : 'dims' cannot be of length 0
 > # if no dims, an error to supply dimnames
@@ -7027,5 +7027,5 @@ reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + reallylongnamex2 + reall
 reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + 
     reallylongnamex2 + reallylongnamex3
 > options(op)
-> ## fixed to 60 in R < 2.16.0
+> ## fixed to 60 in R 2.15.x
 > 
