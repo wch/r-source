@@ -322,9 +322,10 @@ tar <- function(tarfile, files = NULL,
         if(info$isdir && !grepl("/$", f)) f <- paste0(f, "/")
         name <- charToRaw(f)
         if(length(name) > 100L) {
-            if(length(name) > 255L) stop("file path is too long")
+            ## best possible case: 155+/+100
+            if(length(name) > 256L) stop("file path is too long")
             s <- max(which(name[1:155] == charToRaw("/")))
-            if(is.infinite(s) || s+100 < length(name))
+            if(is.infinite(s) || s + 100L < length(name))
                 stop("file path is too long")
             warning("storing paths of more than 100 bytes is not portable:\n  ",
                     sQuote(f), domain = NA)
