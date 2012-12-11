@@ -1321,6 +1321,11 @@ try( do.call(function(x) NextMethod('foo'),list()) )
 ## segfaulted <= 2.11.1
 
 
+## identical() returned FALSE on external ptr with
+## identical addresses <= 2.11.1
+## Example with getNativeSymbolInfo no longer relevant
+
+
 ## getNamespaceVersion() etc
 stopifnot(getNamespaceVersion("stats") == getRversion())
 ## failed in R 2.11.x
