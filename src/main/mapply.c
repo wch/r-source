@@ -31,41 +31,27 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP f = CAR(args), varyingArgs = CADR(args), constantArgs = CADDR(args);
     int m, zero = 0;
     R_xlen_t *lengths, *counters, longest = 0;
-    static SEXP length_op = NULL;
 
     m = length(varyingArgs);
     SEXP vnames = PROTECT(getAttrib(varyingArgs, R_NamesSymbol));
     Rboolean named = vnames != R_NilValue;
 
     lengths = (R_xlen_t *)  R_alloc(m, sizeof(R_xlen_t));
-    for(int i = 0; i < m; i++) {
+    for (int i = 0; i < m; i++) {
 	SEXP tmp1 = VECTOR_ELT(varyingArgs, i);
 	lengths[i] = xlength(tmp1);
-	if (isObject(tmp1)) { // possibly dispatch on length():
-	    /* Cache the .Primitive for 'length' for DispatchOrEval to use. */
-	    if (length_op == NULL) {
-		length_op = eval(install("length"), R_BaseEnv);
-		if (TYPEOF(length_op) != BUILTINSXP) {
-		    length_op = NULL;
-		    error("'length' is not a BUILTIN");
-		}
-		R_PreserveObject(length_op); // should not be needed
-	    }
+	if (isObject(tmp1)) { // possibly dispatch on length()
+	    /* Cache the .Primitive: unclear caching is worthwhile. */
+	    static SEXP length_op = NULL;
+	    if (length_op == NULL) length_op = R_Primitive("length");
 	    // DispatchOrEval() needs 'args' to be a pairlist
 	    SEXP ans, tmp2 = PROTECT(list1(tmp1));
-	    if (DispatchOrEval(call, length_op, "length", tmp2, rho, 
-			       &ans, 0, 1))  // result could be double and long
-		switch(TYPEOF(ans)) {
-		case REALSXP:
-		    lengths[i] = (R_xlen_t) REAL(ans)[0];
-		    break;
-		default:
-		    lengths[i] = (R_xlen_t) asInteger(ans);
-		    break;
-		}
+	    if (DispatchOrEval(call, length_op, "length", tmp2, rho, &ans, 0, 1))
+		lengths[i] = (R_xlen_t) (TYPEOF(ans) == REALSXP ?
+					 REAL(ans)[0] : asInteger(ans));
 	    UNPROTECT(1);
 	}
-	if(lengths[i] == 0) zero++;
+	if (lengths[i] == 0) zero++;
 	if (lengths[i] > longest) longest = lengths[i];
     }
     if (zero && longest)
@@ -84,7 +70,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP fcall = R_NilValue; // -Wall
     if (constantArgs == R_NilValue)
 	;
-    else if(isVectorList(constantArgs))
+    else if (isVectorList(constantArgs))
 	fcall = VectorToPairList(constantArgs);
     else
 	error(_("argument 'MoreArgs' of 'mapply' is not a list"));
@@ -92,7 +78,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT_WITH_INDEX(fcall, &fi);
 
     Rboolean realIndx = longest > INT_MAX;
-    for(int j = m - 1; j >= 0; j--) {
+    for (int j = m - 1; j >= 0; j--) {
 	SET_VECTOR_ELT(mindex, j, ScalarInteger(j + 1));
 	SET_VECTOR_ELT(nindex, j, allocVector(realIndx ? REALSXP : INTSXP, 1));
 	SEXP tmp1 = PROTECT(lang3(R_Bracket2Symbol, install("dots"),
@@ -109,8 +95,8 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SEXP ans = PROTECT(allocVector(VECSXP, longest));
 
-    for(int i = 0; i < longest; i++) {
-	for(int j = 0; j < m; j++) {
+    for (int i = 0; i < longest; i++) {
+	for (int j = 0; j < m; j++) {
 	    counters[j] = (++counters[j] > lengths[j]) ? 1 : counters[j];
 	    if (realIndx)
 		REAL(VECTOR_ELT(nindex, j))[0] = (double) counters[j];
@@ -120,7 +106,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_VECTOR_ELT(ans, i, eval(fcall, rho));
     }
 
-    for(int j = 0; j < m; j++)
+    for (int j = 0; j < m; j++)
 	if (counters[j] != lengths[j])
 	    warning(_("longer argument not a multiple of length of shorter"));
 
