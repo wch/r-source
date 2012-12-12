@@ -69,7 +69,7 @@ extern void R_chk_free(void *);
 
 #define Memcpy(p,q,n)  memcpy( p, q, (size_t)(n) * sizeof(*p) )
 
-/* added for 2.16.0 */
+/* added for 3.0.0 */
 #define Memzero(p,n)  memset(p, 0, (size_t)(n) * sizeof(*p))
 
 #define CallocCharBuf(n) (char *) R_chk_calloc((size_t) ((n)+1), sizeof(char))

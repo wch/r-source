@@ -120,7 +120,7 @@ extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
 
-// added in 2.16.0
+// added in 3.0.0
 extern int  (*ptr_R_EditFiles)(int, const char **, const char **, const char *);
 // naming follows earlier versions in R.app
 extern SEXP (*ptr_do_selectlist)(SEXP, SEXP, SEXP, SEXP);
