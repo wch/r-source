@@ -26,10 +26,10 @@ col2rgb(col, alpha = FALSE)
   For integer colors, \code{0} is shorthand for the current
   \code{\link{par}("bg")} (and hence is only relevant to base graphics
   and not grid graphics, and is an error if \pkg{graphics} is not
-  loaded: like \code{par} it will open a device if none is open),
-  and \code{\link{NA}} means transparent.
+  loaded: like \code{par} it will open a device if none is open).  Its
+  used is deprecated.
 
-  For character colors, \code{"NA"} is equivalent to \code{NA}, transparent.
+  \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
 }
 \value{
   an integer matrix with three or four  (for\code{alpha = TRUE}) rows
