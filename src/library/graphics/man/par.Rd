@@ -609,7 +609,9 @@ par(\dots, no.readonly = FALSE)
   colors, the \code{\link{palette}}.  This provides compatibility with
   S.  Index \code{0} corresponds to the background color.  (Because
   apparently some people have been assuming it, it is also possible to
-  specify integers as character strings, e.g. \code{"3"}.)
+  specify integers as character strings, e.g. \code{"3"}.)  Note that
+  the palette (apart from \code{0} which is per-device)
+  is a per-session setting.
 
   Additionally, \code{"transparent"} is \emph{transparent}, useful for
   filled areas (such as the background!), and just invisible for things
