@@ -17,8 +17,12 @@ palette(value)
   has a numeric index.
 }
 \details{
+  The color palette and referring to colors by number (see
+  e.g. \code{\link{par}}) was provided for compatibility with S: in \R
+  it is almost always better to specify colours by name.
+  
   If \code{value} has length 1, it is taken to be the name of
-  a built in color palette.  If \code{value} has length greater
+  a built-in color palette.  If \code{value} has length greater
   than 1 it is assumed to contain a description of the colors
   which are to make up the new palette (either by name or
   by RGB levels).
@@ -27,6 +31,11 @@ palette(value)
   the current palette.
 
   Currently, the only built-in palette is \code{"default"}.
+
+  There is only one palette setting for all devices in a \R session.  If
+  the palette is changed, the new palette applies to all subsequent
+  plotting or re-plotting (for example if an on-screen device is resized
+  or \code{\link{dev.copy}} is used).
 }
 \value{
   A character vector giving the palette which \emph{was} in effect.
