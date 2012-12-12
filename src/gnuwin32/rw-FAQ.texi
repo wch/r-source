@@ -81,7 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.15.0} or later).  It is biased towards users of 64-bit Windows.
+(@samp{3.0.0} or later).  It is biased towards users of 64-bit Windows.
 
 
 @newchap{}
@@ -101,7 +101,7 @@ The information here applies only to recent versions of R for Windows,
 * How can I keep workspaces for different projects in different directories?::  
 * How do I print from R?::      
 * Can I use R CMD BATCH?::      
-* Can I use @RWVER@ with ESS and (X)emacs?::  
+* Can I use @RWVER@ with ESS and Emacs?::  
 * What are HOME and working directories?::  
 * How do I set environment variables?::  
 * R can't find my file::        
@@ -128,8 +128,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win.exe} of about 48Mb.  This contains all the
-components and allows as complete as installation as you choose.
+installer @samp{@RWVER@-win.exe} of about 50Mb.
 
 There are also links on that page to the @samp{r-patched} and
 @samp{r-devel} snapshots.  These are frequently updated builds of
@@ -379,7 +378,7 @@ can print help files by @code{help(fn_name, help_type="PDF")}.
 @end itemize
 
 
-@node Can I use R CMD BATCH?, Can I use @RWVER@ with ESS and (X)emacs?, How do I print from R?, Installation and Usage
+@node Can I use R CMD BATCH?, Can I use @RWVER@ with ESS and Emacs?, How do I print from R?, Installation and Usage
 @section Can I use @code{R CMD BATCH}?
 
 Yes: use @code{R CMD BATCH --help} or @code{?BATCH} for full details.
@@ -396,8 +395,8 @@ The purpose of @code{2>&1} is to redirect warnings and errors to the
 same file as normal output.
 
 
-@node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
-@section Can I use @RWVER@ with ESS and (X)emacs?
+@node Can I use @RWVER@ with ESS and Emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
+@section Can I use @RWVER@ with ESS and Emacs?
 
 Yes.  ESS has for a long time supported R under Windows: it does so by
 running @code{Rterm.exe} without a visible console.
@@ -406,7 +405,7 @@ For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
 
 
-@node What are HOME and working directories?, How do I set environment variables?, Can I use @RWVER@ with ESS and (X)emacs?, Installation and Usage
+@node What are HOME and working directories?, How do I set environment variables?, Can I use @RWVER@ with ESS and Emacs?, Installation and Usage
 @section What are HOME and working directories?
 
 Several places in the documentation use these terms.
@@ -632,14 +631,12 @@ This is a misreading of Windows' confusing Task Manager.  R's
 computation is single-threaded, and so it cannot use more than one CPU.
 What the task manager shows is not the usage in CPUs but the usage as a
 percentage of the apparent total number of CPUs.  We say `apparent' as
-it treats so-called `hyper-threaded' CPUs such as many Pentium 4s as two
-CPUs even though there is only one physical CPU.
+it treats so-called `hyper-threaded' CPUs such as two CPUs per core, and
+most modern CPUs have at least two cores.
 
-Hyper-threading has been re-introduced for some Intel i3/i5/i7, Atom and
-Xeon CPUs: these will usually be reported as 4 or more CPUs and so R
-will be shown as using 25% or less.  You can see how many `CPU's are
-assumed by looking at the number of graphs of `CPU Usage History' on the
-`Performance' tab of the Windows Task manager.
+You can see how many `CPU's are assumed by looking at the number of
+graphs of `CPU Usage History' on the `Performance' tab of the Windows
+Task manager.
 
 
 @node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
@@ -819,10 +816,9 @@ Windows) subsystem: they run in almost exactly the same way as on a
 process is 4GB (rather than 2GB or perhaps 3GB).
 
 When R is installed on 64-bit Windows there is the option of installing
-32- and/or 64-bit builds: the default is to install both.  The 64-bit
-build has 'x64' suffixed to its name on the Start menu and desktop
-shortcuts.  If you are using the 32-bit build, replace @samp{x64} by
-@samp{i386} in the examples in this FAQ.
+32- and/or 64-bit builds: the default is to install both. If you are
+using the 32-bit build, replace @samp{x64} by @samp{i386} in the
+examples in this FAQ.
 
 @node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
@@ -1125,11 +1121,11 @@ You can install binary packages either from a repository such as
 CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
-packages for each minor (2.x) version will be stored in a separate area,
-so for R 2.16.? the files are in @file{bin/windows/contrib/2.16}.
+packages for each minor (2.x.? or 3.x.?) version will be stored in a separate area,
+so for R 3.0.? the files are in @file{bin/windows/contrib/3.0}.
 
 Note that the binary versions on CRAN are unsupported: see
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.16/@/ReadMe},
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.0/@/ReadMe},
 which also gives the locations of a few other binary packages.
 
 If there is no binary package or that is not up-to-date or you prefer
@@ -1227,7 +1223,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found.  See
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.16/@/ReadMe} for a
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.0/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2},
 @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
 of the packages connecting to databases).
@@ -1710,7 +1706,8 @@ Just download the file @file{Rblas.dll} appropriate to your CPU and
 replace @file{@var{R_HOME}/bin/x64/Rblas.dll}.  (There is also a generic
 version called @samp{DYNAMIC_ARCH} that tries to adapt itself to the CPU
 found -- however if you know the exact CPU used it is better to download
-the CPU-specific version.)
+the CPU-specific version.  Note that development of that BLAS was frozen
+in 2010 so you will not find versions for recent CPUs.)
 
 Note that fast BLAS implementations may give different (and often
 slightly less accurate) results than the reference BLAS included in R.
@@ -1911,7 +1908,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2012-10-22
+@set LASTEDIT 2012-12-12
 @ifhtml
 @html
 <hr WIDTH="100%">
