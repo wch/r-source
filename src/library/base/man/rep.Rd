@@ -103,9 +103,9 @@ rep_len(x, length.out)
   always \code{NULL} even when \code{length.out} is positive.
 
   Although it has never been documented, these functions have always
-  worked on \link{expression} vectors.  Versions prior to \R 2.16.0
-  accepted pairlists and some other objects (although the results were
-  rarely what their users intended).
+  worked on \link{expression} vectors.  \R 2.x.y accepted pairlists and
+  some other objects (although the results were rarely what their users
+  intended).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

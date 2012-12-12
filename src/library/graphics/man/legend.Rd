@@ -136,9 +136,9 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
 
   See the examples for how to right-justify labels.
   
-  Version of \R prior to 2.16.0 omitted negative \code{pch} values:
-  since they are not used for Unicode points, values \code{-31:-1} are
-  silently omitted, as are \code{NA} and \code{""} values.
+  \R 2.x.0 yomitted negative \code{pch} values.  Since they are not used
+  for Unicode points, values \code{-31:-1} are still silently omitted,
+  as are \code{NA} and \code{""} values.
 }
 \value{
   A list with list components

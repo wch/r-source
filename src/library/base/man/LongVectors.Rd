@@ -9,10 +9,10 @@
 \alias{Long vectors}
 \title{Long Vectors}
 \description{
-  Vectors of \eqn{2^{31}}{2^31} or more elements were added in \R 2.16.0.
+  Vectors of \eqn{2^{31}}{2^31} or more elements were added in \R 3.0.0.
 }
 \details{
-  Prior to \R 2.16.0, all vectors in \R were restricted to at most
+  Prior to \R 3.0.0, all vectors in \R were restricted to at most
   \eqn{2^{31} - 1}{2^31 - 1} elements and could be indexed by integer
   vectors.
 

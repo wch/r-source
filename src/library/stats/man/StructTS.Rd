@@ -84,7 +84,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
     observations and hence is not comparable to \code{\link{arima}}
     nor different types of structural models.}
   \item{loglik0}{the maximized log-likelihood with the constant used
-    prior to \R 2.16.0, for backwards compatibility.}
+    prior to \R 3.0.0, for backwards compatibility.}
   \item{data}{the time series \code{x}.}
   \item{residuals}{the standardized residuals.}
   \item{fitted}{a multiple time series with one component for the level,

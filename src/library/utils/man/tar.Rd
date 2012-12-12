@@ -114,11 +114,11 @@ tar(tarfile, files = NULL,
   (especially hard links and symbolic links to directories).
 
   The internal implementation writes only the blocks of 512 bytes
-  required, unlike GNU \command{tar} which by default pads with
-  \samp{nul} to a multiple of 20 blocks (10KB).  Implementations which
-  pad differ on whether the block padding should occur before or after
-  compression (or both): padding was designed for improved performance
-  on physical tape drives.
+  required (including trailing blocks of nuls), unlike GNU \command{tar}
+  which by default pads with \samp{nul} to a multiple of 20 blocks
+  (10KB).  Implementations which pad differ on whether the block padding
+  should occur before or after compression (or both): padding was
+  designed for improved performance on physical tape drives.
 }
 
 \seealso{

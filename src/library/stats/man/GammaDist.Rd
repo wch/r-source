@@ -81,7 +81,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 %   \code{scale < 1e-10}.
 \note{
   The S (Becker \emph{et al} (1988) parametrization was via \code{shape}
-  and \code{rate}: S had no \code{scale} parameter.  Prior to \R 2.16.0
+  and \code{rate}: S had no \code{scale} parameter.  In \R 2.x.y
   \code{scale} took precedence over \code{rate}, but now it is an error
   to supply both.
 

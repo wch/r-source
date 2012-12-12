@@ -18,18 +18,18 @@ make_translations_pkg(srcdir, outDir = ".", append = "-1")
   \item{srcdir}{The \R source directory.}
   \item{outDir}{The directory into which to place the prepared package.}
   \item{append}{The suffix for the package version number,
-    e.g. \code{2.16.0-1} will be the default in \R 2.16.0.}
+    e.g. \code{3.0.0-1} will be the default in \R 3.0.0.}
 }
 \details{
   This extracts the translations in a current \R source distribution and
   packages them as a source package called \pkg{translations} which can
   be distributed on CRAN and installed by
   \code{\link{update.packages}}.  This allows e.g. the translations
-  shipped in \R 2.16.0 to be updated to those currently in
+  shipped in \R 3.x.y to be updated to those currently in
   \samp{R-patched}, even by a user without administrative privileges.
 
   The package has a \samp{Depends} field which restricts it to versions
-  \code{2.x.*} for a single \code{x}.
+  \code{3.x.*} for a single \code{x}.
 }
 
 \keyword{utilities}

@@ -57,7 +57,7 @@ length(x) <- value
   double value is returned that can be represented as an integer it is
   returned as a length-one integer vector.
 
-  As from \R 2.16.0, lengths can be returned as double in base \R.
+  As from \R 3.0.0, lengths can be returned as double in base \R.
 }
 
 \seealso{\code{nchar} for counting the number of characters in

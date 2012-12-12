@@ -1204,7 +1204,7 @@ their attributes after themselves.  Atomic vector objects write their
 length followed by the data: generic vector-list objects write their
 length followed by a call to @code{WriteItem} for each element.  The
 code for @code{CHARSXP}s special-cases @code{NA_STRING} and writes it as
-length @code{-1} with no data.  Prior to @R{} 2.16.0 the `length' is
+length @code{-1} with no data.  In @R{} 2.x.y the `length' is
 always written as a 32-bit integer: in later versions lengths no more
 than @code{2^31 - 1} are written in that way and larger lengths as
 @code{-1} followed by the upper and lower 32-bits as integers (regarded
@@ -1633,7 +1633,7 @@ mechanism will warn far enough from the stack limit to allow for modest
 use of alloca).  (@code{do_makeunique} in file @file{src/main/unique.c}
 provides an example of both points.)
 
-As from @R{} 2.16.0 there is an alternative check,
+As from @R{} 3.0.0 there is an alternative check,
 @findex R_CheckStack2
 @example
     R_CheckStack2(size_t extra);
@@ -1716,9 +1716,9 @@ value that has previously be obtained @emph{via} @code{vmaxget}:
 allocations after the value was obtained will no longer be protected and
 hence available for garbage collection.
 
-Prior to @R{} 2.16.0, type @code{RAWSXP} was used for `small'
-allocations (less than 2^31 - 1 bytes) and type @code{REALSXP} for
-allocations up to 2^34 - 1 bytes on 64-bit machines.
+In @R{} 2.x.y, type @code{RAWSXP} was used for `small' allocations (less
+than 2^31 - 1 bytes) and type @code{REALSXP} for allocations up to 2^34
+- 1 bytes on 64-bit machines.
 
 @node Internal use of global and base environments, Modules, Memory allocators, R Internal Structures
 @section Internal use of global and base environments
@@ -3447,8 +3447,8 @@ viewers.)
 @node Base graphics, Grid graphics, Colours, Graphics Devices
 @section Base graphics
 
-The base graphics system was migrated to package @pkg{graphics} in @R{} 2.16.0:
-it was previously implemented in files in @file{src/main}.
+The base graphics system was migrated to package @pkg{graphics} in @R{}
+3.0.0: it was previously implemented in files in @file{src/main}.
 
 For historical reasons it is largely implemented in two layers.
 Files @file{plot.c}, @code{plot3d.c} and @code{par.c} contain the code
@@ -3531,7 +3531,7 @@ The handling of missing values differs in the two classes of uses.
 Generally these are errors when used in @code{par} but cause the
 corresponding element of the plot to be omitted when used as an element
 of a vector argument.  Originally the interpretation of arguments was
-mainly left to the device, but as from @R{} 2.16.0 some of this is
+mainly left to the device, but as from @R{} 3.0.0 some of this is
 pre-empted in the graphics engine (but for example the handling of
 @code{lwd = 0} remains device-specific, with some interpreting it as a
 `thinnest possible' line).
@@ -4209,10 +4209,10 @@ timescale.
 @node Long vectors, 64-bit types, Current and future directions, Current and future directions
 @section Long vectors
 
-Vectors in @R{} before version 2.16.0 were limited to a length of 2^31 -
-1 elements (about 2 billion), as the length is stored in the
-@code{SEXPREC} as a C @code{int}, and that type is used extensively to
-record lengths and element numbers, including in packages.
+Vectors in @R{} 2.x.y were limited to a length of 2^31 - 1 elements
+(about 2 billion), as the length is stored in the @code{SEXPREC} as a C
+@code{int}, and that type is used extensively to record lengths and
+element numbers, including in packages.
 
 Note that longer vectors are effectively impossible under 32-bit
 platforms because of their address limit, so this section applies only

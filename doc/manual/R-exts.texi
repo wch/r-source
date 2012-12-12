@@ -492,7 +492,7 @@ this specification; in @R{} 2.14.0 or later, the @samp{Author} and
 @samp{Maintainer} fields are auto-generated from it if needed when
 building@footnote{at least if this is done in a locale which matches the
 package encoding.} or installing@footnote{installation generates an
-ASCII version prior to @R{} 2.16.0.}.
+ASCII version in @R{} 2.x.y.}.
 
 @findex COPYRIGHTS
 @c DESCRIPTION field Copyright
@@ -949,7 +949,7 @@ and have one of the extensions @file{.R} or @file{.r}.  If present, the
 line for each demo, giving its name and a description separated by white
 space. (Note that it is not possible to generate this index file
 automatically.)  Note that a demo does not have a specified encoding and
-so should be an ASCII file (@pxref{Encoding issues}).  As from @R{} 2.16.0
+so should be an ASCII file (@pxref{Encoding issues}).  As from @R{} 3.0.0
 @code{demo()} will use the package encoding if there is one, but this
 is mainly useful for non-ASCII comments.
 
@@ -4047,7 +4047,7 @@ msgfmt -c --statistics -o inst/po/@var{ll}/LC_MESSAGES/@var{pkg}.mo po/@var{ll}.
 from the package's top-level directory.  Using @option{-c} does some
 useful validity checks, and @option{--statistics} notes the coverage.
 
-Note that as from @R{} 2.16.0 the location of the compiled translations
+Note that as from @R{} 3.0.0 the location of the compiled translations
 (the @file{.mo} file) is different for a standard package (stored in the
 @pkg{translations} package and a contributed one (stored in the
 package's own sources).
@@ -4055,7 +4055,7 @@ package's own sources).
 @node Supporting R function,  , Installing translations, Internationalization
 @subsection Supporting R function
 
-As from @R{} 2.16.0 there is an @R{} function, @code{update_pkg_po} in
+As from @R{} 3.0.0 there is an @R{} function, @code{update_pkg_po} in
 package @pkg{tools}, to automate much of the maintenance of message
 translations.  See its help for what it does in detail.
 
@@ -6783,7 +6783,7 @@ the first.
 
 A fairly common cause of such crashes is a package which uses @code{.C}
 or @code{.Fortran} and writes beyond (at either end) one of the
-arguments it is passed.  As from @R{} 2.16.0 there is a good way to
+arguments it is passed.  As from @R{} 3.0.0 there is a good way to
 detect this: using @code{options(CBoundsCheck = TRUE)} (which can be
 selected @emph{via} the environment variable @env{R_C_BOUNDS_CHECK=yes)}
 changes the way @code{.C} and @code{.Fortran} work to check if the
@@ -6804,7 +6804,7 @@ Error: segfault from C stack overflow
 However, C stack overflows are fatal under Windows and normally defeat
 attempts at debugging on that platform.  Further, the size of the stack
 is set when @R{} is compiled@footnote{For a long time the compilation
-default was 10MB, but this was increased to 64MB for @R{} 2.16.0.},
+default was 10MB, but this was increased to 64MB for @R{} 3.0.0.},
 whereas on POSIX OSes it can be set in the shell from which @R{} is
 launched.
 
@@ -7164,7 +7164,7 @@ package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.  However, prior to @R{} 2.16.0 the detection of
+directive will be used.  However, prior to @R{} 2.15.2 the detection of
 the correct namespace is unreliable and you are strongly recommended to
 use the @code{PACKAGE} argument for packages to be used with earlier
 versions of @R{}.
@@ -11872,7 +11872,7 @@ extern int  (*ptr_R_EditFile)(const char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
-// added in R 2.16.0
+// added in R 3.0.0
 extern int  (*ptr_R_EditFiles)(int, const char **, const char **, const char *);
 extern SEXP (*ptr_do_selectlist)(SEXP, SEXP, SEXP, SEXP);
 extern SEXP (*ptr_do_dataentry)(SEXP, SEXP, SEXP, SEXP);

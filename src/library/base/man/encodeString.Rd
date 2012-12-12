@@ -58,7 +58,7 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
   A character vector of the same length as \code{x}, with the same
   attributes (including names and dimensions) but with no class set.
 
-  As from \R 2.16.0, marked UTF-8 encodings are preserved.
+  As from \R 3.0.0, marked UTF-8 encodings are preserved.
 }
 \seealso{
   \code{\link{print.default}}

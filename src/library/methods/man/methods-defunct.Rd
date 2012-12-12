@@ -48,7 +48,7 @@ allGenerics()
 % Removed in 2.11.0
 trySilent(expr)
 
-% Removed in 2.16.0
+% Removed in 3.0.0
 traceOn(what, tracer=browseAll, exit=NULL)
 traceOff(what)
 }

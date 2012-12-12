@@ -55,7 +55,7 @@ chol(x, \dots)
     pivot]}.  See the examples.
 
   Pivoting with LAPACK requires LAPACK >= 3.2 and was added in \R
-  2.16.0.  The value of \code{tol} is passed to LAPACK, with negative
+  2.15.2.  The value of \code{tol} is passed to LAPACK, with negative
   values selecting the default tolerance of (usually) \code{nrow(x) *
   .Machine$double.neg.eps * max(diag(x)}.  The algorithm terminates once
   the pivot is less than \code{tol}.

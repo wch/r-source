@@ -45,10 +45,9 @@ Sys.which(names)
   OS-dependent.  It will usually do tilde-expansion and it may make use
   of \command{csh} aliases.
 
-  Prior to \R 2.16.0, arguments containing spaces or other
-  metacharacters needed to be escaped as they would be for a shell: for
-  example Windows paths containing spaces needed to be enclosed in double
-  quotes. 
+  In \R 2.x.y, arguments containing spaces or other metacharacters
+  needed to be escaped as they would be for a shell: for example Windows
+  paths containing spaces needed to be enclosed in double quotes.
 }
 \examples{
 ## the first two are likely to exist everywhere

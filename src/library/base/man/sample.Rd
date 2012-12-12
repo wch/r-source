@@ -67,7 +67,7 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   \code{sample.int} is a bare interface in which both \code{n} and
   \code{size} must be supplied as integers.
   
-  As from \R 2.16.0, \code{n} can be larger than the largest integer of
+  As from \R 3.0.0, \code{n} can be larger than the largest integer of
   type \code{integer}, up to the largest representable integer in type
   \code{double}.  Only uniform sampling is supported.  Two
   random numbers are used to ensure uniform sampling of large integers.
@@ -119,7 +119,7 @@ resample(x[x >  8]) # length 2
 resample(x[x >  9]) # length 1
 resample(x[x > 10]) # length 0
 
-## R >= 2.16.0 only
+## R 3.x.y only
 sample.int(1e10, 12, replace = TRUE)
 sample.int(1e10, 12) # not that there is much chance of duplicates
 }

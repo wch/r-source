@@ -3308,7 +3308,7 @@ special values such as INF or NaN values. Using these special values may
 cause LAPACK to return unexpected results or become unstable.
 @end quotation
 
-As from @R{} 2.16.0 we rely on limited support in LAPACK for matrices
+As from @R{} 3.0.0 we rely on limited support in LAPACK for matrices
 with @math{2^{31}} or more elements: it is quite possible that an
 external LAPACK will not have that support.
 

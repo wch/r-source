@@ -56,7 +56,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   faster for long vectors.  Method \code{"radix"} is only implemented
   for integer \code{x} with a range of less than 100,000.  For such
   \code{x} it is very fast (and stable), and hence is ideal for sorting
-  factors---as from \R 2.16.0 it is the default method for factors with
+  factors---as from \R 3.0.0 it is the default method for factors with
   less than 100,000 levels.
 
   \code{partial = NULL} is supported for compatibility with other

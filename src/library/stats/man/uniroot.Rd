@@ -55,10 +55,9 @@ uniroot(f, interval, \dots,
   \code{f} will be called as \code{f(\var{x}, ...)} for a numeric value
   of \var{x}.
   
-  The argument passed to \code{f} has special semantics and is shared
-  between calls.  The function should not copy it.
+  The argument passed to \code{f} has special semantics and used to be
+  shared between calls.  The function should not copy it.
 }
-%% or at least, it did prior to R 2.16.0
 
 \value{
   A list with four components: \code{root} and \code{f.root} give the
