@@ -5388,6 +5388,27 @@ function(dir)
     foss <- analyze_license(meta["License"])$is_verified
     out$Maintainer <- meta["Maintainer"]
 
+    language <- meta["Language"]
+    if((is.na(language) || language == "en") &&
+       config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
+                                        FALSE))) {
+        a <- utils:::aspell_package_description(dir,
+                                                control =
+                                                 c("--master=en_US",
+                                                   "--add-extra-dicts=en_GB"),
+                                                program = "aspell",
+                                                dictionaries = "en_stats")
+        if(NROW(a))
+            out$spelling <- a
+    }
+
+    ## Check for possibly mis-spelled field names.
+    nms <- names(meta)
+    nms <- nms[is.na(match(nms, .get_standard_DESCRIPTION_fields())) &
+               !grepl("^(X-CRAN|Repository/R-Forge)", nms)]
+    if(length(nms))
+        out$fields <- nms
+
     urls <- .get_standard_repository_URLs()
     ## We do not want to use utils::available.packages() for now, as
     ## this unconditionally filters according to R version and OS type.
@@ -5410,6 +5431,36 @@ function(dir)
 
     ## Note that .get_standard_repository_URLs() puts the CRAN master first.
     CRAN <- urls[1L]
+
+    ## Check for CRAN repository db overrides and possible conflicts.
+    con <- url(sprintf("%s/src/contrib/PACKAGES.in", CRAN))
+    odb <- read.dcf(con)
+    close(con)
+    ## For now (2012-11-28), PACKAGES.in is all ASCII, so there is no
+    ## need to re-encode.  Eventually, it might be in UTF-8 ...
+    entry <- odb[odb[, "Package"] == meta["Package"], ]
+    entry <- entry[!is.na(entry) & (names(entry) != "Package")]
+    if(length(entry)) {
+        fmt <- function(s)
+            unlist(lapply(s,
+                          function(e) {
+                              paste(strwrap(e, indent = 2L, exdent = 4L),
+                                    collapse = "\n")
+                          }))
+        ## Report all overrides for visual inspection.
+        entry <- fmt(sprintf("  %s: %s", names(entry), entry))
+        out$overrides <- entry
+        fields <- intersect(names(meta), names(entry))
+        if(length(fields)) {
+            ## Find fields where package metadata and repository
+            ## overrides are in conflict.
+            ind <- ! unlist(Map(identical,
+                                fmt(sprintf("  %s: %s", fields, meta[fields])),
+                                entry[fields]))
+            if(any(ind))
+                out$conflicts <- fields[ind]
+        }
+    }
 
     ## For now, information about the CRAN package archive is provided
     ## in CRAN's src/contrib/Meta/archive.rds.
@@ -5529,57 +5580,6 @@ function(dir)
     l_d <- db[db[, "Package"] == package, "License"]
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
-
-    language <- meta["Language"]
-    if((is.na(language) || language == "en") &&
-       config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
-                                        FALSE))) {
-        a <- utils:::aspell_package_description(dir,
-                                                control =
-                                                 c("--master=en_US",
-                                                   "--add-extra-dicts=en_GB"),
-                                                program = "aspell",
-                                                dictionaries = "en_stats")
-        if(NROW(a))
-            out$spelling <- a
-    }
-
-    ## Check for possibly mis-spelled field names.
-    nms <- names(meta)
-    nms <- nms[is.na(match(nms, .get_standard_DESCRIPTION_fields())) &
-               !grepl("^(X-CRAN|Repository/R-Forge)", nms)]
-    if(length(nms))
-        out$fields <- nms
-
-    ## Check for CRAN repository db overrides and possible conflicts.
-    con <- url(sprintf("%s/src/contrib/PACKAGES.in", CRAN))
-    odb <- read.dcf(con)
-    close(con)
-    ## For now (2012-11-28), PACKAGES.in is all ASCII, so there is no
-    ## need to re-encode.  Eventually, it might be in UTF-8 ...
-    entry <- odb[odb[, "Package"] == meta["Package"], ]
-    entry <- entry[!is.na(entry) & (names(entry) != "Package")]
-    if(length(entry)) {
-        fmt <- function(s)
-            unlist(lapply(s,
-                          function(e) {
-                              paste(strwrap(e, indent = 2L, exdent = 4L),
-                                    collapse = "\n")
-                          }))
-        ## Report all overrides for visual inspection.
-        entry <- fmt(sprintf("  %s: %s", names(entry), entry))
-        out$overrides <- entry
-        fields <- intersect(names(meta), names(entry))
-        if(length(fields)) {
-            ## Find fields where package metadata and repository
-            ## overrides are in conflict.
-            ind <- ! unlist(Map(identical,
-                                fmt(sprintf("  %s: %s", fields, meta[fields])),
-                                entry[fields]))
-            if(any(ind))
-                out$conflicts <- fields[ind]
-        }
-    }
 
     out
 }
