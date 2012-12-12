@@ -141,7 +141,7 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	    np <- nchar(pch[1L], type = "c")
 	    pch <- substr(rep.int(pch[1L], np), 1L:np, 1L:np)
 	}
-        ## this coercion was documented but not done in R < 2.16.0
+        ## this coercion was documented but not done in R < 3.0.0
         if(!is.character(pch)) pch <- as.integer(pch)
     }
 
@@ -252,7 +252,7 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	pt.lwd <- rep_len(pt.lwd, n.leg)
         ok <- !is.na(pch)
         if (!is.character(pch)) {
-            ## R < 2.16.0 omitted pch < 0
+            ## R 2.x.y omitted pch < 0
             ok <- ok & (pch >= 0 | pch <= -32)
         } else {
             ## like points

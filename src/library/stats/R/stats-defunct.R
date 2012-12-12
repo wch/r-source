@@ -29,7 +29,7 @@ reshapeLong <- function(x,jvars,  ilev = row.names(x),
 ## <entry>
 ## Deprecated in 1.8.0
 ## Defunct in 1.9.0
-# removed in 2.16.0 to avoid confusion as a method
+# removed in 3.0.0 to avoid confusion as a method
 ## print.coefmat <- function(x, digits=max(3, getOption("digits") - 2),
 ##               signif.stars = getOption("show.signif.stars"),
 ##               dig.tst = max(1, min(5, digits - 1)),

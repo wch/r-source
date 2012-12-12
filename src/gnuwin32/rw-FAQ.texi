@@ -305,8 +305,8 @@ versions around if you wish.
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
 of your home directory, @file{R\win64-library\@var{x.y}} on 64-bit
 builds), you will need to update that too when the minor version of R
-changes (e.g.@: from 2.15.2 to 2.16.0).  A simple way to do so is to
-copy (say) @file{R\win-library\2.15} to @file{R\win-library\2.16} before
+changes (e.g.@: from 3.0.2 to 3.1.0).  A simple way to do so is to
+copy (say) @file{R\win-library\3.0} to @file{R\win-library\3.1} before
 running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 
@@ -889,7 +889,7 @@ edit the @env{PATH}.
 The element you want to add to the path is something like
 
 @example
-c:\Program Files\R\R-2.16.0\bin\x64
+c:\Program Files\R\R-3.0.0\bin\x64
 @end example
 
 @noindent
@@ -1379,8 +1379,8 @@ The latest version of the package might require a later version of R
 than the one you are using.  You can check on the package's HTML page on
 CRAN, and update your R if needed.
 
-Your R might be too old.  Binary packages for the 2.x series are built
-(if possible) whilst 2.(x+1) is current, e.g.@: once 2.16.0 is released,
+Your R might be too old.  Binary packages for the 2.x series were built
+(if possible) whilst 2.(x+1) is current, and once 3.0.0 is released,
 binary packages for 2.14.x will be frozen.  You can always try
 installing from the sources.
 

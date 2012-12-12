@@ -114,7 +114,7 @@ Sys.which <- function(names)
         return(res)
     }
     for(i in names) {
-        ## Quoting was added in 2.16.0
+        ## Quoting was added in 3.0.0
         ans <- suppressWarnings(system(paste(which, shQuote(i)),
                                        intern = TRUE, ignore.stderr = TRUE))
         ## Solaris' which gives 'no foo in ...' message on stdout,
