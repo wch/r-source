@@ -672,6 +672,13 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+   \itemize{
+      \item Use of \code{col2rgb(0)} is deprecated (see the help page
+      for its limitations).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{beta(a, b)} could overflow to infinity in its
