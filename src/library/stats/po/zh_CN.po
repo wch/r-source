@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:25+0100\n"
+"POT-Creation-Date: 2012-12-10 18:35+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -120,15 +120,15 @@ msgstr "变数名字不对"
 msgid "invalid tag"
 msgstr "标签不对"
 
-#: distance.c:155
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "所有无限值都作为NA来处理"
 
-#: distance.c:228
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): p值不对"
 
-#: distance.c:231
+#: distance.c:229
 msgid "distance(): invalid distance"
 msgstr "distance()：距离值不对"
 

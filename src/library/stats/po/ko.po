@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:25+0100\n"
+"POT-Creation-Date: 2012-12-10 18:35+0000\n"
 "PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -122,15 +122,15 @@ msgstr "변수 이름들이 잘못되었습니다"
 msgid "invalid tag"
 msgstr "태그가 부적절합니다"
 
-#: distance.c:155
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "유한하지 않은 값들은 NA 처리됩니다 "
 
-#: distance.c:228
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): p 값이 잘못되었습니다 "
 
-#: distance.c:231
+#: distance.c:229
 msgid "distance(): invalid distance"
 msgstr "distance(): 거리가 잘못되었습니다 "
 

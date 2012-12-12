@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:25+0100\n"
+"POT-Creation-Date: 2012-12-10 18:35+0000\n"
 "PO-Revision-Date: 2012-03-15 12:00-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -125,15 +125,15 @@ msgstr "неправильные имена переменных"
 msgid "invalid tag"
 msgstr "неправильный тег"
 
-#: distance.c:155
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "обрабатываю не-конечные значения как NA"
 
-#: distance.c:228
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): неправильный p"
 
-#: distance.c:231
+#: distance.c:229
 msgid "distance(): invalid distance"
 msgstr "distance(): неправильное расстояние"
 

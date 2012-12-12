@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-26 17:25+0100\n"
+"POT-Creation-Date: 2012-12-10 18:35+0000\n"
 "PO-Revision-Date: 2012-03-06 21:47+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -121,15 +121,15 @@ msgstr "nom de variable incorrect"
 msgid "invalid tag"
 msgstr "marque (tag) incorrecte"
 
-#: distance.c:155
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "valeurs infinies traitées comme NA"
 
-#: distance.c:228
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance() : p incorrect"
 
-#: distance.c:231
+#: distance.c:229
 msgid "distance(): invalid distance"
 msgstr "distance() : distance incorrecte"
 
