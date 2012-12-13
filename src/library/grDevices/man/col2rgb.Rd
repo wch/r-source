@@ -28,9 +28,6 @@ col2rgb(col, alpha = FALSE)
   Prior to \R 3.0.0, \code{col = 0} could be used to refer to the
   background color of the current device in base graphics: this is now
   an error.
-  
-  Historically character strings specifying positive integers were
-  coerced to integer, but this has been removed.
 }
 \value{
   An integer matrix with three or four (for\code{alpha = TRUE}) rows
