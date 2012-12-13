@@ -25,9 +25,9 @@ palette(value)
   a built-in color palette.  If \code{value} has length greater
   than 1 it is assumed to contain a description of the colors
   which are to make up the new palette (either by name or
-  by RGB levels).
+  by RGB levels).  The maximum size for a palette is 1024 entries.
 
-  If \code{value} is omitted or has length 0, no change is made
+  If \code{value} is omitted or has length 0, no change is made to
   the current palette.
 
   Currently, the only built-in palette is \code{"default"}.

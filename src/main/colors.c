@@ -34,8 +34,7 @@
 
 static unsigned int rgb2col(const char *);
 
-static double str2col(const char *s);
-
+/* COLOR_TABLE_SIZE is defined in colors.h */
 static int R_ColorTableSize;
 static unsigned int R_ColorTable[COLOR_TABLE_SIZE];
 
@@ -74,7 +73,7 @@ static unsigned int num2col(int col)
 
 SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-/* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
+/* color name, "#rrggbb" or palette index to (r,g,b) conversion */
 
     SEXP colors, ans, names, dmns;
     double col;
@@ -107,7 +106,7 @@ SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
-	    icol = (unsigned int) str2col(CHAR(STRING_ELT(colors, i)));
+	    icol = R_GE_str2col(CHAR(STRING_ELT(colors, i)));
 	    INTEGER(ans)[i4 + 0] = R_RED(icol);
 	    INTEGER(ans)[i4 + 1] = R_GREEN(icol);
 	    INTEGER(ans)[i4 + 2] = R_BLUE(icol);
@@ -1091,21 +1090,15 @@ const char *col2name(unsigned int col)
     }
 }
 
-static double str2col(const char *s)
+/* used in grDevices for fg and bg of devices */
+/* in GraphicsEngine.h */
+unsigned int R_GE_str2col(const char *s)
 {
     if(s[0] == '#') return rgb2col(s);
     else if(isdigit((int)s[0])) {
 	error("specification of colors in the palette by a string is defunct");
-	return 0.0; // -Wall
-	//return number2col(s, bg);
+	return 0.; // -Wall
     } else return name2col(s);
-}
-
-/* used in grDevices */
-/* in GraphicsEngine.h */
-unsigned int R_GE_str2col(const char *s)
-{
-    return (unsigned int) str2col(s);
 }
 
 /* Convert a sexp element to an R color desc */
@@ -1119,7 +1112,7 @@ unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
     switch(TYPEOF(x))
     {
     case STRSXP:
-	return (unsigned int) str2col(CHAR(STRING_ELT(x, i)));
+	return R_GE_str2col(CHAR(STRING_ELT(x, i)));
     case LGLSXP:
 	indx = LOGICAL(x)[i];
 	if (indx == NA_LOGICAL) return R_TRANWHITE;
