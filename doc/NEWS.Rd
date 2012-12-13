@@ -679,6 +679,9 @@
    \itemize{
       \item Use of \code{col2rgb(0)} is deprecated (see the help page
       for its limitations).
+
+      \item The undocumented use of strings such as \code{"3"} as colour
+      names (e.g. in \code{col2rgb()}) is deprecated.
     }
   }
   

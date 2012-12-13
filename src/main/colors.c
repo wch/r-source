@@ -110,7 +110,7 @@ SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = str2col(CHAR(STRING_ELT(colors, i)), bg);
-	    if (col == BG_NEEDED) error("col2rgb(\"0\") is deprecated");
+	    if (col == BG_NEEDED) error("col2rgb(\"0\") is defunct");
 	    icol = (unsigned int) col;
 	    INTEGER(ans)[i4 + 0] = R_RED(icol);
 	    INTEGER(ans)[i4 + 1] = R_GREEN(icol);
@@ -1113,8 +1113,10 @@ static double str2col(const char *s, double bg)
        and made this depend on base graphics.
        Looks like it was an artefact of conversion in col2rgb().
     */
-    else if(isdigit((int)s[0])) return number2col(s, bg);
-    else return name2col(s);
+    else if(isdigit((int)s[0])) {
+	warning("specification of colors in the palette by a string is deprecated");
+	return number2col(s, bg);
+    } else return name2col(s);
 }
 
 /* used in grDevices */

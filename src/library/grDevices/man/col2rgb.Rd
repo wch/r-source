@@ -25,8 +25,8 @@ col2rgb(col, alpha = FALSE)
 \details{
   \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
   
-  For historical reasons character strings specifying positive integers
-  have been coerced to integer: this may change in the near future.
+  Historically character strings specifying positive integers were
+  coerced to integer, but this is now deprecated and will be removed shortly.
 }
 \value{
   an integer matrix with three or four  (for\code{alpha = TRUE}) rows
