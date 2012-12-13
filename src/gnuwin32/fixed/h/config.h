@@ -994,11 +994,8 @@
 #define SIZEOF_LONG_LONG 8
 
 /* The size of `size_t', as computed by sizeof. */
-#ifdef WIN64
-#define SIZEOF_SIZE_T 8
-#else
-#define SIZEOF_SIZE_T 4
-#endif
+#define SIZEOF_SIZE_T @ST@
+
 
 /* Define as the maximum value of type 'size_t', if the system doesn't define
    it. (For intl) */
