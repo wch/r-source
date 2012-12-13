@@ -399,8 +399,10 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if      (col == NA_INTEGER) col = R_TRANWHITE;
 	    else if (col == 0)          col = bg;
 	    else 		        col = R_ColorTable[(unsigned int)(col-1) % R_ColorTableSize];
-	    if (col == BG_NEEDED)
+	    if (col == BG_NEEDED) {
+		warning("col2rgb(0) is deprecated");
 	    	col = bg = dpptr(GEcurrentDevice())->bg;
+	    }
 	    icol = (unsigned int)col;
 	    INTEGER(ans)[i4 +0] = R_RED(icol);
 	    INTEGER(ans)[i4 +1] = R_GREEN(icol);
