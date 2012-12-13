@@ -1031,7 +1031,7 @@ unsigned int R_GE_str2col(const char *s)
     else if(isdigit((int)s[0])) {
 	char *ptr;
 	int indx = strtod(s, &ptr);
-	if(*ptr || indx <= 0) error(_("invalid color specification '%s'"), s);
+	if(*ptr || indx <= 0) error(_("invalid color specification \"%s\""), s);
 	warning("specification of colors in the palette by a string is deprecated");
 	return R_ColorTable[(indx-1) % R_ColorTableSize];
 //	error("specification of colors in the palette by a string is defunct");
