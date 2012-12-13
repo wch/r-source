@@ -596,20 +596,23 @@ par(\dots, no.readonly = FALSE)
 }
 
 \section{Color Specification}{
+  
   Colors can be specified in several different ways. The simplest way is
   with a character string giving the color name (e.g., \code{"red"}).  A
   list of the possible colors can be obtained with the function
-  \code{\link{colors}}.  Alternatively, colors can be specified directly in
-  terms of their RGB components with a string of the form \code{"#RRGGBB"}
-  where each of the pairs \code{RR}, \code{GG}, \code{BB} consist of two
-  hexadecimal digits giving a value in the range \code{00} to \code{FF}.
-  Colors can also be specified by giving an index into a small table of
-  colors, the \code{\link{palette}}.  This provides compatibility with
-  S.  Index \code{0} corresponds to the background color.  (Because
-  apparently some people have been assuming it, it is also possible to
-  specify integers as character strings, e.g. \code{"3"}.)  Note that
-  the palette (apart from \code{0} which is per-device)
-  is a per-session setting.
+  \code{\link{colors}}.  Alternatively, colors can be specified directly
+  in terms of their RGB components with a string of the form
+  \code{"#RRGGBB"} where each of the pairs \code{RR}, \code{GG},
+  \code{BB} consist of two hexadecimal digits giving a value in the
+  range \code{00} to \code{FF}.  Colors can also be specified by giving
+  an index into a small table of colors, the \code{\link{palette}}:
+  indices wrap round so with the default palette of size 8, \code{10} is
+  the same as \code{2}.  This provides compatibility with S.  Index
+  \code{0} corresponds to the background color.  (Because apparently
+  some people have been assuming it, it was also possible to specify
+  integers as character strings, e.g. \code{"3"}.  This is now
+  deprecated.)  Note that the palette (apart from \code{0} which is
+  per-device) is a per-session setting.
 
   Additionally, \code{"transparent"} is \emph{transparent}, useful for
   filled areas (such as the background!), and just invisible for things
