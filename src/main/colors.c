@@ -1023,6 +1023,18 @@ const char *col2name(unsigned int col)
     }
 }
 
+static double str2col(const char *s, double bg)
+{
+    if(s[0] == '#') return rgb2col(s);
+    else if(isdigit((int)s[0])) {
+	char *ptr;
+	int indx = strtod(s, &ptr);
+	if(*ptr) error(_("invalid color specification \"%s\""), s);
+	if (indx == 0) return bg;
+	return R_ColorTable[(indx-1) % R_ColorTableSize];
+    } else return name2col(s);
+}
+
 /* used in grDevices for fg and bg of devices */
 /* in GraphicsEngine.h */
 unsigned int R_GE_str2col(const char *s)
@@ -1034,13 +1046,12 @@ unsigned int R_GE_str2col(const char *s)
 	if(*ptr || indx == 0) error(_("invalid color specification \"%s\""), s);
 //	warning("specification of colors in the palette by a string is deprecated");
 	return R_ColorTable[(indx-1) % R_ColorTableSize];
-//	error("specification of colors in the palette by a string is defunct");
-//	return 0.; // -Wall
     } else return name2col(s);
 }
 
 /* Convert a sexp element to an R color desc */
 /* We Assume that Checks Have Been Done */
+
 
 /* used in grid/src/gpar.c with bg = R_TRANWHITE */
 /* in GraphicsEngine.h */
@@ -1050,7 +1061,7 @@ unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
     switch(TYPEOF(x))
     {
     case STRSXP:
-	return R_GE_str2col(CHAR(STRING_ELT(x, i)));
+	return str2col(CHAR(STRING_ELT(x, i)), bg);
     case LGLSXP:
 	indx = LOGICAL(x)[i];
 	if (indx == NA_LOGICAL) return R_TRANWHITE;
