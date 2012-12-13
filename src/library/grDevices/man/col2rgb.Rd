@@ -30,9 +30,6 @@ col2rgb(col, alpha = FALSE)
   used is deprecated.
 
   \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
-  
-  Historically character strings specifying integers (without
-  a sign) were coerced to integer, but this is now deprecated.
 }
 \value{
   An integer matrix with three or four (for\code{alpha = TRUE}) rows
