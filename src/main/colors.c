@@ -1109,13 +1109,10 @@ const char *col2name(unsigned int col)
 static double str2col(const char *s, double bg)
 {
     if(s[0] == '#') return rgb2col(s);
-    /* This seems rather strange,
-       and made this depend on base graphics.
-       Looks like it was an artefact of conversion in col2rgb().
-    */
     else if(isdigit((int)s[0])) {
-	warning("specification of colors in the palette by a string is deprecated");
-	return number2col(s, bg);
+	error("specification of colors in the palette by a string is defunct");
+	return 0.0; // -Wall
+	//return number2col(s, bg);
     } else return name2col(s);
 }
 

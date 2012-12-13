@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-27 r61168) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-13 r61296) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -676,12 +676,17 @@ blue     0    0    0    0
 red      8
 green  160
 blue   255
-> ## all three kind of color specifications mixed :
-> col2rgb(c(red = "red", palette =  1:3, hex = "#abcdef"))
-      red palette1 palette2 palette3 hex
-red   255        0      255        0 171
-green   0        0        0      205 205
-blue    0        0        0        0 239
+> ## all three kinds of color specifications:
+> col2rgb(c(red = "red", hex = "#abcdef"))
+      red hex
+red   255 171
+green   0 205
+blue    0 239
+> col2rgb(c(palette = 1:3))
+      palette1 palette2 palette3
+red          0      255        0
+green        0        0      205
+blue         0        0        0
 > 
 > ##-- NON-INTRODUCTORY examples --
 > 

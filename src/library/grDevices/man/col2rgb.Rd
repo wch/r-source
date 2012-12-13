@@ -25,11 +25,15 @@ col2rgb(col, alpha = FALSE)
 \details{
   \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
   
+  Prior to \R 3.0.0, \code{col = 0} could be used to refer to the
+  background color of the current device in base graphics: this is now
+  an error.
+  
   Historically character strings specifying positive integers were
-  coerced to integer, but this is now deprecated and will be removed shortly.
+  coerced to integer, but this has been removed.
 }
 \value{
-  an integer matrix with three or four  (for\code{alpha = TRUE}) rows
+  An integer matrix with three or four (for\code{alpha = TRUE}) rows
   and number of columns the length of \code{col}.  If \code{col} has
   names these are used as the column names of the return value.
 }
@@ -50,8 +54,9 @@ col2rgb(1:8)  # the ones from the palette() (if the default)
 col2rgb(paste0("gold", 1:4))
 
 col2rgb("#08a0ff")
-## all three kind of color specifications mixed :
-col2rgb(c(red = "red", palette =  1:3, hex = "#abcdef"))
+## all three kinds of color specifications:
+col2rgb(c(red = "red", hex = "#abcdef"))
+col2rgb(c(palette = 1:3))
 
 ##-- NON-INTRODUCTORY examples --
 

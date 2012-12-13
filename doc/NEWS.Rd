@@ -487,6 +487,10 @@
       
       \item Use of \code{col2rgb(0)} is defunct: use \code{par("bg")}
       instead.
+      
+      \item The long-undocumented use of e.g. \code{"3"} as a colour
+      name to refer to the palette has been removed.  Use an integer,
+      not a string.
     }
   }
 
