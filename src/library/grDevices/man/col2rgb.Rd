@@ -35,11 +35,13 @@ col2rgb(col, alpha = FALSE)
   a sign) were coerced to integer, but this is now deprecated.
 }
 \value{
-  an integer matrix with three or four  (for\code{alpha = TRUE}) rows
+  An integer matrix with three or four (for\code{alpha = TRUE}) rows
   and number of columns the length of \code{col}.  If \code{col} has
   names these are used as the column names of the return value.
 }
-\author{Martin Maechler}
+\author{
+  Martin Maechler and the R core team.
+}
 \seealso{
   \code{\link{rgb}}, \code{\link{colors}}, \code{\link{palette}}, etc.
 }
@@ -52,8 +54,9 @@ col2rgb(1:8)  # the ones from the palette() (if the default)
 col2rgb(paste("gold", 1:4, sep = ""))
 
 col2rgb("#08a0ff")
-## all three kind of color specifications mixed :
-col2rgb(c(red = "red", palette =  1:3, hex = "#abcdef"))
+## all three kinds of color specifications:
+col2rgb(c(red = "red", hex = "#abcdef"))
+col2rgb(c(palette = 1:3))
 
 ##-- NON-INTRODUCTORY examples --
 
