@@ -16,16 +16,26 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-colors <- function(distinct = FALSE) {
+colours <- colors <- function(distinct = FALSE)
+{
     c <- .External2(C_colors)
     if(distinct) c[!duplicated(t(col2rgb(c)))] else c
 }
-colours <- colors
-col2rgb <- function(col, alpha=FALSE) {
-  result <- .External2(C_col2rgb, col)
-  if (!alpha)
-    result <- result[1L:3,, drop=FALSE]
-  result
+
+col2rgb <- function(col, alpha = FALSE)
+{
+    if(!is.character(col)) {
+        nm <- names(col)
+        col <- as.integer(col)
+        if(any(!is.na(col) & col <= 0)) stop("integer values must be positive")
+        p <- palette()
+        col <- p[1L + (col - 1L) %% length(p)]
+        names(col) <- nm
+    }
+    result <- .Call(C_col2rgb, col)
+    if (!alpha)
+        result <- result[1L:3,, drop = FALSE]
+    result
 }
 
 gray <- function(level, alpha = NULL) .Call(C_gray, level, alpha)

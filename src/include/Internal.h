@@ -94,7 +94,6 @@ SEXP do_classgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_colon(SEXP, SEXP, SEXP, SEXP);
 SEXP do_colors(SEXP, SEXP, SEXP, SEXP);
 SEXP do_colsum(SEXP, SEXP, SEXP, SEXP);
-SEXP do_col2RGB(SEXP, SEXP, SEXP, SEXP);
 SEXP do_commandArgs(SEXP, SEXP, SEXP, SEXP);
 SEXP do_comment(SEXP, SEXP, SEXP, SEXP);
 SEXP do_commentgets(SEXP, SEXP, SEXP, SEXP);

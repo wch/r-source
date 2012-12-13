@@ -436,3 +436,39 @@ SEXP RGB2hsv(SEXP rgb)
     UNPROTECT(2);
     return ans;
 }
+
+
+SEXP col2rgb(SEXP colors)
+{
+/* color name, "#rrggbb" or palette index to (r,g,b) conversion */
+
+    SEXP ans, names, dmns;
+    unsigned int icol;
+    int n, i, i4;
+
+    if (!isString(colors)) error(_("invalid '%s' value"), "col");
+    n = LENGTH(colors);
+
+    /* First set up the output matrix */
+    PROTECT(ans = allocMatrix(INTSXP, 4, n));
+    PROTECT(dmns = allocVector(VECSXP, 2));
+    PROTECT(names = allocVector(STRSXP, 4));
+    SET_STRING_ELT(names, 0, mkChar("red"));
+    SET_STRING_ELT(names, 1, mkChar("green"));
+    SET_STRING_ELT(names, 2, mkChar("blue"));
+    SET_STRING_ELT(names, 3, mkChar("alpha"));
+    SET_VECTOR_ELT(dmns, 0, names);
+    if ((names = getAttrib(colors, R_NamesSymbol)) != R_NilValue)
+	SET_VECTOR_ELT(dmns, 1, names);
+    setAttrib(ans, R_DimNamesSymbol, dmns);
+
+    for(i = i4 = 0; i < n; i++, i4 += 4) {
+	icol = R_GE_str2col(CHAR(STRING_ELT(colors, i)));
+	INTEGER(ans)[i4 + 0] = R_RED(icol);
+	INTEGER(ans)[i4 + 1] = R_GREEN(icol);
+	    INTEGER(ans)[i4 + 2] = R_BLUE(icol);
+	    INTEGER(ans)[i4 + 3] = R_ALPHA(icol);
+    }
+    UNPROTECT(3);
+    return ans;
+}

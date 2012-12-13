@@ -69,7 +69,6 @@ static R_CMethodDef CEntries [] = {
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_CallMethodDef CallEntries[] = {
-    // NB: each *also* needs an entry in useDynLib() in ../NAMESPACE !
     CALLDEF(Type1FontInUse, 2),
     CALLDEF(CIDFontInUse, 2),
     CALLDEF(R_CreateAtVector, 4),
@@ -80,6 +79,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(rgb, 6),
     CALLDEF(hsv, 4),
     CALLDEF(hcl, 5),
+    CALLDEF(col2rgb, 1),
 
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),
@@ -119,7 +119,6 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(getGraphicsEventEnv, 1),
     EXTDEF(setGraphicsEventEnv, 2),
     EXTDEF(colors, 0),
-    EXTDEF(col2rgb, 1),
     EXTDEF(palette, 1),
     EXTDEF(devAskNewPage, 1),
 

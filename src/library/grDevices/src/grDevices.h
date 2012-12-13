@@ -99,7 +99,7 @@ SEXP hsv(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP hcl(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP gray(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP colors(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP col2rgb(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP col2rgb(SEXP colors);
 SEXP palette(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env);
 #endif
