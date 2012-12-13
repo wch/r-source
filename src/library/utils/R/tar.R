@@ -39,7 +39,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                "gzip" = "z", "bzip2" = "j", "xz" = "J")
     } else if (is.logical(compressed)) {
         if (is.na(compressed)) {
-            magic <- readBin(tarfile, "raw", n = 3)
+            magic <- readBin(tarfile, "raw", n = 3L)
             if(all(magic[1:2] == c(0x1f, 0x8b))) cflag <- "z"
             else if(all(magic[1:2] == c(0x1f, 0x9d))) cflag <- "z" # compress
             else if(rawToChar(magic[1:3]) == "BZh") cflag <- "j"
@@ -242,7 +242,9 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                    }
                 }
             }
+        } else if(ctype %in% c("3", "4")) {
             ## 3 and 4 are devices
+            warn1 <- c(warn1, "skipping devices")
         } else if(ctype == "5") {
             ## directory
             contents <- c(contents, name)
@@ -251,8 +253,10 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 Sys.chmod(name, mode, TRUE) # FIXME: check result
                 ## no point is setting time, as dir will be populated later.
             }
+        } else if(ctype == "6") {
             ## 6 is a fifo
-        } else if(ctype %in% c("L", "K")) {
+            warn1 <- c(warn1, "skipping fifos")
+       } else if(ctype %in% c("L", "K")) {
             ## These are GNU extensions that are widely supported
             ## They use one or more blocks to store the name of
             ## a file or link or of a link target.
@@ -335,7 +339,7 @@ tar <- function(tarfile, files = NULL,
                 stop("file path is too long")
             warning("storing paths of more than 100 bytes is not portable:\n  ",
                     sQuote(f), domain = NA)
-            prefix <- name[1:(s-1)]
+            prefix <- name[1:(s-1L)]
             name <- name[-(1:s)]
             header[345+seq_along(prefix)] <- prefix
         }
