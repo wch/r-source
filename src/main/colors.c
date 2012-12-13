@@ -110,27 +110,25 @@ SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = str2col(CHAR(STRING_ELT(colors, i)), bg);
-	    if (col == BG_NEEDED)
-	    	col = bg = dpptr(GEcurrentDevice())->bg;
+	    if (col == BG_NEEDED) error("col2rgb(\"0\") is deprecated");
 	    icol = (unsigned int) col;
-	    INTEGER(ans)[i4 +0] = R_RED(icol);
-	    INTEGER(ans)[i4 +1] = R_GREEN(icol);
-	    INTEGER(ans)[i4 +2] = R_BLUE(icol);
-	    INTEGER(ans)[i4 +3] = R_ALPHA(icol);
+	    INTEGER(ans)[i4 + 0] = R_RED(icol);
+	    INTEGER(ans)[i4 + 1] = R_GREEN(icol);
+	    INTEGER(ans)[i4 + 2] = R_BLUE(icol);
+	    INTEGER(ans)[i4 + 3] = R_ALPHA(icol);
 	}
     } else {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = INTEGER(colors)[i];
-	    if      (col == NA_INTEGER) col = R_TRANWHITE;
+	    if (col == NA_INTEGER) col = R_TRANWHITE;
 	    else if (col == 0) col = bg;
 	    else col = R_ColorTable[(unsigned int)(col-1) % R_ColorTableSize];
-	    if (col == BG_NEEDED)
-	    	col = bg = dpptr(GEcurrentDevice())->bg;
+	    if (col == BG_NEEDED) error("col2rgb(0) is defunct");
 	    icol = (unsigned int) col;
-	    INTEGER(ans)[i4 +0] = R_RED(icol);
-	    INTEGER(ans)[i4 +1] = R_GREEN(icol);
-	    INTEGER(ans)[i4 +2] = R_BLUE(icol);
-	    INTEGER(ans)[i4 +3] = R_ALPHA(icol);
+	    INTEGER(ans)[i4 + 0] = R_RED(icol);
+	    INTEGER(ans)[i4 + 1] = R_GREEN(icol);
+	    INTEGER(ans)[i4 + 2] = R_BLUE(icol);
+	    INTEGER(ans)[i4 + 3] = R_ALPHA(icol);
 	}
     }
     UNPROTECT(3);
@@ -1123,7 +1121,7 @@ static double str2col(const char *s, double bg)
 /* in GraphicsEngine.h */
 unsigned int R_GE_str2col(const char *s)
 {
-    return (unsigned int)str2col(s, R_TRANWHITE);
+    return (unsigned int) str2col(s, R_TRANWHITE);
 }
 
 /* Convert a sexp element to an R color desc */
@@ -1137,7 +1135,7 @@ unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
     switch(TYPEOF(x))
     {
     case STRSXP:
-	return (unsigned int)str2col(CHAR(STRING_ELT(x, i)), bg);
+	return (unsigned int) str2col(CHAR(STRING_ELT(x, i)), bg);
     case LGLSXP:
 	indx = LOGICAL(x)[i];
 	if (indx == NA_LOGICAL) return R_TRANWHITE;

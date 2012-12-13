@@ -484,6 +484,9 @@
       \pkg{methods} are now defunct.
 
       \item Function \code{CRAN.packages()} is finally defunct.
+      
+      \item Use of \code{col2rgb(0)} is defunct: use \code{par("bg")}
+      instead.
     }
   }
 

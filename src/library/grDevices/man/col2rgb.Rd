@@ -16,27 +16,26 @@ col2rgb(col, alpha = FALSE)
   \item{col}{vector of any of the three kinds of \R color specifications,
     i.e., either a color name (as listed by \code{\link{colors}()}), a
     hexadecimal string of the form \code{"#rrggbb"} or
-    \code{"#rrggbbaa"} (see \code{\link{rgb}}), or a positive
-    integer \code{i} meaning \code{\link{palette}()[i]} or \code{0} (see
-    \sQuote{Details}).  Non-character values are coerced to integers.}
+    \code{"#rrggbbaa"} (see \code{\link{rgb}}), or a positive integer
+    \code{i} meaning \code{\link{palette}()[i]}.  Non-character values
+    are coerced to integers.}
   \item{alpha}{logical value indicating whether alpha channel (opacity)
     values should be returned.}
 }
 \details{
-  For integer colors, \code{0} is shorthand for the current
-  \code{\link{par}("bg")} (and hence is only relevant to base graphics
-  and not grid graphics, and is an error if \pkg{graphics} is not
-  loaded: like \code{par} it will open a device if none is open).  Its
-  used is deprecated.
-
   \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
+  
+  For historical reasons character strings specifying positive integers
+  have been coerced to integer: this may change in the near future.
 }
 \value{
   an integer matrix with three or four  (for\code{alpha = TRUE}) rows
   and number of columns the length of \code{col}.  If \code{col} has
   names these are used as the column names of the return value.
 }
-\author{Martin Maechler}
+\author{
+  Martin Maechler and the R core team.
+}
 \seealso{
   \code{\link{rgb}}, \code{\link{colors}}, \code{\link{palette}}, etc.
 
