@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2009  The R Core Team
+ *  Copyright (C) 1997-2012  The R Core Team
  *  Copyright (C) 2003	     The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -385,29 +385,31 @@ SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     if(isString(colors)) {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = str2col(CHAR(STRING_ELT(colors, i)), bg);
-	    if (col == BG_NEEDED)
+	    if (col == BG_NEEDED) {
+		warning("col2rgb(\"0\") is deprecated");
 	    	col = bg = dpptr(GEcurrentDevice())->bg;
-	    icol = (unsigned int)col;
-	    INTEGER(ans)[i4 +0] = R_RED(icol);
-	    INTEGER(ans)[i4 +1] = R_GREEN(icol);
-	    INTEGER(ans)[i4 +2] = R_BLUE(icol);
-	    INTEGER(ans)[i4 +3] = R_ALPHA(icol);
+	    }
+	    icol = (unsigned int) col;
+	    INTEGER(ans)[i4 + 0] = R_RED(icol);
+	    INTEGER(ans)[i4 + 1] = R_GREEN(icol);
+	    INTEGER(ans)[i4 + 2] = R_BLUE(icol);
+	    INTEGER(ans)[i4 + 3] = R_ALPHA(icol);
 	}
     } else {
 	for(i = i4 = 0; i < n; i++, i4 += 4) {
 	    col = INTEGER(colors)[i];
-	    if      (col == NA_INTEGER) col = R_TRANWHITE;
-	    else if (col == 0)          col = bg;
-	    else 		        col = R_ColorTable[(unsigned int)(col-1) % R_ColorTableSize];
+	    if (col == NA_INTEGER) col = R_TRANWHITE;
+	    else if (col == 0) col = bg;
+	    else col = R_ColorTable[(unsigned int)(col-1) % R_ColorTableSize];
 	    if (col == BG_NEEDED) {
 		warning("col2rgb(0) is deprecated");
 	    	col = bg = dpptr(GEcurrentDevice())->bg;
 	    }
-	    icol = (unsigned int)col;
-	    INTEGER(ans)[i4 +0] = R_RED(icol);
-	    INTEGER(ans)[i4 +1] = R_GREEN(icol);
-	    INTEGER(ans)[i4 +2] = R_BLUE(icol);
-	    INTEGER(ans)[i4 +3] = R_ALPHA(icol);
+	    icol = (unsigned int) col;
+	    INTEGER(ans)[i4 + 0] = R_RED(icol);
+	    INTEGER(ans)[i4 + 1] = R_GREEN(icol);
+	    INTEGER(ans)[i4 + 2] = R_BLUE(icol);
+	    INTEGER(ans)[i4 + 3] = R_ALPHA(icol);
 	}
     }
     UNPROTECT(3);
