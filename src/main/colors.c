@@ -67,28 +67,28 @@ static unsigned int ScaleColor(double x)
 {
     if (!R_FINITE(x) || x < 0.0 || x > 1.0)
 	error(_("color intensity %g, not in [0,1]"), x);
-    return (unsigned int)(255*x + 0.5);
+    return (unsigned int) (255*x + 0.5);
 }
 
 static unsigned int CheckColor(int x)
 {
     if (x == NA_INTEGER || x < 0 || x > 255)
 	error(_("color intensity %d, not in 0:255"), x);
-    return (unsigned int)x;
+    return (unsigned int) x;
 }
 
 static unsigned int ScaleAlpha(double x)
 {
     if (!R_FINITE(x) || x < 0.0 || x > 1.0)
 	error(_("alpha level %g, not in [0,1]"), x);
-    return (unsigned int)(255*x + 0.5);
+    return (unsigned int) (255*x + 0.5);
 }
 
 static unsigned int CheckAlpha(int x)
 {
     if (x == NA_INTEGER || x < 0 || x > 255)
 	error(_("alpha level %d, not in 0:255"), x);
-    return (unsigned int)x;
+    return (unsigned int) x;
 }
 
 
@@ -1464,20 +1464,20 @@ static double str2col(const char *s, double bg)
 /* used in grDevices, public */
 unsigned int R_GE_str2col(const char *s)
 {
-    return (unsigned int)str2col(s, R_TRANWHITE);
+    return (unsigned int) str2col(s, R_TRANWHITE);
 }
 
 /* Convert a sexp element to an R color desc */
 /* We Assume that Checks Have Been Done */
 
-/* used in grid/src/gpar.c */
+/* used in grid/src/gpar.c, with bg = R_TRANWHITE */
 unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
 {
     int indx;
     switch(TYPEOF(x))
     {
     case STRSXP:
-	return (unsigned int)str2col(CHAR(STRING_ELT(x, i)), bg);
+	return (unsigned int) str2col(CHAR(STRING_ELT(x, i)), bg);
     case LGLSXP:
 	indx = LOGICAL(x)[i];
 	if (indx == NA_LOGICAL) return R_TRANWHITE;
