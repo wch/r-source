@@ -279,7 +279,7 @@ int selectDevice(int devNum)
 }
 
 /* historically the close was in the [kK]illDevices.
-   only use findNext= TRUE when shutting R dowm, and .Device[s] are not
+   only use findNext = FALSE when shutting R dowm, and .Device[s] are not
    updated.
 */
 static
@@ -448,7 +448,7 @@ void GEaddDevice(pGEDevDesc gdd)
     }
 }
 
-/* conveniende wrapper */
+/* convenience wrapper */
 void GEaddDevice2(pGEDevDesc gdd, const char *name)
 {
     gsetVar(R_DeviceSymbol, mkString(name), R_BaseEnv);
@@ -487,26 +487,20 @@ pGEDevDesc GEcreateDevDesc(pDevDesc dev)
 
 void attribute_hidden InitGraphics(void)
 {
-    int i;
-    SEXP s, t;
-
     R_Devices[0] = &nullDevice;
     active[0] = TRUE;
-    for (i = 1; i < R_MaxDevices; i++) {
+    // these are static arrays, not really needed
+    for (int i = 1; i < R_MaxDevices; i++) {
 	R_Devices[i] = NULL;
 	active[i] = FALSE;
     }
 
     /* init .Device and .Devices */
-    PROTECT(s = mkString("null device"));
+    SEXP s = PROTECT(mkString("null device"));
     gsetVar(R_DeviceSymbol, s, R_BaseEnv);
-    PROTECT(t = mkString("null device"));
-    gsetVar(R_DevicesSymbol, CONS(t, R_NilValue), R_BaseEnv);
+    s = PROTECT(mkString("null device"));
+    gsetVar(R_DevicesSymbol, CONS(s, R_NilValue), R_BaseEnv);
     UNPROTECT(2);
-
-    /* Register the base graphics system with the graphics engine
-     */
-    // registerBase();
 }
 
 
@@ -514,7 +508,7 @@ void NewFrameConfirm(pDevDesc dd)
 {
     if(!R_Interactive) return;
     /* dd->newFrameConfirm(dd) will either handle this, or return
-       FALSE to ask for the engine to do so. */
+       FALSE to ask the engine to do so. */
     if(dd->newFrameConfirm && dd->newFrameConfirm(dd)) ;
     else {
 	unsigned char buf[1024];
