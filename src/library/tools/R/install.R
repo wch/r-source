@@ -201,8 +201,8 @@
         full
     }
 
-    ## used for LazyData, KeepSource, ByteCompile
-    parse_description_field <- function(desc, field, default=TRUE)
+    ## used for LazyData, KeepSource, ByteCompile, ForceBiarch
+    parse_description_field <- function(desc, field, default = TRUE)
     {
         tmp <- desc[field]
         if (is.na(tmp)) default
@@ -696,8 +696,12 @@
                                             "rphast", "rtfbs", "sparsenet",
                                             "tcltk2", "tiff", "udunits2"))
                             one_only <- sum(nchar(readLines("../configure.win", warn = FALSE), "bytes")) > 0
-                        if(one_only && !force_biarch)
-                            warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain=NA)
+                        if(one_only && !force_biarch) {
+                            if(parse_description_field(desc, "Biarch", FALSE))
+                                force_biarch <- TRUE
+                            else
+                                warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain = NA)
+                        }
                     }
                     if(force_biarch) one_only <- FALSE
                     if(one_only || length(archs) < 2L)

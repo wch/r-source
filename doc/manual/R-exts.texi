@@ -689,6 +689,11 @@ Windows build would zip up the data directory or not: set this to
 2.13.0: but it might still be needed if the package can be installed
 under earlier versions of @R{}.)
 
+@c DESCRIPTION field Biarch
+The @samp{Biarch} logical field is used on Windows to select the
+@command{INSTALL} option @option{--force-biarch} for this package.
+(Introduced in @R{} 3.0.0.)
+
 @c DESCRIPTION field BuildVignettes
 The @samp{BuildVignettes} logical field can be set to a false value to stop
 @command{R CMD build} from attempting to rebuild the vignettes, as well

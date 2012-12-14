@@ -611,7 +611,7 @@ function(x, predicate = NULL, recursive = FALSE)
             for(i in seq_along(e)) gatherer(e[[i]])
     }
     gatherer(x)
-    
+
     calls
 }
 
@@ -637,14 +637,14 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL)
     if(is.null(.worker))
         .worker <- function(file, encoding)
             .find_calls_in_file(file, encoding, predicate, recursive)
-    
+
     code_files <-
         list_files_with_type(file.path(dir, "R"), "code",
                              OS_subdirs = c("unix", "windows"))
     calls <- lapply(code_files, .worker, encoding)
     names(calls) <-
         .file_path_relative_to_dir(code_files, dirname(dir))
-    
+
     calls
 }
 
@@ -966,6 +966,7 @@ function()
              ## .get_DESCRIPTION_fields_in_R_exts():
              c("Author",
                "Authors@R",
+               "Biarch",
                "BugReports",
                "BuildKeepEmpty",
                "BuildManual",
@@ -1674,7 +1675,7 @@ function(expr)
 function(dir, fun, ..., verbose = FALSE)
 {
     dir <- file_path_as_absolute(dir)
-    
+
     dfiles <- Sys.glob(file.path(dir, "*", "DESCRIPTION"))
 
     results <-

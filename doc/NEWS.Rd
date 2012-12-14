@@ -409,6 +409,13 @@
 
       Packages without a \file{R} directory and no \file{NAMESPACE} file
       can still be installed.
+      
+      \item Packages can specify in their \file{DESCRIPTION file} a line
+      like
+ \preformatted{
+     ForceBiarch: yes
+}
+      to be installed on Windows with \option{--force-biarch}.
     }
   }
   
