@@ -26,19 +26,18 @@
 
 #include <Defn.h>
 #include <Internal.h>
-#include <Graphics.h>  /* for dpptr */
-//#include <Colors.h>
 #include <R_ext/GraphicsEngine.h>
 #include <Rmath.h>
 #include <ctype.h> /* for tolower, isdigit */
 
 static unsigned int rgb2col(const char *);
+static unsigned int name2col(const char *nm);
 
-#define COLOR_TABLE_SIZE 1024
-static int R_ColorTableSize;
-static unsigned int R_ColorTable[COLOR_TABLE_SIZE];
+#define MAX_PALETTE_SIZE 1024
+static int PaletteSize;
+static unsigned int Palette[MAX_PALETTE_SIZE];
 
-/* String Comparison Ignoring Case and Squeezing Out Blanks */
+/* String comparison ignoring case and squeezing out blanks */
 static int StrMatch(const char *s, const char *t)
 {
     for(;;) {
@@ -777,31 +776,31 @@ static ColorDataBaseEntry ColorDataBase[] = {
 SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP val, ans;
-    unsigned int color[COLOR_TABLE_SIZE];
+    unsigned int color[MAX_PALETTE_SIZE];
     int i, n;
 
     /* Record the current palette */
-    PROTECT(ans = allocVector(STRSXP, R_ColorTableSize));
-    for (i = 0; i < R_ColorTableSize; i++)
-	SET_STRING_ELT(ans, i, mkChar(col2name(R_ColorTable[i])));
+    PROTECT(ans = allocVector(STRSXP, PaletteSize));
+    for (i = 0; i < PaletteSize; i++)
+	SET_STRING_ELT(ans, i, mkChar(col2name(Palette[i])));
     val = CAR(args);
     if (!isString(val)) error(_("invalid argument type"));
     if ((n = length(val)) == 1) {
 	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) { /* ASCII */
 	    int i;
-	    for (i = 0; (i < COLOR_TABLE_SIZE) && DefaultPalette[i]; i++)
-		R_ColorTable[i] = name2col(DefaultPalette[i]);
-	    R_ColorTableSize = i;
+	    for (i = 0; (i < MAX_PALETTE_SIZE) && DefaultPalette[i]; i++)
+		Palette[i] = name2col(DefaultPalette[i]);
+	    PaletteSize = i;
 	} else error(_("unknown palette (need >= 2 colors)"));
     }
     else if (n > 1) {
-	if (n > COLOR_TABLE_SIZE)
-	     error(_("maximum number of colors exceeded"));
+	if (n > MAX_PALETTE_SIZE)
+	    error(_("maximum number of colors is %d"), MAX_PALETTE_SIZE);
 	for (i = 0; i < n; i++)
 	    color[i] = char2col(CHAR(STRING_ELT(val, i)));
 	for (i = 0; i < n; i++)
-	    R_ColorTable[i] = color[i];
-	R_ColorTableSize = n;
+	    Palette[i] = color[i];
+	PaletteSize = n;
     }
     UNPROTECT(1);
     return ans;
@@ -857,8 +856,7 @@ static unsigned int rgb2col(const char *rgb)
 
 /* External Color Name to Internal Color Code */
 
-/* in GraphicsEngine.h, use in plotmath.c */
-unsigned int attribute_hidden name2col(const char *nm)
+static unsigned int name2col(const char *nm)
 {
     int i;
     if(strcmp(nm, "NA") == 0 || strcmp(nm, "transparent") == 0)
@@ -937,7 +935,7 @@ static unsigned int str2col(const char *s, unsigned int bg)
 	int indx = (int) strtod(s, &ptr);
 	if(*ptr) error(_("invalid color specification \"%s\""), s);
 	if (indx == 0) return bg;
-	return R_ColorTable[(indx-1) % R_ColorTableSize];
+	return Palette[(indx-1) % PaletteSize];
     } else return name2col(s);
 }
 
@@ -951,7 +949,7 @@ unsigned int R_GE_str2col(const char *s)
 	int indx = (int) strtod(s, &ptr);
 	if(*ptr || indx == 0) error(_("invalid color specification \"%s\""), s);
 //	warning("specification of colors in the palette by a string is deprecated");
-	return R_ColorTable[(indx-1) % R_ColorTableSize];
+	return Palette[(indx-1) % PaletteSize];
     } else return name2col(s);
 }
 
@@ -984,11 +982,12 @@ unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
 	   warning(_("supplied color is not numeric nor character"));
 	   return bg;
     }
-    if (indx <= 0) return bg;
-    else return R_ColorTable[(indx-1) % R_ColorTableSize];
+//    if (indx < 0) error(_("numerical color values must be >= 0"));
+    if (indx == 0) return bg;
+    else return Palette[(indx-1) % PaletteSize];
 }
 
-/* in GraphicsEngine.h */
+/* in GraphicsEngine.h, used by devices */
 unsigned int RGBpar(SEXP x, int i)
 {
     return RGBpar3(x, i, R_TRANWHITE);
@@ -1009,6 +1008,6 @@ void attribute_hidden InitColors(void)
 
     /* Install Default Palette */
     for(i = 0 ; DefaultPalette[i] ; i++)
-	R_ColorTable[i] = name2col(DefaultPalette[i]);
-    R_ColorTableSize = i;
+	Palette[i] = name2col(DefaultPalette[i]);
+    PaletteSize = i;
 }

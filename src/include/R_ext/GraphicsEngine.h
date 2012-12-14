@@ -304,7 +304,6 @@ double toDeviceHeight(double value, GEUnit from, pGEDevDesc dd);
 #define RGBpar			Rf_RGBpar
 #define RGBpar3			Rf_RGBpar3
 #define col2name                Rf_col2name
-#define name2col		Rf_name2col
 
 /* Convert an element of a R colour specification (which might be a
    number or a string) into an internal colour specification. */
@@ -313,7 +312,6 @@ unsigned int RGBpar3(SEXP, int, unsigned int);
 
 /* Convert an internal colour specification to/from a colour name */
 const char *col2name(unsigned int col); /* used in par.c, grid */
-unsigned int name2col(const char *);    /* used by plotmath.c */
 
 /* Convert either a name or a #RRGGBB[AA] string to internal.
    Because people were using it, it also converts "1", "2" ...
