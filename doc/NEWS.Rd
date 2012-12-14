@@ -573,7 +573,11 @@
       \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
       although it was contrary to the documentation.  It is now an error.
 
-      \item Entry point \code{rcont2} has been removed.
+      \item Entry point \code{rcont2} has been migrated to package
+      \pkg{stats} and so is no longer available.
+      
+      \item The entry points \code{rgb2hsv} and \code{hsv2rgb} have been
+      migrated to package \pkg{grDevices} and so are no longer available.
     }
   }
 

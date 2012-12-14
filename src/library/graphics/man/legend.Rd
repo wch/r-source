@@ -1,6 +1,6 @@
 % File src/library/graphics/man/legend.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{legend}
@@ -28,7 +28,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{x, y}{the x and y co-ordinates to be used to position the legend.
     They can be specified by keyword or in any way which is accepted by
     \code{\link{xy.coords}}: See \sQuote{Details}.}
-  \item{legend}{a character or \link{expression} vector.
+  \item{legend}{a character or \link{expression} vector
     of length \eqn{\ge 1} to appear in the legend.  Other
     objects will be coerced by \code{\link{as.graphicsAnnot}}.}
   \item{fill}{if specified, this argument will cause boxes filled

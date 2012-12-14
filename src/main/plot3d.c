@@ -28,7 +28,6 @@
 #include <float.h>  /* for DBL_MAX */
 #include <Rmath.h>
 #include <Graphics.h>
-#include <Colors.h> /* for isNAcol */
 #include <Print.h>
 #include <R_ext/Boolean.h>
 

@@ -27,14 +27,14 @@
 #include <Defn.h>
 #include <Internal.h>
 #include <Graphics.h>  /* for dpptr */
-#include <Colors.h>
+//#include <Colors.h>
 #include <R_ext/GraphicsEngine.h>
 #include <Rmath.h>
 #include <ctype.h> /* for tolower, isdigit */
 
 static unsigned int rgb2col(const char *);
 
-/* COLOR_TABLE_SIZE is defined in colors.h */
+#define COLOR_TABLE_SIZE 1024
 static int R_ColorTableSize;
 static unsigned int R_ColorTable[COLOR_TABLE_SIZE];
 
@@ -42,17 +42,10 @@ static unsigned int R_ColorTable[COLOR_TABLE_SIZE];
 static int StrMatch(const char *s, const char *t)
 {
     for(;;) {
-	if(*s == '\0' && *t == '\0') {
-	    return 1;
-	}
-	if(*s == ' ') {
-	    s++; continue;
-	}
-	if(*t == ' ') {
-	    t++; continue;
-	}
-	if(tolower(*s++) != tolower(*t++))
-	    return 0;
+	if(*s == '\0' && *t == '\0') return 1;
+	if(*s == ' ') { s++; continue; }
+	if(*t == ' ') { t++; continue; }
+	if(tolower(*s++) != tolower(*t++)) return 0;
     }
 }
 
@@ -62,88 +55,6 @@ static unsigned int char2col(const char *s)
     else return name2col(s);
 }
 
-
-/* From here on down moved from graphics.c in 2.7.0 *//* Colour Code */
-
-/* hsv2rgb -- HSV to RGB conversion  */
-/* Based on HSV_TO_RGB from Foley and Van Dam First Ed. Page 616 */
-/* See Alvy Ray Smith, Color Gamut Transform Pairs, SIGGRAPH '78 */
-
-static char HexDigits[] = "0123456789ABCDEF";
-
-/* rgb2hsv and hsv2rgb are in Utils.h ! */
-void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
-{
-    double f, p, q, t;
-    int i;
-
-    f = modf(h * 6.0, &t);
-    i = ((int) t) % 6;
-
-    p = v * (1 - s);
-    q = v * (1 - s * f);
-    t = v * (1 - (s * (1 - f)));
-    switch (i) {
-    case 0:	*r = v;		*g = t;		*b = p;	break;
-    case 1:	*r = q;		*g = v;		*b = p;	break;
-    case 2:	*r = p;		*g = v;		*b = t;	break;
-    case 3:	*r = p;		*g = q;		*b = v; break;
-    case 4:	*r = t;		*g = p;		*b = v; break;
-    case 5:	*r = v;		*g = p;		*b = q;	break;
-    default:
-	error(_("bad hsv to rgb color conversion"));
-    }
-}
-
-/* rgb2hsv() -- the reverse (same reference as above)
- *	this implementation is adapted from code by Nicholas Lewin-Koh.
- */
-void rgb2hsv(double r, double g, double b,
-	     double *h, double *s, double *v)
-    /* all (r,g,b, h,s,v) values in [0,1] */
-{
-    double min, max, delta;
-    Rboolean r_max = TRUE, b_max = FALSE;
-    /* Compute  min(r,g,b) and max(r,g,b) and remember where max is: */
-    min = max = r;
-    if(min > g) { /* g < r */
-	if(b < g)
-	    min = b;/* &  max = r */
-	else { /* g <= b, g < r */
-	    min = g;
-	    if(b > r) { max = b; b_max = TRUE; r_max = FALSE; }
-	    /* else : g <= b <=r */
-	}
-    } else { /* r <= g */
-	if(b > g) {
-	    max = b; b_max = TRUE; r_max = FALSE; /* &  min = r */
-	} else { /* b,r <= g */
-	    max = g; r_max = FALSE; /* &  min = r */
-	    if(b < r) min = b; /* else : r <= b <= g */
-	}
-    }
-
-    *v = max;
-    if( max == 0 || (delta = max - min) == 0) {
-	/*   r = g = b : "gray" : s = h = 0 */
-	*s = *h = 0;
-	return;
-    }
-    /* else : */
-    *s = delta / max;
-
-    if(r_max)
-	*h =     ( g - b ) / delta; /* between yellow & magenta */
-    else if(b_max)
-	*h = 4 + ( r - g ) / delta; /* between magenta & cyan */
-    else /* g == max */
-	*h = 2 + ( b - r ) / delta; /* between cyan & yellow*/
-
-    *h /= 6;
-    if(*h < 0)
-	*h += 1.;
-    return;
-}
 
 
 /*
@@ -863,14 +774,6 @@ static ColorDataBaseEntry ColorDataBase[] = {
 };
 
 
-static void setpalette(const char **palette)
-{
-    int i;
-    for (i = 0; (i < COLOR_TABLE_SIZE) && palette[i]; i++)
-	R_ColorTable[i] = name2col(palette[i]);
-    R_ColorTableSize = i;
-}
-
 SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP val, ans;
@@ -883,10 +786,13 @@ SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_STRING_ELT(ans, i, mkChar(col2name(R_ColorTable[i])));
     val = CAR(args);
     if (!isString(val)) error(_("invalid argument type"));
-    if ((n=length(val)) == 1) {
-	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) /* ASCII */
-	    setpalette(DefaultPalette);
-	else error(_("unknown palette (need >= 2 colors)"));
+    if ((n = length(val)) == 1) {
+	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) { /* ASCII */
+	    int i;
+	    for (i = 0; (i < COLOR_TABLE_SIZE) && DefaultPalette[i]; i++)
+		R_ColorTable[i] = name2col(DefaultPalette[i]);
+	    R_ColorTableSize = i;
+	} else error(_("unknown palette (need >= 2 colors)"));
     }
     else if (n > 1) {
 	if (n > COLOR_TABLE_SIZE)
@@ -929,7 +835,7 @@ static unsigned int hexdigit(int digit)
 /* #RRGGBB[AA] String to Internal Color Code */
 static unsigned int rgb2col(const char *rgb)
 {
-    unsigned int r=0, g=0, b=0, a=0; /* -Wall */
+    unsigned int r = 0, g = 0, b = 0, a = 0; /* -Wall */
     if(rgb[0] != '#')
 	error(_("invalid RGB specification"));
     switch (strlen(rgb)) {
@@ -951,7 +857,7 @@ static unsigned int rgb2col(const char *rgb)
 
 /* External Color Name to Internal Color Code */
 
-/* in GraphicsEngine.h */
+/* in GraphicsEngine.h, use in plotmath.c */
 unsigned int attribute_hidden name2col(const char *nm)
 {
     int i;
@@ -979,21 +885,21 @@ unsigned int attribute_hidden name2col(const char *nm)
     return 0;		/* never occurs but avoid compiler warnings */
 }
 
-static char ColBuf[10];
-
 
 /* Internal to External Color Representation */
 /* Search the color name database first */
 /* If this fails, create an #RRGGBB string */
 
+static char HexDigits[] = "0123456789ABCDEF";
+
 /* used in grid */
 /* in GraphicsEngine.h */
 const char *col2name(unsigned int col)
 {
-    int i;
+    static char ColBuf[10]; // used for return value
 
     if(R_OPAQUE(col)) {
-	for(i = 0 ; ColorDataBase[i].name ; i++) {
+	for(int i = 0 ; ColorDataBase[i].name ; i++) {
 	    if(col == ColorDataBase[i].code)
 		return ColorDataBase[i].name;
 	}
@@ -1023,26 +929,26 @@ const char *col2name(unsigned int col)
     }
 }
 
-static double str2col(const char *s, double bg)
+static unsigned int str2col(const char *s, unsigned int bg)
 {
     if(s[0] == '#') return rgb2col(s);
     else if(isdigit((int)s[0])) {
 	char *ptr;
-	int indx = strtod(s, &ptr);
+	int indx = (int) strtod(s, &ptr);
 	if(*ptr) error(_("invalid color specification \"%s\""), s);
 	if (indx == 0) return bg;
 	return R_ColorTable[(indx-1) % R_ColorTableSize];
     } else return name2col(s);
 }
 
-/* used in grDevices for fg and bg of devices */
+/* used in grDevices and in packages for fg and bg of devices */
 /* in GraphicsEngine.h */
 unsigned int R_GE_str2col(const char *s)
 {
     if(s[0] == '#') return rgb2col(s);
     else if(isdigit((int)s[0])) {
 	char *ptr;
-	int indx = strtod(s, &ptr);
+	int indx = (int) strtod(s, &ptr);
 	if(*ptr || indx == 0) error(_("invalid color specification \"%s\""), s);
 //	warning("specification of colors in the palette by a string is deprecated");
 	return R_ColorTable[(indx-1) % R_ColorTableSize];
@@ -1089,29 +995,6 @@ unsigned int RGBpar(SEXP x, int i)
 }
 
 
-/*
- * Is element i of a colour object NA (or NULL)?
- */
-Rboolean isNAcol(SEXP col, int index, int ncol)
-{
-    Rboolean result = TRUE; /* -Wall */
-
-    if (isNull(col))
-	result = TRUE;
-    else {
-	if (isLogical(col))
-	    result = LOGICAL(col)[index % ncol] == NA_LOGICAL;
-	else if (isString(col))
-	    result = strcmp(CHAR(STRING_ELT(col, index % ncol)), "NA") == 0;
-	else if (isInteger(col))
-	    result = INTEGER(col)[index % ncol] == NA_INTEGER;
-	else if (isReal(col))
-	    result = !R_FINITE(REAL(col)[index % ncol]);
-	else
-	    error(_("invalid color specification"));
-    }
-    return result;
-}
 
 /* Initialize the Color Databases */
 

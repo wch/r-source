@@ -26,12 +26,11 @@
 #include <Defn.h>
 #include <float.h>  /* for DBL_MAX */
 #include <Graphics.h>
-#include <Colors.h> /* for isNAcol */
 #include <Print.h>
 
 #include "graphics.h"
 
-static void TypeCheck(SEXP s, SEXPTYPE type)
+static R_INLINE void TypeCheck(SEXP s, SEXPTYPE type)
 {
     if (TYPEOF(s) != type)
 	error("invalid type passed to graphics function");
@@ -52,6 +51,30 @@ static R_INLINE double fmax2(double x, double y)
 	if (ISNAN(x) || ISNAN(y))
 		return x + y;
 	return (x < y) ? y : x;
+}
+
+/*
+ * Is element i of a colour object NA (or NULL)?
+ */
+Rboolean isNAcol(SEXP col, int index, int ncol)
+{
+    Rboolean result = TRUE; /* -Wall */
+
+    if (isNull(col))
+	result = TRUE;
+    else {
+	if (isLogical(col))
+	    result = LOGICAL(col)[index % ncol] == NA_LOGICAL;
+	else if (isString(col))
+	    result = strcmp(CHAR(STRING_ELT(col, index % ncol)), "NA") == 0;
+	else if (isInteger(col))
+	    result = INTEGER(col)[index % ncol] == NA_INTEGER;
+	else if (isReal(col))
+	    result = !R_FINITE(REAL(col)[index % ncol]);
+	else
+	    error(_("invalid color specification"));
+    }
+    return result;
 }
 
 

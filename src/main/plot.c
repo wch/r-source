@@ -26,7 +26,6 @@
 #include <Defn.h>
 #include <float.h>  /* for DBL_MAX */
 #include <Graphics.h>
-#include <Colors.h> /* for isNAcol */
 #include <Print.h>
 
 #define imax2(x, y) ((x < y) ? y : x)

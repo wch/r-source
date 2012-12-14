@@ -27,7 +27,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <Colors.h>
+//#include <Colors.h>
 #include <GraphicsBase.h>
 
 /* From src/main/devices.c */

@@ -39,8 +39,6 @@
 #define StringFalse   Rf_StringFalse
 #define StringTrue    Rf_StringTrue
 #define isBlankString Rf_isBlankString
-#define hsv2rgb       Rf_hsv2rgb
-#define rgb2hsv       Rf_rgb2hsv
 
 #ifdef  __cplusplus
 extern "C" {
@@ -82,11 +80,6 @@ double R_strtod(const char *c, char **end);
 
 char *R_tmpnam(const char *prefix, const char *tempdir);
 char *R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext);
-
-void	hsv2rgb(double h, double s, double v,
-		double *r, double *g, double *b);
-void	rgb2hsv(double r, double g, double b,
-		double *h, double *s, double *v);
 
 void R_CheckUserInterrupt(void);
 void R_CheckStack(void);

@@ -26,7 +26,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>  /* for dpptr */
-#include <Colors.h>
+//#include <Colors.h>
 #include <R_ext/GraphicsEngine.h>
 #include <Rmath.h>
 #include <ctype.h> /* for tolower, isdigit */
@@ -91,6 +91,84 @@ static unsigned int CheckAlpha(int x)
     if (x == NA_INTEGER || x < 0 || x > 255)
 	error(_("alpha level %d, not in 0:255"), x);
     return (unsigned int)x;
+}
+
+/* hsv2rgb -- HSV to RGB conversion  */
+/* Based on HSV_TO_RGB from Foley and Van Dam First Ed. Page 616 */
+/* See Alvy Ray Smith, Color Gamut Transform Pairs, SIGGRAPH '78 */
+
+static void hsv2rgb(double h, double s, double v, 
+		    double *r, double *g, double *b)
+{
+    double f, p, q, t;
+    int i;
+
+    f = modf(h * 6.0, &t);
+    i = ((int) t) % 6;
+
+    p = v * (1 - s);
+    q = v * (1 - s * f);
+    t = v * (1 - (s * (1 - f)));
+    switch (i) {
+    case 0:	*r = v;		*g = t;		*b = p;	break;
+    case 1:	*r = q;		*g = v;		*b = p;	break;
+    case 2:	*r = p;		*g = v;		*b = t;	break;
+    case 3:	*r = p;		*g = q;		*b = v; break;
+    case 4:	*r = t;		*g = p;		*b = v; break;
+    case 5:	*r = v;		*g = p;		*b = q;	break;
+    default:
+	error(_("bad hsv to rgb color conversion"));
+    }
+}
+
+/* rgb2hsv() -- the reverse (same reference as above)
+ *	this implementation is adapted from code by Nicholas Lewin-Koh.
+ */
+static void rgb2hsv(double r, double g, double b,
+		    double *h, double *s, double *v)
+    /* all (r,g,b, h,s,v) values in [0,1] */
+{
+    double min, max, delta;
+    Rboolean r_max = TRUE, b_max = FALSE;
+    /* Compute  min(r,g,b) and max(r,g,b) and remember where max is: */
+    min = max = r;
+    if(min > g) { /* g < r */
+	if(b < g)
+	    min = b;/* &  max = r */
+	else { /* g <= b, g < r */
+	    min = g;
+	    if(b > r) { max = b; b_max = TRUE; r_max = FALSE; }
+	    /* else : g <= b <=r */
+	}
+    } else { /* r <= g */
+	if(b > g) {
+	    max = b; b_max = TRUE; r_max = FALSE; /* &  min = r */
+	} else { /* b,r <= g */
+	    max = g; r_max = FALSE; /* &  min = r */
+	    if(b < r) min = b; /* else : r <= b <= g */
+	}
+    }
+
+    *v = max;
+    if( max == 0 || (delta = max - min) == 0) {
+	/*   r = g = b : "gray" : s = h = 0 */
+	*s = *h = 0;
+	return;
+    }
+    /* else : */
+    *s = delta / max;
+
+    if(r_max)
+	*h =     ( g - b ) / delta; /* between yellow & magenta */
+    else if(b_max)
+	*h = 4 + ( r - g ) / delta; /* between magenta & cyan */
+    else /* g == max */
+	*h = 2 + ( b - r ) / delta; /* between cyan & yellow*/
+
+    *h /= 6;
+    if(*h < 0)
+	*h += 1.;
+    return;
 }
 
 
@@ -402,6 +480,10 @@ SEXP gray(SEXP lev, SEXP a)
     return ans;
 }
 
+
+
+
+
 SEXP RGB2hsv(SEXP rgb)
 {
 /* (r,g,b) -> (h,s,v) conversion */
@@ -472,3 +554,5 @@ SEXP col2rgb(SEXP colors)
     UNPROTECT(3);
     return ans;
 }
+
+
