@@ -19,7 +19,7 @@ col2rgb(col, alpha = FALSE)
     \code{"#rrggbbaa"} (see \code{\link{rgb}}), or a positive integer
     \code{i} meaning \code{\link{palette}()[i]}.  Non-character values
     are coerced to integers.}
-  \item{alpha}{logical value indicating whether alpha channel (opacity)
+  \item{alpha}{logical value indicating whether the alpha channel (opacity)
     values should be returned.}
 }
 \details{
@@ -30,7 +30,7 @@ col2rgb(col, alpha = FALSE)
   an error.
 }
 \value{
-  An integer matrix with three or four (for\code{alpha = TRUE}) rows
+  An integer matrix with three or four (for \code{alpha = TRUE}) rows
   and number of columns the length of \code{col}.  If \code{col} has
   names these are used as the column names of the return value.
 }
