@@ -7619,7 +7619,7 @@ In addition to registering C routines to be called by @R{}, it can at
 times be useful for one package to make some of its C routines available
 to be called by C code in another package.  An interface to support this
 has been provided since @R{} 2.4.0.  The interface consists of two
-routines declared as
+routines declared in header @file{R_ext/Rdynload.h} as
 
 @findex R_RegisterCCallable
 @findex R_GetCCallable
