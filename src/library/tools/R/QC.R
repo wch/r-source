@@ -57,6 +57,14 @@
 
 ## R CMD build uses .check_package_subdirs
 
+## NB: 'tools' cannot use NAMESPACE imports from utils, as it exists first
+
+##' a "default" print method used "below" (in several *.R):
+.print.via.format <- function(x, ...) {
+    writeLines(format(x, ...))
+    invisible(x)
+}
+
 ## utility for whether Rd sources are available.
 .haveRds <- function(dir)
 {
@@ -299,13 +307,7 @@ function(x, ...)
     as.character(unlist(lapply(which(sapply(x, length) > 0L), .fmt)))
 }
 
-print.undoc <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
-
+print.undoc <- .print.via.format
 
 ### * codoc
 
@@ -1065,11 +1067,7 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
-print.codocClasses <-
-function(x, ...)
-{
-    writeLines(format(x))
-}
+print.codocClasses <- .print.via.format
 
 ### * codocData
 
@@ -1244,12 +1242,7 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
-print.codocData <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.codocData <- .print.via.format
 
 
 ### * checkDocFiles
@@ -1505,12 +1498,7 @@ function(x, ...)
     y
 }
 
-print.checkDocFiles <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.checkDocFiles <- .print.via.format
 
 
 ### * checkDocStyle
@@ -1775,12 +1763,7 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
-print.checkDocStyle <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.checkDocStyle <- .print.via.format
 
 ### * checkFF
 
@@ -2061,12 +2044,7 @@ function(x, ...)
     res
 }
 
-print.checkFF <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.checkFF <- .print.via.format
 
 
 ### * checkS3methods
@@ -2308,12 +2286,7 @@ function(x, ...)
     as.character(unlist(lapply(x, .fmt)))
 }
 
-print.checkS3methods <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.checkS3methods <- .print.via.format
 
 
 ### * checkReplaceFuns
@@ -2461,12 +2434,7 @@ function(x, ...)
         character()
 }
 
-print.checkReplaceFuns <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.checkReplaceFuns <- .print.via.format
 
 
 ### * checkTnF
@@ -2596,12 +2564,7 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
-print.checkTnF <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.checkTnF <- .print.via.format
 
 
 ### * .check__depends
@@ -2805,12 +2768,7 @@ function(x, ...)
       )
 }
 
-print.check_package_depends <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_package_depends <- .print.via.format
 
 ### * .check_package_description
 
@@ -3177,12 +3135,7 @@ function(x, ...)
       })
 }
 
-print.check_package_description_encoding <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_package_description_encoding <- .print.via.format
 
 ###
 
@@ -3256,12 +3209,7 @@ function(x, ...)
       })
 }
 
-print.check_package_license <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_package_license <- .print.via.format
 
 ### * .check_make_vars
 
@@ -3335,12 +3283,7 @@ function(x, ...)
     as.character(unlist(lapply(seq_along(x), .fmt)))
 }
 
-print.check_make_vars <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_make_vars <- .print.via.format
 
 ### * .check_code_usage_in_package
 
@@ -3549,12 +3492,7 @@ function(x, ...)
     strwrap(x, indent = 0L, exdent = 2L)
 }
 
-print.check_code_usage_in_package <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_code_usage_in_package <- .print.via.format
 
 ### * .check_Rd_xrefs
 
@@ -3746,12 +3684,7 @@ function(x, ...)
     }
 }
 
-print.check_Rd_xrefs <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_Rd_xrefs <- .print.via.format
 
 ### * .check_package_datasets
 
@@ -3848,12 +3781,8 @@ function(x, ...)
       })
 }
 
-print.check_package_datasets <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_package_datasets <- .print.via.format
+
 ### * .check_package_datasets
 
 .check_package_compact_datasets <-
@@ -4090,12 +4019,7 @@ function(x, ...)
     as.character(unlist(lapply(which(sapply(x, length) > 0L), .fmt)))
 }
 
-print.subdir_tests <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.subdir_tests <- .print.via.format
 
 
 ### * .check_package_ASCII_code
@@ -4400,12 +4324,7 @@ function(x, ...)
       )
 }
 
-print.check_package_code_startup_functions <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_package_code_startup_functions <- .print.via.format
 
 .bad_call_names_in_startup_functions <-
     list(load = c("library", "require"),
@@ -4523,12 +4442,7 @@ function(x, ...)
       unlist(Map(.format_calls_in_file, x, names(x))))
 }
 
-print.check_package_code_assign_to_globalenv <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_package_code_assign_to_globalenv <- .print.via.format
 
 ### * .check_package_code_attach
 
@@ -4537,7 +4451,7 @@ function(dir)
 {
     predicate <- function(e)
         as.character(e[[1L]]) == "attach"
-    
+
     calls <- Filter(length,
                     .find_calls_in_package_code(dir, predicate,
                                                 recursive = TRUE))
@@ -4554,12 +4468,7 @@ function(x, ...)
       unlist(Map(.format_calls_in_file, x, names(x))))
 }
 
-print.check_package_code_attach <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_package_code_attach <- .print.via.format
 
 ### * .check_packages_used
 
@@ -4760,12 +4669,7 @@ function(x, ...)
       })
 }
 
-print.check_packages_used <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_packages_used <- .print.via.format
 
 ### * .check_packages_used_in_examples
 
@@ -5138,12 +5042,7 @@ function(x, ...)
       })
 }
 
-print.check_T_and_F <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_T_and_F <- .print.via.format
 
 
 ### * .check_dotIntenal
@@ -5271,12 +5170,7 @@ function(x, ...)
     out
 }
 
-print.check_dotInternal <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_dotInternal <- .print.via.format
 
 ### * .check_namespace
 
@@ -5641,12 +5535,7 @@ function(x, ...)
       )
 }
 
-print.check_package_CRAN_incoming <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_package_CRAN_incoming <- .print.via.format
 
 ### * .check_Rd_metadata
 
@@ -5735,12 +5624,7 @@ function(x, ...)
       })
 }
 
-print.check_Rd_metadata <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_Rd_metadata <- .print.via.format
 
 ## * .check_Rd_contents
 
@@ -5836,12 +5720,7 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
-print.check_Rd_contents <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_Rd_contents <- .print.via.format
 
 ### * .find_charset
 

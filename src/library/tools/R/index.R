@@ -146,11 +146,11 @@ function(x, ...)
 {
     if(length(x$missing_from_index)) {
         writeLines("Demos with missing or empty index information:")
-        print(x$missing_from_index)
+        print(x$missing_from_index, ...)
     }
     if(length(x$missing_from_demos)) {
         writeLines("Demo index entries without corresponding demo:")
-        print(x$missing_from_demos)
+        print(x$missing_from_demos, ...)
     }
     invisible(x)
 }

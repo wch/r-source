@@ -249,12 +249,7 @@ function(x, ...)
                  entries, names(entries), objects)))
 }
 
-print.check_so_symbols <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_so_symbols <- .print.via.format
 
 check_compiled_code <-
 if(.Platform$OS.type == "windows") {
@@ -394,12 +389,7 @@ function(x, ...)
     paste(unlist(lapply(x, format)), collapse = "\n")
 }
 
-print.check_compiled_code <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.check_compiled_code <- .print.via.format
 
 .shlib_objects_symbol_tables <-
 function(file = "symbols.rds")

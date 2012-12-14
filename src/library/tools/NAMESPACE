@@ -1,5 +1,25 @@
 useDynLib(tools, .registration = TRUE)
 
+## Package 'tools' must work before 'utils' -- cannot import
+## importFrom("utils",
+## 	   Stangle, Sweave,
+## 	   available.packages,
+## 	   bibentry, citEntry, citeNatbib,
+## 	   compareVersion,
+## 	   contrib.url,
+## 	   data,
+## 	   flush.console,
+## 	   globalVariables,
+## 	   install.packages,
+## 	   installed.packages,
+## 	   localeToCharset,
+## 	   make.packages.html,
+## 	   packageDescription,
+## 	   read.delim,
+## 	   summaryRprof,
+## 	   tail,
+## 	   tar, untar, zip)
+
 export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db",
        "Rd_parse", "Rdiff", "Rdindex", "SweaveTeXFilter",
@@ -23,6 +43,7 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "texi2pdf", "toHTML", "toRd", "undoc", "update_pkg_po",
        "vignetteDepends", "write_PACKAGES", "xgettext",
        "xgettext2pot", "xngettext")
+export(.print.via.format)
 
 exportPattern("^SIG.+")
 

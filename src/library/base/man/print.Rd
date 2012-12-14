@@ -76,6 +76,8 @@ print(x, \dots)
 
   For more customizable (but cumbersome) printing, see
   \code{\link{cat}}, \code{\link{format}} or also \code{\link{write}}.
+  For a simple prototypical print method, see
+  \code{\link[tools]{.print.via.format}} in package \pkg{tools}.
 }
 \examples{
 require(stats)

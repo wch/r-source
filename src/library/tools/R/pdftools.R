@@ -611,12 +611,7 @@ function(x, ...)
              ...)
 }
 
-print.pdf_info <-
-function(x, ...)
-{
-    writeLines(format(x, ...))
-    invisible(x)
-}
+print.pdf_info <- .print.via.format
 
 ## * Object readers
 
@@ -852,12 +847,7 @@ function(x, ...)
     sprintf("PDF_String(<%s>)", paste(as.character(x), collapse = ""))
 }
 
-print.PDF_String <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.PDF_String <- .print.via.format
 
 ## PDF name objects.
 
@@ -940,12 +930,7 @@ function(x, ...)
     sprintf("PDF_Array(%d)", length(x))
 }
 
-print.PDF_Array <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.PDF_Array <- .print.via.format
 
 pdf_read_object_dictionary_or_stream <-
 function(con, doc = NULL)
@@ -1028,12 +1013,7 @@ function(x, ...)
 }
 
 print.PDF_Dictionary <-
-print.PDF_Stream <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.PDF_Stream <- .print.via.format
 
 ## Experimental summary methods.
 ## Cannot easily make this the print method, because PDF dictionary
@@ -1088,12 +1068,7 @@ function(x, ...)
     sprintf("PDF_Indirect_Reference(%d,%d)", x["num"], x["gen"])
 }
 
-print.PDF_Indirect_Reference <-
-function(x, ...)
-{
-    writeLines(format(x))
-    invisible(x)
-}
+print.PDF_Indirect_Reference <- .print.via.format
 
 pdf_dereference_maybe <-
 function(obj, doc, con = NULL)
