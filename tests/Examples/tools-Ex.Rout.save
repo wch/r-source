@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-27 r61168) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-14 r61329) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -680,6 +680,34 @@ NULL
 > ### Keywords: utilities documentation
 > 
 > ### ** Examples
+> 
+> 
+> cleanEx()
+> nameEx("print.via.format")
+> ### * print.via.format
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: .print.via.format
+> ### Title: Printing Utilities
+> ### Aliases: .print.via.format
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> ## The function is simply defined as
+>  function (x, ...) {
++     writeLines(format(x, ...))
++     invisible(x)
++  }
+function (x, ...) 
+{
+    writeLines(format(x, ...))
+    invisible(x)
+}
+> 
+> ## is used for simple print methods in R, and as prototype for new methods.
+> 
 > 
 > 
 > cleanEx()
