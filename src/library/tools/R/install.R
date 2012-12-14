@@ -629,9 +629,9 @@
             if (inherits(res, "try-error"))
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
             if (!file.exists(namespace <- file.path(instdir, "NAMESPACE")) ) {
-##                starsmsg(stars, "Creating default NAMESPACE file")
-##                writeDefaultNamespace(namespace) # from build.R
-                errmsg("a 'NAMESPACE' file is required")
+                if(dir.exists("R"))
+                    errmsg("a 'NAMESPACE' file is required")
+                else writeLines("## package without R code", namespace)
             }
         }
 

@@ -406,6 +406,9 @@
       \command{R CMD INSTALL} no longer adds a namespace, and a
       \code{.First.lib()} function in a package will be ignored.
       [The latter as from ca Dec 21.]
+
+      Packages without a \file{R} directory and no \file{NAMESPACE} file
+      can still be installed.
     }
   }
   
@@ -672,6 +675,10 @@
     \itemize{
       \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
       and hence usable as e.g. \code{#if R_SVN_REVISION < 70000}.
+
+      \item On a 64-bit Windows platform with enough RAM, \code{R_alloc}
+      can now allocate up to just under 32GB like other 64-bit
+      platforms.
     }
   }
 
