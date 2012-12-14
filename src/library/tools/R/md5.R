@@ -34,7 +34,7 @@ md5sum <- function(files)
 
 checkMD5sums <- function(package, dir)
 {
-    if(missing(dir)) dir <- find.package(package, quiet=TRUE)
+    if(missing(dir)) dir <- find.package(package, quiet = TRUE)
     if(!length(dir)) return(NA)
     md5file <- file.path(dir, "MD5")
     if(!file.exists(md5file)) return(NA)
@@ -46,7 +46,7 @@ checkMD5sums <- function(package, dir)
     if (is.null(dot))
         stop("current working directory cannot be ascertained")
     setwd(dir)
-    x <- md5sum(dir(dir, recursive=TRUE))
+    x <- md5sum(dir(dir, recursive = TRUE))
     setwd(dot)
     x <- x[names(x) != "MD5"]
     nmx <- names(x)
@@ -54,8 +54,11 @@ checkMD5sums <- function(package, dir)
     not.here <- !(nmxx %in% nmx)
     if(any(not.here)) {
         res <- FALSE
-        cat("files", paste(nmxx[not.here], collapse=", "),
-            "are missing\n", sep=" ")
+        if (sum(not.here) > 1L)
+            cat("files", sQuote(paste(nmxx[not.here]), collapse = ", "),
+                "are missing\n", sep = " ")
+        else
+            cat("file", sQuote(nmxx[not.here]), "is missing\n", sep = " ")
     }
     nmxx <- nmxx[!not.here]
     diff <- xx[nmxx] != x[nmxx]
@@ -63,9 +66,9 @@ checkMD5sums <- function(package, dir)
         res <- FALSE
         files <- nmxx[diff]
         if(length(files) > 1L)
-            cat("files", paste(sQuote(files), collapse=", "),
-                "have the wrong MD5 checksums\n", sep=" ")
+            cat("files", paste(sQuote(files), collapse = ", "),
+                "have the wrong MD5 checksums\n", sep = " ")
         else cat("file", sQuote(files), "has the wrong MD5 checksum\n")
     }
-    return(res)
+    res
 }
