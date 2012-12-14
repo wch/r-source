@@ -139,7 +139,7 @@ function(x, ...)
     cat("data: ", x$data.name, "\n\n")
     pp <- format.pval(x$p.value, 2, na.form="-")
     attributes(pp) <- attributes(x$p.value)
-    print(pp, quote=FALSE)
+    print(pp, quote=FALSE, ...)
     cat("\nP value adjustment method:", x$p.adjust.method, "\n")
     invisible(x)
 }

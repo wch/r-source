@@ -109,14 +109,14 @@ print.summary.packageStatus <- function(x, ...)
     cat(  "-------------------\n")
     for(k in seq_along(x$Libs)) {
         cat("\n*** Library ", names(x$Libs)[k], "\n", sep = "")
-        print(x$Libs[[k]])
+	print(x$Libs[[k]], ...)
     }
     cat("\n\nAvailable packages:\n")
     cat(    "-------------------\n")
     cat("(each package appears only once)\n")
     for(k in seq_along(x$Repos)){
         cat("\n*** Repository ", names(x$Repos)[k], "\n", sep = "")
-        print(x$Repos[[k]])
+	print(x$Repos[[k]], ...)
     }
     invisible(x)
 }
@@ -124,10 +124,10 @@ print.summary.packageStatus <- function(x, ...)
 print.packageStatus <- function(x, ...)
 {
     cat("Number of installed packages:\n")
-    print(table(x$inst$LibPath, x$inst$Status))
+    print(table(x$inst$LibPath, x$inst$Status), ...)
 
     cat("\nNumber of available packages (each package counted only once):\n")
-    print(table(x$avail$Repository, x$avail$Status))
+    print(table(x$avail$Repository, x$avail$Status), ...)
     invisible(x)
 }
 

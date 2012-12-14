@@ -109,7 +109,7 @@ print.summary.prcomp <-
 function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     cat("Importance of components:\n")
-    print(x$importance, digits = digits)
+    print(x$importance, digits = digits, ...)
     invisible(x)
 }
 

@@ -102,7 +102,7 @@ is.na.raster <- function(x) is.na(as.matrix(x))
 # so that people could play with numeric machinations
 # with raster images
 
-print.raster <- function(x, ...) print(as.matrix(x))
+print.raster <- function(x, ...) print(as.matrix(x), ...)
 
 
 # Subsetting methods

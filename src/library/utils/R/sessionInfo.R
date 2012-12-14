@@ -67,18 +67,18 @@ print.sessionInfo <- function(x, locale=TRUE, ...)
     cat("Platform: ", x$platform, "\n\n", sep = "")
     if(locale){
         cat("locale:\n")
-        print(strsplit(x$locale, ";", fixed=TRUE)[[1]], quote=FALSE)
+	print(strsplit(x$locale, ";", fixed=TRUE)[[1]], quote=FALSE, ...)
         cat("\n")
     }
     cat("attached base packages:\n")
-    print(x$basePkgs, quote=FALSE)
+    print(x$basePkgs, quote=FALSE, ...)
     if(!is.null(x$otherPkgs)){
         cat("\nother attached packages:\n")
-        print(mkLabel(x, "otherPkgs"), quote=FALSE)
+	print(mkLabel(x, "otherPkgs"), quote=FALSE, ...)
     }
     if(!is.null(x$loadedOnly)){
         cat("\nloaded via a namespace (and not attached):\n")
-        print(mkLabel(x, "loadedOnly"), quote=FALSE)
+	print(mkLabel(x, "loadedOnly"), quote=FALSE, ...)
     }
     invisible(x)
 }

@@ -377,7 +377,7 @@ is.unit <- function(unit) {
 }
 
 print.unit <- function(x, ...) {
-  print(as.character(x), quote=FALSE)
+  print(as.character(x), quote=FALSE, ...)
   invisible(x)
 }
 

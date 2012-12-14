@@ -112,7 +112,7 @@ terms.default <- function(x, ...) {
 
 terms.terms <- function(x, ...) x
 print.terms <- function(x, ...) {
-    print.default(unclass(x))
+    print.default(unclass(x), ...)
     invisible(x)
 }
 

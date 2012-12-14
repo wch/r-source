@@ -31,7 +31,7 @@ is.gpar <- function(x) {
 }
 
 print.gpar <- function(x, ...) {
-  print(unclass(x))
+  print(unclass(x), ...)
   invisible(x)
 }
 
