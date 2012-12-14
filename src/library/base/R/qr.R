@@ -199,25 +199,33 @@ qr.fitted <- function(qr, y, k=qr$rank)
 ## qr.solve is defined in  ./solve.R
 
 ##---- The next three are from Doug Bates ('st849'):
-qr.Q <- function (qr, complete = FALSE,
-		  Dvec = rep.int(if (cmplx) 1 + 0i else 1,
-		  if (complete) dqr[1] else min(dqr)))
+qr.Q <- function (qr, complete = FALSE, Dvec)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     dqr <- dim(qr$qr)
+    n <- dqr[1L]
     cmplx <- mode(qr$qr) == "complex"
+    if(missing(Dvec))
+	Dvec <- rep.int(if (cmplx) 1 + 0i else 1,
+			if (complete) n else min(dqr))
     D <-
-	if (complete) diag(Dvec, dqr[1L])
+	if (complete) diag(Dvec, n)
 	else {
 	    ncols <- min(dqr)
-	    diag(Dvec[seq_len(ncols)], nrow = dqr[1L], ncol = ncols)
+	    diag(Dvec[seq_len(ncols)], nrow = n, ncol = ncols)
 	}
     qr.qy(qr, D)
 }
 
-qr.R <- function (qr, complete = FALSE)
+qr.R <- function (qr, complete = FALSE, ...)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
+    if(!missing(...))
+	warning(sprintf(ngettext(length(list(...)),
+				 "extra argument %s will be disregarded",
+				 "extra arguments %s will be disregarded"),
+			 paste(sQuote(names(list(...))), collapse = ", ")),
+		domain = NA)
     R <- qr$qr
     if (!complete)
 	R <- R[seq.int(min(dim(R))), , drop = FALSE]

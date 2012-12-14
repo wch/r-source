@@ -9,7 +9,7 @@
 \usage{
 qr.X(qr, complete = FALSE, ncol =)
 qr.Q(qr, complete = FALSE, Dvec =)
-qr.R(qr, complete = FALSE)
+qr.R(qr, complete = FALSE, \dots)
 }
 \alias{qr.X}
 \alias{qr.Q}
@@ -35,6 +35,8 @@ qr.R(qr, complete = FALSE)
   \item{Dvec}{vector (not matrix) of diagonal values.  Each column of
     the returned \eqn{\bold{Q}} will be multiplied by the corresponding
     diagonal value.  Defaults to all \code{1}s.}
+  \item{\dots}{potentially further arguments, passed potentially to
+    non-default methods.}
 }
 \description{
   Returns the original matrix from which the object was constructed or
