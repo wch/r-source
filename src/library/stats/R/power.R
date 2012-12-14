@@ -144,9 +144,9 @@ function(x, ...)
 {
     cat("\n    ", x$method, "\n\n")
     note <- x$note
-    x[c("method","note")] <- NULL
-    cat(paste(format(names(x), width = 15, justify = "right"),
-	      format(x), sep = " = "), "\n", sep = "\n")
-    if(!is.null(note)) cat("\n", "NOTE:", note, "\n\n")
+    x[c("method", "note")] <- NULL
+    cat(paste(format(names(x), width = 15L, justify = "right"),
+	      format(x), sep = " = "), sep = "\n")
+    if(!is.null(note)) cat("\n", "NOTE:", note, "\n\n") else cat("\n")
     invisible(x)
 }
