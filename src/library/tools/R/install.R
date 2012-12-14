@@ -201,7 +201,7 @@
         full
     }
 
-    ## used for LazyData, KeepSource, ByteCompile, ForceBiarch
+    ## used for LazyData, KeepSource, ByteCompile, Biarch
     parse_description_field <- function(desc, field, default = TRUE)
     {
         tmp <- desc[field]
@@ -685,16 +685,17 @@
                         ## These are packages which have arch-independent
                         ## code in configure.win
                         if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
-                                            "PearsonDS", "RGtk2",
-                                            "RNetCDF", "RODBC", "Rcpp",
-                                            "Runuran", "SQLiteMap", "XML",
-                                            "arulesSequences", "cairoDevice",
-                                            "diversitree", "foreign",
-                                            "fastICA", "glmnet", "gstat",
-                                            "igraph", "jpeg", "png", "proj4",
-                                            "randtoolbox", "rgdal", "rngWELL",
-                                            "rphast", "rtfbs", "sparsenet",
-                                            "tcltk2", "tiff", "udunits2"))
+                                            "PearsonDS", "PKI", "RGtk2",
+                                            "RNetCDF", "RODBC", "RSclient",
+                                            "Rcpp", "Runuran", "SQLiteMap",
+                                            "XML", "arulesSequences",
+                                            "cairoDevice", "diversitree",
+                                            "foreign", "fastICA", "glmnet",
+                                            "gstat", "igraph", "jpeg", "png",
+                                            "proj4", "randtoolbox", "rgdal",
+                                            "rngWELL", "rphast", "rtfbs",
+                                            "sparsenet", "tcltk2", "tiff",
+                                            "udunits2"))
                             one_only <- sum(nchar(readLines("../configure.win", warn = FALSE), "bytes")) > 0
                         if(one_only && !force_biarch) {
                             if(parse_description_field(desc, "Biarch", FALSE))
