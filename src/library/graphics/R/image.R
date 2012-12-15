@@ -126,13 +126,14 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
             stop(gettextf("%s can only be used with a regular grid",
                           sQuote("useRaster = TRUE")),
                  domain = NA)
-        # this should be mostly equivalent to RGBpar3 with bg=NA
+        # this should be mostly equivalent to RGBpar3 with bg = R_TRANWHITE
         if (!is.character(col)) {
-            p <- palette()
-            pl <- length(p)
             col <- as.integer(col)
+            if (any(!is.na(col) & col < 0L))
+                stop("integer colors must be non-negative")
             col[col < 1L] <- NA_integer_
-            col <- p[((col - 1L) %% pl) + 1L]
+            p <- palette()
+            col <- p[((col - 1L) %% length(p)) + 1L]
         }
         zc <- col[zi + 1L]
         dim(zc) <- dim(z)
