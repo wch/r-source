@@ -24,18 +24,9 @@ colours <- colors <- function(distinct = FALSE)
 
 col2rgb <- function(col, alpha = FALSE)
 {
-    if(!is.character(col)) {
-        nm <- names(col)
-        col <- as.integer(col)
-        if(any(!is.na(col) & col <= 0)) stop("integer values must be positive")
-        p <- palette()
-        col <- p[1L + (col - 1L) %% length(p)]
-        names(col) <- nm
-    }
+    if(!is.character(col)) storage.mode(col) <- "character"
     result <- .Call(C_col2rgb, col)
-    if (!alpha)
-        result <- result[1L:3,, drop = FALSE]
-    result
+    if (!alpha) result[1L:3L,, drop = FALSE] else result
 }
 
 gray <- function(level, alpha = NULL) .Call(C_gray, level, alpha)
@@ -43,7 +34,7 @@ grey <- gray
 
 rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 {
-    ## Only red given
+    ## Only 'red' given
     if(missing(green) && missing(blue)) {
 	if(is.matrix(red) || is.data.frame(red)) {
 	    red <- data.matrix(red)

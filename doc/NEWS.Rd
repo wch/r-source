@@ -14,11 +14,11 @@
       3.0.0.
 
       \item There is a subtle change in behaviour for numeric index
-      values \eqn{2^{31}}{2^31} and larger.  These never used to be legitimate
-      and so were treated as \code{NA}, sometimes with a warning.  They
-      are now legal for long vectors so there is no longer a warning,
-      and \code{x[2^31] <- y} will now extend the vector on a 64-bit
-      platform and give an error on a 32-bit one.
+      values \eqn{2^{31}}{2^31} and larger.  These never used to be
+      legitimate and so were treated as \code{NA}, sometimes with a
+      warning.  They are now legal for long vectors so there is no
+      longer a warning, and \code{x[2^31] <- y} will now extend the
+      vector on a 64-bit platform and give an error on a 32-bit one.
 
       \item It is now possible for 64-bit builds to allocate amounts of
       memory limited only by the OS.  It may be wise to use OS
@@ -32,6 +32,10 @@
       to the amount of RAM installed: this limit can be changed by
       command-line option \option{--max-mem-size} or setting environment
       variable \env{R_MAX_MEM_SIZE}.
+
+      \item Negative numbers for colours are consistently an error:
+      previously they were sometimes taken as transparent, sometimes
+      mapped into the current palette and sometimes an error.
     }
   }
 

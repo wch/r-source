@@ -612,6 +612,9 @@ par(\dots, no.readonly = FALSE)
   \code{0} corresponds to the background color.  Note that the palette
   (apart from \code{0} which is per-device) is a per-session setting.
 
+  Negative integer colours were accepted prior to \R 3.0.0, but treated
+  inconsistently.  They are now errors.
+
   Additionally, \code{"transparent"} is \emph{transparent}, useful for
   filled areas (such as the background!), and just invisible for things
   like lines or text.  In most circumstances (integer) \code{NA}
