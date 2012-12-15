@@ -1108,7 +1108,7 @@ SEXP C_axis(SEXP args)
 	    incr = 1;
 	}
 	for (i = istart; i != iend; i += incr) {
-	    double padjval = REAL(padj)[i%npadj];
+	    double padjval = REAL(padj)[i % npadj];
 	    padjval = ComputePAdjValue(padjval, side, gpptr(dd)->las);
 	    x = REAL(at)[i];
 	    if (!R_FINITE(x)) continue;
@@ -1249,7 +1249,7 @@ SEXP C_axis(SEXP args)
 	    incr = 1;
 	}
 	for (i = istart; i != iend; i += incr) {
-	    double padjval = REAL(padj)[i%npadj];
+	    double padjval = REAL(padj)[i % npadj];
 	    padjval = ComputePAdjValue(padjval, side, gpptr(dd)->las);
 	    y = REAL(at)[i];
 	    if (!R_FINITE(y)) continue;
@@ -1661,10 +1661,10 @@ SEXP C_segments(SEXP args)
 
     GMode(1, dd);
     for (i = 0; i < n; i++) {
-	xx[0] = x0[i%nx0];
-	yy[0] = y0[i%ny0];
-	xx[1] = x1[i%nx1];
-	yy[1] = y1[i%ny1];
+	xx[0] = x0[i % nx0];
+	yy[0] = y0[i % ny0];
+	xx[1] = x1[i % nx1];
+	yy[1] = y1[i % ny1];
 	GConvert(xx, yy, USER, DEVICE, dd);
 	GConvert(xx+1, yy+1, USER, DEVICE, dd);
 	if (R_FINITE(xx[0]) && R_FINITE(yy[0]) &&
@@ -1741,10 +1741,10 @@ SEXP C_rect(SEXP args)
 	    gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
 	else
 	    gpptr(dd)->lwd = dpptr(dd)->lwd;
-	x0 = xl[i%nxl];
-	y0 = yb[i%nyb];
-	x1 = xr[i%nxr];
-	y1 = yt[i%nyt];
+	x0 = xl[i % nxl];
+	y0 = yb[i % nyb];
+	x1 = xr[i % nxr];
+	y1 = yt[i % nyt];
 	GConvert(&x0, &y0, USER, DEVICE, dd);
 	GConvert(&x1, &y1, USER, DEVICE, dd);
 	if (R_FINITE(x0) && R_FINITE(y0) && R_FINITE(x1) && R_FINITE(y1))
@@ -1848,10 +1848,10 @@ SEXP C_raster(SEXP args)
     /* raster is rather inefficient so allow a native representation as
        an integer array which requires no conversion */
     if (inherits(raster, "nativeRaster") && isInteger(raster))
-	image = (unsigned int*) INTEGER(raster);
+	image = (unsigned int *) INTEGER(raster);
     else {
-	image = (unsigned int*) R_alloc(n, sizeof(unsigned int));
-	for (i=0; i<n; i++)
+	image = (unsigned int *) R_alloc(n, sizeof(unsigned int));
+	for (i = 0; i < n; i++)
 	    image[i] = RGBpar3(raster, i, R_TRANWHITE);
     }
 
@@ -1876,10 +1876,10 @@ SEXP C_raster(SEXP args)
 
     GMode(1, dd);
     for (i = 0; i < n; i++) {
-	x0 = xl[i%nxl];
-	y0 = yb[i%nyb];
-	x1 = xr[i%nxr];
-	y1 = yt[i%nyt];
+	x0 = xl[i % nxl];
+	y0 = yb[i % nyb];
+	x1 = xr[i % nxr];
+	y1 = yt[i % nyt];
 	GConvert(&x0, &y0, USER, DEVICE, dd);
 	GConvert(&x1, &y1, USER, DEVICE, dd);
 	if (R_FINITE(x0) && R_FINITE(y0) && R_FINITE(x1) && R_FINITE(y1))
@@ -1958,10 +1958,10 @@ SEXP C_arrows(SEXP args)
 
     GMode(1, dd);
     for (i = 0; i < n; i++) {
-	xx0 = x0[i%nx0];
-	yy0 = y0[i%ny0];
-	xx1 = x1[i%nx1];
-	yy1 = y1[i%ny1];
+	xx0 = x0[i % nx0];
+	yy0 = y0[i % ny0];
+	xx1 = x1[i % nx1];
+	yy1 = y1[i % ny1];
 	GConvert(&xx0, &yy0, USER, DEVICE, dd);
 	GConvert(&xx1, &yy1, USER, DEVICE, dd);
 	if (R_FINITE(xx0) && R_FINITE(yy0) && R_FINITE(xx1) && R_FINITE(yy1)
@@ -2177,7 +2177,7 @@ SEXP C_text(SEXP args)
 		gpptr(dd)->col = INTEGER(col)[i % ncol];
 	    else
 		gpptr(dd)->col = dpptr(dd)->col;
-	    if (ncex && R_FINITE(REAL(cex)[i%ncex]))
+	    if (ncex && R_FINITE(REAL(cex)[i % ncex]))
 		gpptr(dd)->cex = gpptr(dd)->cexbase * REAL(cex)[i % ncex];
 	    else
 		gpptr(dd)->cex = gpptr(dd)->cexbase;
@@ -2465,15 +2465,15 @@ SEXP C_mtext(SEXP args)
     GMode(1, dd);
 
     for (i = 0; i < n; i++) {
-	double atval = REAL(at)[i%nat];
-	double adjval = REAL(adj)[i%nadj];
-	double padjval = REAL(padj)[i%npadj];
-	double cexval = REAL(cex)[i%ncex];
-	double lineval = REAL(line)[i%nline];
-	int outerval = INTEGER(outer)[i%nouter];
-	int sideval = INTEGER(side)[i%nside];
-	int fontval = INTEGER(font)[i%nfont];
-	int colval = INTEGER(col)[i%ncol];
+	double atval = REAL(at)[i % nat];
+	double adjval = REAL(adj)[i % nadj];
+	double padjval = REAL(padj)[i % npadj];
+	double cexval = REAL(cex)[i % ncex];
+	double lineval = REAL(line)[i % nline];
+	int outerval = INTEGER(outer)[i % nouter];
+	int sideval = INTEGER(side)[i % nside];
+	int fontval = INTEGER(font)[i % nfont];
+	int colval = INTEGER(col)[i % ncol];
 
 	if (outerval == NA_INTEGER) outerval = 0;
 	/* Note : we ignore any shrinking produced */
@@ -2492,11 +2492,11 @@ SEXP C_mtext(SEXP args)
 			       outerval, dd);
 
 	if (isExpression(text))
-	    GMMathText(VECTOR_ELT(text, i%ntext),
+	    GMMathText(VECTOR_ELT(text, i % ntext),
 		       sideval, lineval, outerval, atval, gpptr(dd)->las,
 		       padjval, dd);
 	else {
-	    string = STRING_ELT(text, i%ntext);
+	    string = STRING_ELT(text, i % ntext);
 	    if(string != NA_STRING)
 		GMtext(CHAR(string), getCharCE(string), sideval, lineval,
 		       outerval, atval, gpptr(dd)->las, padjval, dd);
@@ -3699,7 +3699,7 @@ SEXP C_symbols(SEXP args)
 		/* GCircle sets radius zero to one pixel, but does
 		   not change very small non-zero radii */
 		GCircle(REAL(x)[i], REAL(y)[i],	USER, rx,
-			INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg],	dd);
+			INTEGER(bg)[i % nbg], INTEGER(fg)[i % nfg],	dd);
 	    }
 	}
 	break;
@@ -3724,7 +3724,7 @@ SEXP C_symbols(SEXP args)
 		}
 		/* FIXME: should this skip 0-sized symbols? */
 		GRect(xx - rx, yy - rx, xx + rx, yy + rx, DEVICE,
-		      INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+		      INTEGER(bg)[i % nbg], INTEGER(fg)[i % nfg], dd);
 	    }
 	}
 	break;
@@ -3753,7 +3753,7 @@ SEXP C_symbols(SEXP args)
 		}
 		/* FIXME: should this skip 0-sized symbols? */
 		GRect(xx - rx, yy - ry, xx + rx, yy + ry, DEVICE,
-		      INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+		      INTEGER(bg)[i % nbg], INTEGER(fg)[i % nfg], dd);
 
 	    }
 	}
@@ -3795,7 +3795,7 @@ SEXP C_symbols(SEXP args)
 					   INCHES, NDC, dd) + yy;
 		}
 		GPolygon(nc, xp, yp, NDC,
-			 INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+			 INTEGER(bg)[i % nbg], INTEGER(fg)[i % nfg], dd);
 	    }
 	}
 	vmaxset(vmax);
@@ -3836,11 +3836,11 @@ SEXP C_symbols(SEXP args)
 			ry = GConvertYUnits(0.5 * p1, USER, NDC, dd);
 		    }
 		    GRect(xx - rx, yy - ry, xx + rx, yy + ry, NDC,
-			  INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+			  INTEGER(bg)[i % nbg], INTEGER(fg)[i % nfg], dd);
 		    GRect(xx - rx,  yy - (1 - 2 * p2) * ry,
 			  xx + rx,  yy - (1 - 2 * p3) * ry,
 			  NDC,
-			  INTEGER(fg)[i%nfg], INTEGER(fg)[i%nfg], dd);
+			  INTEGER(fg)[i % nfg], INTEGER(fg)[i % nfg], dd);
 		    GLine(xx - rx, yy, xx - 1.5 * rx, yy, NDC, dd);
 		    GLine(xx + rx, yy, xx + 1.5 * rx, yy, NDC, dd);
 
@@ -3895,7 +3895,7 @@ SEXP C_symbols(SEXP args)
 		    p4 = (1 - p4) * (yy - ry) + p4 * (yy + ry);
 		    /* Box */
 		    GRect(xx - rx, yy - ry, xx + rx, yy + ry, NDC,
-			  INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+			  INTEGER(bg)[i % nbg], INTEGER(fg)[i % nfg], dd);
 		    /* Median */
 		    GLine(xx - rx, p4, xx + rx, p4, NDC, dd);
 		    /* Lower Whisker */
