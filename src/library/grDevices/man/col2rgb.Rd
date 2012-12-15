@@ -17,8 +17,8 @@ col2rgb(col, alpha = FALSE)
     i.e., either a color name (as listed by \code{\link{colors}()}), a
     hexadecimal string of the form \code{"#rrggbb"} or
     \code{"#rrggbbaa"} (see \code{\link{rgb}}), or a positive integer
-    \code{i} meaning \code{\link{palette}()[i]}.  Non-character values
-    are coerced to integers.}
+    \code{i} meaning \code{\link{palette}()[i]}.  Non-numeric values
+    are coerced to character.}
   \item{alpha}{logical value indicating whether the alpha channel (opacity)
     values should be returned.}
 }
@@ -30,7 +30,7 @@ col2rgb(col, alpha = FALSE)
   an error.
 
   Before \R 3.0.0 negative integer values were accepted and wrapped
-  around to colors in the palette: this is not how either the base or
+  around to colors in the palette: this was not how either the base or
   grid graphics systems usually resolved such values.  They are now
   always an error.
 }

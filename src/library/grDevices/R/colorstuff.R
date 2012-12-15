@@ -24,9 +24,10 @@ colours <- colors <- function(distinct = FALSE)
 
 col2rgb <- function(col, alpha = FALSE)
 {
-    if(!is.character(col)) storage.mode(col) <- "character"
-    result <- .Call(C_col2rgb, col)
-    if (!alpha) result[1L:3L,, drop = FALSE] else result
+    ## R-level trap for now.
+    if(any(as.character(col) == "0"))
+        stop("numerical color values must be positive", domain = NA)
+    .Call(C_col2rgb, col, alpha)
 }
 
 gray <- function(level, alpha = NULL) .Call(C_gray, level, alpha)

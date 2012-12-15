@@ -79,7 +79,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(rgb, 6),
     CALLDEF(hsv, 4),
     CALLDEF(hcl, 5),
-    CALLDEF(col2rgb, 1),
+    CALLDEF(col2rgb, 2),
 
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),

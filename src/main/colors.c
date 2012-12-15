@@ -937,25 +937,21 @@ static unsigned int str2col(const char *s, unsigned int bg)
     } else return name2col(s);
 }
 
-/* used in grDevices and in packages for fg and bg of devices */
+/* used in grDevices for fg and bg of devices */
 /* in GraphicsEngine.h */
 unsigned int R_GE_str2col(const char *s)
 {
-    if(s[0] == '#') return rgb2col(s);
-    else if(isdigit((int)s[0])) {
-	char *ptr;
-	int indx = (int) strtod(s, &ptr);
-	if(*ptr || indx == 0) error(_("invalid color specification \"%s\""), s);
-//	warning("specification of colors in the palette by a string is deprecated");
-	return Palette[(indx-1) % PaletteSize];
-    } else return name2col(s);
+    if (streql(s, "0")) 
+	error(_("invalid color specification \"%s\""), s);
+    return str2col(s, R_TRANWHITE); // bg is irrelevant
 }
 
 /* Convert a sexp element to an R color desc */
 /* We Assume that Checks Have Been Done */
 
 
-/* used in grid/src/gpar.c with bg = R_TRANWHITE */
+/* used in grid/src/gpar.c with bg = R_TRANWHITE,
+   in packages Cairo, canvas and jpeg */
 /* in GraphicsEngine.h */
 unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
 {
