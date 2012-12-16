@@ -3412,22 +3412,40 @@ various components.
 Colours in the base graphics system were originally adopted from S (and
 before that the GRZ library from Bell Labs), with the concept of a
 (variable-sized) palette of colours referenced by numbers
-@samp{1...@var{N}} plus @samp{0} (the background colour).  @R{}
-introduced the idea of referring to colours by character strings, either
-in the forms @samp{#RRGGBB} or @samp{#RRGGBBAA} (representing the bytes
-in hex) as given by function @code{rgb()} or via names: the 657 known
-names are given in the character vector @code{colors} and in a table in
-file @file{colors.c}.  Note that semi-transparent colours are not
+@samp{1...@var{N}} plus @samp{0} (the background colour of the current
+device).  @R{} introduced the idea of referring to colours by character
+strings, either in the forms @samp{#RRGGBB} or @samp{#RRGGBBAA}
+(representing the bytes in hex) as given by function @code{rgb()} or via
+names: the 657 known names are given in the character vector
+@code{colors} and in a table in file @file{colors.c} in package
+@pkg{grDevices}.  Note that semi-transparent colours are not
 `premultiplied', so 50% transparent white is @samp{#ffffff80}.
 
-What is not clear is how the RGB values are to be mapped to display
-colours in the graphics device.  There was a proposal
-(@uref{http://developer.r-project.org/sRGB-RFC.html}) to regard the
-mapping as the colorspace `sRGB', which was adopted in @R{} 2.13.0.  The
-sRGB colorspace is an industry standard: it is used by Web browsers and
-JPEGs from all but high-end digital cameras.  The interpretation is a
-matter for graphics devices and for code that manipulates colours, but
-not for the graphics engine or subsystems.
+The handling of negative colour numbers was undefined (and inconsistent)
+prior to @R{} 3.0.0, which made them an error.  Colours greater than
+@samp{@var{N}} are wrapped around, so that for example with the default
+palette of size 8, colours @samp{10} is colour @samp{2} in the palette.
+
+Integer colours have been used more widely than the base graphics
+sub-system, as they are supported by package @pkg{grid} and hence by
+@pkg{lattice} and @pkg{ggplot2}.  (They are also used by package
+@pkg{rgl}.)  @pkg{grid} did re-define colour @samp{0} to be transparent
+white, but @pkg{rgl} used @code{col2rgb} and hence the background colour
+of base graphics.
+
+Note that positive integer colours refer to the current palette and
+colour @samp{0} to the current device (and a device is opened if needs
+be).  These are mapped to type @code{rcolor} at the time of use: this
+matters when re-playing the display list, e.g.@: when a device is
+resized or @code{dev.copy} is used.  The palette should be thought of as
+per-session: as from @R{} 3.0.0 it is stored in package @pkg{grDevices}.
+
+What was for a long time unclear was how the RGB values were to be
+mapped to display colours in the graphics device.  @R{} 2.13.0 adopted
+the colorspace `sRGB'. This is an industry standard: it is used by Web
+browsers and JPEGs from all but high-end digital cameras.  The
+interpretation is a matter for graphics devices and for code that
+manipulates colours, but not for the graphics engine or subsystems.
 
 @R{} uses a painting model similar to PostScript and PDF.  This means
 that where shapes (circles, rectangles and polygons) can both be filled
