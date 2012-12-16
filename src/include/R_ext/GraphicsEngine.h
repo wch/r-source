@@ -55,9 +55,11 @@ extern "C" {
  * Version 8:  Add dev_Path() (R 2.12.0)
  * Version 9:  Add dev_HoldFlush(), haveTrans*, haveRaster,
  *             haveCapture, haveLocator.  (R 2.14.0)
+ * Version 10: For R 3.0.0.  Typedef and use 'rcolor',
+ *             Remove name2col (R_GE_str2col does the job).
  */
 
-#define R_GE_version 9
+#define R_GE_version 10
 
 int R_GE_getVersion(void);
 
@@ -301,23 +303,25 @@ double toDeviceHeight(double value, GEUnit from, pGEDevDesc dd);
  *  From colors.c, used in par.c, grid/src/gpar.c
  */
 
+typedef unsigned int rcolor;
+
 #define RGBpar			Rf_RGBpar
 #define RGBpar3			Rf_RGBpar3
 #define col2name                Rf_col2name
 
 /* Convert an element of a R colour specification (which might be a
    number or a string) into an internal colour specification. */
-unsigned int RGBpar(SEXP, int);
-unsigned int RGBpar3(SEXP, int, unsigned int);
+rcolor RGBpar(SEXP, int);
+rcolor RGBpar3(SEXP, int, rcolor);
 
 /* Convert an internal colour specification to/from a colour name */
-const char *col2name(unsigned int col); /* used in par.c, grid */
+const char *col2name(rcolor col); /* used in par.c, grid */
 
 /* Convert either a name or a #RRGGBB[AA] string to internal.
    Because people were using it, it also converts "1", "2" ...
    to a colour in the palette, and "0" to transparent white.
 */
-unsigned int R_GE_str2col(const char *s);
+rcolor R_GE_str2col(const char *s);
 
 
 

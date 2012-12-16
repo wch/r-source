@@ -32,9 +32,6 @@
 #include "Fileio.h"
 #include "grDevices.h"
 
-/* Formerly in headers, but only used in some devices */
-typedef unsigned int rcolor;
-
 	/* device-specific information per picTeX device */
 
 #define DOTSperIN	72.27

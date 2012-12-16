@@ -589,6 +589,11 @@
       
       \item The entry points \code{rgb2hsv} and \code{hsv2rgb} have been
       migrated to package \pkg{grDevices} and so are no longer available.
+      
+      \item \code{R_GE_version} has been increased to \code{10} and
+      \code{name2col} removed (use \code{R_GE_str2col} instead).  \R
+      internal colour codes are now defined using the typedef
+      \code{rcolor}.
     }
   }
 

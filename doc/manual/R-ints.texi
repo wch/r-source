@@ -3395,15 +3395,14 @@ on the graphics hardware and undocumented properties of GDI.
 @node Colours, Base graphics, Graphics devices, Graphics Devices
 @section Colours
 
-Devices receive colours as an @code{unsigned int} (in the @code{GPar}
-structure and some of the devices as the @code{typedef} @code{rcolor},
-defined in the private header @file{Graphics.h}): the comments in file
-@file{R_ext/GraphicsDevice.h} were the primary documentation.  The 4
-bytes in the @code{unsigned int} are @emph{R},@emph{G},@emph{B} and
-@emph{alpha} from least to most significant. So each of RGB has 256
-levels of luminosity from 0 to 255.  The alpha byte represents (from
-@R{} 2.0.0) opacity, so value 255 is fully opaque and 0 fully
-transparent: many but not all devices handle semi-transparent colours.
+Devices receive colours as a @code{typedef} @code{rcolor} (an
+@code{unsigned int}) defined in the header
+@file{R_ext/GraphicsEngine.h}).  The 4 bytes are
+@emph{R} ,@emph{G}, @emph{B} and @emph{alpha} from least to most
+significant. So each of RGB has 256 levels of luminosity from 0 to 255.
+The alpha byte represents (from @R{} 2.0.0) opacity, so value 255 is
+fully opaque and 0 fully transparent: many but not all devices handle
+semi-transparent colours.
 
 Colors can be created in C via the macro @code{R_RGBA}, and a set of
 macros are defined in @file{R_ext/GraphicsDevice.h} to extract the

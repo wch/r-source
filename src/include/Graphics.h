@@ -31,7 +31,7 @@
 #define R_GRAPHICS 1
 #include <Rgraphics.h> /* RUnit */
 
-typedef unsigned int rcolor;
+//typedef unsigned int rcolor;
 
 /* base.c, graphics.c, par.c */
 #define MAX_LAYOUT_ROWS 200

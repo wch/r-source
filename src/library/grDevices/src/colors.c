@@ -27,9 +27,6 @@
 #include <Defn.h>
 #include <R_ext/GraphicsEngine.h>
 
-/* from Graphics.h */
-typedef unsigned int rcolor;
-
 #include "grDevices.h"
 
 static char ColBuf[10];
