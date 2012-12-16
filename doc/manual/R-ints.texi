@@ -1697,7 +1697,7 @@ as the garbage collector marks everything that can be reached from that
 location.  When a vector is @code{R_alloc}ated, its @code{ATTRIB}
 pointer is set to the current @code{R_VStack}, and @code{R_VStack} is
 set to the latest allocation.  Thus @code{R_VStack} is a single-linked
-chain of vectors currently allocated via @code{R_alloc}.  Function
+chain of the vectors currently allocated via @code{R_alloc}.  Function
 @code{vmaxset} resets the location @code{R_VStack}, and should be to a
 value that has previously be obtained @emph{via} @code{vmaxget}:
 allocations after the value was obtained will no longer be protected and
@@ -3395,22 +3395,40 @@ various components.
 Colours in the base graphics system were originally adopted from S (and
 before that the GRZ library from Bell Labs), with the concept of a
 (variable-sized) palette of colours referenced by numbers
-@samp{1...@var{N}} plus @samp{0} (the background colour).  @R{}
-introduced the idea of referring to colours by character strings, either
-in the forms @samp{#RRGGBB} or @samp{#RRGGBBAA} (representing the bytes
-in hex) as given by function @code{rgb()} or via names: the 657 known
-names are given in the character vector @code{colors} and in a table in
-file @file{colors.c}.  Note that semi-transparent colours are not
-`premultiplied', so 50% transparent white is @samp{#ffffff80}.
+@samp{1...@var{N}} plus @samp{0} (the background colour of the current
+device).  @R{} introduced the idea of referring to colours by character
+strings, either in the forms @samp{#RRGGBB} or @samp{#RRGGBBAA}
+(representing the bytes in hex) as given by function @code{rgb()} or via
+names: the 657 known names are given in the character vector
+@code{colors} and in a table in file @file{colors.c}.  Note that
+semi-transparent colours are not `premultiplied', so 50% transparent
+white is @samp{#ffffff80}.
 
-What is not clear is how the RGB values are to be mapped to display
-colours in the graphics device.  There was a proposal
-(@uref{http://developer.r-project.org/sRGB-RFC.html}) to regard the
-mapping as the colorspace `sRGB', which was adopted in @R{} 2.13.0.  The
-sRGB colorspace is an industry standard: it is used by Web browsers and
-JPEGs from all but high-end digital cameras.  The interpretation is a
-matter for graphics devices and for code that manipulates colours, but
-not for the graphics engine or subsystems.
+The handling of negative colour numbers is undefined (and inconsistent):
+they will in future be made an error.  Colours greater than
+@samp{@var{N}} are wrapped around, so that for example with the default
+palette of size 8, colour @samp{10} is colour @samp{2} in the palette.
+
+Integer colours have been used more widely than the base graphics
+sub-system, as they are supported by package @pkg{grid} and hence by
+@pkg{lattice} and @pkg{ggplot2}.  (They are also used by package
+@pkg{rgl}.)  @pkg{grid} re-defines colour @samp{0} to be transparent
+white, but @pkg{rgl} uses @code{col2rgb} and hence the background colour
+of base graphics.
+
+Note that positive integer colours refer to the current palette (which
+is per-session, not per-device) and colour @samp{0} to the current
+device (and a device is opened if needs be).  These are mapped to type
+@code{rcolor} at the time of use: this matters when re-playing the
+display list, e.g.@: when a device is resized or @code{dev.copy} is
+used.
+
+What was for a long time unclear was how the RGB values were to be
+mapped to display colours in the graphics device.  @R{} 2.13.0 adopted
+the colorspace `sRGB'. This is an industry standard: it is used by Web
+browsers and JPEGs from all but high-end digital cameras.  The
+interpretation is a matter for graphics devices and for code that
+manipulates colours, but not for the graphics engine or subsystems.
 
 @R{} uses a painting model similar to PostScript and PDF.  This means
 that where shapes (circles, rectangles and polygons) can both be filled
@@ -3430,8 +3448,8 @@ viewers.)
 @node Base graphics, Grid graphics, Colours, Graphics Devices
 @section Base graphics
 
-The base graphics system is likely to move to package @pkg{graphics} at
-some stage, but it currently implemented in files in @file{src/main}.
+The base graphics system will move to package @pkg{graphics} in @R{}
+3.0.0, but is currently implemented in files in @file{src/main}.
 
 For historical reasons it is largely implemented in two layers.
 Files @file{plot.c}, @code{plot3d.c} and @code{par.c} contain the code
@@ -3966,11 +3984,9 @@ does not want to be tied to, for example, TeXLive 2007.
 @node Future directions, Function and variable index, Use of TeX dialects, Top
 @chapter Future directions
 
-This chapter is for notes about possible future changes to @R{}: there
-is no commitment to make such changes, let alone to a timescale.
-
-For plans about 64-bit types see the version in the developemnt version
-of @R{}, since support for longer vectors is being added there.
+This chapter is for notes about possible future changes to @R{}: these
+are now listed only in the version of this manual for the development
+version of @R{}.
 
 @node Function and variable index, Concept index, Future directions, Top
 @unnumbered Function and variable index
