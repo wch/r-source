@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06+0000\n"
+"POT-Creation-Date: 2012-12-16 08:16+0000\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -265,17 +265,17 @@ msgid "unsupported version of Windows"
 msgstr "desteklenmeyen Windows sürümü"
 
 #: src/gnuwin32/extra.c:264 src/main/apply.c:108 src/main/character.c:593
-#: src/main/colors.c:83 src/main/connections.c:3313 src/main/context.c:640
-#: src/main/context.c:659 src/main/datetime.c:677 src/main/datetime.c:748
-#: src/main/datetime.c:1001 src/main/dotcode.c:203 src/main/errors.c:926
-#: src/main/errors.c:958 src/main/errors.c:1060 src/main/errors.c:1085
-#: src/main/errors.c:1090 src/main/errors.c:1362 src/main/seq.c:188
-#: src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392
-#: src/main/seq.c:396 src/main/seq.c:400 src/main/sort.c:1195
-#: src/main/sort.c:1278 src/main/sort.c:1282 src/main/sort.c:1289
-#: src/main/sort.c:1364 src/main/source.c:217 src/main/summary.c:844
-#: src/main/sysutils.c:248 src/main/util.c:953 src/main/util.c:958
-#: src/main/util.c:965 src/main/util.c:968 src/modules/X11/devX11.c:3133
+#: src/main/connections.c:3313 src/main/context.c:640 src/main/context.c:659
+#: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:958
+#: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
+#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
+#: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
+#: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
+#: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
+#: src/main/source.c:217 src/main/summary.c:844 src/main/sysutils.c:248
+#: src/main/util.c:953 src/main/util.c:958 src/main/util.c:965
+#: src/main/util.c:968 src/modules/X11/devX11.c:3133
 #: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3165
 #: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3180
 #: src/modules/X11/devX11.c:3185 src/modules/X11/devX11.c:3189
@@ -1660,49 +1660,6 @@ msgstr "'value' boş olmayan bir karakter dizesi olmalıdır"
 msgid "invalid to change the storage mode of a factor"
 msgstr "bir faktörün depolama modunu değiştirmek için geçersiz"
 
-#: src/main/colors.c:168
-msgid "bad hsv to rgb color conversion"
-msgstr "hatalı hsv -> rgb dönüşümü"
-
-#: src/main/colors.c:959 src/main/errors.c:1183 src/main/logic.c:171
-msgid "invalid argument type"
-msgstr "geçersiz argüman tipi"
-
-#: src/main/colors.c:963
-msgid "unknown palette (need >= 2 colors)"
-msgstr "geçersiz renk paleti ( >=2 renk gerekli)"
-
-#: src/main/colors.c:967
-msgid "maximum number of colors exceeded"
-msgstr "maksimum renk sayısı aşıldı"
-
-#: src/main/colors.c:998 src/main/engine.c:3097
-msgid "invalid hex digit in 'color' or 'lty'"
-msgstr "'color' veya 'lty' içinde geçersiz hex rakamı"
-
-#: src/main/colors.c:1008 src/main/colors.c:1018
-msgid "invalid RGB specification"
-msgstr "geçersiz RGB özelliği"
-
-#: src/main/colors.c:1052
-#, c-format
-msgid "invalid color name '%s'"
-msgstr "geçersiz renk ismi '%s'"
-
-#: src/main/colors.c:1061
-#, c-format
-msgid "invalid color specification '%s'"
-msgstr "geçersiz renk özelliği '%s'"
-
-#: src/main/colors.c:1154
-msgid "supplied color is not numeric nor character"
-msgstr "verilen renk sayısal ya da karaktersel değil"
-
-#: src/main/colors.c:1187
-#, fuzzy
-msgid "invalid color specification"
-msgstr "Geçersiz renk özelliği"
-
 #: src/main/complex.c:127
 msgid "invalid complex unary operator"
 msgstr "geçersiz karmaşık tekli operatör"
@@ -2529,7 +2486,7 @@ msgstr "çok fazla açık aygıt"
 msgid "not enough memory to allocate device (in GEcreateDevDesc)"
 msgstr "aygıtı yerleştirmek için yeterli bellek yok (GEcreateDevDes içinde)"
 
-#: src/main/devices.c:521
+#: src/main/devices.c:515
 msgid "Hit <Return> to see next plot: "
 msgstr "Sonraki çizimi görmek için <Enter>'a basın: "
 
@@ -2899,6 +2856,10 @@ msgstr "'env' argümanı bir ortam olmalı"
 #: src/main/engine.c:3042 src/main/engine.c:3050
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "pch=\"c\"'de geçersiz çokbaytlı karakter"
+
+#: src/main/engine.c:3097
+msgid "invalid hex digit in 'color' or 'lty'"
+msgstr "'color' veya 'lty' içinde geçersiz hex rakamı"
 
 #: src/main/engine.c:3120
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -3277,6 +3238,10 @@ msgstr "%s de tanımlanmamış özellik"
 #: src/main/errors.c:1182
 msgid "invalid number of arguments"
 msgstr "geçersiz sayıda argüman"
+
+#: src/main/errors.c:1183 src/main/logic.c:171
+msgid "invalid argument type"
+msgstr "geçersiz argüman tipi"
 
 #: src/main/errors.c:1185
 msgid "time-series/vector length mismatch"
@@ -3993,72 +3958,72 @@ msgstr ""
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Hata: C stack taşmasından segfault\n"
 
-#: src/main/main.c:835
+#: src/main/main.c:834
 msgid "unable to open the base package\n"
 msgstr "base paketi açılamadı\n"
 
-#: src/main/main.c:912
+#: src/main/main.c:911
 #, fuzzy, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr ".RData'da kayıtlı veri geri alınamadı\n"
 
-#: src/main/main.c:959
+#: src/main/main.c:958
 msgid "During startup - "
 msgstr "Başlangıç sırasında - "
 
-#: src/main/main.c:1189
+#: src/main/main.c:1188
 msgid "cannot quit from browser"
 msgstr "tarayıcıdan çıkılamıyor"
 
-#: src/main/main.c:1193
+#: src/main/main.c:1192
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 "\"yes\", \"no\", \"ask\", veya \"default\" seçeneklerinden biri beklendi."
 
-#: src/main/main.c:1198
+#: src/main/main.c:1197
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "etkileşimli olmayan kullanımda save=\"ask\" kullanımı: komut dizesi "
 "varsayılanı kullanılacak"
 
-#: src/main/main.c:1206
+#: src/main/main.c:1205
 msgid "unrecognized value of 'save'"
 msgstr "'save' in tanınmayan değeri"
 
-#: src/main/main.c:1209
+#: src/main/main.c:1208
 msgid "invalid 'status', 0 assumed"
 msgstr "geçersiz 'status', 0 varsayıldı"
 
-#: src/main/main.c:1214
+#: src/main/main.c:1213
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "geçersiz 'runLast', YANLIŞ varsayıldı"
 
-#: src/main/main.c:1245
+#: src/main/main.c:1244
 msgid "cannot allocate space for toplevel callback element"
 msgstr "üst seviye geri çağrı öğesi için yer ayrılamıyor"
 
-#: src/main/main.c:1323
+#: src/main/main.c:1322
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex'e negatif indis verildi"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1430
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "üst seviye görev geri çağrılarından uyarı mesajları '%s'\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1486
 msgid "top-level task callback did not return a logical value"
 msgstr "üst seviye görev geri çağrısı mantıksal bir değer döndürmedi"
 
-#: src/main/mapply.c:72
+#: src/main/mapply.c:58
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 
-#: src/main/mapply.c:90
+#: src/main/mapply.c:76
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr "'mapply'ın argümanı 'MoreArgs' bir liste değil"
 
-#: src/main/mapply.c:125
+#: src/main/mapply.c:110
 msgid "longer argument not a multiple of length of shorter"
 msgstr "uzun argüman kısa argümanın uzunluğunun bir katı değil"
 
@@ -4766,16 +4731,16 @@ msgstr "'mode' uzunluğu en az bir olmalıdır"
 msgid "insufficient OS support on this platform"
 msgstr "bu platform için yetersiz işletim sistemi desteği"
 
-#: src/main/plot3d.c:119
+#: src/main/plot3d.c:118
 #, fuzzy, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour(): dairesel/uzun seglist -- bug.report()!"
 
-#: src/main/plot3d.c:197
+#: src/main/plot3d.c:196
 msgid "all z values are equal"
 msgstr "tüm z değerleri eşit"
 
-#: src/main/plot3d.c:199
+#: src/main/plot3d.c:198
 msgid "all z values are NA"
 msgstr "tüm z değerleri NA"
 
@@ -7171,6 +7136,31 @@ msgstr "X11 modülü yüklenemiyor"
 #: src/unix/X11.c:126 src/unix/X11.c:132 src/unix/X11.c:138 src/unix/X11.c:144
 msgid "X11 is not available"
 msgstr "X11 mevcut değil"
+
+#~ msgid "bad hsv to rgb color conversion"
+#~ msgstr "hatalı hsv -> rgb dönüşümü"
+
+#~ msgid "unknown palette (need >= 2 colors)"
+#~ msgstr "geçersiz renk paleti ( >=2 renk gerekli)"
+
+#~ msgid "maximum number of colors exceeded"
+#~ msgstr "maksimum renk sayısı aşıldı"
+
+#~ msgid "invalid RGB specification"
+#~ msgstr "geçersiz RGB özelliği"
+
+#~ msgid "invalid color name '%s'"
+#~ msgstr "geçersiz renk ismi '%s'"
+
+#~ msgid "invalid color specification '%s'"
+#~ msgstr "geçersiz renk özelliği '%s'"
+
+#~ msgid "supplied color is not numeric nor character"
+#~ msgstr "verilen renk sayısal ya da karaktersel değil"
+
+#, fuzzy
+#~ msgid "invalid color specification"
+#~ msgstr "Geçersiz renk özelliği"
 
 #~ msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 #~ msgstr "rcont2 [%d,%d]: exp 0'a taştı; algoritma hatası"

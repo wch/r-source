@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.16.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:26\n"
+"POT-Creation-Date: 2012-12-16 08:16\n"
 "PO-Revision-Date: 2012-01-28 17:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -221,16 +221,20 @@ msgstr "status %d i kørende kommando »%s«"
 msgid "range too small for 'min.n'"
 msgstr "interval for lille for min.n"
 
-msgid "A raster matrix must be character, or numeric, or logical"
+#, fuzzy
+msgid "a raster matrix must be character, or numeric, or logical"
 msgstr "En bitmapmatrix skal være tegn eller numerisk eller logisk"
 
-msgid "A raster array must be numeric"
+#, fuzzy
+msgid "a raster array must be numeric"
 msgstr "En bitmaparray skal være numerisk"
 
-msgid "A raster array must have exactly 3 dimensions"
+#, fuzzy
+msgid "a raster array must have exactly 3 dimensions"
 msgstr "En bitmaparray skal have præcis 3 dimensioner"
 
-msgid "A raster array must have exactly 3 or 4 planes"
+#, fuzzy
+msgid "a raster array must have exactly 3 or 4 planes"
 msgstr "En bitmaparray skal have præcis 3 eller 4 plan"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
@@ -242,7 +246,8 @@ msgstr "ugyldig bitmapundersætning"
 msgid "invalid raster subassignment"
 msgstr "ugyldig bitmapundertildeling"
 
-msgid "Operator not meaningful for raster objects"
+#, fuzzy
+msgid "operator not meaningful for raster objects"
 msgstr "Operatør er ikke meningsfuld for bitmapobjekter"
 
 msgid "no current device to record from"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:26\n"
+"POT-Creation-Date: 2012-12-16 08:16\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -229,17 +229,21 @@ msgstr "status '%d' w działającym poleceniu '%s'"
 msgid "range too small for 'min.n'"
 msgstr "zakres zbyt mały dla 'min.m'"
 
-msgid "A raster matrix must be character, or numeric, or logical"
+#, fuzzy
+msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 "Macierz rastrowa musi być tekstem lub liczbą lub być wartością logiczną"
 
-msgid "A raster array must be numeric"
+#, fuzzy
+msgid "a raster array must be numeric"
 msgstr "Tablica rastrowa musi być liczbowa"
 
-msgid "A raster array must have exactly 3 dimensions"
+#, fuzzy
+msgid "a raster array must have exactly 3 dimensions"
 msgstr "Tablica rastrowa musi mieć dokładnie 3 wymiary"
 
-msgid "A raster array must have exactly 3 or 4 planes"
+#, fuzzy
+msgid "a raster array must have exactly 3 or 4 planes"
 msgstr "Tablica rastrowa musi mieć dokładnie 3 lub 4 płaszczyzny"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
@@ -251,7 +255,8 @@ msgstr "niepoprawny podzbiór rastra"
 msgid "invalid raster subassignment"
 msgstr "niepoprawny wymiana elementu rastra"
 
-msgid "Operator not meaningful for raster objects"
+#, fuzzy
+msgid "operator not meaningful for raster objects"
 msgstr "Operator nie ma znaczenia dla obiektów rastrowych"
 
 msgid "no current device to record from"

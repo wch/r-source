@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06+0000\n"
+"POT-Creation-Date: 2012-12-16 08:16+0000\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -263,17 +263,17 @@ msgid "unsupported version of Windows"
 msgstr "denne Windows-versjonen er ikkje støtta"
 
 #: src/gnuwin32/extra.c:264 src/main/apply.c:108 src/main/character.c:593
-#: src/main/colors.c:83 src/main/connections.c:3313 src/main/context.c:640
-#: src/main/context.c:659 src/main/datetime.c:677 src/main/datetime.c:748
-#: src/main/datetime.c:1001 src/main/dotcode.c:203 src/main/errors.c:926
-#: src/main/errors.c:958 src/main/errors.c:1060 src/main/errors.c:1085
-#: src/main/errors.c:1090 src/main/errors.c:1362 src/main/seq.c:188
-#: src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392
-#: src/main/seq.c:396 src/main/seq.c:400 src/main/sort.c:1195
-#: src/main/sort.c:1278 src/main/sort.c:1282 src/main/sort.c:1289
-#: src/main/sort.c:1364 src/main/source.c:217 src/main/summary.c:844
-#: src/main/sysutils.c:248 src/main/util.c:953 src/main/util.c:958
-#: src/main/util.c:965 src/main/util.c:968 src/modules/X11/devX11.c:3133
+#: src/main/connections.c:3313 src/main/context.c:640 src/main/context.c:659
+#: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:958
+#: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
+#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
+#: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
+#: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
+#: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
+#: src/main/source.c:217 src/main/summary.c:844 src/main/sysutils.c:248
+#: src/main/util.c:953 src/main/util.c:958 src/main/util.c:965
+#: src/main/util.c:968 src/modules/X11/devX11.c:3133
 #: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3165
 #: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3180
 #: src/modules/X11/devX11.c:3185 src/modules/X11/devX11.c:3189
@@ -1670,49 +1670,6 @@ msgstr "«value» må vera ein teiknstreng ulik null"
 msgid "invalid to change the storage mode of a factor"
 msgstr "kan ikkje endra lagringsmodus til ein faktor"
 
-#: src/main/colors.c:168
-msgid "bad hsv to rgb color conversion"
-msgstr "ugyldig hsv- til rgb-fargeomgjering"
-
-#: src/main/colors.c:959 src/main/errors.c:1183 src/main/logic.c:171
-msgid "invalid argument type"
-msgstr "ugyldig argumentstype"
-
-#: src/main/colors.c:963
-msgid "unknown palette (need >= 2 colors)"
-msgstr "ukjend palett (treng minst 2 fargar)"
-
-#: src/main/colors.c:967
-msgid "maximum number of colors exceeded"
-msgstr "meir enn maks tal på fargar brukt"
-
-#: src/main/colors.c:998 src/main/engine.c:3097
-msgid "invalid hex digit in 'color' or 'lty'"
-msgstr "ugyldig heksadesimal-siffer i «color» eller «lty»"
-
-#: src/main/colors.c:1008 src/main/colors.c:1018
-msgid "invalid RGB specification"
-msgstr "ugyldig RGB-val"
-
-#: src/main/colors.c:1052
-#, c-format
-msgid "invalid color name '%s'"
-msgstr "ugyldig fargenamn «%s»"
-
-#: src/main/colors.c:1061
-#, c-format
-msgid "invalid color specification '%s'"
-msgstr "ugyldig fargeval «%s»"
-
-#: src/main/colors.c:1154
-msgid "supplied color is not numeric nor character"
-msgstr "den oppgjevne fargen er ikkje numerisk eller ein teiknstreng"
-
-#: src/main/colors.c:1187
-#, fuzzy
-msgid "invalid color specification"
-msgstr "ugyldig fargeval"
-
 #: src/main/complex.c:127
 msgid "invalid complex unary operator"
 msgstr "ugyldig kompleks unæroperator"
@@ -2541,7 +2498,7 @@ msgstr "for mange opne einingar"
 msgid "not enough memory to allocate device (in GEcreateDevDesc)"
 msgstr "ikkje nok minne å tildela eininga (i GEcreateDevDesc)"
 
-#: src/main/devices.c:521
+#: src/main/devices.c:515
 msgid "Hit <Return> to see next plot: "
 msgstr "Trykk «Enter» for å sjå det neste plottet: "
 
@@ -2911,6 +2868,10 @@ msgstr "«env»-argumentet må vera ein omgjevnad"
 #: src/main/engine.c:3042 src/main/engine.c:3050
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "ugyldig multibyte-teikn i pch=\"c\""
+
+#: src/main/engine.c:3097
+msgid "invalid hex digit in 'color' or 'lty'"
+msgstr "ugyldig heksadesimal-siffer i «color» eller «lty»"
 
 #: src/main/engine.c:3120
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -3289,6 +3250,10 @@ msgstr "ikkje-implementert funksjon i %s"
 #: src/main/errors.c:1182
 msgid "invalid number of arguments"
 msgstr "ugyldig tal på argument"
+
+#: src/main/errors.c:1183 src/main/logic.c:171
+msgid "invalid argument type"
+msgstr "ugyldig argumentstype"
 
 #: src/main/errors.c:1185
 msgid "time-series/vector length mismatch"
@@ -3997,70 +3962,70 @@ msgstr ""
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Feil: Minnepeikarfeil frå C-stakkoverflyt\n"
 
-#: src/main/main.c:835
+#: src/main/main.c:834
 msgid "unable to open the base package\n"
 msgstr "klarte ikkje opna pakken «base»\n"
 
-#: src/main/main.c:912
+#: src/main/main.c:911
 #, fuzzy, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr "klarte ikkje gjenoppretta lagra data i «.RData»\n"
 
-#: src/main/main.c:959
+#: src/main/main.c:958
 msgid "During startup - "
 msgstr "Ved oppstart – "
 
-#: src/main/main.c:1189
+#: src/main/main.c:1188
 msgid "cannot quit from browser"
 msgstr "klarte ikkje avslutta browser"
 
-#: src/main/main.c:1193
+#: src/main/main.c:1192
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "venta anten «yes», «no», «ask» eller «default»"
 
-#: src/main/main.c:1198
+#: src/main/main.c:1197
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" i ikkje-interaktiv bruk: kommandolinjestandardverdien vert brukt"
 
-#: src/main/main.c:1206
+#: src/main/main.c:1205
 msgid "unrecognized value of 'save'"
 msgstr "ukjend «save»-verdi"
 
-#: src/main/main.c:1209
+#: src/main/main.c:1208
 msgid "invalid 'status', 0 assumed"
 msgstr "ugyldig «status» (brukar 0)"
 
-#: src/main/main.c:1214
+#: src/main/main.c:1213
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "ugyldig «runLast» (brukar FALSE)"
 
-#: src/main/main.c:1245
+#: src/main/main.c:1244
 msgid "cannot allocate space for toplevel callback element"
 msgstr "klarte ikkje reservera plass til tilbakekall-element på toppnivå"
 
-#: src/main/main.c:1323
+#: src/main/main.c:1322
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "negativ indeks send til R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1430
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "åtvaringsmeldingar frå oppgåve-tilbakekall «%s» på toppnivå\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1486
 msgid "top-level task callback did not return a logical value"
 msgstr "oppgåve-tilbakekall på toppnivå returnerte ikkje ein logisk verdi"
 
-#: src/main/mapply.c:72
+#: src/main/mapply.c:58
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 
-#: src/main/mapply.c:90
+#: src/main/mapply.c:76
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr "argumentet «MoreArgs» i «mapply» er ikkje ei liste"
 
-#: src/main/mapply.c:125
+#: src/main/mapply.c:110
 msgid "longer argument not a multiple of length of shorter"
 msgstr ""
 "lengda til det lengste objektet er ikkje eit multiplum av lengda til det "
@@ -4770,16 +4735,16 @@ msgstr "«mode» må ha minst eitt element"
 msgid "insufficient OS support on this platform"
 msgstr "ikkje nok OS-støtte på denne plattforma"
 
-#: src/main/plot3d.c:119
+#: src/main/plot3d.c:118
 #, fuzzy, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour(): sirkulær/lang seglist – bug.report()!"
 
-#: src/main/plot3d.c:197
+#: src/main/plot3d.c:196
 msgid "all z values are equal"
 msgstr "alle z-verdiane er like"
 
-#: src/main/plot3d.c:199
+#: src/main/plot3d.c:198
 msgid "all z values are NA"
 msgstr "alle z-verdiane er NA-verdiar"
 
@@ -7179,6 +7144,31 @@ msgstr "X11-modulen kan ikkje lastast"
 #: src/unix/X11.c:126 src/unix/X11.c:132 src/unix/X11.c:138 src/unix/X11.c:144
 msgid "X11 is not available"
 msgstr "X11 er ikkje tilgjengeleg"
+
+#~ msgid "bad hsv to rgb color conversion"
+#~ msgstr "ugyldig hsv- til rgb-fargeomgjering"
+
+#~ msgid "unknown palette (need >= 2 colors)"
+#~ msgstr "ukjend palett (treng minst 2 fargar)"
+
+#~ msgid "maximum number of colors exceeded"
+#~ msgstr "meir enn maks tal på fargar brukt"
+
+#~ msgid "invalid RGB specification"
+#~ msgstr "ugyldig RGB-val"
+
+#~ msgid "invalid color name '%s'"
+#~ msgstr "ugyldig fargenamn «%s»"
+
+#~ msgid "invalid color specification '%s'"
+#~ msgstr "ugyldig fargeval «%s»"
+
+#~ msgid "supplied color is not numeric nor character"
+#~ msgstr "den oppgjevne fargen er ikkje numerisk eller ein teiknstreng"
+
+#, fuzzy
+#~ msgid "invalid color specification"
+#~ msgstr "ugyldig fargeval"
 
 #~ msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 #~ msgstr "rcont2 [%d,%d]: exp-underflyt til 0. Algoritmen slo feil."

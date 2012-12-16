@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:26\n"
+"POT-Creation-Date: 2012-12-16 08:16\n"
 "PO-Revision-Date: 2011-10-15 15:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -229,18 +229,22 @@ msgstr "statut %d dans la commande en cours d'exécution '%s'"
 msgid "range too small for 'min.n'"
 msgstr "étendue des valeurs trop petite pour min.n"
 
-msgid "A raster matrix must be character, or numeric, or logical"
+#, fuzzy
+msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 "Une matrice de pixels doit contenir des chaînes de caractères, des nombres "
 "ou des valeurs logiques"
 
-msgid "A raster array must be numeric"
+#, fuzzy
+msgid "a raster array must be numeric"
 msgstr "Une matrice de pixels doit être numérique"
 
-msgid "A raster array must have exactly 3 dimensions"
+#, fuzzy
+msgid "a raster array must have exactly 3 dimensions"
 msgstr "Une matrice de pixels doit avoir exactement 3 dimensions"
 
-msgid "A raster array must have exactly 3 or 4 planes"
+#, fuzzy
+msgid "a raster array must have exactly 3 or 4 planes"
 msgstr "Une matrice de pixels doit avoir exactement 3 ou 4 plans"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
@@ -252,7 +256,8 @@ msgstr "indiçage d'image en mode point incorrect"
 msgid "invalid raster subassignment"
 msgstr "sous-assignement d'image en mode point incorrect"
 
-msgid "Operator not meaningful for raster objects"
+#, fuzzy
+msgid "operator not meaningful for raster objects"
 msgstr "Opérateur incohérent pour des objets de type 'raster'"
 
 msgid "no current device to record from"

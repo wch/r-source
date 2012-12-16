@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2012-12-16 08:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,40 +22,89 @@ msgstr ""
 msgid "'%s' must be numeric of length %d"
 msgstr ""
 
-#: colors.c:71
+#: colors.c:72
 #, c-format
 msgid "color intensity %g, not in [0,1]"
 msgstr ""
 
-#: colors.c:78
+#: colors.c:79
 #, c-format
 msgid "color intensity %d, not in 0:255"
 msgstr ""
 
-#: colors.c:85
+#: colors.c:86
 #, c-format
 msgid "alpha level %g, not in [0,1]"
 msgstr ""
 
-#: colors.c:92
+#: colors.c:93
 #, c-format
 msgid "alpha level %d, not in 0:255"
 msgstr ""
 
-#: colors.c:131 colors.c:145
+#: colors.c:121
+msgid "bad hsv to rgb color conversion"
+msgstr ""
+
+#: colors.c:210 colors.c:224
 msgid "invalid hsv color"
 msgstr ""
 
-#: colors.c:251 colors.c:269
+#: colors.c:330 colors.c:348
 msgid "invalid hcl color"
 msgstr ""
 
-#: colors.c:326
+#: colors.c:405
 msgid "invalid 'names' vector"
 msgstr ""
 
-#: colors.c:385 colors.c:394
+#: colors.c:464 colors.c:473
 msgid "invalid gray level, must be in [0,1]."
+msgstr ""
+
+#: colors.c:529
+#, c-format
+msgid "invalid '%s' value"
+msgstr ""
+
+#: colors.c:1309
+msgid "invalid hex digit in 'color' or 'lty'"
+msgstr ""
+
+#: colors.c:1319 colors.c:1329
+msgid "invalid RGB specification"
+msgstr ""
+
+#: colors.c:1362
+#, c-format
+msgid "invalid color name '%s'"
+msgstr ""
+
+#: colors.c:1412 colors.c:1421
+#, c-format
+msgid "invalid color specification \"%s\""
+msgstr ""
+
+#: colors.c:1449
+msgid "supplied color is neither numeric nor character"
+msgstr ""
+
+#: colors.c:1453
+#, c-format
+msgid "numerical color values must be >= 0, found %d"
+msgstr ""
+
+#: colors.c:1464
+msgid "invalid argument type"
+msgstr ""
+
+#: colors.c:1475
+msgid "unknown palette (need >= 2 colors)"
+msgstr ""
+
+#: colors.c:1479
+#, c-format
+msgid "maximum number of colors is %d"
 msgstr ""
 
 #: devPS.c:559
@@ -654,7 +703,7 @@ msgstr ""
 msgid "not a supported scheme, no image data written"
 msgstr ""
 
-#: stubs.c:114
+#: stubs.c:99
 #, c-format
 msgid "invalid '%s' argument"
 msgstr ""

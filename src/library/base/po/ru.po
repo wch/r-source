@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06+0000\n"
+"POT-Creation-Date: 2012-12-16 08:16+0000\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -267,17 +267,17 @@ msgid "unsupported version of Windows"
 msgstr "неподдерживаемая версия Windows"
 
 #: src/gnuwin32/extra.c:264 src/main/apply.c:108 src/main/character.c:593
-#: src/main/colors.c:83 src/main/connections.c:3313 src/main/context.c:640
-#: src/main/context.c:659 src/main/datetime.c:677 src/main/datetime.c:748
-#: src/main/datetime.c:1001 src/main/dotcode.c:203 src/main/errors.c:926
-#: src/main/errors.c:958 src/main/errors.c:1060 src/main/errors.c:1085
-#: src/main/errors.c:1090 src/main/errors.c:1362 src/main/seq.c:188
-#: src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392
-#: src/main/seq.c:396 src/main/seq.c:400 src/main/sort.c:1195
-#: src/main/sort.c:1278 src/main/sort.c:1282 src/main/sort.c:1289
-#: src/main/sort.c:1364 src/main/source.c:217 src/main/summary.c:844
-#: src/main/sysutils.c:248 src/main/util.c:953 src/main/util.c:958
-#: src/main/util.c:965 src/main/util.c:968 src/modules/X11/devX11.c:3133
+#: src/main/connections.c:3313 src/main/context.c:640 src/main/context.c:659
+#: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:958
+#: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
+#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
+#: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
+#: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
+#: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
+#: src/main/source.c:217 src/main/summary.c:844 src/main/sysutils.c:248
+#: src/main/util.c:953 src/main/util.c:958 src/main/util.c:965
+#: src/main/util.c:968 src/modules/X11/devX11.c:3133
 #: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3165
 #: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3180
 #: src/modules/X11/devX11.c:3185 src/modules/X11/devX11.c:3189
@@ -1660,49 +1660,6 @@ msgstr "'value' должно быть непустой строкой"
 msgid "invalid to change the storage mode of a factor"
 msgstr "не могу поменять тип хранения фактора"
 
-#: src/main/colors.c:168
-msgid "bad hsv to rgb color conversion"
-msgstr "неправильная конвертация цвета из hsv в rgb"
-
-#: src/main/colors.c:959 src/main/errors.c:1183 src/main/logic.c:171
-msgid "invalid argument type"
-msgstr "неправильный тип аргумента"
-
-#: src/main/colors.c:963
-msgid "unknown palette (need >= 2 colors)"
-msgstr "неизвестная палитра (нужно >= 2 цветов)"
-
-#: src/main/colors.c:967
-msgid "maximum number of colors exceeded"
-msgstr "превышено максимальное количество цветов"
-
-#: src/main/colors.c:998 src/main/engine.c:3097
-msgid "invalid hex digit in 'color' or 'lty'"
-msgstr "неправильное шестнадцатеричное число в 'color' или 'lty'"
-
-#: src/main/colors.c:1008 src/main/colors.c:1018
-msgid "invalid RGB specification"
-msgstr "неправильное указание RGB "
-
-#: src/main/colors.c:1052
-#, c-format
-msgid "invalid color name '%s'"
-msgstr "неправильное имя цвета '%s'"
-
-#: src/main/colors.c:1061
-#, c-format
-msgid "invalid color specification '%s'"
-msgstr "неправильное указание цвета '%s'"
-
-#: src/main/colors.c:1154
-msgid "supplied color is not numeric nor character"
-msgstr "предложенный цвет -- не цифра и не символ"
-
-#: src/main/colors.c:1187
-#, fuzzy
-msgid "invalid color specification"
-msgstr "Неправильное определение цвета"
-
 #: src/main/complex.c:127
 msgid "invalid complex unary operator"
 msgstr "неправильный комплексный унарный оператор"
@@ -2527,7 +2484,7 @@ msgstr "слишком много открытых устройств"
 msgid "not enough memory to allocate device (in GEcreateDevDesc)"
 msgstr "недостаточно памяти для размещения устройства (в GEcreateDevDesc)"
 
-#: src/main/devices.c:521
+#: src/main/devices.c:515
 msgid "Hit <Return> to see next plot: "
 msgstr "Нажмите <Ввод>, чтобы увидеть следующий график:"
 
@@ -2896,6 +2853,10 @@ msgstr "аргумент 'env' должен быть окружением"
 #: src/main/engine.c:3042 src/main/engine.c:3050
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "неправильный многобайтный знак в pch=\"c\""
+
+#: src/main/engine.c:3097
+msgid "invalid hex digit in 'color' or 'lty'"
+msgstr "неправильное шестнадцатеричное число в 'color' или 'lty'"
 
 #: src/main/engine.c:3120
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -3272,6 +3233,10 @@ msgstr "эта особенность в %s не реализована"
 #: src/main/errors.c:1182
 msgid "invalid number of arguments"
 msgstr "неправильное количество аргументов"
+
+#: src/main/errors.c:1183 src/main/logic.c:171
+msgid "invalid argument type"
+msgstr "неправильный тип аргумента"
 
 #: src/main/errors.c:1185
 msgid "time-series/vector length mismatch"
@@ -3990,73 +3955,73 @@ msgstr "dummy - do not translate"
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Ошибка сегментации памяти из переполненного стека C\n"
 
-#: src/main/main.c:835
+#: src/main/main.c:834
 msgid "unable to open the base package\n"
 msgstr "не могу открыть пакет 'base'\n"
 
-#: src/main/main.c:912
+#: src/main/main.c:911
 #, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr "не могу восстановить сохраненные в %s данные\n"
 
-#: src/main/main.c:959
+#: src/main/main.c:958
 msgid "During startup - "
 msgstr "Во время загрузки - "
 
-#: src/main/main.c:1189
+#: src/main/main.c:1188
 msgid "cannot quit from browser"
 msgstr "не могу выйти из браузера"
 
-#: src/main/main.c:1193
+#: src/main/main.c:1192
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "ожидается одно из: \"yes\", \"no\", \"ask\" или \"default\"."
 
-#: src/main/main.c:1198
+#: src/main/main.c:1197
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" во время неинтерактивной работы: будет использована командная "
 "строка по умолчанию"
 
-#: src/main/main.c:1206
+#: src/main/main.c:1205
 msgid "unrecognized value of 'save'"
 msgstr "нераспознанное значение 'save'"
 
-#: src/main/main.c:1209
+#: src/main/main.c:1208
 msgid "invalid 'status', 0 assumed"
 msgstr "неправильный 'status', принят 0"
 
-#: src/main/main.c:1214
+#: src/main/main.c:1213
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "неправильный 'runLast', принято FALSE"
 
-#: src/main/main.c:1245
+#: src/main/main.c:1244
 msgid "cannot allocate space for toplevel callback element"
 msgstr "не могу выделить место обратного вызова элемента верхнего уровня"
 
-#: src/main/main.c:1323
+#: src/main/main.c:1322
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "отрицательный индекс передан в R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1430
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 "предупреждающие сообщения из обратного вызова задачи верхнего уровня '%s'\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1486
 msgid "top-level task callback did not return a logical value"
 msgstr "обратный вызов задачи верхнего уровня не вернул логического значения"
 
-#: src/main/mapply.c:72
+#: src/main/mapply.c:58
 #, fuzzy
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr "Ввод нулевого размера нельзя смешивать с ненулевым"
 
-#: src/main/mapply.c:90
+#: src/main/mapply.c:76
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr "аргумент 'MoreArgs' из 'mapply' не является списком"
 
-#: src/main/mapply.c:125
+#: src/main/mapply.c:110
 msgid "longer argument not a multiple of length of shorter"
 msgstr "длина большего аргумента не является произведением длины меньшего"
 
@@ -4758,16 +4723,16 @@ msgstr "длина 'mode' должна быть не меньше единицы
 msgid "insufficient OS support on this platform"
 msgstr "недостаточная поддержка OS на этой платформе"
 
-#: src/main/plot3d.c:119
+#: src/main/plot3d.c:118
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour(): круговой/длинный список сегментов -- set %s > %d?"
 
-#: src/main/plot3d.c:197
+#: src/main/plot3d.c:196
 msgid "all z values are equal"
 msgstr "все значения z равны"
 
-#: src/main/plot3d.c:199
+#: src/main/plot3d.c:198
 msgid "all z values are NA"
 msgstr "все значения z являются NA"
 
@@ -7164,6 +7129,31 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:126 src/unix/X11.c:132 src/unix/X11.c:138 src/unix/X11.c:144
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#~ msgid "bad hsv to rgb color conversion"
+#~ msgstr "неправильная конвертация цвета из hsv в rgb"
+
+#~ msgid "unknown palette (need >= 2 colors)"
+#~ msgstr "неизвестная палитра (нужно >= 2 цветов)"
+
+#~ msgid "maximum number of colors exceeded"
+#~ msgstr "превышено максимальное количество цветов"
+
+#~ msgid "invalid RGB specification"
+#~ msgstr "неправильное указание RGB "
+
+#~ msgid "invalid color name '%s'"
+#~ msgstr "неправильное имя цвета '%s'"
+
+#~ msgid "invalid color specification '%s'"
+#~ msgstr "неправильное указание цвета '%s'"
+
+#~ msgid "supplied color is not numeric nor character"
+#~ msgstr "предложенный цвет -- не цифра и не символ"
+
+#, fuzzy
+#~ msgid "invalid color specification"
+#~ msgstr "Неправильное определение цвета"
 
 #~ msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 #~ msgstr ""

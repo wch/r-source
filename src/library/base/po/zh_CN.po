@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06+0000\n"
+"POT-Creation-Date: 2012-12-16 08:16+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -262,17 +262,17 @@ msgid "unsupported version of Windows"
 msgstr "不支持这版本的Windows"
 
 #: src/gnuwin32/extra.c:264 src/main/apply.c:108 src/main/character.c:593
-#: src/main/colors.c:83 src/main/connections.c:3313 src/main/context.c:640
-#: src/main/context.c:659 src/main/datetime.c:677 src/main/datetime.c:748
-#: src/main/datetime.c:1001 src/main/dotcode.c:203 src/main/errors.c:926
-#: src/main/errors.c:958 src/main/errors.c:1060 src/main/errors.c:1085
-#: src/main/errors.c:1090 src/main/errors.c:1362 src/main/seq.c:188
-#: src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392
-#: src/main/seq.c:396 src/main/seq.c:400 src/main/sort.c:1195
-#: src/main/sort.c:1278 src/main/sort.c:1282 src/main/sort.c:1289
-#: src/main/sort.c:1364 src/main/source.c:217 src/main/summary.c:844
-#: src/main/sysutils.c:248 src/main/util.c:953 src/main/util.c:958
-#: src/main/util.c:965 src/main/util.c:968 src/modules/X11/devX11.c:3133
+#: src/main/connections.c:3313 src/main/context.c:640 src/main/context.c:659
+#: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:958
+#: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
+#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
+#: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
+#: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
+#: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
+#: src/main/source.c:217 src/main/summary.c:844 src/main/sysutils.c:248
+#: src/main/util.c:953 src/main/util.c:958 src/main/util.c:965
+#: src/main/util.c:968 src/modules/X11/devX11.c:3133
 #: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3165
 #: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3180
 #: src/modules/X11/devX11.c:3185 src/modules/X11/devX11.c:3189
@@ -1633,49 +1633,6 @@ msgstr "'value'必需为非空字符"
 msgid "invalid to change the storage mode of a factor"
 msgstr "不能改变因子的存储方式"
 
-#: src/main/colors.c:168
-msgid "bad hsv to rgb color conversion"
-msgstr "hsv到rgb颜色转换不对"
-
-#: src/main/colors.c:959 src/main/errors.c:1183 src/main/logic.c:171
-msgid "invalid argument type"
-msgstr "参数种类不对"
-
-#: src/main/colors.c:963
-msgid "unknown palette (need >= 2 colors)"
-msgstr "没有这种调色(至少需要两种颜色)"
-
-#: src/main/colors.c:967
-msgid "maximum number of colors exceeded"
-msgstr "颜色的数目已超过最大值"
-
-#: src/main/colors.c:998 src/main/engine.c:3097
-msgid "invalid hex digit in 'color' or 'lty'"
-msgstr "十六进制'color'设定或lty设定不对"
-
-#: src/main/colors.c:1008 src/main/colors.c:1018
-msgid "invalid RGB specification"
-msgstr "RGB设定不对"
-
-#: src/main/colors.c:1052
-#, c-format
-msgid "invalid color name '%s'"
-msgstr "颜色名字'%s'不对"
-
-#: src/main/colors.c:1061
-#, c-format
-msgid "invalid color specification '%s'"
-msgstr "颜色设定'%s'不对"
-
-#: src/main/colors.c:1154
-msgid "supplied color is not numeric nor character"
-msgstr "所提供的颜色值不是数值，也不是字符串"
-
-#: src/main/colors.c:1187
-#, fuzzy
-msgid "invalid color specification"
-msgstr "颜色设定不对"
-
 #: src/main/complex.c:127
 msgid "invalid complex unary operator"
 msgstr "复数一进列运算符有错"
@@ -2489,7 +2446,7 @@ msgstr "太多已打开的设备"
 msgid "not enough memory to allocate device (in GEcreateDevDesc)"
 msgstr "分配设备内存不够(GEcreateDevDesc)"
 
-#: src/main/devices.c:521
+#: src/main/devices.c:515
 msgid "Hit <Return> to see next plot: "
 msgstr "按<Return>键来看下一个图: "
 
@@ -2855,6 +2812,10 @@ msgstr "'env'参数必需是环境"
 #: src/main/engine.c:3042 src/main/engine.c:3050
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "pch=\"c\"里的多字节字元不对"
+
+#: src/main/engine.c:3097
+msgid "invalid hex digit in 'color' or 'lty'"
+msgstr "十六进制'color'设定或lty设定不对"
 
 #: src/main/engine.c:3120
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -3226,6 +3187,10 @@ msgstr "%s里的功能目前没有实现"
 #: src/main/errors.c:1182
 msgid "invalid number of arguments"
 msgstr "参数数目不对"
+
+#: src/main/errors.c:1183 src/main/logic.c:171
+msgid "invalid argument type"
+msgstr "参数种类不对"
 
 #: src/main/errors.c:1185
 msgid "time-series/vector length mismatch"
@@ -3927,70 +3892,70 @@ msgstr "dummy - do not translate"
 msgid "Error: segfault from C stack overflow\n"
 msgstr "错误：C堆叠上溢\n"
 
-#: src/main/main.c:835
+#: src/main/main.c:834
 msgid "unable to open the base package\n"
 msgstr "无法打开基本程序包\n"
 
-#: src/main/main.c:912
+#: src/main/main.c:911
 #, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr "无法復原保存在%s里的数据\n"
 
-#: src/main/main.c:959
+#: src/main/main.c:958
 msgid "During startup - "
 msgstr "在启动过程中 - "
 
-#: src/main/main.c:1189
+#: src/main/main.c:1188
 msgid "cannot quit from browser"
 msgstr "无法退出瀏覽器"
 
-#: src/main/main.c:1193
+#: src/main/main.c:1192
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用\"yes\", \"no\", \"ask\"或\"default\"中的一个."
 
-#: src/main/main.c:1198
+#: src/main/main.c:1197
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\"不能在非交互型状态时使用，改用命令行缺省值"
 
-#: src/main/main.c:1206
+#: src/main/main.c:1205
 msgid "unrecognized value of 'save'"
 msgstr "没有这种'save'值"
 
-#: src/main/main.c:1209
+#: src/main/main.c:1208
 msgid "invalid 'status', 0 assumed"
 msgstr "'status'不对, 假設为零"
 
-#: src/main/main.c:1214
+#: src/main/main.c:1213
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast'不对, 假設为FALSE"
 
-#: src/main/main.c:1245
+#: src/main/main.c:1244
 msgid "cannot allocate space for toplevel callback element"
 msgstr "无法为最高层回叫元素分配空间"
 
-#: src/main/main.c:1323
+#: src/main/main.c:1322
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex不能用负的索引值"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1430
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高层任务回叫'%s'时产生了警告信息\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1486
 msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没有回覆逻辑值"
 
-#: src/main/mapply.c:72
+#: src/main/mapply.c:58
 #, fuzzy
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr "零长度输入和非零长度输入是不能混合在一起的"
 
-#: src/main/mapply.c:90
+#: src/main/mapply.c:76
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr "'mapply'的参数'MoreArgs'不是串列"
 
-#: src/main/mapply.c:125
+#: src/main/mapply.c:110
 msgid "longer argument not a multiple of length of shorter"
 msgstr "长参数的长度不是短参数的长度的整倍数"
 
@@ -4681,16 +4646,16 @@ msgstr "'mode'的长度至少需要是一"
 msgid "insufficient OS support on this platform"
 msgstr "本平台操作系统支持不够"
 
-#: src/main/plot3d.c:119
+#: src/main/plot3d.c:118
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour():圆的/长的seglist – 是不是应该把%s设成大于%d?"
 
-#: src/main/plot3d.c:197
+#: src/main/plot3d.c:196
 msgid "all z values are equal"
 msgstr "所有的z值是一样的"
 
-#: src/main/plot3d.c:199
+#: src/main/plot3d.c:198
 msgid "all z values are NA"
 msgstr "所有的z值都是NA"
 
@@ -7041,6 +7006,31 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:126 src/unix/X11.c:132 src/unix/X11.c:138 src/unix/X11.c:144
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "bad hsv to rgb color conversion"
+#~ msgstr "hsv到rgb颜色转换不对"
+
+#~ msgid "unknown palette (need >= 2 colors)"
+#~ msgstr "没有这种调色(至少需要两种颜色)"
+
+#~ msgid "maximum number of colors exceeded"
+#~ msgstr "颜色的数目已超过最大值"
+
+#~ msgid "invalid RGB specification"
+#~ msgstr "RGB设定不对"
+
+#~ msgid "invalid color name '%s'"
+#~ msgstr "颜色名字'%s'不对"
+
+#~ msgid "invalid color specification '%s'"
+#~ msgstr "颜色设定'%s'不对"
+
+#~ msgid "supplied color is not numeric nor character"
+#~ msgstr "所提供的颜色值不是数值，也不是字符串"
+
+#, fuzzy
+#~ msgid "invalid color specification"
+#~ msgstr "颜色设定不对"
 
 #~ msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 #~ msgstr "rcont2 [%d,%d]: exp下溢到0; 算法失败"

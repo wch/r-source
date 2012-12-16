@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06+0000\n"
+"POT-Creation-Date: 2012-12-16 08:16+0000\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -263,17 +263,17 @@ msgid "unsupported version of Windows"
 msgstr "不支援的 Windows 版本"
 
 #: src/gnuwin32/extra.c:264 src/main/apply.c:108 src/main/character.c:593
-#: src/main/colors.c:83 src/main/connections.c:3313 src/main/context.c:640
-#: src/main/context.c:659 src/main/datetime.c:677 src/main/datetime.c:748
-#: src/main/datetime.c:1001 src/main/dotcode.c:203 src/main/errors.c:926
-#: src/main/errors.c:958 src/main/errors.c:1060 src/main/errors.c:1085
-#: src/main/errors.c:1090 src/main/errors.c:1362 src/main/seq.c:188
-#: src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392
-#: src/main/seq.c:396 src/main/seq.c:400 src/main/sort.c:1195
-#: src/main/sort.c:1278 src/main/sort.c:1282 src/main/sort.c:1289
-#: src/main/sort.c:1364 src/main/source.c:217 src/main/summary.c:844
-#: src/main/sysutils.c:248 src/main/util.c:953 src/main/util.c:958
-#: src/main/util.c:965 src/main/util.c:968 src/modules/X11/devX11.c:3133
+#: src/main/connections.c:3313 src/main/context.c:640 src/main/context.c:659
+#: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
+#: src/main/dotcode.c:203 src/main/errors.c:926 src/main/errors.c:958
+#: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
+#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
+#: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
+#: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
+#: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
+#: src/main/source.c:217 src/main/summary.c:844 src/main/sysutils.c:248
+#: src/main/util.c:953 src/main/util.c:958 src/main/util.c:965
+#: src/main/util.c:968 src/modules/X11/devX11.c:3133
 #: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3165
 #: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3180
 #: src/modules/X11/devX11.c:3185 src/modules/X11/devX11.c:3189
@@ -1634,49 +1634,6 @@ msgstr "'value' 必須是非空字串"
 msgid "invalid to change the storage mode of a factor"
 msgstr "變更因子的儲存體模式無效"
 
-#: src/main/colors.c:168
-msgid "bad hsv to rgb color conversion"
-msgstr "hsv 到 rgb 顏色轉換不正確"
-
-#: src/main/colors.c:959 src/main/errors.c:1183 src/main/logic.c:171
-msgid "invalid argument type"
-msgstr "引數類型不正確"
-
-#: src/main/colors.c:963
-msgid "unknown palette (need >= 2 colors)"
-msgstr "沒有這種調色盤 (需要 >= 兩種顏色)"
-
-#: src/main/colors.c:967
-msgid "maximum number of colors exceeded"
-msgstr "顏色的數目已超過最大值"
-
-#: src/main/colors.c:998 src/main/engine.c:3097
-msgid "invalid hex digit in 'color' or 'lty'"
-msgstr "十六進位 'color' 設定或 'lty' 設定不正確"
-
-#: src/main/colors.c:1008 src/main/colors.c:1018
-msgid "invalid RGB specification"
-msgstr "RGB 設定不正確"
-
-#: src/main/colors.c:1052
-#, c-format
-msgid "invalid color name '%s'"
-msgstr "無效的顏色名稱 '%s'"
-
-#: src/main/colors.c:1061
-#, c-format
-msgid "invalid color specification '%s'"
-msgstr "無效的顏色規格 '%s'"
-
-#: src/main/colors.c:1154
-msgid "supplied color is not numeric nor character"
-msgstr "所提供的顏色既非數值亦非字元"
-
-#: src/main/colors.c:1187
-#, fuzzy
-msgid "invalid color specification"
-msgstr "無效的顏色規格"
-
 #: src/main/complex.c:127
 msgid "invalid complex unary operator"
 msgstr "單一複數運算子不正確"
@@ -2490,7 +2447,7 @@ msgstr "太多已經開啟的裝置"
 msgid "not enough memory to allocate device (in GEcreateDevDesc)"
 msgstr "所需記憶體不足以配置裝置 (在 GEcreateDevDesc 中)"
 
-#: src/main/devices.c:521
+#: src/main/devices.c:515
 msgid "Hit <Return> to see next plot: "
 msgstr "按 <return> 鍵來看下一張圖: "
 
@@ -2856,6 +2813,10 @@ msgstr "'env' 引數必須是環境物件"
 #: src/main/engine.c:3042 src/main/engine.c:3050
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "pch=\"c\" 中的多位元組字元不正確"
+
+#: src/main/engine.c:3097
+msgid "invalid hex digit in 'color' or 'lty'"
+msgstr "十六進位 'color' 設定或 'lty' 設定不正確"
 
 #: src/main/engine.c:3120
 msgid "invalid line type: must be length 2, 4, 6 or 8"
@@ -3228,6 +3189,10 @@ msgstr "%s 中的功能尚未實作"
 #: src/main/errors.c:1182
 msgid "invalid number of arguments"
 msgstr "引數數目不正確"
+
+#: src/main/errors.c:1183 src/main/logic.c:171
+msgid "invalid argument type"
+msgstr "引數類型不正確"
 
 #: src/main/errors.c:1185
 msgid "time-series/vector length mismatch"
@@ -3929,69 +3894,69 @@ msgstr "dummy - do not translate"
 msgid "Error: segfault from C stack overflow\n"
 msgstr "錯誤: C 堆疊向上溢位的區段錯誤\n"
 
-#: src/main/main.c:835
+#: src/main/main.c:834
 msgid "unable to open the base package\n"
 msgstr "無法開啟基本套件\n"
 
-#: src/main/main.c:912
+#: src/main/main.c:911
 #, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr "無法還原儲存在 %s 中的資料\n"
 
-#: src/main/main.c:959
+#: src/main/main.c:958
 msgid "During startup - "
 msgstr "於啟動期間 - "
 
-#: src/main/main.c:1189
+#: src/main/main.c:1188
 msgid "cannot quit from browser"
 msgstr "無法離開瀏覽器"
 
-#: src/main/main.c:1193
+#: src/main/main.c:1192
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用 \"yes\"、\"no\"、\"ask\" 或 \"default\" 中的一個。"
 
-#: src/main/main.c:1198
+#: src/main/main.c:1197
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\" 不能在非交互狀態時使用：改用命令列預設值"
 
-#: src/main/main.c:1206
+#: src/main/main.c:1205
 msgid "unrecognized value of 'save'"
 msgstr "沒有這種 'save' 值"
 
-#: src/main/main.c:1209
+#: src/main/main.c:1208
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' 不正確, 假定為 0"
 
-#: src/main/main.c:1214
+#: src/main/main.c:1213
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' 不正確, 假定為 FALSE"
 
-#: src/main/main.c:1245
+#: src/main/main.c:1244
 msgid "cannot allocate space for toplevel callback element"
 msgstr "無法為最高層回呼元素配置空間"
 
-#: src/main/main.c:1323
+#: src/main/main.c:1322
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "負的索引值被傳遞給 R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1430
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高層任務回呼 '%s' 產生了警告訊息\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1486
 msgid "top-level task callback did not return a logical value"
 msgstr "最高層任務回呼沒回傳邏輯值"
 
-#: src/main/mapply.c:72
+#: src/main/mapply.c:58
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 
-#: src/main/mapply.c:90
+#: src/main/mapply.c:76
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
 msgstr "'mapply' 的引數 'MoreArgs' 不是一個串列"
 
-#: src/main/mapply.c:125
+#: src/main/mapply.c:110
 msgid "longer argument not a multiple of length of shorter"
 msgstr "長引數長度不是短引數長度的整數倍"
 
@@ -4685,16 +4650,16 @@ msgstr "'mode' 的長度必須是至少一個"
 msgid "insufficient OS support on this platform"
 msgstr "這個平臺的作業系統支援不足"
 
-#: src/main/plot3d.c:119
+#: src/main/plot3d.c:118
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour()：環/長 seglist -- 設定 %s > %d？"
 
-#: src/main/plot3d.c:197
+#: src/main/plot3d.c:196
 msgid "all z values are equal"
 msgstr "所有的 z 值都一樣"
 
-#: src/main/plot3d.c:199
+#: src/main/plot3d.c:198
 msgid "all z values are NA"
 msgstr "所有的 z 值都是 NA"
 
@@ -7047,6 +7012,31 @@ msgstr "無法載入 X11 模組"
 #: src/unix/X11.c:126 src/unix/X11.c:132 src/unix/X11.c:138 src/unix/X11.c:144
 msgid "X11 is not available"
 msgstr "無法使用 X11"
+
+#~ msgid "bad hsv to rgb color conversion"
+#~ msgstr "hsv 到 rgb 顏色轉換不正確"
+
+#~ msgid "unknown palette (need >= 2 colors)"
+#~ msgstr "沒有這種調色盤 (需要 >= 兩種顏色)"
+
+#~ msgid "maximum number of colors exceeded"
+#~ msgstr "顏色的數目已超過最大值"
+
+#~ msgid "invalid RGB specification"
+#~ msgstr "RGB 設定不正確"
+
+#~ msgid "invalid color name '%s'"
+#~ msgstr "無效的顏色名稱 '%s'"
+
+#~ msgid "invalid color specification '%s'"
+#~ msgstr "無效的顏色規格 '%s'"
+
+#~ msgid "supplied color is not numeric nor character"
+#~ msgstr "所提供的顏色既非數值亦非字元"
+
+#, fuzzy
+#~ msgid "invalid color specification"
+#~ msgstr "無效的顏色規格"
 
 #~ msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 #~ msgstr "rcont2 [%d,%d]: exp 向下溢位到 0; 演算法失敗"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-16 08:17\n"
 "PO-Revision-Date: 2011-10-18 19:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -264,6 +264,9 @@ msgstr "размерность z не является произведением length(x)(-1) на length(y)(-1)"
 #, fuzzy
 msgid "%s can only be used with a regular grid"
 msgstr "useRaster = TRUE можно использовать только с регулярной сеткой"
+
+msgid "integer colors must be non-negative"
+msgstr ""
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""

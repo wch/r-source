@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:26\n"
+"POT-Creation-Date: 2012-12-16 08:16\n"
 "PO-Revision-Date: 2011-10-18 19:29-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -230,17 +230,21 @@ msgstr "статус %d выполняющейся команды '%s'"
 msgid "range too small for 'min.n'"
 msgstr "размах слишком мал для min.m"
 
-msgid "A raster matrix must be character, or numeric, or logical"
+#, fuzzy
+msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 "Растровая матрица должна быть символом, числом или логическим выражением"
 
-msgid "A raster array must be numeric"
+#, fuzzy
+msgid "a raster array must be numeric"
 msgstr "Растровая многомерная матрица должна быть числовой"
 
-msgid "A raster array must have exactly 3 dimensions"
+#, fuzzy
+msgid "a raster array must have exactly 3 dimensions"
 msgstr "Растровая многомерная матрица должна быть в точности трехмерной"
 
-msgid "A raster array must have exactly 3 or 4 planes"
+#, fuzzy
+msgid "a raster array must have exactly 3 or 4 planes"
 msgstr ""
 "Растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
 
@@ -253,7 +257,8 @@ msgstr "неправильное извлечение элемента растра"
 msgid "invalid raster subassignment"
 msgstr "неправильная замена жлемента растра"
 
-msgid "Operator not meaningful for raster objects"
+#, fuzzy
+msgid "operator not meaningful for raster objects"
 msgstr "Оператор не имеет смысла для объектов растра"
 
 msgid "no current device to record from"
