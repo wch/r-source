@@ -18,7 +18,7 @@
 
 colours <- colors <- function(distinct = FALSE)
 {
-    c <- .External2(C_colors)
+    c <- .Call(C_colors)
     if(distinct) c[!duplicated(t(col2rgb(c)))] else c
 }
 
@@ -60,7 +60,7 @@ rgb2hsv <- function(r, g = NULL, b = NULL, maxColorValue = 255)
     rgb <- if(is.null(g) && is.null(b)) as.matrix(r) else rbind(r, g, b)
     if(!is.numeric(rgb)) stop("rgb matrix must be numeric")
     d <- dim(rgb)
-    if(d[1L] != 3) stop("rgb matrix must have 3 rows")
+    if(d[1L] != 3L) stop("rgb matrix must have 3 rows")
     n <- d[2L]
     if(n == 0L) return(cbind(c(h = 1, s = 1, v = 1))[, 0L])
     ## else:
@@ -73,8 +73,8 @@ rgb2hsv <- function(r, g = NULL, b = NULL, maxColorValue = 255)
 
 palette <- function(value)
 {
-    if(missing(value)) .External2(C_palette, character())
-    else invisible(.External2(C_palette, value))
+    if(missing(value)) .Call(C_palette, character())
+    else invisible(.Call(C_palette, value))
 }
 
 ## A quick little ''rainbow'' function -- improved by MM

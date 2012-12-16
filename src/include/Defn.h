@@ -799,7 +799,6 @@ extern Rboolean known_to_be_utf8 INI_as(FALSE);
 # define getVar			Rf_getVar
 # define getVarInFrame		Rf_getVarInFrame
 # define InitArithmetic		Rf_InitArithmetic
-# define InitColors		Rf_InitColors
 # define InitConnections	Rf_InitConnections
 # define InitEd			Rf_InitEd
 # define InitFunctionHashing	Rf_InitFunctionHashing
@@ -990,7 +989,6 @@ int GetOptionCutoff(void);
 SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
 void InitArithmetic(void);
-void InitColors(void);
 void InitConnections(void);
 void InitEd(void);
 void InitFunctionHashing(void);

@@ -94,13 +94,19 @@ SEXP setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP devAskNewPage(SEXP call, SEXP op, SEXP args, SEXP env);
 
 #ifndef DEVWINDOWS
-SEXP rgb(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP hsv(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP hcl(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP gray(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP colors(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP rgb(SEXP r, SEXP g, SEXP b, SEXP a, SEXP MCV, SEXP nam);
+SEXP hsv(SEXP h, SEXP s, SEXP v, SEXP a);
+SEXP hcl(SEXP h, SEXP c, SEXP l, SEXP a, SEXP sfixup);
+SEXP gray(SEXP lev, SEXP a);
+SEXP colors(void);
 SEXP col2rgb(SEXP colors, SEXP alpha);
-SEXP palette(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP palette(SEXP value);
+SEXP RGB2hsv(SEXP rgb);
 #endif
+
+unsigned int inRGBpar3(SEXP, int, unsigned int);
+const char *incol2name(unsigned int col);
+unsigned int inR_GE_str2col(const char *s);
+void initPalette(void);
+
 

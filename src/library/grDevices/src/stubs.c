@@ -67,16 +67,6 @@ SEXP setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_setGraphicsEventEnv(call, op, CDR(args), env);
 }
 
-SEXP colors(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_colors(call, op, CDR(args), env);
-}
-
-SEXP palette(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return do_palette(call, op, CDR(args), env);
-}
-
 #ifdef WIN32
 SEXP bringtotop(SEXP sdev, SEXP sstay);
 SEXP msgwindow(SEXP sdev, SEXP stype);

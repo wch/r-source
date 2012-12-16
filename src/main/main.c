@@ -785,7 +785,6 @@ void setup_Rmainloop(void)
     InitOptions();
     InitEd();
     InitArithmetic();
-    InitColors();
     InitGraphics();
     R_Is_Running = 1;
     R_check_locale();
