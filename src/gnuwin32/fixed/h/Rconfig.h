@@ -19,7 +19,7 @@
 #ifdef _WIN64
 #define SIZEOF_SIZE_T 8
 #else
-#define SIZEOF_SIZE_T 8
+#define SIZEOF_SIZE_T 4
 #endif
 
 #endif /* not R_CONFIG_H */
