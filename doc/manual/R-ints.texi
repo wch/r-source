@@ -3396,14 +3396,14 @@ on the graphics hardware and undocumented properties of GDI.
 @section Colours
 
 Devices receive colours as an @code{unsigned int} (in the @code{GPar}
-structure and some of the devices as the @code{typedef} @code{rcolor}):
-the comments in file @file{R_ext/GraphicsDevice.h} are the primary
-documentation.  The 4 bytes in the @code{unsigned int} are
-@emph{R},@emph{G},@emph{B} and @emph{alpha} from least to most
-significant. So each of RGB has 256 levels of luminosity from 0 to 255.
-The alpha byte represents (from @R{} 2.0.0) opacity, so value 255 is
-fully opaque and 0 fully transparent: many but not all devices handle
-semi-transparent colours.
+structure and some of the devices as the @code{typedef} @code{rcolor},
+defined in the private header @file{Graphics.h}): the comments in file
+@file{R_ext/GraphicsDevice.h} were the primary documentation.  The 4
+bytes in the @code{unsigned int} are @emph{R},@emph{G},@emph{B} and
+@emph{alpha} from least to most significant. So each of RGB has 256
+levels of luminosity from 0 to 255.  The alpha byte represents (from
+@R{} 2.0.0) opacity, so value 255 is fully opaque and 0 fully
+transparent: many but not all devices handle semi-transparent colours.
 
 Colors can be created in C via the macro @code{R_RGBA}, and a set of
 macros are defined in @file{R_ext/GraphicsDevice.h} to extract the
@@ -3421,10 +3421,13 @@ names: the 657 known names are given in the character vector
 @pkg{grDevices}.  Note that semi-transparent colours are not
 `premultiplied', so 50% transparent white is @samp{#ffffff80}.
 
+Integer or character @code{NA} colours are mapped internally to
+transparent white, as is the character string @code{"NA"}.
+
 The handling of negative colour numbers was undefined (and inconsistent)
 prior to @R{} 3.0.0, which made them an error.  Colours greater than
 @samp{@var{N}} are wrapped around, so that for example with the default
-palette of size 8, colours @samp{10} is colour @samp{2} in the palette.
+palette of size 8, colour @samp{10} is colour @samp{2} in the palette.
 
 Integer colours have been used more widely than the base graphics
 sub-system, as they are supported by package @pkg{grid} and hence by
@@ -3461,6 +3464,25 @@ Edition, version 1.7.  Unfortunately, although this is what the PDF
 standard says should happen, it is not correctly implemented by some
 viewers.)
 
+The mapping from colour numbers to type @code{rcolor} is primarily done
+by function @code{RGBpar3}: this is exported from the @R{} binary but
+linked to code in package @pkg{grDevices}.  The first argument is a
+@code{SEXP} pointing to a character, integer or double vector, and the
+second is the @code{rcolor} value for colour @code{0} (or @code{"0"}).
+C entry point @code{RGBpar} is a wrapper that takes @code{0} to be
+transparent white: it is often used to set colour defaults for devices.
+The @R{}-level wrapper is @code{col2rgb}.
+
+There is also @code{R_GE_str2col} which takes a C string and converts to
+type @code{rcolor}: @code{"0'} is converted to transparent white.
+
+There is a @R{}-level coversion of colours to @samp{##RRGGBBAA} by
+@code{image.default(useRaster = TRUE)}.
+
+The other color-conversion entry point in the API is @code{name2col}
+which takes a colour name (a C string) and returns a value of type
+@code{rcolor}.  This handles @code{"NA"}, @code{"transparent"} and the
+657 colours known to the @R{} function @code{colors()}.
 
 @node Base graphics, Grid graphics, Colours, Graphics Devices
 @section Base graphics
@@ -3748,7 +3770,7 @@ which require the package to be installed.
 
 The following environment variables can be used to customize the
 operation of @command{check}: a convenient place to set these is the
-check environment file.
+check environment file (default, @file{~/.R/check.Renviron}).
 
 @vtable @code
 @item _R_CHECK_ALL_NON_ISO_C_
@@ -3898,7 +3920,7 @@ Default: false.
 Should the @file{vign_test} directory be removed if the test is successful?
 Default: true.
 @item _R_CHECK_REPLACING_IMPORTS_
-Should warnings about replacing imports be reported?  These on come
+Should warnings about replacing imports be reported?  These come
 from auto-generated @file{NAMESPACE} files in other packages.
 Default: false.
 @item _R_CHECK_UNSAFE_CALLS_

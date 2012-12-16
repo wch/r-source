@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2012  The R Core Team
- *  Copyright (C) 2003	     The R Foundation
+ *  Copyright (C) 2012  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +17,8 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* This should be regarded as part of the graphics engine */
+/* This should be regarded as part of the graphics engine: 
+   it is now a stub for code in grDevices */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -26,10 +26,6 @@
 
 #include <Defn.h>
 #include <R_ext/GraphicsEngine.h>
-//#include <R_ext/Rdynload.h>
-
-//DL_FUNC ptr_RGBpar3, ptr_col2name, ptr_R_GE_str2col;
-
 
 typedef unsigned int (*F1)(SEXP x, int i, unsigned int bg);
 typedef const char * (*F2)(unsigned int col);

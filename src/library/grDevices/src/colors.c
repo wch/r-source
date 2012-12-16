@@ -25,10 +25,10 @@
 #endif
 
 #include <Defn.h>
-#include <Graphics.h>  /* for dpptr */
 #include <R_ext/GraphicsEngine.h>
-#include <Rmath.h>
-#include <ctype.h> /* for tolower, isdigit */
+
+/* from Graphics.h */
+typedef unsigned int rcolor;
 
 #include "grDevices.h"
 
@@ -555,7 +555,7 @@ SEXP col2rgb(SEXP colors, SEXP alpha)
     setAttrib(ans, R_DimNamesSymbol, dmns);
 
     for(int i = 0, j = 0; i < n; i++) {
-	unsigned int icol = inRGBpar3(colors, i, R_TRANWHITE);
+	rcolor icol = inRGBpar3(colors, i, R_TRANWHITE);
 	INTEGER(ans)[j++] = R_RED(icol);
 	INTEGER(ans)[j++] = R_GREEN(icol);
 	INTEGER(ans)[j++] = R_BLUE(icol);
@@ -568,9 +568,11 @@ SEXP col2rgb(SEXP colors, SEXP alpha)
 
 // ------------------ code for tables to export to main executable --------
 
+#include <ctype.h> /* for tolower, isdigit */
+
 #define MAX_PALETTE_SIZE 1024
 static int PaletteSize;
-static unsigned int Palette[MAX_PALETTE_SIZE];
+static rcolor Palette[MAX_PALETTE_SIZE];
 
 /* String comparison ignoring case and squeezing out blanks */
 static int StrMatch(const char *s, const char *t)
@@ -625,15 +627,14 @@ const char *DefaultPalette[] = {
 
 /* The Table of Known Color Names */
 /* Adapted from the X11 RGB database */
-/* Note: the color "white" is moved */
-/* to the top of the database to avoid */
-/* its being known as "gray100" */
+/* Note: the color "white" was moved to the top of the database 
+   to avoid its being looked up by col2name as "gray100" */
 
 typedef
 struct colorDataBaseEntry {
-	char *name;	/* X11 Color Name */
-	char *rgb;	/* #RRGGBB String */
-	unsigned int code;  /* Internal R Color Code */
+    char *name;	  // X11 Color Name
+    char *rgb;	  // #RRGGBB String, no longer used
+    rcolor code;  // Internal R Color Code
 } ColorDataBaseEntry;
 
 static ColorDataBaseEntry ColorDataBase[] = {
@@ -1312,7 +1313,7 @@ static unsigned int hexdigit(int digit)
 
 
 /* #RRGGBB[AA] String to Internal Color Code */
-static unsigned int rgb2col(const char *rgb)
+static rcolor rgb2col(const char *rgb)
 {
     unsigned int r = 0, g = 0, b = 0, a = 0; /* -Wall */
     if(rgb[0] != '#')
@@ -1336,7 +1337,7 @@ static unsigned int rgb2col(const char *rgb)
 
 /* External Color Name to Internal Color Code */
 
-static unsigned int name2col(const char *nm)
+static rcolor name2col(const char *nm)
 {
     int i;
     if(strcmp(nm, "NA") == 0 || strcmp(nm, "transparent") == 0)
@@ -1360,7 +1361,7 @@ static unsigned int name2col(const char *nm)
 	    return ColorDataBase[i].code;
     }
     error(_("invalid color name '%s'"), nm);
-    return 0;		/* never occurs but avoid compiler warnings */
+    return 0U;		/* never occurs but avoid compiler warnings */
 }
 
 
@@ -1368,7 +1369,7 @@ static unsigned int name2col(const char *nm)
 /* Search the color name database first */
 /* If this fails, create an #RRGGBB string */
 
-const char *incol2name(unsigned int col)
+const char *incol2name(rcolor col)
 {
     static char ColBuf[10]; // used for return value
 
@@ -1403,7 +1404,7 @@ const char *incol2name(unsigned int col)
     }
 }
 
-static unsigned int str2col(const char *s, unsigned int bg)
+static rcolor str2col(const char *s, rcolor bg)
 {
     if(s[0] == '#') return rgb2col(s);
     else if(isdigit((int)s[0])) {
@@ -1415,7 +1416,7 @@ static unsigned int str2col(const char *s, unsigned int bg)
     } else return name2col(s);
 }
 
-unsigned int inR_GE_str2col(const char *s)
+rcolor inR_GE_str2col(const char *s)
 {
     if (streql(s, "0")) 
 	error(_("invalid color specification \"%s\""), s);
@@ -1426,7 +1427,7 @@ unsigned int inR_GE_str2col(const char *s)
 /* We Assume that Checks Have Been Done */
 
 
-unsigned int inRGBpar3(SEXP x, int i, unsigned int bg)
+rcolor inRGBpar3(SEXP x, int i, rcolor bg)
 {
     int indx;
     switch(TYPEOF(x))
@@ -1458,7 +1459,7 @@ unsigned int inRGBpar3(SEXP x, int i, unsigned int bg)
 SEXP palette(SEXP val)
 {
     SEXP ans;
-    unsigned int color[MAX_PALETTE_SIZE];
+    rcolor color[MAX_PALETTE_SIZE];
     int i, n;
 
     if (!isString(val)) error(_("invalid argument type"));
@@ -1521,6 +1522,6 @@ void initPalette(void)
     int i;
     for(i = 0 ; DefaultPalette[i] ; i++)
 	Palette[i] = name2col(DefaultPalette[i]);
-    PaletteSize = i;
+    PaletteSize = i;  // 8
 }
 
