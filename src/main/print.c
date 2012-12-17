@@ -82,7 +82,8 @@ static char tagbuf[TAGBUFLEN + 5];
 
 
 /* Used in X11 module for dataentry */
-/* 'rho' is unused */
+/* NB this is called by R.app even though it is in no public header, so 
+   alter there if you alter this */
 void PrintDefaults(void)
 {
     R_print.na_string = NA_STRING;

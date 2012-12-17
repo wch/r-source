@@ -659,6 +659,9 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 }
 
 /* EncodeElement is called by cat(), write.table() and deparsing. */
+
+/* NB this is called by R.app even though it is in no public header, so 
+   alter there if you alter this */
 const char *EncodeElement(SEXP x, int indx, int quote, char dec)
 {
     int w, d, e, wi, di, ei;
