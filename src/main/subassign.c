@@ -436,6 +436,16 @@ static R_INLINE int gi(SEXP indx, R_xlen_t i)
 }
 #endif
 
+static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
+    /* if RHS (container or element) has NAMED > 0 set NAMED = 2.
+       Duplicating might be safer/more consistent (PR15098) */
+    SEXP val = VECTOR_ELT(y, i);
+    if ((NAMED(y) || NAMED(val)))
+	if (NAMED(val) < 2)
+	    SET_NAMED(val, 2);
+    return val;
+}
+
 static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
     SEXP dim, indx, newnames;
@@ -646,7 +656,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    if (i >= ny && NAMED(VECTOR_ELT(y, i % ny)) < 2)
 		SET_NAMED(VECTOR_ELT(y, i % ny), 2);
 
-	    SET_VECTOR_ELT(x, ii, VECTOR_ELT(y, i % ny));
+	    SET_VECTOR_ELT(x, ii, VECTOR_ELT_FIX_NAMED(y, i % ny));
 	}
 	break;
 
@@ -968,7 +978,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * NR;
-		SET_VECTOR_ELT(x, ij, VECTOR_ELT(y, k));
+		SET_VECTOR_ELT(x, ij, VECTOR_ELT_FIX_NAMED(y, k));
 		k = (k + 1) % ny;
 	    }
 	}
@@ -1175,7 +1185,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    if (i >= ny && NAMED(VECTOR_ELT(y, i % ny)) < 2)
 		SET_NAMED(VECTOR_ELT(y, i % ny), 2);
 
-	    SET_VECTOR_ELT(x, ii, VECTOR_ELT(y, i % ny));
+	    SET_VECTOR_ELT(x, ii, VECTOR_ELT_FIX_NAMED(y, i % ny));
 	    break;
 
 	case 2424: /* raw <- raw */
