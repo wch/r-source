@@ -26,9 +26,9 @@ export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        maintainer, make.packages.html, make.socket, memory.limit,
        memory.size, menu, methods, mirror2html, modifyList,
        new.packages, news, object.size, old.packages,
-       package.contents, package.skeleton, packageDescription,
-       packageVersion, packageStatus, page, person, personList, pico,
-       prompt, promptData, promptPackage, rc.getOption, rc.options,
+       package.skeleton, packageDescription, packageVersion,
+       packageStatus, page, person, personList, pico, prompt,
+       promptData, promptPackage, rc.getOption, rc.options,
        rc.settings, rc.status, readCitationFile, read.DIF, read.csv,
        read.csv2, read.delim, read.delim2, read.fwf, read.fortran,
        read.socket, read.table, recover, relist, remove.packages,
@@ -38,7 +38,7 @@ export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        toLatex, type.convert, unstack, untar, unzip,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.csv, write.csv2, write.socket, write.table,
-       xedit, xemacs, zip, zip.file.extract)
+       xedit, xemacs, zip)
 
 export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 

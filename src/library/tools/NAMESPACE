@@ -21,12 +21,11 @@ useDynLib(tools, .registration = TRUE)
 ## 	   tar, untar, zip)
 
 export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
-       "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db",
-       "Rd_parse", "Rdiff", "Rdindex", "SweaveTeXFilter",
-       "add_datalist", "bibstyle", "buildVignettes",
-       "charset_to_Unicode", "checkDocFiles", "checkDocStyle",
-       "checkFF", "checkMD5sums", "checkNEWS", "checkRd",
-       "checkPoFile", "checkPoFiles", "checkRdaFiles",
+       "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db", "Rdiff",
+       "Rdindex", "SweaveTeXFilter", "add_datalist", "bibstyle",
+       "buildVignettes", "charset_to_Unicode", "checkDocFiles",
+       "checkDocStyle", "checkFF", "checkMD5sums", "checkNEWS",
+       "checkRd", "checkPoFile", "checkPoFiles", "checkRdaFiles",
        "checkReplaceFuns", "checkS3methods", "checkTnF",
        "checkVignettes", "codoc", "codocClasses", "codocData",
        "compactPDF", "delimMatch", "deparseLatex", "dependsOnPkgs",
@@ -43,7 +42,8 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "texi2pdf", "toHTML", "toRd", "undoc", "update_pkg_po",
        "vignetteDepends", "write_PACKAGES", "xgettext",
        "xgettext2pot", "xngettext")
-export(.print.via.format)
+
+export(".print.via.format")
 
 exportPattern("^SIG.+")
 

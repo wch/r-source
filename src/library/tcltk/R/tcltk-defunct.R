@@ -17,31 +17,31 @@
 #  http://www.r-project.org/Licenses/
 
 ## deprecated at r16598, 2001-11-04
-"$.tclvar" <- function(x, name)
-	.Defunct("tclVar and tclvalue")
+## removed in R 3.0.0
+##"$.tclvar" <- function(x, name) .Defunct("tclVar and tclvalue")
 
-"$<-.tclvar" <- function(x, name, value)
-    .Defunct("tclVar and tclvalue<-")
+##"$<-.tclvar" <- function(x, name, value) .Defunct("tclVar and tclvalue<-")
 
 ## deprecated in R 2.3.0
-tkcmd <- function(...)
-    .Defunct("tcl")
+## removed in R 3.0.0
+## tkcmd <- function(...)
+##     .Defunct("tcl")
 
-tkfile.tail <- function(...)
-    .Defunct("tclfile.tail")
+## tkfile.tail <- function(...)
+##     .Defunct("tclfile.tail")
 
-tkfile.dir <- function(...)
-    .Defunct("tclfile.dir")
+## tkfile.dir <- function(...)
+##     .Defunct("tclfile.dir")
 
-tkopen <- function(...)
-    .Defunct("tclopen")
+## tkopen <- function(...)
+##     .Defunct("tclopen")
 
-tkclose <- function(...)
-    .Defunct("tclclose")
+## tkclose <- function(...)
+##     .Defunct("tclclose")
 
-tkputs <- function(...)
-    .Defunct("tclputs")
+## tkputs <- function(...)
+##     .Defunct("tclputs")
 
-tkread <- function(...)
-    .Defunct("tclread")
+## tkread <- function(...)
+##     .Defunct("tclread")
 

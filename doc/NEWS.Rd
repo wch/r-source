@@ -501,6 +501,16 @@
       
       \item Use of \code{col2rgb(0)} is defunct: use \code{par("bg")}
       instead.
+      
+      \item The long-defunct functions \code{Rd_parse()},
+      \code{anovalist.lm()}, \code{clearNames()}, \code{glm.fit.null()},
+      \code{lm.fit.null()}, \code{lm.wfit.null()},
+      \code{mauchley.test()}, \code{package.contents()},
+      \code{reshapeLong()}, \code{resapeWide()}, \code{tkclose()},
+      \code{tkcmd()}, \code{tkfile.dir()}, \code{tkfile.tail()},
+      \code{tkopen()}, \code{tkputs()}, \code{tkread()},
+      \code{trySilent()}, \code{zip.file.extract()} have been removed
+      entirely (but are still in the help system).
     }
   }
 

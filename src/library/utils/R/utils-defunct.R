@@ -19,15 +19,17 @@
 ## <entry>
 ## Deprecated in 1.9.0
 ## Defunct in 2.0.0
-package.contents <- function(pkg, lib.loc=NULL) .Defunct(package="utils")
+## Removed in 3.0.0
+## package.contents <- function(pkg, lib.loc=NULL) .Defunct(package="utils")
 ## </entry>
 
 ## <entry>
 ## Deprecated in 2.12.2
 ## Defunct in 2.14.0
-zip.file.extract <- function(file, zipname = "R.zip",
-			     unzip = getOption("unzip"), dir = tempdir())
-.Defunct("unzip")
+## Removed in 3.0.0
+## zip.file.extract <- function(file, zipname = "R.zip",
+## 			     unzip = getOption("unzip"), dir = tempdir())
+## .Defunct("unzip")
 ## </entry>
 
 ## <entry>

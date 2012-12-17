@@ -73,12 +73,8 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
 # for now, as package 'rv' takes over median
 export(median.default)
 
-# deprecated
-export(mauchley.test)
-
 # defunct
-export(reshapeWide, reshapeLong, anovalist.lm, lm.fit.null,
-       lm.wfit.null, glm.fit.null)
+# export(clearNames, mauchley.test, reshapeWide, reshapeLong, anovalist.lm, lm.fit.null, lm.wfit.null, glm.fit.null)
 
 ## register all the methods for generics elsewhere in case namespace is
 ## loaded but not currently attached.
@@ -417,7 +413,7 @@ S3method(summary, princomp)
 export(NLSstAsymptotic, NLSstClosestX, NLSstLfAsymptote,
        NLSstRtAsymptote, SSasymp, SSasympOff, SSasympOrig, SSbiexp,
        SSfol, SSfpl, SSgompertz, SSlogis, SSmicmen, SSweibull,
-       asOneSidedFormula, clearNames, getInitial, nls, nls.control,
+       asOneSidedFormula, getInitial, nls, nls.control,
        numericDeriv, selfStart, setNames, sortedXyData)
 
 # documented but not exported
