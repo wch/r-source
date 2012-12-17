@@ -1,4 +1,4 @@
-Changes from grid_2.15.0 to grid_2.16.0:
+Changes from grid_2.15.0 to grid_3.0.0:
 --------------------------------------
 
 1.  Bug fix for showViewport() when the viewport is a
@@ -6,7 +6,7 @@ Changes from grid_2.15.0 to grid_2.16.0:
     is NOT just a simple viewport (e.g., when one of
     the components of the "vpStack" is a "vpStack").
 
-2.  Bug fix for grid.ls(viewports=TRUE) when listing a
+2.  Bug fix for grid.ls(viewports = TRUE) when listing a
     "vpStack" and one of the components of the stack
     is NOT just a simple viewport (e.g., when one of
     the components of the "vpStack" is a "vpStack").
@@ -45,7 +45,7 @@ Changes from grid_2.15.0 to grid_2.16.0:
 
 
 Changes from grid_2.14.0 to grid_2.15.0:
---------------------------------------
+---------------------------------------
 
 1.  Added calcStringMetric() function.
 
@@ -76,21 +76,21 @@ Changes from grid_2.14.0 to grid_2.15.0:
 
 
 Changes from grid_2.12.0 to grid_2.13.0:
---------------------------------------
+---------------------------------------
 
 1.  Added grid.function() for drawing lines to represent functions.
 
 2.  Fixed bug in calculation of x, y, width, and height of segments
     grobs.
 
-3.  Fixed bug in grid.grab(wrap=TRUE) when the scene includes 
+3.  Fixed bug in grid.grab(wrap = TRUE) when the scene includes 
     downViewport()s.
 
 4.  Added showGrob() function.
 
 
 Changes from grid_2.11.0 to grid_2.12.0:
---------------------------------------
+---------------------------------------
 
 1.  Neither width nor height need to be specified in 
     grid.raster().  The image aspect ratio will be used
@@ -106,7 +106,7 @@ Changes from grid_2.11.0 to grid_2.12.0:
 
 
 Changes from grid_2.10.0 to grid_2.11.0:
---------------------------------------
+---------------------------------------
 
 1.  Added xsplinePoints() function to return the (x, y) 
     locations that an Xspline would be drawn through.
@@ -139,7 +139,7 @@ Changes from grid_2.9.0 to grid_2.10.0:
     
 
 Changes from grid_2.8.0 to grid_2.9.0:
-------------------------------------
+-------------------------------------
 
 1.  Copied grid.roundRect() from 'RGraphics' package into 'grid'.
 
@@ -166,7 +166,7 @@ Changes from grid_2.8.0 to grid_2.9.0:
 
 
 Changes from grid_2.7.0 to grid_2.8.0:
-------------------------------------
+-------------------------------------
 
 1.  Added grid.null() and nullGrob();  grob that is guaranteed
     to have zero-width, zero-height, and draw nothing.
@@ -187,7 +187,7 @@ Changes from grid_2.7.0 to grid_2.8.0:
 
 
 Changes from grid_2.6.0 to grid_2.7.0:
-------------------------------------
+-------------------------------------
 
 1.  Grid will no longer complain about clipping to a rotated
     viewport if the rotation is a multiple of 90 degrees.
@@ -231,7 +231,7 @@ Changes from grid_2.6.0 to grid_2.7.0:
 
 
 Changes from grid_2.5.0 to grid_2.6.0:
-------------------------------------
+-------------------------------------
 
 1.  Added grid.gedit() as convenience wrapper for grid.edit()
     based on usage patterns of Hadley Wickham when working with
@@ -262,7 +262,7 @@ Changes from grid_2.5.0 to grid_2.6.0:
 
 
 Changes from grid_2.4.0 to grid_2.5.0:
-------------------------------------
+-------------------------------------
 
 1.  Added 'open' argument to grid.curve().  This allows, for example,
     filling the segment of a circle.
@@ -273,7 +273,7 @@ Changes from grid_2.4.0 to grid_2.5.0:
 
 
 Changes from grid_2.3.0 to grid_2.4.0:
-------------------------------------
+-------------------------------------
 
 1.  Bug fix for colour used when drawing a rectangle in a
     rotated viewport (reported by Olaf Burger).
@@ -300,7 +300,7 @@ Changes from grid_2.3.0 to grid_2.4.0:
 
 
 Changes from grid_2.2.0 to grid_2.3.0:
-------------------------------------
+-------------------------------------
 
 1.  Bug fix for stringWidth() and stringHeight() with mathematical 
     annotation.
@@ -378,7 +378,7 @@ Changes from grid_2.2.0 to grid_2.3.0:
 
 
 Changes from grid_2.1.0 to grid_2.2.0:
-------------------------------------
+-------------------------------------
 
 1.  current.vpPath() now exported.
 
