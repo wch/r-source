@@ -595,6 +595,10 @@
       \item Entry point \code{rcont2} has been migrated to package
       \pkg{stats} and so is no longer available.
       
+      \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
+      (rather than a string) and hence usable as e.g.
+      \code{#if R_SVN_REVISION < 70000}.
+
       \item The entry points \code{rgb2hsv} and \code{hsv2rgb} have been
       migrated to package \pkg{grDevices} and so are no longer available.
       
@@ -701,9 +705,6 @@
   
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
-      and hence usable as e.g. \code{#if R_SVN_REVISION < 70000}.
-
       \item On a 64-bit Windows platform with enough RAM, \code{R_alloc}
       can now allocate up to just under 32GB like other 64-bit
       platforms.
