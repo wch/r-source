@@ -56,10 +56,12 @@ summaryRprof <-
            break
        if (memory.profiling) {
            memprefix <- attr(regexpr(":[0-9]+:[0-9]+:[0-9]+:[0-9]+:", chunk), "match.length")
-           if (memory == "both"){
+           if (memory == "both") {
                memstuff <- substr(chunk, 2L, memprefix-1L)
                memcounts <- pmax(apply(sapply(strsplit(memstuff, ":"), as.numeric), 1, diff), 0)
-               memcounts <- c(0, rowSums(memcounts[, 1L:3L]))
+               ##  memcounts <- c(0, rowSums(memcounts[, 1L:3L]))
+               ## convert to bytes.
+               memcounts <- c(0, rowSums(cbind(memcounts[, 1L:2L] * 8, memcounts[, 3L])))
                rm(memstuff)
            }
            chunk <- substr(chunk, memprefix+1L, nchar(chunk,  "c"))

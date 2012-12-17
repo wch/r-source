@@ -82,7 +82,10 @@
       
       \item In Windows, \code{file.link()} and \code{file.symlink()}
       used the link name twice, so would always fail. (Reported
-      by Rui Barradas/Oliver Soong).      
+      by Rui Barradas/Oliver Soong).
+
+      \item \code{summaryRprof(memory = "both")} mixed up the units of
+      Vcells and Ncells: it now works in bytes.  (\PR{15138})
     }
   }
 }
