@@ -489,8 +489,6 @@
       \code{.Call("R_GD_nullDevice", package = "grDevices")} has
       been removed: use \code{pdf(file = NULL)} instead.
 
-      \item The long-defunct function \code{print.coefmat()} has been removed.
-
       \item The \code{.Fortran()} entry point \code{"dqrls"} which has
       not been used by \R since version 2.15.1 is no longer available.
 
@@ -506,11 +504,11 @@
       \code{anovalist.lm()}, \code{clearNames()}, \code{glm.fit.null()},
       \code{lm.fit.null()}, \code{lm.wfit.null()},
       \code{mauchley.test()}, \code{package.contents()},
-      \code{reshapeLong()}, \code{resapeWide()}, \code{tkclose()},
-      \code{tkcmd()}, \code{tkfile.dir()}, \code{tkfile.tail()},
-      \code{tkopen()}, \code{tkputs()}, \code{tkread()},
-      \code{trySilent()}, \code{zip.file.extract()} have been removed
-      entirely (but are still in the help system).
+      \code{print.coefmat()}, \code{reshapeLong()}, \code{resapeWide()},
+      \code{tkclose()}, \code{tkcmd()}, \code{tkfile.dir()},
+      \code{tkfile.tail()}, \code{tkopen()}, \code{tkputs()},
+      \code{tkread()}, \code{trySilent()}, \code{zip.file.extract()}
+      have been removed entirely (but are still in the help system).
     }
   }
 
@@ -753,7 +751,10 @@
       
       \item In Windows, \code{file.link()} and \code{file.symlink()}
       used the link name twice, so would always fail. (Reported
-      by Rui Barradas/Oliver Soong).      
+      by Rui Barradas/Oliver Soong).
+
+      \item \code{summaryRprof(memory = "both")} mixed up the units of
+      Vcells and Ncells: it now works in bytes.  (\PR{15138})
     }
   }
 }
