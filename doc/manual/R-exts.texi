@@ -472,15 +472,16 @@ the sole (and maybe not even the main) author.
 
 @c DESCRIPTION field Maintainer
 The mandatory @samp{Maintainer} field should give a @emph{single} name
-with a @emph{valid} (RFC 2822) email address in angle brackets (for
-sending bug reports etc.).  It should not end in a period or comma.  For
-a public package it should be a @emph{person}, not a mailing list and
-not a corporate entity: do ensure that it is valid and will remain valid
-for the lifetime of the package.
+followed a @emph{valid} (RFC 2822) email address in angle brackets.  It
+should not end in a period or comma.  This field is what is reported by
+the @code{maintainer} function and used by @code{bug.report}.  For a
+@acronym{CRAN} package it should be a @emph{person}, not a mailing list
+and not a corporate entity: do ensure that it is valid and will remain
+valid for the lifetime of the package.
 
 Both @samp{Author} and @samp{Maintainer} fields can be omitted (as from
 @R{} 2.14.0) if a suitable @samp{Authors@@R} field is given.  This field
-can be used to provide a refined, machine-readable description of the
+can be used to provide a refined and machine-readable description of the
 package ``authors'' (in particular specifying their precise
 @emph{roles}), via suitable @R{} code.  The roles can include
 @samp{"aut"} (author) for full authors, @samp{"cre"} (creator) for the

@@ -23,6 +23,7 @@
 ##"$<-.tclvar" <- function(x, name, value) .Defunct("tclVar and tclvalue<-")
 
 ## deprecated in R 2.3.0
+## defunct 2006-04-10
 ## removed in R 3.0.0
 ## tkcmd <- function(...)
 ##     .Defunct("tcl")
