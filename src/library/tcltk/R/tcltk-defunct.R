@@ -16,14 +16,17 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## deprecated at r16598, 2001-11-04
-## removed in R 3.0.0
-##"$.tclvar" <- function(x, name) .Defunct("tclVar and tclvalue")
+## This file is only retained to record history.
 
-##"$<-.tclvar" <- function(x, name, value) .Defunct("tclVar and tclvalue<-")
+## deprecated at r16598, 2001-11-04
+## defunct 2006-04-10, for R 2.4.0
+## removed in R 3.0.0
+## "$.tclvar" <- function(x, name) .Defunct("tclVar and tclvalue")
+
+## "$<-.tclvar" <- function(x, name, value) .Defunct("tclVar and tclvalue<-")
 
 ## deprecated in R 2.3.0
-## defunct 2006-04-10
+## defunct 2006-04-10, for R 2.4.0
 ## removed in R 3.0.0
 ## tkcmd <- function(...)
 ##     .Defunct("tcl")
