@@ -108,7 +108,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     commonLen = length(value);
     commonType = TYPEOF(value);
     dim_v = getAttrib(value, R_DimSymbol);
-    array_value = (TYPEOF(dim_v) == INTSXP && LENGTH(dim_v) >= 1) ? TRUE : FALSE;
+    array_value = (TYPEOF(dim_v) == INTSXP && LENGTH(dim_v) >= 1);
     PROTECT(ans = allocVector(commonType, n*commonLen));
     if (useNames) {
     	PROTECT(names = getAttrib(XX, R_NamesSymbol));
@@ -145,45 +145,46 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 				LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
 	for(i = 0; i < n; i++) {
-	    int j;
-	    SEXPTYPE tmpType;
+	    SEXP val; SEXPTYPE valType;
+	    PROTECT_INDEX indx;
 	    INTEGER(ind)[0] = i + 1;
-	    tmp = eval(R_fcall, rho);
-	    if (length(tmp) != commonLen)
+	    PROTECT_WITH_INDEX(val = eval(R_fcall, rho), &indx);
+	    if (length(val) != commonLen)
 	    	error(_("values must be length %d,\n but FUN(X[[%d]]) result is length %d"),
-	               commonLen, i+1, length(tmp));
-	    tmpType = TYPEOF(tmp);
-	    if (tmpType != commonType) {
+	               commonLen, i+1, length(val));
+	    valType = TYPEOF(val);
+	    if (valType != commonType) {
 	    	Rboolean okay = FALSE;
 	    	switch (commonType) {
-	    	case CPLXSXP: okay = (tmpType == REALSXP) || (tmpType == INTSXP)
-	    	                    || (tmpType == LGLSXP); break;
-	    	case REALSXP: okay = (tmpType == INTSXP) || (tmpType == LGLSXP); break;
-	    	case INTSXP:  okay = (tmpType == LGLSXP); break;
+	    	case CPLXSXP: okay = (valType == REALSXP) || (valType == INTSXP)
+	    	                    || (valType == LGLSXP); break;
+	    	case REALSXP: okay = (valType == INTSXP) || (valType == LGLSXP); break;
+	    	case INTSXP:  okay = (valType == LGLSXP); break;
 	        }
 	        if (!okay)
 	            error(_("values must be type '%s',\n but FUN(X[[%d]]) result is type '%s'"),
-	            	  type2char(commonType), i+1, type2char(tmpType));
-	        tmp = coerceVector(tmp, commonType);
+	            	  type2char(commonType), i+1, type2char(valType));
+	        REPROTECT(val = coerceVector(val, commonType), indx);
 	    }
 	    /* Take row names from the first result only */
 	    if (i == 0 && useNames && isNull(rowNames))
-	    	REPROTECT(rowNames = getAttrib(tmp,
+	    	REPROTECT(rowNames = getAttrib(val,
 					       array_value ? R_DimNamesSymbol : R_NamesSymbol),
 			  index);
-	    for (j = 0; j < commonLen; j++) {
+	    for (int j = 0; j < commonLen; j++) {
 	    	switch (commonType) {
-	    	case CPLXSXP: COMPLEX(ans)[i*commonLen + j] = COMPLEX(tmp)[j]; break;
-	    	case REALSXP: REAL(ans)[i*commonLen + j] = REAL(tmp)[j]; break;
-	    	case INTSXP:  INTEGER(ans)[i*commonLen + j] = INTEGER(tmp)[j]; break;
-	    	case LGLSXP:  LOGICAL(ans)[i*commonLen + j] = LOGICAL(tmp)[j]; break;
-	    	case RAWSXP:  RAW(ans)[i*commonLen + j] = RAW(tmp)[j]; break;
-	    	case STRSXP:  SET_STRING_ELT(ans, i*commonLen + j, STRING_ELT(tmp, j)); break;
-	    	case VECSXP:  SET_VECTOR_ELT(ans, i*commonLen + j, VECTOR_ELT(tmp, j)); break;
+	    	case CPLXSXP: COMPLEX(ans)[i*commonLen + j] = COMPLEX(val)[j]; break;
+	    	case REALSXP: REAL(ans)[i*commonLen + j] = REAL(val)[j]; break;
+	    	case INTSXP:  INTEGER(ans)[i*commonLen + j] = INTEGER(val)[j]; break;
+	    	case LGLSXP:  LOGICAL(ans)[i*commonLen + j] = LOGICAL(val)[j]; break;
+	    	case RAWSXP:  RAW(ans)[i*commonLen + j] = RAW(val)[j]; break;
+	    	case STRSXP:  SET_STRING_ELT(ans, i*commonLen + j, STRING_ELT(val, j)); break;
+	    	case VECSXP:  SET_VECTOR_ELT(ans, i*commonLen + j, VECTOR_ELT(val, j)); break;
 	    	default:
 	    	    error(_("type '%s' is not supported"), type2char(commonType));
 	    	}
 	    }
+	    UNPROTECT(1);
 	}
 	UNPROTECT(3);
     }
