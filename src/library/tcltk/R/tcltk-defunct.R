@@ -17,6 +17,7 @@
 #  http://www.r-project.org/Licenses/
 
 ## deprecated at r16598, 2001-11-04
+## defunct 2006-04-10, for R 2.4.0
 "$.tclvar" <- function(x, name)
 	.Defunct("tclVar and tclvalue")
 
@@ -24,6 +25,7 @@
     .Defunct("tclVar and tclvalue<-")
 
 ## deprecated in R 2.3.0
+## defunct 2006-04-10, for R 2.4.0
 tkcmd <- function(...)
     .Defunct("tcl")
 
