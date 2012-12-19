@@ -2079,4 +2079,3 @@ stopifnot(identical(X, matrix(c(1,2,3, 5,7,11, 13,17,19), 3, 3)))
 
 
 proc.time()
-z
