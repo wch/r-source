@@ -2022,8 +2022,21 @@ x <- list()
 x[1:2] <- list(1)
 x[[1]][] <- 2  # change part of first component of x
 x   # second component of x should not be affected
-stopifnot(identical(x[[2]], 1))
-## was  2  in R <= 2.15.2  ("NAMED")
+stopifnot(identical(x[[2]], 1))# was 2
+##
+## 2nd example from Comment #5
+x <- list()
+list(1) -> x[1] -> x[2]
+x[[1]][] <- 2
+stopifnot(x[[2]] == 1)## was 2, wrongly, as well ..
+##
+## 3rd example from Comment #5
+y <- list(1)
+x <- list()
+x[1] <- y
+x[[1]][] <- 2
+stopifnot(y[[1]] == 1)## was 2
+## "NAMED": all three were wrong in    2.4.0 <= R <= 2.15.2
 
 
 ## PR#15115
@@ -2051,8 +2064,10 @@ stopifnot(!is.na(z$tension))
 ## recursive listing of directories
 p <- file.path(R.home(), "share","texmf") # always exists, readable
 lfri <- list.files(p, recursive=TRUE, include.dirs=TRUE)
-stopifnot(!is.na(match(c("tex", "bibtex"), lfri)))
-## failed for a few days, unnoticed, in the development version of R
+subdirs <- c("bibtex", "tex")
+stopifnot(!is.na(match(subdirs, lfri)),
+	  identical(subdirs, list.files(p, all.files=TRUE, no..=TRUE)))
+## the first failed for a few days, unnoticed, in the development version of R
 
 
 ## In R 2.15.[12] this changed X
@@ -2064,3 +2079,4 @@ stopifnot(identical(X, matrix(c(1,2,3, 5,7,11, 13,17,19), 3, 3)))
 
 
 proc.time()
+z
