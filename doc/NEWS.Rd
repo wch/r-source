@@ -408,8 +408,8 @@
       \code{.First.lib()} function will need to be converted.
 
       \command{R CMD INSTALL} no longer adds a namespace, and a
-      \code{.First.lib()} function in a package will be ignored.
-      [The latter as from ca Dec 21.]
+      \code{.First.lib()} function in a package will be ignored (with a
+      warning for now).
 
       Packages without a \file{R} directory and no \file{NAMESPACE} file
       can still be installed.
