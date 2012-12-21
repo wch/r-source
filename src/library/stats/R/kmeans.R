@@ -84,6 +84,7 @@ function(x, centers, iter.max = 10, nstart = 1,
                     "Hartigan-Wong" = 1,
                     "Lloyd" = 2, "Forgy" = 2,
                     "MacQueen" = 3)
+    storage.mode(x) <- "double"
     if(length(centers) == 1L) {
 	if (centers == 1) nmeth <- 3
 	k <- centers
@@ -112,7 +113,6 @@ function(x, centers, iter.max = 10, nstart = 1,
     if(is.na(iter.max) || iter.max < 1) stop("'iter.max' must be positive")
     if(ncol(x) != ncol(centers))
 	stop("must have same number of columns in 'x' and 'centers'")
-    storage.mode(x) <- "double"
     storage.mode(centers) <- "double"
     Z <- do_one(nmeth)
     best <- sum(Z$wss)
