@@ -126,7 +126,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
             if(grepl("# Default NAMESPACE created by R", ns[1L],
                      useBytes = TRUE)) {
                 if (nsname == Sys.getenv("R_INSTALL_PKG"))
-                    warning(sprintf("ignoring .First.lib() for package %s", sQuote(nsname)), domain = NA)
+                    warning(sprintf("ignoring .First.lib() for package %s", sQuote(nsname)), domain = NA, call. = FALSE)
 ##                fn <- get(".First.lib", envir = env, inherits = FALSE)
 ##                fn(libname, pkgname)
             }
