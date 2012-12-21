@@ -528,9 +528,8 @@ matchSignature <-
     if(is.null(names(signature))) {
         which <- seq_along(signature)
         if(length(which) > length(anames))
-          stop(gettextf("more elements in the method signature (%d) than in the generic  signature (%d)",
-               length(which),
-               length(anames)), domain = NA)
+          stop(gettextf("more elements in the method signature (%d) than in the generic signature (%d) for function %s",
+	       length(which), length(anames), sQuote(fun@generic)), domain = NA)
     }
     else {
     ## construct a function call with the same naming pattern  &
