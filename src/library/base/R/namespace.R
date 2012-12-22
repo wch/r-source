@@ -117,19 +117,9 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
                               conditionMessage(res)),
                      call. = FALSE, domain = NA)
             }
-        } else if (!exists(".onLoad", envir = ns, inherits = FALSE) &&
-                   !exists(".onAttach", envir = ns, inherits = FALSE) &&
-                   exists(".First.lib", envir = env, inherits = FALSE)) {
-            ## ignore .First.lib except for auto-generated NAMESPACEs
-            ns <- readLines(file.path(libname, pkgname, "NAMESPACE"),
-                            warn = FALSE)
-            if(grepl("# Default NAMESPACE created by R", ns[1L],
-                     useBytes = TRUE)) {
-                if (nsname == Sys.getenv("R_INSTALL_PKG"))
-                    warning(sprintf("ignoring .First.lib() for package %s", sQuote(nsname)), domain = NA, call. = FALSE)
-##                fn <- get(".First.lib", envir = env, inherits = FALSE)
-##                fn(libname, pkgname)
-            }
+        } else if (exists(".First.lib", envir = env, inherits = FALSE)) {
+            if (nsname == Sys.getenv("R_INSTALL_PKG"))
+                warning(sprintf("ignoring .First.lib() for package %s", sQuote(nsname)), domain = NA, call. = FALSE)
         }
     }
     runUserHook <- function(pkgname, pkgpath) {
