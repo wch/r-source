@@ -11,7 +11,7 @@ Name: GNU General Public License
 Abbrev: GPL
 Version: 3
 SSS: GPL-3
-OSI: open (http://opensource.org/licenses/gpl-license))
+OSI: open (http://opensource.org/licenses/gpl-license)
 FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#GNUGPL)
 URL: http://www.R-project.org/Licenses/GPL-3
 FOSS: yes
@@ -32,6 +32,7 @@ SSS: LGPL-2.1
 OSI: open (http://opensource.org/licenses/lgpl-license)
 FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#LGPLv2.1)
 URL: http://www.R-project.org/Licenses/LGPL-2.1
+FOSS: yes
 
 Name: GNU Lesser General Public License
 Abbrev: LGPL
@@ -200,4 +201,11 @@ Name: CC0
 FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#CC0)
 OSI: NA (http://opensource.org/faq#cc-zero)
 URL: http://creativecommons.org/publicdomain/zero/1.0/legalcode
+FOSS: yes
+
+Name: zlib License
+Abbrev: Zlib
+FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#ZLib)
+OSI: open (http://opensource.org/licenses/Zlib)
+URL: http://www.gzip.org/zlib/zlib_license.html
 FOSS: yes
