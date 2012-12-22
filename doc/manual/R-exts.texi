@@ -396,8 +396,9 @@ as made available @emph{via} @uref{http://www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the @R{} source or home
 directory.
 @item
-The names of abbreviations of free or open source software (FOSS, e.g.,
-@uref{http://en.wikipedia.org/@/wiki/@/FOSS}) licenses as contained in the
+The names or abbreviations of ``standard'' and mostly free or open
+source software (FOSS, e.g.,
+@uref{http://en.wikipedia.org/@/wiki/@/FOSS}) licenses contained in the
 license data base in file @file{share/licenses/license.db} in the @R{}
 source or home directory, possibly (for versioned licenses) followed by
 a version restriction of the form @samp{(@var{op} @var{v})} with
@@ -407,11 +408,7 @@ specification (strings of non-negative integers separated by @samp{.}),
 possibly combined @emph{via} @samp{,} (see below for an example).  For
 versioned licenses, one can also specify the name followed by the
 version, or combine an existing abbreviation and the version with a
-@samp{-}.  Further free (see
-@uref{http://www.fsf.org/@/licenses/@/license-list.html}) or open
-software (see
-@uref{http://www.opensource.org/@/licenses/@/bsd-license.php})
-licenses will be added to this data base if necessary.
+@samp{-}.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
 to a file named @file{LICENSE} or @file{LICENCE} in the package (source
@@ -421,11 +418,11 @@ The string @samp{Unlimited}, meaning that there are no restrictions on
 distribution or use other than those imposed by relevant laws (including
 copyright laws).
 @end itemize
-If a package license restricts a base FOSS license (where permitted,
-e.g., using GPL-3 or AGPL-3 with an attribution clause), the additional
-terms should be placed in file @file{LICENSE} (or @file{LICENCE}), and
-the string @samp{+ file LICENSE} (or @samp{+ file LICENCE},
-respectively) should be appended to the corresponding individual license
+If a package license restricts a base license (where permitted, e.g.,
+using GPL-3 or AGPL-3 with an attribution clause), the additional terms
+should be placed in file @file{LICENSE} (or @file{LICENCE}), and the
+string @samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively)
+should be appended to the corresponding individual license
 specification.
 
 Examples of standardized specifications include
