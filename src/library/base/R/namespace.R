@@ -106,8 +106,9 @@ getExportedValue <- function(ns, name) {
     c(## automatically detected as calls to library.dynam
       "EMD","PKfit", "Peaks", "Rsundials", "SpherWave", "TAHMMAnnot",
       "bear", "bise", "bisoreg", "gibbs.met", "integrOmics", "ivivc", "mpa",
-      "opefimor", "predmixcor", "ref", "ringscale", "sampfling", "seqCBS",
-      "stab", "survivalROC", "tdm", "wombsoft",
+      "multic", "opefimor", "pamctdp","predmixcor", "realized", "ref",
+      "ringscale", "sampfling", "seqCBS", "stab", "survivalROC", "tdm",
+      "wombsoft",
       ## Manually checked
       "CarbonEL", "Rniftilib")
 
