@@ -104,18 +104,12 @@ getExportedValue <- function(ns, name) {
 
 .Firstlib_as_onLoad <-
     c(## automatically detected as calls to library.dynam
-      "BAS", "BMA", "CompQuadForm", "CompRandFld", "DIME", "EMD",
-      "GEOmap", "GenKern", "PKfit", "Peaks", "Rsundials", "Rwave",
-      "SpatialExtremes", "SpherWave", "TAHMMAnnot", "bear", "bild",
-      "bise", "bisoreg", "bootstrap", "brainwaver", "dixon", "ebdbNet",
-      "energy", "evdbayes", "fImport", "forensim", "gibbs.met", "gld",
-      "integrOmics", "ivivc", "logspline", "mpa", "onemap", "opefimor",
-      "pamctdp", "picante", "polspline", "ppMeasures", "predmixcor",
-      "ref", "ringscale", "sampfling", "sampling", "seqCBS", "stab",
-      "survPresmooth", "survivalROC", "tdm", "tdthap", "tweedie",
-      "waveslim", "wombsoft",
+      "EMD","PKfit", "Peaks", "Rsundials", "SpherWave", "TAHMMAnnot",
+      "bear", "bise", "bisoreg", "gibbs.met", "integrOmics", "ivivc", "mpa",
+      "opefimor", "predmixcor", "ref", "ringscale", "sampfling", "seqCBS",
+      "stab", "survivalROC", "tdm", "wombsoft",
       ## Manually checked
-      "CarbonEL", "LogConcDEAD", "Rniftilib", "ecodist", "ftnonpar")
+      "CarbonEL", "Rniftilib")
 
 attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 {
