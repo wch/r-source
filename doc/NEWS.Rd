@@ -300,6 +300,9 @@
       \item \code{.onDetach()} is supported as an alternative to
       \code{.Last.lib}.  Unlike \code{.Last.lib}, this does not need to
       be exported from the package's namespace.
+      
+      The \code{srcfile} argument to \code{parse()} may now be a 
+      character string, to be used in error messages.
     }
   }
 
@@ -679,6 +682,9 @@
       
       \item \code{legend()} now accepts negative \code{pch} values, in
       the same way \code{points()} long has.
+      
+      \item Parse errors when installing files now correctly display
+      the name of the file containing the bad code.      
     }
   }
 }

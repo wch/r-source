@@ -3790,7 +3790,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     REPROTECT(ParseState.SrcFile = srcfile, ParseState.SrcFileProt);
     REPROTECT(ParseState.Original = srcfile, ParseState.OriginalProt);
     
-    if (!isNull(ParseState.SrcFile)) {
+    if (isEnvironment(ParseState.SrcFile)) {
     	ParseState.keepSrcRefs = TRUE;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
     }
@@ -3921,7 +3921,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
     REPROTECT(ParseState.SrcFile = srcfile, ParseState.SrcFileProt);
     REPROTECT(ParseState.Original = srcfile, ParseState.OriginalProt);
     
-    if (!isNull(ParseState.SrcFile)) {
+    if (isEnvironment(ParseState.SrcFile)) {
     	ParseState.keepSrcRefs = TRUE;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
     }
@@ -4982,7 +4982,8 @@ static void setParseFilename(SEXP newname) {
 	SET_STRING_ELT(class, 1, mkChar("srcfile"));
 	setAttrib(ParseState.SrcFile, R_ClassSymbol, class);
 	UNPROTECT(1);
-    }
+    } else 
+    	REPROTECT(ParseState.SrcFile = newname, ParseState.SrcFileProt);
     UNPROTECT_PTR(newname);
 }
 

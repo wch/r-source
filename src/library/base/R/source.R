@@ -98,6 +98,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
     	lines <- readLines(file, warn = FALSE)
     	if (isTRUE(keep.source))
     	    srcfile <- srcfilecopy(deparse(substitute(file)), lines)
+    	else
+    	    srcfile <- deparse(substitute(file))
     }
 
     ## parse() uses this option in the C code.

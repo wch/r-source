@@ -27,8 +27,8 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
     to character if possible.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
-  \item{srcfile}{\code{NULL}, or a \code{\link{srcfile}} object.  See
-    the \sQuote{Details} section.}
+  \item{srcfile}{\code{NULL}, a character vector, or a 
+    \code{\link{srcfile}} object.  See the \sQuote{Details} section.}
   \item{encoding}{encoding to be assumed for input strings.  If the
     value is \code{"latin1"} or \code{"UTF-8"} it is used to mark
     character strings as known to be in Latin-1 or UTF-8: it is not used
@@ -66,10 +66,16 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
 
   The default for \code{srcfile} is set as follows.  If
   \code{options("keep.source")} is \code{FALSE}, \code{srcfile}
-  defaults to \code{NULL}. Otherwise, if \code{text} is used,
-  \code{srcfile} will be set to a \code{\link{srcfilecopy}} containing
-  the text.  If a character string is used for \code{file}, a
-  \code{\link{srcfile}} object referring to that file will be used.
+  defaults to a character string, either \code{"<text>"} or one
+  derived from \code{file}.  When \code{options("keep.source")} is
+  \code{TRUE}, if \code{text} is used, \code{srcfile} will be set to a
+  \code{\link{srcfilecopy}} containing the text.  If a character
+  string is used for \code{file}, a \code{\link{srcfile}} object
+  referring to that file will be used.
+  
+  When \code{srcfile} is a character string, error messages will
+  include the name.  When it is a \code{\link{srcfile}} object,
+  source reference information will be retained.  
 }
 \value{
   An object of type \code{"\link{expression}"}, with up to \code{n}

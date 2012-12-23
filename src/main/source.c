@@ -88,13 +88,16 @@ SEXP attribute_hidden getParseContext(void)
 static void getParseFilename(char* buffer, size_t buflen)
 {
     buffer[0] = '\0';
-    if (R_ParseErrorFile && !isNull(R_ParseErrorFile)) {
-	SEXP filename;
-	PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
-	if (isString(filename) && length(filename))
-	    strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen - 1);
-	UNPROTECT(1);
-    }
+    if (R_ParseErrorFile) {
+    	if (isEnvironment(R_ParseErrorFile)) {
+	    SEXP filename;
+	    PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
+	    if (isString(filename) && length(filename))
+	        strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen - 1);
+	    UNPROTECT(1);
+        } else if (isString(R_ParseErrorFile) && length(R_ParseErrorFile)) 
+            strncpy(buffer, CHAR(STRING_ELT(R_ParseErrorFile, 0)), buflen - 1);
+    }           
 }
 
 static SEXP tabExpand(SEXP strings)
