@@ -2065,8 +2065,8 @@ stopifnot(!is.na(z$tension))
 p <- file.path(R.home(), "share","texmf") # always exists, readable
 lfri <- list.files(p, recursive=TRUE, include.dirs=TRUE)
 subdirs <- c("bibtex", "tex")
-stopifnot(!is.na(match(subdirs, lfri)),
-	  identical(subdirs, list.files(p, all.files=TRUE, no..=TRUE)))
+lfnd <- setdiff(list.files(p, all.files=TRUE, no..=TRUE), ".svn")
+stopifnot(!is.na(match(subdirs, lfri)), identical(subdirs, lfnd))
 ## the first failed for a few days, unnoticed, in the development version of R
 
 
