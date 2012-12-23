@@ -133,7 +133,7 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
 }
 
 .onUnload <- function(libpath) {
-    cat("unloading 'methods' package ...\n")# see when this is called
+    message("unloading 'methods' package ...")# see when this is called
     .isMethodsDispatchOn(FALSE)
     methods:::bind_activation(FALSE)
     library.dynam.unload("methods", libpath)
@@ -153,15 +153,13 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
     }
 }
 
-.Last.lib <- function(libpath) {
-    methods:::.onUnload(libpath)
-}
+.onDetach <- function(libpath) methods:::.onUnload(libpath)
+
 ## redefining it here, invalidates the one above:
 ## Why don't we unload "methods" on detach() ?
-.Last.lib <- function(libpath) .isMethodsDispatchOn(FALSE)
+.onDetach <- function(libpath) .isMethodsDispatchOn(FALSE)
 
 .saveImage <- FALSE
-## cat("Saving namespace image ...\n")
 
 ## want ASCII quotes, not fancy nor translated ones
 .dQ <- function (x) paste0('"', x, '"')

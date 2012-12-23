@@ -22,7 +22,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
     checkConflicts <- function(env)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
-                       ".Random.seed", ".Last.lib",
+                       ".Random.seed", ".Last.lib", ".onDetach",
                        ".packageName", ".noGenerics", ".required",
                        ".no_S3_generics", ".requireCachedGenerics")
         sp <- search()
@@ -123,6 +123,7 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
     if (! grepl("^package:", packageName) )
         return(invisible(.Internal(detach(pos))))
 
+    ## From here down we are detaching a package.
     pkgname <- sub("^package:", "", packageName)
     for(pkg in search()[-1L]) {
         if(grepl("^package:", pkg) &&
@@ -139,13 +140,28 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
     }
     env <- as.environment(pos)
     libpath <- attr(env, "path")
-    hook <- getHook(packageEvent(pkgname, "detach")) # might be list
+    hook <- getHook(packageEvent(pkgname, "detach")) # might be a list
     for(fun in rev(hook)) try(fun(pkgname, libpath))
-    if(exists(".Last.lib", mode = "function", where = pos, inherits = FALSE)) {
+    ns <- asNamespace(pkgname)
+    if(exists(".onDetach", mode = "function", where = ns, inherits = FALSE)) {
+        .onDetach <- get(".onDetach",  mode = "function", pos = ns,
+                         inherits = FALSE)
+        if(!is.null(libpath)) {
+            res <- tryCatch(.onDetach(libpath), error = identity)
+            if (inherits(res, "error")) {
+                warning(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+                                 ".onDetach", "detach", pkgname,
+                                 deparse(conditionCall(res))[1L],
+                                 conditionMessage(res)),
+                        call. = FALSE, domain = NA)
+            }
+        }
+    }
+    else if(exists(".Last.lib", mode = "function", where = pos, inherits = FALSE)) {
         .Last.lib <- get(".Last.lib",  mode = "function", pos = pos,
                          inherits = FALSE)
         if(!is.null(libpath)) {
-            res <- tryCatch(.Last.lib(libpath), error=identity)
+            res <- tryCatch(.Last.lib(libpath), error = identity)
             if (inherits(res, "error")) {
                 warning(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
                                  ".Last.lib", "detach", pkgname,

@@ -296,6 +296,10 @@
       a further such argument) needs a \code{length()} method (which the
       documented arguments never do).  (Requested by Hervé Pagès; with a
       patch.)
+      
+      \item \code{.onDetach()} is supported as an alternative to
+      \code{.Last.lib}.  Unlike \code{.Last.lib}, this does not need to
+      be exported from the package's namespace.
     }
   }
 

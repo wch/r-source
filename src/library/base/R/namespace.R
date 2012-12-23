@@ -134,7 +134,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
     if (attname %in% search())
         stop("namespace is already attached")
     env <- attach(NULL, pos = pos, name = attname)
-    ## we do not want to run e.g. .Last.lib here
+    ## we do not want to run e.g. .onDetach here
     on.exit(.Internal(detach(pos)))
     attr(env, "path") <- nspath
     exports <- getNamespaceExports(ns)
@@ -773,7 +773,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
         ## but most of these are never exported (exception: .Last.lib)
         stoplist <- c(".__NAMESPACE__.", ".__S3MethodsTable__.",
                       ".packageName", ".First.lib", ".Last.lib",
-                      ".onLoad", ".onAttach", ".conflicts.OK", ".noGenerics")
+                      ".onLoad", ".onAttach", ".onDetach",
+                      ".conflicts.OK", ".noGenerics")
         vars <- getNamespaceExports(ns)
         vars <- vars[! vars %in% stoplist]
     } else vars

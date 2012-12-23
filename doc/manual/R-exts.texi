@@ -3155,17 +3155,19 @@ with two unnamed arguments, in that order.} @code{libname} and
 @code{pkgname}; they should be defined in the namespace but not
 exported.
 
-@findex .Last.lib
 @findex .onUnload
-Packages use the @code{.Last.lib} function (provided it is exported from
-the namespace) when @code{detach} is called on the package.  It is
-called with a single argument, the full path to the installed package.
-There is also a hook @code{.onUnload} which is called when the namespace
-is unloaded (@emph{via} a call to @code{unloadNamespace}, perhaps called
-by @code{detach(unload=TRUE)}) with argument the full path to the
-installed package's directory.  @code{.onUnload} should be defined in
-the name space and not exported, but @code{.Last.lib} does need to be
-exported.
+@findex .onDetach
+@findex .Last.lib
+Packages can use a @code{.onDetach} (as from @R{} 3.0.0) or @code{.Last.lib}
+function (provided the latter is exported from the namespace) when
+@code{detach} is called on the package.  It is called with a single
+argument, the full path to the installed package.  There is also a hook
+@code{.onUnload} which is called when the namespace is unloaded
+(@emph{via} a call to @code{unloadNamespace}, perhaps called by
+@code{detach(unload = TRUE)}) with argument the full path to the installed
+package's directory.  @code{.onUnload} and @code{.onDetach} should be
+defined in the namespace and not exported, but @code{.Last.lib} does
+need to be exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
