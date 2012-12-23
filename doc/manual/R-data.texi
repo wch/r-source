@@ -1808,7 +1808,7 @@ an @R{} reader.  A versatile example of such software is ImageMagick and
 its fork GraphicsMagick.  These provide command-line programs
 @command{convert} and @command{gm convert} to convert images from one
 format to another: what formats they can input is determined when they
-are compiled, and the supported formats can be listed by
+are compiled, and the supported formats can be listed by e.g.@:
 @command{convert -list format}.
 
 Package @CRANpkg{pixmap} has a function @code{read.pnm} to read `portable
@@ -1816,10 +1816,8 @@ anymap' images in PBM (black/white), PGM (grey) and PPM (RGB colour)
 formats.  These are also known as `netpbm' formats.
 
 Packages @CRANpkg{bmp}, @CRANpkg{jpeg} and @CRANpkg{png} read the
-formats after which they are named.  The grandly named @CRANpkg{ReadImages}
-package reads only JPEG and PNG. See also packages @CRANpkg{biOps},
-@CRANpkg{Momocs} and @CRANpkg{digitize}, and  Bioconductor package
-@pkg{EBImage}.
+formats after which they are named.  See also packages @CRANpkg{biOps}
+and @CRANpkg{Momocs}, and Bioconductor package @pkg{EBImage}.
 
 TIFF is more a meta-format, a wrapper within which a very large variety
 of image formats can be embedded.  Packages @CRANpkg{rtiff} and
