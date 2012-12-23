@@ -3475,7 +3475,7 @@ The @R{}-level wrapper is @code{col2rgb}.
 There is also @code{R_GE_str2col} which takes a C string and converts to
 type @code{rcolor}: @code{"0'} is converted to transparent white.
 
-There is a @R{}-level coversion of colours to @samp{##RRGGBBAA} by
+There is a @R{}-level conversion of colours to @samp{##RRGGBBAA} by
 @code{image.default(useRaster = TRUE)}.
 
 The other color-conversion entry point in the API is @code{name2col}
