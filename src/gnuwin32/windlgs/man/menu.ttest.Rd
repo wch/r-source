@@ -2,6 +2,9 @@
 \alias{menu.ttest}
 \alias{menu.ttest2}
 \alias{menu.ttest3}
+
+\alias{del.ttest}
+
 \title{An Example Dialog for t Tests}
 \description{
   An example of writing a dialog box for an \R function.
@@ -10,18 +13,22 @@
 menu.ttest()
 menu.ttest2()
 menu.ttest3()
+
+del.ttest()
 }
 \value{
   This just calls \code{\link{t.test}} and returns its value for
   printing by \code{print.htest}.
 }
-\note{
-  The purpose of this function is to exemplify GUI programming. See
+\details{
+  The purpose of these functions is to exemplify GUI programming. See
   the source C code for the details.  The three functions differ in
   the way they return the information. \code{menu.ttest} returns the
   values of the fields etc for assembly in \R code. \code{menu.ttest2}
   submits a string directly to the console.  \code{menu.ttest3}
-  returns the parsed and evaluated expression as an R object.
+  returns the parsed and evaluated expression as an \R object.
+
+  \code{del.test()} will remove the menu.
 }
 
 \examples{
