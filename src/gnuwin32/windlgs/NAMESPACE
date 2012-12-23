@@ -1,0 +1,5 @@
+useDynLib("wingdlgs")
+
+import(stats)
+
+export(".")
