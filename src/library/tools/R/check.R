@@ -2877,19 +2877,15 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                 if (!config_val_to_logical(check_imports_flag))
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
+                check_FirstLib_flag <-
+                    Sys.getenv("_R_CHECK_DOT_FIRSTLIB_", "FALSE")
+                if (!config_val_to_logical(check_FirstLib_flag))
+                    lines <- grep("Warning: ignoring .First.lib()", lines,
+                                  fixed = TRUE, invert = TRUE, value = TRUE)
 
-                ## look for notes with auto-generated NAMESPACE files.
-                ll <- grep("running .First.lib() for package", lines0,
-                           fixed = TRUE, value = TRUE)
-                if (length(lines) || (length(ll) && check_incoming)) {
-                    lines <- unique(c(lines, ll))
+                if (length(lines)) {
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
-                    printLog0(Log, sprintf("See %s for details.\n",
-                                           sQuote(outfile)))
-                } else if(length(ll)) {
-                    noteLog(Log, "Found the following significant note:")
-                    printLog0(Log, .format_lines_with_indent(ll), "\n")
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
                 } else resultLog(Log, "OK")
@@ -3473,6 +3469,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         Sys.setenv("_R_CHECK_INSTALL_DEPENDS_" = "TRUE")
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
         Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
+        Sys.setenv("_R_CHECK_DOT_FIRSTLIB_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
