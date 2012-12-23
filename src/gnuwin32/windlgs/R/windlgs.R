@@ -30,14 +30,14 @@ menu.ttest3 <- function() .Call("menu_ttest3")
 
 del.ttest <- function() winMenuDel("Statistics")
 
-.First.lib <- function(lib, pkg)
+.onAttach <- function(libname, pkgname)
 {
-    require(stats) # for t.test
-    library.dynam("windlgs", pkg, lib)
-    winMenuAdd("Statistics")
-    winMenuAdd("Statistics/Classical tests")
-    winMenuAddItem("Statistics/Classical tests", "t-test:1", "menu.ttest()")
-    winMenuAddItem("Statistics/Classical tests", "t-test:2", "menu.ttest2()")
-    winMenuAddItem("Statistics/Classical tests", "t-test:3", "menu.ttest3()")
-    cat("To remove the Statistics menu use del.ttest()\n")
+    if(interactive()) {
+        winMenuAdd("Statistics")
+        winMenuAdd("Statistics/Classical tests")
+        winMenuAddItem("Statistics/Classical tests", "t-test:1", "menu.ttest()")
+        winMenuAddItem("Statistics/Classical tests", "t-test:2", "menu.ttest2()")
+        winMenuAddItem("Statistics/Classical tests", "t-test:3", "menu.ttest3()")
+        cat("To remove the Statistics menu use del.ttest()\n")
+    }
 }
