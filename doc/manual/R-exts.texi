@@ -3005,24 +3005,9 @@ functions in the package.  If not found locally, @R{} searches the
 package namespace first, then the imports, then the base namespace and
 then the normal search path.
 
-If a @file{NAMESPACE} file is not present, then one is generated
-automatically when the package is built or installed, all objects are
-exported, and all packages listed in the Imports or Depends fields in
-the @file{DESCRIPTION} file are imported.  This is only intended as a
-temporary measure whilst packages are converted to have a
-@file{NAMESPACE} file and will be removed in due course.  A hand-crafted
-@file{NAMESPACE} should be added to any existing package which does not
-have one.
-
-Prior to version 2.14.0, namespaces were optional in packages.  In such
-packages searches for non-local variables started with the search path,
-so a package's own functions could be masked by those of a package
-appearing earlier.
-
-As from @R{} 2.14.0 all packages have a namespace, and a default
-@file{NAMESPACE} file is generated on installation if there is not one
-in the sources.  However, not all versions of @R{} will read the
-@file{NAMESPACE} file if the package contains not @R{} code.
+Prior to version 2.14.0, namespaces were optional in packages: a default
+namespace was generated in 2.14.x and 2.15.x.  As from 3.0.0 a namepace
+is mandatory.
 
 @menu
 * Specifying imports and exports::  
@@ -3176,6 +3161,14 @@ directive described next.
 
 User-level hooks are also available: see the help on function
 @code{setHook}.
+
+These hooks are often used incorrectly.  People forget to export
+@code{.Last.lib}.   Compiled code should be loaded in @code{.onLoad} (or
+@emph{via} a @code{useDynLb} directive: see below) and unloaded in
+@code{.onUnload}.  Do remember that a package's namespace can be loaded
+without the namespace being attached (e.g. by @code{pkgname::fun}) and
+that a package can be detached and re-attached whilst its namespace
+remains loaded.
 
 @node useDynLib, An example, Load hooks, Package namespaces
 @subsection useDynLib
@@ -3624,15 +3617,15 @@ of conformance to the standard.
 @item
 Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
-on most @R{} platforms (including those mostly used by the
-@acronym{CRAN} maintainers), but 64-bit on many modern Unix and Linux
-platforms.  It is rather unlikely that the use of @code{long} in C code
-has been thought through: if you need a longer type than @code{int} you
-should use a configure test for a C99 type such as @code{int_fast64_t}
-(and failing that, @code{long long} @footnote{but note that @code{long
-long} is not a standard C++ type, and C++ compilers set up for strict
-checking will reject it.}) and typedef your own type to be @code{long} or
-@code{long long}, or use another suitable type (such as @code{size_t}).
+on some @R{} platforms (including 64-bit Windows), but 64-bit on most
+modern Unix and Linux platforms.  It is rather unlikely that the use of
+@code{long} in C code has been thought through: if you need a longer
+type than @code{int} you should use a configure test for a C99 type such
+as @code{int_fast64_t} (and failing that, @code{long long} @footnote{but
+note that @code{long long} is not a standard C++ type, and C++ compilers
+set up for strict checking will reject it.}) and typedef your own type
+to be @code{long} or @code{long long}, or use another suitable type
+(such as @code{size_t}).
 
 It is not safe to assume that @code{long} and pointer types are the same
 size, and they are not on 64-bit Windows.  If you need to convert
