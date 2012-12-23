@@ -2468,13 +2468,12 @@ into the package's environment, then lazy-loads a database
 the contents of  @file{R/@var{pkgname}}: a standard template to load
 lazy-load databases are provided in @file{share/R/nspackloader.R}.
 
-How (and if) compiled code is loaded is down to the package's startup
-code such as @code{.First.lib} or @code{.onLoad}, although a
-@code{useDynlib} directive in a namespace provides an alternative.
-Conventionally compiled code is loaded by a call to @code{library.dynam}
-and this looks in directory @file{libs} (and in an appropriate
-sub-directory if sub-architectures are in use) for a shared object
-(Unix-alike) or DLL (Windows).
+Compiled code is usually loaded when the package's namespace is loaded
+by a @code{useDynlib} directive in a @file{NAMESPACE} file or by the
+package's @code{.onLoad} function.  Conventionally compiled code is
+loaded by a call to @code{library.dynam} and this looks in directory
+@file{libs} (and in an appropriate sub-directory if sub-architectures
+are in use) for a shared object (Unix-alike) or DLL (Windows).
 
 Subdirectory @file{data} serves two purposes. In a package using
 lazy-loading of data, it contains a lazy-load database @file{Rdata},
