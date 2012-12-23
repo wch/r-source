@@ -351,7 +351,7 @@ The format is that of a `Debian Control File' (see the help for
 @samp{read.dcf} and
 @uref{http://www.debian.org/@/doc/@/debian-policy/@/ch-controlfields.html}:
 @R{} does not require encoding in UTF-8 and does not support comments
-sarting with @samp{#}).  Fields start with an ASCII name immediately
+starting with @samp{#}).  Fields start with an ASCII name immediately
 followed by a colon: the value starts after the colon and a space.
 Continuation lines (for example, for descriptions longer than one line)
 start with a space or tab.  Field names are case-sensitive: all those
@@ -393,7 +393,7 @@ as made available @emph{via} @uref{http://www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the @R{} source or home
 directory.
 @item
-The names of abbreviations of free or open source software (FOSS, e.g.,
+The names and abbreviations of free or open source software (FOSS, e.g.,
 @uref{http://en.wikipedia.org/@/wiki/@/FOSS}) licenses as contained in the
 license data base in file @file{share/licenses/license.db} in the @R{}
 source or home directory, possibly (for versioned licenses) followed by
@@ -3108,14 +3108,14 @@ exported.
 
 @findex .Last.lib
 @findex .onUnload
-Packages use the @code{.Last.lib} function (provided it is exported from
+Packages use a @code{.Last.lib} function (provided it is exported from
 the namespace) when @code{detach} is called on the package.  It is
 called with a single argument, the full path to the installed package.
 There is also a hook @code{.onUnload} which is called when the namespace
 is unloaded (@emph{via} a call to @code{unloadNamespace}, perhaps called
 by @code{detach(unload=TRUE)}) with argument the full path to the
 installed package's directory.  @code{.onUnload} should be defined in
-the name space and not exported, but @code{.Last.lib} does need to be
+the namespace and not exported, but @code{.Last.lib} does need to be
 exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
@@ -3125,6 +3125,14 @@ directive described next.
 
 User-level hooks are also available: see the help on function
 @code{setHook}.
+
+These hooks are often used incorrectly.  People forget to export
+@code{.Last.lib}.   Compiled code should be loaded in @code{.onLoad} (or
+@emph{via} a @code{useDynLb} directive: see below) and unloaded in
+@code{.onUnload}.  Do remember that a package's namespace can be loaded
+without the namespace being attached (e.g. by @code{pkgname::fun}) and
+that a package can be detached and re-attached whilst its namespace
+remains loaded.
 
 @node useDynLib, An example, Load hooks, Package namespaces
 @subsection useDynLib
@@ -3603,15 +3611,15 @@ of conformance to the standard.
 @item
 Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
-on most @R{} platforms (including those mostly used by the
-@acronym{CRAN} maintainers), but 64-bit on many modern Unix and Linux
-platforms.  It is rather unlikely that the use of @code{long} in C code
-has been thought through: if you need a longer type than @code{int} you
-should use a configure test for a C99 type such as @code{int_fast64_t}
-(and failing that, @code{long long} @footnote{but note that @code{long
-long} is not a standard C++ type, and C++ compilers set up for strict
-checking will reject it.}) and typedef your own type to be @code{long} or
-@code{long long}, or use another suitable type (such as @code{size_t}).
+on some @R{} platforms (including 64-bit Windows), but 64-bit on most
+modern Unix and Linux platforms.  It is rather unlikely that the use of
+@code{long} in C code has been thought through: if you need a longer
+type than @code{int} you should use a configure test for a C99 type such
+as @code{int_fast64_t} (and failing that, @code{long long} @footnote{but
+note that @code{long long} is not a standard C++ type, and C++ compilers
+set up for strict checking will reject it.}) and typedef your own type
+to be @code{long} or @code{long long}, or use another suitable type
+(such as @code{size_t}).
 
 It is not safe to assume that @code{long} and pointer types are the same
 size, and they are not on 64-bit Windows.  If you need to convert
