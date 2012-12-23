@@ -41,3 +41,6 @@ del.ttest <- function() winMenuDel("Statistics")
         packageStartupMessage("To remove the Statistics menu use del.ttest()")
     }
 }
+
+.onDetach <- function(libpath) del.ttest()
+
