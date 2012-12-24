@@ -282,7 +282,7 @@
       \item \code{encodeString()} preserves UTF-8 marked encodings.
       Thus if factor levels are marked as UTF-8 an attempt is made to
       print them in UTF-8 in \command{RGui} on Windows.
-      
+
       \item \code{readLines()} and \code{scan()} (and hence
       \code{read.table()}) in a UTF-8 locale now discard a UTF-8
       byte-order-mark (BOM).  Such BOMs are allowed but not recommended
@@ -296,13 +296,18 @@
       a further such argument) needs a \code{length()} method (which the
       documented arguments never do).  (Requested by Hervé Pagès; with a
       patch.)
-      
+
       \item \code{.onDetach()} is supported as an alternative to
       \code{.Last.lib}.  Unlike \code{.Last.lib}, this does not need to
       be exported from the package's namespace.
       
       \item The \code{srcfile} argument to \code{parse()} may now be a 
       character string, to be used in error messages.
+
+      \item The \code{format()} method for \code{ftable} objects gains
+      a \code{method} argument, propagated to \code{write.ftable()} and
+      \code{print()}, allowing more compact output, notably for LaTeX
+      formatting, thanks to Marius Hofert.
     }
   }
 
@@ -420,7 +425,7 @@
 
       Packages without a \file{R} directory and no \file{NAMESPACE} file
       can still be installed.
-      
+
       \item Packages can specify in their \file{DESCRIPTION file} a line
       like
  \preformatted{
@@ -429,7 +434,7 @@
       to be installed on Windows with \option{--force-biarch}.
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now gives a warning rather than a
@@ -503,10 +508,10 @@
       \pkg{methods} are now defunct.
 
       \item Function \code{CRAN.packages()} is finally defunct.
-      
+
       \item Use of \code{col2rgb(0)} is defunct: use \code{par("bg")}
       instead.
-      
+
       \item The long-defunct functions \code{Rd_parse()},
       \code{anovalist.lm()}, \code{clearNames()}, \code{glm.fit.null()},
       \code{lm.fit.null()}, \code{lm.wfit.null()},
@@ -601,14 +606,14 @@
 
       \item Entry point \code{rcont2} has been migrated to package
       \pkg{stats} and so is no longer available.
-      
+
       \item \code{R_SVN_REVISION} in \file{Rversion.h} is now an integer
       (rather than a string) and hence usable as e.g.
       \code{#if R_SVN_REVISION < 70000}.
 
       \item The entry points \code{rgb2hsv} and \code{hsv2rgb} have been
       migrated to package \pkg{grDevices} and so are no longer available.
-      
+
       \item \code{R_GE_version} has been increased to \code{10} and
       \code{name2col} removed (use \code{R_GE_str2col} instead).  \R
       internal colour codes are now defined using the typedef
@@ -679,12 +684,12 @@
 
       \item \code{La.svd()} accepts logical matrices (as documented, and
       as \code{svd()} did).
-      
+
       \item \code{legend()} now accepts negative \code{pch} values, in
       the same way \code{points()} long has.
-      
+
       \item Parse errors when installing files now correctly display
-      the name of the file containing the bad code.      
+      the name of the file containing the bad code.
     }
   }
 }
@@ -712,7 +717,7 @@
       for installation.
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item On a 64-bit Windows platform with enough RAM, \code{R_alloc}
@@ -727,7 +732,7 @@
       for its limitations).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{beta(a, b)} could overflow to infinity in its
@@ -752,14 +757,14 @@
 
       \item The \code{call()} function did not duplicate its arguments.
       (\PR{15115})
-      
+
       \item \code{TukeyHSD()} could give \code{NA} results with some
       \samp{na.action} methods such as \code{na.exclude()}.
       (Hinted at on R-help by John Fox.)
 
       \item The deprecated \code{svd(X, LINPACK = TRUE)} could alter
       \code{X} in \R 2.15.[12].  (Reported by Bill Dunlap.)
-      
+
       \item In Windows, \code{file.link()} and \code{file.symlink()}
       used the link name twice, so would always fail. (Reported
       by Rui Barradas/Oliver Soong).

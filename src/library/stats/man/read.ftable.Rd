@@ -1,6 +1,7 @@
 % File src/library/stats/man/read.ftable.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
+% Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{read.ftable}
@@ -8,15 +9,20 @@
 \alias{read.ftable}
 \alias{write.ftable}
 \alias{format.ftable}
+\alias{print.ftable}
 \description{Read, write and coerce \sQuote{flat} contingency tables.}
 \usage{
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
 
 write.ftable(x, file = "", quote = TRUE, append = FALSE,
-             digits = getOption("digits"))
+             digits = getOption("digits"), \dots)
 
-\method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"), \dots)
+\method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"),
+                        method = c("non.compact", "row.compact",
+                                  "col.compact", "compact"),
+                        lsep = " \\ ", \dots)
+\method{print}{ftable}(x, digits = getOption("digits"), \dots)
 }
 \arguments{
   \item{file}{either a character string naming a file or a connection
@@ -42,7 +48,26 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
     the contents of \code{file} will be overwritten.}
   \item{digits}{an integer giving the number of significant digits to
     use for (the cell entries of) \code{x}.}
-  \item{\dots}{further arguments to be passed to or from methods.}
+  \item{method}{string specifying how the \code{"ftable"} object is formatted
+    (and printed if used as in \code{write.ftable()} or the \code{print}
+    method).  Available methods are (see the examples):
+    \describe{
+      \item{"non.compact"}{the default representation of an
+        \code{"ftable"} object.}
+      \item{"row.compact"}{a row-compact version without empty cells
+        belo the column labels.}
+      \item{"col.compact"}{a column-compact version without empty cells
+        to the right of the row labels.}
+      \item{"compact"}{a row- and column-compact version.  This may imply
+        a row and a column label sharing the same cell.  They are then
+        separated by the string \code{lsep}.}
+    }
+  }
+  \item{lsep}{only for \code{method = "compact"}, the separation string
+    for row and column labels.}
+  \item{\dots}{further arguments to be passed to or
+    from methods; for \code{write()} and \code{print()}, notably
+    arguments such as \code{method}, passed to \code{format()}.}
 }
 \details{
   \code{read.ftable} reads in a flat-like contingency table from a
@@ -60,11 +85,13 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
   Note that flat tables are characterized by their \sQuote{ragged}
   display of row (and maybe also column) labels.  If the full grid of
   levels of the row variables is given, one should instead use
-  \code{read.table} to read in the data, and create the contingency
-  table from this using \code{\link{xtabs}}.
+  \code{\link{read.table}} to read in the data, and create the
+  contingency table from this using \code{\link{xtabs}}.
 
   \code{write.ftable} writes a flat table to a file, which is useful for
-  generating \sQuote{pretty} ASCII representations of contingency tables.
+  generating \sQuote{pretty} ASCII representations of contingency
+  tables.  Different versions are available via the \code{method}
+  argument, which may be useful, for example, for constructing LaTeX tables.
 }
 \seealso{
   \code{\link{ftable}} for more information on flat contingency tables.
@@ -86,8 +113,8 @@ cat("             Intercourse\n",
     "      Female      22  36\n",
     file = file)
 \donttest{file.show(file)}
-ft <- read.ftable(file)
-ft
+ft1 <- read.ftable(file)
+ft1
 unlink(file)
 
 ## Agresti (1990), page 297, Table 8.16.
@@ -108,6 +135,9 @@ unlink(file)
 
 ft22 <- ftable(Titanic, row.vars = 2:1, col.vars = 4:3)
 write.ftable(ft22, quote = FALSE)
+write.ftable(ft22, quote = FALSE, method="row.compact")
+write.ftable(ft22, quote = FALSE, method="col.compact")
+write.ftable(ft22, quote = FALSE, method="compact")
 \dontshow{
 stopifnot(dim(format(ft)) == 4:5,
           dim(format(ftable(UCBAdmissions))) == c(6,9),

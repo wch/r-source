@@ -168,12 +168,14 @@ as.table.ftable <- function(x, ...)
     x
 }
 
-format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
+format.ftable <-
+    function(x, quote=TRUE, digits=getOption("digits"),
+             method=c("non.compact", "row.compact", "col.compact", "compact"),
+             lsep=" \\ ", ...)
 {
     if(!inherits(x, "ftable"))
-        stop("'x' must be an \"ftable\" object")
-    charQuote <- function(s)
-        if(quote) paste0("\"", s, "\"") else s
+	stop("'x' must be an \"ftable\" object")
+    charQuote <- function(s) if(quote) paste0("\"", s, "\"") else s
     makeLabels <- function(lst) {
         lens <- sapply(lst, length)
         cplensU <- c(1, cumprod(lens))
@@ -188,36 +190,72 @@ format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
         y
     }
     makeNames <- function(x) {
-        nmx <- names(x)
-        if(is.null(nmx)) nmx <- rep_len("", length(x))
-        nmx
+	nmx <- names(x)
+	if(is.null(nmx)) rep_len("", length(x)) else nmx
     }
 
     xrv <- attr(x, "row.vars")
     xcv <- attr(x, "col.vars")
-    LABS <- cbind(rbind(matrix("", nrow = length(xcv), ncol = length(xrv)),
-                        charQuote(makeNames(xrv)),
-                        makeLabels(xrv)),
-                  c(charQuote(makeNames(xcv)),
-                    rep("", times = nrow(x) + 1)))
+    method <- match.arg(method)
+    LABS <-
+	switch(method,
+	       "non.compact" =		# current default
+	   {
+	       cbind(rbind(matrix("", nrow = length(xcv), ncol = length(xrv)),
+			   charQuote(makeNames(xrv)),
+			   makeLabels(xrv)),
+		     c(charQuote(makeNames(xcv)),
+		       rep("", times = nrow(x) + 1)))
+	   },
+	       "row.compact" =		# row-compact version
+	   {
+	       cbind(rbind(matrix("", nrow = length(xcv)-1, ncol = length(xrv)),
+			   charQuote(makeNames(xrv)),
+			   makeLabels(xrv)),
+		     c(charQuote(makeNames(xcv)),
+		       rep("", times = nrow(x))))
+	   },
+	       "col.compact" =		# column-compact version
+	   {
+	       cbind(rbind(cbind(matrix("", nrow = length(xcv), ncol = length(xrv)-1),
+				 charQuote(makeNames(xcv))),
+			   charQuote(makeNames(xrv)),
+			   makeLabels(xrv)))
+	   },
+	       "compact" =		# fully compact version
+	   {
+	       l.xcv <- length(xcv)
+	       l.xrv <- length(xrv)
+	       xrv.nms <- makeNames(xrv)
+	       xcv.nms <- makeNames(xcv)
+	       mat <- cbind(rbind(cbind(matrix("", nrow = l.xcv-1, ncol = l.xrv-1),
+					charQuote(makeNames(xcv[-l.xcv]))),
+				  charQuote(xrv.nms),
+				  makeLabels(xrv)))
+	       mat[l.xcv, l.xrv] <- paste(tail(xrv.nms, 1),
+					  tail(xcv.nms, 1), sep = lsep)
+	       mat
+	   },
+	       stop("wrong method"))
     DATA <- rbind(if(length(xcv)) t(makeLabels(xcv)),
-                  rep("", times = ncol(x)),
-                  format(unclass(x), digits = digits))
+		  if(method %in% c("non.compact", "col.compact"))
+			rep("", times = ncol(x)),
+		  format(unclass(x), digits = digits, ...))
     cbind(apply(LABS, 2L, format, justify = "left"),
 	  apply(DATA, 2L, format, justify = "right"))
 }
 
 write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,
-			 digits = getOption("digits"))
+			 digits = getOption("digits"), ...)
 {
-    r <- format.ftable(x, quote = quote, digits = digits)
+    r <- format.ftable(x, quote = quote, digits = digits, ...)
     cat(t(r), file = file, append = append,
 	sep = c(rep(" ", ncol(r) - 1), "\n"))
     invisible(x)
 }
 
 print.ftable <- function(x, digits = getOption("digits"), ...)
-    write.ftable(x, quote = FALSE, digits = digits)
+    write.ftable(x, quote = FALSE, digits = digits, ...)
 
 read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
                         col.vars, skip = 0)

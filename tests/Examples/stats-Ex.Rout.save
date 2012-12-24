@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-30 r61184) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-24 r61404) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -7249,7 +7249,7 @@ Friedman chi-squared = 0.3333, df = 1, p-value = 0.5637
 > 
 > ### Name: ftable
 > ### Title: Flat Contingency Tables
-> ### Aliases: ftable ftable.default print.ftable
+> ### Aliases: ftable ftable.default
 > ### Keywords: category
 > 
 > ### ** Examples
@@ -13652,7 +13652,7 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > 
 > ### Name: read.ftable
 > ### Title: Manipulate Flat Contingency Tables
-> ### Aliases: read.ftable write.ftable format.ftable
+> ### Aliases: read.ftable write.ftable format.ftable print.ftable
 > ### Keywords: category
 > 
 > ### ** Examples
@@ -13667,8 +13667,8 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 +     "Black Male        29  23\n",
 +     "      Female      22  36\n",
 +     file = file)
-> ft <- read.ftable(file)
-> ft
+> ft1 <- read.ftable(file)
+> ft1
              Intercourse Yes  No
 Race  Gender                    
 White Male                43 134
@@ -13709,6 +13709,40 @@ Female 1st                0     4     1   140
        2nd                0    13    13    80
        3rd               17    89    14    76
        Crew               0     3     0    20
+> write.ftable(ft22, quote = FALSE, method="row.compact")
+             Survived    No         Yes      
+Sex    Class Age      Child Adult Child Adult
+Male   1st                0   118     5    57
+       2nd                0   154    11    14
+       3rd               35   387    13    75
+       Crew               0   670     0   192
+Female 1st                0     4     1   140
+       2nd                0    13    13    80
+       3rd               17    89    14    76
+       Crew               0     3     0    20
+> write.ftable(ft22, quote = FALSE, method="col.compact")
+       Survived    No         Yes      
+       Age      Child Adult Child Adult
+Sex    Class                           
+Male   1st          0   118     5    57
+       2nd          0   154    11    14
+       3rd         35   387    13    75
+       Crew         0   670     0   192
+Female 1st          0     4     1   140
+       2nd          0    13    13    80
+       3rd         17    89    14    76
+       Crew         0     3     0    20
+> write.ftable(ft22, quote = FALSE, method="compact")
+       Survived        No         Yes      
+Sex    Class \ Age Child Adult Child Adult
+Male   1st              0   118     5    57
+       2nd              0   154    11    14
+       3rd             35   387    13    75
+       Crew             0   670     0   192
+Female 1st              0     4     1   140
+       2nd              0    13    13    80
+       3rd             17    89    14    76
+       Crew             0     3     0    20
 > ## Don't show: 
 > stopifnot(dim(format(ft)) == 4:5,
 +           dim(format(ftable(UCBAdmissions))) == c(6,9),
