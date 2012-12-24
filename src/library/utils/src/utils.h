@@ -89,4 +89,6 @@ SEXP dllversion(SEXP path);
 SEXP loadRconsole(SEXP file);
 SEXP memsize(SEXP size);
 SEXP shortpath(SEXP paths);
+
+SEXP processevents(void);
 #endif

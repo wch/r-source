@@ -338,6 +338,7 @@ tktoplevel    <- function(parent = .TkRoot,...) {
                    rm(list = ID, envir = parent$env)
                tkbind(w, "<Destroy>","")
            })
+    process.events()
     w
 }
 ### ------ Window & Geometry managers, widget commands &c ------

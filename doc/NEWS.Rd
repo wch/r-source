@@ -308,6 +308,9 @@
       a \code{method} argument, propagated to \code{write.ftable()} and
       \code{print()}, allowing more compact output, notably for LaTeX
       formatting, thanks to Marius Hofert.
+      
+      \item The \code{utils::process.events()} function has been added
+      to trigger immediate event handling.
     }
   }
 
@@ -690,6 +693,9 @@
 
       \item Parse errors when installing files now correctly display
       the name of the file containing the bad code.
+      
+      \item In Windows, tcltk windows were not always properly constructed.
+      (\PR{15150}.)
     }
   }
 }

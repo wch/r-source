@@ -214,6 +214,11 @@ SEXP flushconsole(void)
     return R_NilValue;
 }
 
+SEXP processevents(void)
+{
+    R_ProcessEvents();
+    return R_NilValue;
+}
 
 // formerly in src/main/platform.c
 SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)

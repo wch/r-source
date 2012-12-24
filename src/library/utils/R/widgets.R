@@ -70,3 +70,5 @@ select.list <-
 }
 
 flush.console <- function() invisible(.Call(C_flushconsole))
+
+process.events <- function() invisible(.Call(C_processevents))
