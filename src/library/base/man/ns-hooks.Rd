@@ -93,6 +93,13 @@
   code: it is potentially very slow and may fail in versions of \R
   before 2.14.2 if package installation is going on in parallel.  See
   its help page for alternatives.
+
+  Compiled code should be loaded (e.g. \emph{via}
+  \code{\link{library.dynam}}) in \code{.onLoad} or a \code{useDynLib}
+  directive in the \file{NAMESPACE} file, and not in \code{.onAttach}.
+  Similarly, compiled code should not be unloaded (e.g. \emph{via}
+  \code{\link{library.dynam.unload}}) in \code{.Last.lib} nor
+  \code{.onDetach}, only in \code{.onUnload}. 
 }
 
 \seealso{
