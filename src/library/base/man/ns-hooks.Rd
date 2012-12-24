@@ -36,11 +36,11 @@
   looked for and if found is called (with two unnamed arguments) before
   the package environment is sealed.
 
-  If a function \code{.Last.lib} is exported in the package, it will be
+  If a function \code{.Last.lib} is exported from the package, it will be
   called (with a single argument) when the package is detached.  Beware
   that it might be called if \code{.onAttach} has failed, so it should
-  be written defensively.  (It is called within \code{\link{try}}, so
-  errors will not stop the package being detached.)
+  be written defensively.  (It is called within \code{\link{tryCatch}},
+  so errors will not stop the package being detached.)
   
   If a namespace is unloaded (via \code{\link{unloadNamespace}}), a hook
   function \code{.onUnload} is run (with a single argument) before final
@@ -90,6 +90,13 @@
   code: it is potentially very slow and may fail in versions of \R
   before 2.14.2 if package installation is going on in parallel.  See
   its help page for alternatives.
+
+  Compiled code should be loaded (e.g. \emph{via}
+  \code{\link{library.dynam}}) in \code{.onLoad} or a \code{useDynLib}
+  directive in the \file{NAMESPACE} file, and not in \code{.onAttach}.
+  Similarly, compiled code should not be unloaded (e.g. \emph{via}
+  \code{\link{library.dynam.unload}}) in \code{.Last.lib}, only in
+  \code{.onUnload}.
 }
 
 \seealso{

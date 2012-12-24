@@ -3301,8 +3301,8 @@ useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
 
 @noindent
 which makes the @R{} variables corresponding to the FORTRAN symbols
-@code{F_bkde} and so on, and so avoid clashes with @R{} code in the name
-space.
+@code{F_bkde} and so on, and so avoid clashes with @R{} code in the
+namespace.
 
 
 @c More information about this symbol lookup, along with some approaches
@@ -5386,10 +5386,9 @@ the following to output the markup necessary to display the Greek letter in
 @findex \Sexpr
 @findex \RdOpts
 
-Two new macros supporting dynamically generated man pages were
-introduced in @R{} 2.10.0, @code{\Sexpr} and @code{\RdOpts}.  These
-are modelled after Sweave, and are intended to contain executable @R{}
-expressions in the @file{Rd} file.
+Two macros supporting dynamically generated man pages are @code{\Sexpr}
+and @code{\RdOpts}.  These are modelled after Sweave, and are intended
+to contain executable @R{} expressions in the @file{Rd} file.
 
 The main argument to @code{\Sexpr} must be valid @R{} code that can be
 executed. It may also take options in square brackets before the main
