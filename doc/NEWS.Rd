@@ -777,6 +777,8 @@
 
       \item \code{summaryRprof(memory = "both")} mixed up the units of
       Vcells and Ncells: it now works in bytes.  (\PR{15138})
+      
+      \item \code{tools::Rd2HTML()} would sometimes delete text. (\PR{15134})
     }
   }
 }
