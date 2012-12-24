@@ -111,10 +111,11 @@ look at @R{}'s help pages on
 @noindent
 before reading on.
 
-A computing environment including a number of tools is assumed; the
-``R Installation and Administration'' manual describes what is needed.
-Under a Unix-alike most of the tools are likely to be present by
-default, but Microsoft Windows may require careful setup.
+For packages which contain code to be compiled, a computing environment
+including a number of tools is assumed; the ``R Installation and
+Administration'' manual describes what is needed.  Under a Unix-alike
+most of the tools are likely to be present by default, but Mac OS X and
+Microsoft Windows will require additional setup.
 
 Once a source package is created, it must be installed by
 the command @code{R CMD INSTALL}.
@@ -133,9 +134,10 @@ A @emph{package} is a directory of files which extend @R{}, either a
 @emph{source package} (the master files of a package), or a tarball
 containing the files of a source package, or an @emph{installed}
 package, the result of running @command{R CMD INSTALL} on a source
-package.  On some platforms there are also @emph{binary packages}, a zip
-file or tarball containing the files of an installed package which can
-be unpacked rather than installing from sources.
+package.  On some platforms (notably OS X and Windows) there are also
+@emph{binary packages}, a zip file or tarball containing the files of an
+installed package which can be unpacked rather than installing from
+sources.
 
 A package is @strong{not}@footnote{although this is common mis-usage.
 It seems to stem from S, whose analogues of @R{}'s packages were
@@ -170,15 +172,15 @@ and portability.
 
 @emph{Compilation} is not a correct term for a package.  Installing a
 source package which contains C, C++ or Fortran code will involve
-compiling that code.  As from @R{} 2.13.0 there is also the possibility
-of (`byte') compiling the @R{} code in a package (using the facilities
-of package @pkg{compiler}): at some future time this might be done
-routinely when @emph{compiling} a package may come to mean compiling its
-@R{} code.
+compiling that code.  There is also the possibility of (`byte')
+compiling the @R{} code in a package (using the facilities of package
+@pkg{compiler}): already the base and recommended packages are
+byte-compiled.  At some future time this might be done routinely, so
+@emph{compiling} a package may come to mean compiling its @R{} code.
 
 It used to be unambiguous to talk about @emph{loading} an installed
-package using @code{library()}, but since the advent of package name
-spaces this has been less clear: people now often talk about
+package using @code{library()}, but since the advent of package
+namespaces this has been less clear: people now often talk about
 @emph{loading} the package's namespace and then @emph{attaching} the
 package so it becomes visible on the search path.  Function
 @code{library} performs both steps, but a package's namespace can be
@@ -187,11 +189,11 @@ loaded without the package being attached (for example by calls like
 
 The option of @emph{lazy loading} of code or data is mentioned at
 several points.  This is part of the installation, always selected for
-@R{} code (since @R{} 2.14.0) but optional for data.  When used the @R{}
-objects of the package are created at installation time, and stored in a
-database in the @file{R} directory of the installed package, being
-loaded into the session at first use.  This makes the @R{} session run
-faster and use less (virtual) memory.
+@R{} code@footnote{since @R{} 2.14.0} but optional for data.  When used
+the @R{} objects of the package are created at installation time, and
+stored in a database in the @file{R} directory of the installed package,
+being loaded into the session at first use.  This makes the @R{} session
+run faster and use less (virtual) memory.
 @ifset UseExternalXrefs
 (For technical details,
 @pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
@@ -272,7 +274,7 @@ packages.  For example, if you have a package named @file{foo}, do not
 also create a package named @file{Foo}.
 
 To ensure that file names are valid across file systems and supported
-operating system platforms, the @acronym{ASCII} control characters as
+operating systems, the @acronym{ASCII} control characters as
 well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/}, @samp{<},
 @samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed in file
 names.  In addition, files with names @samp{con}, @samp{prn},
@@ -291,7 +293,7 @@ would be good practice to avoid the shell metacharacters
 @code{()@{@}'[]$}.  In addition, packages are normally distributed as
 tarballs, and these have a limit on path lengths (including the package
 name): for maximal portability 100 bytes, and less portably up to 256
-bytes with a final component of no more than 100 bytes.
+bytes with restricitons including a final component of no more than 100 bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
@@ -299,7 +301,7 @@ appropriate architecture.  @command{R CMD check} will warn about
 them@footnote{false positives are possible, but only a handful have been
 seen so far.} unless they are listed (one filepath per line) in a file
 @file{BinaryFiles} at the top level of the package.  Note that
-@acronym{CRAN} will no longer accept submissions containing binary files
+@acronym{CRAN} will not accept submissions containing binary files
 even if they are listed.
 
 The @R{} function @code{package.skeleton} can help to create the
@@ -371,7 +373,7 @@ an @samp{Encoding} field (see below).
 
 @c DESCRIPTION field Package
 The mandatory @samp{Package} field gives the name of the package.  This
-should contain only letters, numbers and dot, have at least two
+should contain only (ASCII) letters, numbers and dot, have at least two
 characters and start with a letter and not end in a dot.
 
 @c DESCRIPTION field Version
@@ -380,7 +382,8 @@ This is a sequence of at least @emph{two} (and usually three)
 non-negative integers separated by single @samp{.} or @samp{-}
 characters.  The canonical form is as shown in the example, and a
 version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
-were @samp{0.1-0}.
+were @samp{0.1-0}.  It is @strong{not} a decimal number, so for example
+@code{0.9 < 0.75} since @code{9 < 75}.
 
 @c DESCRIPTION field License
 The mandatory @samp{License} field should specify the license of the
@@ -396,7 +399,7 @@ as made available @emph{via} @uref{http://www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the @R{} source or home
 directory.
 @item
-The names or abbreviations of ``standard'' and mostly free or open
+The names and abbreviations of ``standard'' and mostly free or open
 source software (FOSS, e.g.,
 @uref{http://en.wikipedia.org/@/wiki/@/FOSS}) licenses contained in the
 license data base in file @file{share/licenses/license.db} in the @R{}
@@ -486,7 +489,7 @@ package maintainer, and @samp{"ctb"} (contributor) for other
 contributors, @samp{"cph"} (copyright holder), among others.  See
 @code{?person} for more information.  Note that no role is assumed by
 default.  Auto-generated package citation information takes advantage of
-this specification; in @R{} 2.14.0 or later, the @samp{Author} and
+this specification.  In @R{} 2.14.0 or later, the @samp{Author} and
 @samp{Maintainer} fields are auto-generated from it if needed when
 building@footnote{at least if this is done in a locale which matches the
 package encoding.} or installing@footnote{installation generates an
@@ -531,9 +534,7 @@ will be attached (after checking version requirements) before the
 current package, both when @code{library} is called and when preparing
 for lazy-loading during installation.
 
-A package (or @samp{R}) can appear more than once in the @samp{Depends},
-but only the first occurrence was used in versions of @R{} prior to
-2.7.0: these are now very unlikely to be encountered.
+A package (or @samp{R}) can appear more than once in the @samp{Depends}.
 
 It makes no sense to declare a dependence on @code{R} without a version
 specification, nor on the package @pkg{base}: this is an @R{} package
@@ -680,7 +681,7 @@ byte-compilation (which can take quite a long time and increases the
 installed size of the package).
 
 @c DESCRIPTION field ZipData
-The @samp{ZipData} logical field used to control whether the automatic
+The @samp{ZipData} logical field was used to control whether the automatic
 Windows build would zip up the data directory or not: set this to
 @samp{no} if your package will not work with a zipped data directory.
 (Setting to any other value is deprecated, and it is unused from @R{}
@@ -891,8 +892,9 @@ can be used together and mixing C and C++ seems to be widely successful.
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{WIN32} will be defined: on 64-bit Windows builds also
-@samp{WIN64}, and on Mac OS X @samp{__APPLE__} and @samp{__APPLE_CC__}
-are defined.
+@samp{WIN64}, and on Mac OS X @samp{__APPLE__} is
+defined.@footnote{Currently also @samp{__APPLE_CC__}, but that indicates
+a compiler with Apple-specific features, not the OS.}
 
 The default rules can be tweaked by setting macros@footnote{the POSIX
 terminology, called `make variables' by GNU make.} in a file
@@ -916,10 +918,10 @@ should have files @file{src/Makefile} and @file{src/Makefile.win}
 
 In very special cases packages may create binary files other than the
 shared objects/DLLs in the @file{src} directory.  Such files will not be
-installed in multi-arch setting since @code{R CMD INSTALL --libs-only}
+installed in a multi-arch setting since @code{R CMD INSTALL --libs-only}
 is used to merge multiple architectures and it only copies shared
 objects/DLLs.  If a package wants to install other binaries (for example
-executable programs), it should to provide an @R{} script
+executable programs), it should provide an @R{} script
 @file{src/install.libs.R} which will be run as part of the installation
 in the @code{src} build directory @emph{instead of} copying the shared
 objects/DLLs. The script is run in a separate @R{} environment
@@ -1679,8 +1681,7 @@ C/C++ code written to use OpenMP should include @code{omp} pragmas and
 other OpenMP-specific code in @code{#ifdef _OPENMP ... #endif}.
 
 OpenMP support is available on Windows in the toolchain used for @R{}
-2.15.0 and these macros will be set appropriately.  It is not available
-on Windows prior to @R{} 2.14.2.
+2.15.0 and these macros will be set appropriately.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Mac OS X and Windows implementations have substantial overheads and
@@ -1726,18 +1727,16 @@ For a tutorial see
 POSIX threads are not normally used on Windows, which has its own native
 concepts of threads.  However, there are two projects implementing
 @code{pthreads} on top of Windows, @code{pthreads-w32} and
-@code{winpthreads} (a recent part of the MinGW-w64 project).  Both
-implement @code{libptheads} as an import library for a DLL.
+@code{winpthreads} (a recent part of the MinGW-w64 project).
 
 Whether Windows toolchains implement @code{pthreads} is up to the
-toolchain provider.  One issue has been licenses: @code{pthreads-w32} is
-licensed under LGPL which requires source code to be made available.
-The toolchains used to compile @R{} prior to version 2.14.2 do not
-contain @code{pthreads}, although in some cases @code{pthreads-w32}
-could be retro-fitted.  As from @R{} 2.14.2 a @command{make} variable
-@code{SHLIB_PTHREAD_FLAGS} is available: this should be included in both
-@code{PKG_CPPFLAGS} (or the Fortran or F9x equivalents) and
-@code{PKG_LIBS}.
+toolchain provider: the toolchain recommended for @R{} 2.14.2 and later
+does by default provide it.  The toolchains used to compile @R{} prior
+to version 2.14.2 do not contain @code{pthreads}, although in some cases
+@code{pthreads-w32} could be retro-fitted.  As from @R{} 2.14.2 a
+@command{make} variable @code{SHLIB_PTHREAD_FLAGS} is available: this
+should be included in both @code{PKG_CPPFLAGS} (or the Fortran or F9x
+equivalents) and @code{PKG_LIBS}.
 
 The presence of a working @code{pthreads} implementation cannot be
 unambiguously determined without testing for yourself: however, that
@@ -11063,7 +11062,6 @@ Is similar to @code{rsort_with_index} but sorts into decreasing order,
 and @code{NA}s are not handled.
 @end deftypefun
 
-
 @deftypefun void iPsort (int* @var{x}, int @var{n}, int @var{k})
 @deftypefunx void rPsort (double* @var{x}, int @var{n}, int @var{k})
 @deftypefunx void cPsort (Rcomplex* @var{x}, int @var{n}, int @var{k})
@@ -12065,7 +12063,7 @@ DllInfo *info = R_getEmbeddingDllInfo();
 R_registerRoutines(info, cMethods, callMethods, NULL, NULL);
 @end example
 
-The native routines defined by @code{cMethod} and @code{callMethods}
+The native routines defined by @code{cMethods} and @code{callMethods}
 should be present in the embedding application.  See @ref{Registering
 native routines} for details on registering symbols in general.
 
