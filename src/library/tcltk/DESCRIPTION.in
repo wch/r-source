@@ -6,3 +6,5 @@ Author: R Core Team
 Maintainer: R Core Team <R-core@r-project.org>
 Description: Interface and language bindings to Tcl/Tk GUI elements
 License: Part of R @VERSION@
+Imports: utils
+
