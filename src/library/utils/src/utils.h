@@ -56,6 +56,9 @@ SEXP edit(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho);
 
+SEXP processevents(void);
+
+
 #ifdef Win32
 SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP closeWinProgressBar(SEXP call, SEXP op, SEXP args, SEXP rho);
@@ -89,6 +92,4 @@ SEXP dllversion(SEXP path);
 SEXP loadRconsole(SEXP file);
 SEXP memsize(SEXP size);
 SEXP shortpath(SEXP paths);
-
-SEXP processevents(void);
 #endif
