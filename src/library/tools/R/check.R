@@ -1200,8 +1200,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             ini <- character()
             if (length(out4)) warningLog(Log) else noteLog(Log)
             if (length(out1)) {
-                ## remove multiple blank lines
-                out1 <- rle(out1)$values
                 printLog0(Log, paste(c(out1, ""), collapse = "\n"))
                 ini <- ""
             }

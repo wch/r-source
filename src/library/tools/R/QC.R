@@ -4268,7 +4268,7 @@ function(dir)
 format.check_package_code_startup_functions <-
 function(x, ...)
 {
-    res <- if(!is.null(attr(x, ".First.lib"))) "NB: .First.lib is obsolete and will not be used in R >= 3.0.0\n" else character()
+    res <- if(!is.null(attr(x, ".First.lib"))) "NB: .First.lib is obsolete and will not be used in R >= 3.0.0" else character()
     if(length(x)) {
 
         ## Flatten out doubly recursive list of functions within list of
@@ -4392,27 +4392,9 @@ function(dir)
         if(!length(calls)) return(out)
         cnames <- .call_names(calls)
         ## And pick the ones which should not be there ...
-        ind <- (cnames %in% bad_call_names)
-        if(any(ind)) {
-            calls <- calls[ind]
-            cnames <- cnames[ind]
-            ## Exclude library(help = ......) calls.
-            pos <- which(cnames == "library")
-            if(length(pos)) {
-                pos <- pos[sapply(calls[pos],
-                                  function(e)
-                                  any(names(e)[-1L] == "help"))]
-                ## Could also match.call(base::library, e) first ...
-                if(length(pos)) {
-                    calls <- calls[-pos]
-                    cnames <- cnames[-pos]
-                }
-            }
-            if(length(calls)) {
-                out$bad_calls <-
-                    list(calls = calls, names = cnames)
-            }
-        }
+        ind <- cnames %in% bad_call_names
+        if(any(ind))
+            out$bad_calls <- list(calls = calls[ind], names = cnames[ind])
         out
     }
 
@@ -4441,7 +4423,7 @@ function(dir)
 format.check_package_code_unload_functions <-
 function(x, ...)
 {
-    res <- if(!is.null(attr(x, ".Last.lib"))) "NB: .Last.lib must be exported\n" else character()
+    res <- if(!is.null(attr(x, ".Last.lib"))) "NB: .Last.lib will not be used uness it is exported" else character()
     if(length(x)) {
 
         ## Flatten out doubly recursive list of functions within list of
