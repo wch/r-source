@@ -301,7 +301,7 @@
       \code{.Last.lib}.  Unlike \code{.Last.lib}, this does not need to
       be exported from the package's namespace.
       
-      The \code{srcfile} argument to \code{parse()} may now be a 
+      \item The \code{srcfile} argument to \code{parse()} may now be a 
       character string, to be used in error messages.
     }
   }
