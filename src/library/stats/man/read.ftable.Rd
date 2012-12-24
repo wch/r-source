@@ -21,7 +21,7 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
 \method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"),
                         method = c("non.compact", "row.compact",
                                   "col.compact", "compact"),
-                        lsep = " \\ ", \dots)
+                        lsep = " \\\\ ", \dots)
 \method{print}{ftable}(x, digits = getOption("digits"), \dots)
 }
 \arguments{
