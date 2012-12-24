@@ -189,7 +189,7 @@ loaded without the package being attached (for example by calls like
 
 The option of @emph{lazy loading} of code or data is mentioned at
 several points.  This is part of the installation, always selected for
-@R{} code@footnote{since @R{} 2.14.0} but optional for data.  When used
+@R{} code but optional for data.  When used
 the @R{} objects of the package are created at installation time, and
 stored in a database in the @file{R} directory of the installed package,
 being loaded into the session at first use.  This makes the @R{} session
@@ -359,13 +359,13 @@ Continuation lines (for example, for descriptions longer than one line)
 start with a space or tab.  Field names are case-sensitive: all those
 used by @R{} are capitalized.
 
-The @samp{Package}, @samp{Version}, @samp{License},
-@samp{Description}, @samp{Title}, @samp{Author}, and @samp{Maintainer}
-fields are mandatory, all other fields are optional.  For @R{} 2.14.0 or
-later, @samp{Author} and @samp{Maintainer} can be auto-generated from
-@samp{Authors@@R}, and may be omitted if the latter is provided (and
-the package depends on @code{R (>= 2.14)}: see below for details):
-however if they are not ASCII we recommend that they are provided.
+The @samp{Package}, @samp{Version}, @samp{License}, @samp{Description},
+@samp{Title}, @samp{Author}, and @samp{Maintainer} fields are mandatory,
+all other fields are optional.  Fields @samp{Author} and
+@samp{Maintainer} can be auto-generated from @samp{Authors@@R}, and may
+be omitted if the latter is provided (and the package depends on @code{R
+(>= 2.14)}: see below for details): however if they are not ASCII we
+recommend that they are provided.
 
 For maximal portability, the @file{DESCRIPTION} file should be written
 entirely in @acronym{ASCII} --- if this is not possible it must contain
@@ -479,21 +479,21 @@ the @code{maintainer} function and used by @code{bug.report}.  For a
 and not a corporate entity: do ensure that it is valid and will remain
 valid for the lifetime of the package.
 
-Both @samp{Author} and @samp{Maintainer} fields can be omitted (as from
-@R{} 2.14.0) if a suitable @samp{Authors@@R} field is given.  This field
-can be used to provide a refined and machine-readable description of the
-package ``authors'' (in particular specifying their precise
-@emph{roles}), via suitable @R{} code.  The roles can include
-@samp{"aut"} (author) for full authors, @samp{"cre"} (creator) for the
-package maintainer, and @samp{"ctb"} (contributor) for other
-contributors, @samp{"cph"} (copyright holder), among others.  See
-@code{?person} for more information.  Note that no role is assumed by
-default.  Auto-generated package citation information takes advantage of
-this specification.  In @R{} 2.14.0 or later, the @samp{Author} and
-@samp{Maintainer} fields are auto-generated from it if needed when
-building@footnote{at least if this is done in a locale which matches the
-package encoding.} or installing@footnote{installation generates an
-ASCII version in @R{} 2.x.y.}.
+Both @samp{Author} and @samp{Maintainer} fields can be omitted if a
+suitable @samp{Authors@@R} field is given.  This field can be used to
+provide a refined and machine-readable description of the package
+``authors'' (in particular specifying their precise @emph{roles}), via
+suitable @R{} code.  The roles can include @samp{"aut"} (author) for
+full authors, @samp{"cre"} (creator) for the package maintainer, and
+@samp{"ctb"} (contributor) for other contributors, @samp{"cph"}
+(copyright holder), among others.  See @code{?person} for more
+information.  Note that no role is assumed by default.  Auto-generated
+package citation information takes advantage of this specification.  In
+@R{} 2.14.0 or later, the @samp{Author} and @samp{Maintainer} fields are
+auto-generated from it if needed when building@footnote{at least if this
+is done in a locale which matches the package encoding.} or
+installing@footnote{installation generates an ASCII version in @R{}
+2.x.y.}.
 
 @findex COPYRIGHTS
 @c DESCRIPTION field Copyright
@@ -965,18 +965,14 @@ interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
 @file{html} and @file{Meta}, and earlier versions used @file{latex},
 @file{R-ex}).  The copying of the @file{inst} happens after @file{src}
-is built so its @file{Makefile} can create files to be installed.  Prior
-to @R{} 2.12.2, the files were installed on POSIX platforms with the
-permissions in the package sources, so care should be taken to ensure
-these are not too restrictive: @command{R CMD build} will make suitable
-adjustments.  To exclude files from being installed, one can specify a
-list of exclude patterns in file @file{.Rinstignore} in the top-level
-source directory.  These patterns should be Perl-like regular
-expressions (see the help for @code{regexp} in @R{} for the precise
-details), one per line, to be matched@footnote{case-insensitively on
-Windows.} against the file and directory paths, e.g.@:
-@file{doc/.*[.]png$} will exclude all PNG files in @file{inst/doc} based on
-the (lower-case) extension.
+is built so its @file{Makefile} can create files to be installed.  To
+exclude files from being installed, one can specify a list of exclude
+patterns in file @file{.Rinstignore} in the top-level source directory.
+These patterns should be Perl-like regular expressions (see the help for
+@code{regexp} in @R{} for the precise details), one per line, to be
+matched@footnote{case-insensitively on Windows.} against the file and
+directory paths, e.g.@: @file{doc/.*[.]png$} will exclude all PNG files
+in @file{inst/doc} based on the (lower-case) extension.
 
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
@@ -1088,9 +1084,7 @@ function @code{tools::add_datalist}.
 Tables (@file{.tab}, @file{.txt}, or @file{.csv} files) can be
 compressed by @command{gzip}, @command{bzip2} or @command{xz},
 optionally with additional extension @file{.gz}, @file{.bz2} or
-@file{.xz}.  However, such files can only be used with @R{} 2.10.0 or
-later, and so the package should have an appropriate @samp{Depends}
-entry in its DESCRIPTION file.
+@file{.xz}.
 
 If your package is to be distributed, do consider the resource
 implications of large datasets for your users: they can make packages
@@ -1100,9 +1094,7 @@ large datasets as @file{.rda} images prepared by @code{save(, compress =
 TRUE)} (the default): there is no excuse for distributing ASCII saves.
 Using @command{bzip2} or @command{xz} compression will usually reduce
 the size of both the package tarball and the installed package, in some
-cases by a factor of two or more.  However, such compression can only be
-used with @R{} 2.10.0 or later, and so the package should have an
-appropriate @samp{Depends} entry in its DESCRIPTION file.
+cases by a factor of two or more.
 
 Package @pkg{tools} has a couple of functions to help with data images:
 @code{checkRdaFiles} reports on the way the image was saved, and
@@ -1638,7 +1630,7 @@ DLL.
 
 @cindex OpenMP
 
-As from @R{} 2.13.0 there is some support for packages which wish to use
+There is some support for packages which wish to use
 OpenMP@footnote{@uref{http://www.openmp.org/},
 @uref{http://en.wikipedia.org/@/wiki/@/OpenMP},
 @uref{https://computing.llnl.gov/@/tutorials/@/openMP/}}.  The
@@ -2323,12 +2315,11 @@ of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl-like regular expressions (see
 the help for @code{regexp} in @R{} for the precise details), one per
 line, to be matched@footnote{case-insensitively on Windows.} against the
-file names@footnote{including directory names as from @R{} 2.13.0:
-earlier versions accepted the names of non-empty directories.} relative
-to the top-level package source directory.  In addition, directories
-from source control systems@footnote{called @file{CVS} or @file{.svn} or
-@file{.arch-ids} or @file{.bzr} or @file{.git} (but not files called
-@file{.git}) or @file{.hg}.} or from @command{eclipse}@footnote{called
+file and directory names relative to the top-level package source
+directory.  In addition, directories from source control
+systems@footnote{called @file{CVS} or @file{.svn} or @file{.arch-ids} or
+@file{.bzr} or @file{.git} (but not files called @file{.git}) or
+@file{.hg}.} or from @command{eclipse}@footnote{called
 @file{.metadata}.}, directories with names ending @file{.Rcheck} or
 @file{Old} or @file{old} and files @file{GNUMakefile},
 @file{Read-and-delete-me} or with base names starting with @samp{.#}, or
@@ -2396,10 +2387,6 @@ default (it can be selected by environment variable
 
 It can be useful to run @command{R CMD check --check-subdirs=yes} on the
 built tarball as a final check on the contents.
-
-Note that prior to @R{} 2.13.0, @command{R CMD build} did some cleaning in
-the supplied source directory, but this was undocumented and is no
-longer done.
 
 @command{R CMD build} looks a suitable @command{tar} program that can
 produce a compressed tarball: almost certainly one will have been found
@@ -2501,11 +2488,10 @@ and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
 A special case are PDF documents with sources in Sweave format, which we
-call @emph{package vignettes}.  As from @R{} 2.14.0 the preferred
-location for the Sweave sources is the subdirectory @file{vignettes} of
-the source packages, but for compatibility with earlier versions of
-@R{}, vignette sources will be looked for in @file{inst/doc} if
-@file{vignettes} does not exist.
+call @emph{package vignettes}.  The preferred location for the Sweave
+sources is the subdirectory @file{vignettes} of the source packages, but
+for compatibility with earlier versions of @R{}, vignette sources will
+be looked for in @file{inst/doc} if @file{vignettes} does not exist.
 
 Vignette sources are normally given the file extension @file{.Rnw} or
 @file{.Rtex}, but for historical reasons extensions@footnote{and to
@@ -2546,11 +2532,11 @@ care of both creation of PDF files and cleaning up afterwards (including
 after @code{Sweave}), i.e., delete all files that shall not appear in
 the final package archive.  Note that if the @code{make} step runs @R{}
 it needs to be careful to respect the environment values of @env{R_LIBS}
-and @env{R_HOME}@footnote{As from @R{} 2.13.0, @code{R_HOME/bin} is
-prepended to the @env{PATH} so that references to @command{R} or
-@command{Rscript} in the @file{Makefile} do make use of the currently
-running version of @R{}.}.  Finally, if there is a @file{Makefile} and
-it has a @samp{clean:} target, @command{make clean} is run.
+and @env{R_HOME}@footnote{@code{R_HOME/bin} is prepended to the
+@env{PATH} so that references to @command{R} or @command{Rscript} in the
+@file{Makefile} do make use of the currently running version of @R{}.}.
+Finally, if there is a @file{Makefile} and it has a @samp{clean:}
+target, @command{make clean} is run.
 
 All the usual @emph{caveats} about including a @file{Makefile} apply.
 It must be portable (no @acronym{GNU} extensions), use LF line endings
@@ -3050,9 +3036,7 @@ list all exports or use narrowly-defined groups.  (As from @R{} 2.13.0
 this pattern applies to S4 classes, but did not in earlier versions of
 @R{}.)  Beware of patterns which include names starting with a period:
 some of these are internal-only variables and should never be exported,
-e.g.@: @samp{.__S3MethodsTable__.} .  (Such objects are excluded from
-pattern matches in recent versions of @R{}, so such patterns are safer
-for packages only to be used with @R{} 2.14.0 or later.)
+e.g.@: @samp{.__S3MethodsTable__.} .
 
 Packages implicitly import the base namespace.
 Variables exported from other packages with namespaces need to be
@@ -3340,8 +3324,8 @@ useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
 
 @noindent
 which makes the @R{} variables corresponding to the FORTRAN symbols
-@code{F_bkde} and so on, and so avoid clashes with @R{} code in the name
-space.
+@code{F_bkde} and so on, and so avoid clashes with @R{} code in the
+namespace.
 
 
 @c More information about this symbol lookup, along with some approaches
@@ -3452,12 +3436,11 @@ export(AIC, BIC, nobs)
 @noindent
 All S4 classes to be used outside the package need to be listed in an
 @code{exportClasses} directive. Alternatively, they can be specified
-using @code{exportClassPattern}.@footnote{As from @R{} 2.13.0 this
-defaults to the same pattern as @code{exportPattern}: use something like
+using @code{exportClassPattern}.@footnote{This defaults to the same
+pattern as @code{exportPattern}: use something like
 @code{exportClassPattern("^$")} to override this.} in the same style as
-for @code{exportPattern}.
-To export methods for generics from other packages an
-@code{exportMethods} directive can be used.
+for @code{exportPattern}.  To export methods for generics from other
+packages an @code{exportMethods} directive can be used.
 
 Note that exporting methods on a generic in the namespace will also
 export the generic, and exporting a generic in the namespace will also
@@ -3605,9 +3588,7 @@ problems.  This is particularly important for C++, where @code{g++ -Wall
 -pedantic} will alert you to the use of GNU extensions which fail to
 compile on most other C++ compilers.  @R{} assumes a C99 compiler as
 from version 2.12.0, but if you want your package to be portable to
-earlier versions you should write in C90.  (In practice C99 has been
-available on most platforms since @emph{ca} 2007 but old versions of
-@command{gcc} were still in use for @R{} 2.11.x.)
+earlier versions you should write in C90.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
@@ -3729,14 +3710,14 @@ internationalization facilities discussed elsewhere in this manual.
 Function @code{showNonASCIIfile} in package @pkg{tools} can help in
 finding non-@acronym{ASCII} bytes in files.
 
-From @R{} 2.10.0 there is a portable way to have arbitrary text in
-character strings (only) in your @R{} code, which is to supply them in
-Unicode as @code{\uxxxx} escapes.  If there are any characters not in
-the current encoding the parser will encode the character string as
-UTF-8 and mark it as such.  This applies also to character strings in
-datasets: they can be prepared using @code{\uxxxx} escapes or encoded in
-UTF-8 in a UTF-8 locale, or even converted to UTF-8 via @samp{iconv()}.
-If you do this, make sure you have @samp{R (>= 2.10)} (or later) in the
+There is a portable way to have arbitrary text in character strings
+(only) in your @R{} code, which is to supply them in Unicode as
+@code{\uxxxx} escapes.  If there are any characters not in the current
+encoding the parser will encode the character string as UTF-8 and mark
+it as such.  This applies also to character strings in datasets: they
+can be prepared using @code{\uxxxx} escapes or encoded in UTF-8 in a
+UTF-8 locale, or even converted to UTF-8 via @samp{iconv()}.  If you do
+this, make sure you have @samp{R (>= 2.10)} (or later) in the
 @samp{Depends} field of the @file{DESCRIPTION} file.
 
 @R{} sessions running in non-UTF-8 locales will if possible re-encode
@@ -3954,10 +3935,6 @@ and mark strings by
 dngettext(("@var{pkg}", @var{<singular string>}, @var{<plural string>}, n)
 @end example
 
-@noindent
-(This is only supported from @R{} 2.10.0, so packages which use
-@code{dngettext} need to depend on @code{R (>= 2.10)}.)
-
 @item
 In the package's @file{src} directory run
 
@@ -4111,10 +4088,7 @@ look like as a @file{CITATION} file can be seen in recommended package
 @CRANpkg{nlme} (see below): recommended packages @CRANpkg{boot},
 @CRANpkg{cluster} and @CRANpkg{mgcv} have further examples.
 
-A @file{CITATION} file will contain calls to function @code{bibentry}
-(new style, only works with @R{} 2.12.0 or later), or to the functions
-@code{citHeader}, @code{citEntry} and (optionally) @code{citFooter} (old
-style).
+A @file{CITATION} file will contain calls to function @code{bibentry}.
 
 Here is that for @CRANpkg{nlme}, re-formatted:
 
@@ -5395,10 +5369,9 @@ the following to output the markup necessary to display the Greek letter in
 @findex \Sexpr
 @findex \RdOpts
 
-Two new macros supporting dynamically generated man pages were
-introduced in @R{} 2.10.0, @code{\Sexpr} and @code{\RdOpts}.  These
-are modelled after Sweave, and are intended to contain executable @R{}
-expressions in the @file{Rd} file.
+Two macros supporting dynamically generated man pages are @code{\Sexpr}
+and @code{\RdOpts}.  These are modelled after Sweave, and are intended
+to contain executable @R{} expressions in the @file{Rd} file.
 
 The main argument to @code{\Sexpr} must be valid @R{} code that can be
 executed. It may also take options in square brackets before the main
@@ -5438,13 +5411,12 @@ Print the results of the code just as if it was executed at the console,
 and include the printed results verbatim.  (Invisible results will not print.)
 
 @item @code{results=rd}
-The result is assumed to be a character vector containing markup to
-be passed to @code{parse_Rd()}, with the result inserted in place.
-This could be used to insert computed aliases, for instance.
-As of @R{} 2.13.1-patched, @code{parse_Rd()} is called first
-with @code{fragment=FALSE} to allow a single Rd section
-macro to be inserted.  If that fails, it is called again with
-@code{fragment=TRUE}, the older behavior.
+The result is assumed to be a character vector containing markup to be
+passed to @code{parse_Rd()}, with the result inserted in place.  This
+could be used to insert computed aliases, for instance.
+@code{parse_Rd()} is called first with @code{fragment = FALSE} to allow
+a single Rd section macro to be inserted.  If that fails, it is called
+again with @code{fragment = TRUE}, the older behavior.
 
 @item @code{results=hide}
 Insert no output.
@@ -7609,9 +7581,8 @@ many other packages do rely on symbol lookup.
 
 In addition to registering C routines to be called by @R{}, it can at
 times be useful for one package to make some of its C routines available
-to be called by C code in another package.  An interface to support this
-has been provided since @R{} 2.4.0.  The interface consists of two
-routines declared in header @file{R_ext/Rdynload.h} as
+to be called by C code in another package.  The interface consists of
+two routines declared in header @file{R_ext/Rdynload.h} as
 
 @findex R_RegisterCCallable
 @findex R_GetCCallable
@@ -7920,10 +7891,7 @@ I/O will when compiled on Windows interfere with C I/O: when the Fortran
 I/O is initialized (typically when the package is loaded) the C
 @code{stdout} and @code{stderr} are switched to LF line endings.
 (Function @code{init} in file @file{src/modules/lapack/init_win.c} shows how to
-mitigate this.)  Even worse, prior to @R{} 2.6.2 using Fortran output
-when running under the Windows GUI console (@code{Rgui}) would hang the
-@R{} session.  This is now avoided by ensuring that the Fortran output
-is written to a file (@file{fort.6} in the working directory).
+mitigate this.)
 
 @node Linking to other packages, Handling R objects in C, Fortran I/O, System and foreign language interfaces
 @section Linking to other packages
@@ -8717,8 +8685,7 @@ you.   The variant @code{mkCharLen} can be used to create a
 
 Note that @R{} character strings are restricted to @code{2^31 - 1}
 bytes, and hence so should the input to @code{mkChar} be (C allows
-longer strings on 64-bit platforms): the function itself did not check
-prior to @R{} 2.15.1.
+longer strings on 64-bit platforms).
 
 @node Finding and setting variables, Some convenience functions, Handling character data, Handling R objects in C
 @subsection Finding and setting variables
@@ -11231,9 +11198,9 @@ systems (e.g.@: most OSes on Sparc and PowerPC hardware) and not on
 little-endian systems (such as @code{i686} and @code{x86_64} on all
 OSes, and Linux on Alpha and Itanium).  It can be useful when
 manipulating binary files.  The macro @code{SUPPORT_OPENMP} is defined
-on suitable systems as from @R{} 2.13.0, and can be used in conjunction
-with the @code{SUPPORT_OPENMP_*} macros in packages that want to make
-use of OpenMP.
+on suitable systems and can be used in conjunction with the
+@code{SUPPORT_OPENMP_*} macros in packages that want to make use of
+OpenMP.
 
 Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
 defines a macro @code{R_VERSION} giving the version number encoded as an
