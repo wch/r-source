@@ -22,10 +22,11 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
     keep.source <- isTRUE(getOption("keep.source"))
     if(!is.null(text)) {
     	if (length(text) == 0L) return(expression())
-	if (missing(srcfile)) 
+	if (missing(srcfile)) {
 	    srcfile <- "<text>"
-	if (keep.source)
-	    srcfile <- srcfilecopy(srcfile, text)
+	    if (keep.source)
+	       srcfile <- srcfilecopy(srcfile, text)
+	}
 	file <- stdin()
     } else {
 	if(is.character(file)) {
