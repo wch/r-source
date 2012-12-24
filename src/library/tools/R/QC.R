@@ -4268,7 +4268,7 @@ function(dir)
 format.check_package_code_startup_functions <-
 function(x, ...)
 {
-    res <- if(!is.null(attr(x, ".First.lib"))) ".First.lib is obsolete and will not be used\n" else character()
+    res <- if(!is.null(attr(x, ".First.lib"))) "NB: .First.lib is obsolete and will not be used in R >= 3.0.0\n" else character()
     if(length(x)) {
 
         ## Flatten out doubly recursive list of functions within list of
@@ -4369,6 +4369,154 @@ function(file, encoding = NA)
 .call_names <-
 function(x)
     as.character(sapply(x, function(e) deparse(e[[1L]])))
+
+
+### * .check_package_code_unload_functions
+
+.check_package_code_unload_functions <-
+function(dir)
+{
+    bad_call_names <- "library.dynam.unload"
+
+    .check_unload_function <- function(fcode, fname) {
+        out <- list()
+        nms <- names(fcode[[2L]])
+        ## Check names of formals.
+        ## Allow anything containing ... (for now); otherwise, insist on
+        ## length one with names starting with lib.
+        if(is.na(match("...", nms)) &&
+           (length(nms) != 1L || substring(nms, 1L, 3L) != "lib"))
+            out$bad_arg_names <- nms
+        ## Look at all calls (not only at top level).
+        calls <- .find_calls(fcode[[3L]], recursive = TRUE)
+        if(!length(calls)) return(out)
+        cnames <- .call_names(calls)
+        ## And pick the ones which should not be there ...
+        ind <- (cnames %in% bad_call_names)
+        if(any(ind)) {
+            calls <- calls[ind]
+            cnames <- cnames[ind]
+            ## Exclude library(help = ......) calls.
+            pos <- which(cnames == "library")
+            if(length(pos)) {
+                pos <- pos[sapply(calls[pos],
+                                  function(e)
+                                  any(names(e)[-1L] == "help"))]
+                ## Could also match.call(base::library, e) first ...
+                if(length(pos)) {
+                    calls <- calls[-pos]
+                    cnames <- cnames[-pos]
+                }
+            }
+            if(length(calls)) {
+                out$bad_calls <-
+                    list(calls = calls, names = cnames)
+            }
+        }
+        out
+    }
+
+    calls <- .find_calls_in_package_code(dir,
+                                         .worker =
+                                         .get_unload_function_calls_in_file)
+    LL <- unlist(lapply(calls, "[[", ".Last.lib"))
+    calls <- Filter(length,
+                    lapply(calls,
+                           function(e)
+                           Filter(length,
+                                  Map(.check_unload_function,
+                                      e, names(e)))))
+    if(length(LL)) {
+        code_objs <- ".Last.lib"
+        nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+        OK <- intersect(code_objs, nsInfo$exports)
+        for(p in nsInfo$exportPatterns)
+            OK <- c(OK, grep(p, code_objs, value = TRUE))
+        if(!length(OK)) attr(calls, ".Last.lib") <- TRUE
+    }
+    class(calls) <- "check_package_code_unload_functions"
+    calls
+}
+
+format.check_package_code_unload_functions <-
+function(x, ...)
+{
+    res <- if(!is.null(attr(x, ".Last.lib"))) "NB: .Last.lib must be exported\n" else character()
+    if(length(x)) {
+
+        ## Flatten out doubly recursive list of functions within list of
+        ## files structure for computing summary messages.
+        y <- unlist(x, recursive = FALSE)
+
+        has_bad_wrong_args <-
+            "bad_arg_names" %in% unlist(lapply(y, names))
+        calls <-
+            unique(unlist(lapply(y,
+                                 function(e) e[["bad_calls"]][["names"]])))
+        .fmt_entries_for_file <- function(e, f) {
+            c(gettextf("File %s:", sQuote(f)),
+              unlist(Map(.fmt_entries_for_function, e, names(e))),
+              "")
+        }
+
+        .fmt_entries_for_function <- function(e, f) {
+            c(if(length(bad <- e[["bad_arg_names"]])) {
+                gettextf("  %s has wrong argument list %s",
+                         f, sQuote(paste(bad, collapse = ", ")))
+            },
+              if(length(bad <- e[["bad_calls"]])) {
+                  c(gettextf("  %s calls:", f),
+                    paste0("    ",
+                           unlist(lapply(bad[["calls"]], function(e)
+                                         paste(deparse(e), collapse = "")))))
+              })
+        }
+
+        res <-
+            c(res,
+              unlist(Map(.fmt_entries_for_file, x, names(x)),
+                     use.names = FALSE),
+              if(has_bad_wrong_args)
+              strwrap(gettextf("Package detach functions should have one arguments with names starting with %s.", sQuote("lib")),
+                      exdent = 2L),
+              if(length(call))
+              strwrap(gettextf("Package detach functions should not call %s.",
+                               sQuote("library.dynam.unload")),
+                      exdent = 2L),
+              gettextf("See section %s in '%s'.",
+                       sQuote("Good practice"), "?.Last.lib")
+              )
+    }
+    res
+}
+
+print.check_package_code_unload_functions <- .print.via.format
+
+.get_unload_function_calls_in_file <-
+function(file, encoding = NA)
+{
+    exprs <- .parse_code_file(file, encoding)
+
+    ## Use a custom gatherer rather than .find_calls() with a suitable
+    ## predicate so that we record the name of the unload function in
+    ## which the calls were found.
+    calls <- list()
+    for(e in exprs) {
+        if((length(e) > 2L) &&
+	   (is.name(x <- e[[1L]])) &&
+           (as.character(x) %in%
+            c("<-", "=")) &&
+           (as.character(y <- e[[2L]]) %in%
+            c(".Last.lib", ".onDetach")) &&
+	   (is.call(z <- e[[3L]])) &&
+           (as.character(z[[1L]]) == "function")) {
+            new <- list(z)
+            names(new) <- as.character(y)
+            calls <- c(calls, new)
+        }
+    }
+    calls
+}
 
 ### * .check_package_code_tampers
 

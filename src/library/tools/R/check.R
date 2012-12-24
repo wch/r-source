@@ -1146,6 +1146,12 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                       sprintf("tools:::.check_package_code_startup_functions(dir = \"%s\")\n",
                               pkgdir))
         out1 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+        Rcmd <- paste("options(warn=1)\n",
+                      sprintf("tools:::.check_package_code_unload_functions(dir = \"%s\")\n",
+                              pkgdir))
+        out1a <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+        out1 <- if (length(out1) && length(out1a)) c(out1, "", out1a)
+                else c(out1, out1a)
 
         out2 <- out3 <- out4 <- out5 <- out6 <- NULL
 
@@ -1194,6 +1200,8 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             ini <- character()
             if (length(out4)) warningLog(Log) else noteLog(Log)
             if (length(out1)) {
+                ## remove multiple blank lines
+                out1 <- rle(out1)$values
                 printLog0(Log, paste(c(out1, ""), collapse = "\n"))
                 ini <- ""
             }
