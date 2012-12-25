@@ -779,7 +779,7 @@
       \item The deprecated \code{svd(X, LINPACK = TRUE)} could alter
       \code{X} in \R 2.15.[12].  (Reported by Bill Dunlap.)
 
-      \item In Windows, \code{file.link()} and \code{file.symlink()}
+      \item Under Windows, \code{file.link()} and \code{file.symlink()}
       used the link name twice, so would always fail. (Reported
       by Rui Barradas/Oliver Soong).
 
@@ -793,6 +793,10 @@
       
       \item \code{embedFonts()} needed to quote some filepaths.
       (\PR{15149})
+      
+      \item \code{parallel::mccollect()} handled \code{NULL} returns
+      incorrectly (removing the element rather than setting it to
+      \code{NULL}).
     }
   }
 }
