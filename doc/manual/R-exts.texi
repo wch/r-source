@@ -293,7 +293,7 @@ would be good practice to avoid the shell metacharacters
 @code{()@{@}'[]$}.  In addition, packages are normally distributed as
 tarballs, and these have a limit on path lengths (including the package
 name): for maximal portability 100 bytes, and less portably up to 256
-bytes with restricitons including a final component of no more than 100 bytes.
+bytes with restrictions including a final component of no more than 100 bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
@@ -2991,7 +2991,7 @@ package namespace first, then the imports, then the base namespace and
 then the normal search path.
 
 Prior to version 2.14.0, namespaces were optional in packages: a default
-namespace was generated in 2.14.x and 2.15.x.  As from 3.0.0 a namepace
+namespace was generated in 2.14.x and 2.15.x.  As from 3.0.0 a namespace
 is mandatory.
 
 @menu

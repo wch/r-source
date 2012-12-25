@@ -55,7 +55,7 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
       \item{"non.compact"}{the default representation of an
         \code{"ftable"} object.}
       \item{"row.compact"}{a row-compact version without empty cells
-        belo the column labels.}
+        below the column labels.}
       \item{"col.compact"}{a column-compact version without empty cells
         to the right of the row labels.}
       \item{"compact"}{a row- and column-compact version.  This may imply
