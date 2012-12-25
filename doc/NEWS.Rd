@@ -779,6 +779,9 @@
       Vcells and Ncells: it now works in bytes.  (\PR{15138})
       
       \item \code{tools::Rd2HTML()} would sometimes delete text. (\PR{15134})
+      
+      \item \code{plot()} failed for \code{"table"} objects containing
+      just one entry.  (\PR{15118})
     }
   }
 }
