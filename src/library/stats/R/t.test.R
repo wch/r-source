@@ -115,9 +115,9 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     names(mu) <- if(paired || !is.null(y)) "difference in means" else "mean"
     attr(cint,"conf.level") <- conf.level
     rval <- list(statistic = tstat, parameter = df, p.value = pval,
-	       conf.int=cint, estimate=estimate, null.value = mu,
-	       alternative=alternative,
-	       method=method, data.name=dname)
+	       conf.int = cint, estimate = estimate, null.value = mu,
+	       alternative = alternative,
+	       method = method, data.name = dname)
     class(rval) <- "htest"
     return(rval)
 }

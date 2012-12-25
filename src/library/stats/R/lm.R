@@ -252,7 +252,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 print.lm <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     cat("\nCall:\n",
-	paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep="")
+	paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
     if(length(coef(x))) {
         cat("Coefficients:\n")
         print.default(format(coef(x), digits = digits),
@@ -355,12 +355,12 @@ print.summary.lm <-
 	      signif.stars = getOption("show.signif.stars"),	...)
 {
     cat("\nCall:\n", # S has ' ' instead of '\n'
-	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
+	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep = "")
     resid <- x$residuals
     df <- x$df
     rdf <- df[2L]
     cat(if(!is.null(x$weights) && diff(range(x$weights))) "Weighted ",
-        "Residuals:\n", sep="")
+        "Residuals:\n", sep = "")
     if (rdf > 5L) {
 	nam <- c("Min", "1Q", "Median", "3Q", "Max")
 	rq <- if (length(dim(resid)) == 2L)
@@ -375,7 +375,8 @@ print.summary.lm <-
     else if (rdf > 0L) {
 	print(resid, digits = digits, ...)
     } else { # rdf == 0 : perfect fit!
-	cat("ALL", df[1L], "residuals are 0: no residual degrees of freedom!\n")
+	cat("ALL", df[1L], "residuals are 0: no residual degrees of freedom!")
+        cat("\n")
     }
     if (length(x$aliased) == 0L) {
         cat("\nNo Coefficients\n")
@@ -396,18 +397,19 @@ print.summary.lm <-
     }
     ##
     cat("\nResidual standard error:",
-	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
-    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
+	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom")
+    cat("\n")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep = "")
     if (!is.null(x$fstatistic)) {
-	cat("Multiple R-squared:", formatC(x$r.squared, digits = digits))
-	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared, digits = digits),
+	cat("Multiple R-squared: ", formatC(x$r.squared, digits = digits))
+	cat(",\tAdjusted R-squared: ",formatC(x$adj.r.squared, digits = digits),
 	    "\nF-statistic:", formatC(x$fstatistic[1L], digits = digits),
 	    "on", x$fstatistic[2L], "and",
 	    x$fstatistic[3L], "DF,  p-value:",
 	    format.pval(pf(x$fstatistic[1L], x$fstatistic[2L],
                            x$fstatistic[3L], lower.tail = FALSE),
-                        digits = digits),
-	    "\n")
+                        digits = digits))
+        cat("\n")
     }
     correl <- x$correlation
     if (!is.null(correl)) {

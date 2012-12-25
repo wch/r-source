@@ -317,6 +317,8 @@
 
       \item The \code{print()} method for class \code{"htest"} gives
       fewer trailing spaces (wish of \PR{15124}).
+
+      Also output from \code{HoltWinters()}, \code{nls()} and others.
     }
   }
 

@@ -40,13 +40,13 @@ medpolish <-
 	r <- r - delta
 	t <- t + delta
 	newsum <- sum(abs(z), na.rm = na.rm)
-	converged <- newsum==0 || abs(newsum-oldsum) < eps*newsum
+	converged <- newsum == 0 || abs(newsum - oldsum) < eps*newsum
 	if(converged) break
 	oldsum <- newsum
-	if(trace.iter) cat(iter,":", newsum,"\n")
+	if(trace.iter) cat(iter, ": ", newsum, "\n", sep = "")
     }
     if(converged) {
-        if(trace.iter) cat("Final:", newsum,"\n")
+        if(trace.iter) cat("Final: ", newsum, "\n", sep = "")
     } else
     warning(sprintf(ngettext(maxiter,
                              "medpolish() did not converge in %d iteration",
@@ -63,7 +63,7 @@ medpolish <-
 print.medpolish <- function(x, digits = getOption("digits"), ...)
 {
     cat("\nMedian Polish Results (Dataset: \"", x$name, "\")\n", sep = "")
-    cat("\nOverall:", x$overall, "\n\nRow Effects:\n")
+    cat("\nOverall: ", x$overall, "\n\nRow Effects:\n", sep = "")
     print(x$row, digits = digits, ...)
     cat("\nColumn Effects:\n")
     print(x$col, digits = digits, ...)

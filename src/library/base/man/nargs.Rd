@@ -36,7 +36,7 @@ tst(clicketyclack) # 1 (even non-existing)
 tst(c1, a2, rr3) # 3
 
 foo <- function(x, y, z, w) {
-   cat("call was", deparse(match.call()), "\n")
+   cat("call was ", deparse(match.call()), "\n", sep = "")
    nargs()
 }
 foo()      # 0

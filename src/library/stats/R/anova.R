@@ -153,9 +153,10 @@ printCoefmat <-
 	    }
 	} else signif.stars <- FALSE
     } else signif.stars <- FALSE
-    print.default(Cf, quote = FALSE, right = TRUE, na.print=na.print, ...)
+    print.default(Cf, quote = FALSE, right = TRUE, na.print = na.print, ...)
     if(signif.stars && signif.legend)
-        cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
+        ## FIXME: double space is to reproduce historical MM error
+        cat("---\nSignif. codes:  ", attr(Signif,"legend"), "\n", sep ="")
     invisible(x)
 }
 

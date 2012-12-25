@@ -206,8 +206,10 @@ nlsModel.plinear <- function(form, data, start, wts)
              getPars = function() getPars(),
              getAllPars = function() c( getPars(), c( .lin = lin ) ),
              getEnv = function() env,
-             trace = function() cat(format(dev),":",
-             format(c(getPars(), lin)), "\n" ),
+             trace = function() {
+                 cat(format(dev),": ", format(c(getPars(), lin)))
+                 cat("\n")
+             },
              Rmat = function()
              qr.R(qr(.swts * cbind(ddot(attr(rhs, "gradient"), lin), rhs))),
              predict = function(newdata = list(), qr = FALSE)
@@ -366,7 +368,10 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 	     getPars = function() getPars(),
 	     getAllPars = function() getPars(),
 	     getEnv = function() env,
-	     trace = function() cat(format(dev),": ", format(getPars()), "\n"),
+	     trace = function() {
+                 cat(format(dev),": ", format(getPars()))
+                 cat("\n")
+             },
 	     Rmat = function() qr.R(QR),
 	     predict = function(newdata = list(), qr = FALSE)
 	     eval(form[[3L]], as.list(newdata), env)
@@ -690,16 +695,20 @@ summary.nls <-
         with(x$convInfo,
          {
              if(identical(x$call$algorithm, "port"))
-                 cat("\nAlgorithm \"port\", convergence message:",
-                     stopMessage, "\n")
+                 cat("\nAlgorithm \"port\", convergence message: ",
+                     stopMessage, "\n", sep = "")
              else {
-                 if(!isConv || getOption("show.nls.convergence", TRUE))
+                 if(!isConv || getOption("show.nls.convergence", TRUE)) {
                      cat("\nNumber of iterations",
                          if(isConv) "to convergence:" else "till stop:", finIter,
                          "\nAchieved convergence tolerance:",
-                         format(finTol, digits = digits),"\n")
-                 if(!isConv)
-                     cat("Reason stopped:", stopMessage, "\n")
+                         format(finTol, digits = digits))
+                     cat("\n")
+                 }
+                 if(!isConv) {
+                     cat("Reason stopped:", stopMessage)
+                     cat("\n")
+                 }
              }
          })
 
@@ -709,8 +718,8 @@ summary.nls <-
 print.nls <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     cat("Nonlinear regression model\n")
-    cat("  model: ", deparse(formula(x)), "\n")
-    cat("   data: ", deparse(x$data), "\n")
+    cat("  model: ", deparse(formula(x)), "\n", sep = "")
+    cat("   data: ", deparse(x$data), "\n", sep = "")
     print(x$m$getAllPars(), digits = digits, ...)
     cat(" ", if(!is.null(x$weights) && diff(range(x$weights))) "weighted ",
 	"residual sum-of-squares: ", format(x$m$deviance(), digits = digits),
@@ -733,7 +742,8 @@ print.summary.nls <-
     printCoefmat(x$coefficients, digits = digits, signif.stars = signif.stars,
                  ...)
     cat("\nResidual standard error:",
-        format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
+        format(signif(x$sigma, digits)), " on ", rdf, " degrees of freedom")
+    cat("\n")
     correl <- x$correlation
     if (!is.null(correl)) {
         p <- NCOL(correl)

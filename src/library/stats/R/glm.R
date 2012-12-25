@@ -258,7 +258,7 @@ glm.fit <-
             mu <- linkinv(eta <- eta + offset)
             dev <- sum(dev.resids(y, mu, weights))
             if (control$trace)
-                cat("Deviance =", dev, "Iterations -", iter, "\n")
+                cat("Deviance = ", dev, " Iterations - ", iter, "\n", sep = "")
             ## check for divergence
             boundary <- FALSE
             if (!is.finite(dev)) {
@@ -277,7 +277,7 @@ glm.fit <-
                 }
                 boundary <- TRUE
                 if (control$trace)
-                    cat("Step halved: new deviance =", dev, "\n")
+                    cat("Step halved: new deviance = ", dev, "\n", sep = "")
             }
             ## check for fitted values outside domain.
             if (!(valideta(eta) && validmu(mu))) {
@@ -296,7 +296,7 @@ glm.fit <-
                 boundary <- TRUE
                 dev <- sum(dev.resids(y, mu, weights))
                 if (control$trace)
-                    cat("Step halved: new deviance =", dev, "\n")
+                    cat("Step halved: new deviance = ", dev, "\n", sep = "")
             }
             ## check for convergence
             if (abs(dev - devold)/(0.1 + abs(dev)) < control$epsilon) {
@@ -399,7 +399,8 @@ print.glm <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
     if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep = "")
     cat("Null Deviance:	   ",	format(signif(x$null.deviance, digits)),
 	"\nResidual Deviance:", format(signif(x$deviance, digits)),
-	"\tAIC:", format(signif(x$aic, digits)), "\n")
+	"\tAIC:", format(signif(x$aic, digits)))
+    cat("\n")
     invisible(x)
 }
 

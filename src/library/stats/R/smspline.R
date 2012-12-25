@@ -257,12 +257,15 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
     if(is.null(cv)) cv <- FALSE else if(is.name(cv)) cv <- eval(cv)
     cat("\nSmoothing Parameter  spar=", format(x$spar, digits=digits),
         " lambda=", format(x$lambda, digits=digits),
-        if(ip["ispar"] != 1L) paste0("(", ip["iter"], " iterations)"),
-        "\n")
-    cat("Equivalent Degrees of Freedom (Df):", format(x$df,digits=digits),"\n")
-    cat("Penalized Criterion:", format(x$pen.crit, digits=digits), "\n")
+        if(ip["ispar"] != 1L) paste0("(", ip["iter"], " iterations)"))
+    cat("\n")
+    cat("Equivalent Degrees of Freedom (Df):", format(x$df,digits=digits))
+    cat("\n")
+    cat("Penalized Criterion:", format(x$pen.crit, digits=digits))
+    cat("\n")
     if(!is.na(cv))
-        cat(if(cv) "PRESS:" else "GCV:", format(x$cv.crit, digits=digits), "\n")
+        cat(if(cv) "PRESS: " else "GCV: ",
+            format(x$cv.crit, digits = digits), "\n", sep = "")
     invisible(x)
 }
 

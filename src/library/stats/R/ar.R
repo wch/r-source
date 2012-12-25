@@ -183,8 +183,8 @@ print.ar <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
                 " (", format(x$asy.se.coef$x.mean, digits = digits),
                 ") ", "\n", sep = "")
         cat("\nOrder selected", x$order, " sigma^2 estimated as ",
-            format(x$var.pred, digits = digits),"\n")
-
+            format(x$var.pred, digits = digits))
+        cat("\n")
     }
     invisible(x)
 }

@@ -157,7 +157,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
 {
     if(!is.null(cl <- x$call)) {
         cat("Call:\n   ")
-        dput(cl, control=NULL)
+        dput(cl, control = NULL)
     }
     qrx <- if(x$rank) qr(x)
     asgn <- x$assign[qrx$pivot[1L:x$rank]]
@@ -204,7 +204,8 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
             dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), "Residuals")
             print(tmp, quote = FALSE, right = TRUE)
             cat("\n")
-            cat("Residual standard error:", sapply(sqrt(ss/rdf), format), "\n")
+            cat("Residual standard error: ", sapply(sqrt(ss/rdf), format),
+                "\n", sep = "")
         } else
         print(matrix(0, 2L, 1L, dimnames=
                      list(c("Sum of Squares", "Deg. of Freedom"), "<empty>")))
@@ -229,7 +230,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
         cat("\n")
         if(rdf > 0) {
             rs <- sqrt(RSS/rdf)
-            cat("Residual standard error:", sapply(rs, format), "\n")
+            cat("Residual standard error: ", sapply(rs, format), "\n", sep = "")
         }
         coef <- as.matrix(x$coefficients)[, 1L]
         R <- qrx$qr
@@ -487,8 +488,8 @@ print.aovlist <- function(x, ...)
         mn <- x[[1L]]$coefficients
         if(is.matrix(mn)) {
             cat("\nGrand Means:\n")
-            print(format(mn[1,]), quote=FALSE)
-        } else cat("\nGrand Mean:", format(mn[1L]), "\n")
+            print(format(mn[1,]), quote = FALSE)
+        } else cat("\nGrand Mean: ", format(mn[1L]), "\n", sep = "")
         nx <- nx[-1L]
     }
     for(ii in seq_along(nx)) {
@@ -522,7 +523,7 @@ print.summary.aovlist <- function(x, ...)
 {
     nn <- names(x)
     for (i in nn) {
-        cat("\n", i, "\n", sep="")
+        cat("\n", i, "\n", sep = "")
         print(x[[i]], ...)
     }
     invisible(x)
