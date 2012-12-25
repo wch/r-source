@@ -84,9 +84,9 @@
   package should be achieved by (selectively) importing from the other
   package's namespace.
 
-  As from \R 2.14.0, uses of \code{library} with argument \code{help} to
-  display basic information about the package should use \code{format}
-  on the computed package information object and pass this to
+  Uses of \code{library} with argument \code{help} to display basic
+  information about the package should use \code{format} on the
+  computed package information object and pass this to
   \code{packageStartupMessage}.
   
   There should be no calls to \code{\link{installed.packages}} in startup

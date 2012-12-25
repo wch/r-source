@@ -4226,6 +4226,7 @@ function(dir)
         ## And pick the ones which should not be there ...
         bcn <- bad_call_names
         if(fname == ".onAttach") bcn <- c(bcn, "library.dynam")
+        if(fname == ".onLoad") bcn <- c(bcn, "packageStartupMessage")
         ind <- (cnames %in% bcn)
         if(any(ind)) {
             calls <- calls[ind]
