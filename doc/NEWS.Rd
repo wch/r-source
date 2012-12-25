@@ -314,6 +314,9 @@
 
       \item \code{Sys.which()} now returns \code{NA} (not \code{""}) for
       \code{NA} inputs (related to \PR{15147}).
+
+      \item The \code{print()} method for class \code{"htest"} gives
+      fewer trailing spaces (wish of \PR{15124}).
     }
   }
 

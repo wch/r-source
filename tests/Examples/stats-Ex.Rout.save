@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-12-24 r61404) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-25 r61428) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -2838,20 +2838,20 @@ Warning in ansari.test.default(ramsay, jung.parekh) :
 
 	Ansari-Bradley test
 
-data:  ramsay and jung.parekh 
+data:  ramsay and jung.parekh
 AB = 185.5, p-value = 0.1815
-alternative hypothesis: true ratio of scales is not equal to 1 
+alternative hypothesis: true ratio of scales is not equal to 1
 
 > 
 > ansari.test(rnorm(10), rnorm(10, 0, 2), conf.int = TRUE)
 
 	Ansari-Bradley test
 
-data:  rnorm(10) and rnorm(10, 0, 2) 
+data:  rnorm(10) and rnorm(10, 0, 2)
 AB = 69, p-value = 0.03831
-alternative hypothesis: true ratio of scales is not equal to 1 
+alternative hypothesis: true ratio of scales is not equal to 1
 95 percent confidence interval:
- 0.1852324 0.9712857 
+ 0.1852324 0.9712857
 sample estimates:
 ratio of scales 
       0.4007458 
@@ -2862,11 +2862,11 @@ ratio of scales
 
 	Ansari-Bradley test
 
-data:  rnorm(100) and rnorm(100, 0, 2) 
+data:  rnorm(100) and rnorm(100, 0, 2)
 AB = 6180, p-value = 3.347e-08
-alternative hypothesis: true ratio of scales is not equal to 1 
+alternative hypothesis: true ratio of scales is not equal to 1
 95 percent confidence interval:
- 0.3330596 0.5693532 
+ 0.3330596 0.5693532
 sample estimates:
 ratio of scales 
       0.4346784 
@@ -3815,14 +3815,14 @@ Warning in bw.bcv(x) : minimum occurred at one end of the range
 
 	Bartlett test of homogeneity of variances
 
-data:  InsectSprays$count and InsectSprays$spray 
+data:  InsectSprays$count and InsectSprays$spray
 Bartlett's K-squared = 25.9598, df = 5, p-value = 9.085e-05
 
 > bartlett.test(count ~ spray, data = InsectSprays)
 
 	Bartlett test of homogeneity of variances
 
-data:  count by spray 
+data:  count by spray
 Bartlett's K-squared = 25.9598, df = 5, p-value = 9.085e-05
 
 > 
@@ -3853,11 +3853,11 @@ Bartlett's K-squared = 25.9598, df = 5, p-value = 9.085e-05
 
 	Exact binomial test
 
-data:  c(682, 243) 
+data:  c(682, 243)
 number of successes = 682, number of trials = 925, p-value = 0.3825
-alternative hypothesis: true probability of success is not equal to 0.75 
+alternative hypothesis: true probability of success is not equal to 0.75
 95 percent confidence interval:
- 0.7076683 0.7654066 
+ 0.7076683 0.7654066
 sample estimates:
 probability of success 
              0.7372973 
@@ -3866,11 +3866,11 @@ probability of success
 
 	Exact binomial test
 
-data:  682 and 682 + 243 
+data:  682 and 682 + 243
 number of successes = 682, number of trials = 925, p-value = 0.3825
-alternative hypothesis: true probability of success is not equal to 0.75 
+alternative hypothesis: true probability of success is not equal to 0.75
 95 percent confidence interval:
- 0.7076683 0.7654066 
+ 0.7076683 0.7654066
 sample estimates:
 probability of success 
              0.7372973 
@@ -3964,14 +3964,14 @@ probability of success
 
 	Box-Pierce test
 
-data:  x 
+data:  x
 X-squared = 0.0013, df = 1, p-value = 0.9709
 
 > Box.test (x, lag = 1, type = "Ljung")
 
 	Box-Ljung test
 
-data:  x 
+data:  x
 X-squared = 0.0014, df = 1, p-value = 0.9704
 
 > 
@@ -4074,7 +4074,7 @@ I(x^3) -0.73        0.93 -0.99
 
 	Pearson's Chi-squared test
 
-data:  M 
+data:  M
 X-squared = 30.0701, df = 2, p-value = 2.954e-07
 
 > Xsq$observed   # observed counts (same as M) 
@@ -4114,14 +4114,14 @@ gender   Democrat Independent Republican
 
 	Chi-squared test for given probabilities
 
-data:  x 
+data:  x
 X-squared = 2.5, df = 2, p-value = 0.2865
 
 > chisq.test(as.table(x))             # the same
 
 	Chi-squared test for given probabilities
 
-data:  as.table(x) 
+data:  as.table(x)
 X-squared = 2.5, df = 2, p-value = 0.2865
 
 > x <- c(89,37,30,28,2)
@@ -4134,7 +4134,7 @@ Error in chisq.test(x, p = p) : probabilities must sum to 1.
 
 	Chi-squared test for given probabilities
 
-data:  x 
+data:  x
 X-squared = 9.9901, df = 4, p-value = 0.04059
 
 >                                 # works
@@ -4147,7 +4147,7 @@ Warning in chisq.test(x, p = p) :
 
 	Chi-squared test for given probabilities
 
-data:  x 
+data:  x
 X-squared = 5.7947, df = 4, p-value = 0.215
 
 > chisq.test(x, p = p, simulate.p.value = TRUE)
@@ -4155,7 +4155,7 @@ X-squared = 5.7947, df = 4, p-value = 0.215
 	Chi-squared test for given probabilities with simulated p-value (based
 	on 2000 replicates)
 
-data:  x 
+data:  x
 X-squared = 5.7947, df = NA, p-value = 0.2029
 
 > 
@@ -4165,7 +4165,7 @@ X-squared = 5.7947, df = NA, p-value = 0.2029
 
 	Chi-squared test for given probabilities
 
-data:  table(x) 
+data:  table(x)
 X-squared = 4.3, df = 4, p-value = 0.3669
 
 > 
@@ -4821,9 +4821,9 @@ attr(,"legend")
 
 	Kendall's rank correlation tau
 
-data:  x and y 
+data:  x and y
 T = 26, p-value = 0.05972
-alternative hypothesis: true tau is greater than 0 
+alternative hypothesis: true tau is greater than 0
 sample estimates:
       tau 
 0.4444444 
@@ -4835,9 +4835,9 @@ sample estimates:
 
 	Kendall's rank correlation tau
 
-data:  x and y 
+data:  x and y
 z = 1.6681, p-value = 0.04765
-alternative hypothesis: true tau is greater than 0 
+alternative hypothesis: true tau is greater than 0
 sample estimates:
       tau 
 0.4444444 
@@ -4849,9 +4849,9 @@ sample estimates:
 
 	Spearman's rank correlation rho
 
-data:  x and y 
+data:  x and y
 S = 48, p-value = 0.0484
-alternative hypothesis: true rho is greater than 0 
+alternative hypothesis: true rho is greater than 0
 sample estimates:
 rho 
 0.6 
@@ -4860,11 +4860,11 @@ rho
 
 	Pearson's product-moment correlation
 
-data:  x and y 
+data:  x and y
 t = 1.8411, df = 7, p-value = 0.05409
-alternative hypothesis: true correlation is greater than 0 
+alternative hypothesis: true correlation is greater than 0
 95 percent confidence interval:
- -0.02223023  1.00000000 
+ -0.02223023  1.00000000
 sample estimates:
       cor 
 0.5711816 
@@ -4877,11 +4877,11 @@ sample estimates:
 
 	Pearson's product-moment correlation
 
-data:  CONT and INTG 
+data:  CONT and INTG
 t = -0.8605, df = 41, p-value = 0.3945
-alternative hypothesis: true correlation is not equal to 0 
+alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- -0.4168591  0.1741182 
+ -0.4168591  0.1741182
 sample estimates:
        cor 
 -0.1331909 
@@ -6948,11 +6948,11 @@ Frequency = 1
 
 	Fisher's Exact Test for Count Data
 
-data:  TeaTasting 
+data:  TeaTasting
 p-value = 0.2429
-alternative hypothesis: true odds ratio is greater than 1 
+alternative hypothesis: true odds ratio is greater than 1
 95 percent confidence interval:
- 0.3135693       Inf 
+ 0.3135693       Inf
 sample estimates:
 odds ratio 
   6.408309 
@@ -6974,11 +6974,11 @@ Monozygotic        10             3
 
 	Fisher's Exact Test for Count Data
 
-data:  Convictions 
+data:  Convictions
 p-value = 0.0004652
-alternative hypothesis: true odds ratio is less than 1 
+alternative hypothesis: true odds ratio is less than 1
 95 percent confidence interval:
- 0.0000000 0.2849601 
+ 0.0000000 0.2849601
 sample estimates:
 odds ratio 
 0.04693661 
@@ -6987,9 +6987,9 @@ odds ratio
 
 	Fisher's Exact Test for Count Data
 
-data:  Convictions 
+data:  Convictions
 p-value = 0.0005367
-alternative hypothesis: true odds ratio is not equal to 1 
+alternative hypothesis: true odds ratio is not equal to 1
 sample estimates:
 odds ratio 
 0.04693661 
@@ -7011,18 +7011,18 @@ attr(,"conf.level")
 
 	Fisher's Exact Test for Count Data
 
-data:  Job 
+data:  Job
 p-value = 0.7827
-alternative hypothesis: two.sided 
+alternative hypothesis: two.sided
 
 > fisher.test(Job, simulate.p.value = TRUE, B = 1e5)
 
 	Fisher's Exact Test for Count Data with simulated p-value (based on
 	1e+05 replicates)
 
-data:  Job 
+data:  Job
 p-value = 0.7842
-alternative hypothesis: two.sided 
+alternative hypothesis: two.sided
 
 > 
 > 
@@ -7065,14 +7065,14 @@ alternative hypothesis: two.sided
 
 	Fligner-Killeen test of homogeneity of variances
 
-data:  InsectSprays$count and InsectSprays$spray 
+data:  InsectSprays$count and InsectSprays$spray
 Fligner-Killeen:med chi-squared = 14.4828, df = 5, p-value = 0.01282
 
 > fligner.test(count ~ spray, data = InsectSprays)
 
 	Fligner-Killeen test of homogeneity of variances
 
-data:  count by spray 
+data:  count by spray
 Fligner-Killeen:med chi-squared = 14.4828, df = 5, p-value = 0.01282
 
 > ## Compare this to bartlett.test()
@@ -7206,7 +7206,7 @@ circumference ~ A/(1 + exp((B - age)/C))
 
 	Friedman rank sum test
 
-data:  RoundingTimes 
+data:  RoundingTimes
 Friedman chi-squared = 11.1429, df = 2, p-value = 0.003805
 
 > ## => strong evidence against the null that the methods are equivalent
@@ -7228,14 +7228,14 @@ Friedman chi-squared = 11.1429, df = 2, p-value = 0.003805
 
 	Friedman rank sum test
 
-data:  wb$x, wb$w and wb$t 
+data:  wb$x, wb$w and wb$t
 Friedman chi-squared = 0.3333, df = 1, p-value = 0.5637
 
 > friedman.test(x ~ w | t, data = wb)
 
 	Friedman rank sum test
 
-data:  x and w and t 
+data:  x and w and t
 Friedman chi-squared = 0.3333, df = 1, p-value = 0.5637
 
 > 
@@ -8229,7 +8229,7 @@ Available components:
 
 	Kruskal-Wallis rank sum test
 
-data:  list(x, y, z) 
+data:  list(x, y, z)
 Kruskal-Wallis chi-squared = 0.7714, df = 2, p-value = 0.68
 
 > ## Equivalently,
@@ -8242,7 +8242,7 @@ Kruskal-Wallis chi-squared = 0.7714, df = 2, p-value = 0.68
 
 	Kruskal-Wallis rank sum test
 
-data:  x and g 
+data:  x and g
 Kruskal-Wallis chi-squared = 0.7714, df = 2, p-value = 0.68
 
 > 
@@ -8253,7 +8253,7 @@ Kruskal-Wallis chi-squared = 0.7714, df = 2, p-value = 0.68
 
 	Kruskal-Wallis rank sum test
 
-data:  Ozone by Month 
+data:  Ozone by Month
 Kruskal-Wallis chi-squared = 29.2666, df = 4, p-value = 6.901e-06
 
 > 
@@ -8281,34 +8281,34 @@ Kruskal-Wallis chi-squared = 29.2666, df = 4, p-value = 6.901e-06
 
 	Two-sample Kolmogorov-Smirnov test
 
-data:  x and y 
+data:  x and y
 D = 0.48, p-value = 0.0002033
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 > # Does x come from a shifted gamma distribution with shape 3 and rate 2?
 > ks.test(x+2, "pgamma", 3, 2) # two-sided, exact
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  x + 2 
+data:  x + 2
 D = 0.4096, p-value = 4.227e-08
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 > ks.test(x+2, "pgamma", 3, 2, exact = FALSE)
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  x + 2 
+data:  x + 2
 D = 0.4096, p-value = 1.033e-07
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 > ks.test(x+2, "pgamma", 3, 2, alternative = "gr")
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  x + 2 
+data:  x + 2
 D^+ = 0.04, p-value = 0.8302
-alternative hypothesis: the CDF of x lies above the null hypothesis 
+alternative hypothesis: the CDF of x lies above the null hypothesis
 
 > 
 > # test if x is stochastically larger than x2
@@ -8319,11 +8319,11 @@ alternative hypothesis: the CDF of x lies above the null hypothesis
 
 	Welch Two Sample t-test
 
-data:  x and x2 
+data:  x and x2
 t = 5.6742, df = 96.85, p-value = 7.242e-08
-alternative hypothesis: true difference in means is greater than 0 
+alternative hypothesis: true difference in means is greater than 0
 95 percent confidence interval:
- 0.7069751       Inf 
+ 0.7069751       Inf
 sample estimates:
  mean of x  mean of y 
  0.1004483 -0.8990693 
@@ -8332,17 +8332,17 @@ sample estimates:
 
 	Wilcoxon rank sum test with continuity correction
 
-data:  x and x2 
+data:  x and x2
 W = 1983, p-value = 2.212e-07
-alternative hypothesis: true location shift is greater than 0 
+alternative hypothesis: true location shift is greater than 0
 
 > ks.test(x, x2, alternative = "l")
 
 	Two-sample Kolmogorov-Smirnov test
 
-data:  x and x2 
+data:  x and x2
 D^- = 0.5, p-value = 3.727e-06
-alternative hypothesis: the CDF of x lies below that of y 
+alternative hypothesis: the CDF of x lies below that of y
 
 > 
 > 
@@ -9172,11 +9172,11 @@ Delay  Cured Died
 
 	Mantel-Haenszel chi-squared test with continuity correction
 
-data:  Rabbits 
+data:  Rabbits
 Mantel-Haenszel X-squared = 3.9286, df = 1, p-value = 0.04747
-alternative hypothesis: true common odds ratio is not equal to 1 
+alternative hypothesis: true common odds ratio is not equal to 1
 95 percent confidence interval:
-  1.026713 47.725133 
+  1.026713 47.725133
 sample estimates:
 common odds ratio 
                 7 
@@ -9188,11 +9188,11 @@ common odds ratio
 
 	Exact conditional test of independence in 2 x 2 x k tables
 
-data:  Rabbits 
+data:  Rabbits
 S = 16, p-value = 0.03994
-alternative hypothesis: true common odds ratio is not equal to 1 
+alternative hypothesis: true common odds ratio is not equal to 1
 95 percent confidence interval:
-   1.077401 529.837399 
+   1.077401 529.837399
 sample estimates:
 common odds ratio 
          10.36102 
@@ -9204,11 +9204,11 @@ common odds ratio
 
 	Exact conditional test of independence in 2 x 2 x k tables
 
-data:  Rabbits 
+data:  Rabbits
 S = 16, p-value = 0.01997
-alternative hypothesis: true common odds ratio is greater than 1 
+alternative hypothesis: true common odds ratio is greater than 1
 95 percent confidence interval:
- 1.384239      Inf 
+ 1.384239      Inf
 sample estimates:
 common odds ratio 
          10.36102 
@@ -9220,11 +9220,11 @@ common odds ratio
 
 	Mantel-Haenszel chi-squared test with continuity correction
 
-data:  UCBAdmissions 
+data:  UCBAdmissions
 Mantel-Haenszel X-squared = 1.4269, df = 1, p-value = 0.2323
-alternative hypothesis: true common odds ratio is not equal to 1 
+alternative hypothesis: true common odds ratio is not equal to 1
 95 percent confidence interval:
- 0.7719074 1.0603298 
+ 0.7719074 1.0603298
 sample estimates:
 common odds ratio 
         0.9046968 
@@ -9281,7 +9281,7 @@ Male   <5000                          1   1   2   1
 
 	Cochran-Mantel-Haenszel test
 
-data:  Satisfaction 
+data:  Satisfaction
 Cochran-Mantel-Haenszel M^2 = 10.2001, df = 9, p-value = 0.3345
 
 > ## See Table 7.12 in Agresti (2002), p. 297.
@@ -9362,7 +9362,7 @@ cond     deg0NA deg4NA deg8NA deg0NP deg4NP deg8NP
 	~1
 
 
-data:  SSD matrix from lm(formula = reacttime ~ 1) 
+data:  SSD matrix from lm(formula = reacttime ~ 1)
 W = 0.0311, p-value = 0.04765
 
 > 
@@ -9376,7 +9376,7 @@ W = 0.0311, p-value = 0.04765
 	~deg + noise
 
 
-data:  SSD matrix from lm(formula = reacttime ~ 1) 
+data:  SSD matrix from lm(formula = reacttime ~ 1)
 W = 0.8938, p-value = 0.6381
 
 > mauchly.test(mlmfit, M = ~ deg + noise, X = ~ noise, idata = idata)
@@ -9389,7 +9389,7 @@ W = 0.8938, p-value = 0.6381
 	~deg + noise
 
 
-data:  SSD matrix from lm(formula = reacttime ~ 1) 
+data:  SSD matrix from lm(formula = reacttime ~ 1)
 W = 0.9601, p-value = 0.8497
 
 > 
@@ -9426,7 +9426,7 @@ W = 0.9601, p-value = 0.8497
 
 	McNemar's Chi-squared test with continuity correction
 
-data:  Performance 
+data:  Performance
 McNemar's chi-squared = 16.8178, df = 1, p-value = 4.115e-05
 
 > ## => significant change (in fact, drop) in approval ratings
@@ -9884,9 +9884,9 @@ b4                    3  0  0  0  0  3
 
 	Mood two-sample test of scale
 
-data:  ramsay and jung.parekh 
+data:  ramsay and jung.parekh
 Z = 1.0371, p-value = 0.2997
-alternative hypothesis: two.sided 
+alternative hypothesis: two.sided
 
 > ## Compare this to ansari.test(ramsay, jung.parekh)
 > 
@@ -10597,7 +10597,7 @@ attr(,"gradient")
 
 	One-way analysis of means (not assuming equal variances)
 
-data:  extra and group 
+data:  extra and group
 F = 3.4626, num df = 1.000, denom df = 17.776, p-value = 0.07939
 
 > ## Assuming equal variances
@@ -10605,7 +10605,7 @@ F = 3.4626, num df = 1.000, denom df = 17.776, p-value = 0.07939
 
 	One-way analysis of means
 
-data:  extra and group 
+data:  extra and group
 F = 3.4626, num df = 1, denom df = 18, p-value = 0.07919
 
 > ## which gives the same result as
@@ -11508,11 +11508,11 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 
 	Exact Poisson test
 
-data:  137 time base: 24.19893 
+data:  137 time base: 24.19893
 number of events = 137, time base = 24.199, p-value < 2.2e-16
-alternative hypothesis: true event rate is not equal to 1 
+alternative hypothesis: true event rate is not equal to 1
 95 percent confidence interval:
- 4.753125 6.692709 
+ 4.753125 6.692709
 sample estimates:
 event rate 
   5.661407 
@@ -11523,11 +11523,11 @@ event rate
 
 	Comparison of Poisson rates
 
-data:  c(11, 6 + 8 + 7) time base: c(800, 1083 + 1050 + 878) 
+data:  c(11, 6 + 8 + 7) time base: c(800, 1083 + 1050 + 878)
 count1 = 11, expected count1 = 6.717, p-value = 0.07967
-alternative hypothesis: true rate ratio is not equal to 1 
+alternative hypothesis: true rate ratio is not equal to 1
 95 percent confidence interval:
- 0.8584264 4.2772659 
+ 0.8584264 4.2772659
 sample estimates:
 rate ratio 
   1.971488 
@@ -11881,7 +11881,7 @@ pmax(eta^(1/lambda), .Machine$double.eps)
 
 	Phillips-Perron Unit Root Test
 
-data:  x 
+data:  x
 Dickey-Fuller = -33.0567, Truncation lag parameter = 7, p-value = 0.01
 
 > y <- cumsum(x) # has unit root
@@ -11889,7 +11889,7 @@ Dickey-Fuller = -33.0567, Truncation lag parameter = 7, p-value = 0.01
 
 	Phillips-Perron Unit Root Test
 
-data:  y 
+data:  y
 Dickey-Fuller = -2.6899, Truncation lag parameter = 7, p-value = 0.2863
 
 > 
@@ -13369,11 +13369,11 @@ attr(,"factors")$Residuals
 
 	1-sample proportions test with continuity correction
 
-data:  heads out of 100, null probability 0.5 
+data:  heads out of 100, null probability 0.5
 X-squared = 0.09, df = 1, p-value = 0.7642
-alternative hypothesis: true p is not equal to 0.5 
+alternative hypothesis: true p is not equal to 0.5
 95 percent confidence interval:
- 0.4183183 0.6201278 
+ 0.4183183 0.6201278
 sample estimates:
    p 
 0.52 
@@ -13382,11 +13382,11 @@ sample estimates:
 
 	1-sample proportions test without continuity correction
 
-data:  heads out of 100, null probability 0.5 
+data:  heads out of 100, null probability 0.5
 X-squared = 0.16, df = 1, p-value = 0.6892
-alternative hypothesis: true p is not equal to 0.5 
+alternative hypothesis: true p is not equal to 0.5
 95 percent confidence interval:
- 0.4231658 0.6153545 
+ 0.4231658 0.6153545
 sample estimates:
    p 
 0.52 
@@ -13405,9 +13405,9 @@ sample estimates:
 	4-sample test for equality of proportions without continuity
 	correction
 
-data:  smokers out of patients 
+data:  smokers out of patients
 X-squared = 12.6004, df = 3, p-value = 0.005585
-alternative hypothesis: two.sided 
+alternative hypothesis: two.sided
 sample estimates:
    prop 1    prop 2    prop 3    prop 4 
 0.9651163 0.9677419 0.9485294 0.8536585 
@@ -13435,9 +13435,9 @@ sample estimates:
 	4-sample test for equality of proportions without continuity
 	correction
 
-data:  smokers out of patients 
+data:  smokers out of patients
 X-squared = 12.6004, df = 3, p-value = 0.005585
-alternative hypothesis: two.sided 
+alternative hypothesis: two.sided
 sample estimates:
    prop 1    prop 2    prop 3    prop 4 
 0.9651163 0.9677419 0.9485294 0.8536585 
@@ -13447,7 +13447,7 @@ sample estimates:
 	Chi-squared Test for Trend in Proportions
 
 data:  smokers out of patients ,
- using scores: 1 2 3 4 
+ using scores: 1 2 3 4
 X-squared = 8.2249, df = 1, p-value = 0.004132
 
 > prop.trend.test(smokers, patients, c(0,0,0,1))
@@ -13455,7 +13455,7 @@ X-squared = 8.2249, df = 1, p-value = 0.004132
 	Chi-squared Test for Trend in Proportions
 
 data:  smokers out of patients ,
- using scores: 0 0 0 1 
+ using scores: 0 0 0 1
 X-squared = 12.1731, df = 1, p-value = 0.0004848
 
 > 
@@ -13534,7 +13534,7 @@ Store  A  B  C  D  E
 
 	Quade test
 
-data:  y 
+data:  y
 Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 
 > 
@@ -14800,14 +14800,14 @@ foo bar baz
 
 	Shapiro-Wilk normality test
 
-data:  rnorm(100, mean = 5, sd = 3) 
+data:  rnorm(100, mean = 5, sd = 3)
 W = 0.9956, p-value = 0.9876
 
 > shapiro.test(runif(100, min = 2, max = 4))
 
 	Shapiro-Wilk normality test
 
-data:  runif(100, min = 2, max = 4) 
+data:  runif(100, min = 2, max = 4)
 W = 0.9309, p-value = 5.616e-05
 
 > 
@@ -16106,11 +16106,11 @@ attr(,"legend")
 
 	Welch Two Sample t-test
 
-data:  1:10 and c(7:20) 
+data:  1:10 and c(7:20)
 t = -5.4349, df = 21.982, p-value = 1.855e-05
-alternative hypothesis: true difference in means is not equal to 0 
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -11.052802  -4.947198 
+ -11.052802  -4.947198
 sample estimates:
 mean of x mean of y 
       5.5      13.5 
@@ -16119,11 +16119,11 @@ mean of x mean of y
 
 	Welch Two Sample t-test
 
-data:  1:10 and c(7:20, 200) 
+data:  1:10 and c(7:20, 200)
 t = -1.6329, df = 14.165, p-value = 0.1245
-alternative hypothesis: true difference in means is not equal to 0 
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -47.242900   6.376233 
+ -47.242900   6.376233
 sample estimates:
 mean of x mean of y 
   5.50000  25.93333 
@@ -16136,11 +16136,11 @@ mean of x mean of y
 
 	Welch Two Sample t-test
 
-data:  extra[group == 1] and extra[group == 2] 
+data:  extra[group == 1] and extra[group == 2]
 t = -1.8608, df = 17.776, p-value = 0.07939
-alternative hypothesis: true difference in means is not equal to 0 
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -3.3654832  0.2054832 
+ -3.3654832  0.2054832
 sample estimates:
 mean of x mean of y 
      0.75      2.33 
@@ -16150,11 +16150,11 @@ mean of x mean of y
 
 	Welch Two Sample t-test
 
-data:  extra by group 
+data:  extra by group
 t = -1.8608, df = 17.776, p-value = 0.07939
-alternative hypothesis: true difference in means is not equal to 0 
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -3.3654832  0.2054832 
+ -3.3654832  0.2054832
 sample estimates:
 mean in group 1 mean in group 2 
            0.75            2.33 
@@ -16914,11 +16914,11 @@ log(y) ~ x
 
 	F test to compare two variances
 
-data:  x and y 
+data:  x and y
 F = 2.6522, num df = 49, denom df = 29, p-value = 0.006232
-alternative hypothesis: true ratio of variances is not equal to 1 
+alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 1.332510 4.989832 
+ 1.332510 4.989832
 sample estimates:
 ratio of variances 
           2.652168 
@@ -16927,11 +16927,11 @@ ratio of variances
 
 	F test to compare two variances
 
-data:  lm(x ~ 1) and lm(y ~ 1) 
+data:  lm(x ~ 1) and lm(y ~ 1)
 F = 2.6522, num df = 49, denom df = 29, p-value = 0.006232
-alternative hypothesis: true ratio of variances is not equal to 1 
+alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 1.332510 4.989832 
+ 1.332510 4.989832
 sample estimates:
 ratio of variances 
           2.652168 
@@ -17083,26 +17083,26 @@ $rotmat
 
 	Wilcoxon signed rank test
 
-data:  x and y 
+data:  x and y
 V = 40, p-value = 0.01953
-alternative hypothesis: true location shift is greater than 0 
+alternative hypothesis: true location shift is greater than 0
 
 > wilcox.test(y - x, alternative = "less")    # The same.
 
 	Wilcoxon signed rank test
 
-data:  y - x 
+data:  y - x
 V = 5, p-value = 0.01953
-alternative hypothesis: true location is less than 0 
+alternative hypothesis: true location is less than 0
 
 > wilcox.test(y - x, alternative = "less",
 +             exact = FALSE, correct = FALSE) # H&W large sample
 
 	Wilcoxon signed rank test
 
-data:  y - x 
+data:  y - x
 V = 5, p-value = 0.01908
-alternative hypothesis: true location is less than 0 
+alternative hypothesis: true location is less than 0
 
 >                                             # approximation
 > 
@@ -17118,18 +17118,18 @@ alternative hypothesis: true location is less than 0
 
 	Wilcoxon rank sum test
 
-data:  x and y 
+data:  x and y
 W = 35, p-value = 0.1272
-alternative hypothesis: true location shift is greater than 0 
+alternative hypothesis: true location shift is greater than 0
 
 > wilcox.test(x, y, alternative = "greater",
 +             exact = FALSE, correct = FALSE) # H&W large sample
 
 	Wilcoxon rank sum test
 
-data:  x and y 
+data:  x and y
 W = 35, p-value = 0.1103
-alternative hypothesis: true location shift is greater than 0 
+alternative hypothesis: true location shift is greater than 0
 
 >                                             # approximation
 > 
@@ -17137,11 +17137,11 @@ alternative hypothesis: true location shift is greater than 0
 
 	Wilcoxon rank sum test
 
-data:  rnorm(10) and rnorm(10, 2) 
+data:  rnorm(10) and rnorm(10, 2)
 W = 7, p-value = 0.0004871
-alternative hypothesis: true location shift is not equal to 0 
+alternative hypothesis: true location shift is not equal to 0
 95 percent confidence interval:
- -3.024352 -1.348555 
+ -3.024352 -1.348555
 sample estimates:
 difference in location 
              -2.262424 
@@ -17156,9 +17156,9 @@ Warning in wilcox.test.default(x = c(41L, 36L, 12L, 18L, 28L, 23L, 19L,  :
 
 	Wilcoxon rank sum test with continuity correction
 
-data:  Ozone by Month 
+data:  Ozone by Month
 W = 127.5, p-value = 0.0001208
-alternative hypothesis: true location shift is not equal to 0 
+alternative hypothesis: true location shift is not equal to 0
 
 > 
 > 

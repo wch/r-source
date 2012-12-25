@@ -19,9 +19,9 @@
 print.htest <- function(x, digits = 4L, quote = TRUE, prefix = "", ...)
 {
     cat("\n")
-    cat(strwrap(x$method, prefix = "\t"), sep="\n")
+    cat(strwrap(x$method, prefix = "\t"), sep = "\n")
     cat("\n")
-    cat("data: ", x$data.name, "\n")
+    cat("data:  ", x$data.name, "\n", sep = "")
     out <- character()
     if(!is.null(x$statistic))
 	out <- c(out, paste(names(x$statistic), "=",
@@ -34,7 +34,7 @@ print.htest <- function(x, digits = 4L, quote = TRUE, prefix = "", ...)
 	out <- c(out, paste("p-value",
 			    if(substr(fp, 1L, 1L) == "<") fp else paste("=",fp)))
     }
-    cat(strwrap(paste(out, collapse = ", ")), sep="\n")
+    cat(strwrap(paste(out, collapse = ", ")), sep = "\n")
     if(!is.null(x$alternative)) {
 	cat("alternative hypothesis: ")
 	if(!is.null(x$null.value)) {
@@ -44,20 +44,21 @@ print.htest <- function(x, digits = 4L, quote = TRUE, prefix = "", ...)
 			   two.sided = "not equal to",
 			   less = "less than",
 			   greater = "greater than")
-		cat("true", names(x$null.value), "is", alt.char,
-		    x$null.value, "\n")
+		cat("true ", names(x$null.value), " is ", alt.char, " ",
+		    x$null.value, "\n", sep = "")
 	    }
 	    else {
-		cat(x$alternative, "\nnull values:\n")
+		cat(x$alternative, "\nnull values:\n", sep = "")
 		print(x$null.value, ...)
 	    }
 	}
-	else cat(x$alternative, "\n")
+	else cat(x$alternative, "\n", sep = "")
     }
     if(!is.null(x$conf.int)) {
 	cat(format(100 * attr(x$conf.int, "conf.level")),
-	    "percent confidence interval:\n",
-	    format(c(x$conf.int[1L], x$conf.int[2L])), "\n")
+	    " percent confidence interval:\n", " ",
+	    paste(format(c(x$conf.int[1L], x$conf.int[2L])), collapse = " "),
+            "\n", sep = "")
     }
     if(!is.null(x$estimate)) {
 	cat("sample estimates:\n")

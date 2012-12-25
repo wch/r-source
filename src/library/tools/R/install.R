@@ -45,7 +45,7 @@
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
 
-    MAKE <- Sys.getenv("MAKE")
+    MAKE <- Sys.getenv("MAKE") # FIXME shQuote, default?
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)
@@ -300,10 +300,10 @@
             filepath <- shQuote(file.path(startdir, filename))
             owd <- setwd(lib)
             TAR <- Sys.getenv("TAR", 'tar')
-            system(paste(TAR, "-chf", filepath,
+            system(paste(shQuote(TAR), "-chf", filepath,
                          paste(curPkg, collapse = " ")))
             GZIP <- Sys.getenv("R_GZIPCMD", "gzip")
-            system(paste(GZIP, "-9f", filepath))
+            system(paste(shQuote(GZIP), "-9f", filepath))
             if (grepl("darwin", R.version$os)) {
                 filename <- paste0(filename, ".gz")
                 nfilename <- paste0(pkg_name, "_", version,".tgz")
@@ -332,7 +332,7 @@
             ## system(paste("rm -f", filepath))
             unlink(filepath)
             owd <- setwd(lib)
-            res <- system(paste(ZIP, "-r9Xq", filepath,
+            res <- system(paste(shQuote(ZIP), "-r9Xq", filepath,
                                 paste(curPkg, collapse = " ")))
             setwd(owd)
             if (res)

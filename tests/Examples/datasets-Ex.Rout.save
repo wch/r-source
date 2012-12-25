@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-12-03 r61190) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-25 r61428) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -2884,11 +2884,11 @@ Warning: not plotting observations with leverage one:
 
 	Paired t-test
 
-data:  extra[group == 1] and extra[group == 2] 
+data:  extra[group == 1] and extra[group == 2]
 t = -4.0621, df = 9, p-value = 0.002833
-alternative hypothesis: true difference in means is not equal to 0 
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -2.4598858 -0.7001142 
+ -2.4598858 -0.7001142
 sample estimates:
 mean of the differences 
                   -1.58 
