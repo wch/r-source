@@ -74,11 +74,11 @@ download.packages(pkgs, destdir, available = NULL,
   \code{\link{available.packages}}, \code{\link{contrib.url}}.
 
   The main use is by \code{\link{install.packages}}.
-  
+
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 
-  The \sQuote{R Installation and Administration} manual for how to 
+  The \sQuote{R Installation and Administration} manual for how to
   set up a repository.
 }
 

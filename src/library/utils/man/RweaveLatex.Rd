@@ -62,20 +62,20 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \samp{\\includegraphics{}} directive for each plot file and in turn
   impacts the scaling of your plot files as they will appear in your
   final document.
-  
+
   Thus, for example, you may set \code{width=3} in your figure chunk and
   the generated graphics files will be set to 3 inches in
   width.  However, the width of your graphic in your final document will
   be set to \samp{0.8\\textwidth} and the height dimension will be
   scaled accordingly.  Fonts and symbols will be similarly scaled in the
-  final document. 
-  
+  final document.
+
   You can adjust the default value by including the
   \samp{\\setkeys{Gin}{width=...}} directive in your \file{.Rnw} file
   after the \samp{\\begin{document}} directive and changing the
   \code{width} option value as you prefer, using standard LaTeX
   measurement values.
- 
+
   If you wish to override this default behavior entirely, you can add a
   \samp{\\usepackage[nogin]{Sweave}} directive in your preamble.  In this
   case, no size/scaling options will be passed to the
@@ -87,7 +87,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   suppresses the use of the \samp{ae} package, the use of which may
   interfere with certain encoding and typeface selections.  If you have
   problems in the rendering of certain character sets, try this option.
-  
+
   The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
   when setting \R output.  Either set
   \code{\link{options}(useFancyQuotes = FALSE)} or arrange that LaTeX is
@@ -95,7 +95,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   declaration: Windows users of \code{Sweave} from \command{Rgui.exe}
   will need to replace \samp{utf8} by \samp{cp1252} or similar) and
   ensure that typewriter fonts containing directional quotes are used.
-  
+
   Some LaTeX graphics drivers do not include \samp{.png} or \samp{.jpg}
   in the list of known extensions.  To enable them, add something like
   \samp{\\DeclareGraphicsExtensions{.png,.pdf,.jpg}} to the preamble of
@@ -111,21 +111,21 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   values in parentheses show the default values).  Character string
   values should be quoted when passed from \code{\link{Sweave}} through
   \code{\dots} but not when use in the header of a code chunk.
-  \describe{    
+  \describe{
     \item{engine:}{character string (\code{"R"}).  Only chunks with
       \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
-    
+
     \item{echo:}{logical (\code{TRUE}). Include \R code in the output
       file?}
 
     \item{keep.source:}{logical (\code{TRUE}).  When echoing, if
       \code{keep.source == TRUE} the original source is copied to the
       file.  Otherwise, deparsed source is echoed.}
-    
+
     \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk
       is not evaluated, and hence no text nor graphical output
       produced.}
-    
+
     \item{results:}{character string (\code{"verbatim"}).  If
       \code{"verbatim"}, the output of \R commands is included in the
       verbatim-like \samp{Soutput} environment.  If \code{"tex"}, the
@@ -135,16 +135,16 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
     \item{print:}{logical (\code{FALSE}).  If \code{TRUE}, this forces
       auto-printing of all expressions.}
-    
+
     \item{term:}{logical (\code{TRUE}).  If \code{TRUE}, visibility of
       values emulates an interactive \R session: values of assignments
       are not printed, values of single objects are printed.  If
       \code{FALSE}, output comes only from explicit \code{\link{print}}
       or similar statements.}
-    
+
     \item{split:}{logical (\code{FALSE}).  If \code{TRUE}, text output
       is written to separate files for each code chunk.}
-    
+
     \item{strip.white:}{character string (\code{"true"}).  If
       \code{"true"}, blank lines at the beginning and end of output are
       removed.  If \code{"all"}, then all blank lines are removed from
@@ -156,67 +156,67 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       Note that blank lines in a code chunk will usually produce a
       prompt string rather than a blank line on output.
     }
-    
+
     \item{prefix:}{logical (\code{TRUE}).  If \code{TRUE} generated
       filenames of figures and output all have the common prefix given
       by the \code{prefix.string} option: otherwise only unlabelled
       chunks use the prefix.}
-    
+
     \item{prefix.string:}{a character string, default is the name of the
       source file (without extension).  Note that this is used as part
       of filenames, so needs to be portable.}
-    
+
     \item{include:}{logical (\code{TRUE}), indicating whether input
       statements for text output (if \code{split = TRUE}) and
       \samp{\\includegraphics} statements for figures should be
       auto-generated.  Use \code{include = FALSE} if the output should
       appear in a different place than the code chunk (by placing the
       input line manually).}
-    
+
     \item{fig:}{logical (\code{FALSE}), indicating whether the code
       chunk produces graphical output.  Note that only one figure per
       code chunk can be processed this way.  The labels for figure
       chunks are used as part of the file names, so should preferably be
       alphanumeric.}
-    
+
     \item{eps:}{logical (\code{FALSE}), indicating whether EPS figures
       should be generated.  Ignored if \code{fig = FALSE}.}
-    
+
     \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures
       should be generated.  Ignored if \code{fig = FALSE}.}
-    
+
     \item{pdf.version, pdf.encoding, pdf.compress:}{passed to
       \code{\link{pdf}} to set the version, encoding and compression (or
       not).  Defaults taken from \code{pdf.options()}.}
-    
+
     \item{png:}{logical (\code{FALSE}), indicating whether PNG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
       available in \R >= 2.13.0.}
-    
+
     \item{jpeg:}{logical (\code{FALSE}), indicating whether JPEG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
       available in \R >= 2.13.0.}
-    
+
     \item{grdevice:}{character (\code{NULL}): see section \sQuote{Custom
 	Graphics Devices}.  Ignored if \code{fig = FALSE}.  Only
       available in \R >= 2.13.0.}
-    
+
     \item{width:}{numeric (6), width of figures in inches.  See
       \sQuote{Details}.}
-    
+
     \item{height:}{numeric (6), height of figures in inches.  See
       \sQuote{Details}.}
-    
+
     \item{resolution:}{numeric (300), resolution in pixels per inch:
       used for PNG and JPEG graphics.  Note that the default is a fairly
       high value, appropriate for high-quality plots.  Something like
       \code{100} is a better choice for package vignettes.}
-    
+
     \item{concordance:}{logical (\code{FALSE}).  Write a concordance
       file to link the input line numbers to the output line numbers.
       This is an experimental feature; see the source code for the
       output format, which is subject to change in future releases.}
-    
+
     \item{figs.only:}{logical (\code{FALSE}).
       By default each figure chunk is run once, then re-run for each
       selected type of graphics.  That will open a default graphics

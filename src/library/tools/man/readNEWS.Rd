@@ -47,7 +47,7 @@ checkNEWS(file = file.path(R.home(), "NEWS"))
 
   \code{checkNEWS()} returns \code{TRUE} if no suspected errors are found,
   or prints a message for each suspected error and returns \code{FALSE}.
- 
+
   Note that this was only ever experimental and may be removed soon,
   since the NEWS-file format is not longer supported (but there are
   examples \file{ONEWS}, \file{OONEWS} and perhaps in packages).

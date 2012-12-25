@@ -14,7 +14,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 }
 \description{
   \code{loglin} is used to fit log-linear models to multidimensional
-  contingency tables by Iterative Proportional Fitting.  
+  contingency tables by Iterative Proportional Fitting.
 }
 \arguments{
   \item{table}{a contingency table to be fit, typically the output from
@@ -29,7 +29,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
     interactions, respectively (but no 2-3 or 1-2-3 interaction), i.e.,
     a model where factors 2 and 3 are independent conditional on factor
     1 (sometimes represented as \sQuote{[12][13]}).
-     
+
     The names of factors (i.e., \code{names(dimnames(table))}) may be
     used rather than numeric indices.
   }
@@ -56,7 +56,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
     adjustment for structural zeros.}
   \item{margin}{list of the margins that were fit.  Basically the same
     as the input \code{margin}, but with numbers replaced by names
-    where possible.} 
+    where possible.}
   \item{fit}{An array like \code{table} containing the fitted values.
     Only returned if \code{fit} is \code{TRUE}.}
   \item{param}{A list containing the estimated parameters of the
@@ -81,7 +81,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   in \code{margin}.  Hence if the model is decomposable and the order
   given in \code{margin} is a running intersection property ordering
   then IPF will converge in one iteration.
-    
+
   Package \CRANpkg{MASS} contains \code{loglm}, a front-end to
   \code{loglin} which allows the log-linear model to be specified and
   fitted in a formula-based manner similar to that of other fitting

@@ -18,7 +18,7 @@
 \description{
   Convert or print integers in hexadecimal format, with as many digits
   as are needed to display the largest, using leading zeroes as
-  necessary. 
+  necessary.
 }
 \usage{
 as.hexmode(x)

@@ -25,7 +25,7 @@ unit.rep(x, \dots)
   An object of class \code{"unit"}.
 }
 \author{ Paul Murrell }
- 
+
 \seealso{
   \code{\link{rep}}
 }

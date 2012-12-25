@@ -14,9 +14,9 @@
 \title{R for Windows Configuration}
 \description{
   The file \file{Rconsole} configures the R GUI console in this
-  Windows port. The \code{loadRconsole} function loads a new 
+  Windows port. The \code{loadRconsole} function loads a new
   configuration.
-  
+
   The file \file{Rdevga} configures the graphics devices
   \code{\link{windows}}, \code{win.graph}, \code{win.metafile} and
   \code{win.print}, as well as the bitmap devices \code{\link{bmp}},
@@ -47,8 +47,8 @@
   \file{Rconsole} can also set the initial positions of the console and
   the graphics device, as well as the size and position of the MDI
   workspace in MDI mode.
-  
-  \code{loadRconsole} is called for its side effect of loading new 
+
+  \code{loadRconsole} is called for its side effect of loading new
   defaults.  It returns no useful value.
 }
 
@@ -61,7 +61,7 @@
 
   If the environment variable \env{R_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),
-  otherwise to the Windows \sQuote{personal}  directory, 
+  otherwise to the Windows \sQuote{personal}  directory,
   otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} and
   \code{HOMEDRIVE} are both set
   otherwise to the working directory.  This is as described in the file

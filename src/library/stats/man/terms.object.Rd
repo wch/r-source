@@ -29,7 +29,7 @@
   \item{term.labels}{A character vector containing the labels for each
     of the terms in the model, except for offsets.  Note that these are
     after possible re-ordering of terms.
-  
+
     Non-syntactic names will be quoted by backticks: this makes it
     easier to re-construct the formula from the term labels.
   }

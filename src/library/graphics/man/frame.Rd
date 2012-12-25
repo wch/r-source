@@ -24,7 +24,7 @@ frame()
   with a \emph{canvas} colour (the on-screen devices \code{X11},
   \code{windows} and \code{quartz}), the window is first painted with the
   canvas colour and then the background colour.
-  
+
   There are two hooks called \code{"before.plot.new"} and
   \code{"plot.new"} (see \code{\link{setHook}}) called immediately
   before and after advancing the frame. The latter is used

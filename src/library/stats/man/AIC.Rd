@@ -38,7 +38,7 @@ BIC(object, \dots)
   log-likelihood function \code{\link{logLik}} rather than these
   functions: the action of their default methods is to call \code{logLik}
   on all the supplied objects and assemble the results.
-  
+
   When comparing fitted objects, the smaller the AIC or BIC, the better
   the fit.
 
@@ -50,7 +50,7 @@ BIC(object, \dots)
   when comparing fits of different classes (with, for example, a
   comparison of a Poisson and gamma GLM being meaningless since one has
   a discrete response, the other continuous).
-  
+
   \code{BIC} is defined as
   \code{AIC(object, \dots, k = log(nobs(object)))}.
   This needs the number of observations to be known: the default method

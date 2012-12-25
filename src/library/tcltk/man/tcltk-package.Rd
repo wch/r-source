@@ -17,7 +17,7 @@ Interface and language bindings to Tcl/Tk GUI elements.
 This package provides access to the platform-independent Tcl scripting
 language and Tk GUI elements.  See \link{TkWidgets} for a list of
 supported widgets, \link{TkWidgetcmds} for commands to work with them,
-and references in those files for more.  
+and references in those files for more.
 
 The Tcl/Tk documentation is in
 #ifdef windows

@@ -165,10 +165,10 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.getRequiredPackages} is a wrapper to
   \code{.getRequiredPackages2} using a \file{DESCRIPTION} file.
 
-  \code{testPlatformEquivalence} is used to test if a package with 
+  \code{testPlatformEquivalence} is used to test if a package with
   compiled code can safely be loaded into a build of \R, which it does by
   comparing their \sQuote{canonical} \code{"cpu-vendor-os"} descriptions.
-  The default function omits the \code{vendor} part and allows small 
+  The default function omits the \code{vendor} part and allows small
   mismatches elsewhere.
 
   The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if
@@ -209,7 +209,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{.gt} and \code{.gtn} are callbacks from \code{\link{rank}} and
   \code{\link{is.unsorted}} used for classed objects.
-  
+
   \code{.primTrace} and \code{.primUntrace} are the \link{primitive}
   functions underlying \code{\link{trace}} and \code{\link{untrace}}
   respectively.
@@ -227,10 +227,10 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{.popath} is a variable created at startup which records where
   the \pkg{translations} package in use is.
-  
+
   \code{.mapply} and \code{.detach} are \sQuote{bare-bones} versions for
   use in other \R packages.
-  
+
   Objects starting \code{.C_} and \code{.F_} are references to
   registered C and Fortran entry points.
 }

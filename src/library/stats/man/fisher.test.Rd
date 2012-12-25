@@ -125,7 +125,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \emph{Categorical data analysis}. Second edition.
   New York: Wiley.
   Pages 91--101.
-  
+
   Fisher, R. A. (1935)
   The logic of inductive inference.
   \emph{Journal of the Royal Statistical Society Series A} \bold{98},
@@ -149,7 +149,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   Fisher's Exact Test in \eqn{r \times c}{r x c} Contingency Tables.
   \emph{ACM Transactions on Mathematical Software}, \bold{19},
   484--488.
-  
+
   Patefield, W. M. (1981)
   Algorithm AS159.  An efficient method of generating r x c tables
   with given row and column totals.

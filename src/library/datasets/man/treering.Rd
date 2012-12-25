@@ -22,7 +22,7 @@ treering
   Each tree ring corresponds to one year.
 }
 \details{
-  The data were recorded by Donald A. Graybill, 1980, from 
+  The data were recorded by Donald A. Graybill, 1980, from
   Gt Basin Bristlecone Pine 2805M, 3726-11810 in Methuselah Walk, California.
 }
 \source{

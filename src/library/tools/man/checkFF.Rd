@@ -37,12 +37,12 @@ checkFF(package, dir, file, lib.loc = NULL,
   Note that we can only check if the \code{name} argument is a symbol or
   a character string, not what class of object the symbol resolves to
   at run-time.
-  
+
   If the package has a namespace which contains a \code{useDynLib}
   directive, calls in top-level functions in the package are not
   reported as their symbols will be preferentially looked up in the DLL
   named in the first \code{useDynLib} directive.
-  
+
   As from \R 2.15.2, this also checks that calls with \code{PACKAGE}
   specified are to the same package, and reports separately those which
   are in base packages and those which are in other packages (and if

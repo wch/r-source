@@ -44,7 +44,7 @@
   Forecasting trends and seasonals by exponentially weighted
   moving averages,
   \emph{ONR Research Memorandum, Carnegie Institute of Technology} \bold{52}.
-  
+
   P. R. Winters (1960)
   Forecasting sales by exponentially weighted moving averages,
   \emph{Management Science} \bold{6}, 324--342.

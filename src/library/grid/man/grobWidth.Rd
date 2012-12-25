@@ -23,7 +23,7 @@ grobDescent(x)
   \item{x}{A grob object.}
 }
 \value{
-  A unit object. 
+  A unit object.
 }
 \author{Paul Murrell}
 \seealso{

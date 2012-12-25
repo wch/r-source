@@ -83,13 +83,13 @@ unloadNamespace(ns)
 \value{
   \code{attachNamespace} returns invisibly the package environment it
   adds to the search path.
-  
+
   \code{loadNamespace} returns the namespace environment, either one
   already loaded or the one the function causes to be loaded.
-  
+
   \code{requireNamespace} returns \code{TRUE} if it succeeds or
   \code{FALSE}.
-  
+
   \code{loadedNamespaces} returns a character vector.
 
   \code{unloadNamespace} returns \code{NULL}, invisibly.

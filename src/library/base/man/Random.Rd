@@ -123,7 +123,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
       unsigned integers.  Neither the first three nor the last three
       should be all zero, and they are limited to less than
       \code{4294967087} and \code{4294944443} respectively.
-      
+
       This is not particularly interesting of itself, but provides the
       basis for the multiple streams used in package \pkg{parallel}.
       % See \code{\link{RngStream}}.
@@ -238,7 +238,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \emph{The Art of Computer Programming.} Volume 2, third edition, ninth
   printing.\cr
   See \url{http://Sunburn.Stanford.EDU/~knuth/news02.html}.
-  
+
   L'Ecuyer, P. (1999) Good parameters and implementations for combined
   multiple recursive random number generators. \emph{Operations
   Research} \bold{47}, 159--164.
@@ -271,7 +271,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
 
 \seealso{
   \code{\link{sample}} for random sampling with and without replacement.
-  
+
   \link{Distributions} for functions for random-variate generation from
   standard distributions.
 }

@@ -22,7 +22,7 @@
 \source{
   Anonymous (1948)
   \emph{Biometrika}, \bold{35}, 214.
-} 
+}
 \details{
   Newly hatched chicks were randomly allocated into six groups, and each
   group was given a different feed supplement.  Their weights in grams

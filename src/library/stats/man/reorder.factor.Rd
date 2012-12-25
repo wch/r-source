@@ -10,7 +10,7 @@
 \description{
   \code{reorder} is a generic function.  The \code{"default"} method
   treats its first argument as a categorical variable, and reorders its
-  levels based on the values of a second variable, usually numeric.  
+  levels based on the values of a second variable, usually numeric.
 }
 
 \usage{
@@ -46,7 +46,7 @@ reorder(x, \dots)
   \code{order}), with the order of the levels determined by
   \code{FUN} applied to \code{X} grouped by \code{x}.  The
   levels are ordered such that the values returned by \code{FUN}
-  are in increasing order.  Empty levels will be dropped. 
+  are in increasing order.  Empty levels will be dropped.
 
   Additionally, the values of \code{FUN} applied to the subsets of
   \code{X} (in the original order of the levels of \code{x}) is returned

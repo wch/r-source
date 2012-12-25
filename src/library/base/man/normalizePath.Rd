@@ -24,7 +24,7 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 \details{
   Tilde-expansion (see \code{\link{path.expand}}) is first done on
   \code{paths} (as from \R 2.13.0).
-  
+
   Where the Unix-alike platform supports it attempts to turn paths into
   absolute paths in their canonical form (no \samp{./}, \samp{../} nor
   symbolic links).  It relies on the POSIX system function
@@ -68,7 +68,7 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 }
 
 #ifdef windows
-\seealso{  
+\seealso{
   \code{\link{shortPathName}}
 }
 #endif

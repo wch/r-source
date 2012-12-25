@@ -37,7 +37,7 @@ spineplot(x, \dots)
     details.}
   \item{y}{a \code{"factor"} interpreted to be the dependent variable}
   \item{formula}{a \code{"formula"} of type \code{y ~ x} with a single
-    dependent \code{"factor"} and a single explanatory variable.}    
+    dependent \code{"factor"} and a single explanatory variable.}
   \item{data}{an optional data frame.}
   \item{breaks}{if the explanatory variable is numeric, this controls how
     it is discretized. \code{breaks} is passed to \code{\link{hist}} and can
@@ -50,13 +50,13 @@ spineplot(x, \dots)
   \item{ylevels}{a character or numeric vector specifying in which order
     the levels of the dependent variable should be plotted.}
   \item{col}{a vector of fill colors of the same length as \code{levels(y)}.
-    The default is to call \code{\link{gray.colors}}.}  
+    The default is to call \code{\link{gray.colors}}.}
   \item{main, xlab, ylab}{character strings for annotation}
   \item{xaxlabels, yaxlabels}{character vectors for annotation of x and y axis.
     Default to \code{levels(y)} and \code{levels(x)}, respectively for the
     spine plot. For \code{xaxlabels} in the spinogram, the breaks are
     used.}
-  \item{xlim, ylim}{the range of x and y values with sensible defaults.}  
+  \item{xlim, ylim}{the range of x and y values with sensible defaults.}
   \item{axes}{logical.  If \code{FALSE} all axes (including those giving
     level names) are suppressed.}
   \item{\dots}{additional arguments passed to \code{\link{rect}}.}
@@ -72,7 +72,7 @@ spineplot(x, \dots)
   spinogram is plotted).  Additionally, \code{spineplot} can also be
   called with only a single argument which then has to be a 2-way table,
   interpreted to correspond to \code{table(x, y)}.
-  
+
   Both, spine plots and spinograms, are essentially mosaic plots with
   special formatting of spacing and shading.  Conceptually, they plot
   \eqn{P(y | x)} against \eqn{P(x)}.  For the spine plot (where both
@@ -81,7 +81,7 @@ spineplot(x, \dots)
   spinogram (where \eqn{x} is numerical), \eqn{x} is first discretized
   (by calling \code{\link{hist}} with \code{breaks} argument) and then
   empirical relative frequencies are taken.
-  
+
   Thus, spine plots can also be seen as a generalization of stacked bar
   plots where not the heights but the widths of the bars corresponds to
   the relative frequencies of \code{x}. The heights of the bars then

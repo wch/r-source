@@ -53,13 +53,13 @@ system(command, intern = FALSE,
   Only double quotes are allowed on Windows: see the examples.  (Note: a
   Windows path name cannot contain a double quote, so we do not need to
   worry about escaping embedded quotes.)
-  
+
   \code{command} must be an executable (extensions \file{.exe},
   \file{.com}) or a batch file (extensions \file{.cmd} and \file{.bat}):
   these extensions are tried in turn if none is supplied.)  This means
   that redirection, pipes, DOS internal commands, \dots cannot be used:
   see \code{\link{shell}}.
-  
+
   The search path for \code{command} may be system-dependent: it will
   include the \R \file{bin} directory, the working directory and the
   Windows system directories before \env{PATH}.
@@ -82,7 +82,7 @@ system(command, intern = FALSE,
 
   The ordering of arguments after the first two has changed from time to
   time: it is recommended to name all arguments after the first.
-  
+
   There are many pitfalls in using \code{system} to ascertain if a
   command can be run --- \code{\link{Sys.which}} is more suitable.
 }
@@ -131,7 +131,7 @@ system(command, intern = FALSE,
 \preformatted{
     system("some command 2>&1", intern = TRUE)
 }
-  
+
   For GUIs, what happens to output sent to \file{stdout} or
   \file{stderr} if \code{intern = FALSE} is interface-specific, and it
   is unsafe to assume that such messages will appear on a GUI console
@@ -144,10 +144,10 @@ system(command, intern = FALSE,
   Precisely what is seen by the user depends on the optional parameters,
   whether \code{Rgui} or \code{Rterm} is being used, and whether a
   console command or GUI application is run by the command.
-  
+
   By default nothing will be seen in either front-end until the command
   finishes and the output is displayed.
-  
+
   For console commands \code{Rgui} will open a new \sQuote{console}, so
   if \code{invisible = FALSE}, a commands window will appear for the
   duration of the command.  For \code{Rterm} a separate commands window
@@ -156,7 +156,7 @@ system(command, intern = FALSE,
 
   GUI applications will not display in either front-end unless
   \code{invisible} is false.
-  
+
   It is possible to interrupt a running command being waited for from
   the keyboard (using the \samp{Esc} key in \code{Rgui} or \samp{Ctrl-C}
   in \code{Rterm}) or from the \code{Rgui} menu: this should at least
@@ -200,10 +200,10 @@ system(command, intern = FALSE,
 
     \item The behaviour on error is different in subtle ways (and has
     differed between \R versions).
-    
+
     \item The quoting conventions for \code{command} differ, but
     \code{\link{shQuote}} is a portable interface.
-    
+
     \item Arguments \code{show.output.on.console}, \code{minimized},
     \code{invisible} only do something on Windows (and are most relevant
     to \command{Rgui} there).
@@ -212,13 +212,13 @@ system(command, intern = FALSE,
 \seealso{
   \code{\link{system2}}.
 #ifdef windows
-  
+
   \code{\link{shell}} or \code{\link{shell.exec}} for a less raw
   interface.
 #endif
-  
+
   \code{\link{.Platform}} for platform-specific variables.
-  
+
   \code{\link{pipe}} to set up a pipe connection.
 }
 #ifdef unix

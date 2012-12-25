@@ -20,7 +20,7 @@
 }
 \details{
   Tilde-expansion (see \code{\link{path.expand}}) is done on \code{x}.
-  
+
   If \code{recursive = FALSE} directories are not deleted,
   not even empty ones.
 
@@ -30,8 +30,8 @@
   delete the contents of a directory target of a symbolic link: it now
   only deletes the symbolic link (as \code{unlink(x, recursive = FALSE)}
   always has).
-  
-#endif  
+
+#endif
   Wildcard expansion is done by the internal code of
   \code{\link{Sys.glob}}.  Wildcards never match a leading \file{.} in
   the filename, and files \file{.} and \file{..} will never be
@@ -60,7 +60,7 @@
 
   Windows cannot remove the current working directory, nor any file
   which is open nor any directory containing such a file.
-  
+
   UTF-8-encoded paths not valid in the current locale can be used.
 #endif
 }

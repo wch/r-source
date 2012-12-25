@@ -9,7 +9,7 @@
 \title{ Draw Arrows }
 \description{
   Functions to create and draw arrows at either end of a line, or at
-  either end of a 
+  either end of a
   line.to, lines, or segments grob.
 
   These functions have been deprecated in favour of \code{arrow}
@@ -32,7 +32,7 @@ arrowsGrob(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
   \item{default.units}{A string indicating the default units to use
-    if \code{x} or \code{y} are only given as numeric vectors.}  
+    if \code{x} or \code{y} are only given as numeric vectors.}
   \item{grob}{ A grob to add arrows to;  currently can only be
     a line.to, lines, or segments grob. }
   \item{angle}{ A numeric specifying (half) the width of the arrow head
@@ -51,10 +51,10 @@ arrowsGrob(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
   \item{vp}{A Grid viewport object (or NULL).}
 }
 \details{
-  Both functions create an arrows grob (a graphical object describing 
+  Both functions create an arrows grob (a graphical object describing
   arrows), but only \code{grid.arrows()}
   draws the arrows (and then only if \code{draw} is \code{TRUE}).
-  
+
   If the grob argument is specified, this overrides any x
   and/or y arguments.
 }

@@ -39,7 +39,7 @@ segments(x0, y0, x1 = x0, y1 = y0,
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{arrows}}, 
+  \code{\link{arrows}},
   \code{\link{polygon}} for slightly easier and less flexible line
   drawing, and
   \code{\link{lines}} for the usual polygons.

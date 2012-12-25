@@ -45,12 +45,12 @@ to be created and manipulated to contain those routines.
 There are two ways to create a new style environment.  The easiest
 is to set \code{.init = TRUE}, in which case the environment will be
 initialized with a copy of the default \code{"JSS"} environment.  (This style
-is modelled after the \file{jss.bst} style used by the \emph{Journal 
-of Statistical Software}.)  Alternatively, the \code{envir} argument 
+is modelled after the \file{jss.bst} style used by the \emph{Journal
+of Statistical Software}.)  Alternatively, the \code{envir} argument
 can be used to specify a completely new style environment.
 
 To find the name of the default style, use \code{getBibstyle()}. To
-retrieve an existing style without setting it as the default, use 
+retrieve an existing style without setting it as the default, use
 \code{bibstyle(style, .default = FALSE)}.  To modify an existing style,
 specify \code{style} and some named entries via \code{...}.
 (Modifying the default \code{"JSS"} style is discouraged.)  Setting
@@ -59,7 +59,7 @@ default style, but modifications will not be allowed.
 
 At a minimum, the environment should contain routines to render each
 of the 12 types of bibliographic entry supported by
-\code{\link{bibentry}} as well as several other routines 
+\code{\link{bibentry}} as well as several other routines
 described below.
 The former must be named \code{formatArticle},
 \code{formatBook}, \code{formatInbook}, \code{formatIncollection},
@@ -69,7 +69,7 @@ The former must be named \code{formatArticle},
 \code{formatUnpublished}.  Each of these takes one argument, a single
 \code{\link{unclass}}'ed entry from the \code{\link{bibentry}} vector
 passed to the renderer, and should produce a single element character
-vector (possibly containing newlines).  
+vector (possibly containing newlines).
 
 The other routines are as follows.  \code{sortKeys}, a function to
 produce a sort key to sort the entries, is passed the original
@@ -101,7 +101,7 @@ Duncan Murdoch
 }
 \examples{
 \testonly{options(useFancyQuotes = FALSE)}
-refs <- 
+refs <-
 c(bibentry(bibtype = "manual",
     title = "R: A Language and Environment for Statistical Computing",
     author = person("R Core Team"),
@@ -109,7 +109,7 @@ c(bibentry(bibtype = "manual",
     address = "Vienna, Austria",
     year = 2012,
     isbn = "3-900051-07-0",
-    url = "http://www.R-project.org"),  
+    url = "http://www.R-project.org"),
   bibentry(bibtype = "article",
     author = c(person(c("George", "E", "P"), "Box"),
                person(c("David",  "R"),      "Cox")),
@@ -118,11 +118,11 @@ c(bibentry(bibtype = "manual",
     journal = "Journal of the Royal Statistical Society, Series B",
     volume = 26,
     pages = "211-252"))
-    
+
 bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
        .init = TRUE)
-print(refs, .bibstyle = "unsorted")    
+print(refs, .bibstyle = "unsorted")
 }
 \keyword{ utilties }
 \keyword{ documentation }

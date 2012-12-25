@@ -44,13 +44,13 @@ kruskal.test(x, \dots)
   null that the location parameters of the distribution of \code{x}
   are the same in each group (sample).  The alternative is that they
   differ in at least one.
-  
+
   If \code{x} is a list, its elements are taken as the samples to be
   compared, and hence have to be numeric data vectors.  In this case,
   \code{g} is ignored, and one can simply use \code{kruskal.test(x)}
   to perform the test.  If the samples are not yet contained in a
   list, use \code{kruskal.test(list(x, ...))}.
-  
+
   Otherwise, \code{x} must be a numeric data vector, and \code{g} must
   be a vector or factor object of the same length as \code{x} giving
   the group for the corresponding elements of \code{x}.
@@ -76,7 +76,7 @@ kruskal.test(x, \dots)
   \code{\link{lm}} together with \code{\link{anova}} for performing
   one-way location analysis under normality assumptions; with Student's
   t test (\code{\link{t.test}}) as the special case for two samples.
-  
+
   \code{\link[coin:LocationTests]{wilcox_test}} in package
   \CRANpkg{coin} for exact, asymptotic and Monte Carlo
   \emph{conditional} p-values, including in the presence of ties.

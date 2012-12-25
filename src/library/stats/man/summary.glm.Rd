@@ -85,7 +85,7 @@
   \item{coefficients}{the matrix of coefficients, standard errors,
     z-values and p-values.  Aliased coefficients are omitted.}
   \item{aliased}{named logical vector showing if the original
-    coefficients are aliased.} 
+    coefficients are aliased.}
   \item{dispersion}{either the supplied argument or the inferred/estimated
     dispersion if the latter is \code{NULL}.}
   \item{df}{a 3-vector of the rank of the model and the number of

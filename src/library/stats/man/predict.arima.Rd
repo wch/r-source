@@ -39,7 +39,7 @@
 \references{
   Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
     State Space Methods.}  Oxford University Press.
-  
+
   Harvey, A. C. and McKenzie, C. R. (1982) Algorithm AS182.
   An algorithm for finite sample prediction from ARIMA processes.
   \emph{Applied Statistics} \bold{31}, 180--187.

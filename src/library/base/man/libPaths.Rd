@@ -55,7 +55,7 @@
   of the home directory (or \file{Library/R/\var{x.y}/library} for
   Mac OS X AQUA builds), for \R \var{x.y.z}.
 
-  \code{.Library.site} can be set via the environment variable 
+  \code{.Library.site} can be set via the environment variable
   \env{R_LIBS_SITE} (as a non-empty colon-separated list of library trees).
 #endif
 #ifdef windows

@@ -46,7 +46,7 @@ suppressPackageStartupMessages(expr)
 
   While the message is being processed, a \code{muffleMessage} restart
   is available.
-  
+
   \code{suppressMessages} evaluates its expression in a context that
   ignores all \sQuote{simple} diagnostic messages.
 
@@ -58,12 +58,12 @@ suppressPackageStartupMessages(expr)
   and \code{stop} to generate a text message from the \code{\dots}
   arguments by possible translation (see \code{\link{gettext}}) and
   concatenation (with no separator).
-}  
+}
 \seealso{
   \code{\link{warning}} and \code{\link{stop}} for generating warnings
   and errors; \code{\link{conditions}} for condition handling and
   recovery.
-  
+
   \code{\link{gettext}} for the mechanisms for the automated translation
   of text.
 }

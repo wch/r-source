@@ -35,7 +35,7 @@ Sys.unsetenv(x)
   handle these correctly so they should be avoided.  Most platforms
   allow setting an environment variable to \code{""}, but Windows does
   not, and there \code{Sys.setenv(FOO = "")} unsets \env{FOO}.
-  
+
   There may be system-specific limits on the maximum length of the values
   of individual environment variables or of all environment variables.
 #ifdef windows
@@ -49,14 +49,14 @@ Sys.unsetenv(x)
 #ifdef unix
 \note{
   If \code{Sys.unsetenv} is not supported, it will at least try to
-  set the value of the environment variable to \code{""}, with a 
+  set the value of the environment variable to \code{""}, with a
   warning.
 }
 #endif
 \seealso{
   \code{\link{Sys.getenv}}, \link{Startup} for ways to set environment
   variables for the \R session.
-  
+
   \code{\link{setwd}} for the working directory.
 
 

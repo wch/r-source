@@ -32,7 +32,7 @@ polyroot(z)
 }
 \value{
   A complex vector of length \eqn{n - 1}, where \eqn{n} is the position
-  of the largest non-zero element of \code{z}. 
+  of the largest non-zero element of \code{z}.
 }
 \source{
   C translation by Ross Ihaka of Fortran code in the reference, with

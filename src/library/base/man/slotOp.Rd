@@ -27,7 +27,7 @@ object@name
   any other object.  (There is an exception for name \code{.Data} for
   internal use only.)
 
-  If \code{name} is not a slot name, an error is thrown. 
+  If \code{name} is not a slot name, an error is thrown.
 }
 \value{
   The current contents of the slot.

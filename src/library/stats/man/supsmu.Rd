@@ -34,8 +34,8 @@ supsmu(x, y, wt, span = "cv", periodic = FALSE, bass = 0)
 
   The best of the three smoothers is chosen by cross-validation for each
   prediction. The best spans are then smoothed by a running lines
-  smoother and the final prediction chosen by linear interpolation. 
- 
+  smoother and the final prediction chosen by linear interpolation.
+
   The FORTRAN code says: \dQuote{For small samples (\code{n < 40}) or if
     there are substantial serial correlations between observations close
     in x-value, then a pre-specified fixed span smoother (\code{span >

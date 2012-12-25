@@ -49,12 +49,12 @@ SIGUSR2
   \code{kill} system call to send a signal to a process, most often to
   terminate it.  Function \code{pskill} provides a wrapper: it silently
   ignores invalid values of its arguments, including zero or negative pids.
-  
+
   In normal use on a Unix-alike, \kbd{Ctrl-C} sends \code{SIGINT},
   \kbd{Ctrl-\\} sends \code{SIGQUIT} and \kbd{Ctrl-Z} sends
   \code{SIGTSTP}: that and \code{SIGSTOP} suspend a process which can be
   resumed by \code{SIGCONT}.
-  
+
   The signals are small integers, but the actual numeric values are not
   standardized (and most do differ between OSes).  The \code{SIG*}
   objects contain the appropriate integer values for the current platform

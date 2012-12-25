@@ -7,7 +7,7 @@
 \alias{tkpager}
 \title{Page file using Tk text widget}
 \description{
-  This plugs into \code{file.show}, showing files in separate windows. 
+  This plugs into \code{file.show}, showing files in separate windows.
 }
 \usage{
 tkpager(file, header, title, delete.file)

@@ -162,7 +162,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     to re-encode the input (see \code{fileEncoding}.  See also \sQuote{Details}.
   }
 
-  \item{text}{character string: if \code{file} is not supplied and this is, 
+  \item{text}{character string: if \code{file} is not supplied and this is,
     then data are read from the value of \code{text} via a text connection.
   }
 

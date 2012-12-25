@@ -76,7 +76,7 @@ enquote(cl)
   \code{\link{bquote}} for partial substitution,
   \code{\link{sQuote}} and \code{\link{dQuote}} for adding quotation
   marks to strings,
-  
+
   \code{\link{all.names}} to retrieve the symbol names from an expression
   or call.
 }

@@ -135,7 +135,7 @@ tclRequire(package, warn = TRUE)
   string to the Tcl interpreter and returns the result as an object of
   class \code{tclObj} (see below).  A newer variant \code{.Tcl.objv}
   accepts arguments in the form of a named list of \code{tclObj}
-  objects. 
+  objects.
 
   \code{.Tcl.args} converts an R argument list of \code{tag = value} pairs
   to the Tcl \code{-option value} style, thus
@@ -151,8 +151,8 @@ tclRequire(package, warn = TRUE)
   \code{.Tcl.args.objv} serves a similar purpose as \code{.Tcl.args} but
   produces a list of \code{tclObj} objects suitable for passing to
   \code{.Tcl.objv}. The names of the list are converted to Tcl option
-  style internally by \code{.Tcl.objv}. 
-  
+  style internally by \code{.Tcl.objv}.
+
   Callbacks can be either \emph{atomic callbacks} handled by
   \code{.Tcl.callback} or expressions. An expression is treated as a
   list of atomic callbacks, with the following exceptions: if an
@@ -197,13 +197,13 @@ tclRequire(package, warn = TRUE)
   \code{tclVar} creates a new Tcl variable and initializes it to
   \code{init}.  An R object of class \code{tclVar} is created to
   represent it.  Using \code{as.character} on the object returns the Tcl
-  variable name.  Accessing the Tcl variable from R is done using the 
+  variable name.  Accessing the Tcl variable from R is done using the
   \code{tclvalue} function, which can also occur on the left-hand side of
   assignments.  If \code{tclvalue} is passed an argument which is not a
   \code{tclVar} object, then it will assume that it is a character string
-  explicitly naming global Tcl variable. Tcl variables created by 
+  explicitly naming global Tcl variable. Tcl variables created by
   \code{tclVar} are uniquely named and automatically unset by the
-  garbage collector when the representing object is no longer in use. 
+  garbage collector when the representing object is no longer in use.
 
   \code{tclArray} creates a new Tcl array and initializes it to the empty
   array.  An R object of class \code{tclArray} and inheriting from class
@@ -217,16 +217,16 @@ tclRequire(package, warn = TRUE)
   length and the set of names in an array using methods for
   \code{length} and \code{names}, respectively; these cannot
   meaningfully be set so assignment forms exist only to print an error
-  message. 
+  message.
 
   It is possible to access Tcl's \sQuote{dual-ported} objects directly,
   thus avoiding parsing and deparsing of their string representation.
   This works by using objects of class \code{tclObj}.  The string
   representation of such objects can be extracted (but not set) using
   \code{tclvalue} and conversion to vectors of mode \code{"character"},
-  \code{"double"}, \code{"integer"}, \code{"logical"}, and \code{"raw"} 
-  is performed using the standard coercion functions \code{as.character}, 
-  etc.  Conversely, such 
+  \code{"double"}, \code{"integer"}, \code{"logical"}, and \code{"raw"}
+  is performed using the standard coercion functions \code{as.character},
+  etc.  Conversely, such
   vectors can be converted using \code{as.tclObj}.  There is an
   ambiguity as to what should happen for length one vectors, controlled
   by the \code{drop} argument; there are cases where the distinction
@@ -245,7 +245,7 @@ tclRequire(package, warn = TRUE)
   it prints \code{<Tcl>} followed by the string representation of the
   object.  Notice that \code{as.character} on a \code{tclVar} object is
   the \emph{name} of the corresponding Tcl variable and not the value.
-  
+
   Tcl packages can be loaded with \code{tclRequire}; it may be necessary
   to add the directory where they are found to the Tcl search path with
   \code{addTclPath}.  The return value is a class \code{"tclObj"} object

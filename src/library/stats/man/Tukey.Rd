@@ -53,10 +53,10 @@ qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
   Multiple comparisons of simple effects in
   the two-way analysis of variance with fixed effects.
   \emph{Journal of Statistical Computation and Simulation}, \bold{30}, 1--15.
-  
+
   Odeh, R. E.  and  Evans, J. O. (1974)
   Algorithm AS 70: Percentage Points of the Normal Distribution.
-  \emph{Applied Statistics} \bold{23}, 96--97. 
+  \emph{Applied Statistics} \bold{23}, 96--97.
 }
 \seealso{
   \link{Distributions} for standard distributions, including

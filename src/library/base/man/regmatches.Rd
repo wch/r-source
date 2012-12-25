@@ -25,7 +25,7 @@ regmatches(x, m, invert = FALSE) <- value
   match data (as obtained from \code{\link{regexpr}}), empty matches are
   dropped; for list match data, empty matches give empty components
   (zero-length character vectors).
-  
+
   If \code{invert} is \code{FALSE}, \code{regmatches} extracts the
   non-matched substrings, i.e., the strings are split according to the
   matches similar to \code{\link{strsplit}} (for vector match data, at

@@ -10,7 +10,7 @@
 \description{
   This divides up \code{1:nx} into \code{ncl} lists of approximately
   equal size, as a way to allocate tasks to nodes in a cluster.
-  
+
   It is mainly for internal use, but some package authors have found it useful.
 }
 \usage{

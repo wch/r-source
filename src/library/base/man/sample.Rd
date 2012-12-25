@@ -34,23 +34,23 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   \code{sample} takes place from \code{1:x}.  \emph{Note} that this
   convenience feature may lead to undesired behaviour when \code{x} is
   of varying length in calls such as \code{sample(x)}.  See the examples.
-  
+
   Otherwise \code{x} can be any \R object for which \code{length} and
   subsetting by integers make sense: S3 or S4 methods for these
   operations will be dispatched as appropriate.
-  
+
   For \code{sample} the default for \code{size} is the number of items
   inferred from the first argument, so that \code{sample(x)} generates a
   random permutation of the elements of \code{x} (or \code{1:x}).
-  
+
   As from \R 2.11.0 it is allowed to ask for \code{size = 0} samples
   with \code{n = 0} or a length-zero \code{x}, but otherwise \code{n >
   0} or positive \code{length(x)} is required.
 
   Non-integer positive numerical values of \code{n} or \code{x} will be
   truncated to the next smallest integer, which has to be no larger than
-  \code{\link{.Machine}$integer.max}. 
-  
+  \code{\link{.Machine}$integer.max}.
+
   The optional \code{prob} argument can be used to give a vector of
   weights for obtaining the elements of the vector being sampled.  They
   need not sum to one, but they should be non-negative and not all zero.
@@ -63,10 +63,10 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   sequentially, that is the probability of choosing the next item is
   proportional to the weights amongst the remaining items.  The number
   of nonzero weights must be at least \code{size} in this case.
-  
+
   \code{sample.int} is a bare interface in which both \code{n} and
   \code{size} must be supplied as integers.
-  
+
   As from \R 3.0.0, \code{n} can be larger than the largest integer of
   type \code{integer}, up to the largest representable integer in type
   \code{double}.  Only uniform sampling is supported.  Two

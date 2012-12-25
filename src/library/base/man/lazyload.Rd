@@ -24,7 +24,7 @@ lazyLoadDBexec(filebase, fun, filter)
 }
 \details{
   These are internal functions for use only by \R itself.
-  
+
   The function \code{lazyLoad} is the workhorse function called by the
   package loader to load the code for a package from a database.  The
   database consists of two binary files, \file{\var{filebase}.rdb} (the

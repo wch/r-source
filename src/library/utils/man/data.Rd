@@ -57,7 +57,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   is used.  (Files with extensions \file{.txt}, \file{.tab} or
   \file{.csv} can be compressed, with or without further extension
   \file{.gz}, \file{.bz2} or \file{.xz}.)
-  
+
   The data sets to be loaded can be specified as a sequence of names or
   character strings, or as the character vector \code{list}, or as both.
 
@@ -118,7 +118,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   \code{\link{help}} for obtaining documentation on data sets,
   \code{\link{save}} for \emph{creating} the second (\file{.rda}) kind
   of data, typically the most efficient one.
-  
+
   The \sQuote{Writing R Extensions} for considerations in preparing the
   \file{data} directory of a package.
 }

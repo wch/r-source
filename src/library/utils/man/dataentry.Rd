@@ -33,7 +33,7 @@ de(\dots, Modes = list(), Names = NULL)
   Where available it provides a means to visually edit a matrix or
   a collection of variables (including a data frame) as described in the
   Notes section.
-  
+
   \code{data.entry} has side effects, any changes made in the
   spreadsheet are reflected in the variables.  The functions \code{de},
   \code{de.ncols}, \code{de.setup} and \code{de.restore} are designed to
@@ -158,7 +158,7 @@ de(\dots, Modes = list(), Names = NULL)
   Initially the value is blank, and attempts to paste a blank value will
   have no effect.
 #endif
-  
+
   Control-L will refresh the display, recalculating field widths to fit
   the current entries.
 
@@ -173,7 +173,7 @@ de(\dots, Modes = list(), Names = NULL)
 #endif
 #ifdef windows
   50 characters (and by the window width).
-  
+
   The initial size of the data editor window is taken from the default
   dimensions of a pager (see \code{\link{Rconsole}}), but adjusted
   downwards to show a whole number of rows and columns.

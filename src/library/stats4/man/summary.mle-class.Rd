@@ -32,6 +32,6 @@ They contain values meant for printing by \code{show}.
   }
 }
 \seealso{
-  \code{\link{summary}}, \code{\link{mle}}, \code{\link{mle-class}} 
+  \code{\link{summary}}, \code{\link{mle}}, \code{\link{mle-class}}
 }
 \keyword{classes}

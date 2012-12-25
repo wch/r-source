@@ -7,7 +7,7 @@
 \title{Predicting from Nonlinear Least Squares Fits}
 \alias{predict.nls}
 \usage{
-\method{predict}{nls}(object, newdata , se.fit = FALSE, scale = NULL, df = Inf, 
+\method{predict}{nls}(object, newdata , se.fit = FALSE, scale = NULL, df = Inf,
         interval = c("none", "confidence", "prediction"),
         level = 0.95, \dots)
 }
@@ -44,7 +44,7 @@
    calculated. At present this argument is ignored.}
  \item{level}{A numeric scalar between 0 and 1 giving the confidence
    level for the intervals (if any) to be calculated.  At present
-   this argument is ignored.} 
+   this argument is ignored.}
  \item{\dots}{Additional optional arguments.  At present no optional
    arguments are used.}
 }

@@ -59,7 +59,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
     user to (de-)select from the list of packages which could
     be updated or added.  The latter value only works on
     systems with a GUI version of \code{\link{select.list}},
-    and is otherwise equivalent to \code{ask = TRUE}.     
+    and is otherwise equivalent to \code{ask = TRUE}.
   }
   \item{available}{
     an object as returned by \code{\link{available.packages}}
@@ -75,7 +75,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   }
   \item{instPkgs}{
     by default all installed packages,
-    \code{\link{installed.packages}(lib.loc = lib.loc)}.  A subset can be 
+    \code{\link{installed.packages}(lib.loc = lib.loc)}.  A subset can be
     specified; currently this must be in the same (character matrix)
     format as returned by \code{installed.packages()}.
   }
@@ -96,7 +96,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   version of \R (for example built under 2.14.x when running \R 2.15.0).
   (For binary package types here is no check that the version on the
   repository was built under the current minor version of \R,
-  but it is advertised as being suitable for this version.) 
+  but it is advertised as being suitable for this version.)
 
   \code{new.packages} does the same comparison but reports uninstalled
   packages that are available at the repositories.  If \code{ask !=
@@ -119,13 +119,13 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
 }
 \value{
   \code{update.packages} returns \code{NULL} invisibly.
-  
+
   For \code{old.packages}, \code{NULL} or a matrix with one row per
   package, row names the package names and column names
   \code{"Package"}, \code{"LibPath"}, \code{"Installed"} (the version),
   \code{"Built"} (the version built under), \code{"ReposVer"} and
   \code{"Repository"}.
-  
+
   For \code{new.packages} a character vector of package names,
   \emph{after} any selected \emph{via} \code{ask} have been installed.
 }
@@ -140,14 +140,14 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \code{\link{install.packages}},
   \code{\link{available.packages}}, \code{\link{download.packages}},
   \code{\link{installed.packages}}, \code{\link{contrib.url}}.
-  
+
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 
   \code{\link{INSTALL}}, \code{\link{REMOVE}}, \code{\link{remove.packages}},
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
 
-  The \sQuote{R Installation and Administration} manual for how to 
+  The \sQuote{R Installation and Administration} manual for how to
   set up a repository.
 }
 

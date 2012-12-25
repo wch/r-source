@@ -13,12 +13,12 @@
 \usage{
 grid.segments(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
               x1 = unit(1, "npc"), y1 = unit(1, "npc"),
-              default.units = "npc", 
+              default.units = "npc",
               arrow = NULL,
               name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
 segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
               x1 = unit(1, "npc"), y1 = unit(1, "npc"),
-              default.units = "npc", 
+              default.units = "npc",
               arrow = NULL, name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
@@ -41,7 +41,7 @@ segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
   Both functions create a segments grob (a graphical object describing
   segments), but only \code{grid.segments}
   draws the segments (and then only if \code{draw} is \code{TRUE}).
-  
+
 }
 \value{
   A segments grob.  \code{grid.segments} returns the value invisibly.

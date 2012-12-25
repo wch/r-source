@@ -18,7 +18,7 @@
 
   The regions are: North America, Europe, Asia, South America, Oceania,
   Africa, Central America.
-  
+
   The years are: 1951, 1956, 1957, 1958, 1959, 1960, 1961.
 }
 \source{
@@ -33,7 +33,7 @@
 require(graphics)
 matplot(rownames(WorldPhones), WorldPhones, type = "b", log = "y",
         xlab = "Year", ylab = "Number of telephones (1000's)")
-legend(1951.5, 80000, colnames(WorldPhones), col = 1:6, lty = 1:5, 
+legend(1951.5, 80000, colnames(WorldPhones), col = 1:6, lty = 1:5,
        pch = rep(21, 7))
 title(main = "World phones data: log scale for response")
 }

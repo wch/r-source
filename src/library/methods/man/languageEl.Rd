@@ -18,8 +18,8 @@ isGrammarSymbol(symbol)
 
 }
 \section{Summary of Functions}{
-  \describe{  
-    \item{\code{languageEl}:}{ 
+  \describe{
+    \item{\code{languageEl}:}{
       extract an element of a language object, consistently for
       different kinds of objects.
 
@@ -27,7 +27,7 @@ isGrammarSymbol(symbol)
       arguments, with the default expression if any as value.
 
       The first element of a call is the name or the function object
-      being called.  
+      being called.
 
       The 2nd, 3rd, etc. elements are the 1st, 2nd, etc. arguments
       expressions.  Note that the form of the extracted name is
@@ -45,7 +45,7 @@ isGrammarSymbol(symbol)
       The first element of a \code{while} object is the loop test, and
       the second the body of the loop.
     }
-    
+
     \item{\code{isGrammarSymbol}:}{
       Checks whether the symbol is part of the grammar.
       Don't use this function directly.

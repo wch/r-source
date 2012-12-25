@@ -45,7 +45,7 @@ library.dynam.unload(chname, libpath,
 }
 \details{
   See \code{\link{dyn.load}} for what sort of objects these functions handle.
-  
+
   \code{library.dynam} is designed to be used inside a package rather
   than at the command line, and should really only be used inside
   \code{\link{.onLoad}}.  The system-specific extension for DLLs (e.g.,
@@ -59,14 +59,14 @@ library.dynam.unload(chname, libpath,
   the help on \code{\link{dyn.load}} for how to control where dependent
   DLLs are found.
 #endif
-  
+
   \code{library.dynam.unload} is designed for use in
   \code{\link{.onUnload}}: it unloads the DLL and updates the value of
   \code{.dynLibs()}
 
   \code{.dynLibs} is used for getting (with no argument) or setting the
   DLLs which are currently loaded by packages (using \code{library.dynam}).
-  
+
   \code{lib.loc} should contain absolute paths: versions of \R prior to
   2.12.0 may get confused by relative paths.
 }
@@ -80,7 +80,7 @@ library.dynam.unload(chname, libpath,
   in future calls is returned invisibly.  Note that the class
   \code{"\link{DLLInfo}"} has a method for \code{$} which can be used to
   resolve native symbols within that DLL.
-  
+
   \code{library.dynam.unload} invisibly returns an object of class
   \code{"\link{DLLInfo}"} identifying the DLL successfully unloaded.
 
@@ -100,11 +100,11 @@ library.dynam.unload(chname, libpath,
 \seealso{
   \code{\link{getLoadedDLLs}} for information on \code{"DLLInfo"} and
   \code{"DLLInfoList"} objects.
-  
+
   \code{\link{.onLoad}}, \code{\link{library}},
   \code{\link{dyn.load}}, \code{\link{.packages}},
   \code{\link{.libPaths}}
-  
+
   \code{\link{SHLIB}} for how to create suitable DLLs.
 }
 \references{
@@ -114,6 +114,6 @@ library.dynam.unload(chname, libpath,
 }
 \examples{
 ## Which DLLs were dynamically loaded by packages?
-library.dynam() 
+library.dynam()
 }
 \keyword{data}

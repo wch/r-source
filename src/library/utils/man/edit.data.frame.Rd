@@ -49,7 +49,7 @@
   It is possible to use the data-editor's facilities to select the mode
   of columns to swap between numerical and factor columns in a data
   frame.  Changing any column in a numerical matrix to character will
-  cause the result to be coerced to a character matrix.  Changing 
+  cause the result to be coerced to a character matrix.  Changing
   the mode of logical columns is not supported.
 
   For a data frame, the row names will be taken from the original object

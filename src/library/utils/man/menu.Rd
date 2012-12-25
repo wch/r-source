@@ -26,7 +26,7 @@ menu(choices, graphics = FALSE, title = NULL)
   (Windows, Mac OS X or X11 \emph{via} Tcl/Tk) a listbox widget is
   used, otherwise a text menu.  It is an error to use \code{menu} in a
   non-interactive session.
-  
+
   Ten or fewer items will be displayed in a single column, more in
   multiple columns if possible within the current display width.
 

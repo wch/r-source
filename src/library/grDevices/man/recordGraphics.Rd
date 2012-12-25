@@ -47,7 +47,7 @@ recordGraphics(expr, list, env)
 
   An example of improper use would be calling the \code{assign} function
   to performing assignments in the global environment.
-} 
+}
 \seealso{\code{\link{eval}} }
 \examples{
 require(graphics)

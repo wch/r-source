@@ -23,7 +23,7 @@ makeContent(x)
 \details{
   These functions are called by the \code{grid.draw} methods for grobs
   and gTrees.
-  
+
   \code{makeContext} is called first during the drawing of a grob.
   This function should be used to \emph{modify} the \code{vp} slot
   of \code{x} (and/or the \code{childrenvp} slot if \code{x}
@@ -33,7 +33,7 @@ makeContent(x)
   \code{vp} slot, and for gTrees is to also push and up any viewports in the
   \code{childrenvp} slot, so this function is used to customise the
   drawing context for a grob or gTree.
-  
+
   \code{makeContent} is called next and is where any additional
   calculations should occur and graphical content should
   be generated (see, for example,

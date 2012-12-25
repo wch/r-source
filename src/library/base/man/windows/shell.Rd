@@ -64,7 +64,7 @@ shell(cmd, shell, flag = "/c", intern = FALSE, wait = TRUE,
   of \file{.exe} is assumed.  It is possible to use batch files
   directly if their extension is given: Windows (rather than \R) then
   chooses a shell.
-    
+
   See \code{\link{system}} for fuller details: \code{shell} is a more
   user-friendly wrapper for \code{system}.  To make use of Windows
   file associations, use \code{\link{shell.exec}}.

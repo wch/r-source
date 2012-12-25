@@ -25,7 +25,7 @@
   The following devices will be functional if \R was compiled to use
   them (they exist but will return with a warning on other systems):
   \itemize{
-#ifdef unix    
+#ifdef unix
     \item \code{\link{X11}} The graphics device for the X11 windowing system
 #endif
     \item \code{\link{cairo_pdf}}, \code{cairo_ps} PDF and PostScript
@@ -35,7 +35,7 @@
     \item \code{\link{jpeg}} JPEG bitmap device
     \item \code{\link{bmp}} BMP bitmap device
     \item \code{\link{tiff}} TIFF bitmap device
-#ifdef unix    
+#ifdef unix
 
     \item \code{\link{quartz}} The graphics device for the Mac OS X
     native Quartz 2d graphics system.  (This is only functional on Mac
@@ -53,7 +53,7 @@
   \code{\link{pdf}} (or the setting of \env{R_DEFAULT_DEVICE})
   otherwise.  The exception is interactive use under Unix if no screen
   device is known to be available, when \code{pdf()} is used.
-  
+
   It is possible for an \R package to provide further graphics devices
   and several packages on CRAN do so.  These include other devices outputting
   SVG and PGF/TiKZ (TeX-based graphics, see \url{http://pgf.sourceforge.net/}).

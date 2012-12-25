@@ -24,7 +24,7 @@ col2rgb(col, alpha = FALSE)
 }
 \details{
   \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
-  
+
   Prior to \R 3.0.0, \code{col = 0} could be used to refer to the
   background color of the current device in base graphics: this is now
   an error.

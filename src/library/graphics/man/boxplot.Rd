@@ -105,7 +105,7 @@ boxplot(x, \dots)
   formula, parallel boxplots will be plotted, in the order of the
   arguments or the order of the levels of the factor (see
   \code{\link{factor}}).
-  
+
   Missing values are ignored when forming boxplots.
 }
 \value{

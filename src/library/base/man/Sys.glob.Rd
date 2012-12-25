@@ -45,7 +45,7 @@ Sys.glob(paths, dirmark = FALSE)
   match \file{.RData} but will not usually match \file{.aa.RData}.  Note
   that this is platform-dependent: e.g. on Solaris \code{Sys.glob("*.*")}
   matches \file{.} and \file{..}.
-  
+
   \code{[} begins a character class.  If the first character in
   \code{[...]} is not \code{!}, this is a character class which matches
   a single character against any of the characters specified.  The class
@@ -54,7 +54,7 @@ Sys.glob(paths, dirmark = FALSE)
   character which is \emph{none} of the specified characters.  Whether
   \code{.} in a character class matches a leading \code{.} in the
   filename is OS-dependent.
-  
+
   Character classes can include ranges such as \code{[A-Z]}: include
   \code{-} as a character by having it first or last in a class.  (The
   interpretation of ranges should be locale-specific, so the example is
@@ -80,7 +80,7 @@ Sys.glob(paths, dirmark = FALSE)
   character which is \emph{none} of the specified characters.  Whether
   \code{.} in a character class matches a leading \code{.} in the
   filename is OS-dependent.
-  
+
   Character classes can include ranges such as \code{[A-Z]}: include
   \code{-} as a character by having it first or last in a class.  (In the
   current implementation ranges are in numeric order of Unicode points.)
@@ -105,7 +105,7 @@ Sys.glob(paths, dirmark = FALSE)
   is normally collated in either the current locale or in byte (ASCII)
   order; however, on Windows collation is in the order of Unicode
   points.
-  
+
   Directory errors are normally ignored, so the matches are to
   accessible file paths (but not necessarily accessible files).
 }

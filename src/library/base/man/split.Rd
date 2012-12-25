@@ -110,7 +110,7 @@ l <- lapply(l, transform, Oz.Z = scale(Ozone))
 aq2 <- unsplit(l, g)
 head(aq2)
 with(aq2, tapply(Oz.Z,  Month, sd, na.rm = TRUE))
- 
+
 
 ### Split a matrix into a list by columns
 ma <- cbind(x = 1:10, y = (-4:5)^2)

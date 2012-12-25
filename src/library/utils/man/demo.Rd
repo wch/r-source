@@ -52,7 +52,7 @@ demo(topic, package = NULL, lib.loc = NULL,
   \code{"packageIQR"}.
 }
 \seealso{
-  \code{\link{source}} and \code{\link{devAskNewPage}} which 
+  \code{\link{source}} and \code{\link{devAskNewPage}} which
 are called by \code{demo}.
 }
 

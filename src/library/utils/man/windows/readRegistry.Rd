@@ -31,7 +31,7 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   session: this means that some Registry keys may not be accessible even
   if they exist.  This may result in \code{NULL} values in the object
   returned, and, possibly, empty element names.
-  
+
   On 64-bit Windows, this will by default read the 32-bit view of the
   Registry when run from 32-bit \R, and the 64-bit view when run from
   64-bit \R: see

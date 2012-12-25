@@ -27,19 +27,19 @@ grid.grabExpr(expr, warn = 2, wrap = FALSE, ...)
   }
   \item{wrap}{ A logical indicating how the output should
     be captured. If \code{TRUE}, each non-grob element on the
-    display list is captured by wrapping it in a grob.  
+    display list is captured by wrapping it in a grob.
   }
   \item{\dots}{ arguments passed to gTree, for example, a
     name and/or class for the gTree that is created.}
 }
 \details{
   There are four ways to capture grid output as a gTree.
-  
+
   There are two functions for capturing output:
   use \code{grid.grab} to capture an existing drawing
   and \code{grid.grabExpr} to capture the output from
   an expression (without drawing anything).
-  
+
   For each of these functions, the output can be captured in
   two ways.  One way tries to be clever and make a
   gTree with a childrenvp slot containing all viewports on

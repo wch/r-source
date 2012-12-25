@@ -35,7 +35,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     Do supply \code{def} if there is no
     current function of this name or for some reason you do not want
     to use that function to define the generic. In that case, the
-    formal arguments and 
+    formal arguments and
     default values for the generic are taken from \code{def}.  In most
     cases, the body of \code{def} will then define the default method,
     as the existing function did in the one-argument call.
@@ -45,7 +45,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
     \code{\link{standardGeneric}} with the same character string as
     \code{name}.
 
-    
+
   }
   \item{group}{ Optionally, a character string giving the name of the group
     generic function to which this function belongs.    See

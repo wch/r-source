@@ -32,7 +32,7 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
     (\sQuote{time-varying}).  This is canonically a list of vectors of
     variable names, but it can optionally be a matrix of names, or a
     single vector of names.  In each case, the names can be replaced by
-    indices which are interpreted as referring to \code{names(data)}. 
+    indices which are interpreted as referring to \code{names(data)}.
     See \sQuote{Details} for more details and options.}
   \item{v.names}{names of variables in the long format that correspond
     to multiple variables in the wide format.  See \sQuote{Details}.}

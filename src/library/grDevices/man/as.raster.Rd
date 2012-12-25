@@ -37,7 +37,7 @@ as.raster(x, \dots)
 \details{
   An object of class \code{"raster"} is a matrix of colour values as
   given by \code{\link{rgb}} representing a bitmap image.
-  
+
   It is not expected that the user will need to call these functions
   directly; functions to render bitmap images in graphics packages will
   make use of the \code{as.raster()} function to generate a raster
@@ -48,17 +48,17 @@ as.raster(x, \dots)
 
   The default implementation for numeric matrices interprets scalar
   values on black-to-white scale.
-  
+
   Raster objects can be subsetted like a matrix and it is
   possible to assign to a subset of a raster object.
 
   There is a method for converting a raster object to a matrix
   (of colour strings).
-  
+
   Raster objects can be compared
   for equality or inequality (with each other or with a
   colour string).
-  
+
   As from \R 2.14.0 there is a \code{\link{is.na}} method which returns
   a logical matrix of the same dimensions as the raster object.  Note
   that \code{NA} values are interpreted as the fully transparent colour

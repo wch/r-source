@@ -32,10 +32,10 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
     locations which make up separate xsplines.}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{shape}{A numeric vector of values between -1 and 1, which
     control the shape of the spline relative to the control points.}
-  \item{open}{A logical value indicating whether the spline is 
+  \item{open}{A logical value indicating whether the spline is
     a line or a closed shape.}
   \item{arrow}{A list describing arrow heads to place at either end
     of the xspline, as produced by the \code{arrow} function.}
@@ -81,7 +81,7 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   the second and third of each set of four control points, so
   this default behaviour ensures that
   the resulting curve starts at the first control point you have
-  specified and ends at the last control point.  
+  specified and ends at the last control point.
   The default
   behaviour can be turned off via the \code{repEnds} argument,
   in which case the curve that is drawn starts (approximately) at
@@ -89,17 +89,17 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   second-to-last control point.
 
   The \code{repEnds} argument is ignored for closed xsplines.
-  
+
   Missing values are not allowed for \code{x} and \code{y}
   (i.e., it is not valid for a control point to be missing).
 
-  For closed xsplines, a curve is automatically drawn 
+  For closed xsplines, a curve is automatically drawn
   between the final control point and the initial control point.
 }
 \references{
   Blanc, C. and Schlick, C. (1995),
   "X-splines : A Spline Model Designed for the End User",
-  in \emph{Proceedings of SIGGRAPH 95}, pp. 377--386. 
+  in \emph{Proceedings of SIGGRAPH 95}, pp. 377--386.
   \url{http://dept-info.labri.fr/~schlick/DOC/sig1.html}
 }
 \seealso{

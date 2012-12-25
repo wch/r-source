@@ -21,7 +21,7 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
     vectorized.  Defaults to all arguments of \code{FUN}.}
   \item{SIMPLIFY}{logical or character string; attempt to reduce the
     result to a vector, matrix or higher dimensional array; see
-    the \code{simplify} argument of \code{\link{sapply}}.} 
+    the \code{simplify} argument of \code{\link{sapply}}.}
   \item{USE.NAMES}{logical; use names if the first \dots argument has
     names, or if it is a character vector, use that character vector as
     the names.}

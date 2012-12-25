@@ -87,7 +87,7 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   used.  For boxplots, the lengths of the whiskers are regarded as
   dimensions alongside width and height when scaling by \code{inches},
   and are otherwise interpreted in the units of the y axis.)
-  
+
   % The next is enforced in GCircle.
   Circles of radius zero are plotted at radius one pixel (which is
   device-dependent).  Circles of a very small non-zero radius may or may

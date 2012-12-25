@@ -35,9 +35,9 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
     parallel to the axis the default is to centre the string.}
   \item{padj}{adjustment for each string perpendicular to the reading
     direction (which is controlled by \code{adj}).  For strings parallel
-    to the axes, \code{padj = 0} means right or top alignment, 
+    to the axes, \code{padj = 0} means right or top alignment,
     and \code{padj = 1} means left or bottom alignment.
-    
+
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
@@ -76,7 +76,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   Note that if the text is to be plotted perpendicular to the axis,
   \code{adj} determines the justification of the string \emph{and} the
   position along the axis unless \code{at} is specified.
-  
+
   Graphics parameter \code{"ylbias"} (see \code{\link{par}}) determines
   how the text baseline is placed relative to the nominal line.
 }

@@ -8,7 +8,7 @@
 \title{Convert Sweave Syntax}
 \description{
   This function converts the syntax of files in \code{\link{Sweave}}
-  format to another Sweave syntax definition. 
+  format to another Sweave syntax definition.
 }
 \usage{
 SweaveSyntConv(file, syntax, output = NULL)

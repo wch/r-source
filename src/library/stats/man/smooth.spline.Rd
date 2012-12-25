@@ -48,7 +48,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom
    in the GCV criterion.}
- 
+
  \item{control.spar}{optional list with named components controlling the
    root finding when the smoothing parameter \code{spar} is computed,
    i.e., missing or \code{NULL}, see below.
@@ -71,7 +71,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    Note that \code{spar} is only searched for in the interval
    \eqn{[low, high]}.
    }
-   
+
    \item{tol}{A tolerance for same-ness of the \code{x} values.  The
      values are binned into bins of size \code{tol} and values which
      fall into the same bin are regarded as the same.
@@ -80,7 +80,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 \details{
   Neither \code{x} nor \code{y} are allowed to containing missing or
   infinite values.
-  
+
   The \code{x} vector should contain at least four distinct values.
   \sQuote{Distinct} here is controlled by \code{tol}: values which are
   regarded as the same are replaced by the first of their values and the

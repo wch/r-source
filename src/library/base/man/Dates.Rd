@@ -21,7 +21,7 @@
 
 \title{Date Class}
 \description{
-  Description of the class \code{"Date"} representing calendar dates. 
+  Description of the class \code{"Date"} representing calendar dates.
 }
 \usage{
 \method{summary}{Date}(object, digits = 12, \dots)
@@ -43,14 +43,14 @@
   ignored when printing.  It is possible to produce fractional days via
   the \code{mean} method or by adding or subtracting (see
   \code{\link{Ops.Date}}).
-  
+
   The print methods respect \code{\link{options}("max.print")}.
 }
 \seealso{
   \code{\link{Sys.Date}} for the current date.
 
   \code{\link{Ops.Date}} for operators on \code{"Date"} objects.
-  
+
   \code{\link{format.Date}} for conversion to and from character strings.
 
   \code{\link{axis.Date}} and

@@ -97,7 +97,7 @@ textConnection(letters)
 # oops, I forgot to record that one
 showConnections()
 #  class     description      mode text   isopen   can read can write
-#3 "letters" "textConnection" "r"  "text" "opened" "yes"    "no"     
+#3 "letters" "textConnection" "r"  "text" "opened" "yes"    "no"
 mycon <- getConnection(3)
 }
 

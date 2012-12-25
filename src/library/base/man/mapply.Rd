@@ -23,7 +23,7 @@ mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
   \item{SIMPLIFY}{logical or character string; attempt to reduce the
     result to a vector, matrix or higher dimensional array; see
-    the \code{simplify} argument of \code{\link{sapply}}.} 
+    the \code{simplify} argument of \code{\link{sapply}}.}
   \item{USE.NAMES}{logical; use names if the first \dots argument has
     names, or if it is a character vector, use that character vector as
     the names.}
@@ -33,7 +33,7 @@ mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
   (re-cycled to the length of the longest, unless any have length zero),
   followed by the arguments given in \code{MoreArgs}.  The arguments in
   the call will be named if \code{\dots} or \code{MoreArgs} are named.
-  
+
   Arguments with classes in \code{\dots} will be accepted, and their
   subsetting and \code{length} methods will be used.
 }

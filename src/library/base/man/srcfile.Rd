@@ -79,10 +79,10 @@ srcref(srcfile, lloc)
   file system.
 
   The \code{srcfilealias} function produces an object of the descendant
-  class \code{srcfilealias}, which gives an alternate name to another 
+  class \code{srcfilealias}, which gives an alternate name to another
   srcfile.  This is produced by the parser when a \code{#line} directive
   is used.
-  
+
   The \code{getSrcLines} function reads the specified lines from
   \code{srcfile}.
 
@@ -106,20 +106,20 @@ srcref(srcfile, lloc)
   a particular line; if it was already open, it will be repositioned
   to that line.
 
-  Methods are defined for \code{print}, \code{summary} and 
+  Methods are defined for \code{print}, \code{summary} and
   \code{as.character} for class \code{srcref}.  The \code{as.character}
   method will read the associated source file to obtain the text
   corresponding to the reference.  The exact behaviour depends on the
   class of the source file.  If the source file inherits from
-  class \code{"srcfilecopy"}, the lines are taken from the saved copy 
+  class \code{"srcfilecopy"}, the lines are taken from the saved copy
   using the "parsed" line counts.  If not, an attempt
-  is made to read the file, and the original line numbers of the 
+  is made to read the file, and the original line numbers of the
   \code{srcref} record (i.e. elements 1 and 3) are used.  If an error
-  occurs (e.g. the file no longer exists), text like 
+  occurs (e.g. the file no longer exists), text like
   \code{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
   indicating the \code{line:column} ranges of the first and last
   character.  The \code{summary} method defaults to this type of
-  display.  
+  display.
 
   Lists of \code{srcref} objects may be attached to expressions as the
   \code{"srcref"} attribute.  (The list of \code{srcref} objects should be the same

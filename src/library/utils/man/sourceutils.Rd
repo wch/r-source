@@ -16,7 +16,7 @@
 }
 \usage{
 getSrcFilename(x, full.names = FALSE, unique = TRUE)
-getSrcDirectory(x, unique = TRUE) 
+getSrcDirectory(x, unique = TRUE)
 getSrcref(x)
 getSrcLocation(x, which = c("line", "column", "byte", "parse"),
                first = TRUE)
@@ -52,7 +52,7 @@ getSrcLocation(x, which = c("line", "column", "byte", "parse"),
   }
 }
 \value{
-  \code{getSrcFilename} and \code{getSrcDirectory} return character vectors 
+  \code{getSrcFilename} and \code{getSrcDirectory} return character vectors
   holding the filename/directory.
 
   \code{getSrcref} returns a list of \code{"srcref"} objects or
@@ -67,12 +67,12 @@ getSrcLocation(x, which = c("line", "column", "byte", "parse"),
 \examples{
 fn <- function(x) {
   x + 1 # A comment, kept as part of the source
-}			    
+}			
 
 # Show the temporary file directory
 # where the example was saved
 
-getSrcDirectory(fn)  
+getSrcDirectory(fn)
 getSrcLocation(fn, "line")
 }
 \keyword{ utilities }

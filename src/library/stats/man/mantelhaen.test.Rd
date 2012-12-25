@@ -160,5 +160,5 @@ ftable(. ~ Gender + Income, Satisfaction)
 ## Table 7.8 in Agresti (2002), p. 288.
 mantelhaen.test(Satisfaction)
 ## See Table 7.12 in Agresti (2002), p. 297.
-}  
+}
 \keyword{htest}

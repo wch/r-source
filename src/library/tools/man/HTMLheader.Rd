@@ -13,7 +13,7 @@ This function generates the standard HTML header used on R help pages.
 }
 \usage{
 HTMLheader(title = "R", logo = TRUE, up = NULL,
-           top = file.path(Rhome, "doc/html/index.html"), 
+           top = file.path(Rhome, "doc/html/index.html"),
            Rhome = "",
            css = file.path(Rhome, "doc/html/R.css"),
            headerTitle = paste("R:", title),

@@ -23,7 +23,7 @@ Recall(\dots)
 }
 \seealso{
   \code{\link{do.call}} and \code{\link{call}}.
-  
+
   \code{\link{local}} for another way to write anonymous recursive functions.
 }
 \examples{

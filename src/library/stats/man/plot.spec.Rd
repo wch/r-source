@@ -16,7 +16,7 @@
 \usage{
 \method{plot}{spec}(x, add = FALSE, ci = 0.95, log = c("yes", "dB", "no"),
      xlab = "frequency", ylab = NULL, type = "l",
-     ci.col = "blue", ci.lty = 3, 
+     ci.col = "blue", ci.lty = 3,
      main = NULL, sub = NULL,
      plot.type = c("marginal", "coherency", "phase"),
      \dots)
@@ -24,7 +24,7 @@
 plot.spec.phase(x, ci = 0.95,
                 xlab = "frequency", ylab = "phase",
                 ylim = c(-pi, pi), type = "l",
-                main = NULL, ci.col = "blue", ci.lty = 3, \dots) 
+                main = NULL, ci.col = "blue", ci.lty = 3, \dots)
 
 plot.spec.coherency(x, ci = 0.95,
                     xlab = "frequency",
@@ -46,7 +46,7 @@ plot.spec.coherency(x, ci = 0.95,
     \code{options(ts.S.compat = TRUE)} has been set, when it is
     \code{"dB"}.  Only valid for \code{plot.type = "marginal"}.
   }
-  \item{xlab}{the x label of the plot.}  
+  \item{xlab}{the x label of the plot.}
   \item{ylab}{the y label of the plot.  If missing a suitable label will
     be constructed.}
   \item{type}{the type of plot to be drawn, defaults to lines.}

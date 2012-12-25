@@ -26,7 +26,7 @@ unit(x, units, data=NULL)
   in a large number of different coordinate systems.  All drawing
   occurs relative to a viewport and the \code{units} specifies
   what coordinate system to use within that viewport.
-  
+
   Possible \code{units} (coordinate systems) are:
   \describe{
     \item{\code{"npc"}}{Normalised Parent Coordinates (the default).
@@ -53,7 +53,7 @@ unit(x, units, data=NULL)
       Same as Normalised Parent Coordinates, except gives the same answer for
       horizontal and vertical locations/dimensions.  It uses the
       \emph{lesser} of npc-width and npc-height.  This is useful for making
-      things which are a proportion of the viewport, but have to be square 
+      things which are a proportion of the viewport, but have to be square
       (or have a fixed aspect ratio).}
     \item{\code{"strwidth"}}{Multiples of the width of the string
       specified in the \code{data} argument.  The font size is
@@ -71,17 +71,17 @@ unit(x, units, data=NULL)
   For example, it is possible to use \code{"in"} or \code{"inch"}
   instead of \code{"inches"} and \code{"centimetre"} or
   \code{"centimeter"} instead of \code{"cm"}.
-  
+
   A special \code{units} value of \code{"null"} is also allowed,
   but only makes sense when used in specifying widths of columns
   or heights of rows in grid layouts (see \code{\link{grid.layout}}).
-  
+
   The \code{data} argument must be a list when the \code{unit.length()}
   is greater than 1.  For example,
 \preformatted{  unit(rep(1, 3), c("npc", "strwidth", "inches"),
   data = list(NULL, "my string", NULL))
 }.
-      
+
   It is possible to subset unit objects in the normal way
   (e.g., \code{unit(1:5, "npc")[2:4]}), but a special function
   \code{unit.c} is provided for combining unit objects.
@@ -106,7 +106,7 @@ unit(x, units, data=NULL)
   \code{"strheight"}.
 }
 \value{
-  An object of class \code{"unit"}. 
+  An object of class \code{"unit"}.
 }
 \author{Paul Murrell}
 \seealso{

@@ -104,7 +104,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   save large amounts of memory.  For factors it is automatically set to
   the smaller of \code{length(x)} and the number of levels plus one (for
   \code{NA})
-  
+
   \link{Long vectors} are supported for the default method of
   \code{duplicated}, but may only be usable if \code{nmax} is supplied.
 }

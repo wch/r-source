@@ -39,7 +39,7 @@ as.single(x, \dots)
   object of base type \code{"double"}.
 
   \code{is.double} is a test of double \link{type}.
-  
+
   \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}.  The functions \code{as.single}
   and \code{single} are identical to \code{as.double} and \code{double}

@@ -38,7 +38,7 @@ friedman.test(y, \dots)
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to or from methods.}    
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   \code{friedman.test} can be used for analyzing unreplicated complete
@@ -48,7 +48,7 @@ friedman.test(y, \dots)
 
   The null hypothesis is that apart from an effect of \code{blocks},
   the location parameter of \code{y} is the same in each of the
-  \code{groups}. 
+  \code{groups}.
 
   If \code{y} is a matrix, \code{groups} and \code{blocks} are
   obtained from the column and row indices, respectively.  \code{NA}'s

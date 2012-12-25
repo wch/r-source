@@ -49,7 +49,7 @@
   needed for packages with long path names (over 100 bytes) or very
   large files (over 8GB): however, the resulting tarball may not be
   portable.
-  
+
   \command{R CMD check} by default unpacks tarballs by the internal
   \code{\link{untar}} function: if needed an external \command{tar}
   command can be specified by the environment variable

@@ -6,7 +6,7 @@
 \name{dump}
 \title{Text Representations of R Objects}
 \usage{
-dump(list, file = "dumpdata.R", append = FALSE, 
+dump(list, file = "dumpdata.R", append = FALSE,
      control = "all", envir = parent.frame(), evaluate = TRUE)
 }
 \alias{dump}
@@ -25,7 +25,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   \item{append}{if \code{TRUE} and \code{file} is a character string,
     output will be appended to \code{file}; otherwise, it will overwrite
     the contents of \code{file}.}
-    
+
   \item{control}{character vector indicating deparsing options.
     See \code{\link{.deparseOpts}} for their description.}
 
@@ -37,7 +37,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   If some of the objects named do not exist (in scope), they are
   omitted, with a warning.  If \code{file} is a file and no objects
   exist then no file is created.
-  
+
   \code{source}ing may not produce an identical copy of
   \code{dump}ed objects.  A warning is issued if it is likely that
   problems will arise, for example when dumping exotic or complex
@@ -50,12 +50,12 @@ dump(list, file = "dumpdata.R", append = FALSE,
   perhaps S) session, but the function \code{\link{save}} is designed to
   be used for transporting \R data, and will work with \R objects that
   \code{dump} does not handle.
-  
+
   To produce a more readable representation of an object, use
   \code{control = NULL}.  This will skip attributes, and will make other
   simplifications that make \code{source} less likely to produce an
   identical copy.  See \code{\link{deparse}} for details.
-  
+
   To deparse the internal representation of a function rather than
   displaying the saved source, use \code{control = c("keepInteger",
     "warnIncomplete", "keepNA")}.  This will lose all formatting and
@@ -76,7 +76,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   package will be searched \emph{before} the global environment unless
   \code{dump} is called from the top level prompt or the \code{envir}
   argument is given explicitly.
-  
+
   To avoid the risk of a source attribute becoming out of sync with the
   actual function definition, the source attribute of a function will
   never be dumped as an attribute.

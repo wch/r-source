@@ -7,7 +7,7 @@
 \title{Tabulation for Vectors}
 \description{
   \code{tabulate} takes the integer-valued vector \code{bin} and counts
-  the number of times each integer occurs in it. 
+  the number of times each integer occurs in it.
 }
 \usage{
 tabulate(bin, nbins = max(1, bin, na.rm = TRUE))
@@ -20,10 +20,10 @@ tabulate(bin, nbins = max(1, bin, na.rm = TRUE))
 }
 \details{
    \code{tabulate} is the workhorse for the \code{\link{table}} function.
-  
+
   If \code{bin} is a factor, its internal integer representation
   is tabulated.
-  
+
   If the elements of \code{bin} are numeric but not integers,
   they are truncated by \code{\link{as.integer}}.
 }

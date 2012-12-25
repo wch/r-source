@@ -21,7 +21,7 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE, nullPointers = TRUE,
   \item{forEx}{logical: extra pruning for \file{-Ex.Rout} files to
     exclude the header.}
   \item{nullPointers}{logical: should the displayed addresses of
-    pointers be set to \code{0x00000000} before comparison?} 
+    pointers be set to \code{0x00000000} before comparison?}
   \item{Log}{logical: should the returned value include a log of
     differences found?}
 }

@@ -13,11 +13,11 @@ nlevels(x)
   Return the number of levels which its argument has.
 }
 \arguments{
-  \item{x}{an object, usually a factor.} 
+  \item{x}{an object, usually a factor.}
 }
 \details{
   This is usually applied to a factor, but other objects can have levels.
-  
+
   The actual factor levels (if they exist) can be obtained
   with the \code{\link{levels}} function.
 }

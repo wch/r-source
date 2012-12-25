@@ -115,7 +115,7 @@ as.qr(x)
   For \code{qr}, the LINPACK routine \code{DQRDC} and the LAPACK
   routines \code{DGEQP3} and \code{ZGEQP3}.  Further LINPACK and LAPACK
   routines are used for \code{qr.coef}, \code{qr.qy} and \code{qr.aty}.
-  
+
   LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
   \url{http://www.netlib.org/linpack} and their guides are listed
   in the references.
@@ -125,7 +125,7 @@ as.qr(x)
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
-  
+
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.

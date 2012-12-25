@@ -14,7 +14,7 @@ euro
 euro.cross
 }
 \format{
-  \code{euro} is a named vector of length 11, \code{euro.cross} a 
+  \code{euro} is a named vector of length 11, \code{euro.cross} a
   matrix of size 11 by 11, with dimnames.
 }
 \details{

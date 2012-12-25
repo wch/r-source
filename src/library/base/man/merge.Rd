@@ -51,7 +51,7 @@ merge(x, y, \dots)
   \code{merge} is a generic function whose principal method is for data
   frames: the default method coerces its arguments to data frames and
   calls the \code{"data.frame"} method.
-  
+
   By default the data frames are merged on the columns with names they
   both have, but separate specifications of the columns can be given by
   \code{by.x} and \code{by.y}.  The rows in the two data frames that

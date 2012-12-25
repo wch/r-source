@@ -289,7 +289,7 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
   \emph{Software for Data Analysis: Programming with R}
   Springer.  (For the R version: see section 10.6 for method
   selection and section 13.4 for generic functions).
-  
+
   Chambers, John M. (1998)
   \emph{Programming with Data}
   Springer (For the original S4 version.)

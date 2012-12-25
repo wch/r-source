@@ -18,7 +18,7 @@ beaver2
   temperature dynamics of beaver \emph{Castor canadensis} in
   north-central Wisconsin.  Body temperature was measured by telemetry
   every 10 minutes for four females, but data from a one period of
-  less than a day for each of two animals is used there. 
+  less than a day for each of two animals is used there.
 }
 \format{
   The \code{beaver1} data frame has 114 rows and 4 columns on body

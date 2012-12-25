@@ -27,7 +27,7 @@ file.info(\dots)
   digits summarizing the permissions for the file owner, the owner's
   group and for anyone respectively.  Each digit is the logical
   \emph{or} of read (4), write (2) and execute/search (1) permissions.
-  
+
 #ifdef unix
   On most systems symbolic links are followed, so information is given
   about the file to which the link points rather than about the link.
@@ -39,9 +39,9 @@ file.info(\dots)
   on their extensions (e.g., \file{.exe}, \file{.com}, \file{.cmd}
   and \file{.bat} files).  \code{\link{file.access}} will give a more
   reliable view of read/write access availability to the \R process.
-  
+
   UTF-8-encoded file names not valid in the current locale can be used.
-  
+
   Junction points and symbolic links are followed, so information is
   given about the file/directory to which the link points rather than
   about the link.
@@ -82,7 +82,7 @@ file.info(\dots)
   creation time (something which is not recorded on most Unix-alike file
   systems).  What is meant by \sQuote{file access} and hence the
   \sQuote{last access time} is system-dependent.
-  
+
   The times are reported to an accuracy of seconds, and perhaps more on
   some systems.  However, many file systems only record times in
   seconds, and some (e.g. modification time on FAT systems) are recorded
@@ -102,7 +102,7 @@ file.info(\dots)
   \code{\link{files}}, \code{\link{file.access}},
   \code{\link{list.files}},
   and \code{\link{DateTimeClasses}} for the date formats.
-  
+
   \code{\link{Sys.chmod}} to change permissions.
 }
 \examples{

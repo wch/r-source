@@ -15,7 +15,7 @@
 \usage{CO2}
 \format{
   An object of class
-  \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")} 
+  \code{c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame")}
   containing the following columns:
   \describe{
     \item{Plant}{
@@ -25,13 +25,13 @@
     }
     \item{Type}{
       a factor with levels
-      \code{Quebec} 
+      \code{Quebec}
       \code{Mississippi}
       giving the origin of the plant
     }
     \item{Treatment}{
       a factor with levels
-      \code{nonchilled} 
+      \code{nonchilled}
       \code{chilled}
     }
     \item{conc}{
@@ -48,10 +48,10 @@
   from Mississippi was measured at several levels of ambient
   \eqn{CO_2}{CO2} concentration.  Half the plants of each type were
   chilled overnight before the experiment was conducted.
-  
+
   This dataset was originally part of package \code{nlme}, and that has
   methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
-  \code{print}) for its grouped-data classes. 
+  \code{print}) for its grouped-data classes.
 }
 \source{
   Potvin, C., Lechowicz, M. J. and Tardif, S. (1990)

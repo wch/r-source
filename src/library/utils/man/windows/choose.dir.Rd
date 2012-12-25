@@ -18,7 +18,7 @@ choose.dir(default = "", caption = "Select folder")
 }
 \value{
   A length-one character vector, character \code{NA} if
-  \sQuote{Cancel} was selected. 
+  \sQuote{Cancel} was selected.
 }
 \details{
   This brings up   the Windows shell folder selection widget.  With the
@@ -32,7 +32,7 @@ choose.dir(default = "", caption = "Select folder")
   \code{\link{choose.files}}
 }
 \examples{
-  if (interactive()) 
+  if (interactive())
         choose.dir(getwd(), "Choose a suitable folder")
 }
 \keyword{file}

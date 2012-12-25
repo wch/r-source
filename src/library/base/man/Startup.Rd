@@ -127,7 +127,7 @@
   \code{\var{value}} is then processed in a similar way to a Unix shell:
   in particular the outermost level of (single or double) quotes is
   stripped, and backslashes are removed except inside quotes.
-  
+
   On systems with sub-architectures (mainly Mac OS X and Windows), the
   files \file{Renviron.site} and \file{Rprofile.site} are looked for
   first in architecture-specific directories,
@@ -149,13 +149,13 @@
   The startup options are for \command{Rgui}, \command{Rterm} and
   \code{R} but not for \command{Rcmd}: attempting to use
   e.g. \option{--vanilla} with the latter will give a warning or error.
-  
+
   Unix versions of \R have a file \file{\var{\link{R_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process, and is not
   used on \R for Windows.
 #endif
-  
+
   \command{R CMD check} and \command{R CMD build} do not always read the
   standard startup files, but they do always read specific
   \samp{Renviron} files.  The location of these can be controlled by the
@@ -190,13 +190,13 @@
 #ifdef unix
   \code{\link{X11}} and \code{\link{quartz}}.
 #endif
-  
+
   \emph{An Introduction to R} for more command-line options: those
   affecting memory management are covered in the help file for
   \link{Memory}.
 
   \code{\link{readRenviron}} to read \file{.Renviron} files.
-  
+
   For profiling code, see \code{\link{Rprof}}.
 }
 \examples{
@@ -233,7 +233,7 @@ local({
   cols <- Sys.getenv("COLUMNS")
   if(nzchar(cols)) options(width = as.integer(cols))
   # interactive sessions get a fortune cookie (needs fortunes package)
-  if (interactive()) 
+  if (interactive())
     fortunes::fortune()
 })
 

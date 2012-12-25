@@ -11,7 +11,7 @@
   given in \code{x} and \code{y}.
 }
 \usage{
-polypath(x, y = NULL, 
+polypath(x, y = NULL,
          border = NULL, col = NA, lty = par("lty"),
          rule = "winding", \dots)
 }
@@ -26,14 +26,14 @@ polypath(x, y = NULL,
   \item{border}{the color to draw the border.  The default, \code{NULL},
     means to use \code{\link{par}("fg")}.  Use \code{border = NA} to
     omit borders.
-    
+
     For compatibility with S, \code{border} can also be logical, in
     which case \code{FALSE} is equivalent to \code{NA} (borders omitted)
     and \code{TRUE} is equivalent to \code{NULL} (use the foreground colour),
   }
   \item{lty}{the line type to be used, as in \code{\link{par}}.}
   \item{rule}{character value specifying the path fill mode: either
-    \code{"winding"} or \code{"evenodd"}.} 
+    \code{"winding"} or \code{"evenodd"}.}
   \item{\dots}{\link{graphical parameters} such as \code{xpd}, \code{lend},
     \code{ljoin} and \code{lmitre} can be given as arguments.}
 }
@@ -44,7 +44,7 @@ polypath(x, y = NULL,
 
   It is assumed that the path is to be closed by joining the last point to
   the first point.
- 
+
   The coordinates can contain missing values.  The behaviour is similar
   to that of \code{\link{polygon}}, except that instead of breaking a
   polygon into several polygons, \code{NA} values break the path into
@@ -55,10 +55,10 @@ polypath(x, y = NULL,
   can contain holes, as interpreted by the fill rule; these fill a region if
   the path border encircles it an odd or non-zero number of times,
   respectively.
-  
+
   Hatched shading (as implemented for \code{polygon()}) is not
   (currently) supported.
-  
+
   Not all graphics devices support this function: for example
   \code{xfig} and \code{pictex} do not.
 }

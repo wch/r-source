@@ -25,7 +25,7 @@ calcStringMetric(text)
   on the font settings that are in effect when this function is called.
   It will not necessarily correspond to the metric information of any
   text that is drawn on the page.
-} 
+}
 \seealso{ \code{\link{stringAscent}}, \code{\link{stringDescent}},
 \code{\link{grobAscent}}, and \code{\link{grobDescent}}.}
 
@@ -66,7 +66,7 @@ test <- function(x) {
         grid.rect(width=unit(metric$width, "inches"),
                   height=unit(metric$descent, "inches"),
                   just="bottom",
-                  gp=gpar(col=rgb(1,0,0,.5)))        
+                  gp=gpar(col=rgb(1,0,0,.5)))
     }
 }
 

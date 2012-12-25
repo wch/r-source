@@ -34,12 +34,12 @@ c(\dots, recursive = FALSE)
   \code{as.vector} is a more intuitive way to do this, but also drops
   names.  Note too that methods other than the default are not required
   to do this (and they will almost certainly preserve a class attribute).
-  
+
   This is a \link{primitive} function.
 }
 \value{
   \code{NULL} or an expression or a vector of an appropriate mode.
-  (With no arguments the value is \code{NULL}.)  
+  (With no arguments the value is \code{NULL}.)
 }
 \section{S4 methods}{
   This function is S4 generic, but with argument list

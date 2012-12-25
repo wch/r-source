@@ -40,7 +40,7 @@ signif(x, digits = 6)
 \arguments{
   \item{x}{a numeric vector.  Or, for \code{round} and \code{signif}, a
     complex vector.}
-  
+
   \item{digits}{integer indicating the number of decimal places
     (\code{round}) or significant digits (\code{signif}) to be used.
     Negative values are allowed (see \sQuote{Details}).}
@@ -70,12 +70,12 @@ signif(x, digits = 6)
   integer in that range.  Complex numbers are rounded to retain the
   specified number of digits in the larger of the components.  Each
   element of the vector is rounded individually, unlike printing.
-  
+
   These are all primitive functions.
 }
 \section{S4 methods}{
   These are all (internally) S4 generic.
-  
+
   \code{ceiling}, \code{floor} and \code{trunc} are members of the
   \code{\link[=S4groupGeneric]{Math}} group generic.  As an S4
   generic, \code{trunc} has only one argument.

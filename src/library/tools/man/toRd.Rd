@@ -23,7 +23,7 @@ toRd(obj, ...)
 The object to be rendered.
 }
   \item{style}{
-The style to be used in converting a \code{\link{bibentry}} object.  
+The style to be used in converting a \code{\link{bibentry}} object.
 }
   \item{\dots}{
 Additional arguments used by methods.

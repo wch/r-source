@@ -8,10 +8,10 @@
 \title{Create a Coherent Group of Grid Graphical Objects}
 \description{
   This function is deprecated; please use \code{gTree}.
-  
+
   This function creates a graphical object which contains
   several other graphical objects.  When it is drawn, it draws
-  all of its children.  
+  all of its children.
 
   It may be convenient to name the elements of the collection.
 }

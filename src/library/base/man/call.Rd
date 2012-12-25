@@ -32,15 +32,15 @@ as.call(x)
   taken as \code{name} and the remaining arguments as arguments for the
   constructed call: if the first argument is named the name must
   partially match \code{name}.
-  
+
   \code{is.call} is used to determine whether \code{x} is a call (i.e.,
   of mode \code{"call"}).
-  
+
   Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
   The first element of the list becomes the function part of the call,
   so should be a function or the name of one (as a symbol; a quoted
-  string will not do).  
-  
+  string will not do).
+
   All three are \link{primitive} functions.  \code{call} is
   \sQuote{special}: it only evaluates its first argument.
 }

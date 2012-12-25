@@ -122,7 +122,7 @@
     \item{\env{R_RD4PDF}:}{Options for \command{pdflatex} processing of
       \code{Rd} files.  Used by \command{R CMD Rd2pdf}.}
     \item{\env{R_SHARE_DIR}:}{The location of the \R \file{share}
-      directory.  Set by \R.} 
+      directory.  Set by \R.}
     \item{\env{R_TEXI2DVICMD}:}{The path to \command{texi2dvi}.
       Defaults to the value of \env{TEXI2DVI}, and if that is unset to a
       value determined when \R was built.

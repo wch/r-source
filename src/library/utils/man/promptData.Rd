@@ -34,7 +34,7 @@ promptData(object, filename = NULL, name = NULL)
   documentation shell is created and returned.  Writing the shell to a
   file amounts to \code{cat(unlist(x), file = filename, sep = "\\n")},
   where \code{x} is the list-style representation.
-  
+
   Currently, only data frames are handled explicitly by the code.
 }
 \seealso{\code{\link{prompt}}}

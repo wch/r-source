@@ -60,7 +60,7 @@ getParseText(parseData, id)
   \item{text}{character. If \code{includeText} is \code{TRUE}, the
     text of all tokens; if it is \code{NA} (the default), the text of terminal
     tokens.  If \code{includeText == FALSE}, this column is not included.}
-  
+
   The rownames of the dataframe will be equal to the \code{id} values,
   and the dataframe will have a \code{"srcfile"} attribute containing
   the \code{\link{srcfile}} record which was used.  The rows will be
@@ -100,7 +100,7 @@ Duncan Murdoch
 \examples{
 fn <- function(x) {
   x + 1 # A comment, kept as part of the source
-}                           
+}
 
 d <- getParseData(fn)
 if (!is.null(d)) {

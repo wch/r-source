@@ -25,7 +25,7 @@ tar(tarfile, files = NULL,
 
   \item{files}{A character vector of filepaths to be archived:
     the default is to archive all files under the current directory.}
-  
+
   \item{compression}{character string giving the type of compression to
     be used (default none).  Can be abbreviated.}
 
@@ -125,9 +125,9 @@ tar(tarfile, files = NULL,
   \url{http://en.wikipedia.org/wiki/Tar_(file_format)},
   \url{http://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13_06}
   for the way the POSIX utility \command{pax} handles \command{tar} formats.
-  
+
   \url{https://github.com/libarchive/libarchive/wiki/FormatTar}.
-  
+
   \code{\link{untar}}.
 }
 

@@ -75,7 +75,7 @@ rwilcox(nn, m, n)
 \seealso{
   \code{\link{wilcox.test}} to calculate the statistic from data, find p
   values and so on.
-  
+
   \link{Distributions} for standard distributions, including
   \code{\link{dsignrank}} for the distribution of the
   \emph{one-sample} Wilcoxon signed rank statistic.

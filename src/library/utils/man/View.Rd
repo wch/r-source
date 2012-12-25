@@ -41,7 +41,7 @@ View(x, title)
 
   The initial size of the data viewer window is taken from the default
   dimensions of a pager (see \code{\link{Rconsole}}), but adjusted
-  downwards to show a whole number of rows and columns.  
+  downwards to show a whole number of rows and columns.
 #endif
 }
 \value{

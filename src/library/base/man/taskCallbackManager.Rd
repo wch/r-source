@@ -32,7 +32,7 @@ taskCallbackManager(handlers = list(), registered = FALSE,
   \item{registered}{a logical value indicating whether
     the \code{evaluate} function has already been registered
     with the internal task callback mechanism.
-    This is usually \code{FALSE} and 
+    This is usually \code{FALSE} and
     the first time a callback is added
     via the \code{add} function, the
     \code{evaluate} function is automatically registered.
@@ -76,7 +76,7 @@ taskCallbackManager(handlers = list(), registered = FALSE,
   \code{\link{addTaskCallback}},
   \code{\link{removeTaskCallback}},
   \code{\link{getTaskCallbackNames}}\\
-  \url{http://developer.r-project.org/TaskHandlers.pdf}  
+  \url{http://developer.r-project.org/TaskHandlers.pdf}
 }
 \examples{
 # create the manager

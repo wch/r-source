@@ -46,7 +46,7 @@ graphics.off()
   list not including the null device.  \code{dev.next} and
   \code{dev.prev} select the next open device in the appropriate
   direction, unless no device is open.
-  
+
   \code{dev.off} shuts down the specified (by default the current)
   device.  If the current device is shut down and any other devices are
   open, the next open device is made current.  It is an error to

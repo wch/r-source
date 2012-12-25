@@ -49,13 +49,13 @@
 
   This dataset was originally part of package \code{nlme}, and that has
   methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
-  \code{print}) for its grouped-data classes. 
+  \code{print}) for its grouped-data classes.
 }
 \source{
   Boeckmann, A. J., Sheiner, L. B. and Beal, S. L. (1994), \emph{NONMEM
     Users Guide: Part V}, NONMEM Project Group, University of
   California, San Francisco.
-    
+
   Davidian, M. and Giltinan, D. M. (1995) \emph{Nonlinear Models for
     Repeated Measurement Data}, Chapman & Hall (section 5.5, p. 145 and
   section 6.6, p. 176)

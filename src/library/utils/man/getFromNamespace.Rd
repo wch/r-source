@@ -37,7 +37,7 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   \code{assignInMyNamespace} is intended to be called from functions
   within a package, and chooses the namespace as the environment of the
   function calling it.
-  
+
   The namespace can be specified in several ways.  Using, for example,
   \code{ns = "stats"} is the most direct, but a loaded package with a
   namespace can be specified via any of the methods used for
@@ -47,7 +47,7 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   \code{getFromNamespace} is similar to (but predates) the
   \code{\link{:::}} operator, but is more flexible in how the namespace
   is specified.
-  
+
   \code{fixInNamespace} invokes \code{\link{edit}} on the object named
   \code{x} and assigns the revised object in place of the original
   object.  For compatibility with \code{fix}, \code{x} can be unquoted.

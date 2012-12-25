@@ -32,7 +32,7 @@ contourLines(x = seq(0, 1, length.out = nrow(z)),
 }
 \details{
   \code{contourLines} draws nothing, but returns a set of contour lines.
-  
+
   There is currently no documentation about the algorithm.
   The source code is in \file{\var{\link{R_HOME}}/src/main/plot3d.c}.
 }

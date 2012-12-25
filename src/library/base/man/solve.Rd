@@ -52,7 +52,7 @@ solve(a, b, \dots)
 \source{
   The defult method is an interface to the LAPACK routines \code{DGESV}
   and \code{ZGESV}.
-  
+
   LAPACK is from \url{http://www.netlib.org/lapack}.
 }
 \references{
@@ -60,7 +60,7 @@ solve(a, b, \dots)
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
-  
+
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.

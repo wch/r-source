@@ -80,17 +80,17 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
   If \code{keep.source} is true (the default in interactive use), the
   source of functions is kept so they can be listed exactly as input.
-  
+
 %   Using \code{echo = TRUE} and \code{keep.source = TRUE} may interact
 %   badly with source code that includes \samp{#line nn "filename"}
 %   directives (e.g. code produced by older versions of
 %   \code{\link{Stangle}()}): \code{source()} will attempt to obtain the
 %   source from the named file which may have changed since the code was
 %   produced.  Use \code{keep.source = FALSE} to avoid this.
-  
+
   Unlike input from a console, lines in the file or on a connection can
   contain an unlimited number of characters.
-  
+
   When \code{skip.echo > 0}, that many comment lines at the start of
   the file will not be echoed.  This does not affect the execution of
   the code at all.  If there are executable lines within the first
@@ -98,14 +98,14 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
   If \code{echo} is true and a deparsed expression exceeds
   \code{max.deparse.length}, that many characters are output followed by
-  \code{ .... [TRUNCATED] }.  
+  \code{ .... [TRUNCATED] }.
 }
 \section{Encodings}{
   By default the input is read and parsed in  the current encoding of
   the \R session.  This is usually what it required, but occasionally
   re-encoding is needed, e.g. if a file from a UTF-8-using system is to
   be read on Windows (or \emph{vice versa}).
-  
+
   The rest of this paragraph applies if \code{file} is an actual
   filename or URL (and not \code{""} nor a connection).  If
   \code{encoding = "unknown"}, an attempt is made to guess the encoding:
@@ -116,7 +116,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \code{"unknown"}) in a Latin-1 or UTF-8 locale then character strings
   in the result will be translated to the current encoding and marked as
   such (see \code{\link{Encoding}}).
-  
+
   If \code{file} is a connection (including one specified by \code{""},
   it is not possible to re-encode the input inside \code{source}, and so
   the \code{encoding} argument is just used to mark character strings in the
@@ -134,16 +134,16 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
   \code{\link{sys.source}} which is a streamlined version to source a
   file into an environment.
-  
+
   \sQuote{The R Language Definition} for a discussion of source
-  directives.  
+  directives.
 }
 \examples{
 ## If you want to source() a bunch of files, something like
 ## the following may be useful:
  sourceDir <- function(path, trace = TRUE, ...) {
     for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
-       if(trace) cat(nm,":") 
+       if(trace) cat(nm,":")
        source(file.path(path, nm), ...)
        if(trace) cat("\n")
     }

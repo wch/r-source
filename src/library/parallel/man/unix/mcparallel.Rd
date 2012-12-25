@@ -12,7 +12,7 @@
 \title{Evaluate an \R Expression Asynchronously in a Separate Process}
 \description{
   These functions are based on forking and so are not available on Windows.
-  
+
   \code{mcparallel} starts a parallel \R process which evaluates the
   given expression.
 
@@ -99,7 +99,7 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   uses the RNG: this is pretty much guaranteed to give a different
   random-number stream from the current session and any other child
   process.
-  
+
   The behaviour with \code{mc.set.seed = TRUE} is different only if
   \code{\link{RNGkind}("L'Ecuyer-CMRG")} has been selected.  Then each
   time a child is forked it is given the next stream (see
@@ -120,7 +120,7 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 
 \author{
   Simon Urbanek and R Core.
-  
+
   Derived from the \CRANpkg{multicore} package (but with different
   handling of the RNG stream).
 }

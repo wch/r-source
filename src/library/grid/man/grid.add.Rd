@@ -13,7 +13,7 @@
 }
 \usage{
 grid.add(gPath, child, strict = FALSE, grep = FALSE,
-         global = FALSE, allDevices = FALSE, redraw = TRUE) 
+         global = FALSE, allDevices = FALSE, redraw = TRUE)
 
 addGrob(gTree, child, gPath = NULL, strict = FALSE, grep = FALSE,
         global = FALSE, warn = TRUE)
@@ -51,11 +51,11 @@ setChildren(x, children)
 \details{
   \code{addGrob} copies the specified grob and returns a modified
   grob.
-  
+
   \code{grid.add} destructively modifies a grob on the display list.
   If \code{redraw}
   is \code{TRUE} it then redraws everything to reflect the change.
-  
+
   \code{setChildren} is a basic function for setting all children
   of a gTree at once (instead of repeated calls to \code{addGrob}).
 }

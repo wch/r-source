@@ -35,7 +35,7 @@ is.name(x)
 \details{
   Names are limited to 10,000 bytes (and were to 256 bytes in versions
   of \R before 2.13.0).
-  
+
   \code{as.name} first coerces its argument internally to a character
   vector (so methods for \code{as.character} are not used).  It then
   takes the first element and provided it is not \code{""}, returns a
@@ -44,7 +44,7 @@ is.name(x)
 
   \code{as.name} is implemented as \code{\link{as.vector}(x, "symbol")},
   and hence will dispatch methods for the generic function \code{as.vector}.
-  
+
   \code{is.name} and \code{is.symbol} are \link{primitive} functions.
 }
 \value{

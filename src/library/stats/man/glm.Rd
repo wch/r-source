@@ -118,7 +118,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{\dots}{
     For \code{glm}: arguments to be used to form the default
     \code{control} argument if it is not supplied directly.
-    
+
     For \code{weights}: further arguments passed to or from other methods.
   }
 }
@@ -192,7 +192,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   which inherits from the class \code{"lm"}. See later in this section.
   If a non-standard \code{method} is used, the object will also inherit
   from the class (if any) returned by that function.
-  
+
   The function \code{\link{summary}} (i.e., \code{\link{summary.glm}}) can
   be used to obtain or print a summary of the results and the function
   \code{\link{anova}} (i.e., \code{\link{anova.glm}})
@@ -290,14 +290,14 @@ glm.fit(x, y, weights = rep(1, nobs),
 
   \code{\link{lm}} for non-generalized \emph{linear} models (which SAS
   calls GLMs, for \sQuote{general} linear models).
-  
+
   \code{\link{loglin}} and \code{\link[MASS]{loglm}} (package
   \CRANpkg{MASS}) for fitting log-linear models (which binomial and
   Poisson GLMs are) to contingency tables.
 
   \code{bigglm} in package \CRANpkg{biglm} for an alternative
   way to fit GLMs to large datasets (especially those with many cases).
- 
+
   \code{\link{esoph}}, \code{\link{infert}} and
   \code{\link{predict.glm}} have examples of fitting binomial glms.
 }

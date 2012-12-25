@@ -65,7 +65,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   \code{"bitrgb"}, \code{"bitcmyk"}, \code{"pngmono"}, \code{"pnggray"},
   \code{"pngalpha"}, \code{"png16"}, \code{"png256"}, \code{"png16m"},
   \code{"png48"}, \code{"jpeg"}, \code{"jpeggray"}, \code{"pdfwrite"}.
-  
+
   The default type, \code{"png16m"}, supports 24-bit colour and
   anti-aliasing.  Versions of \R prior to 2.7.0 defaulted to
   \code{"png256"}, which uses a palette of 256 colours and could be a
@@ -78,7 +78,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   which is 8-bit per channel RGB (the most common TIFF format).  None of
   the listed TIFF types support transparency.  \code{"tiff32nc"} uses
   8-bit per channel CMYK, which printers might require.
-  
+
   For formats which contain a single image, a file specification like
   \code{Rplots\%03d.png} can be used: this is interpreted by Ghostscript.
 
@@ -103,7 +103,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
 #ifdef windows
   Use of \code{bitmap} will leave a temporary file (with file name
   starting \code{Rbit}).
-  
+
 #endif
   Although using \code{type = "pdfwrite"} will work for simple plots, it
   is not recommended.  Either use \code{\link{pdf}} to produce PDF
@@ -123,7 +123,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
     \item Font sizes are in big points.
     \item The default font family is (for the standard Ghostscript
     setup) URW Nimbus Sans.
-    \item Line widths are as a multiple of 1/96 inch, with no minimum. 
+    \item Line widths are as a multiple of 1/96 inch, with no minimum.
     \item Circle of any radius are allowed.
     \item Colours are interpreted by the viewing/printing application.
   }
@@ -133,7 +133,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   \code{\link{savePlot}}, which for \code{windows} and
   \code{X11(type = "cairo")} provides a simple way to record a PNG
   record of the current plot.
-  
+
   \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{png}},
   \code{\link{jpeg}}, \code{\link{tiff}} and  \code{bmp}.
 

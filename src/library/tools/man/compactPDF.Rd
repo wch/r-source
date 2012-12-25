@@ -56,14 +56,14 @@ compactPDF(paths,
   \command{qpdf} and/or \command{gs_cmd} are run on all PDF files found,
   and those which are reduced in size by at least 10\% and 10Kb are
   replaced.
-  
+
   The strategy of our use of \command{qpdf} is to (losslessly) compress
   both PDF streams and objects.  Ghostscript compresses streams and more
   (including downsampling and compressing embedded images) and
   consequently is much slower and may lose quality (but can also produce
   much smaller PDF files).  However, quality \code{"ebook"} is perfectly
   adequate for screen viewing and printing on laser printers.
-  
+
   Where PDF files are changed they will become PDF version 1.5 files:
   these have been supported by Acrobat Reader since version 6 in 2003,
   so this is very unlikely to cause difficulties.
@@ -75,7 +75,7 @@ compactPDF(paths,
   seem to be the default for MiKTeX's \command{pdflatex}.  For some PDF
   files (and especially package vignettes), using GhostScript can
   dramatically reduce the space taken by embedded images (often screenshots).
-  
+
   Where both Ghostscript and \command{qpdf} are selected (when
   \code{gs_quality != "none"} and both executables are found), they are
   run in that order and the size reductions apply to the total

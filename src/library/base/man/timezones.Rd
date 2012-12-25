@@ -32,7 +32,7 @@ Sys.timezone()
   the current timezone, but \code{Sys.timezone} will retrieve the name
   it uses for the current time (and the name may differ depending on
   whether daylight saving time is in effect).
-  
+
   On most platforms it is  possible to set the time zone via the
   environment variable \env{TZ}: see the section on \sQuote{Time zone
     names} for suitable values.
@@ -71,7 +71,7 @@ Sys.timezone()
 
 \value{
   \code{Sys.timezone} returns an OS-specific character string, possibly
-  an empty string.  Typically this is an abbreviation such as \code{"EST"}. 
+  an empty string.  Typically this is an abbreviation such as \code{"EST"}.
 }
 
 \section{Time zone names}{
@@ -99,7 +99,7 @@ Sys.timezone()
   history since 1970 have specific names, but those with different
   earlier histories may not.
 #ifdef unix
-  
+
   For most Unix-alikes use the Olson database.  The system-specific
   default location in the file system varies, e.g.
   \file{/usr/share/zoneinfo} (Linux, Mac OS X, FreeBSD),
@@ -134,7 +134,7 @@ Sys.timezone()
   it is still accepted for backwards compatibility but was (and remains)
   unreliable and gives a warning.
 #endif
-  
+
   Many systems support timezones of the form \samp{GMT+n} and
   \samp{GMT-n}, which are at a fixed offset from UTC (hence no DST).
   Contrary to some usage (but consistent with names such as

@@ -26,11 +26,11 @@ Sys.setFileTime(path, time)
 }
 \details{
   This attempts sets the file time to the value specified.
-  
+
   On a Unix-alike it uses the system call \code{utimes} if that is
   available, otherwise \code{utimes}.  On a POSIX file system it sets
   both the last-access and modification times.
-  
+
   On Windows it uses the system call \code{SetFileTime} to set the
   \sQuote{last write time}.  Some Windows file systems only record the
   time at a resolution of two seconds.

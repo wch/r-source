@@ -18,7 +18,7 @@ withVisible(x)
 }
 \details{
   The argument is evaluated in the caller's context.
-  
+
   This is a \link{primitive} function.
 }
 \value{

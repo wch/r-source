@@ -24,7 +24,7 @@ jitter(x, factor = 1, amount = NULL)
 \value{
   \code{jitter(x, \dots)} returns a numeric of the same length as
   \code{x}, but with an \code{amount} of noise added in order to break
-  ties. 
+  ties.
 }
 \details{
   The result, say \code{r}, is \code{r <- x + runif(n, -a, a)}

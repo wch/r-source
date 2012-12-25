@@ -36,7 +36,7 @@ forwardsolve(l, x, k = ncol(l), upper.tri = FALSE, transpose = FALSE)
 
   The \code{r}/\code{l} must have at least \code{k} rows and columns,
   and \code{x} must have at least \code{k} rows.
-  
+
   This is a wrapper for the level-3 BLAS routine \code{dtrsm}.
 }
 \value{

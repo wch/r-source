@@ -21,16 +21,16 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 
   \item{files}{A character vector of recorded filepaths to be extracted:
     the default is to extract all files.}
-  
+
   \item{list}{If \code{TRUE}, list the files and extract none.  The
     equivalent of \command{unzip -l}.}
-  
+
   \item{overwrite}{If \code{TRUE}, overwrite existing files, otherwise
     ignore such files.  The equivalent of \command{unzip -o}.}
-  
+
   \item{junkpaths}{If \code{TRUE}, use only the basename of the stored
     filepath when extracting.  The equivalent of \command{unzip -j}.}
-  
+
   \item{exdir}{The directory to extract files to (the equivalent of
     \code{unzip -d}).  It will be created if necessary.}
 

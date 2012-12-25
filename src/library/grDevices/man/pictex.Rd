@@ -37,8 +37,8 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   Note that text is recorded in the file as-is, so annotations involving
   TeX special characters (such as ampersand and underscore) need to be
   quoted as they would be when entering TeX.
-  
-  Multiple plots will be placed as separate environments in the output file.  
+
+  Multiple plots will be placed as separate environments in the output file.
 }
 \references{
   Knuth, D. E. (1984)

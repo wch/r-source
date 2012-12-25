@@ -98,7 +98,7 @@ clearNames(object)
 
   \code{mauchley.test} was a misspelling of Mauchly's name, corrected
   by the introduction of \code{\link{mauchly.test}}.
-  
+
   \code{clearNames} had been introduced at about the same time as
   \code{\link{unname}}, but is less general and has been used rarely.
 }

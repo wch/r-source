@@ -46,7 +46,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   depends on whether the connection is blocking or not.  For a
   non-blocking text-mode connection the incomplete line is pushed back,
   silently.  For all other connections the line will be accepted, with a
-  warning. 
+  warning.
 
   Whatever mode the connection is opened in, any of LF, CRLF or CR will
   be accepted as the EOL marker for a line.
@@ -89,7 +89,7 @@ close(con)
 unlink("test1") # tidy up
 
 \dontrun{
-# read a 'Windows Unicode' file 
+# read a 'Windows Unicode' file
 A <- readLines(file("Unicode.txt", encoding = "UCS-2LE"))
 unique(Encoding(A)) # will most likely be UTF-8
 }}

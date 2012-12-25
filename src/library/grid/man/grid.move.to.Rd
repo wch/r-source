@@ -30,7 +30,7 @@ lineToGrob(x = 1, y = 1, default.units = "npc", arrow = NULL,
   \item{x}{A numeric value or a unit object specifying an x-value.}
   \item{y}{A numeric value or a unit object specifying a y-value.}
   \item{default.units}{A string indicating the default units to use
-    if \code{x} or \code{y} are only given as numeric values.}  
+    if \code{x} or \code{y} are only given as numeric values.}
   \item{arrow}{A list describing arrow heads to place at either end
     of the line, as produced by the \code{arrow} function.}
   \item{name}{ A character identifier. }
@@ -44,7 +44,7 @@ lineToGrob(x = 1, y = 1, default.units = "npc", arrow = NULL,
 \details{
   Both functions create a move.to/line.to grob (a graphical object describing a
   move-to/line-to), but only \code{grid.move.to/line.to()}
-  draws the move.to/line.to (and then only if \code{draw} is \code{TRUE}).  
+  draws the move.to/line.to (and then only if \code{draw} is \code{TRUE}).
 }
 \value{
   A move.to/line.to grob.

@@ -17,7 +17,7 @@
 showGrob(x = NULL,
          gPath = NULL, strict = FALSE, grep = FALSE,
          recurse = TRUE, depth = NULL,
-         labelfun = grobLabel, ...) 
+         labelfun = grobLabel, ...)
 }
 \arguments{
   \item{x}{
@@ -95,7 +95,7 @@ showGrob(x = NULL,
     example(histogram)
     showGrob()
     showGrob(gPath="plot_01.ylab")
-    
+
     library(ggplot2)
     # Ctrl-c after first example
     example(qplot)

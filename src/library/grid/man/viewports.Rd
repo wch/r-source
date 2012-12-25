@@ -12,7 +12,7 @@
 \title{Maintaining and Navigating the Grid Viewport Tree}
 \description{
   Grid maintains a tree of viewports --- nested drawing
-  contexts. 
+  contexts.
 
   These functions provide ways to add or remove viewports
   and to navigate amongst viewports in the tree.
@@ -40,12 +40,12 @@ upViewport(n, recording=TRUE)
   descriptions
   of a drawing context.  A viewport object must be pushed onto the
   viewport tree before it has any effect on drawing.
-  
+
   The viewport tree always has a single root viewport (created by the
   system) which corresponds to the entire device (and default
   graphical parameter settings).  Viewports may be added to the tree
   using \code{pushViewport()} and removed from the tree using
-  \code{popViewport()}.  
+  \code{popViewport()}.
 
   There is only ever one current viewport, which is the current
   position within the viewport tree.  All drawing and

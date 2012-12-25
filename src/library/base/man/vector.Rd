@@ -50,7 +50,7 @@ is.vector(x, mode = "any")
   hand, \code{as.vector} removes \emph{all} attributes including names
   for results of atomic mode (but not those of mode \code{"list"} nor
   \code{"expression"}).
-  
+
   Note that factors are \emph{not} vectors; \code{is.vector} returns
   \code{FALSE} and \code{as.vector} converts a factor to a character
   vector for \code{mode = "any"}.
@@ -61,7 +61,7 @@ is.vector(x, mode = "any")
   vector elements are initialized to \code{FALSE}, numeric vector
   elements to \code{0}, character vector elements to \code{""}, raw
   vector elements to \code{nul} bytes and list elements to \code{NULL}.
-  
+
   For \code{as.vector}, a vector (atomic or of type list).  All
   attributes are removed from the result if it is of an atomic mode, but
   not in general for a list result.  The default method handles 24 input

@@ -24,7 +24,7 @@ dirname(path)
 }
 \details{
   For \code{dirname} \link{tilde expansion} of the path is done.
-  
+
   Trailing path separators are removed before dissecting the path,
   and for \code{dirname} any trailing file separators are removed
   from the result.

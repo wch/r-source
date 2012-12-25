@@ -18,8 +18,8 @@ package \pkg{natbib}.
 }
 \usage{
 cite(keys, bib, ...)
-citeNatbib(keys, bib, textual = FALSE, before = NULL, after = NULL, 
-           mode = c("authoryear", "numbers", "super"), abbreviate = TRUE, 
+citeNatbib(keys, bib, textual = FALSE, before = NULL, after = NULL,
+           mode = c("authoryear", "numbers", "super"), abbreviate = TRUE,
            longnamesfirst = TRUE,
            bibpunct = c("(", ")", ";", "a", "", ","), previous)
 }
@@ -33,7 +33,7 @@ A \code{"\link{bibentry}"} object containing the list of documents in which
 to find the keys.
 }
   \item{...}{
-Additional arguments to pass to the \code{cite()} function for the 
+Additional arguments to pass to the \code{cite()} function for the
 default style.
 }
   \item{textual}{
@@ -60,14 +60,14 @@ A vector of punctuation to use in the citation, as used in \pkg{natbib}.  See
 the Details section.
 }
   \item{previous}{
-A list of keys that have been previously cited, to be used when 
+A list of keys that have been previously cited, to be used when
 \code{abbreviate == TRUE} and \code{longnamesfirst == TRUE}
 }
 }
 \details{
 Argument names are chosen based on the documentation for the LaTeX \pkg{natbib}
-package.  See that documentation for the interpretation of the 
-\code{bibpunct} entries.  
+package.  See that documentation for the interpretation of the
+\code{bibpunct} entries.
 
 The entries in \code{bibpunct} are as follows:
 \enumerate{
@@ -79,11 +79,11 @@ The entries in \code{bibpunct} are as follows:
 \item Punctuation to go between the author and year.
 \item Punctuation to go between years when authorship is suppressed.
 }
-Note that if \code{mode} is specified, it overrides the 
+Note that if \code{mode} is specified, it overrides the
 mode specification in \code{bibpunct[4]}.  Partial matching is used for
 \code{mode}.
 
-The defaults for \code{citeNatbib} have been chosen to match the JSS style, and 
+The defaults for \code{citeNatbib} have been chosen to match the JSS style, and
 by default these are used in \code{cite}.  See \code{\link{bibstyle}}
 for how to set a different default style.
 }
@@ -145,9 +145,9 @@ cite("R, boot-package", refs)
 savestyle <- tools::getBibstyle()
 tools::bibstyle("JSSnumbered", .init = TRUE,
          fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
-         cite = function(key, bib, ...) 
+         cite = function(key, bib, ...)
          	citeNatbib(key, bib, mode = "numbers",
-         	    bibpunct = c("[", "]", ";", "n", "", ","), ...)               
+         	    bibpunct = c("[", "]", ";", "n", "", ","), ...)
          )
 cite("R, boot-package", refs, textual = TRUE)
 refs

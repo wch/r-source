@@ -32,11 +32,11 @@ all(\dots, na.rm = FALSE)
 }
 \value{
   The value is a logical vector of length one.
-  
+
   Let \code{x} denote the concatenation of all the logical vectors in
   \code{...} (after coercion), after removing \code{NA}s if requested by
   \code{na.rm = TRUE}.
-  
+
   The value returned is \code{TRUE} if all of the values in \code{x} are
   \code{TRUE} (including if there are no values), and \code{FALSE} if at
   least one of the values in \code{x} is \code{FALSE}.  Otherwise the

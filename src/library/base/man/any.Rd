@@ -27,12 +27,12 @@ any(\dots, na.rm = FALSE)
 
   Coercion of types other than integer (raw, double, complex, character,
   list) gives a warning as this is often unintentional.
-  
-  This is a \link{primitive} function.  
+
+  This is a \link{primitive} function.
 }
 \value{
   The value is a logical vector of length one.
-  
+
   Let \code{x} denote the concatenation of all the logical vectors in
   \code{...} (after coercion), after removing \code{NA}s if requested by
   \code{na.rm = TRUE}.

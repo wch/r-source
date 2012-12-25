@@ -76,7 +76,7 @@ is.matrix(x)
 
   When coercing a vector, it produces a one-column matrix, and
   promotes the names (if any) of the vector to the rownames of the matrix.
-  
+
   \code{is.matrix} is a \link{primitive} function.
 }
 \note{

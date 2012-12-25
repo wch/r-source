@@ -92,7 +92,7 @@ rf(n, df1, df2, ncp)
   distribution, which is not the same algorithm used if \code{ncp} is
   omitted.  This is to give consistent behaviour in extreme cases with
   values of \code{ncp} very near zero.
-  
+
   The code for non-zero \code{ncp} is principally intended to be used
   for moderate values of \code{ncp}: it will not be highly accurate,
   especially in the tails, for large values.

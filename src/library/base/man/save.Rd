@@ -48,7 +48,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     \command{gzip} compression, and (from \R 2.10.0) character strings
     \code{"gzip"}, \code{"bzip2"} or \code{"xz"} specify the
     type of compression.  Ignored when \code{file} is a connection
-    and for workspace format version 1.} 
+    and for workspace format version 1.}
   \item{compression_level}{integer: the level of compression to be
     used.  Defaults to \code{6} for \command{gzip} compression and to
     \code{9} for \command{bzip2} or \command{xz} compression.}
@@ -100,7 +100,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   seconds respectively.  These results are indicative, but the relative
   performances do depend on the actual file and \command{xz} did
   unusually well here.
-  
+
   It is possible to compress later (with \command{gzip}, \command{bzip2}
   or \command{xz}) a file saved with \code{compress = FALSE}: the effect
   is the same as saving with compression.  Also, a saved file can be
@@ -118,7 +118,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
       cannot open compressed file '.RDataTmp',
       probable reason 'Permission denied'
 }
-  
+
   The defaults were changed to use compressed saves for \code{save} in
   2.3.0 and for \code{save.image} in 2.4.0.  Any recent version of \R
   can read compressed save files, and a compressed file can be

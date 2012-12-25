@@ -108,7 +108,7 @@ isTRUE(x)
   arguments.
 
   \code{\link{Syntax}} for operator precedence.
-  
+
   \code{\link{bitwAnd}} for bitwise versions for integer vectors.
 }
 \examples{

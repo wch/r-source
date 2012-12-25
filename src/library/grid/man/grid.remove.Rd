@@ -18,7 +18,7 @@ grid.remove(gPath, warn = TRUE, strict  =  FALSE, grep = FALSE,
 grid.gremove(\dots, grep = TRUE, global = TRUE)
 
 removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
-           global = FALSE, warn = TRUE) 
+           global = FALSE, warn = TRUE)
 }
 \arguments{
   \item{gTree}{A gTree object.}
@@ -50,7 +50,7 @@ removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
 \details{
   \code{removeGrob} copies the specified grob and returns a modified
   grob.
-  
+
   \code{grid.remove} destructively modifies a grob on the display list.
   If \code{redraw}
   is \code{TRUE} it then redraws everything to reflect the change.

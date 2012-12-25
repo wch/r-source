@@ -44,7 +44,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \code{sort} is a generic function for which methods can be written,
   and \code{sort.int} is the internal method which is compatible
   with S if only the first three arguments are used.
-  
+
   The default \code{sort} method makes use of \code{\link{order}} for
   classed objects, which in turn makes use of the generic function
   \code{\link{xtfrm}} (and can be slow unless a \code{xtfrm} method has
@@ -70,7 +70,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   substantially more efficient if \code{partial} has a handful of
   elements, and a full sort is done (a Quicksort if possible) if there
   are more than 10.)  Names are discarded for partial sorting.
-  
+
   Method \code{"shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant from
   Sedgewick (1996)).  If \code{x} has names a stable modification is
   used, so ties are not reordered.  (This only matters if names are
@@ -85,7 +85,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   performance in the rare worst case.  (Peto's modification using a
   pseudo-random midpoint is used to make the worst case rarer.)  This is
   not a stable sort, and ties may be reordered.
-  
+
   Factors with less than 100,000 levels are sorted by radix sorting when
   \code{method} is not supplied: see \code{\link{sort.list}}.
 }
@@ -131,7 +131,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 }
 \seealso{
   \sQuote{\link{Comparison}} for how character strings are collated.
-  
+
   \code{\link{order}} for sorting on or reordering multiple variables.
 
   \code{\link{is.unsorted}}. \code{\link{rank}}.

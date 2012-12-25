@@ -13,7 +13,7 @@
 getWindowsHandle(which = "Console")
 }
 \arguments{
-  \item{which}{A string (see below), or the number of a 
+  \item{which}{A string (see below), or the number of a
                 graphics device window}
 }
 \details{
@@ -23,20 +23,20 @@ getWindowsHandle(which = "Console")
   \code{"Console"} \tab The console window handle. \cr
   \code{"Frame"}   \tab The MDI frame window handle. \cr
   \code{"Process"} \tab The process pseudo-handle. \cr
-  A device number \tab The window handle of a graphics device 
+  A device number \tab The window handle of a graphics device
  }
-  These values are not normally useful to users, but may be used by 
+  These values are not normally useful to users, but may be used by
   developers making add-ons to \R{}.
-  
-  \code{NULL} is returned for the Frame handle if not running in MDI mode, 
-  for the Console handle when running Rterm, for any unrecognized 
-  string for \code{which}, or for a graphics device with no 
+
+  \code{NULL} is returned for the Frame handle if not running in MDI mode,
+  for the Console handle when running Rterm, for any unrecognized
+  string for \code{which}, or for a graphics device with no
   corresponding window.
-  
-  Other windows (help browsers, etc.) are not accessible 
+
+  Other windows (help browsers, etc.) are not accessible
   through this function.
 }
-\note{  
+\note{
   As from R 2.6.0, this function returns an external pointer rather than
   an integer value, and \code{which = "ProcessId"} is no longer supported.
   Use \code{\link{Sys.getpid}} for the latter.

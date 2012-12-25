@@ -29,7 +29,7 @@ showNonASCIIfile(file)
   \emph{via} \code{\link{iconv}(sub = "byte")}.
 }
 \value{
-  The elements of \code{x} containing non-ASCII characters will be returned 
+  The elements of \code{x} containing non-ASCII characters will be returned
   invisibly.
 }
 \examples{

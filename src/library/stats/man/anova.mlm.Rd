@@ -8,8 +8,8 @@
 \alias{anova.mlmlist}
 \title{Comparisons between Multivariate Linear Models}
 \description{
-  Compute a (generalized) analysis of variance table for one or more 
-  multivariate linear models. 
+  Compute a (generalized) analysis of variance table for one or more
+  multivariate linear models.
 }
 \usage{
 \method{anova}{mlm}(object, \dots,
@@ -25,7 +25,7 @@
   \item{Sigma}{(only relevant if  \code{test == "Spherical"}).  Covariance
     matrix assumed proportional to \code{Sigma}.}
   \item{T}{transformation matrix.  By default computed from \code{M} and
-    \code{X}.} 
+    \code{X}.}
   \item{M}{formula or matrix describing the outer projection (see below).}
   \item{X}{formula or matrix describing the inner projection (see below).}
   \item{idata}{data frame describing intra-block design.}
@@ -50,7 +50,7 @@
   performed.
 
   It is common to transform the observations prior to testing. This
-  typically involves 
+  typically involves
   transformation to intra-block differences, but more complicated
   within-block designs can be encountered,
   making more elaborate transformations necessary.  A
@@ -59,7 +59,7 @@
   \code{M} and \code{X}, which in turn can be given as matrices or as
   model formulas with respect to \code{idata} (the tests will be
   invariant to parametrization of the quotient space \code{M/X}).
-  
+
   As with \code{anova.lm}, all test statistics use the SSD matrix from
   the largest model considered as the (generalized) denominator.
 
@@ -98,7 +98,7 @@ mlmfit0 <- update(mlmfit, ~0)
 anova(mlmfit, mlmfit0, X = ~1)
 
 ## Assuming sphericity
-anova(mlmfit, mlmfit0, X = ~1, test = "Spherical") 
+anova(mlmfit, mlmfit0, X = ~1, test = "Spherical")
 
 
 ### tests using intra-subject 3x2 design
@@ -116,7 +116,7 @@ f <- factor(rep(1:2, 5)) # bogus, just for illustration
 mlmfit2 <- update(mlmfit, ~f)
 anova(mlmfit2, mlmfit, mlmfit0, X = ~1, test = "Spherical")
 anova(mlmfit2, X = ~1, test = "Spherical")
-# one-model form, eqiv. to previous 
+# one-model form, eqiv. to previous
 
 ### There seems to be a strong interaction in these data
 plot(colMeans(reacttime))

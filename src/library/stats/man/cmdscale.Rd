@@ -40,13 +40,13 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   the analysis of Mardia (1978), and returns the best-fitting
   \eqn{k}-dimensional representation, where \eqn{k} may be less than the
   argument \code{k}.
-  
+
   The representation is only determined up to location (\code{cmdscale}
   takes the column means of the configuration to be at the origin),
   rotations and reflections.  The configuration returned is given in
   principal-component axes, so the reflection chosen may differ between
   \R platforms (see \code{\link{prcomp}}).
-  
+
   When \code{add = TRUE}, a minimal additive constant \eqn{c*} is
   computed such that the the dissimilarities \eqn{d_{ij} + c*}{d[i,j] +
   c*} are Euclidean and hence can be represented in \code{n - 1}
@@ -92,9 +92,9 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   \emph{Multidimensional Scaling}.  Second edition.
   Chapman and Hall.
 
-  Gower, J. C. (1966)  
-  Some distance properties of latent root and vector 
-  methods used in multivariate analysis.  
+  Gower, J. C. (1966)
+  Some distance properties of latent root and vector
+  methods used in multivariate analysis.
   \emph{Biometrika} \bold{53}, 325--328.
 
   Krzanowski, W. J. and Marriott, F. H. C. (1994)
@@ -105,7 +105,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   Some properties of classical multidimensional scaling.
   \emph{Communications on Statistics -- Theory and Methods}, \bold{A7},
   1233--41.
-  
+
   Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).  Chapter 14 of
   \emph{Multivariate Analysis}, London: Academic Press.
 

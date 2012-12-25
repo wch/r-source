@@ -57,9 +57,9 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   calls to \code{FUN} as there are cores (or elements, if fewer), each
   handling a subset vector.  This makes it more efficient than
   \code{mclapply} but requires the above assumption on \code{FUN}.
-  
+
   If \code{mc.cores == 1} this evaluates \code{FUN(v, ...)} in the
-  current process. 
+  current process.
 }
 
 \value{
@@ -76,14 +76,14 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   check the length of the result to make sure it is of the correct size.
   \code{pvec} raises a warning if that is the case since it does not
   know whether such an outcome is intentional or not.
-  
+
   See \code{\link{mcfork}} for the inadvisability of using this with
   GUI front-ends.
 }
 
 \author{
   Simon Urbanek and R Core.
-  
+
   Derived from the \CRANpkg{multicore} package.
 }
 \seealso{

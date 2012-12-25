@@ -28,7 +28,7 @@ getLoadedDLLs()
   element corresponding to each DLL that is currently loaded in the
   session.  Each element is an object of class \code{"DLLInfo"} which
   has the following entries.
-  
+
   \item{name}{the abbreviated name.}
   \item{path}{the fully qualified name of the loaded DLL.}
   \item{dynamicLookup}{a logical value indicating whether R uses only

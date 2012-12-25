@@ -19,7 +19,7 @@ socketSelect(socklist, write = FALSE, timeout = NULL)
                  indefinitely.}
 }
 \description{
-  Waits for the first of several socket connections to become available.  
+  Waits for the first of several socket connections to become available.
 }
 \value{Logical the same length as \code{socklist} indicating
   whether the corresponding socket connection is available for

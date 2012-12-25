@@ -19,7 +19,7 @@ cmpfun(f, options = NULL)
 compile(e, env = .GlobalEnv, options = NULL)
 cmpfile(infile, outfile, ascii = FALSE, env = .GlobalEnv,
         verbose = FALSE, options = NULL)
-loadcmp(file, envir = .GlobalEnv, chdir = FALSE) 
+loadcmp(file, envir = .GlobalEnv, chdir = FALSE)
 disassemble(code)
 enableJIT(level)
 compilePKGS(enable)
@@ -101,7 +101,7 @@ setCompilerOptions(...)
   \code{options} argument; the \code{options} argument is primarily for
   internal use.  \code{setCompilerOption} sets the default option
   values. It returns a named list of the previous values.
-  
+
   Calling the compiler a byte code compiler is actually a bit of a
   misnomer: the external representation of code objects currently uses
   \code{int} operands, and when compiled with \code{gcc} the internal

@@ -32,7 +32,7 @@ detectCores(all.tests = FALSE, logical = FALSE)
 }
 \value{
   An integer, \code{NA} if the answer is unknown.
-  
+
   Exactly what this represents is OS-dependent: where possible by
   default it represents physical cores and not logical
   (e.g. hyperthreaded) CPUs.
@@ -46,7 +46,7 @@ detectCores(all.tests = FALSE, logical = FALSE)
   tested.
 #endif
 % http://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
-  
+
   Currently \code{logical} makes a difference on Sparc Solaris: there
   \code{logical = FALSE} returns the number of physical cores and
   \code{logical = TRUE} returns the number of available hardware

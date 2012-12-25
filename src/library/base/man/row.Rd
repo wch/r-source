@@ -15,7 +15,7 @@ row(x, as.factor = FALSE)
 }
 \arguments{
   \item{x}{a matrix-like object, that is one with a two-dimensional
-    \code{dim}.} 
+    \code{dim}.}
   \item{as.factor}{a logical value indicating whether the value should
     be returned as a factor of row labels (created if necessary)
     rather than as numbers.}

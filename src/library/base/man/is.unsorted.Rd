@@ -23,7 +23,7 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   A length-one logical value.  All objects of length 0 or 1 are sorted:
   the result will be \code{NA} for objects of length 2 or more except for
   atomic vectors and objects with a class (where the \code{>=} or \code{>}
-  method is used to compare \code{x[i]} with \code{x[i-1]} for 
+  method is used to compare \code{x[i]} with \code{x[i-1]} for
   \code{i} in \code{2:length(x)}).
 }
 \note{

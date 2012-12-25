@@ -33,7 +33,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   \item{border}{the color to draw the border.  The default, \code{NULL},
     means to use \code{\link{par}("fg")}.  Use \code{border = NA} to
     omit borders.
-    
+
     For compatibility with S, \code{border} can also be logical, in
     which case \code{FALSE} is equivalent to \code{NA} (borders omitted)
     and \code{TRUE} is equivalent to \code{NULL} (use the foreground colour),
@@ -42,7 +42,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   \item{\dots}{graphical parameters such as \code{xpd}, \code{lend},
     \code{ljoin} and \code{lmitre} can be given as arguments.}
   \item{fillOddEven}{logical controlling the polygon shading mode:  see
-      below for details.  Default \code{FALSE}.} 
+      below for details.  Default \code{FALSE}.}
 }
 \details{
   The coordinates can be passed in a plotting structure
@@ -51,7 +51,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
 
   It is assumed that the polygon is to be closed by joining the last
   point to the first point.
- 
+
   The coordinates can contain missing values.  The behaviour is similar
   to that of \code{\link{lines}}, except that instead of breaking a line
   into several lines, \code{NA} values break the polygon into several

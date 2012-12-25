@@ -34,14 +34,14 @@ setWinProgressBar(pb, value, title = NULL, label = NULL)
 \details{
   \code{winProgressBar} will display a progress bar centred on the
   screen.  Space will be allocated for the label only if it is non-empty.
-  
+
   \code{setWinProgessBar} will update the value and for non-\code{NULL}
   values, the title and label (provided there was one when the widget
   was created).  Missing (\code{\link{NA}}) and out-of-range values of
   \code{value} will be (silently) ignored.
-  
+
   The progress bar should be \code{close}d when finished with, but it
-  will be garbage-collected once no \R object refers to it. 
+  will be garbage-collected once no \R object refers to it.
 }
 \value{
   For \code{winProgressBar} an object of class \code{"winProgressBar"}.

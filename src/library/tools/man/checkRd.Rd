@@ -43,7 +43,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
 
   An Rd object is passed through \code{prepare_Rd}, but it may already
   have been (and installed Rd objects have).
-  
+
   Warnings are given a \sQuote{level}: those from \code{prepare_Rd} have
   level 0.  These include
   \tabular{l}{
@@ -69,7 +69,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     5 \tab \verb{\title} content must be plain text\cr
     3 \tab Empty section \var{tag name}\cr
     -1 \tab Non-ASCII contents without declared encoding\cr
-    -1 \tab Non-ASCII contents in second part of \verb{\enc}\cr 
+    -1 \tab Non-ASCII contents in second part of \verb{\enc}\cr
     -3 \tab Tag \verb{\ldots} is not valid in a code block\cr
     -3 \tab Apparent non-ASCII contents without declared encoding\cr
     -3 \tab Apparent non-ASCII contents in second part of \verb{\enc}\cr

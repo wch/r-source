@@ -22,7 +22,7 @@
   The linker front-end is useful in particular when linking against the
   R shared library, in which case \code{linkcmd} must contain \code{-lR}
   but need not specify its library path.
-  
+
   Currently only works if the C compiler is used for linking, and no C++
   code is used.
 

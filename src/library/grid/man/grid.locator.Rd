@@ -68,7 +68,7 @@ if (interactive()) {
   grid.xaxis()
   grid.yaxis()
   do.click("native")
-  popViewport()  
+  popViewport()
 }
 }
 \keyword{dplot}

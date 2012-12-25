@@ -18,7 +18,7 @@ preplot(object, \dots)
 }
 \details{
     Only the generic function is currently provided in base \R, but some
-    add-on packages have methods. Principally here for S compatibility. 
+    add-on packages have methods. Principally here for S compatibility.
 }
 \value{
     An object set up to make a plot that describes \code{object}.

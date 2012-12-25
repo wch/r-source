@@ -28,7 +28,7 @@
 \details{
   The references define the types of residuals: Davison & Snell is a
   good reference for the usages of each.
-  
+
   The partial residuals are a matrix of working residuals, with each
   column formed by omitting a term from the model.
 
@@ -58,7 +58,7 @@
   \emph{Residuals and diagnostics.}  In: Statistical Theory
   and Modelling. In Honour of Sir David Cox, FRS, eds.
   Hinkley, D. V., Reid, N. and Snell, E. J., Chapman & Hall.
-  
+
   Hastie, T. J. and Pregibon, D. (1992)
   \emph{Generalized linear models.}
   Chapter 6 of \emph{Statistical Models in S}

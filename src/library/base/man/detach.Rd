@@ -58,7 +58,7 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE,
   You cannot detach either the workspace (position 1) nor the \pkg{base}
   package (the last item in the search list), and attempting to do so
   will throw an error.
-  
+
   Unloading some namespaces has undesirable side effects:
   e.g. unloading \pkg{grid} closes all graphics devices, and on most
   systems \pkg{tcltk} cannot be reloaded once it has been unloaded and

@@ -14,20 +14,20 @@
 }
 \usage{
 grid.lines(x = unit(c(0, 1), "npc"),
-          y = unit(c(0, 1), "npc"), 
-          default.units = "npc", 
+          y = unit(c(0, 1), "npc"),
+          default.units = "npc",
           arrow = NULL, name = NULL,
           gp=gpar(), draw = TRUE, vp = NULL)
 linesGrob(x = unit(c(0, 1), "npc"),
-          y = unit(c(0, 1), "npc"), 
-          default.units = "npc", 
+          y = unit(c(0, 1), "npc"),
+          default.units = "npc",
           arrow = NULL, name = NULL,
           gp=gpar(), vp = NULL)
 grid.polyline(...)
 polylineGrob(x = unit(c(0, 1), "npc"),
-             y = unit(c(0, 1), "npc"), 
+             y = unit(c(0, 1), "npc"),
              id=NULL, id.lengths=NULL,
-             default.units = "npc", 
+             default.units = "npc",
              arrow = NULL, name = NULL,
              gp=gpar(), vp = NULL)
 }
@@ -35,7 +35,7 @@ polylineGrob(x = unit(c(0, 1), "npc"),
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
   \item{default.units}{A string indicating the default units to use
-    if \code{x} or \code{y} are only given as numeric vectors.}  
+    if \code{x} or \code{y} are only given as numeric vectors.}
   \item{arrow}{A list describing arrow heads to place at either end
     of the line, as produced by the \code{arrow} function.}
   \item{name}{ A character identifier. }

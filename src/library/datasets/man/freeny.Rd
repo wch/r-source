@@ -22,7 +22,7 @@ freeny.y
 
   \code{freeny.y} is a time series with 39 observations on quarterly
   revenue from (1962,2Q) to (1971,4Q).
-  
+
   \code{freeny.x} is a matrix of explanatory variables.  The columns
   are \code{freeny.y} lagged 1 quarter, price index, income level, and
   market potential.

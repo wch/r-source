@@ -9,7 +9,7 @@
 \description{
   Grid maintains a viewport stack --- a list of nested drawing
   contexts.
-  
+
   This function makes the specified viewport the default viewport
   and makes its parent the previous default viewport (i.e.,
   nests the specified context within the previous default context).

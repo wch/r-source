@@ -17,7 +17,7 @@
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         Links = NULL, Links2 = NULL,
-        stages = "render", outputEncoding = "UTF-8", 
+        stages = "render", outputEncoding = "UTF-8",
         dynamic = FALSE, no_links = FALSE, fragment = FALSE,
         stylesheet = "R.css", ...)
 
@@ -67,7 +67,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   Each of the functions accepts a filename for an Rd file, and
   will use \code{\link{parse_Rd}} to parse it before applying the
   conversions or checks.
-  
+
   The difference between arguments \code{Link} and \code{Link2} is that
   links are looked in them in turn, so lazy-evaluation can be used to
   only do a second-level search for links if required.
@@ -78,11 +78,11 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \sQuote{2005/12/01} or later, and even with that version the coverage
   of UTF-8 glyphs is not extensive (and not even as complete as
   Latin-1).
-  
+
   \code{Rd2txt} will format text paragraphs to a width determined by
   \code{width}, with appropriate margins.  The default is to be close to
   the rendering in versions of \R < 2.10.0.
-  
+
   \code{Rd2txt} will use directional quotes (see \code{\link{sQuote}})
   if option \code{"useFancyQuotes"} is true (the default) and
 #ifdef unix
@@ -98,12 +98,12 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \code{options} argument, documented with the \code{\link{Rd2txt_options}}
   function. Changes made using \code{options} are temporary, those
   made with \code{\link{Rd2txt_options}} are persistent.
-  
+
   When \code{fragment = TRUE}, the \code{Rd} file will be rendered
   with no processing of \verb{\Sexpr} elements or conditional defines
   using \verb{#ifdef} or \verb{#ifndef}.  Normally a fragment represents
   text within a section, but if the first element of the fragment
-  is a section macro, the whole fragment will be rendered as 
+  is a section macro, the whole fragment will be rendered as
   a series of sections, without the usual sorting.
 }
 \section{Encodings}{
@@ -119,13 +119,13 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 
   If the text cannot be converted to the \code{outputEncoding}, byte
   substitution will be used (see \code{\link{iconv}}): \code{Rd2latex}
-  and \code{Rd2ex} give a warning. 
+  and \code{Rd2ex} give a warning.
 }
 
 \note{
   The \verb{\Sexpr} macro is a new addition to Rd files.  It includes
   \R code that will be executed at one of three times: \emph{build} time
-  (when a package's source code is built into a tarball), 
+  (when a package's source code is built into a tarball),
   \emph{install} time (when the package is installed or
   built into a binary package), and \emph{render} time (when the man
   page is converted to a readable format).

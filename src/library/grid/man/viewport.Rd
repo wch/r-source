@@ -17,7 +17,7 @@
 \usage{
 viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          width = unit(1, "npc"), height = unit(1, "npc"),
-         default.units = "npc", just = "centre", 
+         default.units = "npc", just = "centre",
          gp = gpar(), clip = "inherit",
          xscale = c(0, 1), yscale = c(0, 1),
          angle = 0,
@@ -35,7 +35,7 @@ vpTree(parent, children)
   \item{height}{A numeric vector or unit object specifying height.}
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{just}{A string or numeric
     vector specifying the justification of the viewport
     relative to its (x, y) location.  If there are two values, the first
@@ -184,9 +184,9 @@ grid.newpage()
 tree <- vpTree(viewport(w=0.8, h=0.8, name="A"),
                vpList(vpStack(viewport(x=0.1, y=0.1, w=0.5, h=0.5,
                                        just=c("left", "bottom"), name="B"),
-                              viewport(x=0.1, y=0.1, w=0.5, h=0.5, 
+                              viewport(x=0.1, y=0.1, w=0.5, h=0.5,
                                        just=c("left", "bottom"), name="C"),
-                              viewport(x=0.1, y=0.1, w=0.5, h=0.5, 
+                              viewport(x=0.1, y=0.1, w=0.5, h=0.5,
                                        just=c("left", "bottom"), name="D")),
                       viewport(x=0.5, w=0.4, h=0.9,
                                just="left", name="E")))

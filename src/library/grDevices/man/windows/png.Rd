@@ -77,7 +77,7 @@ tiff(filename = "Rplot\%03d.tif",
     For allowed values and their effect (on fonts
     and lines) with \code{type = "cairo"} see \code{\link{svg}}.}
 }
-\details{  
+\details{
   Plots in PNG and JPEG format can easily be converted to many other
   bitmap formats, and both can be displayed in modern web browsers.  The
   PNG format is lossless and is best for line diagrams and blocks of
@@ -101,7 +101,7 @@ tiff(filename = "Rplot\%03d.tif",
 
   For graphics parameters that make use of dimensions in inches,
   \code{res} ppi (default 72) is assumed.
-  
+
   Both \code{bmp} and \code{png} will use a palette if there are fewer
   than 256 colours on the page, and record a 24-bit RGB file otherwise.
   For the \code{png} device, \code{type = "cairo"} does the PNG output in
@@ -110,7 +110,7 @@ tiff(filename = "Rplot\%03d.tif",
   never use a palette and normally creates a larger 32-bit ARGB
   file---this may work better for specialist uses with semi-transparent
   colours.
-  
+
   \code{png(type = "windows")} supports transparent backgrounds on 16-bit
   (\sQuote{High Color}) or better screens: use \code{bg =
     "transparent"}.  There is also support for semi-transparent colours
@@ -129,7 +129,7 @@ tiff(filename = "Rplot\%03d.tif",
 \section{Warnings}{
   Note that by default the \code{width} and \code{height} values are in
   pixels not inches.  A warning will be issued if both are less than 20.
-  
+
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.

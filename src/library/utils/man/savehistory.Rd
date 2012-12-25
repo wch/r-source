@@ -75,7 +75,7 @@ timestamp(stamp = date(),
 
   \code{history} shows only unique matching lines if \code{pattern} is
   supplied.
-  
+
   The \code{timestamp} function writes a timestamp (or other message)
   into the history and echos it to the console.  On platforms that do not
   support a history mechanism (where the mechanism does not support

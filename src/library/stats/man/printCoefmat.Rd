@@ -33,7 +33,7 @@ printCoefmat(x, digits = max(3, getOption("digits") - 2),
     encoded visually as \sQuote{significance stars} in order to help scanning
     of long coefficient tables.  It defaults to the
     \code{show.signif.stars} slot of \code{\link{options}}.}
-  \item{signif.legend}{logical; if \code{TRUE}, a legend for the 
+  \item{signif.legend}{logical; if \code{TRUE}, a legend for the
     \sQuote{significance stars} is printed provided \code{signif.stars =
       TRUE}.}
   \item{dig.tst}{minimum number of significant digits for the test statistics,

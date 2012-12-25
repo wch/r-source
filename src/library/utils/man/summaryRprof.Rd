@@ -25,7 +25,7 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
     rather than current memory}
   \item{exclude}{Functions to exclude when summarizing the stack trace
     for memory summaries}
-  
+
 }
 \details{
   This function provides the analysis code for \code{\link{Rprof}} files
@@ -45,7 +45,7 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
   allocated the memory.
 
   With \code{memory = "both"} the change in total memory (truncated at zero)
-  is reported in addition to timing data. 
+  is reported in addition to timing data.
 
   With \code{memory = "tseries"} or \code{memory = "stats"} the \code{index}
   argument specifies how to summarize the stack trace.  A positive number
@@ -69,7 +69,7 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
   \item{sampling.time}{Total length of profiling run}
 
   If \code{memory = "both"} the same list but with memory consumption in Mb
-  in addition to the timings.  
+  in addition to the timings.
 
   If \code{memory = "tseries"} a data frame giving memory statistics over
   time
@@ -84,7 +84,7 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
   of the \R source tree).
 
   \code{\link{Rprof}}
-  
+
   \code{\link{tracemem}} traces copying of an object via the C function
   \code{duplicate}.
 

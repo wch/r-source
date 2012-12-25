@@ -15,7 +15,7 @@
 grid.bezier(...)
 bezierGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
             id = NULL, id.lengths = NULL,
-            default.units = "npc", arrow = NULL, 
+            default.units = "npc", arrow = NULL,
             name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
@@ -31,7 +31,7 @@ bezierGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
     locations which make up separate beziers.}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{arrow}{A list describing arrow heads to place at either end
     of the bezier, as produced by the \code{arrow} function.}
   \item{name}{ A character identifier. }
@@ -49,7 +49,7 @@ bezierGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   Bezier curve), but only \code{grid.bezier}
   draws the Bezier curve.
 
-  A Bezier curve is a line drawn relative to 4 control points.  
+  A Bezier curve is a line drawn relative to 4 control points.
 
   Missing values are not allowed for \code{x} and \code{y}
   (i.e., it is not valid for a control point to be missing).

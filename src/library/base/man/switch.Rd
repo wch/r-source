@@ -24,7 +24,7 @@ switch(EXPR, \dots)
 \details{
   \code{switch} works in two distinct ways depending whether the first
   argument evaluates to a character string or a number.
-  
+
   If the value of \code{EXPR} is not a character string it is coerced to
   integer.  If this is between 1 and \code{nargs()-1} then the
   corresponding element of \code{\dots} is evaluated and the result
@@ -41,10 +41,10 @@ switch(EXPR, \dots)
   \code{\dots} its value is returned.  (If there is more than one such
   argument an error is returned.  Before \R 2.13.0 the first one would
   have been used.)
-  
+
   The first argument is always taken to be \code{EXPR}: if it is named
   its name must (partially) match.
-  
+
   This is implemented as a \link{primitive} function that only evaluates
   its first argument and one other if one is selected.
 }

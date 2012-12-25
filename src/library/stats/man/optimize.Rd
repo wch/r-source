@@ -39,7 +39,7 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
 }
 \details{
   Note that arguments after \code{\dots} must be matched exactly.
-  
+
   The method used is a combination of golden section search and
   successive parabolic interpolation, and was designed for use with
   continuous functions.  Convergence is never much slower
@@ -72,7 +72,7 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
 
   \code{f} will be called as \code{f(\var{x}, ...)} for a numeric value
   of \var{x}.
-  
+
   The argument passed to \code{f} has special semantics and used to be
   shared between calls.  The function should not copy it.
 }

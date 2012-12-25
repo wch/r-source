@@ -37,7 +37,7 @@ get.gpar(names = NULL)
   takes its settings from the graphics device.  These defaults may
   differ between devices (e.g., the default \code{fill} setting is
   different for a PNG device compared to a PDF device).
-  
+
   Valid parameter names are:
   \tabular{ll}{
     col \tab Colour for lines and borders. \cr
@@ -60,13 +60,13 @@ get.gpar(names = NULL)
   graphical parameter \code{\link{par}} in base graphics.  (This may
   have a slightly different name, e.g. \code{lend}, \code{ljoin},
   \code{lmitre}, \code{family}.)
-  
+
   Colours can be specified in one of the forms returned by
   \code{\link{rgb}}, as a name (see \code{\link{colors}}) or as a
   non-negative integer index into the current \link{palette} (with zero
   being taken as transparent).  (Prior to \R 3.0.0 negative integer
   values were allowed and taken as transparent: they are now an error.)
-  
+
   The \code{alpha} setting is combined with the alpha channel for
   individual colours by multiplying (with both alpha settings
   normalised to the range 0 to 1).

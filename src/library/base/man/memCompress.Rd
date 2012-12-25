@@ -33,7 +33,7 @@ memDecompress(from,
 \details{
   \code{type = "none"} passes the input through unchanged, but may be
   useful if \code{type} is a variable.
-  
+
   \code{type = "unknown"} attempts to detect the type of compression
   applied (if any): this will always succeed for \command{bzip2}
   compression, and will succeed for other forms if there is a suitable
@@ -50,7 +50,7 @@ memDecompress(from,
   compressed with \command{xz} version 4.999 and some versions of
   \command{lzma}.  There are other versions, in particular \sQuote{raw}
   streams, that are not currently handled.
-  
+
   All the types of compression can expand the input: for \code{"gzip"}
   and \code{"bzip"} the maximum expansion is known and so
   \code{memCompress} can always allocate sufficient space.  For
@@ -64,7 +64,7 @@ memDecompress(from,
 
 \seealso{
   \link{connections}.
-  
+
   \url{http://en.wikipedia.org/wiki/Data_compression} for background on
   data compression, \url{http://zlib.net/},
   \url{http://en.wikipedia.org/wiki/Gzip}, \url{http://www.bzip.org/},

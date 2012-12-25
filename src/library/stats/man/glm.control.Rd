@@ -27,7 +27,7 @@ glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
   to the \code{control} argument of \code{\link{glm.fit}}, which uses
   its elements as arguments to \code{glm.control}: the latter provides
   defaults and sanity checking.
-  
+
   If \code{epsilon} is small (less than \eqn{10^{-10}}{1e-10}) it is
   also used as the tolerance for the detection of collinearity in the
   least squares solution.

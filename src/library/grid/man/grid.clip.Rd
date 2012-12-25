@@ -15,7 +15,7 @@
 grid.clip(...)
 clipGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          width = unit(1, "npc"), height = unit(1, "npc"),
-         just = "centre", hjust = NULL, vjust = NULL, 
+         just = "centre", hjust = NULL, vjust = NULL,
          default.units = "npc", name = NULL, vp = NULL)
 }
 \arguments{
@@ -37,7 +37,7 @@ clipGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     If specified, overrides the \code{just} setting.}
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{name}{ A character identifier. }
   \item{vp}{A Grid viewport object (or NULL).}
   \item{\dots}{Arguments passed to \code{clipGrob}.}
@@ -52,7 +52,7 @@ clipGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   explicitly enforces a clipping region.
 }
 \value{
-  \code{clipGrob} returns a clip grob.  
+  \code{clipGrob} returns a clip grob.
 }
 \author{Paul Murrell}
 \seealso{
@@ -69,7 +69,7 @@ grid.lines(gp=gpar(col="red", lwd=5))
 # Viewport sets new clip region
 pushViewport(viewport(width=0.5, height=0.5, clip=TRUE))
 grid.lines(gp=gpar(col="grey", lwd=3))
-# Return to original viewport;  get 
+# Return to original viewport;  get
 # clip region from previous grid.clip()
 # (NOT from previous viewport clip region)
 popViewport()

@@ -18,7 +18,7 @@
 \source{
   Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
     State Space Methods.}  Oxford University Press.
-  \url{http://www.ssfpack.com/dkbook/} 
+  \url{http://www.ssfpack.com/dkbook/}
 }
 \references{
   Makridakis, S., Wheelwright, S. C. and Hyndman, R. J. (1998)

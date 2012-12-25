@@ -38,7 +38,7 @@
 }
 \seealso{
   \code{\link{round}} for the generic function and default methods.
-  
+
   \code{\link{DateTimeClasses}}, \code{\link{Date}}
 }
 

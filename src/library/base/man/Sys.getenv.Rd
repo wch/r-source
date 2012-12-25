@@ -39,7 +39,7 @@ Sys.getenv(x = NULL, unset = "", names = NA)
   some platforms allow but POSIX does not.  (Windows is such a platform:
   there names including \code{=} are truncated just before the first
   \code{=}.)
-  
+
   Argument \code{names} was introduced in \R 2.13.0 to avoid needing the
   common use of \code{as.vector(Sys.getenv())}.
 }

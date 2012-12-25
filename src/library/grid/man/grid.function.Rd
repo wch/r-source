@@ -16,7 +16,7 @@ grid.function(...)
 functionGrob(f, n = 101, range = "x", units = "native",
              name = NULL, gp=gpar(), vp = NULL)
 
-grid.abline(intercept, slope, ...) 
+grid.abline(intercept, slope, ...)
 }
 \arguments{
   \item{f}{ A function that must take a single argument
@@ -42,7 +42,7 @@ grid.abline(intercept, slope, ...)
   and a series of lines are
   drawn through the resulting \code{x} and \code{y} values.
 
-  The generation of the \code{n} values depends on the value of 
+  The generation of the \code{n} values depends on the value of
   \code{range}.  In the default case, \code{dim} is
   \code{"x"}, which means that a set
   of \code{x} values are generated covering the range of the current

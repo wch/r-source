@@ -30,7 +30,7 @@
 }
 \value{
   A list with an element for each parameter being profiled. The elements
-  are data-frames with two variables 
+  are data-frames with two variables
   \item{par.vals}{a matrix of parameter values for each fitted model.}
   \item{tau}{the profile t-statistics.}
 }
@@ -44,7 +44,7 @@
     and Its Applications}, Wiley (chapter 6).
 }
 \author{
-  Of the original version, 
+  Of the original version,
   Douglas M. Bates and Saikat DebRoy
 }
 \seealso{

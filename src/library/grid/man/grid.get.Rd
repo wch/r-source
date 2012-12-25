@@ -17,7 +17,7 @@ grid.get(gPath, strict = FALSE, grep = FALSE, global = FALSE,
 
 grid.gget(\dots, grep = TRUE, global = TRUE)
 
-getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE) 
+getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE)
 }
 \arguments{
   \item{gTree}{A gTree object.}

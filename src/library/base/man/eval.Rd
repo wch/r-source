@@ -60,7 +60,7 @@ local(expr, envir = new.env())
   If \code{envir} is \code{NULL} it is interpreted as an empty list so
   no values could be found in \code{envir} and look-up goes directly to
   \code{enclos}.
-  
+
   \code{local} evaluates an expression in a local environment.  It is
   equivalent to \code{evalq} except that its default argument creates a
   new, empty environment.  This is useful to create anonymous recursive

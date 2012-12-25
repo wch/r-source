@@ -40,7 +40,7 @@
   (1994) for further references.  All four approximate F statistics are
   the same when the term being tested has one degree of freedom, but in
   other cases that for the Roy statistic is an upper bound.
-  
+
   The tolerance \code{tol} is applied to the QR decomposition of the
   residual correlation matrix (unless some response has essentially zero
   residuals, when it is unscaled).  Thus the default value guards
@@ -63,7 +63,7 @@
 \references{
   Anderson, T. W. (1994) \emph{An Introduction to Multivariate
     Statistical Analysis.} Wiley.
-  
+
   Hand, D. J. and Taylor, C. C.  (1987)
   \emph{Multivariate Analysis of Variance and Repeated Measures.}
   Chapman and Hall.

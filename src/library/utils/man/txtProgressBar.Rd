@@ -39,12 +39,12 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
 \details{
   \code{txtProgressBar} will display a progress bar on the \R console
   (or a connection) via a text representation.
-  
+
   \code{setTxtProgessBar} will update the value.  Missing
   (\code{\link{NA}}) and out-of-range values of \code{value} will be
   (silently) ignored.  (Such values of \code{initial} cause the progress
   bar not to be displayed until a valid value is set.)
-  
+
   The progress bar should be \code{close}d when finished with: this
   outputs the final newline character.
 
@@ -75,7 +75,7 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
 #endif
   \code{\link{tkProgressBar}}.
 #ifdef unix
-  
+
   Windows versions of \R also have \code{winProgressBar}.
 #endif
 }

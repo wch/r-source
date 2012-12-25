@@ -59,14 +59,14 @@ mc.reset.stream()
   they are set from the current seed of the master process: after
   selecting the L'Ecuyer generator).
 #ifdef unix
-  
+
   Calling \code{mc.reset.stream()} after setting the L'Ecuyer random
   number generator and seed makes runs from
   \code{\link{mcparallel}(mc.set.seed = TRUE)} reproducible.  This is
   done internally in \code{\link{mclapply}} and \code{\link{pvec}}.
   (Note that it does not set the seed in the master process, so does not
   affect the fallback-to-serial versions of these functions.)
-#endif  
+#endif
 }
 \value{
   For \code{nextRNGStream} and \code{nextRNGSubStream},
@@ -76,7 +76,7 @@ mc.reset.stream()
   L'Ecuyer, P. (1999) Good parameters and implementations for combined
   multiple recursive random number generators.  \emph{Operations
   Research} \bold{47}, 159--164.
-  
+
   L'Ecuyer, P., Simard, R.,  Chen, E. J. and Kelton, W. D. (2002)
   An object-oriented random-number package with many long streams
   and substreams.  \emph{Operations Research} \bold{50} 1073--5.

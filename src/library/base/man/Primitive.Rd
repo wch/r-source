@@ -23,7 +23,7 @@
   positional matching can be used where desirable, e.g. in
   \code{\link{switch}}. For more details, see the \sQuote{R Internals
     Manual}.
-  
+
   All primitive functions are in the base namespace.
 
   This function is almost never used: \code{`name`} or, more carefully,

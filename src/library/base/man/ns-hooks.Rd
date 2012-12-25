@@ -44,11 +44,11 @@
   might be called if \code{.onAttach} has failed, so it should be
   written defensively.  (It is called within \code{\link{tryCatch}}, so
   errors will not stop the package being detached.)
-  
+
   If a namespace is unloaded (via \code{\link{unloadNamespace}}), a hook
   function \code{.onUnload} is run (with a single argument) before final
   unloading.
-  
+
   Note that the code in \code{.onLoad} and \code{.onUnload} is run
   without the package being on the search path, but (unless circumvented)
   lexical scope will make objects in the namespace and its imports
@@ -58,7 +58,7 @@
   \code{.onLoad}, \code{.onUnload} and \code{.onAttach} are looked for
   as internal objects in the namespace and should not be exported
   (whereas \code{.Last.lib} should be).
-  
+
   Anything needed for the functioning of the namespace should be
   handled at load/unload times by the \code{.onLoad} and
   \code{.onUnload} hooks.  For example, DLLs can be loaded (unless done
@@ -88,7 +88,7 @@
   information about the package should use \code{format} on the
   computed package information object and pass this to
   \code{packageStartupMessage}.
-  
+
   There should be no calls to \code{\link{installed.packages}} in startup
   code: it is potentially very slow and may fail in versions of \R
   before 2.14.2 if package installation is going on in parallel.  See
@@ -99,11 +99,11 @@
   directive in the \file{NAMESPACE} file, and not in \code{.onAttach}.
   Similarly, compiled code should not be unloaded (e.g. \emph{via}
   \code{\link{library.dynam.unload}}) in \code{.Last.lib} nor
-  \code{.onDetach}, only in \code{.onUnload}. 
+  \code{.onDetach}, only in \code{.onUnload}.
 }
 
 \seealso{
-  \code{\link{setHook}} shows how users can set hooks on the same events, and 
+  \code{\link{setHook}} shows how users can set hooks on the same events, and
   lists the sequence of events involving all of the hooks.
 }
 \keyword{utilities}

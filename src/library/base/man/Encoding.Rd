@@ -41,7 +41,7 @@ enc2utf8(x)
   vectors to the native encoding or UTF-8 respectively, taking any
   marked encoding into account.  They are \link{primitive} functions,
   designed to do minimal copying.
-  
+
   There are other ways for character strings to acquire a declared
   encoding apart from explicitly setting it (and these have changed as
   \R has evolved).  Functions \code{\link{scan}},
@@ -74,7 +74,7 @@ enc2utf8(x)
   any of the inputs are UTF-8.
 
   \code{\link{paste}} and \code{\link{sprintf}} return elements marked
-  as bytes if any of the corresponding inputs is marked as bytes, and 
+  as bytes if any of the corresponding inputs is marked as bytes, and
   otherwise marked as UTF-8 of any of the inputs is marked as UTF-8.
 
   \code{\link{match}}, \code{\link{pmatch}}, \code{\link{charmatch}},

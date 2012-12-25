@@ -11,12 +11,12 @@
   These functions create and draw text and \link{plotmath} expressions.
 }
 \usage{
-grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
+grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
           just = "centre", hjust = NULL, vjust = NULL, rot = 0,
           check.overlap = FALSE, default.units = "npc",
           name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
 
-textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
+textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
           just = "centre", hjust = NULL, vjust = NULL, rot = 0,
           check.overlap = FALSE, default.units = "npc",
           name = NULL, gp = gpar(), vp = NULL)
@@ -26,7 +26,7 @@ textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     objects are coerced by \code{\link{as.graphicsAnnot}}.}
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
-  \item{just}{The justification of the text 
+  \item{just}{The justification of the text
     relative to its (x, y) location.  If there are two values, the first
     value specifies horizontal justification and the second value specifies
     vertical justification.  Possible string values are: \code{"left"},
@@ -43,7 +43,7 @@ textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     check for and omit overlapping text.}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
@@ -56,10 +56,10 @@ textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   Both functions create a text grob (a graphical object describing
   text), but only \code{grid.text}
   draws the text (and then only if \code{draw} is \code{TRUE}).
-  
+
   If the \code{label} argument is an expression, the output is
   formatted as a mathematical annotation, as for base graphics text.
-  
+
 }
 \value{
   A text grob.  \code{grid.text} returns the value invisibly.

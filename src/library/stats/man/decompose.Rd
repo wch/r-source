@@ -30,7 +30,7 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
   \deqn{Y_t = T_t + S_t + e_t}{Y[t] = T[t] + S[t] + e[t]}
   The multiplicative model used is:
   \deqn{Y_t = T_t\,S_t\, e_t}{Y[t] = T[t] * S[t] * e[t]}
-  
+
   The function first determines the trend component using a moving
   average (if \code{filter} is \code{NULL}, a symmetric window with
   equal weights is used), and removes it from the time series.  Then,
@@ -73,8 +73,8 @@ m$figure
 plot(m)
 
 ## example taken from Kendall/Stuart
-x <- c(-50, 175, 149, 214, 247, 237, 225, 329, 729, 809, 
-       530, 489, 540, 457, 195, 176, 337, 239, 128, 102, 232, 429, 3, 
+x <- c(-50, 175, 149, 214, 247, 237, 225, 329, 729, 809,
+       530, 489, 540, 457, 195, 176, 337, 239, 128, 102, 232, 429, 3,
        98, 43, -141, -77, -13, 125, 361, -45, 184)
 x <- ts(x, start = c(1951, 1), end = c(1958, 4), frequency = 4)
 m <- decompose(x)

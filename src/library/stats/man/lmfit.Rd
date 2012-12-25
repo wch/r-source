@@ -31,13 +31,13 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     linear predictor during fitting.}
 
   \item{method}{currently, only \code{method = "qr"} is supported.}
-  
+
   \item{tol}{tolerance for the \code{\link{qr}} decomposition.  Default
     is 1e-7.}
 
   \item{singular.ok}{logical. If \code{FALSE}, a singular model is an
     error.}
-  
+
   \item{\dots}{currently disregarded.}
 }
 \value{

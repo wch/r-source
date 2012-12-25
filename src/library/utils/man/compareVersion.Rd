@@ -24,7 +24,7 @@ compareVersion(a, b)
   \R package version numbers are of the form \code{x.y-z} for integers
   \code{x}, \code{y} and \code{z}, with components after \code{x}
   optionally missing (in which case the version number is older than
-  those with the components present). 
+  those with the components present).
 }
 \seealso{
   \code{\link{package_version}},

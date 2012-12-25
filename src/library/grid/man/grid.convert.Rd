@@ -21,18 +21,18 @@
   unit object in a different coordinate system.
 }
 \usage{
-convertX(x, unitTo, valueOnly = FALSE) 
-convertY(x, unitTo, valueOnly = FALSE) 
-convertWidth(x, unitTo, valueOnly = FALSE) 
-convertHeight(x, unitTo, valueOnly = FALSE) 
+convertX(x, unitTo, valueOnly = FALSE)
+convertY(x, unitTo, valueOnly = FALSE)
+convertWidth(x, unitTo, valueOnly = FALSE)
+convertHeight(x, unitTo, valueOnly = FALSE)
 convertUnit(x, unitTo,
              axisFrom = "x", typeFrom = "location",
              axisTo = axisFrom, typeTo = typeFrom,
              valueOnly = FALSE)
-grid.convertX(x, unitTo, valueOnly = FALSE) 
-grid.convertY(x, unitTo, valueOnly = FALSE) 
-grid.convertWidth(x, unitTo, valueOnly = FALSE) 
-grid.convertHeight(x, unitTo, valueOnly = FALSE) 
+grid.convertX(x, unitTo, valueOnly = FALSE)
+grid.convertY(x, unitTo, valueOnly = FALSE)
+grid.convertWidth(x, unitTo, valueOnly = FALSE)
+grid.convertHeight(x, unitTo, valueOnly = FALSE)
 grid.convert(x, unitTo,
              axisFrom = "x", typeFrom = "location",
              axisTo = axisFrom, typeTo = typeFrom,
@@ -60,9 +60,9 @@ grid.convert(x, unitTo,
   The \code{convertUnit} function allows for general-purpose
   conversions.  The other four functions are just more convenient
   front-ends to it for the most common conversions.
-  
+
   The conversions occur within the current viewport.
-  
+
   It is not currently possible to convert to all valid coordinate systems
   (e.g., "strwidth" or "grobwidth").  I'm not sure if all of these
   are impossible, they just seem implausible at this stage.
@@ -72,7 +72,7 @@ grid.convert(x, unitTo,
   than user coordinates then you should simply do something like
   \code{unit(1, "inches")} rather than something like
   \code{unit(0.134, "native")}.
-  
+
   In some cases, however, it is necessary for the user to
   perform calculations on a unit value and this function becomes
   necessary.  In such cases, please take note of the warning below.

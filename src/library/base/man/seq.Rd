@@ -53,7 +53,7 @@ seq_len(length.out)
   \code{seq.int} is an \link{internal generic} which dispatches on
   methods for \code{"seq"} based on the class of the first supplied
   argument (before argument matching).
-  
+
   Typical usages are
 \preformatted{seq(from, to)
 seq(from, to, by= )

@@ -10,7 +10,7 @@
   The auxiliary function \code{windows.options} can be used to set or view
   (if called without arguments) the default values for the arguments of
   \code{\link{windows}}.
-  
+
   \code{windows.options} needs to be called before calling \code{windows},
   and the default values it sets can be overridden by supplying
   arguments to \code{windows}.

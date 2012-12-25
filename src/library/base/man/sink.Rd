@@ -61,7 +61,7 @@ sink.number(type = c("output", "message"))
   Sink-ing the messages stream should be done only with great care.
   For that stream \code{file} must be an already open connection, and
   there is no stack of connections.
-  
+
   If \code{file} is a character string, the file will be opened using
   the current encoding.  If you want a different encoding (e.g. to
   represent strings which have been stored in UTF-8), use a

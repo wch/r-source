@@ -64,7 +64,7 @@ x \%in\% table
   For all types, \code{NA} matches \code{NA} and no other value.
   For real and complex values, \code{NaN} values are regarded
   as matching any other \code{NaN} value, but not matching \code{NA}.
-  
+
   That \code{\%in\%} never returns \code{NA} makes it particularly
   useful in \code{if} conditions.
 

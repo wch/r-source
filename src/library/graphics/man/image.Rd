@@ -49,7 +49,7 @@ image(x, \dots)
     \code{""} if these were unspecified.}
   \item{breaks}{a set of finite numeric breakpoints for the colours:
     must have one more breakpoint than colour and be in increasing
-    order.  Unsorted vectors will be sorted, with a warning.} 
+    order.  Unsorted vectors will be sorted, with a warning.}
   \item{oldstyle}{logical. If true the midpoints of the colour intervals
     are equally spaced, and \code{zlim[1]} and \code{zlim[2]} were taken
     to be midpoints.  The default is to have colour intervals of equal
@@ -81,7 +81,7 @@ image(x, \dots)
   only makes sense to specify the midpoints of an equally-spaced
   grid.  If you specify just one row or column and a length-one \code{x}
   or \code{y}, the whole user area in the corresponding direction is
-  filled. For logarithmic \code{x} or \code{y} axes the boundaries between 
+  filled. For logarithmic \code{x} or \code{y} axes the boundaries between
   cells must be specified.
 
   Rectangles corresponding to missing values are not plotted (and so are
@@ -110,7 +110,7 @@ image(x, \dots)
   rendering of raster images have been reported by users of
   \code{windows()} devices under Remote Desktop, at least under its
   default settings.)
-  
+
   The graphics files in PDF and PostScript can be much smaller under
   this option.
 
@@ -132,7 +132,7 @@ image(x, \dots)
   \code{\link{heat.colors}}, \code{\link{topo.colors}},
   \code{\link{terrain.colors}}, \code{\link{rainbow}},
   \code{\link{hsv}}, \code{\link{par}}.
-  
+
   \code{\link{dev.capabilities}} to see if \code{useRaster = TRUE} is
   supported on the current device.
 }

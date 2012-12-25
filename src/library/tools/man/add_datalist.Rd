@@ -22,7 +22,7 @@ add_datalist(pkgpath, force = FALSE)
   \item{pkgpath}{The path to a (source) package.}
 
   \item{force}{logical: can an existing \file{data/datalist} file be
-    over-written?} 
+    over-written?}
 }
 \details{
   \command{R CMD build} will call this function to add a data list to

@@ -37,10 +37,10 @@ proc.time()
   of user instructions of the calling process.  The \sQuote{system time}
   is the CPU time charged for execution by the system on behalf of the
   calling process.}
- 
+
   Times of child processes are not available on Windows and will always
   be given as \code{NA}.
-  
+
   The resolution of the times will be system-specific and on Unix-alikes
   times are rounded down to milliseconds.  On modern systems they will
   be that accurate, but on older systems they might be accurate to 1/100

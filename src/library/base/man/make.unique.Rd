@@ -29,7 +29,7 @@ make.unique(names, sep = ".")
   In other words, you can append one string at a time to a vector,
   making it unique each time, and get the same result as applying
   \code{make.unique} to all of the strings at once.
-    
+
   If character vector \code{A} is already unique, then
   \code{make.unique(c(A, B))} preserves \code{A}.
 }

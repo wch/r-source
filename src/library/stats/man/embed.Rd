@@ -6,7 +6,7 @@
 \name{embed}
 \title{Embedding a Time Series}
 \usage{
-embed (x, dimension = 1) 
+embed (x, dimension = 1)
 }
 \alias{embed}
 \arguments{

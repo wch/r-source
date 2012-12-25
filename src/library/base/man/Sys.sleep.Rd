@@ -20,7 +20,7 @@ Sys.sleep(time)
   not to interfere with more important foreground tasks.  A typical use
   is to allow a process launched from \R to set itself up and read its
   input files before \R execution is resumed.
-  
+
   The intention is that this function suspends execution of \R
   expressions but wakes the process up often enough to respond to GUI
   events, typically every 0.5 seconds.

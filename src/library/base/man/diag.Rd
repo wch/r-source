@@ -44,7 +44,7 @@ diag(x) <- value
 
   The replacement form sets the diagonal of the matrix \code{x} to the
   given value(s).
-  
+
   In all other cases the value is a diagonal matrix with \code{nrow}
   rows and \code{ncol} columns (if \code{ncol} is not given the matrix
   is square).  Here \code{nrow} is taken from the argument if specified,

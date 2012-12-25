@@ -26,7 +26,7 @@
   To remove from the library tree \code{\var{lib}} instead of the default
   one, use \command{R CMD REMOVE -l lib \var{pkgs}}.
 
-  Use \command{R CMD REMOVE --help} for more usage information.  
+  Use \command{R CMD REMOVE --help} for more usage information.
 }
 #ifdef unix
 \note{

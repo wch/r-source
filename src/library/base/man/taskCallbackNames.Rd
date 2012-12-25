@@ -21,7 +21,7 @@ getTaskCallbackNames()
   a top-level task is completed successfully.
   Each name is the one used when registering
   the callbacks and returned as the in the
-  call to \code{\link{addTaskCallback}}. 
+  call to \code{\link{addTaskCallback}}.
 }
 \note{
   One can use \code{\link{taskCallbackManager}}
@@ -34,7 +34,7 @@ getTaskCallbackNames()
   \code{\link{addTaskCallback}},
   \code{\link{removeTaskCallback}},
   \code{\link{taskCallbackManager}}\\
-  \url{http://developer.r-project.org/TaskHandlers.pdf}  
+  \url{http://developer.r-project.org/TaskHandlers.pdf}
 }
 \examples{
  n <- addTaskCallback(function(expr, value, ok, visible) {

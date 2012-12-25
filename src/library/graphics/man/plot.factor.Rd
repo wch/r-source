@@ -13,7 +13,7 @@
     \item{x, y}{numeric or factor. \code{y} may be missing.}
     \item{legend.text}{character vector for annotation of y axis in the
       case of a factor \code{y}: defaults to \code{levels(y)}.  This
-      sets the \code{yaxlabels} argument of \code{\link{spineplot}}.}      
+      sets the \code{yaxlabels} argument of \code{\link{spineplot}}.}
     \item{\dots}{Further arguments to \code{\link{barplot}},
       \code{\link{boxplot}}, \code{\link{spineplot}} or
       \code{\link{plot}} as appropriate.  All of these accept

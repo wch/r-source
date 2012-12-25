@@ -65,7 +65,7 @@ tiff(filename = "Rplot\%03d.tiff",
     For types \code{"cairo"} and \code{"quartz"}, the \code{family}
     argument can be supplied.  See the \sQuote{Cairo fonts}
     section in the help for \code{\link{X11}}.}
-  
+
   \item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
     (some Mac OS X builds) or \code{"cairo"}.  The latter will only be
     available if the system was compiled with support for cairo --
@@ -73,7 +73,7 @@ tiff(filename = "Rplot\%03d.tiff",
     \code{\link{getOption}("bitmapType")} -- the \sQuote{out of the box}
     default is \code{"quartz"} or \code{"cairo"} where available,
     otherwise \code{"Xlib"}.}
-  
+
   \item{antialias}{for \code{type = "cairo"}, giving the type of
     anti-aliasing (if any) to be used.  See \code{\link{X11}}.  The
     default is set by \code{\link{X11.options}}.  Also for \code{type =
@@ -129,7 +129,7 @@ tiff(filename = "Rplot\%03d.tiff",
   backend which will never use a palette and normally creates a larger
   32-bit ARGB file---this may work better for specialist uses with
   semi-transparent colours.
-  
+
   Quartz-produced PNG and TIFF plots with a transparent background are
   recorded with a dark grey matte which will show up in some viewers,
   including \command{Preview} on OS X.
@@ -142,7 +142,7 @@ tiff(filename = "Rplot\%03d.tiff",
 \section{Warnings}{
   Note that by default the \code{width} and \code{height} values are in
   pixels not inches.  A warning will be issued if both are less than 20.
-  
+
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.

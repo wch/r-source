@@ -41,24 +41,24 @@ readRDS(file, refhook = NULL)
   example to store metadata for a package and to store the
   \code{\link{help.search}} databases: the \code{".rds"} file extension
   is most often used.
-  
+
   Functions \code{\link{serialize}} and \code{\link{unserialize}}
   provide a slightly lower-level interface to serialization: objects
   serialized to a connection by \code{serialize} can be read back by
   \code{readRDS} and conversely.
-  
+
   All of these interfaces use the same serialization format, which has
   been used since \R 1.4.0 (but extended from time to time as new
   object types have been added to \R).  However, \code{save} writes a
   single line header (typically \code{"RDXs\n"}) before the
   serialization of a single object (a pairlist of all the objects to be
-  saved). 
-  
+  saved).
+
   Compression is handled by the connection opened when \code{file} is a
   file name, so is only possible when \code{file} is a connection if
   handled by the connection.  So e.g. \code{\link{url}} connections will
   needed to be wrapped in a call to \code{\link{gzcon}}.
-  
+
   If a connection is supplied it will be opened (in binary mode) for the
   duration of the function if not already open: if it is already open it
   must be in binary mode for \code{saveRDS(ascii = FALSE)} (the

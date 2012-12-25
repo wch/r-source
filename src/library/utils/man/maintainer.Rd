@@ -20,8 +20,8 @@ maintainer(pkg)
 }
 \details{
    Accesses the package description to return the name and email address of
-   the maintainer.  
-   
+   the maintainer.
+
    Questions about contributed packages should often be addressed to
    the package maintainer; questions about base packages should
    usually be addressed to the R-help or R-devel mailing lists.  Bug
@@ -42,7 +42,7 @@ maintainer(pkg)
   \url{https://stat.ethz.ch/pipermail/r-help/2010-February/230027.html}
 }
 % failed 2011-07-07
-% \references{ 
+% \references{
 % \url{http://n4.nabble.com/R-help-question-How-can-we-enable-useRs-to-contribute-corrections-to-help-files-faster-tp1572568p1572868.html}
 % }
 \seealso{

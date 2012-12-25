@@ -76,7 +76,7 @@ sunflowerplot(x, \dots)
 }
 \details{
   This is a generic function with default and formula methods.
-  
+
   For \code{number[i] == 1}, a (slightly enlarged) usual plotting symbol
   (\code{pch}) is drawn.  For \code{number[i] > 1}, a small plotting
   symbol is drawn and \code{number[i]} equi-angular \sQuote{rays}

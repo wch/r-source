@@ -188,10 +188,10 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       so-called "Nelson Index", by specifying an escape sequence of the form
       \samp{\\\\#N1234}.  For example, the (obsolete) Kanji for \sQuote{one} is
       produced by \samp{\\\\#N0001}.
-    
+
       \code{demo(Japanese)} shows the available Japanese characters.
     }
-      
+
     \item{Raw Hershey Glyphs:}{all of the characters in the Hershey
       fonts are stored in a large array.  Some characters are not
       accessible in any of the Hershey fonts.  These characters can only

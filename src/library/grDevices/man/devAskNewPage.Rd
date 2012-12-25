@@ -19,10 +19,10 @@ devAskNewPage(ask = NULL)
 }
 \details{
   If the current device is the null device, this will open a graphics device.
-  
+
   The default argument just returns the current setting and does not
   change it.
-  
+
   The default value when a device is opened is taken from the
   setting of \code{\link{options}("device.ask.default")}.
 

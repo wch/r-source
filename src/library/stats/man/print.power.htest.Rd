@@ -14,7 +14,7 @@
 }
 \arguments{
   \item{x}{Object of class \code{"power.htest"}.}
-  \item{\dots}{further arguments to be passed to or from methods.}  
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   A \code{power.htest} object is just a named list of numbers and

@@ -28,7 +28,7 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.}
   \item{all}{logical; if \code{TRUE} search
-    all available packages in the library trees specified by \code{lib.loc}, 
+    all available packages in the library trees specified by \code{lib.loc},
     and if \code{FALSE}, search only attached packages.}
   \item{x, name}{Object of class \code{vignette}.}
   \item{\ldots}{Ignored by the \code{print} method, passed on to
@@ -43,7 +43,7 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
 #endif
   If several vignettes have PDF versions with base name identical to
   \code{topic}, the first one found is used.
-  
+
   If no topics are given, all available vignettes are listed.  The
   corresponding information is returned in an object of class
   \code{"packageIQR"}.

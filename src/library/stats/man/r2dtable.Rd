@@ -31,7 +31,7 @@ r2dtable(n, r, c)
   Algorithm AS159.  An efficient method of generating r x c tables
   with given row and column totals.
   \emph{Applied Statistics} \bold{30}, 91--97.
-} 
+}
 \examples{
 ## Fisher's Tea Drinker data.
 TeaTasting <-

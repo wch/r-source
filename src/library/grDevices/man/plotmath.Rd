@@ -218,7 +218,7 @@
   \code{\link{points}}.  The \code{\link{windows}} family of devices can
   display such characters if they are available in the font in use.
   This can often be used to display Greek \emph{letters} in bold or italic.
- 
+
   A good way to both find out which characters are available in a font
   and to determine the Unicode number is to use the \sQuote{Character
   Map} accessory (usually on the \sQuote{Start} menu under

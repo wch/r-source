@@ -165,7 +165,7 @@ par(\dots, no.readonly = FALSE)
   to physical margins.  (The same inter-line spacing multiplied by
   \code{lheight} is used for multi-line strings in \code{text} and
   \code{strheight}.)
-  
+
   Note that graphical parameters are suggestions: plotting functions and
   devices need not make use of them (and this is particularly true of
   non-default methods for e.g. \code{plot}).
@@ -255,7 +255,7 @@ par(\dots, no.readonly = FALSE)
       as \code{cra}, expressed in different units.}
     \item{\code{col}}{A specification for the default plotting color.  See
       section \sQuote{Color Specification}.
-      
+
       Some functions such as \code{\link{lines}} and \code{\link{text}}
       accept a vector of values which are recycled and may be
       interpreted slightly differently.
@@ -543,7 +543,7 @@ par(\dots, no.readonly = FALSE)
       \code{\link{plot.window}} or setting \code{par("usr")}: \code{n}
       is taken from \code{par("lab")}.  It affects the default behaviour
       of subsequent calls to \code{\link{axis}} for sides 1 or 3.
-      
+
       It is only relevant to default numeric axis systems, and not for
       example to dates.
     }

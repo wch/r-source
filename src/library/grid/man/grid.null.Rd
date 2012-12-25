@@ -24,13 +24,13 @@ grid.null(...)
   \item{y}{A numeric vector or unit object specifying y-location.}
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{name}{ A character identifier. }
   \item{vp}{A Grid viewport object (or NULL).}
   \item{\dots}{Arguments passed to \code{nullGrob()}.}
 }
 \value{
-  A null grob.  
+  A null grob.
 }
 \author{Paul Murrell}
 \seealso{

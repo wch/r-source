@@ -97,7 +97,7 @@ persp(x, \dots)
   coordinates \eqn{(x,y,z,t)}.  It can be used to superimpose
   additional graphical elements on the 3D plot, by
   \code{\link{lines}()} or \code{\link{points}()}, using the
-  function \code{\link{trans3d}()}. 
+  function \code{\link{trans3d}()}.
 }
 \details{
   The plots are produced by first transforming the (x,y,z)
@@ -138,7 +138,7 @@ persp(x, \dots)
 }
 \seealso{
   \code{\link{contour}} and \code{\link{image}}; \code{\link{trans3d}}.
-  
+
   Rotatable 3D plots can be produced by package \CRANpkg{rgl}: other
   ways to produce static perspective plots are available in packages
   \CRANpkg{lattice} and \CRANpkg{scatterplot3d}.
@@ -196,7 +196,7 @@ z <- outer(x, y, function(a, b) a*b^2)
 nrz <- nrow(z)
 ncz <- ncol(z)
 # Create a function interpolating colors in the range of specified colors
-jet.colors <- colorRampPalette( c("blue", "green") ) 
+jet.colors <- colorRampPalette( c("blue", "green") )
 # Generate the desired number of colors from this palette
 nbcol <- 100
 color <- jet.colors(nbcol)

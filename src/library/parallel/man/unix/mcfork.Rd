@@ -12,9 +12,9 @@
 \description{
   These are low-level functions, not available on Windows, and not
   exported from the namespace.
-  
+
   \code{mcfork} creates a new child process as a copy of the current \R process.
- 
+
   \code{mcexit} closes the current child process, informing the master
   process as necessary.
 }
@@ -93,7 +93,7 @@ mcexit(exit.code = 0L, send = NULL)
   Derived from the \CRANpkg{multicore} package.
 }
 \section{Warning}{
-  This is a very low-level API for expert use only. 
+  This is a very low-level API for expert use only.
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{sendMaster}}

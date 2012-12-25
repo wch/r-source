@@ -82,7 +82,7 @@ deriv3(expr, \dots)
   values with a \code{"gradient"} attribute containing the gradient
   matrix.  If \code{hessian} is \code{TRUE} the evaluation also returns
   a \code{"hessian"} attribute containing the Hessian array.
-  
+
   If \code{function.arg} is not \code{NULL}, \code{deriv} and
   \code{deriv3} return a function with those arguments rather than an
   expression.

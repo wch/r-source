@@ -22,7 +22,7 @@ SSfol(Dose, input, lKe, lKa, lCl)
 }
 \description{
   This \code{selfStart} model evaluates the first-order compartment
-  function and its gradient.  It has an \code{initial} attribute that 
+  function and its gradient.  It has an \code{initial} attribute that
   creates initial estimates of the parameters \code{lKe}, \code{lKa},
   and \code{lCl}.
 }

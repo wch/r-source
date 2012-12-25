@@ -14,14 +14,14 @@ roundrectGrob(x=0.5, y=0.5, width=1, height=1,
               default.units="npc",
               r=unit(0.1, "snpc"),
               just="centre",
-              name=NULL, gp=NULL, vp=NULL) 
-grid.roundrect(...) 
+              name=NULL, gp=NULL, vp=NULL)
+grid.roundrect(...)
 }
 \arguments{
   \item{x, y, width, height}{The location and size of the rectangle.}
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{r}{The radius of the rounded corners.}
   \item{just}{The justification of the rectangle relative to its
 location.}
@@ -37,7 +37,7 @@ location.}
 \examples{
 grid.roundrect(width=.5, height=.5, name="rr")
 theta <- seq(0, 360, length=50)
-for (i in 1:50) 
+for (i in 1:50)
     grid.circle(x=grobX("rr", theta[i]),
                 y=grobY("rr", theta[i]),
                 r=unit(1, "mm"),

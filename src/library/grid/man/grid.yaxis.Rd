@@ -45,7 +45,7 @@ yaxisGrob(at = NULL, label = TRUE, main = TRUE,
   Both functions create a yaxis grob (a graphical object describing a
   yaxis), but only \code{grid.yaxis}
   draws the yaxis (and then only if \code{draw} is \code{TRUE}).
-  
+
 }
 \value{
   A yaxis grob.  \code{grid.yaxis} returns the value invisibly.

@@ -29,7 +29,7 @@ hasTsp(x)
     It gives the start time \emph{in time units}, the end time and
     the frequency.
 
-    Assignments are checked for consistency.    
+    Assignments are checked for consistency.
 
     Assigning \code{NULL} which removes the \code{tsp} attribute
     \emph{and} any \code{"ts"} (or \code{"mts"}) class of \code{x}.

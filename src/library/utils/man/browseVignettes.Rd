@@ -24,7 +24,7 @@ browseVignettes(package = NULL, lib.loc = NULL, all = TRUE)
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.}
   \item{all}{logical; if \code{TRUE} search
-    all available packages in the library trees specified by \code{lib.loc}, 
+    all available packages in the library trees specified by \code{lib.loc},
     and if \code{FALSE}, search only attached packages.}
   \item{x}{Object of class \code{browseVignettes}.}
   \item{\dots}{Further arguments, ignored by the \code{print} method. }

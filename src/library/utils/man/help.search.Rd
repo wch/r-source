@@ -14,7 +14,7 @@
   keyword entries (or any combination thereof), using either
   \link{fuzzy matching} or \link{regular expression} matching.  Names
   and titles of the matched help entries are displayed nicely formatted.
-  
+
   Vignette names, titles and keywords and demo names and titles
   may also be searched.
 }
@@ -84,14 +84,14 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     Also changes the meaning of regexps in \code{agrep} to be Perl regexps.}
   \item{types}{a character vector listing the types of documentation
     to search.  The entries must be abbreviations of \code{"vignette"}
-    \code{"help"} or \code{"demo"}. Results will be presented in the 
+    \code{"help"} or \code{"demo"}. Results will be presented in the
     order specified.}
   \item{field}{a single value of \code{fields} to search.}
 }
 \details{
   Upon installation of a package, a pre-built help.search index is
   serialized as \file{hsearch.rds} in the \file{Meta} directory
-  (provided the package has any help pages).  Vignettes are also 
+  (provided the package has any help pages).  Vignettes are also
   indexed in the \file{Meta/vignette.rds} file.  These files are used to
   create the help search database.
 
@@ -105,18 +105,18 @@ help.search(pattern, fields = c("alias", "concept", "title"),
 
   If possible, the help database is saved in memory for use by
   subsequent calls in the session.
-  
+
   Note that currently the aliases in the matching help files are not
   displayed.
-  
-  As with \code{\link{?}}, in \code{??} the pattern may be prefixed with a 
+
+  As with \code{\link{?}}, in \code{??} the pattern may be prefixed with a
   package name followed by \code{::} or \code{:::} to limit the search
   to that package.
-  
-  Vignettes are searched as follows.  The \code{"name"} and 
-  \code{"alias"} are both the base of the vignette filename, and the 
+
+  Vignettes are searched as follows.  The \code{"name"} and
+  \code{"alias"} are both the base of the vignette filename, and the
   \code{"concept"} entries are taken from the \code{\\VignetteKeywords}
-  entries.  Vignettes are not classified using the help system 
+  entries.  Vignettes are not classified using the help system
   \code{"keyword"} classifications.  Demos are handled
   similarly to vignettes, without the  \code{"concept"} search.
 }
@@ -130,7 +130,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   In R.app on Mac OS X, this will show up a browser with selectable items. On
   exiting this browser, the help pages for the selected items will be
   shown in separate help windows.
-  
+
   The internal format of the class is undocumented and subject to change.
 }
 \seealso{
@@ -140,7 +140,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   mechanism.
 
   \code{\link{RSiteSearch}} to access an on-line search of \R resources.
-  
+
   \code{\link{apropos}} uses regexps and has nice examples.
 }
 \examples{

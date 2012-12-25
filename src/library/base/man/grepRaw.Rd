@@ -12,7 +12,7 @@
 }
 \usage{
 grepRaw(pattern, x, offset = 1L, ignore.case = FALSE,
-        value = FALSE, fixed = FALSE, all = FALSE, invert = FALSE) 
+        value = FALSE, fixed = FALSE, all = FALSE, invert = FALSE)
 }
 \arguments{
   \item{pattern}{raw vector containing a \link{regular expression}
@@ -77,7 +77,7 @@ grepRaw(pattern, x, offset = 1L, ignore.case = FALSE,
 \seealso{
   \link{regular expression} (aka \code{\link{regexp}}) for the details
   of the pattern specification.
-  
+
   \code{\link{grep}} for matching character vectors.
 }
 \keyword{utilities}

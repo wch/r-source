@@ -36,7 +36,7 @@ mood.test(x, \dots)
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to or from methods.}  
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   The underlying model is that the two samples are drawn from

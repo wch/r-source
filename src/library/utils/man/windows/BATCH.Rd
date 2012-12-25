@@ -34,7 +34,7 @@
   A final expression \samp{proc.time()} will be executed after the input
   script unless the latter calls \code{\link{q}(runLast = FALSE)} or is aborted.
   This can be suppressed by the option \option{--no-timing}.
-  
+
   Additional options can be set by the environment variable
   \env{R_BATCH_OPTIONS}: these come after \option{--restore --save}
   and before any options given on the command line.

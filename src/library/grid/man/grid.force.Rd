@@ -34,7 +34,7 @@ grid.revert(redraw = TRUE)
   at-drawing-time contents.  For example, an axis will be
   replaced by a vanilla gTree with lines and text representing
   the axis tick marks that were actually drawn.  This makes
-  the tick marks 
+  the tick marks
   visible to \code{grid.ls()} and accessible to \code{grid.edit()}.
 
   The \code{grid.revert()} function reverses the effect of

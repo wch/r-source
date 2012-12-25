@@ -55,7 +55,7 @@ rgeom(n, prob)
   Catherine Loader (see \code{\link{dbinom}}).
 
   \code{pgeom} and \code{qgeom} are based on the closed-form formulae.
-  
+
   \code{rgeom} uses the derivation as an exponential mixture of Poissons, see
 
   Devroye, L. (1986) \emph{Non-Uniform Random Variate Generation.}

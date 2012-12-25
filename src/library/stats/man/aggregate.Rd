@@ -31,7 +31,7 @@ aggregate(x, \dots)
   \item{x}{an R object.}
   \item{by}{a list of grouping elements, each as long as the variables
     in the data frame \code{x}.  The elements are coerced to factors
-    before use.} 
+    before use.}
   \item{FUN}{a function to compute the summary statistics which can be
     applied to all data subsets.}
   \item{simplify}{a logical indicating whether results should be
@@ -59,7 +59,7 @@ aggregate(x, \dots)
 \details{
   \code{aggregate} is a generic function with methods for data frames
   and time series.
-  
+
   The default method, \code{aggregate.default}, uses the time series
   method if \code{x} is a time series, and otherwise coerces \code{x}
   to a data frame and calls the data frame method.
@@ -81,10 +81,10 @@ aggregate(x, \dots)
   missing values in any of the \code{by} variables will be omitted from
   the result.  (Note that versions of \R prior to 2.11.0 required
   \code{FUN} to be a scalar function.)
-  
+
   \code{aggregate.formula} is a standard formula interface to
   \code{aggregate.data.frame}.
-  
+
   \code{aggregate.ts} is the time series method, and requires \code{FUN}
   to be a scalar function.  If \code{x} is not a time series, it is
   coerced to one.  Then, the variables in \code{x} are split into
@@ -96,7 +96,7 @@ aggregate(x, \dots)
   the original series covers a whole number of quarters or years: in
   particular aggregating a monthly series to quarters starting in
   February does not give a conventional quarterly series.
-  
+
   \code{FUN} is passed to \code{\link{match.fun}}, and hence it can be a
   function or a symbol or character string naming a function.
 }

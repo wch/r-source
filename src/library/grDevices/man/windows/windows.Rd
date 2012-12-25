@@ -142,7 +142,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   continuous plotting.  These times can be altered by setting
   \code{options("windowsTimeout")} to a vector of two integers before
   opening the device.
- 
+
   Line widths as controlled by \code{par(lwd =)} are in multiples of
   1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
 
@@ -152,12 +152,12 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   example.  If the \code{filename} is omitted (or specified as
   \code{""}), the output is copied to the clipboard when the device is
   closed.
-  
+
   The \code{restoreConsole} argument is a temporary fix for a problem
   in the current implementation of several Windows graphics devices,
   and is likely to be removed in an upcoming release.  If set to
   \code{FALSE}, the console will not receive the focus after the new
-  device is opened.  
+  device is opened.
 
   There is support for semi-transparent colours of lines, fills and text
   on the screen devices.  These work for saving (from the
@@ -230,7 +230,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     \item Font sizes are in big points.
     \item The default font family is Arial.
     \item Line widths are as a multiple of 1/96 inch, with a minimum of
-    one pixel. 
+    one pixel.
     \item The minimum radius of a circle is 1 pixel.
     \item \code{pch = "."} with \code{cex = 1} corresponds to a rectangle of sides
     the larger of one pixel and 0.01 inch.

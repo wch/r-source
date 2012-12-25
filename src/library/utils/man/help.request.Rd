@@ -52,7 +52,7 @@ help.request(subject = "",
 }
 \seealso{The posting guide (\url{http://www.r-project.org/posting-guide.html}),
   also \code{\link{sessionInfo}()} from which you may add to the help request.
-  
+
   \code{\link{create.post}}.
 }
 \author{Heather Turner, based on the then current code and help page of

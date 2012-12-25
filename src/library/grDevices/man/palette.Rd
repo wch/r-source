@@ -20,7 +20,7 @@ palette(value)
   The color palette and referring to colors by number (see
   e.g. \code{\link{par}}) was provided for compatibility with S: in \R
   it is almost always better to specify colours by name.
-  
+
   If \code{value} has length 1, it is taken to be the name of
   a built-in color palette.  If \code{value} has length greater
   than 1 it is assumed to contain a description of the colors

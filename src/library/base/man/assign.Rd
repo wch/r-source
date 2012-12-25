@@ -28,7 +28,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
 \details{
   There are no restrictions on \code{name}: it can be a non-syntactic
   name (see \code{\link{make.names}}).
-  
+
   The \code{pos} argument can specify the  environment in which to assign
   the object in any of several ways:
   as an integer (the position in the \code{\link{search}} list); as

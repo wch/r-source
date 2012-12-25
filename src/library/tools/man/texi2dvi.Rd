@@ -41,7 +41,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
 \details{
   \code{texi2pdf} is a wrapper for the common case of
   \code{texi2dvi(pdf = TRUE)}.
-  
+
   Despite the name, this is used in \R to compile LaTeX files,
   specifically those generated from vignettes.  It
   ensures that the \file{\var{\link{R_HOME}}/share/texmf} directory is
@@ -52,11 +52,11 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   \file{\var{R_HOME}/share/texmf} and finally the default
   path.  Analogous changes are made to \env{BIBINPUTS} and
   \env{BSTINPUTS} settings.
-  
+
   MiKTeX has a \code{texi2dvi} executable but no other Windows TeX
   installation that we know of does, so emulation is used on e.g. TeXLive
   installations on Windows.
-  
+
   Occasionally indices contain special characters which cause indexing
   to fail (particularly when using the \samp{hyperref} LaTeX package)
   even on valid input.  The argument \code{index = FALSE} is provided to
@@ -74,12 +74,12 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   The three possible approaches all have their quirks.  For example the
   Unix-alike \code{texi2dvi} script removes ancillary files that already
   exist but the other two approaches do not (and may get confused by
-  such files). 
+  such files).
 }
 \value{
   Invisible \code{NULL}.  Used for the side effect of creating a dvi or
   PDF file in the current working directory (and maybe other files,
-  especially if \code{clean = FALSE}). 
+  especially if \code{clean = FALSE}).
 }
 \author{
   Originally Achim Zeileis but largely rewritten by R-core.

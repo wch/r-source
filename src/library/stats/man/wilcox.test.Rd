@@ -92,7 +92,7 @@ wilcox.test(x, \dots)
   difference in medians (a common misconception) but rather the median
   of the difference between a sample from \code{x} and a sample from
   \code{y}.
-  
+
   If exact p-values are available, an exact confidence interval is
   obtained by the algorithm described in Bauer (1972), and the
   Hodges-Lehmann estimator is employed.  Otherwise, the returned

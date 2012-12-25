@@ -47,7 +47,7 @@ getClassDef(Class, where, package, inherits = TRUE)
   The class cache allows for multiple definitions of the
   same class name in separate environments, with of course the
   limitation that the package attribute or package name must be
-  provided in the call to 
+  provided in the call to
 
 }
 \value{

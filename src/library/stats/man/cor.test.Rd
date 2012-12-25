@@ -136,7 +136,7 @@ cor.test(x, \dots)
   \code{\link[SuppDists:Spearman]{pSpearman}} in package
   \CRANpkg{SuppDists},
   \code{\link[pspearman:spearman.test]{spearman.test}} in package
-  \CRANpkg{pspearman}, 
+  \CRANpkg{pspearman},
   which supply different (and often more accurate) approximations.
 }
 

@@ -30,7 +30,7 @@ return if the user has signalled to interrupt the calculation.
 Duncan Murdoch
 }
 \seealso{
-See \sQuote{Writing R Extensions} and the \sQuote{R for Windows FAQ} 
+See \sQuote{Writing R Extensions} and the \sQuote{R for Windows FAQ}
 for more discussion of the \code{R_ProcessEvents} function.
 }
 \keyword{ utilities }

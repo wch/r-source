@@ -23,7 +23,7 @@ chisq.test(x, y = NULL, correct = TRUE,
     \code{x} is a factor, \code{y} should be a factor of the same length.}
   \item{correct}{a logical indicating whether to apply continuity
     correction when computing the test statistic for 2 by 2 tables: one
-    half is subtracted from all \eqn{|O - E|} differences; however, the 
+    half is subtracted from all \eqn{|O - E|} differences; however, the
     correction will not be bigger than the differences themselves.  No correction
     is done if \code{simulate.p.value = TRUE}.}
   \item{p}{a vector of probabilities of the same length of \code{x}.
@@ -90,7 +90,7 @@ chisq.test(x, y = NULL, correct = TRUE,
   \item{residuals}{the Pearson residuals,
     \code{(observed - expected) / sqrt(expected)}.}
   \item{stdres}{standardized residuals,
-    \code{(observed - expected) / sqrt(V)}, where \code{V} is the residual cell variance (Agresti, 2007, 
+    \code{(observed - expected) / sqrt(V)}, where \code{V} is the residual cell variance (Agresti, 2007,
     section 2.4.5 for the case where \code{x} is a matrix, \code{n * p * (1 - p)} otherwise).}
 }
 \seealso{
@@ -124,7 +124,7 @@ M <- as.table(rbind(c(762, 327, 468), c(484, 239, 477)))
 dimnames(M) <- list(gender = c("M","F"),
                     party = c("Democrat","Independent", "Republican"))
 (Xsq <- chisq.test(M))  # Prints test summary
-Xsq$observed   # observed counts (same as M) 
+Xsq$observed   # observed counts (same as M)
 Xsq$expected   # expected counts under the null
 Xsq$residuals  # Pearson residuals
 Xsq$stdres     # standardized residuals

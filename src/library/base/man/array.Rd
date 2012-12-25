@@ -41,7 +41,7 @@ is.array(x)
   dimensions (attribute \code{"dimnames"}).
 
   A two-dimensional array is the same thing as a \code{\link{matrix}}.
-  
+
   One-dimensional arrays often look like vectors, but may be handled
   differently by some functions: \code{\link{str}} does distinguish
   them in recent versions of \R.
@@ -53,8 +53,8 @@ is.array(x)
   The \code{"dimnames"} attribute is optional: if present it is a list
   with one component for each dimension, either \code{NULL} or a
   character vector of the length given by the element of the
-  \code{"dim"} attribute for that dimension.  
-  
+  \code{"dim"} attribute for that dimension.
+
   \code{is.array} is a \link{primitive} function.
 }
 \value{

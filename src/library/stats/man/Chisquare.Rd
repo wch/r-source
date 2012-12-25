@@ -109,7 +109,7 @@ rchisq(n, df, ncp = 0)
 }
 \seealso{
   \link{Distributions} for other standard distributions.
-  
+
   A central chi-squared distribution with \eqn{n} degrees of freedom
   is the same as a Gamma distribution with \code{shape} \eqn{\alpha =
     n/2}{a = n/2} and \code{scale} \eqn{\sigma = 2}{s = 2}.  Hence, see

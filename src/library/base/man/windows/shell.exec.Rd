@@ -18,11 +18,11 @@ shell.exec(file)
 }
 \details{
   The path in \code{file} is interpreted relative to the current working
-  directory.  
-  
-  \R versions 2.13.0 and earlier interpreted \code{file} relative to 
-  the \R home directory, so a complete path was usually needed.  
-  
+  directory.
+
+  \R versions 2.13.0 and earlier interpreted \code{file} relative to
+  the \R home directory, so a complete path was usually needed.
+
   Encoded \samp{file://} URLs should be in the Windows standard form, e.g.
   \code{"file:///c:/path/to/file.txt"}.
 

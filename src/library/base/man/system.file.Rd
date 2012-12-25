@@ -39,9 +39,9 @@ system.file(\dots, package = "base", lib.loc = NULL, mustWork = FALSE)
   A character vector of positive length, containing the file paths
   that matched \code{\dots}, or the empty string, \code{""}, if none
   matched (unless \code{mustWork = TRUE}).
-  
+
   If matching the root of a package, there is no trailing separator.
-  
+
   \code{system.file()} with no arguments gives the root of the
   \pkg{base} package.
 }

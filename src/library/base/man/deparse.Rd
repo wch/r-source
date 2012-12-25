@@ -58,14 +58,14 @@ deparse(expr, width.cutoff = 60L,
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual
-  function definition, the source attribute of a function will never 
+  function definition, the source attribute of a function will never
   be deparsed as an attribute.
 
   Deparsing internal structures may not be accurate: for example the
   graphics display list recorded by \code{\link{recordPlot}} is not
   intended to be deparsed and \code{.Internal} calls will be shown as
   primitive calls.
-}   
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

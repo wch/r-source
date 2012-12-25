@@ -66,7 +66,7 @@
     \code{-(double.digits + 3)}.  Normally \code{-52}.}
   \item{double.neg.ulp.digits}{the largest negative integer \code{i}
     such that \code{1 - double.base ^ i != 1}, except that it is bounded
-    below by \code{-(double.digits + 3)}. Normally \code{-53}.} 
+    below by \code{-(double.digits + 3)}. Normally \code{-53}.}
   \item{double.exponent}{
     the number of bits (decimal places if \code{double.base} is 10) reserved
     for the representation of the exponent (including the bias or sign)

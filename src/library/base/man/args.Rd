@@ -21,7 +21,7 @@ args(name)
 \value{
   For a closure, a closure with identical formal argument list but an
   empty (\code{NULL}) body.
-  
+
   For a primitive, a closure with the documented usage and \code{NULL}
   body.  Note that some primitives do not make use of named arguments
   and match by position rather than name.

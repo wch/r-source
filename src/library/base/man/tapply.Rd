@@ -33,7 +33,7 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
   If \code{FUN} is not \code{NULL}, it is passed to
   \code{\link{match.fun}}, and hence it can be a function or a symbol or
   character string naming a function.
-  
+
   When \code{FUN} is present, \code{tapply} calls \code{FUN} for each
   cell that has any data in it.  If \code{FUN} returns a single atomic
   value for each such cell (e.g., functions \code{mean} or \code{var})

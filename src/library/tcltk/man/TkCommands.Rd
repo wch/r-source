@@ -96,17 +96,17 @@
 \alias{tkplace.info}
 \alias{tkplace.slaves}
 \alias{tkgetOpenFile}
-\alias{tkgetSaveFile} 
-\alias{tkchooseDirectory}        
-\alias{tkmessageBox}  
-\alias{tkdialog}        
-\alias{tkpopup}        
+\alias{tkgetSaveFile}
+\alias{tkchooseDirectory}
+\alias{tkmessageBox}
+\alias{tkdialog}
+\alias{tkpopup}
 \alias{tclfile.tail}
 \alias{tclfile.dir}
 \alias{tclopen}
 \alias{tclclose}
-\alias{tclputs}        
-\alias{tclread}        
+\alias{tclputs}
+\alias{tclread}
 
 \title{Tk non-widget commands}
 \description{
@@ -254,7 +254,7 @@ tclread(...)
   \item{\dots}{Handled via \code{.Tcl.args}}
 }
 \details{
-   
+
   \code{tcl} provides a generic interface to calling any Tk or Tcl
   command by simply running \code{.Tcl.args.objv} on the argument list
   and passing the
@@ -265,13 +265,13 @@ tclread(...)
 
   \code{tktitle} and its assignment form provides an alternate interface
   to Tk's \code{wm title}
-  
+
   There are far too many of these commands to describe them and their
   arguments in full.  Please refer to the Tcl/Tk documentation for details.
   With a few exceptions, the pattern is that Tk subcommands like
   \code{pack configure} are converted to function names like
   \code{tkpack.configure}, and Tcl subcommands are like
-  \code{tclfile.dir}.  
+  \code{tclfile.dir}.
 }
 \seealso{\code{\link{TclInterface}}, \code{\link{TkWidgets}},
   \code{\link{TkWidgetcmds}}}

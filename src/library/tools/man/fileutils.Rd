@@ -47,7 +47,7 @@ list_files_with_type(dir, type, all.files = FALSE,
 \details{
   \code{file_ext} returns the file (name) extensions.
   (Only purely alphanumeric extensions are recognized.)
-  
+
   \code{file_path_as_absolute} turns a possibly relative file path
   absolute, performing tilde expansion if necessary. As from \R 2.13.0
   this is a wrapper for \code{\link{normalizePath}}.  Currently,

@@ -61,7 +61,7 @@ gcinfo(verbose)
 
   The final two columns show the maximum space used since the last call
   to \code{gc(reset = TRUE)} (or since \R started).
-  
+
   \code{gcinfo} returns the previous value of the flag.
 }
 \seealso{
@@ -69,7 +69,7 @@ gcinfo(verbose)
 
   \code{\link{Memory}} on \R's memory management,
   and \code{\link{gctorture}} if you are an \R developer.
- 
+
   \code{\link{reg.finalizer}} for actions to happen at garbage
   collection.
 }

@@ -8,7 +8,7 @@
 \title{ Pairwise comparisons for proportions}
 \description{
   Calculate pairwise comparisons between pairs of proportions with
-  correction for multiple testing 
+  correction for multiple testing
 }
 \usage{
 pairwise.prop.test(x, n, p.adjust.method = p.adjust.methods, ...)

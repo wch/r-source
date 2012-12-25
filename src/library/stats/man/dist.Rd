@@ -185,7 +185,7 @@ stopifnot(Inf == dist(m2, method =  "euclidean"),
           Inf == dist(m2, method =  "manhattan"))
 ##  "Inf" is same as very large number:
 x1 <- x; x1[6] <- 1e100
-stopifnot(dist(cbind(x, y), method = "canberra") == 
+stopifnot(dist(cbind(x, y), method = "canberra") ==
     print(dist(cbind(x1, y), method = "canberra")))
 
 ## 2)

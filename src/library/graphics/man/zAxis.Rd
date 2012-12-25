@@ -31,7 +31,7 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
 \value{
   The numeric locations on the axis scale at which tick marks were drawn
   when the plot was first drawn (see \sQuote{Details}).
-  
+
   This function is usually invoked for its side effect, which is to add
   an axis to an already existing plot.
 }

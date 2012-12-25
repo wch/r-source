@@ -44,7 +44,7 @@ strptime(x, format, tz = "")
   The \code{format} and \code{as.character} methods and \code{strftime}
   convert objects from the classes \code{"POSIXlt"} and \code{"POSIXct"}
   (not \code{strftime}) to character vectors.
-  
+
   \code{strptime} converts character vectors to class \code{"POSIXlt"}:
   its input \code{x} is first converted by \code{\link{as.character}}.
   Each input string is processed as far as necessary for the format
@@ -120,7 +120,7 @@ strptime(x, format, tz = "")
       to be valid (interpreted as 1BC): see
       \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standard
       also says that years before 1582 in its calendar should only be used
-      with agreement of the parties involved.} 
+      with agreement of the parties involved.}
     \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
       \code{-0800} is 8 hours behind UTC.}
     \item{\code{\%Z}}{(output only.) Time zone as a character
@@ -128,11 +128,11 @@ strptime(x, format, tz = "")
   }
   Where leading zeros are shown they will be used on output but are
   optional on input.
-  
+
   Note that when \code{\%z} or \code{\%Z} is used for output with an
   object with an assigned timezone an attempt is made to use the values
   for that timezone --- but it is not guaranteed to succeed.
-  
+
   Also defined in the current standards but less widely implemented
   (e.g. not for output on Windows) are
   \describe{
@@ -208,11 +208,11 @@ strptime(x, format, tz = "")
   standard which expresses a day as \code{"2001-02-28"} and a time as
   \code{"14:01:02"} using leading zeroes as here.  The ISO form uses no
   space to separate dates and times.
-  
+
   For \code{strptime} the input string need not specify the date
   completely: it is assumed that unspecified seconds, minutes or hours
   are zero, and an unspecified year, month or day is the current one.
-  
+
   If the timezone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
 
@@ -238,7 +238,7 @@ strptime(x, format, tz = "")
   \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the
   current official version, see
   \url{http://www.iso.org/iso/en/prods-services/popstds/datesandtime.html}.
-  
+
   The POSIX 1003.1 standard, which is in some respects stricter than ISO 8601.
 }
 \seealso{

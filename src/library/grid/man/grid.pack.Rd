@@ -32,7 +32,7 @@ packGrob(frame, grob, side = NULL,
 }
 \arguments{
   \item{gPath}{ A gPath object, which specifies a frame on the
-    display list.} 
+    display list.}
   \item{frame}{ An object of class \code{frame}, typically the output
   from a call to \code{grid.frame}. }
   \item{grob}{ An object of class \code{grob}.  The object to be
@@ -74,10 +74,10 @@ packGrob(frame, grob, side = NULL,
 \details{
   \code{packGrob} modifies the given frame grob and returns the modified
   frame grob.
-  
+
   \code{grid.pack} destructively modifies a frame grob on the display
   list (and redraws the display list if \code{redraw} is \code{TRUE}).
-  
+
   These are (meant to be) very flexible functions.  There are many
   different
   ways to specify where the new object is to be added relative to the

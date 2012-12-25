@@ -40,7 +40,7 @@ promptMethods(f, filename = NULL, methods)
   If \code{filename} is \code{FALSE}, the text created is returned,
   presumably to be inserted some other documentation file, such as the
   documentation of the generic function itself (see
-  \code{\link{prompt}}). 
+  \code{\link{prompt}}).
 
   If \code{filename} is \code{NA}, a list-style representation of the
   documentation shell is created and returned.  Writing the shell to a

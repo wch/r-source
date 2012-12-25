@@ -46,7 +46,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 
   Complex values are sorted first by the real part, then the imaginary
   part.
-  
+
   The sort order for character vectors will depend on the collating
   sequence of the locale in use: see \code{\link{Comparison}}.
 
@@ -79,7 +79,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \code{sort.list} can get called by mistake as a method for
   \code{\link{sort}} with a list argument, and gives a suitable error
   message for list \code{x}.
-  
+
   There is a historical difference in behaviour for \code{na.last = NA}:
   \code{sort.list} removes the \code{NA}s and then computes the order
   amongst the remaining elements: \code{order} computes the order
@@ -90,7 +90,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
  }
    both sort the non-\code{NA} values of \code{x}.
 }
-  
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

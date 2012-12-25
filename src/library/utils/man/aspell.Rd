@@ -44,7 +44,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
   \url{http://lasr.cs.ucla.edu/geoff/ispell.html}, respectively, for
   obtaining the Aspell, Hunspell and (International) Ispell programs and
   dictionaries.
-  
+
   The currently available built-in filters are \code{"Rd"}
   (corresponding to \code{\link{RdTextFilter}}), \code{"Sweave"}
   (corresponding to \code{\link{SweaveTeXFilter}}), \code{"R"},
@@ -89,7 +89,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
 }
 \seealso{
   \link{aspell-utils} for utilities for spell checking packages.
-  
+
   Package \pkg{Aspell} on Omegahat
   (\url{http://www.omegahat.org/Aspell}) for a fine-grained R interface
   to the Aspell library.

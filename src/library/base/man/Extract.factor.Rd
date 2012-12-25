@@ -31,10 +31,10 @@
 \details{
   When unused levels are dropped the ordering of the remaining levels is
   preserved.
-  
+
   If \code{value} is not in \code{levels(x)}, a missing value is
   assigned with a warning.
-  
+
   Any \code{\link{contrasts}} assigned to the factor are preserved
   unless \code{drop = TRUE}.
 

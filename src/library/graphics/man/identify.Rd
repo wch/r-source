@@ -50,7 +50,7 @@ identify(x, \dots)
 \details{
   \code{identify} is a generic function, and only the default method is
   described here.
-  
+
   \code{identify} is only supported on screen devices such as
   \code{X11}, \code{windows} and \code{quartz}.  On other devices the
   call will do nothing.
@@ -60,7 +60,7 @@ identify(x, \dots)
   the point has already been identified or the click is not
   near any of the points a message is printed immediately on
   the \R console.
-  
+
   If \code{plot} is \code{TRUE}, the point is labelled with the
   corresponding element of \code{labels}.  If \code{atpen} is false (the
   default) the labels are placed below, to the left, above or to the
@@ -81,14 +81,14 @@ identify(x, \dots)
   and selecting \sQuote{Stop} from the menu, or from the \sQuote{Stop}
   menu on the graphics window.
 #endif
- 
+
   On most devices which support \code{identify}, successful selection of
   a point is indicated by a bell sound unless
   \code{\link{options}(locatorBell = FALSE)} has been set.
 
   If the window is resized or hidden and then exposed before the identification
   process has terminated, any labels drawn by \code{identify}
-  will disappear.  These will reappear once the identification process has 
+  will disappear.  These will reappear once the identification process has
   terminated and the window is resized or hidden and exposed again.
   This is because the labels drawn by \code{identify} are not
   recorded in the device's display list until the identification process has

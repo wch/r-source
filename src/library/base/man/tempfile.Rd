@@ -45,7 +45,7 @@ tempdir()
   The file name is made by concatenating the path given by
   \code{tmpdir}, the \code{pattern} string, a random string in hex and
   a suffix of \code{fileext}.
-  
+
   By default, \code{tmpdir} will be the directory given by
   \code{tempdir()}.  This will be a subdirectory of the per-session
   temporary directory found by the following rule when the \R session is

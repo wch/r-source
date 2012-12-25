@@ -24,7 +24,7 @@ force(x)
 \note{
   This is semantic sugar: just evaluating the symbol will do the
   same thing (see the examples).
-  
+
   \code{force} does not force the evaluation of other
   \link{promises}.  (It works by forcing the promise that
   is created when the actual arguments of a call are matched to the

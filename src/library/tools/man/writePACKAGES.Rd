@@ -58,7 +58,7 @@ write_PACKAGES(dir = ".", fields = NULL,
   extracts information from each package's \file{DESCRIPTION} file, and
   writes this information into the \file{PACKAGES} and
   \file{PACKAGES.gz} files.
-  
+
   Including non-latest versions of packages is only useful if they have
   less constraining version requirements, so for example
   \code{latestOnly = FALSE} could be used for a source repository when
@@ -74,7 +74,7 @@ write_PACKAGES(dir = ".", fields = NULL,
   in \R 2.10.0 and can be used by \code{\link{download.packages}}.  If
   the file names are not of the standard form, use
   \code{addFiles = TRUE}.
-  
+
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read
   all \file{DESCRIPTION} files contained in the (zipped) binary packages
   for Windows in the given directory \code{dir}, and builds files
@@ -88,7 +88,7 @@ write_PACKAGES(dir = ".", fields = NULL,
 \note{
   Processing \file{.tar.gz} archives to extract the \file{DESCRIPTION}
   files is quite slow.
-  
+
   This function can be useful on other OSes to prepare a repository to
   be accessed by Windows machines, so \code{type = "win.binary"} should
   work on all OSes.

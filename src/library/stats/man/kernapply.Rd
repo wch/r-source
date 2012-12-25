@@ -11,7 +11,7 @@
 \alias{kernapply.tskernel}
 \alias{kernapply.vector}
 \description{
-  \code{kernapply} computes the convolution between an input sequence 
+  \code{kernapply} computes the convolution between an input sequence
   and a specific kernel.
 }
 \usage{

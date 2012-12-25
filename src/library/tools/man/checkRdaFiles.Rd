@@ -15,7 +15,7 @@
   compressed (and if so in what format).
 
   Usually such files have extension \file{.rda} or \file{.RData}, hence
-  the name of the function. 
+  the name of the function.
 }
 \usage{
 checkRdaFiles(paths)

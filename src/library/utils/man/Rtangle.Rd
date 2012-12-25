@@ -54,7 +54,7 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
 ###################################################
 }
 using either the chunk label or the file name and line numbers.
-  
+
   Note that this driver does not simple extract the code chunks verbatim
   because code chunks can re-use earlier chunks.
 }
@@ -64,25 +64,25 @@ using either the chunk label or the file name and line numbers.
   \describe{
     \item{engine:}{character string (\code{"R"}).  Only chunks with
       \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
-    
+
     \item{keep.source:}{logical (\code{TRUE}).  If \code{keep.source ==
       TRUE} the original source is copied to the file.  Otherwise,
       deparsed source is output.}
-    
+
     \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk
       is copied across but commented out.}
-    
+
     \item{prefix}{Used if \code{split = TRUE}.  See \code{prefix.string}.}
-    
+
     \item{prefix.string:}{a character string, default is the name of the
       source file (without extension).  Used if \code{split = TRUE} as
       the prefix for the filename if the chunk has no label, or if it
       has a label and \code{prefix = TRUE}.  Note that this is used as
       part of filenames, so needs to be portable.}
-    
+
     \item{show.line.nos}{logical (\code{FALSE}).  Should the output be
       annotated with comments showing the line number of the first code line
-      of the chunk?} 
+      of the chunk?}
   }
 }
 

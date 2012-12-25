@@ -43,7 +43,7 @@
   Reply to W. B. Joyner & D. M. Boore's \dQuote{Comments on: New
     attenuation relations for peak and expected accelerations for peak
     and expected accelerations of strong ground motion},
-  \emph{Bull. Seism. Soc. Am.}, \bold{73}, 1481--1483. 
+  \emph{Bull. Seism. Soc. Am.}, \bold{73}, 1481--1483.
 
   Brillinger, D. R. and Preisler, H. K. (1984)
   An exploratory analysis of the Joyner-Boore attenuation data,

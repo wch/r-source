@@ -91,7 +91,7 @@ getValidity(ClassDef)
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
- Springer (For the original S4 version.) 
+ Springer (For the original S4 version.)
 }
 \seealso{\code{\link{setClass}};
   class \code{\linkS4class{classRepresentation}}.

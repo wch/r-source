@@ -32,7 +32,7 @@ citFooter(...)
     respectively.
     See section \bold{Entry Fields} in \code{\link{bibentry}} for
     details.
-    
+
     For \code{citHeader} and \code{citFooter}, character strings.
   }
 }

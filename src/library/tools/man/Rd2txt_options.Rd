@@ -15,8 +15,8 @@ This function sets various options for displaying text help.
 Rd2txt_options(...)
 }
 \arguments{
-  \item{\dots}{A list containing named options, or 
-  options passed as individual named arguments.  
+  \item{\dots}{A list containing named options, or
+  options passed as individual named arguments.
   See below for currently defined ones.}
 }
 \details{
@@ -33,7 +33,7 @@ Rd2txt_options(...)
       nested section level.}
     \item{itemBullet}{(default \code{"* "}, with the asterisk replaced by a
       Unicode bullet in UTF-8 and most Windows locales):
-      The symbol to use as a bullet in itemized lists.} 
+      The symbol to use as a bullet in itemized lists.}
     \item{enumFormat}{:  A function to format item numbers in enumerated lists.}
     \item{showURLs}{(default \code{FALSE}):  Whether to show URLs when
       expanding \verb{\href} tags.}
@@ -43,7 +43,7 @@ Rd2txt_options(...)
       section titles with underlines (via backspacing).}
   }
 }
-\value{ 
+\value{
   If called with no arguments, returns all option settings in a list.
   Otherwise, it changes the named settings and invisibly returns their
   previous values.

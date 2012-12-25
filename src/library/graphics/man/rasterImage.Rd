@@ -33,7 +33,7 @@ rasterImage(image,
   100 to 200 then \code{xleft} should be larger than 100 and \code{xright}
   should be less than 200.  The position vectors will be recycled to the
   length of the longest.
-  
+
   Plotting raster images is not supported on all devices and may have
   limitations where supported, for example (e.g. for \code{postscript}
   and \code{X11(type = "Xlib")}) is restricted to opaque colors).

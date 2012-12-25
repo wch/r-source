@@ -15,9 +15,9 @@ bug.report(subject = "",  address,
   \item{subject}{Subject of the email.}
   \item{address}{Recipient's email address, where applicable: for
     package bug reports sent by email this defaults to the address of
-    the package maintainer (the first if more than one is listed).} 
+    the package maintainer (the first if more than one is listed).}
   \item{file}{filename to use (if needed) for setting up the email.}
-  \item{package}{Optional character vector naming a single package which is 
+  \item{package}{Optional character vector naming a single package which is
     the subject of the bug report.}
   \item{lib.loc}{A character vector describing the location of \R
     library trees in which to search for the package, or \code{NULL}.
@@ -34,14 +34,14 @@ bug.report(subject = "",  address,
 \details{
   If \code{package} is \code{NULL} or a base package, this opens the R
   bugs tracker at \url{http://bugs.r-project.org/}.
-  
+
   If \code{package} is specified, it is assumed that the bug report is
   about that package, and parts of its \file{DESCRIPTION} file are
   added to the standard information.  If the package has a
   \code{BugReports} field in the \file{DESCRIPTION} file, that URL
   will be opened using \code{\link{browseURL}}, otherwise an email
   directed to the package maintainer will be generated using
-  \code{\link{create.post}}.  
+  \code{\link{create.post}}.
 }
 \value{Nothing useful.}
 \section{When is there a bug?}{
@@ -143,7 +143,7 @@ bug.report(subject = "",  address,
   \emph{before} \code{bug.report}.
 
   \code{\link{create.post}}, which handles emailing reports.
-  
+
   The R FAQ, also \code{\link{sessionInfo}()} from which you may add
   to the bug report.
 }

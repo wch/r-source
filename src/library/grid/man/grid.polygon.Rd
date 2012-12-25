@@ -33,7 +33,7 @@ polygonGrob(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
     locations which make up separate polygons.}
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
@@ -48,7 +48,7 @@ polygonGrob(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
 \details{
   Both functions create a polygon grob (a graphical object describing a
   polygon), but only \code{grid.polygon}
-  draws the polygon (and then only if \code{draw} is \code{TRUE}).  
+  draws the polygon (and then only if \code{draw} is \code{TRUE}).
 }
 \author{Paul Murrell}
 \seealso{

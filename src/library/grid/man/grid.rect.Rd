@@ -18,7 +18,7 @@ grid.rect(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
           gp=gpar(), draw = TRUE, vp = NULL)
 rectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          width = unit(1, "npc"), height = unit(1, "npc"),
-         just = "centre", hjust = NULL, vjust = NULL, 
+         just = "centre", hjust = NULL, vjust = NULL,
          default.units = "npc", name = NULL,
          gp=gpar(), vp = NULL)
 }
@@ -27,7 +27,7 @@ rectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   \item{y}{A numeric vector or unit object specifying y-location.}
   \item{width}{A numeric vector or unit object specifying width.}
   \item{height}{A numeric vector or unit object specifying height.}
-  \item{just}{The justification of the rectangle 
+  \item{just}{The justification of the rectangle
     relative to its (x, y) location.  If there are two values, the first
     value specifies horizontal justification and the second value specifies
     vertical justification.  Possible string values are: \code{"left"},
@@ -41,7 +41,7 @@ rectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     If specified, overrides the \code{just} setting.}
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
@@ -54,7 +54,7 @@ rectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   Both functions create a rect grob (a graphical object describing
   rectangles), but only \code{grid.rect}
   draws the rectangles (and then only if \code{draw} is \code{TRUE}).
-  
+
 }
 \value{
   A rect grob.  \code{grid.rect} returns the value invisibly.

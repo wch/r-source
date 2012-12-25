@@ -24,8 +24,8 @@
     }
     \item{state}{
       a factor with levels
-      \code{treated} 
-      \code{untreated} 
+      \code{treated}
+      \code{untreated}
     }
   }
 }
@@ -45,7 +45,7 @@
 
   Treloar, M. A. (1974), \emph{Effects of Puromycin on
     Galactosyltransferase in Golgi Membranes}, M.Sc. Thesis, U. of
-  Toronto. 
+  Toronto.
 }
 
 \seealso{

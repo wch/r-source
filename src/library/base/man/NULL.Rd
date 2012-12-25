@@ -20,7 +20,7 @@ is.null(x)
   whose value is undefined.
 
   \code{as.null} ignores its argument and returns the value \code{NULL}.
-  
+
   \code{is.null} returns \code{TRUE} if its argument
   is \code{NULL} and \code{FALSE} otherwise.
 }

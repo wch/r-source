@@ -19,7 +19,7 @@ DLL.version(path)
 }
 \value{
   If the DLL does not exist, \code{NULL}.
-  
+
   A character vector of length two, giving the DLL version and the version of
   \R used to build the DLL.  If the information is not available, the
   corresponding string is empty.

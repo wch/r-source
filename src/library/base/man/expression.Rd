@@ -34,7 +34,7 @@ as.expression(x, \dots)
   subsetted by \code{[}, \code{[[} or \code{$}, the latter two extracting
   individual calls etc.  The replacement forms of these operators can be
   used to replace or delete elements.
-  
+
   \code{expression} and \code{is.expression} are \link{primitive} functions.
   \code{expression} is \sQuote{special}: it does not evaluate its arguments.
 }

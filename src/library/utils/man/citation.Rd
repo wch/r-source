@@ -37,7 +37,7 @@ readCitationFile(file, meta = NULL)
   authors have invested a lot of time and effort in creating \R as it is
   today.  Please give credit where credit is due and cite \R and \R
   packages when you use them for data analysis.
-  
+
   Execute function \code{citation()} for information on how to cite the
   base R system in publications.  If the name of a non-base package is
   given, the function either returns the information contained in the
@@ -64,7 +64,7 @@ readCitationFile(file, meta = NULL)
   source file and may contain arbitrary R commands including
   conditionals and computations.  Function \code{readCitationFile()} is
   used by \code{citation()} to extract the information in
-  \file{CITATION} files.  The file is \code{source()}ed by the R 
+  \file{CITATION} files.  The file is \code{source()}ed by the R
   parser in a temporary environment and all resulting bibliographic
   objects (specifically, of class \code{"\link{bibentry}"}) are
   collected.

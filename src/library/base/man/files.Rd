@@ -109,7 +109,7 @@ Sys.junction(from, to)
   \sQuote{\link{umask}}.  Other security attributes such as ACLs are not
   copied.  On a POSIX filesystem the targets of symbolic links will be
   copied rather than the links themselves.
-  
+
   \code{file.symlink} and \code{file.link} make symbolic and hard links
   on those file systems which support them.  For \code{file.symlink} the
   \code{to} argument can specify a single existing directory.  (Unix and
@@ -144,7 +144,7 @@ Sys.junction(from, to)
   relative paths of the form \file{d:path}: try \file{d:./path}
   instead.  In particular, \file{d:} is not recognized as a directory.
   Nor are \samp{\\\\?\\} prefixes (and similar) supported.
-  
+
   Most of these functions accept UTF-8 filepaths not valid in the
   current locale.
 
@@ -168,7 +168,7 @@ Sys.junction(from, to)
   or more junctions: \code{to} should either specify a single existing
   directory or a set of non-existent file paths of the same length as
   \code{from}.
-  
+
   A version of symbolic linking to files/directories was implemented
   starting with Vista, and \code{file.symlink} makes use of that
   interface since \R 2.15.0.  However, it has restrictions (apart from
@@ -206,7 +206,7 @@ Sys.junction(from, to)
 
   \url{http://en.wikipedia.org/wiki/Hard_link} and
   \url{http://en.wikipedia.org/wiki/Symbolic_link} for the concepts of
-  links and their limitations. 
+  links and their limitations.
 }
 
 \examples{

@@ -13,8 +13,8 @@
 \alias{tkfile.dir}
 \alias{tkopen}
 \alias{tkclose}
-\alias{tkputs}        
-\alias{tkread}        
+\alias{tkputs}
+\alias{tkread}
 
 \title{Defunct Functions in Package \pkg{tcltk}}
 \description{

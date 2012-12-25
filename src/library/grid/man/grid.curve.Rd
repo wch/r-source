@@ -17,7 +17,7 @@
 grid.curve(...)
 curveGrob(x1, y1, x2, y2, default.units = "npc",
           curvature = 1, angle = 90, ncp = 1, shape = 0.5,
-          square = TRUE, squareShape = 1, 
+          square = TRUE, squareShape = 1,
           inflect = FALSE, arrow = NULL, open = TRUE,
           debug = FALSE,
           name = NULL, gp = gpar(), vp = NULL)

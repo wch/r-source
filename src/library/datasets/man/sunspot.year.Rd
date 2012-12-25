@@ -10,7 +10,7 @@
   Yearly Sunspot Data, 1700--1988
 }
 \description{
-  Yearly numbers of sunspots. 
+  Yearly numbers of sunspots.
 }
 \usage{
 sunspot.year
@@ -21,6 +21,6 @@ sunspot.year
 }
 \source{
   H. Tong (1996)
-  \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p. 471. 
+  \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p. 471.
 }
 \keyword{datasets}

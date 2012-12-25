@@ -28,7 +28,7 @@ contrib.url(repos, type = getOption("pkgType"))
   \code{\link{available.packages}}, \code{\link{download.packages}},
   \code{\link{install.packages}}.
 
-  The \sQuote{R Installation and Administration} manual for how to 
+  The \sQuote{R Installation and Administration} manual for how to
   set up a repository.
 }
 \keyword{utilities}

@@ -32,7 +32,7 @@ tsSmooth(object, \dots)
 }
 
 \author{ B. D. Ripley }
- 
+
 \seealso{
   \code{\link{KalmanSmooth}}, \code{\link{StructTS}}.
 

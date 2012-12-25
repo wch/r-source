@@ -42,7 +42,7 @@
   otherwise): use forward slashes and no spaces for the path to a
   writable directory.
 #endif
-  
+
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
   names of package archive files: these are then extracted to a
@@ -66,13 +66,13 @@
   sections, and can be faster on very large tarballs.   Setting
   \env{R_INSTALL_TAR} to \samp{tar.exe} has been needed to overcome
   permissions issues on some Windows systems.)
-  
+
   The package sources can be cleaned up prior to installation by
   \option{--preclean} or after by \option{--clean}: cleaning is
   essential if the sources are to be used with more than one
   architecture or platform.
-#ifdef unix  
-  
+#ifdef unix
+
   Some package sources contain a \file{configure} script that can be
   passed arguments or variables via the option \option{--configure-args}
   and \option{--configure-vars}, respectively, if necessary.  The latter
@@ -94,14 +94,14 @@
 
   For details of the locking which is done, see the section
   \sQuote{Locking} in the help for \code{\link{install.packages}}.
-  
+
 #ifdef windows
-  
+
   Option \option{--build} can be used to zip up the installed package
   for distribution.
 #endif
 #ifdef unix
-  
+
   Some platforms (notably Mac OS X and Windows) support
   sub-architectures in which binaries for different CPUs are installed
   within the same library tree. For such installations, the default
@@ -121,7 +121,7 @@
   (see the \code{keep.source} argument to \code{\link{source}}): this
   can be enabled by the option \option{--with-keep.source} or by setting
   environment variable \env{R_KEEP_PKG_SOURCE} to \code{yes}.
-  
+
   Use \command{R CMD INSTALL --help} for concise usage information,
   including all the available options.
 }
@@ -132,7 +132,7 @@
   processed before any packages, and where options have conflicting
   effects the last one will win.
 #ifdef unix
-  
+
   Some parts of the operation of \code{INSTALL} depend on the \R
   temporary directory (see \code{\link{tempdir}}, usually under
   \file{/tmp}) having both write and execution access to the account

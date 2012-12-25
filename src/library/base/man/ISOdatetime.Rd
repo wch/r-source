@@ -26,7 +26,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \code{strptime} that differ only in their defaults and that
   \code{ISOdate} sets UTC as the timezone.  For dates without times it
   would normally be better to use the \code{"\link{Date}"} class.
-  
+
   The main arguments will be recycled using the usual recycling rules.
 }
 \value{

@@ -110,7 +110,7 @@ In this case,
 the recommended approach is to define the S3 method and also supply the
 identical function as the definition of the S4 method.
 If the S3 generic function was \code{f3(x, ...)} and the S4 class for
-the new method was 
+the new method was
 \code{"myClass"}:
 
  \code{f3.myClass <- function(x, ...) { ..... }}
@@ -233,7 +233,7 @@ superclasses exist.
 A call to \code{\link{setClassUnion}} creates a union class that
 is a
 superclass of each of the members of the union.
- A call to 
+ A call to
 \code{\link{setIs}} can create an inheritance relationship that is not the simple one of
 containing the superclass representation in the new class.
 Arguments \code{coerce} and \code{replace} supply methods to convert
@@ -344,7 +344,7 @@ A call to a generic function therefore has two contexts:  one for the
 function and a second for the method.
 The argument objects will be copied to the second context, but not any
 local objects created in a nonstandard generic function.
-The other important distinction is that the parent 
+The other important distinction is that the parent
 (\dQuote{enclosing}) environment of the second context is the environment
 of the method as a function, so that all \R programming techniques
 using such environments apply to method definitions as ordinary functions.
@@ -503,7 +503,7 @@ mydf1[1:2, ] # a data frame object (with extra attributes)
 
 setMethod("[",
     signature(x = "myFrame"),
-    function (x, i, j, ..., drop = TRUE) 
+    function (x, i, j, ..., drop = TRUE)
     {
         S3Part(x) <- callNextMethod()
         x@timestamps <- c(Sys.time(), as.POSIXct(x@timestamps))

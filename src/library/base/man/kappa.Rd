@@ -82,7 +82,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 \source{
   The LAPACK routines \code{DTRCON} and \code{ZTRCON} and the LINPACK
   routine \code{DTRCO}.
-  
+
   LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
   \url{http://www.netlib.org/linpack} and their guides are listed
   in the references.
@@ -92,7 +92,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
-  
+
  Chambers, J. M. (1992)
   \emph{Linear models.}
   Chapter 4 of \emph{Statistical Models in S}

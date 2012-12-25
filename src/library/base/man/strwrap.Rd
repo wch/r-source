@@ -41,7 +41,7 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0,
   marks (thought as representing sentence ends) are preserved.
   Currently, possible sentence ends at line breaks are not considered
   specially.
-  
+
   Indentation is relative to the number of characters in the prefix
   string.
 }

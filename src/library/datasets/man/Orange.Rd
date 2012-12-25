@@ -31,10 +31,10 @@
     }
   }
 }
-\details{   
+\details{
   This dataset was originally part of package \code{nlme}, and that has
   methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
-  \code{print}) for its grouped-data classes. 
+  \code{print}) for its grouped-data classes.
 }
 \source{
   Draper, N. R. and Smith, H. (1998), \emph{Applied Regression Analysis

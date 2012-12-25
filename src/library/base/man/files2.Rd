@@ -48,9 +48,9 @@ Sys.umask(mode = NA)
   OS-dependent, and it is unsafe to assume that more than three octal
   digits will be used.  For more details see your OS's documentation on the
   system call \code{mkdir}, e.g. \command{man 2 mkdir} (and not that on
-  the command-line utility of that name). 
+  the command-line utility of that name).
 #endif
-  
+
   One of the idiosyncrasies of Windows is that directory creation may
   report success but create a directory with a different name, for
   example \code{dir.create("G.S.")} creates \file{"G.S"}.  This is
@@ -59,7 +59,7 @@ Sys.umask(mode = NA)
   with a trailing space.
   %% http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx
   %% is vague about this!
-  
+
   \code{Sys.chmod} sets the file permissions of one or more files.
 #ifdef unix
   It may not be supported on a system (when a warning is issued).
@@ -80,7 +80,7 @@ Sys.umask(mode = NA)
   more extensive system of file permissions on some file systems
   (e.g. versions of NTFS) which are unrelated to this system call.
 #endif
-  
+
   \code{Sys.umask} sets the \code{umask} and returns the previous value:
   as a special case \code{mode = NA} just returns the current value.
 #ifdef unix
@@ -99,7 +99,7 @@ Sys.umask(mode = NA)
   How modes are handled depends on the file system, even on Unix-alikes
   (although their documentation is often written assuming a POSIX file
   system).  So treat documentation cautiously if you are using, say, a
-  FAT/FAT32 or network-mounted file system. 
+  FAT/FAT32 or network-mounted file system.
 }
 \value{
   \code{dir.create} and \code{Sys.chmod} return invisibly a logical vector
@@ -113,7 +113,7 @@ Sys.umask(mode = NA)
   \code{Sys.umask} returns the previous value of the \code{umask},
   as a length-one object of class \code{"\link{octmode}"}: the
   visibility flag is off unless \code{mode} is \code{NA}.
-  
+
   See also the section in the help for \code{\link{file.exists}} on
   case-insensitive file systems for the interpretation of \code{path}
   and \code{paths}.
@@ -124,8 +124,8 @@ Sys.umask(mode = NA)
   relative paths of the form \file{d:path}: try \file{d:./path}
   instead.  In particular, \file{d:} is not recognized as a directory.
   Nor are \samp{\\\\?\\} prefixes (and similar) supported.
-  
-  UTF-8-encoded dirnames not valid in the current locale can be used.  
+
+  UTF-8-encoded dirnames not valid in the current locale can be used.
 }
 #endif
 

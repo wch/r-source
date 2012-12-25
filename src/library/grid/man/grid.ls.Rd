@@ -11,7 +11,7 @@
 \title{ List the names of grobs or viewports }
 \description{
   Returns a listing of the names of grobs or viewports.
-  
+
   This is a generic function with methods for grobs (including
   gTrees) and viewports (including vpTrees).
 }
@@ -19,9 +19,9 @@
 grid.ls(x=NULL, grobs=TRUE, viewports=FALSE, fullNames=FALSE,
         recursive=TRUE, print=TRUE, flatten=TRUE, ...)
 
-nestedListing(x, gindent="  ", vpindent=gindent) 
-pathListing(x, gvpSep=" | ", gAlign=TRUE) 
-grobPathListing(x, ...) 
+nestedListing(x, gindent="  ", vpindent=gindent)
+pathListing(x, gvpSep=" | ", gAlign=TRUE)
+grobPathListing(x, ...)
 }
 \arguments{
   \item{x}{A grob or viewport or \code{NULL}.  If \code{NULL}, the current
@@ -58,7 +58,7 @@ grobPathListing(x, ...)
   are listed.
 
   Otherwise, \code{x} should be a grob or a viewport.
-  
+
   The default behaviour of this function is to print information
   about the grobs in the current scene.  It is also possible to
   add information about the viewports in the scene.  By default,
@@ -112,7 +112,7 @@ grid.ls(sampleGTree, view=TRUE, print=nestedListing, gindent="--")
 grid.ls(sampleGTree, view=TRUE, print=pathListing)
 # path listing, without grobs aligned
 grid.ls(sampleGTree, view=TRUE, print=pathListing, gAlign=FALSE)
-# grob path listing 
+# grob path listing
 grid.ls(sampleGTree, view=TRUE, print=grobPathListing)
 # path listing, grobs only
 grid.ls(sampleGTree, print=pathListing)

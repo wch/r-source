@@ -47,7 +47,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   containing the string to be plotted, and a selection of the optional
   modifying \link{graphical parameters} \code{cex=}, \code{col=} and
   \code{font=}.  Other objects will be coerced by
-  \code{\link{as.graphicsAnnot}}. 
+  \code{\link{as.graphicsAnnot}}.
 
   The position of \code{main} defaults to being vertically centered in
   (outer) margin 3 and justified horizontally according to

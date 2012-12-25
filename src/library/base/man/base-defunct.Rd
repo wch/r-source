@@ -221,8 +221,8 @@ Sys.putenv(\dots)
   \code{\link{packageDescription}} in \pkg{utils}.
 
   \code{loadURL} has been superseded by \code{\link{load}(url())}.
-  
-  \code{delay} has been replaced by \code{\link{delayedAssign}}. 
+
+  \code{delay} has been replaced by \code{\link{delayedAssign}}.
   Unevaluated promises should never be visible.
 
   \code{write.table0} was an \R-level version of \code{write.table}
@@ -242,7 +242,7 @@ Sys.putenv(\dots)
 
   \code{unix} was a \emph{deprecated} (since the 1990s) alternative to
   \code{\link{system}}, available for backwards compatibility.
-  
+
   \code{gammaCody} was the \eqn{(\Gamma)} function from the Specfun
   package used at C level in the Bessel code.  It may have been
   somewhat faster but less precise and/or robust than \R's standard
@@ -258,11 +258,11 @@ Sys.putenv(\dots)
 
   \code{.First.lib} was the load/attach hook for packages without
   namespaces: use \code{\link{.onLoad}} or \code{\link{.onAttach}} instead.
-  
+
   \code{mem.limits} reported on the old-style limits on the number of
   cons cells and size of the vector heap.  These are no longer limited
   except by overall memory limits.
-  
+
   \code{.readRDS} and \code{.saveRDS}, were internal-only versions (and
   the only versions available prior to \R 2.13.0) of
   \code{\link{.readRDS}} and \code{\link{.saveRDS}}.

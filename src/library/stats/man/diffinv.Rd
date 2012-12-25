@@ -10,7 +10,7 @@
 \title{Discrete Integration: Inverse of Differencing}
 \description{
   Computes the inverse function of the lagged differences function
-  \code{\link{diff}}. 
+  \code{\link{diff}}.
 }
 \usage{
 diffinv(x, ...)
@@ -35,7 +35,7 @@ diffinv(x, ...)
 }
 \value{
   A numeric vector, matrix, or time series (the latter for the
-  \code{"ts"} method) representing the discrete integral of \code{x}. 
+  \code{"ts"} method) representing the discrete integral of \code{x}.
 }
 \author{A. Trapletti}
 \seealso{

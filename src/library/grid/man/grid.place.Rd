@@ -21,7 +21,7 @@ placeGrob(frame, grob, row = NULL, col = NULL)
 }
 \arguments{
   \item{gPath}{ A gPath object, which specifies a frame on the
-    display list.} 
+    display list.}
   \item{frame}{ An object of class \code{frame}, typically the output
   from a call to \code{grid.frame}. }
   \item{grob}{ An object of class \code{grob}.  The object to be
@@ -35,10 +35,10 @@ placeGrob(frame, grob, row = NULL, col = NULL)
 \details{
   \code{placeGrob} modifies the given frame grob and returns the modified
   frame grob.
-  
+
   \code{grid.place} destructively modifies a frame grob on the display
   list (and redraws the display list if \code{redraw} is \code{TRUE}).
-  
+
 }
 \value{
   \code{placeGrob} returns a frame grob, but \code{grid.place} returns

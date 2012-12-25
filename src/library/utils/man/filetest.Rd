@@ -18,7 +18,7 @@ file_test(op, x, y)
   \item{op}{a character string specifying the test to be performed.
     Unary tests (only \code{x} is used) are \code{"-f"} (existence and
     not being a directory), \code{"-d"} (existence and directory) and
-    \code{"-x"} (executable as a file or searchable as a directory). 
+    \code{"-x"} (executable as a file or searchable as a directory).
     Binary tests are \code{"-nt"} (strictly newer than, using the modification
     dates) and \code{"-ot"} (strictly older than): in both cases the
     test is false unless both files exist.}
@@ -30,13 +30,13 @@ file_test(op, x, y)
   Unix-alike this requires execute permission on all of the directories in
   the path that leads to the file, but no permissions on the file
   itself.
-  
+
   For the meaning of \code{"-x"} on Windows see \code{\link{file.access}}.
 }
 \seealso{
   \code{\link{file.exists}} which only tests for existence
   (\code{test -e} on some systems) but not for not being a directory.
-  
+
   \code{\link{file.path}}, \code{\link{file.info}}
 }
 \examples{

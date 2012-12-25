@@ -18,7 +18,7 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
     describing any centering to be done on the x values before the
     analysis.  If \code{TRUE} (default), subtract the column means.
     If \code{FALSE}, do not adjust the columns.  Otherwise, a vector
-    of values to be subtracted from the columns.} 
+    of values to be subtracted from the columns.}
   \item{ycenter}{analogous to \code{xcenter}, but for the y values.}
 }
 \description{
@@ -46,7 +46,7 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   Hotelling H. (1936).
   Relations between two sets of variables.
   \emph{Biometrika}, \bold{28}, 321--327.
-  
+
   Seber, G. A. F. (1984).
   \emph{Multivariate Observations}.
   New York: Wiley, p. 506f.

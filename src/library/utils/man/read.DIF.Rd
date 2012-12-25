@@ -59,7 +59,7 @@ read.DIF(file, header = FALSE,
     Its value is either a vector of logicals (values are recycled if
     necessary), or a vector of numeric or character indices which
     specify which columns should not be converted to factors.
-    
+
     Note: In releases prior to \R{} 2.12.1, cells marked as being of
     character type were converted to logical, numeric or complex using
     \code{\link{type.convert}} as in \code{\link{read.table}}.

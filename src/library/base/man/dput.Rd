@@ -40,8 +40,8 @@ dget(file)
 
   \code{dput} will warn if fewer characters were written to a file than
   expected, which may indicate a full or corrupt file system.
-    
-  To display saved source rather than deparsing the internal representation 
+
+  To display saved source rather than deparsing the internal representation
   include \code{"useSource"} in \code{control}.  \R currently saves
   source only for function definitions.
 }
@@ -52,9 +52,9 @@ dget(file)
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual
-  function definition, the source attribute of a function will never 
+  function definition, the source attribute of a function will never
   be written as an attribute.
-}    
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

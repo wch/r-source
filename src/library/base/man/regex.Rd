@@ -309,7 +309,7 @@
   Patterns \samp{(?<=...)} and \samp{(?<!...)} are the lookbehind
   equivalents: they do not allow repetition quantifiers nor \samp{\\C}
   in \code{\dots}.
-  
+
   As from \R 2.14.0 \code{regexpr} and \code{gregexpr} support
   \sQuote{named capture}.  If groups are named, e.g.,
   \code{"(?<first>[A-Z][a-z]+)"} then the positions of the matches are

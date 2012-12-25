@@ -28,11 +28,11 @@ sweep(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, \dots)
 \details{
   \code{FUN} is found by a call to \code{\link{match.fun}}.  As in the
   default, binary operators can be supplied if quoted or backquoted.
-  
+
   \code{FUN} should be a function of two arguments: it will be called
   with arguments \code{x} and an array of the same dimensions generated
   from \code{STATS} by \code{\link{aperm}}.
-  
+
   The consistency check among \code{STATS}, \code{MARGIN} and \code{x}
   is stricter if \code{STATS} is an array than if it is a vector.
   In the vector case, some kinds of recycling are allowed without a

@@ -19,7 +19,7 @@ showMethods(f = character(), where = topenv(parent.frame()),
 \arguments{
   \item{f}{one or more function names.  If omitted, all functions
     will be shown that match the other arguments.
-    
+
     The argument can also be an expression that evaluates to a single
     generic function, in which
     case argument \code{fdef} is ignored.  Providing an expression for

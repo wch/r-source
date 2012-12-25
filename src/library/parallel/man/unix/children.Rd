@@ -57,7 +57,7 @@ mckill(process, signal = 2L)
 }
 \details{
   \code{children} returns currently active children.
- 
+
   \code{readChild} reads data from a given child process.
 
   \code{selectChildren} checks children for available data.
@@ -70,9 +70,9 @@ mckill(process, signal = 2L)
   will also be echoed on the standard output of the master process
   (unless disabled).  The function is vector-compatible, so you can
   specify \code{child} as a list or a vector of process IDs.
-  
+
   \code{sendMaster} sends data from the child to the master process.
-  
+
   \code{mckill} sends a signal to a child process: it is equivalent to
   \code{\link{pskill}} in package \pkg{tools}.
 }
@@ -93,9 +93,9 @@ mckill(process, signal = 2L)
 
   \code{sendChildStdin} returns a vector of \code{TRUE} values (one for
   each member of \code{child}) or throws an error.
-  
+
   \code{sendMaster} returns \code{TRUE} or throws an error.
-  
+
   \code{mckill} returns \code{TRUE}.
 }
 \author{

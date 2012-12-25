@@ -30,7 +30,7 @@ levels(x) <- value
   Both the extractor and replacement forms are generic and new methods
   can be written for them.  The most important method for the replacement
   function is that for \code{\link{factor}}s.
-  
+
   For the factor replacement method, a \code{NA} in \code{value}
   causes that level to be removed from the levels and the elements
   formerly with that level to be replaced by \code{NA}.

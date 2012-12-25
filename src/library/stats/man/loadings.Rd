@@ -39,10 +39,10 @@ loadings(x)
   factor analysis and principal component analysis (PCA) are often
   conflated in the social science literature, it was used for PCA by
   SPSS and hence by \code{\link{princomp}} in S-PLUS to help SPSS users.
-  
+
   Small loadings are conventionally not printed (replaced by spaces), to
   draw the eye to the pattern of the larger loadings.
-  
+
   The \code{print} method for class \code{"\link{factanal}"} calls the
   \code{"loadings"} method to print the loadings, and so passes down
   arguments such as \code{cutoff} and \code{sort}.

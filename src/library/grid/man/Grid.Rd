@@ -15,7 +15,7 @@
   \emph{viewports}) on the graphics device and define a number of
   coordinate systems for each region.  Drawing can be specified to occur
   in any viewport using any of the available coordinate systems.
-  
+
   Grid graphics and standard R graphics do not mix!
 
   Type \code{library(help = grid)} to see a list of (public)
@@ -28,7 +28,7 @@
   \code{\link{unit}}.
 }
 \examples{
-## Diagram of a simple layout 
+## Diagram of a simple layout
 grid.show.layout(grid.layout(4,2,
                      heights=unit(rep(1, 4),
                                   c("lines", "lines", "lines", "null")),

@@ -28,7 +28,7 @@ PP.test(x, lshort = TRUE)
   \code{trunc(12*(n/100)^0.25)} is used.  The p-values are
   interpolated from Table 4.2, page 103 of Banerjee \emph{et al.}
   (1993).
-  
+
   Missing values are not handled.
 }
 \value{
@@ -37,14 +37,14 @@ PP.test(x, lshort = TRUE)
   \item{parameter}{the truncation lag parameter.}
   \item{p.value}{the p-value of the test.}
   \item{method}{a character string indicating what type of test was
-    performed.} 
+    performed.}
   \item{data.name}{a character string giving the name of the data.}
 }
 \references{
   A. Banerjee, J. J. Dolado, J. W. Galbraith, and D. F. Hendry (1993)
   \emph{Cointegration, Error Correction, and the Econometric Analysis
     of Non-Stationary Data}, Oxford University Press, Oxford.
-  
+
   P. Perron (1988) Trends and random walks in macroeconomic time
   series. \emph{Journal of Economic Dynamics and Control} \bold{12},
   297--332.

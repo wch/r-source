@@ -16,7 +16,7 @@ structure(.Data, \dots)
     form, which will be attached to data.}
 }
 \description{
-  \code{structure} returns the given object with further 
+  \code{structure} returns the given object with further
   \link{attributes} set.
 }
 \details{

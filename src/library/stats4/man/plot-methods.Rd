@@ -27,7 +27,7 @@
      the spline interpolation of the profile t curves.}
  \item{absVal}{a logical value indicating whether or not the plots
      should be on the scale of the absolute value of the profile t.
-     Defaults to \code{TRUE}.} 
+     Defaults to \code{TRUE}.}
  \item{\dots}{other arguments to the \code{plot} function can be passed here.}
 }
 \section{Methods}{

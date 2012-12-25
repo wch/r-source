@@ -97,7 +97,7 @@ There are also
       \code{"Mod"}, \code{"Re"}}
   }
   Note that \code{Ops} merely consists of three sub groups.
-  
+
   All the functions in these groups (other than the group generics
   themselves) are basic functions in \R.  They are not by default S4 generic
   functions, and many of them are defined as primitives.  However, you can still define
@@ -113,7 +113,7 @@ There are also
 
   For further details about group generic functions see section 10.5 of
   \emph{Software for Data Analysis}.
-  
+
 }
 \references{
  Chambers, John M. (2008)

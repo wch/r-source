@@ -39,7 +39,7 @@ pi
   }
 
   These are implemented as variables in the base namespace taking
-  appropriate values. 
+  appropriate values.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

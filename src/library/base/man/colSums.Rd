@@ -52,8 +52,8 @@ rowMeans(x, na.rm = FALSE, dims = 1)
   per-row basis, so column means may not be over the same set of rows,
   and vice versa.  To use only complete rows or columns, first select
   them with \code{\link{na.omit}} or \code{\link{complete.cases}}
-  (possibly on the transpose of \code{x}). 
-  
+  (possibly on the transpose of \code{x}).
+
   The versions with an initial dot in the name are \sQuote{bare-bones}
   versions for use in programming: they apply only to numeric matrices
   and do not name the result.

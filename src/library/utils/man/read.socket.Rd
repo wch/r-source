@@ -24,7 +24,7 @@ write.socket(socket, string)
 }
 \value{
   \code{read.socket} returns the string read as a length-one character vector.
-    
+
   \code{write.socket} returns the number of bytes written.
 
 }

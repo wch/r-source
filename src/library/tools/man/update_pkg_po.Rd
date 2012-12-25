@@ -57,7 +57,7 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     \item All the \file{po/\var{lang}.po} files are compiled and
     installed under \file{inst/po}.
   }
-  
+
   \code{pkg = "base"} is special (and for use by \R developers only):
   the C files are not in the package directory but in the main sources.
 }
@@ -69,7 +69,7 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
   on Unix-alikes (including Mac OS X).  Pre-compiled versions for
   Windows are available in
   \url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
-  
+
   It may not work correctly for \code{en@auot} translations except in a
   UTF-8 locale, so these are skipped elsewhere.
 }

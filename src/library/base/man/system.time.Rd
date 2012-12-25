@@ -17,7 +17,7 @@ unix.time(expr, gcFirst = TRUE)
     immediately before the timing?  Default is \code{TRUE}.}
 }
 \description{Return CPU (and other) times that \code{expr} used.
-}    
+}
 \details{
   \code{system.time} calls the function \code{\link{proc.time}},
   evaluates \code{expr}, and then calls \code{proc.time} once more,

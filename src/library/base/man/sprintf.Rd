@@ -170,7 +170,7 @@ gettextf(fmt, \dots, domain = NULL)
   does perform sanity checks on the format, and since \R 2.10.0, we have
   not seen crashes anymore.  But not all possible user errors on all
   platforms have been tested, and some might be terminal.
-  
+
   The behaviour on inputs not documented here is \sQuote{undefined},
   which means it is allowed to differ by platform.
 }

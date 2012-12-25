@@ -31,7 +31,7 @@ warnings(\dots)
 
   It is possible that \code{last.warning} refers to the last recorded
   warning and not to the last warning, for example if \code{options(warn)} has
-  been changed or if a catastrophic error occurred. 
+  been changed or if a catastrophic error occurred.
 }
 \section{Warning}{
   It is undocumented where \code{last.warning} is stored nor that it is

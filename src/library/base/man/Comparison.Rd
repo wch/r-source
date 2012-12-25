@@ -49,7 +49,7 @@ x != y
   may not sort in the same order for the same language in different
   character sets).  Collation of non-letters (spaces, punctuation signs,
   hyphens, fractions and so on) is even more problematic.
-  
+
   Character strings can be compared  with different marked encodings
   (see \code{\link{Encoding}}): they are translated to UTF-8 before
   comparison.
@@ -67,7 +67,7 @@ x != y
   regarded as non-comparable even to themselves, so comparisons
   involving them will always result in \code{NA}.  Missing values can
   also result when character strings are compared and one is not valid
-  in the current collation locale. 
+  in the current collation locale.
 
   Language objects such as symbols and calls are deparsed to
   character strings before comparison.
@@ -113,7 +113,7 @@ x != y
 }
 \seealso{
   \code{\link{factor}} for the behaviour with factor arguments.
-  
+
   \code{\link{Syntax}} for operator precedence.
 
   \code{\link{icuSetCollate}} to tune the string collation algorithm

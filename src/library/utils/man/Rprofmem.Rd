@@ -42,7 +42,7 @@ Rprofmem(filename = "Rprofmem.out", append = FALSE, threshold = 0)
   The memory profiler can be used at the same time as other \R and C profilers.
   }
 \value{
-  None  
+  None
 }
 
 \seealso{

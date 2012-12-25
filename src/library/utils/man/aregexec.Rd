@@ -38,7 +38,7 @@ aregexec(pattern, text, max.distance = 0.1, costs = NULL,
   to exact string matching provided by \code{\link{regexec}} and
   \code{\link{grep}}).
 
-  Note that by default, \code{\link{agrep}} performs literal matches, 
+  Note that by default, \code{\link{agrep}} performs literal matches,
   whereas \code{aregexec} performs regular expression matches.
 
   See \code{\link{agrep}} and \code{\link{adist}} for more information

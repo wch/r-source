@@ -34,7 +34,7 @@
   demographic variables: the percentage of population less than 15
   years old and the percentage of the population over 75 years old.
   The data are averaged over the decade 1960--1970 to remove the
-  business cycle or other short-term fluctuations. 
+  business cycle or other short-term fluctuations.
 }
 \references{
   Sterling, Arnie (1977) Unpublished BS Thesis.

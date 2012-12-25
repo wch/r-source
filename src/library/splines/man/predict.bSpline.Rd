@@ -57,17 +57,17 @@ ispl <- interpSpline( weight ~ height,  women )
 opar <- par(mfrow = c(2, 2), las = 1)
 plot(predict(ispl, nseg = 201),     # plots over the range of the knots
      main = "Original data with interpolating spline", type = "l",
-     xlab = "height", ylab = "weight") 
+     xlab = "height", ylab = "weight")
 points(women$height, women$weight, col = 4)
 plot(predict(ispl, nseg = 201, deriv = 1),
      main = "First derivative of interpolating spline", type = "l",
-     xlab = "height", ylab = "weight") 
+     xlab = "height", ylab = "weight")
 plot(predict(ispl, nseg = 201, deriv = 2),
      main = "Second derivative of interpolating spline", type = "l",
-     xlab = "height", ylab = "weight") 
+     xlab = "height", ylab = "weight")
 plot(predict(ispl, nseg = 401, deriv = 3),
      main = "Third derivative of interpolating spline", type = "l",
-     xlab = "height", ylab = "weight") 
+     xlab = "height", ylab = "weight")
 par(opar)
 }
 \keyword{models}

@@ -30,7 +30,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
     \file{.dll} or \file{.so}) and with no directory/path information.
     So a file \file{MyPackage/libs/MyPackage.so} would be specified as
     \samp{MyPackage}.
-    
+
     The \code{DLLInfo} objects can be obtained directly
     in calls to \code{\link{dyn.load}} and  \code{\link{library.dynam}},
     or can be found after the DLL has been loaded using
@@ -63,7 +63,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   \code{.Call}, \code{.Fortran} and \code{.External} interfaces. Each is
   a list with as many elements as there were routines registered for
   that interface.
-  
+
   Each element identifies a routine and is an object
   of class \code{"NativeSymbolInfo"}.
   An object of this class has the following fields:
@@ -81,7 +81,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
 }
 \references{
   \sQuote{Writing R Extensions Manual} for symbol registration.
-  
+
   R News, Volume 1/3, September 2001.   "In search of C/C++ & Fortran Symbols"
 }
 \author{Duncan Temple Lang \email{duncan@wald.ucdavis.edu}}

@@ -28,7 +28,7 @@
 
   For a two-column data frame it plots the second column against the
   first by the most appropriate method for the first column.
-  
+
   For a single numeric column it uses \code{\link{stripchart}}, and for
   other single-column data frames tries to find a plot method for the
   single column.

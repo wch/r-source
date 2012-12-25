@@ -40,7 +40,7 @@ pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE,
   and also generate a dependency
   matrix, calling \code{getDepList} with this information and returning
   the result.
-  
+
   These functions will retrieve information about the dependencies of
   the matrix, resulting in a \code{DependsList} object.  This is a
   list with four elements:
@@ -56,11 +56,11 @@ pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE,
       \code{local = TRUE}, the \code{Found} element will always be empty.}
     \item{R}{Any R version dependencies.}
   }
-    
+
   If \code{recursive} is \code{TRUE}, any package that is specified as a
   dependency will in turn have its dependencies included (and so on),
-  these are known as indirect dependencies.  If \code{recursive} is 
-  \code{FALSE}, only the dependencies directly stated by the package will 
+  these are known as indirect dependencies.  If \code{recursive} is
+  \code{FALSE}, only the dependencies directly stated by the package will
   be used.
 
   If \code{local} is \code{TRUE}, the system will only look at the user's local

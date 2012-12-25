@@ -31,7 +31,7 @@ locator(n = 512, type = "n", \dots)
   \code{locator} is only supported on screen devices such as
   \code{X11}, \code{windows} and \code{quartz}.  On other devices the
   call will do nothing.
-  
+
   Unless the process is terminated prematurely by the user (see below)
   at most \code{n} positions are determined.
 

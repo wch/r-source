@@ -33,7 +33,7 @@ psnice(pid = Sys.getpid(), value = NA_integer_)
   not the niceness.  Niceness is used by the utility
   \file{/usr/bin/renice}: \file{/usr/bin/nice} (and
   \command{/usr/bin/renice -n}) specifies an \emph{increment} in niceness.
-  
+
   Only privileged users (usually super-users) can lower the niceness.
 
   Windows has a slightly different concept of \sQuote{priority
@@ -51,7 +51,7 @@ psnice(pid = Sys.getpid(), value = NA_integer_)
 \seealso{
   Various functions in package \pkg{parallel} create child processes
   whose priority may need to be changed.
-  
+
   \code{\link{pskill}}.
 }
 

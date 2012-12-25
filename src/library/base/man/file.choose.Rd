@@ -25,7 +25,7 @@ file.choose(new = FALSE)
 }
 
 \seealso{\code{\link{list.files}} for non-interactive selection.
-#ifdef windows    
+#ifdef windows
 \code{\link{choose.files}} for selecting multiple files interactively.
 #endif
 }

@@ -43,7 +43,7 @@ truncate(con, \dots)
   non-integer values are likely to be truncated.  Note that the possible
   values can exceed the largest representable number in an \R
   \code{integer} on 64-bit builds, and on some 32-bit builds.
-  
+
   File connections can be open for both writing/appending, in which case
   \R keeps separate positions for reading and writing.  Which \code{seek}
   refers to can be set by its \code{rw} argument: the default is the
@@ -59,13 +59,13 @@ truncate(con, \dots)
   the append modes.  (The reported write position for a file opened in
   an append mode will typically be unreliable until the file has been
   written to.)
-  
+
   \code{gzfile} connections support \code{seek} with a number of
   limitations, using the file position of the uncompressed file.
   They do not support \code{origin = "end"}.  When writing, seeking is
   only possible forwards: when reading seeking backwards is supported by
   rewinding the file and re-reading from its start.
-  
+
   If \code{seek} is called with a non-\code{NA} value of \code{where},
   any pushback on a text-mode connection is discarded.
 
@@ -73,7 +73,7 @@ truncate(con, \dots)
   position.  It works only for \code{file} connections, and is not
   implemented on all platforms: on others (including Windows) it will
   not work for large (> 2Gb) files.
-  
+
   None of these should be expected to work on text-mode connections with
   re-encoding selected.
 }

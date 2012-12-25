@@ -28,14 +28,14 @@ postDrawDetails(x)
 \details{
   These functions are called by the \code{grid.draw} methods for grobs
   and gTrees.
-  
+
   \code{preDrawDetails} is called first during the drawing of a grob.
   This is where any additional viewports should be pushed (see,
   for example, \code{grid:::preDrawDetails.frame}).  Note that
   the default behaviour for grobs is to push any viewports in the
   \code{vp} slot, and for gTrees is to also push and up any viewports in the
   \code{childrenvp} slot so there is typically nothing to do here.
-  
+
   \code{drawDetails} is called next and is where any additional
   calculations and graphical output should occur (see, for example,
   \code{grid:::drawDetails.xaxis}.  Note that the default behaviour

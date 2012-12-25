@@ -32,6 +32,6 @@ toLatex(object, \dots)
   Objects of class \code{"Bibtex"} or \code{"Latex"} are simply
   character vectors where each element holds one line of the
   corresponding BibTeX or LaTeX file.
-} 
+}
 \seealso{\code{\link{citEntry}} and \code{\link{sessionInfo}} for examples}
 \keyword{misc}

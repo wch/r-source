@@ -25,7 +25,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
     \sQuote{Details} section.}
   \item{encoding}{Encoding to be assumed for input strings.}
   \item{verbose}{Logical indicating whether detailed parsing
-    information should be printed.} 
+    information should be printed.}
   \item{fragment}{Logical indicating whether file represents a complete
     Rd file, or a fragment.}
   \item{warningCalls}{Logical: should parser warnings include the call?}
@@ -37,7 +37,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
 \details{
   This function parses \file{Rd} files according to the specification given
   in \url{http://developer.r-project.org/parseRd.pdf}.
-  
+
   It generates a warning for each parse error and attempts to continue
   parsing.  In order to continue, it is generally necessary to drop some
   parts of the file, so such warnings should not be ignored.
@@ -47,7 +47,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
   internal format of this object is subject to change.  The
   \code{as.character()} and \code{print()} methods defined for the
   class return character vectors and print them, respectively.
-  
+
   Files without a marked encoding are by default assumed to be in the
   native encoding.  An alternate default can be set using the
   \code{encoding} argument.  All text in files is translated to the

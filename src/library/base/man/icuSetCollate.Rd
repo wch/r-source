@@ -21,7 +21,7 @@ icuSetCollate(...)
   (\url{http://site.icu-project.org}).  For such systems,
   \code{icuSetCollate} can be used to tune the way collation is done.
   On other builds calling this function does nothing, with a warning.
-  
+
   Possible arguments are
   \describe{
     \item{\code{locale}:}{A character string such as \code{"da_DK"} giving the
@@ -51,7 +51,7 @@ icuSetCollate(...)
     \item{\code{hiragana_quaternary}:}{Possible values \code{"on"} (sort
       Hiragana first at quaternary level) and \code{"off"}.}
   }
-  Only the first three are likely to be of interest except to those with a 
+  Only the first three are likely to be of interest except to those with a
   detailed understanding of collation and specialized requirements.
 
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
@@ -67,7 +67,7 @@ icuSetCollate(...)
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}
-  
+
   The ICU user guide chapter on collation
   (\url{http://userguide.icu-project.org/collation}).
 }

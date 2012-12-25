@@ -24,12 +24,12 @@ offset(object)
 }
 \details{
   There can be more than one offset in a model formula, but \code{-} is
-  not supported for \code{offset} terms (and is equivalent to \code{+}). 
+  not supported for \code{offset} terms (and is equivalent to \code{+}).
 }
 
 \seealso{
   \code{\link{model.offset}}, \code{\link{model.frame}}.
-  
+
   For examples see \code{\link{glm}} and
   \code{\link[MASS]{Insurance}} in package \CRANpkg{MASS}.
 }

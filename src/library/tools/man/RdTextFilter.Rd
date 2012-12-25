@@ -9,7 +9,7 @@
 Select text in an Rd file.
 }
 \description{
-This function blanks out all non-text in an Rd file, 
+This function blanks out all non-text in an Rd file,
 for spell checking or other uses.
 }
 \usage{
@@ -56,7 +56,7 @@ Sections of the Rd file to keep.
   \code{"TEXT"}.
 }
 \value{
-  A character vector which if written to a file, one element per line, would 
+  A character vector which if written to a file, one element per line, would
   duplicate the text elements of the original Rd file.
 }
 \author{

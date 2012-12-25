@@ -18,8 +18,8 @@ fix(x, \dots)
   \item{\dots}{arguments to pass to editor: see \code{\link{edit}}.}
 }
 \details{
-  The name supplied as \code{x} need not exist as an \R object, in 
-  which case a function with no arguments and an empty body is supplied 
+  The name supplied as \code{x} need not exist as an \R object, in
+  which case a function with no arguments and an empty body is supplied
   for editing.
 
   Editing an \R object may change it in ways other than are obvious: see

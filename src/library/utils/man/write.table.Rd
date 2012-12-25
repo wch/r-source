@@ -107,7 +107,7 @@ write.csv2(\dots)
 
   If \code{file} is a non-open connection, an attempt is made to open it
   and then close it after use.
-  
+
   To write a Unix-style file on Windows, use a binary connection
   e.g. \code{file = file("filename", "wb")}.
 }
@@ -134,7 +134,7 @@ write.csv2(\dots)
   ensure that the correct conventions are used to write a valid file.
   Attempts to change \code{append}, \code{col.names}, \code{sep},
   \code{dec} or \code{qmethod} are ignored, with a warning.
-  
+
   CSV files do not record an encoding, and this causes problems if they
   are not ASCII for many other applications.  Windows Excel 2007/10 will
   open files (e.g. by the file association mechanism) correctly if they

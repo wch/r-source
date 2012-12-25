@@ -39,7 +39,7 @@ write(x, file = "data",
 \seealso{
   \code{write} is a wrapper for \code{\link{cat}}, which gives further
   details on the format used.
-  
+
   \code{\link{save}} for writing any \R objects,
   \code{\link{write.table}} for data frames,
   and \code{\link{scan}} for reading data.

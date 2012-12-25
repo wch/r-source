@@ -60,7 +60,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   followed by the red, blue, green and optionally alpha values in
   hexadecimal (after rescaling to \code{0 ... 255}).  The optional alpha
   values range from \code{0} (fully transparent) to \code{255} (opaque).
-  
+
   \R does \strong{not} use \sQuote{premultiplied alpha}.
 }
 \seealso{

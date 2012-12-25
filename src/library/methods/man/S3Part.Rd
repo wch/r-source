@@ -22,12 +22,12 @@
   \code{\link{setOldClass}}, and many have been.  These classes can
   then be contained in (that is, superclasses of) regular S4 classes, allowing formal methods
   and slots to be added to the S3 behavior.  The function
-  \code{S3Part} extracts or replaces 
+  \code{S3Part} extracts or replaces
   the S3 part of such an object.
   \code{S3Class} extracts or
   replaces the S3-style class.  \code{S3Class} also applies to object
   from an S4 class with \code{S3methods=TRUE} in the call to \code{\link{setClass}}.
- 
+
 See the details below.
   Also discussed are S3 <-> S4 coercion; see the section
   \dQuote{S3 and S4 objects}
@@ -110,7 +110,7 @@ slotsFromS3(object)
   the value determined  by the \code{contains=} argument to
   \code{\link{setClass}}.
   Individual objects from the S4 class may
-  have 
+  have
   an S3 class corresponding to the value in the prototype or to an
   (S3) subclass of that value.  See the examples below.
 
@@ -214,7 +214,7 @@ empty list for any other object.
   partially defined version of S4 objects via S3 computations  (not
   much different from invoking \code{\link{new}} with corresponding
   arguments, but usable in this form even if the S4 object has an
-  initialize method with different arguments). 
+  initialize method with different arguments).
 }
 
 \references{
@@ -269,7 +269,7 @@ myDD <- new("dataFrameD", myData, date = Sys.Date())
 setClass("NumX", contains="numeric", representation(id="character"))
 nn = new("NumX", 1:10, id="test")
 stopifnot(identical(1:10, S3Part(nn, strict = TRUE)))
-          
+
 m1 = cbind(group, weight)
 setClass("MatX", contains = "matrix", representation(date = "Date"))
 mx1 = new("MatX", m1, date = Sys.Date())

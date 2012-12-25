@@ -107,16 +107,16 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   character string with an optional integer printf-style format that
   will be substituted by the device number.  It is also optionally used
   (without a format) to give a title to a PDF file.
-    
+
   Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}
   for on-screen devices and to \code{"quartz_off_screen"} otherwise.
-  
+
   The font family chosen needs to cover the characters to be used:
   characters not in the font are rendered as empty oblongs.  For
   non-Western-European languages something other than the default of
   \code{"Helvetica"} is likely to be needed---one choice for Chinese is
   \code{"MingLiU"}.
-  
+
   \code{quartz.save} is a modified version of \code{\link{dev.copy2pdf}}
   to copy the plot from the current screen device to a \code{quartz}
   device, by default to a PNG file.

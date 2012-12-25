@@ -8,7 +8,7 @@
 \title{A function to install unresolved dependencies}
 \description{
   This function will take the \code{Found} element of a
-  \code{pkgDependsList} object and attempt to install 
+  \code{pkgDependsList} object and attempt to install
   all of the listed packages from the specified repositories.
 }
 \usage{

@@ -27,7 +27,7 @@ eapply(env, FUN, \dots, all.names = FALSE, USE.NAMES = TRUE)
   can request that all named objects are used (normally names that begin
   with a dot are not).  The output is not sorted and no enclosing
   environments are searched.
-  
+
   This is a \link{primitive} function.
 }
 \value{

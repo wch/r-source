@@ -20,7 +20,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
     Mac OS X GUI use a list box, and on a Unix-alike if package
     \pkg{tcltk} and an X server are available, use a Tk
     widget. Otherwise use a text \code{\link{menu}}.}
-  
+
   \item{all}{Logical, get all known mirrors or only the ones flagged as OK.}
   \item{local.only}{Logical, try to get most recent list from CRAN or
     use file on local disk only.}

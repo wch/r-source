@@ -14,7 +14,7 @@ This function waits for input from a graphics window in the
 form of a mouse or keyboard event.
 }
 \usage{
-getGraphicsEvent(prompt = "Waiting for input", 
+getGraphicsEvent(prompt = "Waiting for input",
                  onMouseDown = NULL, onMouseMove = NULL,
                  onMouseUp = NULL, onKeybd = NULL,
                  consolePrompt = prompt)
@@ -44,7 +44,7 @@ The functions are related as follows.  If any of the first five
 arguments to \code{getGraphicsEvent} are given, then it uses those
 in a call to \code{setGraphicsEventHandlers} to replace any existing
 handlers in the current device.  This is for compatibility with pre-2.12.0 \R{}
-versions.  The current normal way to set up event handlers is to 
+versions.  The current normal way to set up event handlers is to
 set them using \code{setGraphicsEventHandlers} or \code{setGraphicsEventEnv} on
 one or more graphics devices, and then use \code{getGraphicsEvent()} with
 no arguments to retrieve event data.
@@ -52,21 +52,21 @@ no arguments to retrieve event data.
 for use later.
 
 The names of the arguments in \code{getGraphicsEvent} are special.  When
-handling events, the graphics system will look through the event 
+handling events, the graphics system will look through the event
 environment for functions named \code{onMouseDown}, \code{onMouseMove}, \code{onMouseUp}
-and \code{onKeybd} and use them as event handlers.  It will use 
+and \code{onKeybd} and use them as event handlers.  It will use
 \code{prompt} for a label on the graphics device.  Two other special names are
 \code{which}, which will identify the graphics device, and
 \code{result}, where the result of the last event
 handler will be stored before being returned by \code{getGraphicsEvent()}.
 
-The mouse event handlers should be functions with header 
+The mouse event handlers should be functions with header
 \code{function(buttons, x, y)}.  The coordinates \code{x}
 and \code{y} will be passed to mouse event handlers in device independent
-coordinates (i.e. the lower left corner of the window is \code{(0,0)}, 
-the upper right is \code{(1,1)}).  The \code{buttons} argument 
+coordinates (i.e. the lower left corner of the window is \code{(0,0)},
+the upper right is \code{(1,1)}).  The \code{buttons} argument
 will be a vector listing the buttons
-that are pressed at the time of the event, with 0 for left, 1 for middle, and 2 
+that are pressed at the time of the event, with 0 for left, 1 for middle, and 2
 for right.
 
 The keyboard event handler should be a function with header
@@ -83,19 +83,19 @@ keys will have been processed, so \code{shift-a} will be passed as
 }
 
 The event handlers are standard R functions, and will be executed as though called
-from the event environment.  
+from the event environment.
 
 In an interactive session, events will be processed until
 \itemize{
      \item one of the event handlers returns
 a non-\code{NULL} value which will be returned as the value of
-\code{getGraphicsEvent}, or 
+\code{getGraphicsEvent}, or
       \item the user interrupts the function from the
 console.
 }
 }
 \value{
-When run interactively, 
+When run interactively,
 \code{getGraphicsEvent} returns a non-\code{NULL} value returned from one of the event handlers.
 In a non-interactive session, \code{getGraphicsEvent} will return \code{NULL} immediately.
 
@@ -117,7 +117,7 @@ dragplot <- function(..., xlim = NULL, ylim = NULL, xaxs = "r", yaxs = "r") {
 
     devset <- function()
         if (dev.cur() != eventEnv$which) dev.set(eventEnv$which)
-        
+
     dragmousedown <- function(buttons, x, y) {
         startx <<- x
         starty <<- y
@@ -126,7 +126,7 @@ dragplot <- function(..., xlim = NULL, ylim = NULL, xaxs = "r", yaxs = "r") {
         eventEnv$onMouseMove <- dragmousemove
         NULL
     }
-    
+
     dragmousemove <- function(buttons, x, y) {
         devset()
         deltax <- diff(grconvertX(c(startx, x), "ndc", "user"))
@@ -135,17 +135,17 @@ dragplot <- function(..., xlim = NULL, ylim = NULL, xaxs = "r", yaxs = "r") {
                   ylim = usr[3:4]-deltay, yaxs = "i")
         NULL
     }
-    
-    mouseup <- function(buttons, x, y) {    
+
+    mouseup <- function(buttons, x, y) {
     	eventEnv$onMouseMove <- NULL
     }	
-        
+
     keydown <- function(key) {
         if (key == "q") return(invisible(1))
         eventEnv$onMouseMove <- NULL
         NULL
     }
-    
+
     setGraphicsEventHandlers(prompt = "Click and drag, hit q to quit",
                      onMouseDown = dragmousedown,
                      onMouseUp = mouseup,

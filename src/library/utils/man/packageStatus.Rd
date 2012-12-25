@@ -46,11 +46,11 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
   The URLs in \code{repositories} should be full paths to the
   appropriate contrib sections of the repositories.  The default is
   \code{contrib.url(getOption("repos"))}.
-  
+
   There are \code{print} and \code{summary} methods for the
   \code{"packageStatus"} objects: the \code{print} method gives a brief
   tabular summary and the \code{summary} method prints the results.
-  
+
   The \code{update} method updates the \code{"packageStatus"} object.
   The \code{upgrade} method is similar to \code{\link{update.packages}}:
   it offers to install the current versions of those packages which are not

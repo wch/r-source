@@ -65,7 +65,7 @@ cut(x, \dots)
 \value{
   A \code{\link{factor}} is returned, unless \code{labels = FALSE} which
   results in an integer vector of level codes.
-  
+
   Values which fall outside the range of \code{breaks} are coded as
   \code{NA}, as are \code{NaN} and \code{NA} values.
 }
@@ -87,7 +87,7 @@ cut(x, \dots)
   \code{\link{quantile}} for ways of choosing breaks of roughly equal
   content (rather than length).
 
-  \code{\link{.bincode}} for a bare-bones version. 
+  \code{\link{.bincode}} for a bare-bones version.
 }
 \examples{
 Z <- stats::rnorm(10000)

@@ -24,7 +24,7 @@ writeBin(object, con, size = NA_integer_,
     vector to be read, or a character vector of length one describing
     the mode: one of \code{"numeric"}, \code{"double"},
     \code{"integer"}, \code{"int"}, \code{"logical"}, \code{"complex"},
-    \code{"character"}, \code{"raw"}.} 
+    \code{"character"}, \code{"raw"}.}
   \item{n}{integer.  The (maximal) number of records to be
     read.  You can use an over-estimate here, but not too large as
     storage is reserved for \code{n} items.}
@@ -38,7 +38,7 @@ writeBin(object, con, size = NA_integer_,
     target system for the file.  Using \code{"swap"} will force swapping
     endian-ness.}
   \item{object}{An \R object to be written to the connection.}
-  \item{useBytes}{See \code{\link{writeLines}}.} 
+  \item{useBytes}{See \code{\link{writeLines}}.}
 }
 \details{
   These functions are intended to be used with binary-mode connections.
@@ -55,7 +55,7 @@ writeBin(object, con, size = NA_integer_,
   the vector is used as input.  If \code{writeBin} is called with
   \code{con} a raw vector, it is just an indication that a raw vector
   should be returned.
-  
+
   If \code{size} is specified and not the natural size of the object,
   each element of the vector is coerced to an appropriate type before
   being written or as it is read.  Possible sizes are 1, 2, 4 and
@@ -70,10 +70,10 @@ writeBin(object, con, size = NA_integer_,
   characters.  \code{\link{readChar}} and \code{\link{writeChar}} can
   be used to read and write fixed-length strings.  No check is made that
   the string is valid in the current locale.
-  
+
   Handling \R's missing and special (\code{Inf}, \code{-Inf} and
   \code{NaN}) values is discussed in the \emph{R Data Import/Export} manual.
-  
+
   Only \eqn{2^{31}-1}{2^31 - 1} bytes can be written in a single
   call (and that is the maximum capacity of a raw vector).
 }
@@ -91,10 +91,10 @@ writeBin(object, con, size = NA_integer_,
   which does not contain C-style character strings, warnings (usually
   many) are given.  From a file or connection, the input will be broken
   into pieces of length 10000 with any final part being discarded.
-  
+
   Using these functions on a text-mode connection may work but should
   not be mixed with text-mode access to the connection, especially if
-  the connection was opened with an \code{encoding} argument. 
+  the connection was opened with an \code{encoding} argument.
 }
 
 \value{

@@ -27,7 +27,7 @@ The value of the Tcl service mode before the call.
 }
 \examples{
 ## see demo(tkcanvas) for an example
-\dontrun{    
+\dontrun{
 oldmode <- tclServiceMode(FALSE)
 # Do some work to create a nice picture.
 # Nothing will be displayed until...

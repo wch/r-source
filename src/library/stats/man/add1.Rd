@@ -49,9 +49,9 @@ drop1(object, scope, \dots)
     The \eqn{\chi^2}{Chisq} test can be an exact test
     (\code{lm} models with known scale) or a likelihood-ratio test or a
     test of the reduction in scaled deviance depending on the method.
-    For \code{\link{glm}} fits, you can also choose \code{"LRT"} and 
-    \code{"Rao"} for likelihood ratio tests and Rao's efficient score test. 
-    The former is synonymous with \code{"Chisq"} (although both have 
+    For \code{\link{glm}} fits, you can also choose \code{"LRT"} and
+    \code{"Rao"} for likelihood ratio tests and Rao's efficient score test.
+    The former is synonymous with \code{"Chisq"} (although both have
     an asymptotic chi-square distribution).
     }
   \item{k}{the penalty constant in AIC / \eqn{C_p}{Cp}.}
@@ -112,7 +112,7 @@ drop1(object, scope, \dots)
   These are not fully equivalent to the functions in S.  There is no
   \code{keep} argument, and the methods used are not quite so
   computationally efficient.
-    
+
   Their authors' definitions of Mallows' \eqn{C_p}{Cp} and Akaike's AIC
   are used, not those of the authors of the models chapter of S.
 }
@@ -125,7 +125,7 @@ drop1(object, scope, \dots)
 
   The default methods make calls to the function \code{\link{nobs}} to
   check that the number of observations involved in the fitting process
-  remained unchanged. 
+  remained unchanged.
 }
 \seealso{
   \code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
@@ -143,7 +143,7 @@ drop1(lm1, test = "F")  # So called 'type II' anova
 \dontshow{example(glm, echo = FALSE)}
 drop1(glm.D93, test = "Chisq")
 drop1(glm.D93, test = "F")
-add1(glm.D93, scope = ~outcome*treatment, test = "Rao") ## Pearson Chi-square 
+add1(glm.D93, scope = ~outcome*treatment, test = "Rao") ## Pearson Chi-square
 \testonly{options(od)}
 }
 \keyword{models}

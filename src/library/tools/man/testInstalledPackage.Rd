@@ -55,7 +55,7 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
   be desirable to set environment variables \env{LANGUAGE} to \samp{en}
   and \env{LC_TIME} to \samp{C} to reduce the number of differences from
   reference results.
-  
+
 #ifdef unix
   The package-specific tests for the base and recommended packages are
   not normally installed, but \command{make install-tests} is provided

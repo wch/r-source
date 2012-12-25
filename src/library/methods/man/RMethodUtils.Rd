@@ -313,7 +313,7 @@ insertClassMethods(methods, Class, value, fieldNames, returnAll)
       method that are not arguments to the function; and (3) the omitted
       formal arguments do not appear as explicit classes in the
       signature.  A future extension hopes to test also that the
-      omitted arguments are not assumed by being used as locally assigned 
+      omitted arguments are not assumed by being used as locally assigned
       names or function names in the body of the method.
     }
 

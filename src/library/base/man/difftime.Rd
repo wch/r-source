@@ -101,7 +101,7 @@ as.difftime(tim, format = "\%X", units = "auto")
 
   The \code{format} method simply formats the numeric value and appends
   the units as a text string.
-  
+
   The default behaviour when \code{time1} or \code{time2} was a
   \code{"POSIXlt"} object changed in \R 2.12.0: previously such objects
   were regarded as in the timezone given by \code{tz} which defaulted to

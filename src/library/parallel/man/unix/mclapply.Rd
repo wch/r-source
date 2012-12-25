@@ -19,7 +19,7 @@
 
   It relies on forking and hence is not available on Windows unless
   \code{mc.cores = 1}.
-  
+
   \code{mcmapply} is a parallelized version of \code{\link{mapply}}, and
   \code{mcMap} corresponds to \code{\link{Map}}.
 }
@@ -97,7 +97,7 @@ mcMap(f, ...)
   all jobs as a whole.  See \code{\link{mcparallel}} or the package's
   vignette for ways to make the results reproducible with
   \code{mc.preschedule = TRUE}.
-  
+
   Note: the number of file descriptors (and processes) is usually
   limited by the operating system, so you may have trouble using more
   than 100 cores or so (see \code{ulimit -n} or similar in your OS
@@ -126,13 +126,13 @@ mcMap(f, ...)
   the same GUI which will likely cause chaos (and possibly
   crashes).  Child processes should never use on-screen graphics
   devices.
-  
+
   Some precautions have been taken to make this usable in
   \command{R.app} on Mac OS X, but users of third-party front-ends
   should consult their documentation.
 
   Note that \pkg{tcltk} counts as a GUI for these purposes since
-  \command{Tk} runs an event loop.  
+  \command{Tk} runs an event loop.
 }
 
 \author{
@@ -143,7 +143,7 @@ mcMap(f, ...)
 \seealso{
   \code{\link{mcparallel}}, \code{\link{pvec}},
   \code{\link{parLapply}}, \code{\link{clusterMap}}.
-  
+
   \code{\link{simplify2array}} for results like \code{\link{sapply}}.
 }
 \examples{\donttest{

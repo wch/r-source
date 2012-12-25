@@ -15,7 +15,7 @@ Choose a model by AIC in a Stepwise Algorithm
 }
 \usage{
 step(object, scope, scale = 0,
-     direction = c("both", "backward", "forward"), 
+     direction = c("both", "backward", "forward"),
      trace = 1, keep = NULL, steps = 1000, k = 2, \dots)
 }
 \arguments{
@@ -38,7 +38,7 @@ step(object, scope, scale = 0,
   }
   \item{direction}{
     the mode of stepwise search, can be one of \code{"both"},
-    \code{"backward"}, or \code{"forward"}, with a default of \code{"both"}. 
+    \code{"backward"}, or \code{"forward"}, with a default of \code{"both"}.
     If the \code{scope} argument is missing the default for
     \code{direction} is \code{"backward"}.
   }
@@ -47,9 +47,9 @@ step(object, scope, scale = 0,
     Larger values may give more detailed information.
   }
   \item{keep}{
-    a filter function whose input is a fitted model object and the 
-    associated \code{AIC} statistic, and whose output is arbitrary. 
-    Typically \code{keep} will select a subset of the components of 
+    a filter function whose input is a fitted model object and the
+    associated \code{AIC} statistic, and whose output is arbitrary.
+    Typically \code{keep} will select a subset of the components of
     the object and return them. The default is not to keep anything.
   }
   \item{steps}{
@@ -98,7 +98,7 @@ step(object, scope, scale = 0,
   \code{.} in a \code{scope} formula means \sQuote{what is
   already there}, with \code{.^2} indicating all interactions of
   existing terms.
-  
+
   There is a potential problem in using \code{\link{glm}} fits with a
   variable \code{scale}, as in that case the deviance is not simply
   related to the maximized log-likelihood.  The \code{"glm"} method for
@@ -149,7 +149,7 @@ step(object, scope, scale = 0,
 \examples{\donttest{
 ## following on from example(lm)
 \dontshow{utils::example("lm", echo = FALSE)}
-step(lm.D9)  
+step(lm.D9)
 
 summary(lm1 <- lm(Fertility ~ ., data = swiss))
 slm1 <- step(lm1)

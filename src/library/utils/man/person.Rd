@@ -31,7 +31,7 @@ person(given = NULL, family = NULL, middle = NULL,
 \method{format}{person}(x,
        include = c("given", "family", "email", "role", "comment"),
        braces = list(given = "", family = "", email = c("<", ">"),
-                     role = c("[", "]"), comment = c("(", ")")), 
+                     role = c("[", "]"), comment = c("(", ")")),
        collapse = list(given = " ", family = " ", email = ", ",
                        role = ", ", comment = ", "),
        ...
@@ -61,7 +61,7 @@ person(given = NULL, family = NULL, middle = NULL,
     when formatting.}
   \item{braces}{a list of characters (see \bold{Details}).}
   \item{collapse}{a list of characters (see \bold{Details}).}
-  \item{\dots}{currently not used.}  
+  \item{\dots}{currently not used.}
 }
 \value{
   \code{person()} and \code{as.person()} return objects of class
@@ -93,7 +93,7 @@ person(given = NULL, family = NULL, middle = NULL,
   reverse the default person formatting, and can also handle formatted
   person entries collapsed by comma or \code{"and"} (with appropriate
   white space).
-  
+
   Personal names are rather tricky, e.g.,
   \url{http://en.wikipedia.org/wiki/Personal_name}.
 
@@ -120,7 +120,7 @@ person(given = NULL, family = NULL, middle = NULL,
       package citation.}
     \item{\code{"com"}}{(Compiler) Use for persons who collected code
       (potentially in other languages) but did not make further
-      substantial contributions to the package.}  
+      substantial contributions to the package.}
     \item{\code{"ctb"}}{(Contributor) Use for authors who have made
       smaller contributions (such as code patches etc.) but should not
       show up in the package citation.}

@@ -28,16 +28,16 @@ grobY(x, theta)
   The angle is anti-clockwise with zero corresponding to a line
   with an origin centred between the extreme
   points of the shape, and pointing at 3 o'clock.
-  
+
   If the grob describes a single shape, the boundary value should
   correspond to the exact edge of the shape.
 
   If the grob describes multiple shapes, the boundary
   value will either correspond to the edge of a bounding box around all of
   the shapes described by the grob (for multiple rectangles, circles,
-  xsplines, or text), or to a 
+  xsplines, or text), or to a
   convex hull around all vertices of all shapes described by the grob
-  (for multiple polygons, points, lines, polylines, 
+  (for multiple polygons, points, lines, polylines,
   and segments).
 
   Points grobs are currently a special case because the convex hull
@@ -47,7 +47,7 @@ grobY(x, theta)
   The extents of any arrow heads are currently \emph{not} taken into account.
 }
 \value{
-  A unit object. 
+  A unit object.
 }
 \author{Paul Murrell}
 \seealso{

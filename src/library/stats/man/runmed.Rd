@@ -70,7 +70,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
       \eqn{O(n \times k)}{O(n * k)} which is slower asymptotically, it is
       considerably faster for small \eqn{k} or \eqn{n}.}
   }
-  
+
   Currently long vectors are only supported for \code{algorithm = "Steutzle"}.
 }
 \references{

@@ -46,7 +46,7 @@
 }
 \details{
   Data frames can be indexed in several modes.  When \code{[} and
-  \code{[[} are used with a single vector index (\code{x[i]} or 
+  \code{[[} are used with a single vector index (\code{x[i]} or
   \code{x[[i]]}), they index the data frame as if it were a list.  In
   this usage a \code{drop} argument is ignored, with a warning.
 

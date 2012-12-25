@@ -30,8 +30,8 @@ Oxford, table A.3
 }
 \examples{
 require(stats); require(graphics) # for time
-plot(ldeaths) 
-plot(mdeaths, fdeaths) 
+plot(ldeaths)
+plot(mdeaths, fdeaths)
 ## Better labels:
 yr <- floor(tt <- time(mdeaths))
 plot(mdeaths, fdeaths,

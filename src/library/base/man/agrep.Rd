@@ -17,7 +17,7 @@
   transform one string into another).
 }
 \usage{
-agrep(pattern, x, max.distance = 0.1, costs = NULL, 
+agrep(pattern, x, max.distance = 0.1, costs = NULL,
       ignore.case = FALSE, value = FALSE, fixed = TRUE,
       useBytes = FALSE)
 }
@@ -74,7 +74,7 @@ agrep(pattern, x, max.distance = 0.1, costs = NULL,
   As from \R 2.10.0 this uses \code{tre} by Ville Laurikari
   (\url{http://http://laurikari.net/tre/}), which supports MBCS
   character matching much better than the previous version.
-  
+
   The main effect of \code{useBytes} is to avoid errors/warnings about
   invalid inputs and spurious matches in multibyte locales.
   It inhibits the conversion of inputs with marked encodings, and is

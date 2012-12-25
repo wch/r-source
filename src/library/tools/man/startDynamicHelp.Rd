@@ -25,7 +25,7 @@ startDynamicHelp(start = TRUE)
   those ports in order; otherwise, it tries up to 10 random ports to
   find one not in use.  It can be disabled by setting the environment
   variable \env{R_DISABLE_HTTPD} to a non-empty value.
-  
+
   \code{startDynamicHelp} is called by functions that need to use the
   server, so would rarely be called directly by a user.
 
@@ -49,7 +49,7 @@ startDynamicHelp(start = TRUE)
 \seealso{
   \code{\link{help.start}} and \code{\link{help}(help_type = "html")}
   will attempt to start the HTTP server if required
-  
+
   \code{\link{Rd2HTML}} is used to render the package help pages.
 }
 \keyword{ documentation }

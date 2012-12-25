@@ -16,7 +16,7 @@
 \usage{
 quartzFont(family)
 
-quartzFonts(...)           
+quartzFonts(...)
 }
 \arguments{
   \item{family}{a character vector containing the four PostScript font

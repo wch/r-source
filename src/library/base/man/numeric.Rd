@@ -50,7 +50,7 @@ is.numeric(x)
 }
 \value{
   for \code{numeric} and \code{as.numeric} see \code{\link{double}}.
-  
+
   The default method for \code{is.numeric} returns \code{TRUE}
   if its argument is of \link{mode} \code{"numeric"}
   (\link{type} \code{"double"} or type \code{"integer"}) and not a

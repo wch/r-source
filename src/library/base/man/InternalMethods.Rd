@@ -58,7 +58,7 @@
   \code{\link{seq.int}}
   (which dispatches methods for \code{"seq"})%       [seq.c]
   and \code{\link{xtfrm}}%                           [sort.c]
-  
+
   In addition, \code{is.name} is a synonym for \code{is.symbol} and
   dispatches methods for the latter.
 

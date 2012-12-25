@@ -77,7 +77,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \code{\link{suppressPackageStartupMessages}}: this will suppress all
   messages from \R itself but not necessarily all those from package
   authors.
-  
+
   If \code{library} is called with no \code{package} or \code{help}
   argument, it lists all available packages in the libraries specified
   by \code{lib.loc}, and returns the corresponding information in an

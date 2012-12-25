@@ -25,17 +25,17 @@ setBreakpoint(srcfile, line, nameonly = TRUE,
 \arguments{
   \item{srcfile}{The name of the file containing the source code.}
   \item{line}{The line number within the file.  See Details for an
-    alternate way to specify this.} 
+    alternate way to specify this.}
   \item{nameonly}{If \code{TRUE} (the default), we require only a match
-    to \code{basename(srcfile)}, not to the full path.} 
+    to \code{basename(srcfile)}, not to the full path.}
   \item{envir}{Where do we start looking for function objects?}
   \item{lastenv}{Where do we stop?  See the Details.}
   \item{verbose}{Should we print information on where breakpoints were set?}
   \item{tracer}{An optional \code{tracer} function to pass to
     \code{\link{trace}}.  By default, a call to \code{\link{browser}}
-    is inserted.} 
+    is inserted.}
   \item{print}{The \code{print} argument to pass to \code{\link{trace}}.}
-  \item{clear}{If \code{TRUE}, call \code{\link{untrace}} rather than 
+  \item{clear}{If \code{TRUE}, call \code{\link{untrace}} rather than
     \code{\link{trace}}.}
   \item{\dots}{Additional arguments to pass to \code{\link{trace}}.}
 }
@@ -52,7 +52,7 @@ setBreakpoint(srcfile, line, nameonly = TRUE,
   usually find all user code other than S4 methods; the second one is
   quite slow, as it will typically search all attached system
   libraries.)
-  
+
   For convenience, \code{envir} may be specified indirectly:  if it is
   not an environment, it will be replaced with
   \code{environment(envir)}.

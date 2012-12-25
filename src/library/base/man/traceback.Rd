@@ -12,7 +12,7 @@
   uncaught error, i.e., the sequence of calls that lead to the error.
   This is useful when an error occurs with an unidentifiable error
   message.  It can also be used to print the current stack or
-  arbitrary lists of deparsed calls.  
+  arbitrary lists of deparsed calls.
 }
 \usage{
 traceback(x = NULL, max.lines = getOption("deparse.max.lines"))
@@ -20,7 +20,7 @@ traceback(x = NULL, max.lines = getOption("deparse.max.lines"))
 \arguments{
   \item{x}{\code{NULL} (default, meaning \code{.Traceback}), or an
     integer count of calls to skip in the current stack, or a list or
-    pairlist of deparsed calls.  See the details.}    
+    pairlist of deparsed calls.  See the details.}
   \item{max.lines}{The maximum number of lines to be printed
     \emph{per call}.  The default is unlimited.}
 }
@@ -32,18 +32,18 @@ traceback(x = NULL, max.lines = getOption("deparse.max.lines"))
   function calls (such as \code{\link{.Call}}): if profiling is in
   progress it will include calls to some primitive functions.  (Calls
   to builtins are included, but not to specials.)
-  
+
   Errors which are caught \emph{via} \code{\link{try}} or
   \code{\link{tryCatch}} do not generate a traceback, so what is printed
   is the call sequence for the last uncaught error, and not necessarily
   for the last error.
-  
+
   If \code{x} is numeric, then the current stack is printed, skipping
   \code{x} entries at the top of the stack.  For example,
   \code{options(error = function() traceback(2))} will print the stack
   at the time of the error, skipping the call to \code{traceback()}
   and the error function that called it.
-  
+
   Otherwise, \code{x} is assumed to be a list or pairlist of deparsed
   calls and will be displayed in the same way.
 }

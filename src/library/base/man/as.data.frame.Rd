@@ -37,7 +37,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
 \method{as.data.frame}{character}(x, \dots,
               stringsAsFactors = default.stringsAsFactors())
 
-\method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE, \dots, 
+\method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE, \dots,
               stringsAsFactors = default.stringsAsFactors())
 
 is.data.frame(x)
@@ -85,7 +85,7 @@ is.data.frame(x)
 
   If a data frame is supplied, all classes preceding \code{"data.frame"}
   are stripped, and the row names are changed if that argument is supplied.
-  
+
   If \code{row.names = NULL}, row names are constructed from the names
   or dimnames of \code{x}, otherwise are the integer sequence
   starting at one.  Few of the methods check for duplicated row names.

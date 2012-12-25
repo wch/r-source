@@ -16,7 +16,7 @@ rawConnection(object, open = "r")
 rawConnectionValue(con)
 }
 \arguments{
-  \item{object}{character or raw vector.  A description of the connection. 
+  \item{object}{character or raw vector.  A description of the connection.
     For an input this is an \R raw vector object, and for an output
     connection the name for the connection.
   }
@@ -29,7 +29,7 @@ rawConnectionValue(con)
   destroys the copy.
 
   An output raw connection is opened and creates an \R raw vector
-  internally.  The raw vector can be retrieved \emph{via} 
+  internally.  The raw vector can be retrieved \emph{via}
   \code{rawConnectionValue}.
 
   If a connection is open for both input and output the initial raw
@@ -53,7 +53,7 @@ rawConnectionValue(con)
   of output there is a 100,000 character limit on the length of line for
   output connections: longer lines will be truncated with a warning.
 }
- 
+
 \seealso{
   \code{\link{connections}}, \code{\link{showConnections}}.
 }

@@ -57,7 +57,7 @@
   If there is an exports file \file{dllname-win.def} in the current
   directory it will be used, otherwise all entry points in objects (but
   not libraries) will be exported from the DLL.
-#endif 
+#endif
 }
 #ifdef unix
 \note{
@@ -76,7 +76,7 @@
     Administration and Installation} manual (see the \file{doc/manual}
   subdirectory of the \R source tree).
 
-  The \sQuote{R Installation and Administration} and \sQuote{Writing R 
+  The \sQuote{R Installation and Administration} and \sQuote{Writing R
   Extensions} manuals.
 }
 #ifdef unix

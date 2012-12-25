@@ -33,7 +33,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
    By default, equally spaced values from 0 to 1 are used.  If \code{x}
    is a \code{list}, its components \code{x$x} and \code{x$y} are used
    for \code{x} and \code{y}, respectively.  If the list has component
-   \code{z} this is used for \code{z}.} 
+   \code{z} this is used for \code{z}.}
  \item{z}{a numeric matrix containing the values to be plotted..  Note that
    \code{x} can be used instead of \code{z} for convenience.}
  \item{xlim}{x limits for the plot.}

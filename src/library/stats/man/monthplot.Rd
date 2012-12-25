@@ -33,8 +33,8 @@ monthplot(x, \dots)
           times = seq_along(x),
           phase = (times - 1L)\%\%length(labels) + 1L, base = mean,
           axes = TRUE, type = c("l", "h"), box = TRUE,
-          add = FALSE, 
-          col = par("col"), lty = par("lty"), lwd = par("lwd"), 
+          add = FALSE,
+          col = par("col"), lty = par("lty"), lwd = par("lwd"),
           col.base = col, lty.base = lty, lwd.base = lwd, ...)
 }
 \arguments{

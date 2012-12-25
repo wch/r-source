@@ -220,7 +220,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 
   Argument \code{libs_only = TRUE} is supported for source installs and for
   Windows binary installs.
-  
+
   For binary installs, the function also checks for the availability of
   a source package on the same repository, and reports if the source
   package has a later version, or is available but no binary version

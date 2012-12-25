@@ -11,7 +11,7 @@
 \description{
   This function marks an object so that a message is printed whenever the
   internal code copies the object.  It is a
-  major cause of hard-to-predict memory use in R.  
+  major cause of hard-to-predict memory use in R.
 }
 \usage{
 tracemem(x)
@@ -30,7 +30,7 @@ retracemem(x, previous = NULL)
   left in code during development).
 
   It is enabled in the standard Mac OS X and Windows builds of \R.
-  
+
   When an object is traced any copying of the object by the C function
   \code{duplicate} produces a message to standard output, as does type
   coercion and copying when passing arguments to \code{.C} or
@@ -48,7 +48,7 @@ retracemem(x, previous = NULL)
   \code{\link{trace}} and it is not useful to trace \code{NULL},
   environments, promises, weak references, or external pointer objects, as
   these are not duplicated.
-  
+
   These functions are \link{primitive}.
 }
 \value{
@@ -59,7 +59,7 @@ retracemem(x, previous = NULL)
 \seealso{
   \code{\link{capabilities}("profmem")} to see if this was enabled for
   this build of \R.
-  
+
   \code{\link{trace}}, \code{\link{Rprofmem}}
 
   \url{http://developer.r-project.org/memory-profiling.html}

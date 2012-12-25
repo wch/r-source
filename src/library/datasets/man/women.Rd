@@ -23,7 +23,7 @@
   The data set appears to have been taken from the American Society of
   Actuaries \emph{Build and Blood Pressure Study} for some (unknown to
   us) earlier year.
-    
+
   The World Almanac notes: \dQuote{The figures represent weights in
     ordinary indoor clothing and shoes, and heights with shoes}.
 }

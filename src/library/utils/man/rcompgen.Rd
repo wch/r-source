@@ -25,7 +25,7 @@
   provide a simple control and query mechanism.  The actual interface
   consists of a few unexported functions described further down.
 }
-  
+
 \usage{
 
 rc.settings(ops, ns, args, func, ipck, S3, data, help,
@@ -93,7 +93,7 @@ rc.options(\dots)
         upon request), and more can be added by the user through the
         unexported function \code{.addFunctionInfo} (see below).
       }
-      
+
       \item{\code{files}:}{ enables filename completion in \R code.  This
         is initially set to \code{FALSE}, in which case the underlying
         completion front-end can take over (and hopefully do a better
@@ -138,7 +138,7 @@ rc.options(\dots)
   partial \sQuote{word} (a.k.a. token) being completed is empty (since
   there would be too many completions).  The more advanced types of
   completion are described below.
-  
+
   \describe{
 
     \item{\bold{Completion after extractors \code{$} and \code{@}}:}{
@@ -278,7 +278,7 @@ rc.options(\dots)
 
 \section{Unexported API}{
 
-  There are several unexported functions in the package.  Of these, 
+  There are several unexported functions in the package.  Of these,
   a few are special because they provide the API through which other
   mechanisms can make use of the facilities provided by this package
   (they are unexported because they are not meant to be called directly
@@ -295,7 +295,7 @@ rc.options(\dots)
 
     .guessTokenFromLine()
     .win32consoleCompletion(linebuffer, cursorPosition,
-                            check.repeat = TRUE, 
+                            check.repeat = TRUE,
                             minlength = -1)
 
     .addFunctionInfo(...)

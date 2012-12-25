@@ -9,7 +9,7 @@
 \title{Read and Write Data in DCF Format}
 \description{
   Reads or writes an \R object from/to a file in Debian Control File
-  format. 
+  format.
 }
 \usage{
 read.dcf(file, fields = NULL, all = FALSE, keep.white = NULL)
@@ -68,7 +68,7 @@ write.dcf(x, file = "", append = FALSE,
     \item Records are separated by one or more empty (i.e., whitespace
     only) lines.
   }
-  
+
   Note that \code{read.dcf(all = FALSE)} reads the file byte-by-byte.
   This allows a \file{DESCRIPTION} file to be read and only its ASCII
   fields used, or its \samp{Encoding} field used to re-encode the
@@ -86,7 +86,7 @@ write.dcf(x, file = "", append = FALSE,
   but never used in a record, then the corresponding value is \code{NA}.
   If fields are repeated within a record, the last one encountered is
   returned.  Malformed lines lead to an error.
-  
+
   For \code{read.dcf(all = TRUE)} a data frame is returned, again with
   one row per record and one column per field.  The columns are lists of
   character vectors for fields with multiple occurrences, and character
@@ -94,7 +94,7 @@ write.dcf(x, file = "", append = FALSE,
 
   Note that an empty \code{file} is a valid DCF file, and
   \code{read.dcf} will return a zero-row matrix or data frame.
-  
+
   For \code{write.dcf}, invisible \code{NULL}.
 }
 

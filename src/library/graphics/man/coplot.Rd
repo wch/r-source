@@ -7,13 +7,13 @@
 \title{Conditioning Plots}
 \usage{
 coplot(formula, data, given.values, panel = points, rows, columns,
-       show.given = TRUE, col = par("fg"), pch = par("pch"), 
+       show.given = TRUE, col = par("fg"), pch = par("pch"),
        bar.bg = c(num = gray(0.8), fac = gray(0.95)),
        xlab = c(x.name, paste("Given :", a.name)),
        ylab = c(y.name, paste("Given :", b.name)),
        subscripts = FALSE,
        axlabels = function(f) abbreviate(levels(f)),
-       number = 6, overlap = 0.5, xlim, ylim, \dots) 
+       number = 6, overlap = 0.5, xlim, ylim, \dots)
 co.intervals(x, number = 6, overlap = 0.5)
 }
 \alias{coplot}

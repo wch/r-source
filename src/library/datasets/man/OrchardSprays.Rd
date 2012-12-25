@@ -27,12 +27,12 @@
   sulphur emulsion in sucrose solution.  Seven different concentrations
   of lime sulphur ranging from a concentration of 1/100 to 1/1,562,500
   in successive factors of 1/5 were used as well as a solution
-  containing no lime sulphur. 
-  
+  containing no lime sulphur.
+
   The responses for the different solutions were obtained by releasing
   100 bees into the chamber for two hours, and then measuring the
   decrease in volume of the solutions in the various cells.
-  
+
   An \eqn{8 \times 8}{8 x 8} Latin square design was used and the
   treatments were coded as follows:
   \tabular{rl}{

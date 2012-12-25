@@ -48,11 +48,11 @@
       omits \pkg{methods} as it takes about 60\% of the startup time.
     }
   }
-  
+
   Spaces are allowed in \code{expression} and \code{file} (but will need
   to be protected from the shell in use, if any, for example by
   enclosing the argument in quotes).
-  
+
 #ifdef unix
   Normally the version of \R is determined at installation, but this can
   be overridden by setting the environment variable \env{RHOME}.
@@ -61,7 +61,7 @@
   The \R files are found from the location of the \file{Rscript.exe}
   executable.   If this is copied elsewhere, the environment variable
   \env{RHOME} should be set to the top directory of the \R installation.
-  
+
   Unlike Unix-alikes, this links directly to \file{R.dll} rather than
   running a separate process.
 #endif

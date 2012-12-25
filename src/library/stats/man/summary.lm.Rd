@@ -53,7 +53,7 @@
     the estimated coefficient, its standard error, t-statistic and
     corresponding (two-sided) p-value.  Aliased coefficients are omitted.}
   \item{aliased}{named logical vector showing if the original
-    coefficients are aliased.} 
+    coefficients are aliased.}
   \item{sigma}{the square root of the estimated variance of the random
     error
     \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{w_i R_i^2},}{\sigma^2 = 1/(n-p) Sum(w[i] R[i]^2),}

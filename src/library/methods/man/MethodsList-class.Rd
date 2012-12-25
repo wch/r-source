@@ -23,7 +23,7 @@ old-style objects. }
   \item{\code{argument}:}{Object of class \code{"name"}.  The name of the
     argument being used for dispatch at this level. }
   \item{\code{methods}:}{A named list of the methods (and method lists)
-    defined \emph{explicitly} for this argument. 
+    defined \emph{explicitly} for this argument.
  The names are the names of classes, and the corresponding
   element defines the method or methods to be used if the corresponding
   argument has that class.  See the details below.}
@@ -44,7 +44,7 @@ old-style objects. }
   In the first case, the function defines the method to use for any call
   in which \code{x} is of class \code{"track"}.  In the second case, the
   new methods list object defines the available methods depending on
-  the remaining formal arguments, in this example, \code{y}. 
+  the remaining formal arguments, in this example, \code{y}.
 
   Each method  corresponds conceptually to a \emph{signature};
   that is a named list of classes, with names corresponding to some or

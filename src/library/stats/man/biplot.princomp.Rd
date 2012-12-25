@@ -28,7 +28,7 @@ Biplot for Principal Components
     The variables are scaled by \code{lambda ^ scale} and the
     observations are scaled by \code{lambda ^ (1-scale)} where
     \code{lambda} are the singular values as computed by
-    \code{\link{princomp}}. Normally \code{0 <= scale <= 1}, and a warning 
+    \code{\link{princomp}}. Normally \code{0 <= scale <= 1}, and a warning
     will be issued if the specified \code{scale} is outside this range.
   }
   \item{pc.biplot}{

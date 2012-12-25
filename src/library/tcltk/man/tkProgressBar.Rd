@@ -34,12 +34,12 @@ setTkProgressBar(pb, value, title = NULL, label = NULL)
 \details{
   \code{tkProgressBar} will display a widget containing a label and
   progress bar.
-  
+
   \code{setTkProgessBar} will update the value and for non-\code{NULL}
   values, the title and label (provided there was one when the widget
   was created).  Missing (\code{\link{NA}}) and out-of-range values of
   \code{value} will be (silently) ignored.
-  
+
   The progress bar should be \code{close}d when finished with.
 
   This will use the \code{ttk::progressbar} widget for Tk version 8.5 or
@@ -54,7 +54,7 @@ setTkProgressBar(pb, value, title = NULL, label = NULL)
 }
 
 \seealso{
-  \code{\link{txtProgressBar}}  
+  \code{\link{txtProgressBar}}
 #ifdef windows
 
   \code{\link{winProgressBar}} for a version using Windows native

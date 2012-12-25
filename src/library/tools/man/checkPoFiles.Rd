@@ -27,7 +27,7 @@ checkPoFiles(language, dir = ".")
   \item{dir}{a path to a directory in which to check files.}
 }
 \details{
-  
+
   Part of \R's internationalization depends on translations of messages
   in \file{.po} files.  In these files an \sQuote{English} message taken
   from the \R sources is followed by a translation into another
@@ -51,16 +51,16 @@ checkPoFiles(language, dir = ".")
   If the \code{strictPlural} argument is \code{TRUE}, then argument
   lists must agree exactly between singular and plural forms of messages; if
   \code{FALSE}, then translations only need to match one or the other
-  of the two forms.  When \code{checkPoFiles} calls \code{checkPoFile}, 
+  of the two forms.  When \code{checkPoFiles} calls \code{checkPoFile},
   the \code{strictPlural} argument is set to \code{TRUE} for files with
   names starting \file{R-}, and to \code{FALSE} otherwise.
-  
+
   Items marked as \sQuote{fuzzy} in the \file{.po} file are not
   processed (as they are ignored by the message compiler).
-  
+
   If a difference is found, the translated string is checked for variant
   percent signs (e.g. the wide percent sign \code{"\uFF05"}).  Such signs
-  will not be recognized as format specifiers, and are likely to be 
+  will not be recognized as format specifiers, and are likely to be
   errors.
 }
 \value{

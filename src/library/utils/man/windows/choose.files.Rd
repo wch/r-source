@@ -8,7 +8,7 @@
 \alias{Filters}
 \title{Choose a List of Files Interactively}
 \description{
-  Use a Windows file dialog to choose a list of zero or more files 
+  Use a Windows file dialog to choose a list of zero or more files
 interactively.
 }
 \usage{
@@ -55,7 +55,7 @@ Filters
   in the \code{default} argument.  If a directory is not given, the
   dialog will start in the current directory the first time, and
   remember the last directory used on subsequent invocations.
-  
+
   There is a buffer limit on the total length of the selected filenames:
   it is large but this function is not intended to select thousands of
   files, when the limit might be reached.
@@ -67,7 +67,7 @@ Filters
   files by pattern.
 }
 \examples{
-  if (interactive()) 
+  if (interactive())
        choose.files(filters = Filters[c("zip", "All"),])
 }
 \keyword{file}

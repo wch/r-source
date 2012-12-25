@@ -24,7 +24,7 @@
 }
 \seealso{
   \code{\link{sunspot.month}} has a longer (and a bit different) series.
-} 
+}
 \examples{
 require(graphics)
 plot(sunspots, main = "sunspots data", xlab = "Year",

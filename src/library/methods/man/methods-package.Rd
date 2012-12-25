@@ -14,7 +14,7 @@ Formally defined methods and classes for R objects, plus
 other programming tools, as described in the references.
 }
 \details{
-  This package provides the \sQuote{S4} or \sQuote{S version 4} 
+  This package provides the \sQuote{S4} or \sQuote{S version 4}
   approach to methods and classes in a functional language.
 
   See the documentation entries \code{\link{Classes}},
@@ -34,7 +34,7 @@ other programming tools, as described in the references.
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
- Springer (For the original S4 version.) 
+ Springer (For the original S4 version.)
 }
 \author{
 R Core Team

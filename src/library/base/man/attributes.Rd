@@ -26,7 +26,7 @@ mostattributes(obj) <- value
 \details{
   Unlike \code{\link{attr}} it is possible to set attributes on a
   \code{NULL} object: it will first be coerced to an empty list.
-  
+
   Note that some attributes (namely \code{\link{class}},
   \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},
   \code{\link{names}}, \code{\link{row.names}} and
@@ -55,7 +55,7 @@ mostattributes(obj) <- value
   The names of a pairlist are not stored as attributes, but are reported
   as if they were (and can be set by the replacement form of
   \code{attributes}).
-  
+
   Both assignment and replacement forms of \code{attributes} are
   \link{primitive} functions.
 }

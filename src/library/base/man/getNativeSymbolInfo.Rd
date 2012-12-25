@@ -31,11 +31,11 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
 }
 \arguments{
   \item{name}{the name(s) of the native symbol(s).}
-  
+
   \item{PACKAGE}{an optional argument that specifies to which
     DLL to restrict the search for this symbol.  If this is
     \code{"base"}, we search in the \R executable itself.}
-  
+
   \item{unlist}{a logical value which controls how the result is
     returned if the function is called with the name of a single symbol.
     If \code{unlist} is \code{TRUE} and the number of symbol names in
@@ -43,7 +43,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
     is returned.  If it is \code{FALSE}, then a list
     of \code{NativeSymbolInfo} objects is returned.
     This is ignored if the number of symbols passed in \code{name} is
-    more than one. 
+    more than one.
     To be compatible with earlier versions of this function, this
     defaults to \code{TRUE}.
   }
@@ -90,7 +90,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
       \item{dynamicLookup}{a logical value indicating whether dynamic
         resolution is used when looking for symbols in this library,
         or only registered routines can be located.}
-    }    
+    }
   }
   If the routine was explicitly registered by the dynamically loaded
   library, the list contains a fourth field
@@ -111,7 +111,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   For information about registering native routines,
   see \dQuote{In Search of C/C++ & FORTRAN Routines},
   R-News, volume 1, number 3, 2001, p20--23
-  (\url{http://cran.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).  
+  (\url{http://cran.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).
 }
 \author{Duncan Temple Lang}
 \note{
@@ -131,7 +131,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   \code{\link{.Fortran}},
   \code{\link{.External}},
   \code{\link{.Call}},
-  \code{\link{dyn.load}}.  
+  \code{\link{dyn.load}}.
 }
 
 % \examples{

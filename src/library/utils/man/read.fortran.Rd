@@ -30,11 +30,11 @@ read.fortran(file, format, ..., as.is = TRUE, colClasses = NA)
   indicates columns to be skipped. The repeat code \code{r} and decimal
   place code \code{d} are always optional. The length code \code{l} is
   required except for \code{X} formats when \code{r} is present.
-  
+
   For a single-line record, \code{format} should be a character
   vector. For a multiline record it should be a list with a character
   vector for each line.
-  
+
   Skipped (\code{X}) columns are not passed to \code{read.fwf}, so
   \code{colClasses}, \code{col.names}, and similar arguments passed to
   \code{read.fwf} should not reference these columns.

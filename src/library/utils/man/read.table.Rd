@@ -45,7 +45,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
     \emph{relative} to the current working directory,
     \code{\link{getwd}()}. Tilde-expansion is performed where supported.
     As from \R 2.10.0 this can be a compressed file (see \code{\link{file}}).
-    
+
     Alternatively, \code{file} can be a readable text-mode
     \link{connection} (which will be opened for reading if
     necessary, and if so \code{\link{close}}d (and hence destroyed) at
@@ -175,14 +175,14 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?  Note that this is overridden by \code{as.is} and
     \code{colClasses}, both of which allow finer control.}
-  
+
   \item{fileEncoding}{character string: if non-empty declares the
     encoding used on a file (not a connection) so the character data can
     be re-encoded.  See the \sQuote{Encoding} section of the help for
     \code{\link{file}}, the \sQuote{R Data Import/Export Manual} and
     \sQuote{Note}.
   }
-  
+
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
     Latin-1 or UTF-8 (see \code{\link{Encoding}}): it is not used to
@@ -190,10 +190,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
     their native encoding (if one of those two).  See \sQuote{Value}.
   }
 
-  \item{text}{character string: if \code{file} is not supplied and this is, 
+  \item{text}{character string: if \code{file} is not supplied and this is,
     then data are read from the value of \code{text} via a text connection.
-    Notice that a literal string can be used to include (small) data sets 
-    within R code. 
+    Notice that a literal string can be used to include (small) data sets
+    within R code.
   }
 
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
@@ -265,7 +265,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
   These functions can use a surprising amount of memory when reading
   large files.  There is extensive discussion in the \sQuote{R Data
   Import/Export} manual, supplementing the notes here.
-  
+
   Less memory will be used if \code{colClasses} is specified as one of
   the six \link{atomic} vector classes.  This can be particularly so when
   reading a column that takes many distinct numeric values, as storing
@@ -287,7 +287,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include
   the column of row names (if any).
-  
+
   Because this function uses \code{\link{pushBack}} it can only handle
   character strings which can be represented in the current locale.  So
   although \code{fileEncoding} can be used to specify the encoding of
@@ -310,7 +310,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
   \code{\link{count.fields}} can be useful to determine problems with
   reading files which result in reports of incorrect record lengths (see
   the \sQuote{Examples} below).
-  
+
   \url{http://tools.ietf.org/html/rfc4180} for the IANA definition of
   CSV files (which requires comma as separator and CRLF line endings).
 }

@@ -135,7 +135,7 @@ getGenerics(where, searchForm = FALSE)
     named, the names must be formal argument names for the generic
     function.  Signatures are matched to the arguments specified in
     the signature slot of the generic function (see the Details
-    section of the \code{\link{setMethod}} documentation). 
+    section of the \code{\link{setMethod}} documentation).
 
   The \code{signature} argument to \code{dumpMethods} is ignored (it
   was used internally in previous implementations).}

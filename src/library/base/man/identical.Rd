@@ -67,14 +67,14 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   If \code{single.NA} is true, as by default, \code{identical} sees
   \code{\link{NaN}} as different from \code{\link{NA_real_}}, but all
   \code{NaN}s are equal (and all \code{NA} of the same type are equal).
-  
+
   Character strings are regarded as identical if they are in different
   marked encodings but would agree when translated to UTF-8.
-  
+
   If \code{attrib.as.set} is true, as by default, comparison of
   attributes view them as a set (and not a vector, so order is not
   tested).
-  
+
   If \code{ignore.bytecode} is true (the default), the compiled
   bytecode of a function (see \code{\link{cmpfun}}) will be ignored in
   the comparison. If it is false, functions will compare equal only if

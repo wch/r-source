@@ -27,7 +27,7 @@ grid.layout(nrow = 1, ncol = 1,
     describing the heights of the rows
     in the layout.}
   \item{default.units}{A string indicating the default units to use
-    if \code{widths} or \code{heights} are only given as numeric vectors.}  
+    if \code{widths} or \code{heights} are only given as numeric vectors.}
   \item{respect}{A logical value or a numeric matrix.
     If a logical, this indicates whether
     row heights and column widths should respect each other.
@@ -35,7 +35,7 @@ grid.layout(nrow = 1, ncol = 1,
     row and column should be respected (see examples below).
   }
   \item{just}{A string or numeric
-    vector specifying how the 
+    vector specifying how the
     layout should be
     justified if it is not the same size as its parent viewport.
     If there are two values, the first
@@ -62,7 +62,7 @@ grid.layout(nrow = 1, ncol = 1,
   combination with Grid graphics.  The documentation for
   \code{layout} may provide some useful information and this
   function should behave identically in comparable situations.  The
-  \code{grid.layout} 
+  \code{grid.layout}
   function has \emph{added} the ability to specify a broader range
   of units for row heights and column widths, and allows for nested
   layouts (see \code{viewport}).

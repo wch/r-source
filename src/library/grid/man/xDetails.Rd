@@ -30,7 +30,7 @@ yDetails(x, theta)
   grob primitives, the centre is
   determined as half way between the minimum and maximum values
   in x and y directions).
-  
+
   These functions are called in the calculation of
   \code{"grobx"} and \code{"groby"} units as produced by
   the \code{grobX} and \code{grobY} functions.

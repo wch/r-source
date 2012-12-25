@@ -7,7 +7,7 @@
 \alias{savePlot}
 \title{Save Cairo X11 Plot to File}
 \description{
-  Save the current page of a cairo \code{\link{X11}()} device to a file. 
+  Save the current page of a cairo \code{\link{X11}()} device to a file.
 }
 \usage{
 savePlot(filename = paste("Rplot", type, sep = "."),

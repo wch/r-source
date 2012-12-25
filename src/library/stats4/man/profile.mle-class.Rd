@@ -34,7 +34,7 @@ Objects can be created by calls of the form \code{new("profile.mle",
   }
 }
 \seealso{
-  \code{\link{mle}}, \code{\link{mle-class}}, \code{\link{summary.mle-class}} 
+  \code{\link{mle}}, \code{\link{mle-class}}, \code{\link{summary.mle-class}}
 }
 %% Do we want examples for classes??
 %%\examples{

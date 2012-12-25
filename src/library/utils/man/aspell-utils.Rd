@@ -25,7 +25,7 @@ aspell_package_R_files(dir, ignore = character(), control = list(),
                        program = NULL, dictionaries = character())
 aspell_package_C_files(dir, ignore = character(), control = list(),
                        program = NULL, dictionaries = character())
-    
+
 aspell_write_personal_dictionary_file(x, out, language = "en",
                                       program = NULL)
 }

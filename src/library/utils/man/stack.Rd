@@ -56,7 +56,7 @@ unstack(x, \dots)
   \code{unstack} produces a list of columns according to the formula
   \code{form}.  If all the columns have the same length, the resulting
   list is coerced to a data frame.
-  
+
   \code{stack} produces a data frame with two columns:
   \item{values}{the result of concatenating the selected vectors in
     \code{x}.}

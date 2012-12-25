@@ -16,7 +16,7 @@
 }
 \value{
   A list with at least the following components:
-  
+
   \item{OS.type}{
     character string, giving the \bold{O}perating \bold{S}ystem
     (family) of the computer.  One of \code{"unix"} or \code{"windows"}.
@@ -45,7 +45,7 @@
     character string, \code{"big"} or \code{"little"}, giving the
     endianness of the processor in use.  This is relevant when it is
     necessary to know the order to read/write bytes of e.g. an integer or
-    double from/to a \link{connection}: see \code{\link{readBin}}. 
+    double from/to a \link{connection}: see \code{\link{readBin}}.
   }
   \item{pkgType}{
     character string, the preferred setting for
@@ -83,7 +83,7 @@
   \code{\link{R.version}} and \code{\link{Sys.info}} give more details
   about the OS.  In particular, \code{R.version$platform} is the
   canonical name of the platform under which \R was compiled.
-  
+
   \code{\link{.Machine}} for details of the arithmetic used, and
   \code{\link{system}} for invoking platform-specific system commands.
 }

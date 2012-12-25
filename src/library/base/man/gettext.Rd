@@ -65,7 +65,7 @@ bindtextdomain(domain, dirname = NULL)
   translate messages.
 
   \code{\link{xgettext}} for extracting translatable strings from \R
-  source files. 
+  source files.
 }
 \examples{
 bindtextdomain("R")  # non-null if and only if NLS is enabled

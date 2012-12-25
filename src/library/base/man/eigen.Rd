@@ -93,7 +93,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \emph{LAPACK Users' Guide}.  Third Edition.  SIAM.\cr
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
-  
+
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.

@@ -26,7 +26,7 @@
 \value{
   \code{droplevels} returns an object of the same class as \code{x}}
 \details{
-  The method for class \code{"factor"} is essentially equivalent to \code{factor(x)}. 
+  The method for class \code{"factor"} is essentially equivalent to \code{factor(x)}.
 
   The \code{except} argument follow the usual indexing rules.
 }
@@ -37,7 +37,7 @@
   subsetting.  (Notice that subsetting does \emph{not} in general drop
   unused levels).  By default, levels are dropped from all factors in a
   data frame, but the \code{except} argument allows you to specify
-  columns for which this is not wanted.  
+  columns for which this is not wanted.
 }
 
 \seealso{

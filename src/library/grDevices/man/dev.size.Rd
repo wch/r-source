@@ -26,7 +26,7 @@ dev.size(units = c("in", "cm", "px"))
   \code{\link{par}("din")}, but this provides a way to access it
   independent of the graphics sub-system in use.  Note that
   \code{par("din")} is only updated when a new plot is started, whereas
-  \code{dev.size} tracks the size as an on-screen device is resized. 
+  \code{dev.size} tracks the size as an on-screen device is resized.
 }
 \examples{
 dev.size("cm")

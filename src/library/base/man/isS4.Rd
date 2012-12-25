@@ -23,7 +23,7 @@ asS3(object, flag = TRUE, complete = TRUE)
   \item{object}{Any R object.}
 
   \item{flag}{Optional, logical: indicate direction of conversion.}
-  
+
   \item{complete}{Optional, logical: whether conversion to S3 is
     completed.  Not usually needed, but see the details section.}
 }
@@ -32,7 +32,7 @@ asS3(object, flag = TRUE, complete = TRUE)
   Note that \code{isS4} does not rely on the \pkg{methods}
   package, so in particular it can be used to detect the need to
   \code{\link{require}} that package.
-    
+
   \code{asS3} uses the value of
   \code{complete} to control whether an attempt is made to transform
   \code{object} into a valid object of the implied S3 class.  If
@@ -51,7 +51,7 @@ asS3(object, flag = TRUE, complete = TRUE)
   whether the internal flag marking an S4 object has been turned on for
   this object.
 
-  \code{asS4} and \code{asS3} will turn this flag on or off, 
+  \code{asS4} and \code{asS3} will turn this flag on or off,
   and \code{asS3} will set the class from the objects \code{.S3Class}
   slot if one exists.  Note that \code{asS3} will \emph{not}  turn
   the object into an S3 object
@@ -72,7 +72,7 @@ isS4(getClass("MethodDefinition")) # TRUE
 \dontshow{
 stopifnot(isS4(asS4(Sys.time())))
 ## Following is a correction of previous behavior. See note in the
-## value section above 
+## value section above
 stopifnot(isS4(asS4(getClass("MethodDefinition"), FALSE, 2)))
 stopifnot(!isS4(asS4(getClass("MethodDefinition"), FALSE, 0)))
 }

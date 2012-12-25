@@ -66,7 +66,7 @@ arima(x, order = c(0, 0, 0),
   \item{n.cond}{Only used if fitting by conditional-sum-of-squares: the
     number of initial observations to ignore.  It will be ignored if
     less than the maximum lag of an AR term.}
-  
+
   \item{optim.method}{The value passed as the \code{method} argument to
     \code{\link{optim}}.}
 

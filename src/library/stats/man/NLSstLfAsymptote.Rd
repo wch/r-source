@@ -23,7 +23,7 @@ NLSstLfAsymptote(xy)
 }
 \value{
   A single numeric value estimating the horizontal asymptote for small
-  \code{x}. 
+  \code{x}.
 }
 \author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{

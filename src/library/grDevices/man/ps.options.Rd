@@ -12,7 +12,7 @@
   The auxiliary function \code{ps.options} can be used to set or view
   (if called without arguments) the default values for some of the
   arguments to \code{\link{postscript}}.
-  
+
   \code{ps.options} needs to be called before calling \code{postscript},
   and the default values it sets can be overridden by supplying
   arguments to \code{postscript}.
@@ -41,7 +41,7 @@ setPS(\dots)
   If both \code{reset = TRUE} and \code{...} are supplied the defaults
   are first reset to the \sQuote{factory-fresh} values and then the new
   values are applied.
-  
+
   For backwards compatibility argument \code{append} is accepted but
   ignored with a warning.
 

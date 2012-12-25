@@ -9,7 +9,7 @@
 \title{Date and Date-time Plotting Functions}
 \description{
   Functions to plot objects of classes \code{"POSIXlt"},
-  \code{"POSIXct"} and \code{"Date"} representing calendar dates and times. 
+  \code{"POSIXct"} and \code{"Date"} representing calendar dates and times.
 }
 \usage{
 axis.POSIXct(side, x, at, format, labels = TRUE, \dots)
@@ -35,7 +35,7 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
   and labels whereas if \code{x} is specified a suitable grid of labels
   is chosen. Printing of tick labels can be suppressed by using
   \code{labels = FALSE}.
-  
+
   The date-times for a \code{"POSIXct"} input are interpreted in the
   timezone give by the \code{"tzone"} attribute if there is one,
   otherwise the current timezone.

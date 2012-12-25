@@ -30,7 +30,7 @@ bitwShiftR(a, n)
 }
 \details{
   Each element of an integer vector has 32 bits.
-  
+
   Pairwise operations can result in integer \code{NA}.
 
   Shifting is done assuming the values represent unsigned integers.

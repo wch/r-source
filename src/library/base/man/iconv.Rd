@@ -55,7 +55,7 @@ iconvlist()
 
   Encoding \code{"ASCII"} is also accepted, and on most systems
   \code{"C"} and \code{"POSIX"} are synonyms for ASCII.
-  
+
   Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
   are ignored: they will always be translated as if from \code{from}
   even if declared otherwise.
@@ -81,7 +81,7 @@ iconvlist()
   project (which does not support \samp{//TRANSLIT}) and there is an
   older FreeBSD port (\samp{libiconv} is usually used there): it has not
   been reported whether or not these work with \R.
-  
+
   Note that you cannot rely on invalid inputs being detected, especially
   for \code{to = "ASCII"} where some implementations allow 8-bit
   characters and pass them through unchanged or with transliteration.
@@ -105,7 +105,7 @@ iconvlist()
   elements).
 }
 \seealso{
-  \code{\link{localeToCharset}}, \code{\link{file}}. 
+  \code{\link{localeToCharset}}, \code{\link{file}}.
 }
 \examples{
 ## In principle, not all systems have iconvlist

@@ -69,7 +69,7 @@ dev.control(displaylist = c("inhibit", "enable"))
   copied.  Most screen devices default to a transparent background, which
   is probably not what is needed when copying to a device such as
   \code{\link{png}}.
-  
+
   For \code{dev.copy2eps} and \code{dev.copy2pdf}, \code{width} and
   \code{height} are taken from the current device unless otherwise
   specified.  If just one of \code{width} and \code{height} is

@@ -23,7 +23,7 @@ SSbiexp(input, A1, lrc1, A2, lrc2)
 }
 \description{
   This \code{selfStart} model evaluates the biexponential model function
-  and its gradient.  It has an \code{initial} attribute that 
+  and its gradient.  It has an \code{initial} attribute that
   creates initial estimates of the parameters \code{A1}, \code{lrc1},
   \code{A2}, and \code{lrc2}.
 }

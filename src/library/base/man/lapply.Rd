@@ -31,7 +31,7 @@ simplify2array(x, higher = TRUE)
   \item{\dots}{optional arguments to \code{FUN}.}
   \item{simplify}{logical or character string; should the result be
     simplified to a vector, matrix or higher dimensional array if
-    possible?  For \code{sapply} it must be named and not abbreviated. 
+    possible?  For \code{sapply} it must be named and not abbreviated.
     The default value, \code{TRUE}, returns a vector or matrix if appropriate,
     whereas if \code{simplify = "array"} the result may be an
     \code{\link{array}} of \dQuote{rank}
@@ -86,7 +86,7 @@ simplify2array(x, higher = TRUE)
   Function \code{FUN} must be able to accept as input any of the
   elements of \code{X}.  If the latter is an atomic vector, \code{FUN}
   will always be passed a length-one vector of the same type as \code{X}.
-  
+
   Arguments in \code{\dots} cannot have the same name as any of the
   other arguments, and care may be needed to avoid partial matching to
   \code{FUN}.  In general-purpose code it is good practice to name the
@@ -94,7 +94,7 @@ simplify2array(x, higher = TRUE)
   through: this both avoids partial matching to \code{FUN} and ensures
   that a sensible error message is given if arguments named \code{X} or
   \code{FUN} are passed through \code{\dots}.
-  
+
   Simplification in \code{sapply} is only attempted if \code{X} has
   length greater than zero and if the return values from all elements
   of \code{X} are all of the same (positive) length.  If the common

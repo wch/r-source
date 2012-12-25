@@ -54,7 +54,7 @@ uniroot(f, interval, \dots,
 
   \code{f} will be called as \code{f(\var{x}, ...)} for a numeric value
   of \var{x}.
-  
+
   The argument passed to \code{f} has special semantics and used to be
   shared between calls.  The function should not copy it.
 }

@@ -55,7 +55,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   POSIX.  \code{"LC_MESSAGES"} will be \code{"C"} on systems that do not
   support message translation, and is not supported on Windows.  Trying
   to use an unsupported category is an error for \code{Sys.setlocale}.
-  
+
   Note that setting category \code{"LC_ALL"} sets only
   \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and
   \code{"LC_TIME"}.
@@ -93,11 +93,11 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   anomalously, so gives a warning.  Input conversions
   in \R itself are unaffected, but the reading and writing of ASCII
   \code{\link{save}} files will be, as may packages.
-  
+
   Setting it temporarily on a Unix-alike to produce graphical or text
   output may work well enough, but \code{\link{options}(OutDec)} is
   often preferable.
-  
+
   Almost all the output routines used by \R itself under Windows ignore
   the setting of \code{"LC_NUMERIC"} since they make use of the Trio
   library which is not internationalized.

@@ -25,7 +25,7 @@ stripchart(x, \dots)
            vertical = FALSE, group.names, add = FALSE,
            at = NULL, xlim = NULL, ylim = NULL,
            ylab = NULL, xlab = NULL, dlab = "", glab = "",
-           log = "", pch = 0, col = par("fg"), cex = par("cex"), 
+           log = "", pch = 0, col = par("fg"), cex = par("cex"),
            axes = TRUE, frame.plot = axes, \dots)
 }
 \arguments{
@@ -36,7 +36,7 @@ stripchart(x, \dots)
     specification of the form \code{y ~ g} can be given,
     indicating the observations in the vector \code{y} are to be
     grouped according to the levels of the factor
-    \code{g}.  \code{NA}s are allowed in the data.} 
+    \code{g}.  \code{NA}s are allowed in the data.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{x} should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
@@ -67,7 +67,7 @@ stripchart(x, \dots)
   \item{ylab, xlab}{labels: see \code{\link{title}}.}
   \item{dlab, glab}{alternate way to specify axis labels: see \sQuote{Details}.}
   \item{xlim, ylim}{plot limits: see \code{\link{plot.window}}.}
-  \item{log}{on which axes to use a log scale:  see 
+  \item{log}{on which axes to use a log scale:  see
     \code{\link{plot.default}}}
   \item{pch, col, cex}{Graphical parameters: see \code{\link{par}}.}
   \item{axes, frame.plot}{Axis control:  see \code{\link{plot.default}}}
@@ -75,9 +75,9 @@ stripchart(x, \dots)
 \details{
   Extensive examples of the use of this kind of plot can be found in
   Box, Hunter and Hunter or Seber and Wild.
-  
+
   The \code{dlab} and \code{glab} labels may be used instead of \code{xlab}
-  and \code{ylab} if those are not specified.  \code{dlab} applies to the 
+  and \code{ylab} if those are not specified.  \code{dlab} applies to the
   continuous data axis (the X axis unless \code{vertical} is \code{TRUE}),
   \code{glab} to the group axis.
 }

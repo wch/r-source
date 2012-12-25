@@ -16,7 +16,7 @@ NLSstAsymptotic(xy)
 }
 \description{
   Fits the asymptotic regression model, in the form \code{b0 +
-      b1*(1-exp(-exp(lrc) * x)} to the \code{xy} data.  
+      b1*(1-exp(-exp(lrc) * x)} to the \code{xy} data.
   This can be used as a building block in determining starting estimates
   for more complicated models.
 }

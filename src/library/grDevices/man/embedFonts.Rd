@@ -47,7 +47,7 @@ embedFonts(file, format, outfile = file, fontpaths = "",
 
   Note that Ghostscript may do font substitution, so the font embedded
   may differ from that specified in the original file.
-  
+
   Some other options which can be useful (see your Ghostscript
   documentation) are \option{-dMaxSubsetPct=100},
   \option{-dSubsetFonts=true} and  \option{-dEmbedAllFonts=true}.

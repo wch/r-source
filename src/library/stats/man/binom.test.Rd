@@ -51,7 +51,7 @@ binom.test(x, n, p = 0.5,
   The use of confidence or fiducial limits illustrated in the case of
   the binomial.
   \emph{Biometrika}, \bold{26}, 404--413.
-  
+
   William J. Conover (1971),
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.

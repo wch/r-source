@@ -12,7 +12,7 @@
 
   You should use the \code{convertUnit()} function or one of its
   close allies instead.
-  
+
   This function returns a numeric vector containing the specified
   x or y locations or dimensions, converted to "user" or "data"
   units, relative to the current viewport.
@@ -30,10 +30,10 @@ convertNative(unit, dimension="x", type="location")
 }
 \author{ Paul Murrell }
 \section{WARNING }{ If you draw objects based on output from these conversion
-    functions, then resize your device, the objects will be drawn 
+    functions, then resize your device, the objects will be drawn
     incorrectly -- the base R display list will not recalculate these
-    conversions.  This means that you can only rely on the results of 
-    these calculations if the size of your device is fixed.} 
+    conversions.  This means that you can only rely on the results of
+    these calculations if the size of your device is fixed.}
 \seealso{ \code{\link{grid.convert}}, \code{\link{unit}} }
 
 \examples{

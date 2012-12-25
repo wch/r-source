@@ -33,7 +33,7 @@ integrate(f, lower, upper, \dots, subdivisions = 100L,
 }
 \details{
   Note that arguments after \code{\dots} must be matched exactly.
-  
+
   If one or both limits are infinite, the infinite range is mapped onto
   a finite interval.
 
@@ -59,7 +59,7 @@ integrate(f, lower, upper, \dots, subdivisions = 100L,
   behaviour of the function elsewhere, the function needs to be
   well-behaved, for example differentiable except perhaps for a small
   number of jumps or integrable singularities.
-  
+
   \code{f} must accept a vector of inputs and produce a vector of function
   evaluations at those points.  The \code{\link{Vectorize}} function
   may be helpful to convert \code{f} to this form.
@@ -99,7 +99,7 @@ integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)
 
 ## some functions do not handle vector input properly
 f <- function(x) 2.0
-try(integrate(f, 0, 1)) 
+try(integrate(f, 0, 1))
 integrate(Vectorize(f), 0, 1)  ## correct
 integrate(function(x) rep(2.0, length(x)), 0, 1)  ## correct
 

@@ -29,7 +29,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
 \details{
   Enabling profiling automatically disables any existing profiling to
   another or the same file.
-  
+
   Profiling works by writing out the call stack every \code{interval}
   seconds, to the file specified.  Either the \code{\link{summaryRprof}}
   function or the wrapper script \command{R CMD Rprof} can be used to
@@ -50,7 +50,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   How time is measured varies by platform: on a Unix-alike it is the CPU
   time of the \R process, so for example excludes time when \R is waiting
   for input or for processes run by \code{\link{system}} to return.
-  
+
   Note that the timing interval cannot usefully be too small: once the
   timer goes off, the information is not recorded until the next timing
   click (probably in the range 1--10msecs).

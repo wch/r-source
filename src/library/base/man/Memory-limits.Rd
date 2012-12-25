@@ -19,7 +19,7 @@
   32- or 64-bit builds of \R.  The memory limits depends mainly on the
   build, but for a 32-bit build of \R on Windows they also depend on the
   underlying OS version.
-  
+
   \R holds all objects in memory, and there are limits based on the
   amount of memory that can be used by all objects:
   \itemize{
@@ -42,7 +42,7 @@
   There are also limits on individual objects. The storage space
   cannot exceed the address limit, and if you try to exceed that limit,
   the error message begins \code{cannot allocate vector of length}.
-  The number of bytes in a character string is limited to 
+  The number of bytes in a character string is limited to
   \eqn{2^{31} - 1 \approx 2\thinspace 10^9}{2^31 - 1 ~ 2*10^9},
   which is also the limit on each dimension of an array.
 }
@@ -79,7 +79,7 @@ limit vmemoryuse 4096m
   It is not normally possible to allocate as much as 2Gb to a single
   vector in a 32-bit build of \R even on 64-bit Windows because of
   preallocations by Windows in the middle of the address space.
- 
+
   Under Windows, \R imposes limits on the total memory allocation
   available to a single session as the OS provides no way to do so: see
   \code{\link{memory.size}} and \code{\link{memory.limit}}.

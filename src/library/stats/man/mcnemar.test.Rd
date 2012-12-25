@@ -18,7 +18,7 @@ mcnemar.test(x, y = NULL, correct = TRUE)
     or a factor object.}
   \item{y}{a factor object; ignored if \code{x} is a matrix.}
   \item{correct}{a logical indicating whether to apply continuity
-    correction when computing the test statistic.} 
+    correction when computing the test statistic.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:

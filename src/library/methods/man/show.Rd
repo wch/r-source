@@ -54,7 +54,7 @@ the discussion in \code{\link{setIs}} for the general concept.
 ## following the example shown in the setMethod documentation ...
 setClass("track",
          representation(x="numeric", y="numeric"))
-setClass("trackCurve", 
+setClass("trackCurve",
          representation("track", smooth = "numeric"))
 
 t1 <- new("track", x=1:20, y=(1:20)^2)

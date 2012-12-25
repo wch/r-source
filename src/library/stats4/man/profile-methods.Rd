@@ -30,7 +30,7 @@
 \details{
   The profiling algorithm tries to find an approximately evenly spaced
   set of at least five parameter values (in each direction from the
-  optimum) to cover  
+  optimum) to cover
   the root-likelihood function. Some care is taken to try and get sensible
   results in cases of high parameter curvature. Notice that it may not
   always be possible to obtain the cutoff value, since the likelihood

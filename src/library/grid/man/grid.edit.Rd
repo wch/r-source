@@ -19,7 +19,7 @@ grid.edit(gPath, ..., strict = FALSE, grep = FALSE,
 grid.gedit(..., grep = TRUE, global = TRUE)
 
 editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
-         global = FALSE, warn = TRUE) 
+         global = FALSE, warn = TRUE)
 }
 \arguments{
   \item{grob}{A grob object.}
@@ -51,7 +51,7 @@ editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
 \details{
   \code{editGrob} copies the specified grob and returns a modified
   grob.
-  
+
   \code{grid.edit} destructively modifies a grob on the display list.
   If \code{redraw}
   is \code{TRUE} it then redraws everything to reflect the change.

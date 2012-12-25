@@ -26,7 +26,7 @@ prototype(...)
     strings.  Unnamed arguments are classes that a newly defined class
     extends; named arguments name the explicit slots in the new class,
     and specify what class each slot should have.
-   
+
     In the call to \code{prototype}, if an unnamed argument is
     supplied, it unconditionally forms the basis for the prototype
     object.  Remaining arguments are taken to correspond to slots of

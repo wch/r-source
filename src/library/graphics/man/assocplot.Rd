@@ -71,7 +71,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
 
   Meyer, D., Zeileis, A., and Hornik, K. (2005)
   The strucplot framework: Visualizing multi-way contingency tables with vcd.
-  \emph{Report 22}, Department of Statistics and Mathematics, 
+  \emph{Report 22}, Department of Statistics and Mathematics,
   \enc{Wirtschaftsuniversität}{Wirtschaftsuniversitaet} Wien, Research Report Series.
   \url{http://epub.wu.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
 }

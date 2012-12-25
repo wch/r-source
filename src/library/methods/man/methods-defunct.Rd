@@ -87,12 +87,12 @@ traceOff(what)
   by the introduction of the S4 bit in \R 2.4.0.
 
   \code{allGenerics} is superseded by \code{\link{getGenerics}}.
-  
+
   \code{trySilent(ex)} was a deprecated equivalent of \code{\link{try}(e,
     silent=TRUE)}; in \R programming it is typically more efficient and
   flexible to work with something like \code{\link{tryCatch}(ex,
     error = function(e) e)} instead.
-  
+
   The functions \code{traceOn} and \code{traceOff} have been replaced by
   extended versions of the functions \code{\link{trace}} and
   \code{\link{untrace}}.

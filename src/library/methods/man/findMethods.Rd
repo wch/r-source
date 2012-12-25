@@ -14,9 +14,9 @@
   The function \code{findMethods} converts the methods defined in a table for a generic
   function (as used for selection of methods) into a list, for study or
   display.  The list is actually from the class \code{listOfMethods}
-  (see the section describing the class, below).  
+  (see the section describing the class, below).
 
- 
+
   The list will be limited
   to the methods defined in environment \code{where} if that argument is
   supplied and limited to those including one or more of the
@@ -32,7 +32,7 @@ the objects in the table.
   whose rows are the class names from the signature of the corresponding
   methods; it operates either from a list returned by
   \code{findMethods}, or by computing such a list itself, given the same
-  arguments as \code{findMethods} .  
+  arguments as \code{findMethods} .
 
   The function \code{hasMethods} returns \code{TRUE} or \code{FALSE}
   according to whether there is a non-empty table of methods for
@@ -98,14 +98,14 @@ getMethods(f, where, table = FALSE)
     the generic function.  See \sQuote{Details}.}
 }
 \details{
-  
+
   The functions obtain a table of the defined methods, either from the
   generic function or from the stored metadata object in the environment
   specified by \code{where}.  In a call to \code{getMethods}, the information in the table is converted
   as described above to produce the returned value, except with the
   \code{table} argument.
 
- 
+
   Note that \code{hasMethods}, but not the other functions, can be used
   even if no generic function of this name is currently found.  In this
   case \code{package} must either be supplied as an argument or included

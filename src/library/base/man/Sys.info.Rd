@@ -30,7 +30,7 @@ Sys.info()
     cannot be ascertained.  This may differ from the real user in
     \sQuote{set-user-ID} processes.}
 #ifdef unix
-  
+
   The first five fields come from the \code{uname(2)} system call.  The
   login name comes from \code{getlogin(2)}, and the user names from
   \code{getpwuid(getuid())} and \code{getpwuid(geteuid())}
@@ -52,7 +52,7 @@ Sys.info()
   login or user names will be what you might reasonably expect.
   (In particular on some Linux distributions the login name is unknown
   from sessions with re-directed inputs.)
-  
+
   The use of alternatives such as \code{system("whoami")} is not
   portable: the POSIX command \code{system("id")} is much more portable
   on Unix-alikes, provided only the POSIX options are used (and not the

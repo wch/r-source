@@ -10,7 +10,7 @@
   The auxiliary function \code{pdf.options} can be used to set or view
   (if called without arguments) the default values for some of the
   arguments to \code{\link{pdf}}.
-  
+
   \code{pdf.options} needs to be called before calling \code{pdf},
   and the default values it sets can be overridden by supplying
   arguments to \code{pdf}.

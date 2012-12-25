@@ -34,7 +34,7 @@
     This is intended to add safety for packages, which can ensure by
     using this argument that no other package can override their external
     symbols, and also speeds up the search (see \sQuote{Note}).}
-  
+
   \item{ENCODING}{For back-compatibility, accepted but ignored.}
 }
 
@@ -43,7 +43,7 @@
   code.  Later interfaces are \code{\link{.Call}} and
   \code{\link{.External}} which are more flexible and have better
   performance.
-  
+
   These functions are both \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which should not be named).
   The other named arguments follow \code{\dots} and so cannot be
@@ -95,11 +95,11 @@
   \code{logical} are \code{int}, not \code{long} as in S.  This
   difference matters on most 64-bit platforms, where \code{int} is
   32-bit and \code{long} is 64-bit (but not on 64-bit Windows).
-  
+
   \emph{Note:} The Fortran type corresponding to \code{logical} is
   \code{integer}, not \code{logical}: the difference matters on some
   Fortran compilers.
-  
+
   Missing (\code{NA}) string values are passed to \code{.C} as the string
   "NA". As the C \code{char} type can represent all possible bit patterns
   there appears to be no way to distinguish missing strings from the
@@ -111,7 +111,7 @@
   up to 255 characters of the string are passed back.  (How well this
   works, and even if it works at all, depends on the C and Fortran
   compilers and the platform.)
-  
+
   Lists, functions are other \R objects can (for historical reasons) be
   passed to \code{.C}, but the \code{\link{.Call}} interface is much
   preferred.  All inputs apart from atomic vectors should be regarded as
@@ -192,14 +192,14 @@
   \code{PACKAGE} (to confine the search to a single DLL) or pass
   \code{.NAME} as one of the native symbol objects.  Searching for
   symbols can take a long time, especially when many namespaces are loaded.
-  
+
   You may see \code{PACKAGE = "base"} for symbols linked into \R.  Do
   not use this in your own code: such symbols are not part of the API
   and may be changed without warning.
-  
+
   \code{PACKAGE = ""} used to be accepted (but was undocumented): it is
   now an error.
-  
+
   The way \link{pairlist}s were passed by \code{.C} prior to \R 2.15.0
   was not as documented.  This has been corrected, but the
   \code{\link{.Call}} and \code{\link{.External}} interfaces are much

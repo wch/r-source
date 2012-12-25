@@ -10,7 +10,7 @@
 }
 \description{
   This function blanks out code chunks and Noweb markup in an Sweave
-  input file, for spell checking or other uses. 
+  input file, for spell checking or other uses.
 }
 \usage{
 SweaveTeXFilter(ifile, encoding = "unknown")
@@ -30,7 +30,7 @@ SweaveTeXFilter(ifile, encoding = "unknown")
   original locations.
 }
 \value{
-  A character vector which if written to a file, one element per line, would 
+  A character vector which if written to a file, one element per line, would
   duplicate the text elements of the original Rd file.
 }
 \author{

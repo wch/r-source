@@ -34,7 +34,7 @@ cdplot(x, \dots)
     variable (or an object coercible to this).}
   \item{y}{a \code{"factor"} interpreted to be the dependent variable}
   \item{formula}{a \code{"formula"} of type \code{y ~ x} with a single dependent
-    \code{"factor"} and a single numerical explanatory variable.}    
+    \code{"factor"} and a single numerical explanatory variable.}
   \item{data}{an optional data frame.}
   \item{plot}{logical. Should the computed conditional densities be plotted?}
   \item{tol.ylab}{convenience tolerance parameter for y-axis annotation.
@@ -44,8 +44,8 @@ cdplot(x, \dots)
     the levels of the dependent variable should be plotted.}
   \item{bw, n, from, to, \dots}{arguments passed to \code{\link{density}}}
   \item{col}{a vector of fill colors of the same length as \code{levels(y)}.
-    The default is to call \code{\link{gray.colors}}.}  
-  \item{border}{border color of shaded polygons.}  
+    The default is to call \code{\link{gray.colors}}.}
+  \item{border}{border color of shaded polygons.}
   \item{main, xlab, ylab}{character strings for annotation}
   \item{yaxlabels}{character vector for annotation of y axis, defaults to
     \code{levels(y)}.}
@@ -62,8 +62,8 @@ cdplot(x, \dots)
   and plots \eqn{P(y | x)} against \eqn{x}. The conditional probabilities
   are not derived by discretization (as in the spinogram), but using a smoothing
   approach via \code{\link{density}}.
-  
-  Note, that the estimates of the conditional densities are more reliable for 
+
+  Note, that the estimates of the conditional densities are more reliable for
   high-density regions of \eqn{x}. Conversely, the are less reliable in regions
   with only few \eqn{x} observations.
 }

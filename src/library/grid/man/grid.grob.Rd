@@ -18,9 +18,9 @@
 \usage{
 grid.grob(list.struct, cl = NULL, draw = TRUE)
 grob(..., name = NULL, gp = NULL, vp = NULL, cl = NULL)
-gTree(..., name = NULL, gp = NULL, vp = NULL, children = NULL, 
+gTree(..., name = NULL, gp = NULL, vp = NULL, children = NULL,
       childrenvp = NULL, cl = NULL)
-grobTree(..., name = NULL, gp = NULL, vp = NULL, 
+grobTree(..., name = NULL, gp = NULL, vp = NULL,
          childrenvp = NULL, cl = NULL)
 childNames(gTree)
 gList(...)
@@ -49,7 +49,7 @@ is.grob(x)
 \details{
   These functions can be used to create a basic grob, gTree, or gList
   object, or a new class derived from one of these.
-  
+
   A grid graphical object (grob) is a description of a graphical
   item.  These basic classes provide default behaviour for
   validating, drawing,
@@ -63,7 +63,7 @@ is.grob(x)
   within the childrenvp via a vpPath.
 
   Grob names need not be unique in general, but all children of a
-  gTree must have different names.  
+  gTree must have different names.
     A grob name can be any string, though
     it is not
     advisable to use the gPath separator  (currently \code{::}) in
@@ -71,7 +71,7 @@ is.grob(x)
 
   The function \code{childNames} returns the names of the grobs
   which are children of a gTree.
-  
+
   All grid primitives (\code{grid.lines}, \code{grid.rect}, ...) and
   some higher-level grid components (e.g., \code{grid.xaxis} and
   \code{grid.yaxis}) are derived from these classes.
@@ -79,7 +79,7 @@ is.grob(x)
   \code{grobTree} is just a convenient wrapper for \code{gTree}
   when the only components of the gTree are grobs (so all
   unnamed arguments become children of the gTree).
-  
+
   \code{grid.grob} is deprecated.
 
 }

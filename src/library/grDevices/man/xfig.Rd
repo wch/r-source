@@ -75,11 +75,11 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
   The \code{file} argument is interpreted as a C integer format as used
   by \code{\link{sprintf}}, with integer argument the page number.
   The default gives files \file{Rplot001.fig}, \dots, \file{Rplot999.fig},
-  \file{Rplot1000.fig}, \dots.  
+  \file{Rplot1000.fig}, \dots.
 
   Line widths as controlled by \code{par(lwd =)} are in multiples of
   5/6*1/72 inch.  Multiples less than 1 are allowed.  \code{pch = "."} with
-  \code{cex = 1} corresponds to a square of side 1/72 inch.  
+  \code{cex = 1} corresponds to a square of side 1/72 inch.
 
   Windows users can make use of WinFIG
   (\url{http://www.schmidt-web-berlin.de/WinFIG.htm}, shareware), or

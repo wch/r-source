@@ -38,7 +38,7 @@ file.access(names, mode = 0)
   this function regards directories and files with extension
   \file{.exe}, \file{.bat}, \file{.cmd} and \file{.com} as executable.
   (\code{\link{system}} and \code{\link{Sys.which}} make the same assumption.)
-  
+
   UTF-8-encoded file names not valid in the current locale can be used.
 #endif
 

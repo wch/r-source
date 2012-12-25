@@ -28,14 +28,14 @@ Each call to \code{browser} can supply either a text string or a condition.
 The functions \code{browserText} and \code{browserCondition} provide ways
 to retrieve those values.  Since there can be multiple browser contexts
 active at any time we also support retrieving values from the different
-contexts.  The innermost (most recently initiated) browser context is 
+contexts.  The innermost (most recently initiated) browser context is
 numbered 1: other contexts are numbered sequentially.
 
 \code{browserSetDebug} provides a mechanism for initiating the browser in
 one of the calling functions.  See \code{\link{sys.frame}} for a more
-complete discussion of the calling stack. To use \code{browserSetDebug} 
+complete discussion of the calling stack. To use \code{browserSetDebug}
 you select some calling function, determine how far back it is in the call
-stack and call \code{browserSetDebug} with \code{n} set to that value. 
+stack and call \code{browserSetDebug} with \code{n} set to that value.
 Then, by typing \code{c} at the browser prompt you will cause evaluation
 to continue, and provided there are no intervening calls to browser or
 other interrupts, control will halt again once evaluation has returned to

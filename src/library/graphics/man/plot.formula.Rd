@@ -38,7 +38,7 @@
   should be of the form \code{y ~ x} or \code{y ~ 1} with a left-hand
   side and a single term on the right-hand side.  The \code{plot} method
   accepts other forms discussed later in this section.
-  
+
   Both the terms in the formula and the \code{\dots} arguments are
   evaluated in \code{data} enclosed in \code{parent.frame()} if
   \code{data} is a list or a data frame.  The terms of the formula and
@@ -50,12 +50,12 @@
   If the formula in the \code{plot} method contains more than one term
   on the right-hand side, a series of plots is produced of the response
   against each non-response term.
-  
+
   For the \code{plot} method the formula can be of the form
   \code{~ z + y + z}: the variables specified on the right-hand side are
   collected into a data frame, subsetted if specified, and displayed by
   \code{\link{plot.data.frame}}.
-  
+
   Missing values are not considered in these methods, and in particular
   cases with missing values are not removed.
 
@@ -64,7 +64,7 @@
   Otherwise, the class of \code{x} will determine the type of the plot.
   For factors this will be a parallel boxplot, and argument
   \code{horizontal = TRUE} can be specified (see \code{\link{boxplot}}).
-  
+
   Note that some arguments will need to be protected from premature
   evaluation by enclosing them in \code{\link{quote}}: currently this is
   done automatically for \code{main}, \code{sub} and \code{xlab}.  For

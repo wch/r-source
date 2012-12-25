@@ -42,7 +42,7 @@ dev.capabilities(what = NULL)
     raster images as used by \code{\link{rasterImage}} and
     \code{\link{grid.raster}}?  Possible values \code{"no"}, \code{"yes"} and
     \code{"non-missing"} (support only for arrays without any missing
-    values).}  
+    values).}
   \item{capture}{logical:  Does the current device
     support raster capture as used by \code{\link{grid.cap}}?}
   \item{locator}{logical:  Does the current device

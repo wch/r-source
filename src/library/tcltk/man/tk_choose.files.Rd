@@ -7,7 +7,7 @@
 \alias{tk_choose.files}
 \title{Choose a List of Files Interactively}
 \description{
-  Use a Tk file dialog to choose a list of zero or more files 
+  Use a Tk file dialog to choose a list of zero or more files
   interactively.
 }
 \usage{

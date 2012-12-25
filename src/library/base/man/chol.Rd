@@ -76,7 +76,7 @@ chol(x, \dots)
 \source{
   This is an interface to the LAPACK routines \code{DPOTRF} and
   \code{DPSTRF} and the LINPACK routines \code{DPOFA} and \code{DCHDC}.
-  
+
   LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
   \url{http://www.netlib.org/linpack} and their guides are listed
   in the references.
@@ -86,7 +86,7 @@ chol(x, \dots)
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
-  
+
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.

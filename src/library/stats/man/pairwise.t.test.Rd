@@ -8,7 +8,7 @@
 \title{ Pairwise t tests}
 \description{
  Calculate pairwise comparisons between group levels with corrections
- for multiple testing 
+ for multiple testing
 }
 \usage{
 pairwise.t.test(x, g, p.adjust.method = p.adjust.methods,
@@ -37,7 +37,7 @@ pairwise.t.test(x, g, p.adjust.method = p.adjust.methods,
   Only the lower triangle of the matrix of possible comparisons is being
   calculated, so setting \code{alternative} to anything other than
   \code{"two.sided"} requires that the levels of \code{g} are ordered
-  sensibly. 
+  sensibly.
 }
 \value{
   Object of class \code{"pairwise.htest"}

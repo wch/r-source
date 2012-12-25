@@ -23,7 +23,7 @@ model.matrix(object, \dots)
     matrices or character strings naming functions) to be used
     as replacement values for the \code{\link{contrasts}}
     replacement function and whose names are the names of
-    columns of \code{data} containing \code{\link{factor}}s.}   
+    columns of \code{data} containing \code{\link{factor}}s.}
   \item{xlev}{to be used as argument of \code{\link{model.frame}} if
     \code{data} is such that \code{model.frame} is called.}
   \item{\dots}{further arguments passed to or from other methods.}
@@ -41,7 +41,7 @@ model.matrix(object, \dots)
   important.  Any character variables are coerced to factors, with a
   warning.  After coercion, all the variables used on the right-hand
   side of the formula must be logical, integer, numeric or factor.
-  
+
   If \code{contrasts.arg} is specified for a factor it overrides the
   default factor coding for that variable and any \code{"contrasts"}
   attribute set by \code{\link{C}} or \code{\link{contrasts}}.
@@ -65,7 +65,7 @@ model.matrix(object, \dots)
   (if any), and positive values to terms in the order given by the
   \code{term.labels} attribute of the \code{terms} structure
   corresponding to \code{object}.
-  
+
   If there are any factors in terms in the model, there is an attribute
   \code{"contrasts"}, a named list with an entry for each factor.  This
   specifies the contrasts that would be used in terms in which the

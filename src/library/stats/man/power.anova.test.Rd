@@ -34,7 +34,7 @@ power.anova.test(groups = NULL, n = NULL,
 \value{
   Object of class \code{"power.htest"}, a list of the arguments
   (including the computed one) augmented with \code{method} and
-  \code{note} elements. 
+  \code{note} elements.
 }
 
 \author{Claus \enc{Ekstrøm}{Ekstroem}}

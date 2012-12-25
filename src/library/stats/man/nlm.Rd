@@ -66,7 +66,7 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
 }
 \details{
   Note that arguments after \code{\dots} must be matched exactly.
-  
+
   If a gradient or hessian is supplied but evaluates to the wrong mode
   or length, it will be ignored if \code{check.analyticals = TRUE} (the
   default) with a warning.  The hessian is not even checked unless the
@@ -78,7 +78,7 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
   The functions supplied should always return finite (including not
   \code{NA} and not \code{NaN}) values: for the function value itself
   non-finite values are replaced by the maximum positive value with a warning.
-  
+
   The parameter vector passed to \code{f} and \code{hessian} has special
   semantics and is shared between calls.  The functions should not copy it.
 }
@@ -124,8 +124,8 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
 }
 \seealso{
   \code{\link{optim}} and \code{\link{nlminb}}.
-  
-  \code{\link{constrOptim}} for constrained optimization, 
+
+  \code{\link{constrOptim}} for constrained optimization,
   \code{\link{optimize}} for one-dimensional
   minimization and \code{\link{uniroot}} for root finding.
   \code{\link{deriv}} to calculate analytical derivatives.

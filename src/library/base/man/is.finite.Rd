@@ -54,14 +54,14 @@ is.nan(x)
   either the real or imaginary part is \code{NaN} but not \code{NA}.
   All elements of logical, integer and raw vectors are considered not to
   be NaN.
-  
+
   All three functions accept \code{NULL} as input and return a length
   zero result. The default methods accept character and raw vectors, and
   return \code{FALSE} for all entries. Prior to \R version 2.14.0 they
   accepted all input, returning \code{FALSE} for most non-numeric
   values; cases which are not atomic vectors are now signalled as
   errors.
-  
+
   All three functions are generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
 }

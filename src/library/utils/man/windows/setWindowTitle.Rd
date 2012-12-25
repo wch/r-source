@@ -32,14 +32,14 @@ setStatusBar(text)
   \code{setWindowTitle} appends \code{suffix} to the normal window
   identification (\code{RGui}, \code{R Console} or \code{Rterm}).  Use
   \code{suffix = ""} to reset the title.
-  
+
   \code{getWindowTitle} gets the current title.
 
   This sets the title of the frame in MDI mode, the title of the console
   for \code{RGui --sdi}, and the title of the window from which it was
   launched for \code{Rterm}.
   It has no effect in embedded uses of \R.
-  
+
   \code{getIdentification} returns the normal window identification.
 
   \code{setStatusBar} sets the text in the statusbar of an MDI
@@ -47,9 +47,9 @@ setStatusBar(text)
 }
 \value{
   The first three functions return a length 1 character vector.
-  
-  \code{setWindowTitle} returns the previous window title (invisibly).  
-  
+
+  \code{setWindowTitle} returns the previous window title (invisibly).
+
   \code{getWindowTitle} and \code{getIdentification} return the current
   window title and the normal window identification, respectively.
 }

@@ -38,7 +38,7 @@ nobs(object, ...)
   quick check that different fits have been fitted to the same set of
   data (and not, say, that further rows have been dropped because of NAs
   in the new predictors).
-  
+
   For \code{lm}, \code{glm} and \code{nls} fits, observations with zero
   weight are not included.
 }

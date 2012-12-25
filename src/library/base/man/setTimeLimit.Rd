@@ -20,7 +20,7 @@ setSessionTimeLimit(cpu = Inf, elapsed = Inf)
   \item{cpu}{double.  Limit on total cpu time.}
   \item{elapsed}{double.  Limit on elapsed time.}
   \item{transient}{logical.  If \code{TRUE}, the limits apply only to
-    the rest of the current computation.} 
+    the rest of the current computation.}
 }
 \details{
   \code{setTimeLimit} sets limits which apply to each top-level
@@ -40,7 +40,7 @@ setSessionTimeLimit(cpu = Inf, elapsed = Inf)
   but only at points in compiled C and Fortran code identified by the
   code author.
 #ifdef unix
-  
+
   \sQuote{Total cpu time} includes that used by child processes where
   the latter is reported.
 #endif

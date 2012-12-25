@@ -61,11 +61,11 @@ unique(x, incomparables = FALSE, \dots)
   Missing values are regarded as equal, but \code{NaN} is not equal to
   \code{NA_real_}.  Character strings are regarded as equal if they are
   in different encodings but would agree when translated to UTF-8.
-  
+
   Values in \code{incomparables} will never be marked as duplicated.
   This is intended to be used for a fairly small set of values and will
   not be efficient for a very large set.
-  
+
   When used on a data frame with more than one column, or an array or
   matrix when comparing dimensions of length greater than one, this
   tests for identity of character representations.  This will

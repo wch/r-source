@@ -34,7 +34,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     use \code{\%\%} in the string for \code{\%} in the file name.
     A single integer format matching the \link{regular expression}
     \code{"\%[#0 +=-]*[0-9.]*[diouxX]"} is allowed.
-    
+
     Tilde expansion (see \code{\link{path.expand}}) is done.
   }
   \item{onefile}{logical: if true (the default) allow multiple figures
@@ -115,13 +115,13 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
-      \code{\link{polygon}} for details.  Default \code{FALSE}.}    
+      \code{\link{polygon}} for details.  Default \code{FALSE}.}
 }
 \details{
   All arguments except \code{file} default to values given by
   \code{\link{ps.options}()}.  The ultimate defaults are quoted in the
   arguments section.
-    
+
   \code{postscript} opens the file \code{file} and the PostScript
   commands needed to plot any graphics requested are written to that
   file.  This file can then be printed on a suitable device to obtain
@@ -180,7 +180,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \code{fonts} argument when the device is opened.
 
   Font families are declared via a call to \code{\link{postscriptFonts}}.
-  
+
   The argument \code{family} specifies the initial/default font family
   to be used.  In normal use it is one of \code{"AvantGarde"},
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
@@ -302,7 +302,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   drivers).  Conversely, its files can be rendered much slower on some
   viewers, and there can be a noticeable discontinuity in color
   gradients involving gray or white.
-  
+
   Other possibilities are \code{"gray"} (or \code{"grey"}) which used
   only greyscales (and converts other colours to a luminance), and
   \code{"cmyk"}.  The simplest possible conversion from sRGB to CMYK is
@@ -350,13 +350,13 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
     \item Line widths are as a multiple of 1/96 inch, with a minimum
-    of 0.01 enforced.   
+    of 0.01 enforced.
     \item Circle of any radius are allowed.
     \item Colours are by default specified as sRGB.
   }
 
   At very small line widths, the line type may be forced to solid.
-  
+
   Raster images are currently limited to opaque colours.
 }
 

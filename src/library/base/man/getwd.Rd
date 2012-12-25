@@ -29,7 +29,7 @@ setwd(dir)
 
 \seealso{
   \code{\link{list.files}} for the \emph{contents} of a directory.
-  
+
   \code{\link{normalizePath}} for a \sQuote{canonical} path name.
 }
 
@@ -39,7 +39,7 @@ setwd(dir)
   On Windows the path returned will use \code{/} as the path separator
   and be encoded in UTF-8.  The path will not have a trailing \code{/}
   unless it is the root directory (of a drive or share on Windows).
-  
+
   \code{setwd} returns the current directory before the change,
   invisibly and with the same conventions as \code{getwd}.  It will give
   an error if it does not succeed (including if it is not implemented).

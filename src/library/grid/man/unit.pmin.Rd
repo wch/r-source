@@ -9,7 +9,7 @@
 \title{ Parallel Unit Minima and Maxima }
 \description{
   Returns a unit object whose i'th value is the minimum (or maximum)
-  of the i'th values of the arguments.  
+  of the i'th values of the arguments.
 }
 \usage{
 unit.pmin(...)

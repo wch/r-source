@@ -51,7 +51,7 @@ polym(\dots, degree = 1, raw = FALSE)
   Although formally \code{degree} should be named (as it follows
   \code{\dots}), an unnamed second argument of length 1 will be
   interpreted as the degree.
-  
+
   The orthogonal polynomial is summarized by the coefficients, which can
   be used to evaluate it via the three-term recursion given in Kennedy
   & Gentle (1980, pp. 343--4), and used in the \code{predict} part of

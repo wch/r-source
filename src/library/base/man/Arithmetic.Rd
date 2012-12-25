@@ -98,7 +98,7 @@ x \%/\% y
   representation of \code{0.2} is a binary fraction slightly larger than
   \code{0.2}, the answer to \code{1 \%/\% 0.2} should be \code{4} but
   most platforms give \code{5}.
-  
+
   Users are sometimes surprised by the value returned, for example why
   \code{(-8)^(1/3)} is \code{NaN}.  For \link{double} inputs, \R makes
   use of IEC 60559 arithmetic on all platforms, together with the C
@@ -110,7 +110,7 @@ x \%/\% y
 
   Arithmetic on type \link{double} in \R is supposed to be done in
   \sQuote{round to nearest, ties to even} mode, but this does depend on
-  the compiler and FPU being set up correctly. 
+  the compiler and FPU being set up correctly.
 }
 \section{S4 methods}{
   These operators are members of the S4 \code{\link{Arith}} group generic,

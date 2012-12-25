@@ -14,7 +14,7 @@
 grid.show.layout(l, newpage=TRUE, bg = "light grey",
              cell.border = "blue", cell.fill = "light blue",
              cell.label = TRUE, label.col = "blue",
-             unit.col = "red", vp = NULL) 
+             unit.col = "red", vp = NULL)
 }
 \arguments{
   \item{l}{A Grid layout object.}
@@ -52,7 +52,7 @@ grid.show.layout(l, newpage=TRUE, bg = "light grey",
 }
 
 \examples{
-## Diagram of a simple layout 
+## Diagram of a simple layout
 grid.show.layout(grid.layout(4,2,
                      heights=unit(rep(1, 4),
                                   c("lines", "lines", "lines", "null")),

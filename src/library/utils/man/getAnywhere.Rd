@@ -25,7 +25,7 @@ argsAnywhere(x)
 }
 \details{
   These functions look at all loaded namespaces, whether or not they are
-  associated with a package on the search list.  
+  associated with a package on the search list.
 
   They do not search literally \dQuote{anywhere}: for example, local
   evaluation frames and namespaces that are not loaded will not be
@@ -45,7 +45,7 @@ argsAnywhere(x)
   \item{dups}{logical: is the object identical to one earlier in the
     list.}
   In computing whether objects are identical, their environments are ignored.
-  
+
   Normally the structure will be hidden by the \code{print} method.
   There is a \code{[} method to extract one or more of the objects
   found.
@@ -58,7 +58,7 @@ argsAnywhere(x)
   might not be the one of those returned by \code{getAnywhere} since it
   might have come from a namespace which was unloaded or be registered
   under another name.
-  
+
   \code{\link{get}},  \code{\link{getFromNamespace}}, \code{\link{args}}
 }
 \examples{

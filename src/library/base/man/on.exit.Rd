@@ -36,7 +36,7 @@ on.exit(expr = NULL, add = FALSE)
   expression will be looked for in the function and its environment at
   the time of exit: to capture the current value in \code{expr} use
   \code{\link{substitute}} or similar.
-  
+
   This is a \sQuote{special} \link{primitive} function: it only
   evaluates the argument \code{add}.
 }
@@ -51,7 +51,7 @@ on.exit(expr = NULL, add = FALSE)
 \seealso{
   \code{\link{sys.on.exit}} which returns the expression stored for use
   by \code{on.exit()} in the function in which \code{sys.on.exit()} is
-  evaluated.  
+  evaluated.
 }
 \examples{
 require(graphics)

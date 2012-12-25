@@ -27,7 +27,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
     to character if possible.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
-  \item{srcfile}{\code{NULL}, a character vector, or a 
+  \item{srcfile}{\code{NULL}, a character vector, or a
     \code{\link{srcfile}} object.  See the \sQuote{Details} section.}
   \item{encoding}{encoding to be assumed for input strings.  If the
     value is \code{"latin1"} or \code{"UTF-8"} it is used to mark
@@ -49,7 +49,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
 \details{
   If \code{text} has length greater than zero (after coercion) it is used in
   preference to \code{file}.
-  
+
   All versions of \R accept input from a connection with end of line
   marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
   or CR (as used on classic Mac OS).  The final line can be incomplete,
@@ -72,25 +72,25 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
   \code{\link{srcfilecopy}} containing the text.  If a character
   string is used for \code{file}, a \code{\link{srcfile}} object
   referring to that file will be used.
-  
+
   When \code{srcfile} is a character string, error messages will
   include the name.  When it is a \code{\link{srcfile}} object,
-  source reference information will be retained.  
+  source reference information will be retained.
 }
 \value{
   An object of type \code{"\link{expression}"}, with up to \code{n}
   elements if specified as a non-negative integer.
 
   When \code{srcfile} is non-\code{NULL}, a \code{"srcref"} attribute
-  will be attached to the result containing a list of 
-  \code{\link{srcref}} records corresponding to each element, a 
+  will be attached to the result containing a list of
+  \code{\link{srcref}} records corresponding to each element, a
   \code{"srcfile"} attribute will be attached containing a copy of
   \code{srcfile}, and a \code{"wholeSrcref"} attribute will be
   attached containing a \code{\link{srcref}} record corresponding to
   all of the parsed text. Detailed parse information will be stored in
-  the \code{"srcfile"} attribute, to be retrieved by 
+  the \code{"srcfile"} attribute, to be retrieved by
   \code{\link{getParseData}}.
-  
+
   A syntax error (including an incomplete expression) will throw an error.
 
   Character strings in the result will have a declared encoding if

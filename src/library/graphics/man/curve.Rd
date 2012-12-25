@@ -81,7 +81,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   but can give bad results for functions which are not smooth.
 
   For expensive-to-compute \code{expr}essions, you should use smarter tools.
-  
+
   The way \code{curve} handles \code{expr} has caused confusion.  It
   first looks to see if \code{expr} is a \link{name} (also known as a
   symbol), in which case it is taken to be the name of a function, and
@@ -95,13 +95,13 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   of length \code{n}.  Note that this means that \code{curve(x, ...)} is
   taken as a request to plot a function named \code{x} (and it is used
   as such in the \code{function} method for \code{plot}).
-  
+
   As from \R 2.14.0 the \code{plot} method can be called directly as
   \code{plot.function}.
 }
 
 \value{
-  A list with components \code{x} and \code{y} of the points that were 
+  A list with components \code{x} and \code{y} of the points that were
   drawn is returned invisibly.
 }
 

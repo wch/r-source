@@ -73,8 +73,8 @@ hist(x, \dots)
     of bars, if not \code{FALSE}; see \code{\link{plot.histogram}}.}
   \item{nclass}{numeric (integer).  For S(-PLUS) compatibility only,
     \code{nclass} is equivalent to \code{breaks} for a scalar or
-    character argument.}  
-  \item{warn.unused}{logical.  If \code{plot = FALSE} and 
+    character argument.}
+  \item{warn.unused}{logical.  If \code{plot = FALSE} and
     \code{warn.unused = TRUE}, a warning will be issued when graphical
     parameters are passed to \code{hist.default()}.}
   \item{\dots}{further arguments and \link{graphical parameters} passed to

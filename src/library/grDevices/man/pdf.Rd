@@ -71,7 +71,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     speaking, in bp, that is 1/72 of an inch, but approximately in
     points.  Defaults to \code{12}.}
   \item{pagecentre}{logical: should the device region be centred on the
-    page? -- is only relevant for \code{paper != "special"}.  
+    page? -- is only relevant for \code{paper != "special"}.
     Defaults to \code{TRUE}.}
   \item{colormodel}{a character string describing the color model:
     currently allowed values are \code{"srgb"}, \code{"gray"} (or
@@ -101,7 +101,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   All arguments except \code{file} default to values given by
   \code{\link{pdf.options}()}.  The ultimate defaults are quoted in the
   arguments section.
-    
+
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
   plot any graphics requested are sent to that file.
 
@@ -109,7 +109,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   by \code{\link{sprintf}}, with integer argument the page number.
   The default gives files \file{Rplot001.pdf}, \dots, \file{Rplot999.pdf},
   \file{Rplot1000.pdf}, \dots.
-  
+
   The \code{family} argument can be used to specify a PDF-specific
   font family as the initial/default font for the device.  If additional
   font families are to be used they should be included in the
@@ -141,7 +141,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 #endif
   Since \code{\link{embedFonts}} makes use of Ghostscript, it should be
   able to embed the URW-based families for use with other viewers.
-  
+
   See \code{\link{postscript}} for details of encodings, as the internal
   code is shared between the drivers.  The native PDF encoding is given
   in file \file{PDFDoc.enc}.
@@ -238,7 +238,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 
   Unfortunately the default viewers on most Linux and Mac OS X systems
   have these problems, and no obvious way to turn off graphics anti-aliasing.
-  
+
   Acrobat Reader does not use the fonts specified but rather emulates
   them from multiple-master fonts.  This can be seen in imprecise
   centering of characters, for example the multiply and divide signs in
@@ -262,12 +262,12 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   of font names to those used by the system.  Adding the following lines
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
   this problem.
-\preformatted{<fontconfig>    
+\preformatted{<fontconfig>
 <alias binding="same">
   <family>ZapfDingbats</family>
   <accept><family>Dingbats</family></accept>
 </alias>
-</fontconfig>  
+</fontconfig>
 }
   Some further workarounds for problems with symbol fonts on
   viewers using \sQuote{fontconfig} are given in the \sQuote{Cairo Fonts}
@@ -288,11 +288,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{\link{Devices}},
   \code{\link{postscript}}.
 
-#ifdef unix  
+#ifdef unix
   \code{\link{cairo_pdf}} and (on Mac OS X only) \code{\link{quartz}}
   for other devices that can produce PDF.
 #endif
-#ifdef windows  
+#ifdef windows
   \code{\link{cairo_pdf}} and (on Mac OS X only) \code{quartz}
   for other devices that can produce PDF.
 #endif

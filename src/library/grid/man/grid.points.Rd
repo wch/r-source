@@ -30,7 +30,7 @@ pointsGrob(x = stats::runif(10),
     interpretation of these values.}
   \item{size}{A unit object specifying the size of the plotting symbols.}
   \item{default.units}{A string indicating the default units to use
-    if \code{x} or \code{y} are only given as numeric vectors.}  
+    if \code{x} or \code{y} are only given as numeric vectors.}
   \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically

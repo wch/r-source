@@ -24,7 +24,7 @@
   attached packages \emph{invisibly} whereas
   \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
   packages available in the library location path \code{lib.loc}.
-  
+
   For a package to be regarded as being \sQuote{available} it must have valid
   metadata (and hence be an installed package).  However, this will
   report a package as available if the metadata does not match the

@@ -77,7 +77,7 @@ promptClass(clName, filename = NULL, type = "class",
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
- Springer (For the original S4 version.) 
+ Springer (For the original S4 version.)
 }
 \seealso{
   \code{\link{prompt}} for documentation of functions,

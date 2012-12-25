@@ -78,7 +78,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
   frame. Using \code{na.action=na.exclude} makes these problems less likely.
 
   Nothing sensible happens for interaction terms, and they may cause errors.
-  
+
   The \code{plot = FALSE} option is useful when some special action is needed,
   e.g. to overlay the results of two different models or to plot
   confidence bands.

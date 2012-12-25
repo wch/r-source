@@ -189,7 +189,7 @@ In the usual case that the subclass contains the superclass (i.e., has
 all its slots), the method is constructed either by extracting or
 replacing the inherited slots.
 Non-simple extensions (the result of a call to \code{\link{setIs}})
-will usually contain explicit methods, though possibly not for replacement. 
+will usually contain explicit methods, though possibly not for replacement.
 
  If no subclass/superclass relationship provides a method, \code{as}
  looks for an inherited method, but applying, inheritance for the argument \code{from} only, not for
@@ -198,7 +198,7 @@ will usually contain explicit methods, though possibly not for replacement.
   \code{Class} specified). Thus,
   \code{selectMethod("coerce", sig, useInherited= c(from=TRUE, to= FALSE))}
   replicates the method selection used by \code{as()}.
-  
+
 In nearly all cases the method found in this way will be cached in the
 table of coerce methods (the exception being subclass relationships with a test, which
 are legal but discouraged).

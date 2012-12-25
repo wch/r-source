@@ -15,7 +15,7 @@
 \usage{
 X11Font(font)
 
-X11Fonts(...)      
+X11Fonts(...)
 }
 \arguments{
   \item{font}{a character string containing an X11 font description.}

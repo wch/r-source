@@ -18,7 +18,7 @@ tk_choose.dir(default = "", caption = "Select directory")
 }
 \value{
   A length-one character vector, character \code{NA} if
-  \sQuote{Cancel} was selected. 
+  \sQuote{Cancel} was selected.
 }
 \seealso{
   \code{\link{tk_choose.files}}

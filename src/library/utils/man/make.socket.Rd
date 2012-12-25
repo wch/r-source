@@ -38,7 +38,7 @@ make.socket(host = "localhost", port, fail = TRUE, server = FALSE)
 \section{Warning}{
   I don't know if the connecting host name returned
   when \code{server = TRUE} can be trusted.  I suspect not.
-} 
+}
 
 \seealso{
   \code{\link{close.socket}}, \code{\link{read.socket}}

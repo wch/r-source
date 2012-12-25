@@ -24,10 +24,10 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
   \item{nchars}{integer vector, giving the lengths in characters of
     (unterminated) character strings to be read or written.  Elements
     must be >= 0 and not \code{NA}.}
-  
+
   \item{useBytes}{logical: For \code{readChar}, should \code{nchars} be
     regarded as a number of bytes not characters in a multi-byte
-    locale?  For \code{writeChar}, see \code{\link{writeLines}}.} 
+    locale?  For \code{writeChar}, see \code{\link{writeLines}}.}
 
   \item{object}{A character vector to be written to the connection, at
     least as long as \code{nchars}.}
@@ -42,7 +42,7 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
   character strings.  They are for strings of known length, and
   can optionally write an end-of-string mark.  They are intended only
   for character strings valid in the current locale.
-  
+
   These functions are intended to be used with binary-mode connections.
   If \code{con} is a character string, the functions call
   \code{\link{file}} to obtain a binary-mode file connection which is
@@ -52,16 +52,16 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
   position.  If it is not open, it is opened for the duration of the
   call in an appropriate mode (binary read or write) and then closed
   again.  An open connection must be in binary mode.
-  
+
   If \code{readChar} is called with \code{con} a raw vector, the data in
   the vector is used as input.  If \code{writeChar} is called with
   \code{con} a raw vector, it is just an indication that a raw vector
-  should be returned.  
+  should be returned.
 
   Character strings containing ASCII \code{nul}(s) will be read
   correctly by \code{readChar} but truncated at the first
   \code{nul} with a warning.
-  
+
   If the character length requested for \code{readChar} is longer than
   the data available on the connection, what is available is
   returned.  For \code{writeChar} if too many characters are requested
@@ -85,15 +85,15 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
   unsuitable.  \code{readChar} can still be used for such fields if
   there are no embedded nuls: otherwise \code{readBin(what = "raw")}
   provides an alternative.
-  
+
   \code{nchars} will be interpreted in bytes not characters in a
   non-UTF-8 multi-byte locale, with a warning.
 
   There is little validity checking of UTF-8 reads.
-  
+
   Using these functions on a text-mode connection may work but should
   not be mixed with text-mode access to the connection, especially if
-  the connection was opened with an \code{encoding} argument. 
+  the connection was opened with an \code{encoding} argument.
 }
 
 \seealso{

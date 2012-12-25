@@ -9,7 +9,7 @@
 \description{
   Plot time series against lagged versions of themselves.
   Helps visualizing \sQuote{auto-dependence} even when auto-correlations
-  vanish. 
+  vanish.
 }
 \usage{
 lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,

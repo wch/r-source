@@ -16,7 +16,7 @@
  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
-  Returns the model used to fit \code{object}. 
+  Returns the model used to fit \code{object}.
 }
 \value{
   a formula representing the model used to obtain \code{object}.

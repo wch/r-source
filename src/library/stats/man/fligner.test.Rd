@@ -36,7 +36,7 @@ fligner.test(x, \dots)
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to or from methods.}  
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   If \code{x} is a list, its elements are taken as the samples to be
@@ -48,7 +48,7 @@ fligner.test(x, \dots)
   Otherwise, \code{x} must be a numeric data vector, and \code{g} must
   be a vector or factor object of the same length as \code{x} giving the
   group for the corresponding elements of \code{x}.
-  
+
   The Fligner-Killeen (median) test has been determined in a simulation
   study as one of the many tests for homogeneity of variances which is
   most robust against departures from normality, see Conover, Johnson &

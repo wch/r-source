@@ -34,7 +34,7 @@ logLik(object, \dots)
   \code{"fitdistr"}, \code{"negbin"} and \code{"polr"} in package
   \CRANpkg{MASS}, \code{"multinom"} in package \CRANpkg{nnet} and
   \code{"gls"}, \code{"gnls"} \code{"lme"} and others in package
-  \CRANpkg{nlme}. 
+  \CRANpkg{nlme}.
 }
 %   \code{corStruct}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
 %   \code{varFunc}.
@@ -61,7 +61,7 @@ logLik(object, \dots)
   giving the number of (estimated) parameters in the model.
 
   There is a simple \code{print} method for \code{"logLik"} objects.
-  
+
   There may be other attributes depending on the method used: see the
   appropriate documentation.  One that is used by several methods is
   \code{"nobs"}, the number of observations used in estimation (after
@@ -73,7 +73,7 @@ logLik(object, \dots)
 }
 \references{
   For \code{logLik.lm}:
-  
+
   Harville, D.A. (1974).
   Bayesian inference for variance components using only error contrasts.
   \emph{Biometrika}, \bold{61}, 383--385.

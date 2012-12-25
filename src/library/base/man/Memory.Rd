@@ -14,7 +14,7 @@
   (rarely-used) command-line options to control its size, but it is now
   sized automatically.
 #ifdef windows
-  
+
   On Windows the \option{--max-mem-size} option (or environment variable
   \env{R_MAX_MEM_SIZE}) sets the maximum memory allocation: it has a
   minimum allowed value of 32M.  This is intended to catch attempts to
@@ -29,7 +29,7 @@
   second are thrown on a \emph{heap} of \sQuote{Vcells} of 8 bytes each.
   Each cons cell occupies 28 bytes on a 32-bit build of \R, (usually) 56
   bytes on a 64-bit build.
-  
+
   The default values are (currently) an initial setting of 350k cons
   cells, 6Mb of vector heap: note that the areas are not actually
   allocated initially: rather these values are the sizes for triggering
@@ -40,7 +40,7 @@
   cells used as numbers and megabytes) by typing \code{\link{gc}()} at the
   \R prompt.  Note that following \code{\link{gcinfo}(TRUE)}, automatic
   garbage collection always prints memory use statistics.
-  
+
   The command-line option \option{--max-ppsize} controls the maximum
   size of the pointer protection stack.  This defaults to 50000, but can
   be increased to allow deep recursion or large and complicated

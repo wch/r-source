@@ -23,19 +23,19 @@ load(file, envir = parent.frame())
   format.  It can read a compressed file (see \code{\link{save}})
   directly from a file or from a suitable connection (including a call
   to \code{\link{url}}).
-  
+
   A not-open connection will be opened in mode \code{"rb"} and closed
   after use.  Any connection other than a \code{\link{gzfile}} or
   \code{\link{gzcon}} connection will be wrapped in \code{\link{gzcon}}
   to allow compressed saves to be handled: note that this leaves the
   connection in an altered state (in particular, binary-only), and that
   it needs to be closed explicitly (it will not be garbage-collected).
-  
+
   Only \R objects saved in the current format (used since \R 1.4.0)
   can be read from a connection.  If no input is available on a
   connection a warning will be given, but any input not in the current
   format will result in a error.
-  
+
   Loading from an earlier version will give a warning about the
   \sQuote{magic number}: magic numbers \code{1971:1977} are from \R <
   0.99.0, and \code{RD[ABX]1} from \R 0.99.0 to \R 1.3.1.  These are all

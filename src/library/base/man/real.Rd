@@ -26,6 +26,6 @@ is.real(x)
 }
 \details{
   \code{as.real} is a generic function, but S3 methods must be
-  written for \code{\link{as.double}}.  
+  written for \code{\link{as.double}}.
 }
 \keyword{classes}

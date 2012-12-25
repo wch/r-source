@@ -53,7 +53,7 @@ xedit(name = NULL, file = "")
   object \code{name} you must assign the result of \code{edit} to
   \code{name}.  (Try \code{\link{fix}} if you want to make permanent
   changes to an object.)
-  
+
   In the form \code{edit(name)},
   \code{edit} deparses \code{name} into a temporary file and invokes the
   editor \code{editor} on this file. Quitting from the editor causes
@@ -69,9 +69,9 @@ xedit(name = NULL, file = "")
   function will preserve its environment.  See
   \code{\link{edit.data.frame}} for further changes that can occur when
   editing a data frame or matrix.
-  
-  Currently only the internal editor in Windows makes use of the 
-  \code{title} option; it displays the given name in the window 
+
+  Currently only the internal editor in Windows makes use of the
+  \code{title} option; it displays the given name in the window
   header.
 }
 \seealso{

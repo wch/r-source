@@ -33,7 +33,7 @@ grid.path(\dots)
     \code{"winding"} or \code{"evenodd"}.}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y}
-    are only given as numeric vectors.}  
+    are only given as numeric vectors.}
   \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
@@ -52,7 +52,7 @@ grid.path(\dots)
   A path is like a polygon except that the former can contain holes, as
   interpreted by the fill rule; these fill a region if the path border
   encircles it an odd or non-zero number of times, respectively.
-  
+
   Not all graphics devices support this function: for example
   \code{xfig} and \code{pictex} do not.
 }
@@ -65,7 +65,7 @@ grid.path(\dots)
 pathSample <- function(x, y, rule, gp = gpar()) {
     if (is.na(rule))
         grid.path(x, y, id = rep(1:2, each = 4), gp = gp)
-    else 
+    else
         grid.path(x, y, id = rep(1:2, each = 4), rule = rule, gp = gp)
     if (!is.na(rule))
         grid.text(paste("Rule:", rule), y = 0, just = "bottom")

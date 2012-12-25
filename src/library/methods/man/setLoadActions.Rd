@@ -14,7 +14,7 @@
 Set Actions For Package Loading
 }
 \description{
-These functions 
+These functions
 provide a mechanism
 for packages to specify computations to be done during the loading of
 the package namespace.
