@@ -787,14 +787,18 @@ SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     nm = CAR(args);
     if(!isString(nm))
-	error(_("'names' is not a character string"));
+	error(_("'names' is not a character vector"));
     n = LENGTH(nm);
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
-	const char *this = CHAR(STRING_ELT(nm, i));
-	char *that = expandcmd(this, 1);
-	SET_STRING_ELT(ans, i, mkChar(that ? that : ""));
-	free(that);
+	if (STRING_ELT(nm, i) == NA_STRING) {
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	} else {
+	    const char *this = CHAR(STRING_ELT(nm, i));
+	    char *that = expandcmd(this, 1);
+	    SET_STRING_ELT(ans, i, mkChar(that ? that : ""));
+	    free(that);
+	}
     }
     setAttrib(ans, R_NamesSymbol, nm);
     UNPROTECT(1);
