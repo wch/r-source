@@ -52,10 +52,7 @@ system <- function(command, intern = FALSE,
         if(stdout == "") stdout <- TRUE
         if(!ignore.stderr && .Platform$GUI == "Rgui") stderr <- TRUE
     } else {
-        if  (wait)
-            flag <- ifelse(show.output.on.console, 2L, 1L)
-        else
-            flag <- 0L
+        flag <- if (wait) ifelse(show.output.on.console, 2L, 1L) else 0L
     }
     if (invisible) flag <- 20L + flag
     else if (minimized) flag <- 10L + flag
@@ -128,7 +125,7 @@ Sys.timezone <- function()
 {
     z <- as.POSIXlt(Sys.time())
     zz <- attr(z, "tzone")
-    if(length(zz) == 3L) zz[2 + z$isdst] else zz[1L]
+    if(length(zz) == 3L) zz[2L + z$isdst] else zz[1L]
 }
 
 Sys.which <- function(names) .Internal(Sys.which(as.character(names)))
