@@ -68,7 +68,8 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
                 for (pid in s) {
                     r <- readChild(pid)
                     if (is.integer(r) || is.null(r)) fin[pid == pids] <- TRUE
-                    if (is.raw(r)) res[[which(pid == pids)]] <- unserialize(r)
+                    if (is.raw(r)) # unserialize(r) might be null
+                        res[which(pid == pids)] <- list(unserialize(r))
                 }
                 if (is.function(intermediate)) intermediate(res)
             } else if (all(is.na(match(pids, processID(children()))))) break
