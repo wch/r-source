@@ -85,6 +85,9 @@
       Vcells and Ncells: it now works in bytes.  (\PR{15138})
       
       \item \code{tools::Rd2HTML()} would sometimes delete text. (\PR{15134})
+      
+      \item \code{embedFonts()} needed to quote some filepaths.
+      (\PR{15149})
     }
   }
 }

@@ -985,12 +985,12 @@ embedFonts <- function(file, # The ps or pdf file to convert
         gsexe <- shortPathName(gsexe)
     tmpfile <- tempfile("Rembed")
     if (length(fontpaths))
-        fontpaths <- paste("-sFONTPATH=",
-                           paste(fontpaths, collapse=.Platform$path.sep),
-                           sep="")
-    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format,
-                 " -sOutputFile=", tmpfile, " ", fontpaths, " ",
-                 options, " ", file, sep = "")
+        fontpaths <-
+            shQuote(paste0("-sFONTPATH=",
+                           paste(fontpaths, collapse =.Platform$path.sep)))
+    cmd <- paste0(gsexe, " -dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format,
+                  " -sOutputFile=", tmpfile, " ", fontpaths, " ",
+                  options, " ", shQuote(file))
     ret <- system(cmd)
     if(ret != 0)
         stop(gettextf("status %d in running command '%s'", ret, cmd),
