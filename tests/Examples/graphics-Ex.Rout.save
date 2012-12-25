@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-12-09 r61257) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-25 r61428) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin11.4.2/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2028,7 +2028,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x288ae70>
+<bytecode: 0x7f8d514beb48>
 <environment: namespace:graphics>
 > 
 > 
@@ -2681,11 +2681,11 @@ temperature no yes
 > text(m, 0.85, "stripchart(round(x,1), \"jitter\")")
 > 
 > stripchart(decrease ~ treatment,
-+     main = "stripchart(OrchardSprays)", 
++     main = "stripchart(OrchardSprays)",
 +     vertical = TRUE, log = "y", data = OrchardSprays)
 > 
 > stripchart(decrease ~ treatment, at = c(1:8)^2,
-+     main = "stripchart(OrchardSprays)", 
++     main = "stripchart(OrchardSprays)",
 +     vertical = TRUE, log = "y", data = OrchardSprays)
 > 
 > 
@@ -2932,7 +2932,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x356a6a8>
+<bytecode: 0x7f8d5332db40>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3011,7 +3011,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.743 0.344 6.216 0 0 
+Time elapsed:  5.682 0.328 6.142 0 0 
 > grDevices::dev.off()
 null device 
           1 

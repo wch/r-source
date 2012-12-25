@@ -92,11 +92,11 @@ stripchart(xr, method = "jitter", add = TRUE, at = 0.7)
 text(m, 0.85, "stripchart(round(x,1), \"jitter\")")
 
 stripchart(decrease ~ treatment,
-    main = "stripchart(OrchardSprays)", 
+    main = "stripchart(OrchardSprays)",
     vertical = TRUE, log = "y", data = OrchardSprays)
 
 stripchart(decrease ~ treatment, at = c(1:8)^2,
-    main = "stripchart(OrchardSprays)", 
+    main = "stripchart(OrchardSprays)",
     vertical = TRUE, log = "y", data = OrchardSprays)
 }
 \keyword{hplot}
