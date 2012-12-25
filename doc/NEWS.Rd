@@ -782,6 +782,9 @@
       
       \item \code{plot()} failed for \code{"table"} objects containing
       just one entry.  (\PR{15118})
+      
+      \item \code{embedFonts()} needed to quote some filepaths.
+      (\PR{15149})
     }
   }
 }

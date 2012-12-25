@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima0.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima0}
@@ -202,7 +202,7 @@ arima0(x, order = c(0, 0, 0),
   \emph{Applied Statistics} \bold{31}, 180--187.
 
   Jones, R. H. (1980) Maximum likelihood fitting of ARMA models to time
-  series with missing observations. \emph{Technometrics} \bold{20} 389--395.
+  series with missing observations. \emph{Technometrics} \bold{22} 389--395.
 }
 
 \note{
