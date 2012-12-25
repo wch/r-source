@@ -4423,7 +4423,7 @@ function(dir)
 format.check_package_code_unload_functions <-
 function(x, ...)
 {
-    res <- if(!is.null(attr(x, ".Last.lib"))) "NB: .Last.lib will not be used uness it is exported" else character()
+    res <- if(!is.null(attr(x, ".Last.lib"))) "NB: .Last.lib will not be used unless it is exported" else character()
     if(length(x)) {
 
         ## Flatten out doubly recursive list of functions within list of
