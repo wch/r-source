@@ -33,9 +33,9 @@ dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
         poss <- Sys.which(c("gswin64c.exe", "gswin32c.exe"))
         poss <- poss[nzchar(poss)]
         gsexe <- if(length(poss)) poss else "gswin32c.exe"
-    } else if(length(grep(" ", gsexe, fixed=TRUE))> 0)
+    } else if(grepl(" ", gsexe, fixed = TRUE))
         gsexe <- shortPathName(gsexe)
-    gshelp <- system(paste(gsexe, "-help"), intern=TRUE, invisible=TRUE)
+    gshelp <- system(paste(gsexe, "-help"), intern = TRUE, invisible = TRUE)
     st <- grep("^Available", gshelp)
     en <- grep("^Search", gshelp)
     if(!length(st) || !length(en))
@@ -46,7 +46,7 @@ dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
         if(match(type, devs, 0) == 0)
             stop(gettextf("device '%s' is not available\n", type),
                  gettextf("Available devices are %s",
-                          paste(gsdevs, collapse="\n")),
+                          paste(gsdevs, collapse = "\n")),
                  domain = NA)
     }
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
@@ -58,29 +58,29 @@ dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
 
     current.device <- dev.cur()
     if(method == "pdf")
-        dev.off(dev.copy(device = pdf, file=tmp, width=width,
-                         height=height,
-                         pointsize=pointsize, paper="special", ...))
+        dev.off(dev.copy(device = pdf, file = tmp, width = width,
+                         height = height,
+                         pointsize = pointsize, paper = "special", ...))
     else
-        dev.off(dev.copy(device = postscript, file=tmp, width=width,
-                         height=height,
-                         pointsize=pointsize, paper="special",
-                         horizontal=FALSE, ...))
+        dev.off(dev.copy(device = postscript, file = tmp, width = width,
+                         height = height,
+                         pointsize = pointsize, paper = "special",
+                         horizontal = FALSE, ...))
     dev.set(current.device)
     extra <- ""
-    if (!is.na(taa)) extra <- paste(" -dTextAlphaBits=", taa, sep="")
-    if (!is.na(gaa)) extra <- paste(extra, " -dGraphicsAlphaBits=", gaa, sep="")
-    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
-                 " -r", res,
-                 " -dAutoRotatePages=/None",
-                 " -g", ceiling(res*width), "x", ceiling(res*height),
+    if (!is.na(taa)) extra <- paste0(" -dTextAlphaBits=", taa)
+    if (!is.na(gaa)) extra <- paste0(extra, " -dGraphicsAlphaBits=", gaa)
+    cmd <- paste0(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
+                  " -r", res,
+                  " -dAutoRotatePages=/None",
+                  " -g", ceiling(res*width), "x", ceiling(res*height),
                   extra,
-                 " -sOutputFile=", file, " ", tmp, sep="")
-    system(cmd, invisible=TRUE)
+                 " -sOutputFile=", shQuote(file), " ", tmp)
+    system(cmd, invisible = TRUE)
     invisible()
 }
 
-bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
+bitmap <- function(file, type = "png16m", height = 7, width = 7, res = 72,
                    units = "in", pointsize, taa = NA, gaa = NA, ...)
 {
     if(missing(file)) stop("'file' is missing with no default")
@@ -95,35 +95,35 @@ bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
         poss <- Sys.which(c("gswin64c.exe", "gswin32c.exe"))
         poss <- poss[nzchar(poss)]
         gsexe <- if(length(poss)) poss else "gswin32c.exe"
-    } else if(length(grep(" ", gsexe, fixed=TRUE)))
+    } else if(grepl(" ", gsexe, fixed = TRUE))
         gsexe <- shortPathName(gsexe)
-    gshelp <- system(paste(gsexe, "-help"), intern=TRUE, invisible=TRUE)
+    gshelp <- system(paste(gsexe, "-help"), intern = TRUE, invisible = TRUE)
     st <- grep("^Available", gshelp)
     en <- grep("^Search", gshelp)
     if(!length(st) || !length(en))
         warning("unrecognized format of gs -help")
     else {
         gsdevs <- gshelp[(st+1):(en-1)]
-        devs <- c(strsplit(gsdevs, " "), recursive=TRUE)
+        devs <- c(strsplit(gsdevs, " "), recursive = TRUE)
         if(match(type, devs, 0) == 0)
             stop(gettextf("device '%s' is not available\n", type),
                  gettextf("Available devices are %s",
-                          paste(gsdevs, collapse="\n")),
+                          paste(gsdevs, collapse = "\n")),
                  domain = NA)
     }
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
     extra <- ""
-    if (!is.na(taa)) extra <- paste(" -dTextAlphaBits=", taa, sep="")
-    if (!is.na(gaa)) extra <- paste(extra, " -dGraphicsAlphaBits=", gaa, sep="")
+    if (!is.na(taa)) extra <- paste0(" -dTextAlphaBits=", taa)
+    if (!is.na(gaa)) extra <- paste0(extra, " -dGraphicsAlphaBits=", gaa)
     tmp <- tempfile("Rbit")
-    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
-                 " -r", res,
-                 " -dAutoRotatePages=/None",
-                 " -g", ceiling(res*width), "x", ceiling(res*height),
-                 extra,
-                 " -sOutputFile=", file, sep="")
-    postscript(file=tmp, width=width, height=height,
-               pointsize=pointsize, paper="special", horizontal=FALSE,
-               print.it=TRUE, command=cmd, ...)
+    cmd <- paste0(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
+                  " -r", res,
+                  " -dAutoRotatePages=/None",
+                  " -g", ceiling(res*width), "x", ceiling(res*height),
+                  extra,
+                  " -sOutputFile=", shQuote(file))
+    postscript(file = tmp, width = width, height = height,
+               pointsize = pointsize, paper = "special", horizontal = FALSE,
+               print.it = TRUE, command = cmd, ...)
     invisible()
 }

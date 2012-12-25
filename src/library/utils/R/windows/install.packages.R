@@ -24,7 +24,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
     {
         if(file.exists(zipname)) {
             if((unzip <- getOption("unzip")) != "internal") {
-                system(paste(unzip, "-oq", zipname, "-d", dest),
+                system(paste(shQuote(unzip), "-oq", zipname, "-d", dest),
                        show.output.on.console = FALSE, invisible = TRUE)
             } else unzip(zipname, exdir = dest)
         } else stop(gettextf("zip file %s not found",

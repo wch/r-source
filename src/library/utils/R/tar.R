@@ -51,8 +51,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (!gzOK ) {
         ## version info may be sent to stdout or stderr
         tf <- tempfile()
-        cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
-        system(paste(TAR, "--version >", tf, "2>&1"))
+        cmd <- paste0(shQuote(TAR), " -", cflag, "tf ", shQuote(tarfile))
+        system(paste(shQuote(TAR), "--version >", tf, "2>&1"))
         if (file.exists(tf)) {
             gzOK <- any(grepl("GNU", readLines(tf), fixed = TRUE))
             unlink(tf)
@@ -75,12 +75,12 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         cflag <- ""
     }
     if (list) {
-        cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
+        cmd <- paste0(shQuote(TAR), " -", cflag, "tf ", shQuote(tarfile))
         if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
         if (verbose) message("untar: using cmd = ", sQuote(cmd), domain = NA)
         system(cmd, intern = TRUE)
     } else {
-        cmd <- paste0(TAR, " -", cflag, "xf ", shQuote(tarfile))
+        cmd <- paste0(shQuote(TAR), " -", cflag, "xf ", shQuote(tarfile))
         if (!missing(exdir)) {
             if (!file_test("-d", exdir)) {
                 if(!dir.create(exdir, showWarnings = TRUE, recursive = TRUE))
@@ -305,7 +305,7 @@ tar <- function(tarfile, files = NULL,
                 if (grepl("darwin8", R.version$os)) # 10.4, Tiger
                     tar <- paste("COPY_EXTENDED_ATTRIBUTES_DISABLE=1", tar)
             }
-            cmd <- paste(tar, extra_flags, flags, shQuote(tarfile),
+            cmd <- paste(shQuote(tar), extra_flags, flags, shQuote(tarfile),
                          paste(shQuote(files), collapse=" "))
             return(invisible(system(cmd)))
         }
