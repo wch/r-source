@@ -34,7 +34,8 @@ Sys.which(names)
   \code{names}.  The elements are either the full path to the
   executable  or some indication that no executable of that name was
   found.  Typically the indication is \code{""}, but this does depend on
-  the OS (and the known exceptions are changed to \code{""}).
+  the OS (and the known exceptions are changed to \code{""}).  Missing
+  values in \code{names} have missing return values (as from \R 3.0.0).
 
   On Windows the paths will be short paths (8+3 components, no spaces)
   with \code{\\} as the path delimiter.

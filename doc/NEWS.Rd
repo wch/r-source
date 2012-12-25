@@ -311,6 +311,9 @@
       
       \item The \code{utils::process.events()} function has been added
       to trigger immediate event handling.
+
+      \item \code{Sys.which()} now returns \code{NA} (not \code{""}) for
+      \code{NA} inputs (related to \PR{15147}).
     }
   }
 
