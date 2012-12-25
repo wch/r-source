@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-12-25 r61428) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-25 r61434) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin11.4.2/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1418,7 +1418,7 @@ List of 2
 > 
 > mosaicplot(HairEyeColor, shade = TRUE)
 > ## Independence model of hair and eye color and sex.  Indicates that
-> ## there are more blue eyed blonde females than expected in the case 
+> ## there are more blue eyed blonde females than expected in the case
 > ## of independence and too few brown eyed blonde females.
 > ## The corresponding model is:
 > fm <- loglin(HairEyeColor, list(1, 2, 3))
@@ -1708,7 +1708,7 @@ armed.forces
 > nrz <- nrow(z)
 > ncz <- ncol(z)
 > # Create a function interpolating colors in the range of specified colors
-> jet.colors <- colorRampPalette( c("blue", "green") ) 
+> jet.colors <- colorRampPalette( c("blue", "green") )
 > # Generate the desired number of colors from this palette
 > nbcol <- 100
 > color <- jet.colors(nbcol)
@@ -1885,7 +1885,7 @@ wool         1    451   450.7   3.339 0.07361 .
 tension      2   2034  1017.1   7.537 0.00138 **
 Residuals   50   6748   135.0                   
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > plot.design(       Form, data = warpbreaks, col = 2)  # same as above
 > 
 > ## More than one y :
@@ -2028,7 +2028,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x7f8d514beb48>
+<bytecode: 0x1f8b140>
 <environment: namespace:graphics>
 > 
 > 
@@ -2932,7 +2932,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x7f8d5332db40>
+<bytecode: 0x3650f28>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3011,7 +3011,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.682 0.328 6.142 0 0 
+Time elapsed:  3.626 0.062 3.699 0 0 
 > grDevices::dev.off()
 null device 
           1 

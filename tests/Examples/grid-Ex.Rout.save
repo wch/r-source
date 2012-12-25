@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-27 r61168) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-25 r61434) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -37,7 +37,7 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
-> ## Diagram of a simple layout 
+> ## Diagram of a simple layout
 > grid.show.layout(grid.layout(4,2,
 +                      heights=unit(rep(1, 4),
 +                                   c("lines", "lines", "lines", "null")),
@@ -130,7 +130,7 @@ attr(,"class")
 +         grid.rect(width=unit(metric$width, "inches"),
 +                   height=unit(metric$descent, "inches"),
 +                   just="bottom",
-+                   gp=gpar(col=rgb(1,0,0,.5)))        
++                   gp=gpar(col=rgb(1,0,0,.5)))
 +     }
 + }
 > 
@@ -554,7 +554,7 @@ NULL
 > # Viewport sets new clip region
 > pushViewport(viewport(width=0.5, height=0.5, clip=TRUE))
 > grid.lines(gp=gpar(col="grey", lwd=3))
-> # Return to original viewport;  get 
+> # Return to original viewport;  get
 > # clip region from previous grid.clip()
 > # (NOT from previous viewport clip region)
 > popViewport()
@@ -1014,7 +1014,7 @@ NULL
 +   grid.xaxis()
 +   grid.yaxis()
 +   do.click("native")
-+   popViewport()  
++   popViewport()
 + }
 > 
 > 
@@ -1090,7 +1090,7 @@ vp1
 vp1::vp2
 vp1::vp2 | parent::child
 vp1::vp2::2
-> # grob path listing 
+> # grob path listing
 > grid.ls(sampleGTree, view=TRUE, print=grobPathListing)
          | parent
 vp1::vp2 | parent::child
@@ -1180,7 +1180,7 @@ List of 6
 > pathSample <- function(x, y, rule, gp = gpar()) {
 +     if (is.na(rule))
 +         grid.path(x, y, id = rep(1:2, each = 4), gp = gp)
-+     else 
++     else
 +         grid.path(x, y, id = rep(1:2, each = 4), rule = rule, gp = gp)
 +     if (!is.na(rule))
 +         grid.text(paste("Rule:", rule), y = 0, just = "bottom")
@@ -1302,7 +1302,7 @@ List of 6
 > 
 > redGradient <- matrix(hcl(0, 80, seq(50, 80, 10)),
 +                       nrow=4, ncol=5)
-> # interpolated 
+> # interpolated
 > grid.newpage()
 > grid.raster(redGradient)
 > # blocky
@@ -1387,7 +1387,7 @@ List of 6
 > 
 > grid.roundrect(width=.5, height=.5, name="rr")
 > theta <- seq(0, 360, length=50)
-> for (i in 1:50) 
+> for (i in 1:50)
 +     grid.circle(x=grobX("rr", theta[i]),
 +                 y=grobY("rr", theta[i]),
 +                 r=unit(1, "mm"),
@@ -1408,7 +1408,7 @@ List of 6
 > 
 > ### ** Examples
 > 
-> ## Diagram of a simple layout 
+> ## Diagram of a simple layout
 > grid.show.layout(grid.layout(4,2,
 +                      heights=unit(rep(1, 4),
 +                                   c("lines", "lines", "lines", "null")),
@@ -1597,7 +1597,7 @@ List of 6
 > ##D     example(histogram)
 > ##D     showGrob()
 > ##D     showGrob(gPath="plot_01.ylab")
-> ##D     
+> ##D 
 > ##D     library(ggplot2)
 > ##D     # Ctrl-c after first example
 > ##D     example(qplot)
@@ -1799,9 +1799,9 @@ List of 6
 > tree <- vpTree(viewport(w=0.8, h=0.8, name="A"),
 +                vpList(vpStack(viewport(x=0.1, y=0.1, w=0.5, h=0.5,
 +                                        just=c("left", "bottom"), name="B"),
-+                               viewport(x=0.1, y=0.1, w=0.5, h=0.5, 
++                               viewport(x=0.1, y=0.1, w=0.5, h=0.5,
 +                                        just=c("left", "bottom"), name="C"),
-+                               viewport(x=0.1, y=0.1, w=0.5, h=0.5, 
++                               viewport(x=0.1, y=0.1, w=0.5, h=0.5,
 +                                        just=c("left", "bottom"), name="D")),
 +                       viewport(x=0.5, w=0.4, h=0.9,
 +                                just="left", name="E")))
@@ -1962,7 +1962,7 @@ vp1::vp2
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.697 0.055 2.767 0 0 
+Time elapsed:  1.423 0.015 1.444 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-12-14 r61329) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-25 r61434) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x2932e88>
+<environment: 0x2fbf158>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x2932e88>
+<environment: 0x2fbf158>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x2932e88>
+<environment: 0x2fbf158>
 
 $showURLs
 [1] FALSE
@@ -213,7 +213,7 @@ $underline_titles
 > ## Don't show: 
 > options(useFancyQuotes = FALSE)
 > ## End Don't show
-> refs <- 
+> refs <-
 + c(bibentry(bibtype = "manual",
 +     title = "R: A Language and Environment for Statistical Computing",
 +     author = person("R Core Team"),
@@ -221,7 +221,7 @@ $underline_titles
 +     address = "Vienna, Austria",
 +     year = 2012,
 +     isbn = "3-900051-07-0",
-+     url = "http://www.R-project.org"),  
++     url = "http://www.R-project.org"),
 +   bibentry(bibtype = "article",
 +     author = c(person(c("George", "E", "P"), "Box"),
 +                person(c("David",  "R"),      "Cox")),
@@ -230,12 +230,12 @@ $underline_titles
 +     journal = "Journal of the Royal Statistical Society, Series B",
 +     volume = 26,
 +     pages = "211-252"))
->     
+> 
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x3480fa0>
-> print(refs, .bibstyle = "unsorted")    
+<environment: 0x2636cb0>
+> print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2012). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
 ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
@@ -942,7 +942,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.586 0.022 0.622 0 0 
+Time elapsed:  0.283 0.005 0.289 0 0 
 > grDevices::dev.off()
 null device 
           1 

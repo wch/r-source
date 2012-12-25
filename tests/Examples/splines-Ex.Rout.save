@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2012-11-27 r61168) -- "Unsuffered Consequences"
+R Under development (unstable) (2012-12-25 r61434) -- "Unsuffered Consequences"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -139,11 +139,11 @@ bs(height, df = 5)3  27.6161     0.4571  60.415 4.70e-13 ***
 bs(height, df = 5)4  40.8481     0.3866 105.669 3.09e-15 ***
 bs(height, df = 5)5  49.1296     0.3090 158.979  < 2e-16 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 0.2276 on 9 degrees of freedom
-Multiple R-squared: 0.9999,	Adjusted R-squared: 0.9998 
-F-statistic: 1.298e+04 on 5 and 9 DF,  p-value: < 2.2e-16 
+Multiple R-squared:  0.9999,	Adjusted R-squared:  0.9998 
+F-statistic: 1.298e+04 on 5 and 9 DF,  p-value: < 2.2e-16
 
 > 
 > ## example of safe prediction
@@ -248,11 +248,11 @@ ns(height, df = 5)3  33.2582     0.3541   93.93 8.91e-15 ***
 ns(height, df = 5)4  50.7894     0.6062   83.78 2.49e-14 ***
 ns(height, df = 5)5  45.0363     0.2784  161.75  < 2e-16 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 0.2645 on 9 degrees of freedom
-Multiple R-squared: 0.9998,	Adjusted R-squared: 0.9997 
-F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16 
+Multiple R-squared:  0.9998,	Adjusted R-squared:  0.9997 
+F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 
 > 
 > ## example of safe prediction
@@ -354,17 +354,17 @@ polynomial representation of spline for weight ~ height
 > opar <- par(mfrow = c(2, 2), las = 1)
 > plot(predict(ispl, nseg = 201),     # plots over the range of the knots
 +      main = "Original data with interpolating spline", type = "l",
-+      xlab = "height", ylab = "weight") 
++      xlab = "height", ylab = "weight")
 > points(women$height, women$weight, col = 4)
 > plot(predict(ispl, nseg = 201, deriv = 1),
 +      main = "First derivative of interpolating spline", type = "l",
-+      xlab = "height", ylab = "weight") 
++      xlab = "height", ylab = "weight")
 > plot(predict(ispl, nseg = 201, deriv = 2),
 +      main = "Second derivative of interpolating spline", type = "l",
-+      xlab = "height", ylab = "weight") 
++      xlab = "height", ylab = "weight")
 > plot(predict(ispl, nseg = 401, deriv = 3),
 +      main = "Third derivative of interpolating spline", type = "l",
-+      xlab = "height", ylab = "weight") 
++      xlab = "height", ylab = "weight")
 > par(opar)
 > 
 > 
@@ -609,7 +609,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.874 0.058 2.951 0 0 
+Time elapsed:  1.433 0.023 1.461 0 0 
 > grDevices::dev.off()
 null device 
           1 
