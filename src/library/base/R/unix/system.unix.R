@@ -106,6 +106,7 @@ system2 <- function(command, args = character(),
 
 Sys.which <- function(names)
 {
+    if (any(is.na(names))) stop("missing values are not allowed")
     res <- character(length(names)); names(res) <- names
     ## hopefully configure found [/usr]/bin/which
     which <- "@WHICH@"

@@ -128,7 +128,11 @@ Sys.timezone <- function()
 {
     z <- as.POSIXlt(Sys.time())
     zz <- attr(z, "tzone")
-    if(length(zz) == 3L) zz[2 + z$isdst] else zz[1L]
+    if(length(zz) == 3L) zz[2L + z$isdst] else zz[1L]
 }
 
-Sys.which <- function(names) .Internal(Sys.which(as.character(names)))
+Sys.which <- function(names)
+{
+    if (any(is.na(names))) stop("missing values are not allowed")
+    .Internal(Sys.which(as.character(names)))
+}

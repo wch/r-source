@@ -14,7 +14,8 @@
 Sys.which(names)
 }
 \arguments{
-  \item{names}{Character vector of names or paths of possible executables.}
+  \item{names}{Character vector of names or paths of possible
+    executables.  Supplying missing values is an error.}
 }
 \details{
   The system command \command{which} reports on the full path names of
