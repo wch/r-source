@@ -17,5 +17,5 @@
 #  http://www.r-project.org/Licenses/
 
 replicate <- function(n, expr, simplify = "array")
-        sapply(integer(n), 
+        sapply(integer(n),
            eval.parent(substitute(function(...)expr)), simplify = simplify)

@@ -22,8 +22,8 @@ removeSource <- function(fn) {
     attr(fn, "source") <- NULL
     attr(fn, "srcref") <- NULL
     attr(body(fn), "wholeSrcref") <- NULL
-    attr(body(fn), "srcfile") <- NULL    
-    
+    attr(body(fn), "srcfile") <- NULL
+
     recurse <- function(part) {
         attr(part, "srcref") <- NULL
         if (is.language(part) && is.recursive(part)) {
@@ -38,7 +38,7 @@ removeSource <- function(fn) {
 
 getSrcFilename <- function(x, full.names=FALSE, unique=TRUE) {
     srcref <- getSrcref(x)
-    if (is.list(srcref)) 
+    if (is.list(srcref))
     	result <- sapply(srcref, getSrcFilename, full.names, unique)
     else {
     	srcfile <- attr(srcref, "srcfile")
@@ -72,7 +72,7 @@ getSrcLocation <- function(x, which=c("line", "column", "byte", "parse"), first=
         if (length(srcref) == 6L) srcref <- c(srcref, srcref[c(1L,3L)])
     	which <- match.arg(which)
     	if (first) index <- c(line=1L, column=5L, byte=2L, parse=7L)[which]
-    	else       index <- c(line=3L, column=6L, byte=4L, parse=8L)[which] 
+    	else       index <- c(line=3L, column=6L, byte=4L, parse=8L)[which]
     	srcref[index]
     }
  }
@@ -80,7 +80,7 @@ getSrcLocation <- function(x, which=c("line", "column", "byte", "parse"), first=
 getSrcfile <- function(x) {
     result <- attr(x, "srcfile")
     if (!is.null(result)) return(result)
-    
+
     srcref <- attr(x, "wholeSrcref")
     if (is.null(srcref)) {
 	srcref <- getSrcref(x)
@@ -112,18 +112,18 @@ substr_with_tabs <- function(x, start, stop, tabsize = 8) {
 
 getParseData <- function(x, includeText = NA) {
     srcfile <- getSrcfile(x)
-    
-    if (is.null(srcfile)) 
+
+    if (is.null(srcfile))
     	return(NULL)
-    else 
+    else
     	data <- srcfile$parseData
     if (!is.null(data)) {
         tokens <- attr(data, "tokens")
         data <- t(unclass(data))
-        colnames(data) <- c( "line1", "col1",  
-		 	     "line2", "col2", 
+        colnames(data) <- c( "line1", "col1",
+		 	     "line2", "col2",
 		 	     "terminal", "token.num", "id", "parent" )
-    	data <- data.frame(data[,-c(5,6)], token=tokens, 
+    	data <- data.frame(data[,-c(5,6)], token=tokens,
     	                   terminal=as.logical(data[,"terminal"]),
     	                   text=attr(data, "text"),
     			   stringsAsFactors=FALSE)
@@ -137,8 +137,8 @@ getParseData <- function(x, includeText = NA) {
             gettext <- integer(0)
             data$text <- NULL
         }
-        
-        if (length(gettext)) 
+
+        if (length(gettext))
 	    data$text[gettext] <- getParseText(data, data$id[gettext])
     }
     data	

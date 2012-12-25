@@ -37,11 +37,11 @@ expand.model.frame <- function(model, extras,
     if (!na.expand){
         naa <- model$call$na.action
         subset <- model$call$subset
-        rval <- eval(call("model.frame",ff, data = data, subset = subset, 
+        rval <- eval(call("model.frame",ff, data = data, subset = subset,
                       na.action = naa),envir )
     } else {
         subset <- model$call$subset
-        rval <- eval(call("model.frame",ff, data = data, subset = subset, 
+        rval <- eval(call("model.frame",ff, data = data, subset = subset,
                           na.action = I), envir)
         oldmf <- model.frame(model)
         keep <- match(rownames(oldmf), rownames(rval))

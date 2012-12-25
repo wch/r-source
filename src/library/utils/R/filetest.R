@@ -21,7 +21,7 @@
 file_test <-
 function(op, x, y)
 {
-    ## Provide shell-style '-f', '-d', '-x', '-nt' and '-ot' tests. 
+    ## Provide shell-style '-f', '-d', '-x', '-nt' and '-ot' tests.
     ## Note that file.exists() only tests existence ('test -e' on some
     ## systems), and that our '-f' tests for existence and not being a
     ## directory (the GNU variant tests for being a regular file).

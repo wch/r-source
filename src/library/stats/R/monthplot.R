@@ -77,7 +77,7 @@ monthplot.default <-
         Call$xlab <- if("xlab" %in% nmdots) dots$xlab else ""
         if(box) Call$frame.plot <- TRUE
         Call$labels <- Call$times <- Call$phase <- Call$base <-
-            Call$type <- Call$box <- Call$add <- Call$col.base <- 
+            Call$type <- Call$box <- Call$add <- Call$col.base <-
             Call$lty.base <- Call$lwd.base <- NULL
         eval(Call)
         if (axes) {
@@ -97,7 +97,7 @@ monthplot.default <-
             lines((y[sub] - min(y)) * scale - 0.45 + i, x[sub],
                   type = type, col = col, lty = lty, lwd = lwd, ...)
         else segments((y[sub] - min(y)) * scale - 0.45 + i, means[i],
-                      (y[sub] - min(y)) * scale - 0.45 + i, x[sub], 
+                      (y[sub] - min(y)) * scale - 0.45 + i, x[sub],
                       col = col, lty = lty, lwd = lwd, ...)
     }
     invisible()

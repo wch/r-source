@@ -108,7 +108,7 @@ function()
     tab_unversioned[R_license_db$Abbrev[pos]] <- pos
 
     ## Versioned licenses from the R license db.
-    ## Style A: Name of abbreviation of a versioned license, optionally 
+    ## Style A: Name of abbreviation of a versioned license, optionally
     ##   followed by a version spec
     ## Style B: Name of a versioned license followed by the version.
     ## Style C: Abbrevation of a versioned license combined with '-'.
@@ -164,7 +164,7 @@ function()
     re_license_file <- "file LICEN[CS]E"
     re_license_extension <-
         sprintf("[[:space:]]*\\+[[:space:]]*%s", re_license_file)
-    
+
     ## <NOTE>
     ## Many standard licenses actually do not allow extensions.
     ## Ideally, we would only allow the extension markup for extensible
@@ -462,7 +462,7 @@ function(x)
         paste(components, collapse = " | ")
     } else NA_character_
 
-    ## Analyze components provided that we know we can standardize.    
+    ## Analyze components provided that we know we can standardize.
     if(is_standardizable) {
         is_verified <- if(any(components == "Unlimited")) TRUE else {
             is_FOSS <- function(x)
@@ -587,7 +587,7 @@ function(x)
     if(x == "Unlimited" ||
        grepl(x, R_license_db_vars$re_license_file))
         return(NULL)
-    
+
     ## Drop possible license extension.
     x <- sub(R_license_db_vars$re_license_extension, "", x)
 
@@ -633,7 +633,7 @@ function(x)
         pos <- R_license_db_vars$tab_versioned_style_C[x]
         R_license_db[pos, ]
     }
-             
+
 }
 
 .numeric_version_meets_constraints_p <-

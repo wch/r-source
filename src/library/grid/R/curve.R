@@ -318,7 +318,7 @@ calcCurveGrob <- function(x, debug) {
     y2 <- rep(y2, length.out=maxn)
     if (!is.null(arrow))
         arrow <- rep(arrow, length.out=maxn)
-    
+
     if (curvature == 0) {
         children <- gList(straightCurve(x1, y1, x2, y2, arrow, debug))
     } else {

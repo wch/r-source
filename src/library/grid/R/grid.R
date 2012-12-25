@@ -515,4 +515,4 @@ delayGrob <- function(expr, list,
     gTree(expr=substitute(expr), list=list,
           name=name, gp=gp, vp=vp, cl="delayedgrob")
 }
-    
+

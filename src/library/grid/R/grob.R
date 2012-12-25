@@ -2002,7 +2002,7 @@ force.grob <- function(x) {
     on.exit(grid.Call(L_setDLon, dlon))
     tempgpar <- grid.Call(L_getGPar)
     on.exit(grid.Call(L_setGPar, tempgpar), add=TRUE)
-    # Same drawing context set up as drawGrob() 
+    # Same drawing context set up as drawGrob()
     # including enforcing the drawing context
     x <- preDraw(x)
     # Same drawing content set up as drawGrob() ...
@@ -2055,7 +2055,7 @@ force.gTree <- function(x) {
     if (!identical(x, originalX)) {
         # Store the original object to allow a "revert"
         x$.ORIGINAL <- originalX
-        # Return the 'x' that would have been drawn 
+        # Return the 'x' that would have been drawn
         # This will typically be a vanilla gTree with children to draw
         # (which will not have makeContext() or makeContent() methods)
         # BUT to be safe add "forcedgrob" class so that subsequent
@@ -2159,7 +2159,7 @@ reorderGrob <- function(x, order, back=TRUE) {
                           x$childrenOrder[-order])
         } else {
             newOrder <- c(x$childrenOrder[-order],
-                          x$childrenOrder[order])            
+                          x$childrenOrder[order])
         }
     }
     x$childrenOrder <- newOrder
@@ -2180,7 +2180,7 @@ reorderGrob <- function(x, order, back=TRUE) {
 # first and then reorder the children of the resulting gTree
 grid.reorder <- function(gPath, order, back=TRUE, grep=FALSE, redraw=TRUE) {
     grob <- grid.get(gPath, grep=grep)
-    grid.set(gPath, reorderGrob(grob, order, back=back), 
+    grid.set(gPath, reorderGrob(grob, order, back=back),
              grep=grep, redraw=redraw)
 }
-    
+
