@@ -13,6 +13,9 @@
       \item It is intended that this version will be released as \R
       3.0.0.
 
+      Packages need to have been installed under this version of \R.
+      (Pro tem, this is considered to be R-devel from April 2012.)
+
       \item There is a subtle change in behaviour for numeric index
       values \eqn{2^{31}}{2^31} and larger.  These never used to be
       legitimate and so were treated as \code{NA}, sometimes with a
