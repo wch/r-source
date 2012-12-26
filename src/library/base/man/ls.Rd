@@ -1,6 +1,6 @@
 % File src/library/base/man/ls.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ls}
@@ -8,17 +8,16 @@
 \alias{objects}
 \title{List Objects}
 \usage{
-ls(name, pos = -1, envir = as.environment(pos),
+ls(name, pos = -1L, envir = as.environment(pos),
    all.names = FALSE, pattern)
-objects(name, pos= -1, envir = as.environment(pos),
+objects(name, pos= -1L, envir = as.environment(pos),
         all.names = FALSE, pattern)
 }
 \arguments{
   \item{name}{which environment to use in listing the available objects.
-    Defaults to the \emph{current}
-    environment.  Although called \code{name} for back compatibility, in
-    fact this argument can specify the environment in any form; see the
-    details section.}
+    Defaults to the \emph{current} environment.  Although called
+    \code{name} for back compatibility, in fact this argument can
+    specify the environment in any form; see the \sQuote{Details} section.}
   \item{pos}{an alternative argument to \code{name} for specifying the
     environment as a position in the search list.  Mostly there for
     back compatibility.}
@@ -32,13 +31,13 @@ objects(name, pos= -1, envir = as.environment(pos),
     used to convert wildcard patterns to regular expressions.}
 }
 \description{
-   \code{ls} and \code{objects} return a vector of character strings
-   giving the names of the objects in the specified environment.
-   When invoked with no argument at the top level prompt,
-   \code{ls} shows what data sets and functions a user has defined.
-   When invoked with no argument inside a function,
-   \code{ls} returns the names of the functions local variables.
-   This is useful in conjunction with \code{browser}.
+  \code{ls} and \code{objects} return a vector of character strings
+  giving the names of the objects in the specified environment.  When
+  invoked with no argument at the top level prompt, \code{ls} shows what
+  data sets and functions a user has defined.  When invoked with no
+  argument inside a function, \code{ls} returns the names of the
+  function's local variables: this is useful in conjunction with
+  \code{browser}.
 }
 \details{
   The \code{name} argument can specify the  environment from which

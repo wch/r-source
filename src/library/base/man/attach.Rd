@@ -9,7 +9,7 @@
 
 \title{Attach Set of R Objects to Search Path}
 \usage{
-attach(what, pos = 2, name = deparse(substitute(what)),
+attach(what, pos = 2L, name = deparse(substitute(what)),
        warn.conflicts = TRUE)
 }
 \arguments{
@@ -19,7 +19,8 @@ attach(what, pos = 2, name = deparse(substitute(what)),
     \sQuote{Details}.}
   \item{pos}{integer specifying position in \code{\link{search}()} where
     to attach.}
-  \item{name}{name to use for the attached database.}
+  \item{name}{name to use for the attached database. Names starting with
+    \code{package:} are reserved for \code{\link{library}}.}
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the database,
     unless that database contains an object \code{.conflicts.OK}.  A

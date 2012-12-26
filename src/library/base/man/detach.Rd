@@ -1,13 +1,13 @@
 % File src/library/base/man/detach.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{detach}
 \alias{detach}
 \title{Detach Objects from the Search Path}
 \usage{
-detach(name, pos = 2, unload = FALSE, character.only = FALSE,
+detach(name, pos = 2L, unload = FALSE, character.only = FALSE,
        force = FALSE)
 }
 \arguments{

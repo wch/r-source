@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-attach <- function(what, pos = 2, name = deparse(substitute(what)),
+attach <- function(what, pos = 2L, name = deparse(substitute(what)),
                    warn.conflicts = TRUE)
 {
     checkConflicts <- function(env)
@@ -45,7 +45,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
         ipos <- seq_along(sp)[-c(db.pos, match(c("Autoloads", "CheckExEnv"), sp, 0L))]
         for (i in ipos) {
             obj.same <- match(objects(i, all.names = TRUE), ob, nomatch = 0L)
-            if (any(obj.same > 0)) {
+            if (any(obj.same > 0L)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
                 Classobjs <- grep("^\\.__", same)
@@ -60,8 +60,8 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
                                         inherits = FALSE))
                 same <- same[is_fn1 == is_fn2]
                 if(length(same)) {
-                    objs <- strwrap(paste(same, collapse=", "), indent=4,
-                                    exdent=4)
+                    objs <- strwrap(paste(same, collapse=", "), indent = 4L,
+                                    exdent = 4L)
                     pkg <-
                         if (sum(sp == sp[i]) > 1L) {
                             sprintf("%s (position %d)", sp[i], i)
@@ -79,17 +79,17 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
         }
     }
 
-    if(pos == 1) {
+    if(pos == 1L) {
         warning("*** 'pos=1' is not possible; setting 'pos=2' for now.\n",
                 "*** Note that 'pos=1' will give an error in the future")
-        pos <- 2
+        pos <- 2L
     }
     if (is.character(what) && (length(what) == 1L)){
         if (!file.exists(what))
             stop(gettextf("file '%s' not found", what), domain = NA)
         if(missing(name)) name <- paste0("file:", what)
         value <- .Internal(attach(NULL, pos, name))
-        load(what, envir=as.environment(pos))
+        load(what, envir = as.environment(pos))
     }
     else
         value <- .Internal(attach(what, pos, name))
@@ -102,7 +102,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
     invisible(value)
 }
 
-detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
+detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
                    force = FALSE)
 {
     if(!missing(name)) {
@@ -196,7 +196,7 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
 .detach <- function(pos) .Internal(detach(pos))
 
 ls <- objects <-
-    function (name, pos = -1, envir = as.environment(pos), all.names = FALSE,
+    function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,
               pattern)
 {
     if (!missing(name)) {
@@ -214,8 +214,8 @@ ls <- objects <-
     }
     all.names <- .Internal(ls(envir, all.names))
     if (!missing(pattern)) {
-        if ((ll <- length(grep("[", pattern, fixed=TRUE))) &&
-            ll != length(grep("]", pattern, fixed=TRUE))) {
+        if ((ll <- length(grep("[", pattern, fixed = TRUE))) &&
+            ll != length(grep("]", pattern, fixed = TRUE))) {
             if (pattern == "[") {
                 pattern <- "\\["
                 warning("replaced regular expression pattern '[' by  '\\\\['")
