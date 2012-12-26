@@ -19,7 +19,7 @@
 attachNamespace(ns, pos = 2, dataPath = NULL, depends = NULL)
 loadNamespace(package, lib.loc = NULL,
               keep.source = getOption("keep.source.pkgs"),
-              partial = FALSE)
+              partial = FALSE, versionCheck = NULL)
 requireNamespace(package, ..., quietly = FALSE)
 loadedNamespaces()
 unloadNamespace(ns)
@@ -37,6 +37,8 @@ unloadNamespace(ns)
     For more details see this argument to \code{\link{library}}.
   }
   \item{partial}{logical; if true, stop just after loading code.}
+  \item{versionCheck}{\code{NULL} or a version specification (a list
+    with components \code{op} and \code{version})).}
   \item{quietly}{logical: should progress and error messages be suppressed?}
   \item{\dots}{further arguments to be passed to \code{loadNamespace}.}
 }

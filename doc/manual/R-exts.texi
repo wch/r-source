@@ -541,18 +541,17 @@ specification, nor on the package @pkg{base}: this is an @R{} package
 and @pkg{base} is always available.
 
 @c DESCRIPTION field Imports
-The @samp{Imports} field lists packages whose namespaces are
-imported from (as specified in the @file{NAMESPACE} file) but which do
-not need to be attached.  Namespaces accessed by the @samp{::} and
-@samp{:::} operators must be listed here, or in @samp{Suggests} or
-@samp{Enhances} (see below).  Ideally this field will include all the
-standard packages that are used, and it is important to include S4-using
-packages (as their class definitions can change and the
-@file{DESCRIPTION} file is used to decide which packages to re-install
-when this happens).  Packages declared in the @samp{Depends} field
-should not also be in the @samp{Imports} field.  Version requirements
-can be specified, but will @strong{not} be checked when the namespace is
-loaded (whereas they are checked by @command{R CMD check}).
+The @samp{Imports} field lists packages whose namespaces are imported
+from (as specified in the @file{NAMESPACE} file) but which do not need
+to be attached.  Namespaces accessed by the @samp{::} and @samp{:::}
+operators must be listed here, or in @samp{Suggests} or @samp{Enhances}
+(see below).  Ideally this field will include all the standard packages
+that are used, and it is important to include S4-using packages (as
+their class definitions can change and the @file{DESCRIPTION} file is
+used to decide which packages to re-install when this happens).
+Packages declared in the @samp{Depends} field should not also be in the
+@samp{Imports} field.  Version requirements can be specified but are
+only be checked when the namespace is loaded in @R{} >= 3.0.0.
 
 @c DESCRIPTION field Suggests
 The @samp{Suggests} field uses the same syntax as @samp{Depends} and

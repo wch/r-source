@@ -322,6 +322,10 @@
       fewer trailing spaces (wish of \PR{15124}).
 
       Also output from \code{HoltWinters()}, \code{nls()} and others.
+      
+      \item \code{loadNamespace()} allows a version specification to be
+      given, and this is used to check version specifications given in
+      the \samp{Imports} field when a namespace is loaded.
     }
   }
 

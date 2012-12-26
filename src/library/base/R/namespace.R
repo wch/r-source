@@ -109,7 +109,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
     runHook <- function(hookname, env, libname, pkgname) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
-            res <- tryCatch(fun(libname, pkgname), error=identity)
+            res <- tryCatch(fun(libname, pkgname), error = identity)
             if (inherits(res, "error")) {
                 stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
                               hookname, "attachNamespace", nsname,
@@ -156,7 +156,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 
 loadNamespace <- function (package, lib.loc = NULL,
                            keep.source = getOption("keep.source.pkgs"),
-                           partial = FALSE)
+                           partial = FALSE, versionCheck = NULL)
 {
     package <- as.character(package)[[1L]]
 
@@ -183,9 +183,15 @@ loadNamespace <- function (package, lib.loc = NULL,
     "__NameSpacesLoading__" <- c(package, loading)
 
     ns <- .Internal(getRegisteredNamespace(as.name(package)))
-    if (! is.null(ns))
+    if (! is.null(ns)) {
+        if(length(z <- versionCheck) == 3L) {
+            if(!do.call(z$op, list(current, z$version)))
+                stop(gettextf("namespace %s %s is already loaded, but %s %s is required",
+                              sQuote(package), current, z$op, z$version),
+                     domain = NA)
+        }
         ns
-    else {
+    } else {
         ## only used here for .onLoad
         runHook <- function(hookname, env, libname, pkgname) {
             if (exists(hookname, envir = env, inherits = FALSE)) {
@@ -212,7 +218,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             version <- as.character(version)
             info <- new.env(hash = TRUE, parent = baseenv())
             assign(".__NAMESPACE__.", info, envir = env)
-            assign("spec", c(name = name,version = version), envir = info)
+            assign("spec", c(name = name, version = version), envir = info)
             setNamespaceInfo(env, "exports", new.env(hash = TRUE, parent = baseenv()))
             dimpenv <- new.env(parent = baseenv(), hash = TRUE)
             attr(dimpenv, "name") <- paste("lazydata", name, sep = ":")
@@ -343,19 +349,26 @@ loadNamespace <- function (package, lib.loc = NULL,
         if(file.exists(pkgInfoFP)) {
             pkgInfo <- readRDS(pkgInfoFP)
             version <- pkgInfo$DESCRIPTION["Version"]
+            vI <- pkgInfo$Imports
             if(is.null(built <- pkgInfo$Built))
                 stop(gettextf("package %s has not been installed properly\n",
                               sQuote(basename(pkgpath))),
                      call. = FALSE, domain = NA)
             R_version_built_under <- as.numeric_version(built$R)
-            if(R_version_built_under < "2.10.0")
-                stop(gettextf("package %s was built before R 2.10.0: please re-install it",
+            ## change to 3.0.0 before release
+            if(R_version_built_under < "2.16.0")
+                stop(gettextf("package %s was built before R 3.0.0: please re-install it",
                              sQuote(basename(pkgpath))),
                      call. = FALSE, domain = NA)
             ## we need to ensure that S4 dispatch is on now if the package
             ## will require it, or the exports will be incomplete.
             dependsMethods <- "methods" %in% names(pkgInfo$Depends)
             if(dependsMethods) loadNamespace("methods")
+            if(length(z <- versionCheck) == 3L &&
+               !do.call(z$op, list(version, z$version)))
+                stop(gettextf("namespace %s %s is being loaded, but %s %s is required",
+                              sQuote(package), version, z$op, z$version),
+                     domain = NA)
         }
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
@@ -363,20 +376,25 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## process imports
         for (i in nsInfo$imports) {
             if (is.character(i))
-                namespaceImport(ns, loadNamespace(i, c(lib.loc, .libPaths())))
+                namespaceImport(ns,
+                                loadNamespace(i, c(lib.loc, .libPaths()),
+                                              versionCheck = vI[[i]]))
             else
                 namespaceImportFrom(ns,
-                                    loadNamespace(i[[1L]],
-                                                  c(lib.loc, .libPaths())),
+                                    loadNamespace(j <- i[[1L]],
+                                                  c(lib.loc, .libPaths()),
+                                                  versionCheck = vI[[j]]),
                                     i[[2L]])
         }
         for(imp in nsInfo$importClasses)
-            namespaceImportClasses(ns, loadNamespace(imp[[1L]],
-                                                     c(lib.loc, .libPaths())),
+            namespaceImportClasses(ns, loadNamespace(j <- imp[[1L]],
+                                                     c(lib.loc, .libPaths()),
+                                                     versionCheck = vI[[j]]),
                                    imp[[2L]])
         for(imp in nsInfo$importMethods)
-            namespaceImportMethods(ns, loadNamespace(imp[[1L]],
-                                                     c(lib.loc, .libPaths())),
+            namespaceImportMethods(ns, loadNamespace(j <- imp[[1L]],
+                                                     c(lib.loc, .libPaths()),
+                                                     versionCheck = vI[[j]]),
                                    imp[[2L]])
 
         ## store info for loading namespace for loadingNamespaceInfo to read
