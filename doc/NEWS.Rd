@@ -240,7 +240,7 @@
       \code{ngettext()}, analogously to \code{stop()} etc.
 
       \item \code{termplot()} gains a new argument \code{plot = FALSE}
-      which returns information to allows the plots to be modified for
+      which returns information to allow the plots to be modified for
       use as part of other plots, but does not plot them.
       (Contributed by Terry Therneau, \PR{15076}.)
 
@@ -303,15 +303,15 @@
       \item \code{.onDetach()} is supported as an alternative to
       \code{.Last.lib}.  Unlike \code{.Last.lib}, this does not need to
       be exported from the package's namespace.
-      
-      \item The \code{srcfile} argument to \code{parse()} may now be a 
+
+      \item The \code{srcfile} argument to \code{parse()} may now be a
       character string, to be used in error messages.
 
       \item The \code{format()} method for \code{ftable} objects gains
       a \code{method} argument, propagated to \code{write.ftable()} and
       \code{print()}, allowing more compact output, notably for LaTeX
       formatting, thanks to Marius Hofert.
-      
+
       \item The \code{utils::process.events()} function has been added
       to trigger immediate event handling.
 
@@ -322,7 +322,7 @@
       fewer trailing spaces (wish of \PR{15124}).
 
       Also output from \code{HoltWinters()}, \code{nls()} and others.
-      
+
       \item \code{loadNamespace()} allows a version specification to be
       given, and this is used to check version specifications given in
       the \samp{Imports} field when a namespace is loaded.
@@ -708,7 +708,7 @@
 
       \item Parse errors when installing files now correctly display
       the name of the file containing the bad code.
-      
+
       \item In Windows, tcltk windows were not always properly constructed.
       (\PR{15150}.)
     }
@@ -792,15 +792,15 @@
 
       \item \code{summaryRprof(memory = "both")} mixed up the units of
       Vcells and Ncells: it now works in bytes.  (\PR{15138})
-      
+
       \item \code{tools::Rd2HTML()} would sometimes delete text. (\PR{15134})
-      
+
       \item \code{plot()} failed for \code{"table"} objects containing
       just one entry.  (\PR{15118})
-      
+
       \item \code{embedFonts()} needed to quote some filepaths.
       (\PR{15149})
-      
+
       \item \code{parallel::mccollect()} handled \code{NULL} returns
       incorrectly (removing the element rather than setting it to
       \code{NULL}).
