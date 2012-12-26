@@ -185,6 +185,7 @@ loadNamespace <- function (package, lib.loc = NULL,
     ns <- .Internal(getRegisteredNamespace(as.name(package)))
     if (! is.null(ns)) {
         if(length(z <- versionCheck) == 3L) {
+            current <- getNamespaceVersion(ns)
             if(!do.call(z$op, list(current, z$version)))
                 stop(gettextf("namespace %s %s is already loaded, but %s %s is required",
                               sQuote(package), current, z$op, z$version),
