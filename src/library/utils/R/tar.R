@@ -148,7 +148,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         on.exit(setwd(od), add = TRUE)
     }
     contents <- character()
-    llink <- lname <- NULL
+    llink <- lname <- lsize <- NULL
     repeat{
         block <- readBin(con, "raw", n = 512L)
         if(!length(block)) break
@@ -159,9 +159,9 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         ns <- if(length(w)) max(w) else 0
         name <- rawToChar(block[seq_len(ns)])
         magic <- rawToChar(block[258:262])
-        if ((magic == "ustar") && block[346] > 0) {
+        if ((magic == "ustar") && block[346L] > 0) {
             ns <- max(which(block[346:500] > 0))
-            prefix <- rawToChar(block[345+seq_len(ns)])
+            prefix <- rawToChar(block[345L+seq_len(ns)])
             name <- file.path(prefix, name)
             ns <- nchar(name, "b")
         }
@@ -178,7 +178,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         checksum <- sum(xx) %% 2^24 # 6 bytes
         if(csum != checksum) {
             ## try it with signed bytes.
-            checksum <- sum(ifelse(xx > 127, xx - 128, xx)) %% 2^24 # 6 bytes
+            checksum <- sum(ifelse(xx > 127L, xx - 128L, xx)) %% 2^24 # 6 bytes
             if(csum != checksum)
                 warning(gettextf("checksum error for entry '%s'", name),
                         domain = NA)
@@ -306,7 +306,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             path <- grep("[0-9]* path=", info, useBytes = TRUE, value = TRUE)
             if(length(path)) lname <- sub("[0-9]* path=", "", path)
             linkpath <- grep("[0-9]* linkpath=", info, useBytes = TRUE, value = TRUE)
-            if(length(linkpath)) llink <- sub("[0-9]* path=", "", path)
+            if(length(linkpath)) llink <- sub("[0-9]* linkpath=", "", path)
         } else stop("unsupported entry type ", sQuote(ctype))
     }
     if(length(warn1)) {

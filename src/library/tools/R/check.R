@@ -3461,8 +3461,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
-    warn_on_namespace <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_WARN_ON_NAMESPACE_", "TRUE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -3480,7 +3478,6 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
         R_check_suggests_only <- TRUE
-        warn_on_namespace <- TRUE
         R_check_code_assign_to_globalenv <- TRUE
         R_check_code_attach <- TRUE
     } else {
@@ -3702,13 +3699,16 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
             checkingLog(Log, "if there is a namespace")
             if (file.exists(file.path(pkgdir, "NAMESPACE")))
                 resultLog(Log, "OK")
-            else {
-                if(warn_on_namespace) warningLog(Log) else noteLog(Log)
-                wrapLog("As from R 2.14.0 all packages need a namespace.\n",
-                        "One will be generated on installation,",
-                        "but it is better to handcraft a NAMESPACE file:",
-                        "R CMD build will produce a suitable starting point.\n",
-                        "CRAN requires a NAMESPACE file for all submissions.")
+            else if (dir.exists(file.path(pkgdir, "R"))) {
+                warningLog(Log)
+                wrapLog("All packages need a namespace as from R 3.0.0.\n",
+                        "R CMD build will produce a suitable starting point,",
+                        "but it is better to handcraft a NAMESPACE file.")
+            } else {
+                noteLog(Log)
+                wrapLog("Packages without R code can be instaled without",
+                        "a NAMESPACE file, but it is cleaner to add",
+                        "an empty one.")
             }
 
             ## we need to do this before installation
