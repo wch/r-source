@@ -96,6 +96,8 @@ static SEXP	UserMacroLookup(const char *);
 static SEXP	InstallKeywords();
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
+static int	xxgetc();
+static int	xxungetc(int);
 
 /* Flags used to mark need for postprocessing in the dynamicFlag attribute */
 
@@ -105,21 +107,26 @@ static SEXP     makeSrcref(YYLTYPE *, SEXP);
 
 /* Internal lexer / parser state variables */
 
-static int 	xxinRString, xxQuoteLine, xxQuoteCol;
-static int	xxinEqn;
-static int	xxNewlineInString;
-static int	xxgetc();
-static int	xxungetc(int);
-static int	xxlineno, xxbyteno, xxcolno;
-static int	xxmode, xxitemType, xxbraceDepth;  /* context for lexer */
-static int	xxDebugTokens;  /* non-zero causes debug output to R console */
-static const char* xxBasename;     /* basename of file for error messages */
-static SEXP	Value;
-static int	xxinitvalue;
 static char const yyunknown[] = "unknown macro"; /* our message, not bison's */
-static SEXP	xxMacroList;/* A hashed environment containing all the standard and user-defined macro names */
 
 
+typedef struct ParseState ParseState;
+struct ParseState {
+    int xxinRString, xxQuoteLine, xxQuoteCol;
+    int	xxinEqn;
+    int	xxNewlineInString;
+    int	xxlineno, xxbyteno, xxcolno;
+    int	xxmode, xxitemType, xxbraceDepth;  /* context for lexer */
+    int	xxDebugTokens;  /* non-zero causes debug output to R console */
+    const char* xxBasename;     /* basename of file for error messages */
+    SEXP	Value;
+    int	xxinitvalue;
+    SEXP	xxMacroList;/* A hashed environment containing all the standard and user-defined macro names */
+    ParseState *prevState;
+};
+
+static Rboolean busy = FALSE;
+static ParseState parseState;
 
 #define RLIKE 1		/* Includes R strings; xxinRString holds the opening quote char, or 0 outside a string */
 #define LATEXLIKE 2
@@ -198,7 +205,7 @@ VerbatimArg1 VerbatimArg2 IfDefTarget ArgItems Option
 
 Init:		STARTFILE RdFile END_OF_INPUT		{ xxsavevalue($2, &@$); UNPROTECT_PTR($1); return 0; }
 	|	STARTFRAGMENT RdFragment END_OF_INPUT	{ xxsavevalue($2, &@$); UNPROTECT_PTR($1); return 0; }
-	|	error					{ PROTECT(Value = R_NilValue);  YYABORT; }
+	|	error					{ PROTECT(parseState.Value = R_NilValue);  YYABORT; }
 	;
 
 RdFragment :    goLatexLike ArgItems  		{ $$ = $2; UNPROTECT_PTR($1); }
@@ -286,10 +293,10 @@ LatexArg2:	goLatexLike Arg			{ xxpopMode($1); $$ = $2; }
 	|	goLatexLike TEXT		{ xxpopMode($1); $$ = xxnewlist($2); 
      						  if(wCalls)
     	    					      warning(_("bad markup (extra space?) at %s:%d:%d"), 
-    	    					            xxBasename, @2.first_line, @2.first_column); 
+    	    					            parseState.xxBasename, @2.first_line, @2.first_column); 
      						  else
     	    					      warningcall(R_NilValue, _("bad markup (extra space?) at %s:%d:%d"), 
-    	    					            xxBasename, @2.first_line, @2.first_column); 
+    	    					            parseState.xxBasename, @2.first_line, @2.first_column); 
 						}	
 
 Item0Arg:	goItem0 Arg		 	{ xxpopMode($1); $$ = $2; }
@@ -319,7 +326,7 @@ goLatexLike:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, UNKNOWN, FALSE); }
 
 goRLike:	/* empty */			{ $$ = xxpushMode(RLIKE, UNKNOWN, FALSE); }
 
-goRLike2:	/* empty */			{ xxbraceDepth--; $$ = xxpushMode(RLIKE, UNKNOWN, FALSE); xxbraceDepth++; }
+goRLike2:	/* empty */			{ parseState.xxbraceDepth--; $$ = xxpushMode(RLIKE, UNKNOWN, FALSE); parseState.xxbraceDepth++; }
 
 goOption:	/* empty */			{ $$ = xxpushMode(INOPTION, UNKNOWN, FALSE); }
 
@@ -327,7 +334,7 @@ goVerbatim:	/* empty */			{ $$ = xxpushMode(VERBATIM, UNKNOWN, FALSE); }
 
 goVerbatim1:	/* empty */			{ $$ = xxpushMode(VERBATIM, UNKNOWN, TRUE); }
 
-goVerbatim2:    /* empty */			{ xxbraceDepth--; $$ = xxpushMode(VERBATIM, UNKNOWN, FALSE); xxbraceDepth++; }
+goVerbatim2:    /* empty */			{ parseState.xxbraceDepth--; $$ = xxpushMode(VERBATIM, UNKNOWN, FALSE); parseState.xxbraceDepth++; }
 
 goItem0:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, ESCAPE, FALSE); }
 
@@ -348,23 +355,23 @@ static SEXP xxpushMode(int newmode, int newitem, int neweqn)
     SEXP ans;
     PROTECT(ans = allocVector(INTSXP, 7));
     
-    INTEGER(ans)[0] = xxmode;		/* Lexer mode */
-    INTEGER(ans)[1] = xxitemType;	/* What is \item? */
-    INTEGER(ans)[2] = xxbraceDepth;	/* Brace depth used in RCODE and VERBATIM */
-    INTEGER(ans)[3] = xxinRString;      /* Quote char that started a string */
-    INTEGER(ans)[4] = xxQuoteLine;      /* Where the quote was */
-    INTEGER(ans)[5] = xxQuoteCol;       /*           "         */
-    INTEGER(ans)[6] = xxinEqn;          /* In the first arg to \eqn or \deqn:  no escapes */
+    INTEGER(ans)[0] = parseState.xxmode;		/* Lexer mode */
+    INTEGER(ans)[1] = parseState.xxitemType;	/* What is \item? */
+    INTEGER(ans)[2] = parseState.xxbraceDepth;	/* Brace depth used in RCODE and VERBATIM */
+    INTEGER(ans)[3] = parseState.xxinRString;      /* Quote char that started a string */
+    INTEGER(ans)[4] = parseState.xxQuoteLine;      /* Where the quote was */
+    INTEGER(ans)[5] = parseState.xxQuoteCol;       /*           "         */
+    INTEGER(ans)[6] = parseState.xxinEqn;          /* In the first arg to \eqn or \deqn:  no escapes */
     
 #if DEBUGMODE
     Rprintf("xxpushMode(%d, %s) pushes %d, %s, %d\n", newmode, yytname[YYTRANSLATE(newitem)], 
-    						xxmode, yytname[YYTRANSLATE(xxitemType)], xxbraceDepth);
+    						parseState.xxmode, yytname[YYTRANSLATE(parseState.xxitemType)], parseState.xxbraceDepth);
 #endif
-    xxmode = newmode;
-    xxitemType = newitem;
-    xxbraceDepth = 0;
-    xxinRString = 0;
-    xxinEqn = neweqn;
+    parseState.xxmode = newmode;
+    parseState.xxitemType = newitem;
+    parseState.xxbraceDepth = 0;
+    parseState.xxinRString = 0;
+    parseState.xxinEqn = neweqn;
     
     return ans;
 }
@@ -373,15 +380,15 @@ static void xxpopMode(SEXP oldmode)
 {
 #if DEBUGVALS
     Rprintf("xxpopMode(%d, %s, %d) replaces %d, %s, %d\n", INTEGER(oldmode)[0], yytname[YYTRANSLATE(INTEGER(oldmode)[1])], INTEGER(oldmode)[2], 
-    					xxmode, yytname[YYTRANSLATE(xxitemType)], xxbraceDepth);
+    					parseState.xxmode, yytname[YYTRANSLATE(parseState.xxitemType)], parseState.xxbraceDepth);
 #endif
-    xxmode = INTEGER(oldmode)[0];
-    xxitemType = INTEGER(oldmode)[1]; 
-    xxbraceDepth = INTEGER(oldmode)[2];
-    xxinRString = INTEGER(oldmode)[3];
-    xxQuoteLine = INTEGER(oldmode)[4];
-    xxQuoteCol  = INTEGER(oldmode)[5];
-    xxinEqn	= INTEGER(oldmode)[6];
+    parseState.xxmode = INTEGER(oldmode)[0];
+    parseState.xxitemType = INTEGER(oldmode)[1]; 
+    parseState.xxbraceDepth = INTEGER(oldmode)[2];
+    parseState.xxinRString = INTEGER(oldmode)[3];
+    parseState.xxQuoteLine = INTEGER(oldmode)[4];
+    parseState.xxQuoteCol  = INTEGER(oldmode)[5];
+    parseState.xxinEqn	= INTEGER(oldmode)[6];
     
     UNPROTECT_PTR(oldmode);
 }
@@ -522,7 +529,7 @@ static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
     	PROTECT(thedefn = mkString(CHAR(STRING_ELT(thedefn,0))));
     else
     	PROTECT(thedefn = mkString(""));
-    prev = findVar(install(CHAR(STRING_ELT(thename, 0))), xxMacroList);
+    prev = findVar(install(CHAR(STRING_ELT(thename, 0))), parseState.xxMacroList);
     if (prev != R_UnboundValue && !strcmp(CHAR(STRING_ELT(cmd,0)), "\renewcommand")) {
         snprintf(buffer, sizeof(buffer), _("Macro '%s' previously defined."), 
                  CHAR(STRING_ELT(thename, 0)));
@@ -540,7 +547,7 @@ static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
     setAttrib(ans, install("Rd_tag"), cmd);
     setAttrib(ans, install("definition"), thedefn);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
-    defineVar(install(CHAR(STRING_ELT(thename, 0))), ans, xxMacroList);
+    defineVar(install(CHAR(STRING_ELT(thename, 0))), ans, parseState.xxMacroList);
 
     UNPROTECT_PTR(thedefn);
     UNPROTECT_PTR(cmd);
@@ -699,11 +706,11 @@ static SEXP xxmarkup3(SEXP header, SEXP body1, SEXP body2, SEXP body3, int flag,
 static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 {
     int flag = getDynamicFlag(Rd);
-    PROTECT(Value = PairToVectorList(CDR(Rd)));
-    if (!isNull(Value)) {
-    	setAttrib(Value, R_ClassSymbol, mkString("Rd"));
-    	setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
-    	setDynamicFlag(Value, flag);
+    PROTECT(parseState.Value = PairToVectorList(CDR(Rd)));
+    if (!isNull(parseState.Value)) {
+    	setAttrib(parseState.Value, R_ClassSymbol, mkString("Rd"));
+    	setAttrib(parseState.Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    	setDynamicFlag(parseState.Value, flag);
     }
     UNPROTECT_PTR(Rd);
 }
@@ -717,14 +724,14 @@ static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 
 static void xxWarnNewline()
 {
-    if (xxNewlineInString) {
+    if (parseState.xxNewlineInString) {
 	if(wCalls)
 	    warning(_("newline within quoted string at %s:%d"), 
-		    xxBasename, xxNewlineInString);
+		    parseState.xxBasename, parseState.xxNewlineInString);
 	else
 	    warningcall(R_NilValue,
 			_("newline within quoted string at %s:%d"), 
-			xxBasename, xxNewlineInString);
+			parseState.xxBasename, parseState.xxNewlineInString);
     }
 }
 
@@ -742,7 +749,7 @@ static int (*ptr_getc)(void);
 	    int *old = pushbase;              \
             pushsize *= 2;                    \
 	    pushbase = malloc(pushsize*sizeof(int));         \
-	    if(!pushbase) error(_("unable to allocate buffer for long macro at line %d"), xxlineno);\
+	    if(!pushbase) error(_("unable to allocate buffer for long macro at line %d"), parseState.xxlineno);\
 	    memmove(pushbase, old, npush*sizeof(int));        \
 	    if(old != pushback) free(old); }	    \
 	pushbase[npush++] = (c);                        \
@@ -780,14 +787,14 @@ static int xxgetc(void)
     if (!macrolevel) {
 	oldpos = prevpos;
 	prevpos = (prevpos + 1) % PUSHBACK_BUFSIZE;
-	prevbytes[prevpos] = xxbyteno;
-	prevlines[prevpos] = xxlineno;    
+	prevbytes[prevpos] = parseState.xxbyteno;
+	prevlines[prevpos] = parseState.xxlineno;    
 	/* We only advance the column for the 1st byte in UTF-8, so handle later bytes specially */
 	if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF) {
-	    xxcolno--;   
+	    parseState.xxcolno--;   
 	    prevcols[prevpos] = prevcols[oldpos];
 	} else 
-	    prevcols[prevpos] = xxcolno;
+	    prevcols[prevpos] = parseState.xxcolno;
 
 	if (c == EOF) return R_EOF;
 
@@ -795,17 +802,17 @@ static int xxgetc(void)
 	R_ParseContext[R_ParseContextLast] = (char) c;
 
 	if (c == '\n') {
-	    xxlineno += 1;
-	    xxcolno = 1;
-	    xxbyteno = 1;
+	    parseState.xxlineno += 1;
+	    parseState.xxcolno = 1;
+	    parseState.xxbyteno = 1;
 	} else {
-	    xxcolno++;
-	    xxbyteno++;
+	    parseState.xxcolno++;
+	    parseState.xxbyteno++;
 	}
 
-	if (c == '\t') xxcolno = ((xxcolno + 6) & ~7) + 1;
+	if (c == '\t') parseState.xxcolno = ((parseState.xxcolno + 6) & ~7) + 1;
 
-	R_ParseContextLine = xxlineno;
+	R_ParseContextLine = parseState.xxlineno;
     }
     /* Rprintf("get %c\n", c); */
     return c;
@@ -816,12 +823,12 @@ static int xxungetc(int c)
     /* this assumes that c was the result of xxgetc; if not, some edits will be needed */
     if (c == END_MACRO) macrolevel++;
     if (!macrolevel) {
-    	xxlineno = prevlines[prevpos];
-    	xxbyteno = prevbytes[prevpos];
-    	xxcolno  = prevcols[prevpos];
+    	parseState.xxlineno = prevlines[prevpos];
+    	parseState.xxbyteno = prevbytes[prevpos];
+    	parseState.xxcolno  = prevcols[prevpos];
     	prevpos = (prevpos + PUSHBACK_BUFSIZE - 1) % PUSHBACK_BUFSIZE;
     
-    	R_ParseContextLine = xxlineno;
+    	R_ParseContextLine = parseState.xxlineno;
     
     	R_ParseContext[R_ParseContextLast] = '\0';
     	/* Mac OS X requires us to keep this non-negative */
@@ -899,9 +906,9 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment)
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
     
-    xxlineno = 1;
-    xxcolno = 1; 
-    xxbyteno = 1;
+    parseState.xxlineno = 1;
+    parseState.xxcolno = 1; 
+    parseState.xxbyteno = 1;
     
     SrcFile = srcfile;
     
@@ -910,31 +917,31 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment)
     pushsize = PUSHBACK_BUFSIZE;
     macrolevel = 0;
     
-    xxmode = LATEXLIKE; 
-    xxitemType = UNKNOWN;
-    xxbraceDepth = 0;
-    xxinRString = 0;
-    xxNewlineInString = 0;
-    xxinEqn = 0;
-    if (fragment) xxinitvalue = STARTFRAGMENT;
-    else	  xxinitvalue = STARTFILE;
+    parseState.xxmode = LATEXLIKE; 
+    parseState.xxitemType = UNKNOWN;
+    parseState.xxbraceDepth = 0;
+    parseState.xxinRString = 0;
+    parseState.xxNewlineInString = 0;
+    parseState.xxinEqn = 0;
+    if (fragment) parseState.xxinitvalue = STARTFRAGMENT;
+    else	  parseState.xxinitvalue = STARTFILE;
     
-    xxMacroList = InstallKeywords();
+    parseState.xxMacroList = InstallKeywords();
     
-    Value = R_NilValue;
+    parseState.Value = R_NilValue;
     
     if (yyparse()) *status = PARSE_ERROR;
     else *status = PARSE_OK;
 
 #if DEBUGVALS
-    Rprintf("ParseRd result: %p\n", Value);    
+    Rprintf("ParseRd result: %p\n", parseState.Value);    
 #endif    
-    UNPROTECT_PTR(Value);
-    UNPROTECT_PTR(xxMacroList);
+    UNPROTECT_PTR(parseState.Value);
+    UNPROTECT_PTR(parseState.xxMacroList);
     
     if (pushbase != pushback) free(pushbase);
     
-    return Value;
+    return parseState.Value;
 }
 
 #include "Rconnections.h"
@@ -1147,14 +1154,14 @@ static SEXP InstallKeywords()
     	
 static int KeywordLookup(const char *s)
 {
-    SEXP rec = findVar(install(s), xxMacroList);
+    SEXP rec = findVar(install(s), parseState.xxMacroList);
     if (rec == R_UnboundValue) return UNKNOWN;
     else return INTEGER(rec)[0];
 }
 
 static SEXP UserMacroLookup(const char *s)
 {
-    SEXP rec = findVar(install(s), xxMacroList);
+    SEXP rec = findVar(install(s), parseState.xxMacroList);
     if (rec == R_UnboundValue) error(_("Unable to find macro %s"), s);
     return getAttrib(rec, install("definition"));
 }
@@ -1287,7 +1294,7 @@ static void yyerror(const char *s)
 	    char *old = stext;              \
             nstext *= 2;                    \
 	    stext = malloc(nstext);         \
-	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), xxlineno);\
+	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno);\
 	    memmove(stext, old, nc);        \
 	    if(old != st0) free(old);	    \
 	    bp = stext+nc; }		    \
@@ -1296,9 +1303,9 @@ static void yyerror(const char *s)
 
 static void setfirstloc(void)
 {
-    yylloc.first_line = xxlineno;
-    yylloc.first_column = xxcolno;
-    yylloc.first_byte = xxbyteno;
+    yylloc.first_line = parseState.xxlineno;
+    yylloc.first_column = parseState.xxcolno;
+    yylloc.first_byte = parseState.xxbyteno;
 }
 
 static void setlastloc(void)
@@ -1314,9 +1321,9 @@ static void setlastloc(void)
 static int token(void)
 {
     int c, lookahead;
-    int outsideLiteral = xxmode == LATEXLIKE || xxmode == INOPTION || xxbraceDepth == 0;
+    int outsideLiteral = parseState.xxmode == LATEXLIKE || parseState.xxmode == INOPTION || parseState.xxbraceDepth == 0;
 
-    if (xxinitvalue) {
+    if (parseState.xxinitvalue) {
         yylloc.first_line = 0;
         yylloc.first_column = 0;
         yylloc.first_byte = 0;
@@ -1324,8 +1331,8 @@ static int token(void)
         yylloc.last_column = 0;
         yylloc.last_byte = 0;
     	PROTECT(yylval = mkString(""));
-        c = xxinitvalue;
-    	xxinitvalue = 0;
+        c = parseState.xxinitvalue;
+    	parseState.xxinitvalue = 0;
     	return(c);
     }
     
@@ -1333,46 +1340,46 @@ static int token(void)
     c = xxgetc();
 
     switch (c) {
-    	case '%': if (!xxinEqn) return mkComment(c);
+    	case '%': if (!parseState.xxinEqn) return mkComment(c);
     	    break;
 	case '\\':
-	    if (!xxinEqn) {
+	    if (!parseState.xxinEqn) {
 		lookahead = xxungetc(xxgetc());
-		if (isalpha(lookahead) && xxmode != VERBATIM 
+		if (isalpha(lookahead) && parseState.xxmode != VERBATIM 
 		    /* In R strings, only link or var is allowed as markup */
-		    && (lookahead == 'l' || lookahead == 'v' || !xxinRString)) 
+		    && (lookahead == 'l' || lookahead == 'v' || !parseState.xxinRString)) 
 		    return mkMarkup(c);
 	    }
 	    break;
         case R_EOF:
-            if (xxinRString) {
+            if (parseState.xxinRString) {
        		xxWarnNewline();
        		error(_("Unexpected end of input (in %c quoted string opened at %s:%d:%d)"), 
- 			xxinRString, xxBasename, xxQuoteLine, xxQuoteCol);
+ 			parseState.xxinRString, parseState.xxBasename, parseState.xxQuoteLine, parseState.xxQuoteCol);
     	    }
     	    return END_OF_INPUT; 
     	case '#':
-    	    if (!xxinEqn && yylloc.first_column == 1) return mkIfdef(c);
+    	    if (!parseState.xxinEqn && yylloc.first_column == 1) return mkIfdef(c);
     	    break;
     	case LBRACE:
-    	    if (!xxinRString) {
-    	    	xxbraceDepth++;
+    	    if (!parseState.xxinRString) {
+    	    	parseState.xxbraceDepth++;
     	    	if (outsideLiteral) return c;
     	    }
     	    break;
     	case RBRACE:
-    	    if (!xxinRString) {
-    	    	xxbraceDepth--;
-    	    	if (outsideLiteral || xxbraceDepth == 0) return c;
+    	    if (!parseState.xxinRString) {
+    	    	parseState.xxbraceDepth--;
+    	    	if (outsideLiteral || parseState.xxbraceDepth == 0) return c;
     	    }
     	    break;
     	case '[':
     	case ']':
-    	    if (xxmode == INOPTION ) return c; 
+    	    if (parseState.xxmode == INOPTION ) return c; 
     	    break;
     } 	    
 	
-    switch (xxmode) {
+    switch (parseState.xxmode) {
 	case RLIKE:     return mkCode(c);
 	case INOPTION:
 	case LATEXLIKE: return mkText(c);
@@ -1402,7 +1409,7 @@ static int mkText(int c)
     	    xxungetc(lookahead);
     	    if (isalpha(lookahead)) goto stop;
     	case ']':
-    	    if (xxmode == INOPTION) goto stop;
+    	    if (parseState.xxmode == INOPTION) goto stop;
             break;
     	case '%':
     	case LBRACE:
@@ -1444,8 +1451,8 @@ static int mkCode(int c)
     char *stext = st0, *bp = st0;
     
     /* Avoid double counting initial braces */
-    if (c == LBRACE && !xxinRString) xxbraceDepth--;
-    if (c == RBRACE && !xxinRString) xxbraceDepth++; 
+    if (c == LBRACE && !parseState.xxinRString) parseState.xxbraceDepth--;
+    if (c == RBRACE && !parseState.xxinRString) parseState.xxbraceDepth++; 
     
     while(1) {
 	int escaped = 0;
@@ -1457,14 +1464,14 @@ static int mkCode(int c)
     	    } else xxungetc(lookahead);
     	}
     	if ((!escaped && c == '%') || c == R_EOF) break;
-    	if (xxinRString) {
+    	if (parseState.xxinRString) {
     	    /* This stuff is messy, because there are two levels of escaping:
     	       The Rd escaping and the R code string escaping. */
     	    if (c == '\\') {
     		int lookahead = xxgetc();
     		if (lookahead == '\\') { /* This must be the 3rd backslash */
     		    lookahead = xxgetc();
-    		    if (lookahead == xxinRString || lookahead == '\\') {	
+    		    if (lookahead == parseState.xxinRString || lookahead == '\\') {	
     	    	    	TEXT_PUSH(c);
     	    	    	c = lookahead;
     	    	    	escaped = 1;
@@ -1472,7 +1479,7 @@ static int mkCode(int c)
     	    	    	xxungetc(lookahead); /* put back the 4th char */
     	    	    	xxungetc('\\');	     /* and the 3rd */
     	    	    }
-    	    	} else if (lookahead == xxinRString) { /* There could be one or two before this */
+    	    	} else if (lookahead == parseState.xxinRString) { /* There could be one or two before this */
     	    	    TEXT_PUSH(c);
     	    	    c = lookahead;
     	    	    escaped = 1;
@@ -1482,8 +1489,8 @@ static int mkCode(int c)
     	    	    break;
     	    	} else xxungetc(lookahead);
     	    }
-    	    if (!escaped && c == xxinRString)
-    	    	xxinRString = 0;
+    	    if (!escaped && c == parseState.xxinRString)
+    	    	parseState.xxinRString = 0;
     	} else {
     	    if (c == '#') {
     	    	do {
@@ -1497,15 +1504,15 @@ static int mkCode(int c)
 		            escaped = 1;
 		        } else xxungetc(lookahead);
     		    }
-    	    	    if (c == LBRACE && !escaped) xxbraceDepth++;
-    	    	    else if (c == RBRACE && !escaped) xxbraceDepth--;
-    	    	} while (c != '\n' && c != R_EOF && xxbraceDepth > 0);
-    	    	if (c == RBRACE && !escaped) xxbraceDepth++; /* avoid double counting */
+    	    	    if (c == LBRACE && !escaped) parseState.xxbraceDepth++;
+    	    	    else if (c == RBRACE && !escaped) parseState.xxbraceDepth--;
+    	    	} while (c != '\n' && c != R_EOF && parseState.xxbraceDepth > 0);
+    	    	if (c == RBRACE && !escaped) parseState.xxbraceDepth++; /* avoid double counting */
     	    }
     	    if (c == '\'' || c == '"' || c == '`') {
-    	    	xxinRString = c;
-    	    	xxQuoteLine = xxlineno;
-    	    	xxQuoteCol  = xxcolno;
+    	    	parseState.xxinRString = c;
+    	    	parseState.xxQuoteLine = parseState.xxlineno;
+    	    	parseState.xxQuoteCol  = parseState.xxcolno;
     	    } else if (c == '\\' && !escaped) {
     	    	int lookahead = xxgetc();
     	    	if (lookahead == LBRACE || lookahead == RBRACE) {
@@ -1519,16 +1526,16 @@ static int mkCode(int c)
     	    	    c = lookahead;
     	    	}
     	    } else if (c == LBRACE) {
-    	    	xxbraceDepth++;
+    	    	parseState.xxbraceDepth++;
     	    } else if (c == RBRACE) {
-    	    	if (xxbraceDepth == 1) break;
-    	    	else xxbraceDepth--;
+    	    	if (parseState.xxbraceDepth == 1) break;
+    	    	else parseState.xxbraceDepth--;
     	    } else if (c == R_EOF) break;
     	}
     	TEXT_PUSH(c);
     	if (c == '\n') {
-    	    if (xxinRString && !xxNewlineInString) 
-    	    	xxNewlineInString = xxlineno-1;
+    	    if (parseState.xxinRString && !parseState.xxNewlineInString) 
+    	    	parseState.xxNewlineInString = parseState.xxlineno-1;
     	    break;
     	}
     	c = xxgetc();
@@ -1568,7 +1575,7 @@ static int mkMarkup(int c)
             	}
             } else {
             	if (retval == NOITEM) 
-    	    	    retval = xxitemType;
+    	    	    retval = parseState.xxitemType;
     	    	break;
     	    }
         }
@@ -1604,7 +1611,7 @@ static int mkIfdef(int c)
     	bp--; bp--;
     	for (; bp > stext; bp--) 
     	    xxungetc(*bp);
-    	switch (xxmode) {
+    	switch (parseState.xxmode) {
     	case RLIKE:     
     	    retval = mkCode(*bp);
     	    break;
@@ -1629,8 +1636,8 @@ static int mkVerb(int c)
     char *stext = st0, *bp = st0;
     
     /* Avoid double counting initial braces */
-    if (c == LBRACE) xxbraceDepth--;
-    if (c == RBRACE) xxbraceDepth++;     
+    if (c == LBRACE) parseState.xxbraceDepth--;
+    if (c == RBRACE) parseState.xxbraceDepth++;     
     
     while(1) {
     	int escaped = 0;
@@ -1638,17 +1645,17 @@ static int mkVerb(int c)
             int lookahead = xxgetc();
             if (lookahead == '\\' || lookahead == '%' || lookahead == LBRACE || lookahead == RBRACE) {
 		escaped = 1;
-		if (xxinEqn) TEXT_PUSH(c);
+		if (parseState.xxinEqn) TEXT_PUSH(c);
 		c = lookahead;
 	    } else xxungetc(lookahead);
         }
         if (c == R_EOF) break;
         if (!escaped) {
-    	    if (c == '%' && !xxinEqn) break;
-	    else if (c == LBRACE) xxbraceDepth++;
+    	    if (c == '%' && !parseState.xxinEqn) break;
+	    else if (c == LBRACE) parseState.xxbraceDepth++;
     	    else if (c == RBRACE) {
-	    	if (xxbraceDepth == 1) break;
-	    	else xxbraceDepth--;
+	    	if (parseState.xxbraceDepth == 1) break;
+	    	else parseState.xxbraceDepth--;
 	    }
 	}
     	TEXT_PUSH(c);
@@ -1665,9 +1672,9 @@ static int yylex(void)
 {
     int tok = token();
     
-    if (xxDebugTokens) {
+    if (parseState.xxDebugTokens) {
         Rprintf("%d:%d: %s", yylloc.first_line, yylloc.first_column, yytname[YYTRANSLATE(tok)]);
-    	if (xxinRString) Rprintf("(in %c%c)", xxinRString, xxinRString);
+    	if (parseState.xxinRString) Rprintf("(in %c%c)", parseState.xxinRString, parseState.xxinRString);
     	if (tok > 255 && tok != END_OF_INPUT) 
     	    Rprintf(": %s", CHAR(STRING_ELT(yylval, 0)));
 	Rprintf("\n");
@@ -1680,6 +1687,65 @@ static void con_cleanup(void *data)
 {
     Rconnection con = data;
     if(con->isopen) con->close(con);
+}
+
+static void PutState(ParseState *state) {
+    state->xxinRString = parseState.xxinRString;
+    state->xxQuoteLine = parseState.xxQuoteLine;
+    state->xxQuoteCol = parseState.xxQuoteCol;
+    state->xxinEqn = parseState.xxinEqn;
+    state->xxNewlineInString = parseState.xxNewlineInString;
+    state->xxlineno = parseState.xxlineno;
+    state->xxbyteno = parseState.xxbyteno;
+    state->xxcolno = parseState.xxcolno;
+    state->xxmode = parseState.xxmode;
+    state->xxitemType = parseState.xxitemType;
+    state->xxbraceDepth = parseState.xxbraceDepth;
+    state->xxDebugTokens = parseState.xxDebugTokens;
+    state->xxBasename = parseState.xxBasename;
+    state->Value = parseState.Value;
+    state->xxinitvalue = parseState.xxinitvalue;
+    state->xxMacroList = parseState.xxMacroList;
+    state->prevState = parseState.prevState;
+}
+
+static void UseState(ParseState *state) {
+    parseState.xxinRString = state->xxinRString;
+    parseState.xxQuoteLine = state->xxQuoteLine;
+    parseState.xxQuoteCol = state->xxQuoteCol;
+    parseState.xxinEqn = state->xxinEqn;
+    parseState.xxNewlineInString = state->xxNewlineInString;
+    parseState.xxlineno = state->xxlineno;
+    parseState.xxbyteno = state->xxbyteno;
+    parseState.xxcolno = state->xxcolno;
+    parseState.xxmode = state->xxmode;
+    parseState.xxitemType = state->xxitemType;
+    parseState.xxbraceDepth = state->xxbraceDepth;
+    parseState.xxDebugTokens = state->xxDebugTokens;
+    parseState.xxBasename = state->xxBasename;
+    parseState.Value = state->Value;
+    parseState.xxinitvalue = state->xxinitvalue;
+    parseState.xxMacroList = state->xxMacroList;
+    parseState.prevState = state->prevState;
+}
+
+static void PushState() {
+    if (busy) {
+    	ParseState *prev = malloc(sizeof(ParseState));
+    	PutState(prev);
+    	parseState.prevState = prev;
+    } else 
+        parseState.prevState = NULL;  
+    busy = TRUE;
+}
+
+static void PopState() {
+    if (parseState.prevState) {
+    	ParseState *prev = parseState.prevState;
+    	UseState(prev);
+    	free(prev);
+    } else
+    	busy = FALSE;
 }
 
 /* "do_parseRd" 
@@ -1705,6 +1771,8 @@ SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_ParseError = 0;
     R_ParseErrorMsg[0] = '\0';
+    
+    PushState();
 
     ifile = asInteger(CAR(args));                       args = CDR(args);
 
@@ -1715,9 +1783,9 @@ SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     if(!isLogical(CAR(args)) || LENGTH(CAR(args)) != 1)
     	error(_("invalid '%s' value"), "verbose");
-    xxDebugTokens = asInteger(CAR(args));		args = CDR(args);
-    xxBasename = CHAR(STRING_ELT(CAR(args), 0));	args = CDR(args);
-    fragment = asLogical(CAR(args));			args = CDR(args);
+    parseState.xxDebugTokens = asInteger(CAR(args));		args = CDR(args);
+    parseState.xxBasename = CHAR(STRING_ELT(CAR(args), 0));	args = CDR(args);
+    fragment = asLogical(CAR(args));				args = CDR(args);
     wcall = asLogical(CAR(args));
     if (wcall == NA_LOGICAL)
     	error(_("invalid '%s' value"), "warningCalls");
@@ -1735,9 +1803,13 @@ SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!con->canread) error(_("cannot read from this connection"));
 	s = R_ParseRd(con, &status, source, fragment);
 	if(!wasopen) endcontext(&cntxt);
+	PopState();
 	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
-    else error(_("invalid Rd file"));
+    else {
+      PopState();
+      error(_("invalid Rd file"));
+    }
     return s;
 }
 
@@ -1759,16 +1831,20 @@ SEXP C_deparseRd(SEXP e, SEXP state)
     e = STRING_ELT(e, 0);
     
     if(!isInteger(state) || length(state) != 5) error(_("bad state"));
-    xxbraceDepth = INTEGER(state)[0];
-    xxinRString = INTEGER(state)[1];
-    xxmode = INTEGER(state)[2];
-    xxinEqn = INTEGER(state)[3];
+    
+    PushState();
+    
+    parseState.xxbraceDepth = INTEGER(state)[0];
+    parseState.xxinRString = INTEGER(state)[1];
+    parseState.xxmode = INTEGER(state)[2];
+    parseState.xxinEqn = INTEGER(state)[3];
     quoteBraces = INTEGER(state)[4];
     
-    
-    if (xxmode != LATEXLIKE && xxmode != RLIKE && xxmode != VERBATIM && xxmode != COMMENTMODE 
-     && xxmode != INOPTION  && xxmode != UNKNOWNMODE)
-    	error(_("bad text mode %d in 'deparseRd'"), xxmode);
+    if (parseState.xxmode != LATEXLIKE && parseState.xxmode != RLIKE && parseState.xxmode != VERBATIM && parseState.xxmode != COMMENTMODE 
+     && parseState.xxmode != INOPTION  && parseState.xxmode != UNKNOWNMODE) {
+        PopState();
+    	error(_("bad text mode %d in 'deparseRd'"), parseState.xxmode);
+    }
     
     for (c = CHAR(e), outlen=0; *c; c++) {
     	outlen++;
@@ -1779,40 +1855,40 @@ SEXP C_deparseRd(SEXP e, SEXP state)
     inRComment = FALSE;
     for (c = CHAR(e); *c; c++) {
     	escape = FALSE;
-    	if (xxmode != UNKNOWNMODE) {
+    	if (parseState.xxmode != UNKNOWNMODE) {
 	    switch (*c) {
 	    case '\\':
-		if (xxmode == RLIKE && xxinRString) {
+		if (parseState.xxmode == RLIKE && parseState.xxinRString) {
 		    lookahead = *(c+1);
-		    if (lookahead == '\\' || lookahead == xxinRString || lookahead == 'l') 
+		    if (lookahead == '\\' || lookahead == parseState.xxinRString || lookahead == 'l') 
 		    	escape = TRUE;
 		    break;
 		}          /* fall through to % case for non-strings... */    
 	    case '%':
-		if (xxmode != COMMENTMODE && !xxinEqn)
+		if (parseState.xxmode != COMMENTMODE && !parseState.xxinEqn)
 		    escape = TRUE;
 		break;
 	    case LBRACE:
 	    case RBRACE:
 		if (quoteBraces)
 		    escape = TRUE;
-		else if (!xxinRString && !xxinEqn && (xxmode == RLIKE || xxmode == VERBATIM)) {
-		    if (*c == LBRACE) xxbraceDepth++;
-		    else if (xxbraceDepth <= 0) escape = TRUE;
-		    else xxbraceDepth--;
+		else if (!parseState.xxinRString && !parseState.xxinEqn && (parseState.xxmode == RLIKE || parseState.xxmode == VERBATIM)) {
+		    if (*c == LBRACE) parseState.xxbraceDepth++;
+		    else if (parseState.xxbraceDepth <= 0) escape = TRUE;
+		    else parseState.xxbraceDepth--;
 		}
 		break;
 	    case '\'':
 	    case '"':
 	    case '`':
-	    	if (xxmode == RLIKE) {
-		    if (xxinRString) {
-			if (xxinRString == *c) xxinRString = 0;
-		    } else if (!inRComment) xxinRString = *c;
+	    	if (parseState.xxmode == RLIKE) {
+		    if (parseState.xxinRString) {
+			if (parseState.xxinRString == *c) parseState.xxinRString = 0;
+		    } else if (!inRComment) parseState.xxinRString = *c;
 		}
 		break;
 	    case '#':
-	    	if (xxmode == RLIKE && !xxinRString) 
+	    	if (parseState.xxmode == RLIKE && !parseState.xxinRString) 
 	    	    inRComment = TRUE;
 	    	break;
 	    case '\n':
@@ -1831,8 +1907,11 @@ SEXP C_deparseRd(SEXP e, SEXP state)
     R_chk_free(outbuf);
 
     statevals = INTEGER( VECTOR_ELT(result, 1) );
-    statevals[0] = xxbraceDepth;
-    statevals[1] = xxinRString;
+    statevals[0] = parseState.xxbraceDepth;
+    statevals[1] = parseState.xxinRString;
+    
+    PopState();
+    
     UNPROTECT(1);
     return result;
 }

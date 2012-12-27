@@ -628,6 +628,9 @@
       \code{name2col} removed (use \code{R_GE_str2col} instead).  \R
       internal colour codes are now defined using the typedef
       \code{rcolor}.
+      
+      \item The \code{REPROTECT} macro now checks that the protect index
+      is valid.
     }
   }
 
@@ -703,6 +706,11 @@
 
       \item In Windows, tcltk windows were not always properly constructed.
       (\PR{15150})
+      
+      \item The internal functions implementing \code{parse()},
+      \code{tools::parseLatex()} and \code{tools::parse_Rd()} were not
+      reentrant, leading to errors in rare circumstances such as a
+      garbage collection triggering a recursive call.      
     }
   }
 }

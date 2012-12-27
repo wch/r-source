@@ -2809,6 +2809,23 @@ void unprotect_ptr(SEXP s)
     R_PPStackTop--;
 }
 
+/* Debugging function:  is s protected? */
+
+int Rf_isProtected(SEXP s)
+{
+    int i = R_PPStackTop;
+
+    /* go look for  s  in  R_PPStack */
+    do {
+	if (i == 0)
+	    return(i);
+    } while ( R_PPStack[--i] != s );
+
+    /* OK, got it, and  i  is indexing its location */
+    return(i);    
+}
+
+
 void R_ProtectWithIndex(SEXP s, PROTECT_INDEX *pi)
 {
     protect(s);
@@ -2817,6 +2834,9 @@ void R_ProtectWithIndex(SEXP s, PROTECT_INDEX *pi)
 
 void R_Reprotect(SEXP s, PROTECT_INDEX i)
 {
+    if (i >= R_PPStackTop || i < 0) {
+      error(_("R_Reprotect: only %d protected items, can't reprotect index %d"), R_PPStackTop, i);
+    }
     R_PPStack[i] = s;
 }
 

@@ -93,22 +93,32 @@ static SEXP	GrowList(SEXP, SEXP);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
+static int	xxgetc();
+static int	xxungetc(int);
 
 /* Internal lexer / parser state variables */
 
-static int	xxgetc();
-static int	xxungetc(int);
-static int	xxlineno, xxbyteno, xxcolno;
-static int	xxDebugTokens;  /* non-zero causes debug output to R console */
-static SEXP	Value;
-static int	xxinitvalue;
+
 static char const yyunknown[] = "unknown macro"; /* our message, not bison's */
-static SEXP	xxInVerbEnv;    /* Are we currently in a verbatim environment? If
+
+typedef struct ParseState ParseState;
+struct ParseState {
+    int	xxlineno, xxbyteno, xxcolno;
+    int	xxDebugTokens;  /* non-zero causes debug output to R console */
+    SEXP	Value;
+    int	xxinitvalue;
+    SEXP	xxInVerbEnv;    /* Are we currently in a verbatim environment? If
 				   so, this is the string to end it. If not, 
 				   this is NULL */
-static SEXP	xxVerbatimList;/* A STRSXP containing all the verbatim environment names */
+    SEXP	xxVerbatimList;/* A STRSXP containing all the verbatim environment names */
 
-static SEXP     SrcFile;  /* parseLatex will *always* supply a srcfile */
+    SEXP     SrcFile;  /* parseLatex will *always* supply a srcfile */
+    
+    ParseState *prevState;
+};
+
+static Rboolean busy = FALSE;
+static ParseState parseState;
 
 /* Routines used to build the parse tree */
 
@@ -148,7 +158,7 @@ static int      mkVerbEnv();
 
 Init:		Items END_OF_INPUT		{ xxsavevalue($1, &@$); return 0; }
 	|	END_OF_INPUT			{ xxsavevalue(NULL, &@$); return 0; }
-	|	error				{ PROTECT(Value = R_NilValue);  YYABORT; }
+	|	error				{ PROTECT(parseState.Value = R_NilValue);  YYABORT; }
 	;
 
 Items:		Item				{ $$ = xxnewlist($1); }
@@ -224,7 +234,7 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
     	UNPROTECT_PTR(body);	
     }
     /* FIXME:  check that begin and end match */
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     setAttrib(ans, install("latex_tag"), mkString("ENVIRONMENT"));
     if (!isNull(end)) 
     	UNPROTECT_PTR(end);
@@ -242,7 +252,7 @@ static SEXP xxmath(SEXP body, YYLTYPE *lloc)
 #endif
     PROTECT(ans = PairToVectorList(CDR(body)));
     UNPROTECT_PTR(body);
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     setAttrib(ans, install("latex_tag"), mkString("MATH"));
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -262,7 +272,7 @@ static SEXP xxblock(SEXP body, YYLTYPE *lloc)
 	PROTECT(ans = PairToVectorList(CDR(body)));
     	UNPROTECT_PTR(body);	
     }
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     setAttrib(ans, install("latex_tag"), mkString("BLOCK"));
 
 #if DEBUGVALS
@@ -274,8 +284,8 @@ static SEXP xxblock(SEXP body, YYLTYPE *lloc)
 static int VerbatimLookup(const char *s)
 {
     int i;
-    for (i = 0; i < length(xxVerbatimList); i++) {
-    	if (strcmp(s, CHAR(STRING_ELT(xxVerbatimList, i))) == 0)
+    for (i = 0; i < length(parseState.xxVerbatimList); i++) {
+    	if (strcmp(s, CHAR(STRING_ELT(parseState.xxVerbatimList, i))) == 0)
     	    return TRUE;
     }
     return FALSE;
@@ -286,30 +296,30 @@ static void xxSetInVerbEnv(SEXP envname)
     char buffer[256];
     if (VerbatimLookup(CHAR(STRING_ELT(envname, 0)))) {
     	snprintf(buffer, sizeof(buffer), "\\end{%s}", CHAR(STRING_ELT(envname, 0)));
-    	PROTECT(xxInVerbEnv = ScalarString(mkChar(buffer)));
-    } else xxInVerbEnv = NULL;
+    	PROTECT(parseState.xxInVerbEnv = ScalarString(mkChar(buffer)));
+    } else parseState.xxInVerbEnv = NULL;
 }
 
 static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 {
     if (items) {
-    	PROTECT(Value = PairToVectorList(CDR(items)));
+    	PROTECT(parseState.Value = PairToVectorList(CDR(items)));
     	UNPROTECT_PTR(items);
     } else {
-    	PROTECT(Value = allocVector(VECSXP, 1));
-    	SET_VECTOR_ELT(Value, 0, ScalarString(mkChar("")));
-    	setAttrib(VECTOR_ELT(Value, 0), install("latex_tag"), mkString("TEXT"));
+    	PROTECT(parseState.Value = allocVector(VECSXP, 1));
+    	SET_VECTOR_ELT(parseState.Value, 0, ScalarString(mkChar("")));
+    	setAttrib(VECTOR_ELT(parseState.Value, 0), install("latex_tag"), mkString("TEXT"));
     }	
-    if (!isNull(Value)) {
-    	setAttrib(Value, R_ClassSymbol, mkString("LaTeX"));
-    	setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    if (!isNull(parseState.Value)) {
+    	setAttrib(parseState.Value, R_ClassSymbol, mkString("LaTeX"));
+    	setAttrib(parseState.Value, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     }
 }
 
 static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
     setAttrib(item, install("latex_tag"), mkString(yytname[YYTRANSLATE(type)]));
-    setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     return item;
 }
 
@@ -339,14 +349,14 @@ static int xxgetc(void)
 
     oldpos = prevpos;
     prevpos = (prevpos + 1) % PUSHBACK_BUFSIZE;
-    prevbytes[prevpos] = xxbyteno;
-    prevlines[prevpos] = xxlineno;    
+    prevbytes[prevpos] = parseState.xxbyteno;
+    prevlines[prevpos] = parseState.xxlineno;    
     /* We only advance the column for the 1st byte in UTF-8, so handle later bytes specially */
     if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF) {
-    	xxcolno--;   
+    	parseState.xxcolno--;   
     	prevcols[prevpos] = prevcols[oldpos];
     } else 
-    	prevcols[prevpos] = xxcolno;
+    	prevcols[prevpos] = parseState.xxcolno;
     
     if (c == EOF) return R_EOF;
     
@@ -354,17 +364,17 @@ static int xxgetc(void)
     R_ParseContext[R_ParseContextLast] = (char) c;
     
     if (c == '\n') {
-    	xxlineno += 1;
-    	xxcolno = 1;
-    	xxbyteno = 1;
+    	parseState.xxlineno += 1;
+    	parseState.xxcolno = 1;
+    	parseState.xxbyteno = 1;
     } else {
-        xxcolno++;
-    	xxbyteno++;
+        parseState.xxcolno++;
+    	parseState.xxbyteno++;
     }
 
-    if (c == '\t') xxcolno = ((xxcolno + 6) & ~7) + 1;
+    if (c == '\t') parseState.xxcolno = ((parseState.xxcolno + 6) & ~7) + 1;
     
-    R_ParseContextLine = xxlineno;
+    R_ParseContextLine = parseState.xxlineno;
     
     return c;
 }
@@ -372,12 +382,12 @@ static int xxgetc(void)
 static int xxungetc(int c)
 {
     /* this assumes that c was the result of xxgetc; if not, some edits will be needed */
-    xxlineno = prevlines[prevpos];
-    xxbyteno = prevbytes[prevpos];
-    xxcolno  = prevcols[prevpos];
+    parseState.xxlineno = prevlines[prevpos];
+    parseState.xxbyteno = prevbytes[prevpos];
+    parseState.xxcolno  = prevcols[prevpos];
     prevpos = (prevpos + PUSHBACK_BUFSIZE - 1) % PUSHBACK_BUFSIZE;
     
-    R_ParseContextLine = xxlineno;
+    R_ParseContextLine = parseState.xxlineno;
     
     R_ParseContext[R_ParseContextLast] = '\0';
     /* Mac OS X requires us to keep this non-negative */
@@ -448,30 +458,57 @@ static SEXP GrowList(SEXP l, SEXP s)
 
 /*--------------------------------------------------------------------------*/
 
+static void PutState(ParseState *state) {
+    state->xxlineno = parseState.xxlineno;
+    state->xxbyteno = parseState.xxbyteno;
+    state->xxcolno = parseState.xxcolno;
+    state->xxDebugTokens = parseState.xxDebugTokens;
+    state->Value = parseState.Value;
+    state->xxinitvalue = parseState.xxinitvalue;
+    state->xxInVerbEnv = parseState.xxInVerbEnv;
+    state->xxVerbatimList = parseState.xxVerbatimList;
+    state->SrcFile = parseState.SrcFile; 
+    state->prevState = parseState.prevState;
+}
+
+static void UseState(ParseState *state) {
+    parseState.xxlineno = state->xxlineno;
+    parseState.xxbyteno = state->xxbyteno;
+    parseState.xxcolno = state->xxcolno;
+    parseState.xxDebugTokens = state->xxDebugTokens;
+    parseState.Value = state->Value;
+    parseState.xxinitvalue = state->xxinitvalue;
+    parseState.xxInVerbEnv = state->xxInVerbEnv;
+    parseState.xxVerbatimList = state->xxVerbatimList;
+    parseState.SrcFile = state->SrcFile; 
+    parseState.prevState = state->prevState;
+}
+
 static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 {
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
-    xxInVerbEnv = NULL;
+    	
+    parseState.xxInVerbEnv = NULL;
     
-    xxlineno = 1;
-    xxcolno = 1; 
-    xxbyteno = 1;
+    parseState.xxlineno = 1;
+    parseState.xxcolno = 1; 
+    parseState.xxbyteno = 1;
     
-    SrcFile = srcfile;
+    parseState.SrcFile = srcfile;
     
     npush = 0;
     
-    Value = R_NilValue;
+    parseState.Value = R_NilValue;
     
     if (yyparse()) *status = PARSE_ERROR;
     else *status = PARSE_OK;
 
 #if DEBUGVALS
-    Rprintf("ParseRd result: %p\n", Value);    
+    Rprintf("ParseRd result: %p\n", parseState.Value);    
 #endif    
-    UNPROTECT_PTR(Value);
-    return Value;
+    UNPROTECT_PTR(parseState.Value);
+    return parseState.Value;
 }
 
 static const char * nextchar_parse;
@@ -614,7 +651,7 @@ static void yyerror(const char *s)
     } else {
     	sprintf(ParseErrorMsg, "%s", s);
     }
-    filename = findVar(install("filename"), SrcFile);
+    filename = findVar(install("filename"), parseState.SrcFile);
     if (isString(filename) && length(filename))
     	strncpy(ParseErrorFilename, CHAR(STRING_ELT(filename, 0)), PARSE_ERROR_SIZE - 1);
     else
@@ -633,7 +670,7 @@ static void yyerror(const char *s)
 	    char *old = stext;              \
             nstext *= 2;                    \
 	    stext = malloc(nstext);         \
-	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), xxlineno);\
+	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno);\
 	    memmove(stext, old, nc);        \
 	    if(old != st0) free(old);	    \
 	    bp = stext+nc; }		    \
@@ -642,9 +679,9 @@ static void yyerror(const char *s)
 
 static void setfirstloc(void)
 {
-    yylloc.first_line = xxlineno;
-    yylloc.first_column = xxcolno;
-    yylloc.first_byte = xxbyteno;
+    yylloc.first_line = parseState.xxlineno;
+    yylloc.first_column = parseState.xxcolno;
+    yylloc.first_byte = parseState.xxbyteno;
 }
 
 static void setlastloc(void)
@@ -661,7 +698,7 @@ static int token(void)
 {
     int c;
 
-    if (xxinitvalue) {
+    if (parseState.xxinitvalue) {
         yylloc.first_line = 0;
         yylloc.first_column = 0;
         yylloc.first_byte = 0;
@@ -669,14 +706,14 @@ static int token(void)
         yylloc.last_column = 0;
         yylloc.last_byte = 0;
     	PROTECT(yylval = mkString(""));
-        c = xxinitvalue;
-    	xxinitvalue = 0;
+        c = parseState.xxinitvalue;
+    	parseState.xxinitvalue = 0;
     	return(c);
     }
     
     setfirstloc();    
     
-    if (xxInVerbEnv)
+    if (parseState.xxInVerbEnv)
     	return mkVerbEnv();    
     	
     c = xxgetc();
@@ -792,18 +829,18 @@ static int mkVerbEnv()
     int matched = 0, i;
     int c;
     
-    while ((c = xxgetc()) != R_EOF && CHAR(STRING_ELT(xxInVerbEnv, 0))[matched]) {
+    while ((c = xxgetc()) != R_EOF && CHAR(STRING_ELT(parseState.xxInVerbEnv, 0))[matched]) {
     	TEXT_PUSH(c);
-    	if (c == CHAR(STRING_ELT(xxInVerbEnv, 0))[matched])
+    	if (c == CHAR(STRING_ELT(parseState.xxInVerbEnv, 0))[matched])
     	    matched++;
     	else
     	    matched = 0;
     }
-    if ( !CHAR(STRING_ELT(xxInVerbEnv, 0))[matched] ) {
+    if ( !CHAR(STRING_ELT(parseState.xxInVerbEnv, 0))[matched] ) {
     	for (i = matched-1; i >= 0; i--) 
     	    xxungetc(*(--bp));    	    
-    	UNPROTECT_PTR(xxInVerbEnv);
-    	xxInVerbEnv = NULL;
+    	UNPROTECT_PTR(parseState.xxInVerbEnv);
+    	parseState.xxInVerbEnv = NULL;
     }
     	    
     PROTECT(yylval = mkString2(stext, bp - stext));
@@ -815,7 +852,7 @@ static int yylex(void)
 {
     int tok = token();
     
-    if (xxDebugTokens) {
+    if (parseState.xxDebugTokens) {
         Rprintf("%d:%d: %s", yylloc.first_line, yylloc.first_column, yytname[YYTRANSLATE(tok)]);
     	if (tok > 255 && tok != END_OF_INPUT) 
     	    Rprintf(": %s", CHAR(STRING_ELT(yylval, 0)));
@@ -823,6 +860,25 @@ static int yylex(void)
     }
     setlastloc();
     return tok;
+}
+
+static void PushState() {
+    if (busy) {
+    	ParseState *prev = malloc(sizeof(ParseState));
+    	PutState(prev);
+    	parseState.prevState = prev;
+    } else 
+        parseState.prevState = NULL;  
+    busy = TRUE;
+}
+
+static void PopState() {
+    if (parseState.prevState) {
+    	ParseState *prev = parseState.prevState;
+    	UseState(prev);
+    	free(prev);
+    } else
+    	busy = FALSE;
 }
 
 /* "do_parseLatex" 
@@ -844,16 +900,21 @@ SEXP C_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_ParseError = 0;
     R_ParseErrorMsg[0] = '\0';
+    
+    PushState();
 
     text = CAR(args);		                        args = CDR(args);
 
     source = CAR(args);					args = CDR(args);
     if(!isLogical(CAR(args)) || LENGTH(CAR(args)) != 1)
     	error(_("invalid '%s' value"), "verbose");
-    xxDebugTokens = asInteger(CAR(args));		args = CDR(args);
-    xxVerbatimList = CAR(args); 			args = CDR(args);
+    parseState.xxDebugTokens = asInteger(CAR(args));	args = CDR(args);
+    parseState.xxVerbatimList = CAR(args); 		args = CDR(args);
 
     s = R_ParseLatex(text, &status, source);
+    
+    PopState();
+    	
     if (status != PARSE_OK) parseError(call, R_ParseError);
     return s;
 }

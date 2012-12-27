@@ -107,10 +107,11 @@ static void R_ReplFile(FILE *fp, SEXP rho)
 		PrintWarnings();
 	    break;
 	case PARSE_ERROR:
+	    R_FinalizeSrcRefState();
 	    parseError(R_NilValue, R_ParseError);
 	    break;
 	case PARSE_EOF:
-	    R_FinalizeSrcRefState(&ParseState);
+	    R_FinalizeSrcRefState();
 	    return;
 	    break;
 	case PARSE_INCOMPLETE:
