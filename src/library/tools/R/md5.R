@@ -55,7 +55,7 @@ checkMD5sums <- function(package, dir)
     if(any(not.here)) {
         res <- FALSE
         if (sum(not.here) > 1L)
-            cat("files", sQuote(paste(nmxx[not.here]), collapse = ", "),
+            cat("files", paste(sQuote(nmxx[not.here]), collapse = ", "),
                 "are missing\n", sep = " ")
         else
             cat("file", sQuote(nmxx[not.here]), "is missing\n", sep = " ")
