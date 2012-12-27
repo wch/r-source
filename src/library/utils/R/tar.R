@@ -42,7 +42,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                "gzip" = "z", "bzip2" = "j", "xz" = "J")
     } else if (is.logical(compressed)) {
         if (is.na(compressed)) {
-            magic <- readBin(tarfile, "raw", n = 3)
+            magic <- readBin(tarfile, "raw", n = 3L)
             if(all(magic[1:2] == c(0x1f, 0x8b))) cflag <- "z"
             else if(all(magic[1:2] == c(0x1f, 0x9d))) cflag <- "z" # compress
             else if(rawToChar(magic[1:3]) == "BZh") cflag <- "j"
@@ -54,6 +54,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (!gzOK ) {
         ## version info may be sent to stdout or stderr
         tf <- tempfile()
+        ## TAR might be a command+flags, so don't quote it
         cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
         system(paste(TAR, "--version >", tf, "2>&1"))
         if (file.exists(tf)) {
@@ -161,9 +162,9 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         ns <- if(length(w)) max(w) else 0
         name <- rawToChar(block[seq_len(ns)])
         magic <- rawToChar(block[258:262])
-        if ((magic == "ustar") && block[346] > 0) {
+        if ((magic == "ustar") && block[346L] > 0) {
             ns <- max(which(block[346:500] > 0))
-            prefix <- rawToChar(block[345+seq_len(ns)])
+            prefix <- rawToChar(block[345L+seq_len(ns)])
             name <- file.path(prefix, name)
             ns <- nchar(name, "b")
         }
@@ -180,7 +181,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         checksum <- sum(xx) %% 2^24 # 6 bytes
         if(csum != checksum) {
             ## try it with signed bytes.
-            checksum <- sum(ifelse(xx > 127, xx - 128, xx)) %% 2^24 # 6 bytes
+            checksum <- sum(ifelse(xx > 127L, xx - 128L, xx)) %% 2^24 # 6 bytes
             if(csum != checksum)
                 warning(gettextf("checksum error for entry '%s'", name),
                         domain = NA)
@@ -260,6 +261,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             ## 6 is a fifo
         } else if(ctype %in% c("L", "K")) {
             ## These are GNU extensions that are widely supported
+            ## They use one or more blocks to store the name of
+            ## a file or link or of a link target.
             name_size <- 512L * ceiling(size/512L)
             block <- readBin(con, "raw", n = name_size)
             if(length(block) < name_size)
@@ -305,6 +308,7 @@ tar <- function(tarfile, files = NULL,
                 if (grepl("darwin8", R.version$os)) # 10.4, Tiger
                     tar <- paste("COPY_EXTENDED_ATTRIBUTES_DISABLE=1", tar)
             }
+            ## 'tar' might be a command + flags, so don't quote it
             cmd <- paste(tar, extra_flags, flags, shQuote(tarfile),
                          paste(shQuote(files), collapse=" "))
             return(invisible(system(cmd)))
@@ -341,7 +345,7 @@ tar <- function(tarfile, files = NULL,
                 stop("file path is too long")
             warning("storing paths of more than 100 bytes is not portable:\n  ",
                     sQuote(f), domain = NA)
-            prefix <- name[1:(s-1)]
+            prefix <- name[1:(s-1L)]
             name <- name[-(1:s)]
             message("name ", rawToChar(name))
             message("prefix ", rawToChar(prefix))
@@ -356,8 +360,6 @@ tar <- function(tarfile, files = NULL,
         gid <- info$gid
         if(!is.null(gid) && !is.na(gid))
             header[117:123] <- charToRaw(sprintf("%07o", gid))
-        ## size is 0 for directories and it seems for links.
-        size <- ifelse(info$isdir, 0, info$size)
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
         if (info$isdir) header[157L] <- charToRaw("5")
         else {
@@ -371,6 +373,9 @@ tar <- function(tarfile, files = NULL,
                 size <- 0
             }
         }
+        ## size is 0 for directories and it seems for links.
+        size <- ifelse(info$isdir, 0, info$size)
+        if(size >= 8^11) stop("file size is limited to 8GB")
         header[125:135] <- charToRaw(sprintf("%011o", as.integer(size)))
         ## the next two are what POSIX says, not what GNU tar does.
         header[258:262] <- charToRaw("ustar")
