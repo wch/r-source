@@ -119,7 +119,7 @@ plot.table <-
 	if(is.null(xlab)) xlab <- ""
 	if(is.null(ylab)) ylab <- xnam
         is.num <- suppressWarnings(!any(is.na(xx <- as.numeric(nx))))
-	x0 <- if(is.num) xx else seq.int(x)
+	x0 <- if(is.num) xx else seq_along(x)
 	plot(x0, unclass(x), type = type,
 	     ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
 	     lwd = lwd, ..., xaxt = "n")
