@@ -321,11 +321,15 @@
       \item The \code{print()} method for class \code{"htest"} gives
       fewer trailing spaces (wish of \PR{15124}).
 
-      Also output from \code{HoltWinters()}, \code{nls()} and others.
+      Also print output from \code{HoltWinters()}, \code{nls()} and others.
 
       \item \code{loadNamespace()} allows a version specification to be
       given, and this is used to check version specifications given in
       the \samp{Imports} field when a namespace is loaded.
+      
+      \item \code{untar(tar = "internal")} has some support for
+      \code{pax} headers as produced by e.g. \command{gnutar --posix}
+      or \command{bsdtar --format pax}, including long path and link names.
     }
   }
 
@@ -337,7 +341,8 @@
       (Elements of character vectors remain limited to
       \eqn{2^{31}-1}{2^31 - 1} bytes.)
 
-      Not all aspects of such vectors are complete (or completely tested).
+      Not all aspects of such vectors are completely implemented (nor
+      completely tested).
 
       \item Most operations which can sensibly be done with long vectors
       now work: others may return the error \sQuote{long vectors not

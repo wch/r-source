@@ -104,7 +104,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     }
 }
 
-untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
+untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
+                   keepAll = FALSE)
 {
     getOct <- function(x, offset, len)
     {
@@ -184,6 +185,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         }
         type <- block[157L]
         ctype <- rawToChar(type)
+#        message(sprintf("%s: '%s'", ctype, name))
         if(type %in% c(0L, 7L) || ctype == "0") {
             ## regular or high-performance file
             if(!is.null(lname)) {name <- lname; lname <- NULL}
@@ -272,10 +274,39 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 lname <- rawToChar(block[seq_len(ns)])
             else
                 llink <- rawToChar(block[seq_len(ns)])
-        } else if(ctype %in% c("x", "g") && grepl("^PaxHeader", name)) {
+        } else if(keepAll) {
+            ## treat like an ordinary file
+            contents <- c(contents, name)
+            remain <- size
+            dothis <- !list
+            if(dothis && length(files)) dothis <- name %in% files
+            if(dothis) {
+                mydir.create(dirname(name))
+                out <- file(name, "wb")
+            }
+            for(i in seq_len(ceiling(size/512L))) {
+                block <- readBin(con, "raw", n = 512L)
+                if(length(block) < 512L)
+                    stop("incomplete block on file")
+                if (dothis) {
+                    writeBin(block[seq_len(min(512L, remain))], out)
+                    remain <- remain - 512L
+                }
+            }
+            if(dothis) {
+                close(out)
+                Sys.chmod(name, mode, FALSE) # override umask
+                Sys.setFileTime(name, ft)
+            }
+         } else if(ctype %in% c("x", "g")) { # && grepl("PaxHeader", name)) {
             ## pax headers misused by bsdtar.
-            warn1 <- c(warn1, "skipping pax headers")
-            readBin(con, "raw", n = 512L*ceiling(size/512L))
+            warn1 <- c(warn1, "using pax headers")
+            info <- readBin(con, "raw", n = 512L*ceiling(size/512L))
+            info <- strsplit(rawToChar(info), "\n", fixed = TRUE)[[1]]
+            path <- grep("[0-9]* path=", info, useBytes = TRUE, value = TRUE)
+            if(length(path)) lname <- sub("[0-9]* path=", "", path)
+            linkpath <- grep("[0-9]* linkpath=", info, useBytes = TRUE, value = TRUE)
+            if(length(linkpath)) llink <- sub("[0-9]* path=", "", path)
         } else stop("unsupported entry type ", sQuote(ctype))
     }
     if(length(warn1)) {
