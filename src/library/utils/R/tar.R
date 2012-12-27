@@ -186,7 +186,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         }
         type <- block[157L]
         ctype <- rawToChar(type)
-##        message(sprintf("%s: '%s'", ctype, name))
+#        message(sprintf("%s, %d: '%s'", ctype, size, name))
         if(type %in% c(0L, 7L) || ctype == "0") {
             ## regular or high-performance file
             if(!is.null(lname)) {name <- lname; lname <- NULL}
@@ -222,6 +222,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             if(!is.null(llink)) {name2 <- llink; llink <- NULL}
             if(!list) {
                 if(ctype == "1") {
+                    mydir.create(dirname(name))
+                    unlink(name)
                     if (!file.link(name2, name)) { # will give a warning
                         ## link failed, so try a file copy
                         if(file.copy(name2, name))
@@ -232,6 +234,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                 } else {
                     if(.Platform$OS.type == "windows") {
                         ## this will not work for links to dirs
+                        mydir.create(dirname(name))
                         from <- file.path(dirname(name), name2)
                         if (!file.copy(from, name))
                             warning(gettextf("failed to copy %s to %s", sQuote(from), sQuote(name)), domain = NA)

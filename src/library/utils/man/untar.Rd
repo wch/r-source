@@ -85,7 +85,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   as some \command{tar} implementations do.  It will create the parent
   directories for directories or files in the archive if necessary.  It
   handles the standard (USTAR/POSIX), GNU and \command{pax} ways of
-  handling file paths of more than 100 bytes.
+  handling file paths of more than 100 bytes, and the GNU way of
+  handling link targets of more than 100 bytes.
 
   You may see warnings from the internal implementation such
   as \preformatted{    unsupported entry type 'x'}

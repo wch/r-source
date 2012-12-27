@@ -82,11 +82,13 @@ tar(tarfile, files = NULL,
   \itemize{
     \item The handling of file paths of more than 100 bytes.  These were
     unsupported in early versions of \command{tar}, and supported in one
-    way by POSIX \command{tar} and in another by GNU \command{tar}.  The
-    internal implementation uses the \sQuote{ustar} way from the 1998
-    POSIX standard which supports up to 256 bytes (depending on the
-    path: in particular the final component is limited to 100 bytes),
-    and warns on paths of more than 100 bytes.
+    way by POSIX \command{tar} and in another by GNU \command{tar} and
+    yet another by the POSIX \command{pax} command which
+    recent\command{tar} programs often support.  The internal
+    implementation uses the \sQuote{ustar} way from the 1998 POSIX
+    standard which supports up to 256 bytes (depending on the path: in
+    particular the final component is limited to 100 bytes), and warns
+    on paths of more than 100 bytes.
 
     Most formats do not record the encoding of file paths.
 
@@ -101,14 +103,17 @@ tar(tarfile, files = NULL,
     used.
 
     Names of links in the \sQuote{ustar} format are restricted to 100
-    bytes.
+    bytes.  There is an GNU extension for arbitrarily long link names,
+    but \command{bsdtar} does not read.  As from \R 3.0,0 the internal
+    method uses the GNU extension, with a warning.
 
     \item Header fields, in particular the padding to be used when
     fields are not full or not used.  POSIX did define the correct
     behaviour but commonly used implementations did (and still do)
     not comply.
 
-    \item File sizes.  The \sQuote{ustar} format is restricted to 8GB.
+    \item File sizes.  The \sQuote{ustar} format is restricted to 8GB
+    per (uncompressed) file.
   }
   For portability, avoid file paths of more than 100 bytes and all links
   (especially hard links and symbolic links to directories).
