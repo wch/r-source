@@ -186,7 +186,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         }
         type <- block[157L]
         ctype <- rawToChar(type)
-#        message(sprintf("%s: '%s'", ctype, name))
+##        message(sprintf("%s: '%s'", ctype, name))
         if(type %in% c(0L, 7L) || ctype == "0") {
             ## regular or high-performance file
             if(!is.null(lname)) {name <- lname; lname <- NULL}
@@ -238,14 +238,18 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                         else
                             warn1 <- c(warn1, "restoring symbolic link as a file copy")
                    } else {
-                       if(!file.symlink(name2, name)) { # will give a warning
+                       mydir.create(dirname(name))
+                       od <- setwd(dirname(name))
+                       nm <- basename(name)
+                       unlink(nm)
+                       if(!file.symlink(name2, nm)) { # will give a warning
                         ## so try a file copy: will not work for links to dirs
-                        from <- file.path(dirname(name), name2)
-                        if (file.copy(from, name))
+                        if (file.copy(name2, nm))
                             warn1 <- c(warn1, "restoring symbolic link as a file copy")
                            else
                                warning(gettextf("failed to copy %s to %s", sQuote(from), sQuote(name)), domain = NA)
                        }
+                       setwd(od)
                    }
                 }
             }
@@ -300,20 +304,34 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                 Sys.chmod(name, mode, FALSE) # override umask
                 Sys.setFileTime(name, ft)
             }
-         } else if(ctype == "x") { # && grepl("PaxHeader", name)) {
+        } else if(ctype == "x") {
             ## pax headers misused by bsdtar.
-            warn1 <- c(warn1, "using pax headers")
+            isUTF8 <- FALSE
+            warn1 <- c(warn1, "using pax extended headers")
             info <- readBin(con, "raw", n = 512L*ceiling(size/512L))
             info <- strsplit(rawToChar(info), "\n", fixed = TRUE)[[1]]
+            hcs <- grep("[0-9]* hdrcharset=", info, useBytes = TRUE,
+                        value = TRUE)
+            if(length(hcs)) {
+                hcs <- sub("[0-9]* hdrcharset=", hcs, useBytes = TRUE)
+                isUTF8 <- identical(hcs, "ISO-IR 10646 2000 UTF-8")
+            }
             path <- grep("[0-9]* path=", info, useBytes = TRUE, value = TRUE)
-            if(length(path)) lname <- sub("[0-9]* path=", "", path)
-            linkpath <- grep("[0-9]* linkpath=", info, useBytes = TRUE, value = TRUE)
-            if(length(linkpath)) llink <- sub("[0-9]* linkpath=", "", linkpath)
+            if(length(path)) {
+                lname <- sub("[0-9]* path=", "", path, useBytes = TRUE)
+                if(isUTF8) Encoding(lname) <- "UTF-8"
+            }
+            linkpath <- grep("[0-9]* linkpath=", info, useBytes = TRUE,
+                             value = TRUE)
+            if(length(linkpath)) {
+                llink <- sub("[0-9]* linkpath=", "", linkpath, useBytes = TRUE)
+                if(isUTF8) Encoding(llink) <- "UTF-8"
+            }
             size <- grep("[0-9]* size=", info, useBytes = TRUE, value = TRUE)
             if(length(size))
                 lsize <- as.integer(sub("[0-9]* size=", "", size))
          } else if(ctype == "g") {
-            warn1 <- c(warn1, "skipping pax global headers")
+            warn1 <- c(warn1, "skipping pax global extended headers")
             readBin(con, "raw", n = 512L*ceiling(size/512L))
         } else stop("unsupported entry type ", sQuote(ctype))
     }
@@ -361,6 +379,25 @@ tar <- function(tarfile, files = NULL,
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")
 
+    GNUname <- function(name, link = FALSE)
+    {
+        header <- raw(512L)
+        n1 <- charToRaw("ExtendedName")
+        header[seq_along(n1)] <- n1
+        header[157L] <- charToRaw(ifelse(link, "K", "L"))
+        size <- length(name)
+        header[125:135] <- charToRaw(sprintf("%011o", as.integer(size)))
+        header[149:156] <- charToRaw(" ")
+        checksum <- sum(as.integer(header)) %% 2^24 # 6 bytes
+        header[149:154] <- charToRaw(sprintf("%06o", as.integer(checksum)))
+        header[155L] <- as.raw(0L)
+        writeBin(header, con)
+        writeBin(name, con)
+        ssize <- 512L * ceiling(size/512L)
+        if(ssize > size) writeBin(raw(ssize - size), con)
+    }
+    warn1 <- character()
+
     files <- list.files(files, recursive = TRUE, all.files = TRUE,
                         full.names = TRUE, include.dirs = TRUE)
 
@@ -374,7 +411,13 @@ tar <- function(tarfile, files = NULL,
         ## add trailing / to dirs.
         if(info$isdir && !grepl("/$", f)) f <- paste0(f, "/")
         name <- charToRaw(f)
+##         if(length(name) > 100L) {
+##             GNUname(name)
+##             name <- charToRaw("dummy")
+##             warn1 <- c(warn1, "using GNU extension for long pathname")
+##         }
         if(length(name) > 100L) {
+            ## we could use the GNU or pax extension ...
             ## best possible case: 155+/+100
             if(length(name) > 256L) stop("file path is too long")
             ## do not want to split on terminal /
@@ -386,8 +429,6 @@ tar <- function(tarfile, files = NULL,
                     sQuote(f), domain = NA)
             prefix <- name[1:(s-1L)]
             name <- name[-(1:s)]
-            message("name ", rawToChar(name))
-            message("prefix ", rawToChar(prefix))
             header[345L+seq_along(prefix)] <- prefix
         }
         header[seq_along(name)] <- name
@@ -406,15 +447,19 @@ tar <- function(tarfile, files = NULL,
             if(is.na(lnk)) lnk <- ""
             header[157L] <- charToRaw(ifelse(nzchar(lnk), "2", "0"))
             if(nzchar(lnk)) {
-                ## we could use the GNU extension ...
-                if(length(lnk) > 100L) stop("linked path is too long")
+                if(nchar(lnk, "b") > 100L) {
+                    ##  stop("linked path is too long")
+                    GNUname(charToRaw(lnk), TRUE)
+                    warn1 <- c(warn1, "using GNU extension for long linkname")
+                    lnk <- "dummy"
+                }
                 header[157L + seq_len(nchar(lnk))] <- charToRaw(lnk)
                 size <- 0
             }
         }
         ## size is 0 for directories and it seems for links.
         size <- ifelse(info$isdir, 0, info$size)
-        if(size > 8^11) stop("file size is limited to 8GB")
+        if(size >= 8^11) stop("file size is limited to 8GB")
         header[125:135] <- charToRaw(sprintf("%011o", as.integer(size)))
         ## the next two are what POSIX says, not what GNU tar does.
         header[258:262] <- charToRaw("ustar")
@@ -448,5 +493,9 @@ tar <- function(tarfile, files = NULL,
     block <- raw(512L)
     writeBin(block, con)
     writeBin(block, con)
+    if(length(warn1)) {
+        warn1 <- unique(warn1)
+        for (w in warn1) warning(w, domain = NA)
+    }
     invisible(0L)
 }

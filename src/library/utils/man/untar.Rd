@@ -93,7 +93,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   allowed as extensions, but other types are reserved.  The only thing
   you can do with such an archive is to find a \code{tar} program that
   handles it, and look carefully at the resulting files.  There may also
-  be the warning \preformatted{    using pax headers}
+  be the warning \preformatted{    using pax extended headers}
   This is indicates that additional information may have been discarded,
   such as ACLs, encodings \dots, and long path and link names are only
   used as from \R 3.0.0.
