@@ -300,7 +300,7 @@ install.packages <-
         hasSrc <-  !is.na(av2[bins, "Archs"])
 
         srcvers <- available[bins, "Version"]
-        later <- binvers < srcvers
+        later <- as.numeric_version(binvers) < srcvers
         if(any(later)) {
             msg <- ngettext(sum(later),
                             "There is a binary version available but the source version is later",
@@ -378,7 +378,7 @@ install.packages <-
                 available <-
                     available.packages(contriburl = contrib.url(repos, type), method = method)
             } else {
-                srcpkgs <-  row.names(av1)
+                srcpkgs <- pkgs[pkgs %in% row.names(av1)]
                 ## Now see what we can get as binary packages.
                 available <-
                     available.packages(contriburl = contrib.url(repos, type), method = method)
@@ -397,8 +397,10 @@ install.packages <-
                     cat("\n   ", msg, "\n\n", sep = "")
                 }
                 binvers <- available[bins, "Version"]
-                srcvers <- av1[bins, "Version"]
-                later <- !is.na(srcvers) & (binvers < srcvers)
+                srcvers <- binvers
+                OK <- bins %in% srcpkgs
+                srcvers[OK] <- av1[bins[OK], "Version"]
+                later <- as.numeric_version(binvers) < srcvers
                 if(any(later)) {
                     msg <- ngettext(sum(later),
                                     "There is a binary version available (and will be installed) but the source version is later",
