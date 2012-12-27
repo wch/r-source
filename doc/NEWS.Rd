@@ -710,6 +710,10 @@
 
       \item \code{image()} now sorts an unsorted \code{breaks} vector,
       with a warning.
+
+      \item The internal methods for \code{tar()} and \code{untar()} do
+      a slightly more general job for \sQuote{ustar}-style handling of
+      paths of more than 100 bytes.
     }
   }
 

@@ -153,15 +153,18 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         if(!length(block)) break
         if(length(block) < 512L) stop("incomplete block on file")
         if(all(block == 0)) break
-        ns <- max(which(block[1:100] > 0))
-        if (ns <= 0) stop("invalid name field in tarball")
+        ## This should be non-empty, but whole name could be in prefix
+        w <- which(block[1:100] > 0)
+        ns <- if(length(w)) max(w) else 0
         name <- rawToChar(block[seq_len(ns)])
         magic <- rawToChar(block[258:262])
         if ((magic == "ustar") && block[346] > 0) {
             ns <- max(which(block[346:500] > 0))
             prefix <- rawToChar(block[345+seq_len(ns)])
             name <- file.path(prefix, name)
+            ns <- nchar(name, "b")
         }
+        if (ns <= 0) stop("invalid name field in tarball")
         ## mode zero-padded 8 bytes (including nul) at 101
         ## Aargh: bsdtar has this one incorrectly with 6 bytes+space
         mode <- as.octmode(getOct(block, 100, 8))
@@ -334,14 +337,18 @@ tar <- function(tarfile, files = NULL,
         if(length(name) > 100L) {
             ## best possible case: 155+/+100
             if(length(name) > 256L) stop("file path is too long")
-            s <- max(which(name[1:155] == charToRaw("/")))
+            ## do not want to split on terminal /
+            m <- length(name)
+            s <- max(which(name[1:min(156, m - 1L)] == charToRaw("/")))
             if(is.infinite(s) || s + 100L < length(name))
                 stop("file path is too long")
             warning("storing paths of more than 100 bytes is not portable:\n  ",
                     sQuote(f), domain = NA)
             prefix <- name[1:(s-1L)]
             name <- name[-(1:s)]
-            header[345+seq_along(prefix)] <- prefix
+            message("name ", rawToChar(name))
+            message("prefix ", rawToChar(prefix))
+            header[345L+seq_along(prefix)] <- prefix
         }
         header[seq_along(name)] <- name
         header[101:107] <- charToRaw(sprintf("%07o", info$mode))
