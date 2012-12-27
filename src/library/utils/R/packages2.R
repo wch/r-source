@@ -378,7 +378,7 @@ install.packages <-
                 available <-
                     available.packages(contriburl = contrib.url(repos, type), method = method)
             } else {
-                pkgs <- getDependencies(pkgs, dependencies, av1, lib)
+                srcpkgs <-  row.names(av1)
                 ## Now see what we can get as binary packages.
                 available <-
                     available.packages(contriburl = contrib.url(repos, type), method = method)
@@ -387,18 +387,18 @@ install.packages <-
                 ## or it might be later in source.
                 ## FIXME: might only want to check on the same repository,
                 ## allowing for CRANextras.
-                na <- pkgs[!pkgs %in% bins]
+                na <- srcpkgs[!srcpkgs %in% bins]
                 if (length(na)) {
                     msg <-
                         sprintf(ngettext(length(na),
                                          "package %s is available as a source package but not as a binary",
                                          "packages %s are available as source packages but not as binaries"),
-                                paste(sQuote(na), collapse=", "))
+                                paste(sQuote(na), collapse = ", "))
                     cat("\n   ", msg, "\n\n", sep = "")
                 }
                 binvers <- available[bins, "Version"]
                 srcvers <- av1[bins, "Version"]
-                later <- binvers < srcvers
+                later <- !is.na(srcvers) & (binvers < srcvers)
                 if(any(later)) {
                     msg <- ngettext(sum(later),
                                     "There is a binary version available (and will be installed) but the source version is later",
