@@ -63,7 +63,7 @@
       \item In \code{layout()}, the limits on the grid size have been
       raised (again).
 
-      \item New simple \code{provideDimnames()} utility.
+      \item New simple \code{provideDimnames()} utility function.
 
       \item Where methods for \code{length()} return a double value
       which is representable as an integer (as often happens for package
@@ -217,11 +217,11 @@
       \item \code{clearPushBack()} is now a documented interface to a
       long-existing internal call.
 
-      \item \code{aspell()} gains filters for R code, Debian Control
-      Format and message catalog files, and support for R level
+      \item \code{aspell()} gains filters for \R code, Debian Control
+      Format and message catalog files, and support for \R level
       dictionaries.  In addition, package \pkg{utils} now provides
-      \code{aspell_package_R_files()} and
-      \code{aspell_package_C_files()} for spell checking R and C level
+      functions \code{aspell_package_R_files()} and
+      \code{aspell_package_C_files()} for spell checking \R and C level
       message strings in packages.
 
       \item \code{bibentry()} gains some support for \dQuote{incomplete}
@@ -337,11 +337,11 @@
       (Elements of character vectors remain limited to
       \eqn{2^{31}-1}{2^31 - 1} bytes.)
 
-      Use of such vectors is work-in-progress.
+      Not all aspects of such vectors are complete (or completely tested).
 
       \item Most operations which can sensibly be done with long vectors
       now work: others may return the error \sQuote{long vectors not
-      supported yet}.  Some of these are because they explicitly work
+      supported yet}.  Most of these are because they explicitly work
       with integer indices (e.g. \code{anyDuplicated()} and
       \code{match()}) or because of other limits (e.g. of character
       strings or matrix dimensions) would be exceeded or the operations
@@ -406,9 +406,10 @@
 
       Since these entry points are always accessed by the \R entry
       points they do not need to be in the load table which can be
-      searched faster.  This does mean that \code{.C} / \code{.Fortran}
-      / \code{.Call} calls copied from earlier versions of \R may no
-      longer work -- but they were never part of the API.
+      substantially smaller and hence searched faster.  This does mean
+      that \code{.C} / \code{.Fortran} / \code{.Call} calls copied from
+      earlier versions of \R may no longer work -- but they were never
+      part of the API.
 
       \item Many \code{.Call()} calls in package \pkg{base} have been
       migrated to \code{.Internal()} calls.
@@ -437,17 +438,15 @@
       \command{R CMD build} will still add a namespace, but a
       \code{.First.lib()} function will need to be converted.
 
-      \command{R CMD INSTALL} no longer adds a namespace, and a
-      \code{.First.lib()} function in a package will be ignored (with an
-      installation warning for now).
+      \command{R CMD INSTALL} no longer adds a namespace (so
+      installation will fail), and a \code{.First.lib()} function in a
+      package will be ignored (with an installation warning for now).
 
-      Packages without a \file{R} directory and no \file{NAMESPACE} file
-      can still be installed.
+      As an exception, packages without a \file{R} directory and no
+      \file{NAMESPACE} file can still be installed.
 
       \item Packages can specify in their \file{DESCRIPTION file} a line
-      like
- \preformatted{
-     ForceBiarch: yes
+      like \preformatted{     ForceBiarch: yes
 }
       to be installed on Windows with \option{--force-biarch}.
     }
@@ -497,10 +496,8 @@
       \item The \code{.Internal(eval.with.vis)} non-API function has
       been removed.
 
-      \item Support for the converters for use with \code{.C()} is not
-      compiled in by default: compile \file{src/main/dotcode.c} with
-      \option{-DSUPPORT_CONVERTERS} to re-enable this (untested as we
-      know of no examples in packages).
+      \item Support for the converters for use with \code{.C()} has been
+      removed.
 
       \item The previously deprecated uses of \code{array()} with a
       0-length \code{dim} argument and \code{tapply()} with a 0-length
@@ -538,7 +535,7 @@
       \code{tkclose()}, \code{tkcmd()}, \code{tkfile.dir()},
       \code{tkfile.tail()}, \code{tkopen()}, \code{tkputs()},
       \code{tkread()}, \code{trySilent()}, \code{zip.file.extract()}
-      have been removed entirely (but are still in the help system).
+      have been removed entirely (but are still documented in the help system).
     }
   }
 
@@ -548,10 +545,6 @@
       \pkg{graphics} package (and hence no longer uses
       \code{.Internal()} calls).
 
-      This may require re-installing some S4-using packages
-      (e.g. \CRANpkg{timeDate}) which captured the old versions of the
-      \R interfaces.
-
       \item Most of the \code{.Internal()} calls used in the \pkg{stats}
       package have been migrated to C code in that package.
 
@@ -559,11 +552,6 @@
       been used by packages no longer exist, including
       \code{.Internal(cor)} \code{.Internal(cov)},
       \code{.Internal(optimhess)} and \code{.Internal(update.formula)}.
-
-      It also means that packages such as \CRANpkg{compositions} which
-      made copies of \pkg{stats} functions at installation need to be
-      re-installed.  As may packages which have been byte-compiled,
-      since some \code{.Internal()} calls are inlined by the compiler.
 
       \item Some \code{.External()} calls to the \code{base} package
       (really to the \R executable or shared library) have been moved to
@@ -611,16 +599,15 @@
       be recompiled.
 
       \item A few recently added C entry points were missing the
-      remapping to \code{Rf_}, notably \code{[dpq]nbinom_mu}.  Packages
-      using them need to be reinstalled.
+      remapping to \code{Rf_}, notably \code{[dpq]nbinom_mu}.
 
       \item Some of the interface pointers formerly available only to
       \command{R.app} are now available to front-ends on all
       Unix-alikes: one has been added for the interface to
       \code{View()}.
 
-      \item \code{PACKAGE = ""} was accepted in \code{.C()} etc calls,
-      although it was contrary to the documentation.  It is now an error.
+      \item \code{PACKAGE = ""} is now an error in \code{.C()} etc calls:
+      it was always contrary to the documentation.
 
       \item Entry point \code{rcont2} has been migrated to package
       \pkg{stats} and so is no longer available.
@@ -710,7 +697,7 @@
       the name of the file containing the bad code.
 
       \item In Windows, tcltk windows were not always properly constructed.
-      (\PR{15150}.)
+      (\PR{15150})
     }
   }
 }

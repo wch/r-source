@@ -9,7 +9,7 @@ all: makeMakedeps libmain.a
 CPPFLAGS=-I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD $(arch_DEFS)
 
 CSOURCES=\
-	CConverters.c CommandLineArgs.c \
+	CommandLineArgs.c \
 	Rdynload.c Renviron.c RNG.c \
 	agrep.c apply.c arithmetic.c array.c attrib.c \
 	bind.c builtin.c \

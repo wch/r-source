@@ -31,8 +31,6 @@
 #include <Print.h>
 #include "arithmetic.h" /* for do_math[1234], do_cmathfuns */
 
-#include <R_ext/RConverters.h>
-
 #include <Rinterface.h>
 
 /* Table of  .Internal(.) and .Primitive(.)  R functions
@@ -858,11 +856,6 @@ FUNTAB R_FunTab[] =
 
 {"readDCF",	do_readDCF,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 
-{"getNumRtoCConverters", do_getNumRtoCConverters, 0, 11, 0,{PP_FUNCALL, PREC_FN,0}},
-{"getRtoCConverterDescriptions", do_getRtoCConverterDescriptions, 0, 11, 0,{PP_FUNCALL, PREC_FN, 0}},
-{"getRtoCConverterStatus", do_getRtoCConverterStatus, 0, 11, 0, {PP_FUNCALL, PREC_FN, 0}},
-{"setToCConverterActiveStatus", do_setToCConverterActiveStatus, 0, 11, 2, {PP_FUNCALL, PREC_FN, 0}},
-{"removeToCConverterActiveStatus", do_setToCConverterActiveStatus, 1, 11, 1, {PP_FUNCALL, PREC_FN, 0}},
 
 {"lockEnvironment", do_lockEnv,		0, 111,  2,      {PP_FUNCALL, PREC_FN,	0}},
 {"environmentIsLocked",	do_envIsLocked,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},

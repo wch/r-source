@@ -13,7 +13,7 @@ R_HOME=$(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = \
-	CConverters.c CommandLineArgs.c \
+	CommandLineArgs.c \
 	Rdynload.c Renviron.c RNG.c \
 	agrep.c apply.c arithmetic.c array.c attrib.c \
 	bind.c builtin.c \
