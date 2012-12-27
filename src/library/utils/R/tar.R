@@ -222,6 +222,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(!is.null(llink)) {name2 <- llink; llink <- NULL}
             if(!list) {
                 if(ctype == "1") {
+                    mydir.create(dirname(name))
+                    unlink(name)
                     if (!file.link(name2, name)) { # will give a warning
                         ## link failed, so try a file copy
                         if(file.copy(name2, name))
@@ -232,20 +234,25 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 } else {
                     if(.Platform$OS.type == "windows") {
                         ## this will not work for links to dirs
+                        mydir.create(dirname(name))
                         from <- file.path(dirname(name), name2)
                         if (!file.copy(from, name))
                             warning(gettextf("failed to copy %s to %s", sQuote(from), sQuote(name)), domain = NA)
                         else
                             warn1 <- c(warn1, "restoring symbolic link as a file copy")
                    } else {
-                       if(!file.symlink(name2, name)) { # will give a warning
+                       mydir.create(dirname(name))
+                       od <- setwd(dirname(name))
+                       nm <- basename(name)
+                       unlink(nm)
+                       if(!file.symlink(name2, nm)) { # will give a warning
                         ## so try a file copy: will not work for links to dirs
-                        from <- file.path(dirname(name), name2)
-                        if (file.copy(from, name))
+                        if (file.copy(name2, nm))
                             warn1 <- c(warn1, "restoring symbolic link as a file copy")
                            else
                                warning(gettextf("failed to copy %s to %s", sQuote(from), sQuote(name)), domain = NA)
                        }
+                       setwd(od)
                    }
                 }
             }
@@ -347,8 +354,6 @@ tar <- function(tarfile, files = NULL,
                     sQuote(f), domain = NA)
             prefix <- name[1:(s-1L)]
             name <- name[-(1:s)]
-            message("name ", rawToChar(name))
-            message("prefix ", rawToChar(prefix))
             header[345L+seq_along(prefix)] <- prefix
         }
         header[seq_along(name)] <- name
@@ -368,7 +373,7 @@ tar <- function(tarfile, files = NULL,
             header[157L] <- charToRaw(ifelse(nzchar(lnk), "2", "0"))
             if(nzchar(lnk)) {
                 ## we could use the GNU extension ...
-                if(length(lnk) > 100L) stop("linked path is too long")
+                if(nchar(lnk, "b") > 100L) stop("linked path is too long")
                 header[157L + seq_len(nchar(lnk))] <- charToRaw(lnk)
                 size <- 0
             }
