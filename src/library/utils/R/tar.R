@@ -51,8 +51,9 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (!gzOK ) {
         ## version info may be sent to stdout or stderr
         tf <- tempfile()
-        cmd <- paste0(shQuote(TAR), " -", cflag, "tf ", shQuote(tarfile))
-        system(paste(shQuote(TAR), "--version >", tf, "2>&1"))
+        ## TAR might be a command+flags, so don't quote it
+        cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
+        system(paste(TAR, "--version >", tf, "2>&1"))
         if (file.exists(tf)) {
             gzOK <- any(grepl("GNU", readLines(tf), fixed = TRUE))
             unlink(tf)
@@ -75,12 +76,12 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         cflag <- ""
     }
     if (list) {
-        cmd <- paste0(shQuote(TAR), " -", cflag, "tf ", shQuote(tarfile))
+        cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
         if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
         if (verbose) message("untar: using cmd = ", sQuote(cmd), domain = NA)
         system(cmd, intern = TRUE)
     } else {
-        cmd <- paste0(shQuote(TAR), " -", cflag, "xf ", shQuote(tarfile))
+        cmd <- paste0(TAR, " -", cflag, "xf ", shQuote(tarfile))
         if (!missing(exdir)) {
             if (!file_test("-d", exdir)) {
                 if(!dir.create(exdir, showWarnings = TRUE, recursive = TRUE))
@@ -189,6 +190,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         if(type %in% c(0L, 7L) || ctype == "0") {
             ## regular or high-performance file
             if(!is.null(lname)) {name <- lname; lname <- NULL}
+            if(!is.null(lsize)) {size <- lsize; lsize <- NULL}
             contents <- c(contents, name)
             remain <- size
             dothis <- !list
@@ -298,7 +300,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                 Sys.chmod(name, mode, FALSE) # override umask
                 Sys.setFileTime(name, ft)
             }
-         } else if(ctype %in% c("x", "g")) { # && grepl("PaxHeader", name)) {
+         } else if(ctype == "x") { # && grepl("PaxHeader", name)) {
             ## pax headers misused by bsdtar.
             warn1 <- c(warn1, "using pax headers")
             info <- readBin(con, "raw", n = 512L*ceiling(size/512L))
@@ -306,7 +308,13 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             path <- grep("[0-9]* path=", info, useBytes = TRUE, value = TRUE)
             if(length(path)) lname <- sub("[0-9]* path=", "", path)
             linkpath <- grep("[0-9]* linkpath=", info, useBytes = TRUE, value = TRUE)
-            if(length(linkpath)) llink <- sub("[0-9]* linkpath=", "", path)
+            if(length(linkpath)) llink <- sub("[0-9]* linkpath=", "", linkpath)
+            size <- grep("[0-9]* size=", info, useBytes = TRUE, value = TRUE)
+            if(length(size))
+                lsize <- as.integer(sub("[0-9]* size=", "", size))
+         } else if(ctype == "g") {
+            warn1 <- c(warn1, "skipping pax global headers")
+            readBin(con, "raw", n = 512L*ceiling(size/512L))
         } else stop("unsupported entry type ", sQuote(ctype))
     }
     if(length(warn1)) {
@@ -339,7 +347,8 @@ tar <- function(tarfile, files = NULL,
                 if (grepl("darwin8", R.version$os)) # 10.4, Tiger
                     tar <- paste("COPY_EXTENDED_ATTRIBUTES_DISABLE=1", tar)
             }
-            cmd <- paste(shQuote(tar), extra_flags, flags, shQuote(tarfile),
+            ## 'tar' might be a command + flags, so don't quote it
+            cmd <- paste(tar, extra_flags, flags, shQuote(tarfile),
                          paste(shQuote(files), collapse=" "))
             return(invisible(system(cmd)))
         }
@@ -390,8 +399,6 @@ tar <- function(tarfile, files = NULL,
         gid <- info$gid
         if(!is.null(gid) && !is.na(gid))
             header[117:123] <- charToRaw(sprintf("%07o", gid))
-        ## size is 0 for directories and it seems for links.
-        size <- ifelse(info$isdir, 0, info$size)
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
         if (info$isdir) header[157L] <- charToRaw("5")
         else {
@@ -405,6 +412,9 @@ tar <- function(tarfile, files = NULL,
                 size <- 0
             }
         }
+        ## size is 0 for directories and it seems for links.
+        size <- ifelse(info$isdir, 0, info$size)
+        if(size > 8^11) stop("file size is limited to 8GB")
         header[125:135] <- charToRaw(sprintf("%011o", as.integer(size)))
         ## the next two are what POSIX says, not what GNU tar does.
         header[258:262] <- charToRaw("ustar")
