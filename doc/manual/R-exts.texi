@@ -2862,9 +2862,9 @@ embedded bitmap images, and @command{ps2pdf} does not use PDF object
 compression (see below).
 
 Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
-for Windows and packages in Debian/Ubuntu, and is installed as part of
-the @acronym{CRAN} Mac OS X distribution of @R{}), there is an option
-@option{--compact-vignettes} to @command{R CMD build} to run
+for Windows and packages in Debian/Ubuntu/Fedora 17, and is installed as
+part of the @acronym{CRAN} Mac OS X distribution of @R{}), there is an
+option @option{--compact-vignettes} to @command{R CMD build} to run
 @command{qpdf} over PDF files under @file{inst/doc} and replace them if
 at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
 command can be supplied as environment variable @env{R_QPDF} (and is on
