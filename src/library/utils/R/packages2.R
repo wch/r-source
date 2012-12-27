@@ -219,7 +219,7 @@ install.packages <-
         ## the only known reliable way is to try it
         ok <- file.info(lib)$isdir %in% TRUE # dir might not exist, PR#14311
         if(ok) {
-            fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep="_"))
+            fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep = "_"))
             unlink(fn, recursive = TRUE) # precaution
             res <- try(dir.create(fn, showWarnings = FALSE))
             if(inherits(res, "try-error") || !res) ok <- FALSE
@@ -299,7 +299,7 @@ install.packages <-
         hasSrc <-  !is.na(av2[bins, "Archs"])
 
         srcvers <- available[bins, "Version"]
-        later <- binvers < srcvers
+        later <- as.numeric_version(binvers) < srcvers
         if(any(later)) {
             msg <- ngettext(sum(later),
                             "There is a binary version available but the source version is later",
@@ -322,7 +322,7 @@ install.packages <-
         bins <- bins[!later]
 
         if(interactive() && length(srcOnly)) {
-            nc <- !( available[srcOnly, "NeedsCompilation"] %in% "no")
+            nc <- !( available[srcOnly, "NeedsCompilation"] %in% "no" )
             s2 <- srcOnly[nc]
             if(length(s2)) {
                 msg <- c("Package(s) which are only available in source form, and may need compilation of C/C++/Fortran: ",
@@ -370,7 +370,7 @@ install.packages <-
                 available <-
                     available.packages(contriburl = contrib.url(repos, type), method = method)
             } else {
-                pkgs <- getDependencies(pkgs, dependencies, av1, lib)
+                srcpkgs <- pkgs[pkgs %in% row.names(av1)]
                 ## Now see what we can get as binary packages.
                 available <-
                     available.packages(contriburl = contrib.url(repos, type), method = method)
@@ -379,18 +379,20 @@ install.packages <-
                 ## or it might be later in source.
                 ## FIXME: might only want to check on the same repository,
                 ## allowing for CRANextras.
-                na <- pkgs[!pkgs %in% bins]
+                na <- srcpkgs[!srcpkgs %in% bins]
                 if (length(na)) {
                     msg <-
                         sprintf(ngettext(length(na),
                                          "package %s is available as a source package but not as a binary",
                                          "packages %s are available as source packages but not as binaries"),
-                                paste(sQuote(na), collapse=", "))
+                                paste(sQuote(na), collapse = ", "))
                     cat("\n   ", msg, "\n\n", sep = "")
                 }
                 binvers <- available[bins, "Version"]
-                srcvers <- av1[bins, "Version"]
-                later <- binvers < srcvers
+                srcvers <- binvers
+                OK <- bins %in% srcpkgs
+                srcvers[OK] <- av1[bins[OK], "Version"]
+                later <- as.numeric_version(binvers) < srcvers
                 if(any(later)) {
                     msg <- ngettext(sum(later),
                                     "There is a binary version available (and will be installed) but the source version is later",
@@ -466,7 +468,7 @@ install.packages <-
             Sys.setenv(R_LIBS = libpath)
             on.exit(Sys.setenv(R_LIBS = oldrlibs))
         } else
-            cmd0 <- paste(paste("R_LIBS", shQuote(libpath), sep="="), cmd0)
+            cmd0 <- paste(paste("R_LIBS", shQuote(libpath), sep = "="), cmd0)
 
     if (is.character(clean))
         cmd0 <- paste(cmd0, clean)
@@ -560,7 +562,7 @@ install.packages <-
                     paste("\t@echo begin installing package", sQuote(pkg)),
                     paste0("\t@", cmd, " && touch ", pkg, ".ts"),
                     paste0("\t@cat ", pkg, ".out"),
-                    "", sep="\n", file = conn)
+                    "", sep = "\n", file = conn)
             }
             close(conn)
             ## system(paste("cat ", mfile))
