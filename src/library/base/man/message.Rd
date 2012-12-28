@@ -28,7 +28,7 @@ suppressPackageStartupMessages(expr)
     (and which are pasted together with no separator) or (for
     \code{message} only) a single condition object.}
   \item{domain}{see \code{\link{gettext}}.  If \code{NA}, messages will
-    not be translated.}
+    not be translated, see also the note in \code{\link{stop}}.}
   \item{appendLF}{logical: should messages given as a character string
     have a newline appended?}
   \item{expr}{expression to evaluate.}
