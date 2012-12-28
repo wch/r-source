@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007  The R Core Team
+ *  Copyright (C) 2007-12  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@
 #ifndef R_EXT_QUARTZDEVICE_H_
 #define R_EXT_QUARTZDEVICE_H_
 
-/* FIXME: this is installed, but can it really work without config.h */
+/* FIXME: this is installed, but can it really work without config.h? */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -205,6 +205,7 @@ typedef struct QuartzFunctons_s {
 #define QP_Flags_Cocoa  0x0002  /* Cocoa is fully initialized */
 #define QP_Flags_Front  0x0004  /* is front application */
 
+/* FIXME: no longer used, remove in due course */
 /* from unix/aqua.c - loads grDevices if necessary and returns NULL on failure */
 QuartzFunctions_t *getQuartzFunctions();
 

@@ -27,6 +27,7 @@
    There's another one in src/main/systutils.c, ptr_CocoaSystem .
 */
 
+/* This is no longer used as from R.app r6413 */
 #include <Defn.h>
 
 /* tell QuartzDevice.h to insert definitions for us (to maintain consistency) */
