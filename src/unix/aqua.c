@@ -36,24 +36,14 @@
 #include <R_ext/Rdynload.h>
 #include <R_ext/QuartzDevice.h>
 
-DL_FUNC ptr_GetQuartzParameters;
-
-
-/* called from Mac-GUI/RController.m, before packages are loaded.
+/* Defined in R_ext/QuartzDevice.h.
+   Called from Mac-GUI/RController.m, before packages are loaded.
    If this fails, it hangs R.app */
 
 /* FIXME: this should not be allowed: we were requiring symbols in
    grDevices.dll */
 QuartzFunctions_t *getQuartzFunctions(void) 
 {
-    /* presumably this was intended to cache the result.
-       But,
-       - it was never used
-       - it would be unsafe as the namespace could be unloaded/reloaded
-    static QuartzFunctions_t* qfn;
-    if (qfn) return qfn;
-    */
-
     QuartzFunctions_t *(*fn)(void);
     fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
     if (!fn) {
