@@ -23,14 +23,19 @@
 
 /* This file provides support for R.app, the OS X front end */
 
+/*
+   There's another one in src/main/systutils.c, ptr_CocoaSystem .
+*/
+
 #include <Defn.h>
-#include <Internal.h>
+/*#include <Internal.h>
 
 #include "Runix.h"
 #include <sys/types.h>
 #ifdef HAVE_SYS_STAT_H
 # include <sys/stat.h>
 #endif
+*/
 
 /* tell QuartzDevice.h to insert definitions for us (to maintain consistency) */
 #define IN_AQUA_C 1
@@ -38,15 +43,6 @@
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/QuartzDevice.h>
-
-/* These are in no header.  Their definitions are in
-   Mac-GUI/REngine/Rinit.m, which sets them to functions in
-   Mac-GUI/REngine/Rcallbacks.m
-
-   So this is a essentially a private hook arrangement for R.app
-
-   There's another one in src/main/systutils.c, ptr_CocoaSystem .
-*/
 
 DL_FUNC ptr_GetQuartzParameters;
 
