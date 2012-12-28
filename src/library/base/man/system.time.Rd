@@ -38,6 +38,8 @@ unix.time(expr, gcFirst = TRUE)
 }
 \seealso{
   \code{\link{proc.time}}, \code{\link{time}} which is for time series.
+  
+  \code{\link{Sys.time}} to get the current date & time.
 }
 \examples{
 require(stats)
