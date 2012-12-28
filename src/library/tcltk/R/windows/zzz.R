@@ -20,8 +20,8 @@
 
 .onLoad <- function(libname, pkgname)
 {
-    packageStartupMessage("Loading Tcl/Tk interface ...",
-                          domain = "R-tcltk", appendLF = FALSE)
+##    packageStartupMessage("Loading Tcl/Tk interface ...",
+##                          domain = "R-tcltk", appendLF = FALSE)
     if(!nzchar(tclbin <- Sys.getenv("MY_TCLTK"))) {
         tclbin <- file.path(R.home(), "Tcl",
                             if(.Machine$sizeof.pointer == 8) "bin64" else "bin")
@@ -31,7 +31,7 @@
             lib64 <- gsub("\\", "/", file.path(R.home(), "Tcl", "lib64"),
                           fixed=TRUE)
             Sys.setenv(TCLLIBPATH = lib64)
-        } else Sys.unsetenv("TCLLIBPATH") # it case called from a 64-bit process
+        } else Sys.unsetenv("TCLLIBPATH") # in case called from a 64-bit process
     }
     library.dynam("tcltk", pkgname, libname, DLLpath = tclbin)
     routines <- getDLLRegisteredRoutines("tcltk", addNames = FALSE)
@@ -41,7 +41,7 @@
                function(sym) assign(paste0(".C_", sym$name), sym, envir = ns))
     .C(.C_tcltk_start)
     addTclPath(system.file("exec", package = "tcltk"))
-    packageStartupMessage(" ", "done", domain = "R-tcltk")
+##    packageStartupMessage(" ", "done", domain = "R-tcltk")
     invisible()
 }
 

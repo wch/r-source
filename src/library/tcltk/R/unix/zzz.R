@@ -22,8 +22,8 @@
 {
     ## This will get interrupted if there is no display,
     ## so we choose to have the space here.
-    packageStartupMessage("Loading Tcl/Tk interface ...", " ",
-                          domain = "R-tcltk", appendLF = FALSE)
+ ##   packageStartupMessage("Loading Tcl/Tk interface ...", " ",
+ ##                         domain = "R-tcltk", appendLF = FALSE)
 
     ## Use local = FALSE to allow easy loading of Tcl extensions
     library.dynam("tcltk", pkgname, libname, local = FALSE)
@@ -34,7 +34,7 @@
                function(sym) assign(paste0(".C_", sym$name), sym, envir = ns))
     .TkUp <<- .C(.C_tcltk_init, 0L)[[1L]] == 1L
     addTclPath(system.file("exec", package = "tcltk"))
-    packageStartupMessage("done", domain = "R-tcltk")
+##    packageStartupMessage("done", domain = "R-tcltk")
     invisible()
 }
 
