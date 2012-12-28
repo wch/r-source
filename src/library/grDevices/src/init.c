@@ -131,6 +131,11 @@ static const R_ExternalMethodDef ExtEntries[] = {
     {NULL, NULL, 0}
 };
 
+#ifdef HAVE_AQUA
+extern void setup_RdotApp(void);
+extern Rboolean useaqua;
+#endif
+
 void R_init_grDevices(DllInfo *dll)
 {
     initPalette();
@@ -138,4 +143,10 @@ void R_init_grDevices(DllInfo *dll)
     R_useDynamicSymbols(dll, FALSE);
 // Uh, oh, R.app looks up symbols ....
 //    R_forceSymbols(dll, TRUE);
+
+#if HAVE_AQUA
+/* R.app will run event loop, so if we are running under that we don't
+   need to run one here */
+    if(useaqua) setup_RdotApp();
+#endif
 }

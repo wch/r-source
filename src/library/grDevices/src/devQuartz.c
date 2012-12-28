@@ -325,6 +325,12 @@ static void* QuartzDevice_SetParameter(QuartzDesc_t desc, const char *key, void 
     return NULL;
 }
 
+void setup_RdotApp(void)
+{
+    int eflags = QP_Flags_CFLoop | QP_Flags_Cocoa | QP_Flags_Front;
+    QuartzDevice_SetParameter(NULL, QuartzParam_EmbeddingFlags, &eflags);
+}
+
 static void*  QuartzDevice_GetParameter(QuartzDesc_t desc, const char *key)
 {
     if (desc) { /* backend-specific? pass it on */
