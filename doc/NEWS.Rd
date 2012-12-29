@@ -541,6 +541,9 @@
       \code{tkfile.tail()}, \code{tkopen()}, \code{tkputs()},
       \code{tkread()}, \code{trySilent()}, \code{zip.file.extract()}
       have been removed entirely (but are still documented in the help system).
+      
+      \item The unused \code{dataPath} argument to
+      \code{attachNamespace()} has been removed.
     }
   }
 

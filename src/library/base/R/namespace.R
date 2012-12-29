@@ -103,7 +103,7 @@ getExportedValue <- function(ns, name) {
 }
 
 
-attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
+attachNamespace <- function(ns, pos = 2L, depends = NULL)
 {
     ## only used to run .onAttach
     runHook <- function(hookname, env, libname, pkgname) {

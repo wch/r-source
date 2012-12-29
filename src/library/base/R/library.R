@@ -297,9 +297,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if (packageHasNamespace(package, which.lib.loc)) {
                 tt <- try({
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
-                    dataPath <- file.path(which.lib.loc, package, "data")
-                    env <- attachNamespace(ns, pos = pos,
-                                           dataPath = dataPath, deps)
+                    env <- attachNamespace(ns, pos = pos, deps)
                 })
                 if (inherits(tt, "try-error"))
                     if (logical.return)
