@@ -146,12 +146,14 @@ is.loaded(symbol, PACKAGE = "", type = "")
   DLL and then re-loading a DLL of the same name may or may not work: on
   Solaris it uses the first version loaded.
 
-  \code{is.loaded} checks if the symbol name is loaded and hence
-  available for use in \code{.C} or \code{.Fortran} or \code{.Call} or
-  \code{.External}.  It will succeed if any one of the four calling
-  functions would succeed in using the entry point unless \code{type} is
-  specified.  (See \code{\link{.Fortran}} for how Fortran symbols are
-  mapped.)
+  \code{is.loaded} checks if the symbol name is loaded \emph{and
+  searchable} and hence available for use as a character string value
+  for argument \code{.NAME} in \code{.C} or \code{.Fortran} or
+  \code{.Call} or \code{.External}.  It will succeed if any one of the
+  four calling functions would succeed in using the entry point unless
+  \code{type} is specified.  (See \code{\link{.Fortran}} for how Fortran
+  symbols are mapped.)  Note that symbols in base packages are not
+  searchable, and other packages can be so marked.
 }
 \note{
   \code{is.loaded} requires the name you would give to \code{.C} etc
@@ -223,9 +225,9 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \code{\link{.Call}}.
 }
 \examples{
-is.loaded("hcass2") #-> probably TRUE, as stats is loaded
+## expect all of these to be false in R >= 3.0.0.
 is.loaded("supsmu") # Fortran entry point in stats
 is.loaded("supsmu", "stats", "Fortran")
-is.loaded("PDF", type = "External")
+is.loaded("PDF", type = "External") # pdf() device in grDevices
 }
 \keyword{interface}
