@@ -22,14 +22,24 @@ setClass <-
              contains = character(), validity = NULL, access = list(),
              where = topenv(parent.frame()), version = .newExternalptr(),
              sealed = FALSE, package = getPackageName(where),
-             S3methods = FALSE)
+             S3methods = FALSE, slots)
 {
     oldDef <- getClassDef(Class, where)
     if(is(oldDef, "classRepresentation") && oldDef@sealed)
         stop(gettextf("%s has a sealed class definition and cannot be redefined",
                       dQuote(Class)),
              domain = NA)
-    if(is(representation, "classRepresentation")) {
+    if(!missing(slots)) {
+        ## The modern version consistent with reference classes
+        ## Arguments slots= and contains= are used, representation must not be
+        if(!missing(representation))
+            stop("Argument \"representation\" cannot be used if argument \"slots\" is supplied")
+        properties <- inferProperties(slots, "slots")
+        classDef <- makeClassRepresentation(Class, properties,contains, prototype, package,
+                                             validity, access, version, sealed, where = where)
+        superClasses <- names(classDef@contains)
+    }
+    else if(is(representation, "classRepresentation")) {
         ## supplied a class definition object
         classDef <- representation
         if(!(missing(prototype) && missing(contains) && missing(validity) && missing(access)
@@ -937,3 +947,42 @@ classGeneratorFunction <- function(classDef, env = topenv(parent.frame())) {
     fun@package <- classDef@package
     fun
 }
+
+inferProperties <- function(props, what) {
+    .validPropNames <- function(propNames) {
+        n <- length(props)
+        if(!n)
+            return(character())
+        else if(is.null(propNames))
+            stop(gettextf("No %s names supplied", what))
+        else if(!all(nzchar(propNames)))
+            stop(gettextf("All %s names must be nonempty", what))
+        else if(any(duplicated(propNames)))
+            stop(gettextf("All %s names must be distinct", what))
+        propNames
+    }
+    if(is.character(props)) {
+        propNames <- names(props)
+        if(is.null(propNames)) {
+            propNames <- .validPropNames(props) # the text is the names
+            ## treat as "ANY"
+            props <- as.list(rep("ANY", length(props)))
+            names(props) <- propNames
+        }
+        else {
+            .validPropNames(propNames)
+            props <- as.list(props)
+        }
+    }
+    else if(is.list(props)) {
+        if(length(props) > 0) # just validate them
+            .validPropNames(names(props))
+    }
+    else
+        stop(gettextf("argument %s must be a list or a character vector; got an object of class %s",
+                      dQuote(what), dQuote(class(fields))),
+             domain = NA)
+    props
+}
+
+

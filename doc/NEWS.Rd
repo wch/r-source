@@ -329,7 +329,14 @@
       
       \item \code{untar(tar = "internal")} has some support for
       \code{pax} headers as produced by e.g. \command{gnutar --posix}
-      or \command{bsdtar --format pax}, including long path and link names.
+      or \command{bsdtar --format pax}, including long path and link
+      names.
+
+      \item \code{setClass()} has a new argument, \code{slots=},
+      clearer and less ambiguous than \code{representation=}.  It is
+      recommended for future code, but should be back-compatible.  At
+      the same time, the allowed slot specification is slightly more general.
+      See the documentation for details.
     }
   }
 

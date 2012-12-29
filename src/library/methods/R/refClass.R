@@ -887,27 +887,7 @@ setRefClass <- function(Class, fields = character(),
                         methods = list(),
                         where = topenv(parent.frame()),
                         ...) {
-    ## process the field definitions
-    if(is.character(fields)) {
-        fieldNames <- fields
-        ## treat as "ANY"
-        fields <- as.list(rep("ANY", length(fields)))
-        names(fields) <- fieldNames
-    }
-    else if(is.list(fields)) {
-        if(length(fields) > 0) {
-            fieldNames <- names(fields)
-            if(is.null(fieldNames) ||
-               !all(nzchar(fieldNames)))
-                stop("a list argument for 'fields' must have nonempty names for all the fields")
-        }
-        else
-            fieldNames <- character()
-    }
-    else
-        stop(gettextf("argument 'fields' must be a list of the field classes or definitions or the names of the fields; got an object of class %s",
-                      dQuote(class(fields))),
-             domain = NA)
+    fields <- inferProperties(fields, "fields")
     theseMethods <- names(methods) # non-inherited, for processing later
     ## collect the method and field definitions
     info <- refClassInformation(Class, contains, fields, methods, where)
