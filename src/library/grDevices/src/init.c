@@ -53,19 +53,6 @@ static SEXP cairoProps(SEXP in)
 }
 #endif
 
-
-#ifndef WIN32
-void *getQuartzAPI();
-#endif
-
-static R_CMethodDef CEntries [] = {
-#ifndef WIN32
-    // This is used by src/unix/aqua.c, as a symbol to be looked up
-    {"getQuartzAPI", (DL_FUNC) getQuartzAPI, 0},
-#endif
-    {NULL, NULL, 0}
-};
-
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_CallMethodDef CallEntries[] = {
@@ -139,12 +126,11 @@ extern Rboolean useaqua;
 void R_init_grDevices(DllInfo *dll)
 {
     initPalette();
-    R_registerRoutines(dll, CEntries, CallEntries, NULL, ExtEntries);
+    R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
-// Uh, oh, R.app looks up symbols ....
-//    R_forceSymbols(dll, TRUE);
+    R_forceSymbols(dll, TRUE);
 
-#if HAVE_AQUA
+#ifdef HAVE_AQUA
 /* R.app will run event loop, so if we are running under that we don't
    need to run one here */
     if(useaqua) setup_RdotApp();

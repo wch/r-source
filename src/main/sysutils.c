@@ -311,7 +311,7 @@ int R_system(const char *command)
 #endif
     res = system(command);
     sigprocmask(SIG_UNBLOCK, &ss, NULL);
-#else
+#else // not APPLE
     res = system(command);
 #endif
 #ifdef HAVE_SYS_WAIT_H

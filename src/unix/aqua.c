@@ -21,21 +21,24 @@
 #include <config.h>
 #endif
 
+
 /* This file provides support for R.app, the OS X front end */
 
 /*
    There's another one in src/main/systutils.c, ptr_CocoaSystem .
 */
 
+/* This sets ptr_QuartzBackend as a symbol in this file */
+#define IN_AQUA_C 1
+#include <R_ext/QuartzDevice.h>
+
+
+#ifdef OLD
 /* This is no longer used as from R.app r6413 */
 #include <Defn.h>
 
-/* tell QuartzDevice.h to insert definitions for us (to maintain consistency) */
-#define IN_AQUA_C 1
-
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Rdynload.h>
-#include <R_ext/QuartzDevice.h>
 
 /* Defined in R_ext/QuartzDevice.h.
    Called from Mac-GUI/RController.m, before packages are loaded.
@@ -57,4 +60,5 @@ QuartzFunctions_t *getQuartzFunctions(void)
     }
     return fn();
 }
+#endif
 
