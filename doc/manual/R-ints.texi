@@ -3609,11 +3609,12 @@ of @R{} and the code for the console is currently in @file{R.dll}.
 @section R.app
 
 @command{R.app} is a Mac OS X application which provides a console.  Its
-sources are a separate project, and its binaries link to an @R{}
-installation which it runs as a dynamic library @file{libR.dylib}.  The
-standard @acronym{CRAN} distribution of @R{} for OS X bundles the GUI
-and @R{} itself, but installing the GUI is optional and either component
-can be updated separately.
+sources are a separate project@footnote{an Xcode project, in SVN at
+@uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI}.}, and its binaries
+link to an @R{} installation which it runs as a dynamic library
+@file{libR.dylib}.  The standard @acronym{CRAN} distribution of @R{} for
+OS X bundles the GUI and @R{} itself, but installing the GUI is optional
+and either component can be updated separately.
 
 @command{R.app} relies on @file{libR.dylib} being in a specific place,
 and hence on @R{} having been built and installed as a Mac OS X
@@ -3625,34 +3626,33 @@ resolves to
 which is (in the @acronym{CRAN} distribution) a `fat' binary containing
 multiple sub-architectures.
 
-Mac OS X applications are directory trees, but each @command{R.app}
-contains a front-end written in Objective-C for one sub-architecture: in
-the standard distribution there are separate applications for 32- and
-64-bit Intel architectures.
+Mac OS X applications are directory trees: each @command{R.app} contains
+a front-end written in Objective-C for one sub-architecture: in the
+standard distribution there are separate applications for 32- and 64-bit
+Intel architectures.
 
 Originally the @R{} sources contained quite a lot of code used only by
-the OS X GUI, but this has now almost entirely been migrated to
-@command{R.app}.
+the OS X GUI, but this has now been migrated to @command{R.app}.
 
 @command{R.app} starts @R{} as an embedded application with a
 command-line which includes @option{--gui=aqua} (see below).  It uses
 most of the interface pointers defined in the header
-@file{Rinterface.h}, plus private interface pointers in files
-@file{src/main/sysutils.c} and @file{src/unix/aqua.c}.  It adds an
-environment it calls @code{tools:RGUI} to the second position in the
-search path.  This contains a number of utility functions used to
-support the menu items, for example @code{package.manager()}, and
-functions @code{q()} and @code{auit()} which mask those in package
-@pkg{base}---the custom versions save the history in a way specific to
-@code{R.app}.
+@file{Rinterface.h}, plus a private interface pointer in file
+@file{src/main/sysutils.c}.@footnote{There is another one for the
+@code{quartz} device in @file{src/unix/aqua.c}.}  It adds an environment
+it names @code{tools:RGUI} to the second position in the search path.
+This contains a number of utility functions used to support the menu
+items, for example @code{package.manager()}, plus functions @code{q()}
+and @code{quit()} which mask those in package @pkg{base}---the custom
+versions save the history in a way specific to @code{R.app}.
 
 There is a @command{configure} option @option{--with-aqua} for @R{}
 which customizes the way @R{} is built: this is distinct from the
-@option{--enable-R-framework} option which installs @R{} as a framework
-needed for use with @code{R.app}.  The option @option{--with-aqua} is
-the default on Mac OS X.  It sets the macro @code{HAVE_AQUA} in
-@file{config.h} and the make variable @code{BUILD_AQUA_TRUE}.  These
-have several consequences:
+@option{--enable-R-framework} option which causes @command{make install}
+to install @R{} as the framework needed for use with @code{R.app}.  (The
+option @option{--with-aqua} is the default on Mac OS X.)  It sets the
+macro @code{HAVE_AQUA} in @file{config.h} and the make variable
+@code{BUILD_AQUA_TRUE}.  These have several consequences:
 
 @itemize
 @item
@@ -3663,9 +3663,7 @@ access to the Mac OS X screen.
 
 @item
 File @code{src/unix/aqua.c} is compiled.  This now only contains an
-interface pointer which is used to tell the the @pkg{grDevices} graphics
-package that @command{R.app} is already running a Quartz event loop and
-hence the @code{quartz()} device(s) do not need to.
+interface pointer for the @code{quartz()} device(s).
 
 @item
 @code{capabilities("aqua")} is set to @code{TRUE}.
@@ -3713,6 +3711,11 @@ Various widgets are switched to the versions provided in
 @command{R.app}: these include graphical menus, the data editor (but not
 the data viewer used by @code{View()}) and the workspace browser invoked
 by @code{browseEnv()}.
+
+@item
+The @pkg{grDevices} package when loaded knows that it is being run
+under @command{R.app} and so informs any @code{quartz} devices that a
+Quartz event loop is already running.
 @end itemize
 
 @item

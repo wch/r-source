@@ -24,41 +24,10 @@
 
 /* This file provides support for R.app, the OS X front end */
 
-/*
-   There's another one in src/main/systutils.c, ptr_CocoaSystem .
-*/
-
-/* This sets ptr_QuartzBackend as a symbol in this file */
+/* This sets ptr_QuartzBackend as a symbol 
+in this file */
 #define IN_AQUA_C 1
 #include <R_ext/QuartzDevice.h>
 
-
-#ifdef OLD
-/* This is no longer used as from R.app r6413 */
-#include <Defn.h>
-
-#include <R_ext/GraphicsEngine.h>
-#include <R_ext/Rdynload.h>
-
-/* Defined in R_ext/QuartzDevice.h.
-   Called from Mac-GUI/RController.m, before packages are loaded.
-   If this fails, it hangs R.app */
-
-/* FIXME: this should not be allowed: we were requiring symbols in
-   grDevices.dll */
-QuartzFunctions_t *getQuartzFunctions(void) 
-{
-    QuartzFunctions_t *(*fn)(void);
-    fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
-    if (!fn) {
-	SEXP call = lang2(install("loadNamespace"), mkString("grDevices"));
-	PROTECT(call);
-	eval(call, R_GlobalEnv);
-	UNPROTECT(1);
-	fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
-	if (!fn) error("unable to get QuartzAPI");
-    }
-    return fn();
-}
-#endif
+/* There's another pointer in src/main/systutils.c, ptr_CocoaSystem . */
 
