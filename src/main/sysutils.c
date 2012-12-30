@@ -51,7 +51,7 @@
 #endif
 
 #ifdef HAVE_AQUA
-int (*ptr_CocoaSystem)(char*);
+int (*ptr_CocoaSystem)(const char*);
 extern	Rboolean useaqua;
 #endif
 
@@ -301,13 +301,7 @@ int R_system(const char *command)
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
 #ifdef HAVE_AQUA
-    char *cmdcpy;
-    if(useaqua) { // should be if(ptr_CocoaSystem)
-	/* FIXME, is Cocoa's interface not const char*? */
-	cmdcpy = acopy_string(command);
-	res = ptr_CocoaSystem(cmdcpy);
-    }
-    else
+    if(ptr_CocoaSystem) res = ptr_CocoaSystem(command); else
 #endif
     res = system(command);
     sigprocmask(SIG_UNBLOCK, &ss, NULL);
