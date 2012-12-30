@@ -31,6 +31,8 @@
 #include <Rinternals.h>
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
+/* This sets ptr_QuartzBackend as a symbol in this file */
+#define IN_AQUA_C 1
 #include <R_ext/QuartzDevice.h>
 
 #include "grDevices.h"
@@ -499,6 +501,7 @@ static QuartzFunctions_t qfn = {
     QuartzDevice_GetParameter
 };
 
+/* currrently unused: was used by R.app via aqua.c */
 QuartzFunctions_t *getQuartzAPI() {
     return &qfn;
 }

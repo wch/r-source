@@ -3632,14 +3632,14 @@ standard distribution there are separate applications for 32- and 64-bit
 Intel architectures.
 
 Originally the @R{} sources contained quite a lot of code used only by
-the OS X GUI, but this has now been migrated to @command{R.app}.
+the OS X GUI, but by @R{} 3.0.0 this was been migrated to the
+@command{R.app} sources.
 
 @command{R.app} starts @R{} as an embedded application with a
 command-line which includes @option{--gui=aqua} (see below).  It uses
 most of the interface pointers defined in the header
 @file{Rinterface.h}, plus a private interface pointer in file
-@file{src/main/sysutils.c}.@footnote{There is another one for the
-@code{quartz} device in @file{src/unix/aqua.c}.}  It adds an environment
+@file{src/main/sysutils.c}.  It adds an environment
 it names @code{tools:RGUI} to the second position in the search path.
 This contains a number of utility functions used to support the menu
 items, for example @code{package.manager()}, plus functions @code{q()}
@@ -3657,7 +3657,7 @@ macro @code{HAVE_AQUA} in @file{config.h} and the make variable
 @itemize
 @item
 The @code{quartz()} device is built (other than as a stub) in package
-@pkg{grDevices}:  this needs an Objective-C compiler.  Then
+@pkg{grDevices}: this needs an Objective-C compiler.  Then
 @code{quartz()} can be used with terminal @R{} provided the latter has
 access to the Mac OS X screen.
 
