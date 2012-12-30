@@ -186,7 +186,7 @@ loadNamespace <- function (package, lib.loc = NULL,
     if (! is.null(ns)) {
         if(length(z <- versionCheck) == 3L) {
             current <- getNamespaceVersion(ns)
-            if(!do.call(z$op, list(current, z$version)))
+            if(!do.call(z$op, list(as.numeric_version(current), z$version)))
                 stop(gettextf("namespace %s %s is already loaded, but %s %s is required",
                               sQuote(package), current, z$op, z$version),
                      domain = NA)
@@ -366,7 +366,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             dependsMethods <- "methods" %in% names(pkgInfo$Depends)
             if(dependsMethods) loadNamespace("methods")
             if(length(z <- versionCheck) == 3L &&
-               !do.call(z$op, list(version, z$version)))
+               !do.call(z$op, list(as.numeric_version(version), z$version)))
                 stop(gettextf("namespace %s %s is being loaded, but %s %s is required",
                               sQuote(package), version, z$op, z$version),
                      domain = NA)
