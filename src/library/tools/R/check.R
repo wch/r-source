@@ -2658,7 +2658,7 @@ setRlibs <- function(lib0 = "", pkgdir = ".", suggests = FALSE,
                              ": warning: .* is used uninitialized",
                              ": warning: .* set but not used",
                              ": warning: unused",
-                             ": warning: #warning",
+                             ": #warning",
                              "missing link\\(s\\):")
                 ## Warnings spotted by gcc with
                 ## '-Wimplicit-function-declaration', which is
