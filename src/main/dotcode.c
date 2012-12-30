@@ -33,6 +33,7 @@
 
 #include <R_ext/GraphicsEngine.h> /* needed for GEDevDesc in do_Externalgr */
 
+#define IN_R
 #include <R_ext/RConverters.h>
 #include <R_ext/Riconv.h>
 

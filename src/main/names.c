@@ -29,6 +29,7 @@
 #include <Print.h>
 #include "arithmetic.h" /* for do_math[1234], do_cmathfuns */
 
+#define IN_R
 #include <R_ext/RConverters.h>
 
 #include <Rinterface.h>

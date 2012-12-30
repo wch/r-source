@@ -24,6 +24,7 @@
 #endif
 
 #include <Defn.h>
+#define IN_R
 #include <R_ext/RConverters.h>
 
 /* head of the linked list of converters. Typically, NULL.*/
