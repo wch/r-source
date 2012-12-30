@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -677,7 +677,7 @@ msgstr ""
 msgid "package %s has not been installed properly"
 msgstr ""
 
-msgid "package %s was built before R 2.10.0: please re-install it"
+msgid "package %s was built before R 3.0.0: please re-install it"
 msgstr ""
 
 msgid "This is R %s, package %s needs %s %s"
@@ -941,6 +941,9 @@ msgstr ""
 msgid "%s not found"
 msgstr ""
 
+msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr ""
+
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr ""
 
@@ -954,6 +957,9 @@ msgid "failed to assign NativeSymbolInfo for %s since %s is already defined in t
 msgstr ""
 
 msgid "package %s does not have a namespace"
+msgstr ""
+
+msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr ""
 
 msgid "unable to load R code in package %s"

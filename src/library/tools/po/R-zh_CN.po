@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -313,6 +313,16 @@ msgstr "程序包启动函数不应该改变搜索路径"
 #, fuzzy
 msgid "See section %s in '%s'."
 msgstr "参见?.onAttach 里的%s章节"
+
+#, fuzzy
+msgid ""
+"Package detach functions should have one arguments with names starting with "
+"%s."
+msgstr "程序包启动函数需要有两个名字分别为%s和%s的参数"
+
+#, fuzzy
+msgid "Package detach functions should not call %s."
+msgstr "程序包启动函数不应该改变搜索路径"
 
 msgid "unable to create"
 msgstr "无法建立"

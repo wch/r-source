@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -705,7 +705,7 @@ msgstr ""
 msgid "package %s has not been installed properly"
 msgstr ""
 
-msgid "package %s was built before R 2.10.0: please re-install it"
+msgid "package %s was built before R 3.0.0: please re-install it"
 msgstr ""
 
 msgid "This is R %s, package %s needs %s %s"
@@ -982,6 +982,9 @@ msgstr ""
 msgid "%s not found"
 msgstr ""
 
+msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr ""
+
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr ""
 
@@ -1001,6 +1004,9 @@ msgid ""
 msgstr ""
 
 msgid "package %s does not have a namespace"
+msgstr ""
+
+msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr ""
 
 msgid "unable to load R code in package %s"

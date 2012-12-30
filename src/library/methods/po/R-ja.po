@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 09:21\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2012-02-26 14:07+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -535,9 +535,10 @@ msgstr ""
 "しいシグナチャ(単一のクラス名のリスト)のようには見えません：%d 個のクラス名が"
 "ありましたが、シグナチャオブジェクトには %d 個の要素があります "
 
+#, fuzzy
 msgid ""
-"more elements in the method signature (%d) than in the generic  signature "
-"(%d)"
+"more elements in the method signature (%d) than in the generic signature "
+"(%d) for function %s"
 msgstr ""
 " メソッドシグナチャ (%d) 中に総称的な シグネチャ (%d) 中よりも多くの要素があ"
 "ります "
@@ -1081,6 +1082,10 @@ msgid "%s has a sealed class definition and cannot be redefined"
 msgstr " \"%s\" は封印されたクラス定義を持ち、再定義は出来ません "
 
 msgid ""
+"Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr ""
+
+msgid ""
 "only arguments 'Class' and 'where' can be supplied when argument "
 "'representation' is a 'classRepresentation' object"
 msgstr ""
@@ -1211,6 +1216,22 @@ msgstr " %s に対する関数定義はありません "
 #, fuzzy
 msgid "argument 'classDef' must be a class definition or the name of a class"
 msgstr " 引数 classDef はクラス定義かクラスの名前でなければなりません "
+
+msgid "No %s names supplied"
+msgstr ""
+
+msgid "All %s names must be nonempty"
+msgstr ""
+
+msgid "All %s names must be distinct"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument %s must be a list or a character vector; got an object of class %s"
+msgstr ""
+" 引数 %s は総称的関数か単一の文字列でなければなりません; クラス %s のオブジェ"
+"クトを得ました "
 
 msgid "no function %s found"
 msgstr " 関数 %s が見付かりません "
@@ -1717,19 +1738,6 @@ msgstr ""
 "れていません (推奨パッケージ %s が利用不可能？) "
 
 #, fuzzy
-msgid ""
-"a list argument for 'fields' must have nonempty names for all the fields"
-msgstr " 欄へのリスト引数は全ての欄に対し空でない名前が必要です "
-
-#, fuzzy
-msgid ""
-"argument 'fields' must be a list of the field classes or definitions or the "
-"names of the fields; got an object of class %s"
-msgstr ""
-" 引数欄は欄クラスまたは定義のリスト、さもなければ単に欄の名前でなければなりま"
-"せん；クラス %s のオブジェクトが与えられました "
-
-#, fuzzy
 msgid "class %s is defined but is not a reference class"
 msgstr " クラス \"%s\" は定義されていますが，参照クラスではありません "
 
@@ -1972,6 +1980,9 @@ msgstr ""
 msgid "not a package name: %s"
 msgstr " パッケージ名ではありません: %s "
 
+msgid "unloading 'methods' package ..."
+msgstr ""
+
 msgid "apparently bad method or class metadata in saved environment;"
 msgstr ""
 " 保存された環境中に誤ったメソッドもしくはクラスメタデータがあるようです; "
@@ -2092,6 +2103,19 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
 " クラス %s の定義は指定された位置 %s にありません、%s に関する定義です "
+
+#, fuzzy
+#~ msgid ""
+#~ "a list argument for 'fields' must have nonempty names for all the fields"
+#~ msgstr " 欄へのリスト引数は全ての欄に対し空でない名前が必要です "
+
+#, fuzzy
+#~ msgid ""
+#~ "argument 'fields' must be a list of the field classes or definitions or "
+#~ "the names of the fields; got an object of class %s"
+#~ msgstr ""
+#~ " 引数欄は欄クラスまたは定義のリスト、さもなければ単に欄の名前でなければな"
+#~ "りません；クラス %s のオブジェクトが与えられました "
 
 #~ msgid "Warning:  using defunct methods list search"
 #~ msgstr " 警告：廃止されたメソッドリスト検索を用いています "

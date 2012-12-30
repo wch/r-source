@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -330,6 +330,18 @@ msgstr "Startfunktionen des Pakets sollten %s nicht aufrufen."
 #, fuzzy
 msgid "See section %s in '%s'."
 msgstr "Siehe Abschnitt %s in ?.onAttach."
+
+#, fuzzy
+msgid ""
+"Package detach functions should have one arguments with names starting with "
+"%s."
+msgstr ""
+"Startfunktionen des Pakets sollten zwei Argumente haben, deren Namen\n"
+"mit %s bzw. %s beginnen."
+
+#, fuzzy
+msgid "Package detach functions should not call %s."
+msgstr "Startfunktionen des Pakets sollten %s nicht aufrufen."
 
 msgid "unable to create"
 msgstr "kann nicht erzeugen"

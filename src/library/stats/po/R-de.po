@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2012-03-06 09:25+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1008,6 +1008,10 @@ msgstr "kann mit den gegebenen Daten '...' in der Formel nicht nutzen"
 
 msgid "'x' must be an \"ftable\" object"
 msgstr "'x' muss ein \"ftable\" Objekt sein"
+
+#, fuzzy
+msgid "wrong method"
+msgstr "falsche Endregel"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
@@ -2627,9 +2631,6 @@ msgstr[1] "'start.innov' ist zu kurz: benötige %d Punkte"
 
 #~ msgid "'proj' is not implemented for \"mlm\" fits"
 #~ msgstr "'proj' ist für \"mlm\" Fits nicht implementiert"
-
-#~ msgid "wrong endrule"
-#~ msgstr "falsche Endregel"
 
 #~ msgid "upper scope does not include model term(s) %s"
 #~ msgstr "oberer Scope enthält den/die Modellterm(e) %s nicht"

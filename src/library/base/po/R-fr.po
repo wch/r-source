@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -796,7 +796,8 @@ msgstr "'keep.source' est obsolète et sera ignoré"
 msgid "package %s has not been installed properly"
 msgstr "le package '%s' n'a pas été installé correctement"
 
-msgid "package %s was built before R 2.10.0: please re-install it"
+#, fuzzy
+msgid "package %s was built before R 3.0.0: please re-install it"
 msgstr ""
 "le package %s a été compilé avant R 2.10.0 : veuillez réinstaller une "
 "version plus récente, s'il-vous-plait"
@@ -1104,6 +1105,10 @@ msgid "%s not found"
 msgstr "%s introuvable"
 
 #, fuzzy
+msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "le package %s %s est chargé, mais %s %s est requis par %s"
+
+#, fuzzy
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "l'espace de noms %s est déjà verrouillé dans loadNamespace"
 
@@ -1125,6 +1130,10 @@ msgstr ""
 
 msgid "package %s does not have a namespace"
 msgstr "le package %s n'a pas d'espace de noms"
+
+#, fuzzy
+msgid "namespace %s %s is being loaded, but %s %s is required"
+msgstr "le package %s %s est chargé, mais %s %s est requis par %s"
 
 msgid "unable to load R code in package %s"
 msgstr "impossible de charger le code R depuis le package %s"

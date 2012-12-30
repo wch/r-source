@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -331,6 +331,18 @@ msgstr "패키지 스타트업 함수들은 %s 를 호출해서는 안됩니다 
 #, fuzzy
 msgid "See section %s in '%s'."
 msgstr "?.onAttach 도움말에서  %s 섹션을 확인하세요 "
+
+#, fuzzy
+msgid ""
+"Package detach functions should have one arguments with names starting with "
+"%s."
+msgstr ""
+"패키지 스타트업 함수들은 반드시 %s 와 %s 로 시작하는 이름을 가진 인수를 가져"
+"야 합니다 "
+
+#, fuzzy
+msgid "Package detach functions should not call %s."
+msgstr "패키지 스타트업 함수들은 %s 를 호출해서는 안됩니다 "
 
 msgid "unable to create"
 msgstr "생성할 수 없습니다 "

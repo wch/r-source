@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 09:21\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -419,8 +419,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"more elements in the method signature (%d) than in the generic  signature "
-"(%d)"
+"more elements in the method signature (%d) than in the generic signature "
+"(%d) for function %s"
 msgstr ""
 
 msgid "no generic function found corresponding to %s"
@@ -824,6 +824,10 @@ msgid "%s has a sealed class definition and cannot be redefined"
 msgstr ""
 
 msgid ""
+"Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr ""
+
+msgid ""
 "only arguments 'Class' and 'where' can be supplied when argument "
 "'representation' is a 'classRepresentation' object"
 msgstr ""
@@ -920,6 +924,20 @@ msgstr ""
 
 #, fuzzy
 msgid "argument 'classDef' must be a class definition or the name of a class"
+msgstr "Erstatningsværdi skal udvide klasse %s, fik %s"
+
+msgid "No %s names supplied"
+msgstr ""
+
+msgid "All %s names must be nonempty"
+msgstr ""
+
+msgid "All %s names must be distinct"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument %s must be a list or a character vector; got an object of class %s"
 msgstr "Erstatningsværdi skal udvide klasse %s, fik %s"
 
 msgid "no function %s found"
@@ -1280,15 +1298,6 @@ msgid ""
 "assignments (recommended package %s not available?)"
 msgstr ""
 
-msgid ""
-"a list argument for 'fields' must have nonempty names for all the fields"
-msgstr ""
-
-msgid ""
-"argument 'fields' must be a list of the field classes or definitions or the "
-"names of the fields; got an object of class %s"
-msgstr ""
-
 msgid "class %s is defined but is not a reference class"
 msgstr ""
 
@@ -1456,6 +1465,9 @@ msgid "no method in methods table for %s for signature %s"
 msgstr ""
 
 msgid "not a package name: %s"
+msgstr ""
+
+msgid "unloading 'methods' package ..."
 msgstr ""
 
 msgid "apparently bad method or class metadata in saved environment;"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 09:21\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2012-03-05 22:07+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -540,9 +540,10 @@ msgstr ""
 "sieht nicht wie eine zulässige Signatur (Vektor von einzelnen Klassennamen) "
 "aus; es gab %d Klassennamen, aber %d Elemente im Signaturobjekt"
 
+#, fuzzy
 msgid ""
-"more elements in the method signature (%d) than in the generic  signature "
-"(%d)"
+"more elements in the method signature (%d) than in the generic signature "
+"(%d) for function %s"
 msgstr ""
 "mehr Elemente in der Methodensignatur (%d) als in der generischen Signatur "
 "(%d)"
@@ -1106,6 +1107,10 @@ msgstr ""
 "werden"
 
 msgid ""
+"Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr ""
+
+msgid ""
 "only arguments 'Class' and 'where' can be supplied when argument "
 "'representation' is a 'classRepresentation' object"
 msgstr ""
@@ -1239,6 +1244,22 @@ msgid "argument 'classDef' must be a class definition or the name of a class"
 msgstr ""
 "Argument classdef muss eine Klassendefinition oder der Name einer\n"
 "Klasse sein"
+
+msgid "No %s names supplied"
+msgstr ""
+
+msgid "All %s names must be nonempty"
+msgstr ""
+
+msgid "All %s names must be distinct"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument %s must be a list or a character vector; got an object of class %s"
+msgstr ""
+"Argument %s muss eine generische Funktion oder eine Zeichenkette sein;\n"
+"bekam ein Objekt aus Klasse %s"
 
 msgid "no function %s found"
 msgstr "keine Funktion %s gefunden"
@@ -1749,21 +1770,6 @@ msgstr ""
 "Feldzuweisungen überprüft (empfohlenes Paket %s nicht verfügbar?))"
 
 #, fuzzy
-msgid ""
-"a list argument for 'fields' must have nonempty names for all the fields"
-msgstr ""
-"Ein Listenargument für Felder muss nicht-leere Namen für alle Felder "
-"bereitstellen"
-
-#, fuzzy
-msgid ""
-"argument 'fields' must be a list of the field classes or definitions or the "
-"names of the fields; got an object of class %s"
-msgstr ""
-"Argument fields muss eine Liste von Feldklassen oder Definitionen sein oder "
-"einfach die Name der Felder: bekam ein Objekt aus Klasse %s"
-
-#, fuzzy
 msgid "class %s is defined but is not a reference class"
 msgstr "Klasse %s ist definiert, aber keine Referenzklasse"
 
@@ -2009,6 +2015,9 @@ msgstr "Keine Methode in der Methodentabelle für  \"%s\" für Signatur \"%s\""
 msgid "not a package name: %s"
 msgstr "ist kein Paketname: %s"
 
+msgid "unloading 'methods' package ..."
+msgstr ""
+
 msgid "apparently bad method or class metadata in saved environment;"
 msgstr ""
 "anscheinend unbrauchbare Methode oder Klassenmetadaten in gespeicherter "
@@ -2165,6 +2174,21 @@ msgstr[0] ""
 msgstr[1] ""
 "keine Definiton der Klasse %s an der angegebenen Position, %s, Definitinen "
 "bei: %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "a list argument for 'fields' must have nonempty names for all the fields"
+#~ msgstr ""
+#~ "Ein Listenargument für Felder muss nicht-leere Namen für alle Felder "
+#~ "bereitstellen"
+
+#, fuzzy
+#~ msgid ""
+#~ "argument 'fields' must be a list of the field classes or definitions or "
+#~ "the names of the fields; got an object of class %s"
+#~ msgstr ""
+#~ "Argument fields muss eine Liste von Feldklassen oder Definitionen sein "
+#~ "oder einfach die Name der Felder: bekam ein Objekt aus Klasse %s"
 
 #~ msgid "Warning:  using defunct methods list search"
 #~ msgstr "Warnung: Listensuche in methods funktioniert nicht mehr"

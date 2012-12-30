@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 09:21\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2012-03-15 11:56-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -522,9 +522,10 @@ msgstr ""
 "выглядит правильным идентификатором (вектором одиночного класса имен): там "
 "было %d классов имен, но %d элементов в идентификаторе"
 
+#, fuzzy
 msgid ""
-"more elements in the method signature (%d) than in the generic  signature "
-"(%d)"
+"more elements in the method signature (%d) than in the generic signature "
+"(%d) for function %s"
 msgstr ""
 "в идентификаторе метода (%d) больше элементов, чем в общем идентификаторе "
 "(%d)"
@@ -1075,6 +1076,10 @@ msgstr ""
 "\"%s\" имеет запечатанное определение класса и не может быть переопределено"
 
 msgid ""
+"Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr ""
+
+msgid ""
 "only arguments 'Class' and 'where' can be supplied when argument "
 "'representation' is a 'classRepresentation' object"
 msgstr ""
@@ -1204,6 +1209,22 @@ msgstr "Не дали имя пакета и определение класса для %s"
 #, fuzzy
 msgid "argument 'classDef' must be a class definition or the name of a class"
 msgstr "аргумент classDef должен быть определением или именем класса"
+
+msgid "No %s names supplied"
+msgstr ""
+
+msgid "All %s names must be nonempty"
+msgstr ""
+
+msgid "All %s names must be distinct"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument %s must be a list or a character vector; got an object of class %s"
+msgstr ""
+"аргумент %s должен быть общей функцией или одной текстовой строкой; получен "
+"объект класса %s"
 
 msgid "no function %s found"
 msgstr "не найдено функции %s"
@@ -1693,19 +1714,6 @@ msgstr ""
 "(рекоммендуемый пакет %s не доступен?)"
 
 #, fuzzy
-msgid ""
-"a list argument for 'fields' must have nonempty names for all the fields"
-msgstr "Список аргументов для полей должен иметь непустуе имена во всех полях"
-
-#, fuzzy
-msgid ""
-"argument 'fields' must be a list of the field classes or definitions or the "
-"names of the fields; got an object of class %s"
-msgstr ""
-"Поля аргумента должны быть списком классов поля или определений, или просто "
-"именами полей, а получил объект класса %s"
-
-#, fuzzy
 msgid "class %s is defined but is not a reference class"
 msgstr "Класс %s не  определен как ссылочный класс"
 
@@ -1942,6 +1950,9 @@ msgstr "В таблице методов нет метода для \"%s\" для подписи \"%s\""
 msgid "not a package name: %s"
 msgstr "не является именем пакета: %s"
 
+msgid "unloading 'methods' package ..."
+msgstr ""
+
 msgid "apparently bad method or class metadata in saved environment;"
 msgstr "очевидно плохой метод или метаданные класса в сохраненном окружении;"
 
@@ -2118,6 +2129,20 @@ msgstr[1] ""
 "нет определения класса %s в указанной позиции, %s, определение(-я): %s"
 msgstr[2] ""
 "нет определения класса %s в указанной позиции, %s, определение(-я): %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "a list argument for 'fields' must have nonempty names for all the fields"
+#~ msgstr ""
+#~ "Список аргументов для полей должен иметь непустуе имена во всех полях"
+
+#, fuzzy
+#~ msgid ""
+#~ "argument 'fields' must be a list of the field classes or definitions or "
+#~ "the names of the fields; got an object of class %s"
+#~ msgstr ""
+#~ "Поля аргумента должны быть списком классов поля или определений, или "
+#~ "просто именами полей, а получил объект класса %s"
 
 #~ msgid "Warning:  using defunct methods list search"
 #~ msgstr "Предупреждение: использую нерабочие методы поиска в списке"

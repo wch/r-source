@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 09:21\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -461,9 +461,10 @@ msgstr ""
 "为函数%1$s作为方法标记而用的对象看来不象是合法的标记(单类别名字矢量) ：一共"
 "有%2$d类别名字，但标记对象里只有%3$d个元素"
 
+#, fuzzy
 msgid ""
-"more elements in the method signature (%d) than in the generic  signature "
-"(%d)"
+"more elements in the method signature (%d) than in the generic signature "
+"(%d) for function %s"
 msgstr "方法标记(%d)里的元素比泛型标记(%d)里的要多"
 
 #, fuzzy
@@ -938,6 +939,10 @@ msgid "%s has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
 
 msgid ""
+"Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr ""
+
+msgid ""
 "only arguments 'Class' and 'where' can be supplied when argument "
 "'representation' is a 'classRepresentation' object"
 msgstr ""
@@ -1052,6 +1057,21 @@ msgstr "%s没有程辑包出没有类别定义"
 #, fuzzy
 msgid "argument 'classDef' must be a class definition or the name of a class"
 msgstr "参数classDef必需是类别定义或是类别的名字"
+
+msgid "No %s names supplied"
+msgstr ""
+
+msgid "All %s names must be nonempty"
+msgstr ""
+
+msgid "All %s names must be distinct"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument %s must be a list or a character vector; got an object of class %s"
+msgstr ""
+"参数%s要么是泛型函数要么是单一字符串；现在得到的却是类别为%s的目标对象对象"
 
 msgid "no function %s found"
 msgstr "找不到%s这一函数"
@@ -1488,17 +1508,6 @@ msgid ""
 msgstr "没有检查%s类别方法代码可能有错的场分配（是不是因为没有推荐程辑包%s？）"
 
 #, fuzzy
-msgid ""
-"a list argument for 'fields' must have nonempty names for all the fields"
-msgstr "场串列参数必需全部都是非空场名"
-
-#, fuzzy
-msgid ""
-"argument 'fields' must be a list of the field classes or definitions or the "
-"names of the fields; got an object of class %s"
-msgstr "参数场必须是场类别串列，或定义串列，或场的名字;现在得到是类别的对象%s"
-
-#, fuzzy
 msgid "class %s is defined but is not a reference class"
 msgstr "类别%s有定义但不是引用类别"
 
@@ -1710,6 +1719,9 @@ msgstr "函数\"%s\"标记\"%s\"方法表里没有设定方法"
 msgid "not a package name: %s"
 msgstr "不是程輯包名: %s"
 
+msgid "unloading 'methods' package ..."
+msgstr ""
+
 msgid "apparently bad method or class metadata in saved environment;"
 msgstr "保存的环境中出现了不良方法或类别元数据；"
 
@@ -1821,6 +1833,18 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
+
+#, fuzzy
+#~ msgid ""
+#~ "a list argument for 'fields' must have nonempty names for all the fields"
+#~ msgstr "场串列参数必需全部都是非空场名"
+
+#, fuzzy
+#~ msgid ""
+#~ "argument 'fields' must be a list of the field classes or definitions or "
+#~ "the names of the fields; got an object of class %s"
+#~ msgstr ""
+#~ "参数场必须是场类别串列，或定义串列，或场的名字;现在得到是类别的对象%s"
 
 #~ msgid "Warning:  using defunct methods list search"
 #~ msgstr "警告：你用的串列搜索方法已经不现存了"

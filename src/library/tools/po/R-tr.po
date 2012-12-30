@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -299,6 +299,14 @@ msgid "Package startup functions should not call %s."
 msgstr ""
 
 msgid "See section %s in '%s'."
+msgstr ""
+
+msgid ""
+"Package detach functions should have one arguments with names starting with "
+"%s."
+msgstr ""
+
+msgid "Package detach functions should not call %s."
 msgstr ""
 
 msgid "unable to create"

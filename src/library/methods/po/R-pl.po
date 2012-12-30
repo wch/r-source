@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 09:21\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -525,9 +525,10 @@ msgstr ""
 "poprawną sygnaturę (wektor pojedynczych nazw klas): było %d nazw klas, ale "
 "%d elementów w obiekcie sygnatury"
 
+#, fuzzy
 msgid ""
-"more elements in the method signature (%d) than in the generic  signature "
-"(%d)"
+"more elements in the method signature (%d) than in the generic signature "
+"(%d) for function %s"
 msgstr ""
 "więcej elementów w sygnaturze metody (%d) niż w ogólnej sygnaturze (%d)"
 
@@ -1076,6 +1077,10 @@ msgid "%s has a sealed class definition and cannot be redefined"
 msgstr "\"%s\" ma zablokowaną definicję klasy i nie może być przedefiniowana"
 
 msgid ""
+"Argument \"representation\" cannot be used if argument \"slots\" is supplied"
+msgstr ""
+
+msgid ""
 "only arguments 'Class' and 'where' can be supplied when argument "
 "'representation' is a 'classRepresentation' object"
 msgstr ""
@@ -1207,6 +1212,22 @@ msgstr "Nie dostarczono nazwy pakietu i nie znaleziono definicji klasy dla %s"
 #, fuzzy
 msgid "argument 'classDef' must be a class definition or the name of a class"
 msgstr "argument 'classDef' musi być definicją klasy lub nazwą klasy"
+
+msgid "No %s names supplied"
+msgstr ""
+
+msgid "All %s names must be nonempty"
+msgstr ""
+
+msgid "All %s names must be distinct"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"argument %s must be a list or a character vector; got an object of class %s"
+msgstr ""
+"argument %s musi być ogólną funkcją lub pojedynczym ciągiem tekstowym; "
+"otrzymano obiekt klasy %s"
 
 msgid "no function %s found"
 msgstr "nie znaleziono funkcji %s"
@@ -1705,19 +1726,6 @@ msgstr ""
 "przypisań pól (rekomendowany pakiet %s nie jest dostępny?)"
 
 #, fuzzy
-msgid ""
-"a list argument for 'fields' must have nonempty names for all the fields"
-msgstr "Argument 'list' dla pól musi mieć niepuste nazwy dla wszystkich pól"
-
-#, fuzzy
-msgid ""
-"argument 'fields' must be a list of the field classes or definitions or the "
-"names of the fields; got an object of class %s"
-msgstr ""
-"Argument 'fields' musi być listą klas pól lub definicjami, lub też tylko "
-"nazwami pól; otrzymano obiekt klasy %s"
-
-#, fuzzy
 msgid "class %s is defined but is not a reference class"
 msgstr "Klasa %s jest zdefiniowana, ale nie jest referencyjną klasą"
 
@@ -1956,6 +1964,9 @@ msgstr "Brak metod w tablicy metod dla \"%s\" dla sygnatury \"%s\""
 msgid "not a package name: %s"
 msgstr "nie jest nazwą pakietu: %s"
 
+msgid "unloading 'methods' package ..."
+msgstr ""
+
 msgid "apparently bad method or class metadata in saved environment;"
 msgstr "najwyraźniej złe metadane metody lub klasy w zapisanym środowisku;"
 
@@ -2132,6 +2143,19 @@ msgstr[1] ""
 "brak definicji klasy %s we wskazanym położeniu, %s, definicja(e): %s"
 msgstr[2] ""
 "brak definicji klasy %s we wskazanym położeniu, %s, definicja(e): %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "a list argument for 'fields' must have nonempty names for all the fields"
+#~ msgstr "Argument 'list' dla pól musi mieć niepuste nazwy dla wszystkich pól"
+
+#, fuzzy
+#~ msgid ""
+#~ "argument 'fields' must be a list of the field classes or definitions or "
+#~ "the names of the fields; got an object of class %s"
+#~ msgstr ""
+#~ "Argument 'fields' musi być listą klas pól lub definicjami, lub też tylko "
+#~ "nazwami pól; otrzymano obiekt klasy %s"
 
 #~ msgid "Warning:  using defunct methods list search"
 #~ msgstr "Ostrzeżenie: użycie zlikwidowanej listy metod wyszukiwania"

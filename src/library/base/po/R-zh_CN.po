@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 10:06\n"
+"POT-Creation-Date: 2012-12-30 14:07\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -754,7 +754,8 @@ msgstr "'keep.source'已经不再有用，因此会略过不用"
 msgid "package %s has not been installed properly"
 msgstr "没有正确安装程辑包%s "
 
-msgid "package %s was built before R 2.10.0: please re-install it"
+#, fuzzy
+msgid "package %s was built before R 3.0.0: please re-install it"
 msgstr "程辑包%s是在R版本2.10.0之前建的：你得重新安装"
 
 msgid "This is R %s, package %s needs %s %s"
@@ -1045,6 +1046,10 @@ msgid "%s not found"
 msgstr "%s不存在"
 
 #, fuzzy
+msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "载入了程辑包%1$s %2$s，但%5$s需要%3$s %4$s "
+
+#, fuzzy
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "名字空间%s已经在loadNamespace封條了"
 
@@ -1066,6 +1071,10 @@ msgstr ""
 
 msgid "package %s does not have a namespace"
 msgstr "程辑包%s没有名字空间"
+
+#, fuzzy
+msgid "namespace %s %s is being loaded, but %s %s is required"
+msgstr "载入了程辑包%1$s %2$s，但%5$s需要%3$s %4$s "
 
 msgid "unable to load R code in package %s"
 msgstr "程辑包%s里的R写碼载入失败"
