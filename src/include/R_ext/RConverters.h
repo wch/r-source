@@ -26,6 +26,8 @@
 #ifndef R_CCONVERTERS_H
 #define R_CCONVERTERS_H
 
+#warning R_exts/RConverters.h was deprecated in R 2.15.1 and will be removed in R 3.0.0
+
 #include <Rinternals.h>
 
 #ifdef __cplusplus

@@ -27,8 +27,7 @@ unloadNamespace(ns)
 \arguments{
   \item{ns}{string or namespace object.}
   \item{pos}{integer specifying position to attach.}
-  \item{dataPath}{path to directory containing a database of datasets to
-    be lazy-loaded into the attached environment.}
+  \item{dataPath}{unused: will be removed in \R 3.0.0.}
   \item{depends}{\code{NULL} or a character vector of dependencies to be
     recorded in object \code{.Depends} in the package.}
   \item{package}{string naming the package/namespace to load.}
