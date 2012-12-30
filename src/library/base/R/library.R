@@ -60,13 +60,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(length(dep) > 1L) {
                     res <- if(is.character(target <- dep$version)) {
                         ver <- R.version
-                        # if (ver$status %in% c("", "Patched")) FALSE else
                         do.call(dep$op,
-                                list(ver[["svn rev"]],
+                                list(as.numeric(ver[["svn rev"]]),
                                      as.numeric(sub("^r", "", dep$version))))
                     } else {
-                        target <- as.numeric_version(dep$version)
-                        eval(parse(text=paste("current", dep$op, "target")))
+                        do.call(dep$op,
+                                list(current, as.numeric_version(target)))
                     }
                     if(!res)
                         stop(gettextf("This is R %s, package %s needs %s %s",
@@ -134,7 +133,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 file.show(lfiles[1L], encoding = encoding)
             } else {
                 message(gettextf("Package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is", sQuote(pkg)), domain = NA)
-                message(pkgInfo$DESCRIPTION["License"])
+                message(pkgInfo$DESCRIPTION["License"], domain = NA)
             }
             choice <- menu(c("accept", "decline"),
                            title = paste("License for", sQuote(pkg)))
@@ -862,7 +861,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                     for(z in zs)
                         if(length(z) > 1L) {
                             target <- as.numeric_version(z$version)
-                            if (!eval(parse(text=paste("current", z$op, "target"))))
+                            if (!do.call(z$op, list(as.numeric_version(current), target)))
                                 stop(gettextf("package %s %s was found, but %s %s is required by %s",
                                               sQuote(pkg), current, z$op,
                                               target, sQuote(pkgname)),
@@ -886,7 +885,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                     for(z in zs)
                         if (length(z) > 1L) {
                             target <- as.numeric_version(z$version)
-                            if (!eval(parse(text=paste("current", z$op, "target"))))
+                            if (!do.call(z$op, list(as.numeric_version(current), target)))
                                 stop(gettextf("package %s %s is loaded, but %s %s is required by %s",
                                               sQuote(pkg), current, z$op,
                                               target, sQuote(pkgname)),

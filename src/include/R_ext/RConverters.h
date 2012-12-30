@@ -26,6 +26,8 @@
 #ifndef R_CCONVERTERS_H
 #define R_CCONVERTERS_H
 
+/* GNU claims #warning is a GNU extension but it is also available
+   on Solaris cc (if parseable, hence the quotes) */
 #warning "R_exts/RConverters.h was deprecated in R 2.15.1 and will be removed in R 3.0.0"
 
 #include <Rinternals.h>
