@@ -34,7 +34,7 @@ setClass <-
         ## Arguments slots= and contains= are used, representation must not be
         if(!missing(representation))
             stop("Argument \"representation\" cannot be used if argument \"slots\" is supplied")
-        properties <- inferProperties(slots, "slots")
+        properties <- inferProperties(slots, "slot")
         classDef <- makeClassRepresentation(Class, properties,contains, prototype, package,
                                              validity, access, version, sealed, where = where)
         superClasses <- names(classDef@contains)
@@ -948,6 +948,7 @@ classGeneratorFunction <- function(classDef, env = topenv(parent.frame())) {
     fun
 }
 
+## grammar: 'what' is an adjective, so not plural ....
 inferProperties <- function(props, what) {
     .validPropNames <- function(propNames) {
         n <- length(props)

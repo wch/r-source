@@ -887,7 +887,7 @@ setRefClass <- function(Class, fields = character(),
                         methods = list(),
                         where = topenv(parent.frame()),
                         ...) {
-    fields <- inferProperties(fields, "fields")
+    fields <- inferProperties(fields, "field")
     theseMethods <- names(methods) # non-inherited, for processing later
     ## collect the method and field definitions
     info <- refClassInformation(Class, contains, fields, methods, where)
