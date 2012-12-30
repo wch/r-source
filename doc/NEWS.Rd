@@ -509,7 +509,8 @@
       been removed.
 
       \item Support for the converters for use with \code{.C()} has been
-      removed.
+      removed, including the oft misused non-API header
+      \file{R_exts/RConverters.h}.
 
       \item The previously deprecated uses of \code{array()} with a
       0-length \code{dim} argument and \code{tapply()} with a 0-length
@@ -536,8 +537,8 @@
 
       \item Function \code{CRAN.packages()} is finally defunct.
 
-      \item Use of \code{col2rgb(0)} is defunct: use \code{par("bg")}
-      instead.
+      \item Use of \code{col2rgb(0)} is defunct: use \code{par("bg")} or
+      \code{NA} instead.
 
       \item The long-defunct functions \code{Rd_parse()},
       \code{anovalist.lm()}, \code{clearNames()}, \code{glm.fit.null()},
