@@ -742,6 +742,9 @@
       \item The internal methods for \code{tar()} and \code{untar()} do
       a slightly more general job for \sQuote{ustar}-style handling of
       paths of more than 100 bytes.
+
+      \item Package \pkg{parallel} has been added to the reference index
+      (\file{refman.pdf}.
     }
   }
 
@@ -823,6 +826,9 @@
       \item \code{parallel::mccollect()} handled \code{NULL} returns
       incorrectly (removing the element rather than setting it to
       \code{NULL}).
+      
+      \item The full reference index (\file{fullrefman.pdf}) was missing
+      packages \pkg{compiler}, \pkg{parallel} and \pkg{splines}.
     }
   }
 }
