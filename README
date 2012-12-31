@@ -34,7 +34,7 @@ flexible graphical environment for creating various kinds of data
 presentations.
 
 A package specification allows the production of loadable modules for
-specific purposes, and several hundred contributed packages are made
+specific purposes, and several thousand contributed packages are made
 available through the CRAN sites (see
 http://CRAN.R-project.org/mirrors.html for the current members).
 
@@ -50,7 +50,9 @@ Since mid-1997 there has been a core group who can modify the R source
 code archive, listed in file doc/AUTHORS.
 
 R 1.0.0 was released on 29 February 2000 and 2.0.0 on 4 October 2004.
+R 3.0.0 is planned for Spring 2013.
 
+This file has been minimally revised since the release of R 1.0.0.
 
 3. PRESENT STATUS
 
@@ -62,12 +64,13 @@ Book") and the 1998 book "Programming with Data" (the "Green Book").
 
 All the R functions have been documented in the form of help pages in
 an "output independent" form which can be used to create versions for
-HTML, LaTeX, text etc.  A 1800+ page Reference Index (a collection of
-all the help pages) can be obtained in a variety of formats.  The
-manual `An Introduction to R' provides a more user-friendly starting
-point, and there is an `R Language Definition' manual and more
-specialized manuals on data import/export and extending R.  See INSTALL
-for instructions on how to generate these documents.
+HTML, PDF, text etc.  A 1900+ page Reference Index (a collection of
+most of the help pages: there is also a 3200+ page version with all
+the help pages) can be obtained in PDF.  The manual `An Introduction
+to R' provides a more user-friendly starting point, and there is an
+FAQ, a draft `R Language Definition' manual and more specialized
+manuals on admininstration, data import/export and extending R.  See
+INSTALL for instructions on how to generate these documents.
 
 
 4. GOALS
