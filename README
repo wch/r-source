@@ -65,12 +65,13 @@ Book") and the 1998 book "Programming with Data" (the "Green Book").
 All the R functions have been documented in the form of help pages in
 an "output independent" form which can be used to create versions for
 HTML, PDF, text etc.  A 1900+ page Reference Index (a collection of
-most of the help pages: there is also a 3200+ page version with all
-the help pages) can be obtained in PDF.  The manual `An Introduction
-to R' provides a more user-friendly starting point, and there is an
-FAQ, a draft `R Language Definition' manual and more specialized
-manuals on admininstration, data import/export and extending R.  See
-INSTALL for instructions on how to generate these documents.
+most of the help pages: there is also a 3300+ page version with all
+the help pages, including recommended packages) can be obtained in
+PDF.  The manual `An Introduction to R' provides a more user-friendly
+starting point, and there is an FAQ, a draft `R Language Definition'
+manual and more specialized manuals on admininstration, data
+import/export and extending R.  See INSTALL for instructions on how to
+generate these documents.
 
 
 4. GOALS

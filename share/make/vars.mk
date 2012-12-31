@@ -3,6 +3,7 @@
 
 ## There is also 'translations', but that is not Priority: base
 ## so it can be handled by update.packages() in due course.
+## If you add packages here, also update doc/manual/Makefile.{in,win}
 R_PKGS_BASE = base tools utils grDevices graphics stats datasets methods grid splines stats4 tcltk compiler parallel
 ## Those which can be installed initially compiled (not base tools)
 R_PKGS_BASE1 = utils grDevices graphics stats datasets methods grid splines stats4 tcltk parallel
