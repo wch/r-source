@@ -680,6 +680,10 @@
       \sQuote{long double} type.  This is required by C99, but system
       implementations can be slow or flawed.  Use \command{configure}
       option \option{--disable-long-double}.
+
+      \item The 'reference manual' on the Windows GUI menu and included
+      in the installer is now the full reference index, including all
+      base and recommended packages.
     }
   }
 

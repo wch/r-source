@@ -103,7 +103,7 @@ $(OBJECTS_HTML): $(texiincludes) Rman.css
 info: $(OBJECTS_INFO)
 $(OBJECTS_INFO): $(texiincludes)
 
-pdf: refman.pdf $(OBJECTS_PDF)
+pdf: fullrefman.pdf $(OBJECTS_PDF)
 $(OBJECTS_PDF): $(texiincludes)
 
 refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \

@@ -558,7 +558,7 @@ static void menumainman(control m)
 
 static void menumainref(control m)
 {
-    internal_shellexec("doc\\manual\\refman.pdf");
+    internal_shellexec("doc\\manual\\fullrefman.pdf");
 }
 
 static void menumaindata(control m)
@@ -923,7 +923,7 @@ int RguiPackageMenu(PkgMenuItems pmenu)
 static void CheckForManuals(void)
 {
     lmanintro = check_doc_file("doc\\manual\\R-intro.pdf");
-    lmanref = check_doc_file("doc\\manual\\refman.pdf");
+    lmanref = check_doc_file("doc\\manual\\fullrefman.pdf");
     lmandata = check_doc_file("doc\\manual\\R-data.pdf");
     lmanlang = check_doc_file("doc\\manual\\R-lang.pdf");
     lmanext = check_doc_file("doc\\manual\\R-exts.pdf");
@@ -954,7 +954,7 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 	MCHECK(hmenu->mmanintro = newmenuitem("An &Introduction to R", 0,
 				       menumainman));
 	if (!lmanintro) disable(hmenu->mmanintro);
-	MCHECK(hmenu->mmanref = newmenuitem("R &Reference Manual", 0,
+	MCHECK(hmenu->mmanref = newmenuitem("R &Reference", 0,
 				     menumainref));
 	if (!lmanref) disable(hmenu->mmanref);
 	MCHECK(hmenu->mmandata = newmenuitem("R Data Import/Export", 0,

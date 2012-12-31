@@ -128,7 +128,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win.exe} of about 50Mb.
+installer @samp{@RWVER@-win.exe} of about 52Mb.
 
 There are also links on that page to the @samp{r-patched} and
 @samp{r-devel} snapshots.  These are frequently updated builds of
@@ -153,13 +153,13 @@ mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
 32-bit XP SP3.
 
 Your file system must allow case-honouring long file names (as is likely
-except perhaps for some network-mounted systems).  A installation for
-one architecture takes about 75Mb of disk space, for both 90-100Mb.
+except perhaps for some network-mounted systems).  A installation takes
+75--100Mb of disk space.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
 with spaces in will probably work, but is little-tested.)  Users of
-Vista/Windows 7/8/Server 2008 installing for a single user using an
+Vista/Windows 7/8/Server 2008/2012 installing for a single user using an
 account with administrator rights@footnote{Non-administrator accounts
 will automatically be offered a default installation directory in the
 user area.} should consider installing into a non-system area (such as
@@ -277,11 +277,11 @@ without creating a shortcut starting in a writable folder.
 @section How do I UNinstall R?
 
 Normally you can do this from the @samp{Add/Remove Programs} (XP) or
-@samp{Programs and Features} (Vista/7/8/Server 2008) group in the
-Control Panel.  If it does not appear there, run @file{unins000.exe} in
-the top-level installation directory.  On recent versions of Windows you
-may well be asked to confirm that you wish to run a program from an
-`unknown' or `unidentified' publisher.
+@samp{Programs and Features} group in the Control Panel.  If it does not
+appear there, run @file{unins000.exe} in the top-level installation
+directory.  On recent versions of Windows you may well be asked to
+confirm that you wish to run a program from an `unknown' or
+`unidentified' publisher.
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -421,10 +421,9 @@ variable @env{HOME} is set, its value is used.  After those two
 user-controllable settings, R tries to find system-defined home
 directories.  It first tries to use the Windows "personal" directory
 (typically @file{C:\Documents and Settings\username\My Documents} on
-Windows XP and @file{C:\Users\username\Documents} on Vista/Windows
-7/8/Server 2008).
-If that fails, if both environment variables @env{HOMEDRIVE} and
-@env{HOMEPATH} are set (and they normally are), the value is
+Windows XP and @file{C:\Users\username\Documents} nowadays).  If that
+fails, if both environment variables @env{HOMEDRIVE} and @env{HOMEPATH}
+are set (and they normally are), the value is
 @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If all of these fail, the current
 working directory is used.
 
@@ -465,9 +464,9 @@ See @code{?Startup} for more details of environment files.
 For all applications via Windows.  How you set an environment variable
 is system specific: under Windows XP/Server 2003 you can use `System' in
 the control panel or the properties of `My Computer' (under the
-`Advanced' tab).  Under Vista/7/8/Server 2008, go to `User Accounts' in
-the Control Panel, and select your account and then `Change my
-environment variables'.
+`Advanced' tab).  Under recent versions of Windows, go to `User
+Accounts' in the Control Panel, and select your account and then `Change
+my environment variables'.
 @end enumerate
 
 The order of precedence for environmental variables is the order in
@@ -894,7 +893,7 @@ for 64-bit @command{Rcmd.exe}, replacing @code{x64} by @code{i386} for
 
 How you set the path depends on your OS version.  On Windows XP/Server
 2003 you can use `System' in the control panel or the properties of `My
-Computer' (under the `Advanced' tab).  Under Vista and later, go to
+Computer' (under the `Advanced' tab).  Under more recent versions, go to
 `User Accounts' in the Control Panel, and select your account and then
 `Change my environment variables'.  (System policies can prevent end
 users making changes.)

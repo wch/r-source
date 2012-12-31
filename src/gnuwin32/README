@@ -12,8 +12,7 @@ Installation
 ============
 
 The distribution is distributed as an installer @RWVER@-win.exe.  Just
-run this for a Windows-style installer.  It contains all the R
-components, and you can select what you want installed.
+run this for a Windows-style installer.
 
 For more details, including command-line options for the installer and
 how to uninstall, see the rw-FAQ.  If you are reading this as part of
@@ -125,12 +124,12 @@ copy with a user's settings can be put in her HOME directory or in the
 working directory.  (The exact sequence is to search the directory
 pointed to by the first found of the environment variables R_USER then
 HOME, then the Windows "personal" directory (typically
-'C:\Users\username\My Documents' on Windows Vista/7 and 'C:\Documents
-and Settings\username\My Documents' on XP) then {HOMEDRIVE}{HOMEPATH}
-then the working directory, finally R_HOME\etc.  This also applies to
-.Renviron and other uses of 'HOME' in our documentation.)  The file
-contains a description of the settings that can be altered.  See also
-?Rconsole.
+'C:\Users\username\My Documents' on recent versions of Windows and
+'C:\Documents and Settings\username\My Documents' on XP) then
+{HOMEDRIVE}{HOMEPATH} then the working directory, finally R_HOME\etc.
+This also applies to .Renviron and other uses of 'HOME' in our
+documentation.)  The file contains a description of the settings that
+can be altered.  See also ?Rconsole.
 
 An alternative way to edit the Rconsole file is to use the GUI
 preferences item on the Edit menu in Rgui.exe.  This can change some
