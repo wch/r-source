@@ -510,7 +510,7 @@
 
       \item Support for the converters for use with \code{.C()} has been
       removed, including the oft misused non-API header
-      \file{R_exts/RConverters.h}.
+      \file{R_ext/RConverters.h}.
 
       \item The previously deprecated uses of \code{array()} with a
       0-length \code{dim} argument and \code{tapply()} with a 0-length

@@ -130,7 +130,7 @@ refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 
 fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
    refman.top refman.bot
-	@$(ECHO) " PDF/LaTeX documentation: reference index ..."
+	@$(ECHO) " PDF/LaTeX documentation: full reference index ..."
 	@(opt="$(R_PAPERSIZE)paper"; \
 	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
