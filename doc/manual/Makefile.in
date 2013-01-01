@@ -184,7 +184,7 @@ R-intro.info: $(texiincludes)
 R-ints.info: $(texiincludes)
 R-lang.info: $(texiincludes)
 
-pdf: refman.pdf $(OBJECTS_PDF)
+pdf: fullrefman.pdf $(OBJECTS_PDF)
 refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "ERROR: 'pdflatex' needed but missing on your system."; \

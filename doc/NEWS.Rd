@@ -681,6 +681,10 @@
       implementations can be slow or flawed.  Use \command{configure}
       option \option{--disable-long-double}.
 
+      \item \command{make pdf} and \command{make install-pdf} now make
+      and install the full reference index (including \pkg{compiler},
+      \pkg{grid} and the recommended packages).
+
       \item The 'reference manual' on the Windows GUI menu and included
       in the installer is now the full reference index, including all
       base and recommended packages.
@@ -828,7 +832,7 @@
       \code{NULL}).
       
       \item The full reference index (\file{fullrefman.pdf}) was missing
-      packages \pkg{compiler}, \pkg{parallel} and \pkg{splines}.
+      packages \pkg{compiler}, \pkg{grid} and \pkg{parallel}.
     }
   }
 }

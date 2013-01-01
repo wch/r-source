@@ -417,10 +417,10 @@ There is a set of manuals that can be built from the sources,
 
 @table @samp
 @item refman
-Printed versions of the help pages for the base packages.
+Printed versions of the help pages for selected base packages (over 1900 pages)
 @item fullrefman
 Printed versions of all the help pages for base and recommended packages
-(over 3200 pages).
+(over 3300 pages).
 @item R-FAQ
 R @acronym{FAQ}
 @item R-intro
@@ -436,11 +436,11 @@ R @acronym{FAQ}
 @end table
 
 @noindent
-To make these (except @samp{fullrefman}), use
+To make these (with @samp{fullrefman} not @samp{refman}), use
 
 @example
 make pdf      @r{to create PDF versions}
-make info     @r{to create info files (not @samp{refman}).}
+make info     @r{to create info files (not @samp{refman} nor @samp{fullrefman}).}
 @end example
 
 You will not be able to build any of these unless you have
@@ -463,10 +463,10 @@ a different paper size, you should first delete the file
 @file{doc/manual/version.texi}.)
 
 There are some issues with making the PDF reference manual,
-@file{refman.pdf}.  The help files contain both ISO Latin1 characters
-(e.g.@: in @file{text.Rd}) and upright quotes, neither of which are
-contained in the standard @LaTeX{} Computer Modern fonts.  We have
-provided four alternatives:
+@file{refman.pdf} or @file{fullrefman.pdf}.  The help files contain both
+ISO Latin1 characters (e.g.@: in @file{text.Rd}) and upright quotes,
+neither of which are contained in the standard @LaTeX{} Computer Modern
+fonts.  We have provided four alternatives:
 
 @table @code
 @item times
@@ -4968,7 +4968,7 @@ It is also possible to use the TeXLive distribution from
 @uref{http://www.tug.org/texlive/}.
 
 @enindex R_RD4PDF
-Please read @ref{Making the manuals} about how to make @file{refman.pdf}
+Please read @ref{Making the manuals} about how to make @file{fullrefman.pdf}
 and set the environment variable @env{R_RD4PDF} suitably; ensure you
 have the required fonts installed or that @samp{MiKTeX} is set up to
 install @LaTeX{} on first use.
