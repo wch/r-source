@@ -955,11 +955,15 @@ inferProperties <- function(props, what) {
         if(!n)
             return(character())
         else if(is.null(propNames))
-            stop(gettextf("No %s names supplied", what))
+            stop(gettextf("No %s name supplied", what),
+                 domain = NA, call. = FALSE)
         else if(!all(nzchar(propNames)))
-            stop(gettextf("All %s names must be nonempty", what))
-        else if(any(duplicated(propNames)))
-            stop(gettextf("All %s names must be distinct", what))
+            stop(gettextf("All %s names must be nonempty", what),
+                 domain = NA, call. = FALSE)
+        else if(any(duplicated(propNames))) # NB: not translatable because of plurals
+            stop(gettextf("All %s names must be distinct in:\n(%s)", what,
+                          paste(sQuote(propNames), collapse = ", ")),
+                 domain = NA, call. = FALSE)
         propNames
     }
     if(is.character(props)) {
