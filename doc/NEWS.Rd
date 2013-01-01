@@ -748,7 +748,7 @@
       paths of more than 100 bytes.
 
       \item Package \pkg{parallel} has been added to the reference index
-      (\file{refman.pdf}.
+      (\file{refman.pdf}).
     }
   }
 
