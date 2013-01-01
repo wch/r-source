@@ -36,7 +36,7 @@
       for installation.
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item On a 64-bit Windows platform with enough RAM, \code{R_alloc}
@@ -51,7 +51,7 @@
       for its limitations).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{beta(a, b)} could overflow to infinity in its
@@ -76,35 +76,35 @@
 
       \item The \code{call()} function did not duplicate its arguments.
       (\PR{15115})
-      
+
       \item \code{TukeyHSD()} could give \code{NA} results with some
       \samp{na.action} methods such as \code{na.exclude()}.
       (Hinted at on R-help by John Fox.)
 
       \item The deprecated \code{svd(X, LINPACK = TRUE)} could alter
       \code{X} in \R 2.15.[12].  (Reported by Bill Dunlap.)
-      
+
       \item Under Windows, \code{file.link()} and \code{file.symlink()}
       used the link name twice, so would always fail. (Reported
       by Rui Barradas/Oliver Soong).
 
       \item \code{summaryRprof(memory = "both")} mixed up the units of
       Vcells and Ncells: it now works in bytes.  (\PR{15138})
-      
+
       \item \code{tools::Rd2HTML()} would sometimes delete text. (\PR{15134})
-      
+
       \item \code{plot()} failed for \code{"table"} objects containing
       just one entry.  (\PR{15118})
-      
+
       \item \code{embedFonts()} needed to quote some filepaths.
       (\PR{15149})
-      
+
       \item \code{parallel::mccollect()} handled \code{NULL} returns
       incorrectly (removing the element rather than setting it to
       \code{NULL}).
       
       \item The full reference index (\file{fullrefman.pdf}) was missing
-      packages \pkg{compiler}, \pkg{parallel} and \pkg{splines}.
+      packages \pkg{compiler}, \pkg{grid} and \pkg{parallel}.
     }
   }
 }
