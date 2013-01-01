@@ -337,6 +337,10 @@
       recommended for future code, but should be back-compatible.  At
       the same time, the allowed slot specification is slightly more general.
       See the documentation for details.
+      
+      \item \code{mget()} now has a default for \code{envir} (the frame
+      from which it is called), for consistency with \code{get()} and
+      \code{assign()}.
     }
   }
 

@@ -22,11 +22,9 @@ mget(x, envir, mode = "any", ifnotfound, inherits = FALSE)
     string).\cr
     For \code{mget} a character vector of object names.
   }
-  \item{pos}{where to look for the object (see \sQuote{Details}); if
-    omitted \code{get} search as if the name of the object appeared
-    unquoted in an expression.}
-  \item{envir}{a way to specify an environment to look in;
-    see the \sQuote{Details} section.}
+  \item{pos, envir}{where to look for the object (see \sQuote{Details}); if
+    omitted search as if the name of the object appeared unquoted in an
+    expression.}
   \item{mode}{the mode or type of object sought: see the
     \sQuote{Details} section.}
   \item{inherits}{should the enclosing frames of the environment be

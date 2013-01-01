@@ -17,12 +17,13 @@
 #  http://www.r-project.org/Licenses/
 
 get <-
-    function (x, pos = -1, envir = as.environment(pos), mode = "any",
+    function (x, pos = -1L, envir = as.environment(pos), mode = "any",
               inherits = TRUE)
     .Internal(get(x, envir, mode, inherits))
 
 mget <- function(x, envir, mode = "any", ifnotfound, inherits = FALSE)
-    .Internal(mget(x, envir, mode,
+    .Internal(mget(x, if(missing(envir)) as.environment(-1L) else envir,
+                   mode,
                    if(missing(ifnotfound))
                    list(function(x) stop(gettextf("value for %s not found", sQuote(x)))) else ifnotfound,
                    inherits))
