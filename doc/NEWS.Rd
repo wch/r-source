@@ -104,7 +104,7 @@
       \code{NULL}).
       
       \item The full reference index (\file{fullrefman.pdf}) was missing
-      packages \pkg{compiler}, \pkg{grid} and \pkg{parallel}.
+      packages \pkg{compiler} and \pkg{parallel}.
     }
   }
 }
