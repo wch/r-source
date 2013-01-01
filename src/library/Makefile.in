@@ -134,7 +134,7 @@ install-strip:
 uninstall:
 	@$(ECHO) "uninstalling packages ..."
 	@(cd "$(DESTDIR)$(rhome)/library"; \
-	  for p in $(R_PKGS); do rm -rf $${p}; done)
+	  for p in $(R_PKGS) translations; do rm -rf $${p}; done)
 	@rmdir "$(DESTDIR)$(rhome)/library" 2>/dev/null \
           || $(ECHO) "  subdir $(DESTDIR)$(rhome)/library not removed"
 
