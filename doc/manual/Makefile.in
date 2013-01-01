@@ -54,7 +54,6 @@ R_RD4PDF = @R_RD4PDF@
 
 texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
 texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
-refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
 refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/tex/latex/Rd.sty
 fullrefman_TEXINPUTS = $(texinputs_BASE) @USE_RECOMMENDED_PACKAGES_TRUE@ $(texinputs_RECOMMENDED)
 SVN_REV = $(top_builddir)/SVN-REVISION
@@ -200,7 +199,7 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
 	  $(ECHO) "\\usepackage[utf8]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
-	  texinputs=`(for f in $(refman_TEXINPUTS); \
+	  texinputs=`(for f in $(texinputs_BASE); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
@@ -213,7 +212,7 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) refman.tex
 	@touch stamp-refman-pdf
-stamp-refman-pdf: $(refman_TEXINPUTS)
+stamp-refman-pdf: $(texinputs_BASE)
 	@touch $@
 fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	@if test -z "$(PDFLATEX)"; then \

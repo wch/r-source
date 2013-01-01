@@ -51,7 +51,6 @@ R_RD4PDF = times,inconsolata,hyper
 
 texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
 texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
-refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
 refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/tex/latex/Rd.sty
 fullrefman_TEXINPUTS = $(texinputs_BASE) $(texinputs_RECOMMENDED)
 SVN_REV = $(top_srcdir)/SVN-REVISION
@@ -105,7 +104,7 @@ $(OBJECTS_INFO): $(texiincludes)
 pdf: fullrefman.pdf $(OBJECTS_PDF)
 $(OBJECTS_PDF): $(texiincludes)
 
-refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
+refman.pdf: $(texinputs_BASE) $(refman_DEPENDENCIES) \
    refman.top refman.bot
 	@$(ECHO) " PDF/LaTeX documentation: reference index ..."
 	@(opt="$(R_PAPERSIZE)paper"; \
@@ -114,7 +113,7 @@ refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
 	  $(ECHO) "\\usepackage[utf8]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
-	  texinputs=`(for f in $(refman_TEXINPUTS); \
+	  texinputs=`(for f in $(texinputs_BASE); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex

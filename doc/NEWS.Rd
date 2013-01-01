@@ -747,8 +747,8 @@
       a slightly more general job for \sQuote{ustar}-style handling of
       paths of more than 100 bytes.
 
-      \item Package \pkg{parallel} has been added to the reference index
-      (\file{refman.pdf}).
+      \item Packages \pkg{compiler} and  \pkg{parallel} has been added
+      to the reference index (\file{refman.pdf}.
     }
   }
 
