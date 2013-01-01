@@ -19,7 +19,7 @@
       a slightly more general job for \sQuote{ustar}-style handling of
       paths of more than 100 bytes.
 
-      \item Packages \pkg{compiler} and  \pkg{parallel} has been added
+      \item Packages \pkg{compiler} and \pkg{parallel} have been added
       to the reference index (\file{refman.pdf}).
     }
   }
