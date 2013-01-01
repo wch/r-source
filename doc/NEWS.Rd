@@ -20,7 +20,7 @@
       paths of more than 100 bytes.
 
       \item Packages \pkg{compiler} and  \pkg{parallel} has been added
-      to the reference index (\file{refman.pdf}.
+      to the reference index (\file{refman.pdf}).
     }
   }
 
