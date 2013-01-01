@@ -1021,7 +1021,7 @@
       \code{.Call()}, \code{.External()} and \code{.Fortran()} calls in
       other packages, and gives a warning on those found from \R itself
       (which are not part of the API and change without notice: many
-      will changed for \R 3.0.0).
+      will be changed for \R 3.0.0).
     }
   }
 

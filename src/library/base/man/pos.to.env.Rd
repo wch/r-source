@@ -1,6 +1,6 @@
 % File src/library/base/man/pos.to.env.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pos.to.env}
@@ -11,8 +11,8 @@
 }
 \usage{pos.to.env(x)}
 \arguments{
-  \item{x}{an integer between 1 and \code{length(search())}, the length
-    of the search path.}
+  \item{x}{an integer between \code{1} and \code{length(search())}, the length
+    of the search path, or \code{-1}.}
 }
 \details{
   Several \R functions for manipulating objects in environments (such as
@@ -21,6 +21,11 @@
   a convenience function for programmers which converts these positions
   to corresponding environments; users will typically have no need for
   it.  It is \link{primitive}.
+
+  \code{-1} is interpreted as the environment the function is called
+  from.
+
+  This is a \link{primitive} function.
 }
 \examples{
 pos.to.env(1) # R_GlobalEnv

@@ -17,10 +17,13 @@ get(x, pos = -1, envir = as.environment(pos), mode = "any",
 mget(x, envir, mode = "any", ifnotfound, inherits = FALSE)
 }
 \arguments{
-  \item{x}{a variable name (given as a character string).}
-  \item{pos}{where to look for the object (see the details section); if
-    omitted, the function will search as if the name of the object
-    appeared unquoted in an expression.}
+  \item{x}{for \code{get}, a variable name (given as a character
+    string).\cr
+    For \code{mget} a character vector.
+  }
+  \item{pos}{where to look for the object (see \sQuote{Details}); if
+    omitted (for \code{get}), the function will search as if the name of
+    the object appeared unquoted in an expression.}
   \item{envir}{an alternative way to specify an environment to look in;
     see the \sQuote{Details} section.}
   \item{mode}{the mode or type of object sought: see the
@@ -32,7 +35,7 @@ mget(x, envir, mode = "any", ifnotfound, inherits = FALSE)
 }
 \details{
   The \code{pos} argument can specify the environment in which to look
-  for the object in any of several ways: as an integer (the position in
+  for the object in any of several ways: as a positive integer (the position in
   the \code{\link{search}} list); as the character string name of an
   element in the search list; or as an \code{\link{environment}}
   (including using \code{\link{sys.frame}} to access the currently active
@@ -91,7 +94,7 @@ mget(x, envir, mode = "any", ifnotfound, inherits = FALSE)
 \examples{
 get("\%o\%")
 
-##test mget
+## test mget
 e1 <- new.env()
 mget(letters, e1, ifnotfound = as.list(LETTERS))
 }

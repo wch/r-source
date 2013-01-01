@@ -1,6 +1,6 @@
 % File src/library/base/man/assign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{assign}
@@ -30,8 +30,8 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   name (see \code{\link{make.names}}).
 
   The \code{pos} argument can specify the  environment in which to assign
-  the object in any of several ways:
-  as an integer (the position in the \code{\link{search}} list); as
+  the object in any of several ways: as \code{-1} (the default),
+  as a positive integer (the position in the \code{\link{search}} list); as
   the character string name of an element in the search list; or as an
   \code{\link{environment}} (including using \code{\link{sys.frame}} to
   access the currently active function calls).
