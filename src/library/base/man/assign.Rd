@@ -26,8 +26,8 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   \item{immediate}{an ignored compatibility feature.}
 }
 \details{
-  There are no restrictions on \code{name}: it can be a non-syntactic
-  name (see \code{\link{make.names}}).
+  There are no restrictions on the name given as \code{x}: it can be a
+  non-syntactic name (see \code{\link{make.names}}).
 
   The \code{pos} argument can specify the  environment in which to assign
   the object in any of several ways: as \code{-1} (the default),
@@ -36,7 +36,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   \code{\link{environment}} (including using \code{\link{sys.frame}} to
   access the currently active function calls).
   The \code{envir} argument is an alternative way to specify an
-  environment, but is primarily there for back compatibility.
+  environment, but is primarily for back compatibility.
 
   \code{assign} does not dispatch assignment methods, so it cannot be
   used to set elements of vectors, names, attributes, etc.
@@ -61,7 +61,8 @@ assign(x, value, pos = -1, envir = as.environment(pos),
 
   If \code{inherits} is \code{FALSE}, assignment takes place in the
   initial frame of \code{envir}, unless an existing binding is locked or
-  there is no existing binding and the environment is locked.
+  there is no existing binding and the environment is locked (when an
+  error is signaled).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -77,23 +78,23 @@ assign(x, value, pos = -1, envir = as.environment(pos),
 }
 \examples{
 for(i in 1:6) { #-- Create objects  'r.1', 'r.2', ... 'r.6' --
- nam <- paste("r", i, sep = ".")
- assign(nam, 1:i)
+    nam <- paste("r", i, sep = ".")
+    assign(nam, 1:i)
 }
 ls(pattern = "^r..$")
 
 ##-- Global assignment within a function:
 myf <- function(x) {
- innerf <- function(x) assign("Global.res", x^2, envir = .GlobalEnv)
- innerf(x+1)
+    innerf <- function(x) assign("Global.res", x^2, envir = .GlobalEnv)
+    innerf(x+1)
 }
 myf(3)
 Global.res # 16
 
 a <- 1:4
 assign("a[1]", 2)
-a[1] == 2          #FALSE
-get("a[1]") == 2   #TRUE
+a[1] == 2          # FALSE
+get("a[1]") == 2   # TRUE
 
 }
 \keyword{data}
