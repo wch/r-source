@@ -683,7 +683,7 @@
 
       \item \command{make pdf} and \command{make install-pdf} now make
       and install the full reference index (including \pkg{compiler},
-      \pkg{grid} and the recommended packages).
+      \pkg{parallel} and the recommended packages).
 
       \item The 'reference manual' on the Windows GUI menu and included
       in the installer is now the full reference index, including all
@@ -832,7 +832,7 @@
       \code{NULL}).
       
       \item The full reference index (\file{fullrefman.pdf}) was missing
-      packages \pkg{compiler}, \pkg{grid} and \pkg{parallel}.
+      packages \pkg{compiler} and \pkg{parallel}.
     }
   }
 }

@@ -54,7 +54,6 @@ R_RD4PDF = @R_RD4PDF@
 
 texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
 texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
-R_PKGS_refman = base datasets grDevices graphics grid methods parallel splines stats stats4 tcltk tools utils
 refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
 refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/tex/latex/Rd.sty
 fullrefman_TEXINPUTS = $(texinputs_BASE) @USE_RECOMMENDED_PACKAGES_TRUE@ $(texinputs_RECOMMENDED)
