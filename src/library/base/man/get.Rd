@@ -15,12 +15,13 @@
 get(x, pos = -1, envir = as.environment(pos), mode = "any",
     inherits = TRUE)
 
-mget(x, envir, mode = "any", ifnotfound, inherits = FALSE)
+mget(x, envir = as.environment(-1), mode = "any", ifnotfound,
+     inherits = FALSE)
 }
 \arguments{
   \item{x}{For \code{get}, an object name (given as a character
     string).\cr
-    For \code{mget} a character vector of object names.
+    For \code{mget}, a character vector of object names.
   }
   \item{pos, envir}{where to look for the object (see \sQuote{Details}); if
     omitted search as if the name of the object appeared unquoted in an
@@ -41,17 +42,13 @@ mget(x, envir, mode = "any", ifnotfound, inherits = FALSE)
   function calls).  The \code{envir} argument is an alternative way to
   specify an environment.
 
-  These functions look to see if the name(s) \code{x} have a value bound
-  to it in the specified environment.  If \code{inherits} is \code{TRUE}
-  and a value is not found for \code{x} in the specified environment,
-  the enclosing frames of the environment are searched until the name
-  \code{x} is encountered.  See \code{\link{environment}} and the
-  \sQuote{R Language Definition} manual for details about the structure
-  of environments and their enclosures.
-
-  \bold{Warning:}
-  \code{inherits = TRUE} is the default for \code{get} in \R
-  but not for S where it had a different meaning.
+  These functions look to see if each of the name(s) \code{x} have a
+  value bound to it in the specified environment.  If \code{inherits} is
+  \code{TRUE} and a value is not found for \code{x} in the specified
+  environment, the enclosing frames of the environment are searched
+  until the name \code{x} is encountered.  See \code{\link{environment}}
+  and the \sQuote{R Language Definition} manual for details about the
+  structure of environments and their enclosures.
 
   If \code{mode} is specified then only objects of that type are sought.
   \code{mode} here is a mixture of the meanings of \code{\link{typeof}}
@@ -66,18 +63,19 @@ mget(x, envir, mode = "any", ifnotfound, inherits = FALSE)
   \code{ifnotfound} must be a list containing either the value to use if
   the requested item is not found or a function of one argument which
   will be called if the item is not found, with argument the name of the
-  item being requested.  The default value for \code{inherits} is
-  \code{FALSE}, in contrast to the default behavior for \code{get}.
-  
-}
-\note{
-  The reverse of \code{a <- get(nam)} is \code{\link{assign}(nam, a)}.
+  item being requested.
 }
 \value{
   For \code{get}, the object found.  If no object is found an error results.
 
   For \code{mget}, a named list of objects (found or specified \emph{via}
   \code{ifnotfound}).
+}
+\note{
+  The reverse of \code{a <- get(nam)} is \code{\link{assign}(nam, a)}.
+  
+  \code{inherits = TRUE} is the default for \code{get} in \R
+  but not for S where it had a different meaning.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
