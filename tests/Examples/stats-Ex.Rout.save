@@ -1630,7 +1630,6 @@ Variances:
 > ## keep some parameters fixed; trace optimizer:
 > StructTS(log10(UKgas), type = "BSM", fixed = c(0.1,0.001,NA,NA),
 +          optim.control = list(trace = TRUE))
-iter    0 value -0.914421
 iter   10 value -0.936176
 final  value -0.936176 
 converged

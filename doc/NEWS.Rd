@@ -844,6 +844,11 @@
       
       \item The full reference index (\file{fullrefman.pdf}) was missing
       packages \pkg{compiler} and \pkg{parallel}.
+      
+      \item The report for
+      \code{optim(method = "L-BFGS-B", control = list(trace = 1))}
+      reported the last completed and not the current iteration, unlike
+      other methods and trace levels.  (\PR{15103})
     }
   }
 }
