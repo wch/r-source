@@ -1,6 +1,6 @@
 % File src/library/stats/man/reshape.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
 \name{reshape}
@@ -49,9 +49,8 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \item{drop}{a vector of names of variables to drop before reshaping.}
   \item{direction}{character string, either \code{"wide"} to reshape to
     wide format, or \code{"long"} to reshape to long format.}
-  \item{new.row.names}{logical; if \code{TRUE} and \code{direction = "wide"},
-    create new row names in long format from the values of the \code{id} and
-    \code{time} variables.}
+  \item{new.row.names}{character or \code{NULL}: a non-null value will be
+    used for the row names of the result.}
   \item{sep}{A character vector of length 1, indicating a separating
     character in the variable names in the wide format.  This is used for
     guessing \code{v.names} and \code{times} arguments based on the
@@ -103,12 +102,13 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   like \code{x.1},\code{y.1},\code{x.2},\code{y.2}.
 
   The \code{split} argument should not usually be necessary.  The
-  \code{split$regexp} component is passed to either \code{strsplit()} or
-  \code{regexp()}, where the latter is used if \code{split$include} is
-  \code{TRUE}, in which case the splitting occurs after the first
-  character of the matched string.  In the \code{strsplit()} case, the
-  separator is not included in the result, and it is possible to specify
-  fixed-string matching using \code{split$fixed}.
+  \code{split$regexp} component is passed to either
+  \code{\link{strsplit}} or \code{\link{regexpr}}, where the latter is
+  used if \code{split$include} is \code{TRUE}, in which case the
+  splitting occurs after the first character of the matched string.  In
+  the \code{\link{strsplit}} case, the separator is not included in the
+  result, and it is possible to specify fixed-string matching using
+  \code{split$fixed}.
 }
 \value{
   The reshaped data frame with added attributes to simplify reshaping
