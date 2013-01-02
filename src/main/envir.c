@@ -1828,9 +1828,8 @@ static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
  */
 SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, env, x, mode, ifnotfound, ifnfnd;
-    SEXPTYPE gmode; /* is unsigned int */
-    int ginherits = 0, nvals, nmode, nifnfnd, i;
+    SEXP ans, env, x, mode, ifnotfound;
+    int ginherits = 0, nvals, nmode, nifnfnd;
 
     checkArity(op, args);
 
@@ -1842,11 +1841,9 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* It must be present and a string */
     if (!isString(x) )
 	error(_("invalid first argument"));
-    for(i = 0; i < nvals; i++)
+    for(int i = 0; i < nvals; i++)
 	if( isNull(STRING_ELT(x, i)) || !CHAR(STRING_ELT(x, 0))[0] )
 	    error(_("invalid name in position %d"), i+1);
-
-    /* FIXME: should we install them all?) */
 
     env = CADR(args);
     if (ISNULL(env)) {
@@ -1876,35 +1873,19 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(ans = allocVector(VECSXP, nvals));
 
-    /* now for each element of x, we look for it, using the inherits,
-       etc */
-
-    for(i = 0; i < nvals; i++) {
-	if (isString(mode)) { /* ASCII */
-	    if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )), "function"))
-		gmode = FUNSXP;
-	    else
-		gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )));
-	} else {
-	    error(_("invalid '%s' argument"), "mode");
-	    gmode = FUNSXP; /* -Wall */
+    for(int i = 0; i < nvals; i++) {
+	SEXPTYPE gmode;
+	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode)), "function"))
+	    gmode = FUNSXP;
+	else {
+	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode)));
+	    if(gmode == (SEXPTYPE) (-1))
+		error(_("invalid '%s' argument"), "mode");
 	}
-
-	/* is the mode provided one of the real modes? */
-	if( gmode == (SEXPTYPE) (-1))
-	    error(_("invalid '%s' argument"), "mode");
-
-
-	if( TYPEOF(ifnotfound) != VECSXP )
-	    error(_("invalid '%s' argument"), "ifnotfound");
-	if( nifnfnd == 1 ) /* length has been checked to be 1 or nvals. */
-	    ifnfnd = VECTOR_ELT(ifnotfound, 0);
-	else
-	    ifnfnd = VECTOR_ELT(ifnotfound, i);
-
 	SET_VECTOR_ELT(ans, i,
-		       gfind(translateChar(STRING_ELT(x,i % nvals)), env,
-			     gmode, ifnfnd, ginherits, rho));
+		       gfind(translateChar(STRING_ELT(x, i % nvals)), env,
+			     gmode, VECTOR_ELT(ifnotfound, i % nifnfnd),
+			     ginherits, rho));
     }
 
     setAttrib(ans, R_NamesSymbol, duplicate(x));
