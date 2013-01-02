@@ -239,7 +239,14 @@ isIncomplete(con)
   \code{bzfile}, \code{xzfile}, \code{unz} and \code{socketConnection}
   return a connection object which inherits from class
   \code{"connection"} and has a first more specific class.
+  
+  \code{open} and \code{flush} return \code{NULL}, invisibly.
 
+  \code{close} returns either \code{NULL} or an integer status,
+  invisibly. The status is from when the connection was last closed and
+  is available only for some types of connections (e.g. pipes, files and
+  fifos): typically zero values indicate success.
+  
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
 

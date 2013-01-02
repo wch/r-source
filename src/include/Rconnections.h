@@ -65,6 +65,7 @@ struct Rconn {
     void *id;
     void *ex_ptr;
     void *private;
+    int status; /* for pipes etc */
 };
 
 

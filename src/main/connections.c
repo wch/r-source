@@ -516,6 +516,7 @@ void init_con(Rconnection new, const char *description, int enc,
     if(!current_id) current_id = (void *) 1;
     new->id = current_id;
     new->ex_ptr = NULL;
+    new->status = NA_INTEGER;
 }
 
 /* ------------------- file connections --------------------- */
@@ -639,7 +640,8 @@ static Rboolean file_open(Rconnection con)
 static void file_close(Rconnection con)
 {
     Rfileconn this = con->private;
-    if(con->isopen && strcmp(con->description, "stdin")) fclose(this->fp);
+    if(con->isopen && strcmp(con->description, "stdin")) 
+	con->status = fclose(this->fp);
     con->isopen = FALSE;
 #ifdef Win32
     if(this->anon_file) unlink(this->name);
@@ -900,7 +902,7 @@ static Rboolean fifo_open(Rconnection con)
 
 static void fifo_close(Rconnection con)
 {
-    close(((Rfifoconn)(con->private))->fd);
+    con->status = close(((Rfifoconn)(con->private))->fd);
     con->isopen = FALSE;
 }
 
@@ -1085,7 +1087,7 @@ static Rboolean pipe_open(Rconnection con)
 
 static void pipe_close(Rconnection con)
 {
-    pclose(((Rfileconn)(con->private))->fp);
+    con->status = pclose(((Rfileconn)(con->private))->fp);
     con->isopen = FALSE;
 }
 
@@ -3137,7 +3139,11 @@ SEXP attribute_hidden do_close(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("cannot close output sink connection"));
     if(i == R_ErrorCon)
 	error(_("cannot close messages sink connection"));
-    con_destroy(i);
+    Rconnection con = getConnection(i);
+    con_close1(con);
+    free(Connections[i]);
+    Connections[i] = NULL;
+    if (con->status != NA_INTEGER) return ScalarInteger(con->status);
     return R_NilValue;
 }
 
