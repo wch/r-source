@@ -1305,6 +1305,8 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
     for objc_lookup_class in objc_lookup_class objc_lookUpClass; do
       AC_LINK_IFELSE([
         AC_LANG_PROGRAM([
+/* see PR#15107 */
+#undef __OBJC2__
 #include <objc/objc.h>
 #include <objc/objc-api.h>
 			], [
@@ -1345,7 +1347,9 @@ AC_DEFUN([R_PROG_OBJCXX_WORKS],
 [AC_MSG_CHECKING([whether $1 can compile ObjC++])
 ## we don't use AC_LANG_xx because ObjC++ is not defined as a language (yet)
 ## (the test program is from the gcc test suite)
+## but it needed an #undef (PR#15107)
 cat << \EOF > conftest.mm
+#undef __OBJC2__
 #include <objc/Object.h>
 #include <iostream>
 

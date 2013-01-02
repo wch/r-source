@@ -52,6 +52,13 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+   \itemize{
+      \item The \command{configure} tests for Objective C and Objective
+      C++ should now work on Mac OS 10.8 with Xcode 4.5.2 (\PR{15107}).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{beta(a, b)} could overflow to infinity in its
