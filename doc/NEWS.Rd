@@ -462,7 +462,7 @@
       \file{NAMESPACE} file can still be installed.
 
       \item Packages can specify in their \file{DESCRIPTION file} a line
-      like \preformatted{     ForceBiarch: yes
+      like \preformatted{     Biarch: yes
 }
       to be installed on Windows with \option{--force-biarch}.
     }
@@ -781,6 +781,13 @@
    \itemize{
       \item Use of \code{col2rgb(0)} is deprecated (see the help page
       for its limitations).
+    }
+  }
+
+  \subsection{INSTALLATION}{
+   \itemize{
+      \item The \command{configure} tests for Objective C and Objective
+      C++ should now work on Mac OS 10.8 with Xcode 4.5.2 (\PR{15107}).
     }
   }
 
