@@ -1077,10 +1077,11 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 		error(_("L-BFGS-B needs finite values of 'fn'"));
 	    fmingr(n, x, g, ex);
 	} else if (strncmp(task, "NEW_X", 5) == 0) {
+	    iter++;
 	    if(trace == 1 && (iter % nREPORT == 0)) {
 		Rprintf("iter %4d value %f\n", iter, f);
 	    }
-	    if (++iter > maxit) {
+	    if (iter > maxit) {
 		*fail = 1;
 		break;
 	    }
