@@ -4,18 +4,25 @@
 % Distributed under GPL 2 or later
 
 \name{slotOp}
-\title{Extract Slots}
+\title{Extract or Replace A Slot}
 \alias{@}
+\alias{@<-}
 \description{
-  Extract the contents of a slot in a object with a formal (S4) class
+  Extract or replace the contents of a slot in a object with a formal (S4) class
   structure.
 }
 \usage{
 object@name
+object@name <- value
 }
 \arguments{
   \item{object}{An object from a formally defined (S4) class.}
-  \item{name}{The character-string name of the slot.}
+  \item{name}{The character-string name of the slot, quoted or
+      not. Must be the name of a slot in the definition of the class
+      of \code{object}.}
+  \item{value}{A replacement value for the slot, which must be from a
+      class compatible with the class defined for this slot in the
+      definition of the class of  \code{object}.}
 }
 \details{
   This operator supports the formal classes of package \pkg{methods}, and
@@ -26,8 +33,6 @@ object@name
   \code{\link{isS4}}), and it is an error to attempt to use \code{@} on
   any other object.  (There is an exception for name \code{.Data} for
   internal use only.)
-
-  If \code{name} is not a slot name, an error is thrown.
 }
 \value{
   The current contents of the slot.

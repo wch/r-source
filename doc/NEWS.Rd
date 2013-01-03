@@ -446,6 +446,9 @@
       specified in the \file{NAMESPACE} file of the package rather than
       searching all loaded DLLs.  A few packages needed \code{PACKAGE}
       arguments added.
+
+      \item The \code{@<-} operator is now implemented as a primitive,
+      which should reduce some copying of objects when used.
     }
   }
 

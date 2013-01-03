@@ -8,7 +8,6 @@
 \alias{slot}
 \alias{.hasSlot}
 \alias{slot<-}
-\alias{@<-}
 \alias{slotNames}
 \alias{.slotNames}
 \alias{getSlots}
@@ -19,7 +18,7 @@
 }
 \usage{
 \special{object@name}% @ really is in base.
-object@name <- value
+\special{object@name <- value}% @ really is in base.
 
 slot(object, name)
 slot(object, name, check = TRUE) <- value
@@ -93,6 +92,9 @@ getSlots(x)
   implementation does not prevent attributes being assigned, via
   \code{\link{attr<-}}, and such assignments are not checked for
   legitimate slot names.
+
+  Note also that the \code{"@"} operator for extraction and
+  replacement is a primitive and actually resides in the \code{base} package.
 }
 \references{
  Chambers, John M. (2008)
