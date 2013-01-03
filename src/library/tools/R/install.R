@@ -1140,7 +1140,7 @@
             ## R_LIBS was set already.  R_runR is in check.R
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
-            env <- if (deps_only) setRlibs(lib0, self = TRUE) else ""
+            env <- if (deps_only) setRlibs(lib0, self = TRUE, quote = TRUE) else ""
             if (length(test_archs) > 1L) {
                 msgs <- character()
                 opts <- "--no-save --slave"
