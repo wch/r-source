@@ -60,7 +60,7 @@ file.show <-
         delete.file <- TRUE
     }
     if(is.function(pager))
-	pager(files, header, title, delete.file)
+	pager(files, header = header, title = title, delete.file = delete.file)
     else
         .Internal(file.show(files, header, title, delete.file, pager))
 }
