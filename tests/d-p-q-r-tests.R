@@ -620,6 +620,10 @@ lq1 <- log(qt(-2^-(20:600), df=1, log=TRUE))
 lq2 <- log(qt(-2^-(20:600), df=2, log=TRUE))
 stopifnot(mean(abs(diff(lq1) - log(2)      )) < 1e-8,
 	  mean(abs(diff(lq2) - log(sqrt(2)))) < 4e-8)
+## Case, where log.p=TRUE was fine, but log.p=FALSE (default) gave NaN:
+lp <- 40:406
+stopifnot(all.equal(lp, -pt(qt(exp(-lp), 1.2), 1.2, log=TRUE), tol = 4e-16))
+
 
 ## pbeta(*, log=TRUE) {toms708} -- now improved tail behavior
 x <- c(.01, .10, .25, .40, .55, .71, .98)

@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2007 The R Core Team
- *  Copyright (C) 2003	    The R Foundation
+ *  Copyright (C) 2000-2013 The R Core Team
+ *  Copyright (C) 2003-2013 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,7 +46,6 @@ double qt(double p, double ndf, int lower_tail, int log_p)
     const static double eps = 1.e-12;
 
     double P, q;
-    Rboolean neg;
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(ndf))
@@ -62,7 +61,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	const static double Eps = 1e-11; /* must be > accu */
 
 	double ux, lx, nx, pp;
-	
+
 	int iter = 0;
 
 	p = R_DT_qIv(p);
@@ -102,15 +101,13 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 
     P = R_D_qIv(p); /* if exp(p) underflows, we fix below */
 
-    neg = (!lower_tail || P < 0.5) && (lower_tail || P > 0.5);
+    Rboolean neg = (!lower_tail || P < 0.5) && (lower_tail || P > 0.5),
+	is_neg_lower = (lower_tail == neg); /* both TRUE or FALSE == !xor */
     if(neg)
 	P = 2 * (log_p ? (lower_tail ? P : -expm1(p)) : R_D_Lval(p));
     else
 	P = 2 * (log_p ? (lower_tail ? -expm1(p) : P) : R_D_Cval(p));
     /* 0 <= P <= 1 ; P = 2*min(P', 1 - P')  in all cases */
-
-/* Use this if(log_p) only : */
-#define P_is_exp_2p (lower_tail == neg) /* both TRUE or FALSE == !xor */
 
      if (fabs(ndf - 2) < eps) {	/* df ~= 2 */
 	if(P > DBL_MIN) {
@@ -123,7 +120,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	}
 	else { /* P << 1, q = 1/sqrt(P) = ... */
 	    if(log_p)
-		q = P_is_exp_2p ? exp(- p/2) / M_SQRT2 : 1/sqrt(-expm1(p));
+		q = is_neg_lower ? exp(- p/2) / M_SQRT2 : 1/sqrt(-expm1(p));
 	    else
 		q = ML_POSINF;
 	}
@@ -134,7 +131,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 
 	else { /* P = 0, but maybe = 2*exp(p) ! */
 	    if(log_p) /* 1/tan(e) ~ 1/e */
-		q = P_is_exp_2p ? M_1_PI * exp(-p) : -1./(M_PI * expm1(p));
+		q = is_neg_lower ? M_1_PI * exp(-p) : -1./(M_PI * expm1(p));
 	    else
 		q = ML_POSINF;
 	}
@@ -151,8 +148,8 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	    y = pow(d * P, 2 / ndf);
 	    P_ok = (y >= DBL_EPSILON);
 	}
-	if(!P_ok) { /* log_p && P very small */
-	    log_P2 = P_is_exp_2p ? p : R_Log1_Exp(p); /* == log(P / 2) */
+	if(!P_ok) {// log.p && P very.small  ||  (d*P)^(2/df) =: y < eps_c
+	    log_P2 = is_neg_lower ? R_D_log(p) : R_D_LExp(p); /* == log(P / 2) */
 	    x = (log(d) + M_LN2 + log_P2) / ndf;
 	    y = exp(2 * x);
 	}
@@ -172,18 +169,15 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 		  - y - 3) / b + 1) * x;
 	    y = expm1(a * y * y);
 	    q = sqrt(ndf * y);
-	} else { /* re-use 'y' from above */
-
-	    if(!P_ok && x < - M_LN2 * DBL_MANT_DIG) {/* 0.5* log(DBL_EPSILON) */
-		/* y above might have underflown */
-		q = sqrt(ndf) * exp(-x);
-	    }
-	    else {
-		y = ((1 / (((ndf + 6) / (ndf * y) - 0.089 * d - 0.822)
-			   * (ndf + 2) * 3) + 0.5 / (ndf + 4))
-		     * y - 1) * (ndf + 1) / (ndf + 2) + 1 / y;
-		q = sqrt(ndf * y);
-	    }
+	} else if(!P_ok && x < - M_LN2 * DBL_MANT_DIG) {/* 0.5* log(DBL_EPSILON) */
+	    /* y above might have underflown */
+	    q = sqrt(ndf) * exp(-x);
+	}
+	else { /* re-use 'y' from above */
+	    y = ((1 / (((ndf + 6) / (ndf * y) - 0.089 * d - 0.822)
+		       * (ndf + 2) * 3) + 0.5 / (ndf + 4))
+		 * y - 1) * (ndf + 1) / (ndf + 2) + 1 / y;
+	    q = sqrt(ndf * y);
 	}
 
 

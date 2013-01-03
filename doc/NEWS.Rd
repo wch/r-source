@@ -326,7 +326,7 @@
       \item \code{loadNamespace()} allows a version specification to be
       given, and this is used to check version specifications given in
       the \samp{Imports} field when a namespace is loaded.
-      
+
       \item \code{untar(tar = "internal")} has some support for
       \code{pax} headers as produced by e.g. \command{gnutar --posix}
       or \command{bsdtar --format pax}, including long path and link
@@ -337,11 +337,11 @@
       recommended for future code, but should be back-compatible.  At
       the same time, the allowed slot specification is slightly more general.
       See the documentation for details.
-      
+
       \item \code{mget()} now has a default for \code{envir} (the frame
       from which it is called), for consistency with \code{get()} and
       \code{assign()}.
-      
+
       \item \code{close()} now returns an integer status where available,
       invisibly. (Wish of \PR{15088}.)
     }
@@ -556,7 +556,7 @@
       \code{tkfile.tail()}, \code{tkopen()}, \code{tkputs()},
       \code{tkread()}, \code{trySilent()}, \code{zip.file.extract()}
       have been removed entirely (but are still documented in the help system).
-      
+
       \item The unused \code{dataPath} argument to
       \code{attachNamespace()} has been removed.
     }
@@ -646,7 +646,7 @@
       \code{name2col} removed (use \code{R_GE_str2col} instead).  \R
       internal colour codes are now defined using the typedef
       \code{rcolor}.
-      
+
       \item The \code{REPROTECT} macro now checks that the protect index
       is valid.
     }
@@ -732,11 +732,11 @@
 
       \item In Windows, tcltk windows were not always properly constructed.
       (\PR{15150})
-      
+
       \item The internal functions implementing \code{parse()},
       \code{tools::parseLatex()} and \code{tools::parse_Rd()} were not
       reentrant, leading to errors in rare circumstances such as a
-      garbage collection triggering a recursive call.      
+      garbage collection triggering a recursive call.
     }
   }
 }
@@ -844,14 +844,16 @@
       \item \code{parallel::mccollect()} handled \code{NULL} returns
       incorrectly (removing the element rather than setting it to
       \code{NULL}).
-      
+
       \item The full reference index (\file{fullrefman.pdf}) was missing
       packages \pkg{compiler} and \pkg{parallel}.
-      
+
       \item The report for
       \code{optim(method = "L-BFGS-B", control = list(trace = 1))}
       reported the last completed and not the current iteration, unlike
       other methods and trace levels.  (\PR{15103})
+
+      \item \code{qt(1e-12, 1.2)} no longer gives \code{NaN}.
     }
   }
 }
