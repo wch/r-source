@@ -342,7 +342,7 @@
       from which it is called), for consistency with \code{get()} and
       \code{assign()}.
       
-      \item \code{close()} now return a status where available,
+      \item \code{close()} now returns an integer status where available,
       invisibly. (Wish of \PR{15088}.)
     }
   }
