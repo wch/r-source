@@ -1240,10 +1240,10 @@ non-empty value, it is assumed that you want to use a different Tcl/Tk
 8.5.x installation with the path to its @file{bin} directory given by
 value of @env{MY_TCLTK}, and that this is set up correctly (with
 @env{TCL_LIBRARY} set if needed).  Note that you do need 8.5.x and not
-8.4.x nor (a pre-release of) 8.6.0, and you do need the architecture to
-match, that is a 32-bit or 64-bit build of Tcl/Tk to match the R build
-in use.  (There is no guarantee that a 64-bit build will work: it
-depends on the layout it uses.)
+8.4.x nor 8.6.0, and you do need the architecture to match, that is a
+32-bit or 64-bit build of Tcl/Tk to match the R build in use.  (There is
+no guarantee that a 64-bit build will work: it depends on the layout it
+uses.)
 
 In the past several package authors have suggested using ActiveTcl
 (@uref{http://www.activestate.com/@/Products/@/activetcl/}) as a way to
@@ -1258,7 +1258,7 @@ MY_TCLTK=c:/Tcl/bin
 @noindent
 @strong{but} current versions do not by default contain any extra
 extensions (although they may be downloaded via the @code{Teacup}
-facility).
+facility) and this only works for 32-bit R.
 
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages

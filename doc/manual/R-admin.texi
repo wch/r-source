@@ -1461,7 +1461,8 @@ Snow Leopard, Lion, Mountain Lion).
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
 double-click on the icon.  Note that (X11-based) Tcl/Tk needs to be
 installed separately if needed, from
-@uref{http://cran.r-project.org/bin/macosx/tools/}.
+@uref{http://cran.r-project.org/bin/macosx/tools/}, and for Mountain
+Lion XQuartz will also need to be installed to use Tk.
 
 See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
@@ -4130,10 +4131,12 @@ be recognized as alphabetic by @code{make.names}.
 @cindex OS X
 
 You can build @R{} as a Unix application on OS X using the Apple
-Developer Tools (`Xcode') and a version of @command{gfortran}.  (Some
-recent versions of Xcode need `Command Line Tools for Xcode'.) You will
-also need @code{libreadline} (or to configure with
-@option{--without-readline}).
+Developer Tools (`Xcode') and suitable compilers (including a version of
+@command{gfortran}).  (Recent versions of Xcode need `Command Line Tools
+for Xcode' installed.  This can be downloaded from within Xcode (from
+the @samp{Downloads} preferences pane) or from
+@uref{http://developer.apple.com/download}.)  You will also need
+@code{libreadline} (or to configure with @option{--without-readline}).
 
 You may also want to install an X sub-system (or you will need to
 configure with @option{--without-x}): X is part of the standard OS X
@@ -4165,7 +4168,8 @@ only be used for the data editor/viewer.
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
 with @code{R.app}, it also changes the default location of the personal
-library (see @code{?.libPaths()}).
+library (see @code{?.libPaths()}).   Also use
+@option{--disable-R-framework} to install in the standard layout.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4178,9 +4182,10 @@ The @code{vecLib} library can be used @emph{via} the configuration options
 @noindent
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
 routines.  (Use of @code{vecLib} without @option{--with-lapack} has
-resulted in segfaults: there is a workaround as from @R{} 2.15.2.)  You
-can replace @code{vecLib} by @code{Accelerate}: in recent versions of OS
-X the former is a wrapper for the latter.
+resulted in segfaults: there is a workaround as from @R{} 2.15.2, and
+using @option{--with-lapack} did not work on Snow Leopard.)  You can
+replace @code{vecLib} by @code{Accelerate}: in recent versions of OS X
+the former is a wrapper for the latter.
 
 Note that the Apple versions of GCC (and those on
 @uref{http://r.research.att.com}) are based on version 4.2 from
@@ -4308,11 +4313,15 @@ in a @command{Terminal} window.  If Java is not installed this should
 prompt you to install it.
 @c http://osxdaily.com/2012/08/01/install-java-in-os-x-mountain-lion/
 
+There is also a version of Java available from Oracle.
+
+Note for use with @pkg{rJava}: the available Java SDK is 64-bit, only.
+
 @node Frameworks,  , Mountain Lion, Mac OS X
 @subsection Frameworks
 
 The @acronym{CRAN} build of @R{} is installed as a framework, which is
-selected by option
+selected by the default option
 
 @example
 ./configure --enable-R-framework
