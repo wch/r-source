@@ -35,11 +35,13 @@ mget(x, envir = as.environment(-1), mode = "any", ifnotfound,
 }
 \details{
   The \code{pos} argument can specify the environment in which to look
-  for the object in any of several ways: as a positive integer (the position in
-  the \code{\link{search}} list); as the character string name of an
-  element in the search list; or as an \code{\link{environment}}
-  (including using \code{\link{sys.frame}} to access the currently active
-  function calls).  The \code{envir} argument is an alternative way to
+  for the object in any of several ways: as a positive integer (the
+  position in the \code{\link{search}} list); as the character string
+  name of an element in the search list; or as an
+  \code{\link{environment}} (including using \code{\link{sys.frame}}
+  to access the currently active function calls).  The default of
+  \code{-1} indicates the current environment of the call to
+  \code{get}. The \code{envir} argument is an alternative way to
   specify an environment.
 
   These functions look to see if each of the name(s) \code{x} have a

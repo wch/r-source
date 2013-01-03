@@ -22,7 +22,8 @@ lsf.str(pos = -1, envir, \dots)
   applying \code{\link{str}()} to each matched name: see section Value.
 }
 \arguments{
-  \item{pos}{integer indicating \code{\link{search}} path position.}
+  \item{pos}{integer indicating \code{\link{search}} path position, or
+    \code{-1} for the current environment.}
   \item{name}{optional name indicating \code{\link{search}} path
     position, see \code{\link{ls}}.}
   \item{envir}{environment to use, see \code{\link{ls}}.}
