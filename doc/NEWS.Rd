@@ -109,14 +109,16 @@
       \item \code{parallel::mccollect()} handled \code{NULL} returns
       incorrectly (removing the element rather than setting it to
       \code{NULL}).
-      
+
       \item The full reference index (\file{fullrefman.pdf}) was missing
       packages \pkg{compiler} and \pkg{parallel}.
-      
+
       \item The report for
       \code{optim(method = "L-BFGS-B", control = list(trace = 1))}
       reported the last completed and not the current iteration, unlike
       other methods and trace levels.  (\PR{15103})
+
+      \item \code{qt(1e-12, 1.2)} no longer gives \code{NaN}.
     }
   }
 }
