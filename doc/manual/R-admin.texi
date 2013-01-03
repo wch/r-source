@@ -2853,8 +2853,8 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.12 have been tested (including most versions
-of 8.4.x, but not recently).
+Versions of Tcl/Tk up to 8.5.12 and 8.6.0 have been tested (including
+most versions of 8.4.x, but not recently).
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
 @subsection Java support
@@ -4313,7 +4313,10 @@ in a @command{Terminal} window.  If Java is not installed this should
 prompt you to install it.
 @c http://osxdaily.com/2012/08/01/install-java-in-os-x-mountain-lion/
 
-There is also a version of Java available from Oracle.
+There is also a version of Java available from Oracle, but they have a
+different layout and so that can only be used with a source installation
+and after setting environment variables (see
+@uref{http://mailman.rz.uni-augsburg.de/pipermail/stats-rosuda-devel/2012q4/001917.html}).
 
 Note for use with @pkg{rJava}: the available Java SDK is 64-bit, only.
 
