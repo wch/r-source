@@ -90,7 +90,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             }
             cmd <- if(.Platform$OS.type == "windows")
                 ## some versions of tar.exe need / here
-                paste(cmd, "-C", gsub("\\", "/", exdir, fixed=TRUE))
+                paste(cmd, "-C", shQuote(gsub("\\", "/", exdir, fixed=TRUE)))
             else
                 paste(cmd, "-C", shQuote(exdir))
         }

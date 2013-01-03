@@ -677,7 +677,7 @@
       installer, so can be omitted if desired.
 
       \item The markup for many messages has been changed to make them
-      easier to translate, incorporating suggestions from Łukasz Daniel.
+      easier to translate, incorporating suggestions from ?ukasz Daniel.
     }
   }
 
@@ -854,6 +854,11 @@
       other methods and trace levels.  (\PR{15103})
 
       \item \code{qt(1e-12, 1.2)} no longer gives \code{NaN}.
+      
+      \item On Windows the \code{untar()} function now quotes the
+      directory name when using an external \command{tar} utility, so
+      \code{R CMD check} will handle pathnames containing spaces.
+      
     }
   }
 }
@@ -1360,7 +1365,7 @@
       \item The NA warning messages from e.g. \code{pchisq()} now report
       the call to the closure and not that of the \code{.Internal}.
 
-      \item Added Polish translations by Łukasz Daniel.
+      \item Added Polish translations by ?ukasz Daniel.
     }
   }
 
