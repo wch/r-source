@@ -448,7 +448,9 @@
       arguments added.
 
       \item The \code{@<-} operator is now implemented as a primitive,
-      which should reduce some copying of objects when used.
+      which should reduce some copying of objects when used.  Note
+      that the operator object must now be in base: don't try to
+      import it explicitly from package "methods".
     }
   }
 
