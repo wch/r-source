@@ -859,11 +859,13 @@
       other methods and trace levels.  (\PR{15103})
 
       \item \code{qt(1e-12, 1.2)} no longer gives \code{NaN}.
-      
+
+      \item \code{dt(1e160, 1.2, log=TRUE)} no longer gives \code{-Inf}.
+
       \item On Windows the \code{untar()} function now quotes the
       directory name when using an external \command{tar} utility, so
       \code{R CMD check} will handle pathnames containing spaces.
-      
+
     }
   }
 }
