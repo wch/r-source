@@ -52,7 +52,7 @@ for(f in ls(.ArgsEnv, all.names=TRUE))
 ff <- ls("package:base", all.names=TRUE)
 ff <- ff[sapply(ff, function(x) is.primitive(get(x, "package:base")))]
 lang_elements <-
-    c('$', '$<-', '&&', '(', ':', '<-', '<<-', '=', '@',
+    c('$', '$<-', '&&', '(', ':', '<-', '<<-', '=', '@', '@<-',
       '[', '[<-', '[[', '[[<-', 'break', 'for', 'function', 'if', 'next',
       'repeat', 'return', 'while', '{', '||', '~')
 
