@@ -132,7 +132,7 @@ mcMap(f, ...)
   should consult their documentation.
 
   Note that \pkg{tcltk} counts as a GUI for these purposes since
-  \command{Tk} runs an event loop.
+  \command{Tcl} runs an event loop.
 }
 
 \author{
