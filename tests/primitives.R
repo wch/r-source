@@ -51,6 +51,7 @@ for(f in ls(.ArgsEnv, all.names=TRUE))
 ## and nothing else
 ff <- ls("package:base", all.names=TRUE)
 ff <- ff[sapply(ff, function(x) is.primitive(get(x, "package:base")))]
+## NB: there is a another version of this list in tools::undoc()
 lang_elements <-
     c('$', '$<-', '&&', '(', ':', '<-', '<<-', '=', '@', '@<-',
       '[', '[<-', '[[', '[[<-', 'break', 'for', 'function', 'if', 'next',

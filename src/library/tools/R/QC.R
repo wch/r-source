@@ -265,7 +265,7 @@ function(package, dir, lib.loc = NULL)
         extras <- prototypes %w/o% prims
         if(length(extras))
             undoc_things <- c(undoc_things, list(prim_extra=extras))
-        langElts <- c("$","$<-","&&","(",":","@","[","[[",
+        langElts <- c("$","$<-","&&","(",":","@","@<-","[","[[",
                       "[[<-","[<-","{","||","~","<-","<<-","=","break","for",
                       "function","if","next","repeat","return", "while")
         miss <- prims %w/o% c(langElts, prototypes)
