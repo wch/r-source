@@ -2035,7 +2035,7 @@ arithmetic and logic:
 @example
 @group
                [    [[    $    @@
-<-   <<-  =    [<-  [[<-  $<-
+<-   <<-  =    [<-  [[<-  $<-  @@<-
 
 +    -    *    /     ^    %%   %*%  %/%
 <    <=   ==   !=    >=   >
@@ -2185,8 +2185,8 @@ call       switch
 @noindent
 intentionally use positional matching, and need to do so to avoid
 partial matching to their first argument.  They do check that the first
-argument (partially) matched the formal argument name.  On the other
-hand,
+argument is unnamed or for the first two, partially matches the formal
+argument name.  On the other hand,
 
 @example
 @group
@@ -2212,6 +2212,7 @@ required.
 * Special primitives::          
 * Special internals::           
 * Prototypes for primitives::   
+* Adding a primitive::          
 @end menu
 
 @node Special primitives, Special internals, .Internal vs .Primitive, .Internal vs .Primitive
@@ -2248,7 +2249,7 @@ There are also special @code{.Internal} functions: @code{NextMethod},
 for the @code{deparse.level} argument), @code{eapply}, @code{lapply} and
 @code{vapply}.
 
-@node Prototypes for primitives,  , Special internals, .Internal vs .Primitive
+@node Prototypes for primitives, Adding a primitive, Special internals, .Internal vs .Primitive
 @section Prototypes for primitives
 
 Prototypes are available for the primitive functions and operators, and
@@ -2271,7 +2272,7 @@ included are better thought of as language elements (at the time of
 writing
 
 @example
-$  $<-  &&  (  :  @@  [  [[  [[<-  [<-  @{  ||  ~  <-  <<-  =
+$  $<-  &&  (  :  @@  @@<-  [  [[  [[<-  [<-  @{  ||  ~  <-  <<-  =
 break  for function  if  next  repeat  return  while
 @end example
 
@@ -2306,6 +2307,39 @@ generic, by setting a method and checking it is not dispatched to (but
 this can fail for other reasons).  However, there is no certain way to
 know that if other @code{.Internal} or primitive functions are not
 internally generic except by reading the source code.
+
+@node Adding a primitive,  , Prototypes for primitives, .Internal vs .Primitive
+@section Adding a primitive
+
+[For R-core use: reverse this procedure to remove a primitive.  Most
+commonly this is done by changing a @code{.Internal} to a primitive or
+@emph{vice versa}.]
+
+Primitives are listed in the table @code{R_FunTab} in
+@file{src/main/names.c}: primitives have @samp{Y = 0} in the @samp{eval}
+field.
+
+There needs to an a @samp{\alias} entry in a help file in the @pkg{base}
+package, and the primitive needs to be added to one of the lists at the
+start of this section.
+
+Some primitives are regarded as language elements (the current ones are
+listed above).  These need to be in added to two lists of exceptions,
+@code{langElts} in @code{undoc()} (in file
+@file{src/library/tools/R/QC.R}) and @code{lang_elements} in
+@file{tests/primitives.R}.
+
+All other primitives are regarded as functions and should be listed in
+one of the environments defined in @file{src/library/base/R/zzz.R},
+either @code{.ArgsEnv} or @code{.GenericArgsEnv}: internal generics also
+need to be listed in the character vector @code{.S3PrimitiveGenerics}.
+Note too the discussion about argument matching above: if you add a
+primitive function with more than one argument by converting a
+@code{.Internal} you need to add argument matching to the C code, and
+for those with a single argument, add argument-name checking.
+
+Do ensure that @command{make check-devel} has been run: that tests most
+of these requirements.
 
 @node Internationalization in the R sources, Package Structure, .Internal vs .Primitive, Top
 @chapter Internationalization in the R sources
