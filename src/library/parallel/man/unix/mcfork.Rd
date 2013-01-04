@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/mcfork.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-12 R Core Team
+% Copyright 2009-13 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -84,7 +84,7 @@ mcexit(exit.code = 0L, send = NULL)
   before forking.
 
   Note that \pkg{tcltk} counts as a GUI for these purposes since
-  \command{Tk} runs an event loop.
+  \command{Tcl} runs an event loop.
 }
 
 \author{
