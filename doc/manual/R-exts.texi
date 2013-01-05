@@ -2356,7 +2356,8 @@ variable @env{TAR} to the path to a suitable program or to
 @samp{internal} if none is available.  @strong{Note to users of
 OpenSUSE:} It seems OpenSUSE 12.2 uses a modified version of GNU
 @command{tar} which produces by default non-portable tarballs, so set
-@env{TAR} to @samp{internal} or @samp{/bin/tar --format=gnu}.
+@env{TAR} to @samp{internal} or @samp{/bin/tar --format=gnu} or set
+environment variable @env{TAR_OPTIONS} to @samp{--format=gnu}.
 
 @node Building binary packages,  , Building package tarballs, Checking and building packages
 @subsection Building binary packages
