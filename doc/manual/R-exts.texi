@@ -2353,7 +2353,10 @@ produce a compressed tarball: almost certainly one will have been found
 when @R{} was configured on a Unix-alike (and the Windows toolset
 contains one), but if an unsuitable one is found, set the environment
 variable @env{TAR} to the path to a suitable program or to
-@code{"internal"} if none is available.
+@samp{internal} if none is available.  @strong{Note to users of
+OpenSUSE:} It seems OpenSUSE 12.2 uses a modified version of GNU
+@command{tar} which produces by default non-portable tarballs, so set
+@env{TAR} to @samp{internal} or @samp{/bin/tar --format=gnu}.
 
 @node Building binary packages,  , Building package tarballs, Checking and building packages
 @subsection Building binary packages
