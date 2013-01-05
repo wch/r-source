@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-12 R Core Team
+% Copyright 2009-13 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -23,24 +23,25 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
   \item{files}{A character vector of recorded filepaths to be extracted:
     the default is to extract all files.}
-  
-  \item{list}{If \code{TRUE}, just list the files.  The equivalent of
-    \command{tar -tf}.  Otherwise extract the files (the equivalent of
+
+  \item{list}{If \code{TRUE}, list the files (the equivalent of
+    \command{tar -tf}).  Otherwise extract the files (the equivalent of
     \command{tar -xf}).}
-    
+
   \item{exdir}{The directory to extract files to (the equivalent of
     \command{tar -C}).  It will be created if necessary.}
 
   \item{compressed}{logical or character.  Values \code{"gzip"},
     \code{"bzip2"} and \code{"xz"} select that form of compression (and
     may be abbreviated to the first letter).  \code{TRUE} indicates gzip
-    compression, \code{FALSE} no known compression (but the
+    compression, \code{FALSE} no known compression (but an external
     \command{tar} command may detect compression automagically), and
     \code{NA} (the default) that the type is inferred from the file
     header.}
 
   \item{extras}{\code{NULL} or a character string: further command-line
-    flags such as \option{-p} to be passed to the \command{tar} program.}
+    flags such as \option{-p} to be passed to an external \command{tar}
+    program.}
 
   \item{verbose}{logical: if true echo the command used.}
 
@@ -60,15 +61,15 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   Modern GNU flavours of \command{tar} will support compressed archives,
   and since 1.15 are able to detect the type of compression
   automatically: version 1.20 added support for \command{lzma} and
-  version 1.22 for \command{xz} compression using LZMA2.  For other
-  flavours of \command{tar}, environment variable \env{R_GZIPCMD} gives
-  the command to decompress \command{gzip} and \command{compress} files,
-  and \command{R_BZIPCMD} for \command{bzip2} files.  (There is a
-  \command{bsdtar} command from the \samp{libarchive} project used by
+  version 1.22 for \command{xz} compression using LZMA2.  Mac OS 10.6
+  and later (and FreeBSD and some other OSes) have a \command{tar} also
+  known as \command{bsdtar} from the \samp{libarchive} project used by
   Mac OS 10.6 and later which can also detect \command{gzip} and
-  \command{bzip2} compression automatically, as can the \command{tar}
-  from the \sQuote{Heirloom Toolchest} project.)
-  
+  \command{bzip2} compression automatically.  For other flavours of
+  \command{tar}, environment variable \env{R_GZIPCMD} gives the command
+  to decompress \command{gzip} and \command{compress} files, and
+  \command{R_BZIPCMD} for \command{bzip2} files.
+
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
 
@@ -83,17 +84,21 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   compression.  It does not guard against restoring absolute file paths,
   as some \command{tar} implementations do.  It will create the parent
   directories for directories or files in the archive if necessary.  It
-  handles both the standard (USTAR/POSIX) and GNU ways of handling file
-  paths of more than 100 bytes.
+  handles the standard (USTAR/POSIX), GNU and \command{pax} ways of
+  handling file paths of more than 100 bytes, and the GNU way of
+  handling link targets of more than 100 bytes.
 
-  You may see warnings from the internal implementation such as
-\preformatted{unsupported entry type 'x'}
+  You may see warnings from the internal implementation such
+  as \preformatted{    unsupported entry type 'x'}
   This often indicates an invalid archive: entry types \code{"A-Z"} are
-  allowed as extensions, but other types are reserved (this example is
-  from Mac OS 10.6.3).  The only thing you can do with such an archive
-  is to find a \code{tar} program that handles it, and look carefully at
-  the resulting files.
-  
+  allowed as extensions, but other types are reserved.  The only thing
+  you can do with such an archive is to find a \code{tar} program that
+  handles it, and look carefully at the resulting files.  There may also
+  be the warning \preformatted{    using pax extended headers}
+  This is indicates that additional information may have been discarded,
+  such as ACLs, encodings \dots, and long path and link names are only
+  used as from \R 2.15.3.
+
   The standards only support ASCII filenames (indeed, only alphanumeric
   plus period, underscore and hyphen).  \code{untar} makes no attempt to map
   filenames to those acceptable on the current system, and treats the
@@ -109,7 +114,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 }
 
 \seealso{
-  \code{\link{tar}}, \code{\link{unzip}}.  
+  \code{\link{tar}}, \code{\link{unzip}}.
 }
 
 \keyword{file}

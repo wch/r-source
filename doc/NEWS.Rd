@@ -21,7 +21,11 @@
 
       \item Packages \pkg{compiler} and \pkg{parallel} have been added
       to the reference index (\file{refman.pdf}).
-    }
+
+      \item \code{untar(tar = "internal")} has some support for
+      \code{pax} headers as produced by e.g. \command{gnutar --posix}
+      (which seems prevalent on OpenSUSE 12.2) or
+      \command{bsdtar --format pax}, including long path and link names.    }
   }
 
   \subsection{UTILITIES}{
