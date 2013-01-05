@@ -20,10 +20,10 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
                          ".newClassRepresentation", ".classGeneratorFunction",
                          ".mergeClassDefSlots", "..mergeClassDefSlots"))
 
-..First.lib  <-
+..onLoad  <-
   ## Initialize the methods package.  Called from .onLoad, first
   ## during INSTALL, when saved will be FALSE, at which time
-  ## the serious computation is done.  (The name ..First.lib is only historical)
+  ## the serious computation is done.
   function(libname, pkgname, where)
 {
     if(missing(where)) {
@@ -44,12 +44,7 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
               else
               NA)
     if(identical(saved, FALSE)) {
-        ## optionally turn off old-style mlists
-        mopt <- Sys.getenv("R_MLIST")
-        .noMlistsFlag <<- (is.character(mopt) && all(mopt != "YES"))
-        if(!.noMlistsFlag)
-            cat("Initializing with support for old-style methods list objects\n")
-        cat("initializing class and method definitions ...\n")
+        cat("initializing class and method definitions ...")
         on.exit(assign(".saveImage", NA, envir = where))
         ## set up default prototype (uses .Call so has be at load time)
         assign(".defaultPrototype",
@@ -98,7 +93,7 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
         unlockBinding(".BasicFunsList", where)
         assign(".saveImage", TRUE, envir = where)
         on.exit()
-        cat("done\n")
+        cat(" done\n")
     }
     else {
         if(!isTRUE(saved))
@@ -119,7 +114,7 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
 .onLoad <- function(libname, pkgname) {
     env <- environment(sys.function())
     doSave <- identical(get(".saveImage", envir = env), FALSE)
-    ..First.lib(libname, pkgname, env)
+    ..onLoad(libname, pkgname, env)
     if(doSave) {
         dbbase <- file.path(libname, pkgname, "R", pkgname)
         ns <- asNamespace(pkgname)
