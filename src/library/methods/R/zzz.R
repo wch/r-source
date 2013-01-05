@@ -67,7 +67,8 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
         assign(".extendsForS3", ..extendsForS3, envir = where)
         .makeBasicFuns(where)
         rm(.makeGeneric, .newClassRepresentation, .possibleExtends,
-           ..mergeClassDefSlots, .classGeneratorFunction, envir = where)
+           ..mergeClassDefSlots, .classGeneratorFunction, ..classEnv,
+           ..addToMetaTable, ..extendsForS3, envir = where)
         .InitMethodDefinitions(where)
         .InitShowMethods(where)
         assign(".isPrototype", ..isPrototype, envir = where)
@@ -87,8 +88,10 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
         .initImplicitGenerics(where)
         assign("implicitGeneric", .implicitGeneric, envir = where)
         cacheMetaData(where, TRUE, searchWhere = .GlobalEnv, FALSE)
-        assign(".checkRequiredGenerics", ..checkRequiredGenerics,envir = where)
+        assign(".checkRequiredGenerics", ..checkRequiredGenerics, envir = where)
         assign(".methodPackageSlots", ..methodPackageSlots, envir = where)
+        rm(..isPrototype, .isSealedMethod, ..requirePackage, .implicitGeneric,
+           ..checkRequiredGenerics, ..methodPackageSlots, envir = where)
         ## unlock some bindings that must be modifiable
         unlockBinding(".BasicFunsList", where)
         assign(".saveImage", TRUE, envir = where)
