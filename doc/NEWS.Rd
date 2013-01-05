@@ -742,6 +742,11 @@
       \code{tools::parseLatex()} and \code{tools::parse_Rd()} were not
       reentrant, leading to errors in rare circumstances such as a
       garbage collection triggering a recursive call.
+
+      \item Field assignments in reference class objects via
+      \code{$<-} were not being checked 
+      because the magic incantation to turn methods on for that
+      primitive operator had been inadvertently omitted. %$
     }
   }
 }
