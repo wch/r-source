@@ -382,6 +382,8 @@ tar <- function(tarfile, files = NULL,
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")
 
+    ## FIXME: eventually we should use the pax extension, but
+    ## that was first supported in R 2.15.3.
     GNUname <- function(name, link = FALSE)
     {
         header <- raw(512L)
@@ -414,25 +416,27 @@ tar <- function(tarfile, files = NULL,
         ## add trailing / to dirs.
         if(info$isdir && !grepl("/$", f)) f <- paste0(f, "/")
         name <- charToRaw(f)
-##         if(length(name) > 100L) {
-##             GNUname(name)
-##             name <- charToRaw("dummy")
-##             warn1 <- c(warn1, "using GNU extension for long pathname")
-##         }
         if(length(name) > 100L) {
-            ## we could use the GNU or pax extension ...
+            OK <- TRUE
             ## best possible case: 155+/+100
-            if(length(name) > 256L) stop("file path is too long")
-            ## do not want to split on terminal /
-            m <- length(name)
-            s <- max(which(name[1:min(156, m - 1L)] == charToRaw("/")))
-            if(is.infinite(s) || s + 100L < length(name))
-                stop("file path is too long")
+            if(length(name) > 256L) OK <- FALSE
+            else {
+                ## do not want to split on terminal /
+                m <- length(name)
+                s <- max(which(name[1:min(156, m - 1L)] == charToRaw("/")))
+                if(is.infinite(s) || s + 100L < length(name)) OK <- FALSE
+            }
             warning("storing paths of more than 100 bytes is not portable:\n  ",
                     sQuote(f), domain = NA)
-            prefix <- name[1:(s-1L)]
-            name <- name[-(1:s)]
-            header[345L+seq_along(prefix)] <- prefix
+            if (OK) {
+                prefix <- name[1:(s-1L)]
+                name <- name[-(1:s)]
+                header[345L+seq_along(prefix)] <- prefix
+            } else {
+                GNUname(name)
+                name <- charToRaw("dummy")
+                warn1 <- c(warn1, "using GNU extension for long pathname")
+            }
         }
         header[seq_along(name)] <- name
         header[101:107] <- charToRaw(sprintf("%07o", info$mode))

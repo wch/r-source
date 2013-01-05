@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-12 R Core Team
+% Copyright 2009-13 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -85,10 +85,11 @@ tar(tarfile, files = NULL,
     way by POSIX \command{tar} and in another by GNU \command{tar} and
     yet another by the POSIX \command{pax} command which
     recent\command{tar} programs often support.  The internal
-    implementation uses the \sQuote{ustar} way from the 1998 POSIX
+    implementation warns on paths of more than 100 bytes,
+    uses the \sQuote{ustar} way from the 1998 POSIX
     standard which supports up to 256 bytes (depending on the path: in
-    particular the final component is limited to 100 bytes), and warns
-    on paths of more than 100 bytes.
+    particular the final component is limited to 100 bytes) if possible,
+    or the GNU way (which is widely supported).
 
     Most formats do not record the encoding of file paths.
 
@@ -104,7 +105,7 @@ tar(tarfile, files = NULL,
 
     Names of links in the \sQuote{ustar} format are restricted to 100
     bytes.  There is an GNU extension for arbitrarily long link names,
-    but \command{bsdtar} does not read.  As from \R 3.0,0 the internal
+    but \command{bsdtar} does not read.  As from \R 2.15.3 the internal
     method uses the GNU extension, with a warning.
 
     \item Header fields, in particular the padding to be used when

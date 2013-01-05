@@ -339,6 +339,10 @@
 
       \item \code{close()} now returns an integer status where available,
       invisibly. (Wish of \PR{15088}.)
+      
+      \item The internal method of \code{tar()} can now store paths too
+      long for the \samp{ustar} format, using the (widely supported) GNU
+      extension.
     }
   }
 
