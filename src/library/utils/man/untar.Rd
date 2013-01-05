@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-12 R Core Team
+% Copyright 2009-13 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -97,7 +97,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   be the warning \preformatted{    using pax extended headers}
   This is indicates that additional information may have been discarded,
   such as ACLs, encodings \dots, and long path and link names are only
-  used as from \R 3.0.0.
+  used as from \R 2.15.3.
 
   The standards only support ASCII filenames (indeed, only alphanumeric
   plus period, underscore and hyphen).  \code{untar} makes no attempt to map

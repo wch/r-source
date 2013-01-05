@@ -327,11 +327,6 @@
       given, and this is used to check version specifications given in
       the \samp{Imports} field when a namespace is loaded.
 
-      \item \code{untar(tar = "internal")} has some support for
-      \code{pax} headers as produced by e.g. \command{gnutar --posix}
-      or \command{bsdtar --format pax}, including long path and link
-      names.
-
       \item \code{setClass()} has a new argument, \code{slots=},
       clearer and less ambiguous than \code{representation=}.  It is
       recommended for future code, but should be back-compatible.  At
@@ -766,7 +761,11 @@
 
       \item Packages \pkg{compiler} and \pkg{parallel} have been added
       to the reference index (\file{refman.pdf}).
-    }
+
+      \item \code{untar(tar = "internal")} has some support for
+      \code{pax} headers as produced by e.g. \command{gnutar --posix}
+      (which seems prevalent on OpenSUSE 12.2) or
+      \command{bsdtar --format pax}, including long path and link names.    }
   }
 
   \subsection{UTILITIES}{
