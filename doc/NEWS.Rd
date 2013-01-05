@@ -343,6 +343,10 @@
       \item The internal method of \code{tar()} can now store paths too
       long for the \samp{ustar} format, using the (widely supported) GNU
       extension.
+
+      \item Local reference classes are a technique for avoiding unneeded
+      copying of large components of objects while retaining standard
+      \R functional behavior.  See \code{?LocalReferenceClasses}.
     }
   }
 
