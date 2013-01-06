@@ -776,7 +776,11 @@
       \item \code{untar(tar = "internal")} has some support for
       \code{pax} headers as produced by e.g. \command{gnutar --posix}
       (which seems prevalent on OpenSUSE 12.2) or
-      \command{bsdtar --format pax}, including long path and link names.    }
+      \command{bsdtar --format pax}, including long path and link names.
+    
+      \item \code{sQuote()} and \code{dQuote()} now handle 0-length
+      inputs.  (Suggestion of Ben Bolker.)
+    }
   }
 
   \subsection{UTILITIES}{

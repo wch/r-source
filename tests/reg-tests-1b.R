@@ -1969,8 +1969,8 @@ lm.wfit(cbind(1, x), y, w)
 ## as.data.frame() methods should preferably not barf on an 'nm' arg
 ## reported by Bill Dunlap
 ## (https://stat.ethz.ch/pipermail/r-devel/2012-September/064848.html)
-as.data.frame(1:10, nm="OneToTen")
-as.data.frame(LETTERS[1:10], nm="FirstTenLetters")
+as.data.frame(1:10, nm = "OneToTen")
+as.data.frame(LETTERS[1:10], nm = "FirstTenLetters")
 as.data.frame(LETTERS[1:10])
 ## second failed in 2.15.1.
 
@@ -1986,7 +1986,7 @@ if(is.na(z[2]) || is.na(z10[2])) {
 
 
 ##
-options(max.print=.Machine$integer.max)
+options(max.print = .Machine$integer.max)
 1 ## segfaulted because of integer overflow
 stopifnot(identical(.Machine$integer.max, getOption("max.print")))
 ##
@@ -2075,7 +2075,13 @@ stopifnot(!is.na(match(subdirs, lfri)), identical(subdirs, lfnd))
 X <- matrix(c(1,2,3, 5,7,11, 13,17,19), 3, 3)
 s <- svd(X, LINPACK = TRUE) # gives deprecation warning
 stopifnot(identical(X, matrix(c(1,2,3, 5,7,11, 13,17,19), 3, 3)))
-## but not in R-devel nor 2.15.2 patched
+## but not in R-devel nor 2.15.2 patched at the time.
+
+
+## [sd]Quote on 0-length inputs.
+x <- character(0)
+stopifnot(identical(sQuote(x), x), identical(dQuote(x), x))
+## was length one in 2.15.2
 
 
 proc.time()
