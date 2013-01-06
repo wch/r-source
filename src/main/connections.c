@@ -3144,8 +3144,7 @@ SEXP attribute_hidden do_close(SEXP call, SEXP op, SEXP args, SEXP env)
     con_close1(con);
     free(Connections[i]);
     Connections[i] = NULL;
-    if (status != NA_INTEGER) return ScalarInteger(status);
-    return R_NilValue;
+    return (status != NA_INTEGER) ? ScalarInteger(status) : R_NilValue;
 }
 
 /* seek(con, where = numeric(), origin = "start", rw = "") */
