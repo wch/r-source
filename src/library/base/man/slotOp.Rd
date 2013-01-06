@@ -25,7 +25,7 @@ object@name <- value
       definition of the class of  \code{object}.}
 }
 \details{
-  These operators supports the formal classes of package \pkg{methods},
+  These operators support the formal classes of package \pkg{methods},
   and are enabled only when package \pkg{methods} is loaded (as per
   default).  See \code{\link{slot}} for further details.
 

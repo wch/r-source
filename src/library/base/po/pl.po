@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-06 08:10+0000\n"
+"POT-Creation-Date: 2013-01-06 13:25+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -243,16 +243,15 @@ msgstr "problem z wyświetleniem '%ls'"
 #: src/main/util.c:1950 src/main/util.c:1974 src/main/util.c:1978
 #: src/main/util.c:1980 src/main/util.c:2005 src/main/util.c:2007
 #: src/main/util.c:2009 src/main/util.c:2012 src/main/util.c:2015
-#: src/main/util.c:2019 src/main/util.c:2021
-#: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
-#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:299
-#: src/modules/internet/internet.c:303 src/modules/lapack/Lapack.c:159
-#: src/modules/lapack/Lapack.c:266 src/modules/lapack/Lapack.c:707
-#: src/modules/lapack/Lapack.c:810 src/modules/lapack/Lapack.c:872
-#: src/modules/lapack/Lapack.c:1206 src/modules/X11/devX11.c:3232
+#: src/main/util.c:2019 src/main/util.c:2021 src/modules/X11/devX11.c:3232
 #: src/modules/X11/devX11.c:3235 src/modules/X11/devX11.c:3238
-#: src/modules/X11/devX11.c:3262 src/unix/sys-std.c:1220
-#: src/unix/sys-std.c:1243
+#: src/modules/X11/devX11.c:3262 src/modules/internet/internet.c:284
+#: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
+#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
+#: src/modules/lapack/Lapack.c:159 src/modules/lapack/Lapack.c:266
+#: src/modules/lapack/Lapack.c:707 src/modules/lapack/Lapack.c:810
+#: src/modules/lapack/Lapack.c:872 src/modules/lapack/Lapack.c:1206
+#: src/unix/sys-std.c:1220 src/unix/sys-std.c:1243
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
@@ -266,17 +265,19 @@ msgstr "niewspierana wersja systemu Windows"
 #: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
 #: src/main/dotcode.c:199 src/main/errors.c:926 src/main/errors.c:958
 #: src/main/errors.c:1060 src/main/errors.c:1085 src/main/errors.c:1090
-#: src/main/errors.c:1362 src/main/seq.c:188 src/main/seq.c:342
-#: src/main/seq.c:347 src/main/seq.c:351 src/main/seq.c:392 src/main/seq.c:396
-#: src/main/seq.c:400 src/main/sort.c:1195 src/main/sort.c:1278
-#: src/main/sort.c:1282 src/main/sort.c:1289 src/main/sort.c:1364
-#: src/main/source.c:220 src/main/summary.c:844 src/main/sysutils.c:248
-#: src/main/util.c:953 src/main/util.c:958 src/main/util.c:965
-#: src/main/util.c:968 src/modules/X11/devX11.c:3133
-#: src/modules/X11/devX11.c:3160 src/modules/X11/devX11.c:3165
-#: src/modules/X11/devX11.c:3170 src/modules/X11/devX11.c:3180
-#: src/modules/X11/devX11.c:3185 src/modules/X11/devX11.c:3189
-#: src/modules/X11/devX11.c:3193 src/unix/sys-std.c:1294
+#: src/main/errors.c:1362 src/main/identical.c:66 src/main/identical.c:67
+#: src/main/identical.c:68 src/main/identical.c:69 src/main/identical.c:70
+#: src/main/seq.c:188 src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351
+#: src/main/seq.c:392 src/main/seq.c:396 src/main/seq.c:400
+#: src/main/sort.c:1195 src/main/sort.c:1278 src/main/sort.c:1282
+#: src/main/sort.c:1289 src/main/sort.c:1364 src/main/source.c:220
+#: src/main/summary.c:844 src/main/sysutils.c:248 src/main/util.c:953
+#: src/main/util.c:958 src/main/util.c:965 src/main/util.c:968
+#: src/modules/X11/devX11.c:3133 src/modules/X11/devX11.c:3160
+#: src/modules/X11/devX11.c:3165 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3180 src/modules/X11/devX11.c:3185
+#: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3193
+#: src/unix/sys-std.c:1294
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawna wartość '%s'"
@@ -689,6 +690,21 @@ msgstr "funkcja '%s' nie jest dostarczana przez pakiet '%s'"
 msgid "table entry must be an external pointer"
 msgstr "wpis w tabeli musi być wskaźnikiem zewnętrznym"
 
+#: src/main/Renviron.c:159 src/main/Renviron.c:164
+#, fuzzy, c-format
+msgid "problem in setting variable '%s' in Renviron"
+msgstr "problem z ustawieniem strefy czasowej"
+
+#: src/main/Renviron.c:311
+#, fuzzy
+msgid "argument 'x' must be a character string"
+msgstr "argument 'code' musi być ciągiem tekstowym"
+
+#: src/main/Renviron.c:315
+#, fuzzy, c-format
+msgid "file '%s' cannot be opened for reading"
+msgstr "plik zip '%s' nie może zostać otwarty"
+
 #: src/main/Rstrptime.h:504 src/main/Rstrptime.h:969
 #, c-format
 msgid "use of %s for input is not supported"
@@ -884,8 +900,9 @@ msgstr "niepoprawny argument 'base' o zerowej długości"
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d argumentów przekazanych do 'log', który wymaga 1 lub 2"
 
-#: src/main/array.c:80 src/main/array.c:1429
-msgid "'data' must be of a vector type"
+#: src/main/array.c:79 src/main/array.c:1428
+#, fuzzy, c-format
+msgid "'data' must be of a vector type, was '%s'"
 msgstr "'data' musi być typu wektora"
 
 #: src/main/array.c:94 src/main/array.c:102
@@ -2057,11 +2074,13 @@ msgid "cannot close standard connections"
 msgstr "nie można zamknąć standardowych połączeń"
 
 #: src/main/connections.c:3139
-msgid "cannot close output sink connection"
+#, fuzzy
+msgid "cannot close 'output' sink connection"
 msgstr "nie można zamknąć wyjścia połączenia sink"
 
 #: src/main/connections.c:3141
-msgid "cannot close messages sink connection"
+#, fuzzy
+msgid "cannot close 'message' sink connection"
 msgstr "nie można zamknąć wiadomości połączenia sink"
 
 #: src/main/connections.c:3161 src/main/connections.c:4881
@@ -2764,6 +2783,57 @@ msgstr "niepoprawne formalne argumenty dla 'function'"
 #: src/main/dstruct.c:99
 msgid "invalid body argument for 'function'"
 msgstr "nieprawidłowe argumenty w ciele dla 'function'"
+
+#: src/main/edit.c:110
+msgid "invalid argument to edit()"
+msgstr "niepoprawny argument przekazany do 'edit()'"
+
+#: src/main/edit.c:121 src/main/saveload.c:2066
+msgid "unable to open file"
+msgstr "nie można otworzyć pliku"
+
+#: src/main/edit.c:134
+msgid "argument 'editor' type not valid"
+msgstr "niepoprawny typ argumentu 'editor'"
+
+#: src/main/edit.c:136
+msgid "argument 'editor' is not set"
+msgstr "argument 'editor' nie jest ustawiony"
+
+#: src/main/edit.c:141
+msgid "'title' must be a string"
+msgstr "'title' musi być ciągiem"
+
+#: src/main/edit.c:159
+#, c-format
+msgid "unable to run editor '%s'"
+msgstr "nie można uruchomić edytora '%s'"
+
+#: src/main/edit.c:161
+msgid "editor ran but returned error status"
+msgstr "edytor uruchomił się ale zwrócił status błędu"
+
+#: src/main/edit.c:171
+#, c-format
+msgid "problem with running editor %s"
+msgstr "problem z uruchomieniem edytora %s"
+
+#: src/main/edit.c:189
+msgid "unable to open file to read"
+msgstr "nie można otworzyć pliku do odczytania"
+
+#: src/main/edit.c:196
+#, c-format
+msgid ""
+"%s occurred on line %d\n"
+" use a command like\n"
+" x <- edit()\n"
+" to recover"
+msgstr ""
+"Pojawiło się '%s' w linii %d\n"
+" użyj polecenia jak\n"
+" x <- edit()\n"
+"w celu przywrócenia"
 
 #: src/main/engine.c:40
 msgid "Graphics API version mismatch"
@@ -3900,6 +3970,10 @@ msgstr "ciąg wynikowy jest zbyt długi"
 msgid "'pcre_fullinfo' returned '%d' "
 msgstr "pcre_fullinfo zwrócił '%d' "
 
+#: src/main/identical.c:121
+msgid "ignoring non-pairlist attributes"
+msgstr ""
+
 #: src/main/internet.c:92
 msgid "internet routines cannot be accessed in module"
 msgstr "procedury internetowe nie są dostępne w module"
@@ -4875,6 +4949,11 @@ msgstr[0] ""
 msgstr[1] " [ osiągnięto getOption(\"max.print\") -- pominięto %d wiersze ]]\n"
 msgstr[2] " [ osiągnięto getOption(\"max.print\") -- pominięto %d wierszy ]]\n"
 
+#: src/main/printutils.c:602
+#, fuzzy
+msgid "it is not known that wchar_t is Unicode on this platform"
+msgstr "nsl() nie jest obsługiwany na tej platformie"
+
 #: src/main/qsort.c:55
 msgid "argument is not a numeric vector"
 msgstr "argument nie jest wektorem liczbowym"
@@ -4913,6 +4992,63 @@ msgstr "niepoprawna liczba prawdopodobieństw"
 #, fuzzy
 msgid "n >= 2^31, replace = FALSE is only supported on 64-bit platforms"
 msgstr "'dirmarke = TRUE' nie wspierany na tej platformie"
+
+#: src/main/raw.c:37 src/main/raw.c:273
+#, fuzzy
+msgid "argument must be a character vector of length 1"
+msgstr "'hostname' musi być wektorem tekstowym o długości 1"
+
+#: src/main/raw.c:39 src/main/raw.c:275
+#, fuzzy
+msgid ""
+"argument should be a character vector of length 1\n"
+"all but the first element will be ignored"
+msgstr "argument '%s' ma długość > 1 i tylko pierwszy element zostanie użyty"
+
+#: src/main/raw.c:53 src/main/raw.c:89 src/main/raw.c:110
+#, fuzzy
+msgid "argument 'x' must be a raw vector"
+msgstr "pierwszy argument musi być wektorem"
+
+#: src/main/raw.c:56 src/main/raw.c:330
+#, fuzzy
+msgid "argument 'multiple' must be TRUE or FALSE"
+msgstr "'resize' musi posiadać wartość TRUE lub FALSE"
+
+#: src/main/raw.c:91
+#, fuzzy
+msgid "argument 'shift' must be a small integer"
+msgstr "argument 'size' musi być dodatnią liczbą całkowitą"
+
+#: src/main/raw.c:129 src/main/raw.c:327
+#, fuzzy
+msgid "argument 'x' must be an integer vector"
+msgstr "pierwszy argument musi być wektorem znaku"
+
+#: src/main/raw.c:148
+#, fuzzy
+msgid "argument 'x' must be raw, integer or logical"
+msgstr "argument 'logarithm' musi być logiczny"
+
+#: src/main/raw.c:150
+#, fuzzy
+msgid "argument 'type' must be a character string"
+msgstr "argument 'code' musi być ciągiem tekstowym"
+
+#: src/main/raw.c:154
+#, fuzzy, c-format
+msgid "argument 'x' must be a multiple of %d long"
+msgstr "argument musi być funkcją"
+
+#: src/main/raw.c:167 src/main/raw.c:181
+#, fuzzy
+msgid "argument 'x' must not contain NAs"
+msgstr "argument nie może być funkcją"
+
+#: src/main/raw.c:285
+#, fuzzy
+msgid "invalid UTF-8 string"
+msgstr "niepoprawny ciąg UTF-8 'old'"
 
 #: src/main/relop.c:105
 #, c-format
@@ -5124,10 +5260,6 @@ msgstr "załadowane dane nie są w postaci listy par"
 #: src/main/saveload.c:2053
 msgid "first argument must be a file name"
 msgstr "pierwszy argument musi być nazwą pliku"
-
-#: src/main/saveload.c:2066
-msgid "unable to open file"
-msgstr "nie można otworzyć pliku"
 
 #: src/main/saveload.c:2098 src/main/saveload.c:2124 src/main/serialize.c:826
 #: src/main/serialize.c:863 src/main/serialize.c:901
@@ -6306,6 +6438,236 @@ msgstr "Muszą być przynajmniej cztery punkty kontrolne"
 msgid "There must be at least three control points"
 msgstr "Muszą być przynajmniej trzy punkty kontrolne"
 
+#: src/modules/X11/dataentry.c:1871 src/modules/X11/devX11.c:1241
+#, c-format
+msgid "X11 protocol error: %s"
+msgstr "błąd protokołu X11: %s"
+
+#: src/modules/X11/devX11.c:458
+msgid "cannot set grayscale: reverting to monochrome"
+msgstr "nie można ustawić skali szarości: powracanie do monochromatyczności"
+
+#: src/modules/X11/devX11.c:544
+msgid ""
+"X11 driver unable to obtain color cube\n"
+"  reverting to monochrome"
+msgstr ""
+"sterownik X11 nie może uzyskać kolorowego sześcianu\n"
+"  powracanie do monochromatyczności"
+
+#: src/modules/X11/devX11.c:592
+msgid ""
+"Error: X11 cannot allocate additional graphics colors.\n"
+"Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
+msgstr ""
+"Błąd: X11 nie można przydzielić dodatkowych kolorów grafiki.\n"
+"Rozważ użycie X11 z colortype=\"pseudo.cube\" lub \"gray\"."
+
+#: src/modules/X11/devX11.c:1022
+msgid ""
+"could not find any X11 fonts\n"
+"Check that the Font Path is correct."
+msgstr ""
+"nie można znaleźć jakichkolwiek czcionek X11\n"
+"Sprawdź, czy ścieżka do czcionek jest poprawna."
+
+#: src/modules/X11/devX11.c:1082
+#, c-format
+msgid "X11 used font size %d when %d was requested"
+msgstr "X11 użył rozmiaru czcionki %d podczas gdy %d był żądany"
+
+#: src/modules/X11/devX11.c:1116
+#, c-format
+msgid "X11 font %s, face %d at size %d could not be loaded"
+msgstr "czcionka X11 %s, krój %d o rozmiarze %d nie mógł być załadowany"
+
+#: src/modules/X11/devX11.c:1125
+msgid ""
+"semi-transparency is not supported on this device: reported only once per "
+"page"
+msgstr ""
+"półprzezroczystość nie jest wspierana na tym urządzeniu: zaraportowane tylko "
+"raz na stronę"
+
+#: src/modules/X11/devX11.c:1249
+#, c-format
+msgid "X11 I/O error while opening X11 connection to '%s'"
+msgstr "błąd X11 wejścia/wyjścia podczas otwierania połączenia X11 z '%s'"
+
+#: src/modules/X11/devX11.c:1267
+msgid "X11 fatal IO error: please save work and shut down R"
+msgstr ""
+"fatalny błąd X11 wejścia/wyjścia: proszę zapisać pracę po czym zamknąć R"
+
+#: src/modules/X11/devX11.c:1323
+msgid "locale not supported by Xlib: some X ops will operate in C locale"
+msgstr ""
+"lokalizacja nie jest wspierana przez 'Xlib': niektóre opcje X będą operowały "
+"w lokalizacji C"
+
+#: src/modules/X11/devX11.c:1324
+msgid "X cannot set locale modifiers"
+msgstr "X nie może ustawić modyfikatorów lokalizacji"
+
+#: src/modules/X11/devX11.c:1328
+msgid "no png support in this version of R"
+msgstr "brak wsparcia 'png' w tej wersji R"
+
+#: src/modules/X11/devX11.c:1334
+msgid "filename too long in png() call"
+msgstr "nazwa pliku zbyt długa w wezwaniu 'png()'"
+
+#: src/modules/X11/devX11.c:1338
+#, c-format
+msgid "could not open PNG file '%s'"
+msgstr "nie udało się otworzyć pliku PNG '%s'"
+
+#: src/modules/X11/devX11.c:1350
+msgid "no jpeg support in this version of R"
+msgstr "brak wsparcia 'jpeg' w tej wersji R"
+
+#: src/modules/X11/devX11.c:1360
+msgid "filename too long in jpeg() call"
+msgstr "nazwa pliku zbyt długa w wezwaniu 'jpeg()'"
+
+#: src/modules/X11/devX11.c:1364
+#, c-format
+msgid "could not open JPEG file '%s'"
+msgstr "nie udało się otworzyć pliku JPEG '%s'"
+
+#: src/modules/X11/devX11.c:1376
+msgid "no tiff support in this version of R"
+msgstr "brak wsparcia 'tiff' w tej wersji R"
+
+#: src/modules/X11/devX11.c:1384
+msgid "filename too long in tiff() call"
+msgstr "nazwa pliku zbyt długa w wezwaniu 'tiff()'"
+
+#: src/modules/X11/devX11.c:1396
+msgid "filename too long in bmp() call"
+msgstr "nazwa pliku zbyt długa w wezwaniu 'bmp()'"
+
+#: src/modules/X11/devX11.c:1400
+#, c-format
+msgid "could not open BMP file '%s'"
+msgstr "nie udało się otworzyć pliku BMP '%s'"
+
+#: src/modules/X11/devX11.c:1430
+#, c-format
+msgid "unable to open connection to X11 display '%s'"
+msgstr "nie można otworzyć połączenia z oknem X11 '%s'"
+
+#: src/modules/X11/devX11.c:1440
+msgid "ignoring 'display' argument as an X11 device is already open"
+msgstr ""
+"ignorowanie argumentu 'display' ponieważ urządzenie X11 jest już otwarte"
+
+#: src/modules/X11/devX11.c:1446
+msgid "cairo-based types may only work correctly on TrueColor visuals"
+msgstr ""
+"typy oparte na cairo mogą działać porpawnie jedynie na wyświetlaczach "
+"TrueColor"
+
+#: src/modules/X11/devX11.c:1456
+msgid "jpeg() does not support transparency: using white bg"
+msgstr "'jpeg()' nie wspiera przezroczystości: używanie białego tła"
+
+#: src/modules/X11/devX11.c:1561
+#, c-format
+msgid "unable to obtain information on display '%s'"
+msgstr "nie można uzyskać informacji z ekranu '%s'"
+
+#: src/modules/X11/devX11.c:1579
+msgid "unable to create X11 window"
+msgstr "nie można utworzyć okna X11"
+
+#: src/modules/X11/devX11.c:1714
+#, c-format
+msgid "'width=%d, height=%d' are unlikely values in pixels"
+msgstr "'width=%d, height=%d' są mało prawdopodobnymi wartościami w pikselach"
+
+#: src/modules/X11/devX11.c:1719
+msgid "unable to create pixmap"
+msgstr "nie można utworzyć 'pixmap'"
+
+#: src/modules/X11/devX11.c:1750
+msgid "invalid font specification"
+msgstr "niepoprawne określenie czcionki"
+
+#: src/modules/X11/devX11.c:1790
+msgid "font family not found in X11 font database"
+msgstr "nie znaleziono czcionki w bazie czcionek X11"
+
+#: src/modules/X11/devX11.c:1829
+#, c-format
+msgid "invalid use of %d < 0 in '%s'"
+msgstr "błędne użycie %d < 0 w '%s'"
+
+#: src/modules/X11/devX11.c:1950
+#, c-format
+msgid "could not open file '%s'"
+msgstr "nie udało się otworzyć pliku '%s'"
+
+#: src/modules/X11/devX11.c:2180
+#, c-format
+msgid "%s not available for this device"
+msgstr "%s not available for this device"
+
+#: src/modules/X11/devX11.c:2325
+msgid "Unable to create XImage"
+msgstr "Nie można utworzyć XImage"
+
+#: src/modules/X11/devX11.c:2524
+msgid "attempt to use the locator after dev.hold()"
+msgstr "próba użycia lokalizatora po dev.hold()"
+
+#: src/modules/X11/devX11.c:3102
+#, c-format
+msgid "unable to start device %s"
+msgstr "nie można uruchomić urządzenia %s"
+
+#: src/modules/X11/devX11.c:3129
+msgid "invalid 'width' or 'height'"
+msgstr "błędna wartość 'width' lub 'height'"
+
+#: src/modules/X11/devX11.c:3136
+msgid "invalid colortype passed to X11 driver"
+msgstr "niepoprawny typ koloru przekazany do sterownika X11"
+
+#: src/modules/X11/devX11.c:3150
+msgid "unknown X11 color/colour model -- using monochrome"
+msgstr "nieznany model koloru X11 -- używanie monochromatycznego"
+
+#: src/modules/X11/devX11.c:3240
+msgid "no plot on device to save"
+msgstr "nie ma wykresu na urządzeniu, które można zapisać"
+
+#: src/modules/X11/devX11.c:3242
+msgid "not an open X11cairo device"
+msgstr "nie ma otwartego urządzenia X11cairo"
+
+#: src/modules/X11/devX11.c:3251
+#, c-format
+msgid "cannot open file '%s'"
+msgstr "nie można otworzyć pliku '%s'"
+
+#: src/modules/X11/devX11.c:3268
+msgid "savePlot() is not supported on this build"
+msgstr "savePlot() nie jest wspierane w tej kompilacji"
+
+#: src/modules/X11/devX11.c:3308
+msgid "unable to contact X11 display"
+msgstr "nie można połączyć się z ekranem X11"
+
+#: src/modules/X11/devX11.c:3357
+#, c-format
+msgid "clipboard cannot be read (error code %d)"
+msgstr "nie można odczytać zawartości schowka (kod błędu %d)"
+
+#: src/modules/X11/devX11.c:3388
+msgid "cannot allocate memory for X11Routines structure"
+msgstr "nie można przydzielić pamięci dla struktury 'X11Routines'"
+
 #: src/modules/internet/internet.c:188 src/modules/internet/internet.c:192
 #: src/modules/internet/internet.c:198 src/modules/internet/internet.c:210
 msgid "allocation of url connection failed"
@@ -6686,236 +7048,6 @@ msgstr "'b' musi być macierzą liczbową"
 msgid "argument 'logarithm' must be logical"
 msgstr "argument 'logarithm' musi być logiczny"
 
-#: src/modules/X11/devX11.c:458
-msgid "cannot set grayscale: reverting to monochrome"
-msgstr "nie można ustawić skali szarości: powracanie do monochromatyczności"
-
-#: src/modules/X11/devX11.c:544
-msgid ""
-"X11 driver unable to obtain color cube\n"
-"  reverting to monochrome"
-msgstr ""
-"sterownik X11 nie może uzyskać kolorowego sześcianu\n"
-"  powracanie do monochromatyczności"
-
-#: src/modules/X11/devX11.c:592
-msgid ""
-"Error: X11 cannot allocate additional graphics colors.\n"
-"Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
-msgstr ""
-"Błąd: X11 nie można przydzielić dodatkowych kolorów grafiki.\n"
-"Rozważ użycie X11 z colortype=\"pseudo.cube\" lub \"gray\"."
-
-#: src/modules/X11/devX11.c:1022
-msgid ""
-"could not find any X11 fonts\n"
-"Check that the Font Path is correct."
-msgstr ""
-"nie można znaleźć jakichkolwiek czcionek X11\n"
-"Sprawdź, czy ścieżka do czcionek jest poprawna."
-
-#: src/modules/X11/devX11.c:1082
-#, c-format
-msgid "X11 used font size %d when %d was requested"
-msgstr "X11 użył rozmiaru czcionki %d podczas gdy %d był żądany"
-
-#: src/modules/X11/devX11.c:1116
-#, c-format
-msgid "X11 font %s, face %d at size %d could not be loaded"
-msgstr "czcionka X11 %s, krój %d o rozmiarze %d nie mógł być załadowany"
-
-#: src/modules/X11/devX11.c:1125
-msgid ""
-"semi-transparency is not supported on this device: reported only once per "
-"page"
-msgstr ""
-"półprzezroczystość nie jest wspierana na tym urządzeniu: zaraportowane tylko "
-"raz na stronę"
-
-#: src/modules/X11/devX11.c:1241
-#, c-format
-msgid "X11 protocol error: %s"
-msgstr "błąd protokołu X11: %s"
-
-#: src/modules/X11/devX11.c:1249
-#, c-format
-msgid "X11 I/O error while opening X11 connection to '%s'"
-msgstr "błąd X11 wejścia/wyjścia podczas otwierania połączenia X11 z '%s'"
-
-#: src/modules/X11/devX11.c:1267
-msgid "X11 fatal IO error: please save work and shut down R"
-msgstr ""
-"fatalny błąd X11 wejścia/wyjścia: proszę zapisać pracę po czym zamknąć R"
-
-#: src/modules/X11/devX11.c:1323
-msgid "locale not supported by Xlib: some X ops will operate in C locale"
-msgstr ""
-"lokalizacja nie jest wspierana przez 'Xlib': niektóre opcje X będą operowały "
-"w lokalizacji C"
-
-#: src/modules/X11/devX11.c:1324
-msgid "X cannot set locale modifiers"
-msgstr "X nie może ustawić modyfikatorów lokalizacji"
-
-#: src/modules/X11/devX11.c:1328
-msgid "no png support in this version of R"
-msgstr "brak wsparcia 'png' w tej wersji R"
-
-#: src/modules/X11/devX11.c:1334
-msgid "filename too long in png() call"
-msgstr "nazwa pliku zbyt długa w wezwaniu 'png()'"
-
-#: src/modules/X11/devX11.c:1338
-#, c-format
-msgid "could not open PNG file '%s'"
-msgstr "nie udało się otworzyć pliku PNG '%s'"
-
-#: src/modules/X11/devX11.c:1350
-msgid "no jpeg support in this version of R"
-msgstr "brak wsparcia 'jpeg' w tej wersji R"
-
-#: src/modules/X11/devX11.c:1360
-msgid "filename too long in jpeg() call"
-msgstr "nazwa pliku zbyt długa w wezwaniu 'jpeg()'"
-
-#: src/modules/X11/devX11.c:1364
-#, c-format
-msgid "could not open JPEG file '%s'"
-msgstr "nie udało się otworzyć pliku JPEG '%s'"
-
-#: src/modules/X11/devX11.c:1376
-msgid "no tiff support in this version of R"
-msgstr "brak wsparcia 'tiff' w tej wersji R"
-
-#: src/modules/X11/devX11.c:1384
-msgid "filename too long in tiff() call"
-msgstr "nazwa pliku zbyt długa w wezwaniu 'tiff()'"
-
-#: src/modules/X11/devX11.c:1396
-msgid "filename too long in bmp() call"
-msgstr "nazwa pliku zbyt długa w wezwaniu 'bmp()'"
-
-#: src/modules/X11/devX11.c:1400
-#, c-format
-msgid "could not open BMP file '%s'"
-msgstr "nie udało się otworzyć pliku BMP '%s'"
-
-#: src/modules/X11/devX11.c:1430
-#, c-format
-msgid "unable to open connection to X11 display '%s'"
-msgstr "nie można otworzyć połączenia z oknem X11 '%s'"
-
-#: src/modules/X11/devX11.c:1440
-msgid "ignoring 'display' argument as an X11 device is already open"
-msgstr ""
-"ignorowanie argumentu 'display' ponieważ urządzenie X11 jest już otwarte"
-
-#: src/modules/X11/devX11.c:1446
-msgid "cairo-based types may only work correctly on TrueColor visuals"
-msgstr ""
-"typy oparte na cairo mogą działać porpawnie jedynie na wyświetlaczach "
-"TrueColor"
-
-#: src/modules/X11/devX11.c:1456
-msgid "jpeg() does not support transparency: using white bg"
-msgstr "'jpeg()' nie wspiera przezroczystości: używanie białego tła"
-
-#: src/modules/X11/devX11.c:1561
-#, c-format
-msgid "unable to obtain information on display '%s'"
-msgstr "nie można uzyskać informacji z ekranu '%s'"
-
-#: src/modules/X11/devX11.c:1579
-msgid "unable to create X11 window"
-msgstr "nie można utworzyć okna X11"
-
-#: src/modules/X11/devX11.c:1714
-#, c-format
-msgid "'width=%d, height=%d' are unlikely values in pixels"
-msgstr "'width=%d, height=%d' są mało prawdopodobnymi wartościami w pikselach"
-
-#: src/modules/X11/devX11.c:1719
-msgid "unable to create pixmap"
-msgstr "nie można utworzyć 'pixmap'"
-
-#: src/modules/X11/devX11.c:1750
-msgid "invalid font specification"
-msgstr "niepoprawne określenie czcionki"
-
-#: src/modules/X11/devX11.c:1790
-msgid "font family not found in X11 font database"
-msgstr "nie znaleziono czcionki w bazie czcionek X11"
-
-#: src/modules/X11/devX11.c:1829
-#, c-format
-msgid "invalid use of %d < 0 in '%s'"
-msgstr "błędne użycie %d < 0 w '%s'"
-
-#: src/modules/X11/devX11.c:1950
-#, c-format
-msgid "could not open file '%s'"
-msgstr "nie udało się otworzyć pliku '%s'"
-
-#: src/modules/X11/devX11.c:2180
-#, c-format
-msgid "%s not available for this device"
-msgstr "%s not available for this device"
-
-#: src/modules/X11/devX11.c:2325
-msgid "Unable to create XImage"
-msgstr "Nie można utworzyć XImage"
-
-#: src/modules/X11/devX11.c:2524
-msgid "attempt to use the locator after dev.hold()"
-msgstr "próba użycia lokalizatora po dev.hold()"
-
-#: src/modules/X11/devX11.c:3102
-#, c-format
-msgid "unable to start device %s"
-msgstr "nie można uruchomić urządzenia %s"
-
-#: src/modules/X11/devX11.c:3129
-msgid "invalid 'width' or 'height'"
-msgstr "błędna wartość 'width' lub 'height'"
-
-#: src/modules/X11/devX11.c:3136
-msgid "invalid colortype passed to X11 driver"
-msgstr "niepoprawny typ koloru przekazany do sterownika X11"
-
-#: src/modules/X11/devX11.c:3150
-msgid "unknown X11 color/colour model -- using monochrome"
-msgstr "nieznany model koloru X11 -- używanie monochromatycznego"
-
-#: src/modules/X11/devX11.c:3240
-msgid "no plot on device to save"
-msgstr "nie ma wykresu na urządzeniu, które można zapisać"
-
-#: src/modules/X11/devX11.c:3242
-msgid "not an open X11cairo device"
-msgstr "nie ma otwartego urządzenia X11cairo"
-
-#: src/modules/X11/devX11.c:3251
-#, c-format
-msgid "cannot open file '%s'"
-msgstr "nie można otworzyć pliku '%s'"
-
-#: src/modules/X11/devX11.c:3268
-msgid "savePlot() is not supported on this build"
-msgstr "savePlot() nie jest wspierane w tej kompilacji"
-
-#: src/modules/X11/devX11.c:3308
-msgid "unable to contact X11 display"
-msgstr "nie można połączyć się z ekranem X11"
-
-#: src/modules/X11/devX11.c:3357
-#, c-format
-msgid "clipboard cannot be read (error code %d)"
-msgstr "nie można odczytać zawartości schowka (kod błędu %d)"
-
-#: src/modules/X11/devX11.c:3388
-msgid "cannot allocate memory for X11Routines structure"
-msgstr "nie można przydzielić pamięci dla struktury 'X11Routines'"
-
 #: src/nmath/bessel_i.c:69
 msgid "bessel_i allocation error"
 msgstr "błąd przydziału bessel_i"
@@ -6976,6 +7108,11 @@ msgstr ""
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g): precyzja utracona w wyniku\n"
 
+#: src/nmath/choose.c:79 src/nmath/choose.c:122
+#, c-format
+msgid "'k' (%.2f) must be integer, rounded to %.0f"
+msgstr ""
+
 #: src/nmath/nmath.h:133
 #, c-format
 msgid "argument out of domain in '%s'\n"
@@ -7000,6 +7137,16 @@ msgstr "pełna precyzja może nie zostać osiągnięta w '%s'\n"
 #, c-format
 msgid "underflow occurred in '%s'\n"
 msgstr "wystąpił niedomiar w '%s'\n"
+
+#: src/nmath/pbeta.c:48
+#, c-format
+msgid "pbeta_raw() -> bratio() gave error code %d"
+msgstr ""
+
+#: src/nmath/pnbinom.c:71
+#, c-format
+msgid "pnbinom_mu() -> bratio() gave error code %d"
+msgstr ""
 
 #: src/nmath/pnchisq.c:241
 #, c-format
@@ -7030,6 +7177,22 @@ msgstr "'norm_rand()': niepoprawny 'N01_kind': %d\n"
 #, c-format
 msgid "wilcox allocation error %d"
 msgstr "błąd przydziału 'wilcox' %d"
+
+#: src/unix/X11.c:54
+msgid "X11 module is not available under this GUI"
+msgstr "Moduł X11 nie jest dostępny pod tym GUI"
+
+#: src/unix/X11.c:60
+msgid "X11 routines cannot be accessed in module"
+msgstr "procedury X11 nie są dostępne w module"
+
+#: src/unix/X11.c:78 src/unix/X11.c:90 src/unix/X11.c:102 src/unix/X11.c:113
+msgid "X11 module cannot be loaded"
+msgstr "Moduł X11 nie może został załadowany"
+
+#: src/unix/X11.c:126 src/unix/X11.c:132 src/unix/X11.c:138 src/unix/X11.c:144
+msgid "X11 is not available"
+msgstr "X11 nie jest dostępne"
 
 #: src/unix/dynload.c:143
 msgid ""
@@ -7170,22 +7333,6 @@ msgstr "tworzenie pliku tymczasowego dla '-e' nie powiodło się"
 #: src/unix/system.c:458
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "OSTRZEŻENIE: Tylko edytowanie pierwszego pliku na liście"
-
-#: src/unix/X11.c:54
-msgid "X11 module is not available under this GUI"
-msgstr "Moduł X11 nie jest dostępny pod tym GUI"
-
-#: src/unix/X11.c:60
-msgid "X11 routines cannot be accessed in module"
-msgstr "procedury X11 nie są dostępne w module"
-
-#: src/unix/X11.c:78 src/unix/X11.c:90 src/unix/X11.c:102 src/unix/X11.c:113
-msgid "X11 module cannot be loaded"
-msgstr "Moduł X11 nie może został załadowany"
-
-#: src/unix/X11.c:126 src/unix/X11.c:132 src/unix/X11.c:138 src/unix/X11.c:144
-msgid "X11 is not available"
-msgstr "X11 nie jest dostępne"
 
 #~ msgid "'names' is not a character string"
 #~ msgstr "'names' nie jest ciągiem tekstowym"
@@ -7476,41 +7623,6 @@ msgstr "X11 nie jest dostępne"
 
 #~ msgid "corrupt matrix -- dims not not match length"
 #~ msgstr "macierz uszkodzona -- wymiary nie zgadzają się z długością"
-
-#~ msgid "invalid argument to edit()"
-#~ msgstr "niepoprawny argument przekazany do 'edit()'"
-
-#~ msgid "argument 'editor' type not valid"
-#~ msgstr "niepoprawny typ argumentu 'editor'"
-
-#~ msgid "argument 'editor' is not set"
-#~ msgstr "argument 'editor' nie jest ustawiony"
-
-#~ msgid "'title' must be a string"
-#~ msgstr "'title' musi być ciągiem"
-
-#~ msgid "unable to run editor '%s'"
-#~ msgstr "nie można uruchomić edytora '%s'"
-
-#~ msgid "editor ran but returned error status"
-#~ msgstr "edytor uruchomił się ale zwrócił status błędu"
-
-#~ msgid "problem with running editor %s"
-#~ msgstr "problem z uruchomieniem edytora %s"
-
-#~ msgid "unable to open file to read"
-#~ msgstr "nie można otworzyć pliku do odczytania"
-
-#~ msgid ""
-#~ "%s occurred on line %d\n"
-#~ " use a command like\n"
-#~ " x <- edit()\n"
-#~ " to recover"
-#~ msgstr ""
-#~ "Pojawiło się '%s' w linii %d\n"
-#~ " użyj polecenia jak\n"
-#~ " x <- edit()\n"
-#~ "w celu przywrócenia"
 
 #~ msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
 #~ msgstr "Wartości NA w .C(\"bincode\",... NAOK=FALSE)"
