@@ -12,7 +12,6 @@ src/gnuwin32/shext.c
 src/gnuwin32/sys-win32.c
 src/gnuwin32/system.c
 src/include/Errormsg.h
-src/main/CConverters.c
 src/main/CommandLineArgs.c
 src/main/RNG.c
 src/main/Rdynload.c

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-06 08:09\n"
 "PO-Revision-Date: 2012-02-26 14:07+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1220,10 +1220,14 @@ msgstr " 引数 classDef はクラス定義かクラスの名前でなければ�
 msgid "No %s names supplied"
 msgstr ""
 
-msgid "All %s names must be nonempty"
+msgid ""
+"All %s names must be nonempty in:\n"
+"(%s)"
 msgstr ""
 
-msgid "All %s names must be distinct"
+msgid ""
+"All %s names must be distinct in:\n"
+"(%s)"
 msgstr ""
 
 #, fuzzy
@@ -1796,6 +1800,15 @@ msgid "field %s of class %s has a non-default binding and cannot be locked"
 msgstr ""
 " フィールド \"%s\" （クラス \"%s\"）は既定の結合を持たないためロックできませ"
 "ん "
+
+msgid ""
+"Class %s is not a subclass of %s; functional semantics not defined for this "
+"class"
+msgstr ""
+
+#, fuzzy
+msgid "Could not find local object in supplied environment"
+msgstr " この環境ではクラス \"%s\" は定義されていません "
 
 #, fuzzy
 msgid ""
