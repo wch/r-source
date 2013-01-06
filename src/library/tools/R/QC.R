@@ -3652,7 +3652,7 @@ function(package, dir, lib.loc = NULL)
                              paste(sQuote(unknown[miss]), collapse = ", ")),
                     domain = NA)
         if(any(!miss))
-            message(sprintf(ngettext(sum(miss),
+            message(sprintf(ngettext(sum(!miss),
                                      "Unknown package %s in Rd xrefs",
                                      "Unknown packages %s in Rd xrefs"),
                              paste(sQuote(unknown[!miss]), collapse = ", ")),
