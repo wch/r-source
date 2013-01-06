@@ -3136,14 +3136,15 @@ SEXP attribute_hidden do_close(SEXP call, SEXP op, SEXP args, SEXP env)
     if(i < 3) error(_("cannot close standard connections"));
     for(j = 0; j < R_SinkNumber; j++)
 	if(i == SinkCons[j])
-	    error(_("cannot close output sink connection"));
+	    error(_("cannot close 'output' sink connection"));
     if(i == R_ErrorCon)
-	error(_("cannot close messages sink connection"));
+	error(_("cannot close 'message' sink connection"));
     Rconnection con = getConnection(i);
+    int status = con->status;
     con_close1(con);
     free(Connections[i]);
     Connections[i] = NULL;
-    if (con->status != NA_INTEGER) return ScalarInteger(con->status);
+    if (status != NA_INTEGER) return ScalarInteger(status);
     return R_NilValue;
 }
 
