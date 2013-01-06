@@ -1,6 +1,6 @@
 % File src/library/base/man/sQuote.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sQuote}
@@ -77,7 +77,8 @@ dQuote(x)
 #endif
 }
 \value{
-  A character vector in the current locale's encoding.
+  A character vector of the same length as \code{x} (after any coercion)
+  in the current locale's encoding.
 }
 \seealso{
   \link{Quotes} for quoting \R code.
