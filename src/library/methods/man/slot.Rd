@@ -1,6 +1,6 @@
 % File src/library/methods/man/slot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Copyright 2005-2010 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -18,7 +18,7 @@
 }
 \usage{
 \special{object@name}% @ really is in base.
-\special{object@name <- value}% @ really is in base.
+\special{object@name <- value}% @<- really is in base.
 
 slot(object, name)
 slot(object, name, check = TRUE) <- value
@@ -93,8 +93,9 @@ getSlots(x)
   \code{\link{attr<-}}, and such assignments are not checked for
   legitimate slot names.
 
-  Note also that the \code{"@"} operator for extraction and
-  replacement is a primitive and actually resides in the \code{base} package.
+  Note that the \code{"@"} operators for extraction and (since \R 3.0.0)
+  replacement are primitive and actually reside in the \pkg{base}
+  package.
 }
 \references{
  Chambers, John M. (2008)

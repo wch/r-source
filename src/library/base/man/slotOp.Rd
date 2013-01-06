@@ -1,6 +1,6 @@
 % File src/library/base/man/slotOp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{slotOp}
@@ -8,8 +8,8 @@
 \alias{@}
 \alias{@<-}
 \description{
-  Extract or replace the contents of a slot in a object with a formal (S4) class
-  structure.
+  Extract or replace the contents of a slot in a object with a
+  formal (S4) class structure.
 }
 \usage{
 object@name
@@ -18,21 +18,28 @@ object@name <- value
 \arguments{
   \item{object}{An object from a formally defined (S4) class.}
   \item{name}{The character-string name of the slot, quoted or
-      not. Must be the name of a slot in the definition of the class
+      not.  Must be the name of a slot in the definition of the class
       of \code{object}.}
   \item{value}{A replacement value for the slot, which must be from a
       class compatible with the class defined for this slot in the
       definition of the class of  \code{object}.}
 }
 \details{
-  This operator supports the formal classes of package \pkg{methods}, and
-  is enabled only when \pkg{methods} is loaded (as per default).  See
-  \code{\link{slot}} for further details.
+  These operators supports the formal classes of package \pkg{methods},
+  and are enabled only when package \pkg{methods} is loaded (as per
+  default).  See \code{\link{slot}} for further details.
 
   It is checked that \code{object} is an S4 object (see
   \code{\link{isS4}}), and it is an error to attempt to use \code{@} on
   any other object.  (There is an exception for name \code{.Data} for
-  internal use only.)
+  internal use only.)  The replacement operator checks that the slot
+  already exists on the object (which it should if the object is really
+  from the class it claims to be).
+
+  Prior to \R 3.0.0 the replacement operator was in package
+  \pkg{methods} and had a different test for validity of \code{name}.
+
+  These are internal generic operators: see \link{InternalMethods}.
 }
 \value{
   The current contents of the slot.

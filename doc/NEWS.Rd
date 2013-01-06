@@ -451,9 +451,12 @@
       arguments added.
 
       \item The \code{@<-} operator is now implemented as a primitive,
-      which should reduce some copying of objects when used.  Note
-      that the operator object must now be in base: don't try to
-      import it explicitly from package "methods".
+      which should reduce some copying of objects when used.  Note that
+      the operator object must now be in base: do not try to import it
+      explicitly from package \pkg{methods}.  Its validity test has been
+      changed: previously it was that the slot name was part of the
+      class definition: it is now that the slot already exists on the
+      object.
     }
   }
 
