@@ -1363,30 +1363,30 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-static void check_slot_name(SEXP obj, SEXP input) {
-	int isAttr = 0;
-	SEXP alist, name;
+static void check_slot_name(SEXP obj, SEXP input) 
+{
+    Rboolean isAttr = FALSE;
+    SEXP alist, name;
 
-	name = install(CHAR(STRING_ELT(input, 0)));
-	if(name == install(".Data") &&  TYPEOF(obj) != S4SXP)
-	    return;
-	   
+    name = install(CHAR(STRING_ELT(input, 0)));
+    if(name == install(".Data") &&  TYPEOF(obj) != S4SXP)
+	return;
 
-	/* Check for a valid slot name; must already have this attr if not .Data */
-	for (alist = ATTRIB(obj); alist != R_NilValue; alist = CDR(alist)) {
-	    SEXP tmp = TAG(alist);
-	    if (tmp == name) {
-		isAttr = 1;
-		break;
-	    }
+    /* Check for a valid slot name; must already have this attr if not .Data */
+    for (alist = ATTRIB(obj); alist != R_NilValue; alist = CDR(alist)) {
+	SEXP tmp = TAG(alist);
+	if (tmp == name) {
+	    isAttr = TRUE;
+	    break;
 	}
-	if(!isAttr) {
-	    SEXP klass;
-	    klass = getAttrib(obj, R_ClassSymbol);
-	    error(_("\"%s\" is not a slot in object of class \"%s\""),
-		  translateChar(STRING_ELT(input, 0)),
-		    translateChar(STRING_ELT(klass, 0)));
-	}
+    }
+    if(!isAttr) {
+	SEXP klass;
+	klass = getAttrib(obj, R_ClassSymbol);
+	error(_("\"%s\" is not an existing slot in an object of class \"%s\""),
+	      translateChar(STRING_ELT(input, 0)),
+	      translateChar(STRING_ELT(klass, 0)));
+    }
 }
 
 
@@ -1398,32 +1398,32 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if(PRIMVAL(op)) { /* @<- */
-	SEXP input, nlist, value, ans; int iS;
+	SEXP input, nlist, ans;
 	PROTECT(input = allocVector(STRSXP, 1));
 
 	nlist = CADR(args);
-	iS = isSymbol(nlist);
-	if (iS)
+	if (isSymbol(nlist))
 	    SET_STRING_ELT(input, 0, PRINTNAME(nlist));
 	else if(isString(nlist) )
 	    SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
 	else {
-	    error(_("invalid type '%s' for slot name"), type2char(TYPEOF(nlist)));
+	    error(_("invalid type '%s' for slot name"), 
+		  type2char(TYPEOF(nlist)));
 	    return R_NilValue; /*-Wall*/
 	}
 
 	/* replace the second argument with a string */
 	SETCADR(args, input);
+	UNPROTECT(1); // 'input' is now protected
 
  	if(DispatchOrEval(call, op, "@<-", args, env, &ans, 0, 0))
 	    return(ans);
 
-	PROTECT(value = CADDR(ans));
-
 	PROTECT(obj = CAR(ans));
 	check_slot_name(obj, input);
-	UNPROTECT(3);
-	return R_do_slot_assign(obj, input, value);
+	UNPROTECT(1);
+	/* R_do_slot_assign protects obj and value */
+	return R_do_slot_assign(obj, input, CADDR(ans));
     }
 
 
@@ -1632,7 +1632,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
 	error(_("attempt to set slot on NULL object"));
 #endif
     PROTECT(obj); PROTECT(value);
-				/* Ensure that name is a symbol */
+    /* Ensure that name is a symbol */
     if(isString(name) && LENGTH(name) == 1)
 	name = install(translateChar(STRING_ELT(name, 0)));
     if(TYPEOF(name) == CHARSXP)
