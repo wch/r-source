@@ -2709,18 +2709,18 @@ function(x, ...)
 {
     c(character(),
       if(length(bad <- x$required_but_not_installed) > 1L) {
-          c("Packages required but not available:", .pretty_format(bad), "")
+          c(.pretty_format2("Packages required but not available:", bad), "")
       } else if(length(bad)) {
           c(sprintf("Package required but not available: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$suggested_but_not_installed) > 1L) {
-          c("Packages suggested but not available:", .pretty_format(bad), "")
+          c(.pretty_format2("Packages suggested but not available:", bad), "")
       } else if(length(bad)) {
           c(sprintf("Package suggested but not available: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$required_but_obsolete) > 1L) {
-          c("Packages required and available but unsuitable versions:",
-            .pretty_format(bad),
+          c(.pretty_format2("Packages required and available but unsuitable versions:",
+                            bad),
             "")
       } else if(length(bad)) {
           c(sprintf("Package required and available but unsuitable version: %s", sQuote(bad)),
@@ -2731,11 +2731,12 @@ function(x, ...)
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(sprintf("Former standard package required but now defunct: %s", sQuote(bad)), "")
+          c(sprintf("Former standard package required but now defunct: %s",
+                    sQuote(bad)), "")
       },
       if(length(bad <- x$suggests_but_not_installed) > 1L) {
-          c("Packages suggested but not available for checking:",
-            .pretty_format(bad),
+          c(.pretty_format2("Packages suggested but not available for checking:",
+                            bad),
             "")
       } else if(length(bad)) {
           c(sprintf("Package suggested but not available for checking: %s",
@@ -2743,8 +2744,8 @@ function(x, ...)
             "")
       },
       if(length(bad <- x$enhances_but_not_installed) > 1L) {
-          c("Packages which this enhances but not available for checking:",
-            .pretty_format(bad),
+          c(.pretty_format2("Packages which this enhances but not available for checking:",
+                            bad),
             "")
       } else if(length(bad)) {
           c(sprintf("Package which this enhances but not available for checking: %s", sQuote(bad)),
@@ -2761,7 +2762,7 @@ function(x, ...)
             "")
       },
       if(length(bad <- x$missing_namespace_depends) > 1L) {
-          c("Namespace dependencies not required:", .pretty_format(bad), "")
+          c(.pretty_format2("Namespace dependencies not required:", bad), "")
       } else if(length(bad)) {
           c(sprintf("Namespace dependency not required: %s", sQuote(bad)), "")
       }
@@ -6264,6 +6265,14 @@ function(x)
 {
     strwrap(paste(sQuote(x), collapse = " "),
             indent = 2L, exdent = 2L)
+}
+.pretty_format2 <-
+function(msg, x)
+{
+    xx <- strwrap(paste(sQuote(x), collapse = " "), exdent = 2L)
+    if (length(xx) > 1L || (nchar(msg) + nchar(xx) + 1L > 75L))
+        c(msg, .pretty_format(x))
+    else paste(msg, xx, sep = " ")
 }
 
 ### ** .pretty_print
