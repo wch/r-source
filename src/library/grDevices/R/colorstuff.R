@@ -74,7 +74,7 @@ rgb2hsv <- function(r, g = NULL, b = NULL, maxColorValue = 255)
 palette <- function(value)
 {
     if(missing(value)) .Call(C_palette, character())
-    else invisible(.Call(C_palette, value))
+    else invisible(.Call.graphics(C_palette, value))
 }
 
 ## A quick little ''rainbow'' function -- improved by MM

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/recordplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{recordPlot}
@@ -31,10 +31,12 @@ replayPlot(x)
 \section{Warning}{
   The format of recorded plots may change between \R versions.
   Recorded plots should \strong{not} be used as a permanent
-  storage format for \R plots.
+  storage format for \R plots.  There were extensive changes in \R
+  3.0.0, and only plots recorded in that or later can be replayed in
+  this version of \R.
 
   \R will always attempt to replay a recorded plot, but if the plot was
-  recorded with a different \R version then bad things may happen.
+  recorded with a different \R version or build then bad things may happen.
 }
 \value{
   \code{recordPlot} returns an object of class \code{"recordedplot"}.

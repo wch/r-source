@@ -347,6 +347,8 @@ plot.new <- function()
         try(fun())
     }
     .External2(C_plot_new)
+    ## record palette
+    palette(palette())
     for(fun in getHook("plot.new")) {
         if(is.character(fun)) fun <- get(fun)
         try(fun())

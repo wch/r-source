@@ -355,6 +355,15 @@
       \acronym{CRAN} have times in a local timzeone or many years in the
       past even though the standard required them to be in UTC).
       
+      \item \code{replayplot()} cannot (and will not attempt to) replay
+      plots recorded under \R < 3.0.0.  It may crash the \R session if
+      an attempt is made to replay plots created in a different build of
+      \R >= 3.0.0.
+
+      \item Palette changes get recorded on the display list, so
+      replaying plots (including when resizing screen devices and using
+      \code{dev.copy()}) will work better when the palette is changed
+      during a plot.
     }
   }
 
@@ -578,6 +587,9 @@
 
       \item The unused \code{dataPath} argument to
       \code{attachNamespace()} has been removed.
+      
+      \item \code{grid.prompt()} has been removed: use
+      \code{devAskNewPage()} instead.
     }
   }
 

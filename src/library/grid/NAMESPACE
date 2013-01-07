@@ -25,8 +25,7 @@ export(
        "grid.newpage",
        "grid.plot.and.legend",
        "grid.pretty",
-       "grid.prompt",
-       "grid.refresh", 
+       "grid.refresh",
        "grid.show.layout", "grid.show.viewport",
 
        "unit",
@@ -38,7 +37,7 @@ export(
        "absolute.size",
 
        "valid.just",
-       
+
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
        "pop.viewport", "push.viewport",
        "popViewport", "pushViewport",
@@ -72,19 +71,19 @@ export(
        "grid.cap",
        "setChildren",
        "showGrob",
-       
+
        # Listing grobs and viewports
        "grid.ls",
        "nestedListing", "pathListing", "grobPathListing",
        # Deprecated
-       "getNames", "childNames", 
-       
+       "getNames", "childNames",
+
        # Creating and drawing predefined grobs and gTrees
        "grid.abline",
        "grid.arrows", "grid.circle", "grid.clip", "grid.curve",
        "grid.function",
-       "grid.line.to", "grid.lines", "grid.move.to", "grid.null", 
-       "grid.points", "grid.path", "grid.polygon", "grid.polyline", 
+       "grid.line.to", "grid.lines", "grid.move.to", "grid.null",
+       "grid.points", "grid.path", "grid.polygon", "grid.polyline",
        "grid.raster", "grid.rect", "grid.roundrect",
        "grid.segments", "grid.text", "grid.xspline", "grid.bezier",
        "arrowsGrob", "circleGrob", "clipGrob", "curveGrob",
@@ -94,9 +93,9 @@ export(
        "rasterGrob", "rectGrob", "roundrectGrob",
        "segmentsGrob", "textGrob", "xsplineGrob", "bezierGrob",
        "xsplinePoints", "bezierPoints",
-       
+
        "grid.xaxis", "grid.yaxis",
-       "xaxisGrob", "yaxisGrob", 
+       "xaxisGrob", "yaxisGrob",
 
        # Frames and packing
        "grid.frame", "grid.pack", "grid.place",

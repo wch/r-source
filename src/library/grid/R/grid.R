@@ -296,16 +296,6 @@ current.transform <- function() {
   grid.Call(L_currentViewport)$trans
 }
 
-# Control whether user is prompted before new page
-grid.prompt <- function(ask) {
-    .Deprecated("devAskNewPage")
-    if(!missing(ask)) {
-        if (!is.logical(ask))
-            stop("invalid 'ask' value")
-        grDevices::devAskNewPage(ask)
-    } else grDevices::devAskNewPage()
-}
-
 # Call this function if you want the graphics device erased or moved
 # on to a new page.  High-level plotting functions should call this.
 # NOTE however, that if you write a function which calls grid.newpage,
@@ -326,6 +316,7 @@ grid.newpage <- function(recording=TRUE) {
     .Call(L_initViewportStack)
     if (recording) {
         .Call(L_initDisplayList)
+        palette(palette()) # record the current palette
         for (fun in getHook("grid.newpage"))  {
             if(is.character(fun)) fun <- get(fun)
             try(fun())
