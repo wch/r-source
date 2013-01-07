@@ -344,9 +344,17 @@
       long for the \samp{ustar} format, using the (widely supported) GNU
       extension.
 
-      \item Local reference classes are a technique for avoiding unneeded
-      copying of large components of objects while retaining standard
-      \R functional behavior.  See \code{?LocalReferenceClasses}.
+      \item Local reference classes have been added to package
+      \pkg{methods}.  These are a technique for avoiding unneeded
+      copying of large components of objects while retaining standard \R
+      functional behavior.  See \code{?LocalReferenceClasses}.
+
+      \item \code{untar()} has a new arguemnt \code{restore_times} which
+      if false (not the default) discards the times in the tarball.
+      This is useful if they are incorrect (some tarballs submitted to
+      \acronym{CRAN} have times in a local timzeone or many years in the
+      past even though the standard required them to be in UTC).
+      
     }
   }
 

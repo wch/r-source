@@ -14,7 +14,7 @@
 \usage{
 untar(tarfile, files = NULL, list = FALSE, exdir = ".",
       compressed = NA, extras = NULL, verbose = FALSE,
-      tar = Sys.getenv("TAR"))
+      restore_times =  TRUE, tar = Sys.getenv("TAR"))
 }
 \arguments{
   \item{tarfile}{The pathname of the tar file: tilde expansion (see
@@ -44,6 +44,12 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     program.}
 
   \item{verbose}{logical: if true echo the command used.}
+
+  \item{restore_times}{logical.  If true (default) restore file
+    modification times.  If false, the equivalent of the \option{-m}
+    flag.  Times in tarballs are supposed to be in UTC, but tarballs are
+    submitted to CRAN with times in the future or far past: this
+    argument allows such times to be discarded.}
 
   \item{tar}{character string: the path to the command to be used.  If
     the command itself contains spaces it needs to be quoted -- but

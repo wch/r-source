@@ -18,10 +18,10 @@
 
 untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                   compressed = NA, extras = NULL, verbose = FALSE,
-                  tar = Sys.getenv("TAR"))
+                  restore_times = TRUE, tar = Sys.getenv("TAR"))
 {
     if (inherits(tarfile, "connection") || identical(tar, "internal"))
-        return(untar2(tarfile, files, list, exdir))
+        return(untar2(tarfile, files, list, exdir, restore_times))
 
     if (!(is.character(tarfile) && length(tarfile) == 1L))
         stop("invalid 'tarfile' argument")
@@ -46,6 +46,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             else if(rawToChar(magic[1:5]) == "\xFD7zXZ") cflag <- "J"
         } else if (compressed) cflag <- "z"
     } else stop("'compressed' must be logical or character")
+    if (!restore_times) cflag <- paste0(cflag, "m")
 
     gzOK <- .Platform$OS.type == "windows"
     if (!gzOK ) {
@@ -106,7 +107,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 }
 
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
-                   keepAll = FALSE)
+                   restore_times = TRUE)
 {
     getOct <- function(x, offset, len)
     {
@@ -211,7 +212,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             if(dothis) {
                 close(out)
                 Sys.chmod(name, mode, FALSE) # override umask
-                Sys.setFileTime(name, ft)
+                if(restore_times) Sys.setFileTime(name, ft)
             }
         } else if(ctype %in% c("1", "2")) {
             ## hard and symbolic links
@@ -283,30 +284,6 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                 lname <- rawToChar(block[seq_len(ns)])
             else
                 llink <- rawToChar(block[seq_len(ns)])
-        } else if(keepAll) {
-            ## treat like an ordinary file
-            contents <- c(contents, name)
-            remain <- size
-            dothis <- !list
-            if(dothis && length(files)) dothis <- name %in% files
-            if(dothis) {
-                mydir.create(dirname(name))
-                out <- file(name, "wb")
-            }
-            for(i in seq_len(ceiling(size/512L))) {
-                block <- readBin(con, "raw", n = 512L)
-                if(length(block) < 512L)
-                    stop("incomplete block on file")
-                if (dothis) {
-                    writeBin(block[seq_len(min(512L, remain))], out)
-                    remain <- remain - 512L
-                }
-            }
-            if(dothis) {
-                close(out)
-                Sys.chmod(name, mode, FALSE) # override umask
-                Sys.setFileTime(name, ft)
-            }
         } else if(ctype == "x") {
             ## pax headers misused by bsdtar.
             isUTF8 <- FALSE
