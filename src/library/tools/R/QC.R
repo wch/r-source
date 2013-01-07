@@ -2000,8 +2000,7 @@ function(x, ...)
             paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
         msg <- ngettext(length(x),
                         "Foreign function call without 'PACKAGE' argument:",
-                        "Foreign function calls without 'PACKAGE' argument:",
-                        domain = NA)
+                        "Foreign function calls without 'PACKAGE' argument:")
         res <- c(msg, unlist(lapply(x, .fmt)))
     }
     if (length(xx)) {
@@ -2009,8 +2008,7 @@ function(x, ...)
             paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
         msg <- ngettext(length(x),
                         "Foreign function call with empty 'PACKAGE' argument:",
-                        "Foreign function calls with empty 'PACKAGE' argument:",
-                        domain = NA)
+                        "Foreign function calls with empty 'PACKAGE' argument:")
        res <- c(res, msg, unlist(lapply(xx, .fmt)))
     }
 
@@ -2026,8 +2024,7 @@ function(x, ...)
             xx <- unique(xx)
             msg <- ngettext(length(xx),
                             "Foreign function call with 'PACKAGE' argument in a base package:",
-                            "Foreign function calls with 'PACKAGE' argument in a base package:",
-                            domain = NA)
+                            "Foreign function calls with 'PACKAGE' argument in a base package:")
             res <- c(res, msg, sort(xx))
         }
         if(any(!base)) {
@@ -2036,8 +2033,7 @@ function(x, ...)
             xx <- unique(xx)
             msg <- ngettext(length(xx),
                             "Foreign function call with 'PACKAGE' argument in a different package:",
-                            "Foreign function calls with 'PACKAGE' argument in a different package:",
-                            domain = NA)
+                            "Foreign function calls with 'PACKAGE' argument in a different package:")
             res <- c(res, msg, sort(xx))
         }
     }
@@ -2045,8 +2041,7 @@ function(x, ...)
         zz <- unique(zz)
         msg <- ngettext(length(zz),
                         "Undeclared package in foreign function calls:",
-                        "Undeclared packages in foreign function calls:",
-                        domain = NA)
+                        "Undeclared packages in foreign function calls:")
         res <- c(res, msg, paste("  ", paste(sQuote(sort(zz)), collapse = ", ")))
     }
     res
