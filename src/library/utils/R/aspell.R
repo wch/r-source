@@ -116,7 +116,7 @@ function(files, filter, control = list(), encoding = "unknown",
     }
 
     ## No special expansion of control argument for now.
-    control <- paste(as.character(control), collapse = " ")
+    control <- as.character(control)
 
     fnames <- names(files)
     files <- as.list(files)
@@ -167,27 +167,11 @@ function(files, filter, control = list(), encoding = "unknown",
         ## the lines of
         ##   writeLines(paste0("^", lines), tfile,
         ##              useBytes = TRUE)
-        ## ## Pass encoding info to Aspell in case we know it.
-        ## if(!is.null(filter))  {
-        ##     enc <- unique(Encoding(lines))
-        ##     enc <- enc[enc != "unknown"]
-        ##     if(length(enc) != 1L)
-        ##         enc <- "unknown"
-        ## }
-        ## ## But only if we know how to tell Aspell about it.
-        ## enc <- switch(enc,
-        ##               "UTF-8" = "utf-8",
-        ##               "latin1" = "iso-8859-1",
-        ##               "unknown")
-	## cmd <- sprintf("aspell pipe %s < %s",
-        ##                if(enc == "unknown") control
-        ##                else sprintf("%s --encoding=%s", control, enc),
-        ##                tfile)
+        ## and pass the encoding info to Aspell in case we know it.
 
-        cmd <- sprintf("%s -a %s < %s", shQuote(program), control, tfile)
-
-	out <- tools:::.shell_with_capture(cmd)
-
+        out <- tools:::.shell_with_capture(program, c("-a", control),
+                                           stdin = tfile)
+                                           
 	if(out$status != 0L)
 	    stop(gettextf("Running aspell failed with diagnostics:\n%s",
 			  paste(out$stderr, collapse = "\n")),

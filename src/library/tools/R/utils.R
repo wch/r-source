@@ -271,7 +271,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         opt_pdf <- if(pdf) "--pdf" else ""
         opt_quiet <- if(quiet) "--quiet" else ""
         opt_extra <- ""
-        out <- .shell_with_capture(paste(shQuote(texi2dvi), "--help"))
+        out <- .shell_with_capture(texi2dvi, "--help")
         if(length(grep("--no-line-error", out$stdout)))
             opt_extra <- "--no-line-error"
         ## (Maybe change eventually: the current heuristics for finding
@@ -282,10 +282,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## https://stat.ethz.ch/pipermail/r-devel/2011-March/060262.html
         ## That has [A-Za-z], earlier versions [A-z], both of which may be
         ## invalid in some locales.
-        out <- .shell_with_capture(paste("LC_COLLATE=C",
-                                         shQuote(texi2dvi), opt_pdf,
-                                         opt_quiet, opt_extra,
-                                         shQuote(file)))
+        out <- .shell_with_capture(texi2dvi,
+                                   c(opt_pdf, opt_quiet, opt_extra,
+                                     shQuote(file)),
+                                   env = "LC_COLLATE=C")
 
         ## We cannot necessarily rely on out$status, hence let us
         ## analyze the log files in any case.
@@ -1507,21 +1507,18 @@ function(x)
 ### ** .shell_with_capture
 
 .shell_with_capture <-
-function(command, input = NULL)
+function(command, args = character(), env = character(),
+         stdin = "", input = NULL)
 {
     ## Invoke a system command using a shell and capture its status,
     ## stdout and stderr into separate components.
 
-    ## Should try some sanity checking that there is no redirection in
-    ## command thus far ...
     outfile <- tempfile("xshell")
     errfile <- tempfile("xshell")
     on.exit(unlink(c(outfile, errfile)))
-    status <- if(.Platform$OS.type == "windows")
-        shell(sprintf("%s > %s 2> %s", command, outfile, errfile),
-              input = input, shell = "cmd.exe")
-    else system(sprintf("%s > %s 2> %s", command, outfile, errfile),
-                input = input)
+    status <- system2(command, args, env = env,
+                      stdout = outfile, stderr = errfile,
+                      stdin = stdin, input = input)
     list(status = status,
          stdout = readLines(outfile, warn = FALSE),
          stderr = readLines(errfile, warn = FALSE))
