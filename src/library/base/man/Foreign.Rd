@@ -105,7 +105,7 @@
   there appears to be no way to distinguish missing strings from the
   string \code{"NA"}.  If this distinction is important use \code{\link{.Call}}.
 
-  \code{.Fortran} passes the first (only )character string of a character
+  \code{.Fortran} passes the first (only) character string of a character
   vector is passed as a C character array to Fortran: that may be usable
   as \code{character*255} if its true length is passed separately.  Only
   up to 255 characters of the string are passed back.  (How well this
