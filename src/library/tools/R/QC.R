@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -625,10 +625,9 @@ function(package, dir, lib.loc = NULL,
         ## Replacement functions.
         if(length(replace_exprs)) {
             replace_funs <-
-                paste(sapply(replace_exprs,
+                paste0(sapply(replace_exprs,
                              function(e) as.character(e[[2L]][[1L]])),
-                      "<-",
-                      sep = "")
+                      "<-")
             replace_funs <- .transform_S3_method_markup(replace_funs)
             functions <- c(functions, replace_funs)
             ind <- (replace_funs %in% functions_in_code)
@@ -1353,10 +1352,9 @@ function(package, dir, lib.loc = NULL)
         ## Replacement functions.
         if(length(replace_exprs)) {
             replace_funs <-
-                paste(sapply(replace_exprs,
+                paste0(sapply(replace_exprs,
                              function(e) as.character(e[[2L]][[1L]])),
-                      "<-",
-                      sep = "")
+                      "<-")
             functions <- c(functions, replace_funs)
             arg_names_in_usage <-
                 c(arg_names_in_usage,
@@ -1716,10 +1714,9 @@ function(package, dir, lib.loc = NULL)
                                  .is_call_from_replacement_function_usage))
         if(any(ind)) {
             replace_funs <-
-                paste(sapply(exprs[ind],
-                             function(e) as.character(e[[2L]][[1L]])),
-                      "<-",
-                      sep = "")
+                paste0(sapply(exprs[ind],
+                              function(e) as.character(e[[2L]][[1L]])),
+                       "<-")
             functions <- c(functions, replace_funs)
         }
 
@@ -2003,7 +2000,8 @@ function(x, ...)
             paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
         msg <- ngettext(length(x),
                         "Foreign function call without 'PACKAGE' argument:",
-                        "Foreign function calls without 'PACKAGE' argument:")
+                        "Foreign function calls without 'PACKAGE' argument:",
+                        domain = NA)
         res <- c(msg, unlist(lapply(x, .fmt)))
     }
     if (length(xx)) {
@@ -2011,7 +2009,8 @@ function(x, ...)
             paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
         msg <- ngettext(length(x),
                         "Foreign function call with empty 'PACKAGE' argument:",
-                        "Foreign function calls with empty 'PACKAGE' argument:")
+                        "Foreign function calls with empty 'PACKAGE' argument:",
+                        domain = NA)
        res <- c(res, msg, unlist(lapply(xx, .fmt)))
     }
 
@@ -2027,7 +2026,8 @@ function(x, ...)
             xx <- unique(xx)
             msg <- ngettext(length(xx),
                             "Foreign function call with 'PACKAGE' argument in a base package:",
-                            "Foreign function calls with 'PACKAGE' argument in a base package:")
+                            "Foreign function calls with 'PACKAGE' argument in a base package:",
+                            domain = NA)
             res <- c(res, msg, sort(xx))
         }
         if(any(!base)) {
@@ -2036,7 +2036,8 @@ function(x, ...)
             xx <- unique(xx)
             msg <- ngettext(length(xx),
                             "Foreign function call with 'PACKAGE' argument in a different package:",
-                            "Foreign function calls with 'PACKAGE' argument in a different package:")
+                            "Foreign function calls with 'PACKAGE' argument in a different package:",
+                            domain = NA)
             res <- c(res, msg, sort(xx))
         }
     }
@@ -2044,7 +2045,8 @@ function(x, ...)
         zz <- unique(zz)
         msg <- ngettext(length(zz),
                         "Undeclared package in foreign function calls:",
-                        "Undeclared packages in foreign function calls:")
+                        "Undeclared packages in foreign function calls:",
+                        domain = NA)
         res <- c(res, msg, paste("  ", paste(sQuote(sort(zz)), collapse = ", ")))
     }
     res
@@ -2735,18 +2737,18 @@ function(x, ...)
 {
     c(character(),
       if(length(bad <- x$required_but_not_installed) > 1L) {
-          c("Packages required but not available:", .pretty_format(bad), "")
+          c(.pretty_format2("Packages required but not available:", bad), "")
       } else if(length(bad)) {
           c(sprintf("Package required but not available: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$suggested_but_not_installed) > 1L) {
-          c("Packages suggested but not available:", .pretty_format(bad), "")
+          c(.pretty_format2("Packages suggested but not available:", bad), "")
       } else if(length(bad)) {
           c(sprintf("Package suggested but not available: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$required_but_obsolete) > 1L) {
-          c("Packages required and available but unsuitable versions:",
-            .pretty_format(bad),
+          c(.pretty_format2("Packages required and available but unsuitable versions:",
+                            bad),
             "")
       } else if(length(bad)) {
           c(sprintf("Package required and available but unsuitable version: %s", sQuote(bad)),
@@ -2760,8 +2762,8 @@ function(x, ...)
           c(sprintf("Former standard package required but now defunct: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$suggests_but_not_installed) > 1L) {
-          c("Packages suggested but not available for checking:",
-            .pretty_format(bad),
+          c(.pretty_format2("Packages suggested but not available for checking:",
+                            bad),
             "")
       } else if(length(bad)) {
           c(sprintf("Package suggested but not available for checking: %s",
@@ -2769,8 +2771,8 @@ function(x, ...)
             "")
       },
       if(length(bad <- x$enhances_but_not_installed) > 1L) {
-          c("Packages which this enhances but not available for checking:",
-            .pretty_format(bad),
+          c(.pretty_format2("Packages which this enhances but not available for checking:",
+                            bad),
             "")
       } else if(length(bad)) {
           c(sprintf("Package which this enhances but not available for checking: %s", sQuote(bad)),
@@ -2786,7 +2788,7 @@ function(x, ...)
             "")
       },
       if(length(bad <- x$missing_namespace_depends) > 1L) {
-          c("Namespace dependencies not required:", .pretty_format(bad), "")
+          c(.pretty_format2("Namespace dependencies not required:", bad), "")
       } else if(length(bad)) {
           c(sprintf("Namespace dependency not required: %s", sQuote(bad)), "")
       }
@@ -2913,11 +2915,10 @@ function(dfile)
         depends <- .strip_whitespace(unlist(strsplit(val, ",")))
         bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()
         dep_regexp <-
-            paste("^[[:space:]]*",
-                  paste0("(R|", valid_package_name_regexp, ")"),
-                  "([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?",
-                  "[[:space:]]*$",
-                  sep = "")
+            paste0("^[[:space:]]*",
+                   paste0("(R|", valid_package_name_regexp, ")"),
+                   "([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?",
+                   "[[:space:]]*$")
         for(dep in depends) {
             if(!grepl(dep_regexp, dep)) {
                 ## Entry does not match the regexp.
@@ -3481,7 +3482,7 @@ function(package, lib.loc = NULL)
     checkMethodUsagePackage <- function (pack, ...) {
 	pname <- paste("package", pack, sep = ":")
 	if (!pname %in% search())
-	    stop("package must be loaded")
+	    stop("package must be loaded", domain = NA)
 	checkMethodUsageEnv(if (pack %in% loadedNamespaces())
 			    getNamespace(pack) else as.environment(pname), ...)
     }
@@ -5838,7 +5839,7 @@ function(env, verbose = getOption("verbose"))
 		       tryCatch(methods::hasMethods(g, where = env),
 				error = identity))
 	if(any(hasErr <- sapply(hasM, inherits, what = "error"))) {
-            dq <- function(ch) paste('"', ch ,'"', sep='')
+            dq <- function(ch) paste0('"', ch ,'"')
             rErr <- r[hasErr]
             pkgs <- r@package[hasErr]
             ## FIXME: This warning should not happen here when called
@@ -6091,6 +6092,14 @@ function(x)
 {
     strwrap(paste(sQuote(x), collapse = " "),
             indent = 2L, exdent = 2L)
+}
+.pretty_format2 <-
+function(msg, x)
+{
+    xx <- strwrap(paste(sQuote(x), collapse = " "), exdent = 2L)
+    if (length(xx) > 1L || (nchar(msg) + nchar(xx) + 1L > 75L))
+        c(msg, .pretty_format(x))
+    else paste(msg, xx, sep = " ")
 }
 
 ### ** .pretty_print
