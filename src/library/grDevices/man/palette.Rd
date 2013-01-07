@@ -21,16 +21,14 @@ palette(value)
   e.g. \code{\link{par}}) was provided for compatibility with S: in \R
   it is almost always better to specify colours by name.
 
-  If \code{value} has length 1, it is taken to be the name of
-  a built-in color palette.  If \code{value} has length greater
-  than 1 it is assumed to contain a description of the colors
-  which are to make up the new palette (either by name or
-  by RGB levels).  The maximum size for a palette is 1024 entries.
+  If \code{value} has length 1, it is taken to be the name of a built-in
+  color palette (only \code{"default"} is built-in currently).  If
+  \code{value} has length greater than 1 it is assumed to contain a
+  description of the colors which are to make up the new palette (either
+  by name or by RGB levels).  The maximum size for a palette is 1024
+  entries.
 
-  If \code{value} is omitted or has length 0, no change is made to
-  the current palette.
-
-  Currently, the only built-in palette is \code{"default"}.
+  If \code{value} is omitted, no change is made to the current palette.
 
   There is only one palette setting for all devices in a \R session.  If
   the palette is changed, the new palette applies to all subsequent
