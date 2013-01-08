@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2012-12-25 r61434) -- "Unsuffered Consequences"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-01-08 r61586) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -962,14 +962,13 @@ Female Yes                89  17 202 131  94  24
 > op <- par(mfrow = c(2, 2))
 > hist(islands)
 > utils::str(hist(islands, col = "gray", labels = TRUE))
-List of 7
- $ breaks     : num [1:10] 0 2000 4000 6000 8000 10000 12000 14000 16000 18000
- $ counts     : int [1:9] 41 2 1 1 1 1 0 0 1
- $ intensities: num [1:9] 4.27e-04 2.08e-05 1.04e-05 1.04e-05 1.04e-05 ...
- $ density    : num [1:9] 4.27e-04 2.08e-05 1.04e-05 1.04e-05 1.04e-05 ...
- $ mids       : num [1:9] 1000 3000 5000 7000 9000 11000 13000 15000 17000
- $ xname      : chr "islands"
- $ equidist   : logi TRUE
+List of 6
+ $ breaks  : num [1:10] 0 2000 4000 6000 8000 10000 12000 14000 16000 18000
+ $ counts  : int [1:9] 41 2 1 1 1 1 0 0 1
+ $ density : num [1:9] 4.27e-04 2.08e-05 1.04e-05 1.04e-05 1.04e-05 ...
+ $ mids    : num [1:9] 1000 3000 5000 7000 9000 11000 13000 15000 17000
+ $ xname   : chr "islands"
+ $ equidist: logi TRUE
  - attr(*, "class")= chr "histogram"
 > 
 > hist(sqrt(islands), breaks = 12, col = "lightblue", border = "pink")
@@ -978,8 +977,8 @@ List of 7
 +           col = "blue1")
 > text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = "blue3")
 > sapply(r[2:3], sum)
-     counts intensities 
-  48.000000    0.215625 
+   counts   density 
+48.000000  0.215625 
 > sum(r$density * diff(r$breaks)) # == 1
 [1] 1
 > lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
@@ -987,24 +986,22 @@ List of 7
 > 
 > require(utils) # for str
 > str(hist(islands, breaks = 12, plot =  FALSE)) #-> 10 (~= 12) breaks
-List of 7
- $ breaks     : num [1:10] 0 2000 4000 6000 8000 10000 12000 14000 16000 18000
- $ counts     : int [1:9] 41 2 1 1 1 1 0 0 1
- $ intensities: num [1:9] 4.27e-04 2.08e-05 1.04e-05 1.04e-05 1.04e-05 ...
- $ density    : num [1:9] 4.27e-04 2.08e-05 1.04e-05 1.04e-05 1.04e-05 ...
- $ mids       : num [1:9] 1000 3000 5000 7000 9000 11000 13000 15000 17000
- $ xname      : chr "islands"
- $ equidist   : logi TRUE
+List of 6
+ $ breaks  : num [1:10] 0 2000 4000 6000 8000 10000 12000 14000 16000 18000
+ $ counts  : int [1:9] 41 2 1 1 1 1 0 0 1
+ $ density : num [1:9] 4.27e-04 2.08e-05 1.04e-05 1.04e-05 1.04e-05 ...
+ $ mids    : num [1:9] 1000 3000 5000 7000 9000 11000 13000 15000 17000
+ $ xname   : chr "islands"
+ $ equidist: logi TRUE
  - attr(*, "class")= chr "histogram"
 > str(hist(islands, breaks = c(12,20,36,80,200,1000,17000), plot = FALSE))
-List of 7
- $ breaks     : num [1:7] 12 20 36 80 200 1000 17000
- $ counts     : int [1:6] 12 11 8 6 4 7
- $ intensities: num [1:6] 0.03125 0.014323 0.003788 0.001042 0.000104 ...
- $ density    : num [1:6] 0.03125 0.014323 0.003788 0.001042 0.000104 ...
- $ mids       : num [1:6] 16 28 58 140 600 9000
- $ xname      : chr "islands"
- $ equidist   : logi FALSE
+List of 6
+ $ breaks  : num [1:7] 12 20 36 80 200 1000 17000
+ $ counts  : int [1:6] 12 11 8 6 4 7
+ $ density : num [1:6] 0.03125 0.014323 0.003788 0.001042 0.000104 ...
+ $ mids    : num [1:6] 16 28 58 140 600 9000
+ $ xname   : chr "islands"
+ $ equidist: logi FALSE
  - attr(*, "class")= chr "histogram"
 > 
 > hist(islands, breaks = c(12,20,36,80,200,1000,17000), freq = TRUE,
@@ -2028,7 +2025,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1f8b140>
+<bytecode: 0x10fc8d8>
 <environment: namespace:graphics>
 > 
 > 
@@ -2052,10 +2049,6 @@ $breaks
 
 $counts
  [1] 3 1 2 2 1 1 2 1 1 1
-
-$intensities
- [1] 0.04000000 0.01333333 0.02666667 0.02666667 0.01333333 0.01333333
- [7] 0.02666667 0.01333333 0.01333333 0.01333333
 
 $density
  [1] 0.04000000 0.01333333 0.02666667 0.02666667 0.01333333 0.01333333
@@ -2932,7 +2925,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x3650f28>
+<bytecode: 0x24820c0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3011,7 +3004,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.626 0.062 3.699 0 0 
+Time elapsed:  6.894 0.119 7.089 0 0 
 > grDevices::dev.off()
 null device 
           1 
