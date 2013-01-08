@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2012-11-06 r61087) -- "Unsuffered Consequences"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-01-08 r61587) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1014,7 +1014,7 @@ Coefficients:
 
 Degrees of Freedom: 11 Total (i.e. Null);  11 Residual
 Null Deviance:	    32.83 
-Residual Deviance: 32.83 	AIC: 92.52 
+Residual Deviance: 32.83 	AIC: 92.52
 > step(detg1.m0,scope=list(upper=~M.user*Temp*Soft))
 Start:  AIC=92.52
 cbind(X, M) ~ 1
@@ -1061,7 +1061,7 @@ Coefficients:
 
 Degrees of Freedom: 11 Total (i.e. Null);  8 Residual
 Null Deviance:	    32.83 
-Residual Deviance: 5.656 	AIC: 71.35 
+Residual Deviance: 5.656 	AIC: 71.35
 > 
 > ## PR 829 (empty values in all.vars)
 > ## This example by Uwe Ligges <ligges@statistik.uni-dortmund.de>
@@ -1770,7 +1770,7 @@ Coefficients:
 
 Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    68.01 
-Residual Deviance: 60.66 	AIC: 168.7 
+Residual Deviance: 60.66 	AIC: 168.7
 Warning messages:
 1: step size truncated: out of bounds 
 2: step size truncated: out of bounds 
@@ -1788,7 +1788,7 @@ Coefficients:
 
 Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    317.2 
-Residual Deviance: 228.5 	AIC: 344.7 
+Residual Deviance: 228.5 	AIC: 344.7
 There were 27 warnings (use warnings() to see them)
 > warnings()
 Warning messages:
@@ -2448,8 +2448,8 @@ x2                NA         NA      NA       NA
 x3            0.2587     0.3509   0.737    0.485
 
 Residual standard error: 0.8063 on 7 degrees of freedom
-Multiple R-squared: 0.9326,	Adjusted R-squared: 0.9134 
-F-statistic: 48.43 on 2 and 7 DF,  p-value: 7.946e-05 
+Multiple R-squared:  0.9326,	Adjusted R-squared:  0.9134 
+F-statistic: 48.43 on 2 and 7 DF,  p-value: 7.946e-05
 
 Correlation of Coefficients:
    (Intercept) x1   
@@ -2466,7 +2466,7 @@ Coefficients:
 
 Degrees of Freedom: 9 Total (i.e. Null);  7 Residual
 Null Deviance:	    67.53 
-Residual Deviance: 4.551 	AIC: 28.51 
+Residual Deviance: 4.551 	AIC: 28.51
 > summary(fit, cor = TRUE)
 
 Call:
@@ -2844,7 +2844,7 @@ No coefficients
 
 Degrees of Freedom: 10 Total (i.e. Null);  10 Residual
 Null Deviance:	    2.74 
-Residual Deviance: 2.74 	AIC: 17.43 
+Residual Deviance: 2.74 	AIC: 17.43
 > summary(fit)
 
 Call:
@@ -2933,7 +2933,7 @@ NA
 
 Degrees of Freedom: 10 Total (i.e. Null);  10 Residual
 Null Deviance:	    2.74 
-Residual Deviance: 2.74 	AIC: 17.43 
+Residual Deviance: 2.74 	AIC: 17.43
 > summary(fit)
 
 Call:
@@ -3268,11 +3268,11 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [11] as.data.frame as.list       as.matrix     by            cbind        
 [16] dim           dimnames      dimnames<-    droplevels    duplicated   
 [21] edit          format        formula       head          is.na        
-[26] mean          merge         na.exclude    na.omit       plot         
-[31] print         prompt        rbind         row.names     row.names<-  
-[36] rowsum        split         split<-       stack         str          
-[41] subset        summary       t             tail          transform    
-[46] unique        unstack       within       
+[26] merge         na.exclude    na.omit       plot          print        
+[31] prompt        rbind         row.names     row.names<-   rowsum       
+[36] split         split<-       stack         str           subset       
+[41] summary       t             tail          transform     unique       
+[46] unstack       within       
 > meth2gen("dendrogram")
  [1] [[         as.hclust  cophenetic cut        labels     merge     
  [7] plot       print      reorder    rev        str       
@@ -3662,7 +3662,7 @@ NULL
 Call:
 aov(formula = y ~ a + b + Error(c), data = test.df)
 
-Grand Mean: 0.8066534 
+Grand Mean: 0.8066534
 
 Stratum 1: c
 
@@ -3680,7 +3680,7 @@ Terms:
 Sum of Squares  1.389453 2.148149  5.048689
 Deg. of Freedom        1        1         4
 
-Residual standard error: 1.123464 
+Residual standard error: 1.123464
 Estimated effects may be unbalanced
 > aov(y ~ a + b - 1 + Error(c), data=test.df)
 
@@ -3704,7 +3704,7 @@ Terms:
 Sum of Squares  1.389453 2.148149  5.048689
 Deg. of Freedom        1        1         4
 
-Residual standard error: 1.123464 
+Residual standard error: 1.123464
 1 out of 3 effects not estimable
 Estimated effects may be unbalanced
 > ## wrong assignment to strata labels < 1.9.0
@@ -3714,11 +3714,11 @@ Estimated effects may be unbalanced
 
 	Exact binomial test
 
-data:  c(800, 10) 
+data:  c(800, 10)
 number of successes = 800, number of trials = 810, p-value < 2.2e-16
-alternative hypothesis: true probability of success is not equal to 0.5 
+alternative hypothesis: true probability of success is not equal to 0.5
 95 percent confidence interval:
- 0.9774134 0.9940643 
+ 0.9774134 0.9940643
 sample estimates:
 probability of success 
              0.9876543 
@@ -3747,7 +3747,7 @@ Call:
 aov(formula = dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), 
     data = sample.df)
 
-Grand Mean: 65.07444 
+Grand Mean: 65.07444
 
 Stratum 1: subject
 
@@ -3775,7 +3775,7 @@ Terms:
 Sum of Squares   29204.13
 Deg. of Freedom        42
 
-Residual standard error: 26.36923 
+Residual standard error: 26.36923
 > summary(sample.aov)
 
 Error: subject
@@ -3802,7 +3802,7 @@ Call:
 aov(formula = dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), 
     data = sample.df)
 
-Grand Mean: 65.07444 
+Grand Mean: 65.07444
 
 Stratum 1: subject
 
@@ -3830,7 +3830,7 @@ Terms:
 Sum of Squares   29204.13
 Deg. of Freedom        42
 
-Residual standard error: 26.36923 
+Residual standard error: 26.36923
 > summary(sample.aov)
 
 Error: subject
@@ -4562,7 +4562,7 @@ Error in stats:::add1.default(fit, ~. + x2) :
 [2,]  11.2301  3.5301  3.1812  0.001467 ** 
 [3,]   9.9161  3.0927  3.2063  0.001344 ** 
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > printCoefmat(cmat, signif.stars = TRUE, signif.legend = FALSE)
      Estimate Std.Err Z value    Pr(>z)    
 [1,]  11.3092  2.8636  3.9493 7.837e-05 ***
@@ -4580,7 +4580,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 [2,]  11.2301  3.5301  3.1812  0.001467 ** 
 [3,]   9.9161  3.0927  3.2063  0.001344 ** 
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > ## did not work in 2.1.0
 > 
 > 
@@ -4732,7 +4732,7 @@ Model 2: y ~ z
 1      9 89.130                                 
 2      8  6.316  1    82.814 104.9 7.099e-06 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > add1(lm1, scope = ~ z)
 Single term additions
 
@@ -5600,7 +5600,7 @@ Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)   1.1866     0.1797   6.602  4.4e-08 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 1.206 on 44 degrees of freedom
   (5 observations deleted due to missingness)
@@ -5619,7 +5619,7 @@ Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)   2.8988     0.2586   11.21 1.75e-14 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 1.735 on 44 degrees of freedom
   (5 observations deleted due to missingness)
@@ -6398,15 +6398,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2fbf690> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7ff61cd6daa8> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2f9b418> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7ff61cd33f08> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2f9b418> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7ff61cd33f08> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -6422,9 +6422,9 @@ function ()
 
 	Kendall's rank correlation tau
 
-data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3)
 T = 1, p-value = 0.08333
-alternative hypothesis: true tau is not equal to 0 
+alternative hypothesis: true tau is not equal to 0
 sample estimates:
  tau 
 -0.8 
@@ -6434,9 +6434,9 @@ sample estimates:
 
 	Kendall's rank correlation tau
 
-data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3)
 z = -1.9596, p-value = 0.05004
-alternative hypothesis: true tau is not equal to 0 
+alternative hypothesis: true tau is not equal to 0
 sample estimates:
  tau 
 -0.8 
@@ -6446,9 +6446,9 @@ sample estimates:
 
 	Kendall's rank correlation tau
 
-data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3)
 z = -1.7146, p-value = 0.08641
-alternative hypothesis: true tau is not equal to 0 
+alternative hypothesis: true tau is not equal to 0
 sample estimates:
  tau 
 -0.8 
@@ -6459,9 +6459,9 @@ sample estimates:
 
 	Spearman's rank correlation rho
 
-data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3)
 S = 38, p-value = 0.08333
-alternative hypothesis: true rho is not equal to 0 
+alternative hypothesis: true rho is not equal to 0
 sample estimates:
  rho 
 -0.9 
@@ -6471,9 +6471,9 @@ sample estimates:
 
 	Spearman's rank correlation rho
 
-data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3)
 S = 38, p-value = 0.03739
-alternative hypothesis: true rho is not equal to 0 
+alternative hypothesis: true rho is not equal to 0
 sample estimates:
  rho 
 -0.9 
@@ -6483,9 +6483,9 @@ sample estimates:
 
 	Spearman's rank correlation rho
 
-data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3) 
+data:  c(1, 2, 3, 4, 5) and c(8, 6, 7, 5, 3)
 S = 38, p-value = 0.09689
-alternative hypothesis: true rho is not equal to 0 
+alternative hypothesis: true rho is not equal to 0
 sample estimates:
  rho 
 -0.9 
@@ -6681,11 +6681,11 @@ Frequency = 0.2
 
 	Exact conditional test of independence in 2 x 2 x k tables
 
-data:  Nitrous 
+data:  Nitrous
 S = 57, p-value = 0.1959
-alternative hypothesis: true common odds ratio is less than 1 
+alternative hypothesis: true common odds ratio is less than 1
 95 percent confidence interval:
- 0.000000 1.388197 
+ 0.000000 1.388197
 sample estimates:
 common odds ratio 
         0.6652418 
@@ -6694,11 +6694,11 @@ common odds ratio
 
 	Mantel-Haenszel chi-squared test with continuity correction
 
-data:  Nitrous 
+data:  Nitrous
 Mantel-Haenszel X-squared = 0.7143, df = 1, p-value = 0.199
-alternative hypothesis: true common odds ratio is less than 1 
+alternative hypothesis: true common odds ratio is less than 1
 95 percent confidence interval:
- 0.000000 1.260053 
+ 0.000000 1.260053
 sample estimates:
 common odds ratio 
         0.6645374 
@@ -6873,11 +6873,11 @@ Coefficients:
 (Intercept)  0.03949    0.08612   0.459    0.663    
 x            0.99788    0.01502  66.419 7.83e-10 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.1232 on 6 degrees of freedom
-Multiple R-squared: 0.9986,	Adjusted R-squared: 0.9984 
-F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10 
+Multiple R-squared:  0.9986,	Adjusted R-squared:  0.9984 
+F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10
 
 > ## issue is how the 5-number summary is labelled
 > ## (also seen in example(case.names))

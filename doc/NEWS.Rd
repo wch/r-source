@@ -593,6 +593,9 @@
       
       \item The long-deprecated \code{intensities} component is no
       longer returned by \code{hist()}.
+
+      \item  \code{mean()} for data frame  and \code{sd()}
+      for data frames and matrices are defunct.
     }
   }
 
@@ -3210,7 +3213,6 @@
       \code{library.dynam.unload()} and \code{useDynLib} directives in
       \file{NAMESPACE} files.
 
-      %% should become defunct not earlier than end of summer 2013!
       \item It is deprecated to use \code{mean(x)} and \code{sd(x)}
       directly on data frames (or also matrices, for \code{sd})
       \code{x}, instead of simply using \code{sapply}.
