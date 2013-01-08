@@ -590,6 +590,9 @@
       
       \item \code{grid.prompt()} has been removed: use
       \code{devAskNewPage()} instead.
+      
+      \item The long-deprecated \code{intensities} component is no
+      longer returned by \code{hist()}.
     }
   }
 
@@ -828,6 +831,10 @@
    \itemize{
       \item Use of \code{col2rgb(0)} is deprecated (see the help page
       for its limitations).
+      
+      \item The deprecated \code{intensities} component returned by
+      \code{hist()} is no longer recognized by the \code{plot()} method
+      and will be removed in \R 3.0.0.
     }
   }
 

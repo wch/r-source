@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -132,12 +132,13 @@ hist(x, \dots)
     relative frequencies \code{counts/n} and in general satisfy
     \eqn{\sum_i \hat f(x_i) (b_{i+1}-b_i) = 1}{sum[i; f^(x[i])
       (b[i+1]-b[i])] = 1}, where \eqn{b_i}{b[i]} = \code{breaks[i]}.}
-  \item{intensities}{same as \code{density}. Deprecated, but retained
-    for compatibility.}
   \item{mids}{the \eqn{n} cell midpoints.}
   \item{xname}{a character string with the actual \code{x} argument name.}
   \item{equidist}{logical, indicating if the distances between
     \code{breaks} are all the same.}
+
+  Prior to \R 3.0.0 there was a component \code{intensities}, the same
+  as \code{density}, for long-term back compatibility.
 }
 
 \references{

@@ -32,9 +32,15 @@ palette(value)
 
   There is only one palette setting for all devices in a \R session.  If
   the palette is changed, the new palette applies to all subsequent
-  plotting or re-plotting (for example if an on-screen device is resized
-  or \code{\link{dev.copy}} is used).
+  plotting.
+
+  Prior to \R 3.0.0 the current palette also applies to re-plotting (for
+  example if an on-screen device is resized or \code{\link{dev.copy}} or
+  \code{\link{replayPlot}} is used).  In current \R, the palette is
+  recorded on the displaylist at the start of each page and when it is
+  changed.
 }
+
 \value{
   A character vector giving the palette which \emph{was} in effect.
   This is \code{\link{invisible}} unless the argument is omitted.
