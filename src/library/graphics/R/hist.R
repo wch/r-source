@@ -160,9 +160,7 @@ plot.histogram <-
     if(freq && !equidist)
 	warning("the AREAS in the plot are wrong -- rather use freq=FALSE")
 
-    y <- if (freq) x$counts else { ## x$density -- would be enough, but
-	## for back compatibility
-	y <- x$density; if(is.null(y)) x$intensities else y}
+    y <- if (freq) x$counts else x$density
     nB <- length(x$breaks)
     if(is.null(y) || 0L == nB) stop("'x' is wrongly structured")
 
