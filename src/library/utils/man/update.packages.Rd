@@ -1,6 +1,6 @@
 % File src/library/utils/man/update.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update.packages}
@@ -67,7 +67,8 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
     makes an internal call to \code{available.packages}.
   }
   \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
-    minor version of \R is considered to be \sQuote{old}.}
+    major.minor version of \R (e.g. \code{2.14}) is considered to be
+    \sQuote{old}.}
   \item{oldPkgs}{
     if specified as non-NULL, \code{update.packages()} only considers
     these packages for updating. This may be a character vector
