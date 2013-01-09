@@ -806,6 +806,9 @@
     
       \item \code{sQuote()} and \code{dQuote()} now handle 0-length
       inputs.  (Suggestion of Ben Bolker.)
+
+      \item \code{summaryRprof()} returns zero-row data frames rather
+      than tnrow an error if no events are recorded, for consistency.
     }
   }
 
@@ -818,7 +821,7 @@
       This enables most packages to be built \sQuote{out of the box}
       without \command{Rtools}: the main exceptions are those which need
       to be installed to re-build vignettes and need \command{Rtools}
-      for installation.
+      for installation (usually because they contain compiled code).
     }
   }
 

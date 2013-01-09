@@ -1,6 +1,6 @@
 % File src/library/utils/man/summaryRprof.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{summaryRprof}
@@ -16,17 +16,18 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
               index = 2, diff = TRUE, exclude = NULL)
 }
 \arguments{
-  \item{filename}{Name of a file produced by \code{Rprof()}}
-  \item{chunksize}{Number of lines to read at a time}
-  \item{memory}{Summaries for memory information.  See \sQuote{Details} below}
+  \item{filename}{Name of a file produced by \code{Rprof()}.}
+  \item{chunksize}{Number of lines to read at a time.}
+  \item{memory}{Summaries for memory information.  See \sQuote{Details} below.}
   \item{index}{How to summarize the stack trace for memory
     information.  See \sQuote{Details} below.}
   \item{diff}{If \code{TRUE} memory summaries use change in memory
-    rather than current memory}
+    rather than current memory.}
   \item{exclude}{Functions to exclude when summarizing the stack trace
-    for memory summaries}
+    for memory summaries.}
 
 }
+
 \details{
   This function provides the analysis code for \code{\link{Rprof}} files
   used by \command{R CMD Rprof}.
@@ -34,7 +35,12 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
   As the profiling output file could be larger than available memory, it
   is read in blocks of \code{chunksize} lines.  Increasing \code{chunksize}
   will make the function run faster if sufficient memory is available.
+}
 
+\section{Memory profiling}{
+  Options other than \code{memory = "none"} apply only to files produced
+  by \code{\link{Rprof}(memory.profiling =  TRUE)}.
+  
   When called with \code{memory.profiling = TRUE}, the profiler writes
   information on three aspects of memory use: vector memory in small
   blocks on the R heap, vector memory in large blocks (from
@@ -63,10 +69,16 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
 
 \value{
   If \code{memory = "none"}, a list with components
-  \item{by.self}{Timings sorted by \sQuote{self} time}
-  \item{by.total}{Timings sorted by \sQuote{total} time}
-  \item{sample.interval}{The sampling interval}
-  \item{sampling.time}{Total length of profiling run}
+  \item{by.self}{A data frame of timings sorted by \sQuote{self} time.}
+  \item{by.total}{A data frame of timings sorted by \sQuote{total} time.}
+  \item{sample.interval}{The sampling interval.}
+  \item{sampling.time}{Total time of profiling run.}
+
+  The first two components have columns \samp{self.time},
+  \samp{self.pct}, \samp{total.time} and \samp{total.pct}, the times in
+  seconds and percentages of the total time spent executing code in that
+  function and code in that function or called from that function,
+  respectively.
 
   If \code{memory = "both"} the same list but with memory consumption in Mb
   in addition to the timings.
@@ -76,6 +88,9 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
 
   If \code{memory = "stats"} a \code{\link{by}} object giving memory statistics
   by function.
+  
+  Prior to \R 2.15.3 an error was thrown if no events were recorded: now
+  zero-row data frames are returned.
 }
 
 \seealso{
