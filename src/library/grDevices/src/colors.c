@@ -568,8 +568,20 @@ SEXP col2rgb(SEXP colors, SEXP alpha)
 #include <ctype.h> /* for tolower, isdigit */
 
 #define MAX_PALETTE_SIZE 1024
-static int PaletteSize;
-static rcolor Palette[MAX_PALETTE_SIZE];
+static int PaletteSize = 8;
+static rcolor Palette[MAX_PALETTE_SIZE] = {
+    0xff000000,
+    0xff0000ff,
+    0xff00cd00,
+    0xffff0000,
+    0xffffff00,
+    0xffff00ff,
+    0xff00ffff,
+    0xffbebebe
+};
+
+static rcolor Palette0[MAX_PALETTE_SIZE];
+
 
 /* String comparison ignoring case and squeezing out blanks */
 static int StrMatch(const char *s, const char *t)
@@ -608,7 +620,6 @@ static int StrMatch(const char *s, const char *t)
  * Changed "white" to "grey" in the default palette
  * in response to user suggestion
  */
-
 attribute_hidden
 const char *DefaultPalette[] = {
     "black",
@@ -1465,7 +1476,7 @@ SEXP palette(SEXP val)
     for (i = 0; i < PaletteSize; i++)
 	SET_STRING_ELT(ans, i, mkChar(incol2name(Palette[i])));
     if ((n = length(val)) == 1) {
-	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) { /* ASCII */
+	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) {
 	    int i;
 	    for (i = 0; (i < MAX_PALETTE_SIZE) && DefaultPalette[i]; i++)
 		Palette[i] = name2col(DefaultPalette[i]);
@@ -1487,6 +1498,17 @@ SEXP palette(SEXP val)
     return ans;
 }
 
+/* A version using 'rcolor' type */
+SEXP palette2(SEXP val)
+{
+    if (TYPEOF(val) != INTSXP) error("requires INTSXP argment");
+    int n = LENGTH(val);
+    for (int i = 0; i < n; i++) 
+	Palette[i] = (rcolor)INTEGER(val)[i];
+    PaletteSize = n;
+    return R_NilValue;
+}
+
 SEXP colors(void)
 {
     int n;
@@ -1499,26 +1521,37 @@ SEXP colors(void)
     return ans;
 }
 
+static void savePalette(Rboolean save)
+{
+    if (save)
+	for (int i = 0; i < PaletteSize; i++)
+	    Palette0[i] = Palette[i];
+    else
+	for (int i = 0; i < PaletteSize; i++)
+	    Palette[i] = Palette0[i];
+}
+
 /* same as src/main/colors.c */
 typedef unsigned int (*F1)(SEXP x, int i, unsigned int bg);
 typedef const char * (*F2)(unsigned int col);
 typedef unsigned int (*F3)(const char *s);
+typedef void (*F4)(Rboolean save);
 
-void Rg_set_col_ptrs(F1 f1, F2 f2, F3 f3);
+void Rg_set_col_ptrs(F1 f1, F2 f2, F3 f3, F4 f4);
 
 void initPalette(void)
 {
-    Rg_set_col_ptrs(&inRGBpar3, &incol2name, &inR_GE_str2col);
+    Rg_set_col_ptrs(&inRGBpar3, &incol2name, &inR_GE_str2col, &savePalette);
 
     /* Initialize the Color Database: we now pre-compute this
     for(int i = 0 ; ColorDataBase[i].name ; i++)
 	ColorDataBase[i].code = rgb2col(ColorDataBase[i].rgb);
-    */
 
-    /* Install Default Palette */
+    Install Default Palette: precomputed
     int i;
     for(i = 0 ; DefaultPalette[i] ; i++)
 	Palette[i] = name2col(DefaultPalette[i]);
     PaletteSize = i;  // 8
+    */
 }
 

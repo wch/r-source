@@ -43,10 +43,7 @@ replayPlot <- function(x)
     else if (version != rversion())
         warning(gettext("loading snapshot from different R version"),
                 " (", version, ")", domain = NA)
-    pal <- palette()
-    res <- .External2(C_playSnapshot, x)
-    palette(pal)
-    invisible(res)
+    invisible(.External2(C_playSnapshot, x))
 }
 
 print.recordedplot <- function(x, ...)

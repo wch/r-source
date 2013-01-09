@@ -2727,6 +2727,9 @@ void GEinitDisplayList(pGEDevDesc dd)
  ****************************************************************
  */
 
+/* from colors.c */
+void savePalette(Rboolean save);
+
 void GEplayDisplayList(pGEDevDesc dd)
 {
     int i, this, savedDevice, plotok;
@@ -2756,6 +2759,7 @@ void GEplayDisplayList(pGEDevDesc dd)
     PROTECT(theList);
     plotok = 1;
     if (theList != R_NilValue) {
+	savePalette(TRUE);
 	savedDevice = curDevice();
 	selectDevice(this);
 	while (theList != R_NilValue && plotok) {
@@ -2772,6 +2776,7 @@ void GEplayDisplayList(pGEDevDesc dd)
 	    theList = CDR(theList);
 	}
 	selectDevice(savedDevice);
+	savePalette(FALSE);
     }
     UNPROTECT(1);
 }

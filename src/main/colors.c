@@ -30,16 +30,19 @@
 typedef unsigned int (*F1)(SEXP x, int i, unsigned int bg);
 typedef const char * (*F2)(unsigned int col);
 typedef unsigned int (*F3)(const char *s);
+typedef void (*F4)(Rboolean save);
 
 static F1 ptr_RGBpar3;
 static F2 ptr_col2name;
 static F3 ptr_R_GE_str2col;
+static F4 ptr_savePalette;
 
-void Rg_set_col_ptrs(F1 f1, F2 f2, F3 f3)
+void Rg_set_col_ptrs(F1 f1, F2 f2, F3 f3, F4 f4)
 {
     ptr_RGBpar3 = f1;
     ptr_col2name = f2;
     ptr_R_GE_str2col = f3;
+    ptr_savePalette = f4;
 }
 
 /* used in grid/src/gpar.c with bg = R_TRANWHITE,
@@ -48,7 +51,7 @@ void Rg_set_col_ptrs(F1 f1, F2 f2, F3 f3)
 unsigned int RGBpar3(SEXP x, int i, unsigned int bg)
 {
     if (!ptr_RGBpar3) error("package grDevices must be loaded");
-    return (unsigned int)(ptr_RGBpar3)(x, i, bg);
+    return (ptr_RGBpar3)(x, i, bg);
 }
 
 /* in GraphicsEngine.h, used by devices */
@@ -62,7 +65,7 @@ unsigned int RGBpar(SEXP x, int i)
 const char *col2name(unsigned int col)
 {
     if (!ptr_col2name) error("package grDevices must be loaded");
-    return (const char *)(ptr_col2name)(col);
+    return (ptr_col2name)(col);
 }
 
 /* used in grDevices for fg and bg of devices */
@@ -70,5 +73,12 @@ const char *col2name(unsigned int col)
 unsigned int R_GE_str2col(const char *s)
 {
     if (!ptr_R_GE_str2col) error("package grDevices must be loaded");
-    return (unsigned int)(ptr_R_GE_str2col)(s);
+    return (ptr_R_GE_str2col)(s);
+}
+
+/* used in engine.c */
+void savePalette(Rboolean save)
+{
+    if (!ptr_savePalette) error("package grDevices must be loaded");
+    (ptr_savePalette)(save);
 }

@@ -69,6 +69,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(col2rgb, 2),
     CALLDEF(colors, 0),
     CALLDEF(palette, 1),
+    CALLDEF(palette2, 1),
 
 #ifndef WIN32
     CALLDEF(makeQuartzDefault, 0),

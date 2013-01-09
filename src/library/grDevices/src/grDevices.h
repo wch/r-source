@@ -101,6 +101,7 @@ SEXP gray(SEXP lev, SEXP a);
 SEXP colors(void);
 SEXP col2rgb(SEXP colors, SEXP alpha);
 SEXP palette(SEXP value);
+SEXP palette2(SEXP value);
 SEXP RGB2hsv(SEXP rgb);
 #endif
 
