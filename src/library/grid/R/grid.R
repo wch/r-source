@@ -316,7 +316,7 @@ grid.newpage <- function(recording=TRUE) {
     .Call(L_initViewportStack)
     if (recording) {
         .Call(L_initDisplayList)
-        palette(palette()) # record the current palette
+        grDevices:::recordPalette()
         for (fun in getHook("grid.newpage"))  {
             if(is.character(fun)) fun <- get(fun)
             try(fun())

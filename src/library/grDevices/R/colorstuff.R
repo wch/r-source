@@ -77,6 +77,13 @@ palette <- function(value)
     else invisible(.Call.graphics(C_palette, value))
 }
 
+## An unexported version that works with internal representation as 'rcolor'
+## We could avoid this if we knew at R level whether the display list was
+## enabled or inhibited: but we do need to record a call to C_palette2.
+recordPalette <- function()
+    .Call.graphics(C_palette2, .Call(C_palette2, NULL))
+
+
 ## A quick little ''rainbow'' function -- improved by MM
 ## doc in	../man/palettes.Rd
 rainbow <-

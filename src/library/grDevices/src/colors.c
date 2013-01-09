@@ -1501,12 +1501,18 @@ SEXP palette(SEXP val)
 /* A version using 'rcolor' type */
 SEXP palette2(SEXP val)
 {
-    if (TYPEOF(val) != INTSXP) error("requires INTSXP argment");
-    int n = LENGTH(val);
-    for (int i = 0; i < n; i++) 
-	Palette[i] = (rcolor)INTEGER(val)[i];
-    PaletteSize = n;
-    return R_NilValue;
+    SEXP ans = PROTECT(allocVector(INTSXP, PaletteSize));
+    int n = length(val), *ians = INTEGER(ans); 
+    for (int i = 0; i < PaletteSize; i++) ians[i] = (int)Palette[i];
+    if (n) {
+	if (TYPEOF(val) != INTSXP) error("requires INTSXP argment");
+	if (n > MAX_PALETTE_SIZE)
+	    error(_("maximum number of colors is %d"), MAX_PALETTE_SIZE);
+	for (int i = 0; i < n; i++) Palette[i] = (rcolor)INTEGER(val)[i];
+	PaletteSize = n;
+    }
+    UNPROTECT(1);
+    return ans;    
 }
 
 SEXP colors(void)
@@ -1521,6 +1527,7 @@ SEXP colors(void)
     return ans;
 }
 
+/* Used to push/pop palette when replaying display list */
 static void savePalette(Rboolean save)
 {
     if (save)
