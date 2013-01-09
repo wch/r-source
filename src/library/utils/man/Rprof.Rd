@@ -84,7 +84,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   \dQuote{Writing \R Extensions} (see the \file{doc/manual} subdirectory
   of the \R source tree).
 
-  \code{\link{summaryRprof}}
+  \code{\link{summaryRprof}} to analyse the output file.
 
   \code{\link{tracemem}}, \code{\link{Rprofmem}} for other ways to track
   memory use.

@@ -95,8 +95,7 @@ summaryRprof <-
        if (length(chunk) < chunksize) break
     })
 
-    if (sum(fcounts) == 0)
-        stop("no events were recorded")
+#    if (sum(fcounts) == 0) stop("no events were recorded")
 
 
     firstnum <- fcounts*sample.interval
