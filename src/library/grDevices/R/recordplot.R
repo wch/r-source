@@ -39,7 +39,7 @@ replayPlot <- function(x)
     nm <- names(x)
     version <- attr(x, "version") ## added in R 2.0.0.
     if (is.null(version) || version < as.numeric_version("3.0.0"))
-        error("loading snapshot from pre-3.0.0 R version")
+        stop("loading snapshot from pre-3.0.0 R version")
     else if (version != rversion())
         warning(gettext("loading snapshot from different R version"),
                 " (", version, ")", domain = NA)
