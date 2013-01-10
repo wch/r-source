@@ -894,7 +894,7 @@ $NotFound
 character(0)
 
 $R
-[1] "R (>= 2.14.0)"
+[1] "R (>= 2.15.1)"
 
 attr(,"class")
 [1] "DependsList" "list"       
