@@ -326,14 +326,14 @@ checkSlotAssignment <- function(obj, name, value)
 }
 
 
-
-"@<-" <-
-   function(object, name, value) {
-     arg <- substitute(name)
-     if(is.name(arg))
-       name <- as.character(arg)
-     "slot<-"(object, name, TRUE, value)
-   }
+## Now a primitive in base
+## "@<-" <-
+##    function(object, name, value) {
+##      arg <- substitute(name)
+##      if(is.name(arg))
+##        name <- as.character(arg)
+##      "slot<-"(object, name, TRUE, value)
+##    }
 
 ##  The names of the class's slots.  The argument is either the name
 ##  of a class, or an object from the relevant class.
