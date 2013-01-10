@@ -1155,7 +1155,7 @@ setRlibs <-
         out1 <- if (length(out1) && length(out1a)) c(out1, "", out1a)
                 else c(out1, out1a)
 
-        out2 <- out3 <- out4 <- out5 <- out6 <- NULL
+        out2 <- out3 <- out4 <- out5 <- out6 <- out7 <- NULL
 
         if (!is_base_pkg && R_check_unsafe_calls) {
             Rcmd <- paste("options(warn=1)\n",
