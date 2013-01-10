@@ -1211,7 +1211,8 @@ setRlibs <-
             length(out7)) {
             ini <- character()
             if (length(out4) ||
-                grepl("Found the defunct function", out7, fixed = TRUE))
+                (length(out7) &&
+                 grepl("Found the defunct function", out7, fixed = TRUE)))
                 warningLog(Log) else noteLog(Log)
             if (length(out1)) {
                 printLog0(Log, paste(c(out1, ""), collapse = "\n"))
