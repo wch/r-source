@@ -1,7 +1,7 @@
 #  File src/library/methods/R/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,15 @@
 #  http://www.r-project.org/Licenses/
 
 utils::globalVariables(c(".possibleExtends", ".makeGeneric",
-                         ".newClassRepresentation", ".classGeneratorFunction",
-                         ".mergeClassDefSlots", "..mergeClassDefSlots"))
+                         ".newClassRepresentation",
+                         ".classGeneratorFunction",
+                         ".mergeClassDefSlots",
+                         "..mergeClassDefSlots", "..classEnv",
+                         "..addToMetaTable", "..extendsForS3",
+                         "..isPrototype", ".isSealedMethod",
+                         "..requirePackage", ".implicitGeneric",
+                         "..checkRequiredGenerics",
+                         "..methodPackageSlots"))
 
 ..onLoad  <-
   ## Initialize the methods package.  Called from .onLoad, first
