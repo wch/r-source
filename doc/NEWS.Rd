@@ -31,7 +31,7 @@
       inputs.  (Suggestion of Ben Bolker.)
 
       \item \code{summaryRprof()} returns zero-row data frames rather
-      than tnrow an error if no events are recorded, for consistency.
+      than throw an error if no events are recorded, for consistency.
     }
   }
 
