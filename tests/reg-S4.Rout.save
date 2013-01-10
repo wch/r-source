@@ -504,16 +504,12 @@ $answer.all
 [1] "as.numeric"
 > identical(as.numeric(x_c1),as.double(x_c1))
 [1] TRUE
-> identical(as.numeric(x_c1),as.real(x_c1))
-[1] TRUE
 > 
 > 
 > setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
 [1] "as.numeric"
 > x_c2 <- new("c2", pi)
 > identical(as.numeric(x_c2),as.double(x_c2))
-[1] TRUE
-> identical(as.numeric(x_c2),as.real(x_c2))
 [1] TRUE
 > 
 > ## '!' changed signature from 'e1' to 'x' in 2.6.0

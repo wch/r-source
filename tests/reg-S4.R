@@ -311,13 +311,11 @@ as.raw(x_c1)
 # as.double, as.real use as.numeric for their methods to maintain equivalence
 setMethod("as.numeric", "c1", function(x, ...) 42+pi)
 identical(as.numeric(x_c1),as.double(x_c1))
-identical(as.numeric(x_c1),as.real(x_c1))
 
 
 setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
 x_c2 <- new("c2", pi)
 identical(as.numeric(x_c2),as.double(x_c2))
-identical(as.numeric(x_c2),as.real(x_c2))
 
 ## '!' changed signature from 'e1' to 'x' in 2.6.0
 setClass("foo", "logical")

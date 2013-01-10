@@ -841,6 +841,9 @@
       \item The deprecated \code{intensities} component returned by
       \code{hist()} is no longer recognized by the \code{plot()} method
       and will be removed in \R 3.0.0.
+      
+      \item \code{real()}, \code{as.real()} and \code{is.real()} are now
+      formally deprecated and give a warning.
     }
   }
 

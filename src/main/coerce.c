@@ -1402,25 +1402,28 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     check1arg(args, call, "x");
     switch(op0) {
-	case 0:
-	    name = "as.character"; break;
-	case 1:
-	    name = "as.integer"; type = INTSXP; break;
-	case 2:
-	    name = "as.double"; type = REALSXP; break;
-	case 3:
-	    name = "as.complex"; type = CPLXSXP; break;
-	case 4:
-	    name = "as.logical"; type = LGLSXP; break;
-	case 5:
-	    name = "as.raw"; type = RAWSXP; break;
+    case 0:
+	name = "as.character"; break;
+    case 1:
+	name = "as.integer"; type = INTSXP; break;
+    case 2:
+	name = "as.double"; type = REALSXP; break;
+    case 20: // as.real
+	warningcall(call, "as.real is deprecated: use as.double");
+	name = "as.double"; type = REALSXP; break;
+    case 3:
+	name = "as.complex"; type = CPLXSXP; break;
+    case 4:
+	name = "as.logical"; type = LGLSXP; break;
+    case 5:
+	name = "as.raw"; type = RAWSXP; break;
     }
     if (DispatchOrEval(call, op, name, args, rho, &ans, 0, 1))
 	return(ans);
 
     /* Method dispatch has failed, we now just */
     /* run the generic internal code */
-
+    
     checkArity(op, args);
     x = CAR(args);
     if(TYPEOF(x) == type) {
@@ -1794,7 +1797,11 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == INTSXP)
 	    && !inherits(CAR(args), "factor");
 	break;
-    case REALSXP:	/* is.double == is.real */
+    case REALSXP:	/* is.double */
+	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == REALSXP);
+	break;
+    case 67:	/* is.real */
+	warningcall(call, "is.real is deprecated: use is.double");
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == REALSXP);
 	break;
     case CPLXSXP:	/* is.complex */
