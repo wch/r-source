@@ -1,6 +1,6 @@
 % File src/library/base/man/c.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{c}
@@ -24,7 +24,7 @@ c(\dots, recursive = FALSE)
 }
 \details{
   The output type is determined from the highest type of the components
-  in the hierarchy NULL < raw < logical < integer < real < complex < character
+  in the hierarchy NULL < raw < logical < integer < double < complex < character
   < list < expression.  Pairlists are treated as lists, but non-vector
   components (such names and calls) are treated as one-element lists
   which cannot be unlisted even if \code{recursive = TRUE}.

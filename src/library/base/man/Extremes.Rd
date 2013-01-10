@@ -1,6 +1,6 @@
 % File src/library/base/man/Extremes.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extremes}
@@ -89,7 +89,7 @@ pmin.int(\dots, na.rm = FALSE)
   length zero if one of the inputs had zero length.
 
   The type of the result will be that of the highest of the inputs in
-  the hierarchy integer < real < character.
+  the hierarchy integer < double < character.
 
   For \code{min} and \code{max} if there are only numeric inputs and all
   are empty (after possible removal of \code{NA}s), the result is double
