@@ -1204,15 +1204,14 @@ setRlibs <-
                               sprintf("tools:::.check_depdef(package = \"%s\")\n", pkgname)
                           else
                               sprintf("tools:::.check_depdef(dir = \"%s\")\n", pkgdir))
-            out7 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+            out7 <- R_runR2(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6) ||
             length(out7)) {
             ini <- character()
             if (length(out4) ||
-                (length(out7) &&
-                 any(grepl("Found the defunct function", out7, fixed = TRUE))))
+                length(grep("^Found the defunct function", out7)))
                 warningLog(Log) else noteLog(Log)
             if (length(out1)) {
                 printLog0(Log, paste(c(out1, ""), collapse = "\n"))
