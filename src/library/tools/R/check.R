@@ -1204,7 +1204,7 @@ setRlibs <-
                               sprintf("tools:::.check_depdef(package = \"%s\")\n", pkgname)
                           else
                               sprintf("tools:::.check_depdef(dir = \"%s\")\n", pkgdir))
-            out7 <- R_runR2(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+            out7 <- R_runR(Rcmd, "R_DEFAULT_PACKAGES=")
         }
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6) ||
