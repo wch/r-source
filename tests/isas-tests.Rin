@@ -14,12 +14,13 @@ ls.base <- c(ls("package:base"), ls("package:stats"))
 base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
 bi <- ls.base[base.is.f]
 iroot <- substring(is.bi <- bi[substring(bi,1,3) == "is."],4)
-## is.single is a dummy
-iroot <- iroot[-match("single", iroot)]
+## is.single is a dummy, is.real is deprecated
+iroot <- iroot[-match(c("single", "real"), iroot)]
 aroot <- substring(as.bi <- bi[substring(bi,1,3) == "as."],4)
 ## eliminate as.foo methods: there are no is.foo methods
 ## this works because data.frame.*  has no other matches for data.
 aroot <- aroot[!duplicated(sub("\\..*", "", aroot))]
+aroot <- aroot[-match("real", aroot)]
 root <- intersect(iroot, aroot) # both an  is.foo and as.foo function exist
 
 ex.list <- expression(integer(0), NULL, list(), 1:1, pi, "1.3", list(a=1),

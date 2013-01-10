@@ -94,6 +94,7 @@ require(methods)
 setClass("foo", representation(x="numeric", y="numeric"))
 xx <- new("foo",  x=1, y=2)
 S4gen <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.function(x))]
+S4gen <- setdiff(S4gen, "as.real") # deprecated
 for(f in S4gen) {
     g <- get(f)
     if(is.primitive(g)) g <- getGeneric(f) # should error on non-Generics.

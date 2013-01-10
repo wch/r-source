@@ -702,7 +702,7 @@ stopifnot(identical(sprintf(character(0L), pi), character(0L)))
 ## C-level asLogical(x) or c(<raw>, <number>) did not work
 r <- as.raw(1)
 stopifnot(if(r) TRUE)
-for (type in c("null", "logical", "integer", "real", "complex",
+for (type in c("null", "logical", "integer", "double", "complex",
                "character", "list", "expression"))
     c(r, r, get(sprintf('as.%s', type))(1))
 ## failed  before 2.9.0

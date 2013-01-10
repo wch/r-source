@@ -1,4 +1,4 @@
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 
 ## this should be kept in step with code in R/lazyload.R
 .Internal(eval(quote({
@@ -95,5 +95,5 @@
 }), .Internal(new.env(FALSE, baseenv(), 29L)), baseenv()))
 
 ## keep in sync with R/zzz.R
-as.numeric <- as.real <- as.double
+as.numeric <- as.double
 is.name <- is.symbol

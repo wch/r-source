@@ -1,7 +1,7 @@
 #### Run all demos that do not depend on tcl and other specials.
 .ptime <- proc.time()
 set.seed(123)
-options(keep.source=TRUE, useFancyQuotes=FALSE)
+options(keep.source=TRUE, useFancyQuotes=FALSE, warn = 1)
 
 ## Drop these for strict testing {and add them to demos2.R)
 ## lm.glm is in ../src/library/utils/man/demo.Rd }:

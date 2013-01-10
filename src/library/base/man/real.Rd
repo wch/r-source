@@ -1,6 +1,6 @@
 % File src/library/base/man/real.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{real}
@@ -16,6 +16,8 @@ is.real(x)
 \description{
   These functions are the same as their \code{\link{double}} equivalents
   and are provided for backwards compatibility only.
+
+  They are deprecated.
 }
 \arguments{
   \item{length}{A non-negative integer specifying the desired length.

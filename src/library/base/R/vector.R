@@ -1,7 +1,7 @@
 #  File src/library/base/R/vector.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,14 @@ vector <- function(mode = "logical", length = 0L).Internal(vector(mode, length))
 logical <- function(length = 0L) .Internal(vector("logical", length))
 character <- function(length = 0L) .Internal(vector("character", length))
 integer <- function(length = 0L) .Internal(vector("integer", length))
-real <- numeric <- double <-
+numeric <- double <-
     function(length = 0L) .Internal(vector("double", length))
+
+real <- function(length = 0L)
+{
+    .Deprecated("double")
+    .Internal(vector("double", length))
+}
 
 complex <- function(length.out = 0L,
 		    real = numeric(), imaginary = numeric(),

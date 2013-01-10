@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 #  http://www.r-project.org/Licenses/
 
 ## top-level assignments that need to be copied to baseloader.R
-as.numeric <- as.real <- as.double
+as.numeric <- as.double
 is.name <- is.symbol
 
 
@@ -201,6 +201,9 @@ assign("as.complex", function(x, ...) UseMethod("as.complex"),
        envir = .GenericArgsEnv)
 assign("as.double", function(x, ...) UseMethod("as.double"),
        envir = .GenericArgsEnv)
+## deprecated
+assign("as.real", function(x, ...) UseMethod("as.double"),
+       envir = .GenericArgsEnv)
 assign("as.integer", function(x, ...) UseMethod("as.integer"),
        envir = .GenericArgsEnv)
 assign("as.logical", function(x, ...) UseMethod("as.logical"),
@@ -230,8 +233,6 @@ assign("signif", function(x, digits=6) UseMethod("signif"),
 assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
 #assign("xtfrm", function(x) UseMethod("xtfrm"), envir = .GenericArgsEnv)
 
-## make these the same object as as.double
+## make this the same object as as.double
 assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
-       envir = .GenericArgsEnv)
-assign("as.real", get("as.double", envir = .GenericArgsEnv),
        envir = .GenericArgsEnv)
