@@ -1,6 +1,6 @@
 % File src/library/utils/man/data.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data}
@@ -15,7 +15,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
      verbose = getOption("verbose"), envir = .GlobalEnv)
 }
 \arguments{
-  \item{\dots}{a sequence of names or literal character strings.}
+  \item{\dots}{literal character strings or names.}
   \item{list}{a character vector.}
   \item{package}{
     a character vector giving the package(s) to look
@@ -58,8 +58,8 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   \file{.csv} can be compressed, with or without further extension
   \file{.gz}, \file{.bz2} or \file{.xz}.)
 
-  The data sets to be loaded can be specified as a sequence of names or
-  character strings, or as the character vector \code{list}, or as both.
+  The data sets to be loaded can be specified as a set of character
+  strings or names, or as the character vector \code{list}, or as both.
 
   For each given data set, the first two types (\file{.R} or \file{.r},
   and \file{.RData} or \file{.rda} files) can create several variables
@@ -106,6 +106,9 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   none were specified.
 }
 \note{
+  In programming, the datasets should be specified by character strings
+  (with quotes), rather than names (without).
+  
   One can take advantage of the search order and the fact that a
   \file{.R} file will change directory.  If raw data are stored in
   \file{mydata.txt} then one can set up \file{mydata.R} to read
@@ -127,6 +130,8 @@ require(utils)
 data()                         # list all available data sets
 try(data(package = "rpart") )  # list the data sets in the rpart package
 data(USArrests, "VADeaths")    # load the data sets 'USArrests' and 'VADeaths'
+\dontrun{## Alternatively
+ds <- c("USArrests", "VADeaths"); data(list = ds)}
 help(USArrests)                # give information on data set 'USArrests'
 }
 \keyword{documentation}
