@@ -16,136 +16,105 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-utils::globalVariables(c(".possibleExtends", ".makeGeneric",
-                         ".newClassRepresentation",
-                         ".classGeneratorFunction",
-                         ".mergeClassDefSlots",
-                         "..mergeClassDefSlots", "..classEnv",
-                         "..addToMetaTable", "..extendsForS3",
-                         "..isPrototype", ".isSealedMethod",
-                         "..requirePackage", ".implicitGeneric",
-                         "..checkRequiredGenerics",
-                         "..methodPackageSlots"))
+## utils::globalVariables("...onLoad")
 
-..onLoad  <-
-  ## Initialize the methods package.  Called from .onLoad, first
-  ## during INSTALL, when saved will be FALSE, at which time
-  ## the serious computation is done.
-  function(libname, pkgname, where)
+## Initial version of .onLoad
+...onLoad  <-
+  ## Initialize the methods package.
+  function(libname, pkgname)
 {
-    if(missing(where)) {
-        where <- match(paste0("package:", pkgname), search())
-        if(is.na(where)) {
-            warning(gettextf("not a package name: %s", sQuote(pkgname)),
-                    domain = NA)
-            return()
-        }
-        where <- as.environment(where)
-    }
+    where <- environment(sys.function())  # the namespace
     initMethodDispatch(where)
     ## temporary empty reference to the package's own namespace
     assign(".methodsNamespace", new.env(), envir = where)
     .Call(C_R_set_method_dispatch, TRUE)
-    saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
-              get(".saveImage", envir = where)
-              else
-              NA)
-    if(identical(saved, FALSE)) {
-        cat("initializing class and method definitions ...")
-        on.exit(assign(".saveImage", NA, envir = where))
-        ## set up default prototype (uses .Call so has be at load time)
-        assign(".defaultPrototype",
-               .Call(C_Rf_allocS4Object),
-               envir = where)
-        assign(".SealedClasses", character(), envir = where)
-        .InitClassDefinition(where)
-        assign("possibleExtends", .possibleExtends, envir = where)
-        .InitBasicClasses(where)
-        .initClassSupport(where)
-        .InitMethodsListClass(where)
-        .setCoerceGeneric(where)
-        ## now install the non-dummy versions of some functions
-        assign(".classEnv", ..classEnv, envir = where)
-        assign("makeGeneric", .makeGeneric, envir = where)
-        assign("newClassRepresentation", .newClassRepresentation, envir = where)
-        assign("classGeneratorFunction", .classGeneratorFunction, envir = where)
-        assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
-        assign(".addToMetaTable", ..addToMetaTable, envir = where)
-        assign(".extendsForS3", ..extendsForS3, envir = where)
-        .makeBasicFuns(where)
-        rm(.makeGeneric, .newClassRepresentation, .possibleExtends,
-           ..mergeClassDefSlots, .classGeneratorFunction, ..classEnv,
-           ..addToMetaTable, ..extendsForS3, envir = where)
-        .InitMethodDefinitions(where)
-        .InitShowMethods(where)
-        assign(".isPrototype", ..isPrototype, envir = where)
-        .InitClassUnion(where)
-        .InitS3Classes(where)
-        .InitSpecialTypesAndClasses(where)
-        .InitTraceFunctions(where)
-        .InitRefClasses(where)
-        ## now seal the classes defined in the package
-        for(cl in get(".SealedClasses", where))
-            sealClass(cl, where)
-        assign("isSealedMethod", .isSealedMethod, envir = where)
-        assign(".requirePackage", ..requirePackage, envir = where)
-        ## initialize implicit generics for base package
-        ## Note that this is done before making a non-vacuous implicitGeneric()
-        ## so that non-default signatures are allowed in setGeneric()
-        .initImplicitGenerics(where)
-        assign("implicitGeneric", .implicitGeneric, envir = where)
-        cacheMetaData(where, TRUE, searchWhere = .GlobalEnv, FALSE)
-        assign(".checkRequiredGenerics", ..checkRequiredGenerics, envir = where)
-        assign(".methodPackageSlots", ..methodPackageSlots, envir = where)
-        rm(..isPrototype, .isSealedMethod, ..requirePackage, .implicitGeneric,
-           ..checkRequiredGenerics, ..methodPackageSlots, envir = where)
-        ## unlock some bindings that must be modifiable
-        unlockBinding(".BasicFunsList", where)
-        assign(".saveImage", TRUE, envir = where)
-        on.exit()
-        cat(" done\n")
-    }
-    else {
-        if(!isTRUE(saved))
-            stop("maybe the methods package was not installed correctly; check the make results!",
-                 domain = NA)
+    cat("initializing class and method definitions ...")
+    ## set up default prototype (uses .Call so has be at load time)
+    assign(".defaultPrototype", .Call(C_Rf_allocS4Object), envir = where)
+    assign(".SealedClasses", character(), envir = where)
+    .InitClassDefinition(where)
+    assign("possibleExtends", .possibleExtends, envir = where)
+    .InitBasicClasses(where)
+    .initClassSupport(where)
+    .InitMethodsListClass(where)
+    .setCoerceGeneric(where)
+    ## now install the non-dummy versions of some functions
+    assign(".classEnv", ..classEnv, envir = where)
+    assign("makeGeneric", .makeGeneric, envir = where)
+    assign("newClassRepresentation", .newClassRepresentation, envir = where)
+    assign("classGeneratorFunction", .classGeneratorFunction, envir = where)
+    assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
+    assign(".addToMetaTable", ..addToMetaTable, envir = where)
+    assign(".extendsForS3", ..extendsForS3, envir = where)
+    .makeBasicFuns(where)
+    rm(.makeGeneric, .newClassRepresentation, .possibleExtends,
+       ..mergeClassDefSlots, .classGeneratorFunction, ..classEnv,
+       ..addToMetaTable, ..extendsForS3, envir = where)
+    .InitMethodDefinitions(where)
+    .InitShowMethods(where)
+    assign(".isPrototype", ..isPrototype, envir = where)
+    .InitClassUnion(where)
+    .InitS3Classes(where)
+    .InitSpecialTypesAndClasses(where)
+    .InitTraceFunctions(where)
+    .InitRefClasses(where)
+    ## now seal the classes defined in the package
+    for(cl in get(".SealedClasses", where))
+        sealClass(cl, where)
+    assign("isSealedMethod", .isSealedMethod, envir = where)
+    assign(".requirePackage", ..requirePackage, envir = where)
+    ## initialize implicit generics for base package
+    ## Note that this is done before making a non-vacuous implicitGeneric()
+    ## so that non-default signatures are allowed in setGeneric()
+    .initImplicitGenerics(where)
+    assign("implicitGeneric", .implicitGeneric, envir = where)
+    cacheMetaData(where, TRUE, searchWhere = .GlobalEnv, FALSE)
+    assign(".checkRequiredGenerics", ..checkRequiredGenerics, envir = where)
+    assign(".methodPackageSlots", ..methodPackageSlots, envir = where)
+    rm(..isPrototype, .isSealedMethod, ..requirePackage, .implicitGeneric,
+       ..checkRequiredGenerics, ..methodPackageSlots, envir = where)
+    ## unlock some bindings that must be modifiable
+    unlockBinding(".BasicFunsList", where)
+    assign(".saveImage", TRUE, envir = where)
+    cat(" done\n")
 
-        ## assign the environment of a function from the methods
-        ## package-- the namespace of the methods package, if it has
-        ## one, or the global environment
-
-        mns <- environment(get("setGeneric", where))
-        assign(".methodsNamespace", mns, where)
-        ## assign to baseenv also, signalling methods loaded
-        assign(".methodsNamespace", mns, baseenv())
-    }
+    assign(".onLoad", ..onLoad, envir = where)
+    rm(...onLoad, ..onLoad, envir = where)
+    dbbase <- file.path(libname, pkgname, "R", pkgname)
+    ns <- asNamespace(pkgname)
+    vars <- ls(envir = ns, all.names = TRUE)
+    ## we need to exclude the registration vars
+    vars <- grep("^C_", vars, invert = TRUE, value = TRUE)
+    tools:::makeLazyLoadDB(ns, dbbase, variables = vars)
 }
 
-.onLoad <- function(libname, pkgname) {
-    env <- environment(sys.function())
-    doSave <- identical(get(".saveImage", envir = env), FALSE)
-    ..onLoad(libname, pkgname, env)
-    if(doSave) {
-        dbbase <- file.path(libname, pkgname, "R", pkgname)
-        ns <- asNamespace(pkgname)
-        vars <- ls(envir = ns, all.names = TRUE)
-        ## we need to exclude the registration vars
-        vars <- grep("^C_", vars, invert = TRUE, value = TRUE)
-        tools:::makeLazyLoadDB(ns, dbbase, variables = vars)
-    }
+## avoid warnings from static analysis code by extra call
+.onLoad <- function(libname, pkgname) ...onLoad(libname, pkgname)
+
+##  .onLoad for routine use, installed by ...onLoad
+..onLoad <- function(libname, pkgname)
+{
+    where <- environment(sys.function())  # the namespace
+    initMethodDispatch(where)
+    .Call(C_R_set_method_dispatch, TRUE)
+    assign(".methodsNamespace", where, where)
+    ## assign to baseenv also, signalling methods loaded
+    assign(".methodsNamespace", where, baseenv())
     if(Sys.getenv("R_S4_BIND") == "active")
         methods:::bind_activation(TRUE)
 }
 
-.onUnload <- function(libpath) {
-    message("unloading 'methods' package ...")# see when this is called
+.onUnload <- function(libpath)
+{
+    message("unloading 'methods' package ...") # see when this is called
     .isMethodsDispatchOn(FALSE)
     methods:::bind_activation(FALSE)
     library.dynam.unload("methods", libpath)
 }
 
 
-.onAttach <- function(libname, pkgname) {
+.onAttach <- function(libname, pkgname)
+{
     env <- environment(sys.function())
     ## unlock some bindings that must be modifiable
     unlockBinding(".BasicFunsList", env)
@@ -164,6 +133,7 @@ utils::globalVariables(c(".possibleExtends", ".makeGeneric",
 ## Why don't we unload "methods" on detach() ?
 .onDetach <- function(libpath) .isMethodsDispatchOn(FALSE)
 
+## used for .methodsIsLoaded
 .saveImage <- FALSE
 
 ## want ASCII quotes, not fancy nor translated ones
