@@ -1,6 +1,6 @@
 % File src/library/base/man/Arithmetic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Arithmetic}
@@ -88,7 +88,7 @@ x \%/\% y
   Objects such as arrays or time-series can be operated on this
   way provided they are conformable.
 
-  For real arguments, \code{\%\%} can be subject to catastrophic loss of
+  For double arguments, \code{\%\%} can be subject to catastrophic loss of
   accuracy if \code{x} is much larger than \code{y}, and a warning is
   given if this is detected.
 

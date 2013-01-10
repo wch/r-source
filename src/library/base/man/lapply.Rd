@@ -1,6 +1,6 @@
 % File src/library/base/man/lapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lapply}
@@ -105,7 +105,7 @@ simplify2array(x, higher = TRUE)
   checks that all values of \code{FUN} are compatible with the
   \code{FUN.VALUE}, in that they must have the same length and type.
   (Types may be promoted to a higher type within the ordering logical
-  < integer < real < complex, but not demoted.)
+  < integer < double < complex, but not demoted.)
 
   Users of S4 classes should pass a list to \code{lapply} and
   \code{vapply}: the internal coercion is done by the \code{as.list} in
@@ -124,7 +124,7 @@ simplify2array(x, higher = TRUE)
   Otherwise an atomic vector or matrix or list of the same length as
   \code{X} (of length \code{n} for \code{replicate}).  If simplification
   occurs, the output type is determined from the highest type of the
-  return values in the hierarchy NULL < raw < logical < integer < real <
+  return values in the hierarchy NULL < raw < logical < integer < double <
   complex < character < list < expression, after coercion of pairlists
   to lists.
 
