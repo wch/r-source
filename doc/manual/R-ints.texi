@@ -4049,6 +4049,11 @@ Should the package code be checked for the presence of the obsolete function
 @code{.First.lib()}?
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_DEPRECATED_DEFUNCT_
+Should the package code be checked for the presence of recently deprecated
+or defunct functions (including completely removed functions). 
+Default: false (but true for CRAN submission checks).
+
 @end vtable
 
 CRAN's submission checks use something like

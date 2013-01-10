@@ -1183,24 +1183,36 @@ setRlibs <-
             if (!any(grepl("^Found.* .Internal call", out4))) out4 <- NULL
         }
 
-        if(R_check_code_assign_to_globalenv) {
+        if(!is_base_pkg && R_check_code_assign_to_globalenv) {
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_code_assign_to_globalenv(dir = \"%s\")\n",
                                   pkgdir))
             out5 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
 
-        if(R_check_code_attach) {
+        if(!is_base_pkg && R_check_code_attach) {
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_code_attach(dir = \"%s\")\n",
                                   pkgdir))
             out6 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
 
+        ## Use of deprecated and defunct?
+        if(!is_base_pkg && R_check_use_codetools && R_check_depr_def) {
+            Rcmd <- paste("options(warn=1)\n",
+                          if (do_install)
+                              sprintf("tools:::.check_depdef(package = \"%s\")\n", pkgname)
+                          else
+                              sprintf("tools:::.check_depdef(dir = \"%s\")\n", pkgdir))
+            out7 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+        }
         if (length(out1) || length(out2) || length(out3) ||
-            length(out4) || length(out5) || length(out6)) {
+            length(out4) || length(out5) || length(out6) ||
+            length(out7)) {
             ini <- character()
-            if (length(out4)) warningLog(Log) else noteLog(Log)
+            if (length(out4) ||
+                grepl("Found the defunct function", out7, fixed = TRUE))
+                warningLog(Log) else noteLog(Log)
             if (length(out1)) {
                 printLog0(Log, paste(c(out1, ""), collapse = "\n"))
                 ini <- ""
@@ -1231,8 +1243,12 @@ setRlibs <-
                 printLog0(Log, paste(c(ini, out5, ""), collapse = "\n"))
                 ini <- ""
             }
-            if (length(out6))
+            if (length(out6)) {
                 printLog0(Log, paste(c(ini, out6, ""), collapse = "\n"))
+                 ini <- ""
+            }
+            if (length(out7))
+                printLog0(Log, paste(c(ini, out7, ""), collapse = "\n"))
         } else resultLog(Log, "OK")
     }
 
@@ -3424,6 +3440,8 @@ setRlibs <-
                                          as.character(.Platform$OS.type == "unix")))
     R_check_dot_internal <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DOT_INTERNAL_", "TRUE"))
+    R_check_depr_def <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_DEPRECATED_DEFUNCT_", "FALSE"))
     R_check_Rd_contents <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_", "TRUE"))
     R_check_ascii_code <-
@@ -3484,6 +3502,7 @@ setRlibs <-
         R_check_suggests_only <- TRUE
         R_check_code_assign_to_globalenv <- TRUE
         R_check_code_attach <- TRUE
+        R_check_depr_def <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.

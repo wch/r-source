@@ -5411,6 +5411,165 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     invisible()
 }
 
+
+### * .check_depdef
+
+.check_depdef <-
+function(package, dir, lib.loc = NULL)
+{
+    bad_depr <- c("real", "as.real", "is.real")
+
+    bad_def <- c("La.eigen", "tetragamma", "pentagamma",
+                 "package.description", "gammaCody",
+                 "manglePackageName", ".readRDS", ".saveRDS",
+                 "mem.limits", "trySilent", "traceOn", "traceOff",
+                 "print.coefmat", "anovalist.lm", "lm.fit.null",
+                 "lm.wfit.null", "glm.fit.null", "tkcmd",
+                 "tkfile.tail", "tkfile.dir", "tkopen", "tkclose",
+                 "tkputs", "tkread", "Rd_parse", "CRAN.packages",
+                 "zip.file.extract")
+
+    bad <- c(bad_depr, bad_def)
+    bad_closures <- character()
+    found <- character()
+
+    find_bad_closures <- function(env) {
+        objects_in_env <- objects(env, all.names = TRUE)
+        x <- lapply(objects_in_env,
+                    function(o) {
+                        v <- get(o, envir = env)
+                        if (typeof(v) == "closure")
+                            codetools::findGlobals(v)
+                    })
+        objects_in_env[sapply(x, function(s) {
+            res <- any(s %in% bad)
+            if(res) found <<- c(found, s)
+            res
+        })]
+    }
+
+    find_bad_S4methods <- function(env) {
+        gens <- .get_S4_generics(code_env)
+        x <- lapply(gens, function(f) {
+            tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
+                       envir = code_env)
+            ## The S4 'system' does **copy** base code into packages ....
+            any(unlist(eapply(tab, function(v) {
+                if(!inherits(v, "derivedDefaultMethod")) FALSE
+                else {
+                    s <- codetools::findGlobals(v)
+                    found <<- c(found, s)
+                    any(s %in% bad)
+                }
+            })))
+        })
+        gens[unlist(x)]
+    }
+
+    find_bad_refClasses <- function(refs) {
+        cl <- names(refs)
+        x <- lapply(refs, function(z) {
+            any(unlist(sapply(z, function(v) {
+                s <- codetools::findGlobals(v)
+                found <<- c(found, s)
+                any(s %in% bad)
+            })))
+        })
+        cl[unlist(x)]
+    }
+
+
+    bad_S4methods <- list()
+    bad_refs <- character()
+    if(!missing(package)) {
+        if(length(package) != 1L)
+            stop("argument 'package' must be of length 1")
+        dir <- find.package(package, lib.loc)
+        if(! package %in% .get_standard_package_names()$base) {
+            .load_package_quietly(package, lib.loc)
+            code_env <- if(packageHasNamespace(package, dirname(dir)))
+                           asNamespace(package)
+            else .package_env(package)
+            bad_closures <- find_bad_closures(code_env)
+            if(.isMethodsDispatchOn()) {
+                bad_S4methods <- find_bad_S4methods(code_env)
+                refs <- .get_ref_classes(code_env)
+                if(length(refs)) bad_refs <- find_bad_refClasses(refs)
+            }
+        }
+    }
+    else {
+        ## The dir case.
+        if(missing(dir))
+            stop("you must specify 'package' or 'dir'")
+        dir <- file_path_as_absolute(dir)
+        code_dir <- file.path(dir, "R")
+        if(file_test("-d", code_dir)) {
+            code_env <- new.env(hash = TRUE)
+            dfile <- file.path(dir, "DESCRIPTION")
+            meta <- if(file_test("-f", dfile))
+                .read_description(dfile)
+            else
+                character()
+            .source_assignments_in_code_dir(code_dir, code_env, meta)
+            bad_closures <- find_bad_closures(code_env)
+        }
+    }
+
+    found <- sort(unique(found))
+    deprecated <- found[found %in% bad_depr]
+    defunct <- found[found %in% bad_def]
+
+    out <- list(bad_closures = bad_closures, deprecated = deprecated,
+                defunct = defunct)
+    class(out) <- "check_depdef"
+    out
+}
+
+format.check_depdef <-
+function(x, ...)
+{
+    out <- if(length(x$bad_closures)) {
+        msg <- ngettext(length(x$bad_closures),
+                        "Found an obsolete call in the following function:",
+                        "Found an obsolete call in the following functions:"
+                        )
+        c(strwrap(msg), .pretty_format(x$bad_closures))
+    } else character()
+    if(length(x$bad_S4methods)) {
+        msg <- ngettext(length(x$bad_S4methods),
+                        "Found an obsolete call in methods for the following S4 generic:",
+                        "Found an obsolete call in methods for the following S4 generics:"
+                        )
+        out <- c(out, strwrap(msg), .pretty_format(x$bad_S4methods))
+    }
+    if(length(x$bad_refs)) {
+        msg <- ngettext(length(x$bad_refs),
+                        "Found an obsolete call in methods for the following reference class:",
+                        "Found an obsolete call in methods for the following reference classes:"
+                        )
+        out <- c(out, strwrap(msg), .pretty_format(x$bad_refs))
+    }
+    if(length(x$deprecated)) {
+        msg <- ngettext(length(x$deprecated),
+                        "Found the deprecated function:",
+                        "Found the deprecated functions:"
+                        )
+        out <- c(out, strwrap(msg), .pretty_format(x$deprecated))
+    }
+    if(length(x$defunct)) {
+        msg <- ngettext(length(x$defunct),
+                        "Found the defunct function:",
+                        "Found the defunct functions:"
+                        )
+        out <- c(out, strwrap(msg), .pretty_format(x$defunct))
+    }
+    out
+}
+
+print.check_depdef <- .print.via.format
+
+
 ### * .check_package_CRAN_incoming
 
 .check_package_CRAN_incoming <-
