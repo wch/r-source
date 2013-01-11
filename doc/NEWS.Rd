@@ -732,6 +732,10 @@
       \item The 'reference manual' on the Windows GUI menu and included
       in the installer is now the full reference index, including all
       base and recommended packages.
+      
+      \item The Windows installer no longer installs a Start Menu
+      link to the static help pages; as most pages are generated
+      dynamically, this led to a lot of broken links.
     }
   }
 

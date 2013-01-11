@@ -8,8 +8,6 @@ Name: "{commondesktop}\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; MinVer
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R i386 @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('i386')
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('x64') and Is64BitInstallMode 
 
-Name: "{group}\R @RVER@ Help"; Filename: "{app}\doc\html\index.html"
-
 [Registry] 
 Root: HKLM; Subkey: "Software\@Producer@"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin and isComponentSelected('x64') and Is64BitInstallMode
 Root: HKLM; Subkey: "Software\@Producer@\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin and isComponentSelected('x64') and Is64BitInstallMode
