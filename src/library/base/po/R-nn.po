@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-12 10:56\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -587,13 +587,6 @@ msgstr "0 × 0-matrise"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "ikkje-kvadratisk matrise i «eigen»"
-
-msgid "too large a matrix for EISPACK"
-msgstr ""
-
-#, fuzzy
-msgid "'%s' returned code %d in 'eigen'"
-msgstr "«rs» returnerte koden %d i «eigen»"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1437,13 +1430,6 @@ msgstr "truleg feil teiknkoding for names(.) til kolonne"
 msgid ","
 msgstr ","
 
-msgid "'nv' must be 0 or ncol(x)"
-msgstr "«nv» må vera 0 eller ncol(x)"
-
-#, fuzzy
-msgid "error %d in LINPACK subroutine 'dsvdc'"
-msgstr "feil %d i «dsvdc»"
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr "STATS er lengre enn storleiken til «dim(x)[MARGIN]»"
 
@@ -1776,6 +1762,17 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#, fuzzy
+#~ msgid "'%s' returned code %d in 'eigen'"
+#~ msgstr "«rs» returnerte koden %d i «eigen»"
+
+#~ msgid "'nv' must be 0 or ncol(x)"
+#~ msgstr "«nv» må vera 0 eller ncol(x)"
+
+#, fuzzy
+#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
+#~ msgstr "feil %d i «dsvdc»"
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr "fann ein S4-versjon «%s», så han er ikkje rett importert"

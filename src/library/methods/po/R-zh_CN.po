@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-06 08:09\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1729,9 +1729,6 @@ msgstr "在追溯环境里找不到\"%s\"泛型函数的方法表"
 msgid "no method in methods table for %s for signature %s"
 msgstr "函数\"%s\"标记\"%s\"方法表里没有设定方法"
 
-msgid "not a package name: %s"
-msgstr "不是程輯包名: %s"
-
 msgid "unloading 'methods' package ..."
 msgstr ""
 
@@ -1846,6 +1843,9 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
+
+#~ msgid "not a package name: %s"
+#~ msgstr "不是程輯包名: %s"
 
 #, fuzzy
 #~ msgid ""

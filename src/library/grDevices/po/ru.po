@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07+0000\n"
+"POT-Creation-Date: 2013-01-12 10:57+0000\n"
 "PO-Revision-Date: 2012-03-15 11:26-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -72,44 +72,44 @@ msgstr ""
 msgid "invalid '%s' value"
 msgstr "неправильный аргумент 'file'"
 
-#: colors.c:1307
+#: colors.c:1318
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr ""
 
-#: colors.c:1317 colors.c:1327
+#: colors.c:1328 colors.c:1338
 #, fuzzy
 msgid "invalid RGB specification"
 msgstr "Неправильное указание шрифта"
 
-#: colors.c:1360
+#: colors.c:1371
 #, fuzzy, c-format
 msgid "invalid color name '%s'"
 msgstr "неправильная строка в '%s'"
 
-#: colors.c:1410 colors.c:1419
+#: colors.c:1421 colors.c:1430
 #, fuzzy, c-format
 msgid "invalid color specification \"%s\""
 msgstr "Неправильное указание шрифта"
 
-#: colors.c:1447
+#: colors.c:1458
 msgid "supplied color is neither numeric nor character"
 msgstr ""
 
-#: colors.c:1451
+#: colors.c:1462
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr ""
 
-#: colors.c:1462
+#: colors.c:1473
 #, fuzzy
 msgid "invalid argument type"
 msgstr "неправильный аргумент 'file'"
 
-#: colors.c:1473
+#: colors.c:1484
 msgid "unknown palette (need >= 2 colors)"
 msgstr ""
 
-#: colors.c:1477
+#: colors.c:1488 colors.c:1510
 #, c-format
 msgid "maximum number of colors is %d"
 msgstr ""

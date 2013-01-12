@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-06 08:09\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2012-03-15 11:56-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1960,9 +1960,6 @@ msgstr ""
 msgid "no method in methods table for %s for signature %s"
 msgstr "В таблице методов нет метода для \"%s\" для подписи \"%s\""
 
-msgid "not a package name: %s"
-msgstr "не является именем пакета: %s"
-
 msgid "unloading 'methods' package ..."
 msgstr ""
 
@@ -2142,6 +2139,9 @@ msgstr[1] ""
 "нет определения класса %s в указанной позиции, %s, определение(-я): %s"
 msgstr[2] ""
 "нет определения класса %s в указанной позиции, %s, определение(-я): %s"
+
+#~ msgid "not a package name: %s"
+#~ msgstr "не является именем пакета: %s"
 
 #, fuzzy
 #~ msgid ""

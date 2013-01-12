@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-16 08:16\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -281,7 +281,8 @@ msgstr "현재 이하의 것으로부터 기록할수가 있는 디바이스는 
 msgid "argument is not of class %s"
 msgstr "인수는 클래스 \"recordedplot\"가 아닙니다"
 
-msgid "loading snapshot from pre-2.0.0 R version"
+#, fuzzy
+msgid "loading snapshot from pre-3.0.0 R version"
 msgstr "pre-2.0.0 R 버전으로부터 snapshot가 적재되고 있습니다"
 
 msgid "loading snapshot from different R version"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2012-02-26 14:01+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -186,10 +186,6 @@ msgstr " 少なくとも 1 つの viewport を navigate up しなければいけ
 #, fuzzy
 msgid "the 'vp' argument is deprecated"
 msgstr " 引数 vp は廃止予定です "
-
-#, fuzzy
-msgid "invalid 'ask' value"
-msgstr " 不正な 'ask' 値です "
 
 #, fuzzy
 msgid "invalid object inserted on the display list"
@@ -632,6 +628,10 @@ msgstr[0] " 不正な 'grob' の名前です "
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] " 不正な viewport 名です "
+
+#, fuzzy
+#~ msgid "invalid 'ask' value"
+#~ msgstr " 不正な 'ask' 値です "
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr " 添え字の符号は混在できません "

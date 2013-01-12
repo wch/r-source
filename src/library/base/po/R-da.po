@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-12 10:56\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -584,13 +584,6 @@ msgstr "0 x 0 matrix"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "ikkekvadratisk matrix i 'eigen'"
-
-msgid "too large a matrix for EISPACK"
-msgstr ""
-
-#, fuzzy
-msgid "'%s' returned code %d in 'eigen'"
-msgstr "'rs' returnerede kode %d i 'eigen'"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1406,12 +1399,6 @@ msgstr ""
 msgid ","
 msgstr ","
 
-msgid "'nv' must be 0 or ncol(x)"
-msgstr ""
-
-msgid "error %d in LINPACK subroutine 'dsvdc'"
-msgstr ""
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr ""
 
@@ -1737,6 +1724,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "'%s' returned code %d in 'eigen'"
+#~ msgstr "'rs' returnerede kode %d i 'eigen'"
 
 #~ msgid "Use of save versions prior to 2 is deprecated"
 #~ msgstr "Brug af save-versioner før 2 er forældet"

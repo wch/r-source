@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-12 10:56\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -601,13 +601,6 @@ msgstr "matriz 0 x 0"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "matriz não quadrada em 'eigen'"
-
-msgid "too large a matrix for EISPACK"
-msgstr ""
-
-#, fuzzy
-msgid "'%s' returned code %d in 'eigen'"
-msgstr "'rs' retornou código %d em 'eigen'"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1501,13 +1494,6 @@ msgstr "provavelmente codificação errada no names(.) da coluna"
 msgid ","
 msgstr ","
 
-msgid "'nv' must be 0 or ncol(x)"
-msgstr "'nv' deve ser 0 ou ncol(x)"
-
-#, fuzzy
-msgid "error %d in LINPACK subroutine 'dsvdc'"
-msgstr "erro %d em 'dsvdc'"
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr "STATS é maior que o comprimento de 'dim(x)[MARGIN]'"
 
@@ -1843,6 +1829,17 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "'%s' returned code %d in 'eigen'"
+#~ msgstr "'rs' retornou código %d em 'eigen'"
+
+#~ msgid "'nv' must be 0 or ncol(x)"
+#~ msgstr "'nv' deve ser 0 ou ncol(x)"
+
+#, fuzzy
+#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
+#~ msgstr "erro %d em 'dsvdc'"
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr ""

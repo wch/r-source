@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2012-03-15 11:27-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -187,10 +187,6 @@ msgstr "Нужно управлять как минимум одной оконницей"
 #, fuzzy
 msgid "the 'vp' argument is deprecated"
 msgstr "Аргумент vp не одобряется"
-
-#, fuzzy
-msgid "invalid 'ask' value"
-msgstr "Неправильное значение 'ask'"
 
 #, fuzzy
 msgid "invalid object inserted on the display list"
@@ -628,6 +624,10 @@ msgid_plural "invalid viewport names"
 msgstr[0] "Неправильное име(на) оконницы"
 msgstr[1] "Неправильное име(на) оконницы"
 msgstr[2] "Неправильное име(на) оконницы"
+
+#, fuzzy
+#~ msgid "invalid 'ask' value"
+#~ msgstr "Неправильное значение 'ask'"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Не могу смешивать знаки индексов"

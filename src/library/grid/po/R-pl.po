@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -185,10 +185,6 @@ msgstr "Potrzeba przenieść w górę przynajmniej jedno okno ekranu"
 #, fuzzy
 msgid "the 'vp' argument is deprecated"
 msgstr "Argument 'vp' jest przestarzały"
-
-#, fuzzy
-msgid "invalid 'ask' value"
-msgstr "Niepoprawna wartość 'ask'"
 
 #, fuzzy
 msgid "invalid object inserted on the display list"
@@ -634,6 +630,10 @@ msgid_plural "invalid viewport names"
 msgstr[0] "Niepoprawne nazwy okien ekranu"
 msgstr[1] "Niepoprawne nazwy okien ekranu"
 msgstr[2] "Niepoprawne nazwy okien ekranu"
+
+#, fuzzy
+#~ msgid "invalid 'ask' value"
+#~ msgstr "Niepoprawna wartość 'ask'"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Nie można mieszać znaków indeksów"

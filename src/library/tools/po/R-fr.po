@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1082,8 +1082,9 @@ msgid_plural "Note: found %d strings marked as \"bytes\""
 msgstr[0] "Note : %d chaîne de caractères marquée comme \"bytes\" trouvée"
 msgstr[1] "Note : %d chaînes de caractères marquées comme \"bytes\" trouvées"
 
-msgid "Warning in file '%s':"
-msgid_plural "Warnings in file '%s':"
+#, fuzzy
+msgid "Warning in file %s:"
+msgid_plural "Warnings in file %s:"
 msgstr[0] "Avis dans le fichier '%s' :"
 msgstr[1] "Avis dans le fichier '%s' :"
 
@@ -1126,6 +1127,35 @@ msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#, fuzzy
+msgid "Found an obsolete call in the following function:"
+msgid_plural "Found an obsolete call in the following functions:"
+msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
+msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#, fuzzy
+msgid "Found an obsolete call in methods for the following S4 generic:"
+msgid_plural "Found an obsolete call in methods for the following S4 generics:"
+msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
+msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#, fuzzy
+msgid "Found an obsolete call in methods for the following reference class:"
+msgid_plural ""
+"Found an obsolete call in methods for the following reference classes:"
+msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
+msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+msgid "Found the deprecated function:"
+msgid_plural "Found the deprecated functions:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Found the defunct function:"
+msgid_plural "Found the defunct functions:"
+msgstr[0] ""
+msgstr[1] ""
 
 #, fuzzy
 msgid "Generic without any methods in %s: %s"

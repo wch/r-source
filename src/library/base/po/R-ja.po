@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-12 10:56\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -595,13 +595,6 @@ msgstr " 0 x 0 行列です "
 
 msgid "non-square matrix in 'eigen'"
 msgstr " 'eigen' に非正方行列が与えられました "
-
-msgid "too large a matrix for EISPACK"
-msgstr ""
-
-#, fuzzy
-msgid "'%s' returned code %d in 'eigen'"
-msgstr " 'eigen' で 'rs' がコード %d を返しました "
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1478,13 +1471,6 @@ msgstr " おそらく列の names(.) 中に間違ったエンコーディング�
 msgid ","
 msgstr " , "
 
-msgid "'nv' must be 0 or ncol(x)"
-msgstr " 'nv' は 0 か ncol(x) でなければなりません "
-
-#, fuzzy
-msgid "error %d in LINPACK subroutine 'dsvdc'"
-msgstr " 'dsvdc' 中にエラー %d があります "
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr "STATS は 'dim(x)[MARGIN]' の大きさより長いです "
 
@@ -1793,6 +1779,17 @@ msgstr[0] " TRUE の代わりに T が使われました "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#, fuzzy
+#~ msgid "'%s' returned code %d in 'eigen'"
+#~ msgstr " 'eigen' で 'rs' がコード %d を返しました "
+
+#~ msgid "'nv' must be 0 or ncol(x)"
+#~ msgstr " 'nv' は 0 か ncol(x) でなければなりません "
+
+#, fuzzy
+#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
+#~ msgstr " 'dsvdc' 中にエラー %d があります "
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr ""

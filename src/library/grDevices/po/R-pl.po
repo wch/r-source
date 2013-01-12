@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-16 08:16\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -266,7 +266,8 @@ msgstr "brak bieżącego urządzenia z którego można nagrywać"
 msgid "argument is not of class %s"
 msgstr "argument nie jest klasy \"recordedplot\""
 
-msgid "loading snapshot from pre-2.0.0 R version"
+#, fuzzy
+msgid "loading snapshot from pre-3.0.0 R version"
 msgstr "ładowanie zrzutu z wersji R przed 2.0.0"
 
 msgid "loading snapshot from different R version"

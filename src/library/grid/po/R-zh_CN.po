@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -181,10 +181,6 @@ msgstr "至少需要往上驾一个视口"
 #, fuzzy
 msgid "the 'vp' argument is deprecated"
 msgstr "vp参数已经不再有用"
-
-#, fuzzy
-msgid "invalid 'ask' value"
-msgstr "'ask'的值不对"
 
 #, fuzzy
 msgid "invalid object inserted on the display list"
@@ -616,6 +612,10 @@ msgstr[0] "'grob'名字不对"
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "视口名字不对"
+
+#, fuzzy
+#~ msgid "invalid 'ask' value"
+#~ msgstr "'ask'的值不对"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "不能混用索引符号"

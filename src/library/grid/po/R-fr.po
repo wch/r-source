@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2012-03-06 21:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -191,10 +191,6 @@ msgstr "Il faut naviguer dans au moins une vue"
 #, fuzzy
 msgid "the 'vp' argument is deprecated"
 msgstr "L'argument 'vp' est obsolète"
-
-#, fuzzy
-msgid "invalid 'ask' value"
-msgstr "Valeur 'ask' incorrecte"
 
 #, fuzzy
 msgid "invalid object inserted on the display list"
@@ -645,6 +641,10 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "Nom(s) de vue(s) incorrect(s)"
 msgstr[1] "Nom(s) de vue(s) incorrect(s)"
+
+#, fuzzy
+#~ msgid "invalid 'ask' value"
+#~ msgstr "Valeur 'ask' incorrecte"
 
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Impossible de mélanger les signes des indices"

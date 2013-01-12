@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-12 10:56\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -592,13 +592,6 @@ msgstr "0 x 0 행렬 "
 
 msgid "non-square matrix in 'eigen'"
 msgstr "'eigen' 에 non-sqare 행렬이 주어졌습니다"
-
-msgid "too large a matrix for EISPACK"
-msgstr ""
-
-#, fuzzy
-msgid "'%s' returned code %d in 'eigen'"
-msgstr "'rs' 는 코드 %d 를 'eigen' 에 반환했습니다"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1453,13 +1446,6 @@ msgstr "아마도 names(.) 열들에 인코딩이 올바르지 않은 것 같습
 msgid ","
 msgstr ","
 
-msgid "'nv' must be 0 or ncol(x)"
-msgstr "'nv' 는 0 또는 ncol(x) 이어야 합니다 "
-
-#, fuzzy
-msgid "error %d in LINPACK subroutine 'dsvdc'"
-msgstr "'dsvdc' 에서 에러 %d 가 발견되었습니다 "
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr "STATS 는 'dim(x)[MARGIN]' 의 길이보다 깁니다 "
 
@@ -1767,6 +1753,17 @@ msgstr[0] "TRUE 대신 T 가 사용되었습니다 "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#, fuzzy
+#~ msgid "'%s' returned code %d in 'eigen'"
+#~ msgstr "'rs' 는 코드 %d 를 'eigen' 에 반환했습니다"
+
+#~ msgid "'nv' must be 0 or ncol(x)"
+#~ msgstr "'nv' 는 0 또는 ncol(x) 이어야 합니다 "
+
+#, fuzzy
+#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
+#~ msgstr "'dsvdc' 에서 에러 %d 가 발견되었습니다 "
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr "%s 의 S4 버전이 검색되어 올바르게 불러들여져 왔습니다 "

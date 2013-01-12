@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-12 10:56\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -587,13 +587,6 @@ msgstr "零乘零的矩阵"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "eigen里的矩阵不是正方形的"
-
-msgid "too large a matrix for EISPACK"
-msgstr ""
-
-#, fuzzy
-msgid "'%s' returned code %d in 'eigen'"
-msgstr "'eigen'里'rs'回覆了代码%d"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1428,13 +1421,6 @@ msgstr "列名称的编码可能不对"
 msgid ","
 msgstr "，"
 
-msgid "'nv' must be 0 or ncol(x)"
-msgstr "'nv'的值必需为零或为ncol(x)"
-
-#, fuzzy
-msgid "error %d in LINPACK subroutine 'dsvdc'"
-msgstr "'dsvdc'里的%d有错"
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr "STATS大于'dim(x)[MARGIN]'的范围"
 
@@ -1736,6 +1722,17 @@ msgstr[0] "用T代替TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "'%s' returned code %d in 'eigen'"
+#~ msgstr "'eigen'里'rs'回覆了代码%d"
+
+#~ msgid "'nv' must be 0 or ncol(x)"
+#~ msgstr "'nv'的值必需为零或为ncol(x)"
+
+#, fuzzy
+#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
+#~ msgstr "'dsvdc'里的%d有错"
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr "找到了%s的S4版本，因此它没有被正确地被引进"

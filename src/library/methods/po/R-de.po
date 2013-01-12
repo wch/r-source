@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-06 08:09\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2012-03-05 22:07+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -2025,9 +2025,6 @@ msgstr ""
 msgid "no method in methods table for %s for signature %s"
 msgstr "Keine Methode in der Methodentabelle für  \"%s\" für Signatur \"%s\""
 
-msgid "not a package name: %s"
-msgstr "ist kein Paketname: %s"
-
 msgid "unloading 'methods' package ..."
 msgstr ""
 
@@ -2187,6 +2184,9 @@ msgstr[0] ""
 msgstr[1] ""
 "keine Definiton der Klasse %s an der angegebenen Position, %s, Definitinen "
 "bei: %s"
+
+#~ msgid "not a package name: %s"
+#~ msgstr "ist kein Paketname: %s"
 
 #, fuzzy
 #~ msgid ""

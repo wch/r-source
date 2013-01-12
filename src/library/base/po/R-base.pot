@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-01-12 10:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -519,12 +519,6 @@ msgid "0 x 0 matrix"
 msgstr ""
 
 msgid "non-square matrix in 'eigen'"
-msgstr ""
-
-msgid "too large a matrix for EISPACK"
-msgstr ""
-
-msgid "'%s' returned code %d in 'eigen'"
 msgstr ""
 
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1284,12 +1278,6 @@ msgid "probably wrong encoding in names(.) of column"
 msgstr ""
 
 msgid ","
-msgstr ""
-
-msgid "'nv' must be 0 or ncol(x)"
-msgstr ""
-
-msgid "error %d in LINPACK subroutine 'dsvdc'"
 msgstr ""
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"

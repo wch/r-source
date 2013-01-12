@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34\n"
+"POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,9 +164,6 @@ msgid "must navigate up at least one viewport"
 msgstr ""
 
 msgid "the 'vp' argument is deprecated"
-msgstr ""
-
-msgid "invalid 'ask' value"
 msgstr ""
 
 msgid "invalid object inserted on the display list"
