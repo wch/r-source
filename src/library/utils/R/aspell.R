@@ -169,8 +169,8 @@ function(files, filter, control = list(), encoding = "unknown",
         ##              useBytes = TRUE)
         ## and pass the encoding info to Aspell in case we know it.
 
-        out <- tools:::.shell_with_capture(program, c("-a", control),
-                                           stdin = tfile)
+        out <- tools:::.system_with_capture(program, c("-a", control),
+                                            stdin = tfile)
                                            
 	if(out$status != 0L)
 	    stop(gettextf("Running aspell failed with diagnostics:\n%s",

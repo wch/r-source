@@ -271,7 +271,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         opt_pdf <- if(pdf) "--pdf" else ""
         opt_quiet <- if(quiet) "--quiet" else ""
         opt_extra <- ""
-        out <- .shell_with_capture(texi2dvi, "--help")
+        out <- .system_with_capture(texi2dvi, "--help")
         if(length(grep("--no-line-error", out$stdout)))
             opt_extra <- "--no-line-error"
         ## (Maybe change eventually: the current heuristics for finding
@@ -282,10 +282,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## https://stat.ethz.ch/pipermail/r-devel/2011-March/060262.html
         ## That has [A-Za-z], earlier versions [A-z], both of which may be
         ## invalid in some locales.
-        out <- .shell_with_capture(texi2dvi,
-                                   c(opt_pdf, opt_quiet, opt_extra,
-                                     shQuote(file)),
-                                   env = "LC_COLLATE=C")
+        out <- .system_with_capture(texi2dvi,
+                                    c(opt_pdf, opt_quiet, opt_extra,
+                                      shQuote(file)),
+                                    env = "LC_COLLATE=C")
 
         ## We cannot necessarily rely on out$status, hence let us
         ## analyze the log files in any case.
@@ -1504,26 +1504,6 @@ function(x)
     y
 }
 
-### ** .shell_with_capture
-
-.shell_with_capture <-
-function(command, args = character(), env = character(),
-         stdin = "", input = NULL)
-{
-    ## Invoke a system command using a shell and capture its status,
-    ## stdout and stderr into separate components.
-
-    outfile <- tempfile("xshell")
-    errfile <- tempfile("xshell")
-    on.exit(unlink(c(outfile, errfile)))
-    status <- system2(command, args, env = env,
-                      stdout = outfile, stderr = errfile,
-                      stdin = stdin, input = input)
-    list(status = status,
-         stdout = readLines(outfile, warn = FALSE),
-         stderr = readLines(errfile, warn = FALSE))
-}
-
 ### ** .source_assignments
 
 .source_assignments <-
@@ -1626,6 +1606,26 @@ function(x)
     x <- sub("^[[:space:]]+", "", x)
     x <- sub("[[:space:]]+$", "", x)
     x
+}
+
+### ** .system_with_capture
+
+.system_with_capture <-
+function(command, args = character(), env = character(),
+         stdin = "", input = NULL)
+{
+    ## Invoke a system command and capture its status, stdout and stderr
+    ## into separate components.
+
+    outfile <- tempfile("xshell")
+    errfile <- tempfile("xshell")
+    on.exit(unlink(c(outfile, errfile)))
+    status <- system2(command, args, env = env,
+                      stdout = outfile, stderr = errfile,
+                      stdin = stdin, input = input)
+    list(status = status,
+         stdout = readLines(outfile, warn = FALSE),
+         stderr = readLines(errfile, warn = FALSE))
 }
 
 ### ** .try_quietly

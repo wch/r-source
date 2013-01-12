@@ -185,9 +185,9 @@ get_exclude_patterns <- function()
         writeLines(text, con)
     }
 
-    ## This version of shell_with_capture merges stdout and stderr
+    ## This version of system_with_capture merges stdout and stderr
     ## Used to run R to install package and build vignettes.
-    shell_with_capture <- function (command, args) {
+    system_with_capture <- function (command, args) {
         outfile <- tempfile("xshell")
         on.exit(unlink(outfile))
         status <- system2(command, args, outfile, outfile)
@@ -281,7 +281,7 @@ get_exclude_patterns <- function()
             args <- c("CMD", "INSTALL -l", shQuote(libdir),
                       "--no-multiarch", shQuote(pkgdir))
         }
-	res <- shell_with_capture(cmd, args)
+	res <- system_with_capture(cmd, args)
 	if (res$status) {
 	    printLog(Log, "      -----------------------------------\n")
 	    printLog(Log, paste(c(res$stdout, ""),  collapse = "\n"))
@@ -351,7 +351,7 @@ get_exclude_patterns <- function()
                 oPATH <- Sys.getenv("PATH")
                 Sys.setenv(PATH = paste(R.home("bin"), oPATH,
                            sep = .Platform$path.sep))
-                res <- shell_with_capture(cmd, args)
+                res <- system_with_capture(cmd, args)
                 Sys.setenv(PATH = oPATH)
                 if (res$status) {
                     resultLog(Log, "ERROR")
