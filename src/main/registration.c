@@ -86,12 +86,6 @@ static R_FortranMethodDef fortranMethods[] = {
     FDEF(ch2inv, 5),
     FDEF(chol, 5),
 
-    /* EISPACK */
-    FDEF(cg, 13),
-    FDEF(ch, 12),
-    FDEF(rg, 10),
-    FDEF(rs, 9),
-
     /* LINPACK */
     FDEF(dchdc, 7),
     FDEF(dqrcf, 8),
