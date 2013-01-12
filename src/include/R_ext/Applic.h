@@ -167,12 +167,6 @@ void optif9(int nr, int n, double *x,
 
 /* Others */
 
-/* appl/ch2inv.f */
-void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
-
-/* appl/chol.f: formerly used in package nlme */
-void F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
-
 /* appl/eigen.f */
 int F77_NAME(cg)(int *nm, int *n, double *ar, double *ai,
 		 double *wr, double *wi, int *matz, double *zr, double *zi,
@@ -182,7 +176,8 @@ int F77_NAME(ch)(int *nm, int *n, double *ar, double *ai,
 		 double *fv1, double *fv2, double *fm1, int *ierr);
 int F77_NAME(rg)(int *nm, int *n, double *a, double *wr, double *wi,
 		 int *matz, double *z, int *iv1, double *fv1, int *ierr);
-/* formerly used in package nlme, misused by gss, latenetnet and robustbase */
+/* formerly used in package nlme, 
+   misused by gss, latenetnet, robust and robustbase */
 int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
 		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
 

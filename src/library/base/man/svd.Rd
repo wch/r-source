@@ -62,11 +62,9 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
 }
 \source{
   The main functions used are the LAPACK routines \code{DGESDD} and
-  \code{ZGESVD}; \code{svd(LINPACK = TRUE)} provides an interface to the
-  LINPACK routine \code{DSVDC}.
+  \code{ZGESVD}.
 
-  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
-  \url{http://www.netlib.org/linpack} and their guides are listed
+  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
   in the references.
 }
 \references{
@@ -78,14 +76,6 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
-
-  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
-}
-
-\note{
-  \code{LINPACK = TRUE} (for compatibility with \R < 1.7.0) was formally
-  deprecated in \R 2.15.2.
 }
 
 \seealso{

@@ -25,16 +25,9 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
 \value{
   The inverse of the matrix whose Choleski decomposition was given.
 }
-\details{
-  The LINPACK interface is restricted to matrices \code{x} with less
-  than \eqn{2^{31}}{2^31} elements.
-}
 \source{
-  This is an interface to the LAPACK routine \code{DPOTRI} and the LINPACK
-  routine \code{DPODI}.
-
-  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
-  \url{http://www.netlib.org/linpack} and their guides are listed
+  This is an interface to the LAPACK routine \code{DPOTRI}.
+  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
   in the references.
 }
 \references{

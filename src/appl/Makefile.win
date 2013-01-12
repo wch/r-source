@@ -6,10 +6,8 @@ CSOURCES = \
 	cpoly.c fft.c fmin.c integrate.c interv.c \
 	machar.c maxcol.c optim.c pretty.c strsignif.c uncmin.c
 FSOURCES = \
-	ch2inv.f chol.f \
 	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
-	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f \
-	eigen.f
+	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f eigen.f
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
 
 all: makeMakedeps libappl.a

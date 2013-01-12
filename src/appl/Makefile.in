@@ -14,10 +14,8 @@ SOURCES_C = \
 	cpoly.c fft.c fmin.c integrate.c interv.c \
 	machar.c maxcol.c optim.c pretty.c strsignif.c uncmin.c
 SOURCES_F = \
-	ch2inv.f chol.f dchdc.f \
-	dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
-	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f \
-	eigen.f
+	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
+	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f eigen.f
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS_BLAS = @USE_EXTERNAL_BLAS_FALSE@ blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
