@@ -168,16 +168,8 @@ void optif9(int nr, int n, double *x,
 /* Others */
 
 /* appl/eigen.f */
-int F77_NAME(cg)(int *nm, int *n, double *ar, double *ai,
-		 double *wr, double *wi, int *matz, double *zr, double *zi,
-		 double *fv1, double *fv2, double *fv3, int *ierr);
-int F77_NAME(ch)(int *nm, int *n, double *ar, double *ai,
-		 double *w, int *matz, double *zr, double *zi,
-		 double *fv1, double *fv2, double *fm1, int *ierr);
-int F77_NAME(rg)(int *nm, int *n, double *a, double *wr, double *wi,
-		 int *matz, double *z, int *iv1, double *fv1, int *ierr);
-/* formerly used in package nlme, 
-   misused by gss, latenetnet, robust and robustbase */
+/* formerly used in package nlme, still used by gss, latenetnet,
+   robust and robustbase */
 int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
 		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
 
@@ -190,7 +182,7 @@ void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 		     double *qty, int *k,
 		     int *jpvt, double *qraux, double *work);
 
-/* appl/pretty.c non-API but used by engine.c, rgl and formerly GWAtoolbox */
+/* appl/pretty.c non-API but used by engine.c and rgl */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 		 double shrink_sml, double high_u_fact[],
 		 int eps_correction, int return_bounds);

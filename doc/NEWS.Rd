@@ -696,6 +696,10 @@
 
       \item The \code{REPROTECT} macro now checks that the protect index
       is valid.
+
+      \item Several non-API entry points no longer used by \R have been
+      removed, including the Fortran entry points \code{chol},
+      \code{chol2inv}, \code{cg}, \code{ch} and \code{rg}.
     }
   }
 
