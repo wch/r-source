@@ -1,7 +1,7 @@
 #  File src/library/base/R/solve.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,8 +35,7 @@ solve.qr <- function(a, b, ...)
 }
 
 solve.default <-
-    function(a, b, tol = ifelse(LINPACK, 1e-7, .Machine$double.eps),
-	     LINPACK = FALSE, ...)
+    function(a, b, tol = .Machine$double.eps, LINPACK = FALSE, ...)
 {
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
 	a <- as.matrix(a)
@@ -52,28 +51,14 @@ solve.default <-
 	return(solve.qr(a, b, tol))
     }
 
-    if(!LINPACK) {
-	a <- as.matrix(a)
-	if(missing(b)) {
-	    b <- diag(1.0, nrow(a))
-	    colnames(b) <- rownames(a)
-	}
-        return(.Internal(La_solve(a, b, tol)))
+    if(LINPACK)
+        warning("LINPACK = TRUE is defunct and will be ignored", domain = NA)
+    a <- as.matrix(a)
+    if(missing(b)) {
+        b <- diag(1.0, nrow(a))
+        colnames(b) <- rownames(a)
     }
-
-    warning("LINPACK = TRUE is deprecated", domain = NA)
-    a <- qr(a, tol = tol)
-    nc <- ncol(a$qr)
-    if( a$rank != nc )
-	stop("singular matrix 'a' in 'solve'")
-    if( missing(b) ) {
-	if( nc != nrow(a$qr) )
-	    stop("only square matrices can be inverted")
-	## preserve dimnames
-	b <- diag(1, nc)
-	colnames(b) <- rownames(a$qr)
-    }
-    qr.coef(a, b)
+    .Internal(La_solve(a, b, tol))
 }
 
 solve <- function(a, b, ...) UseMethod("solve")

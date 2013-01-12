@@ -1,7 +1,7 @@
 #  File src/library/base/R/eigen.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,6 +35,9 @@ isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...)
 
 eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 {
+    if (EISPACK)
+        warning("EISPACK = TRUE is defunct and will be ignored", domain = NA)
+
     x <- as.matrix(x)
     n <- nrow(x)
     if (!n) stop("0 x 0 matrix")
@@ -47,119 +50,15 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 
     if(missing(symmetric)) symmetric <- isSymmetric.matrix(x)
 
-    if (!EISPACK) {
-        if (symmetric) {
-            z <- if(!complex.x) .Internal(La_rs(x, only.values))
-            else .Internal(La_rs_cmplx(x, only.values))
-            ord <- rev(seq_along(z$values))
-        } else {
-            z <- if(!complex.x) .Internal(La_rg(x, only.values))
-            else .Internal(La_rg_cmplx(x, only.values))
-            ord <- sort.list(Mod(z$values), decreasing = TRUE)
-        }
-        return(list(values = z$values[ord],
-                    vectors = if (!only.values) z$vectors[, ord, drop = FALSE]))
+    if (symmetric) {
+        z <- if(!complex.x) .Internal(La_rs(x, only.values))
+        else .Internal(La_rs_cmplx(x, only.values))
+        ord <- rev(seq_along(z$values))
+    } else {
+        z <- if(!complex.x) .Internal(La_rg(x, only.values))
+        else .Internal(La_rg_cmplx(x, only.values))
+        ord <- sort.list(Mod(z$values), decreasing = TRUE)
     }
-
-    warning("EISPACK = TRUE is deprecated", domain = NA)
-    if(n > 46340) stop("too large a matrix for EISPACK")
-    if(!complex.x && !is.double(x)) storage.mode(x) <- "double"
-    dbl.n <- double(n)
-    if(!is.null(dimnames(x)))
-        dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
-    if(symmetric) {##--> real values
-	if(complex.x) {
-	    z <- .Fortran(.F_ch,
-			  n,
-			  n,
-			  Re(x),
-			  Im(x),
-			  values = dbl.n,
-			  !only.values,
-			  vectors = Re(x),
-			  ivectors = Im(x),
-			  dbl.n,
-			  dbl.n,
-			  double(2*n),
-			  ierr = integer(1L))
-	    if (z$ierr)
-		stop(gettextf("'%s' returned code %d in 'eigen'", "ch", z$ierr),
-                     domain = NA)
-	    if(!only.values)
-		z$vectors <- matrix(complex(real=z$vectors,
-					    imaginary=z$ivectors), ncol=n)
-	}
-	else {
-	    z <- .Fortran(.F_rs,
-			  n,
-			  n,
-			  x,
-			  values = dbl.n,
-			  !only.values,
-			  vectors = x,
-			  dbl.n,
-			  dbl.n,
-			  ierr = integer(1L))
-	    if (z$ierr)
-		stop(gettextf("'%s' returned code %d in 'eigen'", "rs", z$ierr),
-                     domain = NA)
-	}
-	ord <- sort.list(z$values, decreasing = TRUE)
-    }
-    else {##- Asymmetric :
-	if(complex.x) {
-	    xr <- Re(x)
-	    xi <- Im(x)
-	    z <- .Fortran(.F_cg,
-			  n,
-			  n,
-			  xr,
-			  xi,
-			  values = dbl.n,
-			  ivalues = dbl.n,
-			  !only.values,
-			  vectors = xr,
-			  ivectors = xi,
-			  dbl.n,
-			  dbl.n,
-			  dbl.n,
-			  ierr = integer(1L))
-	    if (z$ierr)
-		stop(gettextf("'%s' returned code %d in 'eigen'", "cg", z$ierr),
-                     domain = NA)
-	    z$values <- complex(real=z$values,imaginary=z$ivalues)
-	    if(!only.values)
-		z$vectors <- matrix(complex(real=z$vectors,
-					    imaginary=z$ivectors), ncol=n)
-	}
-	else {
-	    z <- .Fortran(.F_rg,
-			  n,
-			  n,
-			  x,
-			  values = dbl.n,
-			  ivalues = dbl.n,
-			  !only.values,
-			  vectors = x,
-			  integer(n),
-			  dbl.n,
-			  ierr = integer(1L))
-	    if (z$ierr)
-		stop(gettextf("'%s' returned code %d in 'eigen'", "rg", z$ierr),
-                     domain = NA)
-	    ind <- z$ivalues > 0L
-	    if(any(ind)) {#- have complex (conjugated) values
-		ind <- seq.int(n)[ind]
-		z$values <- complex(real=z$values,imaginary=z$ivalues)
-		if(!only.values) {
-		    z$vectors[, ind] <- complex(real=z$vectors[,ind],
-						imaginary=z$vectors[,ind+1])
-		    z$vectors[, ind+1] <- Conj(z$vectors[,ind])
-		}
-	    }
-	}
-	ord <- sort.list(Mod(z$values), decreasing = TRUE)
-    }
-    list(values = z$values[ord],
-	 vectors = if(!only.values) z$vectors[, ord, drop = FALSE])
+    return(list(values = z$values[ord],
+                vectors = if (!only.values) z$vectors[, ord, drop = FALSE]))
 }

@@ -1,7 +1,7 @@
 #  File src/library/base/R/svd.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 
 svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 {
+    if(LINPACK)
+        warning("LINPACK = TRUE is defunct and will be ignored", domain = NA)
     x <- as.matrix(x)
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
     dx <- dim(x)
@@ -28,61 +30,6 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
         res <- La.svd(x, nu, nv)
         return(list(d = res$d, u = if(nu) res$u, v = if(nv) Conj(t(res$vt))))
     }
-    if (!LINPACK) {
-        res <- La.svd(x, nu, nv)
-        return(list(d = res$d, u = if(nu) res$u, v = if(nv) t(res$vt)))
-    }
-
-    ## LINPACK only from here on.
-    warning("LINPACK = TRUE is deprecated", domain = NA)
-    storage.mode(x) <- "double"
-    n <- as.integer(n)
-    if(is.na(n)) stop("invalid nrow(x)")
-    p <- as.integer(p)
-    if(is.na(p)) stop("invalid ncol(x)")
-    if(1.0 * n * p > 2147483647) stop("too large a matrix for LINPACK")
-
-    if(nu == 0L) {
-	job <- 0L
-	u <- double()
-    }
-    else if(nu == n) {
-	job <- 10L
-	u <- matrix(0, n, n)
-    }
-    else if(nu == p) {
-	job <- 20L
-	u <- matrix(0, n, p)
-    }
-    else
-	stop("'nu' must be 0, nrow(x) or ncol(x)")
-
-    job <- job +
-	if(nv == 0L) 0L else if(nv == p || nv == n) 1L else
-    stop("'nv' must be 0 or ncol(x)")
-
-    v <- if(job == 0L) double() else matrix(0, p, p)
-
-    mm <- min(n+1L,p)
-    z <- .Fortran(.F_dsvdc,
-		  x, # did storage.mode above
-		  n,
-		  n,
-		  p,
-		  d = double(mm),
-		  double(p),
-		  u = u,
-		  n,
-		  v = v,
-		  p,
-		  double(n),
-		  as.integer(job),
-		  info = integer(1L),
-		  DUP = FALSE)[c("d","u","v","info")]
-    if(z$info)
-	stop(gettextf("error %d in LINPACK subroutine 'dsvdc'", z$info),
-             domain = NA)
-    z$d <- z$d[seq_len(min(n, p))]
-    if(nv && nv < p) z$v <- z$v[, 1L:nv, drop = FALSE]
-    z[c("d", if(nu) "u", if(nv) "v")]
+    res <- La.svd(x, nu, nv)
+    list(d = res$d, u = if(nu) res$u, v = if(nv) t(res$vt))
 }

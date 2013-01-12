@@ -1,6 +1,6 @@
 % File src/library/base/man/eigen.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{eigen}
@@ -25,18 +25,12 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
-  \item{EISPACK}{logical.  Should EISPACK be used (for compatibility with
-    \R < 1.7.0)?}
+  \item{EISPACK}{logical. Defunct and ignored (with a warning).}
 }
 \details{
   If \code{symmetric} is unspecified, the code attempts to
   determine if the matrix is symmetric up to plausible numerical
   inaccuracies.  It is faster and surer to set the value yourself.
-
-  \code{eigen} is preferred to \code{eigen(EISPACK = TRUE)}
-  for new projects, but its eigenvectors may differ in sign and
-  (in the asymmetric case) in normalization.  (They may also differ
-  between methods and between platforms.)
 
   Computing the eigenvectors is the slow part for large matrices.
 
@@ -47,9 +41,6 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   algebraic solution with repeated real eigenvalues, the computed
   solution may be of a similar matrix with complex conjugate pairs of
   eigenvalues.
-
-  The EISPACK interface is restricted to matrices \code{x} with less
-  than \eqn{2^{31}}{2^31} elements.
 }
 \value{
   The spectral decomposition of \code{x} is returned as components of a
@@ -63,11 +54,8 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   }
   \item{vectors}{either a \eqn{p\times p}{p * p} matrix whose columns
     contain the eigenvectors of \code{x}, or \code{NULL} if
-    \code{only.values} is \code{TRUE}.
-
-    For \code{eigen(, symmetric = FALSE, EISPACK = TRUE)} the choice of
-    length of the eigenvectors is not defined by EISPACK.  In all other
-    cases the vectors are normalized to unit length.
+    \code{only.values} is \code{TRUE}.  The vectors are normalized to
+    unit length.
 
     Recall that the eigenvectors are only defined up to a constant: even
     when the length is specified they are still only defined up to a
@@ -81,11 +69,8 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 \source{
   By default \code{eigen} uses the LAPACK routines \code{DSYEVR},
   \code{DGEEV}, \code{ZHEEV} and \code{ZGEEV} whereas
-  \code{eigen(EISPACK = TRUE)} provides an interface to the EISPACK
-  routines \code{RS}, \code{RG}, \code{CH} and \code{CG}.
 
-  LAPACK and EISPACK are from \url{http://www.netlib.org/lapack} and
-  \url{http://www.netlib.org/eispack} and their guides are listed
+  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
   in the references.
 }
 \references{
@@ -97,23 +82,10 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
-
-  Smith, B. T., Boyle, J. M., Dongarra, J. J., Garbow, B. S., Ikebe, Y.,
-  Klema, V., and  Moler, C. B. (1976).
-  \emph{Matrix Eigensystems Routines -- EISPACK Guide}.
   Springer-Verlag Lecture Notes in Computer Science \bold{6}.
 
   Wilkinson, J. H. (1965) \emph{The Algebraic Eigenvalue Problem.}
   Clarendon Press, Oxford.
-
-  Wilkinson, J. H. and Reinsch, C. (1971) \emph{Linear Algebra}.  Volume
-  II of \emph{Handbook for Automatic Computation}, Springer-Verlag.\cr
-  [Original source for EISPACK, in ALGOL.]
-}
-
-\note{
-  \code{EISPACK = TRUE} (for compatibility with \R < 1.7.0) was formally
-  deprecated in \R 2.15.2.
 }
 
 \seealso{

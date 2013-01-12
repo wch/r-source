@@ -1,6 +1,6 @@
 % File src/library/base/man/svd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{svd}
@@ -22,9 +22,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
     This must between \code{0} and \code{n = nrow(x)}.}
   \item{nv}{the number of right singular vectors to be computed.
     This must be between \code{0} and \code{p = ncol(x)}.}
-  \item{LINPACK}{logical.  Should LINPACK be used (for compatibility with
-    \R < 1.7.0)?  In this case \code{nu} must be \code{0},
-    \code{nrow(x)} or \code{ncol(x)}.}
+  \item{LINPACK}{logical.  Defunct and ignored (with a warning).}
 }
 \details{
   The singular value decomposition plays an important role in many

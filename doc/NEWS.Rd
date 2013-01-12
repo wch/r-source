@@ -596,6 +596,9 @@
 
       \item  \code{mean()} for data frame  and \code{sd()}
       for data frames and matrices are defunct.
+      
+      \item \code{eigen(EISPACK = TRUE)}, \code{solve(LINPACK = TRUE)}
+      and \code{svd(LINPACK = TRUE)} are defunct.
     }
   }
 

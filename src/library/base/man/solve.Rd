@@ -1,6 +1,6 @@
 % File src/library/base/man/solve.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{solve}
@@ -23,12 +23,9 @@ solve(a, b, \dots)
     side(s) of the linear system.  If missing, \code{b} is taken to be
     an identity matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
-    columns of \code{a}.  If \code{LINPACK} is \code{TRUE} the default
-    is \code{1e-7}, otherwise it is \code{.Machine$double.eps}. Future
-    versions of R may use a tighter tolerance.  Not currently used with
-    complex matrices \code{a}.}
-  \item{LINPACK}{logical.  Should LINPACK be used (for compatibility with
-    \R < 1.7.0)?  Otherwise LAPACK is used.}
+    columns of \code{a}.  The default is \code{.Machine$double.eps}. Not
+    currently used with complex matrices \code{a}.}
+  \item{LINPACK}{logical.  Defunct and ignored (with a warning).}
   \item{\dots}{further arguments passed to or from other methods}
 }
 \details{
@@ -45,9 +42,6 @@ solve(a, b, \dots)
   For back-compatibility \code{a} can be a (real) QR decomposition,
   although \code{\link{qr.solve}} should be called in that case.
   \code{\link{qr.solve}} can handle non-square systems.
-
-  The LINPACK interface is restricted to matrices \code{x} with less
-  than \eqn{2^{31}}{2^31} elements.
 }
 \source{
   The defult method is an interface to the LAPACK routines \code{DGESV}
@@ -64,11 +58,6 @@ solve(a, b, \dots)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
-}
-
-\note{
-  \code{LINPACK = TRUE} (for compatibility with \R < 1.7.0) was formally
-  deprecated in \R 2.15.2.
 }
 
 \seealso{

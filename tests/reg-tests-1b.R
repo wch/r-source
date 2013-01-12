@@ -2070,14 +2070,6 @@ stopifnot(!is.na(match(subdirs, lfri)), identical(subdirs, lfnd))
 ## the first failed for a few days, unnoticed, in the development version of R
 
 
-## In R 2.15.[12] this changed X
-## (https://stat.ethz.ch/pipermail/r-devel/2012-December/065339.html)
-X <- matrix(c(1,2,3, 5,7,11, 13,17,19), 3, 3)
-s <- svd(X, LINPACK = TRUE) # gives deprecation warning
-stopifnot(identical(X, matrix(c(1,2,3, 5,7,11, 13,17,19), 3, 3)))
-## but not in R-devel nor 2.15.2 patched at the time.
-
-
 ## [sd]Quote on 0-length inputs.
 x <- character(0)
 stopifnot(identical(sQuote(x), x), identical(dQuote(x), x))
