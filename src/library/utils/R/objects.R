@@ -18,7 +18,8 @@
 
 ## findGeneric(fname) :  is 'fname' the name of an S3 generic ?
 ##			[unexported function used only in this file]
-findGeneric <- function(fname, envir)
+findGeneric <-
+function(fname, envir)
 {
     if(!exists(fname, mode = "function", envir = envir)) return("")
     f <- get(fname, mode = "function", envir = envir)
@@ -64,10 +65,12 @@ findGeneric <- function(fname, envir)
     isUME(body(f))
 }
 
-getKnownS3generics <- function()
+getKnownS3generics <-
+function()
     c(names(.knownS3Generics), tools:::.get_internal_S3_generics())
 
-methods <- function (generic.function, class)
+methods <-
+function(generic.function, class)
 {
     rbindSome <- function(df, nms, msg) {
         ## rbind.data.frame() -- dropping rows with duplicated names
@@ -191,7 +194,8 @@ methods <- function (generic.function, class)
     res
 }
 
-print.MethodsFunction <- function(x, ...)
+print.MethodsFunction <-
+function(x, ...)
 {
     visible <- attr(x, "info")[["visible"]]
     if(length(x)) {
@@ -204,7 +208,8 @@ print.MethodsFunction <- function(x, ...)
 }
 
 
-getS3method <-  function(f, class, optional = FALSE)
+getS3method <-
+function(f, class, optional = FALSE)
 {
     if(!any(f == getKnownS3generics())) {
         truegf <- findGeneric(f, parent.frame())
@@ -235,7 +240,8 @@ getS3method <-  function(f, class, optional = FALSE)
                                 domain = NA)
 }
 
-getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
+getFromNamespace <-
+function(x, ns, pos = -1, envir = as.environment(pos))
 {
     if(missing(ns)) {
         nm <- attr(envir, "name", exact = TRUE)
@@ -246,7 +252,8 @@ getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
     get(x, envir = ns, inherits = FALSE)
 }
 
-assignInMyNamespace <- function(x, value)
+assignInMyNamespace <-
+function(x, value)
 {
     f <- sys.function(-1)
     ns <- environment(f)
@@ -285,7 +292,7 @@ assignInMyNamespace <- function(x, value)
 }
 
 assignInNamespace <-
-    function(x, value, ns, pos = -1, envir = as.environment(pos))
+function(x, value, ns, pos = -1, envir = as.environment(pos))
 {
     nf <- sys.nframe()
     if(missing(ns)) {
@@ -346,7 +353,8 @@ assignInNamespace <-
     invisible(NULL)
 }
 
-fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
+fixInNamespace <-
+function(x, ns, pos = -1, envir = as.environment(pos), ...)
 {
     subx <- substitute(x)
     if (is.name(subx))
@@ -363,9 +371,11 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
     assignInNamespace(subx, x, ns)
 }
 
-getAnywhere <- function(x)
+getAnywhere <-
+function(x)
 {
-    x <- as.character(substitute(x))
+    if(tryCatch(!is.character(x), error = function(e) TRUE))
+        x <- as.character(substitute(x))
     objs <- list(); where <- character(); visible <- logical()
     ## first look on search path
     if(length(pos <- find(x, numeric = TRUE))) {
@@ -424,7 +434,8 @@ getAnywhere <- function(x)
     res
 }
 
-print.getAnywhere <- function(x, ...)
+print.getAnywhere <-
+function(x, ...)
 {
     n <- sum(!x$dups)
     if(n == 0L) {
@@ -445,20 +456,24 @@ print.getAnywhere <- function(x, ...)
     invisible(x)
 }
 
-`[.getAnywhere` <- function(x, i)
+`[.getAnywhere` <-
+function(x, i)
 {
     if(!is.numeric(i)) stop("only numeric indices can be used")
     if(length(i) == 1L) x$objs[[i]]
     else x$objs[i]
 }
 
-argsAnywhere <- function(x) {
-        name <- as.character(substitute(x))
-        fs <- do.call(getAnywhere, list(name))
-        if (sum(!fs$dups) == 0L)
-            return(NULL)
-        if (sum(!fs$dups) > 1L)
-            sapply(fs$objs[!fs$dups],
-                   function(f) if (is.function(f)) args(f))
-        else args(fs$objs[[1L]])
+argsAnywhere <-
+function(x)
+{
+    if(tryCatch(!is.character(x), error = function(e) TRUE))
+        x <- as.character(substitute(x))
+    fs <- getAnywhere(x)
+    if (sum(!fs$dups) == 0L)
+        return(NULL)
+    if (sum(!fs$dups) > 1L)
+        sapply(fs$objs[!fs$dups],
+               function(f) if (is.function(f)) args(f))
+    else args(fs$objs[[1L]])
 }
