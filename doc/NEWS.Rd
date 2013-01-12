@@ -364,6 +364,8 @@
       replaying plots (including when resizing screen devices and using
       \code{dev.copy()}) will work better when the palette is changed
       during a plot.
+
+      \item \code{chol(pivot = TRUE)} now defaults to LAPACK, not LINPACK.
     }
   }
 
@@ -599,6 +601,9 @@
       
       \item \code{eigen(EISPACK = TRUE)}, \code{solve(LINPACK = TRUE)}
       and \code{svd(LINPACK = TRUE)} are defunct.
+
+      \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated (the
+      \code{pivot = FALSE} case has been since \R 2.15.2).
     }
   }
 

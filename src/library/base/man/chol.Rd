@@ -1,6 +1,6 @@
 % File src/library/base/man/chol.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol}
@@ -14,15 +14,14 @@
 \usage{
 chol(x, \dots)
 
-\method{chol}{default}(x, pivot = FALSE,  LINPACK = pivot, tol = -1, \dots)
+\method{chol}{default}(x, pivot = FALSE,  LINPACK = FALSE, tol = -1, \dots)
 }
 \arguments{
   \item{x}{an object for which a method exists.  The default method
     applies to numeric (or logical) symmetric, positive-definite matrices.}
   \item{\dots}{arguments to be based to or from methods.}
   \item{pivot}{Should pivoting be used?}
-  \item{LINPACK}{logical.  Should LINPACK be used? (For compatibility
-    with \R < 1.7.0 in the non-pivoting case.)}
+  \item{LINPACK}{logical.  Should LINPACK be used (which is deprecated)?}
   \item{tol}{A numeric tolerance for use with \code{pivot = TRUE,
       LINPACK = FALSE)}.}
 }
@@ -53,8 +52,9 @@ chol(x, \dots)
   is true that \code{t(Q[, oo]) \%*\% Q[, oo]} equals \code{x},
   or, alternatively, \code{t(Q) \%*\% Q} equals \code{x[pivot,
     pivot]}.  See the examples.
-
-  Pivoting with LAPACK requires LAPACK >= 3.2 and was added in \R
+  
+  Use of \code{chol(pivot = FALSE, LINPACK = TRUE)} was deprecated in \R
+  1.7.0.   Pivoting with LAPACK requires LAPACK >= 3.2 and was added in \R
   2.15.2.  The value of \code{tol} is passed to LAPACK, with negative
   values selecting the default tolerance of (usually) \code{nrow(x) *
   .Machine$double.neg.eps * max(diag(x)}.  The algorithm terminates once
@@ -126,16 +126,10 @@ qr(m)$rank # is 2, as it should be
 # chol() unlike qr() does not use a tolerance.
 try(chol(m))
 
-(Q <- chol(m, pivot = TRUE)) # NB wrong rank here - see Warning section.
+(Q <- chol(m, pivot = TRUE))
 ## we can use this by
 pivot <- attr(Q, "pivot")
 crossprod(Q[, order(pivot)]) # recover m
-
-(Q <- chol(m, TRUE, FALSE)) # NB rank is correct
-## we can use this by
-pivot <- attr(Q, "pivot")
-crossprod(Q[, order(pivot)]) # recover m
-
 
 ## now for a non-positive-definite matrix
 ( m <- matrix(c(5,-5,-5,3), 2, 2) )

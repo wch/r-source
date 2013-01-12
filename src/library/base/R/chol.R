@@ -1,7 +1,7 @@
 #  File src/library/base/R/chol.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,12 +18,13 @@
 
 chol <- function(x, ...) UseMethod("chol")
 
-chol.default <- function(x, pivot = FALSE, LINPACK = pivot, tol = -1, ...)
+chol.default <- function(x, pivot = FALSE, LINPACK = FALSE, tol = -1, ...)
 {
     if (is.complex(x))
         stop("complex matrices not permitted at present")
 
     if(!LINPACK) return(.Internal(La_chol(as.matrix(x), pivot, tol)))
+    warning("LINPACK = TRUE is deprecated", domain = NA)
 
     if(is.matrix(x)) {
 	if(nrow(x) != ncol(x)) stop("non-square matrix in 'chol'")
@@ -57,7 +58,6 @@ chol.default <- function(x, pivot = FALSE, LINPACK = pivot, tol = -1, ...)
         }
         robj
     } else {
-        warning("pivot = FALSE, LINPACK = TRUE is deprecated", domain = NA)
         z <- .Fortran(.F_chol, x = x, n, n, v = matrix(0, nrow=n, ncol=n),
                       info = integer(1L), DUP = FALSE)
         if(z$info)
