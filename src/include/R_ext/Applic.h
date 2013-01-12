@@ -99,33 +99,6 @@ void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 void str_signif(void *x, int *n, const char **type, int *width, int *digits,
 		const char **format, const char **flag, char **result);
 
-/* appl/ch2inv.f */
-void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
-
-/* appl/chol.f: used in package nlme */
-void F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
-
-/* appl/eigen.f */
-int F77_NAME(cg)(int *nm, int *n, double *ar, double *ai,
-		 double *wr, double *wi, int *matz, double *zr, double *zi,
-		 double *fv1, double *fv2, double *fv3, int *ierr);
-int F77_NAME(ch)(int *nm, int *n, double *ar, double *ai,
-		 double *w, int *matz, double *zr, double *zi,
-		 double *fv1, double *fv2, double *fm1, int *ierr);
-int F77_NAME(rg)(int *nm, int *n, double *a, double *wr, double *wi,
-		 int *matz, double *z, int *iv1, double *fv1, int *ierr);
-/* used in package nlme */
-int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
-		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
-
-/* find qr decomposition, dqrdc2() is basis of R's qr(), also used by nlme */
-void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
-		      double *tol, int *rank,
-		      double *qraux, int *pivot, double *work);
-void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
-		     double *tol, double *b, double *rsd,
-		     double *qty, int *k,
-		     int *jpvt, double *qraux, double *work);
 
 /* appl/dqrutl.f: interfaces to dqrsl */
 void F77_NAME(dqrqty)(double *x, int *n, int *k, double *qraux,
@@ -193,6 +166,34 @@ void optif9(int nr, int n, double *x,
 
 
 /* Others */
+
+/* appl/ch2inv.f */
+void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
+
+/* appl/chol.f: formerly used in package nlme */
+void F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
+
+/* appl/eigen.f */
+int F77_NAME(cg)(int *nm, int *n, double *ar, double *ai,
+		 double *wr, double *wi, int *matz, double *zr, double *zi,
+		 double *fv1, double *fv2, double *fv3, int *ierr);
+int F77_NAME(ch)(int *nm, int *n, double *ar, double *ai,
+		 double *w, int *matz, double *zr, double *zi,
+		 double *fv1, double *fv2, double *fm1, int *ierr);
+int F77_NAME(rg)(int *nm, int *n, double *a, double *wr, double *wi,
+		 int *matz, double *z, int *iv1, double *fv1, int *ierr);
+/* formerly used in package nlme, misused by gss, latenetnet and robustbase */
+int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
+		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
+
+/* find qr decomposition, dqrdc2() is basis of R's qr(), also used by nlme */
+void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
+		      double *tol, int *rank,
+		      double *qraux, int *pivot, double *work);
+void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
+		     double *tol, double *b, double *rsd,
+		     double *qty, int *k,
+		     int *jpvt, double *qraux, double *work);
 
 /* appl/pretty.c non-API but used by engine.c, rgl and formerly GWAtoolbox */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,

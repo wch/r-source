@@ -22,7 +22,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
     This must between \code{0} and \code{n = nrow(x)}.}
   \item{nv}{the number of right singular vectors to be computed.
     This must be between \code{0} and \code{p = ncol(x)}.}
-  \item{LINPACK}{logical.  Defunct and ignored (with a warning).}
+  \item{LINPACK}{logical.  Defunct and ignored (with a warning for true values).}
 }
 \details{
   The singular value decomposition plays an important role in many

@@ -1,6 +1,6 @@
 % File src/library/base/man/chol2inv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol2inv}
@@ -19,8 +19,8 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
     contain the Choleski decomposition of the matrix to be inverted.}
   \item{size}{the number of columns of \code{x} containing the
     Choleski decomposition.}
-  \item{LINPACK}{logical.  Should LINPACK be used (for compatibility with
-    \R < 1.7.0)?}
+  \item{LINPACK}{logical.  Defunct and ignored (with a warning for true value).}
+
 }
 \value{
   The inverse of the matrix whose Choleski decomposition was given.

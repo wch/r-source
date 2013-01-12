@@ -23,8 +23,16 @@ chol.default <- function(x, pivot = FALSE, LINPACK = FALSE, tol = -1, ...)
     if (is.complex(x))
         stop("complex matrices not permitted at present")
 
+    if (!pivot && LINPACK) {
+        warning("LINPACK = TRUE, pivot = FALSE is defunct and will be ignored",
+                domain = NA)
+        LINPACK <- TRUE
+    }
+
     if(!LINPACK) return(.Internal(La_chol(as.matrix(x), pivot, tol)))
-    warning("LINPACK = TRUE is deprecated", domain = NA)
+
+    ## deprecated in R 3.0.0
+    warning("LINPACK = pivot = TRUE is deprecated", domain = NA)
 
     if(is.matrix(x)) {
 	if(nrow(x) != ncol(x)) stop("non-square matrix in 'chol'")
@@ -41,55 +49,25 @@ chol.default <- function(x, pivot = FALSE, LINPACK = FALSE, tol = -1, ...)
 
     storage.mode(x) <- "double"
 
-    if(pivot) { ## code could be used in the other case too
-        xx <- x
-        xx[lower.tri(xx)] <- 0
-        z <- .Fortran(.F_dchdc, x = xx, n, n, double(n), piv = integer(n),
-                      as.integer(pivot), rank = integer(1L), DUP = FALSE)
-        if (z$rank < n)
-            if(!pivot) stop("matrix not positive definite")
-            else warning("matrix not positive definite")
-        robj <- z$x
-        if (pivot) {
-            attr(robj, "pivot") <- z$piv
-            attr(robj, "rank") <- z$rank
-            if(!is.null(cn <- colnames(x)))
-                colnames(robj) <- cn[z$piv]
-        }
-        robj
-    } else {
-        z <- .Fortran(.F_chol, x = x, n, n, v = matrix(0, nrow=n, ncol=n),
-                      info = integer(1L), DUP = FALSE)
-        if(z$info)
-            stop("non-positive definite matrix in 'chol'")
-        z$v
+    xx <- x
+    xx[lower.tri(xx)] <- 0
+    z <- .Fortran(.F_dchdc, x = xx, n, n, double(n), piv = integer(n),
+                  as.integer(pivot), rank = integer(1L), DUP = FALSE)
+    if (z$rank < n)
+        if(!pivot) stop("matrix not positive definite")
+        else warning("matrix not positive definite")
+    robj <- z$x
+    if (pivot) {
+        attr(robj, "pivot") <- z$piv
+        attr(robj, "rank") <- z$rank
+        if(!is.null(cn <- colnames(x)))
+            colnames(robj) <- cn[z$piv]
     }
+    robj
 }
 
 chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
 {
-    if(!LINPACK) return(.Internal(La_chol2inv(x, size)))
-
-    warning("LINPACK = TRUE is deprecated", domain = NA)
-    if(!is.numeric(x)) stop("non-numeric argument to 'chol2inv'")
-    if(is.matrix(x)) {
-	nr <- nrow(x)
-	nc <- ncol(x)
-    }
-    else {
-	nr <- length(x)
-	nc <- 1L
-    }
-    nr <- as.integer(nr)
-    if(is.na(nr)) stop("invalid nrow(x)")
-    size <- as.integer(size)
-    if(is.na(size) || size <= 0L || size > nr || size > nc)
-	stop("invalid 'size' argument in 'chol2inv'")
-    storage.mode(x) <- "double"
-    z <- .Fortran(.F_ch2inv,
-		  x = x, nr, size, v = matrix(0, nrow=size, ncol=size),
-                  info = integer(1L), DUP = FALSE)
-    if(z$info)
-	stop("singular matrix in 'chol2inv'")
-    z$v
+    if(LINPACK) warning("LINPACK = TRUE is defunct", domain = NA)
+    .Internal(La_chol2inv(x, size))
 }

@@ -596,11 +596,13 @@
       \item The long-deprecated \code{intensities} component is no
       longer returned by \code{hist()}.
 
-      \item  \code{mean()} for data frame  and \code{sd()}
-      for data frames and matrices are defunct.
+      \item \code{mean()} for data frames and \code{sd()} for data
+      frames and matrices are defunct.
       
-      \item \code{eigen(EISPACK = TRUE)}, \code{solve(LINPACK = TRUE)}
-      and \code{svd(LINPACK = TRUE)} are defunct.
+      \item \code{chol(pivot = FALSE, LINPACK = TRUE)},
+      \code{ch2inv(LINPACK = TRUE)}, \code{eigen(EISPACK = TRUE)},
+      \code{solve(LINPACK = TRUE)} and \code{svd(LINPACK = TRUE)} are
+      defunct: LAPACK will be used, with a warning.
 
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated (the
       \code{pivot = FALSE} case has been since \R 2.15.2).
