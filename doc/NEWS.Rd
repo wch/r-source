@@ -797,6 +797,10 @@
       \code{$<-} were not being checked 
       because the magic incantation to turn methods on for that
       primitive operator had been inadvertently omitted. %$
+      
+      \item \code{setHook(hookname, value, action="replace")} set the
+      hook to be the value, rather than a list containing the value as
+      documented. (\PR{15167})      
     }
   }
 }

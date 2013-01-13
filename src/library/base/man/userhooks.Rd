@@ -1,6 +1,6 @@
 % File src/library/base/man/userhooks.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{userhooks}
@@ -23,9 +23,9 @@ packageEvent(pkgname,
 }
 \arguments{
   \item{hookName}{character string: the hook name}
-  \item{pkgname}{character string: the package/namespace name.}
+  \item{pkgname}{character string: the package/namespace name}
   \item{event}{character string: an event for the package}
-  \item{value}{A function, or for \code{action = "replace"}, \code{NULL}.}
+  \item{value}{A function, or for \code{action = "replace"}, \code{NULL} or a list of functions}
   \item{action}{The action to be taken.  The names can be abbreviated.}
 }
 

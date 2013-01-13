@@ -1,7 +1,7 @@
 #  File src/library/base/R/userhooks.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ setHook <- function(hookName, value,
     new <- switch(action,
                   "append" = c(old, value),
                   "prepend" = c(value, old),
-                  "replace" = value)
+                  "replace" = if (is.null(value) || is.list(value)) value else list(value))
     if (length(new))
         assign(hookName, new, envir = .userHooksEnv, inherits = FALSE)
     else if(exists(hookName, envir = .userHooksEnv, inherits = FALSE))
