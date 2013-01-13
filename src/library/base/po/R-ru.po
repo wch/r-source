@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:56\n"
+"POT-Creation-Date: 2013-01-13 07:43\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -169,18 +169,6 @@ msgstr ""
 
 msgid "matrix not positive definite"
 msgstr "матрица не является положительно определенной"
-
-msgid "non-positive definite matrix in 'chol'"
-msgstr "не положительно определенная матрица в 'chol'"
-
-msgid "non-numeric argument to 'chol2inv'"
-msgstr "нечисловой аргумент для 'chol2inv'"
-
-msgid "invalid 'size' argument in 'chol2inv'"
-msgstr "неправильный аргумент 'size' в 'chol2inv'"
-
-msgid "singular matrix in 'chol2inv'"
-msgstr "сингулярная матрица в 'chol2inv'"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' должен быть матрицей по крайней мере с двумя измерениями"
@@ -1801,6 +1789,18 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "non-positive definite matrix in 'chol'"
+#~ msgstr "не положительно определенная матрица в 'chol'"
+
+#~ msgid "non-numeric argument to 'chol2inv'"
+#~ msgstr "нечисловой аргумент для 'chol2inv'"
+
+#~ msgid "invalid 'size' argument in 'chol2inv'"
+#~ msgstr "неправильный аргумент 'size' в 'chol2inv'"
+
+#~ msgid "singular matrix in 'chol2inv'"
+#~ msgstr "сингулярная матрица в 'chol2inv'"
 
 #, fuzzy
 #~ msgid "'%s' returned code %d in 'eigen'"

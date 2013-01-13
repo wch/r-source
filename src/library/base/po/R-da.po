@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:56\n"
+"POT-Creation-Date: 2013-01-13 07:43\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -160,18 +160,6 @@ msgstr ""
 
 msgid "matrix not positive definite"
 msgstr ""
-
-msgid "non-positive definite matrix in 'chol'"
-msgstr ""
-
-msgid "non-numeric argument to 'chol2inv'"
-msgstr "ikke numerisk argument for 'chol2inv'"
-
-msgid "invalid 'size' argument in 'chol2inv'"
-msgstr "ugyldigt 'size' argument i 'chol2inv'"
-
-msgid "singular matrix in 'chol2inv'"
-msgstr "entalsmatrix i 'chol2inv'"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' skal være en array på mindst to dimensioner"
@@ -1724,6 +1712,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "non-numeric argument to 'chol2inv'"
+#~ msgstr "ikke numerisk argument for 'chol2inv'"
+
+#~ msgid "invalid 'size' argument in 'chol2inv'"
+#~ msgstr "ugyldigt 'size' argument i 'chol2inv'"
+
+#~ msgid "singular matrix in 'chol2inv'"
+#~ msgstr "entalsmatrix i 'chol2inv'"
 
 #, fuzzy
 #~ msgid "'%s' returned code %d in 'eigen'"

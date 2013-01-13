@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:56\n"
+"POT-Creation-Date: 2013-01-13 07:43\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -166,18 +166,6 @@ msgstr ""
 
 msgid "matrix not positive definite"
 msgstr "matriz não é positiva definida"
-
-msgid "non-positive definite matrix in 'chol'"
-msgstr "matriz nãoo positiva definida em 'chol'"
-
-msgid "non-numeric argument to 'chol2inv'"
-msgstr "argumento não numérico para 'chol2inv'"
-
-msgid "invalid 'size' argument in 'chol2inv'"
-msgstr "argumento 'size' inválido em 'chol2inv'"
-
-msgid "singular matrix in 'chol2inv'"
-msgstr "matriz singular em 'chol2inv'"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' deve ser um array de pelo menos duas dimensões"
@@ -1829,6 +1817,18 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "non-positive definite matrix in 'chol'"
+#~ msgstr "matriz nãoo positiva definida em 'chol'"
+
+#~ msgid "non-numeric argument to 'chol2inv'"
+#~ msgstr "argumento não numérico para 'chol2inv'"
+
+#~ msgid "invalid 'size' argument in 'chol2inv'"
+#~ msgstr "argumento 'size' inválido em 'chol2inv'"
+
+#~ msgid "singular matrix in 'chol2inv'"
+#~ msgstr "matriz singular em 'chol2inv'"
 
 #, fuzzy
 #~ msgid "'%s' returned code %d in 'eigen'"

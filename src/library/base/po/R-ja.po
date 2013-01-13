@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:56\n"
+"POT-Creation-Date: 2013-01-13 07:43\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -163,18 +163,6 @@ msgstr ""
 
 msgid "matrix not positive definite"
 msgstr " 行列は正定値符号ではありません "
-
-msgid "non-positive definite matrix in 'chol'"
-msgstr " 'chol' に非負定値符号行列 "
-
-msgid "non-numeric argument to 'chol2inv'"
-msgstr " 'chol2inv' へ数値でない引数 "
-
-msgid "invalid 'size' argument in 'chol2inv'"
-msgstr " 'chol2inv' 中に無効な 'size' 引数 "
-
-msgid "singular matrix in 'chol2inv'"
-msgstr " 'chol2inv' 中に特異行列 "
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr " 'x' は少なくとも二次元の配列でなければなりません "
@@ -1779,6 +1767,18 @@ msgstr[0] " TRUE の代わりに T が使われました "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "non-positive definite matrix in 'chol'"
+#~ msgstr " 'chol' に非負定値符号行列 "
+
+#~ msgid "non-numeric argument to 'chol2inv'"
+#~ msgstr " 'chol2inv' へ数値でない引数 "
+
+#~ msgid "invalid 'size' argument in 'chol2inv'"
+#~ msgstr " 'chol2inv' 中に無効な 'size' 引数 "
+
+#~ msgid "singular matrix in 'chol2inv'"
+#~ msgstr " 'chol2inv' 中に特異行列 "
 
 #, fuzzy
 #~ msgid "'%s' returned code %d in 'eigen'"

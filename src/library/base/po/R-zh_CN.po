@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:56\n"
+"POT-Creation-Date: 2013-01-13 07:43\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -166,18 +166,6 @@ msgstr ""
 
 msgid "matrix not positive definite"
 msgstr "非正定矩阵"
-
-msgid "non-positive definite matrix in 'chol'"
-msgstr "'chol'里的矩阵非正定"
-
-msgid "non-numeric argument to 'chol2inv'"
-msgstr "'chol2inv'的参数不是数值"
-
-msgid "invalid 'size' argument in 'chol2inv'"
-msgstr "'chol2inv'的'size'参数不对"
-
-msgid "singular matrix in 'chol2inv'"
-msgstr "'chol2inv'里有奇异矩阵"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x'必需是阵列，而且至少得有两个维度"
@@ -1722,6 +1710,18 @@ msgstr[0] "用T代替TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "non-positive definite matrix in 'chol'"
+#~ msgstr "'chol'里的矩阵非正定"
+
+#~ msgid "non-numeric argument to 'chol2inv'"
+#~ msgstr "'chol2inv'的参数不是数值"
+
+#~ msgid "invalid 'size' argument in 'chol2inv'"
+#~ msgstr "'chol2inv'的'size'参数不对"
+
+#~ msgid "singular matrix in 'chol2inv'"
+#~ msgstr "'chol2inv'里有奇异矩阵"
 
 #, fuzzy
 #~ msgid "'%s' returned code %d in 'eigen'"
