@@ -215,7 +215,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_", "rs_",
             "Rf_printArray", "Rf_printMatrix", "Rf_printNamedVector",
             "Rf_printVector",
             "R_Parse1Buffer", "R_ParseBuffer", "R_Parse1File", "R_ParseFile",
-            "R_ParseConn", "parseError", "R_ParseVector", "ParseStatus",
+            "R_ParseConn", "parseError",
             "Rf_addTaskCallback", "R_removeTaskCallback",
             "Rf_removeTaskCallbackByIndex",
             "Rf_removeTaskCallbackByName",
@@ -473,7 +473,7 @@ function(x, ...)
               strwrap(paste("Found non-API calls to R:",
                             paste(sQuote(x), collapse = ", ")),
                       indent = 2L, exdent = 4L)
-          } else paste0("  Found non-API call to R: ", sQuote(x))
+          } else paste("  Found non-API call to R:", sQuote(x))
           )
     else character()
 }
