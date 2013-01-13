@@ -473,7 +473,7 @@ function(x, ...)
               strwrap(paste("Found non-API calls to R:",
                             paste(sQuote(x), collapse = ", ")),
                       indent = 2L, exdent = 4L)
-          } else paste0("  Found non-API calls to R:", sQuote(x))
+          } else paste0("  Found non-API call to R: ", sQuote(x))
           )
     else character()
 }
