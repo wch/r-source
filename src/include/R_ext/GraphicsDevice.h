@@ -771,8 +771,6 @@ struct _DevDesc {
 /* Properly declared version of devNumber */
 int ndevNumber(pDevDesc );
 
-/* Formerly in Rdevices.h */
-
 /* How many devices exist ? (>= 1) */
 int NumDevices(void);
 
