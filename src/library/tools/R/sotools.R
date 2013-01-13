@@ -240,6 +240,8 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
         if(have_tables) ind[1:4] <- TRUE
         tab <- so_symbol_names_table[ind, , drop = FALSE]
         attr(tab, "file") <- so
+        tab2 <- intersect(sub("^_", "", nms), nonAPI)
+        if(length(tab2)) attr(tab, "nonAPI") <- tab2
         class(tab) <- "check_so_symbols"
         tab
     }
@@ -357,6 +359,12 @@ if(.Platform$OS.type == "windows") {
                 Filter(length, lapply(so_files, check_so_symbols, rarch="i386"))
             }
         } else NULL
+        nAPIs <- lapply(lapply(so_files, check_so_symbols, rarch = "i386"),
+                        function(x) if(length(z <- attr(x, "nonAPI")))
+                        structure(z, file = attr(x, "file"),
+                                  class = "check_nonAPI_calls"))
+
+        bad <- c(bad, Filter(length, nAPIs))
 
         so_files <-
             Sys.glob(file.path(dir, "libs/x64",
@@ -374,6 +382,12 @@ if(.Platform$OS.type == "windows") {
                 Filter(length, lapply(so_files, check_so_symbols, rarch="x64"))
             }
         } else NULL
+        nAPIs <- lapply(lapply(so_files, check_so_symbols, rarch = "x64"),
+                        function(x) if(length(z <- attr(x, "nonAPI")))
+                        structure(z, file = attr(x, "file"),
+                                  class = "check_nonAPI_calls"))
+
+        bad2 <- c(bad2, Filter(length, nAPIs))
 
         if(!length(bad) && !length(bad2)) return(invisible(NULL))
 

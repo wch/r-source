@@ -1809,7 +1809,7 @@ setRlibs <-
             ## will not be picking up symbols just in system libraries.
             haveObjs <- any(grepl("^ *Object", out))
             if(haveObjs && any(grepl("(abort|assert|exit)", out)) &&
-               !pkgname %in% c("multicore", "parallel")) # need to call exit
+               !pkgname %in% c("multicore", "parallel")) # these need to call exit
                 warningLog(Log)
             else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -1818,7 +1818,7 @@ setRlibs <-
                 wrapLog("\nCompiled code should not call entry points which",
                         "might terminate R nor write to stdout/stderr instead",
                         "of to the console.\n" ,
-                        if(nAPIs) "Nor should they call non-API entry points in R.\n",
+                        if(nAPIs) "Nor should it call non-API entry points in R.\n",
                         "\n",
                         "See 'Writing portable packages'",
                         "in the 'Writing R Extensions' manual.\n")
@@ -1828,7 +1828,7 @@ setRlibs <-
                         "of to the console.  The detected symbols are linked",
                         "into the code but might come from libraries",
                         "and not actually be called.\n",
-                        if(nAPIs) "Nor should they call non-API entry points in R.\n",
+                        if(nAPIs) "Nor should it call non-API entry points in R.\n",
                         "\n",
                         "See 'Writing portable packages'",
                         "in the 'Writing R Extensions' manual.\n")
