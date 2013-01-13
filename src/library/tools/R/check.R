@@ -1813,25 +1813,26 @@ setRlibs <-
                 warningLog(Log)
             else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            nAPIs <- length(grep("Found non-API calls to R", out))
-            if(haveObjs)
-                wrapLog("\nCompiled code should not call entry points which",
-                        "might terminate R nor write to stdout/stderr instead",
-                        "of to the console.\n" ,
-                        if(nAPIs) "Nor should it call non-API entry points in R.\n",
-                        "\n",
-                        "See 'Writing portable packages'",
-                        "in the 'Writing R Extensions' manual.\n")
-            else
-                wrapLog("\nCompiled code should not call entry points which",
-                        "might terminate R nor write to stdout/stderr instead",
-                        "of to the console.  The detected symbols are linked",
-                        "into the code but might come from libraries",
-                        "and not actually be called.\n",
-                        if(nAPIs) "Nor should it call non-API entry points in R.\n",
-                        "\n",
-                        "See 'Writing portable packages'",
-                        "in the 'Writing R Extensions' manual.\n")
+            nAPIs <- length(grep("Found non-API", out))
+            nBad <- length(grep(", possibly from ", out))
+            msg <- if (nBad) {
+                if(haveObjs)
+                    c("Compiled code should not call entry points which",
+                      "might terminate R nor write to stdout/stderr instead",
+                      "of to the console.\n")
+                else
+                    c("Compiled code should not call entry points which",
+                      "might terminate R nor write to stdout/stderr instead",
+                      "of to the console.  The detected symbols are linked",
+                      "into the code but might come from libraries",
+                      "and not actually be called.\n")
+            } else character()
+            if(nAPIs)
+                msg <- c(msg,
+                         "Compiled code should not call non-API entry points in R.\n")
+            wrapLog("\n", paste(msg, collapse = " "), "\n",
+                    "See 'Writing portable packages'",
+                    "in the 'Writing R Extensions' manual.\n")
         } else resultLog(Log, "OK")
     }
 
