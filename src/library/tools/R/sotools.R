@@ -205,6 +205,32 @@ function(x)
     sub("@.*", "", x)
 }
 
+## from R_ext/Applic.h, Print.h, Parse.h
+nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_", "rs_",
+            "fft_factor", "fft_work",
+            "Brent_fmin", "fdhess", "optif0", "optif9",
+            "dqrdc2_", "dqrls_", "R_pretty0",
+            "R_print", "Rf_formatRaw", "Rf_formatString",
+            "Rf_EncodeElement", "Rf_EncodeEnvironment",
+            "Rf_printArray", "Rf_printMatrix", "Rf_printNamedVector",
+            "Rf_printVector",
+            "R_Parse1Buffer", "R_ParseBuffer", "R_Parse1File", "R_ParseFile",
+            "R_ParseConn", "parseError", "R_ParseVector", "ParseStatus",
+            "Rf_addTaskCallback", "R_removeTaskCallback",
+            "Rf_removeTaskCallbackByIndex",
+            "Rf_removeTaskCallbackByName",
+            "Rf_formatLogical", "Rf_formatInteger", "Rf_formatComplex",
+            "Rf_EncodeLogical", "Rf_EncodeInteger", "Rf_EncodeReal",
+            "Rf_EncodeComplex", "Rf_VectorIndex", "Rf_printIntegerVector",
+            "Rf_printRealVector", "Rf_printComplexVector",
+            "initStdinHandler", "consoleInputHandler", "addInputHandler",
+            "getInputHandler", "removeInputHandler", "getSelectedHandler",
+            "R_checkActivity", "R_checkActivityEx", "R_runHandlers",
+            "R_PolledEvents", "R_wait_usec",
+            "locale2charset", "Ri18n_wctype", "Ri18n_iswctype")
+
+
+
 check_so_symbols <- if(.Platform$OS.type == "windows") {
     function(so, rarch, have_tables = FALSE)
     {
@@ -222,7 +248,7 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
     {
         if(!length(system_ABI)) return()
         tab <- read_symbols_from_object_file(so)
-        # nms <- tab[tab[, "type"] == "U", "name"]
+        tab2 <- tab[tab[, "type"] == "U", "name"]
 	nms <- tab[, "name"]
         sys <- system_ABI["system"]
         if(!is.null(snh <- so_symbol_names_handlers_db[[sys]]))
@@ -230,6 +256,9 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
         ind <- so_symbol_names_table[, "osname"] %in% nms
         tab <- so_symbol_names_table[ind, , drop = FALSE]
         attr(tab, "file") <- so
+        tab2 <- sub("^_", "", tab2)
+        tab2 <- intersect(tab2, nonAPI)
+        if(length(tab2)) attr(tab, "nonAPI") <- tab2
         class(tab) <- "check_so_symbols"
         tab
     }
@@ -238,7 +267,14 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
 format.check_so_symbols <-
 function(x, ...)
 {
-    if(!length(x)) return(character())
+    if(!length(x)) {
+        if(length(nonAPI <- attr(x, "nonAPI")))
+            return(c(gettextf("File %s:", sQuote(attr(x, "file"))),
+                     strwrap(paste("Found non-API calls to R:",
+                                   paste(sQuote(nonAPI), collapse = " ")),
+                             indent = 2L, exdent = 4L)))
+        else return(character())
+    }
     entries <- split.data.frame(x, x[, "osname"])
     objects <- vector("list", length(entries))
     names(objects) <- names(entries)
@@ -262,7 +298,11 @@ function(x, ...)
                        strwrap(sprintf("Object: %s", sQuote(w)),
                                indent = 4L, exdent = 6L)
                    }),
-                 entries, names(entries), objects)))
+                 entries, names(entries), objects)),
+      if(length(nonAPI <- attr(x, "nonAPI")))
+          strwrap(paste("Found non-API calls to R:",
+                        paste(sQuote(nonAPI), collapse = " ")),
+                  indent = 2L, exdent = 4L))
 }
 
 ## print.check_so_symbols <- .print.via.format
@@ -390,7 +430,12 @@ if(.Platform$OS.type == "windows") {
             bad <- Filter(length, lapply(bad, compare))
         } else if(useST)
             cat("Note: information on .o files is not available\n")
+        nAPIs <- lapply(lapply(so_files, check_so_symbols),
+                        function(x) if(length(z <- attr(x, "nonAPI")))
+                        structure(z, file = attr(x, "file"),
+                                  class = "check_nonAPI_calls"))
 
+        bad <- c(bad, Filter(length, nAPIs))
         class(bad) <- "check_compiled_code"
         bad
     }
@@ -403,6 +448,17 @@ function(x, ...)
     ## sapply does not always simplify as one wants here if there is
     ## more than one DLL.
     paste(unlist(lapply(x, format)), collapse = "\n")
+}
+
+format.check_nonAPI_calls <-
+function(x, ...)
+{
+    if(length(x))
+        c(gettextf("File %s:", sQuote(attr(x, "file"))),
+          strwrap(paste("Found non-API calls to R:",
+                        paste(sQuote(x), collapse = " ")),
+                  indent = 2L, exdent = 4L))
+    else character()
 }
 
 ## print.check_compiled_code <- .print.via.format

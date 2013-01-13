@@ -1813,19 +1813,22 @@ setRlibs <-
                 warningLog(Log)
             else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
+            nAPIs <- length(grep("Found non-API calls to R", out))
             if(haveObjs)
-                wrapLog("\nCompiled code should not call functions which",
+                wrapLog("\nCompiled code should not call entry points which",
                         "might terminate R nor write to stdout/stderr instead",
                         "of to the console.\n" ,
+                        if(nAPIs) "Nor should they call non-API entry points in R.\n",
                         "\n",
                         "See 'Writing portable packages'",
                         "in the 'Writing R Extensions' manual.\n")
             else
-                wrapLog("\nCompiled code should not call functions which",
+                wrapLog("\nCompiled code should not call entry points which",
                         "might terminate R nor write to stdout/stderr instead",
                         "of to the console.  The detected symbols are linked",
                         "into the code but might come from libraries",
                         "and not actually be called.\n",
+                        if(nAPIs) "Nor should they call non-API entry points in R.\n",
                         "\n",
                         "See 'Writing portable packages'",
                         "in the 'Writing R Extensions' manual.\n")
@@ -1987,7 +1990,7 @@ setRlibs <-
             print_time(t1, t2, Log)
             ## Look at the output from running the examples.  For
             ## the time being, report warnings about use of
-            ## deprecated functions, as the next release will make
+            ## deprecated , as the next release will make
             ## them defunct and hence using them an error.
             any <- FALSE
             lines <- readLines(exout, warn = FALSE)
