@@ -3107,6 +3107,17 @@ to be imported explicitly.
 and non-standard names such as @code{[<-} and @code{function} must
 be.)
 
+It is possible to specify a third argument to S3method, the function to
+be used as the method, for example
+
+@example
+S3method(print, check_so_symbols, .print.via.format)
+@end example
+
+@noindent
+when @code{print.check_so_symbols} is not needed.
+
+
 @node Load hooks, useDynLib, Registering S3 methods, Package namespaces
 @subsection Load hooks
 
