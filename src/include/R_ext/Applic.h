@@ -164,15 +164,6 @@ void optif9(int nr, int n, double *x,
 	    double steptl, double *xpls, double *fpls, double *gpls,
 	    int *itrmcd, double *a, double *wrk, int *itncnt);
 
-
-/* Others */
-
-/* appl/eigen.f */
-/* formerly used in package nlme, still used by gss, latenetnet,
-   robust and robustbase */
-int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
-		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
-
 /* find qr decomposition, dqrdc2() is basis of R's qr(), also used by nlme */
 void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
 		      double *tol, int *rank,
@@ -181,6 +172,15 @@ void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 		     double *tol, double *b, double *rsd,
 		     double *qty, int *k,
 		     int *jpvt, double *qraux, double *work);
+
+
+/* Others */
+
+/* appl/eigen.f */
+/* formerly used in package nlme, still used by gss, latenetnet,
+   robust and robustbase */
+int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
+		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
 
 /* appl/pretty.c non-API but used by engine.c and rgl */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
