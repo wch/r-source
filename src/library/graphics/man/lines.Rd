@@ -56,7 +56,8 @@ lines(x, \dots)
 
   \code{\link{abline}} for drawing (single) straight lines.
 
-  \code{\link{par}} for how to specify colors.
+  \code{\link{par}} for line type (\code{lty}) specification and how to
+  specify colors.
 }
 \examples{
 # draw a smooth line through a scatter plot
