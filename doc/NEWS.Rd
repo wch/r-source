@@ -802,6 +802,10 @@
       \item \code{setHook(hookname, value, action="replace")} set the
       hook to be the value, rather than a list containing the value as
       documented. (\PR{15167})      
+      
+      \item  If a package used a \file{NEWS.Rd} file, the main HTML
+      package index page did not link to it.  (Reported by Dirk
+      Eddelbuettel.)      
     }
   }
 }

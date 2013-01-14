@@ -1830,7 +1830,7 @@
 	if (file.exists(file.path(outDir, "demo")))
 	    cat('<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>\n',
 		 sep = "", file=conn)
-	if (file.exists(file.path(outDir, "NEWS")))
+	if (any(file.exists(c(file.path(outDir, "NEWS"), file.path(outDir, "NEWS.Rd")))))
 	    cat('<li><a href="../NEWS">Package NEWS</a>.</li>\n',
 		 sep = "", file=conn)
 
