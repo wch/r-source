@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2012  The R Core Team
+ *  Copyright (C) 1998--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  */
 
 /* These are the R interface routines to the plain FFT code
-   fft_factor() & fft_work() in ../appl/fft.c. */
+   fft_factor() & fft_work() in fft.c. */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

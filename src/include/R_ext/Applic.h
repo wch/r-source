@@ -129,20 +129,6 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 
 /* For use in package stats */
 
-/* appl/fft.c */
-/* NOTE:  The following functions use GLOBAL (static) variables !!
- * ----   some of R-core think that this should be changed,
- *        which will INEVITABLY extend the argument lists ...!
- */
-/* non-API, but used by package RandomFields */
-void fft_factor(int n, int *pmaxf, int *pmaxp);
-Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
-/* TRUE: success */ int isn, double *work, int *iwork);
-
-/* appl/fmin.c: used by package xoi */
-double Brent_fmin(double ax, double bx, double (*f)(double, void *),
-		  void *info, double tol);
-
 /* appl/uncmin.c : */
 
 /* type of pointer to the target and gradient functions */

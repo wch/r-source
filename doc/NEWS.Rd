@@ -699,7 +699,8 @@
 
       \item Several non-API entry points no longer used by \R have been
       removed, including the Fortran entry points \code{chol},
-      \code{chol2inv}, \code{cg}, \code{ch} and \code{rg}.
+      \code{chol2inv}, \code{cg}, \code{ch} and \code{rg}, and the C
+      entry points \code{Brent_fmin}, \code{fft_factor} and \code{fft_work}.
     }
   }
 
