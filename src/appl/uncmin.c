@@ -110,6 +110,7 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
     }
 } /* fdhess */
 
+#if 0
 static void d1fcn_dum(int n, double *x, double *g, void *state)
 {
 /*	dummy routine to prevent unsatisfied external diagnostic
@@ -121,6 +122,7 @@ static void d2fcn_dum(int nr, int n, double *x, double *h, void *state)
 /*	dummy routine to prevent unsatisfied external diagnostic
  *	when specific analytic hessian function not supplied. */
 }
+#endif
 
 static void mvmltl(int nr, int n, double *a, double *x, double *y)
 {
@@ -2068,7 +2070,7 @@ optchk(int n, double *x, double *typsiz, double *sx, double *fscale,
 
 static void
 prt_result(int nr, int n, const double x[], double f, const double g[],
-       const double *a, const double p[], int itncnt, int iflg)
+	   const double *a, const double p[], int itncnt, int iflg)
 {
 /*
  *  PURPOSE
@@ -2193,7 +2195,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *			 be evaluated by secant update instead of
  *			 analytically or by finite differences
  *	msg	    <--> on input:  ( > 0) message to inhibit certain
- *			   automatic checks; see do_nlm() in ../main/optimize.c
+ *			   automatic checks; see do_nlm() in optimize.c
  *			 on output: ( < 0) error code; =0 no error
  *	ndigit	     --> number of good digits in optimization function fcn
  *	itnlim	     --> maximum number of allowable iterations
@@ -2445,6 +2447,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 	       *itrmcd, msg, prt_result);
 } /* optdrv */
 
+#if 0
 static void
 dfault(int n, double *x,
        double *typsiz, double *fscale,
@@ -2545,8 +2548,9 @@ optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 	 &wrk[nr * 4], &wrk[nr * 5], &wrk[nr * 6], &wrk[nr * 7],
 	 &wrk[nr * 8], &itncnt);
 } /* optif0 */
+#endif
 
-/* ---- this one is called from ../main/optimize.c : --------------- */
+/* ---- this one is called from optimize.c : --------------- */
 void
 optif9(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
        void *state, double *typsiz, double fscale, int method,
@@ -2600,7 +2604,7 @@ optif9(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *	fpls	    <--> on exit:  function value at solution, xpls
  *	gpls(n)	    <--> on exit:  gradient at solution xpls
  *	itrmcd	    <--	 termination code (in 0..5 ; 0 is "perfect");
- *			see optcode() in ../main/optimize.c for meaning
+ *			see optcode() in optimize.c for meaning
  *	a(n,n)	     --> workspace for hessian (or estimate)
  *			 and its cholesky decomposition
  *	wrk(n,8)     --> workspace

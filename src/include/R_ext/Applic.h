@@ -139,7 +139,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp);
 Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
 /* TRUE: success */ int isn, double *work, int *iwork);
 
-/* appl/fmin.c: used by package pcaPA */
+/* appl/fmin.c: used by package xoi */
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol);
 
@@ -186,11 +186,6 @@ int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 		 double shrink_sml, double high_u_fact[],
 		 int eps_correction, int return_bounds);
-
-/* appl/uncmin.c : used in packages nlme, pcaPP */
-void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
-	    double *xpls, double *fpls, double *gpls, int *itrmcd,
-	    double *a, double *wrk);
 
 #ifdef  __cplusplus
 }
