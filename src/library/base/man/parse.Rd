@@ -11,7 +11,8 @@
   list.
 }
 \usage{
-parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
+parse(file = "", n = NULL, text = NULL, prompt = "?",
+      keep.source = getOption("keep.source"), srcfile,
       encoding = "unknown")
 }
 \arguments{
@@ -27,6 +28,8 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
     to character if possible.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
+  \item{keep.source}{a logical value; if \code{TRUE}, keep 
+    source reference information.}
   \item{srcfile}{\code{NULL}, a character vector, or a
     \code{\link{srcfile}} object.  See the \sQuote{Details} section.}
   \item{encoding}{encoding to be assumed for input strings.  If the
@@ -65,9 +68,9 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
   may impose a lower limit: see \sQuote{An Introduction to R}).
 
   The default for \code{srcfile} is set as follows.  If
-  \code{options("keep.source")} is \code{FALSE}, \code{srcfile}
+  \code{keep.source} is not \code{TRUE}, \code{srcfile}
   defaults to a character string, either \code{"<text>"} or one
-  derived from \code{file}.  When \code{options("keep.source")} is
+  derived from \code{file}.  When \code{keep.source} is
   \code{TRUE}, if \code{text} is used, \code{srcfile} will be set to a
   \code{\link{srcfilecopy}} containing the text.  If a character
   string is used for \code{file}, a \code{\link{srcfile}} object

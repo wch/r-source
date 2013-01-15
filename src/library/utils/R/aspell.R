@@ -720,10 +720,7 @@ function(file, encoding = "unknown")
     ## The message strings considered are the string constants subject to
     ## translation in gettext-family calls (see below for details).
 
-    oop <- options(keep.source = TRUE)
-    on.exit(options(oop))
-
-    exprs <- parse(file = file, encoding = encoding)
+    exprs <- parse(file = file, encoding = encoding, keep.source = TRUE)
     if(!length(exprs)) return(NULL)
 
     pd <- getParseData(exprs)

@@ -366,6 +366,9 @@
       during a plot.
 
       \item \code{chol(pivot = TRUE)} now defaults to LAPACK, not LINPACK.
+      
+      \item The \code{parse()} function has a new parameter 
+      \code{keep.source}, which defaults to \code{options("keep.source")}.
     }
   }
 
@@ -606,6 +609,10 @@
 
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated (the
       \code{pivot = FALSE} case has been since \R 2.15.2).
+      
+      \item The \code{keep.source} argument to \code{library()} and 
+      \code{require()} is defunct.  This option needs to be set
+      at install time.
     }
   }
 

@@ -17,9 +17,10 @@
 #  http://www.r-project.org/Licenses/
 
 parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
+		  keep.source = getOption("keep.source"),
                   srcfile = NULL, encoding = "unknown")
 {
-    keep.source <- isTRUE(getOption("keep.source"))
+    keep.source <- isTRUE(keep.source)
     if(!is.null(text)) {
     	if (length(text) == 0L) return(expression())
 	if (missing(srcfile)) {

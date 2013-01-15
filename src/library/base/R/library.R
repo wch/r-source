@@ -33,11 +33,8 @@ function(built, run)
 library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
-	 quietly = FALSE, keep.source = getOption("keep.source.pkgs"),
-         verbose = getOption("verbose"))
+	 quietly = FALSE, verbose = getOption("verbose"))
 {
-    if (!missing(keep.source))
-        warning("'keep.source' is deprecated and will be ignored")
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
         if(is.null(built <- pkgInfo$Built))
@@ -580,11 +577,8 @@ function(chname, libpath, verbose = getOption("verbose"),
 
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
-         keep.source = getOption("keep.source.pkgs"),
          character.only = FALSE)
 {
-    if (!missing(keep.source))
-        warning("'keep.source' is deprecated and will be ignored")
     if(!character.only)
         package <- as.character(substitute(package)) # allowing "require(eda)"
     loaded <- paste("package", package, sep = ":") %in% search()

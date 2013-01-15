@@ -12,7 +12,7 @@
 \description{
   These functions locate objects containing particular lines of source
   code, using the information saved when the code was parsed with
-  \code{options(keep.source = TRUE)}.
+  \code{keep.source = TRUE}.
 }
 \usage{
 findLineNum(srcfile, line, nameonly = TRUE,

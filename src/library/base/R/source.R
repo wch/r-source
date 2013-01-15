@@ -102,20 +102,15 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
     	    srcfile <- deparse(substitute(file))
     }
 
-    ## parse() uses this option in the C code.
-    if (!isTRUE(keep.source)) {
-        op <- options(keep.source = FALSE)
-        on.exit(options(op), add = TRUE)
-    } else op <- NULL
     exprs <- if (!from_file) {
         if (length(lines))  # there is a C-level test for this
             .Internal(parse(stdin(), n = -1, lines, "?", srcfile, encoding))
         else expression()
     } else
     	.Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
+
     on.exit()
     if (from_file) close(file)
-    if (!is.null(op)) options(op)
 
     Ne <- length(exprs)
     if (verbose)
@@ -248,9 +243,9 @@ function(file, envir = baseenv(), chdir = FALSE,
     if (keep.source) {
     	lines <- readLines(file, warn = FALSE)
     	srcfile <- srcfilecopy(file, lines, file.info(file)[1,"mtime"], isFile = TRUE)
-    	exprs <- parse(text = lines, srcfile = srcfile)
+    	exprs <- parse(text = lines, srcfile = srcfile, keep.source = TRUE)
     } else
-    	exprs <- parse(n = -1, file = file, srcfile = NULL)
+    	exprs <- parse(n = -1, file = file, srcfile = NULL, keep.source = FALSE)
     if (length(exprs) == 0L)
 	return(invisible())
     if (chdir && (path <- dirname(file)) != ".") {

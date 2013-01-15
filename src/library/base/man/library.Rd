@@ -20,12 +20,10 @@
 library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
         warn.conflicts = TRUE, quietly = FALSE,
-        keep.source = getOption("keep.source.pkgs"),
         verbose = getOption("verbose"))
 
 require(package, lib.loc = NULL, quietly = FALSE,
         warn.conflicts = TRUE,
-        keep.source = getOption("keep.source.pkgs"),
         character.only = FALSE)
 }
 \arguments{
@@ -49,10 +47,6 @@ require(package, lib.loc = NULL, quietly = FALSE,
     printed about \code{\link{conflicts}} from attaching the new
     package.  A conflict is a function masking a function,
     or a non-function masking a non-function.
-  }
-  \item{keep.source}{logical. Now ignored.
-    This argument does not apply to packages using lazy-loading:
-    whether they have kept source is determined when they are installed.
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
