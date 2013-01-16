@@ -401,7 +401,7 @@ function(x, ...)
                        strwrap(sprintf("Object: %s", sQuote(w)),
                                indent = 4L, exdent = 6L)
                    }),
-                 entries, names(entries), objects)),
+                 entries, names(entries), objects)))
 }
 
 ## print.check_so_symbols <- .print.via.format
