@@ -11129,6 +11129,13 @@ it will usually be taken from the environment variable @env{HOME} if
 this is defined.
 @end deftypefun
 
+For historical reasons there are FORTRAN interfaces to functions
+@code{D1MACH} and @code{I1MACH}.  These can be called from C code as
+e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
+the original functions by Fox, Hall and Schryer on NetLib at
+@uref{http://www.netlib.org/slatec/src/} for IEC 60559 arithmetic
+(required by @R{}).
+
 @node Re-encoding, Allowing interrupts, Utility functions, The R API
 @section Re-encoding
 
@@ -12104,6 +12111,10 @@ handler for events on a particular file descriptor, or to set a polling
 interval (@emph{via} @code{R_wait_usec}) and a function to be called
 periodically @emph{via} @code{R_PolledEvents}: the polling mechanism is used by
 the @pkg{tcltk} package.
+
+It is not intended that these facilities are used by packages, but if
+they are needed exceptionally, the package should ensure that it cleans
+up and removes its handlers when its namespace is unloaded.
 
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out
