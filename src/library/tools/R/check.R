@@ -2229,7 +2229,7 @@ setRlibs <-
                 any <- TRUE
                 warningLog(Log)
                 msg <- ngettext(nb,
-                                "Package vignette( without corresponding PDF:\n",
+                                "Package vignette without corresponding PDF:\n",
                                 "Package vignettes without corresponding PDFs:\n", domain = NA)
                 printLog(Log, msg)
                 printLog(Log,
