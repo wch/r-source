@@ -337,7 +337,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 
 ## non-API in Applic.h
 ## future <- c("dqrcf_", "dqrdc2_", "dqrls_", "dqrqty_", "dqrqy_", "dqrrsd_","dqrxb_", "optif9")
-## d1mach_ and i1mach_ are unclear: C versions are private.
+## d1mach_ and i1mach_ are mentioned (since R 2.15.3) in R-exts.
 
 check_so_symbols <- if(.Platform$OS.type == "windows") {
     function(so, rarch, have_tables = FALSE)
