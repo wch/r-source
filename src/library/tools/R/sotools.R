@@ -303,18 +303,17 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "UNIMPLEMENTED_TYPE", "UNIMPLEMENTED_TYPEt",
             "User_norm_fun", "User_unif_init", "addInputHandler",
             "baseRegisterIndex", "cpuLimit", "cpuLimit2",
-            "cpuLimitValue", "csduplicated", "currentTime", "d1mach_",
-            "dcar", "dcdr", "do_Rprof", "do_Rprofmem",
-            "do_X11", "do_contourLines", "do_edit",
-            "do_getGraphicsEventEnv", "do_getSnapshot",
-            "do_playSnapshot", "do_saveplot", "do_set_prim_method",
-            "dtype", "dummy_fgetc", "dummy_ii", "dummy_vfprintf",
-            "elapsedLimit", "elapsedLimit2", "elapsedLimitValue",
-            "end_Rmainloop", "epslon_", "extR_HTTPDCreate",
-            "extR_HTTPDStop", "fdhess", "fixup_NaRm", "fpu_setup",
-            "getConnection", "getInputHandler", "getPRIMNAME",
-            "getSelectedHandler", "get_workspace_name", "i1mach_",
-            "inherits3", "initStdinHandler", "interv_",
+            "cpuLimitValue", "csduplicated", "currentTime", "dcar",
+            "dcdr", "do_Rprof", "do_Rprofmem", "do_X11",
+            "do_contourLines", "do_edit", "do_getGraphicsEventEnv",
+            "do_getSnapshot", "do_playSnapshot", "do_saveplot",
+            "do_set_prim_method", "dtype", "dummy_fgetc", "dummy_ii",
+            "dummy_vfprintf", "elapsedLimit", "elapsedLimit2",
+            "elapsedLimitValue", "end_Rmainloop", "epslon_",
+            "extR_HTTPDCreate", "extR_HTTPDStop", "fdhess",
+            "fixup_NaRm", "fpu_setup", "getConnection",
+            "getInputHandler", "getPRIMNAME", "getSelectedHandler",
+            "get_workspace_name", "inherits3", "initStdinHandler",
             "known_to_be_latin1", "known_to_be_utf8",
             "locale2charset", "match5", "matherr",
             "max_contour_segments", "mbcsToUcs2", "mbcsValid",
@@ -338,6 +337,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 
 ## non-API in Applic.h
 ## future <- c("dqrcf_", "dqrdc2_", "dqrls_", "dqrqty_", "dqrqy_", "dqrrsd_","dqrxb_", "optif9")
+## d1mach_ and i1mach_ are unclear: C versions are private.
 
 check_so_symbols <- if(.Platform$OS.type == "windows") {
     function(so, rarch, have_tables = FALSE)
@@ -377,14 +377,7 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
 format.check_so_symbols <-
 function(x, ...)
 {
-    if(!length(x)) {
-        if(length(nonAPI <- attr(x, "nonAPI")))
-            return(c(gettextf("File %s:", sQuote(attr(x, "file"))),
-                     strwrap(paste("Found non-API calls to R:",
-                                   paste(sQuote(nonAPI), collapse = " ")),
-                             indent = 2L, exdent = 4L)))
-        else return(character())
-    }
+    if(!length(x)) return(character())
     entries <- split.data.frame(x, x[, "osname"])
     objects <- vector("list", length(entries))
     names(objects) <- names(entries)
@@ -409,10 +402,6 @@ function(x, ...)
                                indent = 4L, exdent = 6L)
                    }),
                  entries, names(entries), objects)),
-      if(length(nonAPI <- attr(x, "nonAPI")))
-          strwrap(paste("Found non-API calls to R:",
-                        paste(sQuote(nonAPI), collapse = " ")),
-                  indent = 2L, exdent = 4L))
 }
 
 ## print.check_so_symbols <- .print.via.format
