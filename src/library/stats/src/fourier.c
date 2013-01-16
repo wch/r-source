@@ -26,7 +26,9 @@
 #endif
 
 #include <Defn.h>
-#include <R_ext/Applic.h>
+void fft_factor(int n, int *pmaxf, int *pmaxp);
+Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
+		  int isn, double *work, int *iwork);
 
 #include "statsR.h"
 
