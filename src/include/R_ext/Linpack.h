@@ -37,7 +37,6 @@ extern "C" {
 
 	/* Double Precision Linpack */
 
-extern void F77_NAME(dchdc)(double*, int*, int*, double*, int*, int*, int*);
 extern void F77_NAME(dpbfa)(double*, int*, int*, int*, int*);
 extern void F77_NAME(dpbsl)(double*, int*, int*, int*, double*);
 extern void F77_NAME(dpoco)(double*, int*, int*, double*, double*, int*);

@@ -418,11 +418,7 @@
  bratio
  breaktodebugger
  cbabk2_
- cbal_
  cdiv_
- cg_
- ch2inv_
- ch_
  check_doc_file
  closeconsole
  complex_binary
@@ -1273,6 +1269,7 @@
  rpipeGets
  rpipeOpen
  runerror
+ savePalette
  setDLLSearchPath
  setTitle
  setWidthOnResize

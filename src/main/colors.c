@@ -77,6 +77,7 @@ unsigned int R_GE_str2col(const char *s)
 }
 
 /* used in engine.c */
+attribute_hidden
 void savePalette(Rboolean save)
 {
     if (!ptr_savePalette) error("package grDevices must be loaded");
