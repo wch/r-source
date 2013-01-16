@@ -5735,13 +5735,14 @@ has to be built to enable this, but the option
 @R{}.
 
 The command @command{Rprof} is used to control profiling, and its help
-page can be consulted for full details.  Profiling works by recording at
-fixed intervals@footnote{For Unix-alikes these are intervals of CPU
+page can be consulted for full details.  Profiling works by recording
+at fixed intervals@footnote{For Unix-alikes these are intervals of CPU
 time, and for Windows of elapsed time.} (by default every 20 msecs)
-which @R{} function is being used, and recording the results in a file
-(default @file{Rprof.out} in the working directory).  Then the function
-@code{summaryRprof} or the command-line utility @code{R CMD Rprof
-@var{Rprof.out}} can be used to summarize the activity.
+which line in which @R{} function is being used, and recording the
+results in a file (default @file{Rprof.out} in the working directory).
+Then the function @code{summaryRprof} or the command-line utility
+@code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
+activity.
 
 As an example, consider the following code (from Venables & Ripley,
 2002, pp. 225--6).
@@ -5818,7 +5819,7 @@ Self seconds: time spent in function alone.
 @end smallexample
 
 @noindent
-(Function names are not quoted on Windows.)  This often produces
+This often produces
 surprising results and can be used to identify bottlenecks or pieces of
 @R{} code that could benefit from being replaced by compiled code.
 

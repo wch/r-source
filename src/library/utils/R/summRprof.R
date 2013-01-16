@@ -20,6 +20,7 @@
 summaryRprof <-
     function(filename = "Rprof.out", chunksize = 5000,
              memory = c("none", "both", "tseries", "stats"),
+             lines = c("hide", "show", "both"),
              index = 2, diff = TRUE, exclude = NULL)
 {
     con <- file(filename, "rt")
@@ -29,6 +30,7 @@ summaryRprof <-
         stop(gettextf("no lines found in %s", sQuote(filename)), domain = NA)
     sample.interval <- as.numeric(strsplit(firstline, "=")[[1L]][2L])/1e6
     memory.profiling <- substr(firstline, 1L, 6L) == "memory"
+    line.profiling <- grepl("line profiling", firstline)
 
     memory <- match.arg(memory)
     if(memory != "none" && !memory.profiling)
@@ -42,6 +44,9 @@ summaryRprof <-
                                     aggregate = index, diff = diff, exclude = exclude,
                                     sample.interval = sample.interval))
 
+    lines <- match.arg(lines)
+    if (lines != "hide" && !line.profiling)
+    	stop("profile does not contain line information")
 
     fnames <- NULL
     ucounts <- NULL
@@ -72,7 +77,11 @@ summaryRprof <-
        }
 
        chunk <- strsplit(chunk, " ")
-
+       if (line.profiling && lines != "both") 
+           chunk <- lapply(chunk, function(x) { 
+       	      	x <- grep("^\"", x, value = TRUE, invert = (lines == "show"))
+       	      	if (length(x)) x else "<no location>"
+       	     })
        newfirsts <- sapply(chunk,  "[[",  1L)
        newuniques <- lapply(chunk,  unique)
        ulen <- sapply(newuniques, length)
@@ -95,15 +104,20 @@ summaryRprof <-
        if (length(chunk) < chunksize) break
     })
 
-#    if (sum(fcounts) == 0) stop("no events were recorded")
-
-
     firstnum <- fcounts*sample.interval
     uniquenum <- ucounts*sample.interval
 
     ## sort and form % on unrounded numbers
     index1 <- order(-firstnum, -uniquenum)
     index2 <- order(-uniquenum, -firstnum)
+    
+    if (lines == "show") {
+    	filename <- sub("#.*$", "", fnames)
+    	linenum <- rep(0, length(filename))
+    	hasline <- filename != fnames
+    	linenum[hasline] <- as.numeric(sub("^.*#", "", fnames[hasline]))
+    	index3 <- order(filename, linenum)
+    }
 
     firstpct <- round(100*firstnum/sum(firstnum), 2)
     uniquepct <- round(100*uniquenum/sum(firstnum), 2)
@@ -122,7 +136,13 @@ summaryRprof <-
     by.self <- rval[index1, ]
     by.self <- by.self[by.self[,1L] > 0, ]
     by.total <- rval[index2, c(3L, 4L,  if(memory == "both") 5L, 1L, 2L)]
-    list(by.self = by.self, by.total = by.total,
+    
+    result <- list(by.self = by.self, by.total = by.total)
+    
+    if (lines == "show")
+    	result <- c(result, list(by.line = rval[index3,]))
+    	
+    c(result, 
          sample.interval = sample.interval,
          sampling.time = sum(fcounts)*sample.interval)
 }

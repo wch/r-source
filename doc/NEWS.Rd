@@ -369,6 +369,12 @@
       
       \item The \code{parse()} function has a new parameter 
       \code{keep.source}, which defaults to \code{options("keep.source")}.
+      
+      \item Profiling via \code{Rprof()} now optionally records information
+      at the statement level, not just the function level.
+      
+      \item The \code{Rprof()} function now quotes function names 
+      in Windows, consistent with the quoting in Unix.
     }
   }
 

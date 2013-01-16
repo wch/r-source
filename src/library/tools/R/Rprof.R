@@ -28,8 +28,10 @@
             "Options:",
             "  -h, --help		print short help message and exit",
             "  -v, --version		print version info and exit",
+            "  --lines		print line information",
             "  --total	       	print only by total",
             "  --self	       	print only by self",
+            "  --linesonly      print only by line",
             "  --min%total=    	minimum % to print for 'by total'",
             "  --min%self=     	minimum % to print for 'by self'",
             "",
@@ -46,7 +48,8 @@
     }
 
     files <- character()
-    bytotal <- byself <- TRUE
+    bytotal <- byself <- bylines <- TRUE
+    lines <- FALSE
     mintotal <- minself <- -1L
     while(length(args)) {
         a <- args[1L]
@@ -59,16 +62,25 @@
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2010 The R Core Team.",
+                "Copyright (C) 1997-2013 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
             do_exit(0L)
         } else if (a == "--total") {
+            bytotal <- TRUE
             byself <- FALSE
+            bylines <- FALSE
         } else if (a == "--self") {
-            byself <- TRUE
             bytotal <- FALSE
+            byself <- TRUE
+            bylines <- FALSE
+        } else if (a == "--linesonly") {
+            byself <- FALSE
+            bytotal <- FALSE
+            bylines <- TRUE
+        } else if (a == "--lines") {
+            lines <- TRUE
         } else if (substr(a, 1, 12)  == "--min%total=") {
             mintotal <- as.integer(substr(a, 13, 1000))
         } else if (substr(a, 1, 11)  == "--min%self=") {
@@ -78,25 +90,38 @@
     }
     file <- if (!length(files)) "Rprof.out" else files[1L]
 
-    res <- utils::summaryRprof(file)
+    res <- utils::summaryRprof(file, lines = if (lines) "show" else "hide")
 
     cat("\nEach sample represents", format(res$sample.interval), "seconds.\n")
     cat("Total run time:", format(res$sampling.time), "seconds.\n")
     cat("\nTotal seconds: time spent in function and callees.\n")
     cat("Self seconds: time spent in function alone.\n\n")
 
+    printed <- FALSE
     if (bytotal) {
         m <- data.frame(res$by.total[c(2,1,4,3)], row.names(res$by.total))
-        if(mintotal > 0) m <- m[m[,1L] >= mintotal,]
+        if(mintotal > 0) m <- m[m[,1L] >= mintotal,,drop = FALSE]
         writeLines(c("   %       total       %        self",
                      " total    seconds     self    seconds    name",
                      sprintf("%6.1f%10.2f%10.1f%10.2f     %s",
                              m[,1L], m[,2L], m[,3L], m[,4L], m[,5L])))
+        printed <- TRUE
     }
-    if(bytotal && byself) cat("\n\n")
     if(byself) {
+        if (printed) cat("\n\n")
         m <- data.frame(res$by.self[c(2,1,4,3)], row.names(res$by.self))
-        if(minself > 0) m <- m[m[,1L] >= minself,]
+        if(minself > 0) m <- m[m[,1L] >= minself,,drop = FALSE]
+        writeLines(c("   %        self       %      total",
+                     "  self    seconds    total   seconds    name",
+                     sprintf("%6.1f%10.2f%10.1f%10.2f     %s",
+                             m[,1L], m[,2L], m[,3L], m[,4L], m[,5L])))
+        printed <- TRUE
+    }
+    if(lines && bylines) {
+        if (printed) cat("\n\n")
+        m <- data.frame(res$by.line[c(2,1,4,3)], row.names(res$by.line))
+        if(minself > 0) m <- m[m[,1L] >= minself,,drop = FALSE]
+        if(mintotal > 0) m <- m[m[,1L] >= mintotal,,drop = FALSE]
         writeLines(c("   %        self       %      total",
                      "  self    seconds    total   seconds    name",
                      sprintf("%6.1f%10.2f%10.1f%10.2f     %s",

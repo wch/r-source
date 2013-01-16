@@ -11,7 +11,7 @@
 }
 \usage{
 Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
-       memory.profiling = FALSE)
+       memory.profiling = FALSE, line.profiling = FALSE)
 }
 \arguments{
   \item{filename}{
@@ -25,6 +25,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
     real: time interval between samples.
   }
   \item{memory.profiling}{logical: write memory use information to the file?}
+  \item{line.profiling}{logical:  write line locations to the file?}
 }
 \details{
   Enabling profiling automatically disables any existing profiling to
@@ -61,6 +62,13 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   \link{primitive} functions do not do so: specifically those which are
   of \link{type} \code{"special"} (see the \sQuote{R Internals} manual
   for more details).
+  
+  Individual statements will be recorded in the profile log if
+  \code{line.profiling} is \code{TRUE}, and if the code being executed
+  was parsed with source references.  See \code{\link{parse}} for a
+  discussion of source references.  By default the statement locations
+  are not shown in \code{\link{summaryRprof}}, but see that help page
+  for options to enable the display.  
 }
 #ifdef unix
 \note{

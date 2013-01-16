@@ -44,10 +44,20 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
+  
+  Murdoch, D. (2010).  
+  \href{http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf}{Source 
+  References}.  \emph{The R Journal} 2/2, 16-19.
 }
 \seealso{
   \code{\link{scan}}, \code{\link{source}}, \code{\link{eval}},
   \code{\link{deparse}}.
+
+  The source reference information can be used for debugging (see e.g.
+  \code{\link{setBreakpoint}}) and profiling (see
+  \code{\link{Rprof}}). It can be examined by \code{\link{getSrcref}}
+  and related functions.  More detailed information is available through
+  \code{\link{getParseData}}.  
 }
 \details{
   If \code{text} has length greater than zero (after coercion) it is used in
@@ -77,8 +87,9 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
   referring to that file will be used.
 
   When \code{srcfile} is a character string, error messages will
-  include the name.  When it is a \code{\link{srcfile}} object,
-  source reference information will be retained.
+  include the name, but source reference information will not be added
+  to the result.  When \code{srcfile} is a \code{\link{srcfile}}
+  object, source reference information will be retained. 
 }
 \value{
   An object of type \code{"\link{expression}"}, with up to \code{n}
@@ -101,6 +112,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
   \code{text} is supplied with every element of known encoding in a
   Latin-1 or UTF-8 locale.
 }
+
 \examples{
 cat("x <- c(1, 4)\n  x ^ 3 -10 ; outer(1:7, 5:9)\n", file = "xyz.Rdmped")
 # parse 3 statements from the file "xyz.Rdmped"
