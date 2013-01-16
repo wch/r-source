@@ -1624,6 +1624,8 @@ function(package, dir, lib.loc = NULL)
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
     ## generic functions.
+    ## Change in 3.0.0: we only look for methods named generic.class,
+    ## not those registered by a 3-arg S3method().
     methods_stop_list <- .make_S3_methods_stop_list(basename(dir))
     methods_in_package <- sapply(all_S3_generics, function(g) {
         ## This isn't really right: it assumes the generics are visible.
@@ -1637,12 +1639,15 @@ function(package, dir, lib.loc = NULL)
         name <- paste0(g, ".")
         methods <-
             functions_in_code[substr(functions_in_code, 1L,
-                                     nchar(name, type="c")) == name]
+                                     nchar(name, type = "c")) == name]
         ## </FIXME>
         methods <- methods %w/o% methods_stop_list
         if(has_namespace) {
             ## Find registered methods for generic g.
-            methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
+            methods2 <- ns_S3_methods[ns_S3_generics == g]
+            ## but for these purposes check name.
+            OK <- substr(methods2, 1L, nchar(name, type = "c")) == name
+            methods <- c(methods, methods2[OK])
         }
         methods
     })
