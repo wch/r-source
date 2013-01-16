@@ -138,6 +138,7 @@ int Ri18n_wcwidth(wchar_t c)
 			 lc));
 }
 
+/* Used in charcter.c, gnuwin32/console.c */
 attribute_hidden
 int Ri18n_wcswidth (const wchar_t *s, size_t n)
 {
@@ -306,7 +307,7 @@ static const Ri18n_wctype_func_l Ri18n_wctype_func[] = {
     {NULL,     0,     NULL}
 };
 
-attribute_hidden
+/* These two used (via macros) in X11 dataentry */
 wctype_t Ri18n_wctype(const char *name)
 {
     int i;
@@ -316,7 +317,6 @@ wctype_t Ri18n_wctype(const char *name)
     return Ri18n_wctype_func[i].wctype;
 }
 
-attribute_hidden
 int Ri18n_iswctype(wint_t wc, wctype_t desc)
 {
     int i;
