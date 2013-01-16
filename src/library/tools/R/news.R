@@ -543,7 +543,7 @@ function(file)
     db <- .extract_news_from_Rd(x)
 
     ## Post-process section names to extract versions and dates.
-    re_v <- sprintf(".*[Vv]ersion[[:space:]]+(%s).*$",
+    re_v <- sprintf(".*version[[:space:]]+(%s).*$",
                     .standard_regexps()$valid_package_version)
     re_d <- sprintf("^.*(%s)[[:punct:][:space:]]*$",
                     "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}")
@@ -554,7 +554,7 @@ function(file)
         warning("Cannot extract version info from the following section titles:\n",
                 sprintf("  %s", unique(nms[!ind])))
     .make_news_db(cbind(ifelse(ind,
-                               sub(re_v, "\\1", nms),
+                               sub(re_v, "\\1", nms, ignore.case = TRUE),
                                NA_character_),
                         ifelse(grepl(re_d, nms, perl = TRUE),
                                sub(re_d, "\\1", nms, perl = TRUE),
