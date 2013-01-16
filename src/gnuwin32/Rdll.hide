@@ -90,6 +90,7 @@
  R_GetMaxVSize
  R_HandlerStack
  R_HiddenFile
+ R_IoBufferReadOffset
  R_InitialData
  R_InsertRestartHandlers
  R_IoBufferFree
@@ -337,6 +338,7 @@
  Rf_ucstomb
  Rf_unbindVar
  Rf_utf8toucs
+ Rf_vectorIndex
  Rf_yychar
  Rf_yylval
  Rf_yynerrs
@@ -355,6 +357,7 @@
  Rsockselect
  Rstrlen
  Rstrwid
+ Rtzname
  Rwin_rename
  Rwin_wrename
  SET_ACTIVE_BINDING_BIT
@@ -997,6 +1000,7 @@
  hqr_
  htribk_
  htridi_
+ int_arraySubscript
  internal_shellexec
  intpr0_
  invalidate_cached_recodings

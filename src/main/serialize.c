@@ -2637,7 +2637,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
    as a list.  If the force argument is true, promises are forced;
    otherwise they are not. */
 
-SEXP attribute_hidden R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
+static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 {
     SEXP val, tmp, sym;
     Rboolean force;

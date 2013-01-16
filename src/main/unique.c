@@ -821,6 +821,7 @@ static SEXP match_transform(SEXP s, SEXP env)
     return duplicate(s);
 }
 
+/* currently used by fastmatch */
 SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 {
     SEXP ans, x, table;
