@@ -80,9 +80,9 @@ int matherr(struct exception *exc)
 #endif
 
 #ifndef _AIX
-const double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
+static const double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
 #else
-double R_Zero_Hack = 0.0;
+static double R_Zero_Hack = 0.0;
 #endif
 typedef union
 {

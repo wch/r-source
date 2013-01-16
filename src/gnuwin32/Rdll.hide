@@ -143,7 +143,6 @@
  R_ShowErrorMessages
  R_ShowFiles
  R_ShowWarnCalls
- R_Srcref
  R_StdinEnc
  R_StringHash
  R_SymbolTable
@@ -163,7 +162,6 @@
  R_XDRDecodeInteger
  R_XDREncodeDouble
  R_XDREncodeInteger
- R_Zero_Hack
  R_binary
  R_check_locale
  R_cmpfun

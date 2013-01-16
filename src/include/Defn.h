@@ -693,12 +693,12 @@ extern int Rf_initEmbeddedR(int argc, char **argv);
 extern char	*R_GUIType	INI_as("unknown");
 extern Rboolean R_isForkedChild		INI_as(FALSE); /* was this forked? */
 
-extern double cpuLimit			INI_as(-1.0);
-extern double cpuLimit2			INI_as(-1.0);
-extern double cpuLimitValue		INI_as(-1.0);
-extern double elapsedLimit		INI_as(-1.0);
-extern double elapsedLimit2		INI_as(-1.0);
-extern double elapsedLimitValue		INI_as(-1.0);
+extern0 double cpuLimit			INI_as(-1.0);
+extern0 double cpuLimit2	       	INI_as(-1.0);
+extern0 double cpuLimitValue		INI_as(-1.0);
+extern0 double elapsedLimit		INI_as(-1.0);
+extern0 double elapsedLimit2		INI_as(-1.0);
+extern0 double elapsedLimitValue       	INI_as(-1.0);
 
 void resetTimeLimits(void);
 

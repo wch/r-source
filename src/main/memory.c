@@ -3243,6 +3243,7 @@ void (SET_RSTEP)(SEXP x, int v) { SET_RSTEP(CHK(x), v); }
 
 /* Primitive Accessors */
 int (PRIMOFFSET)(SEXP x) { return PRIMOFFSET(x); }
+attribute_hidden
 void (SET_PRIMOFFSET)(SEXP x, int v) { SET_PRIMOFFSET(x, v); }
 
 /* Symbol Accessors */
