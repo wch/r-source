@@ -176,8 +176,8 @@ static void __cdecl ProfileThread(void *pwait)
 }
 #else /* not Win32 */
 
-static void lineprof(SEXP srcref) {
-    int len;
+static void lineprof(SEXP srcref) 
+{
     if (srcref && !isNull(srcref)) {
 	SEXP filename;
 	int line = asInteger(srcref);
