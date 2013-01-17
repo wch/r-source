@@ -961,6 +961,9 @@
       directory name when using an external \command{tar} utility, so
       \code{R CMD check} will handle pathnames containing spaces.
 
+      \item The version for Windows 8 and Windows Server 2012 is now
+      displayed by \code{win.version()}.  (Reported by Gabor
+      Grothendieck.)      
     }
   }
 }
