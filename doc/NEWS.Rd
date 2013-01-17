@@ -964,6 +964,10 @@
       \item The version for Windows 8 and Windows Server 2012 is now
       displayed by \code{win.version()}.  (Reported by Gabor
       Grothendieck.)      
+      
+      \item The custom Windows installer target \code{myR} in the
+      installer \file{Makefile} did not work in 2.15.2.  (Reported
+      by Erich Neuwirth.)
     }
   }
 }
