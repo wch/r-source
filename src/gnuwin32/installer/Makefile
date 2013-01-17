@@ -203,5 +203,6 @@ myR:
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
 	  "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --slave)
 	../../../bin$(R_ARCH)/Rscript JRins.R \
-	  $(RPREFIX) "$(IMAGEDIR)" $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
+	  $(RPREFIX) "$(IMAGEDIR)" $(MDISDI) \
+	  $(HelpStyle) $(Internet) $(Producer) "$(ISDIR)"
 	"$(ISDIR)/iscc" R.iss > myR.log

@@ -15,7 +15,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-### JRins.R Rversion srcdir MDISDI HelpStyle Internet Producer
+### JRins.R Rversion srcdir MDISDI HelpStyle Internet Producer ISDIR
 
 .make_R.iss <- function(RW, srcdir, MDISDI=0, HelpStyle=1, Internet=0,
                        Producer = "R-core", ISDIR)
