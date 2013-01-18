@@ -16,18 +16,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-# The profile file always starts with a single header line followed by stack lines
-#   If the header contains "memory profiling", the stack lines have memory info
-#     The memory info is a fixed width prefix on each line of the form :[0-9]+:[0-9]+:[0-9]+:[0-9]+:
-#   If the header contains "line profiling", there will be filename lines and stack lines will contain 
-#     line number info of the form [0-9]+#[0-9]+
-#   The filename lines will start #File [0-9]+: 
 
 summaryRprof <-
     function(filename = "Rprof.out", chunksize = 5000,
              memory = c("none", "both", "tseries", "stats"),
              lines = c("hide", "show", "both"),
-             index = 2, diff = TRUE, exclude = NULL, basenames = 1)
+             index = 2, diff = TRUE, exclude = NULL)
 {
     con <- file(filename, "rt")
     on.exit(close(con))
@@ -37,8 +31,6 @@ summaryRprof <-
     sample.interval <- as.numeric(strsplit(firstline, "=")[[1L]][2L])/1e6
     memory.profiling <- substr(firstline, 1L, 6L) == "memory"
     line.profiling <- grepl("line profiling", firstline)
-    if (line.profiling)
-    	filenames <- character(0)
 
     memory <- match.arg(memory)
     if(memory != "none" && !memory.profiling)
@@ -65,29 +57,8 @@ summaryRprof <-
     repeat({
 
        chunk <- readLines(con, n = chunksize)
- 
-       if (line.profiling) {
-       	   filenamelines <- grep("^#File [0-9]+: ", chunk)
-       	   if (length(filenamelines)) {
-       	   	fnum <- as.integer(sub("^#File ([0-9])+: .*", "\\1", chunk[filenamelines]))
-       	   	filenames[fnum] <- sub("^#File [0-9]+: ", "", chunk[filenamelines])
-       	   	if (basenames) {
-       		    dirnames <- dirname(filenames[fnum])
-       	   	    filenames[fnum] <- basename(filenames[fnum])
-       	   	    for (i in seq_len(basenames - 1)) {
-       	   	        tail <- basename(dirnames)
-       	   	    	filenames[fnum] <- ifelse(tail == ".", filenames[fnum],
-       	   	    	                          paste0(tail, "/", filenames[fnum]))
-       	   	    	dirnames <- dirname(dirnames)
-       	   	    }
-       	   	}
-       	   	chunk <- chunk[-filenamelines]
-       	   }
-       }
-       
        if (length(chunk) == 0L)
            break
-       	       
        if (memory.profiling) {
            memprefix <- attr(regexpr(":[0-9]+:[0-9]+:[0-9]+:[0-9]+:", chunk), "match.length")
            if (memory == "both") {
@@ -106,18 +77,9 @@ summaryRprof <-
        }
 
        chunk <- strsplit(chunk, " ")
-       if (line.profiling)  
-           chunk <- lapply(chunk, function(x) {
-           	locations <- !grepl("^\"", x)
-           	if (lines != "hide") {
-           	    fnum <- sub("#.*", "", x[locations])
-           	    lnum <- sub(".*#", "", x[locations])
-           	    x[locations] <- paste0(filenames[as.integer(fnum)], "#", lnum)
-                }
-           	switch(lines,
-           	    hide = x <- x[!locations],
-           	    show = x <- x[locations]
-           	)
+       if (line.profiling && lines != "both") 
+           chunk <- lapply(chunk, function(x) { 
+       	      	x <- grep("^\"", x, value = TRUE, invert = (lines == "show"))
        	      	if (length(x)) x else "<no location>"
        	     })
        newfirsts <- sapply(chunk,  "[[",  1L)
