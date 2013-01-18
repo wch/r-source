@@ -1,6 +1,6 @@
 % File src/library/utils/man/getFromNamespace.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getFromNamespace}
@@ -13,7 +13,8 @@
   Utility functions to access and replace the non-exported functions in
   a namespace, for use in developing packages with namespaces.
 
-  They should not be used in production code.
+  They should not be used in production code (except perhaps
+  \code{assignInMyNamespace}, but see the \sQuote{Note}).
 }
 \usage{
 getFromNamespace(x, ns, pos = -1, envir = as.environment(pos))
@@ -39,13 +40,12 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   function calling it.
   
   The namespace can be specified in several ways.  Using, for example,
-  \code{ns = "stats"} is the most direct, but a loaded package with a
-  namespace can be specified via any of the methods used for
-  \code{\link{get}}: \code{ns} can also be the environment printed as
-  \code{<namespace:foo>}.
+  \code{ns = "stats"} is the most direct, but a loaded package can be
+  specified via any of the methods used for \code{\link{get}}: \code{ns}
+  can also be the environment printed as \code{<namespace:foo>}.
 
   \code{getFromNamespace} is similar to (but predates) the
-  \code{\link{:::}} operator, but is more flexible in how the namespace
+  \code{\link{:::}} operator: it is more flexible in how the namespace
   is specified.
   
   \code{fixInNamespace} invokes \code{\link{edit}} on the object named
@@ -58,13 +58,14 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   are disallowed.
 }
 \note{
-  \code{assignInNamespace} and \code{fixInNamespace} change the copy in
-  the namespace, but not any copies already exported from the namespace,
-  in particular an object of that name in the package (if already
-  attached) and any copies already imported into other namespaces.
-  They are really intended to be used \emph{only} for objects which are
-  not exported from the namespace.  They do attempt to alter a copy
-  registered as an S3 method if one is found.
+  \code{assignInNamespace}, \code{assignInMyNamespace} and
+  \code{fixInNamespace} change the copy in the namespace, but not any
+  copies already exported from the namespace, in particular an object of
+  that name in the package (if already attached) and any copies already
+  imported into other namespaces.  They are really intended to be used
+  \emph{only} for objects which are not exported from the namespace.
+  They do attempt to alter a copy registered as an S3 method if one is
+  found.
 
   They can only be used to change the values of objects in the
   namespace, not to create new objects.
