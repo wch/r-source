@@ -1469,8 +1469,10 @@ for Mac OS X @acronym{FAQ}} for more details.
 
 Note that if you want to install packages with code that needs to be
 compiled you will need @command{Xcode}@footnote{from the App Store or
-Apple's developer site depending on the version of OS X.} and compilers
-which match the ones used to compile @R{}.  These are currently called
+Apple's developer site depending on the version of OS X, and including
+the `Command Line Tools' which in recent versions of Xcode are
+downloaded for inside Xcode, under the Preferences.} and compilers which
+match the ones used to compile @R{}.  These are currently called
 @command{gcc}, @command{g++} and @command{gfortran}, and need to accept
 the Apple extension of the @option{-arch} flag.  Suitable compilers can
 be downloaded from @uref{http://cran.r-project.org/bin/macosx/tools/}
@@ -2193,12 +2195,14 @@ make this easier for users. See
 for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
-if it defaults to @samp{C} (as it often does when logging it remotely
-and in batch jobs).
+if it defaults to @samp{C} (as it sometimes does when logging it
+remotely and in batch jobs: note whether @command{Terminal} sets the
+@env{LANG} environment variable is an (advanced) option, but the
+default).
 
 Internally OS X uses a form similar to Linux.  It is based on ICU
 locales IDs (@uref{http://userguide.icu-project.org/@/locale}) and not
-XPG ones, but utilities such as @code{Sys.setlocale()} do now normally
+XPG ones, but utilities such as @code{Sys.setlocale()} do normally
 accept XPG forms.  So there are locales like @code{de_AT.ISO8859-15}
 (German in Austria in Latin-9, which covers the Euro): the main
 difference from other Unix-alikes is that where a character set is not
@@ -4148,22 +4152,22 @@ on earlier versions of OS X instead of the Apple version.
 For more information on how to find these and other useful tools see the
 @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for
 Mac OS X @acronym{FAQ}}.  It is possible to use non-Apple compilers
-which do not support @option{-arch}, but changes will be need to the
+which do not support @option{-arch}, but changes will be needed to the
 instructions here (and they are not supported by the @acronym{CRAN}
 binary distribution of @R{}).
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
-most likely want at least @code{jpeg}, @code{libpng}, @code{readline}
-and @code{tiff}.
+most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
+(and perhaps @code{tiff}).
 
 In principle @R{} can be built for 10.4.x but this has not been tested
 recently: 10.5.8 (Leopard) is the earliest version currently tested.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
-becomes the default device when running @R{} at the console and X would
-only be used for the data editor/viewer.
+becomes the default device when running @R{} at the console and X11
+would only be used for the data editor/viewer.
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
@@ -4189,7 +4193,7 @@ the former is a wrapper for the latter.
 
 Note that the Apple versions of GCC (and those on
 @uref{http://r.research.att.com}) are based on version 4.2 from
-2007. That is now a long time ago and latter versions (as used on other
+2007. That is now a long time ago and later versions (as used on other
 @R{} platforms, including @code{CRAN}'s incoming checks) are better at
 detecting coding errors.  If can be well worth checking your code with
 @command{clang}/@command{clang++}: @R{} itself is checked with
@@ -4296,7 +4300,8 @@ performance was obtained from the compilers at
 @node Mountain Lion, Frameworks, Lion, Mac OS X
 @subsection Mountain Lion
 
-See the notes on Lion: currently Xcode (4.5) is similar for the two versions.
+See the notes on Lion: currently Xcode (4.5.x) is the same for the two
+OS versions.
 
 Mountain Lion currently does not come with a Java runtime installed, and
 an upgrade to Mountain Lion removes one if already installed.  It is
