@@ -3628,12 +3628,11 @@ Some of the FORTRAN code makes use of @code{COMPLEX*16} variables, which
 is a Fortran 90 extension.  This is checked for at configure
 time@footnote{as well as its equivalence to the @code{Rcomplex}
 structure defined in @file{R_ext/Complex.h}.}, but you may need to avoid
-compiler flags@footnote{In particular, avoid @command{g77}'s
-@option{-pedantic}, which gives confusing error messages.} asserting
-FORTRAN 77 compliance.
+compiler flags asserting FORTRAN 77 compliance.
 
 Compiling the version of LAPACK in the @R{} sources also requires some
-Fortran 90 extensions.
+Fortran 90 extensions, but these are not needed if an external LAPACK is
+used.
 
 @cindex BLAS library
 For performance reasons@footnote{e.g., to use an optimized @acronym{BLAS} on
@@ -3660,16 +3659,16 @@ will need to set @env{FPICFLAGS} appropriately.
 @subsection Using gfortran
 
 @command{gfortran} is the F95 compiler that is part of
-@command{gcc}@tie{}4.@var{x}.@var{y}.  There were problems compiling
-@R{} with the first release (@command{gcc}@tie{}4.0.0) and more with
-pre-releases, but these are resolved in later versions.
+@command{gcc}@tie{}4.@var{x}.@var{y}.
 
 On Linux @cputype{x86_64} systems there is an incompatibility in the
 return conventions for double-complex functions between
 @command{gfortran} and @command{g77} which results in the final example
 in @code{example(eigen)} hanging or segfaulting under external @acronym{BLAS}s
 built under @command{g77}.  This should be detected by a
-@command{configure} test.
+@command{configure} test.  Although @command{g77} is long obsolete this
+is still sometimes seen with C versions of external software using
+@command{g77} conventions.
 
 The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
 @command{autoconf}) for a @acronym{GNU} FORTRAN compiler is @samp{-g
