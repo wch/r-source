@@ -105,35 +105,70 @@ extern void get_current_mem(unsigned long *,unsigned long *,unsigned long *); /*
 extern unsigned long get_duplicate_counter(void);  /* in duplicate.c */
 extern void reset_duplicate_counter(void);         /* in duplicate.c */
 static int R_Line_Profiling = 0;
+static SEXP R_Filenames_Env; /* when line profiling, an environment holding filenames that have already
+				 	     been seen, hashed for fast lookup */
+static SEXP R_Filenames_List;  /* a "stretchy" list of the unrecorded filenames, as in gram.y */ 
+
 
 
 #ifdef Win32
 HANDLE MainThread;
 HANDLE ProfileEvent;
+#endif /* Win32 */
+
+/* Stretchy List Structures : Lists are created and grown using a special */
+/* dotted pair.  The CAR of the list points to the last cons-cell in the */
+/* list and the CDR points to the first.  The list can be extracted from */
+/* the pair by taking its CDR, while the CAR gives fast access to the end */
+/* of the list. */
+
+static SEXP NewList(void)
+{
+    SEXP s = CONS(R_NilValue, R_NilValue);
+    SETCAR(s, s);
+    return s;
+}
+
+static SEXP GrowList(SEXP l, SEXP s)
+{
+    SEXP tmp;
+    tmp = CONS(s, R_NilValue);
+    SETCDR(CAR(l), tmp);
+    SETCAR(l, tmp);
+    return l;
+}
 
 static void lineprof(char* buf, SEXP srcref) {
     int len;
     if (srcref && !isNull(srcref) && (len = strlen(buf)) < 1000) {
 	SEXP filename;
-	int line = asInteger(srcref);
+	int fnum, line = asInteger(srcref);
 	PROTECT(filename = R_GetSrcFilename(srcref));
-	const char *f = strrchr(CHAR(STRING_ELT(filename, 0)), '/');
-	if (!f) f = CHAR(STRING_ELT(filename, 0));
-	else f = f + 1;
-	snprintf(buf+len, 1100-len, "%s#%d ", f, line);
+	SEXP index = findVarInFrame(R_Filenames_Env, install(CHAR(STRING_ELT(filename, 0))));
+	if (index == R_UnboundValue) {  /* First time we've seen this filename */
+	    fnum = R_Line_Profiling++;
+	    defineVar(install(CHAR(STRING_ELT(filename, 0))), ScalarInteger(fnum), R_Filenames_Env);
+	    GrowList(R_Filenames_List, filename);
+	} else
+	    fnum = INTEGER(index)[0];
+	snprintf(buf+len, 1100-len, "%d#%d ", fnum, line);
 	UNPROTECT(1);
     }
 }
 
-static void doprof(void)
+static void doprof(int sig)  /* sig is ignored in Windows */
 {
     RCNTXT *cptr;
     char buf[1100];
     unsigned long bigv, smallv, nodes;
-    int len;
+    int len, prevnum = R_Line_Profiling;
     
     buf[0] = '\0';
+    
+#ifdef Win32
     SuspendThread(MainThread);
+#endif /* Win32 */
+
     if (R_Mem_Profiling){
 	    get_current_mem(&smallv, &bigv, &nodes);
 	    if((len = strlen(buf)) < 1000) {
@@ -142,9 +177,12 @@ static void doprof(void)
 	    }
 	    reset_duplicate_counter();
     }
-    if (R_Line_Profiling)
+    
+    if (R_Line_Profiling) {
+        PROTECT(R_Filenames_List = NewList());
     	lineprof(buf, R_Srcref);
-        
+    }
+    
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
@@ -159,11 +197,30 @@ static void doprof(void)
 	    }
 	}
     }
+    
+#ifdef Win32
     ResumeThread(MainThread);
+#endif /* Win32 */	
+
+    if (R_Line_Profiling > prevnum) {
+        SEXP list = R_Filenames_List;
+    	while ((list = CDR(list)) != R_NilValue) 
+    	    fprintf(R_ProfileOutfile, "#File %d: %s\n", prevnum++, translateChar(STRING_ELT(CAR(list), 0)));
+    }    
+
+    if (R_Line_Profiling)
+    	UNPROTECT(1);
+    	
     if(strlen(buf))
 	fprintf(R_ProfileOutfile, "%s\n", buf);
+
+#ifndef Win32	
+    signal(SIGPROF, doprof);
+#endif /* not Win32 */
+
 }
 
+#ifdef Win32
 /* Profiling thread main function */
 static void __cdecl ProfileThread(void *pwait)
 {
@@ -171,56 +228,10 @@ static void __cdecl ProfileThread(void *pwait)
 
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
     while(WaitForSingleObject(ProfileEvent, wait) != WAIT_OBJECT_0) {
-	doprof();
+	doprof(0);
     }
 }
 #else /* not Win32 */
-
-static void lineprof(SEXP srcref) 
-{
-    if (srcref && !isNull(srcref)) {
-	SEXP filename;
-	int line = asInteger(srcref);
-	PROTECT(filename = R_GetSrcFilename(srcref));
-	const char *f = strrchr(CHAR(STRING_ELT(filename, 0)), '/');
-	if (!f) f = CHAR(STRING_ELT(filename, 0));
-	else f = f + 1;
-	fprintf(R_ProfileOutfile, "%s#%d ", f, line);
-	UNPROTECT(1);
-    }
-}
-
-static void doprof(int sig)
-{
-    RCNTXT *cptr;
-    int newline = 0;
-    unsigned long bigv, smallv, nodes;
-    if (R_Mem_Profiling){
-	    get_current_mem(&smallv, &bigv, &nodes);
-	    if (!newline) newline = 1;
-	    fprintf(R_ProfileOutfile, ":%ld:%ld:%ld:%ld:", smallv, bigv,
-		     nodes, get_duplicate_counter());
-	    reset_duplicate_counter();
-    }
-    if (R_Line_Profiling)
-    	lineprof(R_Srcref);
-
-    for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
-	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
-	    && TYPEOF(cptr->call) == LANGSXP) {
-	    SEXP fun = CAR(cptr->call);
-	    if (!newline) newline = 1;
-	    fprintf(R_ProfileOutfile, "\"%s\" ",
-		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
-		    "<Anonymous>");
-	    if (R_Line_Profiling)
-	    	lineprof(cptr->srcref);
-	}
-    }
-    if (newline) fprintf(R_ProfileOutfile, "\n");
-    signal(SIGPROF, doprof);
-}
-
 static void doprof_null(int sig)
 {
     signal(SIGPROF, doprof_null);
@@ -246,6 +257,10 @@ static void R_EndProfiling(void)
     if(R_ProfileOutfile) fclose(R_ProfileOutfile);
     R_ProfileOutfile = NULL;
     R_Profiling = 0;
+    if (R_Filenames_Env != R_NilValue) {
+        R_ReleaseObject(R_Filenames_Env);
+        R_Filenames_Env = R_NilValue;
+    }
 }
 
 static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem_profiling, int line_profiling)
@@ -275,7 +290,11 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
 	reset_duplicate_counter();
 	
     R_Line_Profiling = line_profiling;
-
+    if (line_profiling) 
+    	R_PreserveObject( R_Filenames_Env = R_NewHashedEnv(R_EmptyEnv, ScalarInteger(0)) );
+    else
+        R_Filenames_Env = R_NilValue;
+    
 #ifdef Win32
     /* need to duplicate to make a real handle */
     DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread,

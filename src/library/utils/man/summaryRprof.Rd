@@ -14,7 +14,8 @@ amount of time used by different \R functions.
 summaryRprof(filename = "Rprof.out", chunksize = 5000,
               memory = c("none", "both", "tseries", "stats"),
               lines = c("hide", "show", "both"),
-              index = 2, diff = TRUE, exclude = NULL)
+              index = 2, diff = TRUE, exclude = NULL,
+              basenames = 1)
 }
 \arguments{
   \item{filename}{Name of a file produced by \code{Rprof()}.}
@@ -27,7 +28,7 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
     rather than current memory.}
   \item{exclude}{Functions to exclude when summarizing the stack trace
     for memory summaries.}
-
+  \item{basenames}{Number of components of the path to filenames to display.}
 }
 
 \details{
