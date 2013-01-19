@@ -399,7 +399,7 @@ function(x)
                               is_standardizable = FALSE,
                               is_verified = FALSE,
                               standardization = NA_character_,
-                              is_extended = NA,
+                              extensions = NULL,
                               pointers = NULL)
         list(is_empty = is_empty,
              is_canonical = is_canonical,
@@ -407,7 +407,7 @@ function(x)
              is_standardizable = is_standardizable,
              is_verified = is_verified,
              standardization = standardization,
-             is_extended = is_extended,
+             extensions = extensions,
              pointers = pointers)
 
 
@@ -420,7 +420,7 @@ function(x)
     }
 
     pointers <- NULL
-    is_extended <- NA
+    extensions <- NULL
     is_verified <- FALSE
 
     ## Try splitting into the individual components.
@@ -464,32 +464,41 @@ function(x)
 
     ## Analyze components provided that we know we can standardize.
     if(is_standardizable) {
+        verifiable <- function(x)
+            !is.null(x) && all(!is.na(x) & (x == "yes"))        
+        expansions <- lapply(components,
+                             expand_license_spec_component_from_db)
+        
         is_verified <- if(any(components == "Unlimited")) TRUE else {
-            is_FOSS <- function(x)
-                !is.null(x) && all(!is.na(x) & (x == "yes"))
-            expansions <- lapply(components,
-                                 expand_license_spec_component_from_db)
-            any(sapply(expansions, function(e) is_FOSS(e$FOSS)))
+            any(sapply(expansions, function(e) verifiable(e$FOSS)))
         }
 
-        ind <- grep(sprintf("%s$",
-                            R_license_db_vars$re_license_file),
-                     components)
-        if(length(ind)) {
+        components <- grep(sprintf("%s$",
+                                   R_license_db_vars$re_license_file),
+                           components,
+                           value = TRUE)
+        if(length(components)) {
+            ## Components with license file pointers.
             pointers <- sub(".*file ", "", components[ind])
-            is_extended <-
-                any(grepl("+", components[ind], fixed = TRUE))
-        } else {
-            is_extended <- FALSE
+            ## Components with license extensions.
+            ind <- grepl("+", components, fixed = TRUE)
+            if(length(ind))
+                extensions <-
+                    data.frame(components = components[ind],
+                               extensible =
+                               sapply(expansions[ind],
+                                      function(e)
+                                      verifiable(e$Extensible)),
+                               stringsAsFactors = FALSE)
         }
     }
 
     .make_results(is_canonical = is_canonical,
                   bad_components = bad_components,
                   is_standardizable = is_standardizable,
-                  is_verified = is_verified,
                   standardization = standardization,
-                  is_extended = is_extended,
+                  is_verified = is_verified,
+                  extensions = extensions,
                   pointers = pointers)
 }
 

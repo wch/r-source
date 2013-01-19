@@ -3175,6 +3175,12 @@ function(dfile, dir)
                 ok <- FALSE
             }
         }
+        ## Components with extensions but not extensible:
+        if(length(extensions <- status$extensions) &&
+           any(ind <- !extensions$extensible)) {
+            status$bad_extensions <- extensions$components[ind]
+            ok <- FALSE
+        }
         ## Could always return the analysis results and not print them
         ## if ok, but it seems more standard to only return trouble.
         if(!ok)
@@ -3193,7 +3199,9 @@ function(x, ...)
 
     check <- Sys.getenv("_R_CHECK_LICENSE_")
     check <- if(check %in% c("maybe", ""))
-        !(x$is_standardizable) || length(x$bad_pointers)
+        (!(x$is_standardizable)
+         || length(x$bad_pointers)
+         || length(x$bad_extensions))
     else
         isTRUE(as.logical(check))
     if(!check)
@@ -3209,10 +3217,15 @@ function(x, ...)
                   strwrap(x$standardization, indent = 2L, exdent = 2L))
             })
       },
-      if(length(x$bad_pointers)) {
+      if(length(y <- x$bad_pointers)) {
           c(gettextf("Invalid license file pointers: %s",
-                     paste(x$bad_pointers, collapse = " ")))
-      })
+                     paste(y, collapse = " ")))
+      },
+      if(length(y <- x$bad_extensions)) {
+          c(gettext("Components with restrictions not permitted:"),
+            paste(" ", y))
+      }
+      )
 }
 
 ## print.check_package_license <- .print.via.format

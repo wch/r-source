@@ -15,6 +15,7 @@ OSI: open (http://opensource.org/licenses/gpl-license)
 FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#GNUGPL)
 URL: http://www.R-project.org/Licenses/GPL-3
 FOSS: yes
+Extensible: yes
 
 Name: GNU Library General Public License
 Abbrev: LGPL
@@ -51,6 +52,7 @@ FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#AGPL
 OSI: open (http://opensource.org/licenses/AGPL-3.0)
 URL: http://www.R-project.org/Licenses/AGPL-3
 FOSS: yes
+Extensible: yes
 
 Name: Apache License
 Version: 1.1
