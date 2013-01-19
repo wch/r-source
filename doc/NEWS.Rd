@@ -895,6 +895,9 @@
 
       \item The cairo-based versions of \code{X11()} now work with
       current versions of cairographics (e.g. 1.12.10).  (\PR{15168})
+
+      A workaround for earlier version of \R is to use
+      \code{X11.options(type = "nbcairo")}.
     }
   }
 
