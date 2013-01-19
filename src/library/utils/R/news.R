@@ -75,22 +75,22 @@ function(query, package = "R", lib.loc = NULL,
         db[r, ]
 }
 
-print.news_db <-
+format.news_db <-
 function(x, ...)
 {
     if(inherits(x, "news_db_from_Rd") ||
        (!(is.null(bad <- attr(x, "bad")))
         && (length(bad) == NROW(x))
         && all(!bad))) {
-        ## Output news in the preferred input format:
+
+        ## Format news in the preferred input format:
         ##   Changes in $VERSION [($DATE)]:
         ##   [$CATEGORY$]
         ##   indented/formatted bullet list of $TEXT entries.
         ## <FIXME>
         ## Add support for DATE.
         ## </FIXME>
-        print_items <- function(x)
-            cat(paste0("    o   ", gsub("\n", "\n\t", x)), sep = "\n\n")
+
         vchunks <- split(x, x$Version)
         ## Re-order according to decreasing version.
         ## R NEWS has invalid "versions" such as "R-devel" and
@@ -109,37 +109,44 @@ function(x, ...)
             ind <- vstrings != "R-devel"
             vstrings[ind] <- sprintf("version %s", vstrings[ind])
             vheaders <-
-                sprintf("%sChanges in %s%s:\n\n",
-                        c("", rep.int("\n", length(vchunks) - 1L)),
+                sprintf("Changes in %s%s:",
                         vstrings,
                         ifelse(is.na(dates), "",
                                sprintf(" (%s)", dates)))
         }
-        for(i in seq_along(vchunks)) {
-            cat(vheaders[i])
-            vchunk <- vchunks[[i]]
+
+        format_items <- function(x)
+            paste0("    o   ", gsub("\n", "\n\t", x$Text))
+        format_vchunk <- function(vchunk) {
             if(all(!is.na(category <- vchunk$Category)
                    & nzchar(category))) {
                 ## need to preserve order of headings.
-                cchunks <- split(vchunk,
-                                 factor(category, levels=unique(category)))
-                cheaders <-
-                    sprintf("%s%s\n\n",
-                            c("", rep.int("\n", length(cchunks) - 1L)),
-                            names(cchunks))
-                for(j in seq_along(cchunks)) {
-                    cat(cheaders[j])
-                    print_items(cchunks[[j]]$Text)
-                }
+                cchunks <-
+                    split(vchunk,
+                          factor(category, levels = unique(category)))
+                Map(c, names(cchunks), sapply(cchunks, format_items),
+                    USE.NAMES = FALSE)
             } else {
-                print_items(vchunk$Text)
+                format_items(vchunk)
             }
         }
+
+        Map(c, vheaders, lapply(vchunks, format_vchunk),
+            USE.NAMES = FALSE)
     } else {
         ## Simple and ugly.
-        ## Should this drop all-NA variables?
-        print(as.data.frame(x), right = FALSE, row.names = FALSE)
+        ## Drop all-NA variables.
+        apply(as.matrix(x),
+              1L,
+              function(e)
+              paste(formatDL(e[!is.na(e)], style = "list"),
+                    collapse = "\n"))
     }
+}
 
+print.news_db <-
+function(x, ...)
+{
+    writeLines(paste(unlist(format(x, ...)), collapse = "\n\n"))
     invisible(x)
 }
