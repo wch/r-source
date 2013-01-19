@@ -2075,5 +2075,13 @@ x <- character(0)
 stopifnot(identical(sQuote(x), x), identical(dQuote(x), x))
 ## was length one in 2.15.2
 
+## aperm(a, <char>)  when a has named dimnames:
+a <- matrix(1:6, 2, dimnames=list(A=NULL, B=NULL))
+stopifnot(identical(unname(aperm(a, c("B","A"))),
+		    matrix(1:6, 3, byrow=TRUE)))# worked
+assertError(aperm(a, c("C","A")))# fine, but
+## forgetting one had been detrimental:
+assertError( aperm(a, "A") )
+## seg.faulted in 2.15.2 and earlier
 
 proc.time()

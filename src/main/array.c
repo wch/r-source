@@ -132,8 +132,8 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
- #ifndef LONG_VECTOR_SUPPORT
-   if ((double)nr * (double)nc > INT_MAX)
+#ifndef LONG_VECTOR_SUPPORT
+    if ((double)nr * (double)nc > INT_MAX)
 	error(_("too many elements specified"));
 #endif
 
@@ -1092,27 +1092,30 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     perm = CADR(args);
     if (length(perm) == 0) {
 	for (i = 0; i < n; i++) pp[i] = n-1-i;
-    } else if (isString(perm)) {
-	SEXP dna = getAttrib(a, R_DimNamesSymbol);
-	if (isNull(dna))
-	    error(_("'a' does not have named dimnames"));
-	SEXP dnna = getAttrib(dna, R_NamesSymbol);
-	if (isNull(dnna))
-	    error(_("'a' does not have named dimnames"));
-	for (i = 0; i < n; i++) {
-	    const char *this = translateChar(STRING_ELT(perm, i));
-	    for (j = 0; j < n; j++)
-		if (streql(translateChar(STRING_ELT(dnna, j)),
-			   this)) {pp[i] = j; break;}
-	    if (j >= n)
-		error(_("'perm[%d]' does not match a dimension name"), i+1);
-	}
     } else {
-	PROTECT(perm = coerceVector(perm, INTSXP));
-	if (LENGTH(perm) == n) {
+	if (LENGTH(perm) != n)
+	    error(_("'perm' is of wrong length %d (!= %d)"),
+		  LENGTH(perm), n);
+	if (isString(perm)) {
+	    SEXP dna = getAttrib(a, R_DimNamesSymbol);
+	    if (isNull(dna))
+		error(_("'a' does not have named dimnames"));
+	    SEXP dnna = getAttrib(dna, R_NamesSymbol);
+	    if (isNull(dnna))
+		error(_("'a' does not have named dimnames"));
+	    for (i = 0; i < n; i++) {
+		const char *this = translateChar(STRING_ELT(perm, i));
+		for (j = 0; j < n; j++)
+		    if (streql(translateChar(STRING_ELT(dnna, j)),
+			       this)) {pp[i] = j; break;}
+		if (j >= n)
+		    error(_("'perm[%d]' does not match a dimension name"), i+1);
+	    }
+	} else {
+	    PROTECT(perm = coerceVector(perm, INTSXP));
 	    for (i = 0; i < n; i++) pp[i] = INTEGER(perm)[i] - 1;
 	    UNPROTECT(1);
-	} else error(_("'perm' is of wrong length"));
+	}
     }
 
     R_xlen_t *iip = (R_xlen_t *) R_alloc((size_t) n, sizeof(R_xlen_t));
@@ -1374,7 +1377,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (OP == 3) {
 	    if (keepNA)
 		for (int i = 0; i < n; i++) rans[i] /= p;
-	    else 
+	    else
 		for (int i = 0; i < n; i++) rans[i] /= Cnt[i];
 	}
 	for (int i = 0; i < n; i++) REAL(ans)[i] = (double) rans[i];
@@ -1393,13 +1396,13 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     dim <- as.integer(dim)
     vl <- prod(dim)
     if (length(data) != vl) {
-        if (vl > .Machine$integer.max) 
+        if (vl > .Machine$integer.max)
             stop("'dim' specifies too large an array")
         data <- rep(data, length.out = vl)
     }
-    if (length(dim)) 
+    if (length(dim))
         dim(data) <- dim
-    if (is.list(dimnames) && length(dimnames)) 
+    if (is.list(dimnames) && length(dimnames))
         dimnames(data) <- dimnames
     data
 }
@@ -1503,7 +1506,7 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = dimnamesgets(ans, dimnames);
 	UNPROTECT(1);
     }
-	
+
     UNPROTECT(2);
     return ans;
 }
@@ -1527,7 +1530,7 @@ SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid 'ncol' value (too large or NA)"));
     if (nc < 0)
 	error(_("invalid 'ncol' value (< 0)"));
-    int mn = (nr < nc) ? nr : nc; 
+    int mn = (nr < nc) ? nr : nc;
     if (mn > 0 && LENGTH(x) == 0)
 	error(_("'x' must have positive length"));
 
@@ -1575,7 +1578,7 @@ SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
        many rows and cols in the rhs and at least that many rows on
        the rhs.
     */
-    if (k == NA_INTEGER || k <= 0 || k > nrr || k > ncols(r) || k > nrb) 
+    if (k == NA_INTEGER || k <= 0 || k > nrr || k > ncols(r) || k > nrb)
 	error(_("invalid '%s' argument"), "k");
     int upper = asLogical(CAR(args)); args = CDR(args);
     if (upper == NA_INTEGER) error(_("invalid '%s' argument"), "upper.tri");
@@ -1600,7 +1603,7 @@ SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(R_xlen_t j = 0; j < ncb; j++)
 	    memcpy(REAL(ans) + j*k, REAL(b) + j*nrb, (size_t)k *sizeof(double));
 	double one = 1.0;
-	F77_CALL(dtrsm)("L", upper ? "U" : "L", trans ? "T" : "N", "N", 
+	F77_CALL(dtrsm)("L", upper ? "U" : "L", trans ? "T" : "N", "N",
 			&k, &ncb, &one, rr, &nrr, REAL(ans), &k);
     }
     UNPROTECT(nprot);

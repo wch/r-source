@@ -339,7 +339,7 @@
 
       \item \code{close()} now returns an integer status where available,
       invisibly. (Wish of \PR{15088}.)
-      
+
       \item The internal method of \code{tar()} can now store paths too
       long for the \samp{ustar} format, using the (widely supported) GNU
       extension.
@@ -354,7 +354,7 @@
       This is useful if they are incorrect (some tarballs submitted to
       \acronym{CRAN} have times in a local timezone or many years in the
       past even though the standard required them to be in UTC).
-      
+
       \item \code{replayplot()} cannot (and will not attempt to) replay
       plots recorded under \R < 3.0.0.  It may crash the \R session if
       an attempt is made to replay plots created in a different build of
@@ -366,13 +366,13 @@
       during a plot.
 
       \item \code{chol(pivot = TRUE)} now defaults to LAPACK, not LINPACK.
-      
-      \item The \code{parse()} function has a new parameter 
+
+      \item The \code{parse()} function has a new parameter
       \code{keep.source}, which defaults to \code{options("keep.source")}.
-      
+
       \item Profiling via \code{Rprof()} now optionally records information
       at the statement level, not just the function level.
-      
+
       \item The \code{Rprof()} function now quotes function names in
       in its output file on Windows, to be consistent with the quoting
       in Unix.
@@ -599,16 +599,16 @@
 
       \item The unused \code{dataPath} argument to
       \code{attachNamespace()} has been removed.
-      
+
       \item \code{grid.prompt()} has been removed: use
       \code{devAskNewPage()} instead.
-      
+
       \item The long-deprecated \code{intensities} component is no
       longer returned by \code{hist()}.
 
       \item \code{mean()} for data frames and \code{sd()} for data
       frames and matrices are defunct.
-      
+
       \item \code{chol(pivot = FALSE, LINPACK = TRUE)},
       \code{ch2inv(LINPACK = TRUE)}, \code{eigen(EISPACK = TRUE)},
       \code{solve(LINPACK = TRUE)} and \code{svd(LINPACK = TRUE)} are
@@ -616,8 +616,8 @@
 
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated (the
       \code{pivot = FALSE} case has been since \R 2.15.2).
-      
-      \item The \code{keep.source} argument to \code{library()} and 
+
+      \item The \code{keep.source} argument to \code{library()} and
       \code{require()} is defunct.  This option needs to be set
       at install time.
     }
@@ -764,7 +764,7 @@
       \item The 'reference manual' on the Windows GUI menu and included
       in the installer is now the full reference index, including all
       base and recommended packages.
-      
+
       \item The Windows installer no longer installs a Start Menu
       link to the static help pages; as most pages are generated
       dynamically, this led to a lot of broken links.
@@ -812,17 +812,17 @@
       garbage collection triggering a recursive call.
 
       \item Field assignments in reference class objects via
-      \code{$<-} were not being checked 
+      \code{$<-} were not being checked
       because the magic incantation to turn methods on for that
       primitive operator had been inadvertently omitted. %$
-      
+
       \item \code{setHook(hookname, value, action="replace")} set the
       hook to be the value, rather than a list containing the value as
-      documented. (\PR{15167})      
-      
+      documented. (\PR{15167})
+
       \item  If a package used a \file{NEWS.Rd} file, the main HTML
       package index page did not link to it.  (Reported by Dirk
-      Eddelbuettel.)      
+      Eddelbuettel.)
     }
   }
 }
@@ -847,7 +847,7 @@
       \code{pax} headers as produced by e.g. \command{gnutar --posix}
       (which seems prevalent on OpenSUSE 12.2) or
       \command{bsdtar --format pax}, including long path and link names.
-    
+
       \item \code{sQuote()} and \code{dQuote()} now handle 0-length
       inputs.  (Suggestion of Ben Bolker.)
 
@@ -881,11 +881,11 @@
    \itemize{
       \item Use of \code{col2rgb(0)} is deprecated (see the help page
       for its limitations).
-      
+
       \item The deprecated \code{intensities} component returned by
       \code{hist()} is no longer recognized by the \code{plot()} method
       and will be removed in \R 3.0.0.
-      
+
       \item \code{real()}, \code{as.real()} and \code{is.real()} are now
       formally deprecated and give a warning.
     }
@@ -973,12 +973,16 @@
 
       \item The version for Windows 8 and Windows Server 2012 is now
       displayed by \code{win.version()}.  (Reported by Gabor
-      Grothendieck.)      
-      
+      Grothendieck.)
+
       \item The custom Windows installer target \code{myR} in the
       installer \file{Makefile} did not work in 2.15.2.  (Reported
       by Erich Neuwirth.)
+
+      \item \code{aperm(matrix(1:6, 2, dimnames=list(A={}, B={})), "A")}
+      no longer segfaults.
     }
+
   }
 }
 
