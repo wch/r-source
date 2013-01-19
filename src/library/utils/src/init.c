@@ -73,7 +73,7 @@ static const R_CallMethodDef CallEntries[] = {
 static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(download, 5),
     EXTDEF(unzip, 7),
-    EXTDEF(Rprof, 4),
+    EXTDEF(Rprof, 7),
     EXTDEF(Rprofmem, 3),
 
     EXTDEF(countfields, 6),

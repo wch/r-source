@@ -11,7 +11,8 @@
 }
 \usage{
 Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
-       memory.profiling = FALSE, line.profiling = FALSE)
+       memory.profiling = FALSE, line.profiling = FALSE,
+       numfiles = 100L, bufsize = 10000L)
 }
 \arguments{
   \item{filename}{
@@ -26,6 +27,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   }
   \item{memory.profiling}{logical: write memory use information to the file?}
   \item{line.profiling}{logical:  write line locations to the file?}
+  \item{numfiles, bufsize}{integers: line profiling memory allocation}
 }
 \details{
   Enabling profiling automatically disables any existing profiling to
@@ -68,7 +70,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   was parsed with source references.  See \code{\link{parse}} for a
   discussion of source references.  By default the statement locations
   are not shown in \code{\link{summaryRprof}}, but see that help page
-  for options to enable the display.  
+  for options to enable the display.    
 }
 #ifdef unix
 \note{
@@ -87,6 +89,17 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   the current locale.
 }
 #endif
+\note{
+The profiler interrupts R asynchronously, and it cannot allocate
+memory to store results as it runs.  This affects line profiling,
+which needs to store an unknown number of file pathnames.  The
+\code{numfiles} and \code{bufsize} arguments control the size of 
+pre-allocated buffers to hold these results:  the former counts the
+maximum number of paths, the latter counts the numbers of bytes in
+them.  If the profiler runs out of space it will skip recording the
+line information for new files, and issue a warning when
+\code{Rprof(NULL)} is called to finish profiling.
+}
 \seealso{
   The chapter on \dQuote{Tidying and profiling R code} in
   \dQuote{Writing \R Extensions} (see the \file{doc/manual} subdirectory

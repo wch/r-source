@@ -104,36 +104,80 @@ static int R_Mem_Profiling=0;
 extern void get_current_mem(unsigned long *,unsigned long *,unsigned long *); /* in memory.c */
 extern unsigned long get_duplicate_counter(void);  /* in duplicate.c */
 extern void reset_duplicate_counter(void);         /* in duplicate.c */
-static int R_Line_Profiling = 0;
-
+static int R_Line_Profiling = 0;                   /* indicates line profiling, and also counts the filenames seen (+1) */
+static char **R_Srcfiles;			   /* an array of pointers into the filename buffer */
+static size_t R_Srcfile_bufcount;                  /* how big is the array above? */
+static SEXP R_Srcfiles_buffer = NULL;              /* a big RAWSXP to use as a buffer for filenames and pointers to them */
+static int R_Profiling_Error;		   /* record errors here */
 
 #ifdef Win32
 HANDLE MainThread;
 HANDLE ProfileEvent;
+#endif /* Win32 */
+
+/* Careful here!  These functions are called asynchronously, maybe in the middle of GC,
+   so don't do any allocations */
+
+/* This does a linear search through the previously recorded filenames.  If 
+   this one is new, we try to add it.  FIXME:  if there are eventually
+   too many files for an efficient linear search, do hashing. */
+   
+static int getFilenum(const char* filename) {
+    int fnum;
+    
+    for (fnum = 0; fnum < R_Line_Profiling-1
+		   && strcmp(filename, R_Srcfiles[fnum]); fnum++);
+
+    if (fnum == R_Line_Profiling-1) {
+	size_t len = strlen(filename); 
+	if (fnum >= R_Srcfile_bufcount) { /* too many files */
+	    R_Profiling_Error = 1;
+	    return 0;
+	}
+	if (R_Srcfiles[fnum] - (char*)RAW(R_Srcfiles_buffer) + len + 1 > length(R_Srcfiles_buffer)) {
+	      /* out of space in the buffer */
+	    R_Profiling_Error = 2;
+	    return 0;
+	}
+	strcpy(R_Srcfiles[fnum], filename);
+	R_Srcfiles[fnum+1] = R_Srcfiles[fnum] + len + 1;
+	*(R_Srcfiles[fnum+1]) = '\0';
+	R_Line_Profiling++;
+    }
+    
+    return fnum + 1;
+}
 
 static void lineprof(char* buf, SEXP srcref) {
     int len;
     if (srcref && !isNull(srcref) && (len = strlen(buf)) < 1000) {
-	SEXP filename;
-	int line = asInteger(srcref);
-	PROTECT(filename = R_GetSrcFilename(srcref));
-	const char *f = strrchr(CHAR(STRING_ELT(filename, 0)), '/');
-	if (!f) f = CHAR(STRING_ELT(filename, 0));
-	else f = f + 1;
-	snprintf(buf+len, 1100-len, "%s#%d ", f, line);
-	UNPROTECT(1);
+	int fnum, line = asInteger(srcref);
+	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
+	const char *filename;
+	
+	if (!srcfile || TYPEOF(srcfile) != ENVSXP) return;
+	srcfile = findVar(install("filename"), srcfile);
+	if (TYPEOF(srcfile) != STRSXP || !length(srcfile)) return;
+	filename = CHAR(STRING_ELT(srcfile, 0));
+	
+	if ((fnum = getFilenum(filename)))
+	    snprintf(buf+len, 1100-len, "%d#%d ", fnum, line);
     }
 }
 
-static void doprof(void)
+static void doprof(int sig)  /* sig is ignored in Windows */
 {
     RCNTXT *cptr;
     char buf[1100];
     unsigned long bigv, smallv, nodes;
-    int len;
+    int len, prevnum = R_Line_Profiling;
     
     buf[0] = '\0';
+    
+#ifdef Win32
     SuspendThread(MainThread);
+#endif /* Win32 */
+
     if (R_Mem_Profiling){
 	    get_current_mem(&smallv, &bigv, &nodes);
 	    if((len = strlen(buf)) < 1000) {
@@ -142,9 +186,11 @@ static void doprof(void)
 	    }
 	    reset_duplicate_counter();
     }
-    if (R_Line_Profiling)
+    
+    if (R_Line_Profiling) {
     	lineprof(buf, R_Srcref);
-        
+    }
+    
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
@@ -159,11 +205,24 @@ static void doprof(void)
 	    }
 	}
     }
+    
+#ifdef Win32
     ResumeThread(MainThread);
+#endif /* Win32 */	
+
+    for (int i = prevnum; i < R_Line_Profiling; i++)
+    	fprintf(R_ProfileOutfile, "#File %d: %s\n", i, R_Srcfiles[i-1]);
+
     if(strlen(buf))
 	fprintf(R_ProfileOutfile, "%s\n", buf);
+
+#ifndef Win32	
+    signal(SIGPROF, doprof);
+#endif /* not Win32 */
+
 }
 
+#ifdef Win32
 /* Profiling thread main function */
 static void __cdecl ProfileThread(void *pwait)
 {
@@ -171,56 +230,10 @@ static void __cdecl ProfileThread(void *pwait)
 
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
     while(WaitForSingleObject(ProfileEvent, wait) != WAIT_OBJECT_0) {
-	doprof();
+	doprof(0);
     }
 }
 #else /* not Win32 */
-
-static void lineprof(SEXP srcref) 
-{
-    if (srcref && !isNull(srcref)) {
-	SEXP filename;
-	int line = asInteger(srcref);
-	PROTECT(filename = R_GetSrcFilename(srcref));
-	const char *f = strrchr(CHAR(STRING_ELT(filename, 0)), '/');
-	if (!f) f = CHAR(STRING_ELT(filename, 0));
-	else f = f + 1;
-	fprintf(R_ProfileOutfile, "%s#%d ", f, line);
-	UNPROTECT(1);
-    }
-}
-
-static void doprof(int sig)
-{
-    RCNTXT *cptr;
-    int newline = 0;
-    unsigned long bigv, smallv, nodes;
-    if (R_Mem_Profiling){
-	    get_current_mem(&smallv, &bigv, &nodes);
-	    if (!newline) newline = 1;
-	    fprintf(R_ProfileOutfile, ":%ld:%ld:%ld:%ld:", smallv, bigv,
-		     nodes, get_duplicate_counter());
-	    reset_duplicate_counter();
-    }
-    if (R_Line_Profiling)
-    	lineprof(R_Srcref);
-
-    for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
-	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
-	    && TYPEOF(cptr->call) == LANGSXP) {
-	    SEXP fun = CAR(cptr->call);
-	    if (!newline) newline = 1;
-	    fprintf(R_ProfileOutfile, "\"%s\" ",
-		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
-		    "<Anonymous>");
-	    if (R_Line_Profiling)
-	    	lineprof(cptr->srcref);
-	}
-    }
-    if (newline) fprintf(R_ProfileOutfile, "\n");
-    signal(SIGPROF, doprof);
-}
-
 static void doprof_null(int sig)
 {
     signal(SIGPROF, doprof_null);
@@ -246,9 +259,17 @@ static void R_EndProfiling(void)
     if(R_ProfileOutfile) fclose(R_ProfileOutfile);
     R_ProfileOutfile = NULL;
     R_Profiling = 0;
+    if (R_Srcfiles_buffer) {
+        R_ReleaseObject(R_Srcfiles_buffer);
+        R_Srcfiles_buffer = NULL;
+    }
+    if (R_Profiling_Error) 
+    	warning(_("source files skipped by Rprof; please increase '%s'"), 
+    		R_Profiling_Error == 1 ? "numfiles" : "bufsize");
 }
 
-static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem_profiling, int line_profiling)
+static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem_profiling, int line_profiling,
+		            int numfiles, int bufsize)
 {
 #ifndef Win32
     struct itimerval itv;
@@ -274,8 +295,20 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
     if (mem_profiling)
 	reset_duplicate_counter();
 	
+    R_Profiling_Error = 0;	
     R_Line_Profiling = line_profiling;
-
+    if (line_profiling) {
+        /* Allocate a big RAW vector to use as a buffer.  The first len1 bytes are an array of pointers
+           to strings; the actual strings are stored in the second len2 bytes. */
+        R_Srcfile_bufcount = numfiles;
+    	size_t len1 = R_Srcfile_bufcount*sizeof(char *), len2 = bufsize;
+    	R_PreserveObject( R_Srcfiles_buffer = Rf_allocVector(RAWSXP, len1 + len2) );
+    	memset(RAW(R_Srcfiles_buffer), 0, len1+len2);
+    	R_Srcfiles = (char **) RAW(R_Srcfiles_buffer);
+    	R_Srcfiles[0] = (char *)RAW(R_Srcfiles_buffer) + len1;
+    	*(R_Srcfiles[0]) = '\0';
+    } 	
+    
 #ifdef Win32
     /* need to duplicate to make a real handle */
     DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread,
@@ -303,6 +336,7 @@ SEXP do_Rprof(SEXP args)
     SEXP filename;
     int append_mode, mem_profiling, line_profiling;
     double dinterval;
+    int numfiles, bufsize;
 
 #ifdef BC_PROFILING
     if (bc_profiling) {
@@ -310,16 +344,24 @@ SEXP do_Rprof(SEXP args)
 	return R_NilValue;
     }
 #endif
-    if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
+    if (!isString(filename = CAR(args)) || (LENGTH(filename)) != 1)
 	error(_("invalid '%s' argument"), "filename");
-    append_mode = asLogical(CADR(args));
-    dinterval = asReal(CADDR(args));
-    mem_profiling = asLogical(CADDDR(args));
-    line_profiling = asLogical(CAD4R(args));
+    					      args = CDR(args);
+    append_mode = asLogical(CAR(args));       args = CDR(args);
+    dinterval = asReal(CAR(args));            args = CDR(args);
+    mem_profiling = asLogical(CAR(args));     args = CDR(args);
+    line_profiling = asLogical(CAR(args));    args = CDR(args);
+    numfiles = asInteger(CAR(args));  	      args = CDR(args);
+    if (numfiles < 0)
+	error(_("invalid '%s' argument"), "numfiles");
+    bufsize = (size_t)asInteger(CAR(args));
+    if (bufsize < 0)
+	error(_("invalid '%s' argument"), "bufsize");
     
-    filename = STRING_ELT(CAR(args), 0);
+    filename = STRING_ELT(filename, 0);
     if (LENGTH(filename))
-	R_InitProfiling(filename, append_mode, dinterval, mem_profiling, line_profiling);
+	R_InitProfiling(filename, append_mode, dinterval, mem_profiling, line_profiling,
+	                numfiles, bufsize);
     else
 	R_EndProfiling();
     return R_NilValue;
