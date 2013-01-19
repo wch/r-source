@@ -113,7 +113,8 @@ tar(tarfile, files = NULL,
     not comply.
 
     \item File sizes.  The \sQuote{ustar} format is restricted to 8GB
-    per (uncompressed) file.
+    per (uncompressed) file, and the internal method is currently
+    limited to 2GB.
   }
   For portability, avoid file paths of more than 100 bytes and all links
   (especially hard links and symbolic links to directories).
