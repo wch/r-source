@@ -482,7 +482,7 @@ function(x)
             pointers <- sub(".*file ", "", components[ind])
             ## Components with license extensions.
             ind <- grepl("+", components, fixed = TRUE)
-            if(length(ind))
+            if(any(ind))
                 extensions <-
                     data.frame(components = components[ind],
                                extensible =
