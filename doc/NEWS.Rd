@@ -715,6 +715,9 @@
       removed, including the Fortran entry points \code{chol},
       \code{chol2inv}, \code{cg}, \code{ch} and \code{rg}, and the C
       entry points \code{Brent_fmin}, \code{fft_factor} and \code{fft_work}.
+      
+      \item If a \code{.External} call is registered with a number of
+      arguments (other than \code{-1}), this is checked.
     }
   }
 
