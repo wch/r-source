@@ -303,7 +303,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
         R_Srcfile_bufcount = numfiles;
     	size_t len1 = R_Srcfile_bufcount*sizeof(char *), len2 = bufsize;
     	R_PreserveObject( R_Srcfiles_buffer = Rf_allocVector(RAWSXP, len1 + len2) );
-    	memset(RAW(R_Srcfiles_buffer), 0, len1+len2);
+ //   	memset(RAW(R_Srcfiles_buffer), 0, len1+len2);
     	R_Srcfiles = (char **) RAW(R_Srcfiles_buffer);
     	R_Srcfiles[0] = (char *)RAW(R_Srcfiles_buffer) + len1;
     	*(R_Srcfiles[0]) = '\0';
