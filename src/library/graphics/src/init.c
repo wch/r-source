@@ -42,7 +42,7 @@ static const R_CallMethodDef CallEntries[] = {
 
 static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(C_contour, -1),
-    EXTDEF(C_filledcontour, 4),
+    EXTDEF(C_filledcontour, 5),
     EXTDEF(C_image, 4),
     EXTDEF(C_persp, -1),
 
