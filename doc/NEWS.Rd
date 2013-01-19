@@ -26,7 +26,7 @@
       \code{pax} headers as produced by e.g. \command{gnutar --posix}
       (which seems prevalent on OpenSUSE 12.2) or
       \command{bsdtar --format pax}, including long path and link names.
-    
+
       \item \code{sQuote()} and \code{dQuote()} now handle 0-length
       inputs.  (Suggestion of Ben Bolker.)
 
@@ -60,11 +60,11 @@
    \itemize{
       \item Use of \code{col2rgb(0)} is deprecated (see the help page
       for its limitations).
-      
+
       \item The deprecated \code{intensities} component returned by
       \code{hist()} is no longer recognized by the \code{plot()} method
       and will be removed in \R 3.0.0.
-      
+
       \item \code{real()}, \code{as.real()} and \code{is.real()} are now
       formally deprecated and give a warning.
     }
@@ -152,12 +152,16 @@
 
       \item The version for Windows 8 and Windows Server 2012 is now
       displayed by \code{win.version()}.  (Reported by Gabor
-      Grothendieck.)      
-      
+      Grothendieck.)
+
       \item The custom Windows installer target \code{myR} in the
       installer \file{Makefile} did not work in 2.15.2.  (Reported
       by Erich Neuwirth.)
+
+      \item \code{aperm(matrix(1:6, 2, dimnames=list(A={}, B={})), "A")}
+      no longer segfaults.
     }
+
   }
 }
 
