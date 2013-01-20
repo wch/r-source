@@ -293,7 +293,7 @@ would be good practice to avoid the shell metacharacters
 @code{()@{@}'[]$}.  In addition, packages are normally distributed as
 tarballs, and these have a limit on path lengths (including the package
 name): for maximal portability 100 bytes, and less portably up to 256
-bytes with restricitons including a final component of no more than 100 bytes.
+bytes with restrictions including a final component of no more than 100 bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
@@ -536,8 +536,9 @@ packages (as their class definitions can change and the
 @file{DESCRIPTION} file is used to decide which packages to re-install
 when this happens).  Packages declared in the @samp{Depends} field
 should not also be in the @samp{Imports} field.  Version requirements
-can be specified, but will @strong{not} be checked when the namespace is
-loaded (whereas they are checked by @command{R CMD check}).
+can be specified, but are @strong{not} currently checked when the namespace is
+loaded (whereas they are checked by @command{R CMD check}, and will be
+checked on loading in @R{} >= 3.0.0).
 
 The @samp{Suggests} field uses the same syntax as @samp{Depends} and
 lists packages that are not necessarily needed.  This includes packages
@@ -917,18 +918,14 @@ interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
 @file{html} and @file{Meta}, and earlier versions used @file{latex},
 @file{R-ex}).  The copying of the @file{inst} happens after @file{src}
-is built so its @file{Makefile} can create files to be installed.  Prior
-to @R{} 2.12.2, the files were installed on POSIX platforms with the
-permissions in the package sources, so care should be taken to ensure
-these are not too restrictive: @command{R CMD build} will make suitable
-adjustments.  To exclude files from being installed, one can specify a
-list of exclude patterns in file @file{.Rinstignore} in the top-level
-source directory.  These patterns should be Perl-like regular
-expressions (see the help for @code{regexp} in @R{} for the precise
-details), one per line, to be matched@footnote{case-insensitively on
-Windows.} against the file and directory paths, e.g.@:
-@file{doc/.*[.]png$} will exclude all PNG files in @file{inst/doc} based on
-the (lower-case) extension.
+is built so its @file{Makefile} can create files to be installed.  To
+exclude files from being installed, one can specify a list of exclude
+patterns in file @file{.Rinstignore} in the top-level source directory.
+These patterns should be Perl-like regular expressions (see the help for
+@code{regexp} in @R{} for the precise details), one per line, to be
+matched@footnote{case-insensitively on Windows.} against the file and
+directory paths, e.g.@: @file{doc/.*[.]png$} will exclude all PNG files
+in @file{inst/doc} based on the (lower-case) extension.
 
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
@@ -2452,11 +2449,10 @@ and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
 A special case are PDF documents with sources in Sweave format, which we
-call @emph{package vignettes}.  As from @R{} 2.14.0 the preferred
-location for the Sweave sources is the subdirectory @file{vignettes} of
-the source packages, but for compatibility with earlier versions of
-@R{}, vignette sources will be looked for in @file{inst/doc} if
-@file{vignettes} does not exist.
+call @emph{package vignettes}.  The preferred location for the Sweave
+sources is the subdirectory @file{vignettes} of the source packages, but
+for compatibility with earlier versions of @R{}, vignette sources will
+be looked for in @file{inst/doc} if @file{vignettes} does not exist.
 
 Vignette sources are normally given the file extension @file{.Rnw} or
 @file{.Rtex}, but for historical reasons extensions@footnote{and to
@@ -3735,14 +3731,14 @@ internationalization facilities discussed elsewhere in this manual.
 Function @code{showNonASCIIfile} in package @pkg{tools} can help in
 finding non-@acronym{ASCII} bytes in files.
 
-From @R{} 2.10.0 there is a portable way to have arbitrary text in
-character strings (only) in your @R{} code, which is to supply them in
-Unicode as @code{\uxxxx} escapes.  If there are any characters not in
-the current encoding the parser will encode the character string as
-UTF-8 and mark it as such.  This applies also to character strings in
-datasets: they can be prepared using @code{\uxxxx} escapes or encoded in
-UTF-8 in a UTF-8 locale, or even converted to UTF-8 via @samp{iconv()}.
-If you do this, make sure you have @samp{R (>= 2.10)} (or later) in the
+There is a portable way to have arbitrary text in character strings
+(only) in your @R{} code, which is to supply them in Unicode as
+@code{\uxxxx} escapes.  If there are any characters not in the current
+encoding the parser will encode the character string as UTF-8 and mark
+it as such.  This applies also to character strings in datasets: they
+can be prepared using @code{\uxxxx} escapes or encoded in UTF-8 in a
+UTF-8 locale, or even converted to UTF-8 via @samp{iconv()}.  If you do
+this, make sure you have @samp{R (>= 2.10)} (or later) in the
 @samp{Depends} field of the @file{DESCRIPTION} file.
 
 @R{} sessions running in non-UTF-8 locales will if possible re-encode
@@ -5443,13 +5439,12 @@ Print the results of the code just as if it was executed at the console,
 and include the printed results verbatim.  (Invisible results will not print.)
 
 @item @code{results=rd}
-The result is assumed to be a character vector containing markup to
-be passed to @code{parse_Rd()}, with the result inserted in place.
-This could be used to insert computed aliases, for instance.
-As of @R{} 2.13.1-patched, @code{parse_Rd()} is called first
-with @code{fragment=FALSE} to allow a single Rd section
-macro to be inserted.  If that fails, it is called again with
-@code{fragment=TRUE}, the older behavior.
+The result is assumed to be a character vector containing markup to be
+passed to @code{parse_Rd()}, with the result inserted in place.  This
+could be used to insert computed aliases, for instance.
+@code{parse_Rd()} is called first with @code{fragment = FALSE} to allow
+a single Rd section macro to be inserted.  If that fails, it is called
+again with @code{fragment = TRUE}, the older behavior.
 
 @item @code{results=hide}
 Insert no output.
@@ -7606,9 +7601,8 @@ many other packages do rely on symbol lookup.
 
 In addition to registering C routines to be called by @R{}, it can at
 times be useful for one package to make some of its C routines available
-to be called by C code in another package.  An interface to support this
-has been provided since @R{} 2.4.0.  The interface consists of two
-routines declared in header @file{R_ext/Rdynload.h} as
+to be called by C code in another package.  The interface consists of
+two routines declared in header @file{R_ext/Rdynload.h} as
 
 @findex R_RegisterCCallable
 @findex R_GetCCallable
@@ -8822,7 +8816,7 @@ a test of a length-2 @code{"dim"} attribute.
 There are a series of small macros/functions to help construct pairlists
 and language objects (whose internal structures just differ by
 @code{SEXPTYPE}).  Function @code{CONS(u, v)} is the basic building
-block: is constructs a pairlist from @code{u} followed by @code{v}
+block: it constructs a pairlist from @code{u} followed by @code{v}
 (which is a pairlist or @code{R_NilValue}).  @code{LCONS} is a variant
 that constructs a language object.  Functions @code{list1} to
 @code{list5} construct a pairlist from one to five items, and
