@@ -356,8 +356,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                               sQuote(basename(pkgpath))),
                      call. = FALSE, domain = NA)
             R_version_built_under <- as.numeric_version(built$R)
-            ## change to 3.0.0 before release
-            if(R_version_built_under < "2.16.0")
+            if(R_version_built_under < "3.0.0")
                 stop(gettextf("package %s was built before R 3.0.0: please re-install it",
                              sQuote(basename(pkgpath))),
                      call. = FALSE, domain = NA)

@@ -43,9 +43,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                  call. = FALSE, domain = NA)
 
         ## which version was this package built under?
-        ## make 3.0.0 before release
         R_version_built_under <- as.numeric_version(built$R)
-        if(R_version_built_under < "2.16.0")
+        if(R_version_built_under < "3.0.0")
             stop(gettextf("package %s was built before R 3.0.0: please re-install it",
                           sQuote(pkgname)), call. = FALSE, domain = NA)
 
