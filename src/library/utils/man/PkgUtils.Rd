@@ -1,6 +1,6 @@
 % File src/library/utils/man/PkgUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{PkgUtils}
@@ -43,9 +43,12 @@
   Many of the checks in \command{R CMD check} can be turned off or on by
   environment variables: see Chapter 6 of the \sQuote{R Internals} manual.
   
-  \command{R CMD build} uses the external \command{tar} program given by
-  the \env{TAR} environment variable (which is set when \R was
-  configured on a Unix-alike).
+  \command{R CMD build} normally uses the external \command{tar} program
+  given by the \env{TAR} environment variable (which is set when \R was
+  configured on a Unix-alike: on Windows \command{tar.exe} is used if
+  found on the path).  An external program is needed in some
+  circumstances, including for some long (over 100 byte) path names and
+  files of more than 2GB.
   
   \command{R CMD check} by default unpacks tarballs by the internal
   \code{\link{untar}} function: if needed an external \command{tar}
