@@ -6784,7 +6784,7 @@ Error: segfault from C stack overflow
 However, C stack overflows are fatal under Windows and normally defeat
 attempts at debugging on that platform.  Further, the size of the stack
 is set when @R{} is compiled@footnote{For a long time the compilation
-default was 10MB, but this was increased to 64MB for @R{} 3.0.0.},
+default was 10MB, but this was increased to 64MB for @R{} 2.15.2.},
 whereas on POSIX OSes it can be set in the shell from which @R{} is
 launched.
 
@@ -7391,12 +7391,10 @@ the following table:
 
 Currently, the @code{R_ExternalMethodDef} is the same as
 @code{R_CallMethodDef} type and contains fields for the name of the
-routine by which it can be accessed in @R{}, a pointer to the actual native
-symbol (i.e., the routine itself), and the number of arguments the
-routine expects.  For routines with a variable number of arguments
-invoked @emph{via} the @code{.External} interface, one specifies @code{-1} for
-the number of arguments which tells @R{} not to check the actual number
-passed.  For example, if we had a routine named @code{myCall} defined as
+routine by which it can be accessed in @R{}, a pointer to the actual
+native symbol (i.e., the routine itself), and the number of arguments
+the routine expects. For example, if we had a routine named
+@code{myCall} defined as
 
 @example
 SEXP myCall(SEXP a, SEXP b, SEXP c);
@@ -7413,7 +7411,12 @@ R_CallMethodDef callMethods[]  = @{
 @end example
 
 @noindent
-along with any other routines for the @code{.Call} interface.
+along with any other routines for the @code{.Call} interface. For
+routines with a variable number of arguments invoked @emph{via} the
+@code{.External} interface, one specifies @code{-1} for the number of
+arguments which tells @R{} not to check the actual number passed.  Note
+that the number of arguments passed to @code{.External} were not
+checked prior to @R{} 3.0.0.
 
 Routines for use with the @code{.C} and @code{.Fortran} interfaces are
 described with similar data structures, but which have two additional
