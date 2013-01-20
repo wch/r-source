@@ -514,10 +514,18 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(symbol.symbol.external && symbol.symbol.external->numArgs > -1) {
 	int nargs = length(args) - 1;
-	if(symbol.symbol.external->numArgs != nargs)
-	    warningcall(call,
-		      _("Incorrect number of arguments (%d), expecting %d for '%s'"),
-		      nargs, symbol.symbol.external->numArgs, buf);
+	if(symbol.symbol.external->numArgs != nargs) {
+	    /* some people have used 1 to mean any number, not -1 */
+	    if(symbol.symbol.external->numArgs == 1)
+		warningcall(call,
+			    _("Incorrect number of arguments (%d), expecting %d for '%s'"),
+			    nargs, symbol.symbol.external->numArgs, buf);
+	    else
+		errorcall(call,
+			  _("Incorrect number of arguments (%d), expecting %d for '%s'"),
+			  nargs, symbol.symbol.external->numArgs, buf);
+
+	}
     }
 
     if (PRIMVAL(op) == 1) {
