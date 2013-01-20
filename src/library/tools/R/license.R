@@ -473,20 +473,19 @@ function(x)
             any(sapply(expansions, function(e) verifiable(e$FOSS)))
         }
 
-        components <- grep(sprintf("%s$",
-                                   R_license_db_vars$re_license_file),
-                           components,
-                           value = TRUE)
-        if(length(components)) {
+        pos <- grep(sprintf("%s$", R_license_db_vars$re_license_file),
+                    components)
+        if(length(pos)) {
+            components <- components[pos]
             ## Components with license file pointers.
-            pointers <- sub(".*file ", "", components[ind])
+            pointers <- sub(".*file ", "", components)
             ## Components with license extensions.
             ind <- grepl("+", components, fixed = TRUE)
             if(any(ind))
                 extensions <-
                     data.frame(components = components[ind],
                                extensible =
-                               sapply(expansions[ind],
+                               sapply(expansions[pos[ind]],
                                       function(e)
                                       verifiable(e$Extensible)),
                                stringsAsFactors = FALSE)
