@@ -544,6 +544,11 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
 		default:
 		    return FALSE;
 		}
+	    } else if (isUserBinop(CAR(arg))) { 
+	        if (mainop.precedence > PREC_PERCENT
+	            || (mainop.precedence == PREC_PERCENT && left == mainop.rightassoc)) {
+	            return TRUE;
+	        }
 	    }
 	}
     }
@@ -801,10 +806,17 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    d->opts &= SIMPLE_OPTS;
 	}
 	if (TYPEOF(CAR(s)) == SYMSXP) {
-	    if ((TYPEOF(SYMVALUE(CAR(s))) == BUILTINSXP) ||
-		(TYPEOF(SYMVALUE(CAR(s))) == SPECIALSXP)) {
-		op = CAR(s);
-		fop = PPINFO(SYMVALUE(op));
+	    int userbinop = 0; 
+	    op = CAR(s);
+	    if ((TYPEOF(SYMVALUE(op)) == BUILTINSXP) ||
+		(TYPEOF(SYMVALUE(op)) == SPECIALSXP) ||
+		(userbinop = isUserBinop(op))) {
+		if (userbinop) {
+		    fop.kind = PP_BINARY2;    /* not quite right for spacing, but can't be unary */
+		    fop.precedence = PREC_PERCENT;
+		    fop.rightassoc = 0;
+		} else 
+		    fop = PPINFO(SYMVALUE(op));
 		s = CDR(s);
 		if (fop.kind == PP_BINARY) {
 		    switch (length(s)) {
@@ -823,6 +835,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		else if (fop.kind == PP_BINARY2) {
 		    if (length(s) != 2)
 			fop.kind = PP_FUNCALL;
+	 	    else if (userbinop)
+	 	    	fop.kind = PP_BINARY;
 		}
 		switch (fop.kind) {
 		case PP_IF:
@@ -1043,55 +1057,38 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		}
 	    }
 	    else {
-		if(isSymbol(CAR(s)) && isUserBinop(CAR(s))) {
-		    op = CAR(s);
-		    s = CDR(s);
-		    deparse2buff(CAR(s), d);
-		    print2buff(" ", d);
-		    print2buff(translateChar(PRINTNAME(op)), d);
-		    print2buff(" ", d);
-		    linebreak(&lbreak, d);
+		SEXP val = R_NilValue; /* -Wall */
+		if (isSymbol(CAR(s))) {
+		    val = SYMVALUE(CAR(s));
+		    if (TYPEOF(val) == PROMSXP)
+			val = eval(val, R_BaseEnv);
+		}
+		if ( isSymbol(CAR(s))
+		  && TYPEOF(val) == CLOSXP
+		  && streql(CHAR(PRINTNAME(CAR(s))), "::") ){ /*  :: is special case */
 		    deparse2buff(CADR(s), d);
-		    if (lbreak) {
-			d->indent--;
-			lbreak = FALSE;
-		    }
-		    break;
+		    print2buff("::", d);
+		    deparse2buff(CADDR(s), d);
+		}
+		else if ( isSymbol(CAR(s))
+		  && TYPEOF(val) == CLOSXP
+		  && streql(CHAR(PRINTNAME(CAR(s))), ":::") ){ /*  ::: is special case */
+		    deparse2buff(CADR(s), d);
+		    print2buff(":::", d);
+		    deparse2buff(CADDR(s), d);
 		}
 		else {
-		    SEXP val = R_NilValue; /* -Wall */
-		    if (isSymbol(CAR(s))) {
-			val = SYMVALUE(CAR(s));
-			if (TYPEOF(val) == PROMSXP)
-			    val = eval(val, R_BaseEnv);
+		    if ( isSymbol(CAR(s)) ){
+			if(d->opts & S_COMPAT) 
+			    print2buff(quotify(PRINTNAME(CAR(s)), '\''), d);
+			else 
+			    print2buff(quotify(PRINTNAME(CAR(s)), '`'), d);
 		    }
-		    if ( isSymbol(CAR(s))
-		      && TYPEOF(val) == CLOSXP
-		      && streql(CHAR(PRINTNAME(CAR(s))), "::") ){ /*  :: is special case */
-			deparse2buff(CADR(s), d);
-			print2buff("::", d);
-			deparse2buff(CADDR(s), d);
-		    }
-		    else if ( isSymbol(CAR(s))
-		      && TYPEOF(val) == CLOSXP
-		      && streql(CHAR(PRINTNAME(CAR(s))), ":::") ){ /*  ::: is special case */
-			deparse2buff(CADR(s), d);
-			print2buff(":::", d);
-			deparse2buff(CADDR(s), d);
-		    }
-		    else {
-			if ( isSymbol(CAR(s)) ){
-			    if(d->opts & S_COMPAT) 
-			        print2buff(quotify(PRINTNAME(CAR(s)), '\''), d);
-			    else 
-				print2buff(quotify(PRINTNAME(CAR(s)), '`'), d);
-			}
-			else
-			    deparse2buff(CAR(s), d);
-			print2buff("(", d);
-			args2buff(CDR(s), 0, 0, d);
-			print2buff(")", d);
-		    }
+		    else
+			deparse2buff(CAR(s), d);
+		    print2buff("(", d);
+		    args2buff(CDR(s), 0, 0, d);
+		    print2buff(")", d);
 		}
 	    }
 	}
