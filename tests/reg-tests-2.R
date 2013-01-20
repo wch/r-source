@@ -2673,3 +2673,9 @@ options(deparse.cutoff=50)
 form
 options(op)
 ## fixed to 60 in R 2.15.x
+
+
+## PR#15179: user defined binary ops were not deparsed properly
+quote( `%^%`(x, `%^%`(y,z)) )
+quote( `%^%`(x) )
+## 

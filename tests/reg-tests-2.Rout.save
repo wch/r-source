@@ -7029,3 +7029,11 @@ reallylongnamey ~ reallylongnamex0 + reallylongnamex1 +
 > options(op)
 > ## fixed to 60 in R 2.15.x
 > 
+> 
+> ## PR#15179: user defined binary ops were not deparsed properly
+> quote( `%^%`(x, `%^%`(y,z)) )
+x %^% (y %^% z)
+> quote( `%^%`(x) )
+`%^%`(x)
+> ## 
+> 
