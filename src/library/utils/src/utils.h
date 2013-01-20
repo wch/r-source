@@ -58,6 +58,7 @@ SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 SEXP processevents(void);
 
+SEXP octsize(SEXP);
 
 #ifdef Win32
 SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP rho);
