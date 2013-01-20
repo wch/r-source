@@ -13,7 +13,7 @@
 /* second version */
 SEXP out(SEXP x, SEXP y)
 {
-    R_len_t i, j, nx = length(x), ny = length(y);
+    int i, j, nx = length(x), ny = length(y);
     double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
     SEXP ans, dim, dimnames;
 
@@ -42,7 +42,7 @@ SEXP getListElement(SEXP list, const char *str)
 {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
 
-    for (R_len_t i = 0; i < length(list); i++)
+    for (int i = 0; i < length(list); i++)
 	if(strcmp(CHAR(STRING_ELT(names, i)), str) == 0) {
 	    elmt = VECTOR_ELT(list, i);
 	    break;
@@ -68,7 +68,7 @@ SEXP getvar(SEXP name, SEXP rho)
 #include <Rdefines.h>
 SEXP convolve2(SEXP a, SEXP b)
 {
-    R_len_t i, j, na, nb, nab;
+    int i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
@@ -87,7 +87,7 @@ SEXP convolve2(SEXP a, SEXP b)
 
 SEXP convolve2b(SEXP a, SEXP b)
 {
-    R_len_t i, j, na, nb, nab;
+    int i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
@@ -108,7 +108,7 @@ SEXP convolve2b(SEXP a, SEXP b)
 
 SEXP convolveE(SEXP args)
 {
-    R_len_t i, j, na, nb, nab;
+    int i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP a, b, ab;
 
@@ -165,7 +165,7 @@ SEXP showArgs(SEXP args)
 
 SEXP showArgs1(SEXP largs)
 {
-    R_len_t i, nargs = LENGTH(largs);
+    int i, nargs = LENGTH(largs);
     Rcomplex cpl;
     SEXP el, names = getAttrib(largs, R_NamesSymbol);
     const char *name;
@@ -200,7 +200,7 @@ SEXP showArgs1(SEXP largs)
 
 SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 {
-    R_len_t i, n = length(list);
+    int i, n = length(list);
     SEXP ans;
 
     if(!isNewList(list)) error("'list' must be a list");
@@ -217,7 +217,7 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 {
-    R_len_t i, n = length(list);
+    int i, n = length(list);
     SEXP R_fcall, ans;
 
     if(!isNewList(list)) error("'list' must be a list");
@@ -285,7 +285,7 @@ SEXP numeric_deriv(SEXP args)
 {
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
     double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
-    R_len_t start, i, j;
+    int start, i, j;
 
     expr = CADR(args);
     if(!isString(theta = CADDR(args)))
