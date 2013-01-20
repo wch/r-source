@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -244,6 +244,7 @@ static void Cairo_update(pX11Desc xd)
 {
     if(inclose || !xd || !xd->buffered || xd->holdlevel > 0) return;
     cairo_paint(xd->xcc);
+    /* workaround for bug in cairo 1.12.x (PR#15168) */
     cairo_surface_flush(xd->xcs);
     if (xd->type == WINDOW) XDefineCursor(display, xd->window, arrow_cursor);
     XSync(display, 0);
@@ -756,6 +757,7 @@ static void handleEvent(XEvent event)
 	    /* We can use the buffered copy where we have it */ 
 	    if(xd->buffered == 1) {
 		cairo_paint(xd->xcc);
+		/* workaround for bug in cairo 1.12.x (PR#15168) */
 		cairo_surface_flush(xd->xcs);
 	    } else if (xd->buffered > 1)
 		/* rely on timer to repaint eventually */
