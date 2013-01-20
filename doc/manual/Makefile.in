@@ -183,13 +183,13 @@ R-ints.info: $(texiincludes)
 R-lang.info: $(texiincludes)
 
 pdf: fullrefman.pdf $(OBJECTS_PDF)
-refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
+refman.pdf: $(refman_DEPENDENCIES) $(texinputs_BASE)
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "ERROR: 'pdflatex' needed but missing on your system."; \
 	  exit 1; \
 	fi
 	@$(ECHO) "PDF/LaTeX documentation: reference index ..."
-	@rm -f *.aux refman.toc refman.ind stamp-refman-pdf
+	@rm -f *.aux refman.toc refman.ind
 ## <NOTE>
 ## We do not make sure $(ECHO) does not interpret backslash escapes.
 ## Could be trouble ...
@@ -211,16 +211,13 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  $(BATCHPDFLATEX) refman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) refman.tex
-	@touch stamp-refman-pdf
-stamp-refman-pdf: $(texinputs_BASE)
-	@touch $@
-fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
+fullrefman.pdf: $(refman_DEPENDENCIES) $(fullrefman_TEXINPUTS)
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "ERROR: 'pdflatex' needed but missing on your system."; \
 	  exit 1; \
 	fi
 	@$(ECHO) "PDF/LaTeX documentation: full reference index ..."
-	@rm -f *.aux fullrefman.toc fullrefman.ind stamp-fullrefman-pdf
+	@rm -f *.aux fullrefman.toc fullrefman.ind
 	@(opt="$(R_PAPERSIZE)paper"; \
 	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
@@ -243,8 +240,6 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  $(BATCHPDFLATEX) fullrefman.tex
 	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) fullrefman.tex
-	@touch stamp-fullrefman-pdf
-stamp-fullrefman-pdf: $(fullrefman_TEXINPUTS)
 
 R-admin.pdf: $(texiincludes)
 R-data.pdf: $(texiincludes)
