@@ -7161,7 +7161,7 @@ easy in C code.)  We could do this using @code{.C} by
 @group
 void convolve(double *a, int *na, double *b, int *nb, double *ab)
 @{
-    R_len_t i, j, nab = *na + *nb - 1;
+    int i, j, nab = *na + *nb - 1;
 
     for(i = 0; i < nab; i++)
         ab[i] = 0.0;
@@ -7393,8 +7393,8 @@ Currently, the @code{R_ExternalMethodDef} is the same as
 @code{R_CallMethodDef} type and contains fields for the name of the
 routine by which it can be accessed in @R{}, a pointer to the actual
 native symbol (i.e., the routine itself), and the number of arguments
-the routine expects. For example, if we had a routine named
-@code{myCall} defined as
+the routine expects to be passed from @R{}. For example, if we had a
+routine named @code{myCall} defined as
 
 @example
 SEXP myCall(SEXP a, SEXP b, SEXP c);
@@ -8466,7 +8466,7 @@ C code to do the computations is
 
 SEXP out(SEXP x, SEXP y)
 @{
-    R_len_t i, j, nx = length(x), ny = length(y);
+    int i, j, nx = length(x), ny = length(y);
     double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
     SEXP ans;
 
@@ -8498,7 +8498,7 @@ set the @code{dim} attribute directly.
 @group
 SEXP out(SEXP x, SEXP y)
 @{
-    R_len_t i, j, nx = length(x), ny = length(y);
+    int i, j, nx = length(x), ny = length(y);
     double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
     SEXP ans, dim, dimnames;
 @end group
@@ -8649,7 +8649,7 @@ SEXP getListElement(SEXP list, const char *str)
 @end group
 
 @group
-    for (R_len_t i = 0; i < length(list); i++)
+    for (int i = 0; i < length(list); i++)
         if(strcmp(CHAR(STRING_ELT(names, i)), str) == 0) @{
            elmt = VECTOR_ELT(list, i);
            break;
@@ -8931,8 +8931,8 @@ In this section we consider the details of the @R{}/C interfaces.
 
 These two interfaces have almost the same functionality. @code{.Call} is
 based on the interface of the same name in @Sl{} version 4, and
-@code{.External} is based on @code{.Internal}.  @code{.External} is more
-complex but allows a variable number of arguments.
+@code{.External} is based on @R{}'s @code{.Internal}.  @code{.External}
+is more complex but allows a variable number of arguments.
 
 @menu
 * Calling .Call::               
@@ -8963,7 +8963,7 @@ must be transferred to the C code, which is
 
 SEXP convolve2(SEXP a, SEXP b)
 @{
-    R_len_t i, j, na, nb, nab;
+    int i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
@@ -8991,7 +8991,7 @@ Now for the version in @file{Rinternals.h} style.  Only the C code changes.
 
 SEXP convolve2(SEXP a, SEXP b)
 @{
-    R_len_t i, j, na, nb, nab;
+    int i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
@@ -9037,7 +9037,7 @@ the arguments.
 
 SEXP convolveE(SEXP args)
 @{
-    R_len_t i, j, na, nb, nab;
+    int i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP a, b, ab;
 
@@ -9232,7 +9232,7 @@ with C code
 @group
 SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 @{
-    R_len_t i, n = length(list);
+    int i, n = length(list);
     SEXP ans;
 
     if(!isNewList(list)) error("'list' must be a list");
@@ -9259,7 +9259,7 @@ obscure) to do this in C code.  The following is based on the code in
 @group
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 @{
-    R_len_t i, n = length(list);
+    int i, n = length(list);
     SEXP R_fcall, ans;
 
     if(!isNewList(list)) error("'list' must be a list");
@@ -9477,7 +9477,7 @@ SEXP numeric_deriv(SEXP args)
 @{
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
     double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
-    R_len_t start, i, j;
+    int start, i, j;
 @end group
 
 @group
@@ -9665,7 +9665,7 @@ SEXP menu_ttest3()
             error("invalid call %s", cmd);
         @}
         /* Loop is needed here as EXPSEXP will be of length > 1 */
-        for(R_len_t i = 0; i < length(cmdexpr); i++)
+        for(int i = 0; i < length(cmdexpr); i++)
             ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
         UNPROTECT(2);
     @}
