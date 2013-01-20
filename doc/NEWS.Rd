@@ -719,7 +719,8 @@
       entry points \code{Brent_fmin}, \code{fft_factor} and \code{fft_work}.
       
       \item If a \code{.External} call is registered with a number of
-      arguments (other than \code{-1}), this is checked.
+      arguments (other than \code{-1}), the number of arguments passed
+      is checked for each call (as for other foreign function calls).
     }
   }
 
