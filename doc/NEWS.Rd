@@ -342,7 +342,9 @@
 
       \item The internal method of \code{tar()} can now store paths too
       long for the \samp{ustar} format, using the (widely supported) GNU
-      extension.
+      extension.  It can also store long link names, but these are much
+      less widely supported.  There is support for larger files, up to
+      the \samp{ustar} limit of 8GB.
 
       \item Local reference classes have been added to package
       \pkg{methods}.  These are a technique for avoiding unneeded

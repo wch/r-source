@@ -109,22 +109,24 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                    restore_times = TRUE)
 {
-    getOct <- function(x, offset, len)
+    ## might be used with len = 12, so result of more than max int
+    getOctD <- function(x, offset, len)
     {
-        x <- 0L
+        x <- 0.0
         for(i in offset + seq_len(len)) {
             z <- block[i]
             if(!as.integer(z)) break; # terminate on nul
             switch(rawToChar(z),
                    " " = {},
                    "0"=,"1"=,"2"=,"3"=,"4"=,"5"=,"6"=,"7"=
-                   {x <- 8*x + (as.integer(z)-48)},
+                   {x <- 8*x + (as.integer(z)-48L)},
                    stop("invalid octal digit")
                    )
         }
         x
     }
-
+    getOct <- function(x, offset, len)
+        as.integer(getOctD(x, offset, len))
     mydir.create <- function(path, ...) {
         ## for Windows' sake
         path <- sub("[\\/]$", "", path)
@@ -171,8 +173,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         ## mode zero-padded 8 bytes (including nul) at 101
         ## Aargh: bsdtar has this one incorrectly with 6 bytes+space
         mode <- as.octmode(getOct(block, 100, 8))
-        size <- getOct(block, 124, 12)
-        ts <- getOct(block, 136, 12)
+        size <- getOctD(block, 124, 12)
+        ts <- getOctD(block, 136, 12)
         ft <- as.POSIXct(as.numeric(ts), origin = "1970-01-01", tz = "UTC")
         csum <- getOct(block, 148, 8)
         block[149:156] <- charToRaw(" ")
@@ -444,7 +446,7 @@ tar <- function(tarfile, files = NULL,
         ## size is 0 for directories and it seems for links.
         size <- ifelse(info$isdir, 0, info$size)
         if(size >= 8^11) stop("file size is limited to 8GB")
-        header[125:135] <- charToRaw(sprintf("%011o", as.integer(size)))
+        header[125:135] <- .Call(C_octsize, size)
         ## the next two are what POSIX says, not what GNU tar does.
         header[258:262] <- charToRaw("ustar")
         header[264:265] <- charToRaw("0")

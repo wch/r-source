@@ -45,10 +45,10 @@
   By default \command{R CMD build} uses the \code{"internal"} option to
   \code{\link{tar}} to prepare the tarball.  An external \command{tar}
   program can be specified by the \env{R_BUILD_TAR} environment
-  variable.  This will be faster for very large packages, and can be
-  needed for packages with long path names (over 100 bytes) or very
-  large files (over 8GB): however, the resulting tarball may not be
-  portable.
+  variable.  This may be substantially faster for very large packages,
+  and can be needed for packages with long path names (over 100 bytes)
+  or very large files (over 8GB): however, the resulting tarball may not
+  be portable.
 
   \command{R CMD check} by default unpacks tarballs by the internal
   \code{\link{untar}} function: if needed an external \command{tar}
