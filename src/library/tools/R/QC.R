@@ -5597,7 +5597,15 @@ function(dir)
     class(out) <- "check_package_CRAN_incoming"
 
     meta <- .get_package_metadata(dir, FALSE)
-    foss <- analyze_license(meta["License"])$is_verified
+    info <- analyze_license(meta["License"])
+    ## Use later to indicate changes from FOSS to non-FOSS licence.
+    foss <- info$is_verified
+    ## Record to notify about components extending a base license which
+    ## permits extensions.
+    if(length(extensions <- info$extensions) &&
+       any(ind <- extensions$extensible))
+        out$extensions <- extensions$components[ind]
+    
     out$Maintainer <- meta["Maintainer"]
 
     language <- meta["Language"]
@@ -5832,6 +5840,9 @@ function(x, ...)
             strwrap(y[[1L]], indent = 2L, exdent = 4L),
             "Old license:",
             strwrap(y[[2L]], indent = 2L, exdent = 4L)),
+      if(length(y <- x$extensions))
+          c("Components with restrictions and base license permitting such:",
+            paste(" ", y)),
       if(NROW(y <- x$spelling)) {
           s <- split(sprintf("%d:%d", y$Line, y$Column), y$Original)
           c("Possibly mis-spelled words in DESCRIPTION:",
