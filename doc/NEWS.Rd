@@ -377,6 +377,9 @@
       \item The \code{Rprof()} function now quotes function names in
       in its output file on Windows, to be consistent with the quoting
       in Unix.
+
+      \item Profiling via \code{Rprof()} now optionally records
+      information about time spent in GC.
     }
   }
 
