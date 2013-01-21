@@ -515,12 +515,12 @@ function(x)
     if(!length(x)) return(NULL)
     ## As analyzing licenses is costly, only analyze the unique specs.
     v <- unique(x)
-    status <- lapply(v, analyze_license)
-    ## And now turn into a data frame.
-    out <- data.frame(matrix(0, length(v), 0L))
-    for(j in seq_along(status[[1L]]))
-        out[[j]] <- sapply(status, "[[", j)
-    names(out) <- names(status[[1L]])
+    out <- as.data.frame(do.call(rbind, lapply(v, analyze_license)),
+                         stringsAsFactors = FALSE)
+    pos <- match(c("is_empty", "is_canonical", "is_standardizable", 
+                   "is_verified", "standardization"),
+                 names(out))
+    out[pos] <- lapply(out[pos], unlist)
     ## And re-match specs to the unique specs.
     out <- out[match(x, v), ]
     rownames(out) <- NULL
