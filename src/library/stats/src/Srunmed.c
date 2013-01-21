@@ -196,7 +196,8 @@ static void Srunmed(double* y, double* smo, R_xlen_t n, int bw,
 SEXP runmed(SEXP x, SEXP stype, SEXP sk, SEXP end, SEXP print_level)
 {
     if (TYPEOF(x) != REALSXP) error("numeric 'x' required");
-    int n = XLENGTH(x), type = asInteger(stype), k = asInteger(sk),
+    R_xlen_t n = XLENGTH(x);
+    int type = asInteger(stype), k = asInteger(sk),
 	iend = asInteger(end), pl = asInteger(print_level);
     SEXP ans = PROTECT(allocVector(REALSXP, n));
     if (type == 1) {
@@ -205,7 +206,7 @@ SEXP runmed(SEXP x, SEXP stype, SEXP sk, SEXP end, SEXP print_level)
 	int *i1 = (int *) R_alloc(k + 1, sizeof(int)), 
 	    *i2 = (int *) R_alloc(2*k + 1, sizeof(int));
 	double *d1 = (double *) R_alloc(2*k + 1, sizeof(double));
-	Trunmed((int)n, k, REAL(x), REAL(ans), i1, i2, d1, iend, pl);
+	Trunmed(n, k, REAL(x), REAL(ans), i1, i2, d1, iend, pl);
     } else {
 	Srunmed(REAL(x), REAL(ans), n, k, iend, pl > 0);
     }
