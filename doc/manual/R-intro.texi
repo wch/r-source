@@ -3730,6 +3730,12 @@ fun1 <- function(data, data.frame, graph=TRUE, limit=20, ...) @{
 @}
 @end example
 
+Less frequently, a function will need to refer to components of
+@samp{@dots{}}.  The expression @code{list(...)} evaluates all such
+arguments and returns them in a named list, while @code{..1},
+@code{..2}, etc. evaluate them one at a time, with @samp{..n}
+returning the n'th unmatched argument.
+
 @node Assignment within functions, More advanced examples, The three dots argument, Writing your own functions
 @section Assignments within functions
 
