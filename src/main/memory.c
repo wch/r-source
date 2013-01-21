@@ -103,6 +103,10 @@ extern void *Rm_realloc(void * p, size_t n);
 static int gc_reporting = 0;
 static int gc_count = 0;
 
+/* These are used in profiling to separete out time in GC */
+static Rboolean R_in_gc = TRUE;
+int R_gc_running() { return R_in_gc; }
+
 #ifdef TESTING_WRITE_BARRIER
 # define PROTECTCHECK
 #endif
@@ -2608,9 +2612,11 @@ static void R_gc_internal(R_size_t size_needed)
     R_V_maxused = R_MAX(R_V_maxused, R_VSize - VHEAP_FREE());
 
     BEGIN_SUSPEND_INTERRUPTS {
+	R_in_gc = TRUE;
 	gc_start_timing();
 	RunGenCollect(size_needed);
 	gc_end_timing();
+	R_in_gc = FALSE;
     } END_SUSPEND_INTERRUPTS;
 
     if (bad_sexp_type_seen != 0 && first_bad_sexp_type == 0) {

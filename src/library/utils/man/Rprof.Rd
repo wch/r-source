@@ -12,7 +12,7 @@
 \usage{
 Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
        memory.profiling = FALSE, line.profiling = FALSE,
-       numfiles = 100L, bufsize = 10000L)
+       gc.profiling = FALSE, numfiles = 100L, bufsize = 10000L)
 }
 \arguments{
   \item{filename}{
@@ -26,6 +26,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
     real: time interval between samples.
   }
   \item{memory.profiling}{logical: write memory use information to the file?}
+  \item{gc.profiling}{logical:  record whether GC is running?}
   \item{line.profiling}{logical:  write line locations to the file?}
   \item{numfiles, bufsize}{integers: line profiling memory allocation}
 }
