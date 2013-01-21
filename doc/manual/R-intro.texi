@@ -3712,6 +3712,9 @@ to be constants as in our simple example here.
 @node The three dots argument, Assignment within functions, Named arguments and defaults, Writing your own functions
 @section The @samp{@dots{}} argument
 
+@c The ?Reserved topic links here, so please update it
+@c if changing the node name.
+
 Another frequent requirement is to allow one function to pass on
 argument settings to another.  For example many graphics functions use
 the function @code{par()} and functions like @code{plot()} allow the
