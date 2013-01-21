@@ -111,7 +111,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(devAskNewPage, 1),
 
 #ifdef WIN32
-    EXTDEF(devga, 19),
+    EXTDEF(devga, 21),
 #else
     EXTDEF(Quartz, 12),
     EXTDEF(X11, 17),
