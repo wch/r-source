@@ -855,6 +855,8 @@
 
       \item \code{summaryRprof()} returns zero-row data frames rather
       than throw an error if no events are recorded, for consistency.
+      
+      \item The included version of PCRE has been updated to 8.32.
     }
   }
 
