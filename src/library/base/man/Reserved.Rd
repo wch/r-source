@@ -22,10 +22,12 @@
   \code{\link{NA_complex_}} \code{\link{NA_character_}}
 
   \code{\dots} and \code{..1}, \code{..2} etc, which are used to refer to
-  arguments passed down from a calling function.  See the 
-  \href{/doc/manual/R-intro.html#The-three-dots-argument}{Introduction to R}
-  manual for usage of these syntactic elements, and \link[methods]{dotsMethods}
-  for their use in formal methods.
+  arguments passed down from a calling function.  See the
+% This failed in make pdf
+%  \href{/doc/manual/R-intro.html#The-three-dots-argument}{Introduction to R}
+  \sQuote{Introduction to R}
+  manual for usage of these syntactic elements,
+  and \link[methods]{dotsMethods} for their use in formal methods.
 }
 \details{
   Reserved words outside \link[=Quotes]{quotes} are always parsed to be
