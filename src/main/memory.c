@@ -333,6 +333,32 @@ static double R_VGrowIncrFrac = 0.05, R_VShrinkIncrFrac = 0.2;
 static int R_VGrowIncrMin = 80000, R_VShrinkIncrMin = 0;
 #endif
 
+static void init_gc_growincrfrac()
+{
+    char *arg;
+
+    arg = getenv("R_GC_GROWINCRFRAC");
+    if (arg != NULL) {
+	double frac = atof(arg);
+	if (0.05 <= frac && frac <= 0.80) {
+	    R_NGrowIncrFrac = frac;
+	    R_VGrowIncrFrac = frac;
+	}
+    }
+    arg = getenv("R_GC_NGROWINCRFRAC");
+    if (arg != NULL) {
+	double frac = atof(arg);
+	if (0.05 <= frac && frac <= 0.80)
+	    R_NGrowIncrFrac = frac;
+    }
+    arg = getenv("R_GC_VGROWINCRFRAC");
+    if (arg != NULL) {
+	double frac = atof(arg);
+	if (0.05 <= frac && frac <= 0.80)
+	    R_VGrowIncrFrac = frac;
+    }
+}
+
 /* Maximal Heap Limits.  These variables contain upper limits on the
    heap sizes.  They could be made adjustable from the R level,
    perhaps by a handler for a recoverable error.
@@ -1869,6 +1895,7 @@ void attribute_hidden InitMemory()
     int gen;
 
     init_gctorture();
+    init_gc_growincrfrac();
 
     gc_reporting = R_Verbose;
     R_StandardPPStackSize = R_PPStackSize;
