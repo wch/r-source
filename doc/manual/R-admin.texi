@@ -460,7 +460,8 @@ at configuration (default ISO a4): this can be overridden by setting
 on the @command{make} command line, or setting @env{R_PAPERSIZE} in the
 environment and using @command{make -e}.  (If re-making the manuals for
 a different paper size, you should first delete the file
-@file{doc/manual/version.texi}.)
+@file{doc/manual/version.texi}.  The usual value for North America would
+be @samp{letter}.)
 
 There are some issues with making the PDF reference manual,
 @file{refman.pdf} or @file{fullrefman.pdf}.  The help files contain both
@@ -479,7 +480,10 @@ part of the current default), which replace the Courier monospaced font
 by Bera Sans mono or Inconsolata respectively.  (You will need the
 appropriate @LaTeX{} package @pkg{bera} or @pkg{inconsolata}
 installed.@footnote{Debian/Ubuntu use a rather old version of TeXLive
-and so need Debian package @samp{texlive-fonts-extra} installed.})
+and so need Debian package @samp{texlive-fonts-extra} installed.  Fedora
+prior to 18 used an even older version of TeXLive: the best option is to
+update to TeXLive 2012, from the sources or see
+@uref{http://fedoraproject.org/wiki/Features/TeXLive}.})
 
 Note that in most @LaTeX{} installations this will not actually use the
 standard fonts for PDF, but rather embed the URW clones NimbusRom,
@@ -3631,12 +3635,11 @@ Some of the FORTRAN code makes use of @code{COMPLEX*16} variables, which
 is a Fortran 90 extension.  This is checked for at configure
 time@footnote{as well as its equivalence to the @code{Rcomplex}
 structure defined in @file{R_ext/Complex.h}.}, but you may need to avoid
-compiler flags@footnote{In particular, avoid @command{g77}'s
-@option{-pedantic}, which gives confusing error messages.} asserting
-FORTRAN 77 compliance.
+compiler flags asserting FORTRAN 77 compliance.
 
 Compiling the version of LAPACK in the @R{} sources also requires some
-Fortran 90 extensions.
+Fortran 90 extensions, but these are not needed if an external LAPACK is
+used.
 
 @cindex BLAS library
 For performance reasons@footnote{e.g., to use an optimized @acronym{BLAS} on
@@ -3672,7 +3675,9 @@ return conventions for double-complex functions between
 @command{gfortran} and @command{g77} which results in the final example
 in @code{example(eigen)} hanging or segfaulting under external @acronym{BLAS}s
 built under @command{g77}.  This should be detected by a
-@command{configure} test.
+@command{configure} test.  Although @command{g77} is long obsolete this
+is still sometimes seen with C versions of external software using
+@command{g77} conventions.
 
 The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
 @command{autoconf}) for a @acronym{GNU} FORTRAN compiler is @samp{-g
@@ -3776,6 +3781,24 @@ of compilers and support libraries.
 Older versions of this manual (for @R{} < 2.10.0) contain notes on
 platforms such as HP-UX, IRIX and Alpha/OSF1 for which we have had no
 recent reports.
+
+C macros to select particular platforms can be tricky to track down
+(there is a fair amount of misinformation on the Web).  The Wiki
+(currently) at @uref{http://sourceforge.net/p/predef/wiki/Home/} can be
+helpful.  The @R{} sources currently use
+@example
+AIX: _AIX
+Cygwin: __CYGWIN__
+FreeBSD: __FreeBSD__
+HP-UX: __hpux__, __hpux
+IRIX: sgi, __sgi
+Linux: __linux__
+Mac OS X: __APPLE__
+NetBSD: __NetBSD__
+OpenBSD: __OpenBSD__
+Solaris: __sun, sun
+Windows: _WIN32, _WIN64
+@end example
 
 @menu
 * X11 issues::                  
