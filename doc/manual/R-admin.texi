@@ -416,11 +416,11 @@ loopback interface has been disabled.  See
 There is a set of manuals that can be built from the sources,
 
 @table @samp
-@item refman
-Printed versions of the help pages for selected base packages (over 1900 pages)
 @item fullrefman
 Printed versions of all the help pages for base and recommended packages
 (over 3300 pages).
+@item refman
+Printed versions of the help pages for selected base packages (over 1900 pages)
 @item R-FAQ
 R @acronym{FAQ}
 @item R-intro
@@ -436,7 +436,7 @@ R @acronym{FAQ}
 @end table
 
 @noindent
-To make these (with @samp{fullrefman} not @samp{refman}), use
+To make these (with @samp{fullrefman} rather than @samp{refman}), use
 
 @example
 make pdf      @r{to create PDF versions}
@@ -460,7 +460,8 @@ at configuration (default ISO a4): this can be overridden by setting
 on the @command{make} command line, or setting @env{R_PAPERSIZE} in the
 environment and using @command{make -e}.  (If re-making the manuals for
 a different paper size, you should first delete the file
-@file{doc/manual/version.texi}.)
+@file{doc/manual/version.texi}.  The usual value for North America would
+be @samp{letter}.)
 
 There are some issues with making the PDF reference manual,
 @file{refman.pdf} or @file{fullrefman.pdf}.  The help files contain both
@@ -479,7 +480,10 @@ part of the current default), which replace the Courier monospaced font
 by Bera Sans mono or Inconsolata respectively.  (You will need the
 appropriate @LaTeX{} package @pkg{bera} or @pkg{inconsolata}
 installed.@footnote{Debian/Ubuntu use a rather old version of TeXLive
-and so need Debian package @samp{texlive-fonts-extra} installed.})
+and so need Debian package @samp{texlive-fonts-extra} installed.  Fedora
+prior to 18 used an even older version of TeXLive: the best option is to
+update to TeXLive 2012, from the sources or see
+@uref{http://fedoraproject.org/wiki/Features/TeXLive}.})
 
 Note that in most @LaTeX{} installations this will not actually use the
 standard fonts for PDF, but rather embed the URW clones NimbusRom,
