@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-01-22 09:53\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -282,6 +282,9 @@ msgstr " 標準ではないライセンス指定: "
 
 msgid "Invalid license file pointers: %s"
 msgstr " 不正なライセンスファイルのポインタ: %s "
+
+msgid "Components with restrictions not permitted:"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable フラグ: "

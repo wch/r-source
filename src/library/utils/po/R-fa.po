@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-06 08:09\n"
+"POT-Creation-Date: 2013-01-22 09:53\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -865,6 +865,9 @@ msgid "no lines found in %s"
 msgstr ""
 
 msgid "profile does not contain memory information"
+msgstr ""
+
+msgid "profile does not contain line information"
 msgstr ""
 
 msgid "no events were recorded"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-01-22 09:53\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -278,6 +278,9 @@ msgstr "Ustandaryzowana specyfikacja licencji:"
 
 msgid "Invalid license file pointers: %s"
 msgstr "Niepoprawn wskaźniki pliku licencji: %s"
+
+msgid "Components with restrictions not permitted:"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nieprzenośne flagi w zmiennej '%s':"

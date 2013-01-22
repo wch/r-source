@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-13 07:43\n"
+"POT-Creation-Date: 2013-01-22 09:52\n"
 "PO-Revision-Date: 2012-11-27 01:11+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -672,9 +672,6 @@ msgid "triangular matrix should be square"
 msgstr ""
 
 msgid "'object' must be a list"
-msgstr ""
-
-msgid "'keep.source' is deprecated and will be ignored"
 msgstr ""
 
 msgid "package %s has not been installed properly"

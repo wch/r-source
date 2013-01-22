@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-13 07:43\n"
+"POT-Creation-Date: 2013-01-22 09:52\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -770,9 +770,6 @@ msgstr "la matrice triangulaire doit être carrée"
 
 msgid "'object' must be a list"
 msgstr "'object' doit être une liste"
-
-msgid "'keep.source' is deprecated and will be ignored"
-msgstr "'keep.source' est obsolète et sera ignoré"
 
 msgid "package %s has not been installed properly"
 msgstr "le package '%s' n'a pas été installé correctement"
@@ -1821,6 +1818,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "'keep.source' is deprecated and will be ignored"
+#~ msgstr "'keep.source' est obsolète et sera ignoré"
 
 #~ msgid "non-positive definite matrix in 'chol'"
 #~ msgstr "la matrice n'est pas définie positive dans 'chol'"

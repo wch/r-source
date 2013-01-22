@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-01-22 09:53\n"
 "PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -279,6 +279,9 @@ msgstr "Standardisierte Lizenzspezifikation:"
 
 msgid "Invalid license file pointers: %s"
 msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
+
+msgid "Components with restrictions not permitted:"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"

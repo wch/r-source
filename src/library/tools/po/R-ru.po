@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-01-22 09:53\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -282,6 +282,9 @@ msgstr "Стандартизованная спецификация лицензии:"
 
 msgid "Invalid license file pointers: %s"
 msgstr "Неправильные указатели файла лицензии: %s"
+
+msgid "Components with restrictions not permitted:"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"

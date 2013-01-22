@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2013-01-22 09:53+0000\n"
 "PO-Revision-Date: 2010-09-29 20:43+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -155,23 +155,23 @@ msgstr " 引数 %s は空でない数値ベクトルでなければなりませ�
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr " 引数 %s は長さが 1 か %d の数値ベクトルでなければなりません "
 
-#: fourier.c:52 fourier.c:139
+#: fourier.c:54 fourier.c:141
 msgid "non-numeric argument"
 msgstr " 引数が数値でありません "
 
-#: fourier.c:70 fourier.c:85 fourier.c:153
+#: fourier.c:72 fourier.c:87 fourier.c:155
 msgid "fft factorization error"
 msgstr " fft の因数分解エラーです "
 
-#: fourier.c:125
+#: fourier.c:127
 msgid "vector-valued (multivariate) series required"
 msgstr " ベクトル値（多変量）の系列が必要です "
 
-#: fourier.c:198
+#: fourier.c:200
 msgid "no factors"
 msgstr " 因子がありません "
 
-#: fourier.c:201
+#: fourier.c:203
 msgid "invalid factors"
 msgstr " 因子（factor）が不正です "
 
@@ -484,118 +484,118 @@ msgstr " 'ndeps' の長さが誤っています "
 msgid "unknown 'method'"
 msgstr " 未知の 'method' です "
 
-#: optimize.c:56 optimize.c:148 optimize.c:369
+#: optimize.c:210 optimize.c:302 optimize.c:523
 msgid "NA replaced by maximum positive value"
 msgstr " NA は正の最大値で置き換えられました "
 
-#: optimize.c:64 optimize.c:160 optimize.c:377
+#: optimize.c:218 optimize.c:314 optimize.c:531
 msgid "NA/Inf replaced by maximum positive value"
 msgstr " NA/Inf は正の最大値で置き換えられました "
 
-#: optimize.c:73
+#: optimize.c:227
 msgid "invalid function value in 'optimize'"
 msgstr " 'optimize' における関数値が不正です "
 
-#: optimize.c:91 optimize.c:189 optimize.c:562
+#: optimize.c:245 optimize.c:343 optimize.c:716
 msgid "attempt to minimize non-function"
 msgstr " 関数でないものを最小化しようとしました "
 
-#: optimize.c:98 optimize.c:105 optimize.c:114 optimize.c:194 optimize.c:199
-#: optimize.c:215
+#: optimize.c:252 optimize.c:259 optimize.c:268 optimize.c:348 optimize.c:353
+#: optimize.c:369
 #, c-format
 msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
 
-#: optimize.c:107 optimize.c:200
+#: optimize.c:261 optimize.c:354
 msgid "'xmin' not less than 'xmax'"
 msgstr " 'xmin' が 'xmax' より大きいか等しいです "
 
-#: optimize.c:157
+#: optimize.c:311
 msgid "-Inf replaced by maximally negative value"
 msgstr " -Inf は負の最大値で置き換えられました "
 
-#: optimize.c:170
+#: optimize.c:324
 msgid "invalid function value in 'zeroin'"
 msgstr " 'zeroin' における関数値が不正です "
 
-#: optimize.c:205 optimize.c:210
+#: optimize.c:359 optimize.c:364
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr " '%s' に対してNAは認められません "
 
-#: optimize.c:220
+#: optimize.c:374
 msgid "'maxiter' must be positive"
 msgstr " 'maxiter' は正数でなくてはなりません "
 
-#: optimize.c:361
+#: optimize.c:515
 msgid "non-finite value supplied by 'nlm'"
 msgstr " 'nlm' により有限でない値が与えられました "
 
-#: optimize.c:396
+#: optimize.c:550
 msgid "invalid function value in 'nlm' optimizer"
 msgstr " 'nlm' 最適化における関数値が不正です "
 
-#: optimize.c:407 optimize.c:422
+#: optimize.c:561 optimize.c:576
 msgid "function value caching for optimization is seriously confused"
 msgstr " 最適化用にキャッシュされた関数値がひどく混乱しています "
 
-#: optimize.c:437
+#: optimize.c:591
 msgid "numeric parameter expected"
 msgstr " 数値パラメータが期待されています "
 
-#: optimize.c:441
+#: optimize.c:595
 msgid "conflicting parameter lengths"
 msgstr " パラメータの長さが矛盾しています "
 
-#: optimize.c:445
+#: optimize.c:599
 msgid "invalid parameter length"
 msgstr " パラメータの長さが不正です "
 
-#: optimize.c:455 optimize.c:462
+#: optimize.c:609 optimize.c:616
 msgid "missing value in parameter"
 msgstr " パラメータに欠損値があります "
 
-#: optimize.c:467
+#: optimize.c:621
 msgid "invalid parameter type"
 msgstr " パラメータのタイプが不正です "
 
-#: optimize.c:478
+#: optimize.c:632
 msgid "non-positive number of parameters in nlm"
 msgstr " nlm のパラメータが正の値ではありません "
 
-#: optimize.c:480
+#: optimize.c:634
 msgid "nlm is inefficient for 1-d problems"
 msgstr " nlm は一次元問題には効率的ではありません "
 
-#: optimize.c:482
+#: optimize.c:636
 msgid "invalid gradient tolerance in nlm"
 msgstr " nlm における勾配の許容値が不正です "
 
-#: optimize.c:484
+#: optimize.c:638
 msgid "invalid iteration limit in nlm"
 msgstr " nlm の繰り返し回数の限界値が不正です "
 
-#: optimize.c:486
+#: optimize.c:640
 msgid "minimization function has no good digits in nlm"
 msgstr " nlm 中で最小化関数は十分な桁数をもちません "
 
-#: optimize.c:488
+#: optimize.c:642
 msgid "no analytic gradient to check in nlm!"
 msgstr " nlm 中でチェックされる勾配の解析的な式がありません！ "
 
-#: optimize.c:490
+#: optimize.c:644
 msgid "no analytic Hessian to check in nlm!"
 msgstr " nlm 中でチェックすべき解析的なヘッセ行列がありません "
 
-#: optimize.c:492
+#: optimize.c:646
 msgid "probable coding error in analytic gradient"
 msgstr " 解析的な勾配式中にコーディングの間違いの可能性 "
 
-#: optimize.c:494
+#: optimize.c:648
 msgid "probable coding error in analytic Hessian"
 msgstr " 解析的なヘッセ行列式中にコーディングの間違いの可能性があります "
 
-#: optimize.c:496
+#: optimize.c:650
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -604,24 +604,24 @@ msgstr ""
 " *** nlm 関数から未知のエラーメッセージ (msg = %d)  \n"
 " *** これはあり得ないことです！ "
 
-#: optimize.c:507
+#: optimize.c:661
 msgid "Relative gradient close to zero.\n"
 msgstr " 相対勾配が0に近くなっています \n"
 
-#: optimize.c:508 optimize.c:512
+#: optimize.c:662 optimize.c:666
 msgid "Current iterate is probably solution.\n"
 msgstr " 現在の繰り返しでおそらく解が得られたでしょう \n"
 
-#: optimize.c:511
+#: optimize.c:665
 msgid "Successive iterates within tolerance.\n"
 msgstr " 連続した繰り返しが許容範囲内です \n"
 
-#: optimize.c:515
+#: optimize.c:669
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 " 最終の大局的ステップは x よりも小さな点を見つけることが出来ませんでした \n"
 
-#: optimize.c:516
+#: optimize.c:670
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -631,11 +631,11 @@ msgstr ""
 " 関数がこのアルゴリズムには非線形的すぎるか、 \n"
 " steptol が大きすぎます \n"
 
-#: optimize.c:521
+#: optimize.c:675
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr " 繰り返し数が上限を超えました．アルゴリズムは破綻しました \n"
 
-#: optimize.c:524
+#: optimize.c:678
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -648,16 +648,16 @@ msgstr ""
 " ある方向で上から漸近的に有限値に近づいているか、 \n"
 " または stepmx が小さすぎるか、です \n"
 
-#: optimize.c:586 optimize.c:591 optimize.c:595 optimize.c:599 optimize.c:603
-#: optimize.c:607 optimize.c:612
+#: optimize.c:740 optimize.c:745 optimize.c:749 optimize.c:753 optimize.c:757
+#: optimize.c:761 optimize.c:766
 msgid "invalid NA value in parameter"
 msgstr " パラメータ中に不正な NA 値があります "
 
-#: optimize.c:643
+#: optimize.c:797
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr " 提供されたヘッセ行列は不正な長さかモードであったため無視されました "
 
-#: optimize.c:647
+#: optimize.c:801
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr " 提供された勾配は不正な長さかモードであったので無視されました "
 

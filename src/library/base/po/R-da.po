@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-13 07:43\n"
+"POT-Creation-Date: 2013-01-22 09:52\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -727,9 +727,6 @@ msgstr ""
 
 msgid "'object' must be a list"
 msgstr "'object' skal være en liste"
-
-msgid "'keep.source' is deprecated and will be ignored"
-msgstr "'keep.source' er forældet og vil blive ignoreret"
 
 msgid "package %s has not been installed properly"
 msgstr "pakke %s er ikke blevet installeret korrekt"
@@ -1712,6 +1709,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'keep.source' is deprecated and will be ignored"
+#~ msgstr "'keep.source' er forældet og vil blive ignoreret"
 
 #~ msgid "non-numeric argument to 'chol2inv'"
 #~ msgstr "ikke numerisk argument for 'chol2inv'"

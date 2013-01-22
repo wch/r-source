@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2013-01-22 09:53+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -155,23 +155,23 @@ msgstr "参数%s必需为非空数字向量"
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "参数%s必需为长度为一或长度为%d的数字向量"
 
-#: fourier.c:52 fourier.c:139
+#: fourier.c:54 fourier.c:141
 msgid "non-numeric argument"
 msgstr "非数值参数"
 
-#: fourier.c:70 fourier.c:85 fourier.c:153
+#: fourier.c:72 fourier.c:87 fourier.c:155
 msgid "fft factorization error"
 msgstr "fft因数分解错误"
 
-#: fourier.c:125
+#: fourier.c:127
 msgid "vector-valued (multivariate) series required"
 msgstr "需要矢量值系列(多变数)"
 
-#: fourier.c:198
+#: fourier.c:200
 msgid "no factors"
 msgstr "非因子"
 
-#: fourier.c:201
+#: fourier.c:203
 msgid "invalid factors"
 msgstr "因子不对"
 
@@ -483,141 +483,141 @@ msgstr "'ndeps'长度不对"
 msgid "unknown 'method'"
 msgstr "没有这样的'method'"
 
-#: optimize.c:56 optimize.c:148 optimize.c:369
+#: optimize.c:210 optimize.c:302 optimize.c:523
 msgid "NA replaced by maximum positive value"
 msgstr "NA被换成最大的正值"
 
-#: optimize.c:64 optimize.c:160 optimize.c:377
+#: optimize.c:218 optimize.c:314 optimize.c:531
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf被换成最大的正值"
 
-#: optimize.c:73
+#: optimize.c:227
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize'里的函数值不对"
 
-#: optimize.c:91 optimize.c:189 optimize.c:562
+#: optimize.c:245 optimize.c:343 optimize.c:716
 msgid "attempt to minimize non-function"
 msgstr "不能将非函数最小化"
 
-#: optimize.c:98 optimize.c:105 optimize.c:114 optimize.c:194 optimize.c:199
-#: optimize.c:215
+#: optimize.c:252 optimize.c:259 optimize.c:268 optimize.c:348 optimize.c:353
+#: optimize.c:369
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
 
-#: optimize.c:107 optimize.c:200
+#: optimize.c:261 optimize.c:354
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin'不能小于xmax"
 
-#: optimize.c:157
+#: optimize.c:311
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf被换成最大的负值"
 
-#: optimize.c:170
+#: optimize.c:324
 msgid "invalid function value in 'zeroin'"
 msgstr "'zeroin'函数值不对"
 
-#: optimize.c:205 optimize.c:210
+#: optimize.c:359 optimize.c:364
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "'%s'里不可有NA值"
 
-#: optimize.c:220
+#: optimize.c:374
 msgid "'maxiter' must be positive"
 msgstr "'maxiter'必需是正数"
 
-#: optimize.c:361
+#: optimize.c:515
 msgid "non-finite value supplied by 'nlm'"
 msgstr "'nlm'回复了无限值"
 
-#: optimize.c:396
+#: optimize.c:550
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm'最佳化器里的函数值不对"
 
-#: optimize.c:407 optimize.c:422
+#: optimize.c:561 optimize.c:576
 msgid "function value caching for optimization is seriously confused"
 msgstr "最佳化时函数值暫存器出了问题"
 
-#: optimize.c:437
+#: optimize.c:591
 msgid "numeric parameter expected"
 msgstr "需要数值参数"
 
-#: optimize.c:441
+#: optimize.c:595
 msgid "conflicting parameter lengths"
 msgstr "参数的长度自相矛盾"
 
-#: optimize.c:445
+#: optimize.c:599
 msgid "invalid parameter length"
 msgstr "参数长度不对"
 
-#: optimize.c:455 optimize.c:462
+#: optimize.c:609 optimize.c:616
 msgid "missing value in parameter"
 msgstr "参数里不能有遗漏值"
 
-#: optimize.c:467
+#: optimize.c:621
 msgid "invalid parameter type"
 msgstr "参数种类不对"
 
-#: optimize.c:478
+#: optimize.c:632
 msgid "non-positive number of parameters in nlm"
 msgstr "nlm参数不能是负的"
 
-#: optimize.c:480
+#: optimize.c:634
 msgid "nlm is inefficient for 1-d problems"
 msgstr "用nlm来解决一维问题效率不高"
 
-#: optimize.c:482
+#: optimize.c:636
 msgid "invalid gradient tolerance in nlm"
 msgstr "nlm里的梯度容错不对"
 
-#: optimize.c:484
+#: optimize.c:638
 msgid "invalid iteration limit in nlm"
 msgstr "nlm里的迭代极限不对"
 
-#: optimize.c:486
+#: optimize.c:640
 msgid "minimization function has no good digits in nlm"
 msgstr "nlm最小化函数找不到可适用的数字"
 
-#: optimize.c:488
+#: optimize.c:642
 msgid "no analytic gradient to check in nlm!"
 msgstr "nlm里没有可查的分析梯度!"
 
-#: optimize.c:490
+#: optimize.c:644
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nlm里没有可查的分析海森!"
 
-#: optimize.c:492
+#: optimize.c:646
 msgid "probable coding error in analytic gradient"
 msgstr "分析梯度的代码很有可能出错"
 
-#: optimize.c:494
+#: optimize.c:648
 msgid "probable coding error in analytic Hessian"
 msgstr "分析海森的代码很有可能出错"
 
-#: optimize.c:496
+#: optimize.c:650
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr "*** nlm()产生了不知是什么的错误信息(msg = %d) 。这不应该发生!"
 
-#: optimize.c:507
+#: optimize.c:661
 msgid "Relative gradient close to zero.\n"
 msgstr "相对梯度离零太近.\n"
 
-#: optimize.c:508 optimize.c:512
+#: optimize.c:662 optimize.c:666
 msgid "Current iterate is probably solution.\n"
 msgstr "当前的重复值很可能就已经是答案了.\n"
 
-#: optimize.c:511
+#: optimize.c:665
 msgid "Successive iterates within tolerance.\n"
 msgstr "在容错范围内连续迭代.\n"
 
-#: optimize.c:515
+#: optimize.c:669
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "最后一步的整体优化没有能找到比x值要小的一个点.\n"
 
-#: optimize.c:516
+#: optimize.c:670
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -625,11 +625,11 @@ msgid ""
 msgstr ""
 "要么x已经是函数的本地最小值，要么这个函数非线性太强，要么steptol设得太大。\n"
 
-#: optimize.c:521
+#: optimize.c:675
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "超过了迭代极限。算法失败.\n"
 
-#: optimize.c:524
+#: optimize.c:678
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -642,16 +642,16 @@ msgstr ""
 "从上边界达到了渐近有限值\n"
 "要么是stepmx设得太小。\n"
 
-#: optimize.c:586 optimize.c:591 optimize.c:595 optimize.c:599 optimize.c:603
-#: optimize.c:607 optimize.c:612
+#: optimize.c:740 optimize.c:745 optimize.c:749 optimize.c:753 optimize.c:757
+#: optimize.c:761 optimize.c:766
 msgid "invalid NA value in parameter"
 msgstr "参数里的NA值不对"
 
-#: optimize.c:643
+#: optimize.c:797
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "海森的长度不对或其状态不对，因此略过不用"
 
-#: optimize.c:647
+#: optimize.c:801
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "梯度的长度或其状态不对，因此略过不用"
 

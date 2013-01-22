@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-13 07:43\n"
+"POT-Creation-Date: 2013-01-22 09:52\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -740,9 +740,6 @@ msgstr "треугольная матрица должна быть квадратной"
 
 msgid "'object' must be a list"
 msgstr "'object' должен быть списком"
-
-msgid "'keep.source' is deprecated and will be ignored"
-msgstr "'keep.source' устарел и будет пропущен"
 
 msgid "package %s has not been installed properly"
 msgstr "пакет %s как следует не установлен"
@@ -1789,6 +1786,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "'keep.source' is deprecated and will be ignored"
+#~ msgstr "'keep.source' устарел и будет пропущен"
 
 #~ msgid "non-positive definite matrix in 'chol'"
 #~ msgstr "не положительно определенная матрица в 'chol'"

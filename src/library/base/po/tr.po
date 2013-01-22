@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:56+0000\n"
+"POT-Creation-Date: 2013-01-22 09:52+0000\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -145,9 +145,9 @@ msgstr "'%ls' gösterilirken hata"
 #: src/gnuwin32/extra.c:572 src/gnuwin32/extra.c:597 src/main/agrep.c:131
 #: src/main/agrep.c:135 src/main/agrep.c:770 src/main/agrep.c:775
 #: src/main/apply.c:291 src/main/apply.c:293 src/main/apply.c:296
-#: src/main/array.c:87 src/main/array.c:1124 src/main/array.c:1250
-#: src/main/array.c:1252 src/main/array.c:1253 src/main/array.c:1579
-#: src/main/array.c:1581 src/main/array.c:1583 src/main/attrib.c:196
+#: src/main/array.c:87 src/main/array.c:1127 src/main/array.c:1253
+#: src/main/array.c:1255 src/main/array.c:1256 src/main/array.c:1582
+#: src/main/array.c:1584 src/main/array.c:1586 src/main/attrib.c:196
 #: src/main/builtin.c:87 src/main/builtin.c:96 src/main/builtin.c:115
 #: src/main/builtin.c:117 src/main/builtin.c:146 src/main/builtin.c:532
 #: src/main/builtin.c:548 src/main/builtin.c:731 src/main/builtin.c:733
@@ -200,55 +200,56 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/envir.c:1872 src/main/envir.c:1883 src/main/envir.c:2097
 #: src/main/envir.c:2218 src/main/envir.c:2477 src/main/envir.c:2684
 #: src/main/envir.c:2698 src/main/envir.c:2705 src/main/envir.c:2721
-#: src/main/envir.c:3284 src/main/errors.c:1026 src/main/eval.c:269
-#: src/main/grep.c:767 src/main/grep.c:772 src/main/grep.c:1061
-#: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
-#: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
-#: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3428 src/main/paste.c:96 src/main/paste.c:384
-#: src/main/paste.c:391 src/main/paste.c:398 src/main/paste.c:403
-#: src/main/paste.c:408 src/main/paste.c:413 src/main/paste.c:416
-#: src/main/paste.c:424 src/main/paste.c:590 src/main/paste.c:595
-#: src/main/platform.c:301 src/main/platform.c:303 src/main/platform.c:305
-#: src/main/platform.c:321 src/main/platform.c:332 src/main/platform.c:385
-#: src/main/platform.c:387 src/main/platform.c:697 src/main/platform.c:699
-#: src/main/platform.c:1050 src/main/platform.c:1056 src/main/platform.c:1059
-#: src/main/platform.c:1062 src/main/platform.c:1065 src/main/platform.c:1068
-#: src/main/platform.c:1071 src/main/platform.c:1074 src/main/platform.c:1177
-#: src/main/platform.c:1180 src/main/platform.c:1183 src/main/platform.c:1222
-#: src/main/platform.c:1279 src/main/platform.c:1282 src/main/platform.c:1498
-#: src/main/platform.c:1501 src/main/platform.c:1504 src/main/platform.c:1540
-#: src/main/platform.c:1543 src/main/platform.c:1546 src/main/platform.c:1629
-#: src/main/platform.c:1645 src/main/platform.c:1682 src/main/platform.c:1684
-#: src/main/platform.c:1749 src/main/platform.c:1833 src/main/platform.c:2108
-#: src/main/platform.c:2154 src/main/platform.c:2306 src/main/platform.c:2309
-#: src/main/platform.c:2312 src/main/platform.c:2315 src/main/platform.c:2318
-#: src/main/platform.c:2475 src/main/platform.c:2478 src/main/platform.c:2481
-#: src/main/platform.c:2484 src/main/platform.c:2487 src/main/platform.c:2557
-#: src/main/platform.c:2565 src/main/platform.c:2601 src/main/platform.c:2651
-#: src/main/print.c:239 src/main/print.c:245 src/main/print.c:267
-#: src/main/print.c:273 src/main/print.c:280 src/main/random.c:478
-#: src/main/random.c:482 src/main/random.c:489 src/main/random.c:517
-#: src/main/saveload.c:1940 src/main/saveload.c:1943 src/main/saveload.c:1946
-#: src/main/saveload.c:2062 src/main/saveload.c:2242 src/main/saveload.c:2247
-#: src/main/saveload.c:2250 src/main/saveload.c:2353 src/main/scan.c:674
-#: src/main/scan.c:842 src/main/scan.c:855 src/main/scan.c:859
-#: src/main/scan.c:861 src/main/scan.c:872 src/main/scan.c:899
-#: src/main/scan.c:902 src/main/scan.c:957 src/main/seq.c:619
-#: src/main/seq.c:624 src/main/seq.c:632 src/main/seq.c:663 src/main/seq.c:667
-#: src/main/seq.c:673 src/main/seq.c:681 src/main/sort.c:162
-#: src/main/sysutils.c:582 src/main/sysutils.c:586 src/main/sysutils.c:590
-#: src/main/sysutils.c:596 src/main/sysutils.c:600 src/main/sysutils.c:1611
-#: src/main/sysutils.c:1615 src/main/unique.c:965 src/main/unique.c:1288
-#: src/main/unique.c:1348 src/main/unique.c:1355 src/main/unique.c:1748
-#: src/main/util.c:571 src/main/util.c:574 src/main/util.c:1765
-#: src/main/util.c:1931 src/main/util.c:1932 src/main/util.c:1933
-#: src/main/util.c:1950 src/main/util.c:1974 src/main/util.c:1978
-#: src/main/util.c:1980 src/main/util.c:2005 src/main/util.c:2007
-#: src/main/util.c:2009 src/main/util.c:2012 src/main/util.c:2015
-#: src/main/util.c:2019 src/main/util.c:2021 src/modules/X11/devX11.c:3232
-#: src/modules/X11/devX11.c:3235 src/modules/X11/devX11.c:3238
-#: src/modules/X11/devX11.c:3262 src/modules/internet/internet.c:284
+#: src/main/envir.c:3284 src/main/errors.c:1026 src/main/eval.c:357
+#: src/main/eval.c:366 src/main/eval.c:369 src/main/grep.c:767
+#: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
+#: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
+#: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3435
+#: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
+#: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
+#: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
+#: src/main/paste.c:590 src/main/paste.c:595 src/main/platform.c:301
+#: src/main/platform.c:303 src/main/platform.c:305 src/main/platform.c:321
+#: src/main/platform.c:332 src/main/platform.c:385 src/main/platform.c:387
+#: src/main/platform.c:697 src/main/platform.c:699 src/main/platform.c:1050
+#: src/main/platform.c:1056 src/main/platform.c:1059 src/main/platform.c:1062
+#: src/main/platform.c:1065 src/main/platform.c:1068 src/main/platform.c:1071
+#: src/main/platform.c:1074 src/main/platform.c:1177 src/main/platform.c:1180
+#: src/main/platform.c:1183 src/main/platform.c:1222 src/main/platform.c:1279
+#: src/main/platform.c:1282 src/main/platform.c:1498 src/main/platform.c:1501
+#: src/main/platform.c:1504 src/main/platform.c:1540 src/main/platform.c:1543
+#: src/main/platform.c:1546 src/main/platform.c:1629 src/main/platform.c:1645
+#: src/main/platform.c:1682 src/main/platform.c:1684 src/main/platform.c:1749
+#: src/main/platform.c:1833 src/main/platform.c:2108 src/main/platform.c:2154
+#: src/main/platform.c:2306 src/main/platform.c:2309 src/main/platform.c:2312
+#: src/main/platform.c:2315 src/main/platform.c:2318 src/main/platform.c:2475
+#: src/main/platform.c:2478 src/main/platform.c:2481 src/main/platform.c:2484
+#: src/main/platform.c:2487 src/main/platform.c:2557 src/main/platform.c:2565
+#: src/main/platform.c:2601 src/main/platform.c:2651 src/main/print.c:239
+#: src/main/print.c:245 src/main/print.c:267 src/main/print.c:273
+#: src/main/print.c:280 src/main/random.c:478 src/main/random.c:482
+#: src/main/random.c:489 src/main/random.c:517 src/main/saveload.c:1940
+#: src/main/saveload.c:1943 src/main/saveload.c:1946 src/main/saveload.c:2062
+#: src/main/saveload.c:2242 src/main/saveload.c:2247 src/main/saveload.c:2250
+#: src/main/saveload.c:2353 src/main/scan.c:674 src/main/scan.c:842
+#: src/main/scan.c:855 src/main/scan.c:859 src/main/scan.c:861
+#: src/main/scan.c:872 src/main/scan.c:899 src/main/scan.c:902
+#: src/main/scan.c:957 src/main/seq.c:619 src/main/seq.c:624
+#: src/main/seq.c:632 src/main/seq.c:663 src/main/seq.c:667 src/main/seq.c:673
+#: src/main/seq.c:681 src/main/sort.c:162 src/main/sysutils.c:582
+#: src/main/sysutils.c:586 src/main/sysutils.c:590 src/main/sysutils.c:596
+#: src/main/sysutils.c:600 src/main/sysutils.c:1611 src/main/sysutils.c:1615
+#: src/main/unique.c:966 src/main/unique.c:1289 src/main/unique.c:1349
+#: src/main/unique.c:1356 src/main/unique.c:1749 src/main/util.c:571
+#: src/main/util.c:574 src/main/util.c:1765 src/main/util.c:1931
+#: src/main/util.c:1932 src/main/util.c:1933 src/main/util.c:1950
+#: src/main/util.c:1974 src/main/util.c:1978 src/main/util.c:1980
+#: src/main/util.c:2005 src/main/util.c:2007 src/main/util.c:2009
+#: src/main/util.c:2012 src/main/util.c:2015 src/main/util.c:2019
+#: src/main/util.c:2021 src/modules/X11/devX11.c:3241
+#: src/modules/X11/devX11.c:3244 src/modules/X11/devX11.c:3247
+#: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
 #: src/modules/lapack/Lapack.c:159 src/modules/lapack/Lapack.c:266
@@ -276,10 +277,10 @@ msgstr "desteklenmeyen Windows sürümü"
 #: src/main/sort.c:1289 src/main/sort.c:1364 src/main/source.c:220
 #: src/main/summary.c:844 src/main/sysutils.c:248 src/main/util.c:953
 #: src/main/util.c:958 src/main/util.c:965 src/main/util.c:968
-#: src/modules/X11/devX11.c:3133 src/modules/X11/devX11.c:3160
-#: src/modules/X11/devX11.c:3165 src/modules/X11/devX11.c:3170
-#: src/modules/X11/devX11.c:3180 src/modules/X11/devX11.c:3185
-#: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3193
+#: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
+#: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
+#: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
+#: src/modules/X11/devX11.c:3198 src/modules/X11/devX11.c:3202
 #: src/unix/sys-std.c:1294
 #, c-format
 msgid "invalid '%s' value"
@@ -414,8 +415,8 @@ msgstr "<HATA: '%s' kodlamasını tekrar kodlamada hata>\n"
 #: src/gnuwin32/system.c:1043 src/main/connections.c:589
 #: src/main/connections.c:594 src/main/dounzip.c:177 src/main/saveload.c:1951
 #: src/main/serialize.c:2490 src/main/serialize.c:2495
-#: src/main/serialize.c:2580 src/main/serialize.c:2625 src/unix/system.c:312
-#: src/unix/system.c:332
+#: src/main/serialize.c:2580 src/main/serialize.c:2625 src/unix/system.c:316
+#: src/unix/system.c:336
 #, c-format
 msgid "cannot open file '%s': %s"
 msgstr "dosya '%s' açılamadı: %s"
@@ -454,22 +455,22 @@ msgstr "UYARI: --max-mem-size=%4.1fM: çok küçük, görmezden gelindi\n"
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "UYARI: --max-mem-size=%4.0fM: çok büyük, %uM olarak olarak alındı\n"
 
-#: src/gnuwin32/system.c:1054 src/unix/system.c:351
+#: src/gnuwin32/system.c:1054 src/unix/system.c:355
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "UYARI: '-e %s' giriş çok uzun olduğu için ihmal edildi\n"
 
-#: src/gnuwin32/system.c:1058 src/unix/system.c:364
+#: src/gnuwin32/system.c:1058 src/unix/system.c:368
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "UYARI: bilinmeyen seçecek '%s'\n"
 
-#: src/gnuwin32/system.c:1080 src/unix/system.c:368
+#: src/gnuwin32/system.c:1080 src/unix/system.c:372
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGÜMAN '%s' __yoksayıldı__\n"
 
-#: src/gnuwin32/system.c:1086 src/unix/system.c:375
+#: src/gnuwin32/system.c:1086 src/unix/system.c:379
 msgid "cannot use -e with -f or --file"
 msgstr "-e argümanı -f veye --file ile kullanılamaz"
 
@@ -479,7 +480,7 @@ msgstr ""
 "geçicidosya oluşturulması sırasında hata -- TMPDIR uygun olarak belirlendi "
 "mi?"
 
-#: src/gnuwin32/system.c:1123 src/unix/system.c:426
+#: src/gnuwin32/system.c:1123 src/unix/system.c:430
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save', '--no-save' veya '--vanilla' seçmek zorundasınız"
 
@@ -906,7 +907,7 @@ msgstr "0 birim uzunluğunda geçersiz argüman 'base'"
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "1 veya 2 argüman gerektiren 'log'a %d argüman verildi"
 
-#: src/main/array.c:79 src/main/array.c:1428
+#: src/main/array.c:79 src/main/array.c:1431
 #, fuzzy, c-format
 msgid "'data' must be of a vector type, was '%s'"
 msgstr "'data' bir vektörü tipinde olmalıdır"
@@ -915,19 +916,19 @@ msgstr "'data' bir vektörü tipinde olmalıdır"
 msgid "non-numeric matrix extent"
 msgstr "sayısal olmayan matris boyutu"
 
-#: src/main/array.c:97 src/main/array.c:1522
+#: src/main/array.c:97 src/main/array.c:1525
 msgid "invalid 'nrow' value (too large or NA)"
 msgstr "geçersiz 'nrow' değeri (çok büyük veya NA)"
 
-#: src/main/array.c:99 src/main/array.c:1524
+#: src/main/array.c:99 src/main/array.c:1527
 msgid "invalid 'nrow' value (< 0)"
 msgstr "geçersiz 'nrow' değeri (< 0)"
 
-#: src/main/array.c:105 src/main/array.c:1527
+#: src/main/array.c:105 src/main/array.c:1530
 msgid "invalid 'ncol' value (too large or NA)"
 msgstr "geçersiz 'ncol' değeri (çok büyük veya YOK)"
 
-#: src/main/array.c:107 src/main/array.c:1529
+#: src/main/array.c:107 src/main/array.c:1532
 msgid "invalid 'ncol' value (< 0)"
 msgstr "geçersiz 'ncol' değeri (< 0)"
 
@@ -948,7 +949,7 @@ msgstr "veri uzunluğu [%d] sütun sayılarının böleni veya tam böleni deği
 msgid "data length exceeds size of matrix"
 msgstr "veri uzunluğu matris boyutunu aşıyor"
 
-#: src/main/array.c:137 src/main/array.c:1440 src/main/array.c:1536
+#: src/main/array.c:137 src/main/array.c:1443 src/main/array.c:1539
 msgid "too many elements specified"
 msgstr "çok fazla eleman seçildi"
 
@@ -995,42 +996,43 @@ msgstr "argüman bir matris değil"
 msgid "invalid first argument, must be an array"
 msgstr "geçersiz ilk argüman, bir dizi olmalı"
 
-#: src/main/array.c:1098 src/main/array.c:1101
+#: src/main/array.c:1097
+#, fuzzy, c-format
+msgid "'perm' is of wrong length %d (!= %d)"
+msgstr "yanlış uzunlukta 'perm'"
+
+#: src/main/array.c:1102 src/main/array.c:1105
 msgid "'a' does not have named dimnames"
 msgstr "'a' boyut ismi olarak isimlendirilemez"
 
-#: src/main/array.c:1108
+#: src/main/array.c:1112
 #, fuzzy, c-format
 msgid "'perm[%d]' does not match a dimension name"
 msgstr "perm[%d] bir boyut ismiyle uyuşmuyo"
 
-#: src/main/array.c:1115
-msgid "'perm' is of wrong length"
-msgstr "yanlış uzunlukta 'perm'"
-
-#: src/main/array.c:1122
+#: src/main/array.c:1125
 msgid "value out of range in 'perm'"
 msgstr "'perm' de değer sınırlar dışında"
 
-#: src/main/array.c:1204
+#: src/main/array.c:1207
 msgid "'resize' must be TRUE or FALSE"
 msgstr "'resize' DOĞRU yada YANLIŞ olmalı"
 
-#: src/main/array.c:1262
+#: src/main/array.c:1265
 msgid "'x' must be numeric"
 msgstr "'x' sayısal olmalı"
 
-#: src/main/array.c:1436
+#: src/main/array.c:1439
 #, fuzzy
 msgid "'dims' cannot be of length 0"
 msgstr "'hadj' bir birim uzunluğunda olmalıdır"
 
-#: src/main/array.c:1532
+#: src/main/array.c:1535
 #, fuzzy
 msgid "'x' must have positive length"
 msgstr "'value' pozitif bir değer olmalı"
 
-#: src/main/array.c:1593
+#: src/main/array.c:1596
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
@@ -1146,7 +1148,7 @@ msgstr "'dimnames' [%d] uzunluğu dizi uzattmasına eşit değil"
 #: src/main/attrib.c:1045 src/main/builtin.c:74 src/main/builtin.c:111
 #: src/main/envir.c:1533 src/main/envir.c:1659 src/main/envir.c:1721
 #: src/main/envir.c:1843 src/main/paste.c:74 src/main/paste.c:292
-#: src/main/random.c:487 src/main/random.c:516 src/main/unique.c:1747
+#: src/main/random.c:487 src/main/random.c:516 src/main/unique.c:1748
 msgid "invalid first argument"
 msgstr "geçersiz ilk argüman"
 
@@ -1281,7 +1283,7 @@ msgstr "tekrarlanmış biçimsel argüman 'use.names'"
 msgid "argument not a list"
 msgstr "argüman bir liste değil"
 
-#: src/main/bind.c:1022 src/main/eval.c:2411 src/main/eval.c:2420
+#: src/main/bind.c:1022 src/main/eval.c:2510 src/main/eval.c:2519
 #: src/main/objects.c:312 src/main/objects.c:347 src/main/objects.c:722
 #: src/main/objects.c:739 src/main/objects.c:746
 #, c-format
@@ -1327,7 +1329,7 @@ msgstr "seçilen vektör boyutu çok büyük"
 #: src/main/envir.c:1850 src/main/envir.c:2507 src/main/envir.c:2567
 #: src/main/envir.c:2839 src/main/envir.c:2868 src/main/envir.c:2889
 #: src/main/envir.c:2912 src/main/envir.c:2947 src/main/envir.c:2968
-#: src/main/envir.c:3274 src/main/envir.c:3279 src/main/eval.c:4977
+#: src/main/envir.c:3274 src/main/envir.c:3279 src/main/eval.c:5076
 #: src/main/objects.c:192 src/main/objects.c:198 src/main/saveload.c:2060
 #: src/main/saveload.c:2351 src/main/serialize.c:2647
 msgid "use of NULL environment is defunct"
@@ -1399,9 +1401,9 @@ msgid "invalid value"
 msgstr "geçersiz değer"
 
 #: src/main/builtin.c:934 src/main/coerce.c:2398 src/main/coerce.c:2439
-#: src/main/eval.c:403 src/main/eval.c:520 src/main/eval.c:1834
-#: src/main/eval.c:1900 src/main/eval.c:1960 src/main/eval.c:2291
-#: src/main/eval.c:4390 src/main/eval.c:4499
+#: src/main/eval.c:502 src/main/eval.c:619 src/main/eval.c:1933
+#: src/main/eval.c:1999 src/main/eval.c:2059 src/main/eval.c:2390
+#: src/main/eval.c:4489 src/main/eval.c:4598
 msgid "'...' used in an incorrect context"
 msgstr "'...' yanlış içerikte kullanıldı"
 
@@ -1414,7 +1416,7 @@ msgstr ""
 msgid "'EXPR' is missing"
 msgstr "'EXPR' eksik"
 
-#: src/main/builtin.c:992 src/main/eval.c:4815
+#: src/main/builtin.c:992 src/main/eval.c:4914
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR 1 uzunluğunda bir vektör olmalıdır"
 
@@ -1569,7 +1571,7 @@ msgstr "faktör olmayanı zorlama deneniyor"
 msgid "list argument expected"
 msgstr "argüman listesi beklendi"
 
-#: src/main/coerce.c:1543 src/main/eval.c:4981
+#: src/main/coerce.c:1543 src/main/eval.c:5080
 msgid "invalid environment"
 msgstr "geçersiz ortam"
 
@@ -1926,12 +1928,12 @@ msgstr "xzfile bağlatısı yer ayırması başarısız"
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr "bu bir R'nin bu derlemesinin desteklemediği %s-sıkıştırılmış dosya"
 
-#: src/main/connections.c:1899 src/modules/X11/devX11.c:3366
+#: src/main/connections.c:1899 src/modules/X11/devX11.c:3375
 msgid "memory allocation to copy clipboard failed"
 msgstr "panoyu kopyalama için bellek yer ayırması başarısız"
 
-#: src/main/connections.c:1904 src/modules/X11/devX11.c:3345
-#: src/modules/X11/devX11.c:3350
+#: src/main/connections.c:1904 src/modules/X11/devX11.c:3354
+#: src/modules/X11/devX11.c:3359
 msgid "clipboard cannot be opened or contains no text"
 msgstr "pano açılamıyor veya metin içermiyor"
 
@@ -2489,13 +2491,13 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts' negatif olmayan bir tamsayı olmalı"
 
 #: src/main/deparse.c:410 src/main/envir.c:1689 src/main/envir.c:1771
-#: src/main/eval.c:409 src/main/eval.c:1068 src/main/eval.c:3349
+#: src/main/eval.c:508 src/main/eval.c:1167 src/main/eval.c:3448
 #: src/main/saveload.c:1968 src/main/saveload.c:2299 src/main/serialize.c:2665
 #, c-format
 msgid "object '%s' not found"
 msgstr "'%s' nesnesi bulunamadı"
 
-#: src/main/deparse.c:1424
+#: src/main/deparse.c:1421
 msgid "badly formed function expression"
 msgstr "hatalı biçimde fonksiyon ifadesi"
 
@@ -2540,7 +2542,7 @@ msgid ""
 "first argument must be a string (of length 1) or native symbol reference"
 msgstr "'name' bir dize (1 uzunluğunda) ya da yerel sembol referansı olmalıdır"
 
-#: src/main/dotcode.c:201 src/main/dotcode.c:553
+#: src/main/dotcode.c:201 src/main/dotcode.c:569
 msgid "too many arguments in foreign function call"
 msgstr "yabancı fonksiyon kullanımında çok fazla argüman"
 
@@ -2590,92 +2592,93 @@ msgstr "argüman verilmedi"
 msgid "too many arguments"
 msgstr "çok fazla argüman"
 
-#: src/main/dotcode.c:510 src/main/dotcode.c:544 src/main/dotcode.c:1387
+#: src/main/dotcode.c:510 src/main/dotcode.c:560 src/main/dotcode.c:1403
 #, fuzzy
 msgid "'.NAME' is missing"
 msgstr "'EXPR' eksik"
 
-#: src/main/dotcode.c:560 src/main/dotcode.c:1408
+#: src/main/dotcode.c:521 src/main/dotcode.c:525 src/main/dotcode.c:576
+#: src/main/dotcode.c:1424
 #, fuzzy, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Hatalı sayıda argüman (%d), %d adet bekleniyordu (%s için)"
 
-#: src/main/dotcode.c:1217 src/main/dotcode.c:2266
+#: src/main/dotcode.c:1233 src/main/dotcode.c:2282
 msgid "too many arguments, sorry"
 msgstr "çok fazla argüman, üzgünüm"
 
-#: src/main/dotcode.c:1251 src/main/dotcode.c:1268 src/main/engine.c:2989
+#: src/main/dotcode.c:1267 src/main/dotcode.c:1284 src/main/engine.c:2989
 msgid "invalid graphics state"
 msgstr "geçersiz grafik durumu"
 
-#: src/main/dotcode.c:1347
+#: src/main/dotcode.c:1363
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "DLL'ye bakarken DLLInfoReference için NULL değeri"
 
-#: src/main/dotcode.c:1448
+#: src/main/dotcode.c:1464
 #, fuzzy, c-format
 msgid "wrong type for argument %d in call to %s"
 msgstr "%d . argüman için yanlış tip (%s çağrısı)"
 
-#: src/main/dotcode.c:1460
+#: src/main/dotcode.c:1476
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
 
-#: src/main/dotcode.c:1483
+#: src/main/dotcode.c:1499
 #, fuzzy, c-format
 msgid "long vectors (argument %d) are not supported in %s"
 msgstr "sembolik bağlantılar bu sistemde desteklenmiyor"
 
-#: src/main/dotcode.c:1514
+#: src/main/dotcode.c:1530
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "dış fonksiyon çağrısında NA'lar (argüman %d)"
 
-#: src/main/dotcode.c:1537
+#: src/main/dotcode.c:1553
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "dış fonksiyon çağrısında NA/NaN/Inf (argüman %d)"
 
-#: src/main/dotcode.c:1542
+#: src/main/dotcode.c:1558
 msgid "single values not returned if not duplicated"
 msgstr ""
 
-#: src/main/dotcode.c:1568
+#: src/main/dotcode.c:1584
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "Dışarıdan fonksiyon çağrısında karmaşık NA/NaN/Inf (argüman %d)"
 
-#: src/main/dotcode.c:1587
+#: src/main/dotcode.c:1603
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "karakter değişkenler .C/.Fortran'da kopyalanmalıdır"
 
-#: src/main/dotcode.c:1592
+#: src/main/dotcode.c:1608
 msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran'da sadece karakter vektörünün ilk dizesi kullanıldı"
 
-#: src/main/dotcode.c:1635 src/main/dotcode.c:1651 src/main/dotcode.c:1662
+#: src/main/dotcode.c:1651 src/main/dotcode.c:1667 src/main/dotcode.c:1678
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
 msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
-#: src/main/dotcode.c:1656
+#: src/main/dotcode.c:1672
 #, fuzzy, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
 msgstr "Fortran'a geçirmek için geçersiz mod (argüman %d)"
 
-#: src/main/dotcode.c:1667
+#: src/main/dotcode.c:1683
 msgid "pairlists are passed as SEXP as from R 2.15.0"
 msgstr ""
 
-#: src/main/dotcode.c:2489
+#: src/main/dotcode.c:2505
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "\"%s\" tipi dillerarası çağrılarda desteklenmiyor"
 
-#: src/main/dotcode.c:2594
+#: src/main/dotcode.c:2610
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R içinde '%s' modu desteklenmiyor"
@@ -2840,12 +2843,12 @@ msgid "no graphics system to unregister"
 msgstr "kaydı kaldırılacak grafik sistemi bulunmuyor"
 
 #: src/main/engine.c:443 src/main/engine.c:448 src/main/engine.c:456
-#: src/main/engine.c:463 src/main/engine.c:477 src/modules/X11/devX11.c:1152
+#: src/main/engine.c:463 src/main/engine.c:477 src/modules/X11/devX11.c:1157
 msgid "invalid line end"
 msgstr "geçersiz dize sonu "
 
 #: src/main/engine.c:508 src/main/engine.c:513 src/main/engine.c:521
-#: src/main/engine.c:528 src/main/engine.c:542 src/modules/X11/devX11.c:1170
+#: src/main/engine.c:528 src/main/engine.c:542 src/modules/X11/devX11.c:1175
 msgid "invalid line join"
 msgstr "geçersiz dize girişi"
 
@@ -2994,8 +2997,8 @@ msgstr "... listesi %d eleman içermiyor"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d hatalı bir içerikte kullanıldı,  bakılcak ... yok"
 
-#: src/main/envir.c:1321 src/main/envir.c:1767 src/main/eval.c:413
-#: src/main/eval.c:3340
+#: src/main/envir.c:1321 src/main/envir.c:1767 src/main/eval.c:512
+#: src/main/eval.c:3439
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "varsayılanı olmayan \"%s\" argümanı yok"
@@ -3381,16 +3384,21 @@ msgstr "bir deneme içereiğinde değil"
 msgid "error message must be a character string"
 msgstr "hata mesajı bir karakter dizesi olmalıdır"
 
-#: src/main/eval.c:223
+#: src/main/eval.c:272
+#, c-format
+msgid "source files skipped by Rprof; please increase '%s'"
+msgstr ""
+
+#: src/main/eval.c:292
 #, c-format
 msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof: profil dosyası '%s' açılamadı"
 
-#: src/main/eval.c:283
+#: src/main/eval.c:382
 msgid "R profiling is not available on this system"
 msgstr "R profilleme bu sistemde mevcut değil"
 
-#: src/main/eval.c:307
+#: src/main/eval.c:406
 msgid ""
 "promise already under evaluation: recursive default argument reference or "
 "earlier problems?"
@@ -3398,273 +3406,273 @@ msgstr ""
 "promise zaten hesaplama altında: tekrarlamalı varsayılan argüman referansı "
 "veya "
 
-#: src/main/eval.c:309
+#: src/main/eval.c:408
 msgid "restarting interrupted promise evaluation"
 msgstr "yeniden başlatma promise hesaplamasını durdurdu"
 
-#: src/main/eval.c:355
+#: src/main/eval.c:454
 msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "hesaplama çok dallanmış: sonsuz döngü / options(expressions=)?"
 
-#: src/main/eval.c:415 src/main/eval.c:3341
+#: src/main/eval.c:514 src/main/eval.c:3440
 msgid "argument is missing, with no default"
 msgstr "varsayılanı olmayan argüman eksik"
 
-#: src/main/eval.c:516 src/main/eval.c:4338
+#: src/main/eval.c:615 src/main/eval.c:4437
 msgid "attempt to apply non-function"
 msgstr "fonksiyon olmayana uygulama denemesi"
 
-#: src/main/eval.c:539
+#: src/main/eval.c:638
 #, c-format
 msgid "%s at %s#%d: "
 msgstr "%s (%s#%d'de): "
 
-#: src/main/eval.c:995
+#: src/main/eval.c:1094
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "genel fonksiyonun ortamında \"%s\" sembolü bulunamadı"
 
-#: src/main/eval.c:1013
+#: src/main/eval.c:1112
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "sembol \"%s\" yöntemin ortamında değil"
 
-#: src/main/eval.c:1123
+#: src/main/eval.c:1222
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "koşul >1 uzunluğa sahip ve sadece ilk öğe kullanılacak"
 
-#: src/main/eval.c:1140
+#: src/main/eval.c:1239
 msgid "missing value where TRUE/FALSE needed"
 msgstr "TRUE/FALSE gereken yerde eksik değer"
 
-#: src/main/eval.c:1141
+#: src/main/eval.c:1240
 msgid "argument is not interpretable as logical"
 msgstr "argüman mantıksal olarak yorumlanabilir değil"
 
-#: src/main/eval.c:1142
+#: src/main/eval.c:1241
 msgid "argument is of length zero"
 msgstr "sıfır uzunluğunda argüman"
 
-#: src/main/eval.c:1215
+#: src/main/eval.c:1314
 msgid "non-symbol loop variable"
 msgstr "sembol olmayan döngü değişkeni"
 
-#: src/main/eval.c:1306 src/main/eval.c:4106
+#: src/main/eval.c:1405 src/main/eval.c:4205
 msgid "invalid for() loop sequence"
 msgstr "geçersiz for() döngüsü dizilişi"
 
-#: src/main/eval.c:1435
+#: src/main/eval.c:1534
 msgid "multi-argument returns are not permitted"
 msgstr "çoklu argüman geri dönüşlerine izin verilmiyor"
 
-#: src/main/eval.c:1484
+#: src/main/eval.c:1583
 msgid "invalid (NULL) left side of assignment"
 msgstr "atamada geçersiz (NULL) sol taraf"
 
-#: src/main/eval.c:1506
+#: src/main/eval.c:1605
 msgid "target of assignment expands to non-language object"
 msgstr "atama hedefi dil olmayan nesneye yayılıyor"
 
-#: src/main/eval.c:1552
+#: src/main/eval.c:1651
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "'%s' de uzun isim"
 
-#: src/main/eval.c:1614
+#: src/main/eval.c:1713
 msgid "cannot do complex assignments in base namespace"
 msgstr "temel isim alanında karmaşık atamalar yapılamaz"
 
-#: src/main/eval.c:1616
+#: src/main/eval.c:1715
 msgid "cannot do complex assignments in base environment"
 msgstr "temel çevrebirimde karmaşık atamalar yapılamaz"
 
-#: src/main/eval.c:1653 src/main/eval.c:1680
+#: src/main/eval.c:1752 src/main/eval.c:1779
 msgid "invalid function in complex assignment"
 msgstr "karışık atamada geçersiz fonksiyon"
 
-#: src/main/eval.c:1758
+#: src/main/eval.c:1857
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "atamaya geçersiz (do_set) sol taraf"
 
-#: src/main/eval.c:1773
+#: src/main/eval.c:1872
 msgid "invalid assignment left-hand side"
 msgstr "sol tarafa geçersiz atama"
 
-#: src/main/eval.c:1838
+#: src/main/eval.c:1937
 #, c-format
 msgid "argument %d is empty"
 msgstr "argüman %d boş"
 
-#: src/main/eval.c:1841
+#: src/main/eval.c:1940
 #, c-format
 msgid "'%s' is missing"
 msgstr "'%s' eksik"
 
-#: src/main/eval.c:1991
+#: src/main/eval.c:2090
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\" için geçersiz biçimsel argüman"
 
-#: src/main/eval.c:2047 src/main/eval.c:2078 src/main/eval.c:2083
+#: src/main/eval.c:2146 src/main/eval.c:2177 src/main/eval.c:2182
 #, fuzzy, c-format
 msgid "invalid '%s' argument of type '%s'"
 msgstr "hatalı '%s' argümanı"
 
-#: src/main/eval.c:2075
+#: src/main/eval.c:2174
 msgid "numeric 'envir' arg not of length one"
 msgstr "sayısal 'envir' argümanı bir uzunluğunda değil"
 
-#: src/main/eval.c:2099 src/main/eval.c:2121
+#: src/main/eval.c:2198 src/main/eval.c:2220
 msgid "restarts not supported in 'eval'"
 msgstr "'eval' de yeniden başlatma desteklenmiyor"
 
-#: src/main/eval.c:2178 src/main/eval.c:2191
+#: src/main/eval.c:2277 src/main/eval.c:2290
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' bir kapanmadan sonra çağırıldı"
 
-#: src/main/eval.c:2284
+#: src/main/eval.c:2383
 msgid "value in '...' is not a promise"
 msgstr "'...' içindeki değer bir promise değil"
 
-#: src/main/eval.c:2473 src/main/objects.c:713
+#: src/main/eval.c:2572 src/main/objects.c:713
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "'%s' içinde çağrı ismi çok uzun"
 
-#: src/main/eval.c:2494
+#: src/main/eval.c:2593
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "'%s' içinde genel isim çok uzun"
 
-#: src/main/eval.c:2557
+#: src/main/eval.c:2656
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Uyumsuz metodlar (\"%s\", \"%s\") -> \"%s\" için"
 
-#: src/main/eval.c:2621
+#: src/main/eval.c:2720
 msgid "dispatch error in group dispatch"
 msgstr "grup dağıtımında dağıtım hatası"
 
-#: src/main/eval.c:2934
+#: src/main/eval.c:3033
 #, fuzzy, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "'fn' bir fonksiyon değil"
 
-#: src/main/eval.c:3127
+#: src/main/eval.c:3226
 msgid "node stack overflow"
 msgstr "ağ yığın taşması"
 
-#: src/main/eval.c:3133
+#: src/main/eval.c:3232
 msgid "integer stack overflow"
 msgstr "tamsayı yığın taşması"
 
-#: src/main/eval.c:3187
+#: src/main/eval.c:3286
 #, fuzzy
 msgid "bad opcode"
 msgstr "Yanlış işlemci kodu"
 
-#: src/main/eval.c:3929
+#: src/main/eval.c:4028
 #, fuzzy, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "geçersiz 'x' tipi ('x %s y' içinde)"
 
-#: src/main/eval.c:4008
+#: src/main/eval.c:4107
 msgid "bytecode version mismatch; using eval"
 msgstr "baytkodu sürüm uyuşmazlığı; eval kullanılıyor"
 
-#: src/main/eval.c:4013
+#: src/main/eval.c:4112
 msgid "bytecode version is too old"
 msgstr "baytkodu sürümü çok eski"
 
-#: src/main/eval.c:4014
+#: src/main/eval.c:4113
 msgid "bytecode version is too new"
 msgstr "baytkodu sürümü çok yeni"
 
-#: src/main/eval.c:4048
+#: src/main/eval.c:4147
 msgid "byte code version mismatch"
 msgstr ""
 
-#: src/main/eval.c:4174
+#: src/main/eval.c:4273
 msgid "invalid sequence argument in for loop"
 msgstr "döngü için geçersiz sıralama argümanı"
 
-#: src/main/eval.c:4320 src/main/names.c:1130
+#: src/main/eval.c:4419 src/main/names.c:1130
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "iç fonksiyonlarda \"%s\" yok"
 
-#: src/main/eval.c:4427 src/main/eval.c:4752 src/main/eval.c:4794
+#: src/main/eval.c:4526 src/main/eval.c:4851 src/main/eval.c:4893
 msgid "bad function"
 msgstr "hatalı fonksiyon"
 
-#: src/main/eval.c:4442
+#: src/main/eval.c:4541
 msgid "not a BUILTIN function"
 msgstr "bir BUILTIN fonksiyon değil"
 
-#: src/main/eval.c:4819
+#: src/main/eval.c:4918
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr ""
 
-#: src/main/eval.c:4914
+#: src/main/eval.c:5013
 msgid "cannot find index for threaded code address"
 msgstr "iş parçası kod adresi için indeks bulunamadı"
 
-#: src/main/eval.c:4974
+#: src/main/eval.c:5073
 #, fuzzy
 msgid "invalid body"
 msgstr "geçersiz sembol"
 
-#: src/main/eval.c:4994
+#: src/main/eval.c:5093
 msgid "invalid symbol"
 msgstr "geçersiz sembol"
 
-#: src/main/eval.c:5038
+#: src/main/eval.c:5137
 msgid "argument is not a byte code object"
 msgstr "argüman bir bayt kodu nesnesi değil"
 
-#: src/main/eval.c:5059
+#: src/main/eval.c:5158
 msgid "bad file name"
 msgstr "hatalı dosya ismi"
 
-#: src/main/eval.c:5063 src/main/eval.c:5084
+#: src/main/eval.c:5162 src/main/eval.c:5183
 msgid "unable to open 'file'"
 msgstr "dosya açılamadı"
 
-#: src/main/eval.c:5078 src/main/saveload.c:1932
+#: src/main/eval.c:5177 src/main/saveload.c:1932
 msgid "'file' must be non-empty string"
 msgstr "'dosya' boş olmayan bir dize olmalı"
 
-#: src/main/eval.c:5080 src/main/saveload.c:1934 src/main/saveload.c:2234
+#: src/main/eval.c:5179 src/main/saveload.c:1934 src/main/saveload.c:2234
 #: src/main/serialize.c:2092
 msgid "'ascii' must be logical"
 msgstr "'ascii' mantıksal olmalı"
 
-#: src/main/eval.c:5109 src/main/eval.c:5116
+#: src/main/eval.c:5208 src/main/eval.c:5215
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: önbellek çok küçük"
 
-#: src/main/eval.c:5149 src/main/eval.c:5168 src/main/eval.c:5198
+#: src/main/eval.c:5248 src/main/eval.c:5267 src/main/eval.c:5297
 #, fuzzy
 msgid "constant buffer must be a generic vector"
 msgstr "kod genel bir vektör olmalıdır"
 
-#: src/main/eval.c:5200
+#: src/main/eval.c:5299
 msgid "bad constant count"
 msgstr ""
 
-#: src/main/eval.c:5236
+#: src/main/eval.c:5335
 msgid "profile timer in use"
 msgstr "profil zamanlayıcı kullanımda"
 
-#: src/main/eval.c:5238
+#: src/main/eval.c:5337
 msgid "already byte code profiling"
 msgstr "bayt kod profillemesi zaten açık"
 
-#: src/main/eval.c:5256
+#: src/main/eval.c:5355
 msgid "setting profile timer failed"
 msgstr "profil zamanlayıcıyı ayarlama başarısız"
 
-#: src/main/eval.c:5273
+#: src/main/eval.c:5372
 msgid "not byte code profiling"
 msgstr ""
 
@@ -3968,9 +3976,9 @@ msgstr "internet rutinlerine bu modülden erişilemez"
 msgid "internet routines cannot be loaded"
 msgstr "internet rutinleri yüklenemez"
 
-#: src/main/internet.c:118 src/main/memory.c:3156 src/main/memory.c:3165
-#: src/main/memory.c:3176 src/main/memory.c:3189 src/main/memory.c:3205
-#: src/main/memory.c:3222
+#: src/main/internet.c:118 src/main/memory.c:3162 src/main/memory.c:3171
+#: src/main/memory.c:3182 src/main/memory.c:3195 src/main/memory.c:3211
+#: src/main/memory.c:3228
 msgid "bad value"
 msgstr "hatalı değer"
 
@@ -4138,129 +4146,129 @@ msgid "unused argument %s"
 msgid_plural "unused arguments %s"
 msgstr[0] "kullanılmayan argüman(lar) %s"
 
-#: src/main/memory.c:1136
+#: src/main/memory.c:1140
 msgid "can only weakly reference/finalize reference objects"
 msgstr "referans nesneler sadece zayıf referanslık/sonlandırma olabilir"
 
-#: src/main/memory.c:1170
+#: src/main/memory.c:1174
 msgid "finalizer must be a function or NULL"
 msgstr "sonuçlandırıcı bir fonksiyon yada NULL olmalı"
 
-#: src/main/memory.c:1221 src/main/memory.c:1229 src/main/memory.c:1240
+#: src/main/memory.c:1225 src/main/memory.c:1233 src/main/memory.c:1244
 msgid "not a weak reference"
 msgstr "bir zayıf referans değil"
 
-#: src/main/memory.c:1356
+#: src/main/memory.c:1360
 msgid "first argument must be environment or external pointer"
 msgstr "ilk argüman bir ortam veya dış gösterici olmalıdır"
 
-#: src/main/memory.c:1358
+#: src/main/memory.c:1362
 msgid "second argument must be a function"
 msgstr "ikinci argüman bir fonksiyon olmalıdır"
 
-#: src/main/memory.c:1362
+#: src/main/memory.c:1366
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "üçüncü argüman 'TRUE' yada 'FALSE' olmalı"
 
-#: src/main/memory.c:1842
+#: src/main/memory.c:1846
 msgid "vector memory exhausted (limit reached?)"
 msgstr "vektör belleği bitti (limite erişildi?)"
 
-#: src/main/memory.c:1848
+#: src/main/memory.c:1852
 msgid "cons memory exhausted (limit reached?)"
 msgstr "cons belleği tükendi (limite erişildi?)"
 
-#: src/main/memory.c:1853
+#: src/main/memory.c:1857
 msgid "memory exhausted (limit reached?)"
 msgstr "bellek tükendi (limite erişildi?)"
 
-#: src/main/memory.c:1975
+#: src/main/memory.c:1979
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "%0.1f Gb boyutunda bellek bölgesi oluşturulamadı"
 
-#: src/main/memory.c:1980
+#: src/main/memory.c:1984
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "%0.1f Gb boyutunda bellek bölgesi oluşturulamadı"
 
-#: src/main/memory.c:2246
+#: src/main/memory.c:2250
 #, fuzzy
 msgid "vector is too large"
 msgstr "seçilen vektör boyutu çok büyük"
 
-#: src/main/memory.c:2249
+#: src/main/memory.c:2253
 msgid "negative length vectors are not allowed"
 msgstr "negatif uzunlukta vektörlere izin verilmiyor"
 
-#: src/main/memory.c:2275 src/main/memory.c:2288 src/main/memory.c:2301
-#: src/main/memory.c:2316
+#: src/main/memory.c:2279 src/main/memory.c:2292 src/main/memory.c:2305
+#: src/main/memory.c:2320
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "%d uzunluğunda vektör oluşturulamadı"
 
-#: src/main/memory.c:2337
+#: src/main/memory.c:2341
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "vektör ayırmasında geçersiz tip/uzunluk (%s/%d)"
 
-#: src/main/memory.c:2430
+#: src/main/memory.c:2434
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "%0.1f Gb boyutunda vektör ayrılamıyor"
 
-#: src/main/memory.c:2434
+#: src/main/memory.c:2438
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "%0.1f Mb boyutunda vektör ayrılamıyor"
 
-#: src/main/memory.c:2438
+#: src/main/memory.c:2442
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "%0.f Kb boyutunda vektör ayrılamıyor"
 
-#: src/main/memory.c:2771
+#: src/main/memory.c:2777
 msgid "protect(): protection stack overflow"
 msgstr "protect(): yığın taşması koruması"
 
-#: src/main/memory.c:2787
+#: src/main/memory.c:2793
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): sadece %d korunmuş öğe var"
 
-#: src/main/memory.c:2801
+#: src/main/memory.c:2807
 msgid "unprotect_ptr: pointer not found"
 msgstr "uprotect_prt: işaretçi bulunamadı"
 
-#: src/main/memory.c:2838
+#: src/main/memory.c:2844
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr "unprotect(): sadece %d korunmuş öğe var"
 
-#: src/main/memory.c:2877
+#: src/main/memory.c:2883
 #, fuzzy, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc bellekte (%d / %d)  yer ayıramıyor"
 
-#: src/main/memory.c:2888
+#: src/main/memory.c:2894
 #, fuzzy, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc bellekte (%d boyutunda) yeniden yer ayırm yapamadı"
 
-#: src/main/memory.c:3110
+#: src/main/memory.c:3116
 msgid "not safe to return vector pointer"
 msgstr "vektör işaretçisine geri döndürme güvenli değil"
 
-#: src/main/memory.c:3350
+#: src/main/memory.c:3357
 msgid "memory profiling is not available on this system"
 msgstr "bellek profilleme bu sistemde mevcut değil"
 
-#: src/main/memory.c:3415
+#: src/main/memory.c:3422
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: çıktı dosyası '%s' açılamadı"
 
-#: src/main/memory.c:3522
+#: src/main/memory.c:3529
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
@@ -6172,37 +6180,37 @@ msgstr "%s() sadece vektörler için geçerlidir"
 msgid "'nmax' must be positive"
 msgstr "'value' pozitif bir değer olmalı"
 
-#: src/main/unique.c:921
+#: src/main/unique.c:922
 msgid "'match' requires vector arguments"
 msgstr "'match' vektör argüman gerektirir"
 
-#: src/main/unique.c:969 src/main/unique.c:1124
+#: src/main/unique.c:970 src/main/unique.c:1125
 #, fuzzy
 msgid "argument is not of mode character"
 msgstr "argüman mod karakterinin değil "
 
-#: src/main/unique.c:1250
+#: src/main/unique.c:1251
 #, fuzzy
 msgid "... used in a situation where it does not exist"
 msgstr "... var olmayan bir durumda kullanıldı"
 
-#: src/main/unique.c:1341
+#: src/main/unique.c:1342
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr "'match.call' 'un çağırıldığı yerde bir kapama bulunamadı"
 
-#: src/main/unique.c:1534
+#: src/main/unique.c:1535
 msgid "non-numeric data frame in rowsum"
 msgstr "rowsum içinde sayısal olmayan veri çerçevesi"
 
-#: src/main/unique.c:1566
+#: src/main/unique.c:1567
 msgid "this cannot happen"
 msgstr "gerçekleştirilemez"
 
-#: src/main/unique.c:1637
+#: src/main/unique.c:1638
 msgid "'names' must be a character vector"
 msgstr "'names' bir karakter vektörü olmalı"
 
-#: src/main/unique.c:1641
+#: src/main/unique.c:1642
 msgid "'sep' must be a character string"
 msgstr "'sep' bir karakter dizesi olmalı"
 
@@ -6402,16 +6410,16 @@ msgstr "En az dört kontrol noktası olmalıdır"
 msgid "There must be at least three control points"
 msgstr "En az üç kontrol noktası olmaldırı"
 
-#: src/modules/X11/dataentry.c:1871 src/modules/X11/devX11.c:1241
+#: src/modules/X11/dataentry.c:1871 src/modules/X11/devX11.c:1246
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr "X11 protokol hatası: %s"
 
-#: src/modules/X11/devX11.c:458
+#: src/modules/X11/devX11.c:460
 msgid "cannot set grayscale: reverting to monochrome"
 msgstr "gri tonlamalı belirlenemiyor: siyah-beyaza dönülüyor"
 
-#: src/modules/X11/devX11.c:544
+#: src/modules/X11/devX11.c:546
 msgid ""
 "X11 driver unable to obtain color cube\n"
 "  reverting to monochrome"
@@ -6419,7 +6427,7 @@ msgstr ""
 "X11 sürücüsü renk kübünü alamadı\n"
 "  siyah-beyaza dönülüyor"
 
-#: src/modules/X11/devX11.c:592
+#: src/modules/X11/devX11.c:594
 msgid ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
@@ -6427,7 +6435,7 @@ msgstr ""
 "Hata: X11 ek grafik renklerini yerleştiremiyor.\n"
 "X11'i colortype=\"pseudo.cube\" veya \"gray\" ile kullanmayı deneyin."
 
-#: src/modules/X11/devX11.c:1022
+#: src/modules/X11/devX11.c:1027
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
@@ -6435,17 +6443,17 @@ msgstr ""
 "herhangi bir X11 yazıtipi bulunamadı\n"
 "Yazıtipi Dizininin doğru olduğunu kontrol edin."
 
-#: src/modules/X11/devX11.c:1082
+#: src/modules/X11/devX11.c:1087
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr "X11 yazıtipi boyutunu %d olarak kullandı (%d istenmişti)"
 
-#: src/modules/X11/devX11.c:1116
+#: src/modules/X11/devX11.c:1121
 #, c-format
 msgid "X11 font %s, face %d at size %d could not be loaded"
 msgstr "X11 yazıtipi %s, yüz %d (boyut %d) yüklenemedi"
 
-#: src/modules/X11/devX11.c:1125
+#: src/modules/X11/devX11.c:1130
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -6453,179 +6461,179 @@ msgstr ""
 "yarı-şeffaflık bu aygıtta desteklenmiyor: sayfa başına yalnızca bir kez "
 "rapor edidi"
 
-#: src/modules/X11/devX11.c:1249
+#: src/modules/X11/devX11.c:1254
 #, c-format
 msgid "X11 I/O error while opening X11 connection to '%s'"
 msgstr "'%s' e X11 bağlantısı açılırken Girdi/Çıktı hatası oluştu"
 
-#: src/modules/X11/devX11.c:1267
+#: src/modules/X11/devX11.c:1272
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "X11 GÇ hatası: lütfen çalışmanızı kaydedip R'yi kapatın"
 
-#: src/modules/X11/devX11.c:1323
+#: src/modules/X11/devX11.c:1328
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 "yerel Xlib tarafından desteklenmiyor: bazı X işlemleri C yerelinde çalışacak"
 
-#: src/modules/X11/devX11.c:1324
+#: src/modules/X11/devX11.c:1329
 msgid "X cannot set locale modifiers"
 msgstr "X yerelleştirme düzelticilerini belirleyemez"
 
-#: src/modules/X11/devX11.c:1328
+#: src/modules/X11/devX11.c:1333
 msgid "no png support in this version of R"
 msgstr "R'nin bu sürümünde png desteği yok"
 
-#: src/modules/X11/devX11.c:1334
+#: src/modules/X11/devX11.c:1339
 msgid "filename too long in png() call"
 msgstr "png() çağrısında dosya ismi çok uzun"
 
-#: src/modules/X11/devX11.c:1338
+#: src/modules/X11/devX11.c:1343
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "PNG dosyası '%s' açılamadı"
 
-#: src/modules/X11/devX11.c:1350
+#: src/modules/X11/devX11.c:1355
 msgid "no jpeg support in this version of R"
 msgstr "R'nin bu sürümünde jpeg desteği yok"
 
-#: src/modules/X11/devX11.c:1360
+#: src/modules/X11/devX11.c:1365
 msgid "filename too long in jpeg() call"
 msgstr "jpeg() çağrısında dosya ismi çok uzun"
 
-#: src/modules/X11/devX11.c:1364
+#: src/modules/X11/devX11.c:1369
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "JPEG dosyası '%s' açılamadı"
 
-#: src/modules/X11/devX11.c:1376
+#: src/modules/X11/devX11.c:1381
 msgid "no tiff support in this version of R"
 msgstr "R'nin bu sürümünde tiff desteği yok"
 
-#: src/modules/X11/devX11.c:1384
+#: src/modules/X11/devX11.c:1389
 msgid "filename too long in tiff() call"
 msgstr "tiff() çağrısında dosya ismi çok uzun"
 
-#: src/modules/X11/devX11.c:1396
+#: src/modules/X11/devX11.c:1401
 msgid "filename too long in bmp() call"
 msgstr "bmp() çağrısında dosya ismi çok uzun"
 
-#: src/modules/X11/devX11.c:1400
+#: src/modules/X11/devX11.c:1405
 #, c-format
 msgid "could not open BMP file '%s'"
 msgstr "BMP dosyası '%s' açılamadı"
 
-#: src/modules/X11/devX11.c:1430
+#: src/modules/X11/devX11.c:1435
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "X11 ekranı '%s'e bağlantı açılamadı"
 
-#: src/modules/X11/devX11.c:1440
+#: src/modules/X11/devX11.c:1445
 msgid "ignoring 'display' argument as an X11 device is already open"
 msgstr ""
 "Halihazırda bir X11 aygıtı açık olduğu için 'display' argümanı görmezden "
 "geliniyor"
 
-#: src/modules/X11/devX11.c:1446
+#: src/modules/X11/devX11.c:1451
 msgid "cairo-based types may only work correctly on TrueColor visuals"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1456
+#: src/modules/X11/devX11.c:1461
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg() şeffalığı desteklemiyor: beyaz arkaplan kullanılıyor"
 
-#: src/modules/X11/devX11.c:1561
+#: src/modules/X11/devX11.c:1566
 #, c-format
 msgid "unable to obtain information on display '%s'"
 msgstr "'%s' ekranından bilgi alınamadı"
 
-#: src/modules/X11/devX11.c:1579
+#: src/modules/X11/devX11.c:1584
 msgid "unable to create X11 window"
 msgstr "X11 penceresi oluşturulamadı"
 
-#: src/modules/X11/devX11.c:1714
+#: src/modules/X11/devX11.c:1719
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d' piksel cinsine benzemiyor"
 
-#: src/modules/X11/devX11.c:1719
+#: src/modules/X11/devX11.c:1724
 msgid "unable to create pixmap"
 msgstr "pixmap oluşturulamadı"
 
-#: src/modules/X11/devX11.c:1750
+#: src/modules/X11/devX11.c:1755
 msgid "invalid font specification"
 msgstr "geçersiz yazıtipi özelliği"
 
-#: src/modules/X11/devX11.c:1790
+#: src/modules/X11/devX11.c:1795
 msgid "font family not found in X11 font database"
 msgstr "X11 yazıtipi veritabanında yazıtipi ailesi bulunamadı"
 
-#: src/modules/X11/devX11.c:1829
+#: src/modules/X11/devX11.c:1834
 #, c-format
 msgid "invalid use of %d < 0 in '%s'"
 msgstr "%d < 0'in geçersiz kullanımı, ('%s' içinde)"
 
-#: src/modules/X11/devX11.c:1950
+#: src/modules/X11/devX11.c:1955
 #, c-format
 msgid "could not open file '%s'"
 msgstr "dosya '%s' açılamadı"
 
-#: src/modules/X11/devX11.c:2180
+#: src/modules/X11/devX11.c:2185
 #, c-format
 msgid "%s not available for this device"
 msgstr "%s bu aygıt için mevcut değil"
 
-#: src/modules/X11/devX11.c:2325
+#: src/modules/X11/devX11.c:2330
 msgid "Unable to create XImage"
 msgstr "XImage oluşturulamadı"
 
-#: src/modules/X11/devX11.c:2524
+#: src/modules/X11/devX11.c:2529
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3102
+#: src/modules/X11/devX11.c:3111
 #, c-format
 msgid "unable to start device %s"
 msgstr "%s aygıtı başlatılamadı"
 
-#: src/modules/X11/devX11.c:3129
+#: src/modules/X11/devX11.c:3138
 msgid "invalid 'width' or 'height'"
 msgstr "geçersiz 'width' veya 'height'"
 
-#: src/modules/X11/devX11.c:3136
+#: src/modules/X11/devX11.c:3145
 msgid "invalid colortype passed to X11 driver"
 msgstr "X11 sürücüsüne geçersiz renk biçimi iletildi"
 
-#: src/modules/X11/devX11.c:3150
+#: src/modules/X11/devX11.c:3159
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "bilinmeyen X11 renk modeli -- siyah-beyaz kullanılıyor"
 
-#: src/modules/X11/devX11.c:3240
+#: src/modules/X11/devX11.c:3249
 msgid "no plot on device to save"
 msgstr "kaydedilecek çizim aygıtı yok"
 
-#: src/modules/X11/devX11.c:3242
+#: src/modules/X11/devX11.c:3251
 msgid "not an open X11cairo device"
 msgstr "bir açık X11cairo aygıtı değil"
 
-#: src/modules/X11/devX11.c:3251
+#: src/modules/X11/devX11.c:3260
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "'%s' dosyası açılamıyor"
 
-#: src/modules/X11/devX11.c:3268
+#: src/modules/X11/devX11.c:3277
 msgid "savePlot() is not supported on this build"
 msgstr "savePlot() bu derlemede desteklenmiyor"
 
-#: src/modules/X11/devX11.c:3308
+#: src/modules/X11/devX11.c:3317
 msgid "unable to contact X11 display"
 msgstr "X11 ekranıyla iletişim kurulamadı"
 
-#: src/modules/X11/devX11.c:3357
+#: src/modules/X11/devX11.c:3366
 #, c-format
 msgid "clipboard cannot be read (error code %d)"
 msgstr "pano okunamadı (hata kodu %d)"
 
-#: src/modules/X11/devX11.c:3388
+#: src/modules/X11/devX11.c:3397
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "X11Routines yapısı için bellek ayrılamadı"
 
@@ -7276,27 +7284,27 @@ msgstr ""
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() bu sistemde tanımlanmamış"
 
-#: src/unix/system.c:246
+#: src/unix/system.c:250
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "UYARI: değersiz --gui veya -g  görmezden gelindi"
 
-#: src/unix/system.c:264
+#: src/unix/system.c:268
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "UYARI: bilinmeyen grafiksel arabirim '%s', X11 kullanılıyor\n"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:271
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr ""
 "UYARI: bilinmeyen grafiksel arabirim '%s', grafiksel arabirim kullanılmıyor\n"
 
-#: src/unix/system.c:377
+#: src/unix/system.c:381
 msgid "creating temporary file for '-e' failed"
 msgstr "'-e' için geçici dosya oluşturması başarısız"
 
-#: src/unix/system.c:458
+#: src/unix/system.c:462
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "UYARI: Dosya listesinde sadece ilk öğe düzenleniyor"
 

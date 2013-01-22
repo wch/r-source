@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-06 08:09\n"
+"POT-Creation-Date: 2013-01-22 09:53\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -913,6 +913,10 @@ msgid "no lines found in %s"
 msgstr "%s里找不到信息"
 
 msgid "profile does not contain memory information"
+msgstr "程序资料不包含内存信息"
+
+#, fuzzy
+msgid "profile does not contain line information"
 msgstr "程序资料不包含内存信息"
 
 msgid "no events were recorded"

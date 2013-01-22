@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2013-01-22 09:53+0000\n"
 "PO-Revision-Date: 2012-03-08 20:50+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -157,23 +157,23 @@ msgstr "%s 인자는 반드시 수치형 벡터이어야 합니다 "
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "%s 는 길이가 1 이거나 %d 인 수치형 벡터이어야 합니다 "
 
-#: fourier.c:52 fourier.c:139
+#: fourier.c:54 fourier.c:141
 msgid "non-numeric argument"
 msgstr "인수가 숫자가 아닙니다"
 
-#: fourier.c:70 fourier.c:85 fourier.c:153
+#: fourier.c:72 fourier.c:87 fourier.c:155
 msgid "fft factorization error"
 msgstr "fft의 인수분해 에러입니다"
 
-#: fourier.c:125
+#: fourier.c:127
 msgid "vector-valued (multivariate) series required"
 msgstr "벡터 (다변량) 계열이 필요합니다"
 
-#: fourier.c:198
+#: fourier.c:200
 msgid "no factors"
 msgstr "인자가 아닙니다"
 
-#: fourier.c:201
+#: fourier.c:203
 msgid "invalid factors"
 msgstr "인자가 잘못되었습니다"
 
@@ -486,118 +486,118 @@ msgstr "'ndeps'의 길이가 잘못되었습니다"
 msgid "unknown 'method'"
 msgstr "알수없는 'method'입니다"
 
-#: optimize.c:56 optimize.c:148 optimize.c:369
+#: optimize.c:210 optimize.c:302 optimize.c:523
 msgid "NA replaced by maximum positive value"
 msgstr "NA는 최대 양수값으로 대체되었습니다"
 
-#: optimize.c:64 optimize.c:160 optimize.c:377
+#: optimize.c:218 optimize.c:314 optimize.c:531
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf는 최대 양수값으로 대체되었습니다"
 
-#: optimize.c:73
+#: optimize.c:227
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize'의 함수 값이 잘못되었습니다"
 
-#: optimize.c:91 optimize.c:189 optimize.c:562
+#: optimize.c:245 optimize.c:343 optimize.c:716
 msgid "attempt to minimize non-function"
 msgstr "함수가 아닌 것을 최소화하려고 했습니다"
 
-#: optimize.c:98 optimize.c:105 optimize.c:114 optimize.c:194 optimize.c:199
-#: optimize.c:215
+#: optimize.c:252 optimize.c:259 optimize.c:268 optimize.c:348 optimize.c:353
+#: optimize.c:369
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s' 의 값이 잘못되었습니다 "
 
-#: optimize.c:107 optimize.c:200
+#: optimize.c:261 optimize.c:354
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin'가 'xmax'보다 크거나 같습니다"
 
-#: optimize.c:157
+#: optimize.c:311
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf가 최대 음수값으로 교체되었습니다"
 
-#: optimize.c:170
+#: optimize.c:324
 msgid "invalid function value in 'zeroin'"
 msgstr "'zeroin'의 함수값이 잘못되었습니다"
 
-#: optimize.c:205 optimize.c:210
+#: optimize.c:359 optimize.c:364
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "'%s'에 NA는 허용되지 않습니다"
 
-#: optimize.c:220
+#: optimize.c:374
 msgid "'maxiter' must be positive"
 msgstr "'maxiter'는 양수여야 합니다"
 
-#: optimize.c:361
+#: optimize.c:515
 msgid "non-finite value supplied by 'nlm'"
 msgstr "'nlm'에 의해 무한값이 주어졌습니다"
 
-#: optimize.c:396
+#: optimize.c:550
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm'최적화 의해 함수 값이 잘못되었습니다"
 
-#: optimize.c:407 optimize.c:422
+#: optimize.c:561 optimize.c:576
 msgid "function value caching for optimization is seriously confused"
 msgstr "function value caching for optimization is seriously confused"
 
-#: optimize.c:437
+#: optimize.c:591
 msgid "numeric parameter expected"
 msgstr "수치 파라미터가 있어야 합니다"
 
-#: optimize.c:441
+#: optimize.c:595
 msgid "conflicting parameter lengths"
 msgstr "파라미터의 길이가 모순됩니다"
 
-#: optimize.c:445
+#: optimize.c:599
 msgid "invalid parameter length"
 msgstr "파라미터의 길이가 잘못되었습니다"
 
-#: optimize.c:455 optimize.c:462
+#: optimize.c:609 optimize.c:616
 msgid "missing value in parameter"
 msgstr "파라미터에 결손값이 있습니다"
 
-#: optimize.c:467
+#: optimize.c:621
 msgid "invalid parameter type"
 msgstr "파라미터의 유형이 잘못되었습니다"
 
-#: optimize.c:478
+#: optimize.c:632
 msgid "non-positive number of parameters in nlm"
 msgstr "nlm의 파라미터가 양수값이 아닙니다"
 
-#: optimize.c:480
+#: optimize.c:634
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm는 1차원 문제에 효율이지 않습니다"
 
-#: optimize.c:482
+#: optimize.c:636
 msgid "invalid gradient tolerance in nlm"
 msgstr "nlm에 있어서 기울기의 허용값이 잘못되었습니다"
 
-#: optimize.c:484
+#: optimize.c:638
 msgid "invalid iteration limit in nlm"
 msgstr "nlm의 반복 횟수의 한계값이 잘못되었습니다"
 
-#: optimize.c:486
+#: optimize.c:640
 msgid "minimization function has no good digits in nlm"
 msgstr "nlm에서 최소화 함수가 충분한 자리수를 가지지 못했습니다"
 
-#: optimize.c:488
+#: optimize.c:642
 msgid "no analytic gradient to check in nlm!"
 msgstr "nlm에서 확인할 해석적 기울기가 없습니다!"
 
-#: optimize.c:490
+#: optimize.c:644
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nlm중에서 체크해야할 분석Hessian행렬이 없습니다!"
 
-#: optimize.c:492
+#: optimize.c:646
 msgid "probable coding error in analytic gradient"
 msgstr "해석적 기울기에 코딩 오류가 있는 것 같습니다"
 
-#: optimize.c:494
+#: optimize.c:648
 msgid "probable coding error in analytic Hessian"
 msgstr "분석 Hessian 행렬식중에 코딩이 잘못된 가능성이 있습니다"
 
-#: optimize.c:496
+#: optimize.c:650
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -606,23 +606,23 @@ msgstr ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 
-#: optimize.c:507
+#: optimize.c:661
 msgid "Relative gradient close to zero.\n"
 msgstr "상대 기울기가 0에 가깝습니다 \n"
 
-#: optimize.c:508 optimize.c:512
+#: optimize.c:662 optimize.c:666
 msgid "Current iterate is probably solution.\n"
 msgstr "지금 일어나는 반복이 해법일 것입니다 \n"
 
-#: optimize.c:511
+#: optimize.c:665
 msgid "Successive iterates within tolerance.\n"
 msgstr "허용치 내의 연속적인 반복입니다 \n"
 
-#: optimize.c:515
+#: optimize.c:669
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "Last global step failed to locate a point lower than x.\n"
 
-#: optimize.c:516
+#: optimize.c:670
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -632,11 +632,11 @@ msgstr ""
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 
-#: optimize.c:521
+#: optimize.c:675
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "반복 허용치를 초과하였습니다. 알고리즘 실패입니다. \n"
 
-#: optimize.c:524
+#: optimize.c:678
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -650,17 +650,17 @@ msgstr ""
 "from above in some direction,\n"
 "or stepmx is too small.\n"
 
-#: optimize.c:586 optimize.c:591 optimize.c:595 optimize.c:599 optimize.c:603
-#: optimize.c:607 optimize.c:612
+#: optimize.c:740 optimize.c:745 optimize.c:749 optimize.c:753 optimize.c:757
+#: optimize.c:761 optimize.c:766
 msgid "invalid NA value in parameter"
 msgstr "파라미터에  잘못된 NA 값이 있습니다"
 
-#: optimize.c:643
+#: optimize.c:797
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "제공된 hessian 행렬은 부적절한 길이 또는 모드이었기때문에 무시되었습니다"
 
-#: optimize.c:647
+#: optimize.c:801
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "제공된 기울기는 부적절한 길이 또는 모드이었기때문에 무시되었습니다"
 

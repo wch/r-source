@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07+0000\n"
+"POT-Creation-Date: 2013-01-22 09:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: io.c:1014 io.c:1015 stubs.c:39 stubs.c:59 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
-#: windows/dialogs.c:322 windows/util.c:104 windows/widgets.c:78
+#: windows/dialogs.c:322 windows/util.c:112 windows/widgets.c:78
 #: windows/widgets.c:81 windows/widgets.c:86
 #, c-format
 msgid "invalid '%s' argument"
@@ -177,37 +177,37 @@ msgstr ""
 msgid "unsupported version of Windows"
 msgstr ""
 
-#: windows/util.c:267
+#: windows/util.c:275
 msgid "argument must be a character vector or a raw vector"
 msgstr ""
 
-#: windows/util.c:304
+#: windows/util.c:312
 msgid "unable to open the clipboard"
 msgstr ""
 
-#: windows/util.c:309
+#: windows/util.c:317
 msgid "unable to write to the clipboard"
 msgstr ""
 
-#: windows/util.c:388
+#: windows/util.c:396
 msgid "'title' must be a character string"
 msgstr ""
 
-#: windows/util.c:397
+#: windows/util.c:405
 msgid "'text' must be a character string"
 msgstr ""
 
-#: windows/util.c:436
+#: windows/util.c:444
 #, c-format
 msgid "'%s' must be length 1"
 msgstr ""
 
-#: windows/util.c:549
+#: windows/util.c:557
 #, c-format
 msgid "'%s' must be a list"
 msgstr ""
 
-#: windows/util.c:553
+#: windows/util.c:561
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr ""

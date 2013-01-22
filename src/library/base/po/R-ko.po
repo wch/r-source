@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-13 07:43\n"
+"POT-Creation-Date: 2013-01-22 09:52\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -735,9 +735,6 @@ msgstr "triangular matrix should be square"
 
 msgid "'object' must be a list"
 msgstr "'object' 는 list 이어야 합니다 "
-
-msgid "'keep.source' is deprecated and will be ignored"
-msgstr "'keep.source' is deprecated and will be ignored"
 
 msgid "package %s has not been installed properly"
 msgstr "패키지 '%s 는 올바르게 설치되지 않았습니다 "
@@ -1741,6 +1738,9 @@ msgstr[0] "TRUE 대신 T 가 사용되었습니다 "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#~ msgid "'keep.source' is deprecated and will be ignored"
+#~ msgstr "'keep.source' is deprecated and will be ignored"
 
 #~ msgid "non-positive definite matrix in 'chol'"
 #~ msgstr "'chol' 에 non-positive definite 행렬입니다"
