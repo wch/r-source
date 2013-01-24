@@ -1011,7 +1011,8 @@ function(dir, ignore = character(),
 ## Spell-checking DCF files.
 
 aspell_filter_db$dcf <-
-function(ifile, encoding, keep = c("Title", "Description"))
+function(ifile, encoding, keep = c("Title", "Description"),
+         ignore = character())
 {
     lines <- readLines(ifile, encoding = encoding)
     line_has_tags <- grepl("^[^[:blank:]][^:]*:", lines)
@@ -1019,13 +1020,16 @@ function(ifile, encoding, keep = c("Title", "Description"))
     lines <- split(lines, cumsum(line_has_tags))
     ind <- is.na(match(tags, keep))
     lines[ind] <- lapply(lines[ind], function(s) rep.int("", length(s)))
-    unlist(lines, use.names = FALSE)
+    lines <- unlist(lines, use.names = FALSE)
+    for(re in ignore[nzchar(ignore)])
+        lines <- blank_out_regexp_matches(lines, re)
+    lines
 }
 
 ## For spell-checking package DESCRIPTION files.
 
 aspell_package_description <-
-function(dir,
+function(dir, ignore = character(),
          control = list(), program = NULL, dictionaries = character())
 {
     dir <- tools::file_path_as_absolute(dir)
@@ -1038,7 +1042,7 @@ function(dir,
     program <- aspell_find_program(program)
 
     aspell(files,
-           filter = "dcf",
+           filter = list("dcf", ignore = ignore),
            control = control,
            encoding = encoding,
            program = program,
