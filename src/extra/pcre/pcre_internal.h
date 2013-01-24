@@ -61,8 +61,13 @@ depending on the PRIV macro. */
 #define SUPPORT_UTF8
 #define SUPPORT_UCP
 
+/* See http://sourceforge.net/p/predef/wiki/Architectures/
+   SPARC_32 support added in 8.32, 'experimental'.
+
+   At least i386 support did not compile on Solaris Studio.
+ */
 #ifndef __SUNPRO_C
-#if defined(WIN32) || defined(__i386__) || defined(__i386) || defined(__x86_64__) || defined(__ppc64__) || defined(__powerpc64__) || defined(__ppc__) || defined(__powerpc__)
+#if defined(WIN32) || defined(__i386__) || defined(__i386) || defined(__x86_64__) || defined(__ppc64__) || defined(__powerpc64__) || defined(__ppc__) || defined(__powerpc__) || defined(__sparc__)
 # define SUPPORT_JIT
 #endif
 #endif
