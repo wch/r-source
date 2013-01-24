@@ -5608,11 +5608,18 @@ function(dir)
     
     out$Maintainer <- meta["Maintainer"]
 
+    ver <- meta["Version"]
+    if(grepl("(^|[.-])0[0-9]+", ver))
+        out$version_with_leading_zeroes <- ver
+
     language <- meta["Language"]
     if((is.na(language) || language == "en") &&
        config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
                                         FALSE))) {
+        ignore <- c("[ \t]'[^']*'[ \t[:punct:]]",
+                    "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]")
         a <- utils:::aspell_package_description(dir,
+                                                ignore = ignore,
                                                 control =
                                                  c("--master=en_US",
                                                    "--add-extra-dicts=en_GB"),
@@ -5823,6 +5830,8 @@ function(x, ...)
       if(length(y <- x$bad_version))
           sprintf("Insufficient package version (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
+      if(length(y <- x$version_with_leading_zeroes))
+          sprintf("Version contains leading zeroes (%s)", y),
       if(length(y <- x$recency))
           sprintf("Days since last update: %d", y),
       if(length(y <- x$frequency))
