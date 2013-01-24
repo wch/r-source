@@ -11,8 +11,8 @@
 }
 \usage{
 Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
-       memory.profiling = FALSE, line.profiling = FALSE,
-       gc.profiling = FALSE, numfiles = 100L, bufsize = 10000L)
+       memory.profiling = FALSE, gc.profiling = FALSE, 
+       line.profiling = FALSE, numfiles = 100L, bufsize = 10000L)
 }
 \arguments{
   \item{filename}{
