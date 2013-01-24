@@ -2049,6 +2049,13 @@ stopifnot(eval(f) == 1)
 ## Was 0 in 2.15.2 because the i was not duplicated
 
 
+## Complex subassignment  return value
+## From: Justin Talbot to R-devel, 8 Jan 2013
+a <- list( 1 ); b <- (a[[1]] <- a); stopifnot(identical(b, list( 1 )))
+a <- list(x=1); b <- ( a$x  <-  a); stopifnot(identical(b, list(x=1)))
+## both failed in 2.15.2
+
+
 ## TukeyHSD with na.omit = na.exclude, see
 ## https://stat.ethz.ch/pipermail/r-help/2012-October/327119.html
 br <- warpbreaks
