@@ -5757,9 +5757,11 @@ function(dir)
     ## Package versions should be newer than what we already have on CRAN.
 
     v_m <- package_version(meta["Version"])
-    v_d <- package_version(db[, "Version"])
-    if(v_m <= max(v_d))
+    v_d <- max(package_version(db[, "Version"]))
+    if(v_m <= v_d)
         out$bad_version <- list(v_m, v_d)
+    if((v_m$major == v_d$major) & (v_m$minor >= v_d$minor + 10))
+        out$version_with_jump_in_minor <- list(v_m, v_d)
 
     ## Check submission recency and frequency.
     con <- gzcon(url(sprintf("%s/src/contrib/Meta/current.rds", CRAN),
@@ -5832,6 +5834,9 @@ function(x, ...)
                   y[[1L]], y[[2L]]),
       if(length(y <- x$version_with_leading_zeroes))
           sprintf("Version contains leading zeroes (%s)", y),
+      if(length(y <- x$version_with_jump_in_minor))
+          sprintf("Version jumps in minor (submitted: %s, existing: %s)",
+                  y[[1L]], y[[2L]]),
       if(length(y <- x$recency))
           sprintf("Days since last update: %d", y),
       if(length(y <- x$frequency))
