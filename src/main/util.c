@@ -2022,7 +2022,7 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     int eps = asInteger(CAR(args)); /* eps.correct */
     if (eps == NA_INTEGER || eps < 0 || eps > 2) 
 	error(_("'eps.correct' must be 0, 1, or 2"));
-    R_pretty(&l, &u, &n, &min_n, &shrink, REAL(hi), &eps);
+    R_pretty0(&l, &u, &n, min_n, shrink, REAL(hi), eps, 1);
     PROTECT(ans = allocVector(VECSXP, 3));
     SET_VECTOR_ELT(ans, 0, ScalarReal(l));
     SET_VECTOR_ELT(ans, 1, ScalarReal(u));
@@ -2037,10 +2037,8 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /*
-    r <- .C("str_signif", x = x, n = n, mode = as.character(mode), 
-        width = as.integer(width), digits = as.integer(digits), 
-        format = as.character(format), flag = as.character(flag), 
-        result = blank.chars(i.strlen + 2L), PACKAGE = "base")$result
+    r <- .Internal(formatC(x, as.character(mode), width, digits, 
+        as.character(format), as.character(flag), i.strlen))
 */
 
 SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)

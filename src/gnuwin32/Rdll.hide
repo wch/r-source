@@ -214,7 +214,6 @@
  R_nwarnings
  R_osDynSymbol
  R_possible_dispatch
- R_pretty
  R_restore_globals
  R_run_onexits
  R_seemsOldStyleS4Object

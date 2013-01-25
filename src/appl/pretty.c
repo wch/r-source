@@ -192,11 +192,3 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 #undef h
 #undef h5
 }
-
-attribute_hidden
-void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
-	      double *shrink_sml, double *high_u_fact, int *eps_correction)
-{
-    R_pretty0(lo, up, ndiv,
-	    *min_n, *shrink_sml, high_u_fact, *eps_correction, 1);
-}

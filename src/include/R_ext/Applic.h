@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2012   The R Core Team
+ *  Copyright (C) 1998-2013   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -90,16 +90,6 @@ int findInterval(double *xt, int n, double x,
 
 /* The following are registered for use in .C/.Fortran */
 
-/* appl/pretty.c: hidden  */
-void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
-	      double *shrink_sml, double *high_u_fact,
-	      int *eps_correction);
-
-/* appl/strsignif.c: hidden */
-void str_signif(void *x, int *n, const char **type, int *width, int *digits,
-		const char **format, const char **flag, char **result);
-
-
 /* appl/dqrutl.f: interfaces to dqrsl */
 void F77_NAME(dqrqty)(double *x, int *n, int *k, double *qraux,
 		      double *y, int *ny, double *qty);
@@ -125,6 +115,9 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 	    int *negep, int *iexp, int *minexp, int *maxexp,
 	    double *eps, double *epsneg, double *xmin, double *xmax);
 
+/* appl/strsignif.c: for use in util.c */
+void str_signif(void *x, int *n, const char **type, int *width, int *digits,
+		const char **format, const char **flag, char **result);
 
 
 /* For use in package stats */
@@ -162,16 +155,17 @@ void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 
 /* Others */
 
+
+/* appl/pretty.c non-API but used by engine.c, util.c and rgl */
+double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
+		 double shrink_sml, double high_u_fact[],
+		 int eps_correction, int return_bounds);
+
 /* appl/eigen.f */
 /* formerly used in package nlme, still used by gss, latenetnet,
    robust and robustbase */
 int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
 		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
-
-/* appl/pretty.c non-API but used by engine.c and rgl */
-double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
-		 double shrink_sml, double high_u_fact[],
-		 int eps_correction, int return_bounds);
 
 #ifdef  __cplusplus
 }
