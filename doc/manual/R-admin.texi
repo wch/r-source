@@ -1079,8 +1079,8 @@ versions are recommended.  It is also possible to use
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
-The @code{jpeg} sub-directory for version 8d is named @file{jpeg-8d}; if
-you use a different version (e.g.@: @file{jpeg-8c} or
+The @code{jpeg} sub-directory for version 9 is named @file{jpeg-9}; if
+you use a different version (e.g.@: @file{jpeg-8d} or
 @file{libjpeg-turbo}), copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit the definition of
 @code{JPEGDIR}: the names of the @file{libpng} and @file{libtiff}
@@ -1091,10 +1091,10 @@ Example:
 @example
 > tar -zxf libpng-1.5.12.tar.gz
 > mv libpng-1.5.12 libpng
-> tar -zxf jpegsrc.v8d.tar.gz
-> tar -zxf tiff-4.0.2.tar.gz
-> mv tiff-4.0.2/libtiff .
-> rm -rf tiff-4.0.2
+> tar -zxf jpegsrc.v9.tar.gz
+> tar -zxf tiff-4.0.3.tar.gz
+> mv tiff-4.0.3/libtiff .
+> rm -rf tiff-4.0.3
 @end example
 
 @noindent
