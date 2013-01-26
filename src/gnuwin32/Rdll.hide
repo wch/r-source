@@ -126,6 +126,7 @@
  R_ParseErrorFile
  R_ParseFile
  R_PendingPromises
+ R_Pretty
  R_Primitive
  R_Quiet
  R_RecursiveSymbol

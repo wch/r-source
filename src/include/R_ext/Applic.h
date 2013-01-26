@@ -115,9 +115,14 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 	    int *negep, int *iexp, int *minexp, int *maxexp,
 	    double *eps, double *epsneg, double *xmin, double *xmax);
 
+/* appl/pretty.c: for use in engine.c and util.c */
+double R_pretty(double *lo, double *up, int *ndiv, int min_n,
+		double shrink_sml, double high_u_fact[],
+		int eps_correction, int return_bounds);
+
 /* appl/strsignif.c: for use in util.c */
-void str_signif(void *x, int *n, const char **type, int *width, int *digits,
-		const char **format, const char **flag, char **result);
+void str_signif(void *x, int n, const char *type, int width, int digits,
+		const char *format, const char *flag, char **result);
 
 
 /* For use in package stats */
@@ -155,11 +160,6 @@ void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 
 /* Others */
 
-
-/* appl/pretty.c non-API but used by engine.c, util.c and rgl */
-double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
-		 double shrink_sml, double high_u_fact[],
-		 int eps_correction, int return_bounds);
 
 /* appl/eigen.f */
 /* formerly used in package nlme, still used by gss, latenetnet,

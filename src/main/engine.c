@@ -24,7 +24,7 @@
 #include <Defn.h>
 #include <Internal.h>
 #include <R_ext/GraphicsEngine.h>
-#include <R_ext/Applic.h>	/* pretty0() */
+#include <R_ext/Applic.h>	/* pretty() */
 #include <Rmath.h>
 
 # include <rlocale.h>
@@ -2339,12 +2339,11 @@ void GEPretty(double *lo, double *up, int *ndiv)
 #ifdef DEBUG_PLOT
     x1 = ns; x2 = nu;
 #endif
-    unit = R_pretty0(&ns, &nu, ndiv, /* min_n = */ 1,
-		     /* shrink_sml = */ 0.25,
-		     high_u_fact,
-		     2, /* do eps_correction in any case */
-		     0 /* return (ns,nu) in  (lo,up) */);
-    /* ==> ../appl/pretty.c */
+    unit = R_pretty(&ns, &nu, ndiv, /* min_n = */ 1,
+		    /* shrink_sml = */ 0.25,
+		    high_u_fact,
+		    2, /* do eps_correction in any case */
+		    0 /* return (ns,nu) in  (lo,up) */);
 
     /* The following is ugly since it kind of happens already in Rpretty0(..):
      */

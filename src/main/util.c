@@ -2022,7 +2022,7 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     int eps = asInteger(CAR(args)); /* eps.correct */
     if (eps == NA_INTEGER || eps < 0 || eps > 2) 
 	error(_("'eps.correct' must be 0, 1, or 2"));
-    R_pretty0(&l, &u, &n, min_n, shrink, REAL(hi), eps, 1);
+    R_pretty(&l, &u, &n, min_n, shrink, REAL(hi), eps, 1);
     PROTECT(ans = allocVector(VECSXP, 3));
     SET_VECTOR_ELT(ans, 0, ScalarReal(l));
     SET_VECTOR_ELT(ans, 1, ScalarReal(u));
@@ -2038,7 +2038,7 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /*
     r <- .Internal(formatC(x, as.character(mode), width, digits, 
-        as.character(format), as.character(flag), i.strlen))
+                   as.character(format), as.character(flag), i.strlen))
 */
 
 SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -2067,7 +2067,7 @@ SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)
     case REALSXP: px = REAL(x); break;
     default: error("unsupported type ");
     }
-    str_signif(px, &n, &type, &width, &digits, &fmt, &flag, cptr);
+    str_signif(px, n, type, width, digits, fmt, flag, cptr);
     SEXP ans;
     PROTECT(ans = allocVector(STRSXP, n));
     for (int i = 0; i < n; i++) SET_STRING_ELT(ans, i, mkChar(cptr[i]));
