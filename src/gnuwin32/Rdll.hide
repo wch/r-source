@@ -170,7 +170,6 @@
  R_compress1
  R_compress2
  R_compress3
- R_cpolyroot
  R_current_trace_state
  R_data_class2
  R_dec_min_exponent
@@ -1203,7 +1202,6 @@
  lzma_vli_decode
  lzma_vli_encode
  lzma_vli_size
- machar
  mallinfo
  mb_char_len
  menuclear

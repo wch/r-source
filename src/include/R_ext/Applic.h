@@ -106,15 +106,6 @@ void F77_NAME(dqrxb)(double *x, int *n, int *k, double *qraux,
 
 /* hidden, for use in R.bin/R.dll/libR.so */
 
-/* appl/cpoly.c : for use in complex.c */
-void R_cpolyroot(double *opr, double *opi, int *degree,
-		 double *zeror, double *zeroi, Rboolean *fail);
-
-/* appl/machar.c: for use in platform.c */
-void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
-	    int *negep, int *iexp, int *minexp, int *maxexp,
-	    double *eps, double *epsneg, double *xmin, double *xmax);
-
 /* appl/pretty.c: for use in engine.c and util.c */
 double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 		double shrink_sml, double high_u_fact[],
@@ -135,7 +126,7 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f, int ndigit,
 	    double *typx);
 
-/* used in packages nlme, pcaPP */
+/* Also used in packages nlme, pcaPP */
 void optif9(int nr, int n, double *x,
 	    fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 	    void *state, double *typsiz, double fscale, int method,
@@ -144,7 +135,8 @@ void optif9(int nr, int n, double *x,
 	    double steptl, double *xpls, double *fpls, double *gpls,
 	    int *itrmcd, double *a, double *wrk, int *itncnt);
 
-/* find qr decomposition, dqrdc2() is basis of R's qr(), also used by nlme */
+/* find qr decomposition, dqrdc2() is basis of R's qr(), 
+   also used by nlme and many other packages. */
 void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
 		      double *tol, int *rank,
 		      double *qraux, int *pivot, double *work);

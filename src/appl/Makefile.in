@@ -11,7 +11,7 @@ subdir = src/appl
 include $(top_builddir)/Makeconf
 
 SOURCES_C = \
-	cpoly.c integrate.c interv.c machar.c maxcol.c optim.c pretty.c uncmin.c
+	integrate.c interv.c maxcol.c optim.c pretty.c uncmin.c
 SOURCES_F = \
 	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
 	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f eigen.f
