@@ -16,8 +16,10 @@ The status of files used only in the Windows port is in file
 src/gnuwin32/COPYRIGHTS.win, which is appended to this file in binary
 Windows distributions.
 
-Note that all the code *is* copyright and may only be reproduced if
-the copyright notice (that in the file or this notice) is preserved.
+Note that almost all the code *is* copyright and may only be
+reproduced if the copyright notice (that in the file or this notice)
+is preserved.  The status of the included EISPACK and LINPACK routines
+is unclear: they are said to be in the public domain in the USA.
 
 	---------------------------------------------------
 
