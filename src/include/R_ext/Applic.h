@@ -120,10 +120,6 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 		double shrink_sml, double high_u_fact[],
 		int eps_correction, int return_bounds);
 
-/* appl/strsignif.c: for use in util.c */
-void str_signif(void *x, int n, const char *type, int width, int digits,
-		const char *format, const char *flag, char **result);
-
 
 /* For use in package stats */
 

@@ -1295,7 +1295,6 @@
  sigsetmask
  sigsuspend
  stemleaf
- str_signif
  switch_stdout
  tql1_
  tql2_
