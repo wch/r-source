@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2010  the R Core Team
+ *  Copyright (C) 2001-2013  the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
-
+ *
+ *  Most of this file is C translations of Fortran routines in
+ *  QUADPACK: the latter is part of SLATEC 'and therefore in the public
+ *  domain' (http://en.wikipedia.org/wiki/QUADPACK).
+ *
+ *
  * C backend of R's integrate() --- via
  *	 .External("call_dqags", ...) -> Rdqags()  -- for finite     interval
  *	 .External("call_dqagi", ...) -> Rdqagi()  -- for indefinite interval
