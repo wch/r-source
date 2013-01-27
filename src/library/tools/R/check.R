@@ -3024,7 +3024,7 @@ setRlibs <-
                 warningLog(Log)
             else if(length(res) > 1L) noteLog(Log)
             else resultLog(Log, "OK")
-            printLog(Log, paste(c(out, ""), collapse = "\n"))
+            printLog(Log, paste(out, "\n", sep = ""))
         } else resultLog(Log, "OK")
     }
 
