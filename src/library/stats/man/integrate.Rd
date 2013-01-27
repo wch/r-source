@@ -76,11 +76,11 @@ integrate(f, lower, upper, \dots, subdivisions = 100L,
 
 \source{
   Based on QUADPACK routines \code{dqags} and \code{dqagi} by
-  R. Piessens and E. deDoncker-Kapenga, available from Netlib.
+  R. Piessens and E. deDoncker--Kapenga, available from Netlib.
 }
 
 \references{
-  R. Piessens, E. deDoncker-Kapenga, C. Uberhuber, D. Kahaner (1983)
+  R. Piessens, E. deDoncker--Kapenga, C. Uberhuber, D. Kahaner (1983)
   \emph{Quadpack: a Subroutine Package for Automatic Integration};
   Springer Verlag.
 }
