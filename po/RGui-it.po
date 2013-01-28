@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56+0100\n"
+"POT-Creation-Date: 2013-01-28 09:14+0000\n"
 "PO-Revision-Date: 2005-02-05 13:45+0100\n"
 "Last-Translator: Stefano M. Iacus <stefano.iacus@R-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -551,17 +551,17 @@ msgstr "Non è possibile creare una finestra per l'editor"
 msgid "Untitled"
 msgstr "Senza titolo"
 
-#: extra.c:903 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
+#: extra.c:911 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
 msgid "OK"
 msgstr ""
 
-#: extra.c:904 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
+#: extra.c:912 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
 #: ../extra/graphapp/dialogs.c:626 ../extra/graphapp/dialogs.c:725
 #: ../extra/graphapp/dialogs.c:739 ../extra/graphapp/dialogs.c:745
 msgid "Cancel"
 msgstr "Annulla"
 
-#: extra.c:2161 rui.c:1222
+#: extra.c:2169 rui.c:1222
 msgid "Select file"
 msgstr "Seleziona file"
 

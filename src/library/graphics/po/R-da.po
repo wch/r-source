@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-01-08 00:28+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -231,6 +231,9 @@ msgid "must have one more break than colour"
 msgstr ""
 
 msgid "breaks must all be finite"
+msgstr ""
+
+msgid "unsorted 'breaks' will be sorted before use"
 msgstr ""
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"

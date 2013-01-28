@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56+0100\n"
+"POT-Creation-Date: 2013-01-28 09:14+0000\n"
 "PO-Revision-Date: 2012-09-24 14:45-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team:  <gnustats@gmail.com>\n"
@@ -23,18 +23,15 @@ msgstr ""
 "X-Poedit-Language: Korean\n"
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 
-#: console.c:1167
-#: console.c:1209
+#: console.c:1167 console.c:1209
 msgid "Not enough memory"
 msgstr "메모리가 부족합니다"
 
-#: console.c:1256
-#: console.c:1260
+#: console.c:1256 console.c:1260
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "메모리 부족: 텍스트를 클립보드에 복사 할 수 없습니다"
 
-#: console.c:1296
-#: ../extra/graphapp/clipboard.c:53
+#: console.c:1296 ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "클립보드를 열 수 없습니다"
@@ -43,9 +40,7 @@ msgstr "클립보드를 열 수 없습니다"
 msgid "Insufficient memory. Please close the console"
 msgstr "메모리가 부족합니다. 콘솔을 닫아 주세요"
 
-#: console.c:1969
-#: console.c:2022
-#: preferences.c:333
+#: console.c:1969 console.c:2022 preferences.c:333
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -119,8 +114,11 @@ msgid "     Backspace: delete preceding character;\n"
 msgstr "     백스페이스: 이전 문자를 삭제합니다;\n"
 
 #: console.c:2241
-msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del 또는 Ctrl+K: 현재 선택한 문자에서 줄의 끝까지 있는 텍스트들을 삭제합니다.\n"
+msgid ""
+"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr ""
+"     Ctrl+Del 또는 Ctrl+K: 현재 선택한 문자에서 줄의 끝까지 있는 텍스트들을 "
+"삭제합니다.\n"
 
 #: console.c:2242
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -131,20 +129,32 @@ msgid "  Copy and paste.\n"
 msgstr "  복사 및 붙여넣기.\n"
 
 #: console.c:2244
-msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     텍스트를 표시(선택)하기 위해서 마우스의 왼쪽 버튼을 누른상태에서 마우스를 사용하세요.\n"
+msgid ""
+"     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr ""
+"     텍스트를 표시(선택)하기 위해서 마우스의 왼쪽 버튼을 누른상태에서 마우스"
+"를 사용하세요.\n"
 
 #: console.c:2245
-msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     선택한 텍스트를 클립보드에 복사하려면 Shift+Del(또는 Ctrl+C)을 사용하고,\n"
+msgid ""
+"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr ""
+"     선택한 텍스트를 클립보드에 복사하려면 Shift+Del(또는 Ctrl+C)을 사용하"
+"고,\n"
 
 #: console.c:2246
-msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Shitf+Ins (또는 Ctrl+V 또는 Ctrl+Y)를 사용하여 클립보드의 내용 (있는 경우)를 붙여넣습니다 \n"
+msgid ""
+"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
+"(if any)  \n"
+msgstr ""
+"     Shitf+Ins (또는 Ctrl+V 또는 Ctrl+Y)를 사용하여 클립보드의 내용 (있는 경"
+"우)를 붙여넣습니다 \n"
 
 #: console.c:2247
 msgid "     to the console, Ctrl+X first copy then paste\n"
-msgstr "     콘솔로 붙여넣습니다, 또한 Ctrl+X 를 이용하여 먼저 복사한 후 붙여넣기를 해도 상관이 없습니다\n"
+msgstr ""
+"     콘솔로 붙여넣습니다, 또한 Ctrl+X 를 이용하여 먼저 복사한 후 붙여넣기를 "
+"해도 상관이 없습니다\n"
 
 #: console.c:2248
 msgid "  Misc:\n"
@@ -156,7 +166,8 @@ msgstr "     Ctrl+L: 콘솔 화면을 지웁니다.\n"
 
 #: console.c:2250
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O 혹은 INS: 덮어쓰기 모드를 전환합니다: 처음에는 꺼져 있습니다.\n"
+msgstr ""
+"     Ctrl+O 혹은 INS: 덮어쓰기 모드를 전환합니다: 처음에는 꺼져 있습니다.\n"
 
 #: console.c:2251
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -202,10 +213,7 @@ msgstr "표준 윈도우즈 핫키를 이용하여 다음으로 전환할 수 �
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "그래픽 장치 (MDI에서는 Ctrl+Tab 또는 Ctrl+F6, SDI에서는 Alt+Tab)"
 
-#: dataentry.c:223
-#: dataentry.c:1851
-#: dataentry.c:1854
-#: dataentry.c:1885
+#: dataentry.c:223 dataentry.c:1851 dataentry.c:1854 dataentry.c:1885
 msgid "invalid argument"
 msgstr "잘못된 인수"
 
@@ -217,8 +225,7 @@ msgstr "값에 잘못된 형식"
 msgid "Data Editor"
 msgstr "데이터 편집기"
 
-#: dataentry.c:282
-#: dataentry.c:1892
+#: dataentry.c:282 dataentry.c:1892
 msgid "invalid device"
 msgstr "잘못된 장치입니다"
 
@@ -226,13 +233,11 @@ msgstr "잘못된 장치입니다"
 msgid "dataentry: internal memory problem"
 msgstr "dataentry: 내부 메모리에 문제가 발생했습니다"
 
-#: dataentry.c:634
-#: dataentry.c:1221
+#: dataentry.c:634 dataentry.c:1221
 msgid "dataentry: internal memory error"
 msgstr "dataentry: 내부 메모리 오류"
 
-#: dataentry.c:757
-#: dataentry.c:770
+#: dataentry.c:757 dataentry.c:770
 msgid "internal type error in dataentry"
 msgstr "dataentry에 내부형식 오류"
 
@@ -311,13 +316,11 @@ msgstr ""
 "  Ctrl-L키는 열의 크기를 자동으로 재조정하여 화면을 다시 그립니다\n"
 "  Ctrl-C키는 선택한 셀을 복사합니다\n"
 "  Ctrl-V키는 선택한 셀을 붙여넣습니다\n"
-"  오른쪽을 클릭하면 메뉴가 나타나고, 복사, 붙여넣기, 현재 선택된 열의 자동크기조절를 할 수 있습니다\n"
+"  오른쪽을 클릭하면 메뉴가 나타나고, 복사, 붙여넣기, 현재 선택된 열의 자동크"
+"기조절를 할 수 있습니다\n"
 "\n"
 
-#: dataentry.c:1697
-#: dataentry.c:1807
-#: editor.c:781
-#: rui.c:1184
+#: dataentry.c:1697 dataentry.c:1807 editor.c:781 rui.c:1184
 msgid "Help"
 msgstr "도움말"
 
@@ -333,32 +336,21 @@ msgstr "선택한 셀에 붙여넣기"
 msgid "Autosize column"
 msgstr "열 크기 자동조절"
 
-#: dataentry.c:1703
-#: pager.c:310
-#: rui.c:867
+#: dataentry.c:1703 pager.c:310 rui.c:867
 #: ../library/grDevices/src/devWindows.c:1684
 msgid "Stay on top"
 msgstr "창을 항상 맨앞에 놓기"
 
-#: dataentry.c:1705
-#: dataentry.c:1792
-#: pager.c:312
-#: pager.c:475
+#: dataentry.c:1705 dataentry.c:1792 pager.c:312 pager.c:475
 msgid "Close"
 msgstr "닫기"
 
-#: dataentry.c:1790
-#: editor.c:727
-#: pager.c:467
-#: rui.c:1120
+#: dataentry.c:1790 editor.c:727 pager.c:467 rui.c:1120
 #: ../library/grDevices/src/devWindows.c:1624
 msgid "File"
 msgstr "파일"
 
-#: dataentry.c:1796
-#: editor.c:745
-#: pager.c:477
-#: rui.c:1141
+#: dataentry.c:1796 editor.c:745 pager.c:477 rui.c:1141
 msgid "Edit"
 msgstr "편집"
 
@@ -382,8 +374,7 @@ msgstr "셀 너비 ..."
 msgid "Data editor"
 msgstr "데이터 편집기"
 
-#: editor.c:88
-#: editor.c:90
+#: editor.c:88 editor.c:90
 msgid "R Editor"
 msgstr "R 편집기"
 
@@ -406,16 +397,11 @@ msgstr "파일 '%s'를 저장할 수 없습니다"
 msgid "Save script as"
 msgstr "다른 이름으로 스크립트를 저장"
 
-#: editor.c:375
-#: editor.c:692
-#: pager.c:431
-#: rui.c:1074
+#: editor.c:375 editor.c:692 pager.c:431 rui.c:1074
 msgid "Open script"
 msgstr "스크립트 열기"
 
-#: editor.c:498
-#: pager.c:185
-#: pager.c:205
+#: editor.c:498 pager.c:185 pager.c:205
 msgid "No RGui console to paste to"
 msgstr "붙여넣기를 할 RGui 콘솔이 존재하지 않습니다"
 
@@ -433,7 +419,9 @@ msgstr "명령 실행중\n"
 
 #: editor.c:605
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr "R 코드의 한 줄 혹은 선택된 영역을 실행하기 위해서는 먼저 실행할 코드를 선택해주세요\n"
+msgstr ""
+"R 코드의 한 줄 혹은 선택된 영역을 실행하기 위해서는 먼저 실행할 코드를 선택해"
+"주세요\n"
 
 #: editor.c:606
 msgid "     Press Ctrl-R\n"
@@ -448,62 +436,47 @@ msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "     툴바에 있는 \"줄 또는 선택영역 실행\" 아이콘을 눌러주세요\n"
 
 #: editor.c:609
-msgid "This will copy the selected commands to the console and evaluate them.\n"
+msgid ""
+"This will copy the selected commands to the console and evaluate them.\n"
 msgstr "이것은 선택된 명령을 콘솔에 복사하고 그 명령을 평가합니다.\n"
 
 #: editor.c:610
-msgid "If there is no selection, this will just run the current line and advance\n"
-msgstr "만약 아무 영역도 선택되지 않았다면, 현재 행과 그 이전의 내용들을 실행할 것입니다\n"
+msgid ""
+"If there is no selection, this will just run the current line and advance\n"
+msgstr ""
+"만약 아무 영역도 선택되지 않았다면, 현재 행과 그 이전의 내용들을 실행할 것입"
+"니다\n"
 
 #: editor.c:611
 msgid "the cursor by one line.\n"
 msgstr "커서를 한 줄 이동합니다.\n"
 
-#: editor.c:623
-#: editor.c:700
-#: editor.c:761
+#: editor.c:623 editor.c:700 editor.c:761
 msgid "Run line or selection"
 msgstr "줄 또는 선택영역 실행"
 
-#: editor.c:625
-#: editor.c:746
+#: editor.c:625 editor.c:746
 msgid "Undo"
 msgstr "실행취소"
 
-#: editor.c:627
-#: editor.c:749
+#: editor.c:627 editor.c:749
 msgid "Cut"
 msgstr "자르기"
 
-#: editor.c:628
-#: editor.c:751
-#: pager.c:305
-#: pager.c:478
-#: rui.c:857
-#: rui.c:1086
+#: editor.c:628 editor.c:751 pager.c:305 pager.c:478 rui.c:857 rui.c:1086
 #: rui.c:1142
 msgid "Copy"
 msgstr "복사"
 
-#: editor.c:629
-#: editor.c:753
-#: rui.c:858
-#: rui.c:1090
-#: rui.c:1143
+#: editor.c:629 editor.c:753 rui.c:858 rui.c:1090 rui.c:1143
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: editor.c:630
-#: editor.c:755
+#: editor.c:630 editor.c:755
 msgid "Delete"
 msgstr "삭제"
 
-#: editor.c:632
-#: editor.c:757
-#: pager.c:308
-#: pager.c:484
-#: rui.c:864
-#: rui.c:1147
+#: editor.c:632 editor.c:757 pager.c:308 pager.c:484 rui.c:864 rui.c:1147
 msgid "Select all"
 msgstr "전부 선택"
 
@@ -511,9 +484,7 @@ msgstr "전부 선택"
 msgid "Save script"
 msgstr "스크립트 저장"
 
-#: editor.c:704
-#: pager.c:451
-#: ../library/grDevices/src/devWindows.c:1592
+#: editor.c:704 pager.c:451 ../library/grDevices/src/devWindows.c:1592
 msgid "Return focus to Console"
 msgstr "콘솔로 돌아가기"
 
@@ -521,22 +492,16 @@ msgstr "콘솔로 돌아가기"
 msgid "Print script"
 msgstr "스크립트 인쇄"
 
-#: editor.c:709
-#: pager.c:446
-#: rui.c:1102
+#: editor.c:709 pager.c:446 rui.c:1102
 #: ../library/grDevices/src/devWindows.c:1586
 msgid "Print"
 msgstr "인쇄"
 
-#: editor.c:728
-#: pager.c:468
-#: rui.c:1122
+#: editor.c:728 pager.c:468 rui.c:1122
 msgid "New script"
 msgstr "새 스크립트"
 
-#: editor.c:730
-#: pager.c:469
-#: rui.c:1123
+#: editor.c:730 pager.c:469 rui.c:1123
 msgid "Open script..."
 msgstr "스크립트 열기..."
 
@@ -548,9 +513,7 @@ msgstr "저장"
 msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
-#: editor.c:737
-#: pager.c:470
-#: rui.c:1136
+#: editor.c:737 pager.c:470 rui.c:1136
 #: ../library/grDevices/src/devWindows.c:1687
 msgid "Print..."
 msgstr "인쇄..."
@@ -559,8 +522,7 @@ msgstr "인쇄..."
 msgid "Close script"
 msgstr "스크립트 닫기"
 
-#: editor.c:759
-#: rui.c:1148
+#: editor.c:759 rui.c:1148
 msgid "Clear console"
 msgstr "콘솔화면 지우기"
 
@@ -576,8 +538,7 @@ msgstr "찾기..."
 msgid "Replace..."
 msgstr "바꾸기..."
 
-#: editor.c:771
-#: rui.c:1152
+#: editor.c:771 rui.c:1152
 msgid "GUI preferences..."
 msgstr "GUI 환경설정..."
 
@@ -597,24 +558,17 @@ msgstr "편집기 창을 생성할 수 없습니다"
 msgid "Untitled"
 msgstr "제목 없음"
 
-#: extra.c:903
-#: ../extra/graphapp/dialogs.c:622
-#: ../extra/graphapp/dialogs.c:741
+#: extra.c:911 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:904
-#: ../extra/graphapp/dialogs.c:602
-#: ../extra/graphapp/dialogs.c:620
-#: ../extra/graphapp/dialogs.c:626
-#: ../extra/graphapp/dialogs.c:725
-#: ../extra/graphapp/dialogs.c:739
-#: ../extra/graphapp/dialogs.c:745
+#: extra.c:912 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
+#: ../extra/graphapp/dialogs.c:626 ../extra/graphapp/dialogs.c:725
+#: ../extra/graphapp/dialogs.c:739 ../extra/graphapp/dialogs.c:745
 msgid "Cancel"
 msgstr "취소"
 
-#: extra.c:2161
-#: rui.c:1222
+#: extra.c:2169 rui.c:1222
 msgid "Select file"
 msgstr "파일 선택"
 
@@ -626,33 +580,23 @@ msgstr "파일을 여는 중에 에러가 발생했습니다"
 msgid "Insufficient memory to display file in internal pager"
 msgstr "내부페이저에서 파일을 표시하기 위한 메모리가 부족합니다"
 
-#: pager.c:177
-#: pager.c:189
-#: pager.c:209
-#: rui.c:236
-#: rui.c:263
+#: pager.c:177 pager.c:189 pager.c:209 rui.c:236 rui.c:263
 msgid "No selection"
 msgstr "선택되지 않았습니다"
 
-#: pager.c:306
-#: pager.c:436
-#: pager.c:480
+#: pager.c:306 pager.c:436 pager.c:480
 msgid "Paste to console"
 msgstr "콘솔에 붙여넣기"
 
-#: pager.c:307
-#: pager.c:441
-#: pager.c:482
+#: pager.c:307 pager.c:441 pager.c:482
 msgid "Paste commands to console"
 msgstr "명령어를 콘솔에 붙여넣기"
 
-#: pager.c:472
-#: rui.c:1137
+#: pager.c:472 rui.c:1137
 msgid "Save to File..."
 msgstr "파일에 저장..."
 
-#: pager.c:487
-#: rui.c:1154
+#: pager.c:487 rui.c:1154
 msgid "View"
 msgstr "보기"
 
@@ -733,8 +677,7 @@ msgstr "다음 위치로부터 이력을 불러오기"
 msgid "Save history in"
 msgstr "다음 위치에 이력을 저장하기"
 
-#: rui.c:245
-#: rui.c:254
+#: rui.c:245 rui.c:254
 msgid "No text available"
 msgstr "사용가능한 텍스트가 없습니다"
 
@@ -771,13 +714,11 @@ msgstr "객체검색"
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr ".R, .RData, .rda 파일들만 드래그-앤-드랍을 할 수 있습니다"
 
-#: rui.c:859
-#: rui.c:1144
+#: rui.c:859 rui.c:1144
 msgid "Paste commands only"
 msgstr "명령어들만 붙여넣기"
 
-#: rui.c:860
-#: rui.c:1094
+#: rui.c:860 rui.c:1094
 msgid "Copy and paste"
 msgstr "복사 및 붙여넣기"
 
@@ -785,8 +726,7 @@ msgstr "복사 및 붙여넣기"
 msgid "Clear window"
 msgstr "윈도우 지우기"
 
-#: rui.c:866
-#: rui.c:1167
+#: rui.c:866 rui.c:1167
 msgid "Buffered output"
 msgstr "버퍼된 출력"
 
@@ -826,8 +766,7 @@ msgstr "R에 관하여 FAQ"
 msgid "FAQ on R for &Windows"
 msgstr "&Windows 버전의 R에 관한 FAQ"
 
-#: rui.c:950
-#: rui.c:953
+#: rui.c:950 rui.c:953
 msgid "Manuals (in PDF)"
 msgstr "사용설명서 (PDF 형식)"
 
@@ -859,23 +798,19 @@ msgstr "CRAN 홈페이지"
 msgid "About"
 msgstr "R에 관하여"
 
-#: rui.c:1006
-#: ../extra/graphapp/gmenus.c:52
+#: rui.c:1006 ../extra/graphapp/gmenus.c:52
 msgid "Windows"
 msgstr "윈도우즈"
 
-#: rui.c:1007
-#: ../extra/graphapp/gmenus.c:53
+#: rui.c:1007 ../extra/graphapp/gmenus.c:53
 msgid "Cascade"
 msgstr "계단식"
 
-#: rui.c:1008
-#: ../extra/graphapp/gmenus.c:54
+#: rui.c:1008 ../extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
 msgstr "가로로 나란히 보기"
 
-#: rui.c:1009
-#: ../extra/graphapp/gmenus.c:55
+#: rui.c:1009 ../extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
 msgstr "세로로 나란히 보기"
 
@@ -1008,19 +943,15 @@ msgstr "기본 메뉴가 존재하지 않습니다"
 msgid "failed to allocate menu"
 msgstr "메뉴 할당에 실패했습니다"
 
-#: rui.c:1403
-#: rui.c:1527
+#: rui.c:1403 rui.c:1527
 msgid "menu + item is limited to 1000 bytes"
 msgstr "menu + item 은 1000 바이트로 제한되어 있습니다"
 
-#: rui.c:1411
-#: rui.c:1494
+#: rui.c:1411 rui.c:1494
 msgid "menu does not exist"
 msgstr "메뉴가 존재하지 않습니다"
 
-#: rui.c:1429
-#: rui.c:1452
-#: rui.c:1457
+#: rui.c:1429 rui.c:1452 rui.c:1457
 msgid "failed to allocate char storage"
 msgstr "failed to allocate char storage"
 
@@ -1040,13 +971,11 @@ msgstr "메뉴 또는 항목이 존재하지 않습니다"
 msgid "Save workspace image?"
 msgstr "작업공간 이미지를 저장하겠습니까?"
 
-#: ../extra/graphapp/clipboard.c:69
-#: ../extra/graphapp/clipboard.c:73
+#: ../extra/graphapp/clipboard.c:69 ../extra/graphapp/clipboard.c:73
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr "메모리 부족: 셀을 클립보드에 복사할 수 없습니다"
 
-#: ../extra/graphapp/dialogs.c:147
-#: ../extra/graphapp/dialogs.c:164
+#: ../extra/graphapp/dialogs.c:147 ../extra/graphapp/dialogs.c:164
 #: ../extra/graphapp/dialogs.c:181
 msgid "Question"
 msgstr "질문"
@@ -1068,8 +997,7 @@ msgstr "사용자"
 msgid "Password"
 msgstr "암호"
 
-#: ../extra/graphapp/dialogs.c:900
-#: ../extra/graphapp/dialogs.c:906
+#: ../extra/graphapp/dialogs.c:900 ../extra/graphapp/dialogs.c:906
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\"를 찾을 수 없습니다"

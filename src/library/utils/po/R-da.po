@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,6 +228,9 @@ msgstr "fil »filelist« mangler for mappe %s"
 
 msgid "data set %s not found"
 msgstr "datasæt %s blev ikke fundet"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "slagsen »%s« er endnu ikke implementeret"
@@ -704,6 +707,9 @@ msgstr ""
 msgid "Do you want to attempt to install these from sources?"
 msgstr ""
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
 
@@ -954,6 +960,9 @@ msgstr ""
 msgid "incomplete block on file"
 msgstr ""
 
+msgid "invalid name field in tarball"
+msgstr ""
+
 msgid "checksum error for entry '%s'"
 msgstr ""
 
@@ -969,7 +978,7 @@ msgstr ""
 msgid "file path is too long"
 msgstr ""
 
-msgid "linked path is too long"
+msgid "file size is limited to 2GB"
 msgstr ""
 
 msgid ""

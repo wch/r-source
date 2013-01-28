@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 07:50\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2249,24 +2249,6 @@ msgstr ""
 msgid "argument classDef must be a class definition or the name of a class"
 msgstr "argument 'classDef' musi być definicją klasy lub nazwą klasy"
 
-# methods/R/Session.R: 39
-# warning("'traceOn' is deprecated: use the function 'trace' in the 'methods' package instead")
-msgid ""
-"'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
-"instead"
-msgstr ""
-"'traceOn' jest przestarzałe: zamiast tego użyj funkcji 'trace' w pakiecie "
-"'methods'"
-
-# methods/R/Session.R: 85
-# warning("'traceOff' is deprecated: use the function 'untrace' in the 'methods' package instead")
-msgid ""
-"'traceOff' is deprecated: use the function 'untrace' in the 'methods' "
-"package instead"
-msgstr ""
-"'traceOff' jest przestarzałe: zamiast tego użyj funkcji 'untrace' z pakietu "
-"'methods'"
-
 # methods/R/addedFunctions.R: 63
 # stop(if(generic)
 # 	     gettextf("no function %s found", sQuote(name)) else
@@ -3667,3 +3649,21 @@ msgid_plural "no definition for classes %s"
 msgstr[0] "brak definicji dla klasy %s"
 msgstr[1] "brak definicji dla klas %s"
 msgstr[2] "brak definicji dla klas %s"
+
+# methods/R/Session.R: 39
+# warning("'traceOn' is deprecated: use the function 'trace' in the 'methods' package instead")
+#~ msgid ""
+#~ "'traceOn' is deprecated: use the function 'trace' in the 'methods' "
+#~ "package instead"
+#~ msgstr ""
+#~ "'traceOn' jest przestarzałe: zamiast tego użyj funkcji 'trace' w pakiecie "
+#~ "'methods'"
+
+# methods/R/Session.R: 85
+# warning("'traceOff' is deprecated: use the function 'untrace' in the 'methods' package instead")
+#~ msgid ""
+#~ "'traceOff' is deprecated: use the function 'untrace' in the 'methods' "
+#~ "package instead"
+#~ msgstr ""
+#~ "'traceOff' jest przestarzałe: zamiast tego użyj funkcji 'untrace' z "
+#~ "pakietu 'methods'"

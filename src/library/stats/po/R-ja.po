@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:59\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-13 16:20+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -136,6 +136,11 @@ msgid "upper scope does not include model term(s) %s"
 msgstr " 上位のスコープはモデル項 %s を含んでいません "
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+" AIC はこのモデルには定義されません、従って 'step' を進めることができません "
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 " AIC はこのモデルには定義されません、従って 'step' を進めることができません "
 
@@ -2169,6 +2174,10 @@ msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 " spline: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します "
 
+#, fuzzy
+msgid "'y' must be increasing or decreasing"
+msgstr " 'vec' は非減少順にソートされていなければなりません "
+
 msgid "'spline' requires n >= 1"
 msgstr " 'spline' は n >= 1 であることを必要とします "
 
@@ -2341,6 +2350,10 @@ msgstr " 置き換えるべき値が多すぎます "
 msgid "'model' must be list"
 msgstr " 'model' はリストである必要があります "
 
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "  'tol' は正で有限な数値でなければなりません "
+
 msgid "'ar' part of model is not stationary"
 msgstr " モデルの 'ar' 部分が定常ではありません "
 
@@ -2467,9 +2480,6 @@ msgstr[0] " モデル式中にパラメータ %s がありません "
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr " 'vec' が NA を含んでいます "
-
-#~ msgid "'vec' must be sorted non-decreasingly"
-#~ msgstr " 'vec' は非減少順にソートされていなければなりません "
 
 #, fuzzy
 #~ msgid "invalid length(vec)"

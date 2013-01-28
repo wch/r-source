@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.1\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-01 09:38\n"
-"PO-Revision-Date: 2012-09-01 09:38\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
+"PO-Revision-Date: 2013-01-28 09:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -147,12 +147,6 @@ msgstr "Bad \\usage lines found in documentation object ‘%s’:"
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr "S3 methods shown with full name in documentation object ‘%s’:"
 
-msgid "unable to create"
-msgstr "unable to create"
-
-msgid "unable to write code files"
-msgstr "unable to write code files"
-
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "you must specify ‘package’, ‘dir’ or ‘file’"
 
@@ -165,9 +159,6 @@ msgid ""
 msgstr ""
 "parse error in file ‘%s’:\n"
 "%s"
-
-msgid "Foreign function calls without 'PACKAGE' argument:"
-msgstr "Foreign function calls without ‘PACKAGE’ argument:"
 
 msgid "declared S3 method '%s' not found"
 msgstr "declared S3 method ‘%s’ not found"
@@ -316,9 +307,6 @@ msgstr "Invalid license file pointers: %s"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Non-portable flags in variable ‘%s’:"
 
-msgid "package must be loaded"
-msgstr "package must be loaded"
-
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
@@ -393,6 +381,12 @@ msgstr "See section %s in ?.onAttach."
 
 msgid "Good practice"
 msgstr "Good practice"
+
+msgid "unable to create"
+msgstr "unable to create"
+
+msgid "unable to write code files"
+msgstr "unable to write code files"
 
 msgid "package 'methods' is used but not declared"
 msgstr "package ‘methods’ is used but not declared"
@@ -1224,6 +1218,35 @@ msgstr "Call sequence:"
 
 msgid "parsing '%s'"
 msgstr "parsing ‘%s’"
+
+msgid "Foreign function call without 'PACKAGE' argument:"
+msgid_plural "Foreign function calls without 'PACKAGE' argument:"
+msgstr[0] "Foreign function call without ‘PACKAGE’ argument:"
+msgstr[1] "Foreign function calls without ‘PACKAGE’ argument:"
+
+msgid "Foreign function call with empty 'PACKAGE' argument:"
+msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
+msgstr[0] "Foreign function call with empty ‘PACKAGE’ argument:"
+msgstr[1] "Foreign function calls with empty ‘PACKAGE’ argument:"
+
+msgid "Foreign function call with 'PACKAGE' argument in a base package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a base package:"
+msgstr[0] "Foreign function call with ‘PACKAGE’ argument in a base package:"
+msgstr[1] "Foreign function calls with ‘PACKAGE’ argument in a base package:"
+
+msgid "Foreign function call with 'PACKAGE' argument in a different package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a different package:"
+msgstr[0] ""
+"Foreign function call with ‘PACKAGE’ argument in a different package:"
+msgstr[1] ""
+"Foreign function calls with ‘PACKAGE’ argument in a different package:"
+
+msgid "Undeclared package in foreign function calls:"
+msgid_plural "Undeclared packages in foreign function calls:"
+msgstr[0] "Undeclared package in foreign function calls:"
+msgstr[1] "Undeclared packages in foreign function calls:"
 
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"

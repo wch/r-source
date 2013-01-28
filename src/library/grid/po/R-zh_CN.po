@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:04\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -26,7 +26,8 @@ msgstr "'at'是NULL的话不能设定轴标签"
 msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels'和'at'的位置量必需有相同的长度"
 
-msgid "logical 'label' supplied on length 0"
+#, fuzzy
+msgid "logical 'label' supplied of length 0"
 msgstr "提供的逻辑'label'的长度为零"
 
 msgid "End points must not be identical"

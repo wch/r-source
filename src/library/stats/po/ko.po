@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:58+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
 "PO-Revision-Date: 2012-09-25 19:14-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team:  <gnustats@gmail.com>\n"
@@ -31,31 +31,23 @@ msgstr "이동 중앙값들의 bandwidth/span이 n 보다 큽니다"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qunsari()에서 확률들이 [0,1]의 범위밖입니다"
 
-#: approx.c:110
-#: approx.c:142
+#: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
 msgstr "approx(): 잘못된 f 값입니다"
 
-#: approx.c:115
-#: approx.c:145
+#: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): 잘못된 보간법입니다"
 
-#: approx.c:121
-#: approx.c:151
+#: approx.c:121 approx.c:151
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): NA 값들을 보간하려고 시도했습니다"
 
-#: arima.c:69
-#: arima.c:183
-#: arima.c:359
+#: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
 msgstr "잘못된 인수 유형입니다"
 
-#: arima.c:418
-#: arima.c:502
-#: pacf.c:307
-#: pacf.c:347
+#: arima.c:418 arima.c:502 pacf.c:307 pacf.c:347
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0에서 최대 100 개까지의 파라미터들만이 변환 가능합니다"
 
@@ -63,15 +55,15 @@ msgstr "arima0에서 최대 100 개까지의 파라미터들만이 변환 가능
 msgid "maximum supported lag is 350"
 msgstr "지원되는 최대의 lag은 350 입니다"
 
-#: distance.c:156
+#: distance.c:154
 msgid "treating non-finite values as NA"
 msgstr "유한하지 않은 값들은 NA으로 취급됩니다"
 
-#: distance.c:229
+#: distance.c:227
 msgid "distance(): invalid p"
 msgstr "distance(): 잘못된 p 입니다"
 
-#: distance.c:232
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): 잘못된 distance 입니다"
 
@@ -80,15 +72,12 @@ msgstr "distance(): 잘못된 distance 입니다"
 msgid "Value %g out of range (0, 1)"
 msgstr "%g 값이 (0,1) 범위 외입니다"
 
-#: family.c:64
-#: family.c:78
-#: family.c:96
+#: family.c:64 family.c:78 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "인자 %s는 반드시 비어있지 않은 수치형 벡터이어야 합니다"
 
-#: family.c:129
-#: family.c:132
+#: family.c:129 family.c:132
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "인수 %s는 반드시 길이가 1 또는 %d인 수치형 벡터이어야 합니다"
@@ -141,17 +130,8 @@ msgstr "'control'은 반드시 리스트이어야 합니다"
 msgid "'m' must be a list"
 msgstr "'m'은 반드시 리스트이어야 합니다"
 
-#: nls.c:105
-#: nls.c:110
-#: nls.c:115
-#: nls.c:120
-#: nls.c:125
-#: nls.c:166
-#: nls.c:171
-#: nls.c:176
-#: nls.c:181
-#: nls.c:186
-#: nls.c:191
+#: nls.c:105 nls.c:110 nls.c:115 nls.c:120 nls.c:125 nls.c:166 nls.c:171
+#: nls.c:176 nls.c:181 nls.c:186 nls.c:191
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s'가 없습니다"
@@ -178,8 +158,7 @@ msgstr "수렴했습니다"
 msgid "'theta' should be of type character"
 msgstr "'theta'는 문자형이어야 합니다"
 
-#: nls.c:290
-#: port.c:366
+#: nls.c:290 port.c:372
 msgid "use of NULL environment is defunct"
 msgstr "NULL 환경의 사용은 더 이상 지원되지 않습니다"
 
@@ -191,8 +170,7 @@ msgstr "'rho'는 환경이어야 합니다"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'은 올바른 길이를 가진 수치형 벡터가 아닙니다"
 
-#: nls.c:314
-#: nls.c:342
+#: nls.c:314 nls.c:342
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "모델을 평가할 때 결손치 또는 무한대의 값의 생성되었습니다"
 
@@ -234,61 +212,61 @@ msgstr "Rf_divset: alg = %d는 반드시 1, 2, 3, 또는 4 이어야 합니다"
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "그라디언트 함수는 반드시 길이가 %d인 수치형 벡터를 반환해야 합니다"
 
-#: port.c:320
+#: port.c:322
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "헤시안 함수는 반드시 %d 차의 수치형 정방행렬을 반환해야 합니다"
 
-#: port.c:370
+#: port.c:376
 msgid "'rho' must be an environment"
 msgstr "'rho'는 반드시 환경이어야 합니다"
 
-#: port.c:372
-#: port.c:523
+#: port.c:378 port.c:535
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'는 반드시 비어있지 않은 수치형 벡터이어야 합니다"
 
-#: port.c:374
+#: port.c:380
 msgid "When Hessian defined must also have gradient defined"
 msgstr "헤시안을 정의 했을때는 반드시 그라디언트 또한 정의해야 합니다"
 
-#: port.c:377
+#: port.c:383
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "환경 'rho'은 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
 
-#: port.c:391
+#: port.c:397
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower'와 'upper'는 반드시 수치형 벡터이어야 합니다"
 
-#: port.c:437
+#: port.c:449
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement'는 오로지 명명된 리스트들에만 적용됩니다"
 
-#: port.c:458
+#: port.c:470
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s()를 찾을 수 없습니다"
 
-#: port.c:471
+#: port.c:483
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient'는 반드시 크기가 (%d,%d)인 수치형 행렬이어야 합니다"
 
-#: port.c:492
+#: port.c:504
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr "fcn은 모드 %d, 길이 %d를 생성했습니다 - 모드 %d, 길이 %d를 원했었습니다"
+msgstr ""
+"fcn은 모드 %d, 길이 %d를 생성했습니다 - 모드 %d, 길이 %d를 원했었습니다"
 
-#: port.c:505
+#: port.c:517
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store에 대한 유형이 잘못되었습니다"
 
-#: port.c:524
+#: port.c:536
 msgid "m must be a list"
 msgstr "m은 반드시 리스트이어야 합니다"
 
-#: port.c:544
+#: port.c:556
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'와 'upperb'는 반드시 수치형 벡터들이어야 합니다"
 
@@ -313,8 +291,7 @@ msgstr "invalid end-rule for running median of 3: %d"
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "smooth(*, '3RSR')에서 할당오류가 발생했습니다."
 
-#: smooth.c:267
-#: smooth.c:277
+#: smooth.c:267 smooth.c:277
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "smooth(*, '3RSS')에서 할당오류가 발생했습니다."
 
@@ -326,4 +303,3 @@ msgstr "smooth(*, '3R')에서 할당오류가 발생했습니다."
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "마지막 %d개의 관측치중에 누락된 값들이 있습니다"
-

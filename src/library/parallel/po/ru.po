@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 13:07+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
 "PO-Revision-Date: 2011-10-18 22:15-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -19,61 +19,61 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: fork.c:135 fork.c:138
+#: fork.c:131 fork.c:134
 msgid "unable to create a pipe"
 msgstr "не могу создать трубу"
 
-#: fork.c:149
+#: fork.c:145
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "не могу разветвить, возможная причина: %s"
 
-#: fork.c:178
+#: fork.c:174
 msgid "memory allocation error"
 msgstr "ошибка распределения памяти"
 
-#: fork.c:216
+#: fork.c:212
 msgid "only children can send data to the master process"
 msgstr "только дочерние процессы могут посылать данные мастер-процессу"
 
-#: fork.c:218
+#: fork.c:214
 msgid "there is no pipe to the master process"
 msgstr "нет трубы к мастер-процессу"
 
-#: fork.c:220
+#: fork.c:216
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "посылаемый контент должен быть RAW, используйте serialize(), если надо"
 
-#: fork.c:229 fork.c:236
+#: fork.c:225 fork.c:232
 msgid "write error, closing pipe to the master"
 msgstr "ошибка записи, закрываю трубу к мастеру"
 
-#: fork.c:249
+#: fork.c:245
 msgid "only the master process can send data to a child process"
 msgstr "только мастер-процесс может посылать данные дочернему процессу"
 
-#: fork.c:256
+#: fork.c:252
 #, c-format
 msgid "child %d does not exist"
 msgstr "дочерний процесс %d не существует"
 
-#: fork.c:262
+#: fork.c:258
 msgid "write error"
 msgstr "ошибка записи"
 
-#: fork.c:342 fork.c:464
+#: fork.c:338 fork.c:460
 #, c-format
 msgid "error '%s' in select"
 msgstr "ошибка '%s' в выборе"
 
-#: fork.c:548
+#: fork.c:544
 msgid "mckill failed"
 msgstr "mckill не удался"
 
-#: fork.c:558
+#: fork.c:554
 msgid "mcexit can only be used in a child process"
 msgstr "mcexit может быть использован только в дочернем процессе"
 
-#: fork.c:578
+#: fork.c:574
 msgid "mcexit failed"
 msgstr "mcexit не удался"

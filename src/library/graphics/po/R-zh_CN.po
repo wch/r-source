@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -237,6 +237,9 @@ msgstr "数据间隔的数目必需比颜色要多一个"
 
 msgid "breaks must all be finite"
 msgstr "数据间隔值不能有无限的"
+
+msgid "unsorted 'breaks' will be sorted before use"
+msgstr ""
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "z的大小应该等于length(x)(-1)乘length(y)(-1)"

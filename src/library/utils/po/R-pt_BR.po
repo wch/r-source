@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -226,6 +226,9 @@ msgstr ""
 #, fuzzy
 msgid "data set %s not found"
 msgstr "documento não encontrado"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr ""
@@ -702,6 +705,9 @@ msgstr ""
 msgid "Do you want to attempt to install these from sources?"
 msgstr ""
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
 
@@ -952,6 +958,9 @@ msgstr ""
 msgid "incomplete block on file"
 msgstr ""
 
+msgid "invalid name field in tarball"
+msgstr ""
+
 msgid "checksum error for entry '%s'"
 msgstr ""
 
@@ -967,7 +976,7 @@ msgstr ""
 msgid "file path is too long"
 msgstr ""
 
-msgid "linked path is too long"
+msgid "file size is limited to 2GB"
 msgstr ""
 
 msgid ""

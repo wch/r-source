@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:32+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
 "PO-Revision-Date: 2012-09-25 18:00-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team:  <gnustats@gmail.com>\n"
@@ -22,65 +22,62 @@ msgstr ""
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: fork.c:135
-#: fork.c:138
+#: fork.c:131 fork.c:134
 msgid "unable to create a pipe"
 msgstr "파이프를 생성할 수 없습니다"
 
-#: fork.c:149
+#: fork.c:145
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "포크할 수 없는데, 가능한 이유: %s"
 
-#: fork.c:178
+#: fork.c:174
 msgid "memory allocation error"
 msgstr "메모리 할당 오류"
 
-#: fork.c:216
+#: fork.c:212
 msgid "only children can send data to the master process"
 msgstr "오로지 children만이 데이터를 마스터 프로세스에 전송할 수 있습니다"
 
-#: fork.c:218
+#: fork.c:214
 msgid "there is no pipe to the master process"
 msgstr "마스터 프로세스로 연결된 파이프가 없습니다"
 
-#: fork.c:220
+#: fork.c:216
 msgid "content to send must be RAW, use serialize() if needed"
-msgstr "보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
+msgstr ""
+"보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
 
-#: fork.c:229
-#: fork.c:236
+#: fork.c:225 fork.c:232
 msgid "write error, closing pipe to the master"
 msgstr "쓰기 에러, 마스터에 연결된 파이프를 닫습니다"
 
-#: fork.c:249
+#: fork.c:245
 msgid "only the master process can send data to a child process"
 msgstr "오로지 마스터 프로세스만이 데이터를 자식 프로세스에 전송할 수 있습니다"
 
-#: fork.c:256
+#: fork.c:252
 #, c-format
 msgid "child %d does not exist"
 msgstr "child %d가 존재하지 않습니다"
 
-#: fork.c:262
+#: fork.c:258
 msgid "write error"
 msgstr "쓰기 에러"
 
-#: fork.c:342
-#: fork.c:464
+#: fork.c:338 fork.c:460
 #, c-format
 msgid "error '%s' in select"
 msgstr "선택하는 중에 에러 '%s'"
 
-#: fork.c:548
+#: fork.c:544
 msgid "mckill failed"
 msgstr "mckill 실패했습니다"
 
-#: fork.c:558
+#: fork.c:554
 msgid "mcexit can only be used in a child process"
 msgstr "mcexit는 자식 프로세스에서만 오로지 사용될 수 있습니다"
 
-#: fork.c:578
+#: fork.c:574
 msgid "mcexit failed"
 msgstr "mcexit 실패했습니다"
-

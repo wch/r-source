@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:04\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-03-06 21:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -29,7 +29,8 @@ msgstr ""
 msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels' et 'at' doivent être de même longueur"
 
-msgid "logical 'label' supplied on length 0"
+#, fuzzy
+msgid "logical 'label' supplied of length 0"
 msgstr "la valeur logique 'label' est de longeur nulle"
 
 msgid "End points must not be identical"

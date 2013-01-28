@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:53\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -880,9 +880,6 @@ msgstr ""
 msgid ""
 "Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
-msgstr ""
-
-msgid "License"
 msgstr ""
 
 #, fuzzy
@@ -1781,6 +1778,10 @@ msgstr "'to' deve avere  lunghezza 1"
 msgid "'stderr' must be of length 1"
 msgstr "'to' deve avere  lunghezza 1"
 
+#, fuzzy
+msgid "missing values are not allowed"
+msgstr "'row.names' mancanti non sono permesse"
+
 msgid "'which' was not found on this platform"
 msgstr ""
 
@@ -1827,19 +1828,6 @@ msgstr ""
 
 msgid "ERROR: no permission to remove from directory"
 msgstr ""
-
-msgid "T used instead of TRUE"
-msgstr ""
-
-msgid "F used instead of FALSE"
-msgstr ""
-
-msgid "items"
-msgstr ""
-
-#, fuzzy
-msgid "have been removed from the search path"
-msgstr "'%s' non trovato nel percorso di ricerca, uso pos = 2"
 
 msgid "cannot find namespace environment"
 msgstr ""
@@ -1903,10 +1891,20 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "metodo S3 %s dichiarato in NAMESPACE ma non trovato"
 msgstr[1] "metodi S3 %s dichiarati in NAMESPACE ma non trovati"
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "l'argomento drop verrà ignorato"
+msgstr[1] "l'argomento drop verrà ignorato"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#, fuzzy
+#~ msgid "have been removed from the search path"
+#~ msgstr "'%s' non trovato nel percorso di ricerca, uso pos = 2"
 
 #, fuzzy
 #~ msgid "invalid length(x)"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:53\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2011-11-30 14:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -821,9 +821,6 @@ msgstr ""
 "Pakke %s har en licens, som du skal acceptere:\n"
 "ifølge DESCRIPTION-filen er det"
 
-msgid "License"
-msgstr "Licens"
-
 msgid "License for package %s not accepted"
 msgstr "Licens for pakke %s er ikke accepteret"
 
@@ -1639,6 +1636,10 @@ msgstr ""
 msgid "'stderr' must be of length 1"
 msgstr ""
 
+#, fuzzy
+msgid "missing values are not allowed"
+msgstr "manglende erstatningsværdier er ikke tilladt"
+
 msgid "'which' was not found on this platform"
 msgstr ""
 
@@ -1681,18 +1682,6 @@ msgid "ERROR: cannot cd to directory"
 msgstr ""
 
 msgid "ERROR: no permission to remove from directory"
-msgstr ""
-
-msgid "T used instead of TRUE"
-msgstr ""
-
-msgid "F used instead of FALSE"
-msgstr ""
-
-msgid "items"
-msgstr ""
-
-msgid "have been removed from the search path"
 msgstr ""
 
 msgid "cannot find namespace environment"
@@ -1752,10 +1741,19 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] ""
 msgstr[1] ""
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "drop-argumenter vil blive ignoreret"
+msgstr[1] "drop-argumenter vil blive ignoreret"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "License"
+#~ msgstr "Licens"
 
 #, fuzzy
 #~ msgid "invalid length(x)"

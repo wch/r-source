@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56+0100\n"
+"POT-Creation-Date: 2013-01-28 09:14+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -971,7 +971,7 @@ msgstr "Bez tytułu"
 # gettext("OK")
 # src/gnuwin32/extra.c: 903
 # G_("OK")
-#: extra.c:903 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
+#: extra.c:911 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
 msgid "OK"
 msgstr "OK"
 
@@ -991,7 +991,7 @@ msgstr "OK"
 # gettext("Cancel")
 # src/gnuwin32/extra.c: 904
 # G_("Cancel")
-#: extra.c:904 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
+#: extra.c:912 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
 #: ../extra/graphapp/dialogs.c:626 ../extra/graphapp/dialogs.c:725
 #: ../extra/graphapp/dialogs.c:739 ../extra/graphapp/dialogs.c:745
 msgid "Cancel"
@@ -1001,7 +1001,7 @@ msgstr "Anuluj"
 # G_("Select file")
 # src/gnuwin32/extra.c: 2161
 # G_("Select file")
-#: extra.c:2161 rui.c:1222
+#: extra.c:2169 rui.c:1222
 msgid "Select file"
 msgstr "Wybierz plik"
 

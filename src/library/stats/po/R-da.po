@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:59\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,6 +137,9 @@ msgid "upper scope does not include model term(s) %s"
 msgstr ""
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 
 msgid "'A' must be an array or table"
@@ -2104,6 +2107,9 @@ msgstr ""
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 
+msgid "'y' must be increasing or decreasing"
+msgstr ""
+
 msgid "'spline' requires n >= 1"
 msgstr ""
 
@@ -2269,6 +2275,9 @@ msgid "only replacement of elements is allowed"
 msgstr ""
 
 msgid "'model' must be list"
+msgstr ""
+
+msgid "'n' must be strictly positive"
 msgstr ""
 
 msgid "'ar' part of model is not stationary"

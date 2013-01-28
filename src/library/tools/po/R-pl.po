@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-01 09:38\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -405,28 +405,6 @@ msgstr "Znaleziono niepoprawne linie \\usage w obiekcie dokumentacji '%s':"
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr "Metody S3 pokazane z pełną nazwą w obiekcie dokumentacji '%s':"
 
-# tools/R/packages.R: 139
-# stop("unable to create ", td)
-# tools/R/utils.R: 1408
-# stop("unable to create ", con)
-# tools/R/QC.R: 1844
-# stop("unable to create ", file)
-# tools/R/QC.R: 4641
-# stop("unable to create ", file)
-msgid "unable to create"
-msgstr "nie można utworzyć"
-
-# tools/R/utils.R: 1419
-# stop("unable to write code files")
-# tools/R/QC.R: 1848
-# stop("unable to write code files")
-# tools/R/QC.R: 4645
-# stop("unable to write code files")
-# tools/R/admin.R: 321
-# stop("unable to write code files")
-msgid "unable to write code files"
-msgstr "nie można zapisać plików kodu"
-
 # tools/R/QC.R: 1853
 # stop("you must specify 'package', 'dir' or 'file'")
 # tools/R/QC.R: 2563
@@ -477,9 +455,6 @@ msgid ""
 msgstr ""
 "błąd parsowania w pliku '%s':\n"
 "%s"
-
-msgid "Foreign function calls without 'PACKAGE' argument:"
-msgstr "Wywołania obcej funkcji bez argumentu 'PACKAGE':"
 
 # tools/R/QC.R: 2248
 # warning(gettextf("declared S3 method '%s' not found",
@@ -747,11 +722,6 @@ msgstr "Niepoprawne wskaźniki pliku licencji: %s"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nieprzenośne flagi w zmiennej '%s':"
 
-# tools/R/QC.R: 3536
-# stop("package must be loaded")
-msgid "package must be loaded"
-msgstr "pakiet musi zostać załadowany"
-
 # tools/R/QC.R: 3682
 # gettextf("package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked", sQuote(pkg))
 msgid ""
@@ -927,6 +897,28 @@ msgstr "Zobacz sekcję %s w '?.onAttach'."
 #                sQuote("Good practice"))
 msgid "Good practice"
 msgstr "Dobra praktyka"
+
+# tools/R/packages.R: 139
+# stop("unable to create ", td)
+# tools/R/utils.R: 1408
+# stop("unable to create ", con)
+# tools/R/QC.R: 1844
+# stop("unable to create ", file)
+# tools/R/QC.R: 4641
+# stop("unable to create ", file)
+msgid "unable to create"
+msgstr "nie można utworzyć"
+
+# tools/R/utils.R: 1419
+# stop("unable to write code files")
+# tools/R/QC.R: 1848
+# stop("unable to write code files")
+# tools/R/QC.R: 4645
+# stop("unable to write code files")
+# tools/R/admin.R: 321
+# stop("unable to write code files")
+msgid "unable to write code files"
+msgstr "nie można zapisać plików kodu"
 
 # tools/R/QC.R: 4758
 # gettext("package 'methods' is used but not declared")
@@ -2688,6 +2680,42 @@ msgstr "Sekwencja wywołania:"
 msgid "parsing '%s'"
 msgstr "parsowanie '%s'"
 
+#, fuzzy
+msgid "Foreign function call without 'PACKAGE' argument:"
+msgid_plural "Foreign function calls without 'PACKAGE' argument:"
+msgstr[0] "Wywołania obcej funkcji bez argumentu 'PACKAGE':"
+msgstr[1] "Wywołania obcej funkcji bez argumentu 'PACKAGE':"
+msgstr[2] "Wywołania obcej funkcji bez argumentu 'PACKAGE':"
+
+#, fuzzy
+msgid "Foreign function call with empty 'PACKAGE' argument:"
+msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
+msgstr[0] "Wywołania obcej funkcji bez argumentu 'PACKAGE':"
+msgstr[1] "Wywołania obcej funkcji bez argumentu 'PACKAGE':"
+msgstr[2] "Wywołania obcej funkcji bez argumentu 'PACKAGE':"
+
+#, fuzzy
+msgid "Foreign function call with 'PACKAGE' argument in a base package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a base package:"
+msgstr[0] "wywołania obcej funkcji bez argumentu 'PACKAGE':"
+msgstr[1] "wywołania obcej funkcji bez argumentu 'PACKAGE':"
+msgstr[2] "wywołania obcej funkcji bez argumentu 'PACKAGE':"
+
+#, fuzzy
+msgid "Foreign function call with 'PACKAGE' argument in a different package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a different package:"
+msgstr[0] "wywołania obcej funkcji bez argumentu 'PACKAGE':"
+msgstr[1] "wywołania obcej funkcji bez argumentu 'PACKAGE':"
+msgstr[2] "wywołania obcej funkcji bez argumentu 'PACKAGE':"
+
+msgid "Undeclared package in foreign function calls:"
+msgid_plural "Undeclared packages in foreign function calls:"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
 # tools/R/QC.R: 3849
 # ngettext(n,
 #                    "Note: found %d marked Latin-1 string",
@@ -2786,6 +2814,11 @@ msgstr[0] "obiekt %s jest utworzony przez więcej niż jedno wywołanie danych"
 msgstr[1] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 
+# tools/R/QC.R: 3536
+# stop("package must be loaded")
+#~ msgid "package must be loaded"
+#~ msgstr "pakiet musi zostać załadowany"
+
 # tools/R/translations.R: 154
 # message("not installing")
 # tools/R/translations.R: 225
@@ -2797,12 +2830,3 @@ msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 # stop("R CMD build failed")
 #~ msgid "R CMD build failed"
 #~ msgstr "niepowodzeniu kompilacji R CMD"
-
-#, fuzzy
-#~ msgid "Foreign function call(s) with 'PACKAGE' argument in a base package:"
-#~ msgstr "wywołania obcej funkcji bez argumentu 'PACKAGE':"
-
-#, fuzzy
-#~ msgid ""
-#~ "Foreign function call(s) with 'PACKAGE' argument in different package:"
-#~ msgstr "wywołania obcej funkcji bez argumentu 'PACKAGE':"

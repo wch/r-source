@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:04\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,8 @@ msgstr "Ugyldigt at angive akseetiketter når »at« er NULL"
 msgid "'labels' and 'at' locations must have same length"
 msgstr "»labels«- og »at«-placeringer skal have samme længde"
 
-msgid "logical 'label' supplied on length 0"
+#, fuzzy
+msgid "logical 'label' supplied of length 0"
 msgstr "logisk »label« angivet ved længde 0"
 
 msgid "End points must not be identical"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-07 09:49+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -242,6 +242,9 @@ msgstr "es muss eine Stützstelle mehr gebe als Farben"
 
 msgid "breaks must all be finite"
 msgstr "alle Stützstellen müssen endlich sein"
+
+msgid "unsorted 'breaks' will be sorted before use"
+msgstr ""
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "Dimensionen von z sind nicht length(x)(-1) mal length(y)(-1)"

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.1\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,6 +228,9 @@ msgid "must have one more break than colour"
 msgstr ""
 
 msgid "breaks must all be finite"
+msgstr ""
+
+msgid "unsorted 'breaks' will be sorted before use"
 msgstr ""
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"

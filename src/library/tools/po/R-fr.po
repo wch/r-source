@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-01 09:38\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-21 10:21+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -142,12 +142,6 @@ msgstr ""
 "Methodes S3 indiquées avec le nom complet dans la documentation de l'objet "
 "'%s' :"
 
-msgid "unable to create"
-msgstr "impossible de créer"
-
-msgid "unable to write code files"
-msgstr "impossible d'écrire les fichiers de code"
-
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "vous devez spécifier 'package', 'dir' ou 'file'"
 
@@ -160,9 +154,6 @@ msgid ""
 msgstr ""
 "erreur d'analyse de code dans le fichier '%s' :\n"
 "%s"
-
-msgid "Foreign function calls without 'PACKAGE' argument:"
-msgstr "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
 
 msgid "declared S3 method '%s' not found"
 msgstr "methode S3 '%s' déclarée mais introuvable"
@@ -316,9 +307,6 @@ msgstr "Pointeur de fichier licence incorrect : %s"
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicateur non portable dans la variable '%s' :"
 
-msgid "package must be loaded"
-msgstr "le package doit être chargé"
-
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
@@ -397,6 +385,12 @@ msgstr "Voir section %s dans ?.onAttach."
 
 msgid "Good practice"
 msgstr "Bonne pratique"
+
+msgid "unable to create"
+msgstr "impossible de créer"
+
+msgid "unable to write code files"
+msgstr "impossible d'écrire les fichiers de code"
 
 msgid "package 'methods' is used but not declared"
 msgstr "le package 'methods' est utilisé mais pas déclaré"
@@ -1249,6 +1243,37 @@ msgstr "Séquence d'appel :"
 msgid "parsing '%s'"
 msgstr "analyse de '%s'"
 
+#, fuzzy
+msgid "Foreign function call without 'PACKAGE' argument:"
+msgid_plural "Foreign function calls without 'PACKAGE' argument:"
+msgstr[0] "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+msgstr[1] "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+
+#, fuzzy
+msgid "Foreign function call with empty 'PACKAGE' argument:"
+msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
+msgstr[0] "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+msgstr[1] "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+
+#, fuzzy
+msgid "Foreign function call with 'PACKAGE' argument in a base package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a base package:"
+msgstr[0] "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+msgstr[1] "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+
+#, fuzzy
+msgid "Foreign function call with 'PACKAGE' argument in a different package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a different package:"
+msgstr[0] "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+msgstr[1] "Appel de fonctions étrangères sans l'argument 'PACKAGE' :"
+
+msgid "Undeclared package in foreign function calls:"
+msgid_plural "Undeclared packages in foreign function calls:"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] "Note : %d chaîne de caractères marquée Latin-1 trouvée"
@@ -1297,6 +1322,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "package must be loaded"
+#~ msgstr "le package doit être chargé"
 
 #~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 #~ msgstr ""

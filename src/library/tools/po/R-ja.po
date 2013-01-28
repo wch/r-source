@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-01 09:38\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-13 11:25+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -137,12 +137,6 @@ msgstr ""
 " ドキュメンテーション・オブジェクト '%s' 中にフルネームで示されたS3メソッ"
 "ド： "
 
-msgid "unable to create"
-msgstr " 生成出来ません "
-
-msgid "unable to write code files"
-msgstr " コードファイルを書き込めません "
-
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr " 'package', 'dir' もしくは 'file' を指定しなければなりません "
 
@@ -155,9 +149,6 @@ msgid ""
 msgstr ""
 " ファイル '%s' 中に構文解析エラー : \n"
 " %s "
-
-msgid "Foreign function calls without 'PACKAGE' argument:"
-msgstr " 'PACKAGE' 引数のない外部言語関数コール: "
 
 msgid "declared S3 method '%s' not found"
 msgstr " 宣言された S3 メソッド '%s' が見付かりません "
@@ -308,9 +299,6 @@ msgstr " 不正なライセンスファイルのポインタ: %s "
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable フラグ: "
 
-msgid "package must be loaded"
-msgstr " パッケージがロードされなければなりません "
-
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
@@ -387,6 +375,12 @@ msgstr " ?.onAttachのセクション%sを見てください。 "
 
 msgid "Good practice"
 msgstr " 良い方法です。 "
+
+msgid "unable to create"
+msgstr " 生成出来ません "
+
+msgid "unable to write code files"
+msgstr " コードファイルを書き込めません "
 
 msgid "package 'methods' is used but not declared"
 msgstr " パッケージ \"methods\" が使われていますが、宣言されていません "
@@ -1246,6 +1240,32 @@ msgstr " 呼び出しシーケンス： "
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
 
+#, fuzzy
+msgid "Foreign function call without 'PACKAGE' argument:"
+msgid_plural "Foreign function calls without 'PACKAGE' argument:"
+msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+msgid "Foreign function call with empty 'PACKAGE' argument:"
+msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
+msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+msgid "Foreign function call with 'PACKAGE' argument in a base package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a base package:"
+msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
+
+#, fuzzy
+msgid "Foreign function call with 'PACKAGE' argument in a different package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a different package:"
+msgstr[0] " 'PACKAGE' 引数のない外部言語関数コール: "
+
+msgid "Undeclared package in foreign function calls:"
+msgid_plural "Undeclared packages in foreign function calls:"
+msgstr[0] ""
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] " 注意: %d 個の Latin-1 コードの文字が見つかりました "
@@ -1279,6 +1299,9 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "package must be loaded"
+#~ msgstr " パッケージがロードされなければなりません "
 
 #~ msgid "--merge-multiarch is Windows-only"
 #~ msgstr " --merge-multiarch は Windows 専用です "

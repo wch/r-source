@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:58+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,15 +49,15 @@ msgstr "kan kun transformere 100 par i arima0"
 msgid "maximum supported lag is 350"
 msgstr "maksimal understøttet forsinkelse er 350"
 
-#: distance.c:156
+#: distance.c:154
 msgid "treating non-finite values as NA"
 msgstr "behandler ikkebegrænsende værdier som NA"
 
-#: distance.c:229
+#: distance.c:227
 msgid "distance(): invalid p"
 msgstr "distance(): ugyldig p"
 
-#: distance.c:232
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): ugyldig afstand"
 
@@ -152,7 +152,7 @@ msgstr "begrænset"
 msgid "'theta' should be of type character"
 msgstr "'theta' skal være type-tegn"
 
-#: nls.c:290 port.c:366
+#: nls.c:290 port.c:372
 msgid "use of NULL environment is defunct"
 msgstr "brug af NULL-miljø er ude af drift"
 
@@ -206,61 +206,61 @@ msgstr "Rf_divsæt: alg = %d skal være 1, 2, 3 eller 4 "
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "gradientfunktion skal returnere en numerisk vektor med længden %d"
 
-#: port.c:320
+#: port.c:322
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "Hessianfunktion skal returnere en kvadratisk numerisk matrix i orden %d"
 
-#: port.c:370
+#: port.c:376
 msgid "'rho' must be an environment"
 msgstr "'rho' skal være et miljø"
 
-#: port.c:372 port.c:523
+#: port.c:378 port.c:535
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' skal være en numerisk vektor som ikke er tom"
 
-#: port.c:374
+#: port.c:380
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Når Hessian er defineret skal også en gradient være defineret"
 
-#: port.c:377
+#: port.c:383
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "miljø 'rho' skal indeholde en numerisk vektor '.par' med længden %d"
 
-#: port.c:391
+#: port.c:397
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' og 'upper' skal være numeriske vektorer"
 
-#: port.c:437
+#: port.c:449
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' gælder kun for navngivne lister"
 
-#: port.c:458
+#: port.c:470
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() er ikke fundet"
 
-#: port.c:471
+#: port.c:483
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' skal være en numerisk matrix med dimension (%d, %d)"
 
-#: port.c:492
+#: port.c:504
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn lavede tilstand %d, længde %d - ønsket tilstand %d, længde %d"
 
-#: port.c:505
+#: port.c:517
 msgid "invalid type for eval_check_store"
 msgstr "ugyldig type for eval_check_store"
 
-#: port.c:524
+#: port.c:536
 msgid "m must be a list"
 msgstr "m skal være en liste"
 
-#: port.c:544
+#: port.c:556
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' og 'upperb' skal være numeriske vektorer"
 

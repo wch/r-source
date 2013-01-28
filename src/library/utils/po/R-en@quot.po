@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.1\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
-"PO-Revision-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
+"PO-Revision-Date: 2013-01-28 09:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -245,6 +245,9 @@ msgstr "file ‘filelist’ is missing for directory %s"
 
 msgid "data set %s not found"
 msgstr "data set %s not found"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr "only ‘html = TRUE’ is supported on this platform"
 
 msgid "kind '%s' not yet implemented"
 msgstr "kind ‘%s’ not yet implemented"
@@ -745,6 +748,9 @@ msgstr ""
 msgid "Do you want to attempt to install these from sources?"
 msgstr "Do you want to attempt to install these from sources?"
 
+msgid "source repository is unavailable to check versions"
+msgstr "source repository is unavailable to check versions"
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "cannot install MacOS X binary packages on Windows"
 
@@ -1006,6 +1012,9 @@ msgstr "‘tarfile’ must be a character string or a connection"
 msgid "incomplete block on file"
 msgstr "incomplete block on file"
 
+msgid "invalid name field in tarball"
+msgstr "invalid name field in tarball"
+
 msgid "checksum error for entry '%s'"
 msgstr "checksum error for entry ‘%s’"
 
@@ -1021,8 +1030,8 @@ msgstr "file ‘%s’ not found"
 msgid "file path is too long"
 msgstr "file path is too long"
 
-msgid "linked path is too long"
-msgstr "linked path is too long"
+msgid "file size is limited to 2GB"
+msgstr "file size is limited to 2GB"
 
 msgid ""
 "vignette %s found more than once,\n"

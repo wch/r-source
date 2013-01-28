@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:58+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -49,15 +49,15 @@ msgstr "arima0里只能转换100个参数"
 msgid "maximum supported lag is 350"
 msgstr "滞后不能大于350"
 
-#: distance.c:156
+#: distance.c:154
 msgid "treating non-finite values as NA"
 msgstr "所有无限值都作为NA来处理"
 
-#: distance.c:229
+#: distance.c:227
 msgid "distance(): invalid p"
 msgstr "distance(): p值不对"
 
-#: distance.c:232
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance()：距离值不对"
 
@@ -152,7 +152,7 @@ msgstr "收敛了"
 msgid "'theta' should be of type character"
 msgstr "'theta'的种类必需是字符"
 
-#: nls.c:290 port.c:366
+#: nls.c:290 port.c:372
 msgid "use of NULL environment is defunct"
 msgstr "NULL环境不再有用了"
 
@@ -206,60 +206,60 @@ msgstr "Rf_divset: alg = %d其值应该是1, 2, 3, 或4"
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "梯度函数必需回覆长度为%d的数字向量"
 
-#: port.c:320
+#: port.c:322
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "Hessian函数必需回覆一个度数为%d的正方形数值矩阵"
 
-#: port.c:370
+#: port.c:376
 msgid "'rho' must be an environment"
 msgstr "'rho'必需是环境"
 
-#: port.c:372 port.c:523
+#: port.c:378 port.c:535
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'必需是非空数字向量"
 
-#: port.c:374
+#: port.c:380
 msgid "When Hessian defined must also have gradient defined"
 msgstr "如果Hessian有定义的话梯度也必需有定义"
 
-#: port.c:377
+#: port.c:383
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "'rho'环境必包含长度为%d的数字向量'.par'"
 
-#: port.c:391
+#: port.c:397
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower'和'upper'必需为数字向量"
 
-#: port.c:437
+#: port.c:449
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement'只适用于带名串列"
 
-#: port.c:458
+#: port.c:470
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s()不存在"
 
-#: port.c:471
+#: port.c:483
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient'必需是一个维数为(%d,%d)的数值矩阵"
 
-#: port.c:492
+#: port.c:504
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn运行结果的模式为%d , 长度为%d - 但正确的模式应该是%d，长度为%d"
 
-#: port.c:505
+#: port.c:517
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store的种类不对"
 
-#: port.c:524
+#: port.c:536
 msgid "m must be a list"
 msgstr "m必需为串列"
 
-#: port.c:544
+#: port.c:556
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'和'upperb'必需为数字向量"
 

@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.1\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:53\n"
-"PO-Revision-Date: 2012-08-06 10:53\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
+"PO-Revision-Date: 2013-01-28 09:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -836,9 +836,6 @@ msgid ""
 msgstr ""
 "Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
-
-msgid "License"
-msgstr "License"
 
 msgid "License for package %s not accepted"
 msgstr "License for package %s not accepted"
@@ -1661,6 +1658,9 @@ msgstr "‘stdout’ must be of length 1"
 msgid "'stderr' must be of length 1"
 msgstr "‘stderr’ must be of length 1"
 
+msgid "missing values are not allowed"
+msgstr "missing values are not allowed"
+
 msgid "'which' was not found on this platform"
 msgstr "‘which’ was not found on this platform"
 
@@ -1702,18 +1702,6 @@ msgstr "ERROR: cannot cd to directory"
 
 msgid "ERROR: no permission to remove from directory"
 msgstr "ERROR: no permission to remove from directory"
-
-msgid "T used instead of TRUE"
-msgstr "T used instead of TRUE"
-
-msgid "F used instead of FALSE"
-msgstr "F used instead of FALSE"
-
-msgid "items"
-msgstr "items"
-
-msgid "have been removed from the search path"
-msgstr "have been removed from the search path"
 
 msgid "cannot find namespace environment"
 msgstr "cannot find namespace environment"
@@ -1775,6 +1763,11 @@ msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3 method %s was declared in NAMESPACE but not found"
 msgstr[1] "S3 methods %s were declared in NAMESPACE but not found"
+
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "extra argument %s will be disregarded"
+msgstr[1] "extra arguments %s will be disregarded"
 
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"

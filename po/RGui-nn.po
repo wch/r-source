@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56+0100\n"
+"POT-Creation-Date: 2013-01-28 09:14+0000\n"
 "PO-Revision-Date: 2012-09-28 22:17+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -553,17 +553,17 @@ msgstr "Klarte ikkje laga nytt skrivevindauge"
 msgid "Untitled"
 msgstr "Namnlaus"
 
-#: extra.c:903 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
+#: extra.c:911 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:904 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
+#: extra.c:912 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
 #: ../extra/graphapp/dialogs.c:626 ../extra/graphapp/dialogs.c:725
 #: ../extra/graphapp/dialogs.c:739 ../extra/graphapp/dialogs.c:745
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: extra.c:2161 rui.c:1222
+#: extra.c:2169 rui.c:1222
 msgid "Select file"
 msgstr "Vel fil"
 

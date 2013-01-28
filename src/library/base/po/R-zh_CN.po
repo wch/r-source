@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:53\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -824,9 +824,6 @@ msgid ""
 msgstr ""
 "程辑包％s的许可证要求你接受它:\n"
 "按照DESCRIPTION文件它是"
-
-msgid "License"
-msgstr "许可证"
 
 #, fuzzy
 msgid "License for package %s not accepted"
@@ -1651,6 +1648,10 @@ msgstr "'stdout'的长度必需为一"
 msgid "'stderr' must be of length 1"
 msgstr "'stderr'的长度必需为一"
 
+#, fuzzy
+msgid "missing values are not allowed"
+msgstr "不允许有替换值"
+
 msgid "'which' was not found on this platform"
 msgstr "这个平台上找不到'which'"
 
@@ -1692,18 +1693,6 @@ msgstr "错误：无法更换到目录"
 
 msgid "ERROR: no permission to remove from directory"
 msgstr "错误：没有从目录里删除的许可"
-
-msgid "T used instead of TRUE"
-msgstr "用T代替TRUE"
-
-msgid "F used instead of FALSE"
-msgstr "用F代替FALSE "
-
-msgid "items"
-msgstr "项目"
-
-msgid "have been removed from the search path"
-msgstr "在搜索路径上被删除"
 
 msgid "cannot find namespace environment"
 msgstr "找不到名字空间环境"
@@ -1752,9 +1741,29 @@ msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "额外参数%s忽略不用"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "License"
+#~ msgstr "许可证"
+
+#~ msgid "T used instead of TRUE"
+#~ msgstr "用T代替TRUE"
+
+#~ msgid "F used instead of FALSE"
+#~ msgstr "用F代替FALSE "
+
+#~ msgid "items"
+#~ msgstr "项目"
+
+#~ msgid "have been removed from the search path"
+#~ msgstr "在搜索路径上被删除"
 
 #, fuzzy
 #~ msgid "invalid length(x)"

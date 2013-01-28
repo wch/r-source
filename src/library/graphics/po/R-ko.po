@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-25 11:03-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team:  <gnustats@gmail.com>\n"
@@ -95,7 +95,8 @@ msgid "invalid boxplot widths"
 msgstr "유효하지 않은 boxplot 너비들"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr "일부 표식들이 hinges ('box')들 밖에 놓였습니다: notch=FALSE 로 설정해보세요"
+msgstr ""
+"일부 표식들이 hinges ('box')들 밖에 놓였습니다: notch=FALSE 로 설정해보세요"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula'는 정확하게 두개의 변수들을 지정해야 합니다"
@@ -104,7 +105,8 @@ msgid "dependent variable should be a factor"
 msgstr "종속 변수는 반드시 요인이어야 합니다"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr "y 축은 누적확률 스케일이므로, 'ylim' 반드시 [0,1] 범위내에 있어야 합니다"
+msgstr ""
+"y 축은 누적확률 스케일이므로, 'ylim' 반드시 [0,1] 범위내에 있어야 합니다"
 
 msgid "no 'z' matrix specified"
 msgstr "'z' 행렬이 지정되지 않았습니다"
@@ -125,7 +127,9 @@ msgid "'number' must be integer >= 1"
 msgstr "'number'는 반드시 1 이상의 정수이어야 합니다"
 
 msgid "'overlap' must be < 1 (and typically >= 0)."
-msgstr "'overlap'은 반드시 1 보다 작아야 합니다 (그리고 일반적으로는 0 보다 크거나 같습니다)."
+msgstr ""
+"'overlap'은 반드시 1 보다 작아야 합니다 (그리고 일반적으로는 0 보다 크거나 같"
+"습니다)."
 
 msgid "invalid 'given.values'"
 msgstr "유효하지 않은 'given.values'"
@@ -137,7 +141,8 @@ msgid "Missing rows"
 msgstr "누락된 행들"
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
-msgstr "'expr'는 반드시 함수, 또는 '%s'를 포함하는 표현식 혹은 호출이어야 합니다"
+msgstr ""
+"'expr'는 반드시 함수, 또는 '%s'를 포함하는 표현식 혹은 호출이어야 합니다"
 
 msgid "'add' will be ignored as there is no existing plot"
 msgstr "기존의 플랏이 없기 때문에 'add'는 무시될 것입니다"
@@ -215,7 +220,9 @@ msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability'는 '!freq'의 또 다른이름이지만 , 그것들은 다릅니다."
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr "일부 'x'는 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 커버하지 않기 때문일 것입니다"
+msgstr ""
+"일부 'x'는 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 커버하지 않기 "
+"때문일 것입니다"
 
 msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
 msgstr "플랏에 AREAS가 잘못되었습니다 -- freq=FALSE 사용해보세요"
@@ -241,6 +248,9 @@ msgstr "분할점의 수는 반드시 색상의 수보다 하나가 많아야 �
 msgid "breaks must all be finite"
 msgstr "분할점은 반드시 유한개이어야 합니다"
 
+msgid "unsorted 'breaks' will be sorted before use"
+msgstr ""
+
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "z의 차원이 length(x)(-1) times length(y)(-1)와 같지 않습니다"
 
@@ -248,7 +258,9 @@ msgid "useRaster=TRUE can only be used with a regular grid"
 msgstr "useRaster=TRUE는 오로지 일반 그리드와 함께 사용할 수 있습니다"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
-msgstr "'respect'는 반드시 논리적이거나 'mat'과 동일한 차원을 가지는 행렬이어야 합니다"
+msgstr ""
+"'respect'는 반드시 논리적이거나 'mat'과 동일한 차원을 가지는 행렬이어야 합니"
+"다"
 
 msgid ""
 "layout matrix must contain at least one reference\n"
@@ -273,7 +285,8 @@ msgid "horizontal specification overrides: Number of columns :="
 msgstr "수평방향 지정은 무시합니다: 열의 수 :="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
-msgstr "그려진 선분들이 없는 경우에는 'merge = TRUE'는 아무런 효과를 가지지 않습니다"
+msgstr ""
+"그려진 선분들이 없는 경우에는 'merge = TRUE'는 아무런 효과를 가지지 않습니다"
 
 msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr "pch[1L]은 여러 문자들을 포함하기 때문에 pch[2..]를 사용하지 않습니다"
@@ -381,7 +394,8 @@ msgid "a 2-way table has to be specified"
 msgstr "2-차원 분할표가 반드시 지정되어야 합니다"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
-msgstr "x 축은 누적확률 스케일이므로, 'xlim'은 반드시 [0,1]내에 존재해야 합니다"
+msgstr ""
+"x 축은 누적확률 스케일이므로, 'xlim'은 반드시 [0,1]내에 존재해야 합니다"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x'는 반드시 행렬 또는 데이터 프레임이어야 합니다"

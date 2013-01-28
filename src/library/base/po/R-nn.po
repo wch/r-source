@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:53\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -821,9 +821,6 @@ msgstr ""
 "Pakken %s har lisensvilkår som du må godta:\n"
 "Ifølgje DESCRIPTION-fila er vilkåra"
 
-msgid "License"
-msgstr "Lisensvilkår"
-
 msgid "License for package %s not accepted"
 msgstr "Lisensvilkåra for pakken %s ikkje godtekne"
 
@@ -916,7 +913,8 @@ msgid ""
 "package %s found more than once,\n"
 "using the one found in %s"
 msgstr ""
-"fann pakken «%s» meir enn éin gong –\n\n"
+"fann pakken «%s» meir enn éin gong –\n"
+"\n"
 "brukar versjonen i «%s»"
 
 msgid ""
@@ -1084,8 +1082,8 @@ msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
 msgstr ""
-"Sporfunksjonar krev «methods»-pakken, men klarte ikkje lasta "
-"«methods»-namnerommet"
+"Sporfunksjonar krev «methods»-pakken, men klarte ikkje lasta «methods»-"
+"namnerommet"
 
 msgid "Expected a single logical value for the S4 state flag"
 msgstr "Venta éin boolsk verdi for S4-tilstandsflagget"
@@ -1141,8 +1139,7 @@ msgid ""
 "%s"
 msgstr ""
 "exportClassPattern spesifisert i NAMESPACE, men ingen samsvarande klassar i "
-"pakken "
-"%s"
+"pakken %s"
 
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr ""
@@ -1214,8 +1211,8 @@ msgid ""
 "No generic function found corresponding to requested imported methods for "
 "\"%s\" from package \"%s\" (malformed exports?)"
 msgstr ""
-"Fann ingen generisk funksjon som svarar til førespurde importerte metodar for "
-"«%s» frå pakken «%s» (feilformaterte eksportar?)"
+"Fann ingen generisk funksjon som svarar til førespurde importerte metodar "
+"for «%s» frå pakken «%s» (feilformaterte eksportar?)"
 
 msgid "cannot add to exports of a sealed namespace"
 msgstr "kan ikkje leggja til i eksportar til forsegla namnerom"
@@ -1652,6 +1649,10 @@ msgstr "«stdout» må ha lengd 1"
 msgid "'stderr' must be of length 1"
 msgstr "«stderr» må ha lengd 1"
 
+#, fuzzy
+msgid "missing values are not allowed"
+msgstr "manglande erstattingselement ikkje mogleg"
+
 msgid "'which' was not found on this platform"
 msgstr "fann ikkje «which» på denne plattforma"
 
@@ -1693,18 +1694,6 @@ msgstr "FEIL: kan ikkje gå inn i mappe"
 
 msgid "ERROR: no permission to remove from directory"
 msgstr "FEIL: manglar løyve til å fjerna frå mappe"
-
-msgid "T used instead of TRUE"
-msgstr "T brukt i staden for TRUE"
-
-msgid "F used instead of FALSE"
-msgstr "F brukt i staden for FALSE"
-
-msgid "items"
-msgstr "element"
-
-msgid "have been removed from the search path"
-msgstr "har blitt fjerna frå søkjestigen"
 
 msgid "cannot find namespace environment"
 msgstr "finn ikkje namnerom-omgjevnad"
@@ -1767,9 +1756,28 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3-metoden «%s» er deklarert i NAMESPACE, men vart ikkje funnen"
 msgstr[1] "S3-metodane «%s» er deklarerte i NAMESPACE, men vart ikkje funnen"
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
 
+#~ msgid "License"
+#~ msgstr "Lisensvilkår"
 
+#~ msgid "T used instead of TRUE"
+#~ msgstr "T brukt i staden for TRUE"
+
+#~ msgid "F used instead of FALSE"
+#~ msgstr "F brukt i staden for FALSE"
+
+#~ msgid "items"
+#~ msgstr "element"
+
+#~ msgid "have been removed from the search path"
+#~ msgstr "har blitt fjerna frå søkjestigen"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:59\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-21 10:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -150,6 +150,10 @@ msgid "upper scope does not include model term(s) %s"
 msgstr "la formule supérieure n'inclus pas le ou les termes %s du modèle"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr "AIC n'est pas défini pour ce modèle, donc 'step' ne peut poursuivre"
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr "AIC n'est pas défini pour ce modèle, donc 'step' ne peut poursuivre"
 
 msgid "'A' must be an array or table"
@@ -2262,6 +2266,10 @@ msgstr ""
 "spline : la première et la dernière valeurs de y diffèrent - y[1] utilisé "
 "pour les deux"
 
+#, fuzzy
+msgid "'y' must be increasing or decreasing"
+msgstr "'vec' doit être trié de façon non décroissante"
+
 msgid "'spline' requires n >= 1"
 msgstr "'spline' nécessite n >= 1"
 
@@ -2438,6 +2446,10 @@ msgstr "seul le remplacement d'éléments est autorisé"
 msgid "'model' must be list"
 msgstr "'model' doit être une liste"
 
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'top' doit être un nombre positif et non infini"
+
 msgid "'ar' part of model is not stationary"
 msgstr "la partie 'ar' du mopdèle n'est pas stationaire"
 
@@ -2589,9 +2601,6 @@ msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' contient des NA"
-
-#~ msgid "'vec' must be sorted non-decreasingly"
-#~ msgstr "'vec' doit être trié de façon non décroissante"
 
 #, fuzzy
 #~ msgid "invalid length(vec)"

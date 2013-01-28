@@ -1,7 +1,7 @@
 # English translations for R package.
-# Copyright (C) 2012 The R Core Team
+# Copyright (C) 2013 The R Core Team
 # This file is distributed under the same license as the R package.
-# Automatically generated, 2012.
+# Automatically generated, 2013.
 #
 # All this catalog "translates" are quotation characters.
 # The msgids must be ASCII and therefore cannot contain real quotation
@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.1\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:32+0100\n"
-"PO-Revision-Date: 2012-07-13 10:32+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
+"PO-Revision-Date: 2013-01-28 09:13+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -39,61 +39,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: fork.c:135 fork.c:138
+#: fork.c:131 fork.c:134
 msgid "unable to create a pipe"
 msgstr "unable to create a pipe"
 
-#: fork.c:149
+#: fork.c:145
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "unable to fork, possible reason: %s"
 
-#: fork.c:178
+#: fork.c:174
 msgid "memory allocation error"
 msgstr "memory allocation error"
 
-#: fork.c:216
+#: fork.c:212
 msgid "only children can send data to the master process"
 msgstr "only children can send data to the master process"
 
-#: fork.c:218
+#: fork.c:214
 msgid "there is no pipe to the master process"
 msgstr "there is no pipe to the master process"
 
-#: fork.c:220
+#: fork.c:216
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "content to send must be RAW, use serialize() if needed"
 
-#: fork.c:229 fork.c:236
+#: fork.c:225 fork.c:232
 msgid "write error, closing pipe to the master"
 msgstr "write error, closing pipe to the master"
 
-#: fork.c:249
+#: fork.c:245
 msgid "only the master process can send data to a child process"
 msgstr "only the master process can send data to a child process"
 
-#: fork.c:256
+#: fork.c:252
 #, c-format
 msgid "child %d does not exist"
 msgstr "child %d does not exist"
 
-#: fork.c:262
+#: fork.c:258
 msgid "write error"
 msgstr "write error"
 
-#: fork.c:342 fork.c:464
+#: fork.c:338 fork.c:460
 #, c-format
 msgid "error '%s' in select"
 msgstr "error ‘%s’ in select"
 
-#: fork.c:548
+#: fork.c:544
 msgid "mckill failed"
 msgstr "mckill failed"
 
-#: fork.c:558
+#: fork.c:554
 msgid "mcexit can only be used in a child process"
 msgstr "mcexit can only be used in a child process"
 
-#: fork.c:578
+#: fork.c:574
 msgid "mcexit failed"
 msgstr "mcexit failed"

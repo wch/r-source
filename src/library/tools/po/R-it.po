@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-01 09:38\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -136,12 +136,6 @@ msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 
-msgid "unable to create"
-msgstr "impossibile creare"
-
-msgid "unable to write code files"
-msgstr "impossibile scrivere file codice"
-
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "specificare 'package', 'dir' o 'file'"
 
@@ -153,9 +147,6 @@ msgid ""
 "parse error in file '%s':\n"
 "%s"
 msgstr "errore analisi file '%s'"
-
-msgid "Foreign function calls without 'PACKAGE' argument:"
-msgstr ""
 
 msgid "declared S3 method '%s' not found"
 msgstr "il metodo S3 '%s' è dichiarato ma non trovato"
@@ -296,10 +287,6 @@ msgstr ""
 msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
-#, fuzzy
-msgid "package must be loaded"
-msgstr "il name space non deve essere caricato."
-
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
@@ -369,6 +356,12 @@ msgstr ""
 
 msgid "Good practice"
 msgstr ""
+
+msgid "unable to create"
+msgstr "impossibile creare"
+
+msgid "unable to write code files"
+msgstr "impossibile scrivere file codice"
 
 msgid "package 'methods' is used but not declared"
 msgstr ""
@@ -1230,6 +1223,33 @@ msgstr "Successione delle chiamate:"
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
 
+msgid "Foreign function call without 'PACKAGE' argument:"
+msgid_plural "Foreign function calls without 'PACKAGE' argument:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Foreign function call with empty 'PACKAGE' argument:"
+msgid_plural "Foreign function calls with empty 'PACKAGE' argument:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Foreign function call with 'PACKAGE' argument in a base package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a base package:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Foreign function call with 'PACKAGE' argument in a different package:"
+msgid_plural ""
+"Foreign function calls with 'PACKAGE' argument in a different package:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Undeclared package in foreign function calls:"
+msgid_plural "Undeclared packages in foreign function calls:"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
 msgstr[0] ""
@@ -1272,6 +1292,10 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "creati da più di una chiamata data"
 msgstr[1] "creati da più di una chiamata data"
+
+#, fuzzy
+#~ msgid "package must be loaded"
+#~ msgstr "il name space non deve essere caricato."
 
 #, fuzzy
 #~ msgid "cannot update HTML package index"

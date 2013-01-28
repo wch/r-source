@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56+0100\n"
+"POT-Creation-Date: 2013-01-28 09:14+0000\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -560,17 +560,17 @@ msgstr "Não foi possível criar a janela do editor"
 msgid "Untitled"
 msgstr "Sem nome"
 
-#: extra.c:903 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
+#: extra.c:911 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:904 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
+#: extra.c:912 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
 #: ../extra/graphapp/dialogs.c:626 ../extra/graphapp/dialogs.c:725
 #: ../extra/graphapp/dialogs.c:739 ../extra/graphapp/dialogs.c:745
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: extra.c:2161 rui.c:1222
+#: extra.c:2169 rui.c:1222
 msgid "Select file"
 msgstr "Selecionar arquivo"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-14 13:04\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-14 02:56+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -22,7 +22,8 @@ msgstr " 'at' が NULL である場合，axis ラベルを指定するのは無�
 msgid "'labels' and 'at' locations must have same length"
 msgstr " 'labels' と、位置 'at' は同じ長さでなければなりません "
 
-msgid "logical 'label' supplied on length 0"
+#, fuzzy
+msgid "logical 'label' supplied of length 0"
 msgstr " 長さ 0 の論理値の 'label\"  "
 
 msgid "End points must not be identical"

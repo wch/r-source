@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56+0100\n"
+"POT-Creation-Date: 2013-01-28 09:14+0000\n"
 "PO-Revision-Date: 2011-04-02 18:17+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -553,17 +553,17 @@ msgstr "Düzenleyici penceresi oluşturulamadı"
 msgid "Untitled"
 msgstr "İsimsiz "
 
-#: extra.c:903 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
+#: extra.c:911 ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:741
 msgid "OK"
 msgstr "Tamam"
 
-#: extra.c:904 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
+#: extra.c:912 ../extra/graphapp/dialogs.c:602 ../extra/graphapp/dialogs.c:620
 #: ../extra/graphapp/dialogs.c:626 ../extra/graphapp/dialogs.c:725
 #: ../extra/graphapp/dialogs.c:739 ../extra/graphapp/dialogs.c:745
 msgid "Cancel"
 msgstr "İptal"
 
-#: extra.c:2161 rui.c:1222
+#: extra.c:2169 rui.c:1222
 msgid "Select file"
 msgstr "Dosya seç"
 

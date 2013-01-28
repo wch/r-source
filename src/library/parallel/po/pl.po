@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-13 10:32+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -19,38 +19,38 @@ msgstr ""
 # error(_("unable to create a pipe"))
 # parallel/src/fork.c: 142
 # error(_("unable to create a pipe"))
-#: fork.c:135 fork.c:138
+#: fork.c:131 fork.c:134
 msgid "unable to create a pipe"
 msgstr "nie można utworzyć potoku"
 
 # parallel/src/fork.c: 153
 # error(_("unable to fork, possible reason: %s"), strerror(errno))
-#: fork.c:149
+#: fork.c:145
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "nie można rozdzielić, prawdopodobny powód: %s"
 
 # parallel/src/fork.c: 182
 # error(_("memory allocation error"))
-#: fork.c:178
+#: fork.c:174
 msgid "memory allocation error"
 msgstr "błąd przydziału pamięci"
 
 # parallel/src/fork.c: 220
 # error(_("only children can send data to the master process"))
-#: fork.c:216
+#: fork.c:212
 msgid "only children can send data to the master process"
 msgstr "tylko potomne procesy mogą przesłać dane do procesu głównego"
 
 # parallel/src/fork.c: 222
 # error(_("there is no pipe to the master process"))
-#: fork.c:218
+#: fork.c:214
 msgid "there is no pipe to the master process"
 msgstr "nie ma potoku do procesu głównego"
 
 # parallel/src/fork.c: 224
 # error(_("content to send must be RAW, use serialize() if needed"))
-#: fork.c:220
+#: fork.c:216
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 "zawartość do wysłania musi być PUSTA, użyj 'serialize()' jeśli konieczne"
@@ -61,26 +61,26 @@ msgstr ""
 # error(_("write error, closing pipe to the master"))
 # parallel/src/fork.c: 570
 # error(_("write error, closing pipe to the master"))
-#: fork.c:229 fork.c:236
+#: fork.c:225 fork.c:232
 msgid "write error, closing pipe to the master"
 msgstr "błąd zapisu, zamykanie potoku do procesu głównego"
 
 # parallel/src/fork.c: 253
 # error(_("only the master process can send data to a child process"))
-#: fork.c:249
+#: fork.c:245
 msgid "only the master process can send data to a child process"
 msgstr "tylko główny proces może przesłać dane do potomnego procesu"
 
 # parallel/src/fork.c: 260
 # error(_("child %d does not exist"), pid)
-#: fork.c:256
+#: fork.c:252
 #, c-format
 msgid "child %d does not exist"
 msgstr "potomny proces %d nie istnieje"
 
 # parallel/src/fork.c: 266
 # error(_("write error"))
-#: fork.c:262
+#: fork.c:258
 msgid "write error"
 msgstr "błąd zapisu"
 
@@ -88,25 +88,25 @@ msgstr "błąd zapisu"
 # warning(_("error '%s' in select"), strerror(errno))
 # parallel/src/fork.c: 468
 # warning(_("error '%s' in select"), strerror(errno))
-#: fork.c:342 fork.c:464
+#: fork.c:338 fork.c:460
 #, c-format
 msgid "error '%s' in select"
 msgstr "błąd '%s' przy wyborze"
 
 # parallel/src/fork.c: 552
 # error(_("mckill failed"))
-#: fork.c:548
+#: fork.c:544
 msgid "mckill failed"
 msgstr "'mckill' nie powiodło się"
 
 # parallel/src/fork.c: 562
 # error(_("mcexit can only be used in a child process"))
-#: fork.c:558
+#: fork.c:554
 msgid "mcexit can only be used in a child process"
 msgstr "'mcexit' może być użyty jedynie w potomnym procesie"
 
 # parallel/src/fork.c: 583
 # error(_("mcexit failed"))
-#: fork.c:578
+#: fork.c:574
 msgid "mcexit failed"
 msgstr "'mcexit' nie powiodło się"

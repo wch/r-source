@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.1\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -201,6 +201,9 @@ msgid "file 'filelist' is missing for directory %s"
 msgstr ""
 
 msgid "data set %s not found"
+msgstr ""
+
+msgid "only 'html = TRUE' is supported on this platform"
 msgstr ""
 
 msgid "kind '%s' not yet implemented"
@@ -653,6 +656,9 @@ msgstr ""
 msgid "Do you want to attempt to install these from sources?"
 msgstr ""
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
 
@@ -890,6 +896,9 @@ msgstr ""
 msgid "incomplete block on file"
 msgstr ""
 
+msgid "invalid name field in tarball"
+msgstr ""
+
 msgid "checksum error for entry '%s'"
 msgstr ""
 
@@ -905,7 +914,7 @@ msgstr ""
 msgid "file path is too long"
 msgstr ""
 
-msgid "linked path is too long"
+msgid "file size is limited to 2GB"
 msgstr ""
 
 msgid "vignette %s found more than once,\nusing the one found in %s"

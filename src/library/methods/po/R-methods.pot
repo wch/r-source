@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.1\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-07 07:50\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -783,12 +783,6 @@ msgid "No package name supplied and no class definition found for %s"
 msgstr ""
 
 msgid "argument classDef must be a class definition or the name of a class"
-msgstr ""
-
-msgid "'traceOn' is deprecated: use the function 'trace' in the 'methods' package instead"
-msgstr ""
-
-msgid "'traceOff' is deprecated: use the function 'untrace' in the 'methods' package instead"
 msgstr ""
 
 msgid "no function %s found"

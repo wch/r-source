@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:53\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-13 08:12+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -837,9 +837,6 @@ msgid ""
 msgstr ""
 " パッケージ '%s' を使うにはライセンスを受諾する必要があります。Description"
 "ファイルによれば、以下の通りです:  "
-
-msgid "License"
-msgstr " ライセンス "
 
 msgid "License for package %s not accepted"
 msgstr " パッケージ '%s' のライセンスは受諾されていません "
@@ -1690,6 +1687,10 @@ msgstr " 'stdout' は長さ 1 でなければなりません "
 msgid "'stderr' must be of length 1"
 msgstr " 'stderr' は長さ 1 でなければなりません "
 
+#, fuzzy
+msgid "missing values are not allowed"
+msgstr " 置換の値が必要です "
+
 msgid "'which' was not found on this platform"
 msgstr " このプラットホームでは'which'が見つかりません "
 
@@ -1732,18 +1733,6 @@ msgstr " エラー：ディレクトリーに変更できません "
 msgid "ERROR: no permission to remove from directory"
 msgstr " エラー：このディレクトリーから抹消する許可がありません "
 
-msgid "T used instead of TRUE"
-msgstr " TRUE の代わりに T が使われました "
-
-msgid "F used instead of FALSE"
-msgstr " FALSE の代わりに F が使われました "
-
-msgid "items"
-msgstr " 項目 "
-
-msgid "have been removed from the search path"
-msgstr " 検索パスから抹消されています "
-
 msgid "cannot find namespace environment"
 msgstr " 名前空間環境を見つけられません "
 
@@ -1774,7 +1763,8 @@ msgid_plural ""
 "Functions found when exporting methods from the namespace %s which are not "
 "S4 generic: %s"
 msgstr[0] ""
-" 名前空間 %s からメソッドを呼び出す際に，S4 総称的でない関数が見つかりました: %s "
+" 名前空間 %s からメソッドを呼び出す際に，S4 総称的でない関数が見つかりまし"
+"た: %s "
 
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
@@ -1794,9 +1784,29 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] ""
 "S3 メソッド %s は NAMESPACE で宣言されましたが、見つかりませんでした "
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "  余分な引数 %s は無視されます "
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "License"
+#~ msgstr " ライセンス "
+
+#~ msgid "T used instead of TRUE"
+#~ msgstr " TRUE の代わりに T が使われました "
+
+#~ msgid "F used instead of FALSE"
+#~ msgstr " FALSE の代わりに F が使われました "
+
+#~ msgid "items"
+#~ msgstr " 項目 "
+
+#~ msgid "have been removed from the search path"
+#~ msgstr " 検索パスから抹消されています "
 
 #, fuzzy
 #~ msgid "invalid length(x)"

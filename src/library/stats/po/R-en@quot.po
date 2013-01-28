@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.1\n"
+"Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:59\n"
-"PO-Revision-Date: 2012-09-10 13:59\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
+"PO-Revision-Date: 2013-01-28 09:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -156,6 +156,9 @@ msgstr "upper scope does not include model term(s) %s"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC is not defined for this model, so ‘step’ cannot proceed"
+
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
+msgstr "AIC is -infinity for this model, so ‘step’ cannot proceed"
 
 msgid "'A' must be an array or table"
 msgstr "‘A’ must be an array or table"
@@ -2156,6 +2159,9 @@ msgstr "coverage probability out of range [0,1)"
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: first and last y values differ - using y[1] for both"
 
+msgid "'y' must be increasing or decreasing"
+msgstr "‘y’ must be increasing or decreasing"
+
 msgid "'spline' requires n >= 1"
 msgstr "‘spline’ requires n >= 1"
 
@@ -2324,6 +2330,9 @@ msgstr "only replacement of elements is allowed"
 
 msgid "'model' must be list"
 msgstr "‘model’ must be list"
+
+msgid "'n' must be strictly positive"
+msgstr "‘n’ must be strictly positive"
 
 msgid "'ar' part of model is not stationary"
 msgstr "‘ar’ part of model is not stationary"

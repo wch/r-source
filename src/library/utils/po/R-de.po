@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-10 14:39+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -229,6 +229,9 @@ msgstr "Datei 'filelist' fehlt für Verzeichnis %s"
 
 msgid "data set %s not found"
 msgstr "Datensatz %s nicht gefunden"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "Art '%s' noch nicht implementiert"
@@ -738,6 +741,9 @@ msgstr ""
 msgid "Do you want to attempt to install these from sources?"
 msgstr "Möchten Sie aus den Quelltexten installieren?"
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "kann keine MacOS X Binaries auf Windows installieren"
 
@@ -1002,6 +1008,9 @@ msgstr "'tarfile' muss eine Zeichenkette oder eine Verbindung sein"
 msgid "incomplete block on file"
 msgstr "unvollständiger Block in Datei"
 
+msgid "invalid name field in tarball"
+msgstr ""
+
 msgid "checksum error for entry '%s'"
 msgstr "Checksummenfehler für Eintrag '%s'"
 
@@ -1017,8 +1026,8 @@ msgstr "File '%s' nicht gefunden"
 msgid "file path is too long"
 msgstr "Pfad ist zu lang"
 
-msgid "linked path is too long"
-msgstr "verlinkter Pfad ist zu lang"
+msgid "file size is limited to 2GB"
+msgstr ""
 
 msgid ""
 "vignette %s found more than once,\n"
@@ -1217,7 +1226,8 @@ msgstr[1] "installiere Quellpakete %s"
 msgid "package %s is available as a source package but not as a binary"
 msgid_plural "packages %s are available as source packages but not as binaries"
 msgstr[0] "Paket %s ist im Quelltext, jedoch nicht als Binärpaket verfügbar"
-msgstr[1] "Die Pakete %s sind im Quelltext, jedoch nicht als Binärpakete verfügbar"
+msgstr[1] ""
+"Die Pakete %s sind im Quelltext, jedoch nicht als Binärpakete verfügbar"
 
 msgid ""
 "There is a binary version available (and will be installed) but the source "
@@ -1236,6 +1246,9 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "linked path is too long"
+#~ msgstr "verlinkter Pfad ist zu lang"
 
 #~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 #~ msgstr ""

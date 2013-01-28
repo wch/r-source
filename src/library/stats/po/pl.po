@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:58+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -81,19 +81,19 @@ msgstr "maksymalne obsługiwane opóźnienie wynosi 350"
 
 # stats/src/distance.c: 156
 # warning(_("treating non-finite values as NA"))
-#: distance.c:156
+#: distance.c:154
 msgid "treating non-finite values as NA"
 msgstr "traktowanie nieskończonych wartości jako NA"
 
 # stats/src/distance.c: 229
 # error(_("distance(): invalid p"))
-#: distance.c:229
+#: distance.c:227
 msgid "distance(): invalid p"
 msgstr "distance(): niepoprawne 'p'"
 
 # stats/src/distance.c: 232
 # error(_("distance(): invalid distance"))
-#: distance.c:232
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): niepoprawna odległość"
 
@@ -263,7 +263,7 @@ msgstr "'theta' powinna być znakiem"
 # error(_("use of NULL environment is defunct"))
 # stats/src/port.c: 368
 # error(_("use of NULL environment is defunct"))
-#: nls.c:290 port.c:366
+#: nls.c:290 port.c:372
 msgid "use of NULL environment is defunct"
 msgstr "użycie wartości NULL dla środowiska zostało zlikwidowane"
 
@@ -346,14 +346,14 @@ msgstr "funkcja gradientu musi zwrócić wektor liczbowy o długości %d"
 # stats/src/port.c: 322
 # error(_("Hessian function must return a square numeric matrix of order %d"),
 # 		  n)
-#: port.c:320
+#: port.c:322
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "Funkcja hesjana musi zwrócić kwadratową macierz liczbową rzędu %d"
 
 # stats/src/port.c: 372
 # error(_("'rho' must be an environment"))
-#: port.c:370
+#: port.c:376
 msgid "'rho' must be an environment"
 msgstr "'rho' musi być środowiskiem"
 
@@ -361,39 +361,39 @@ msgstr "'rho' musi być środowiskiem"
 # error(_("'d' must be a nonempty numeric vector"))
 # stats/src/port.c: 525
 # error(_("'d' must be a nonempty numeric vector"))
-#: port.c:372 port.c:523
+#: port.c:378 port.c:535
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' musi być niepustym wektorem liczbowym"
 
 # stats/src/port.c: 376
 # error(_("When Hessian defined must also have gradient defined"))
-#: port.c:374
+#: port.c:380
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Kiedy jest zdefiniowany Hesjan musi być również zdefiniowany gradient"
 
 # stats/src/port.c: 379
 # error(_("environment 'rho' must contain a numeric vector '.par' of length %d"),
 # 	      n)
-#: port.c:377
+#: port.c:383
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "środowisko 'rho' musi zawierać wektor liczbowy '.par' o długości %d"
 
 # stats/src/port.c: 393
 # error(_("'lower' and 'upper' must be numeric vectors"))
-#: port.c:391
+#: port.c:397
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' oraz 'upper' muszą być wektorami liczbowymi"
 
 # stats/src/port.c: 439
 # error(_("'getElement' applies only to named lists"))
-#: port.c:437
+#: port.c:449
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' stosuje się jedynie do nazwanych list"
 
 # stats/src/port.c: 460
 # error(_("%s$%s() not found"), lnm, enm)
-#: port.c:458
+#: port.c:470
 #, c-format
 msgid "%s$%s() not found"
 msgstr "nie znaleziono '%s$%s()'"
@@ -401,7 +401,7 @@ msgstr "nie znaleziono '%s$%s()'"
 # stats/src/port.c: 473
 # error(_("'gradient' must be a numeric matrix of dimension (%d,%d)"),
 # 	      gdims[0], gdims[1])
-#: port.c:471
+#: port.c:483
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' musi być macierzą liczbową o wymiarze (%d,%d)"
@@ -409,7 +409,7 @@ msgstr "'gradient' musi być macierzą liczbową o wymiarze (%d,%d)"
 # stats/src/port.c: 494
 # error(_("fcn produced mode %d, length %d - wanted mode %d, length %d"),
 # 	      TYPEOF(v), LENGTH(v), TYPEOF(vv), LENGTH(vv))
-#: port.c:492
+#: port.c:504
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
@@ -417,19 +417,19 @@ msgstr ""
 
 # stats/src/port.c: 507
 # error(_("invalid type for eval_check_store"))
-#: port.c:505
+#: port.c:517
 msgid "invalid type for eval_check_store"
 msgstr "niepoprawny typ dla 'eval_check_store'"
 
 # stats/src/port.c: 526
 # error(_("m must be a list"))
-#: port.c:524
+#: port.c:536
 msgid "m must be a list"
 msgstr "'m' musi być listą"
 
 # stats/src/port.c: 546
 # error(_("'lowerb' and 'upperb' must be numeric vectors"))
-#: port.c:544
+#: port.c:556
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' oraz 'upperb' muszą być wektorami liczbowymi"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:53\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-06 13:39+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -836,9 +836,6 @@ msgid ""
 msgstr ""
 "Paket %s unterliegt einer Lizenz, die akzeptiert werden muss:\n"
 "Gemäß DESCRIPTION handelt es sich um"
-
-msgid "License"
-msgstr "Lizenz"
 
 msgid "License for package %s not accepted"
 msgstr "Lizenz für Paket %s nicht akzeptiert"
@@ -1676,6 +1673,10 @@ msgstr "'stdout' muss Länge 1 haben"
 msgid "'stderr' must be of length 1"
 msgstr "'stderr' muss Länge 1 haben"
 
+#, fuzzy
+msgid "missing values are not allowed"
+msgstr "fehlende Ersetzungswerte nicht zulässig"
+
 msgid "'which' was not found on this platform"
 msgstr "'which' auf dieser Plattform nicht gefunden"
 
@@ -1717,18 +1718,6 @@ msgstr "ERROR: kann nicht in das Verzeichnis wechseln"
 
 msgid "ERROR: no permission to remove from directory"
 msgstr "ERROR: keine Rechte, um aus diesem Verzeichnis zu löschen"
-
-msgid "T used instead of TRUE"
-msgstr "T statt TRUE benutzt"
-
-msgid "F used instead of FALSE"
-msgstr "F statt FALSE benutzt"
-
-msgid "items"
-msgstr "Punkte"
-
-msgid "have been removed from the search path"
-msgstr "sind aus dem  Suchpfad entfernt worden"
 
 msgid "cannot find namespace environment"
 msgstr "kann keine Namensraum-Umgebung finden"
@@ -1791,10 +1780,31 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3 Methode %s wurde in NAMESPACE deklariert, aber nicht gefunden"
 msgstr[1] "S3 Methoden %s wurden in NAMESPACE deklariert, aber nicht gefunden"
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "zusätzliche(s) Argument(e) %s wird/werden verworfen"
+msgstr[1] "zusätzliche(s) Argument(e) %s wird/werden verworfen"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "License"
+#~ msgstr "Lizenz"
+
+#~ msgid "T used instead of TRUE"
+#~ msgstr "T statt TRUE benutzt"
+
+#~ msgid "F used instead of FALSE"
+#~ msgstr "F statt FALSE benutzt"
+
+#~ msgid "items"
+#~ msgstr "Punkte"
+
+#~ msgid "have been removed from the search path"
+#~ msgstr "sind aus dem  Suchpfad entfernt worden"
 
 #, fuzzy
 #~ msgid "invalid length(x)"

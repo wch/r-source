@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:59\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -330,6 +330,14 @@ msgstr "górny zakres nie uwzględnia członów %s modelu"
 # stats/R/add.R: 783
 # stop("AIC is not defined for this model, so 'step' cannot proceed")
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+"Kryterium informacyjne Akaikego nie jest zdefiniowane dla tego modelu, tak "
+"więc 'step' nie może zostać wykonany"
+
+# stats/R/add.R: 783
+# stop("AIC is not defined for this model, so 'step' cannot proceed")
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 "Kryterium informacyjne Akaikego nie jest zdefiniowane dla tego modelu, tak "
 "więc 'step' nie może zostać wykonany"
@@ -4237,6 +4245,12 @@ msgstr ""
 "spline: pierwsza oraz ostatnia wartość 'y' różnią się -- używanie 'y[1]' dla "
 "obu"
 
+# stats/R/ftable.R: 230
+# stop("'file' must be a character string or connection")
+#, fuzzy
+msgid "'y' must be increasing or decreasing"
+msgstr "'file' musi być łańcuchem tekstowym lub połączeniem"
+
 # stats/R/spline.R: 56
 # stop("'spline' requires n >= 1")
 msgid "'spline' requires n >= 1"
@@ -4534,6 +4548,12 @@ msgstr "dozwolona jest tylko zamiana elementów"
 # stop("'model' must be list")
 msgid "'model' must be list"
 msgstr "'model' musi być listą"
+
+# stats/R/smspline.R: 69
+# stop("'tol' must be strictly positive and finite")
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'tol' musi być ściśle dodatnie i skończone"
 
 # stats/R/ts.R: 771
 # stop("'ar' part of model is not stationary")

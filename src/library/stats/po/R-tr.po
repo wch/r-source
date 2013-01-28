@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:59\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -140,6 +140,9 @@ msgid "upper scope does not include model term(s) %s"
 msgstr ""
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr ""
+
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr ""
 
 msgid "'A' must be an array or table"
@@ -2148,6 +2151,10 @@ msgstr ""
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 
+#, fuzzy
+msgid "'y' must be increasing or decreasing"
+msgstr "'vec' azalmayan şekilde sıralanmalı"
+
 msgid "'spline' requires n >= 1"
 msgstr "'spline' için n >= 1 zorunludur"
 
@@ -2320,6 +2327,10 @@ msgstr "sadece öğelerin değişimine izin veriliyor"
 msgid "'model' must be list"
 msgstr "'model' bir liste olmalı"
 
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'ratio' tek bir pozitif tamsayı olmalı"
+
 msgid "'ar' part of model is not stationary"
 msgstr ""
 
@@ -2445,9 +2456,6 @@ msgstr[1] ""
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' NAs içeriyor"
-
-#~ msgid "'vec' must be sorted non-decreasingly"
-#~ msgstr "'vec' azalmayan şekilde sıralanmalı"
 
 #, fuzzy
 #~ msgid "invalid length(vec)"

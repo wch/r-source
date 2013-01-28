@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-08-06 10:53\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -858,9 +858,6 @@ msgid ""
 msgstr ""
 "Pacote '%s' tem uma licença que você precisa aceitar:\n"
 "de acordo com o arquivo DESCRIPTION"
-
-msgid "License"
-msgstr "Licença"
 
 #, fuzzy
 msgid "License for package %s not accepted"
@@ -1740,6 +1737,10 @@ msgstr "'stdout' deve ter comprimento 1"
 msgid "'stderr' must be of length 1"
 msgstr "'stderr' deve ter comprimento 1"
 
+#, fuzzy
+msgid "missing values are not allowed"
+msgstr "'row.names' com valores faltantes não são permitidos"
+
 msgid "'which' was not found on this platform"
 msgstr ""
 
@@ -1783,18 +1784,6 @@ msgstr "ERRO: não é possível entrar no diretório"
 
 msgid "ERROR: no permission to remove from directory"
 msgstr "ERRO: sem permissão para remover diretório"
-
-msgid "T used instead of TRUE"
-msgstr "T usado ao invés de TRUE"
-
-msgid "F used instead of FALSE"
-msgstr "F usado ao invés de FALSE"
-
-msgid "items"
-msgstr "itens"
-
-msgid "have been removed from the search path"
-msgstr "foi removido do caminho de procura"
 
 #, fuzzy
 msgid "cannot find namespace environment"
@@ -1854,10 +1843,31 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "método S3 %s foi declarado no NAMESPACE mas não encontrado"
 msgstr[1] "métodos S3 %s foram declarados no NAMESPACE mas não encontrados"
 
+#, fuzzy
+msgid "extra argument %s will be disregarded"
+msgid_plural "extra arguments %s will be disregarded"
+msgstr[0] "argumento 'drop' será ignorado"
+msgstr[1] "argumento 'drop' será ignorado"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "License"
+#~ msgstr "Licença"
+
+#~ msgid "T used instead of TRUE"
+#~ msgstr "T usado ao invés de TRUE"
+
+#~ msgid "F used instead of FALSE"
+#~ msgstr "F usado ao invés de FALSE"
+
+#~ msgid "items"
+#~ msgstr "itens"
+
+#~ msgid "have been removed from the search path"
+#~ msgstr "foi removido do caminho de procura"
 
 #, fuzzy
 #~ msgid "invalid length(x)"

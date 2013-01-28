@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:58+0100\n"
+"POT-Creation-Date: 2013-01-28 09:13+0000\n"
 "PO-Revision-Date: 2012-03-15 12:00-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -54,15 +54,15 @@ msgstr "могу трансформировать только 100 пар в arima0"
 msgid "maximum supported lag is 350"
 msgstr "максимальный поддерживаемый лаг -- 350"
 
-#: distance.c:156
+#: distance.c:154
 msgid "treating non-finite values as NA"
 msgstr "обрабатываю не-конечные значения как NA"
 
-#: distance.c:229
+#: distance.c:227
 msgid "distance(): invalid p"
 msgstr "distance(): неправильный p"
 
-#: distance.c:232
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): неправильное расстояние"
 
@@ -157,7 +157,7 @@ msgstr "сошлось"
 msgid "'theta' should be of type character"
 msgstr "'theta' должна быть текстового типа"
 
-#: nls.c:290 port.c:366
+#: nls.c:290 port.c:372
 msgid "use of NULL environment is defunct"
 msgstr "использование окружения NULL больше не работает"
 
@@ -212,64 +212,64 @@ msgstr "Rf_divset: alg = %d должен быть 1, 2, 3 или 4"
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "градиентная функция должна возвращать числовой вектор длины %d"
 
-#: port.c:320
+#: port.c:322
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "функция гессиана должна возвращать квадратную числовую матрицу порядка %d"
 
-#: port.c:370
+#: port.c:376
 msgid "'rho' must be an environment"
 msgstr "'rho' должно быть окружением"
 
-#: port.c:372 port.c:523
+#: port.c:378 port.c:535
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' должен быть непустым числовым вектором"
 
-#: port.c:374
+#: port.c:380
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 "Когда определяется функция, вычисляющая гессиан, должен быть определен и "
 "градиент"
 
-#: port.c:377
+#: port.c:383
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "окружение 'rho' должно содержать числовой вектор '.par' длины %d"
 
-#: port.c:391
+#: port.c:397
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' и 'upper' должны быть числовыми векторами"
 
-#: port.c:437
+#: port.c:449
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' применяется лишь к именованным спискам"
 
-#: port.c:458
+#: port.c:470
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() не найден"
 
-#: port.c:471
+#: port.c:483
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 "'gradient' должен быть числовой матрицей матрицей с измерениями (%d,%d)"
 
-#: port.c:492
+#: port.c:504
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn выдала тип %d, длину %d - нужен тип %d, длина %d"
 
-#: port.c:505
+#: port.c:517
 msgid "invalid type for eval_check_store"
 msgstr "неправильный тип 'eval_check_store'"
 
-#: port.c:524
+#: port.c:536
 msgid "m must be a list"
 msgstr "m должен быть списком"
 
-#: port.c:544
+#: port.c:556
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' и 'upperb' должны быть числовыми векторами"
 

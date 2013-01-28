@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2012-09-21 10:28+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -239,6 +239,9 @@ msgstr "fichier 'filelist' introuvable pour le répertoire %s"
 
 msgid "data set %s not found"
 msgstr "jeu de données %s introuvable"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "le type '%s' n'est pas encore implémenté"
@@ -755,6 +758,9 @@ msgstr ""
 msgid "Do you want to attempt to install these from sources?"
 msgstr "Souhaitez-vous essayer d'installer ceux-ci depuis le code source ?"
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
 
@@ -1029,6 +1035,9 @@ msgstr "'tarfile' doit être une chaîne de caractères ou une connexion"
 msgid "incomplete block on file"
 msgstr "bloc incomplet dans le fichier"
 
+msgid "invalid name field in tarball"
+msgstr ""
+
 msgid "checksum error for entry '%s'"
 msgstr "erreur checksum pour l'entrée '%s'"
 
@@ -1044,8 +1053,8 @@ msgstr "fichier '%s' introuvable"
 msgid "file path is too long"
 msgstr "le chemin d'accès au fichier est trop long"
 
-msgid "linked path is too long"
-msgstr "le chemin de lien est trop long"
+msgid "file size is limited to 2GB"
+msgstr ""
 
 msgid ""
 "vignette %s found more than once,\n"
@@ -1278,6 +1287,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages %s sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "linked path is too long"
+#~ msgstr "le chemin de lien est trop long"
 
 #~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 #~ msgstr ""

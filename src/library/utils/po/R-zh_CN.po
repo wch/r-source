@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-27 08:56\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -225,6 +225,9 @@ msgstr "目录%s里没有'filelist'这一文件"
 
 msgid "data set %s not found"
 msgstr "没有%s这个数据集"
+
+msgid "only 'html = TRUE' is supported on this platform"
+msgstr ""
 
 msgid "kind '%s' not yet implemented"
 msgstr "'%s'这一类还没有被实现"
@@ -712,6 +715,9 @@ msgstr ""
 msgid "Do you want to attempt to install these from sources?"
 msgstr ""
 
+msgid "source repository is unavailable to check versions"
+msgstr ""
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
 
@@ -968,6 +974,9 @@ msgstr "'tarfile'的值必需是字符串或联结"
 msgid "incomplete block on file"
 msgstr "不完全文件锁"
 
+msgid "invalid name field in tarball"
+msgstr ""
+
 msgid "checksum error for entry '%s'"
 msgstr "项目'%s'检查和错误"
 
@@ -983,8 +992,8 @@ msgstr "找不到'%s'这一文件"
 msgid "file path is too long"
 msgstr "文件通路太长"
 
-msgid "linked path is too long"
-msgstr "链结的通路太长"
+msgid "file size is limited to 2GB"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -1183,6 +1192,9 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid "linked path is too long"
+#~ msgstr "链结的通路太长"
 
 #~ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 #~ msgstr "无法通过LC_CTYPE关闭与地点有关的字符"

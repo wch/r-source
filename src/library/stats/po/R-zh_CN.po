@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-10 13:59\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -139,6 +139,10 @@ msgid "upper scope does not include model term(s) %s"
 msgstr "模型上範疇里没有这些词条%s "
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
+msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
+
+#, fuzzy
+msgid "AIC is -infinity for this model, so 'step' cannot proceed"
 msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
 
 msgid "'A' must be an array or table"
@@ -2128,6 +2132,10 @@ msgstr "覆蓋機率在值域[0,1) 外"
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 第一个和最后一个y的值不相等-两个用y[1]"
 
+#, fuzzy
+msgid "'y' must be increasing or decreasing"
+msgstr "'vec'必需由小到大排序"
+
 msgid "'spline' requires n >= 1"
 msgstr "'spline'需要n大于等于一"
 
@@ -2295,6 +2303,10 @@ msgstr "只能提供替换值"
 msgid "'model' must be list"
 msgstr "'model'必需是串列"
 
+#, fuzzy
+msgid "'n' must be strictly positive"
+msgstr "'tol'必需是有限的正数"
+
 msgid "'ar' part of model is not stationary"
 msgstr "模型的'ar'部分不平穩"
 
@@ -2418,9 +2430,6 @@ msgstr[0] "参数%s没有在模型公式里出现过"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec'含NA"
-
-#~ msgid "'vec' must be sorted non-decreasingly"
-#~ msgstr "'vec'必需由小到大排序"
 
 #, fuzzy
 #~ msgid "invalid length(vec)"

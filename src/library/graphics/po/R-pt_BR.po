@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-31 12:46\n"
+"POT-Creation-Date: 2013-01-28 09:13\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -243,6 +243,9 @@ msgstr "deve ter uma quebra a mais que cores"
 
 msgid "breaks must all be finite"
 msgstr "breaks devem ser todos finitos"
+
+msgid "unsorted 'breaks' will be sorted before use"
+msgstr ""
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "dimensões de z não são length(x)(-1) vezes length(y)(-1)"
