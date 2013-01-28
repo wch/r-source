@@ -2873,6 +2873,7 @@ void R_Reprotect(SEXP s, PROTECT_INDEX i)
     R_PPStack[i] = s;
 }
 
+#ifdef UNUSED
 /* remove all objects from the protection stack from index i upwards
    and return them in a vector. The order in the vector is from new
    to old. */
@@ -2887,6 +2888,7 @@ SEXP R_CollectFromIndex(PROTECT_INDEX i)
     R_PPStackTop = top; /* this includes the protect we used above */
     return res;
 }
+#endif
 
 /* "initStack" initialize environment stack */
 attribute_hidden
