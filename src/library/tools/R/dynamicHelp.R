@@ -273,7 +273,7 @@ httpd <- function(path, query, ...)
             return(list(payload =
                         paste("<p>",
                               ## for languages with multiple plurals ....
-                              sprintf(ngettext(length(packages):
+                              sprintf(ngettext(length(paths),
                                                "Help on topic '%s' was found in the following package:",
                                                "Help on topic '%s' was found in the following packages:"
                                                ), topic),
