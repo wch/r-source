@@ -3463,10 +3463,10 @@ palette of size 8, colour @samp{10} is colour @samp{2} in the palette.
 
 Integer colours have been used more widely than the base graphics
 sub-system, as they are supported by package @pkg{grid} and hence by
-@pkg{lattice} and @pkg{ggplot2}.  (They are also used by package
-@pkg{rgl}.)  @pkg{grid} did re-define colour @samp{0} to be transparent
-white, but @pkg{rgl} used @code{col2rgb} and hence the background colour
-of base graphics.
+@CRANpkg{lattice} and @CRANpkg{ggplot2}.  (They are also used by package
+@CRANpkg{rgl}.)  @pkg{grid} did re-define colour @samp{0} to be
+transparent white, but @CRANpkg{rgl} used @code{col2rgb} and hence the
+background colour of base graphics.
 
 Note that positive integer colours refer to the current palette and
 colour @samp{0} to the current device (and a device is opened if needs
@@ -3621,8 +3621,8 @@ there are several ways to provide a GUI console.
 
 This can be done by a package which is loaded from terminal-based @R{}
 and launches a console as part of its startup code or by the user
-running a specific function: package @pkg{Rcmdr} is a well-known example
-with a Tk-based GUI.
+running a specific function: package @CRANpkg{Rcmdr} is a well-known
+example with a Tk-based GUI.
 
 There used to be a Gtk-based console invoked by @command{R --gui=GNOME}:
 this relied on special-casing in the front-end shell script to launch a

@@ -1833,7 +1833,7 @@ Which formats it supports is determined when GDAL is compiled: use
 @code{gdalDrivers()} to see what these are for the build you are using.
 It can be useful for uncommon formats such as JPEG 2000 (which is a
 different format from JPEG, and not currently supported in the Mac OS X
-nor Windows binary versions of @pkg{rgdal}).
+nor Windows binary versions of @CRANpkg{rgdal}).
 
 
 @node Connections, Network interfaces, Image files, Top
