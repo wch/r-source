@@ -349,6 +349,9 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
         tab <- so_symbol_names_table[ind, , drop = FALSE]
         attr(tab, "file") <- so
         tab2 <- intersect(sub("^_", "", nms), nonAPI)
+        if ("removeInputHandler" %in% tab2)
+            tab2 <- setdiff(tab2, c("R_InputHandlers", "addInputHandler",
+                                    "removeInputHandler"))
         if(length(tab2)) attr(tab, "nonAPI") <- tab2
         class(tab) <- "check_so_symbols"
         tab
@@ -368,6 +371,9 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
         attr(tab, "file") <- so
         tab2 <- sub("^_", "", tab2)
         tab2 <- intersect(tab2, nonAPI)
+        if ("removeInputHandler" %in% tab2)
+            tab2 <- setdiff(tab2, c("R_InputHandlers", "addInputHandler",
+                                    "removeInputHandler"))
         if(length(tab2)) attr(tab, "nonAPI") <- tab2
         class(tab) <- "check_so_symbols"
         tab
