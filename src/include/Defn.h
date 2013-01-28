@@ -606,7 +606,7 @@ LibExtern RCNTXT* R_GlobalContext;    /* The global context */
 LibExtern RCNTXT* R_SessionContext;   /* The session toplevel context */
 #endif
 extern Rboolean R_Visible;	    /* Value visibility flag */
-LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
+extern0 int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
 extern0 int	R_BrowseLines	INI_as(0);	/* lines/per call in browser */
 
 extern0 int	R_Expressions	INI_as(5000);	/* options(expressions) */

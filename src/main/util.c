@@ -1798,6 +1798,7 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* NB: strings can have equal collation weight without being identical */
+attribute_hidden
 int Scollate(SEXP a, SEXP b)
 {
     int result = 0;
@@ -1854,6 +1855,7 @@ int Scollate(SEXP a, SEXP b)
 }
 
 # else
+attribute_hidden
 int Scollate(SEXP a, SEXP b)
 {
     return strcoll(translateChar(a), translateChar(b));

@@ -80,6 +80,7 @@
  R_Expressions
  R_Expressions_keep
  R_ExternalPtrAddrFn
+ R_EvalDepth
  R_FileMtime
  R_FreeSEXP
  R_FreeStringBufferL
@@ -277,6 +278,7 @@
  Rf_RealFromInteger
  Rf_RealFromLogical
  Rf_RealFromString
+ Rf_Scollate
  Rf_SrcrefPrompt
  Rf_StringFromComplex
  Rf_StringFromInteger
