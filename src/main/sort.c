@@ -858,9 +858,9 @@ orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 }
 #endif
 
-
+#ifdef UNUSED
 #define ORD_2_BODY(FNAME, TYPE_1, TYPE_2, GREATER_2_SUB)		\
-    static void FNAME(int *indx, int n, TYPE_1 *x, TYPE_2 *y,		\
+    void FNAME(int *indx, int n, TYPE_1 *x, TYPE_2 *y,			\
 	   Rboolean nalast, Rboolean decreasing)			\
 {									\
     int t;								\
@@ -879,17 +879,17 @@ orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 	}								\
 }
 
-
-GREATER_2_SUB_DEF(double2greater, double, double, rcmp, rcmp)
-GREATER_2_SUB_DEF(int2greater,       int,    int, icmp, icmp)
-GREATER_2_SUB_DEF(dblint2greater, double,    int, rcmp, icmp)
-GREATER_2_SUB_DEF(intdbl2greater,    int, double, icmp, rcmp)
-
 ORD_2_BODY(R_order2double , double, double, double2greater)
 ORD_2_BODY(R_order2int    ,    int,    int,    int2greater)
 ORD_2_BODY(R_order2dbl_int, double,    int, dblint2greater)
 ORD_2_BODY(R_order2int_dbl,    int, double, intdbl2greater)
 
+
+GREATER_2_SUB_DEF(double2greater, double, double, rcmp, rcmp)
+GREATER_2_SUB_DEF(int2greater,       int,    int, icmp, icmp)
+GREATER_2_SUB_DEF(dblint2greater, double,    int, rcmp, icmp)
+GREATER_2_SUB_DEF(intdbl2greater,    int, double, icmp, rcmp)
+#endif
 
 #define sort2_with_index \
     for (h = sincs[t]; t < 16; h = sincs[++t]) { \
