@@ -3,6 +3,8 @@
 % Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{morley}
 \docType{data}
 \alias{morley}
@@ -33,7 +35,8 @@ morley
   experiment.
 }
 \note{
-  This is the same dataset as \code{michelson} in package \pkg{MASS}.
+  This is the same dataset as \code{michelson} in package
+  \CRANpkg{MASS}.
 }
 \source{
   A. J. Weekes (1986)

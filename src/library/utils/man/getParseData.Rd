@@ -3,6 +3,8 @@
 % Copyright 2012 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{getParseData}
 \alias{getParseData}
 \alias{getParseText}
@@ -90,7 +92,7 @@ Duncan Murdoch
     \item The \code{id} values are not attached to the elements of the parse
     tree, they are only retained in the table returned by \code{getParseData}.
     \item \verb{#line} directives are identified, but other comment
-    markup (e.g. \pkg{roxygen} comments) are not.
+    markup (e.g., \CRANpkg{roxygen} comments) are not.
   }
 }
 

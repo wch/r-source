@@ -3,6 +3,8 @@
 % Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{length}
 \alias{length}
 \alias{length<-}
@@ -51,11 +53,11 @@ length(x) <- value
 
 \section{Warning}{
   Package authors have written methods that return a result of length
-  other than one (\pkg{Formula}) and that return a vector of type
-  \code{\link{double}} (\pkg{Matrix}), even with non-integer values
-  (earlier versions of \pkg{sets}).  As from \R 2.15.2, where a single
-  double value is returned that can be represented as an integer it is
-  returned as a length-one integer vector.
+  other than one (\CRANpkg{Formula}) and that return a vector of type
+  \code{\link{double}} (\CRANpkg{Matrix}), even with non-integer values
+  (earlier versions of \CRANpkg{sets}).  As from \R 2.15.2, where a
+  single double value is returned that can be represented as an integer
+  it is returned as a length-one integer vector.
 
   As from \R 3.0.0, lengths can be returned as double in base \R.
 }

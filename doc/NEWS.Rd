@@ -1026,7 +1026,7 @@
 
       \item \code{qqline()} has new optional arguments
       \code{distribution}, \code{probs} and \code{qtype}, following the
-      example of \pkg{lattice}'s \code{panel.qqmathline()}.
+      example of \CRANpkg{lattice}'s \code{panel.qqmathline()}.
 
       \item The handling of single quotes in the \code{en@quot}
       pseudo-language has been slightly improved.  Double quotes are no
@@ -1458,7 +1458,7 @@
       \item \code{splineDesign()} and \code{spline.des()} in package
       \pkg{splines} have a new option \code{sparse} which can be used
       for efficient construction of a sparse B-spline design matrix
-      (\emph{via} \pkg{Matrix}).
+      (\emph{via} \CRANpkg{Matrix}).
 
       \item \code{norm()} now allows \code{type = "2"} (the
       \sQuote{spectral} or 2-norm) as well, mainly for didactical
