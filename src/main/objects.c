@@ -844,7 +844,7 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
  * @return if which is false, logical TRUE or FALSE
  *	   if which is true, integer vector of length(what) ..
  */
-SEXP inherits3(SEXP x, SEXP what, SEXP which)
+static SEXP inherits3(SEXP x, SEXP what, SEXP which)
 {
     SEXP klass, rval = R_NilValue /* -Wall */;
     if(IS_S4_OBJECT(x))

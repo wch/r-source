@@ -71,6 +71,7 @@
  R_CommentSymbol
  R_ConnIdSymbol
  R_ConsoleIob
+ R_Decode2Long
  R_DevicesSymbol
  R_DisableNLinBrowser
  R_DotEnvSymbol
@@ -305,6 +306,7 @@
  Rf_gammalims
  Rf_get1index
  Rf_i1mach
+ Rf_initStack
  Rf_lfastchoose
  Rf_lgammacor
  Rf_lookupCachedSymbol

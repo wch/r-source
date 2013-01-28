@@ -88,6 +88,7 @@ extern int R_OutputCon; /* from connections.c */
 #define BUFSIZE 8192  /* used by Rprintf etc */
 
 /* Only if ierr < 0 or not is currently used */
+attribute_hidden
 R_size_t R_Decode2Long(char *p, int *ierr)
 {
     R_size_t v = strtol(p, &p, 10);
