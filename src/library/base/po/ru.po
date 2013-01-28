@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52+0000\n"
+"POT-Creation-Date: 2013-01-28 09:16+0000\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -77,18 +77,6 @@ msgstr "Internal(pretty()): очень маленький размах... исп
 #: src/appl/pretty.c:114
 msgid "Internal(pretty()): very large range.. corrected"
 msgstr "Internal(pretty()): очень большой размах... исправлено"
-
-#: src/appl/strsignif.c:122
-msgid ".C(..): Width cannot be zero"
-msgstr ".C(..): ширина не может = 0"
-
-#: src/appl/strsignif.c:137
-msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
-msgstr ".C(..): для  \"d\"-формата 'тип' должно быть \"integer\" "
-
-#: src/appl/strsignif.c:222
-msgid ".C(..): 'type' must be \"real\" for this format"
-msgstr ".C(..): для этого формата 'тип' должен быть \"real\""
 
 #: src/gnuwin32/dynload.c:161
 #, c-format
@@ -207,28 +195,28 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3435
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3462
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
-#: src/main/paste.c:590 src/main/paste.c:595 src/main/platform.c:301
-#: src/main/platform.c:303 src/main/platform.c:305 src/main/platform.c:321
-#: src/main/platform.c:332 src/main/platform.c:385 src/main/platform.c:387
-#: src/main/platform.c:697 src/main/platform.c:699 src/main/platform.c:1050
-#: src/main/platform.c:1056 src/main/platform.c:1059 src/main/platform.c:1062
-#: src/main/platform.c:1065 src/main/platform.c:1068 src/main/platform.c:1071
-#: src/main/platform.c:1074 src/main/platform.c:1177 src/main/platform.c:1180
-#: src/main/platform.c:1183 src/main/platform.c:1222 src/main/platform.c:1279
-#: src/main/platform.c:1282 src/main/platform.c:1498 src/main/platform.c:1501
-#: src/main/platform.c:1504 src/main/platform.c:1540 src/main/platform.c:1543
-#: src/main/platform.c:1546 src/main/platform.c:1629 src/main/platform.c:1645
-#: src/main/platform.c:1682 src/main/platform.c:1684 src/main/platform.c:1749
-#: src/main/platform.c:1833 src/main/platform.c:2108 src/main/platform.c:2154
-#: src/main/platform.c:2306 src/main/platform.c:2309 src/main/platform.c:2312
-#: src/main/platform.c:2315 src/main/platform.c:2318 src/main/platform.c:2475
-#: src/main/platform.c:2478 src/main/platform.c:2481 src/main/platform.c:2484
-#: src/main/platform.c:2487 src/main/platform.c:2557 src/main/platform.c:2565
-#: src/main/platform.c:2601 src/main/platform.c:2651 src/main/print.c:239
+#: src/main/paste.c:590 src/main/paste.c:595 src/main/platform.c:305
+#: src/main/platform.c:307 src/main/platform.c:309 src/main/platform.c:325
+#: src/main/platform.c:336 src/main/platform.c:389 src/main/platform.c:391
+#: src/main/platform.c:701 src/main/platform.c:703 src/main/platform.c:1054
+#: src/main/platform.c:1060 src/main/platform.c:1063 src/main/platform.c:1066
+#: src/main/platform.c:1069 src/main/platform.c:1072 src/main/platform.c:1075
+#: src/main/platform.c:1078 src/main/platform.c:1181 src/main/platform.c:1184
+#: src/main/platform.c:1187 src/main/platform.c:1226 src/main/platform.c:1283
+#: src/main/platform.c:1286 src/main/platform.c:1502 src/main/platform.c:1505
+#: src/main/platform.c:1508 src/main/platform.c:1544 src/main/platform.c:1547
+#: src/main/platform.c:1550 src/main/platform.c:1633 src/main/platform.c:1649
+#: src/main/platform.c:1686 src/main/platform.c:1688 src/main/platform.c:1753
+#: src/main/platform.c:1837 src/main/platform.c:2112 src/main/platform.c:2158
+#: src/main/platform.c:2310 src/main/platform.c:2313 src/main/platform.c:2316
+#: src/main/platform.c:2319 src/main/platform.c:2322 src/main/platform.c:2479
+#: src/main/platform.c:2482 src/main/platform.c:2485 src/main/platform.c:2488
+#: src/main/platform.c:2491 src/main/platform.c:2561 src/main/platform.c:2569
+#: src/main/platform.c:2605 src/main/platform.c:2655 src/main/print.c:239
 #: src/main/print.c:245 src/main/print.c:267 src/main/print.c:273
 #: src/main/print.c:280 src/main/random.c:478 src/main/random.c:482
 #: src/main/random.c:489 src/main/random.c:517 src/main/saveload.c:1940
@@ -244,12 +232,12 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/sysutils.c:600 src/main/sysutils.c:1611 src/main/sysutils.c:1615
 #: src/main/unique.c:966 src/main/unique.c:1289 src/main/unique.c:1349
 #: src/main/unique.c:1356 src/main/unique.c:1749 src/main/util.c:571
-#: src/main/util.c:574 src/main/util.c:1765 src/main/util.c:1931
-#: src/main/util.c:1932 src/main/util.c:1933 src/main/util.c:1950
-#: src/main/util.c:1974 src/main/util.c:1978 src/main/util.c:1980
-#: src/main/util.c:2005 src/main/util.c:2007 src/main/util.c:2009
-#: src/main/util.c:2012 src/main/util.c:2015 src/main/util.c:2019
-#: src/main/util.c:2021 src/modules/X11/devX11.c:3241
+#: src/main/util.c:574 src/main/util.c:1765 src/main/util.c:1933
+#: src/main/util.c:1934 src/main/util.c:1935 src/main/util.c:1952
+#: src/main/util.c:1976 src/main/util.c:1980 src/main/util.c:1982
+#: src/main/util.c:2007 src/main/util.c:2009 src/main/util.c:2011
+#: src/main/util.c:2014 src/main/util.c:2017 src/main/util.c:2021
+#: src/main/util.c:2023 src/modules/X11/devX11.c:3241
 #: src/modules/X11/devX11.c:3244 src/modules/X11/devX11.c:3247
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
@@ -327,7 +315,7 @@ msgstr "плохое устройство"
 msgid "invalid input in 'Rmbstowcs'"
 msgstr "неправильный ввод в Rmbstowcs"
 
-#: src/gnuwin32/extra.c:825 src/main/platform.c:1254
+#: src/gnuwin32/extra.c:825 src/main/platform.c:1258
 msgid "file choice cancelled"
 msgstr "выбор файла отменен"
 
@@ -782,7 +770,7 @@ msgstr "неправильная входная строка y[%d] для это
 msgid "regcomp error: '%s'"
 msgstr "ошибка regcomp: '%s'"
 
-#: src/main/apply.c:42 src/main/apply.c:111 src/main/complex.c:756
+#: src/main/apply.c:42 src/main/apply.c:111 src/main/complex.c:755
 msgid "invalid length"
 msgstr "неправильная длина"
 
@@ -874,7 +862,7 @@ msgstr "целочисленное переполнение привело к с
 msgid "unimplemented real function of 1 argument"
 msgstr "нереализованная действительная функция 1 аргумента"
 
-#: src/main/arithmetic.c:1127 src/main/complex.c:646 src/main/complex.c:716
+#: src/main/arithmetic.c:1127 src/main/complex.c:645 src/main/complex.c:715
 msgid "unimplemented complex function"
 msgstr "нереализованная комплексная функция"
 
@@ -1321,7 +1309,7 @@ msgstr "указанный размер вектора слишком велик
 
 #: src/main/builtin.c:83 src/main/builtin.c:92 src/main/builtin.c:292
 #: src/main/builtin.c:325 src/main/builtin.c:364 src/main/builtin.c:374
-#: src/main/coerce.c:1539 src/main/connections.c:2833 src/main/engine.c:2963
+#: src/main/coerce.c:1539 src/main/connections.c:2833 src/main/engine.c:2962
 #: src/main/envir.c:942 src/main/envir.c:995 src/main/envir.c:1085
 #: src/main/envir.c:1542 src/main/envir.c:1664 src/main/envir.c:1732
 #: src/main/envir.c:1850 src/main/envir.c:2507 src/main/envir.c:2567
@@ -1690,23 +1678,23 @@ msgstr "'value' должно быть непустой строкой"
 msgid "invalid to change the storage mode of a factor"
 msgstr "не могу поменять тип хранения фактора"
 
-#: src/main/complex.c:127
+#: src/main/complex.c:126
 msgid "invalid complex unary operator"
 msgstr "неправильный комплексный унарный оператор"
 
-#: src/main/complex.c:261
+#: src/main/complex.c:260
 msgid "unimplemented complex operation"
 msgstr "не реализованная комплексная операция"
 
-#: src/main/complex.c:364
+#: src/main/complex.c:363
 msgid "non-numeric argument to function"
 msgstr "нечисловой аргумент аргумент для функции"
 
-#: src/main/complex.c:817
+#: src/main/complex.c:824
 msgid "invalid polynomial coefficient"
 msgstr "неправильный коэффициент многочлена"
 
-#: src/main/complex.c:822
+#: src/main/complex.c:829
 msgid "root finding code failed"
 msgstr "ошибка кода нахождения корня"
 
@@ -2606,7 +2594,7 @@ msgstr "Неправильное количество аргументов (%d),
 msgid "too many arguments, sorry"
 msgstr "слишком много аргументов, извините"
 
-#: src/main/dotcode.c:1267 src/main/dotcode.c:1284 src/main/engine.c:2989
+#: src/main/dotcode.c:1267 src/main/dotcode.c:1284 src/main/engine.c:2988
 msgid "invalid graphics state"
 msgstr "неправильное графическое состояние"
 
@@ -2907,50 +2895,50 @@ msgstr "неправильная протяженность оси [GEPretty(.,.
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "неопределенная протяженность оси [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2372
+#: src/main/engine.c:2371
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): новая *lo = %g < %g = x1"
 
-#: src/main/engine.c:2374
+#: src/main/engine.c:2373
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): новая *up = %g > %g = x2"
 
-#: src/main/engine.c:2774
+#: src/main/engine.c:2773
 #, fuzzy
 msgid "display list redraw incomplete"
 msgstr "Отражение списка перерисовки неполное"
 
-#: src/main/engine.c:2959
+#: src/main/engine.c:2958
 msgid "'expr' argument must be an expression"
 msgstr "аргумент 'expr' должен быть выражением"
 
-#: src/main/engine.c:2961
+#: src/main/engine.c:2960
 msgid "'list' argument must be a list"
 msgstr "аргумент 'list' должен быть списком"
 
-#: src/main/engine.c:2967
+#: src/main/engine.c:2966
 msgid "'env' argument must be an environment"
 msgstr "аргумент 'env' должен быть окружением"
 
-#: src/main/engine.c:3047 src/main/engine.c:3055
+#: src/main/engine.c:3046 src/main/engine.c:3054
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "неправильный многобайтный знак в pch=\"c\""
 
-#: src/main/engine.c:3102
+#: src/main/engine.c:3101
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "неправильное шестнадцатеричное число в 'color' или 'lty'"
 
-#: src/main/engine.c:3125
+#: src/main/engine.c:3124
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "неправильный тип линии: должен быть длиной 2, 4, 6 или 8"
 
-#: src/main/engine.c:3129
+#: src/main/engine.c:3128
 msgid "invalid line type: zeroes are not allowed"
 msgstr "неправильный тип линии: нули не разрешены"
 
-#: src/main/engine.c:3138 src/main/engine.c:3146 src/main/engine.c:3153
+#: src/main/engine.c:3137 src/main/engine.c:3145 src/main/engine.c:3152
 msgid "invalid line type"
 msgstr "неправильный тип линии"
 
@@ -3973,9 +3961,9 @@ msgstr "средства Интернет не доступны из модул�
 msgid "internet routines cannot be loaded"
 msgstr "средства Интернет не могут быть загружены"
 
-#: src/main/internet.c:118 src/main/memory.c:3162 src/main/memory.c:3171
-#: src/main/memory.c:3182 src/main/memory.c:3195 src/main/memory.c:3211
-#: src/main/memory.c:3228
+#: src/main/internet.c:118 src/main/memory.c:3189 src/main/memory.c:3198
+#: src/main/memory.c:3209 src/main/memory.c:3222 src/main/memory.c:3238
+#: src/main/memory.c:3255
 msgid "bad value"
 msgstr "неправильное значение"
 
@@ -4146,129 +4134,129 @@ msgstr[0] "неиспользованный аргумент(ы) %s"
 msgstr[1] "неиспользованный аргумент(ы) %s"
 msgstr[2] "неиспользованный аргумент(ы) %s"
 
-#: src/main/memory.c:1140
+#: src/main/memory.c:1166
 msgid "can only weakly reference/finalize reference objects"
 msgstr "могу сослаться на/завершить ссылочные объекты только слабо"
 
-#: src/main/memory.c:1174
+#: src/main/memory.c:1200
 msgid "finalizer must be a function or NULL"
 msgstr "завершитель должен быть функцией или NULL"
 
-#: src/main/memory.c:1225 src/main/memory.c:1233 src/main/memory.c:1244
+#: src/main/memory.c:1251 src/main/memory.c:1259 src/main/memory.c:1270
 msgid "not a weak reference"
 msgstr "не является слабой ссылкой"
 
-#: src/main/memory.c:1360
+#: src/main/memory.c:1386
 msgid "first argument must be environment or external pointer"
 msgstr "первый аргумент должен быть окружением или внешним указателем"
 
-#: src/main/memory.c:1362
+#: src/main/memory.c:1388
 msgid "second argument must be a function"
 msgstr "второй аргумент должен быть функцией"
 
-#: src/main/memory.c:1366
+#: src/main/memory.c:1392
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "третий аргумент должен быть 'TRUE' или 'FALSE'"
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1872
 msgid "vector memory exhausted (limit reached?)"
 msgstr "векторная память вышла (достигнут предел?)"
 
-#: src/main/memory.c:1852
+#: src/main/memory.c:1878
 msgid "cons memory exhausted (limit reached?)"
 msgstr "cons-память вышла (достигнут предел?)"
 
-#: src/main/memory.c:1857
+#: src/main/memory.c:1883
 msgid "memory exhausted (limit reached?)"
 msgstr "память исчерпана (достигнут предел?)"
 
-#: src/main/memory.c:1979
+#: src/main/memory.c:2006
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "не могу разместить блок памяти размером %0.1f Gb"
 
-#: src/main/memory.c:1984
+#: src/main/memory.c:2011
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "не могу разместить блок памяти размером %0.1f Gb"
 
-#: src/main/memory.c:2250
+#: src/main/memory.c:2277
 #, fuzzy
 msgid "vector is too large"
 msgstr "указанный размер вектора слишком велик"
 
-#: src/main/memory.c:2253
+#: src/main/memory.c:2280
 msgid "negative length vectors are not allowed"
 msgstr "не разрешена отрицательная длина векторов"
 
-#: src/main/memory.c:2279 src/main/memory.c:2292 src/main/memory.c:2305
-#: src/main/memory.c:2320
+#: src/main/memory.c:2306 src/main/memory.c:2319 src/main/memory.c:2332
+#: src/main/memory.c:2347
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "не могу разместить вектор длины %d"
 
-#: src/main/memory.c:2341
+#: src/main/memory.c:2368
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "неправильный тип/длина (%s/%d) для размещения вектора"
 
-#: src/main/memory.c:2434
+#: src/main/memory.c:2461
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "не могу разместить вектор размером %0.1f Gb"
 
-#: src/main/memory.c:2438
+#: src/main/memory.c:2465
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "не могу разместить вектор размером %0.1f Mb"
 
-#: src/main/memory.c:2442
+#: src/main/memory.c:2469
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "не могу разместить вектор размером %0.f Kb"
 
-#: src/main/memory.c:2777
+#: src/main/memory.c:2804
 msgid "protect(): protection stack overflow"
 msgstr "protect(): переполнение стека защиты"
 
-#: src/main/memory.c:2793
+#: src/main/memory.c:2820
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): только %d защищенных элементов"
 
-#: src/main/memory.c:2807
+#: src/main/memory.c:2834
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: указатель не найден"
 
-#: src/main/memory.c:2844
+#: src/main/memory.c:2871
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr "unprotect(): только %d защищенных элементов"
 
-#: src/main/memory.c:2883
+#: src/main/memory.c:2910
 #, fuzzy, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc' не может выделить память (%.0f из %u байт)"
 
-#: src/main/memory.c:2894
+#: src/main/memory.c:2921
 #, fuzzy, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc' не может переразместить память (%.0f байт)"
 
-#: src/main/memory.c:3116
+#: src/main/memory.c:3143
 msgid "not safe to return vector pointer"
 msgstr "небезопасно возвращать указатель вектора"
 
-#: src/main/memory.c:3357
+#: src/main/memory.c:3384
 msgid "memory profiling is not available on this system"
 msgstr "профилирование памяти в этой системе недоступно"
 
-#: src/main/memory.c:3422
+#: src/main/memory.c:3449
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: не могу открыть выходной файл '%s'"
 
-#: src/main/memory.c:3529
+#: src/main/memory.c:3556
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
@@ -4610,214 +4598,214 @@ msgstr "Невозможный режим ( x )"
 msgid "atomic vector arguments only"
 msgstr "аргументы являются только элементарными векторами"
 
-#: src/main/platform.c:299 src/main/platform.c:317
+#: src/main/platform.c:303 src/main/platform.c:321
 msgid "invalid filename specification"
 msgstr "неправильный указание имени файла"
 
-#: src/main/platform.c:370 src/main/platform.c:414
+#: src/main/platform.c:374 src/main/platform.c:418
 msgid "write error during file append"
 msgstr "ошибка записи во время добавки файла"
 
-#: src/main/platform.c:389
+#: src/main/platform.c:393
 msgid "nothing to append to"
 msgstr "нечего добавить к"
 
-#: src/main/platform.c:443 src/main/platform.c:787
+#: src/main/platform.c:447 src/main/platform.c:791
 msgid "invalid filename argument"
 msgstr "неправильный аргумент имени файла"
 
-#: src/main/platform.c:455
+#: src/main/platform.c:459
 #, c-format
 msgid "cannot create file '%s', reason '%s'"
 msgstr "не могу создать файл '%s' по причине '%s'"
 
-#: src/main/platform.c:470 src/main/platform.c:540 src/main/platform.c:619
+#: src/main/platform.c:474 src/main/platform.c:544 src/main/platform.c:623
 msgid "invalid first filename"
 msgstr "неправильное первое имя файла"
 
-#: src/main/platform.c:482
+#: src/main/platform.c:486
 #, c-format
 msgid "cannot remove file '%s', reason '%s'"
 msgstr "не могу удалить файл '%s' по причине '%s'"
 
-#: src/main/platform.c:542 src/main/platform.c:621
+#: src/main/platform.c:546 src/main/platform.c:625
 msgid "invalid second filename"
 msgstr "неправильное второе имя файла"
 
-#: src/main/platform.c:544 src/main/platform.c:623
+#: src/main/platform.c:548 src/main/platform.c:627
 msgid "nothing to link"
 msgstr "нечего связать"
 
-#: src/main/platform.c:553
+#: src/main/platform.c:557
 msgid "symbolic links are not supported on this version of Windows"
 msgstr "символические ссылки на этой версии Windows не поддерживаются"
 
-#: src/main/platform.c:573
+#: src/main/platform.c:577
 #, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
 msgstr "не могу создать символическую ссылку '%ls' на '%ls' по причине '%s'"
 
-#: src/main/platform.c:593
+#: src/main/platform.c:597
 #, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
 msgstr "не могу создать символическую ссылку '%s' на '%s' по причине '%s'"
 
-#: src/main/platform.c:601
+#: src/main/platform.c:605
 #, fuzzy
 msgid "symbolic links are not supported on this platform"
 msgstr "символические ссылки на этой платформе не поддерживаются"
 
-#: src/main/platform.c:641
+#: src/main/platform.c:645
 #, c-format
 msgid "cannot link '%ls' to '%ls', reason '%s'"
 msgstr "не могу создать ссылку '%ls' на '%ls' по причине '%s'"
 
-#: src/main/platform.c:661
+#: src/main/platform.c:665
 #, c-format
 msgid "cannot link '%s' to '%s', reason '%s'"
 msgstr "не могу создать ссылку '%s' на '%s' по причине '%s'"
 
-#: src/main/platform.c:670
+#: src/main/platform.c:674
 msgid "(hard) links are not supported on this platform"
 msgstr "жесткие ссылки на этой платформе не поддерживаются"
 
-#: src/main/platform.c:701
+#: src/main/platform.c:705
 msgid "'from' and 'to' are of different lengths"
 msgstr "'from' и 'to' имеют разную длину"
 
-#: src/main/platform.c:712 src/main/platform.c:722
+#: src/main/platform.c:716 src/main/platform.c:726
 msgid "expanded 'from' name too long"
 msgstr "раскрытое имя 'from' слишком длинное"
 
-#: src/main/platform.c:716 src/main/platform.c:726
+#: src/main/platform.c:720 src/main/platform.c:730
 msgid "expanded 'to' name too long"
 msgstr "раскрытое имя 'to' слишком длинное"
 
-#: src/main/platform.c:730
+#: src/main/platform.c:734
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr "не могу переименовать '%s' в '%s' по причине '%s'"
 
-#: src/main/platform.c:1080
+#: src/main/platform.c:1084
 msgid "invalid 'pattern' regular expression"
 msgstr "неправильный шаблон регулярного выражения"
 
-#: src/main/platform.c:1204
+#: src/main/platform.c:1208
 msgid "unable to determine R home location"
 msgstr "не могу определить домашнюю папку R"
 
-#: src/main/platform.c:1256
+#: src/main/platform.c:1260
 msgid "file name too long"
 msgstr "имя файла слишком длинное"
 
-#: src/main/platform.c:1511 src/main/platform.c:1558 src/main/sysutils.c:1630
+#: src/main/platform.c:1515 src/main/platform.c:1562 src/main/sysutils.c:1630
 #: src/main/sysutils.c:1644
 msgid "internal out-of-memory condition"
 msgstr "внутренняя нехватка памяти"
 
-#: src/main/platform.c:1554 src/main/sysutils.c:1640
+#: src/main/platform.c:1558 src/main/sysutils.c:1640
 #, c-format
 msgid "read error on '%s'"
 msgstr "ошибка чтения в '%s'"
 
-#: src/main/platform.c:1716
+#: src/main/platform.c:1720
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "установка 'LC_NUMERIC' может заставить R странно себя вести"
 
-#: src/main/platform.c:1728
+#: src/main/platform.c:1732
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr "LC_MESSAGES существуют под Windows, но не работают"
 
-#: src/main/platform.c:1755
+#: src/main/platform.c:1759
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 "ОС сообщает, что запрос установки локали в \"%s\" не может быть выполнен"
 
-#: src/main/platform.c:2057
+#: src/main/platform.c:2061
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' должен быть единичным текстовым вектором"
 
-#: src/main/platform.c:2063
+#: src/main/platform.c:2067
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() не способна разрешить хост '%s'"
 
-#: src/main/platform.c:2070
+#: src/main/platform.c:2074
 #, fuzzy
 msgid "unknown format returned by C function 'gethostbyname'"
 msgstr "'gethostbyname' вернул неизвестный формат"
 
-#: src/main/platform.c:2079
+#: src/main/platform.c:2083
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/main/platform.c:2136
+#: src/main/platform.c:2140
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' уже существует"
 
-#: src/main/platform.c:2139
+#: src/main/platform.c:2143
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "не могу создать директорию '%s' по причине '%s'"
 
-#: src/main/platform.c:2185
+#: src/main/platform.c:2189
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls' уже существует"
 
-#: src/main/platform.c:2189
+#: src/main/platform.c:2193
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "не могу создать каталог '%ls' по причине '%s'"
 
-#: src/main/platform.c:2204 src/main/platform.c:2361
+#: src/main/platform.c:2208 src/main/platform.c:2365
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2212 src/main/platform.c:2225 src/main/platform.c:2243
-#: src/main/platform.c:2261 src/main/platform.c:2377 src/main/platform.c:2390
-#: src/main/platform.c:2410 src/main/platform.c:2430
+#: src/main/platform.c:2216 src/main/platform.c:2229 src/main/platform.c:2247
+#: src/main/platform.c:2265 src/main/platform.c:2381 src/main/platform.c:2394
+#: src/main/platform.c:2414 src/main/platform.c:2434
 #, fuzzy
 msgid "over-long path length"
 msgstr "нулевой образец"
 
-#: src/main/platform.c:2232
+#: src/main/platform.c:2236
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "проблема с созданием каталога %ls: %s "
 
-#: src/main/platform.c:2251
+#: src/main/platform.c:2255
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "проблема с чтением каталога %ls: %s"
 
-#: src/main/platform.c:2269
+#: src/main/platform.c:2273
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "проблема с копированием %ls в %ls: %s"
 
-#: src/main/platform.c:2399
+#: src/main/platform.c:2403
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "проблема с созданием каталога %s: %s"
 
-#: src/main/platform.c:2418
+#: src/main/platform.c:2422
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "проблема с чтением каталога %s: %s"
 
-#: src/main/platform.c:2439
+#: src/main/platform.c:2443
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "проблема с копированием %s в %s: %s"
 
-#: src/main/platform.c:2562
+#: src/main/platform.c:2566
 msgid "'mode' must be of length at least one"
 msgstr "длина 'mode' должна быть не меньше единицы"
 
-#: src/main/platform.c:2629
+#: src/main/platform.c:2633
 msgid "insufficient OS support on this platform"
 msgstr "недостаточная поддержка OS на этой платформе"
 
@@ -6323,23 +6311,28 @@ msgstr "предупреждающее сообщение сокращено д�
 msgid "all arguments must be named"
 msgstr "атрибуты должны быть именованы"
 
-#: src/main/util.c:1831
+#: src/main/util.c:1832
 msgid "ICU is not supported on this build"
 msgstr "ICU не поддерживается в этой сборке"
 
-#: src/main/util.c:1891
+#: src/main/util.c:1893
 #, fuzzy
 msgid "'breaks' is not sorted"
 msgstr "тип '%s' не поддерживается"
 
-#: src/main/util.c:1925 src/main/util.c:1971
+#: src/main/util.c:1927 src/main/util.c:1973
 #, fuzzy, c-format
 msgid "long vector '%s' is not supported"
 msgstr "тип '%s' не поддерживается"
 
-#: src/main/util.c:2024
+#: src/main/util.c:2026
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
+
+#: src/main/util.c:2054
+#, fuzzy
+msgid "'x' must be a vector"
+msgstr "'x' должен быть текстовым вектором"
 
 #: src/main/version.c:37
 msgid ""
@@ -7300,6 +7293,15 @@ msgstr "создать временный файл для '-e' не удалос
 #: src/unix/system.c:462
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: Только редактирование первого файла из списка"
+
+#~ msgid ".C(..): Width cannot be zero"
+#~ msgstr ".C(..): ширина не может = 0"
+
+#~ msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
+#~ msgstr ".C(..): для  \"d\"-формата 'тип' должно быть \"integer\" "
+
+#~ msgid ".C(..): 'type' must be \"real\" for this format"
+#~ msgstr ".C(..): для этого формата 'тип' должен быть \"real\""
 
 #~ msgid "'names' is not a character string"
 #~ msgstr "'names' не является текстовой строкой"

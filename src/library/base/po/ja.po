@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52+0000\n"
+"POT-Creation-Date: 2013-01-28 09:16+0000\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -72,19 +72,6 @@ msgstr " Internal(pretty()) の範囲が小さすぎます.. 修正しました 
 #: src/appl/pretty.c:114
 msgid "Internal(pretty()): very large range.. corrected"
 msgstr " Internal(pretty()) の範囲が大きすぎます.. 修正しました "
-
-#: src/appl/strsignif.c:122
-msgid ".C(..): Width cannot be zero"
-msgstr " .C(..): 幅(Width)は0ではいけません "
-
-#: src/appl/strsignif.c:137
-msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
-msgstr ""
-" .C(..): 'type' は \"d\"-書式においては \"integer\" でなくてはなりません "
-
-#: src/appl/strsignif.c:222
-msgid ".C(..): 'type' must be \"real\" for this format"
-msgstr " .C(..): 'type' はこの書式においては \"real\" でなくてはなりません "
 
 #: src/gnuwin32/dynload.c:161
 #, c-format
@@ -203,28 +190,28 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3435
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3462
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
-#: src/main/paste.c:590 src/main/paste.c:595 src/main/platform.c:301
-#: src/main/platform.c:303 src/main/platform.c:305 src/main/platform.c:321
-#: src/main/platform.c:332 src/main/platform.c:385 src/main/platform.c:387
-#: src/main/platform.c:697 src/main/platform.c:699 src/main/platform.c:1050
-#: src/main/platform.c:1056 src/main/platform.c:1059 src/main/platform.c:1062
-#: src/main/platform.c:1065 src/main/platform.c:1068 src/main/platform.c:1071
-#: src/main/platform.c:1074 src/main/platform.c:1177 src/main/platform.c:1180
-#: src/main/platform.c:1183 src/main/platform.c:1222 src/main/platform.c:1279
-#: src/main/platform.c:1282 src/main/platform.c:1498 src/main/platform.c:1501
-#: src/main/platform.c:1504 src/main/platform.c:1540 src/main/platform.c:1543
-#: src/main/platform.c:1546 src/main/platform.c:1629 src/main/platform.c:1645
-#: src/main/platform.c:1682 src/main/platform.c:1684 src/main/platform.c:1749
-#: src/main/platform.c:1833 src/main/platform.c:2108 src/main/platform.c:2154
-#: src/main/platform.c:2306 src/main/platform.c:2309 src/main/platform.c:2312
-#: src/main/platform.c:2315 src/main/platform.c:2318 src/main/platform.c:2475
-#: src/main/platform.c:2478 src/main/platform.c:2481 src/main/platform.c:2484
-#: src/main/platform.c:2487 src/main/platform.c:2557 src/main/platform.c:2565
-#: src/main/platform.c:2601 src/main/platform.c:2651 src/main/print.c:239
+#: src/main/paste.c:590 src/main/paste.c:595 src/main/platform.c:305
+#: src/main/platform.c:307 src/main/platform.c:309 src/main/platform.c:325
+#: src/main/platform.c:336 src/main/platform.c:389 src/main/platform.c:391
+#: src/main/platform.c:701 src/main/platform.c:703 src/main/platform.c:1054
+#: src/main/platform.c:1060 src/main/platform.c:1063 src/main/platform.c:1066
+#: src/main/platform.c:1069 src/main/platform.c:1072 src/main/platform.c:1075
+#: src/main/platform.c:1078 src/main/platform.c:1181 src/main/platform.c:1184
+#: src/main/platform.c:1187 src/main/platform.c:1226 src/main/platform.c:1283
+#: src/main/platform.c:1286 src/main/platform.c:1502 src/main/platform.c:1505
+#: src/main/platform.c:1508 src/main/platform.c:1544 src/main/platform.c:1547
+#: src/main/platform.c:1550 src/main/platform.c:1633 src/main/platform.c:1649
+#: src/main/platform.c:1686 src/main/platform.c:1688 src/main/platform.c:1753
+#: src/main/platform.c:1837 src/main/platform.c:2112 src/main/platform.c:2158
+#: src/main/platform.c:2310 src/main/platform.c:2313 src/main/platform.c:2316
+#: src/main/platform.c:2319 src/main/platform.c:2322 src/main/platform.c:2479
+#: src/main/platform.c:2482 src/main/platform.c:2485 src/main/platform.c:2488
+#: src/main/platform.c:2491 src/main/platform.c:2561 src/main/platform.c:2569
+#: src/main/platform.c:2605 src/main/platform.c:2655 src/main/print.c:239
 #: src/main/print.c:245 src/main/print.c:267 src/main/print.c:273
 #: src/main/print.c:280 src/main/random.c:478 src/main/random.c:482
 #: src/main/random.c:489 src/main/random.c:517 src/main/saveload.c:1940
@@ -240,12 +227,12 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/sysutils.c:600 src/main/sysutils.c:1611 src/main/sysutils.c:1615
 #: src/main/unique.c:966 src/main/unique.c:1289 src/main/unique.c:1349
 #: src/main/unique.c:1356 src/main/unique.c:1749 src/main/util.c:571
-#: src/main/util.c:574 src/main/util.c:1765 src/main/util.c:1931
-#: src/main/util.c:1932 src/main/util.c:1933 src/main/util.c:1950
-#: src/main/util.c:1974 src/main/util.c:1978 src/main/util.c:1980
-#: src/main/util.c:2005 src/main/util.c:2007 src/main/util.c:2009
-#: src/main/util.c:2012 src/main/util.c:2015 src/main/util.c:2019
-#: src/main/util.c:2021 src/modules/X11/devX11.c:3241
+#: src/main/util.c:574 src/main/util.c:1765 src/main/util.c:1933
+#: src/main/util.c:1934 src/main/util.c:1935 src/main/util.c:1952
+#: src/main/util.c:1976 src/main/util.c:1980 src/main/util.c:1982
+#: src/main/util.c:2007 src/main/util.c:2009 src/main/util.c:2011
+#: src/main/util.c:2014 src/main/util.c:2017 src/main/util.c:2021
+#: src/main/util.c:2023 src/modules/X11/devX11.c:3241
 #: src/modules/X11/devX11.c:3244 src/modules/X11/devX11.c:3247
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
@@ -323,7 +310,7 @@ msgstr " 不正な装置です "
 msgid "invalid input in 'Rmbstowcs'"
 msgstr " Rmbstowcs  への入力が不正です "
 
-#: src/gnuwin32/extra.c:825 src/main/platform.c:1254
+#: src/gnuwin32/extra.c:825 src/main/platform.c:1258
 msgid "file choice cancelled"
 msgstr " ファイルの選択がキャンセルされました "
 
@@ -783,7 +770,7 @@ msgstr " 入力文字列 y[%d] はこのロケールでは不適切です "
 msgid "regcomp error: '%s'"
 msgstr " regcompのエラー: '%s' "
 
-#: src/main/apply.c:42 src/main/apply.c:111 src/main/complex.c:756
+#: src/main/apply.c:42 src/main/apply.c:111 src/main/complex.c:755
 msgid "invalid length"
 msgstr " 長さが不正です "
 
@@ -874,7 +861,7 @@ msgstr " 整数の桁あふれにより NA が生成されました "
 msgid "unimplemented real function of 1 argument"
 msgstr " 1個の引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1127 src/main/complex.c:646 src/main/complex.c:716
+#: src/main/arithmetic.c:1127 src/main/complex.c:645 src/main/complex.c:715
 msgid "unimplemented complex function"
 msgstr " 未実装の複素関数です "
 
@@ -1332,7 +1319,7 @@ msgstr " 指定されたベクトルのサイズが長すぎます "
 
 #: src/main/builtin.c:83 src/main/builtin.c:92 src/main/builtin.c:292
 #: src/main/builtin.c:325 src/main/builtin.c:364 src/main/builtin.c:374
-#: src/main/coerce.c:1539 src/main/connections.c:2833 src/main/engine.c:2963
+#: src/main/coerce.c:1539 src/main/connections.c:2833 src/main/engine.c:2962
 #: src/main/envir.c:942 src/main/envir.c:995 src/main/envir.c:1085
 #: src/main/envir.c:1542 src/main/envir.c:1664 src/main/envir.c:1732
 #: src/main/envir.c:1850 src/main/envir.c:2507 src/main/envir.c:2567
@@ -1700,23 +1687,23 @@ msgstr " 'value' は NULL でない文字列でなければなりません "
 msgid "invalid to change the storage mode of a factor"
 msgstr " 因子保管モードを変更するのは不正です "
 
-#: src/main/complex.c:127
+#: src/main/complex.c:126
 msgid "invalid complex unary operator"
 msgstr " 不正な複素単項演算子です "
 
-#: src/main/complex.c:261
+#: src/main/complex.c:260
 msgid "unimplemented complex operation"
 msgstr " 未実装の複素演算です "
 
-#: src/main/complex.c:364
+#: src/main/complex.c:363
 msgid "non-numeric argument to function"
 msgstr " 関数の引数が数値ではありません "
 
-#: src/main/complex.c:817
+#: src/main/complex.c:824
 msgid "invalid polynomial coefficient"
 msgstr " 多項式の係数が不正です "
 
-#: src/main/complex.c:822
+#: src/main/complex.c:829
 msgid "root finding code failed"
 msgstr " 根を見つけるコードが失敗しました "
 
@@ -2623,7 +2610,7 @@ msgstr " 引数の数(%1$d)が不正です。%3$s に対しては %2$d 個の引
 msgid "too many arguments, sorry"
 msgstr " 引数が多すぎます（すみません…） "
 
-#: src/main/dotcode.c:1267 src/main/dotcode.c:1284 src/main/engine.c:2989
+#: src/main/dotcode.c:1267 src/main/dotcode.c:1284 src/main/engine.c:2988
 msgid "invalid graphics state"
 msgstr " グラフィックスの状態が不正です "
 
@@ -2925,50 +2912,50 @@ msgstr " 不正な軸範囲です [GEPretty(.,.,n=%d) "
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr " 無限に軸が伸ばされています [GEPretty(%g,%g,%d)]  "
 
-#: src/main/engine.c:2372
+#: src/main/engine.c:2371
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.) : new *lo = %g < %g = x1  "
 
-#: src/main/engine.c:2374
+#: src/main/engine.c:2373
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.) : new *up = %g > %g = x2  "
 
-#: src/main/engine.c:2774
+#: src/main/engine.c:2773
 #, fuzzy
 msgid "display list redraw incomplete"
 msgstr " ディスプレイリストが不完全に再描画されました "
 
-#: src/main/engine.c:2959
+#: src/main/engine.c:2958
 msgid "'expr' argument must be an expression"
 msgstr " 'expr' 引数は式でなくてはなりません "
 
-#: src/main/engine.c:2961
+#: src/main/engine.c:2960
 msgid "'list' argument must be a list"
 msgstr " 'list' 引数はリストでなくてはなりません "
 
-#: src/main/engine.c:2967
+#: src/main/engine.c:2966
 msgid "'env' argument must be an environment"
 msgstr " 'env' 引数は環境でなくてはなりません "
 
-#: src/main/engine.c:3047 src/main/engine.c:3055
+#: src/main/engine.c:3046 src/main/engine.c:3054
 msgid "invalid multibyte char in pch=\"c\""
 msgstr " pch=\"c\" 中に不正なマルチバイトの char があります "
 
-#: src/main/engine.c:3102
+#: src/main/engine.c:3101
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr " 'color' または 'lty' 中の16進数が不正です "
 
-#: src/main/engine.c:3125
+#: src/main/engine.c:3124
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr " 行のタイプが不正です : 行の長さは 2,4,6,8 のいずれかにして下さい "
 
-#: src/main/engine.c:3129
+#: src/main/engine.c:3128
 msgid "invalid line type: zeroes are not allowed"
 msgstr " 不正な線種：ゼロは許されません "
 
-#: src/main/engine.c:3138 src/main/engine.c:3146 src/main/engine.c:3153
+#: src/main/engine.c:3137 src/main/engine.c:3145 src/main/engine.c:3152
 msgid "invalid line type"
 msgstr " 行のタイプが不正です "
 
@@ -3984,9 +3971,9 @@ msgstr " モジュール中でインターネットルーチンがアクセス�
 msgid "internet routines cannot be loaded"
 msgstr " インターネットルーチンがロードできません "
 
-#: src/main/internet.c:118 src/main/memory.c:3162 src/main/memory.c:3171
-#: src/main/memory.c:3182 src/main/memory.c:3195 src/main/memory.c:3211
-#: src/main/memory.c:3228
+#: src/main/internet.c:118 src/main/memory.c:3189 src/main/memory.c:3198
+#: src/main/memory.c:3209 src/main/memory.c:3222 src/main/memory.c:3238
+#: src/main/memory.c:3255
 msgid "bad value"
 msgstr " 不適切な値です "
 
@@ -4153,129 +4140,129 @@ msgid "unused argument %s"
 msgid_plural "unused arguments %s"
 msgstr[0] " 使われていない引数 %s "
 
-#: src/main/memory.c:1140
+#: src/main/memory.c:1166
 msgid "can only weakly reference/finalize reference objects"
 msgstr " 参照オブジェクトは曖昧にしか参照・完結できません "
 
-#: src/main/memory.c:1174
+#: src/main/memory.c:1200
 msgid "finalizer must be a function or NULL"
 msgstr " ファイナライザーは関数であるか NULL でなければなりません "
 
-#: src/main/memory.c:1225 src/main/memory.c:1233 src/main/memory.c:1244
+#: src/main/memory.c:1251 src/main/memory.c:1259 src/main/memory.c:1270
 msgid "not a weak reference"
 msgstr " 弱い (weak) 参照ではありません "
 
-#: src/main/memory.c:1360
+#: src/main/memory.c:1386
 msgid "first argument must be environment or external pointer"
 msgstr " 最初の引数は環境か外部ポインタでなくてはなりません "
 
-#: src/main/memory.c:1362
+#: src/main/memory.c:1388
 msgid "second argument must be a function"
 msgstr " 二番目の引数は関数でなければなりません "
 
-#: src/main/memory.c:1366
+#: src/main/memory.c:1392
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr " 三番目の引数は 'TRUE' か 'FALSE' でなくてはなりません "
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1872
 msgid "vector memory exhausted (limit reached?)"
 msgstr " ベクトルのメモリを使い切りました（上限に達した？） "
 
-#: src/main/memory.c:1852
+#: src/main/memory.c:1878
 msgid "cons memory exhausted (limit reached?)"
 msgstr " cons メモリが尽きました（限界に達したかも？） "
 
-#: src/main/memory.c:1857
+#: src/main/memory.c:1883
 msgid "memory exhausted (limit reached?)"
 msgstr " メモリが尽きました（限界に達したかも？） "
 
-#: src/main/memory.c:1979
+#: src/main/memory.c:2006
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr " サイズ %0.1f Gb のメモリブロックを割り当てることができません "
 
-#: src/main/memory.c:1984
+#: src/main/memory.c:2011
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr " サイズ %0.1f Gb のメモリブロックを割り当てることができません "
 
-#: src/main/memory.c:2250
+#: src/main/memory.c:2277
 #, fuzzy
 msgid "vector is too large"
 msgstr " 指定されたベクトルのサイズが長すぎます "
 
-#: src/main/memory.c:2253
+#: src/main/memory.c:2280
 msgid "negative length vectors are not allowed"
 msgstr " 負の長さのベクトルは許されません "
 
-#: src/main/memory.c:2279 src/main/memory.c:2292 src/main/memory.c:2305
-#: src/main/memory.c:2320
+#: src/main/memory.c:2306 src/main/memory.c:2319 src/main/memory.c:2332
+#: src/main/memory.c:2347
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr " 長さ %d のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2341
+#: src/main/memory.c:2368
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr " ベクトル割り当てにおいて，型か長さ (%s か %d) が不正です "
 
-#: src/main/memory.c:2434
+#: src/main/memory.c:2461
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr " サイズ %0.1f Gb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2438
+#: src/main/memory.c:2465
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr " サイズ %0.1f Mb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2442
+#: src/main/memory.c:2469
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr " サイズ %0.f Kb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2777
+#: src/main/memory.c:2804
 msgid "protect(): protection stack overflow"
 msgstr " protect()：プロテクションスタックが溢れました "
 
-#: src/main/memory.c:2793
+#: src/main/memory.c:2820
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr " unprotect(): %d 個の保護された項目  "
 
-#: src/main/memory.c:2807
+#: src/main/memory.c:2834
 msgid "unprotect_ptr: pointer not found"
 msgstr " unprotect_ptr：ポインターがありません "
 
-#: src/main/memory.c:2844
+#: src/main/memory.c:2871
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr " unprotect(): %d 個の保護された項目  "
 
-#: src/main/memory.c:2883
+#: src/main/memory.c:2910
 #, fuzzy, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr " Calloc がメモリー (%2$u バイトの %1$.0f) を割りあてられませんでした "
 
-#: src/main/memory.c:2894
+#: src/main/memory.c:2921
 #, fuzzy, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr " Realloc がメモリーを再確保できません (%.0f バイト)  "
 
-#: src/main/memory.c:3116
+#: src/main/memory.c:3143
 msgid "not safe to return vector pointer"
 msgstr " ベクトルのポインタを返すのは安全ではありません "
 
-#: src/main/memory.c:3357
+#: src/main/memory.c:3384
 msgid "memory profiling is not available on this system"
 msgstr " メモリプロファリングはこのシステムでは使えません "
 
-#: src/main/memory.c:3422
+#: src/main/memory.c:3449
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr " Rprofmem: ファイル '%s' を開くことができません "
 
-#: src/main/memory.c:3529
+#: src/main/memory.c:3556
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
@@ -4624,217 +4611,217 @@ msgstr " 不可能なモード（x）です "
 msgid "atomic vector arguments only"
 msgstr " 引数はアトムであるベクトルのみです "
 
-#: src/main/platform.c:299 src/main/platform.c:317
+#: src/main/platform.c:303 src/main/platform.c:321
 msgid "invalid filename specification"
 msgstr " ファイル名の指定が不正です "
 
-#: src/main/platform.c:370 src/main/platform.c:414
+#: src/main/platform.c:374 src/main/platform.c:418
 msgid "write error during file append"
 msgstr " ファイル追加中に書き込みエラーが生じました "
 
-#: src/main/platform.c:389
+#: src/main/platform.c:393
 msgid "nothing to append to"
 msgstr " 付け足す（append）べきものがありません "
 
-#: src/main/platform.c:443 src/main/platform.c:787
+#: src/main/platform.c:447 src/main/platform.c:791
 msgid "invalid filename argument"
 msgstr " ファイル名引数が不正です "
 
-#: src/main/platform.c:455
+#: src/main/platform.c:459
 #, c-format
 msgid "cannot create file '%s', reason '%s'"
 msgstr " fife '%s' を作れません, 理由は'%s'です "
 
-#: src/main/platform.c:470 src/main/platform.c:540 src/main/platform.c:619
+#: src/main/platform.c:474 src/main/platform.c:544 src/main/platform.c:623
 msgid "invalid first filename"
 msgstr " 一番目のファイル名が不正です "
 
-#: src/main/platform.c:482
+#: src/main/platform.c:486
 #, c-format
 msgid "cannot remove file '%s', reason '%s'"
 msgstr " ファイル '%s' を削除できません, 理由は '%s' です "
 
-#: src/main/platform.c:542 src/main/platform.c:621
+#: src/main/platform.c:546 src/main/platform.c:625
 msgid "invalid second filename"
 msgstr " 二番目のファイル名が不正です "
 
-#: src/main/platform.c:544 src/main/platform.c:623
+#: src/main/platform.c:548 src/main/platform.c:627
 msgid "nothing to link"
 msgstr " リンクすべきものがありません "
 
-#: src/main/platform.c:553
+#: src/main/platform.c:557
 msgid "symbolic links are not supported on this version of Windows"
 msgstr ""
 " このWindowsのバージョンではシンボリックリンクはサポートされていません "
 
-#: src/main/platform.c:573
+#: src/main/platform.c:577
 #, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
 msgstr ""
 " シンボリックリンク '%ls' （'%ls\" に対する）を作成できません, 理由は '%s' で"
 "す "
 
-#: src/main/platform.c:593
+#: src/main/platform.c:597
 #, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
 msgstr " '%s'に対するシンボリックリンク'%s'を作成できません, 理由は '%s' です "
 
-#: src/main/platform.c:601
+#: src/main/platform.c:605
 #, fuzzy
 msgid "symbolic links are not supported on this platform"
 msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
 
-#: src/main/platform.c:641
+#: src/main/platform.c:645
 #, c-format
 msgid "cannot link '%ls' to '%ls', reason '%s'"
 msgstr " '%ls' を '%ls' にリンクできません, 理由は '%s' です "
 
-#: src/main/platform.c:661
+#: src/main/platform.c:665
 #, c-format
 msgid "cannot link '%s' to '%s', reason '%s'"
 msgstr " '%s' を '%s' にリンクできません, 理由は '%s' です "
 
-#: src/main/platform.c:670
+#: src/main/platform.c:674
 msgid "(hard) links are not supported on this platform"
 msgstr " このプラットフォームでは（ハード）リンクはサポートされていません "
 
-#: src/main/platform.c:701
+#: src/main/platform.c:705
 msgid "'from' and 'to' are of different lengths"
 msgstr " 'from' と 'to' は異なった長さです "
 
-#: src/main/platform.c:712 src/main/platform.c:722
+#: src/main/platform.c:716 src/main/platform.c:726
 msgid "expanded 'from' name too long"
 msgstr " 展開された 'from' 名が長すぎます "
 
-#: src/main/platform.c:716 src/main/platform.c:726
+#: src/main/platform.c:720 src/main/platform.c:730
 msgid "expanded 'to' name too long"
 msgstr " 展開された　'to' 名が長すぎます "
 
-#: src/main/platform.c:730
+#: src/main/platform.c:734
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr " ファイル名を '%s' から '%s' に変更できません, 理由は'%s'です "
 
-#: src/main/platform.c:1080
+#: src/main/platform.c:1084
 msgid "invalid 'pattern' regular expression"
 msgstr " 正規表現の 'pattern' が不正です "
 
-#: src/main/platform.c:1204
+#: src/main/platform.c:1208
 msgid "unable to determine R home location"
 msgstr " R のホームロケーションを決定できません "
 
-#: src/main/platform.c:1256
+#: src/main/platform.c:1260
 msgid "file name too long"
 msgstr " ファイル名が長すぎます "
 
-#: src/main/platform.c:1511 src/main/platform.c:1558 src/main/sysutils.c:1630
+#: src/main/platform.c:1515 src/main/platform.c:1562 src/main/sysutils.c:1630
 #: src/main/sysutils.c:1644
 msgid "internal out-of-memory condition"
 msgstr " 内部でアウトオブメモリーが発生しています "
 
-#: src/main/platform.c:1554 src/main/sysutils.c:1640
+#: src/main/platform.c:1558 src/main/sysutils.c:1640
 #, c-format
 msgid "read error on '%s'"
 msgstr " \"%s\" の読み込みエラーです "
 
-#: src/main/platform.c:1716
+#: src/main/platform.c:1720
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr " 'LC_NUMERIC'をセットすると、Rは変に機能するかもしれません "
 
-#: src/main/platform.c:1728
+#: src/main/platform.c:1732
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr "LC_MESSAGES はWindowsにも存在しますが、動作しません "
 
-#: src/main/platform.c:1755
+#: src/main/platform.c:1759
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 " ロケールを \"%s\" に設定せよとのOS のレポート要求は受け入れられません "
 
-#: src/main/platform.c:2057
+#: src/main/platform.c:2061
 msgid "'hostname' must be a character vector of length 1"
 msgstr " 'hostname' は長さ1の文字列ベクトルでなくてはなりません "
 
-#: src/main/platform.c:2063
+#: src/main/platform.c:2067
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr " nsl 関数はホスト '%s' を解決できませんでした "
 
-#: src/main/platform.c:2070
+#: src/main/platform.c:2074
 #, fuzzy
 msgid "unknown format returned by C function 'gethostbyname'"
 msgstr " gethostbyname が未知の書式を返しました "
 
-#: src/main/platform.c:2079
+#: src/main/platform.c:2083
 msgid "nsl() is not supported on this platform"
 msgstr " このプラットフォームでは nsl 関数はサポートされていません "
 
-#: src/main/platform.c:2136
+#: src/main/platform.c:2140
 #, c-format
 msgid "'%s' already exists"
 msgstr " '%s' はすでに存在します "
 
-#: src/main/platform.c:2139
+#: src/main/platform.c:2143
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr " ディレクトリ '%s' を作れません, 理由は'%s'です "
 
-#: src/main/platform.c:2185
+#: src/main/platform.c:2189
 #, c-format
 msgid "'%ls' already exists"
 msgstr " '%ls' はすでに存在します "
 
-#: src/main/platform.c:2189
+#: src/main/platform.c:2193
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr " ディレクトリ '%ls' を作れません, 理由は '%s' です "
 
-#: src/main/platform.c:2204 src/main/platform.c:2361
+#: src/main/platform.c:2208 src/main/platform.c:2365
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2212 src/main/platform.c:2225 src/main/platform.c:2243
-#: src/main/platform.c:2261 src/main/platform.c:2377 src/main/platform.c:2390
-#: src/main/platform.c:2410 src/main/platform.c:2430
+#: src/main/platform.c:2216 src/main/platform.c:2229 src/main/platform.c:2247
+#: src/main/platform.c:2265 src/main/platform.c:2381 src/main/platform.c:2394
+#: src/main/platform.c:2414 src/main/platform.c:2434
 #, fuzzy
 msgid "over-long path length"
 msgstr " 長さゼロのパターン "
 
-#: src/main/platform.c:2232
+#: src/main/platform.c:2236
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr " ディレクトリ %ls の作成に問題があります: %s "
 
-#: src/main/platform.c:2251
+#: src/main/platform.c:2255
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr " ディレクトリ %ls の作成に問題があります: %s "
 
-#: src/main/platform.c:2269
+#: src/main/platform.c:2273
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr " %ls の %ls へのコピーに問題があります: %s "
 
-#: src/main/platform.c:2399
+#: src/main/platform.c:2403
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr " ディレクトリ %s の作成に問題があります: %s "
 
-#: src/main/platform.c:2418
+#: src/main/platform.c:2422
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr " ディレクトリ %s の作成に問題があります: %s "
 
-#: src/main/platform.c:2439
+#: src/main/platform.c:2443
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr " %s の %s へのコピーに問題があります: %s "
 
-#: src/main/platform.c:2562
+#: src/main/platform.c:2566
 msgid "'mode' must be of length at least one"
 msgstr " 'mode' の長さは1以上でなくてはなりません "
 
-#: src/main/platform.c:2629
+#: src/main/platform.c:2633
 msgid "insufficient OS support on this platform"
 msgstr " このプラットフォームでは不十分なOSのサポートです "
 
@@ -6346,23 +6333,28 @@ msgstr " 警告メッセージは255文字に切り詰められました "
 msgid "all arguments must be named"
 msgstr " 属性は名前が付けられていなければなりません "
 
-#: src/main/util.c:1831
+#: src/main/util.c:1832
 msgid "ICU is not supported on this build"
 msgstr " このビルドではICUはサポートされていません "
 
-#: src/main/util.c:1891
+#: src/main/util.c:1893
 #, fuzzy
 msgid "'breaks' is not sorted"
 msgstr " '%s' という型はサポートされていません "
 
-#: src/main/util.c:1925 src/main/util.c:1971
+#: src/main/util.c:1927 src/main/util.c:1973
 #, fuzzy, c-format
 msgid "long vector '%s' is not supported"
 msgstr " '%s' という型はサポートされていません "
 
-#: src/main/util.c:2024
+#: src/main/util.c:2026
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
+
+#: src/main/util.c:2054
+#, fuzzy
+msgid "'x' must be a vector"
+msgstr " 'x' は文字列ベクトルでなくてはなりません "
 
 #: src/main/version.c:37
 msgid ""
@@ -7323,6 +7315,16 @@ msgstr " '-e'に対して一時ファイルの作成は失敗しました "
 #: src/unix/system.c:462
 msgid "WARNING: Only editing the first in the list of files"
 msgstr " 警告: ファイルリストの最初のみを編集します "
+
+#~ msgid ".C(..): Width cannot be zero"
+#~ msgstr " .C(..): 幅(Width)は0ではいけません "
+
+#~ msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
+#~ msgstr ""
+#~ " .C(..): 'type' は \"d\"-書式においては \"integer\" でなくてはなりません "
+
+#~ msgid ".C(..): 'type' must be \"real\" for this format"
+#~ msgstr " .C(..): 'type' はこの書式においては \"real\" でなくてはなりません "
 
 #~ msgid "'names' is not a character string"
 #~ msgstr " 'names' は文字列ではありません "
