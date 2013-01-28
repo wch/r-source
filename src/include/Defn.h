@@ -588,7 +588,7 @@ extern0 R_size_t R_VSize  INI_as(R_VSIZE);/* Size of the vector heap */
 extern0 SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern0 SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern0 R_size_t R_Collected;	    /* Number of free cons cells (after gc) */
-LibExtern int	R_Is_Running;	    /* for Windows memory manager */
+extern0 int	R_Is_Running;	    /* for Windows memory manager */
 
 /* The Pointer Protection Stack */
 extern0 int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
@@ -600,10 +600,10 @@ LibExtern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
 extern0 SEXP	R_ReturnedValue;    /* Slot for return-ing values */
 extern0 SEXP*	R_SymbolTable;	    /* The symbol table */
 #ifdef R_USE_SIGNALS
-LibExtern RCNTXT R_Toplevel;	      /* Storage for the toplevel context */
-LibExtern RCNTXT* R_ToplevelContext;  /* The toplevel context */
+extern0 RCNTXT R_Toplevel;	      /* Storage for the toplevel context */
+extern0 RCNTXT* R_ToplevelContext;  /* The toplevel context */
 LibExtern RCNTXT* R_GlobalContext;    /* The global context */
-LibExtern RCNTXT* R_SessionContext;   /* The session toplevel context */
+extern0 RCNTXT* R_SessionContext;   /* The session toplevel context */
 #endif
 extern Rboolean R_Visible;	    /* Value visibility flag */
 extern0 int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */

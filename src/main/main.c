@@ -125,8 +125,7 @@ static void R_ReplFile(FILE *fp, SEXP rho)
 static int prompt_type;
 static char BrowsePrompt[20];
 
-/* This is in no header, so non-API */
-const char *R_PromptString(int browselevel, int type)
+static const char *R_PromptString(int browselevel, int type)
 {
     if (R_Slave) {
 	BrowsePrompt[0] = '\0';

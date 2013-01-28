@@ -103,6 +103,7 @@
  R_IoBufferPuts
  R_IoBufferReadReset
  R_IoBufferWriteReset
+ R_Is_Running
  R_JumpToContext
  R_KeepSource
  R_LibraryFileName
@@ -138,10 +139,12 @@
  R_ReturnedValue
  R_SaveToFile
  R_SaveToFileV
+ R_SessionContext
  R_SetMaxNSize
  R_SetMaxVSize
  R_SetOptionWarn
  R_SetOptionWidth
+ R_SetPPSize
  R_SetWin32
  R_ShowErrorCalls
  R_ShowErrorMessages
@@ -154,6 +157,8 @@
  R_TextBufferGetc
  R_TextBufferInit
  R_TmpvalSymbol
+ R_Toplevel
+ R_ToplevelContext
  R_TripleColonSymbol
  R_UTF8fixslash
  R_UseNamesSymbol
@@ -162,6 +167,7 @@
  R_WarnLength
  R_Warnings
  R_WholeSrcrefSymbol
+ R_WriteConnection
  R_XDRDecodeDouble
  R_XDRDecodeInteger
  R_XDREncodeDouble
