@@ -129,8 +129,7 @@ extern SEXP (*ptr_do_dataviewer)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_ProcessEvents)();
 
 
-/* These two are not used by R itself, but are used by the GNOME front-end
-   and the tcltk package */
+/* These two are not used by R itself, but are used by the tcltk package */
 extern int  (*R_timeout_handler)(void);
 extern long R_timeout_val;
 

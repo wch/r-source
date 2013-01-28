@@ -3246,6 +3246,7 @@ int Rconn_ungetc(int c, Rconnection con)
 
 /* read one line (without trailing newline) from con and store it in buf */
 /* return number of characters read, -1 on EOF */
+attribute_hidden
 int Rconn_getline(Rconnection con, char *buf, int bufsize)
 {
     int c, nbuf = -1;

@@ -231,6 +231,8 @@
  R_warn_partial_match_attr
  R_warn_partial_match_dollar
  R_wfopen
+ Rconn_getline
+ Rcons_vprintf
  Rconsolesetwidth
  Rf_AdobeSymbol2ucs2
  Rf_CheckFormals

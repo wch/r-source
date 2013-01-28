@@ -860,12 +860,12 @@ orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 
 
 #define ORD_2_BODY(FNAME, TYPE_1, TYPE_2, GREATER_2_SUB)		\
-void FNAME(int *indx, int n, TYPE_1 *x, TYPE_2 *y,			\
+    static void FNAME(int *indx, int n, TYPE_1 *x, TYPE_2 *y,		\
 	   Rboolean nalast, Rboolean decreasing)			\
 {									\
     int t;								\
     for(t=0; t < n; t++) indx[t] = t; /* indx[] <- 0:(n-1) */		\
-    for(t=0; sincs[t] > n; t++);						\
+    for(t=0; sincs[t] > n; t++);					\
     for (int h = sincs[t]; t < 16; h = sincs[++t])			\
 	for (int i = h; i < n; i++) {					\
 	    int itmp = indx[i], j = i;					\
