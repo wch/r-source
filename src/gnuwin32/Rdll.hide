@@ -362,7 +362,7 @@
  Rf_onsigusr2
  Rf_osDynSymbol
  Rf_pbeta_raw
- Rf_printArrray
+ Rf_printArray
  Rf_printMatrix
  Rf_printComplexVector
  Rf_printIntegerVector
@@ -442,6 +442,7 @@
  _pcre_OP_lengths
  _pcre_default_tables
  _pcre_find_bracket
+ _pcre_hspace_list
  _pcre_is_newline
  _pcre_jit_compile
  _pcre_jit_exec
@@ -449,9 +450,11 @@
  _pcre_jit_get_size
  _pcre_jit_get_target
  _pcre_ord2utf
+ _pcre_ucd_caseless_sets
  _pcre_ucd_records
  _pcre_ucd_stage1
  _pcre_ucd_stage2
+ _pcre_ucp_gbtable
  _pcre_ucp_gentype
  _pcre_ucp_typerange
  _pcre_utf8_table1
@@ -463,6 +466,7 @@
  _pcre_utt_names
  _pcre_utt_size
  _pcre_valid_utf
+ _pcre_vspace_list
  _pcre_was_newline
  _pcre_xclass
  _vsnprintf
@@ -810,6 +814,7 @@
  do_nextn
  do_ngettext
  do_normalizepath
+ do_nsl
  do_nzchar
  do_onexit
  do_open
@@ -1298,6 +1303,7 @@
  pcre_get_stringtable_entries
  pcre_get_substring
  pcre_get_substring_list
+ pcre_jit_exec
  pcre_jit_stack_alloc
  pcre_jit_stack_free
  pcre_maketables
@@ -1436,8 +1442,8 @@
  tzname
  tzset
  unregisterBase
+ utf8Valid
  utf8clen
- utf8valid
  wgl_hist_init
  wgl_hist_next
  wgl_hist_prev
