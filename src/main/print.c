@@ -208,11 +208,13 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
     }
 }
 
+static
 void PrintClosure(SEXP s, Rboolean useSource)
 {
     PrintLanguageEtc(s, useSource, TRUE);
 }
 
+static
 void PrintLanguage(SEXP s, Rboolean useSource)
 {
     PrintLanguageEtc(s, useSource, FALSE);

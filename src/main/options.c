@@ -141,6 +141,7 @@ int GetOptionDigits(void)
     return d;
 }
 
+attribute_hidden
 int GetOptionCutoff(void)
 {
     int w;
@@ -152,7 +153,7 @@ int GetOptionCutoff(void)
     return w;
 }
 
-
+attribute_hidden
 Rboolean Rf_GetOptionDeviceAsk(void)
 {
     int ask;

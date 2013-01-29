@@ -34,6 +34,8 @@
 // --> R_ext/GraphicsEngine.h + Rgraphics.h
 #include <Rmath.h>		/* eg. fmax2() */
 
+static void GLPretty(double *ul, double *uh, int *n);
+
 // used in GScale(), but also grDevices/src/axis_scales.c :
 // (usr, log, n_inp) |--> (axp, n_out) :
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
@@ -86,7 +88,7 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
 #define LPR_SMALL  2
 #define LPR_MEDIUM 3
 
-void GLPretty(double *ul, double *uh, int *n)
+static void GLPretty(double *ul, double *uh, int *n)
 {
 /* Generate pretty tick values --	LOGARITHMIC scale
  * __ ul < uh __

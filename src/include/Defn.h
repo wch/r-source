@@ -596,7 +596,7 @@ extern0 int	R_PPStackTop;	    /* The top of the stack */
 extern0 SEXP*	R_PPStack;	    /* The pointer protection stack */
 
 /* Evaluation Environment */
-LibExtern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
+extern0 SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
 extern0 SEXP	R_ReturnedValue;    /* Slot for return-ing values */
 extern0 SEXP*	R_SymbolTable;	    /* The symbol table */
 #ifdef R_USE_SIGNALS
@@ -743,8 +743,9 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 
 extern unsigned int max_contour_segments INI_as(25000);
 
+/* used in package utils */
 extern Rboolean known_to_be_latin1 INI_as(FALSE);
-extern Rboolean known_to_be_utf8 INI_as(FALSE);
+extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 
 #ifdef __MAIN__
 # undef extern

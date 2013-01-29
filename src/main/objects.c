@@ -184,6 +184,7 @@ void R_warn_S3_for_S4(SEXP method) {
  *    3. fix up the argument list; it should be the arguments to the
  *	 generic matched to the formals of the method to be invoked */
 
+attribute_hidden
 SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 {
     SEXP val;
@@ -248,7 +249,7 @@ int isBasicClass(const char *ss) {
 }
 
 
-
+attribute_hidden
 int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP callrho, SEXP defrho, SEXP *ans)
 {
@@ -1025,7 +1026,7 @@ R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val, SEXP envir)
     return old;
 }
 
-SEXP R_isMethodsDispatchOn(SEXP onOff) {
+static SEXP R_isMethodsDispatchOn(SEXP onOff) {
     SEXP value = allocVector(LGLSXP, 1);
     Rboolean onOffValue;
     R_stdGen_ptr_t old = R_get_standardGeneric_ptr();
@@ -1357,6 +1358,7 @@ static SEXP get_this_generic(SEXP args)
 /* Could there be methods for this op?	Checks
    only whether methods are currently being dispatched and, if so,
    whether methods are currently defined for this op. */
+attribute_hidden
 Rboolean R_has_methods(SEXP op)
 {
     R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr(); int offset;

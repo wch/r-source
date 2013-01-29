@@ -3238,11 +3238,13 @@ int Rconn_fgetc(Rconnection con)
     return c;
 }
 
+#ifdef UNUSED
 int Rconn_ungetc(int c, Rconnection con)
 {
     con->save2 = c;
     return c;
 }
+#endif
 
 /* read one line (without trailing newline) from con and store it in buf */
 /* return number of characters read, -1 on EOF */
@@ -4873,10 +4875,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* This function allows C code to call the write method of a
-   connection.  It is mainly intended as a means for C code to do a
-   buffered write to sockets, but could be the start of a more
-   extensive C-level connection API.  LT */
+attribute_hidden
 size_t R_WriteConnection(Rconnection con, void *buf, size_t n)
 {
     if(!con->isopen) error(_("connection is not open"));

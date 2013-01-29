@@ -966,7 +966,7 @@ void setup_Rmainloop(void)
 
 extern SA_TYPE SaveAction; /* from src/main/startup.c */
 
-void end_Rmainloop(void)
+static void end_Rmainloop(void)
 {
     /* refrain from printing trailing '\n' in slave mode */
     if (!R_Slave)
@@ -1412,6 +1412,7 @@ R_getTaskCallbackNames(void)
      Simple state to indicate that they are currently being run. */
 static Rboolean Rf_RunningToplevelHandlers = FALSE;
 
+/* This is not used in R and in no header */
 void
 Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 			Rboolean visible)

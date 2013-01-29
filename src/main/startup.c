@@ -112,12 +112,14 @@ static char workspace_name[1000] = ".RData";
 #else
 static char workspace_name[PATH_MAX] = ".RData";
 
+attribute_hidden
 void set_workspace_name(const char *fn)
 {
     strncpy(workspace_name, fn, PATH_MAX);
 }
 #endif
 
+attribute_hidden
 const char* get_workspace_name()
 {
     return workspace_name;

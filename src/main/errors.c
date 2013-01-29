@@ -427,6 +427,7 @@ static void cleanup_PrintWarnings(void *data)
     inPrintWarnings = 0;
 }
 
+attribute_hidden
 void PrintWarnings(void)
 {
     int i;
@@ -1199,6 +1200,7 @@ WarningDB[] = {
 };
 
 
+attribute_hidden
 void ErrorMessage(SEXP call, int which_error, ...)
 {
     int i;
@@ -1218,6 +1220,7 @@ void ErrorMessage(SEXP call, int which_error, ...)
     errorcall(call, "%s", buf);
 }
 
+attribute_hidden
 void WarningMessage(SEXP call, R_WARNING which_warn, ...)
 {
     int i;

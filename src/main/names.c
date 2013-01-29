@@ -969,6 +969,7 @@ SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     return prim;
 }
 
+attribute_hidden
 int StrToInternal(const char *s)
 {
     int i;
@@ -1040,7 +1041,7 @@ static void SymbolShortcuts(void)
 }
 
 /* initialize the symbol table */
-void InitNames()
+void attribute_hidden InitNames()
 {
     /* allocate the symbol table */
     if (!(R_SymbolTable = (SEXP *) calloc(HSIZE, sizeof(SEXP))))

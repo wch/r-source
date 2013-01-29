@@ -183,6 +183,7 @@ SEXP deparse1(SEXP call, Rboolean abbrev, int opts)
 }
 
 /* used for language objects in print() */
+attribute_hidden
 SEXP deparse1w(SEXP call, Rboolean abbrev, int opts)
 {
     Rboolean backtick = TRUE;

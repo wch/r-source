@@ -53,6 +53,7 @@
     else				\
 	width = 0
 
+static
 void printLogicalVector(int *x, R_xlen_t n, int indx)
 {
     int w, labwidth=0, width;
@@ -149,6 +150,7 @@ static void printStringVector(SEXP *x, R_xlen_t n, int quote, int indx)
     Rprintf("\n");
 }
 
+static
 void printRawVector(Rbyte *x, R_xlen_t n, int indx)
 {
     int w, labwidth=0, width;

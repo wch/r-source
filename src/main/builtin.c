@@ -32,6 +32,7 @@
 
 #include <R_ext/RS.h> /* for Memzero */
 
+attribute_hidden
 R_xlen_t asVecSize(SEXP x)
 {
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {

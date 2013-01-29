@@ -35,7 +35,7 @@
 #define EncodeReal         Rf_EncodeReal
 #define EncodeComplex      Rf_EncodeComplex
 #define VectorIndex        Rf_VectorIndex
-#define printIntegerVector Rf_printIntegerVector
+//#define printIntegerVector Rf_printIntegerVector
 #define printRealVector    Rf_printRealVector
 #define printComplexVector Rf_printComplexVector
 
@@ -59,7 +59,7 @@ const char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
 int	IndexWidth(R_xlen_t);
 void VectorIndex(R_xlen_t, int);
 
-void printLogicalVector(int *, R_xlen_t, int);
+//void printLogicalVector(int *, R_xlen_t, int);
 void printIntegerVector(int *, R_xlen_t, int);
 void printRealVector   (double *, R_xlen_t, int);
 void printComplexVector(Rcomplex *, R_xlen_t, int);

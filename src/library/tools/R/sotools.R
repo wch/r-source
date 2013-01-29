@@ -213,24 +213,23 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "HASHASH", "HASHVALUE", "OutDec", "PRIMFUN", "PRIMOFFSET",
             "PRIMVAL", "PrintClosure", "PrintLanguage", "RC_fopen",
             "R_CollectFromIndex", "R_CompiledFileName",
-            "R_CurrentExpr", "R_FileExists", "R_FinalizeSrcRefState",
+            "R_FileExists", "R_FinalizeSrcRefState",
             "R_FreeStringBuffer", "R_FunTab", "R_GE_setVFontRoutines",
-            "R_GetVarLocMISSING", "R_GetVarLocSymbol",
-            "R_GetVarLocValue", "R_InitSrcRefState", "R_LookupMethod",
+            "R_GetVarLocMISSING", "R_InitSrcRefState",
             "R_MakeExternalPtrFn", "R_MethodsNamespace",
             "R_NewHashedEnv", "R_OpenCompiledFile", "R_PV",
             "R_ParseBuffer", "R_ParseConn", "R_ParseContext",
             "R_ParseContextLast", "R_ParseContextLine",
             "R_ParseError", "R_ParseErrorMsg", "R_ParseFile",
-            "R_Parse1Buffer", "R_Parse1File", "R_SetVarLocValue",
+            "R_Parse1Buffer", "R_Parse1File",
             "R_SrcfileSymbol", "R_SrcrefSymbol", "R_Visible",
             "R_WriteConnection", "R_addTaskCallback",
             "R_cairoCdynload", "R_data_class",
-            "R_deferred_default_method", "R_execMethod", "R_fgetc",
+            "R_deferred_default_method", "R_execMethod",
             "R_findVarLocInFrame","R_fopen", "R_gc_torture",
             "R_getTaskCallbackNames", "R_get_arith_function",
             "R_get_primname", "R_get_standardGeneric_ptr",
-            "R_gzclose", "R_gzgets", "R_gzopen", "R_has_methods",
+            "R_gzclose", "R_gzgets", "R_gzopen",
             "R_ignore_SIGPIPE", "R_isForkedChild",
             "R_isMethodsDispatchOn", "R_moduleCdynload", "R_pretty",
             "R_primitive_generic", "R_primitive_methods", "R_print",
@@ -243,38 +242,35 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rdownload", "RestoreAction", "Rf_EncodeComplex",
             "Rf_EncodeElement", "Rf_EncodeEnvironment",
             "Rf_EncodeInteger", "Rf_EncodeLogical", "Rf_EncodeRaw",
-            "Rf_EncodeReal", "Rf_EncodeString", "Rf_ErrorMessage",
-            "Rf_GLPretty", "Rf_GPretty", "Rf_GetOptionCutoff",
-            "Rf_GetOptionDeviceAsk", "Rf_InitNames",
+            "Rf_EncodeReal", "Rf_EncodeString",
+            "Rf_GPretty",
             "Rf_NewEnvironment", "Rf_PrintDefaults",
-            "Rf_PrintWarnings", "Rf_ReplIteration", "Rf_Seql",
-            "Rf_StrToInternal", "Rf_VectorIndex", "Rf_WarningMessage",
-            "Rf_addTaskCallback", "Rf_asVecSize", "Rf_begincontext",
+            "Rf_ReplIteration", "Rf_Seql",
+            "Rf_addTaskCallback", "Rf_begincontext",
             "Rf_callToplevelHandlers", "Rf_checkArityCall",
             "Rf_con_pushback", "Rf_copyMostAttribNoTs",
-            "Rf_ddfindVar", "Rf_deparse1", "Rf_deparse1line",
-            "Rf_deparse1w", "Rf_dpptr", "Rf_dynamicfindVar",
+            "Rf_deparse1", "Rf_deparse1line",
+            "Rf_dpptr",
             "Rf_endcontext", "Rf_envlength", "Rf_formatComplex",
             "Rf_formatInteger", "Rf_formatLogical", "Rf_formatRaw",
             "Rf_formatReal", "Rf_formatString", "Rf_init_con",
             "Rf_internalTypeCheck", "Rf_isProtected",
-            "Rf_isValidName", "Rf_mbrtowc", "Rf_mkFalse", "Rf_mkTrue",
+            "Rf_mbrtowc", "Rf_mkFalse",
             "Rf_printArray", "Rf_printComplexVector",
             "Rf_printIntegerVector", "Rf_printMatrix",
             "Rf_printNamedVector", "Rf_printRealVector",
             "Rf_printVector", "Rf_removeTaskCallbackByIndex",
             "Rf_removeTaskCallbackByName", "Rf_set_iconv",
             "Rf_sortVector", "Rf_strIsASCII", "Rf_strchr",
-            "Rf_strrchr", "Rf_tsConform", "Rf_tspgets",
-            "Rf_type2symbol", "Rf_ucstomb", "Rf_usemethod",
+            "Rf_strrchr", "Rf_ucstomb",
             "Rf_utf8towcs", "Rf_wcstoutf8", "Rg_PolledEvents",
             "Rg_set_col_ptrs", "Rg_wait_usec", "Ri18n_iswctype",
             "Ri18n_wcswidth", "Ri18n_wctype", "Ri18n_wcwidth",
             "Rsockclose", "Rsockconnect", "Rsocklisten", "Rsockopen",
             "Rsockread", "Rsockwrite", "Runzip", "SET_CXTAIL",
             "SET_PRIMFUN", "SET_PRIMOFFSET", "SaveAction",
-            "UNIMPLEMENTED_TYPE", "UNIMPLEMENTED_TYPEt",
-            "User_norm_fun", "User_unif_init", "baseRegisterIndex",
+            "UNIMPLEMENTED_TYPE",
+            "baseRegisterIndex",
             "csduplicated", "currentTime", "dcar", "dcdr", "do_Rprof",
             "do_Rprofmem", "do_X11", "do_contourLines", "do_edit",
             "do_getGraphicsEventEnv", "do_getSnapshot",
@@ -282,13 +278,13 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "dqrrsd_","dqrxb_", "dtype", "dummy_fgetc", "dummy_ii",
             "dummy_vfprintf", "end_Rmainloop", "epslon_",
             "extR_HTTPDCreate", "extR_HTTPDStop", "fdhess",
-            "fixup_NaRm", "getConnection", "getPRIMNAME",
+            "getConnection", "getPRIMNAME",
             "get_workspace_name", "known_to_be_latin1",
             "known_to_be_utf8", "locale2charset", "match5", "matherr",
             "max_contour_segments", "mbcsToUcs2", "mbcsValid",
             "memtrace_report", "parseError", "printLogicalVector",
             "printRawVector", "pythag_", "rs_", "rwarnc_",
-            "savePalette", "signrank_free", "tql2_", "tqlrat_",
+            "signrank_free", "tql2_", "tqlrat_",
             "tred1_", "tred2_", "utf8Valid", "utf8locale",
             "wilcox_free", "yylloc")
 
@@ -328,6 +324,27 @@ frontends <-
       "ptr_R_savehistory", "ptr_do_dataentry", "ptr_do_dataviewer",
       "ptr_do_selectlist", "readconsolecfg", "removeInputHandler",
       "run_Rmainloop", "setup_Rmainloop")
+
+## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
+
+## graphics uses OutDec R_print Rf_EncodeComplex Rf_EncodeInteger Rf_EncodeLogical Rf_EncodeReal Rf_GPretty Rf_PrintDefaults Rf_envlength Rf_formatComplex Rf_formatReal baseRegisterIndex known_to_be_latin1 max_contour_segments
+
+## methods uses R_GetVarLocMISSING R_MakeExternalPtrFn R_MethodsNamespace R_data_class R_deferred_default_method R_execMethod R_findVarLocInFrame R_primitive_generic R_primitive_methods R_set_prim_method R_set_quick_method_check R_set_standardGeneric_ptr R_subassign3_dflt Rf_NewEnvironment Rf_envlength do_set_prim_method getPRIMNAME
+
+## parallel uses R_isForkedChild
+
+## stats uses Rf_PrintDefaults Rf_Seql Rf_copyMostAttribNoTs Rf_deparse1 Rf_deparse1line Rf_envlength Rf_mkFalse fdhess memtrace_report signrank_free wilcox_free
+
+## tcltk uses R_Consolefile R_GUIType R_InputHandlers R_Outputfile R_PolledEvents R_checkActivity R_runHandlers R_timeout_handler R_timeout_val R_wait_usec ptr_R_ClearerrConsole ptr_R_FlushConsole ptr_R_ReadConsole ptr_R_ResetConsole ptr_R_WriteConsole
+
+## tools uses RC_fopen R_FileExists R_NewHashedEnv R_ParseContext R_ParseContextLast R_ParseContextLine R_ParseError R_ParseErrorMsg R_SrcfileSymbol R_SrcrefSymbol Rconn_fgetc Rf_begincontext Rf_endcontext Rf_envlength Rf_mbrtowc Rf_strchr extR_HTTPDCreate extR_HTTPDStop getConnection parseError
+
+## utils uses R_ClearerrConsole R_FreeStringBuffer R_GUIType R_moduleCdynload R_print R_strtod4 Rconn_fgetc Rconn_printf Rdownload Rf_EncodeElement Rf_PrintDefaults Rf_begincontext Rf_con_pushback Rf_endcontext Rf_envlength Rf_sortVector Rsockclose Rsockconnect Rsocklisten Rsockopen Rsockread Rsockwrite Runzip UNIMPLEMENTED_TYPE csduplicated do_Rprof do_Rprofmem do_edit getConnection known_to_be_latin1 ptr_R_addhistory ptr_R_loadhistory ptr_R_savehistory ptr_do_dataentry ptr_do_dataviewer ptr_do_selectlist
+
+## modules use R_GE_setVFontRoutines R_setInternetRoutines R_setLapackRoutines R_setX11Routines Rf_set_iconv currentTime dummy_fgetc dummy_vfprintf utf8locale
+
+
+
 
 nonAPI <- c(nonAPI, frontends)
 

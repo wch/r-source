@@ -71,7 +71,6 @@ typedef enum {
 #define GForceClip		Rf_GForceClip
 #define GLine			Rf_GLine
 #define GLocator		Rf_GLocator
-#define GLPretty		Rf_GLPretty
 #define GMapUnits		Rf_GMapUnits
 #define GMapWin2Fig		Rf_GMapWin2Fig
 #define GMathText		Rf_GMathText
@@ -225,7 +224,6 @@ void GBox(int, pGEDevDesc);
 /* Return a "nice" min, max and number of intervals for a given
  * range on a linear or _log_ scale, respectively: */
 void GPretty(double*, double*, int*); /* used in plot3d.c */
-void GLPretty(double*, double*, int*);
 /* Draw text in margins. */
 void GMtext(const char *, cetype_t, int, double, int, double, int, double, pGEDevDesc);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */

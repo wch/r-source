@@ -71,6 +71,7 @@
  R_CommentSymbol
  R_ConnIdSymbol
  R_ConsoleIob
+ R_CurrentExpr
  R_Decode2Long
  R_DevicesSymbol
  R_DisableNLinBrowser
@@ -82,6 +83,7 @@
  R_Expressions_keep
  R_ExternalPtrAddrFn
  R_EvalDepth
+ R_fgetc
  R_FileMtime
  R_FreeSEXP
  R_FreeStringBufferL
@@ -91,6 +93,8 @@
  R_GetMaxNSize
  R_GetMaxVSize
  R_GetTraceback
+ R_GetVarLocSymbol
+ R_GetVarLocValue
  R_HandlerStack
  R_HiddenFile
  R_IoBufferReadOffset
@@ -110,6 +114,7 @@
  R_LoadFromFile
  R_LoadRconsole
  R_Log10
+ R_LookupMethod
  R_NHeap
  R_NShowCalls
  R_NSize
@@ -145,6 +150,7 @@
  R_SetOptionWarn
  R_SetOptionWidth
  R_SetPPSize
+ R_SetVarLocValue
  R_SetWin32
  R_ShowErrorCalls
  R_ShowErrorMessages
@@ -202,6 +208,7 @@
  R_getS4DataSlot
  R_getSymbolInfo
  R_gmtime
+ R_has_methods
  R_init_base
  R_init_jit_enabled
  R_initialize_bcode
@@ -254,7 +261,10 @@
  Rf_DispatchGroup
  Rf_DispatchOrEval
  Rf_EnsureString
+ Rf_ErrorMessage
  Rf_GInit
+ Rf_GetOptionCutoff
+ Rf_GetOptionDeviceAsk
  Rf_IndexWidth
  Rf_InitArithmetic
  Rf_InitBaseEnv
@@ -265,6 +275,7 @@
  Rf_InitGlobalEnv
  Rf_InitGraphics
  Rf_InitMemory
+ Rf_InitNames
  Rf_InitOptions
  Rf_InitStringHash
  Rf_InitTempDir
@@ -284,18 +295,22 @@
  Rf_PrintVersion
  Rf_PrintVersionString
  Rf_PrintVersion_part_1
+ Rf_PrintWarnings
  Rf_RealFromComplex
  Rf_RealFromInteger
  Rf_RealFromLogical
  Rf_RealFromString
  Rf_Scollate
  Rf_SrcrefPrompt
+ Rf_StrToInternal
  Rf_StringFromComplex
  Rf_StringFromInteger
  Rf_StringFromLogical
  Rf_StringFromReal
  Rf_VectorIndex
+ Rf_WarningMessage
  Rf_allocCharsxp
+ Rf_asVecSize
  Rf_bd0
  Rf_chebyshev_eval
  Rf_chebyshev_init
@@ -303,7 +318,9 @@
  Rf_check_stack_balance
  Rf_convertToC
  Rf_d1mach
+ Rf_ddfindVar
  Rf_deparse1s
+ Rf_deparse1w
  Rf_evalList
  Rf_evalListKeepMissing
  Rf_findVar1
@@ -314,6 +331,7 @@
  Rf_get1index
  Rf_i1mach
  Rf_initStack
+ Rf_isValidName
  Rf_lfastchoose
  Rf_lgammacor
  Rf_lookupCachedSymbol
@@ -328,6 +346,7 @@
  Rf_mkCLOSXP
  Rf_mkPROMISE
  Rf_mkSYMSXP
+ Rf_mkTrue
  Rf_name2col
  Rf_onsigusr1
  Rf_onsigusr2
@@ -345,7 +364,10 @@
  Rf_stirlerr
  Rf_strmat2intmat
  Rf_substituteList
+ Rf_tsConform
+ Rf_tspgets
  Rf_ucstomb
+ Rf_usemethod
  Rf_unbindVar
  Rf_utf8toucs
  Rf_vectorIndex
@@ -382,6 +404,7 @@
  UNLOCK_BINDING
  UTF8in
  UTF8out
+ UNIMPLEMENTED_TYPEt
  UseInternet2
  WinCheckUTF8
  WinUTF8out
@@ -981,6 +1004,7 @@
  elapsedLimit2
  elapsedLimitValue
  epslon_
+ fixup_NaRm
  fontname
  fontsty
  formatError
@@ -997,6 +1021,7 @@
  getWindowTitle
  get_current_mem
  get_duplicate_counter
+ get_workspace_name
  getline
  gl_hist_next
  gl_hist_prev
@@ -1015,6 +1040,7 @@
  intpr0_
  invalidate_cached_recodings
  isMethodsDispatchOn
+ known_to_be_utf8
  latin1locale
  libintl_bind_textdomain_codeset
  libintl_bindtextdomain
@@ -1217,6 +1243,7 @@
  lzma_vli_size
  mallinfo
  mb_char_len
+ mbcsValid
  menuclear
  menuconfig
  menueditornew
@@ -1391,6 +1418,7 @@
  tzset
  unregisterBase
  utf8clen
+ utf8valid
  wgl_hist_init
  wgl_hist_next
  wgl_hist_prev
