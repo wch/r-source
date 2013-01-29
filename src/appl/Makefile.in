@@ -22,7 +22,7 @@ OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
 HEADERS = lbfgsb.c
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = COPYRIGHT COPYRIGHT.ftn README \
+DISTFILES = \
 	Makefile.in Makefile.win \
 	$(HEADERS) \
 	$(SOURCES_C) \
