@@ -210,7 +210,8 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "fft_factor", "fft_work", "Brent_fmin", "optif0",
 ## then entry points which are not attribute-hidden
 ## and in a non-API heder or no header at all.
-            "OutDec", "RC_fopen", "R_CollectFromIndex",
+            "OutDec", "PRIMOFFSET",
+            "RC_fopen", "R_CollectFromIndex",
             "R_CompiledFileName", "R_FileExists",
             "R_FreeStringBuffer", "R_FunTab", "R_GE_setVFontRoutines",
             "R_GetVarLocMISSING", "R_MakeExternalPtrFn",
@@ -329,7 +330,7 @@ frontends <-
 
 ## utils uses R_ClearerrConsole R_FreeStringBuffer R_GUIType R_moduleCdynload R_print R_strtod4 Rconn_fgetc Rconn_printf Rdownload Rf_EncodeElement Rf_PrintDefaults Rf_begincontext Rf_con_pushback Rf_endcontext Rf_envlength Rf_sortVector Rsockclose Rsockconnect Rsocklisten Rsockopen Rsockread Rsockwrite Runzip UNIMPLEMENTED_TYPE csduplicated do_Rprof do_Rprofmem do_edit getConnection known_to_be_latin1 ptr_R_addhistory ptr_R_loadhistory ptr_R_savehistory ptr_do_dataentry ptr_do_dataviewer ptr_do_selectlist
 
-## modules use R_GE_setVFontRoutines R_setInternetRoutines R_setLapackRoutines R_setX11Routines Rf_set_iconv currentTime dummy_fgetc dummy_vfprintf ucstomb utf8locale
+## modules use PRIMOFFSET R_GE_setVFontRoutines R_setInternetRoutines R_setLapackRoutines R_setX11Routines Rf_set_iconv currentTime dummy_fgetc dummy_vfprintf ucstomb utf8locale
 
 
 

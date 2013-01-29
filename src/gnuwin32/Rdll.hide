@@ -58,7 +58,6 @@
  MDIsize
  MainThread
  PRIMFUN
- PRIMOFFSET
  PRIMVAL
  PrintUsage
  ProfileEvent
