@@ -1442,7 +1442,6 @@
  tzname
  tzset
  unregisterBase
- utf8Valid
  utf8clen
  wgl_hist_init
  wgl_hist_next
