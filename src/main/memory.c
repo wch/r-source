@@ -217,7 +217,7 @@ static const char *sexptype2char(SEXPTYPE type) {
 
 #ifdef GC_TORTURE
 /* **** if the user specified a wait before starting to force
-   **** collecitons it might make sense to also wait before starting
+   **** collections it might make sense to also wait before starting
    **** to inhibit releases */
 static int gc_force_wait = 0;
 static int gc_force_gap = 0;
@@ -566,7 +566,6 @@ static R_size_t R_NodesInUse = 0;
 
 /* This macro calls dc__action__ for each child of __n__, passing
    dc__extra__ as a second argument for each call. */
-#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 /* When the CHARSXP hash chains are maintained through the ATTRIB
    field it is important that we NOT trace those fields otherwise too
    many CHARSXPs will be kept alive artificially. As a safety we don't
@@ -574,23 +573,16 @@ static R_size_t R_NodesInUse = 0;
    are themselves CHARSXPs, which is what they will be if they are
    part of a hash chain.  Theoretically, for CHARSXPs the ATTRIB field
    should always be either R_NilValue or a CHARSXP. */
-# ifdef PROTECTCHECK
-#  define HAS_GENUINE_ATTRIB(x) \
+#ifdef PROTECTCHECK
+# efine HAS_GENUINE_ATTRIB(x) \
     (TYPEOF(x) != FREESXP && ATTRIB(x) != R_NilValue && \
      (TYPEOF(x) != CHARSXP || TYPEOF(ATTRIB(x)) != CHARSXP))
-# else
-#  define HAS_GENUINE_ATTRIB(x) \
+#else
+# define HAS_GENUINE_ATTRIB(x) \
     (ATTRIB(x) != R_NilValue && \
      (TYPEOF(x) != CHARSXP || TYPEOF(ATTRIB(x)) != CHARSXP))
-# endif
-#else
-# ifdef PROTECTCHECK
-#  define HAS_GENUINE_ATTRIB(x) \
-    (TYPEOF(x) != FREESXP && ATTRIB(x) != R_NilValue)
-# else
-#  define HAS_GENUINE_ATTRIB(x) (ATTRIB(x) != R_NilValue)
-# endif
 #endif
+
 #ifdef PROTECTCHECK
 #define FREE_FORWARD_CASE case FREESXP: if (gc_inhibit_release) break;
 #else
@@ -3279,10 +3271,12 @@ void (SET_RDEBUG)(SEXP x, int v) { SET_RDEBUG(CHK(x), v); }
 void (SET_RSTEP)(SEXP x, int v) { SET_RSTEP(CHK(x), v); }
 
 /* These are only needed with the write barrier on */
+#ifdef TESTING_WRITE_BARRIER
 /* Primitive Accessors */
 int (PRIMOFFSET)(SEXP x) { return PRIMOFFSET(x); }
 attribute_hidden
 void (SET_PRIMOFFSET)(SEXP x, int v) { SET_PRIMOFFSET(x, v); }
+#endif
 
 /* Symbol Accessors */
 SEXP (PRINTNAME)(SEXP x) { return CHK(PRINTNAME(CHK(x))); }
@@ -3318,6 +3312,7 @@ void (SET_PRCODE)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); PRCODE(x) = v; }
 void (SET_PRSEEN)(SEXP x, int v) { SET_PRSEEN(CHK(x), v); }
 
 /* Hashing Accessors */
+#ifdef TESTING_WRITE_BARRIER
 attribute_hidden
 int (HASHASH)(SEXP x) { return HASHASH(CHK(x)); }
 attribute_hidden
@@ -3327,8 +3322,8 @@ attribute_hidden
 void (SET_HASHASH)(SEXP x, int v) { SET_HASHASH(CHK(x), v); }
 attribute_hidden
 void (SET_HASHVALUE)(SEXP x, int v) { SET_HASHVALUE(CHK(x), v); }
+#endif
 
-#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 attribute_hidden
 SEXP (SET_CXTAIL)(SEXP x, SEXP v) {
 #ifdef USE_TYPE_CHECKING
@@ -3340,7 +3335,6 @@ SEXP (SET_CXTAIL)(SEXP x, SEXP v) {
     ATTRIB(x) = v;
     return x;
 }
-#endif /* USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS */
 
 /* Test functions */
 Rboolean Rf_isNull(SEXP s) { return isNull(s); }

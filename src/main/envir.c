@@ -3421,15 +3421,10 @@ static void R_StringHash_resize(unsigned int newsize)
        enough memory, and ideally we would recover from that and
        carry over with a table that was getting full.
      */
-#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
     /* When using the ATTRIB fields to maintain the chains the chain
        moving is destructive and does not involve allocation.  This is
        therefore the only point where GC can occur. */
     new_table = R_NewHashTable(newsize);
-#else
-    PROTECT(old_table);
-    PROTECT(new_table = R_NewHashTable(newsize));
-#endif
     newmask = newsize - 1;
 
     /* transfer chains from old table to new table */
@@ -3444,19 +3439,12 @@ static void R_StringHash_resize(unsigned int newsize)
 	    if (ISNULL(new_chain))
 		SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
 	    /* move the current chain link to the new chain */
-#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 	    /* this is a destrictive modification */
 	    new_chain = SET_CXTAIL(val, new_chain);
 	    SET_VECTOR_ELT(new_table, new_hashcode, new_chain);
-#else
-	    SET_VECTOR_ELT(new_table, new_hashcode, CONS(val, new_chain));
-#endif
 	    chain = next;
 	}
     }
-#ifndef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
-    UNPROTECT(2);
-#endif
     R_StringHash = new_table;
     char_hash_size = newsize;
     char_hash_mask = newmask;
@@ -3529,9 +3517,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
     chain = VECTOR_ELT(R_StringHash, hashcode);
     for (; !ISNULL(chain) ; chain = CXTAIL(chain)) {
 	SEXP val = CXHEAD(chain);
-#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 	if (TYPEOF(val) != CHARSXP) break; /* sanity check */
-#endif
 	if (need_enc == (ENC_KNOWN(val) | IS_BYTES(val)) &&
 	    LENGTH(val) == len &&  /* quick pretest */
 	    memcmp(CHAR(val), name, len) == 0) {
@@ -3564,13 +3550,9 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	chain = VECTOR_ELT(R_StringHash, hashcode);
 	if (ISNULL(chain))
 	    SET_HASHPRI(R_StringHash, HASHPRI(R_StringHash) + 1);
-#ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 	/* this is a destrictive modification */
 	chain = SET_CXTAIL(cval, chain);
 	SET_VECTOR_ELT(R_StringHash, hashcode, chain);
-#else
-	SET_VECTOR_ELT(R_StringHash, hashcode, CONS(cval, chain));
-#endif
 
 	/* resize the hash table if necessary with the new entry still
 	   protected.
