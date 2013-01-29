@@ -265,6 +265,9 @@
  Rf_DispatchAnyOrEval
  Rf_DispatchGroup
  Rf_DispatchOrEval
+ Rf_EncodeEnvironment
+ Rf_EncodeRaw
+ Rf_EncodeString
  Rf_EnsureString
  Rf_ErrorMessage
  Rf_GInit
@@ -330,6 +333,8 @@
  Rf_evalListKeepMissing
  Rf_findVar1
  Rf_findcontext
+ Rf_formatRaw
+ Rf_formatString
  Rf_framedepth
  Rf_gamma_cody
  Rf_gammalims
@@ -357,6 +362,12 @@
  Rf_onsigusr2
  Rf_osDynSymbol
  Rf_pbeta_raw
+ Rf_printArrray
+ Rf_printMatrix
+ Rf_printComplexVector
+ Rf_printIntegerVector
+ Rf_printNamedVector
+ Rf_printVector
  Rf_promiseArgs
  Rf_qchisq_appr
  Rf_regcomp

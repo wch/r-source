@@ -718,7 +718,7 @@ LibExtern int R_max_num_math_threads INI_as(1);
 
 /* Pointer  type and utilities for dispatch in the methods package */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP, SEXP); /* typedef */
-R_stdGen_ptr_t R_get_standardGeneric_ptr(void); /* get method */
+//R_stdGen_ptr_t R_get_standardGeneric_ptr(void); /* get method */
 R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t, SEXP); /* set method */
 LibExtern SEXP R_MethodsNamespace;
 SEXP R_deferred_default_method(void);

@@ -436,6 +436,7 @@ static void printRawMatrix(SEXP sx, int offset, int r_pr, int r, int c,
     }
 }
 
+attribute_hidden
 void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 		 SEXP rl, SEXP cl, const char *rn, const char *cn)
 {
@@ -493,8 +494,8 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 #endif
 }
 
-static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
-			      SEXP dimnames)
+attribute_hidden
+void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 {
 /* == printArray(.) */
 
@@ -605,7 +606,3 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
     }
 }
 
-void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
-{
-    printArrayGeneral(x, dim, quote, right, dimnames);
-}

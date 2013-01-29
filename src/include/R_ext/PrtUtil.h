@@ -35,7 +35,7 @@
 #define EncodeReal         Rf_EncodeReal
 #define EncodeComplex      Rf_EncodeComplex
 #define VectorIndex        Rf_VectorIndex
-//#define printIntegerVector Rf_printIntegerVector
+#define printIntegerVector Rf_printIntegerVector
 #define printRealVector    Rf_printRealVector
 #define printComplexVector Rf_printComplexVector
 
