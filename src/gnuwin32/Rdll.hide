@@ -43,6 +43,7 @@
  ENC_KNOWN
  EhiWakeUp
  EncodeReal2
+ HASHASH
  IS_ACTIVE_BINDING
  IS_ASCII
  IS_BYTES
@@ -56,6 +57,9 @@
  MDIset
  MDIsize
  MainThread
+ PRIMFUN
+ PRIMOFFSET
+ PRIMVAL
  PrintUsage
  ProfileEvent
  R_BCNodeStackBase
@@ -83,8 +87,8 @@
  R_Expressions_keep
  R_ExternalPtrAddrFn
  R_EvalDepth
- R_fgetc
  R_FileMtime
+ R_FinalizeSrcRefState
  R_FreeSEXP
  R_FreeStringBufferL
  R_GE_VStrHeight
@@ -98,6 +102,7 @@
  R_HandlerStack
  R_HiddenFile
  R_IoBufferReadOffset
+ R_InitSrcRefState
  R_InitialData
  R_InsertRestartHandlers
  R_IoBufferFree
@@ -135,7 +140,6 @@
  R_ParseErrorFile
  R_ParseFile
  R_PendingPromises
- R_Pretty
  R_Primitive
  R_Quiet
  R_RecursiveSymbol
@@ -200,6 +204,7 @@
  R_dot_GenericDefEnv
  R_dot_Group
  R_dot_Methods
+ R_fgetc
  R_fixslash
  R_getClockIncrement
  R_getDllTable
@@ -230,6 +235,7 @@
  R_nwarnings
  R_osDynSymbol
  R_possible_dispatch
+ R_pretty
  R_restore_globals
  R_run_onexits
  R_seemsOldStyleS4Object
@@ -396,7 +402,10 @@
  SET_ASCII
  SET_BYTES
  SET_CACHED
+ SET_CXTAIL
+ SET_HASHASH
  SET_LATIN1
+ SET_PRIMFUN
  SET_PRIMOFFSET
  SET_UTF8
  Sys_TempDir

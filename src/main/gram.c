@@ -3552,6 +3552,7 @@ static char	contextstack[CONTEXTSTACK_SIZE], *contextp;
 static void PutSrcRefState(SrcRefState *state);
 static void UseSrcRefState(SrcRefState *state);
 
+attribute_hidden
 void R_InitSrcRefState(SrcRefState *state)
 {
     if (busy) {
@@ -3574,6 +3575,7 @@ void R_InitSrcRefState(SrcRefState *state)
     busy = TRUE;
 }
 
+attribute_hidden
 void R_FinalizeSrcRefState(void)
 {
     UNPROTECT_PTR(ParseState.SrcFile);

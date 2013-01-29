@@ -3278,7 +3278,9 @@ void (SET_CLOENV)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); CLOENV(x) = v; }
 void (SET_RDEBUG)(SEXP x, int v) { SET_RDEBUG(CHK(x), v); }
 void (SET_RSTEP)(SEXP x, int v) { SET_RSTEP(CHK(x), v); }
 
+/* These are only needed with the write barrier on */
 /* Primitive Accessors */
+attribute_hidden
 int (PRIMOFFSET)(SEXP x) { return PRIMOFFSET(x); }
 attribute_hidden
 void (SET_PRIMOFFSET)(SEXP x, int v) { SET_PRIMOFFSET(x, v); }
@@ -3317,13 +3319,18 @@ void (SET_PRCODE)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); PRCODE(x) = v; }
 void (SET_PRSEEN)(SEXP x, int v) { SET_PRSEEN(CHK(x), v); }
 
 /* Hashing Accessors */
+attribute_hidden
 int (HASHASH)(SEXP x) { return HASHASH(CHK(x)); }
+attribute_hidden
 int (HASHVALUE)(SEXP x) { return HASHVALUE(CHK(x)); }
 
+attribute_hidden
 void (SET_HASHASH)(SEXP x, int v) { SET_HASHASH(CHK(x), v); }
+attribute_hidden
 void (SET_HASHVALUE)(SEXP x, int v) { SET_HASHVALUE(CHK(x), v); }
 
 #ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
+attribute_hidden
 SEXP (SET_CXTAIL)(SEXP x, SEXP v) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP)
@@ -3357,9 +3364,12 @@ void attribute_hidden
 void attribute_hidden (LOCK_BINDING)(SEXP b) {LOCK_BINDING(b);}
 void attribute_hidden (UNLOCK_BINDING)(SEXP b) {UNLOCK_BINDING(b);}
 
-/* R_FunTab accessors */
+/* R_FunTab accessors, only needed when write barrier is on */
+attribute_hidden
 int (PRIMVAL)(SEXP x) { return PRIMVAL(x); }
+attribute_hidden
 CCODE (PRIMFUN)(SEXP x) { return PRIMFUN(x); }
+attribute_hidden
 void (SET_PRIMFUN)(SEXP x, CCODE f) { PRIMFUN(x) = f; }
 
 /* for use when testing the write barrier */
