@@ -91,7 +91,8 @@ void printIntegerVector(int *x, R_xlen_t n, int indx)
     Rprintf("\n");
 }
 
-// used in uncmin.c, and pro tem in package 'sem'
+// used in uncmin.c
+attribute_hidden
 void printRealVector(double *x, R_xlen_t n, int indx)
 {
     int w, d, e, labwidth=0, width;

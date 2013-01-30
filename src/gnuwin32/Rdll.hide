@@ -367,6 +367,7 @@
  Rf_printComplexVector
  Rf_printIntegerVector
  Rf_printNamedVector
+ Rf_printRealVector
  Rf_printVector
  Rf_promiseArgs
  Rf_qchisq_appr
