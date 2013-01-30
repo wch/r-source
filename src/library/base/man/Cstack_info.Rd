@@ -1,6 +1,6 @@
 % File src/library/base/man/Cstack_info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Cstack_info}
@@ -24,6 +24,10 @@ Cstack_info()
   the current usage could be estimated as negative.  (The heuristic is
   not used on embedded uses of \R on platforms where the stack base
   is not thought to be accurate.)
+
+  The \sQuote{evaluation depth} is the number of nested \R expressions
+  currently under evaluation: this has a limit controlled by
+  \code{\link{options}("expressions")}.
 }
 \value{
   An integer vector.  This has named elements
