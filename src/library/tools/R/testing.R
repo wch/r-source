@@ -46,14 +46,14 @@ massageExamples <-
     } else if(pkg != "base")
         cat("library('", pkg, "')\n\n", sep = "", file = out)
 
-    cat("assign(\".oldSearch\", search(), pos = 'CheckExEnv')\n", file = out)
+    cat("base::assign(\".oldSearch\", base::search(), pos = 'CheckExEnv')\n", file = out)
     ## cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n", file = out)
     if(addTiming) {
         ## adding timings
-        cat("assign(\".ExTimings\", \"", pkg,
+        cat("base::assign(\".ExTimings\", \"", pkg,
             "-Ex.timings\", pos = 'CheckExEnv')\n", sep="", file = out)
-        cat("cat(\"name\\tuser\\tsystem\\telapsed\\n\", file=get(\".ExTimings\", pos = 'CheckExEnv'))\n", file = out)
-        cat("assign(\".format_ptime\",",
+        cat("base::cat(\"name\\tuser\\tsystem\\telapsed\\n\", file=base::get(\".ExTimings\", pos = 'CheckExEnv'))\n", file = out)
+        cat("base::assign(\".format_ptime\",",
             "function(x) {",
             "  if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]",
             "  if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]",
@@ -88,7 +88,7 @@ massageExamples <-
         cat("flush(stderr()); flush(stdout())\n\n", file = out)
         dont_test <- FALSE
         if(addTiming)
-            cat("assign(\".ptime\", proc.time(), pos = \"CheckExEnv\")\n",
+            cat("base::assign(\".ptime\", proc.time(), pos = \"CheckExEnv\")\n",
                 file = out)
         for (line in lines) {
             if(any(grepl("^[[:space:]]*## No test:", line, perl = TRUE, useBytes = TRUE)))
@@ -100,13 +100,13 @@ massageExamples <-
         }
 
         if(addTiming) {
-            cat("\nassign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
-            cat("cat(\"", nm, "\", get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
+            cat("\nbase::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
+            cat("base::cat(\"", nm, "\", base::get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=base::get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
         }
         if(have_par)
             cat("graphics::par(get(\"par.postscript\", pos = 'CheckExEnv'))\n", file = out)
         if(have_contrasts)
-            cat("options(contrasts = c(unordered = \"contr.treatment\",",
+            cat("base::options(contrasts = c(unordered = \"contr.treatment\",",
                 "ordered = \"contr.poly\"))\n", sep="", file = out)
     }
 

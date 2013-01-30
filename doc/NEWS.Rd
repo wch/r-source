@@ -548,6 +548,11 @@
       \command{R CMD check}: an external \command{tar} program,
       including options, can be specified \emph{via} the environment
       variable \env{R_BUILD_TAR}.
+      
+      \item \code{tools::massageExamples()} is better protected against
+      packages which re-define base functions such as \code{cat()} and
+      \code{get()} and so can cause \command{R CMD check} to fail when
+      checking examples.
     }
   }
 

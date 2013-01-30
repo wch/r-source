@@ -12,12 +12,12 @@ assign("nameEx",
 ## Add some hooks to label plot pages for base and grid graphics
 assign("base_plot_hook",
        function() {
-           pp <- par(c("mfg","mfcol","oma","mar"))
+           pp <- graphics::par(c("mfg","mfcol","oma","mar"))
            if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
                outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
-               mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
+               graphics::mtext(sprintf("help(\"%s\")", nameEx()), side = 4,
                      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-               outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
+               outer = outer, adj = 1, cex = 0.8, col = "orchid", las = 3)
            }
        },
        pos = "CheckExEnv")
