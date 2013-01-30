@@ -169,9 +169,9 @@ SEXP optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP par, fn, gr, method, options, tmp, slower, supper;
     SEXP res, value, counts, conv;
-    int i, npar=0, *mask, trace, maxit, fncount, grcount, nREPORT, tmax;
+    int i, npar=0, *mask, trace, maxit, fncount = 0, grcount = 0, nREPORT, tmax;
     int ifail = 0;
-    double *dpar, *opar, val, abstol, reltol, temp;
+    double *dpar, *opar, val = 0.0, abstol, reltol, temp;
     const char *tn;
     OptStruct OS;
 

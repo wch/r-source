@@ -413,6 +413,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	default:
 	    error(R_MSG_type, type2char(TYPEOF(x)));
+	    ans = R_NilValue; // -Wall on clang 4.2
 	}
 	UNPROTECT(1);
 	return ans;
