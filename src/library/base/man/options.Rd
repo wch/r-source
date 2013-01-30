@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -150,7 +150,9 @@ getOption(x, default = NULL)
       also want to start \R with a larger protection stack;
       see \option{--max-ppsize} in \code{\link{Memory}}.  Note too that
       you may cause a segfault from overflow of the C stack, and on OSes
-      where it is possible you may want to increase that.}
+      where it is possible you may want to increase that.  Once the
+      limit is reached an error is thrown.  The current number under
+      evaluation can be found by calling \code{\link{Cstack_info}}.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored internally
