@@ -208,8 +208,10 @@ function(x)
 ## Obsolete ones first,
 nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "fft_factor", "fft_work", "Brent_fmin", "optif0",
+
 ## then entry points which are not attribute-hidden
-## and in a non-API heder or no header at all.
+## and in a non-API header or no header at all.
+
             "OutDec", "PRIMOFFSET", "RC_fopen", "R_CollectFromIndex",
             "R_CompiledFileName", "R_FileExists",
             "R_FreeStringBuffer", "R_FunTab", "R_GE_setVFontRoutines",
@@ -218,12 +220,11 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "R_OpenCompiledFile", "R_PV", "R_ParseContext",
             "R_ParseContextLast", "R_ParseContextLine",
             "R_ParseError", "R_ParseErrorMsg", "R_SrcfileSymbol",
-            "R_SrcrefSymbol", "R_Visible", "R_WriteConnection",
-            "R_addTaskCallback", "R_cairoCdynload", "R_data_class",
+            "R_SrcrefSymbol", "R_Visible", "R_addTaskCallback",
+            "R_cairoCdynload", "R_data_class",
             "R_deferred_default_method", "R_execMethod",
             "R_findVarLocInFrame","R_fopen", "R_gc_torture",
             "R_getTaskCallbackNames", "R_get_arith_function",
-            "R_get_primname", "R_get_standardGeneric_ptr",
             "R_gzclose", "R_gzgets", "R_gzopen", "R_ignore_SIGPIPE",
             "R_isForkedChild", "R_isMethodsDispatchOn",
             "R_moduleCdynload", "R_primitive_generic",
@@ -236,21 +237,18 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rconn_fgetc", "Rconn_printf", "Rdownload",
             "Rf_EncodeComplex", "Rf_EncodeElement",
             "Rf_EncodeEnvironment", "Rf_EncodeInteger",
-            "Rf_EncodeLogical", "Rf_EncodeRaw", "Rf_EncodeReal",
-            "Rf_EncodeString", "Rf_GPretty", "Rf_NewEnvironment",
-            "Rf_PrintDefaults", "Rf_ReplIteration", "Rf_Seql",
-            "Rf_addTaskCallback", "Rf_begincontext",
-            "Rf_callToplevelHandlers", "Rf_checkArityCall",
-            "Rf_con_pushback", "Rf_copyMostAttribNoTs", "Rf_deparse1",
-            "Rf_deparse1line", "Rf_dpptr", "Rf_endcontext",
-            "Rf_envlength", "Rf_formatComplex", "Rf_formatInteger",
-            "Rf_formatLogical", "Rf_formatRaw", "Rf_formatReal",
-            "Rf_formatString", "Rf_init_con", "Rf_isProtected",
-            "Rf_mbrtowc", "Rf_mkFalse", "Rf_printArray",
-            "Rf_printComplexVector", "Rf_printIntegerVector",
-            "Rf_printMatrix", "Rf_printNamedVector",
-            "Rf_printRealVector", "Rf_printVector",
-            "Rf_removeTaskCallbackByIndex",
+            "Rf_EncodeLogical", "Rf_EncodeReal", "Rf_GPretty",
+            "Rf_NewEnvironment", "Rf_PrintDefaults",
+            "Rf_ReplIteration", "Rf_Seql", "Rf_addTaskCallback",
+            "Rf_begincontext", "Rf_callToplevelHandlers",
+            "Rf_checkArityCall", "Rf_con_pushback",
+            "Rf_copyMostAttribNoTs", "Rf_deparse1", "Rf_deparse1line",
+            "Rf_dpptr", "Rf_endcontext", "Rf_envlength",
+            "Rf_formatComplex", "Rf_formatInteger",
+            "Rf_formatLogical", "Rf_formatReal", "Rf_init_con",
+            "Rf_isProtected", "Rf_mbrtowc", "Rf_mkFalse",
+            "Rf_printNamedVector", "Rf_printRealVector",
+            "Rf_printVector", "Rf_removeTaskCallbackByIndex",
             "Rf_removeTaskCallbackByName", "Rf_set_iconv",
             "Rf_sortVector", "Rf_strIsASCII", "Rf_strchr",
             "Rf_strrchr", "Rf_ucstomb", "Rf_utf8towcs",
@@ -264,51 +262,50 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "do_contourLines", "do_edit", "do_getGraphicsEventEnv",
             "do_getSnapshot", "do_playSnapshot", "do_saveplot",
             "do_set_prim_method", "dqrrsd_","dqrxb_", "dtype",
-            "dummy_fgetc", "dummy_ii", "dummy_vfprintf",
-            "end_Rmainloop", "epslon_", "extR_HTTPDCreate",
-            "extR_HTTPDStop", "fdhess", "getConnection",
-            "getPRIMNAME", "known_to_be_latin1", "locale2charset",
-            "match5", "matherr", "max_contour_segments", "mbcsToUcs2",
-            "memtrace_report", "parseError", "pythag_", "rs_",
-            "rwarnc_", "signrank_free", "tql2_", "tqlrat_", "tred1_",
-            "tred2_", "utf8locale", "wilcox_free", "yylloc")
+            "dummy_fgetc", "dummy_ii", "dummy_vfprintf", "epslon_",
+            "extR_HTTPDCreate", "extR_HTTPDStop", "fdhess",
+            "getConnection", "getPRIMNAME", "known_to_be_latin1",
+            "locale2charset", "match5", "matherr",
+            "max_contour_segments", "mbcsToUcs2", "memtrace_report",
+            "parseError", "pythag_", "rs_", "rwarnc_",
+            "signrank_free", "tql2_", "tqlrat_", "tred1_", "tred2_",
+            "utf8locale", "wilcox_free", "yylloc",
+
+## Rinterface.h, Rembedded.h, R_ext/{RStartup,eventloop}.h
+            "AllDevicesKilled", "R_CStackLimit", "R_CStackStart",
+            "R_ClearerrConsole", "R_CleanTempDir", "R_Consolefile",
+            "R_DefParams", "R_DirtyImage", "R_GUIType", "R_GlobalContext",
+            "R_HistoryFile", "R_HistorySize", "R_Home", "R_HomeDir",
+            "R_InputHandlers", "R_Interactive", "R_Outputfile",
+            "R_PolledEvents", "R_ReplDLLdo1", "R_ReplDLLinit",
+            "R_RestoreGlobalEnv", "R_RestoreGlobalEnvFromFile",
+            "R_RestoreHistory", "R_RunExitFinalizers", "R_SaveGlobalEnv",
+            "R_SaveGlobalEnvToFile", "R_SelectEx", "R_SetParams",
+            "R_SetWin32", "R_SignalHandlers", "R_SizeFromEnv", "R_Slave",
+            "R_Suicide", "R_TempDir", "R_checkActivity",
+            "R_checkActivityEx", "R_runHandlers",
+            "R_setStartTime", "R_set_command_line_arguments",
+            "R_setupHistory", "R_timeout_handler", "R_timeout_val",
+            "R_wait_usec", "RestoreAction", "Rf_CleanEd",
+            "Rf_KillAllDevices", "Rf_endEmbeddedR", "Rf_initEmbeddedR",
+            "Rf_initialize_R", "Rf_jump_to_toplevel", "Rf_mainloop",
+            "SaveAction", "addInputHandler", "editorcleanall", "fpu_setup",
+            "getDLLVersion", "getInputHandler", "getRUser", "get_R_HOME",
+            "getSelectedHandler", "initStdinHandler",
+            "process_site_Renviron", "process_system_Renviron",
+            "process_user_Renviron", "ptr_R_Busy", "ptr_R_ChooseFile",
+            "ptr_R_CleanUp", "ptr_R_ClearerrConsole", "ptr_R_EditFile",
+            "ptr_R_EditFiles", "ptr_R_FlushConsole", "ptr_R_ProcessEvents",
+            "ptr_R_ReadConsole", "ptr_R_ResetConsole", "ptr_R_ShowFiles",
+            "ptr_R_ShowMessage", "ptr_R_Suicide", "ptr_R_WriteConsole",
+            "ptr_R_WriteConsoleEx", "ptr_R_addhistory", "ptr_R_loadhistory",
+            "ptr_R_savehistory", "ptr_do_dataentry", "ptr_do_dataviewer",
+            "ptr_do_selectlist", "readconsolecfg", "removeInputHandler",
+            "run_Rmainloop", "setup_Rmainloop")
 
 ## non-API in Applic.h
 ## future <- c("dqrcf_", "dqrdc2_", "dqrls_", "dqrqty_", "dqrqy_", "optif9")
 ## d1mach_ and i1mach_ are mentioned (since R 2.15.3) in R-exts.
-
-## Rinterface.h, Rembedded.h, R_ext/{RStartup,eventloop}.h
-frontends <-
-    c("AllDevicesKilled", "R_CStackLimit", "R_CStackStart",
-      "R_ClearerrConsole", "R_CleanTempDir", "R_Consolefile",
-      "R_DefParams", "R_DirtyImage", "R_GUIType", "R_GlobalContext",
-      "R_HistoryFile", "R_HistorySize", "R_Home", "R_HomeDir",
-      "R_InputHandlers", "R_Interactive", "R_Outputfile",
-      "R_PolledEvents", "R_ReplDLLdo1", "R_ReplDLLinit",
-      "R_RestoreGlobalEnv", "R_RestoreGlobalEnvFromFile",
-      "R_RestoreHistory", "R_RunExitFinalizers", "R_SaveGlobalEnv",
-      "R_SaveGlobalEnvToFile", "R_SelectEx", "R_SetParams",
-      "R_SetWin32", "R_SignalHandlers", "R_SizeFromEnv", "R_Slave",
-      "R_Suicide", "R_TempDir", "R_checkActivity",
-      "R_checkActivityEx", "R_command_command_line", "R_runHandlers",
-      "R_setStartTime", "R_set_command_line_arguments",
-      "R_setupHistory", "R_timeout_handler", "R_timeout_val",
-      "R_wait_usec", "RestoreAction", "Rf_CleanEd" ,
-      "Rf_KillAllDevices", "Rf_endEmbeddedR", "Rf_initEmbeddedR",
-      "Rf_initialize_R", "Rf_jump_to_toplevel", "Rf_mainloop",
-      "SaveAction", "addInputHandler", "editorcleanall", "fpu_setup",
-      "getDLLVersion", "getInputHandler", "getRUser", "get_R_HOME",
-      "getSelectedHandler", "initStdinHandler",
-      "process_site_Renviron", "process_system_Renviron",
-      "process_user_Renviron", "ptr_R_Busy", "ptr_R_ChooseFile",
-      "ptr_R_CleanUp", "ptr_R_ClearerrConsole", "ptr_R_EditFile",
-      "ptr_R_EditFiles", "ptr_R_FlushConsole", "ptr_R_ProcessEvents",
-      "ptr_R_ReadConsole", "ptr_R_ResetConsole", "ptr_R_ShowFiles",
-      "ptr_R_ShowMessage", "ptr_R_Suicide", "ptr_R_WriteConsole",
-      "ptr_R_WriteConsoleEx", "ptr_R_addhistory", "ptr_R_loadhistory",
-      "ptr_R_savehistory", "ptr_do_dataentry", "ptr_do_dataviewer",
-      "ptr_do_selectlist", "readconsolecfg", "removeInputHandler",
-      "run_Rmainloop", "setup_Rmainloop")
 
 ## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
 
@@ -328,10 +325,6 @@ frontends <-
 
 ## modules use PRIMOFFSET R_GE_setVFontRoutines R_setInternetRoutines R_setLapackRoutines R_setX11Routines Rf_set_iconv currentTime dummy_fgetc dummy_vfprintf ucstomb utf8locale
 
-
-
-
-nonAPI <- c(nonAPI, frontends)
 
 check_so_symbols <- if(.Platform$OS.type == "windows") {
     function(so, rarch, have_tables = FALSE)
