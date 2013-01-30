@@ -574,7 +574,7 @@ static R_size_t R_NodesInUse = 0;
    part of a hash chain.  Theoretically, for CHARSXPs the ATTRIB field
    should always be either R_NilValue or a CHARSXP. */
 #ifdef PROTECTCHECK
-# efine HAS_GENUINE_ATTRIB(x) \
+# define HAS_GENUINE_ATTRIB(x) \
     (TYPEOF(x) != FREESXP && ATTRIB(x) != R_NilValue && \
      (TYPEOF(x) != CHARSXP || TYPEOF(ATTRIB(x)) != CHARSXP))
 #else
