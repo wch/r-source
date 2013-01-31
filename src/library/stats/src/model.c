@@ -985,6 +985,21 @@ static int isOne(SEXP x)
 /* the same list structure and their atoms are identical. */
 /* This is just EQUAL from lisp. */
 
+/* See src/main/memory.c: probably could be simplified to pointer comparison */
+static int Seql(SEXP a, SEXP b)
+{
+    if (a == b) return 1;
+    /* Leave this to compiler to optimize */
+    if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
+	return 0;
+    else {
+    	SEXP vmax = R_VStack;
+    	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
+    	R_VStack = vmax; /* discard any memory used by translateCharUTF8 */
+    	return result;
+    }
+}
+
 static int MatchVar(SEXP var1, SEXP var2)
 {
     /* For expedience, and sanity... */

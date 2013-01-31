@@ -309,6 +309,7 @@
  Rf_RealFromLogical
  Rf_RealFromString
  Rf_Scollate
+ Rf_Seql
  Rf_SrcrefPrompt
  Rf_StrToInternal
  Rf_StringFromComplex
