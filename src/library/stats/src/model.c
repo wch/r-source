@@ -986,16 +986,16 @@ static int isOne(SEXP x)
 /* This is just EQUAL from lisp. */
 
 /* See src/main/memory.c: probably could be simplified to pointer comparison */
-static int Seql(SEXP a, SEXP b)
+static int Seql2(SEXP a, SEXP b)
 {
     if (a == b) return 1;
     /* Leave this to compiler to optimize */
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
     else {
-    	SEXP vmax = R_VStack;
+    	void *vmax = vmaxget();
     	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
-    	R_VStack = vmax; /* discard any memory used by translateCharUTF8 */
+    	vmaxset(vmax); /* discard any memory used by translateCharUTF8 */
     	return result;
     }
 }
@@ -1023,7 +1023,7 @@ static int MatchVar(SEXP var1, SEXP var2)
 	return (asReal(var1) == asReal(var2));
     /* Literal Strings */
     if (isString(var1) && isString(var2))
-	return Seql(STRING_ELT(var1, 0), STRING_ELT(var2, 0));
+	return Seql2(STRING_ELT(var1, 0), STRING_ELT(var2, 0));
     /* Nothing else matches */
     return 0;
 }
