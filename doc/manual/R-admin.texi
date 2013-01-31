@@ -4375,12 +4375,9 @@ R for Mac OS X @acronym{FAQ}} for details.
 @R{} has been built successfully on Solaris 10 (both Sparc and
 @cputype{x86}) using the (zero cost) Oracle Solaris Studio compilers:
 there has been some success with
-@command{gcc}@tie{}4/@command{gfortran}.  Sun packages for @R{} used to
-be available from @uref{http://www.sunfreeware.com/} for both 32-bit
-architectures, but recently have often been many versions old.  (Recent
-Sun machines are AMD Opterons or Intel Xeons (@cputype{amd64}) rather
-than @cputype{x86}, but 32-bit @cputype{x86} executables are the
-default.)
+@command{gcc}@tie{}4/@command{gfortran}.  (Recent Sun machines are AMD
+Opterons or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but
+32-bit @cputype{x86} executables are the default.)
 
 There have been few reports on Solaris 11, with no known extra issues.
 Solaris 9 and earlier are now so old that it is unlikely that @R{} is
@@ -4396,8 +4393,7 @@ installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 
 A large selection of Open Source software can be installed from
-@uref{http://www.opencsw.org} (and also
-@uref{http://www.blastwave.org}), by default installed under
+@uref{http://www.opencsw.org}, by default installed under
 @file{/opt/csw}.
 
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
