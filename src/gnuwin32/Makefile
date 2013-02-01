@@ -274,6 +274,9 @@ distclean: clean
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) ../library/*/src/*.d ../library/*/src/Makedeps
 	$(RM) ../library/*/src/*.dll
+	$(RM) ../library/*/src/windows/*.o ../library/*/src/windows/*.a
+	$(RM) ../library/*/src/windows/*.d ../library/*/src/windows/Makedeps
+	$(RM) ../library/*/src/windows/*.dll
 	$(RM) -r ../library/*/check
 	$(RM) ../library/*/tests/*.ps
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
