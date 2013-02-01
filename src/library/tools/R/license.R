@@ -230,6 +230,11 @@ list("Artistic-2.0" =
        "Artistic-2.0, see http://www.opensource.org/licenses/artistic-license-2.0.php"
        ),
 
+     "BSL-1.0" =
+     c("Boost Software License",
+       "Boost Software License 1.0"
+       ),
+
      "CeCILL-2" =
      c("CeCILL-2.0"
        ),
@@ -465,10 +470,10 @@ function(x)
     ## Analyze components provided that we know we can standardize.
     if(is_standardizable) {
         verifiable <- function(x)
-            !is.null(x) && all(!is.na(x) & (x == "yes"))        
+            !is.null(x) && all(!is.na(x) & (x == "yes"))
         expansions <- lapply(components,
                              expand_license_spec_component_from_db)
-        
+
         is_verified <- if(any(components == "Unlimited")) TRUE else {
             any(sapply(expansions, function(e) verifiable(e$FOSS)))
         }
@@ -517,7 +522,7 @@ function(x)
     v <- unique(x)
     out <- as.data.frame(do.call(rbind, lapply(v, analyze_license)),
                          stringsAsFactors = FALSE)
-    pos <- match(c("is_empty", "is_canonical", "is_standardizable", 
+    pos <- match(c("is_empty", "is_canonical", "is_standardizable",
                    "is_verified", "standardization"),
                  names(out))
     out[pos] <- lapply(out[pos], unlist)
