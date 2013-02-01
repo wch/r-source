@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-01 14:28\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -473,6 +473,23 @@ msgstr "参数'vignette'的长度必需为一"
 msgid "file '%s' not found"
 msgstr "找不到'%s'这个文件"
 
+msgid "vignette engine"
+msgstr ""
+
+#, fuzzy
+msgid "not found"
+msgstr "找不到"
+
+#, fuzzy
+msgid "cannot change the"
+msgstr "无法强迫改变"
+
+msgid "Sweave"
+msgstr ""
+
+msgid "engine"
+msgstr ""
+
 msgid "Invalid DESCRIPTION file"
 msgstr "DESCRIPTION文件不对"
 
@@ -510,8 +527,9 @@ msgstr "无法建立目录'%s'"
 msgid "processing %s"
 msgstr "处理%s "
 
+#, fuzzy
 msgid ""
-"running Sweave on vignette '%s' failed with message:\n"
+"running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
 "用Sweave处理标头'%s'失败，诊断信息为:\n"
@@ -1094,6 +1112,11 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "无法重新编码'%s'%s行"
 
+#, fuzzy
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
+msgstr[0] "在以下这些程序包里找到了关于'%s'主题的帮助"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
@@ -1219,9 +1242,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 #~ msgid "Unrecognized search field:"
 #~ msgstr "无法识别这个搜索字段："
 
-#~ msgid "Help on topic '%s' was found in the following packages:"
-#~ msgstr "在以下这些程序包里找到了关于'%s'主题的帮助"
-
 #~ msgid "ERROR:"
 #~ msgstr "错误："
 
@@ -1268,9 +1288,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "Argument for"
 #~ msgstr "参数用于"
-
-#~ msgid "not found."
-#~ msgstr "找不到"
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "内部错误：NULL标签"

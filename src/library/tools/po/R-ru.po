@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-01 14:28\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -499,6 +499,23 @@ msgstr "аргумент 'vignette' должен быть единичной длины"
 msgid "file '%s' not found"
 msgstr "файл '%s' не найден"
 
+msgid "vignette engine"
+msgstr ""
+
+#, fuzzy
+msgid "not found"
+msgstr "не найден"
+
+#, fuzzy
+msgid "cannot change the"
+msgstr "нельзя соединить"
+
+msgid "Sweave"
+msgstr ""
+
+msgid "engine"
+msgstr ""
+
 msgid "Invalid DESCRIPTION file"
 msgstr "Неправильный файл 'DESCRIPTION'"
 
@@ -538,8 +555,9 @@ msgstr "Не могу создать папку '%s'"
 msgid "processing %s"
 msgstr "обрабатываю %s"
 
+#, fuzzy
 msgid ""
-"running Sweave on vignette '%s' failed with message:\n"
+"running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
 "выполнение Sweave в очерке '%s' не удалось с диагностикой:\n"
@@ -1173,6 +1191,13 @@ msgstr[0] "не могу перекодировать '%s' строк(и) %s"
 msgstr[1] "не могу перекодировать '%s' строк(и) %s"
 msgstr[2] "не могу перекодировать '%s' строк(и) %s"
 
+#, fuzzy
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
+msgstr[0] "Помощь по теме '%s' была найдена в следующих пакетах:"
+msgstr[1] "Помощь по теме '%s' была найдена в следующих пакетах:"
+msgstr[2] "Помощь по теме '%s' была найдена в следующих пакетах:"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
@@ -1316,9 +1341,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 #~ msgid "Unrecognized search field:"
 #~ msgstr "Неизвестное поле поиска:"
 
-#~ msgid "Help on topic '%s' was found in the following packages:"
-#~ msgstr "Помощь по теме '%s' была найдена в следующих пакетах:"
-
 #~ msgid "ERROR:"
 #~ msgstr "ОШИБКА:"
 
@@ -1368,9 +1390,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
 #~ msgid "Argument for"
 #~ msgstr "Аргумент для"
-
-#~ msgid "not found."
-#~ msgstr "не найден"
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "Внутренняя ошибка:  тег NULL"

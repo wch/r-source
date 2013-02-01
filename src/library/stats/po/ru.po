@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53+0000\n"
+"POT-Creation-Date: 2013-02-01 14:27+0000\n"
 "PO-Revision-Date: 2012-03-15 12:00-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -327,44 +327,44 @@ msgstr "неправильная формула в 'update'"
 msgid "formula expected"
 msgstr "ожидается формула"
 
-#: model.c:1026
+#: model.c:1040
 msgid "invalid term in model formula"
 msgstr "неправильный терм в модельной формуле"
 
-#: model.c:1101
+#: model.c:1115
 msgid "invalid model formula"
 msgstr "неправильная модельная формула"
 
-#: model.c:1127 model.c:1375
+#: model.c:1141 model.c:1389
 msgid "invalid power in formula"
 msgstr "неправильная степень в формуле"
 
-#: model.c:1163
+#: model.c:1177
 msgid "invalid model formula in ExtractVars"
 msgstr "неправильная модельная формула в ExtractVars"
 
-#: model.c:1497
+#: model.c:1511
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "повторяющееся имя '%s' в таблице данных, использую '.'"
 
-#: model.c:1554
+#: model.c:1568
 msgid "invalid model formula in EncodeVars"
 msgstr "неправильная модельная формула в EncodeVars"
 
-#: model.c:1640
+#: model.c:1654
 msgid "argument is not a valid model"
 msgstr "аргумент не является правильной моделью"
 
-#: model.c:1650
+#: model.c:1664
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' должен быть NULL или текстовым вектором"
 
-#: model.c:1662
+#: model.c:1676
 msgid "'data' argument is of the wrong type"
 msgstr "аргумент 'data' неправильного типа"
 
-#: model.c:1928
+#: model.c:1942
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' в формуле и нет аргумента 'data'"
 

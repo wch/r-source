@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-01 14:28\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -509,6 +509,23 @@ msgstr " 引数 'vignette' は長さ1でなければなりません "
 msgid "file '%s' not found"
 msgstr " ファイル '%s' が見つかりません "
 
+msgid "vignette engine"
+msgstr ""
+
+#, fuzzy
+msgid "not found"
+msgstr " が見つかりません "
+
+#, fuzzy
+msgid "cannot change the"
+msgstr " 強制変換できません "
+
+msgid "Sweave"
+msgstr ""
+
+msgid "engine"
+msgstr ""
+
 msgid "Invalid DESCRIPTION file"
 msgstr " 不正な DESCRIPTION ファイルです "
 
@@ -546,8 +563,9 @@ msgstr " ディレクトリ '%s' を生成することが出来ません "
 msgid "processing %s"
 msgstr " %s を処理中 "
 
+#, fuzzy
 msgid ""
-"running Sweave on vignette '%s' failed with message:\n"
+"running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
 " ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
@@ -1151,6 +1169,11 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] " '%s' ('%s'行')を再エンコード出来ません "
 
+#, fuzzy
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
+msgstr[0] " '%s' に関するヘルプが以下のパッケージに見つかりました: "
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
@@ -1280,9 +1303,6 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 #~ msgid "Unrecognized search field:"
 #~ msgstr " 認識できない検索フィールド: "
 
-#~ msgid "Help on topic '%s' was found in the following packages:"
-#~ msgstr " '%s' に関するヘルプが以下のパッケージに見つかりました: "
-
 #~ msgid "ERROR:"
 #~ msgstr " エラー: "
 
@@ -1329,9 +1349,6 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 
 #~ msgid "Argument for"
 #~ msgstr " 以下に対する引数 "
-
-#~ msgid "not found."
-#~ msgstr " が見つかりません "
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr " 内部エラー： NULL タグ "

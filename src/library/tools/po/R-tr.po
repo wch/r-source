@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-01 14:28\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -451,6 +451,21 @@ msgstr ""
 msgid "file '%s' not found"
 msgstr ""
 
+msgid "vignette engine"
+msgstr ""
+
+msgid "not found"
+msgstr ""
+
+msgid "cannot change the"
+msgstr ""
+
+msgid "Sweave"
+msgstr ""
+
+msgid "engine"
+msgstr ""
+
 msgid "Invalid DESCRIPTION file"
 msgstr ""
 
@@ -489,7 +504,7 @@ msgid "processing %s"
 msgstr ""
 
 msgid ""
-"running Sweave on vignette '%s' failed with message:\n"
+"running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
 
@@ -1048,6 +1063,11 @@ msgstr[1] ""
 
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
 msgstr[0] ""
 msgstr[1] ""
 

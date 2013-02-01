@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53+0000\n"
+"POT-Creation-Date: 2013-02-01 14:27+0000\n"
 "PO-Revision-Date: 2010-09-29 20:43+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -323,44 +323,44 @@ msgstr " 'update' 中の式が不正です "
 msgid "formula expected"
 msgstr " 式が期待されています "
 
-#: model.c:1026
+#: model.c:1040
 msgid "invalid term in model formula"
 msgstr " モデル式に不正な項があります "
 
-#: model.c:1101
+#: model.c:1115
 msgid "invalid model formula"
 msgstr " モデル式が不正です "
 
-#: model.c:1127 model.c:1375
+#: model.c:1141 model.c:1389
 msgid "invalid power in formula"
 msgstr " モデル式中に不正なべき乗があります "
 
-#: model.c:1163
+#: model.c:1177
 msgid "invalid model formula in ExtractVars"
 msgstr " ExtractVars 中のモデル式が不正です "
 
-#: model.c:1497
+#: model.c:1511
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr " データフレーム中の重複した名前 '%s' を '.' を使って複製しました "
 
-#: model.c:1554
+#: model.c:1568
 msgid "invalid model formula in EncodeVars"
 msgstr " EncodeVars 中のモデル式が不正です "
 
-#: model.c:1640
+#: model.c:1654
 msgid "argument is not a valid model"
 msgstr " 引数は有効なモデルではありません "
 
-#: model.c:1650
+#: model.c:1664
 msgid "'specials' must be NULL or a character vector"
 msgstr " 'specials' はNULLまたは文字ベクタでなくてはなりません "
 
-#: model.c:1662
+#: model.c:1676
 msgid "'data' argument is of the wrong type"
 msgstr " 'data' 引数が誤った型です "
 
-#: model.c:1928
+#: model.c:1942
 msgid "'.' in formula and no 'data' argument"
 msgstr " '.' が式中にありますが, 'data' 引数がありません "
 

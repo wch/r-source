@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-01 14:28\n"
 "PO-Revision-Date: 2012-03-06 21:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -513,6 +513,23 @@ msgstr "l'argument 'vignette' doit être de longueur 1"
 msgid "file '%s' not found"
 msgstr "le fichier '%s' est introuvable"
 
+msgid "vignette engine"
+msgstr ""
+
+#, fuzzy
+msgid "not found"
+msgstr "introuvable"
+
+#, fuzzy
+msgid "cannot change the"
+msgstr "impossible de transformer"
+
+msgid "Sweave"
+msgstr ""
+
+msgid "engine"
+msgstr ""
+
 msgid "Invalid DESCRIPTION file"
 msgstr "Fichier DESCRIPTION incorrect"
 
@@ -552,8 +569,9 @@ msgstr "impossible de créer le répertoire '%s'"
 msgid "processing %s"
 msgstr "analyse de %s"
 
+#, fuzzy
 msgid ""
-"running Sweave on vignette '%s' failed with message:\n"
+"running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
 "le traitement de la vignette '%s' à l'aide de 'Sweave' a échoué avec le "
@@ -1182,6 +1200,12 @@ msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "impossible de réencoder la (les) ligne(s) %2$s de '%1$s'"
 msgstr[1] "impossible de réencoder la (les) ligne(s) %2$s de '%1$s'"
 
+#, fuzzy
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
+msgstr[0] "L'aide pour le mot '%s' est trouvée dans les packages suivants :"
+msgstr[1] "L'aide pour le mot '%s' est trouvée dans les packages suivants :"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
@@ -1319,9 +1343,6 @@ msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
 #~ msgid "Unrecognized search field:"
 #~ msgstr "Champ de recherche inconnu :"
 
-#~ msgid "Help on topic '%s' was found in the following packages:"
-#~ msgstr "L'aide pour le mot '%s' est trouvée dans les packages suivants :"
-
 #~ msgid "ERROR:"
 #~ msgstr "ERREUR :"
 
@@ -1371,9 +1392,6 @@ msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
 
 #~ msgid "Argument for"
 #~ msgstr "Argument pour"
-
-#~ msgid "not found."
-#~ msgstr "introuvable"
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "Erreur interne : étiquette NULL"

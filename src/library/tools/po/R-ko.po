@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-01 14:28\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -495,6 +495,23 @@ msgstr "인수 'vignette' 는 반드시 길이가 1 이어야 합니다 "
 msgid "file '%s' not found"
 msgstr "파일 '%s' 을 찾을 수 없습니다 "
 
+msgid "vignette engine"
+msgstr ""
+
+#, fuzzy
+msgid "not found"
+msgstr "찾을 수 없습니다 "
+
+#, fuzzy
+msgid "cannot change the"
+msgstr "강제변환 할 수 없습니다 "
+
+msgid "Sweave"
+msgstr ""
+
+msgid "engine"
+msgstr ""
+
 msgid "Invalid DESCRIPTION file"
 msgstr "DESCRIPTION 파일이 잘못되었습니다 "
 
@@ -533,8 +550,9 @@ msgstr "디렉토리 '%s' 를 생성할 수 없습니다 "
 msgid "processing %s"
 msgstr "processing %s"
 
+#, fuzzy
 msgid ""
-"running Sweave on vignette '%s' failed with message:\n"
+"running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
 "비니에트 '%s' 의 Sweave 를 실행하는데 아래와 같은 이유로 실패했습니다: \n"
@@ -1126,6 +1144,11 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "'%s' 줄들 %s 를 재인코딩할 수 없습니다 "
 
+#, fuzzy
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
+msgstr[0] "다음의 패키지에서 '%s' 의 주제에 대한 도움말을 찾았습니다: "
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니다 "
@@ -1253,9 +1276,6 @@ msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니
 #~ msgid "Unrecognized search field:"
 #~ msgstr "인식할 수 없는 검색항목: "
 
-#~ msgid "Help on topic '%s' was found in the following packages:"
-#~ msgstr "다음의 패키지에서 '%s' 의 주제에 대한 도움말을 찾았습니다: "
-
 #~ msgid "ERROR:"
 #~ msgstr "에러: "
 
@@ -1302,9 +1322,6 @@ msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니
 
 #~ msgid "Argument for"
 #~ msgstr "Argument for"
-
-#~ msgid "not found."
-#~ msgstr "찾을 수 없습니다 "
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "Internal error: NULL tag"

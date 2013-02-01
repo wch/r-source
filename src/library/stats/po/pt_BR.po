@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53+0000\n"
+"POT-Creation-Date: 2013-02-01 14:27+0000\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -327,45 +327,45 @@ msgstr "fórmula inválida em 'update'"
 msgid "formula expected"
 msgstr "fórmula esperada"
 
-#: model.c:1026
+#: model.c:1040
 msgid "invalid term in model formula"
 msgstr "termo inválido na fórmula de modelo"
 
-#: model.c:1101
+#: model.c:1115
 msgid "invalid model formula"
 msgstr "fórmula de modelo inválida"
 
-#: model.c:1127 model.c:1375
+#: model.c:1141 model.c:1389
 msgid "invalid power in formula"
 msgstr "potenciação inválida na fórmula"
 
-#: model.c:1163
+#: model.c:1177
 msgid "invalid model formula in ExtractVars"
 msgstr "fórmula de modelo inválida em ExtractVars"
 
-#: model.c:1497
+#: model.c:1511
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "nome duplicado '%s' em data frame usando '.'"
 
-#: model.c:1554
+#: model.c:1568
 msgid "invalid model formula in EncodeVars"
 msgstr "fórmula de modelo inválida em EncodeVars"
 
-#: model.c:1640
+#: model.c:1654
 msgid "argument is not a valid model"
 msgstr "argumento não é um modelo válido"
 
-#: model.c:1650
+#: model.c:1664
 #, fuzzy
 msgid "'specials' must be NULL or a character vector"
 msgstr "'path' deve ser um vetor de caracteres"
 
-#: model.c:1662
+#: model.c:1676
 msgid "'data' argument is of the wrong type"
 msgstr "argumento 'data' é do tipo errado"
 
-#: model.c:1928
+#: model.c:1942
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' na fórmula e nenhum argumento 'data'"
 

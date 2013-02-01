@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-01 14:28\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -495,6 +495,23 @@ msgstr "argument 'vignette' musi być długości 1"
 msgid "file '%s' not found"
 msgstr "nie znaleziono pliku '%s'"
 
+msgid "vignette engine"
+msgstr ""
+
+#, fuzzy
+msgid "not found"
+msgstr "nie został znaleziony."
+
+#, fuzzy
+msgid "cannot change the"
+msgstr "nie można przekształcić"
+
+msgid "Sweave"
+msgstr ""
+
+msgid "engine"
+msgstr ""
+
 msgid "Invalid DESCRIPTION file"
 msgstr "Błędny plik DESCRIPTION"
 
@@ -535,8 +552,9 @@ msgstr "nie można utworzyć katalogu '%s'"
 msgid "processing %s"
 msgstr "przetwarzanie %s"
 
+#, fuzzy
 msgid ""
-"running Sweave on vignette '%s' failed with message:\n"
+"running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
 "wykonywanie 'Sweave' na winiecie '%s' nie powiodło się z wynikiem:\n"
@@ -1188,6 +1206,13 @@ msgstr[0] "nie można przekodować '%s' linię(e) %s"
 msgstr[1] "nie można przekodować '%s' linię(e) %s"
 msgstr[2] "nie można przekodować '%s' linię(e) %s"
 
+#, fuzzy
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
+msgstr[0] "Pomoc na temat '%s' została znaleziona w następujących pakietach:"
+msgstr[1] "Pomoc na temat '%s' została znaleziona w następujących pakietach:"
+msgstr[2] "Pomoc na temat '%s' została znaleziona w następujących pakietach:"
+
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "obiekt %s jest utworzony przez więcej niż jedno wywołanie danych"
@@ -1334,9 +1359,6 @@ msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 #~ msgid "Unrecognized search field:"
 #~ msgstr "Nierozpoznane pole wyszukiwania:"
 
-#~ msgid "Help on topic '%s' was found in the following packages:"
-#~ msgstr "Pomoc na temat '%s' została znaleziona w następujących pakietach:"
-
 #~ msgid "ERROR:"
 #~ msgstr "BŁĄD:"
 
@@ -1386,9 +1408,6 @@ msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 
 #~ msgid "Argument for"
 #~ msgstr "Argument dla"
-
-#~ msgid "not found."
-#~ msgstr "nie został znaleziony."
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "Błąd wewnętrzny:  znacznik NULL"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-01 14:28\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -462,6 +462,21 @@ msgstr ""
 msgid "file '%s' not found"
 msgstr ""
 
+msgid "vignette engine"
+msgstr ""
+
+msgid "not found"
+msgstr ""
+
+msgid "cannot change the"
+msgstr ""
+
+msgid "Sweave"
+msgstr ""
+
+msgid "engine"
+msgstr ""
+
 msgid "Invalid DESCRIPTION file"
 msgstr ""
 
@@ -500,7 +515,7 @@ msgid "processing %s"
 msgstr ""
 
 msgid ""
-"running Sweave on vignette '%s' failed with message:\n"
+"running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
 
@@ -1065,6 +1080,11 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "kan ikke skrive kodefiler"
 msgstr[1] "kan ikke skrive kodefiler"
+
+msgid "Help on topic '%s' was found in the following package:"
+msgid_plural "Help on topic '%s' was found in the following packages:"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
