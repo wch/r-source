@@ -989,7 +989,6 @@ static int isOne(SEXP x)
 static int Seql2(SEXP a, SEXP b)
 {
     if (a == b) return 1;
-    /* Leave this to compiler to optimize */
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
     else {
