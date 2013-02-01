@@ -525,7 +525,7 @@ function(vigDeps)
 ### helper for R CMD check
 
 .run_one_vignette <-
-    function(vig_name, docDir, encoding = "")
+function(vig_name, docDir, encoding = "")
 {
     ## The idea about encodings here is that Stangle reads the
     ## file, converts on read and outputs in the current encoding.
@@ -578,8 +578,10 @@ vignetteEngine <- local({
     }
 })
 
-loadVignetteBuilder <- function(pkgdir) {
-    desc <- read.dcf(file.path(pkgdir, "DESCRIPTION"))
+loadVignetteBuilder <-
+function(pkgdir)
+{
+    desc <- .get_package_metadata(pkgdir)        
     if ("VignetteBuilder" %in% colnames(desc)) 
     	for (pkg in desc[,"VignetteBuilder"]) {
     	    loadNamespace(pkg)                   
