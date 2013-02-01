@@ -1,6 +1,6 @@
 % File src/library/base/man/base-defunct.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
@@ -61,6 +61,9 @@
 \alias{.readRDS}
 \alias{.saveRDS}
 \alias{Sys.putenv}
+\alias{real}
+\alias{as.real}
+\alias{is.real}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -159,6 +162,11 @@ mem.limits(nsize = NA, vsize = NA)
 .readRDS(\dots)
 Sys.putenv(\dots)
 % </Removed 2.15.0>
+% Removed in 3.0.0
+real(length = 0)
+as.real(x, \dots)
+is.real(x)
+% </Removed 3.0.0>
 }
 \details{
   \code{category} has been an old-S function before there were factors;
@@ -269,6 +277,9 @@ Sys.putenv(\dots)
 
   \code{Sys.putenv} was a synonym for \code{\link{Sys.setenv}},
   deprecated since \R 2.5.0.
+
+  \code{real}, \code{as.real} and \code{is.real} were long-deprecated
+  synonyms for the \code{double} versions.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}

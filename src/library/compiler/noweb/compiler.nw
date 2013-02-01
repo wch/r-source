@@ -3297,8 +3297,6 @@ setInlineHandler("is.null", function(e, cb, cntxt)
     cmpIs(ISNULL.OP, e, cb, cntxt))
 setInlineHandler("is.object", function(e, cb, cntxt)
     cmpIs(ISOBJECT.OP, e, cb, cntxt))
-setInlineHandler("is.real", function(e, cb, cntxt)
-    cmpIs(ISDOUBLE.OP, e, cb, cntxt))
 setInlineHandler("is.symbol", function(e, cb, cntxt)
     cmpIs(ISSYMBOL.OP, e, cb, cntxt))
 @ %def

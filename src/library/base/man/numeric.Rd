@@ -1,6 +1,6 @@
 % File src/library/base/man/numeric.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{numeric}
@@ -67,15 +67,13 @@ is.numeric(x)
 }
 %% keep next the same in double.Rd & numeric.Rd
 \section{Note on names}{
-  It is a historical anomaly that \R has three names for its
-  floating-point vectors, \code{\link{double}}, \code{\link{numeric}}
-  and \code{\link{real}}.
+  It is a historical anomaly that \R has two names for its
+  floating-point vectors, \code{\link{double}} and \code{\link{numeric}}
+  (and formerly had \code{real}).
 
   \code{double} is the name of the \link{type}.
   \code{numeric} is the name of the \link{mode} and also of the implicit
   \link{class}.  As an S4 formal class, use \code{"numeric"}.
-
-  \code{real} is deprecated and should not be used in new code.
 
   The potential confusion is that \R has used \emph{\link{mode}}
   \code{"numeric"} to mean \sQuote{double or integer}, which conflicts

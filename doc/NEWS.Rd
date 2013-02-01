@@ -633,6 +633,10 @@
       \item The \code{keep.source} argument to \code{library()} and
       \code{require()} is defunct.  This option needs to be set
       at install time.
+      
+      \item Documentation for \code{real()}, \code{as.real()} and
+      \code{is.real()} has been moved to \sQuote{defunct}: the functions
+      will be removed before release.
     }
   }
 
