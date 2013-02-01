@@ -26,7 +26,7 @@ all:
 
 include $(top_srcdir)/share/make/basepkg.mk
 
-$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R $(top_srcdir)/share/licenses/license.db
 	@$(ECHO) "byte-compiling package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
