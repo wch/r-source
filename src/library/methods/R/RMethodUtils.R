@@ -500,7 +500,7 @@ getGeneric <-
     else
         value <- NULL
     if(is.null(value)) {
-        if(is.character(f) && f %in% c("as.double", "as.real")) f <- "as.numeric"
+        if(is.character(f) && f %in% "as.double") f <- "as.numeric"
         if(is.character(f) && !nzchar(f)) {
             message("Empty function name in .getGeneric")
             dput(sys.calls())

@@ -40,7 +40,7 @@ setGeneric <-
     if(exists(name, "package:base") &&
        is.primitive(get(name, "package:base"))) { # primitives
 
-        name <- switch(name, "as.double" =, "as.real" = "as.numeric", name)
+        name <- switch(name, "as.double" = "as.numeric", name)
         fdef <- getGeneric(name) # will fail if this can't have methods
         if(nargs() <= 1) {
             ## generics for primitives are global, so can & must always be cached
@@ -272,7 +272,7 @@ isGeneric <-
       return(FALSE)
     ## check primitives. These are never found as explicit generic functions.
     if(is.primitive(fdef)) {
-        if(is.character(f) && f %in% c("as.double", "as.real")) f <- "as.numeric"
+        if(is.character(f) && f %in% "as.double") f <- "as.numeric"
         ## the definition of isGeneric() for a primitive is that methods are defined
         ## (other than the default primitive)
         gen <- genericForPrimitive(f, mustFind = FALSE)
@@ -473,7 +473,7 @@ setMethod <-
     else {
         where <- as.environment(where)
         gwhere <- .genEnv(f, where)
-        f <- switch(f, "as.double" =, "as.real" = "as.numeric", f)
+        f <- switch(f, "as.double" = "as.numeric", f)
         fdef <- getGeneric(f, where = if(identical(gwhere, baseenv())) where else gwhere)
     }
     if(.lockedForMethods(fdef, where))

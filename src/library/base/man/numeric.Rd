@@ -33,8 +33,7 @@ is.numeric(x)
   element equal to \code{0}.
 
   \code{as.numeric} is a generic function, but S3 methods must be
-  written for \code{\link{as.double}}.  It is identical to
-  \code{as.double} (and \code{as.real}).
+  written for \code{\link{as.double}}.  It is identical to \code{as.double}.
 
   \code{is.numeric} is an \link{internal generic} \code{primitive}
   function: you can write methods to handle specific classes of objects,
@@ -62,7 +61,7 @@ is.numeric(x)
   \code{as.numeric} and \code{is.numeric} are internally S4 generic and
   so methods can be set for them \emph{via} \code{setMethod}.
 
-  To ensure that \code{as.numeric}, \code{as.double} and \code{as.real}
+  To ensure that \code{as.numeric} and \code{as.double}
   remain identical, S4 methods can only be set for \code{as.numeric}.
 }
 %% keep next the same in double.Rd & numeric.Rd
