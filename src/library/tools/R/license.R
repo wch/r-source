@@ -1,7 +1,7 @@
 #  File src/library/tools/R/license.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -179,6 +179,11 @@ list("Artistic-2.0" =
      c("The Artistic License, Version 2.0",
        "Artistic 2.0",
        "Artistic-2.0, see http://www.opensource.org/licenses/artistic-license-2.0.php"
+       ),
+
+     "BSL-1.0" =
+     c("Boost Software License",
+       "Boost Software License 1.0"
        ),
 
      "CeCILL-2" =
@@ -428,7 +433,7 @@ function(x)
         if(any(ind)) {
             s <- sub("[[:space:]]*\\([[:space:]]*", " \\(",
                      components[ind])
-            s <- sub("[[:space:]]*\\)", "\\)", s)            
+            s <- sub("[[:space:]]*\\)", "\\)", s)
             s <- gsub("[[:space:]]*,[[:space:]]*", ", ", s)
             ## Really re_or(operators) ...
             s <- gsub("[[:space:]]+(<=?|>=?|==|!=)", " \\1", s)
