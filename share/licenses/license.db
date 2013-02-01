@@ -219,7 +219,7 @@ FOSS: yes
 
 Name: Boost Software License
 Version: 1.0
-Abbrev: BSL-1.0
+Abbrev: BSL
 FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#boost)
 OSI: open (http://opensource.org/licenses/BSL-1.0)
 URL: http://www.boost.org/LICENSE_1_0.txt
