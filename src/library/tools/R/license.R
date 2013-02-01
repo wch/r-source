@@ -181,9 +181,10 @@ list("Artistic-2.0" =
        "Artistic-2.0, see http://www.opensource.org/licenses/artistic-license-2.0.php"
        ),
 
-     "BSL-1.0" =
+     "BSL" =
      c("Boost Software License",
-       "Boost Software License 1.0"
+       "Boost Software License 1.0",
+       "BSL 1.0"
        ),
 
      "CeCILL-2" =
