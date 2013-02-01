@@ -25,7 +25,7 @@ numeric <- double <-
 
 real <- function(length = 0L)
 {
-    .Deprecated("double")
+    .Defunct("double")
     .Internal(vector("double", length))
 }
 
