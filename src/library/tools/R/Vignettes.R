@@ -581,11 +581,13 @@ vignetteEngine <- local({
 loadVignetteBuilder <-
 function(pkgdir)
 {
-    desc <- .get_package_metadata(pkgdir)        
-    if ("VignetteBuilder" %in% colnames(desc)) 
-    	for (pkg in desc[,"VignetteBuilder"]) {
-    	    loadNamespace(pkg)                   
-	}
+    pkgs <- .get_package_metadata(pkgdir)["VignetteBuilder"]
+    if (!is.na(pkgs)) {
+        pkgs <- unlist(strsplit(pkgs, ","))
+        pkgs <- gsub('[[:space:]]', '', pkgs)
+        for (pkg in pkgs)
+    	    loadNamespace(pkg)
+    }
 }
 
 
