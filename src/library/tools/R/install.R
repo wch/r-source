@@ -1825,8 +1825,7 @@
 
 	cat('<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>\n', file=conn)
 	if (file.exists(file.path(outDir, "doc")))
-	    cat('<li><a href="../doc/index.html">Overview of user guides and package vignettes</a>;',
-		'browse <a href="../doc">directory</a>.</li>\n', file=conn)
+	    cat('<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>\n', file=conn)
 	if (file.exists(file.path(outDir, "demo")))
 	    cat('<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>\n',
 		 sep = "", file=conn)

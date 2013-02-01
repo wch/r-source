@@ -380,6 +380,9 @@
 
       \item Profiling via \code{Rprof()} now optionally records
       information about time spent in GC.
+      
+      \item The HTML help page for a package now displays non-vignette
+      documentation files in a more accessible format.
     }
   }
 

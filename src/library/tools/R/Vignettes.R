@@ -462,17 +462,32 @@ function(x, ...)
 function(pkg, con, vignetteIndex = NULL)
 {
     ## FIXME: in principle we could need to set an encoding here
-    html <- c(HTMLheader("Vignettes"),
+    html <- c(HTMLheader("Vignettes and other documentation"),
               paste0("<h2>Vignettes from package '", pkg,"'</h2>"))
 
     if(is.null(vignetteIndex) || nrow(vignetteIndex) == 0L) {
         html <-
             c(html,
-              "Sorry, the package contains no vignette meta-information nor an index.",
-              'Please browse the <a href=".">directory</a>.')
+              "The package contains no vignette meta-information.")
     } else {
     	vignetteIndex <- cbind(Package=pkg, as.matrix(vignetteIndex[,c("File", "Title", "PDF", "R")]))
         html <- c(html, makeVignetteTable(vignetteIndex, depth=3))
+    }
+    otherfiles <- list.files(system.file("doc", package=pkg))
+    otherfiles <- setdiff(otherfiles, c(vignetteIndex[,c("PDF", "File", "R")], "index.html"))
+    if (length(otherfiles)) {
+    	otherfiles <- ifelse(file.info(system.file(file.path("doc", otherfiles), package=pkg))$isdir,
+			     paste0(otherfiles, "/"),
+			     otherfiles)
+	urls <- paste0('<a href="', otherfiles, '">', otherfiles, '</a>')
+        html <- c(html, '<h2>Other files in the <span class="samp">doc</span> directory</h2>',
+                  '<table width="100%">',
+		  '<col width="24%">',
+		  '<col width="50%">',
+		  '<col width="24%">',
+                  paste0('<tr><td></td><td><span class="samp">', 
+                         iconv(urls, "", "UTF-8"), "</span></td></tr>"),
+                  "</dl>")
     }
     html <- c(html, "</body></html>")
     writeLines(html, con=con)
