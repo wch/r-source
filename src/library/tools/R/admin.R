@@ -512,6 +512,8 @@ function(dir, outDir, encoding = "")
                 basename(file_path_sans_ext(vignetteIndex$File)))
         ind <- file_test("-f", vignettePDFs)
         vignetteIndex$PDF[ind] <- vignettePDFs[ind]
+        
+	loadVignetteBuilder(dir)
 
         ## install tangled versions of all vignettes
         for(srcfile in vignetteIndex$File) {
@@ -519,7 +521,8 @@ function(dir, outDir, encoding = "")
             if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
             cat("  ", sQuote(basename(srcfile)),
                 if(nzchar(enc)) paste("using", sQuote(enc)), "\n")
-            utils::Stangle(srcfile, quiet = TRUE, encoding = enc)
+	    engine <- vignetteEngine(vignetteInfo(srcfile)$engine)
+            engine[["tangle"]](srcfile, quiet = TRUE, encoding = enc)
        }
         Rfiles <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vignetteIndex$File))
         ## remove any files with no R code (they will have header comments).
@@ -609,17 +612,20 @@ function(dir, outDir, keep.source = TRUE)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
+    loadVignetteBuilder(vigns$pkgdir)
+    
     for(srcfile in vigns$docs[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
         message(gettextf("processing %s", sQuote(basename(srcfile))),
                 domain = NA)
         texfile <- paste0(base, ".tex")
-        tryCatch(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
+        engine <- vignetteEngine(vignetteInfo(srcfile)$engine)
+        tryCatch(engine[["weave"]](srcfile, pdf = TRUE, eps = FALSE,
                                quiet = TRUE, keep.source = keep.source,
                                stylepath = FALSE),
                  error = function(e)
-                 stop(gettextf("running Sweave on vignette '%s' failed with message:\n%s",
-                               srcfile, conditionMessage(e)),
+                 stop(gettextf("running %s on vignette '%s' failed with message:\n%s",
+                               engine[["name"]], srcfile, conditionMessage(e)),
                       domain = NA, call. = FALSE))
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?

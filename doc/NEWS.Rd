@@ -512,6 +512,10 @@
       like \preformatted{     Biarch: yes
 }
       to be installed on Windows with \option{--force-biarch}.
+      
+      \item Package vignettes can now be processed by other engines
+      besides \code{Sweave}; see \sQuote{Writing R Extensions} and the
+      \code{tools::vignetteEngine} help topic for details.      
     }
   }
 

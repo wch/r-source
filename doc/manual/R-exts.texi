@@ -534,7 +534,8 @@ will be attached (after checking version requirements) before the
 current package, both when @code{library} is called and when preparing
 for lazy-loading during installation.
 
-A package (or @samp{R}) can appear more than once in the @samp{Depends}.
+A package (or @samp{R}) can appear more than once in the
+@samp{Depends} field.
 
 It makes no sense to declare a dependence on @code{R} without a version
 specification, nor on the package @pkg{base}: this is an @R{} package
@@ -699,6 +700,12 @@ as preventing @command{R CMD check} from testing this.  This should only
 be used exceptionally, for example if the PDFs need large figures which
 are not part of the package sources.
 
+@c DESCRIPTION field VignetteBuilder
+The @samp{VignetteBuilder} field names a package that provides 
+an engine other than Sweave for building vignettes.  This may
+be the current package, or one listed in @samp{Depends},
+@samp{Suggests} or @samp{Imports}.
+See @ref{Non-Sweave vignettes} for details.
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
@@ -2470,7 +2477,8 @@ Windows platform.
 @cindex Sweave
 
 @menu
-* Encodings and vignettes::     
+* Encodings and vignettes::
+* Non-Sweave vignettes::
 @end menu
 
 In addition to the help files in @file{Rd} format, @R{} packages allow
@@ -2486,11 +2494,13 @@ provided), the file names should start with an @acronym{ASCII} letter
 and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
-A special case are PDF documents with sources in Sweave format, which we
-call @emph{package vignettes}.  The preferred location for the Sweave
-sources is the subdirectory @file{vignettes} of the source packages, but
-for compatibility with earlier versions of @R{}, vignette sources will
-be looked for in @file{inst/doc} if @file{vignettes} does not exist.
+A special case are PDF documents with sources in Sweave, which we call
+@emph{package vignettes}.  (Since @R{} version 3.0.0, other vignette
+formats besides Sweave are supported; see @ref{Non-Sweave vignettes}.)
+The preferred location for the sources is the subdirectory
+@file{vignettes} of the source packages, but for compatibility with
+earlier versions of @R{}, vignette sources will be looked for in
+@file{inst/doc} if @file{vignettes} does not exist.
 
 Vignette sources are normally given the file extension @file{.Rnw} or
 @file{.Rtex}, but for historical reasons extensions@footnote{and to
@@ -2576,7 +2586,8 @@ Others you may see are @code{\VignettePackage} (currently ignored),
 @code{\VignetteKeywords}).  These are processed at package installation
 time to create the saved data frame @file{Meta/vignette.rds}, but only
 the @code{\VignetteIndexEntry} and @code{\VignetteKeyword} statements
-are currently used.
+are currently used.  The @code{\VignetteEngine} statement
+is described in @ref{Non-Sweave vignettes}.
 
 At install time an @HTML{} index for all vignettes in the package is
 automatically created from the @code{\VignetteIndexEntry} statements
@@ -2608,7 +2619,7 @@ Perl-like regular expressions on one or more lines.  (See the
 description of the @file{.Rinstignore} file for full details.)
 
 
-@node Encodings and vignettes,  , Writing package vignettes, Writing package vignettes
+@node Encodings and vignettes, Non-Sweave vignettes, Writing package vignettes, Writing package vignettes
 @subsection Encodings and vignettes
 
 Vignette PDFs will in general include descriptive text, @R{} input, @R{}
@@ -2666,6 +2677,38 @@ are read from a UTF-8 CSV file and will be assumed to be in the current
 encoding, so @file{fortunes.tex} will be in UTF-8 in any locale.  Had
 @code{read.table} been told the data were UTF-8, @file{fortunes.tex}
 would have been in the locale's encoding.
+
+@node Non-Sweave vignettes, , Encodings and vignettes, Writing package vignettes
+@subsection Non-Sweave vignettes
+
+New in @R{} version 3.0.0 is the possibility of vignettes in formats
+other than Sweave, for example @CRANpkg{knitr} version ?.?.? or higher.  
+These engines replace
+the @code{Sweave()} and @code{Stangle()} functions with other
+functions to convert vignette source files into @LaTeX{} files or @R{}
+source.  The user indicates this using the @code{\VignetteEngine} line, 
+for example
+@example
+%\VignetteEngine@{knitr@}
+@end example
+@noindent
+This specifies the name of an engine to use in place of Sweave in
+processing the vignette.  As @code{Sweave} is the only engine supplied
+with @R{}, the package providing any other engine must be specified
+in the @samp{VignetteBuilder} field of the package @file{DESCRIPTION}
+file.
+
+Package writers who would like to supply vignette engines need
+to register those engines in the package @code{.onLoad} function.
+For example, that function could make the call
+@example
+tools::vignetteEngine("knitr", weave=vweave, tangle=vtangle)
+@end example
+@noindent
+The @code{weave} and @code{tangle} arguments specify functions with
+headers compatible with @code{Sweave} and @code{Stangle} respectively.
+These will be called by @R{} when processing vignettes.  See
+the @code{?tools::vignetteEngine} help topic for more details.
 
 @node Submitting a package to CRAN, Package namespaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}

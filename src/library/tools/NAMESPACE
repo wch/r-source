@@ -40,8 +40,8 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "startDynamicHelp", "testInstalledBasic",
        "testInstalledPackage", "testInstalledPackages", "texi2dvi",
        "texi2pdf", "toHTML", "toRd", "undoc", "update_pkg_po",
-       "vignetteDepends", "write_PACKAGES", "xgettext",
-       "xgettext2pot", "xngettext")
+       "vignetteDepends", "vignetteEngine", "write_PACKAGES", 
+       "xgettext", "xgettext2pot", "xngettext")
 
 export(".print.via.format")
 

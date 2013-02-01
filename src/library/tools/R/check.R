@@ -2354,7 +2354,8 @@ setRlibs <-
                 cat("  ", sQuote(basename(v)),
                     if(nzchar(enc)) paste("using", sQuote(enc)),
                     "...")
-                Rcmd <- paste0("options(warn=1)\ntools:::.run_one_vignette('",
+                Rcmd <- paste0("options(warn=1)\ntools:::loadVignetteBuilder('",
+                	       vigns$pkgdir, "')\ntools:::.run_one_vignette('",
                                basename(v), "', '", vigns$dir, "'",
                                if (nzchar(enc))
                                    paste0(", encoding = '", enc, "'"),
