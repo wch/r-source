@@ -1366,8 +1366,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void check_slot_assign(SEXP obj, SEXP input, SEXP value, SEXP env) 
 {
-    Rboolean isAttr = FALSE;
-    SEXP alist, name, valueClass, objClass;
+    SEXP valueClass, objClass;
 
     valueClass = R_data_class(value, FALSE);
     objClass = R_data_class(obj, FALSE);
