@@ -299,7 +299,7 @@ distclean: clean
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
 	$(RM) ../../SVN-REVISION.bak
-	$(RM) rw-FAQ fixed/html/rw-FAQ.html
+	$(RM) ../../doc/manual/rw-FAQ
 	$(MAKE) -C cran clean
 	$(RM) -r ../library/.vignettes # it gets left behind if there is an error
 	$(RM) -r ../../share/locale # relic of earlier versions
@@ -372,7 +372,7 @@ bytecode-recommended:
 	  $(MK) -C ../library/Recommended -f Makefile.win
 
 docfiles:
-	@$(MK) -f Makefile.docs
+	@$(MK) -C ../../doc/manual -f Makefile.win FAQ
 
 bitmapdll:
 	@$(MAKE) -C bitmap

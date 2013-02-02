@@ -39,7 +39,7 @@ LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) translations $(EXTR
 
 INFO_FILES = COPYING NEWS README
 DOC_INFO_FILES = AUTHORS COPYING FAQ RESOURCES THANKS CHANGES
-GW_INFO_FILES = COPYRIGHTS README.Rterm rw-FAQ
+GW_INFO_FILES = COPYRIGHTS README.Rterm ../../doc/manual/rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Rcmd_environ
 

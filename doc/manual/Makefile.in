@@ -19,7 +19,7 @@ DISTFILES = \
 	README \
 	Makefile.in Makefile.win \
 	R-defs.texi dir epsf.tex pdfcolor.tex \
-	$(SOURCES_TEXI) \
+	$(SOURCES_TEXI) rw-FAQ.texi \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
