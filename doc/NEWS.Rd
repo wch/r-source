@@ -844,6 +844,10 @@
       \item  If a package used a \file{NEWS.Rd} file, the main HTML
       package index page did not link to it.  (Reported by Dirk
       Eddelbuettel.)
+
+      \item The primitive implementation of \code{@<-} was not
+      checking the class of the replacement.  It now does a check,
+      quicker but less general than \code{slot<-}. See the help.
     }
   }
 }

@@ -325,6 +325,27 @@ checkSlotAssignment <- function(obj, name, value)
        as(value, slotClass, strict=FALSE, ext = ok)
 }
 
+## slightly simpler verison to be called from do_attrgets()
+checkAtAssignment <- function(cl, name, valueClass)
+{
+    ClassDef <- getClass(cl) # fails if cl not a defined class (!)
+    slotClass <- elNamed(ClassDef@slots, name)
+    if(is.null(slotClass))
+        stop(gettextf("%s is not a slot in class %s",
+                      sQuote(name), dQuote(cl)),
+             domain = NA)
+    if(.identC(slotClass, valueClass))
+       return(TRUE)
+    ## check the value, but be careful to use the definition of the slot's class from
+    ## the class environment of obj (change validObject too if a better way is found)
+    ok <- possibleExtends(valueClass, slotClass,
+                          ClassDef2 = getClassDef(slotClass, where = .classEnv(ClassDef)))
+    if(identical(ok, FALSE))
+       stop(gettextf("assignment of an object of class %s is not valid for @%s in an object of class %s; is(value, \"%s\") is not TRUE",
+		     dQuote(valueClass), sQuote(name), dQuote(cl), slotClass),
+            domain = NA)
+    TRUE
+}
 
 ## Now a primitive in base
 ## "@<-" <-

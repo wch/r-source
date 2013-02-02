@@ -14,3 +14,6 @@ setClass("D", contains = "numeric", representation(names = "character"))
 d <- new("D", 1)
 names(d) <- "A"
 stopifnot(identical(d@names, "A"))
+## test the checks on @<- primitive assignment
+stopifnot(is(tryCatch(a@yy <- 1 , error = function(e)e), "error"))
+stopifnot(is(tryCatch(a@xx <- "A" , error = function(e)e), "error"))

@@ -27,7 +27,8 @@ object@name <- value
 \details{
   These operators support the formal classes of package \pkg{methods},
   and are enabled only when package \pkg{methods} is loaded (as per
-  default).  See \code{\link{slot}} for further details.
+  default).  See \code{\link{slot}} for further details, in particular
+  for the differences between \code{slot()} and the \code{@} operator.
 
   It is checked that \code{object} is an S4 object (see
   \code{\link{isS4}}), and it is an error to attempt to use \code{@} on

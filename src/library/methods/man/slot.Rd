@@ -96,6 +96,21 @@ getSlots(x)
   Note that the \code{"@"} operators for extraction and (since \R 3.0.0)
   replacement are primitive and actually reside in the \pkg{base}
   package.
+
+  The replacement versions of  \code{"@"} and \code{slot()} differ in
+  the computations done to coerce the right side of the assignment to
+  the declared class of the slot.  Both verify that the value provided
+  is from a subclass of the declared slot class.  The  \code{slot()}
+  version will go on to call the coerce method if there is one, in
+  effect doing the computation \code{as(value, slotClass, strict =
+    FALSE)}. The  \code{"@"} version just verifies the relation,
+  leaving any coerce to be done later (e.g., when a relevant method is
+  dispatched).
+
+  In most uses the result is equivalent, and the  \code{"@"} version
+  saves an extra function call, but if empirical evidence shows that a
+  conversion is needed, either call \code{as()} before the replacement
+  or use the replacement version of \code{slot()}.
 }
 \references{
  Chambers, John M. (2008)
