@@ -2682,7 +2682,7 @@ would have been in the locale's encoding.
 @subsection Non-Sweave vignettes
 
 New in @R{} version 3.0.0 is the possibility of vignettes in formats
-other than Sweave, for example @CRANpkg{knitr} version ?.?.? or higher.  
+other than Sweave, for example @CRANpkg{knitr} version 1.1 or higher.  
 These engines replace
 the @code{Sweave()} and @code{Stangle()} functions with other
 functions to convert vignette source files into @LaTeX{} files or @R{}
