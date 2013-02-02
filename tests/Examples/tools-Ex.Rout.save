@@ -902,6 +902,29 @@ attr(,"class")
 > 
 > 
 > cleanEx()
+> nameEx("vignetteEngine")
+> ### * vignetteEngine
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vignetteEngine
+> ### Title: Set or get a vignette processing engine.
+> ### Aliases: vignetteEngine
+> ### Keywords: utilities documentation
+> 
+> ### ** Examples
+> 
+> str(vignetteEngine("Sweave"))
+List of 3
+ $ name  : chr "Sweave"
+ $ weave :function (file, driver = RweaveLatex(), syntax = getOption("SweaveSyntax"), 
+    encoding = "", ...)  
+ $ tangle:function (file, driver = Rtangle(), syntax = getOption("SweaveSyntax"), 
+    encoding = "", ...)  
+> 
+> 
+> 
+> cleanEx()
 > nameEx("writePACKAGES")
 > ### * writePACKAGES
 > 
