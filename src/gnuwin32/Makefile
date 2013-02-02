@@ -278,7 +278,7 @@ distclean: clean
 	$(RM) ../library/*/src/windows/*.d ../library/*/src/windows/Makedeps
 	$(RM) ../library/*/src/windows/*.dll
 	$(RM) -r ../library/*/check
-	$(RM) ../library/*/tests/*.ps
+	$(RM) ../library/*/tests/*.ps ../library/*/tests/*.pdf
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def
 	$(RM) R.exp COPYRIGHTS
