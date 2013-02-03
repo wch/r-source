@@ -53,7 +53,7 @@ function(package, dir, lib.loc = NULL,
     file.create(".check.timestamp")
     result <- list(tangle = list(), weave = list(),
                    source = list(), latex = list())
-                   
+
     loadVignetteBuilder(vigns$pkgdir)
 
     startdir <- getwd()
@@ -218,7 +218,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     WINDOWS <- .Platform$OS.type == "windows"
 
     file.create(".build.timestamp")
-    
+
     loadVignetteBuilder(vigns$pkgdir)
 
     pdfs <- character()
@@ -458,6 +458,7 @@ function(x, ...)
 
 ### * .writeVignetteHtmlIndex
 
+## NB SamplerCompare has a .Rnw file which produces on R code.
 .writeVignetteHtmlIndex <-
 function(pkg, con, vignetteIndex = NULL)
 {
@@ -465,16 +466,19 @@ function(pkg, con, vignetteIndex = NULL)
     html <- c(HTMLheader("Vignettes and other documentation"),
               paste0("<h2>Vignettes from package '", pkg,"'</h2>"))
 
-    if(is.null(vignetteIndex) || nrow(vignetteIndex) == 0L) {
+    if(NROW(vignetteIndex) == 0L) { ## NROW(NULL) = 0
         html <-
             c(html,
               "The package contains no vignette meta-information.")
     } else {
-    	vignetteIndex <- cbind(Package=pkg, as.matrix(vignetteIndex[,c("File", "Title", "PDF", "R")]))
-        html <- c(html, makeVignetteTable(vignetteIndex, depth=3))
+    	vignetteIndex <- cbind(Package = pkg, as.matrix(vignetteIndex[,
+                               c("File", "Title", "PDF", "R")]))
+        html <- c(html, makeVignetteTable(vignetteIndex, depth = 3L))
     }
-    otherfiles <- list.files(system.file("doc", package=pkg))
-    otherfiles <- setdiff(otherfiles, c(vignetteIndex[,c("PDF", "File", "R")], "index.html"))
+    otherfiles <- list.files(system.file("doc", package = pkg))
+    if(NROW(vignetteIndex))
+        otherfiles <- setdiff(otherfiles,
+                              c(vignetteIndex[, c("PDF", "File", "R")], "index.html"))
     if (length(otherfiles)) {
     	otherfiles <- ifelse(file.info(system.file(file.path("doc", otherfiles), package=pkg))$isdir,
 			     paste0(otherfiles, "/"),
@@ -485,7 +489,7 @@ function(pkg, con, vignetteIndex = NULL)
 		  '<col width="24%">',
 		  '<col width="50%">',
 		  '<col width="24%">',
-                  paste0('<tr><td></td><td><span class="samp">', 
+                  paste0('<tr><td></td><td><span class="samp">',
                          iconv(urls, "", "UTF-8"), "</span></td></tr>"),
                   "</dl>")
     }
