@@ -61,7 +61,7 @@
   \code{\link{NumericConstants}}, \code{\link{Paren}},
   \code{\link{Quotes}}, \code{\link{Reserved}}.
 
-  The \emph{R Language Definition} manual.
+  The \sQuote{R Language Definition} manual.
 }
 \keyword{documentation}
 \keyword{programming}

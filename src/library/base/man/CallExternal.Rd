@@ -42,8 +42,8 @@
   also be used of C++ code.
 
   For details about how to write code to use with these functions see
-  the chapter on \dQuote{System and foreign language interfaces} in
-  the \dQuote{Writing \R Extensions} manual.  They differ in the way the
+  the chapter on \sQuote{System and foreign language interfaces} in
+  the \sQuote{Writing \R Extensions} manual.  They differ in the way the
   arguments are passed to the C code:  \code{.External} allows for a
   variable number of arguments.
 

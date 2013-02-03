@@ -74,10 +74,10 @@ package.skeleton(name = "anRpackage", list,
 }
 
 \references{
-  Read the \emph{Writing R Extensions} manual for more details.
+  Read the \sQuote{Writing R Extensions} manual for more details.
 
   Once you have created a \emph{source} package you need to install it:
-  see the \emph{R Installation and Administration} manual,
+  see the \sQuote{R Installation and Administration} manual,
   \code{\link{INSTALL}} and \code{\link{install.packages}}.
 }
 

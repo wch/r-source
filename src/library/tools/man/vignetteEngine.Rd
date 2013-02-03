@@ -40,7 +40,7 @@ If the engine is being deleted, \code{NULL}.  Otherwise a list containing compon
 Duncan Murdoch
 }
 \seealso{
-\code{\link{Sweave}} and the Writing R Extensions manual.
+\code{\link{Sweave}} and the \sQuote{Writing R Extensions} manual.
 }
 \examples{
 str(vignetteEngine("Sweave"))

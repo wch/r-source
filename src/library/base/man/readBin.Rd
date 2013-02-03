@@ -72,7 +72,7 @@ writeBin(object, con, size = NA_integer_,
   the string is valid in the current locale.
 
   Handling \R's missing and special (\code{Inf}, \code{-Inf} and
-  \code{NaN}) values is discussed in the \emph{R Data Import/Export} manual.
+  \code{NaN}) values is discussed in the \sQuote{R Data Import/Export} manual.
 
   Only \eqn{2^{31}-1}{2^31 - 1} bytes can be written in a single
   call (and that is the maximum capacity of a raw vector).
@@ -105,7 +105,7 @@ writeBin(object, con, size = NA_integer_,
   invisibly \code{NULL}.
 }
 \seealso{
-  The \emph{R Data Import/Export} manual.
+  The \sQuote{R Data Import/Export} manual.
 
   \code{readChar} to read/write fixed-length strings.
 

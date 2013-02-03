@@ -4331,7 +4331,7 @@ and after setting environment variables.
 @c (see @uref{http://mailman.rz.uni-augsburg.de/pipermail/stats-rosuda-devel/2012q4/001917.html}).
 For example, @file{config.site} could contain
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
