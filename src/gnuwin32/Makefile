@@ -295,7 +295,7 @@ distclean: clean
 	$(MAKE) -C fixed distclean
 	$(MAKE) -C ../include -f Makefile.win distclean
 	-$(MAKE) -C installer distclean
-	@for pkg in $(R_PKGS_BASE); do \
+	@for pkg in $(R_PKGS_BASE) translations; do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
 	$(RM) ../../SVN-REVISION.bak
