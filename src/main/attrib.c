@@ -1366,11 +1366,14 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void check_slot_assign(SEXP obj, SEXP input, SEXP value, SEXP env) 
 {
-    SEXP valueClass, objClass;
+    SEXP valueClass, objClass, e;
 
-    valueClass = R_data_class(value, FALSE);
-    objClass = R_data_class(obj, FALSE);
-    eval( lang4( install("checkAtAssignment"), objClass, input, valueClass ), env );
+    valueClass = PROTECT(R_data_class(value, FALSE));
+    objClass = PROTECT(R_data_class(obj, FALSE));
+    e = PROTECT(lang4(install("checkAtAssignment"), 
+		      objClass, input, valueClass));
+    eval(e, env);
+    UNPROTECT(3);
 }
 
 

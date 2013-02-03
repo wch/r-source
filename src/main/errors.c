@@ -541,14 +541,15 @@ static SEXP GetSrcLoc(SEXP srcref)
 {
     SEXP sep, line, result;
     SEXP srcfile = R_GetSrcFilename(srcref);
-    if (TYPEOF(srcref) != INTSXP || length(srcref) < 4) {
+    if (TYPEOF(srcref) != INTSXP || length(srcref) < 4)
 	return ScalarString(mkChar(""));
-    }
-    PROTECT(srcfile = eval( lang2( install("basename"), srcfile ), R_BaseEnv ) );
+    SEXP e2 = PROTECT(lang2( install("basename"), srcfile));
+    PROTECT(srcfile = eval(e2, R_BaseEnv ) );
     PROTECT(sep = ScalarString(mkChar("#")));
     PROTECT(line = ScalarInteger(INTEGER(srcref)[0]));
-    result = eval( lang4( install("paste0"), srcfile, sep, line ), R_BaseEnv );
-    UNPROTECT(3);
+    SEXP e = PROTECT(lang4( install("paste0"), srcfile, sep, line ));
+    result = eval(e, R_BaseEnv );
+    UNPROTECT(5);
     return result;
 }
 
