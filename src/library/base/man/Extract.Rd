@@ -304,7 +304,7 @@ x$i <- value
   behaviour when applied to data.frame and factors.
 
   \code{\link{Syntax}} for operator precedence, and the
-  \emph{R Language} reference manual about indexing details.
+  \sQuote{R Language Definition} manual about indexing details.
 
 
   \code{\link{NULL}} for details of indexing null objects.

@@ -97,7 +97,7 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
 }
 
 \seealso{
-  The \emph{R Data Import/Export} manual.
+  The \sQuote{R Data Import/Export} manual.
 
   \code{\link{connections}}, \code{\link{readLines}},
   \code{\link{writeLines}}, \code{\link{readBin}}

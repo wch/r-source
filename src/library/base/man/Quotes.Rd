@@ -94,6 +94,6 @@
 
   \code{\link{shQuote}} for quoting OS commands.
 
-  The \emph{R Language Definition} manual.
+  The  \sQuote{R Language Definition} manual.
 }
 \keyword{documentation}
