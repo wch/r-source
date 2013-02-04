@@ -69,7 +69,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   some confusion.
 
   Note that the \env{\link{LANGUAGE}} environment variable has
-  precedence over code{"LC_MESSAGES"} in selecting the language of
+  precedence over \code{"LC_MESSAGES"} in selecting the language of
   message translation on most \R platforms.
 }
 \value{
