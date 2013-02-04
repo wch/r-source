@@ -159,7 +159,7 @@ one architecture takes about 75Mb of disk space, for both 90-100Mb.
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
 with spaces in will probably work, but is little-tested.)  Users of
-Vista/Windows 7/8/Server 2008 installing for a single user using an
+Vista/Windows 7/8/Server 2008/2012 installing for a single user using an
 account with administrator rights@footnote{Non-administrator accounts
 will automatically be offered a default installation directory in the
 user area.} should consider installing into a non-system area (such as
@@ -277,7 +277,7 @@ without creating a shortcut starting in a writable folder.
 @section How do I UNinstall R?
 
 Normally you can do this from the @samp{Add/Remove Programs} (XP) or
-@samp{Programs and Features} (Vista/7/8/Server 2008) group in the
+@samp{Programs and Features} (Vista/7/8/Server 2008/2012) group in the
 Control Panel.  If it does not appear there, run @file{unins000.exe} in
 the top-level installation directory.  On recent versions of Windows you
 may well be asked to confirm that you wish to run a program from an
@@ -421,10 +421,9 @@ variable @env{HOME} is set, its value is used.  After those two
 user-controllable settings, R tries to find system-defined home
 directories.  It first tries to use the Windows "personal" directory
 (typically @file{C:\Documents and Settings\username\My Documents} on
-Windows XP and @file{C:\Users\username\Documents} on Vista/Windows
-7/8/Server 2008).
-If that fails, if both environment variables @env{HOMEDRIVE} and
-@env{HOMEPATH} are set (and they normally are), the value is
+Windows XP and @file{C:\Users\username\Documents} nowadays).  If that
+fails, if both environment variables @env{HOMEDRIVE} and @env{HOMEPATH}
+are set (and they normally are), the value is
 @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If all of these fail, the current
 working directory is used.
 
@@ -465,9 +464,9 @@ See @code{?Startup} for more details of environment files.
 For all applications via Windows.  How you set an environment variable
 is system specific: under Windows XP/Server 2003 you can use `System' in
 the control panel or the properties of `My Computer' (under the
-`Advanced' tab).  Under Vista/7/8/Server 2008, go to `User Accounts' in
-the Control Panel, and select your account and then `Change my
-environment variables'.
+`Advanced' tab).  Under recent versions of Windows, go to `User
+Accounts' in the Control Panel, and select your account and then `Change
+my environment variables'.
 @end enumerate
 
 The order of precedence for environmental variables is the order in
@@ -554,7 +553,7 @@ We have had several reports of this, although they do work for us on
 
 (a) Use the alternative @file{internet2.dll} by starting R with the flag
 @option{--internet2} (@pxref{How do I install R for Windows?}) or
-calling @code{setInternet2(TRUE)}, or setting the environnent variable
+calling @code{setInternet2(TRUE)}, or setting the environment variable
 @env{R_WIN_INTERNET2} to a non-empty value.  These cause R to use the
 Internet Explorer internals, which may already be configured for use
 with proxies.  Note that this does @emph{not} work with proxies that
@@ -894,7 +893,7 @@ for 64-bit @command{Rcmd.exe}, replacing @code{x64} by @code{i386} for
 
 How you set the path depends on your OS version.  On Windows XP/Server
 2003 you can use `System' in the control panel or the properties of `My
-Computer' (under the `Advanced' tab).  Under Vista and later, go to
+Computer' (under the `Advanced' tab).  Under more recent versions, go to
 `User Accounts' in the Control Panel, and select your account and then
 `Change my environment variables'.  (System policies can prevent end
 users making changes.)
@@ -1542,7 +1541,7 @@ paths.@footnote{It does not have a complete understanding of Windows
 file paths, but can complete most relative or absolute file paths,
 including drives and spaces. Relative paths on drives are not handled,
 for example.}  Otherwise, it is completing R expressions: most obviously
-it will match visible R object names and keywords, so @kbd{apr} folloed
+it will match visible R object names and keywords, so @kbd{apr} followed
 by @kbd{TAB} will (in a vanilla session) complete to @code{apropos}.
 After a function name and parenthesis (e.g.@: @kbd{apropos(}) it will
 complete argument names (and @kbd{=}), and after @kbd{$} or @kbd{@@} it
