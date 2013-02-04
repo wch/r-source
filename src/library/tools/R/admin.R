@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -507,11 +507,11 @@ function(dir, outDir, encoding = "")
         if (is.null(cwd))
             stop("current working directory cannot be ascertained")
         setwd(outVignetteDir)
-        vignettePDFs <-
-            sub("$", ".pdf",
-                basename(file_path_sans_ext(vignetteIndex$File)))
-        ind <- file_test("-f", vignettePDFs)
-        vignetteIndex$PDF[ind] <- vignettePDFs[ind]
+        HTMLout <- vignette_is_HTML(vignetteIndex$File)
+        vignetteOutfiles <- vignette_output(basename(vignetteIndex$File))
+        
+        ind <- file_test("-f", vignetteOutfiles)
+        vignetteIndex$PDF[ind] <- vignetteOutfiles[ind]
         
 	loadVignetteBuilder(dir)
 
@@ -524,7 +524,7 @@ function(dir, outDir, encoding = "")
 	    engine <- vignetteEngine(vignetteInfo(srcfile)$engine)
             engine[["tangle"]](srcfile, quiet = TRUE, encoding = enc)
        }
-        Rfiles <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vignetteIndex$File))
+        Rfiles <- vignette_source(basename(vignetteIndex$File))
         ## remove any files with no R code (they will have header comments).
         ## if not correctly declared they might not be in the current encoding
         for(f in Rfiles)
@@ -592,11 +592,10 @@ function(dir, outDir, keep.source = TRUE)
         stop(gettextf("cannot open directory '%s'", outVignetteDir),
              domain = NA)
 
-    vignettePDFs <-
-        file.path(outVignetteDir,
-                  sub("$", ".pdf",
-                      basename(file_path_sans_ext(vigns$docs))))
-    upToDate <- file_test("-nt", vignettePDFs, vigns$docs)
+    vignetteOutfiles <- file.path(outVignetteDir,
+    	vignette_output(basename(vigns$docs)))
+    
+    upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
 
     ## The primary use of this function is to build and install PDF
     ## vignettes in base packages.
@@ -614,11 +613,13 @@ function(dir, outDir, keep.source = TRUE)
 
     loadVignetteBuilder(vigns$pkgdir)
     
-    for(srcfile in vigns$docs[!upToDate]) {
+    srcfiles <- vigns$docs[!upToDate]
+    HTMLout <- vignette_is_HTML(srcfiles)
+    for(i in seq_along(srcfiles)) {
+        srcfile <- srcfiles[i]
         base <- basename(file_path_sans_ext(srcfile))
         message(gettextf("processing %s", sQuote(basename(srcfile))),
                 domain = NA)
-        texfile <- paste0(base, ".tex")
         engine <- vignetteEngine(vignetteInfo(srcfile)$engine)
         tryCatch(engine[["weave"]](srcfile, pdf = TRUE, eps = FALSE,
                                quiet = TRUE, keep.source = keep.source,
@@ -630,18 +631,20 @@ function(dir, outDir, keep.source = TRUE)
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
         ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
-        ## <FIXME>
-        ## What if this fails?
-        texi2pdf(texfile, quiet = TRUE, texinputs = vigns$dir)
-        ## </FIXME>
-        pdffile <-
-	    paste0(basename(file_path_sans_ext(srcfile)), ".pdf")
-        if(!file.exists(pdffile))
-            stop(gettextf("file '%s' was not created", pdffile),
+        outfile <- vignette_output(basename(srcfile))
+        if (!HTMLout[i]) {
+	    ## <FIXME>
+	    ## What if this fails?
+	    texfile <- paste0(base, ".tex")
+	    texi2pdf(texfile, quiet = TRUE, texinputs = vigns$dir)
+	    ## </FIXME>
+	}
+        if(!file.exists(outfile))
+            stop(gettextf("file '%s' was not created", outfile),
                  domain = NA)
-        if(!file.copy(pdffile, outVignetteDir, overwrite = TRUE))
+        if(!file.copy(outfile, outVignetteDir, overwrite = TRUE))
             stop(gettextf("cannot copy '%s' to '%s'",
-                          pdffile,
+                          outfile,
                           outVignetteDir),
                  domain = NA)
     }

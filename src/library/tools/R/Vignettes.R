@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,22 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+
+## Some vignettes produce HTML output, not PDF output.  These functions support that.
+
+vignette_is_HTML <- function(filenames) 
+   file_ext(filenames) == "Rmd"
+
+vignette_source <- function(filenames) {
+   outfiles <- sub("\\.[RrSs](nw|tex)$", ".R", filenames)
+   sub("\\.Rmd$", ".R", outfiles)
+}
+   
+vignette_output <- function(filenames) {
+   outfiles <- sub("\\.[RrSs](nw|tex)$", ".pdf", filenames)
+   sub("\\.Rmd$", ".html", outfiles)
+}
+   
 ### * checkVignettes
 ###
 ### Run a tangle+source and a weave on all vignettes of a package.
@@ -103,11 +119,13 @@ function(package, dir, lib.loc = NULL,
             ## * Catch texi2dvi() errors similar to the above.
             ## * Do *not* immediately show texi2dvi() output as part of
             ##   running checkVignettes().
+            ## * Do not run it on vignettes with the .Rmd extension
             ## (For the future, maybe keep this output and provide it as
             ## additional diagnostics ...)
             ## </NOTE>
             bad_vignettes <- as.character(names(unlist(result)))
-            bad_vignettes <- file_path_sans_ext(basename(bad_vignettes))
+            bad_vignettes <- file_path_sans_ext(basename(c(bad_vignettes,
+            						   vigns$docs[vignette_is_HTML(vigns$docs)])))
             for(f in vigns$docs) {
                 bf <- file_path_sans_ext(basename(f))
                 if(bf %in% bad_vignettes) break
@@ -195,6 +213,8 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
 {
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(invisible())
+    
+    HTMLout <- vignette_is_HTML(vigns$docs)
 
     ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
     Sys.unsetenv("SWEAVE_STYLEPATH_DEFAULT")
@@ -221,13 +241,10 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
 
     loadVignetteBuilder(vigns$pkgdir)
 
-    pdfs <- character()
+    outfiles <- vignette_output(vigns$docs)
     startdir <- getwd()
-    for(f in vigns$docs) {
-        f <- basename(f)
-        bf <- file_path_sans_ext(f)
-        bft <- paste0(bf, ".tex")
-        pdfs <- c(pdfs, paste0(bf, ".pdf"))
+    for(i in seq_along(vigns$docs)) {
+        f <- basename(vigns$docs[i])
 	engine <- vignetteEngine(vignetteInfo(f)$engine)
 
         tryCatch(engine[["weave"]](f, quiet = quiet),
@@ -238,8 +255,10 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
                  })
         setwd(startdir)
         ## This can fail if run in a directory whose path contains spaces.
-        if(!have.makefile)
+        if(!have.makefile && !HTMLout[i]) {
+            bft <- paste0(file_path_sans_ext(f), ".tex")
             texi2pdf(file = bft, clean = FALSE, quiet = quiet)
+        }
     }
 
     if(have.makefile) {
@@ -262,13 +281,13 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
         ## fail to close it.
         graphics.off()
         if(clean) {
-            f <- list.files(all.files = TRUE) %w/o% c(".", "..", pdfs)
+            f <- list.files(all.files = TRUE) %w/o% c(".", "..", basename(outfiles))
             newer <- file_test("-nt", f, ".build.timestamp")
             ## some packages, e.g. SOAR, create directories
             unlink(f[newer], recursive = TRUE)
         }
         f <- list.files(all.files = TRUE)
-        file.remove(f %w/o% c(".", "..", pdfs, origfiles))
+        file.remove(f %w/o% c(".", "..", outfiles, origfiles))
     }
 
     if(file.exists(".build.timestamp")) file.remove(".build.timestamp")
@@ -387,30 +406,31 @@ function(vignetteDir)
     if(!length(vignetteFiles)) {
         out <- data.frame(File = character(),
                           Title = character(),
-                          PDF = character(),
+                          PDF = character(), 	
                           stringsAsFactors = FALSE)
         out$Depends <- list()
         out$Keywords <- list()
         return(out)
     }
 
+    HTMLout <- vignette_is_HTML(vignetteFiles)
+    
     contents <- vector("list", length = length(vignetteFiles) * 5L)
     dim(contents) <- c(length(vignetteFiles), 5L)
     for(i in seq_along(vignetteFiles))
         contents[i, ] <- vignetteInfo(vignetteFiles[i])
     colnames(contents) <- c("File", "Title", "Depends", "Keywords", "Engine")
 
-    ## (Note that paste(character(0L), ".pdf") does not do what we want.)
-    vignettePDFs <- sub("$", ".pdf", file_path_sans_ext(vignetteFiles))
+    vignetteOutfiles <- vignette_output(vignetteFiles)
 
     vignetteTitles <- unlist(contents[, "Title"])
 
-    vignettePDFs[!file_test("-f", vignettePDFs)] <- ""
-    vignettePDFs <- basename(vignettePDFs)
-
+    vignetteOutfiles[!file_test("-f", vignetteOutfiles)] <- ""
+    vignetteOutfiles <- basename(vignetteOutfiles)
+    
     out <- data.frame(File = unlist(contents[, "File"]),
                       Title = vignetteTitles,
-                      PDF = vignettePDFs,
+                      PDF = vignetteOutfiles,	# Not necessarily PDF, but name it that for back compatibility
                       row.names = NULL, # avoid trying to compute row
                                         # names
                       stringsAsFactors = FALSE)
@@ -561,7 +581,7 @@ function(vig_name, docDir, encoding = "")
         cat("\n  When tangling ", sQuote(vig_name), ":\n", sep="")
         stop(result, call. = FALSE, domain = NA)
     }
-    f <- sub("\\.[RrSs](nw|tex)$", ".R", vig_name)
+    f <- vignette_source(vig_name)
     tryCatch(source(f, echo = TRUE),
              error = function(e) result <<- conditionMessage(e))
     if(length(result)) {

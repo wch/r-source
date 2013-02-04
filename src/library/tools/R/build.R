@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -363,7 +363,7 @@ get_exclude_patterns <- function()
                     sources <- basename(list_files_with_exts(doc_dir, "R"))
                     if (length(sources)) {
                         vf <- basename(list_files_with_type(doc_dir, "vignette"))
-                        new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", vf)
+                        new_sources <- vignette_source(vf)
                         dups <- sources[sources %in% new_sources]
                         if(length(dups)) {
                             warningLog(Log)
@@ -381,9 +381,9 @@ get_exclude_patterns <- function()
                 if (basename(vigns$dir) == "vignettes") {
                     ## inst may not yet exist
                     dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
-                    pdfs <- sub("\\.[RrSs](nw|tex)$", ".pdf", vigns$docs)
-                    file.copy(c(vigns$docs, pdfs), doc_dir)
-                    unlink(pdfs)
+                    outfiles <- vignette_output(vigns$docs)
+                    file.copy(c(vigns$docs, outfiles), doc_dir)
+                    unlink(outfiles)
                     extras_file <- file.path("vignettes", ".install_extras")
                     if (file.exists(extras_file)) {
                         extras <- readLines(extras_file, warn = FALSE)

@@ -2258,7 +2258,7 @@ setRlibs <-
         sources <-
             basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
         if (length(sources)) {
-            new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vf))
+            new_sources <- vignette_source(basename(vf))
             dups <- sources[sources %in% new_sources]
             if(nb <- length(dups)) {
                 if(!any) warningLog(Log)
@@ -2370,7 +2370,7 @@ setRlibs <-
                                  stdout = outfile, stderr = outfile)
                 t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
-                savefile <- sub("\\.[RrSs](nw|tex)$", ".Rout.save", v)
+                savefile <- sub("\\.R$", ".Rout.save", vignette_source(v)) # change ext to .Rout.save
                 if(length(grep("^  When (tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")

@@ -2682,11 +2682,18 @@ would have been in the locale's encoding.
 @subsection Non-Sweave vignettes
 
 New in @R{} version 3.0.0 is the possibility of vignettes in formats
-other than Sweave, for example @CRANpkg{knitr} version 1.1 or higher.  
-These engines replace
-the @code{Sweave()} and @code{Stangle()} functions with other
-functions to convert vignette source files into @LaTeX{} files or @R{}
-source.  The user indicates this using the @code{\VignetteEngine} line, 
+other than Sweave by means of ``vignette engines''. For example
+@CRANpkg{knitr} version 1.1 or higher can create @file{.tex} files
+from a variation on Sweave format, or @file{.html} files from a
+variation on ``markdown'' format. These engines replace the
+@code{Sweave()} and @code{Stangle()} functions with other functions to
+convert vignette source files into @LaTeX{} files, @file{.html} files,
+or @R{} source.
+
+@R{} recognizes non-Sweave vignettes using the same extensions as for
+Sweave vignettes; in addition, the extension @file{.Rmd} (standing for
+``R markdown'') is supported.
+The user indicates the vignette engine using the @code{\VignetteEngine} line, 
 for example
 @example
 %\VignetteEngine@{knitr@}
@@ -2697,6 +2704,11 @@ processing the vignette.  As @code{Sweave} is the only engine supplied
 with @R{}, the package providing any other engine must be specified
 in the @samp{VignetteBuilder} field of the package @file{DESCRIPTION}
 file.
+
+If the vignette source has the @file{.Rmd} extension  then it is
+assumed that the weaving procedure produces @file{.html} output
+directly.  Otherwise, the weaver is assumed to produce @file{.tex}
+output, and @R{} handles the conversion to @file{.pdf} files.
 
 Package writers who would like to supply vignette engines need
 to register those engines in the package @code{.onLoad} function.
