@@ -3278,9 +3278,13 @@ As it happens, @R{}'s parser is not perfectly invertible, nor is its
 deparser, as the following examples show
 
 @example
-> deparse(quote(c(1, 2)))
+> str(quote(c(1,2)))
+ language c(1, 2)
+> str(c(1,2))
+ num [1:2] 1 2
+> deparse(quote(c(1,2)))
 [1] "c(1, 2)"
-> deparse(1:2)
+> deparse(c(1,2))
 [1] "c(1, 2)"
 > quote("-"(2, 2))
 2 - 2
