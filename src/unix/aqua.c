@@ -73,6 +73,7 @@ SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     if(ptr_do_wsbrowser) return ptr_do_wsbrowser(call, op, args, env);
     error("only HTML-based workspace browser is available");
+    return R_NilValue; // -Wall
 }
 
 #if defined(HAVE_X11)
