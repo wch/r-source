@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
+"POT-Creation-Date: 2013-02-05 07:27+0000\n"
 "PO-Revision-Date: 2012-03-06 22:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -188,7 +188,7 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/main/envir.c:1879 src/main/envir.c:1890 src/main/envir.c:2104
 #: src/main/envir.c:2225 src/main/envir.c:2484 src/main/envir.c:2691
 #: src/main/envir.c:2705 src/main/envir.c:2712 src/main/envir.c:2728
-#: src/main/envir.c:3291 src/main/errors.c:1024 src/main/eval.c:357
+#: src/main/envir.c:3291 src/main/errors.c:1025 src/main/eval.c:357
 #: src/main/eval.c:366 src/main/eval.c:369 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
@@ -255,9 +255,9 @@ msgstr "version de Windows non supportée"
 #: src/gnuwin32/extra.c:264 src/main/apply.c:108 src/main/character.c:593
 #: src/main/connections.c:3322 src/main/context.c:640 src/main/context.c:659
 #: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
-#: src/main/dotcode.c:199 src/main/errors.c:924 src/main/errors.c:956
-#: src/main/errors.c:1058 src/main/errors.c:1083 src/main/errors.c:1088
-#: src/main/errors.c:1355 src/main/identical.c:66 src/main/identical.c:67
+#: src/main/dotcode.c:199 src/main/errors.c:925 src/main/errors.c:957
+#: src/main/errors.c:1059 src/main/errors.c:1084 src/main/errors.c:1089
+#: src/main/errors.c:1356 src/main/identical.c:66 src/main/identical.c:67
 #: src/main/identical.c:68 src/main/identical.c:69 src/main/identical.c:70
 #: src/main/seq.c:188 src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351
 #: src/main/seq.c:392 src/main/seq.c:396 src/main/seq.c:400
@@ -1223,45 +1223,40 @@ msgstr "un et un seul attribut 'which' doit être fourni"
 msgid "partial match of '%s' to '%s'"
 msgstr "correspondance partielle de '%s' en '%s'"
 
-#: src/main/attrib.c:1387
-#, fuzzy, c-format
-msgid "\"%s\" is not an existing slot in an object of class \"%s\""
-msgstr "aucun slot de nom \"%s\" pour cet objet de la classe \"%s\""
-
-#: src/main/attrib.c:1411
+#: src/main/attrib.c:1397
 #, fuzzy, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "type ou longueur incorrect pour le nom d'un slot"
 
-#: src/main/attrib.c:1448
+#: src/main/attrib.c:1435
 msgid "'name' must be non-null character string"
 msgstr "'name' doit être une chaîne de caractères non nulle"
 
-#: src/main/attrib.c:1571 src/main/attrib.c:1642 src/main/attrib.c:1679
+#: src/main/attrib.c:1558 src/main/attrib.c:1629 src/main/attrib.c:1666
 msgid "invalid type or length for slot name"
 msgstr "type ou longueur incorrect pour le nom d'un slot"
 
-#: src/main/attrib.c:1605
+#: src/main/attrib.c:1592
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "impossible d'obtenir un slot (\"%s\") d'un objet de type \"%s\""
 
-#: src/main/attrib.c:1616
+#: src/main/attrib.c:1603
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "aucun slot de nom \"%s\" pour cet objet de la classe \"%s\""
 
-#: src/main/attrib.c:1633
+#: src/main/attrib.c:1620
 msgid "attempt to set slot on NULL object"
 msgstr "tentative de changer le slot d'un objet en NULL"
 
-#: src/main/attrib.c:1674
+#: src/main/attrib.c:1661
 #, fuzzy
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr ""
 "les classes formelles ne peuvent être utilisées sans le package 'methods'"
 
-#: src/main/attrib.c:1686
+#: src/main/attrib.c:1673
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1270,7 +1265,7 @@ msgstr ""
 "tentative d'obtenir le slot \"%s\" d'un objet d'une classe élémentaire (\"%s"
 "\") sans slots"
 
-#: src/main/attrib.c:1690
+#: src/main/attrib.c:1677
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1544,15 +1539,15 @@ msgstr "argument 'mode' incorrect"
 msgid "applies only to lists and vectors"
 msgstr "ne s'applique qu'à des listes ou des vecteurs"
 
-#: src/main/coerce.c:77 src/main/errors.c:1195
+#: src/main/coerce.c:77 src/main/errors.c:1196
 msgid "NAs introduced by coercion"
 msgstr "NAs introduits lors de la conversion automatique"
 
-#: src/main/coerce.c:79 src/main/errors.c:1196
+#: src/main/coerce.c:79 src/main/errors.c:1197
 msgid "inaccurate integer conversion in coercion"
 msgstr "conversion automatique d'entier approximative"
 
-#: src/main/coerce.c:81 src/main/errors.c:1197
+#: src/main/coerce.c:81 src/main/errors.c:1198
 msgid "imaginary parts discarded in coercion"
 msgstr "les parties imaginaires sont perdues lors de la conversion automatique"
 
@@ -3308,7 +3303,7 @@ msgstr ""
 "Avis dans %s :\n"
 "  %s\n"
 
-#: src/main/errors.c:425 src/main/errors.c:444 src/main/errors.c:591
+#: src/main/errors.c:425 src/main/errors.c:444 src/main/errors.c:592
 msgid "Lost warning messages\n"
 msgstr "messages d'avis perdus\n"
 
@@ -3329,125 +3324,125 @@ msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
 "Il y a eu %d avis ou plus (utilisez warnings() pour voir les %d premiers)\n"
 
-#: src/main/errors.c:582
+#: src/main/errors.c:583
 msgid "Error during wrapup: "
 msgstr "Erreur pendant l'emballage (wrapup) : "
 
-#: src/main/errors.c:607
+#: src/main/errors.c:608
 msgid "Error in "
 msgstr "Erreur dans "
 
-#: src/main/errors.c:608
+#: src/main/errors.c:609
 #, c-format
 msgid " (from %s) : "
 msgstr ""
 
-#: src/main/errors.c:659 src/main/errors.c:665
+#: src/main/errors.c:660 src/main/errors.c:666
 #, c-format
 msgid "Error: "
 msgstr "Erreur : "
 
-#: src/main/errors.c:685 src/main/errors.c:1306
+#: src/main/errors.c:686 src/main/errors.c:1307
 msgid "In addition: "
 msgstr "De plus : "
 
-#: src/main/errors.c:806
+#: src/main/errors.c:807
 msgid "invalid option \"error\"\n"
 msgstr "option \"error\" incorrecte\n"
 
-#: src/main/errors.c:888
+#: src/main/errors.c:889
 msgid "Execution halted\n"
 msgstr "Exécution arrêtée\n"
 
-#: src/main/errors.c:1026
+#: src/main/errors.c:1027
 msgid "'msg1' must be a character string"
 msgstr "'msg1' doit être une chaîne de caractères"
 
-#: src/main/errors.c:1028
+#: src/main/errors.c:1029
 msgid "'msg2' must be a character string"
 msgstr "'msg2' doit être une chaîne de caractères"
 
-#: src/main/errors.c:1124
+#: src/main/errors.c:1125
 msgid " [invalid string in stop(.)]"
 msgstr " [chaîne incorrecte dans stop(.)]"
 
-#: src/main/errors.c:1150
+#: src/main/errors.c:1151
 msgid " [invalid string in warning(.)]"
 msgstr " [chaîne incorrecte dans warning(.)]"
 
-#: src/main/errors.c:1165
+#: src/main/errors.c:1166
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "nombre d'arguments incorrect pour \"%s\""
 
-#: src/main/errors.c:1171 src/main/errors.c:1186
+#: src/main/errors.c:1172 src/main/errors.c:1187
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "fonction non implémentée dans %s"
 
-#: src/main/errors.c:1180
+#: src/main/errors.c:1181
 msgid "invalid number of arguments"
 msgstr "nombre d'arguments incorrect"
 
-#: src/main/errors.c:1181 src/main/logic.c:171
+#: src/main/errors.c:1182 src/main/logic.c:171
 msgid "invalid argument type"
 msgstr "type de l'argument incorrect"
 
-#: src/main/errors.c:1183
+#: src/main/errors.c:1184
 msgid "time-series/vector length mismatch"
 msgstr "longueurs incompatibles des séries temporelles / vecteurs"
 
-#: src/main/errors.c:1184
+#: src/main/errors.c:1185
 msgid "incompatible arguments"
 msgstr "arguments incompatibles"
 
-#: src/main/errors.c:1187
+#: src/main/errors.c:1188
 msgid "unknown error (report this!)"
 msgstr "erreur inconnue (veuillez signaler ceci aux développeurs !)"
 
-#: src/main/errors.c:1199
+#: src/main/errors.c:1200
 msgid "unknown warning (report this!)"
 msgstr "avis inconnu (veuillez signaler ceci aux développeurs !)"
 
-#: src/main/errors.c:1270
+#: src/main/errors.c:1271
 msgid "No function to return from, jumping to top level"
 msgstr "Aucun function d'où sortir, branchement vers le niveau le plus haut"
 
-#: src/main/errors.c:1286
+#: src/main/errors.c:1287
 msgid "top level inconsistency?"
 msgstr "niveau le plus haut incohérent ?"
 
-#: src/main/errors.c:1465
+#: src/main/errors.c:1466
 msgid "bad handler data"
 msgstr "mauvais manipulateur de données"
 
-#: src/main/errors.c:1615
+#: src/main/errors.c:1616
 msgid "error message not a string"
 msgstr "le message d'erreur n'est pas une chaîne de caractères"
 
-#: src/main/errors.c:1690
+#: src/main/errors.c:1691
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 "manipulateur de données ou pile de redémarrage incohérent dans l'ancien "
 "redémarrage"
 
-#: src/main/errors.c:1716 src/main/errors.c:1732
+#: src/main/errors.c:1717 src/main/errors.c:1733
 msgid "bad error message"
 msgstr "mauvais message d'erreur"
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1775
 msgid "bad restart"
 msgstr "mauvais redémarrage"
 
-#: src/main/errors.c:1806
+#: src/main/errors.c:1807
 msgid "restart not on stack"
 msgstr "le redémarrage n'est pas dans la pile"
 
-#: src/main/errors.c:1823
+#: src/main/errors.c:1824
 msgid "not in a try context"
 msgstr "vous n'êtes pas dans un contexte 'try'"
 
-#: src/main/errors.c:1836
+#: src/main/errors.c:1837
 msgid "error message must be a character string"
 msgstr "le message d'erreur doit être une chaîne de caractères"
 
@@ -7472,6 +7467,10 @@ msgstr "la création d'un fichier temporaire pour '-e' a échoué"
 #: src/unix/system.c:462
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "AVIS : édition uniquement du premier fichier de la liste"
+
+#, fuzzy
+#~ msgid "\"%s\" is not an existing slot in an object of class \"%s\""
+#~ msgstr "aucun slot de nom \"%s\" pour cet objet de la classe \"%s\""
 
 #~ msgid "R_CompiledFileName: buffer too small"
 #~ msgstr "R_CompiledFileName : tampon trop petit"

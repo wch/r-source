@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
+"POT-Creation-Date: 2013-02-05 07:27+0000\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -185,7 +185,7 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/envir.c:1879 src/main/envir.c:1890 src/main/envir.c:2104
 #: src/main/envir.c:2225 src/main/envir.c:2484 src/main/envir.c:2691
 #: src/main/envir.c:2705 src/main/envir.c:2712 src/main/envir.c:2728
-#: src/main/envir.c:3291 src/main/errors.c:1024 src/main/eval.c:357
+#: src/main/envir.c:3291 src/main/errors.c:1025 src/main/eval.c:357
 #: src/main/eval.c:366 src/main/eval.c:369 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
@@ -252,9 +252,9 @@ msgstr " このバージョンのWindowsはサポートされていません "
 #: src/gnuwin32/extra.c:264 src/main/apply.c:108 src/main/character.c:593
 #: src/main/connections.c:3322 src/main/context.c:640 src/main/context.c:659
 #: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
-#: src/main/dotcode.c:199 src/main/errors.c:924 src/main/errors.c:956
-#: src/main/errors.c:1058 src/main/errors.c:1083 src/main/errors.c:1088
-#: src/main/errors.c:1355 src/main/identical.c:66 src/main/identical.c:67
+#: src/main/dotcode.c:199 src/main/errors.c:925 src/main/errors.c:957
+#: src/main/errors.c:1059 src/main/errors.c:1084 src/main/errors.c:1089
+#: src/main/errors.c:1356 src/main/identical.c:66 src/main/identical.c:67
 #: src/main/identical.c:68 src/main/identical.c:69 src/main/identical.c:70
 #: src/main/seq.c:188 src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351
 #: src/main/seq.c:392 src/main/seq.c:396 src/main/seq.c:400
@@ -1196,49 +1196,42 @@ msgstr " 性格に一つの属性 'which' が与えらなければなりませ�
 msgid "partial match of '%s' to '%s'"
 msgstr " '%s' の '%s'　への部分的マッチ "
 
-#: src/main/attrib.c:1387
-#, fuzzy, c-format
-msgid "\"%s\" is not an existing slot in an object of class \"%s\""
-msgstr ""
-" 名前 \"%s\" というスロットが、クラス \"%s\" のこのオブジェクトには存在しませ"
-"ん "
-
-#: src/main/attrib.c:1411
+#: src/main/attrib.c:1397
 #, fuzzy, c-format
 msgid "invalid type '%s' for slot name"
 msgstr " スロット名の型または長さが不正です "
 
-#: src/main/attrib.c:1448
+#: src/main/attrib.c:1435
 msgid "'name' must be non-null character string"
 msgstr " 'name' は NULL でない文字列でなければなりません "
 
-#: src/main/attrib.c:1571 src/main/attrib.c:1642 src/main/attrib.c:1679
+#: src/main/attrib.c:1558 src/main/attrib.c:1629 src/main/attrib.c:1666
 msgid "invalid type or length for slot name"
 msgstr " スロット名の型または長さが不正です "
 
-#: src/main/attrib.c:1605
+#: src/main/attrib.c:1592
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 " 型 \"%s\" のオブジェクトからはスロット (\"%s\") を得ることは出来ません "
 
-#: src/main/attrib.c:1616
+#: src/main/attrib.c:1603
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 " 名前 \"%s\" というスロットが、クラス \"%s\" のこのオブジェクトには存在しませ"
 "ん "
 
-#: src/main/attrib.c:1633
+#: src/main/attrib.c:1620
 msgid "attempt to set slot on NULL object"
 msgstr " NULL オブジェクトに対して スロットを設定しようとしました "
 
-#: src/main/attrib.c:1674
+#: src/main/attrib.c:1661
 #, fuzzy
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr " メソッドパッケージなしにフォーマルクラス（formal class）は使えません "
 
-#: src/main/attrib.c:1686
+#: src/main/attrib.c:1673
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1247,7 +1240,7 @@ msgstr ""
 " スロット \"%s\"を、スロットを持たない基本クラス(\"%s\")のオブジェクトから得"
 "ようとしました "
 
-#: src/main/attrib.c:1690
+#: src/main/attrib.c:1677
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1515,15 +1508,15 @@ msgstr " 'mode' 引数が不正です "
 msgid "applies only to lists and vectors"
 msgstr " リストとベクトルのみに適用できます "
 
-#: src/main/coerce.c:77 src/main/errors.c:1195
+#: src/main/coerce.c:77 src/main/errors.c:1196
 msgid "NAs introduced by coercion"
 msgstr " 強制変換により NA が生成されました "
 
-#: src/main/coerce.c:79 src/main/errors.c:1196
+#: src/main/coerce.c:79 src/main/errors.c:1197
 msgid "inaccurate integer conversion in coercion"
 msgstr " 強制変換中に不正確な整数変換が行われました "
 
-#: src/main/coerce.c:81 src/main/errors.c:1197
+#: src/main/coerce.c:81 src/main/errors.c:1198
 msgid "imaginary parts discarded in coercion"
 msgstr " 複素数の虚部は，コネクションで捨てられました "
 
@@ -3240,7 +3233,7 @@ msgstr ""
 " %s 中で警告がありました： \n"
 " %s \n"
 
-#: src/main/errors.c:425 src/main/errors.c:444 src/main/errors.c:591
+#: src/main/errors.c:425 src/main/errors.c:444 src/main/errors.c:592
 msgid "Lost warning messages\n"
 msgstr " 警告メッセージが失われました \n"
 
@@ -3261,123 +3254,123 @@ msgstr ""
 " %d 件以上の警告がありました (最初の%d個の警告を見るには warnings() を使って"
 "下さい) \n"
 
-#: src/main/errors.c:582
+#: src/main/errors.c:583
 msgid "Error during wrapup: "
 msgstr " wrapup 中にエラーが起こりました "
 
-#: src/main/errors.c:607
+#: src/main/errors.c:608
 msgid "Error in "
 msgstr " 以下にエラー "
 
-#: src/main/errors.c:608
+#: src/main/errors.c:609
 #, c-format
 msgid " (from %s) : "
 msgstr ""
 
-#: src/main/errors.c:659 src/main/errors.c:665
+#: src/main/errors.c:660 src/main/errors.c:666
 #, c-format
 msgid "Error: "
 msgstr " エラー： "
 
-#: src/main/errors.c:685 src/main/errors.c:1306
+#: src/main/errors.c:686 src/main/errors.c:1307
 msgid "In addition: "
 msgstr " 追加情報:  "
 
-#: src/main/errors.c:806
+#: src/main/errors.c:807
 msgid "invalid option \"error\"\n"
 msgstr " オプション \"error\" は不正です \n"
 
-#: src/main/errors.c:888
+#: src/main/errors.c:889
 msgid "Execution halted\n"
 msgstr " 実行が停止されました \n"
 
-#: src/main/errors.c:1026
+#: src/main/errors.c:1027
 msgid "'msg1' must be a character string"
 msgstr " 'msg1' は文字列でなければなりません "
 
-#: src/main/errors.c:1028
+#: src/main/errors.c:1029
 msgid "'msg2' must be a character string"
 msgstr " 'msg2' は文字列でなければなりません "
 
-#: src/main/errors.c:1124
+#: src/main/errors.c:1125
 msgid " [invalid string in stop(.)]"
 msgstr " stop 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1150
+#: src/main/errors.c:1151
 msgid " [invalid string in warning(.)]"
 msgstr " warning 関数の引数が不正な文字列です "
 
-#: src/main/errors.c:1165
+#: src/main/errors.c:1166
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr " \"%s\" への引数の個数が正しくありません "
 
-#: src/main/errors.c:1171 src/main/errors.c:1186
+#: src/main/errors.c:1172 src/main/errors.c:1187
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr " %s 中の未実装の機能です "
 
-#: src/main/errors.c:1180
+#: src/main/errors.c:1181
 msgid "invalid number of arguments"
 msgstr " 引数の個数が不正です "
 
-#: src/main/errors.c:1181 src/main/logic.c:171
+#: src/main/errors.c:1182 src/main/logic.c:171
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
-#: src/main/errors.c:1183
+#: src/main/errors.c:1184
 msgid "time-series/vector length mismatch"
 msgstr " 時系列またはベクトル の長さが合致しません "
 
-#: src/main/errors.c:1184
+#: src/main/errors.c:1185
 msgid "incompatible arguments"
 msgstr " 互換性のない引数です "
 
-#: src/main/errors.c:1187
+#: src/main/errors.c:1188
 msgid "unknown error (report this!)"
 msgstr " 未知のエラーです（報告して！） "
 
-#: src/main/errors.c:1199
+#: src/main/errors.c:1200
 msgid "unknown warning (report this!)"
 msgstr " 未知の警告です（報告して！） "
 
-#: src/main/errors.c:1270
+#: src/main/errors.c:1271
 msgid "No function to return from, jumping to top level"
 msgstr " 戻るべき関数がないので，トップレベルへジャンプします "
 
-#: src/main/errors.c:1286
+#: src/main/errors.c:1287
 msgid "top level inconsistency?"
 msgstr " トップレベルの不整合？ "
 
-#: src/main/errors.c:1465
+#: src/main/errors.c:1466
 msgid "bad handler data"
 msgstr " ハンドラーデータ（handler data）が不正です "
 
-#: src/main/errors.c:1615
+#: src/main/errors.c:1616
 msgid "error message not a string"
 msgstr " エラーメッセージが文字列ではありません "
 
-#: src/main/errors.c:1690
+#: src/main/errors.c:1691
 msgid "handler or restart stack mismatch in old restart"
 msgstr " handler stack か restart stack が，古い restart と一致しません "
 
-#: src/main/errors.c:1716 src/main/errors.c:1732
+#: src/main/errors.c:1717 src/main/errors.c:1733
 msgid "bad error message"
 msgstr " 不正なエラーメッセージです "
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1775
 msgid "bad restart"
 msgstr " 不正な再起動です "
 
-#: src/main/errors.c:1806
+#: src/main/errors.c:1807
 msgid "restart not on stack"
 msgstr " スタックからではない再実行です "
 
-#: src/main/errors.c:1823
+#: src/main/errors.c:1824
 msgid "not in a try context"
 msgstr " トライ (try) 文脈ではありません "
 
-#: src/main/errors.c:1836
+#: src/main/errors.c:1837
 msgid "error message must be a character string"
 msgstr " エラーメッセージは文字列であるに違いありません "
 
@@ -7310,6 +7303,12 @@ msgstr " '-e'に対して一時ファイルの作成は失敗しました "
 #: src/unix/system.c:462
 msgid "WARNING: Only editing the first in the list of files"
 msgstr " 警告: ファイルリストの最初のみを編集します "
+
+#, fuzzy
+#~ msgid "\"%s\" is not an existing slot in an object of class \"%s\""
+#~ msgstr ""
+#~ " 名前 \"%s\" というスロットが、クラス \"%s\" のこのオブジェクトには存在し"
+#~ "ません "
 
 #~ msgid "R_CompiledFileName: buffer too small"
 #~ msgstr " R_CompiledFileName: バッファが小さすぎます "

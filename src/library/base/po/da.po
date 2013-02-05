@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r-2-15-branch\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
+"POT-Creation-Date: 2013-02-05 07:27+0000\n"
 "PO-Revision-Date: 2011-11-29 21:34+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -187,7 +187,7 @@ msgstr "problem med visning af '%ls'"
 #: src/main/envir.c:1879 src/main/envir.c:1890 src/main/envir.c:2104
 #: src/main/envir.c:2225 src/main/envir.c:2484 src/main/envir.c:2691
 #: src/main/envir.c:2705 src/main/envir.c:2712 src/main/envir.c:2728
-#: src/main/envir.c:3291 src/main/errors.c:1024 src/main/eval.c:357
+#: src/main/envir.c:3291 src/main/errors.c:1025 src/main/eval.c:357
 #: src/main/eval.c:366 src/main/eval.c:369 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
@@ -254,9 +254,9 @@ msgstr "Windowsversion er ikke understøttet"
 #: src/gnuwin32/extra.c:264 src/main/apply.c:108 src/main/character.c:593
 #: src/main/connections.c:3322 src/main/context.c:640 src/main/context.c:659
 #: src/main/datetime.c:677 src/main/datetime.c:748 src/main/datetime.c:1001
-#: src/main/dotcode.c:199 src/main/errors.c:924 src/main/errors.c:956
-#: src/main/errors.c:1058 src/main/errors.c:1083 src/main/errors.c:1088
-#: src/main/errors.c:1355 src/main/identical.c:66 src/main/identical.c:67
+#: src/main/dotcode.c:199 src/main/errors.c:925 src/main/errors.c:957
+#: src/main/errors.c:1059 src/main/errors.c:1084 src/main/errors.c:1089
+#: src/main/errors.c:1356 src/main/identical.c:66 src/main/identical.c:67
 #: src/main/identical.c:68 src/main/identical.c:69 src/main/identical.c:70
 #: src/main/seq.c:188 src/main/seq.c:342 src/main/seq.c:347 src/main/seq.c:351
 #: src/main/seq.c:392 src/main/seq.c:396 src/main/seq.c:400
@@ -1165,50 +1165,45 @@ msgstr ""
 msgid "partial match of '%s' to '%s'"
 msgstr ""
 
-#: src/main/attrib.c:1387
-#, c-format
-msgid "\"%s\" is not an existing slot in an object of class \"%s\""
-msgstr ""
-
-#: src/main/attrib.c:1411
+#: src/main/attrib.c:1397
 #, fuzzy, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "ugyldigt '%s'-argument"
 
-#: src/main/attrib.c:1448
+#: src/main/attrib.c:1435
 msgid "'name' must be non-null character string"
 msgstr ""
 
-#: src/main/attrib.c:1571 src/main/attrib.c:1642 src/main/attrib.c:1679
+#: src/main/attrib.c:1558 src/main/attrib.c:1629 src/main/attrib.c:1666
 msgid "invalid type or length for slot name"
 msgstr ""
 
-#: src/main/attrib.c:1605
+#: src/main/attrib.c:1592
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1616
+#: src/main/attrib.c:1603
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1633
+#: src/main/attrib.c:1620
 msgid "attempt to set slot on NULL object"
 msgstr ""
 
-#: src/main/attrib.c:1674
+#: src/main/attrib.c:1661
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr ""
 
-#: src/main/attrib.c:1686
+#: src/main/attrib.c:1673
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
 
-#: src/main/attrib.c:1690
+#: src/main/attrib.c:1677
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1474,15 +1469,15 @@ msgstr ""
 msgid "applies only to lists and vectors"
 msgstr ""
 
-#: src/main/coerce.c:77 src/main/errors.c:1195
+#: src/main/coerce.c:77 src/main/errors.c:1196
 msgid "NAs introduced by coercion"
 msgstr ""
 
-#: src/main/coerce.c:79 src/main/errors.c:1196
+#: src/main/coerce.c:79 src/main/errors.c:1197
 msgid "inaccurate integer conversion in coercion"
 msgstr ""
 
-#: src/main/coerce.c:81 src/main/errors.c:1197
+#: src/main/coerce.c:81 src/main/errors.c:1198
 msgid "imaginary parts discarded in coercion"
 msgstr ""
 
@@ -3144,7 +3139,7 @@ msgstr ""
 "Advarsel i %s :\n"
 "  %s\n"
 
-#: src/main/errors.c:425 src/main/errors.c:444 src/main/errors.c:591
+#: src/main/errors.c:425 src/main/errors.c:444 src/main/errors.c:592
 msgid "Lost warning messages\n"
 msgstr "Mistede advarselsbeskeder\n"
 
@@ -3165,123 +3160,123 @@ msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
 msgstr ""
 "Der var %d eller flere advarsler (brug warnings() for at se den første %d)\n"
 
-#: src/main/errors.c:582
+#: src/main/errors.c:583
 msgid "Error during wrapup: "
 msgstr ""
 
-#: src/main/errors.c:607
+#: src/main/errors.c:608
 msgid "Error in "
 msgstr "Fejl i "
 
-#: src/main/errors.c:608
+#: src/main/errors.c:609
 #, c-format
 msgid " (from %s) : "
 msgstr " (fra %s) :"
 
-#: src/main/errors.c:659 src/main/errors.c:665
+#: src/main/errors.c:660 src/main/errors.c:666
 #, c-format
 msgid "Error: "
 msgstr "Fejl: "
 
-#: src/main/errors.c:685 src/main/errors.c:1306
+#: src/main/errors.c:686 src/main/errors.c:1307
 msgid "In addition: "
 msgstr ""
 
-#: src/main/errors.c:806
+#: src/main/errors.c:807
 msgid "invalid option \"error\"\n"
 msgstr ""
 
-#: src/main/errors.c:888
+#: src/main/errors.c:889
 msgid "Execution halted\n"
 msgstr ""
 
-#: src/main/errors.c:1026
+#: src/main/errors.c:1027
 msgid "'msg1' must be a character string"
 msgstr "'msg1' skal være en tegnstreng"
 
-#: src/main/errors.c:1028
+#: src/main/errors.c:1029
 msgid "'msg2' must be a character string"
 msgstr "'msg2' skal være en tegnstreng"
 
-#: src/main/errors.c:1124
+#: src/main/errors.c:1125
 msgid " [invalid string in stop(.)]"
 msgstr " [ugyldig streng i stop(.)]"
 
-#: src/main/errors.c:1150
+#: src/main/errors.c:1151
 msgid " [invalid string in warning(.)]"
 msgstr " [ugyldig streng i warning(.)]"
 
-#: src/main/errors.c:1165
+#: src/main/errors.c:1166
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "forkert antal argumenter for »%s«"
 
-#: src/main/errors.c:1171 src/main/errors.c:1186
+#: src/main/errors.c:1172 src/main/errors.c:1187
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "funktion ikke implementeret i %s"
 
-#: src/main/errors.c:1180
+#: src/main/errors.c:1181
 msgid "invalid number of arguments"
 msgstr "ugyldigt antal argumenter"
 
-#: src/main/errors.c:1181 src/main/logic.c:171
+#: src/main/errors.c:1182 src/main/logic.c:171
 msgid "invalid argument type"
 msgstr ""
 
-#: src/main/errors.c:1183
+#: src/main/errors.c:1184
 msgid "time-series/vector length mismatch"
 msgstr ""
 
-#: src/main/errors.c:1184
+#: src/main/errors.c:1185
 msgid "incompatible arguments"
 msgstr "argumenter er ikke kompatible"
 
-#: src/main/errors.c:1187
+#: src/main/errors.c:1188
 msgid "unknown error (report this!)"
 msgstr "ukendt fejl (rapporter denne!)"
 
-#: src/main/errors.c:1199
+#: src/main/errors.c:1200
 msgid "unknown warning (report this!)"
 msgstr "ukendt advarsel (rapporter denne !)"
 
-#: src/main/errors.c:1270
+#: src/main/errors.c:1271
 msgid "No function to return from, jumping to top level"
 msgstr "Ingen funktion at returnere fra, hopper til øverste niveau"
 
-#: src/main/errors.c:1286
+#: src/main/errors.c:1287
 msgid "top level inconsistency?"
 msgstr ""
 
-#: src/main/errors.c:1465
+#: src/main/errors.c:1466
 msgid "bad handler data"
 msgstr "ugyldige håndtagsdata"
 
-#: src/main/errors.c:1615
+#: src/main/errors.c:1616
 msgid "error message not a string"
 msgstr "fejlbesked er ikke en streng"
 
-#: src/main/errors.c:1690
+#: src/main/errors.c:1691
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 
-#: src/main/errors.c:1716 src/main/errors.c:1732
+#: src/main/errors.c:1717 src/main/errors.c:1733
 msgid "bad error message"
 msgstr "ugyldig fejlbesked"
 
-#: src/main/errors.c:1774
+#: src/main/errors.c:1775
 msgid "bad restart"
 msgstr "ugyldig restart"
 
-#: src/main/errors.c:1806
+#: src/main/errors.c:1807
 msgid "restart not on stack"
 msgstr ""
 
-#: src/main/errors.c:1823
+#: src/main/errors.c:1824
 msgid "not in a try context"
 msgstr ""
 
-#: src/main/errors.c:1836
+#: src/main/errors.c:1837
 msgid "error message must be a character string"
 msgstr "fejlbesked skal være en tegnstreng"
 

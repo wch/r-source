@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2013-02-05 07:28+0000\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -46,15 +46,14 @@ msgstr "argumento não é do tipo correto"
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "sem variável DISPLAY então Tk não está disponível"
 
-#: tcltk_unix.c:86
-msgid "Tcl already loaded"
-msgstr "Tcl já está carregado"
-
-#: tcltk_unix.c:107
+#: tcltk_unix.c:90
 msgid "Tcl is not loaded"
 msgstr "Tcl não está carregado"
 
 # Handler ~ Gerenciador ?
-#: tcltk_unix.c:115
+#: tcltk_unix.c:94
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl não é o último gerenciador carregado"
+
+#~ msgid "Tcl already loaded"
+#~ msgstr "Tcl já está carregado"

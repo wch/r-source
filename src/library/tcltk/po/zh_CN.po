@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:56+0100\n"
+"POT-Creation-Date: 2013-02-05 07:28+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -45,14 +45,13 @@ msgstr "参数的种类不对"
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "没有DISPLAY变量，因此没有Tk这个功能"
 
-#: tcltk_unix.c:86
-msgid "Tcl already loaded"
-msgstr "已经载入了Tcl"
-
-#: tcltk_unix.c:107
+#: tcltk_unix.c:90
 msgid "Tcl is not loaded"
 msgstr "还没有载入Tcl"
 
-#: tcltk_unix.c:115
+#: tcltk_unix.c:94
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl不是最后载入的处理器"
+
+#~ msgid "Tcl already loaded"
+#~ msgstr "已经载入了Tcl"
