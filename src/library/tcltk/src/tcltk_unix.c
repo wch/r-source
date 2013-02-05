@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2007  The R Core Team
+ *  Copyright (C) 2000--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,9 +60,11 @@ static void TclSpinLoop(void *data)
     while (Tcl_DoOneEvent(TCL_DONT_WAIT)) ;
 }
 
+extern Rboolean R_isForkedChild;
 static void TclHandler(void)
 {
-    if (!Tcl_lock && Tcl_GetServiceMode() != TCL_SERVICE_NONE) {
+    if (!R_isForkedChild && !Tcl_lock 
+	&& Tcl_GetServiceMode() != TCL_SERVICE_NONE) {
 	Tcl_lock = 1;
 	(void) R_ToplevelExec(TclSpinLoop, NULL);
 	Tcl_lock = 0;
@@ -70,32 +72,14 @@ static void TclHandler(void)
     OldHandler();
 }
 
-static int Gtk_TclHandler(void)
-{
-    if (!Tcl_lock && Tcl_GetServiceMode() != TCL_SERVICE_NONE) {
-	Tcl_lock = 1;
-	(void) R_ToplevelExec(TclSpinLoop, NULL);
-	Tcl_lock = 0;
-    }
-    return 1;
-}
-
 static void addTcl(void)
 {
-    if (Tcl_loaded)
-	error(_("Tcl already loaded"));
+    if (Tcl_loaded) return; // error(_("Tcl already loaded"));
     Tcl_loaded = 1;
-    if (strcmp(R_GUIType, "GNOME") == 0) {
-	/* This gets polled in the gnomeGUI console's event loop */
-        R_timeout_handler = Gtk_TclHandler;
-        R_timeout_val = 500;
-    } else {
-        OldHandler = R_PolledEvents;
-	OldRwait = R_wait_usec;
-	R_PolledEvents = TclHandler;
-	if ( R_wait_usec > 10000 || R_wait_usec == 0)
-	    R_wait_usec = 10000;
-    }
+    OldHandler = R_PolledEvents;
+    OldRwait = R_wait_usec;
+    R_PolledEvents = TclHandler;
+    if ( R_wait_usec > 10000 || R_wait_usec == 0) R_wait_usec = 10000;
 }
 
 /* Note that although this cleans up R's event loop, it does not attempt
@@ -103,19 +87,13 @@ static void addTcl(void)
 */
 void delTcl(void)
 {
-    if (!Tcl_loaded)
-	error(_("Tcl is not loaded"));
+    if (!Tcl_loaded) error(_("Tcl is not loaded"));
     Tcl_DeleteInterp(RTcl_interp);
     Tcl_Finalize();
-    if (strcmp(R_GUIType, "GNOME") == 0) {
-        R_timeout_handler = NULL;
-        R_timeout_val = 0;
-    } else {
-        if (R_PolledEvents != TclHandler)
-	    error(_("Tcl is not last loaded handler"));
-	R_PolledEvents = OldHandler;
-	R_wait_usec = OldRwait;
-    }
+    if (R_PolledEvents != TclHandler)
+	error(_("Tcl is not last loaded handler"));
+    R_PolledEvents = OldHandler;
+    R_wait_usec = OldRwait;
     Tcl_loaded = 0;
 }
 

@@ -1,6 +1,6 @@
 % File src/library/parallel/man/mclapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-11 R Core Team
+% Copyright 2009-13 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -132,7 +132,9 @@ mcMap(f, ...)
   should consult their documentation.
 
   Note that \pkg{tcltk} counts as a GUI for these purposes since
-  \command{Tcl} runs an event loop.
+  \command{Tcl} runs an event loop.  As from \R 2.15.3 that event loop
+  is inhibited in a child process but there could still be problems with
+  Tk graphical connections.
 }
 
 \author{
