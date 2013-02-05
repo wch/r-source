@@ -2717,7 +2717,7 @@ building vignettes needs @command{tex} and @command{latex}, or
 @code{2005/12/01} or later (for UTF-8 support).  Building PDF package
 manuals (including the @R{} reference manual) and vignettes is sensitive
 to the version of the @LaTeX{} package @pkg{hyperref} and we recommend
-that the @TeX{} distribution used is keep up-to-date.  A number of
+that the @TeX{} distribution used is kept up-to-date.  A number of
 @LaTeX{} packages are required (including @pkg{url.sty}, and
 @pkg{listings.sty}) and others such as @pkg{hyperref} and
 @pkg{inconsolata} are desirable (and without them you will need to
@@ -4307,8 +4307,15 @@ performance was obtained from the compilers at
 @node Mountain Lion, Frameworks, Lion, Mac OS X
 @subsection Mountain Lion
 
-See the notes on Lion: currently Xcode (4.5.x) is the same for the two
+See the notes on Lion: currently Xcode (4.6) is the same for the two
 OS versions.
+
+The X11 system used with Mountain Lion will be XQuartz.  To build the
+graphics devices depending on cairographics the XQuartz path for
+@command{pkg-config} files (default @file{/usr/X11/lib/pkgconfig} needs
+to be known to @command{pkg-config} when @command{configure} is run:
+this usually means adding it to the @env{PKG_CONFIG_PATH} environment
+variable.
 
 Mountain Lion currently does not come with a Java runtime installed, and
 an upgrade to Mountain Lion removes one if already installed.  It is
