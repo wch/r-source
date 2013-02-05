@@ -241,7 +241,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
 
     loadVignetteBuilder(vigns$pkgdir)
 
-    outfiles <- vignette_output(vigns$docs)
+    outfiles <- vignette_output(basename(vigns$docs))
     startdir <- getwd()
     for(i in seq_along(vigns$docs)) {
         f <- basename(vigns$docs[i])
@@ -281,7 +281,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
         ## fail to close it.
         graphics.off()
         if(clean) {
-            f <- list.files(all.files = TRUE) %w/o% c(".", "..", basename(outfiles))
+            f <- list.files(all.files = TRUE) %w/o% c(".", "..", outfiles)
             newer <- file_test("-nt", f, ".build.timestamp")
             ## some packages, e.g. SOAR, create directories
             unlink(f[newer], recursive = TRUE)
