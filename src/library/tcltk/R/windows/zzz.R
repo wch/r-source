@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/windows/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
 
 .onLoad <- function(libname, pkgname)
 {
-##    packageStartupMessage("Loading Tcl/Tk interface ...",
-##                          domain = "R-tcltk", appendLF = FALSE)
     if(!nzchar(tclbin <- Sys.getenv("MY_TCLTK"))) {
         tclbin <- file.path(R.home(), "Tcl",
                             if(.Machine$sizeof.pointer == 8) "bin64" else "bin")
@@ -41,7 +39,6 @@
                function(sym) assign(paste0(".C_", sym$name), sym, envir = ns))
     .C(.C_tcltk_start)
     addTclPath(system.file("exec", package = "tcltk"))
-##    packageStartupMessage(" ", "done", domain = "R-tcltk")
     invisible()
 }
 

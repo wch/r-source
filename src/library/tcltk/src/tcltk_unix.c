@@ -82,8 +82,12 @@ static void addTcl(void)
     if ( R_wait_usec > 10000 || R_wait_usec == 0) R_wait_usec = 10000;
 }
 
+#ifdef UNUSED
 /* Note that although this cleans up R's event loop, it does not attempt
    to clean up Tcl's, to which Tcl_unix_setup added an event source.
+   We could call Tcl_DeleteEventSource.
+   
+   But for now un/re-loading the interpreter seems to cause crashes.
 */
 void delTcl(void)
 {
@@ -96,6 +100,7 @@ void delTcl(void)
     R_wait_usec = OldRwait;
     Tcl_loaded = 0;
 }
+#endif
 
 /* ----- Event loop interface routines -------- */
 static Tcl_Time timeout;

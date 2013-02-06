@@ -28,7 +28,7 @@ static const R_CMethodDef CEntries[] = {
     {"tcltk_end", (DL_FUNC) &tcltk_end, 0},
 #else
     {"tcltk_init", (DL_FUNC) &tcltk_init, 1},
-    {"delTcl", (DL_FUNC) &delTcl, 0},
+//    {"delTcl", (DL_FUNC) &delTcl, 0},
     {"RTcl_ActivateConsole", (DL_FUNC) &RTcl_ActivateConsole, 0},
 #endif
     {NULL, NULL, 0}
