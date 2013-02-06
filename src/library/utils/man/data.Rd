@@ -105,10 +105,37 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   all available data sets in an object of class \code{"packageIQR"} if
   none were specified.
 }
+\section{Good practice}{
+  \code{data()} was originally intended to allow users to load datasets
+  from packages for use in their examples, and as such it loaded the
+  datasets into the workspace \code{\link{.GlobalEnv}}.  This avoided
+  having large datasets in memory when not in use.  That need has been
+  almost entirely superseded by lazy-loading of datasets.
+
+  The ability to specify a dataset by name (without quotes) is a
+  convenience: in programming the datasets should be specified by
+  character strings (with quotes).
+
+  Use of \code{data} within a function without an \code{envir} argument
+  has the almost always undesirable side-effect of putting an object in
+  the user's workspace (and indeed, of replacing any object of that name
+  already there).  It would almost always be better to put the object in
+  the current evaluation environment by \code{data(\dots, envir =
+  environment())}.  However, two alternatives are usually preferable,
+  both described in the \sQuote{Writing R Extensions} manual.
+  \itemize{
+    \item For sets of data, set up a package to use lazy-loading of data.
+    \item For objects which are system data, for example lookup tables
+    used in calculations within the function, use a file
+    \file{R/sysdata.rda} in the package sources or create the objects by
+    \R code at package installation time.
+  }
+  A sometimes inportant distinction is that the second approach places
+  objects in the namespace but the first does not.  So if it is important
+  that the function sees \code{mytable} as an object from the package,
+  it is system data and the second approach should be used.
+}
 \note{
-  In programming, the datasets should be specified by character strings
-  (with quotes), rather than names (without).
-  
   One can take advantage of the search order and the fact that a
   \file{.R} file will change directory.  If raw data are stored in
   \file{mydata.txt} then one can set up \file{mydata.R} to read
