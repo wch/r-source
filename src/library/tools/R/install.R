@@ -342,7 +342,7 @@
                         sQuote(pkg_name), " as ", filename, domain = NA)
         }
         if (Sys.getenv("_R_INSTALL_NO_DONE_") != "yes") {
-            message("", domain = NA)  # ensure next starts on a new line, for R CMD check
+            ## message("", domain = NA)  # ensure next starts on a new line, for R CMD check
             starsmsg(stars, "DONE (", pkg_name, ")")
         }
 
@@ -1141,9 +1141,11 @@
                 opts <- "--no-save --slave"
                 for (arch in test_archs) {
                     starsmsg("***", "arch - ", arch)
-                    res <- R_runR(cmd, opts, env = env,
-                                  stdout = "", stderr = "", arch = arch)
-                    if (res) msgs <- c(msgs, arch)
+                    out <- R_runR(cmd, opts, env = env, arch = arch)
+                    if(length(attr(out, "status")))
+                        msgs <- c(msgs, arch)
+                    if(length(out))
+                        cat(paste(c(out, ""), collapse = "\n"))
                 }
                 if (length(msgs)) {
                     msg <- paste("loading failed for",
@@ -1153,8 +1155,11 @@
             } else {
                 opts <- if (deps_only) "--vanilla --slave"
                 else "--no-save --slave"
-                res <- R_runR(cmd, opts, env = env, stdout = "", stderr = "")
-                if (res) errmsg("loading failed") # does not return
+                out <- R_runR(cmd, opts, env = env)
+                if(length(out))
+                    cat(paste(c(out, ""), collapse = "\n"))
+                if(length(attr(out, "status")))
+                    errmsg("loading failed") # does not return
             }
         }
     }
