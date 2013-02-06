@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1202,7 +1202,7 @@ setRlibs <-
                                   pkgdir))
             out7 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
-        
+
 
         ## Use of deprecated and defunct?
         if(!is_base_pkg && R_check_use_codetools && R_check_depr_def) {
@@ -1252,11 +1252,15 @@ setRlibs <-
             }
             if (length(out6)) {
                 printLog0(Log, paste(c(ini, out6, ""), collapse = "\n"))
-                 ini <- ""
-            }
+                ini <- ""
+                wrapLog(gettextf("See section %s in '%s'.",
+                                 sQuote("Good practice"), "?assign"))
+           }
             if (length(out7)) {
                 printLog0(Log, paste(c(ini, out7, ""), collapse = "\n"))
-                 ini <- ""
+                ini <- ""
+                wrapLog(gettextf("See section %s in '%s'.",
+                                 sQuote("Good practice"), "?data"))
             }
             if (length(out8))
                 printLog0(Log, paste(c(ini, out8, ""), collapse = "\n"))
@@ -3484,7 +3488,7 @@ setRlibs <-
     R_check_code_data_into_globalenv <-
         config_val_to_logical(Sys.getenv("_R_CHECK_CODE_DATA_INTO_GLOBALENV_",
                                          "FALSE"))
-    
+
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
         do_install && config_val_to_logical(Sys.getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"))
