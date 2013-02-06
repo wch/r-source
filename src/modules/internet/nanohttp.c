@@ -1440,7 +1440,8 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
     if ((ctxt->location != NULL) && (ctxt->returnValue >= 300) &&
         (ctxt->returnValue < 400)) {
 	RxmlMessage(1, _("redirect to: '%s'"), ctxt->location);
-	while (RxmlNanoHTTPRecv(ctxt)) ;
+	while (RxmlNanoHTTPRecv(ctxt)) 
+	    ;  // clang likes this on a separate line
         if (nbRedirects < XML_NANO_HTTP_MAX_REDIR) {
 	    nbRedirects++;
 	    redirURL = xmlMemStrdup(ctxt->location);
