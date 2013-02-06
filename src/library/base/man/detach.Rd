@@ -54,13 +54,23 @@ detach(name, pos = 2L, unload = FALSE, character.only = FALSE,
   namespace.  So detaching and re-attaching a package may not refresh
   some or all components of the package, and is inadvisable.
 }
+\section{Good practice}{
+  \code{detach()} without an argument removes the first item on the
+  search path after the workspace.  It is all too easy to call it too
+  many or too few times, or to not notice that the search path has
+  changed since an \code{\link{attach}} call.
+
+  Use of \code{attach}/\code{detach} is best avoided in functions (see
+  the help for \code{\link{attach}}) and in interactive use and scripts
+  it is prudent to detach by name.
+}
 \note{
   You cannot detach either the workspace (position 1) nor the \pkg{base}
   package (the last item in the search list), and attempting to do so
   will throw an error.
 
   Unloading some namespaces has undesirable side effects:
-  e.g. unloading \pkg{grid} closes all graphics devices, and on most
+  e.g. unloading \pkg{grid} closes all graphics devices, and on some
   systems \pkg{tcltk} cannot be reloaded once it has been unloaded and
   may crash \R if this is attempted.
 }
