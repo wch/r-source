@@ -34,6 +34,7 @@
 ## .check_package_code_startup_functions
 ## .check_package_code_assign_to_globalenv
 ## .check_package_code_attach
+## .check_package_code_data_into_globalenv
 ## .check_code_usage_in_package
 ## .check_T_and_F
 ## .check_dotInternal
@@ -4628,6 +4629,45 @@ function(x, ...)
 }
 
 ## print.check_package_code_attach <- .print.via.format
+
+### * .check_package_code_data_into_globalenv
+
+.check_package_code_data_into_globalenv <-
+function(dir)
+{
+    predicate <- function(e) {
+        if(!is.call(e) || as.character(e[[1L]]) != "data")
+            return(FALSE)
+        ## As data() has synopsis
+        ##   data(..., list = character(), package = NULL, lib.loc = NULL, 
+        ##        verbose = getOption("verbose"), envir = .GlobalEnv))
+        ## argument 'envir' must be matched exactly, and calls which
+        ## only have the last four arguments do not load any data.
+        env <- e$envir
+        tab <- c("package", "lib.loc", "verbose", "envir")
+        if(!is.null(nms <- names(e)))
+            e <- e[is.na(match(nms, tab))]
+        ((length(e) > 1L) && 
+         (is.null(env) ||
+          (is.name(env) && as.character(env) == ".GlobalEnv") ||
+          (is.call(env) && as.character(env) == "globalenv")))
+    }
+
+    calls <- Filter(length,
+                    .find_calls_in_package_code(dir, predicate,
+                                                recursive = TRUE))
+    class(calls) <- "check_package_code_data_into_globalenv"
+    calls
+}
+
+format.check_package_code_data_into_globalenv <-
+function(x, ...)
+{
+    if(!length(x)) return(character())
+
+    c("Found the following calls to data() loading into the global environment:",
+      unlist(Map(.format_calls_in_file, x, names(x))))
+}
 
 ### * .check_packages_used
 

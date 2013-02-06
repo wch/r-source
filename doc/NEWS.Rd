@@ -544,7 +544,8 @@
       calls.
 
       \item \command{R CMD check --as-cran} notes assignments to the
-      global environment and calls to \code{attach()}.
+      global environment, calls to \code{data()} which load into the
+      global environment, and calls to \code{attach()}.
 
       \item \command{R CMD build} by default uses the internal method of
       \code{tar()} to prepare the tarball.  This is more likely to
