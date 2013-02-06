@@ -1254,7 +1254,7 @@ setRlibs <-
                 printLog0(Log, paste(c(ini, out6, ""), collapse = "\n"))
                 ini <- ""
                 wrapLog(gettextf("See section %s in '%s'.",
-                                 sQuote("Good practice"), "?assign"))
+                                 sQuote("Good practice"), "?attach"))
            }
             if (length(out7)) {
                 printLog0(Log, paste(c(ini, out7, ""), collapse = "\n"))
