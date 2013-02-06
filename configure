@@ -32967,8 +32967,9 @@ fi
 
 done
 
-  # may need to resolve jpeg routines
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
+  if test "x${ac_cv_header_tiffio_h}" = xyes ; then
+    # may need to resolve jpeg routines
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
 $as_echo_n "checking for TIFFOpen in -ltiff... " >&6; }
 if ${ac_cv_lib_tiff_TIFFOpen+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -33018,14 +33019,72 @@ else
   have_tiff=no
 fi
 
-  if test "x${ac_cv_header_tiffio_h}" = xyes ; then
     if test "x${have_tiff}" = xyes; then
 
 $as_echo "#define HAVE_TIFF 1" >>confdefs.h
 
       BITMAP_LIBS="-ltiff ${BITMAP_LIBS}"
     else
-      have_tiff=no
+      # tiff 4.0.x may need lzma too: SU's static build does
+      unset ac_cv_lib_tiff_TIFFOpen
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TIFFOpen in -ltiff" >&5
+$as_echo_n "checking for TIFFOpen in -ltiff... " >&6; }
+if ${ac_cv_lib_tiff_TIFFOpen+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-ltiff ${BITMAP_LIBS} -llzma $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char TIFFOpen ();
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+return TIFFOpen ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_tiff_TIFFOpen=yes
+else
+  ac_cv_lib_tiff_TIFFOpen=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_tiff_TIFFOpen" >&5
+$as_echo "$ac_cv_lib_tiff_TIFFOpen" >&6; }
+if test "x$ac_cv_lib_tiff_TIFFOpen" = xyes; then :
+  have_tiff=yes
+else
+  have_tiff=no
+fi
+
+      if test "x${have_tiff}" = xyes; then
+
+$as_echo "#define HAVE_TIFF 1" >>confdefs.h
+
+        BITMAP_LIBS="-ltiff ${BITMAP_LIBS} -llzma"
+      else
+        have_tiff=no
+      fi
     fi
   fi
 fi
@@ -36050,11 +36109,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36053: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36112: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36057: \$? = $ac_status" >&5
+   echo "$as_me:36116: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36149,11 +36208,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36152: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36211: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36156: \$? = $ac_status" >&5
+   echo "$as_me:36215: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36201,11 +36260,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36204: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36263: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36208: \$? = $ac_status" >&5
+   echo "$as_me:36267: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
