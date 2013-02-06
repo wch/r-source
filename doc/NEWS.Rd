@@ -879,7 +879,7 @@
       \item The included version of PCRE has been updated to 8.32.
       
       \item The \pkg{tcltk} namespace can now be re-loaded after
-      unloading on  Unix-alike.
+      unloading.
 
       The Tcl/Tk event loop is inhibited in a forked child (as in
       e.g. \code{mclapply()}.

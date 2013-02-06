@@ -43,21 +43,26 @@ static void _R_tcldo(void)
 typedef void (*DO_FUNC)();
 extern void set_R_Tcldo(DO_FUNC ptr);
 extern void unset_R_Tcldo(DO_FUNC ptr);
+static int TkUp = 0;
+
 
 void tcltk_start(void)
 {
-    int TkUp;
     HWND active = GetForegroundWindow(); /* ActiveTCL steals the focus */
 
-    tcltk_init(&TkUp); /* won't return on error */
-    set_R_Tcldo(&_R_tcldo);
+    if(!TkUp) {
+	tcltk_init(&TkUp); /* won't return on error */
+	set_R_Tcldo(&_R_tcldo);
+    }
     _R_tcldo();  /* one call to trigger the focus stealing bug */
     SetForegroundWindow(active); /* and fix it */
 }
 
+/* Not currently called */
 void tcltk_end(void)
 {
     Tcl_DeleteInterp(RTcl_interp);
     Tcl_Finalize();
     unset_R_Tcldo(&_R_tcldo);
+    TkUp = 0;
 }
