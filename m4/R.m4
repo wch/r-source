@@ -1275,12 +1275,13 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
   AC_CACHE_CHECK([for ObjC runtime library], [r_cv_objc_runtime], [
     save_OBJCFLAGS="$OBJCFLAGS"
     save_LIBS="$LIBS"
-    r_cv_objc_runtime=none
+    r_cv_objc_runtime=
     for libobjc in objc objc-gnu objc-lf objc-lf2; do
       LIBS="${save_LIBS} -l${libobjc}"
       #OBJCFLAGS="$OBJCFLAGS $PTHREAD_CFLAGS -fgnu-runtime"
       AC_LINK_IFELSE([
 	AC_LANG_PROGRAM([
+#undef __OBJC2__
 #include <objc/Object.h>
 			], [
   @<:@Object class@:>@;
@@ -1296,7 +1297,7 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
 
   OBJC_LIBS="${r_cv_objc_runtime} ${OBJC_LIBS}"
 
-  if test "${r_cv_objc_runtime}" != none; then
+  if test "z${r_cv_objc_runtime}" != z; then
   AC_CACHE_CHECK([for ObjC runtime style], [r_cv_objc_runtime_style], [
     save_OBJCFLAGS="$OBJCFLAGS"
     save_LIBS="$LIBS"
