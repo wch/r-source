@@ -719,8 +719,8 @@ Some platforms can support closely related builds of @R{} which can
 share all but the executables and dynamic objects.  Examples include
 builds under Solaris for different chips (in particular, 32- and 64-bit
 builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
-@acronym{CPU}s (e.g.@: @cputype{ppc}, @cputype{i386} and
-@cputype{x86_64}) under (Mac) OS X >= 10.4.
+@acronym{CPU}s (e.g.@: @cputype{i386} and @cputype{x86_64}) under (Mac)
+OS X.
 
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
@@ -1457,10 +1457,14 @@ account used to install @R{}.
 @chapter Installing R under (Mac) OS X
 @cindex OS X
 
+@strong{NB:}  Information on OS X is likely to change before release of
+@R{} 3.0.0.
+
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
-binaries for OS X for a base distribution and a large number of
-add-on packages from @acronym{CRAN} to run on OS X 10.[5678] (Leopard,
-Snow Leopard, Lion, Mountain Lion).
+binaries for OS X for a base distribution and a large number of add-on
+packages from @acronym{CRAN} to run on OS X 10.6 and later (Snow
+Leopard, Lion, Mountain Lion, @dots{}).  This is a @cputype{x86_64}
+build, and should run on all Macs from mid-2008 on.
 
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
 double-click on the icon.  Note that (X11-based) Tcl/Tk needs to be
@@ -1468,19 +1472,11 @@ installed separately if needed, from
 @uref{http://cran.r-project.org/bin/macosx/tools/}, and for Mountain
 Lion XQuartz will also need to be installed to use Tk.
 
+On Mountain Lion with `GateKeeper' active you may need to Cmd-click on
+some of the packages (e.g.@: that for Tcl/Tk) and select @samp{Open}.
+
 See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
-
-Note that if you want to install packages with code that needs to be
-compiled you will need @command{Xcode}@footnote{from the App Store or
-Apple's developer site depending on the version of OS X, and including
-the `Command Line Tools' which in recent versions of Xcode are
-downloaded for inside Xcode, under the Preferences.} and compilers which
-match the ones used to compile @R{}.  These are currently called
-@command{gcc}, @command{g++} and @command{gfortran}, and need to accept
-the Apple extension of the @option{-arch} flag.  Suitable compilers can
-be downloaded from @uref{http://cran.r-project.org/bin/macosx/tools/}
-(@command{gfortran}) and @uref{http://r.research.att.com/tools/}.
 
 For building @R{} from source, see @ref{Mac OS X}.
 
@@ -1790,6 +1786,9 @@ the sources on Windows without any additional tools.
 @node OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection OS X
 
+@strong{NB:}  Information on OS X is likely to change before release of
+@R{} 3.0.0.
+
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there are additional types @code{mac.binary*} (the default
 in the @acronym{CRAN} distribution) that can be passed to
@@ -1800,9 +1799,20 @@ files have the extension @samp{tgz}.  The R.app GUI provides for
 installation of either binary or source packages, from @acronym{CRAN} or
 local files.
 
-Installing package which do not contain compiled code should work with
-no additional tools.  For those which need compilation, see the comments
-under @ref{Installing R under (Mac) OS X}.
+Note that many binary packages including compiled code are tied to a
+particular series (@R{} 2.15.x or 3.0.x) of @R{}: in any case @R{} 3.0.x
+cannot use any binary packages built for @R{} 2.15.x.
+
+Installing source packages which do not contain compiled code should
+work with no additional tools. For others you will need
+@command{Xcode}@footnote{from the App Store or Apple's developer site
+depending on the version of OS X, and including the `Command Line Tools'
+which in recent versions of @command{Xcode} can be downloaded for inside
+Xcode, under the Preferences.} and compilers which match the ones used
+to compile @R{}.  These are currently called @command{gcc},
+@command{g++} and @command{gfortran}, and need to accept the Apple
+extension of the @option{-arch} flag.  Suitable compilers can be
+downloaded from @uref{http://r.research.att.com/tools/}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed: for Mountain Lion see @ref{Mountain Lion}.
@@ -1848,8 +1858,8 @@ appropriate).  This is read immediately after @file{Makeconf}.
 
 When installing packages from their sources, there are some extra
 considerations on installations which use sub-architectures.  These are
-commonly used on (Mac) OS X and Windows, but can in principle be used on
-other platforms.
+commonly used on Windows and were used on OS X, but can in principle be
+used on other platforms.
 
 When a source package is installed by a build of @R{} which supports
 multiple sub-architectures, the normal installation process installs the
@@ -1883,6 +1893,10 @@ using the path to @command{R} or @command{R --arch} to select the
 additional sub-architecture.  On Windows there is also @command{R CMD
 INSTALL --merge-multiarch} to build and merge the two architectures,
 starting with a source tarball.
+
+On OS X multiple sub-architectures were commonly used prior to @R{}
+3.0.0: @cputype{x86_64} (the current default), @cputype{i386} and for
+Lion and Tiger @cputype{ppc} and @cputype{ppc64}.
 
 @node Byte-compilation,  , Multiple sub-architectures, Installing packages
 @subsection Byte-compilation
@@ -4140,6 +4154,10 @@ be recognized as alphabetic by @code{make.names}.
 @node Mac OS X, Solaris, FreeBSD, Platform notes
 @section (Mac) OS X
 @cindex OS X
+
+@strong{NB:}  Information on OS X is likely to change before release of
+@R{} 3.0.0.
+
 
 You can build @R{} as a Unix application on OS X using the Apple
 Developer Tools (`Xcode') and suitable compilers (including a version of
