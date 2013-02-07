@@ -4205,18 +4205,15 @@ library (see @code{?.libPaths()}).   Also use
 The @code{vecLib} library can be used @emph{via} the configuration options
 
 @example
---with-blas="-framework vecLib" --with-lapack
+--with-blas="-framework Accelerate" --with-lapack
 @end example
 
 @noindent
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
-routines.  (Use of @code{vecLib} without @option{--with-lapack} has
-resulted in segfaults: there is a workaround as from @R{} 2.15.2, and
-using @option{--with-lapack} did not work on Snow Leopard.)  You can
-replace @code{vecLib} by @code{Accelerate}: in recent versions of OS X
-the former is a wrapper for the latter.
+routines.  (Use of @code{Accelerate} and @option{--with-lapack} did not
+work on Snow Leopard.)
 
-Note that the Apple versions of GCC (and those on
+Note that the Apple versions of GCC (where available, and those on
 @uref{http://r.research.att.com}) are based on version 4.2 from
 2007. That is now a long time ago and later versions (as used on other
 @R{} platforms, including @code{CRAN}'s incoming checks) are better at
@@ -4224,75 +4221,36 @@ detecting coding errors.  If can be well worth checking your code with
 @command{clang}/@command{clang++}: @R{} itself is checked with
 @command{clang 4.x}.
 
+Recent compilers default to 64-bit, but some older ones (supplied at the
+time of Leopard) default to 32-bit.  It is safest to explicitly specify
+the architecture by e.g.@:
+
+@example
+CC='gcc-4.2 -arch x86_64'
+CXX='g++-4.2 -arch x86_64'
+F77='gfortran-4.2 -arch x86_64'
+FC='gfortran-4.2 -arch x86_64'
+OBJC='gcc-4.2 -arch x86_64'
+@end example
+in @file{config.site} or on the @command{configure} command line.
+
+To produce a 32-build, use @samp{i386} instead of @samp{x86_64}.
 
 @menu
-* 32-bit builds::               
-* 64-bit builds::               
 * Snow Leopard::                
 * Lion::                        
 * Mountain Lion::               
 * Frameworks::                  
 @end menu
 
-@node 32-bit builds, 64-bit builds, Mac OS X, Mac OS X
-@subsection 32-bit builds
-
-It is safest to tell the compilers explicitly to compile for 32-bit code
-by setting
-
-@example
-CC='gcc-4.2 -arch i386'
-CXX='g++-4.2 -arch i386'
-F77='gfortran-4.2 -arch i386'
-FC='gfortran-4.2 -arch i386'
-OBJC='gcc-4.2 -arch i386'
-@end example
-
-@noindent
-in @file{config.site} or on the @command{configure} command line.
-
-For recent compilers (but not those on Leopard) the default is likely to
-be 64-bit.
-
-
-@node 64-bit builds, Snow Leopard, 32-bit builds, Mac OS X
-@subsection 64-bit builds
-
-64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
-needed is to select suitable compiler options, e.g.@:
-
-@example
-CC='gcc-4.2 -arch x86_64'
-CXX='g++-4.2 -arch x86_64'
-F77='gfortran-4.2 -arch x86_64'
-FC='gfortran-4.2 -arch x86_64'
-OBJC='gcc-4.2 -arch x86_64'
-@end example
-
-@noindent
-in @file{config.site} or on the @command{configure} command line.  With
-recent compilers this may be the default but it is safest to specify
-@option{-arch} explicitly.
-
-@node Snow Leopard, Lion, 64-bit builds, Mac OS X
+@node Snow Leopard, Lion, Mac OS X, Mac OS X
 @subsection Snow Leopard
 
 A quirk on Snow Leopard is that the X11 libraries are not in the default
 linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
-required (or you can use the @command{configure} options
-@option{--x-includes=/usr/X11/include --x-libraries=/usr/X11/lib.}).
-
-So for a 64-bit build of @R{} you need a file @file{config.site} in the
-top-level build directory containing
-
-@example
-CC='gcc-4.2 -arch x86_64'
-CXX='g++-4.2 -arch x86_64'
-F77='gfortran-4.2 -arch x86_64'
-FC='gfortran-4.2 -arch x86_64'
-OBJC='gcc-4.2 -arch x86_64'
-LIBS=-L/usr/X11/lib
-@end example
+required in @file{config.site} (or you can use the @command{configure}
+options @option{--x-includes=/usr/X11/include
+--x-libraries=/usr/X11/lib.}).
 
 @node Lion, Mountain Lion, Snow Leopard, Mac OS X
 @subsection Lion
@@ -4301,7 +4259,7 @@ With Xcode 4.2 and later you need to install a package named like
 @uref{http://r.research.att.com/@/tools/@/gcc-42-5666.3-darwin11.pkg} to
 provide compilers named @command{gcc-4.2}, @command{g++-4.2} and
 @command{gfortran-4.2}.  These default to 64-bit, so for a 64-bit build
-@file{config.site} in the top-level build directory should contain
+@file{config.site} in the top-level build directory could contain
 
 @example
 CC=gcc-4.2
@@ -4310,8 +4268,6 @@ F77=gfortran-4.2
 FC=gfortran-4.2
 OBJC=gcc-4.2
 @end example
-
-and for a 32-bit build add @option{-arch i386} as displayed above.
 
 It is also possible to build @R{} using Apple's C/C++ compilers supplied
 with Xcode, but these do need to be supplemented by a Fortran compiler
@@ -4335,11 +4291,10 @@ to be known to @command{pkg-config} when @command{configure} is run:
 this usually means adding it to the @env{PKG_CONFIG_PATH} environment
 variable.
 
-Mountain Lion does not come with a Java runtime installed, and an
+Mountain Lion does not come with a Java runtime (JRE) installed, and an
 upgrade to Mountain Lion removes one if already installed.  It is
-intended to be installed at first use.  If you will want to use @R{}
-with packages using @CRANpkg{rJava}, check Java is installed before
-starting to build @R{} by running
+intended to be installed at first use.  Check Java is installed by
+running
 
 @example
 java -version
@@ -4353,11 +4308,12 @@ However, for security reasons you may want/need to install the latest
 JRE from Oracle (currently from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
-There is also versions of Java available from Oracle, but they have a
-different layout and so that can only be used with a source installation
-and after setting environment variables.
-@c (see @uref{http://mailman.rz.uni-augsburg.de/pipermail/stats-rosuda-devel/2012q4/001917.html}).
-For example, @file{config.site} could contain
+However, to install Java-using packages (e.g.@: @CRANpkg{rJava}) from
+their sources you need a Java SDK.  This is available (64-bit only) from
+Oracle, but theirs uses a different layout from SDKs available from
+Apple for earlier versions of OS X, so you need to set environment
+variables when building @R{}.  For example, @file{config.site} could
+contain
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
@@ -4365,8 +4321,7 @@ JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
 
-Note for use with @CRANpkg{rJava}: the available Java SDK is 64-bit,
-only, and it is necessary to set the environment variable @env{NOAWT}
+Note that it is necessary to set the environment variable @env{NOAWT}
 e.g.@: to @code{1} to install some Java-using packages such as
 @CRANpkg{iplots}.
 
@@ -4391,7 +4346,6 @@ but this can be changed at configure time by specifying the flag
 @example
 make prefix=/where/you/want/R.framework/to/go install
 @end example
-
 
 Note that building the @file{R.app} GUI console is a separate project:
 see @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html,
