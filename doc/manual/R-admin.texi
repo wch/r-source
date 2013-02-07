@@ -1472,8 +1472,9 @@ installed separately if needed, from
 @uref{http://cran.r-project.org/bin/macosx/tools/}, and for Mountain
 Lion XQuartz will also need to be installed to use Tk.
 
-On Mountain Lion with `GateKeeper' active you may need to Cmd-click on
-some of the packages (e.g.@: that for Tcl/Tk) and select @samp{Open}.
+On Mountain Lion with `GateKeeper' active you may need to
+right/control-click on some of the packages (e.g.@: that for Tcl/Tk) and
+select @samp{Open}.
 
 See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
@@ -2982,7 +2983,7 @@ position-independent code), and that is not checked.
 Some enhanced @acronym{BLAS}es are compiler-system-specific
 (@code{sunperf} on Solaris@footnote{Using the Oracle Solaris Studio
 @command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
-@code{vecLib}/@code{Accelerate} on OS X).  The correct incantation for
+@code{Accelerate} on OS X).  The correct incantation for
 these is usually found @emph{via} @option{--with-blas} with no value on
 the appropriate platforms.
 
@@ -3276,9 +3277,9 @@ run-time library path or @command{ld.so} cache).
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{sunperf} on Solaris, @code{vecLib}/@code{Accelerate} on OS X
-and ACML on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK
-version 3.2 is required.
+as @code{sunperf} on Solaris, @code{Accelerate} on OS X and ACML and MKL
+on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
+is required.
 
 However, the likely performance gains are thought to be small (and may
 be negative), and the default is not to search for a suitable LAPACK
@@ -4202,7 +4203,7 @@ library (see @code{?.libPaths()}).   Also use
 
 @cindex BLAS library
 @cindex LAPACK library
-The @code{vecLib} library can be used @emph{via} the configuration options
+The @code{Accelerate} library can be used @emph{via} the configuration options
 
 @example
 --with-blas="-framework Accelerate" --with-lapack
@@ -4210,7 +4211,7 @@ The @code{vecLib} library can be used @emph{via} the configuration options
 
 @noindent
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
-routines.  (Use of @code{Accelerate} and @option{--with-lapack} did not
+routines.  (Use of @code{Accelerate} with @option{--with-lapack} did not
 work on Snow Leopard.)
 
 Note that the Apple versions of GCC (where available, and those on
@@ -4234,7 +4235,7 @@ OBJC='gcc-4.2 -arch x86_64'
 @end example
 in @file{config.site} or on the @command{configure} command line.
 
-To produce a 32-build, use @samp{i386} instead of @samp{x86_64}.
+To produce a 32-bit build, use @samp{i386} instead of @samp{x86_64}.
 
 @menu
 * Snow Leopard::                
@@ -4286,14 +4287,14 @@ OS versions.
 
 The X11 system used with Mountain Lion will be XQuartz.  To build the
 graphics devices depending on cairographics the XQuartz path for
-@command{pkg-config} files (default @file{/usr/X11/lib/pkgconfig} needs
+@command{pkg-config} files (default @file{/usr/X11/lib/pkgconfig}) needs
 to be known to @command{pkg-config} when @command{configure} is run:
 this usually means adding it to the @env{PKG_CONFIG_PATH} environment
 variable.
 
 Mountain Lion does not come with a Java runtime (JRE) installed, and an
 upgrade to Mountain Lion removes one if already installed.  It is
-intended to be installed at first use.  Check Java is installed by
+intended to be installed at first use.  Check a JRE is installed by
 running
 
 @example
@@ -4309,11 +4310,11 @@ JRE from Oracle (currently from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
 However, to install Java-using packages (e.g.@: @CRANpkg{rJava}) from
-their sources you need a Java SDK.  This is available (64-bit only) from
-Oracle, but theirs uses a different layout from SDKs available from
-Apple for earlier versions of OS X, so you need to set environment
-variables when building @R{}.  For example, @file{config.site} could
-contain
+their sources you need a Java SDK, not just a JRE.  This is available
+(64-bit only) from Oracle, but theirs uses a different layout from SDKs
+available from Apple for earlier versions of OS X, so you need to set
+environment variables when building @R{}.  For example,
+@file{config.site} could contain
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
