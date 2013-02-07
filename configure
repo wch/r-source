@@ -24312,7 +24312,7 @@ else
 
     save_OBJCFLAGS="$OBJCFLAGS"
     save_LIBS="$LIBS"
-    r_cv_objc_runtime=none
+    r_cv_objc_runtime=
     for libobjc in objc objc-gnu objc-lf objc-lf2; do
       LIBS="${save_LIBS} -l${libobjc}"
       #OBJCFLAGS="$OBJCFLAGS $PTHREAD_CFLAGS -fgnu-runtime"
@@ -24320,6 +24320,7 @@ else
 /* end confdefs.h.  */
 
 
+#undef __OBJC2__
 #include <objc/Object.h>
 
 #ifdef F77_DUMMY_MAIN
@@ -24359,7 +24360,7 @@ $as_echo "$r_cv_objc_runtime" >&6; }
 
   OBJC_LIBS="${r_cv_objc_runtime} ${OBJC_LIBS}"
 
-  if test "${r_cv_objc_runtime}" != none; then
+  if test "z${r_cv_objc_runtime}" != z; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ObjC runtime style" >&5
 $as_echo_n "checking for ObjC runtime style... " >&6; }
 if ${r_cv_objc_runtime_style+:} false; then :
@@ -33033,7 +33034,7 @@ if ${ac_cv_lib_tiff_TIFFOpen+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-ltiff ${BITMAP_LIBS} -llzma $LIBS"
+LIBS="-ltiff -llzma ${BITMAP_LIBS} -llzma $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -33081,7 +33082,7 @@ fi
 
 $as_echo "#define HAVE_TIFF 1" >>confdefs.h
 
-        BITMAP_LIBS="-ltiff ${BITMAP_LIBS} -llzma"
+        BITMAP_LIBS="-ltiff -llzma ${BITMAP_LIBS}"
       else
         have_tiff=no
       fi
@@ -36109,11 +36110,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36112: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36113: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36116: \$? = $ac_status" >&5
+   echo "$as_me:36117: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36208,11 +36209,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36211: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36212: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36215: \$? = $ac_status" >&5
+   echo "$as_me:36216: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36260,11 +36261,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36263: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36264: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36267: \$? = $ac_status" >&5
+   echo "$as_me:36268: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
