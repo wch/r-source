@@ -719,8 +719,8 @@ Some platforms can support closely related builds of @R{} which can
 share all but the executables and dynamic objects.  Examples include
 builds under Solaris for different chips (in particular, 32- and 64-bit
 builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
-@acronym{CPU}s (e.g.@: @cputype{ppc}, @cputype{i386} and
-@cputype{x86_64}) under (Mac) OS X >= 10.4.
+@acronym{CPU}s (e.g.@: @cputype{i386} and @cputype{x86_64}) under (Mac)
+OS X.
 
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
@@ -1079,8 +1079,8 @@ versions are recommended.  It is also possible to use
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
-The @code{jpeg} sub-directory for version 8d is named @file{jpeg-8d}; if
-you use a different version (e.g.@: @file{jpeg-8c} or
+The @code{jpeg} sub-directory for version 9 is named @file{jpeg-9}; if
+you use a different version (e.g.@: @file{jpeg-8d} or
 @file{libjpeg-turbo}), copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit the definition of
 @code{JPEGDIR}: the names of the @file{libpng} and @file{libtiff}
@@ -1091,10 +1091,10 @@ Example:
 @example
 > tar -zxf libpng-1.5.12.tar.gz
 > mv libpng-1.5.12 libpng
-> tar -zxf jpegsrc.v8d.tar.gz
-> tar -zxf tiff-4.0.2.tar.gz
-> mv tiff-4.0.2/libtiff .
-> rm -rf tiff-4.0.2
+> tar -zxf jpegsrc.v9.tar.gz
+> tar -zxf tiff-4.0.3.tar.gz
+> mv tiff-4.0.3/libtiff .
+> rm -rf tiff-4.0.3
 @end example
 
 @noindent
@@ -1468,19 +1468,11 @@ installed separately if needed, from
 @uref{http://cran.r-project.org/bin/macosx/tools/}, and for Mountain
 Lion XQuartz will also need to be installed to use Tk.
 
+On Mountain Lion with `GateKeeper' active you may need to Cmd-click on
+some of the packages (e.g.@: that for Tcl/Tk) and select @samp{Open}.
+
 See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
-
-Note that if you want to install packages with code that needs to be
-compiled you will need @command{Xcode}@footnote{from the App Store or
-Apple's developer site depending on the version of OS X, and including
-the `Command Line Tools' which in recent versions of Xcode are
-downloaded for inside Xcode, under the Preferences.} and compilers which
-match the ones used to compile @R{}.  These are currently called
-@command{gcc}, @command{g++} and @command{gfortran}, and need to accept
-the Apple extension of the @option{-arch} flag.  Suitable compilers can
-be downloaded from @uref{http://cran.r-project.org/bin/macosx/tools/}
-(@command{gfortran}) and @uref{http://r.research.att.com/tools/}.
 
 For building @R{} from source, see @ref{Mac OS X}.
 
@@ -1800,11 +1792,21 @@ files have the extension @samp{tgz}.  The R.app GUI provides for
 installation of either binary or source packages, from @acronym{CRAN} or
 local files.
 
-Installing package which do not contain compiled code should work with
-no additional tools.  For those which need compilation, see the comments
-under @ref{Installing R under (Mac) OS X}.
+Note that many binary packages including compiled code are tied to a
+particular series (@R{} 2.15.x or 3.0.x) of @R{}.
 
-Package @pkg{rJava} and those which depend on it need a Java runtime
+Installing source packages which do not contain compiled code should
+work with no additional tools. For others you will need
+@command{Xcode}@footnote{from the App Store or Apple's developer site
+depending on the version of OS X, and including the `Command Line Tools'
+which in recent versions of @command{Xcode} can be downloaded for inside
+Xcode, under the Preferences.} and compilers which match the ones used
+to compile @R{}.  These are currently called @command{gcc},
+@command{g++} and @command{gfortran}, and need to accept the Apple
+extension of the @option{-arch} flag.  Suitable compilers can be
+downloaded from @uref{http://r.research.att.com/tools/}.
+
+Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed: for Mountain Lion see @ref{Mountain Lion}.
 
 
@@ -3666,9 +3668,7 @@ will need to set @env{FPICFLAGS} appropriately.
 @subsection Using gfortran
 
 @command{gfortran} is the F95 compiler that is part of
-@command{gcc}@tie{}4.@var{x}.@var{y}.  There were problems compiling
-@R{} with the first release (@command{gcc}@tie{}4.0.0) and more with
-pre-releases, but these are resolved in later versions.
+@command{gcc}@tie{}4.@var{x}.@var{y}.
 
 On Linux @cputype{x86_64} systems there is an incompatibility in the
 return conventions for double-complex functions between
@@ -4199,7 +4199,7 @@ using @option{--with-lapack} did not work on Snow Leopard.)  You can
 replace @code{vecLib} by @code{Accelerate}: in recent versions of OS X
 the former is a wrapper for the latter.
 
-Note that the Apple versions of GCC (and those on
+Note that the Apple versions of GCC (where available, and those on
 @uref{http://r.research.att.com}) are based on version 4.2 from
 2007. That is now a long time ago and later versions (as used on other
 @R{} platforms, including @code{CRAN}'s incoming checks) are better at
@@ -4284,7 +4284,7 @@ With Xcode 4.2 and later you need to install a package named like
 @uref{http://r.research.att.com/@/tools/@/gcc-42-5666.3-darwin11.pkg} to
 provide compilers named @command{gcc-4.2}, @command{g++-4.2} and
 @command{gfortran-4.2}.  These default to 64-bit, so for a 64-bit build
-@file{config.site} in the top-level build directory should contain
+@file{config.site} in the top-level build directory could contain
 
 @example
 CC=gcc-4.2
@@ -4318,11 +4318,10 @@ to be known to @command{pkg-config} when @command{configure} is run:
 this usually means adding it to the @env{PKG_CONFIG_PATH} environment
 variable.
 
-Mountain Lion currently does not come with a Java runtime installed, and
-an upgrade to Mountain Lion removes one if already installed.  It is
-intended to be installed at first use.  If you will want to use @R{} with
-packages using @pkg{rJava}, check Java is installed before starting to
-build @R{} by running
+Mountain Lion does not come with a Java runtime (JRE) installed, and an
+upgrade to Mountain Lion removes one if already installed.  It is
+intended to be installed at first use.  Check Java is installed by
+running
 
 @example
 java -version
@@ -4332,12 +4331,16 @@ java -version
 in a @command{Terminal} window.  If Java is not installed this should
 prompt you to install it.
 @c http://osxdaily.com/2012/08/01/install-java-in-os-x-mountain-lion/
+However, for security reasons you may want/need to install the latest
+JRE from Oracle (currently from
+@uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
-There is also a version of Java available from Oracle, but they have a
-different layout and so that can only be used with a source installation
-and after setting environment variables.
-@c (see @uref{http://mailman.rz.uni-augsburg.de/pipermail/stats-rosuda-devel/2012q4/001917.html}).
-For example, @file{config.site} could contain
+However, to install Java-using packages (e.g.@: @CRANpkg{rJava}) from
+their sources you need a Java SDK.  This is available (64-bit only) from
+Oracle, but theirs uses a different layout from SDKs available from
+Apple for earlier versions of OS X, so you need to set environment
+variables when building @R{}.  For example, @file{config.site} could
+contain
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
@@ -4345,7 +4348,9 @@ JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
 
-Note for use with @pkg{rJava}: the available Java SDK is 64-bit, only.
+Note that it is necessary to set the environment variable @env{NOAWT}
+e.g.@: to @code{1} to install some Java-using packages such as
+@CRANpkg{iplots}.
 
 @node Frameworks,  , Mountain Lion, Mac OS X
 @subsection Frameworks
@@ -4368,7 +4373,6 @@ but this can be changed at configure time by specifying the flag
 @example
 make prefix=/where/you/want/R.framework/to/go install
 @end example
-
 
 Note that building the @file{R.app} GUI console is a separate project:
 see @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html,
