@@ -34884,7 +34884,7 @@ $as_echo "$r_cv_JAVA_LD_LIBRARY_PATH" >&6; }
     custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 
     case "${host_os}" in
-      darwin*)
+      darwin89.*|darwin10.*)
         JAVA_LIBS="-framework JavaVM"
         JAVA_LIBS0="-framework JavaVM"
 	JAVA_CPPFLAGS="-I${JAVA_HOME}/include"
@@ -34930,7 +34930,7 @@ $as_echo "$r_cv_JAVA_LD_LIBRARY_PATH" >&6; }
 
 	     if test -n "${boot_path}"; then
 	          for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
-	       	      if test -f "$dir/libjvm.so"; then
+	       	      if test -f "$dir/libjvm${DYLIB_EXT}"; then
 		          has_libjvm=yes
 			  # NOTE: we decided to ignore java.library.path altogether since it was bogus
 			  #       we could just append the newly found paths, though
@@ -34962,6 +34962,7 @@ $as_echo "$r_cv_JAVA_LD_LIBRARY_PATH" >&6; }
 	   jmdirs=''
 	   ## put the most probable locations for each system in the first place
 	   case "${host_os}" in
+	     darwin*)  jmdirs=darwin;;
 	     linux*)   jmdirs=linux;;
 	     bsdi*)    jmdirs=bsdos;;
 	     osf*)     jmdirs=alpha;;
@@ -36110,11 +36111,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36113: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36114: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36117: \$? = $ac_status" >&5
+   echo "$as_me:36118: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36209,11 +36210,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36212: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36213: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36216: \$? = $ac_status" >&5
+   echo "$as_me:36217: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36261,11 +36262,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36264: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36265: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36268: \$? = $ac_status" >&5
+   echo "$as_me:36269: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
