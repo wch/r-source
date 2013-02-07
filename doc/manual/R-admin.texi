@@ -4317,8 +4317,8 @@ to be known to @command{pkg-config} when @command{configure} is run:
 this usually means adding it to the @env{PKG_CONFIG_PATH} environment
 variable.
 
-Mountain Lion currently does not come with a Java runtime installed, and
-an upgrade to Mountain Lion removes one if already installed.  It is
+Mountain Lion does not come with a Java runtime installed, and an
+upgrade to Mountain Lion removes one if already installed.  It is
 intended to be installed at first use.  If you will want to use @R{}
 with packages using @CRANpkg{rJava}, check Java is installed before
 starting to build @R{} by running
@@ -4331,8 +4331,11 @@ java -version
 in a @command{Terminal} window.  If Java is not installed this should
 prompt you to install it.
 @c http://osxdaily.com/2012/08/01/install-java-in-os-x-mountain-lion/
+However, for security reasons you may want/need to install the latest
+JRE from Oracle (currently from
+@uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
-There is also a version of Java available from Oracle, but they have a
+There is also versions of Java available from Oracle, but they have a
 different layout and so that can only be used with a source installation
 and after setting environment variables.
 @c (see @uref{http://mailman.rz.uni-augsburg.de/pipermail/stats-rosuda-devel/2012q4/001917.html}).
@@ -4345,7 +4348,9 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm"
 @end example
 
 Note for use with @CRANpkg{rJava}: the available Java SDK is 64-bit,
-only.
+only, and it is necessary to set the environment variable @env{NOAWT}
+e.g.@: to @code{1} to install some Java-using packages such as
+@CRANpkg{iplots}.
 
 @node Frameworks,  , Mountain Lion, Mac OS X
 @subsection Frameworks
