@@ -308,8 +308,6 @@ function(x, ...)
     as.character(unlist(lapply(which(sapply(x, length) > 0L), .fmt)))
 }
 
-## print.undoc <- .print.via.format
-
 ### * codoc
 
 codoc <-
@@ -1068,8 +1066,6 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
-## print.codocClasses <- .print.via.format
-
 ### * codocData
 
 codocData <-
@@ -1242,9 +1238,6 @@ function(x, ...)
 
     as.character(unlist(lapply(names(x), .fmt)))
 }
-
-## print.codocData <- .print.via.format
-
 
 ### * checkDocFiles
 
@@ -1498,9 +1491,6 @@ function(x, ...)
 
     y
 }
-
-## print.checkDocFiles <- .print.via.format
-
 
 ### * checkDocStyle
 
@@ -1768,8 +1758,6 @@ function(x, ...)
 
     as.character(unlist(lapply(names(x), .fmt)))
 }
-
-## print.checkDocStyle <- .print.via.format
 
 ### * checkFF
 
@@ -2050,9 +2038,6 @@ function(x, ...)
     res
 }
 
-## print.checkFF <- .print.via.format
-
-
 ### * checkS3methods
 
 checkS3methods <-
@@ -2292,9 +2277,6 @@ function(x, ...)
     as.character(unlist(lapply(x, .fmt)))
 }
 
-## print.checkS3methods <- .print.via.format
-
-
 ### * checkReplaceFuns
 
 checkReplaceFuns <-
@@ -2440,9 +2422,6 @@ function(x, ...)
         character()
 }
 
-## print.checkReplaceFuns <- .print.via.format
-
-
 ### * checkTnF
 
 checkTnF <-
@@ -2569,9 +2548,6 @@ function(x, ...)
 
     as.character(unlist(lapply(names(x), .fmt)))
 }
-
-## print.checkTnF <- .print.via.format
-
 
 ### * .check__depends
 
@@ -2774,8 +2750,6 @@ function(x, ...)
       }
       )
 }
-
-## print.check_package_depends <- .print.via.format
 
 ### * .check_package_description
 
@@ -3142,9 +3116,7 @@ function(x, ...)
       })
 }
 
-## print.check_package_description_encoding <- .print.via.format
-
-###
+### * .check_package_license
 
 .check_package_license <-
 function(dfile, dir)
@@ -3229,8 +3201,6 @@ function(x, ...)
       )
 }
 
-## print.check_package_license <- .print.via.format
-
 ### * .check_make_vars
 
 .check_make_vars <-
@@ -3302,8 +3272,6 @@ function(x, ...)
 
     as.character(unlist(lapply(seq_along(x), .fmt)))
 }
-
-## print.check_make_vars <- .print.via.format
 
 ### * .check_code_usage_in_package
 
@@ -3512,8 +3480,6 @@ function(x, ...)
     strwrap(x, indent = 0L, exdent = 2L)
 }
 
-## print.check_code_usage_in_package <- .print.via.format
-
 ### * .check_Rd_xrefs
 
 .check_Rd_xrefs <-
@@ -3704,8 +3670,6 @@ function(x, ...)
     }
 }
 
-## print.check_Rd_xrefs <- .print.via.format
-
 ### * .check_package_datasets
 
 .check_package_datasets <-
@@ -3800,8 +3764,6 @@ function(x, ...)
                    " in object '", x$unknown[, 2L], "'"))
       })
 }
-
-## print.check_package_datasets <- .print.via.format
 
 ### * .check_package_datasets
 
@@ -4038,9 +4000,6 @@ function(x, ...)
 
     as.character(unlist(lapply(which(sapply(x, length) > 0L), .fmt)))
 }
-
-## print.subdir_tests <- .print.via.format
-
 
 ### * .check_package_ASCII_code
 
@@ -4354,8 +4313,6 @@ function(x, ...)
     res
 }
 
-## print.check_package_code_startup_functions <- .print.via.format
-
 .bad_call_names_in_startup_functions <-
     list(load = c("library", "require"),
          output = c("cat", "message", "print", "writeLines"),
@@ -4493,8 +4450,6 @@ function(x, ...)
     res
 }
 
-## print.check_package_code_unload_functions <- .print.via.format
-
 .get_unload_function_calls_in_file <-
 function(file, encoding = NA)
 {
@@ -4602,8 +4557,6 @@ function(x, ...)
       unlist(Map(.format_calls_in_file, x, names(x))))
 }
 
-## print.check_package_code_assign_to_globalenv <- .print.via.format
-
 ### * .check_package_code_attach
 
 .check_package_code_attach <-
@@ -4627,8 +4580,6 @@ function(x, ...)
     c("Found the following calls to attach():",
       unlist(Map(.format_calls_in_file, x, names(x))))
 }
-
-## print.check_package_code_attach <- .print.via.format
 
 ### * .check_package_code_data_into_globalenv
 
@@ -4867,8 +4818,6 @@ function(x, ...)
           x$methods_message
       })
 }
-
-## print.check_packages_used <- .print.via.format
 
 ### * .check_packages_used_in_examples
 
@@ -5241,9 +5190,6 @@ function(x, ...)
       })
 }
 
-## print.check_T_and_F <- .print.via.format
-
-
 ### * .check_dotIntenal
 
 .check_dotInternal <-
@@ -5368,8 +5314,6 @@ function(x, ...)
     }
     out
 }
-
-## print.check_dotInternal <- .print.via.format
 
 ### * .check_namespace
 
@@ -5624,9 +5568,6 @@ function(x, ...)
     }
     out
 }
-
-## print.check_depdef <- .print.via.format
-
 
 ### * .check_package_CRAN_incoming
 
@@ -5918,8 +5859,6 @@ function(x, ...)
       )
 }
 
-## print.check_package_CRAN_incoming <- .print.via.format
-
 ### * .check_Rd_metadata
 
 .check_Rd_metadata <-
@@ -6006,8 +5945,6 @@ function(x, ...)
                  }))
       })
 }
-
-## print.check_Rd_metadata <- .print.via.format
 
 ## * .check_Rd_contents
 
@@ -6102,8 +6039,6 @@ function(x, ...)
 
     as.character(unlist(lapply(names(x), .fmt)))
 }
-
-## print.check_Rd_contents <- .print.via.format
 
 ### * .find_charset
 

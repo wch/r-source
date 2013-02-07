@@ -980,8 +980,6 @@ format.compactPDF <- function(x, ratio = 0.9, diff = 1e4, ...)
           'from', z[, 1L], 'to', z[, 2L])
 }
 
-print.compactPDF <- .print.via.format
-
 ### * add_datalist
 
 add_datalist <- function(pkgpath, force = FALSE)

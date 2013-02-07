@@ -397,8 +397,6 @@ function(x, ...)
                  entries, names(entries), objects)))
 }
 
-## print.check_so_symbols <- .print.via.format
-
 check_compiled_code <-
 if(.Platform$OS.type == "windows") {
     function(dir)
@@ -567,8 +565,6 @@ function(x, ...)
           )
     else character()
 }
-
-## print.check_compiled_code <- .print.via.format
 
 .shlib_objects_symbol_tables <-
 function(file = "symbols.rds")
