@@ -1408,9 +1408,6 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 	name = "as.integer"; type = INTSXP; break;
     case 2:
 	name = "as.double"; type = REALSXP; break;
-    case 20: // as.real
-	warningcall(call, "as.real is deprecated: use as.double");
-	name = "as.double"; type = REALSXP; break;
     case 3:
 	name = "as.complex"; type = CPLXSXP; break;
     case 4:
@@ -1798,10 +1795,6 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    && !inherits(CAR(args), "factor");
 	break;
     case REALSXP:	/* is.double */
-	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == REALSXP);
-	break;
-    case 67:	/* is.real */
-	warningcall(call, "is.real is deprecated: use is.double");
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == REALSXP);
 	break;
     case CPLXSXP:	/* is.complex */

@@ -636,8 +636,8 @@
       at install time.
       
       \item Documentation for \code{real()}, \code{as.real()} and
-      \code{is.real()} has been moved to \sQuote{defunct}: the functions
-      will be removed before release.
+      \code{is.real()} has been moved to \sQuote{defunct} and the
+      functions removed.
     }
   }
 

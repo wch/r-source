@@ -65,8 +65,8 @@ stopifnot(ff %in% known, known %in% ff)
 
 ## check which are not considered as possibles for S4 generic
 ff4 <- names(methods:::.BasicFunsList)
-# as.double and as.real are the same as as.numeric
-S4generic <- ff %in% c(ff4, "as.double", "as.real")
+# as.double is the same as as.numeric
+S4generic <- ff %in% c(ff4, "as.double")
 notS4 <- ff[!S4generic]
 if(length(notS4))
     cat("primitives not covered in methods:::.BasicFunsList:",
@@ -95,7 +95,6 @@ require(methods)
 setClass("foo", representation(x="numeric", y="numeric"))
 xx <- new("foo",  x=1, y=2)
 S4gen <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.function(x))]
-S4gen <- setdiff(S4gen, "as.real") # deprecated
 for(f in S4gen) {
     g <- get(f)
     if(is.primitive(g)) g <- getGeneric(f) # should error on non-Generics.

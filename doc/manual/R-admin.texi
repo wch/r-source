@@ -2766,16 +2766,15 @@ older @TeX{} distributions (TeXLive 2007 and MiKTeX 2.8) used with
 @pkg{texinfo} 4.13.
 
 @cindex Vignettes
-The PDF documentation (including @file{doc/NEWS.pdf}) and
-building vignettes needs @command{tex} and @command{latex}, or
-@command{pdftex} and @command{pdflatex}.  We require @LaTeX{} version
-@code{2005/12/01} or later (for UTF-8 support).  Building PDF package
-manuals (including the @R{} reference manual) and vignettes is sensitive
-to the version of the @LaTeX{} package @pkg{hyperref} and we recommend
-that the @TeX{} distribution used is kept up-to-date.  A number of
-@LaTeX{} packages are required (including @pkg{url.sty}, and
-@pkg{listings.sty}) and others such as @pkg{hyperref} and
-@pkg{inconsolata} are desirable (and without them you will need to
+The PDF documentation (including @file{doc/NEWS.pdf}) and building
+vignettes needs @command{pdftex} and @command{pdflatex}.  We require
+@LaTeX{} version @code{2005/12/01} or later (for UTF-8 support).
+Building PDF package manuals (including the @R{} reference manual) and
+vignettes is sensitive to the version of the @LaTeX{} package
+@pkg{hyperref} and we recommend that the @TeX{} distribution used is
+kept up-to-date.  A number of @LaTeX{} packages are required (including
+@pkg{url.sty}, and @pkg{listings.sty}) and others such as @pkg{hyperref}
+and @pkg{inconsolata} are desirable (and without them you will need to
 change @R{}'s defaults: @pxref{Making the manuals}).
 
 

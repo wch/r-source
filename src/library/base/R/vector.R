@@ -23,12 +23,6 @@ integer <- function(length = 0L) .Internal(vector("integer", length))
 numeric <- double <-
     function(length = 0L) .Internal(vector("double", length))
 
-real <- function(length = 0L)
-{
-    .Defunct("double")
-    .Internal(vector("double", length))
-}
-
 complex <- function(length.out = 0L,
 		    real = numeric(), imaginary = numeric(),
 		    modulus = 1, argument = 0) {
