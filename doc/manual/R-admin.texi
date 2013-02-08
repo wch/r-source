@@ -1457,6 +1457,10 @@ account used to install @R{}.
 @chapter Installing R under (Mac) OS X
 @cindex OS X
 
+@macro Rapp{}
+@sc{R.app}
+@end macro
+
 @strong{NB:}  Information on OS X is likely to change before release of
 @R{} 3.0.0.
 
@@ -1476,10 +1480,49 @@ On Mountain Lion with `GateKeeper' active you may need to
 right/control-click on some of the packages (e.g.@: that for Tcl/Tk) and
 select @samp{Open}.
 
-See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
-for Mac OS X @acronym{FAQ}} for more details.
+The binary version of @R{} is provided as an Apple Installer package. If
+you encounter any problem during the installation, please check the
+Installer log by clicking on the ``Window'' menu and item ``Installer
+Log''. The full output (select ``Show All Log'') is useful for tracking
+down problems.
+
 
 For building @R{} from source, see @ref{Mac OS X}.
+
+@menu
+* Uninstalling under OS X::     
+@end menu
+
+@node Uninstalling under OS X,  , Installing R under (Mac) OS X, Installing R under (Mac) OS X
+@section Uninstalling under OS X
+
+@R{} for Mac OS X consists of two parts: the GUI (@Rapp{}) and the R
+framework. The un-installation is as simple as removing those folders
+(e.g.@: by dragging them into the Trash). The typical installation will
+install the GUI into the @file{/Applications} folder and the R framework
+in the @file{/Library/Frameworks} folder.
+
+If you want to get rid of R using a Terminal, simply run (prepend
+@code{sudo} if needed):
+
+@example
+rm -rf /Library/Frameworks/R.framework /Applications/R.app
+@end example
+
+On most installations there will also be a folder @code{R64.app} in
+@file{/Applications}.
+
+Note that this does leave some symbolic links in @file{/usr/bin}, some
+or all of @file{R}, @file{Rscript}, @file{R32} and @file{R64}.
+
+An alternative is to use Apple's @code{pkgutil} tools to uninstall R. R
+consists of three packages: @code{org.r-project.R.Leopard.fw.pkg},
+@code{org.r-project.R.Leopard.GUI.pkg} and
+@code{org.r-project.R.Leopard.GUI64.pkg}. You can use @code{pkgutil
+--unlink} for each of them to remove their files and/or @code{pkgutil
+--forget} if you want the Apple Installer to forget about the package
+without deleting its files (useful when installing multiple R versions
+in parallel).
 
 
 @node Running R, Add-on packages, Installing R under (Mac) OS X, Top
@@ -4159,14 +4202,10 @@ be recognized as alphabetic by @code{make.names}.
 @strong{NB:}  Information on OS X is likely to change before release of
 @R{} 3.0.0.
 
-
-You can build @R{} as a Unix application on OS X using the Apple
-Developer Tools (`Xcode') and suitable compilers (including a version of
-@command{gfortran}).  (Recent versions of Xcode need `Command Line Tools
-for Xcode' installed.  This can be downloaded from within Xcode (from
-the @samp{Downloads} preferences pane) or from
-@uref{http://developer.apple.com/download}.)  You will also need
-@code{libreadline} (or to configure with @option{--without-readline}).
+You can build @R{} as a Unix application on OS X using Apple's `Command
+Line Tools for Xcode' and and suitable compilers (including a version of
+@command{gfortran}). You will also need
+@code{readline} (or to configure with @option{--without-readline}).
 
 You may also want to install an X sub-system (or you will need to
 configure with @option{--without-x}): X is part of the standard OS X
@@ -4175,31 +4214,38 @@ installed.  For Mountain Lion, see
 @uref{http://xquartz.macosforge.org/}: some people prefer to use XQuartz
 on earlier versions of OS X instead of the Apple version.
 
-For more information on how to find these and other useful tools see the
-@uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for
-Mac OS X @acronym{FAQ}}.  It is possible to use non-Apple compilers
-which do not support @option{-arch}, but changes will be needed to the
-instructions here (and they are not supported by the @acronym{CRAN}
-binary distribution of @R{}).
-
-Pre-compiled versions of many of the @ref{Useful libraries and programs}
-are available from @uref{http://r.research.att.com/libs/}.  You will
-most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
-(and perhaps @code{tiff}).
-
 In principle @R{} can be built for 10.4.x but this has not been tested
 recently: 10.5.8 (Leopard) is the earliest version currently tested.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
 becomes the default device when running @R{} at the console and X11
-would only be used for the data editor/viewer.
+would only be used for the data editor/viewer.  (This needs an
+Objective-C compiler.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
 with @code{R.app}, it also changes the default location of the personal
 library (see @code{?.libPaths()}).   Also use
 @option{--disable-R-framework} to install in the standard layout.
+
+`Command Line Tools for Xcode' used to be part of he Apple
+Developer Tools (`Xcode') but nowadays need to be installed
+separately.  They can be downloaded from
+@uref{http://developer.apple.com/download} (you will need to register
+there) or if you have a recent Xcode installed (from the App Store or
+from @uref{https://developer.apple.com/devcenter/mac/}) you can install
+the command-line tools from within Xcode, from the @samp{Downloads} pane
+in the @samp{Preferences}.
+
+Where to find suitable compilers is described for each supported version
+of OS X below.  Note that some compilers have suffix @code{-4.2} and
+some do not---the CRAN binary build was built with those without.
+
+Pre-compiled versions of many of the @ref{Useful libraries and programs}
+are available from @uref{http://r.research.att.com/libs/}.  You will
+most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
+(and perhaps @code{tiff}).
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4241,11 +4287,17 @@ To produce a 32-bit build, use @samp{i386} instead of @samp{x86_64}.
 * Snow Leopard::                
 * Lion::                        
 * Mountain Lion::               
+* Tcl/Tk headers and libraries::  
 * Frameworks::                  
 @end menu
 
 @node Snow Leopard, Lion, Mac OS X, Mac OS X
 @subsection Snow Leopard
+
+The version of Xcode for Snow Leopard contained usable C and C++
+compilers.  A matching @command{gfortran} can be installed from
+@uref{http://r.research.att.com/tools/} (it needs to match the version
+of Xcode in use).
 
 A quirk on Snow Leopard is that the X11 libraries are not in the default
 linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
@@ -4279,7 +4331,30 @@ for C++: @command{cc} is a link to @command{clang}).  However, the best
 performance was obtained from the compilers at
 @uref{http://r.research.att.com}.
 
-@node Mountain Lion, Frameworks, Lion, Mac OS X
+On Lion and later the @command{configure} script assumes that the Oracle
+Java SDK is installed (which is 64-bit only).  Should you need to
+override the settings, this needs something like
+@example
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
+JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
+JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
+JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
+@end example
+in @file{config.site}.  Should you have the older Apple Java SDK, then
+specify something like
+@example
+JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+JAVA_CPPFLAGS="-I$@{JAVA_HOME@}/include"
+JAVA_LD_LIBRARY_PATH=
+JAVA_LIBS="-framework JavaVM"
+@end example
+
+Note that it is necessary to set the environment variable @env{NOAWT}
+e.g.@: to @code{1} to install some Java-using packages such as
+@CRANpkg{iplots}.
+
+
+@node Mountain Lion, Tcl/Tk headers and libraries, Lion, Mac OS X
 @subsection Mountain Lion
 
 See the notes on Lion: currently Xcode (4.6) is the same for the two
@@ -4309,24 +4384,33 @@ However, for security reasons you may want/need to install the latest
 JRE from Oracle (currently from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
-However, to install Java-using packages (e.g.@: @CRANpkg{rJava}) from
-their sources you need a Java SDK, not just a JRE.  This is available
-(64-bit only) from Oracle, but theirs uses a different layout from SDKs
-available from Apple for earlier versions of OS X, so you need to set
-environment variables when building @R{}.  For example,
-@file{config.site} could contain
+@node Tcl/Tk headers and libraries, Frameworks, Mountain Lion, Mac OS X
+@subsection Tcl/Tk headers and libraries
+
+If you plan to use the @code{tcltk} package for @R{}, you need to
+install a distribution of Tcl/Tk.  There are two alternatives.  If you
+use @Rapp{} you will want to install
+@uref{http://cran.r-project.org/bin/macosx/tools/tcltk-8.5.5-x11.dmg}
+which is a binary package for the X11-based Tcl/Tk (as used on other
+Unix-alikes).
+
+There is also a native (`Aqua') version of Tcl/Tk which produces widgets
+in the native OS X style: this will not work with @Rapp{} because of
+conflicting event loops, but for those only command-line @R{} this
+provides a much more intuitive interface to Tk for experienced Mac
+users. So versions of OS X came with Aqua Tcl/Tk libraries, but these
+are not current versions of Tcl/Tk (8.5.9 in Mountain Lion).  It is
+better to install Tcl/Tk 8.6.x or 8.5.x from the sources or the binary
+distribution at @uref{http://www.activestate.com/activetcl/downloads}.
+Configure @R{} with
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
-JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
-JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
-JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
+--with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
+--with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
 @end example
+(for the versions bundled with OS X, use paths starting with
+@file{/System/Library}).
 
-Note that it is necessary to set the environment variable @env{NOAWT}
-e.g.@: to @code{1} to install some Java-using packages such as
-@CRANpkg{iplots}.
-
-@node Frameworks,  , Mountain Lion, Mac OS X
+@node Frameworks,  , Tcl/Tk headers and libraries, Mac OS X
 @subsection Frameworks
 
 The @acronym{CRAN} build of @R{} is installed as a framework, which is
