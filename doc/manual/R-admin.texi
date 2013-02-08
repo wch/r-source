@@ -244,8 +244,8 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @samp{i386-@/sun-@/solaris}, @samp{sparc-@/sun-@/solaris},
 @samp{x86_64-@/*-@/freebsd}, and @samp{powerpc-@/ibm-@/aix6*} as well as
 perhaps (it is tested less frequently on these platforms)
-@samp{powerpc-@/apple-@/darwin}, @samp{i386-@/*-@/freebsd},
-@samp{i386-@/*-@/netbsd} and @samp{i386-@/*-@/openbsd}.
+@samp{i386-@/*-@/freebsd}, @samp{i386-@/*-@/netbsd} and
+@samp{i386-@/*-@/openbsd}.
 
 @cindex Linux
 @cindex OS X
@@ -1506,11 +1506,8 @@ If you want to get rid of R using a Terminal, simply run (prepend
 @code{sudo} if needed):
 
 @example
-rm -rf /Library/Frameworks/R.framework /Applications/R.app
+rm -rf /Library/Frameworks/R.framework /Applications/R.app /Applications/R64.app 
 @end example
-
-On most installations there will also be a folder @code{R64.app} in
-@file{/Applications}.
 
 Note that this does leave some symbolic links in @file{/usr/bin}, some
 or all of @file{R}, @file{Rscript}, @file{R32} and @file{R64}.
@@ -1838,8 +1835,8 @@ systems, but there are additional types @code{mac.binary*} (the default
 in the @acronym{CRAN} distribution) that can be passed to
 @code{install.packages} in order to download and install binary packages
 from a suitable repository, and type @code{mac.binary.leopard} is the
-default for @acronym{CRAN} builds of R.  These OS X binary package
-files have the extension @samp{tgz}.  The R.app GUI provides for
+default for @acronym{CRAN} builds of R.  These OS X binary package files
+have the extension @samp{tgz}.  The @Rapp{}[ GUI provides for
 installation of either binary or source packages, from @acronym{CRAN} or
 local files.
 
@@ -4214,8 +4211,9 @@ installed.  For Mountain Lion, see
 @uref{http://xquartz.macosforge.org/}: some people prefer to use XQuartz
 on earlier versions of OS X instead of the Apple version.
 
-In principle @R{} can be built for 10.4.x but this has not been tested
-recently: 10.5.8 (Leopard) is the earliest version currently tested.
+In principle @R{} can be built for 10.4.x and for PowerPC Macs but this
+has not been tested recently: 10.5.8 (Leopard) is the earliest version
+currently tested.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
@@ -4225,8 +4223,8 @@ Objective-C compiler.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
-with @code{R.app}, it also changes the default location of the personal
-library (see @code{?.libPaths()}).   Also use
+with @Rapp{}, it also changes the default location of the personal
+library (see @code{?.libPaths()}).  Also use
 @option{--disable-R-framework} to install in the standard layout.
 
 `Command Line Tools for Xcode' used to be part of he Apple
@@ -4289,15 +4287,16 @@ To produce a 32-bit build, use @samp{i386} instead of @samp{x86_64}.
 * Mountain Lion::               
 * Tcl/Tk headers and libraries::  
 * Frameworks::                  
+* Building R.app::              
 @end menu
 
 @node Snow Leopard, Lion, Mac OS X, Mac OS X
 @subsection Snow Leopard
 
-The version of Xcode for Snow Leopard contained usable C and C++
-compilers.  A matching @command{gfortran} can be installed from
-@uref{http://r.research.att.com/tools/} (it needs to match the version
-of Xcode in use).
+The versions of Xcode (3.2.x) supplied for Snow Leopard contained usable
+C and C++ compilers.  A matching @command{gfortran} can be installed
+from @uref{http://r.research.att.com/tools/} (it needs to match the
+version of Xcode in use).
 
 A quirk on Snow Leopard is that the X11 libraries are not in the default
 linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
@@ -4398,7 +4397,7 @@ There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
 conflicting event loops, but for those only command-line @R{} this
 provides a much more intuitive interface to Tk for experienced Mac
-users. So versions of OS X came with Aqua Tcl/Tk libraries, but these
+users. Some versions of OS X came with Aqua Tcl/Tk libraries, but these
 are not current versions of Tcl/Tk (8.5.9 in Mountain Lion).  It is
 better to install Tcl/Tk 8.6.x or 8.5.x from the sources or the binary
 distribution at @uref{http://www.activestate.com/activetcl/downloads}.
@@ -4410,7 +4409,7 @@ Configure @R{} with
 (for the versions bundled with OS X, use paths starting with
 @file{/System/Library}).
 
-@node Frameworks,  , Tcl/Tk headers and libraries, Mac OS X
+@node Frameworks, Building R.app, Tcl/Tk headers and libraries, Mac OS X
 @subsection Frameworks
 
 The @acronym{CRAN} build of @R{} is installed as a framework, which is
@@ -4421,7 +4420,7 @@ selected by the default option
 @end example
 
 This is only needed if you want to build @R{} for use with the
-@code{R.app} console, and implies @option{--enable-R-shlib} to build
+@Rapp{} console, and implies @option{--enable-R-shlib} to build
 @R{} as a dynamic library.  This option configures @R{} to be built and
 installed as a framework called @file{R.framework}.  The default
 installation path for @file{R.framework} is @file{/Library/Frameworks}
@@ -4432,9 +4431,31 @@ but this can be changed at configure time by specifying the flag
 make prefix=/where/you/want/R.framework/to/go install
 @end example
 
-Note that building the @file{R.app} GUI console is a separate project:
-see @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html,
-R for Mac OS X @acronym{FAQ}} for details.
+@node Building R.app,  , Frameworks, Mac OS X
+@subsection Building R.app
+
+Note that building the @Rapp{} GUI console is a separate project, using
+Xcode.  Before compiling @Rapp{} make sure @R{} is installed in
+@file{/Library/Frameworks/R.framework} and working at the command-line
+(this can be binary install: it needs to contain the architecture for
+which @Rapp{} is to be built, here @cputype{x86_64}).
+
+The current sources can be checked out by
+@example
+svn co https://svn.r-project.org/R-packages/trunk/Mac-GUI
+@end example
+This can be built by loading @code{R.xcodeproj} project (select
+the @code{R} target and the @code{Lion64} configuration), or from the
+command-line by
+@example
+xcodebuild -target R -configuration Lion64
+@end example
+See also the @file{INSTALL} file in the checkout or directly at @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
+
+@Rapp{} does not need to be installed in any specific way. Building
+@Rapp{} results in the @Rapp{} bundle which appears as one R icon. This
+application bundle can be run anywhere and it is customary to place it
+in the @emph{Applications} folder.
 
 
 @node Solaris, AIX, Mac OS X, Platform notes
