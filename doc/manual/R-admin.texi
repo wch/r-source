@@ -4149,7 +4149,7 @@ Developer Tools (`Xcode') and suitable compilers (including a version of
 for Xcode' installed.  This can be downloaded from within Xcode (from
 the @samp{Downloads} preferences pane) or from
 @uref{http://developer.apple.com/download}.)  You will also need
-@code{libreadline} (or to configure with @option{--without-readline}).
+@code{readline} (or to configure with @option{--without-readline}).
 
 You may also want to install an X sub-system (or you will need to
 configure with @option{--without-x}): X is part of the standard OS X
