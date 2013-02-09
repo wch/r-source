@@ -1027,6 +1027,8 @@ tests are run).
 If @file{tests} has a subdirectory @file{Examples} containing a file
 @code{@var{pkg}-Ex.Rout.save}, this is compared to the output file for
 running the examples when the latter are checked.
+Reference output should be produced without having the 
+@option{--timings} flag set.
 
 Subdirectory @file{exec} could contain additional executable scripts the
 package needs, typically scripts for interpreters such as the shell,
