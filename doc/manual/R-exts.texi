@@ -2864,20 +2864,17 @@ Please note that submissions without an accompanying email to
 @email{CRAN@@R-project.org} will not be processed, and that emails
 should not be sent personally to members of the CRAN team.
 
-Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
-@acronym{CRAN} check systems use the Debian TeXLive@footnote{currently
-the long obsolete TeXLive 2009.} distribution
-(@uref{http://packages.debian.org/@/en/@/sid/@/texlive}); the Fedora and
-Solaris check systems use current TexLive; the Windows @acronym{CRAN}
-builder uses a reasonably recent version of MikTeX (including all
-packages available directly for MikTeX); the Mac OS X builders use a
-current full version of MacTeX, which includes all of the current
-TeXLive.  Developers wanting to have their vignettes use @TeX{} packages
-or style files not (yet) included in these distributions should
-add@footnote{if their license allows: this often requires also including
-the corresponding @file{.dtx} file.} the style files to the
-@file{vignettes} (or for the legacy layout, @file{inst/doc})
-subdirectory of their package.
+Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux,
+Fedora and Solaris check systems on @acronym{CRAN} use current
+TexLive; the Windows @acronym{CRAN} builder uses a reasonably recent
+version of MikTeX (including all packages available directly for
+MikTeX); the Mac OS X builders use a current full version of MacTeX,
+which includes all of the current TeXLive.  Developers wanting to have
+their vignettes use @TeX{} packages or style files not (yet) included
+in these distributions should add@footnote{if their license allows:
+this often requires also including the corresponding @file{.dtx}
+file.} the style files to the @file{vignettes} (or for the legacy
+layout, @file{inst/doc}) subdirectory of their package.
 
 @menu
 * PDF size::                    
