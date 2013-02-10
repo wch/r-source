@@ -3,13 +3,14 @@ if test -z "${R_HOME}"; then
     exit 1
 fi
 
+DYLIB_EXT=`${R_HOME}/bin/R CMD config DYLIB_EXT`
 tools_classpath=${R_SHARE_DIR}/java
 
 revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R Java configurator: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-11 The R Core Team.
+Copyright (C) 2002-13 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -216,7 +217,7 @@ case "$hostos" in
 	has_libjvm=no
 	save_IFS=$IFS; IFS=:
 	for dir in ${java_library_path}; do
-	    if test -f "$dir/libjvm.so"; then
+	    if test -f "$dir/libjvm${DYLIB_EXT}"; then
 		has_libjvm=yes
 		break
 	    fi
@@ -228,7 +229,7 @@ case "$hostos" in
 	    boot_path=`"$JAVA" -classpath "${tools_classpath}" getsp sun.boot.library.path| ${SED-sed} -e 's/:$//' -e 's/^://'`
 	    if test -n "${boot_path}"; then
 		for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
-		    if test -f "$dir/libjvm.so"; then
+		    if test -f "$dir/libjvm${DYLIB_EXT}"; then
 			has_libjvm=yes
 			# NOTE: we decided to ignore java.library.path altogether since it was bogus
 			#       we could just append the newly found paths, though
