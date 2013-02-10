@@ -49,12 +49,12 @@
   function \code{.onUnload} is run (with a single argument) before final
   unloading.
 
-  Note that the code in \code{.onLoad} and \code{.onUnload} is run
-  without the package being on the search path, but (unless circumvented)
-  lexical scope will make objects in the namespace and its imports
-  visible.  (Do not use the double colon operator in \code{.onLoad} as
-  exports have not been processed at the point it is run.)
-
+  Note that the code in \code{.onLoad} and \code{.onUnload} should not
+  assume any package except the base package is on the search path.
+  Objects in the current package will be visible (unless this is
+  circumvented), but objects from other packages should be imported or
+  the double colon operator should be used.
+  
   \code{.onLoad}, \code{.onUnload} and \code{.onAttach} are looked for
   as internal objects in the namespace and should not be exported
   (whereas \code{.Last.lib} should be).
