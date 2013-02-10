@@ -819,11 +819,11 @@ provided that the objects created do not depend on those packages except
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects: please use suitable
 compression as suggested by @code{tools::resaveRdaFiles}) this will be
-lazy-loaded into the namespace/package environment -- this is intended
-for system datasets that are not intended to be user-accessible
-@emph{via} @code{data}.  Also, files ending in @samp{.in} will be
-allowed in the @file{R} directory to allow a @file{configure} script to
-generate suitable files.
+lazy-loaded into the namespace environment -- this is intended for
+system datasets that are not intended to be user-accessible @emph{via}
+@code{data}.  Also, files ending in @samp{.in} will be allowed in the
+@file{R} directory to allow a @file{configure} script to generate
+suitable files.
 
 Only @acronym{ASCII} characters (and the control characters tab,
 formfeed, LF and CR) should be used in code files.  Other characters are
