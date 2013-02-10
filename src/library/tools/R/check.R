@@ -639,8 +639,9 @@ setRlibs <-
         checkingLog(Log, "for left-over files")
         files <- dir(".", full.names = TRUE, recursive = TRUE)
         bad <- grep("svn-commit[.].*tmp$", files, value = TRUE)
+        bad <- c(bad, grep("^[.]/[^/]*[.][rR]d$", files, value = TRUE))
         if (length(bad)) {
-            bad <- sub("^[.]/", "", bad)
+            bad <- sub("^[.]/", paste0(pkgname, "/"), bad)
             noteLog(Log)
             printLog(Log,
                      "The following files look like leftovers:\n",
