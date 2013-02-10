@@ -176,7 +176,7 @@ if test ${r_cv_java_works} = yes; then
 	has_libjvm=no
 	save_IFS=$IFS; IFS=:
 	for dir in ${JAVA_LD_LIBRARY_PATH}; do
-	    if test -f "$dir/libjvm.so"; then
+	    if test -f "$dir/libjvm${DYLIB_EXT}"; then
 	        has_libjvm=yes
 	       	break
 	    fi
@@ -186,7 +186,7 @@ if test ${r_cv_java_works} = yes; then
 	     R_RUN_JAVA(boot_path, [-classpath ${getsp_cp} getsp sun.boot.library.path])
 	     if test -n "${boot_path}"; then
 	          for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
-	       	      if test -f "$dir/libjvm.so"; then
+	       	      if test -f "$dir/libjvm${DYLIB_EXT}"; then
 		          has_libjvm=yes
 			  # NOTE: we decided to ignore java.library.path altogether since it was bogus
 			  #       we could just append the newly found paths, though
@@ -218,6 +218,7 @@ if test ${r_cv_java_works} = yes; then
 	   jmdirs=''
 	   ## put the most probable locations for each system in the first place
 	   case "${host_os}" in
+	     darwin*)  jmdirs=darwin;;
 	     linux*)   jmdirs=linux;;
 	     bsdi*)    jmdirs=bsdos;;
 	     osf*)     jmdirs=alpha;;
@@ -298,6 +299,13 @@ int main(void) {
       JAVA_LIBS0="${JAVA_LIBS0} -lpthread"
     fi
 
+    if test "${r_cv_jni}" = "no"; then
+        JAVA_LIBS=
+        JAVA_LIBS0=
+	JAVA_CPPFLAGS=
+	JAVA_CPPFLAGS0=
+        JAVA_LD_LIBRARY_PATH=
+    fi
     # cache all detected flags
       AC_CACHE_VAL([r_cv_JAVA_LIBS],[r_cv_JAVA_LIBS="${JAVA_LIBS0}"])
       AC_CACHE_VAL([r_cv_JAVA_CPPFLAGS],[r_cv_JAVA_CPPFLAGS="${JAVA_CPPFLAGS0}"])      
