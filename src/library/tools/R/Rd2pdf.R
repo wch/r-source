@@ -191,21 +191,26 @@
             }
             if (!silent) message(domain = NA)
         } else {
-            files <- c(Sys.glob(file.path(pkgdir, "*.Rd")),
-                       Sys.glob(file.path(pkgdir, "*.rd")))
-            if (!length(files)) {
-                ## is this a source package?  That has man/*.Rd files.
-                files <- c(Sys.glob(file.path(pkgdir, "man", "*.Rd")),
-                           Sys.glob(file.path(pkgdir, "man", "*.rd")))
+            ## As from R 2.15.3, give priority to a man dir.
+            mandir <- file.path(pkgdir, "man")
+            if (file_test("-d", mandir)) {
+                files <- c(Sys.glob(file.path(mandir, "*.Rd")),
+                           Sys.glob(file.path(mandir, "*.rd")))
+                if (is.null(extraDirs)) extraDirs <- .Platform$OS.type
+                for(e in extraDirs)
+                    files <- c(files,
+                               Sys.glob(file.path(mandir, e, "*.Rd")),
+                               Sys.glob(file.path(mandir, e, "*.rd")))
+                if (!length(files))
+                    stop("this package has a ", sQuote("man"), " directory but no .Rd files",
+                         domain = NA)
+           } else {
+                files <- c(Sys.glob(file.path(pkgdir, "*.Rd")),
+                           Sys.glob(file.path(pkgdir, "*.rd")))
                 if (!length(files))
                     stop("this package does not have either a ", sQuote("latex"),
                          " or a (source) ", sQuote("man"), " directory",
                          domain = NA)
-                if (is.null(extraDirs)) extraDirs <- .Platform$OS.type
-                for(e in extraDirs)
-                    files <- c(files,
-                               Sys.glob(file.path(pkgdir, "man", e, "*.Rd")),
-                               Sys.glob(file.path(pkgdir, "man", e, "*.rd")))
             }
             paths <- files
             ## Use a partial Rd db if there is one.
