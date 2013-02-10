@@ -383,6 +383,11 @@
       
       \item The HTML help page for a package now displays non-vignette
       documentation files in a more accessible format.
+      
+      \item To support \code{options(stringsAsFactors = FALSE)},
+      \code{model.frame()}, \code{model.matrix()} and
+      \code{replications()} now automatically convert character
+      vectors to factors without a warning.      
     }
   }
 

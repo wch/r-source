@@ -32,15 +32,15 @@ model.matrix(object, \dots)
   \code{model.matrix} creates a design (or model) matrix.
 }
 \details{
-  \code{model.matrix} creates a design matrix from the description given
-  in \code{terms(object)}, using the data in \code{data} which must
-  supply variables with the same names as would be created by a call to
-  \code{model.frame(object)} or, more precisely, by evaluating
+  \code{model.matrix} creates a design matrix from the description
+  given in \code{terms(object)}, using the data in \code{data} which
+  must supply variables with the same names as would be created by a
+  call to \code{model.frame(object)} or, more precisely, by evaluating
   \code{attr(terms(object), "variables")}.  If \code{data} is a data
   frame, there may be other columns and the order of columns is not
-  important.  Any character variables are coerced to factors, with a
-  warning.  After coercion, all the variables used on the right-hand
-  side of the formula must be logical, integer, numeric or factor.
+  important.  Any character variables are coerced to factors.  After
+  coercion, all the variables used on the right-hand side of the
+  formula must be logical, integer, numeric or factor.
 
   If \code{contrasts.arg} is specified for a factor it overrides the
   default factor coding for that variable and any \code{"contrasts"}

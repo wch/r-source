@@ -313,6 +313,7 @@ replications <- function(formula, data = NULL, na.action)
     n <- length(o)
     z <- setNames(vector("list", n), labels)
     dummy <- numeric(.row_names_info(data, 2L))
+    data <- lapply(data, function(x) if (is.character(x)) as.factor(x) else x)
     notfactor <- !sapply(data, function(x) inherits(x, "factor"))
     balance <- TRUE
     for(i in seq_len(n)) {

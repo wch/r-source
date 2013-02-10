@@ -427,11 +427,8 @@ model.frame.default <-
 	for(nm in names(xlev))
 	    if(!is.null(xl <- xlev[[nm]])) {
 		xi <- data[[nm]]
-                if(is.character(xi)) {
+                if(is.character(xi))
                     xi <- as.factor(xi)
-		    warning(gettextf("character variable '%s' changed to a factor", nm),
-                            domain = NA)
-                }
 		if(!is.factor(xi) || is.null(nxl <- levels(xi)))
 		    warning(gettextf("variable '%s' is not a factor", nm),
                             domain = NA)
@@ -501,11 +498,8 @@ model.matrix.default <- function(object, data = environment(object),
         namD <- names(data)
         ## turn any character columns into factors
         for(i in namD)
-            if(is.character(data[[i]])) {
+            if(is.character(data[[i]]))
                 data[[i]] <- factor(data[[i]])
-                warning(gettextf("variable '%s' converted to a factor", i),
-                        domain = NA)
-            }
         isF <- vapply(data, function(x) is.factor(x) || is.logical(x), NA)
         isF[int] <- FALSE
         isOF <- vapply(data, is.ordered, NA)
