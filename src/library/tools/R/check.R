@@ -703,7 +703,8 @@ setRlibs <-
     {
         checkingLog(Log, "package subdirectories")
         any <- FALSE
-        if (haveR && !length(list_files_with_type("R", "code"))) {
+        if (haveR && !length(list_files_with_type("R", "code")) &&
+            !file.exists(file.path("R", "sysdata.rda"))) {
             haveR <- FALSE
             warningLog(Log, "Found directory 'R' with no source files.")
             any <- TRUE
