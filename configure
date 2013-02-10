@@ -34884,7 +34884,7 @@ $as_echo "$r_cv_JAVA_LD_LIBRARY_PATH" >&6; }
     custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 
     case "${host_os}" in
-      darwin89.*|darwin10.*)
+      darwin*)
         JAVA_LIBS="-framework JavaVM"
         JAVA_LIBS0="-framework JavaVM"
 	JAVA_CPPFLAGS="-I${JAVA_HOME}/include"
