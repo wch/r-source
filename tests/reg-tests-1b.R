@@ -1,3 +1,5 @@
+## From PR#10000 on, for R < 3.0.0
+
 pdf("reg-tests-1b.pdf", encoding = "ISOLatin1.enc")
 
 ## force standard handling for data frames
@@ -2090,5 +2092,9 @@ assertError(aperm(a, c("C","A")))# fine, but
 ## forgetting one had been detrimental:
 assertError( aperm(a, "A") )
 ## seg.faulted in 2.15.2 and earlier
+
+## enc2utf8 failed on NA in non-UTF-8 locales PR#15201
+stopifnot(identical(NA_character_, enc2utf8(NA_character_)))
+## gave "NA" instead of NA_character_
 
 proc.time()

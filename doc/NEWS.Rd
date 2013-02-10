@@ -1015,6 +1015,9 @@
       
       \item Expressions involving user defined operators were not 
       always deparsed faithfully. (\PR{15179})
+      
+      \item The \code{enc2utf8()} function converted \code{NA_character_}
+      to \code{"NA"} in non-UTF-8 locales. (\PR{15201})
     }
 
   }

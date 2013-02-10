@@ -1,4 +1,4 @@
-## From PR#10000 on
+## Up to PR#9999 for R < 3.0.0
 
 pdf("reg-tests-1a.pdf", encoding = "ISOLatin1.enc")
 
