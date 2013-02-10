@@ -34910,7 +34910,7 @@ $as_echo "$r_cv_JAVA_LD_LIBRARY_PATH" >&6; }
 	has_libjvm=no
 	save_IFS=$IFS; IFS=:
 	for dir in ${JAVA_LD_LIBRARY_PATH}; do
-	    if test -f "$dir/libjvm.so"; then
+	    if test -f "$dir/libjvm${DYLIB_EXT}"; then
 	        has_libjvm=yes
 	       	break
 	    fi
@@ -35070,6 +35070,13 @@ $as_echo "$r_cv_jni" >&6; }
       JAVA_LIBS0="${JAVA_LIBS0} -lpthread"
     fi
 
+    if test "${r_cv_jni}" = "no"; then
+        JAVA_LIBS=
+        JAVA_LIBS0=
+	JAVA_CPPFLAGS=
+	JAVA_CPPFLAGS0=
+        JAVA_LD_LIBRARY_PATH=
+    fi
     # cache all detected flags
       if ${r_cv_JAVA_LIBS+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -36111,11 +36118,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36114: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36121: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36118: \$? = $ac_status" >&5
+   echo "$as_me:36125: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36210,11 +36217,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36213: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36220: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36217: \$? = $ac_status" >&5
+   echo "$as_me:36224: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36262,11 +36269,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36265: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36272: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36269: \$? = $ac_status" >&5
+   echo "$as_me:36276: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
