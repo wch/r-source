@@ -3,13 +3,14 @@ if test -z "${R_HOME}"; then
     exit 1
 fi
 
+DYLIB_EXT=`${R_HOME}/bin/R CMD config DYLIB_EXT`
 tools_classpath=${R_SHARE_DIR}/java
 
 revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R Java configurator: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-11 The R Core Team.
+Copyright (C) 2002-13 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -196,6 +197,7 @@ custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 
 # sys-dependent tweaks to JNI flags
 hostos=`uname 2>/dev/null`
+## NB: that is not the same name as in configuration.
 case "$hostos" in
     Darwin*)
 	JAVA_LD_LIBRARY_PATH=
@@ -216,7 +218,7 @@ case "$hostos" in
 	has_libjvm=no
 	save_IFS=$IFS; IFS=:
 	for dir in ${java_library_path}; do
-	    if test -f "$dir/libjvm.so"; then
+	    if test -f "$dir/libjvm${DYLIB_EXT}"; then
 		has_libjvm=yes
 		break
 	    fi
@@ -228,7 +230,7 @@ case "$hostos" in
 	    boot_path=`"$JAVA" -classpath "${tools_classpath}" getsp sun.boot.library.path| ${SED-sed} -e 's/:$//' -e 's/^://'`
 	    if test -n "${boot_path}"; then
 		for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
-		    if test -f "$dir/libjvm.so"; then
+		    if test -f "$dir/libjvm${DYLIB_EXT}"; then
 			has_libjvm=yes
 			# NOTE: we decided to ignore java.library.path altogether since it was bogus
 			#       we could just append the newly found paths, though
@@ -270,10 +272,11 @@ case "$hostos" in
 	   host_os=`echo 'cat(R.version$os)'|${R_HOME}/bin/R --vanilla --slave 2>/dev/null`
            ## put the most probable locations for each system in the first place
            case "${host_os}" in
-             linux*)   jmdirs=linux;;
+             Darwin*)  jmdirs=darwin;;
+             Linux*)   jmdirs=linux;;
              bsdi*)    jmdirs=bsdos;;
              osf*)     jmdirs=alpha;;
-             solaris*) jmdirs=solaris;;
+             SunOS*)   jmdirs=solaris;;
              freebsd*) jmdirs=freebsd; add_java_libs='-lpthread';;
            esac
 	   ## in case host_os detection failed, add all candidates
@@ -329,7 +332,7 @@ else
   if test "${acx_custom_java_libs}" = yes; then
     echo ''
     echo ' ** Warning: you are using custom JAVA_LIBS setting without' >&2
-    echo '    specifying JAVA_LD_LIBRARY_PATH. We cannot gearantee that' >&2
+    echo '    specifying JAVA_LD_LIBRARY_PATH. We cannot guarantee that' >&2
     echo '    this will work, both must match for a proper Java operation!' >&2
   fi
 fi
