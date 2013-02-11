@@ -7,7 +7,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien","CRAN # R-project.org",1,at
 Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","Paulo J. Ribeiro Jr <paulojus # est.ufpr.br>",1,br
-"Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",0,br
+"Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",1,br
 "Brazil (SP 1)",Brazil,"Sao Paulo",http://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br
 "Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba","aafgarci # esalq.usp.br",1,br
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","gripe # sfu.ca",1,ca
@@ -31,7 +31,7 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "France (Montpellier)",France,Montpellier,http://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr
 "France (Paris)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
-"Germany (Bonn)",Germany,Bonn,http://cran.r-mirror.de/,"Stefan Drees, Bonn"," stefan # drees.name",1,de
+"Germany (Bonn)",Germany,Bonn,http://cran.r-mirror.de/,"Stefan Drees, Bonn","stefan # drees.name",1,de
 "Germany (Falkenstein)",Germany,Falkenstein,http://mirror.layerjet.com/cran,layerjet.com,"Elton Chung <elton # layerjet.com>",1,de
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
 Greece,Greece,Crete,http://cran.cc.uoc.gr/,"University of Crete","mirrors # Cc.uoc.gr",1,gr
