@@ -692,7 +692,7 @@ case "${host_os}" in
     Rshlibpath_var=DYLD_FALLBACK_LIBRARY_PATH
     ;;
   *)
-    Rshlibpath_var=${shiibpath_var}
+    Rshlibpath_var=${shlibpath_var}
 esac
 AC_SUBST(shlibpath_var)
 ## Export LD_LIBRARY_PATH or equivalent.
