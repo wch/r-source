@@ -1008,6 +1008,7 @@ function()
                "Type",
                "URL",
                "Version",
+               "VignetteBuilder",
                "ZipData"),
              ## Others: adjust as needed.
              c("Archs",

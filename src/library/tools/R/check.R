@@ -2235,19 +2235,19 @@ setRlibs <-
 
         checkingLog(Log, "package vignettes in ", sQuote("inst/doc"))
         any <- FALSE
-        ## Do PDFs exist for all package vignettes?
+        ## Do PDFs or HTML files exist for all package vignettes?
         ## A base source package need not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
-            pdfs <- file.path(pkgdir, "inst", "doc",
-                              sub("\\.[[:alpha:]]+$", ".pdf", basename(vf)))
-            bad_vignettes <- vf[!file.exists(pdfs)]
+            outfiles <- file.path(pkgdir, "inst", "doc",
+                              vignette_output(basename(vf)))
+            bad_vignettes <- vf[!file.exists(outfiles)]
             if(nb <- length(bad_vignettes)) {
                 any <- TRUE
                 warningLog(Log)
                 msg <- ngettext(nb,
-                                "Package vignette without corresponding PDF:\n",
-                                "Package vignettes without corresponding PDFs:\n", domain = NA)
+                                "Package vignette without corresponding PDF/HTML:\n",
+                                "Package vignettes without corresponding PDF/HTML:\n", domain = NA)
                 printLog(Log, msg)
                 printLog(Log,
                          paste(c(paste("  ",
