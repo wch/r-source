@@ -119,6 +119,15 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 	  zero.print = "0",
 	  justify = "none", ...)
 {
+    ## tables with empty extents have no contents and are hard to
+    ## output in a readable way, so just say something descriptive and
+    ## return.
+    d <- dim(x) 
+    if (any(d == 0)) {
+        cat ("< table of extent", paste(d, collapse=" x "), ">\n")
+        return ( invisible(x) )
+    }
+
     xx <- format(unclass(x), digits = digits, justify = justify)
     ## na.print handled here
     if(any(ina <- is.na(x)))
