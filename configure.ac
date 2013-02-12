@@ -685,7 +685,7 @@ esac
 
 ## Record name of environment variable which tells the dynamic linker
 ## where to find shlibs (typically, 'LD_LIBRARY_PATH').
-## Used in ldpaths: override what libtool thinks on OS X
+## Used in etc/ldpaths: override what libtool thinks on OS X
 ## http://hublog.hubmed.org/archives/001192.html suggests this was in 10.4
 case "${host_os}" in
   darwin*)
@@ -725,7 +725,7 @@ case "${host_os}" in
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
     ## http://developer.apple.com/documentation/MacOSX/ has nothing
     ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
-    ## that it is only needed to GCC 3.x (and earlier) ...
+    ## that it is only needed for GCC 3.x (and earlier) ...
     if test "${GCC}" = yes; then
       case "${CC_VERSION}" in
         2.*|3.*)
@@ -2575,6 +2575,7 @@ AC_CONFIG_FILES(
   etc/Makefile
   etc/Makeconf
   etc/Renviron
+  etc/javaconf
   etc/ldpaths
   m4/Makefile
   po/Makefile 

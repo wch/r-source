@@ -1,6 +1,6 @@
 ### java.m4 -- macros for Java environment detection    -*- Autoconf -*-
 ###
-### Copyright (C) 2005-7 R Core Team
+### Copyright (C) 2005-13 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -58,6 +58,14 @@ AC_DEFUN([R_RUN_JAVA],
 AC_DEFUN([R_JAVA],
 [
 have_java=no
+
+custom_JAVA_HOME="${JAVA_HOME}"
+: ${JAVA_LIBS=~autodetect~}
+: ${JAVA_CPPFLAGS=~autodetect~}
+: ${JAVA_LD_LIBRARY_PATH=~autodetect~}
+custom_JAVA_LIBS="${JAVA_LIBS}"
+custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
+custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 
 ## find java compiler binaries
 if test -z "${JAVA_HOME}" ; then
@@ -133,22 +141,28 @@ if test ${r_cv_java_works} = yes; then
     else
     # otherwise detect all Java-relevant flags
 
-    : ${JAVA_LIBS=~autodetect~}
-    : ${JAVA_CPPFLAGS=~autodetect~}
-    : ${JAVA_LD_LIBRARY_PATH=~autodetect~}
-    custom_JAVA_LIBS="${JAVA_LIBS}"
-    custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
-    custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
-
+    ## We know the standard layout on OS X, but user might have Oracle Java
+    ## The standard JAVA_HOME is something like 
+    ## /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
+    ## or
+    ## /Library/Java/JavaVirtualMachines/1.6.0_39-b04-443.jdk/Contents/Home
     case "${host_os}" in
       darwin*)
-        JAVA_LIBS="-framework JavaVM"
-        JAVA_LIBS0="-framework JavaVM"
-	JAVA_CPPFLAGS="-I${JAVA_HOME}/include"
-	JAVA_CPPFLAGS0='-I$(JAVA_HOME)/include'
-        JAVA_LD_LIBRARY_PATH=
+        pref=`echo "${JAVA_HOME}" | grep "/Home$"`
+        if test "${pref}" = "${JAVA_HOME}"; then 
+          JAVA_LIBS="-framework JavaVM"
+          JAVA_LIBS0=${JAVA_LIBS}
+	  JAVA_CPPFLAGS="-I${JAVA_HOME}/include"
+	  JAVA_CPPFLAGS0='-I$(JAVA_HOME)/include'
+          JAVA_LD_LIBRARY_PATH=
+        else
+	  echo "Non-system Java on OS X"
+        fi
         ;;
       *)
+        ;;
+    esac
+    if test "${JAVA_LIBS}" = "~autodetect~"; then
         R_RUN_JAVA(JAVA_LD_LIBRARY_PATH, [-classpath ${getsp_cp} getsp java.library.path])
 	JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH} | ${SED-sed} -e 's/^://' -e 's/:$//'`
 
@@ -223,8 +237,7 @@ if test ${r_cv_java_works} = yes; then
 	   fi
 	fi
 	JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
-        ;;
-    esac
+    fi
 
     ## honor user overrides
     acx_java_uses_custom_flags=no
@@ -281,9 +294,7 @@ int main(void) {
     fi
 
     if test "${r_cv_jni}" = "no"; then
-        JAVA_LIBS=
         JAVA_LIBS0=
-	JAVA_CPPFLAGS=
 	JAVA_CPPFLAGS0=
         JAVA_LD_LIBRARY_PATH=
     fi
@@ -306,6 +317,11 @@ AC_SUBST(JAVAC)
 AC_SUBST(JAVAH)
 AC_SUBST(JAR)
 AC_SUBST(JAVA_LD_LIBRARY_PATH)
+## These are the versions with $(JAVA_HOME)
 AC_SUBST(JAVA_LIBS0)
 AC_SUBST(JAVA_CPPFLAGS0)
+AC_SUBST(custom_JAVA_HOME)
+AC_SUBST(custom_JAVA_CPPFLAGS)
+AC_SUBST(custom_JAVA_LIBS)
+AC_SUBST(custom_JAVA_LD_LIBRARY_PATH)
 ])

@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 ## <NOTE>
 ## Need target rules for all elements of SOURCES/OBJECTS.
-SOURCES = Makeconf.in Renviron.in ldpaths.in
+SOURCES = Makeconf.in Renviron.in javaconf.in ldpaths.in
 OBJECTS = $(SOURCES:.in=)
 ## </NOTE>
 INSTFILES = repositories
@@ -34,6 +34,8 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 Renviron: $(srcdir)/Renviron.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+javaconf: $(srcdir)/javaconf.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 ldpaths: $(srcdir)/ldpaths.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
