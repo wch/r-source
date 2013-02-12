@@ -1,6 +1,6 @@
 ### java.m4 -- macros for Java environment detection    -*- Autoconf -*-
 ###
-### Copyright (C) 2005-7 R Core Team
+### Copyright (C) 2005-13 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -89,25 +89,6 @@ if test -n "${JAVAC}"; then
   fi
   rm -rf A.java A.class
 fi])
-
-AC_CACHE_CHECK([whether Java compiler works for version 1.4], [r_cv_javac14_works],
-[r_cv_javac14_works=no
-if test "${r_cv_javac_works}" = yes; then
-  rm -f A.java A.class
-  echo "public class A { }" > A.java
-  if "${JAVAC}" -source 1.4 -target 1.4 A.java 2>&AS_MESSAGE_LOG_FD; then
-    if test -f A.class; then
-      r_cv_javac14_works=yes
-    fi
-  fi
-  rm -rf A.java A.class
-fi
-])
-
-if test "${r_cv_javac14_works}" = yes; then
-  JAVAC14="${JAVAC} -source 1.4 -target 1.4"
-fi
-AM_CONDITIONAL(BUILD_JAVA14, [test "x${r_cv_javac14_works}" = xyes])
 
 ## this is where our test-class lives (in tools directory)
 getsp_cp=${ac_aux_dir}
@@ -322,7 +303,6 @@ fi
 ## AC_SUBST(JAVA_HOME) # not needed? is precious now
 AC_SUBST(JAVA)
 AC_SUBST(JAVAC)
-AC_SUBST(JAVAC14)
 AC_SUBST(JAVAH)
 AC_SUBST(JAR)
 AC_SUBST(JAVA_LD_LIBRARY_PATH)
