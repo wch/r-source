@@ -4590,7 +4590,7 @@ function(dir)
         if(!is.call(e) || as.character(e[[1L]]) != "data")
             return(FALSE)
         ## As data() has synopsis
-        ##   data(..., list = character(), package = NULL, lib.loc = NULL, 
+        ##   data(..., list = character(), package = NULL, lib.loc = NULL,
         ##        verbose = getOption("verbose"), envir = .GlobalEnv))
         ## argument 'envir' must be matched exactly, and calls which
         ## only have the last four arguments do not load any data.
@@ -4598,7 +4598,7 @@ function(dir)
         tab <- c("package", "lib.loc", "verbose", "envir")
         if(!is.null(nms <- names(e)))
             e <- e[is.na(match(nms, tab))]
-        ((length(e) > 1L) && 
+        ((length(e) > 1L) &&
          (is.null(env) ||
           (is.name(env) && as.character(env) == ".GlobalEnv") ||
           (is.call(env) && as.character(env) == "globalenv")))
@@ -5419,7 +5419,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 .check_depdef <-
 function(package, dir, lib.loc = NULL)
 {
-    bad_depr <- c("real", "as.real", "is.real")
+    bad_depr <- character()
 
     bad_def <- c("La.eigen", "tetragamma", "pentagamma",
                  "package.description", "gammaCody",
@@ -5429,7 +5429,8 @@ function(package, dir, lib.loc = NULL)
                  "lm.wfit.null", "glm.fit.null", "tkcmd",
                  "tkfile.tail", "tkfile.dir", "tkopen", "tkclose",
                  "tkputs", "tkread", "Rd_parse", "CRAN.packages",
-                 "zip.file.extract")
+                 "zip.file.extract",
+                 "real", "as.real", "is.real")
 
     bad <- c(bad_depr, bad_def)
     bad_closures <- character()
@@ -5561,8 +5562,8 @@ function(x, ...)
     }
     if(length(x$defunct)) {
         msg <- ngettext(length(x$defunct),
-                        "Found the defunct function:",
-                        "Found the defunct functions:"
+                        "Found the defunct/removed function:",
+                        "Found the defunct/removed functions:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$defunct))
     }
@@ -5586,7 +5587,7 @@ function(dir)
     if(length(extensions <- info$extensions) &&
        any(ind <- extensions$extensible))
         out$extensions <- extensions$components[ind]
-    
+
     out$Maintainer <- meta["Maintainer"]
 
     ver <- meta["Version"]
