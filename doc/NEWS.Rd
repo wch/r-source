@@ -391,7 +391,7 @@
 
       \item The print method for objects of class \code{"table"} now
       detects tables with 0-extents and prints the results as, e.g.,
-      \samp{< table of extent 0 x 1 x 2 >}. (Wish of \PR(15198).)
+      \samp{< table of extent 0 x 1 x 2 >}. (Wish of \PR{15198}.)
     }
   }
 
