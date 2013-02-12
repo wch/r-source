@@ -130,7 +130,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
     \file{R/sysdata.rda} in the package sources or create the objects by
     \R code at package installation time.
   }
-  A sometimes inportant distinction is that the second approach places
+  A sometimes important distinction is that the second approach places
   objects in the namespace but the first does not.  So if it is important
   that the function sees \code{mytable} as an object from the package,
   it is system data and the second approach should be used.
