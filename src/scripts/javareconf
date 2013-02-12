@@ -3,6 +3,9 @@ if test -z "${R_HOME}"; then
     exit 1
 fi
 
+## pick up configure-time settings
+## . "${R_HOME}/etc${R_ARCH}/javaconf"
+
 DYLIB_EXT=`${R_HOME}/bin/R CMD config DYLIB_EXT`
 tools_classpath=${R_SHARE_DIR}/java
 
@@ -197,6 +200,7 @@ custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 
 # sys-dependent tweaks to JNI flags
 hostos=`uname 2>/dev/null`
+## NB: that is not the same name as in configuration.
 case "$hostos" in
     Darwin*)
 	JAVA_LD_LIBRARY_PATH=
@@ -271,10 +275,11 @@ case "$hostos" in
 	   host_os=`echo 'cat(R.version$os)'|${R_HOME}/bin/R --vanilla --slave 2>/dev/null`
            ## put the most probable locations for each system in the first place
            case "${host_os}" in
-             linux*)   jmdirs=linux;;
+             Darwin*)  jmdirs=darwin;;
+             Linux*)   jmdirs=linux;;
              bsdi*)    jmdirs=bsdos;;
              osf*)     jmdirs=alpha;;
-             solaris*) jmdirs=solaris;;
+             SunOS*)   jmdirs=solaris;;
              freebsd*) jmdirs=freebsd; add_java_libs='-lpthread';;
            esac
 	   ## in case host_os detection failed, add all candidates
@@ -330,14 +335,44 @@ else
   if test "${acx_custom_java_libs}" = yes; then
     echo ''
     echo ' ** Warning: you are using custom JAVA_LIBS setting without' >&2
-    echo '    specifying JAVA_LD_LIBRARY_PATH. We cannot gearantee that' >&2
+    echo '    specifying JAVA_LD_LIBRARY_PATH. We cannot guarantee that' >&2
     echo '    this will work, both must match for a proper Java operation!' >&2
   fi
 fi
 
-echo "Java library path: ${JAVA_LD_LIBRARY_PATH}"
-echo "JNI linker flags : ${JAVA_LIBS}"
-echo "JNI cpp flags    : ${JAVA_CPPFLAGS}"
+echo
+echo "trying to compile and link a JNI progam "
+echo "detected JNI cpp flags    : ${JAVA_CPPFLAGS}"
+echo "detected JNI linker flags : ${JAVA_LIBS}"
+
+cat <<_ACEOF >conftest.c
+#include <jni.h>
+
+int main(void) {
+    JNI_CreateJavaVM(0, 0, 0);
+    return 0;
+}
+_ACEOF
+
+JAVA_CPPFLAGS1=`echo ${JAVA_CPPFLAGS}|${SED-sed} -e 's:$(JAVA_HOME):'"${JAVA_HOME}:g"`
+JAVA_LIBS1=`echo ${JAVA_LIBS}|${SED-sed} -e 's:$(JAVA_HOME):'"${JAVA_HOME}:g"`
+cat <<_ACEOF >Makevars
+PKG_CPPFLAGS = ${JAVA_CPPFLAGS1}
+PKG_LIBS = ${JAVA_LIBS1}
+_ACEOF
+
+${R_HOME}/bin/R CMD SHLIB conftest.c
+ac_status=$?
+
+if test $ac_status != 0; then
+  echo "Unable to compile a JNI program"
+  JAVA_LD_LIBRARY_PATH=
+  JAVA_LIBS=
+  JAVA_CPPFLAGS=
+fi
+
+rm -f conftest.c conftest.o conftest.so #Makevars
+
 
 echo ""
 
@@ -357,6 +392,11 @@ if test "${export_vars}" = yes; then
     ${run_prog}
     exit 0
 fi
+
+echo ""
+echo "Java library path: ${JAVA_LD_LIBRARY_PATH}"
+echo "JNI cpp flags    : ${JAVA_CPPFLAGS}"
+echo "JNI linker flags : ${JAVA_LIBS}"
 
 test "${dry_run}" = yes && exit 0
 
