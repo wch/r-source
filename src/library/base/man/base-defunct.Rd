@@ -279,7 +279,8 @@ is.real(x)
   deprecated since \R 2.5.0.
 
   \code{real}, \code{as.real} and \code{is.real} were long-deprecated
-  synonyms for the \code{double} versions.
+  synonyms for the \code{double} versions which have been removed in \R
+  3.0.0.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}
