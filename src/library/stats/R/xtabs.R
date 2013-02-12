@@ -45,8 +45,13 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	by <- mf[-i]
 	y <- mf[[i]]
     }
+    has.exclude <- !missing(exclude)
     by <- lapply(by, function(u) {
-	if(!is.factor(u)) u <- factor(u, exclude = exclude)
+        if(!is.factor(u)) u <- factor(u, exclude = exclude)
+        else if(has.exclude) # Don't drop NA from factors unless explicitly asked
+            u <- factor(as.character(u), 
+                        levels = setdiff(levels(u), exclude), 
+                        exclude=NULL)
 	u[ , drop = drop.unused.levels]
     })
     if(!sparse) { ## identical to stats::xtabs

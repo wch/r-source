@@ -1,6 +1,6 @@
 % File src/library/stats/man/xtabs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -58,6 +58,9 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
   If a left hand side is given in \code{formula}, its entries are simply
   summed over the cells corresponding to the right hand side; this also
   works if the lhs does not give counts.
+  
+  For variables in \code{formula} which are factors, \code{exclude}
+  must be specified explicitly; the default exclusions will not be used.  
 }
 \value{
   By default, when \code{sparse = FALSE},
