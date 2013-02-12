@@ -567,6 +567,15 @@
       packages which re-define base functions such as \code{cat()} and
       \code{get()} and so can cause \command{R CMD check} to fail when
       checking examples.
+      
+      \item \command{R CMD javareconf} has been enhanced to be more
+      similar to the code used by \command{configure}.
+
+      There is now a test that a JNI program can be compiled (like
+      \command{configure} did) and only working settings are used.
+
+      It makes use of custom settings from configuration in
+      \file{etc/javaconf}.
     }
   }
 
@@ -796,6 +805,10 @@
       \item The Windows installer no longer installs a Start Menu
       link to the static help pages; as most pages are generated
       dynamically, this led to a lot of broken links.
+      
+      \item Any custom settings for Java configuration are recorded in
+      file \file{etc/javaconf} for subsequent use by \command{R CMD
+	javareconf}.
     }
   }
 

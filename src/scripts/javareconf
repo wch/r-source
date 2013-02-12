@@ -1,10 +1,10 @@
 if test -z "${R_HOME}"; then
-    echo "This command can be executed via R CMD only!"
+    echo "This command can be only executed via R CMD!"
     exit 1
 fi
 
 ## pick up configure-time settings
-## . "${R_HOME}/etc${R_ARCH}/javaconf"
+. "${R_HOME}/etc${R_ARCH}/javaconf"
 
 DYLIB_EXT=`${R_HOME}/bin/R CMD config DYLIB_EXT`
 tools_classpath=${R_SHARE_DIR}/java
@@ -26,7 +26,7 @@ Options:
   -h, --help     print this help message and exit
   -v, --version  print version info and exit
   -n, --dry-run  perform Java detection, but don't touch any
-                 configurations files
+                 configuration files
   -e <prog>      same as -n but exports all detected variables
                  and runs <prog>. If -e is the last argument
                  or <prog> is '' then a shell is used instead
@@ -201,14 +201,22 @@ custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 # sys-dependent tweaks to JNI flags
 hostos=`uname 2>/dev/null`
 ## NB: that is not the same name as in configuration.
-case "$hostos" in
-    Darwin*)
-	JAVA_LD_LIBRARY_PATH=
-	JAVA_LIBS="-framework JavaVM"
-	JAVA_CPPFLAGS='-I$(JAVA_HOME)/include'
+ case "${host_os}" in
+   Darwin*)
+     pref=`echo "${JAVA_HOME}" | grep "/Home$"`
+     if test "${pref}" = "${JAVA_HOME}"; then 
+       JAVA_LIBS="-framework JavaVM"
+       JAVA_CPPFLAGS='-I$(JAVA_HOME)/include'
+       JAVA_LD_LIBRARY_PATH=
 	has_libjvm=unknown
-	;;
-    *)
+    else
+       echo "Non-system Java on OS X"
+    fi
+    ;;
+  *)
+    ;;
+esac
+if test "${JAVA_LIBS}" = "~autodetect~"; then
 	## we need to reset LD_LIBRARY_PATH, because Java automatically
 	## adds all LD_LIBRARY_PATH to Java path
 	save_LDLP=${LD_LIBRARY_PATH}
@@ -301,8 +309,7 @@ case "$hostos" in
            fi
 	   JAVA_CPPFLAGS=`echo ${JAVA_CPPFLAGS} | ${SED-sed} -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
         fi
-	;;
-esac
+fi
 
 if test -n "${add_java_libs}"; then JAVA_LIBS="${JAVA_LIBS} ${add_java_libs}"; fi
 
