@@ -71,7 +71,7 @@ print.browseVignettes <- function(x, ...)
         if (length(s) == 0L) return(character(0L))
         title <- s[, "Title"]
         if (tools:::httpdPort > 0L)
-            prefix <- sprintf("http://127.0.0.1:%d/library/%s/doc", tools:::httpdPort, pkg)
+            prefix <- sprintf("/library/%s/doc", pkg)
         else
             prefix <- sprintf("file://%s/doc", s[, "Dir"])
         src <- s[, "File"]
@@ -95,7 +95,10 @@ print.browseVignettes <- function(x, ...)
 
     file <- tempfile("Rvig.", fileext=".html")
     sink(file)
-    css_file <- file.path(R.home("doc"), "html", "R.css")
+    if (tools:::httpdPort > 0)
+    	css_file <- "/doc/html/R.css"
+    else
+    	css_file <- file.path(R.home("doc"), "html", "R.css")
     cat(sprintf("<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
 <html>
 <head>
