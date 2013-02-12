@@ -47,6 +47,8 @@ JAR = @JAR@
 JAVA = @JAVA@
 JAVAC = @JAVAC@
 JAVAH = @JAVAH@
+## JAVA_HOME might be used in the next three.  
+## They are for packages 'JavaGD' and 'rJava'
 JAVA_HOME = @JAVA_HOME@
 JAVA_CPPFLAGS = @JAVA_CPPFLAGS0@
 JAVA_LIBS = @JAVA_LIBS0@

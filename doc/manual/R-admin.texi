@@ -2978,9 +2978,11 @@ where @samp{JAVA_LIBS} contains flags necessary to link JNI programs.
 Some of the above variables can be queried using @code{R CMD config}.
 
 @enindex R_JAVA_LD_LIBRARY_PATH
-Beware that setting @env{R_JAVA_LD_LIBRARY_PATH} changes the library
-path when @R{} and all its packages are loaded, not just for the Java
-libraries and JVM.  This can cause problems with conflicts between
+Beware that on most OSes@footnote{on e.g.@: Linux and Solaris is
+prepended to the library path; as from @R{}@tie{}3.0.0 it is effectively
+appended on OS X.} setting @env{R_JAVA_LD_LIBRARY_PATH} changes the
+library path when @R{} and all its packages are loaded, not just for the
+Java libraries and JVM.  This can cause problems with conflicts between
 libraries supplied for use with Java and system libraries: it may be
 necessary to trim the auto-detected value to e.g.
 @smallexample
@@ -2990,7 +2992,7 @@ R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 
 @noindent
 This is particularly prevalent when the Java installation is not part of
-the OS, e.g.@: has been installed from Oracle on Linux or OS X.
+the OS, e.g.@: has been installed from Oracle on Linux.
 
 
 
@@ -4366,9 +4368,10 @@ JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end smallexample
-in @file{config.site}.  (Do not include @file{$@{JAVA_HOME@}/jre/lib} in
-@env{JAVA_LD_LIBRARY_PATH}: it contains libraries which conflict with
-system libraries.)
+in @file{config.site}.  As from @R{} 3.0.0 @env{JAVA_LD_LIBRARY_PATH} is
+used as part of @env{DYLD_FALLBACK_LIBRARY_PATH} and so is less likely
+to cause conflicts, but @file{$@{JAVA_HOME@}/jre/lib} is still best
+avoided as it contains libraries which conflict with system libraries.
 
 
 Note that it is necessary to set the environment variable @env{NOAWT}

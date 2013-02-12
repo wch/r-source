@@ -685,14 +685,24 @@ esac
 
 ## Record name of environment variable which tells the dynamic linker
 ## where to find shlibs (typically, 'LD_LIBRARY_PATH').
+## Used in ldpaths: override what libtool thinks on OS X
+## http://hublog.hubmed.org/archives/001192.html suggests this was in 10.4
+case "${host_os}" in
+  darwin*)
+    Rshlibpath_var=DYLD_FALLBACK_LIBRARY_PATH
+    ;;
+  *)
+    Rshlibpath_var=${shiibpath_var}
+esac
 AC_SUBST(shlibpath_var)
 ## Export LD_LIBRARY_PATH or equivalent.
-if eval "test -z \"\${${shlibpath_var}}\""; then
-  eval "${shlibpath_var}=\"${R_LD_LIBRARY_PATH}\""
+if eval "test -z \"\${${Rshlibpath_var}}\""; then
+  eval "${Rshlibpath_var}=\"${R_LD_LIBRARY_PATH}\""
 else
-  eval "${shlibpath_var}=\"${R_LD_LIBRARY_PATH}${PATH_SEPARATOR}\${${shlibpath_var}}\""
+  eval "${Rshlibpath_var}=\"${R_LD_LIBRARY_PATH}${PATH_SEPARATOR}\${${Rshlibpath_var}}\""
 fi
-eval "export ${shlibpath_var}"
+eval "export ${Rshlibpath_var}"
+AC_SUBST(Rshlibpath_var)
 
 ## record how to strip shared/dynamic libraries.
 AC_SUBST(striplib)

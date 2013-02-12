@@ -8,10 +8,10 @@ fi
 if test -n "${R_JAVA_LD_LIBRARY_PATH}"; then
   R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${R_JAVA_LD_LIBRARY_PATH}"
 fi
-## This is DYLD_LIBRARY_PATH on Darwin (OS X) and LD_LIBRARY_PATH elsewhere
-if test -z "${@shlibpath_var@}"; then
-  @shlibpath_var@="${R_LD_LIBRARY_PATH}"
+## This is DYLD_FALLBACK_LIBRARY_PATH on Darwin (OS X) and LD_LIBRARY_PATH elsewhere
+if test -z "${@Rshlibpath_var@}"; then
+  @Rshlibpath_var@="${R_LD_LIBRARY_PATH}"
 else
-  @shlibpath_var@="${R_LD_LIBRARY_PATH}:${@shlibpath_var@}"
+  @Rshlibpath_var@="${R_LD_LIBRARY_PATH}:${@Rshlibpath_var@}"
 fi
-export @shlibpath_var@
+export @Rshlibpath_var@
