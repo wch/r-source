@@ -291,7 +291,11 @@ offset <- function(object) object
         new[new == "ordered"] <- "factor"
     }
     ## ordered is OK as a substitute for factor, but not v.v.
-    new[new == "ordered" && old == "factor"] <- "factor"
+    new[new == "ordered" & old == "factor"] <- "factor"
+    ## factor is OK as a substitute for character
+    ## This probably means the original character got auto-converted to
+    ## factor, setting xlevels and causing the conversion of the new
+    new[new == "factor" & old == "character"] <- "character"
     if(!identical(old, new)) {
         wrong <- old != new
         if(sum(wrong) == 1)
@@ -314,7 +318,9 @@ offset <- function(object) object
     ## logical, factor, ordered vs numeric, and other for future proofing
     if(is.logical(x)) return("logical")
     if(is.ordered(x)) return("ordered")
-    if(is.factor(x))  return("factor")
+    if(is.factor(x)) return("factor")
+    ## Character vectors may be auto-converted to factors, but keep them separate for now
+    if(is.character(x)) return("character")
     if(is.matrix(x) && is.numeric(x))
         return(paste("nmatrix", ncol(x), sep="."))
     ## this is unclear.  Prior to 2.6.0 we assumed numeric with attributes
@@ -599,7 +605,11 @@ makepredictcall.default  <- function(var, call)
     xvars <- sapply(attr(Terms, "variables"), deparse, width.cutoff=500)[-1L]
     if((yvar <- attr(Terms, "response")) > 0) xvars <- xvars[-yvar]
     if(length(xvars)) {
-        xlev <- lapply(m[xvars], function(x) if(is.factor(x)) levels(x) else NULL)
+        xlev <- lapply(m[xvars], 
+        	    function(x) 
+        	    	if(is.factor(x)) levels(x) 
+        	    	else if (is.character(x)) levels(as.factor(x))
+        	    	else NULL)
         xlev[!vapply(xlev, is.null, NA)]
     } else NULL
 }

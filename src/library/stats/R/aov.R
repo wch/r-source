@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aov.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -92,13 +92,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         Terms <- terms(form)
         lmcall$method <- "model.frame"
         mf <- eval(lmcall, parent.frame())
-        xvars <- as.character(attr(Terms, "variables"))[-1L]
-        if ((yvar <- attr(Terms, "response")) > 0L)
-            xvars <- xvars[-yvar]
-	xlev <- if (length(xvars)) {
-            xlev <- lapply(mf[xvars], levels)
-	    xlev[!vapply(xlev, is.null, NA)]
-	} ## else NULL
+        xlev <- .getXlevels(Terms, mf)
         resp <- model.response(mf)
         qtx <- model.matrix(Terms, mf, contrasts)
         cons <- attr(qtx, "contrasts")
