@@ -38,13 +38,22 @@ unix.time <- system.time
 
 date <- function() .Internal(date())
 
-print.proc_time <- function(x, ...)
+summary.proc_time <-
+function(object, ...)
 {
-    y <- x
-    if(!is.na(y[4L])) y[1L] <- y[1L] + y[4L]
-    if(!is.na(y[5L])) y[2L] <- y[2L] + y[5L]
-    y <- y[1L:3L]
-    names(y) <- c(gettext("user"), gettext("system"), gettext("elapsed"))
-    print(y, ...)
+    if(!is.na(object[4L])) 
+        object[1L] <- object[1L] + object[4L]
+    if(!is.na(object[5L])) 
+        object[2L] <- object[2L] + object[5L]
+    object <- object[1L : 3L]
+    names(object) <-
+        c(gettext("user"), gettext("system"), gettext("elapsed"))
+    object
+}
+
+print.proc_time <-
+function(x, ...)
+{
+    print(summary(x, ...))
     invisible(x)
 }

@@ -6,6 +6,7 @@
 \name{proc.time}
 \alias{proc.time}
 \alias{print.proc_time}
+\alias{summary.proc_time}
 \title{Running Time of R}
 \description{
   \code{proc.time} determines how much real and CPU time (in seconds)
