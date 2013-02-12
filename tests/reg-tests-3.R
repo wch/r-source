@@ -118,3 +118,9 @@ if(suppressMessages(require("Matrix"))) {
 contr.sum(4)
 contr.helmert(4)
 contr.sum(2) # needed drop=FALSE at one point.
+
+## xtabs did not exclude levels from factors
+x1 <- c('a','b','a','b','c', NA)
+x2 <- factor(x1, exclude=NULL)
+print(xtabs(~ x1 + x2, na.action = na.pass)) 
+print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass)) 

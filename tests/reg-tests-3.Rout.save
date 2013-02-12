@@ -733,3 +733,19 @@ b . 1
 1    1
 2   -1
 > 
+> ## xtabs did not exclude levels from factors
+> x1 <- c('a','b','a','b','c', NA)
+> x2 <- factor(x1, exclude=NULL)
+> print(xtabs(~ x1 + x2, na.action = na.pass)) 
+   x2
+x1  a b c <NA>
+  a 2 0 0    0
+  b 0 2 0    0
+  c 0 0 1    0
+> print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass)) 
+      x2
+x1     a b <NA>
+  a    2 0    0
+  b    0 2    0
+  <NA> 0 0    1
+> 

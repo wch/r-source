@@ -1023,6 +1023,9 @@
       
       \item The \code{enc2utf8()} function converted \code{NA_character_}
       to \code{"NA"} in non-UTF-8 locales. (\PR{15201})
+      
+      \item The \code{exclude} argument to \code{xtabs()} was ignored
+      for \code{"factor"} arguments.
     }
 
   }
