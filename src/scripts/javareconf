@@ -133,22 +133,20 @@ if test -z "$JAVAC"; then
     IFS=${save_IFS}
 fi
 
+: ${TMPDIR=/tmp}
+{ tempdir=`(mktemp -d -q "${TMPDIR}/RJRECONF.XXXXXX") 2>/dev/null` \
+	&& test -n "${tempdir}" && test -d "${tempdir}" ; } ||
+{ test -n "${RANDOM}" && tempdir=${TMPDIR}/RJRECONF$$-${RANDOM} \
+	&& (mkdir "${tempdir}") ; } ||
+{ tempdir=${TMPDIR}/RJRECONF.$$-`date +%m%d%H%M%S` \
+	&& (mkdir "${tempdir}"); } ||
+{ tempdir=${TMPDIR}/RJRECONF.$$ && (mkdir "${tempdir}") ; } ||
+    (error "cannot create temporary directory" && exit 1)
+
 # test functionality of the compiler
 javac_works='not present'
 if test -n "$JAVAC"; then
     javac_works='not functional'
-#    tempdir=`mktemp -d`
-
-    : ${TMPDIR=/tmp}
-    { tempdir=`(mktemp -d -q "${TMPDIR}/RJRECONF.XXXXXX") 2>/dev/null` \
-	&& test -n "${tempdir}" && test -d "${tempdir}" ; } ||
-    { test -n "${RANDOM}" && tempdir=${TMPDIR}/RJRECONF$$-${RANDOM} \
-	&& (mkdir "${tempdir}") ; } ||
-    { tempdir=${TMPDIR}/RJRECONF.$$-`date +%m%d%H%M%S` \
-	&& (mkdir "${tempdir}"); } ||
-    { tempdir=${TMPDIR}/RJRECONF.$$ && (mkdir "${tempdir}") ; } ||
-    (error "cannot create temporary directory" && exit 1)
-
     echo "public class A { }" > ${tempdir}/A.java
     if test -f ${tempdir}/A.java; then
 	if "${JAVAC}" ${tempdir}/A.java >/dev/null; then
@@ -157,8 +155,6 @@ if test -n "$JAVAC"; then
 	    fi
 	fi
     fi
-    rm -rf ${tempdir}
-
 fi
 if test "${javac_works}" = yes; then
     echo "Java compiler    : ${JAVAC}"
@@ -323,6 +319,10 @@ if test "${custom_JAVA_LD_LIBRARY_PATH}" != '~autodetect~'; then
   JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED-sed} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
 fi
 
+## Do cpmpile test in the temporary dir
+wd=${PWD}
+cd ${tempdir}
+
 echo
 echo "trying to compile and link a JNI progam "
 echo "detected JNI cpp flags    : ${JAVA_CPPFLAGS}"
@@ -354,7 +354,9 @@ if test $ac_status != 0; then
   JAVA_CPPFLAGS=
 fi
 
-rm -f conftest.c conftest.o conftest.so #Makevars
+rm -f conftest.c conftest.o conftest.so Makevars
+cd ${wd}
+rm -rf ${tempdir}
 
 
 echo ""
