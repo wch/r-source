@@ -248,12 +248,12 @@ stopCluster.MPIcluster <- function(cl) {
 stopCluster.spawnedMPIcluster <- function(cl) {
     comm <- 1
     NextMethod()
-    mpi.comm.disconnect(comm)
+    Rmpi::mpi.comm.disconnect(comm)
 }
 
 stopCluster.NWScluster <- function(cl) {
-  NextMethod()
-  nwsDeleteWs(cl[[1]]$wsServer, nwsWsName(cl[[1]]$ws))
-  close(cl[[1]]$wsServer)
+    NextMethod()
+    new::nwsDeleteWs(cl[[1]]$wsServer, nws::nwsWsName(cl[[1]]$ws))
+    close(cl[[1]]$wsServer)
 }
 
