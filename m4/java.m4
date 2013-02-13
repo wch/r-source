@@ -169,13 +169,7 @@ if test ${r_cv_java_works} = yes; then
 	          for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
 	       	      if test -f "$dir/libjvm${DYLIB_EXT}"; then
 		          has_libjvm=yes
-			  # NOTE: we decided to ignore java.library.path altogether since it was bogus
-			  #       we could just append the newly found paths, though
-			  if test "${dir}" = "${boot_path}"; then
-			      JAVA_LD_LIBRARY_PATH="${dir}"
-			  else
-			      JAVA_LD_LIBRARY_PATH="${boot_path}:${dir}"
-			  fi
+			  JAVA_LD_LIBRARY_PATH="${dir}"
 			  break
 		       fi
 		  done
