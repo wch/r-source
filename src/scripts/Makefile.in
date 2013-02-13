@@ -99,7 +99,11 @@ installdirs:
 install-cmds:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
 	@for f in $(SCRIPTS_S); do \
-	  $(INSTALL_SCRIPT) $(srcdir)/$${f} "$(DESTDIR)$(Rexecbindir)"; \
+	  source="$(srcdir)/$${f}"; \
+	  target="$(DESTDIR)$(Rexecbindir)/$${f}"; \
+	  (test -r "$${target}" && \
+	   cmp "$${source}" "$${target}" > /dev/null) || \
+	    $(INSTALL_SCRIPT) "$${source}" "$${target}"; \
 	done
 	@for f in $(SCRIPTS_B); do \
 	  $(INSTALL_SCRIPT) $${f} "$(DESTDIR)$(Rexecbindir)"; \
