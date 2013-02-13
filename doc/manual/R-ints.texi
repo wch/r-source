@@ -4044,6 +4044,11 @@ Default: false (but true for CRAN submission checks).
 Should the package code be checked for calls to @code{attach()}?
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_CODE_DATA_INTO_GLOBALENV_
+Should the package code be checked for calls to @code{data()} which load
+into the global environment?
+Default: false (but true for CRAN submission checks).
+
 @item _R_CHECK_DOT_FIRSTLIB_
 Should the package code be checked for the presence of the obsolete function 
 @code{.First.lib()}?
@@ -4069,6 +4074,7 @@ _R_CHECK_EXECUTABLES_EXCLUSIONS_=FALSE
 _R_CHECK_DOC_SIZES2_=TRUE
 _R_CHECK_CODE_ASSIGN_TO_GLOBALENV_=TRUE
 _R_CHECK_CODE_ATTACH_=TRUE
+_R_CHECK_CODE_DATA_INTO_GLOBALENV_=TRUE
 _R_CHECK_DOT_FIRSTLIB_=TRUE
 _R_CHECK_DEPRECATED_DEFUNCT_=TRUE
 @end example
