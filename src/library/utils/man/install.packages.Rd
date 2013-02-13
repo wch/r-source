@@ -161,8 +161,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{INSTALL_opts}{
     an optional character vector of additional option(s) to be passed to
-    \command{R CMD INSTALL} for a source package install.  E.g.
+    \command{R CMD INSTALL} for a source package install.  E.g.,
     \code{c("--html", "--no-multiarch")}.
+
+    Can also be a named list of character vectors of to be used as
+    additional options, with names the respective package names.
   }
   \item{quiet}{logical: if true, reduce the amount of output.}
   \item{\dots}{

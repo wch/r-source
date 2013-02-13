@@ -121,19 +121,25 @@ install.packages <-
 
     ## Compute the configuration arguments for a given package.
     ## If configure.args is an unnamed character vector, use that.
-    ## If it is named, match the pkg name to the names of the character vector
-    ## and if we get a match, use that element.
-    ## Similarly, configure.args is a list(), match pkg to the names pkg and
-    ## use that element, collapsing it into a single string.
+    ## If it is named, match the pkg name to the names of the character
+    ## vector and if we get a match, use that element.
+    ## Similarly, configure.args is a list(), match pkg to the names pkg
+    ## and use that element, collapsing it into a single string.
 
-    getConfigureArgs <-  function(pkg)
-    {
-        if(.Platform$OS.type == "windows") return(character())
+    get_package_name <- function(pkg) {
         ## Since the pkg argument can be the name of a file rather than
         ## a regular package name, we have to clean that up.
-        pkg <- gsub("_\\.(zip|tar\\.gz)", "",
-                    gsub(.standard_regexps()$valid_package_version, "", basename(pkg)))
-
+        gsub("_\\.(zip|tar\\.gz)", "",
+             gsub(.standard_regexps()$valid_package_version, "",
+                  basename(pkg)))
+    }
+    
+    getConfigureArgs <- function(pkg)
+    {
+        if(.Platform$OS.type == "windows") return(character())
+        
+        pkg <- get_package_name(pkg)
+        
         if(length(pkgs) == 1L && length(configure.args) &&
            length(names(configure.args)) == 0L)
             return(paste0("--configure-args=",
@@ -149,13 +155,11 @@ install.packages <-
         config
     }
 
-    getConfigureVars <-  function(pkg)
+    getConfigureVars <- function(pkg)
     {
         if(.Platform$OS.type == "windows") return(character())
-        ## Since the pkg argument can be the name of a file rather than
-        ## a regular package name, we have to clean that up.
-        pkg <- gsub("_\\.(zip|tar\\.gz)", "",
-                    gsub(.standard_regexps()$valid_package_version, "", basename(pkg)))
+
+        pkg <- get_package_name(pkg)
 
         if(length(pkgs) == 1L && length(configure.vars) &&
            length(names(configure.vars)) == 0L)
@@ -170,6 +174,13 @@ install.packages <-
             config <- character()
 
         config
+    }
+
+    get_install_opts <- function(pkg) {
+        if(!length(INSTALL_opts))
+            character()
+        else
+            paste(INSTALL_opts[[get_package_name(pkg)]], collapse = " ")
     }
 
     if(missing(pkgs) || !length(pkgs)) {
@@ -483,8 +494,14 @@ install.packages <-
         cmd0 <- paste(cmd0, clean)
     if (libs_only)
         cmd0 <- paste(cmd0, "--libs-only")
-    if (!missing(INSTALL_opts))
-        cmd0 <- paste(cmd0, paste(INSTALL_opts, collapse = " "))
+    if (!missing(INSTALL_opts)) {
+        if(!is.list(INSTALL_opts)) {
+            cmd0 <- paste(cmd0, paste(INSTALL_opts, collapse = " "))
+            INSTALL_opts <- list()
+        }
+    } else {
+        INSTALL_opts <- list()
+    }
 
     if(verbose) message(gettextf("system (cmd0): %s", cmd0), domain = NA)
 
@@ -493,7 +510,9 @@ install.packages <-
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
 
         for(i in seq_len(nrow(update))) {
-            cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
+            cmd <- paste(cmd0,
+                         get_install_opts(update[i, 1L]),
+                         "-l", shQuote(update[i, 2L]),
                          getConfigureArgs(update[i, 1L]),
                          getConfigureVars(update[i, 1L]),
                          shQuote(update[i, 1L]))
@@ -566,7 +585,9 @@ install.packages <-
             aDL <- .make_dependency_list(upkgs, available, recursive = TRUE)
             for(i in seq_len(nrow(update))) {
                 pkg <- update[i, 1L]
-                cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
+                cmd <- paste(cmd0,
+                             get_install_opts(update[i, 3L]),
+                             "-l", shQuote(update[i, 2L]),
                              getConfigureArgs(update[i, 3L]),
                              getConfigureVars(update[i, 3L]),
                              shQuote(update[i, 3L]),
@@ -603,7 +624,9 @@ install.packages <-
             unlink(tmpd, recursive = TRUE)
         } else {
             for(i in seq_len(nrow(update))) {
-                cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
+                cmd <- paste(cmd0,
+                             get_install_opts(update[i, 3L]),
+                             "-l", shQuote(update[i, 2L]),
                              getConfigureArgs(update[i, 3L]),
                              getConfigureVars(update[i, 3L]),
                              update[i, 3L])
