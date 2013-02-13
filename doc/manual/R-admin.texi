@@ -2940,7 +2940,7 @@ a sub-architecture-specific version).  A typical setting for
 
 @smallexample
 JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.9.x86_64/jre
-R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server:$@{JAVA_HOME@}/lib/amd64
+R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end smallexample
 
 Note that this unfortunately depends on the exact version of the JRE/JDK
@@ -2983,17 +2983,8 @@ prepended to the library path; as from @R{}@tie{}3.0.0 it is effectively
 appended on OS X.} setting @env{R_JAVA_LD_LIBRARY_PATH} changes the
 library path when @R{} and all its packages are loaded, not just for the
 Java libraries and JVM.  This can cause problems with conflicts between
-libraries supplied for use with Java and system libraries: it may be
-necessary to trim the auto-detected value to e.g.
-@smallexample
-
-R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
-@end smallexample
-
-@noindent
-This is particularly prevalent when the Java installation is not part of
-the OS, e.g.@: has been installed from Oracle on Linux.
-
+libraries supplied for use with Java and system libraries, and
+@env{JAVA_LD_LIBRARY_PATH} may need to be adjusted.
 
 
 @node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under a Unix-alike

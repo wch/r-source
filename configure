@@ -815,7 +815,6 @@ MKDIR_P
 USE_NLS
 USE_RECOMMENDED_PACKAGES_FALSE
 USE_RECOMMENDED_PACKAGES_TRUE
-R_JAVA_LD_LIBRARY_PATH
 R_LD_LIBRARY_PATH
 SHLIB_OPENMP_FFLAGS
 SHLIB_OPENMP_FCFLAGS
@@ -828,10 +827,7 @@ FCFLAGS_f90
 ac_ct_FC
 FCFLAGS
 FC
-custom_JAVA_LD_LIBRARY_PATH
-custom_JAVA_LIBS
-custom_JAVA_CPPFLAGS
-custom_JAVA_HOME
+R_JAVA_LD_LIBRARY_PATH
 JAVA_CPPFLAGS0
 JAVA_LIBS0
 JAVA_LD_LIBRARY_PATH
@@ -839,6 +835,10 @@ JAR
 JAVAH
 JAVAC
 JAVA
+custom_JAVA_LD_LIBRARY_PATH
+custom_JAVA_LIBS
+custom_JAVA_CPPFLAGS
+custom_JAVA_HOME
 PAPERCONF
 R_PROFILING
 BUILD_PCRE_FALSE
@@ -34542,9 +34542,7 @@ test -z "${papersize}" && papersize="${PAPERSIZE}"
 
 
 ## Java support
-
-have_java=no
-
+## R_JAVA
 custom_JAVA_HOME="${JAVA_HOME}"
 : ${JAVA_LIBS=~autodetect~}
 : ${JAVA_CPPFLAGS=~autodetect~}
@@ -34553,551 +34551,10 @@ custom_JAVA_LIBS="${JAVA_LIBS}"
 custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
 custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 
-if test -z "${JAVA_HOME}" ; then
-  JAVA_PATH=${PATH}
-else
-  ## try jre/bin first just in case we don't have full JDK
-  JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${JAVA_HOME}/../bin:${PATH}
-fi
-JAVA_PATH=${JAVA_PATH}:/usr/java/bin:/usr/jdk/bin:/usr/lib/java/bin:/usr/lib/jdk/bin:/usr/local/java/bin:/usr/local/jdk/bin:/usr/local/lib/java/bin:/usr/local/lib/jdk/bin
-for ac_prog in java
-do
-  # Extract the first word of "$ac_prog", so it can be a program name with args.
-set dummy $ac_prog; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_JAVA+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  case $JAVA in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_JAVA="$JAVA" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in ${JAVA_PATH}
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_JAVA="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  ;;
-esac
-fi
-JAVA=$ac_cv_path_JAVA
-if test -n "$JAVA"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $JAVA" >&5
-$as_echo "$JAVA" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-  test -n "$JAVA" && break
-done
-
-for ac_prog in javac
-do
-  # Extract the first word of "$ac_prog", so it can be a program name with args.
-set dummy $ac_prog; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_JAVAC+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  case $JAVAC in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_JAVAC="$JAVAC" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in ${JAVA_PATH}
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_JAVAC="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  ;;
-esac
-fi
-JAVAC=$ac_cv_path_JAVAC
-if test -n "$JAVAC"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $JAVAC" >&5
-$as_echo "$JAVAC" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-  test -n "$JAVAC" && break
-done
-
-for ac_prog in javah
-do
-  # Extract the first word of "$ac_prog", so it can be a program name with args.
-set dummy $ac_prog; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_JAVAH+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  case $JAVAH in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_JAVAH="$JAVAH" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in ${JAVA_PATH}
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_JAVAH="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  ;;
-esac
-fi
-JAVAH=$ac_cv_path_JAVAH
-if test -n "$JAVAH"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $JAVAH" >&5
-$as_echo "$JAVAH" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-  test -n "$JAVAH" && break
-done
-
-for ac_prog in jar
-do
-  # Extract the first word of "$ac_prog", so it can be a program name with args.
-set dummy $ac_prog; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_JAR+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  case $JAR in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_JAR="$JAR" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in ${JAVA_PATH}
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_JAR="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  ;;
-esac
-fi
-JAR=$ac_cv_path_JAR
-if test -n "$JAR"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $JAR" >&5
-$as_echo "$JAR" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-  test -n "$JAR" && break
-done
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether Java compiler works" >&5
-$as_echo_n "checking whether Java compiler works... " >&6; }
-if ${r_cv_javac_works+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  r_cv_javac_works=no
-if test -n "${JAVAC}"; then
-  rm -f A.java A.class
-  echo "public class A { }" > A.java
-  if "${JAVAC}" A.java 2>&5; then
-    if test -f A.class; then
-      r_cv_javac_works=yes
-    fi
-  fi
-  rm -rf A.java A.class
-fi
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_javac_works" >&5
-$as_echo "$r_cv_javac_works" >&6; }
-
-getsp_cp=${ac_aux_dir}
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether Java interpreter works" >&5
-$as_echo_n "checking whether Java interpreter works... " >&6; }
-if ${r_cv_java_works+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  r_cv_java_works=no
-if test -n "${JAVA}" ; then
-
-  acx_java_result=
-  if test -z "${JAVA}"; then
-    echo "$as_me:$LINENO: JAVA is not set, cannot run java -classpath ${getsp_cp} getsp -test" >&5
-  else
-    echo "$as_me:$LINENO: running ${JAVA} -classpath ${getsp_cp} getsp -test" >&5
-    acx_java_result=`${JAVA} -classpath ${getsp_cp} getsp -test 2>&5`
-    echo "$as_me:$LINENO: output: '$acx_java_result'" >&5
-  fi
-  acx_jc_result=$acx_java_result
-
-  if test "${acx_jc_result}" = "Test1234OK"; then
-    r_cv_java_works=yes
-  fi
-  acx_jc_result=
-fi
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_java_works" >&5
-$as_echo "$r_cv_java_works" >&6; }
-
-if test ${r_cv_java_works} = yes; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking Java environment" >&5
-$as_echo_n "checking Java environment... " >&6; }
-if ${r_cv_java_home+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-
-    ## find JAVA_HOME from Java itself unless specified
-    if test -z "${JAVA_HOME}" ; then
-
-  acx_java_result=
-  if test -z "${JAVA}"; then
-    echo "$as_me:$LINENO: JAVA is not set, cannot run java -classpath ${getsp_cp} getsp java.home" >&5
-  else
-    echo "$as_me:$LINENO: running ${JAVA} -classpath ${getsp_cp} getsp java.home" >&5
-    acx_java_result=`${JAVA} -classpath ${getsp_cp} getsp java.home 2>&5`
-    echo "$as_me:$LINENO: output: '$acx_java_result'" >&5
-  fi
-  JAVA_HOME=$acx_java_result
-
-    fi
-    r_cv_java_home="${JAVA_HOME}"
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_java_home" >&5
-$as_echo "$r_cv_java_home" >&6; }
-  JAVA_HOME="${r_cv_java_home}"
-
-  # we have Java support, detect flags
-  if test -n "${JAVA_HOME}"; then
-    # find out whether all settings are already cached
-    r_java_settings_cached=yes
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for cached Java settings" >&5
-$as_echo_n "checking for cached Java settings... " >&6; }
-    if ${r_cv_cache_java_flags+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-
-      r_cv_cache_java_flags=yes
-      r_java_settings_cached=no
-fi
-
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${r_java_settings_cached}" >&5
-$as_echo "${r_java_settings_cached}" >&6; }
-    # if so, fetch them from the cache
-    if test "${r_java_settings_cached}" = yes; then
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking JAVA_LIBS" >&5
-$as_echo_n "checking JAVA_LIBS... " >&6; }
-if ${r_cv_JAVA_LIBS+:} false; then :
-  $as_echo_n "(cached) " >&6
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_JAVA_LIBS" >&5
-$as_echo "$r_cv_JAVA_LIBS" >&6; }
-      JAVA_LIBS0="${r_cv_JAVA_LIBS}"
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking JAVA_CPPFLAGS" >&5
-$as_echo_n "checking JAVA_CPPFLAGS... " >&6; }
-if ${r_cv_JAVA_CPPFLAGS+:} false; then :
-  $as_echo_n "(cached) " >&6
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_JAVA_CPPFLAGS" >&5
-$as_echo "$r_cv_JAVA_CPPFLAGS" >&6; }
-      JAVA_CPPFLAGS0="${r_cv_JAVA_CPPFLAGS}"
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking JAVA_LD_LIBRARY_PATH" >&5
-$as_echo_n "checking JAVA_LD_LIBRARY_PATH... " >&6; }
-if ${r_cv_JAVA_LD_LIBRARY_PATH+:} false; then :
-  $as_echo_n "(cached) " >&6
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_JAVA_LD_LIBRARY_PATH" >&5
-$as_echo "$r_cv_JAVA_LD_LIBRARY_PATH" >&6; }
-      JAVA_LD_LIBRARY_PATH="${r_cv_JAVA_LD_LIBRARY_PATH}"
-    else
-    # otherwise detect all Java-relevant flags
-
-    ## We know the standard layout on OS X, but user might have Oracle Java
-    ## The standard JAVA_HOME is something like
-    ## /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home
-    ## or
-    ## /Library/Java/JavaVirtualMachines/1.6.0_39-b04-443.jdk/Contents/Home
-    case "${host_os}" in
-      darwin*)
-        pref=`echo "${JAVA_HOME}" | grep "/Home$"`
-        if test "${pref}" = "${JAVA_HOME}"; then
-          JAVA_LIBS="-framework JavaVM"
-          JAVA_LIBS0=${JAVA_LIBS}
-	  JAVA_CPPFLAGS="-I${JAVA_HOME}/include"
-	  JAVA_CPPFLAGS0='-I$(JAVA_HOME)/include'
-          JAVA_LD_LIBRARY_PATH=
-        else
-	  echo "Non-system Java on OS X"
-        fi
-        ;;
-      *)
-        ;;
-    esac
-    if test "${JAVA_LIBS}" = "~autodetect~"; then
-
-  acx_java_result=
-  if test -z "${JAVA}"; then
-    echo "$as_me:$LINENO: JAVA is not set, cannot run java -classpath ${getsp_cp} getsp java.library.path" >&5
-  else
-    echo "$as_me:$LINENO: running ${JAVA} -classpath ${getsp_cp} getsp java.library.path" >&5
-    acx_java_result=`${JAVA} -classpath ${getsp_cp} getsp java.library.path 2>&5`
-    echo "$as_me:$LINENO: output: '$acx_java_result'" >&5
-  fi
-  JAVA_LD_LIBRARY_PATH=$acx_java_result
-
-	JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH} | ${SED-sed} -e 's/^://' -e 's/:$//'`
-
-	# unfortunately recent Oracle Java distributions ship with broken
-	# java.library.path so we try to see if that is the case
-	has_libjvm=no
-	save_IFS=$IFS; IFS=:
-	for dir in ${JAVA_LD_LIBRARY_PATH}; do
-	    if test -f "$dir/libjvm${DYLIB_EXT}"; then
-	        has_libjvm=yes
-	       	break
-	    fi
-        done
-	# for broken java.library.path try some heuristic using sun.boot.library.path
-	if test ${has_libjvm} = no; then
-
-  acx_java_result=
-  if test -z "${JAVA}"; then
-    echo "$as_me:$LINENO: JAVA is not set, cannot run java -classpath ${getsp_cp} getsp sun.boot.library.path" >&5
-  else
-    echo "$as_me:$LINENO: running ${JAVA} -classpath ${getsp_cp} getsp sun.boot.library.path" >&5
-    acx_java_result=`${JAVA} -classpath ${getsp_cp} getsp sun.boot.library.path 2>&5`
-    echo "$as_me:$LINENO: output: '$acx_java_result'" >&5
-  fi
-  boot_path=$acx_java_result
-
-	     if test -n "${boot_path}"; then
-	          for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
-	       	      if test -f "$dir/libjvm${DYLIB_EXT}"; then
-		          has_libjvm=yes
-			  # NOTE: we decided to ignore java.library.path altogether since it was bogus
-			  #       we could just append the newly found paths, though
-			  if test "${dir}" = "${boot_path}"; then
-			      JAVA_LD_LIBRARY_PATH="${dir}"
-			  else
-			      JAVA_LD_LIBRARY_PATH="${boot_path}:${dir}"
-			  fi
-			  break
-		       fi
-		  done
-	    fi
-	fi
-	IFS=${save_IFS}
-
-	JAVA_LIBS=`echo ":${JAVA_LD_LIBRARY_PATH} -ljvm" | ${SED-sed} -e 's/:/ -L/g'`
-	JAVA_LIBS0=`echo ${JAVA_LIBS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
-	JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
-
-	## includes consist of two parts - jni.h and machine-dependent jni_md.h
-	jinc=''
-	for pinc in include ../include jre/include; do
-	  if test -f "${JAVA_HOME}/${pinc}/jni.h"; then jinc="${JAVA_HOME}/${pinc}"; break; fi
-	done
-	## only if we get jni.h we can try to find jni_md.h
-	if test -n "${jinc}"; then
-	   JAVA_CPPFLAGS="-I${jinc}"
-	   mdinc=''
-	   jmdirs=''
-	   ## put the most probable locations for each system in the first place
-	   case "${host_os}" in
-	     darwin*)  jmdirs=darwin;;
-	     linux*)   jmdirs=linux;;
-	     bsdi*)    jmdirs=bsdos;;
-	     osf*)     jmdirs=alpha;;
-	     solaris*) jmdirs=solaris;;
-	     freebsd*) jmdirs=freebsd;;
-	   esac
-	   ## prepend . and append less-likely ones
-	   jmdirs=". ${jmdirs} genunix ppc x86 iris hp-ux aix win32 cygwin openbsd"
-	   for pimd in ${jmdirs}; do
-	     if test -f "${jinc}/${pimd}/jni_md.h"; then jmdinc="${jinc}/${pimd}"; break; fi
-	   done
-	   if test -z "${jmdinc}"; then
-	     # ultima-ratio: use find and pray that it works
-	     jmdinc=`find "${jinc}/" -name jni_md.h 2>/dev/null |head -n 1 2>/dev/null`
-	     if test -n "${jmdinc}"; then jmdinc=`dirname "${jmdinc}"`; fi
-	   fi
-	   if test -n "${jmdinc}"; then
-	     if test "${jmdinc}" != "${jinc}/."; then
-	       JAVA_CPPFLAGS="${JAVA_CPPFLAGS} -I${jmdinc}"
-	     fi
-	   fi
-	fi
-	JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
-    fi
-
-    ## honor user overrides
-    acx_java_uses_custom_flags=no
-    if test "${custom_JAVA_LIBS}" != '~autodetect~'; then
-      JAVA_LIBS="${custom_JAVA_LIBS}"
-      JAVA_LIBS0=`echo ${JAVA_LIBS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
-      acx_java_uses_custom_flags=yes
-    fi
-    if test "${custom_JAVA_CPPFLAGS}" != '~autodetect~'; then
-      JAVA_CPPFLAGS="${custom_JAVA_CPPFLAGS}"
-      JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | ${SED-sed} -e "s:${JAVA_HOME}:\$\(JAVA_HOME\):g"`
-      acx_java_uses_custom_flags=yes
-    fi
-    if test "${custom_JAVA_LD_LIBRARY_PATH}" != '~autodetect~'; then
-      JAVA_LD_LIBRARY_PATH="${custom_JAVA_LD_LIBRARY_PATH}"
-    fi
-
-    ## try to link a simple JNI program
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether JNI programs can be compiled" >&5
-$as_echo_n "checking whether JNI programs can be compiled... " >&6; }
-if ${r_cv_jni+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  r_cv_jni=
-    j_save_LIBS="${LIBS}"
-    j_save_CPPF="${CPPFLAGS}"
-    LIBS="${JAVA_LIBS}"
-    CPPFLAGS="${JAVA_CPPFLAGS}"
-    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#include <jni.h>
-int main(void) {
-    JNI_CreateJavaVM(0, 0, 0);
-    return 0;
-}
-
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  r_cv_jni="yes"
-else
-
-    if test "${acx_java_uses_custom_flags}" = yes; then
-      r_cv_jni=no
-      as_fn_error $? "Failed to compile a JNI program with custom JAVA_LIBS/JAVA_CPPFLAGS.
-See config.log for details.
-Do NOT set JAVA_LIBS/JAVA_CPPFLAGS unless you are sure they are correct!
-Java/JNI support is optional unless you set either JAVA_LIBS or JAVA_CPPFLAGS." "$LINENO" 5
-    fi
-    ## some OSes/Javas need -lpthread
-    LIBS="${LIBS} -lpthread"
-    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#include <jni.h>
-int main(void) {
-    JNI_CreateJavaVM(0, 0, 0);
-    return 0;
-}
-
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  r_cv_jni="yes (with pthreads)"
-else
-  r_cv_jni="no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-    LIBS="${j_save_LIBS}"
-    CPPFLAGS="${j_save_CPPF}"
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_jni" >&5
-$as_echo "$r_cv_jni" >&6; }
-    ##AC_MSG_RESULT([$r_cv_jni])
-    if test "${r_cv_jni}" = "yes (with pthreads)"; then
-      JAVA_LIBS0="${JAVA_LIBS0} -lpthread"
-    fi
-
-    if test "${r_cv_jni}" = "no"; then
-        JAVA_LIBS0=
-	JAVA_CPPFLAGS0=
-        JAVA_LD_LIBRARY_PATH=
-    fi
-    # cache all detected flags
-      if ${r_cv_JAVA_LIBS+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  r_cv_JAVA_LIBS="${JAVA_LIBS0}"
-fi
-
-      if ${r_cv_JAVA_CPPFLAGS+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  r_cv_JAVA_CPPFLAGS="${JAVA_CPPFLAGS0}"
-fi
-
-      if ${r_cv_JAVA_LD_LIBRARY_PATH+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  r_cv_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
-fi
-
-    fi # cached flags
-
-    have_java=yes
-  fi
-else  ## not r_cv_java_works
-  JAVA=
-  JAVA_HOME=
-fi
 
 
 
-
+JAVA_LD_LIBRARY_PATH=
 
 
 
@@ -36111,11 +35568,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36114: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35571: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36118: \$? = $ac_status" >&5
+   echo "$as_me:35575: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36210,11 +35667,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36213: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35670: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36217: \$? = $ac_status" >&5
+   echo "$as_me:35674: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36262,11 +35719,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36265: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35722: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36269: \$? = $ac_status" >&5
+   echo "$as_me:35726: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -38503,44 +37960,6 @@ fi
   esac
 done
 fi
-
-## Handle JAVA_LD_LIBRARY_PATH specially so that users can conveniently set just
-## R_JAVA_LD_LIBRARY_PATH in their environment.
-if test -n "${JAVA_LD_LIBRARY_PATH}"; then
-   args=`echo ${JAVA_LD_LIBRARY_PATH} | sed -e s:\$\(JAVA_HOME\):${JAVA_HOME}:g`
-   r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
-   for lib in ${args}; do
-      r_want_lib=true
-      ## Do not add non-existent directories.
-      test -d "${lib}" || r_want_lib=false
-      if test x"${r_want_lib}" = xtrue; then
-        ## do NOT Canonicalize (/usr/lib/j2sdk1.5-sun/jre/../lib/i386).
-	## because we may lose the reference to ${JAVA_HOME} if it is a symlink (it often is)
-        ##lib=`cd "${lib}" && ${GETWD}`
-        ## Do not add something twice, or something already in
-        ## R_LD_LIBRARY_PATH or the defaults.
-        for dir in ${R_JAVA_LD_LIBRARY_PATH}${IFS}${R_LD_LIBRARY_PATH}${IFS}${r_ld_library_defaults}; do
-          if test x"${dir}" = x"${lib}"; then
-             r_want_lib=false
-             break
-          fi
-        done
-        if test x"${r_want_lib}" = xtrue; then
-	  lib=`echo ${lib}|sed -e s:${JAVA_HOME}:\$\{JAVA_HOME\}:g`
-          separator="${PATH_SEPARATOR}"
-test -z "${separator}" && separator=" "
-if test -z "${R_JAVA_LD_LIBRARY_PATH}"; then
-  R_JAVA_LD_LIBRARY_PATH="${lib}"
-else
-  R_JAVA_LD_LIBRARY_PATH="${R_JAVA_LD_LIBRARY_PATH}${separator}${lib}"
-fi
-        fi
-      fi
-   done
-   IFS="${r_save_IFS}"
-fi
-## </FIXME>
-
 
 
 
@@ -45874,15 +45293,6 @@ if test -z "${r_options}"; then
   r_options="Linux LFS"
 else
   r_options="${r_options}${separator}Linux LFS"
-fi
-fi
-if test -n "${JAVA}"; then
-  separator=", "
-test -z "${separator}" && separator=" "
-if test -z "${r_options}"; then
-  r_options="Java"
-else
-  r_options="${r_options}${separator}Java"
 fi
 fi
 if test "${want_prebuilt_html}" = yes; then

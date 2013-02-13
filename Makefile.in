@@ -20,7 +20,7 @@ DISTFILES = $(INSTFILES) \
 SUBDIRS = m4 tools doc etc share src tests
 SUBDIRS_WITH_NO_BUILD = po
 
-all: Makefile Makeconf R docs recommended vignettes
+all: Makefile Makeconf R docs recommended vignettes javaconf
 recommended: @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -37,7 +37,6 @@ ACINCLUDE_DEPENDENCIES = \
 	m4/clibs.m4 \
 	m4/codeset.m4 \
 	m4/gettext.m4 m4/gettext-lib.m4 \
-	m4/java.m4 \
 	m4/libtool.m4 m4/ltoptions.m4 m4/ltversion.m4 m4/ltsugar.m4 m4/lt~obsolete.m4 \
 	m4/stat-time.m4
 CONFIGURE_DEPENDENCIES = $(srcdir)/VERSION
@@ -77,6 +76,14 @@ stamp-recommended: R docs
 ## One of the grid vignettes requires lattice
 vignettes: stamp-recommended
 	@(cd src/library && $(MAKE) $@)
+
+stamp-java : etc/javaconf bin/javareconf
+	@$(ECHO) "configuring Java ..."
+	@bin/R CMD javareconf
+	@touch stamp-java
+
+javaconf: stamp-java
+
 
 install install-strip: installdirs svnonly
 	@for d in $(SUBDIRS); do \
@@ -147,7 +154,7 @@ distclean: clean
 	fi
 	-@rm -rf libconftest.dSYM
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
-	  config.cache config.log config.status libtool \
+	  config.cache config.log config.status libtool stamp-java \
 	  $(ACLOCAL_M4) acinclude.m4 $(distdir).tar.gz
 maintainer-clean: distclean
 	@$(ECHO) "This command is intended for maintainers to use; it"

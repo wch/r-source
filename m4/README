@@ -36,8 +36,5 @@ The files are as follows.
   gettext-lib.m4
 	a concatenation of the m4 files from gettext-0.14.5/autoconf-lib-link.
 
-  java.m4
-	macros for detecting Java runtime environment or JDK.
-
   libtool.m4
 	is from libtool 1.5.6.

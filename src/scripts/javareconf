@@ -216,6 +216,9 @@ hostos=`uname 2>/dev/null`
   *)
     ;;
 esac
+## we now look for a path to put in R_LD_LIBRARY_PATH which will
+## enable libjvm to be found at run time.  This should not be needed,
+## but it seems that libjvm is often not in the ld.so cache.
 if test "${JAVA_LIBS}" = "~autodetect~"; then
 	## we need to reset LD_LIBRARY_PATH, because Java automatically
 	## adds all LD_LIBRARY_PATH to Java path
@@ -224,32 +227,24 @@ if test "${JAVA_LIBS}" = "~autodetect~"; then
 	export LD_LIBRARY_PATH
 	# remove trailing/leading : (if any)
 	java_library_path=`"$JAVA" -classpath "${tools_classpath}" getsp java.library.path| ${SED-sed} -e 's/:$//' -e 's/^://'`
-	# unfortunately recent Oracle Java distributions ship with broken
-	# java.library.path so we try to see if that is the case
+	## see if libjvm is on this path: it is not for recent Oracle Java
 	has_libjvm=no
 	save_IFS=$IFS; IFS=:
 	for dir in ${java_library_path}; do
 	    if test -f "$dir/libjvm${DYLIB_EXT}"; then
 		has_libjvm=yes
+		java_library_path="${dir}"
 		break
 	    fi
 	done
-	# for broken java.library.path try some heuristic using sun.boot.library.path
+	# Then try some heuristics using sun.boot.library.path
 	if test ${has_libjvm} = no; then
-	    echo "NOTE: Your JVM has a bogus java.library.path system property!" >&2
-	    echo "      Trying a heuristic via sun.boot.library.path to find jvm library..." >&2
 	    boot_path=`"$JAVA" -classpath "${tools_classpath}" getsp sun.boot.library.path| ${SED-sed} -e 's/:$//' -e 's/^://'`
 	    if test -n "${boot_path}"; then
 		for dir in "${boot_path}" "${boot_path}/client" "${boot_path}/server"; do
 		    if test -f "$dir/libjvm${DYLIB_EXT}"; then
 			has_libjvm=yes
-			# NOTE: we decided to ignore java.library.path altogether since it was bogus
-			#       we could just append the newly found paths, though
-			if test "${dir}" = "${boot_path}"; then
-			    java_library_path="${dir}"
-			else
-			    java_library_path="${boot_path}:${dir}"
-			fi
+			java_library_path="${dir}"
 			break
 		    fi
 		done
@@ -326,25 +321,6 @@ fi
 if test "${custom_JAVA_LD_LIBRARY_PATH}" != '~autodetect~'; then
   JAVA_LD_LIBRARY_PATH="${custom_JAVA_LD_LIBRARY_PATH}"
   JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED-sed} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
-  if test "${acx_custom_java_libs}" != yes; then
-    echo ''
-    echo ' ** Warning: you are using custom JAVA_LD_LIBRARY_PATH without' >&2
-    echo '    custom JAVA_LIBS. We cannot guarantee that this will work,' >&2
-    echo '    both settings must match for a proper Java operation!' >&2
-  fi
-else
-    if test "${has_libjvm}" = no; then
-	echo ''
-	echo ' ** WARNING: auto-detection could not find libjvm!' >&2
-	echo '    Your JVM has likely invalid java.library.path property,' >&2	
-	echo '    you may want to fix the JVM or set JAVA_LD_LIBRARY_PATH manually.' >&2	
-    fi
-  if test "${acx_custom_java_libs}" = yes; then
-    echo ''
-    echo ' ** Warning: you are using custom JAVA_LIBS setting without' >&2
-    echo '    specifying JAVA_LD_LIBRARY_PATH. We cannot guarantee that' >&2
-    echo '    this will work, both must match for a proper Java operation!' >&2
-  fi
 fi
 
 echo

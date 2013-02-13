@@ -2279,7 +2279,28 @@ AC_SUBST(R_PAPERSIZE)
 AC_SUBST(R_BATCHSAVE)
 
 ## Java support
-R_JAVA
+## R_JAVA
+custom_JAVA_HOME="${JAVA_HOME}"
+: ${JAVA_LIBS=~autodetect~}
+: ${JAVA_CPPFLAGS=~autodetect~}
+: ${JAVA_LD_LIBRARY_PATH=~autodetect~}
+custom_JAVA_LIBS="${JAVA_LIBS}"
+custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
+custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
+AC_SUBST(custom_JAVA_HOME)
+AC_SUBST(custom_JAVA_CPPFLAGS)
+AC_SUBST(custom_JAVA_LIBS)
+AC_SUBST(custom_JAVA_LD_LIBRARY_PATH)
+JAVA_LD_LIBRARY_PATH=
+AC_SUBST(JAVA)
+AC_SUBST(JAVAC)
+AC_SUBST(JAVAH)
+AC_SUBST(JAR)
+AC_SUBST(JAVA_LD_LIBRARY_PATH)
+AC_SUBST(JAVA_LIBS0)
+AC_SUBST(JAVA_CPPFLAGS0)
+AC_SUBST(R_JAVA_LD_LIBRARY_PATH)
+
 
 ## F90/F95 support
 AC_PROG_FC()
@@ -2458,39 +2479,7 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
 done
 fi
 
-## Handle JAVA_LD_LIBRARY_PATH specially so that users can conveniently set just
-## R_JAVA_LD_LIBRARY_PATH in their environment.
-if test -n "${JAVA_LD_LIBRARY_PATH}"; then
-   args=`echo ${JAVA_LD_LIBRARY_PATH} | sed -e s:\$\(JAVA_HOME\):${JAVA_HOME}:g`
-   r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
-   for lib in ${args}; do
-      r_want_lib=true
-      ## Do not add non-existent directories.
-      test -d "${lib}" || r_want_lib=false
-      if test x"${r_want_lib}" = xtrue; then
-        ## do NOT Canonicalize (/usr/lib/j2sdk1.5-sun/jre/../lib/i386).
-	## because we may lose the reference to ${JAVA_HOME} if it is a symlink (it often is)
-        ##lib=`cd "${lib}" && ${GETWD}`
-        ## Do not add something twice, or something already in
-        ## R_LD_LIBRARY_PATH or the defaults.
-        for dir in ${R_JAVA_LD_LIBRARY_PATH}${IFS}${R_LD_LIBRARY_PATH}${IFS}${r_ld_library_defaults}; do
-          if test x"${dir}" = x"${lib}"; then
-             r_want_lib=false
-             break
-          fi
-        done
-        if test x"${r_want_lib}" = xtrue; then
-	  lib=`echo ${lib}|sed -e s:${JAVA_HOME}:\$\{JAVA_HOME\}:g`
-          R_SH_VAR_ADD(R_JAVA_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
-        fi
-      fi
-   done
-   IFS="${r_save_IFS}"
-fi
-## </FIXME>
-
 AC_SUBST(R_LD_LIBRARY_PATH)
-AC_SUBST(R_JAVA_LD_LIBRARY_PATH)
 
 ## Recommended packages.
 if test "${use_recommended_packages}" = yes; then
@@ -2762,9 +2751,6 @@ if test "${use_strict_barrier}" = yes; then
 fi
 if test "${want_linux_lfs}" = yes; then
   R_SH_VAR_ADD(r_options, [Linux LFS], [, ])
-fi
-if test -n "${JAVA}"; then
-  R_SH_VAR_ADD(r_options, [Java], [, ])
 fi
 if test "${want_prebuilt_html}" = yes; then
   R_SH_VAR_ADD(r_options, [static HTML], [, ])

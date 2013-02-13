@@ -574,7 +574,7 @@
       There is now a test that a JNI program can be compiled (like
       \command{configure} did) and only working settings are used.
 
-      It makes use of custom settings from configuration in
+      It makes use of custom settings from configuration recorded in
       \file{etc/javaconf}.
     }
   }
