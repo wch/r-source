@@ -2966,11 +2966,9 @@ sub-architecture-specific version), e.g.
 @smallexample
 JAVA = /usr/bin/java
 JAVAC = /usr/bin/javac
-JAVA_HOME = /usr/java/jdk1.5.0_06/jre
-JAVA_LD_LIBRARY_PATH = $(JAVA_HOME)/lib/amd64/server:$(JAVA_HOME)/lib/amd64:\
-$(JAVA_HOME)/../lib/amd64:/usr/local/lib64
-JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server -L$(JAVA_HOME)/lib/amd64 
-            -L$(JAVA_HOME)/../lib/amd64 -L/usr/local/lib64 -ljvm
+JAVA_HOME = /usr/java/jdk1.7.0_13/jre
+JAVA_LD_LIBRARY_PATH = $(JAVA_HOME)/lib/amd64/server
+JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server -ljvm
 @end smallexample
 
 @noindent

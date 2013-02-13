@@ -954,6 +954,13 @@
 
       A workaround for earlier versions of \R is to use
       \code{X11.options(type = "nbcairo")}.
+      
+      \item Configuration and \command{R CMD javareconf} now come up
+      with a smaller set of library paths for Java on Oracle-format JDK
+      (including OpenJDK).  This helps avoid conflicts between libraries
+      (such as \code{libjpeg}) supplied in the JDK and system
+      libraries.  This can always be overridden if needed: see the
+      \sQuote{R Installation and Administration} manual.
     }
   }
 
