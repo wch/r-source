@@ -77,7 +77,7 @@ stamp-recommended: R docs
 vignettes: stamp-recommended
 	@(cd src/library && $(MAKE) $@)
 
-stamp-java : etc/javaconf bin/javareconf
+stamp-java : etc/javaconf # bin/javareconf
 	@$(ECHO) "configuring Java ..."
 	@bin/R CMD javareconf
 	@touch stamp-java
