@@ -388,7 +388,7 @@ test "${dry_run}" = yes && exit 0
 echo "Updating Java configuration in ${R_HOME}"
 
 ## We update both the base and arch-specific versions as etc/Makefile
-## copies the first to the second (onlu the second are used).
+## copies the first to the second (only the second is used).
 if test -n "${R_ARCH}"; then
   files="${R_HOME}/etc/Makeconf ${R_HOME}/etc/ldpaths ${R_HOME}/etc${R_ARCH}/Makeconf ${R_HOME}/etc${R_ARCH}/ldpaths"
 else
