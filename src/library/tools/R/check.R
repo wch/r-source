@@ -3733,7 +3733,10 @@ setRlibs <-
                 }
             }
 
-            check_incoming <- config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE")) || as_cran
+            check_incoming <- Sys.getenv("_R_CHECK_CRAN_INCOMING_", "NA")
+            check_incoming <- if(check_incoming == "NA") as_cran else {
+                config_val_to_logical(check_incoming)
+            }
             if (check_incoming) check_CRAN_incoming()
 
             ## <NOTE>
