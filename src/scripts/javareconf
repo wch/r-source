@@ -1,5 +1,5 @@
 if test -z "${R_HOME}"; then
-    echo "This command can be executed via R CMD only!"
+    echo "This command can be only executed via R CMD!"
     exit 1
 fi
 
@@ -23,7 +23,7 @@ Options:
   -h, --help     print this help message and exit
   -v, --version  print version info and exit
   -n, --dry-run  perform Java detection, but don't touch any
-                 configurations files
+                 configuration files
   -e <prog>      same as -n but exports all detected variables
                  and runs <prog>. If -e is the last argument
                  or <prog> is '' then a shell is used instead
@@ -213,8 +213,7 @@ case "$hostos" in
 	export LD_LIBRARY_PATH
 	# remove trailing/leading : (if any)
 	java_library_path=`"$JAVA" -classpath "${tools_classpath}" getsp java.library.path| ${SED-sed} -e 's/:$//' -e 's/^://'`
-	# unfortunately recent Oracle Java distributions ship with broken
-	# java.library.path so we try to see if that is the case
+	## see if libjvm is on this path: it is not for recent Oracle Java
 	has_libjvm=no
 	save_IFS=$IFS; IFS=:
 	for dir in ${java_library_path}; do
@@ -223,7 +222,7 @@ case "$hostos" in
 		break
 	    fi
 	done
-	# for broken java.library.path try some heuristic using sun.boot.library.path
+	# Then try some heuristics using sun.boot.library.path
 	if test ${has_libjvm} = no; then
 	    echo "NOTE: Your JVM has a bogus java.library.path system property!" >&2
 	    echo "      Trying a heuristic via sun.boot.library.path to find jvm library..." >&2
@@ -358,7 +357,13 @@ test "${dry_run}" = yes && exit 0
 
 echo "Updating Java configuration in ${R_HOME}"
 
-files="${R_HOME}/etc${R_ARCH}/Makeconf ${R_HOME}/etc${R_ARCH}/ldpaths"
+## We update both the base and arch-specific versions as etc/Makefile
+## copies the first to the second (only the second is used).
+if test -n "${R_ARCH}"; then
+  files="${R_HOME}/etc/Makeconf ${R_HOME}/etc/ldpaths ${R_HOME}/etc${R_ARCH}/Makeconf ${R_HOME}/etc${R_ARCH}/ldpaths"
+else
+  files="${R_HOME}/etc/Makeconf ${R_HOME}/etc/ldpaths"
+fi
 for file in $files; do
     ${SED-sed} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" -e "s|JAVA_LD_LIBRARY_PATH =.\{0,\}|JAVA_LD_LIBRARY_PATH = ${JAVA_LD_LIBRARY_PATH}|" -e "s|JAVAC =.\{0,\}|JAVAC = $JAVAC|" -e "s|JAVAH =.\{0,\}|JAVAH = $JAVAH|" -e "s|JAR =.\{0,\}|JAR = $JAR|" -e "s|JAVA_CPPFLAGS =.\{0,\}|JAVA_CPPFLAGS = ${JAVA_CPPFLAGS}|g"  "${file}" > "${file}.new"
     if test -f "${file}.new"; then
