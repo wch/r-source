@@ -477,9 +477,15 @@ install.packages <-
     ## or run the install in the current process.
     libpath <- .libPaths()
     libpath <- libpath[! libpath %in% .Library]
-    if(length(libpath)) libpath <- paste(libpath, collapse=.Platform$path.sep)
-    cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
-    ## INSTALL ~= ../../../scripts/INSTALL --> ../../tools/R/
+    if(length(libpath))
+        libpath <- paste(libpath, collapse = .Platform$path.sep)
+
+    cmd0 <- file.path(R.home("bin"), "R")
+    args0 <- c("CMD", "INSTALL")
+
+    outfile <- if(quiet) FALSE else ""
+    env <- character()
+    
     if(length(libpath))
         if(.Platform$OS.type == "windows") {
             ## We don't have a way to set an environment variable for
@@ -488,40 +494,48 @@ install.packages <-
             Sys.setenv(R_LIBS = libpath)
             on.exit(Sys.setenv(R_LIBS = oldrlibs))
         } else
-            cmd0 <- paste(paste("R_LIBS", shQuote(libpath), sep = "="), cmd0)
-
+            env <- paste("R_LIBS", shQuote(libpath), sep = "=")
+    
     if (is.character(clean))
-        cmd0 <- paste(cmd0, clean)
+        args0 <- c(args0, clean)
     if (libs_only)
-        cmd0 <- paste(cmd0, "--libs-only")
+        args0 <- c(args0, "--libs-only")
     if (!missing(INSTALL_opts)) {
         if(!is.list(INSTALL_opts)) {
-            cmd0 <- paste(cmd0, paste(INSTALL_opts, collapse = " "))
+            args0 <- c(args0, paste(INSTALL_opts, collapse = " "))
             INSTALL_opts <- list()
         }
     } else {
         INSTALL_opts <- list()
     }
 
-    if(verbose) message(gettextf("system (cmd0): %s", cmd0), domain = NA)
+    if(verbose)
+        message(gettextf("system (cmd0): %s",
+                         paste(c(cmd0, args0), collapse = " ")),
+                domain = NA)
 
     if(is.null(repos) & missing(contriburl)) {
         ## install from local source tarball(s)
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
 
         for(i in seq_len(nrow(update))) {
-            cmd <- paste(cmd0,
-                         get_install_opts(update[i, 1L]),
-                         "-l", shQuote(update[i, 2L]),
-                         getConfigureArgs(update[i, 1L]),
-                         getConfigureVars(update[i, 1L]),
-                         shQuote(update[i, 1L]))
-           if(system(cmd, ignore.stdout = quiet, ignore.stderr = quiet) > 0L)
-                warning(gettextf(
-                 "installation of package %s had non-zero exit status",
-                                sQuote(update[i, 1L])),
+            args <- c(args0,
+                      get_install_opts(update[i, 1L]),
+                      "-l", shQuote(update[i, 2L]),
+                      getConfigureArgs(update[i, 1L]),
+                      getConfigureVars(update[i, 1L]),
+                      shQuote(update[i, 1L]))
+            status <- system2(cmd0, args, env = env,
+                              stdout = outfile, stderr = outfile)
+            if(status > 0L)
+                warning(gettextf("installation of package %s had non-zero exit status",
+                                 sQuote(update[i, 1L])),
                         domain = NA)
-	    else if(verbose) message(sprintf("%d): succeeded '%s'", i, cmd))
+            else if(verbose) {
+                cmd <- paste(c(cmd0, args), collapse = " ")
+                message(sprintf("%d): succeeded '%s'", i, cmd),
+                        domain = NA)
+            }
         }
         return(invisible())
     }
@@ -570,7 +584,7 @@ install.packages <-
         if (Ncpus > 1L && nrow(update) > 1L) {
             ## if --no-lock or --lock was specified in INSTALL_opts
             ## that will override this.
-            cmd0 <- paste(cmd0, "--pkglock")
+            args0 <- c(args0, "--pkglock")
             tmpd <- file.path(tempdir(), "make_packages")
             if (!file.exists(tmpd) && !dir.create(tmpd))
                 stop(gettextf("unable to create temporary directory %s",
@@ -585,18 +599,29 @@ install.packages <-
             aDL <- .make_dependency_list(upkgs, available, recursive = TRUE)
             for(i in seq_len(nrow(update))) {
                 pkg <- update[i, 1L]
-                cmd <- paste(cmd0,
-                             get_install_opts(update[i, 3L]),
-                             "-l", shQuote(update[i, 2L]),
-                             getConfigureArgs(update[i, 3L]),
-                             getConfigureVars(update[i, 3L]),
-                             shQuote(update[i, 3L]),
-                             ">", paste0(pkg, ".out"), "2>&1")
+                args <- c(args0,
+                          get_install_opts(update[i, 3L]),
+                          "-l", shQuote(update[i, 2L]),
+                          getConfigureArgs(update[i, 3L]),
+                          getConfigureVars(update[i, 3L]),
+                          shQuote(update[i, 3L]),
+                          ">", paste0(pkg, ".out"),
+                          "2>&1")
+                ## <NOTE>
+                ## We currently only use env on Unix for R_LIBS.
+                ## Windows we do Sys.setenv(R_LIBS = libpath).
+                ## Should we use env on Windows as well?
+                ## If so, would we need
+                ##   cmd <- paste(c(shQuote(command), env, args),
+                ##                collapse = " ")
+                ## on Windows?
+                cmd <- paste(c(env, shQuote(cmd0), args), collapse = " ")
+                ## </NOTE>
                 deps <- aDL[[pkg]]
                 deps <- deps[deps %in% upkgs]
                 ## very unlikely to be too long
                 deps <- if(length(deps))
-                    paste(paste0(deps, ".ts"), collapse=" ") else ""
+                    paste(paste0(deps, ".ts"), collapse = " ") else ""
                 cat(paste0(pkg, ".ts: ", deps),
                     paste("\t@echo begin installing package", sQuote(pkg)),
                     paste0("\t@", cmd, " && touch ", pkg, ".ts"),
@@ -604,7 +629,6 @@ install.packages <-
                     "", sep = "\n", file = conn)
             }
             close(conn)
-            ## system(paste("cat ", mfile))
             cwd <- setwd(tmpd)
             on.exit(setwd(cwd))
             ## MAKE will be set by sourcing Renviron
@@ -624,18 +648,23 @@ install.packages <-
             unlink(tmpd, recursive = TRUE)
         } else {
             for(i in seq_len(nrow(update))) {
-                cmd <- paste(cmd0,
-                             get_install_opts(update[i, 3L]),
-                             "-l", shQuote(update[i, 2L]),
-                             getConfigureArgs(update[i, 3L]),
-                             getConfigureVars(update[i, 3L]),
-                             update[i, 3L])
-                status <- system(cmd, ignore.stdout = quiet,
-                                 ignore.stderr = quiet)
+                args <- c(args0,
+                          get_install_opts(update[i, 3L]),
+                          "-l", shQuote(update[i, 2L]),
+                          getConfigureArgs(update[i, 3L]),
+                          getConfigureVars(update[i, 3L]),
+                          update[i, 3L])
+                status <- system2(cmd0, args, env = env,
+                                  stdout = outfile, stderr = outfile)
                 if(status > 0L)
                     warning(gettextf("installation of package %s had non-zero exit status",
-                                     sQuote(update[i, 1L])), domain = NA)
-		else if(verbose) message(sprintf("%d): succeeded '%s'", i, cmd))
+                                     sQuote(update[i, 1L])),
+                            domain = NA)
+		else if(verbose) {
+                    cmd <- paste(c(cmd0, args), collapse = " ")
+                    message(sprintf("%d): succeeded '%s'", i, cmd),
+                            domain = NA)
+                }
             }
         }
         if(!quiet && nonlocalrepos && !is.null(tmpd) && is.null(destdir))
