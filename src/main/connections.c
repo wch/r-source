@@ -4196,7 +4196,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0, m = 0; i < n; i++) {
 	int len = INTEGER(nchars)[i];
 	if(len == NA_INTEGER || len < 0)
-	    error(_("invalid '%s' argument"), "nchar");
+	    error(_("invalid '%s' argument"), "nchars");
 	onechar = isRaw ? rawFixedString(bytes, len, nbytes, &np, useBytes)
 	    : readFixedString(con, len, useBytes);
 	if(onechar != R_NilValue) {
@@ -4280,7 +4280,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (tlen > len) len = tlen;
 	    int tt = INTEGER(nchars)[i];
 	    if(tt == NA_INTEGER || tt < 0)
-		error(_("invalid '%s' argument"), "nchar");
+		error(_("invalid '%s' argument"), "nchars");
 	    if (tt > len) len = tt;
 	}
 	buf = (char *) R_alloc(len + slen, sizeof(char));
