@@ -53,6 +53,7 @@ int setDLLSearchPath(const char *path)
     PSDD p = (PSDD) -1;
     static char wd[MAX_PATH] = "";  /* stored real current directory */
 
+    // XP SP1 and later.
     if(p == (PSDD) -1)
 	p = (PSDD) GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
 				  "SetDllDirectoryA");

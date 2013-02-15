@@ -419,6 +419,7 @@ static Rboolean isdebuggerpresent(void)
 {
     typedef BOOL (*R_CheckDebugger)(void);
     R_CheckDebugger entry;
+    /* XP or later */
     entry =
 	(R_CheckDebugger) GetProcAddress((HMODULE)GetModuleHandle("KERNEL32"),
 					 "IsDebuggerPresent");

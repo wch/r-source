@@ -68,6 +68,7 @@ SEXP ncpus(SEXP virtual)
     DWORD numaNodeCount = 0;
     DWORD processorCoreCount = 0;
     DWORD byteOffset = 0;
+    /* XP SP3 and later, but reports physical CPUs before Vista */
     glpi = (LPFN_GLPI) 
 	GetProcAddress(GetModuleHandle(TEXT("kernel32")),
 		       "GetLogicalProcessorInformation");

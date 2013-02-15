@@ -551,6 +551,7 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = (n1 > n2) ? n1 : n2;
 
 #ifdef Win32
+    // Vista, Server 2008 and later
     pCSL = (PCSL) GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
 				 "CreateSymbolicLinkW");
     if(!pCSL)
