@@ -1050,8 +1050,12 @@
       
       \item The \code{exclude} argument to \code{xtabs()} was ignored
       for \code{"factor"} arguments.
-    }
 
+      \item On Windows, work around an event-timing problem when
+      the RGui console was closed from the \sQuote{X} control and the closure
+      cancelled. (This would on some 64-bit systems crash \R, typically
+      those with a slow GPU relative to the CPU.)
+    }
   }
 }
 
