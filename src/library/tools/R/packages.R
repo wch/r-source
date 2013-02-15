@@ -181,8 +181,15 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
         temp <- tryCatch(read.dcf(file.path(paths[i], "DESCRIPTION"),
                                   fields = fields)[1L, ],
                          error = identity)
-        if(!inherits(temp, "error"))
+        if(!inherits(temp, "error")) {
+            if(is.na(temp["NeedsCompilation"])) {
+                temp["NeedsCompilation"] <-
+                    if(file_test("-d", file.path(paths[i], "src"))) "yes" else "no"
+            }
+            ## Cannot compute MD5 sum of the source tar.gz when working
+            ## on the unpacked sources ...
             db[[i]] <- temp
+        }
     }
     if(verbose) message("done")
     names(db) <- basename(paths)
