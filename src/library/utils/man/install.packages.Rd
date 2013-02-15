@@ -19,7 +19,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
                  configure.vars = getOption("configure.vars"),
                  clean = FALSE, Ncpus = getOption("Ncpus", 1L),
                  verbose = getOption("verbose"),
-                 libs_only = FALSE, INSTALL_opts, quiet = FALSE, \dots)
+                 libs_only = FALSE, INSTALL_opts, quiet = FALSE,
+                 keep_outputs = FALSE, \dots)
 }
 \arguments{
   \item{pkgs}{character vector of the names of packages whose
@@ -168,6 +169,13 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     additional options, with names the respective package names.
   }
   \item{quiet}{logical: if true, reduce the amount of output.}
+  \item{keep_outputs}{a logical: if true, keep the outputs from
+    installing source packages in the current working directory, with
+    the names of the output files the package names with \file{.out}
+    appended.  Alternatively, a character string giving the directory
+    where to save the outputs.  Ignored when installing from local
+    files.
+  }
   \item{\dots}{
     Arguments to be passed to \code{\link{download.file}} or to the
     functions for binary installs on Mac OS X and Windows (which accept

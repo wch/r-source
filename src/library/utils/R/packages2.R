@@ -111,7 +111,9 @@ install.packages <-
              configure.vars = getOption("configure.vars"),
              clean = FALSE, Ncpus = getOption("Ncpus", 1L),
 	     verbose = getOption("verbose"),
-             libs_only = FALSE, INSTALL_opts, quiet = FALSE, ...)
+             libs_only = FALSE, INSTALL_opts, quiet = FALSE,
+             keep_outputs = FALSE,
+             ...)
 {
     if (is.logical(clean) && clean)
         clean <- "--clean"
@@ -268,6 +270,7 @@ install.packages <-
 	} else stop("unable to install packages")
     }
 
+    lib <- normalizePath(lib)
 
     ## check if we should infer repos=NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
@@ -483,10 +486,29 @@ install.packages <-
     cmd0 <- file.path(R.home("bin"), "R")
     args0 <- c("CMD", "INSTALL")
 
-    outfile <- if(quiet) FALSE else ""
+    output <- if(quiet) FALSE else ""
     env <- character()
+
+    outdir <- getwd()
+    if(is.logical(keep_outputs)) {
+        if(is.na(keep_outputs))
+            keep_outputs <- FALSE
+    } else if(is.character(keep_outputs) &&
+              (length(keep_outputs) == 1L)) {
+        if(!file_test("-d", keep_outputs) &&
+           !dir.create(keep_outputs, recursive = TRUE))
+            stop(gettextf("unable to create %s", sQuote(keep_outputs)),
+                 domain = NA)
+        outdir <- normalizePath(keep_outputs)
+        keep_outputs <- TRUE
+    } else {
+        stop(gettextf("invalid %s argument", sQuote("keep_outputs")),
+             domain = NA)
+    }
     
-    if(length(libpath))
+    if(length(libpath)) {
+        ## <FIXME>
+        ## Should we merge the windows case with the unix case?
         if(.Platform$OS.type == "windows") {
             ## We don't have a way to set an environment variable for
             ## a single command, as we do not spawn a shell.
@@ -495,7 +517,9 @@ install.packages <-
             on.exit(Sys.setenv(R_LIBS = oldrlibs))
         } else
             env <- paste("R_LIBS", shQuote(libpath), sep = "=")
-    
+        ## </FIXME>
+    }
+        
     if (is.character(clean))
         args0 <- c(args0, clean)
     if (libs_only)
@@ -526,7 +550,7 @@ install.packages <-
                       getConfigureVars(update[i, 1L]),
                       shQuote(update[i, 1L]))
             status <- system2(cmd0, args, env = env,
-                              stdout = outfile, stderr = outfile)
+                              stdout = output, stderr = output)
             if(status > 0L)
                 warning(gettextf("installation of package %s had non-zero exit status",
                                  sQuote(update[i, 1L])),
@@ -615,7 +639,7 @@ install.packages <-
                 ##   cmd <- paste(c(shQuote(command), env, args),
                 ##                collapse = " ")
                 ## on Windows?
-                cmd <- paste(c(env, shQuote(cmd0), args), collapse = " ")
+                cmd <- paste(c(shQuote(cmd0), args), collapse = " ")
                 ## </NOTE>
                 deps <- aDL[[pkg]]
                 deps <- deps[deps %in% upkgs]
@@ -632,8 +656,10 @@ install.packages <-
             cwd <- setwd(tmpd)
             on.exit(setwd(cwd))
             ## MAKE will be set by sourcing Renviron
-            cmd <- paste(Sys.getenv("MAKE", "make"), "-k -j", Ncpus)
-            status <- system(cmd, ignore.stdout = quiet, ignore.stderr = quiet)
+            status <- system2(Sys.getenv("MAKE", "make"),
+                              c("-k -j", Ncpus),
+                              stdout = output, stderr = output,
+                              env = env)
             if(status > 0L) {
                 ## Try to figure out which
                 pkgs <- update[, 1L]
@@ -644,10 +670,15 @@ install.packages <-
                                  paste(sQuote(failed), collapse = ", ")),
                         domain = NA)
             }
+            if(keep_outputs)
+                file.copy(paste0(update[, 1L], ".out"), outdir)
             setwd(cwd); on.exit()
             unlink(tmpd, recursive = TRUE)
         } else {
             for(i in seq_len(nrow(update))) {
+                outfile <- if(keep_outputs) {
+                    paste0(update[i, 1L], ".out")
+                } else output
                 args <- c(args0,
                           get_install_opts(update[i, 3L]),
                           "-l", shQuote(update[i, 2L]),
@@ -656,6 +687,8 @@ install.packages <-
                           update[i, 3L])
                 status <- system2(cmd0, args, env = env,
                                   stdout = outfile, stderr = outfile)
+                if(!quiet && keep_outputs)
+                    writeLines(readLines(outfile))
                 if(status > 0L)
                     warning(gettextf("installation of package %s had non-zero exit status",
                                      sQuote(update[i, 1L])),
@@ -666,6 +699,8 @@ install.packages <-
                             domain = NA)
                 }
             }
+            if(keep_outputs && (outdir != getwd()))
+                file.copy(paste0(update[, 1L], ".out"), outdir)
         }
         if(!quiet && nonlocalrepos && !is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded source packages are in\n\t%s",
