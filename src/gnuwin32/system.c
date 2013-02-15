@@ -447,6 +447,8 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 		saveact = SA_NOSAVE;
 		break;
 	    case CANCEL:
+		// There might be residual events with destroyed handles
+		R_ProcessEvents();
 		jump_to_toplevel();
 		break;
 
