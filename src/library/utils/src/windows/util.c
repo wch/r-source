@@ -48,10 +48,9 @@ SEXP winver(void)
     */
     if(osvi.dwMajorVersion >= 5) {
 	char *desc = "", *type="";
-	PGNSI pGNSI;
 	SYSTEM_INFO si;
 	if(osvi.dwMajorVersion > 6 
-	   || (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 2) ) { /* future proof */
+	   || (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 2) ) { /* future proof, but see also below */
 	    sprintf(ver, "Windows %d.%d (build %d)",
 		    (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion,
 		    LOWORD(osvi.dwBuildNumber));
@@ -59,11 +58,13 @@ SEXP winver(void)
 	    if(osvi.wProductType == VER_NT_WORKSTATION) {
 		if(osvi.dwMinorVersion == 0) desc = "Vista";
 		else if(osvi.dwMinorVersion == 1) desc = "7";
-		else desc = "8";
+		else if(osvi.dwMinorVersion == 2) desc = "8";
+		else desc = "> 8";
 	    } else {
 		if(osvi.dwMinorVersion == 0) desc = "Server 2008";
 		else if(osvi.dwMinorVersion == 1) desc = "Server 2008 R2";
-		else desc = "Server 2012";
+		else if(osvi.dwMinorVersion == 2) desc = "Server 2012";
+		else desc = "Server > 2012";
 	    }
 	} else if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
 	    desc = "2000";
@@ -76,10 +77,7 @@ SEXP winver(void)
 		desc = "Server 2003";
 	}
 	/* GetNativeSystemInfo is XP or later */
-	pGNSI = (PGNSI)
-	    GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
-			   "GetNativeSystemInfo");
-	if(NULL != pGNSI) pGNSI(&si); else GetSystemInfo(&si);
+	GetNativeSystemInfo(&si);
 	if(si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
 	    type = " x64";
 
