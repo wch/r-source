@@ -954,7 +954,8 @@ function()
 function()
     c("Package", "Version", "Priority",
       "Depends", "Imports", "LinkingTo", "Suggests", "Enhances",
-      "OS_type", "License", "Archs")
+      "OS_type", "License", "Archs",
+      "MD5sum", "NeedsCompilation")
 
 ### ** .get_standard_DESCRIPTION_fields
 
@@ -1011,10 +1012,8 @@ function()
                "VignetteBuilder",
                "ZipData"),
              ## Others: adjust as needed.
-             c("Archs",
-               "Repository",
+             c("Repository",
                "Path",
-               "MD5sum",
                "Date/Publication",
                "LastChangedDate",
                "LastChangedRevision",
