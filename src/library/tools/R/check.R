@@ -3228,7 +3228,7 @@ setRlibs <-
             "      --no-install      skip installation and associated tests",
             "      --no-tests        do not run code in 'tests' subdirectory",
             "      --no-manual       do not produce the PDF manual",
-            "      --no-vignettes    do not check Sweave vignettes",
+            "      --no-vignettes    do not run R code in vignettes",
             "      --no-rebuild-vignettes    do not re-build PDFs of vignettes",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
