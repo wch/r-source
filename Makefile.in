@@ -80,7 +80,7 @@ vignettes: stamp-recommended
 ## This needs packages built, hence 'R' dependence on 'javaconf'
 stamp-java : etc/javaconf bin/javareconf
 	@$(ECHO) "configuring Java ..."
-	@bin/R CMD javareconf
+	@-bin/R CMD javareconf
 	@touch stamp-java
 
 javaconf: R
