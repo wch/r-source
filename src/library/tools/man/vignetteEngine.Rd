@@ -28,7 +28,7 @@ The \code{weave} and \code{tangle} functions must be defined with
 argument lists compatible with \code{\link{Sweave}} and 
 \code{\link{Stangle}} respectively. If the filename being processed
 has one of the Sweave extensions (i.e. matching the regular expression
-\code{"[.][RrSs](nw|tex)$"}, the \code{weave} function should produce 
+\code{"[.][RrSs](nw|tex)$"}), the \code{weave} function should produce 
 a \file{.tex} file in the same directory.  If it has the extension
 \file{.Rmd}, weaving should produce an \file{.html} file.  The
 \code{tangle} function should always produce a \file{.R} file.
