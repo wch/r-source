@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -135,13 +135,13 @@ install.packages <-
              gsub(.standard_regexps()$valid_package_version, "",
                   basename(pkg)))
     }
-    
+
     getConfigureArgs <- function(pkg)
     {
         if(.Platform$OS.type == "windows") return(character())
-        
+
         pkg <- get_package_name(pkg)
-        
+
         if(length(pkgs) == 1L && length(configure.args) &&
            length(names(configure.args)) == 0L)
             return(paste0("--configure-args=",
@@ -501,11 +501,10 @@ install.packages <-
                  domain = NA)
         outdir <- normalizePath(keep_outputs)
         keep_outputs <- TRUE
-    } else {
+    } else
         stop(gettextf("invalid %s argument", sQuote("keep_outputs")),
              domain = NA)
-    }
-    
+
     if(length(libpath)) {
         ## <FIXME>
         ## Should we merge the windows case with the unix case?
@@ -519,7 +518,7 @@ install.packages <-
             env <- paste("R_LIBS", shQuote(libpath), sep = "=")
         ## </FIXME>
     }
-        
+
     if (is.character(clean))
         args0 <- c(args0, clean)
     if (libs_only)
@@ -633,7 +632,8 @@ install.packages <-
                           "2>&1")
                 ## <NOTE>
                 ## We currently only use env on Unix for R_LIBS.
-                ## Windows we do Sys.setenv(R_LIBS = libpath).
+                ## Windows we do Sys.setenv(R_LIBS = libpath),
+                ## since system2() has limited support for 'env'
                 ## Should we use env on Windows as well?
                 ## If so, would we need
                 ##   cmd <- paste(c(shQuote(command), env, args),

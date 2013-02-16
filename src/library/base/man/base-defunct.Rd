@@ -169,6 +169,9 @@ is.real(x)
 % </Removed 3.0.0>
 }
 \details{
+  Some of these have stubs which report that they are defunct, but most
+  have been removed completely (apart from being documented here).
+  
   \code{category} has been an old-S function before there were factors;
   should be replaced by \code{\link{factor}} throughout!
 
@@ -279,8 +282,7 @@ is.real(x)
   deprecated since \R 2.5.0.
 
   \code{real}, \code{as.real} and \code{is.real} were long-deprecated
-  synonyms for the \code{double} versions which have been removed in \R
-  3.0.0.
+  synonyms for the \code{double} versions.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}

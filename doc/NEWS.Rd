@@ -620,14 +620,16 @@
       \code{NA} instead.
 
       \item The long-defunct functions \code{Rd_parse()},
-      \code{anovalist.lm()}, \code{clearNames()}, \code{glm.fit.null()},
-      \code{lm.fit.null()}, \code{lm.wfit.null()},
+      \code{anovalist.lm()}, \code{clearNames()}, \code{gammaCody()},
+      \code{glm.fit.null()}, \code{lm.fit.null()},
+      \code{lm.wfit.null()}, \code{manglePackageNames()},
       \code{mauchley.test()}, \code{package.contents()},
       \code{print.coefmat()}, \code{reshapeLong()}, \code{resapeWide()},
       \code{tkclose()}, \code{tkcmd()}, \code{tkfile.dir()},
       \code{tkfile.tail()}, \code{tkopen()}, \code{tkputs()},
-      \code{tkread()}, \code{trySilent()}, \code{zip.file.extract()}
-      have been removed entirely (but are still documented in the help system).
+      \code{tkread()}, \code{trySilent()} and \code{zip.file.extract()}
+      have been removed entirely (but are still documented in the help
+      system).
 
       \item The unused \code{dataPath} argument to
       \code{attachNamespace()} has been removed.
