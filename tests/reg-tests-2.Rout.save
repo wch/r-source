@@ -5090,8 +5090,8 @@ Reaction ~ Days + (Days | Subject) + I(Days^2)
 > op <- options(deparse.max.lines = 3)
 > f <- function(...) browser()
 > do.call(f, mtcars)
-Called from: function (...) 
-browser()(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 
+Called from: (function (...) 
+browser())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 
 22.8, 19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 
   ...
 Browse[1]> c
@@ -5099,12 +5099,12 @@ Browse[1]> c
 > options(error = expression(NULL))
 > f <- function(...) stop()
 > do.call(f, mtcars)
-Error in function (...)  : 
+Error in (function (...)  : 
 Calls: do.call -> <Anonymous>
 > traceback()
 3: stop()
-2: function (...) 
-   stop()(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 
+2: (function (...) 
+   stop())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 
    19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9, 
      ...
 1: do.call(f, mtcars)
@@ -7029,11 +7029,26 @@ reallylongnamey ~ reallylongnamex0 + reallylongnamex1 +
 > options(op)
 > ## fixed to 60 in R 2.15.x
 > 
-> 
 > ## PR#15179: user defined binary ops were not deparsed properly
 > quote( `%^%`(x, `%^%`(y,z)) )
 x %^% (y %^% z)
 > quote( `%^%`(x) )
 `%^%`(x)
 > ## 
+> 
+> ## Anonymous function calls were not deparsed properly
+> substitute(f(x), list(f = function(x) x + 1)) 
+(function (x) 
+x + 1)(x)
+> substitute(f(x), list(f = quote(function(x) x + 1)))
+(function(x) x + 1)(x)
+> substitute(f(x), list(f = quote(f+g)))
+(f + g)(x)
+> substitute(f(x), list(f = quote(base::mean)))
+base::mean(x)
+> substitute(f(x), list(f = quote(a[n])))
+a[n](x)
+> substitute(f(x), list(f = quote(g(y))))
+g(y)(x)
+> ## The first three need parens, the last three don't.
 > 

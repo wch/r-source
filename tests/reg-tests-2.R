@@ -2674,8 +2674,16 @@ form
 options(op)
 ## fixed to 60 in R 2.15.x
 
-
 ## PR#15179: user defined binary ops were not deparsed properly
 quote( `%^%`(x, `%^%`(y,z)) )
 quote( `%^%`(x) )
 ## 
+
+## Anonymous function calls were not deparsed properly
+substitute(f(x), list(f = function(x) x + 1)) 
+substitute(f(x), list(f = quote(function(x) x + 1)))
+substitute(f(x), list(f = quote(f+g)))
+substitute(f(x), list(f = quote(base::mean)))
+substitute(f(x), list(f = quote(a[n])))
+substitute(f(x), list(f = quote(g(y))))
+## The first three need parens, the last three don't.

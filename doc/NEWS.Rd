@@ -1044,8 +1044,10 @@
       \item \code{aperm(matrix(1:6, 2, dimnames=list(A={}, B={})), "A")}
       no longer segfaults.
       
-      \item Expressions involving user defined operators were not 
-      always deparsed faithfully. (\PR{15179})
+      \item Expressions involving user defined operators were not
+      always deparsed faithfully (\PR{15179}), nor were those
+      involving calls to anonymous functions (the latter reported by
+      Hadley Wickham).
       
       \item The \code{enc2utf8()} function converted \code{NA_character_}
       to \code{"NA"} in non-UTF-8 locales. (\PR{15201})

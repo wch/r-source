@@ -675,6 +675,38 @@ static const char * quotify(SEXP name, int quote)
     return EncodeString(name, 0, quote, Rprt_adj_none);
 }
 
+/* check for whether we need to parenthesize a caller.  The unevaluated ones
+   are tricky:
+   We want
+     x$f(z)
+     x[n](z)
+     base::mean(x)
+   but
+     (f+g)(z)
+     (function(x) 1)(x)
+     etc.
+*/
+static Rboolean parenthesizeCaller(SEXP s)
+{   
+    SEXP op, sym;
+    if (TYPEOF(s) == LANGSXP) { /* unevaluated */
+    	op = CAR(s);
+    	if (TYPEOF(op) == SYMSXP) {
+    	    if (isUserBinop(op)) return TRUE;   /* %foo% */
+    	    sym = SYMVALUE(op);
+    	    if (TYPEOF(sym) == BUILTINSXP
+    	        || TYPEOF(sym) == SPECIALSXP) {
+    	        if (PPINFO(sym).precedence >= PREC_DOLLAR
+    	            || PPINFO(sym).kind == PP_FUNCALL) return FALSE; /* x$f(z) or x[n](z) or f(z) */
+    	        else return TRUE;		/* (f+g)(z) etc. */
+    	    }
+    	    return FALSE;			/* regular function call */
+    	 } else
+	    return TRUE; 			/* something strange, like (1)(x) */
+    } else 
+        return TYPEOF(s) == CLOSXP;
+}
+
 /* This is the recursive part of deparsing. */
 
 #define SIMPLE_OPTS (~QUOTEEXPRESSIONS & ~SHOWATTRIBUTES & ~DELAYPROMISES)
@@ -1105,13 +1137,23 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	}
 	else if (TYPEOF(CAR(s)) == CLOSXP || TYPEOF(CAR(s)) == SPECIALSXP
 		 || TYPEOF(CAR(s)) == BUILTINSXP) {
-	    deparse2buff(CAR(s), d);
+	    if (parenthesizeCaller(CAR(s))) {
+	    	print2buff("(", d);
+	    	deparse2buff(CAR(s), d);
+	    	print2buff(")", d);
+	    } else
+	    	deparse2buff(CAR(s), d);
 	    print2buff("(", d);
 	    args2buff(CDR(s), 0, 0, d);
 	    print2buff(")", d);
 	}
 	else { /* we have a lambda expression */
-	    deparse2buff(CAR(s), d);
+	    if (parenthesizeCaller(CAR(s))) {
+	    	print2buff("(", d);
+	    	deparse2buff(CAR(s), d);
+	    	print2buff(")", d);
+	    } else
+	    	deparse2buff(CAR(s), d);
 	    print2buff("(", d);
 	    args2buff(CDR(s), 0, 0, d);
 	    print2buff(")", d);
