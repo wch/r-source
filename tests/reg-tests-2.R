@@ -2608,4 +2608,4 @@ d <- data.frame(x = 1:9,
 fit <- lm(y ~ x, data=d, weights=w)
 summary(fit)
 ## issue is how the 5-number summary is labelled
-## (also seem in example(case.names))
+## (also seen in example(case.names))

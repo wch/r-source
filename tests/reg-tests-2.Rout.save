@@ -6833,5 +6833,5 @@ Multiple R-squared: 0.9986,	Adjusted R-squared: 0.9984
 F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10 
 
 > ## issue is how the 5-number summary is labelled
-> ## (also seem in example(case.names))
+> ## (also seen in example(case.names))
 > 
