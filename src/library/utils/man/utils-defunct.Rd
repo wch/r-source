@@ -19,12 +19,17 @@
   they are not needed (any more).
 }
 \usage{
+# Defunct in R 2.0.0
 package.contents(pkg, lib.loc = NULL)
 
-zip.file.extract(file, zipname = "R.zip",
-                 unzip = getOption("unzip"), dir = tempdir())
+# Defunct in R 2.2.0
 CRAN.packages(CRAN = getOption("repos"), method,
               contriburl = contrib.url(CRAN))
+
+# Defunct in R 2.14.0
+zip.file.extract(file, zipname = "R.zip",
+                 unzip = getOption("unzip"), dir = tempdir())
+
 #ifdef windows
 zip.unpack(zipname, dest)
 #endif

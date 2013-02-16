@@ -70,7 +70,7 @@
   they are no longer needed.
 }
 \usage{
-# Removed in 1.x
+# Defunct in 1.x
 Version()
 provide(package)
 .Provided
@@ -101,52 +101,52 @@ printNoClass(x, digits = NULL, quote = TRUE, na.print = NULL,
 codes(x, \dots)
 codes(x, \dots) <- value
 
-# Removed in 2.0.0
+# Defunct in 2.0.0
 La.eigen(x, symmetric, only.values = FALSE, method = c("dsyevr", "dsyev"))
 tetragamma(x)
 pentagamma(x)
 package.description(pkg, lib.loc = NULL, fields = NULL)
 
-# Removed in 2.2.0
+# Defunct in 2.2.0
 loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 delay(x, env = .GlobalEnv)
 
-# Removed in 2.3.0
+# Defunct in 2.3.0
 format.char(x, width = NULL, flag = "-")
 
-# Removed in 2.4.0
+# Defunct in 2.4.0
 La.chol(x)
 La.chol2inv(x, size = ncol(x))
 
-# Removed in 2.4.0
+# Defunct in 2.4.0
 symbol.C(name)
 symbol.For(name)
 
-# Removed in 2.5.0
+# Defunct in 2.5.0
 unix(call, intern = FALSE)
 
-# Removed in 2.8.0
+# Defunct in 2.8.0
 gammaCody(x)
 
-# Removed in 2.9.0
+# Defunct in 2.9.0
 manglePackageName(pkgName, pkgVersion)
 
-# Removed in 2.13.0
+# Defunct in 2.13.0
 .Import(...)
 .ImportFrom(name, ...)
 .Export(...)
 .S3method(generic, class, method)
 
-# Removed in 2.14.0
+# Defunct in 2.14.0
 .First.lib(lib, pkg)
 
-# Removed in 2.15.0
+# Defunct in 2.15.0
 mem.limits(nsize = NA, vsize = NA)
 .saveRDS(\dots)
 .readRDS(\dots)
 Sys.putenv(\dots)
 
-# Removed in 3.0.0
+# Defunct in 3.0.0
 real(length = 0)
 as.real(x, \dots)
 is.real(x)

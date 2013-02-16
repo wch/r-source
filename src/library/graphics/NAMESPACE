@@ -28,9 +28,6 @@ export(barplot.default, boxplot.default, boxplot.matrix,
        contour.default, image.default,
        pairs.default, plot.default, points.default, text.default)
 
-#defunct
-export(piechart)
-
 S3method(Axis, default)
 S3method(Axis, Date)
 S3method(Axis, POSIXt)

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/graphics-defunct.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -16,22 +16,21 @@
   they are not needed (any more).
 }
 \usage{
-% Removed in 1.3.0
+# Defunct in 1.3.0
 dotplot(\dots)
 stripplot(\dots)
-% </Removed 1.3.0>
-% Removed in 1.6.0
+
+# Defunct in 1.6.0
 piechart(x, labels = names(x), edges = 200, radius = 0.8,
          density = NULL, angle = 45, col = NULL, main = NULL, \dots)
-% </Removed 1.6.0>
 }
 \details{
   \code{dotplot} and \code{stripplot} have been renamed to
   \code{\link{dotchart}} and \code{\link{stripchart}},
   respectively.  The names are now used in \CRANpkg{lattice}.
 
-  \code{piechart} is the old name for \code{pie}, but clashed with usage
-  in Trellis.
+  \code{piechart} was the old name for \code{pie}, but clashed with usage
+  in Trellis (not implemented in \CRANpkg{lattice}).
 }
 \seealso{
   \code{\link{Defunct}}

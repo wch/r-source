@@ -9,10 +9,11 @@
 \alias{Rd_parse}
 \title{Defunct Objects in Package \pkg{tools}}
 \description{
-  The functions or variables listed here are defunct, and may get
-  removed as soon as of the next release.
+  The functions or variables listed here are no longer part of \R as
+  they are not needed (any more).
 }
 \usage{
+# Defunct in R 2.10.0
 Rd_parse(file, text = NULL)
 }
 \seealso{

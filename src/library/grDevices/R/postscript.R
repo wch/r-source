@@ -564,12 +564,6 @@ CIDFont <- function(family, cmap, cmapEncoding, pdfresource="")
     checkFont(font)
 }
 
-# Deprecated in favour of Type1Font()
-postscriptFont <- function(family, metrics, encoding="default")
-{
-    .Defunct("Type1Font")
-}
-
 
 ####################
 # PDF font database
