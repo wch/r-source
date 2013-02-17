@@ -1,6 +1,6 @@
 % File src/library/base/man/Bessel.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Bessel}
@@ -35,8 +35,11 @@ besselY(x, nu)
     respectively.}
 }
 \value{
-  Numeric vector of the same length of \code{x} with the (scaled, if
-  \code{expon.scaled = TRUE}) values of the corresponding Bessel function.
+  Numeric vector with the (scaled, if \code{expon.scaled = TRUE})
+  values of the corresponding Bessel function.
+  
+  The length of the result is the maximum of the lengths of the
+  parameters.  All parameters are recycled to that length.
 }
 \details{
   If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},

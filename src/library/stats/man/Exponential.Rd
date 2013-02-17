@@ -1,6 +1,6 @@
 % File src/library/stats/man/Exponential.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Exponential}
@@ -36,6 +36,14 @@ rexp(n, rate = 1)
   \code{pexp} gives the distribution function,
   \code{qexp} gives the quantile function, and
   \code{rexp} generates random deviates.
+
+  The length of the result is determined by \code{n} for
+  \code{rexp}, and is the maximum of the lengths of the
+  numerical parameters for the other functions.  
+  
+  The numerical parameters other than \code{n} are recycled to the
+  length of the result.  Only the first elements of the logical
+  parameters are used.
 }
 \details{
   If \code{rate} is not specified, it assumes the default value of

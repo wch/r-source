@@ -1,6 +1,6 @@
 % File src/library/stats/man/Uniform.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Uniform}
@@ -48,6 +48,20 @@ runif(n, min = 0, max = 1)
   \code{runif} will not generate either of the extreme values unless
   \code{max = min} or \code{max-min} is small compared to \code{min},
   and in particular not for the default arguments.
+}
+\value{
+  \code{dunif} gives the density,
+  \code{punif} gives the distribution function,
+  \code{qunif} gives the quantile function, and
+  \code{runif} generates random deviates.
+  
+  The length of the result is determined by \code{n} for
+  \code{runif}, and is the maximum of the lengths of the
+  numerical parameters for the other functions.  
+  
+  The numerical parameters other than \code{n} are recycled to the
+  length of the result.  Only the first elements of the logical
+  parameters are used.
 }
 \note{The characteristics of output from pseudo-random number generators
   (such as precision and periodicity) vary widely.  See
