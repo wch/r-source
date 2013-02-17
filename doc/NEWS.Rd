@@ -699,6 +699,10 @@
       \item \code{mcparallel()} has a new argument \code{mc.affinity}
       which attempts to set the affinity of the child process according
       to the specification contained therein.
+      
+      \item The port of socket clusters is chosen randomly: this should
+      help to avoid clashes when two users of a multi-user machine try
+      to create a cluster at the same time.
     }
   }
 

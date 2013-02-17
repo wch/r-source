@@ -160,7 +160,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
 
     ## set defaults in case run manually without args.
     master <- "localhost"
-    port <- 10187 # no point in getting option on worker.
+    port <- NA_integer_ # no point in getting option on worker.
     outfile <- Sys.getenv("R_SNOW_OUTFILE") # defaults to ""
     methods <- TRUE
     useXDR <- TRUE
@@ -178,6 +178,7 @@ print.SOCKnode <- print.SOCK0node <- function(x, ...)
                METHODS = {methods <- value},
                XDR = {useXDR <- as.logical(value)})
     }
+    if (is.na(port)) stop("PORT must be specified")
 
     if(as.logical(methods)) library("methods") ## because Rscript does not load methods by default
     ## We should not need to attach parallel, as we are running in the namespace.

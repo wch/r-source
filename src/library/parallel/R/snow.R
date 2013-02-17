@@ -83,7 +83,8 @@ initDefaultClusterOptions <- function(libname)
 {
     rscript <- file.path(R.home("bin"), "Rscript")
     port <- as.integer(Sys.getenv("R_PARALLEL_PORT"))
-    if (is.na(port)) port <- 10187
+    if (is.na(port))
+        port <- 11000 + 1000 * ((stats::runif(1L) + unclass(Sys.time())/300) %% 1)
     options <- list(port = port,
                     timeout = 60 * 60 * 24 * 30, # 30 days
                     master =  Sys.info()["nodename"],
