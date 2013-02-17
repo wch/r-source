@@ -1,6 +1,6 @@
 % File src/library/stats/man/Cauchy.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Cauchy}
@@ -36,6 +36,14 @@ rcauchy(n, location = 0, scale = 1)
   the density, distribution function and quantile function of the Cauchy
   distribution.  \code{rcauchy} generates random deviates from the
   Cauchy.
+  
+  The length of the result is determined by \code{n} for
+  \code{rcauchy}, and is the maximum of the lengths of the
+  numerical parameters for the other functions.  
+  
+  The numerical parameters other than \code{n} are recycled to the
+  length of the result.  Only the first elements of the logical
+  parameters are used.    
 }
 \details{
   If \code{location} or \code{scale} are not specified, they assume

@@ -1,6 +1,6 @@
 % File src/library/stats/man/Chisquare.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Chisquare}
@@ -39,6 +39,14 @@ rchisq(n, df, ncp = 0)
   generates random deviates.
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
+
+  The length of the result is determined by \code{n} for
+  \code{rchisq}, and is the maximum of the lengths of the
+  numerical parameters for the other functions.  
+  
+  The numerical parameters other than \code{n} are recycled to the
+  length of the result.  Only the first elements of the logical
+  parameters are used.
 }
 \details{
   The chi-squared distribution with \code{df}\eqn{= n \ge 0}

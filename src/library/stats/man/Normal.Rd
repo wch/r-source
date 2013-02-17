@@ -1,6 +1,6 @@
 % File src/library/stats/man/Normal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Normal}
@@ -43,6 +43,14 @@ rnorm(n, mean = 0, sd = 1)
   \code{pnorm} gives the distribution function,
   \code{qnorm} gives the quantile function, and
   \code{rnorm} generates random deviates.
+  
+  The length of the result is determined by \code{n} for
+  \code{rnorm}, and is the maximum of the lengths of the
+  numerical parameters for the other functions.  
+  
+  The numerical parameters other than \code{n} are recycled to the
+  length of the result.  Only the first elements of the logical
+  parameters are used.
 }
 \details{
   If \code{mean} or \code{sd} are not specified they assume the default

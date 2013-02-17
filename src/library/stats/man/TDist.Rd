@@ -1,6 +1,6 @@
 % File src/library/stats/man/TDist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TDist}
@@ -43,6 +43,14 @@ rt(n, df, ncp)
   \code{rt} generates random deviates.
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
+
+  The length of the result is determined by \code{n} for
+  \code{rt}, and is the maximum of the lengths of the
+  numerical parameters for the other functions.  
+  
+  The numerical parameters other than \code{n} are recycled to the
+  length of the result.  Only the first elements of the logical
+  parameters are used.
 }
 \note{
   Supplying \code{ncp = 0} uses the algorithm for the non-central

@@ -1,6 +1,6 @@
 % File src/library/stats/man/Geometric.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Geometric}
@@ -49,6 +49,14 @@ rgeom(n, prob)
   \code{rgeom} generates random deviates.
 
   Invalid \code{prob} will result in return value \code{NaN}, with a warning.
+
+  The length of the result is determined by \code{n} for
+  \code{rgeom}, and is the maximum of the lengths of the
+  numerical parameters for the other functions.  
+  
+  The numerical parameters other than \code{n} are recycled to the
+  length of the result.  Only the first elements of the logical
+  parameters are used.
 }
 \source{
   \code{dgeom} computes via \code{dbinom}, using code contributed by

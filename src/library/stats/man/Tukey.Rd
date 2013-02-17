@@ -1,6 +1,6 @@
 % File src/library/stats/man/Tukey.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Tukey}
@@ -37,6 +37,11 @@ qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
 \value{
   \code{ptukey} gives the distribution function and \code{qtukey} its
   inverse, the quantile function.
+  
+  The length of the result is the maximum of the lengths of the
+  numerical parameters.  The other numerical parameters are recycled
+  to that length.  Only the first elements of the logical parameters
+  are used.  
 }
 \note{
   A Legendre 16-point formula is used for the integral of \code{ptukey}.

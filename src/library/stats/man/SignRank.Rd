@@ -1,6 +1,6 @@
 % File src/library/stats/man/SignRank.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SignRank}
@@ -37,6 +37,14 @@ rsignrank(nn, n)
   \code{psignrank} gives the distribution function,
   \code{qsignrank} gives the quantile function, and
   \code{rsignrank} generates random deviates.
+
+  The length of the result is determined by \code{nn} for
+  \code{rsignrank}, and is the maximum of the lengths of the
+  numerical parameters for the other functions.  
+  
+  The numerical parameters other than \code{nn} are recycled to the
+  length of the result.  Only the first elements of the logical
+  parameters are used.
 }
 \details{
   This distribution is obtained as follows.  Let \code{x} be a sample of
