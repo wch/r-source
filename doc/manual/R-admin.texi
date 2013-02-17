@@ -4297,6 +4297,7 @@ To produce a 32-bit build, use @samp{i386} instead of @samp{x86_64}.
 * Lion::                        
 * Mountain Lion::               
 * Tcl/Tk headers and libraries::  
+* Java (OS X)::                 
 * Frameworks::                  
 * Building R.app::              
 @end menu
@@ -4341,33 +4342,6 @@ for C++: @command{cc} is a link to @command{clang}).  However, the best
 performance was obtained from the compilers at
 @uref{http://r.research.att.com}.
 
-The @command{configure} script assumes the Apple Java SDK, which can be
-specified explicitly by something like (the first two lines are
-alternatives depending on which SDK)
-@smallexample
-JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
-JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_39-b04-443.jdk/Contents/Home
-JAVA_CPPFLAGS="-I$(JAVA_HOME)/include"
-JAVA_LD_LIBRARY_PATH=
-JAVA_LIBS="-framework JavaVM"
-@end smallexample
-However, the Oracle Java SDK (which is 64-bit only) has a later version
-of Java and is often preferred.  This may need something like
-@smallexample
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
-JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
-JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
-JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
-@end smallexample
-in @file{config.site}.  As from @R{} 3.0.0 @env{JAVA_LD_LIBRARY_PATH} is
-used as part of @env{DYLD_FALLBACK_LIBRARY_PATH} and so is less likely
-to cause conflicts, but @file{$@{JAVA_HOME@}/jre/lib} is still best
-avoided as it contains libraries which conflict with system libraries.
-
-
-Note that it is necessary to set the environment variable @env{NOAWT}
-e.g.@: to @code{1} to install some Java-using packages such as
-@CRANpkg{iplots}.
 
 
 @node Mountain Lion, Tcl/Tk headers and libraries, Lion, Mac OS X
@@ -4383,24 +4357,7 @@ to be known to @command{pkg-config} when @command{configure} is run:
 this usually means adding it to the @env{PKG_CONFIG_PATH} environment
 variable.
 
-Mountain Lion does not come with a Java runtime (JRE) installed, and an
-upgrade to Mountain Lion removes one if already installed.  It is
-intended to be installed at first use.  Check a JRE is installed by
-running
-
-@example
-java -version
-@end example
-
-@noindent
-in a @command{Terminal} window.  If Java is not installed this should
-prompt you to install it.
-@c http://osxdaily.com/2012/08/01/install-java-in-os-x-mountain-lion/
-However, for security reasons you may want/need to install the latest
-JRE or JDK from Oracle (currently from
-@uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
-
-@node Tcl/Tk headers and libraries, Frameworks, Mountain Lion, Mac OS X
+@node Tcl/Tk headers and libraries, Java (OS X), Mountain Lion, Mac OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -4426,7 +4383,72 @@ Configure @R{} with
 (for the versions bundled with OS X, use paths starting with
 @file{/System/Library}).
 
-@node Frameworks, Building R.app, Tcl/Tk headers and libraries, Mac OS X
+@node Java (OS X), Frameworks, Tcl/Tk headers and libraries, Mac OS X
+@subsection Java
+
+The situation with Java support on OS X is messy, with Apple essentially
+no longer supporting Java (and what it does support is Java 6, which has
+reached end-of-life).  Snow Leopard and Lion shipped with a Java runtime
+(JRE) for Java 6.  Mountain Lion does not come with an installed JRE,
+and an upgrade to Mountain Lion removes one if already installed.  It is
+intended to be installed at first use: (check if a JRE is installed by
+running
+
+@example
+java -version
+@end example
+
+@noindent
+in a @command{Terminal} window: if Java is not installed this should
+prompt you to install it.)
+
+However, for security reasons you may want/need to install the latest
+JRE or JDK from Oracle (currently from
+@uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
+this is 64-bit only.
+
+To see what versions of Java are currently installed, run
+@command{/usr/libexec/java_home -V}, which lists all the JREs currently
+installed.  Set the environment variable @env{JAVA_HOME} to choose
+betwen these, both when @R{} is built from the sources and when
+@command{R CMD javareconf} is run.
+
+Configuring and building @R{} both looks for a JRE and for support for
+compiling JNI programs (used by packages @CRANpkg{rJava} and
+@CRANpkg{JavaGD}); the later requires a JDK (Java SDK) and not just a
+Java run-time.
+
+The build process tries to fathom out what JRE/JDK is to not used, but
+it may need some help, e.g.@: by setting @env{JAVA_HOME}.  The Apple
+Java SDK can be specified explicitly by something like (the first two
+lines are alternatives depending on which JDK)
+@example
+JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_39-b04-443.jdk/Contents/Home
+JAVA_CPPFLAGS="-I$(JAVA_HOME)/include"
+JAVA_LD_LIBRARY_PATH=
+JAVA_LIBS="-framework JavaVM"
+@end example
+The Oracle Java SDK may need something like
+@example
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
+JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
+JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
+JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
+@end example
+in @file{config.site}.  As from @R{} 3.0.0 @env{JAVA_LD_LIBRARY_PATH} is
+used as part of @env{DYLD_FALLBACK_LIBRARY_PATH} and so is less likely
+to cause conflicts, but @file{$@{JAVA_HOME@}/jre/lib} is still best
+avoided as in some JDKs it contains libraries which conflict with system
+libraries.
+
+Note that it is necessary to set the environment variable @env{NOAWT}
+e.g.@: to @code{1} to install some Java-using packages such as
+@CRANpkg{iplots}.
+
+
+
+@node Frameworks, Building R.app, Java (OS X), Mac OS X
 @subsection Frameworks
 
 The @acronym{CRAN} build of @R{} is installed as a framework, which is
