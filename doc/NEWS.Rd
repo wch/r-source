@@ -389,9 +389,13 @@
       \code{replications()} now automatically convert character
       vectors to factors without a warning.      
 
-      \item The print method for objects of class \code{"table"} now
-      detects tables with 0-extents and prints the results as, e.g.,
+      \item The \code{print} method for objects of class \code{"table"}
+      now detects tables with 0-extents and prints the results as, e.g.,
       \samp{< table of extent 0 x 1 x 2 >}. (Wish of \PR{15198}.)
+  
+      \item Deparsing involving calls to anonymous functions and formula
+      expressions has been made closer to reversible by the addition of
+      extra parentheses.
     }
   }
 
@@ -1049,9 +1053,7 @@
       no longer segfaults.
       
       \item Expressions involving user defined operators were not
-      always deparsed faithfully (\PR{15179}), nor were those
-      involving calls to anonymous functions (the latter reported by
-      Hadley Wickham).
+      always deparsed faithfully (\PR{15179}).
       
       \item The \code{enc2utf8()} function converted \code{NA_character_}
       to \code{"NA"} in non-UTF-8 locales. (\PR{15201})
