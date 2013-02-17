@@ -344,6 +344,8 @@ PKG_CPPFLAGS = ${JAVA_CPPFLAGS1}
 PKG_LIBS = ${JAVA_LIBS1}
 _ACEOF
 
+## in case e.g. -k was passed in the environment
+export MAKEFLAGS=
 ${R_HOME}/bin/R CMD SHLIB conftest.c
 ac_status=$?
 
