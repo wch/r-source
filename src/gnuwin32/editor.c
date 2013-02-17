@@ -741,9 +741,6 @@ static editor neweditor(void)
     MCHECK(m = newmenuitem("-", 0, NULL));
     MCHECK(m = newmenuitem(G_("Close script"), 0, menueditorclose));
     setdata(m, c);
-    /* MCHECK(m = newmenuitem("-", 0, NULL));
-       MCHECK(m = newmenuitem(G_("Exit"), 0, closeconsole));
-       setdata(m, c); */
     MCHECK(newmenu(G_("Edit")));
     MCHECK(m = newmenuitem(G_("Undo"), 'Z', editorundo));
     setdata(m, t);

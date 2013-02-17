@@ -100,7 +100,6 @@ int RguiPackageMenu(PkgMenuItems pmenu);
 void pkgmenuact(PkgMenuItems pmenu);
 int RguiCommonHelp(menu m, HelpMenuItems hmenu);
 void helpmenuact(HelpMenuItems hmenu);
-void closeconsole(control m);
 void showstatusbar(void);
 
 menu getGraphMenu(const char *); /* from extra.c */

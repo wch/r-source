@@ -102,9 +102,10 @@ void Rconsolecmd(char *cmd)
     consolecmd(RConsole, cmd);
 }
 
-void closeconsole(control m)  /* can also be called from editor menus */
+static void closeconsole(control m)
 {
-    R_CleanUp(SA_DEFAULT, 0, 1);
+    consolecmd(RConsole, "q()");
+//    R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
 static void quote_fn(wchar_t *fn, char *s)
