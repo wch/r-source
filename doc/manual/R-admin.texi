@@ -4291,6 +4291,9 @@ OBJC='gcc-4.2 -arch x86_64'
 in @file{config.site} or on the @command{configure} command line.
 
 To produce a 32-bit build, use @samp{i386} instead of @samp{x86_64}.
+Care is needed, as @code{gfortran} may default to a different
+architecture from the C compilers.
+
 
 @menu
 * Snow Leopard::                
@@ -4343,7 +4346,6 @@ performance was obtained from the compilers at
 @uref{http://r.research.att.com}.
 
 
-
 @node Mountain Lion, Tcl/Tk headers and libraries, Lion, Mac OS X
 @subsection Mountain Lion
 
@@ -4389,23 +4391,18 @@ Configure @R{} with
 The situation with Java support on OS X is messy, with Apple essentially
 no longer supporting Java (and what it does support is Java 6, which has
 reached end-of-life).  Snow Leopard and Lion shipped with a Java runtime
-(JRE) for Java 6.  Mountain Lion does not come with an installed JRE,
-and an upgrade to Mountain Lion removes one if already installed.  It is
-intended to be installed at first use: (check if a JRE is installed by
-running
+(JRE).
 
-@example
-java -version
-@end example
-
-@noindent
-in a @command{Terminal} window: if Java is not installed this should
-prompt you to install it.)
+Mountain Lion does not come with an installed JRE, and an upgrade to
+Mountain Lion removes one if already installed.  It is intended to be
+installed at first use. Check if a JRE is installed by running
+@command{java -version} in a @command{Terminal} window: if Java is not
+installed this should prompt you to install it.
 
 However, for security reasons you may want/need to install the latest
-JRE or JDK from Oracle (currently from
+Java from Oracle (currently from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
-this is 64-bit only.
+this is 64-bit only and for Lion and later.
 
 To see what versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V}, which lists all the JREs currently
@@ -4418,10 +4415,10 @@ compiling JNI programs (used by packages @CRANpkg{rJava} and
 @CRANpkg{JavaGD}); the later requires a JDK (Java SDK) and not just a
 Java run-time.
 
-The build process tries to fathom out what JRE/JDK is to not used, but
-it may need some help, e.g.@: by setting @env{JAVA_HOME}.  The Apple
-Java SDK can be specified explicitly by something like (the first two
-lines are alternatives depending on which JDK)
+The build process tries to fathom out what JRE/JDK to use, but it may
+need some help, e.g.@: by setting @env{JAVA_HOME}.  The Apple JDK can be
+specified explicitly by something like (the first two lines are
+alternatives depending on which Apple JDK)
 @example
 JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
 JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_39-b04-443.jdk/Contents/Home
