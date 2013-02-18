@@ -599,7 +599,7 @@ fsub1 <- function(pattern, replacement, x)
 
 
 ## for lists of messages, see ../man/checkRd.Rd
-checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
+checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                     unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
 {
     warnRd <- function(block, Rdfile, ..., level=0)
@@ -892,6 +892,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             tagtitle <- sQuote(as.character(title))
     	} else tagtitle <- tag
         has_text <<- FALSE
+        if (tag == "\\synopsis")
+            warnRd(section, Rdfile, level = 3,
+                   "\\synopsis will be removed in R 3.1.0")
         if (tag %in% c("\\usage", "\\synopsis", "\\examples"))
             checkCodeBlock(section, tag)
     	else checkContent(section, tag)

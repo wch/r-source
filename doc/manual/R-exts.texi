@@ -493,7 +493,7 @@ package citation information takes advantage of this specification.  In
 auto-generated from it if needed when building@footnote{at least if this
 is done in a locale which matches the package encoding.} or
 installing@footnote{installation generates an ASCII version in @R{}
-2.x.y.}.
+< 3.0.0.}.
 
 @findex COPYRIGHTS
 @c DESCRIPTION field Copyright
@@ -518,7 +518,7 @@ followed by a comment in parentheses.  The comment should contain a
 comparison operator, whitespace and a valid version number.  You can
 also use the special package name @samp{R} if your package depends on a
 certain version of @R{} --- e.g., if the package works only with @R{}
-version 2.11.0 or later, include @samp{R (>= 2.11.0)} in the
+version 3.0.0 or later, include @samp{R (>= 3.0.0)} in the
 @samp{Depends} field.  You can also require a certain SVN revision for
 R-devel or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>= r56550)}
 requires a version later than R-devel of late July 2011 (including
@@ -4482,7 +4482,7 @@ code and documentation is possible).
 
 It is no longer advisable to use @code{\synopsis} for the actual
 synopsis and show modified synopses in the @code{\usage}.  Support for
-@code{\synopsis} will be removed eventually.  To indicate that a
+@code{\synopsis} will be removed in \R 3.1.0.  To indicate that a
 function can be used in several different ways, depending on the named
 arguments specified, use section @code{\details}.  E.g.,
 @file{abline.Rd} contains
@@ -12522,8 +12522,8 @@ When @R{} is installed and recording is not disabled then two string
 values are written at that location for keys @code{InstallPath} and
 @code{Current Version}, and these keys are removed when @R{} is
 uninstalled.  To allow information about other installed versions to be
-retained, there is also a key named something like @code{2.11.0} or
-@code{2.11.0 patched} or @code{2.12.0 Pre-release} with a value for
+retained, there is also a key named something like @code{3.0.0} or
+@code{3.0.0 patched} or @code{3.1.0 Pre-release} with a value for
 @code{InstallPath}.
 
 So a comprehensive algorithm to search for @code{R_HOME} is something
