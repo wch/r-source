@@ -520,7 +520,8 @@ will be attached (after checking version requirements) before the
 current package, both when @code{library} is called and when preparing
 for lazy-loading during installation.
 
-A package (or @samp{R}) can appear more than once in the @samp{Depends}.
+A package (or @samp{R}) can appear more than once in the
+@samp{Depends} field.
 
 It makes no sense to declare a dependence on @code{R} without a version
 specification, nor on the package @pkg{base}: this is an @R{} package
@@ -974,6 +975,8 @@ tests are run).
 If @file{tests} has a subdirectory @file{Examples} containing a file
 @code{@var{pkg}-Ex.Rout.save}, this is compared to the output file for
 running the examples when the latter are checked.
+Reference output should be produced without having the 
+@option{--timings} flag set.
 
 Subdirectory @file{exec} could contain additional executable scripts the
 package needs, typically scripts for interpreters such as the shell,
@@ -1586,7 +1589,7 @@ DLL.
 
 @cindex OpenMP
 
-As from @R{} 2.13.0 there is some support for packages which wish to use
+There is some support for packages which wish to use
 OpenMP@footnote{@uref{http://www.openmp.org/},
 @uref{http://en.wikipedia.org/@/wiki/@/OpenMP},
 @uref{https://computing.llnl.gov/@/tutorials/@/openMP/}}.  The
@@ -2340,10 +2343,6 @@ default (it can be selected by environment variable
 
 It can be useful to run @command{R CMD check --check-subdirs=yes} on the
 built tarball as a final check on the contents.
-
-Note that prior to @R{} 2.13.0, @command{R CMD build} did some cleaning in
-the supplied source directory, but this was undocumented and is no
-longer done.
 
 @command{R CMD build} looks a suitable @command{tar} program that can
 produce a compressed tarball: almost certainly one will have been found
@@ -3451,12 +3450,11 @@ export(AIC, BIC, nobs)
 @noindent
 All S4 classes to be used outside the package need to be listed in an
 @code{exportClasses} directive. Alternatively, they can be specified
-using @code{exportClassPattern}.@footnote{As from @R{} 2.13.0 this
-defaults to the same pattern as @code{exportPattern}: use something like
+using @code{exportClassPattern}.@footnote{This defaults to the same
+pattern as @code{exportPattern}: use something like
 @code{exportClassPattern("^$")} to override this.} in the same style as
-for @code{exportPattern}.
-To export methods for generics from other packages an
-@code{exportMethods} directive can be used.
+for @code{exportPattern}.  To export methods for generics from other
+packages an @code{exportMethods} directive can be used.
 
 Note that exporting methods on a generic in the namespace will also
 export the generic, and exporting a generic in the namespace will also
@@ -3604,9 +3602,7 @@ problems.  This is particularly important for C++, where @code{g++ -Wall
 -pedantic} will alert you to the use of GNU extensions which fail to
 compile on most other C++ compilers.  @R{} assumes a C99 compiler as
 from version 2.12.0, but if you want your package to be portable to
-earlier versions you should write in C90.  (In practice C99 has been
-available on most platforms since @emph{ca} 2007 but old versions of
-@command{gcc} were still in use for @R{} 2.11.x.)
+earlier versions you should write in C90.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
@@ -4110,10 +4106,7 @@ look like as a @file{CITATION} file can be seen in recommended package
 @CRANpkg{nlme} (see below): recommended packages @CRANpkg{boot},
 @CRANpkg{cluster} and @CRANpkg{mgcv} have further examples.
 
-A @file{CITATION} file will contain calls to function @code{bibentry}
-(new style, only works with @R{} 2.12.0 or later), or to the functions
-@code{citHeader}, @code{citEntry} and (optionally) @code{citFooter} (old
-style).
+A @file{CITATION} file will contain calls to function @code{bibentry}.
 
 Here is that for @CRANpkg{nlme}, re-formatted:
 
@@ -4443,7 +4436,7 @@ code and documentation is possible).
 
 It is no longer advisable to use @code{\synopsis} for the actual
 synopsis and show modified synopses in the @code{\usage}.  Support for
-@code{\synopsis} will be removed eventually.  To indicate that a
+@code{\synopsis} will be removed in \R 3.1.0.  To indicate that a
 function can be used in several different ways, depending on the named
 arguments specified, use section @code{\details}.  E.g.,
 @file{abline.Rd} contains
@@ -5751,8 +5744,8 @@ has to be built to enable this, but the option
 @R{}.
 
 The command @command{Rprof} is used to control profiling, and its help
-page can be consulted for full details.  Profiling works by recording at
-fixed intervals@footnote{For Unix-alikes these are intervals of CPU
+page can be consulted for full details.  Profiling works by recording
+at fixed intervals@footnote{For Unix-alikes these are intervals of CPU
 time, and for Windows of elapsed time.} (by default every 20 msecs)
 which @R{} function is being used, and recording the results in a file
 (default @file{Rprof.out} in the working directory).  Then the function
@@ -7908,10 +7901,7 @@ I/O will when compiled on Windows interfere with C I/O: when the Fortran
 I/O is initialized (typically when the package is loaded) the C
 @code{stdout} and @code{stderr} are switched to LF line endings.
 (Function @code{init} in file @file{src/modules/lapack/init_win.c} shows how to
-mitigate this.)  Even worse, prior to @R{} 2.6.2 using Fortran output
-when running under the Windows GUI console (@code{Rgui}) would hang the
-@R{} session.  This is now avoided by ensuring that the Fortran output
-is written to a file (@file{fort.6} in the working directory).
+mitigate this.)
 
 @node Linking to other packages, Handling R objects in C, Fortran I/O, System and foreign language interfaces
 @section Linking to other packages
@@ -11097,15 +11087,6 @@ There is also an @code{F77_CALL(interv)()} version of
 @code{findInterval()} with the same arguments, but all pointers.
 @end deftypefun
 
-The following two functions do @emph{numerical} colorspace conversion from
-HSV to RGB and back.  Note that all colours must be in [0,1].
-
-@deftypefun void hsv2rgb (double @var{h}, double @var{s}, double @var{v}, double *@var{r}, double *@var{g}, double *@var{b})
-@end deftypefun
-
-@deftypefun void rgb2hsv (double @var{r}, double @var{g}, double @var{b}, double *@var{h}, double *@var{s}, double *@var{v})
-@end deftypefun
-
 A system-independent interface to produce the name of a temporary
 file is provided as
 
@@ -11216,9 +11197,9 @@ systems (e.g.@: most OSes on Sparc and PowerPC hardware) and not on
 little-endian systems (such as @code{i686} and @code{x86_64} on all
 OSes, and Linux on Alpha and Itanium).  It can be useful when
 manipulating binary files.  The macro @code{SUPPORT_OPENMP} is defined
-on suitable systems as from @R{} 2.13.0, and can be used in conjunction
-with the @code{SUPPORT_OPENMP_*} macros in packages that want to make
-use of OpenMP.
+on suitable systems and can be used in conjunction with the
+@code{SUPPORT_OPENMP_*} macros in packages that want to make use of
+OpenMP.
 
 Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
 defines a macro @code{R_VERSION} giving the version number encoded as an
@@ -12443,8 +12424,8 @@ When @R{} is installed and recording is not disabled then two string
 values are written at that location for keys @code{InstallPath} and
 @code{Current Version}, and these keys are removed when @R{} is
 uninstalled.  To allow information about other installed versions to be
-retained, there is also a key named something like @code{2.11.0} or
-@code{2.11.0 patched} or @code{2.12.0 Pre-release} with a value for
+retained, there is also a key named something like @code{2.15.2} or
+@code{2.15.2 patched} or @code{3.0.0 Pre-release} with a value for
 @code{InstallPath}.
 
 So a comprehensive algorithm to search for @code{R_HOME} is something
