@@ -1,3 +1,8 @@
+% File src/library/grid/vignettes/locndimn.Rnw
+% Part of the R package, http://www.R-project.org
+% Copyright 2001-13 Paul Murrell and the R Core Team
+% Distributed under GPL 2 or later
+
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Locations versus Dimensions}
 %\VignettePackage{grid}
