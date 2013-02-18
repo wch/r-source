@@ -1,3 +1,8 @@
+% File src/library/grid/vignettes/sharing.Rnw
+% Part of the R package, http://www.R-project.org
+% Copyright 2001-13 Paul Murrell and the R Core Team
+% Distributed under GPL 2 or later
+
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Modifying multiple grobs simultaneously}
 \newcommand{\code}[1]{\texttt{#1}}
