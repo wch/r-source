@@ -1,3 +1,8 @@
+% File src/library/parallel/vignettes/parallel.Rnw
+% Part of the R package, http://www.R-project.org
+% Copyright 2011-3 R Core Team
+% Distributed under GPL 2 or later
+
 \documentclass[a4paper]{article}
 
 \usepackage{Rd, parskip, amsmath, enumerate}

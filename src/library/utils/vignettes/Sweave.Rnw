@@ -1,3 +1,8 @@
+% File src/library/utils/vignettes/Sweave.Rnw
+% Part of the R package, http://www.R-project.org
+% Copyright 2002-13 Friedrich Leisch and the R Core Team
+% Distributed under GPL 2 or later
+
 \documentclass[a4paper]{article}
 
 %\VignetteIndexEntry{Sweave User Manual}
@@ -688,7 +693,7 @@ R CMD Sweave file.Rnw
    fail.
 
    \subsection{Why do R lattice graphics not work?}
-  
+
    In recent versions of Sweave they do if they would when run at the
    command line: some calls (e.g.{} those inside loops) need to be
    explicitly \code{print()}-ed.
