@@ -46,9 +46,7 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
   \samp{file://} URI) or downloaded.  If downloaded, the list is cached
   for the \R session in a per-repository file in \code{\link{tempdir}()}
   with a name like
-\preformatted{
-    repos_http\%3a\%2f\%2fcran.r-project.org\%2fsrc\%2fcontrib.rds
- }
+\preformatted{repos_http\%3a\%2f\%2fcran.r-project.org\%2fsrc\%2fcontrib.rds}
  
   By default, this includes only packages whose version and OS
   requirements are met by the running version of \R, and only gives

@@ -52,8 +52,7 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   element(s) of \code{x} at all.
 
   The algorithm applied to each input string is
-\preformatted{
-    repeat \{
+\preformatted{    repeat \{
         if the string is empty
             break.
         if there is a match

@@ -4411,7 +4411,7 @@ this is 64-bit only and for Lion and later.
 To see what versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V}, which lists all the JREs currently
 installed.  Set the environment variable @env{JAVA_HOME} to choose
-betwen these, both when @R{} is configured and when @command{R CMD
+between these, both when @R{} is configured and when @command{R CMD
 javareconf} is run.
 
 Configuring @R{} both looks for a JRE and for support for compiling JNI
