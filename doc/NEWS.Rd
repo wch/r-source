@@ -393,9 +393,8 @@
       now detects tables with 0-extents and prints the results as, e.g.,
       \samp{< table of extent 0 x 1 x 2 >}. (Wish of \PR{15198}.)
   
-      \item Deparsing involving calls to anonymous functions and formula
-      expressions has been made closer to reversible by the addition of
-      extra parentheses.
+      \item Deparsing involving calls to anonymous functions and has been 
+      made closer to reversible by the addition of extra parentheses.
     }
   }
 
