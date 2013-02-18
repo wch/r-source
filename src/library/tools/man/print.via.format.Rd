@@ -4,9 +4,7 @@
 \description{
   \code{.print.via.format} is a \dQuote{prototype} \code{\link{print}()}
   method, useful, at least as a start, by a simple
-  \preformatted{
-    print.<myS3class>  <-  .print.via.format
-  }
+\preformatted{    print.<myS3class>  <-  .print.via.format}
 }
 \usage{
 .print.via.format(x, ...)

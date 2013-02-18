@@ -236,9 +236,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   a source package on the same repository, and reports if the source
   package has a later version, or is available but no binary version
   is.  This check can be suppressed by
-\preformatted{
-      options(install.packages.check.source = "no")
-}
+\preformatted{    options(install.packages.check.source = "no")}
   and should be if there is a partial repository containing only binary
   files.
 }

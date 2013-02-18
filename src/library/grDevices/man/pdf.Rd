@@ -222,9 +222,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 \section{Printing}{
   Except on Windows it is possible to print directly from \code{pdf} by
   something like (this is appropriate for a CUPS printing system):
-\preformatted{
-    pdf("|lp -o landscape", paper = "a4r")
-}
+\preformatted{    pdf("|lp -o landscape", paper = "a4r")}
   This forces \code{onefile = TRUE}.
 }
 

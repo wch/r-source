@@ -57,9 +57,7 @@ colnames(x) <- value
   If the replacement versions are called on a matrix without any
   existing dimnames, they will add suitable dimnames.  But
   constructions such as
-\preformatted{
-    rownames(x)[3] <- "c"
-}
+\preformatted{    rownames(x)[3] <- "c"}
   may not work unless \code{x} already has dimnames, since this will
   create a length-3 \code{value} from the \code{NULL} value of
   \code{rownames(x)}.

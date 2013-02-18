@@ -84,10 +84,9 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \code{sort.list} removes the \code{NA}s and then computes the order
   amongst the remaining elements: \code{order} computes the order
   amongst the non-\code{NA} elements of the original vector.  Thus
- \preformatted{
-   x[order(x, na.last = NA)]
+\preformatted{   x[order(x, na.last = NA)]
    zz <- x[!is.na(x)]; zz[sort.list(x, na.last = NA)]
- }
+}
    both sort the non-\code{NA} values of \code{x}.
 }
 

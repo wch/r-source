@@ -128,8 +128,7 @@ system(command, intern = FALSE,
   For command-line \R, error messages written to \file{stderr} will be
   sent to the terminal unless \code{ignore.stderr = TRUE}.  They can be
   captured (in the most likely shells) by
-\preformatted{
-    system("some command 2>&1", intern = TRUE)
+\preformatted{    system("some command 2>&1", intern = TRUE)
 }
 
   For GUIs, what happens to output sent to \file{stdout} or
