@@ -719,6 +719,15 @@ unless one is actually needed: doing so makes the package @emph{less}
 portable.  If a package has a specified encoding, you should run
 @command{R CMD build} etc in a locale using that encoding.)
 
+@c DESCRIPTION NeedsCompilation
+This should be set to @code{"yes"} if the package contains code which
+needs to be compiled, otherwise @code{"no"} (when the package would be
+able to be installed from source on any platform without additional
+tools).  This is used by @code{install.packages(type = "both")} in @R{}
+>= 2.15.2 on platforms where binary packages are the norm: it is
+normally set by the repository assuming compilation is required if and
+only if the package has a @file{src} directory.
+
 @c DESCRIPTION field OS_type
 The @samp{OS_type} field specifies the OS(es) for which the
 package is intended.  If present, it should be one of @code{unix} or
