@@ -506,8 +506,10 @@ install.packages <-
              domain = NA)
 
     if(length(libpath)) {
-        ## <FIXME>
-        ## Should we merge the windows case with the unix case?
+        ## <NOTE>
+        ## For the foreseeable future, the 'env' argument to system2()
+        ## on Windows is limited to calls to make and rterm (but not R
+        ## CMD): hence need to set the R_LIBS env var here.
         if(.Platform$OS.type == "windows") {
             ## We don't have a way to set an environment variable for
             ## a single command, as we do not spawn a shell.
@@ -516,7 +518,7 @@ install.packages <-
             on.exit(Sys.setenv(R_LIBS = oldrlibs))
         } else
             env <- paste("R_LIBS", shQuote(libpath), sep = "=")
-        ## </FIXME>
+        ## </NOTE>
     }
 
     if (is.character(clean))
