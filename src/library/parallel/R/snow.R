@@ -85,7 +85,7 @@ initDefaultClusterOptions <- function(libname)
     port <- as.integer(Sys.getenv("R_PARALLEL_PORT"))
     if (is.na(port))
         port <- 11000 + 1000 * ((stats::runif(1L) + unclass(Sys.time())/300) %% 1)
-    options <- list(port = port,
+    options <- list(port = as.integer(port),
                     timeout = 60 * 60 * 24 * 30, # 30 days
                     master =  Sys.info()["nodename"],
                     homogeneous = TRUE,

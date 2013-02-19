@@ -703,9 +703,11 @@
       which attempts to set the affinity of the child process according
       to the specification contained therein.
       
-      \item The port of socket clusters is chosen randomly: this should
-      help to avoid clashes when two users of a multi-user machine try
-      to create a cluster at the same time.
+      \item The port used by socket clusters is chosen randomly: this
+      should help to avoid clashes observed when two users of a
+      multi-user machine try to create a cluster at the same time.  To
+      reproduce the previous behaviour set environment variable
+      \env{R_PARALLEL_PORT} to \code{10187}.
     }
   }
 
@@ -881,7 +883,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R VERSION 2.15.2 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.15.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{lgamma(x)} for very small \code{x} (in the
@@ -913,8 +915,13 @@
       \item The \pkg{tcltk} namespace can now be re-loaded after
       unloading.
 
-      The Tcl/Tk event loop is inhibited in a forked child (as in
-      e.g. \code{mclapply()}.
+      The Tcl/Tk event loop is inhibited in a forked child from package
+      \pkg{parallle} (as in e.g. \code{mclapply()}.
+
+      \item \code{parallel::makeCluster()} recognizes the value
+      \samp{random} for the environment variable \env{R_PARALLEL_PORT}:
+      this chooses a random value for the port and reduces the chance of
+      conflicts when multiple users start a cluster at the same time.
     }
   }
 
