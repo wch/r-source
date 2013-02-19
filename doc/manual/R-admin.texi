@@ -1500,25 +1500,24 @@ For building @R{} from source, see @ref{Mac OS X}.
 framework. The un-installation is as simple as removing those folders
 (e.g.@: by dragging them into the Trash). The typical installation will
 install the GUI into the @file{/Applications} folder and the R framework
-in the @file{/Library/Frameworks} folder.
+in the @file{/Library/Frameworks} folder.  This does leave some links in
+@file{/usr/bin}.
 
-If you want to get rid of R using a Terminal, simply run (prepend
-@code{sudo} if needed):
+If you want to get rid of @R{} more completely using a Terminal, simply
+run (prepend @code{sudo} if needed):
 
 @example
-rm -rf /Library/Frameworks/R.framework /Applications/R.app /Applications/R64.app 
+rm -rf /Library/Frameworks/R.framework /Applications/R.app/Applications/R64.app
+rm -f /usr/bin/R /usr/bin/Rscript /usr/bin/R32 /usr/bin/R64
 @end example
 
-Note that this does leave some symbolic links in @file{/usr/bin}, some
-or all of @file{R}, @file{Rscript}, @file{R32} and @file{R64}.
-
-An alternative is to use Apple's @code{pkgutil} tools to uninstall R. R
-consists of three packages: @code{org.r-project.R.Leopard.fw.pkg},
+An alternative is to use Apple's @code{pkgutil} tool. The installation
+consisted of three packages: @code{org.r-project.R.Leopard.fw.pkg},
 @code{org.r-project.R.Leopard.GUI.pkg} and
 @code{org.r-project.R.Leopard.GUI64.pkg}. You can use @code{pkgutil
---unlink} for each of them to remove their files and/or @code{pkgutil
---forget} if you want the Apple Installer to forget about the package
-without deleting its files (useful when installing multiple R versions
+--unlink} to remove their files or @code{pkgutil --forget} if you want
+the Apple Installer to forget about the package without deleting its
+files (useful for the @R{} framework when installing multiple R versions
 in parallel).
 
 

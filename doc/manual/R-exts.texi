@@ -6164,9 +6164,9 @@ collects information from shared objects compiled with @option{-pg}.
 @subsection Mac OS X
 
 Developers have recommended @command{sample} (or @command{Sampler.app},
-which is a GUI version) and @command{Shark} (see
-@uref{http://developer.apple.com/@/tools/@/sharkoptimize.html} and
-@uref{http://developer.apple.com/@/tools/@/shark_optimize.html}).
+which is a GUI version) and @command{Shark} (in version of @code{Xcode}
+up to those for Snow Leopard), and @command{Instruments} (see
+@uref{https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Introduction/Introduction.html}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
