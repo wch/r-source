@@ -17,8 +17,7 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 "Canada (QC 2)",Canada,Montreal,http://cran.parentingamerica.com/,"iWeb, Montreal","jmiller # Parentingamerica.com",1,ca
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 "China (Beijing 1)",China,Bejing,http://ftp.ctex.org/mirrors/CRAN/,CTEX.ORG,"Aloft Wu <aloft # ctex.org>",1,cn
-"China (Beijing 2)",China,Bejing,http://cran.csdb.cn/,"Computer Network Information Center, CAS, Beijing","Hull # cnic.cn",0,cn
-"China (Beijing 3)",China,Bejing,http://mirror.bjtu.edu.cn/cran,"Beijing Jiaotong University, Beijing","idealities # gmail.com",1,cn
+"China (Beijing 2)",China,Bejing,http://mirror.bjtu.edu.cn/cran,"Beijing Jiaotong University, Beijing","idealities # gmail.com",1,cn
 "China (Guangzhou)",China,Guangzhou,http://cran.dataguru.cn,"Dataguru (a, Guangzhou","dataguru # 139.com",1,cn
 "China (Hefei)",China,Hefei,http://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn
 "China (Xiamen)",China,Xiamen,http://mirrors.xmu.edu.cn/CRAN/,"Xiamen University","admin # Xdmc.org",1,cn
@@ -29,7 +28,8 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "France (Lyon 1)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr
 "France (Lyon 2)",France,Lyon,http://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr
 "France (Montpellier)",France,Montpellier,http://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr
-"France (Paris)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
+"France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
+"France (Paris 2)",France,Paris,http://cran.univ-paris1.fr/,"Universite Paris 1 Pantheon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
 "Germany (Bonn)",Germany,Bonn,http://cran.r-mirror.de/,"Stefan Drees, Bonn","stefan # drees.name",1,de
 "Germany (Falkenstein)",Germany,Falkenstein,http://mirror.layerjet.com/cran,layerjet.com,"Elton Chung <elton # layerjet.com>",1,de
