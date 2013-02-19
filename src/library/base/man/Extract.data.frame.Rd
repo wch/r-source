@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.data.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extract.data.frame}
@@ -133,7 +133,7 @@
 \value{
   For \code{[} a data frame, list or a single column (the latter two
   only when dimensions have been dropped).  If matrix indexing is used for
-  extraction a matrix results.  If the result would be a data frame an
+  extraction a vector results.  If the result would be a data frame an
   error results if undefined columns are selected (as there is no general
   concept of a 'missing' column in a data frame).  Otherwise if a single
   column is selected and this is undefined the result is \code{NULL}.
