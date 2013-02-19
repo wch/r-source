@@ -1,6 +1,6 @@
 % File src/library/parallel/man/makePSOCKcluster.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2003-12 R Core Team
+% Copyright 2003-13 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -65,7 +65,9 @@ setDefaultCluster(cl = NULL)
       machine as \samp{somename.local}, a name known only to itself.}
     \item{\code{port}}{The port number for the socket connection,
       default taken from the environment variable \env{R_PARALLEL_PORT},
-      then \code{10187}.}
+      then \code{10187}, unless the environment variable has value
+      \samp{random}, when a port is chosen randomly in the range
+      \code{11000:11999}.}
     \item{\code{timeout}}{The timeout in seconds for that port.  Default
       30 days (and the POSIX standard only requires values up to 31 days
       to be supported).}

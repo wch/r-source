@@ -6,7 +6,7 @@
 \name{NEWS}
 \title{ R News}
 \encoding{UTF-8}
-\section{\Rlogo CHANGES IN R VERSION 2.15.2 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.15.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{lgamma(x)} for very small \code{x} (in the
@@ -38,8 +38,13 @@
       \item The \pkg{tcltk} namespace can now be re-loaded after
       unloading.
 
-      The Tcl/Tk event loop is inhibited in a forked child (as in
-      e.g. \code{mclapply()}.
+      The Tcl/Tk event loop is inhibited in a forked child from package
+      \pkg{parallle} (as in e.g. \code{mclapply()}.
+
+      \item \code{parallel::makeCluster()} recognizes the value
+      \samp{random} for the environment variable \env{R_PARALLEL_PORT}:
+      this chooses a random value for the port and reduces the chance of
+      conflicts when multiple users start a cluster at the same time.
     }
   }
 
