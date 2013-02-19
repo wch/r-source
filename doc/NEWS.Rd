@@ -651,9 +651,6 @@
       \code{solve(LINPACK = TRUE)} and \code{svd(LINPACK = TRUE)} are
       defunct: LAPACK will be used, with a warning.
 
-      \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated (the
-      \code{pivot = FALSE} case has been since \R 2.15.2).
-
       \item The \code{keep.source} argument to \code{library()} and
       \code{require()} is defunct.  This option needs to be set
       at install time.
@@ -661,6 +658,12 @@
       \item Documentation for \code{real()}, \code{as.real()} and
       \code{is.real()} has been moved to \sQuote{defunct} and the
       functions removed.
+
+      \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated (the
+      \code{pivot = FALSE} case has been since \R 2.15.2).
+
+      \item The obsolete use of \code{\\synopsis} in the \samp{Usage}
+      section of \file{.Rd} files will be removed in \R 3.1.0.
     }
   }
 
