@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2012-03-09 06:16+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -722,9 +722,6 @@ msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "패키지 %s 의 설치는 0 이 아닌 종료상태를 가지고 있습니다"
-
-msgid "%d): succeeded '%s'"
-msgstr ""
 
 msgid "unable to create temporary directory %s"
 msgstr "임시 디렉토리 %s 를 생성할 수 없습니다 "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -697,9 +697,6 @@ msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "安装程序包%s时退出狀態的值不是0"
-
-msgid "%d): succeeded '%s'"
-msgstr ""
 
 msgid "unable to create temporary directory %s"
 msgstr "无法建立临时目录%s"

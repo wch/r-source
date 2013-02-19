@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2012-03-15 11:59-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1587,9 +1587,6 @@ msgstr "переменные %s указаны с другими типами, чем в подгонке"
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' должна быть таблицей данных, а не матрицей"
 
-msgid "character variable '%s' changed to a factor"
-msgstr "текстовая переменная '%s' конвертирована в фактор"
-
 msgid "variable '%s' is not a factor"
 msgstr "переменная '%s' -- не фактор"
 
@@ -1598,9 +1595,6 @@ msgstr "'offset' должен быть числом"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "несоответствие model frame и формулы в model.matrix()"
-
-msgid "variable '%s' converted to a factor"
-msgstr "переменная '%s' конвертирована в фактор"
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr "неправильный аргумент 'contrasts.arg'"
@@ -2634,6 +2628,12 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' слишком короткий: нужно %d точек"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точек"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
+
+#~ msgid "character variable '%s' changed to a factor"
+#~ msgstr "текстовая переменная '%s' конвертирована в фактор"
+
+#~ msgid "variable '%s' converted to a factor"
+#~ msgstr "переменная '%s' конвертирована в фактор"
 
 #~ msgid "Burg's algorithm only implemented for univariate series"
 #~ msgstr "алгоритм Бурга разработан только для одномерных серий"

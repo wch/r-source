@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2012-03-06 21:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1637,9 +1637,6 @@ msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr ""
 "'data' doit être un tableau de données et non pas une matrice ou un tableau"
 
-msgid "character variable '%s' changed to a factor"
-msgstr "la variable chaîne de caractères '%s' est convertie en facteur"
-
 msgid "variable '%s' is not a factor"
 msgstr "la variable '%s' n'est pas un facteur"
 
@@ -1649,9 +1646,6 @@ msgstr "'offset' doit être numérique"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr ""
 "le tableau du modèle et la formule ne correspondent pas dans model.matrix()"
-
-msgid "variable '%s' converted to a factor"
-msgstr "la variable '%s' est convertie en facteur"
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr "argument 'contrasts.arg' incorrect"
@@ -2687,6 +2681,12 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' est trop court : il faut %d points"
 msgstr[1] "'start.innov' est trop court : il faut %d points"
+
+#~ msgid "character variable '%s' changed to a factor"
+#~ msgstr "la variable chaîne de caractères '%s' est convertie en facteur"
+
+#~ msgid "variable '%s' converted to a factor"
+#~ msgstr "la variable '%s' est convertie en facteur"
 
 #~ msgid "Burg's algorithm only implemented for univariate series"
 #~ msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2012-02-26 14:13+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1567,9 +1567,6 @@ msgstr " 変数 %s は当てはめによるものとは異なったタイプを�
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr " 'data' は行列や配列ではなく、データフレームでなければなりません "
 
-msgid "character variable '%s' changed to a factor"
-msgstr " 文字変数 '%s' は因子に変換されました "
-
 msgid "variable '%s' is not a factor"
 msgstr " 変数 %s は因子ではありません "
 
@@ -1578,9 +1575,6 @@ msgstr " 'offset' は数値でなければなりません "
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr " model.matrix() でモデルフレームとモデル式の組合せが不適当です "
-
-msgid "variable '%s' converted to a factor"
-msgstr " 変数 '%s' は因子に変換されました "
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr " 無効な 'contrasts.arg' 引数です "
@@ -2532,6 +2526,12 @@ msgstr[0] " NA, NaN および(または) Inf の観測値は削除されまし�
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "character variable '%s' changed to a factor"
+#~ msgstr " 文字変数 '%s' は因子に変換されました "
+
+#~ msgid "variable '%s' converted to a factor"
+#~ msgstr " 変数 '%s' は因子に変換されました "
 
 #~ msgid "Burg's algorithm only implemented for univariate series"
 #~ msgstr " Burg のアルゴリズムは、一変量系列にだけ実装されています "

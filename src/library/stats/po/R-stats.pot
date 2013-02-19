@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1442,9 +1442,6 @@ msgstr ""
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr ""
 
-msgid "character variable '%s' changed to a factor"
-msgstr ""
-
 msgid "variable '%s' is not a factor"
 msgstr ""
 
@@ -1452,9 +1449,6 @@ msgid "'offset' must be numeric"
 msgstr ""
 
 msgid "model frame and formula mismatch in model.matrix()"
-msgstr ""
-
-msgid "variable '%s' converted to a factor"
 msgstr ""
 
 msgid "invalid 'contrasts.arg' argument"

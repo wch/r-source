@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:53\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -729,9 +729,6 @@ msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "instalacja pakietu %s miała niezerowy status wyjścia"
-
-msgid "%d): succeeded '%s'"
-msgstr ""
 
 msgid "unable to create temporary directory %s"
 msgstr "nie można utworzyć katalogu tymczasowego %s"

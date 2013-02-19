@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1532,9 +1532,6 @@ msgstr ""
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' bir veri çerçevesi olmalı, bir matris veya bir dizi değil"
 
-msgid "character variable '%s' changed to a factor"
-msgstr "karakter değişkeni '%s' bir faktörle değiştirildi"
-
 msgid "variable '%s' is not a factor"
 msgstr "değişken '%s' bir faktör değil"
 
@@ -1543,9 +1540,6 @@ msgstr "'offset' sayısal olmalı"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()'de model çerçevesi ve formül uyumsuzluğu"
-
-msgid "variable '%s' converted to a factor"
-msgstr "değişken '%s' bir faktöre dönüştürüldü"
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr "geçersiz 'contrasts.arg' argümanı"
@@ -2502,6 +2496,12 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
+
+#~ msgid "character variable '%s' changed to a factor"
+#~ msgstr "karakter değişkeni '%s' bir faktörle değiştirildi"
+
+#~ msgid "variable '%s' converted to a factor"
+#~ msgstr "değişken '%s' bir faktöre dönüştürüldü"
 
 #~ msgid "Burg's algorithm only implemented for univariate series"
 #~ msgstr "Burg'ün algoritması sadece tek değişkenli seriler için tanımlı"

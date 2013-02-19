@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:28+0000\n"
+"POT-Creation-Date: 2013-02-19 07:12+0000\n"
 "PO-Revision-Date: 2012-09-25 18:07-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team:  <gnustats@gmail.com>\n"
@@ -50,11 +50,11 @@ msgstr "올바른 유형의 인수가 없습니다"
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "DISPLAY 변수가 없어서 Tk를 사용할 수 없습니다"
 
-#: tcltk_unix.c:90
+#: tcltk_unix.c:94
 msgid "Tcl is not loaded"
 msgstr "Tcl은 로드되지 않았습니다"
 
-#: tcltk_unix.c:94
+#: tcltk_unix.c:98
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl는 마지막으로 로드된 처리기가 아닙니다"
 

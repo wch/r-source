@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:27+0000\n"
+"POT-Creation-Date: 2013-02-19 07:11+0000\n"
 "PO-Revision-Date: 2012-10-26 22:30+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -70,12 +70,12 @@ msgstr ""
 msgid "Internal(pretty()): very large range.. corrected"
 msgstr ""
 
-#: src/gnuwin32/dynload.c:161
+#: src/gnuwin32/dynload.c:162
 #, c-format
 msgid "DLL attempted to change FPU control word from %x to %x"
 msgstr ""
 
-#: src/gnuwin32/dynload.c:202
+#: src/gnuwin32/dynload.c:203
 msgid "cannot get working directory"
 msgstr ""
 
@@ -194,21 +194,21 @@ msgstr ""
 #: src/main/paste.c:590 src/main/paste.c:595 src/main/platform.c:305
 #: src/main/platform.c:307 src/main/platform.c:309 src/main/platform.c:325
 #: src/main/platform.c:336 src/main/platform.c:389 src/main/platform.c:391
-#: src/main/platform.c:701 src/main/platform.c:703 src/main/platform.c:1054
-#: src/main/platform.c:1060 src/main/platform.c:1063 src/main/platform.c:1066
-#: src/main/platform.c:1069 src/main/platform.c:1072 src/main/platform.c:1075
-#: src/main/platform.c:1078 src/main/platform.c:1181 src/main/platform.c:1184
-#: src/main/platform.c:1187 src/main/platform.c:1226 src/main/platform.c:1283
-#: src/main/platform.c:1286 src/main/platform.c:1502 src/main/platform.c:1505
-#: src/main/platform.c:1508 src/main/platform.c:1544 src/main/platform.c:1547
-#: src/main/platform.c:1550 src/main/platform.c:1633 src/main/platform.c:1649
-#: src/main/platform.c:1686 src/main/platform.c:1688 src/main/platform.c:1753
-#: src/main/platform.c:1837 src/main/platform.c:2112 src/main/platform.c:2158
-#: src/main/platform.c:2310 src/main/platform.c:2313 src/main/platform.c:2316
-#: src/main/platform.c:2319 src/main/platform.c:2322 src/main/platform.c:2479
-#: src/main/platform.c:2482 src/main/platform.c:2485 src/main/platform.c:2488
-#: src/main/platform.c:2491 src/main/platform.c:2561 src/main/platform.c:2569
-#: src/main/platform.c:2605 src/main/platform.c:2655 src/main/print.c:241
+#: src/main/platform.c:702 src/main/platform.c:704 src/main/platform.c:1055
+#: src/main/platform.c:1061 src/main/platform.c:1064 src/main/platform.c:1067
+#: src/main/platform.c:1070 src/main/platform.c:1073 src/main/platform.c:1076
+#: src/main/platform.c:1079 src/main/platform.c:1182 src/main/platform.c:1185
+#: src/main/platform.c:1188 src/main/platform.c:1227 src/main/platform.c:1284
+#: src/main/platform.c:1287 src/main/platform.c:1503 src/main/platform.c:1506
+#: src/main/platform.c:1509 src/main/platform.c:1545 src/main/platform.c:1548
+#: src/main/platform.c:1551 src/main/platform.c:1634 src/main/platform.c:1650
+#: src/main/platform.c:1687 src/main/platform.c:1689 src/main/platform.c:1754
+#: src/main/platform.c:1838 src/main/platform.c:2113 src/main/platform.c:2173
+#: src/main/platform.c:2325 src/main/platform.c:2328 src/main/platform.c:2331
+#: src/main/platform.c:2334 src/main/platform.c:2337 src/main/platform.c:2494
+#: src/main/platform.c:2497 src/main/platform.c:2500 src/main/platform.c:2503
+#: src/main/platform.c:2506 src/main/platform.c:2576 src/main/platform.c:2584
+#: src/main/platform.c:2620 src/main/platform.c:2670 src/main/print.c:241
 #: src/main/print.c:247 src/main/print.c:269 src/main/print.c:275
 #: src/main/print.c:282 src/main/random.c:478 src/main/random.c:482
 #: src/main/random.c:489 src/main/random.c:517 src/main/saveload.c:1940
@@ -224,12 +224,12 @@ msgstr ""
 #: src/main/sysutils.c:600 src/main/sysutils.c:1611 src/main/sysutils.c:1615
 #: src/main/unique.c:966 src/main/unique.c:1289 src/main/unique.c:1349
 #: src/main/unique.c:1356 src/main/unique.c:1749 src/main/util.c:576
-#: src/main/util.c:579 src/main/util.c:1772 src/main/util.c:1940
-#: src/main/util.c:1941 src/main/util.c:1942 src/main/util.c:1959
-#: src/main/util.c:1983 src/main/util.c:1987 src/main/util.c:1989
-#: src/main/util.c:2014 src/main/util.c:2016 src/main/util.c:2018
-#: src/main/util.c:2021 src/main/util.c:2024 src/main/util.c:2028
-#: src/main/util.c:2030 src/modules/X11/devX11.c:3241
+#: src/main/util.c:579 src/main/util.c:1773 src/main/util.c:1941
+#: src/main/util.c:1942 src/main/util.c:1943 src/main/util.c:1960
+#: src/main/util.c:1984 src/main/util.c:1988 src/main/util.c:1990
+#: src/main/util.c:2015 src/main/util.c:2017 src/main/util.c:2019
+#: src/main/util.c:2022 src/main/util.c:2025 src/main/util.c:2029
+#: src/main/util.c:2031 src/modules/X11/devX11.c:3241
 #: src/modules/X11/devX11.c:3244 src/modules/X11/devX11.c:3247
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
@@ -306,7 +306,7 @@ msgstr ""
 msgid "invalid input in 'Rmbstowcs'"
 msgstr ""
 
-#: src/gnuwin32/extra.c:825 src/main/platform.c:1258
+#: src/gnuwin32/extra.c:825 src/main/platform.c:1259
 msgid "file choice cancelled"
 msgstr ""
 
@@ -391,8 +391,8 @@ msgstr ""
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:548 src/gnuwin32/system.c:1031
-#: src/gnuwin32/system.c:1043 src/main/connections.c:589
+#: src/gnuwin32/system.c:550 src/gnuwin32/system.c:1033
+#: src/gnuwin32/system.c:1045 src/main/connections.c:589
 #: src/main/connections.c:594 src/main/dounzip.c:177 src/main/saveload.c:1951
 #: src/main/serialize.c:2482 src/main/serialize.c:2487
 #: src/main/serialize.c:2572 src/main/serialize.c:2617 src/unix/system.c:316
@@ -401,68 +401,68 @@ msgstr ""
 msgid "cannot open file '%s': %s"
 msgstr ""
 
-#: src/gnuwin32/system.c:562
+#: src/gnuwin32/system.c:564
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:962
+#: src/gnuwin32/system.c:964
 #, c-format
 msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:996
 msgid "WARNING: no max-mem-size given\n"
-msgstr ""
-
-#: src/gnuwin32/system.c:1000
-#, c-format
-msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr ""
 
 #: src/gnuwin32/system.c:1002
 #, c-format
+msgid "WARNING: --max-mem-size value is invalid: ignored\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:1004
+#, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1007
+#: src/gnuwin32/system.c:1009
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1011
+#: src/gnuwin32/system.c:1013
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1054 src/unix/system.c:355
+#: src/gnuwin32/system.c:1056 src/unix/system.c:355
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1058 src/unix/system.c:368
+#: src/gnuwin32/system.c:1060 src/unix/system.c:368
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1080 src/unix/system.c:372
+#: src/gnuwin32/system.c:1082 src/unix/system.c:372
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1086 src/unix/system.c:379
+#: src/gnuwin32/system.c:1088 src/unix/system.c:379
 msgid "cannot use -e with -f or --file"
 msgstr ""
 
-#: src/gnuwin32/system.c:1104
+#: src/gnuwin32/system.c:1106
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr ""
 
-#: src/gnuwin32/system.c:1123 src/unix/system.c:430
+#: src/gnuwin32/system.c:1125 src/unix/system.c:430
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr ""
 
-#: src/gnuwin32/system.c:1128
+#: src/gnuwin32/system.c:1130
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -1260,7 +1260,7 @@ msgstr ""
 
 #: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:293
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
-#: src/main/coerce.c:1539 src/main/connections.c:2833 src/main/engine.c:2962
+#: src/main/coerce.c:1536 src/main/connections.c:2833 src/main/engine.c:2962
 #: src/main/envir.c:946 src/main/envir.c:999 src/main/envir.c:1089
 #: src/main/envir.c:1549 src/main/envir.c:1671 src/main/envir.c:1739
 #: src/main/envir.c:1857 src/main/envir.c:2514 src/main/envir.c:2574
@@ -1333,11 +1333,11 @@ msgid "invalid argument"
 msgstr ""
 
 #: src/main/builtin.c:892 src/main/builtin.c:902 src/main/builtin.c:904
-#: src/main/character.c:366 src/main/coerce.c:2681
+#: src/main/character.c:366 src/main/coerce.c:2674
 msgid "invalid value"
 msgstr ""
 
-#: src/main/builtin.c:935 src/main/coerce.c:2398 src/main/coerce.c:2439
+#: src/main/builtin.c:935 src/main/coerce.c:2391 src/main/coerce.c:2432
 #: src/main/eval.c:502 src/main/eval.c:619 src/main/eval.c:1933
 #: src/main/eval.c:1999 src/main/eval.c:2059 src/main/eval.c:2390
 #: src/main/eval.c:4489 src/main/eval.c:4598
@@ -1491,7 +1491,7 @@ msgstr ""
 msgid "(symbol) object cannot be coerced to type '%s'"
 msgstr ""
 
-#: src/main/coerce.c:1172 src/main/coerce.c:1487
+#: src/main/coerce.c:1172 src/main/coerce.c:1484
 msgid "no method for coercing this S4 class to a vector"
 msgstr ""
 
@@ -1503,117 +1503,117 @@ msgstr ""
 msgid "attempting to coerce non-factor"
 msgstr ""
 
-#: src/main/coerce.c:1535
+#: src/main/coerce.c:1532
 msgid "list argument expected"
 msgstr ""
 
-#: src/main/coerce.c:1543 src/main/eval.c:5080
+#: src/main/coerce.c:1540 src/main/eval.c:5080
 msgid "invalid environment"
 msgstr ""
 
-#: src/main/coerce.c:1547
+#: src/main/coerce.c:1544
 msgid "argument must have length at least 1"
 msgstr ""
 
-#: src/main/coerce.c:1569
+#: src/main/coerce.c:1566
 msgid "invalid body for function"
 msgstr ""
 
-#: src/main/coerce.c:1592
+#: src/main/coerce.c:1589
 msgid "invalid length 0 argument"
 msgstr ""
 
-#: src/main/coerce.c:1607
+#: src/main/coerce.c:1604
 msgid "invalid argument list"
 msgstr ""
 
-#: src/main/coerce.c:1922
+#: src/main/coerce.c:1915
 msgid "type \"single\" unimplemented in R"
 msgstr ""
 
-#: src/main/coerce.c:1924
+#: src/main/coerce.c:1917
 msgid "unimplemented predicate"
 msgstr ""
 
-#: src/main/coerce.c:2071
+#: src/main/coerce.c:2064
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr ""
 
-#: src/main/coerce.c:2137 src/main/coerce.c:2200 src/main/coerce.c:2268
+#: src/main/coerce.c:2130 src/main/coerce.c:2193 src/main/coerce.c:2261
 #, c-format
 msgid "default method not implemented for type '%s'"
 msgstr ""
 
-#: src/main/coerce.c:2286
+#: src/main/coerce.c:2279
 msgid "'name' is missing"
 msgstr ""
 
-#: src/main/coerce.c:2293
+#: src/main/coerce.c:2286
 msgid "first argument must be a character string"
 msgstr ""
 
-#: src/main/coerce.c:2326
+#: src/main/coerce.c:2319
 msgid "'what' must be a character string or a function"
 msgstr ""
 
-#: src/main/coerce.c:2329
+#: src/main/coerce.c:2322
 msgid "'args' must be a list"
 msgstr ""
 
-#: src/main/coerce.c:2332
+#: src/main/coerce.c:2325
 msgid "'envir' must be an environment"
 msgstr ""
 
-#: src/main/coerce.c:2487
+#: src/main/coerce.c:2480
 msgid "invalid environment specified"
 msgstr ""
 
-#: src/main/coerce.c:2552
+#: src/main/coerce.c:2545
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr ""
 
-#: src/main/coerce.c:2555
+#: src/main/coerce.c:2548
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
 "longer be an S4 object"
 msgstr ""
 
-#: src/main/coerce.c:2557
+#: src/main/coerce.c:2550
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
 msgstr ""
 
-#: src/main/coerce.c:2589
+#: src/main/coerce.c:2582
 msgid "invalid replacement object to be a class string"
 msgstr ""
 
-#: src/main/coerce.c:2610
+#: src/main/coerce.c:2603
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 
-#: src/main/coerce.c:2628
+#: src/main/coerce.c:2621
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 msgstr ""
 
-#: src/main/coerce.c:2636
+#: src/main/coerce.c:2629
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 
-#: src/main/coerce.c:2672
+#: src/main/coerce.c:2665
 msgid "'value' must be non-null character string"
 msgstr ""
 
-#: src/main/coerce.c:2685
+#: src/main/coerce.c:2678
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
 
@@ -2392,7 +2392,7 @@ msgstr ""
 msgid "object '%s' not found"
 msgstr ""
 
-#: src/main/deparse.c:1422
+#: src/main/deparse.c:1466
 msgid "badly formed function expression"
 msgstr ""
 
@@ -3460,7 +3460,7 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr ""
 
-#: src/main/eval.c:4419 src/main/names.c:1131
+#: src/main/eval.c:4419 src/main/names.c:1129
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr ""
@@ -4107,24 +4107,24 @@ msgstr ""
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:965
+#: src/main/names.c:963
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:968
+#: src/main/names.c:966
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1097
+#: src/main/names.c:1095
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1099
+#: src/main/names.c:1097
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr ""
 
-#: src/main/names.c:1126 src/main/names.c:1129
+#: src/main/names.c:1124 src/main/names.c:1127
 msgid "invalid .Internal() argument"
 msgstr ""
 
@@ -4438,7 +4438,7 @@ msgstr ""
 msgid "nothing to append to"
 msgstr ""
 
-#: src/main/platform.c:447 src/main/platform.c:791
+#: src/main/platform.c:447 src/main/platform.c:792
 msgid "invalid filename argument"
 msgstr ""
 
@@ -4447,7 +4447,7 @@ msgstr ""
 msgid "cannot create file '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:474 src/main/platform.c:544 src/main/platform.c:623
+#: src/main/platform.c:474 src/main/platform.c:544 src/main/platform.c:624
 msgid "invalid first filename"
 msgstr ""
 
@@ -4456,180 +4456,180 @@ msgstr ""
 msgid "cannot remove file '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:546 src/main/platform.c:625
+#: src/main/platform.c:546 src/main/platform.c:626
 msgid "invalid second filename"
 msgstr ""
 
-#: src/main/platform.c:548 src/main/platform.c:627
+#: src/main/platform.c:548 src/main/platform.c:628
 msgid "nothing to link"
 msgstr ""
 
-#: src/main/platform.c:557
+#: src/main/platform.c:558
 msgid "symbolic links are not supported on this version of Windows"
 msgstr ""
 
-#: src/main/platform.c:577
+#: src/main/platform.c:578
 #, c-format
 msgid "cannot symlink '%ls' to '%ls', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:597
+#: src/main/platform.c:598
 #, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:605
+#: src/main/platform.c:606
 msgid "symbolic links are not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:645
+#: src/main/platform.c:646
 #, c-format
 msgid "cannot link '%ls' to '%ls', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:665
+#: src/main/platform.c:666
 #, c-format
 msgid "cannot link '%s' to '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:674
+#: src/main/platform.c:675
 msgid "(hard) links are not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:705
+#: src/main/platform.c:706
 msgid "'from' and 'to' are of different lengths"
 msgstr ""
 
-#: src/main/platform.c:716 src/main/platform.c:726
+#: src/main/platform.c:717 src/main/platform.c:727
 msgid "expanded 'from' name too long"
 msgstr ""
 
-#: src/main/platform.c:720 src/main/platform.c:730
+#: src/main/platform.c:721 src/main/platform.c:731
 msgid "expanded 'to' name too long"
 msgstr ""
 
-#: src/main/platform.c:734
+#: src/main/platform.c:735
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:1084
+#: src/main/platform.c:1085
 msgid "invalid 'pattern' regular expression"
 msgstr ""
 
-#: src/main/platform.c:1208
+#: src/main/platform.c:1209
 msgid "unable to determine R home location"
 msgstr ""
 
-#: src/main/platform.c:1260
+#: src/main/platform.c:1261
 msgid "file name too long"
 msgstr ""
 
-#: src/main/platform.c:1515 src/main/platform.c:1562 src/main/sysutils.c:1630
+#: src/main/platform.c:1516 src/main/platform.c:1563 src/main/sysutils.c:1630
 #: src/main/sysutils.c:1644
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/platform.c:1558 src/main/sysutils.c:1640
+#: src/main/platform.c:1559 src/main/sysutils.c:1640
 #, c-format
 msgid "read error on '%s'"
 msgstr ""
 
-#: src/main/platform.c:1720
+#: src/main/platform.c:1721
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr ""
 
-#: src/main/platform.c:1732
+#: src/main/platform.c:1733
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr ""
 
-#: src/main/platform.c:1759
+#: src/main/platform.c:1760
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:2061
+#: src/main/platform.c:2062
 msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/platform.c:2067
+#: src/main/platform.c:2068
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:2074
+#: src/main/platform.c:2075
 msgid "unknown format returned by C function 'gethostbyname'"
 msgstr ""
 
-#: src/main/platform.c:2083
+#: src/main/platform.c:2084
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:2140
+#: src/main/platform.c:2155
 #, c-format
 msgid "'%s' already exists"
 msgstr ""
 
-#: src/main/platform.c:2143
+#: src/main/platform.c:2158
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:2189
+#: src/main/platform.c:2204
 #, c-format
 msgid "'%ls' already exists"
 msgstr ""
 
-#: src/main/platform.c:2193
+#: src/main/platform.c:2208
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:2208 src/main/platform.c:2365
+#: src/main/platform.c:2223 src/main/platform.c:2380
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2216 src/main/platform.c:2229 src/main/platform.c:2247
-#: src/main/platform.c:2265 src/main/platform.c:2381 src/main/platform.c:2394
-#: src/main/platform.c:2414 src/main/platform.c:2434
+#: src/main/platform.c:2231 src/main/platform.c:2244 src/main/platform.c:2262
+#: src/main/platform.c:2280 src/main/platform.c:2396 src/main/platform.c:2409
+#: src/main/platform.c:2429 src/main/platform.c:2449
 msgid "over-long path length"
 msgstr ""
 
-#: src/main/platform.c:2236
+#: src/main/platform.c:2251
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2255
+#: src/main/platform.c:2270
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2273
+#: src/main/platform.c:2288
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2403
+#: src/main/platform.c:2418
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2422
+#: src/main/platform.c:2437
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2443
+#: src/main/platform.c:2458
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2566
+#: src/main/platform.c:2581
 msgid "'mode' must be of length at least one"
 msgstr ""
 
-#: src/main/platform.c:2633
+#: src/main/platform.c:2648
 msgid "insufficient OS support on this platform"
 msgstr ""
 
@@ -6081,28 +6081,28 @@ msgstr ""
 msgid "warning message truncated to 255 chars"
 msgstr ""
 
-#: src/main/util.c:1766
+#: src/main/util.c:1767
 msgid "all arguments must be named"
 msgstr ""
 
-#: src/main/util.c:1839
+#: src/main/util.c:1840
 msgid "ICU is not supported on this build"
 msgstr ""
 
-#: src/main/util.c:1900
+#: src/main/util.c:1901
 msgid "'breaks' is not sorted"
 msgstr ""
 
-#: src/main/util.c:1934 src/main/util.c:1980
+#: src/main/util.c:1935 src/main/util.c:1981
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""
 
-#: src/main/util.c:2033
+#: src/main/util.c:2034
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
 
-#: src/main/util.c:2061
+#: src/main/util.c:2062
 msgid "'x' must be a vector"
 msgstr ""
 
@@ -6541,7 +6541,7 @@ msgstr ""
 msgid "redirect to: '%s'"
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:1452
+#: src/modules/internet/nanohttp.c:1453
 msgid "too many redirects, aborting ..."
 msgstr ""
 

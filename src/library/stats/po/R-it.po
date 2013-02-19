@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1630,10 +1630,6 @@ msgstr ""
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' deve essere un data.frame, non una matrice o un array"
 
-#, fuzzy
-msgid "character variable '%s' changed to a factor"
-msgstr "la variabile '%s' non è di tipo factor"
-
 msgid "variable '%s' is not a factor"
 msgstr "la variabile '%s' non è di tipo factor"
 
@@ -1643,10 +1639,6 @@ msgstr "'x' deve essere numeric"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model frame e formula non coincidono in model.matrix()"
-
-#, fuzzy
-msgid "variable '%s' converted to a factor"
-msgstr "la variabile '%s' non è di tipo factor"
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr "argomento 'contrasts.arg' non valido"
@@ -2667,6 +2659,14 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "character variable '%s' changed to a factor"
+#~ msgstr "la variabile '%s' non è di tipo factor"
+
+#, fuzzy
+#~ msgid "variable '%s' converted to a factor"
+#~ msgstr "la variabile '%s' non è di tipo factor"
 
 #~ msgid "Burg's algorithm only implemented for univariate series"
 #~ msgstr "l'algoritmo di Burg è implementato solo per serie unidimensionali"

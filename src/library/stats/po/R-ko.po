@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -1634,9 +1634,6 @@ msgstr "변수 %s는 적용시키기 위한 것과는 다른 클래스로서 지
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data'는 행렬이나 배열은 아니고, data.frame이 아니면 되지 않습니다"
 
-msgid "character variable '%s' changed to a factor"
-msgstr "변수 '%s'는 인자가 아닙니다"
-
 msgid "variable '%s' is not a factor"
 msgstr "변수 '%s'는 인자가 아닙니다"
 
@@ -1646,10 +1643,6 @@ msgstr "'x'는 수치가 아니면 되지 않습니다"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()로 모델 프레임과 모델식의 편성이 적당하지 않습니다"
-
-#, fuzzy
-msgid "variable '%s' converted to a factor"
-msgstr "변수 '%s'는 인자가 아닙니다"
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr "무효인 대비 인수('contrasts.arg')입니다"
@@ -2630,6 +2623,13 @@ msgstr[0] "NA, NaN 및 Inf의 관측값은 삭제되었습니다"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid "character variable '%s' changed to a factor"
+#~ msgstr "변수 '%s'는 인자가 아닙니다"
+
+#, fuzzy
+#~ msgid "variable '%s' converted to a factor"
+#~ msgstr "변수 '%s'는 인자가 아닙니다"
 
 #~ msgid "Burg's algorithm only implemented for univariate series"
 #~ msgstr "Burg의 알고니즘은 일변양계열에만 실제 적용되어 있습니다"

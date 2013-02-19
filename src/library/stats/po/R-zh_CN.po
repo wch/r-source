@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1528,9 +1528,6 @@ msgstr "设定的变量%s的类别同拟合的类别不相符"
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data'必需是数据框, 不能是矩阵或陣列"
 
-msgid "character variable '%s' changed to a factor"
-msgstr "字符变量'%s'被转成因子"
-
 msgid "variable '%s' is not a factor"
 msgstr "变量'%s'不是因子"
 
@@ -1539,9 +1536,6 @@ msgstr "'offset'必需为数值"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()里的模型框和公式不相配"
-
-msgid "variable '%s' converted to a factor"
-msgstr "变量'%s'被转成因子"
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr "'contrasts.arg'参数不对"
@@ -2476,6 +2470,12 @@ msgstr[0] "删除了含NA, NaN或Inf的观察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d 个点"
+
+#~ msgid "character variable '%s' changed to a factor"
+#~ msgstr "字符变量'%s'被转成因子"
+
+#~ msgid "variable '%s' converted to a factor"
+#~ msgstr "变量'%s'被转成因子"
 
 #~ msgid "Burg's algorithm only implemented for univariate series"
 #~ msgstr "Burg的算法只为单变量序列实现"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,6 +39,9 @@ msgid "unknown cluster type"
 msgstr ""
 
 msgid "node of a socket cluster on host %s with pid %d"
+msgstr ""
+
+msgid "PORT must be specified"
 msgstr ""
 
 msgid "'nnodes' must be >= 1"

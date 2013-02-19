@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 14:33\n"
+"POT-Creation-Date: 2013-02-19 07:12\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -50,6 +50,9 @@ msgstr "nieznany typ klastra"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "węzeł gniazda klastra na hoscie %s z pid %d"
+
+msgid "PORT must be specified"
+msgstr ""
 
 msgid "'nnodes' must be >= 1"
 msgstr "'nnodes' musi być >= 1"
