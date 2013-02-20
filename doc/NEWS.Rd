@@ -627,12 +627,12 @@
       \code{glm.fit.null()}, \code{lm.fit.null()},
       \code{lm.wfit.null()}, \code{manglePackageNames()},
       \code{mauchley.test()}, \code{package.contents()},
-      \code{print.coefmat()}, \code{reshapeLong()}, \code{resapeWide()},
-      \code{tkclose()}, \code{tkcmd()}, \code{tkfile.dir()},
-      \code{tkfile.tail()}, \code{tkopen()}, \code{tkputs()},
-      \code{tkread()}, \code{trySilent()} and \code{zip.file.extract()}
-      have been removed entirely (but are still documented in the help
-      system).
+      \code{print.coefmat()}, \code{reshapeLong()},
+      \code{reshapeWide()}, \code{tkclose()}, \code{tkcmd()},
+      \code{tkfile.dir()}, \code{tkfile.tail()}, \code{tkopen()},
+      \code{tkputs()}, \code{tkread()}, \code{trySilent()} and
+      \code{zip.file.extract()} have been removed entirely (but are
+      still documented in the help system).
 
       \item The unused \code{dataPath} argument to
       \code{attachNamespace()} has been removed.
@@ -659,11 +659,11 @@
       \code{is.real()} has been moved to \sQuote{defunct} and the
       functions removed.
 
-      \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated (the
-      \code{pivot = FALSE} case has been since \R 2.15.2).
+      \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated.
 
-      \item The obsolete use of \code{\\synopsis} in the \samp{Usage}
-      section of \file{.Rd} files will be removed in \R 3.1.0.
+      \item The long deprecated use of \code{\\synopsis} in the
+      \samp{Usage} section of \file{.Rd} files will be removed in \R
+      3.1.0.
     }
   }
 
