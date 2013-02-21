@@ -12,3 +12,12 @@ setMethod("[[", "A", function(x, i, j, ...) x@aa[[i]])
 stopifnot(z == c(101, 204, 309, 104, 210, 318))
 ## reported as a bug (which it was not) by H. Pages in
 ## https://stat.ethz.ch/pipermail/r-devel/2012-November/065229.html
+
+## recyling in split()
+## https://stat.ethz.ch/pipermail/r-devel/2013-January/065700.html
+x <- 1:6
+y <- split(x, 1:2)
+class(x) <- "A"
+yy <- split(x, 1:2)
+stopifnot(identical(y, yy))
+## were different in R < 3.0.0

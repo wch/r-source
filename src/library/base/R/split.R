@@ -23,16 +23,16 @@ split.default <- function(x, f, drop = FALSE, sep = ".", ...)
     if(!missing(...)) .NotYetUsed(deparse(...), error = FALSE)
 
     if (is.list(f)) f <- interaction(f, drop = drop, sep = sep)
-    else if (drop || !is.factor(f)) # drop extraneous levels
-	f <- factor(f)
-    storage.mode(f) <- "integer"  # some factors have double
+    else if (!is.factor(f)) f <- as.factor(f) # docs say as.factor
+    else if (drop) f <- factor(f) # drop extraneous levels
+    storage.mode(f) <- "integer"  # some factors have had double in the past
     if (is.null(attr(x, "class")))
 	return(.Internal(split(x, f)))
     ## else
     lf <- levels(f)
     y <- vector("list", length(lf))
     names(y) <- lf
-    ind <- .Internal(split(seq_along(f), f))
+    ind <- .Internal(split(seq_along(x), f))
     for(k in lf) y[[k]] <- x[ind[[k]]]
     y
 }

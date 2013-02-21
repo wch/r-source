@@ -668,7 +668,7 @@
       \item The \code{maxRasters} argument of \code{pdf()} (unused since
       \R 2.14.0) has been removed.
 
-      \item The usused \code{fontsmooth} argument has been removed from
+      \item The unused \code{fontsmooth} argument has been removed from
       the \code{quartz()} device.
     }
   }
@@ -888,6 +888,9 @@
       \item The primitive implementation of \code{@<-} was not
       checking the class of the replacement.  It now does a check,
       quicker but less general than \code{slot<-}. See the help.
+      
+      \item \code{split(x, f)} now recycles classed objects \code{x} in
+      the same way as vectors.  (Reported by Martin Morgan.)
     }
   }
 }
