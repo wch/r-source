@@ -4399,20 +4399,19 @@ installed at first use. Check if a JRE is installed by running
 installed this should prompt you to install it.
 
 However, for security reasons you may want/need to install the latest
-Java from Oracle (currently from
+Java from Oracle (currently Java 7 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
 this is 64-bit only and for Lion and later.
 
 To see what versions of Java are currently installed, run
-@command{/usr/libexec/java_home -V}, which lists all the JREs currently
-installed.  Set the environment variable @env{JAVA_HOME} to choose
-between these, both when @R{} is built from the sources and when
-@command{R CMD javareconf} is run.
+@command{/usr/libexec/java_home -V}.  Set the environment variable
+@env{JAVA_HOME} to choose between these, both when @R{} is built from
+the sources and when @command{R CMD javareconf} is run.
 
 Configuring and building @R{} both looks for a JRE and for support for
 compiling JNI programs (used by packages @CRANpkg{rJava} and
 @CRANpkg{JavaGD}); the later requires a JDK (Java SDK) and not just a
-Java run-time.
+JRE.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
 need some help, e.g.@: by setting @env{JAVA_HOME}.  The Apple JDK can be
@@ -4430,9 +4429,9 @@ JAVA_CPPFLAGS="-I$(JAVA_HOME)/include"
 JAVA_LD_LIBRARY_PATH=
 JAVA_LIBS="-framework JavaVM"
 @end example
-The Oracle Java SDK may need something like
+The Oracle JDK may need something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_15.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
