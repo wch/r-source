@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/quartz.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quartz}
@@ -15,8 +15,8 @@
   graphics file formats.
 }
 \usage{
-quartz(title, width, height, pointsize, family, fontsmooth,
-       antialias, type, file = NULL, bg, canvas, dpi)
+quartz(title, width, height, pointsize, family, antialias, type,
+      file = NULL, bg, canvas, dpi)
 
 quartz.options(\dots, reset = FALSE)
 
@@ -32,8 +32,6 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \item{pointsize}{the default pointsize to be used.  Default \code{12}.}
   \item{family}{this is the family name of the font
     that will be used by the device.  Default \code{"Helvetica"}.}
-  \item{fontsmooth}{logical specifying if fonts should be
-    smoothed. Default \code{TRUE}.  Currently unused.}
   \item{antialias}{whether to use antialiasing.  Default \code{TRUE}.}
   \item{type}{the type of output to use.  See \sQuote{Details} for
     more information.  Default \code{"native"}.}

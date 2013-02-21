@@ -22,7 +22,7 @@ assign(".quartz.Options",
        list(title = "Quartz %d",
             width = 7, height = 7, pointsize=12,
             family = "Helvetica",
-            fontsmooth = TRUE, antialias = TRUE,
+            antialias = TRUE,
             type = "native",
             bg = "transparent", canvas = "white",
             dpi = NA_real_),
@@ -46,8 +46,7 @@ quartz.options <- function(..., reset = FALSE)
     if(reset || l... > 0) invisible(old) else old
 }
 
-quartz <- function(title, width, height, pointsize, family,
-                   fontsmooth, antialias,
+quartz <- function(title, width, height, pointsize, family, antialias,
                    type, file = NULL, bg, canvas, dpi)
 {
     new <- list()
@@ -56,7 +55,6 @@ quartz <- function(title, width, height, pointsize, family,
     if(!missing(height)) new$height <- height
     if(!missing(pointsize)) new$pointsize <- pointsize
     if(!missing(family)) new$family <- family
-    if(!missing(fontsmooth)) new$fontsmooth <- fontsmooth
     if(!missing(antialias)) new$antialias <- antialias
     if(!missing(bg)) new$bg <- bg
     if(!missing(canvas)) new$canvas <- canvas
@@ -66,7 +64,7 @@ quartz <- function(title, width, height, pointsize, family,
     if(!is.null(file) && !checkIntFormat(file)) stop("invalid 'file'")
     d <- check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv)
     .External(C_Quartz, d$type, file, d$width, d$height, d$pointsize, d$family,
-              d$antialias, d$fontsmooth, d$title, d$bg, d$canvas,
+              d$antialias, d$title, d$bg, d$canvas,
               if(is.na(d$dpi)) NULL else d$dpi)
     invisible()
 }

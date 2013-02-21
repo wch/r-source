@@ -292,8 +292,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                 width, height, onefile, family, title, fonts, version,
                 paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-                useDingbats, useKerning, fillOddEven, maxRasters,
-                compress)
+                useDingbats, useKerning, fillOddEven, compress)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -316,9 +315,6 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(useDingbats)) new$useDingbats <- useDingbats
     if(!missing(useKerning)) new$useKerning <- useKerning
     if(!missing(fillOddEven)) new$fillOddEven <- fillOddEven
-    if(!missing(maxRasters))
-        warning("'maxRasters' is no longer needed, and will be ignored",
-                domain = NA)
     if(!missing(compress)) new$compress <- compress
 
     old <- check.options(new, name.opt = ".PDF.Options", envir = .PSenv)

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -9,7 +9,6 @@
 
 \title{PDF Graphics Device}
 %% The definitive doc is the source :-)
-%%         ../../../main/devices.c  &   ../../../main/devPS.c
 \description{
   \code{pdf} starts the graphics device driver for producing PDF
   graphics.
@@ -18,7 +17,7 @@
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width, height, onefile, family, title, fonts, version,
     paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-    useDingbats, useKerning, fillOddEven, maxRasters, compress)
+    useDingbats, useKerning, fillOddEven, compress)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -91,9 +90,6 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
     \code{\link{polygon}} for details.  Defaults to \code{FALSE}.}
-  \item{maxRasters}{integer.  Unused in \R >= 2.14.0, previously the
-    maximum number of raster images to be stored in this PDF document
-    (default \code{64} in \R < 2.13.2).}
   \item{compress}{logical.  Should PDF streams be generated with Flate
     compression?  Defaults to \code{TRUE}.}
 }

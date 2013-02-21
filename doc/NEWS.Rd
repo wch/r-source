@@ -664,6 +664,12 @@
       \item The long deprecated use of \code{\\synopsis} in the
       \samp{Usage} section of \file{.Rd} files will be removed in \R
       3.1.0.
+      
+      \item The \code{maxRasters} argument of \code{pdf()} (unused since
+      \R 2.14.0) has been removed.
+
+      \item The usused \code{fontsmooth} argument has been removed from
+      the \code{quartz()} device.
     }
   }
 
