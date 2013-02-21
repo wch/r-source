@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2012   The R Core Team.
+ *  Copyright (C) 2000-2013   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,55 +19,14 @@
 
 #ifndef R_CONNECTIONS_H_
 #define R_CONNECTIONS_H_
-#include <R_ext/Boolean.h>
+
+/* the visible part of the connections */
+#include <R_ext/Connections.h>
 
 /* NB: this is a private header, and not installed.  The internals of
-   connections are private and subject to change without notice. */
-
-#if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO) && defined(HAVE_SYS_TYPES_H)
-#include <sys/types.h>
-#endif
-
-/* this allows the opaque pointer definition to be made available 
-   in Rinternals.h */
-#ifndef HAVE_RCONNECTION_TYPEDEF
-typedef struct Rconn  *Rconnection;
-#endif
-struct Rconn {
-    char* class;
-    char* description;
-    int enc; /* the encoding of 'description' */
-    char mode[5];
-    Rboolean text, isopen, incomplete, canread, canwrite, canseek, blocking, 
-	isGzcon;
-    Rboolean (*open)(struct Rconn *);
-    void (*close)(struct Rconn *); /* routine closing after auto open */
-    void (*destroy)(struct Rconn *); /* when closing connection */
-    int (*vfprintf)(struct Rconn *, const char *, va_list);
-    int (*fgetc)(struct Rconn *);
-    int (*fgetc_internal)(struct Rconn *);
-    double (*seek)(struct Rconn *, double, int, int);
-    void (*truncate)(struct Rconn *);
-    int (*fflush)(struct Rconn *);
-    size_t (*read)(void *, size_t, size_t, struct Rconn *);
-    size_t (*write)(const void *, size_t, size_t, struct Rconn *);
-    int nPushBack, posPushBack; /* number of lines, position on top line */
-    char **PushBack;
-    int save, save2;
-    char encname[101];
-    /* will be iconv_t, which is a pointer. NULL if not in use */
-    void *inconv, *outconv;
-    /* The idea here is that no MBCS char will ever not fit */
-    char iconvbuff[25], oconvbuff[50], *next, init_out[25];
-    short navail, inavail;
-    Rboolean EOF_signalled;
-    Rboolean UTF8out;
-    void *id;
-    void *ex_ptr;
-    void *private;
-    int status; /* for pipes etc */
-};
-
+       connections are private and subject to change without notice.
+       A subset can be accessed using R_ext/Connections.h but read
+       the warning in that file for details. */
 
 typedef enum {HTTPsh, FTPsh, HTTPSsh} UrlScheme;
 

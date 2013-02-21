@@ -174,7 +174,6 @@
  R_WarnLength
  R_Warnings
  R_WholeSrcrefSymbol
- R_WriteConnection
  R_XDRDecodeDouble
  R_XDRDecodeInteger
  R_XDREncodeDouble

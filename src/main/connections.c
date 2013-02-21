@@ -4875,13 +4875,20 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-attribute_hidden
 size_t R_WriteConnection(Rconnection con, void *buf, size_t n)
 {
     if(!con->isopen) error(_("connection is not open"));
     if(!con->canwrite) error(_("cannot write to this connection"));
 
     return con->write(buf, 1, n, con);
+}
+
+size_t R_ReadConnection(Rconnection con, void *buf, size_t n)
+{
+    if(!con->isopen) error(_("connection is not open"));
+    if(!con->canread) error(_("cannot read from this connection"));
+
+    return con->read(buf, 1, n, con);
 }
 
 /* ------------------- (de)compression functions  --------------------- */
@@ -5703,3 +5710,60 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     return ans;
 }
+
+/* --- C-level entry to create a custom connection object -- */
+/* The returned value is the R-side instance. To avoid additional call to getConnection()
+   the internal Rconnection pointer will be placed in ptr[0] if ptr is not NULL.
+   It is the responsibility of the caller to customize callbacks in the structure,
+   they are initialized to dummy_ (where available) and null_ (all others) callbacks.
+   Also note that the resulting object has a finalizer, so any clean up (including after
+   errors) is done by garbage collection - the caller may not free anything in the
+   structure explicitly (that includes the con->private pointer!).
+ */
+SEXP R_new_custom_connection(const char *description, const char *mode, const char *class_name, Rconnection *ptr)
+{
+    Rconnection new;
+    SEXP ans, class;
+
+    int ncon = NextConnection();
+
+    /* built-in connections do this in a separate new<class>() function */
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error(_("allocation of %s connection failed"), class_name);
+    new->class = (char *) malloc(strlen(class_name) + 1);
+    if(!new->class) {
+        free(new);
+        error(_("allocation of %s connection failed"), class_name);
+    }
+    strcpy(new->class, class_name);
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+        free(new->class); free(new);
+	error(_("allocation of %s connection failed"), class_name);
+    }
+    init_con(new, description, CE_NATIVE, mode);
+    /* all ptrs are init'ed to null_* so no need to repeat that,
+       but the following two are useful tools which could not be accessed otherwise */
+    new->vfprintf = &dummy_vfprintf;
+    new->fgetc = &dummy_fgetc;
+
+    /* here we use the new connection to create a SEXP */
+    Connections[ncon] = new;
+    /* new->blocking = block; */
+    new->encname[0] = 0; /* "" (should have the same effect as "native.enc") */
+    new->ex_ptr = PROTECT(R_MakeExternalPtr(new->id, install("connection"), R_NilValue));
+
+    PROTECT(ans = ScalarInteger(ncon));
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar(class_name));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    setAttrib(ans, R_ConnIdSymbol, new->ex_ptr);
+    R_RegisterCFinalizerEx(new->ex_ptr, conFinalizer, FALSE);
+    UNPROTECT(3);
+    
+    if (ptr) ptr[0] = new;
+
+    return ans;
+}
+
