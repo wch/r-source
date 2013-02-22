@@ -196,22 +196,18 @@ custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 
 # sys-dependent tweaks to JNI flags
 hostos=`uname 2>/dev/null`
-## NB: that is not the same name as in configuration.
- case "${host_os}" in
-   Darwin*)
+if test "${hostos}" = "Darwin"; then
      pref=`echo "${JAVA_HOME}" | grep "/Home$"`
      if test "${pref}" = "${JAVA_HOME}"; then 
+       echo "System Java on OS X"
+       JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
        JAVA_LIBS="-framework JavaVM"
-       JAVA_CPPFLAGS='-I$(JAVA_HOME)/include'
        JAVA_LD_LIBRARY_PATH=
 	has_libjvm=unknown
     else
        echo "Non-system Java on OS X"
     fi
-    ;;
-  *)
-    ;;
-esac
+fi
 ## we now look for a path to put in R_LD_LIBRARY_PATH which will
 ## enable libjvm to be found at run time.  This should not be needed,
 ## but it seems that libjvm is often not in the ld.so cache.
@@ -274,11 +270,11 @@ if test "${JAVA_LIBS}" = "~autodetect~"; then
 	   host_os=`echo 'cat(R.version$os)'|${R_HOME}/bin/R --vanilla --slave 2>/dev/null`
            ## put the most probable locations for each system in the first place
            case "${host_os}" in
-             Darwin*)  jmdirs=darwin;;
-             Linux*)   jmdirs=linux;;
+             darwin*)  jmdirs=darwin;;
+             linux*)   jmdirs=linux;;
              bsdi*)    jmdirs=bsdos;;
              osf*)     jmdirs=alpha;;
-             SunOS*)   jmdirs=solaris;;
+             solaris*) jmdirs=solaris;;
              freebsd*) jmdirs=freebsd; add_java_libs='-lpthread';;
            esac
 	   ## in case host_os detection failed, add all candidates
