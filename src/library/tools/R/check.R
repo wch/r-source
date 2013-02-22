@@ -626,7 +626,7 @@ setRlibs <-
                 any <- TRUE
                 wrapLog(sprintf("Package %s is specified in field VignetteBuilder",
                                 sQuote(vb)),
-                        "but is in either Imports nor Depends.",
+                        "but is in neither Imports nor Depends.",
                         "\n")
           }
        }
