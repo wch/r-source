@@ -1,6 +1,6 @@
 % File src/library/methods/man/hasArg.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hasArg}
@@ -15,7 +15,8 @@
 hasArg(name)
 }
 \arguments{
-  \item{name}{The unquoted name of a potential argument.}
+  \item{name}{The name of a potential argument, as an unquoted name or
+    character string.}
 }
 \details{
   The expression \code{hasArg(x)}, for example, is similar to
@@ -32,14 +33,12 @@ hasArg(name)
 \seealso{ \code{\link{missing}} }
 
 \examples{
-ftest <- function(x1, ...) c(hasArg(x1), hasArg(y2))
+ftest <- function(x1, ...) c(hasArg(x1), hasArg("y2"))
 
 ftest(1) ## c(TRUE, FALSE)
 ftest(1, 2)  ## c(TRUE, FALSE)
-ftest(y2=2)   ## c(FALSE, TRUE)
-ftest(y=2)    ## c(FALSE, FALSE) (no partial matching)
-ftest(y2 = 2, x=1)  ## c(TRUE, TRUE) partial match x1
-
-
+ftest(y2 = 2)   ## c(FALSE, TRUE)
+ftest(y = 2)    ## c(FALSE, FALSE) (no partial matching)
+ftest(y2 = 2, x = 1)  ## c(TRUE, TRUE) partial match x1
 }
 \keyword{ programming }
