@@ -202,7 +202,7 @@ case "$hostos" in
     Darwin*)
 	JAVA_LD_LIBRARY_PATH=
 	JAVA_LIBS="-framework JavaVM"
-	JAVA_CPPFLAGS='-I$(JAVA_HOME)/include'
+        JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
 	has_libjvm=unknown
 	;;
     *)

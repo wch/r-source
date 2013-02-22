@@ -144,8 +144,8 @@ if test ${r_cv_java_works} = yes; then
       darwin*)
         JAVA_LIBS="-framework JavaVM"
         JAVA_LIBS0="-framework JavaVM"
-	JAVA_CPPFLAGS="-I${JAVA_HOME}/include"
-	JAVA_CPPFLAGS0='-I$(JAVA_HOME)/include'
+        JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
+        JAVA_CPPFLAGS0="-I/System/Library/Frameworks/JavaVM.framework/Headers"
         JAVA_LD_LIBRARY_PATH=
         ;;
       *)
