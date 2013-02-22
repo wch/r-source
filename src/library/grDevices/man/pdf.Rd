@@ -83,7 +83,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     font is one of the 14 guaranteed to be available in all PDF viewers,
     that guarantee is not always honoured.
 #ifdef unix
-    See the \sQuote{Note} for a possible fix for such viewers.
+    See the \sQuote{Note} for a possible fix for some viewers.
 #endif
     }
   \item{useKerning}{logical.  Should kerning corrections be included in
@@ -243,19 +243,17 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 
   Acrobat Reader can be extended by \sQuote{font packs}, and these will
   be needed for the full use of encodings other than Latin-1 (although
-  they may be downloaded as needed).  See
-  \url{http://www.adobe.com/downloads/updates} for Reader 9 and X, and
-  \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html} for
-  Reader 6 to 8.
+  they may be offered for download as needed).
 
 #ifdef unix
-  On some systems the default plotting character \code{pch = 1} is
+  On some systems the default plotting character \code{pch = 1} was
   displayed in some PDF viewers incorrectly as a \code{"q"}
   character.  (These seem to be viewers based on the \samp{poppler} PDF
   rendering library).  This may be due to incorrect or incomplete mapping
   of font names to those used by the system.  Adding the following lines
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
-  this problem.
+  this problem, although this has largely been corrected on the affected
+  systems.
 \preformatted{<fontconfig>
 <alias binding="same">
   <family>ZapfDingbats</family>
@@ -269,11 +267,15 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 #endif
 #ifdef windows
   The TeXworks PDF viewer is one of those which has been seen to fail to
-  display Dingbats correctly.  Whereas on other platforms the problems
-  seen are incorrect output, on Windows points are silently omitted.  One
-  workaround is to use the argument \code{useDingbats = FALSE}: another
-  it to use a better PDF viewer.
+  display Dingbats (used \code{pch = 1}) for correctly.  Whereas on
+  other platforms the problems seen are incorrect output, on Windows
+  points are silently omitted.  One workaround is to use the argument
+  \code{useDingbats = FALSE}: another it to use a better PDF viewer.
 #endif
+
+  There is a different font bug in the \command{pdf.js} viewer included
+  in Firefox 19: that maps Dingbats to the Symbol font and so displays
+  \code{pch = 1} as lambda.
 }
 
 \seealso{
