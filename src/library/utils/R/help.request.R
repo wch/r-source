@@ -72,9 +72,9 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
     if (no(FAQ)) return(go("http://cran.r-project.org/faqs.html"))
     intro <- readline("Have you checked An Introduction to R? (y/n) ")
     if (no(intro))
-	return(go("http://cran.r-project.org/doc/manuals/R-intro.html"))
+	return(go("http://cran.r-project.org/manuals.html"))
     NEWS <- readMyLine("Have you checked the NEWS of the latest development release?")
-    if (no(NEWS)) return(go("https://svn.r-project.org/R/trunk/NEWS"))
+    if (no(NEWS)) return(go("http://cran.r-project.org/doc/manuals/r-devel/NEWS.html"))
     rsitesearch <- readline("Have you looked on RSiteSearch? (y/n) ")
     if (no(rsitesearch)) {
 	catPlease()
