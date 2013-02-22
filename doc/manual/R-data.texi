@@ -1820,8 +1820,8 @@ formats after which they are named.  See also packages @CRANpkg{biOps}
 and @CRANpkg{Momocs}, and Bioconductor package @pkg{EBImage}.
 
 TIFF is more a meta-format, a wrapper within which a very large variety
-of image formats can be embedded.  Packages @CRANpkg{rtiff} and
-@CRANpkg{tiff} can read some of the sub-formats (depending on the
+of image formats can be embedded.  Packages @CRANpkg{rtiff} (orphaned)
+and @CRANpkg{tiff} can read some of the sub-formats (depending on the
 external @code{libtiff} software against which they are compiled).
 There some facilities for specialized sub-formats, for example in
 Bioconductor package @pkg{beadarray}.

@@ -623,8 +623,8 @@
       \code{NA} instead.
 
       \item The long-defunct functions \code{Rd_parse()},
-      \code{anovalist.lm()}, \code{clearNames()}, \code{gammaCody()},
-      \code{glm.fit.null()}, \code{lm.fit.null()},
+      \code{anovalist.lm()}, \code{categpry()}, \code{clearNames()},
+      \code{gammaCody()}, \code{glm.fit.null()}, \code{lm.fit.null()},
       \code{lm.wfit.null()}, \code{manglePackageNames()},
       \code{mauchley.test()}, \code{package.contents()},
       \code{print.coefmat()}, \code{reshapeLong()},
@@ -658,18 +658,18 @@
       \item Documentation for \code{real()}, \code{as.real()} and
       \code{is.real()} has been moved to \sQuote{defunct} and the
       functions removed.
-
-      \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated.
-
-      \item The long deprecated use of \code{\\synopsis} in the
-      \samp{Usage} section of \file{.Rd} files will be removed in \R
-      3.1.0.
       
       \item The \code{maxRasters} argument of \code{pdf()} (unused since
       \R 2.14.0) has been removed.
 
       \item The unused \code{fontsmooth} argument has been removed from
       the \code{quartz()} device.
+
+      \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated.
+
+      \item The long-deprecated use of \code{\\synopsis} in the
+      \samp{Usage} section of \file{.Rd} files will be removed in \R
+      3.1.0.
     }
   }
 

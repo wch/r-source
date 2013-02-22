@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,9 +49,6 @@ factor <- function(x = character(), levels, labels = levels,
 
 is.factor <- function(x) inherits(x, "factor")
 as.factor <- function(x) if (is.factor(x)) x else factor(x)
-
-## Help old S users:
-category <- function(...) .Defunct()
 
 levels <- function(x) UseMethod("levels")
 levels.default <- function(x) attr(x, "levels")
