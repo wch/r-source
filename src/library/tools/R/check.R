@@ -3145,7 +3145,7 @@ setRlibs <-
         } else if (!grepl("^check", install)) {
             ## Check for package 'src' subdirectories with object
             ## files (but not if installation was already performed).
-            pat <- "(a|o|[ls][ao]|sl|obj)" # Object file extensions.
+            pat <- "(a|o|[ls][ao]|sl|obj|dll)" # Object file/library extensions.
             any <- FALSE
             srcd <- file.path(pkgdir, "src")
             if (dir.exists(srcd) &&
@@ -3153,12 +3153,12 @@ setRlibs <-
                 if (!any) warningLog(Log)
                 any <- TRUE
                 of <- sub(paste0(".*/",file.path(pkgname, "src") , "/"), "", of)
-                printLog(Log, "Subdirectory ",
-                         sQuote(file.path(pkgname, "src")),
-                         " contains object files\n",
+                printLog(Log, sprintf("Subdirectory %s contains apparent object files/libraries\n",
+                                      sQuote(file.path(pkgname, "src"))),
                          paste(strwrap(paste(of, collapse = " "),
-                                       indent = 2, exdent = 2),
-                               collapse = "\n"), "\n")
+                                       indent = 2L, exdent = 2L),
+                               collapse = "\n"),
+                         "Object files/libraries should not be included in a source package.\n")
             }
             ## A submission had src-i386 etc from multi-arch builds
             ad <- list.dirs(pkgdir, recursive = FALSE)
@@ -3209,10 +3209,10 @@ setRlibs <-
             if(length(bad)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
-                msg <- c("Found the following object files:",
+                msg <- c("Found the following apparent object files/libraries:",
                          strwrap(paste(bad, collapse = " "),
-                                 indent = 2, exdent = 2),
-                         "Most likely, these were included erroneously.\n")
+                                 indent = 2L, exdent = 2L),
+                         "Object files/libraries should not be included in a source package.\n")
                 printLog(Log, paste(msg, collapse = "\n"))
             }
             ## Check for installed copies of the package in some subdir.
