@@ -265,11 +265,11 @@ case "$hostos" in
 	   host_os=`echo 'cat(R.version$os)'|${R_HOME}/bin/R --vanilla --slave 2>/dev/null`
            ## put the most probable locations for each system in the first place
            case "${host_os}" in
-             Darwin*)  jmdirs=darwin;;
-             Linux*)   jmdirs=linux;;
+             darwin*)  jmdirs=darwin;;
+             linux*)   jmdirs=linux;;
              bsdi*)    jmdirs=bsdos;;
              osf*)     jmdirs=alpha;;
-             SunOS*)   jmdirs=solaris;;
+             solaris*) jmdirs=solaris;;
              freebsd*) jmdirs=freebsd; add_java_libs='-lpthread';;
            esac
 	   ## in case host_os detection failed, add all candidates
