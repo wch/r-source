@@ -1515,10 +1515,10 @@ An alternative is to use Apple's @code{pkgutil} tool. The installation
 consisted of three packages: @code{org.r-project.R.Leopard.fw.pkg},
 @code{org.r-project.R.Leopard.GUI.pkg} and
 @code{org.r-project.R.Leopard.GUI64.pkg}. You can use @code{pkgutil
---unlink} to remove their files or @code{pkgutil --forget} if you want
-the Apple Installer to forget about the package without deleting its
-files (useful for the @R{} framework when installing multiple R versions
-in parallel).
+--unlink} (not supported as of Lion) to remove their files or
+@code{pkgutil --forget} if you want the Apple Installer to forget about
+the package without deleting its files (useful for the @R{} framework
+when installing multiple R versions in parallel).
 
 
 @node Running R, Add-on packages, Installing R under (Mac) OS X, Top
