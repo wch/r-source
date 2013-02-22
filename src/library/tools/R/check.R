@@ -3199,6 +3199,33 @@ setRlibs <-
                 }
                 setwd(startdir)
             }
+            files <- list.files(pkgdir, recursive = TRUE)
+            ## Check for object files not directly in src.
+            ## (Note that the above does not look for object files in
+            ## subdirs of src.)
+            bad <- files[grepl(sprintf("\\.%s$", pat), basename(files))]
+            bad <- bad[dirname(bad) != "src" |
+                       dirname(dirname(bad)) != "."]
+            if(length(bad)) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                msg <- c("Found the following object files:",
+                         strwrap(paste(bad, collapse = " "),
+                                 indent = 2, exdent = 2),
+                         "Most likely, these were included erroneously.\n")
+                printLog(Log, paste(msg, collapse = "\n"))
+            }
+            ## Check for installed copies of the package in some subdir.
+            files <- files[basename(dirname(files)) == "Meta"]
+            if(length(files) &&
+               all(!is.na(match(c("nsInfo.rds", "package.rds"),
+                                basename(files))))) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                msg <- sprintf("Subdirectory %s seems to contain an installed version of the package.\n",
+                               sQuote(dirname(dirname(files[1L]))))
+                printLog(Log, msg)
+            }
             if (!any) resultLog(Log, "OK")
         } else resultLog(Log, "OK")
     }
