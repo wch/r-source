@@ -891,10 +891,6 @@
       
       \item \code{split(x, f)} now recycles classed objects \code{x} in
       the same way as vectors.  (Reported by Martin Morgan.)
-
-      \item On unix \code{Rscript} will pass the \code{r_arch} setting
-      it was compiled with on to the R process so that the architecture
-      of \code{Rscript} and that of \R will match unless overridden.
     }
   }
 }
@@ -1087,6 +1083,10 @@
       the RGui console was closed from the \sQuote{X} control and the closure
       cancelled. (This would on some 64-bit systems crash \R, typically
       those with a slow GPU relative to the CPU.)
+
+      \item On unix \code{Rscript} will pass the \code{r_arch} setting
+      it was compiled with on to the R process so that the architecture
+      of \code{Rscript} and that of \R will match unless overridden.
     }
   }
 }
