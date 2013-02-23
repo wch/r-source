@@ -928,7 +928,7 @@
       unloading.
 
       The Tcl/Tk event loop is inhibited in a forked child from package
-      \pkg{parallle} (as in e.g. \code{mclapply()}.
+      \pkg{parallel} (as in e.g. \code{mclapply()}).
 
       \item \code{parallel::makeCluster()} recognizes the value
       \samp{random} for the environment variable \env{R_PARALLEL_PORT}:
