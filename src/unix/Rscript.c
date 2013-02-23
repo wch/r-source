@@ -71,7 +71,12 @@ R --slave --no-restore --vanilla --file=foo [script_args]
 #endif
 
 #ifndef WIN32
+#ifndef R_ARCH /* R_ARCH should be always defined, but for safety ... */
+#define R_ARCH ""
+#endif
+
 static char rhome[] = R_HOME;
+static char rarch[] = R_ARCH;
 #else
 # ifndef BINDIR
 #  define BINDIR "bin"
@@ -225,6 +230,20 @@ int main(int argc, char *argv[])
 #ifdef HAVE_PUTENV
     if(!set_dp && !getenv("R_DEFAULT_PACKAGES"))
 	putenv("R_DEFAULT_PACKAGES=datasets,utils,grDevices,graphics,stats");
+
+#ifndef WIN32
+    /* pass on r_arch from this binary to R as a default */
+    if (!getenv("R_ARCH") && *rarch) {
+	/* we have to prefix / so we may as well use putenv */
+	if (strlen(rarch) + 9 > sizeof(buf2)) {
+	    fprintf(stderr, "impossibly long string for R_ARCH\n");
+	    exit(1);
+	}
+	strcpy(buf2, "R_ARCH=/");
+	strcat(buf2, rarch);
+	putenv(buf2);
+    }
+#endif
 #endif
     if(verbose) {
 	fprintf(stderr, "running\n  '%s", cmd);
