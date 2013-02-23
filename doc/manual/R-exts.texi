@@ -955,6 +955,8 @@ libarch <- if (nzchar(R_ARCH)) paste('libs', R_ARCH, sep='') else 'libs'
 dest <- file.path(R_PACKAGE_DIR, libarch)
 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
 file.copy(files, dest, overwrite = TRUE)
+if(file.exists("symbols.rds"))
+    file.copy("symbols.rds", dest, overwrite = TRUE)
 @end example
 
 The @file{data} subdirectory is for data files: @xref{Data in packages}.
