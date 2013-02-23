@@ -3143,6 +3143,7 @@ setRlibs <-
             printLog(Log, "Only *source* packages can be checked.\n")
             do_exit(1L)
         } else if (!grepl("^check", install)) {
+            ini <- character()
             ## Check for package 'src' subdirectories with object
             ## files (but not if installation was already performed).
             pat <- "(a|o|[ls][ao]|sl|obj|dll)" # Object file/library extensions.
@@ -3152,13 +3153,16 @@ setRlibs <-
                 length(of <- list_files_with_exts(srcd, pat))) {
                 if (!any) warningLog(Log)
                 any <- TRUE
-                of <- sub(paste0(".*/",file.path(pkgname, "src") , "/"), "", of)
-                printLog(Log, sprintf("Subdirectory %s contains apparent object files/libraries\n",
-                                      sQuote(file.path(pkgname, "src"))),
+                of <- sub(paste0(".*/", file.path(pkgname, "src"), "/"),
+                          "", of)
+                printLog(Log,
+                         sprintf("Subdirectory %s contains apparent object files/libraries\n",
+                                 sQuote(file.path(pkgname, "src"))),
                          paste(strwrap(paste(of, collapse = " "),
                                        indent = 2L, exdent = 2L),
                                collapse = "\n"),
                          "Object files/libraries should not be included in a source package.\n")
+                ini <- ""
             }
             ## A submission had src-i386 etc from multi-arch builds
             ad <- list.dirs(pkgdir, recursive = FALSE)
@@ -3170,10 +3174,13 @@ setRlibs <-
                                 "Found the following directory with a name of a multi-arch build directory:\n",
                                 "Found the following directories with names of multi-arch build directories:\n",
                                 domain = NA)
-                printLog(Log, msg,
+                printLog(Log,
+                         ini,
+                         msg,
                          .format_lines_with_indent(basename(ad[ind])),
                          "\n",
                          "Most likely, these were included erroneously.\n")
+                ini <- ""
             }
             if (thispkg_src_subdirs != "no" && dir.exists(srcd)) {
                 setwd(srcd)
@@ -3190,11 +3197,16 @@ setRlibs <-
                     if (length(srcfiles)) {
                         if (!any) warningLog(Log)
                         any <- TRUE
-                        text <- c(paste("Subdirectory", sQuote("src"), "contains:"),
-                                  strwrap(paste(srcfiles, collapse = " "),
-                                          indent = 2, exdent = 2),
-                                  strwrap("These are unlikely file names for src files."), "")
+                        msg <- c(ini,
+                                 paste("Subdirectory",
+                                       sQuote("src"),
+                                       "contains:"),
+                                 strwrap(paste(srcfiles, collapse = " "),
+                                         indent = 2, exdent = 2),
+                                 strwrap("These are unlikely file names for src files."),
+                                 "")
                         printLog(Log, paste(text, collapse = "\n"))
+                        ini <- ""
                     }
                 }
                 setwd(startdir)
@@ -3209,11 +3221,13 @@ setRlibs <-
             if(length(bad)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
-                msg <- c("Found the following apparent object files/libraries:",
+                msg <- c(ini,
+                         "Found the following apparent object files/libraries:",
                          strwrap(paste(bad, collapse = " "),
                                  indent = 2L, exdent = 2L),
                          "Object files/libraries should not be included in a source package.\n")
                 printLog(Log, paste(msg, collapse = "\n"))
+                ini <- ""
             }
             ## Check for installed copies of the package in some subdir.
             files <- files[basename(dirname(files)) == "Meta"]
@@ -3222,9 +3236,10 @@ setRlibs <-
                                 basename(files))))) {
                 if(!any) noteLog(Log)
                 any <- TRUE
-                msg <- sprintf("Subdirectory %s seems to contain an installed version of the package.\n",
-                               sQuote(dirname(dirname(files[1L]))))
-                printLog(Log, msg)
+                msg <- c(ini,
+                         sprintf("Subdirectory %s seems to contain an installed version of the package.\n",
+                                 sQuote(dirname(dirname(files[1L])))))
+                printLog(Log, paste(msg, collapse = "\n"))
             }
             if (!any) resultLog(Log, "OK")
         } else resultLog(Log, "OK")
