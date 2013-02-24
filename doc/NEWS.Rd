@@ -829,6 +829,9 @@
       \item Any custom settings for Java configuration are recorded in
       file \file{etc/javaconf} for subsequent use by \command{R CMD
 	javareconf}.
+
+      \item There is now support for \command{makeinfo} version 5.0
+      (which requires a slightly different \file{.texi} syntax).
     }
   }
 

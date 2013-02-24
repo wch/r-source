@@ -2048,7 +2048,7 @@ result.  The matrix @xxT{} may be calculated either by @code{cbind(x)
 %*% x} or @code{x %*% rbind(x)} since the result of @code{rbind()} or
 @code{cbind()} is always a matrix.  However, the best way to compute
 @xTx{} or @xxT{} is @code{crossprod(x)} or @code{x %o% x}
-respectively.}
+respectively.
 
 @findex crossprod
 The function @code{crossprod()} forms ``crossproducts'', meaning that
@@ -2109,7 +2109,7 @@ something like@footnote{Even better would be to form a matrix square
 root @eqn{B, B} with @eqn{A = BB^T, A = BB'} and find the squared length of the
 solution of @eqn{By = x, By = x}, perhaps using the Cholesky or
 eigendecomposition of @eqn{A, A}.} @code{x %*% solve(A,x)}, rather than
-computing the inverse of @code{A}.
+computing the inverse of @code{A}.}
 
 @node Eigenvalues and eigenvectors, Singular value decomposition and determinants, Linear equations and inversion, Matrix facilities
 @subsection Eigenvalues and eigenvectors
@@ -6556,8 +6556,7 @@ disappear.
 @c need to adapt the discussion slightly.
 
 @table @code
-@item
-Start @R{} appropriately for your platform (@pxref{Invoking R}).
+@item Start @R{} appropriately for your platform (@pxref{Invoking R}).
 
 The @R{} program begins, with a banner.
 
@@ -6760,15 +6759,13 @@ parts @dots{}
 
 @item plot(w, xlim=c(-1,1), ylim=c(-1,1), pch="+",xlab="x", ylab="y")
 @itemx lines(z)
-@itemx
-All points are inside the unit circle, but the distribution is not
+@itemx All points are inside the unit circle, but the distribution is not
 uniform.
 
 @item w <- sqrt(runif(100))*exp(2*pi*runif(100)*1i)
 @itemx plot(w, xlim=c(-1,1), ylim=c(-1,1), pch="+", xlab="x", ylab="y")
 @itemx lines(z)
-@itemx
-The second method uses the uniform distribution.  The points should now
+@itemx The second method uses the uniform distribution.  The points should now
 look more evenly spaced over the disc.
 
 @item rm(th, w, z)
@@ -7073,7 +7070,7 @@ Post-process @R{} profiling files.
 Convert Rd format to various other formats, including @HTML{}, @LaTeX{},
 plain text, and extracting the examples.  @code{Rd2txt} can be used as
 shorthand for @code{Rd2conv -t txt}.
-@itemx Rd2pdf
+@item Rd2pdf
 Convert Rd format to PDF.
 @item Stangle
 Extract S/R code from Sweave documentation
