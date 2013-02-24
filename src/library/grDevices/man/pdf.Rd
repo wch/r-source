@@ -267,10 +267,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 #endif
 #ifdef windows
   The TeXworks PDF viewer is one of those which has been seen to fail to
-  display Dingbats (used \code{pch = 1}) for correctly.  Whereas on
-  other platforms the problems seen are incorrect output, on Windows
-  points are silently omitted.  One workaround is to use the argument
-  \code{useDingbats = FALSE}: another it to use a better PDF viewer.
+  display Dingbats (used \code{pch = 1}) correctly.  Whereas on
+  other platforms the problems seen were incorrect output, on Windows
+  points were silently omitted: however recent versions seem to manage
+  to display Dingbats.
 #endif
 
   There is a different font bug in the \command{pdf.js} viewer included
