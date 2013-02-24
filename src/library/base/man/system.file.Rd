@@ -1,6 +1,6 @@
 % File src/library/base/man/system.file.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system.file}
@@ -34,6 +34,8 @@ system.file(\dots, package = "base", lib.loc = NULL, mustWork = FALSE)
   This uses \code{\link{find.package}} to find the package, and hence
   with the default \code{lib.loc = NULL} looks first for attached
   packages then in each library listed in \code{\link{.libPaths}()}.
+  Note that if a namespace is loaded but the package is not attached,
+  this will look only on \code{\link{.libPaths}()}.
 }
 \value{
   A character vector of positive length, containing the file paths

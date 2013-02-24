@@ -1,6 +1,6 @@
 % File src/library/base/man/detach.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{detach}
@@ -30,7 +30,7 @@ detach(name, pos = 2L, unload = FALSE, character.only = FALSE,
     will occur.
   }
   \item{character.only}{a logical indicating whether \code{name}
-    can be assumed to be character strings.}
+    can be assumed to be a character string.}
   \item{force}{logical: should a package be detached even though other
     attached packages depend on it?}
 }
