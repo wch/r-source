@@ -444,7 +444,7 @@ make info     @r{to create info files (not @samp{refman} nor @samp{fullrefman}).
 @end example
 
 You will not be able to build any of these unless you have
-@command{makeinfo} version 4.7 or later installed, and for PDF you must
+@command{makeinfo} version 4.7 to 4.13 installed, and for PDF you must
 have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
 of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
 @file{texinfo.tex}, often made part of the @TeX{} package in
@@ -2742,7 +2742,7 @@ looking in @file{/usr/xpg4/bin} which is used on some commercial
 Unixes).
 
 You will not be able to build most of the manuals unless you have
-@command{makeinfo} version 4.7 or later installed, and if not some of
+@command{makeinfo} version 4.7 to 4.13 installed, and if not some of
 the @HTML{} manuals will be linked to @acronym{CRAN}. To make PDF
 versions of the manuals you will also need file @file{texinfo.tex}
 installed (which is part of the @acronym{GNU} @pkg{texinfo} distribution
