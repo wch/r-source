@@ -148,10 +148,9 @@ void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 
 /* Others */
 
-
 /* appl/eigen.f */
-/* formerly used in package nlme, still used by gss, latenetnet,
-   robust and robustbase */
+/* formerly used in package nlme, still used by gss, latenetnet
+   and robustbase */
 int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
 		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
 

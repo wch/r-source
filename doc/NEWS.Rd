@@ -665,6 +665,10 @@
       \item The unused \code{fontsmooth} argument has been removed from
       the \code{quartz()} device.
 
+      \item All the (non-API) EISPACK entry points in \R except
+      \code{rs} have been removed: that is liable to be removed at any
+      time.
+      
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated.
 
       \item The long-deprecated use of \code{\\synopsis} in the
@@ -972,6 +976,9 @@
 
       \item \code{real()}, \code{as.real()} and \code{is.real()} are now
       formally deprecated and give a warning.
+      
+      \item This is formal notice that the non-API EISPACK entry points
+      in \R will be removed shortly.
     }
   }
 
@@ -1073,8 +1080,8 @@
       \item \code{aperm(matrix(1:6, 2, dimnames=list(A={}, B={})), "A")}
       no longer segfaults.
       
-      \item Expressions involving user defined operators were not
-      always deparsed faithfully (\PR{15179}).
+      \item Expressions involving user defined operators were not 
+      always deparsed faithfully. (\PR{15179})
       
       \item The \code{enc2utf8()} function converted \code{NA_character_}
       to \code{"NA"} in non-UTF-8 locales. (\PR{15201})
