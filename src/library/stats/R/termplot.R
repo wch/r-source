@@ -92,11 +92,11 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
             ## ww = index to rows in the data, selecting one of each unique
             ##        predictor value
             if (is.fac[i]) {
-                ff <- mf[, nmt[i]]  #copy 3 lines from the plot section
+                ff <- mf[, nmt[i]]
                 if (!is.null(model$na.action))
                     ff <- naresid(model$na.action, ff)
-                xx <- ff[[1]]  #data frame to variable
-                # "nomatch' in case there is a level not in the data
+                xx <- ff[[1L]]  # data frame to variable
+                ## "nomatch' in case there is a level not in the data
                 ww <- match(levels(xx), xx, nomatch = 0L)
             }
             else {
@@ -105,12 +105,15 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
                 ww <- match(sort(unique(xx)), xx)
             }
             outlist[[i]] <- if (se)
-                data.frame(x = xx[ww], y = tms[ww,i], se = terms$se.fit[ww,i],
-                           row.names = NULL)
-            else data.frame(x = xx[ww], y = tms[ww,i], row.names = NULL)
+                data.frame(x = xx[ww], y = tms[ww, i],
+                           se = terms$se.fit[ww, i], row.names = NULL)
+            else data.frame(x = xx[ww], y = tms[ww, i], row.names = NULL)
         }
         attr(outlist, "constant") <- attr(terms, "constant")
-        names(outlist) <- (sapply(cn, carrier.name))[in.mf]
+        ## might be on the fit component.
+        if (se && is.null(attr(outlist, "constant")))
+            attr(outlist, "constant") <- attr(terms$fit, "constant")
+        names(outlist) <- sapply(cn, carrier.name)[in.mf]
         return(outlist)
     }
     ## Defaults:
@@ -179,7 +182,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
                 ff <- naresid(model$na.action, ff)
 	    ll <- levels(ff)
 	    xlims <- range(seq_along(ll)) + c(-.5, .5)
-            xx <- as.numeric(ff) ##need if rug or partial
+            xx <- as.numeric(ff) ## needed if rug or partial
 	    if(rug) {
 		xlims[1L] <- xlims[1L] - 0.07*diff(xlims)
 		xlims[2L] <- xlims[2L] + 0.03*diff(xlims)
@@ -192,7 +195,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
                 axis(1)
 	    for(j in seq_along(ll)) {
 		ww <- which(ff == ll[j])[c(1, 1)]
-		jf <- j + c(-.4, .4)
+		jf <- j + c(-0.4, 0.4)
 		lines(jf, tms[ww, i], col = col.term, lwd = lwd.term, ...)
 		if(se) se.lines(jf, iy = ww, i = i)
 	    }
