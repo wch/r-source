@@ -80,6 +80,9 @@
 
       \item \code{real()}, \code{as.real()} and \code{is.real()} are now
       formally deprecated and give a warning.
+      
+      \item This is formal notice that the non-API EISPACK entry points
+      in \R will be removed shortly.
     }
   }
 
@@ -232,7 +235,7 @@
 
       \item \code{qqline()} has new optional arguments
       \code{distribution}, \code{probs} and \code{qtype}, following the
-      example of \pkg{lattice}'s \code{panel.qqmathline()}.
+      example of \CRANpkg{lattice}'s \code{panel.qqmathline()}.
 
       \item The handling of single quotes in the \code{en@quot}
       pseudo-language has been slightly improved.  Double quotes are no
