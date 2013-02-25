@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.lm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.lm}
@@ -80,7 +80,11 @@
 \value{
   \code{predict.lm} produces a vector of predictions or a matrix of
   predictions and bounds with column names \code{fit}, \code{lwr}, and
-  \code{upr} if \code{interval} is set.  If \code{se.fit} is
+  \code{upr} if \code{interval} is set.  For \code{type = "terms"} this
+  is a matrix with a column per term and may have an attribute
+  \code{"constant"}.
+
+  If \code{se.fit} is
   \code{TRUE}, a list with the following components is returned:
   \item{fit}{vector or matrix as above}
   \item{se.fit}{standard error of predicted means}
