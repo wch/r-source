@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.glm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.glm}
@@ -52,10 +52,13 @@
   \code{NA}.  See also \code{\link{napredict}}.
 }
 \value{
-  If \code{se = FALSE}, a vector or matrix of predictions.
-  If \code{se = TRUE}, a list with components
-  \item{fit}{Predictions}
-  \item{se.fit}{Estimated standard errors}
+  If \code{se.fit = FALSE}, a vector or matrix of predictions.
+  For \code{type = "terms"} this is a matrix with a column per term, and
+  may have an attribute \code{"constant"}.
+  
+  If \code{se.fit = TRUE}, a list with components
+  \item{fit}{Predictions, as for \code{se.fit = FALSE}.}
+  \item{se.fit}{Estimated standard errors.}
   \item{residual.scale}{A scalar giving the square root of the
     dispersion used in computing the standard errors.}
 }
