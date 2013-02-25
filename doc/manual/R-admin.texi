@@ -1470,22 +1470,19 @@ and install it.  This runs on OS X 10.6 and later (Snow Leopard, Lion,
 Mountain Lion, @dots{}); it is a @cputype{x86_64} build which should run
 on all Macs from mid-2008 on.
 
-The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
-double-click on the icon.  Note that (X11-based) Tcl/Tk needs to be
-installed separately if needed, from
-@uref{http://cran.r-project.org/bin/macosx/tools/}, and for Mountain
-Lion XQuartz will also need to be installed to use Tk.
+To install, just double-click on the icon of the file you downloaded.
+Note that (X11-based) Tcl/Tk needs to be installed separately if needed,
+from @uref{http://cran.r-project.org/bin/macosx/tools/}, and for
+Mountain Lion XQuartz will also need to be installed to use Tk.
 
 On Mountain Lion with `GateKeeper' active you may need to
 right/control-click on some of the packages (e.g.@: that for Tcl/Tk) and
 select @samp{Open}.
 
-The binary version of @R{} is provided as an Apple Installer package. If
-you encounter any problem during the installation, please check the
-Installer log by clicking on the ``Window'' menu and item ``Installer
-Log''. The full output (select ``Show All Log'') is useful for tracking
-down problems.
-
+This is an Apple Installer package. If you encounter any problem during
+the installation, please check the Installer log by clicking on the
+``Window'' menu and item ``Installer Log''. The full output (select
+``Show All Log'') is useful for tracking down problems.
 
 For building @R{} from source, see @ref{Mac OS X}.
 
@@ -1507,14 +1504,12 @@ If you want to get rid of @R{} more completely using a Terminal, simply
 run (prepend @code{sudo} if needed):
 
 @example
-rm -rf /Library/Frameworks/R.framework /Applications/R.app/Applications/R64.app
-rm -f /usr/bin/R /usr/bin/Rscript /usr/bin/R32 /usr/bin/R64
+rm -rf /Library/Frameworks/R.framework /usr/bin/R /usr/bin/Rscript
 @end example
 
 An alternative is to use Apple's @code{pkgutil} tool. The installation
-consisted of three packages: @code{org.r-project.R.Leopard.fw.pkg},
-@code{org.r-project.R.Leopard.GUI.pkg} and
-@code{org.r-project.R.Leopard.GUI64.pkg}. You can use @code{pkgutil
+consisted of two packages: @code{org.r-project.R.Leopard.fw.pkg} and
+@code{org.r-project.R.Leopard.GUI.pkg}. You can use @code{pkgutil
 --unlink} (not supported as of Lion) to remove their files or
 @code{pkgutil --forget} if you want the Apple Installer to forget about
 the package without deleting its files (useful for the @R{} framework
@@ -4215,16 +4210,16 @@ Line Tools for Xcode' and and suitable compilers (including a version of
 @command{gfortran}). You will also need
 @code{readline} (or to configure with @option{--without-readline}).
 
-You may also want to install an X sub-system (or you will need to
+You may also need to install an X sub-system (or you will need to
 configure with @option{--without-x}): X is part of the standard OS X
 distribution in versions prior to Mountain Lion, but not always
 installed.  For Mountain Lion, see
 @uref{http://xquartz.macosforge.org/}: some people prefer to use XQuartz
 on earlier versions of OS X instead of the Apple version.
 
-In principle @R{} can be built for 10.4.x and for PowerPC Macs but this
-has not been tested recently: 10.5.8 (Leopard) is the earliest version
-currently tested.
+In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
+but this has not been tested recently: 10.6 (Snow Leopard) is the
+earliest version currently tested.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
@@ -4275,7 +4270,11 @@ Note that the Apple versions of GCC (where available, and those on
 @R{} platforms, including @code{CRAN}'s incoming checks) are better at
 detecting coding errors.  If can be well worth checking your code with
 @command{clang}/@command{clang++}: @R{} itself is checked with
-@command{clang 4.x}.
+@command{clang 4.x}.  If your C compiler does not support Objective C,
+you can use @command{clang}, e.g.@: by
+@example
+OBJC='clang -arch x86_64'
+@end example
 
 Recent compilers default to 64-bit, but some older ones (supplied at the
 time of Leopard) default to 32-bit.  It is safest to explicitly specify
@@ -4288,10 +4287,9 @@ F77='gfortran-4.2 -arch x86_64'
 FC='gfortran-4.2 -arch x86_64'
 OBJC='gcc-4.2 -arch x86_64'
 @end example
-in @file{config.site} or on the @command{configure} command line.
-
-To produce a 32-bit build, use @samp{i386} instead of @samp{x86_64}.
-Care is needed, as @code{gfortran} may default to a different
+in @file{config.site} or on the @command{configure} command line.  To
+produce a 32-bit build, use @samp{i386} instead of @samp{x86_64}.  Care
+@strong{is} needed, as @code{gfortran} may default to a different
 architecture from the C compilers.
 
 
@@ -4481,9 +4479,9 @@ The current sources can be checked out by
 @example
 svn co https://svn.r-project.org/R-packages/trunk/Mac-GUI
 @end example
-This can be built by loading @code{R.xcodeproj} project (select
-the @code{R} target and the @code{Lion64} configuration), or from the
-command-line by
+This can be built by loading @code{R.xcodeproj} project (select the
+@code{R} target and the @code{SnowLeopard64} or @code{Lion64}
+configuration), or from the command-line by
 @example
 xcodebuild -target R -configuration Lion64
 @end example
