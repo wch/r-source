@@ -1,6 +1,6 @@
 % File src/library/methods/man/getPackageName.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getPackageName}
@@ -44,7 +44,7 @@ packageSlot(object) <- value
   \code{.packageName} but don't trust this for the future.)
 }
 \value{
-  \code{packageName} returns the character-string name of the package
+  \code{getPackageName} returns the character-string name of the package
   (without the extraneous \code{"package:"} found in the search list).
 
   \code{packageSlot} returns or sets the package name slot (currently
@@ -57,7 +57,7 @@ packageSlot(object) <- value
   standard \R programming tools (\code{\link{package.skeleton}}, etc.)
 }
 
-\seealso{ \code{\link{search}} }
+\seealso{ \code{\link{search}}, \code{\link{packageName}} }
 
 \examples{
 ## all the following usually return "base"

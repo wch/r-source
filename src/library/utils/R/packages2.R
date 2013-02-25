@@ -754,3 +754,14 @@ globalVariables <- function(names, package, add = TRUE) {
     }
     current
 }
+
+packageName <- function(env = parent.frame()) {
+    if (!is.environment(env)) stop("'env' must be an environment")
+    env <- topenv(env)
+    if (exists(".packageName", envir = env, inherits = FALSE))
+	get(".packageName", envir = env, inherits = FALSE)
+    else if (identical(env, .BaseNamespaceEnv))
+	"base"
+    else
+	NULL
+}

@@ -395,6 +395,9 @@
   
       \item Deparsing involving calls to anonymous functions and has been 
       made closer to reversible by the addition of extra parentheses.
+      
+      \item The function \code{utils::packageName()} has been added as
+      a lightweight version of \code{methods::getPackageName()}.      
     }
   }
 
