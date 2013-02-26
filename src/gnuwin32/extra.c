@@ -816,14 +816,14 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     wchar_t *fn;
-    char str[MAX_PATH+1];
+    char str[4*MAX_PATH+1];
 
     checkArity(op, args);
     setuserfilterW(L"All files (*.*)\0*.*\0\0");
     fn = askfilenameW(G_("Select file"), "");
     if (!fn)
 	error(_("file choice cancelled"));
-    wcstoutf8(str, fn, MAX_PATH+1);
+    wcstoutf8(str, fn, 4*MAX_PATH+1);
     PROTECT(ans = allocVector(STRSXP, 1));
     SET_STRING_ELT(ans, 0, mkCharCE(str, CE_UTF8));
     UNPROTECT(1);
