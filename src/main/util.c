@@ -720,7 +720,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char sp[PATH_MAX];
+    char sp[4*PATH_MAX];
     wchar_t  buf[PATH_MAX], *p;
     const wchar_t *pp;
     int i, n;
@@ -743,7 +743,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 		while (p >= buf && *p == L'/') *(p--) = L'\0';
 	    }
 	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
-	    memset(sp, 0, PATH_MAX); /* safety */
+	    memset(sp, 0, 4*PATH_MAX); /* safety */
 	    wcstoutf8(sp, p, 4*wcslen(p) + 1);
 	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
