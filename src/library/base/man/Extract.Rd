@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -221,7 +221,7 @@ x$i <- value
   When extracting, a numerical, logical or character \code{NA} index picks
   an unknown element and so returns \code{NA} in the corresponding
   element of a logical, integer, numeric, complex or character result,
-  and \code{NULL} for a list.  (It returns \code{00} for a raw result.]
+  and \code{NULL} for a list.  (It returns \code{00} for a raw result.)
 
   When replacing (that is using indexing on the lhs of an
   assignment) \code{NA} does not select any element to be replaced.  As
