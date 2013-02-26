@@ -35,7 +35,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
     \code{unzip -d}).  It will be created if necessary.}
 
   \item{unzip}{The method to be used.  An alternative is to use
-    \code{getOption("unzip"}), which on a Unix-alike may be set to the
+    \code{getOption("unzip")}, which on a Unix-alike may be set to the
     path to a \command{unzip} program.}
 
   \item{setTimes}{logical.  For the internal method only, should the

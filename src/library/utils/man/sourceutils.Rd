@@ -40,7 +40,8 @@ getSrcLocation(x, which = c("line", "column", "byte", "parse"),
 }
 \details{
   Each statement of a function will have its own source reference if the 
-  \code{"keep.source"} option is \code{TRUE)}.  These functions retrieve all of them.
+  \code{"keep.source"} option is \code{TRUE}.  These functions retrieve
+  all of them. 
 
   The components are as follows:
   \describe{
