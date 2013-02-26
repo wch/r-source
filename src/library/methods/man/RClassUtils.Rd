@@ -345,7 +345,7 @@ setDataPart(object, value, check = TRUE)
       silently incorrect results.
     }
 
-    \item{\code{checkSlotAssignment, checkAtAssignment}:}{
+    \item{\code{checkSlotAssignment}, \code{checkAtAssignment}:}{
       Check that the value provided is allowed for this slot, by
       consulting the definition of the class.  Called from the C code
       that assigns slots.

@@ -83,7 +83,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
     is possible but we will not publish one, not least as this generator
     is \bold{not} exactly the same as that in recent versions of S-PLUS.}
 
-    \item{\code{"Mersenne-Twister":}}{
+    \item{\code{"Mersenne-Twister"}:}{
       From Matsumoto and Nishimura (1998). A twisted GFSR with period
       \eqn{2^{19937} - 1}{2^19937 - 1} and equidistribution in 623
       consecutive dimensions (over the whole period).  The \sQuote{seed} is a
@@ -91,7 +91,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
       that set.
     }
 
-    \item{\code{"Knuth-TAOCP-2002":}}{
+    \item{\code{"Knuth-TAOCP-2002"}:}{
       A 32-bit integer GFSR using lagged Fibonacci sequences with
       subtraction.  That is, the recurrence used is
       \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
@@ -101,7 +101,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
       buffer).  The period is around \eqn{2^{129}}{2^129}.
     }
 
-    \item{\code{"Knuth-TAOCP":}}{
+    \item{\code{"Knuth-TAOCP"}:}{
       An earlier version from Knuth (1997).
 
       The 2002 version was not backwards compatible with the earlier
@@ -112,7 +112,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
       Initialization of this generator is done in interpreted \R code
       and so takes a short but noticeable time.
     }
-    \item{\code{"L'Ecuyer-CMRG":}}{
+    \item{\code{"L'Ecuyer-CMRG"}:}{
       A \sQuote{combined multiple-recursive generator} from L'Ecuyer
       (1999), each element of which is a feedback multiplicative
       generator with three integer elements: thus the seed is a (signed)
@@ -129,7 +129,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
       % See \code{\link{RngStream}}.
     }
 
-    \item{\code{"user-supplied":}}{
+    \item{\code{"user-supplied"}:}{
       Use a user-supplied generator.  See \code{\link{Random.user}} for
       details.
     }

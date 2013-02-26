@@ -37,11 +37,12 @@ checkPoFiles(language, dir = ".")
   generated when the message is displayed.
 
   The rules for compatibility differ between C and \R in several ways. C
-  supports several conversions not supported by \R, namely \code{c, u,
-  p, n}.  It is allowed in C's \code{sprintf()} function to have more
-  arguments than are needed by the format string, but in \R the counts
-  must match exactly.  \R requires types of arguments to match, whereas
-  C will do the display whether it makes sense or not.
+  supports several conversions not supported by \R, namely \code{c},
+  \code{u}, \code{p}, \code{n}.  It is allowed in C's \code{sprintf()}
+  function to have more arguments than are needed by the format string,
+  but in \R the counts must match exactly.  \R requires types of
+  arguments to match, whereas C will do the display whether it makes
+  sense or not.
 
   These functions compromise on the testing as follows.  The additional
   formats allowed in C are accepted, and all differences in argument

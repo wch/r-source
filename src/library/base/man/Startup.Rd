@@ -165,7 +165,7 @@
   \file{~/.R/build.Renviron} or sub-architecture-specific versions are
   employed.
 
-  If you want \code{~/.Renviron} or \code{~/.Rprofile} to be ignored by
+  If you want \file{~/.Renviron} or \file{~/.Rprofile} to be ignored by
   child \R processes (such as those run by \command{R CMD check} and
   \command{R CMD build}), set the appropriate environment variable
   \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} to (if possible, which it

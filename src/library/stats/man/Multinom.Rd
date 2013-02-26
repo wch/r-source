@@ -32,8 +32,8 @@ dmultinom(x, size = NULL, prob, log = FALSE)
   no C interface (API); this may be amended in the future.% yes, DO THIS!
 }
 \details{
-  If \code{x} is a $K$-component vector, \code{dmultinom(x, prob)} is
-  the probability
+  If \code{x} is a \eqn{K}-component vector, \code{dmultinom(x, prob)}
+  is the probability
   \deqn{P(X_1=x_1,\ldots,X_K=x_k) = C \times \prod_{j=1}^K
     \pi_j^{x_j}}{P(X[1]=x[1], \dots , X[K]=x[k]) = C * prod(j=1 , \dots, K) p[j]^x[j]}
   where \eqn{C} is the \sQuote{multinomial coefficient}
@@ -54,11 +54,11 @@ dmultinom(x, size = NULL, prob, log = FALSE)
 }
 \value{
   For \code{rmultinom()},
-  an integer \code{K x n} matrix where each column is a random vector
-  generated according to the desired multinomial law, and hence summing
-  to \code{size}.  Whereas the \emph{transposed} result would seem more
-  natural at first, the returned matrix is more efficient because of
-  columnwise storage.
+  an integer \eqn{K \times n}{K x n} matrix where each column is a
+  random vector generated according to the desired multinomial law, and
+  hence summing to \code{size}.  Whereas the \emph{transposed} result
+  would seem more natural at first, the returned matrix is more
+  efficient because of columnwise storage.
 }
 \seealso{
   \link{Distributions} for standard distributions, including

@@ -8,7 +8,7 @@
 \title{Random Wishart Distributed Matrices}
 \description{
   Generate \code{n} random matrices, distributed according to the
-  Wishart distribution with parameters \code{Sigma, df},
+  Wishart distribution with parameters \code{Sigma} and \code{df},
   \eqn{W_p(\Sigma, m),\ m=\code{df},\ \Sigma=\code{Sigma}}{W_p(Sigma, df)}.
 }
 \usage{

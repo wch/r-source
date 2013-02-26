@@ -92,7 +92,7 @@ contour(x, \dots)
 
   Alternatively, use \code{\link[lattice:levelplot]{contourplot}} from the
   \CRANpkg{lattice} package where the \code{\link{formula}} notation allows
-  to use vectors \code{x, y, z} of the same length.
+  to use vectors \code{x}, \code{y}, and \code{z} of the same length.
 
   There is limited control over the axes and frame as arguments
   \code{col}, \code{lwd} and \code{lty} refer to the contour lines
