@@ -228,6 +228,10 @@ x$i <- value
   there is ambiguity as to whether an element of the rhs should
   be used or not, this is only allowed if the rhs value is of length one
   (so the two interpretations would have the same outcome).
+  (The documented behaviour of S was that an \code{NA} replacement index
+  \sQuote{goes nowhere} but uses up an element of \code{value}:
+  Becker \emph{et al} p. 359.  However, that has not been true of
+  other implementations.)
 }
 
 \section{Argument matching}{
@@ -279,13 +283,6 @@ x$i <- value
   even empty nor missing names.  If any object has no names or
   appropriate dimnames, they are taken as all \code{""} and so match
   nothing.
-}
-
-\note{
-  The documented behaviour of S is that an \code{NA} replacement index
-  \sQuote{goes nowhere} but uses up an element of \code{value}
-  (Becker \emph{et al} p. 359).  However, that has not been true of
-  other implementations.
 }
 
 \references{
