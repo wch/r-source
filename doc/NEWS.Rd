@@ -398,6 +398,10 @@
       
       \item The function \code{utils::packageName()} has been added as
       a lightweight version of \code{methods::getPackageName()}.      
+      
+      \item \code{find.package(lib.loc = NULL)} now treats loaded
+      namespaces preferentially in the same way as attached packages
+      have been for a long time.
     }
   }
 
@@ -677,6 +681,10 @@
       \item The long-deprecated use of \code{\\synopsis} in the
       \samp{Usage} section of \file{.Rd} files will be removed in \R
       3.1.0.
+      
+      \item \code{.find.package()} and \code{.path.package()} are
+      deprecated: only the public versions without the dot have ever
+      been in the API.
     }
   }
 

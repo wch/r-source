@@ -5419,7 +5419,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 .check_depdef <-
 function(package, dir, lib.loc = NULL)
 {
-    bad_depr <- character()
+    bad_depr <- c(".find.package", ".path.package")
 
     bad_def <- c("La.eigen", "tetragamma", "pentagamma",
                  "package.description", "gammaCody",

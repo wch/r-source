@@ -38,14 +38,13 @@
 ## consider keeping one (commented) entry here, for easier additions
 
 ## <entry>
-## Deprecated in 2.5.0
-## Sys.putenv <- function(...) {
-##     .Deprecated("Sys.setenv")
-##     Sys.setenv(...)
-## }
+## Deprecated in 3.0.0
+.find.package <- function(...) {
+    .Deprecated("find.package")
+    find.package(...)
+}
+.path.package <- function(...) {
+    .Deprecated("path.package")
+    path.package(...)
+}
 ## </entry>
-
-
-## Allow for future deprecation/defunct
-.find.package <- function(...) find.package(...)
-.path.package <- function(...) path.package(...)

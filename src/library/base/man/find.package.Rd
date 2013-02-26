@@ -1,15 +1,12 @@
 % File src/library/base/man/find.package.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{find.package}
 
 \alias{find.package}
 \alias{path.package}
-%% moved from base-internal.Rd in 2.13.1
-\alias{.find.package}
-\alias{.path.package}
 
 \title{Find Packages}
 \description{
@@ -25,7 +22,7 @@ path.package(package, quiet = FALSE)
   \item{package}{character vector: the names of packages.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
-    of \code{NULL} corresponds to checking the attached packages, then
+    of \code{NULL} corresponds to checking the loaded namespace, then
     all libraries currently known in \code{\link{.libPaths}()}.}
   \item{quiet}{logical.  Should this not give warnings or an error
     if the package is not found?}
@@ -35,7 +32,7 @@ path.package(package, quiet = FALSE)
 \details{
   \code{find.package} returns path to the locations where the
   given packages are found.  If \code{lib.loc} is \code{NULL}, then
-  attached packages are searched before the libraries.  If a package is
+  loaded namespaces are searched before the libraries.  If a package is
   found more than once, the first match is used.  Unless \code{quiet =
   TRUE} a warning will be given about the named packages which are not
   found, and an error if none are.  If \code{verbose} is true, warnings
@@ -59,10 +56,5 @@ path.package(package, quiet = FALSE)
 }
 \value{
   A character vector of paths of package directories.
-}
-\note{
-  \code{.find.package} and \code{.path.package} were internal-only
-  versions prior to \R 2.13.0, and are now wrappers for these public
-  versions.
 }
 \keyword{files}

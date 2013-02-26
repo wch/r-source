@@ -670,10 +670,10 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                       "splines", "stats4", "tcltk"))
         return(file.path(.Library, package))
 
-    use_attached <- FALSE
+    use_loaded <- FALSE
     if(is.null(package)) package <- .packages()
     if(is.null(lib.loc)) {
-        use_attached <- TRUE
+        use_loaded <- TRUE
         lib.loc <- .libPaths()
     }
 
@@ -695,18 +695,10 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                             file.exists(file.path(dirs,
                                                   "DESCRIPTION"))])
         }
-        if(use_attached
-           && length(pos <- grep(paste0("^package:", pkg, "$"),
-                                 search()))) {
-            dirs <- sapply(pos, function(i) {
-                if(identical(env <- as.environment(i), baseenv()))
-                    system.file()
-                else
-                    attr(env, "path")
-            })
-            ## possibly NULL if no path attribute.
-            dirs <- dirs[!vapply(dirs, is.null, NA)]
-            paths <- c(as.character(dirs), paths)
+        if(use_loaded && pkg %in% loadedNamespaces()) {
+            dir <- if (pkg == "base") system.file()
+            else getNamespaceInfo(pkg, "path")
+            paths <- c(dir, paths)
         }
         ## trapdoor for tools:::setRlibs
         if(length(paths) &&
