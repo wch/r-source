@@ -1231,11 +1231,31 @@ setRlibs <-
             length(out4) || length(out5) || length(out6) ||
             length(out7) || length(out8)) {
             ini <- character()
-            if (length(out4) ||
-                length(grep("^Found the defunct/removed function", out8)))
+            if(length(out4) ||
+               length(grep("^Found the defunct/removed function", out8)))
                 warningLog(Log) else noteLog(Log)
+            if (length(out4)) {
+                first <- grep("^Found.* .Internal call", out4)[1L]
+                if(first > 1L) out4 <- out4[-seq_len(first-1)]
+                printLog0(Log, paste(c(ini, out4, "", ""), collapse = "\n"))
+                wrapLog(c("Packages should not call .Internal():",
+                          "it is not part of the API,",
+                          "for use only by R itself",
+                          "and subject to change without notice."))
+                ini <- ""
+            }
+            if (length(out8)) {
+                printLog0(Log, paste(c(ini, out8, ""), collapse = "\n"))
+                ini <- ""
+            }
+            ## All remaining checks give notes and not warnings.            
+            if(length(ini))
+                ini <- c("",
+                         "In addition to the above warning(s), found the following notes:",
+                         "")
+
             if (length(out1)) {
-                printLog0(Log, paste(c(out1, ""), collapse = "\n"))
+                printLog0(Log, paste(c(ini, out1, ""), collapse = "\n"))
                 ini <- ""
             }
             if (length(out2)) {
@@ -1248,16 +1268,6 @@ setRlibs <-
             }
             if (length(out3)) {
                 printLog0(Log, paste(c(ini, out3, ""), collapse = "\n"))
-                ini <- ""
-            }
-            if (length(out4)) {
-                first <- grep("^Found.* .Internal call", out4)[1L]
-                if(first > 1L) out4 <- out4[-seq_len(first-1)]
-                printLog0(Log, paste(c(ini, out4, "", ""), collapse = "\n"))
-                wrapLog(c("Packages should not call .Internal():",
-                          "it is not part of the API,",
-                          "for use only by R itself",
-                          "and subject to change without notice."))
                 ini <- ""
             }
             if (length(out5)) {
@@ -1276,8 +1286,6 @@ setRlibs <-
                 wrapLog(gettextf("See section %s in '%s'.",
                                  sQuote("Good practice"), "?data"))
             }
-            if (length(out8))
-                printLog0(Log, paste(c(ini, out8, ""), collapse = "\n"))
         } else resultLog(Log, "OK")
     }
 
@@ -3205,12 +3213,17 @@ setRlibs <-
                                          indent = 2, exdent = 2),
                                  strwrap("These are unlikely file names for src files."),
                                  "")
-                        printLog(Log, paste(text, collapse = "\n"))
+                        printLog(Log, paste(msg, collapse = "\n"))
                         ini <- ""
                     }
                 }
                 setwd(startdir)
             }
+            ## All remaining checks give notes and not warnings.
+            if(length(ini))
+                ini <- c("",
+                         "In addition to the above warning(s), found the following notes:",
+                         "")
             files <- list.files(pkgdir, recursive = TRUE)
             ## Check for object files not directly in src.
             ## (Note that the above does not look for object files in
