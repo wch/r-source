@@ -651,7 +651,7 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP static intern_getwd(void)
 {
     SEXP rval = R_NilValue;
-    char buf[PATH_MAX+1];
+    char buf[4*PATH_MAX+1];
 
 #ifdef Win32
     {
@@ -797,7 +797,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, s = R_NilValue;	/* -Wall */
     wchar_t buf[PATH_MAX], *p;
     const wchar_t *pp;
-    char sp[PATH_MAX];
+    char sp[4*PATH_MAX];
     int i, n;
 
     checkArity(op, args);
@@ -824,7 +824,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		      && (p > buf+2 || *(p-1) != L':')) --p;
 		p[1] = L'\0';
 	    }
-	    memset(sp, 0, PATH_MAX);
+	    memset(sp, 0, 4*PATH_MAX);
 	    wcstoutf8(sp, buf, 4*wcslen(buf)+1);
 	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
