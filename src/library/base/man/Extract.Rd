@@ -124,9 +124,9 @@ x$i <- value
 }
 
 \section{Atomic vectors}{
-  The usual form of indexing is \code{"["}.  \code{"[["} can be used to
+  The usual form of indexing is \code{[}.  \code{[[} can be used to
   select a single element \emph{dropping} \code{\link{names}}, whereas
-  \code{"["} keeps them, e.g., in \code{c(abc = 123)[1]}.
+  \code{[} keeps them, e.g., in \code{c(abc = 123)[1]}.
 
   The index object \code{i} can be numeric, logical, character or empty.
   Indexing by factors is allowed and is equivalent to indexing by the
