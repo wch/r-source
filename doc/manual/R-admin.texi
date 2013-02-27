@@ -1441,8 +1441,8 @@ Launch either @code{Rgui} or @code{Rterm}, preferably with
 @example
 library("tools")
 testInstalledBasic("both")
-testInstalledPackages("base", errorsAreFatal = FALSE)
-testInstalledPackages("recommended", errorsAreFatal = FALSE)
+testInstalledPackages(scope = "base", errorsAreFatal = FALSE)
+testInstalledPackages(scope = "recommended", errorsAreFatal = FALSE)
 @end example
 
 @noindent
