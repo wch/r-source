@@ -593,7 +593,7 @@
       (re)build vignettes and never omitted them.
 
       \command{R CMD check} accepts \option{--no-build-vignettes} as a
-      synonym for \option{--no-rebuild-vignettes}.
+      preferred synonym for \option{--no-rebuild-vignettes}.
     }
   }
 
@@ -1116,6 +1116,10 @@
       \item On unix \code{Rscript} will pass the \code{r_arch} setting
       it was compiled with on to the R process so that the architecture
       of \code{Rscript} and that of \R will match unless overridden.
+      
+      \item On Windows, \code{basename()}, \code{dirname()} and
+      \code{file.choose()} have more support for long non-ASCII file
+      names with 260 or more bytes when expressed in UTF-8.
     }
   }
 }

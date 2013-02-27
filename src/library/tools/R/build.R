@@ -827,6 +827,8 @@ get_exclude_patterns <- function()
             keep_empty <- TRUE
         } else if (a == "--no-build-vignettes") {
             vignettes <- FALSE
+        } else if (a == "--no-vignettes") { # pre-3.0.0 version
+            vignettes <- FALSE
         } else if (a == "--resave-data") {
             resave_data <- "best"
         } else if (a == "--no-resave-data") {
