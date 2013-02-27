@@ -75,6 +75,7 @@ OSI: open but superseded (http://opensource.org/licenses/artistic-license-1.0)
 FSF: non_free (http://www.gnu.org/licenses/license-list.html#ArtisticLicense)
 URL: http://www.R-project.org/Licenses/Artistic-1.0
 FOSS: no
+Restricts_use: no
 
 Name: Artistic License
 Version: 2.0
@@ -191,18 +192,21 @@ Abbrev: CC BY-NC-ND 3.0 US
 URL: http://creativecommons.org/licenses/by-nc-nd/3.0/us
 FOSS: no
 Extensible: yes
+Restricts_use: yes
 
 Name: Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
 Abbrev: CC BY-NC-SA 3.0
 URL: http://creativecommons.org/licenses/by-nc-sa/3.0
 FOSS: no
 Extensible: yes
+Restricts_use: yes
 
 Name: Creative Commons Attribution-NonCommercial 3.0 Unported License
 Abbrev: CC BY-NC 3.0
 URL: http://creativecommons.org/licenses/by-nc/3.0
 FOSS: no
 Extensible: yes
+Restricts_use: yes
 
 Name: CC0
 FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#CC0)
