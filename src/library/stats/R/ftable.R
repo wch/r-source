@@ -175,19 +175,19 @@ format.ftable <-
 {
     if(!inherits(x, "ftable"))
 	stop("'x' must be an \"ftable\" object")
-    charQuote <- function(s) if(quote) paste0("\"", s, "\"") else s
+    charQuote <- function(s) if(quote && length(s)) paste0("\"", s, "\"") else s
     makeLabels <- function(lst) {
-        lens <- sapply(lst, length)
-        cplensU <- c(1, cumprod(lens))
-        cplensD <- rev(c(1, cumprod(rev(lens))))
-        y <- NULL
-        for (i in rev(seq_along(lst))) {
-            ind <- 1 + seq.int(from = 0, to = lens[i] - 1) * cplensD[i + 1]
-            tmp <- character(length = cplensD[i])
-            tmp[ind] <- charQuote(lst[[i]])
-            y <- cbind(rep(tmp, times = cplensU[i]), y)
-        }
-        y
+	lens <- sapply(lst, length)
+	cplensU <- c(1, cumprod(lens))
+	cplensD <- rev(c(1, cumprod(rev(lens))))
+	y <- NULL
+	for (i in rev(seq_along(lst))) {
+	    ind <- 1 + seq.int(from = 0, to = lens[i] - 1) * cplensD[i + 1L]
+	    tmp <- character(length = cplensD[i])
+	    tmp[ind] <- charQuote(lst[[i]])
+	    y <- cbind(rep(tmp, times = cplensU[i]), y)
+	}
+	y
     }
     makeNames <- function(x) {
 	nmx <- names(x)

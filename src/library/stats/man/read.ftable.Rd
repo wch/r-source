@@ -1,7 +1,7 @@
 % File src/library/stats/man/read.ftable.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
-% Copyright 2002-2012 The R Foundation
+% Copyright 1995-2013 R Core Team
+% Copyright 2002-2013 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{read.ftable}
@@ -139,9 +139,15 @@ write.ftable(ft22, quote = FALSE, method="row.compact")
 write.ftable(ft22, quote = FALSE, method="col.compact")
 write.ftable(ft22, quote = FALSE, method="compact")
 \dontshow{
+op <- options(warn = 2) # no warnings allowed
 stopifnot(dim(format(ft)) == 4:5,
           dim(format(ftable(UCBAdmissions))) == c(6,9),
           dim(format(ft22)) == c(11,7))
+for(meth in c("non.compact", "row.compact", "col.compact", "compact")) {
+   cat("\nMethod ",meth,"\n-----------------\n")
+   write.ftable(ft22, method=meth) # without warnings!
+}
+options(op)
 }
 }
 \keyword{category}
