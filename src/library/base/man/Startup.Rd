@@ -1,6 +1,6 @@
 % File src/library/base/man/Startup.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Startup}
@@ -144,6 +144,9 @@
   site or user environment files: do not change
   \file{\var{\link{R_HOME}}/etc/Renviron} itself.  Note that this is
   distinct from \file{\var{\link{R_HOME}}/etc/Renviron.site}.
+
+  Command-line options may well not apply to alternative front-ends:
+  they do not apply to \command{R.app} on OS X.
 #endif
 #ifdef windows
   The startup options are for \command{Rgui}, \command{Rterm} and

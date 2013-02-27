@@ -1521,7 +1521,8 @@ deleted the files.
 @chapter Running R
 
 How to start @R{} and what command-line options are available is discussed
-in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
+in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.  (Note
+that command-line options do not apply to @Rapp{} on OS X.)
 
 You should ensure that the shell has set adequate resource limits: @R{}
 expects a stack size of at least 8MB and to be able to open at least 256
