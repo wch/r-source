@@ -1248,7 +1248,7 @@ setRlibs <-
                 printLog0(Log, paste(c(ini, out8, ""), collapse = "\n"))
                 ini <- ""
             }
-            ## All remaining checks give notes and not warnings.            
+            ## All remaining checks give notes and not warnings.
             if(length(ini))
                 ini <- c("",
                          "In addition to the above warning(s), found the following notes:",
@@ -2462,7 +2462,7 @@ setRlibs <-
                 }
             } else resultLog(Log, "OK")
 
-            if (do_rebuild_vignettes &&
+            if (do_build_vignettes &&
                 parse_description_field(desc, "BuildVignettes", TRUE)) {
                 checkingLog(Log, "re-building of vignette PDFs")
                 ## copy the whole pkg directory to check directory
@@ -3296,7 +3296,7 @@ setRlibs <-
             "      --no-tests        do not run code in 'tests' subdirectory",
             "      --no-manual       do not produce the PDF manual",
             "      --no-vignettes    do not run R code in vignettes",
-            "      --no-rebuild-vignettes    do not re-build PDFs of vignettes",
+            "      --no-build-vignettes    do not build PDFs of vignettes",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
@@ -3364,7 +3364,7 @@ setRlibs <-
     do_install <- TRUE; install <- ""
     do_tests <- TRUE
     do_vignettes <- TRUE
-    do_rebuild_vignettes <- TRUE
+    do_build_vignettes <- TRUE
     do_manual <- TRUE
     use_gct <- FALSE
     use_valgrind <- FALSE
@@ -3418,8 +3418,10 @@ setRlibs <-
             install <- substr(a, 11, 1000)
         } else if (a == "--no-tests") {
             do_tests  <- FALSE
+        } else if (a == "--no-build-vignettes") {
+            do_build_vignettes  <- FALSE
         } else if (a == "--no-rebuild-vignettes") {
-            do_rebuild_vignettes  <- FALSE
+            do_build_vignettes  <- FALSE
         } else if (a == "--no-vignettes") {
             do_vignettes  <- FALSE
         } else if (a == "--no-manual") {
@@ -3466,7 +3468,7 @@ setRlibs <-
 
     if (install == "fake") {
         ## If we fake installation, then we cannot *run* any code.
-        do_examples <- do_tests <- do_vignettes <- do_rebuild_vignettes <- 0
+        do_examples <- do_tests <- do_vignettes <- do_build_vignettes <- 0
         spec_install <- TRUE
         multiarch <- FALSE
     }
@@ -3740,8 +3742,8 @@ setRlibs <-
         if (!do_examples && !spec_install) opts <- c(opts, "--no-examples")
         if (!do_tests && !spec_install) opts <- c(opts, "--no-tests")
         if (!do_vignettes && !spec_install) opts <- c(opts, "--no-vignettes")
-        if (!do_rebuild_vignettes && !spec_install)
-            opts <- c(opts, "--no-rebuild-vignettes")
+        if (!do_build_vignettes && !spec_install)
+            opts <- c(opts, "--no-build-vignettes")
         if (use_gct) opts <- c(opts, "--use-gct")
         if (use_valgrind) opts <- c(opts, "--use-valgrind")
         if (length(opts) > 1L)

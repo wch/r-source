@@ -586,6 +586,14 @@
 
       It makes use of custom settings from configuration recorded in
       \file{etc/javaconf}.
+      
+      \item The \option{--no-vignettes} argument of \command{R CMD
+	build} has been renamed to the more accurate
+      \option{--no-build-vignettes}: its action has always been to
+      (re)build vignettes and never omitted them.
+
+      \command{R CMD check} accepts \option{--no-build-vignettes} as a
+      synonym for \option{--no-rebuild-vignettes}.
     }
   }
 

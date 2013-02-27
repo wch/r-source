@@ -231,7 +231,7 @@ get_exclude_patterns <- function()
             "",
             "  --force               force removal of INDEX file",
             "  --keep-empty-dirs     do not remove empty dirs",
-            "  --no-vignettes        do not rebuild package vignettes",
+            "  --no-build-vignettes  do not (re)build package vignettes",
             "  --no-manual           do not build the PDF manual even if \\Sexprs are present",
             "  --resave-data=        re-save data files as compactly as possible:",
             '                        "no", "best", "gzip" (default)',
@@ -825,7 +825,7 @@ get_exclude_patterns <- function()
             force <- TRUE
         } else if (a == "--keep-empty-dirs") {
             keep_empty <- TRUE
-        } else if (a == "--no-vignettes") {
+        } else if (a == "--no-build-vignettes") {
             vignettes <- FALSE
         } else if (a == "--resave-data") {
             resave_data <- "best"

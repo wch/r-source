@@ -2351,13 +2351,14 @@ Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
 
 @c DESCRIPTION field BuildVignettes
-Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
-option (or the package's @file{DESCRIPTION} contains
-@samp{BuildVignettes: no} or similar), it will attempt to rebuild the
-vignettes (@pxref{Writing package vignettes}) in the package.  To do so
-it installs the current package into a temporary library tree, but any
-dependent packages need to be installed in an available library tree
-(see the Note: at the top of this section).
+Unless @kbd{R CMD build} is invoked with the
+@option{--no-build-vignettes} option (or the package's
+@file{DESCRIPTION} contains @samp{BuildVignettes: no} or similar), it
+will attempt to (re)build the vignettes (@pxref{Writing package
+vignettes}) in the package.  To do so it installs the current package
+into a temporary library tree, but any dependent packages need to be
+installed in an available library tree (see the Note: at the top of this
+section).
 
 @c DESCRIPTION field BuildManual
 Similarly, if the @file{.Rd} documentation files contain any
