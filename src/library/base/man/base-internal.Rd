@@ -37,10 +37,6 @@
 \alias{.C_R_addTaskCallback}
 \alias{.C_R_getTaskCallbackNames}
 \alias{.C_R_removeTaskCallback}
-\alias{.F_cg}
-\alias{.F_ch}
-\alias{.F_ch2inv}
-\alias{.F_chol}
 \alias{.F_dchdc}
 \alias{.F_dqrcf}
 \alias{.F_dqrdc2}
@@ -48,10 +44,7 @@
 \alias{.F_dqrqy}
 \alias{.F_dqrrsd}
 \alias{.F_dqrxb}
-\alias{.F_dsvdc}
 \alias{.F_dtrco}
-\alias{.F_rg}
-\alias{.F_rs}
 % These are compiled in conditionally
 \alias{.C_R_getbcprofcounts}
 \alias{.C_R_startbcprof}
@@ -98,9 +91,6 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .difftime(xx, units)
 
 .cache_class(class, extends)
-
-.find.package(\dots)
-.path.package(\dots)
 
 .popath
 
@@ -220,10 +210,6 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.cache_class} caches the inheritance of an S4 class for use in
   S3 method dispatch.  With \code{NULL} second argument it returns the
   cached inheritance, for diagnostic use.
-
-  \code{.find.package} and \code{.path.package} are internal-only
-  versions (and the only versions available prior to \R 2.13.0) of
-  \code{\link{find.package}} and \code{\link{path.package}}.
 
   \code{.popath} is a variable created at startup which records where
   the \pkg{translations} package in use is.
