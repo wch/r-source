@@ -209,7 +209,7 @@ function(package, dir, lib.loc = NULL)
 ### remove all temporary files that were created.
 
 buildVignettes <-
-function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
+function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALSE)
 {
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(invisible())
@@ -259,6 +259,14 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
             bft <- paste0(file_path_sans_ext(f), ".tex")
             texi2pdf(file = bft, clean = FALSE, quiet = quiet)
         }
+        
+        if (tangle)  # This is set for custom engines
+            tryCatch(engine[["tangle"]](f, quiet = quiet),
+            	error = function(e) {
+                     stop(gettextf("tangling vignette '%s' failed with diagnostics:\n%s",
+                                   f, conditionMessage(e)),
+                          domain = NA, call. = FALSE)
+                 })
     }
 
     if(have.makefile) {
@@ -618,14 +626,18 @@ vignetteEngine <- local({
 })
 
 loadVignetteBuilder <-
-function(pkgdir)
+function(pkgdir, mustwork = TRUE)
 {
     pkgs <- .get_package_metadata(pkgdir)["VignetteBuilder"]
     if (!is.na(pkgs)) {
         pkgs <- unlist(strsplit(pkgs, ","))
         pkgs <- gsub('[[:space:]]', '', pkgs)
-        for (pkg in pkgs)
-    	    loadNamespace(pkg)
+        for (pkg in pkgs) {
+    	    res <- try(loadNamespace(pkg), silent = TRUE)
+    	    if (mustwork && inherits(res, "try-error"))
+    	    	stop(gettextf("vignette builder '%s' not found", pkg),
+                     domain = NA)
+        }
     }
 }
 

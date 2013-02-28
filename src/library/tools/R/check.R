@@ -2294,7 +2294,8 @@ setRlibs <-
         ## exist in inst/doc?  If so the latter will be ignored,
         sources <-
             basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
-        if (length(sources)) {
+        custom <- !is.na(desc["VignetteBuilder"])
+        if (length(sources) && !custom) {
             new_sources <- vignette_source(basename(vf))
             dups <- sources[sources %in% new_sources]
             if(nb <- length(dups)) {

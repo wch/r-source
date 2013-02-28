@@ -343,10 +343,17 @@ get_exclude_patterns <- function()
                     on.exit(Sys.unsetenv("R_LIBS"), add = TRUE)
                     Sys.setenv(R_LIBS = libdir)
                 }
+                
+                # If a custom builder is used, we tangle all vignettes now in 
+                # case the tangler is not available at INSTALL time.
+                # We could just tangle the custom ones, but mixed Sweave/custom
+                # vignettes are likely to be rare, and this is simpler
+                
+                custom <- !is.na(desc["VignetteBuilder"])
                 cmd <- file.path(R.home("bin"), "Rscript")
                 args <- c("--vanilla",
                           "--default-packages=", # some vignettes assume methods
-                          "-e", shQuote("tools::buildVignettes(dir = '.')"))
+                          "-e", shQuote(paste0("tools::buildVignettes(dir = '.', tangle=", custom, ")")))
                 ## since so many people use 'R CMD' in Makefiles,
                 oPATH <- Sys.getenv("PATH")
                 Sys.setenv(PATH = paste(R.home("bin"), oPATH,
@@ -358,24 +365,26 @@ get_exclude_patterns <- function()
                     printLog(Log, paste(c(res$stdout, ""),  collapse = "\n"))
                     do_exit(1L)
                 } else {
-                    ## Do any of the .R files which will be generated
-                    ## exist in inst/doc?  If so the latter should be removed.
-                    sources <- basename(list_files_with_exts(doc_dir, "R"))
-                    if (length(sources)) {
-                        vf <- basename(list_files_with_type(doc_dir, "vignette"))
-                        new_sources <- vignette_source(vf)
-                        dups <- sources[sources %in% new_sources]
-                        if(length(dups)) {
-                            warningLog(Log)
-                            printLog(Log,
-                                     paste(c("  Unused files in inst/doc which are pointless or misleading",
-                                             "  as they will be re-created from the vignettes on installation:",
-                                             paste("  ", dups),
-                                             "  have been removed", ""),
-                                           collapse = "\n"))
-                            unlink(file.path(doc_dir, dups))
-                        } else resultLog(Log, "OK")
-                    } else resultLog(Log, "OK")
+                    if (!custom) {
+			## Do any of the .R files which will be generated at install time
+			## exist in inst/doc?  If so the latter should be removed.
+			sources <- basename(list_files_with_exts(doc_dir, "R"))
+			if (length(sources)) {
+			    vf <- basename(list_files_with_type(doc_dir, "vignette"))
+			    new_sources <- vignette_source(vf)
+			    dups <- sources[sources %in% new_sources]
+			    if(length(dups)) {
+				warningLog(Log)
+				printLog(Log,
+					 paste(c("  Unused files in inst/doc which are pointless or misleading",
+						 "  as they will be re-created from the vignettes on installation:",
+						 paste("  ", dups),
+						 "  have been removed", ""),
+					       collapse = "\n"))
+				unlink(file.path(doc_dir, dups))
+			    } else resultLog(Log, "OK")
+			} else resultLog(Log, "OK")
+		    } 
                 }
                 ## We may need to install them.
                 if (basename(vigns$dir) == "vignettes") {

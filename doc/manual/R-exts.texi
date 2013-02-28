@@ -2715,10 +2715,10 @@ using the @code{\VignetteEngine} line, for example
 This specifies the name of an engine to use in place of Sweave in
 processing the vignette.  As @code{Sweave} is the only engine supplied
 with @R{}, the package providing any other engine must be specified in
-the @samp{VignetteBuilder} field of the package @file{DESCRIPTION} file,
-and also specified in the @samp{Imports} field in the @file{DESCRIPTION}
-file, unless already in the @samp{Depends} field (since its namespace
-must be available to install your package).
+the @samp{VignetteBuilder} field of the package @file{DESCRIPTION}
+file, and also specified in the @samp{Suggests}, @samp{Imports} or
+@samp{Depends} field in the @file{DESCRIPTION} file (since its
+namespace must be available to build or check your package).
 
 If the vignette source has the @file{.Rmd} extension  then it is
 assumed that the weaving procedure produces @file{.html} output
