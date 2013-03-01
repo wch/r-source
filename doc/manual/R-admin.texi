@@ -1854,6 +1854,20 @@ downloaded from @uref{http://r.research.att.com/tools/}.
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed: for Mountain Lion see @ref{Mountain Lion}.
 
+The X11 version of Tcl/Tk available for download from @acronym{CRAN}
+comes with the @code{Tktable} extension, but not with @code{BWidget}
+which some packages require (and is shipped as part of @R{} for
+Windows).  It is easy to install:
+
+@itemize
+@item Download the sources from @uref{http://sourceforge.net/projects/tcllib/files/BWidget/}.
+@item In a Terminal run something like (depending on the version you downloaded)
+@example
+tar xf bwidget-1.9.5.tar.gz
+sudo mv bwidget-1.9.5 /usr/local/lib
+@end example
+@end itemize
+
 
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
 @subsection Customizing package compilation
