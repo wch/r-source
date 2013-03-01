@@ -593,8 +593,11 @@ function(x, db = NULL)
         }
         if(!is.na(pos <- match("License_restricts_use", cnms))) {
             lru <- db[, pos]
-            ind <- !is.na(lru)
-            out$restricts_use[ind] <- (lru[ind] == "yes")
+            pos <- which(!is.na(lru))
+            out$restricts_use[pos] <- (lru[pos] == "yes")
+            ## restricts_use implies !is_FOSS:
+            pos <- pos[lru[pos] == "yes"]
+            out$is_FOSS[pos] <- FALSE
         }
     }
     out
