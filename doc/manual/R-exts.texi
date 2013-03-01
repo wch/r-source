@@ -10567,11 +10567,11 @@ for example numerical linear algebra computations and special functions.
 
 The header files @file{R_ext/BLAS.h}, @file{R_ext/Lapack.h} and
 @file{R_ext/Linpack.h} contains declarations of the BLAS, LAPACK and
-LINPACK/EISPACK linear algebra functions included in @R{}.  These
-are expressed as calls to FORTRAN subroutines, and they will also be
-usable from users' FORTRAN code.  Although not part of the official
-@acronym{API}, this set of subroutines is unlikely to change (but might
-be supplemented).
+LINPACK linear algebra functions included in @R{}.  These are expressed
+as calls to FORTRAN subroutines, and they will also be usable from
+users' FORTRAN code.  Although not part of the official @acronym{API},
+this set of subroutines is unlikely to change (but might be
+supplemented).
 
 The header file @file{Rmath.h} lists many other functions that are
 available and documented in the following subsections. Many of these are

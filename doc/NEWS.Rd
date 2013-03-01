@@ -684,9 +684,7 @@
       \item The unused \code{fontsmooth} argument has been removed from
       the \code{quartz()} device.
 
-      \item All the (non-API) EISPACK entry points in \R except
-      \code{rs} have been removed: that is liable to be removed at any
-      time.
+      \item All the (non-API) EISPACK entry points in \R have been removed.
       
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated.
 

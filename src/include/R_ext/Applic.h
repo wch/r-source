@@ -145,14 +145,6 @@ void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 		     double *qty, int *k,
 		     int *jpvt, double *qraux, double *work);
 
-
-/* Others */
-
-/* appl/eigen.f */
-/* formerly used in package nlme, still used by latenetnet and robustbase */
-int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
-		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
-
 #ifdef  __cplusplus
 }
 #endif

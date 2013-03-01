@@ -18,8 +18,8 @@ Windows distributions.
 
 Note that almost all the code *is* copyright and may only be
 reproduced if the copyright notice (that in the file or this notice)
-is preserved.  The status of the included EISPACK and LINPACK routines
-is unclear: they are said to be in the public domain in the USA.
+is preserved.  The status of the included LINPACK routines is unclear:
+they are said to be in the public domain in the USA.
 
 	---------------------------------------------------
 
@@ -482,13 +482,7 @@ Portions of these files are based on the parser package,
 
 Some of the files in src/appl were originally taken from the Netlib
 archive now at www.netlib.org and do not clearly state their
-authorship, let alone copyright status.
-
-src/appl/eigen.f is part of EISPACK: it says
-
-'Questions and comments should be directed to Burton S. Garbow' but
-the original authors (in ALGOL) appear to be Bowdler, Martin, Parlett,
-Peters, Reinsch and Wilkinson
+copyright status.
 
 src/appl/{dchdc,dpfa,dpbsl,dpoco,dpodi,dpofa,dposl,dqrdc,
           dqrsl,dsvdc,dtrco,dtrsl}.f 
