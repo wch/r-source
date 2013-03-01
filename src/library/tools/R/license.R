@@ -81,6 +81,8 @@ function()
     ldb[is.na(ldb)] <- ""
     ## (Could also keeps NAs and filter on is.finite() in subsequent
     ## computations.)
+    ## FOSS == "yes" implues Restricts_use = "no":
+    ldb[ldb[, "FOSS"] == "yes", "Restricts_use"] <- "no"
     data.frame(ldb, stringsAsFactors = FALSE)
 }
 
@@ -406,7 +408,9 @@ function(x)
                               is_verified = FALSE,
                               standardization = NA_character_,
                               extensions = NULL,
-                              pointers = NULL)
+                              pointers = NULL,
+                              is_FOSS = NA,
+                              restricts_use = NA)
         list(is_empty = is_empty,
              is_canonical = is_canonical,
              bad_components = bad_components,
@@ -414,7 +418,9 @@ function(x)
              is_verified = is_verified,
              standardization = standardization,
              extensions = extensions,
-             pointers = pointers)
+             pointers = pointers,
+             is_FOSS = is_FOSS,
+             restricts_use = restricts_use)
 
 
     x <- .strip_whitespace(x)
@@ -428,6 +434,8 @@ function(x)
     pointers <- NULL
     extensions <- NULL
     is_verified <- FALSE
+    is_FOSS <- NA
+    restricts_use <- NA
 
     ## Try splitting into the individual components.
     components <-
@@ -470,14 +478,54 @@ function(x)
 
     ## Analyze components provided that we know we can standardize.
     if(is_standardizable) {
-        verifiable <- function(x)
-            !is.null(x) && all(!is.na(x) & (x == "yes"))
+        verifiable <- function(x, v = "yes")
+            !is.null(x) && all(!is.na(x) & (x == v))
+        ## (More generally we could test for positive length of x: but
+        ## a length test is needed because all(NULL) |=> TRUE.)
+        
         expansions <- lapply(components,
                              expand_license_spec_component_from_db)
 
-        is_verified <- if(any(components == "Unlimited")) TRUE else {
-            any(sapply(expansions, function(e) verifiable(e$FOSS)))
-        }
+        ## The license is FOSS if there is one component which is
+        ## "Unlimited" or has a positive number of expansions all of
+        ## which are FOSS.
+        ## If all components have a positive number of expansions where
+        ## at least one is not FOSS, the license is not FOSS.
+        ## Otherwise we do not know.
+        is_FOSS <- if(any(components == "Unlimited")) {
+            TRUE
+        } else if(any(sapply(expansions,
+                             function(e) verifiable(e$FOSS)))) {
+            TRUE
+        } else if(all(sapply(expansions,
+                             function(e) any(e$FOSS == "no")))) {
+            FALSE
+        } else
+            NA
+
+        ## The license is verified (as FOSS) if it was verified as FOSS.
+        is_verified <- !is.na(is_FOSS) && is_FOSS
+
+        ## The license does not restrict use if it is verified as FOSS,
+        ## or if there is one component with a positive number of
+        ## expansions all of which do not restrict use.
+        ## If all components have a positive number of expansions where
+        ## at least one of which restricts use, the license restricts
+        ## use.
+        ## Otherwise, we do not know.
+        restricts_use <- if(is_verified) {
+            FALSE
+        } else if(any(sapply(expansions,
+                             function(e)
+                             (length(e) &&
+                              all(e$Restricts_use == "no"))))) {
+            FALSE
+        } else if(all(sapply(expansions,
+                             function(e)
+                             any(e$Restricts_use == "yes")))) {
+            TRUE
+        } else
+            NA
 
         pos <- grep(sprintf("%s$", R_license_db_vars$re_license_file),
                     components)
@@ -504,7 +552,9 @@ function(x)
                   standardization = standardization,
                   is_verified = is_verified,
                   extensions = extensions,
-                  pointers = pointers)
+                  pointers = pointers,
+                  is_FOSS = is_FOSS,
+                  restricts_use = restricts_use)
 }
 
 .standardize_license_components <-
@@ -515,7 +565,7 @@ function(x)
 }
 
 analyze_licenses <-
-function(x)
+function(x, db = NULL)
 {
     x <- as.character(x)
     if(!length(x)) return(NULL)
@@ -524,26 +574,41 @@ function(x)
     out <- as.data.frame(do.call(rbind, lapply(v, analyze_license)),
                          stringsAsFactors = FALSE)
     pos <- match(c("is_empty", "is_canonical", "is_standardizable",
-                   "is_verified", "standardization"),
+                   "is_verified", "standardization", "is_FOSS",
+                   "restricts_use"),
                  names(out))
     out[pos] <- lapply(out[pos], unlist)
     ## And re-match specs to the unique specs.
     out <- out[match(x, v), ]
     rownames(out) <- NULL
+    if(!is.null(db)) {
+        ## db should be a package db (data frame or character matrix)
+        ## with rows corresponding to the elements of x.
+        cnms <- colnames(db)
+        if(!is.na(pos <- match("License_is_FOSS", cnms))) {
+            lif <- db[, pos]
+            ind <- !is.na(lif)
+            out$is_verified[ind] <- out$is_FOSS[ind] <-
+                (lif[ind] == "yes")
+        }
+        if(!is.na(pos <- match("License_restricts_use", cnms))) {
+            lru <- db[, pos]
+            ind <- !is.na(lru)
+            out$restricts_use[ind] <- (lru[ind] == "yes")
+        }
+    }
     out
 }
 
 build_license_db <-
 function(dir, unpacked = FALSE)
 {
-    ## Note that currently (2007-10-20), the license info is *NOT*
-    ## written into the repository db (file 'PACKAGES') anymore.
-
     CRAN <- getOption("repos")["CRAN"]
     if(missing(dir) && substring(CRAN, 1L, 7L) == "file://")
         dir <- file.path(substring(CRAN, 8L), "src", "contrib")
 
-    fields <- c("License", "Maintainer")
+    fields <- c("License", "License_is_FOSS", "License_restricts_use",
+                "Maintainer")
     db <- .build_repository_package_db(dir, fields, unpacked = unpacked)
     ## Actually, for Omegehat this is not a good idea as this retains
     ## old versions in the "main" src/contrib directory.  But let's not
@@ -558,7 +623,13 @@ function(dir, unpacked = FALSE)
 
 analyze_licenses_in_license_db <-
 function(db)
-    cbind(db, analyze_licenses(db$License))
+{
+    results <- cbind(db, analyze_licenses(db$License, db))
+    ## Keep License_is_FOSS and License_restricts_use columns for now,
+    ## so that we can identify the is_FOSS and restricts_use values
+    ## obtained from these.
+    results
+}
 
 analyze_licenses_in_repository <-
 function(dir, unpacked = FALSE, full = TRUE)
