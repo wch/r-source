@@ -4168,8 +4168,7 @@ used).
 
 The native BSD @command{make} suffices to build @R{} but a number of
 packages require @acronym{GNU} @command{make}, despite the
-recommendations of the ``Writing R Extensions'' manual.  (The BSD
-version is @command{bsdmake} on Darwin.)
+recommendations of the ``Writing R Extensions'' manual.
 
 The simplest way to get the additional software needed to build @R{} is
 to install a pre-compiled version first, e.g.@: by
