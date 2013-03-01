@@ -106,7 +106,7 @@ function(dir, fields = NULL,
 
     ## Add the standard set of fields required to build a repository's
     ## PACKAGES file:
-    fields <- unique(c(.get_standard_repository_db_fields(), fields))
+    fields <- unique(c(.get_standard_repository_db_fields(type), fields))
     packages <- sapply(strsplit(files, "_", fixed = TRUE), "[", 1L)
     db <- vector(length(files), mode = "list")
     names(db) <- files
