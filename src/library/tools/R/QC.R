@@ -5611,6 +5611,40 @@ function(dir)
             out$spelling <- a
     }
 
+    ## If a package has a FOSS license, check whether any of its strong
+    ## recursive dependencies restricts use.
+    if(foss) {
+        available <-
+            utils::available.packages(type = "source",
+                                      filters =
+                                      c("R_version", "duplicates"))
+        ## We need the current dependencies of the package (so batch
+        ## upload checks will not necessarily do "the right thing").
+        package <- meta["Package"]
+        depends <- c("Depends", "Imports", "LinkingTo")
+        ## Need to be careful when merging the dependencies of the
+        ## package (in case it is not yet available).
+        if(!is.na(pos <- match(package, rownames(available)))) {
+            available[package, depends] <- meta[depends]
+        } else {
+            entry <- rbind(meta[colnames(available)])
+            rownames(entry) <- package
+            available <- rbind(available, entry)
+        }
+        ldb <- analyze_licenses(available[, "License"], available)
+        depends <- unlist(package_dependencies(package, available,
+                                               recursive = TRUE))
+        ru <- ldb$restricts_use
+        pnames_restricts_use_TRUE <- rownames(available)[!is.na(ru) & ru]
+        pnames_restricts_use_NA <- rownames(available)[is.na(ru)]
+        bad <- intersect(depends, pnames_restricts_use_TRUE)
+        if(length(bad))
+            out$depends_with_restricts_use_TRUE <- bad
+        bad <- intersect(depends, pnames_restricts_use_NA)
+        if(length(bad))
+            out$depends_with_restricts_use_NA <- bad
+    }
+    
     ## Check for possibly mis-spelled field names.
     nms <- names(meta)
     nms <- nms[is.na(match(nms, .get_standard_DESCRIPTION_fields())) &
@@ -5650,16 +5684,31 @@ function(dir)
     entry <- odb[odb[, "Package"] == meta["Package"], ]
     entry <- entry[!is.na(entry) & (names(entry) != "Package")]
     if(length(entry)) {
+        ## Check for conflicts between package license implications and
+        ## repository overrides.  Note that the license info predicates
+        ## are logicals (TRUE, NA or FALSE) and the repository overrides
+        ## are character ("yes", missing or "no").
+        if(!is.na(iif <- info$is_FOSS) &&
+           !is.na(lif <- entry["License_is_FOSS"]) &&
+           ((lif == "yes") != iif))
+            out$conflict_in_license_is_FOSS <- lif
+        if(!is.na(iru <- info$restricts_use) &&
+           !is.na(lru <- entry["License_restricts_use"]) &&
+           ((lru == "yes") != iru))
+            out$conflict_in_license_restricts_use <- lru
+
         fmt <- function(s)
             unlist(lapply(s,
                           function(e) {
                               paste(strwrap(e, indent = 2L, exdent = 4L),
                                     collapse = "\n")
                           }))
+        nms <- names(entry)
         ## Report all overrides for visual inspection.
-        entry <- fmt(sprintf("  %s: %s", names(entry), entry))
+        entry <- fmt(sprintf("  %s: %s", nms, entry))
+        names(entry) <- nms
         out$overrides <- entry
-        fields <- intersect(names(meta), names(entry))
+        fields <- intersect(names(meta), nms)
         if(length(fields)) {
             ## Find fields where package metadata and repository
             ## overrides are in conflict.
@@ -5856,6 +5905,26 @@ function(x, ...)
       if(length(y <- x$conflicts)) {
           sprintf("CRAN repository db conflicts: %s",
                   sQuote(y))
+      },
+      if(length(y <- x$conflict_in_license_is_FOSS)) {
+          sprintf("Package license conflicts with %s override",
+                  sQuote(paste("License_is_FOSS:", y)))
+      },
+      if(length(y <- x$conflict_in_license_restricts_use)) {
+          sprintf("Package license conflicts with %s override",
+                  sQuote(paste("License_restricts_use:", y)))
+      },
+      if(length(y <- x$depends_with_restricts_use_TRUE)) {
+          c("Package has FOSS license but eventually depends on the following",
+            "packages which restrict use:",
+            strwrap(paste(y, collapse = ", "),
+                    indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$depends_with_restricts_use_NA)) {
+          c("Package has FOSS license but eventually depends on the following",
+            "packages which may restrict use:",
+            strwrap(paste(y, collapse = ", "),
+                    indent = 2L, exdent = 4L))
       }
       )
 }
