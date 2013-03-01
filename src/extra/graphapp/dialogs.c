@@ -197,8 +197,8 @@ void askchangedir()
 {
     char *s, msg[MAX_PATH + 40];
 
-/* if cod has never been used, set it to current directory */
-    if (!cod[0]) GetCurrentDirectory(MAX_PATH, cod);
+/* set cod to current directory */
+    GetCurrentDirectory(MAX_PATH, cod);
     s = askcdstring(G_(" Change working directory to:"), cod);
     if (s && (SetCurrentDirectory(s) == FALSE)) {
 	snprintf(msg, MAX_PATH + 40,

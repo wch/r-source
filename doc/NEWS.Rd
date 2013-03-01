@@ -402,6 +402,10 @@
       \item \code{find.package(lib.loc = NULL)} now treats loaded
       namespaces preferentially in the same way as attached packages
       have been for a long time.
+      
+      \item In Windows, the Change Directory dialog now defaults to
+      the current working directory, rather than to the last directory 
+      chosen in that dialog.
     }
   }
 
