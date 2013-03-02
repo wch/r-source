@@ -48,7 +48,7 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
   with a name like
 \preformatted{repos_http\%3a\%2f\%2fcran.r-project.org\%2fsrc\%2fcontrib.rds}
 
-  By default, this includes only packages whose version and OS
+  By default, the report includes only packages whose version and OS
   requirements are met by the running version of \R, and only gives
   information on the latest versions of packages.
 
@@ -103,11 +103,17 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
 }
 \value{
   A matrix with one row per package, row names the package names and
-  column names \code{"Package"}, \code{"Version"}, \code{"Priority"},
-  \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
-  \code{"Suggests"}, \code{"Enhances"}, \code{"OS_type"},
-  \code{"License"}, \code{"File"} and \code{"Repository"}.  Additional
-  columns can be specified using the \code{fields} argument.
+  column names including \code{"Package"}, \code{"Version"},
+  \code{"Priority"}, \code{"Depends"}, \code{"Imports"},
+  \code{"LinkingTo"}, \code{"Suggests"}, \code{"Enhances"},
+  \code{"File"} and \code{"Repository"}.  Additional columns can be
+  specified using the \code{fields} argument.
+
+  Where provided by the repository, fields \code{"OS_type"},
+  \code{"License"}, \code{"License_is_FOSS"},
+  \code{"License_restricts_use"}, \code{"Archs"}, \code{"MD5sum"} and
+  \code{"NeedsCompilation"} are reported for use by the filters and
+  package management tools, including \code{\link{install.packages}}.
 }
 \seealso{
   \code{\link{install.packages}}, \code{\link{download.packages}},
@@ -120,6 +126,7 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
 ## restrict install.packages() (etc) to known-to-be-FOSS packages
 options(available_packages_filters =
   c("R_version", "OS_type", "subarch", "duplicates", "license/FOSS"))
-
+## or
+options(available_packages_filters = list(add = TRUE, "license/FOSS"))
 }}
 \keyword{utilities}

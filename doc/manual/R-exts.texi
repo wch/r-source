@@ -423,7 +423,7 @@ The string @samp{Unlimited}, meaning that there are no restrictions on
 distribution or use other than those imposed by relevant laws (including
 copyright laws).
 @end itemize
-If a package license restricts a base license (where permitted, e.g.,
+If a package license @emph{restricts} a base license (where permitted, e.g.,
 using GPL-3 or AGPL-3 with an attribution clause), the additional terms
 should be placed in file @file{LICENSE} (or @file{LICENCE}), and the
 string @samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively)
@@ -456,7 +456,8 @@ added by repositories where information cannot be computed from the name
 of the license.  @samp{License_is_FOSS: yes} is used for licenses which
 are known to be FOSS, and @samp{License_restricts_use} can have values
 @samp{yes} or @samp{no} if the @file{LICENSE} file is known to restrict
-users or usage, or known not to.
+users or usage, or known not to.  These are used by, e.g.@:, the
+@code{available.packages} filters.
 
 @c DESCRIPTION field Description
 The mandatory @samp{Description} field should give a comprehensive
