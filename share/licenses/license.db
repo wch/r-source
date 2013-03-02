@@ -240,5 +240,5 @@ Name: ACM Software License Agreement
 Version: 1998
 Abbrev: ACM
 URL: http://www.acm.org/publications/policies/softwarecrnotice
-FOSS:no
+FOSS: no
 Restricts_use: yes

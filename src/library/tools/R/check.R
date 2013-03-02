@@ -638,12 +638,34 @@ setRlibs <-
     {
         checkingLog(Log, "top-level files")
         topfiles <- Sys.glob(c("install.R", "R_PROFILE.R"))
+        any <- FALSE
         if (length(topfiles)) {
+            any <- TRUE
             warningLog(Log)
             printLog(Log, .format_lines_with_indent(topfiles), "\n")
             wrapLog("These files are defunct.",
                     "See manual 'Writing R Extensions'.\n")
-        } else resultLog(Log, "OK")
+        }
+        topfiles <- Sys.glob(c("LICENCE", "LICENSE"))
+        if (length(topfiles)) {
+            ## Are these mentioned in DESCRIPTION?
+            lic <- desc["License"]
+            if(!is.na(lic)) {
+                found <- sapply(topfiles,  function(x) grepl(x, lic, fixed = TRUE))
+                topfiles <- topfiles[!found]
+                if (length(topfiles)) {
+                    any <- TRUE
+                    noteLog(Log)
+                    printLog(Log, .format_lines_with_indent(topfiles), "\n")
+                    printLog(Log,
+                             if(length(topfiles) > 1L)
+                             "are not mentioned in the DESCRIPTION file.\n"
+                             else
+                             "is not mentioned in the DESCRIPTION file.\n")
+                }
+            }
+        }
+        if (!any) resultLog(Log, "OK")
     }
 
     check_detritus <- function()
@@ -3170,7 +3192,7 @@ setRlibs <-
                          paste(strwrap(paste(of, collapse = " "),
                                        indent = 2L, exdent = 2L),
                                collapse = "\n"),
-                         "Object files/libraries should not be included in a source package.\n")
+                         "\nObject files/libraries should not be included in a source package.\n")
                 ini <- ""
             }
             ## A submission had src-i386 etc from multi-arch builds
