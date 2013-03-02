@@ -61,6 +61,9 @@ reformulate("x*w", ff[[2]])
 fS <- surv(ft, case) ~ a + b
 reformulate(c("a", "b*f"), fS[[2]])
 
+## using non-syntactic names:
+reformulate(c("`P/E`", "`\% Growth`"), response = as.name("+-"))
+
 stopifnot(identical(      ~ var, reformulate("var")),
           identical(~ a + b + c, reformulate(letters[1:3])),
           identical(  y ~ a + b, reformulate(letters[1:2], "y"))
