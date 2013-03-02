@@ -5916,15 +5916,17 @@ function(x, ...)
       },
       if(length(y <- x$depends_with_restricts_use_TRUE)) {
           c("Package has a FOSS license but eventually depends on the following",
-            "package(s) which restrict use:",
-            strwrap(paste(y, collapse = ", "),
-                    indent = 2L, exdent = 4L))
+            ifelse(length(y) > 1L,
+                   "packages which restrict use:",
+                   "package which restricts use:"),
+            strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if(length(y <- x$depends_with_restricts_use_NA)) {
           c("Package has a FOSS license but eventually depends on the following",
-            "package(s) which may restrict use:",
-            strwrap(paste(y, collapse = ", "),
-                    indent = 2L, exdent = 4L))
+            ifelse(length(y) > 1L,
+                   "packages which may restrict use:",
+                   "package which may restrict use:"),
+            strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       }
       )
 }
