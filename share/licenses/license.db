@@ -235,3 +235,10 @@ FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#boos
 OSI: open (http://opensource.org/licenses/BSL-1.0)
 URL: http://www.boost.org/LICENSE_1_0.txt
 FOSS: yes
+
+Name: ACM Software License Agreement
+Version: 1998
+Abbrev: ACM
+URL: http://www.acm.org/publications/policies/softwarecrnotice
+FOSS:no
+Restricts_use: yes
