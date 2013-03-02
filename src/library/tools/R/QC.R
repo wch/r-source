@@ -5644,7 +5644,7 @@ function(dir)
         if(length(bad))
             out$depends_with_restricts_use_NA <- bad
     }
-    
+
     ## Check for possibly mis-spelled field names.
     nms <- names(meta)
     nms <- nms[is.na(match(nms, .get_standard_DESCRIPTION_fields())) &
@@ -5915,14 +5915,14 @@ function(x, ...)
                   sQuote(paste("License_restricts_use:", y)))
       },
       if(length(y <- x$depends_with_restricts_use_TRUE)) {
-          c("Package has FOSS license but eventually depends on the following",
-            "packages which restrict use:",
+          c("Package has a FOSS license but eventually depends on the following",
+            "package(s) which restrict use:",
             strwrap(paste(y, collapse = ", "),
                     indent = 2L, exdent = 4L))
       },
       if(length(y <- x$depends_with_restricts_use_NA)) {
-          c("Package has FOSS license but eventually depends on the following",
-            "packages which may restrict use:",
+          c("Package has a FOSS license but eventually depends on the following",
+            "package(s) which may restrict use:",
             strwrap(paste(y, collapse = ", "),
                     indent = 2L, exdent = 4L))
       }
