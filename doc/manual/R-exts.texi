@@ -386,6 +386,8 @@ were @samp{0.1-0}.  It is @strong{not} a decimal number, so for example
 @code{0.9 < 0.75} since @code{9 < 75}.
 
 @c DESCRIPTION field License
+@c DESCRIPTION field License_is_FOSS
+@c DESCRIPTION field License_restricts_use
 The mandatory @samp{License} field should specify the license of the
 package in a standardized form.  Alternatives are indicated @emph{via}
 vertical bars.  Individual specifications must be one of
@@ -448,6 +450,13 @@ Please ensure that the license you choose also covers any dependencies
 (including system dependencies) of your package: it is particularly
 important that any restrictions on the use of such dependencies are
 evident to people reading your @file{DESCRIPTION} file.
+
+Fields @samp{License_is_FOSS} and @samp{License_restricts_use} may be
+added by repositories where information cannot be computed from the name
+of the license.  @samp{License_is_FOSS: yes} is used for licenses which
+are known to be FOSS, and @samp{License_restricts_use} can have values
+@samp{yes} or @samp{no} if the @file{LICENSE} file is known to restrict
+users or usage, or known not to.
 
 @c DESCRIPTION field Description
 The mandatory @samp{Description} field should give a comprehensive
