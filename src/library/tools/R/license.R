@@ -587,9 +587,12 @@ function(x, db = NULL)
         cnms <- colnames(db)
         if(!is.na(pos <- match("License_is_FOSS", cnms))) {
             lif <- db[, pos]
-            ind <- !is.na(lif)
-            out$is_verified[ind] <- out$is_FOSS[ind] <-
-                (lif[ind] == "yes")
+            pos <- which(!is.na(lif))
+            out$is_FOSS[pos] <- out$is_verified[pos] <-
+                (lif[pos] == "yes")
+            ## is_FOSS implies !restricts_use:
+            pos <- pos[lif[pos] == "yes"]
+            out$restricts_use[pos] <- FALSE
         }
         if(!is.na(pos <- match("License_restricts_use", cnms))) {
             lru <- db[, pos]
@@ -597,7 +600,7 @@ function(x, db = NULL)
             out$restricts_use[pos] <- (lru[pos] == "yes")
             ## restricts_use implies !is_FOSS:
             pos <- pos[lru[pos] == "yes"]
-            out$is_FOSS[pos] <- FALSE
+            out$is_FOSS[pos] <- out$is_verified[pos] <- FALSE
         }
     }
     out
