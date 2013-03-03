@@ -59,6 +59,7 @@ SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
     if (result == R_NilValue) {
 	result = allocSExp(type);
 	SET_PRIMOFFSET(result, offset);
+	SET_VECTOR_ELT(PrimCache, offset, result);
     }
     else if (TYPEOF(result) != type)
 	error("requested primitive type is not consistent with cached value");
