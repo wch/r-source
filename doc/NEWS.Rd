@@ -411,6 +411,10 @@
       \code{"license/restricts_use"} filter which retains only packages 
       for which installation can proceed solely based on packages which
       are guaranteed not to restrict use.
+
+      \item New \code{check_packages_in_dir()} function in package
+      \pkg{tools} for conveniently checking source packages along with
+      their reverse dependencies.
     }
   }
 
