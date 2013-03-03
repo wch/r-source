@@ -208,47 +208,64 @@ available_packages_filters_db$duplicates <-
 function(db)
     tools:::.remove_stale_dups(db)
 
-available_packages_filters_db$`license/FOSS` <-
-function(db)
+filter_packages_by_depends_predicates <-
+function(db, predicate, recursive = TRUE)
 {
-    ## What we need to do is find all non-FOSS-verifiable packages and
-    ## all their recursive dependencies.  Somewhat tricky because there
-    ## may be dependencies missing from the package db.
-    ## Hence, for efficiency reasons, do the following.
-    ## Create a data frame which already has Depends/Imports/LinkingTo
-    ## info in package list form, and use this to compute the out of db
-    ## packages.
+    ## Could also add a 'which' argument to specify which dependencies
+    ## are taken.
+
+    ## Drop all packages for which any (recursive) dependency does not
+    ## satisfy the given predicate (implemented as a function computing
+    ## TRUE or FALSE for each rows of the package db).
+
+    ## Somewhat tricky because there may be depends missing from the db,
+    ## which are taken not to satisfy the predicate unless they are
+    ## standard packages.
+
+    ## Determine all depends missing from the db.
     db1 <- data.frame(Package = db[, "Package"],
                       stringsAsFactors = FALSE)
     fields <- c("Depends", "Imports", "LinkingTo")
     for(f in fields)
         db1[[f]] <-
             lapply(db[, f], tools:::.extract_dependency_package_names)
-
     all_packages <- unique(unlist(db1[fields], use.names = FALSE))
     bad_packages <-
         all_packages[is.na(match(all_packages, db1$Package))]
-    ## Dependency package names missing from the db can be
-    ## A. base packages
-    ## C. really missing.
-    ## We can ignore type A as these are known to be FOSS.
+    ## Drop the standard packages from these.
     bad_packages <-
-        bad_packages[is.na(match(bad_packages,
-                                 unlist(tools:::.get_standard_package_names())))]
+        setdiff(bad_packages,
+                unlist(tools:::.get_standard_package_names()))
 
-
-    ## Packages in the db not verifiable as FOSS.
-    ind <- !tools:::analyze_licenses(db[, "License"])$is_verified
+    ## Packages in the db which do not satisfy the predicate.
+    ind <- !predicate(db)
     ## Now find the recursive reverse dependencies of these and the
-    ## packages missing from the db.
-    depends <-
+    ## non-standard packages missing from the db.
+    rdepends <-
         tools:::package_dependencies(db1$Package[ind], db = db1,
-                                      reverse = TRUE, recursive = TRUE)
-    depends <- unique(unlist(depends))
-    ind[match(depends, db1$Package, nomatch = 0L)] <- TRUE
+                                     reverse = TRUE,
+                                     recursive = recursive)
+    rdepends <- unique(unlist(rdepends))
+    ind[match(rdepends, db1$Package, nomatch = 0L)] <- TRUE
 
     ## And drop these from the db.
     db[!ind, , drop = FALSE]
+}
+
+available_packages_filters_db$`license/FOSS` <-
+function(db) {
+    predicate <- function(db)
+        tools:::analyze_licenses(db[, "License"], db)$is_verified
+    filter_packages_by_depends_predicates(db, predicate)
+}
+
+available_packages_filters_db$`license/restricts_use` <-
+function(db) {
+    predicate <- function(db) {
+        ru <- tools:::analyze_licenses(db[, "License"], db)$restricts_use
+        !is.na(ru) & !ru
+    }
+    filter_packages_by_depends_predicates(db, predicate)
 }
 
 available_packages_filters_db$CRAN <-

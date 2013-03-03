@@ -406,6 +406,11 @@
       \item In Windows, the Change Directory dialog now defaults to
       the current working directory, rather than to the last directory 
       chosen in that dialog.
+
+      \item \code{available.packages()} gains a
+      \code{"license/restricts_use"} filter which retains only packages 
+      for which installation can proceed solely based on packages which
+      are guaranteed not to restrict use.
     }
   }
 

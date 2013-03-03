@@ -85,6 +85,10 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
       Note that this does depend on the repository supplying license
       information.
     }
+    \item{\code{"license/restricts_use"}}{include only packages for
+      which installation can proceed solely based on packages which are
+      guaranteed not to restrict use.
+    }
     \item{\code{"CRAN"}}{use CRAN versions in preference to versions
       from other repositories (even if these have a higher version
       number).}
