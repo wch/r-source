@@ -300,7 +300,7 @@ static int R_PageReleaseFreq = 1;
    R_NGrowFrac * R_NSize, the value of R_NSize is incremented by
    R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize.  When the number of
    nodes in use falls below R_NShrinkFrac, R_NSize is decremented by
-   R_NShrinkIncrMin * R_NShrinkFrac * R_NSize.  Analogous adjustments
+   R_NShrinkIncrMin + R_NShrinkFrac * R_NSize.  Analogous adjustments
    are made to R_VSize.
 
    This mechanism for adjusting the heap size constants is very
@@ -311,7 +311,10 @@ static int R_PageReleaseFreq = 1;
    information about the current needs; since the current live heap
    size can be very volatile, the adjustment mechanism only makes
    gradual adjustments.  A more sophisticated strategy would use more
-   of the live heap history. */
+   of the live heap history.
+
+   Some of the settings can now be adjusted by environment variables.
+*/
 static double R_NGrowFrac = 0.70;
 static double R_NShrinkFrac = 0.30;
 
@@ -333,10 +336,40 @@ static double R_VGrowIncrFrac = 0.05, R_VShrinkIncrFrac = 0.2;
 static int R_VGrowIncrMin = 80000, R_VShrinkIncrMin = 0;
 #endif
 
-static void init_gc_growincrfrac()
+static void init_gc_grow_settings()
 {
     char *arg;
 
+    arg = getenv("R_GC_MEM_GROW");
+    if (arg != NULL) {
+	int which = atof(arg);
+	switch (which) {
+	case 0: /* very conservative -- the SMALL_MEMORY settings */
+	    R_NGrowIncrFrac = 0.0;
+	    R_VGrowIncrFrac = 0.0;
+	    break;
+	case 1: /* default */
+	    break;
+	case 2: /* somewhat aggressive */
+	    R_NGrowIncrFrac = 0.2;
+	    R_VGrowIncrFrac = 0.2;
+	    break;
+	case 3: /* more aggressive */
+	    R_NGrowIncrFrac = 0.4;
+	    R_VGrowIncrFrac = 0.4;
+	    R_NGrowFrac = 0.5;
+	    R_VGrowFrac = 0.5;
+	    break;
+	}
+    }
+    arg = getenv("R_GC_GROWFRAC");
+    if (arg != NULL) {
+	double frac = atof(arg);
+	if (0.35 <= frac && frac <= 0.75) {
+	    R_NGrowFrac = frac;
+	    R_VGrowFrac = frac;
+	}
+    }
     arg = getenv("R_GC_GROWINCRFRAC");
     if (arg != NULL) {
 	double frac = atof(arg);
@@ -1888,7 +1921,7 @@ void attribute_hidden InitMemory()
     int gen;
 
     init_gctorture();
-    init_gc_growincrfrac();
+    init_gc_grow_settings();
 
     gc_reporting = R_Verbose;
     R_StandardPPStackSize = R_PPStackSize;
