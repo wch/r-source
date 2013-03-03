@@ -191,16 +191,16 @@ function(package, dir, lib.loc = NULL)
         ## Allow group generics to be undocumented other than in base.
         ## In particular, those from methods partially duplicate base
         ## and are documented in base's groupGenerics.Rd.
-        code_objs <-
-	    code_objs %w/o% c("Arith", "Compare", "Complex", "Logic",
-			      "Math", "Math2", "Ops", "Summary")
+        code_objs <- setdiff(code_objs,
+                             c("Arith", "Compare", "Complex", "Logic",
+                               "Math", "Math2", "Ops", "Summary"))
     }
 
     undoc_things <-
         list("code objects" =
-             unique(code_objs %w/o% all_doc_topics),
+             unique(setdiff(code_objs, all_doc_topics)),
              "data sets" =
-             unique(data_objs %w/o% all_doc_topics))
+             unique(setdiff(data_objs, all_doc_topics)))
 
     if(.isMethodsDispatchOn()) {
         ## Undocumented S4 classes?
@@ -263,13 +263,13 @@ function(package, dir, lib.loc = NULL)
         prims <- base_funs[prim]
         prototypes <- sort(c(ls(envir=.ArgsEnv, all.names=TRUE),
                              ls(envir=.GenericArgsEnv, all.names=TRUE)))
-        extras <- prototypes %w/o% prims
+        extras <- setdiff(prototypes, prims)
         if(length(extras))
             undoc_things <- c(undoc_things, list(prim_extra=extras))
         langElts <- c("$","$<-","&&","(",":","@","@<-","[","[[",
                       "[[<-","[<-","{","||","~","<-","<<-","=","break","for",
                       "function","if","next","repeat","return", "while")
-        miss <- prims %w/o% c(langElts, prototypes)
+        miss <- setdiff(prims, c(langElts, prototypes))
         if(length(miss))
             undoc_things <- c(undoc_things, list(primitives=miss))
     }
@@ -346,11 +346,11 @@ function(package, dir, lib.loc = NULL,
             S3Table <- get(".__S3MethodsTable__.", envir = ns_env)
             functions_in_S3Table <- ls(S3Table, all.names = TRUE)
             objects_in_ns <-
-                (objects(envir = ns_env, all.names = TRUE) %w/o%
-                 c(".__NAMESPACE__.", ".__S3MethodsTable__."))
+                setdiff(objects(envir = ns_env, all.names = TRUE),
+                        c(".__NAMESPACE__.", ".__S3MethodsTable__."))
             objects_in_code_or_namespace <-
                 unique(c(objects_in_code, objects_in_ns))
-            objects_in_ns <- objects_in_ns %w/o% objects_in_code
+            objects_in_ns <- setdiff(objects_in_ns, objects_in_code)
         }
         else
             objects_in_code_or_namespace <- objects_in_code
@@ -600,7 +600,7 @@ function(package, dir, lib.loc = NULL,
             data_sets <- sapply(exprs[ind],
                                 function(e) as.character(e[[2L]]))
             data_sets_in_usages <- c(data_sets_in_usages, data_sets)
-            data_sets <- data_sets %w/o% data_sets_in_code
+            data_sets <- setdiff(data_sets, data_sets_in_code)
             if(length(data_sets))
                 data_sets_in_usages_not_in_code[[docObj]] <- data_sets
             exprs <- exprs[!ind]
@@ -669,7 +669,7 @@ function(package, dir, lib.loc = NULL,
         if(any(ind))
             functions <- functions[!ind]
         ## </FIXME>
-        bad_functions <- functions %w/o% objects_in_code_or_namespace
+        bad_functions <- setdiff(functions, objects_in_code_or_namespace)
         if(length(bad_functions))
             functions_in_usages_not_in_code[[docObj]] <- bad_functions
 
@@ -684,7 +684,8 @@ function(package, dir, lib.loc = NULL,
     ## the bad_doc_objects returned.
     ## </NOTE>
     objects_in_code_not_in_usages <-
-        objects_in_code %w/o% c(functions_in_usages, variables_in_usages)
+        setdiff(objects_in_code,
+                c(functions_in_usages, variables_in_usages))
     functions_in_code_not_in_usages <-
         intersect(functions_in_code, objects_in_code_not_in_usages)
     ## (Note that 'functions_in_code' does not necessarily contain all
@@ -707,7 +708,7 @@ function(package, dir, lib.loc = NULL,
             if(.isMethodsDispatchOn()) {
                 ## Drop the functions which have S4 methods.
                 functions <-
-                    functions %w/o% names(.get_S4_generics(code_env))
+                    setdiff(functions, names(.get_S4_generics(code_env)))
             }
             ## Drop the defunct functions.
             is_defunct <- function(f) {
@@ -721,8 +722,8 @@ function(package, dir, lib.loc = NULL,
     objects_missing_from_usages <-
         if(!has_namespace) character() else {
             c(functions_missing_from_usages,
-              (objects_in_code_not_in_usages
-               %w/o% c(functions_in_code, data_sets_in_code)))
+              setdiff(objects_in_code_not_in_usages,
+                      c(functions_in_code, data_sets_in_code)))
         }
 
     attr(bad_doc_objects, "objects_in_code_not_in_usages") <-
@@ -808,11 +809,11 @@ function(x, ...)
     }
 
     summarize_mismatches_in_names <- function(nfc, nfd) {
-        if(length(nms <- nfc %w/o% nfd))
+        if(length(nms <- setdiff(nfc, nfd)))
             writeLines(c(gettext("  Argument names in code not in docs:"),
                          strwrap(paste(nms, collapse = " "),
                                  indent = 4L, exdent = 4L)))
-        if(length(nms <- nfd %w/o% nfc))
+        if(length(nms <- setdiff(nfd, nfc)))
             writeLines(c(gettext("  Argument names in docs not in code:"),
                          strwrap(paste(nms, collapse = " "),
                                  indent = 4L, exdent = 4L)))
@@ -1026,7 +1027,7 @@ function(package, lib.loc = NULL)
                 docSlots[is.na(match(docSlots, c("...", "\\dots")))]
         ## was if(!identical(slots_in_code, slots_in_docs)) {
         if(!all(d.in.c <- docSlots %in% codeSlots) ||
-           !all(c.in.d <- (codeSlots %w/o% superSlots) %in% docSlots) ) {
+           !all(c.in.d <- (setdiff(codeSlots, superSlots)) %in% docSlots) ) {
             bad_Rd_objects[[db_names[ii]]] <-
                 list(name = cl,
                      code = codeSlots,
@@ -1364,9 +1365,9 @@ function(package, dir, lib.loc = NULL)
 
         ## Now analyze what we found.
         arg_names_in_usage_missing_in_arg_list <-
-            arg_names_in_usage %w/o% arg_names_in_arg_list
+            setdiff(arg_names_in_usage, arg_names_in_arg_list)
         arg_names_in_arg_list_missing_in_usage <-
-            arg_names_in_arg_list %w/o% arg_names_in_usage
+            setdiff(arg_names_in_arg_list, arg_names_in_usage)
         if(length(arg_names_in_arg_list_missing_in_usage)) {
             usage_text <- db_usage_texts[[docObj]]
             bad_args <- character()
@@ -1399,7 +1400,8 @@ function(package, dir, lib.loc = NULL)
         ## '-deprecated' (see e.g. base-deprecated.Rd).
         if(!length(grep("-deprecated$", aliases))) {
             functions <-
-                functions %w/o% .functions_with_no_useful_S3_method_markup()
+                setdiff(functions,
+                        .functions_with_no_useful_S3_method_markup())
             ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
@@ -1411,7 +1413,7 @@ function(package, dir, lib.loc = NULL)
                            aliases)
             ## </FIXME>
             aliases <- gsub("\\\\%", "%", aliases)
-            functions_not_in_aliases <- functions %w/o% aliases
+            functions_not_in_aliases <- setdiff(functions, aliases)
         }
         else
             functions_not_in_aliases <- character()
@@ -1632,7 +1634,7 @@ function(package, dir, lib.loc = NULL)
             functions_in_code[substr(functions_in_code, 1L,
                                      nchar(name, type = "c")) == name]
         ## </FIXME>
-        methods <- methods %w/o% methods_stop_list
+        methods <- setdiff(methods, methods_stop_list)
         if(has_namespace) {
             ## Find registered methods for generic g.
             methods2 <- ns_S3_methods[ns_S3_generics == g]
@@ -1657,7 +1659,7 @@ function(package, dir, lib.loc = NULL)
     ## Historical exception
     if(package_name == "cluster")
         all_methods_in_package <-
-    	    all_methods_in_package %w/o% functions_in_code
+    	    setdiff(all_methods_in_package, functions_in_code)
 
     db <- if(!missing(package))
         Rd_db(package, lib.loc = dirname(dir))
@@ -2078,7 +2080,7 @@ function(package, dir, lib.loc = NULL)
             ns_S3_generics <- ns_S3_methods_db[, 1L]
             ns_S3_methods <- ns_S3_methods_db[, 3L]
             ## Determine unexported but declared S3 methods.
-            S3_reg <- ns_S3_methods %w/o% objects_in_code
+            S3_reg <- setdiff(ns_S3_methods, objects_in_code)
         }
     }
     else {
@@ -2242,7 +2244,7 @@ function(package, dir, lib.loc = NULL)
             functions_in_code[substr(functions_in_code, 1L,
                                      nchar(name, type="c")) == name]
         ## </FIXME>
-        methods <- methods %w/o% methods_stop_list
+        methods <- setdiff(methods, methods_stop_list)
         if(has_namespace) {
             ## Find registered methods for generic g.
             methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
@@ -2359,7 +2361,7 @@ function(package, dir, lib.loc = NULL)
         idx <- grep("<-$", ns_S3_generics)
         if(length(idx)) replace_funs <- ns_S3_methods[idx]
         ## Now remove the functions registered as S3 methods.
-        objects_in_code <- objects_in_code %w/o% ns_S3_methods
+        objects_in_code <- setdiff(objects_in_code, ns_S3_methods)
     }
 
     replace_funs <-
@@ -2603,7 +2605,7 @@ function(dir, force_suggests = TRUE)
         }
         if (length(lreqs)) {
             reqs <- unique(sapply(lreqs, `[[`, 1L))
-            reqs <- reqs %w/o% installed
+            reqs <- setdiff(reqs, installed)
             m <- reqs %in% standard_package_names$stubs
             if(length(reqs[!m])) {
                 bad <- reqs[!m]
@@ -2640,12 +2642,12 @@ function(dir, force_suggests = TRUE)
             }
         }
         if (length(lenhances)) {
-            m <- sapply(lenhances, `[[`, 1L)  %w/o% installed
+            m <- setdiff(sapply(lenhances, `[[`, 1L), installed)
             if(length(m))
                 bad_depends$enhances_but_not_installed <- m
         }
         if (!force_suggests && length(lsuggests)) {
-            m <- sapply(lsuggests, `[[`, 1L)  %w/o% installed
+            m <- setdiff(sapply(lsuggests, `[[`, 1L), installed)
             if(length(m))
                 bad_depends$suggests_but_not_installed <- m
         }
@@ -2660,8 +2662,9 @@ function(dir, force_suggests = TRUE)
         ## For the time being, ignore base packages missing from the
         ## DESCRIPTION dependencies even if explicitly given as vignette
         ## dependencies.
-        reqs <- reqs %w/o% c(depends, imports, suggests, package_name,
-                             standard_package_names$base)
+        reqs <- setdiff(reqs,
+                        c(depends, imports, suggests, package_name,
+                          standard_package_names$base))
         if(length(reqs))
             bad_depends$missing_vignette_depends <- reqs
     }
@@ -2676,8 +2679,8 @@ function(dir, force_suggests = TRUE)
         ## Actually we need to know at least about S4-using packages,
         ## since we need to reinstall if those change.
         allowed_imports <-
-            standard_package_names$base %w/o% c("methods", "stats4")
-        reqs <- reqs %w/o% c(imports, depends, allowed_imports)
+            setdiff(standard_package_names$base, c("methods", "stats4"))
+        reqs <- setdiff(reqs, c(imports, depends, allowed_imports))
         if(length(reqs))
             bad_depends$missing_namespace_depends <- reqs
     }
@@ -3509,7 +3512,7 @@ function(package, dir, lib.loc = NULL)
     ## only 'Depends' are guaranteed to be on the search path, but
     ## 'Imports' have to be installed and hence help there will be found
     deps <- c(names(pkgInfo$Depends), names(pkgInfo$Imports))
-    pkgs <- unique(deps) %w/o% base
+    pkgs <- setdiff(unique(deps), base)
     try_Rd_aliases <- function(...) tryCatch(Rd_aliases(...), error = identity)
     aliases <- c(aliases, lapply(pkgs, try_Rd_aliases, lib.loc = lib.loc))
     aliases[sapply(aliases, class) == "error"] <- NULL
@@ -3934,7 +3937,7 @@ function(dir, doDelete = FALSE)
                      list_files_with_type(code_dir, "code",
                                           full.names = FALSE,
                                           OS_subdirs = OS_subdirs))
-        wrong <- all_files %w/o% R_files
+        wrong <- setdiff(all_files, R_files)
         ## now configure might generate files in this directory
         generated <- grep("\\.in$", wrong)
         if(length(generated)) wrong <- wrong[-generated]
@@ -3950,7 +3953,7 @@ function(dir, doDelete = FALSE)
         man_files <- list_files_with_type(man_dir, "docs",
                                           full.names = FALSE,
                                           OS_subdirs = OS_subdirs)
-        wrong <- all_files %w/o% man_files
+        wrong <- setdiff(all_files, man_files)
         if(length(wrong)) {
             wrong_things$man <- wrong
             if(doDelete) unlink(file.path(dir, "man", wrong))
@@ -3962,7 +3965,7 @@ function(dir, doDelete = FALSE)
         all_files <- mydir(demo_dir)
         demo_files <- list_files_with_type(demo_dir, "demo",
                                            full.names = FALSE)
-        wrong <- all_files %w/o% c("00Index", demo_files)
+        wrong <- setdiff(all_files, c("00Index", demo_files))
         if(length(wrong)) {
             wrong_things$demo <- wrong
             if(doDelete) unlink(file.path(dir, "demo", wrong))
@@ -4673,10 +4676,12 @@ function(package, dir, lib.loc = NULL)
 
     ## it is OK to refer to yourself and non-S4 standard packages
     standard_package_names <-
-        .get_standard_package_names()$base %w/o% c("methods", "stats4")
+        setdiff(.get_standard_package_names()$base,
+                c("methods", "stats4"))
     ## It helps to know if non-default standard packages are require()d
     default_package_names<-
-         standard_package_names %w/o% c("grid", "splines", "tcltk", "tools")
+        setdiff(standard_package_names,
+                c("grid", "splines", "tcltk", "tools"))
     depends_suggests <- c(depends, suggests, enhances, pkg_name, default_package_names)
     imports <- c(imports, depends, suggests, enhances, pkg_name,
                  standard_package_names)

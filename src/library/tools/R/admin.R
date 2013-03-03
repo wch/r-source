@@ -251,7 +251,7 @@ function(dir, outDir)
         }
         ## See which files are listed in the collation spec but don't
         ## exist.
-        badFiles <- codeFilesInCspec %w/o% codeFiles
+        badFiles <- setdiff(codeFilesInCspec, codeFiles)
         if(length(badFiles)) {
             out <- gettextf("\nfiles in '%s' field missing from '%s':",
                             collationField,
@@ -264,7 +264,7 @@ function(dir, outDir)
         ## See which files exist but are missing from the collation
         ## spec.  Note that we do not want the collation spec to use
         ## only a subset of the available code files.
-        badFiles <- codeFiles %w/o% codeFilesInCspec
+        badFiles <- setdiff(codeFiles, codeFilesInCspec)
         if(length(badFiles)) {
             out <- gettextf("\nfiles in '%s' missing from '%s' field:",
                             codeDir,

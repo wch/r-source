@@ -1707,7 +1707,7 @@ setRlibs <-
         ## Have already checked that inst/doc exists and qpdf can be found
         pdfs <- dir('inst/doc', pattern="\\.pdf",
                     recursive = TRUE, full.names = TRUE)
-        pdfs <- pdfs %w/o% "inst/doc/Rplots.pdf"
+        pdfs <- setdiff(pdfs, "inst/doc/Rplots.pdf")
         if (length(pdfs)) {
             checkingLog(Log, "sizes of PDF files under 'inst/doc'")
             any <- FALSE

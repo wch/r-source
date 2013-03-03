@@ -289,13 +289,14 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
         ## fail to close it.
         graphics.off()
         if(clean) {
-            f <- list.files(all.files = TRUE) %w/o% c(".", "..", outfiles)
+            f <- setdiff(list.files(all.files = TRUE),
+                         c(".", "..", outfiles))
             newer <- file_test("-nt", f, ".build.timestamp")
             ## some packages, e.g. SOAR, create directories
             unlink(f[newer], recursive = TRUE)
         }
         f <- list.files(all.files = TRUE)
-        file.remove(f %w/o% c(".", "..", outfiles, origfiles))
+        file.remove(setdiff(f, c(".", "..", outfiles, origfiles)))
     }
 
     if(file.exists(".build.timestamp")) file.remove(".build.timestamp")

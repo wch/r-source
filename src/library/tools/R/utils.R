@@ -213,7 +213,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             out_file <- paste(basename(file_path_sans_ext(file)),
                               if(pdf) "pdf" else "dvi",
                               sep = ".")
-            files <- list.files(all.files = TRUE) %w/o% c(".", "..", out_file)
+            files <- setdiff(list.files(all.files = TRUE),
+                             c(".", "..", out_file))
             file.remove(files[file_test("-nt", files, ".timestamp")])
         }
 
@@ -851,7 +852,7 @@ function(dir, installed = TRUE, primitive = FALSE)
             reqs <- intersect(c(depends, imports), loadedNamespaces())
             if(length(reqs))
                 env_list <- c(env_list, lapply(reqs, getNamespace))
-            reqs <- intersect(depends %w/o% loadedNamespaces(),
+            reqs <- intersect(setdiff(depends, loadedNamespaces()),
                               .packages())
             if(length(reqs))
                 env_list <- c(env_list, lapply(reqs, .package_env))
