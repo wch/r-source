@@ -291,7 +291,7 @@ function(dir,
                           check_env_db)
     }
 
-    timings <- do.call(rbind, lapply(timings, summarize_proc_time))
+    timings <- do.call(rbind, lapply(timings, summary))
     rownames(timings) <- pnames
     write.table(timings, "timings.tab")
 
@@ -364,23 +364,6 @@ function(pid)
     else
         Sys.setenv("DISPLAY" = dis)
 }
-
-## <FIXME>
-## c61917 added a summary() method for proc_time objects: use this
-## eventually ...
-summarize_proc_time <-
-function(x, ...)
-{
-    if(!is.na(x[4L])) 
-        x[1L] <- x[1L] + x[4L]
-    if(!is.na(x[5L])) 
-        x[2L] <- x[2L] + x[5L]
-    x <- x[1L : 3L]
-    names(x) <-
-        c(gettext("user"), gettext("system"), gettext("elapsed"))
-    x
-}
-## </FIXME>
 
 R_check_outdirs <-
 function(dir, all = FALSE)
