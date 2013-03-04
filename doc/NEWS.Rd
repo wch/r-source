@@ -380,35 +380,35 @@
 
       \item Profiling via \code{Rprof()} now optionally records
       information about time spent in GC.
-      
+
       \item The HTML help page for a package now displays non-vignette
       documentation files in a more accessible format.
-      
+
       \item To support \code{options(stringsAsFactors = FALSE)},
       \code{model.frame()}, \code{model.matrix()} and
       \code{replications()} now automatically convert character
-      vectors to factors without a warning.      
+      vectors to factors without a warning.
 
       \item The \code{print} method for objects of class \code{"table"}
       now detects tables with 0-extents and prints the results as, e.g.,
       \samp{< table of extent 0 x 1 x 2 >}. (Wish of \PR{15198}.)
-  
-      \item Deparsing involving calls to anonymous functions and has been 
+
+      \item Deparsing involving calls to anonymous functions and has been
       made closer to reversible by the addition of extra parentheses.
-      
+
       \item The function \code{utils::packageName()} has been added as
-      a lightweight version of \code{methods::getPackageName()}.      
-      
+      a lightweight version of \code{methods::getPackageName()}.
+
       \item \code{find.package(lib.loc = NULL)} now treats loaded
       namespaces preferentially in the same way as attached packages
       have been for a long time.
-      
+
       \item In Windows, the Change Directory dialog now defaults to
-      the current working directory, rather than to the last directory 
+      the current working directory, rather than to the last directory
       chosen in that dialog.
 
       \item \code{available.packages()} gains a
-      \code{"license/restricts_use"} filter which retains only packages 
+      \code{"license/restricts_use"} filter which retains only packages
       for which installation can proceed solely based on packages which
       are guaranteed not to restrict use.
 
@@ -544,10 +544,10 @@
       like \preformatted{     Biarch: yes
 }
       to be installed on Windows with \option{--force-biarch}.
-      
+
       \item Package vignettes can now be processed by other engines
       besides \code{Sweave}; see \sQuote{Writing R Extensions} and the
-      \code{tools::vignetteEngine} help topic for details.      
+      \code{tools::vignetteEngine} help topic for details.
     }
   }
 
@@ -585,12 +585,12 @@
       \command{R CMD check}: an external \command{tar} program,
       including options, can be specified \emph{via} the environment
       variable \env{R_BUILD_TAR}.
-      
+
       \item \code{tools::massageExamples()} is better protected against
       packages which re-define base functions such as \code{cat()} and
       \code{get()} and so can cause \command{R CMD check} to fail when
       checking examples.
-      
+
       \item \command{R CMD javareconf} has been enhanced to be more
       similar to the code used by \command{configure}.
 
@@ -599,7 +599,7 @@
 
       It makes use of custom settings from configuration recorded in
       \file{etc/javaconf}.
-      
+
       \item The \option{--no-vignettes} argument of \command{R CMD
 	build} has been renamed to the more accurate
       \option{--no-build-vignettes}: its action has always been to
@@ -682,11 +682,11 @@
       \item The \code{keep.source} argument to \code{library()} and
       \code{require()} is defunct.  This option needs to be set
       at install time.
-      
+
       \item Documentation for \code{real()}, \code{as.real()} and
       \code{is.real()} has been moved to \sQuote{defunct} and the
       functions removed.
-      
+
       \item The \code{maxRasters} argument of \code{pdf()} (unused since
       \R 2.14.0) has been removed.
 
@@ -694,13 +694,13 @@
       the \code{quartz()} device.
 
       \item All the (non-API) EISPACK entry points in \R have been removed.
-      
+
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is deprecated.
 
       \item The long-deprecated use of \code{\\synopsis} in the
       \samp{Usage} section of \file{.Rd} files will be removed in \R
       3.1.0.
-      
+
       \item \code{.find.package()} and \code{.path.package()} are
       deprecated: only the public versions without the dot have ever
       been in the API.
@@ -745,7 +745,7 @@
       \item \code{mcparallel()} has a new argument \code{mc.affinity}
       which attempts to set the affinity of the child process according
       to the specification contained therein.
-      
+
       \item The port used by socket clusters is chosen randomly: this
       should help to avoid clashes observed when two users of a
       multi-user machine try to create a cluster at the same time.  To
@@ -805,7 +805,7 @@
       removed, including the Fortran entry points \code{chol},
       \code{chol2inv}, \code{cg}, \code{ch} and \code{rg}, and the C
       entry points \code{Brent_fmin}, \code{fft_factor} and \code{fft_work}.
-      
+
       \item If a \code{.External} call is registered with a number of
       arguments (other than \code{-1}), the number of arguments passed
       is checked for each call (as for other foreign function calls).
@@ -859,7 +859,7 @@
       \item The Windows installer no longer installs a Start Menu
       link to the static help pages; as most pages are generated
       dynamically, this led to a lot of broken links.
-      
+
       \item Any custom settings for Java configuration are recorded in
       file \file{etc/javaconf} for subsequent use by \command{R CMD
 	javareconf}.
@@ -925,9 +925,14 @@
       \item The primitive implementation of \code{@<-} was not
       checking the class of the replacement.  It now does a check,
       quicker but less general than \code{slot<-}. See the help.
-      
+
       \item \code{split(x, f)} now recycles classed objects \code{x} in
       the same way as vectors.  (Reported by Martin Morgan.)
+
+      \item \code{pbeta(.28, 1/2, 2200, lower.tail=FALSE, log.p=TRUE)}
+      is no longer \code{-Inf}; ditto for corresponding \code{pt()} and
+      \code{pf()} calls, such as \code{pt(45, df=5000, lower.tail=FALSE,
+	log.p=TRUE)}. (\PR{15162})
     }
   }
 }
@@ -958,9 +963,9 @@
 
       \item \code{summaryRprof()} returns zero-row data frames rather
       than throw an error if no events are recorded, for consistency.
-      
+
       \item The included version of PCRE has been updated to 8.32.
-      
+
       \item The \pkg{tcltk} namespace can now be re-loaded after
       unloading.
 
@@ -1006,7 +1011,7 @@
 
       \item \code{real()}, \code{as.real()} and \code{is.real()} are now
       formally deprecated and give a warning.
-      
+
       \item This is formal notice that the non-API EISPACK entry points
       in \R will be removed shortly.
     }
@@ -1022,7 +1027,7 @@
 
       A workaround for earlier versions of \R is to use
       \code{X11.options(type = "nbcairo")}.
-      
+
       \item Configuration and \command{R CMD javareconf} now come up
       with a smaller set of library paths for Java on Oracle-format JDK
       (including OpenJDK).  This helps avoid conflicts between libraries
@@ -1109,13 +1114,13 @@
 
       \item \code{aperm(matrix(1:6, 2, dimnames=list(A={}, B={})), "A")}
       no longer segfaults.
-      
-      \item Expressions involving user defined operators were not 
+
+      \item Expressions involving user defined operators were not
       always deparsed faithfully. (\PR{15179})
-      
+
       \item The \code{enc2utf8()} function converted \code{NA_character_}
       to \code{"NA"} in non-UTF-8 locales. (\PR{15201})
-      
+
       \item The \code{exclude} argument to \code{xtabs()} was ignored
       for \code{"factor"} arguments.
 
@@ -1127,7 +1132,7 @@
       \item On unix \code{Rscript} will pass the \code{r_arch} setting
       it was compiled with on to the R process so that the architecture
       of \code{Rscript} and that of \R will match unless overridden.
-      
+
       \item On Windows, \code{basename()}, \code{dirname()} and
       \code{file.choose()} have more support for long non-ASCII file
       names with 260 or more bytes when expressed in UTF-8.

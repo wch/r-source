@@ -765,5 +765,18 @@ stopifnot(All.eq(x, qlogis(plogis(x, lower=FALSE, log.p=TRUE),
 			   lower=FALSE, log.p=TRUE)))
 # plogis() underflowed to -Inf too early for R <= 2.15.0
 
+## log upper tail pbeta():
+x <- (25:50)/128
+pbx <- pbeta(x, 1/2, 2200, lower.tail=FALSE, log.p=TRUE)
+d2p <- diff(dp <- diff(pbx))
+b <- 2200*2^(0:50)
+y <- log(-pbeta(.28, 1/2, b, lower.tail=FALSE, log.p=TRUE))
+stopifnot(-1094 < pbx, pbx < -481.66,
+            -29 < dp,   dp < -20,
+           -.36 < d2p, d2p < -.2,
+          all.equal(log(b), y+1.113, tol = .00002)
+          )
+## pbx had two -Inf; y was all Inf  for R <= 2.15.3;  PR#15162
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
