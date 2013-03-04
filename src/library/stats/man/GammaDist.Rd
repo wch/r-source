@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 \name{GammaDist}
 \alias{GammaDist}
 \alias{dgamma}
@@ -110,7 +112,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Note however that \code{pgamma(x, a, ..)} currently requires \eqn{a > 0},
   whereas the incomplete gamma function is also defined for negative
   \eqn{a}.  In that case, you can use \code{gamma_inc(a,x)} (for
-  \eqn{\Gamma(a,x)}) from package \pkg{gsl}.
+  \eqn{\Gamma(a,x)}) from package \CRANpkg{gsl}.
 
   See also
   \url{http://en.wikipedia.org/wiki/Incomplete_gamma_function}, or
