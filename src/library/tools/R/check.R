@@ -651,17 +651,23 @@ setRlibs <-
             ## Are these mentioned in DESCRIPTION?
             lic <- desc["License"]
             if(!is.na(lic)) {
-                found <- sapply(topfiles,  function(x) grepl(x, lic, fixed = TRUE))
+                found <- sapply(topfiles,
+                                function(x) grepl(x, lic, fixed = TRUE))
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
                     any <- TRUE
                     noteLog(Log)
-                    printLog(Log, .format_lines_with_indent(topfiles), "\n")
-                    printLog(Log,
-                             if(length(topfiles) > 1L)
-                             "are not mentioned in the DESCRIPTION file.\n"
-                             else
-                             "is not mentioned in the DESCRIPTION file.\n")
+                    one <- (length(topfiles) == 1L)
+                    msg <- c(if(one) "File" else "Files",
+                             "\n",
+                             .format_lines_with_indent(topfiles),
+                             "\n",
+                             if(one) {
+                                 "is not mentioned in the DESCRIPTION file.\n"
+                             } else {
+                                 "are not mentioned in the DESCRIPTION file.\n"
+                             })
+                    printLog(Log, msg)
                 }
             }
         }
