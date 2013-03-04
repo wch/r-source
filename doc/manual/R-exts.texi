@@ -1013,8 +1013,11 @@ in the installed package.
 
 @findex CITATION
 @cindex citation
-One thing you might like to add to @file{inst} is a @file{CITATION} file
-for use by the @code{citation} function.
+@findex NEWS.Rd
+@cindex news
+Things you might like to add to @file{inst} are a @file{CITATION} file
+for use by the @code{citation} function, and a @file{NEWS.Rd} file for
+use by the @code{news} function.
 
 @findex AUTHORS
 @findex COPYRIGHTS
