@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 08:17\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -941,6 +941,14 @@ msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "comprimento de 'init' deve igualar o comprimento de 'filter'"
+
+#, fuzzy
+msgid "'init' must have 1 column"
+msgstr "'init'; deve ter 1 ou %d cols"
+
+#, fuzzy
+msgid "'init' must have 1 or %d columns"
+msgstr "'init'; deve ter 1 ou %d cols"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x' deve ter pelo menos 2 linhas e colunas"
@@ -2467,12 +2475,6 @@ msgid "unable to optimize from this starting value"
 msgid_plural "unable to optimize from these starting values"
 msgstr[0] "incapaz de otimizar a partir deste(s) valor(es) inicial(s)"
 msgstr[1] "incapaz de otimizar a partir deste(s) valor(es) inicial(s)"
-
-#, fuzzy
-msgid "'init' must have 1 column"
-msgid_plural "'init' must have 1 or %d columns"
-msgstr[0] "'init'; deve ter 1 ou %d cols"
-msgstr[1] "'init'; deve ter 1 ou %d cols"
 
 #, fuzzy
 msgid "X matrix has rank %d, but only %d observation"

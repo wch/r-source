@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 08:17\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -958,6 +958,14 @@ msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "'init'의 길이는 'filter'의 길이에 동일하지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "'init' must have 1 column"
+msgstr "'init'; 1 또는 %d개의 cols를 가지지 않으면 안됩니다"
+
+#, fuzzy
+msgid "'init' must have 1 or %d columns"
+msgstr "'init'; 1 또는 %d개의 cols를 가지지 않으면 안됩니다"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x'는 적어도 2개의 행 그리고 열을 가지지 않으면 안됩니다"
@@ -2532,11 +2540,6 @@ msgstr[0] "'srart'는 %d 행을 가지지 않으면 안됩니다"
 msgid "unable to optimize from this starting value"
 msgid_plural "unable to optimize from these starting values"
 msgstr[0] "이러한 초기값으로부터 최적화를 할수가 없습니다"
-
-#, fuzzy
-msgid "'init' must have 1 column"
-msgid_plural "'init' must have 1 or %d columns"
-msgstr[0] "'init'; 1 또는 %d개의 cols를 가지지 않으면 안됩니다"
 
 #, fuzzy
 msgid "X matrix has rank %d, but only %d observation"

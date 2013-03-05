@@ -51,11 +51,12 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
             ni <- NROW(init)
             if(ni != nfilt)
                 stop("length of 'init' must equal length of 'filter'")
-            if(NCOL(init) != 1L && NCOL(init) != nser)
-                stop(sprintf(ngettext(nser,
-                                      "'init' must have 1 column",
-                                      "'init' must have 1 or %d columns"),
-                             nser), domain = NA)
+            if(NCOL(init) != 1L && NCOL(init) != nser) {
+                ## Need to do it this way for languages without plurals.
+                if(nser == 1L) stop("'init' must have 1 column")
+                else stop(gettextf("'init' must have 1 or %d columns", nser),
+                          domain = NA)
+            }
             if(!is.matrix(init)) dim(init) <- c(nfilt, nser)
         }
         ind <- seq_len(nfilt)

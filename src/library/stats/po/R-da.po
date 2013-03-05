@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 08:17\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -871,6 +871,14 @@ msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr ""
+
+#, fuzzy
+msgid "'init' must have 1 column"
+msgstr "x$lag skal have mindst 1 kolonne"
+
+#, fuzzy
+msgid "'init' must have 1 or %d columns"
+msgstr "x$lag skal have mindst 1 kolonne"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr ""
@@ -2305,12 +2313,6 @@ msgid "unable to optimize from this starting value"
 msgid_plural "unable to optimize from these starting values"
 msgstr[0] ""
 msgstr[1] ""
-
-#, fuzzy
-msgid "'init' must have 1 column"
-msgid_plural "'init' must have 1 or %d columns"
-msgstr[0] "x$lag skal have mindst 1 kolonne"
-msgstr[1] "x$lag skal have mindst 1 kolonne"
 
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
