@@ -158,14 +158,13 @@ makeVignetteTable <- function(vignettes, depth=2) {
 	      '<col width="8%">',
 	      '<col width="8%">')
     for (i in seq_len(nrow(vignettes))) {
-	topic <- file_path_sans_ext(vignettes[i, "File"])
-	Title <- vignettes[i, "Title"]
 	Outfile <- vignettes[i, "PDF"]
+	topic <- file_path_sans_ext(Outfile)
+	Title <- vignettes[i, "Title"]
 	File  <- vignettes[i, "File"]
 	R     <- vignettes[i, "R"]
 	pkg   <- vignettes[i, "Package"]
         root <- c(rep("../", depth), "library/", pkg, "/doc/")
-        isHTML <- vignette_is_HTML(File)
 	link  <- c('<a href="', root,
 		  if (nchar(Outfile)) Outfile else File, '">',
 		  pkg, "::", topic, '</a>')
@@ -173,7 +172,7 @@ makeVignetteTable <- function(vignettes, depth=2) {
 		    '</td>\n<td></td><td valign="top">', Title,
 		    '</td>\n<td valign="top">',
 		    if (nchar(Outfile))
-			c('<a href="', root, Outfile,'">', if (isHTML) 'HTML' else 'PDF', '</a>'),
+			c('<a href="', root, Outfile,'">', vignette_type(Outfile), '</a>'),
 		    '</td>\n<td valign="top">',
 		    '<a href="', root, File,'">source</a>',
 		    '</td>\n<td valign="top" nowrap>',

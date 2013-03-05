@@ -468,11 +468,14 @@ function(dir, outDir)
 function(dir, outDir, encoding = "")
 {
     dir <- file_path_as_absolute(dir)
-    vignetteDir <- file.path(dir, "vignettes")
-    if(!file_test("-d", vignetteDir))
-        vignetteDir <- file.path(dir, "inst", "doc")
+    subdirs <- c("vignettes", file.path("inst", "doc"))
+    ok <- file_test("-d", file.path(dir, subdirs))
     ## Create a vignette index only if the vignette dir exists.
-    if(!file_test("-d", vignetteDir)) return(invisible())
+    if (!any(ok))
+       return(invisible())
+
+    subdir <- subdirs[ok][1L]
+    vignetteDir <- file.path(dir, subdir)
 
     outDir <- file_path_as_absolute(outDir)
     packageName <- basename(outDir)
@@ -487,31 +490,34 @@ function(dir, outDir, encoding = "")
     hasHtmlIndex <- file_test("-f", file.path(vignetteDir, "index.html"))
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
+    vigns <- pkgVignettes(dir=dir, subdirs=subdir)
+
     ## Write dummy HTML index if no vignettes are found and exit.
-    if(!length(list_files_with_type(vignetteDir, "vignette"))) {
+    if(length(vigns$docs) == 0L) {
         ## we don't want to write an index if the directory is in fact empty
-        files <- list.files(vignetteDir, all.files = TRUE) # includes . and ..
-        if((length(files) > 2L) && !hasHtmlIndex)
+        files <- list.files(vignetteDir, all.files = TRUE, no.. = TRUE)
+        if((length(files) > 0L) && !hasHtmlIndex)
             .writeVignetteHtmlIndex(packageName, htmlIndex)
         return(invisible())
     }
 
-    if (basename(vignetteDir) == "vignettes") {
+    if (subdir == "vignettes") {
         ## copy vignette sources over.
-        vigns <- list_files_with_type(vignetteDir, "vignette")
-        file.copy(vigns, outVignetteDir)
+        file.copy(vigns$docs, outVignetteDir)
     }
-    vignetteIndex <- .build_vignette_index(outVignetteDir)
+
+    vigns <- tryCatch({
+        pkgVignettes(dir=outDir, subdirs="doc", output=TRUE, source=TRUE)
+    }, error = function(ex) {
+        pkgVignettes(dir=outDir, subdirs="doc")
+    })
+
+    vignetteIndex <- .build_vignette_index(vigns)
     if(NROW(vignetteIndex) > 0L) {
         cwd <- getwd()
         if (is.null(cwd))
             stop("current working directory cannot be ascertained")
         setwd(outVignetteDir)
-        HTMLout <- vignette_is_HTML(vignetteIndex$File)
-        vignetteOutfiles <- vignette_output(basename(vignetteIndex$File))
-        
-        ind <- file_test("-f", vignetteOutfiles)
-        vignetteIndex$PDF[ind] <- vignetteOutfiles[ind]
         
 	loadVignetteBuilder(dir, mustwork = FALSE)
 
@@ -519,25 +525,50 @@ function(dir, outDir, encoding = "")
         ## engine vignettes should have been included when the package was built,
         ## but in the interim before they are all built with the new code,
         ## this is needed for all packages.
-        
-        for(srcfile in vignetteIndex$File) {
-            enc <- getVignetteEncoding(srcfile, TRUE)
+        for(i in seq_along(vigns$docs)) {
+            file <- vigns$docs[i]
+            file <- basename(file)
+            enc <- getVignetteEncoding(file, TRUE)
             if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
-            cat("  ", sQuote(basename(srcfile)),
+
+            cat("  ", sQuote(basename(file)),
                 if(nzchar(enc)) paste("using", sQuote(enc)), "\n")
-	    engine <- try(vignetteEngine(vignetteInfo(srcfile)$engine), silent = TRUE)
+
+	    engine <- try(vignetteEngine(vigns$engines[i]), silent = TRUE)
 	    if (!inherits(engine, "try-error"))
-            	engine[["tangle"]](srcfile, quiet = TRUE, encoding = enc)
+            	engine$tangle(file, quiet = TRUE, encoding = enc)
         }
-        Rfiles <- vignette_source(basename(vignetteIndex$File))
+        setwd(cwd)
+
+        # Update - now from the output directory
+        vigns <- pkgVignettes(dir=outDir, subdirs="doc", source=TRUE)
+
         ## remove any files with no R code (they will have header comments).
         ## if not correctly declared they might not be in the current encoding
-        for(f in Rfiles)
-            if(all(grepl("(^###|^[[:space:]]*$)",
-                         readLines(f, warn = FALSE)), useBytes = TRUE))
-                unlink(f)
-        vignetteIndex$R <- ifelse(file.exists(Rfiles), Rfiles, "")
-        setwd(cwd)
+        sources <- unlist(vigns$sources)
+        for(i in seq_along(sources)) {
+            file <- sources[i]
+            if (!file_test("-f", file)) next
+            bfr <- readLines(file, warn = FALSE)
+            if(all(grepl("(^###|^[[:space:]]*$)", bfr), useBytes = TRUE)) {
+                unlink(file)
+            }
+        }
+
+        # Update
+        vigns <- pkgVignettes(dir=outDir, subdirs="doc", source=TRUE)
+
+        # Add tangle source files (*.R) to the vignette index
+        # Only the "main" R file, because tangle may also split
+        # output into multiple files
+        sources <- character(length(vigns$docs))
+        for (i in seq_along(vigns$docs)) {
+           name <- vigns$names[i]
+           source <- find_vignette_product(name, by = "tangle", main = TRUE, dir = vigns$dir, engine = engine)
+           if (length(source) > 0L)
+              sources[i] <- basename(source)
+        }
+        vignetteIndex$R <- sources
     }
 
     if(!hasHtmlIndex)
@@ -597,10 +628,18 @@ function(dir, outDir, keep.source = TRUE)
         stop(gettextf("cannot open directory '%s'", outVignetteDir),
              domain = NA)
 
-    vignetteOutfiles <- file.path(outVignetteDir,
-    	vignette_output(basename(vigns$docs)))
-    
-    upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
+    # By default, update everything
+    upToDate <- logical(length(vigns$docs))
+
+    # Unless vignette weave products already exists
+    tryCatch({
+        vignsT <- pkgVignettes(dir = dir, subdirs = "doc", output = TRUE)
+        if (!is.null(vignsT)) {
+          vigns <- vignsT
+          vignetteOutfiles <- file.path(outVignetteDir, basename(vigns$outputs))
+          upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
+       }
+    }, error = function(ex) {})
 
     ## The primary use of this function is to build and install PDF
     ## vignettes in base packages.
@@ -618,38 +657,49 @@ function(dir, outDir, keep.source = TRUE)
 
     loadVignetteBuilder(vigns$pkgdir)
     
-    srcfiles <- vigns$docs[!upToDate]
-    HTMLout <- vignette_is_HTML(srcfiles)
-    for(i in seq_along(srcfiles)) {
-        srcfile <- srcfiles[i]
-        base <- basename(file_path_sans_ext(srcfile))
-        message(gettextf("processing %s", sQuote(basename(srcfile))),
+    for(i in seq_along(vigns$docs)[!upToDate]) {
+        file <- vigns$docs[i]
+        name <- vigns$names[i]
+        engine <- vignetteEngine(vigns$engines[i])
+
+        message(gettextf("processing %s", sQuote(basename(file))),
                 domain = NA)
-        engine <- vignetteEngine(vignetteInfo(srcfile)$engine)
-        tryCatch(engine[["weave"]](srcfile, pdf = TRUE, eps = FALSE,
-                               quiet = TRUE, keep.source = keep.source,
-                               stylepath = FALSE),
-                 error = function(e)
-                 stop(gettextf("running %s on vignette '%s' failed with message:\n%s",
-                               engine[["name"]], srcfile, conditionMessage(e)),
-                      domain = NA, call. = FALSE))
+
+        ## Note that contrary to all other weave/tangle calls, here
+        ## 'file' is not a file in the current directory [hence no
+        ## file <- basename(file) above]. However, weave should/must
+        ## always create a file ('output') in the current directory.
+        output <- tryCatch({
+            engine$weave(file, pdf = TRUE, eps = FALSE, quiet = TRUE, 
+                        keep.source = keep.source, stylepath = FALSE)
+            find_vignette_product(name, by = "weave", engine = engine)
+        }, error = function(e) {
+            stop(gettextf("running %s on vignette '%s' failed with message:\n%s",
+                 engine[["name"]], file, capture.output(e)),
+                 domain = NA, call. = FALSE)
+        })
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
         ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
-        outfile <- vignette_output(basename(srcfile))
-        if (!HTMLout[i]) {
+        if (vignette_is_tex(output)) {
 	    ## <FIXME>
 	    ## What if this fails?
-	    texfile <- paste0(base, ".tex")
-	    texi2pdf(texfile, quiet = TRUE, texinputs = vigns$dir)
+            ## Now gives a more informative error texi2pdf fails
+            ## or if it does not produce a <name>.pdf.
+            tryCatch({
+                texi2pdf(file = output, quiet = TRUE, texinputs = vigns$dir)
+                output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
+            }, error = function(e) {
+                stop(gettextf("compiling TeX file %s failed with message:\n%s",
+                 sQuote(output), capture.output(e)),
+                 domain = NA, call. = FALSE)
+            })
 	    ## </FIXME>
 	}
-        if(!file.exists(outfile))
-            stop(gettextf("file '%s' was not created", outfile),
-                 domain = NA)
-        if(!file.copy(outfile, outVignetteDir, overwrite = TRUE))
+
+        if(!file.copy(output, outVignetteDir, overwrite = TRUE))
             stop(gettextf("cannot copy '%s' to '%s'",
-                          outfile,
+                          output,
                           outVignetteDir),
                  domain = NA)
     }

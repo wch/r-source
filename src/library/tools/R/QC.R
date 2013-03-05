@@ -2655,10 +2655,9 @@ function(dir, force_suggests = TRUE)
     ## FIXME: is this still needed now we do dependency analysis?
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    vignette_dir <- file.path(dir, "inst", "doc")
-    if(file_test("-d", vignette_dir)
-       && length(list_files_with_type(vignette_dir, "vignette"))) {
-        reqs <- unique(unlist(.build_vignette_index(vignette_dir)$Depends))
+    vigns <- pkgVignettes(dir=dir, subdirs=file.path("inst", "doc"))
+    if (!is.null(vigns) && length(vigns$docs) > 0L) {
+        reqs <- unique(unlist(.build_vignette_index(vigns)$Depends))
         ## For the time being, ignore base packages missing from the
         ## DESCRIPTION dependencies even if explicitly given as vignette
         ## dependencies.
@@ -3972,13 +3971,17 @@ function(dir, doDelete = FALSE)
         }
     }
 
-    vign_dir <- file.path(dir, "inst", "doc")
-    if(file_test("-d", vign_dir)) {
-        vignettes <- list_files_with_type(vign_dir, "vignette",
-                                          full.names = FALSE)
-        vignettes <- c(vignettes,
-                       list_files_with_exts(vign_dir, "pdf",
-                                            full.names = FALSE))
+    subdir <- file.path("inst", "doc")
+    vigns <- pkgVignettes(dir=dir, subdirs=subdir)
+    if (!is.null(vigns) && length(vigns$docs) > 0L) {
+        vignettes <- basename(vigns$docs)
+
+        # Add vignette output files, if they exist
+        tryCatch({
+            vigns <- pkgVignettes(dir=dir, subdirs=subdir, output=TRUE)
+            vignettes <- c(vignettes, basename(vigns$outputs))
+        }, error = function(ex) {})
+
         ## we specify ASCII filenames starting with a letter in R-exts
         ## do this in a locale-independent way.
         OK <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz][ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-]+$", vignettes)

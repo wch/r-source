@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ httpd <- function(path, query, ...)
 			    	vigDB <- readRDS(vigfile)
 			    	vigfile0 <- vigfile
 			    }
-			    vignette <- vigDB[topic == file_path_sans_ext(vigDB$File),]
+			    vignette <- vigDB[topic == file_path_sans_ext(vigDB$PDF),]
 			    # There should be exactly one row in the result, but
 			    # bad packages might have more, e.g. vig.Snw and vig.Rnw
 			    vignettes[i,] <- c(pkg, unlist(vignette[1,c("File", "Title", "PDF", "R")]))
@@ -260,7 +260,7 @@ httpd <- function(path, query, ...)
                 tmp <- try(readRDS(fp[i]))
                 titles[i] <- if(inherits(tmp, "try-error"))
                     "unknown title" else
-                    tmp[file_path_sans_ext(tmp$File) == tp[i], "Title"]
+                    tmp[file_path_sans_ext(tmp$PDF) == tp[i], "Title"]
             }
             packages <- paste('<dt><a href="../../', basename(paths), '/html/',
                               basename(file), '.html">', titles,

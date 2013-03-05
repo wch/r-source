@@ -2713,42 +2713,49 @@ other than Sweave by means of ``vignette engines''. For example
 @CRANpkg{knitr} version 1.1 or higher can create @file{.tex} files
 from a variation on Sweave format, or @file{.html} files from a
 variation on ``markdown'' format. These engines replace the
-@code{Sweave()} and @code{Stangle()} functions with other functions to
-convert vignette source files into @LaTeX{} files, @file{.html} files,
-or @R{} source.
+@code{Sweave()} function with other functions to convert vignette
+source files into @LaTeX{} files for processing into @file{.pdf}, or
+directly into @file{.pdf} or @file{.html} files. The @code{Stangle()}
+function is replaced with a function that extracts the @R{} source
+from a vignette.
 
-@R{} recognizes non-Sweave vignettes using the same extensions as for
-Sweave vignettes; in addition, the extension @file{.Rmd} (standing for
-``R markdown'') is supported.  The user indicates the vignette engine
-using the @code{\VignetteEngine} line, for example
+@R{} recognizes non-Sweave vignettes using filename extensions specified
+by the engine.  For example, the @CRANpkg{knitr} package supports 
+the extension @file{.Rmd} (standing for
+``R markdown'').  The user indicates the vignette engine
+within the vignette source using the @code{\VignetteEngine} line, for example
 @example
-%\VignetteEngine@{knitr@}
+%\VignetteEngine@{knitr::knitr@}
 @end example
 @noindent
-This specifies the name of an engine to use in place of Sweave in
-processing the vignette.  As @code{Sweave} is the only engine supplied
-with @R{}, the package providing any other engine must be specified in
-the @samp{VignetteBuilder} field of the package @file{DESCRIPTION}
-file, and also specified in the @samp{Suggests}, @samp{Imports} or
-@samp{Depends} field in the @file{DESCRIPTION} file (since its
-namespace must be available to build or check your package).
+This specifies the name of a package and an engine to use in place of
+Sweave in processing the vignette.  As @code{Sweave} is the only
+engine supplied with @R{}, the package providing any other engine must
+be specified in the @samp{VignetteBuilder} field of the package
+@file{DESCRIPTION} file, and also specified in the @samp{Suggests},
+@samp{Imports} or @samp{Depends} field (since its namespace must be
+available to build or check your package). If more than one package is
+specified as a builder, they will be searched in the order given
+there.  The @pkg{utils} package is always implicitly appended to the
+list of builder packages.
 
-If the vignette source has the @file{.Rmd} extension  then it is
-assumed that the weaving procedure produces @file{.html} output
-directly.  Otherwise, the weaver is assumed to produce @file{.tex}
-output, and @R{} handles the conversion to @file{.pdf} files.
+The vignette engine can produce @file{.tex}, @file{.pdf}, or @file{.html}
+files as output.  If it produces @file{.tex} files, @R{} will 
+call @command{pdflatex} to convert them to @file{.pdf} for display
+to the user.
 
 Package writers who would like to supply vignette engines need
 to register those engines in the package @code{.onLoad} function.
 For example, that function could make the call
 @example
-tools::vignetteEngine("knitr", weave = vweave, tangle = vtangle)
+tools::vignetteEngine("knitr", weave = vweave, tangle = vtangle,
+                      pattern = "[.]Rmd$", package = "knitr")
 @end example
 @noindent
-The @code{weave} and @code{tangle} arguments specify functions with
-headers compatible with @code{Sweave} and @code{Stangle} respectively.
-These will be called by @R{} when processing vignettes.  See
-the @code{?tools::vignetteEngine} help topic for more details.
+(The actual registration in @CRANpkg{knitr} is more complicated, because
+it supports other input formats as well as @file{.Rmd}.)
+See the @code{?tools::vignetteEngine} help topic for details
+on engine registration.
 
 @node Submitting a package to CRAN, Package namespaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}

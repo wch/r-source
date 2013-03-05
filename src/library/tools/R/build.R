@@ -365,13 +365,16 @@ get_exclude_patterns <- function()
                     printLog(Log, paste(c(res$stdout, ""),  collapse = "\n"))
                     do_exit(1L)
                 } else {
+                    # Rescan for weave and tangle output files
+                    vigns <- pkgVignettes(dir = '.', output = TRUE, source = TRUE)
+                    stopifnot(!is.null(vigns))
+
                     if (!custom) {
 			## Do any of the .R files which will be generated at install time
 			## exist in inst/doc?  If so the latter should be removed.
 			sources <- basename(list_files_with_exts(doc_dir, "R"))
 			if (length(sources)) {
-			    vf <- basename(list_files_with_type(doc_dir, "vignette"))
-			    new_sources <- vignette_source(vf)
+			    new_sources <- unlist(vigns$sources)
 			    dups <- sources[sources %in% new_sources]
 			    if(length(dups)) {
 				warningLog(Log)
@@ -384,15 +387,15 @@ get_exclude_patterns <- function()
 				unlink(file.path(doc_dir, dups))
 			    } else resultLog(Log, "OK")
 			} else resultLog(Log, "OK")
-		    } 
+                    } else resultLog(Log, "OK")
                 }
+
                 ## We may need to install them.
                 if (basename(vigns$dir) == "vignettes") {
                     ## inst may not yet exist
                     dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
-                    outfiles <- vignette_output(vigns$docs)
-                    file.copy(c(vigns$docs, outfiles), doc_dir)
-                    unlink(outfiles)
+                    file.copy(c(vigns$docs, vigns$outputs), doc_dir)
+                    unlink(vigns$outputs)
                     extras_file <- file.path("vignettes", ".install_extras")
                     if (file.exists(extras_file)) {
                         extras <- readLines(extras_file, warn = FALSE)
@@ -411,7 +414,7 @@ get_exclude_patterns <- function()
             }
         }
         if (compact_vignettes != "no" &&
-            length(pdfs <- dir(doc_dir, pattern = "\\.pdf", recursive = TRUE,
+            length(pdfs <- dir(doc_dir, pattern = "[.]pdf", recursive = TRUE,
                                full.names = TRUE))) {
             messageLog(Log, "compacting vignettes and other PDF files")
             if(compact_vignettes %in% c("gs", "gs+qpdf", "both")) {

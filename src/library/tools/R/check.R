@@ -1662,7 +1662,7 @@ setRlibs <-
         ## How about any pdf files which look like figures files from vignettes?
         vigns <- pkgVignettes(dir = pkgdir)
         if (!is.null(vigns) && length(vigns$docs)) {
-            vf <- sub("[.][RSrs](nw|tex)", "",  basename(vigns$docs))
+            vf <- vigns$names
             pat <- paste(vf, collapse="|")
             pat <- paste0("^(", pat, ")-[0-9]+[.]pdf")
             bad <- bad | grepl(pat, files)
@@ -2256,7 +2256,7 @@ setRlibs <-
     {
         vigns <- pkgVignettes(dir = pkgdir)
         if (is.null(vigns) || !length(vigns$docs)) return()
-        vf <- vigns$docs
+
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
             ## fake installs don't install inst/doc
             checkingLog(Log, "for unstated dependencies in vignettes")
@@ -2275,10 +2275,18 @@ setRlibs <-
         ## A base source package need not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
-            outfiles <- file.path(pkgdir, "inst", "doc",
-                              vignette_output(basename(vf)))
-            bad_vignettes <- vf[!file.exists(outfiles)]
-            if(nb <- length(bad_vignettes)) {
+            dir <- file.path(pkgdir, "inst", "doc")
+            outputs <- character(length(vigns$docs))
+            for (i in seq_along(vigns$docs)) {
+                file <- vigns$docs[i]
+                name <- vigns$names[i]
+                engine <- vignetteEngine(vigns$engines[i])
+                outputs[i] <- tryCatch({
+                    find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
+                }, error = function(ex) NA)
+            }
+            bad_vignettes <- vigns$docs[is.na(outputs)]
+            if (nb <- length(bad_vignettes)) {
                 any <- TRUE
                 warningLog(Log)
                 msg <- ngettext(nb,
@@ -2290,8 +2298,8 @@ setRlibs <-
                                        sQuote(basename(bad_vignettes))),
                                  "", ""), collapse = "\n"))
             }
-            encs <- vapply(vf, getVignetteEncoding, "")
-            bad_vignettes <- vf[encs == "non-ASCII"]
+            encs <- vapply(vigns$docs, getVignetteEncoding, "")
+            bad_vignettes <- vigns$docs[encs == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -2312,7 +2320,7 @@ setRlibs <-
             basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
         custom <- !is.na(desc["VignetteBuilder"])
         if (length(sources) && !custom) {
-            new_sources <- vignette_source(basename(vf))
+            new_sources <- paste0(vigns$names, ".R")
             dups <- sources[sources %in% new_sources]
             if(nb <- length(dups)) {
                 if(!any) warningLog(Log)
@@ -2402,19 +2410,20 @@ setRlibs <-
             def_enc <- desc["Encoding"]
             if( (is.na(def_enc))) def_enc <- ""
             t1 <- proc.time()
-            for(v in vigns$docs) {
-                enc <- getVignetteEncoding(v, TRUE)
+            for (i in seq_along(vigns$docs)) {
+                file <- vigns$docs[i]
+                name <- vigns$names[i]
+                enc <- getVignetteEncoding(file, TRUE)
                 if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
-                cat("  ", sQuote(basename(v)),
+                cat("  ", sQuote(basename(file)),
                     if(nzchar(enc)) paste("using", sQuote(enc)),
                     "...")
-                Rcmd <- paste0("options(warn=1)\ntools:::loadVignetteBuilder('",
-                	       vigns$pkgdir, "')\ntools:::.run_one_vignette('",
-                               basename(v), "', '", vigns$dir, "'",
+                Rcmd <- paste0("options(warn=1)\ntools:::.run_one_vignette('",
+                               basename(file), "', '", vigns$dir, "'",
                                if (nzchar(enc))
                                    paste0(", encoding = '", enc, "'"),
-                               ")")
-                outfile <- paste0(basename(v), ".log")
+                               ", pkgdir='", vigns$pkgdir, "')")
+                outfile <- paste0(basename(file), ".log")
                 t1b <- proc.time()
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
@@ -2424,12 +2433,12 @@ setRlibs <-
                                  stdout = outfile, stderr = outfile)
                 t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
-                savefile <- sub("\\.R$", ".Rout.save", vignette_source(v)) # change ext to .Rout.save
-                if(length(grep("^  When (tangling|sourcing)", out,
+                savefile <- paste0(name, ".Rout.save")
+                if(length(grep("^  When (running|tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")
                     res <- c(res,
-                             paste("when running code in", sQuote(basename(v))),
+                             paste("when running code in", sQuote(basename(file))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                 } else if(status || ! " *** Run successfully completed ***" %in% out) {
@@ -2437,7 +2446,7 @@ setRlibs <-
                     cat(" failed to complete the test\n")
                     out <- c(out, "", "... incomplete output.  Crash?")
                     res <- c(res,
-                             paste("when running code in", sQuote(basename(v))),
+                             paste("when running code in", sQuote(basename(file))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                 } else if (file.exists(savefile)) {
