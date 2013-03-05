@@ -730,13 +730,13 @@ portable.  If a package has a specified encoding, you should run
 @command{R CMD build} etc in a locale using that encoding.)
 
 @c DESCRIPTION NeedsCompilation
-This should be set to @code{"yes"} if the package contains code which
-needs to be compiled, otherwise @code{"no"} (when the package would be
-able to be installed from source on any platform without additional
-tools).  This is used by @code{install.packages(type = "both")} in @R{}
->= 2.15.2 on platforms where binary packages are the norm: it is
-normally set by the repository assuming compilation is required if and
-only if the package has a @file{src} directory.
+The @samp{NeedsCompilation} field hould be set to @code{"yes"} if the
+package contains code which to be compiled, otherwise @code{"no"} (when
+the package could be installed from source on any platform without
+additional tools).  This is used by @code{install.packages(type =
+"both")} in @R{} >= 2.15.2 on platforms where binary packages are the
+norm: it is normally set by the repository assuming compilation is
+required if and only if the package has a @file{src} directory.
 
 @c DESCRIPTION field OS_type
 The @samp{OS_type} field specifies the OS(es) for which the
@@ -2728,10 +2728,10 @@ using the @code{\VignetteEngine} line, for example
 This specifies the name of an engine to use in place of Sweave in
 processing the vignette.  As @code{Sweave} is the only engine supplied
 with @R{}, the package providing any other engine must be specified in
-the @samp{VignetteBuilder} field of the package @file{DESCRIPTION}
-file, and also specified in the @samp{Suggests}, @samp{Imports} or
-@samp{Depends} field in the @file{DESCRIPTION} file (since its
-namespace must be available to build or check your package).
+the @samp{VignetteBuilder} field of the package @file{DESCRIPTION} file,
+and also specified in the @samp{Imports} or @samp{Depends} field in the
+@file{DESCRIPTION} file (since its namespace must be available to
+install your package).
 
 If the vignette source has the @file{.Rmd} extension  then it is
 assumed that the weaving procedure produces @file{.html} output
