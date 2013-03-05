@@ -248,7 +248,7 @@ function(package, dir, lib.loc = NULL,
         resultsT <- result[[name]]
         resultsT <- lapply(resultsT, FUN = function(res) {
           if (inherits(res, "error"))
-              capture.output(res)
+              conditionMessage(res)
           else
               NULL
         })
@@ -440,7 +440,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
             find_vignette_product(name, by = "weave", engine = engine)
         }, error = function(e) {
             stop(gettextf("processing vignette '%s' failed with diagnostics:\n%s",
-                 file, capture.output(e)), domain = NA, call. = FALSE)
+                 file, conditionMessage(e)), domain = NA, call. = FALSE)
         })
         setwd(startdir)
 
@@ -457,7 +457,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
                 find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
             }, error = function(e) {
                 stop(gettextf("tangling vignette '%s' failed with diagnostics:\n%s",
-                     file, capture.output(e)), domain = NA, call. = FALSE)
+                     file, conditionMessage(e)), domain = NA, call. = FALSE)
             })
             sourceList[[file]] <- output
         }
@@ -827,7 +827,7 @@ function(vig_name, docDir, encoding = "", pkgdir)
         find_vignette_product(name, by = "tangle", engine = engine)
     }, error = function(e) {
         cat("\n  When tangling ", sQuote(file), ":\n", sep="")
-        stop(capture.output(e), call. = FALSE, domain = NA)
+        stop(conditionMessage(e), call. = FALSE, domain = NA)
     })
 
     if(length(output) == 1L) {
@@ -835,7 +835,7 @@ function(vig_name, docDir, encoding = "", pkgdir)
             source(output, echo = TRUE)
         }, error = function(e) {
             cat("\n  When sourcing ", sQuote(output), ":\n", sep="")
-            stop(capture.output(e), call. = FALSE, domain = NA)
+            stop(conditionMessage(e), call. = FALSE, domain = NA)
         })
     }
 

@@ -675,7 +675,7 @@ function(dir, outDir, keep.source = TRUE)
             find_vignette_product(name, by = "weave", engine = engine)
         }, error = function(e) {
             stop(gettextf("running %s on vignette '%s' failed with message:\n%s",
-                 engine[["name"]], file, capture.output(e)),
+                 engine[["name"]], file, conditionMessage(e)),
                  domain = NA, call. = FALSE)
         })
         ## In case of an error, do not clean up: should we point to
@@ -691,7 +691,7 @@ function(dir, outDir, keep.source = TRUE)
                 output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
             }, error = function(e) {
                 stop(gettextf("compiling TeX file %s failed with message:\n%s",
-                 sQuote(output), capture.output(e)),
+                 sQuote(output), conditionMessage(e)),
                  domain = NA, call. = FALSE)
             })
 	    ## </FIXME>
