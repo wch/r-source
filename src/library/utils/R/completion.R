@@ -80,8 +80,9 @@
 
 ## modifies settings:
 
-rc.settings <- function(ops, ns, args, func, ipck, S3, data, help, argdb, files)
+rc.settings <- function(ops, ns, args, func, ipck, S3, data, help, argdb, quotes, files)
 {
+    if (length(match.call()) == 1) return(unlist(.CompletionEnv[["settings"]]))
     checkAndChange <- function(what, value)
     {
         if ((length(value) == 1L) &&
@@ -99,6 +100,7 @@ rc.settings <- function(ops, ns, args, func, ipck, S3, data, help, argdb, files)
     if (!missing(help))  checkAndChange( "help",  help)
     if (!missing(argdb)) checkAndChange("argdb", argdb)
     if (!missing(files)) checkAndChange("files", files)
+    if (!missing(quotes))checkAndChange("quotes", quotes)
     invisible()
 }
 
@@ -176,8 +178,11 @@ rc.status <- function()
 
 .guessTokenFromLine <-
     function(linebuffer = .CompletionEnv[["linebuffer"]],
-             end = .CompletionEnv[["end"]])
+             end = .CompletionEnv[["end"]],
+             update = TRUE)
+    ## update=TRUE changes 'start' and 'token', otherwise they are just returned
 {
+    linebuffer <- substr(linebuffer, 1L, end) # end is cursor, not necessarily line-end 
     ## special rules apply when we are inside quotes (see fileCompletionPreferred() below)
     insideQuotes <- {
         lbss <- head.default(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
@@ -187,22 +192,25 @@ rc.status <- function()
     start <-
         if (insideQuotes)
             ## set 'start' to the location of the last quote
-            suppressWarnings(gregexpr("['\"]",
-                                      substr(linebuffer, 1L, end),
+            suppressWarnings(gregexpr("['\"]", linebuffer,
                                       perl = TRUE))[[1L]]
-            ## suppressWarnings(gregexpr("[^\\.\\w:?$@[\\]\\\\/~ ]+", substr(linebuffer, 1L, end), perl = TRUE))[[1L]]
         else
             ##                    things that should not cause breaks
-            ##                           ______________
+            ##                           _____.^._____
+            ##                          /             \
             suppressWarnings(gregexpr("[^\\.\\w:?$@[\\]]+",
-                                      substr(linebuffer, 1L, end),
+                                      linebuffer,
                                       perl = TRUE))[[1L]]
     start <- ## 0-indexed
         if (all(start < 0L)) 0L
         else tail.default(start + attr(start, "match.length"), 1L) - 1L
-    .CompletionEnv[["start"]] <- start
-    .CompletionEnv[["token"]] <- substr(linebuffer, start + 1L, end)
-    .CompletionEnv[["token"]]
+    token <- substr(linebuffer, start + 1L, end)
+    if (update) {
+        .CompletionEnv[["start"]] <- start
+        .CompletionEnv[["token"]] <- token
+        .CompletionEnv[["token"]]
+    }
+    else list(start = start, token = token)
 }
 
 
@@ -243,6 +251,76 @@ makeRegexpSafe <- function(s)
 specialOps <- c("$", "@", ":::", "::", "?", "[", "[[")
 
 
+specialOpCompletionsHelper <- function(op, suffix, prefix)
+{
+    tryToEval <- function(s)
+    {
+        try(eval(parse(text = s), envir = .GlobalEnv), silent = TRUE)
+    }
+    switch(op,
+           "$" = {
+               if (.CompletionEnv$settings[["ops"]])
+               {
+                   object <- tryToEval(prefix)
+                   if (inherits(object, "try-error")) ## nothing else to do
+                       suffix
+                   else
+                   {
+                       ## ## suffix must match names(object) (or ls(object) for environments)
+                       .DollarNames(object, pattern = sprintf("^%s", makeRegexpSafe(suffix)))
+                   }
+               } else suffix
+           },
+           "@" = {
+               if (.CompletionEnv$settings[["ops"]])
+               {
+                   object <- tryToEval(prefix)
+                   if (inherits(object, "try-error")) ## nothing else to do
+                       suffix
+                   else
+                   {
+                       grep(sprintf("^%s", makeRegexpSafe(suffix)),
+                            methods::slotNames(object), value = TRUE)
+                   }
+               } else suffix
+           },
+           "::" = {
+               if (.CompletionEnv$settings[["ns"]])
+               {
+                   nse <- try(getNamespaceExports(prefix), silent = TRUE)
+                   if (inherits(nse, "try-error")) ## nothing else to do
+                       suffix
+                   else
+                   {
+                       grep(sprintf("^%s", makeRegexpSafe(suffix)),
+                            nse, value = TRUE)
+                   }
+               } else suffix
+           },
+           ":::" = {
+               if (.CompletionEnv$settings[["ns"]])
+               {
+                   ns <- try(getNamespace(prefix), silent = TRUE)
+                   if (inherits(ns, "try-error")) ## nothing else to do
+                       suffix
+                   else
+                   {
+                       ls(ns,
+                          all.names = TRUE,
+                          pattern = sprintf("^%s", makeRegexpSafe(suffix)))
+                   }
+               } else suffix
+           },
+           "[" = ,  # can't think of anything else to do
+           "[[" = {
+               comps <- normalCompletions(suffix)
+               if (length(comps)) comps
+               else suffix
+           })
+}
+
+
+
 
 specialOpLocs <- function(text)
 {
@@ -264,7 +342,7 @@ specialOpLocs <- function(text)
 ## accessing the help system: should allow anything with an index entry
 ## this just looks at packages on the search path.
 
-matchAvailableTopics <- function(text)
+matchAvailableTopics <- function(prefix, text)
 {
     .readAliases <- function(path) {
         if(file.exists(f <- file.path(path, "help", "aliases.rds")))
@@ -276,9 +354,20 @@ matchAvailableTopics <- function(text)
         else character()
     }
     if (length(text) != 1L || text == "") return (character())
+    ## Update list of help topics if necessary
     pkgpaths <- searchpaths()[substr(search(), 1L, 8L) == "package:"]
-    aliases <- unique(unlist(lapply(pkgpaths, .readAliases)))
-    grep(sprintf("^%s", makeRegexpSafe(text)), aliases, value = TRUE)
+    if (!identical(basename(pkgpaths), .CompletionEnv[["attached_packages"]])) {
+        assign("attached_packages", basename(pkgpaths), env = .CompletionEnv)
+        assign("help_topics", unique(unlist(lapply(pkgpaths, .readAliases))), env = .CompletionEnv)
+    }
+    aliases <- .CompletionEnv[["help_topics"]]
+    ans <- grep(sprintf("^%s", makeRegexpSafe(text)), aliases, value = TRUE)
+    if (nzchar(prefix)) {
+        tmp <- grep(sprintf("-%s$", prefix), ans, value = TRUE)
+        if (length(tmp)) substring(tmp, 1, nchar(tmp) - nchar(prefix) - 1L)
+        else character(0)
+    }
+    else ans
 }
 
 
@@ -290,11 +379,11 @@ matchAvailableTopics <- function(text)
 ## usage of ? needs to be fixed in R first).  Anyway, that case is not
 ## currently handled
 
-helpCompletions <- function(prefix, suffix)
+helpCompletions <- function(prefix = "", suffix)
 {
     nc <-
         if (.CompletionEnv$settings[["help"]])
-            matchAvailableTopics(suffix)
+            matchAvailableTopics(prefix, suffix)
         else
             normalCompletions(suffix, check.mode = FALSE)
     if (length(nc)) sprintf("%s?%s", prefix, nc)
@@ -335,83 +424,7 @@ specialCompletions <- function(text, spl)
     ## ( breaks words, so prefix should not involve function calls,
     ## and thus, hopefully no side-effects.
 
-    tryToEval <- function(s)
-    {
-        try(eval(parse(text = s), envir = .GlobalEnv), silent = TRUE)
-    }
-
-    comps <-
-        switch(op,
-               "$" = {
-                   if (.CompletionEnv$settings[["ops"]])
-                   {
-                       object <- tryToEval(prefix)
-                       if (inherits(object, "try-error")) ## nothing else to do
-                           suffix
-                       else
-                       {
-                           ## ## suffix must match names(object) (or ls(object) for environments)
-                           .DollarNames(object, pattern = sprintf("^%s", makeRegexpSafe(suffix)))
-                           ## if (is.environment(object))
-                           ## {
-                           ##     ls(object,
-                           ##        all.names = TRUE,
-                           ##        pattern = sprintf("^%s", makeRegexpSafe(suffix)))
-                           ## }
-                           ## else
-                           ## {
-                           ##     grep(sprintf("^%s", makeRegexpSafe(suffix)),
-                           ##          names(object), value = TRUE)
-                           ## }
-                       }
-                   } else suffix
-               },
-               "@" = {
-                   if (.CompletionEnv$settings[["ops"]])
-                   {
-                       object <- tryToEval(prefix)
-                       if (inherits(object, "try-error")) ## nothing else to do
-                           suffix
-                       else
-                       {
-                           grep(sprintf("^%s", makeRegexpSafe(suffix)),
-                                methods::slotNames(object), value = TRUE)
-                       }
-                   } else suffix
-               },
-               "::" = {
-                   if (.CompletionEnv$settings[["ns"]])
-                   {
-                       nse <- try(getNamespaceExports(prefix), silent = TRUE)
-                       if (inherits(nse, "try-error")) ## nothing else to do
-                           suffix
-                       else
-                       {
-                           grep(sprintf("^%s", makeRegexpSafe(suffix)),
-                                nse, value = TRUE)
-                       }
-                   } else suffix
-               },
-               ":::" = {
-                   if (.CompletionEnv$settings[["ns"]])
-                   {
-                       ns <- try(getNamespace(prefix), silent = TRUE)
-                       if (inherits(ns, "try-error")) ## nothing else to do
-                           suffix
-                       else
-                       {
-                           ls(ns,
-                              all.names = TRUE,
-                              pattern = sprintf("^%s", makeRegexpSafe(suffix)))
-                       }
-                   } else suffix
-               },
-               "[" = ,  # can't think of anything else to do
-               "[[" = {
-                   comps <- normalCompletions(suffix)
-                   if (length(comps)) comps
-                   else suffix
-               })
+    comps <- specialOpCompletionsHelper(op, suffix, prefix)
     if (length(comps) == 0L) comps <- ""
     sprintf("%s%s%s", prefix, op, comps)
 }
@@ -705,6 +718,11 @@ functionArgs <-
 ## number of quotes between the cursor and the beginning of the line
 ## is an odd number.
 
+## FIXME: should include backtick (`)? May be useful, but needs more
+## thought; e.g., should imply not-filename, but rather variable
+## names.  Must cooperate with the if (isInsideQuotes()) branch in
+## .completeToken().
+
 isInsideQuotes <-
 fileCompletionPreferred <- function()
 {
@@ -720,9 +738,9 @@ fileCompletionPreferred <- function()
 }
 
 
-## File name completion, used if settings$files == TRUE.  Front ends
+## File name completion, used if settings$quotes == TRUE.  Front ends
 ## that can do filename completion themselves should probably not use
-## this as they will do a better job.
+## this if they can do a better job.
 
 correctFilenameToken <- function()
 {
@@ -807,40 +825,116 @@ fileCompletions <- function(token)
         ## We assume that whoever determines our token boundaries
         ## considers quote signs as a breaking symbol.
 
-        st <- .CompletionEnv[["start"]]
-        probablyNotFilename <-
-            (st > 2L &&
-             (substr(.CompletionEnv[["linebuffer"]], st-1L, st-1L) %in% c("[", ":", "$")))
 
-
-        ## If the 'files' setting is FALSE, we will make no attempt to
+        ## If the 'quotes' setting is FALSE, we will make no attempt to
         ## do filename completion (this is likely to happen with
         ## front-ends that are capable of doing their own file name
         ## completion; such front-ends can fall back to their native
         ## file completion when rc.status("fileName") is TRUE.
 
-        if (.CompletionEnv$settings[["files"]])
+        if (.CompletionEnv$settings[["quotes"]])
         {
 
-            ## we bail out if probablyNotFilename == TRUE.  If we
-            ## wanted to be really fancy, we could try to detect where
-            ## we are and act accordingly, e.g. if it's
-            ## foo[["bar<TAB>, pretend we are completing foo$bar, etc.
-            ## This is not that hard, we just need to use
-            ## .guessTokenFromLine(linebuffer, end = st - 1) to get the
-            ## 'foo[[' part.
+            ## ## This was used to make a guess whether we are in
+            ## ## special situations like ::, ?, [, etc.  But from R
+            ## ## 3.0.0 we re-evaluate the token based from the
+            ## ## begin-quote, so this is postponed.  This part can be
+            ## ## deleted once this is stable enough.
+            ## st <- .CompletionEnv[["start"]]
+            ## probablyNotFilename <-
+            ##     ((st > 2L &&
+            ##       ((prequote <- substr(.CompletionEnv[["linebuffer"]], st-1L, st-1L)) %in% c("?", "[", ":", "$"))) ||
+            ##      (st == 2L &&
+            ##       ((prequote <- substr(.CompletionEnv[["linebuffer"]], st-1L, st-1L)) %in% c("?")))
+            ##      )
 
-            .CompletionEnv[["comps"]] <-
-                if (probablyNotFilename) character()
-                else fileCompletions(text)
+            ## FIXME|TODO: readline (and maybe other backends) will
+            ## usually use a fixed set of breakpoints to detect
+            ## tokens.  If we are handling quotes ourselves, the more
+            ## likely correct token is everything from the last
+            ## unclosed quote onwards (which may include spaces,
+            ## punctuations, etc. that would normally cause breaks).
+            ## We already do this when we guess the token ourselves
+            ## (e.g., for Windows) (and also in the fileCompletions()
+            ## call below using correctFilenameToken()), and can
+            ## re-use that here.  The problem is that for other
+            ## backends a token may already have been determined, and
+            ## that's what we will need to use.  We can still fake it
+            ## by using the correct token but substracting the extra
+            ## part when providing completions, but that will need
+            ## some work.
+
+            ## Related to that: if we implement that, should also
+            ## check before for '<type>?' and move to help completion
+            ## if so.
+            
+### str(correctFilenameToken())
+### str(.guessTokenFromLine(update = FALSE))
+
+            ## TODO: For extra credit, we could also allow for
+            ## spaces like in 'package ? grid', but will leave
+            ## that for the future (maybe some regexp magic will
+            ## make this simple)
+
+            fullToken <- .guessTokenFromLine(update = FALSE)
+            probablyHelp <- (fullToken$start >= 2L &&
+                             ((substr(.CompletionEnv[["linebuffer"]],
+                                      fullToken$start-1L,
+                                      fullToken$start-1L)) == "?"))
+            if (probablyHelp) {
+                fullToken$prefix <- .guessTokenFromLine(end = fullToken$start - 2, update = FALSE)$token
+            }
+            probablyName <- ((fullToken$start > 2L &&
+                              ((substr(.CompletionEnv[["linebuffer"]],
+                                       fullToken$start-1L,
+                                       fullToken$start-1L)) == "$"))
+                             ||
+                             (fullToken$start > 3L &&
+                              ((substr(.CompletionEnv[["linebuffer"]],
+                                       fullToken$start-2L,
+                                       fullToken$start-1L)) == "[[")))
+            probablyNamespace <- (fullToken$start > 3L &&
+                                  ((substr(.CompletionEnv[["linebuffer"]],
+                                           fullToken$start-2L,
+                                           fullToken$start-1L)) %in% c("::")))
+            ## in anticipation that we will handle this eventually:
+            probablyBacktick <- (fullToken$start >= 1L &&
+                                 ((substr(.CompletionEnv[["linebuffer"]],
+                                          fullToken$start,
+                                          fullToken$start)) %in% c("`")))
+                
+            probablySpecial <- probablyHelp || probablyName || probablyNamespace
+
+            ## str(list(probablyHelp = probablyHelp,
+            ##          probablyName = probablyName,
+            ##          probablyNamespace = probablyNamespace,
+            ##          probablyBacktick = probablyBacktick,
+            ##          probablySpecial = probablySpecial))
+
+            ## For now, we only handle probablyHelp, and just decline
+            ## to do filename completion if any of the other special
+            ## situations are detected (but don't try to complete).
+
+            tentativeCompletions <-
+                if (probablyHelp) {
+                    substring(helpCompletions(fullToken$prefix, fullToken$token),
+                              2L + nchar(fullToken$prefix), 1000L)    # drop initial "prefix + ?"
+                }
+                else if (!probablySpecial)
+                    fileCompletions(fullToken$token) # FIXME: but not if probablyBacktick
             .setFileComp(FALSE)
+            ## str(c(fullToken, list(comps = tentativeCompletions)))
+            ## Adjust for self-computed token
+            .CompletionEnv[["comps"]] <-
+                substring(tentativeCompletions,
+                          1L + nchar(fullToken$token) - nchar(text),
+                          1000L)
         }
         else
         {
             .CompletionEnv[["comps"]] <- character()
             .setFileComp(TRUE)
         }
-
     }
     else
     {
@@ -1112,9 +1206,9 @@ assign("settings",
             args = TRUE, func = FALSE,
             ipck = FALSE, S3 = TRUE, data = TRUE,
             help = TRUE, argdb = TRUE,
-            files = .Platform$OS.type == "windows"),
+            files = TRUE, # FIXME: deprecate in favour of quotes
+            quotes = TRUE),
        env = .CompletionEnv)
-
 
 assign("options",
        list(package.suffix = "::",
@@ -1122,7 +1216,13 @@ assign("options",
             function.suffix = "("),
        env = .CompletionEnv)
 
+## These keeps track of attached packages and available help topics.
+## Needs updating only when packages are attached.
+assign("attached_packages", character(0), env = .CompletionEnv)
+assign("help_topics", character(0), env = .CompletionEnv)
+
+
 .FunArgEnv <- new.env(hash = TRUE, parent = emptyenv())
 
-.initialize.argdb() ## see argdb.R
+.initialize.argdb()
 

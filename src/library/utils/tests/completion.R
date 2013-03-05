@@ -24,6 +24,14 @@ testLine("update(")
 testLine("version$m")
 testLine("nchar(version[")
 
+
+
+testLine("method?coe")
+testLine("?coe")
+testLine("?\"coerce,AN")
+testLine("method?\"coerce,AN")
+
+
 ## testLine("")
 ## testLine("")
 ## testLine("")

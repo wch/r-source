@@ -415,6 +415,12 @@
       \item New \code{check_packages_in_dir()} function in package
       \pkg{tools} for conveniently checking source packages along with
       their reverse dependencies.
+
+      \item R's completion mechanism has been improved to handle help
+      requests (starting with a question mark).  In particular, help
+      prefixes are now supported, as well as quoted help topics.  To
+      support this, completion inside quotes are now handled by R by
+      default on all platforms.
     }
   }
 
