@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -581,22 +581,22 @@ msgstr ""
 msgid "invalid 'file' argument"
 msgstr "무효의 문자열 인수입니다"
 
-#: devQuartz.c:1402
+#: devQuartz.c:1401
 #, fuzzy
 msgid "invalid quartz() device size"
 msgstr "savePlot의 무효인 디비이스입니다"
 
-#: devQuartz.c:1430
+#: devQuartz.c:1429
 #, fuzzy
 msgid "unable to create device description"
 msgstr "디바이스 PostSscript를 시작할수 없습니다"
 
-#: devQuartz.c:1480
+#: devQuartz.c:1479
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
 msgstr ""
 
-#: devQuartz.c:1607
+#: devQuartz.c:1606
 #, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr "Quartz 디바이스는 이 platform에서 이용 가능하지는 않습니다"

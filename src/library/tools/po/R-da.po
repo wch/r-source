@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 06:50\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -450,6 +450,11 @@ msgid ""
 "%s"
 msgstr ""
 
+msgid ""
+"tangling vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+
 msgid "running 'make' failed"
 msgstr ""
 
@@ -475,6 +480,9 @@ msgid "Sweave"
 msgstr ""
 
 msgid "engine"
+msgstr ""
+
+msgid "vignette builder '%s' not found"
 msgstr ""
 
 msgid "Invalid DESCRIPTION file"
@@ -573,6 +581,24 @@ msgstr ""
 #, fuzzy
 msgid "package directory %s does not exist"
 msgstr "mappe »%s« findes ikke"
+
+msgid "no packages to check"
+msgstr ""
+
+msgid "downloading reverse dependencies ..."
+msgstr ""
+
+msgid "downloading %s ..."
+msgstr ""
+
+msgid "installing dependencies %s"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "checking %s ..."
+msgstr ""
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

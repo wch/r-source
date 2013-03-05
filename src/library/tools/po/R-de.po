@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 06:50\n"
 "PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -482,6 +482,14 @@ msgstr ""
 "Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
 "%s"
 
+#, fuzzy
+msgid ""
+"tangling vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+"Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
+"%s"
+
 msgid "running 'make' failed"
 msgstr "Ausführen von 'make ' fehlgeschlagen"
 
@@ -510,6 +518,10 @@ msgstr ""
 
 msgid "engine"
 msgstr ""
+
+#, fuzzy
+msgid "vignette builder '%s' not found"
+msgstr "Datei '%s' nicht gefunden"
 
 msgid "Invalid DESCRIPTION file"
 msgstr "Unzulässige DESCRIPTION Datei"
@@ -615,6 +627,25 @@ msgstr "Fehler: kann  Verzeichnis %s für Check nicht erzeugen"
 #, fuzzy
 msgid "package directory %s does not exist"
 msgstr "Verzeichnis '%s' existiert nicht"
+
+msgid "no packages to check"
+msgstr ""
+
+msgid "downloading reverse dependencies ..."
+msgstr ""
+
+msgid "downloading %s ..."
+msgstr ""
+
+msgid "installing dependencies %s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+#, fuzzy
+msgid "checking %s ..."
+msgstr "erzuege DLL"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
@@ -1273,9 +1304,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 #~ msgid "package must be loaded"
 #~ msgstr "Paket muss geladen werden"
 
-#~ msgid ","
-#~ msgstr ","
-
 #~ msgid "lib"
 #~ msgstr "lib"
 
@@ -1620,9 +1648,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "Running examples in package"
 #~ msgstr "Ausführen der Beispiele im Paket "
-
-#~ msgid "making DLL ..."
-#~ msgstr "erzuege DLL"
 
 #~ msgid "... done"
 #~ msgstr "... fertig"

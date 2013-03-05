@@ -1,15 +1,15 @@
 # Chinese translations for R package
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2006.
+# 陈斐 <feic@normipaiva.com>, 2006.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -25,90 +25,87 @@ msgstr "'%s'必需是长度为%d的数值"
 #: colors.c:69
 #, c-format
 msgid "color intensity %g, not in [0,1]"
-msgstr ""
+msgstr "颜色强度%g，不在[0,1]"
 
 #: colors.c:76
 #, c-format
 msgid "color intensity %d, not in 0:255"
-msgstr ""
+msgstr "颜色强度%d，不在0:255"
 
 #: colors.c:83
 #, c-format
 msgid "alpha level %g, not in [0,1]"
-msgstr ""
+msgstr "α水平%g，不在[0,1]"
 
 #: colors.c:90
 #, c-format
 msgid "alpha level %d, not in 0:255"
-msgstr ""
+msgstr "α水平%d，不在0:255"
 
 #: colors.c:118
 msgid "bad hsv to rgb color conversion"
-msgstr ""
+msgstr "hsv到rgb颜色转换出错"
 
 #: colors.c:207 colors.c:221
 msgid "invalid hsv color"
-msgstr ""
+msgstr "hsv颜色不对"
 
 #: colors.c:327 colors.c:345
 msgid "invalid hcl color"
-msgstr ""
+msgstr "hcl颜色不对"
 
 #: colors.c:402
-#, fuzzy
 msgid "invalid 'names' vector"
-msgstr "'file'参数不对"
+msgstr "'names'向量不对"
 
 #: colors.c:461 colors.c:470
 msgid "invalid gray level, must be in [0,1]."
-msgstr ""
+msgstr "灰色水平不对，必需在[0,1]。"
 
 #: colors.c:526
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr "'file'参数不对"
+msgstr "'%s'值 不对"
 
 #: colors.c:1318
 msgid "invalid hex digit in 'color' or 'lty'"
-msgstr ""
+msgstr "'color'或'lty'里的十六进制数字不对"
 
 #: colors.c:1328 colors.c:1338
-#, fuzzy
 msgid "invalid RGB specification"
-msgstr "字体设置出错"
+msgstr "RGB设置出错"
 
 #: colors.c:1371
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color name '%s'"
-msgstr "'%s'里的字符串不对"
+msgstr "'%s'颜色名字不对"
 
 #: colors.c:1421 colors.c:1430
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color specification \"%s\""
-msgstr "字体设置出错"
+msgstr "颜色设置出错\"%s\""
 
 #: colors.c:1458
 msgid "supplied color is neither numeric nor character"
-msgstr ""
+msgstr "所提供的颜色值既不是数字也不是字符"
 
 #: colors.c:1462
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
-msgstr ""
+msgstr "颜色数值必需大于等于零，现在得到的是%d"
 
 #: colors.c:1473
-#, fuzzy
 msgid "invalid argument type"
-msgstr "'file'参数不对"
+msgstr "参数种类不对"
 
 #: colors.c:1484
 msgid "unknown palette (need >= 2 colors)"
-msgstr ""
+msgstr "没有这样的调色板（至少需要两种颜色"
 
 #: colors.c:1488 colors.c:1510
 #, c-format
 msgid "maximum number of colors is %d"
-msgstr ""
+msgstr "最大颜色数是%d"
 
 #: devPS.c:556
 #, c-format
@@ -195,9 +192,8 @@ msgid "failed to load encoding file '%s'"
 msgstr "无法载入编码文本'%s'"
 
 #: devPS.c:1438 devPS.c:1471
-#, fuzzy
 msgid "invalid font name or more than one font name"
-msgstr "字体名字不对，或字体名字太多"
+msgstr "字体名字不对或太多"
 
 #: devPS.c:1591 devPS.c:1626
 #, c-format
@@ -220,32 +216,26 @@ msgid "cannot load afm file '%s'"
 msgstr "无法载入afm文本'%s'"
 
 #: devPS.c:2383
-#, fuzzy
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "载入的编码损坏了; 没有记录编码"
 
 #: devPS.c:2394
-#, fuzzy
 msgid "failed to record device encoding"
 msgstr "无法记录装置编码"
 
 #: devPS.c:2563
-#, fuzzy
 msgid "object '.ps.prolog' is not a character vector"
-msgstr "对象.ps.prolog不是字符向量"
+msgstr "对象'.ps.prolog'不是字符向量"
 
 #: devPS.c:2636 devPS.c:6407 devWindows.c:784
-#, fuzzy
 msgid "invalid line end"
 msgstr "行尾出错"
 
 #: devPS.c:2655 devPS.c:6426 devWindows.c:797
-#, fuzzy
 msgid "invalid line join"
 msgstr "行接連處出错"
 
 #: devPS.c:2663
-#, fuzzy
 msgid "invalid line mitre"
 msgstr "行斜接出错"
 
@@ -276,17 +266,14 @@ msgid "failed to load encoding file in %s()"
 msgstr "%s()中载入编码文本失败了'"
 
 #: devPS.c:3176 devPS.c:3239 devPS.c:5953 devPS.c:6008 devPS.c:7632
-#, fuzzy
 msgid "invalid font type"
 msgstr "字体类别出错"
 
 #: devPS.c:3200
-#, fuzzy
 msgid "failed to initialise default PostScript font"
 msgstr "无法初始化PostScript字体的默认值"
 
 #: devPS.c:3266
-#, fuzzy
 msgid "failed to initialise additional PostScript fonts"
 msgstr "无法初始化外加的PostScript字体"
 
@@ -299,9 +286,8 @@ msgid "'command' is too long"
 msgstr "'command'太长"
 
 #: devPS.c:3292
-#, fuzzy
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
-msgstr "postscript(print.it=TRUE)不能用在空印刷命令里"
+msgstr "'postscript(print.it=TRUE)'不能用在空'print'命令里"
 
 #: devPS.c:3341
 #, c-format
@@ -334,14 +320,14 @@ msgstr ""
 "    %s"
 
 #: devPS.c:3754
-#, fuzzy, c-format
+#, c-format
 msgid "CID family '%s' not included in postscript() device"
-msgstr "PostScript装置里没有CID系列'%s'"
+msgstr "postscript()装置里没有CID系列'%s'"
 
 #: devPS.c:3772 devPS.c:3783 devPS.c:4221 devPS.c:4251 devPS.c:4356
-#, fuzzy, c-format
+#, c-format
 msgid "family '%s' not included in postscript() device"
-msgstr "PostScript装置里没有'%s'系列"
+msgstr " postscript()装置里没有'%s'系列"
 
 #: devPS.c:4296
 #, c-format
@@ -364,9 +350,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr "文字转换到编码'%s'时出了错"
 
 #: devPS.c:4580
-#, fuzzy
 msgid "ran out of colors in xfig()"
-msgstr "xfig()里的颜色不够"
+msgstr "xfig()里的颜色不够用"
 
 #: devPS.c:4609
 #, c-format
@@ -383,14 +368,12 @@ msgid "invalid foreground/background color (xfig)"
 msgstr "前景/后景颜色不对(xfig)"
 
 #: devPS.c:4780
-#, fuzzy
 msgid "only Type 1 fonts supported for XFig"
-msgstr "XFig只支持一类字体"
+msgstr "XFig只支持Type 1字体"
 
 #: devPS.c:4793
-#, fuzzy
 msgid "failed to initialise default XFig font"
-msgstr "无法初始化XFig字体默认值"
+msgstr "无法初始化XFig默认字体"
 
 #: devPS.c:4830
 #, c-format
@@ -420,17 +403,14 @@ msgid "failed to increase 'maxRaster'"
 msgstr "无法增加’maxRaster’"
 
 #: devPS.c:5559
-#, fuzzy
 msgid "unable to allocate raster image"
 msgstr "无法分配光栅图像"
 
 #: devPS.c:5760
-#, fuzzy
 msgid "corrupt loaded encodings;  font not added"
 msgstr "载入的编码坏了; 字体没有加入"
 
 #: devPS.c:5769
-#, fuzzy
 msgid "failed to record device encoding; font not added"
 msgstr "无法记录装置编码; 字体没有加入"
 
@@ -443,12 +423,10 @@ msgid "failed to load default encoding"
 msgstr "无法载入默认编码"
 
 #: devPS.c:5976
-#, fuzzy
 msgid "failed to initialise default PDF font"
-msgstr "无法初始化PDF字体默认值"
+msgstr "无法初始化PDF默认字体"
 
 #: devPS.c:6031
-#, fuzzy
 msgid "failed to initialise additional PDF fonts"
 msgstr "无法初始化外加的PDF字体"
 
@@ -470,9 +448,8 @@ msgid "invalid foreground/background color (pdf)"
 msgstr "前景/后景颜色不对(pdf)"
 
 #: devPS.c:6255
-#, fuzzy
 msgid "invalid 'alpha' value in PDF"
-msgstr "PDF里的alpha值不对"
+msgstr "PDF里的'alpha'值不对"
 
 #: devPS.c:6280
 msgid "increasing the PDF version to 1.4"
@@ -483,12 +460,10 @@ msgid "unknown 'colormodel', using 'srgb'"
 msgstr "没有这种'colormodel'，用'srgb'"
 
 #: devPS.c:6572
-#, fuzzy
 msgid "failed to load sRGB colorspace file"
 msgstr "无法载入sRGB色彩文件"
 
 #: devPS.c:6836
-#, fuzzy
 msgid "corrupt encodings in PDF device"
 msgstr "PDF装置里的编码坏了"
 
@@ -515,14 +490,12 @@ msgstr ""
 "  请关闭PDF装置"
 
 #: devPS.c:7657 devPS.c:8019 devPS.c:8066
-#, fuzzy
 msgid "failed to find or load PDF font"
-msgstr "没有能够找到和载入PDF字体"
+msgstr "没有能够找到或载入PDF字体"
 
 #: devPS.c:7841 devPS.c:7974
-#, fuzzy
 msgid "failed to find or load PDF CID font"
-msgstr "没有能够找到和载入PDFCID字体"
+msgstr "没有能够找到或载入PDF CID字体"
 
 #: devPS.c:8205 devPS.c:8209 devPS.c:8369 devPS.c:8373
 #, c-format
@@ -564,23 +537,20 @@ msgstr "字体家族\"%s\"没有字体"
 msgid "invalid 'file' argument"
 msgstr "'file'参数不对"
 
-#: devQuartz.c:1402
-#, fuzzy
+#: devQuartz.c:1401
 msgid "invalid quartz() device size"
-msgstr "石英装置大小不对"
+msgstr "quartz()装置大小不对"
 
-#: devQuartz.c:1430
-#, fuzzy
+#: devQuartz.c:1429
 msgid "unable to create device description"
 msgstr "无法建立设备描述文件"
 
-#: devQuartz.c:1480
-#, fuzzy
+#: devQuartz.c:1479
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
-msgstr "无法建立石英装置，可能不支持所提供的种类"
+msgstr "无法建立quartz()装置，可能不支持所提供的种类"
 
-#: devQuartz.c:1607
+#: devQuartz.c:1606
 msgid "Quartz device is not available on this platform"
 msgstr "这个平台上没有石英装置"
 
@@ -598,14 +568,12 @@ msgid "'%%' is not allowed in file name"
 msgstr "文件名字中不能有'%%'"
 
 #: devWindows.c:604
-#, fuzzy
 msgid "invalid font specification"
 msgstr "字体设置出错"
 
 #: devWindows.c:643
-#, fuzzy
 msgid "font family not found in Windows font database"
-msgstr "Windows字体数据库里没有字体系列"
+msgstr "Windows字体数据库里没有这样的字体系列"
 
 #: devWindows.c:1074
 msgid "plot history seems corrupted"
@@ -627,14 +595,13 @@ msgstr "'width=%d, height=%d'这样的像素值很可能不对"
 
 #: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
 #: devWindows.c:1880 devWindows.c:1885
-#, fuzzy
 msgid "unable to allocate bitmap"
 msgstr "无法分配bitmap"
 
 #: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open file '%s' for writing"
-msgstr "无法打开'%s'文本来进行读写"
+msgstr "无法打开'%s'文本写入"
 
 #: devWindows.c:1840
 msgid "filename too long in jpeg() call"
@@ -649,14 +616,13 @@ msgid "filename too long in win.metafile() call"
 msgstr "win.metafile()調用里的文本名字太长"
 
 #: devWindows.c:1916
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open metafile '%s' for writing"
-msgstr "无法打开元文本'%s'来读写"
+msgstr "无法打开元文本'%s'写入"
 
 #: devWindows.c:1918
-#, fuzzy
 msgid "unable to open clipboard to write metafile"
-msgstr "无法打开剪輯板来讀寫元文本"
+msgstr "无法打开剪輯板来写入元文本"
 
 #: devWindows.c:2129
 msgid "Insufficient memory for resize. Killing device"
@@ -667,9 +633,8 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "内存不够，无法重新修改大小. 关闭alpha混合"
 
 #: devWindows.c:2166
-#, fuzzy
 msgid "a clipboard metafile can store only one figure."
-msgstr "剪輯板元文本只能保存一个图片."
+msgstr "剪輯板元文本只能保存一个图片。"
 
 #: devWindows.c:2172
 #, c-format
@@ -697,9 +662,8 @@ msgid "invalid device in 'savePlot'"
 msgstr "'savePlot'装置出错"
 
 #: devWindows.c:3413
-#, fuzzy
 msgid "invalid filename argument in 'savePlot'"
-msgstr "savePlot文本名字参数不对"
+msgstr "'savePlot'文本名字参数不对"
 
 #: devWindows.c:3418
 msgid "invalid type argument in 'savePlot'"
@@ -728,12 +692,11 @@ msgstr "'width'或'height'的值不对"
 
 #: devices.c:43
 msgid "argument must have positive length"
-msgstr ""
+msgstr "参数的长度必需是下的"
 
 #: devices.c:52
-#, fuzzy
 msgid "invalid argument"
-msgstr "'file'参数不对"
+msgstr "参数不对"
 
 #: qdBitmap.c:79
 #, c-format
@@ -741,14 +704,13 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr " QuartzBitmap_Output - 打不开'%s'文件"
 
 #: qdBitmap.c:94
-#, fuzzy
 msgid "not a supported scheme, no image data written"
 msgstr "不支持这个规划，因此没有写任何图象数据"
 
 #: stubs.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "'file'参数不对"
+msgstr "'%s'参数不对"
 
 #~ msgid "Invalid line end"
 #~ msgstr "行尾出错"

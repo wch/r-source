@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -575,24 +575,24 @@ msgstr "nie można było znaleźć żadnej czcionki dla rodziny \"%s\""
 msgid "invalid 'file' argument"
 msgstr "błędny argument 'file'"
 
-#: devQuartz.c:1402
+#: devQuartz.c:1401
 #, fuzzy
 msgid "invalid quartz() device size"
 msgstr "niepoprawny rozmiar urządzenia Quartz"
 
-#: devQuartz.c:1430
+#: devQuartz.c:1429
 #, fuzzy
 msgid "unable to create device description"
 msgstr "Nie można utworzyć opisu urządzenia."
 
-#: devQuartz.c:1480
+#: devQuartz.c:1479
 #, fuzzy
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
 msgstr ""
 "Nie można utworzyć urządzenia Quartz, podany typ może nie być wspierany."
 
-#: devQuartz.c:1607
+#: devQuartz.c:1606
 msgid "Quartz device is not available on this platform"
 msgstr "urządzenie Quartz nie jest dostępne na tej platformie"
 

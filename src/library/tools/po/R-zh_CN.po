@@ -1,15 +1,15 @@
 # Chinese translations for R package
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2006.
+# 陈斐 <feic@normipaiva.com>, 2006.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 06:50\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -53,14 +53,12 @@ msgstr "文件目录'%s'不含R编码"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "目录'%s'没有Rd对象"
 
-#, fuzzy
 msgid ""
 "Functions or methods with usage in documentation object '%s' but not in code:"
-msgstr "函数/文件的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
+msgstr "函数或文件的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
-#, fuzzy
 msgid "Data with usage in documentation object '%s' but not in code:"
-msgstr "数据集的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
+msgstr "数据的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 msgid "Argument names in code not in docs:"
 msgstr "参数名字在编码里有记录但不在文件里:"
@@ -156,7 +154,6 @@ msgstr "%s里不能有T/F这样的值"
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr "程辑包的名字'%s'好象有问题；用文件目录名'%s'替代"
 
-#, fuzzy
 msgid ""
 "Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
 "Depends/Suggests/Imports entries."
@@ -241,9 +238,8 @@ msgstr "无法从Authors@R 域中抽取作者域"
 msgid "Authors@R field gives no person with author role."
 msgstr "Authors@R域没有提供有作者作用的人"
 
-#, fuzzy
 msgid "Authors@R field gives persons with no valid roles:"
-msgstr "Authors@R域没有提供有作者作用的人"
+msgstr "Authors@R领域里没有有效作用的人"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "无法从Authors@R 抽取维修人域"
@@ -270,7 +266,7 @@ msgid "Invalid license file pointers: %s"
 msgstr "执照文件指示器无效：%s"
 
 msgid "Components with restrictions not permitted:"
-msgstr ""
+msgstr "不允许有限制的组件"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
@@ -280,7 +276,6 @@ msgid ""
 "checked"
 msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
 
-#, fuzzy
 msgid "Missing link or links in documentation object '%s':"
 msgstr "使用手冊对象'%s'缺少联结:"
 
@@ -309,23 +304,19 @@ msgstr "程序包启动函数不应该改变搜索路径"
 msgid "Package startup functions should use %s to generate messages."
 msgstr "程序包启动函数应该用%s来生成消息"
 
-#, fuzzy
 msgid "Package startup functions should not call %s."
-msgstr "程序包启动函数不应该改变搜索路径"
+msgstr "程序包启动函数不应该调用%s 。"
 
-#, fuzzy
 msgid "See section %s in '%s'."
-msgstr "参见?.onAttach 里的%s章节"
+msgstr "参见'%2$s'里的%1$s章节"
 
-#, fuzzy
 msgid ""
 "Package detach functions should have one arguments with names starting with "
 "%s."
-msgstr "程序包启动函数需要有两个名字分别为%s和%s的参数"
+msgstr "程序包脱离函数需要有个名字开头为%s的参数。"
 
-#, fuzzy
 msgid "Package detach functions should not call %s."
-msgstr "程序包启动函数不应该改变搜索路径"
+msgstr "程序包脱离函数不应该调用%s 。"
 
 msgid "unable to create"
 msgstr "无法建立"
@@ -355,7 +346,7 @@ msgid "'data(package=)' call not declared from: %s"
 msgstr "'data(package=)'调用没有被声明: %s"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
-msgstr ""
+msgstr "注：需要上网才能用CRAN传入检查"
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "有重复名字'%s'的Rd文件:"
@@ -376,17 +367,20 @@ msgid ""
 "%s\n"
 "in NAMESPACE."
 msgstr ""
+"泛型函数'g'在'env'%s里'%s'出现了错误: %s\n"
+"可能需要这样的\n"
+"\n"
+"%s\n"
+"在名字空间。"
 
 msgid "argument 'file' must be a character string or connection"
 msgstr "参数'document'必需是字符串或联结"
 
-#, fuzzy
 msgid "missing/empty %s field in '%s'"
-msgstr "'%s'里缺少或有空白的\\name域"
+msgstr "'%2$s'里缺少或有空白的%s域"
 
-#, fuzzy
 msgid "Rd files must have a non-empty %s."
-msgstr "Rd文件里必需要有非空白的\\name."
+msgstr "Rd文件里必需要有非空白的%s。"
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
 msgstr "请参考说明书'如何写R附加软件'中'如何写R使用手册'这一章."
@@ -439,23 +433,28 @@ msgstr "不能确定的当前工作目录"
 msgid "no inputs"
 msgstr "没有输入"
 
-#, fuzzy
 msgid "Error in running tools::texi2pdf()"
-msgstr "调用tools::texi2pdf时出了错"
+msgstr "调用tools::texi2pdf()时出了错"
 
 msgid "invalid value for '%s' : %s"
 msgstr "'%s'值无效：%s"
 
-#, fuzzy
 msgid "Only one Rd section per %s is supported."
-msgstr "每\\Sexpr只支持一个Rd章节"
+msgstr "每%s只支持一个Rd章节"
 
-#, fuzzy
 msgid "unable to create temp directory %s"
-msgstr "无法建立temp目录"
+msgstr "无法建立临时目录%s"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+"处理标头'%s'失败，诊断信息为:\n"
+"%s"
+
+#, fuzzy
+msgid ""
+"tangling vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
 "处理标头'%s'失败，诊断信息为:\n"
@@ -465,7 +464,7 @@ msgid "running 'make' failed"
 msgstr "调用'make'失败"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
-msgstr "'%s'插图里'%s'和'%s'的名字是一样的"
+msgstr "'%s'简介里'%s'和'%s'的名字是一样的"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "参数'vignette'的长度必需为一"
@@ -474,21 +473,23 @@ msgid "file '%s' not found"
 msgstr "找不到'%s'这个文件"
 
 msgid "vignette engine"
-msgstr ""
+msgstr "小简介引擎"
 
-#, fuzzy
 msgid "not found"
 msgstr "找不到"
 
-#, fuzzy
 msgid "cannot change the"
-msgstr "无法强迫改变"
+msgstr "无法改变"
 
 msgid "Sweave"
-msgstr ""
+msgstr "Sweave"
 
 msgid "engine"
-msgstr ""
+msgstr "引擎"
+
+#, fuzzy
+msgid "vignette builder '%s' not found"
+msgstr "找不到'%s'这个文件"
 
 msgid "Invalid DESCRIPTION file"
 msgstr "DESCRIPTION文件不对"
@@ -527,12 +528,11 @@ msgstr "无法建立目录'%s'"
 msgid "processing %s"
 msgstr "处理%s "
 
-#, fuzzy
 msgid ""
 "running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
-"用Sweave处理标头'%s'失败，诊断信息为:\n"
+"用%s处理标头'%s'失败了，诊断信息为:\n"
 "%s"
 
 msgid "file '%s' was not created"
@@ -559,17 +559,14 @@ msgstr "改动需要特别'style'"
 msgid "The default JSS style may not be modified."
 msgstr "不能对缺省JSS式样进行修改"
 
-#, fuzzy
 msgid "invalid value for '--compact-vignettes', assuming %s"
-msgstr "--compact-vignettes的值不对，用\"qpdf\""
+msgstr "--compact-vignettes的值不对，假定用%s "
 
-#, fuzzy
 msgid "Error: cannot rename directory to %s"
-msgstr "错误：无法改变目录名字为"
+msgstr "错误：无法改变目录名字到时%s"
 
-#, fuzzy
 msgid "cannot link from %s"
-msgstr "无法打开目录'%s'"
+msgstr "无法打开%s联结"
 
 msgid "-l option without value"
 msgstr "-l选项一定得有值"
@@ -581,7 +578,7 @@ msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr "'--multiarch'只设定了一个可以用的子体系结构"
 
 msgid "'--as-cran' turns off '--extra-arch'"
-msgstr ""
+msgstr "'--as-cran'会把'--extra-arch'关了"
 
 msgid "Error: no packages were specified"
 msgstr "错误：没有设定程序包"
@@ -589,12 +586,31 @@ msgstr "错误：没有设定程序包"
 msgid "ERROR: cannot create check dir %s"
 msgstr "错误：无法建立检查目录%s"
 
-#, fuzzy
 msgid "package directory %s does not exist"
-msgstr "不存在'%s'这个文件目录"
+msgstr "不存在%s这个文件目录"
+
+msgid "no packages to check"
+msgstr ""
+
+msgid "downloading reverse dependencies ..."
+msgstr ""
+
+#, fuzzy
+msgid "downloading %s ..."
+msgstr "比较%s和%s"
+
+msgid "installing dependencies %s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+#, fuzzy
+msgid "checking %s ..."
+msgstr "制造DLL…"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
-msgstr ""
+msgstr "CITATION文件没有声明编码，但文件里出现了非ASCII的输入"
 
 msgid "No files in this directory"
 msgstr "目录里没有任何文件"
@@ -603,7 +619,7 @@ msgid "No results found"
 msgstr "找不到任何结果"
 
 msgid "Vignettes:"
-msgstr "插图："
+msgstr "简介："
 
 msgid "Code demonstrations:"
 msgstr "代码演示"
@@ -674,9 +690,8 @@ msgid ""
 "Administration Manual'"
 msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理手册'"
 
-#, fuzzy
 msgid "generating debug symbols (%s)"
-msgstr "产生调试符号(dSYM)"
+msgstr "产生调试符号(%s)"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "成功将%s程序包解包并MD5和检查"
@@ -695,7 +710,6 @@ msgstr "空的'data'目录"
 msgid "cannot create temporary directory"
 msgstr "无法建立临时性目录"
 
-#, fuzzy
 msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "错误：--merge-multiarch只适用于单独压缩包"
 
@@ -705,9 +719,8 @@ msgstr "程辑包无效."
 msgid "ERROR: no packages specified"
 msgstr "错误：没有设定程序包"
 
-#, fuzzy
 msgid "ERROR: cannot cd to directory %s"
-msgstr "错误：无法进入目录"
+msgstr "错误：无法进入目录%s"
 
 msgid "ERROR: no permission to install to directory"
 msgstr "错误：没有在这个目录里安装的许可"
@@ -809,9 +822,8 @@ msgstr "找不到PDF字头"
 msgid "EOF marker not found"
 msgstr "找不到EOF标记"
 
-#, fuzzy
 msgid "cannot find 'startxref' keyword"
-msgstr "找不到startxref"
+msgstr "找不到'startxref'这关键词"
 
 msgid "cannot find xref table"
 msgstr "找不到xref表"
@@ -873,9 +885,8 @@ msgstr "展开%s"
 msgid "unsupported filter %s"
 msgstr "不支持%s过滤器"
 
-#, fuzzy
 msgid "unsupported %s predictor %d"
-msgstr "不支持flatedecode预测器%d "
+msgstr "不支持%s预测器%d "
 
 msgid "unsupported PNG filter %d"
 msgstr "不支持PNG过滤器%d"
@@ -907,12 +918,11 @@ msgstr "找到了%s,可能是从%s来的"
 msgid "testing '%s' failed"
 msgstr "试用'%s'失败了"
 
-#, fuzzy
 msgid "Testing examples for package %s"
-msgstr "试验程序包范例"
+msgstr "试验程序包%s的范例"
 
 msgid "comparing %s to %s ..."
-msgstr ""
+msgstr "比较%s和%s"
 
 msgid "OK"
 msgstr "好"
@@ -923,20 +933,17 @@ msgstr "结果与参考结果不一样"
 msgid "no examples found for package %s"
 msgstr "程序包%s没有示例"
 
-#, fuzzy
 msgid "Running specific tests for package %s"
-msgstr "执行特定的检验程序"
+msgstr "为程序包%s执行特定的检验程序"
 
-#, fuzzy
 msgid "Running %s"
-msgstr "执行"
+msgstr "执行%s"
 
-#, fuzzy
 msgid "Running vignettes for package %s"
-msgstr "执行小文品给程序包"
+msgstr "执行小文品给程序包%s "
 
 msgid "Comparing %s to %s ..."
-msgstr ""
+msgstr "比较%s和%s"
 
 msgid "no parsed files found"
 msgstr "没有找到句法分析过的文件"
@@ -948,7 +955,7 @@ msgid "running tests of random deviate generation -- fails occasionally"
 msgstr "执行随机偏离检验--偶尔会失败"
 
 msgid "R CMD build failed"
-msgstr ""
+msgstr "R CMD build失败"
 
 msgid "'x' must be a single character string"
 msgstr "'x'必需是单字符串"
@@ -996,7 +1003,7 @@ msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
 
 msgid "contains a blank line"
-msgstr ""
+msgstr "带空行"
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "没有这样带非ASCII数据的编码: 转换为ASCII "
@@ -1010,17 +1017,14 @@ msgstr "调用序列:"
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
 
-#, fuzzy
 msgid "Obsolete package %s in Rd xrefs"
 msgid_plural "Obsolete packages %s in Rd xrefs"
 msgstr[0] "Rd xrefs里程序包%s过时了"
 
-#, fuzzy
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
 msgstr[0] "没有可用来检查Rd xrefs的程序包：%s"
 
-#, fuzzy
 msgid "Unknown package %s in Rd xrefs"
 msgid_plural "Unknown packages %s in Rd xrefs"
 msgstr[0] "Rd xrefs里包含了不知来源的程序包%s"
@@ -1037,7 +1041,6 @@ msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
 msgstr[0] "注意：发现%d个标志为\"bytes\"的字符串"
 
-#, fuzzy
 msgid "Warning in file %s:"
 msgid_plural "Warnings in file %s:"
 msgstr[0] "文件'%s'里有警告："
@@ -1046,76 +1049,68 @@ msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
 
-#, fuzzy
 msgid ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
-msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
+msgstr[0] "在以下的Rd例子文件中遇到了有可能是全局的T或F值:"
 
-#, fuzzy
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "下面的函数调用了.Internal:"
 
-#, fuzzy
 msgid "Found a.Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
-msgstr[0] "下面的函数调用了.Internal:"
+msgstr[0] "下面的S4泛型函数的方法调用了.Internal:"
 
-#, fuzzy
 msgid "Found a .Internal call in methods for the following reference class:"
 msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
-msgstr[0] "下面的函数调用了.Internal:"
+msgstr[0] "下面的引用类里的方法调用了.Internal:"
 
-#, fuzzy
 msgid "Found an obsolete call in the following function:"
 msgid_plural "Found an obsolete call in the following functions:"
-msgstr[0] "下面的函数调用了.Internal:"
+msgstr[0] "下面的函数里出现了过时的调用"
 
-#, fuzzy
 msgid "Found an obsolete call in methods for the following S4 generic:"
 msgid_plural "Found an obsolete call in methods for the following S4 generics:"
-msgstr[0] "下面的函数调用了.Internal:"
+msgstr[0] "下面S4泛型函数里出现了过时的调用"
 
-#, fuzzy
 msgid "Found an obsolete call in methods for the following reference class:"
 msgid_plural ""
 "Found an obsolete call in methods for the following reference classes:"
-msgstr[0] "下面的函数调用了.Internal:"
+msgstr[0] "下面引用类型里出现了过时的调用"
 
 msgid "Found the deprecated function:"
 msgid_plural "Found the deprecated functions:"
-msgstr[0] ""
+msgstr[0] "出现了不推荐使用的功能"
 
+#, fuzzy
 msgid "Found the defunct/removed function:"
 msgid_plural "Found the defunct/removed functions:"
-msgstr[0] ""
+msgstr[0] "出现已不存在的功能"
 
-#, fuzzy
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"
-msgstr[0] "没有方法的同属函数在"
+msgstr[0] "没有方法的同属函数在%s: %s"
 
-#, fuzzy
 msgid ""
 "missing/empty \\name field in Rd file\n"
 "%s"
 msgid_plural ""
 "missing/empty \\name field in Rd files\n"
 "%s"
-msgstr[0] "Rd文件里缺少或有空白的\\name域"
+msgstr[0] ""
+"Rd文件里缺少或有空白的\\name域\n"
+"%s"
 
-#, fuzzy
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
-msgstr[0] "无法重新编码'%s'%s行"
+msgstr[0] "无法重新编码%s行%s"
 
-#, fuzzy
 msgid "Help on topic '%s' was found in the following package:"
 msgid_plural "Help on topic '%s' was found in the following packages:"
-msgstr[0] "在以下这些程序包里找到了关于'%s'主题的帮助"
+msgstr[0] "在以下这些程序包里找到了关于'%s'主题的帮助:"
 
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
@@ -1168,7 +1163,7 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #, fuzzy
 #~ msgid "\\VignetteDepends{}"
-#~ msgstr "插图："
+#~ msgstr "简介："
 
 #~ msgid "Invalid package name."
 #~ msgstr "程辑包名不对."
@@ -1181,9 +1176,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "package must be loaded"
 #~ msgstr "必需载入程序包。"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "lib"
 #~ msgstr "lib"
@@ -1528,9 +1520,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "Running examples in package"
 #~ msgstr "调用例子在程序包"
-
-#~ msgid "making DLL ..."
-#~ msgstr "制造DLL…"
 
 #~ msgid "... done"
 #~ msgstr "…好了"

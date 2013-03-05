@@ -1,7 +1,7 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2006.
+# 陈斐 <feic@normipaiva.com>, 2006.
 # 
 msgid ""
 msgstr ""
@@ -19,12 +19,11 @@ msgstr ""
 
 #: base.c:38
 msgid "no base graphics system is registered"
-msgstr ""
+msgstr "没有注册的基础图形系统"
 
 #: base.c:328 base.c:335 base.c:343
-#, fuzzy
 msgid "the base graphics system is not registered"
-msgstr "注册了太多的图形系统"
+msgstr "没有注册基础图形系统"
 
 #: graphics.c:289
 #, c-format
@@ -36,9 +35,8 @@ msgid "attempt to plot on null device"
 msgstr "null设备上不能绘图"
 
 #: graphics.c:1830
-#, fuzzy
 msgid "outer margins too large (figure region too small)"
-msgstr "外版边太大(fig.region太小)"
+msgstr "外版边太大(图区太小)"
 
 #: graphics.c:1832
 msgid "figure region too large"
@@ -53,9 +51,9 @@ msgid "plot region too large"
 msgstr "绘图区太大"
 
 #: graphics.c:1883
-#, fuzzy, c-format
+#, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
-msgstr "相对范围值=%4.0f * EPS太小(座标%d)"
+msgstr "相对范围值（%4.0f * EPS）太小(座标%d)"
 
 #: graphics.c:1935
 #, c-format
@@ -68,7 +66,6 @@ msgid "axis style \"%c\" unimplemented"
 msgstr "座标形式\"%c\"目前没有实现"
 
 #: graphics.c:2203
-#, fuzzy
 msgid "no graphics device is active"
 msgstr "没有已积活的图形设备"
 
@@ -98,7 +95,6 @@ msgid "invalid argument to GBox"
 msgstr "GBox参数不对"
 
 #: graphics.c:3363
-#, fuzzy
 msgid "metric information not available for this device"
 msgstr "公制信息不适用于这个设备"
 
@@ -134,14 +130,12 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\"里的参数\"j\"超出了合适的范围"
 
 #: par.c:447
-#, fuzzy
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
-msgstr "\"mfg\"里的nr值不对，略过不用"
+msgstr "\"mfg\"里的'nr'值不对，略过不用"
 
 #: par.c:449
-#, fuzzy
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
-msgstr "\"mfg\"里的nc值不对，略过不用"
+msgstr "\"mfg\"里的'nc'值不对，略过不用"
 
 #: par.c:475
 msgid "calling par(new=TRUE) with no plot"
@@ -177,9 +171,8 @@ msgid "too many cells in layout, limit %d"
 msgstr "layout里的元素太多, 极限为%d"
 
 #: plot.c:75
-#, fuzzy
 msgid "invalid color specification"
-msgstr "字形设定不对"
+msgstr "颜色设定不对"
 
 #: plot.c:141
 msgid "only NA allowed in logical plotting symbol"
@@ -201,9 +194,9 @@ msgid "invalid '%s' value"
 msgstr "'%s'值不对"
 
 #: plot.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'vfont' value [typeface %d]"
-msgstr "'vfont'值不对[typeface]"
+msgstr "'vfont'值不对[typeface %d]"
 
 #: plot.c:332
 #, c-format
@@ -362,9 +355,9 @@ msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
 
 #: plot.c:3008 plot.c:3144
-#, fuzzy, c-format
+#, c-format
 msgid "invalid number of points in %s"
-msgstr "locator()里点的数目不对"
+msgstr "%s里点的数目不对"
 
 #: plot.c:3146
 msgid "incorrect argument type"
@@ -432,34 +425,30 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "温度计数据不对(需要三或四个列)"
 
 #: plot.c:3808
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'thermometers[, %s]'"
-msgstr "温度计[,%s]不对"
+msgstr "'thermometers[,%s]'不对"
 
 #: plot.c:3811
-#, fuzzy, c-format
+#, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
-msgstr "温度计[,%s]在[0,1]范围外--看起来会有点不对"
+msgstr "'thermometers[,%s]'在[0,1]范围外--看起来会有点不对"
 
 #: plot.c:3814
-#, fuzzy
 msgid "invalid 'thermometers[, 1:2]'"
-msgstr "温度计[,1:2]"
+msgstr "'thermometers[,1:2]'"
 
 #: plot.c:3853
-#, fuzzy
 msgid "invalid 'boxplots' data (need 5 columns)"
-msgstr "盒形图数据不对(需要五个列)"
+msgstr "'boxplots'数据不对(需要五个列)"
 
 #: plot.c:3862
-#, fuzzy
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
-msgstr "盒形图[,5]在[0,1]范围外--看起来会有点不对"
+msgstr "'boxplots[, 5]'在[0,1]范围外--看起来会有点不对"
 
 #: plot.c:3864
-#, fuzzy
 msgid "invalid 'boxplots[, 1:4]'"
-msgstr "盒形图[, 1:4]不对"
+msgstr "'boxplots[, 1:4]'不对"
 
 #: plot.c:3910
 msgid "invalid symbol type"
@@ -567,7 +556,7 @@ msgstr "所有的z值都是NA"
 #: stem.c:156
 #, c-format
 msgid "long vector '%s' is not supported"
-msgstr ""
+msgstr "不支持长向量'%s'"
 
 #~ msgid "unable to allocate memory (in GPolygon)"
 #~ msgstr "无法分配内存(GPolygon)"

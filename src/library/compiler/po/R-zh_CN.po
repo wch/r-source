@@ -1,7 +1,7 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2006.
+# 陈斐 <feic@normipaiva.com>, 2006.
 # 
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-30 15:04\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
-"Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
+"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -74,9 +74,8 @@ msgstr "看不到'<<-'分配到'%s'的连接"
 msgid "wrong number of arguments to '%s'"
 msgstr "给'%s'的参数个数不对"
 
-#, fuzzy
 msgid "more than one default provided in switch() call"
-msgstr "调用交换时只能有一个默认值"
+msgstr "调用switch()时只能有一个默认值"
 
 msgid "cannot compile a non-function"
 msgstr "无法编译非函数"
@@ -115,3 +114,4 @@ msgstr[1] "为句法函数作了本地分配："
 
 #~ msgid "expected a single logical value for the S4 state flag"
 #~ msgstr "S4状态标志需要单一的逻辑值"
+

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 06:50\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -496,6 +496,14 @@ msgstr ""
 " ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
 " %s "
 
+#, fuzzy
+msgid ""
+"tangling vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" %s "
+
 msgid "running 'make' failed"
 msgstr " make の実行に失敗しました "
 
@@ -525,6 +533,10 @@ msgstr ""
 
 msgid "engine"
 msgstr ""
+
+#, fuzzy
+msgid "vignette builder '%s' not found"
+msgstr " ファイル '%s' が見つかりません "
 
 msgid "Invalid DESCRIPTION file"
 msgstr " 不正な DESCRIPTION ファイルです "
@@ -632,6 +644,25 @@ msgstr " エラー：チェックディレクトリ '%s' を生成すること�
 #, fuzzy
 msgid "package directory %s does not exist"
 msgstr " ディレクトリ '%s' が存在しません "
+
+msgid "no packages to check"
+msgstr ""
+
+msgid "downloading reverse dependencies ..."
+msgstr ""
+
+msgid "downloading %s ..."
+msgstr ""
+
+msgid "installing dependencies %s"
+msgstr ""
+
+msgid ","
+msgstr " , "
+
+#, fuzzy
+msgid "checking %s ..."
+msgstr "DLLの作成中... "
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
@@ -1243,9 +1274,6 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 #~ msgid "package must be loaded"
 #~ msgstr " パッケージがロードされなければなりません "
 
-#~ msgid ","
-#~ msgstr " , "
-
 #~ msgid "lib"
 #~ msgstr " lib "
 
@@ -1606,9 +1634,6 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 
 #~ msgid "Running examples in package"
 #~ msgstr " パッケージ中の例を実行中 "
-
-#~ msgid "making DLL ..."
-#~ msgstr "DLLの作成中... "
 
 #~ msgid "... done"
 #~ msgstr " ... 完了 "

@@ -1,13 +1,13 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2006.
+# 陈斐 <feic@normipaiva.com>, 2006.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:11+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -18,14 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/appl/optim.c:60
-#, fuzzy
 msgid "non-finite value supplied by 'optim'"
-msgstr "optim回覆了无限值"
+msgstr "'optim'回覆了无限值"
 
 #: src/appl/optim.c:67
-#, fuzzy, c-format
+#, c-format
 msgid "candidate point in 'optim' evaluated to length %d not %d"
-msgstr "optim候选点长度被评估为%d，而不是%d"
+msgstr "'optim'候选点长度被评估为%d，而不是%d"
 
 #: src/appl/optim.c:136
 msgid "REPORT must be > 0 (method = \"BFGS\")"
@@ -40,18 +39,16 @@ msgid "function cannot be evaluated at initial parameters"
 msgstr "无法用初始参数来评估函数"
 
 #: src/appl/optim.c:489
-#, fuzzy
 msgid "unknown 'type' in \"CG\" method of 'optim'"
-msgstr "optim的CG方法中没有这种'type'"
+msgstr "'optim'的\"CG\"方法中没有这种'type'"
 
 #: src/appl/optim.c:502
 msgid "Function cannot be evaluated at initial parameters"
 msgstr "无法用初始参数来评估函数"
 
 #: src/appl/optim.c:557
-#, fuzzy
 msgid "unknown type in \"CG\" method of 'optim'"
-msgstr "optim的CG方法中没有这一种类"
+msgstr "'optim'的\"CG\"方法中没有这一种类"
 
 #: src/appl/optim.c:656
 msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
@@ -190,7 +187,7 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3469
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3502
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
@@ -306,18 +303,17 @@ msgid "bad device"
 msgstr "设备有错"
 
 #: src/gnuwin32/extra.c:794 src/gnuwin32/extra.c:802
-#, fuzzy
 msgid "invalid input in 'Rmbstowcs'"
-msgstr "Rmbstowcs里的输入不对"
+msgstr "'Rmbstowcs'里的输入不对"
 
 #: src/gnuwin32/extra.c:825 src/main/platform.c:1259
 msgid "file choice cancelled"
 msgstr "撤消文件选择"
 
 #: src/gnuwin32/run.c:242
-#, fuzzy, c-format
+#, c-format
 msgid "'CreateProcess' failed to run '%s'"
-msgstr "CreateProcess调用'%s'失败"
+msgstr "'CreateProcess'调用'%s'失败"
 
 #: src/gnuwin32/run.c:344
 msgid "Child process not responding.  R will terminate it."
@@ -348,9 +344,8 @@ msgid "allocation of pipe connection failed"
 msgstr "管道链结分配失败"
 
 #: src/gnuwin32/run.c:790
-#, fuzzy
 msgid "'names' is not a character vector"
-msgstr "'fmt'必需是字符矢量"
+msgstr "'names'必需是字符矢量"
 
 #: src/gnuwin32/sys-win32.c:182
 msgid "character string expected as first argument"
@@ -412,9 +407,9 @@ msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show():不存在'%s'这个文件\n"
 
 #: src/gnuwin32/system.c:964
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"
-msgstr "警告: '%s'的值不对: 略过不用"
+msgstr "警告: R_MAX_MEM_SIZE的值不对: 略过不用\n"
 
 #: src/gnuwin32/system.c:996
 msgid "WARNING: no max-mem-size given\n"
@@ -551,39 +546,33 @@ msgid "RNG_Init: unimplemented RNG kind %d"
 msgstr "RNG_Init: RNG种类%d目前没有实现"
 
 #: src/main/RNG.c:354
-#, fuzzy
 msgid "'.Random.seed' is a missing argument with no default"
-msgstr ".Random.seed这个参数没有设定，也没有缺省值"
+msgstr "'.Random.seed'这个参数没有设定，也没有缺省值"
 
 #: src/main/RNG.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "'.Random.seed' is not an integer vector but of type '%s'"
-msgstr ".Random.seed不是整数矢量，类别为'%s'"
+msgstr "'.Random.seed'不是整数矢量，类别为'%s'"
 
 #: src/main/RNG.c:362
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid integer"
-msgstr ".Random.seed[1]不是适当正数"
+msgstr ".Random.seed[1]不是适当的整数"
 
 #: src/main/RNG.c:366
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid Normal type"
-msgstr ".Random.seed[0]不是适当的Normal类"
+msgstr "'.Random.seed[1]'不是适当的Normal类"
 
 #: src/main/RNG.c:378
-#, fuzzy
 msgid "'.Random.seed[1] = 5' but no user-supplied generator"
-msgstr ".Random.seed[1]=5但用户指定的发生器却不存在"
+msgstr "'.Random.seed[1]=5'但用户指定的发生器却不存在"
 
 #: src/main/RNG.c:381
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid RNG kind"
-msgstr ".Random.seed[1]不是适当的RNG类(代码)"
+msgstr "'.Random.seed[1]'不是适当的RNG类"
 
 #: src/main/RNG.c:403
-#, fuzzy
 msgid "'.Random.seed' has wrong length"
-msgstr ".Random.seed的长度不对"
+msgstr "'.Random.seed'的长度不对"
 
 #: src/main/RNG.c:456
 #, c-format
@@ -591,9 +580,8 @@ msgid "RNGkind: unimplemented RNG kind %d"
 msgstr "RNGkind: RNG种类%d目前没有实现"
 
 #: src/main/RNG.c:470
-#, fuzzy
 msgid "invalid Normal type in 'RNGkind'"
-msgstr "RNGkind里的Normal类不对"
+msgstr "'RNGkind'里的Normal类不对"
 
 #: src/main/RNG.c:473
 msgid "'user_norm_rand' not in load table"
@@ -608,9 +596,8 @@ msgid "R_RegisterRoutines called with invalid DllInfo object."
 msgstr "在调用R_RegisterRoutines时DllInfo对象出了错."
 
 #: src/main/Rdynload.c:533
-#, fuzzy
 msgid "`maximal number of DLLs reached..."
-msgstr "已达到了DLL数目的上限..."
+msgstr "`已达到了DLL数目的上限..."
 
 #: src/main/Rdynload.c:589
 msgid "could not allocate space for 'path'"
@@ -653,9 +640,9 @@ msgid "must pass package name or DllInfo reference"
 msgstr "必需传给程序包名字或DllInfo引用"
 
 #: src/main/Rdynload.c:1193
-#, fuzzy, c-format
+#, c-format
 msgid "unimplemented type %d in 'createRSymbolObject'"
-msgstr "createRSymbolObject里的种类%d目前没有被实现"
+msgstr "'createRSymbolObject'里的种类%d目前没有被实现"
 
 #: src/main/Rdynload.c:1275 src/main/Rdynload.c:1369
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
@@ -675,19 +662,18 @@ msgid "table entry must be an external pointer"
 msgstr "桌项必需是外部指针"
 
 #: src/main/Renviron.c:159 src/main/Renviron.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "problem in setting variable '%s' in Renviron"
-msgstr "设定时区时出了问题"
+msgstr "在Renviron里设定'%s'变量时出了问题"
 
 #: src/main/Renviron.c:311
-#, fuzzy
 msgid "argument 'x' must be a character string"
-msgstr "参数'code'必需是字符串"
+msgstr "参数'x'必需是字符串"
 
 #: src/main/Renviron.c:315
-#, fuzzy, c-format
+#, c-format
 msgid "file '%s' cannot be opened for reading"
-msgstr "无法打开'%s'文件"
+msgstr "无法读取'%s'文件"
 
 #: src/main/Rstrptime.h:504 src/main/Rstrptime.h:969
 #, c-format
@@ -767,13 +753,12 @@ msgid "invalid length"
 msgstr "长度不对"
 
 #: src/main/apply.c:106
-#, fuzzy
 msgid "'FUN.VALUE' must be a vector"
-msgstr "FUN.VALUE必需是矢量"
+msgstr "'FUN.VALUE'必需是矢量"
 
 #: src/main/apply.c:116
 msgid "long vectors are not supported for matrix/array results"
-msgstr ""
+msgstr "不支持长向量矩阵/数组结果"
 
 #: src/main/apply.c:162
 #, c-format
@@ -808,7 +793,6 @@ msgid "NaNs produced"
 msgstr "产生了NaNs"
 
 #: src/main/arithmetic.c:43
-#, fuzzy
 msgid "non-numeric argument to mathematical function"
 msgstr "数学函数中用了非数值参数"
 
@@ -882,9 +866,9 @@ msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "给了'log'%d个参数，但它最多只能用两个参数"
 
 #: src/main/array.c:79 src/main/array.c:1431
-#, fuzzy, c-format
+#, c-format
 msgid "'data' must be of a vector type, was '%s'"
-msgstr "'data'的种类必需为矢量"
+msgstr "'data'的种类必需为矢量，但现在是'%s'"
 
 #: src/main/array.c:94 src/main/array.c:102
 msgid "non-numeric matrix extent"
@@ -940,19 +924,17 @@ msgid "negative extents to 3D array"
 msgstr "三维排列的范围不能是负值"
 
 #: src/main/array.c:229
-#, fuzzy
 msgid "'alloc3Darray': too many elements specified"
-msgstr "alloc3Darray: 设定了太多的元素"
+msgstr "'alloc3Darray': 设定了太多的元素"
 
 #: src/main/array.c:254
-#, fuzzy
 msgid "'allocArray': too many elements specified by 'dims'"
-msgstr "allocArray: 'dims'设定了太多的元素"
+msgstr "'allocArray': 'dims'设定了太多的元素"
 
 #: src/main/array.c:438
-#, fuzzy, c-format
+#, c-format
 msgid "a matrix-like object is required as argument to '%s'"
-msgstr "'row/col'必需用矩阵目标对象作参数"
+msgstr "'%s'必需用矩阵目标对象作参数"
 
 #: src/main/array.c:652
 msgid "requires numeric/complex matrix/vector arguments"
@@ -971,18 +953,18 @@ msgid "invalid first argument, must be an array"
 msgstr "第一个参数不对, 必需是陈列"
 
 #: src/main/array.c:1097
-#, fuzzy, c-format
+#, c-format
 msgid "'perm' is of wrong length %d (!= %d)"
-msgstr "'perm'的长度不对"
+msgstr "'perm'的长度不对 %d (!= %d)"
 
 #: src/main/array.c:1102 src/main/array.c:1105
 msgid "'a' does not have named dimnames"
 msgstr "'a'必需有带名字的dimnames"
 
 #: src/main/array.c:1112
-#, fuzzy, c-format
+#, c-format
 msgid "'perm[%d]' does not match a dimension name"
-msgstr "perm[%d]和维度名字不相配"
+msgstr "'perm[%d]'和维度名字不相配"
 
 #: src/main/array.c:1125
 msgid "value out of range in 'perm'"
@@ -997,19 +979,17 @@ msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
 #: src/main/array.c:1439
-#, fuzzy
 msgid "'dims' cannot be of length 0"
-msgstr "'hadj'的长度必需为一"
+msgstr "'dims'的长度不能为零"
 
 #: src/main/array.c:1535
-#, fuzzy
 msgid "'x' must have positive length"
-msgstr "'value'的长度必需是正数"
+msgstr "'x'的长度必需是正数"
 
 #: src/main/array.c:1596
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-msgstr ""
+msgstr "'backsolve'里出现了奇异矩阵。对角线[%d]里第一个零"
 
 #: src/main/attrib.c:40 src/main/attrib.c:234 src/main/attrib.c:268
 #: src/main/attrib.c:290 src/main/attrib.c:404 src/main/attrib.c:451
@@ -1070,22 +1050,22 @@ msgid "attempt to set invalid 'class' attribute"
 msgstr "无法设非适当'class'属性"
 
 #: src/main/attrib.c:773
-#, fuzzy, c-format
+#, c-format
 msgid "class '%s' has no 'names' slot"
-msgstr "'%s'种类没有'names'这样的槽 "
+msgstr "'%s'种类没有'names'这个的槽 "
 
 #: src/main/attrib.c:775
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "class '%s' has no 'names' slot; assigning a names attribute will create an "
 "invalid object"
-msgstr "'%s'种类没有'names'槽；在分配名称属性时会创建一个无效对象"
+msgstr "'%s'种类没有'names'这个槽；在为其分配名称属性时会创建一个无效对象"
 
 #: src/main/attrib.c:778
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "invalid to use names()<- to set the 'names' slot in a non-vector class ('%s')"
-msgstr "在矢量类别('%s')里不能用names()<- 来设'names'槽"
+msgstr "在非矢量类别('%s')里不能用names()<-来设'names'这个槽"
 
 #: src/main/attrib.c:808
 msgid "incompatible 'names' argument"
@@ -1143,9 +1123,8 @@ msgid "the dims contain negative values"
 msgstr "dims不能包含负值级"
 
 #: src/main/attrib.c:1069
-#, fuzzy
 msgid "dims do not match the length of object"
-msgstr "dims [product %d]与对象长度[%d]不匹配"
+msgstr "dims与对象长度不匹配"
 
 #: src/main/attrib.c:1071
 #, c-format
@@ -1180,9 +1159,9 @@ msgid "partial match of '%s' to '%s'"
 msgstr "'%s'部分匹配到'%s'"
 
 #: src/main/attrib.c:1397
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type '%s' for slot name"
-msgstr "名字槽的类别或长度不对"
+msgstr "槽名字的类别'%s'不对"
 
 #: src/main/attrib.c:1435
 msgid "'name' must be non-null character string"
@@ -1207,9 +1186,8 @@ msgid "attempt to set slot on NULL object"
 msgstr "不能为NULL目标对象设属性"
 
 #: src/main/attrib.c:1661
-#, fuzzy
 msgid "formal classes cannot be used without the 'methods' package"
-msgstr "一定要有方法程序包才能用正式类别"
+msgstr "一定要有'methods'程序包才能用正式类别"
 
 #: src/main/attrib.c:1673
 #, c-format
@@ -1328,7 +1306,7 @@ msgstr "'parent'不是环境"
 #: src/main/connections.c:3828 src/main/connections.c:3862
 #: src/main/connections.c:4240 src/main/connections.c:4310
 #: src/main/connections.c:4516 src/main/connections.c:4520
-#: src/main/connections.c:4882 src/main/deparse.c:360 src/main/deparse.c:446
+#: src/main/connections.c:4881 src/main/deparse.c:360 src/main/deparse.c:446
 #: src/main/serialize.c:1941
 msgid "cannot write to this connection"
 msgstr "无法写入此链结"
@@ -1373,9 +1351,9 @@ msgid "'...' used in an incorrect context"
 msgstr "'...'用在的上下文不对"
 
 #: src/main/builtin.c:956
-#, fuzzy, c-format
+#, c-format
 msgid "duplicate 'switch' defaults: '%s' and '%s'"
-msgstr "重复开关默认值：'%s'和'%s'"
+msgstr "重复'switch'默认值：'%s'和'%s'"
 
 #: src/main/builtin.c:989
 msgid "'EXPR' is missing"
@@ -1413,7 +1391,6 @@ msgid "extracting substrings from a non-character object"
 msgstr "无法从非字符对象里抽取子字串"
 
 #: src/main/character.c:268 src/main/character.c:363
-#, fuzzy
 msgid "invalid substring arguments"
 msgstr "子字符串参数不对"
 
@@ -1713,9 +1690,9 @@ msgid "invalid input found on input connection '%s'"
 msgstr "输入链结'%s'内的输入不对"
 
 #: src/main/connections.c:579
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%ls': %s"
-msgstr "无法打开文件'%s': %s"
+msgstr "无法打开文件'%ls': %s"
 
 #: src/main/connections.c:690
 msgid "connection is not open for reading"
@@ -1766,8 +1743,8 @@ msgstr "无法打开先进先出'%s'"
 #: src/main/connections.c:1300 src/main/connections.c:1310
 #: src/main/connections.c:1429 src/main/connections.c:1489
 #: src/main/connections.c:2015 src/main/connections.c:2032
-#: src/main/connections.c:2341 src/main/connections.c:5055
-#: src/main/connections.c:5119
+#: src/main/connections.c:2341 src/main/connections.c:5062
+#: src/main/connections.c:5126
 msgid "too large a block specified"
 msgstr "区组太大"
 
@@ -1805,9 +1782,9 @@ msgid "fifo connections are not available on this system"
 msgstr "本系统没有先进先出链结这个功能"
 
 #: src/main/connections.c:1066
-#, fuzzy, c-format
+#, c-format
 msgid "cannot pipe() cmd '%ls': %s"
-msgstr "无法打开pipe()命令'%s': %s"
+msgstr "无法pipe()命令'%ls': %s"
 
 #: src/main/connections.c:1073
 #, c-format
@@ -1862,7 +1839,7 @@ msgstr "文件'%s'结尾的内容看起来不是由bzip2压缩的"
 msgid "allocation of bzfile connection failed"
 msgstr "分配bz文件链结失败"
 
-#: src/main/connections.c:1573 src/main/connections.c:5663
+#: src/main/connections.c:1573 src/main/connections.c:5670
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "无法为lzma译码器进行初始化，错误是%d"
@@ -1896,12 +1873,10 @@ msgid "memory allocation to open clipboard failed"
 msgstr "打开裁剪板时内存分配失败"
 
 #: src/main/connections.c:1943
-#, fuzzy
 msgid "unable to open the clipboard"
 msgstr "无法打开裁剪板"
 
 #: src/main/connections.c:1947
-#, fuzzy
 msgid "unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
@@ -1957,9 +1932,8 @@ msgid "'con' is not an output rawConnection"
 msgstr "'con'不是输出链结rawConnection"
 
 #: src/main/connections.c:2510
-#, fuzzy
 msgid "too many characters for text connection"
-msgstr "无法给文字链结分配内存"
+msgstr "字符太多了，无法用文字链结"
 
 #: src/main/connections.c:2515
 msgid "cannot allocate memory for text connection"
@@ -2001,7 +1975,7 @@ msgstr "本系统没有插坐这个功能"
 #: src/main/connections.c:3087 src/main/connections.c:3134
 #: src/main/connections.c:3159 src/main/connections.c:3182
 #: src/main/connections.c:3194 src/main/connections.c:3310
-#: src/main/connections.c:3428 src/main/connections.c:5158
+#: src/main/connections.c:3428 src/main/connections.c:5165
 msgid "'con' is not a connection"
 msgstr "'con'不是链结"
 
@@ -2022,29 +1996,28 @@ msgid "cannot close standard connections"
 msgstr "无法关闭标准链结"
 
 #: src/main/connections.c:3139
-#, fuzzy
 msgid "cannot close 'output' sink connection"
-msgstr "无法关闭外输汇集链结"
+msgstr "无法关闭'output'汇集链结"
 
 #: src/main/connections.c:3141
-#, fuzzy
 msgid "cannot close 'message' sink connection"
-msgstr "无法关闭信息汇集链结"
+msgstr "无法关闭'message'汇集链结"
 
-#: src/main/connections.c:3161 src/main/connections.c:4881
-#: src/main/serialize.c:1931 src/main/serialize.c:1939
+#: src/main/connections.c:3161 src/main/connections.c:4880
+#: src/main/connections.c:4888 src/main/serialize.c:1931
+#: src/main/serialize.c:1939
 msgid "connection is not open"
 msgstr "链结没有打开"
 
 #: src/main/connections.c:3257 src/main/connections.c:3269
-#, fuzzy
 msgid "line longer than buffer size"
-msgstr "行要比缓冲区大"
+msgstr "行要比缓冲区要大"
 
 #: src/main/connections.c:3337 src/main/connections.c:3339
 #: src/main/connections.c:3612 src/main/connections.c:4166
-#: src/main/connections.c:4191 src/main/dcf.c:73 src/main/scan.c:921
-#: src/main/scan.c:925 src/main/serialize.c:1933 src/main/source.c:272
+#: src/main/connections.c:4191 src/main/connections.c:4889 src/main/dcf.c:73
+#: src/main/scan.c:921 src/main/scan.c:925 src/main/serialize.c:1933
+#: src/main/source.c:272
 msgid "cannot read from this connection"
 msgstr "无法从此链结读取"
 
@@ -2142,15 +2115,13 @@ msgid ""
 msgstr "writeChar：字符串的长度比需要的字节数目短-用零来补上"
 
 #: src/main/connections.c:4398
-#, fuzzy
 msgid "maximum number of pushback lines exceeded"
-msgstr "颜色的数目已超过最大值"
+msgstr "超出推回线的最大数量"
 
 #: src/main/connections.c:4404 src/main/connections.c:4408
 #: src/main/connections.c:4444 src/main/connections.c:4450
-#, fuzzy
 msgid "could not allocate space for pushback"
-msgstr "无法为pushBack分配空间"
+msgstr "无法为推回分配空间"
 
 #: src/main/connections.c:4435
 msgid "can only push back on open readable connections"
@@ -2173,9 +2144,8 @@ msgid "no sink to remove"
 msgstr "没有可以除去的汇集"
 
 #: src/main/connections.c:4649
-#, fuzzy
 msgid "there is no connection NA"
-msgstr "没有%d链结"
+msgstr "没有NA链结"
 
 #: src/main/connections.c:4651
 #, c-format
@@ -2192,75 +2162,79 @@ msgstr "file(\"\")只支持open = \"w+\"和open = \"w+b\"这两种模式：现�
 msgid "unsupported URL scheme"
 msgstr "不支持这种URL方案"
 
-#: src/main/connections.c:4923
+#: src/main/connections.c:4930
 msgid "file stream does not have gzip magic number"
 msgstr "文件串流没有gzip幻数"
 
-#: src/main/connections.c:4934
+#: src/main/connections.c:4941
 msgid "file stream does not have valid gzip header"
 msgstr "文件串流的gzip表头有错"
 
-#: src/main/connections.c:4999
+#: src/main/connections.c:5006
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "清除'gzcon'链结时书写出错"
 
-#: src/main/connections.c:5101
+#: src/main/connections.c:5108
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc错误%x%x\n"
 
-#: src/main/connections.c:5128
+#: src/main/connections.c:5135
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon'链结书写出错"
 
-#: src/main/connections.c:5162
+#: src/main/connections.c:5169
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level’必需是0 ... 9之一"
 
-#: src/main/connections.c:5165
+#: src/main/connections.c:5172
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression'的值要么是TRUE要么是FALSE"
 
-#: src/main/connections.c:5168
-#, fuzzy
+#: src/main/connections.c:5175
 msgid "this is already a 'gzcon' connection"
-msgstr "这已经是gzcon链结"
+msgstr "这已经是'gzcon'链结"
 
-#: src/main/connections.c:5174
+#: src/main/connections.c:5181
 msgid "can only use read- or write- binary connections"
 msgstr "只用读或写的二进列链结"
 
-#: src/main/connections.c:5177
+#: src/main/connections.c:5184
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "文字方式的'file'联结有可能会出错"
 
-#: src/main/connections.c:5180
-#, fuzzy
+#: src/main/connections.c:5187
 msgid ""
 "cannot create a 'gzcon' connection from a writable textConnection; maybe use "
 "rawConnection"
-msgstr "不能创建一个可写的textConnection的gzcon连接；试用rawConnection一下"
+msgstr "不能创建一个可写的textConnection的'gzcon'连接；试用rawConnection一下"
 
-#: src/main/connections.c:5183 src/main/connections.c:5187
-#: src/main/connections.c:5194 src/main/connections.c:5208
+#: src/main/connections.c:5190 src/main/connections.c:5194
+#: src/main/connections.c:5201 src/main/connections.c:5215
 msgid "allocation of 'gzcon' connection failed"
 msgstr "分配'gzcon'链结失败"
 
-#: src/main/connections.c:5368
+#: src/main/connections.c:5375
 msgid "not a list of sockets"
 msgstr "非插坐串列"
 
-#: src/main/connections.c:5373
+#: src/main/connections.c:5380
 msgid "bad write indicators"
 msgstr "书写指示器有错"
 
-#: src/main/connections.c:5384
+#: src/main/connections.c:5391
 msgid "not a socket connection"
 msgstr "非插坐链结"
 
-#: src/main/connections.c:5607
+#: src/main/connections.c:5614
 msgid "unknown compression, assuming none"
 msgstr "不知道这种压缩格式，因此假设没有压缩"
+
+#: src/main/connections.c:5732 src/main/connections.c:5736
+#: src/main/connections.c:5742
+#, fuzzy, c-format
+msgid "allocation of %s connection failed"
+msgstr "原始链结分配失败"
 
 #: src/main/context.c:126
 msgid ""
@@ -2316,19 +2290,16 @@ msgid "internal error in 'do_sys'"
 msgstr "'do_sys'里发生了内部错误"
 
 #: src/main/cum.c:49
-#, fuzzy
 msgid "integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
-msgstr "cumsum(.)中整数上溢；请用cumsum(as.numeric(.))"
+msgstr "'cumsum'中整数上溢；请用'cumsum(as.numeric(.))'"
 
 #: src/main/cum.c:178
-#, fuzzy
 msgid "'cummin' not defined for complex numbers"
-msgstr "min/max不适用于复数"
+msgstr "'cummin'不适用于复数"
 
 #: src/main/cum.c:181
-#, fuzzy
 msgid "'cummax' not defined for complex numbers"
-msgstr "min/max不适用于复数"
+msgstr "'cummax'不适用于复数"
 
 #: src/main/cum.c:206 src/main/cum.c:230
 msgid "unknown cumxxx function"
@@ -2349,9 +2320,8 @@ msgstr "取消时区设制时出了问题"
 
 #: src/main/datetime.c:770 src/main/datetime.c:772 src/main/datetime.c:862
 #: src/main/datetime.c:1170 src/main/datetime.c:1172
-#, fuzzy
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
-msgstr "非空的POSIXlt结构里含长度为零的部件"
+msgstr "非空的\"POSIXlt\"结构里含长度为零的部件"
 
 #: src/main/dcf.c:85 src/main/dcf.c:152 src/main/dcf.c:230
 msgid "could not allocate memory for 'read.dcf'"
@@ -2400,9 +2370,8 @@ msgid "too few arguments"
 msgstr "参数数目太少"
 
 #: src/main/deparse.c:159
-#, fuzzy
 msgid "invalid 'cutoff' value for 'deparse', using default"
-msgstr "反向分析的'cutoff'值不对, 用缺省值"
+msgstr "'deparse'的'cutoff'值不对, 用缺省值"
 
 #: src/main/deparse.c:247
 msgid "deparse of an S4 object will not be source()able"
@@ -2425,7 +2394,6 @@ msgid "character arguments expected"
 msgstr "需要字符参数"
 
 #: src/main/deparse.c:394
-#, fuzzy
 msgid "zero-length argument"
 msgstr "参数长度为零"
 
@@ -2445,9 +2413,8 @@ msgid "badly formed function expression"
 msgstr "函数表达式形式不对"
 
 #: src/main/devices.c:44
-#, fuzzy
 msgid "the base graphics system is not registered"
-msgstr "注册了太多的图形系统"
+msgstr "基本图形系统还没有注册"
 
 #: src/main/devices.c:165 src/main/devices.c:172
 msgid "no active or default device"
@@ -2480,10 +2447,9 @@ msgid "symbol '%s' is too long"
 msgstr "符号'%s'太长"
 
 #: src/main/dotcode.c:159
-#, fuzzy
 msgid ""
 "first argument must be a string (of length 1) or native symbol reference"
-msgstr "'name'要么是字符串(长度为一)要么是本机符号引用"
+msgstr "第一个参数要么是字符串(长度为一)要么是本机符号引用"
 
 #: src/main/dotcode.c:201 src/main/dotcode.c:561
 msgid "too many arguments in foreign function call"
@@ -2491,13 +2457,13 @@ msgstr "外接函数调用时参数太多"
 
 #: src/main/dotcode.c:213
 msgid "PACKAGE = \"\" is invalid"
-msgstr ""
+msgstr "PACKAGE = \"\"无效"
 
 #: src/main/dotcode.c:267 src/main/dotcode.c:272 src/main/dotcode.c:277
 #: src/main/dotcode.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" not available for %s() for package \"%s\""
-msgstr "%s不适用于这个设备"
+msgstr "程序包\"%3$s\"里\"%1$s\"不适用于%2$s()"
 
 #: src/main/dotcode.c:287
 #, c-format
@@ -2511,9 +2477,9 @@ msgstr "载入表里没有\"%1$s\"字符名\"%2$s\""
 
 #: src/main/dotcode.c:346 src/main/dotcode.c:350 src/main/dotcode.c:360
 #: src/main/dotcode.c:425 src/main/dotcode.c:432
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' used more than once"
-msgstr "DUP只能用一次"
+msgstr "'%s'只能用一次"
 
 #: src/main/dotcode.c:356
 msgid "DLL name is too long"
@@ -2536,9 +2502,8 @@ msgid "too many arguments"
 msgstr "参数太多"
 
 #: src/main/dotcode.c:510 src/main/dotcode.c:552 src/main/dotcode.c:1395
-#, fuzzy
 msgid "'.NAME' is missing"
-msgstr "缺少'EXPR'"
+msgstr "缺少'.NAME'"
 
 #: src/main/dotcode.c:519 src/main/dotcode.c:568 src/main/dotcode.c:1416
 #, c-format
@@ -2558,7 +2523,7 @@ msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "寻找DLL时DLLInfoReference的值是NULL"
 
 #: src/main/dotcode.c:1456
-#, fuzzy, c-format
+#, c-format
 msgid "wrong type for argument %d in call to %s"
 msgstr "调用%2$s时参数%1$d的种类不对"
 
@@ -2572,7 +2537,7 @@ msgstr "调用'%s'时明确要求不要复制参数，但参数%d的种类不对
 #: src/main/dotcode.c:1491
 #, fuzzy, c-format
 msgid "long vectors (argument %d) are not supported in %s"
-msgstr "这个平台不支持符号链结"
+msgstr "%2$s里不支持长向量（参数%2$d）"
 
 #: src/main/dotcode.c:1522
 #, c-format
@@ -2586,7 +2551,7 @@ msgstr "外接函数调用时不能有NA/NaN/Inf(arg%d)"
 
 #: src/main/dotcode.c:1550
 msgid "single values not returned if not duplicated"
-msgstr ""
+msgstr "如果不重复的话，单值没有返回"
 
 #: src/main/dotcode.c:1576
 #, c-format
@@ -2602,18 +2567,18 @@ msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran只能用字节矢量中的第一个字符串"
 
 #: src/main/dotcode.c:1643 src/main/dotcode.c:1659 src/main/dotcode.c:1670
-#, fuzzy, c-format
+#, c-format
 msgid "invalid mode (%s) to pass to Fortran (arg %d)"
-msgstr "传给Fortran的状态出错(arg%d)"
+msgstr "传给Fortran(arg%2$d)的状态(%1$s)出错"
 
 #: src/main/dotcode.c:1664
-#, fuzzy, c-format
+#, c-format
 msgid "invalid mode (%s) to pass to C or Fortran (arg %d)"
-msgstr "传给Fortran的状态出错(arg%d)"
+msgstr "传给C或Fortran(arg%2$d)的状态(%1$s)出错"
 
 #: src/main/dotcode.c:1675
 msgid "pairlists are passed as SEXP as from R 2.15.0"
-msgstr ""
+msgstr "从R版本2.15.0之后pairlists作为SEXP来用"
 
 #: src/main/dotcode.c:2497
 #, c-format
@@ -2677,9 +2642,8 @@ msgid "unz connections can only be opened for reading"
 msgstr "unz链结只可读不可写"
 
 #: src/main/dounzip.c:412
-#, fuzzy
 msgid "invalid description of 'unz' connection"
-msgstr "unz链结的描述不对"
+msgstr "'unz'链结的描述不对"
 
 #: src/main/dounzip.c:418
 #, c-format
@@ -2701,15 +2665,14 @@ msgstr "无法对这个链结书写"
 
 #: src/main/dounzip.c:493 src/main/dounzip.c:497 src/main/dounzip.c:503
 #: src/main/dounzip.c:520
-#, fuzzy
 msgid "allocation of 'unz' connection failed"
-msgstr "分配unz链结失败"
+msgstr "分配'unz'链结失败"
 
-#: src/main/dstruct.c:89
+#: src/main/dstruct.c:90
 msgid "invalid formal arguments for 'function'"
 msgstr "’function’的正式参数不对"
 
-#: src/main/dstruct.c:99
+#: src/main/dstruct.c:100
 msgid "invalid body argument for 'function'"
 msgstr "’function’的函数体定义不对"
 
@@ -2788,30 +2751,26 @@ msgstr "行接合出错"
 
 #: src/main/engine.c:761 src/main/engine.c:865 src/main/engine.c:1098
 #: src/main/engine.c:1205 src/main/engine.c:1328 src/main/engine.c:1392
-#, fuzzy
 msgid "'lwd' must be non-negative and finite"
-msgstr "'gap'必需是正整数"
+msgstr "'lwd'必需是正整数"
 
 #: src/main/engine.c:798
 msgid "out of memory while clipping polyline"
 msgstr "剪裁多重线的时候内存不够"
 
 #: src/main/engine.c:1386
-#, fuzzy
 msgid "path rendering is not implemented for this device"
-msgstr "本系统没有为这个设备实现路径呈现这个功能"
+msgstr "没有为这个设备实现路径呈现这个功能"
 
 #: src/main/engine.c:1406
 msgid "Invalid graphics path"
 msgstr "图形路径出错"
 
 #: src/main/engine.c:1425
-#, fuzzy
 msgid "raster rendering is not implemented for this device"
-msgstr "本系统没有为这个设备实现光栅渲染这一功能"
+msgstr "没有为这个设备实现光栅渲染这一功能"
 
 #: src/main/engine.c:1449
-#, fuzzy
 msgid "raster capture is not available for this device"
 msgstr "栅格捕捉不适用于这个设备"
 
@@ -2855,7 +2814,6 @@ msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up =%g >%g = x2"
 
 #: src/main/engine.c:2773
-#, fuzzy
 msgid "display list redraw incomplete"
 msgstr "显示串列没有完全被刷新"
 
@@ -2922,7 +2880,7 @@ msgid "argument to '%s' is not an environment"
 msgstr "参数'%s'不是环境"
 
 #: src/main/envir.c:1253
-#, fuzzy, c-format
+#, c-format
 msgid "the ... list does not contain %d elements"
 msgstr "... 串列不包含%d元素"
 
@@ -3201,7 +3159,7 @@ msgstr "错误于"
 #: src/main/errors.c:609
 #, c-format
 msgid " (from %s) : "
-msgstr ""
+msgstr " (从%s) : "
 
 #: src/main/errors.c:660 src/main/errors.c:666
 #, c-format
@@ -3313,7 +3271,7 @@ msgstr "错误信息必需是字符串"
 #: src/main/eval.c:272
 #, c-format
 msgid "source files skipped by Rprof; please increase '%s'"
-msgstr ""
+msgstr "源文件跳过Rprof，请增加“%s”"
 
 #: src/main/eval.c:292
 #, c-format
@@ -3438,9 +3396,9 @@ msgid "invalid formal argument list for \"function\""
 msgstr "\"function\"正式参数串列不对"
 
 #: src/main/eval.c:2146 src/main/eval.c:2177 src/main/eval.c:2182
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument of type '%s'"
-msgstr "'%s'参数不对"
+msgstr "种类'%2$s'的参数'%1$s'不对"
 
 #: src/main/eval.c:2174
 msgid "numeric 'envir' arg not of length one"
@@ -3491,9 +3449,8 @@ msgid "integer stack overflow"
 msgstr "整数堆叠上溢"
 
 #: src/main/eval.c:3286
-#, fuzzy
 msgid "bad opcode"
-msgstr "op代码不对"
+msgstr "opcode不对"
 
 #: src/main/eval.c:4028
 #, c-format
@@ -3521,9 +3478,9 @@ msgid "invalid sequence argument in for loop"
 msgstr "循环里的顺序参数不对"
 
 #: src/main/eval.c:4419 src/main/names.c:1129
-#, fuzzy, c-format
+#, c-format
 msgid "there is no .Internal function '%s'"
-msgstr "没有\"%s\"这个内部函数"
+msgstr "没有'%s'这个内部函数"
 
 #: src/main/eval.c:4526 src/main/eval.c:4851 src/main/eval.c:4893
 msgid "bad function"
@@ -3534,9 +3491,8 @@ msgid "not a BUILTIN function"
 msgstr "非BUILTIN函数"
 
 #: src/main/eval.c:4918
-#, fuzzy
 msgid "numeric EXPR required for 'switch' without named alternatives"
-msgstr "没有名字替代的开关需要数值EXPR"
+msgstr "没有名字替代的'switch'需要数值EXPR"
 
 #: src/main/eval.c:5013
 msgid "cannot find index for threaded code address"
@@ -3613,9 +3569,8 @@ msgid "invalid prompt"
 msgstr "提示不对"
 
 #: src/main/gevents.c:124
-#, fuzzy
 msgid "recursive use of 'getGraphicsEvent' not supported"
-msgstr "不支持getGraphicsEvent的递归应用"
+msgstr "不支持'getGraphicsEvent'的递归应用"
 
 #: src/main/gevents.c:134
 msgid "no graphics event handlers set"
@@ -3681,14 +3636,14 @@ msgid "unexpected %s"
 msgstr "意外的%s"
 
 #: src/main/gram.y:1941
-#, fuzzy, c-format
+#, c-format
 msgid "repeated formal argument '%s' on line %d"
-msgstr "%2$d行上有重复正式参数'%1$s'"
+msgstr "%2$d行上正式参数'%1$s'有重复"
 
 #: src/main/gram.y:2141
-#, fuzzy, c-format
+#, c-format
 msgid "integer literal %s contains decimal; using numeric value"
-msgstr "整数文字%sL里有小数点；转用数值"
+msgstr "整数文字%s里有小数点；转用数值"
 
 #: src/main/gram.y:2145
 #, c-format
@@ -3696,9 +3651,9 @@ msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "同L一起修饰的%s是非整数值; 转用数值"
 
 #: src/main/gram.y:2158
-#, fuzzy, c-format
+#, c-format
 msgid "integer literal %s contains unnecessary decimal point"
-msgstr "整数文字%sL里含多余的小数点"
+msgstr "整数文字%s里含多余的小数点"
 
 #: src/main/gram.y:2190
 #, c-format
@@ -3765,9 +3720,9 @@ msgid "contextstack overflow at line %d"
 msgstr "%d行上下文堆叠上溢"
 
 #: src/main/gram.y:3225
-#, fuzzy, c-format
+#, c-format
 msgid "internal parser error at line %d"
-msgstr "%d行输入缓冲区上溢"
+msgstr "%d行里输入缓冲区上溢"
 
 #: src/main/graphics.c:67
 #, c-format
@@ -3866,13 +3821,13 @@ msgid "result string is too long"
 msgstr "结果字符串太长"
 
 #: src/main/grep.c:2411
-#, fuzzy, c-format
+#, c-format
 msgid "'pcre_fullinfo' returned '%d' "
-msgstr "pcre_fullinfo返回了'%d'"
+msgstr "'pcre_fullinfo'返回了'%d'"
 
 #: src/main/identical.c:121
 msgid "ignoring non-pairlist attributes"
-msgstr ""
+msgstr "忽略非pairlist的属性"
 
 #: src/main/internet.c:92
 msgid "internet routines cannot be accessed in module"
@@ -3885,9 +3840,9 @@ msgstr "无法读写模块里的互联网例行程序"
 msgid "internet routines cannot be loaded"
 msgstr "无法载入互联网例行程序"
 
-#: src/main/internet.c:118 src/main/memory.c:3185 src/main/memory.c:3194
-#: src/main/memory.c:3205 src/main/memory.c:3218 src/main/memory.c:3234
-#: src/main/memory.c:3251
+#: src/main/internet.c:118 src/main/memory.c:3218 src/main/memory.c:3227
+#: src/main/memory.c:3238 src/main/memory.c:3251 src/main/memory.c:3267
+#: src/main/memory.c:3284
 msgid "bad value"
 msgstr "值不对"
 
@@ -3902,14 +3857,12 @@ msgid "socket routines cannot be loaded"
 msgstr "无法载入插坐例行程序"
 
 #: src/main/lapack.c:39
-#, fuzzy
 msgid "LAPACK routines cannot be accessed in module"
-msgstr "模块没有X11例行程序"
+msgstr "LAPACK例行程序无法使用在模块中"
 
 #: src/main/lapack.c:53
-#, fuzzy
 msgid "LAPACK routines cannot be loaded"
-msgstr "无法载入插坐例行程序"
+msgstr "无法载入LAPACK例行程序"
 
 #: src/main/logic.c:51
 msgid "binary operations require two arguments"
@@ -4014,9 +3967,8 @@ msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没有回覆逻辑值"
 
 #: src/main/mapply.c:58
-#, fuzzy
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
-msgstr "零长度输入和非零长度输入是不能混合在一起的"
+msgstr "零长度输入和非零长度输入是不能混合在一起用的"
 
 #: src/main/mapply.c:76
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
@@ -4047,137 +3999,136 @@ msgid "partial argument match of '%s' to '%s'"
 msgstr "'%s'部分匹配为'%s'"
 
 #: src/main/match.c:377
-#, fuzzy, c-format
+#, c-format
 msgid "unused argument %s"
 msgid_plural "unused arguments %s"
-msgstr[0] "参数(%s) 没有用"
+msgstr[0] "参数没有用%s"
 
-#: src/main/memory.c:1158
+#: src/main/memory.c:1191
 msgid "can only weakly reference/finalize reference objects"
 msgstr "只能微弱引用或定局引用对象"
 
-#: src/main/memory.c:1192
+#: src/main/memory.c:1225
 msgid "finalizer must be a function or NULL"
 msgstr "定局器必需是函数或NULL"
 
-#: src/main/memory.c:1243 src/main/memory.c:1251 src/main/memory.c:1262
+#: src/main/memory.c:1276 src/main/memory.c:1284 src/main/memory.c:1295
 msgid "not a weak reference"
 msgstr "非微弱引用"
 
-#: src/main/memory.c:1378
+#: src/main/memory.c:1411
 msgid "first argument must be environment or external pointer"
 msgstr "第一参数必需是环境或外部指针"
 
-#: src/main/memory.c:1380
+#: src/main/memory.c:1413
 msgid "second argument must be a function"
 msgstr "第二参数必需是函数"
 
-#: src/main/memory.c:1384
+#: src/main/memory.c:1417
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "第三个的值要么是TRUE要么是FALSE"
 
-#: src/main/memory.c:1865
+#: src/main/memory.c:1898
 msgid "vector memory exhausted (limit reached?)"
 msgstr "矢量内存用完了(达到了极限?)"
 
-#: src/main/memory.c:1871
+#: src/main/memory.c:1904
 msgid "cons memory exhausted (limit reached?)"
 msgstr "cons内存用完了(达到了极限?)"
 
-#: src/main/memory.c:1876
+#: src/main/memory.c:1909
 msgid "memory exhausted (limit reached?)"
 msgstr "内存用完了(达到了极限?)"
 
-#: src/main/memory.c:1999
-#, fuzzy, c-format
+#: src/main/memory.c:2032
+#, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
-msgstr "无法分配大小为%0.1f Gb的内存块"
+msgstr "无法分配大小为%0.f Tb的内存块"
 
-#: src/main/memory.c:2004
+#: src/main/memory.c:2037
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "无法分配大小为%0.1f Gb的内存块"
 
-#: src/main/memory.c:2270
-#, fuzzy
+#: src/main/memory.c:2303
 msgid "vector is too large"
-msgstr "矢量size设得太大了"
+msgstr "矢量设得太大了"
 
-#: src/main/memory.c:2273
+#: src/main/memory.c:2306
 msgid "negative length vectors are not allowed"
 msgstr "不能有负长度矢量"
 
-#: src/main/memory.c:2299 src/main/memory.c:2312 src/main/memory.c:2325
-#: src/main/memory.c:2340
+#: src/main/memory.c:2332 src/main/memory.c:2345 src/main/memory.c:2358
+#: src/main/memory.c:2373
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "无法分配长度为%d的矢量"
 
-#: src/main/memory.c:2361
+#: src/main/memory.c:2394
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "矢量分配的种类/长度(%s/%d)不对"
 
-#: src/main/memory.c:2454
+#: src/main/memory.c:2487
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "无法分配大小为%0.1f Gb的矢量"
 
-#: src/main/memory.c:2458
+#: src/main/memory.c:2491
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "无法分配大小为%0.1f Mb的矢量"
 
-#: src/main/memory.c:2462
+#: src/main/memory.c:2495
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "无法分配大小为%0.f Kb的矢量"
 
-#: src/main/memory.c:2797
+#: src/main/memory.c:2830
 msgid "protect(): protection stack overflow"
 msgstr "protect()：防护堆叠上溢"
 
-#: src/main/memory.c:2813
+#: src/main/memory.c:2846
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect():只有%d个保护项"
 
-#: src/main/memory.c:2827
+#: src/main/memory.c:2860
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: 找不到指针"
 
-#: src/main/memory.c:2864
-#, fuzzy, c-format
+#: src/main/memory.c:2897
+#, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
-msgstr "unprotect():只有%d个保护项"
+msgstr "R_Reprotect:只有%d个保护项, 不能重新保护索引%d"
 
-#: src/main/memory.c:2906
-#, fuzzy, c-format
+#: src/main/memory.c:2939
+#, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
-msgstr "Calloc无法分配(%2$u的%1$.0f)内存"
+msgstr "'Calloc'无法分配(%2$u字节的%1$.0f)内存"
 
-#: src/main/memory.c:2917
-#, fuzzy, c-format
+#: src/main/memory.c:2950
+#, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
-msgstr "Realloc 无法重新分配(大小为%.0f)的内存"
+msgstr "'Realloc'无法重新分配(大小为%.0f字节)的内存"
 
-#: src/main/memory.c:3139
+#: src/main/memory.c:3172
 msgid "not safe to return vector pointer"
 msgstr "回覆矢量指针不是安全的做法"
 
-#: src/main/memory.c:3391
+#: src/main/memory.c:3424
 msgid "memory profiling is not available on this system"
 msgstr "本系统没有记忆概要分析这个功能"
 
-#: src/main/memory.c:3456
+#: src/main/memory.c:3489
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: 无法输出文件'%s'"
 
-#: src/main/memory.c:3563
+#: src/main/memory.c:3596
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
-msgstr ""
+msgstr "现在还没有支持长向量：%s:%d"
 
 #: src/main/names.c:963
 msgid "string argument required"
@@ -4213,20 +4164,18 @@ msgid "bad generic definition environment"
 msgstr "类属定义环境不对"
 
 #: src/main/objects.c:242
-#, fuzzy
 msgid ""
 "no '.S3MethodsClass' table, cannot use S4 objects with S3 methods ('methods' "
 "package not attached?)"
-msgstr "没有.S3MethodsClass表，不能将S3方法用在S4目标对象上(方法"
+msgstr "没有'.S3MethodsClass'表，不能将S3方法用在S4目标对象上('methods'"
 
 #: src/main/objects.c:266 src/main/objects.c:405
 msgid "'UseMethod' used in an inappropriate fashion"
 msgstr "'UseMethod'不能这样使用"
 
 #: src/main/objects.c:286
-#, fuzzy
 msgid "invalid generic function in 'usemethod'"
-msgstr "'usemethod'里不能用类属功能"
+msgstr "'usemethod'里类属功能无效"
 
 #: src/main/objects.c:393
 msgid "there must be a 'generic' argument"
@@ -4237,9 +4186,8 @@ msgid "'generic' argument must be a character string"
 msgstr "'generic'参数必需是字符串"
 
 #: src/main/objects.c:434
-#, fuzzy
 msgid "'UseMethod' called from outside a function"
-msgstr "不能在函数外调用'NextMethod' "
+msgstr "不能在函数外调用'UseMethod' "
 
 #: src/main/objects.c:441
 msgid "first argument must be a generic name"
@@ -4280,14 +4228,12 @@ msgid "generic function not specified"
 msgstr "没有设定类属功能"
 
 #: src/main/objects.c:661
-#, fuzzy
 msgid "invalid generic argument to 'NextMethod'"
-msgstr "NextMethod不能用类属参数"
+msgstr "'NextMethod'里不能有类属参数"
 
 #: src/main/objects.c:674
-#, fuzzy
 msgid "invalid 'group' argument found in 'NextMethod'"
-msgstr "NextMethod不能用'group'参数"
+msgstr "'NextMethod'里的'group'参数不对"
 
 #: src/main/objects.c:693
 msgid "wrong value for .Method"
@@ -4331,9 +4277,8 @@ msgid "could not find correct environment; please report!"
 msgstr "找不到正确的环境；请报告!"
 
 #: src/main/objects.c:1038
-#, fuzzy
 msgid "'onOff' must be TRUE or FALSE"
-msgstr "'all.x'必需是TRUE或FALSE"
+msgstr "'onOff'必需是TRUE或FALSE"
 
 #: src/main/objects.c:1094
 #, c-format
@@ -4341,15 +4286,13 @@ msgid "unable to find a non-generic version of function \"%s\""
 msgstr "无法找到函数\"%s\"非类属的版本"
 
 #: src/main/objects.c:1126
-#, fuzzy
 msgid ""
 "'standardGeneric' called without 'methods' dispatch enabled (will be ignored)"
-msgstr "方法分派没有激活，因此不能调用standardGeneric(略过不用)"
+msgstr "'methods'分派没有激活，因此不能调用'standardGeneric' (略过不用)"
 
 #: src/main/objects.c:1135
-#, fuzzy
 msgid "argument to 'standardGeneric' must be a non-empty character string"
-msgstr "standardGeneric的参数必需是非空字符串"
+msgstr "'standardGeneric'的参数必需是非空字符串"
 
 #: src/main/objects.c:1140
 #, c-format
@@ -4382,7 +4325,7 @@ msgid ""
 msgstr "原始同属函数的正式定义必需是函数对象(不能是'%s'类)"
 
 #: src/main/objects.c:1315
-#, fuzzy, c-format
+#, c-format
 msgid "object returned as generic function \"%s\" does not appear to be one"
 msgstr "回归为同属函数的目标对象\"%s\"看起来不象"
 
@@ -4419,9 +4362,9 @@ msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr "无法从虚拟类别(\"%s\")中产生对象"
 
 #: src/main/objects.c:1595
-#, fuzzy, c-format
+#, c-format
 msgid "object of class \"%s\" does not correspond to a valid S3 object"
-msgstr "类别为\"%s\"的目标对象没有对应于有效的S3目标对象"
+msgstr "类别为\"%s\"的目标对象不符合一个有效的S3目标对象"
 
 #: src/main/options.c:117 src/main/options.c:177
 msgid "corrupted options list"
@@ -4437,7 +4380,7 @@ msgstr "印刷数字无效，用7"
 
 #: src/main/options.c:150
 msgid "invalid 'deparse.cutoff', used 60"
-msgstr ""
+msgstr "'deparse.cutoff'无效，用了60"
 
 #: src/main/options.c:162
 msgid "invalid value for \"device.ask.default\", using FALSE"
@@ -4484,13 +4427,12 @@ msgid "invalid separator"
 msgstr "分隔符不对"
 
 #: src/main/paste.c:118
-#, fuzzy
 msgid "non-string argument to internal 'paste'"
-msgstr "内部貼補的参数不是字符串"
+msgstr "内部'paste'的参数不是字符串"
 
 #: src/main/paste.c:174 src/main/paste.c:244
 msgid "result would exceed 2^31-1 bytes"
-msgstr ""
+msgstr "结果将会超过2^31-1个字节"
 
 #: src/main/paste.c:320
 msgid "non-string argument to Internal paste"
@@ -4561,7 +4503,6 @@ msgid "cannot symlink '%s' to '%s', reason '%s'"
 msgstr "无法打开'%s'到'%s'的链结，原因是'%s'"
 
 #: src/main/platform.c:606
-#, fuzzy
 msgid "symbolic links are not supported on this platform"
 msgstr "这个平台不支持符号链结"
 
@@ -4641,9 +4582,8 @@ msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl()无法分辨主机'%s'"
 
 #: src/main/platform.c:2075
-#, fuzzy
 msgid "unknown format returned by C function 'gethostbyname'"
-msgstr "gethostbyname回覆了错误的格式"
+msgstr "'gethostbyname'回覆了错误的格式"
 
 #: src/main/platform.c:2084
 msgid "nsl() is not supported on this platform"
@@ -4671,14 +4611,13 @@ msgstr "由于'%2$s'的原因，无法建立'%1$ls'文件目录"
 
 #: src/main/platform.c:2223 src/main/platform.c:2380
 msgid "too deep nesting"
-msgstr ""
+msgstr "嵌套过深"
 
 #: src/main/platform.c:2231 src/main/platform.c:2244 src/main/platform.c:2262
 #: src/main/platform.c:2280 src/main/platform.c:2396 src/main/platform.c:2409
 #: src/main/platform.c:2429 src/main/platform.c:2449
-#, fuzzy
 msgid "over-long path length"
-msgstr "式样长度为零"
+msgstr "路径长度太长了"
 
 #: src/main/platform.c:2251
 #, c-format
@@ -4784,24 +4723,20 @@ msgid "invalid 'tryS4' internal argument"
 msgstr "'tryS4'内部参数不对"
 
 #: src/main/print.c:1018
-#, fuzzy
 msgid "invalid character length in 'dblepr'"
-msgstr "dblepr字符长度不对"
+msgstr "'dblepr'字符长度不对"
 
 #: src/main/print.c:1036
-#, fuzzy
 msgid "invalid character length in 'intpr'"
-msgstr "intpr字符长度不对"
+msgstr "'intpr'字符长度不对"
 
 #: src/main/print.c:1055
-#, fuzzy
 msgid "invalid character length in 'realpr'"
-msgstr "realpr字符长度不对"
+msgstr "'realpr'字符长度不对"
 
 #: src/main/print.c:1065
-#, fuzzy
 msgid "memory allocation error in 'realpr'"
-msgstr "realpr内存分配错误"
+msgstr "'realpr'内存分配错误"
 
 #: src/main/print.c:1081
 #, c-format
@@ -4817,15 +4752,14 @@ msgid "too few column labels"
 msgstr "列標記不够"
 
 #: src/main/printarray.c:486
-#, fuzzy, c-format
+#, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
 msgstr[0] "[到达getOption(\"max.print\") -- 略过%d行]]\n"
 
 #: src/main/printutils.c:606
-#, fuzzy
 msgid "it is not known that wchar_t is Unicode on this platform"
-msgstr "本平台不支持nsl()"
+msgstr " wchar_t在本平台上不应该是Unicode"
 
 #: src/main/qsort.c:55
 msgid "argument is not a numeric vector"
@@ -4863,66 +4797,55 @@ msgid "incorrect number of probabilities"
 msgstr "机率数目不对"
 
 #: src/main/random.c:537
-#, fuzzy
 msgid "n >= 2^31, replace = FALSE is only supported on 64-bit platforms"
-msgstr "本平台不支持'dirmark = TRUE'"
+msgstr "n >= 2^31, replace = FALSE只能在64位平台上才能用"
 
 #: src/main/raw.c:37 src/main/raw.c:273
-#, fuzzy
 msgid "argument must be a character vector of length 1"
-msgstr "'hostname'必需是长度为一的字符矢量"
+msgstr "参数必需是长度为一的字符矢量"
 
 #: src/main/raw.c:39 src/main/raw.c:275
-#, fuzzy
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
-msgstr "变数'%s'的长度大于一，因此只能用其第一元素"
+msgstr "参数'%s'应该是长度为一的字符矢量，因此只能用其第一元素"
 
 #: src/main/raw.c:53 src/main/raw.c:89 src/main/raw.c:110
-#, fuzzy
 msgid "argument 'x' must be a raw vector"
-msgstr "第一参数必需是矢量"
+msgstr "参数'x'必需是矢量"
 
 #: src/main/raw.c:56 src/main/raw.c:330
-#, fuzzy
 msgid "argument 'multiple' must be TRUE or FALSE"
-msgstr "'resize'的值必需是TRUE或是FALSE"
+msgstr "'multiple'的参数值必需是TRUE或是FALSE"
 
 #: src/main/raw.c:91
-#, fuzzy
 msgid "argument 'shift' must be a small integer"
-msgstr "'size'参数必需是正整数"
+msgstr "'shift'参数必需是整数"
 
 #: src/main/raw.c:129 src/main/raw.c:327
-#, fuzzy
 msgid "argument 'x' must be an integer vector"
-msgstr "第一参数必需是字符矢量"
+msgstr "'x'参数必需是整数矢量"
 
 #: src/main/raw.c:148
-#, fuzzy
 msgid "argument 'x' must be raw, integer or logical"
-msgstr "参数'logarithm'必需是逻辑值"
+msgstr "参数'x'必需是原始，整数或逻辑值"
 
 #: src/main/raw.c:150
-#, fuzzy
 msgid "argument 'type' must be a character string"
-msgstr "参数'code'必需是字符串"
+msgstr "参数'type'必需是字符串"
 
 #: src/main/raw.c:154
-#, fuzzy, c-format
+#, c-format
 msgid "argument 'x' must be a multiple of %d long"
-msgstr "参数必需为函数"
+msgstr "参数'x'必需是长%d的倍数"
 
 #: src/main/raw.c:167 src/main/raw.c:181
-#, fuzzy
 msgid "argument 'x' must not contain NAs"
-msgstr "参数不能是函数"
+msgstr "'x'参数不能带NA"
 
 #: src/main/raw.c:285
-#, fuzzy
 msgid "invalid UTF-8 string"
-msgstr "UTF-8字符串'old'有错"
+msgstr "UTF-8字符串有错"
 
 #: src/main/relop.c:105
 #, c-format
@@ -4942,9 +4865,8 @@ msgid "invalid comparison with complex values"
 msgstr "不能比较复数值"
 
 #: src/main/relop.c:668
-#, fuzzy
 msgid "'a' and 'b' must have the same type"
-msgstr "'data'的种类必需为矢量"
+msgstr "'a'和'b'的种类必需相同"
 
 #: src/main/saveload.c:200 src/main/saveload.c:205 src/main/saveload.c:214
 #: src/main/saveload.c:223 src/main/saveload.c:232 src/main/saveload.c:241
@@ -5185,9 +5107,8 @@ msgid "scan() expected '%s', got '%s'"
 msgstr "scan()需要'%s', 而不是'%s'"
 
 #: src/main/scan.c:575 src/main/scan.c:722
-#, fuzzy
 msgid "too many items"
-msgstr "参数太多"
+msgstr "项目太多"
 
 #: src/main/scan.c:661
 msgid "empty 'what' specified"
@@ -5248,18 +5169,17 @@ msgid "incorrect type for second argument"
 msgstr "第二参数种类不对"
 
 #: src/main/seq.c:335
-#, fuzzy, c-format
+#, c-format
 msgid "attempt to replicate an object of type '%s'"
-msgstr "非矢量不能被复制"
+msgstr "种类为'%s'的目标对象不能被复制"
 
 #: src/main/seq.c:388
 msgid "attempt to replicate non-vector"
 msgstr "非矢量不能被复制"
 
 #: src/main/seq.c:404
-#, fuzzy
 msgid "cannot replicate NULL to a non-zero length"
-msgstr "无法分配长度为%d的矢量"
+msgstr "不能复制NULL到一个非零长度的"
 
 #: src/main/seq.c:627 src/main/seq.c:634 src/main/seq.c:765 src/main/seq.c:972
 #, c-format
@@ -5354,20 +5274,20 @@ msgid "names in persistent strings are not supported yet"
 msgstr "目前不支持持续字符串里的名字"
 
 #: src/main/serialize.c:1457
-#, fuzzy
 msgid "negative serialized length for vector"
-msgstr "不能设非矢量的长度"
+msgstr "向量序列长度不能是负的"
 
 #: src/main/serialize.c:1465
-#, fuzzy
 msgid "invalid upper part of serialized vector length"
-msgstr "参数长度不对"
+msgstr "上部序列向量的长度不对"
 
 #: src/main/serialize.c:1470
 msgid ""
 "negative serialized vector length:\n"
 "perhaps long vector from 64-bit version of R?"
 msgstr ""
+"负序列化的向量长度：\n"
+"也许矢量是从64位版本的R来的？"
 
 #: src/main/serialize.c:1659
 msgid "this version of R cannot read class references"
@@ -5496,12 +5416,12 @@ msgstr "无法排序原始矢量"
 
 #: src/main/sort.c:593
 msgid "NA or infinite index"
-msgstr ""
+msgstr "出现了NA或无限大的index "
 
 #: src/main/sort.c:596
-#, fuzzy, c-format
+#, c-format
 msgid "index %ld outside bounds"
-msgstr "索引%d在界限外"
+msgstr "索引%ld在界限外"
 
 #: src/main/sort.c:601 src/main/sort.c:614
 msgid "NA index"
@@ -5551,9 +5471,8 @@ msgid "second argument must be a factor"
 msgstr "第二参数必需是因子"
 
 #: src/main/split.c:45
-#, fuzzy
 msgid "group length is 0 but data length > 0"
-msgstr "Group长度为零但数据长度大于零"
+msgstr "组的长度为零但数据的长度大于零"
 
 #: src/main/split.c:47
 msgid "data length is not a multiple of split variable"
@@ -5564,7 +5483,7 @@ msgid "factor has bad level"
 msgstr "因子的水平不对"
 
 #: src/main/sprintf.c:94
-#, fuzzy, c-format
+#, c-format
 msgid "required resulting string length %d is greater than maximal %d"
 msgstr "所需要的字符串长度%d大于最大限度%d"
 
@@ -5813,7 +5732,7 @@ msgstr "只有负下标里才能有零"
 
 #: src/main/subscript.c:592
 msgid "subscript too large for 32-bit R"
-msgstr ""
+msgstr "标过大，因为是32位的R "
 
 #: src/main/subscript.c:792
 msgid "no 'dimnames' attribute for array"
@@ -5857,9 +5776,8 @@ msgid "invalid 'type' (%s) of argument"
 msgstr "'type'(%s)参数不对"
 
 #: src/main/summary.c:63
-#, fuzzy
 msgid "integer overflow - use sum(as.numeric(.))"
-msgstr "整数上溢；请用sum(as.numeric(.))"
+msgstr "整数上溢-请用sum(as.numeric(.))"
 
 #: src/main/summary.c:484
 #, c-format
@@ -5995,18 +5913,16 @@ msgid "unsupported conversion to '%s' from codepage %d"
 msgstr "不支持从代码页%2$d里到'%1$s'的转换"
 
 #: src/main/sysutils.c:1413
-#, fuzzy
 msgid "cannot create 'R_TempDir'"
-msgstr "无法分配R_TempDir"
+msgstr "无法创建'R_TempDir'"
 
 #: src/main/sysutils.c:1417 src/main/sysutils.c:1424 src/main/sysutils.c:1427
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr "无法设制R_SESSION_TMPDIR "
 
 #: src/main/sysutils.c:1436
-#, fuzzy
 msgid "cannot allocate 'R_TempDir'"
-msgstr "无法分配R_TempDir"
+msgstr "无法分配'R_TempDir'"
 
 #: src/main/sysutils.c:1473
 msgid "temporary name too long"
@@ -6052,9 +5968,8 @@ msgid "%s() applies only to vectors"
 msgstr "%s()只适用于矢量"
 
 #: src/main/unique.c:689
-#, fuzzy
 msgid "'nmax' must be positive"
-msgstr "'value'的长度必需是正数"
+msgstr "'nmax'的长度必需是正数"
 
 #: src/main/unique.c:922
 msgid "'match' requires vector arguments"
@@ -6065,9 +5980,8 @@ msgid "argument is not of mode character"
 msgstr "参数不是字符状态"
 
 #: src/main/unique.c:1251
-#, fuzzy
 msgid "... used in a situation where it does not exist"
-msgstr "... 用在它不存在的地方了"
+msgstr "... 用于了在它不存在的地方"
 
 #: src/main/unique.c:1342
 msgid "unable to find a closure from within which 'match.call' was called"
@@ -6196,32 +6110,29 @@ msgid "warning message truncated to 255 chars"
 msgstr "警告信息缩短到255个字节"
 
 #: src/main/util.c:1767
-#, fuzzy
 msgid "all arguments must be named"
-msgstr "属性必需取名"
+msgstr "所有的参数都必需取名"
 
 #: src/main/util.c:1840
 msgid "ICU is not supported on this build"
 msgstr "本平台不支持ICU"
 
 #: src/main/util.c:1901
-#, fuzzy
 msgid "'breaks' is not sorted"
-msgstr "不支持'%s'这一种类"
+msgstr "'breaks'没有排序"
 
 #: src/main/util.c:1935 src/main/util.c:1981
-#, fuzzy, c-format
+#, c-format
 msgid "long vector '%s' is not supported"
-msgstr "不支持'%s'这一种类"
+msgstr "不支持'%s'这种长向量"
 
 #: src/main/util.c:2034
 msgid "'eps.correct' must be 0, 1, or 2"
-msgstr ""
+msgstr "'eps.correct' 的值必需是0，1，或2"
 
 #: src/main/util.c:2062
-#, fuzzy
 msgid "'x' must be a vector"
-msgstr "'x'必需是字符矢量"
+msgstr "'x'必需是向量"
 
 #: src/main/version.c:37
 msgid ""
@@ -6277,12 +6188,10 @@ msgid "insufficient memory to allocate point array"
 msgstr "没有足够的内存以分配给数点排列"
 
 #: src/main/xspline.c:470
-#, fuzzy
 msgid "there must be at least two control points"
 msgstr "至少得有两个控制点"
 
 #: src/main/xspline.c:472
-#, fuzzy
 msgid "there must be at least four control points"
 msgstr "至少得有四个控制点"
 
@@ -6821,12 +6730,11 @@ msgstr "'jobu'和'jobv'必需是字符对象"
 
 #: src/modules/lapack/Lapack.c:748
 msgid "matrices of 2^31 or more elements are not supported"
-msgstr ""
+msgstr "不支持2 ^ 31个或更多的元素矩阵"
 
 #: src/modules/lapack/Lapack.c:808
-#, fuzzy
 msgid "'x' must be a square complex matrix"
-msgstr "'x'必需是正方形的数值矩阵"
+msgstr "'x'必需是正方形的复数矩阵"
 
 #: src/modules/lapack/Lapack.c:919 src/modules/lapack/Lapack.c:993
 #: src/modules/lapack/Lapack.c:1032 src/modules/lapack/Lapack.c:1106
@@ -6849,7 +6757,7 @@ msgstr "%d数位主次为非正定"
 
 #: src/modules/lapack/Lapack.c:953
 msgid "the matrix is either rank-deficient or indefinite"
-msgstr ""
+msgstr "矩阵的秩亏或不确定"
 
 #: src/modules/lapack/Lapack.c:980
 msgid "'size' argument must be a positive integer"
@@ -6871,9 +6779,9 @@ msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "元素(%d,%d)为零, 因此无法求逆"
 
 #: src/modules/lapack/Lapack.c:1087
-#, fuzzy, c-format
+#, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
-msgstr "Lapack例行程序dgesv: 系统正好是奇异的"
+msgstr "Lapack例行程序%s: 系统正好是奇异的: U[%d,%d] = 0"
 
 #: src/modules/lapack/Lapack.c:1094
 #, c-format
@@ -6947,7 +6855,7 @@ msgstr "bessel_y(%g,nu=%g): 结果的精确度有损害\n"
 #: src/nmath/choose.c:79 src/nmath/choose.c:122
 #, c-format
 msgid "'k' (%.2f) must be integer, rounded to %.0f"
-msgstr ""
+msgstr "'k' (%.2f)必需是整数，四舍五入时到%.0f"
 
 #: src/nmath/nmath.h:133
 #, c-format
@@ -6977,12 +6885,12 @@ msgstr "'%s'下溢\n"
 #: src/nmath/pbeta.c:48
 #, c-format
 msgid "pbeta_raw() -> bratio() gave error code %d"
-msgstr ""
+msgstr "pbeta_raw() -> bratio()得到了错误代码%d"
 
 #: src/nmath/pnbinom.c:71
 #, c-format
 msgid "pnbinom_mu() -> bratio() gave error code %d"
-msgstr ""
+msgstr "pnbinom_mu() -> bratio()得到了错误代码%d "
 
 #: src/nmath/pnchisq.c:241
 #, c-format

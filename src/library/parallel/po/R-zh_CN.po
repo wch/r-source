@@ -1,7 +1,7 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2006.
+# 陈斐 <feic@normipaiva.com>, 2006.
 # 
 msgid ""
 msgstr ""
@@ -23,7 +23,6 @@ msgstr "'seed'的值不对"
 msgid "need at least one argument"
 msgstr "至少需要一个参数"
 
-#, fuzzy
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr "非零长度的输入和长度为零的输入不能同时混用"
 
@@ -36,9 +35,8 @@ msgstr "'X'必需有名字的dimnames"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "'MARGIN'所有的元素都必需是尺寸的名字"
 
-#, fuzzy
 msgid "no cluster 'cl' supplied and none is registered"
-msgstr "没有提供集群也没有注册"
+msgstr "没有提供'cl'集群也没有注册"
 
 msgid "not a valid cluster"
 msgstr "群集不对"
@@ -61,9 +59,8 @@ msgstr "'child'参数不对"
 msgid "'children' must be a list of processes or a single process"
 msgstr "'children'要么是进程列表，要么是一个单一的进程"
 
-#, fuzzy
 msgid "'process' must be of class %s"
-msgstr "'process'的类别必需是\"process\""
+msgstr "'process'的类别必需是%s"
 
 msgid "'child' must be a valid child process"
 msgstr "'child'必须是有效的子进程"
@@ -98,7 +95,6 @@ msgstr "Windows不支持分叉集群"
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr " Windows不支持'mc.cores' > 1"
 
-#, fuzzy
 msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
 msgstr[0] "主机%2$s上%1$d个节点的插座集群"

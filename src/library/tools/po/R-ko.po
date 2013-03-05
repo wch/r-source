@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 06:50\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -483,6 +483,14 @@ msgstr ""
 "비니에트 '%s' 를 수행하는데 다음과 같은 이유로 실패했습니다: \n"
 "%s"
 
+#, fuzzy
+msgid ""
+"tangling vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+"비니에트 '%s' 를 수행하는데 다음과 같은 이유로 실패했습니다: \n"
+"%s"
+
 msgid "running 'make' failed"
 msgstr "'make' 를 실행하는데 실패했습니다 "
 
@@ -511,6 +519,10 @@ msgstr ""
 
 msgid "engine"
 msgstr ""
+
+#, fuzzy
+msgid "vignette builder '%s' not found"
+msgstr "파일 '%s' 을 찾을 수 없습니다 "
 
 msgid "Invalid DESCRIPTION file"
 msgstr "DESCRIPTION 파일이 잘못되었습니다 "
@@ -617,6 +629,24 @@ msgstr "에러: 체크 디렉토리 '%s' 를 작성할 수가 없습니다"
 #, fuzzy
 msgid "package directory %s does not exist"
 msgstr "디렉토리 '%s' 가 존재하지 않습니다 "
+
+msgid "no packages to check"
+msgstr ""
+
+msgid "downloading reverse dependencies ..."
+msgstr ""
+
+msgid "downloading %s ..."
+msgstr ""
+
+msgid "installing dependencies %s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "checking %s ..."
+msgstr ""
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
@@ -1216,9 +1246,6 @@ msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니
 
 #~ msgid "package must be loaded"
 #~ msgstr "패키지가 반드시 로드되어야 합니다 "
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "lib"
 #~ msgstr "lib"

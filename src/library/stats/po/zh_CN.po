@@ -1,7 +1,7 @@
 # Chinese translations for R package
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2007.
+# 陈斐 <feic@normipaiva.com>, 2007.
 # 
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-02-01 14:27+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -185,28 +185,27 @@ msgstr "跨距太小"
 
 #: loglin.c:369
 msgid "this should not happen"
-msgstr ""
+msgstr "这不应该发生"
 
 #: loglin.c:371
 msgid "algorithm did not converge"
-msgstr ""
+msgstr "算法没有收敛"
 
 #: loglin.c:373
 msgid "incorrect specification of 'table' or 'start'"
-msgstr ""
+msgstr "'table'或'start'的设定不对"
 
 #: lowess.c:292
 msgid "'f' must be finite and > 0"
-msgstr ""
+msgstr "'f'必需是正数"
 
 #: lowess.c:295
-#, fuzzy
 msgid "'iter' must be finite and >= 0"
-msgstr "'maxiter'必需是正数"
+msgstr "'iter'必需是正数"
 
 #: lowess.c:298
 msgid "'delta' must be finite and > 0"
-msgstr ""
+msgstr "'delta'必需是正数"
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
@@ -742,15 +741,15 @@ msgstr "'lowerb'和'upperb'必需为数字向量"
 
 #: rWishart.c:51
 msgid "inconsistent degrees of freedom and dimension"
-msgstr ""
+msgstr "自由度和维度不相符"
 
 #: rWishart.c:84
 msgid "'scal' must be a square, real matrix"
-msgstr ""
+msgstr "'scal'必需是正文形的实数矩阵"
 
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"
-msgstr ""
+msgstr "'scal'不是正定矩阵"
 
 #: random.c:66 random.c:70 random.c:75 random.c:80 random.c:161 random.c:167
 #: random.c:172 random.c:177 random.c:240 random.c:245 random.c:250
@@ -774,7 +773,7 @@ msgstr "第二参数'size'不对"
 #: rcont.c:83
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr ""
+msgstr " rcont2 [%d,%d]: exp下益到0； 算法失败"
 
 #: smooth.c:101
 #, c-format

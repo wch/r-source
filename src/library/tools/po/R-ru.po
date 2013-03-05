@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 06:50\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -487,6 +487,14 @@ msgstr ""
 "выполнение очерка '%s' не удалось с диагностикой:\n"
 "%s"
 
+#, fuzzy
+msgid ""
+"tangling vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+"выполнение очерка '%s' не удалось с диагностикой:\n"
+"%s"
+
 msgid "running 'make' failed"
 msgstr "не удался запуск 'make'"
 
@@ -515,6 +523,10 @@ msgstr ""
 
 msgid "engine"
 msgstr ""
+
+#, fuzzy
+msgid "vignette builder '%s' not found"
+msgstr "файл '%s' не найден"
 
 msgid "Invalid DESCRIPTION file"
 msgstr "Неправильный файл 'DESCRIPTION'"
@@ -621,6 +633,25 @@ msgstr "ОШИБКА: не могу создать проверочную директорию %s"
 #, fuzzy
 msgid "package directory %s does not exist"
 msgstr "папка '%s' не существует"
+
+msgid "no packages to check"
+msgstr ""
+
+msgid "downloading reverse dependencies ..."
+msgstr ""
+
+msgid "downloading %s ..."
+msgstr ""
+
+msgid "installing dependencies %s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+#, fuzzy
+msgid "checking %s ..."
+msgstr "делаю DLL..."
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
@@ -1282,9 +1313,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 #~ msgid "package must be loaded"
 #~ msgstr "должен быть загружен пакет"
 
-#~ msgid ","
-#~ msgstr ","
-
 #~ msgid "lib"
 #~ msgstr "lib"
 
@@ -1647,9 +1675,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
 #~ msgid "Running examples in package"
 #~ msgstr "Запускаю примеры к пакету"
-
-#~ msgid "making DLL ..."
-#~ msgstr "делаю DLL..."
 
 #~ msgid "... done"
 #~ msgstr "... готово"

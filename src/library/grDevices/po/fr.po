@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: 2012-03-06 21:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -578,17 +578,17 @@ msgstr "aucune police de caractères trouvée pour la famille \"%s\""
 msgid "invalid 'file' argument"
 msgstr "argument 'file' incorrect"
 
-#: devQuartz.c:1402
+#: devQuartz.c:1401
 #, fuzzy
 msgid "invalid quartz() device size"
 msgstr "taille de périphérique Quartz incorrecte"
 
-#: devQuartz.c:1430
+#: devQuartz.c:1429
 #, fuzzy
 msgid "unable to create device description"
 msgstr "impossible une description du périphérique."
 
-#: devQuartz.c:1480
+#: devQuartz.c:1479
 #, fuzzy
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
@@ -596,7 +596,7 @@ msgstr ""
 "Impossible de créer le périphérique cible Quartz, le type fourni n'est peut-"
 "être pas supporté."
 
-#: devQuartz.c:1607
+#: devQuartz.c:1606
 msgid "Quartz device is not available on this platform"
 msgstr "Périphérique Quartz non disponible sur cette architecture"
 

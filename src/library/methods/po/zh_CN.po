@@ -1,15 +1,15 @@
 # Chinese translations for R package
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2007.
+# 陈斐 <feic@normipaiva.com>, 2007.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 08:55+0100\n"
+"POT-Creation-Date: 2012-12-10 18:35+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgid "no generic function definition found for '%s'"
 msgstr "没有为'%s'找到适用的泛型函数"
 
 #: methods_list_dispatch.c:436
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "no generic function definition found for '%s' in the supplied environment"
 msgstr "在提供的环境里'%s'没有同属函数定义"
@@ -166,17 +166,16 @@ msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s'必需是单一字符串(现在它是类别为\"%s\"的对象)"
 
 #: methods_list_dispatch.c:876
-#, fuzzy
 msgid "class should be either a character-string name or a class definition"
 msgstr "类别必需是字符串名字或类别定义"
 
 #: methods_list_dispatch.c:955
-#, fuzzy, c-format
+#, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "没有能够为原始\"%s\"找到同属函数"
 
 #: methods_list_dispatch.c:961
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""

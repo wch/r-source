@@ -1,7 +1,7 @@
 # Chinese translations for R package
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2007.
+# 陈斐 <feic@normipaiva.com>, 2007.
 # 
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
-"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -53,37 +53,29 @@ msgstr "'start'和'end'不能相等，而且必需在[0, 1] 之间。"
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma'的值要么是数量，要么是'sRGB'"
 
-#, fuzzy
 msgid "Color space converter: %s"
-msgstr "颜色空间转换器:"
+msgstr "颜色空间转换器: %s "
 
-#, fuzzy
 msgid "Reference white: %s"
-msgstr "白色参考:"
+msgstr "白色参考: %s "
 
-#, fuzzy
 msgid "display gamma = %s"
-msgstr "显示gamma"
+msgstr "显示gamma = %s"
 
-#, fuzzy
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr "'from'要么是颜色转换器，要么是字符串"
+msgstr "'from'要么是\"colorConverter\"，要么是字符串"
 
-#, fuzzy
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr "'to'要么是颜色转换器，要么是字符串"
+msgstr "'to'要么是\"colorConverter\"，要么是字符串"
 
-#, fuzzy
 msgid "'from.ref.white' disagrees with definition of %s"
-msgstr "'from.ref.white'同下面这个定义有冲突"
+msgstr "'from.ref.white'同下面%s这个定义有冲突"
 
-#, fuzzy
 msgid "'to.ref.white' disagrees with definition of %s"
-msgstr "'to.ref.white'同下面这个定义有冲突"
+msgstr "'to.ref.white'同下面%s这个定义有冲突"
 
-#, fuzzy
 msgid "color spaces use different reference whites"
-msgstr "颜色空间不能使用不同的白色参考。"
+msgstr "颜色空间不能使用不同的白色参考"
 
 msgid "'name' must be a character vector"
 msgstr "'name' 必需是非空字符串"
@@ -154,9 +146,9 @@ msgstr "还不存在的'%s'是不能被重新设定的"
 msgid "invalid options in '%s'"
 msgstr "'%s'里的选择项出错"
 
-#, fuzzy
+
 msgid "NOT changing %s"
-msgstr "不更换"
+msgstr "不更换%s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr "'append'参数不后向相容，因此略过不用"
@@ -218,27 +210,21 @@ msgstr "'file'必需是非空字符串"
 msgid "Invalid output format"
 msgstr "输出的格式不对"
 
-#, fuzzy
 msgid "status %d in running command '%s'"
 msgstr "调用命令'%s'的运行状况为%d"
 
-#, fuzzy
 msgid "range too small for 'min.n'"
-msgstr "min.n的范围太小了"
+msgstr "'min.n'的范围太小了"
 
-#, fuzzy
 msgid "a raster matrix must be character, or numeric, or logical"
-msgstr "光栅矩阵必需是字符，数字或逻辑"
+msgstr "光栅矩阵必需是字符，数字或逻辑值"
 
-#, fuzzy
 msgid "a raster array must be numeric"
 msgstr "栅格阵列必需是数字"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 dimensions"
 msgstr "栅格阵列必需是三维的"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 or 4 planes"
 msgstr "栅格阵列必需有三个或四个平面"
 
@@ -251,20 +237,17 @@ msgstr "栅格子集不对"
 msgid "invalid raster subassignment"
 msgstr "光栅子分配无效"
 
-#, fuzzy
 msgid "operator not meaningful for raster objects"
 msgstr "这种操作对光栅对象没有意义"
 
 msgid "no current device to record from"
 msgstr "没有可用来记载的装置"
 
-#, fuzzy
 msgid "argument is not of class %s"
-msgstr "参数的类别必需为\"recorded plot\""
+msgstr "参数的类别必需为%s"
 
-#, fuzzy
 msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "从前-2.0.0 R版本载入快照"
+msgstr "从前-3.0.0 R版本载入快照"
 
 msgid "loading snapshot from different R version"
 msgstr "从另外一个R版本载入快照"
@@ -326,13 +309,11 @@ msgstr "'title'不对"
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "石英字体不对： 必需有四条字符串"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr "石英字体里的参数不对(必需为字体名称)"
+msgstr "'quartzFonts'里的参数不对(必需为字体名称)"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr "石英字体里的参数不对(需要带名参数)"
+msgstr "'quartzFonts'里的参数不对(需要带名参数)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr "这个构建不支持基于cairo的类型-用\"Xlib\""
@@ -343,13 +324,11 @@ msgstr "X11(type = \"XLib\")的系列不对"
 msgid "invalid X11 font specification:"
 msgstr "X11字体设置出了错:"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
-msgstr "'%s'里的参数不对(必需是字体名称)"
+msgstr "'X11Fonts'里的参数不对(必需是字体名称)"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (need named args)"
-msgstr "'%s'里的参数不对(需要有带名参数)"
+msgstr "'X11Fonts'里的参数不对(需要有带名参数)"
 
 msgid "no such device"
 msgstr "没有这样的装置"
@@ -415,3 +394,4 @@ msgstr[0] "对数图里略过%d个小于等于零的z值"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "因为没有事件循环管理器，减少quartz()装置的交互能力"
+

@@ -1,7 +1,7 @@
 # Chinese translations for R package
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2007.
+# 陈斐 <feic@normipaiva.com>, 2007.
 #
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-24 08:30\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -26,16 +26,14 @@ msgstr "'derivs'和'x'的长度必需匹配"
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord'必需为正整数，最多不能超过结的数目"
 
-#, fuzzy
 msgid "need at least %s (=%d) knots"
-msgstr "至少需要2*ord-1(=%d) 个结"
+msgstr "至少需要%s (=%d) 个结"
 
-#, fuzzy
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr "除非你设定'outer.ok = TRUE'，'x'数据值必需在%g到%g范围之间"
+msgstr "除非你设定'%s'，'x'数据值必需在%g到%g范围之间"
 
 msgid "%s needs package 'Matrix' correctly installed"
-msgstr ""
+msgstr "程序包'Matrix'必需安装了以后才能用%s"
 
 msgid "values of 'x' must be distinct"
 msgstr "'x'的值不能有重复"
@@ -73,9 +71,9 @@ msgstr "样条必需是单凋的"
 msgid "'degree' must be integer >= 1"
 msgstr "'degree'必需大于等于一的整数"
 
-#, fuzzy
 msgid "'df' was too small; have used %d"
-msgstr "'df'太小了；用过了的值为"
+msgstr "'df'太小了；用过了的值为%d "
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr "一些在结值界外的'x'数据有可能会引起病态底数"
+

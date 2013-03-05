@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:11+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -191,7 +191,7 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3469
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3502
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
@@ -1355,7 +1355,7 @@ msgstr "«parent» er ikkje ein omgjevnad"
 #: src/main/connections.c:3828 src/main/connections.c:3862
 #: src/main/connections.c:4240 src/main/connections.c:4310
 #: src/main/connections.c:4516 src/main/connections.c:4520
-#: src/main/connections.c:4882 src/main/deparse.c:360 src/main/deparse.c:446
+#: src/main/connections.c:4881 src/main/deparse.c:360 src/main/deparse.c:446
 #: src/main/serialize.c:1941
 msgid "cannot write to this connection"
 msgstr "klarte ikkje skriva til sambandet"
@@ -1802,8 +1802,8 @@ msgstr "klarte ikkje opna fifo-en «%s»"
 #: src/main/connections.c:1300 src/main/connections.c:1310
 #: src/main/connections.c:1429 src/main/connections.c:1489
 #: src/main/connections.c:2015 src/main/connections.c:2032
-#: src/main/connections.c:2341 src/main/connections.c:5055
-#: src/main/connections.c:5119
+#: src/main/connections.c:2341 src/main/connections.c:5062
+#: src/main/connections.c:5126
 msgid "too large a block specified"
 msgstr "for stor blokk oppgjeven"
 
@@ -1901,7 +1901,7 @@ msgstr "fila «%s» ser ikkje ut til å vera komprimert med bzip2"
 msgid "allocation of bzfile connection failed"
 msgstr "feil ved reservering av bzfile-samband"
 
-#: src/main/connections.c:1573 src/main/connections.c:5663
+#: src/main/connections.c:1573 src/main/connections.c:5670
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "klarte ikkje starta lzma-dekodaren (feil %d)"
@@ -2041,7 +2041,7 @@ msgstr "soklar er ikkje tilgjengelege på dette systemet"
 #: src/main/connections.c:3087 src/main/connections.c:3134
 #: src/main/connections.c:3159 src/main/connections.c:3182
 #: src/main/connections.c:3194 src/main/connections.c:3310
-#: src/main/connections.c:3428 src/main/connections.c:5158
+#: src/main/connections.c:3428 src/main/connections.c:5165
 msgid "'con' is not a connection"
 msgstr "«con» er ikkje eit samband"
 
@@ -2071,8 +2071,9 @@ msgstr "klarte ikkje lukka utsink-samband"
 msgid "cannot close 'message' sink connection"
 msgstr "klarte ikkje lukka meldingssink-samband"
 
-#: src/main/connections.c:3161 src/main/connections.c:4881
-#: src/main/serialize.c:1931 src/main/serialize.c:1939
+#: src/main/connections.c:3161 src/main/connections.c:4880
+#: src/main/connections.c:4888 src/main/serialize.c:1931
+#: src/main/serialize.c:1939
 msgid "connection is not open"
 msgstr "sambandet er ikkje ope"
 
@@ -2083,8 +2084,9 @@ msgstr "Linja er lengre enn bufferstorleiken"
 
 #: src/main/connections.c:3337 src/main/connections.c:3339
 #: src/main/connections.c:3612 src/main/connections.c:4166
-#: src/main/connections.c:4191 src/main/dcf.c:73 src/main/scan.c:921
-#: src/main/scan.c:925 src/main/serialize.c:1933 src/main/source.c:272
+#: src/main/connections.c:4191 src/main/connections.c:4889 src/main/dcf.c:73
+#: src/main/scan.c:921 src/main/scan.c:925 src/main/serialize.c:1933
+#: src/main/source.c:272
 msgid "cannot read from this connection"
 msgstr "klarte ikkje lesa frå dette sambandet"
 
@@ -2239,49 +2241,49 @@ msgstr ""
 msgid "unsupported URL scheme"
 msgstr "ikkje-støtta URL-skjema"
 
-#: src/main/connections.c:4923
+#: src/main/connections.c:4930
 msgid "file stream does not have gzip magic number"
 msgstr "filstraumen har ikkje det magiske talet til gzip"
 
-#: src/main/connections.c:4934
+#: src/main/connections.c:4941
 msgid "file stream does not have valid gzip header"
 msgstr "filstraumen har ikkje eit gyldig gzip-hovud"
 
-#: src/main/connections.c:4999
+#: src/main/connections.c:5006
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "feil ved tømming av gzon-samband"
 
-#: src/main/connections.c:5101
+#: src/main/connections.c:5108
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "CRC-feil %x %x\n"
 
-#: src/main/connections.c:5128
+#: src/main/connections.c:5135
 msgid "write error on 'gzcon' connection"
 msgstr "feil ved skriving til gzcon-samband"
 
-#: src/main/connections.c:5162
+#: src/main/connections.c:5169
 msgid "'level' must be one of 0 ... 9"
 msgstr "«level» må vera éin av 0, 1, ..., 9"
 
-#: src/main/connections.c:5165
+#: src/main/connections.c:5172
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "«allowNonCompression» må vera «TRUE» (sann) eller «FALSE» (usann)"
 
-#: src/main/connections.c:5168
+#: src/main/connections.c:5175
 #, fuzzy
 msgid "this is already a 'gzcon' connection"
 msgstr "dette er alt eit gzcon-samband"
 
-#: src/main/connections.c:5174
+#: src/main/connections.c:5181
 msgid "can only use read- or write- binary connections"
 msgstr "kan berre bruka lese- eller skrive-binærsamband"
 
-#: src/main/connections.c:5177
+#: src/main/connections.c:5184
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "bruk av tekstmodus-«file»-samband vil kanskje ikkje fungera skikkeleg"
 
-#: src/main/connections.c:5180
+#: src/main/connections.c:5187
 #, fuzzy
 msgid ""
 "cannot create a 'gzcon' connection from a writable textConnection; maybe use "
@@ -2290,26 +2292,32 @@ msgstr ""
 "kan ikkje oppretta eit gzcon-samband frå ein skrivar «textConnection» (du "
 "kan prøva å bruka «rawConnection»)"
 
-#: src/main/connections.c:5183 src/main/connections.c:5187
-#: src/main/connections.c:5194 src/main/connections.c:5208
+#: src/main/connections.c:5190 src/main/connections.c:5194
+#: src/main/connections.c:5201 src/main/connections.c:5215
 msgid "allocation of 'gzcon' connection failed"
 msgstr "feil ved reservering av gzcon-samband"
 
-#: src/main/connections.c:5368
+#: src/main/connections.c:5375
 msgid "not a list of sockets"
 msgstr "ikkje ei liste over soklar"
 
-#: src/main/connections.c:5373
+#: src/main/connections.c:5380
 msgid "bad write indicators"
 msgstr "ugyldig skriveindikatorar"
 
-#: src/main/connections.c:5384
+#: src/main/connections.c:5391
 msgid "not a socket connection"
 msgstr "ikkje eit sokkelsamband"
 
-#: src/main/connections.c:5607
+#: src/main/connections.c:5614
 msgid "unknown compression, assuming none"
 msgstr "ukjend komprimering – antek ukomprimerte data"
+
+#: src/main/connections.c:5732 src/main/connections.c:5736
+#: src/main/connections.c:5742
+#, fuzzy, c-format
+msgid "allocation of %s connection failed"
+msgstr "feil ved reservering av råsamband"
 
 #: src/main/context.c:126
 msgid ""
@@ -2758,12 +2766,12 @@ msgstr "kan ikkje skriva med dette sambandet"
 msgid "allocation of 'unz' connection failed"
 msgstr "feil ved reservering av unz-samband"
 
-#: src/main/dstruct.c:89
+#: src/main/dstruct.c:90
 #, fuzzy
 msgid "invalid formal arguments for 'function'"
 msgstr "ugyldige formelle argument for «function»"
 
-#: src/main/dstruct.c:99
+#: src/main/dstruct.c:100
 #, fuzzy
 msgid "invalid body argument for 'function'"
 msgstr "ugyldige formelle argument for «function»"
@@ -3957,9 +3965,9 @@ msgstr "kan ikkje bruka Internett-rutinar i modul"
 msgid "internet routines cannot be loaded"
 msgstr "kan ikkje lasta Internett-rutinar"
 
-#: src/main/internet.c:118 src/main/memory.c:3185 src/main/memory.c:3194
-#: src/main/memory.c:3205 src/main/memory.c:3218 src/main/memory.c:3234
-#: src/main/memory.c:3251
+#: src/main/internet.c:118 src/main/memory.c:3218 src/main/memory.c:3227
+#: src/main/memory.c:3238 src/main/memory.c:3251 src/main/memory.c:3267
+#: src/main/memory.c:3284
 msgid "bad value"
 msgstr "ugyldig verdi"
 
@@ -4128,129 +4136,129 @@ msgid_plural "unused arguments %s"
 msgstr[0] "ubrukt(e) argument %s"
 msgstr[1] "ubrukt(e) argument %s"
 
-#: src/main/memory.c:1158
+#: src/main/memory.c:1191
 msgid "can only weakly reference/finalize reference objects"
 msgstr "kan berre svakt referera/finalisera referanseobjekt"
 
-#: src/main/memory.c:1192
+#: src/main/memory.c:1225
 msgid "finalizer must be a function or NULL"
 msgstr "finalisatoren må vera ein funksjon eller NULL"
 
-#: src/main/memory.c:1243 src/main/memory.c:1251 src/main/memory.c:1262
+#: src/main/memory.c:1276 src/main/memory.c:1284 src/main/memory.c:1295
 msgid "not a weak reference"
 msgstr "ikkje ein svak referanse"
 
-#: src/main/memory.c:1378
+#: src/main/memory.c:1411
 msgid "first argument must be environment or external pointer"
 msgstr "det første argumentet må vera ein omgjevnad eller ein ekstern peikar"
 
-#: src/main/memory.c:1380
+#: src/main/memory.c:1413
 msgid "second argument must be a function"
 msgstr "det andre argumentet må vera ein funksjon"
 
-#: src/main/memory.c:1384
+#: src/main/memory.c:1417
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "det tredje argumentet må vera «TRUE» (sann) eller «FALSE» (usann)"
 
-#: src/main/memory.c:1865
+#: src/main/memory.c:1898
 msgid "vector memory exhausted (limit reached?)"
 msgstr "ikkje nok vektorminne (nådde grensa?)"
 
-#: src/main/memory.c:1871
+#: src/main/memory.c:1904
 msgid "cons memory exhausted (limit reached?)"
 msgstr "ikkje nok konstantminne (nådde grensa?)"
 
-#: src/main/memory.c:1876
+#: src/main/memory.c:1909
 msgid "memory exhausted (limit reached?)"
 msgstr "ikkje nok minne (nådde grensa?)"
 
-#: src/main/memory.c:1999
+#: src/main/memory.c:2032
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "klarte ikkje reservera minneblokk av storleik %0.1f Gb"
 
-#: src/main/memory.c:2004
+#: src/main/memory.c:2037
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "klarte ikkje reservera minneblokk av storleik %0.1f Gb"
 
-#: src/main/memory.c:2270
+#: src/main/memory.c:2303
 #, fuzzy
 msgid "vector is too large"
 msgstr "den oppgjevne vektorstorleiken er for stor"
 
-#: src/main/memory.c:2273
+#: src/main/memory.c:2306
 msgid "negative length vectors are not allowed"
 msgstr "kan ikkje ha vektorar av negativ lengd"
 
-#: src/main/memory.c:2299 src/main/memory.c:2312 src/main/memory.c:2325
-#: src/main/memory.c:2340
+#: src/main/memory.c:2332 src/main/memory.c:2345 src/main/memory.c:2358
+#: src/main/memory.c:2373
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "kan ikkje reservera vektor av lengd %d"
 
-#: src/main/memory.c:2361
+#: src/main/memory.c:2394
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "ugyldig type/lengd (%s/%d) ved vektorreservering"
 
-#: src/main/memory.c:2454
+#: src/main/memory.c:2487
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "kan ikkje reservera vektor av storleik %0.1f Gb"
 
-#: src/main/memory.c:2458
+#: src/main/memory.c:2491
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "kan ikkje reservera vektor av storleik %0.1f Mb"
 
-#: src/main/memory.c:2462
+#: src/main/memory.c:2495
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "kan ikkje reservera vektor av storleik %0.f Kb"
 
-#: src/main/memory.c:2797
+#: src/main/memory.c:2830
 msgid "protect(): protection stack overflow"
 msgstr "protect(): vern av stakkoverflyt"
 
-#: src/main/memory.c:2813
+#: src/main/memory.c:2846
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): berre %d verna objekt"
 
-#: src/main/memory.c:2827
+#: src/main/memory.c:2860
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: fann ikkje peikar"
 
-#: src/main/memory.c:2864
+#: src/main/memory.c:2897
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr "unprotect(): berre %d verna objekt"
 
-#: src/main/memory.c:2906
+#: src/main/memory.c:2939
 #, fuzzy, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc klarte ikkje reservera (%u av %u) minne"
 
-#: src/main/memory.c:2917
+#: src/main/memory.c:2950
 #, fuzzy, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc klarte ikkje endra storleik (%u) på reservert minne"
 
-#: src/main/memory.c:3139
+#: src/main/memory.c:3172
 msgid "not safe to return vector pointer"
 msgstr "ikkje trygt å returnera vektorpeikar"
 
-#: src/main/memory.c:3391
+#: src/main/memory.c:3424
 msgid "memory profiling is not available on this system"
 msgstr "minneprofilering er ikkje tilgjengeleg på dette systemet"
 
-#: src/main/memory.c:3456
+#: src/main/memory.c:3489
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: klarte ikkje opna utfila «%s»"
 
-#: src/main/memory.c:3563
+#: src/main/memory.c:3596
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""

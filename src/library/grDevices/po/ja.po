@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: 2012-02-26 14:10+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -583,23 +583,23 @@ msgstr " フォントファミリー'%s'に対してフォントが見つかり�
 msgid "invalid 'file' argument"
 msgstr " 不正な 'file' 引数 "
 
-#: devQuartz.c:1402
+#: devQuartz.c:1401
 #, fuzzy
 msgid "invalid quartz() device size"
 msgstr " 不正なQuarts デバイスサイズ "
 
-#: devQuartz.c:1430
+#: devQuartz.c:1429
 #, fuzzy
 msgid "unable to create device description"
 msgstr " デバイスの内容を作成できませんでした "
 
-#: devQuartz.c:1480
+#: devQuartz.c:1479
 #, fuzzy
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
 msgstr "Quartzデバイスを作成できません。与えられた型はサポートされていません "
 
-#: devQuartz.c:1607
+#: devQuartz.c:1606
 msgid "Quartz device is not available on this platform"
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません "
 

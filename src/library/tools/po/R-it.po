@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2013-03-05 06:50\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -463,6 +463,11 @@ msgid ""
 "%s"
 msgstr ""
 
+msgid ""
+"tangling vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+
 #, fuzzy
 msgid "running 'make' failed"
 msgstr "esecuzione di make fallita"
@@ -492,6 +497,10 @@ msgstr ""
 
 msgid "engine"
 msgstr ""
+
+#, fuzzy
+msgid "vignette builder '%s' not found"
+msgstr "file '%s' non trovato"
 
 msgid "Invalid DESCRIPTION file"
 msgstr "file DESCRIPTION non valido"
@@ -595,6 +604,24 @@ msgstr "impossibile creare directory '%s'"
 #, fuzzy
 msgid "package directory %s does not exist"
 msgstr "la directory '%s' non esiste"
+
+msgid "no packages to check"
+msgstr ""
+
+msgid "downloading reverse dependencies ..."
+msgstr ""
+
+msgid "downloading %s ..."
+msgstr ""
+
+msgid "installing dependencies %s"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "checking %s ..."
+msgstr ""
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""

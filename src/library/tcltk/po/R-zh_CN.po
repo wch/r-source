@@ -92,9 +92,8 @@ msgstr "好"
 msgid "Cancel"
 msgstr "取消"
 
-#, fuzzy
 msgid "'pb' is not from class %s"
-msgstr "'pb'不属于\"tkProgressBar\"这一类别"
+msgstr "'pb'不属%s这一类别"
 
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters'必需是有两个列的字符矩阵"
@@ -110,3 +109,4 @@ msgstr "没有安装Tcl/Tk支持文件"
 
 #~ msgid "done"
 #~ msgstr "完成"
+

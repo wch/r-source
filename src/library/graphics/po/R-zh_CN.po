@@ -1,7 +1,7 @@
 # Chinese translations for R package
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <feic@avaya.com>, 2007.
+# 陈斐 <feic@normipaiva.com>, 2007.
 # 
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-16 08:17\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
-"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -83,9 +83,8 @@ msgstr "第一个参数不对"
 msgid "'formula' missing or incorrect"
 msgstr "要么是缺少'formula'，要么是它的设定不对"
 
-#, fuzzy
 msgid "'at' must have same length as 'z$n', i.e. %d"
-msgstr "'at'同'z$n'的长度必需相等, 如"
+msgstr "'at'同'z$n'的长度必需相等, 如%d"
 
 msgid "invalid boxplot widths"
 msgstr "boxplot宽度不对"
@@ -129,9 +128,8 @@ msgstr "'given.values'值不对"
 msgid "rows * columns too small"
 msgstr "行 * 列的结果太小"
 
-#, fuzzy
 msgid "Missing rows: %s"
-msgstr "缺少行"
+msgstr "缺少行: %s "
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr "'expr'要么是函数，要么调用，要么是包含'%s'的表达式"
@@ -184,9 +182,8 @@ msgstr "几何定义不对"
 msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
-#, fuzzy
 msgid "invalid length(x)"
-msgstr "'log'不对"
+msgstr "长度不对"
 
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'breaks'设定了的话'nclass'就不能用了"
@@ -200,13 +197,11 @@ msgstr "没有'breaks'这样的算法"
 msgid "invalid number of 'breaks'"
 msgstr "'breaks'数目不对"
 
-#, fuzzy
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: pretty()错误, breaks="
 
-#, fuzzy
 msgid "invalid length(breaks)"
-msgstr "座标长度不对"
+msgstr "length(breaks)不对"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks'必需严格递增"
@@ -217,9 +212,8 @@ msgstr "'probability'是'!freq'的化名，因此它们应该是一样的。"
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "有些'x'值没有被计数；有可能是因为'breaks'没有跨距整个'x'的范围"
 
-#, fuzzy
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
-msgstr "图形的面积不对 -- 用freq=FALSE"
+msgstr "图形的面积不对 -- 用'freq=FALSE'"
 
 msgid "'x' is wrongly structured"
 msgstr "'x'的结构不对"
@@ -239,35 +233,31 @@ msgstr "z的限制不对"
 msgid "must have one more break than colour"
 msgstr "数据间隔的数目必需比颜色要多一个"
 
-#, fuzzy
 msgid "'breaks' must all be finite"
-msgstr "数据间隔值不能有无限的"
+msgstr "'breaks'不能有无限的"
 
 msgid "unsorted 'breaks' will be sorted before use"
-msgstr ""
+msgstr "'breaks'没有被排序，在使用前会对之进行排序"
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "z的大小应该等于length(x)(-1)乘length(y)(-1)"
 
-#, fuzzy
 msgid "%s can only be used with a regular grid"
-msgstr "useRaster=TRUE只适用于普通网格"
+msgstr "%s只适用于普通网格"
 
 msgid "integer colors must be non-negative"
-msgstr ""
+msgstr "整数颜色值必需是正数"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr "'respect'要么是逻辑值，要么是同'mat'大小一样的矩阵"
 
-#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
 "to each of the values {1 ... %d}"
-msgstr "格式矩阵至少要有对{1..n}里每一个值的参考值；但这里n ="
+msgstr "格式矩阵至少要对{1 ... %d}里每一个值都有参考值"
 
-#, fuzzy
 msgid "invalid 'title'"
-msgstr "标题不对"
+msgstr "'title'不对"
 
 msgid "'legend' is of length 0"
 msgstr "'legend'长度为零"
@@ -278,9 +268,8 @@ msgstr "座标长度不对"
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width'必需为大于等于零的数值"
 
-#, fuzzy
 msgid "horizontal specification overrides: Number of columns := %d"
-msgstr "水平定义超越其它的定义： 列的数目为 :="
+msgstr "水平定义超越其它的定义： 列的数目为 := %d"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "不画线断时'merge = TRUE'就沿用"
@@ -396,9 +385,8 @@ msgstr "'x'要么是矩阵，要么是数据框"
 msgid "data in 'x' must be numeric"
 msgstr "'x'里的数据必需为数值"
 
-#, fuzzy
 msgid "'nrow * ncol' is less than the number of observations"
-msgstr "nrow乘ncol不能小于观测量的数目"
+msgstr "'nrow * ncol'不能小于观测量的数目"
 
 msgid "labels do not make sense for a single location"
 msgstr "单一位置的标签没有意义"
@@ -433,15 +421,12 @@ msgstr "'number'的长度必需同'x'和'y'的长度相同"
 msgid "exactly one symbol type must be specified"
 msgstr "只能设定一个符号种类"
 
-#, fuzzy
 msgid "x log scale:  xinch() is nonsense"
 msgstr "x对数尺度：xinch()没有意义"
 
-#, fuzzy
 msgid "y log scale:  yinch() is nonsense"
 msgstr "y对数尺度：yinch()没有意义"
 
-#, fuzzy
 msgid "log scale:  xyinch() is nonsense"
 msgstr "对数尺度：xyinch()没有意义"
 
@@ -453,7 +438,6 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "没有用%s这个参数"
 
-#, fuzzy
 msgid "extra argument %s will be disregarded"
 msgid_plural "extra arguments %s will be disregarded"
 msgstr[0] "多余的参数%s略过不用"
@@ -466,3 +450,4 @@ msgstr[0] "多余的参数%s略过不用"
 
 #~ msgid "regression coefficients"
 #~ msgstr "回归系数"
+

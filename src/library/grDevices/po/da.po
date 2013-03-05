@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: 2011-11-29 09:07+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -581,24 +581,24 @@ msgstr "ingen skrift kunne findes for familie »%s«"
 msgid "invalid 'file' argument"
 msgstr "ugyldigt 'fil'-argument"
 
-#: devQuartz.c:1402
+#: devQuartz.c:1401
 #, fuzzy
 msgid "invalid quartz() device size"
 msgstr "ugyldig Quartz-enhedsstørrelse"
 
-#: devQuartz.c:1430
+#: devQuartz.c:1429
 #, fuzzy
 msgid "unable to create device description"
 msgstr "Kan ikke oprette enhedsbeskrivelse."
 
-#: devQuartz.c:1480
+#: devQuartz.c:1479
 #, fuzzy
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
 msgstr ""
 "Kan ikke oprette Quartz-enhedsmål, angivet type er måske ikke understøttet."
 
-#: devQuartz.c:1607
+#: devQuartz.c:1606
 msgid "Quartz device is not available on this platform"
 msgstr "Quartz-enhed er ikke tilgængelig på denne platform"
 

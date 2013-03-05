@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:11+0000\n"
+"POT-Creation-Date: 2013-03-05 06:49+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -190,7 +190,7 @@ msgstr "problem z wyświetleniem '%ls'"
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3469
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3502
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
@@ -1348,7 +1348,7 @@ msgstr "'parent' nie jest środowiskiem"
 #: src/main/connections.c:3828 src/main/connections.c:3862
 #: src/main/connections.c:4240 src/main/connections.c:4310
 #: src/main/connections.c:4516 src/main/connections.c:4520
-#: src/main/connections.c:4882 src/main/deparse.c:360 src/main/deparse.c:446
+#: src/main/connections.c:4881 src/main/deparse.c:360 src/main/deparse.c:446
 #: src/main/serialize.c:1941
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
@@ -1798,8 +1798,8 @@ msgstr "nie można otworzyć kolejki fifo '%s'"
 #: src/main/connections.c:1300 src/main/connections.c:1310
 #: src/main/connections.c:1429 src/main/connections.c:1489
 #: src/main/connections.c:2015 src/main/connections.c:2032
-#: src/main/connections.c:2341 src/main/connections.c:5055
-#: src/main/connections.c:5119
+#: src/main/connections.c:2341 src/main/connections.c:5062
+#: src/main/connections.c:5126
 msgid "too large a block specified"
 msgstr "określono zbyt duży blok"
 
@@ -1899,7 +1899,7 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr "przydział połączenia bzfile nie powiódł się"
 
-#: src/main/connections.c:1573 src/main/connections.c:5663
+#: src/main/connections.c:1573 src/main/connections.c:5670
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "nie można zainicjować dekodera lzma, błąd %d"
@@ -2038,7 +2038,7 @@ msgstr "gniazda nie są dostępne w tym systemie"
 #: src/main/connections.c:3087 src/main/connections.c:3134
 #: src/main/connections.c:3159 src/main/connections.c:3182
 #: src/main/connections.c:3194 src/main/connections.c:3310
-#: src/main/connections.c:3428 src/main/connections.c:5158
+#: src/main/connections.c:3428 src/main/connections.c:5165
 msgid "'con' is not a connection"
 msgstr "'con' nie jest połączeniem"
 
@@ -2068,8 +2068,9 @@ msgstr "nie można zamknąć wyjścia połączenia sink"
 msgid "cannot close 'message' sink connection"
 msgstr "nie można zamknąć wiadomości połączenia sink"
 
-#: src/main/connections.c:3161 src/main/connections.c:4881
-#: src/main/serialize.c:1931 src/main/serialize.c:1939
+#: src/main/connections.c:3161 src/main/connections.c:4880
+#: src/main/connections.c:4888 src/main/serialize.c:1931
+#: src/main/serialize.c:1939
 msgid "connection is not open"
 msgstr "połączenie nie jest otwarte"
 
@@ -2080,8 +2081,9 @@ msgstr "Linia dłuższa niż rozmiar bufora"
 
 #: src/main/connections.c:3337 src/main/connections.c:3339
 #: src/main/connections.c:3612 src/main/connections.c:4166
-#: src/main/connections.c:4191 src/main/dcf.c:73 src/main/scan.c:921
-#: src/main/scan.c:925 src/main/serialize.c:1933 src/main/source.c:272
+#: src/main/connections.c:4191 src/main/connections.c:4889 src/main/dcf.c:73
+#: src/main/scan.c:921 src/main/scan.c:925 src/main/serialize.c:1933
+#: src/main/source.c:272
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
@@ -2236,49 +2238,49 @@ msgstr ""
 msgid "unsupported URL scheme"
 msgstr "niewspierany schemat adresu URL"
 
-#: src/main/connections.c:4923
+#: src/main/connections.c:4930
 msgid "file stream does not have gzip magic number"
 msgstr "strumień plikowy nie posiada magicznej liczby gzip"
 
-#: src/main/connections.c:4934
+#: src/main/connections.c:4941
 msgid "file stream does not have valid gzip header"
 msgstr "strumień plikowy nie posiada poprawnego nagłówka gzip"
 
-#: src/main/connections.c:4999
+#: src/main/connections.c:5006
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "Błąd zapisu podczas czyszczenia połączenia 'gzcon'"
 
-#: src/main/connections.c:5101
+#: src/main/connections.c:5108
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "błąd crc %x %x\n"
 
-#: src/main/connections.c:5128
+#: src/main/connections.c:5135
 msgid "write error on 'gzcon' connection"
 msgstr "Błąd zapisu w połączeniu gzcon"
 
-#: src/main/connections.c:5162
+#: src/main/connections.c:5169
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' musi być liczbą z pomiędzy 0 ... 9"
 
-#: src/main/connections.c:5165
+#: src/main/connections.c:5172
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' musi być TRUE lub FALSE"
 
-#: src/main/connections.c:5168
+#: src/main/connections.c:5175
 #, fuzzy
 msgid "this is already a 'gzcon' connection"
 msgstr "to już jest połączenie gzcon"
 
-#: src/main/connections.c:5174
+#: src/main/connections.c:5181
 msgid "can only use read- or write- binary connections"
 msgstr "można tylko użyć read- lub write- połączeń binarnych"
 
-#: src/main/connections.c:5177
+#: src/main/connections.c:5184
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "użycie trybu tekstowego połączenia 'file' może nie działać poprawnie"
 
-#: src/main/connections.c:5180
+#: src/main/connections.c:5187
 #, fuzzy
 msgid ""
 "cannot create a 'gzcon' connection from a writable textConnection; maybe use "
@@ -2287,26 +2289,32 @@ msgstr ""
 "nie można utworzyć połączenia 'gzcon' z zapisywalnego połączenia "
 "'textConnection'; użyj być może 'rawConnection'"
 
-#: src/main/connections.c:5183 src/main/connections.c:5187
-#: src/main/connections.c:5194 src/main/connections.c:5208
+#: src/main/connections.c:5190 src/main/connections.c:5194
+#: src/main/connections.c:5201 src/main/connections.c:5215
 msgid "allocation of 'gzcon' connection failed"
 msgstr "przydział połączenia 'gzcon' nie powiódł się"
 
-#: src/main/connections.c:5368
+#: src/main/connections.c:5375
 msgid "not a list of sockets"
 msgstr "nie jest listą gniazd"
 
-#: src/main/connections.c:5373
+#: src/main/connections.c:5380
 msgid "bad write indicators"
 msgstr "błędne wskaźniki zapisu"
 
-#: src/main/connections.c:5384
+#: src/main/connections.c:5391
 msgid "not a socket connection"
 msgstr "nie połączenie socket"
 
-#: src/main/connections.c:5607
+#: src/main/connections.c:5614
 msgid "unknown compression, assuming none"
 msgstr "nieznana kompresja, zakładam brak"
+
+#: src/main/connections.c:5732 src/main/connections.c:5736
+#: src/main/connections.c:5742
+#, fuzzy, c-format
+msgid "allocation of %s connection failed"
+msgstr "przydział prostego połączenia nie powiódł się"
 
 #: src/main/context.c:126
 msgid ""
@@ -2761,11 +2769,11 @@ msgstr "zapis nie jest dostępny dla tego połączenia"
 msgid "allocation of 'unz' connection failed"
 msgstr "przydział unz-połączenie nie udało się"
 
-#: src/main/dstruct.c:89
+#: src/main/dstruct.c:90
 msgid "invalid formal arguments for 'function'"
 msgstr "niepoprawne formalne argumenty dla 'function'"
 
-#: src/main/dstruct.c:99
+#: src/main/dstruct.c:100
 msgid "invalid body argument for 'function'"
 msgstr "nieprawidłowe argumenty w ciele dla 'function'"
 
@@ -3971,9 +3979,9 @@ msgstr "procedury internetowe nie są dostępne w module"
 msgid "internet routines cannot be loaded"
 msgstr "procedury internetowe nie mogą zostać załadowane"
 
-#: src/main/internet.c:118 src/main/memory.c:3185 src/main/memory.c:3194
-#: src/main/memory.c:3205 src/main/memory.c:3218 src/main/memory.c:3234
-#: src/main/memory.c:3251
+#: src/main/internet.c:118 src/main/memory.c:3218 src/main/memory.c:3227
+#: src/main/memory.c:3238 src/main/memory.c:3251 src/main/memory.c:3267
+#: src/main/memory.c:3284
 msgid "bad value"
 msgstr "niepoprawna wartość"
 
@@ -4146,129 +4154,129 @@ msgstr[0] "nieużywane argument(y) %s"
 msgstr[1] "nieużywane argument(y) %s"
 msgstr[2] "nieużywane argument(y) %s"
 
-#: src/main/memory.c:1158
+#: src/main/memory.c:1191
 msgid "can only weakly reference/finalize reference objects"
 msgstr "można jedynie słabo odwoływać/ finalizować obiekty referencyjne"
 
-#: src/main/memory.c:1192
+#: src/main/memory.c:1225
 msgid "finalizer must be a function or NULL"
 msgstr "finalizator musi być funkcją lub wartością NULL"
 
-#: src/main/memory.c:1243 src/main/memory.c:1251 src/main/memory.c:1262
+#: src/main/memory.c:1276 src/main/memory.c:1284 src/main/memory.c:1295
 msgid "not a weak reference"
 msgstr "nie jest słabą referencją"
 
-#: src/main/memory.c:1378
+#: src/main/memory.c:1411
 msgid "first argument must be environment or external pointer"
 msgstr "pierwszy argument musi być środowiskiem lub zewnętrznym wskaźnikiem"
 
-#: src/main/memory.c:1380
+#: src/main/memory.c:1413
 msgid "second argument must be a function"
 msgstr "drugi argument musi być funkcją"
 
-#: src/main/memory.c:1384
+#: src/main/memory.c:1417
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "trzeci argument musi być 'TRUE' lub 'FALSE'"
 
-#: src/main/memory.c:1865
+#: src/main/memory.c:1898
 msgid "vector memory exhausted (limit reached?)"
 msgstr "wektorowa pamięć wyczerpana (osiągnięto limit?)"
 
-#: src/main/memory.c:1871
+#: src/main/memory.c:1904
 msgid "cons memory exhausted (limit reached?)"
 msgstr "pamięć cons wyczerpana (osiągnięto limit?)"
 
-#: src/main/memory.c:1876
+#: src/main/memory.c:1909
 msgid "memory exhausted (limit reached?)"
 msgstr "pamięci wyczerpana (osiągnięto limit?)"
 
-#: src/main/memory.c:1999
+#: src/main/memory.c:2032
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "nie można przydzielić bloku pamięci o rozmiarze %0.1f Gb"
 
-#: src/main/memory.c:2004
+#: src/main/memory.c:2037
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "nie można przydzielić bloku pamięci o rozmiarze %0.1f Gb"
 
-#: src/main/memory.c:2270
+#: src/main/memory.c:2303
 #, fuzzy
 msgid "vector is too large"
 msgstr "podany rozmiar wektora jest zbyt duży"
 
-#: src/main/memory.c:2273
+#: src/main/memory.c:2306
 msgid "negative length vectors are not allowed"
 msgstr "wektory o ujemnej długości nie są dozwolone"
 
-#: src/main/memory.c:2299 src/main/memory.c:2312 src/main/memory.c:2325
-#: src/main/memory.c:2340
+#: src/main/memory.c:2332 src/main/memory.c:2345 src/main/memory.c:2358
+#: src/main/memory.c:2373
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "nie można przydzielić wektora o długości %d"
 
-#: src/main/memory.c:2361
+#: src/main/memory.c:2394
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "niepoprawny typ/długość (%s/%d) dla przydziału wektora"
 
-#: src/main/memory.c:2454
+#: src/main/memory.c:2487
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "nie można przydzielić wektora o rozmiarze %0.1f Gb"
 
-#: src/main/memory.c:2458
+#: src/main/memory.c:2491
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "nie można przydzielić wektora o rozmiarze %0.1f Mb"
 
-#: src/main/memory.c:2462
+#: src/main/memory.c:2495
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "nie można przydzielić wektora o rozmiarze %0.f Kb"
 
-#: src/main/memory.c:2797
+#: src/main/memory.c:2830
 msgid "protect(): protection stack overflow"
 msgstr "protect(): zabezpieczenie stosu przed przepełnieniem"
 
-#: src/main/memory.c:2813
+#: src/main/memory.c:2846
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): tylko %d zabezpieczonych pozycji"
 
-#: src/main/memory.c:2827
+#: src/main/memory.c:2860
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: wskaźnik nie został znaleziony"
 
-#: src/main/memory.c:2864
+#: src/main/memory.c:2897
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr "unprotect(): tylko %d zabezpieczonych pozycji"
 
-#: src/main/memory.c:2906
+#: src/main/memory.c:2939
 #, fuzzy, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc' nie mógł przydzielić pamięci (%.0f z %u bajtów)"
 
-#: src/main/memory.c:2917
+#: src/main/memory.c:2950
 #, fuzzy, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc' nie mógł ponownie przydzielić pamięci (%.0f bajtów)"
 
-#: src/main/memory.c:3139
+#: src/main/memory.c:3172
 msgid "not safe to return vector pointer"
 msgstr "nie jest bezpiecznie zwracać wskaźnik wektora"
 
-#: src/main/memory.c:3391
+#: src/main/memory.c:3424
 msgid "memory profiling is not available on this system"
 msgstr "profilowanie pamięci nie jest dostępne na tym systemie"
 
-#: src/main/memory.c:3456
+#: src/main/memory.c:3489
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: nie można otworzyć pliku wyjściowego '%s'"
 
-#: src/main/memory.c:3563
+#: src/main/memory.c:3596
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
