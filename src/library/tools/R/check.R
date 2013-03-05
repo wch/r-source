@@ -618,18 +618,6 @@ setRlibs <-
                 printLog(Log, paste(out, collapse = "\n"), "\n")
             }
         }
-        if(!is.na(vb <- db["VignetteBuilder"])) {
-            depends <- .get_requires_from_package_db(db, "Depends")
-            imports <- .get_requires_from_package_db(db, "Imports")
-            if (!vb %in% c(pkgname, imports, depends)) {
-                if(!any) noteLog(Log)
-                any <- TRUE
-                wrapLog(sprintf("Package %s is specified in field VignetteBuilder",
-                                sQuote(vb)),
-                        "but is in neither Imports nor Depends.",
-                        "\n")
-          }
-       }
 
         if (!any) resultLog(Log, "OK")
     }
