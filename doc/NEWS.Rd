@@ -7,13 +7,11 @@
 \title{ R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN R 3.0.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
-      \item It is intended that this version will be released as \R
-      3.0.0.
-
-      Packages need to have been installed under this version of \R.
+      \item Packages need to be (re-)installed under this version
+      (3.0.0) of \R.
 
       \item There is a subtle change in behaviour for numeric index
       values \eqn{2^{31}}{2^31} and larger.  These never used to be
@@ -943,6 +941,10 @@
       \item The Windows graphics device would crash \R{} if a user
       attempted to load the graphics history from a variable that was
       not a saved history. (\PR{15230})      
+
+      \item The workspace size for the \code{predict()}
+      method for \code{loess()} could exceed the maximum integer size.
+      (Reported by Hiroyuki Kawakatsu.)
     }
   }
 }
