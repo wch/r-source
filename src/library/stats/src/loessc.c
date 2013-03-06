@@ -234,7 +234,9 @@ loess_workspace(int *d, int *n, double *span, int *degree,
     tau0 = ((*degree) > 1) ? (int)((D + 2) * (D + 1) * 0.5) : (D + 1);
     tau = tau0 - (*sum_drop_sqr);
     lv = 50 + (3 * D + 3) * nvmax + N + (tau0 + 2) * nf;
-    liv = 50 + ((int)pow((double)2, (double)D) + 4) * nvmax + 2 * N;
+    double dliv = 50 + (pow(2.0, (double)D) + 4.0) * nvmax + 2.0 * N;
+    if (dliv < INT_MAX) liv = dliv;
+    else error("workspace required is too large");
     if(*setLf) {
 	lv = lv + (D + 1) * nf * nvmax;
 	liv = liv + nf * nvmax;
