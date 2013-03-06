@@ -21,9 +21,8 @@ chol(x, \dots)
     applies to numeric (or logical) symmetric, positive-definite matrices.}
   \item{\dots}{arguments to be based to or from methods.}
   \item{pivot}{Should pivoting be used?}
-  \item{LINPACK}{logical.  Should LINPACK be used (which is deprecated)?}
-  \item{tol}{A numeric tolerance for use with \code{pivot = TRUE,
-      LINPACK = FALSE)}.}
+  \item{LINPACK}{logical.  Should LINPACK be used (now ignored)?}
+  \item{tol}{A numeric tolerance for use with \code{pivot = TRUE}.}
 }
 \value{
   The upper triangular factor of the Choleski decomposition, i.e., the
@@ -53,15 +52,12 @@ chol(x, \dots)
   or, alternatively, \code{t(Q) \%*\% Q} equals \code{x[pivot,
     pivot]}.  See the examples.
   
-  Use of \code{chol(pivot = FALSE, LINPACK = TRUE)} was deprecated in \R
-  1.7.0.   Pivoting with LAPACK requires LAPACK >= 3.2 and was added in \R
-  2.15.2.  The value of \code{tol} is passed to LAPACK, with negative
-  values selecting the default tolerance of (usually) \code{nrow(x) *
-  .Machine$double.neg.eps * max(diag(x)}.  The algorithm terminates once
-  the pivot is less than \code{tol}.
-
-  The LINPACK interface is restricted to matrices \code{x} with less
-  than \eqn{2^{31}}{2^31} elements.
+  Pivoting with LAPACK requires LAPACK >= 3.2 and was added in \R 2.15.2
+  (it was previously available using LINPACK).  The value of \code{tol}
+  is passed to LAPACK, with negative values selecting the default
+  tolerance of (usually) \code{nrow(x) * .Machine$double.neg.eps *
+  max(diag(x)}.  The algorithm terminates once the pivot is less than
+  \code{tol}.
 }
 
 \section{Warning}{
@@ -75,10 +71,9 @@ chol(x, \dots)
 
 \source{
   This is an interface to the LAPACK routines \code{DPOTRF} and
-  \code{DPSTRF} and the LINPACK routines \code{DPOFA} and \code{DCHDC}.
+  \code{DPSTRF},
 
-  LAPACK and LINPACK are from \url{http://www.netlib.org/lapack} and
-  \url{http://www.netlib.org/linpack} and their guides are listed
+  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
   in the references.
 }
 \references{
@@ -90,16 +85,7 @@ chol(x, \dots)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
-
-  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 }
-
-\note{
-  \code{LINPACK = TRUE, pivot = FALSE} (for compatibility with \R <
-  1.7.0) was formally deprecated in \R 2.15.2.
-}
-
 
 \seealso{
   \code{\link{chol2inv}} for its \emph{inverse} (without pivoting),
