@@ -939,6 +939,10 @@
       is no longer \code{-Inf}; ditto for corresponding \code{pt()} and
       \code{pf()} calls, such as \code{pt(45, df=5000, lower.tail=FALSE,
 	log.p=TRUE)}. (\PR{15162})
+	
+      \item The Windows graphics device would crash \R{} if a user
+      attempted to load the graphics history from a variable that was
+      not a saved history. (\PR{15230})      
     }
   }
 }
