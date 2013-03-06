@@ -1070,7 +1070,7 @@ version.
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
 (available, e.g., from @uref{http://www.libpng.org/},
 @uref{http://www.ijg.org} and
-@uref{http://download.osgeo.org/@/libtiff/}.  The earliest versions that
+@uref{http://download.osgeo.org/@/libtiff/}).  The earliest versions that
 have been tested are @file{libpng-1.5.4.tar.gz},
 @file{jpegsrc.v8c.tar.gz} and @file{tiff-3.9.1.tar.gz}, but current
 versions are recommended.  It is also possible to use
@@ -1994,7 +1994,7 @@ selected repositories).  For example
 
 @example
 > inst <- packageStatus()$inst
-> inst[inst$Status != "ok", c("Package", "Version", "Status")])
+> inst[inst$Status != "ok", c("Package", "Version", "Status")]
                   Package Version      Status
 Biobase           Biobase   2.8.0 unavailable
 RCurl               RCurl   1.4-2     upgrade
