@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-01-30 r61784) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-05 r62136) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -915,12 +915,12 @@ attr(,"class")
 > ### ** Examples
 > 
 > str(vignetteEngine("Sweave"))
-List of 3
- $ name  : chr "Sweave"
- $ weave :function (file, driver = RweaveLatex(), syntax = getOption("SweaveSyntax"), 
-    encoding = "", ...)  
- $ tangle:function (file, driver = Rtangle(), syntax = getOption("SweaveSyntax"), 
-    encoding = "", ...)  
+List of 5
+ $ name   : chr "Sweave"
+ $ package: chr "utils"
+ $ pattern: chr "[.][rRsS](nw|tex)$"
+ $ weave  :function (...)  
+ $ tangle :function (...)  
 > 
 > 
 > 
