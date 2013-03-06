@@ -26,7 +26,7 @@ chol.default <- function(x, pivot = FALSE, LINPACK = FALSE, tol = -1, ...)
     if (!pivot && LINPACK) {
         warning("LINPACK = TRUE, pivot = FALSE is defunct and will be ignored",
                 domain = NA)
-        LINPACK <- TRUE
+        LINPACK <- FALSE
     }
 
     if(!LINPACK) return(.Internal(La_chol(as.matrix(x), pivot, tol)))
