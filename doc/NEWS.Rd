@@ -7,6 +7,27 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R-devel}{
+  \subsection{DEPRECATED AND DEFUNCT}{
+    % Not yet released, but intended.
+    \itemize{
+     \item \code{chol(pivot = FALSE, LINPACK = TRUE)},
+      \code{ch2inv(LINPACK = TRUE)}, \code{eigen(EISPACK = TRUE)},
+      \code{solve(LINPACK = TRUE)} and \code{svd(LINPACK = TRUE)} no
+      longer warn that LAPACK will be used.
+
+      \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.
+
+      \item The long-deprecated use of \code{\\synopsis} in the
+      \samp{Usage} section of \file{.Rd} files has been removed.
+
+      \item \code{.find.package()} and \code{.path.package()} are
+      defunct: only the public versions without the dot have ever
+      been in the API.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.0.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
