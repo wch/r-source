@@ -5,7 +5,7 @@ CPPFLAGS=-I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 CSOURCES = \
 	integrate.c interv.c maxcol.c optim.c pretty.c uncmin.c
 FSOURCES = \
-	dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
+	dchdc.f dpbfa.f dpbsl.f dpoco.f dpodi.f dpofa.f dposl.f dqrdc.f \
 	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
 

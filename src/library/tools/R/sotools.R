@@ -206,7 +206,7 @@ function(x)
 }
 
 ## Obsolete ones first,
-nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_", "dchdc_",
+nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "fft_factor", "fft_work", "Brent_fmin", "optif0",
 
 ## then entry points which are not attribute-hidden
