@@ -19,66 +19,67 @@
 ftable <- function(x, ...) UseMethod("ftable")
 
 ftable.default <- function(..., exclude = c(NA, NaN),
-                           row.vars = NULL, col.vars = NULL) {
+			   row.vars = NULL, col.vars = NULL) {
     args <- list(...)
     if (length(args) == 0L)
-        stop("nothing to tabulate")
+	stop("nothing to tabulate")
     x <- args[[1L]]
     if(is.list(x))
-        x <- table(x, exclude = exclude)
+	x <- table(x, exclude = exclude)
     else if(inherits(x, "ftable")) {
-        x <- as.table(x)
+	x <- as.table(x)
     }
     else if(!(is.array(x) && (length(dim(x)) > 1L))) {
-        x <- table(..., exclude = exclude)
+	x <- table(..., exclude = exclude)
     }
     dn <- dimnames(x)
     dx <- dim(x)
     n <- length(dx)
     if(!is.null(row.vars)) {
-        if(is.character(row.vars)) {
-            i <- pmatch(row.vars, names(dn))
-            if(any(is.na(i)))
-                stop("incorrect specification for 'row.vars'")
-            row.vars <- i
-        } else if(any((row.vars < 1) | (row.vars > n)))
-            stop("incorrect specification for 'row.vars'")
+	if(is.character(row.vars)) {
+	    i <- pmatch(row.vars, names(dn))
+	    if(any(is.na(i)))
+		stop("incorrect specification for 'row.vars'")
+	    row.vars <- i
+	} else if(any((row.vars < 1) | (row.vars > n)))
+	    stop("incorrect specification for 'row.vars'")
     }
     if(!is.null(col.vars)) {
-        if(is.character(col.vars)) {
-            i <- pmatch(col.vars, names(dn))
-            if(any(is.na(i)))
-             stop("incorrect specification for 'col.vars'")
-            col.vars <- i
-        } else if(any((col.vars < 1) | (col.vars > n)))
-            stop("incorrect specification for 'col.vars'")
+	if(is.character(col.vars)) {
+	    i <- pmatch(col.vars, names(dn))
+	    if(any(is.na(i)))
+	     stop("incorrect specification for 'col.vars'")
+	    col.vars <- i
+	} else if(any((col.vars < 1) | (col.vars > n)))
+	    stop("incorrect specification for 'col.vars'")
     }
     i <- 1 : n
     if(!is.null(row.vars) && !is.null(col.vars)) {
-        all.vars <- sort(c(row.vars, col.vars))
-        if (length(all.vars) < n) {
-            x <- apply(x, all.vars, sum)
-            row.vars <- match(row.vars, all.vars)
-            col.vars <- match(col.vars, all.vars)
-            dn <- dn[all.vars]
-            dx <- dx[all.vars]
-        }
+	all.vars <- sort(c(row.vars, col.vars))
+	if ((p <- length(all.vars)) < n) {
+	    x <- if(p) apply(x, all.vars, sum) else sum(x)
+	    row.vars <- match(row.vars, all.vars)
+	    col.vars <- match(col.vars, all.vars)
+	    dn <- dn[all.vars]
+	    dx <- dx[all.vars]
+	}
     }
     else if(!is.null(row.vars))
-        col.vars <- i[-row.vars]
+	col.vars <- if(length(row.vars)) i[-row.vars] else i
     else if(!is.null(col.vars))
-        row.vars <- i[-col.vars]
+	row.vars <- if(length(col.vars)) i[-col.vars] else i
     else {
-        row.vars <- 1 : (n-1)
-        col.vars <- n
+	row.vars <- seq_len(n-1)
+	col.vars <- n
     }
 
-    y <- aperm(x, c(rev(row.vars), rev(col.vars)))
-    dim(y) <- c(prod(dx[row.vars]), prod(dx[col.vars]))
-    attr(y, "row.vars") <- dn[row.vars]
-    attr(y, "col.vars") <- dn[col.vars]
-    class(y) <- "ftable"
-    y
+    if(length(perm <- c(rev(row.vars), rev(col.vars))) > 1)
+	x <- aperm(x, perm)
+    dim(x) <- c(prod(dx[row.vars]), prod(dx[col.vars]))
+    attr(x, "row.vars") <- dn[row.vars]
+    attr(x, "col.vars") <- dn[col.vars]
+    class(x) <- "ftable"
+    x
 }
 
 ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
@@ -170,8 +171,8 @@ as.table.ftable <- function(x, ...)
 
 format.ftable <-
     function(x, quote=TRUE, digits=getOption("digits"),
-             method=c("non.compact", "row.compact", "col.compact", "compact"),
-             lsep=" \\ ", ...)
+	     method=c("non.compact", "row.compact", "col.compact", "compact"),
+	     lsep=" | ", ...)
 {
     if(!inherits(x, "ftable"))
 	stop("'x' must be an \"ftable\" object")
@@ -194,9 +195,22 @@ format.ftable <-
 	if(is.null(nmx)) rep_len("", length(x)) else nmx
     }
 
-    xrv <- attr(x, "row.vars")
-    xcv <- attr(x, "col.vars")
+    l.xrv <- length(xrv <- attr(x, "row.vars"))
+    l.xcv <- length(xcv <- attr(x, "col.vars"))
     method <- match.arg(method)
+    ## deal with 'extreme' layouts (no col.vars, no row.vars)
+    if(l.xrv == 0) {
+	if(method=="col.compact")
+	    method <- "non.compact" # already produces a 'col.compact' version
+	else if (method=="compact")
+	    method <- "row.compact" # only need to 'row.compact'ify
+    }
+    if(l.xcv == 0) {
+	if(method=="row.compact")
+	    method <- "non.compact" # already produces a 'row.compact' version
+	else if (method=="compact")
+	    method <- "col.compact" # only need to 'col.compact'ify
+    }
     LABS <-
 	switch(method,
 	       "non.compact" =		# current default
@@ -224,8 +238,6 @@ format.ftable <-
 	   },
 	       "compact" =		# fully compact version
 	   {
-	       l.xcv <- length(xcv)
-	       l.xrv <- length(xrv)
 	       xrv.nms <- makeNames(xrv)
 	       xcv.nms <- makeNames(xcv)
 	       mat <- cbind(rbind(cbind(matrix("", nrow = l.xcv-1, ncol = l.xrv-1),

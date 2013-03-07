@@ -21,7 +21,7 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
 \method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"),
                         method = c("non.compact", "row.compact",
                                   "col.compact", "compact"),
-                        lsep = " \\\\ ", \dots)
+                        lsep = " | ", \dots)
 \method{print}{ftable}(x, digits = getOption("digits"), \dots)
 }
 \arguments{
@@ -139,15 +139,18 @@ write.ftable(ft22, quote = FALSE, method="row.compact")
 write.ftable(ft22, quote = FALSE, method="col.compact")
 write.ftable(ft22, quote = FALSE, method="compact")
 \dontshow{
-op <- options(warn = 2) # no warnings allowed
-stopifnot(dim(format(ft)) == 4:5,
-          dim(format(ftable(UCBAdmissions))) == c(6,9),
-          dim(format(ft22)) == c(11,7))
-for(meth in c("non.compact", "row.compact", "col.compact", "compact")) {
-   cat("\nMethod ",meth,"\n-----------------\n")
-   write.ftable(ft22, method=meth) # without warnings!
-}
-options(op)
+ op <- options(warn = 2) # no warnings allowed
+ stopifnot(dim(format(ft)) == 4:5,
+	   dim(format(ftable(UCBAdmissions))) == c(6,9))
+ meths <- c("non.compact", "row.compact", "col.compact", "compact")
+ dimform <- function(ft) sapply(meths, function(M) dim(format(ft, method=M)))
+ m.eq    <- function(M,m) all.equal(unname(M), m, tol=0)
+ ## All format(..) w/o warnings:
+ stopifnot(m.eq(print(dimform(ft22)),
+		rbind(11:10, rep(7:6, each=2))),
+	   m.eq(print(dimform(ftable(Titanic, row.vars = integer()))),
+		rbind(rep(6:5,2), 33)))
+ options(op)
 }
 }
 \keyword{category}
