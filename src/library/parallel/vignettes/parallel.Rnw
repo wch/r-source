@@ -725,7 +725,7 @@ since lazy evaluation may be delayed until the tasks have been sent to
 the workers.  This is no problem in the forking approach, as the
 information needed for lazy evaluation will be present in the forked workers.
 
-For \pkg{snow}-like clusters the trick is to ensure that \code{...}
+For \CRANpkg{snow}-like clusters the trick is to ensure that \code{...}
 has any promises forced whilst the information is still available.
 This is how \CRANpkg{boot} does it:
 <<eval=FALSE>>=
