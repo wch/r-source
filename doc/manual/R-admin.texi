@@ -3340,7 +3340,7 @@ Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
 as @code{sunperf} on Solaris, @code{Accelerate} on OS X and ACML and MKL
 on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
-is required.
+is required.  This can only be done if @option{--with-blas} has been used.
 
 However, the likely performance gains are thought to be small (and may
 be negative), and the default is not to search for a suitable LAPACK
@@ -3400,6 +3400,21 @@ cause LAPACK to return unexpected results or become unstable.
 As from @R{} 3.0.0 we rely on limited support in LAPACK for matrices
 with @math{2^{31}} or more elements: it is quite possible that an
 external LAPACK will not have that support.
+
+If you have a pure FORTRAN 77 compiler which cannot compile LAPACK it
+may be possible to use CLAPACK from
+@uref{http://www.netlib.org/clapack/} by something like
+@example
+-with-lapack="-lclapack -lf2c"
+@end example
+provided these were built with position-independent code and the calling
+conventions for double complex function return values match those in the
+BLAS used, so it may be simpler to use CLAPACK built to use CBLAS and
+@example
+-with-lapack="-lclapack -lcblas -lf2c"
+@end example
+
+
 
 @node Caveats,  , LAPACK, Linear algebra
 @subsection Caveats
@@ -3738,7 +3753,8 @@ not @command{gcc} you
 @enindex FPICFLAGS
 will need to set @env{FPICFLAGS} appropriately.  Also, the included
 LAPACK sources contain constructs that @command{f2c} is unlikely to be
-able to process, so you would need to use an external LAPACK library.
+able to process, so you would need to use an external LAPACK library
+(such as CLAPACK from @uref{http://www.netlib.org/clapack/}).
 
 
 @node Using gfortran,  , Using FORTRAN, Using FORTRAN
