@@ -33,8 +33,19 @@
   The default values are (currently) an initial setting of 350k cons
   cells, 6Mb of vector heap: note that the areas are not actually
   allocated initially: rather these values are the sizes for triggering
-  garbage collection.  Thereafter \R will grow or shrink the areas
-  depending on usage, never decreasing below the initial values.
+  garbage collection.  These values can be set by the command line
+  options \option{--min-nsize} and \option{--min-vsize} when R is
+  started. Thereafter \R will grow or shrink the areas depending on
+  usage, never decreasing below the initial values.
+
+  How much time R spends in the garbage collector will depend on these
+  initial settings and on the trade-off the memory manager makes, when
+  memory fills up, between collecting garbage to free up unused memory
+  and growing these areas.  The strategy used for growth can be
+  specified by setting the environment variable \env{R_GC_MEM_GROW} to
+  an integer value between 0 and 3. This variable is read at
+  start-up. Higher values grow the heap more aggressively, thus reducing
+  garbage collection time but using more memory.
 
   You can find out the current memory consumption (the heap and cons
   cells used as numbers and megabytes) by typing \code{\link{gc}()} at the
