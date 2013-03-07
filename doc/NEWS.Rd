@@ -968,6 +968,9 @@
       \item \code{ftable(x, row.vars, col.vars)} now also works when the
       \code{*.vars} arguments are (integer or character vectors) of
       length zero.
+      
+      \item Calling \code{cat()} on a malformed UTF-8 string could cause
+      the Windows GUI to lock up. (\PR{15227})
     }
   }
 }
