@@ -937,14 +937,18 @@
       is no longer \code{-Inf}; ditto for corresponding \code{pt()} and
       \code{pf()} calls, such as \code{pt(45, df=5000, lower.tail=FALSE,
 	log.p=TRUE)}. (\PR{15162})
-	
+
       \item The Windows graphics device would crash \R{} if a user
       attempted to load the graphics history from a variable that was
-      not a saved history. (\PR{15230})      
+      not a saved history. (\PR{15230})
 
       \item The workspace size for the \code{predict()}
       method for \code{loess()} could exceed the maximum integer size.
       (Reported by Hiroyuki Kawakatsu.)
+
+      \item \code{ftable(x, row.vars, col.vars)} now also works when the
+      \code{*.vars} arguments are (integer or character vectors) of
+      length zero.
     }
   }
 }

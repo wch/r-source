@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-03-04 r62121) -- "Unsuffered Consequences"
+R version 3.0.0 alpha (2013-03-07 r62158) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3714,7 +3714,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x38cc0b8>
+<environment: 0x368d698>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4715,7 +4715,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x63ee9c0>
+<bytecode: 0x60d1a38>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6732,8 +6732,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x2b38940>
-<environment: 0x83e20e0>
+<bytecode: 0x282ff20>
+<environment: 0x8a883b0>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7134,7 +7134,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x8f9ac10>
+<environment: 0x8c831a0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11656,26 +11656,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x2b59a00>
-<environment: 0x8b27b20>
+<bytecode: 0x28512b8>
+<environment: 0x8111cd0>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x2b59ae0>
-<environment: 0x8b27b20>
+<bytecode: 0x284fc00>
+<environment: 0x8111cd0>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x2b59bc0>
-<environment: 0x8b27b20>
+<bytecode: 0x284fce0>
+<environment: 0x8111cd0>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x2b58058>
-<environment: 0x8b27b20>
+<bytecode: 0x2850060>
+<environment: 0x8111cd0>
 
 $name
 [1] "identity"
@@ -11686,14 +11686,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x8b28ad8>
-<environment: 0x8b1e8c0>
+<bytecode: 0x8112c88>
+<environment: 0x8108a70>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x8b28bf0>
-<environment: 0x8b1e8c0>
+<bytecode: 0x8112da0>
+<environment: 0x8108a70>
 
 > 
 > 
@@ -15532,8 +15532,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3a0ac90>
-<environment: 0x7f614b0>
+<bytecode: 0x2aa29b8>
+<environment: 0x7c57420>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17757,7 +17757,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.378 0.354 16.369 0 0 
+Time elapsed:  14.967 0.336 15.987 0 0 
 > grDevices::dev.off()
 null device 
           1 
