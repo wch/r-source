@@ -1864,8 +1864,8 @@ function(package, dir, file, lib.loc = NULL,
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
 
     ## allow calls to LINPACK functions in base, if registered.
-    ## NB: dqrls and dqrdc2 are not LINPACK
-    allowed <- c("dchdc", "dqrcf","dsvdc", "dtrco")
+    ## NB: dqrls and dqrdc2 are not LINPACK, dchdc is going
+    allowed <- c("dqrcf","dsvdc", "dtrco")
 
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
