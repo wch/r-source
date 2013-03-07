@@ -149,10 +149,25 @@ static int getFilenum(const char* filename) {
     return fnum + 1;
 }
 
+/* These, together with sprintf/strcat, are not safe -- we should be
+   using snprintf and such and computing needed sizes, but these
+   settings are better than what we had. LT */
+
+#define PROFBUFSIZ 10500
+#define PROFITEMMAX  500
+#define PROFLINEMAX (PROFBUFSIZ - PROFITEMMAX)
+
+/* It would also be better to flush the buffer when it gets full,
+   even if the line isn't complete. But this isn't possible if we rely
+   on writing all line profiling files first.  With these sizes
+   hitting the limit is fairly unlikely, but if we do then the output
+   file is wrong. Maybe writing an overflow marker of some sort would
+   be better.  LT */
+
 static void lineprof(char* buf, SEXP srcref) 
 {
     size_t len;
-    if (srcref && !isNull(srcref) && (len = strlen(buf)) < 1000) {
+    if (srcref && !isNull(srcref) && (len = strlen(buf)) < PROFLINEMAX) {
 	int fnum, line = asInteger(srcref);
 	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
 	const char *filename;
@@ -163,14 +178,14 @@ static void lineprof(char* buf, SEXP srcref)
 	filename = CHAR(STRING_ELT(srcfile, 0));
 	
 	if ((fnum = getFilenum(filename)))
-	    snprintf(buf+len, 1100-len, "%d#%d ", fnum, line);
+	    snprintf(buf+len, PROFBUFSIZ - len, "%d#%d ", fnum, line);
     }
 }
 
 static void doprof(int sig)  /* sig is ignored in Windows */
 {
     RCNTXT *cptr;
-    char buf[1100];
+    char buf[PROFBUFSIZ];
     unsigned long bigv, smallv, nodes;
     size_t len;
     int prevnum = R_Line_Profiling;
@@ -183,24 +198,24 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 
     if (R_Mem_Profiling){
 	    get_current_mem(&smallv, &bigv, &nodes);
-	    if((len = strlen(buf)) < 1000)
-		sprintf(buf+len, ":%ld:%ld:%ld:%ld:", smallv, bigv,
-			nodes, get_duplicate_counter());
+	    if((len = strlen(buf)) < PROFLINEMAX)
+		snprintf(buf+len, PROFBUFSIZ - len, 
+			 ":%ld:%ld:%ld:%ld:", smallv, bigv,
+			 nodes, get_duplicate_counter());
 	    reset_duplicate_counter();
     }
     
     if (R_GC_Profiling && R_gc_running())
 	strcat(buf, "\"<GC>\" ");
 
-    if (R_Line_Profiling) {
+    if (R_Line_Profiling)
     	lineprof(buf, R_Srcref);
-    }
     
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
-	    if(strlen(buf) < 1000) {
+	    if(strlen(buf) < PROFLINEMAX) {
 	    	strcat(buf, "\"");
 		strcat(buf, TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
 		       	"<Anonymous>");
@@ -211,6 +226,8 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 	}
     }
     
+    /* I believe it would be slightly safer to place this _after_ the
+       next two bits, along with the signal() call. LT */
 #ifdef Win32
     ResumeThread(MainThread);
 #endif /* Win32 */	
