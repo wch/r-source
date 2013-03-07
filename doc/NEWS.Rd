@@ -438,6 +438,11 @@
       prefixes are now supported, as well as quoted help topics.  To
       support this, completion inside quotes are now handled by R by
       default on all platforms.
+
+      \item The memory manager now allows the strategy used to balance
+      garbage collection and memory growth to be controlled by setting
+      the environment variable \env{R_GC_MEM_GROW}. See \code{?Memory}
+      for more details.
     }
   }
 
