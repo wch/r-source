@@ -37,12 +37,9 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   error giving a positive error code (most often \code{1}): these can
   only be interpreted by detailed study of the FORTRAN code but mean
   that the algorithm failed to converge.
-
-  The LINPACK interface is restricted to matrices \code{x} with less
-  than \eqn{2^{31}}{2^31} elements.
 }
 \value{
-  The SVD decomposition of the matrix as computed by LAPACK/LINPACK,
+  The SVD decomposition of the matrix as computed by LAPACK.
   \deqn{ \bold{X = U D V'},} where \eqn{\bold{U}} and \eqn{\bold{V}} are
   orthogonal, \eqn{\bold{V'}} means \emph{V transposed}, and
   \eqn{\bold{D}} is a diagonal matrix with the singular

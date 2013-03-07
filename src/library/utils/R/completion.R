@@ -788,6 +788,18 @@ fileCompletions <- function(token)
     pfilename.expanded <- path.expand(pfilename)
     comps <- Sys.glob(sprintf("%s*", pfilename.expanded), dirmark = TRUE)
 
+    ## If there is only one completion (and it's a directory), also
+    ## include files inside in list of completions.  This is not
+    ## particularly useful, but without this, readline tends to add an
+    ## end-quote (if sole completion) which is irritating if one is
+    ## actually looking for something inside the directory.  Note that
+    ## we don't actually test to see if it's a directory, because if
+    ## it is not, list.files() will simply return character(0).
+    if (length(comps) == 1 && substring(comps, nchar(comps), nchar(comps)) == "/") {
+        filesInside <- list.files(comps, all.files = TRUE, full.names = FALSE, no.. = TRUE)
+        if (length(filesInside)) comps <- c(comps, file.path(comps, filesInside))
+    }
+
     ## for things that only extend beyond the cursor, need to
     ## 'unexpand' path
     if (pfilename.expanded != pfilename)
@@ -797,7 +809,6 @@ fileCompletions <- function(token)
     ## need to delete extra part
     if (pfilename != token)
         comps <- substring(comps, nchar(pfilename) - nchar(token) + 1L, 1000L)
-
     comps
 }
 
