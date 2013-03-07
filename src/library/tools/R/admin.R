@@ -518,7 +518,7 @@ function(dir, outDir, encoding = "")
         if (is.null(cwd))
             stop("current working directory cannot be ascertained")
         setwd(outVignetteDir)
-        
+
 	loadVignetteBuilder(dir, mustwork = FALSE)
 
         ## install tangled versions of Sweave vignettes.  FIXME:  Custom
@@ -628,18 +628,12 @@ function(dir, outDir, keep.source = TRUE)
         stop(gettextf("cannot open directory '%s'", outVignetteDir),
              domain = NA)
 
-    # By default, update everything
-    upToDate <- logical(length(vigns$docs))
-
-    # Unless vignette weave products already exists
-    tryCatch({
-        vignsT <- pkgVignettes(dir = dir, subdirs = "doc", output = TRUE)
-        if (!is.null(vignsT)) {
-          vigns <- vignsT
-          vignetteOutfiles <- file.path(outVignetteDir, basename(vigns$outputs))
-          upToDate <- file_test("-nt", vignetteOutfiles, vigns$docs)
-       }
-    }, error = function(ex) {})
+    ## We have to be careful to avoid repeated rebuilding.
+    vignettePDFs <-
+        file.path(outVignetteDir,
+                  sub("$", ".pdf",
+                      basename(file_path_sans_ext(vigns$docs))))
+    upToDate <- file_test("-nt", vignettePDFs, vigns$docs)
 
     ## The primary use of this function is to build and install PDF
     ## vignettes in base packages.
@@ -656,7 +650,7 @@ function(dir, outDir, keep.source = TRUE)
     setwd(buildDir)
 
     loadVignetteBuilder(vigns$pkgdir)
-    
+
     for(i in seq_along(vigns$docs)[!upToDate]) {
         file <- vigns$docs[i]
         name <- vigns$names[i]
@@ -670,7 +664,7 @@ function(dir, outDir, keep.source = TRUE)
         ## file <- basename(file) above]. However, weave should/must
         ## always create a file ('output') in the current directory.
         output <- tryCatch({
-            engine$weave(file, pdf = TRUE, eps = FALSE, quiet = TRUE, 
+            engine$weave(file, pdf = TRUE, eps = FALSE, quiet = TRUE,
                         keep.source = keep.source, stylepath = FALSE)
             find_vignette_product(name, by = "weave", engine = engine)
         }, error = function(e) {
