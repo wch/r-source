@@ -24,14 +24,16 @@
   \code{mcMap} corresponds to \code{\link{Map}}.
 }
 \usage{
-mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
+mclapply(X, FUN, ...,
+         mc.preschedule = TRUE, mc.set.seed = TRUE,
          mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
          mc.cleanup = TRUE, mc.allow.recursive = TRUE)
 
-mcmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE,
-        mc.preschedule = TRUE, mc.set.seed = TRUE,
-        mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
-        mc.cleanup = TRUE)
+mcmapply(FUN, ...,
+         MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE,
+         mc.preschedule = TRUE, mc.set.seed = TRUE,
+         mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
+         mc.cleanup = TRUE)
 
 mcMap(f, ...)
 }

@@ -15,7 +15,8 @@
 }
 \usage{
 check_packages_in_dir(dir,
-                      check_args = character(), check_args_db = list(),
+                      check_args = character(),
+                      check_args_db = list(),
                       reverse = NULL,
                       check_env = character(),
                       xvfb = FALSE,
@@ -24,7 +25,8 @@ check_packages_in_dir(dir,
                       ...)
 
 summarize_check_packages_in_dir_results(dir, all = TRUE)
-summarize_check_packages_in_dir_timings(dir, all = FALSE, full = FALSE)
+summarize_check_packages_in_dir_timings(dir, all = FALSE,
+                                        full = FALSE)
 summarize_check_packages_in_dir_depends(dir, all = FALSE)
 }
 \arguments{

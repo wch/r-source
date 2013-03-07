@@ -14,7 +14,8 @@
   Arguments are recycled if necessary.
 }
 \usage{
-mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
+mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
+       USE.NAMES = TRUE)
 }
 \arguments{
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}

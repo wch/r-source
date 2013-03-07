@@ -10,7 +10,8 @@
   Select item(s) from a character vector using a Tk listbox.
 }
 \usage{
-tk_select.list(choices, preselect = NULL, multiple = FALSE, title = NULL)
+tk_select.list(choices, preselect = NULL, multiple = FALSE,
+               title = NULL)
 }
 \arguments{
   \item{choices}{a character vector of items.}

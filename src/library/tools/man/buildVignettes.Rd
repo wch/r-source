@@ -13,8 +13,8 @@
   of a package.
 }
 \usage{
-buildVignettes(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE,
-               tangle = FALSE)
+buildVignettes(package, dir, lib.loc = NULL, quiet = TRUE,
+               clean = TRUE, tangle = FALSE)
 
 pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
 	     output = FALSE, source = FALSE)

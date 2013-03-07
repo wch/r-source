@@ -18,8 +18,10 @@ These experimental functions work with a subset of LaTeX code.
   characters.
 }
 \usage{
-parseLatex(text, filename = deparse(substitute(text)), verbose = FALSE,
-           verbatim = c("verbatim", "verbatim*", "Sinput", "Soutput"))
+parseLatex(text, filename = deparse(substitute(text)),
+           verbose = FALSE,
+           verbatim = c("verbatim", "verbatim*",
+                        "Sinput", "Soutput"))
 deparseLatex(x, dropBraces = FALSE)
 latexToUtf8(x)
 }

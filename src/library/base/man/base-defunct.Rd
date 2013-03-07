@@ -85,9 +85,11 @@ getenv(\dots)
 read.table.url(url, method, \dots)
 scan.url(url, file = tempfile(), method, \dots)
 source.url(url, file = tempfile(), method, \dots)
-httpclient(url, port = 80, error.is.fatal = TRUE, check.MIME.type = TRUE,
-           file = tempfile(), drop.ctrl.z = TRUE)
-parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
+httpclient(url, port = 80, error.is.fatal = TRUE,
+           check.MIME.type = TRUE, file = tempfile(),
+           drop.ctrl.z = TRUE)
+parse.dcf(text = NULL, file = "", fields = NULL,
+          versionfix = FALSE)
 .Alias(expr)
 print.ordered(.)
 .Dyn.libs
@@ -102,7 +104,8 @@ codes(x, \dots)
 codes(x, \dots) <- value
 
 # Defunct in 2.0.0
-La.eigen(x, symmetric, only.values = FALSE, method = c("dsyevr", "dsyev"))
+La.eigen(x, symmetric, only.values = FALSE,
+         method = c("dsyevr", "dsyev"))
 tetragamma(x)
 pentagamma(x)
 package.description(pkg, lib.loc = NULL, fields = NULL)

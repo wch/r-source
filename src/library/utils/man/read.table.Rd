@@ -26,17 +26,17 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            stringsAsFactors = default.stringsAsFactors(),
            fileEncoding = "", encoding = "unknown", text)
 
-read.csv(file, header = TRUE, sep = ",", quote = "\"", dec = ".",
-         fill = TRUE, comment.char = "", \dots)
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", \dots)
 
-read.csv2(file, header = TRUE, sep = ";", quote = "\"", dec = ",",
-          fill = TRUE, comment.char = "", \dots)
+read.csv2(file, header = TRUE, sep = ";", quote = "\"",
+          dec = ",", fill = TRUE, comment.char = "", \dots)
 
-read.delim(file, header = TRUE, sep = "\t", quote = "\"", dec = ".",
-           fill = TRUE, comment.char = "", \dots)
+read.delim(file, header = TRUE, sep = "\t", quote = "\"",
+           dec = ".", fill = TRUE, comment.char = "", \dots)
 
-read.delim2(file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
-            fill = TRUE, comment.char = "", \dots)
+read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
+            dec = ",", fill = TRUE, comment.char = "", \dots)
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.

@@ -50,7 +50,8 @@ print.coefmat(x, digits = max(3, getOption("digits") - 2),
               signif.stars = getOption("show.signif.stars"),
               dig.tst = max(1, min(5, digits - 1)),
               cs.ind, tst.ind, zap.ind = integer(0),
-              P.values = NULL, has.Pvalue, eps.Pvalue = .Machine$double.eps,
+              P.values = NULL, has.Pvalue,
+              eps.Pvalue = .Machine$double.eps,
               na.print = "", \dots)
 anovalist.lm(object, \dots, test = NULL)
 lm.fit.null(x, y, method = "qr", tol = 1e-07, \dots)
