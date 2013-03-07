@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@normipaiva.com>, 2006.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -132,7 +132,7 @@ msgstr ""
 "陈列所有<strong>可供使用</strong>的程序包的小文品。"
 
 msgid "No vignettes found by %s"
-msgstr "没有找到小文品"
+msgstr "没有找到小文品%s"
 
 msgid "Package %s: DESCRIPTION file not found"
 msgstr "程序包%s: 找不到DESCRIPTION这个文件"
@@ -201,13 +201,13 @@ msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "无法从程序包的DESCRIPTION文件中为%s确定年份"
 
 msgid "To cite package %s in publications use:"
-msgstr "在出版物中使用程序包时引用％s"
+msgstr "在出版物中使用程序包时引用%s:"
 
 msgid ""
 "ATTENTION: This citation information has been auto-generated from the "
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
-"注意：此引文信息是从软件包描述文件自动生成的，可能需要手工编辑，请参见％s。"
+"注意：此引文信息是从软件包描述文件自动生成的，可能需要手工编辑，请参见%s。"
 
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN'的值必需是函数或NULL"
@@ -711,7 +711,7 @@ msgid ""
 msgstr "程序包\"%s\"的名字空间被锁定了；全局变量列表没有改变。"
 
 msgid "'env' must be an environment"
-msgstr ""
+msgstr "'env'必需是环境"
 
 msgid "no object named '%s' to show"
 msgstr "找不到名字为'%s'的对象"
@@ -1013,7 +1013,7 @@ msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar'退出码为%d"
 
 msgid "file %s is not an OS X binary package"
-msgstr "文件％s不是OS ​​X的二进制软件包"
+msgstr "文件%s不是OS ​​X的二进制软件包"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "程序包%s打开成功，MD5和检查也通过"
@@ -1157,7 +1157,7 @@ msgstr[0] "安装源码包%s"
 
 msgid "package %s is available as a source package but not as a binary"
 msgid_plural "packages %s are available as source packages but not as binaries"
-msgstr[0] "程序包％s是源码包，但不是二进制包"
+msgstr[0] "程序包%s是源码包，但不是二进制包"
 
 msgid ""
 "There is a binary version available (and will be installed) but the source "

@@ -2,12 +2,12 @@
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@normipaiva.com>, 2006.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -158,8 +158,7 @@ msgid ""
 "Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
 "Depends/Suggests/Imports entries."
 msgstr ""
-"标头从属(\\VignetteDepends{}条目)必需包含在DESCRIPTION文件里的Depends/"
-"Suggests/Imports条目中."
+"标头从属(%s条目)必需包含在DESCRIPTION文件里的Depends/Suggests/Imports条目中."
 
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
@@ -442,8 +441,59 @@ msgstr "'%s'值无效：%s"
 msgid "Only one Rd section per %s is supported."
 msgstr "每%s只支持一个Rd章节"
 
+msgid "Vignette product"
+msgstr "产品简介："
+
+msgid "does not have a known filename extension ("
+msgstr "没有一个已知的文件扩展名"
+
+msgid ","
+msgstr ","
+
+msgid ")"
+msgstr ")"
+
+msgid "Failed to locate the"
+msgstr "无法找到"
+
+msgid "output file (by engine"
+msgstr "输出文件（由引擎"
+
+msgid "%s::%s"
+msgstr "%s::%s"
+
+msgid ") for vignette with name"
+msgstr ")为带这个名字的简介"
+
+msgid ". The following files exists in directory"
+msgstr "。目录里有这些文件"
+
+msgid ":"
+msgstr "："
+
+msgid "Located more than one"
+msgstr "找到一个以上的"
+
 msgid "unable to create temp directory %s"
 msgstr "无法建立临时目录%s"
+
+msgid "Vignette"
+msgstr "简介："
+
+msgid "overwrites the following"
+msgstr "覆盖下面的"
+
+msgid "output by vignette"
+msgstr "简介输出的"
+
+msgid "Detected vignette source files ("
+msgstr "找到了简介的源代码（"
+
+msgid ") with shared names ("
+msgstr "）和分用的名字（"
+
+msgid ") and therefore risking overwriting each others output files"
+msgstr "）因此可以冒险各个输出文件"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -452,12 +502,11 @@ msgstr ""
 "处理标头'%s'失败，诊断信息为:\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "tangling vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
-"处理标头'%s'失败，诊断信息为:\n"
+"简介'%s'失败了，诊断信息为:\n"
 "%s"
 
 msgid "running 'make' failed"
@@ -472,24 +521,62 @@ msgstr "参数'vignette'的长度必需为一"
 msgid "file '%s' not found"
 msgstr "找不到'%s'这个文件"
 
-msgid "vignette engine"
+msgid "Unsupported engine name"
+msgstr "不支持这样的引擎名"
+
+msgid "None of packages"
+msgstr "所有的程序包都没有"
+
+msgid "have registered vignette engines"
+msgstr "注册简介引擎"
+
+msgid "Vignette engine"
 msgstr "小简介引擎"
 
-msgid "not found"
-msgstr "找不到"
+msgid "is not registered"
+msgstr "没有注册"
 
-msgid "cannot change the"
+msgid "is not registered by any of the packages"
+msgstr "没有被它所要用的程序包所注册"
+
+msgid "Engine name"
+msgstr "引擎名字"
+
+msgid "and package"
+msgstr "和程辑包"
+
+msgid "do not match"
+msgstr "不匹配"
+
+msgid "Argument"
+msgstr "参数"
+
+msgid "weave"
+msgstr "weave"
+
+msgid "must be a function and not"
+msgstr "必需是个函数，还不能"
+
+msgid "tangle"
+msgstr "纠缠"
+
+msgid "pattern"
+msgstr "模式"
+
+msgid "must be a character vector or NULL and not"
+msgstr "必需是字符串或联结"
+
+msgid "Cannot change the"
 msgstr "无法改变"
 
 msgid "Sweave"
 msgstr "Sweave"
 
-msgid "engine"
-msgstr "引擎"
+msgid "engine or use an engine of that name"
+msgstr "引擎或用带那个名字的引擎"
 
-#, fuzzy
 msgid "vignette builder '%s' not found"
-msgstr "找不到'%s'这个文件"
+msgstr "找不到'%s'这个简介的作者"
 
 msgid "Invalid DESCRIPTION file"
 msgstr "DESCRIPTION文件不对"
@@ -535,8 +622,12 @@ msgstr ""
 "用%s处理标头'%s'失败了，诊断信息为:\n"
 "%s"
 
-msgid "file '%s' was not created"
-msgstr "无法产生文件'%s'"
+msgid ""
+"compiling TeX file %s failed with message:\n"
+"%s"
+msgstr ""
+"编译TeX文件%s失败，消息为:\n"
+"%s"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "无法将'%s'拷贝到'%s'"
@@ -590,24 +681,19 @@ msgid "package directory %s does not exist"
 msgstr "不存在%s这个文件目录"
 
 msgid "no packages to check"
-msgstr ""
+msgstr "没有可以查检的东西"
 
 msgid "downloading reverse dependencies ..."
-msgstr ""
+msgstr "下载扭转了的依赖关系"
 
-#, fuzzy
 msgid "downloading %s ..."
-msgstr "比较%s和%s"
+msgstr "下载%s。。。"
 
 msgid "installing dependencies %s"
-msgstr ""
+msgstr "安装依赖关系%s"
 
-msgid ","
-msgstr ","
-
-#, fuzzy
 msgid "checking %s ..."
-msgstr "制造DLL…"
+msgstr "%s…"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "CITATION文件没有声明编码，但文件里出现了非ASCII的输入"
@@ -1085,10 +1171,9 @@ msgid "Found the deprecated function:"
 msgid_plural "Found the deprecated functions:"
 msgstr[0] "出现了不推荐使用的功能"
 
-#, fuzzy
 msgid "Found the defunct/removed function:"
 msgid_plural "Found the defunct/removed functions:"
-msgstr[0] "出现已不存在的功能"
+msgstr[0] "出现已不存在的或是被取消的功能"
 
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"
@@ -1115,6 +1200,15 @@ msgstr[0] "在以下这些程序包里找到了关于'%s'主题的帮助:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "not found"
+#~ msgstr "找不到"
+
+#~ msgid "engine"
+#~ msgstr "引擎"
+
+#~ msgid "file '%s' was not created"
+#~ msgstr "无法产生文件'%s'"
 
 #~ msgid "found %s"
 #~ msgstr "找到了%s"
@@ -1212,9 +1306,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 #~ msgid "file"
 #~ msgstr "文件"
 
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
-
 #~ msgid "ssname"
 #~ msgstr "ssname"
 
@@ -1227,9 +1318,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 #, fuzzy
 #~ msgid "package directory"
 #~ msgstr "程序包目录"
-
-#~ msgid "does not exist"
-#~ msgstr "不存在"
 
 #~ msgid "Unrecognized search field:"
 #~ msgstr "无法识别这个搜索字段："
@@ -1277,9 +1365,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "Internal error, no tag"
 #~ msgstr "内部错误，没有标签"
-
-#~ msgid "Argument for"
-#~ msgstr "参数用于"
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "内部错误：NULL标签"
@@ -1366,9 +1451,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 #~ msgid "not installing"
 #~ msgstr "安装至"
 
-#~ msgid ":"
-#~ msgstr "："
-
 #~ msgid "Generics g in env ="
 #~ msgstr "同属函数g在env="
 
@@ -1380,9 +1462,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "importFrom("
 #~ msgstr " importFrom("
-
-#~ msgid ")"
-#~ msgstr ")"
 
 #~ msgid "in NAMESPACE."
 #~ msgstr "在NAMESPACE。"
@@ -1657,6 +1736,3 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "Syntax error in documentation object '%s':"
 #~ msgstr "使用手冊对象'%s'里主语法错误:"
-
-#~ msgid "no or more than one match"
-#~ msgstr "没有成对的，或多于一双"

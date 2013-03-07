@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -150,21 +150,6 @@ msgstr "automat ładujący nie znalazł '%s' w '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "macierze zespolone nie są dozwolone na chwilę obecną"
-
-msgid "non-square matrix in 'chol'"
-msgstr "macierz w 'chol' nie jest kwadratowa"
-
-msgid "non-matrix argument to 'chol'"
-msgstr "argument przekazany do 'chol' nie jest macierzą"
-
-msgid "invalid nrow(x)"
-msgstr ""
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
-msgstr "macierz nie jest dodatnio określona"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' musi być tablicą o co najmniej dwóch wymiarach"
@@ -589,6 +574,9 @@ msgstr "macierz 0 x 0"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "macierz w 'eigen' nie jest kwadratowa"
+
+msgid "invalid nrow(x)"
+msgstr ""
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1232,6 +1220,9 @@ msgstr "argument będzie częściowo powtórzony"
 msgid "invalid ncol(x)"
 msgstr "niepoprawna wartość"
 
+msgid "too large a matrix for LINPACK"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
 msgstr "pierwszy argument musi być dekompozycją QR"
 
@@ -1808,6 +1799,15 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr "macierz w 'chol' nie jest kwadratowa"
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr "argument przekazany do 'chol' nie jest macierzą"
+
+#~ msgid "matrix not positive definite"
+#~ msgstr "macierz nie jest dodatnio określona"
 
 #~ msgid "'keep.source' is deprecated and will be ignored"
 #~ msgstr "'keep.source' jest przestarzałe i będzie zignorowane"

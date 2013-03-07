@@ -2,12 +2,12 @@
 # Copyright (C) 2012 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@normipaiva.com>, 2012.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2013-03-07 08:36+0000\n"
 "PO-Revision-Date: 2012-02-29 14:00+0000\n"
 "Last-Translator: Fei Chen <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2012-02-26 14:09+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -147,22 +147,6 @@ msgstr " 自動ローダーは '%s' を '%s' 中に見つけられませんで�
 
 msgid "complex matrices not permitted at present"
 msgstr " 複素行列は現在許可されていません "
-
-msgid "non-square matrix in 'chol'"
-msgstr " 'chol' 中に非正方行列 "
-
-msgid "non-matrix argument to 'chol'"
-msgstr " 'chol' へ行列でない引数 "
-
-#, fuzzy
-msgid "invalid nrow(x)"
-msgstr " 不当な名前です "
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
-msgstr " 行列は正定値符号ではありません "
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr " 'x' は少なくとも二次元の配列でなければなりません "
@@ -583,6 +567,10 @@ msgstr " 0 x 0 行列です "
 
 msgid "non-square matrix in 'eigen'"
 msgstr " 'eigen' に非正方行列が与えられました "
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr " 不当な名前です "
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1239,6 +1227,9 @@ msgstr " 引数は繰り返して使われます "
 msgid "invalid ncol(x)"
 msgstr " 不当な名前です "
 
+msgid "too large a matrix for LINPACK"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
 msgstr " 最初の引数は QR 分解でなければなりません "
 
@@ -1764,6 +1755,15 @@ msgstr[0] " TRUE の代わりに T が使われました "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr " 'chol' 中に非正方行列 "
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr " 'chol' へ行列でない引数 "
+
+#~ msgid "matrix not positive definite"
+#~ msgstr " 行列は正定値符号ではありません "
 
 #~ msgid "'keep.source' is deprecated and will be ignored"
 #~ msgstr " 'keep.source'は現在は非推奨で、今後は無視されます "

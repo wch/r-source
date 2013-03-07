@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: 2012-03-15 12:03-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -477,8 +477,64 @@ msgid "Only one Rd section per %s is supported."
 msgstr "Поддерживается только один раздел Rd на \\Sexpr."
 
 #, fuzzy
+msgid "Vignette product"
+msgstr "Миниатюры:"
+
+msgid "does not have a known filename extension ("
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid ")"
+msgstr ")"
+
+#, fuzzy
+msgid "Failed to locate the"
+msgstr "не могу создать"
+
+msgid "output file (by engine"
+msgstr ""
+
+msgid "%s::%s"
+msgstr ""
+
+msgid ") for vignette with name"
+msgstr ""
+
+#, fuzzy
+msgid ". The following files exists in directory"
+msgstr "В этой папке нет файлов"
+
+msgid ":"
+msgstr ":"
+
+#, fuzzy
+msgid "Located more than one"
+msgstr "нет или более одного соответствия"
+
+#, fuzzy
 msgid "unable to create temp directory %s"
 msgstr "не могу создать временную папку"
+
+#, fuzzy
+msgid "Vignette"
+msgstr "Миниатюры:"
+
+msgid "overwrites the following"
+msgstr ""
+
+msgid "output by vignette"
+msgstr ""
+
+msgid "Detected vignette source files ("
+msgstr ""
+
+msgid ") with shared names ("
+msgstr ""
+
+msgid ") and therefore risking overwriting each others output files"
+msgstr ""
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -507,21 +563,67 @@ msgstr "аргумент 'vignette' должен быть единичной длины"
 msgid "file '%s' not found"
 msgstr "файл '%s' не найден"
 
-msgid "vignette engine"
+#, fuzzy
+msgid "Unsupported engine name"
+msgstr "неподдерживаемый фильтр %s"
+
+#, fuzzy
+msgid "None of packages"
+msgstr "Не найдено помощи для пакета %s"
+
+msgid "have registered vignette engines"
 msgstr ""
 
 #, fuzzy
-msgid "not found"
-msgstr "не найден"
+msgid "Vignette engine"
+msgstr "Миниатюры:"
 
 #, fuzzy
-msgid "cannot change the"
+msgid "is not registered"
+msgstr "не существует"
+
+msgid "is not registered by any of the packages"
+msgstr ""
+
+msgid "Engine name"
+msgstr ""
+
+#, fuzzy
+msgid "and package"
+msgstr "неправильный пакет"
+
+#, fuzzy
+msgid "do not match"
+msgstr "не существует"
+
+#, fuzzy
+msgid "Argument"
+msgstr "Аргумент для"
+
+msgid "weave"
+msgstr ""
+
+msgid "must be a function and not"
+msgstr ""
+
+msgid "tangle"
+msgstr ""
+
+msgid "pattern"
+msgstr ""
+
+#, fuzzy
+msgid "must be a character vector or NULL and not"
+msgstr "'file' должен быть текстовой строкой или соединением"
+
+#, fuzzy
+msgid "Cannot change the"
 msgstr "нельзя соединить"
 
 msgid "Sweave"
 msgstr ""
 
-msgid "engine"
+msgid "engine or use an engine of that name"
 msgstr ""
 
 #, fuzzy
@@ -575,8 +677,13 @@ msgstr ""
 "выполнение Sweave в очерке '%s' не удалось с диагностикой:\n"
 "%s"
 
-msgid "file '%s' was not created"
-msgstr "файл '%s' не создан"
+#, fuzzy
+msgid ""
+"compiling TeX file %s failed with message:\n"
+"%s"
+msgstr ""
+"выполнение Sweave в очерке '%s' не удалось с диагностикой:\n"
+"%s"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "не могу скопировать '%s' в '%s'"
@@ -645,9 +752,6 @@ msgstr ""
 
 msgid "installing dependencies %s"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 #, fuzzy
 msgid "checking %s ..."
@@ -1235,6 +1339,13 @@ msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
+#, fuzzy
+#~ msgid "not found"
+#~ msgstr "не найден"
+
+#~ msgid "file '%s' was not created"
+#~ msgstr "файл '%s' не создан"
+
 #~ msgid "found %s"
 #~ msgstr "найден %s"
 
@@ -1363,9 +1474,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 #~ msgid "package directory"
 #~ msgstr "директория пакетов"
 
-#~ msgid "does not exist"
-#~ msgstr "не существует"
-
 #~ msgid "Unrecognized search field:"
 #~ msgstr "Неизвестное поле поиска:"
 
@@ -1415,9 +1523,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
 #~ msgid "Internal error, no tag"
 #~ msgstr "Внутренняя ошибка, тега нет"
-
-#~ msgid "Argument for"
-#~ msgstr "Аргумент для"
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "Внутренняя ошибка:  тег NULL"
@@ -1504,9 +1609,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 #~ msgid "not installing"
 #~ msgstr "устанавливаю в"
 
-#~ msgid ":"
-#~ msgstr ":"
-
 #~ msgid "Generics g in env ="
 #~ msgstr "Общие 'g' в env ="
 
@@ -1518,9 +1620,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
 #~ msgid "importFrom("
 #~ msgstr "importFrom("
-
-#~ msgid ")"
-#~ msgstr ")"
 
 #~ msgid "in NAMESPACE."
 #~ msgstr "в NAMESPACE."
@@ -1830,6 +1929,3 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
 #~ msgid "multiple \\encoding lines in file"
 #~ msgstr "несколько \\строк кодировок в файле"
-
-#~ msgid "no or more than one match"
-#~ msgstr "нет или более одного соответствия"

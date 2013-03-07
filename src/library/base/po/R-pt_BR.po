@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -151,21 +151,6 @@ msgstr "autocarregador não encontrou '%s' em '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "matrizes complexas não permitidas atualmente"
-
-msgid "non-square matrix in 'chol'"
-msgstr "matriz não quadrada em 'chol'"
-
-msgid "non-matrix argument to 'chol'"
-msgstr "argumento não matricial para 'chol'"
-
-msgid "invalid nrow(x)"
-msgstr ""
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
-msgstr "matriz não é positiva definida"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' deve ser um array de pelo menos duas dimensões"
@@ -589,6 +574,9 @@ msgstr "matriz 0 x 0"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "matriz não quadrada em 'eigen'"
+
+msgid "invalid nrow(x)"
+msgstr ""
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1264,6 +1252,9 @@ msgstr "argumento 'drop' será ignorado"
 msgid "invalid ncol(x)"
 msgstr "valor inválido"
 
+msgid "too large a matrix for LINPACK"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
 msgstr "primeiro argumento deve ser uma decomposição QR"
 
@@ -1814,6 +1805,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr "matriz não quadrada em 'chol'"
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr "argumento não matricial para 'chol'"
+
+#~ msgid "matrix not positive definite"
+#~ msgstr "matriz não é positiva definida"
 
 #~ msgid "non-positive definite matrix in 'chol'"
 #~ msgstr "matriz nãoo positiva definida em 'chol'"

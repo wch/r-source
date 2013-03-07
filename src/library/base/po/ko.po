@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:49+0000\n"
+"POT-Creation-Date: 2013-03-07 08:36+0000\n"
 "PO-Revision-Date: 2012-03-07 02:34+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -188,8 +188,8 @@ msgstr "'%ls' 를 표시하는데 문제가 있습니다 "
 #: src/main/envir.c:1879 src/main/envir.c:1890 src/main/envir.c:2104
 #: src/main/envir.c:2225 src/main/envir.c:2484 src/main/envir.c:2691
 #: src/main/envir.c:2705 src/main/envir.c:2712 src/main/envir.c:2728
-#: src/main/envir.c:3291 src/main/errors.c:1025 src/main/eval.c:357
-#: src/main/eval.c:366 src/main/eval.c:369 src/main/grep.c:767
+#: src/main/envir.c:3291 src/main/errors.c:1025 src/main/eval.c:374
+#: src/main/eval.c:383 src/main/eval.c:386 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
@@ -1263,7 +1263,7 @@ msgstr "'use.names' 인수 형식이 반복되었습니다"
 msgid "argument not a list"
 msgstr "인수는 리스트가 아닙니다"
 
-#: src/main/bind.c:1022 src/main/eval.c:2510 src/main/eval.c:2519
+#: src/main/bind.c:1022 src/main/eval.c:2527 src/main/eval.c:2536
 #: src/main/objects.c:313 src/main/objects.c:348 src/main/objects.c:723
 #: src/main/objects.c:740 src/main/objects.c:747
 #, c-format
@@ -1309,7 +1309,7 @@ msgstr "지정된 벡터의 크기가 너무 큽니다"
 #: src/main/envir.c:1857 src/main/envir.c:2514 src/main/envir.c:2574
 #: src/main/envir.c:2846 src/main/envir.c:2875 src/main/envir.c:2896
 #: src/main/envir.c:2919 src/main/envir.c:2954 src/main/envir.c:2975
-#: src/main/envir.c:3281 src/main/envir.c:3286 src/main/eval.c:5076
+#: src/main/envir.c:3281 src/main/envir.c:3286 src/main/eval.c:5093
 #: src/main/objects.c:193 src/main/objects.c:199 src/main/saveload.c:2060
 #: src/main/saveload.c:2351 src/main/serialize.c:2639
 msgid "use of NULL environment is defunct"
@@ -1381,9 +1381,9 @@ msgid "invalid value"
 msgstr "값이 잘못되었습니다"
 
 #: src/main/builtin.c:935 src/main/coerce.c:2391 src/main/coerce.c:2432
-#: src/main/eval.c:502 src/main/eval.c:619 src/main/eval.c:1933
-#: src/main/eval.c:1999 src/main/eval.c:2059 src/main/eval.c:2390
-#: src/main/eval.c:4489 src/main/eval.c:4598
+#: src/main/eval.c:519 src/main/eval.c:636 src/main/eval.c:1950
+#: src/main/eval.c:2016 src/main/eval.c:2076 src/main/eval.c:2407
+#: src/main/eval.c:4506 src/main/eval.c:4615
 msgid "'...' used in an incorrect context"
 msgstr "'...' 가 잘못된 맥락에서 사용되었습니다"
 
@@ -1396,7 +1396,7 @@ msgstr "duplicate switch defaults: '%s' and '%s'"
 msgid "'EXPR' is missing"
 msgstr "'EXPR' 가 없습니다"
 
-#: src/main/builtin.c:993 src/main/eval.c:4914
+#: src/main/builtin.c:993 src/main/eval.c:4931
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR는 길이 1 인 벡터여야 합니다"
 
@@ -1552,7 +1552,7 @@ msgstr "비인자로 강제 변환하려고 합니다"
 msgid "list argument expected"
 msgstr "인수 목록이 기대되고 있습니다"
 
-#: src/main/coerce.c:1540 src/main/eval.c:5080
+#: src/main/coerce.c:1540 src/main/eval.c:5097
 msgid "invalid environment"
 msgstr "잘못된 환경입니다"
 
@@ -2478,7 +2478,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts'은 작은 음수가 아닌 정수여야 합니다"
 
 #: src/main/deparse.c:411 src/main/envir.c:1696 src/main/envir.c:1778
-#: src/main/eval.c:508 src/main/eval.c:1167 src/main/eval.c:3448
+#: src/main/eval.c:525 src/main/eval.c:1184 src/main/eval.c:3465
 #: src/main/saveload.c:1968 src/main/saveload.c:2299 src/main/serialize.c:2657
 #, c-format
 msgid "object '%s' not found"
@@ -2981,8 +2981,8 @@ msgstr "... 리스트는 %d 개의 요소를 포함하지 않습니다"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr ".. %d는 잘못된 문맥에서 사용되고 있습니다. 참조할 ...이 없습니다"
 
-#: src/main/envir.c:1328 src/main/envir.c:1774 src/main/eval.c:512
-#: src/main/eval.c:3439
+#: src/main/envir.c:1328 src/main/envir.c:1774 src/main/eval.c:529
+#: src/main/eval.c:3456
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "인수 \"%s\"가 없으며, 기본값도 없습니다"
@@ -3362,21 +3362,21 @@ msgstr "try 문맥이 아닙니다"
 msgid "error message must be a character string"
 msgstr "오류 메시지는 문자열이어야 합니다"
 
-#: src/main/eval.c:272
+#: src/main/eval.c:289
 #, c-format
 msgid "source files skipped by Rprof; please increase '%s'"
 msgstr ""
 
-#: src/main/eval.c:292
+#: src/main/eval.c:309
 #, c-format
 msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof : 프로파일 '%s'를 열 수 없습니다"
 
-#: src/main/eval.c:382
+#: src/main/eval.c:399
 msgid "R profiling is not available on this system"
 msgstr "R 프로파일은 이 시스템에서는 사용할 수 없습니다"
 
-#: src/main/eval.c:406
+#: src/main/eval.c:423
 msgid ""
 "promise already under evaluation: recursive default argument reference or "
 "earlier problems?"
@@ -3384,268 +3384,268 @@ msgstr ""
 "약속이 이미 평가되고 있습니다: 재귀적인 기본 인수 참조 이거나 그 전의 문제일"
 "까요?"
 
-#: src/main/eval.c:408
+#: src/main/eval.c:425
 msgid "restarting interrupted promise evaluation"
 msgstr "중단된 약속 평가를 재개합니다"
 
-#: src/main/eval.c:454
+#: src/main/eval.c:471
 msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "평가식이 너무 깊게 내제되었습니다: 무한재귀/ 옵션(표현식=)？"
 
-#: src/main/eval.c:514 src/main/eval.c:3440
+#: src/main/eval.c:531 src/main/eval.c:3457
 msgid "argument is missing, with no default"
 msgstr "인수에 값이 없고 기본값도 없습니다"
 
-#: src/main/eval.c:615 src/main/eval.c:4437
+#: src/main/eval.c:632 src/main/eval.c:4454
 msgid "attempt to apply non-function"
 msgstr "함수가 아닌것을 적용하려고 했습니다"
 
-#: src/main/eval.c:638
+#: src/main/eval.c:655
 #, c-format
 msgid "%s at %s#%d: "
 msgstr "%s 는 %s#%d: "
 
-#: src/main/eval.c:1094
+#: src/main/eval.c:1111
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "기호 \"%s\"가 제네릭 함수의 환경에 없습니다"
 
-#: src/main/eval.c:1112
+#: src/main/eval.c:1129
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "심볼 \"%s\" 가 메소드의 환경에 있지 않습니다"
 
-#: src/main/eval.c:1222
+#: src/main/eval.c:1239
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "조건 길이가 2 이상이므로, 최초의 하나만이 사용됩니다"
 
-#: src/main/eval.c:1239
+#: src/main/eval.c:1256
 msgid "missing value where TRUE/FALSE needed"
 msgstr "TRUE/FALSE이 필요한 곳이 결손값입니다"
 
-#: src/main/eval.c:1240
+#: src/main/eval.c:1257
 msgid "argument is not interpretable as logical"
 msgstr "인수가 논리변수로서 해석할수가 없습니다"
 
-#: src/main/eval.c:1241
+#: src/main/eval.c:1258
 msgid "argument is of length zero"
 msgstr "인수의 길이가 0입니다"
 
-#: src/main/eval.c:1314
+#: src/main/eval.c:1331
 msgid "non-symbol loop variable"
 msgstr "non-symbol loop variable"
 
-#: src/main/eval.c:1405 src/main/eval.c:4205
+#: src/main/eval.c:1422 src/main/eval.c:4222
 msgid "invalid for() loop sequence"
 msgstr "invalid for() loop sequence"
 
-#: src/main/eval.c:1534
+#: src/main/eval.c:1551
 msgid "multi-argument returns are not permitted"
 msgstr "복수의 인수 반환은 허용되지 않습니다"
 
-#: src/main/eval.c:1583
+#: src/main/eval.c:1600
 msgid "invalid (NULL) left side of assignment"
 msgstr "대입의 좌변이 부정 (NULL)입니다"
 
-#: src/main/eval.c:1605
+#: src/main/eval.c:1622
 msgid "target of assignment expands to non-language object"
 msgstr "값 할당 대상이 비언어적 개체로 확장됩니다"
 
-#: src/main/eval.c:1651
+#: src/main/eval.c:1668
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "'%s'의 이름이 너무 깁니다"
 
-#: src/main/eval.c:1713
+#: src/main/eval.c:1730
 msgid "cannot do complex assignments in base namespace"
 msgstr "base 이름 공간에 있어서 복소수의 대입은 할수가 없습니다"
 
-#: src/main/eval.c:1715
+#: src/main/eval.c:1732
 msgid "cannot do complex assignments in base environment"
 msgstr "기본 환경에서 복소수를 대입할 수 없습니다"
 
-#: src/main/eval.c:1752 src/main/eval.c:1779
+#: src/main/eval.c:1769 src/main/eval.c:1796
 msgid "invalid function in complex assignment"
 msgstr "복소수의 대입으로, 함수가 잘못되었습니다"
 
-#: src/main/eval.c:1857
+#: src/main/eval.c:1874
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "대입의 좌변이 (do_set) 잘못되었습니다"
 
-#: src/main/eval.c:1872
+#: src/main/eval.c:1889
 msgid "invalid assignment left-hand side"
 msgstr "좌변에 대입이 잘못되었습니다"
 
-#: src/main/eval.c:1937
+#: src/main/eval.c:1954
 #, c-format
 msgid "argument %d is empty"
 msgstr "인수 %d가 비어 있습니다"
 
-#: src/main/eval.c:1940
+#: src/main/eval.c:1957
 #, c-format
 msgid "'%s' is missing"
 msgstr "'%s'를 찾을 수 없습니다"
 
-#: src/main/eval.c:2090
+#: src/main/eval.c:2107
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\"의 형식 매개 변수 목록이 잘못되었습니다"
 
-#: src/main/eval.c:2146 src/main/eval.c:2177 src/main/eval.c:2182
+#: src/main/eval.c:2163 src/main/eval.c:2194 src/main/eval.c:2199
 #, fuzzy, c-format
 msgid "invalid '%s' argument of type '%s'"
 msgstr "'%s' 인수가 잘못되었습니다 "
 
-#: src/main/eval.c:2174
+#: src/main/eval.c:2191
 msgid "numeric 'envir' arg not of length one"
 msgstr "숫자 'envir'인수의 길이가 1이 아닙니다"
 
-#: src/main/eval.c:2198 src/main/eval.c:2220
+#: src/main/eval.c:2215 src/main/eval.c:2237
 msgid "restarts not supported in 'eval'"
 msgstr "재실행 기능은 'eval'함수에 대해서는 지원되지 않습니다"
 
-#: src/main/eval.c:2277 src/main/eval.c:2290
+#: src/main/eval.c:2294 src/main/eval.c:2307
 msgid "'Recall' called from outside a closure"
 msgstr "클로저 외부에서 'Recall'이 호출되었습니다"
 
-#: src/main/eval.c:2383
+#: src/main/eval.c:2400
 msgid "value in '...' is not a promise"
 msgstr "'...'의 값은 promise가 아닙니다"
 
-#: src/main/eval.c:2572 src/main/objects.c:714
+#: src/main/eval.c:2589 src/main/objects.c:714
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "'%s'의 호출 이름이 너무 깁니다"
 
-#: src/main/eval.c:2593
+#: src/main/eval.c:2610
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "'%s'의 제네릭명이 너무 깁니다"
 
-#: src/main/eval.c:2656
+#: src/main/eval.c:2673
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "메소드 (\"%s\", \"%s\")는 \"%s\"과 모순됩니다"
 
-#: src/main/eval.c:2720
+#: src/main/eval.c:2737
 msgid "dispatch error in group dispatch"
 msgstr "그룹 디스패치에 발송 오류가 있습니다"
 
-#: src/main/eval.c:3033
+#: src/main/eval.c:3050
 #, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "\"%s\" 는 %s 함수가 아닙니다"
 
-#: src/main/eval.c:3226
+#: src/main/eval.c:3243
 msgid "node stack overflow"
 msgstr "노드 스택이 가득 찼습니다"
 
-#: src/main/eval.c:3232
+#: src/main/eval.c:3249
 msgid "integer stack overflow"
 msgstr "정수 스택이 가득 찼습니다"
 
-#: src/main/eval.c:3286
+#: src/main/eval.c:3303
 #, fuzzy
 msgid "bad opcode"
 msgstr "opcode가 부적절합니다"
 
-#: src/main/eval.c:4028
+#: src/main/eval.c:4045
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "'x %s y' %s의 형식이 잘못되었습니다"
 
-#: src/main/eval.c:4107
+#: src/main/eval.c:4124
 msgid "bytecode version mismatch; using eval"
 msgstr "바이트 코드 버전 불일치; eval을 사용합니다"
 
-#: src/main/eval.c:4112
+#: src/main/eval.c:4129
 msgid "bytecode version is too old"
 msgstr "바이트 코드 버전이 너무 오래되었습니다"
 
-#: src/main/eval.c:4113
+#: src/main/eval.c:4130
 msgid "bytecode version is too new"
 msgstr "바이트 코드 버전이 너무 앞서 있습니다"
 
-#: src/main/eval.c:4147
+#: src/main/eval.c:4164
 msgid "byte code version mismatch"
 msgstr "바이트 코드 버전이 불일치합니다"
 
-#: src/main/eval.c:4273
+#: src/main/eval.c:4290
 msgid "invalid sequence argument in for loop"
 msgstr "for 루프 범위 인수가 잘못되었습니다"
 
-#: src/main/eval.c:4419 src/main/names.c:1129
+#: src/main/eval.c:4436 src/main/names.c:1129
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "내부 함수 \"%s \" 가 없습니다"
 
-#: src/main/eval.c:4526 src/main/eval.c:4851 src/main/eval.c:4893
+#: src/main/eval.c:4543 src/main/eval.c:4868 src/main/eval.c:4910
 msgid "bad function"
 msgstr "잘못된 함수입니다"
 
-#: src/main/eval.c:4541
+#: src/main/eval.c:4558
 msgid "not a BUILTIN function"
 msgstr "BUILTIN 함수가 아닙니다"
 
-#: src/main/eval.c:4918
+#: src/main/eval.c:4935
 #, fuzzy
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr "명명된 대체값이 없는 switch() 함수는 숫자 표현식이 필요합니다"
 
-#: src/main/eval.c:5013
+#: src/main/eval.c:5030
 msgid "cannot find index for threaded code address"
 msgstr "스레드 코드 주소를 위한 인덱스가 없습니다"
 
-#: src/main/eval.c:5073
+#: src/main/eval.c:5090
 msgid "invalid body"
 msgstr "invalid body"
 
-#: src/main/eval.c:5093
+#: src/main/eval.c:5110
 msgid "invalid symbol"
 msgstr "기호가 잘못되었습니다"
 
-#: src/main/eval.c:5137
+#: src/main/eval.c:5154
 msgid "argument is not a byte code object"
 msgstr "인수가 바이트 코드 오브젝트가 아닙니다"
 
-#: src/main/eval.c:5158
+#: src/main/eval.c:5175
 msgid "bad file name"
 msgstr "잘못된 파일 이름입니다"
 
-#: src/main/eval.c:5162 src/main/eval.c:5183
+#: src/main/eval.c:5179 src/main/eval.c:5200
 msgid "unable to open 'file'"
 msgstr "'file'를 열수가 없습니다"
 
-#: src/main/eval.c:5177 src/main/saveload.c:1932
+#: src/main/eval.c:5194 src/main/saveload.c:1932
 msgid "'file' must be non-empty string"
 msgstr "'file'는 비어있지 않는 문자열 이어야만 합니다"
 
-#: src/main/eval.c:5179 src/main/saveload.c:1934 src/main/saveload.c:2234
+#: src/main/eval.c:5196 src/main/saveload.c:1934 src/main/saveload.c:2234
 #: src/main/serialize.c:2084
 msgid "'ascii' must be logical"
 msgstr "'ascii'는 논리값 이어야만 합니다"
 
-#: src/main/eval.c:5250 src/main/eval.c:5269 src/main/eval.c:5299
+#: src/main/eval.c:5267 src/main/eval.c:5286 src/main/eval.c:5316
 msgid "constant buffer must be a generic vector"
 msgstr "constant buffer must be a generic vector"
 
-#: src/main/eval.c:5301
+#: src/main/eval.c:5318
 msgid "bad constant count"
 msgstr "bad constant count"
 
-#: src/main/eval.c:5337
+#: src/main/eval.c:5354
 msgid "profile timer in use"
 msgstr "프로파일 타이머가 사용되고 있습니다"
 
-#: src/main/eval.c:5339
+#: src/main/eval.c:5356
 msgid "already byte code profiling"
 msgstr "이미 바이트 코드 프로파일링이 되고 있습니다"
 
-#: src/main/eval.c:5357
+#: src/main/eval.c:5374
 msgid "setting profile timer failed"
 msgstr "프로파일 타이머 설정에 실패했습니다"
 
-#: src/main/eval.c:5374
+#: src/main/eval.c:5391
 msgid "not byte code profiling"
 msgstr "바이트 코드의 프로파일링이 아닙니다"
 

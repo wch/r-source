@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@normipaiva.com>, 2006.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -119,8 +119,8 @@ msgid ""
 "  error: %s"
 msgstr ""
 "%2$s()里算'%3$s'时%1$s失败了，详细内容：\n"
-"  调用: %s\n"
-"  错误: %s"
+"  调用: %4$s\n"
+"  错误: %5$s"
 
 msgid "%s namespace cannot be unloaded:"
 msgstr "无法卸下%s这个名字空间："
@@ -145,22 +145,6 @@ msgstr "自动载入器在'%2$s'找不到'%1$s' "
 
 msgid "complex matrices not permitted at present"
 msgstr "复数矩阵现在不能用"
-
-msgid "non-square matrix in 'chol'"
-msgstr "'chol'的矩阵不是正方形的"
-
-msgid "non-matrix argument to 'chol'"
-msgstr "'chol'的参数不是矩阵"
-
-
-msgid "invalid nrow(x)"
-msgstr "nrow(x)不对"
-
-msgid "too large a matrix for LINPACK"
-msgstr "矩阵对LINPACK来说太大了"
-
-msgid "matrix not positive definite"
-msgstr "非正定矩阵"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x'必需是阵列，而且至少得有两个维度"
@@ -236,7 +220,6 @@ msgstr "options(\"stringsAsFactors\")只能取TRUE或FALSE值"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "'data.frame'参数里%d单元中行名不匹配"
-
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "某些row.names有重复：%s --> row.names不用了"
@@ -542,6 +525,9 @@ msgstr "零乘零的矩阵"
 msgid "non-square matrix in 'eigen'"
 msgstr "eigen里的矩阵不是正方形的"
 
+msgid "invalid nrow(x)"
+msgstr "nrow(x)不对"
+
 msgid "invalid 'labels'; length %d should be 1 or %d"
 msgstr "'labels'不对；长度%d应该是一或%d"
 
@@ -713,17 +699,17 @@ msgid ""
 msgstr "程辑包%s的使用许可要求你先通过交互式会话时接受它"
 
 msgid "package %s has a license that you need to accept after viewing"
-msgstr "程辑包％s的使用许可证要求你在看完后接受它"
+msgstr "程辑包%s的使用许可证要求你在看完后接受它"
 
 msgid ""
 "package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
-"程辑包％s的使用许可证要求你接受它:\n"
+"程辑包%s的使用许可证要求你接受它:\n"
 "按照DESCRIPTION文件它是"
 
 msgid "license for package %s not accepted"
-msgstr "程辑包％s的使用许可证没有被接受"
+msgstr "程辑包%s的使用许可证没有被接受"
 
 msgid "Attaching package: %s"
 msgstr "载入程辑包：%s"
@@ -972,14 +958,14 @@ msgstr "%s不存在"
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "载入了名字空间%1$s %2$s，但需要的是%3$s %4$s"
 
-
 msgid "namespace %s is already sealed in 'loadNamespace'"
 msgstr "名字空间%s已经在'loadNamespace'封條了"
 
 msgid ""
 "failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
 "defined in the %s namespace"
-msgstr "不能为%1$s分配RegisteredNativeSymbol给%2$s因为%4$s已经在%3$s名字空间有定义了"
+msgstr ""
+"不能为%1$s分配RegisteredNativeSymbol给%2$s因为%4$s已经在%3$s名字空间有定义了"
 
 msgid ""
 "failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
@@ -1003,7 +989,8 @@ msgstr "程辑包%s里的R写碼载入失败"
 msgid ""
 "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
 "package %s"
-msgstr "虽然'exportClassPattern'在'NAMESPACE'有设定但它在%s程辑包中没有相对应的类别"
+msgstr ""
+"虽然'exportClassPattern'在'NAMESPACE'有设定但它在%s程辑包中没有相对应的类别"
 
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "在%s程辑包中%s类别指定被用于出口，但它的定义并不存在"
@@ -1082,7 +1069,7 @@ msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "'NAMESPACE'文件里'%s'指示中有空的名字"
 
 msgid "duplicated symbol names %s in useDynLib(\"%s\")"
-msgstr "useDynlib(\"%s\")里有重复字符名字"
+msgstr "useDynlib(\"%s\")里有重复字符名字%s"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "不是'S3method'指令：%s"
@@ -1125,6 +1112,9 @@ msgstr "参数将被数据略微回收"
 
 msgid "invalid ncol(x)"
 msgstr "ncol(x)不对"
+
+msgid "too large a matrix for LINPACK"
+msgstr "矩阵对LINPACK来说太大了"
 
 msgid "first argument must be a QR decomposition"
 msgstr "第一个参数必需是QR分解"
@@ -1352,7 +1342,7 @@ msgid "attempt to make a table with >= 2^31 elements"
 msgstr "企图建立一个元素多于2^31的表"
 
 msgid "'object' must inherit from class %s"
-msgstr "'object'必需从\"table\"繼承类别"
+msgstr "'object'必需从\"table\"繼承类别%s"
 
 msgid "'x' must inherit from class %s"
 msgstr "'x'必需从%s繼承类别"
@@ -1417,7 +1407,6 @@ msgstr "一元算符'%s'对numeric_version对象没有定义"
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr "'%s'对numeric_version对象没有定义"
 
-#, 
 msgid "%s not defined for \"numeric_version\" objects"
 msgstr "'%s'对numeric_version对象没有定义"
 
@@ -1586,8 +1575,7 @@ msgid ""
 msgid_plural ""
 "Functions found when exporting methods from the namespace %s which are not "
 "S4 generic: %s"
-msgstr[0] ""
-"在从名字空间%s中出口方法时发现了不是S4通用的函数%s"
+msgstr[0] "在从名字空间%s中出口方法时发现了不是S4通用的函数%s"
 
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
@@ -1616,6 +1604,15 @@ msgstr[0] "不是所有的%s都是TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr "'chol'的矩阵不是正方形的"
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr "'chol'的参数不是矩阵"
+
+#~ msgid "matrix not positive definite"
+#~ msgstr "非正定矩阵"
 
 #~ msgid "'keep.source' is deprecated and will be ignored"
 #~ msgstr "'keep.source'已经不再有用，因此会略过不用"
@@ -1834,4 +1831,3 @@ msgstr[0] "警告信息：\n"
 #, fuzzy
 #~ msgid "invalid value of length(bin)"
 #~ msgstr "无效值"
-

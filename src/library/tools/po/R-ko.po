@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: 2012-03-08 23:15+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -473,8 +473,64 @@ msgid "Only one Rd section per %s is supported."
 msgstr "Only one Rd section per \\Sexpr is supported."
 
 #, fuzzy
+msgid "Vignette product"
+msgstr "비니에트:"
+
+msgid "does not have a known filename extension ("
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid ")"
+msgstr ")"
+
+#, fuzzy
+msgid "Failed to locate the"
+msgstr "생성할 수 없습니다 "
+
+msgid "output file (by engine"
+msgstr ""
+
+msgid "%s::%s"
+msgstr ""
+
+msgid ") for vignette with name"
+msgstr ""
+
+#, fuzzy
+msgid ". The following files exists in directory"
+msgstr "이 디렉토리에는 파일이 없습니다 "
+
+msgid ":"
+msgstr ":"
+
+#, fuzzy
+msgid "Located more than one"
+msgstr "하나를 넘어가는 match이 없습니다"
+
+#, fuzzy
 msgid "unable to create temp directory %s"
 msgstr "temp 디렉토리를 작성할수가 없습니다"
+
+#, fuzzy
+msgid "Vignette"
+msgstr "비니에트:"
+
+msgid "overwrites the following"
+msgstr ""
+
+msgid "output by vignette"
+msgstr ""
+
+msgid "Detected vignette source files ("
+msgstr ""
+
+msgid ") with shared names ("
+msgstr ""
+
+msgid ") and therefore risking overwriting each others output files"
+msgstr ""
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -503,21 +559,67 @@ msgstr "인수 'vignette' 는 반드시 길이가 1 이어야 합니다 "
 msgid "file '%s' not found"
 msgstr "파일 '%s' 을 찾을 수 없습니다 "
 
-msgid "vignette engine"
+#, fuzzy
+msgid "Unsupported engine name"
+msgstr "지원되지 않는 필터 %s "
+
+#, fuzzy
+msgid "None of packages"
+msgstr "패키지 %s 에 대한 도움말을 찾지 못했습니다 "
+
+msgid "have registered vignette engines"
 msgstr ""
 
 #, fuzzy
-msgid "not found"
-msgstr "찾을 수 없습니다 "
+msgid "Vignette engine"
+msgstr "비니에트:"
 
 #, fuzzy
-msgid "cannot change the"
+msgid "is not registered"
+msgstr "존재하지 않습니다"
+
+msgid "is not registered by any of the packages"
+msgstr ""
+
+msgid "Engine name"
+msgstr ""
+
+#, fuzzy
+msgid "and package"
+msgstr "잘못된 패키지 "
+
+#, fuzzy
+msgid "do not match"
+msgstr "존재하지 않습니다"
+
+#, fuzzy
+msgid "Argument"
+msgstr "Argument for"
+
+msgid "weave"
+msgstr ""
+
+msgid "must be a function and not"
+msgstr ""
+
+msgid "tangle"
+msgstr ""
+
+msgid "pattern"
+msgstr ""
+
+#, fuzzy
+msgid "must be a character vector or NULL and not"
+msgstr "file' 은 반드시 문자열 혹은 커넥션이어야 합니다 "
+
+#, fuzzy
+msgid "Cannot change the"
 msgstr "강제변환 할 수 없습니다 "
 
 msgid "Sweave"
 msgstr ""
 
-msgid "engine"
+msgid "engine or use an engine of that name"
 msgstr ""
 
 #, fuzzy
@@ -570,8 +672,13 @@ msgstr ""
 "비니에트 '%s' 의 Sweave 를 실행하는데 아래와 같은 이유로 실패했습니다: \n"
 "%s"
 
-msgid "file '%s' was not created"
-msgstr "파일 '%s' 는 생성되지 않았습니다 "
+#, fuzzy
+msgid ""
+"compiling TeX file %s failed with message:\n"
+"%s"
+msgstr ""
+"비니에트 '%s' 의 Sweave 를 실행하는데 아래와 같은 이유로 실패했습니다: \n"
+"%s"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "'%s' 에서 '%s' 로 복사할 수 없습니다 "
@@ -641,9 +748,6 @@ msgstr ""
 
 msgid "installing dependencies %s"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "checking %s ..."
 msgstr ""
@@ -1183,6 +1287,13 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니다 "
 
+#, fuzzy
+#~ msgid "not found"
+#~ msgstr "찾을 수 없습니다 "
+
+#~ msgid "file '%s' was not created"
+#~ msgstr "파일 '%s' 는 생성되지 않았습니다 "
+
 #~ msgid "found %s"
 #~ msgstr "%s 를 찾았습니다 "
 
@@ -1297,9 +1408,6 @@ msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니
 #~ msgid "package directory"
 #~ msgstr "패키지 디렉토리 "
 
-#~ msgid "does not exist"
-#~ msgstr "존재하지 않습니다"
-
 #~ msgid "Unrecognized search field:"
 #~ msgstr "인식할 수 없는 검색항목: "
 
@@ -1346,9 +1454,6 @@ msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니
 
 #~ msgid "Internal error, no tag"
 #~ msgstr "Internal error, no tag"
-
-#~ msgid "Argument for"
-#~ msgstr "Argument for"
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "Internal error: NULL tag"
@@ -1437,9 +1542,6 @@ msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니
 #~ msgid "not installing"
 #~ msgstr "다음 부분에 설치 "
 
-#~ msgid ":"
-#~ msgstr ":"
-
 #~ msgid "Generics g in env ="
 #~ msgstr "Generics g in env ="
 
@@ -1451,9 +1553,6 @@ msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니
 
 #~ msgid "importFrom("
 #~ msgstr "importFrom("
-
-#~ msgid ")"
-#~ msgstr ")"
 
 #~ msgid "in NAMESPACE."
 #~ msgstr "in NAMESPACE."
@@ -1586,6 +1685,3 @@ msgstr[0] "한개이상의 데이터 호출에 의해 생성된 객체 %s 입니
 
 #~ msgid "Syntax error in documentation object '%s':"
 #~ msgstr "파일 '%s'에서 인덱스 정보를 읽을수가 없습니다"
-
-#~ msgid "no or more than one match"
-#~ msgstr "하나를 넘어가는 match이 없습니다"

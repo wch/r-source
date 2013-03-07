@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2012-03-15 11:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -153,22 +153,6 @@ msgstr "автозагрузчик не нашел '%s' в '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "в настоящее время комплексные матрицы не разрешены"
-
-msgid "non-square matrix in 'chol'"
-msgstr "не квадратная матрица в 'chol'"
-
-msgid "non-matrix argument to 'chol'"
-msgstr "нематричный аргумент для 'chol'"
-
-#, fuzzy
-msgid "invalid nrow(x)"
-msgstr "неправильное имя"
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
-msgstr "матрица не является положительно определенной"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' должен быть матрицей по крайней мере с двумя измерениями"
@@ -583,6 +567,10 @@ msgstr "0 x 0 матрица"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "неквадратная матрица в 'eigen'"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "неправильное имя"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1212,6 +1200,9 @@ msgstr "аргумент будет частично зациклен"
 msgid "invalid ncol(x)"
 msgstr "неправильное имя"
 
+msgid "too large a matrix for LINPACK"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
 msgstr "первый аргумент должен быть результатом QR разложения"
 
@@ -1786,6 +1777,15 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr "не квадратная матрица в 'chol'"
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr "нематричный аргумент для 'chol'"
+
+#~ msgid "matrix not positive definite"
+#~ msgstr "матрица не является положительно определенной"
 
 #~ msgid "'keep.source' is deprecated and will be ignored"
 #~ msgstr "'keep.source' устарел и будет пропущен"

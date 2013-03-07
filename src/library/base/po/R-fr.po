@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2012-03-06 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -155,22 +155,6 @@ msgstr "le chargement automatique n'a pas trouvé '%s' dans '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "les matrices complexes ne sont pas encore traitées"
-
-msgid "non-square matrix in 'chol'"
-msgstr "la matrice doit être carrée pour 'chol'"
-
-msgid "non-matrix argument to 'chol'"
-msgstr "l'argument doit être une matrice pour 'chol'"
-
-#, fuzzy
-msgid "invalid nrow(x)"
-msgstr "nom incorrect"
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
-msgstr "la matrice n'est pas définie positive"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' doit être un tableau ayant au moins 2 dimensions"
@@ -609,6 +593,10 @@ msgstr "matrice 0 x 0"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "la matrice n'est pas carrée dans 'eigen'"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "nom incorrect"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1265,6 +1253,9 @@ msgstr "un argument sera recyclé partiellement"
 msgid "invalid ncol(x)"
 msgstr "nom incorrect"
 
+msgid "too large a matrix for LINPACK"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
 msgstr "le premier argument doit être une décomposition QR"
 
@@ -1818,6 +1809,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr "la matrice doit être carrée pour 'chol'"
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr "l'argument doit être une matrice pour 'chol'"
+
+#~ msgid "matrix not positive definite"
+#~ msgstr "la matrice n'est pas définie positive"
 
 #~ msgid "'keep.source' is deprecated and will be ignored"
 #~ msgstr "'keep.source' est obsolète et sera ignoré"

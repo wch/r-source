@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -431,7 +431,58 @@ msgstr ""
 msgid "Only one Rd section per %s is supported."
 msgstr ""
 
+msgid "Vignette product"
+msgstr ""
+
+msgid "does not have a known filename extension ("
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "Failed to locate the"
+msgstr ""
+
+msgid "output file (by engine"
+msgstr ""
+
+msgid "%s::%s"
+msgstr ""
+
+msgid ") for vignette with name"
+msgstr ""
+
+msgid ". The following files exists in directory"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid "Located more than one"
+msgstr ""
+
 msgid "unable to create temp directory %s"
+msgstr ""
+
+msgid "Vignette"
+msgstr ""
+
+msgid "overwrites the following"
+msgstr ""
+
+msgid "output by vignette"
+msgstr ""
+
+msgid "Detected vignette source files ("
+msgstr ""
+
+msgid ") with shared names ("
+msgstr ""
+
+msgid ") and therefore risking overwriting each others output files"
 msgstr ""
 
 msgid ""
@@ -456,19 +507,58 @@ msgstr ""
 msgid "file '%s' not found"
 msgstr ""
 
-msgid "vignette engine"
+msgid "Unsupported engine name"
 msgstr ""
 
-msgid "not found"
+msgid "None of packages"
 msgstr ""
 
-msgid "cannot change the"
+msgid "have registered vignette engines"
+msgstr ""
+
+msgid "Vignette engine"
+msgstr ""
+
+msgid "is not registered"
+msgstr ""
+
+msgid "is not registered by any of the packages"
+msgstr ""
+
+msgid "Engine name"
+msgstr ""
+
+msgid "and package"
+msgstr ""
+
+msgid "do not match"
+msgstr ""
+
+msgid "Argument"
+msgstr ""
+
+msgid "weave"
+msgstr ""
+
+msgid "must be a function and not"
+msgstr ""
+
+msgid "tangle"
+msgstr ""
+
+msgid "pattern"
+msgstr ""
+
+msgid "must be a character vector or NULL and not"
+msgstr ""
+
+msgid "Cannot change the"
 msgstr ""
 
 msgid "Sweave"
 msgstr ""
 
-msgid "engine"
+msgid "engine or use an engine of that name"
 msgstr ""
 
 msgid "vignette builder '%s' not found"
@@ -516,7 +606,9 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "file '%s' was not created"
+msgid ""
+"compiling TeX file %s failed with message:\n"
+"%s"
 msgstr ""
 
 msgid "cannot copy '%s' to '%s'"
@@ -580,9 +672,6 @@ msgid "downloading %s ..."
 msgstr ""
 
 msgid "installing dependencies %s"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "checking %s ..."

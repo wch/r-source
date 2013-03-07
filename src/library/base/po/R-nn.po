@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -149,21 +149,6 @@ msgstr "autolastaren fann ikkje «%s» i «%s»"
 
 msgid "complex matrices not permitted at present"
 msgstr "komplekse matriser er førebels ikkje støtta"
-
-msgid "non-square matrix in 'chol'"
-msgstr "ikkje-kvadratisk matrise i «chol»"
-
-msgid "non-matrix argument to 'chol'"
-msgstr "ikkje-matrise-argument i «chol»"
-
-msgid "invalid nrow(x)"
-msgstr "ugyldig nrow(x)"
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
-msgstr "matrisa er ikkje positiv definitt"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "«x» må vera eit array-objekt med minst to dimensjonar"
@@ -575,6 +560,9 @@ msgstr "0 × 0-matrise"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "ikkje-kvadratisk matrise i «eigen»"
+
+msgid "invalid nrow(x)"
+msgstr "ugyldig nrow(x)"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1203,6 +1191,9 @@ msgstr "eit argument vert delvis resirkulert"
 msgid "invalid ncol(x)"
 msgstr "ugyldig ncol(x)"
 
+msgid "too large a matrix for LINPACK"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
 msgstr "det første argumentet må vera ei QR-dekomponering"
 
@@ -1747,6 +1738,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr "ikkje-kvadratisk matrise i «chol»"
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr "ikkje-matrise-argument i «chol»"
+
+#~ msgid "matrix not positive definite"
+#~ msgstr "matrisa er ikkje positiv definitt"
 
 #~ msgid "'keep.source' is deprecated and will be ignored"
 #~ msgstr "«keep.source» er forelda, og vert ikkje brukt"

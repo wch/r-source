@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2012-03-08 20:10+0200\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
@@ -151,22 +151,6 @@ msgstr "자동로더는 '%s' 를 '%s' 에서 찾을 수 없습니다 "
 
 msgid "complex matrices not permitted at present"
 msgstr "복소 행렬은 현재 허용도지 않습니다 "
-
-msgid "non-square matrix in 'chol'"
-msgstr "'chol' 에 비정방행렬이 있습니다 "
-
-msgid "non-matrix argument to 'chol'"
-msgstr "'chol' 에 행렬이 아닌 인수입니다"
-
-#, fuzzy
-msgid "invalid nrow(x)"
-msgstr "부적절한 이름입니다"
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
-msgstr "향렬이 positive definite 가 아닙니다 "
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' 는 최소 2차원 배열이어야 합니다 "
@@ -580,6 +564,10 @@ msgstr "0 x 0 행렬 "
 
 msgid "non-square matrix in 'eigen'"
 msgstr "'eigen' 에 non-sqare 행렬이 주어졌습니다"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "부적절한 이름입니다"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1213,6 +1201,9 @@ msgstr "인수가 반복사용될 것입니다 "
 msgid "invalid ncol(x)"
 msgstr "부적절한 이름입니다"
 
+msgid "too large a matrix for LINPACK"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
 msgstr "첫번째 인수가 QR 분해이어야 합니다 "
 
@@ -1738,6 +1729,15 @@ msgstr[0] "TRUE 대신 T 가 사용되었습니다 "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 매시지: \n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr "'chol' 에 비정방행렬이 있습니다 "
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr "'chol' 에 행렬이 아닌 인수입니다"
+
+#~ msgid "matrix not positive definite"
+#~ msgstr "향렬이 positive definite 가 아닙니다 "
 
 #~ msgid "'keep.source' is deprecated and will be ignored"
 #~ msgstr "'keep.source' is deprecated and will be ignored"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -30,7 +30,7 @@ msgid "need at least %s (=%d) knots"
 msgstr "至少需要%s (=%d) 个结"
 
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr "除非你设定'%s'，'x'数据值必需在%g到%g范围之间"
+msgstr "除非你设定'%3$s'，'x'数据值必需在%1$g到%2$g范围之间"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr "程序包'Matrix'必需安装了以后才能用%s"
@@ -76,4 +76,3 @@ msgstr "'df'太小了；用过了的值为%d "
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr "一些在结值界外的'x'数据有可能会引起病态底数"
-

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -454,9 +454,62 @@ msgstr ""
 msgid "Only one Rd section per %s is supported."
 msgstr ""
 
+msgid "Vignette product"
+msgstr ""
+
+msgid "does not have a known filename extension ("
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+#, fuzzy
+msgid "Failed to locate the"
+msgstr "impossibile creare"
+
+msgid "output file (by engine"
+msgstr ""
+
+msgid "%s::%s"
+msgstr ""
+
+msgid ") for vignette with name"
+msgstr ""
+
+msgid ". The following files exists in directory"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+#, fuzzy
+msgid "Located more than one"
+msgstr "non più di una corrispondenza"
+
 #, fuzzy
 msgid "unable to create temp directory %s"
 msgstr "impossibile creare directory temporanea"
+
+msgid "Vignette"
+msgstr ""
+
+msgid "overwrites the following"
+msgstr ""
+
+msgid "output by vignette"
+msgstr ""
+
+msgid "Detected vignette source files ("
+msgstr ""
+
+msgid ") with shared names ("
+msgstr ""
+
+msgid ") and therefore risking overwriting each others output files"
+msgstr ""
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -481,21 +534,64 @@ msgstr "l'argomento 'vignette' deve avere lunghezza 1"
 msgid "file '%s' not found"
 msgstr "file '%s' non trovato"
 
-msgid "vignette engine"
+msgid "Unsupported engine name"
 msgstr ""
 
 #, fuzzy
-msgid "not found"
-msgstr "file '%s' non trovato"
+msgid "None of packages"
+msgstr "non può essere usato per il pacchetto 'base'"
+
+msgid "have registered vignette engines"
+msgstr ""
+
+msgid "Vignette engine"
+msgstr ""
 
 #, fuzzy
-msgid "cannot change the"
+msgid "is not registered"
+msgstr "il file '%s' non esiste"
+
+msgid "is not registered by any of the packages"
+msgstr ""
+
+msgid "Engine name"
+msgstr ""
+
+msgid "and package"
+msgstr ""
+
+#, fuzzy
+msgid "do not match"
+msgstr "il file '%s' non esiste"
+
+msgid "Argument"
+msgstr ""
+
+msgid "weave"
+msgstr ""
+
+msgid "must be a function and not"
+msgstr ""
+
+msgid "tangle"
+msgstr ""
+
+msgid "pattern"
+msgstr ""
+
+#, fuzzy
+msgid "must be a character vector or NULL and not"
+msgstr ""
+"argomento 'file' deve essere una stringa di caratteri o una connessione"
+
+#, fuzzy
+msgid "Cannot change the"
 msgstr "impossibile leggere codice sorgente del pacchetto"
 
 msgid "Sweave"
 msgstr ""
 
-msgid "engine"
+msgid "engine or use an engine of that name"
 msgstr ""
 
 #, fuzzy
@@ -546,8 +642,10 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "file '%s' was not created"
-msgstr "il file '%s' non è stato creato"
+msgid ""
+"compiling TeX file %s failed with message:\n"
+"%s"
+msgstr ""
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "impossibile copiare '%s' su '%s'"
@@ -615,9 +713,6 @@ msgid "downloading %s ..."
 msgstr ""
 
 msgid "installing dependencies %s"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "checking %s ..."
@@ -1176,6 +1271,13 @@ msgstr[0] "creati da più di una chiamata data"
 msgstr[1] "creati da più di una chiamata data"
 
 #, fuzzy
+#~ msgid "not found"
+#~ msgstr "file '%s' non trovato"
+
+#~ msgid "file '%s' was not created"
+#~ msgstr "il file '%s' non è stato creato"
+
+#, fuzzy
 #~ msgid "package must be loaded"
 #~ msgstr "il name space non deve essere caricato."
 
@@ -1190,10 +1292,6 @@ msgstr[1] "creati da più di una chiamata data"
 #, fuzzy
 #~ msgid "package directory"
 #~ msgstr "impossibile creare directory '%s'"
-
-#, fuzzy
-#~ msgid "does not exist"
-#~ msgstr "il file '%s' non esiste"
 
 #, fuzzy
 #~ msgid "running 'zip' failed"
@@ -1335,6 +1433,3 @@ msgstr[1] "creati da più di una chiamata data"
 
 #~ msgid "Syntax error in documentation object '%s':"
 #~ msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
-
-#~ msgid "no or more than one match"
-#~ msgstr "non più di una corrispondenza"

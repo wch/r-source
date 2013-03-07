@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: 2012-02-26 14:22+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -486,8 +486,64 @@ msgid "Only one Rd section per %s is supported."
 msgstr " \\SexprはRdセクションを1つしか持てません。 "
 
 #, fuzzy
+msgid "Vignette product"
+msgstr " ビニエット: "
+
+msgid "does not have a known filename extension ("
+msgstr ""
+
+msgid ","
+msgstr " , "
+
+msgid ")"
+msgstr " ) "
+
+#, fuzzy
+msgid "Failed to locate the"
+msgstr " 生成出来ません "
+
+msgid "output file (by engine"
+msgstr ""
+
+msgid "%s::%s"
+msgstr ""
+
+msgid ") for vignette with name"
+msgstr ""
+
+#, fuzzy
+msgid ". The following files exists in directory"
+msgstr " このディレクトリにはファイルが存在しません "
+
+msgid ":"
+msgstr " ： "
+
+#, fuzzy
+msgid "Located more than one"
+msgstr " 0か複数のマッチ "
+
+#, fuzzy
 msgid "unable to create temp directory %s"
 msgstr " 仮ディレクトリを生成することが出来ません "
+
+#, fuzzy
+msgid "Vignette"
+msgstr " ビニエット: "
+
+msgid "overwrites the following"
+msgstr ""
+
+msgid "output by vignette"
+msgstr ""
+
+msgid "Detected vignette source files ("
+msgstr ""
+
+msgid ") with shared names ("
+msgstr ""
+
+msgid ") and therefore risking overwriting each others output files"
+msgstr ""
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -517,21 +573,67 @@ msgstr " 引数 'vignette' は長さ1でなければなりません "
 msgid "file '%s' not found"
 msgstr " ファイル '%s' が見つかりません "
 
-msgid "vignette engine"
+#, fuzzy
+msgid "Unsupported engine name"
+msgstr " 未サポートのフィルタ %s "
+
+#, fuzzy
+msgid "None of packages"
+msgstr " パッケージ %s に対するヘルプが見つかりません "
+
+msgid "have registered vignette engines"
 msgstr ""
 
 #, fuzzy
-msgid "not found"
-msgstr " が見つかりません "
+msgid "Vignette engine"
+msgstr " ビニエット: "
 
 #, fuzzy
-msgid "cannot change the"
+msgid "is not registered"
+msgstr " は存在しません "
+
+msgid "is not registered by any of the packages"
+msgstr ""
+
+msgid "Engine name"
+msgstr ""
+
+#, fuzzy
+msgid "and package"
+msgstr " 不正なパッケージです "
+
+#, fuzzy
+msgid "do not match"
+msgstr " は存在しません "
+
+#, fuzzy
+msgid "Argument"
+msgstr " 以下に対する引数 "
+
+msgid "weave"
+msgstr ""
+
+msgid "must be a function and not"
+msgstr ""
+
+msgid "tangle"
+msgstr ""
+
+msgid "pattern"
+msgstr ""
+
+#, fuzzy
+msgid "must be a character vector or NULL and not"
+msgstr " 'file' は文字列ベクトルかコネクションでなければなりません "
+
+#, fuzzy
+msgid "Cannot change the"
 msgstr " 強制変換できません "
 
 msgid "Sweave"
 msgstr ""
 
-msgid "engine"
+msgid "engine or use an engine of that name"
 msgstr ""
 
 #, fuzzy
@@ -583,8 +685,13 @@ msgstr ""
 " ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
 " %s "
 
-msgid "file '%s' was not created"
-msgstr " ファイル '%s' は生成されませんでした "
+#, fuzzy
+msgid ""
+"compiling TeX file %s failed with message:\n"
+"%s"
+msgstr ""
+" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" %s "
 
 msgid "cannot copy '%s' to '%s'"
 msgstr " '%s' を '%s' にコピーすることが出来ません "
@@ -656,9 +763,6 @@ msgstr ""
 
 msgid "installing dependencies %s"
 msgstr ""
-
-msgid ","
-msgstr " , "
 
 #, fuzzy
 msgid "checking %s ..."
@@ -1209,6 +1313,13 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
 
+#, fuzzy
+#~ msgid "not found"
+#~ msgstr " が見つかりません "
+
+#~ msgid "file '%s' was not created"
+#~ msgstr " ファイル '%s' は生成されませんでした "
+
 #~ msgid "found %s"
 #~ msgstr " %s が見つかりました "
 
@@ -1325,9 +1436,6 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 #~ msgid "package directory"
 #~ msgstr " パッケージ dir "
 
-#~ msgid "does not exist"
-#~ msgstr " は存在しません "
-
 #~ msgid "Unrecognized search field:"
 #~ msgstr " 認識できない検索フィールド: "
 
@@ -1374,9 +1482,6 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 
 #~ msgid "Internal error, no tag"
 #~ msgstr " 内部エラー、タグがありません "
-
-#~ msgid "Argument for"
-#~ msgstr " 以下に対する引数 "
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr " 内部エラー： NULL タグ "
@@ -1465,9 +1570,6 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 #~ msgid "not installing"
 #~ msgstr " 以下にインストール中: "
 
-#~ msgid ":"
-#~ msgstr " ： "
-
 #~ msgid "Generics g in env ="
 #~ msgstr " 総称的な g (以下の環境中） "
 
@@ -1479,9 +1581,6 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 
 #~ msgid "importFrom("
 #~ msgstr " importFrom( "
-
-#~ msgid ")"
-#~ msgstr " ) "
 
 #~ msgid "in NAMESPACE."
 #~ msgstr " 名前空間の中に。 "
@@ -1805,6 +1904,3 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 
 #~ msgid "multiple \\encoding lines in file"
 #~ msgstr " 以下のファイル中に重複した \\encoding 行 "
-
-#~ msgid "no or more than one match"
-#~ msgstr " 0か複数のマッチ "

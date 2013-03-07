@@ -12,16 +12,14 @@
     \itemize{
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.
 
-      \item \code{chol(pivot = FALSE, LINPACK = TRUE)},
-      \code{ch2inv(LINPACK = TRUE)}, \code{eigen(EISPACK = TRUE)},
-      \code{solve(LINPACK = TRUE)} and \code{svd(LINPACK = TRUE)} no
-      longer warn that LAPACK will be used.
+      \code{chol(LINPACK = TRUE)}, \code{ch2inv(LINPACK = TRUE)},
+      \code{eigen(EISPACK = TRUE)}, \code{solve(LINPACK = TRUE)} and
+      \code{svd(LINPACK = TRUE)} use LAPACK and no longer warn.
 
-      % Rest are not yet released, but intended.
-      \item The long-deprecated use of \code{\\synopsis} in the
+      \item [Intended] The long-deprecated use of \code{\\synopsis} in the
       \samp{Usage} section of \file{.Rd} files has been removed.
 
-      \item \code{.find.package()} and \code{.path.package()} are
+      \item [Intended] \code{.find.package()} and \code{.path.package()} are
       defunct: only the public versions without the dot have ever
       been in the API.
     }

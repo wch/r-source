@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -144,21 +144,6 @@ msgid "autoloader did not find '%s' in '%s'"
 msgstr ""
 
 msgid "complex matrices not permitted at present"
-msgstr ""
-
-msgid "non-square matrix in 'chol'"
-msgstr ""
-
-msgid "non-matrix argument to 'chol'"
-msgstr ""
-
-msgid "invalid nrow(x)"
-msgstr ""
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
 msgstr ""
 
 msgid "'x' must be an array of at least two dimensions"
@@ -530,6 +515,9 @@ msgid "0 x 0 matrix"
 msgstr ""
 
 msgid "non-square matrix in 'eigen'"
+msgstr ""
+
+msgid "invalid nrow(x)"
 msgstr ""
 
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1115,6 +1103,9 @@ msgid "an argument will be fractionally recycled"
 msgstr ""
 
 msgid "invalid ncol(x)"
+msgstr ""
+
+msgid "too large a matrix for LINPACK"
 msgstr ""
 
 msgid "first argument must be a QR decomposition"

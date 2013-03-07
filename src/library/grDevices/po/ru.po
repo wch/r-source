@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:49+0000\n"
+"POT-Creation-Date: 2013-03-07 08:36+0000\n"
 "PO-Revision-Date: 2012-03-15 11:26-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -315,7 +315,7 @@ msgstr "postscript(print.it=TRUE) использован с пустой командой печати"
 msgid "invalid page type '%s' (postscript)"
 msgstr "неправильный тип страницы '%s' (postscript)"
 
-#: devPS.c:3453 devPS.c:4566 devWindows.c:2338
+#: devPS.c:3453 devPS.c:4566 devWindows.c:2339
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -543,14 +543,14 @@ msgstr "неправильный параметр 'family' в %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "неправильный параметр 'fonts' в %s"
 
-#: devPS.c:8233 devPS.c:8395 devPS.c:8398 devWindows.c:3643 devWindows.c:3647
-#: devWindows.c:3655 devWindows.c:3666 devWindows.c:3672 devWindows.c:3679
-#: devWindows.c:3686 devWindows.c:3690
+#: devPS.c:8233 devPS.c:8395 devPS.c:8398 devWindows.c:3644 devWindows.c:3648
+#: devWindows.c:3656 devWindows.c:3667 devWindows.c:3673 devWindows.c:3680
+#: devWindows.c:3687 devWindows.c:3691
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "неправильное значение '%s'"
 
-#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3723
+#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3724
 #, c-format
 msgid "unable to start %s() device"
 msgstr "не могу запустить устройство %s()"
@@ -626,114 +626,114 @@ msgstr "история графиков, похоже, повреждена"
 msgid "no plot history!"
 msgstr "нет истории графиков!"
 
-#: devWindows.c:1795
+#: devWindows.c:1796
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "слишком длинное имя файла в вызове %s()"
 
-#: devWindows.c:1804 devWindows.c:1843 devWindows.c:1877
+#: devWindows.c:1805 devWindows.c:1844 devWindows.c:1878
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "не похоже, что 'width=%d, height=%d' в пикселях"
 
-#: devWindows.c:1812 devWindows.c:1817 devWindows.c:1846 devWindows.c:1851
-#: devWindows.c:1880 devWindows.c:1885
+#: devWindows.c:1813 devWindows.c:1818 devWindows.c:1847 devWindows.c:1852
+#: devWindows.c:1881 devWindows.c:1886
 #, fuzzy
 msgid "unable to allocate bitmap"
 msgstr "Не могу разместить bitmap"
 
-#: devWindows.c:1823 devWindows.c:1857 devWindows.c:2181
+#: devWindows.c:1824 devWindows.c:1858 devWindows.c:2182
 #, fuzzy, c-format
 msgid "unable to open file '%s' for writing"
 msgstr "Не могу открыть файл '%s' для записи"
 
-#: devWindows.c:1840
+#: devWindows.c:1841
 msgid "filename too long in jpeg() call"
 msgstr "слишком длинное имя файла в вызове jpeg()"
 
-#: devWindows.c:1874
+#: devWindows.c:1875
 msgid "filename too long in tiff() call"
 msgstr "слишком длинное имя файла в вызове tiff()"
 
-#: devWindows.c:1906
+#: devWindows.c:1907
 msgid "filename too long in win.metafile() call"
 msgstr "слишком длинное имя файла в вызове win.metafile()"
 
-#: devWindows.c:1916
+#: devWindows.c:1917
 #, fuzzy, c-format
 msgid "unable to open metafile '%s' for writing"
 msgstr "Не могу открыть метафайл '%s' для записи"
 
-#: devWindows.c:1918
+#: devWindows.c:1919
 #, fuzzy
 msgid "unable to open clipboard to write metafile"
 msgstr "Не могу открыть буфер обмена для записи метафайла"
 
-#: devWindows.c:2129
+#: devWindows.c:2130
 msgid "Insufficient memory for resize. Killing device"
 msgstr "Не хватает памяти для масштабирования. Убиваю устройство"
 
-#: devWindows.c:2137
+#: devWindows.c:2138
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Не хватает памяти для масштабирования. Отключаю alpha-blending"
 
-#: devWindows.c:2166
+#: devWindows.c:2167
 #, fuzzy
 msgid "a clipboard metafile can store only one figure."
 msgstr "Метафайл в буфере обмена может хранить только одну фигуру."
 
-#: devWindows.c:2172
+#: devWindows.c:2173
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "метафайл '%s' не получается создать"
 
-#: devWindows.c:3109 devWindows.c:3747
+#: devWindows.c:3110 devWindows.c:3748
 msgid "R Graphics"
 msgstr "R-графика"
 
-#: devWindows.c:3123
+#: devWindows.c:3124
 msgid "attempt to use the locator after dev.hold()"
 msgstr "попытка использовать locator после dev.hold()"
 
-#: devWindows.c:3387
+#: devWindows.c:3388
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "опция 'windowsTimeouts' должна быть целым числом"
 
-#: devWindows.c:3408
+#: devWindows.c:3409
 msgid "invalid device number in 'savePlot'"
 msgstr "неправильный номер устройства в 'savePlot'"
 
-#: devWindows.c:3410
+#: devWindows.c:3411
 msgid "invalid device in 'savePlot'"
 msgstr "неправильное устройство в 'savePlot'"
 
-#: devWindows.c:3413
+#: devWindows.c:3414
 #, fuzzy
 msgid "invalid filename argument in 'savePlot'"
 msgstr "неправильный аргумент имени файла в savePlot"
 
-#: devWindows.c:3418
+#: devWindows.c:3419
 msgid "invalid type argument in 'savePlot'"
 msgstr "неправильный тип аргумента в 'savePlot'"
 
-#: devWindows.c:3445
+#: devWindows.c:3446
 msgid "unknown type in savePlot"
 msgstr "неизвестный тип в savePlot"
 
-#: devWindows.c:3490 devWindows.c:3523 devWindows.c:3552 devWindows.c:3584
-#: devWindows.c:3609
+#: devWindows.c:3491 devWindows.c:3524 devWindows.c:3553 devWindows.c:3585
+#: devWindows.c:3610
 msgid "processing of the plot ran out of memory"
 msgstr "обработка графика исчерпала память"
 
-#: devWindows.c:3569
+#: devWindows.c:3570
 msgid "Impossible to open "
 msgstr "Нельзя открыть "
 
-#: devWindows.c:3596
+#: devWindows.c:3597
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Невозможно загрузить Rbitmap.dll"
 
-#: devWindows.c:3638
+#: devWindows.c:3639
 msgid "invalid 'width' or 'height'"
 msgstr "неправильная 'width' или 'height'"
 

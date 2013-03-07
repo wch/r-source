@@ -2,12 +2,12 @@
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@normipaiva.com>, 2007.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -146,7 +146,6 @@ msgstr "还不存在的'%s'是不能被重新设定的"
 msgid "invalid options in '%s'"
 msgstr "'%s'里的选择项出错"
 
-
 msgid "NOT changing %s"
 msgstr "不更换%s"
 
@@ -211,7 +210,7 @@ msgid "Invalid output format"
 msgstr "输出的格式不对"
 
 msgid "status %d in running command '%s'"
-msgstr "调用命令'%s'的运行状况为%d"
+msgstr "调用命令'%2$s'的运行状况为%1$d"
 
 msgid "range too small for 'min.n'"
 msgstr "'min.n'的范围太小了"
@@ -394,4 +393,3 @@ msgstr[0] "对数图里略过%d个小于等于零的z值"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "因为没有事件循环管理器，减少quartz()装置的交互能力"
-

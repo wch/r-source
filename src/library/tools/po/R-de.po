@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: 2012-09-10 14:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -472,8 +472,64 @@ msgid "Only one Rd section per %s is supported."
 msgstr "Nur ein Rd Abschnitt pro \\Sepr wird unterstützt"
 
 #, fuzzy
+msgid "Vignette product"
+msgstr "Vignetten:"
+
+msgid "does not have a known filename extension ("
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid ")"
+msgstr ")"
+
+#, fuzzy
+msgid "Failed to locate the"
+msgstr "kann nicht erzeugen"
+
+msgid "output file (by engine"
+msgstr ""
+
+msgid "%s::%s"
+msgstr ""
+
+msgid ") for vignette with name"
+msgstr ""
+
+#, fuzzy
+msgid ". The following files exists in directory"
+msgstr "Keine Dateien in diesem Verzeichnis"
+
+msgid ":"
+msgstr ":"
+
+#, fuzzy
+msgid "Located more than one"
+msgstr "keine oder mehr als eine Übereinstimmung"
+
+#, fuzzy
 msgid "unable to create temp directory %s"
 msgstr "kann kein temp Verzeichnis erzeugen"
+
+#, fuzzy
+msgid "Vignette"
+msgstr "Vignetten:"
+
+msgid "overwrites the following"
+msgstr ""
+
+msgid "output by vignette"
+msgstr ""
+
+msgid "Detected vignette source files ("
+msgstr ""
+
+msgid ") with shared names ("
+msgstr ""
+
+msgid ") and therefore risking overwriting each others output files"
+msgstr ""
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -502,21 +558,67 @@ msgstr "Argument 'vignette' muss Länge 1 haben"
 msgid "file '%s' not found"
 msgstr "Datei '%s' nicht gefunden"
 
-msgid "vignette engine"
+#, fuzzy
+msgid "Unsupported engine name"
+msgstr "nicht unterstützter Filter %s"
+
+#, fuzzy
+msgid "None of packages"
+msgstr "Keine Hilfe zum Paket %s gefunden"
+
+msgid "have registered vignette engines"
 msgstr ""
 
 #, fuzzy
-msgid "not found"
-msgstr "nicht gefunden"
+msgid "Vignette engine"
+msgstr "Vignetten:"
 
 #, fuzzy
-msgid "cannot change the"
+msgid "is not registered"
+msgstr "existiert nicht"
+
+msgid "is not registered by any of the packages"
+msgstr ""
+
+msgid "Engine name"
+msgstr ""
+
+#, fuzzy
+msgid "and package"
+msgstr "ungültiges Paket"
+
+#, fuzzy
+msgid "do not match"
+msgstr "existiert nicht"
+
+#, fuzzy
+msgid "Argument"
+msgstr "Argument für"
+
+msgid "weave"
+msgstr ""
+
+msgid "must be a function and not"
+msgstr ""
+
+msgid "tangle"
+msgstr ""
+
+msgid "pattern"
+msgstr ""
+
+#, fuzzy
+msgid "must be a character vector or NULL and not"
+msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
+
+#, fuzzy
+msgid "Cannot change the"
 msgstr "kann nicht umwandeln"
 
 msgid "Sweave"
 msgstr ""
 
-msgid "engine"
+msgid "engine or use an engine of that name"
 msgstr ""
 
 #, fuzzy
@@ -569,8 +671,14 @@ msgstr ""
 "fehlgeschlagen:\n"
 "%s"
 
-msgid "file '%s' was not created"
-msgstr "Datei '%s' wurde nicht erzeugt"
+#, fuzzy
+msgid ""
+"compiling TeX file %s failed with message:\n"
+"%s"
+msgstr ""
+"Sweave auf der Vignette '%s' auszuführen mit folgender Diagnose "
+"fehlgeschlagen:\n"
+"%s"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "kann '%s' nicht nach '%s' kopieren"
@@ -639,9 +747,6 @@ msgstr ""
 
 msgid "installing dependencies %s"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 #, fuzzy
 msgid "checking %s ..."
@@ -1212,6 +1317,13 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
+#, fuzzy
+#~ msgid "not found"
+#~ msgstr "nicht gefunden"
+
+#~ msgid "file '%s' was not created"
+#~ msgstr "Datei '%s' wurde nicht erzeugt"
+
 #~ msgid "found %s"
 #~ msgstr "'%s' gefunden"
 
@@ -1354,9 +1466,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 #~ msgid "package directory"
 #~ msgstr "Paket Verzeichnis"
 
-#~ msgid "does not exist"
-#~ msgstr "existiert nicht"
-
 #~ msgid "Unrecognized search field:"
 #~ msgstr "Nicht erkanntes Suchfeld:"
 
@@ -1406,9 +1515,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "Internal error, no tag"
 #~ msgstr "Interber Fehler, kein Tag"
-
-#~ msgid "Argument for"
-#~ msgstr "Argument für"
 
 #~ msgid "Internal error:  NULL tag"
 #~ msgstr "Interner Fehler: NULL Tag"
@@ -1497,9 +1603,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 #~ msgid "not installing"
 #~ msgstr "installiert nach"
 
-#~ msgid ":"
-#~ msgstr ":"
-
 #~ msgid "Generics g in env ="
 #~ msgstr "Generische g in env ="
 
@@ -1511,9 +1614,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "importFrom("
 #~ msgstr "importFrom("
-
-#~ msgid ")"
-#~ msgstr ")"
 
 #~ msgid "in NAMESPACE."
 #~ msgstr "im NAMESPACE."
@@ -1813,6 +1913,3 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "multiple \\encoding lines in file"
 #~ msgstr "mehrere \\encoding Zeilen in der Datei"
-
-#~ msgid "no or more than one match"
-#~ msgstr "keine oder mehr als eine Übereinstimmung"

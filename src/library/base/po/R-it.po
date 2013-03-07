@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -154,22 +154,6 @@ msgstr "l'autocaricatore non trova '%s' in '%s'"
 
 msgid "complex matrices not permitted at present"
 msgstr "matrici complesse non ammesse al momento"
-
-msgid "non-square matrix in 'chol'"
-msgstr "matrice non quadrata in 'chol'"
-
-msgid "non-matrix argument to 'chol'"
-msgstr "argomento di 'chol' deve essere una matrice"
-
-#, fuzzy
-msgid "invalid nrow(x)"
-msgstr "nome non valido"
-
-msgid "too large a matrix for LINPACK"
-msgstr ""
-
-msgid "matrix not positive definite"
-msgstr "matrice non definita positiva"
 
 msgid "'x' must be an array of at least two dimensions"
 msgstr "'x' deve essere un array con almeno due dimensioni"
@@ -603,6 +587,10 @@ msgstr "matrice 0 x 0"
 
 msgid "non-square matrix in 'eigen'"
 msgstr "matrice non quadrata in 'eigen'"
+
+#, fuzzy
+msgid "invalid nrow(x)"
+msgstr "nome non valido"
 
 #, fuzzy
 msgid "invalid 'labels'; length %d should be 1 or %d"
@@ -1280,6 +1268,9 @@ msgstr "l'argomento drop verrà ignorato"
 msgid "invalid ncol(x)"
 msgstr "nome non valido"
 
+msgid "too large a matrix for LINPACK"
+msgstr ""
+
 msgid "first argument must be a QR decomposition"
 msgstr "il primo argomento deve essere una decomposizione QR"
 
@@ -1837,6 +1828,15 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "non-square matrix in 'chol'"
+#~ msgstr "matrice non quadrata in 'chol'"
+
+#~ msgid "non-matrix argument to 'chol'"
+#~ msgstr "argomento di 'chol' deve essere una matrice"
+
+#~ msgid "matrix not positive definite"
+#~ msgstr "matrice non definita positiva"
 
 #~ msgid "non-positive definite matrix in 'chol'"
 #~ msgstr "matrice non definita positiva in 'chol'"
