@@ -264,7 +264,7 @@ static size_t enctowcs(wchar_t *wc, char *s, int n)
 	nc += mbstowcs(wc, s, n);
 	pb += 3; pe = pb;
 	while(*pe &&
-	      !((pe = strchr(pb, UTF8out[0])) && *(pe+1) == UTF8out[1] &&
+	      !((pe = strchr(pe, UTF8out[0])) && *(pe+1) == UTF8out[1] &&
 	      *(pe+2) == UTF8out[2])) pe++;
 	if(!*pe) return nc; /* FIXME */;
 	*pe = '\0';
