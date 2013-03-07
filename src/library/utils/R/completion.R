@@ -357,8 +357,12 @@ matchAvailableTopics <- function(prefix, text)
     ## Update list of help topics if necessary
     pkgpaths <- searchpaths()[substr(search(), 1L, 8L) == "package:"]
     if (!identical(basename(pkgpaths), .CompletionEnv[["attached_packages"]])) {
-        assign("attached_packages", basename(pkgpaths), env = .CompletionEnv)
-        assign("help_topics", unique(unlist(lapply(pkgpaths, .readAliases))), env = .CompletionEnv)
+        assign("attached_packages",
+               basename(pkgpaths),
+               envir = .CompletionEnv)
+        assign("help_topics",
+               unique(unlist(lapply(pkgpaths, .readAliases))),
+               envir = .CompletionEnv)
     }
     aliases <- .CompletionEnv[["help_topics"]]
     ans <- grep(sprintf("^%s", makeRegexpSafe(text)), aliases, value = TRUE)
