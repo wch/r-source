@@ -605,9 +605,12 @@ SEXP eval(SEXP e, SEXP rho)
 	    /* We used to insert a context only if profiling,
 	       but helps for tracebacks on .C etc. */
 	    if (R_Profiling || (PPINFO(op).kind == PP_FOREIGN)) {
+		SEXP oldref = R_Srcref;
+		R_Srcref = NULL;
 		begincontext(&cntxt, CTXT_BUILTIN, e,
 			     R_BaseEnv, R_BaseEnv, R_NilValue, R_NilValue);
 		tmp = PRIMFUN(op) (e, op, tmp, rho);
+		R_Srcref = oldref;
 		endcontext(&cntxt);
 	    } else {
 		tmp = PRIMFUN(op) (e, op, tmp, rho);
