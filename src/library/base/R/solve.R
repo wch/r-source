@@ -51,8 +51,6 @@ solve.default <-
 	return(solve.qr(a, b, tol))
     }
 
-    if(LINPACK)
-        warning("LINPACK = TRUE is defunct and will be ignored", domain = NA)
     a <- as.matrix(a)
     if(missing(b)) {
         b <- diag(1.0, nrow(a))

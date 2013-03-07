@@ -25,7 +25,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
-  \item{EISPACK}{logical. Defunct and ignored (with a warning for true values).}
+  \item{EISPACK}{logical. Defunct and ignored.}
 }
 \details{
   If \code{symmetric} is unspecified, the code attempts to

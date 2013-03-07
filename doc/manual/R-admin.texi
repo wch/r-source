@@ -3722,7 +3722,7 @@ used.
 For performance reasons@footnote{e.g., to use an optimized @acronym{BLAS} on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
-It may be possible to use @command{f2c}, the FORTRAN-to-C converter
+It might be possible to use @command{f2c}, the FORTRAN-to-C converter
 (@uref{http://www.netlib.org/@/f2c}), via a script.  (An example script
 is given in @file{scripts/f77_f2c}: this can be customized by setting
 @enindex F2C
@@ -3736,7 +3736,9 @@ the environment variables @env{F2C}, @env{F2CLIBS}, @env{CC} and
 on a 32-bit platform but not on a 64-bit platform.  If your compiler is
 not @command{gcc} you
 @enindex FPICFLAGS
-will need to set @env{FPICFLAGS} appropriately.
+will need to set @env{FPICFLAGS} appropriately.  Also, the included
+LAPACK sources contain constructs that @command{f2c} is unlikely to be
+able to process, so you would need to use an external LAPACK library.
 
 
 @node Using gfortran,  , Using FORTRAN, Using FORTRAN

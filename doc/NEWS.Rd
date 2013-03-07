@@ -12,12 +12,12 @@
     \itemize{
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.
       
-      % Rest are not yet released, but intended.
       \item \code{chol(pivot = FALSE, LINPACK = TRUE)},
       \code{ch2inv(LINPACK = TRUE)}, \code{eigen(EISPACK = TRUE)},
       \code{solve(LINPACK = TRUE)} and \code{svd(LINPACK = TRUE)} no
       longer warn that LAPACK will be used.
 
+      % Rest are not yet released, but intended.
       \item The long-deprecated use of \code{\\synopsis} in the
       \samp{Usage} section of \file{.Rd} files has been removed.
 

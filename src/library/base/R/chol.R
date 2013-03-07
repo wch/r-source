@@ -23,13 +23,9 @@ chol.default <- function(x, pivot = FALSE, LINPACK = FALSE, tol = -1, ...)
     if (is.complex(x))
         stop("complex matrices not permitted at present")
 
-    if (LINPACK) warning("LINPACK = TRUE", domain = NA)
-
     .Internal(La_chol(as.matrix(x), pivot, tol))
 }
 
 chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
-{
-    if(LINPACK) warning("LINPACK = TRUE is defunct", domain = NA)
     .Internal(La_chol2inv(x, size))
-}
+
