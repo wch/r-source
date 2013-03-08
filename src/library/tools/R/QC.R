@@ -1865,7 +1865,8 @@ function(package, dir, file, lib.loc = NULL,
 
     ## allow calls to LINPACK functions in base, if registered.
     ## NB: dqrls and dqrdc2 are not LINPACK, dchdc is going
-    allowed <- c("dqrcf","dsvdc", "dtrco")
+    ## allowed <- c("dqrcf","dsvdc", "dtrco")
+    allowed <- character()
 
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
