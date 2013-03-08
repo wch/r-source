@@ -16,7 +16,8 @@
 }
 \usage{
 download.file(url, destfile, method, quiet = FALSE, mode = "w",
-              cacheOK = TRUE, extra = getOption("download.file.extra"))
+              cacheOK = TRUE,
+              extra = getOption("download.file.extra"))
 }
 \arguments{
   \item{url}{A character string naming the URL of a resource to be

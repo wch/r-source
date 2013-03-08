@@ -13,7 +13,8 @@
   from a local mirror).
 }
 \usage{
-available.packages(contriburl = contrib.url(getOption("repos"), type),
+available.packages(contriburl =
+                   contrib.url(getOption("repos"), type),
                    method, fields = NULL,
                    type = getOption("pkgType"),
                    filters = NULL)

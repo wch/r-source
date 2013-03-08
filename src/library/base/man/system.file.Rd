@@ -6,7 +6,8 @@
 \name{system.file}
 \title{Find Names of R System Files}
 \usage{
-system.file(\dots, package = "base", lib.loc = NULL, mustWork = FALSE)
+system.file(\dots, package = "base", lib.loc = NULL,
+            mustWork = FALSE)
 }
 \alias{system.file}
 \arguments{

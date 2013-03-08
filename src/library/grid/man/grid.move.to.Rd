@@ -17,7 +17,8 @@
 grid.move.to(x = 0, y = 0, default.units = "npc", name = NULL,
              draw = TRUE, vp = NULL)
 
-moveToGrob(x = 0, y = 0, default.units = "npc", name = NULL, vp = NULL)
+moveToGrob(x = 0, y = 0, default.units = "npc", name = NULL,
+           vp = NULL)
 
 grid.line.to(x = 1, y = 1, default.units = "npc",
              arrow = NULL, name = NULL,

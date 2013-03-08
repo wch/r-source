@@ -11,8 +11,8 @@
   footers and some other differences.
 }
 \usage{
-Rdiff(from, to, useDiff = FALSE, forEx = FALSE, nullPointers = TRUE,
-      Log = FALSE)
+Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
+      nullPointers = TRUE, Log = FALSE)
 }
 \arguments{
   \item{from, to}{filepaths to be compared}

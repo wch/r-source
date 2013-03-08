@@ -14,8 +14,10 @@
   at the values in \code{x}.
 }
 \usage{
-splineDesign(knots, x, ord = 4, derivs, outer.ok = FALSE, sparse = FALSE)
-spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE, sparse = FALSE)
+splineDesign(knots, x, ord = 4, derivs, outer.ok = FALSE,
+             sparse = FALSE)
+spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE,
+             sparse = FALSE)
 }
 \arguments{
   \item{knots}{a numeric vector of knot positions with non-decreasing

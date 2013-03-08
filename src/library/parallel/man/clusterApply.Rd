@@ -39,13 +39,15 @@ clusterMap(cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
 clusterSplit(cl = NULL, seq)
 
 parLapply(cl = NULL, X, fun, ...)
-parSapply(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+parSapply(cl = NULL, X, FUN, ..., simplify = TRUE,
+          USE.NAMES = TRUE)
 parApply(cl = NULL, X, MARGIN, FUN, ...)
 parRapply(cl = NULL, x, FUN, ...)
 parCapply(cl = NULL, x, FUN, ...)
 
 parLapplyLB(cl = NULL, X, fun, ...)
-parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
+            USE.NAMES = TRUE)
 }
 \arguments{
   \item{cl}{a cluster object, created by this package or by package

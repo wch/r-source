@@ -12,7 +12,8 @@
 }
 \usage{
 package.dependencies(x, check = FALSE,
-                     depLevel = c("Depends", "Imports", "Suggests"))
+                     depLevel =
+                     c("Depends", "Imports", "Suggests"))
 }
 \arguments{
   \item{x}{A matrix of package descriptions as returned by

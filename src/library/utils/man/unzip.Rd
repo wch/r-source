@@ -13,7 +13,8 @@
 }
 \usage{
 unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
-      junkpaths = FALSE, exdir = ".", unzip = "internal", setTimes = FALSE)
+      junkpaths = FALSE, exdir = ".", unzip = "internal",
+      setTimes = FALSE)
 }
 \arguments{
   \item{zipfile}{The pathname of the zip file: tilde expansion (see

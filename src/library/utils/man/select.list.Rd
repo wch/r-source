@@ -10,8 +10,8 @@
   Select item(s) from a character vector.
 }
 \usage{
-select.list(choices, preselect = NULL, multiple = FALSE, title = NULL,
-             graphics = getOption("menu.graphics"))
+select.list(choices, preselect = NULL, multiple = FALSE,
+            title = NULL, graphics = getOption("menu.graphics"))
 }
 \arguments{
   \item{choices}{a character vector of items.}
