@@ -717,16 +717,14 @@ well as removing the directory @file{tests} containing the test results.
 
 Some platforms can support closely related builds of @R{} which can
 share all but the executables and dynamic objects.  Examples include
-builds under Solaris for different chips (in particular, 32- and 64-bit
-builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
-@acronym{CPU}s (e.g.@: @cputype{i386} and @cputype{x86_64}) under (Mac)
-OS X.
+builds under Linux, OS X or Solaris for different @acronym{CPU}s or 32-
+and 64-bit builds.
 
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
 @var{name} can be anything non-empty, and is used to name subdirectories
 of @file{lib}, @file{etc}, @file{include} and the package @file{libs}
-subdirectories.  Example names from other systems are the use of
+subdirectories.  Example names from other software are the use of
 @file{sparcv9} on Sparc Solaris and @file{32} by @command{gcc} on
 @cputype{x86_64} Linux.
 
@@ -985,7 +983,6 @@ configuration files in the @file{etc} directory.
 * Building the manuals::        
 * Building the Inno Setup installer::  
 * Building the MSI installer::  
-* Cross-building on Linux::     
 * 64-bit Windows builds::       
 @end menu
 
@@ -1022,10 +1019,9 @@ tar -xf R-@value{VERSIONno}.tar.gz
 
 @noindent
 to create the source tree in @var{R_HOME}.  @strong{Beware}: do use
-@command{tar} to extract the sources rather than tools such as WinZip
-that do not understand symbolic links.  If you are using an account with
-administrative privileges you may get a lot of messages which can be
-suppressed by
+@command{tar} to extract the sources rather than tools such as WinZip.
+If you are using an account with administrative privileges you may get a
+lot of messages which can be suppressed by
 
 @example
 tar --no-same-owner -xf R-@value{VERSIONno}.tar.gz
@@ -1061,7 +1057,7 @@ build you will also need
 
 @item
 The Tcl/Tk support files are contained in @file{Rtools30.exe} and
-available as @file{.zip}s from
+available as @file{.zip} files from
 @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
 install the right version: there is a 32-bit version and a 64-bit
 version.
@@ -1070,11 +1066,8 @@ version.
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
 (available, e.g., from @uref{http://www.libpng.org/},
 @uref{http://www.ijg.org} and
-@uref{http://download.osgeo.org/@/libtiff/}).  The earliest versions that
-have been tested are @file{libpng-1.5.4.tar.gz},
-@file{jpegsrc.v8c.tar.gz} and @file{tiff-3.9.1.tar.gz}, but current
-versions are recommended.  It is also possible to use
-@samp{libjpeg-turbo} from
+@uref{http://download.osgeo.org/@/libtiff/}); current versions are
+recommended.  It is also possible to use @samp{libjpeg-turbo} from
 @uref{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
@@ -1089,8 +1082,8 @@ directories can also be set there.
 Example:
 
 @example
-> tar -zxf libpng-1.5.12.tar.gz
-> mv libpng-1.5.12 libpng
+> tar -zxf libpng-1.5.14.tar.gz
+> mv libpng-1.5.14 libpng
 > tar -zxf jpegsrc.v9.tar.gz
 > tar -zxf tiff-4.0.3.tar.gz
 > mv tiff-4.0.3/libtiff .
@@ -1357,7 +1350,7 @@ build.  Then the @command{make rinstaller} step copies the files that
 differ between architectures from the 32-bit build as it builds the
 installer image.
 
-@node Building the MSI installer, Cross-building on Linux, Building the Inno Setup installer, Building from source
+@node Building the MSI installer, 64-bit Windows builds, Building the Inno Setup installer, Building from source
 @subsection Building the MSI installer
 
 It is also possible to build an installer for use with Microsoft
@@ -1365,8 +1358,9 @@ Installer.  This is intended for use by sysadmins doing automated
 installs, and is not recommended for casual use.
 
 It makes use of the Windows Installer XML (WiX) toolkit @emph{version
-3.0 or 3.5} available from @uref{http://wix.sourceforge.net/}.  Once WiX
-is installed, set the path to its home directory in
+3.5} (or perhaps 3.6 or 3.7, untested) available from
+@uref{http://wix.sourceforge.net/} or @uref{http://wixtoolset.org/}.
+Once WiX is installed, set the path to its home directory in
 @file{MkRules.local}.
 
 You need to have the files for a complete R build, including bitmap and
@@ -1402,12 +1396,7 @@ MSI installer can only be run on 64-bit Windows.
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
 for suggesting WiX and building a prototype installer.
 
-@node Cross-building on Linux, 64-bit Windows builds, Building the MSI installer, Building from source
-@subsection Cross-building on Linux
-
-Support for cross-building was withdrawn at @R{} 2.9.0.
-
-@node 64-bit Windows builds,  , Cross-building on Linux, Building from source
+@node 64-bit Windows builds,  , Building the MSI installer, Building from source
 @subsection 64-bit Windows builds
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only one
@@ -1461,14 +1450,14 @@ account used to install @R{}.
 @sc{R.app}
 @end macro
 
-@strong{NB:}  Information on OS X is likely to change before release of
-@R{} 3.0.0.
-
-The front package of a @acronym{CRAN} site has a link `Download R for OS
+The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it.  This runs on OS X 10.6 and later (Snow Leopard, Lion,
-Mountain Lion, @dots{}); it is a @cputype{x86_64} build which should run
-on all Macs from mid-2008 on.
+Mountain Lion, @dots{}); it is a 64-bit (@cputype{x86_64}) build which
+should run on all Macs from mid-2008 on.
+
+Note that unlike binary installations of @R{} 2.x.y, there is only a
+64-bit version (and hence no @code{R64} application).
 
 To install, just double-click on the icon of the file you downloaded.
 Note that (X11-based) Tcl/Tk needs to be installed separately if needed,
@@ -1487,10 +1476,33 @@ the installation, please check the Installer log by clicking on the
 For building @R{} from source, see @ref{Mac OS X}.
 
 @menu
+* Running R under OS X::        
 * Uninstalling under OS X::     
 @end menu
 
-@node Uninstalling under OS X,  , Installing R under (Mac) OS X, Installing R under (Mac) OS X
+@node Running R under OS X, Uninstalling under OS X, Installing R under (Mac) OS X, Installing R under (Mac) OS X
+@section Running R under OS X
+
+There are two ways to run @R{} on OS X from the @acronym{CRAN} binary
+distribution.
+
+There is a GUI console normally installed with the @R{} icon in
+@file{/Applications} which you can run by double-clicking (e.g. from
+Launchpad or Finder).  This is usually referred to as @Rapp{} to
+distinguish it from command-line @R{}: its user manual is current part
+of the OS X FAQ at
+@uref{http://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html}
+
+
+You can run command-line @R{} from a Terminal like any other Unix-alike:
+see the next chapter of this manual.  There are some small differences
+which may surprise users of @R{} on other plaforms, notably the default
+personal library directory (under @file{~/Library/R},
+e.g. @file{~/Library/R/3.0/library}), and that warnings, messages and
+other output to @file{stderr} are printed in bold.
+
+
+@node Uninstalling under OS X,  , Running R under OS X, Installing R under (Mac) OS X
 @section Uninstalling under OS X
 
 @R{} for Mac OS X consists of two parts: the GUI (@Rapp{}) and the R
@@ -1504,13 +1516,13 @@ If you want to get rid of @R{} more completely using a Terminal, simply
 run (prepend @code{sudo} if needed):
 
 @example
-rm -rf /Library/Frameworks/R.framework /usr/bin/R /usr/bin/Rscript
+rm -rf /Library/Frameworks/R.framework /Applications/R.app /usr/bin/R /usr/bin/Rscript
 @end example
 
 An alternative is to use Apple's @code{pkgutil} tool. The installation
 consisted of two packages: @code{org.r-project.R.Leopard.fw.pkg} and
 @code{org.r-project.R.Leopard.GUI.pkg}. You can use @code{pkgutil
---unlink} (not supported as of Lion) to remove their files or
+--unlink} (not supported by Lion or later) to remove their files or
 @code{pkgutil --forget} if you want the Apple Installer to forget about
 the package without deleting its files (useful for the @R{} framework
 when installing multiple R versions in parallel), or after you have
@@ -4235,7 +4247,7 @@ be recognized as alphabetic by @code{make.names}.
 @cindex OS X
 
 @strong{NB:}  Information on OS X is likely to change before release of
-@R{} 3.0.0.
+@R{} 3.0.0, in particular the compiler recommendations.
 
 You can build @R{} as a Unix application on OS X using Apple's `Command
 Line Tools for Xcode' and and suitable compilers (including a version of
@@ -4257,7 +4269,9 @@ To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
 becomes the default device when running @R{} at the console and X11
 would only be used for the data editor/viewer.  (This needs an
-Objective-C compiler.)
+Objective-C compiler@footnote{Apple's @code{clang} should be able to:
+some builds of @code{gcc} can, but not all built with Objective C
+support work.} which can compile the code for @code{quartz()}.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
@@ -4274,9 +4288,8 @@ from @uref{https://developer.apple.com/devcenter/mac/}) you can install
 the command-line tools from within Xcode, from the @samp{Downloads} pane
 in the @samp{Preferences}.
 
-Where to find suitable compilers is described for each supported version
-of OS X below.  Note that some compilers have suffix @code{-4.2} and
-some do not---the CRAN binary build was built with those without.
+Where to find suitable compilers is described below for each supported
+version of OS X..
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
@@ -4293,37 +4306,33 @@ The @code{Accelerate} library can be used @emph{via} the configuration options
 
 @noindent
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
-routines.  (Use of @code{Accelerate} with @option{--with-lapack} did not
-work on Snow Leopard.)
+routines.  (Use of @code{Accelerate} with @option{--with-lapack} does
+not work on Snow Leopard: it way work there without.)
 
-Note that the Apple versions of GCC (where available, and those on
-@uref{http://r.research.att.com}) are based on version 4.2 from
-2007. That is now a long time ago and later versions (as used on other
-@R{} platforms, including @code{CRAN}'s incoming checks) are better at
-detecting coding errors.  If can be well worth checking your code with
-@command{clang}/@command{clang++}: @R{} itself is checked with
-@command{clang 4.x}.  If your C compiler does not support Objective C,
+Note that the current Apple versions of GCC are based on version 4.2
+from 2007. That is now a long time ago and later versions (as used on
+other @R{} platforms, including @code{CRAN}'s incoming checks) are
+better at detecting coding errors.  If can be well worth checking your
+code with @command{clang}/@command{clang++}: @R{} itself is checked with
+@command{clang 4.2}.  If your C compiler does not support Objective C,
 you can use @command{clang}, e.g.@: by
 @example
-OBJC='clang -arch x86_64'
+OBJC=clang
 @end example
+in @file{config.site} or at the end of the @command{configure} command
+line.
 
-Recent compilers default to 64-bit, but some older ones (supplied at the
-time of Leopard) default to 32-bit.  It is safest to explicitly specify
-the architecture by e.g.@:
+Recent compilers default to 64-bit, but some older ones default to
+32-bit.  It is safest to explicitly specify the architecture by e.g.@:
 
 @example
 CC='gcc-4.2 -arch x86_64'
 CXX='g++-4.2 -arch x86_64'
 F77='gfortran-4.2 -arch x86_64'
 FC='gfortran-4.2 -arch x86_64'
-OBJC='gcc-4.2 -arch x86_64'
+OBJC='clang -arch x86_64'
 @end example
-in @file{config.site} or on the @command{configure} command line.  To
-produce a 32-bit build, use @samp{i386} instead of @samp{x86_64}.  Care
-@strong{is} needed, as @code{gfortran} may default to a different
-architecture from the C compilers.
-
+in @file{config.site} or on the @command{configure} command line.
 
 @menu
 * Snow Leopard::                
@@ -4355,15 +4364,15 @@ options @option{--x-includes=/usr/X11/include
 With Xcode 4.2 and later you need to install a package named like
 @uref{http://r.research.att.com/@/tools/@/gcc-42-5666.3-darwin11.pkg} to
 provide compilers named @command{gcc-4.2}, @command{g++-4.2} and
-@command{gfortran-4.2}.  These default to 64-bit, so for a 64-bit build
-@file{config.site} in the top-level build directory could contain
+@command{gfortran-4.2}.  So @file{config.site} in the top-level build
+directory could contain
 
 @example
 CC=gcc-4.2
 CXX=g++-4.2
 F77=gfortran-4.2
 FC=gfortran-4.2
-OBJC=gcc-4.2
+OBJC=clang
 @end example
 
 It is also possible to build @R{} using Apple's C/C++ compilers supplied
@@ -4371,9 +4380,8 @@ with Xcode, but these do need to be supplemented by a Fortran compiler
 (such as @code{gfortran-4.2}).  @command{/usr/bin/gcc} is a link to
 @command{llvm-gcc}, an LLVM-based compiler with a @command{gcc 4.2.1}
 front end, and @command{clang} can also be used (and @command{clang++}
-for C++: @command{cc} is a link to @command{clang}).  However, the best
-performance was obtained from the compilers at
-@uref{http://r.research.att.com}.
+for C++: @command{cc} and @command{c++} are links to @command{clang} and
+@command{clang++}).
 
 
 @node Mountain Lion, Tcl/Tk headers and libraries, Lion, Mac OS X
@@ -4384,7 +4392,7 @@ OS versions.
 
 The X11 system used with Mountain Lion will be XQuartz.  To build the
 graphics devices depending on cairographics the XQuartz path for
-@command{pkg-config} files (default @file{/usr/X11/lib/pkgconfig}) needs
+@command{pkg-config} files (default @file{/opt/X11/lib/pkgconfig}) needs
 to be known to @command{pkg-config} when @command{configure} is run:
 this usually means adding it to the @env{PKG_CONFIG_PATH} environment
 variable.
@@ -4401,9 +4409,9 @@ Unix-alikes).
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
-conflicting event loops, but for those only command-line @R{} this
+conflicting event loops, but for those only using command-line @R{} this
 provides a much more intuitive interface to Tk for experienced Mac
-users. Some versions of OS X came with Aqua Tcl/Tk libraries, but these
+users. Most versions of OS X come with Aqua Tcl/Tk libraries, but these
 are not current versions of Tcl/Tk (8.5.9 in Mountain Lion).  It is
 better to install Tcl/Tk 8.6.x or 8.5.x from the sources or the binary
 distribution at @uref{http://www.activestate.com/activetcl/downloads}.
@@ -4459,7 +4467,7 @@ JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_41-b02-445.jdk/Contents/Home
 @end example
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_15.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
@@ -4502,10 +4510,9 @@ make prefix=/where/you/want/R.framework/to/go install
 @subsection Building R.app
 
 Note that building the @Rapp{} GUI console is a separate project, using
-Xcode.  Before compiling @Rapp{} make sure @R{} is installed in
-@file{/Library/Frameworks/R.framework} and working at the command-line
-(this can be binary install: it needs to contain the architecture for
-which @Rapp{} is to be built, here @cputype{x86_64}).
+Xcode.  Before compiling @Rapp{} make sure the current version of @R{}
+is installed in @file{/Library/Frameworks/R.framework} and working at
+the command-line (this can be binary install).
 
 The current sources can be checked out by
 @example
@@ -4513,9 +4520,9 @@ svn co https://svn.r-project.org/R-packages/trunk/Mac-GUI
 @end example
 This can be built by loading @code{R.xcodeproj} project (select the
 @code{R} target and the @code{SnowLeopard64} or @code{Lion64}
-configuration), or from the command-line by
+configuration), or from the command-line by e.g.@:
 @example
-xcodebuild -target R -configuration Lion64
+xcodebuild -target R -configuration SnowLeopard64
 @end example
 See also the @file{INSTALL} file in the checkout or directly at @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
 
