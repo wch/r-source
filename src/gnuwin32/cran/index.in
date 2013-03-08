@@ -65,6 +65,8 @@ FAQ</a> for Windows-specific information.</p>
   <li>Patches to this release are incorporated in the <a href="rpatched.html">r-patched snapshot build</a>.</li>
   <li>A build of the development version (which will eventually become
 the next major release of R) is available in the <a href="rdevel.html">r-devel snapshot build</a>.</li>
+  <li>A build of a pre-release of R 3.0.0 is available in the <a href="rtest.html">r-devel snapshot build</a>.</li>
+
   <li><a href="../../windows/base/old/">Previous releases</a></li>
 </ul>
 
