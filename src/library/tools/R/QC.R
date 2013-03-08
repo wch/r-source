@@ -1863,11 +1863,6 @@ function(package, dir, file, lib.loc = NULL,
     ## Also, need to handle base::.Call() etc ...
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
 
-    ## allow calls to LINPACK functions in base, if registered.
-    ## NB: dqrls and dqrdc2 are not LINPACK, dchdc is going
-    ## allowed <- c("dqrcf","dsvdc", "dtrco")
-    allowed <- character()
-
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
@@ -1882,9 +1877,7 @@ function(package, dir, file, lib.loc = NULL,
                 else {
                     this <- parg <- e[["PACKAGE"]]
                     if (!is.na(pkg) && is.character(parg) &&
-                        nzchar(parg) && parg != pkg &&
-                        (this != "base" || !e[[2L]] %in% allowed)
-                        ) {
+                        nzchar(parg) && parg != pkg && this != "base") {
                         wrong_pkg <<- c(wrong_pkg, e)
                         bad_pkg <<- c(bad_pkg, this)
                     }
