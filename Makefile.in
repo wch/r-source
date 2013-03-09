@@ -106,6 +106,10 @@ svnonly:
 	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || $(ECHO) "Revision: -99") 2> /dev/null \
 	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
 	    | cut -d' ' -f1,2,3,4 > SVN-REVISION-tmp ; \
+	  if test "`cat SVN-REVISION-tmp`" = "Revision: -99"; then \
+	    $(ECHO) "ERROR: not an svn checkout"; \
+	    exit 1; \
+	  fi; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
 	  rm -f SVN-REVISION-tmp ; \
 	else \
