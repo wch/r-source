@@ -196,8 +196,9 @@ and that the SSL certificate for the Subversion server of the R project
 should be recognized as from a trusted source.
 
 Note that retrieving the sources by e.g.@: @command{wget -r} or
-@command{svn export} from that URL will not work: the Subversion
-information is needed to build @R{}.
+@command{svn export} from that URL will not work (and will give a error
+early in the @command{make}): the Subversion information is needed to
+build @R{}.
 
 The Subversion repository does not contain the current sources for the
 recommended packages, which can be obtained by @command{rsync} or
