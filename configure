@@ -33395,8 +33395,8 @@ fi
 
   fi
   if test "${have_zlib}" = yes; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if zlib version >= 1.2.3" >&5
-$as_echo_n "checking if zlib version >= 1.2.3... " >&6; }
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if zlib version >= 1.2.5" >&5
+$as_echo_n "checking if zlib version >= 1.2.5... " >&6; }
 if ${r_cv_header_zlib_h+:} false; then :
   $as_echo_n "(cached) " >&6
 else
@@ -33411,9 +33411,9 @@ else
 #include <zlib.h>
 int main() {
 #ifdef ZLIB_VERSION
-/* Workaround Debian bug: it uses 1.2.3.4 even though there is no such
+/* Work around Debian bug: it uses 1.2.3.4 even though there was no such
    version on the master site zlib.net */
-  exit(strncmp(ZLIB_VERSION, "1.2.3", 5) < 0);
+  exit(strncmp(ZLIB_VERSION, "1.2.5", 5) < 0);
 #else
   exit(1);
 #endif
@@ -33857,13 +33857,13 @@ else
   have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE version >= 7.6" >&5
-$as_echo_n "checking if PCRE version >= 7.6... " >&6; }
-if ${r_cv_have_pcre76+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE version >= 8.10" >&5
+$as_echo_n "checking if PCRE version >= 8.10... " >&6; }
+if ${r_cv_have_pcre830+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   if test "$cross_compiling" = yes; then :
-  r_cv_have_pcre76=no
+  r_cv_have_pcre830=no
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -33877,9 +33877,9 @@ else
 #endif
 int main() {
 #ifdef PCRE_MAJOR
-#if PCRE_MAJOR > 7
+#if PCRE_MAJOR > 8
   exit(0);
-#elif PCRE_MAJOR > 6 && PCRE_MAJOR >= 6
+#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
   exit(0);
 #else
   exit(1);
@@ -33891,31 +33891,31 @@ int main() {
 
 _ACEOF
 if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_have_pcre76=yes
+  r_cv_have_pcre830=yes
 else
-  r_cv_have_pcre76=no
+  r_cv_have_pcre830=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre76" >&5
-$as_echo "$r_cv_have_pcre76" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre830" >&5
+$as_echo "$r_cv_have_pcre830" >&6; }
 fi
-if test "x${r_cv_have_pcre76}" = xyes; then
+if test "x${r_cv_have_pcre830}" = xyes; then
   LIBS="-lpcre ${LIBS}"
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether PCRE support needs to be compiled" >&5
 $as_echo_n "checking whether PCRE support needs to be compiled... " >&6; }
-if test "x${r_cv_have_pcre76}" = xyes; then
+if test "x${r_cv_have_pcre830}" = xyes; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 fi
- if test "x${r_cv_have_pcre76}" != xyes; then
+ if test "x${r_cv_have_pcre830}" != xyes; then
   BUILD_PCRE_TRUE=
   BUILD_PCRE_FALSE='#'
 else
