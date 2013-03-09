@@ -273,7 +273,7 @@ generally to any implementation of the @R{} environment.
 Most users will find it necessary to interact directly with the
 operating system on their computer from time to time.  In this guide, we
 mainly discuss interaction with the operating system on UNIX machines.
-If you are running @R{} under Windows or Mac OS you will need to make
+If you are running @R{} under Windows or OS X you will need to make
 some small adjustments.
 
 Setting up a workstation to take full advantage of the customizable
@@ -5355,7 +5355,7 @@ easy because at startup time @R{} initiates a graphics @emph{device
 driver} which opens a special @emph{graphics window} for the display of
 interactive graphics.  Although this is done automatically, it is useful
 to know that the command used is @code{X11()} under UNIX,
-@code{windows()} under Windows and @code{quartz()} under Mac OS X.
+@code{windows()} under Windows and @code{quartz()} under OS X.
 
 Once the device driver is running, @R{} plotting commands can be used to
 produce a variety of graphical displays and to create entirely new kinds
@@ -6262,7 +6262,7 @@ For use with the X11 window system on Unix-alikes
 For use on Windows
 @item quartz()
 @findex quartz
-For use on Mac OS X
+For use on OS X
 @item postscript()
 @findex postscript
 For printing on PostScript printers, or creating PostScript graphics
@@ -6352,7 +6352,7 @@ meanings are as follows:
 @itemx win.metafile()
 [Windows]
 @item quartz()
-[Mac OS X]
+[OS X]
 @item postscript()
 @itemx pdf()
 @item png()
@@ -6788,13 +6788,13 @@ want to save it.
 @node Invoking R, The command-line editor, A sample session, Top
 @appendix Invoking R
 
-Users of @R{} on Windows or Mac OS X should read the OS-specific section
+Users of @R{} on Windows or OS X should read the OS-specific section
 first, but command-line use is also supported.
 
 @menu
 * Invoking R from the command line::  
 * Invoking R under Windows::    
-* Invoking R under Mac OS X::   
+* Invoking R under OS X::       
 * Scripting with R::            
 @end menu
 
@@ -7024,9 +7024,7 @@ support is available, @samp{Tk}. (For back-compatibility, @samp{x11} and
 @samp{tk} are accepted.)
 
 @item --arch=@var{name}
-(UNIX only) Run the specified sub-architecture.  Most commonly used on
-Mac OS X, where the possible values are @samp{i386}, @samp{x86_64} and
-@samp{ppc}.
+(UNIX only) Run the specified sub-architecture.
 
 @item --args
 This flag does nothing except cause the rest of the command line to be
@@ -7134,7 +7132,7 @@ batch file, or if it has extension @code{.sh} or @code{.pl} the
 appropriate interpreter (if available) is called to run it.
 
 
-@node Invoking R under Windows, Invoking R under Mac OS X, Invoking R from the command line, Invoking R
+@node Invoking R under Windows, Invoking R under OS X, Invoking R from the command line, Invoking R
 @appendixsec Invoking R under Windows
 
 There are two ways to run @R{} under Windows.  Within a terminal window
@@ -7204,22 +7202,23 @@ will run @LaTeX{} on @file{mydoc.tex}, with the path to @R{}'s
 this does not help with the MiKTeX build of @LaTeX{}, but
 @command{R CMD texify mydoc} will work in that case.)
 
-@node Invoking R under Mac OS X, Scripting with R, Invoking R under Windows, Invoking R
-@appendixsec Invoking R under Mac OS X
+@node Invoking R under OS X, Scripting with R, Invoking R under Windows, Invoking R
+@appendixsec Invoking R under OS X
 
 There are two ways to run @R{} under Mac OS X.  Within a @code{Terminal.app}
 window by invoking @code{R}, the methods described in the first
 subsection apply.  There is also console-based GUI (@code{R.app}) that by
 default is installed in the @code{Applications} folder on your
-system.  It is a standard double-clickable Mac OS X application.
+system.  It is a standard double-clickable OS X application.
 
-The startup procedure under Mac OS X is very similar to that under UNIX.
-The `home directory' is the one inside the R.framework, but the startup
-and current working directory are set as the user's home directory
-unless a different startup directory is given in the Preferences window
+The startup procedure under OS X is very similar to that under UNIX, but
+@code{R.app} does not make use of command-line arguments.  The `home
+directory' is the one inside the R.framework, but the startup and
+current working directory are set as the user's home directory unless a
+different startup directory is given in the Preferences window
 accessible from within the GUI.
 
-@node Scripting with R,  , Invoking R under Mac OS X, Invoking R
+@node Scripting with R,  , Invoking R under OS X, Invoking R
 @appendixsec Scripting with R
 
 If you just want to run a file @file{foo.R} of @R{} commands, the

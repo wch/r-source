@@ -3001,7 +3001,7 @@ AM_CONDITIONAL(USE_MMAP_ZLIB,
 ## Set shell variable r_cv_header_zlib_h to 'yes' if a recent enough
 ## zlib.h is found, and to 'no' otherwise.
 AC_DEFUN([_R_HEADER_ZLIB],
-[AC_CACHE_CHECK([if zlib version >= 1.2.3],
+[AC_CACHE_CHECK([if zlib version >= 1.2.5],
                 [r_cv_header_zlib_h],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
@@ -3009,9 +3009,9 @@ AC_DEFUN([_R_HEADER_ZLIB],
 #include <zlib.h>
 int main() {
 #ifdef ZLIB_VERSION
-/* Workaround Debian bug: it uses 1.2.3.4 even though there is no such
+/* Work around Debian bug: it uses 1.2.3.4 even though there was no such
    version on the master site zlib.net */
-  exit(strncmp(ZLIB_VERSION, "1.2.3", 5) < 0);
+  exit(strncmp(ZLIB_VERSION, "1.2.5", 5) < 0);
 #else
   exit(1);
 #endif
@@ -3059,7 +3059,7 @@ else
   have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
-AC_CACHE_CHECK([if PCRE version >= 7.6], [r_cv_have_pcre76],
+AC_CACHE_CHECK([if PCRE version >= 8.10], [r_cv_have_pcre830],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -3070,9 +3070,9 @@ AC_CACHE_CHECK([if PCRE version >= 7.6], [r_cv_have_pcre76],
 #endif
 int main() {
 #ifdef PCRE_MAJOR
-#if PCRE_MAJOR > 7
+#if PCRE_MAJOR > 8
   exit(0);
-#elif PCRE_MAJOR > 6 && PCRE_MAJOR >= 6
+#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
   exit(0);
 #else
   exit(1);
@@ -3081,18 +3081,18 @@ int main() {
   exit(1);
 #endif
 }
-]])], [r_cv_have_pcre76=yes], [r_cv_have_pcre76=no], [r_cv_have_pcre76=no])])
+]])], [r_cv_have_pcre830=yes], [r_cv_have_pcre830=no], [r_cv_have_pcre830=no])])
 fi
-if test "x${r_cv_have_pcre76}" = xyes; then
+if test "x${r_cv_have_pcre830}" = xyes; then
   LIBS="-lpcre ${LIBS}"
 fi
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
-if test "x${r_cv_have_pcre76}" = xyes; then
+if test "x${r_cv_have_pcre830}" = xyes; then
   AC_MSG_RESULT([no])
 else
   AC_MSG_RESULT([yes])
 fi
-AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre76}" != xyes])
+AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre830}" != xyes])
 ])# R_PCRE
 
 ## R_BZLIB
