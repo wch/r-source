@@ -894,6 +894,10 @@
 
       \item There is now support for \command{makeinfo} version 5.0
       (which requires a slightly different \file{.texi} syntax).
+      
+      \item The minimum versions for \option{--use-system-zlib} and
+      \code{--use-system-pcre} are now tested as 1.2.5 and 8.10
+      respectively.
     }
   }
 
