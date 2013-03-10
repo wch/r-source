@@ -22,6 +22,6 @@ toLatex <- function(object, ...) UseMethod("toLatex")
 
 print.Bibtex <- print.Latex <- function(x, prefix = "", ...)
 {
-    writeLines(paste0(prefix, unclass(x)))
+    writeLines(paste0(prefix, unclass(x)), ...)
     invisible(x)
 }
