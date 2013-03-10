@@ -4573,9 +4573,9 @@ When using the Oracle compilers@footnote{including @command{gcc} for
 Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this
 disables @acronym{IEEE} arithmetic and @command{make check} will fail.
 
-For the Solaris Studio compilers a little juggling of paths was needed
-to ensure @acronym{GNU} @code{libiconv} (in @file{/usr/local}) was used
-rather than the Solaris @code{iconv}:
+A little juggling of paths was needed to ensure @acronym{GNU}
+@code{libiconv} (in @file{/usr/local}) was used rather than the Solaris
+@code{iconv}:
 
 @example
 CC="cc -xc99"
@@ -4708,6 +4708,11 @@ This has often given test failures in the past, in several different
 places.  At the time of writing it fails in @file{tests/reg-BLAS.R}, and on
 some builds, including for @cputype{amd64}, it fails in
 @code{example(eigen)}.
+
+As from @R{} 3.0.0 parsing very complex expressions needs a lot of stack
+space when the Oracle compilers are used: several packages require the
+stack increased to say 20MB, and even then @CRANpkg{biclust} will not
+install.
 
 
 @menu
