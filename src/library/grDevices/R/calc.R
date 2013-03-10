@@ -76,9 +76,13 @@ chull <- function(x, y = NULL)
 {
     X <- xy.coords(x, y, recycle = TRUE)
     x <- cbind(X$x, X$y)
-    n <- nrow(x)
-    if(n == 0) return(integer())
-    .Call(C_chull, x)
+    if(nrow(x) == 0) return(integer())
+    if(nrow(x) == 1) return(1L)
+    res <- .Call(C_chull, x)
+    ## fix up order: needed in rare cases: PR#15127
+    xx <- sweep(x[res, ], 2L, colMeans(x[res, ]))
+    angs <- atan2(xx[, 2L], -xx[, 1L])
+    res[order(angs)]
 }
 
 nclass.Sturges <- function(x) ceiling(log2(length(x)) + 1)
