@@ -898,6 +898,10 @@
       \item The minimum versions for \option{--use-system-zlib} and
       \code{--use-system-pcre} are now tested as 1.2.5 and 8.10
       respectively.
+      
+      \item On Windows, the stack size is reduced to 16MB on 32-bit
+      systems: misguided users were launching many threads without
+      controlling the stack size.
     }
   }
 
