@@ -3043,8 +3043,10 @@ caddr_t hello() {
 
 ## R_PCRE
 ## ------
-## Try finding pcre library and headers.
-## RedHat puts the headers in /usr/include/pcre.
+## If selected, try finding system pcre library and headers.
+## RedHat put the headers in /usr/include/pcre.
+## R (2.15.3, 3.0.0) includes 8.32: there are problems < 8.10 and
+## distros are often slow to update.
 AC_DEFUN([R_PCRE],
 [if test "x${use_system_pcre}" = xyes; then
   AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
@@ -3059,7 +3061,7 @@ else
   have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
-AC_CACHE_CHECK([if PCRE version >= 8.10], [r_cv_have_pcre830],
+AC_CACHE_CHECK([if PCRE version >= 8.10], [r_cv_have_pcre810],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -3081,18 +3083,18 @@ int main() {
   exit(1);
 #endif
 }
-]])], [r_cv_have_pcre830=yes], [r_cv_have_pcre830=no], [r_cv_have_pcre830=no])])
+]])], [r_cv_have_pcre810=yes], [r_cv_have_pcre810=no], [r_cv_have_pcre810=no])])
 fi
-if test "x${r_cv_have_pcre830}" = xyes; then
+if test "x${r_cv_have_pcre810}" = xyes; then
   LIBS="-lpcre ${LIBS}"
 fi
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
-if test "x${r_cv_have_pcre830}" = xyes; then
+if test "x${r_cv_have_pcre810}" = xyes; then
   AC_MSG_RESULT([no])
 else
   AC_MSG_RESULT([yes])
 fi
-AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre830}" != xyes])
+AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre810}" != xyes])
 ])# R_PCRE
 
 ## R_BZLIB
