@@ -21,3 +21,11 @@ class(x) <- "A"
 yy <- split(x, 1:2)
 stopifnot(identical(y, yy))
 ## were different in R < 3.0.0
+
+
+## dates with fractional seconds after 2038 (PR#15200)
+## Extremely speculative!
+z <- as.POSIXct(2^31+c(0.4, 0.8), origin=ISOdatetime(1970,1,1,0,0,0,tz="GMT"))
+zz <- format(z)
+stopifnot(zz[1] == zz[2])
+## printed form rounded not truncated in R < 3.0.0

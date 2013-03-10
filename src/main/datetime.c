@@ -414,7 +414,6 @@ static double mktime0 (struct tm *tm, const int local)
 static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 {
     double d = *tp;
-    int day;
     int y, tmp, mon, left, diff, diff2;
     struct tm *res= ltm;
     time_t t;
@@ -431,8 +430,8 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	return local ? localtime(&t) : gmtime(&t);
     }
 
-    day = (int) floor(d/86400.0);
-    left = (int) (d - day * 86400.0 + 0.5);
+    int day = floor(d/86400.0);
+    left = (int) (d - day * 86400.0 + 1e-6); // allow for fractional secs
 
     /* hour, min, and sec */
     res->tm_hour = left / 3600;
