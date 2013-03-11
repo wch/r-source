@@ -260,7 +260,9 @@ or @file{COPYING.LIB} files but refer to the copies on
 @uref{http://www.r-project.org/@/Licenses/} and included in the @R{}
 distribution (in directory @file{share/licenses}).  Since files named
 @file{LICENSE} or @file{LICENCE} @emph{will} be installed, do not use
-these names for standard licence files.
+these names for standard licence files.  To include comments about the
+licensing rather than the body of a license, use a file named something
+like @file{LICENSE.note}.
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
