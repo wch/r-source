@@ -39,7 +39,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   that the algorithm failed to converge.
 }
 \value{
-  The SVD decomposition of the matrix as computed by LAPACK.
+  The SVD decomposition of the matrix as computed by LAPACK,
   \deqn{ \bold{X = U D V'},} where \eqn{\bold{U}} and \eqn{\bold{V}} are
   orthogonal, \eqn{\bold{V'}} means \emph{V transposed}, and
   \eqn{\bold{D}} is a diagonal matrix with the singular

@@ -1,5 +1,5 @@
 
-R version 3.0.0 alpha (2013-03-07 r62158) -- "Unsuffered Consequences"
+R version 3.0.0 alpha (2013-03-10 r62200) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -7306,7 +7306,61 @@ Female 1st              4 141
        2nd             13  93
        3rd            106  90
        Crew             3  20
-> 
+> ## Don't show: 
+> . <- integer()
+> (f04 <- ftable(Titanic, col.vars= .))
+Class Sex    Age   Survived     
+1st   Male   Child No          0
+                   Yes         5
+             Adult No        118
+                   Yes        57
+      Female Child No          0
+                   Yes         1
+             Adult No          4
+                   Yes       140
+2nd   Male   Child No          0
+                   Yes        11
+             Adult No        154
+                   Yes        14
+      Female Child No          0
+                   Yes        13
+             Adult No         13
+                   Yes        80
+3rd   Male   Child No         35
+                   Yes        13
+             Adult No        387
+                   Yes        75
+      Female Child No         17
+                   Yes        14
+             Adult No         89
+                   Yes        76
+Crew  Male   Child No          0
+                   Yes         0
+             Adult No        670
+                   Yes       192
+      Female Child No          0
+                   Yes         0
+             Adult No          3
+                   Yes        20
+> (f10 <- ftable(Titanic, col.vars= 1, row.vars= .))
+Class 1st 2nd 3rd Crew
+                      
+      325 285 706  885
+> (f01 <- ftable(Titanic, col.vars= ., row.vars= 1))
+Class     
+1st    325
+2nd    285
+3rd    706
+Crew   885
+> (f00 <- ftable(Titanic, col.vars= ., row.vars= .))
+     
+ 2201
+> stopifnot(
++   dim(f04) == c(32,1),
++   dim(f10) == c(1,4),
++   dim(f01) == c(4,1),
++   dim(f00) == c(1,1))
+> ## End Don't show
 > ## Start with a data frame.
 > x <- ftable(mtcars[c("cyl", "vs", "am", "gear")])
 > x
@@ -13743,80 +13797,35 @@ Female 1st          0     4     1   140
        3rd         17    89    14    76
        Crew         0     3     0    20
 > write.ftable(ft22, quote = FALSE, method="compact")
-       Survived        No         Yes      
-Sex    Class \ Age Child Adult Child Adult
-Male   1st              0   118     5    57
-       2nd              0   154    11    14
-       3rd             35   387    13    75
-       Crew             0   670     0   192
-Female 1st              0     4     1   140
-       2nd              0    13    13    80
-       3rd             17    89    14    76
-       Crew             0     3     0    20
+       Survived       No         Yes      
+Sex    Class | Age Child Adult Child Adult
+Male   1st             0   118     5    57
+       2nd             0   154    11    14
+       3rd            35   387    13    75
+       Crew            0   670     0   192
+Female 1st             0     4     1   140
+       2nd             0    13    13    80
+       3rd            17    89    14    76
+       Crew            0     3     0    20
 > ## Don't show: 
-> op <- options(warn = 2) # no warnings allowed
-> stopifnot(dim(format(ft)) == 4:5,
-+           dim(format(ftable(UCBAdmissions))) == c(6,9),
-+           dim(format(ft22)) == c(11,7))
-> for(meth in c("non.compact", "row.compact", "col.compact", "compact")) {
-+    cat("\nMethod ",meth,"\n-----------------\n")
-+    write.ftable(ft22, method=meth) # without warnings!
-+ }
-
-Method  non.compact 
------------------
-                 "Survived"    "No"           "Yes"        
-                 "Age"      "Child" "Adult" "Child" "Adult"
-"Sex"    "Class"                                           
-"Male"   "1st"                    0     118       5      57
-         "2nd"                    0     154      11      14
-         "3rd"                   35     387      13      75
-         "Crew"                   0     670       0     192
-"Female" "1st"                    0       4       1     140
-         "2nd"                    0      13      13      80
-         "3rd"                   17      89      14      76
-         "Crew"                   0       3       0      20
-
-Method  row.compact 
------------------
-                 "Survived"    "No"           "Yes"        
-"Sex"    "Class" "Age"      "Child" "Adult" "Child" "Adult"
-"Male"   "1st"                    0     118       5      57
-         "2nd"                    0     154      11      14
-         "3rd"                   35     387      13      75
-         "Crew"                   0     670       0     192
-"Female" "1st"                    0       4       1     140
-         "2nd"                    0      13      13      80
-         "3rd"                   17      89      14      76
-         "Crew"                   0       3       0      20
-
-Method  col.compact 
------------------
-         "Survived"    "No"           "Yes"        
-         "Age"      "Child" "Adult" "Child" "Adult"
-"Sex"    "Class"                                   
-"Male"   "1st"            0     118       5      57
-         "2nd"            0     154      11      14
-         "3rd"           35     387      13      75
-         "Crew"           0     670       0     192
-"Female" "1st"            0       4       1     140
-         "2nd"            0      13      13      80
-         "3rd"           17      89      14      76
-         "Crew"           0       3       0      20
-
-Method  compact 
------------------
-         "Survived"      "No"           "Yes"        
-"Sex"    Class \ Age "Child" "Adult" "Child" "Adult"
-"Male"   "1st"              0     118       5      57
-         "2nd"              0     154      11      14
-         "3rd"             35     387      13      75
-         "Crew"             0     670       0     192
-"Female" "1st"              0       4       1     140
-         "2nd"              0      13      13      80
-         "3rd"             17      89      14      76
-         "Crew"             0       3       0      20
-> options(op)
+>  op <- options(warn = 2) # no warnings allowed
+>  stopifnot(dim(format(ft)) == 4:5,
++ 	   dim(format(ftable(UCBAdmissions))) == c(6,9))
+>  meths <- c("non.compact", "row.compact", "col.compact", "compact")
+>  dimform <- function(ft) sapply(meths, function(M) dim(format(ft, method=M)))
+>  m.eq    <- function(M,m) all.equal(unname(M), m, tol=0)
+>  ## All format(..) w/o warnings:
+>  stopifnot(m.eq(print(dimform(ft22)),
++ 		rbind(11:10, rep(7:6, each=2))),
++ 	   m.eq(print(dimform(ftable(Titanic, row.vars = integer()))),
++ 		rbind(rep(6:5,2), 33)))
+     non.compact row.compact col.compact compact
+[1,]          11          10          11      10
+[2,]           7           7           6       6
+     non.compact row.compact col.compact compact
+[1,]           6           5           6       5
+[2,]          33          33          33      33
+>  options(op)
 > ## End Don't show
 > 
 > 
