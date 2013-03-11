@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory-limits.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Memory-limits}
@@ -20,7 +20,7 @@
   build, but for a 32-bit build of \R on Windows they also depend on the
   underlying OS version.
 
-  \R holds all objects in memory, and there are limits based on the
+  \R holds all objects in virtual memory, and there are limits based on the
   amount of memory that can be used by all objects:
   \itemize{
     \item There may be limits on the size of the heap and the number of

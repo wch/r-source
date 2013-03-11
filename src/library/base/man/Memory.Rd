@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Memory}
@@ -10,16 +10,16 @@
   How \R manages its workspace.
 }
 \details{
-  \R has a variable-sized workspace.  Prior to \R 2.15.0 there were
-  (rarely-used) command-line options to control its size, but it is now
-  sized automatically.
+  \R has a variable-sized workspace.  There are (rarely-used)
+  command-line options to control its minimim size, but no longer any to
+  control the maximum size.
 #ifdef windows
 
   On Windows the \option{--max-mem-size} option (or environment variable
-  \env{R_MAX_MEM_SIZE}) sets the maximum memory allocation: it has a
-  minimum allowed value of 32M.  This is intended to catch attempts to
-  allocate excessive amounts of memory which may cause other processes
-  to run out of resources.  See also \code{\link{memory.limit}}.
+  \env{R_MAX_MEM_SIZE}) sets the maximum (virtual) memory allocation: it
+  has a minimum allowed value of 32M.  This is intended to catch
+  attempts to allocate excessive amounts of memory which may cause other
+  processes to run out of resources.  See also \code{\link{memory.limit}}.
 #endif
 
   \R maintains separate areas for fixed and variable sized objects.  The
@@ -31,14 +31,15 @@
   bytes on a 64-bit build.
 
   The default values are (currently) an initial setting of 350k cons
-  cells, 6Mb of vector heap: note that the areas are not actually
+  cell sand 6Mb of vector heap.  Note that the areas are not actually
   allocated initially: rather these values are the sizes for triggering
   garbage collection.  These values can be set by the command line
-  options \option{--min-nsize} and \option{--min-vsize} when R is
-  started. Thereafter \R will grow or shrink the areas depending on
-  usage, never decreasing below the initial values.
+  options \option{--min-nsize} and \option{--min-vsize} (or if they are
+  not used, the environment variables \env{R_NSIZE} and \env{R_VSIZE})
+  when \R is started. Thereafter \R will grow or shrink the areas
+  depending on usage, never decreasing below the initial values.
 
-  How much time R spends in the garbage collector will depend on these
+  How much time \R spends in the garbage collector will depend on these
   initial settings and on the trade-off the memory manager makes, when
   memory fills up, between collecting garbage to free up unused memory
   and growing these areas.  The strategy used for growth can be
