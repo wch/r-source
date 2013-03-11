@@ -159,6 +159,7 @@ void R_DefParams(Rstart Rp)
     Rp->max_nsize = R_SIZE_T_MAX;
     Rp->ppsize = R_PPSSIZE;
     Rp->NoRenviron = FALSE;
+    R_SizeFromEnv(Rp);
 }
 
 #define Max_Nsize 50000000	/* about 1.4Gb 32-bit, 2.8Gb 64-bit */
@@ -193,7 +194,7 @@ static void SetSize(R_size_t vsize, R_size_t nsize)
 {
     char msg[1024];
 
-    /* vsize >0 to catch long->int overflow */
+    /* vsize > 0 to catch long->int overflow */
     if (vsize < 1000 && vsize > 0) {
 	R_ShowMessage("WARNING: vsize ridiculously low, Megabytes assumed\n");
 	vsize *= (R_size_t) Mega;
