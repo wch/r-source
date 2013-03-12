@@ -219,12 +219,12 @@ $underline_titles
 +     author = person("R Core Team"),
 +     organization = "R Foundation for Statistical Computing",
 +     address = "Vienna, Austria",
-+     year = 2012,
++     year = 2013,
 +     isbn = "3-900051-07-0",
 +     url = "http://www.R-project.org"),
 +   bibentry(bibtype = "article",
-+     author = c(person(c("George", "E", "P"), "Box"),
-+                person(c("David",  "R"),      "Cox")),
++     author = c(person(c("George", "E.", "P."), "Box"),
++                person(c("David",  "R."),      "Cox")),
 +     year = 1964,
 +     title = "An Analysis of Transformations",
 +     journal = "Journal of the Royal Statistical Society, Series B",
@@ -236,7 +236,7 @@ $underline_titles
 +        .init = TRUE)
 <environment: 0x2b6b458>
 > print(refs, .bibstyle = "unsorted")
-[1] R Core Team (2012). _R: A Language and Environment for Statistical
+[1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
 ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
 
