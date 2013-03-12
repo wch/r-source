@@ -44,6 +44,16 @@
 #undef _S4_subsettable
 
 
+static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, int i) {
+    /* if RHS (container or element) has NAMED > 0 set NAMED = 2.
+       Duplicating might be safer/more consistent (**** PR15098) */
+    SEXP val = VECTOR_ELT(y, i);
+    if ((NAMED(y) || NAMED(val)))
+	if (NAMED(val) < 2)
+	    SET_NAMED(val, 2);
+    return val;
+}
+
 /* ExtractSubset does the transfer of elements from "x" to "result" */
 /* according to the integer subscripts given in "indx". */
 
@@ -100,7 +110,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	case VECSXP:
 	case EXPRSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
-		SET_VECTOR_ELT(result, i, VECTOR_ELT(x, ii));
+		SET_VECTOR_ELT(result, i, VECTOR_ELT_FIX_NAMED(x, ii));
 	    else
 		SET_VECTOR_ELT(result, i, R_NilValue);
 	    break;
@@ -298,7 +308,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    SET_STRING_ELT(result, ij, STRING_ELT(x, iijj));
 		    break;
 		case VECSXP:
-		    SET_VECTOR_ELT(result, ij, VECTOR_ELT(x, iijj));
+		    SET_VECTOR_ELT(result, ij, VECTOR_ELT_FIX_NAMED(x, iijj));
 		    break;
 		case RAWSXP:
 		    RAW(result)[ij] = RAW(x)[iijj];
@@ -450,7 +460,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	    break;
 	case VECSXP:
 	    if (ii != NA_INTEGER)
-		SET_VECTOR_ELT(result, i, VECTOR_ELT(x, ii));
+		SET_VECTOR_ELT(result, i, VECTOR_ELT_FIX_NAMED(x, ii));
 	    else
 		SET_VECTOR_ELT(result, i, R_NilValue);
 	    break;

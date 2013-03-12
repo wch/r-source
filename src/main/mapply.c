@@ -82,7 +82,10 @@ do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 	    counters[j] = (++counters[j] > lengths[j]) ? 1 : counters[j];
 	    INTEGER(VECTOR_ELT(nindex, j))[0] = counters[j];
 	}
-	SET_VECTOR_ELT(ans, i, eval(fcall, rho));
+	SEXP tmp = eval(fcall, rho);
+	if (NAMED(tmp))
+	    tmp = duplicate(tmp);
+	SET_VECTOR_ELT(ans, i, tmp);
     }
 
     for(int j = 0; j < m; j++)

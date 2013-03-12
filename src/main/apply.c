@@ -148,7 +148,10 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SEXP val; SEXPTYPE valType;
 	    PROTECT_INDEX indx;
 	    INTEGER(ind)[0] = i + 1;
-	    PROTECT_WITH_INDEX(val = eval(R_fcall, rho), &indx);
+	    val = val = eval(R_fcall, rho);
+	    if (NAMED(val))
+		val = duplicate(val);
+	    PROTECT_WITH_INDEX(val, &indx);
 	    if (length(val) != commonLen)
 	    	error(_("values must be length %d,\n but FUN(X[[%d]]) result is length %d"),
 	               commonLen, i+1, length(val));
@@ -264,6 +267,8 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	/* PROTECT(R_fcall = lang2(FUN, X)); */
 	PROTECT(R_fcall = lang3(FUN, X, R_DotsSymbol));
 	ans = eval(R_fcall, rho);
+	if (NAMED(ans))
+	    ans = duplicate(ans);
 	UNPROTECT(1);
 	return(ans);
     } else if(replace) return duplicate(X);
