@@ -1,6 +1,6 @@
 % File src/library/splines/man/ns.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns}
@@ -32,22 +32,26 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
     supplied, the basis parameters do not depend on \code{x}. Data can
     extend beyond \code{Boundary.knots}}
 }
-\value{
-    A matrix of dimension \code{length(x) * df} where either \code{df} was
-    supplied or if \code{knots} were supplied,
-    \code{df = length(knots) + 1 + intercept}.
-    Attributes are returned that correspond to the arguments to \code{ns},
-    and explicitly give the \code{knots}, \code{Boundary.knots} etc for
-    use by \code{predict.ns()}.
+\details{
+  \code{ns} is based on the function \code{\link{spline.des}}.  It
+  generates a basis matrix for representing the family of
+  piecewise-cubic splines with the specified sequence of
+  interior knots, and the natural boundary conditions.  These enforce
+  the constraint that the function is linear beyond the boundary knots,
+  which can either be supplied or default to the extremes of the
+  data.
 
-    \code{ns()} is based on the function \code{\link{spline.des}}.  It
-    generates a basis matrix for representing the family of
-    piecewise-cubic splines with the specified sequence of
-    interior knots, and the natural boundary conditions.  These enforce
-    the constraint that the function is linear beyond the boundary knots,
-    which can either be supplied, else default to the extremes of the
-    data.  A primary use is in modeling formula to directly specify a
-    natural spline term in a model.
+  A primary use is in modeling formula to directly specify a
+  natural spline term in a model: see the examples.
+}
+
+\value{
+  A matrix of dimension \code{length(x) * df} where either \code{df} was
+  supplied or if \code{knots} were supplied,
+  \code{df = length(knots) + 1 + intercept}.
+  Attributes are returned that correspond to the arguments to \code{ns},
+  and explicitly give the \code{knots}, \code{Boundary.knots} etc for
+  use by \code{predict.ns()}.
 }
 \seealso{
   \code{\link{bs}}, \code{\link{predict.ns}}, \code{\link{SafePrediction}}
@@ -62,6 +66,9 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
 require(stats); require(graphics)
 ns(women$height, df = 5)
 summary(fm1 <- lm(weight ~ ns(height, df = 5), data = women))
+
+## To see what knots were selected
+attr(terms(fm1), "predvars")
 
 ## example of safe prediction
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
