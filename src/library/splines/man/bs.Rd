@@ -1,6 +1,6 @@
 % File src/library/splines/man/bs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bs}
@@ -34,6 +34,14 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     \code{Boundary.knots} are supplied, the basis parameters do not
     depend on \code{x}. Data can extend beyond \code{Boundary.knots}.}
 }
+\details{
+  \code{bs} is based on the function \code{\link{spline.des}}.
+  It generates a basis matrix for
+  representing the family of piecewise polynomials with the specified
+  interior knots and degree, evaluated at the values of \code{x}.  A
+  primary use is in modeling formulas to directly specify a piecewise
+  polynomial term in a model.
+}
 \value{
   A matrix of dimension \code{c(length(x), df)}, where either \code{df}
   was supplied or if \code{knots} were supplied, \code{df =
@@ -41,13 +49,6 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   are returned that correspond to the arguments to \code{bs}, and
   explicitly give the \code{knots}, \code{Boundary.knots} etc for use by
   \code{predict.bs()}.
-
-  \code{bs()} is based on the function \code{\link{spline.des}()}.
-  It generates a basis matrix for
-  representing the family of piecewise polynomials with the specified
-  interior knots and degree, evaluated at the values of \code{x}.  A
-  primary use is in modeling formulas to directly specify a piecewise
-  polynomial term in a model.
 }
 \seealso{
   \code{\link{ns}}, \code{\link{poly}}, \code{\link{smooth.spline}},

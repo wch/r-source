@@ -255,6 +255,11 @@ Multiple R-squared:  0.9998,	Adjusted R-squared:  0.9997
 F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 
 > 
+> ## To see what knots were selected
+> attr(terms(fm1), "predvars")
+list(weight, ns(height, knots = c(60.8, 63.6, 66.4, 69.2), Boundary.knots = c(58, 
+72), intercept = FALSE))
+> 
 > ## example of safe prediction
 > plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 > ht <- seq(57, 73, length.out = 200)
