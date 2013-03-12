@@ -5613,11 +5613,13 @@ function(dir)
             out$spelling <- a
     }
 
+    urls <- .get_standard_repository_URLs()
+
     ## If a package has a FOSS license, check whether any of its strong
     ## recursive dependencies restricts use.
     if(foss) {
         available <-
-            utils::available.packages(type = "source",
+            utils::available.packages(utils::contrib.url(urls, "source"),
                                       filters =
                                       c("R_version", "duplicates"))
         ## We need the current dependencies of the package (so batch
@@ -5654,9 +5656,11 @@ function(dir)
     if(length(nms))
         out$fields <- nms
 
-    urls <- .get_standard_repository_URLs()
     ## We do not want to use utils::available.packages() for now, as
     ## this unconditionally filters according to R version and OS type.
+    ## <FIXME>
+    ## This is no longer true ...
+    ## </FIXME>
     .repository_db <- function(u) {
         con <- gzcon(url(sprintf("%s/src/contrib/PACKAGES.gz", u), "rb"))
         on.exit(close(con))
