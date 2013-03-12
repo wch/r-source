@@ -33,8 +33,8 @@ without copying the large fields.
 
 }
 \usage{
-\special{setRefClass(Class, fields = , contains = c("localRefClass",....), methods =,
-     where =, ...)}
+\special{setRefClass(Class, fields = , contains = c("localRefClass",....),
+     methods =, where =, ...)}
 }
 
 \details{

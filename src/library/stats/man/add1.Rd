@@ -22,7 +22,8 @@ add1(object, scope, \dots)
 \method{add1}{lm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
      x = NULL, k = 2, \dots)
 
-\method{add1}{glm}(object, scope, scale = 0, test = c("none", "Rao", "LRT", "Chisq", "F"),
+\method{add1}{glm}(object, scope, scale = 0,
+     test = c("none", "Rao", "LRT", "Chisq", "F"),
      x = NULL, k = 2, \dots)
 
 drop1(object, scope, \dots)
@@ -33,7 +34,8 @@ drop1(object, scope, \dots)
 \method{drop1}{lm}(object, scope, scale = 0, all.cols = TRUE,
       test = c("none", "Chisq", "F"), k = 2, \dots)
 
-\method{drop1}{glm}(object, scope, scale = 0, test = c("none", "Rao", "LRT", "Chisq", "F"),
+\method{drop1}{glm}(object, scope, scale = 0,
+      test = c("none", "Rao", "LRT", "Chisq", "F"),
       k = 2, \dots)
 }
 \arguments{

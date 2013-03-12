@@ -18,7 +18,8 @@
 }
 \usage{
 optim(par, fn, gr = NULL, \dots,
-      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"),
+      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN",
+                 "Brent"),
       lower = -Inf, upper = Inf,
       control = list(), hessian = FALSE)
 
