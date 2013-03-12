@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/chull.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chull}
@@ -21,13 +21,11 @@ chull(x, y = NULL)
 \details{
   \code{\link{xy.coords}} is used to interpret the
   specification of the points. The algorithm is that given by Eddy (1977).
-
-  \sQuote{Peeling} as used in the S function \code{chull} can be
-  implemented by calling \code{chull} recursively.
 }
 \value{
-  An integer vector giving the indices of the points lying on the
-  convex hull, in clockwise order.
+  An integer vector giving the indices of the unique points lying on the
+  convex hull, in clockwise order.  (The first will be returned for
+  duplicate points.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -44,8 +42,7 @@ chull(x, y = NULL)
 \seealso{\code{\link{xy.coords}}, \code{\link{polygon}}}
 
 \examples{
-require(stats)
-X <- matrix(rnorm(2000), ncol = 2)
+X <- matrix(stats::rnorm(2000), ncol = 2)
 chull(X)
 \dontrun{
   # Example usage from graphics package

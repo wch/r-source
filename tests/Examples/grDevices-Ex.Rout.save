@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-01-30 r61784) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-12 r62209) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -598,8 +598,7 @@ $ch
 > 
 > ### ** Examples
 > 
-> require(stats)
-> X <- matrix(rnorm(2000), ncol = 2)
+> X <- matrix(stats::rnorm(2000), ncol = 2)
 > chull(X)
  [1]  61 442 165 899 697 446 975 656 232 557 938 295 495
 > ## Not run: 
