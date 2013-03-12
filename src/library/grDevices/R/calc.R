@@ -79,6 +79,9 @@ chull <- function(x, y = NULL)
     if(nrow(x) == 0) return(integer())
     if(nrow(x) == 1) return(1L)
     res <- .Call(C_chull, x)
+    ## if this is called on multiple copies of a single point
+    ## res is of length one.
+    if (length(res) < 2L) return(res)
     ## fix up order: needed in rare cases: PR#15127
     xx <- sweep(x[res, ], 2L, colMeans(x[res, ]))
     angs <- atan2(xx[, 2L], -xx[, 1L])
