@@ -138,9 +138,9 @@ S3method(.DollarNames, environment)
 
 export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
        Sweave, SweaveSyntConv, SweaveSyntaxLatex, SweaveSyntaxNoweb,
-       RtangleWritedoc, RweaveLatexOptions, RweaveChunkPrefix,
-       RweaveEvalWithOpt, RweaveTryStop, SweaveHooks,
-       RweaveLatexWritedoc, RweaveLatexOptions, RweaveLatexFinish,
+       RtangleWritedoc, RweaveChunkPrefix, RweaveEvalWithOpt,
+       RweaveTryStop, SweaveHooks, RweaveLatexWritedoc,
+       RweaveLatexOptions, RweaveLatexFinish,
        makeRweaveLatexCodeRunner)
 
 if(tools:::.OStype() == "unix") {
