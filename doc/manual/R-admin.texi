@@ -1507,7 +1507,7 @@ of the OS X FAQ at
 
 You can run command-line @R{} from a Terminal like any other Unix-alike:
 see the next chapter of this manual.  There are some small differences
-which may surprise users of @R{} on other plaforms, notably the default
+which may surprise users of @R{} on other platforms, notably the default
 personal library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.0/library}), and that warnings, messages and
 other output to @file{stderr} are printed in bold.
