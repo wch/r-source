@@ -935,16 +935,24 @@ function()
             .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
     } else {
         nms <- c("CRAN", "BioCsoft", "BioCann", "BioCexp")
-        p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-        repos <- if(file_test("-f", p)) {
-            a <- .read_repositories(p)
-            a[nms, "URL"]
-        } else {
-            a <- .read_repositories(file.path(R.home("etc"),
-                                              "repositories"))
-            c("http://CRAN.R-project.org", a[nms[-1L], "URL"])
+        repos <- getOption("repos")
+        ## This is set by utils:::.onLoad(), hence may be NULL.
+        if(!is.null(repos) &&
+           !any(is.na(repos[nms])) &&
+           (repos["CRAN"] != "@CRAN@"))
+            repos <- repos[nms]
+        else {
+            p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+            repos <- if(file_test("-f", p)) {
+                a <- .read_repositories(p)
+                a[nms, "URL"]
+            } else {
+                a <- .read_repositories(file.path(R.home("etc"),
+                                                  "repositories"))
+                c("http://CRAN.R-project.org", a[nms[-1L], "URL"])
+            }
+            names(repos) <- nms
         }
-        names(repos) <- nms
     }
     repos
 }
