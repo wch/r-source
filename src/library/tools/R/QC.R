@@ -1863,6 +1863,8 @@ function(package, dir, file, lib.loc = NULL,
     ## Also, need to handle base::.Call() etc ...
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
 
+    allowed <- character()
+
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
@@ -1877,7 +1879,7 @@ function(package, dir, file, lib.loc = NULL,
                 else {
                     this <- parg <- e[["PACKAGE"]]
                     if (!is.na(pkg) && is.character(parg) &&
-                        nzchar(parg) && parg != pkg && this != "base") {
+                        nzchar(parg) && parg != pkg) {
                         wrong_pkg <<- c(wrong_pkg, e)
                         bad_pkg <<- c(bad_pkg, this)
                     }
