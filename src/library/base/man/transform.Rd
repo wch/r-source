@@ -1,6 +1,6 @@
 % File src/library/base/man/transform.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{transform}
@@ -31,14 +31,18 @@ transform(`_data`, \dots)
 \value{
   The modified value of \code{_data}.
 }
+\section{Warning}{
+  This is a convenience function intended for use interactively.  For
+  programming it is better to use the standard subsetting arithmetic functions,
+  and in particular the non-standard evaluation of
+  argument \code{transform} can have unanticipated consequences.
+  
+}
 \author{Peter Dalgaard}
-\note{Prior to R 2.3.0, the first argument was named \code{x}, but this
-caused trouble if people wanted to create a variable of that name.
-Names starting with an underscore are syntactically invalid, so the
-current choice should be less problematic.
-
-If some of the values are not vectors of the appropriate length,
-  you deserve whatever you get!}
+\note{
+  If some of the values are not vectors of the appropriate length,
+  you deserve whatever you get!
+}
 \seealso{ \code{\link{within}} for a more flexible approach,
     \code{\link{subset}},
     \code{\link{list}},
