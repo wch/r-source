@@ -6961,8 +6961,8 @@ tilde-expansion: see the help for @code{path.expand}.
 For expert use only: set the initial trigger sizes for garbage
 collection of vector heap (in bytes) and @emph{cons cells} (number)
 respectively.  Suffix @samp{M} specifies megabytes or millions of cells
-respectively.  The defaults are 6Mb and 350k respectively and can laso
-be set by enviroment variables @env{R_NSIZE} and @env{R_VSIZE}.
+respectively.  The defaults are 6Mb and 350k respectively and can also
+be set by environment variables @env{R_NSIZE} and @env{R_VSIZE}.
 
 @item --max-ppsize=@var{N}
 Specify the maximum size of the pointer protection stack as @var{N}

@@ -11,7 +11,7 @@
 }
 \details{
   \R has a variable-sized workspace.  There are (rarely-used)
-  command-line options to control its minimim size, but no longer any to
+  command-line options to control its minimum size, but no longer any to
   control the maximum size.
 #ifdef windows
 
