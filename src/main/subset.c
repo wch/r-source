@@ -47,7 +47,8 @@
 
 static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
     /* if RHS (container or element) has NAMED > 0 set NAMED = 2.
-       Duplicating might be safer/more consistent (**** PR15098) */
+       Duplicating might be safer/more consistent (fix bug reported by
+       Radford Neal; similar to PR15098) */
     SEXP val = VECTOR_ELT(y, i);
     if ((NAMED(y) || NAMED(val)))
 	if (NAMED(val) < 2)
