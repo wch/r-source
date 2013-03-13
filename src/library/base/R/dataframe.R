@@ -462,12 +462,11 @@ data.frame <-
             for(j in seq_along(xi)) {
                 xi1 <- xi[[j]]
                 if(is.vector(xi1) || is.factor(xi1))
-                    xi[[j]] <- rep(xi1, length.out = nr)
+                    xi[[j]] <- rep_len(xi1, nr)
 		else if(is.character(xi1) && inherits(xi1, "AsIs"))
-                    xi[[j]] <- structure(rep(xi1, length.out = nr),
-                                         class = class(xi1))
+                    xi[[j]] <- structure(rep_len(xi1, nr), class = class(xi1))
                 else if(inherits(xi1, "Date") || inherits(xi1, "POSIXct"))
-                    xi[[j]] <- rep(xi1, length.out = nr)
+                    xi[[j]] <- rep_len(xi1, nr)
                 else {
                     fixed <- FALSE
                     break
@@ -722,7 +721,7 @@ data.frame <-
             ## except for two column numeric matrix or full-sized logical matrix
             if(is.numeric(i) && is.matrix(i) && ncol(i) == 2) {
                 # Rewrite i as a logical index
-                index <- rep(FALSE, prod(dim(x)))
+                index <- rep.int(FALSE, prod(dim(x)))
                 dim(index) <- dim(x)
                 tryCatch(index[i] <- TRUE,
                          error = function(e) stop(conditionMessage(e), call.=FALSE))
@@ -732,7 +731,7 @@ data.frame <-
                 if (length(o) %% N != 0L)
                     warning("number of items to replace is not a multiple of replacement length")
                 if (N < length(o))
-                    value <- rep(value, length.out=length(o))
+                    value <- rep_len(value, length(o))
                 value <- value[o]
                 i <- index
             }
@@ -742,7 +741,7 @@ data.frame <-
                 ## allow replication of length(value) > 1 in 1.8.0
                 N <- length(value)
                 if(N > 1L && N < nreplace && (nreplace %% N) == 0L)
-                    value <- rep(value, length.out = nreplace)
+                    value <- rep_len(value, nreplace)
                 if(N > 1L && (length(value) != nreplace))
                     stop("'value' is the wrong length")
                 n <- 0L
@@ -842,7 +841,7 @@ data.frame <-
                 ## try to use the names of a list `value'
                 if(is.list(value) && !is.null(vnm <- names(value))) {
                     p <- length(jseq)
-                    if(length(vnm) < p) vnm <- rep(vnm, length.out = p)
+                    if(length(vnm) < p) vnm <- rep_len(vnm, p)
                     new.cols <- vnm[jseq > nvars]
                 }
 	    }
@@ -867,7 +866,7 @@ data.frame <-
                              N, n), domain = NA)
             if(N < n && N > 0L)
                 if(n %% N == 0L && length(dim(value)) <= 1L)
-                    value <- rep(value, length.out = n)
+                    value <- rep_len(value, n)
                 else
                     stop(sprintf(ngettext(N,
                                           "replacement has %d row, data has %d",
@@ -904,7 +903,7 @@ data.frame <-
                                       "replacement element %d has %d rows, need %d"),
                              k, N, n), domain = NA)
             ## these fixing-ups will not work for matrices
-            if(N > 0L && N < n) value[[k]] <- rep(value[[k]], length.out = n)
+            if(N > 0L && N < n) value[[k]] <- rep_len(value[[k]], n)
             if(N > n) {
                 warning(sprintf(ngettext(N,
                                          "replacement element %d has %d row to replace %d rows",
@@ -918,7 +917,7 @@ data.frame <-
     nrowv <- dimv[1L]
     if(nrowv < n && nrowv > 0L) {
 	if(n %% nrowv == 0L)
-	    value <- value[rep(seq_len(nrowv), length.out = n),,drop = FALSE]
+	    value <- value[rep_len(seq_len(nrowv), n),,drop = FALSE]
 	else
             stop(sprintf(ngettext(nrowv,
                                   "%d row in value to replace %d rows",
@@ -932,7 +931,7 @@ data.frame <-
                         nrowv, n), domain = NA)
     ncolv <- dimv[2L]
     jvseq <- seq_len(p)
-    if(ncolv < p) jvseq <- rep(seq_len(ncolv), length.out = p)
+    if(ncolv < p) jvseq <- rep_len(seq_len(ncolv), p)
     else if(ncolv > p) {
         warning(sprintf(ngettext(ncolv,
                                  "provided %d variable to replace %d variables",
@@ -1019,7 +1018,7 @@ data.frame <-
                              N, nrows), domain = NA)
             if(N < nrows)
                 if(N > 0L && (nrows %% N == 0L) && length(dim(value)) <= 1L)
-                    value <- rep(value, length.out = nrows)
+                    value <- rep_len(value, nrows)
                 else
                     stop(sprintf(ngettext(N,
                                           "replacement has %d row, data has %d",
@@ -1112,7 +1111,7 @@ data.frame <-
                          N, nrows), domain = NA)
         if (N < nrows)
             if (N > 0L && (nrows %% N == 0L) && length(dim(value)) <= 1L)
-                value <- rep(value, length.out = nrows)
+                value <- rep_len(value, nrows)
             else
                 stop(sprintf(ngettext(N,
                                       "replacement has %d row, data has %d",
@@ -1326,7 +1325,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	xi <- unclass(allargs[[i]])
 	if(!is.list(xi))
 	    if(length(xi) != nvar)
-		xi <- rep(xi, length.out = nvar)
+		xi <- rep_len(xi, nvar)
 	ri <- rows[[i]]
 	pi <- perm[[i]]
 	if(is.null(pi)) pi <- pseq
@@ -1498,7 +1497,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
                      domain = NA)
 	} else {
 	    if(!rscalar)
-		e2 <- split(rep(as.vector(e2), length.out = prod(dim(e1))),
+		e2 <- split(rep_len(as.vector(e2), prod(dim(e1))),
 			    rep.int(seq_len(ncol(e1)),
                                     rep.int(nrow(e1), ncol(e1))))
 	}
@@ -1515,7 +1514,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
                      domain = NA)
 	} else {
 	    if(!lscalar)
-		e1 <- split(rep(as.vector(e1), length.out = prod(dim(e2))),
+		e1 <- split(rep_len(as.vector(e1), prod(dim(e2))),
 			    rep.int(seq_len(ncol(e2)),
                                     rep.int(nrow(e2), ncol(e2))))
 	}

@@ -264,7 +264,7 @@ socketSelect <- function(socklist, write = FALSE, timeout = NULL) {
     else if (timeout < 0)
         stop("'timeout' must be NULL or a non-negative number")
     if (length(write) < length(socklist))
-        write <- rep(write, length.out = length(socklist))
+        write <- rep_len(write, length(socklist))
     .Internal(sockSelect(socklist, write, timeout))
 }
 

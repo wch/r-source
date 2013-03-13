@@ -147,10 +147,10 @@ function(x, ...)
     d <- list()
     sapply(names(x),
              function(id) {
-                d[[id]] <<- rep("", n)
-                names <- sapply(x[[id]], function(x) x$name)
+		d[[id]] <<- rep.int("", n)
+		names <- vapply(x[[id]], function(x) x$name, "")
                 if(length(names)) d[[id]][seq_along(names)] <<- names
-                d[[paste(id, "numParameters")]] <<- rep("", n)
+                d[[paste(id, "numParameters")]] <<- rep.int("", n)
                 names <- sapply(x[[id]], function(x) x$numParameters)
                 if(length(names))
                     d[[paste(id, "numParameters")]][seq_along(names)] <<- names
