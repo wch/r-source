@@ -617,7 +617,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                               sQuote(package),
                               paste(expMethods, collapse = ", ")),
                      domain = NA)
-            exports <- c(exports, expClasses,  expTables)
+            exports <- unique(c(exports, expClasses,  expTables))
         }
         ## certain things should never be exported.
         if (length(exports)) {
@@ -1137,7 +1137,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                exportMethods = {
                    exportMethods <<- c(asChar(e[-1L]), exportMethods)
                },
-               import = imports <<- c(imports,as.list(asChar(e[-1L]))),
+               import = imports <<- c(imports, as.list(asChar(e[-1L]))),
                importFrom = {
                    imp <- e[-1L]
                    ivars <- imp[-1L]
@@ -1266,14 +1266,16 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     for (e in directives)
         parseDirective(e)
 
-       # need to preserve the names on dynlibs, so unique() is not appropriate.
+    ## need to preserve the names on dynlibs, so unique() is not appropriate.
     dynlibs <- dynlibs[!duplicated(dynlibs)]
-    list(imports = imports, exports = exports, exportPatterns = exportPatterns,
+    list(imports = imports, exports = exports,
+         exportPatterns = unique(exportPatterns),
          importClasses = importClasses, importMethods = importMethods,
-         exportClasses = exportClasses,  exportMethods = exportMethods,
-         exportClassPatterns = exportClassPatterns,
+         exportClasses = unique(exportClasses),
+         exportMethods = unique(exportMethods),
+         exportClassPatterns = unique(exportClassPatterns),
          dynlibs = dynlibs, nativeRoutines = nativeRoutines,
-         S3methods = S3methods[seq_len(nS3), ,drop = FALSE])
+         S3methods = unique(S3methods[seq_len(nS3), , drop = FALSE]) )
 } ## end{parseNamespaceFile}
 
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
