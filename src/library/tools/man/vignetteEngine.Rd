@@ -7,9 +7,7 @@
 
 \name{vignetteEngine}
 \alias{vignetteEngine}
-\title{
-Set or get a vignette processing engine.
-}
+\title{Set or Get a Vignette Processing Engine}
 \description{
 Vignettes are normally processed by \code{\link{Sweave}}, but package
 writers may choose to use a different engine (e.g. one provided by the
@@ -18,30 +16,21 @@ is used by those packages to register their engines, and internally by
 \R{} to retrieve them.
 }
 \usage{
-vignetteEngine(name, weave, tangle, pattern = NULL, 
+vignetteEngine(name, weave, tangle, pattern = NULL,
 	       package = NULL)
 }
 \arguments{
-  \item{name}{
-The name of the engine.
-}
-  \item{weave}{
-A function to convert vignette source files to LaTeX output.
-}
-  \item{tangle}{
-A function to convert vignette source files to R code.
-}
-  \item{pattern}{
-A regular expression pattern for the filenames handled by this engine,
-or \code{NULL} for the default pattern.
-}
-  \item{package}{
-The package registering the engine.  By default, this is the package calling \code{vignetteEngine}.
-}
+  \item{name}{the name of the engine.}
+  \item{weave}{a function to convert vignette source files to LaTeX output.}
+  \item{tangle}{a function to convert vignette source files to \R code.}
+  \item{pattern}{a regular expression pattern for the filenames handled
+    by this engine, or \code{NULL} for the default pattern.}
+  \item{package}{the package registering the engine.  By default, this
+    is the package calling \code{vignetteEngine}.}
 }
 \details{
 If \code{weave} is missing, \code{vignetteEngine} will return the currently
-registered engine matching \code{name} and \code{package}.  
+registered engine matching \code{name} and \code{package}.
 
 If \code{weave} is \code{NULL}, the specified engine will be deleted.
 
@@ -70,12 +59,13 @@ If set to \code{NULL}, the default pattern \code{"[.][RrSs](nw|tex)$"}
 is used.
 }
 \value{
-If the engine is being deleted, \code{NULL}.  Otherwise a list containing components
-\item{name}{The name of the engine}
-\item{package}{The name of its package}
-\item{pattern}{The pattern for vignette input files}
-\item{weave}{The weave function}
-\item{tangle}{The tangle function}
+  If the engine is being deleted, \code{NULL}.  Otherwise a list
+  containing components
+  \item{name}{The name of the engine}
+  \item{package}{The name of its package}
+  \item{pattern}{The pattern for vignette input files}
+  \item{weave}{The weave function}
+  \item{tangle}{The tangle function}
 }
 \author{
 Duncan Murdoch and Henrik Bengtsson.
