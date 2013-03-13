@@ -1,13 +1,13 @@
 # Translation of src/library/methods/po/methods.pot to German
-# Copyright (C) 2007-2011 The R Foundation
+# Copyright (C) 2007-2013 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-10-01 08:55+0100\n"
-"PO-Revision-Date: 2011-03-23 15:51+0100\n"
+"PO-Revision-Date: 2013-03-12 10:39+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -49,7 +49,7 @@ msgid "no generic function definition found for '%s'"
 msgstr "keine generische Funktionsdefinition für '%s' gefunden"
 
 #: methods_list_dispatch.c:436
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "no generic function definition found for '%s' in the supplied environment"
 msgstr ""
@@ -188,24 +188,20 @@ msgstr ""
 "\")"
 
 #: methods_list_dispatch.c:876
-#, fuzzy
 msgid "class should be either a character-string name or a class definition"
-msgstr ""
-"Class sollte entweder ein Zeichenkettenname oder eine Klassendefinition sein"
+msgstr "class sollte entweder ein Zeichenkettenname oder eine Klassendefinition sein"
 
 #: methods_list_dispatch.c:955
-#, fuzzy, c-format
+#, c-format
 msgid "failed to get the generic for the primitive \"%s\""
-msgstr "Bekam keine Generische für die Primitive \"%s\""
+msgstr "bekam keine Generische für die Primitive \"%s\""
 
 #: methods_list_dispatch.c:961
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
-msgstr ""
-"Erwartete eine generische Funktion oder eine Primitive für den Dispatch, "
-"bekam Objekt der Klasse \"%s\""
+msgstr "erwartete eine generische Funktion oder eine Primitive für den Dispatch, bekam Objekt der Klasse \"%s\""
 
 #~ msgid ""
 #~ "S language method selection got an error when called from internal "

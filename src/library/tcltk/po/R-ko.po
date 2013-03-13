@@ -1,41 +1,45 @@
-# # File R_HOME/src/library/tcltk/po/R-ko.po
-# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
-# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
-# # Distributed under GPL 2 or later
-# #
+# Korean translation for R tcltk package
+# src/library/tcltk/po/R-ko.po
+# Copyright (C) 1995-2013 The R Core Team
+# This file is distributed under the same license as the R tcltk package.
+# R Development Translation Team - Korean
+# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
+# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-30 14:07\n"
-"PO-Revision-Date: 2012-03-08 20:29+0200\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
+"PO-Revision-Date: 2013-02-21 21:04-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.1.6\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "cannot handle object of mode '%s'"
-msgstr "모드가 '%s' 인 객체를 처리할 수 없습니다 "
+msgstr "모드가 '%s'인 객체를 처리할 수 없습니다"
 
 msgid "cannot change names on Tcl array"
-msgstr "Tcl 배열에서는 이름을 변경할수 없습니다"
+msgstr "Tcl 배열에 있는 이름을 변경할 수 없습니다"
 
 msgid "cannot set length of Tcl array"
-msgstr "Tcl 배열의 길이를 정할 수 없습니다 "
+msgstr "Tcl 배열에 길이를 정할 수 없습니다"
 
 msgid "Tcl package '%s' not found"
-msgstr "Tcl 패키지 '%s' 를 찾을 수 없습니다 "
+msgstr "Tcl 패키지 '%s'를 찾을 수 없습니다"
 
 msgid "The tkGUI is not available under Windows"
-msgstr "tkGUI 는 Windows 에서 사용할 수 없습니다 "
+msgstr "tkGUI는 윈도우즈에서 사용할 수 없습니다"
 
 msgid "File"
-msgstr "파일 "
+msgstr "파일"
 
 msgid "Demos"
 msgstr "데모"
@@ -47,68 +51,62 @@ msgid "Help"
 msgstr "도움말"
 
 msgid "Source R code"
-msgstr "R 소스코드 "
+msgstr "R 코드 소스하기"
 
 msgid "Quit"
 msgstr "종료"
 
 msgid "Save workspace"
-msgstr "워크스페이스 저장"
+msgstr "작업공간을 저장합니다"
 
 msgid "Don't save workspace"
-msgstr "워크스페이스 저장하지 않기 "
+msgstr "작업공간을 저장하지 않습니다"
 
 msgid "t test"
-msgstr "t 테스트 "
+msgstr "t 테스트"
 
 msgid "Density"
 msgstr "밀도"
 
 msgid "Interactive linear fitting"
-msgstr "인터랙티브한 선형적합 "
+msgstr "대화식 선형적합"
 
 msgid "R FAQ"
-msgstr "R 자주 찾는 질문들 "
+msgstr "R 자주 찾는 질문들"
 
 msgid "Load"
-msgstr "내려받기 "
+msgstr "로드하기"
 
 msgid "Go get them!"
-msgstr "가서 가져오세요!"
+msgstr "가서 그것들을 가져옵니다!"
 
 msgid "Load packages"
-msgstr "패키지를 내려받습니다 "
+msgstr "패키지를 로드하기"
 
 msgid "Install packages from CRAN"
-msgstr "CRAN 으로부터 패키지를 설치하세요 "
+msgstr "CRAN으로부터 패키지들을 설치하기"
 
 msgid "Help topic:"
 msgstr "도움말 주제들:"
 
 msgid "Manuals in PDF format"
-msgstr "PDF 형식의 매뉴얼들 "
+msgstr "PDF 형식의 매뉴얼들"
 
 msgid "OK"
-msgstr "OK"
+msgstr "확인"
 
 msgid "Cancel"
 msgstr "취소"
 
-#, fuzzy
 msgid "'pb' is not from class %s"
-msgstr "'pb' 는 \"tkProgressBar\" 클래스가 아닙니다 "
+msgstr "'pb'는 클래스 %s로부터 나온것이 아닙니다"
 
 msgid "'filters' must be a 2-column character matrix"
-msgstr "'filters' 는 반드시 2개의 열을 가진 문자형 행렬이어야 합니다 "
+msgstr "'filters'는 반드시 2개의 열을 가진 문자형 행렬이어야 합니다"
 
 msgid "Tcl/Tk support is not available on this system"
-msgstr "이 시스템에서는 Tcl/Tk 이 지원되지 않습니다 "
+msgstr "이 시스템에서는 Tcl/Tk을 지원하지 않습니다"
 
 msgid "Tcl/Tk support files were not installed"
-msgstr "Tcl/Tk 을 지원하는 파일들이 설치되지 않았습니다 "
+msgstr "Tcl/Tk을 지원하는 파일들이 설치되지 않았습니다"
 
-#~ msgid "Loading Tcl/Tk interface ..."
-#~ msgstr "Tcl/Tk 인터페이스를 내려받는 중입니다 ... "
-
-#~ msgid "done"
-#~ msgstr "완료 "

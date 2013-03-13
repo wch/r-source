@@ -1,16 +1,14 @@
 # German translation of 
 # src/library/graphics/po/grid.pot
-# Copyright (C) 2009-2010 The R Foundation
+# Copyright (C) 2009-2013 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-2010.
-#
-#
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.12.0\n"
+"Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-10-02 09:51+0100\n"
-"PO-Revision-Date: 2010-09-21 14:36+0200\n"
+"PO-Revision-Date: 2013-03-01 15:06+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
 "Language: \n"
@@ -20,45 +18,36 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 #: grid.c:214
-#, fuzzy
 msgid "cannot clip to rotated viewport"
-msgstr "Kann rotierten Viewport nicht beschneiden"
+msgstr "kann rotierten Viewport nicht beschneiden"
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-#, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr ""
-"Kann den obersten viewport nicht vom Stack werfen (grid und graphics "
-"Ausgaben gemischt?)"
+msgstr "kann den obersten viewport nicht vom Stack werfen ('grid' und 'graphics' Ausgaben gemischt?)"
 
 #: grid.c:952
 msgid "attempt to plot on null device"
 msgstr "Versuch in das NUll-Gerät zu zeichnen"
 
 #: grid.c:1232
-#, fuzzy
 msgid "there is no layout defined"
-msgstr "Kein Layout definiert"
+msgstr "kein Layout definiert"
 
 #: grid.c:1452
-#, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
-msgstr "Polygonkante nicht gefunden (Nullbreite oder Nulllänge?)"
+msgstr "Polygonkante nicht gefunden (Breite oder Länge 0?)"
 
 #: grid.c:1461
-#, fuzzy
 msgid "polygon edge not found"
 msgstr "Polygonkante nicht gefunden"
 
 #: grid.c:1615
-#, fuzzy
 msgid "require at least two points to draw arrow"
-msgstr "Mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
+msgstr "mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
 
 #: grid.c:1931
-#, fuzzy
 msgid "non-finite control point in Xspline"
-msgstr "Nicht-endlicher Kontrollpunkt in Xspline"
+msgstr "nicht-endlicher Kontrollpunkt in Xspline"
 
 #: grid.c:2796
 msgid "non-finite x or y in graphics path"
@@ -69,54 +58,45 @@ msgid "invalid plotting symbol"
 msgstr "unzulässiges Plotsymbol"
 
 #: grid.c:3372
-#, fuzzy
 msgid "unable to clip to rotated rectangle"
-msgstr "Kann nicht auf das rotierte Rechteck zurechtschneiden"
+msgstr "kann nicht auf das rotierte Rechteck zurechtschneiden"
 
 #: layout.c:587
-#, fuzzy
 msgid "invalid 'layout.pos.row'"
-msgstr "unzulässige layout.pos.row"
+msgstr "unzulässige 'layout.pos.row'"
 
 #: layout.c:591
-#, fuzzy
 msgid "invalid 'layout.pos.col'"
-msgstr "unzulässige layout.pos.col"
+msgstr "unzulässige 'layout.pos.col'"
 
 #: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "singuläre Transformationsmatrix"
 
 #: state.c:169
-#, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr "Kann den Gridstatus nicht speichern. Zu viele geöffnete Geräte"
+msgstr "kann den Status von 'grid' nicht speichern. Zu viele geöffnete Geräte?"
 
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-#, fuzzy
 msgid "unimplemented unit function"
-msgstr "Nicht implementierte Einheitenfunktion"
+msgstr "nicht implementierte Einheitenfunktion"
 
 #: unit.c:893 unit.c:1639
-#, fuzzy
 msgid "invalid unit or unit not yet implemented"
-msgstr "Unzulässige Einheit oder Einheit nicht implementiert"
+msgstr "unzulässige Einheit oder Einheit noch nicht implementiert"
 
 #: unit.c:1798
 msgid "Invalid unit"
 msgstr "Ungültige Einheit"
 
 #: unit.c:1814
-#, fuzzy
 msgid "'units' must be character"
-msgstr "Einheiten müssen Zeichenketten sein"
+msgstr "'units' müssen Zeichenketten sein"
 
 #: unit.c:1817
-#, fuzzy
 msgid "'units' must be of length > 0"
-msgstr "Einheiten müssen positive Länge haben"
+msgstr "'units' müssen positive Länge haben"
 
 #: viewport.c:317
-#, fuzzy
 msgid "non-finite location and/or size for viewport"
-msgstr "Nicht-endlicher Ort oder/unf Größe des Viewports"
+msgstr "nicht-endlicher Ort oder/und Größe des Viewports"

@@ -1,0 +1,251 @@
+# Korean translation for R utils package
+# src/library/utils/po/ko.po
+# Copyright (C) 1995-2013 The R Core Team
+# This file is distributed under the same license as the R utils package.
+# R Development Translation Team - Korean
+# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
+# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.0.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2013-03-07 08:37+0000\n"
+"PO-Revision-Date: 2013-02-16 14:52-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
+"org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: io.c:310 io.c:314 io.c:324 io.c:538 io.c:719 io.c:770 io.c:782 io.c:786
+#: io.c:792 io.c:1007 io.c:1008 io.c:1010 io.c:1011 io.c:1012 io.c:1013
+#: io.c:1014 io.c:1015 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
+#: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
+#: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
+#: windows/widgets.c:81 windows/widgets.c:86
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "'%s' 인자가 잘못되었습니다"
+
+#: io.c:333 io.c:779
+msgid "invalid quote symbol set"
+msgstr ""
+
+#: io.c:345 io.c:800 io.c:995
+msgid "cannot open the connection"
+msgstr "연결을 열 수 없습니다"
+
+#: io.c:348 io.c:352
+msgid "cannot read from this connection"
+msgstr "이 연결로부터 읽을 수 없습니다"
+
+#: io.c:396 io.c:414
+msgid "string terminated by newline or EOF"
+msgstr "새로운 행 또는 EOF에 의하여 종료된 문자열입니다"
+
+#: io.c:534
+msgid "the first argument must be of mode character"
+msgstr "첫번째 인자는 반드시 문자형이어야 합니다"
+
+#: io.c:721
+#, c-format
+msgid "Selection: "
+msgstr "선택: "
+
+#: io.c:809 io.c:822
+msgid "cannot allocate buffer in 'readTableHead'"
+msgstr "'readTableHead' 내에서 버퍼를 할당할 수 없습니다"
+
+#: io.c:833
+msgid "\\ followed by EOF"
+msgstr "\\ 가 EOF 뒤에 놓였습니다"
+
+#: io.c:878 io.c:881
+#, c-format
+msgid "incomplete final line found by readTableHeader on '%s'"
+msgstr ""
+"'%s'에서 readTableHeader에 의하여 발견된 완성되지 않은 마지막 라인입니다"
+
+#: io.c:988
+msgid "'file' is not a connection"
+msgstr "'file'은 연결이 아닙니다"
+
+#: io.c:991
+msgid "cannot write to this connection"
+msgstr "이 연결에 쓰기를 할 수 없습니다"
+
+#: io.c:1021
+msgid "'dec' must be a single character"
+msgstr "'dec'는 반드시 한개의 문자이어야 합니다"
+
+#: io.c:1048
+#, c-format
+msgid "corrupt data frame -- length of column %d does not not match nrows"
+msgstr ""
+"데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습니"
+"다"
+
+#: io.c:1096
+msgid "corrupt matrix -- dims not not match length"
+msgstr "행렬이 손상되었습니다 -- dims 가 길이가 일치하지 않습니다"
+
+#: stubs.c:48
+msgid "'savehistory' can only be used in Rgui and Rterm"
+msgstr "'savehistory'는 오로지 Rgui 와 Rterm에서만 사용될 수 있습니다"
+
+#: stubs.c:65
+msgid "'loadhistory' can only be used in Rgui and Rterm"
+msgstr "'loadhistory'는 오로지 Rgui 와 Rterm에서만 사용될 수 있습니다"
+
+#: stubs.c:76
+msgid "invalid timestamp"
+msgstr "잘못된 타임스탬프입니다"
+
+#: stubs.c:141 stubs.c:149
+msgid "X11 dataentry cannot be loaded"
+msgstr "X11 데이터엔트리가 로드될 수 없습니다"
+
+#: stubs.c:145 stubs.c:174 stubs.c:180
+msgid "X11 is not available"
+msgstr "X11이 사용가능하지 않습니다"
+
+#: stubs.c:237 stubs.c:240
+#, c-format
+msgid "invalid '%s' specification"
+msgstr "유효하지 않은 '%s' 지정입니다"
+
+#: utils.c:83
+msgid "'hostname' must be a character vector of length 1"
+msgstr "'hostname'은 반드시 길이가 1인 문자형 벡터이어야 합니다"
+
+#: utils.c:89
+#, c-format
+msgid "nsl() was unable to resolve host '%s'"
+msgstr ""
+
+#: utils.c:96
+msgid "unknown format returned by 'gethostbyname'"
+msgstr "알수없는 형식이 'gethostbyname'에 의해서 반환되었습니다"
+
+#: utils.c:105
+msgid "nsl() is not supported on this platform"
+msgstr "이 플랫폼에서는 nsl()는 지원되지 않습니다"
+
+#: windows/dialogs.c:182
+msgid "unknown type"
+msgstr "알수없는 유형입니다"
+
+#: windows/dialogs.c:214 windows/dialogs.c:238 windows/dialogs.c:276
+#: windows/dialogs.c:311
+msgid "menu functions can only be used in the GUI"
+msgstr "메뉴 함수들은 GUI내에서만 사용할 수 있습니다"
+
+#: windows/dialogs.c:246
+#, c-format
+msgid "unable to retrieve items for %s (%s)"
+msgstr "%s (%s)대한 항목들을 불러올 수 없습니다"
+
+#: windows/dialogs.c:284
+#, c-format
+msgid "unable to add menu (%s)"
+msgstr "메뉴 %s를 추가할 수 없습니다"
+
+#: windows/dialogs.c:296
+#, c-format
+msgid "unable to add menu item (%s)"
+msgstr "메뉴항목 %s을 추가할 수 없습니다"
+
+#: windows/dialogs.c:319
+msgid "menu does not exist"
+msgstr "메뉴가 존재하지 않습니다"
+
+#: windows/dialogs.c:326
+#, c-format
+msgid "unable to delete menu item (%s)"
+msgstr "메뉴항목 %s를 삭제할 수 없습니다"
+
+#: windows/registry.c:73 windows/registry.c:254 windows/registry.c:257
+#: windows/registry.c:260
+#, c-format
+msgid "invalid '%s' value"
+msgstr "'%s'의 값이 잘못되었습니다"
+
+#: windows/registry.c:272
+#, c-format
+msgid "Registry key '%ls' not found"
+msgstr "레지스트리 키 '%ls'를 찾을 수 없습니다"
+
+#: windows/util.c:41
+msgid "unsupported version of Windows"
+msgstr "지원되지 않는 버전의 윈도우즈입니다"
+
+#: windows/util.c:274
+msgid "argument must be a character vector or a raw vector"
+msgstr "인자는 반드시 문자형 벡터 또는  raw 벡터이어야 합니다"
+
+#: windows/util.c:311
+msgid "unable to open the clipboard"
+msgstr "클립보드를 열 수 없습니다"
+
+#: windows/util.c:316
+msgid "unable to write to the clipboard"
+msgstr "클립보드에 쓸 수 없습니다"
+
+#: windows/util.c:395
+msgid "'title' must be a character string"
+msgstr "'title'은 반드시 문자열이어야 합니다"
+
+#: windows/util.c:404
+msgid "'text' must be a character string"
+msgstr "'text'는 반드시 문자열이어야 합니다"
+
+#: windows/util.c:443
+#, c-format
+msgid "'%s' must be length 1"
+msgstr "'%s'는 반드시 길이가 1이어야 합니다"
+
+#: windows/util.c:556
+#, c-format
+msgid "'%s' must be a list"
+msgstr "'%s'은 반드시 리스트이어야 합니다"
+
+#: windows/util.c:560
+#, c-format
+msgid "'%s' element %d is not a window handle"
+msgstr "'%s'의 구성요소 %d는 윈도우 핸들이 아닙니다"
+
+#: windows/widgets.c:108
+msgid "Select one or more"
+msgstr "하나 이상을 선택해 주세요"
+
+#: windows/widgets.c:108
+msgid "Select one"
+msgstr "하나를 선택해주세요"
+
+#: windows/widgets.c:182 windows/widgets.c:252
+msgid "'default' must be a character string"
+msgstr "'default'는 반드시 문자열이어야 합니다"
+
+#: windows/widgets.c:184 windows/widgets.c:254
+msgid "'default' is overlong"
+msgstr "'default'가 너무 깁니다"
+
+#: windows/widgets.c:188 windows/widgets.c:258
+msgid "'caption' must be a character string"
+msgstr "'caption'은 반드시 문자열이어야 합니다"
+
+#: windows/widgets.c:190
+msgid "'multi' must be a logical value"
+msgstr "'multi'는 반드시 논리값이어야 합니다"
+
+#: windows/widgets.c:192
+msgid "'filterindex' must be an integer value"
+msgstr "'filterindex'는 반드시 정수값이어야 합니다"

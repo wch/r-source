@@ -1,13 +1,13 @@
 # Translation of po/R.pot to German.
-# Copyright (C) 2005-2012 The R Foundation
+# Copyright (C) 2005-2013 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2005-2012.
+# Detlef Steuer <steuer@hsu-hh.de>, 2005-2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.15.0\n"
+"Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-16 08:17+0000\n"
-"PO-Revision-Date: 2012-03-05 15:33+0100\n"
+"PO-Revision-Date: 2013-02-28 16:20+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -18,12 +18,11 @@ msgstr ""
 
 #: base.c:38
 msgid "no base graphics system is registered"
-msgstr ""
+msgstr "kein Basisgrafiksystem registriert"
 
 #: base.c:328 base.c:335 base.c:343
-#, fuzzy
 msgid "the base graphics system is not registered"
-msgstr "zu viele Grafiksysteme registriert"
+msgstr "das Basisgrafiksystem ist nicht registriert"
 
 #: graphics.c:289
 #, c-format
@@ -35,7 +34,6 @@ msgid "attempt to plot on null device"
 msgstr "Versuch auf das Nulldevice zu zeichnen"
 
 #: graphics.c:1830
-#, fuzzy
 msgid "outer margins too large (figure region too small)"
 msgstr "äußere Ränder zu groß (figure region zu klein)"
 
@@ -52,9 +50,9 @@ msgid "plot region too large"
 msgstr "plot region zu groß"
 
 #: graphics.c:1883
-#, fuzzy, c-format
+#, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
-msgstr "relativer Wertebereich =%4.0f * EPS ist klein (Achse %d)"
+msgstr "relativer Wertebereich (%4.0f * EPS) ist klein (Achse %d)"
 
 #: graphics.c:1935
 #, c-format
@@ -67,7 +65,6 @@ msgid "axis style \"%c\" unimplemented"
 msgstr "Achsenstil \"%c\" nicht implementiert"
 
 #: graphics.c:2203
-#, fuzzy
 msgid "no graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
@@ -97,9 +94,8 @@ msgid "invalid argument to GBox"
 msgstr "ungültiges Argument für GBox"
 
 #: graphics.c:3363
-#, fuzzy
 msgid "metric information not available for this device"
-msgstr "Metrische Information für dieses Device nicht möglich"
+msgstr "Metrikinformation für dieses Device nicht verfügbar"
 
 #: par-common.c:138
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
@@ -133,14 +129,12 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "Parameter \"j\" in \"mfg\" ist außerhalb des zulässigen Bereiches"
 
 #: par.c:447
-#, fuzzy
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
-msgstr "Wert für nr in \"mfg\" ist falsch und wird ignoriert"
+msgstr "Wert für 'nr' in \"mfg\" ist falsch und wird ignoriert"
 
 #: par.c:449
-#, fuzzy
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
-msgstr "Wert für nc in \"mfg\" ist falsch und wird ignoriert"
+msgstr "Wert für 'nc' in \"mfg\" ist falsch und wird ignoriert"
 
 #: par.c:475
 msgid "calling par(new=TRUE) with no plot"
@@ -176,9 +170,8 @@ msgid "too many cells in layout, limit %d"
 msgstr "zu viele Zellen in layout, höchstens %d zulässig"
 
 #: plot.c:75
-#, fuzzy
 msgid "invalid color specification"
-msgstr "ungültige Zeichensatzspezifikation"
+msgstr "ungültige Farbspezifikation"
 
 #: plot.c:141
 msgid "only NA allowed in logical plotting symbol"
@@ -200,9 +193,9 @@ msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
 
 #: plot.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'vfont' value [typeface %d]"
-msgstr "ungültiger Wert für 'vfont' [typeface]"
+msgstr "ungültiger Wert für 'vfont' [typeface %d]"
 
 #: plot.c:332
 #, c-format
@@ -268,9 +261,9 @@ msgstr "'hadj' muss Länge 1 haben"
 #: plot.c:888 plot.c:2096 plot.c:2373 plot.c:2379 plot.c:2386 plot.c:2394
 #: plot.c:2401 plot.c:2408 plot.c:2415 plot.c:2422 plot.c:2430 plot.c:2437
 #: plot.c:3155
-#, fuzzy, c-format
+#, c-format
 msgid "zero-length '%s' specified"
-msgstr "'side' mit Länge 0 angegeben"
+msgstr "'%s' mit Länge 0 angegeben"
 
 #: plot.c:957
 msgid "'labels' is supplied and not 'at'"
@@ -361,9 +354,9 @@ msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
 
 #: plot.c:3008 plot.c:3144
-#, fuzzy, c-format
+#, c-format
 msgid "invalid number of points in %s"
-msgstr "ungültige Anzahl von Punkten in locator()"
+msgstr "ungültige Anzahl von Punkten in %s"
 
 #: plot.c:3146
 msgid "incorrect argument type"
@@ -431,34 +424,30 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "ungültige Daten für Thermometer (3 oder 4 Spalten nötig)"
 
 #: plot.c:3808
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'thermometers[, %s]'"
-msgstr "ungültige Thermometer[,%s]"
+msgstr "ungültige 'thermometers[,%s]'"
 
 #: plot.c:3811
-#, fuzzy, c-format
+#, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
-msgstr "Thermometer[,%s] nicht in [0,1] -- sieht evtl. lustig aus"
+msgstr "'thermometer[,%s]' nicht in [0,1] -- sieht evtl. lustig aus"
 
 #: plot.c:3814
-#, fuzzy
 msgid "invalid 'thermometers[, 1:2]'"
-msgstr "ungültige Thermometer[,1:2]"
+msgstr "ungültige 'thermometers[,1:2]'"
 
 #: plot.c:3853
-#, fuzzy
 msgid "invalid 'boxplots' data (need 5 columns)"
-msgstr "ungültige Daten für boxplot (5 Spalten nötig)"
+msgstr "ungültige Daten für 'boxplots' (5 Spalten nötig)"
 
 #: plot.c:3862
-#, fuzzy
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
-msgstr "boxplots[,5] außerhalb von [0,1] -- sieht evtl. lustig aus"
+msgstr "'boxplots[,5]' außerhalb von [0,1] -- sieht evtl. lustig aus"
 
 #: plot.c:3864
-#, fuzzy
 msgid "invalid 'boxplots[, 1:4]'"
-msgstr "ungültige boxplots[, 1:4]"
+msgstr "ungültige 'boxplots[, 1:4]'"
 
 #: plot.c:3910
 msgid "invalid symbol type"
@@ -566,7 +555,7 @@ msgstr "alle z Werte sind NA"
 #: stem.c:156
 #, c-format
 msgid "long vector '%s' is not supported"
-msgstr ""
+msgstr "langer Vektor '%s' wird nicht unterstützt"
 
 #~ msgid "unable to allocate memory (in GPolygon)"
 #~ msgstr "kann keinen Speicher zuteilen (in GPolygon)"
