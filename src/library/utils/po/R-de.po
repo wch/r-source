@@ -1,14 +1,14 @@
 # Translation of src/library/utils/po/R-utils.pot to German.
-# Copyright (C) 2008-2012 The R Foundation
+# Copyright (C) 2008-2013 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2012.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.2\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
-"PO-Revision-Date: 2012-09-10 14:39+0200\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
+"PO-Revision-Date: 2013-03-11 11:08+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -30,9 +30,8 @@ msgstr "keine Doku für %s in Paket %s gefunden"
 msgid "document not found"
 msgstr "Dokument nicht gefunden"
 
-#, fuzzy
 msgid "A search query has been submitted to %s"
-msgstr "Eine Suchanfrage wurde gesendet an"
+msgstr "Eine Suchanfrage wurde gesendet an %s"
 
 msgid "The results page should open in your browser shortly"
 msgstr "Die Ergebnissseite sollte sich in Kürze in Ihrem Browser öffnen"
@@ -43,9 +42,8 @@ msgstr "Referenz auf unbekannten Abschnitt %s"
 msgid "no Sweave file with name %s found"
 msgstr "keine Sweave-Datei namens %s gefunden"
 
-#, fuzzy
 msgid "%d Sweave files for basename %s found"
-msgstr "%d Sweave Dateien für Basisnamen %s gefunden:"
+msgstr "%d Sweave Dateien für Basisnamen %s gefunden"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "mehr als eine Syntaxspezifikation gefunden, benutze die erste"
@@ -56,9 +54,8 @@ msgstr "Objekt %s gehört nicht zur Klasse \"SweaveSyntax\""
 msgid "recursive Sweave input %s in stack"
 msgstr "rekursiver Sweave-Input %s auf dem Stack"
 
-#, fuzzy
 msgid "target syntax not of class %s"
-msgstr "Zielsyntax gehört nicht zur Klasse \"SweaveSyntax\""
+msgstr "Zielsyntax gehört nicht zur Klasse %s"
 
 msgid "target syntax contains no translation table"
 msgstr "Zielsyntax enthält keine Übersetzungstabelle"
@@ -70,17 +67,14 @@ msgstr ""
 "Parsing-Fehler oder leere Option in\n"
 "%s"
 
-#, fuzzy
 msgid "Warning: unknown option %s"
-msgstr "Warnung: unbekannte Option"
+msgstr "Warnung: unbekannte Option %s"
 
-#, fuzzy
 msgid "Created PDF document %s"
-msgstr "Erzeugte PDF Dokument"
+msgstr "Erzeugtes PDF Dokument %s"
 
-#, fuzzy
 msgid "Compacting PDF document"
-msgstr "Erzeugte PDF Dokument"
+msgstr "Komprimieren PDF Dokument"
 
 msgid "path to %s contains spaces,"
 msgstr "Pfad zu %s enthält Leerstellen."
@@ -103,9 +97,8 @@ msgstr "Wert der 'strip.white' Option sollte in Kleinbuchstaben sein"
 msgid "elements of 'what' after the first will be ignored"
 msgstr "Elemente von 'what' nach dem ersten werden ignoriert"
 
-#, fuzzy
 msgid "No suitable spell-checker program found"
-msgstr "Keine passende Rechtschreibprüfung gefunden."
+msgstr "Keine passende Rechtschreibprüfung gefunden"
 
 msgid "Filter '%s' is not available."
 msgstr "Filter '%s' ist nicht verfügbar"
@@ -117,6 +110,8 @@ msgid ""
 "The following dictionaries were not found:\n"
 "%s"
 msgstr ""
+"Die folgenden Wörterbücher wurden nicht gefunden:\n"
+"%s"
 
 msgid "Processing file %s"
 msgstr "Verarbeite Datei %s"
@@ -138,11 +133,9 @@ msgstr ""
 "Nutze <code> %s </code> \n"
 " um die Vignetten in allen <strong>verfügbaren</strong> Paketen aufzulisten"
 
-#, fuzzy
 msgid "No vignettes found by %s"
-msgstr "Keine Vignetten gefunden durch"
+msgstr "Keine Vignetten gefunden durch %s"
 
-#, fuzzy
 msgid "Package %s: DESCRIPTION file not found"
 msgstr "Paket %s: DESCRIPTION nicht gefunden"
 
@@ -171,13 +164,11 @@ msgstr "Nutze entweder %s oder %s aber nicht beide."
 msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "Es ist empfohlen %s/%s anstelle von %s/%s/%s zu nutzen."
 
-#, fuzzy
 msgid "method is only applicable to %s objects"
-msgstr "Methode kann gerade auf %s Objekte angewendet werden"
+msgstr "Methode kann nicht auf %s Objekte angewendet werden"
 
-#, fuzzy
 msgid "all arguments must be of class %s"
-msgstr "Alle Argumente müssen zur Klasse \"person\" gehören"
+msgstr "alle Argumente müssen zur Klasse %s gehören"
 
 msgid "all fields have to be named"
 msgstr "alle Felder müssen Namen haben"
@@ -186,18 +177,20 @@ msgid "%s has to be one of %s"
 msgstr "%s muss einer aus %s sein"
 
 msgid "subscript out of bounds"
-msgstr ""
+msgstr "Index außerhalb der Grenzen"
 
 msgid "%s should be one of %s"
 msgstr "%s sollte einer von %s sein"
 
 msgid "A BibTeX entry for LaTeX users is"
-msgstr ""
+msgstr "Ein BibTeX-eintrag für LaTeX Benutzer ist"
 
 msgid ""
 "Dropping invalid entry %d:\n"
 "%s"
 msgstr ""
+"Ignoriere ungültigen Eintrag %d:\n"
+"%s"
 
 msgid "package %s not found"
 msgstr "Paket %s nicht gefunden"
@@ -212,19 +205,20 @@ msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "konnte das Jahr für %s aus der DESCRIPTION des Paketes nicht bestimmen"
 
 msgid "To cite package %s in publications use:"
-msgstr ""
+msgstr "Um Paket %s in Publikationen zu zitieren nutzen Sie bitte:"
 
 msgid ""
 "ATTENTION: This citation information has been auto-generated from the "
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
+"ACHTUNG: Diese Zitatinformation wurde aus der DESCRIPTION-Datei\n"
+"automatischn generiert. Evtl. manuelle Nacharbeit nötig, siehe %s."
 
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN' muss eine Funktion oder NULL sein"
 
-#, fuzzy
 msgid "cannot handle S4 methods yet"
-msgstr "Kann noch nicht mit S4 Methoden umgehen"
+msgstr "kann noch nicht mit S4 Methoden umgehen"
 
 msgid "'package' must be a character string or NULL"
 msgstr "'package' muss eine Zeichenkette oder NULL sein"
@@ -245,7 +239,7 @@ msgid "data set %s not found"
 msgstr "Datensatz %s nicht gefunden"
 
 msgid "only 'html = TRUE' is supported on this platform"
-msgstr ""
+msgstr "nur 'html = TRUE' ist auf dieser Plattform unterstützt"
 
 msgid "kind '%s' not yet implemented"
 msgstr "Art '%s' noch nicht implementiert"
@@ -274,9 +268,8 @@ msgstr "habe nichts assign()-ed"
 msgid "Browsing in the environment with call:"
 msgstr "Untersuche die Umgebung mit Aufruf:"
 
-#, fuzzy
 msgid "'dump' is not an object of class %s"
-msgstr "'dump' gehört nicht zur Klasse 'dump.frames'"
+msgstr "'dump' gehört nicht zur Klasse %s"
 
 msgid "Message:"
 msgstr "Nachricht:"
@@ -329,9 +322,8 @@ msgstr "bearbeitete Zeilennamen enthalten Duplikate und werden ignoriert"
 msgid "invalid input matrix"
 msgstr "unzulässige Eingabematrix"
 
-#, fuzzy
 msgid "class of 'name' will be discarded"
-msgstr "Klasse(n) von 'name' wird verworfen"
+msgstr "Klasse von 'name' wird verworfen"
 
 msgid "cannot edit NULL row names"
 msgstr "kann NULL Zeilennamen nicht editieren"
@@ -351,9 +343,8 @@ msgstr "Zeilennummer fehlt"
 msgid "'fix' requires a name"
 msgstr "'fix' beötigt einen Namen"
 
-#, fuzzy
 msgid "too many list items (at most up to %d)"
-msgstr "zu viele Listenpunke (höchstens 26!)"
+msgstr "zu viele Listenpunke (höchstens %d)"
 
 msgid "no vector columns were selected"
 msgstr "keine Vektorspalten ausgewählt"
@@ -426,9 +417,8 @@ msgstr ""
 msgid "creation of %s failed"
 msgstr "Erzeugung von %s fehlgeschlagen"
 
-#, fuzzy
 msgid "Saving help page to %s"
-msgstr "Sichere Hilfeseiten nach"
+msgstr "Sichere Hilfeseiten nach %s"
 
 msgid "argument %s must be a single character string"
 msgstr "Argument %s muss einzelne Zeichkette sein"
@@ -574,18 +564,16 @@ msgstr "keine R Objekte spezifiziert oder verfügbar"
 msgid "directory '%s' already exists"
 msgstr "Verzeichnis '%s' exisitiert bereits"
 
-#, fuzzy
 msgid ""
 "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
 "the 'code_files' argument"
 msgstr ""
-"Generische Funktionen und andere S4 Objekte (z.B. '%s') können nicht "
-"gedumped werden: nutze code_files= Argument"
+"generische Funktionen und andere S4 Objekte (z.B. '%s') können nicht "
+"gedumped werden: nutze 'code_files' Argument"
 
 msgid "unable to access index for repository %s"
 msgstr "kann nicht auf den Index für das Repository %s zugreifen"
 
-#, fuzzy
 msgid "invalid 'filters' argument."
 msgstr "unzulässiges 'filters' Argument"
 
@@ -598,7 +586,6 @@ msgstr ""
 "unzulässige 'oldPkgs'; muss eine Zeichenkette oder ein Ergebniss von old."
 "packages() sein"
 
-#, fuzzy
 msgid "ill-formed 'instPkgs' matrix"
 msgstr "missgestaltete 'instPkgs' Matrix"
 
@@ -672,9 +659,8 @@ msgstr "'lib = \"%s\" ist nicht schreibbar"
 msgid "unable to install packages"
 msgstr "kann keine Pakete installieren"
 
-#, fuzzy
 msgid "unable to create %s"
-msgstr "kann nicht erzeugen"
+msgstr "kann %s nicht erzeugen"
 
 msgid "inferring 'repos = NULL' from the file name"
 msgstr "leite 'repos = NULL' aus dem Dateinamen ab"
@@ -698,7 +684,7 @@ msgid "Do you want to attempt to install these from sources?"
 msgstr "Möchten Sie aus den Quelltexten installieren?"
 
 msgid "source repository is unavailable to check versions"
-msgstr ""
+msgstr "Quelltextrepository nicht verfügbar um Versionen zu überprüfen"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "kann keine MacOS X Binaries auf Windows installieren"
@@ -717,7 +703,7 @@ msgstr ""
 "Wenn es  aus einem RPM installiert wurde, benötigen Sie evtl. das R-devel RPM"
 
 msgid "system (cmd0): %s"
-msgstr ""
+msgstr "System (cmd0): %s"
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "Installation des Pakets %s hatte Exit-Status ungleich 0"
@@ -726,10 +712,10 @@ msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid "foundpkgs: %s"
-msgstr ""
+msgstr "foundpkgs: %s"
 
 msgid "files: %s"
-msgstr ""
+msgstr "files: %s"
 
 msgid ""
 "installation of one of more packages failed,\n"
@@ -761,13 +747,11 @@ msgstr "kein Objket namens '%s' anzuzeigen"
 msgid "'file' must be \"\" or an open connection object"
 msgstr "'file' muss \"\" oder eine bereits geöffnetes Verbindungsobjekt sein"
 
-#, fuzzy
 msgid "must have 'max' > 'min'"
-msgstr "es muss max > min sein"
+msgstr "es muss 'max' > 'min' sein"
 
-#, fuzzy
 msgid "'pb' is not from class %s"
-msgstr "'pb' ist nicht aus Klasse \"txtProgressBar\""
+msgstr "'pb' ist nicht aus Klasse %s"
 
 msgid "cannot determine a usable name"
 msgstr "kann keinen nutzbaren Namen finden"
@@ -871,9 +855,8 @@ msgstr "unzulässiges Format"
 msgid "transfer failure"
 msgstr "Übertragungsfehler"
 
-#, fuzzy
 msgid "%s option must be a length one character vector or NULL"
-msgstr "Option muss Zeichenkettenvektor der Länge 1 oder NULL sein"
+msgstr "%s Option muss Zeichenkettenvektor der Länge 1 oder NULL sein"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
@@ -887,9 +870,8 @@ msgstr "die ersten 5 Zeilen sind leer: gebe auf"
 msgid "relist() requires recursively unlisted objects."
 msgstr "relist() benötigt rekursive ungelistete Objekte"
 
-#, fuzzy
 msgid "The 'flesh' argument does not contain a skeleton attribute."
-msgstr "Das flesh Argument enthält kein Gerüstattribut"
+msgstr "Das 'flesh' Argument enthält kein Gerüstattribut"
 
 msgid ""
 "Either ensure you unlist a relistable object, or specify the skeleton "
@@ -922,17 +904,14 @@ msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr ""
 "str.data.frame() mit nicht-Data-Frame aufgerufen --- umwandeln in einen."
 
-#, fuzzy
 msgid "invalid options(\"str\") -- using defaults instead"
-msgstr "ungültige options('str') -- nutze stattdessen Standard"
+msgstr "ungültige options(\"str\") -- nutze stattdessen Standard"
 
-#, fuzzy
 msgid "invalid components in options(\"str\"): %s"
-msgstr "ungültige Kompoenten in options('str')"
+msgstr "ungültige Komponenten in options(\"str\"): %s"
 
-#, fuzzy
 msgid "'str.default': 'le' is NA, so taken as 0"
-msgstr "'str.default': 'le' is NA"
+msgstr "'str.default': 'le' is NA, also als 0 betrachtet"
 
 msgid "'object' does not have valid levels()"
 msgstr "'object' hat keine gültigen levels()"
@@ -947,9 +926,8 @@ msgstr "kein Zeilen in  '%s'"
 msgid "profile does not contain memory information"
 msgstr "Profil einthält keine Speicherinformation"
 
-#, fuzzy
 msgid "profile does not contain line information"
-msgstr "Profil einthält keine Speicherinformation"
+msgstr "Profil enthält keine Zeileninformation"
 
 msgid "no events were recorded"
 msgstr "keine Ereignisse aufgezeichnet"
@@ -973,7 +951,7 @@ msgid "incomplete block on file"
 msgstr "unvollständiger Block in Datei"
 
 msgid "invalid name field in tarball"
-msgstr ""
+msgstr "ungültiger Name im Tar-Paket"
 
 msgid "checksum error for entry '%s'"
 msgstr "Checksummenfehler für Eintrag '%s'"
@@ -988,7 +966,7 @@ msgid "file '%s' not found"
 msgstr "File '%s' nicht gefunden"
 
 msgid "file size is limited to 8GB"
-msgstr ""
+msgstr "Dateigröße limitiert auf 8GB"
 
 msgid ""
 "vignette %s found more than once,\n"
@@ -1027,9 +1005,8 @@ msgstr "ungültige Zahlen in 'quote'"
 msgid "invalid 'quote' specification"
 msgstr "unzulässige Spezifikation für 'quote'"
 
-#, fuzzy
 msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
-msgstr "col.names = NA hat keinen Sinn, wenn row.names = FALSE"
+msgstr "'col.names = NA' hat keinen Sinn, wenn 'row.names = FALSE'"
 
 msgid "invalid 'col.names' specification"
 msgstr "unzulässige Spezifikation für 'col.names'"
@@ -1080,15 +1057,15 @@ msgstr "Datei %s ist kein OS X Binärpaket"
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "Paket %s erfolgreich ausgepackt und MD5 Summen abgeglichen"
 
-#, fuzzy
 msgid ""
 "ERROR: failed to lock directory %s for modifying\n"
 "Try removing %s"
-msgstr "ERROR: Verzeichnis-Lock fehlgeschlagen"
+msgstr ""
+"ERROR: Verzeichnis-Lock für Veränderung fehlgeschlagen<\n"
+"Versuche %s zu entfernen"
 
-#, fuzzy
 msgid "ERROR: failed to create lock directory %s"
-msgstr "ERROR: Kann lock-Verzeichnis nicht erzeugen"
+msgstr "ERROR: Kann lock-Verzeichnis %s nicht erzeugen"
 
 msgid "restored %s"
 msgstr "%s wiederhergestellt"
@@ -1120,7 +1097,6 @@ msgid ""
 "%s yourself"
 msgstr "Wenn nichts passiert, sollten Sie %s selbst öffnen"
 
-#, fuzzy
 msgid "zip file %s not found"
 msgstr "Zipfile %s nicht gefunden"
 
@@ -1136,41 +1112,36 @@ msgstr "winDialog() kann nicht nicht-interaktiv genutzt werden"
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() kann nicht nicht-interaktiv genutzt werden"
 
-#, fuzzy
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] "%d Vorkommen in %s"
 msgstr[1] "%d Vorkommen in %s"
 
-#, fuzzy
 msgid "Invalid role specification: %s."
 msgid_plural "Invalid role specifications: %s."
-msgstr[0] "unzulässige Spezifikation(en) für role: %s."
-msgstr[1] "unzulässige Spezifikation(en) für role: %s."
+msgstr[0] "unzulässige Spezifikation für role: %s."
+msgstr[1] "unzulässige Spezifikationen für role: %s."
 
-#, fuzzy
 msgid "A bibentry of bibtype %s has to specify the field: %s"
 msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
-msgstr[0] "Ein bibentry vom Typ %s muss das/die Feld(er) %s spezifizieren."
-msgstr[1] "Ein bibentry vom Typ %s muss das/die Feld(er) %s spezifizieren."
+msgstr[0] "Ein bibentry vom Typ %s muss das Feld %s spezifizieren."
+msgstr[1] "Ein bibentry vom Typ %s muss die Felder %s spezifizieren."
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
 msgstr[0] "Klasse verworfen von Spalte %s"
 msgstr[1] "Klassen verworfen von Spalten %s"
 
-#, fuzzy
 msgid "matched %d object."
 msgid_plural "matched %d objects."
-msgstr[0] "%d übereinstimmenden Objekte."
-msgstr[1] "%d übereinstimmenden Objekte."
+msgstr[0] "%d übereinstimmendes Objekt."
+msgstr[1] "%d übereinstimmende Objekte."
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "Objekt '%s' nicht gefunden"
 msgstr[1] "Objekte '%s' nicht gefunden"
 
-#, fuzzy
 msgid ""
 "Removing package from %s\n"
 "(as %s is unspecified)"
@@ -1178,10 +1149,10 @@ msgid_plural ""
 "Removing packages from %s\n"
 "(as %s is unspecified)"
 msgstr[0] ""
-"Entferne Paket(e) von %s\n"
+"Entferne Paket von %s\n"
 "(da %s nicht spezifiziert)"
 msgstr[1] ""
-"Entferne Paket(e) von %s\n"
+"Entferne Pakete von %s\n"
 "(da %s nicht spezifiziert)"
 
 msgid "package %s is not available (for %s)"
@@ -1199,7 +1170,6 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] "installiere auch Abhängigkeit %s"
 msgstr[1] "installiere auch Abhängigkeiten %s"
 
-#, fuzzy
 msgid ""
 "Installing package into %s\n"
 "(as %s is unspecified)"
@@ -1207,10 +1177,10 @@ msgid_plural ""
 "Installing packages into %s\n"
 "(as %s is unspecified)"
 msgstr[0] ""
-"Installiere Paket(e) nach %s\n"
+"Installiere Paket nach %s\n"
 "(da %s nicht spezifiziert)"
 msgstr[1] ""
-"Installiere Paket(e) nach %s\n"
+"Installiere Pakete nach %s\n"
 "(da %s nicht spezifiziert)"
 
 msgid "'lib' element %s is not a writable directory"
@@ -1224,16 +1194,15 @@ msgid_plural ""
 msgstr[0] "Es gibt eine Binärversion, jedoch ist der Quelltext neuer"
 msgstr[1] "Es gibt Binärversionen, jedoch sind die Quelltexte neuer"
 
-#, fuzzy
 msgid "Do you want to install from sources the package which need compilation?"
 msgid_plural ""
 "Do you want to install from sources the packages which need compilation?"
 msgstr[0] ""
-"Möchten Sie versuchen, das Paket bzw. die Paktete aus den Quelltexten\n"
-"zu installieren, was eine Kompilierung erfordert?"
+"Möchten Sie versuchen, das Paket aus den Quelltexten\n"
+"zu installieren, welches eine Kompilierung erfordert?"
 msgstr[1] ""
-"Möchten Sie versuchen, das Paket bzw. die Paktete aus den Quelltexten\n"
-"zu installieren, was eine Kompilierung erfordert?"
+"Möchten Sie versuchen, die Paktete aus den Quelltexten\n"
+"zu installieren, welche eine Kompilierung erfordern?"
 
 msgid ""
 "Package which are only available in source form, and may need compilation of "
@@ -1242,7 +1211,11 @@ msgid_plural ""
 "Packages which are only available in source form, and may need compilation "
 "of C/C++/Fortran"
 msgstr[0] ""
+"Paket, das nur als Quelltext vorliegt und eventuell Übersetzung von C/C++/"
+"Fortran benötigt."
 msgstr[1] ""
+"Pakete, die nur als Quelltext vorliegen und eventuell Übersetzung von C/C++/"
+"Fortran benötigen."
 
 msgid "installing the source package %s"
 msgid_plural "installing the source packages %s"
@@ -1268,17 +1241,15 @@ msgstr[1] ""
 "Es gibt Binärversionen (und diese werden installiert), jedoch sind\\n\"\n"
 "\"die Quelltexte neuer"
 
-#, fuzzy
 msgid "last record incomplete, %d line discarded"
 msgid_plural "last record incomplete, %d lines discarded"
-msgstr[0] "letzter Eintrag unvollständig, %d Zeilen verworfen"
+msgstr[0] "letzter Eintrag unvollständig, %d Zeile verworfen"
 msgstr[1] "letzter Eintrag unvollständig, %d Zeilen verworfen"
 
-#, fuzzy
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
-msgstr[0] "Ungültige römische Zahl(en): %s"
-msgstr[1] "Ungültige römische Zahl(en): %s"
+msgstr[0] "ungültige römische Zahl: %s"
+msgstr[1] "ungültige römische Zahlen: %s"
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"

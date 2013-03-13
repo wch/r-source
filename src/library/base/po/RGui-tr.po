@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-25 08:32+0100\n"
+"POT-Creation-Date: 2013-03-13 10:43+0000\n"
 "PO-Revision-Date: 2011-04-02 18:17+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -233,192 +233,192 @@ msgstr "'%s' dosyası kaydedilemedi"
 msgid "Save script as"
 msgstr "Betiği farklı kaydet"
 
-#: src/gnuwin32/editor.c:375 src/gnuwin32/editor.c:692
-#: src/gnuwin32/pager.c:431 src/gnuwin32/rui.c:1074
+#: src/gnuwin32/editor.c:377 src/gnuwin32/editor.c:694
+#: src/gnuwin32/pager.c:431 src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "Betik aç"
 
-#: src/gnuwin32/editor.c:498 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
+#: src/gnuwin32/editor.c:500 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
 msgid "No RGui console to paste to"
 msgstr "Yapıştırılacak RGui konsolu yok"
 
-#: src/gnuwin32/editor.c:600
+#: src/gnuwin32/editor.c:602
 msgid "R EDITOR\n"
 msgstr "R DÜZENLEYİCİ\n"
 
-#: src/gnuwin32/editor.c:602
+#: src/gnuwin32/editor.c:604
 msgid "A standard text editor for editing and running R code.\n"
 msgstr ""
 "R kodunu düzenlemek ve çalıştırmak için bir standart metin düzenleyicidir.\n"
 
-#: src/gnuwin32/editor.c:604
+#: src/gnuwin32/editor.c:606
 msgid "RUNNING COMMANDS\n"
 msgstr "KOMUT ÇALIŞTIRMA\n"
 
-#: src/gnuwin32/editor.c:605
+#: src/gnuwin32/editor.c:607
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr ""
 "R kodunun bir satırını veya bölgesini çalıştırmak için, kodu seçin ve:\n"
 
-#: src/gnuwin32/editor.c:606
+#: src/gnuwin32/editor.c:608
 msgid "     Press Ctrl-R\n"
 msgstr "     Ctrl-R'ye basın\n"
 
-#: src/gnuwin32/editor.c:607
+#: src/gnuwin32/editor.c:609
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr "     Düzenle menüsünden \"Satırı veya seçimi çalıştır\"ı seçin\n"
 
-#: src/gnuwin32/editor.c:608
+#: src/gnuwin32/editor.c:610
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr ""
 "     Araç çubuğundan \"Satırı veya seçimi çalıştır\" simgesine tıklayın\n"
 "işlemlerinden birin yapın.\n"
 
-#: src/gnuwin32/editor.c:609
+#: src/gnuwin32/editor.c:611
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "Bu işlem, seçili komutları konsola kopyalayacak ve değerlendirecek.\n"
 
-#: src/gnuwin32/editor.c:610
+#: src/gnuwin32/editor.c:612
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr "Seçim yoksa, bu işlem sadece geçerli satırı çalıştıracak ve\n"
 
-#: src/gnuwin32/editor.c:611
+#: src/gnuwin32/editor.c:613
 msgid "the cursor by one line.\n"
 msgstr "imleci bir satır devam ettirecek.\n"
 
-#: src/gnuwin32/editor.c:623 src/gnuwin32/editor.c:700
-#: src/gnuwin32/editor.c:761
+#: src/gnuwin32/editor.c:625 src/gnuwin32/editor.c:702
+#: src/gnuwin32/editor.c:760
 msgid "Run line or selection"
 msgstr "Satırı yada seçimi çalıştır"
 
-#: src/gnuwin32/editor.c:625 src/gnuwin32/editor.c:746
+#: src/gnuwin32/editor.c:627 src/gnuwin32/editor.c:745
 msgid "Undo"
 msgstr "Geri al"
 
-#: src/gnuwin32/editor.c:627 src/gnuwin32/editor.c:749
+#: src/gnuwin32/editor.c:629 src/gnuwin32/editor.c:748
 msgid "Cut"
 msgstr "Kes"
 
-#: src/gnuwin32/editor.c:628 src/gnuwin32/editor.c:751
-#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:857
-#: src/gnuwin32/rui.c:1086 src/gnuwin32/rui.c:1142
+#: src/gnuwin32/editor.c:630 src/gnuwin32/editor.c:750
+#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859
+#: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "Kopyala "
 
-#: src/gnuwin32/editor.c:629 src/gnuwin32/editor.c:753 src/gnuwin32/rui.c:858
-#: src/gnuwin32/rui.c:1090 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:631 src/gnuwin32/editor.c:752 src/gnuwin32/rui.c:860
+#: src/gnuwin32/rui.c:1092 src/gnuwin32/rui.c:1145
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: src/gnuwin32/editor.c:630 src/gnuwin32/editor.c:755
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:754
 msgid "Delete"
 msgstr "Sil"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:757
-#: src/gnuwin32/pager.c:308 src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:864
-#: src/gnuwin32/rui.c:1147
+#: src/gnuwin32/editor.c:634 src/gnuwin32/editor.c:756
+#: src/gnuwin32/pager.c:308 src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866
+#: src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "Tümünü seç"
 
-#: src/gnuwin32/editor.c:696
+#: src/gnuwin32/editor.c:698
 msgid "Save script"
 msgstr "Betiği kaydet"
 
-#: src/gnuwin32/editor.c:704 src/gnuwin32/pager.c:451
-#: src/library/grDevices/src/devWindows.c:1593
+#: src/gnuwin32/editor.c:706 src/gnuwin32/pager.c:451
+#: src/library/grDevices/src/devWindows.c:1594
 msgid "Return focus to Console"
 msgstr "Konsola dön"
 
-#: src/gnuwin32/editor.c:707
+#: src/gnuwin32/editor.c:709
 msgid "Print script"
 msgstr "Betiği yazdır"
 
-#: src/gnuwin32/editor.c:709 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1102
-#: src/library/grDevices/src/devWindows.c:1587
+#: src/gnuwin32/editor.c:711 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1104
+#: src/library/grDevices/src/devWindows.c:1588
 msgid "Print"
 msgstr "Yazdır"
 
-#: src/gnuwin32/editor.c:727 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1120
+#: src/gnuwin32/editor.c:729 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1790
-#: src/library/grDevices/src/devWindows.c:1625
+#: src/library/grDevices/src/devWindows.c:1626
 msgid "File"
 msgstr "Dosya"
 
-#: src/gnuwin32/editor.c:728 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:730 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1124
 msgid "New script"
 msgstr "Yeni betik"
 
-#: src/gnuwin32/editor.c:730 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1123
+#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1125
 msgid "Open script..."
 msgstr "Betik aç..."
 
-#: src/gnuwin32/editor.c:732
+#: src/gnuwin32/editor.c:734
 msgid "Save"
 msgstr "Kaydet"
 
-#: src/gnuwin32/editor.c:734
+#: src/gnuwin32/editor.c:736
 msgid "Save as..."
 msgstr "Farklı kaydet ... "
 
-#: src/gnuwin32/editor.c:737 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1136
-#: src/library/grDevices/src/devWindows.c:1688
+#: src/gnuwin32/editor.c:739 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1138
+#: src/library/grDevices/src/devWindows.c:1689
 msgid "Print..."
 msgstr "Yazdır..."
 
-#: src/gnuwin32/editor.c:740
+#: src/gnuwin32/editor.c:742
 msgid "Close script"
 msgstr "Betiği kapat"
 
-#: src/gnuwin32/editor.c:745 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1141
+#: src/gnuwin32/editor.c:744 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1143
 #: src/library/utils/src/windows/dataentry.c:1796
 msgid "Edit"
 msgstr "Düzenle"
 
-#: src/gnuwin32/editor.c:759 src/gnuwin32/rui.c:1148
+#: src/gnuwin32/editor.c:758 src/gnuwin32/rui.c:1150
 msgid "Clear console"
 msgstr "Konsolu temizle"
 
-#: src/gnuwin32/editor.c:763
+#: src/gnuwin32/editor.c:762
 msgid "Run all"
 msgstr "Hepsini çalıştır"
 
-#: src/gnuwin32/editor.c:766
+#: src/gnuwin32/editor.c:765
 msgid "Find..."
 msgstr "Bul..."
 
-#: src/gnuwin32/editor.c:768
+#: src/gnuwin32/editor.c:767
 msgid "Replace..."
 msgstr "Değiştir..."
 
-#: src/gnuwin32/editor.c:771 src/gnuwin32/rui.c:1152
+#: src/gnuwin32/editor.c:770 src/gnuwin32/rui.c:1154
 msgid "GUI preferences..."
 msgstr "Arabirim tercihleri..."
 
-#: src/gnuwin32/editor.c:781 src/gnuwin32/rui.c:1184
+#: src/gnuwin32/editor.c:780 src/gnuwin32/rui.c:1186
 #: src/library/utils/src/windows/dataentry.c:1697
 #: src/library/utils/src/windows/dataentry.c:1807
 msgid "Help"
 msgstr "Yardım"
 
-#: src/gnuwin32/editor.c:782
+#: src/gnuwin32/editor.c:781
 msgid "Editor"
 msgstr "Düzenleyici"
 
-#: src/gnuwin32/editor.c:841
+#: src/gnuwin32/editor.c:840
 msgid "Maximum number of editors reached"
 msgstr "Maksimum düzenleyici sayısına erişildi"
 
-#: src/gnuwin32/editor.c:846
+#: src/gnuwin32/editor.c:845
 msgid "Unable to create editor window"
 msgstr "Düzenleyici penceresi oluşturulamadı"
 
-#: src/gnuwin32/editor.c:854
+#: src/gnuwin32/editor.c:853
 msgid "Untitled"
 msgstr "İsimsiz "
 
-#: src/gnuwin32/extra.c:823 src/gnuwin32/rui.c:1222
+#: src/gnuwin32/extra.c:823 src/gnuwin32/rui.c:1224
 msgid "Select file"
 msgstr "Dosya seç"
 
@@ -431,7 +431,7 @@ msgid "Insufficient memory to display file in internal pager"
 msgstr "Dosyayı iç sayfalayıcıda göstermek için yetersiz bellek"
 
 #: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
-#: src/gnuwin32/rui.c:236 src/gnuwin32/rui.c:263
+#: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
 msgid "No selection"
 msgstr "Seçim yok"
 
@@ -443,9 +443,9 @@ msgstr "Konsola yapıştır"
 msgid "Paste commands to console"
 msgstr "Komutları konsola yapıştır"
 
-#: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:867
+#: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1703
-#: src/library/grDevices/src/devWindows.c:1685
+#: src/library/grDevices/src/devWindows.c:1686
 msgid "Stay on top"
 msgstr "Üstte kal"
 
@@ -455,11 +455,11 @@ msgstr "Üstte kal"
 msgid "Close"
 msgstr "Kapat"
 
-#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1137
+#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1139
 msgid "Save to File..."
 msgstr "Dosyaya Kaydet..."
 
-#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1154
+#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1156
 msgid "View"
 msgstr "Görünüm"
 
@@ -522,314 +522,314 @@ msgstr "'%s' yoksayıldı (%d satırındaki, %s dosyasının)"
 msgid "Rgui Configuration Editor"
 msgstr "Rgui Yapılandırma Düzenleyicisi"
 
-#: src/gnuwin32/rui.c:139
+#: src/gnuwin32/rui.c:140
 msgid "Select file to source"
 msgstr "Kaynağa dosya seç"
 
-#: src/gnuwin32/rui.c:160
+#: src/gnuwin32/rui.c:161
 msgid "Select image to load"
 msgstr "Açılacak görüntüyü seç"
 
-#: src/gnuwin32/rui.c:175
+#: src/gnuwin32/rui.c:176
 msgid "Save image in"
 msgstr "Görüntüyü dosyaya kaydet"
 
-#: src/gnuwin32/rui.c:189
+#: src/gnuwin32/rui.c:190
 msgid "Load history from"
 msgstr "Dosyadan geçmişi yükle"
 
-#: src/gnuwin32/rui.c:198
+#: src/gnuwin32/rui.c:199
 msgid "Save history in"
 msgstr "Dosyaya geçmişi kaydet"
 
-#: src/gnuwin32/rui.c:245 src/gnuwin32/rui.c:254
+#: src/gnuwin32/rui.c:246 src/gnuwin32/rui.c:255
 msgid "No text available"
 msgstr "Metin mevcut değil"
 
-#: src/gnuwin32/rui.c:303
+#: src/gnuwin32/rui.c:304
 msgid "Name of data frame or matrix"
 msgstr "Veri çerçevesi yada matrisin adı"
 
-#: src/gnuwin32/rui.c:310
+#: src/gnuwin32/rui.c:311
 #, c-format
 msgid "'%s' cannot be found"
 msgstr "'%s' bulunamıyor"
 
-#: src/gnuwin32/rui.c:449
+#: src/gnuwin32/rui.c:451
 msgid "Are you sure?"
 msgstr "Emin misiniz?"
 
-#: src/gnuwin32/rui.c:544
+#: src/gnuwin32/rui.c:546
 msgid "Help on"
 msgstr "Yardım açık"
 
-#: src/gnuwin32/rui.c:600
+#: src/gnuwin32/rui.c:602
 msgid "Search help"
 msgstr "Yardımda ara"
 
-#: src/gnuwin32/rui.c:615
+#: src/gnuwin32/rui.c:617
 msgid "Search for words in help list archives and documentation"
 msgstr ""
 "Kelimeler için yardım listeleri arşivlerinde ve dokümantasyonlarda arama yap"
 
-#: src/gnuwin32/rui.c:630
+#: src/gnuwin32/rui.c:632
 msgid "Apropos"
 msgstr "Nesne Bul (Apropos)"
 
-#: src/gnuwin32/rui.c:853
+#: src/gnuwin32/rui.c:855
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "Sadece .R, .RData ve .rda dosyaları sürükle-bırak yapılabilir"
 
-#: src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1144
+#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1146
 msgid "Paste commands only"
 msgstr "Sadece komutları yapıştır"
 
-#: src/gnuwin32/rui.c:860 src/gnuwin32/rui.c:1094
+#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1096
 msgid "Copy and paste"
 msgstr "Kopyala ve yapıştır"
 
-#: src/gnuwin32/rui.c:862
+#: src/gnuwin32/rui.c:864
 msgid "Clear window"
 msgstr "Pencereyi temizle"
 
-#: src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1167
+#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1169
 msgid "Buffered output"
 msgstr "Arabelleğe alınmış çıktı"
 
-#: src/gnuwin32/rui.c:906
+#: src/gnuwin32/rui.c:908
 msgid "Packages"
 msgstr "Paketler"
 
-#: src/gnuwin32/rui.c:907
+#: src/gnuwin32/rui.c:909
 msgid "Load package..."
 msgstr "Paket yükle..."
 
-#: src/gnuwin32/rui.c:909
+#: src/gnuwin32/rui.c:911
 msgid "Set CRAN mirror..."
 msgstr "CRAN yansısı belirle..."
 
-#: src/gnuwin32/rui.c:911
+#: src/gnuwin32/rui.c:913
 msgid "Select repositories..."
 msgstr "Depoları seç...."
 
-#: src/gnuwin32/rui.c:913
+#: src/gnuwin32/rui.c:915
 msgid "Install package(s)..."
 msgstr "Paket(ler) kur..."
 
-#: src/gnuwin32/rui.c:915
+#: src/gnuwin32/rui.c:917
 msgid "Update packages..."
 msgstr "Paketleri güncelle..."
 
-#: src/gnuwin32/rui.c:918
+#: src/gnuwin32/rui.c:920
 msgid "Install package(s) from local zip files..."
 msgstr "Yerel zip dosyasından paket(ler) kur..."
 
-#: src/gnuwin32/rui.c:942
+#: src/gnuwin32/rui.c:944
 msgid "FAQ on R"
 msgstr "R'de SSS"
 
-#: src/gnuwin32/rui.c:944
+#: src/gnuwin32/rui.c:946
 msgid "FAQ on R for &Windows"
 msgstr "&Windows için R'de SSS"
 
-#: src/gnuwin32/rui.c:950 src/gnuwin32/rui.c:953
+#: src/gnuwin32/rui.c:952 src/gnuwin32/rui.c:955
 msgid "Manuals (in PDF)"
 msgstr "El kitapları (PDF biçiminde)"
 
-#: src/gnuwin32/rui.c:983
+#: src/gnuwin32/rui.c:985
 msgid "R functions (text)..."
 msgstr "R fonksiyonları (metin)..."
 
-#: src/gnuwin32/rui.c:985
+#: src/gnuwin32/rui.c:987
 msgid "Html help"
 msgstr "Html Yardım"
 
-#: src/gnuwin32/rui.c:987
+#: src/gnuwin32/rui.c:989
 msgid "Search help..."
 msgstr "Yardımda ara..."
 
-#: src/gnuwin32/rui.c:992
+#: src/gnuwin32/rui.c:994
 msgid "Apropos..."
 msgstr "Nesne Bul (Apropos)..."
 
-#: src/gnuwin32/rui.c:994
+#: src/gnuwin32/rui.c:996
 msgid "R Project home page"
 msgstr "R Projesi ana sayfa"
 
-#: src/gnuwin32/rui.c:995
+#: src/gnuwin32/rui.c:997
 msgid "CRAN home page"
 msgstr "CRAN ana sayfa"
 
-#: src/gnuwin32/rui.c:997
+#: src/gnuwin32/rui.c:999
 msgid "About"
 msgstr "Hakkında"
 
-#: src/gnuwin32/rui.c:1006 src/extra/graphapp/gmenus.c:52
+#: src/gnuwin32/rui.c:1008 src/extra/graphapp/gmenus.c:52
 msgid "Windows"
 msgstr "Pencereler"
 
-#: src/gnuwin32/rui.c:1007 src/extra/graphapp/gmenus.c:53
+#: src/gnuwin32/rui.c:1009 src/extra/graphapp/gmenus.c:53
 msgid "Cascade"
 msgstr "Kademeli yap"
 
-#: src/gnuwin32/rui.c:1008 src/extra/graphapp/gmenus.c:54
+#: src/gnuwin32/rui.c:1010 src/extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
 msgstr "&Yatay Hizala"
 
-#: src/gnuwin32/rui.c:1009 src/extra/graphapp/gmenus.c:55
+#: src/gnuwin32/rui.c:1011 src/extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
 msgstr "&Dikey Hizala"
 
-#: src/gnuwin32/rui.c:1010
+#: src/gnuwin32/rui.c:1012
 msgid "Minimize group"
 msgstr "Grubu küçült"
 
-#: src/gnuwin32/rui.c:1011
+#: src/gnuwin32/rui.c:1013
 msgid "Restore group"
 msgstr "Grubu önceki boyuta getir"
 
-#: src/gnuwin32/rui.c:1078
+#: src/gnuwin32/rui.c:1080
 msgid "Load workspace"
 msgstr "Çalışma alanı aç"
 
-#: src/gnuwin32/rui.c:1082
+#: src/gnuwin32/rui.c:1084
 msgid "Save workspace"
 msgstr "Çalışma alanı kaydet"
 
-#: src/gnuwin32/rui.c:1098
+#: src/gnuwin32/rui.c:1100
 msgid "Stop current computation"
 msgstr "Geçerli hesaplamayı durdur"
 
-#: src/gnuwin32/rui.c:1121
+#: src/gnuwin32/rui.c:1123
 msgid "Source R code..."
 msgstr "R Kodu kaynağı ekle..."
 
-#: src/gnuwin32/rui.c:1124
+#: src/gnuwin32/rui.c:1126
 msgid "Display file(s)..."
 msgstr "Dosya(ları) görüntüle..."
 
-#: src/gnuwin32/rui.c:1126
+#: src/gnuwin32/rui.c:1128
 msgid "Load Workspace..."
 msgstr "Çalışma Alanı Aç... "
 
-#: src/gnuwin32/rui.c:1127
+#: src/gnuwin32/rui.c:1129
 msgid "Save Workspace..."
 msgstr "Çalışma Alanı Kaydet"
 
-#: src/gnuwin32/rui.c:1129
+#: src/gnuwin32/rui.c:1131
 msgid "Load History..."
 msgstr "Geçmişi Aç..."
 
-#: src/gnuwin32/rui.c:1131
+#: src/gnuwin32/rui.c:1133
 msgid "Save History..."
 msgstr "Geçmişi Kaydet..."
 
-#: src/gnuwin32/rui.c:1134
+#: src/gnuwin32/rui.c:1136
 msgid "Change dir..."
 msgstr "Dizin değiştir..."
 
-#: src/gnuwin32/rui.c:1139
+#: src/gnuwin32/rui.c:1141
 msgid "Exit"
 msgstr "Çıkış"
 
-#: src/gnuwin32/rui.c:1146
+#: src/gnuwin32/rui.c:1148
 msgid "Copy and Paste"
 msgstr "Kopyala ve Yapıştır"
 
-#: src/gnuwin32/rui.c:1150
+#: src/gnuwin32/rui.c:1152
 msgid "Data editor..."
 msgstr "Veri düzenleyici..."
 
-#: src/gnuwin32/rui.c:1155
+#: src/gnuwin32/rui.c:1157
 msgid "Toolbar"
 msgstr "Araç çubuğu"
 
-#: src/gnuwin32/rui.c:1156
+#: src/gnuwin32/rui.c:1158
 msgid "Statusbar"
 msgstr "Durum çubuğu"
 
-#: src/gnuwin32/rui.c:1160
+#: src/gnuwin32/rui.c:1162
 msgid "Misc"
 msgstr "Diğer"
 
-#: src/gnuwin32/rui.c:1161
+#: src/gnuwin32/rui.c:1163
 msgid "Stop current computation           \tESC"
 msgstr "Geçerli hesaplamayı durdur           \tESC"
 
-#: src/gnuwin32/rui.c:1163
+#: src/gnuwin32/rui.c:1165
 msgid "Stop all computations"
 msgstr "Tüm hesaplamaları durdur"
 
-#: src/gnuwin32/rui.c:1165
+#: src/gnuwin32/rui.c:1167
 msgid "Break to debugger"
 msgstr "Ayıklayıcıya bozdur"
 
-#: src/gnuwin32/rui.c:1168
+#: src/gnuwin32/rui.c:1170
 msgid "Word completion"
 msgstr "Kelime tamamlama"
 
-#: src/gnuwin32/rui.c:1170
+#: src/gnuwin32/rui.c:1172
 msgid "Filename completion"
 msgstr "Dosya adı tamamlama"
 
-#: src/gnuwin32/rui.c:1177
+#: src/gnuwin32/rui.c:1179
 msgid "List objects"
 msgstr "Objeleri listele"
 
-#: src/gnuwin32/rui.c:1178
+#: src/gnuwin32/rui.c:1180
 msgid "Remove all objects"
 msgstr "Tüm objeleri sil"
 
-#: src/gnuwin32/rui.c:1179
+#: src/gnuwin32/rui.c:1181
 msgid "List search &path"
 msgstr "Kontrol &klasörünü listele"
 
-#: src/gnuwin32/rui.c:1185
+#: src/gnuwin32/rui.c:1187
 msgid "Console"
 msgstr "Konsol"
 
-#: src/gnuwin32/rui.c:1266
+#: src/gnuwin32/rui.c:1268
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'mname' 1000 baytla sınırlıdır"
 
-#: src/gnuwin32/rui.c:1308
+#: src/gnuwin32/rui.c:1310
 #, c-format
 msgid "menu %s does not exist"
 msgstr "%s menüsü bulunmuyor"
 
-#: src/gnuwin32/rui.c:1361
+#: src/gnuwin32/rui.c:1363
 msgid "'menu' is limited to 500 bytes"
 msgstr "'menu' 500 baytla sınırlıdır"
 
-#: src/gnuwin32/rui.c:1371
+#: src/gnuwin32/rui.c:1373
 msgid "base menu does not exist"
 msgstr "temel menü bulunmuyor"
 
-#: src/gnuwin32/rui.c:1386
+#: src/gnuwin32/rui.c:1388
 msgid "failed to allocate menu"
 msgstr "menüyü yerleştirmede hata"
 
-#: src/gnuwin32/rui.c:1403 src/gnuwin32/rui.c:1527
+#: src/gnuwin32/rui.c:1405 src/gnuwin32/rui.c:1529
 msgid "menu + item is limited to 1000 bytes"
 msgstr "menü + öğe 1000 baytla sınırlıdır"
 
-#: src/gnuwin32/rui.c:1411 src/gnuwin32/rui.c:1494
+#: src/gnuwin32/rui.c:1413 src/gnuwin32/rui.c:1496
 msgid "menu does not exist"
 msgstr "menu bulunmuyor"
 
-#: src/gnuwin32/rui.c:1429 src/gnuwin32/rui.c:1452 src/gnuwin32/rui.c:1457
+#: src/gnuwin32/rui.c:1431 src/gnuwin32/rui.c:1454 src/gnuwin32/rui.c:1459
 msgid "failed to allocate char storage"
 msgstr "karakter depolamayı yerleştirmede hata"
 
-#: src/gnuwin32/rui.c:1465
+#: src/gnuwin32/rui.c:1467
 msgid "failed to allocate menuitem"
 msgstr "menüöğesini yerleştirmede hata"
 
-#: src/gnuwin32/rui.c:1517
+#: src/gnuwin32/rui.c:1519
 msgid "menu not found"
 msgstr "menü bulunamadı"
 
-#: src/gnuwin32/rui.c:1535
+#: src/gnuwin32/rui.c:1537
 msgid "menu or item does not exist"
 msgstr "menü yada öğe bulunmuyor"
 
@@ -1057,7 +1057,7 @@ msgid "Enhanced metafiles"
 msgstr "Gelişmiş metafile'lar"
 
 #: src/library/grDevices/src/devWindows.c:990
-#: src/library/grDevices/src/devWindows.c:3435
+#: src/library/grDevices/src/devWindows.c:3436
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "seçilen dosya yolu çok uzun: sadece 512 bayta kadar izin verilir"
 
@@ -1069,147 +1069,148 @@ msgstr "Değiştirilecek grafik yok! "
 msgid "Variable name"
 msgstr "Değişken adı "
 
-#: src/library/grDevices/src/devWindows.c:1256
-msgid "Variable doesn't exist or doesn't contain any plots!"
+#: src/library/grDevices/src/devWindows.c:1258
+#, fuzzy
+msgid "Variable doesn't contain any plots!"
 msgstr "Değişken yok yada herhangi bir grafik içermiyor!"
 
-#: src/library/grDevices/src/devWindows.c:1272
+#: src/library/grDevices/src/devWindows.c:1273
 msgid "Name of variable to save to"
 msgstr "Kaydedilecek değişken adı"
 
-#: src/library/grDevices/src/devWindows.c:1581
+#: src/library/grDevices/src/devWindows.c:1582
 msgid "Copy to the clipboard as a metafile"
 msgstr "Panoya bir metadosya olarak kopyala"
 
-#: src/library/grDevices/src/devWindows.c:1599
-#: src/library/grDevices/src/devWindows.c:1610
+#: src/library/grDevices/src/devWindows.c:1600
+#: src/library/grDevices/src/devWindows.c:1611
 msgid "Stop locator"
 msgstr "Konumlayıcıyı durdur"
 
-#: src/library/grDevices/src/devWindows.c:1609
-#: src/library/grDevices/src/devWindows.c:1613
+#: src/library/grDevices/src/devWindows.c:1610
+#: src/library/grDevices/src/devWindows.c:1614
 msgid "Stop"
 msgstr "Dur "
 
-#: src/library/grDevices/src/devWindows.c:1615
+#: src/library/grDevices/src/devWindows.c:1616
 msgid "Continue"
 msgstr "Devam et "
 
-#: src/library/grDevices/src/devWindows.c:1619
+#: src/library/grDevices/src/devWindows.c:1620
 msgid "Next"
 msgstr "Sonraki "
 
-#: src/library/grDevices/src/devWindows.c:1620
+#: src/library/grDevices/src/devWindows.c:1621
 msgid "Next plot"
 msgstr "Sonraki grafik"
 
-#: src/library/grDevices/src/devWindows.c:1626
+#: src/library/grDevices/src/devWindows.c:1627
 msgid "Save as"
 msgstr "Farklı Kaydet "
 
-#: src/library/grDevices/src/devWindows.c:1635
-#: src/library/grDevices/src/devWindows.c:1637
-#: src/library/grDevices/src/devWindows.c:1639
+#: src/library/grDevices/src/devWindows.c:1636
+#: src/library/grDevices/src/devWindows.c:1638
+#: src/library/grDevices/src/devWindows.c:1640
 #, c-format
 msgid "%s quality..."
 msgstr "%s kalite..."
 
-#: src/library/grDevices/src/devWindows.c:1641
+#: src/library/grDevices/src/devWindows.c:1642
 msgid "Copy to the clipboard"
 msgstr "Panoya kopyala"
 
-#: src/library/grDevices/src/devWindows.c:1642
+#: src/library/grDevices/src/devWindows.c:1643
 msgid "as a Bitmap\tCTRL+C"
 msgstr "Biteşlem olarak\tCTRL+C"
 
-#: src/library/grDevices/src/devWindows.c:1643
+#: src/library/grDevices/src/devWindows.c:1644
 msgid "as a Metafile\tCTRL+W"
 msgstr "Metafile olarak\tCTRL+W"
 
-#: src/library/grDevices/src/devWindows.c:1646
+#: src/library/grDevices/src/devWindows.c:1647
 msgid "Print...\tCTRL+P"
 msgstr "Yazdır...\tCTRL+P "
 
-#: src/library/grDevices/src/devWindows.c:1648
+#: src/library/grDevices/src/devWindows.c:1649
 msgid "close Device"
 msgstr "Aygıtı kapat"
 
-#: src/library/grDevices/src/devWindows.c:1649
+#: src/library/grDevices/src/devWindows.c:1650
 msgid "History"
 msgstr "Geçmiş"
 
-#: src/library/grDevices/src/devWindows.c:1650
+#: src/library/grDevices/src/devWindows.c:1651
 msgid "Recording"
 msgstr "Kayıt"
 
-#: src/library/grDevices/src/devWindows.c:1653
+#: src/library/grDevices/src/devWindows.c:1654
 msgid "Add\tINS"
 msgstr "Ekle\tINS "
 
-#: src/library/grDevices/src/devWindows.c:1654
+#: src/library/grDevices/src/devWindows.c:1655
 msgid "Replace"
 msgstr "Değiştir"
 
-#: src/library/grDevices/src/devWindows.c:1656
+#: src/library/grDevices/src/devWindows.c:1657
 msgid "Previous\tPgUp"
 msgstr "Geri\tPgUp "
 
-#: src/library/grDevices/src/devWindows.c:1657
+#: src/library/grDevices/src/devWindows.c:1658
 msgid "Next\tPgDown"
 msgstr "İleri\tPgDown "
 
-#: src/library/grDevices/src/devWindows.c:1659
+#: src/library/grDevices/src/devWindows.c:1660
 msgid "Save to variable..."
 msgstr "Değişkene kaydet..."
 
-#: src/library/grDevices/src/devWindows.c:1660
+#: src/library/grDevices/src/devWindows.c:1661
 msgid "Get from variable..."
 msgstr "Değişkenden al..."
 
-#: src/library/grDevices/src/devWindows.c:1662
+#: src/library/grDevices/src/devWindows.c:1663
 msgid "Clear history"
 msgstr "Geçmişi temizleme"
 
-#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1664
 msgid "Resize"
 msgstr "Yeniden boyutlandır"
 
-#: src/library/grDevices/src/devWindows.c:1664
+#: src/library/grDevices/src/devWindows.c:1665
 msgid "R mode"
 msgstr "R modu"
 
-#: src/library/grDevices/src/devWindows.c:1666
+#: src/library/grDevices/src/devWindows.c:1667
 msgid "Fit to window"
 msgstr "Pencereye sığdır"
 
-#: src/library/grDevices/src/devWindows.c:1668
+#: src/library/grDevices/src/devWindows.c:1669
 msgid "Fixed size"
 msgstr "Sabit boyut"
 
-#: src/library/grDevices/src/devWindows.c:1675
+#: src/library/grDevices/src/devWindows.c:1676
 msgid "Copy as metafile"
 msgstr "Metafile olarak kopyala"
 
-#: src/library/grDevices/src/devWindows.c:1677
+#: src/library/grDevices/src/devWindows.c:1678
 msgid "Copy as bitmap"
 msgstr "Biteşlem olarak kopyala"
 
-#: src/library/grDevices/src/devWindows.c:1680
+#: src/library/grDevices/src/devWindows.c:1681
 msgid "Save as metafile..."
 msgstr "Metafile olarak farklı kaydet..."
 
-#: src/library/grDevices/src/devWindows.c:1682
+#: src/library/grDevices/src/devWindows.c:1683
 msgid "Save as postscript..."
 msgstr "Postscript olarak farklı kaydet"
 
-#: src/library/grDevices/src/devWindows.c:3135
+#: src/library/grDevices/src/devWindows.c:3136
 msgid "Locator is active"
 msgstr "Konumlayıcı aktif "
 
-#: src/library/grDevices/src/devWindows.c:3758
+#: src/library/grDevices/src/devWindows.c:3759
 msgid "Waiting to confirm page change..."
 msgstr "Sayfa değişikliği onayı bekleniyor..."
 
-#: src/library/grDevices/src/devWindows.c:3770
+#: src/library/grDevices/src/devWindows.c:3771
 msgid "Click or hit ENTER for next page"
 msgstr "Sonraki sayfa için ENTER'a basın yada tıklayın"

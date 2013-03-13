@@ -1,14 +1,14 @@
 # Translation of /src/library/splines/po/R-splines.pot
 # to German
-# Copyright (C) 2005-2012 The R Foundation
+# Copyright (C) 2005-2013 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2012.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.2\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-24 08:30\n"
-"PO-Revision-Date: 2012-09-07 16:45+0200\n"
+"PO-Revision-Date: 2013-03-01 16:34+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -27,21 +27,14 @@ msgid "'ord' must be positive integer, at most the number of knots"
 msgstr ""
 "'ord' muss eine positive ganze Zahl sein, maximal die Anzahl der Knoten"
 
-#, fuzzy
 msgid "need at least %s (=%d) knots"
-msgstr "brauche mindestens 2*ord -1 (=%d) Knoten"
+msgstr "brauche mindestens %s (=%d) Knoten"
 
-#, fuzzy
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr ""
-"die 'x' Daten müssen im Bereich %g bis %g liegen, außer es ist 'outer.ok = "
-"TRUE'"
+msgstr "die 'x' Daten müssen im Bereich %g bis %g liegen, außer es ist %s gesetzt"
 
-#, fuzzy
 msgid "%s needs package 'Matrix' correctly installed"
-msgstr ""
-"splineDesign(*, sparse=TRUE) benötigt das korrekt installierte Paket \"Matrix"
-"\""
+msgstr "%s benötigt das korrekt installierte Paket 'Matrix'"
 
 msgid "values of 'x' must be distinct"
 msgstr "Werte von 'x' müssen verschieden sein"
@@ -79,9 +72,8 @@ msgstr "spline muss monoton sein"
 msgid "'degree' must be integer >= 1"
 msgstr "'degree' muss Integer >= 1 sein"
 
-#, fuzzy
 msgid "'df' was too small; have used %d"
-msgstr "'df' war zu klein; habe benutzt"
+msgstr "'df' war zu klein; habe %d benutzt"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr ""

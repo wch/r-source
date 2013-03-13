@@ -1,43 +1,45 @@
-# File R_HOME/src/library/parallel/po/ko.po
-# Korean translations for R-Base
-# Copyright (C) 2012 THE R'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the R package
-# Maintainer: Chel Hee Lee (Korean, R Development Translation Team)
-# Email: <gnustats@gmail.com> or <chl948@mail.usask.ca>
+# Korean translation for R parallel package
+# src/library/parallel/po/ko.po
+# Copyright (C) 1995-2013 The R Core Team
+# This file is distributed under the same license as the R parallel package.
+# R Development Translation Team - Korean
+# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
+# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.2\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-30 08:34+0000\n"
-"PO-Revision-Date: 2012-09-25 18:00-0600\n"
+"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"PO-Revision-Date: 2013-02-21 20:43-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team:  <gnustats@gmail.com>\n"
-"Language: \n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu.org>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Language: Korean\n"
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: fork.c:135 fork.c:138
+#: fork.c:135
+#: fork.c:138
 msgid "unable to create a pipe"
 msgstr "파이프를 생성할 수 없습니다"
 
 #: fork.c:149
 #, c-format
 msgid "unable to fork, possible reason: %s"
-msgstr "포크할 수 없는데, 가능한 이유: %s"
+msgstr "포크할 수 없습니다. 가능한 이유는 다음과 같습니다: %s"
 
 #: fork.c:178
 msgid "memory allocation error"
-msgstr "메모리 할당 오류"
+msgstr "메모리 할당 에러입니다"
 
 #: fork.c:216
 msgid "only children can send data to the master process"
-msgstr "오로지 children만이 데이터를 마스터 프로세스에 전송할 수 있습니다"
+msgstr "오로지  자식들만이 데이터를 마스터 프로세스에 보낼 수 있습니다"
 
 #: fork.c:218
 msgid "there is no pipe to the master process"
@@ -45,54 +47,55 @@ msgstr "마스터 프로세스로 연결된 파이프가 없습니다"
 
 #: fork.c:220
 msgid "content to send must be RAW, use serialize() if needed"
-msgstr ""
-"보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
+msgstr "보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
 
-#: fork.c:229 fork.c:236 fork.c:566
+#: fork.c:229
+#: fork.c:236
+#: fork.c:566
 msgid "write error, closing pipe to the master"
-msgstr "쓰기 에러, 마스터에 연결된 파이프를 닫습니다"
+msgstr "쓰기 에러입니다.  마스에 연결된 파이프를 닫습니다"
 
 #: fork.c:249
 msgid "only the master process can send data to a child process"
-msgstr "오로지 마스터 프로세스만이 데이터를 자식 프로세스에 전송할 수 있습니다"
+msgstr "오로지 마스터 프로세스만이 데이터를 자식프로세스에 보낼 수 있습니다"
 
 #: fork.c:256
 #, c-format
 msgid "child %d does not exist"
-msgstr "child %d가 존재하지 않습니다"
+msgstr "child %d는 존재하지 않습니다"
 
 #: fork.c:262
 msgid "write error"
-msgstr "쓰기 에러"
+msgstr "쓰기 에러입니다"
 
-#: fork.c:342 fork.c:464
+#: fork.c:342
+#: fork.c:464
 #, c-format
 msgid "error '%s' in select"
-msgstr "선택하는 중에 에러 '%s'"
+msgstr "선택중 에러 '%s'가 발생했습니다"
 
 #: fork.c:548
-#, fuzzy
 msgid "'mckill' failed"
-msgstr "mckill 실패했습니다"
+msgstr "'mckill' 실패했습니다"
 
 #: fork.c:558
-#, fuzzy
 msgid "'mcexit' can only be used in a child process"
-msgstr "mcexit는 자식 프로세스에서만 오로지 사용될 수 있습니다"
+msgstr "'mcexit'는 오로지 자식 프로세스에서만 사용됩니다"
 
 #: fork.c:579
-#, fuzzy
 msgid "'mcexit' failed"
-msgstr "mcexit 실패했습니다"
+msgstr "'mcexit' 실패했습니다"
 
-#: fork.c:601 fork.c:610
+#: fork.c:601
+#: fork.c:610
 msgid "invalid CPU affinity specification"
-msgstr ""
+msgstr "유효하지 않은 CPU affinity 지정입니다"
 
 #: fork.c:621
 msgid "requested CPU set is too large for this system"
-msgstr ""
+msgstr "요청된 CPU 셋은 이 시스템에 너무 큽니다"
 
 #: fork.c:644
 msgid "retrieving CPU affinity set failed"
-msgstr ""
+msgstr "CPU affiniy 셋을 검색하는데 실패했습니다"
+

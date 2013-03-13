@@ -1,13 +1,13 @@
 # Translation of src/library/grDevices/po/grDevices.pot to German.
-# Copyright (C) 2005-2012 The R Foundation
+# Copyright (C) 2005-2013 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-2012.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.15.0\n"
+"Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-03-07 08:36+0000\n"
-"PO-Revision-Date: 2012-03-05 21:58+0100\n"
+"PO-Revision-Date: 2013-03-01 10:48+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -24,90 +24,87 @@ msgstr "'%s' muss numerisch sein mit Länge %d"
 #: colors.c:69
 #, c-format
 msgid "color intensity %g, not in [0,1]"
-msgstr ""
+msgstr "Farbintensität %g nicht in [0, 1]"
 
 #: colors.c:76
 #, c-format
 msgid "color intensity %d, not in 0:255"
-msgstr ""
+msgstr "Farbintensität %d nicht in 1:255"
 
 #: colors.c:83
 #, c-format
 msgid "alpha level %g, not in [0,1]"
-msgstr ""
+msgstr "alpha Level %g nicht in [0, 1]"
 
 #: colors.c:90
 #, c-format
 msgid "alpha level %d, not in 0:255"
-msgstr ""
+msgstr "alpha Level %d nicht in 0:255"
 
 #: colors.c:118
 msgid "bad hsv to rgb color conversion"
-msgstr ""
+msgstr "schlechte HSV nach RGB Konvertierung"
 
 #: colors.c:207 colors.c:221
 msgid "invalid hsv color"
-msgstr ""
+msgstr "unzulässige HSV Farbe"
 
 #: colors.c:327 colors.c:345
 msgid "invalid hcl color"
-msgstr ""
+msgstr "unzulässige HCL Farbe"
 
 #: colors.c:402
-#, fuzzy
 msgid "invalid 'names' vector"
-msgstr "unzulässiges 'file' Argument"
+msgstr "unzulässiger 'names' Vektor"
 
 #: colors.c:461 colors.c:470
 msgid "invalid gray level, must be in [0,1]."
-msgstr ""
+msgstr "unzulässige Graustufe, muss aus [0, 1] sein"
 
 #: colors.c:526
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr "unzulässiges 'file' Argument"
+msgstr "unzulässiger '%s' Wert"
 
 #: colors.c:1318
 msgid "invalid hex digit in 'color' or 'lty'"
-msgstr ""
+msgstr "unzulässige Hexadezimalziffer in 'color' oder 'lty'"
 
 #: colors.c:1328 colors.c:1338
-#, fuzzy
 msgid "invalid RGB specification"
-msgstr "Unzulässige Zeichensatzspezifikation"
+msgstr "unzulässige RGB Spezifikation"
 
 #: colors.c:1371
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color name '%s'"
-msgstr "ungültige Zeichenkette in '%s'"
+msgstr "ungültiger Farbname in '%s'"
 
 #: colors.c:1421 colors.c:1430
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color specification \"%s\""
-msgstr "Unzulässige Zeichensatzspezifikation"
+msgstr "Unzulässige Farbspezifikation \"%s\""
 
 #: colors.c:1458
 msgid "supplied color is neither numeric nor character"
-msgstr ""
+msgstr "angegebene Farbe ist weder numerisch noch Zeichenkette"
 
 #: colors.c:1462
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
-msgstr ""
+msgstr "numerische Farbe muss >= 0 sein, gefunden %d"
 
 #: colors.c:1473
-#, fuzzy
 msgid "invalid argument type"
-msgstr "unzulässiges 'file' Argument"
+msgstr "unzulässiger Argumenttyp"
 
 #: colors.c:1484
 msgid "unknown palette (need >= 2 colors)"
-msgstr ""
+msgstr "unbekannte Palette (brauche >= 2 Farben)"
 
 #: colors.c:1488 colors.c:1510
 #, c-format
 msgid "maximum number of colors is %d"
-msgstr ""
+msgstr "maximale Zahl von Farben ist %d"
 
 #: devPS.c:556
 #, c-format
@@ -198,9 +195,8 @@ msgid "failed to load encoding file '%s'"
 msgstr "Laden der Kodierungsdatei '%s' fehlgeschlagen"
 
 #: devPS.c:1438 devPS.c:1471
-#, fuzzy
 msgid "invalid font name or more than one font name"
-msgstr "Ungültiger Zeichensatzname, oder mehr als einer"
+msgstr "Ungültiger Zeichensatzname, oder mehr als ein Zeichensatzname"
 
 #: devPS.c:1591 devPS.c:1626
 #, c-format
@@ -227,34 +223,28 @@ msgid "cannot load afm file '%s'"
 msgstr "kann afm Datei '%s' nicht laden"
 
 #: devPS.c:2383
-#, fuzzy
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "Beschädigte geladene Kodierung; Kodierung nicht aufgezeichnet"
 
 #: devPS.c:2394
-#, fuzzy
 msgid "failed to record device encoding"
 msgstr "Speichern der Gerätekodierung fehlgeschlagen"
 
 #: devPS.c:2563
-#, fuzzy
 msgid "object '.ps.prolog' is not a character vector"
-msgstr "Das Objekt .ps.prolog ist keine Zeichenkette"
+msgstr "Objekt '.ps.prolog' ist keine Zeichenkette"
 
 #: devPS.c:2636 devPS.c:6407 devWindows.c:784
-#, fuzzy
 msgid "invalid line end"
-msgstr "Unzulässiges Zeilenende"
+msgstr "unzulässiges Zeilenende"
 
 #: devPS.c:2655 devPS.c:6426 devWindows.c:797
-#, fuzzy
 msgid "invalid line join"
-msgstr "Unzulässige Zeilenverbindung"
+msgstr "unzulässige Zeilenverbindung"
 
 #: devPS.c:2663
-#, fuzzy
 msgid "invalid line mitre"
-msgstr "Unzulässige Zeilenkappung"
+msgstr "unzulässige Zeilenkappung"
 
 #: devPS.c:2872 devPS.c:3766 devPS.c:4214 devPS.c:4241 devPS.c:5249
 #: devPS.c:7752 devPS.c:7797
@@ -285,19 +275,16 @@ msgid "failed to load encoding file in %s()"
 msgstr "Laden der Kodierungsdatei in %s() fehlgeschlagen"
 
 #: devPS.c:3176 devPS.c:3239 devPS.c:5953 devPS.c:6008 devPS.c:7632
-#, fuzzy
 msgid "invalid font type"
-msgstr "Unzulässiger Zeichensatztyp"
+msgstr "unzulässiger Zeichensatztyp"
 
 #: devPS.c:3200
-#, fuzzy
 msgid "failed to initialise default PostScript font"
-msgstr "Konnte den stabdard Postscriptzeichensatz nicht initialisieren"
+msgstr "konnte den standard Postscriptzeichensatz nicht initialisieren"
 
 #: devPS.c:3266
-#, fuzzy
 msgid "failed to initialise additional PostScript fonts"
-msgstr "Konnte zusätzliche PostScript Zeichensätze nicht initialisieren"
+msgstr "konnte zusätzliche PostScript Zeichensätze nicht initialisieren"
 
 #: devPS.c:3282
 msgid "invalid foreground/background color (postscript)"
@@ -308,9 +295,8 @@ msgid "'command' is too long"
 msgstr "'command' ist zu lang"
 
 #: devPS.c:3292
-#, fuzzy
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
-msgstr "postscript(print.it=TRUE) mit leerem Druckkommando benutzt"
+msgstr "'postscript(print.it=TRUE)' mit leerem 'print' Befehl benutzt"
 
 #: devPS.c:3341
 #, c-format
@@ -345,14 +331,14 @@ msgstr ""
 "    %s"
 
 #: devPS.c:3754
-#, fuzzy, c-format
+#, c-format
 msgid "CID family '%s' not included in postscript() device"
-msgstr "Die CID Familie '%s' ist nicht im PostScript-Gerät enthalten"
+msgstr "Die CID Familie '%s' ist nicht im postscript() Gerät enthalten"
 
 #: devPS.c:3772 devPS.c:3783 devPS.c:4221 devPS.c:4251 devPS.c:4356
-#, fuzzy, c-format
+#, c-format
 msgid "family '%s' not included in postscript() device"
-msgstr "Die Familie '%s' ist nicht im PostScript-Gerät enthalten<"
+msgstr "Familie '%s' ist nicht im postscript() Gerät enthalten"
 
 #: devPS.c:4296
 #, c-format
@@ -375,7 +361,6 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr "konnte Text nicht in Kodierung '%s' konvertieren"
 
 #: devPS.c:4580
-#, fuzzy
 msgid "ran out of colors in xfig()"
 msgstr "keine Farben mehr übrig in xfig()"
 
@@ -394,14 +379,12 @@ msgid "invalid foreground/background color (xfig)"
 msgstr "ungültige Vorder-/Hintergrundfarbe (xfig)"
 
 #: devPS.c:4780
-#, fuzzy
 msgid "only Type 1 fonts supported for XFig"
-msgstr "Es werden nur Type 1 Zeichensätze für XFig unterstützt"
+msgstr "es werden nur Type 1 Zeichensätze für XFig unterstützt"
 
 #: devPS.c:4793
-#, fuzzy
 msgid "failed to initialise default XFig font"
-msgstr "Konnte den Standard-Zeichensatz für XFig nicht initialisieren"
+msgstr "konnte den Standard-Zeichensatz für XFig nicht initialisieren"
 
 #: devPS.c:4830
 #, c-format
@@ -431,19 +414,17 @@ msgid "failed to increase 'maxRaster'"
 msgstr "konnte 'maxRaster' nicht vergrößern"
 
 #: devPS.c:5559
-#, fuzzy
 msgid "unable to allocate raster image"
-msgstr "kann Rasterimage nicht allokieren"
+msgstr "kann Rasterimage nicht allozieren"
 
 #: devPS.c:5760
-#, fuzzy
 msgid "corrupt loaded encodings;  font not added"
 msgstr "Geladene Kodierungen sind beschädigt; Zeichensatz nicht hinzugefügt"
 
 #: devPS.c:5769
-#, fuzzy
 msgid "failed to record device encoding; font not added"
-msgstr "Konnte Gerätekodierung nicht feststellen; Zeichensatz nicht hizugefügt"
+msgstr ""
+"konnte Gerätekodierung nicht aufzeichnen; Zeichensatz nicht hinzugefügt"
 
 #: devPS.c:5880
 msgid "increasing the PDF version to 1.2"
@@ -454,12 +435,10 @@ msgid "failed to load default encoding"
 msgstr "konnte Standardkodierung nicht laden"
 
 #: devPS.c:5976
-#, fuzzy
 msgid "failed to initialise default PDF font"
 msgstr "Konnte den Standard-Zeichensatz für PDF nicht initialisieren"
 
 #: devPS.c:6031
-#, fuzzy
 msgid "failed to initialise additional PDF fonts"
 msgstr "Konnte zusätzliche PDF Zeichensätze nicht initialisieren"
 
@@ -481,7 +460,6 @@ msgid "invalid foreground/background color (pdf)"
 msgstr "ungültige Vorder-/Hintergrundfarbe (pdf)"
 
 #: devPS.c:6255
-#, fuzzy
 msgid "invalid 'alpha' value in PDF"
 msgstr "unzulässiger alpha Wert in PDF"
 
@@ -494,12 +472,10 @@ msgid "unknown 'colormodel', using 'srgb'"
 msgstr "unbekanntes 'colormodel', nutze 'srgb'"
 
 #: devPS.c:6572
-#, fuzzy
 msgid "failed to load sRGB colorspace file"
 msgstr "Laden der sRGB Farbraumdatei fehlgeschlagen"
 
 #: devPS.c:6836
-#, fuzzy
 msgid "corrupt encodings in PDF device"
 msgstr "Beschädigte Kodierungen im PDF Gerät"
 
@@ -526,12 +502,10 @@ msgstr ""
 " bitte das PDF gerät schließen"
 
 #: devPS.c:7657 devPS.c:8019 devPS.c:8066
-#, fuzzy
 msgid "failed to find or load PDF font"
-msgstr "Konnte PDF Zeichensatz nicht finden oder nicht laden"
+msgstr "konnte PDF Zeichensatz nicht finden oder nicht laden"
 
 #: devPS.c:7841 devPS.c:7974
-#, fuzzy
 msgid "failed to find or load PDF CID font"
 msgstr "Konnte PDF CID Zeichensatz nicht finden oder nicht laden"
 
@@ -576,22 +550,19 @@ msgid "invalid 'file' argument"
 msgstr "unzulässiges 'file' Argument"
 
 #: devQuartz.c:1401
-#, fuzzy
 msgid "invalid quartz() device size"
-msgstr "unzulässige Größe für Quartz-Gerät"
+msgstr "unzulässige Größe für quartz() Gerät"
 
 #: devQuartz.c:1429
-#, fuzzy
 msgid "unable to create device description"
-msgstr "Kann keine Gerätebeschreibung erzeugen."
+msgstr "kann keine Gerätebeschreibung erzeugen."
 
 #: devQuartz.c:1479
-#, fuzzy
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
 msgstr ""
-"Kann das Quartz-Gerät als Ziel nicht erzeugen, angegebener Typ evtl. nicht "
-"unterstützt."
+"kann das quartz() Gerät als Ziel nicht erzeugen, angegebener Typ evtl. nicht "
+"unterstützt"
 
 #: devQuartz.c:1606
 msgid "Quartz device is not available on this platform"
@@ -611,12 +582,10 @@ msgid "'%%' is not allowed in file name"
 msgstr "'%%' ist in Dateinamen nicht erlaubt"
 
 #: devWindows.c:604
-#, fuzzy
 msgid "invalid font specification"
-msgstr "Unzulässige Zeichensatzspezifikation"
+msgstr "unzulässige Zeichensatzspezifikation"
 
 #: devWindows.c:643
-#, fuzzy
 msgid "font family not found in Windows font database"
 msgstr "Zeichensatzfamilie in der Windows Zeichensatzdatenbank nicht gefunden"
 
@@ -640,14 +609,13 @@ msgstr "'width=%d, height=%d'sind unwahrscheinliche Pixelzahlen"
 
 #: devWindows.c:1813 devWindows.c:1818 devWindows.c:1847 devWindows.c:1852
 #: devWindows.c:1881 devWindows.c:1886
-#, fuzzy
 msgid "unable to allocate bitmap"
 msgstr "kann Bitmap nicht allozieren"
 
 #: devWindows.c:1824 devWindows.c:1858 devWindows.c:2182
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open file '%s' for writing"
-msgstr "Kann Datei '%s' nicht zum Schreiben öffnen"
+msgstr "kann Datei '%s' nicht zum Schreiben öffnen"
 
 #: devWindows.c:1841
 msgid "filename too long in jpeg() call"
@@ -662,14 +630,13 @@ msgid "filename too long in win.metafile() call"
 msgstr "Dateiname zu lang in win.metafile() Aufruf"
 
 #: devWindows.c:1917
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open metafile '%s' for writing"
-msgstr "Kann Metafile '%s' nicht zum Schreiben öffnen<"
+msgstr "kann Metafile '%s' nicht zum Schreiben öffnen<"
 
 #: devWindows.c:1919
-#, fuzzy
 msgid "unable to open clipboard to write metafile"
-msgstr "Kann die Zwischenablage nicht zum Schreiben eines Metafiles öffnen"
+msgstr "kann die Zwischenablage nicht zum Schreiben eines Metafiles öffnen"
 
 #: devWindows.c:2130
 msgid "Insufficient memory for resize. Killing device"
@@ -680,9 +647,8 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Zu wenig Speicher für Größenänderung. Schalte Alpha-Blending ab.<"
 
 #: devWindows.c:2167
-#, fuzzy
 msgid "a clipboard metafile can store only one figure."
-msgstr "Ein Zwischenablagemetafile kann nur eine Figur speichern."
+msgstr "ein Zwischenablagemetafile kann nur eine Grafik speichern."
 
 #: devWindows.c:2173
 #, c-format
@@ -710,9 +676,8 @@ msgid "invalid device in 'savePlot'"
 msgstr "unzulässiges Gerät in 'savePlot'"
 
 #: devWindows.c:3414
-#, fuzzy
 msgid "invalid filename argument in 'savePlot'"
-msgstr "unzulässiges Dateinamenargument in savePlot"
+msgstr "unzulässiges Dateinamenargument in 'savePlot'"
 
 #: devWindows.c:3419
 msgid "invalid type argument in 'savePlot'"
@@ -741,12 +706,11 @@ msgstr "unzulässige 'with' oder 'height'"
 
 #: devices.c:43
 msgid "argument must have positive length"
-msgstr ""
+msgstr "Argument muss positive Länge haben"
 
 #: devices.c:52
-#, fuzzy
 msgid "invalid argument"
-msgstr "unzulässiges 'file' Argument"
+msgstr "unzulässiges Argument"
 
 #: qdBitmap.c:79
 #, c-format
@@ -754,14 +718,13 @@ msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr "QuartzBitmap_Output - kann Datei '%s' nicht öffnen"
 
 #: qdBitmap.c:94
-#, fuzzy
 msgid "not a supported scheme, no image data written"
-msgstr "Nicht unterstütztes Schema, keine Abbilddatei geschrieben"
+msgstr "nicht unterstütztes Schema, keine Abbilddatei geschrieben"
 
 #: stubs.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "unzulässiges 'file' Argument"
+msgstr "unzulässiges '%s' Argument"
 
 #~ msgid "Invalid line end"
 #~ msgstr "Unzulässiges Zeilenende"

@@ -1,13 +1,13 @@
 # Translation of  src/library/grDevices/po/R-grDevices.pot to German.
-# Copyright (C) 2005-2011 The R Foundation
+# Copyright (C) 2005-2013 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.14.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-01-12 10:57\n"
-"PO-Revision-Date: 2011-10-07 15:46+0200\n"
+"PO-Revision-Date: 2013-03-01 10:55+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -52,35 +52,27 @@ msgstr "'start' und 'end' müssen unterschiedlich und in [0, 1] sein"
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' muss ein Skalar oder 'sRGB' sein"
 
-#, fuzzy
 msgid "Color space converter: %s"
-msgstr "Farbraumkonverter:"
+msgstr "Farbraumkonverter: %s"
 
-#, fuzzy
 msgid "Reference white: %s"
-msgstr "Referenz-Weiß:"
+msgstr "Referenz-Weiß: %s"
 
-#, fuzzy
 msgid "display gamma = %s"
-msgstr "Gamma für Display"
+msgstr "Gammawert für Display = %s"
 
-#, fuzzy
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr "'from' muss ein Farbkonvertierer oder eine Zeichenkette sein"
+msgstr "'from' muss ein \"colorConverter\" Objekt oder eine Zeichenkette sein"
 
-#, fuzzy
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr "'to' muss ein Farbkonvertierer oder eine Zeichenkette sein"
+msgstr "'to' muss ein \"colorConverter\" Objekt oder eine Zeichenkette sein"
 
-#, fuzzy
 msgid "'from.ref.white' disagrees with definition of %s"
-msgstr "'from.ref.white' stimmt nicht Überein mit der Definition von"
+msgstr "'from.ref.white' stimmt nicht überein mit der Definition von %s"
 
-#, fuzzy
 msgid "'to.ref.white' disagrees with definition of %s"
-msgstr "'to.ref.white' stimmt nicht Überein mit der Definition von"
+msgstr "'to.ref.white' stimmt nicht überein mit der Definition von %s"
 
-#, fuzzy
 msgid "color spaces use different reference whites"
 msgstr "Farbräume nutzen unterschiedliches Referenz-Weiß"
 
@@ -154,9 +146,8 @@ msgstr "kann nicht existierendes ' %s' nicht zurücksetzen"
 msgid "invalid options in '%s'"
 msgstr "ungültige Optionen in '%s'"
 
-#, fuzzy
 msgid "NOT changing %s"
-msgstr "NICHT ändernd"
+msgstr "andere NICHT %s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr "Argument 'append' dient der Rückwärtskompatibilität und wird ignoriert"
@@ -221,26 +212,21 @@ msgstr "ungültiges Ausgabeformat"
 msgid "status %d in running command '%s'"
 msgstr "Status %d im laufenden Kommando '%s'"
 
-#, fuzzy
 msgid "range too small for 'min.n'"
-msgstr "Spannweite zu klein für min.n"
+msgstr "Spannweite zu klein für 'min.n'"
 
-#, fuzzy
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 "Eine Rastermatrix muss entweder character, nummerisch oder boole'sch sein"
 
-#, fuzzy
 msgid "a raster array must be numeric"
-msgstr "Ein Raster-Array muss nummerisch sein"
+msgstr "ein Raster-Array muss numerisch sein"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 dimensions"
-msgstr "Ein Raster-Array muss genau 3 Dimensionen haben"
+msgstr "ein Raster-Array muss genau 3 Dimensionen haben"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 or 4 planes"
-msgstr "Ein Rater-Array muss genau 3 oder 4 Ebenen haben"
+msgstr "ein Rater-Array muss genau 3 oder 4 Ebenen haben"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr "'drop' ist implizit immer FALSE in '[.raster'"
@@ -251,20 +237,17 @@ msgstr "ungültiges Rastersubsetting"
 msgid "invalid raster subassignment"
 msgstr "ungültige Rasterteilzuweisung"
 
-#, fuzzy
 msgid "operator not meaningful for raster objects"
 msgstr "Operator hat für Rasterobjekte keine Bedeutung"
 
 msgid "no current device to record from"
 msgstr "kein aktuelles Device, von dem aufgenommen werden kann"
 
-#, fuzzy
 msgid "argument is not of class %s"
-msgstr "Argument ist nicht von Klasse \" recordedplot\""
+msgstr "Argument ist nicht von Klasse %s"
 
-#, fuzzy
 msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "lade Snapshot einer Version vor R-2.0.0"
+msgstr "lade Snapshot einer Version vor R-3.0.0"
 
 msgid "loading snapshot from different R version"
 msgstr "lade Snapshot einer anderen R Version"
@@ -326,13 +309,11 @@ msgstr "unzulässiger 'title'"
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "ungültiger Quartz Zeichensatz: müssen 4 Zeichenketten sein"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr "ungültige Argumente in quartzFonts (muss ein Zeichensatzname sein)"
+msgstr "ungültige Argumente in 'quartzFonts' (muss ein Zeichensatzname sein)"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr "ungültige Argumente in quartzFonts (benötigt benannte Argumente)"
+msgstr "ungültige Argumente in 'quartzFonts' (benötigt benannte Argumente)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr ""
@@ -345,13 +326,11 @@ msgstr "unbekannte Famiile für X11(type = \"XLib\")"
 msgid "invalid X11 font specification:"
 msgstr "ungültige X11 Zeichensatzspezifikation"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
-msgstr "ungültige Argumente in '%s' (muss ein Zeichensatzname sein)"
+msgstr "ungültige Argumente in 'X11Fonts' (muss ein Zeichensatzname sein)"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (need named args)"
-msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt"
+msgstr "unzulässige Argumente in 'X11Fonts' (benannte Argumente benötigt"
 
 msgid "no such device"
 msgstr "kein solches Device"

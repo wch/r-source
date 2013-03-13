@@ -1,125 +1,134 @@
-# # File R_HOME/src/library/tools/po/ko.po
-# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
-# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
-# # Distributed under GPL 2 or later
-# #
+# Korean translation for R tools package
+# src/library/tools/po/ko.po
+# Copyright (C) 1995-2013 The R Core Team
+# This file is distributed under the same license as the R tools package.
+# R Development Translation Team - Korean
+# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
+# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-30 14:07+0000\n"
-"PO-Revision-Date: 2012-03-06 17:56+0200\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
+"PO-Revision-Date: 2013-02-16 10:16-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.1.6\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
-msgstr "'files' 인자는 반드시 문자이어야 합니다 "
+msgstr "인자 'files'는 반드시 문자이어야 합니다"
 
 #: Rmd5.c:50
 #, c-format
 msgid "md5 failed on file '%s'"
-msgstr "파일 '%s' 에서 md5 가 작동하지 않습니다 "
+msgstr "파일 '%s'에서 md5가 작동하지 않습니다"
 
 #: getfmts.c:51
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr ""
+msgstr "오로지 %d 인자들만이 허용됩니다"
 
 #: getfmts.c:56
 msgid "'fmt' is not a character vector"
-msgstr ""
+msgstr "'fmt'는 문자형 벡터가 아닙니다"
 
 #: getfmts.c:59
 msgid "'fmt' must be length 1"
-msgstr ""
+msgstr "'fmt'는 반드시 길이가 1이어야 합니다"
 
 #: getfmts.c:65
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr ""
+msgstr "'fmt' 길이가 최대 포맷길이 %d를 초과합니다"
 
 #: getfmts.c:86
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr ""
+msgstr "알 수 없는 포맷 지정 '%s'입니다"
 
 #: getfmts.c:126
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
-#: gramLatex.y:673 gramRd.y:1297
+#: gramLatex.y:673
+#: gramRd.y:1297
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr ""
+msgstr "라인 %d에 있는 긴 문자열에 대한 버퍼를 할당할 수 없습니다"
 
-#: gramLatex.y:910 gramRd.y:1785 gramRd.y:1791
-#, fuzzy, c-format
+#: gramLatex.y:910
+#: gramRd.y:1785
+#: gramRd.y:1791
+#, c-format
 msgid "invalid '%s' value"
-msgstr "올바르지 않은 인자의 유형 "
+msgstr "유효하지 않은 '%s' 값입니다"
 
-#: gramRd.y:295 gramRd.y:298
+#: gramRd.y:295
+#: gramRd.y:298
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
-msgstr ""
+msgstr "%s:%d:%d에 잘못된 마크업이 있습니다"
 
 #: gramRd.y:534
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr ""
+msgstr "매크로 '%s'는 이전에 정의되었습니다"
 
 #: gramRd.y:543
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
-msgstr ""
+msgstr "사용자 정의된 매크로에서는 최대 4개의 인자들이 허용됩니다"
 
 #: gramRd.y:577
 #, c-format
 msgid "No macro definition for '%s'."
-msgstr ""
+msgstr "'%s'에 주어진 매크로 정의가 없습니다."
 
-#: gramRd.y:729 gramRd.y:733
+#: gramRd.y:729
+#: gramRd.y:733
 #, c-format
 msgid "newline within quoted string at %s:%d"
-msgstr ""
+msgstr "%s:%d에 있는 따옴표 처리된 문자열 내에 새로운 행이 있습니다"
 
 #: gramRd.y:752
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
-msgstr ""
+msgstr "라인 %d에 있는 긴 매크로에 대해서 버퍼를 할당할 수 없습니다"
 
 #: gramRd.y:782
 msgid "macros nested too deeply: infinite recursion?"
-msgstr ""
+msgstr "매크로들이 너무 깊게 중첩되어 있습니다:  무한 반복을 하나요?"
 
 #: gramRd.y:1165
 #, c-format
 msgid "Unable to find macro %s"
-msgstr ""
+msgstr "매크로 %s를 찾을 수 없습니다"
 
 #: gramRd.y:1357
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr ""
+msgstr "입력을 끝을 알 수 없습니다 (in %c quoted string opened at %s:%d:%d)"
 
 #: gramRd.y:1796
 msgid "cannot open the connection"
-msgstr ""
+msgstr "커넥션을 열 수 없습니다"
 
 #: gramRd.y:1803
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "이 커넥션으로부터 읽을 수 없습니다"
 
 #: gramRd.y:1811
 msgid "invalid Rd file"
-msgstr ""
+msgstr "유효한 Rd 파일이 아닙니다"
 
 #: gramRd.y:1830
 msgid "'deparseRd' only supports deparsing character elements"
@@ -127,38 +136,42 @@ msgstr ""
 
 #: gramRd.y:1833
 msgid "bad state"
-msgstr ""
+msgstr "잘못된 상태입니다"
 
 #: gramRd.y:1846
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
-msgstr ""
+msgstr "'deparseRd'에 잘못된 텍스트 모드 %d가 있습니다"
 
 #: http.c:32
 msgid "invalid bind address specification"
-msgstr ""
+msgstr "유효하지 않은 바인드 주소지정이 있습니다"
 
-#: install.c:96 install.c:117 install.c:119
-#, fuzzy, c-format
+#: install.c:96
+#: install.c:117
+#: install.c:119
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "올바르지 않은 인자의 유형 "
+msgstr "유효하지 않은 '%s' 인자입니다"
 
 #: install.c:147
 msgid "write error during file append"
-msgstr ""
+msgstr "파일병합을 하는 동안 쓰기 에러가 발생했습니다"
 
 #: signals.c:43
 msgid "pskill() is not supported on this platform"
-msgstr "이 플랫폼에서는 pskill() 이 지원되지 않습니다 "
+msgstr "이 플랫폼에서 pskill()은 지원되지 않습니다"
 
 #: signals.c:140
 msgid "psnice() is not supported on this platform"
-msgstr "이 플랫폼에서는 psnice() 가 지원되지 않습니다 "
+msgstr "이 플랫폼에서 psnice()은 지원되지 않습니다"
 
 #: text.c:65
 msgid "invalid argument type"
-msgstr "올바르지 않은 인자의 유형 "
+msgstr "유효하지 않은 인자 타입입니다"
 
-#: text.c:222 text.c:244
+#: text.c:222
+#: text.c:244
 msgid "out of memory"
-msgstr "메모리가 부족합니다 "
+msgstr "메모리가 부족합니다"
+

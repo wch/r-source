@@ -1,621 +1,761 @@
-# # File R_HOME/po/ko.po
-# # Managed by Chel Hee Lee (Korean, R Development Translation Team)
-# # Email <gnustats@gmail.com> or <chl948@mail.usask.ca>
-# # Copyright 1995-2012 R Core Team & R Develoment Translation Team
-# # Distributed under GPL 2 or later
-# #
+# Korean translation for R graphics package
+# src/library/graphics/po/ko.po
+# Copyright (C) 1995-2013 The R Core Team
+# This file is distributed under the same license as the R graphics package.
+# R Development Translation Team - Korean
+# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
+# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-16 08:17+0000\n"
-"PO-Revision-Date: 2012-03-07 02:34+0200\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: The Korean R Translation Council <gnustats@gmail.com>\n"
+"PO-Revision-Date: 2013-02-20 17:48-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 2.1.6\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+# CHL20130308
 #: base.c:38
 msgid "no base graphics system is registered"
-msgstr ""
+msgstr "등록된 base 그래픽 시스템이 없습니다"
 
-#: base.c:328 base.c:335 base.c:343
-#, fuzzy
+# CHL20130308
+#: base.c:328
+#: base.c:335
+#: base.c:343
 msgid "the base graphics system is not registered"
-msgstr "등록된 graphics 시스템이 너무 많습니다"
+msgstr "base 그래픽 시스템이 등록되지 않았습니다"
 
+# CHL20130308
 #: graphics.c:289
 #, c-format
 msgid "bad units specified in '%s'"
-msgstr "'%s'에 잘못된 unit가 지정되었습니다"
+msgstr "'%s'에 지정된 기본단위가 올바르지 않습니다"
 
-#: graphics.c:1778 graphics.c:1800
+# CHL20130308
+#: graphics.c:1778
+#: graphics.c:1800
 msgid "attempt to plot on null device"
-msgstr "존재하지 않는 장치에 그리기를 시도하였습니다"
+msgstr "null device에 플랏을 시도합니다"
 
+# CHL20130308
 #: graphics.c:1830
-#, fuzzy
 msgid "outer margins too large (figure region too small)"
-msgstr "외부 여백이 너무 큽니다 (fig.region가 너무 작습니다)"
+msgstr "외부 여백이 너무 커서 figure region이 너무 작습니다"
 
+# CHL20130308
 #: graphics.c:1832
 msgid "figure region too large"
-msgstr "그리기 영역이 너무 큽니다"
+msgstr "figure region이 너무 큽니다"
 
+# CHL20130308
 #: graphics.c:1834
 msgid "figure margins too large"
-msgstr "그림의 여백이 너무 큽니다"
+msgstr "figure 여백이 너무 큽니다"
 
+# CHL20130308
 #: graphics.c:1836
 msgid "plot region too large"
-msgstr "plot 영역이 너무 큽니다"
+msgstr "플랏 영역이 너무 큽니다"
 
+# CHL20130308
 #: graphics.c:1883
-#, fuzzy, c-format
+#, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
-msgstr "값의 상대 범위 = %4.0f * EPS는 작습니다 (축 %d)"
+msgstr ""
 
+# CHL20130308
 #: graphics.c:1935
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
-msgstr "축의 한계가 유한하지 않습니다 [GScale (%g,%g, %d,); log = %d]"
+msgstr "무한한 한계를 가지는 축입니다 [GScale(%g,%g,%d, .); log=%d]"
 
+# CHL20130308
 #: graphics.c:1965
 #, c-format
 msgid "axis style \"%c\" unimplemented"
-msgstr "축 스타일 \"%c\"는 아직 구현되지 않았습니다"
+msgstr "축의 스타일 \"%c\"은 구현되지 않았습니다"
 
+# CHL20130308
 #: graphics.c:2203
-#, fuzzy
 msgid "no graphics device is active"
-msgstr "현재 유효한 그래픽 장치가 없습니다"
+msgstr "활성화 된 그래픽 장치가 없습니다"
 
+# CHL20130308
 #: graphics.c:2398
 msgid "plot.new has not been called yet"
-msgstr "아직 plot.new가 호출되지 않았습니다"
+msgstr "plot.new는 아직까지 호출되지 않았습니다"
 
+# CHL20130308
 #: graphics.c:2400
 msgid "invalid graphics state"
-msgstr "그래픽 상태가 올바르지 않습니다"
+msgstr "유효한 그래픽 상태가 아닙니다"
 
+# CHL20130308
 #: graphics.c:2561
 msgid "No graphics device is active"
-msgstr "현재 유효한 그래픽 장치가 없습니다"
+msgstr "활성화된 그래픽 장치가 없습니다"
 
+# CHL20130308
 #: graphics.c:3020
 msgid "zero-length arrow is of indeterminate angle and so skipped"
-msgstr "길이가 0 인 arrow는 각도를 정할 수 없으므로, 지나 갑니다"
+msgstr "길이가 0인 arrow는 angle을 정할 수 없기 때문에 넘어갑니다"
 
+# CHL20130308
 #: graphics.c:3101
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
-msgstr "par(\"bty\") = '%c'는 잘못되었습니다：box()를 그릴 수 없습니다"
+msgstr "유효한 par(\"bty\") = '%c'가 아니므로 그려질 box()가 없습니다"
 
+# CHL20130308
 #: graphics.c:3118
 msgid "invalid argument to GBox"
-msgstr "GBox의 인수가 잘못되었습니다"
+msgstr "유효하지 않은 인자가 GBox에 전달되었습니다"
 
+# CHL20130308
 #: graphics.c:3363
-#, fuzzy
 msgid "metric information not available for this device"
-msgstr "이 장치에 대한 메트릭 정보를 사용할 수 없습니다"
+msgstr "이 장치에 대한 metric information이 사용가능하지 않습니다"
 
+# CHL20130308
 #: par-common.c:138
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "그래픽 매개 변수 'family'의 최대 길이는 200 바이트입니다"
+msgstr "그래픽 파라미터 'family'는 최대 200바이트의 길이를 가질 수 있습니다"
 
+# CHL20130308
 #: par.c:158
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
-msgstr "그래픽 매개 변수 \"%s\"에 잘못된 값이 지정되었습니다"
+msgstr "그래픽 파라미터 \"%s\"에 지정된 값이 유효하지 않습니다"
 
+# CHL20130308
 #: par.c:165
 #, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
-msgstr "그래픽 매개 변수 \"%s\"의 길이가 잘못되었습니다"
+msgstr "그래픽 파라미터 \"%s\"는 잘못된 길이를 가지고 있습니다"
 
-#: par.c:260 par.c:670
+# CHL20130308
+#: par.c:260
+#: par.c:670
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
-msgstr "그래픽 매개 변수 \"%s\"를 설정할 수 없습니다"
+msgstr "그래픽 파라미터 \"%s\"를 설정할 수 없습니다"
 
+# CHL20130308
 #: par.c:432
 msgid "parameter \"mfg\" has the wrong length"
-msgstr "\"mfg\" 매개 변수의 길이가 잘못되었습니다"
+msgstr "파라미터 \"mfg\"는 잘못된 길이를 가지고 있습니다"
 
+# CHL20130308
 #: par.c:440
 msgid "parameter \"i\" in \"mfg\" is out of range"
-msgstr "\"mfg\"의 파라미터 \"i\"가 범위밖입니다"
+msgstr "\"mfg\"내의 파라미터 \"i\"가 범위밖에 있습니다"
 
+# CHL20130308
 #: par.c:442
 msgid "parameter \"j\" in \"mfg\" is out of range"
-msgstr "\"mfg\"의 파라미터  \"j\"가 범위밖입니다"
+msgstr "\"mfg\"내의 파라미터 \"j\"가 범위밖에 있습니다"
 
+# CHL20130308
 #: par.c:447
-#, fuzzy
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
-msgstr "\"mfg\" 안의 nr의 값은 잘못되어 무시됩니다"
+msgstr "\"mfg\"내 'nr'의 값이 잘못되었으므로 무시될 것입니다"
 
+# CHL20130308
 #: par.c:449
-#, fuzzy
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
-msgstr "\"mfg\"안의  nc의 값은 잘못되어 무시됩니다"
+msgstr "\"mfg\"내 'nc'의 값이 잘못되었으므로 무시될 것입니다"
 
+# CHL20130308
 #: par.c:475
 msgid "calling par(new=TRUE) with no plot"
-msgstr "calling par(new=TRUE) with no plot"
+msgstr "플랏없이 par(new=TRUE)를 호출합니다"
 
-#: par.c:662 par.c:1046
+# CHL20130308
+#: par.c:662
+#: par.c:1046
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
-msgstr "그래픽 매개 변수 \"%s\"는 더 이상 지원되지 않습니다"
+msgstr "그래픽 파라미터 \"%s\"는 필요하지 않습니다"
 
-#: par.c:666 par.c:1050
+# CHL20130308
+#: par.c:666
+#: par.c:1050
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
-msgstr "\"%s\"는 그래픽 매개 변수가 아닙니다\""
+msgstr "\"%s\"는 그래픽 매개변수가 아닙니다"
 
+# CHL20130308
 #: par.c:1103
 msgid "invalid argument passed to par()"
-msgstr "par()에 잘못된 매개 변수가 전달되었습니다"
+msgstr "par()에 전달된 인자는 유효하지 않습니다"
 
+# CHL20130308
 #: par.c:1147
 #, c-format
 msgid "too many rows in layout, limit %d"
-msgstr "layout의 행 개수가 너무 많습니다 (한계값은 %d)"
+msgstr "레이아웃내에 너무 많은 행이 있습니다 (최대 %d입니다)"
 
+# CHL20130308
 #: par.c:1153
 #, c-format
 msgid "too many columns in layout, limit %d"
-msgstr "layout의 열 개수가 너무 많습니다 (한계값은 %d)"
+msgstr "레이아웃내에 너무 많은 열들이 있습니다 (최대 %d입니다)"
 
+# CHL20130308
 #: par.c:1155
 #, c-format
 msgid "too many cells in layout, limit %d"
-msgstr "layout의 셀 개수가 너무 많습니다 (한계값은 %d)"
+msgstr "레이아웃내에 너무 많은 셀들이 있습니다 (최대 %d개입니다)"
 
+# CHL20130308
 #: plot.c:75
-#, fuzzy
 msgid "invalid color specification"
-msgstr "글꼴 지정이 잘못되었습니다"
+msgstr "색상지정이 유효하지 않습니다"
 
+# CHL20130308
 #: plot.c:141
 msgid "only NA allowed in logical plotting symbol"
-msgstr "논리적인 플롯 심벌로서는 NA만이 허용됩니다"
+msgstr ""
 
+# CHL20130308
 #: plot.c:143
 msgid "invalid plotting symbol"
-msgstr "플롯 기호가 잘못되었습니다"
+msgstr "유효한 플랏 기호가 아닙니다"
 
+# CHL20130308
 #: plot.c:232
 msgid "invalid font specification"
-msgstr "글꼴 지정이 잘못되었습니다"
+msgstr "유효한 폰트 지정이 아닙니다"
 
-#: plot.c:291 plot.c:305 plot.c:496 plot.c:501 plot.c:2124 plot.c:2131
-#: plot.c:3148 plot.c:3150 plot.c:3152 plot.c:3304 plot3d.c:1155 plot3d.c:1159
-#: plot3d.c:1161 plot3d.c:1895
+# CHL20130308
+#: plot.c:291
+#: plot.c:305
+#: plot.c:496
+#: plot.c:501
+#: plot.c:2124
+#: plot.c:2131
+#: plot.c:3148
+#: plot.c:3150
+#: plot.c:3152
+#: plot.c:3304
+#: plot3d.c:1155
+#: plot3d.c:1159
+#: plot3d.c:1161
+#: plot3d.c:1895
 #, c-format
 msgid "invalid '%s' value"
-msgstr "'%s' 의 값이 잘못되었습니다 "
+msgstr "유효한 '%s'의 값이 아닙니다"
 
+# CHL20130308
 #: plot.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'vfont' value [typeface %d]"
-msgstr "'vfont'의 값이 잘못되었습니다 [typeface]"
+msgstr "유효한 'vfont'의 값이 아닙니다 [typeface %d]"
 
+# CHL20130308
 #: plot.c:332
 #, c-format
 msgid "invalid 'vfont' value [typeface = %d, fontindex = %d]"
-msgstr "'vfont'의 값이 잘못되었습니다 [typeface = %d, fontindex = %d]"
+msgstr "유효한 'vfont'의 값이 아닙니다 [typeface = %d, fontindex = %d]"
 
+# CHL20130308
 #: plot.c:406
 msgid "invalid graphics parameter"
-msgstr "그래픽 매개 변수가 잘못되었습니다"
+msgstr "유효한 그래픽 파라미터가 아닙니다"
 
+# CHL20130308
 #: plot.c:492
 msgid "at least 3 arguments required"
-msgstr "적어도 3 개의 인수가 필요합니다"
+msgstr "최소한 3개의 인자가 요구되어 집니다"
 
+# CHL20130308
 #: plot.c:507
 msgid "\"log=\" specification must be character"
-msgstr "\"log = \" 의 지정은 문자이어야만 합니다"
+msgstr "\"log=\" 지정은 반드시 문자이어야 합니다"
 
+# CHL20130308
 #: plot.c:518
 #, c-format
 msgid "invalid \"log=%s\" specification"
-msgstr "\"log=%s \"의 지정이 잘못되었습니다"
+msgstr "유효한 \"log=%s\" 지정이 아닙니다"
 
+# CHL20130308
 #: plot.c:533
 msgid "NAs not allowed in 'xlim'"
-msgstr "'xlim'에 NA는 허용되지 않습니다"
+msgstr "NA는 'xlim'에 사용할 수 없습니다"
 
+# CHL20130308
 #: plot.c:539
 msgid "need finite 'xlim' values"
-msgstr "유한 'xlim'의 값이 필요합니다"
+msgstr "유한한 값들만이 'xlim'에 사용될 수 있습니다"
 
+# CHL20130308
 #: plot.c:545
 msgid "NAs not allowed in 'ylim'"
-msgstr "'ylim'에 NA는 허용되지 않습니다"
+msgstr "NA는 'ylim'에 사용할 수 없습니다"
 
+# CHL20130308
 #: plot.c:551
 msgid "need finite 'ylim' values"
-msgstr "유한한 'ylim'의 값이 필요합니다"
+msgstr "유한한 값들만이 'ylim'에 사용될 수 있습니다"
 
+# CHL20130308
 #: plot.c:557
 msgid "Logarithmic axis must have positive limits"
-msgstr "로그축은 양의 한계치가 있어야 합니다"
+msgstr "로그값을 가지는 축은 반드시 양의 한계값을 가져야 합니다"
 
+# CHL20130308
 #: plot.c:679
 msgid "invalid type for axis labels"
-msgstr "축 레이블의 형식이 잘못되었습니다"
+msgstr "축 레이블에 유효한 타입이 아닙니다"
 
-#: plot.c:780 plot.c:1313 plot.c:1634 plot.c:1699 plot.c:1774 plot.c:1840
-#: plot.c:1913 plot.c:2008 plot.c:2084 plot.c:2362 plot.c:2536 plot.c:2752
-#: plot.c:3286 plot.c:3413 plot.c:3489 plot.c:3655 plot.c:3935 plot3d.c:1864
+# CHL20130308
+#: plot.c:780
+#: plot.c:1313
+#: plot.c:1634
+#: plot.c:1699
+#: plot.c:1774
+#: plot.c:1840
+#: plot.c:1913
+#: plot.c:2008
+#: plot.c:2084
+#: plot.c:2362
+#: plot.c:2536
+#: plot.c:2752
+#: plot.c:3286
+#: plot.c:3413
+#: plot.c:3489
+#: plot.c:3655
+#: plot.c:3935
+#: plot3d.c:1864
 msgid "too few arguments"
-msgstr "인수가 너무 적습니다"
+msgstr "인자의 수가 너무 적습니다"
 
+# CHL20130308
 #: plot.c:791
 #, c-format
 msgid "invalid axis number %d"
-msgstr "축의 번호 %d이 잘못되었습니다"
+msgstr "유효하지 않은 축 번호 %d입니다"
 
+# CHL20130308
 #: plot.c:881
 msgid "'hadj' must be of length one"
-msgstr "'hadj'는 1의 길이어야 합니다"
+msgstr "'hadj'의 길이는 반드시 1이어야 합니다"
 
-#: plot.c:888 plot.c:2096 plot.c:2373 plot.c:2379 plot.c:2386 plot.c:2394
-#: plot.c:2401 plot.c:2408 plot.c:2415 plot.c:2422 plot.c:2430 plot.c:2437
+# CHL20130308
+#: plot.c:888
+#: plot.c:2096
+#: plot.c:2373
+#: plot.c:2379
+#: plot.c:2386
+#: plot.c:2394
+#: plot.c:2401
+#: plot.c:2408
+#: plot.c:2415
+#: plot.c:2422
+#: plot.c:2430
+#: plot.c:2437
 #: plot.c:3155
-#, fuzzy, c-format
+#, c-format
 msgid "zero-length '%s' specified"
-msgstr "길이가 0 인 'side'가 지정되어 있습니다"
+msgstr "길이가 0인 '%s'가 지정되었습니다"
 
+# CHL20130308
 #: plot.c:957
 msgid "'labels' is supplied and not 'at'"
-msgstr "'label'이 주어져 있지만 'at'이 아닙니다"
+msgstr "'labels'만 주어지고 'at'은 주어지지 않았습니다"
 
+# CHL20130308
 #: plot.c:961
 #, c-format
 msgid "'at' and 'labels' lengths differ, %d != %d"
-msgstr "'at'과 'label'의 길이가 다릅니다. %d! = %d"
+msgstr "'at'의 길이는 %d인데, 'labels'의 길이는 %d입니다"
 
+# CHL20130308
 #: plot.c:978
 msgid "no locations are finite"
-msgstr "어느 위치도 유한하지는 않습니다"
+msgstr ""
 
+# CHL20130308
 #: plot.c:1329
 msgid "invalid plotting structure"
-msgstr "잘못된 플롯 구조입니다"
+msgstr "유효하지 않은 플롯팅 구조입니다"
 
+# CHL20130308
 #: plot.c:1331
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
-msgstr "%s()에 두고 'x'와 'y'의 길이가 다릅니다"
+msgstr "%s()에 있는 'x'와 'y'의 길이가 다릅니다"
 
+# CHL20130308
 #: plot.c:1342
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
-msgstr "plot 타입 '%s'는 최초의 문자가 잘립니다"
+msgstr ""
 
-#: plot.c:1346 plot.c:3013
+# CHL20130308
+#: plot.c:1346
+#: plot.c:3013
 msgid "invalid plot type"
-msgstr "플롯 유형이 잘못되었습니다"
+msgstr "유효한 플랏 타입이 아닙니다"
 
+# CHL20130308
 #: plot.c:1546
 #, c-format
 msgid "invalid plot type '%c'"
-msgstr "플롯 형식 '%c'이 잘못되었습니다"
+msgstr "'%c'는 유효한 플랏 타입이 아닙니다"
 
+# CHL20130308
 #: plot.c:1589
 msgid "invalid first argument"
-msgstr "첫번째 인수가 잘못되었습니다"
+msgstr "첫번째 인자가 잘못되었습니다"
 
+# CHL20130308
 #: plot.c:1596
 msgid "invalid second argument"
-msgstr "두번째 인수가 잘못되었습니다"
+msgstr "두번째 인자가 잘못되었습니다"
 
+# CHL20130308
 #: plot.c:1604
 msgid "invalid third argument"
-msgstr "세번째 인수가 잘못되었습니다"
+msgstr "세번째 인자가 잘못되었습니다"
 
+# CHL20130308
 #: plot.c:1612
 msgid "invalid fourth argument"
-msgstr "네번째 인수가 잘못되었습니다"
+msgstr "네번째 인자가 잘못되었습니다"
 
+# CHL20130308
 #: plot.c:1620
 msgid "cannot mix zero-length and non-zero-length coordinates"
-msgstr "길이 0이 아닌 자표와 0의 좌표는 함께 사용될 수 없습니다"
+msgstr "길이가 0인 좌표와 길이가 0이 아닌 좌표는 함께 사용될 수 없습니다"
 
+# CHL20130308
 #: plot.c:1926
 msgid "invalid arrow head length"
-msgstr "화살표 머리 부분의 길이가 잘못되었습니다"
+msgstr "화살표 머리부분의 길이가 유효하지 않습니다"
 
+# CHL20130308
 #: plot.c:1931
 msgid "invalid arrow head angle"
-msgstr "화살표 머리 부분의 각도가 잘못되었습니다"
+msgstr "화살표 머리부분의 각도가 유효하지 않습니다"
 
+# CHL20130308
 #: plot.c:1936
 msgid "invalid arrow head specification"
-msgstr "화살표 머리 부분의 지정이 잘못되었습니다"
+msgstr "화살표 머리부분의 지정이 유효하지 않습니다"
 
+# CHL20130308
 #: plot.c:2170
 msgid "no coordinates were supplied"
 msgstr "좌표가 제공되지 않았습니다"
 
+# CHL20130308
 #: plot.c:2793
 msgid "invalid a=, b= specification"
-msgstr "a =, b =지정이 잘못되었습니다"
+msgstr "유효하지 않은 a=, b= 지정입니다"
 
+# CHL20130308
 #: plot.c:2802
 msgid "'a' and 'b' must be finite"
-msgstr "'a'와 'b'는 유한해야합니다"
+msgstr "'a'와 'b'는 반드시 유한해야 합니다"
 
-#: plot.c:2937 plot.c:4055 plot.c:4059 plot.c:4062 plot.c:4082 plot.c:4086
-#: plot.c:4089 plot3d.c:1077 plot3d.c:1081 plot3d.c:1086 plot3d.c:1090
-#: plot3d.c:1094 plot3d.c:1098 stem.c:159 stem.c:160 stem.c:162 stem.c:163
-#: stem.c:209 stem.c:210
+# CHL20130308
+#: plot.c:2937
+#: plot.c:4055
+#: plot.c:4059
+#: plot.c:4062
+#: plot.c:4082
+#: plot.c:4086
+#: plot.c:4089
+#: plot3d.c:1077
+#: plot3d.c:1081
+#: plot3d.c:1086
+#: plot3d.c:1090
+#: plot3d.c:1094
+#: plot3d.c:1098
+#: stem.c:159
+#: stem.c:160
+#: stem.c:162
+#: stem.c:163
+#: stem.c:209
+#: stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
-msgstr "'%s' 인수가 잘못되었습니다 "
+msgstr "유효하지 않은 '%s' 인자입니다"
 
-#: plot.c:3008 plot.c:3144
-#, fuzzy, c-format
+# CHL20130308
+#: plot.c:3008
+#: plot.c:3144
+#, c-format
 msgid "invalid number of points in %s"
-msgstr "locator()함수로 점의 개수가 잘못되었습니다"
+msgstr "%s에 있는 점들의 개수가 유효하지 않습니다"
 
+# CHL20130308
 #: plot.c:3146
 msgid "incorrect argument type"
-msgstr "잘못된 인수의 형태입니다"
+msgstr "올바르지 않은 인자 유형입니다"
 
+# CHL20130308
 #: plot.c:3158
 msgid "different argument lengths"
-msgstr "인수의 길이가 다릅니다"
+msgstr "인자의 길이들이 다릅니다"
 
+# CHL20130308
 #: plot.c:3160
 msgid "more 'labels' than points"
-msgstr "점의 개수보다 'labels'의 수가 많습니다"
+msgstr "점의 개수보다 'labels'의 수가 더 많습니다"
 
+# CHL20130308
 #: plot.c:3209
 #, c-format
 msgid "warning: no point within %.2f inches\n"
-msgstr "경고 : %.2f 인치 내에 점이 없습니다 \n"
+msgstr "경고: %.2f 인치이내에 포인트가 하나도 없습니다\n"
 
+# CHL20130308
 #: plot.c:3215
 msgid "warning: nearest point already identified\n"
-msgstr "경고 : 근방점이 이미 분류(identify)되어 있습니다 \n"
+msgstr "경고: 가장 가까운 포인트는 이미 확인되었습니다\n"
 
+# CHL20130308
 #: plot.c:3297
 msgid "invalid units"
-msgstr "단위가 잘못되었습니다"
+msgstr ""
 
-#: plot.c:3473 plot.c:3580
+# CHL20130308
+#: plot.c:3473
+#: plot.c:3580
 msgid "invalid dendrogram input"
-msgstr "dendrogram의 입력이 잘못되었습니다"
+msgstr "유효하지 않은 덴드로이드그램 입력입니다"
 
+# CHL20130308
 #: plot.c:3637
 msgid "invalid symbol parameter vector"
-msgstr "invalid symbol parameter vector"
+msgstr "유효하지 않은 심볼 파라마터 벡터입니다"
 
+# CHL20130308
 #: plot.c:3660
 msgid "invalid symbol coordinates"
-msgstr "심벌의 좌표가 부적절합니다"
+msgstr "심볼의 좌표가 유효하지 않습니다"
 
+# CHL20130308
 #: plot.c:3668
 msgid "x/y/parameter length mismatch"
-msgstr "x/y 또는 파라미터의 길이가 부적절합니다"
+msgstr "x/y/파라미터의 길이가 일치하지 않습니다"
 
+# CHL20130308
 #: plot.c:3687
 msgid "invalid circles data"
-msgstr "invalid circles data"
+msgstr ""
 
-#: plot.c:3689 plot.c:3710 plot.c:3735 plot.c:3765
+# CHL20130308
+#: plot.c:3689
+#: plot.c:3710
+#: plot.c:3735
+#: plot.c:3765
 msgid "invalid symbol parameter"
-msgstr "invalid symbol parameter"
+msgstr "유효하지 않은 심볼 파라미터입니다"
 
+# CHL20130308
 #: plot.c:3708
 msgid "invalid squares data"
-msgstr "invalid squares data"
+msgstr ""
 
+# CHL20130308
 #: plot.c:3733
 msgid "invalid rectangles data (need 2 columns)"
-msgstr "invalid rectangles data (need 2 columns)"
+msgstr "사각형을 그리는데 유효한 데이터가 아닙니다 (2개의 열들이 필요합니다)"
 
+# CHL20130308
 #: plot.c:3763
 msgid "invalid stars data"
-msgstr "invalid stars data"
+msgstr ""
 
+# CHL20130308
 #: plot.c:3805
 msgid "invalid thermometers data (need 3 or 4 columns)"
-msgstr "thermometers 데이터가 잘못되었습니다 (3 또는 4열이 필요합니다)"
+msgstr ""
 
+# CHL20130308
 #: plot.c:3808
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'thermometers[, %s]'"
-msgstr "thermometers[, %s]가 잘못되었습니다"
+msgstr ""
 
+# CHL20130308
 #: plot.c:3811
-#, fuzzy, c-format
+#, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
-msgstr "thermometers[, %s]가 [0,1] 범위외 -- 이상하게 보일지도 모릅니다"
+msgstr ""
 
+# CHL20130308
 #: plot.c:3814
-#, fuzzy
 msgid "invalid 'thermometers[, 1:2]'"
-msgstr "thermometers[,1:2]가 부적절합니다"
+msgstr ""
 
+# CHL20130308
 #: plot.c:3853
-#, fuzzy
 msgid "invalid 'boxplots' data (need 5 columns)"
-msgstr "boxplots의 데이터가 부적절합니다(5열이 필요합니다)"
+msgstr "'boxplots'에 유효한 데이터가 아닙니다 (5개의 열들이 필요합니다)"
 
+# CHL20130308
 #: plot.c:3862
-#, fuzzy
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
-msgstr "boxplots[, 5]가 [0,1]의 범위외에 있는것이 이상합니다"
+msgstr ""
 
+# CHL20130308
 #: plot.c:3864
-#, fuzzy
 msgid "invalid 'boxplots[, 1:4]'"
-msgstr "boxplots[, 1:4]가 부적절합니다"
+msgstr "유효하지 않은 'boxplots[, 1:4]'입니다"
 
+# CHL20130308
 #: plot.c:3910
 msgid "invalid symbol type"
-msgstr "심벌의 유형이 부적절합니다"
+msgstr "유효하지 않은 심볼 유형입니다"
 
-#: plot.c:3948 plot.c:3950 plot.c:3955 plot.c:3957
+# CHL20130308
+#: plot.c:3948
+#: plot.c:3950
+#: plot.c:3955
+#: plot.c:3957
 #, c-format
 msgid "incorrect length for '%s' argument"
-msgstr "'%s'인수의 길이가 잘못되었습니다"
+msgstr "'%s' 인자의 길이가 잘못되었습니다"
 
-#: plot3d.c:181 plot3d.c:1921
+# CHL20130308
+#: plot3d.c:181
+#: plot3d.c:1921
 msgid "insufficient 'x' or 'y' values"
-msgstr "'x' 또는 'y'의 값이 충분하지 않습니다"
+msgstr "충분하지 않은 'x' 또는 'y'의 값입니다"
 
-#: plot3d.c:185 plot3d.c:1924
+# CHL20130308
+#: plot3d.c:185
+#: plot3d.c:1924
 msgid "dimension mismatch"
 msgstr "차원이 일치하지 않습니다"
 
-#: plot3d.c:193 plot3d.c:1927
+# CHL20130308
+#: plot3d.c:193
+#: plot3d.c:1927
 msgid "no contour values"
-msgstr "등고선값이 없습니다"
+msgstr ""
 
+# CHL20130308
 #: plot3d.c:255
 msgid "invalid x / y values or limits"
-msgstr "x / y의 값 또는 한계치가 잘못되었습니다"
+msgstr ""
 
+# CHL20130308
 #: plot3d.c:257
 msgid "invalid contour levels: must be strictly increasing"
-msgstr "등고선 레벨이 잘못되었습니다 : 단조 증가해야 합니다"
+msgstr "유효하지 않은 contour 레벨입니다. 이 값은 반드시 증가해야만 합니다"
 
-#: plot3d.c:1041 plot3d.c:1054
+# CHL20130308
+#: plot3d.c:1041
+#: plot3d.c:1054
 msgid "Axis orientation not calculated"
-msgstr "축 방향은 계산되지 않았습니다"
+msgstr ""
 
+# CHL20130308
 #: plot3d.c:1074
 msgid "too few parameters"
-msgstr "매개변수가 너무 적습니다"
+msgstr "파라미터들이 너무 적습니다"
 
+# CHL20130308
 #: plot3d.c:1104
 msgid "invalid 'x' limits"
-msgstr "'x'의 한계치가 잘못되었습니다"
+msgstr "유효하지 않은 'x' limits입니다"
 
+# CHL20130308
 #: plot3d.c:1106
 msgid "invalid 'y' limits"
-msgstr "'y'의 한계치가 잘못되었습니다"
+msgstr "유효하지 않은 'y' limits입니다"
 
+# CHL20130308
 #: plot3d.c:1108
 msgid "invalid 'z' limits"
-msgstr "'z'의 한계치가 잘못되었습니다"
+msgstr "유효하지 않은 'z' limits입니다"
 
+# CHL20130308
 #: plot3d.c:1129
 msgid "'xlab' must be a character vector of length 1"
-msgstr "'xlab'은 길이1의 문자 벡터여야 합니다"
+msgstr "'xlab'은 반드시 길이가 1인 문자형 벡터이어야 합니다"
 
+# CHL20130308
 #: plot3d.c:1131
 msgid "'ylab' must be a character vector of length 1"
-msgstr "'ylab'은 길이1의 문자 벡터여야 합니다"
+msgstr "'ylab'은 반드시 길이가 1인 문자형 벡터이어야 합니다"
 
+# CHL20130308
 #: plot3d.c:1133
 msgid "'zlab' must be a character vector of length 1"
-msgstr "'zlab'은 길이1의 문자 벡터여야 합니다"
+msgstr "'zlab'은 반드시 길이가 1인 문자형 벡터이어야 합니다"
 
+# CHL20130308
 #: plot3d.c:1153
 msgid "invalid viewing parameters"
-msgstr "잘못된 viewing 파라미터입니다"
+msgstr "유효하지 않은 viewing 파라미터입니다"
 
-#: plot3d.c:1171 plot3d.c:1175
+# CHL20130308
+#: plot3d.c:1171
+#: plot3d.c:1175
 #, c-format
 msgid "invalid '%s' specification"
-msgstr "'%s' 의 지정이 잘못되었습니다"
+msgstr "유효한 '%s' 지정이 아닙니다"
 
+# CHL20130308
 #: plot3d.c:1521
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
-msgstr "contour(): circular/long seglist -- set %s > %d?"
+msgstr ""
 
+# CHL20130308
 #: plot3d.c:1931
 msgid "missing 'x' values"
-msgstr "'x' 값이 빠졌습니다"
+msgstr "'x' 값들이 없습니다"
 
+# CHL20130308
 #: plot3d.c:1933
 msgid "increasing 'x' values expected"
-msgstr "'x'값이 증가되어야 합니다"
+msgstr "'x'의 값들은 증가해야만 합니다"
 
+# CHL20130308
 #: plot3d.c:1938
 msgid "missing 'y' values"
-msgstr "'y' 값이 빠졌습니다"
+msgstr "'y' 값들이 없습니다"
 
+# CHL20130308
 #: plot3d.c:1940
 msgid "increasing 'y' values expected"
-msgstr "'y'값이 증가되어야 합니다"
+msgstr "'y'의 값들은 증가해야만 합니다"
 
+# CHL20130308
 #: plot3d.c:1945
 msgid "invalid NA contour values"
-msgstr "잘못된 NA 등고선 (contour) 값입니다"
+msgstr "NA값은 contour에 유효하지 않습니다"
 
+# CHL20130308
 #: plot3d.c:1957
 msgid "all z values are equal"
-msgstr "z 변수의 값이 전부 동일합니다"
+msgstr "모든 z 값들이 동일합니다"
 
+# CHL20130308
 #: plot3d.c:1959
 msgid "all z values are NA"
-msgstr "z 변수의 값이 전부 NA 입니다"
+msgstr "모든 z 값들이 NA입니다"
 
+# CHL20130308
 #: stem.c:156
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""
-
-#~ msgid "unable to allocate memory (in GPolygon)"
-#~ msgstr "(GPolygon에서) 메모리를 확보할 수 없습니다"
-
-#~ msgid "invalid number of points in identify()"
-#~ msgstr "identify()함수로 점의 개수가 잘못되었습니다"
-
-#~ msgid "Event GE_ScalePS requires a single numeric value"
-#~ msgstr "이벤트 GE_ScalePS는 단일 수치를 필요로 합니다"
-
-#~ msgid "zero length 'padj' specified"
-#~ msgstr "길이가 0 인 'padj'이 지정되어 있습니다"
-
-#~ msgid "unable to allocate memory (in GPath)"
-#~ msgstr "메모리가 확보될 수 없습니다 (GPath중에서)"
-
-#~ msgid "invalid x or y (in GPath)"
-#~ msgstr "잘못된 x 또는 y 입니다 (GPath중에서)"
-
-#~ msgid "zero length 'labels'"
-#~ msgstr "길이가 0 인 'labels'가 지정되어 있습니다"
-
-#~ msgid "zero length 'text' specified"
-#~ msgstr "길이가 0 인 'text'가 지정되어 있습니다"
-
-#~ msgid "zero length 'line' specified"
-#~ msgstr "길이가 0 인 'line'가 지정되어 있습니다"
-
-#~ msgid "zero length 'outer' specified"
-#~ msgstr "길이가 0 인 'outer'가 지정되어 있습니다"
-
-#~ msgid "zero length 'at' specified"
-#~ msgstr "길이가 0 인 'at'가 지정되어 있습니다"
-
-#~ msgid "zero length 'adj' specified"
-#~ msgstr "길이가 0 인 'adj'지정되어 있습니다"
-
-#~ msgid "zero length 'cex' specified"
-#~ msgstr "길이가 0 인 'cex'가 지정되어 있습니다"
-
-#~ msgid "zero length 'col' specified"
-#~ msgstr "길이가 0 인 'col'가 지정되어 있습니다"
-
-#~ msgid "zero length 'font' specified"
-#~ msgstr "길이가 0 인 'font'가 지정되어 있습니다"
-
-#~ msgid "unable to allocate memory (in xspline)"
-#~ msgstr "메모리를 확보할 수 없습니다 (xspline에서)"

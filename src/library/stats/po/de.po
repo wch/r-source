@@ -1,13 +1,13 @@
 # Translation of /src/library/stats/po/stats.pot
-# Copyright (C) 2008-2012 The R Foundation
+# Copyright (C) 2008-2013 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2012.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.15.0\n"
+"Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-02-01 14:27+0000\n"
-"PO-Revision-Date: 2012-03-06 09:23+0100\n"
+"PO-Revision-Date: 2013-03-11 16:08+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: \n"
@@ -184,28 +184,27 @@ msgstr "Spannbreite ist zu klein"
 
 #: loglin.c:369
 msgid "this should not happen"
-msgstr ""
+msgstr "das sollte nicht sein"
 
 #: loglin.c:371
 msgid "algorithm did not converge"
-msgstr ""
+msgstr "Algorithmus hat nicht konvergiert"
 
 #: loglin.c:373
 msgid "incorrect specification of 'table' or 'start'"
-msgstr ""
+msgstr "falsche Spezifikationen für 'table' oder 'start'"
 
 #: lowess.c:292
 msgid "'f' must be finite and > 0"
-msgstr ""
+msgstr "'f' muss endlich und > 0 sein"
 
 #: lowess.c:295
-#, fuzzy
 msgid "'iter' must be finite and >= 0"
-msgstr "'maxiter' muss positiv sein"
+msgstr "'iter' muss endlich und >= 0  sein"
 
 #: lowess.c:298
 msgid "'delta' must be finite and > 0"
-msgstr ""
+msgstr "'delta' muss endlich und > 0 sein"
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
@@ -790,7 +789,7 @@ msgstr "ungültiges zweites Argument 'size'"
 #: rcont.c:83
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr ""
+msgstr "rcont2 [%d,%d]: exp underflow zu 0; Algorithmus fehlgeschlagen"
 
 #: smooth.c:101
 #, c-format
