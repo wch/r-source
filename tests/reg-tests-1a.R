@@ -6,6 +6,11 @@ pdf("reg-tests-1a.pdf", encoding = "ISOLatin1.enc")
 options(stringsAsFactors=TRUE)
 ## .Machine
 (Meps <- .Machine$double.eps)# and use it in this file
+## Facilitate diagnosing of testing startup:
+envLst <- c(t(outer(c("R_ENVIRON","R_PROFILE"), c("","_USER"), paste0)),
+	    "R_CHECK_ENVIRON","R_LIBS")
+cbind(Sys.getenv(envLst))
+.libPaths()
 
 assertError <- function(expr)
     stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
