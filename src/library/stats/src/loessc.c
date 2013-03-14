@@ -235,7 +235,7 @@ loess_workspace(int *d, int *n, double *span, int *degree,
     tau = tau0 - (*sum_drop_sqr);
     lv = 50 + (3 * D + 3) * nvmax + N + (tau0 + 2) * nf;
     double dliv = 50 + (pow(2.0, (double)D) + 4.0) * nvmax + 2.0 * N;
-    if (dliv < INT_MAX) liv = dliv;
+    if (dliv < INT_MAX) liv = (int) dliv;
     else error("workspace required is too large");
     if(*setLf) {
 	lv = lv + (D + 1) * nf * nvmax;
@@ -272,7 +272,7 @@ loess_prune(int *parameter, int *a, double *xi, double *vert,
     parameter[5] = iv[21] - 1;
     parameter[6] = iv[14] - 1;
 
-    for(i = 0; i < d; i++){
+    for(i = 0; i < d; i++) {
 	k = nvmax * i;
 	vert[i] = v[v1 + k];
 	vert[i + d] = v[v1 + vc + k];
