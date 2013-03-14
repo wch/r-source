@@ -73,8 +73,11 @@ used by accessor functions.
 
 Note that fields are distinct from
 the slots, if any, in the object.  Slots are, as always, handled by
-standard \R{} object management.  Slots for the class can be included
-(as the \code{representation=} argument) in the \dots argument.
+standard \R{} object management.  
+It is not generally a good idea to mix slots and fields in the same
+class; this confuses the distinction in behavior between reference
+classes and regular S4 classes.  See the comments in the
+\dQuote{Implementation} section.
 }
   \item{contains}{
 optional vector of superclasses for this class.  If a superclass is
@@ -184,7 +187,8 @@ functional programming semantics; that is, changes made to an object
 passed as an argument are local to the function call.  The object that
 supplied the argument is unchanged.
 
-The functional model (sometimes called pass-by-value) is
+The functional model (sometimes called pass-by-value, although this is
+inaccurate for \R) is
 suitable for many statistical computations and is implicit, for
 example, in the basic \R software for fitting statistical models.
 In some other situations, one would like all the code dealing with an
@@ -198,7 +202,7 @@ others, support a version of classes and methods assuming reference
 semantics.
 The corresponding programming mechanism
 is to invoke a method on an object.
-In the \R syntax that we use \code{"$"} %$
+In the \R syntax we use \code{"$"} %$
 for this operation; one invokes a method,
 \code{m1} say, on an object \code{x} by the expression
 \code{x$m1(...)}. %$
@@ -240,7 +244,8 @@ in the method definition.
 The implementation uses \R environments to make fields and methods
 available by name.
 Additional special fields allow reference to the complete object and
-to the definition of the class.  See the section on \dQuote{Inheritance}.
+to the definition of the class.  See the section on \dQuote{Writing
+  Reference Methods}.
 
 The goal of the software described here is to provide a uniform
 programming style in \R for software dealing with reference classes, whether
@@ -291,20 +296,19 @@ The special object \code{.refClassDef} contains the definition of the
 class of the object.
 These fields are read-only (it makes no sense to modify these
 references), with one exception.
-The \code{.self} field can be modified in the \code{$initialize} %$
+In principal, the \code{.self} field can be modified in the \code{$initialize} %$
 method, because the object is still being created at this stage.
-(Assignments to this field, as to all fields, need to use the
-non-local assignment operator.)
-This is the preferred way to assign S4-style attributes to the object,
-if you need to do so; but remember that these attributes will not
-behave according to reference semantics, unlike fields.
+This is definitely not recommended, unless to set some
+non-reference properties of the object defined for this class, which
+is itself not recommended if it mixes slots and fields.
+
 
 The methods available include methods inherited from superclasses, as
 discussed in the next section.
 
 Only methods actually used will be included in the environment
-corresponding to an individual object.  If a method requires a
-particular other method, then the first method should include a call
+corresponding to an individual object.  To declare that a method requires a
+particular other method, the first method should include a call
 to \code{$usingMethods()} %$
 with the name of the other method as an argument.
 Declaring the methods this way is essential if the other method is used indirectly (e.g., via \code{\link{sapply}()}
@@ -328,14 +332,11 @@ See the method definitions in the example.
 Reference classes inherit from other reference classes by using the
 standard \R inheritance; that is, by including the superclasses in the
 \code{contains=} argument when creating the new class.
-Non-reference classes can also be included in the \code{contains=} argument.  The class definition
-mechanism treats reference and non-reference superclasses slightly differently.
-If the contained reference classes themselves have reference
-superclasses, these will be moved ahead of any non-reference
-superclasses in the class definition (otherwise the ordering of
-superclasses may be ambiguous).
 The names of the reference superclasses are in slot
 \code{refSuperClasses} of the class definition.
+Reference classes can inherit from ordinary S4 classes also, but this
+is usually a bad idea if it mixes reference fields and non-reference slots.
+See the comments in the section on \dQuote{Implementation}.
 
 Class fields are inherited.  A class definition can override a field
 of the same name in a superclass only if the overriding class is a
@@ -599,13 +600,15 @@ A number of
 systems using the OOP programming paradigm recommend or enforce
 \emph{getter and setter methods}
 corresponding to each field, rather than direct access by name.
-In the \R version presented here (and fairly often elsewhere
-as well), a field named \code{abc} of an object \code{x} would be
-extracted by \code{x$getAbc()} and assigned by
-\code{x$setAbc(value)}.
-The \code{$accessors} %$}
-method is a convenience function that creates getter and setter methods for the
+If you like this style and want to  extract a field named \code{abc}
+by \code{x$getAbc()} and assign it by
+\code{x$setAbc(value)},
+the \code{$accessors} %$}
+method is a convenience function that creates such getter and setter methods for the
 specified fields.
+Otherwise there is no reason to use this mechanism.  In particular, it
+has nothing to do with the general ability to define fields by
+functions as described in the section on \dQuote{Reference Objects}.
 }
 } %% end of \describe
 } %% end of \section
@@ -613,11 +616,10 @@ specified fields.
 \section{Implementation}{
 Reference classes are implemented as S4 classes with a data part of
 type \code{"environment"}.
-An object generated from a reference class has this type.
 Fields correspond to named objects in the environment.
-A field associated with an accessor function is implemented as an
+A field associated with a function is implemented as an
 \link[=bindenv]{active binding}.
-In addition, fields with a specified class are implemented as a
+In particular, fields with a specified class are implemented as a
 special form of active binding to enforce valid assignment to the
 field.
 A field, say \code{data}, can be accessed generally by an expression
@@ -638,6 +640,19 @@ will call that function.
 When a method is invoked on an object, the function defining the method is
 installed in the object's environment, with the same environment as the
 environment of the function.
+
+Because of the implementation, new reference classes can inherit from
+non-reference S4 classes as well as reference classes.
+This is usually a bad idea, if the slots from the non-reference
+class are thought of as alternatives to fields.
+Unless there is some special argument in favor, mixing the functional
+and reference paradigms for properties of the same object is
+conceptually unclear.
+In addition, the initialization method for the class will have to sort
+out fields from slots, with a good chance of creating anomalous
+behavior for subclasses of this class.
+Better in general to define fields analogous to the slots in the S4
+class, and to initialize those from an S4 object of that class.
 
 }
 
@@ -707,9 +722,9 @@ Using \code{$trace()} on an object sets up a tracing
 version for future invocations of the specified method for that
 object.
 Using \code{$trace()} on the generator for the class sets up a
-tracing version for all future objects from that class (and for all
-existing objects that have not yet invoked the traced method, because
-reference methods are cached lazily in the object when first invoked).
+tracing version for all future objects from that class (and sometimes for
+existing objects from the class if the method is not declared or
+previously invoked).
 
 In either case, all the arguments to the standard  \code{\link{trace}}
 function are available, except for \code{signature=} which is
