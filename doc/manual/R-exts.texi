@@ -2022,11 +2022,11 @@ they may not work at all or may work incorrectly in other locales
 (although UTF-8 locales will most likely work).
 
 @quotation Note
-@code{R CMD check} and @code{R CMD build} run @R{} with
-@option{--vanilla}, so none of the user's startup files are read.  If
-you need @env{R_LIBS} set (to find packages in a non-standard library)
-you can set it in the environment: also you can use the check and build
-environment files (as specified by the environment variables
+@code{R CMD check} and @code{R CMD build} run @R{} processes with
+@option{--vanilla} in which none of the user's startup files are read.
+If you need @env{R_LIBS} set (to find packages in a non-standard
+library) you can set it in the environment: also you can use the check
+and build environment files (as specified by the environment variables
 @env{R_CHECK_ENVIRON} and @env{R_BUILD_ENVIRON}; if unset,
 files@footnote{On systems which use sub-architectures,
 architecture-specific versions such as @file{~/.R/check.Renviron.i386}
@@ -2040,7 +2040,7 @@ using these utilities.
 Installation and Administration'' manual) if present and in your path,
 and it is required for packages which need it to install (including
 those with @file{configure.win} or @file{cleanup.win} scripts or a
-@file{src} directory).  
+@file{src} directory) and e.g.@: need vignettes built.
 
 You may need to set @env{TMPDIR} to point to a suitable writable
 directory with a path not containing spaces -- use forward slashes for
