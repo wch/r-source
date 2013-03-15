@@ -43,6 +43,7 @@ OSI: open (http://opensource.org/licenses/lgpl-license)
 FSF: free_and_GPL_compatible (http://www.gnu.org/licenses/license-list.html#LGPL)
 URL: http://www.R-project.org/Licenses/LGPL-3
 FOSS: yes
+Extensible: yes
 
 Name: GNU Affero General Public License
 Abbrev: AGPL
