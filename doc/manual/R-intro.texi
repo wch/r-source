@@ -148,10 +148,9 @@ Most @R{} novices will start with the introductory session in Appendix
 A.  This should give some familiarity with the style of @R{} sessions
 and more importantly some instant feedback on what actually happens.
 
-Many users will come to @R{} mainly for its graphical facilities.  In
-this case, @ref{Graphics} on the graphics facilities can be read at
-almost any time and need not wait until all the preceding sections have
-been digested.
+Many users will come to @R{} mainly for its graphical facilities.
+@ref{Graphics} on the graphics facilities can be read at almost any time
+and need not wait until all the preceding sections have been digested.
 
 @menu
 * Introduction and preliminaries::
@@ -453,8 +452,8 @@ be used in @R{} packages) only A--Za--z0--9 should be used.} (and in
 some countries this includes accented letters) plus @samp{@code{.}} and
 @samp{@code{_}}, with the restriction that a name must start with
 @samp{@code{.}} or a letter, and if it starts with @samp{@code{.}} the
-second character must not be a digit.  Names are currently effectively
-unlimited, but were limited to 256 bytes prior to @R{} 2.13.0
+second character must not be a digit.  Names are effectively
+unlimited in length.
 
 Elementary commands consist of either @emph{expressions} or
 @emph{assignments}.  If an expression is given as a command, it is
@@ -576,8 +575,9 @@ you are given the opportunity to save all the currently available
 objects.  If you indicate that you want to do this, the objects are
 written to a file called @file{.RData}@footnote{The leading ``dot'' in
 this file name makes it @emph{invisible} in normal file listings in
-UNIX.} in the current directory, and the command lines used in the
-session are saved to a file called @file{.Rhistory}.
+UNIX, and in default GUI file listings on OS X and Windows.} in the
+current directory, and the command lines used in the session are saved
+to a file called @file{.Rhistory}.
 
 When @R{} is started at later time from the same directory it reloads
 the workspace from this file.  At the same time the associated commands
@@ -2905,10 +2905,9 @@ data()
 @end example
 
 @noindent
-As from @R{} version 2.0.0 all the datasets supplied with @R{} are
-available directly by name.  However, many packages still use the
-earlier convention in which @code{data} was also used to load datasets
-into @R{}, for example
+All the datasets supplied with @R{} are available directly by name.
+However, many packages still use the obsolete convention in which
+@code{data} was also used to load datasets into @R{}, for example
 
 @example
 data(infert)
@@ -5105,7 +5104,7 @@ Certain forms of nonlinear model can be fitted by Generalized Linear
 Models (@code{glm()}).  But in the majority of cases we have to approach
 the nonlinear curve fitting problem as one of nonlinear optimization.
 @R{}'s nonlinear optimization routines are @code{optim()}, @code{nlm()}
-and (from @R{} 2.2.0) @code{nlminb()},
+and @code{nlminb()},
 @findex nlm
 @findex optim
 @findex nlminb
@@ -6938,7 +6937,7 @@ Combine @option{--no-save}, @option{--no-environ},
 (not @command{Rgui.exe}) Take input from @var{file}: @samp{-} means
 @code{stdin}.  Implies @option{--no-save} unless @option{--save} has
 been set.  On a Unix-alike, shell metacharacters should be avoided in
-@var{file} (but as from @R{} 2.14.0 spaces are allowed).
+@var{file} (but spaces are allowed).
 
 @item -e @var{expression}
 (not @command{Rgui.exe}) Use @var{expression} as an input line.  One or
@@ -6976,7 +6975,7 @@ for @R{} objects and working areas.  This is set by default to the
 smaller of the amount of physical RAM in the machine and for 32-bit
 @R{}, 1.5Gb@footnote{2.5Gb on versions of Windows that support 3Gb per
 process and have the support enabled: see the @file{rw-FAQ} Q2.9; 3.5Gb
-on some 64-bit versions of Windows.}, and must be between 32Mb and the
+on most 64-bit versions of Windows.}, and must be between 32Mb and the
 maximum allowed on that version of Windows.
 
 @item --quiet
@@ -7107,17 +7106,17 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-In addition, you can use@footnote{as from @R{} 2.13.0.}  options
-@option{--arch=}, @option{--no-environ}, @option{--no-init-file},
-@option{--no-site-file} and @option{--vanilla} between @command{R} and
-@command{CMD}: these affect any @R{} processes run by the tools.  (Here
-@option{--vanilla} is equivalent to @option{--no-environ --no-site-file
---no-init-file}.)  However, note that @command{R CMD} does not of itself
-use any @R{} startup files (in particular, neither user nor site
-@file{Renviron} files), and all of the @R{} processes run by these tools
-(except @command{BATCH}) use @option{--no-restore}.  Most use
-@option{--vanilla} and so invoke no @R{} startup files: the current
-exceptions are @command{INSTALL}, @command{REMOVE}, @command{Sweave} and
+In addition, you can use options @option{--arch=},
+@option{--no-environ}, @option{--no-init-file}, @option{--no-site-file}
+and @option{--vanilla} between @command{R} and @command{CMD}: these
+affect any @R{} processes run by the tools.  (Here @option{--vanilla} is
+equivalent to @option{--no-environ --no-site-file --no-init-file}.)
+However, note that @command{R CMD} does not of itself use any @R{}
+startup files (in particular, neither user nor site @file{Renviron}
+files), and all of the @R{} processes run by these tools (except
+@command{BATCH}) use @option{--no-restore}.  Most use @option{--vanilla}
+and so invoke no @R{} startup files: the current exceptions are
+@command{INSTALL}, @command{REMOVE}, @command{Sweave} and
 @command{SHLIB} (which uses @option{--no-site-file --no-init-file}).
 
 @example
@@ -7453,9 +7452,8 @@ Re-submit the command to @R{}.
 The final @key{RET} terminates the command line editing sequence.
 
 The @strong{readline} key bindings can be customized in the usual way
-@emph{via} a @file{~/.inputrc} file.  As from @R{} 2.12.0, these
-customizations can be conditioned on application @code{R}, that is
-by including a section like
+@emph{via} a @file{~/.inputrc} file.  These customizations can be
+conditioned on application @code{R}, that is by including a section like
 
 @example
 $if R
