@@ -106,6 +106,7 @@
    ALIAS_1 '\0' CANONICAL_1 '\0' ... ALIAS_n '\0' CANONICAL_n '\0' '\0'  */
 static const char * volatile charset_aliases;
 
+#ifndef __APPLE__
 /* Return a pointer to the contents of the charset.alias file.  */
 static const char *
 get_charset_aliases (void)
@@ -280,6 +281,7 @@ get_charset_aliases (void)
 
   return cp;
 }
+#endif
 
 /* Determine the current locale's character encoding, and canonicalize it
    into one of the canonical names listed in config.charset.
