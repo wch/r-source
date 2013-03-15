@@ -67,7 +67,7 @@ The current version of this document is @value{VERSION}.
 * Obtaining R::                 
 * Installing R under Unix-alikes::  
 * Installing R under Windows::  
-* Installing R under (Mac) OS X::  
+* Installing R under OS X::     
 * Running R::                   
 * Add-on packages::             
 * Internationalization::        
@@ -939,7 +939,7 @@ LANGUAGE=en LC_TIME=C
 @end example
 
 
-@node Installing R under Windows, Installing R under (Mac) OS X, Installing R under Unix-alikes, Top
+@node Installing R under Windows, Installing R under OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows
 
@@ -1347,8 +1347,8 @@ will create an installer that defaults to installing @R{} to run in SDI
 mode.  See @file{src/@/gnuwin32/installer/Makefile} for the names and
 values that can be set.
 
-The standard CRAN distribution of a 32/64-bit installer is made by first
-building 32-bit R (just
+The standard @acronym{CRAN} distribution of a 32/64-bit installer is
+made by first building 32-bit R (just
 
 @example
 make 32-bit
@@ -1453,8 +1453,8 @@ given by @code{R.home()}), and hence may need to be run under the
 account used to install @R{}.
 
 
-@node Installing R under (Mac) OS X, Running R, Installing R under Windows, Top
-@chapter Installing R under (Mac) OS X
+@node Installing R under OS X, Running R, Installing R under Windows, Top
+@chapter Installing R under OS X
 @cindex OS X
 
 @macro Rapp{}
@@ -1481,14 +1481,14 @@ the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
 ``Show All Log'') is useful for tracking down problems.
 
-For building @R{} from source, see @ref{Mac OS X}.
+For building @R{} from source, see @ref{OS X}.
 
 @menu
 * Running R under OS X::        
 * Uninstalling under OS X::     
 @end menu
 
-@node Running R under OS X, Uninstalling under OS X, Installing R under (Mac) OS X, Installing R under (Mac) OS X
+@node Running R under OS X, Uninstalling under OS X, Installing R under OS X, Installing R under OS X
 @section Running R under OS X
 
 There are two ways to run @R{} on OS X from the @acronym{CRAN} binary
@@ -1510,7 +1510,7 @@ e.g. @file{~/Library/R/3.0/library}), and that warnings, messages and
 other output to @file{stderr} are printed in bold.
 
 
-@node Uninstalling under OS X,  , Running R under OS X, Installing R under (Mac) OS X
+@node Uninstalling under OS X,  , Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
 
 @R{} for OS X consists of two parts: the GUI (@Rapp{}) and the R
@@ -1538,7 +1538,7 @@ when installing multiple R versions in parallel), or after you have
 deleted the files.
 
 
-@node Running R, Add-on packages, Installing R under (Mac) OS X, Top
+@node Running R, Add-on packages, Installing R under OS X, Top
 @chapter Running R
 
 How to start @R{} and what command-line options are available is discussed
@@ -1845,11 +1845,12 @@ the sources on Windows without any additional tools.
 
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there are additional types @code{mac.binary*} (the default
-in the @acronym{CRAN} distribution) that can be passed to
-@code{install.packages} in order to download and install binary packages
-from a suitable repository.  These OS X binary package files have the
-extension @samp{tgz}.  The @Rapp{} GUI provides menus for installation
-of either binary or source packages, from @acronym{CRAN} or local files.
+in the @acronym{CRAN} distribution but not when compiling from source,
+not for nightly builds) that can be passed to @code{install.packages} in
+order to download and install binary packages from a suitable
+repository.  These OS X binary package files have the extension
+@samp{tgz}.  The @Rapp{} GUI provides menus for installation of either
+binary or source packages, from @acronym{CRAN} or local files.
 
 Note that many binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
@@ -1857,7 +1858,7 @@ particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the `Command
 Line Tools' for @command{Xcode} and compilers which match those used to
-build @R{}: see @ref{Mac OS X}.
+build @R{}: see @ref{OS X}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed: for Mountain Lion see @ref{Mountain Lion}.
@@ -1871,12 +1872,12 @@ Windows).  It is easy to install:
 @item Download the sources from @uref{http://sourceforge.net/projects/tcllib/files/BWidget/}.
 @item In a Terminal run something like (depending on the version you downloaded)
 @example
-tar xf bwidget-1.9.5.tar.gz
-sudo mv bwidget-1.9.5 /usr/local/lib
+tar xf bwidget-1.9.6.tar.gz
+sudo mv bwidget-1.9.6 /usr/local/lib
 @end example
 @end itemize
 
-It may be possible to use other compilers with the CRAN distribution of
+It may be possible to use other compilers with the @acronym{CRAN} distribution of
 @R{}, but the settings in the file
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} will need
 to be changed, either by editing that file or in a file such as
@@ -2390,7 +2391,7 @@ Almost all current @acronym{CPU}s have both 32- and 64-bit sets of
 instructions.  Most OSes running on such @acronym{CPU}s offer the choice
 of building a 32-bit or a 64-bit version of R (and details are given
 below under specific OSes).  For most a 32-bit version is the default,
-but for some (e.g., @cputype{x86_64} Linux and (Mac) OS X >= 10.6)
+but for some (e.g., @cputype{x86_64} Linux and OS X >= 10.6)
 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
@@ -3898,7 +3899,7 @@ Windows: _WIN32, _WIN64
 * X11 issues::                  
 * Linux::                       
 * FreeBSD::                     
-* Mac OS X::                    
+* OS X::                        
 * Solaris::                     
 * AIX::                         
 * Cygwin::                      
@@ -4185,14 +4186,14 @@ Others have found on at least some versions of @cputype{ix86} Linux that
 the configure flag @option{--disable-largefile} was needed (since
 @file{glob.h} on that platform presumed @command{gcc} was being used).
 
-@node FreeBSD, Mac OS X, Linux, Platform notes
+@node FreeBSD, OS X, Linux, Platform notes
 @section FreeBSD
 @cindex FreeBSD
 
 Rainer Hurling has reported success on @cputype{amd64} FreeBSD 9.0 (and
 on earlier versions in the past), and Brian Ripley tested
-@cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of (Mac) OS X)
-is based on FreeBSD we find testing on Darwin tends to pick up most
+@cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of OS X) is
+based on FreeBSD we find testing on Darwin tends to pick up most
 potential problems on FreeBSD.  However, FreeBSD lacks adequate
 character type (e.g.@: which are alphabetic) and collation support for
 multi-byte locales (but a port of ICU is available), and does not yet
@@ -4231,12 +4232,12 @@ Beware that the lack of adequate support for non-ASCII characters in
 UTF-8 locales has many consequences in @R{}: for example names will not
 be recognized as alphabetic by @code{make.names}.
 
-@node Mac OS X, Solaris, FreeBSD, Platform notes
-@section (Mac) OS X
+@node OS X, Solaris, FreeBSD, Platform notes
+@section OS X
 @cindex OS X
 
 @strong{NB:}  Information on OS X is liable to change before release of
-@R{} 3.0.0
+@R{} 3.0.0.
 
 You can build @R{} using Apple's `Command Line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
@@ -4276,20 +4277,36 @@ from @uref{https://developer.apple.com/devcenter/mac/}) you can install
 the command-line tools from within Xcode, from the @samp{Downloads} pane
 in the @samp{Preferences}.
 
-The supported compilers are available at
-@uref{http://r.research.att.com/gcc-4.7.2.pkg} and install into
-@file{/opt/R}.  To use them, have in @file{config.site}
+Various compilers can be used.  It is expected that the @acronym{CRAN}
+distribution of @R{} will be built using
+
+@itemize
+@item @command{gcc}
+from the Xcode distribution.  This is a version of gcc 4.2.1 with an
+LLVM backend.
+
+@item @command{gfortran}
+from @uref{http://r.research.att.com/tools}: there are versions of
+gfortran 4.2.x there to match various versions of Xcode.
+
+@item @command{clang}
+from the Xcode distribution, to compile the Objective-C parts of the
+@code{quartz()} device. 
+@end itemize
+
+To these, have in @file{config.site} something like
 
 @example
-CC="/opt/R/bin/gcc-4.7 -mtune=native"
-CXX="/opt/R/bin/g++-4.7 -mtune=native"
-F77="/opt/R/bin/gfortran-4.7 -mtune=native"
+CC="/usr/bin/gcc -mtune=native"
+CXX="/usr/bin/g++ -mtune=native"
+F77="/usr/bin/gfortran -mtune=native"
 FC=$F77
 OBJC="clang  -mtune=native"
 @end example
 
 @noindent
-(It is necessary to use @code{clang} from the Xcode command-line tools.)
+Full paths are not needed, but help to ensure that the intended
+compilers are used.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
@@ -4309,14 +4326,14 @@ to provide higher-performance versions of the @acronym{BLAS} and LAPACK
 routines.  (Use of @code{Accelerate} with @option{--with-lapack} does
 not work on Snow Leopard: it way work there without.)
 
-The supported compilers default to 64-bit, but some older ones default to
+Recent compilers default to 64-bit, but some older ones default to
 32-bit.  It may be necessary to explicitly specify the architecture by
 e.g.@:
 
 @example
-CC='gcc-4.2 -arch x86_64'
-CXX='g++-4.2 -arch x86_64'
-F77='gfortran-4.2 -arch x86_64'
+CC='gcc -arch x86_64'
+CXX='g++ -arch x86_64'
+F77='gfortran -arch x86_64'
 OBJC='clang -arch x86_64'
 @end example
 in @file{config.site} or on the @command{configure} command line.
@@ -4331,7 +4348,7 @@ in @file{config.site} or on the @command{configure} command line.
 * Building R.app::              
 @end menu
 
-@node Snow Leopard, Lion, Mac OS X, Mac OS X
+@node Snow Leopard, Lion, OS X, OS X
 @subsection Snow Leopard
 
 A quirk on Snow Leopard is that the X11 libraries are not in the default
@@ -4340,19 +4357,18 @@ required in @file{config.site}, or you can use the @command{configure}
 options @option{--x-includes=/usr/X11/include
 --x-libraries=/usr/X11/lib.}.
 
-The supported compilers are strongly recommended, but the versions of
-Xcode (3.2.x) supplied for Snow Leopard contained usable C and C++
-compilers.  A matching @command{gfortran} can be installed from
+The versions of Xcode supplied for Snow Leopard contained usable C and
+C++ compilers.  A matching @command{gfortran} can be installed from
 @uref{http://r.research.att.com/tools/} (it needs to match the version
 of Xcode in use).
 
-@node Lion, Mountain Lion, Snow Leopard, Mac OS X
+@node Lion, Mountain Lion, Snow Leopard, OS X
 @subsection Lion
 
 No tweaks are known to be needed on Lion.  See the notes on Mountain
 Lion if XQuartz is in use.
 
-@node Mountain Lion, Tcl/Tk headers and libraries, Lion, Mac OS X
+@node Mountain Lion, Tcl/Tk headers and libraries, Lion, OS X
 @subsection Mountain Lion
 
 The X11 system used with Mountain Lion will be XQuartz.  To build the
@@ -4362,7 +4378,7 @@ to be known to @command{pkg-config} when @command{configure} is run:
 this usually means adding it to the @env{PKG_CONFIG_PATH} environment
 variable.
 
-@node Tcl/Tk headers and libraries, Java (OS X), Mountain Lion, Mac OS X
+@node Tcl/Tk headers and libraries, Java (OS X), Mountain Lion, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -4399,7 +4415,7 @@ Configure @R{} with
 (for the versions bundled with OS X, use paths starting with
 @file{/System/Library}).
 
-@node Java (OS X), Frameworks, Tcl/Tk headers and libraries, Mac OS X
+@node Java (OS X), Frameworks, Tcl/Tk headers and libraries, OS X
 @subsection Java
 
 The situation with Java support on OS X is messy, with Apple essentially
@@ -4463,7 +4479,7 @@ e.g.@: to @code{1} to install some Java-using packages such as
 
 
 
-@node Frameworks, Building R.app, Java (OS X), Mac OS X
+@node Frameworks, Building R.app, Java (OS X), OS X
 @subsection Frameworks
 
 The @acronym{CRAN} build of @R{} is installed as a framework, which is
@@ -4485,7 +4501,7 @@ but this can be changed at configure time by specifying the flag
 make prefix=/where/you/want/R.framework/to/go install
 @end example
 
-@node Building R.app,  , Frameworks, Mac OS X
+@node Building R.app,  , Frameworks, OS X
 @subsection Building R.app
 
 Note that building the @Rapp{} GUI console is a separate project, using
@@ -4511,7 +4527,7 @@ application bundle can be run anywhere and it is customary to place it
 in the @emph{Applications} folder.
 
 
-@node Solaris, AIX, Mac OS X, Platform notes
+@node Solaris, AIX, OS X, Platform notes
 @section Solaris
 @cindex Solaris
 
@@ -4674,7 +4690,7 @@ built with @samp{Cstd} and so an @R{} package using such libraries also
 needs to be.  Occasionally the flag @option{-library=stlport4,Crun} has
 been needed.
 
-Several CRAN packages using C++ need the more liberal interpretation
+Several @acronym{CRAN} packages using C++ need the more liberal interpretation
 given by adding
 
 @example
@@ -4746,8 +4762,8 @@ be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
 
-The compilation can be tuned to a particular cpu: the CRAN check system
-uses @code{-mtune=niagara2}.
+The compilation can be tuned to a particular cpu: the @acronym{CRAN}
+check system uses @code{-mtune=niagara2}.
 
 Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.7.2
 needed
