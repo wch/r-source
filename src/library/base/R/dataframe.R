@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2012 The R Core Team
+# Changes Copyright (C) 1998-2013 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -731,7 +731,7 @@ data.frame <-
                 if (length(o) %% N != 0L)
                     warning("number of items to replace is not a multiple of replacement length")
                 if (N < length(o))
-                    value <- rep_len(value, length(o))
+                    value <- rep(value, length.out=length(o))
                 value <- value[o]
                 i <- index
             }
@@ -741,7 +741,7 @@ data.frame <-
                 ## allow replication of length(value) > 1 in 1.8.0
                 N <- length(value)
                 if(N > 1L && N < nreplace && (nreplace %% N) == 0L)
-                    value <- rep_len(value, nreplace)
+                    value <- rep(value, length.out = nreplace)
                 if(N > 1L && (length(value) != nreplace))
                     stop("'value' is the wrong length")
                 n <- 0L
@@ -866,7 +866,7 @@ data.frame <-
                              N, n), domain = NA)
             if(N < n && N > 0L)
                 if(n %% N == 0L && length(dim(value)) <= 1L)
-                    value <- rep_len(value, n)
+                    value <- rep(value, length.out = n)
                 else
                     stop(sprintf(ngettext(N,
                                           "replacement has %d row, data has %d",
@@ -903,7 +903,7 @@ data.frame <-
                                       "replacement element %d has %d rows, need %d"),
                              k, N, n), domain = NA)
             ## these fixing-ups will not work for matrices
-            if(N > 0L && N < n) value[[k]] <- rep_len(value[[k]], n)
+            if(N > 0L && N < n) value[[k]] <- rep(value[[k]], length.out = n)
             if(N > n) {
                 warning(sprintf(ngettext(N,
                                          "replacement element %d has %d row to replace %d rows",
@@ -1018,7 +1018,7 @@ data.frame <-
                              N, nrows), domain = NA)
             if(N < nrows)
                 if(N > 0L && (nrows %% N == 0L) && length(dim(value)) <= 1L)
-                    value <- rep_len(value, nrows)
+                    value <- rep(value, length.out = nrows)
                 else
                     stop(sprintf(ngettext(N,
                                           "replacement has %d row, data has %d",
@@ -1111,7 +1111,7 @@ data.frame <-
                          N, nrows), domain = NA)
         if (N < nrows)
             if (N > 0L && (nrows %% N == 0L) && length(dim(value)) <= 1L)
-                value <- rep_len(value, nrows)
+                value <- rep(value, length.out = nrows)
             else
                 stop(sprintf(ngettext(N,
                                       "replacement has %d row, data has %d",
