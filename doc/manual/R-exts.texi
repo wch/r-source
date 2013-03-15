@@ -114,7 +114,7 @@ before reading on.
 For packages which contain code to be compiled, a computing environment
 including a number of tools is assumed; the ``R Installation and
 Administration'' manual describes what is needed.  Under a Unix-alike
-most of the tools are likely to be present by default, but Mac OS X and
+most of the tools are likely to be present by default, but OS X and
 Microsoft Windows will require additional setup.
 
 Once a source package is created, it must be installed by
@@ -154,7 +154,7 @@ a DLL, where the second L stands for `library'.  Installed packages may
 contain compiled code in what is known on most Unix-alikes as a
 @emph{shared object} and on Windows as a DLL (and used to be called a
 @emph{shared library} on some Unix-alikes).  The concept of a
-@emph{shared library} (@emph{dynamic library} on Mac OS X) as a
+@emph{shared library} (@emph{dynamic library} on OS X) as a
 collection of compiled code to which a package might link is also used,
 especially for @R{} itself on some platforms.
 
@@ -269,8 +269,8 @@ For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @uref{http://www.gnu.org/@/prep/@/standards/@/standards.html#Documentation}.
 
 The package subdirectory should be given the same name as the package.
-Because some file systems (e.g., those on Windows and by default on Mac
-OS X) are not case-sensitive, to maintain portability it is strongly
+Because some file systems (e.g., those on Windows and by default on OS
+X) are not case-sensitive, to maintain portability it is strongly
 recommended that case distinctions not be used to distinguish different
 packages.  For example, if you have a package named @file{foo}, do not
 also create a package named @file{Foo}.
@@ -919,7 +919,7 @@ can be used together and mixing C and C++ seems to be widely successful.
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{WIN32} will be defined: on 64-bit Windows builds also
-@samp{WIN64}, and on Mac OS X @samp{__APPLE__} is
+@samp{WIN64}, and on OS X @samp{__APPLE__} is
 defined.@footnote{Currently also @samp{__APPLE_CC__}, but that indicates
 a compiler with Apple-specific features, not the OS.}
 
@@ -1006,7 +1006,7 @@ in @file{inst/doc} based on the (lower-case) extension.
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
 top level of the package will @emph{not} be installed and so not be
-known to users of Windows and Mac OS X compiled packages (and not seen
+known to users of Windows and OS X compiled packages (and not seen
 by those who use @command{R CMD INSTALL} or @command{install.packages}
 on the tarball).  So any information files you wish an end user to see
 should be included in @file{inst}.  Note that if the named exceptions
@@ -1064,7 +1064,7 @@ under @file{exec} are installed (and those with names starting with a
 dot are ignored), and they are all marked as executable (mode
 @code{755}, moderated by @samp{umask}) on POSIX platforms.  Note too
 that this may not be suitable for executable @emph{programs} since some
-platforms (including Mac OS X and Windows) support multiple
+platforms (including OS X and Windows) support multiple
 architectures using the same installed package directory.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
@@ -1169,7 +1169,7 @@ this should be declared in the @samp{SystemRequirements} field of its
 extensions @samp{BWidget} and @samp{Tktable} which are included with the
 @R{} for Windows installer @emph{are} extensions and do need to be
 declared.  @samp{Tktable} does ship as part of the Tcl/Tk provided on
-CRAN for Mac OS X, but you will need to tell your users how to make use
+CRAN for OS X, but you will need to tell your users how to make use
 of it:
 
 @example
@@ -1369,7 +1369,7 @@ quoted in makefiles and configure scripts.
 
 One of the more tricky tasks can be to find the headers and libraries of
 external software.  One tool which is increasingly available on
-Unix-alikes (but not Mac OS X) to do this is @command{pkg-config}.  The
+Unix-alikes (but not OS X) to do this is @command{pkg-config}.  The
 @file{configure} script will need to test for the presence of the
 command itself (see for example package @CRANpkg{Cairo}), and if present it
 can be asked if the software is installed, of a suitable version and for
@@ -1678,9 +1678,7 @@ SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
-are available for use in @file{src/Makevars} or
-@file{src/Makevars.win}.@footnote{But OpenMP support is not available
-with the default toolchain used prior to @R{} 2.14.2 on Windows.}
+are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
 Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS}
 and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
 conditioned on the use of OpenMP can be used inside @code{#ifdef
@@ -1697,21 +1695,18 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 There is nothing to say what version of OpenMP is supported: version 3.0
-(May 2008) is supported by recent versions of the main platforms (but
-note that Mac OS X binaries are currently built for 10.5 using compilers
-which support version 2.5), but portable packages cannot assume that end
-users have recent versions (there are some years-old versions of Linux
-in use), and it may be safest to assume version 2.5.
+(May 2008) is supported by recent versions of the Linux, Windows and
+Solaris platforms, but portable packages cannot assume that end users
+have recent versions (there are some years-old versions of Linux in
+use), and it may be safest to assume version 2.5.
 
 C/C++ code written to use OpenMP should include @code{omp} pragmas and
 other OpenMP-specific code in @code{#ifdef _OPENMP ... #endif}.
 
-OpenMP support is available on Windows in the toolchain used for @R{}
-2.15.0 and these macros will be set appropriately.
-
 The performance of OpenMP varies substantially between platforms.  Both
-the Mac OS X and Windows implementations have substantial overheads and
-are only beneficial if quite substantial tasks are run in parallel.
+the Windows and OS X (where available) implementations have substantial
+overheads and are only beneficial if quite substantial tasks are run in
+parallel.
 
 Calling any of the @R{} API from threaded code is `for experts only':
 they will need to read the source code to determine if it is
@@ -2289,9 +2284,9 @@ although a @code{C} locale is rarely used at a console, it may be the
 default if logging in remotely or for batch jobs.
 
 @quotation Multiple sub-architectures
-On systems which support multiple sub-architectures (principally Windows
-and Mac OS X), @command{R CMD check} will install and check a package
-which contains compiled code under all available sub-architectures. (Use
+On systems which support multiple sub-architectures (principally
+Windows), @command{R CMD check} will install and check a package which
+contains compiled code under all available sub-architectures. (Use
 option @option{--force-multiarch} to force this for packages without
 compiled code, which are otherwise only checked under the main
 sub-architecture.)  This will run the loading tests, examples and
@@ -2328,7 +2323,7 @@ Packages may be distributed in source form as ``tarballs''
 (@file{.tar.gz} files) or in binary form. The source form can be
 installed on all platforms with suitable tools and is the usual form for
 Unix-like systems; the binary form is platform-specific, and is the more
-common distribution form for the Windows and Mac platforms.
+common distribution form for the Windows and OS X platforms.
 
 Using @command{R CMD build}, the @R{} package builder, one can build @R{}
 package tarballs from their sources (for example, for subsequent release).
@@ -2439,7 +2434,7 @@ packages.  They contain compiled shared libraries rather than C, C++ or
 Fortran source code, and the R functions are included in their installed
 form.  The format and filename are platform-specific; for example, a
 binary package for Windows is usually supplied as a @file{.zip} file,
-and for the Mac platform the default binary package file extension is
+and for the OS X platform the default binary package file extension is
 @file{.tgz}.
 
 The recommended method of building binary packages is to use
@@ -2482,9 +2477,9 @@ where @file{location} is the chosen directory with write access. The package
 will be installed as a subdirectory of @file{location}, and the package binary
 will be created in the current directory.
 
-Other options for @command{R CMD INSTALL} can be found using
-@command{R CMD INSTALL --help}, and platform-specific details for special
-cases (e.g. handling Fortran sources on Mac OS X) are discussed in the
+Other options for @command{R CMD INSTALL} can be found using @command{R
+CMD INSTALL --help}, and platform-specific details for special cases
+(e.g. handling Fortran sources on OS X) are discussed in the
 platform-specific FAQs.
 
 
@@ -2506,8 +2501,8 @@ Windows platform.
 @cindex Sweave
 
 @menu
-* Encodings and vignettes::
-* Non-Sweave vignettes::
+* Encodings and vignettes::     
+* Non-Sweave vignettes::        
 @end menu
 
 In addition to the help files in @file{Rd} format, @R{} packages allow
@@ -2707,7 +2702,7 @@ encoding, so @file{fortunes.tex} will be in UTF-8 in any locale.  Had
 @code{read.table} been told the data were UTF-8, @file{fortunes.tex}
 would have been in the locale's encoding.
 
-@node Non-Sweave vignettes, , Encodings and vignettes, Writing package vignettes
+@node Non-Sweave vignettes,  , Encodings and vignettes, Writing package vignettes
 @subsection Non-Sweave vignettes
 
 New in @R{} version 3.0.0 is the possibility of vignettes in formats
@@ -2905,7 +2900,7 @@ Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux,
 Fedora and Solaris check systems on @acronym{CRAN} use current
 TexLive; the Windows @acronym{CRAN} builder uses a reasonably recent
 version of MikTeX (including all packages available directly for
-MikTeX); the Mac OS X builders use a current full version of MacTeX,
+MikTeX); the OS X builder uses a current full version of MacTeX,
 which includes all of the current TeXLive.  Developers wanting to have
 their vignettes use @TeX{} packages or style files not (yet) included
 in these distributions should add@footnote{if their license allows:
@@ -2952,12 +2947,12 @@ compression (see below).
 
 Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
 for Windows and packages in Debian/Ubuntu/Fedora 17, and is installed as
-part of the @acronym{CRAN} Mac OS X distribution of @R{}), there is an
+part of the @acronym{CRAN} OS X distribution of @R{}), there is an
 option @option{--compact-vignettes} to @command{R CMD build} to run
 @command{qpdf} over PDF files under @file{inst/doc} and replace them if
 at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
 command can be supplied as environment variable @env{R_QPDF} (and is on
-the CRAN binary of @R{} for Mac OS X).  This option can take values
+the CRAN binary of @R{} for OS X).  This option can take values
 @samp{qpdf} (the default) as well as @samp{gs} or @samp{both} to try
 harder to reduce the size.  These should definitely be tried before
 submission to CRAN for packages with more than 250Kb of PDF files: as
@@ -3847,10 +3842,10 @@ for syntax checking.
 @node Binary distribution,  , Encoding issues, Writing portable packages
 @subsection Binary distribution
 
-If you want to distribute a binary version of a package on Windows or
-Mac OS X, there are further checks you need to do to check it is
-portable: it is all too easy to depend on external software on your own
-machine that other users will not have.
+If you want to distribute a binary version of a package on Windows or OS
+X, there are further checks you need to do to check it is portable: it
+is all too easy to depend on external software on your own machine that
+other users will not have.
 
 For Windows, check what other DLLs your package's DLL depends on
 (`imports' from in the DLL tools' parlance).  A convenient GUI-based
@@ -3866,9 +3861,10 @@ makefiles, watch out in particular for dependencies on the toolchain's
 runtime DLLs such as @file{libgfortran}, @file{libstdc++} and
 @file{libgcc_s}.
 
-For Mac OS X, using @code{R CMD otool -L} on the package's shared
-objects under @file{libs} will show what they depend on: watch for any
-dependencies in @file{/usr/local/lib}, notably @file{libgfortran.2.dylib}.
+For OS X, using @code{R CMD otool -L} on the package's shared objects
+under @file{libs} will show what they depend on: watch for any
+dependencies in @file{/usr/local/lib}, notably
+@file{libgfortran.2.dylib}.
 
 @node Diagnostic messages, Internationalization, Writing portable packages, Creating R packages
 @section Diagnostic messages
@@ -5938,7 +5934,7 @@ more memory than is conveniently available or when memory allocation and
 copying of objects is responsible for slow code. There are three ways to
 profile memory use over time in @R{} code. All three require @R{} to
 have been compiled with @option{--enable-memory-profiling}, which is not
-the default, but is currently used for the Mac OS X and Windows binary
+the default, but is currently used for the OS X and Windows binary
 distributions. All can be misleading, for different reasons.
 
 In understanding the memory profiles it is useful to know a little more
@@ -6099,7 +6095,7 @@ profile DLLs on Windows.
 @menu
 * Linux::                       
 * Solaris::                     
-* Mac OS X::                    
+* OS X::                        
 @end menu
 
 @node Linux, Solaris, Profiling compiled code, Profiling compiled code
@@ -6189,14 +6185,14 @@ the times spent in each section, if the appropriate source code was
 compiled with debugging support, and @command{opreport -c} to generate a
 callgraph (if collection was enabled and the platform supports this).
 
-@node Solaris, Mac OS X, Linux, Profiling compiled code
+@node Solaris, OS X, Linux, Profiling compiled code
 @subsection Solaris
 
 On 64-bit (only) Solaris, the standard profiling tool @command{gprof}
 collects information from shared objects compiled with @option{-pg}.
 
-@node Mac OS X,  , Solaris, Profiling compiled code
-@subsection Mac OS X
+@node OS X,  , Solaris, Profiling compiled code
+@subsection OS X
 
 Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version), @command{Shark} (in version of @code{Xcode}
@@ -6704,11 +6700,11 @@ mechanism can be helpful in isolating memory protect problems.
 @subsection Using valgrind
 
 If you have access to Linux on an @cputype{ix86}, @cputype{x86_64},
-@cputype{ppc32}, @cputype{ppc64} or @cputype{s390x} platform, or Mac OS
-10.5/6/7 on @cputype{i386} or @cputype{x86_64} you can use
-@code{valgrind} (@uref{http://www.valgrind.org/}, pronounced to rhyme
-with `tinned') to check for possible problems.  To run some examples
-under @code{valgrind} use something like
+@cputype{ppc32}, @cputype{ppc64} or @cputype{s390x} platform, or (some
+versions of) OS X you can use @code{valgrind}
+(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+check for possible problems.  To run some examples under @code{valgrind}
+use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
@@ -6731,10 +6727,7 @@ and similar) so you may need to build a version of @R{} specifically to
 use with @code{valgrind}.
 
 On Mac OS 10.6/7 the valgrind session is liable to hang when @R{}
-terminates.  This was an issue in @command{valgrind} prior to 3.8.1 and
-can be circumvented by setting the environment variable
-@env{R_OSX_VALGRIND}.  It is still necessary to avoid the use of
-@code{system()} in the @R{} session, directly or indirectly.
+terminates with @command{valgrind} prior to 3.8.1.
 
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in
@@ -6801,7 +6794,7 @@ It is possible to run all the examples, tests and vignettes covered by
 @noindent
 or setting the environment variable @env{VALGRIND_OPTS}.
 
-On Mac OS X you may need to ensure that debugging symbols are made
+On OS X you may need to ensure that debugging symbols are made
 available (so @command{valgrind} reports line numbers in files).  This
 can usually be done with the @command{valgrind} option
 @option{--dysmutil=yes} to ask for the symbols to be dumped when the
@@ -7317,8 +7310,8 @@ C/C++ code that includes @file{Rinternals.h} should be called via
 @findex dyn.unload
 
 Compiled code to be used with @R{} is loaded as a shared object
-(Unix-alikes including Mac OS X, @pxref{Creating shared objects} for
-more information) or DLL (Windows).
+(Unix-alikes including OS X, @pxref{Creating shared objects} for more
+information) or DLL (Windows).
 
 The shared object/DLL is loaded by @code{dyn.load} and unloaded by
 @code{dyn.unload}.  Unloading is not normally necessary, but it is
@@ -7622,7 +7615,7 @@ can make a large difference.  The results can depend quite markedly on
 the OS (and even if it is 32- or 64-bit), on the version of @R{} and
 what else is loaded into @R{} at the time.
 
-To fix ideas, first consider @code{x84_64} Mac OS 10.7 and @R{} 2.15.2.  A
+To fix ideas, first consider @code{x84_64} OS 10.7 and @R{} 2.15.2.  A
 simple @code{.Call} function might be
 @example
 foo <- function(x) .Call("foo", x)
@@ -8044,7 +8037,7 @@ which will give an empty path component if sub-architectures are not in
 use (but that works on current platforms).
 
 For a dynamic library @file{packB/libs/libpackB.so}
-(@file{packB/libs/libpackB.dylib} on Mac OS X) we could use
+(@file{packB/libs/libpackB.dylib} on OS X) we could use
 
 @example
 PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, package="packB", mustWork=TRUE))' \
@@ -8055,17 +8048,16 @@ PKG_LIBS=-L"$(PKGB_PATH)" -lpackB
 @noindent
 This will work for installation, but very likely not when package
 @code{packB} is loaded, as the path to package @pkg{packB}'s @file{libs}
-directory is not in the @command{ld.so}@footnote{@command{dyld} on Mac
-OS X, and @env{DYLD_LIBRARY_PATHS} below.}  search path.  You can
-arrange to put it there @strong{before} @R{} is launched by setting (on
-some platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to
-the @command{ld.so} cache (see @command{man ldconfig}).  On platforms
-that support it, the path to the dynamic library can be hardcoded at
-install time (which assumes that the location of package @pkg{packB}
-will not be changed) nor the package updated to a changed API).  On
-systems with the @acronym{GNU}
-linker (e.g.@: Linux) and some others (e.g.@: Mac OS X) this can be done
-by
+directory is not in the @command{ld.so}@footnote{@command{dyld} on OS X,
+and @env{DYLD_LIBRARY_PATHS} below.}  search path.  You can arrange to
+put it there @strong{before} @R{} is launched by setting (on some
+platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to the
+@command{ld.so} cache (see @command{man ldconfig}).  On platforms that
+support it, the path to the dynamic library can be hardcoded at install
+time (which assumes that the location of package @pkg{packB} will not be
+changed) nor the package updated to a changed API).  On systems with the
+@acronym{GNU} linker (e.g.@: Linux) and some others (e.g.@: OS X)
+this can be done by
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
@@ -11743,9 +11735,9 @@ front-ends).
 @node Embedding R under Unix-alikes, Embedding R under Windows, Linking GUIs and other front-ends to R, Linking GUIs and other front-ends to R
 @section Embedding R under Unix-alikes
 
-@R{} can be built as a shared library@footnote{In the parlance of Mac OS
-X this is a @emph{dynamic} library, and is the normal way to build @R{}
-on that platform.} if configured with @option{--enable-R-shlib}.  This
+@R{} can be built as a shared library@footnote{In the parlance of OS X
+this is a @emph{dynamic} library, and is the normal way to build @R{} on
+that platform.} if configured with @option{--enable-R-shlib}.  This
 shared library can be used to run @R{} from alternative front-end
 programs.  We will assume this has been done for the rest of this
 section.  Also, it can be built as a static library if configured with
@@ -11754,7 +11746,7 @@ way.
 
 The command-line @R{} front-end, @file{@var{R_HOME}/bin/exec/R} is one
 such example, and the former @acronym{GNOME} (see package @pkg{gnomeGUI}
-on @acronym{CRAN}'s @samp{Archive} area) and Mac OS X consoles are
+on @acronym{CRAN}'s @samp{Archive} area) and OS X consoles are
 others.  The source for @file{@var{R_HOME}/bin/exec/R} is in file
 @file{src/main/Rmain.c} and is very simple
 
@@ -12257,9 +12249,9 @@ appropriately.
 
 These will be set@footnote{at least on platforms where the values are
 available, that is having @code{getrlimit} and on Linux or having
-@code{sysctl} supporting @code{KERN_USRSTACK}, including FreeBSD and
-Mac OS X.} when @code{Rf_initialize_R} is called, to values appropriate to
-the main thread.  Stack-checking can be disabled by setting
+@code{sysctl} supporting @code{KERN_USRSTACK}, including FreeBSD and OS
+X.} when @code{Rf_initialize_R} is called, to values appropriate to the
+main thread.  Stack-checking can be disabled by setting
 @code{R_CStackLimit = (uintptr_t)-1}, but it is better to if possible
 set appropriate values.  (What these are and how to determine them are
 OS-specific, and the stack size limit may differ for secondary threads.

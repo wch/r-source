@@ -2360,7 +2360,7 @@ internationalized in the same way as other packages.
 * R code::                      
 * Main C code::                 
 * Windows-GUI-specific code::   
-* Mac OS X GUI::                
+* OS X GUI::                    
 * Updating::                    
 @end menu
 
@@ -2427,7 +2427,7 @@ The macro @code{_("msg")} can safely be used in directory
 translation.  (This does not apply to @code{N_} or @code{P_}).
 
 
-@node Windows-GUI-specific code, Mac OS X GUI, Main C code, Internationalization in the R sources
+@node Windows-GUI-specific code, OS X GUI, Main C code, Internationalization in the R sources
 @section Windows-GUI-specific code
 
 Messages for the Windows GUI are in a separate domain @samp{RGui}.  This
@@ -2457,14 +2457,14 @@ The template and message catalogs for the @samp{RGui} domain are in the
 top-level @file{po} directory.
 
 
-@node Mac OS X GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
-@section Mac OS X GUI
+@node OS X GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
+@section OS X GUI
 
 This is handled separately: see
 @uref{http://developer.r-project.org/Translations.html}.
 
 
-@node Updating,  , Mac OS X GUI, Internationalization in the R sources
+@node Updating,  , OS X GUI, Internationalization in the R sources
 @section Updating
 
 See file @file{po/README} for how to update the message templates and catalogs.
@@ -2653,13 +2653,13 @@ All these functions do tilde expansion, in the same way as
 @code{path.expand}, with the deliberate exception of @code{Sys.glob}.
 
 File names may be case sensitive or not: the latter is the norm on
-Windows and Mac OS X, the former on other Unix-alikes.  Note that this
+Windows and OS X, the former on other Unix-alikes.  Note that this
 is a property of both the OS and the file system: it is often possible
 to map names to upper or lower case when mounting the file system.  This
 can affect the matching of patterns in @code{list.files} and
 @code{Sys.glob}.
 
-File names commonly contain spaces on Windows and Mac OS X but not
+File names commonly contain spaces on Windows and OS X but not
 elsewhere.  As file names are handled as character strings by @R{},
 spaces are not usually a concern unless file names are passed to other
 process, e.g.@: by a @code{system} call.
@@ -3632,7 +3632,7 @@ modified startup sequence.
 
 However, the main way to run a GUI console is to launch a separate
 program which runs embedded @R{}: this is done by @command{Rgui.exe} on
-Windows and @command{R.app} on Mac OS X.  The first is an integral part
+Windows and @command{R.app} on OS X.  The first is an integral part
 of @R{} and the code for the console is currently in @file{R.dll}.
 
 @menu
@@ -3642,7 +3642,7 @@ of @R{} and the code for the console is currently in @file{R.dll}.
 @node R.app,  , GUI consoles, GUI consoles
 @section R.app
 
-@command{R.app} is a Mac OS X application which provides a console.  Its
+@command{R.app} is a OS X application which provides a console.  Its
 sources are a separate project@footnote{an Xcode project, in SVN at
 @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI}.}, and its binaries
 link to an @R{} installation which it runs as a dynamic library
@@ -3660,7 +3660,7 @@ resolves to
 which is (in the @acronym{CRAN} distribution) a `fat' binary containing
 multiple sub-architectures.
 
-Mac OS X applications are directory trees: each @command{R.app} contains
+OS X applications are directory trees: each @command{R.app} contains
 a front-end written in Objective-C for one sub-architecture: in the
 standard distribution there are separate applications for 32- and 64-bit
 Intel architectures.
@@ -3684,7 +3684,7 @@ There is a @command{configure} option @option{--with-aqua} for @R{}
 which customizes the way @R{} is built: this is distinct from the
 @option{--enable-R-framework} option which causes @command{make install}
 to install @R{} as the framework needed for use with @code{R.app}.  (The
-option @option{--with-aqua} is the default on Mac OS X.)  It sets the
+option @option{--with-aqua} is the default on OS X.)  It sets the
 macro @code{HAVE_AQUA} in @file{config.h} and the make variable
 @code{BUILD_AQUA_TRUE}.  These have several consequences:
 
@@ -3693,7 +3693,7 @@ macro @code{HAVE_AQUA} in @file{config.h} and the make variable
 The @code{quartz()} device is built (other than as a stub) in package
 @pkg{grDevices}: this needs an Objective-C compiler.  Then
 @code{quartz()} can be used with terminal @R{} provided the latter has
-access to the Mac OS X screen.
+access to the OS X screen.
 
 @item
 File @code{src/unix/aqua.c} is compiled.  This now only contains an
@@ -3934,7 +3934,7 @@ Should @command{du} be used to find the installed sizes of packages?
 but this option allows the check to be overruled if an unsuitable
 command is found (including one that does not respect the @option{-k}
 flag to report in units of 1Kb, or reports in a different format -- the
-GNU, Mac OS X and Solaris @command{du} commands have been tested).
+GNU, OS X and Solaris @command{du} commands have been tested).
 Default: true if @command{du} is found.
 @item _R_CHECK_DOC_SIZES_
 Should @command{qpdf} be used to check the installed sizes of PDFs?
@@ -4096,7 +4096,7 @@ other commonly-used repositories.
 
 @cindex coding standards
 @R{} is meant to run on a wide variety of platforms, including Linux and
-most variants of Unix as well as Windows and Mac OS X.
+most variants of Unix as well as Windows and OS X.
 Therefore, when extending @R{} by either adding to the @R{} base
 distribution or by providing an add-on package, one should not rely on
 features specific to only a few supported platforms, if this can be
@@ -4114,7 +4114,7 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 An ISO C99 C compiler.  Note that extensions such as @acronym{POSIX}
 1003.1 must be tested for, typically using Autoconf unless you are sure
 they are supported on all mainstream @R{} platforms (including Windows
-and Mac OS X).  Packages will be more portable to @R{} < 2.12.0 if
+and OS X).  Packages will be more portable to @R{} < 2.12.0 if
 written assuming only C89, but this should not be done where using C99
 features will make for cleaner or more robust code.
 

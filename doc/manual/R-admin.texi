@@ -1513,7 +1513,7 @@ other output to @file{stderr} are printed in bold.
 @node Uninstalling under OS X,  , Running R under OS X, Installing R under (Mac) OS X
 @section Uninstalling under OS X
 
-@R{} for Mac OS X consists of two parts: the GUI (@Rapp{}) and the R
+@R{} for OS X consists of two parts: the GUI (@Rapp{}) and the R
 framework. The un-installation is as simple as removing those folders
 (e.g.@: by dragging them into the Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
@@ -3188,7 +3188,7 @@ Intel's Math Kernel Library
 (@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
 strongly encouraged to read the MKL User's Guide, which is installed
 with the library, before attempting to link to MKL.  There are also
-versions of MKL for Mac OS X and Windows, but they did not work with the
+versions of MKL for OS X and Windows, but they did not work with the
 standard compilers used for @R{} on those platforms.
 
 The MKL interface has changed several times, and may change again: the
@@ -3888,7 +3888,7 @@ FreeBSD: __FreeBSD__
 HP-UX: __hpux__, __hpux
 IRIX: sgi, __sgi
 Linux: __linux__
-Mac OS X: __APPLE__
+OS X: __APPLE__
 NetBSD: __NetBSD__
 OpenBSD: __OpenBSD__
 Solaris: __sun, sun

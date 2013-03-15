@@ -7206,7 +7206,7 @@ this does not help with the MiKTeX build of @LaTeX{}, but
 @node Invoking R under OS X, Scripting with R, Invoking R under Windows, Invoking R
 @appendixsec Invoking R under OS X
 
-There are two ways to run @R{} under Mac OS X.  Within a @code{Terminal.app}
+There are two ways to run @R{} under OS X.  Within a @code{Terminal.app}
 window by invoking @code{R}, the methods described in the first
 subsection apply.  There is also console-based GUI (@code{R.app}) that by
 default is installed in the @code{Applications} folder on your
@@ -7278,7 +7278,7 @@ the usual way for the shell running the command.
 
 If you do not wish to hardcode the path to @command{Rscript} but have it
 in your path (which is normally the case for an installed @R{} except on
-Windows, but e.g.@: Mac OS X users may need to add @file{/usr/local/bin}
+Windows, but e.g.@: OS X users may need to add @file{/usr/local/bin}
 to their path), use
 
 @example
@@ -7338,7 +7338,7 @@ When the @acronym{GNU} @strong{readline} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
 line editor allowing recall, editing and re-submission of prior commands
 is used.  Note that other versions of @strong{readline} exist and may be
-used by the inbuilt command line editor: this used to happen on Mac OS X.
+used by the inbuilt command line editor: this used to happen on OS X.
 
 It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}
