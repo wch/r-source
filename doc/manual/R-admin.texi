@@ -3539,9 +3539,8 @@ command line as
 If you are building in a directory different from the sources, there can
 be copies of @file{config.site} in the source and the build directories,
 and both will be read (in that order).  In addition, if there is a file
-@file{~/.R/config} (or failing that) @code{~/.Rconfig}), it is read
-between the @file{config.site} files in the source and the build
-directories.
+@file{~/.R/config}, it is read between the @file{config.site} files in
+the source and the build directories.
 
 There is also a general @command{autoconf} mechanism for
 @file{config.site} files, which are read before any of those mentioned
@@ -4371,7 +4370,18 @@ install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to install
 @uref{http://cran.r-project.org/bin/macosx/tools/tcltk-8.5.5-x11.dmg}
 which is a binary package for the X11-based Tcl/Tk (as used on other
-Unix-alikes).
+Unix-alikes).  This may need
+@example
+--with-tcl-config=/usr/local/lib/tclConfig.sh 
+--with-tk-config=/usr/local/lib/tkConfig.sh
+@end example
+@noindent
+and on a system with XQuartz, @file{tkConfig.sh} needed to be edited to
+have
+@example
+TK_XINCLUDES='-I/opt/X11/include'
+@end example
+
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of

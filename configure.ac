@@ -124,13 +124,6 @@ cfile="${HOME}/.R/config"
 if test -r "${cfile}"; then
   echo "loading user script '${cfile}'"
   . "${cfile}"
-else
-  ## NB: undocumented, replaced ~/.Rconf in late 2004, latter removed in 2009
-  cfile="${HOME}/.Rconfig"
-  if test -r "${cfile}"; then
-    echo "loading user script '${cfile}'"
-    . "${cfile}"
-  fi
 fi
 cfile="./config.site"
 if test -r "${cfile}"; then

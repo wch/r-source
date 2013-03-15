@@ -909,6 +909,9 @@
       \item On Windows, the stack size is reduced to 16MB on 32-bit
       systems: misguided users were launching many threads without
       controlling the stack size.
+
+      \item \command{configure} no longer looks for file
+      \file{~/.Rconfig}: \file{~/.R/config} has long been preferred.
     }
   }
 
