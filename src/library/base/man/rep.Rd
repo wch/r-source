@@ -1,6 +1,6 @@
 % File src/library/base/man/rep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rep}
@@ -18,7 +18,7 @@
   function, and the (internal) default method is described here.
 
   \code{rep.int} and \code{rep_len} are faster simplified versions for
-  two common cases.
+  two common cases.  They are not generic.
 }
 \usage{
 rep(x, \dots)

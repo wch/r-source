@@ -480,7 +480,7 @@ and Courier.  This works well both for on-screen viewing and for
 printing.  One disadvantage is that the Usage and Examples sections may
 come out rather wide: this can be overcome by using @emph{in addition}
 either of the options @code{inconsolata} (which is part of the current
-default, on a Unix-alike, only if found by @command{configure}) or
+default, on a Unix-alike only if found by @command{configure}) or
 @code{beramono}, which replace the Courier monospaced font by
 Inconsolata or Bera Sans mono respectively.  (You will need the
 appropriate @LaTeX{} package @pkg{inconsolata} or @pkg{bera}
@@ -1524,7 +1524,8 @@ If you want to get rid of @R{} more completely using a Terminal, simply
 run (prepend @code{sudo} if needed):
 
 @example
-rm -rf /Library/Frameworks/R.framework /Applications/R.app /usr/bin/R /usr/bin/Rscript
+rm -rf /Library/Frameworks/R.framework /Applications/R.app \
+   /usr/bin/R /usr/bin/Rscript
 @end example
 
 An alternative is to use Apple's @code{pkgutil} tool. The installation
@@ -1762,9 +1763,10 @@ this will be selected automatically if the name given is a single
 
 @code{install.packages} can look in several repositories, specified as a
 character vector by the argument @code{repos}: these can include a
-@acronym{CRAN} mirror, Bioconductor, Omegahat, R-forge, local archives,
-local files, @dots{}).  Function @code{setRepositories()} can select
-amongst those repositories that the @R{} installation is aware of.
+@acronym{CRAN} mirror, Bioconductor, Omegahat, R-forge, rforge.net,
+local archives, local files, @dots{}).  Function
+@code{setRepositories()} can select amongst those repositories that the
+@R{} installation is aware of.
 
 Naive users sometimes forget that as well as installing a package, they
 have to use @code{library} to make its functionality available.
@@ -1877,7 +1879,7 @@ sudo mv bwidget-1.9.5 /usr/local/lib
 It may be possible to use other compilers with the CRAN distribution of
 @R{}, but the settings in the file
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} will need
-to be changed, either by editing the file or in a file such as
+to be changed, either by editing that file or in a file such as
 @file{~/.R/Makevars} (see the next section).  Entries which may need to
 be changed include @samp{CC}, @samp{CXX}, @samp{CXXCPP},
 @samp{DYLIB_LD}, @samp{FC}, @samp{F77}, @samp{SHLIB_CXXLD},
@@ -1924,8 +1926,8 @@ appropriate).  This is read immediately after @file{Makeconf}.
 
 When installing packages from their sources, there are some extra
 considerations on installations which use sub-architectures.  These are
-commonly used on Windows and were used on OS X in @R{} 2.x.y, but can in
-principle be used on other platforms.
+commonly used on Windows but can in principle be used on other
+platforms.
 
 When a source package is installed by a build of @R{} which supports
 multiple sub-architectures, the normal installation process installs the
@@ -2978,7 +2980,7 @@ sub-architecture-specific version), e.g.
 @example
 JAVA = /usr/bin/java
 JAVAC = /usr/bin/javac
-JAVA_HOME = /usr/java/jdk1.7.0_15/jre
+JAVA_HOME = /usr/java/jdk1.7.0_17/jre
 JAVA_LD_LIBRARY_PATH = $(JAVA_HOME)/lib/amd64/server
 JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server -ljvm
 @end example
@@ -3076,7 +3078,7 @@ the test suite.
 @menu
 * ATLAS::                       
 * ACML::                        
-* Goto BLAS::                   
+* Goto and OpenBLAS::           
 * MKL::                         
 * Shared BLAS::                 
 @end menu
@@ -3122,7 +3124,7 @@ Consult its file @file{INSTALL.txt} for how to build ATLAS with
 position-independent code (at least on version 3.8.0 and later): that
 file also describes how to build ATLAS as a shared library.
 
-@node ACML, Goto BLAS, ATLAS, BLAS
+@node ACML, Goto and OpenBLAS, ATLAS, BLAS
 @subsubsection ACML
 
 @c : there used to be Solaris 10, but it seems no more.
@@ -3156,8 +3158,8 @@ way to use ACML.
 The version last tested (5.1.0) failed the @file{reg-BLAS.R} test in its
 handling of @code{NA}s.
 
-@node Goto BLAS, MKL, ACML, BLAS
-@subsubsection Goto BLAS
+@node Goto and OpenBLAS, MKL, ACML, BLAS
+@subsubsection Goto and OpenBLAS
 
 Dr Kazushige Goto wrote another tuned @acronym{BLAS} which is
 available for several processors and OSes.  The current version is known
@@ -3179,7 +3181,7 @@ updated for CPUs released since mid-2010.  However, OpenBLAS
 (@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant project with
 support for some current CPUs.
 
-@node MKL, Shared BLAS, Goto BLAS, BLAS
+@node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
 For Intel processors@footnote{and perhaps others} under Linux, there is
 Intel's Math Kernel Library
@@ -3735,10 +3737,6 @@ Compiling the version of LAPACK in the @R{} sources also requires some
 Fortran 90 extensions, but these are not needed if an external LAPACK is
 used.
 
-@cindex BLAS library
-For performance reasons@footnote{e.g., to use an optimized @acronym{BLAS} on
-Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
-
 It might be possible to use @command{f2c}, the FORTRAN-to-C converter
 (@uref{http://www.netlib.org/@/f2c}), via a script.  (An example script
 is given in @file{scripts/f77_f2c}: this can be customized by setting
@@ -4108,6 +4106,10 @@ on the Clang front-ends, invoked by @code{CC=clang CXX=clang++},
 together with @command{gfortran}.  These take very similar options to
 the corresponding GCC compilers.
 
+This has to be used in conjunction with a Fortran compiler: the
+@command{configure} code will remove @option{-lgcc} from @env{FLIBS},
+which is needed for some versions of @command{gfortran}.
+
 @node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
 @subsection Intel compilers
 
@@ -4286,6 +4288,8 @@ F77="/opt/R/bin/gfortran-4.7 -mtune=native"
 FC=$F77
 OBJC="clang  -mtune=native"
 @end example
+
+@noindent
 (It is necessary to use @code{clang} from the Xcode command-line tools.)
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
@@ -4424,10 +4428,12 @@ JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
 JAVA_LD_LIBRARY_PATH=
 JAVA_LIBS="-framework JavaVM"
 @end example
+@noindent
 The Apple developer versions of the JDK install somewhere like
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
 @end example
+@noindent
 The Oracle JDK can be specified explicitly by something like
 @example
 JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home
@@ -4685,8 +4691,7 @@ some builds, including for @cputype{amd64}, it fails in
 
 As from @R{} 3.0.0 parsing very complex expressions needs a lot of stack
 space when the Oracle compilers are used: several packages require the
-stack increased to say 20MB, and even then @CRANpkg{biclust} will not
-install.
+stack increased to say 20MB.
 
 
 @menu
