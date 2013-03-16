@@ -1178,6 +1178,9 @@
     }
     args0 <- args
 
+    startdir <- getwd()
+    if (is.null(startdir))
+        stop("current working directory cannot be ascertained")
     lib <- lib0 <- ""
     clean <- FALSE
     preclean <- FALSE
