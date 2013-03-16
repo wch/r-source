@@ -742,14 +742,14 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 
     ver <- paste(R.version$major,
                  strsplit(R.version$minor, ".", fixed=TRUE)[[1L]][1L], sep = ".")
-    mac.subtype <- "universal"
+    mac.path <- "macosx"
     if (substr(type, 1L, 11L) == "mac.binary.") {
-        mac.subtype <- substring(type, 12L)
+        mac.path <- paste(mac.path, substring(type, 12L), sep = "/")
         type <- "mac.binary"
     }
     res <- switch(type,
 		"source" = paste(gsub("/$", "", repos), "src", "contrib", sep = "/"),
-                "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", mac.subtype, "contrib", ver, sep = "/"),
+                "mac.binary" = paste(gsub("/$", "", repos), "bin", mac.path, "contrib", ver, sep = "/"),
                 "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep = "/")
                )
     res

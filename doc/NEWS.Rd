@@ -583,6 +583,9 @@
       \item Package vignettes can now be processed by other engines
       besides \code{Sweave}; see \sQuote{Writing R Extensions} and the
       \code{tools::vignetteEngine} help topic for details.
+
+      \item The package type \code{"mac.binary"} now results in a path
+      without Mac subtype (which used to be \code{"universal"}).
     }
   }
 
