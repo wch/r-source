@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-03-05 r62136) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-16 r62274) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -908,7 +908,7 @@ attr(,"class")
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: vignetteEngine
-> ### Title: Set or get a vignette processing engine.
+> ### Title: Set or Get a Vignette Processing Engine
 > ### Aliases: vignetteEngine
 > ### Keywords: utilities documentation
 > 
