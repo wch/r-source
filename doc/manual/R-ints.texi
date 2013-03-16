@@ -87,8 +87,10 @@ This chapter is the beginnings of documentation about @R{} internal
 structures.  It is written for the core team and others studying the
 code in the @file{src/main} directory.
 
-It is a work-in-progress, first begun for @R{} 2.4.0, and should be
-checked against the current version of the source code.
+It is a work-in-progress and should be checked against the current
+version of the source code.  Versions for @R{} 2.x.y contain historical
+comments about when features were introduced: this version is for the
+3.x.y series.
 
 @menu
 * SEXPs::                       
@@ -222,8 +224,7 @@ have formals, body and environment.
 
 @cindex S4 type
 The @code{SEXPTYPE} @code{S4SXP} is for S4 objects which do not consist
-solely of a simple type such as an atomic vector or function.  Prior to
-@R{} 2.4.0 these were represented as empty lists.
+solely of a simple type such as an atomic vector or function.
 
 
 @node Rest of header, The 'data', SEXPTYPEs, SEXPs
@@ -1048,12 +1049,7 @@ is left brace, which is implemented as a primitive.} are
 `Special' primitive and internal functions evaluate their arguments
 internally @emph{after} @code{R_Visible} has been set, and evaluation of
 the arguments (e.g.@: an assignment as in PR#9263)) can change the value
-of the flag.  Prior to @R{} 2.5.0, known instances of such functions
-reset the flag after the internal evaluation of arguments: examples
-include @code{[}, @code{[[}, @code{$}, @code{c}, @code{cbind},
-@code{dump}, @code{rbind} and @code{unlist}, as well as the language
-constructs (which are primitives) @code{for}, @code{while} and
-@code{repeat}.
+of the flag.
 
 The @code{R_Visible} flag can also get altered during the evaluation of
 a function, with comments in the code about @code{warning},
@@ -1061,10 +1057,9 @@ a function, with comments in the code about @code{warning},
 (Since the C-level function @code{eval} sets @code{R_Visible}, this
 could apply to any function calling it.  Since it is called when
 evaluating promises, even object lookup can change @code{R_Visible}.)
-As from @R{} 2.5.0 internal and primitive functions force the documented
-setting of @code{R_Visible} on return, unless the C code is allowed to
-change it (the exceptions above are indicated by @code{PRIMPRINT} having
-value 2).
+Internal and primitive functions force the documented setting of
+@code{R_Visible} on return, unless the C code is allowed to change it
+(the exceptions above are indicated by @code{PRIMPRINT} having value 2).
 
 The actual autoprinting is done by @code{PrintValueEnv} in file
 @file{print.c}.  If the object to be printed has the S4 bit set and S4
@@ -1080,10 +1075,10 @@ is called.
 
 @cindex write barrier
 @cindex garbage collector
-@R{} has since version 1.2.0 had a generational garbage collector, and
-bit @code{gcgen} in the @code{sxpinfo} header is used in the
-implementation of this.  This is used in conjunction with the
-@code{mark} bit to identify two previous generations.
+@R{} has long had a generational garbage collector, and bit @code{gcgen}
+in the @code{sxpinfo} header is used in the implementation of this.
+This is used in conjunction with the @code{mark} bit to identify two
+previous generations.
 
 There are three levels of collections.  Level 0 collects only the
 youngest generation, level 1 collects the two youngest generations and
@@ -1135,20 +1130,19 @@ of the file (a single LF-terminated line) which the lower-level versions
 do not.
 
 @code{save} and @code{saveRDS} allow various forms of compression, and
-@command{gzip} compression has been the default (except for ASCII saves)
-since @R{} 2.4.0.  Compression is applied to the whole file stream,
-including the headers, so serialized files can be uncompressed or
-re-compressed by external programs.  Since @R{} 2.10.0 both @code{load}
-and @code{readRDS} can read @command{gzip}, @command{bzip2} and
-@command{xz} forms of compression when reading from a file, and
-@command{gzip} compression when reading from a connection.
+@command{gzip} compression is the default (except for ASCII saves).
+Compression is applied to the whole file stream, including the headers,
+so serialized files can be uncompressed or re-compressed by external
+programs.  Both @code{load} and @code{readRDS} can read @command{gzip},
+@command{bzip2} and @command{xz} forms of compression when reading from
+a file, and @command{gzip} compression when reading from a connection.
 
 @R{} has used the same serialization format since @R{} 1.4.0 in December
 2001.  Earlier formats are still supported via @code{load} and
 @code{save} but such formats are not described here. The current
 serialization format is called `version 2', and has been expanded in
-back-compatible ways since @R{} 1.4.0, for example to support additional
-@code{SEXPTYPE}s.
+back-compatible ways since its inception, for example to support
+additional @code{SEXPTYPE}s.
 
 @code{save} works by writing a single-line header (typically
 @code{RDX2\n} for a binary save: the only other current value is
@@ -1204,11 +1198,10 @@ their attributes after themselves.  Atomic vector objects write their
 length followed by the data: generic vector-list objects write their
 length followed by a call to @code{WriteItem} for each element.  The
 code for @code{CHARSXP}s special-cases @code{NA_STRING} and writes it as
-length @code{-1} with no data.  In @R{} 2.x.y the `length' is
-always written as a 32-bit integer: in later versions lengths no more
-than @code{2^31 - 1} are written in that way and larger lengths as
-@code{-1} followed by the upper and lower 32-bits as integers (regarded
-as unsigned).
+length @code{-1} with no data.  Lengths no more than @code{2^31 - 1} are
+written in that way and larger lengths (which only occur on 64-bit
+sytems) as @code{-1} followed by the upper and lower 32-bits as integers
+(regarded as unsigned).
 
 Environments are treated in several ways: as we have seen, some are
 written as specific pseudo-@code{SEXPTYPE}s.  Package and namespace
@@ -1232,34 +1225,22 @@ non-ASCII bytes.
 @node Encodings for CHARSXPs, The CHARSXP cache, Serialization Formats, R Internal Structures
 @section Encodings for CHARSXPs
 
-Character data in @R{} are stored in the sexptype @code{CHARSXP}.  Until
-@R{} 2.1.0 it was assumed that the data were in the platform's native
-8-bit encoding, and furthermore it was quite often assumed that the
-encoding was ISO Latin-1 or a near-superset (such as Windows' CP1252 or
-Latin-9).
+Character data in @R{} are stored in the sexptype @code{CHARSXP}.  
 
-As from @R{} 2.1.0 there was support for other encodings, in particular
-UTF-8 and the multi-byte encodings used on Windows for CJK languages.
-However, there was no way of indicating which encoding had been used,
-even if this was known (and e.g.@: @code{scan} would not know the
-encoding of the file it was reading).  This lead to packages with data
-in French encoded in Latin-1 in @code{.rda} files which could not be
-read in other locales (and they would be able to be displayed in a
-French UTF-8 locale, if not in non-UTF-8 Japanese locales).
-
-@R{} 2.5.0 introduced a limited means to indicate the encoding of a
-@code{CHARSXP} via two of the `general purpose' bits which are used to
-declare the encoding to be either Latin-1 or UTF-8.  (Note that it is
-possible for a character vector to contain elements in different
-encodings.)  Both printing and plotting notice the declaration and
-convert the string to the current locale (possibly using @code{<xx>} to
-display in hexadecimal bytes that are not valid in the current locale).
-Many (but not all) of the character manipulation functions will either
-preserve the declaration or re-encode the character string.
+There is support for encodings other than that of the current locale, in
+particular UTF-8 and the multi-byte encodings used on Windows for CJK
+languages. A limited means to indicate the encoding of a @code{CHARSXP}
+is @emph{via} two of the `general purpose' bits which are used to declare
+the encoding to be either Latin-1 or UTF-8.  (Note that it is possible
+for a character vector to contain elements in different encodings.)
+Both printing and plotting notice the declaration and convert the string
+to the current locale (possibly using @code{<xx>} to display in
+hexadecimal bytes that are not valid in the current locale).  Many (but
+not all) of the character manipulation functions will either preserve
+the declaration or re-encode the character string.
 
 Strings that refer to the OS such as file names need to be passed
-through a wide-character interface on some OSes (e.g. Windows), which is
-to a large extent done as from @R{} 2.7.0.
+through a wide-character interface on some OSes (e.g. Windows).
 
 When are character strings declared to be of known encoding?  One way is
 to do so directly via @code{Encoding}.  The parser declares the encoding
@@ -1273,20 +1254,18 @@ will work in any locale.  ASCII strings should never have a marked
 encoding, as any encoding will be ignored when entering such strings
 into the @code{CHARSXP} cache.
 
-The rationale behind considering only UTF-8 and Latin-1 is that most
+The rationale behind considering only UTF-8 and Latin-1 was that most
 systems are capable of producing UTF-8 strings and this is the nearest
 we have to a universal format.  For those that do not (for example those
 lacking a powerful enough @code{iconv}), it is likely that they work in
-Latin-1, the old @R{} assumption.
-
-This was taken further in @R{} 2.7.0.  There the parser can return a
+Latin-1, the old @R{} assumption. The the parser can return a
 UTF-8-encoded string if it encounters a @samp{\uxxx} escape for a
 Unicode point that cannot be represented in the current charset.  (This
 needs MBCS support, and was only enabled@footnote{See define
 @code{USE_UTF8_IF_POSSIBLE} in file @file{src/main/gram.c}.} on
-Windows.)  From @R{} 2.10.0 it is enabled for all platforms with MBCS
-support, and a @samp{\uxxx} or @samp{\Uxxxxxxxx} escape ensures that the
-parsed string will be marked as UTF-8.
+Windows.)  This is enabled for all platforms, and a @samp{\uxxx} or
+@samp{\Uxxxxxxxx} escape ensures that the parsed string will be marked
+as UTF-8.
 
 Most of the character manipulation functions now preserve UTF-8
 encodings: there are some notes as to which at the top of file
@@ -1302,7 +1281,7 @@ but that can be re-encoded to UTF-8 by setting @code{wantSymbolUTF8} to
 @samp{TRUE}.  The Windows' port of cairographics has a rather peculiar
 assumption: it wants the symbol font to be encoded in UTF-8 as if it
 were encoded in Latin-1 rather than Adobe Symbol: this is selected by
-@code{wantSymbolUTF8 = NA_LOGICAL} (as from @R{} 2.13.1).
+@code{wantSymbolUTF8 = NA_LOGICAL}.
 
 Windows has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
@@ -1325,13 +1304,13 @@ connection passed to those functions.
 @section The CHARSXP cache
 
 @findex mkChar
-A global cache for @code{CHARSXP}s created by @code{mkChar} was
-introduced in @R{} 2.6.0 -- the cache ensures that most @code{CHARSXP}s
-with the same contents share storage (`contents' including any declared
-encoding).  Not all @code{CHARSXP}s are part of the cache -- notably
-@samp{NA_STRING} is not. @code{CHARSXP}s reloaded from the @code{save}
-formats of @R{} prior to 0.99.0 are not cached (since the code used is
-frozen and few examples still exist).
+There is a global cache for @code{CHARSXP}s created by @code{mkChar} ---
+the cache ensures that most @code{CHARSXP}s with the same contents share
+storage (`contents' including any declared encoding).  Not all
+@code{CHARSXP}s are part of the cache -- notably @samp{NA_STRING} is
+not. @code{CHARSXP}s reloaded from the @code{save} formats of @R{} prior
+to 0.99.0 are not cached (since the code used is frozen and very few
+examples still exist).
 
 @findex mkCharLenCE
 The cache records the encoding of the string as well as the bytes: all
@@ -1376,8 +1355,7 @@ and @code{error} should be used for code called from a @code{.Internal}
 is not passed down).  However, there are two complications.  One is that
 code might be called from either a primitive or a @code{.Internal}, in
 which case probably @code{warningcall} is more appropriate.  The other
-involves replacement functions, where the call will be of the form
-(from @R{} < 2.6.0)
+involves replacement functions, where the call was once of the form
 @example
 > length(x) <- y ~ x
 Error in "length<-"(`*tmp*`, value = y ~ x) : invalid value
@@ -1633,7 +1611,7 @@ mechanism will warn far enough from the stack limit to allow for modest
 use of alloca).  (@code{do_makeunique} in file @file{src/main/unique.c}
 provides an example of both points.)
 
-As from @R{} 3.0.0 there is an alternative check,
+There is an alternative check,
 @findex R_CheckStack2
 @example
     R_CheckStack2(size_t extra);
@@ -1715,10 +1693,6 @@ chain of the vectors currently allocated via @code{R_alloc}.  Function
 value that has previously be obtained @emph{via} @code{vmaxget}:
 allocations after the value was obtained will no longer be protected and
 hence available for garbage collection.
-
-In @R{} 2.x.y, type @code{RAWSXP} was used for `small' allocations (less
-than 2^31 - 1 bytes) and type @code{REALSXP} for allocations up to 2^34
-- 1 bytes on 64-bit machines.
 
 @node Internal use of global and base environments, Modules, Memory allocators, R Internal Structures
 @section Internal use of global and base environments
@@ -1908,12 +1882,11 @@ compiling the @R{} sources on Windows.
 @node Lazy loading,  , Visibility, R Internal Structures
 @section Lazy loading
 
-Lazy loading was introduced in @R{} 2.0.0, for code in packages and for
-datasets in packages (the latter is still optional, but code is always
-lazy-loaded as from @R{} 2.14.0).  When a package/namespace which uses it
-is loaded, the package/namespace environment is populated with promises
-for all the named objects: when these promises are evaluated they load
-the actual code from a database.
+Lazy loading is always used for code in packages but is optional
+(selected by the package maintiner) for datasets in packages.  When a
+package/namespace which uses it is loaded, the package/namespace
+environment is populated with promises for all the named objects: when
+these promises are evaluated they load the actual code from a database.
 
 There are separate databases for code and data, stored in the @file{R}
 and @file{data} subdirectories.  The database consists of two files,
@@ -1935,7 +1908,7 @@ file.  Element @code{variables} has an entry for each named object:
 @code{references} serializes a temporary environment used when named
 environments are added to the database.  @code{compressed} is a logical
 indicating if the serialized objects were compressed: compression is
-always used nowadays. @R{} 2.10.0 added the values @code{compressed = 2}
+always used nowadays. We later added the values @code{compressed = 2}
 and @code{3} for @command{bzip2} and @command{xz} compression (with the
 possibility of future expansion to other methods): these formats add a
 fifth byte to the header for the type of compression, and stores
@@ -2203,10 +2176,9 @@ named argument that this (partially) matches the name given in the
 documentation: this is also done for replacement functions with one
 argument plus @code{value}.
 
-The net effect is that from @R{} 2.11.0 argument matching for primitives
-intended for end-user use is done in the same way as for interpreted
-functions except for the six exceptions where positional matching is
-required.
+The net effect is that argument matching for primitives intended for
+end-user use is done in the same way as for interpreted functions except
+for the six exceptions where positional matching is required.
 
 @menu
 * Special primitives::          
@@ -2515,9 +2487,7 @@ plus a file @file{Rdata.rds} which contain a named character vector used
 by @code{data()} in the (unusual) event that it is used for such a
 package.  Otherwise it is a copy of the @file{data} directory in the
 sources, with saved images re-compressed if @command{R CMD INSTALL
---resave-data} was used.  Prior to @R{} 2.12.0 the contents of the
-directory could be moved to a zip file @file{Rdata.zip} and a listing
-written in file @file{filelist}: this was principally done on Windows.
+--resave-data} was used.
 
 Subdirectory @file{demo} supports the @code{demo} function, and is
 copied from the sources.
@@ -2710,16 +2680,15 @@ specifications (the last being the current directory on drive
 @node Graphics Devices, GUI consoles, Files, Top
 @chapter Graphics
 
-@R{}'s graphics internals were revised for version 1.4.0 (and tidied up
-for 2.7.0).  This was to enable multiple graphics systems to be
-installed on top on the graphics `engine' -- currently there are two
-such systems, one supporting `base' graphics (based on that in S and
-whose @R{} code@footnote{The C code is in files @code{base.c},
-@code{graphics.c}, @code{par.c}, @code{plot.c} and @code{plot3d.c} in
-directory @file{src/main}.} is in package @pkg{graphics}) and one
-implemented in package @pkg{grid}.
+@R{}'s graphics internals were re-designed to enable multiple graphics
+systems to be installed on top on the graphics `engine' -- currently
+there are two such systems, one supporting `base' graphics (based on
+that in S and whose @R{} code@footnote{The C code is in files
+@code{base.c}, @code{graphics.c}, @code{par.c}, @code{plot.c} and
+@code{plot3d.c} in directory @file{src/main}.} is in package
+@pkg{graphics}) and one implemented in package @pkg{grid}.
 
-Some notes on the changes for 1.4.0 can be found at
+Some notes on the historical changes can be found at
 @uref{http://www.stat.auckland.ac.nz/@/~paul/@/R/basegraph.html} and
 @uref{http://www.stat.auckland.ac.nz/@/~paul/R/@/graphicsChanges.html}.
 
@@ -2771,10 +2740,9 @@ The device also sets a number of variables, mainly Boolean flags
 indicating its capabilities.  Devices work entirely in `device units'
 which are up to its developer: they can be in pixels, big points (1/72
 inch), twips, @dots{}, and can differ@footnote{although that needs to be
-handled carefully, as for example the @code{xspline} functions used
-prior to @R{} 2.7.0 to depend on the aspect ratio of the pixels, and the
-@code{circle} callback is given a radius (and that should be interpreted
-as in the x units).} in the @samp{x} and @samp{y} directions.
+handled carefully, as for example the @code{circle} callback is given a
+radius (and that should be interpreted as in the x units).} in the
+@samp{x} and @samp{y} directions.
 
 @c think of the engine as colors.c, devices.c, engine.c, plotmath.c, vfonts.c
 The next layer up is the graphics `engine' that is the main interface to
@@ -2867,14 +2835,11 @@ engine to obtain information about the device and initiate actions
 (e.g.@: a new page, plotting a line or some text).  Type @code{pDevDesc}
 is a pointer to this type.
 
-Prior to @R{} 2.14.0 all of the callback functions need to be set, to
-dummy functions if the capability (such as a locator) is not available.
-In devices which will only be used in @R{} 2.14.0 or later the following
-callbacks can be omitted (or set to the null pointer, their default
-value) when appropriate default behaviour will be taken by the graphics
-engine: @code{activate}, @code{cap}, @code{deactivate}, @code{locator},
-@code{holdflush} (API version 9), @code{mode}, @code{newFrameConfirm},
-@code{path}, @code{raster} and @code{size}.
+The following callbacks can be omitted (or set to the null pointer,
+their default value) when appropriate default behaviour will be taken by
+the graphics engine: @code{activate}, @code{cap}, @code{deactivate},
+@code{locator}, @code{holdflush} (API version 9), @code{mode},
+@code{newFrameConfirm}, @code{path}, @code{raster} and @code{size}.
 
 The relationship of device units to physical dimensions is set by the
 element @code{ipr} of the @code{DevDesc} structure: a @samp{double}
@@ -2995,11 +2960,6 @@ points (negative values) to the @code{metricInfo} callback?
 @item @code{wantSymbolUTF8} --
 @code{Rboolean}: should symbol text be handled in UTF-8 in the same way
 as other text?  Requires @code{textUTF8 = TRUE}.
-@end itemize
-
-Several more were added at @R{} 2.14.0 to support the
-@code{dev.capabilities} function: these are all small integers.
-@itemize
 @item @code{haveTransparency}:
 does the device support semi-transparent colours?
 @item @code{haveTransparentBg}:
@@ -3101,10 +3061,9 @@ one, argument @samp{hadj} to @code{text} will be called as @code{0 ,0.5,
 position.  If it is two, continuous values in the range @code{[0, 1]}
 are assumed to be supported.
 
-A new capability in @R{} 2.7.0 (graphics API version 4) was
-@code{hasTextUTF8}.  If this is true, it has two consequences.  First,
-there are callbacks @code{textUTF8} and @code{strWidthUTF8} that should
-behave identically to @code{text} and @code{strWidth} except that
+Capabability @code{hasTextUTF8} if true, it has two consequences.
+First, there are callbacks @code{textUTF8} and @code{strWidthUTF8} that
+should behave identically to @code{text} and @code{strWidth} except that
 @samp{str} is assumed to be in UTF-8 rather than the current locale's
 encoding.  The graphics engine will call these for all text except in
 the symbol font.  Second, Unicode points will be passed to the
@@ -3246,13 +3205,11 @@ the header as
 @end example
 
 @noindent
-Since @code{mode = 2} has only recently been documented at device level,
-it is not surprising that was it not used by any device: prior to @R{}
-2.7.0 it was not set by @code{grid::grid.locator}.  It could be used to
-change the graphics cursor, but devices currently do that in the
-@code{locator} callback.  (In base graphics the mode is set for the
-duration of a @code{locator} call, but if @code{type != "n"} is switched
-back for each point whilst annotation is being done.)
+Since @code{mode = 2} has only recently been documented at device level.
+It could be used to change the graphics cursor, but devices currently do
+that in the @code{locator} callback.  (In base graphics the mode is set
+for the duration of a @code{locator} call, but if @code{type != "n"} is
+switched back for each point whilst annotation is being done.)
 
 Many devices do indeed do nothing on this call, but some screen devices
 ensure that drawing is flushed to the screen when called with @code{mode
@@ -3262,15 +3219,12 @@ figure will stop and start drawing many times.  The buffering introduced
 in the @code{X11()} device makes use of @code{mode = 0} to indicate
 activity: it updates the screen after @emph{ca} 100ms of inactivity.
 
-As from @R{} 2.14.0 this callback need not be supplied if it does nothing.
+This callback need not be supplied if it does nothing.
 
 @node Graphics events, Specific devices, 'Mode', Graphics devices
 @subsection Graphics events
 
-Graphics devices may be designed to handle user interaction.  
-The current model is similar to the one introduced in R 2.1.0 for
-the Windows screen device, but the design was changed in R 2.12.0 to 
-be more open ended.
+Graphics devices may be designed to handle user interaction: not all are.  
 
 Users may use @code{grDevices::setGraphicsEventEnv} to set the
 @code{eventEnv} environment in the device driver to hold event
@@ -3338,8 +3292,8 @@ low coverage apart from a few monospaced fonts in a few sizes (which are
 not suitable for graph annotation), and where glyphs are missing what is
 plotted is often quite unsatisfactory.
 
-The approach being taken as from @R{} 2.7.0 is to make use of more modern
-toolkits, namely @code{cairo} for rendering and @code{Pango} for font
+The current approach is to make use of more modern toolkits, namely
+@code{cairo} for rendering and @code{Pango} for font
 management---because these are associated with @code{Gtk+2} they are
 widely available.  Cairo supports translucent colours and alpha-blending
 (@emph{via} @code{Xrender}), and anti-aliasing for the display of lines
@@ -3386,27 +3340,25 @@ Resizes are handled by replaying the display list: this might not be
 necessary if a fixed canvas with scrollbars is being used, but that is
 the least popular of the three forms of resizing.
 
-Text on the device has moved to `Unicode' (UCS-2) in recent years.  As
-from  @R{} 2.7.0, UTF-8 is requested (@code{hasTextUTF8 = TRUE}) for
-standard text, and converted to UCS-2 in the plotting functions in file
+Text on the device has moved to `Unicode' (UCS-2) in recent years.
+UTF-8 is requested (@code{hasTextUTF8 = TRUE}) for standard text, and
+converted to UCS-2 in the plotting functions in file
 @file{src/extra/graphapp/gdraw.c}.  However, GDI has no support for
 Unicode symbol fonts, and symbols are handled in Adobe Symbol encoding.
 
-Support for translucent colours (with alpha channel between 0 and 255)
-was introduced in @R{} 2.6.0 for the screen device only, and extended to
-the bitmap devices in @R{} 2.7.0.@footnote{It is technically possible to
-use alpha-blending on metafile devices such as printers, but it seems
-few drivers have support for this.} This is done by drawing on a further
-internal bitmap, @code{xd->bm2}, in the opaque version of the colour
-then alpha-blending that bitmap to @code{xd->bm}.  The alpha-blending
-routine is in a separate DLL, @file{msimg32.dll}, which is loaded on
-first use.@footnote{It is available on Windows 2000 or later, and so had
-to be optional in @R{} 2.6.0.}  As small a rectangular region as
-reasonably possible is alpha-blended (this is rectangle @code{r} in the
-code), but things like mitre joins make estimation of a tight bounding
-box too much work for lines and polygonal boundaries.
-Translucent-coloured lines are not common, and the performance seems
-acceptable.
+There is support for translucent colours (with alpha channel between 0
+and 255) was introduced on the screen device and bitmap
+devices.@footnote{It is technically possible to use alpha-blending on
+metafile devices such as printers, but it seems few drivers have support
+for this.} This is done by drawing on a further internal bitmap,
+@code{xd->bm2}, in the opaque version of the colour then alpha-blending
+that bitmap to @code{xd->bm}.  The alpha-blending routine is in a
+separate DLL, @file{msimg32.dll}, which is loaded on first use.  As
+small a rectangular region as reasonably possible is alpha-blended (this
+is rectangle @code{r} in the code), but things like mitre joins make
+estimation of a tight bounding box too much work for lines and polygonal
+boundaries.  Translucent-coloured lines are not common, and the
+performance seems acceptable.
 
 The support for a transparent background in @code{png()} predates full
 alpha-channel support in @code{libpng} (let alone in PNG viewers), so
@@ -3430,12 +3382,11 @@ on the graphics hardware and undocumented properties of GDI.
 
 Devices receive colours as a @code{typedef} @code{rcolor} (an
 @code{unsigned int}) defined in the header
-@file{R_ext/GraphicsEngine.h}).  The 4 bytes are
-@emph{R} ,@emph{G}, @emph{B} and @emph{alpha} from least to most
-significant. So each of RGB has 256 levels of luminosity from 0 to 255.
-The alpha byte represents (from @R{} 2.0.0) opacity, so value 255 is
-fully opaque and 0 fully transparent: many but not all devices handle
-semi-transparent colours.
+@file{R_ext/GraphicsEngine.h}).  The 4 bytes are @emph{R} ,@emph{G},
+@emph{B} and @emph{alpha} from least to most significant. So each of RGB
+has 256 levels of luminosity from 0 to 255.  The alpha byte represents
+opacity, so value 255 is fully opaque and 0 fully transparent: many but
+not all devices handle semi-transparent colours.
 
 Colors can be created in C via the macro @code{R_RGBA}, and a set of
 macros are defined in @file{R_ext/GraphicsDevice.h} to extract the
@@ -3473,14 +3424,13 @@ colour @samp{0} to the current device (and a device is opened if needs
 be).  These are mapped to type @code{rcolor} at the time of use: this
 matters when re-playing the display list, e.g.@: when a device is
 resized or @code{dev.copy} is used.  The palette should be thought of as
-per-session: as from @R{} 3.0.0 it is stored in package @pkg{grDevices}.
+per-session: it is stored in package @pkg{grDevices}.
 
-What was for a long time unclear was how the RGB values were to be
-mapped to display colours in the graphics device.  @R{} 2.13.0 adopted
-the colorspace `sRGB'. This is an industry standard: it is used by Web
-browsers and JPEGs from all but high-end digital cameras.  The
-interpretation is a matter for graphics devices and for code that
-manipulates colours, but not for the graphics engine or subsystems.
+The convention is that devices use the colorspace `sRGB'. This is an
+industry standard: it is used by Web browsers and JPEGs from all but
+high-end digital cameras.  The interpretation is a matter for graphics
+devices and for code that manipulates colours, but not for the graphics
+engine or subsystems.
 
 @R{} uses a painting model similar to PostScript and PDF.  This means
 that where shapes (circles, rectangles and polygons) can both be filled
@@ -4114,12 +4064,11 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 An ISO C99 C compiler.  Note that extensions such as @acronym{POSIX}
 1003.1 must be tested for, typically using Autoconf unless you are sure
 they are supported on all mainstream @R{} platforms (including Windows
-and OS X).  Packages will be more portable to @R{} < 2.12.0 if
-written assuming only C89, but this should not be done where using C99
-features will make for cleaner or more robust code.
+and OS X).
 
 @item
-A FORTRAN 77 compiler (but not Fortran 9x).
+A FORTRAN 77 compiler (but not Fortran 9x, although it is nowadays
+widely available).
 
 @item
 A simple @command{make}, considering the features of @command{make} in
