@@ -1877,9 +1877,9 @@ sudo mv bwidget-1.9.6 /usr/local/lib
 @end example
 @end itemize
 
-It may be possible to use other compilers with the @acronym{CRAN} distribution of
-@R{}, but the settings in the file
-@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} will need
+It may be possible to use other compilers with the @acronym{CRAN}
+distribution of @R{}, but the settings in the file
+@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} may need
 to be changed, either by editing that file or in a file such as
 @file{~/.R/Makevars} (see the next section).  Entries which may need to
 be changed include @samp{CC}, @samp{CXX}, @samp{CXXCPP},
