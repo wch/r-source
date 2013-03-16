@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,60 @@
     lockdir <- ""
     is_first_package <- TRUE
     stars <- "*"
+
+    ## Need these here in case of an early error, e.g. missing etc/Makeconf
+    tmpdir <- ""
+    clean_on_error <- TRUE
+    do_exit_on_error <- function()
+    {
+        ## If we are not yet processing a package, we will not have
+        ## set curPkg
+        if(clean_on_error && length(curPkg)) {
+            pkgdir <- file.path(lib, curPkg)
+            if (nzchar(pkgdir) && dir.exists(pkgdir) &&
+                is_subdir(pkgdir, lib)) {
+                starsmsg(stars, "removing ", sQuote(pkgdir))
+                unlink(pkgdir, recursive = TRUE)
+            }
+
+            if (nzchar(lockdir) &&
+                dir.exists(lp <- file.path(lockdir, curPkg)) &&
+                is_subdir(lp, lockdir)) {
+                starsmsg(stars, "restoring previous ", sQuote(pkgdir))
+                if (WINDOWS) {
+                    file.copy(lp, dirname(pkgdir), recursive = TRUE)
+                    Sys.setFileTime(pkgdir, file.info(lp)$mtime)
+                    unlink(lp, recursive = TRUE)
+                } else {
+                    ## some shells require that they be run in a known dir
+                    setwd(startdir)
+                    system(paste("mv", shQuote(lp), shQuote(pkgdir)))
+                }
+            }
+        }
+
+        do_cleanup()
+        q("no", status = 1, runLast = FALSE)
+    }
+
+    do_cleanup <- function()
+    {
+        if(nzchar(tmpdir)) do_cleanup_tmpdir()
+        if (!is_first_package) {
+            ## Only need to do this in case we successfully installed
+            ## at least one package
+            if (lib == .Library && "html" %in% build_help_types)
+                utils::make.packages.html(.Library, docdir = R.home("doc"))
+        }
+        if (nzchar(lockdir)) unlink(lockdir, recursive = TRUE)
+    }
+
+    do_cleanup_tmpdir <- function()
+    {
+        ## Solaris will not remove any directory in the current path
+        setwd(startdir)
+        if (dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
+    }
 
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
@@ -135,24 +189,6 @@
             "Report bugs at bugs.r-project.org .", sep = "\n")
     }
 
-    do_cleanup <- function()
-    {
-        do_cleanup_tmpdir()
-        if (!is_first_package) {
-            ## Only need to do this in case we successfully installed
-            ## at least one package
-            if (lib == .Library && "html" %in% build_help_types)
-                utils::make.packages.html(.Library, docdir = R.home("doc"))
-        }
-        if (nzchar(lockdir)) unlink(lockdir, recursive = TRUE)
-    }
-
-    do_cleanup_tmpdir <- function()
-    {
-        ## Solaris will not remove any directory in the current path
-        setwd(startdir)
-        if (dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
-    }
 
     # Check whether dir is a subdirectory of parent,
     # to protect against malicious package names like ".." below
@@ -160,38 +196,6 @@
 
     is_subdir <- function(dir, parent)
         normalizePath(parent) == normalizePath(file.path(dir, ".."))
-
-    do_exit_on_error <- function()
-    {
-        ## If we are not yet processing a package, we will not have
-        ## set curPkg
-        if(clean_on_error && length(curPkg)) {
-            pkgdir <- file.path(lib, curPkg)
-            if (nzchar(pkgdir) && dir.exists(pkgdir) &&
-                is_subdir(pkgdir, lib)) {
-                starsmsg(stars, "removing ", sQuote(pkgdir))
-                unlink(pkgdir, recursive = TRUE)
-            }
-
-            if (nzchar(lockdir) &&
-                dir.exists(lp <- file.path(lockdir, curPkg)) &&
-                is_subdir(lp, lockdir)) {
-                starsmsg(stars, "restoring previous ", sQuote(pkgdir))
-                if (WINDOWS) {
-                    file.copy(lp, dirname(pkgdir), recursive = TRUE)
-                    Sys.setFileTime(pkgdir, file.info(lp)$mtime)
-                    unlink(lp, recursive = TRUE)
-                } else {
-                    ## some shells require that they be run in a known dir
-                    setwd(startdir)
-                    system(paste("mv", shQuote(lp), shQuote(pkgdir)))
-                }
-            }
-        }
-
-        do_cleanup()
-        q("no", status = 1, runLast = FALSE)
-    }
 
     fullpath <- function(dir)
     {
@@ -1174,9 +1178,6 @@
     }
     args0 <- args
 
-    startdir <- getwd()
-    if (is.null(startdir))
-        stop("current working directory cannot be ascertained")
     lib <- lib0 <- ""
     clean <- FALSE
     preclean <- FALSE
@@ -1203,7 +1204,6 @@
     force_biarch <- FALSE
     force_both <- FALSE
     test_load <- TRUE
-    clean_on_error <- TRUE
     merge <- FALSE
     dsym <- nzchar(Sys.getenv("PKG_MAKE_DSYM"))
 
