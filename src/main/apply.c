@@ -157,7 +157,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT_INDEX indx;
 	    if (realIndx) REAL(ind)[0] = (double)(i + 1);
 	    else INTEGER(ind)[0] = (int)(i + 1);
-	    val = val = eval(R_fcall, rho);
+	    val = eval(R_fcall, rho);
 	    if (NAMED(val))
 		val = duplicate(val);
 	    PROTECT_WITH_INDEX(val, &indx);
