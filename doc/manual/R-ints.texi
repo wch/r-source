@@ -2531,21 +2531,22 @@ File @file{nsInfo.rds} records a list, a parsed version of the
 @file{NAMESPACE} file.
 
 File @file{Rd.rds} records a data frame with one row for each help file.
-The (character) columns are @samp{File} (the file name with extension),
-@samp{Name} (the @samp{\name} section), @samp{Type} (from the optional
+The columns are @samp{File} (the file name with extension), @samp{Name}
+(the @samp{\name} section), @samp{Type} (from the optional
 @samp{\docType} section), @samp{Title}, @samp{Encoding}, @samp{Aliases},
-@samp{Concepts} and @samp{Keywords}.  The last three are character
-strings with zero or more entries separated by @samp{, }.
+@samp{Concepts} and @samp{Keywords}.  All columns are character vectors
+apart from @samp{Aliases}, which is a list of character vectors.
 
 File @file{hsearch.rds} records the information to be used by
 @samp{help.search}.  This is a list of four unnamed elements which are
-character vectors for help files, aliases, keywords and concepts.  All
+character matrices for help files, aliases, keywords and concepts.  All
 the matrices have columns @samp{ID} and @samp{Package} which are used to
 tie the aliases, keywords and concepts (the remaining column of the last
 three elements) to a particular help file.  The first element has
-further columns @samp{LibPath} (empty since @R{} 2.3.0), @samp{name},
-@samp{title}, @samp{topic} (the first alias, used when presenting the
-results as @samp{@var{pkgname}::@var{topic}}) and @samp{Encoding}.
+further columns @samp{LibPath} (stored as @code{""} and filled in what
+the file is loaded), @samp{name}, @samp{title}, @samp{topic} (the first
+alias, used when presenting the results as
+@samp{@var{pkgname}::@var{topic}}) and @samp{Encoding}.
 
 File @file{links.rds} records a named character vector, the names being
 aliases and the values character strings of the form

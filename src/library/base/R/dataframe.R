@@ -462,11 +462,12 @@ data.frame <-
             for(j in seq_along(xi)) {
                 xi1 <- xi[[j]]
                 if(is.vector(xi1) || is.factor(xi1))
-                    xi[[j]] <- rep_len(xi1, nr)
+                    xi[[j]] <- rep(xi1, length.out = nr)
 		else if(is.character(xi1) && inherits(xi1, "AsIs"))
-                    xi[[j]] <- structure(rep_len(xi1, nr), class = class(xi1))
+                    xi[[j]] <- structure(rep(xi1, length.out = nr),
+                                         class = class(xi1))
                 else if(inherits(xi1, "Date") || inherits(xi1, "POSIXct"))
-                    xi[[j]] <- rep_len(xi1, nr)
+                    xi[[j]] <- rep(xi1, length.out = nr)
                 else {
                     fixed <- FALSE
                     break
@@ -1325,7 +1326,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	xi <- unclass(allargs[[i]])
 	if(!is.list(xi))
 	    if(length(xi) != nvar)
-		xi <- rep_len(xi, nvar)
+		xi <- rep(xi, length.out = nvar)
 	ri <- rows[[i]]
 	pi <- perm[[i]]
 	if(is.null(pi)) pi <- pseq
