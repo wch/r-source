@@ -92,6 +92,7 @@
 # define getc getc_unlocked
 #endif
 
+#ifndef __APPLE__
 /* The following static variable is declared 'volatile' to avoid a
    possible multithread problem in the function get_charset_aliases. If we
    are running in a threaded environment, and if two threads initialize
@@ -101,12 +102,12 @@
 #if __STDC__ != 1
 # define volatile /* empty */
 #endif
+
 /* Pointer to the contents of the charset.alias file, if it has already been
    read, else NULL.  Its format is:
    ALIAS_1 '\0' CANONICAL_1 '\0' ... ALIAS_n '\0' CANONICAL_n '\0' '\0'  */
 static const char * volatile charset_aliases;
 
-#ifndef __APPLE__
 /* Return a pointer to the contents of the charset.alias file.  */
 static const char *
 get_charset_aliases (void)
