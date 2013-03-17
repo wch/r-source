@@ -19,7 +19,7 @@
       \item [Intended] The long-deprecated use of \code{\\synopsis} in the
       \samp{Usage} section of \file{.Rd} files has been removed.
 
-      \item [Intended] \code{.find.package()} and \code{.path.package()} are
+      \item [On Apr 12] \code{.find.package()} and \code{.path.package()} are
       defunct: only the public versions without the dot have ever
       been in the API.
     }
