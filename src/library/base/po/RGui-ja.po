@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:43+0000\n"
+"POT-Creation-Date: 2013-03-18 19:36+0000\n"
 "PO-Revision-Date: 2011-03-25 08:30+0900 \n"
 "Last-Translator: Masahiro Hayashi <mh@m884.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -1207,10 +1207,10 @@ msgstr " ポストスクリプトに保存... "
 msgid "Locator is active"
 msgstr " Locator はアクティブです "
 
-#: src/library/grDevices/src/devWindows.c:3759
+#: src/library/grDevices/src/devWindows.c:3763
 msgid "Waiting to confirm page change..."
 msgstr " ページ変更を確認するまで待機中... "
 
-#: src/library/grDevices/src/devWindows.c:3771
+#: src/library/grDevices/src/devWindows.c:3775
 msgid "Click or hit ENTER for next page"
 msgstr " クリックまたは ENTER キーを押すと次のページに移ります "

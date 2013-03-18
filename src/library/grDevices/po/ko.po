@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 08:04+0000\n"
+"POT-Creation-Date: 2013-03-18 19:37+0000\n"
 "PO-Revision-Date: 2013-02-21 18:58-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -528,7 +528,7 @@ msgstr "%s에 유효하지 않은 'fonts' 파라미터가 있습니다"
 msgid "invalid value of '%s'"
 msgstr "유효하지 않은 '%s'의 값입니다"
 
-#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3725
+#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3728
 #, c-format
 msgid "unable to start %s() device"
 msgstr "%s() 장치를 시작할 수 없습니다"
@@ -657,7 +657,7 @@ msgstr "클립보드 메타파일은 오로지 한개의 figure만을 저장할 
 msgid "metafile '%s' could not be created"
 msgstr "메타파일 '%s'은 생성되지 않을 것입니다"
 
-#: devWindows.c:3110 devWindows.c:3749
+#: devWindows.c:3110 devWindows.c:3752
 msgid "R Graphics"
 msgstr "R 그래픽스"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGUi\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:43+0000\n"
+"POT-Creation-Date: 2013-03-18 19:36+0000\n"
 "PO-Revision-Date: 2012-09-09 23:36+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -1207,10 +1207,10 @@ msgstr "Gem som postscript..."
 msgid "Locator is active"
 msgstr "Lokalisering er aktiv"
 
-#: src/library/grDevices/src/devWindows.c:3759
+#: src/library/grDevices/src/devWindows.c:3763
 msgid "Waiting to confirm page change..."
 msgstr "Venter på at bekræfte sideændring..."
 
-#: src/library/grDevices/src/devWindows.c:3771
+#: src/library/grDevices/src/devWindows.c:3775
 msgid "Click or hit ENTER for next page"
 msgstr "Klik eller tryk på RETUR for næste side"

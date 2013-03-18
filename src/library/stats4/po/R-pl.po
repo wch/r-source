@@ -1,22 +1,23 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-07-12 12:59\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
-"Language: \n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"X-Poedit-Language: Polish\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
-"X-Poedit-Country: POLAND\n"
+"|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 1.5.5\n"
 
+# stats4/R/mle.R: 44
+# stop("some named arguments in 'fixed' are not arguments to the supplied log-likelihood")
 msgid ""
 "some named arguments in 'fixed' are not arguments to the supplied log-"
 "likelihood"
@@ -24,9 +25,13 @@ msgstr ""
 "niektóre nazwane argumenty w funkcji 'fixed' nie są argumentami do "
 "dostarczonej logarytmicznej funkcji wiarygodności"
 
+# stats4/R/mle.R: 47
+# stop("'start' must be a named list")
 msgid "'start' must be a named list"
 msgstr "'start' musi być nazwaną listą"
 
+# stats4/R/mle.R: 53
+# stop("some named arguments in 'start' are not arguments to the supplied log-likelihood")
 msgid ""
 "some named arguments in 'start' are not arguments to the supplied log-"
 "likelihood"
@@ -34,14 +39,20 @@ msgstr ""
 "niektóre nazwane argumenty w funkcji 'start' nie są argumentami do "
 "dostarczonej logarytmicznej funkcji wiarygodności"
 
+# stats4/R/mle.R: 124
+# stop("profiling has found a better solution, so original fit had not converged")
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
 msgstr ""
 "profilowanie znalazło lepsze rozwiązanie, tak więc oryginalne dopasowanie "
 "nie uzbieżniło się"
 
+# stats4/R/mle.R: 206
+# warning("levels truncated to positive values only")
 msgid "levels truncated to positive values only"
-msgstr "poziomy obcięto do wartości dodatnich"
+msgstr "poziomy przycięto do wartości dodatnich"
 
+# stats4/R/mle.R: 325
+# warning("extra arguments discarded")
 msgid "extra arguments discarded"
-msgstr "ekstra argumenty odrzucono"
+msgstr "dodatkowe argumenty zostały odrzucone"

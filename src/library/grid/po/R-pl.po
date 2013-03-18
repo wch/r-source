@@ -1,646 +1,1025 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-01-12 10:57\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
-"Language: \n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"X-Poedit-Language: Polish\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
-"X-Poedit-Country: POLAND\n"
+"|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 1.5.5\n"
 
-#, fuzzy
+# grid/R/components.R: 46
+# stop("invalid 'at' location in 'axis'")
 msgid "invalid 'at' location in 'axis'"
-msgstr "Niepoprawne położenie 'at' w 'axis'"
+msgstr "niepoprawne położenie 'at' w 'axis'"
 
-#, fuzzy
+# grid/R/components.R: 52
+# stop("invalid to specify axis labels when 'at' is NULL")
 msgid "invalid to specify axis labels when 'at' is NULL"
-msgstr "Nie można określać etykiet osi kiedy wartość 'at' to NULL"
+msgstr "nie można określać etykiet osi kiedy wartość 'at' to NULL"
 
+# grid/R/components.R: 57
+# stop("'labels' and 'at' locations must have same length")
 msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels' oraz położenia 'at' muszą mieć tę samą długość"
 
-#, fuzzy
+# grid/R/components.R: 175
+# stop("logical 'label' supplied of length 0")
+# grid/R/components.R: 303
+# stop("logical 'label' supplied of length 0")
 msgid "logical 'label' supplied of length 0"
-msgstr "Logiczna wartość 'label' o zerowej długości"
+msgstr "logiczna wartość 'label' o zerowej długości"
 
-#, fuzzy
+# grid/R/curve.R: 308
+# stop("end points must not be identical")
 msgid "end points must not be identical"
-msgstr "Punkty końcowe nie mogą być identyczne"
+msgstr "punkty końcowe nie mogą być identyczne"
 
-#, fuzzy
+# grid/R/curve.R: 455
+# stop("'x1', 'y1', 'x2', and 'y2' must be units")
 msgid "'x1', 'y1', 'x2', and 'y2' must be units"
 msgstr "'x1', 'y1' ,'x2', oraz 'y2' muszą być jednostkami"
 
+# grid/R/curve.R: 460
+# stop("'shape' must be between -1 and 1")
+# grid/R/primitives.R: 790
+# stop("'shape' must be between -1 and 1")
 msgid "'shape' must be between -1 and 1"
 msgstr "Wartość 'shape' musi być z przedziału [-1;1]"
 
+# grid/R/curve.R: 463
+# stop("'squareShape' must be between -1 and 1")
 msgid "'squareShape' must be between -1 and 1"
 msgstr "Wartość 'squareShape' musi być z przedziału [-1;1]"
 
+# grid/R/curve.R: 466
+# stop("'arrow' must be an arrow object or NULL")
 msgid "'arrow' must be an arrow object or NULL"
 msgstr "Obiekt 'arrow' musi być obiektem strzałki lub NULL"
 
-#, fuzzy
+# grid/R/debug.R: 369
+# stop("how did we get here?")
 msgid "how did we get here?"
-msgstr "Jak się tu dostaliśmy?"
+msgstr "jak się tu dostaliśmy?"
 
-#, fuzzy
+# grid/R/debug.R: 415
+# stop("must start new page if showing leaves separately")
 msgid "must start new page if showing leaves separately"
 msgstr ""
-"Trzeba rozpocząć nową stronę jeśli liście mają być pokazywane oddzielnie"
+"trzeba rozpocząć nową stronę jeśli liście mają być pokazywane oddzielnie"
 
-#, fuzzy
+# grid/R/edit.R: 35
+# stop("invalid 'edit' information")
+# grid/R/edit.R: 67
+# stop("invalid 'edit' information")
 msgid "invalid 'edit' information"
-msgstr "Niepoprawna informacja 'edit'"
+msgstr "niepoprawna informacja 'edit'"
 
+# grid/R/edit.R: 50
+# stop("'gEditList' can only contain 'gEdit' objects")
 msgid "'gEditList' can only contain 'gEdit' objects"
 msgstr "'gEditList' może zawierać tylko obiekty 'gEdit'"
 
-#, fuzzy
+# grid/R/frames.R: 140
+# stop("invalid 'frame'")
+# grid/R/frames.R: 331
+# stop("invalid 'frame'")
 msgid "invalid 'frame'"
-msgstr "Niepoprawny 'frame'"
+msgstr "niepoprawny 'frame'"
 
-#, fuzzy
+# grid/R/frames.R: 142
+# stop("invalid 'grob'")
+# grid/R/frames.R: 333
+# stop("invalid 'grob'")
 msgid "invalid 'grob'"
-msgstr "Niepoprawny 'grob'"
+msgstr "niepoprawny 'grob'"
 
-#, fuzzy
+# grid/R/frames.R: 154
+# stop("invalid 'row' and/or 'col' (no such cell in frame layout)")
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr "Niepoprawne 'row' oraz/lub 'col' (brak takiej komórki w ramce layoutu)"
+msgstr "niepoprawne 'row' oraz/lub 'col' (brak takiej komórki w ramce layoutu)"
 
+# grid/R/frames.R: 193
+# stop("'col' can only be a range of existing columns")
 msgid "'col' can only be a range of existing columns"
 msgstr "'col' może być tylko z zakresu istniejących kolumn"
 
-#, fuzzy
+# grid/R/frames.R: 199
+# stop("invalid 'col' specification")
 msgid "invalid 'col' specification"
-msgstr "Niepoprawne określenie 'col'"
+msgstr "niepoprawne określenie 'col'"
 
+# grid/R/frames.R: 236
+# stop("'row' can only be a range of existing rows")
 msgid "'row' can only be a range of existing rows"
 msgstr "'row' może być tylko z zakresu istniejących wierszy"
 
-#, fuzzy
+# grid/R/frames.R: 242
+# stop("invalid 'row' specification")
 msgid "invalid 'row' specification"
-msgstr "Niepoprawne określenie 'row'"
+msgstr "niepoprawne określenie 'row'"
 
-#, fuzzy
+# grid/R/frames.R: 376
+# stop("cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'")
 msgid ""
 "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
 "before', or 'col.after'"
 msgstr ""
-"Nie można określić więcej niż jeden z 'side=[\"left\", \"right\"]', 'col', "
+"nie można określić więcej niż jeden z 'side=[\"left\", \"right\"]', 'col', "
 "'col.before', lub 'col.after'"
 
-#, fuzzy
+# grid/R/frames.R: 390
+# stop("must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'")
 msgid ""
 "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
 "before', or 'row.after'"
 msgstr ""
-"Potrzeba określić dokładnie jeden z 'side=[\"top\", \"bottom\"]', 'row', "
+"potrzeba określić dokładnie jeden z 'side=[\"top\", \"bottom\"]', 'row', "
 "'row.before', lub 'row.after'"
 
-#, fuzzy
+# grid/R/function.R: 22
+# stop("invalid 'n'")
 msgid "invalid 'n'"
-msgstr "Niepoprawny 'n'"
+msgstr "niepoprawny 'n'"
 
-#, fuzzy
+# grid/R/function.R: 26
+# stop("invalid 'f'")
 msgid "invalid 'f'"
-msgstr "Niepoprawny 'f'"
+msgstr "niepoprawny 'f'"
 
-#, fuzzy
+# grid/R/gpar.R: 42
+# stop(gettextf("'gpar' element '%s' must not be length 0", gparname),
+#            domain = NA)
 msgid "'gpar' element '%s' must not be length 0"
-msgstr "element '%s' w 'gpar' nie może być długości 0"
+msgstr "element '%s' w 'gpar' nie może mieć długości 0"
 
-#, fuzzy
+# grid/R/gpar.R: 64
+# warning("'gamma' 'gpar' element is defunct")
+# grid/R/gpar.R: 193
+# warning("'gamma' 'gpar' element is defunct")
+# grid/R/gpar.R: 231
+# warning("'gamma' 'gpar' element is defunct")
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' w 'gpar' jest przestarzałe"
 
-#, fuzzy
+# grid/R/gpar.R: 106
+# stop("invalid 'linemitre' value")
 msgid "invalid 'linemitre' value"
-msgstr "Niepoprawna wartość 'linemitre'"
+msgstr "niepoprawna wartość 'linemitre'"
 
-#, fuzzy
+# grid/R/gpar.R: 111
+# stop("invalid 'alpha' value")
 msgid "invalid 'alpha' value"
-msgstr "Niepoprawna wartość 'alpha'"
+msgstr "niepoprawna wartość 'alpha'"
 
-#, fuzzy
+# grid/R/gpar.R: 136
+# stop("must specify only one of 'font' and 'fontface'")
 msgid "must specify only one of 'font' and 'fontface'"
-msgstr "Potrzeba określić tylko jeden z 'font' oraz 'fontface'"
+msgstr "potrzeba określić tylko jeden z 'font' oraz 'fontface'"
 
-#, fuzzy
+# grid/R/gpar.R: 158
+# stop("invalid font face")
 msgid "invalid font face"
-msgstr "Niepoprawna czcionka"
+msgstr "niepoprawny krój czcionki"
 
-#, fuzzy
+# grid/R/gpar.R: 189
+# stop("argument must be a 'gpar' object")
 msgid "argument must be a 'gpar' object"
-msgstr "Argument musi być obiektem 'gpar'"
+msgstr "argument musi być obiektem 'gpar'"
 
-#, fuzzy
+# grid/R/gpar.R: 228
+# stop("must specify only valid 'gpar' names")
 msgid "must specify only valid 'gpar' names"
-msgstr "Potrzeba określić tylko poprawne nazwy 'gpar'"
+msgstr "potrzeba określić tylko poprawne nazwy 'gpar'"
 
-#, fuzzy
+# grid/R/grab.R: 75
+# stop("invalid display list element")
 msgid "invalid display list element"
-msgstr "Niepoprawne element listy wyświetleń"
+msgstr "niepoprawne element listy wyświetleń"
 
-#, fuzzy
+# grid/R/grab.R: 116
+# warning("one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')")
 msgid ""
 "one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
 msgstr ""
-"'grob(s)' nadpisane ('grab' NIE BĘDZIE wiarygodne; spróbuj 'wrap=TRUE')"
+"jeden lub więcej 'grob' nadpisane ('grab' NIE BĘDZIE wiarygodne; spróbuj "
+"'wrap=TRUE')"
 
+# grid/R/grab.R: 142
+# warning("viewport overwritten (grab MAY not be faithful)")
+# grid/R/grab.R: 182
+# warning("viewport overwritten (grab MAY not be faithful)")
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "okno ekranu nadpisane ('grab' MOŻE nie być wiarygodne)"
 
+# grid/R/grab.R: 168
+# warning("grob pushed viewports and did not pop/up them (grab MAY not be faithful)")
 msgid ""
 "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
 msgstr ""
-"'grob' wypchnął okna ekranu i nie wyświetlił ich ('grab' MOŻE nie być "
+"'grob' wypchnął okna ekranów i nie wyświetlił ich ('grab' MOŻE nie być "
 "wiarygodny)"
 
-#, fuzzy
+# grid/R/grid.R: 28
+# stop("only valid to push viewports")
 msgid "only valid to push viewports"
-msgstr "Poprawne tylko dla wypychanych okien ekranu"
+msgstr "poprawne tylko dla wypychanych okien ekranów"
 
-#, fuzzy
+# grid/R/grid.R: 97
+# stop("must specify at least one viewport")
 msgid "must specify at least one viewport"
-msgstr "Potrzeba określić przynajmniej jedno okno ekranu"
+msgstr "potrzeba określić przynajmniej jedno okno ekranu"
 
-#, fuzzy
+# grid/R/grid.R: 193
+# stop("must pop at least one viewport")
 msgid "must pop at least one viewport"
-msgstr "Potrzeba wyświetlić przynajmniej jedno okno ekranu"
+msgstr "potrzeba wyświetlić przynajmniej jedno okno ekranu"
 
-#, fuzzy
+# grid/R/grid.R: 211
+# stop("must navigate up at least one viewport")
 msgid "must navigate up at least one viewport"
-msgstr "Potrzeba przenieść w górę przynajmniej jedno okno ekranu"
+msgstr "potrzeba przenieść w górę przynajmniej jedno okno ekranu"
 
-#, fuzzy
+# grid/R/grid.R: 250
+# warning("the 'vp' argument is deprecated")
 msgid "the 'vp' argument is deprecated"
-msgstr "Argument 'vp' jest przestarzały"
+msgstr "argument 'vp' jest przestarzały"
 
-#, fuzzy
+# grid/R/grid.R: 374
+# stop("invalid object inserted on the display list")
 msgid "invalid object inserted on the display list"
-msgstr "Niepoprawne obiekty wstawione na listę wyświetleń"
+msgstr "niepoprawne obiekty wstawione na listę wyświetleń"
 
-#, fuzzy
+# grid/R/grid.R: 424
+# stop("invalid modification of the display list")
 msgid "invalid modification of the display list"
-msgstr "Niepoprawna modyfikacja listy wyświetleń"
+msgstr "niepoprawna modyfikacja listy wyświetleń"
 
+# grid/R/grid.R: 492
+# stop("'expr' must return a grob or gList")
 msgid "'expr' must return a grob or gList"
-msgstr ""
+msgstr "'expr' musi zwrócić 'grob' lub 'gList'"
 
-#, fuzzy
+# grid/R/grob.R: 44
+# stop("invalid 'grob' argument")
 msgid "invalid 'grob' argument"
-msgstr "Niepoprawny argument 'grob'"
+msgstr "niepoprawny argument 'grob'"
 
-#, fuzzy
+# grid/R/grob.R: 61
+# stop("invalid 'vp' slot")
 msgid "invalid 'vp' slot"
-msgstr "Niepoprawne gniazdo 'vp'"
+msgstr "niepoprawne gniazdo 'vp'"
 
-#, fuzzy
+# grid/R/grob.R: 81
+# stop("invalid 'gp' slot")
 msgid "invalid 'gp' slot"
-msgstr "Niepoprawne gniazdo 'gp'"
+msgstr "niepoprawne gniazdo 'gp'"
 
-#, fuzzy
+# grid/R/grob.R: 113
+# stop("invalid 'grob' class")
 msgid "invalid 'grob' class"
-msgstr "Niepoprawna klasa 'grob'"
+msgstr "niepoprawna klasa 'grob'"
 
+# grid/R/grob.R: 119
+# warning("grid.grob() is deprecated; please use grob() instead")
 msgid "grid.grob() is deprecated; please use grob() instead"
 msgstr "'grid.grob()' jest przestarzałe; proszę w zamian użyć 'grob()'"
 
-#, fuzzy
+# grid/R/grob.R: 148
+# stop("a 'grob' path must contain at least one 'grob' name")
 msgid "a 'grob' path must contain at least one 'grob' name"
-msgstr "Ścieżka 'grob' musi zawierać przynajmniej jedną nazwę 'grob'"
+msgstr "ścieżka 'grob' musi zawierać przynajmniej jedną nazwę 'grob'"
 
-#, fuzzy
+# grid/R/grob.R: 192
+# stop("unable to coerce to \"gList\"")
 msgid "unable to coerce to \"gList\""
-msgstr "Nie można przekształcić w 'gList'"
+msgstr "nie można przekształcić w \"gList\""
 
-#, fuzzy
+# grid/R/grob.R: 208
+# stop("only 'grobs' allowed in \"gList\"")
 msgid "only 'grobs' allowed in \"gList\""
-msgstr "Tylko 'grobs' są dozwolone w 'gList'"
+msgstr "tylko 'grobs' są dozwolone w \"gList\""
 
-#, fuzzy
+# grid/R/grob.R: 220
+# stop("invalid element to add to \"gList\"")
 msgid "invalid element to add to \"gList\""
-msgstr "Niepoprawny element do dodania do 'gList'"
+msgstr "niepoprawny element do dodania do \"gList\""
 
-#, fuzzy
+# grid/R/grob.R: 265
+# stop("can only set 'children' for a \"gTree\"")
 msgid "can only set 'children' for a \"gTree\""
-msgstr "Można jedynie ustawić 'children' dla 'gTree'"
+msgstr "można jedynie ustawić 'children' dla \"gTree\""
 
-#, fuzzy
+# grid/R/grob.R: 268
+# stop("'children' must be a \"gList\"")
 msgid "'children' must be a \"gList\""
-msgstr "Parametr 'children' musi być typu 'gList'"
+msgstr "'children' musi być klasy \"gList\""
 
-#, fuzzy
+# grid/R/grob.R: 289
+# stop("it is only valid to get 'children' from a \"gTree\"")
 msgid "it is only valid to get 'children' from a \"gTree\""
-msgstr "Poprawne jest jedynie uzyskanie 'children' z 'gTree'"
+msgstr "poprawne jest jedynie uzyskanie 'children' z \"gTree\""
 
-#, fuzzy
+# grid/R/grob.R: 316
+# stop("invalid \"gTree\" class")
 msgid "invalid \"gTree\" class"
-msgstr "Niepoprawna klasa 'gTree'"
+msgstr "niepoprawna klasa 'gTree'"
 
+# grid/R/grob.R: 362
+# stop("'allDevices' not yet implemented")
+# grid/R/grob.R: 466
+# stop("'allDevices' not yet implemented")
+# grid/R/grob.R: 512
+# stop("'allDevices' not yet implemented")
+# grid/R/grob.R: 577
+# stop("'allDevices' not yet implemented")
 msgid "'allDevices' not yet implemented"
 msgstr "'allDevices' jeszcze nie jest zaimplementowane"
 
-#, fuzzy
+# grid/R/grob.R: 366
+# stop("invalid 'gPath'")
+# grid/R/grob.R: 387
+# stop("invalid 'gPath'")
+# grid/R/grob.R: 405
+# stop("invalid 'gPath'")
+# grid/R/grob.R: 436
+# stop("invalid 'gPath'")
+# grid/R/grob.R: 470
+# stop("invalid 'gPath'")
+# grid/R/grob.R: 516
+# stop("invalid 'gPath'")
+# grid/R/grob.R: 546
+# stop("invalid 'gPath'")
+# grid/R/grob.R: 581
+# stop("invalid 'gPath'")
 msgid "invalid 'gPath'"
-msgstr "Niepoprawny 'gPath'"
+msgstr "niepoprawny 'gPath'"
 
-#, fuzzy
+# grid/R/grob.R: 368
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 392
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 407
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 438
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 472
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 491
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 518
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 548
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 583
+# stop("invalid 'grep' value")
+# grid/R/grob.R: 608
+# stop("invalid 'grep' value")
 msgid "invalid 'grep' value"
-msgstr "Niepoprawna wartość 'grep'"
+msgstr "niepoprawna wartość 'grep'"
 
-#, fuzzy
+# grid/R/grob.R: 383
+# stop("it is only valid to get a child from a \"gTree\"")
 msgid "it is only valid to get a child from a \"gTree\""
-msgstr "Poprawne jest jedynie uzyskanie dziecka z 'gTree'"
+msgstr "poprawne jest jedynie uzyskanie dziecka z \"gTree\""
 
+# grid/R/grob.R: 422
+# stop("'gPath' does not specify a valid child")
+# grid/R/grob.R: 451
+# stop("'gPath' does not specify a valid child")
+# grid/R/grob.R: 456
+# stop("'gPath' does not specify a valid child")
 msgid "'gPath' does not specify a valid child"
 msgstr "'gPath' nie określa poprawnego dziecka"
 
-#, fuzzy
+# grid/R/grob.R: 430
+# stop("it is only valid to set a child of a \"gTree\"")
 msgid "it is only valid to set a child of a \"gTree\""
-msgstr "Poprawne jest jedynie ustawienie dziecka 'gTree'"
+msgstr "poprawne jest jedynie ustawienie dziecka \"gTree\""
 
-#, fuzzy
+# grid/R/grob.R: 432
+# stop("it is only valid to set a 'grob' as child of a \"gTree\"")
 msgid "it is only valid to set a 'grob' as child of a \"gTree\""
-msgstr "Poprawne jest jedynie ustawienie  'grob' jako dziecka 'gTree'"
+msgstr "poprawne jest jedynie ustawienie  'grob' jako dziecka \"gTree\""
 
+# grid/R/grob.R: 447
+# stop(gettextf("New 'grob' name (%s) does not match 'gPath' (%s)",
+#                         newGrob$name, gPath), domain = NA)
 msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
 msgstr "Nowa nazwa 'grob' (%s) nie zgadza się z 'gPath' (%s)"
 
-#, fuzzy
+# grid/R/grob.R: 481
+# stop("it is only valid to add a 'grob' to a \"gTree\"")
 msgid "it is only valid to add a 'grob' to a \"gTree\""
-msgstr "Poprawne jest jedynie dodanie 'grob' do 'gTree'"
+msgstr "poprawne jest jedynie dodanie 'grob' do \"gTree\""
 
-#, fuzzy
+# grid/R/grob.R: 489
+# stop("it is only valid to add a child to a \"gTree\"")
+# grid/R/grob.R: 1220
+# stop("it is only valid to add a child to a \"gTree\"")
+# grid/R/grob.R: 1253
+# stop("it is only valid to add a child to a \"gTree\"")
 msgid "it is only valid to add a child to a \"gTree\""
-msgstr "Poprawne jest jedynie dodanie dziecka do 'gTree'"
+msgstr "poprawne jest jedynie dodanie dziecka do \"gTree\""
 
+# grid/R/grob.R: 497
+# warning(gettextf("'gPath' (%s) not found",
+#                                  as.character(gPath)),
+#                         domain = NA)
+# grid/R/grob.R: 564
+# warning(gettextf("'gPath' (%s) not found", as.character(gPath)),
+#                     domain = NA)
+# grid/R/grob.R: 614
+# warning(gettextf("'gPath' (%s) not found",
+#                                  as.character(gPath)),
+#                         domain = NA)
+# grid/R/grob.R: 1208
+# stop(gettextf("'gPath' (%s) not found", as.character(gPath)), domain = NA)
+# grid/R/grob.R: 1372
+# stop(gettextf("'gPath' (%s) not found", gPath), domain = NA)
 msgid "'gPath' (%s) not found"
 msgstr "'gPath' (%s) nie został znaleziony"
 
-#, fuzzy
+# grid/R/grob.R: 542
+# stop("it is only valid to remove a child from a \"gTree\"")
+# grid/R/grob.R: 1383
+# stop("it is only valid to remove a child from a \"gTree\"")
 msgid "it is only valid to remove a child from a \"gTree\""
-msgstr "Poprawne jest jedynie usunięcie dziecka z 'gTree'"
+msgstr "poprawne jest jedynie usunięcie dziecka z \"gTree\""
 
-#, fuzzy
+# grid/R/grob.R: 606
+# stop("it is only valid to edit a child of a \"gTree\"")
 msgid "it is only valid to edit a child of a \"gTree\""
-msgstr "Poprawne jest jedynie edytowanie dziecka 'gTree'"
+msgstr "poprawne jest jedynie edytowanie dziecka \"gTree\""
 
-#, fuzzy
+# grid/R/grob.R: 639
+# stop("it is invalid to directly edit the 'children' or 'childrenOrder' slot")
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
 msgstr ""
-"Niepoprawne jest bezpośrednie edytowanie gniazda 'children' lub "
+"niepoprawne jest bezpośrednie edytowanie gniazda 'children' lub "
 "'childrenOrder'"
 
-#, fuzzy
+# grid/R/grob.R: 750
+# stop("invalid 'result'")
 msgid "invalid 'result'"
-msgstr "Niepoprawny 'result'"
+msgstr "niepoprawny 'result'"
 
-#, fuzzy
+# grid/R/grob.R: 948
+# stop("the new 'grob' must have the same name as the old 'grob'")
+# grid/R/grob.R: 972
+# stop("the new 'grob' must have the same name as the old 'grob'")
+# grid/R/grob.R: 1008
+# stop("the new 'grob' must have the same name as the old 'grob'")
 msgid "the new 'grob' must have the same name as the old 'grob'"
-msgstr "Nowy 'grob' musi mieć tę samą nazwe jak stary 'grob'"
+msgstr "nowy 'grob' musi mieć tę samą nazwę jak stary 'grob'"
 
-#, fuzzy
+# grid/R/grob.R: 1061
+# warning(gettextf("slot '%s' not found", i), domain = NA)
 msgid "slot '%s' not found"
-msgstr "Gniazdo '%s' nie zostało znalezione"
+msgstr "gniazdo '%s' nie zostało znalezione"
 
+# grid/R/grob.R: 1548
+# stop(gettextf("gPath (%s) not found",
+#                   paste(gPath, name, sep=.grid.pathSep)),
+#                   domain = NA)
+# grid/R/grob.R: 1644
+# stop(gettextf("gPath (%s) not found", name), domain = NA)
 msgid "gPath (%s) not found"
-msgstr "gPath (%s) nie został znaleziony"
+msgstr "'gPath' (%s) nie został znaleziony"
 
-#, fuzzy
+# grid/R/grob.R: 1676
+# stop(gettextf("grob '%s' not found", name), domain = NA)
+# grid/R/grob.R: 1689
+# stop(gettextf("grob '%s' not found", name), domain = NA)
 msgid "grob '%s' not found"
-msgstr "Grob '%s' nie został znaleziony"
+msgstr "'grob' '%s' nie został znaleziony"
 
-#, fuzzy
+# grid/R/grob.R: 1713
+# stop("invalid element in the display list")
 msgid "invalid element in the display list"
-msgstr "Niepoprawny element w liście wyświetleń"
+msgstr "niepoprawny element w liście wyświetleń"
 
-#, fuzzy
+# grid/R/grob.R: 2144
+# stop("can only reorder 'children' for a \"gTree\"")
 msgid "can only reorder 'children' for a \"gTree\""
-msgstr "Można jedynie ustawić 'children' dla 'gTree'"
+msgstr "można ponownie uporządkować jedynie 'children' dla \"gTree\""
 
-#, fuzzy
+# grid/R/grob.R: 2155
+# stop("Invalid 'order'")
 msgid "Invalid 'order'"
-msgstr "Niepoprawny 'frame'"
+msgstr "Niepoprawny 'order'"
 
+# grid/R/highlevel.R: 138
+# stop("'l' must be a layout")
 msgid "'l' must be a layout"
 msgstr "'l' musi być layoutem"
 
+# grid/R/highlevel.R: 272
+# stop("'pch' and 'labels' not the same length")
+# grid/R/highlevel.R: 314
+# stop("'pch' and 'labels' not the same length")
 msgid "'pch' and 'labels' not the same length"
 msgstr "'pch' oraz 'labels' nie są tej samej długości"
 
+# grid/R/highlevel.R: 276
+# stop("'hgap' must be single unit")
+# grid/R/highlevel.R: 318
+# stop("'hgap' must be single unit")
 msgid "'hgap' must be single unit"
 msgstr "'hgap' musi być pojedynczą jednostką"
 
+# grid/R/highlevel.R: 280
+# stop("'vgap' must be single unit")
+# grid/R/highlevel.R: 322
+# stop("'vgap' must be single unit")
 msgid "'vgap' must be single unit"
 msgstr "'vgap' musi być pojedynczą jednostką"
 
-#, fuzzy
+# grid/R/just.R: 42
+# stop("invalid justification")
+# grid/R/just.R: 74
+# stop("invalid justification")
 msgid "invalid justification"
-msgstr "Niepoprawne justowanie"
+msgstr "niepoprawne justowanie"
 
-#, fuzzy
+# grid/R/just.R: 48
+# stop("invalid horizontal justification")
 msgid "invalid horizontal justification"
-msgstr "Niepoprawne poziome justowanie"
+msgstr "niepoprawne poziome justowanie"
 
-#, fuzzy
+# grid/R/just.R: 53
+# stop("invalid vertical justification")
 msgid "invalid vertical justification"
-msgstr "Niepoprawne pionowe justowanie"
+msgstr "niepoprawne pionowe justowanie"
 
+# grid/R/layout.R: 34
+# stop("'respect' must be logical or an 'nrow' by 'ncol' matrix")
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr ""
 "'respect' musi być wartością logiczną lub macierzą o rozmiarze 'nrow' na "
 "'ncol'"
 
-#, fuzzy
+# grid/R/ls.R: 64
+# stop("invalid 'print' argument")
 msgid "invalid 'print' argument"
-msgstr "Niepoprawny argument 'print'"
+msgstr "niepoprawny argument 'print'"
 
-#, fuzzy
+# grid/R/ls.R: 92
+# stop("invalid object in 'listing'")
 msgid "invalid object in 'listing'"
-msgstr "Niepoprawny obiekt w listowaniu"
+msgstr "niepoprawny obiekt w listing'"
 
-#, fuzzy
+# grid/R/ls.R: 695
+# stop("invalid listing")
 msgid "invalid listing"
-msgstr "Niepoprawne listowanie"
+msgstr "niepoprawne listowanie"
 
-#, fuzzy
+# grid/R/ls.R: 723
+# stop("invalid 'listing'")
 msgid "invalid 'listing'"
-msgstr "Niepoprawne listowanie"
+msgstr "niepoprawny 'listing'"
 
-#, fuzzy
+# grid/R/origin.R: 24
+# stop("invalid 'origin'")
 msgid "invalid 'origin'"
-msgstr "Niepoprawna wartość 'origin'"
+msgstr "niepoprawna wartość 'origin'"
 
-#, fuzzy
+# grid/R/primitives.R: 26
+# stop("'length' must be a 'unit' object")
+# grid/R/primitives.R: 419
+# stop("'length' must be a 'unit' object")
 msgid "'length' must be a 'unit' object"
-msgstr "Wielkość 'length' musi być obiektem jednostkowym"
+msgstr "'length' musi być obiektem 'unit'"
 
-#, fuzzy
+# grid/R/primitives.R: 31
+# stop("invalid 'ends' or 'type' argument")
+# grid/R/primitives.R: 423
+# stop("invalid 'ends' or 'type' argument")
 msgid "invalid 'ends' or 'type' argument"
-msgstr "Niepoprawny argument 'ends' lub 'type'"
+msgstr "niepoprawny argument 'ends' lub 'type'"
 
+# grid/R/primitives.R: 74
+# stop("'x' and 'y' must be units")
+# grid/R/primitives.R: 109
+# stop("'x' and 'y' must be units")
+# grid/R/primitives.R: 151
+# stop("'x' and 'y' must be units")
+# grid/R/primitives.R: 231
+# stop("'x' and 'y' must be units")
+# grid/R/primitives.R: 583
+# stop("'x' and 'y' must be units")
+# grid/R/primitives.R: 679
+# stop("'x' and 'y' must be units")
+# grid/R/primitives.R: 1381
+# stop("'x' and 'y' must be units")
+# grid/R/primitives.R: 1641
+# stop("'x' and 'y' must be units")
 msgid "'x' and 'y' must be units"
 msgstr "'x' oraz 'y' muszą być jednostkami"
 
+# grid/R/primitives.R: 77
+# stop("'x' and 'y' must have length 1")
+# grid/R/primitives.R: 112
+# stop("'x' and 'y' must have length 1")
 msgid "'x' and 'y' must have length 1"
-msgstr "Wielkości 'x' oraz 'y' muszą mieć długość 1"
+msgstr "'x' oraz 'y' muszą mieć długość 1"
 
+# grid/R/primitives.R: 114
+# stop("invalid 'arrow' argument")
+# grid/R/primitives.R: 153
+# stop("invalid 'arrow' argument")
+# grid/R/primitives.R: 245
+# stop("invalid 'arrow' argument")
+# grid/R/primitives.R: 326
+# stop("invalid 'arrow' argument")
+# grid/R/primitives.R: 788
+# stop("invalid 'arrow' argument")
+# grid/R/primitives.R: 977
+# stop("invalid 'arrow' argument")
 msgid "invalid 'arrow' argument"
 msgstr "niepoprawny argument 'arrow'"
 
-#, fuzzy
+# grid/R/primitives.R: 233
+# stop("it is invalid to specify both 'id' and 'id.lengths'")
+# grid/R/primitives.R: 585
+# stop("it is invalid to specify both 'id' and 'id.lengths'")
+# grid/R/primitives.R: 681
+# stop("it is invalid to specify both 'id' and 'id.lengths'")
+# grid/R/primitives.R: 774
+# stop("it is invalid to specify both 'id' and 'id.lengths'")
+# grid/R/primitives.R: 950
+# stop("it is invalid to specify both 'id' and 'id.lengths'")
 msgid "it is invalid to specify both 'id' and 'id.lengths'"
-msgstr "Nie jest poprawnie określać oba 'id' oraz 'id.lengths'"
+msgstr "nie jest poprawnie określać oba 'id' oraz 'id.lengths'"
 
+# grid/R/primitives.R: 235
+# stop("'x' and 'y' must be same length")
+# grid/R/primitives.R: 587
+# stop("'x' and 'y' must be same length")
+# grid/R/primitives.R: 683
+# stop("'x' and 'y' must be same length")
+# grid/R/primitives.R: 778
+# stop("'x' and 'y' must be same length")
+# grid/R/primitives.R: 954
+# stop("'x' and 'y' must be same length")
 msgid "'x' and 'y' must be same length"
-msgstr "Wielkości 'x' oraz 'y' muszą mieć tę samą długość"
+msgstr "'x' oraz 'y' muszą mieć tę samą długość"
 
+# grid/R/primitives.R: 237
+# stop("'x' and 'y' and 'id' must all be same length")
+# grid/R/primitives.R: 589
+# stop("'x' and 'y' and 'id' must all be same length")
+# grid/R/primitives.R: 685
+# stop("'x' and 'y' and 'id' must all be same length")
+# grid/R/primitives.R: 780
+# stop("'x' and 'y' and 'id' must all be same length")
+# grid/R/primitives.R: 956
+# stop("'x' and 'y' and 'id' must all be same length")
 msgid "'x' and 'y' and 'id' must all be same length"
-msgstr "Wielkości 'x' oraz 'y' oraz 'id' muszą wszystkie mieć tę samą długość"
+msgstr "'x' oraz 'y' oraz 'id' muszą wszystkie mieć tę samą długość"
 
+# grid/R/primitives.R: 241
+# stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+# grid/R/primitives.R: 593
+# stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+# grid/R/primitives.R: 689
+# stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+# grid/R/primitives.R: 784
+# stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+# grid/R/primitives.R: 960
+# stop("'x' and 'y' and 'id.lengths' must specify same overall length")
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
 msgstr ""
 "'x' oraz 'y' oraz 'id.lengths' muszą określać tę samą całościową długość"
 
+# grid/R/primitives.R: 324
+# stop("'x0', 'y0', 'x1', and 'y1' must be units")
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "Wielkości 'x0', 'y0', 'x1', oraz 'y1' muszą być jednostkami"
 
+# grid/R/primitives.R: 417
+# stop("'x' and 'y' must be units or NULL")
 msgid "'x' and 'y' must be units or NULL"
-msgstr "Wielkości 'x' oraz 'y' muszą być jednostkami lub wartościami NULL"
+msgstr "'x' oraz 'y' muszą być jednostkami lub wartościami NULL"
 
-#, fuzzy
+# grid/R/primitives.R: 430
+# stop("corrupt 'arrows' object")
+# grid/R/primitives.R: 499
+# stop("corrupt 'arrows' object")
+# grid/R/primitives.R: 514
+# stop("corrupt 'arrows' object")
 msgid "corrupt 'arrows' object"
-msgstr "Uszkodzony obiekt 'arrows'"
+msgstr "uszkodzony obiekt 'arrows'"
 
-#, fuzzy
+# grid/R/primitives.R: 551
+# stop("the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob")
 msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
-"Argument 'grob' musi być jednym z 'line.to', 'lines' lub grob 'segments'"
+"argument 'grob' musi być jednym z 'line.to', 'lines' lub grob 'segments'"
 
+# grid/R/primitives.R: 772
+# stop("x and y must be units")
+# grid/R/primitives.R: 948
+# stop("x and y must be units")
 msgid "x and y must be units"
 msgstr "Wielkości 'x' oraz 'y' muszą być jednostkami"
 
-#, fuzzy
+# grid/R/primitives.R: 965
+# stop("must have exactly 4 control points")
 msgid "must have exactly 4 control points"
-msgstr "Potrzeba mieć dokładnie 4 punkty kontrolne"
+msgstr "potrzeba mieć dokładnie 4 punkty kontrolne"
 
-#, fuzzy
+# grid/R/primitives.R: 974
+# stop("must have exactly 4 control points per Bezier curve")
 msgid "must have exactly 4 control points per Bezier curve"
-msgstr "Potrzeba mieć dokładnie 4 punkty kontrolne na każdą krzywą Beziera"
+msgstr "potrzeba mieć dokładnie 4 punkty kontrolne na każdą krzywą Beziera"
 
+# grid/R/primitives.R: 1034
+# stop("'x', 'y', and 'r' must be units")
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y', oraz 'r' muszą być jednostkami"
 
+# grid/R/primitives.R: 1105
+# stop("'x', 'y', 'width', and 'height' must be units")
+# grid/R/primitives.R: 1207
+# stop("'x', 'y', 'width', and 'height' must be units")
+# grid/R/primitives.R: 1593
+# stop("'x', 'y', 'width', and 'height' must be units")
+# grid/R/roundRect.R: 47
+# stop("'x', 'y', 'width', and 'height' must be units")
 msgid "'x', 'y', 'width', and 'height' must be units"
-msgstr "Wielkości 'x', 'y', 'width', oraz 'height' muszą być jednostkami"
+msgstr "'x', 'y', 'width', oraz 'height' muszą być jednostkami"
 
-#, fuzzy
+# grid/R/primitives.R: 1384
+# stop("invalid 'rot' value")
 msgid "invalid 'rot' value"
-msgstr "Nieprawidłowa wartość 'rot'"
+msgstr "nieprawidłowa wartość 'rot'"
 
+# grid/R/primitives.R: 1502
+# stop("zero-length 'pch'")
 msgid "zero-length 'pch'"
-msgstr "Wielkość 'pch' ma zerową długość"
+msgstr "'pch' ma zerową długość"
 
+# grid/R/primitives.R: 1514
+# stop("'x', 'y' and 'size' must be units")
 msgid "'x', 'y' and 'size' must be units"
 msgstr "'x', 'y' oraz 'size' muszą być jednostkami"
 
-#, fuzzy
+# grid/R/primitives.R: 1516
+# stop("'x' and 'y' must be 'unit' objects and have the same length")
 msgid "'x' and 'y' must be 'unit' objects and have the same length"
-msgstr ""
-"Wielkości 'x' oraz 'y' muszą być obiektami jednostkowymi oraz mieć tę samą "
-"długość"
+msgstr "'x' oraz 'y' muszą być obiektami 'unit' oraz mieć tę samą długość"
 
+# grid/R/primitives.R: 1596
+# stop("'x', 'y', 'width', and 'height' must all be units of length 1")
+# grid/R/viewport.R: 40
+# stop("'x', 'y', 'width', and 'height' must all be units of length 1")
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr "'x', 'y', 'width', oraz 'height' muszą być jednostkami o długości 1"
 
+# grid/R/primitives.R: 1643
+# stop("'x' and 'y' must all be units of length 1")
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x' oraz 'y' muszą być jednostkami o długości 1"
 
-#, fuzzy
+# grid/R/roundRect.R: 49
+# stop("'r' must be a 'unit' object")
 msgid "'r' must be a 'unit' object"
-msgstr "'r' musi być obiektem jednostkowym"
+msgstr "'r' musi być obiektem 'unit'"
 
+# grid/R/roundRect.R: 54
+# stop("'x', 'y', 'width', and 'height' must have length 1")
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width', oraz 'height' muszą mieć długość 1"
 
+# grid/R/unit.R: 32
+# stop("'x' and 'units' must have length > 0")
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' oraz 'units' muszą mieć długość > 0"
 
+# grid/R/unit.R: 61
+# stop("'x' argument must be a unit object")
 msgid "'x' argument must be a unit object"
 msgstr "argument 'x' musi być obiektem jednostkowym"
 
-#, fuzzy
+# grid/R/unit.R: 63
+# stop("invalid 'axis' or 'type'")
 msgid "invalid 'axis' or 'type'"
-msgstr "Niepoprawna wartość 'axis' lub 'type'"
+msgstr "niepoprawna wartość 'axis' lub 'type'"
 
-#, fuzzy
+# grid/R/unit.R: 192
+# stop("no string supplied for 'strwidth/height' unit")
 msgid "no string supplied for 'strwidth/height' unit"
-msgstr "Nie dostarczono ciągów dla jednostki 'strwidth/height'"
+msgstr "nie dostarczono łańcuchów dla jednostki 'strwidth/height'"
 
-#, fuzzy
+# grid/R/unit.R: 200
+# stop("no 'grob' supplied for 'grobwidth/height' unit")
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr "Nie dostarczono 'grob' dla jednostki 'grobwidth/height'"
+msgstr "nie dostarczono 'grob' dla jednostki 'grobwidth/height'"
 
+# grid/R/unit.R: 205
+# stop("'gPath' must have depth 1 in 'grobwidth/height' units")
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr "'gPath' musi mieć głębokość 1 w jednostkach 'grobwidth/height'"
 
-#, fuzzy
+# grid/R/unit.R: 209
+# stop("non-NULL value supplied for plain unit")
 msgid "non-NULL value supplied for plain unit"
-msgstr "Wartość nie-NULL dostarczona dla zwykłej jednostki"
+msgstr "wartość inna niż NULL dostarczona dla zwykłej jednostki"
 
-#, fuzzy
+# grid/R/unit.R: 235
+# stop(gettextf("operator '%s' not meaningful for units", .Generic),
+#          domain = NA)
 msgid "operator '%s' not meaningful for units"
-msgstr "Operator '%s' nie posiada znaczenia dla jednostek"
+msgstr "operator '%s' nie posiada znaczenia dla jednostek"
 
-#, fuzzy
+# grid/R/unit.R: 241
+# stop("only one operand may be a unit")
 msgid "only one operand may be a unit"
-msgstr "Tylko jeden operator może być jednostką"
+msgstr "tylko jeden operator może być jednostką"
 
-#, fuzzy
+# grid/R/unit.R: 247
+# stop("non-unit operand must be numeric")
+# grid/R/unit.R: 253
+# stop("non-unit operand must be numeric")
 msgid "non-unit operand must be numeric"
-msgstr "Niejednostkowy operator musi być liczbą"
+msgstr "niejednostkowy operator musi być liczbą"
 
-#, fuzzy
+# grid/R/unit.R: 260
+# stop("both operands must be units")
 msgid "both operands must be units"
-msgstr "Oba operatory muszą być jednostkami"
+msgstr "oba operatory muszą być jednostkami"
 
+# grid/R/unit.R: 273
+# stop(gettextf("'Summary' function '%s' not meaningful for units",
+#                   .Generic), domain = NA)
 msgid "'Summary' function '%s' not meaningful for units"
 msgstr "Funkcja 'summary' '%s' nie ma znaczenia dla jednostek"
 
-#, fuzzy
+# grid/R/unit.R: 302
+# stop("no arguments where at least one expected")
 msgid "no arguments where at least one expected"
-msgstr "Zero argumentów gdzie oczekiwano przynajmniej jednego"
+msgstr "brak argumentów gdzie oczekiwano przynajmniej jednego"
 
+# grid/R/unit.R: 325
+# stop("Zero arguments where at least one expected")
 msgid "Zero arguments where at least one expected"
 msgstr "Zero argumentów gdzie oczekiwano przynajmniej jednego"
 
-#, fuzzy
+# grid/R/unit.R: 402
+# stop("cannot mix signs of indices")
+# grid/R/unit.R: 434
+# stop("cannot mix signs of indices")
+# grid/R/unit.R: 467
+# stop("cannot mix signs of indices")
 msgid "cannot mix signs of indices"
-msgstr "Nie można mieszać znaków indeksów"
+msgstr "nie można mieszać znaków indeksów"
 
-#, fuzzy
+# grid/R/unit.R: 407
+# stop("index out of bounds ('unit' subsetting)")
 msgid "index out of bounds ('unit' subsetting)"
-msgstr "Indeks poza zakresem (podzbiór jednostek)"
+msgstr "indeks poza zakresem (podzbiór 'unit')"
 
-#, fuzzy
+# grid/R/unit.R: 439
+# stop("index out of bounds (unit arithmetic subsetting)")
 msgid "index out of bounds (unit arithmetic subsetting)"
-msgstr "Indeks poza zakresem (arytmetyczny podzbiór jednostki)"
+msgstr "indeks poza zakresem (arytmetyczny podzbiór jednostki)"
 
-#, fuzzy
+# grid/R/unit.R: 472
+# stop("index out of bounds (unit list subsetting)")
 msgid "index out of bounds (unit list subsetting)"
-msgstr "Indeks poza zakresem (podzbiór listy jednostek)"
+msgstr "indeks poza zakresem (podzbiór listy jednostek)"
 
-#, fuzzy
+# grid/R/unit.R: 499
+# stop("it is invalid to combine 'unit' objects with other types")
 msgid "it is invalid to combine 'unit' objects with other types"
-msgstr "Niepoprawne jest łączenie obiektów jednostkowych z innymi typami"
+msgstr "niepoprawne jest łączenie obiektów 'unit' z innymi typami"
 
-#, fuzzy
+# grid/R/unit.R: 537
+# stop("invalid 'unit' object")
 msgid "invalid 'unit' object"
-msgstr "Niepoprawny obiekt jednostkowy"
+msgstr "niepoprawny obiekt 'unit'"
 
-#, fuzzy
+# grid/R/unit.R: 639
+# stop("invalid 'theta'")
 msgid "invalid 'theta'"
-msgstr "Niepoprawna wartość 'theta'"
+msgstr "niepoprawna wartość 'theta'"
 
+# grid/R/util.R: 38
+# stop("'range' must be numeric")
 msgid "'range' must be numeric"
 msgstr "'range' musi być liczbą"
 
-#, fuzzy
+# grid/R/viewport.R: 42
+# stop("invalid 'gp' value")
 msgid "invalid 'gp' value"
-msgstr "Niepoprawna wartość 'grep'"
+msgstr "niepoprawna wartość 'grep'"
 
-#, fuzzy
+# grid/R/viewport.R: 48
+# stop("invalid 'clip' value")
 msgid "invalid 'clip' value"
-msgstr "Niepoprawna wartość 'clip'"
+msgstr "niepoprawna wartość 'clip'"
 
-#, fuzzy
+# grid/R/viewport.R: 51
+# stop("invalid 'xscale' in viewport")
 msgid "invalid 'xscale' in viewport"
-msgstr "Niepoprawne 'xscale' w oknie ekranu"
+msgstr "niepoprawne 'xscale' w oknie ekranu"
 
-#, fuzzy
+# grid/R/viewport.R: 54
+# stop("invalid 'yscale' in viewport")
 msgid "invalid 'yscale' in viewport"
-msgstr "Niepoprawne 'yscale' w oknie ekranu"
+msgstr "niepoprawne 'yscale' w oknie ekranu"
 
-#, fuzzy
+# grid/R/viewport.R: 57
+# stop("invalid 'angle' in viewport")
 msgid "invalid 'angle' in viewport"
-msgstr "Niepoprawne 'angle' w oknie ekranu"
+msgstr "niepoprawne 'angle' w oknie ekranu"
 
-#, fuzzy
+# grid/R/viewport.R: 59
+# stop("invalid 'layout' in viewport")
 msgid "invalid 'layout' in viewport"
-msgstr "Niepoprawne 'layout' w oknie ekranu"
+msgstr "niepoprawne 'layout' w oknie ekranu"
 
-#, fuzzy
+# grid/R/viewport.R: 63
+# stop("invalid 'layout.pos.row' in viewport")
 msgid "invalid 'layout.pos.row' in viewport"
-msgstr "Niepoprawne 'layout.pos.row' w oknie ekranu"
+msgstr "niepoprawne 'layout.pos.row' w oknie ekranu"
 
-#, fuzzy
+# grid/R/viewport.R: 68
+# stop("invalid 'layout.pos.col' in viewport")
 msgid "invalid 'layout.pos.col' in viewport"
-msgstr "Niepoprawne 'layout.pos.col' w oknie ekranu"
+msgstr "niepoprawne 'layout.pos.col' w oknie ekranu"
 
-#, fuzzy
+# grid/R/viewport.R: 258
+# stop("only viewports allowed in 'vpList'")
 msgid "only viewports allowed in 'vpList'"
-msgstr "Tylko okna ekranów są dozwolone w 'vpList'"
+msgstr "tylko okna ekranów są dozwolone w 'vpList'"
 
-#, fuzzy
+# grid/R/viewport.R: 275
+# stop("only viewports allowed in 'vpStack'")
 msgid "only viewports allowed in 'vpStack'"
-msgstr "Tylko okna ekranu są dozwolone w 'vpStack'"
+msgstr "tylko okna ekranów są dozwolone w 'vpStack'"
 
+# grid/R/viewport.R: 286
+# stop("'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'")
 msgid ""
 "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
 msgstr ""
 "'parent' musi być oknem ekranu oraz 'children' musi być 'vpList' w 'vpTree'"
 
-#, fuzzy
+# grid/R/viewport.R: 322
+# stop("a viewport path must contain at least one viewport name")
 msgid "a viewport path must contain at least one viewport name"
-msgstr "Ścieżka okna ekranu musi zawierać przynajmniej jedną nazwę okna ekranu"
+msgstr "ścieżka okna ekranu musi zawierać przynajmniej jedną nazwę okna ekranu"
 
-#, fuzzy
+# grid/R/viewport.R: 394
+# stop("must specify at least one of 'x' or 'xscale'")
 msgid "must specify at least one of 'x' or 'xscale'"
-msgstr "Potrzeba określić przynajmniej jeden z 'x' lub 'xscale'"
+msgstr "potrzeba określić przynajmniej jeden z 'x' lub 'xscale'"
 
-#, fuzzy
+# grid/R/viewport.R: 399
+# stop("must specify at least one of 'y' or 'yscale'")
 msgid "must specify at least one of 'y' or 'yscale'"
-msgstr "Potrzeba określić przynajmniej jeden z 'y' lub 'yscale'"
+msgstr "potrzeba określić przynajmniej jeden z 'y' lub 'yscale'"
 
+# grid/R/zzz.R: 52
+# warning("shutting down all devices when unloading 'grid' namespace",
+#                     call. = FALSE)
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr ""
-"zamykanie wszystkich urządzeń kiedy wyłączana jest przestrzeń nazw 'grid'"
+"zamykanie wszystkich urządzeń kiedy wykonywane jest zwalnianie przestrzeni "
+"nazw 'grid'"
 
-#, fuzzy
+# grid/R/grob.R: 150
+# stop(ngettext(sum(bad), "invalid grob name", "invalid grob names"),
+#            domain = NA)
 msgid "invalid grob name"
 msgid_plural "invalid grob names"
-msgstr[0] "Niepoprawne nazwy 'grob'"
-msgstr[1] "Niepoprawne nazwy 'grob'"
-msgstr[2] "Niepoprawne nazwy 'grob'"
+msgstr[0] "niepoprawna nazwa 'grob'"
+msgstr[1] "niepoprawne nazwy 'grob'"
+msgstr[2] "niepoprawne nazwy 'grob'"
 
-#, fuzzy
+# grid/R/viewport.R: 324
+# stop(ngettext(sum(bad),
+#                     "invalid viewport name",
+#                     "invalid viewport names"),
+#            domain = NA)
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
-msgstr[0] "Niepoprawne nazwy okien ekranu"
-msgstr[1] "Niepoprawne nazwy okien ekranu"
-msgstr[2] "Niepoprawne nazwy okien ekranu"
+msgstr[0] "niepoprawna nazwa okna ekranu"
+msgstr[1] "niepoprawne nazwy okien ekranu"
+msgstr[2] "niepoprawne nazwy okien ekranu"
 
-#, fuzzy
 #~ msgid "invalid 'ask' value"
-#~ msgstr "Niepoprawna wartość 'ask'"
-
-#~ msgid "Cannot mix signs of indices"
-#~ msgstr "Nie można mieszać znaków indeksów"
-
-#, fuzzy
-#~ msgid "It is only valid to remove a child from a \"gTree\""
-#~ msgstr "Poprawne jest jedynie usunięcie dziecka z 'gTree'"
+#~ msgstr "niepoprawna wartość 'ask'"
 
 #~ msgid "This function is redundant and will disappear in future versions."
 #~ msgstr "Ta funkcja jest zbędna i zniknie w przyszłych wersjach."
@@ -649,14 +1028,11 @@ msgstr[2] "Niepoprawne nazwy okien ekranu"
 #~ "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
 #~ "functions."
 #~ msgstr ""
-#~ "'grid.arrows()' stał się przestarzały;  użuj argumentów 'arrow' aby "
-#~ "narysować funkcje linią."
+#~ "'grid.arrows()' stał się przestarzały;  użyj argumentów 'arrow' aby "
+#~ "narysować funkcje za pomocą linii."
 
 #~ msgid "shape must be between -1 and 1"
 #~ msgstr "Wielkość 'shape' musi być z przedziału [-1;1]"
-
-#~ msgid "Non-unit operand must be numeric"
-#~ msgstr "Niejednostkowy operator musi być liczbą"
 
 #~ msgid ""
 #~ "unit.rep has been deprecated in favour of a unit method for the generic "
@@ -672,6 +1048,5 @@ msgstr[2] "Niepoprawne nazwy okien ekranu"
 #~ "'unit.length' stał się przestarzały na korzyść metody jednostkowej dla "
 #~ "ogólne funkcji długości"
 
-#, fuzzy
-#~ msgid "invalid graphics parameters"
+#~ msgid "Invalid graphics parameters"
 #~ msgstr "Niepoprawne parametry graficzne"

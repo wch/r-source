@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:43+0000\n"
+"POT-Creation-Date: 2013-03-18 19:36+0000\n"
 "PO-Revision-Date: 2012-10-26 22:30+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -1194,10 +1194,10 @@ msgstr "postscript ذخیره به عنوان ..."
 msgid "Locator is active"
 msgstr "مختصات‌یاب فعال می‌باشد"
 
-#: src/library/grDevices/src/devWindows.c:3759
+#: src/library/grDevices/src/devWindows.c:3763
 msgid "Waiting to confirm page change..."
 msgstr "منتظر اجازه شما برای تغییر تصویر  ..."
 
-#: src/library/grDevices/src/devWindows.c:3771
+#: src/library/grDevices/src/devWindows.c:3775
 msgid "Click or hit ENTER for next page"
 msgstr "برای دیدن تصویر بعد در این پنجره تلیک کنید یا کلید اینتر را بزنید"

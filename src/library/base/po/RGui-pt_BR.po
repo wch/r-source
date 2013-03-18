@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:43+0000\n"
+"POT-Creation-Date: 2013-03-18 19:36+0000\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1218,10 +1218,10 @@ msgstr "Salvar como postscript..."
 msgid "Locator is active"
 msgstr "Localizador está ativo"
 
-#: src/library/grDevices/src/devWindows.c:3759
+#: src/library/grDevices/src/devWindows.c:3763
 msgid "Waiting to confirm page change..."
 msgstr "Esperando para confirmar mudança de página..."
 
-#: src/library/grDevices/src/devWindows.c:3771
+#: src/library/grDevices/src/devWindows.c:3775
 msgid "Click or hit ENTER for next page"
 msgstr "Clique com o mouse ou pressione ENTER para próxima página"

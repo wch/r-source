@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:43+0000\n"
+"POT-Creation-Date: 2013-03-18 19:36+0000\n"
 "PO-Revision-Date: 2005-02-05 13:45+0100\n"
 "Last-Translator: Stefano M. Iacus <stefano.iacus@R-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1206,10 +1206,10 @@ msgstr "Salva su postscript..."
 msgid "Locator is active"
 msgstr "Locator è attivo"
 
-#: src/library/grDevices/src/devWindows.c:3759
+#: src/library/grDevices/src/devWindows.c:3763
 msgid "Waiting to confirm page change..."
 msgstr "Aspetto per confermare cambio pagina..."
 
-#: src/library/grDevices/src/devWindows.c:3771
+#: src/library/grDevices/src/devWindows.c:3775
 msgid "Click or hit ENTER for next page"
 msgstr "Click o premi ENTER per pagina successiva"
