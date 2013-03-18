@@ -4103,7 +4103,7 @@ the additional flags being needed to resolve problems linking against
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
-C++ compilers (@uref{http://clang.llvm.org}, versions 2.9 and 3.0) based
+C++ compilers (@uref{http://clang.llvm.org}, versions 3.0 and 3.2) based
 on the Clang front-ends, invoked by @code{CC=clang CXX=clang++},
 together with @command{gfortran}.  These take very similar options to
 the corresponding GCC compilers.
@@ -4111,6 +4111,9 @@ the corresponding GCC compilers.
 This has to be used in conjunction with a Fortran compiler: the
 @command{configure} code will remove @option{-lgcc} from @env{FLIBS},
 which is needed for some versions of @command{gfortran}.
+
+Note that @command{clang++} 3.0 as in Fedora 17 is rather broken when
+used with @command{g++} C++ headers.
 
 @node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
 @subsection Intel compilers
@@ -4342,6 +4345,16 @@ F77='gfortran -arch x86_64'
 OBJC='clang -arch x86_64'
 @end example
 in @file{config.site} or on the @command{configure} command line.
+
+Looking at the top of
+@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
+will show the compilers and configuration options used for the
+@acronym{CRAN} binary package for @R{}: at the time of writing
+@example
+--with-system-zlib' --enable-memory-profiling --disable-openmp
+@end example
+@noindent
+was used.
 
 @menu
 * Snow Leopard::                

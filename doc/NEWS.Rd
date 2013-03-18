@@ -444,12 +444,20 @@
       the environment variable \env{R_GC_MEM_GROW}. See \code{?Memory}
       for more details.
       
-      \item (\sQuote{For experts only}, and the introductory manual
+      \item (\sQuote{For experts only}, as the introductory manual
       says.)  The use of environment variables \env{R_NSIZE} and
       \env{R_VSIZE} to control the initial (= minimum) garbade
       collection trigger for number of cons cels and size of heap has
       been restored: they can be overridden by the command-line options
       \code{--min-nsize} and \code{--min-vsize}; see \code{?Memory}.
+
+      \item On Windows, the device name for bitmap devices as reported
+      by \code{.Device} and \code{.Devices} no longer includes the file
+      name.   This is for consistency with other platforms and was
+      requested by the \CRANpkg{lattice} maintainer.
+
+      \code{win.metafile()} still uses the file name: the exact form is
+      used by package \CRANpkg{tkrplot}.
     }
   }
 
