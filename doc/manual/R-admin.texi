@@ -1884,10 +1884,19 @@ distribution of @R{}, but the settings in the file
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} will need
 to be changed, either by editing that file or in a file such as
 @file{~/.R/Makevars} (see the next section).  Entries which may need to
-be changed include @samp{CC}, @samp{CXX}, @samp{CXXCPP},
-@samp{DYLIB_LD}, @samp{FC}, @samp{F77}, @samp{FLIBS}, @samp{MAIN_LD},
-@samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD} and @samp{SHLIB_LD} as well as the
-corresponding flags.
+be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{F77},
+@samp{FLIBS} and the corresponding flags, and perhaps @samp{CXXCPP},
+@samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD}
+and @samp{SHLIB_LD}.
+
+So for example you could select @command{clang} for both C and C++ with
+extensive checking by having in @file{~/.R/Makevars}
+@example
+CC=clang
+CXX=clang++
+CFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
+CXXFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
+@end example
 
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
 @subsection Customizing package compilation

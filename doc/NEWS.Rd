@@ -593,7 +593,17 @@
       \code{tools::vignetteEngine} help topic for details.
 
       \item The package type \code{"mac.binary"} now results in a path
-      without Mac subtype (which used to be \code{"universal"}).
+      without Mac subtype (which used to be \code{"universal"}).  This
+      is the type used for the \acronym{CRAN} binary distribution for OS
+      X as from \R 3.0.0.
+      
+      \item File \file{etc/Makeconf} makes more use of the macros
+      \code{$(CC)}, \code{$(CXX)}, \code{$(F77)} and \code{$(FC)}, so
+      the compiler in use can be changed by setting just these (and if
+      necessary the corresponding flags) in file \file{~/.R/Makevars}.
+
+      This is convenient for those working with binary distributions of
+      \R, e.g. on OS X.
     }
   }
 
