@@ -2081,7 +2081,7 @@ msgid ""
 "ERROR: failed to lock directory %s for modifying\n"
 "Try removing %s"
 msgstr ""
-"BŁĄD: nie udało się zablokować katalogu %d do modyfikacji\n"
+"BŁĄD: nie udało się zablokować katalogu %s do modyfikacji\n"
 "Spróbuj usunąć %s"
 
 # utils/R/unix/mac.install.R: 97

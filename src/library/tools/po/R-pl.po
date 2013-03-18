@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37\n"
+"POT-Creation-Date: 2013-03-07 08:24\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2828,15 +2828,22 @@ msgstr[2] "Funkcje ogólne bez metod w %s: %s"
 #                                   "missing/empty \\name field in Rd files\n%s"),
 #                          paste(" ", Rd_paths[idx], collapse = "\n")),
 #                  call. = FALSE, domain = NA)
+#, fuzzy
 msgid ""
 "missing/empty \\name field in Rd file\n"
 "%s"
 msgid_plural ""
 "missing/empty \\name field in Rd files\n"
 "%s"
-msgstr[0] "brakujące/puste pole \\name w pliku Rd"
-msgstr[1] "brakujące/puste pole \\name w plikach Rd"
-msgstr[2] "brakujące/puste pole \\name w plikach Rd"
+msgstr[0] ""
+"brakujące/puste pole \\name w pliku Rd\n"
+"%s"
+msgstr[1] ""
+"brakujące/puste pole \\name w plikach Rd\n"
+"%s"
+msgstr[2] ""
+"brakujące/puste pole \\name w plikach Rd\n"
+"%s"
 
 # tools/R/admin.R: 304
 # warning(sprintf(ngettext(length(bad),

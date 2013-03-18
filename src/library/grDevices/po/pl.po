@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:24+0000\n"
+"POT-Creation-Date: 2013-03-18 19:31+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -934,7 +934,7 @@ msgstr "niepoprawna wartość '%s'"
 # error(_("unable to start %s() device"), "pdf")
 # grDevices/src/devWindows.c: 3724
 # error(_("unable to start %s() device"), type)
-#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3724
+#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3728
 #, c-format
 msgid "unable to start %s() device"
 msgstr "nie można uruchomić urządzenia '%s()'"
@@ -1157,7 +1157,7 @@ msgstr "metaplik '%s' nie mógł zostać utworzony"
 # (_("R Graphics"))
 # grDevices/src/devWindows.c: 3748
 # (_("R Graphics"))
-#: devWindows.c:3110 devWindows.c:3748
+#: devWindows.c:3110 devWindows.c:3752
 msgid "R Graphics"
 msgstr "R Grafika"
 

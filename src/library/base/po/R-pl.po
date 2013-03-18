@@ -1570,7 +1570,7 @@ msgstr "'object' musi być listą"
 #                               sQuote(basename(pkgpath))),
 #                      call. = FALSE, domain = NA)
 msgid "package %s has not been installed properly"
-msgstr "pakiet 's nie został zainstalowany poprawnie"
+msgstr "pakiet %s nie został zainstalowany poprawnie"
 
 # src/library/base/R/library.R: 48
 # stop(gettextf("package %s was built before R 3.0.0: please re-install it",
