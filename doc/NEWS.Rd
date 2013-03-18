@@ -458,6 +458,10 @@
 
       \code{win.metafile()} still uses the file name: the exact form is
       used by package \CRANpkg{tkrplot}.
+      
+      \item \code{set.seed(NULL)} re-initializes \code{.Random.seed} as
+      done at the beginning of the session if not already set.
+      (Suggestion of Bill Dunlap.)
     }
   }
 
