@@ -3710,6 +3710,7 @@ SEXP devga(SEXP args)
 	strcpy(type, "windows");
 	if (display[0]) {
 	    strncpy(type, display, 100);
+	    // Package tkrplot assumes the exact form here
 	    if(strncmp(display, "win.metafile", 12)) {
 		char *p = strchr(type, ':');
 		if(p) *p = '\0';
