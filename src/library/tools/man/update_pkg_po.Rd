@@ -1,6 +1,6 @@
 % File src/library/tools/man/update_pkg_po.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012 R Core Team
+% Copyright 2012-3 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update_pkg_po}
@@ -43,11 +43,11 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     \item All the \file{po/R-\var{lang}.po} files are compiled and
     installed under \file{inst/po}.
     \item The remaining steps are done only if file
-    \file{po/\var{pkgname}.pot} already exists.  All the \file{src/*.c}
-    files in the package are examined to create a file
-    \file{po/\var{pkgname}.po} containing the translatable messages
-    in the C files.  If there is a \code{src/windows} directory, C files
-    within it are also examined.
+    \file{po/\var{pkgname}.pot} already exists.  The
+    \file{src/*.\{c,cc,cpp,m,mm\}} files in the package are examined to
+    create a file \file{po/\var{pkgname}.po} containing the translatable
+    messages in the C/C++ files.  If there is a \code{src/windows}
+    directory, files within it are also examined.
     \item All existing files in directory \code{po} with names
     \file{\var{lang}.po} are updated from \file{\var{pkgname}.pot}.
     \item \code{\link{checkPoFile}} is called on each

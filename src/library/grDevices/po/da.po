@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36+0000\n"
+"POT-Creation-Date: 2013-03-18 08:04+0000\n"
 "PO-Revision-Date: 2011-11-29 09:07+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -558,7 +558,7 @@ msgid "invalid value of '%s'"
 msgstr "ugyldig værdi for '%s'"
 
 # 85%
-#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3724
+#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3725
 #, c-format
 msgid "unable to start %s() device"
 msgstr "kan ikke starte %s()-enhed"
@@ -697,7 +697,7 @@ msgstr "En metafil for udklipsholderen kan kun lagre en figur."
 msgid "metafile '%s' could not be created"
 msgstr "metafilfil '%s' kunne ikke oprettes"
 
-#: devWindows.c:3110 devWindows.c:3748
+#: devWindows.c:3110 devWindows.c:3749
 msgid "R Graphics"
 msgstr "R-grafik"
 

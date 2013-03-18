@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:44+0000\n"
+"POT-Creation-Date: 2013-03-18 08:03+0000\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1175,7 +1175,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr "必須給定 'which' 剛好一個屬性"
 
 #: src/main/attrib.c:1336 src/main/attrib.c:1359 src/main/subscript.c:234
-#: src/main/subscript.c:238 src/main/subset.c:1155 src/main/subset.c:1206
+#: src/main/subscript.c:238 src/main/subset.c:1156 src/main/subset.c:1207
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s' 部份匹配到 '%s'"
@@ -5705,7 +5705,7 @@ msgstr "矩陣中的下標數目不正確"
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr "矩陣子集賦值中有不相容的類型 (從 %s 到 %s)"
 
-#: src/main/subassign.c:1021 src/main/subset.c:900
+#: src/main/subassign.c:1021 src/main/subset.c:901
 msgid "incorrect number of subscripts"
 msgstr "下標數目不正確"
 
@@ -5768,7 +5768,7 @@ msgstr "[[ ]] 下標 (%d) 在界限外"
 #: src/main/subassign.c:1852 src/main/subscript.c:139 src/main/subscript.c:141
 #: src/main/subscript.c:265 src/main/subscript.c:267 src/main/subscript.c:801
 #: src/main/subscript.c:803 src/main/subscript.c:896 src/main/subscript.c:898
-#: src/main/subset.c:1076
+#: src/main/subset.c:1077
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr "無效的下標類型 '%s'"
@@ -5838,31 +5838,31 @@ msgstr "陣列中沒有 'dimnames' 此一屬性"
 msgid "subscripting on non-vector"
 msgstr "非向量不能有下標"
 
-#: src/main/subset.c:260
+#: src/main/subset.c:261
 msgid "dimensions would exceed maximum size of array"
 msgstr ""
 
-#: src/main/subset.c:303 src/main/subset.c:332
+#: src/main/subset.c:304 src/main/subset.c:333
 msgid "matrix subscripting not handled for this type"
 msgstr "此一類型無法處理矩陣下標"
 
-#: src/main/subset.c:487
+#: src/main/subset.c:488
 msgid "array subscripting not handled for this type"
 msgstr "此一類型無法處理陣列下標"
 
-#: src/main/subset.c:798
+#: src/main/subset.c:799
 msgid "incorrect number of dimensions"
 msgstr "維度數目不正確"
 
-#: src/main/subset.c:896
+#: src/main/subset.c:897
 msgid "no index specified"
 msgstr "沒有指定的索引"
 
-#: src/main/subset.c:906
+#: src/main/subset.c:907
 msgid "this S4 class is not subsettable"
 msgstr "這個 S4 類別不是子集合表格"
 
-#: src/main/subset.c:912
+#: src/main/subset.c:913
 msgid "wrong arguments for subsetting an environment"
 msgstr "取子集環境時的引數不正確"
 

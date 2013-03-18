@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:44+0000\n"
+"POT-Creation-Date: 2013-03-18 08:03+0000\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1196,7 +1196,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr "nøyaktig eitt «which»-attributt må vera oppgjeve"
 
 #: src/main/attrib.c:1336 src/main/attrib.c:1359 src/main/subscript.c:234
-#: src/main/subscript.c:238 src/main/subset.c:1155 src/main/subset.c:1206
+#: src/main/subscript.c:238 src/main/subset.c:1156 src/main/subset.c:1207
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "«%s» vert tolka som «%s»"
@@ -5802,7 +5802,7 @@ msgstr "feil tal på indeks i matrise"
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr "ikkje-kompatible typar (frå %s til %s) i delmatrise-tildeling"
 
-#: src/main/subassign.c:1021 src/main/subset.c:900
+#: src/main/subassign.c:1021 src/main/subset.c:901
 msgid "incorrect number of subscripts"
 msgstr "feil tal på indeksar"
 
@@ -5866,7 +5866,7 @@ msgstr "[[ ]] indeks (%d) utanfor gyldig verdiområde"
 #: src/main/subassign.c:1852 src/main/subscript.c:139 src/main/subscript.c:141
 #: src/main/subscript.c:265 src/main/subscript.c:267 src/main/subscript.c:801
 #: src/main/subscript.c:803 src/main/subscript.c:896 src/main/subscript.c:898
-#: src/main/subset.c:1076
+#: src/main/subset.c:1077
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr "ugyldig indekstype «%s»"
@@ -5936,31 +5936,31 @@ msgstr "manglar «dimnamnes»-attributt for array"
 msgid "subscripting on non-vector"
 msgstr "delmengduttrekking på ikkje-vektor"
 
-#: src/main/subset.c:260
+#: src/main/subset.c:261
 msgid "dimensions would exceed maximum size of array"
 msgstr ""
 
-#: src/main/subset.c:303 src/main/subset.c:332
+#: src/main/subset.c:304 src/main/subset.c:333
 msgid "matrix subscripting not handled for this type"
 msgstr "matriseindeksering ikkje handtert for denne typen"
 
-#: src/main/subset.c:487
+#: src/main/subset.c:488
 msgid "array subscripting not handled for this type"
 msgstr "arrayindeksering ikkje handtert for denne typen"
 
-#: src/main/subset.c:798
+#: src/main/subset.c:799
 msgid "incorrect number of dimensions"
 msgstr "feil tal på dimensjonar"
 
-#: src/main/subset.c:896
+#: src/main/subset.c:897
 msgid "no index specified"
 msgstr "ingen indeks vald"
 
-#: src/main/subset.c:906
+#: src/main/subset.c:907
 msgid "this S4 class is not subsettable"
 msgstr "kan ikkje trekkja ut delmengder denne S4-klassen"
 
-#: src/main/subset.c:912
+#: src/main/subset.c:913
 msgid "wrong arguments for subsetting an environment"
 msgstr "feil argument for uttrekkjing av delmengder av omgjevnad"
 

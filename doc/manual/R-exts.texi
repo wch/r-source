@@ -3993,8 +3993,8 @@ The process of enabling translations is
 
 @itemize
 @item
-In a header file that will be included in all the C files
-containing messages that should be translated, declare
+In a header file that will be included in all the C (or C++ or Objective
+C/C++) files containing messages that should be translated, declare
 
 @example
 #include <R.h>  /* to include Rconfig.h */

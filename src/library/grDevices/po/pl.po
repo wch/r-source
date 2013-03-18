@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36+0000\n"
+"POT-Creation-Date: 2013-03-18 08:04+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -552,7 +552,7 @@ msgstr "niepoprawny parametr 'fonts' w %s"
 msgid "invalid value of '%s'"
 msgstr "niepoprawna wartość '%s'"
 
-#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3724
+#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3725
 #, c-format
 msgid "unable to start %s() device"
 msgstr "nie można uruchomić urządzenia '%s()'"
@@ -691,7 +691,7 @@ msgstr "Metaplik schowka może przechowywać tylko jeden obrazek."
 msgid "metafile '%s' could not be created"
 msgstr "plik meta '%s' nie mógł zostać utworzony"
 
-#: devWindows.c:3110 devWindows.c:3748
+#: devWindows.c:3110 devWindows.c:3749
 msgid "R Graphics"
 msgstr "R Graphics"
 

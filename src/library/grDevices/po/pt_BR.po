@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36+0000\n"
+"POT-Creation-Date: 2013-03-18 08:04+0000\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -533,7 +533,7 @@ msgstr ""
 msgid "invalid value of '%s'"
 msgstr ""
 
-#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3724
+#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3725
 #, c-format
 msgid "unable to start %s() device"
 msgstr "não é possível iniciar dispositivo %s()"
@@ -663,7 +663,7 @@ msgstr ""
 msgid "metafile '%s' could not be created"
 msgstr "arquivo afm '%s' não pode ser aberto"
 
-#: devWindows.c:3110 devWindows.c:3748
+#: devWindows.c:3110 devWindows.c:3749
 msgid "R Graphics"
 msgstr ""
 

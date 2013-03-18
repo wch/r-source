@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:44+0000\n"
+"POT-Creation-Date: 2013-03-18 08:03+0000\n"
 "PO-Revision-Date: 2012-03-06 22:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1218,7 +1218,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr "un et un seul attribut 'which' doit être fourni"
 
 #: src/main/attrib.c:1336 src/main/attrib.c:1359 src/main/subscript.c:234
-#: src/main/subscript.c:238 src/main/subset.c:1155 src/main/subset.c:1206
+#: src/main/subscript.c:238 src/main/subset.c:1156 src/main/subset.c:1207
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "correspondance partielle de '%s' en '%s'"
@@ -5956,7 +5956,7 @@ msgstr ""
 "types incompatibles (de %s à %s) dans l'affectation d'un sous-ensemble de "
 "matrice"
 
-#: src/main/subassign.c:1021 src/main/subset.c:900
+#: src/main/subassign.c:1021 src/main/subset.c:901
 msgid "incorrect number of subscripts"
 msgstr "nombre d'indices incorrect"
 
@@ -6024,7 +6024,7 @@ msgstr "[[ ]] indice (%d) en dehors des bornes"
 #: src/main/subassign.c:1852 src/main/subscript.c:139 src/main/subscript.c:141
 #: src/main/subscript.c:265 src/main/subscript.c:267 src/main/subscript.c:801
 #: src/main/subscript.c:803 src/main/subscript.c:896 src/main/subscript.c:898
-#: src/main/subset.c:1076
+#: src/main/subset.c:1077
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr "type '%s' d'indice incorrect"
@@ -6094,31 +6094,31 @@ msgstr "aucun attribut 'dimnames' pour le tableau"
 msgid "subscripting on non-vector"
 msgstr "indiçage d'un élément non vectoriel"
 
-#: src/main/subset.c:260
+#: src/main/subset.c:261
 msgid "dimensions would exceed maximum size of array"
 msgstr "les dimensions excèderaient la taille maximale du tableau"
 
-#: src/main/subset.c:303 src/main/subset.c:332
+#: src/main/subset.c:304 src/main/subset.c:333
 msgid "matrix subscripting not handled for this type"
 msgstr "indiçage matriciel non géré pour ce type"
 
-#: src/main/subset.c:487
+#: src/main/subset.c:488
 msgid "array subscripting not handled for this type"
 msgstr "indiçage matriciel non géré pour ce type"
 
-#: src/main/subset.c:798
+#: src/main/subset.c:799
 msgid "incorrect number of dimensions"
 msgstr "nombre de dimensions incorrect"
 
-#: src/main/subset.c:896
+#: src/main/subset.c:897
 msgid "no index specified"
 msgstr "aucun indice spécifié"
 
-#: src/main/subset.c:906
+#: src/main/subset.c:907
 msgid "this S4 class is not subsettable"
 msgstr "cette classe S4 n'est pas indiçable"
 
-#: src/main/subset.c:912
+#: src/main/subset.c:913
 msgid "wrong arguments for subsetting an environment"
 msgstr "mauvais arguments pour extraire une partie d'un environnement"
 

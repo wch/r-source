@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:44+0000\n"
+"POT-Creation-Date: 2013-03-18 08:03+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -1147,7 +1147,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr ""
 
 #: src/main/attrib.c:1336 src/main/attrib.c:1359 src/main/subscript.c:234
-#: src/main/subscript.c:238 src/main/subset.c:1155 src/main/subset.c:1206
+#: src/main/subscript.c:238 src/main/subset.c:1156 src/main/subset.c:1207
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr ""
@@ -5587,7 +5587,7 @@ msgstr ""
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr ""
 
-#: src/main/subassign.c:1021 src/main/subset.c:900
+#: src/main/subassign.c:1021 src/main/subset.c:901
 msgid "incorrect number of subscripts"
 msgstr ""
 
@@ -5650,7 +5650,7 @@ msgstr ""
 #: src/main/subassign.c:1852 src/main/subscript.c:139 src/main/subscript.c:141
 #: src/main/subscript.c:265 src/main/subscript.c:267 src/main/subscript.c:801
 #: src/main/subscript.c:803 src/main/subscript.c:896 src/main/subscript.c:898
-#: src/main/subset.c:1076
+#: src/main/subset.c:1077
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr ""
@@ -5720,31 +5720,31 @@ msgstr ""
 msgid "subscripting on non-vector"
 msgstr ""
 
-#: src/main/subset.c:260
+#: src/main/subset.c:261
 msgid "dimensions would exceed maximum size of array"
 msgstr ""
 
-#: src/main/subset.c:303 src/main/subset.c:332
+#: src/main/subset.c:304 src/main/subset.c:333
 msgid "matrix subscripting not handled for this type"
 msgstr ""
 
-#: src/main/subset.c:487
+#: src/main/subset.c:488
 msgid "array subscripting not handled for this type"
 msgstr ""
 
-#: src/main/subset.c:798
+#: src/main/subset.c:799
 msgid "incorrect number of dimensions"
 msgstr ""
 
-#: src/main/subset.c:896
+#: src/main/subset.c:897
 msgid "no index specified"
 msgstr ""
 
-#: src/main/subset.c:906
+#: src/main/subset.c:907
 msgid "this S4 class is not subsettable"
 msgstr ""
 
-#: src/main/subset.c:912
+#: src/main/subset.c:913
 msgid "wrong arguments for subsetting an environment"
 msgstr ""
 

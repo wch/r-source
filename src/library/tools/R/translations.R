@@ -167,10 +167,11 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     if (!is_base) {
         dom <- pkg
         od <- setwd("src")
-        cfiles <- dir(".", pattern = "[.]c$")
+        exts <- "[.](c|cc|cpp|m|mm)$"
+        cfiles <- dir(".", pattern = exts)
         if (file.exists("windows"))
             cfiles <- c(cfiles,
-                        dir("windows", pattern = "[.]c$", full.names = TRUE))
+                        dir("windows", pattern = exts, full.names = TRUE))
     } else {
         dom <- "R"
         od <- setwd("../../..")

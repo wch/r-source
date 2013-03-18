@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:44+0000\n"
+"POT-Creation-Date: 2013-03-18 08:03+0000\n"
 "PO-Revision-Date: 2012-02-26 14:21+0200 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -1191,7 +1191,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr " 性格に一つの属性 'which' が与えらなければなりません "
 
 #: src/main/attrib.c:1336 src/main/attrib.c:1359 src/main/subscript.c:234
-#: src/main/subscript.c:238 src/main/subset.c:1155 src/main/subset.c:1206
+#: src/main/subscript.c:238 src/main/subset.c:1156 src/main/subset.c:1207
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr " '%s' の '%s'　への部分的マッチ "
@@ -5811,7 +5811,7 @@ msgstr " 行列への添え字の数が正しくありません "
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr " 行列への部分代入で両立しない型です (%s から　%s)  "
 
-#: src/main/subassign.c:1021 src/main/subset.c:900
+#: src/main/subassign.c:1021 src/main/subset.c:901
 msgid "incorrect number of subscripts"
 msgstr " 添え字の数が正しくありません "
 
@@ -5876,7 +5876,7 @@ msgstr " [[ ]] の添え字（%d）が範囲外です "
 #: src/main/subassign.c:1852 src/main/subscript.c:139 src/main/subscript.c:141
 #: src/main/subscript.c:265 src/main/subscript.c:267 src/main/subscript.c:801
 #: src/main/subscript.c:803 src/main/subscript.c:896 src/main/subscript.c:898
-#: src/main/subset.c:1076
+#: src/main/subset.c:1077
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr " 添え字の型 '%s' が不正です "
@@ -5946,31 +5946,31 @@ msgstr " 配列に 'dimnames' 属性がありません "
 msgid "subscripting on non-vector"
 msgstr " ベクトルでないものへの添え字操作 "
 
-#: src/main/subset.c:260
+#: src/main/subset.c:261
 msgid "dimensions would exceed maximum size of array"
 msgstr " 次元が配列の最大サイズを超えたかもしれません "
 
-#: src/main/subset.c:303 src/main/subset.c:332
+#: src/main/subset.c:304 src/main/subset.c:333
 msgid "matrix subscripting not handled for this type"
 msgstr " このデータ型に対しては添え字は使えません "
 
-#: src/main/subset.c:487
+#: src/main/subset.c:488
 msgid "array subscripting not handled for this type"
 msgstr " このデータ型に対しては添え字は使えません "
 
-#: src/main/subset.c:798
+#: src/main/subset.c:799
 msgid "incorrect number of dimensions"
 msgstr " 次元数が正しくありません "
 
-#: src/main/subset.c:896
+#: src/main/subset.c:897
 msgid "no index specified"
 msgstr " 添字が指定されていません "
 
-#: src/main/subset.c:906
+#: src/main/subset.c:907
 msgid "this S4 class is not subsettable"
 msgstr " この S4 クラスは部分代入可能ではありません "
 
-#: src/main/subset.c:912
+#: src/main/subset.c:913
 msgid "wrong arguments for subsetting an environment"
 msgstr " 環境の subsetting に対する誤った引数です "
 

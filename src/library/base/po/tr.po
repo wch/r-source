@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:44+0000\n"
+"POT-Creation-Date: 2013-03-18 08:03+0000\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1188,7 +1188,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr "tam olarak bir 'which' nitelik verilmelidir"
 
 #: src/main/attrib.c:1336 src/main/attrib.c:1359 src/main/subscript.c:234
-#: src/main/subscript.c:238 src/main/subset.c:1155 src/main/subset.c:1206
+#: src/main/subscript.c:238 src/main/subset.c:1156 src/main/subset.c:1207
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s' den '%s' e kısmi eşleşme"
@@ -5793,7 +5793,7 @@ msgstr "matriste hatalı sayıda altindis"
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr "matris altküme atamasında uyumsuz tipler (%s'den %s'e)"
 
-#: src/main/subassign.c:1021 src/main/subset.c:900
+#: src/main/subassign.c:1021 src/main/subset.c:901
 msgid "incorrect number of subscripts"
 msgstr "geçersiz sayıda altbetik"
 
@@ -5856,7 +5856,7 @@ msgstr "[[ ]] altindis (%d) sınırlar dışında"
 #: src/main/subassign.c:1852 src/main/subscript.c:139 src/main/subscript.c:141
 #: src/main/subscript.c:265 src/main/subscript.c:267 src/main/subscript.c:801
 #: src/main/subscript.c:803 src/main/subscript.c:896 src/main/subscript.c:898
-#: src/main/subset.c:1076
+#: src/main/subset.c:1077
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr "geçersiz altindis tipi '%s'"
@@ -5926,31 +5926,31 @@ msgstr "dizi için 'dimnames' özelliği yok"
 msgid "subscripting on non-vector"
 msgstr "vektör olmayan altindisleniyor"
 
-#: src/main/subset.c:260
+#: src/main/subset.c:261
 msgid "dimensions would exceed maximum size of array"
 msgstr ""
 
-#: src/main/subset.c:303 src/main/subset.c:332
+#: src/main/subset.c:304 src/main/subset.c:333
 msgid "matrix subscripting not handled for this type"
 msgstr "matris altindisleri bu tip için yöneltilmiyor"
 
-#: src/main/subset.c:487
+#: src/main/subset.c:488
 msgid "array subscripting not handled for this type"
 msgstr "dize altindisleri bu tip için yöneltilmiyor"
 
-#: src/main/subset.c:798
+#: src/main/subset.c:799
 msgid "incorrect number of dimensions"
 msgstr "yanlış sayıda boyut"
 
-#: src/main/subset.c:896
+#: src/main/subset.c:897
 msgid "no index specified"
 msgstr "indis belirlenmedi"
 
-#: src/main/subset.c:906
+#: src/main/subset.c:907
 msgid "this S4 class is not subsettable"
 msgstr "bu S4 sınıfı alt küme yapılamaz"
 
-#: src/main/subset.c:912
+#: src/main/subset.c:913
 msgid "wrong arguments for subsetting an environment"
 msgstr "bir çevrebirimi altkümelemek için yanlış argüman"
 
