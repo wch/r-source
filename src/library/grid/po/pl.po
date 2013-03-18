@@ -1,122 +1,165 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 09:51+0100\n"
+"POT-Creation-Date: 2012-12-10 18:35+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
-"Language: \n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"X-Poedit-Language: Polish\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
-"X-Poedit-Country: POLAND\n"
+"|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 1.5.5\n"
 
+# grid/src/grid.c: 214
+# warning(_("cannot clip to rotated viewport"))
 #: grid.c:214
-#, fuzzy
 msgid "cannot clip to rotated viewport"
-msgstr "Nie można przypiąć do obróconego okienka ekranu"
+msgstr "nie można przypiąć do obróconego okienka ekranu"
 
+# grid/src/grid.c: 673
+# error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
+# grid/src/grid.c: 678
+# error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
+# grid/src/grid.c: 767
+# error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
+# grid/src/grid.c: 772
+# error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-#, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
-"Nie można wyświetlić okienka ekranu na wierzchu (siatka oraz wyjście grafiki "
+"nie można wyświetlić okienka ekranu na wierzchu (siatka oraz grafika "
 "pomieszały się?)"
 
+# grid/src/grid.c: 952
+# error(_("attempt to plot on null device"))
 #: grid.c:952
 msgid "attempt to plot on null device"
 msgstr "próba rysowania na pustym urządzeniu"
 
+# grid/src/grid.c: 1232
+# error(_("there is no layout defined"))
 #: grid.c:1232
-#, fuzzy
 msgid "there is no layout defined"
-msgstr "Nie określono układu"
+msgstr "nie określono układu"
 
+# grid/src/grid.c: 1452
+# error(_("polygon edge not found (zero-width or zero-height?)"))
 #: grid.c:1452
-#, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
-"Nie znaleziono krawędzi wielokąta (zerowa szerokość lub zerowa wysokość?)"
+"nie znaleziono krawędzi wielokąta (zerowa szerokość lub zerowa wysokość?)"
 
+# grid/src/grid.c: 1461
+# error(_("polygon edge not found"))
 #: grid.c:1461
-#, fuzzy
 msgid "polygon edge not found"
-msgstr "Nie znaleziono krawędzi wielokąta"
+msgstr "nie znaleziono krawędzi wielokąta"
 
+# grid/src/grid.c: 1615
+# error(_("require at least two points to draw arrow"))
 #: grid.c:1615
-#, fuzzy
 msgid "require at least two points to draw arrow"
-msgstr "Wymaga co najmniej dwu punktów, aby narysować strzałkę"
+msgstr "wymaga co najmniej dwu punktów, aby narysować strzałkę"
 
+# grid/src/grid.c: 1931
+# error(_("non-finite control point in Xspline"))
 #: grid.c:1931
-#, fuzzy
 msgid "non-finite control point in Xspline"
-msgstr "Nieskończony punkt kontrolny w Xspline"
+msgstr "nieskończony punkt kontrolny w 'Xspline'"
 
+# grid/src/grid.c: 2796
+# error(_("non-finite x or y in graphics path"))
 #: grid.c:2796
 msgid "non-finite x or y in graphics path"
 msgstr "nieskończony 'x' lub 'y' w ścieżce grafiki"
 
+# grid/src/grid.c: 3286
+# error(_("invalid plotting symbol"))
 #: grid.c:3286
 msgid "invalid plotting symbol"
 msgstr "Nieprawidłowy rysowany symbol"
 
+# grid/src/grid.c: 3372
+# warning(_("unable to clip to rotated rectangle"))
 #: grid.c:3372
-#, fuzzy
 msgid "unable to clip to rotated rectangle"
-msgstr "Nie można przypiąć do obróconego prostokąta"
+msgstr "nie można przypiąć do obróconego prostokąta"
 
+# grid/src/layout.c: 587
+# error(_("invalid 'layout.pos.row'"))
 #: layout.c:587
-#, fuzzy
 msgid "invalid 'layout.pos.row'"
 msgstr "niepoprawny 'layout.pos.row'"
 
+# grid/src/layout.c: 591
+# error(_("invalid 'layout.pos.col'"))
 #: layout.c:591
-#, fuzzy
 msgid "invalid 'layout.pos.col'"
 msgstr "niepoprawny 'layout.pos.col'"
 
+# grid/src/matrix.c: 49
+# error(_("singular transformation matrix"))
 #: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "osobliwa macierz transformacyjna"
 
+# grid/src/state.c: 169
+# error(_("unable to store 'grid' state.  Too many devices open?"))
 #: state.c:169
-#, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr "Nie można zachować stanu siatki. Zbyt duża liczba otwartych okien?"
+msgstr "nie można zachować stanu siatki. Zbyt duża liczba otwartych urządzeń?"
 
+# grid/src/unit.c: 260
+# error(_("unimplemented unit function"))
+# grid/src/unit.c: 410
+# error(_("unimplemented unit function"))
+# grid/src/unit.c: 1204
+# error(_("unimplemented unit function"))
+# grid/src/unit.c: 1284
+# error(_("unimplemented unit function"))
+# grid/src/unit.c: 1364
+# error(_("unimplemented unit function"))
+# grid/src/unit.c: 1444
+# error(_("unimplemented unit function"))
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-#, fuzzy
 msgid "unimplemented unit function"
-msgstr "Niezaimplementowana jednostkowa funkcja"
+msgstr "niezaimplementowana jednostkowa funkcja"
 
+# grid/src/unit.c: 893
+# error(_("invalid unit or unit not yet implemented"))
+# grid/src/unit.c: 1639
+# error(_("invalid unit or unit not yet implemented"))
 #: unit.c:893 unit.c:1639
-#, fuzzy
 msgid "invalid unit or unit not yet implemented"
 msgstr ""
-"Niedozwolona jednostka lub jednostka nie została jeszcze zaimplementowana"
+"niedozwolona jednostka lub jednostka nie została jeszcze zaimplementowana"
 
+# grid/src/unit.c: 1798
+# error(_("Invalid unit"))
 #: unit.c:1798
 msgid "Invalid unit"
 msgstr "Niepoprawna jednostka"
 
+# grid/src/unit.c: 1814
+# error(_("'units' must be character"))
 #: unit.c:1814
-#, fuzzy
 msgid "'units' must be character"
-msgstr "Jednostki muszą być znakiem"
+msgstr "'units' muszą być tekstem"
 
+# grid/src/unit.c: 1817
+# error(_("'units' must be of length > 0"))
 #: unit.c:1817
-#, fuzzy
 msgid "'units' must be of length > 0"
-msgstr "Jednostki muszą mieć długość > 0"
+msgstr "'units' muszą mieć długość > 0"
 
+# grid/src/viewport.c: 317
+# error(_("non-finite location and/or size for viewport"))
 #: viewport.c:317
-#, fuzzy
 msgid "non-finite location and/or size for viewport"
-msgstr "Nieskończone położenie oraz/lub rozmiar okna ekranu"
+msgstr "nieskończone położenie oraz/lub rozmiar okna ekranu"

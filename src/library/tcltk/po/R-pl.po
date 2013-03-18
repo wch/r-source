@@ -1,107 +1,171 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2013-03-07 08:37\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
-"Language: \n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"X-Poedit-Language: Polish\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
-"X-Poedit-Country: POLAND\n"
+"|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 1.5.5\n"
 
+# tcltk/R/Tk.R: 268
+# stop(gettextf("cannot handle object of mode '%s'",
+#                               storage.mode(x)), domain = NA)
 msgid "cannot handle object of mode '%s'"
-msgstr "nie można poradzić sobie z obiektem trybu '%s'"
+msgstr "nie można obsłużyć obiektu o trybie '%s'"
 
+# tcltk/R/tclarray.R: 71
+# stop("cannot change names on Tcl array")
 msgid "cannot change names on Tcl array"
 msgstr "nie można zmienić nazw w tablicy Tcl"
 
+# tcltk/R/tclarray.R: 77
+# stop("cannot set length of Tcl array")
 msgid "cannot set length of Tcl array"
 msgstr "nie można ustawić długości tablicy Tcl"
 
+# tcltk/R/tclsearch.R: 37
+# warning(gettextf("Tcl package '%s' not found", package),
+#                     domain = NA)
 msgid "Tcl package '%s' not found"
 msgstr "Pakiet Tcl '%s' nie został znaleziony"
 
+# tcltk/R/tkGUI.R: 23
+# stop("The tkGUI is not available under Windows")
 msgid "The tkGUI is not available under Windows"
 msgstr "tkGUI nie jest dostępne w systemie Windows"
 
+# tcltk/R/tkGUI.R: 38
+# gettext("File")
 msgid "File"
 msgstr "Plik"
 
+# tcltk/R/tkGUI.R: 39
+# gettext("Demos")
 msgid "Demos"
 msgstr "Dema"
 
+# tcltk/R/tkGUI.R: 40
+# gettext("Packages")
 msgid "Packages"
 msgstr "Pakiety"
 
+# tcltk/R/tkGUI.R: 41
+# gettext("Help")
 msgid "Help"
 msgstr "Pomoc"
 
+# tcltk/R/tkGUI.R: 43
+# gettext("Source R code")
 msgid "Source R code"
 msgstr "Źródłowy kod R"
 
+# tcltk/R/tkGUI.R: 48
+# gettext("Quit")
 msgid "Quit"
 msgstr "Wyjście"
 
+# tcltk/R/tkGUI.R: 50
+# gettext("Save workspace")
 msgid "Save workspace"
 msgstr "Zapisz obszar roboczy"
 
+# tcltk/R/tkGUI.R: 52
+# gettext("Don't save workspace")
 msgid "Don't save workspace"
 msgstr "Nie zapisuj obszaru roboczego"
 
+# tcltk/R/tkGUI.R: 55
+# gettext("t test")
 msgid "t test"
 msgstr "test t-Studenta"
 
+# tcltk/R/tkGUI.R: 57
+# gettext("Density")
 msgid "Density"
 msgstr "Gęstość"
 
+# tcltk/R/tkGUI.R: 59
+# gettext("Interactive linear fitting")
 msgid "Interactive linear fitting"
-msgstr "Interaktywne fitowanie liniowe"
+msgstr "Interaktywne dopasowanie liniowe"
 
+# tcltk/R/tkGUI.R: 61
+# gettext("R FAQ")
 msgid "R FAQ"
 msgstr "FAQ dla R"
 
+# tcltk/R/tkGUI.R: 78
+# gettext("Load")
 msgid "Load"
 msgstr "Załaduj"
 
+# tcltk/R/tkGUI.R: 96
+# gettext("Go get them!")
 msgid "Go get them!"
-msgstr "Bierz ich!"
+msgstr "Bierz je!"
 
+# tcltk/R/tkGUI.R: 99
+# gettext("Load packages")
 msgid "Load packages"
 msgstr "Załaduj pakiety"
 
+# tcltk/R/tkGUI.R: 101
+# gettext("Install packages from CRAN")
 msgid "Install packages from CRAN"
-msgstr "Zainstaluj pakiety z repozytirum CRAN"
+msgstr "Zainstaluj pakiety z repozytorium CRAN"
 
+# tcltk/R/tkGUI.R: 106
+# gettext("Help topic:")
 msgid "Help topic:"
 msgstr "Temat pomocy:"
 
+# tcltk/R/tkGUI.R: 132
+# gettext("Manuals in PDF format")
 msgid "Manuals in PDF format"
 msgstr "Podręczniki w formacie PDF"
 
+# tcltk/R/utils.R: 49
+# gettext("OK")
 msgid "OK"
 msgstr "OK"
 
+# tcltk/R/utils.R: 50
+# gettext("Cancel")
 msgid "Cancel"
 msgstr "Anuluj"
 
-#, fuzzy
+# tcltk/R/utils.R: 156
+# stop(gettextf("'pb' is not from class %s",
+#                       dQuote("tkProgressBar")),
+#              domain = NA)
+# tcltk/R/utils.R: 165
+# stop(gettextf("'pb' is not from class %s",
+#                       dQuote("tkProgressBar")),
+#              domain = NA)
 msgid "'pb' is not from class %s"
-msgstr "'pb' nie pochodzi z klasy \"tkProgressBar\""
+msgstr "'pb' nie pochodzi z klasy %s"
 
+# tcltk/R/utils.R: 191
+# stop("'filters' must be a 2-column character matrix")
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' muszą być 2-kolumnowymi macierzami znaków"
 
+# tcltk/R/unix/zzzstub.R: 20
+# stop("Tcl/Tk support is not available on this system", domain = "R-tcltk")
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Obsługa Tcl/Tk nie jest dostępna dla tego systemu"
 
+# tcltk/R/windows/zzz.R: 27
+# stop("Tcl/Tk support files were not installed", call.=FALSE)
 msgid "Tcl/Tk support files were not installed"
 msgstr "Pliki obsługujące Tcl/Tk nie zostały zainstalowane"
 

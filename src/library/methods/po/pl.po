@@ -1,31 +1,36 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.15.0\n"
+"Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 08:55+0100\n"
+"POT-Creation-Date: 2012-12-10 18:35+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
-"Language: \n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
-"X-Poedit-Language: Polish\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
-"X-Poedit-Country: POLAND\n"
+"|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 1.5.5\n"
 
+# methods/src/class_support.c: 32
+# error(_("calling the C routine used as an initializer for 'externalptr' objects"))
 #: class_support.c:32
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
 msgstr ""
 "wywołanie procedury C użyte jako inicjalizator dla obiektów 'externalptr'"
 
+# methods/src/do_substitute_direct.c: 41
+# error(_("invalid list for substitution"))
 #: do_substitute_direct.c:41
 msgid "invalid list for substitution"
 msgstr "niepoprawna lista do podmiany"
 
+# methods/src/methods_list_dispatch.c: 148
+# error(_("could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"))
 #: methods_list_dispatch.c:148
 msgid ""
 "could not find the skeleton calls for 'methods' (package detached?): expect "
@@ -34,27 +39,39 @@ msgstr ""
 "nie można znaleźć głównych wywołań dla 'methods' (odłączony pakiet?): "
 "oczekuj pojawienia się bardzo złych rzeczy"
 
+# methods/src/methods_list_dispatch.c: 214
+# error(_("no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"),
+# 	      class_string(mlist), CHAR(asChar(fname)))
 #: methods_list_dispatch.c:214
 #, c-format
 msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
 "for function '%s'"
 msgstr ""
-"nie znaleziono gniazd \"allMethods\" w obiekcie klasy \"%s\" użytej jako "
-"listy metod dla funkcji '%s'"
+"nie znaleziono gniazd 'allMethods' w obiekcie klasy '%s' użytej jako listy "
+"metod dla funkcji '%s'"
 
+# methods/src/methods_list_dispatch.c: 433
+# error(_("no generic function definition found for '%s'"),
+# 		  CHAR(asChar(name)))
 #: methods_list_dispatch.c:433
 #, c-format
 msgid "no generic function definition found for '%s'"
-msgstr "nie znaleziono ogólnej definicji funkcji dla '%s'"
+msgstr "nie znaleziono definicji ogólnej funkcji dla '%s'"
 
+# methods/src/methods_list_dispatch.c: 436
+# error(_("no generic function definition found for '%s' in the supplied environment"),
+# 		  CHAR(asChar(name)))
 #: methods_list_dispatch.c:436
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "no generic function definition found for '%s' in the supplied environment"
 msgstr ""
-"Nie znaleziono ogólnej definicji funkcji dla '%s' w dostarczonym środowisku"
+"nie znaleziono definicji ogólnej funkcji dla '%s' w dostarczonym środowisku"
 
+# methods/src/methods_list_dispatch.c: 471
+# error(_("invalid generic function object for method selection for function '%s': expected a function or a primitive, got an object of class \"%s\""),
+# 		   CHAR(asChar(fsym)), class_string(fdef))
 #: methods_list_dispatch.c:471
 #, c-format
 msgid ""
@@ -62,8 +79,11 @@ msgid ""
 "expected a function or a primitive, got an object of class \"%s\""
 msgstr ""
 "niepoprawny obiekt ogólnej funkcji dla wyboru metody dla funkcji '%s': "
-"oczekiwano funkcji lub typu prymitywnego, otrzymano obiekt klasy \"%s\""
+"oczekiwano funkcji lub typu prymitywnego, otrzymano obiekt klasy '%s'"
 
+# methods/src/methods_list_dispatch.c: 486
+# error(_("no direct or inherited method for function '%s' for this call"),
+# 		  CHAR(asChar(fname)))
 #: methods_list_dispatch.c:486
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
@@ -71,15 +91,25 @@ msgstr ""
 "Brak bezpośredniej lub dziedziczonej metody dla funkcji '%s' dla tego "
 "wywołania"
 
+# methods/src/methods_list_dispatch.c: 512
+# error(_("invalid object (non-function) used as method"))
+# methods/src/methods_list_dispatch.c: 1040
+# error(_("invalid object (non-function) used as method"))
 #: methods_list_dispatch.c:512 methods_list_dispatch.c:1040
 msgid "invalid object (non-function) used as method"
 msgstr "niepoprawny obiekt (nie-funkcja) użyty jako metoda"
 
+# methods/src/methods_list_dispatch.c: 533
+# error(_("could not find symbol '%s' in frame of call"),
+# 	      CHAR(PRINTNAME(symbol)))
 #: methods_list_dispatch.c:533
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr "nie można było znaleźć symbolu '%s' w strukturze wywołania"
 
+# methods/src/methods_list_dispatch.c: 541
+# error(_("invalid symbol in checking for missing argument in method dispatch: expected a name, got an object of class \"%s\""),
+# 	     class_string(symbol))
 #: methods_list_dispatch.c:541
 #, c-format
 msgid ""
@@ -87,12 +117,17 @@ msgid ""
 "a name, got an object of class \"%s\""
 msgstr ""
 "niepoprawny symbol w sprawdzaniu brakującego argumentu w wysyłaniu metody: "
-"oczekiwano nazwy, otrzymano obiekt klasy \"%s\""
+"oczekiwano nazwy, otrzymano obiekt klasy '%s'"
 
+# methods/src/methods_list_dispatch.c: 544
+# error(_("use of NULL environment is defunct"))
 #: methods_list_dispatch.c:544
 msgid "use of NULL environment is defunct"
 msgstr "użycie środowiska NULL jest przestarzałe"
 
+# methods/src/methods_list_dispatch.c: 548
+# error(_("invalid environment in checking for missing argument, '%s', in methods dispatch: got an object of class \"%s\""),
+# 	     CHAR(PRINTNAME(symbol)), class_string(ev))
 #: methods_list_dispatch.c:548
 #, c-format
 msgid ""
@@ -100,17 +135,23 @@ msgid ""
 "dispatch: got an object of class \"%s\""
 msgstr ""
 "niepoprawne środowisko w sprawdzaniu brakującego argumentu '%s' w wysyłaniu "
-"metod: otrzymano obiekt klasy \"%s\""
+"metod: otrzymano obiekt klasy '%s'"
 
+# methods/src/methods_list_dispatch.c: 574
+# error(_("object of class \"%s\" used as methods list for function '%s' ( no 'argument' slot)"),
+# 	      class_string(mlist), CHAR(asChar(fname)))
 #: methods_list_dispatch.c:574
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
 "'argument' slot)"
 msgstr ""
-"obiekt klasy \"%s\" użyty jako lista metod dla funkcji '%s' ( brak gniazda "
-"'argument')"
+"obiekt klasy '%s' został użyty jako lista metod dla funkcji '%s' ( brak "
+"gniazda 'argument')"
 
+# methods/src/methods_list_dispatch.c: 585
+# error(_("(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"),
+# 	      CHAR(asChar(fname)))
 #: methods_list_dispatch.c:585
 #, c-format
 msgid ""
@@ -120,6 +161,9 @@ msgstr ""
 "(przy wybieraniu metody dla funkcji '%s') '...' oraz powiązane zmienne nie "
 "mogą być użyte dla wysyłania metod"
 
+# methods/src/methods_list_dispatch.c: 588
+# error(_("(in selecting a method for function '%s') the 'environment' argument for dispatch must be an R environment; got an object of class \"%s\""),
+# 	    CHAR(asChar(fname)), class_string(ev))
 #: methods_list_dispatch.c:588
 #, c-format
 msgid ""
@@ -127,8 +171,20 @@ msgid ""
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
 "(przy wybieraniu metody dla funkcji '%s') argument 'environment' dla "
-"wysyłania musi być środowiskiem R; otrzymano obiekt klasy \"%s\""
+"wysyłania musi być środowiskiem R; otrzymano obiekt klasy '%s'"
 
+# methods/src/methods_list_dispatch.c: 602
+# error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
+# 		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)),
+# 		      R_curErrorBuf())
+# methods/src/methods_list_dispatch.c: 614
+# error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
+# 		  CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)),
+# 		  R_curErrorBuf())
+# methods/src/methods_list_dispatch.c: 995
+# error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
+# 		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)),
+# 		      R_curErrorBuf())
 #: methods_list_dispatch.c:602 methods_list_dispatch.c:614
 #: methods_list_dispatch.c:995
 #, c-format
@@ -139,11 +195,17 @@ msgstr ""
 "błąd podczas obliczania argumentu '%s' przy wybieraniu metody dla funkcji "
 "'%s': %s"
 
+# methods/src/methods_list_dispatch.c: 622
+# error(_("no matching method for function '%s' (argument '%s', with class \"%s\")"),
+# 	      CHAR(asChar(fname)), CHAR(PRINTNAME(arg_sym)), class)
 #: methods_list_dispatch.c:622
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
-msgstr "brak pasującej metody dla funkcji '%s' (argument '%s', z klasą \"%s\")"
+msgstr "brak pasującej metody dla funkcji '%s' (argument '%s', z klasą '%s')"
 
+# methods/src/methods_list_dispatch.c: 629
+# error(_("recursive use of function '%s' in method selection, with no default method"),
+# 		  CHAR(asChar(fname)))
 #: methods_list_dispatch.c:629
 #, c-format
 msgid ""
@@ -152,6 +214,8 @@ msgstr ""
 "rekursywne użycie funkcji '%s' w wyborze metody, z brakiem określonej metody "
 "domyślnej"
 
+# methods/src/methods_list_dispatch.c: 692
+# error(_("in processing 'callNextMethod', found a '...' in the matched call, but no corresponding '...' argument"))
 #: methods_list_dispatch.c:692
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
@@ -160,52 +224,70 @@ msgstr ""
 "przy przetwarzaniu 'callNextMethod', znaleziono '...' w dopasowanym "
 "wywołaniu, ale nie ma odpowiedniego argumentu '...'"
 
+# methods/src/methods_list_dispatch.c: 705
+# error(_("error in evaluating a 'primitive' next method: %s"),
+# 		     R_curErrorBuf())
 #: methods_list_dispatch.c:705
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "błąd w trakcie obliczania 'primitive' następnej metody: %s"
 
+# methods/src/methods_list_dispatch.c: 797
+# error(_("'%s' must be a single string (got a character vector of length %d)"),
+# 		  what, length(obj))
 #: methods_list_dispatch.c:797
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
-"'%s' musi być pojedynczym ciągiem (otrzymano wektor tekstowy o długości %d)"
+"'%s' musi być pojedynczym łańcuchem (otrzymano wektor tekstowy o długości %d)"
 
+# methods/src/methods_list_dispatch.c: 801
+# error(_("'%s' must be a non-empty string; got an empty string"),
+# 		  what)
 #: methods_list_dispatch.c:801
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
-msgstr "'%s' musi być niepustym ciągiem; otrzymano pusty ciąg"
+msgstr "'%s' musi być niepustym łańcuchem; otrzymano pusty łańcuch"
 
+# methods/src/methods_list_dispatch.c: 805
+# error(_("'%s' must be a single string (got an object of class \"%s\")"),
+# 	      what, class_string(obj))
 #: methods_list_dispatch.c:805
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
-msgstr "'%s' musi być pojedynczym ciągiem (otrzymano obiekt klasy \"%s\")"
+msgstr "'%s' musi być pojedynczym łańcuchem (otrzymano obiekt klasy '%s')"
 
+# methods/src/methods_list_dispatch.c: 876
+# error(_("class should be either a character-string name or a class definition"))
 #: methods_list_dispatch.c:876
-#, fuzzy
 msgid "class should be either a character-string name or a class definition"
-msgstr "Klasa powinna być albo nazwą tekstową albo definicją klasy"
+msgstr "klasa powinna być albo nazwą tekstową albo definicją klasy"
 
+# methods/src/methods_list_dispatch.c: 955
+# error(_("failed to get the generic for the primitive \"%s\""), CHAR(asChar(fname)))
 #: methods_list_dispatch.c:955
-#, fuzzy, c-format
+#, c-format
 msgid "failed to get the generic for the primitive \"%s\""
-msgstr "Nie udało się uzyskać ogólnej funkcji dla typu prymitywnego \"%s\""
+msgstr "nie udało się uzyskać ogólnej funkcji dla typu prymitywnego \"%s\""
 
+# methods/src/methods_list_dispatch.c: 961
+# error(_("expected a generic function or a primitive for dispatch, got an object of class \"%s\""),
+# 	      class_string(fdef))
 #: methods_list_dispatch.c:961
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
 msgstr ""
-"Oczekiwano ogólnej funkcji lub typu prymitywnego dla wysyłania, otrzymano "
+"oczekiwano ogólnej funkcji lub typu prymitywnego dla wysyłania, otrzymano "
 "obiekt klasy \"%s\""
 
 #~ msgid ""
 #~ "S language method selection got an error when called from internal "
 #~ "dispatch for function '%s'"
 #~ msgstr ""
-#~ "wybór metody języka S spowodował błąd kiedy został wywołany z "
-#~ "wewnętrznego wysyłania dla funkcji '%s'"
+#~ "wybór metody języka S spowodował błąd gdy został wywołany z wewnętrznego "
+#~ "wysyłania dla funkcji '%s'"
 
 #~ msgid ""
 #~ "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
@@ -218,5 +300,5 @@ msgstr ""
 #~ "Generic \"%s\" seems not to have been initialized for table dispatch---"
 #~ "need to have .SigArgs and .AllMtable assigned in its environment"
 #~ msgstr ""
-#~ "Ogólny \"%s\" wydaje się nie być zainicjalizowany dla tabeli wysyłki---"
+#~ "Ogólny '%s' wydaje się nie być zainicjalizowany dla tabeli wysyłki---"
 #~ "potrzeba mieć '.SigArgs' oraz '.AllMtable' przypisane w jego środowisku"
