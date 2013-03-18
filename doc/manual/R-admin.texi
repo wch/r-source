@@ -4279,8 +4279,8 @@ from @uref{https://developer.apple.com/devcenter/mac/}) you can install
 the command-line tools from within Xcode, from the @samp{Downloads} pane
 in the @samp{Preferences}.
 
-Various compilers can be used.  It is expected that the @acronym{CRAN}
-distribution of @R{} will be built using
+Various compilers can be used.  The @acronym{CRAN} distribution of @R{}
+is built using
 
 @itemize
 @item @command{gcc}
@@ -4309,6 +4309,9 @@ OBJC="clang"
 @noindent
 Full names are not needed, but help to ensure that the intended
 compilers are used.
+
+The OpenMP support in this version of @command{gcc} is problematic, so
+the @acronym{CRAN} build is configured with @option{--disable-openmp}.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
