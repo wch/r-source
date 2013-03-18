@@ -510,10 +510,12 @@ SEXP attribute_hidden do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP skind, nkind;
     int seed;
 
-    checkArity(op,args);
-    seed = asInteger(CAR(args));
-    if (seed == NA_INTEGER)
-	error(_("supplied seed is not a valid integer"));
+    checkArity(op, args);
+    if(!isNull(CAR(args))) {
+	seed = asInteger(CAR(args));
+	if (seed == NA_INTEGER)
+	    error(_("supplied seed is not a valid integer"));
+    } else seed = TimeToSeed();
     skind = CADR(args);
     nkind = CADDR(args);
     GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from 

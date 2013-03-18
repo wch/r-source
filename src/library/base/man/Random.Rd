@@ -39,7 +39,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \item{normal.kind}{character string or \code{NULL}.  If it is a character
     string, set the method of Normal generation.  Use \code{"default"}
     to return to the \R default.  \code{NULL} makes no change.}
-  \item{seed}{a single value, interpreted as an integer.}
+  \item{seed}{a single value, interpreted as an integer, or \code{NULL}
+    (see \sQuote{Details}).}
   \item{vstr}{a character string containing a version number,
     e.g., \code{"1.6.2"}}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
@@ -147,13 +148,15 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   whenever it is selected (even if it is the current normal generator)
   and when \code{kind} is changed.
 
-  \code{set.seed} uses its single integer argument to set as many seeds
+  \code{set.seed} uses a single integer argument to set as many seeds
   as are required.  It is intended as a simple way to get quite different
   seeds by specifying small integer arguments, and also as a way to get
   valid seed sets for the more complicated methods (especially
   \code{"Mersenne-Twister"} and \code{"Knuth-TAOCP"}).  There is no
   guarantee that different values of \code{seed} will seed the RNG
-  differently, although any exceptions would be extremely rare.
+  differently, although any exceptions would be extremely rare.  If
+  called with \code{seed = NULL} it re-initializes (see \sQuote{Note})
+  as if no seed had yet been set.
 
   The use of \code{kind = NULL} or \code{normal.kind = NULL} in
   \code{RNGkind} or \code{set.seed} selects the currently-used
