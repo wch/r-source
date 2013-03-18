@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-13 10:43+0000\n"
-"PO-Revision-Date: 2013-02-28 16:10+0100\n"
+"POT-Creation-Date: 2013-03-13 10:53+0000\n"
+"PO-Revision-Date: 2013-03-18 10:12+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -1070,9 +1070,8 @@ msgid "Variable name"
 msgstr "Variablenname"
 
 #: src/library/grDevices/src/devWindows.c:1258
-#, fuzzy
 msgid "Variable doesn't contain any plots!"
-msgstr "Variable existiert nicht oder enthält keine Plots!"
+msgstr "Variable enthält keine Plots!"
 
 #: src/library/grDevices/src/devWindows.c:1273
 msgid "Name of variable to save to"

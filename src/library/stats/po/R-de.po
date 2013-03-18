@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
-"PO-Revision-Date: 2013-03-13 12:49+0100\n"
+"POT-Creation-Date: 2013-03-05 08:17\n"
+"PO-Revision-Date: 2013-03-18 10:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -901,13 +901,11 @@ msgstr "'circular' muss boole'sch und nicht NA sein"
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "Länge von 'init' muss der Länge von 'filter' entsprechen"
 
-#, fuzzy
 msgid "'init' must have 1 column"
-msgstr "'init': muss eine Spalte haben"
+msgstr "'init'  muss  1 Spalte haben"
 
-#, fuzzy
 msgid "'init' must have 1 or %d columns"
-msgstr "'init': muss eine Spalte haben"
+msgstr "'init' muss 1 oder %d Spalte(n) haben"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x' muss mindestens 2 Zeilen und Spalten haben"

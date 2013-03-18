@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-03-18 08:03+0000\n"
-"PO-Revision-Date: 2013-02-28 10:48+0100\n"
+"PO-Revision-Date: 2013-03-18 10:13+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -2285,9 +2285,9 @@ msgstr "unbekannte Kompression, vermute keine"
 
 #: src/main/connections.c:5732 src/main/connections.c:5736
 #: src/main/connections.c:5742
-#, fuzzy, c-format
+#, c-format
 msgid "allocation of %s connection failed"
-msgstr "Allokation einer raw-Verbindung fehlgeschlagen"
+msgstr "Allokation einer %s Verbindung fehlgeschlagen"
 
 #: src/main/context.c:126
 msgid ""

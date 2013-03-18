@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37\n"
-"PO-Revision-Date: 2013-03-13 12:52+0100\n"
+"POT-Creation-Date: 2013-03-07 08:24\n"
+"PO-Revision-Date: 2013-03-18 10:24+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -464,12 +464,11 @@ msgstr "Ungültiger Wert für '%s' : %s"
 msgid "Only one Rd section per %s is supported."
 msgstr "Nur ein Rd Abschnitt pro %s wird unterstützt"
 
-#, fuzzy
 msgid "Vignette product"
-msgstr "Vignetten:"
+msgstr "Vignette Produkt"
 
 msgid "does not have a known filename extension ("
-msgstr ""
+msgstr "hat keine bekannte Dateinamenserweiterung ("
 
 msgid ","
 msgstr ","
@@ -477,52 +476,47 @@ msgstr ","
 msgid ")"
 msgstr ")"
 
-#, fuzzy
 msgid "Failed to locate the"
-msgstr "kann nicht erzeugen"
+msgstr "konnte nicht finden"
 
 msgid "output file (by engine"
-msgstr ""
+msgstr "Augabedatei (von Engine"
 
 msgid "%s::%s"
-msgstr ""
+msgstr "%s::%s"
 
-#, fuzzy
 msgid ") for vignette with name"
-msgstr "Vignetten-Enging"
+msgstr ") für Vignette mit Namen"
 
-#, fuzzy
 msgid ". The following files exists in directory"
-msgstr "Keine Dateien in diesem Verzeichnis"
+msgstr ". Die folgende Datei exisitiert im Verzeichnis"
 
 msgid ":"
 msgstr ":"
 
-#, fuzzy
 msgid "Located more than one"
-msgstr "keine oder mehr als eine Übereinstimmung"
+msgstr "mehr als eine gefunden"
 
 msgid "unable to create temp directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
-#, fuzzy
 msgid "Vignette"
-msgstr "Vignetten:"
+msgstr "Vignette"
 
 msgid "overwrites the following"
-msgstr ""
+msgstr "überschreibt die folgende"
 
 msgid "output by vignette"
-msgstr ""
+msgstr "Ausgabe der Vignette"
 
 msgid "Detected vignette source files ("
-msgstr ""
+msgstr "Vignetten Quelldateien gefunden ("
 
 msgid ") with shared names ("
-msgstr ""
+msgstr ") mit gemeinsamen Namen ("
 
 msgid ") and therefore risking overwriting each others output files"
-msgstr ""
+msgstr ") und deshalb besteht Gefahr des gegenseitigen Überschreibens von Ausgaben"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -531,7 +525,6 @@ msgstr ""
 "Verarbeitung der Vignette '%s' mit folgender Diagnose fehlgeschlagen:\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "tangling vignette '%s' failed with diagnostics:\n"
 "%s"
@@ -551,62 +544,51 @@ msgstr "Argument 'vignette' muss Länge 1 haben"
 msgid "file '%s' not found"
 msgstr "Datei '%s' nicht gefunden"
 
-#, fuzzy
 msgid "Unsupported engine name"
-msgstr "nicht unterstützter Filter %s"
+msgstr "nicht unterstützter Engine Name"
 
-#, fuzzy
 msgid "None of packages"
-msgstr "Keine Hilfe zum Paket %s gefunden"
+msgstr "Keines der Pakete"
 
-#, fuzzy
 msgid "have registered vignette engines"
-msgstr "Vignetten-Enging"
+msgstr "habe Vignetten-Engine registriert"
 
-#, fuzzy
 msgid "Vignette engine"
-msgstr "Vignetten-Enging"
+msgstr "Vignetten-Engine"
 
-#, fuzzy
 msgid "is not registered"
-msgstr "existiert nicht"
+msgstr "ist nicht registriert"
 
 msgid "is not registered by any of the packages"
-msgstr ""
+msgstr "ist nicht von irgendeinem Paket registriert"
 
 msgid "Engine name"
-msgstr ""
+msgstr "Engine Name"
 
-#, fuzzy
 msgid "and package"
-msgstr "ungültiges Paket"
+msgstr "und Paket"
 
-#, fuzzy
 msgid "do not match"
-msgstr "existiert nicht"
+msgstr "stimmen nicht überein"
 
-#, fuzzy
 msgid "Argument"
-msgstr "Argument für"
+msgstr "Argument"
 
-#, fuzzy
 msgid "weave"
-msgstr "Sweave"
+msgstr "weave"
 
 msgid "must be a function and not"
-msgstr ""
+msgstr "muss eine Funktion sein und kein"
 
 msgid "tangle"
-msgstr ""
+msgstr "tangle"
 
 msgid "pattern"
-msgstr ""
+msgstr "Muster"
 
-#, fuzzy
 msgid "must be a character vector or NULL and not"
-msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
+msgstr "muss eine Zeichenkette oder NULL aber keine"
 
-#, fuzzy
 msgid "Cannot change the"
 msgstr "kann nicht ändern"
 
@@ -614,11 +596,10 @@ msgid "Sweave"
 msgstr "Sweave"
 
 msgid "engine or use an engine of that name"
-msgstr ""
+msgstr "Engine oder nutze eine Engine dieses Namens"
 
-#, fuzzy
 msgid "vignette builder '%s' not found"
-msgstr "Datei '%s' nicht gefunden"
+msgstr "Vignetten-Erzeuger '%s' nicht gefunden"
 
 msgid "Invalid DESCRIPTION file"
 msgstr "Unzulässige DESCRIPTION Datei"
@@ -665,13 +646,11 @@ msgstr ""
 "fehlgeschlagen:\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "compiling TeX file %s failed with message:\n"
 "%s"
 msgstr ""
-"Ausführung von %s auf der Vignette '%s' mit folgender Diagnose "
-"fehlgeschlagen:\n"
+"TeX Durchlauf für Datei %s fehlgeschlagen mit Nachricht:\n"
 "%s"
 
 msgid "cannot copy '%s' to '%s'"
@@ -726,21 +705,19 @@ msgid "package directory %s does not exist"
 msgstr "Paketverzeichnis '%s' existiert nicht"
 
 msgid "no packages to check"
-msgstr ""
+msgstr "keine Pakete zu überprüfen"
 
 msgid "downloading reverse dependencies ..."
-msgstr ""
+msgstr "lade umgekehrte Abhängikeiten herunter ..."
 
-#, fuzzy
 msgid "downloading %s ..."
-msgstr "vergleiche %s mit %s ..."
+msgstr "Herunterladen von %s ..."
 
 msgid "installing dependencies %s"
-msgstr ""
+msgstr "installiere Abhängigkeiten %s"
 
-#, fuzzy
 msgid "checking %s ..."
-msgstr "erzuege DLL"
+msgstr "überprüfe %s ..."
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
