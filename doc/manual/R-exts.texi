@@ -1699,11 +1699,14 @@ There is nothing to say what version of OpenMP is supported: version 3.0
 Solaris platforms, but portable packages cannot assume that end users
 have recent versions (there are some years-old versions of Linux in
 use), and it may be safest to assume version 2.5.  The compilers
-currently used on OS X have partial support for OpenMPP 2.5, but this is
-not enabled in the @acronym{CRAN} build.
+currently used on OS X have partial support for OpenMP 2.5, but this is
+not enabled in the @acronym{CRAN} build (and unreliable).
 
 C/C++ code written to use OpenMP should include @code{omp} pragmas and
-other OpenMP-specific code in @code{#ifdef _OPENMP ... #endif}.
+other OpenMP-specific code in @code{#ifdef _OPENMP ... #endif} or
+condition on @code{#ifdef SUPPORT_OPENMP} (see above).  Note that some
+toolchains used for @R{} (e.g.@: @command{clang}) have no OpenMP support
+at all, not even @file{omp.h}.  
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and OS X (where available) implementations have substantial
