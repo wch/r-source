@@ -327,6 +327,9 @@ for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
     break
   fi
 done])
+if test "${r_cv_prog_cc_m}" = "${cc_minus_MM}"; then
+  r_cv_prog_cc_m="\$(CC) -MM"
+fi
 if test -z "${r_cv_prog_cc_m}"; then
   AC_MSG_RESULT([no])
 else

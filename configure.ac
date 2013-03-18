@@ -614,6 +614,12 @@ userFFLAGS=${FFLAGS}
 R_PROG_F77
 AC_PROG_CXX
 AC_PROG_CXXCPP
+if test "${CXXCPP}" = "${CXX} -E"; then
+  CXXCPP0="\$(CXX) -E"
+else
+  CXXCPP0=${CXXCPP}
+fi
+AC_SUBST(CXXCPP0)
 R_GCC4_VISIBILITY
 AC_GNU_SOURCE ## needed to libintl
 
@@ -1556,8 +1562,12 @@ esac
 
 ## Step 5.  Overrides from the environment and error checking.
 if test -z "${MAIN_LD}"; then
-  main_ld_was_given=no
-  MAIN_LD="${main_ld}"
+   main_ld_was_given=no
+  if test "${main_ld}" = "${CC}"; then
+     MAIN_LD="\$(CC)"
+  else
+     MAIN_LD="${main_ld}"
+  fi
   R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 fi
 
@@ -1599,7 +1609,11 @@ fi
 
 if test -z "${SHLIB_LD}"; then
   shlib_ld_was_given=no
-  SHLIB_LD="${shlib_ld}"
+  if test "${shlib_ld}" = "${CC}"; then
+    SHLIB_LD="\$(CC)"
+  else
+    SHLIB_LD="${shlib_ld}"
+  fi
   R_SH_VAR_ADD(SHLIB_LDFLAGS, [${shlib_ldflags}])
 fi
 if test -z "${SHLIB_LDFLAGS}"; then
@@ -1609,7 +1623,11 @@ fi
 
 if test -z "${SHLIB_CXXLD}"; then
   shlib_cxxld_was_given=no
-  SHLIB_CXXLD="${shlib_cxxld}"
+  if test "${shlib_cxxld}" = "${CXX}"; then
+    SHLIB_CXXLD="\$(CXX)"
+  else
+    SHLIB_CXXLD="${shlib_cxxld}"
+  fi
   R_SH_VAR_ADD(SHLIB_CXXLDFLAGS, [${shlib_cxxldflags}])
 fi
 if test -z "${SHLIB_CXXLDFLAGS}"; then
@@ -2304,7 +2322,7 @@ AC_OPENMP
 AC_LANG_POP()
 if test -z "${SHLIB_FCLD}"; then
   shlib_fcld_was_given=no
-  SHLIB_FCLD="${FC}"
+  SHLIB_FCLD="\$(FC)"
 fi
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
 AC_SUBST(SHLIB_FCLD)
