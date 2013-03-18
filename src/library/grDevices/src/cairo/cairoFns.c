@@ -480,7 +480,7 @@ static PangoFontDescription
     }
     /* seems a ssize < 1 gums up pango, PR#14369 */
     if (ssize < 1) ssize = 1.0;
-    pango_font_description_set_size(fontdesc, ssize);
+    pango_font_description_set_size(fontdesc, (gint) ssize);
 
     return fontdesc;
 }
@@ -540,7 +540,7 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
 	Rf_ucstoutf8(str, (unsigned int) c);
     } else {
 	/* Here we assume that c < 256 */
-	str[0] = c; str[1] = 0;
+	str[0] = (char) c; str[1] = (char) 0;
     }
     layout = PG_layout(desc, xd->cc, str);
     PG_text_extents(xd->cc, layout, NULL, NULL, &iwidth,
