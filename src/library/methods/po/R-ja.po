@@ -1316,13 +1316,12 @@ msgstr ""
 " 関数 %s に対して素直に継承されたメソッドが見つかりません; 素直でないメソッド"
 "を使います "
 
-#, fuzzy
 msgid ""
 "Note: method with signature %s chosen for function %s,\n"
 " target signature %s.\n"
 " %s would also be valid"
 msgstr ""
-" 注: シグネチャー %s を持つ関数 %s% に対して選ばれた、 \n"
+" 注: シグネチャー %s を持つメソッドが、関数 %s に対して選ばれました, \n"
 " 対象シグネチャー %s です。 \n"
 " %s もまた有効かもしれません "
 
