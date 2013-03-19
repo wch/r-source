@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 08:03+0000\n"
+"POT-Creation-Date: 2013-03-19 12:12+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -587,7 +587,7 @@ msgstr "'RNGkind'里的Normal类不对"
 msgid "'user_norm_rand' not in load table"
 msgstr "'user_norm_rand'不在载入表中"
 
-#: src/main/RNG.c:516
+#: src/main/RNG.c:517
 msgid "supplied seed is not a valid integer"
 msgstr "提供的随机种不是正确的正数"
 

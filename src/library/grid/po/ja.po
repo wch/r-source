@@ -7,54 +7,48 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 09:51+0100\n"
-"PO-Revision-Date: 2010-09-29 20:36+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"POT-Creation-Date: 2013-03-07 08:36+0000\n"
+"PO-Revision-Date: 2013-02-28 05:38+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
-"X-Generator: Pootle 1.1.0 \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 #: grid.c:214
-#, fuzzy
 msgid "cannot clip to rotated viewport"
-msgstr " rotated viewport は省略することが出来ません "
+msgstr " rotated viewport のクリップは出来ません "
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-#, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
-" トップレベルの viewport は pop することが出来ません（grid と グラフィックス"
-"出力を混同していませんか？） "
+" トップレベルの viewport は pop することが出来ません ('grid' と 'graphics' の"
+"出力を混同していませんか?) "
 
 #: grid.c:952
 msgid "attempt to plot on null device"
-msgstr " ヌルデバイスに作図を試みる "
+msgstr " ナルデバイスにプロットしようとしています "
 
 #: grid.c:1232
-#, fuzzy
 msgid "there is no layout defined"
-msgstr " layout が定義されていません "
+msgstr " レイアウトが定義されていません "
 
 #: grid.c:1452
-#, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
-msgstr " 多角形頂点が見付かりません(幅もしくは高さがゼロ？) "
+msgstr " 多角形の頂点が見付かりません (幅もしくは高さがゼロ？) "
 
 #: grid.c:1461
-#, fuzzy
 msgid "polygon edge not found"
 msgstr " 多角形の頂点が見付かりません "
 
 #: grid.c:1615
-#, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 
 #: grid.c:1931
-#, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr " Xspline 中に有限でない制御点 "
 
@@ -67,59 +61,51 @@ msgid "invalid plotting symbol"
 msgstr " 不正なプロット記号です "
 
 #: grid.c:3372
-#, fuzzy
 msgid "unable to clip to rotated rectangle"
-msgstr " 回転矩形へクリップ出来ません "
+msgstr " 回転された矩形へクリップ出来ません "
 
 #: layout.c:587
-#, fuzzy
 msgid "invalid 'layout.pos.row'"
-msgstr " 不正な layout.pos.row です "
+msgstr " 不正な 'layout.pos.row' です "
 
 #: layout.c:591
-#, fuzzy
 msgid "invalid 'layout.pos.col'"
-msgstr " 不正な layout.pos.col です "
+msgstr " 不正な 'layout.pos.col' です "
 
 #: matrix.c:49
 msgid "singular transformation matrix"
 msgstr " 特異な変換行列です "
 
 #: state.c:169
-#, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
-" 現在の grid の状態を保持することが出来ません．デバイスを開きすぎていません"
-"か？ "
+" 現在の 'grid' の状態を保持することが出来ません。デバイスを開きすぎていません"
+"か? "
 
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-#, fuzzy
 msgid "unimplemented unit function"
-msgstr " 単位(unit)関数は推奨されていません "
+msgstr " 未実装の単位 (unit) 関数です "
 
 #: unit.c:893 unit.c:1639
-#, fuzzy
 msgid "invalid unit or unit not yet implemented"
-msgstr " 不正な単位(unit)か，まだ推奨されていない単位(unit)です "
+msgstr " 不正な単位 (unit) か、まだ実装されていない単位 (unit) です "
 
 #: unit.c:1798
 msgid "Invalid unit"
-msgstr " 不正な単位(unit) です "
+msgstr " 不正な単位 (unit) です "
 
 #: unit.c:1814
-#, fuzzy
 msgid "'units' must be character"
-msgstr " 単位(Units)は文字型である必要があります "
+msgstr " 単位 ('units') は文字型でなければなりません "
 
 #: unit.c:1817
-#, fuzzy
 msgid "'units' must be of length > 0"
-msgstr " 単位(Units)の長さは 0 より大きい必要があります "
+msgstr " 単位 ('units') の長さは 0 より大きくなければなりません "
 
 #: viewport.c:317
-#, fuzzy
 msgid "non-finite location and/or size for viewport"
-msgstr " 有限でない location かつ/または 有限でない viewport です "
+msgstr ""
+" 有限でない location かつ/または 有限でない viewport に対するサイズです "
 
 #~ msgid "Invalid circle radius (must be non-negative)"
 #~ msgstr " 不正な円の半径です（非負でなければなりません） "

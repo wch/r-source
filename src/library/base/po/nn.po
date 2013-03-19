@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 08:03+0000\n"
+"POT-Creation-Date: 2013-03-19 12:12+0000\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -612,7 +612,7 @@ msgstr "ugyldig «Normal»-type i RNGkind"
 msgid "'user_norm_rand' not in load table"
 msgstr "«user_norm_rand» finst ikkje i lastetabellen"
 
-#: src/main/RNG.c:516
+#: src/main/RNG.c:517
 msgid "supplied seed is not a valid integer"
 msgstr "det oppgjevne frøet er ikkje eit gyldig heiltal"
 

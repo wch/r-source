@@ -6,16 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07+0000\n"
-"PO-Revision-Date: 2011-10-22 21:52+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2013-03-07 08:37+0000 \n"
+"PO-Revision-Date: 2013-02-28 06:03+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
-"X-Generator: Pootle 1.1.0 \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
@@ -29,129 +30,129 @@ msgstr " md5 はファイル '%s' で失敗しました "
 #: getfmts.c:51
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr ""
+msgstr " 引数は %d 個までです "
 
 #: getfmts.c:56
 msgid "'fmt' is not a character vector"
-msgstr ""
+msgstr " 'fmt' は文字列ベクトルではありません "
 
 #: getfmts.c:59
 msgid "'fmt' must be length 1"
-msgstr ""
+msgstr " 'fmt' の長さは 1 でなければなりません "
 
 #: getfmts.c:65
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr ""
+msgstr " 'fmt' の長さがフォーマットの最大長 %d を越えています "
 
 #: getfmts.c:86
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr ""
+msgstr " 識別不能なフォーマット指定 '%s' です "
 
 #: getfmts.c:126
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr ""
+msgstr " 各変換指定に許されるアステリスク '*' は多くても一つです "
 
 #: gramLatex.y:673 gramRd.y:1297
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr ""
+msgstr " %d 行にある長い文字列のためのバッファを確保できませんでした "
 
 #: gramLatex.y:910 gramRd.y:1785 gramRd.y:1791
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr " 不正な引数の型です "
+msgstr " 不正な '%s' 値です "
 
 #: gramRd.y:295 gramRd.y:298
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
-msgstr ""
+msgstr " %s:%d:%d に誤ったマークアップがあります (スペースが余計?) "
 
 #: gramRd.y:534
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr ""
+msgstr " マクロ '%s' は既に定義されています。 "
 
 #: gramRd.y:543
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
-msgstr ""
+msgstr " ユーザー定義のマクロに許されている引数の数は最大 4 つです "
 
 #: gramRd.y:577
 #, c-format
 msgid "No macro definition for '%s'."
-msgstr ""
+msgstr " '%s' に対するマクロが定義されていません。 "
 
 #: gramRd.y:729 gramRd.y:733
 #, c-format
 msgid "newline within quoted string at %s:%d"
-msgstr ""
+msgstr " 引用文字列の %s に改行:%d "
 
 #: gramRd.y:752
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
-msgstr ""
+msgstr " 行 %d にある長いマクロに対するバッファを確保できません "
 
 #: gramRd.y:782
 msgid "macros nested too deeply: infinite recursion?"
-msgstr ""
+msgstr " マクロが過剰に入れ子になっています: 無限な再帰？ "
 
 #: gramRd.y:1165
 #, c-format
 msgid "Unable to find macro %s"
-msgstr ""
+msgstr " マクロ %s を見つけることができません "
 
 #: gramRd.y:1357
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr ""
+msgstr " 予想外の入力の停止 (%c 引用文字列中の %s:%d:%d で開かれた) "
 
 #: gramRd.y:1796
 msgid "cannot open the connection"
-msgstr ""
+msgstr " コネクションを開くことができません "
 
 #: gramRd.y:1803
 msgid "cannot read from this connection"
-msgstr ""
+msgstr " このコネクションからは読み取りができません "
 
 #: gramRd.y:1811
 msgid "invalid Rd file"
-msgstr ""
+msgstr " 不正な Rd ファイルです "
 
 #: gramRd.y:1830
 msgid "'deparseRd' only supports deparsing character elements"
-msgstr ""
+msgstr " 'deparseRd' は文字要素のディパースだけをサポートしています "
 
 #: gramRd.y:1833
 msgid "bad state"
-msgstr ""
+msgstr " 不都合な状態 "
 
 #: gramRd.y:1846
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
-msgstr ""
+msgstr " 'deparseRd' 中に不都合なテキストモード %d "
 
 #: http.c:32
 msgid "invalid bind address specification"
-msgstr ""
+msgstr " 不正な空白アドレス指定 "
 
 #: install.c:96 install.c:117 install.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr " 不正な引数の型です "
+msgstr " 不正な引数 '%s' です "
 
 #: install.c:147
 msgid "write error during file append"
-msgstr ""
+msgstr " ファイルの付加中に書き込みエラー "
 
 #: signals.c:43
 msgid "pskill() is not supported on this platform"
-msgstr " pskill()はこのプラットホームではサポートされていません "
+msgstr " pskill() はこのプラットホームではサポートされていません "
 
 #: signals.c:140
 msgid "psnice() is not supported on this platform"
-msgstr " psnice()はこのプラットホームではサポートされていません "
+msgstr " psnice() はこのプラットホームではサポートされていません "
 
 #: text.c:65
 msgid "invalid argument type"

@@ -1,15 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
-"PO-Revision-Date: 2005-03-31 08:00+0009 \n"
-"Last-Translator: Nobuo Funao \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2013-03-07 08:36 \n"
+"PO-Revision-Date: 2013-02-28 04:15+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 msgid "must have at least 'ord' knots"
 msgstr " 少なくとも 'ord' 個のノットを持たなければなりません "
@@ -18,20 +20,19 @@ msgid "length of 'derivs' must match length of 'x'"
 msgstr " 'derivs' の長さは 'x' の長さと合わせる必要があります "
 
 msgid "'ord' must be positive integer, at most the number of knots"
-msgstr " 'ord' は正の整数で，多くてもノット数です "
+msgstr " 'ord' は正の整数で、多くてもノット数です "
 
-#, fuzzy
 msgid "need at least %s (=%d) knots"
-msgstr " 少なくとも 2*ord -1 (=%d) 個のノット必要です "
+msgstr " 少なくとも %s (=%d) 個のノットが必要です "
 
-#, fuzzy
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
 msgstr ""
-" 'outer.ok = TRUE' でない場合は，データ 'x' は g から %g の範囲内でなければな"
-"りません． "
+" データ 'x' は %g から %g の範囲内でなければなりません、ただし '%s' を設定し"
+"ている場合を除きます "
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr ""
+" %s には 'Matrix' パッケージが正しくインストールされている必要があります "
 
 msgid "values of 'x' must be distinct"
 msgstr " 'x' の値はすべて別々の値でなければなりません "
@@ -43,7 +44,7 @@ msgid "lengths of 'x' and 'y' must match"
 msgstr " 'x' と 'y' の長さを合わせる必要があります "
 
 msgid "values of 'x' must be strictly increasing"
-msgstr " ノット位置は狭義に単調増加でなければなりません "
+msgstr " ノット位置 'x' は狭義に単調増加でなければなりません "
 
 msgid "'ord' must be >= 2"
 msgstr " 'ord' は 2 以上でなければなりません "
@@ -69,11 +70,10 @@ msgstr " スプラインは単調でなければなりません "
 msgid "'degree' must be integer >= 1"
 msgstr " 'degree' は 1 以上の整数でなければなりません "
 
-#, fuzzy
 msgid "'df' was too small; have used %d"
-msgstr " 'df' が小さすぎました．代わりに以下が使われました： "
+msgstr " 'df' が小さすぎました; 代わりに %d が使われました "
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr ""
-" ある 'x' の値がノットの境界線を越えてしまったため，状況の悪化を招いてしまっ"
+" ある 'x' の値がノットの境界線を越えてしまったため、状況の悪化を招いてしまっ"
 "た可能性があります "

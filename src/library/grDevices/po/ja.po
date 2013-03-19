@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-03-18 19:37+0000\n"
-"PO-Revision-Date: 2012-02-26 14:10+0200 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"PO-Revision-Date: 2013-02-28 05:49+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -22,95 +22,94 @@ msgstr ""
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:53
 #, c-format
 msgid "'%s' must be numeric of length %d"
-msgstr " '%s'は長さ%dの数値でなければなりません "
+msgstr " '%s' は長さ %d の数値でなければなりません "
 
 #: colors.c:69
 #, c-format
 msgid "color intensity %g, not in [0,1]"
-msgstr ""
+msgstr " 色彩強度 %g が [0, 1] の範囲内にありません "
 
 #: colors.c:76
 #, c-format
 msgid "color intensity %d, not in 0:255"
-msgstr ""
+msgstr " 色彩強度 %d が 0:255 の範囲内にありません "
 
 #: colors.c:83
 #, c-format
 msgid "alpha level %g, not in [0,1]"
-msgstr ""
+msgstr " アルファ値 %g が [0, 1] の範囲内にありません "
 
 #: colors.c:90
 #, c-format
 msgid "alpha level %d, not in 0:255"
-msgstr ""
+msgstr " アルファ値 %d が 0:255 の範囲内にありません "
 
 #: colors.c:118
 msgid "bad hsv to rgb color conversion"
-msgstr ""
+msgstr " hsv から rgb への色変換に失敗しました "
 
 #: colors.c:207 colors.c:221
 msgid "invalid hsv color"
-msgstr ""
+msgstr " hsv カラーが不正です "
 
 #: colors.c:327 colors.c:345
 msgid "invalid hcl color"
-msgstr ""
+msgstr " hcl カラーが不正です "
 
 #: colors.c:402
-#, fuzzy
 msgid "invalid 'names' vector"
-msgstr " 不正な 'file' 引数 "
+msgstr " 'names' ベクトルが不正です "
 
 #: colors.c:461 colors.c:470
 msgid "invalid gray level, must be in [0,1]."
-msgstr ""
+msgstr " 濃淡度が不正です。濃淡度は [0, 1] の範囲内にある必要があります "
 
 #: colors.c:526
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr " 不正な 'file' 引数 "
+msgstr " '%s' の値が不正です "
 
 #: colors.c:1318
 msgid "invalid hex digit in 'color' or 'lty'"
-msgstr ""
+msgstr " 'color' または 'lty' 中の 16 進数が不正です "
 
 #: colors.c:1328 colors.c:1338
-#, fuzzy
 msgid "invalid RGB specification"
-msgstr " 不正なフォント指定 "
+msgstr " RGB の指定が不正です "
 
 #: colors.c:1371
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color name '%s'"
-msgstr " '%s' 中に不正な文字列 "
+msgstr " 色名 '%s' が不正です "
 
 #: colors.c:1421 colors.c:1430
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color specification \"%s\""
-msgstr " 不正なフォント指定 "
+msgstr " 色の指定 \"%s\" が不正です "
 
 #: colors.c:1458
 msgid "supplied color is neither numeric nor character"
-msgstr ""
+msgstr " 与えられた色が数値でも文字列でもありません "
 
 #: colors.c:1462
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr ""
+" 色を数値で指定する場合、数値は 0 以上である必要があります。%d が指定されまし"
+"た "
 
 #: colors.c:1473
-#, fuzzy
 msgid "invalid argument type"
-msgstr " 不正な 'file' 引数 "
+msgstr " 引数の型が不正です "
 
 #: colors.c:1484
 msgid "unknown palette (need >= 2 colors)"
-msgstr ""
+msgstr " パレットが不正です (2 色以上必要です) "
 
 #: colors.c:1488 colors.c:1510
 #, c-format
 msgid "maximum number of colors is %d"
-msgstr ""
+msgstr " パレットの色数の最大値は %d です "
 
 #: devPS.c:556
 #, c-format
@@ -140,12 +139,12 @@ msgstr " 'PostScriptMetricInfo' 中に未知のエンコーディング '%s' "
 #: devPS.c:844 devPS.c:855
 #, c-format
 msgid "font metrics unknown for Unicode character U+%04x"
-msgstr " Unicode　文字　U+%04x に対するフォントメトリックスが未知です "
+msgstr " Unicode 文字 U+%04x に対するフォントメトリックスが未知です "
 
 #: devPS.c:863
 #, c-format
 msgid "font metrics unknown for character 0x%x"
-msgstr " 文字　0x%x に対するフォントメトリックスが未知です "
+msgstr " 文字 0x%x に対するフォントメトリックスが未知です "
 
 #: devPS.c:877
 #, c-format
@@ -153,14 +152,14 @@ msgid ""
 "invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte "
 "locale"
 msgstr ""
-" 一バイトロケールに於いて 'PostScriptCIDMetricInfo' に不正な文字(%04x)が送ら"
-"れました "
+" 一バイトロケールにおいて 'PostScriptCIDMetricInfo' に不正な文字 (%04x) が送"
+"られました "
 
 #: devPS.c:885
 msgid ""
 "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr ""
-" 一バイトロケールに於いて 'PostScriptCIDMetricInfo' に不正な文字が送られまし"
+" 一バイトロケールにおいて 'PostScriptCIDMetricInfo' に不正な文字が送られまし"
 "た "
 
 #: devPS.c:990
@@ -201,7 +200,6 @@ msgid "failed to load encoding file '%s'"
 msgstr " エンコーディングファイル '%s' をロードできませんでした "
 
 #: devPS.c:1438 devPS.c:1471
-#, fuzzy
 msgid "invalid font name or more than one font name"
 msgstr " 一つもしくは複数のフォント名が不正です "
 
@@ -216,14 +214,14 @@ msgstr ""
 #, c-format
 msgid "font encoding for family '%s' not found in font database"
 msgstr ""
-" フォントのデータベースに \"%s\" ファミリに対するエンコーディングが見付かりま"
-"せん "
+" フォントのデータベースに '%s' ファミリに対するエンコーディングが見付かりませ"
+"ん "
 
 #: devPS.c:1725 devPS.c:1752
 #, c-format
 msgid "font CMap for family '%s' not found in font database"
 msgstr ""
-" フォントのデータベースに \"%s\" ファミリに対する CMap フォントが見付かりませ"
+" フォントのデータベースに '%s' ファミリに対する CMap フォントが見付かりませ"
 "ん "
 
 #: devPS.c:1946 devPS.c:2025 devPS.c:2093
@@ -232,36 +230,30 @@ msgid "cannot load afm file '%s'"
 msgstr " afm ファイル '%s' をロードできませんでした "
 
 #: devPS.c:2383
-#, fuzzy
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr ""
-" ロードされたエンコーディングが破損しています；　　エンコーディングは記録され"
-"ませんでした "
+" ロードされたエンコーディングが破損しています;  エンコーディングは記録されま"
+"せんでした "
 
 #: devPS.c:2394
-#, fuzzy
 msgid "failed to record device encoding"
 msgstr " デバイスのエンコーディングを記録することに失敗しました "
 
 #: devPS.c:2563
-#, fuzzy
 msgid "object '.ps.prolog' is not a character vector"
-msgstr " オブジェクト .ps.prolog は文字列ベクトルではありません "
+msgstr " オブジェクト '.ps.prolog' は文字列ベクトルではありません "
 
 #: devPS.c:2636 devPS.c:6407 devWindows.c:784
-#, fuzzy
 msgid "invalid line end"
-msgstr " 行末が不正です "
+msgstr " 線分の線端形状の指定が不正です "
 
 #: devPS.c:2655 devPS.c:6426 devWindows.c:797
-#, fuzzy
 msgid "invalid line join"
-msgstr " 行のつながりが不正です "
+msgstr " 線分の接続方法の指定が不正です "
 
 #: devPS.c:2663
-#, fuzzy
 msgid "invalid line mitre"
-msgstr " 不正な line mitre です "
+msgstr " 線分のマイターリミットの指定が不正です "
 
 #: devPS.c:2872 devPS.c:3766 devPS.c:4214 devPS.c:4241 devPS.c:5249
 #: devPS.c:7752 devPS.c:7797
@@ -272,7 +264,7 @@ msgstr " 不正なフォント %d を使おうとしましたが、フォント 
 #: devPS.c:3094 devPS.c:4716 devPS.c:5828
 #, c-format
 msgid "filename too long in %s()"
-msgstr " %s() 中に長すぎるファイル名  "
+msgstr " %s() 中のファイル名が長すぎます "
 
 #: devPS.c:3100 devPS.c:4722 devPS.c:5834
 #, c-format
@@ -290,17 +282,14 @@ msgid "failed to load encoding file in %s()"
 msgstr " %s() 中にエンコーディングファイををロードできませんでした "
 
 #: devPS.c:3176 devPS.c:3239 devPS.c:5953 devPS.c:6008 devPS.c:7632
-#, fuzzy
 msgid "invalid font type"
-msgstr " 不正なフォントタイプです "
+msgstr " フォントタイプが不正です "
 
 #: devPS.c:3200
-#, fuzzy
 msgid "failed to initialise default PostScript font"
 msgstr " 既定のポストスクリプトフォントの初期化に失敗しました "
 
 #: devPS.c:3266
-#, fuzzy
 msgid "failed to initialise additional PostScript fonts"
 msgstr " 追加のポストスクリプトフォントの初期化に失敗しました "
 
@@ -313,21 +302,20 @@ msgid "'command' is too long"
 msgstr " 'command' が長すぎます "
 
 #: devPS.c:3292
-#, fuzzy
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
-msgstr " postscript(print.it=TRUE)　が空の描画命令とともに使われました "
+msgstr " 'postscript(print.it=TRUE)' が空の描画命令とともに使われました "
 
 #: devPS.c:3341
 #, c-format
 msgid "invalid page type '%s' (postscript)"
-msgstr " 不正なページ '%s'  (ポストスクリプト) "
+msgstr " 不正なページ '%s' (ポストスクリプト) "
 
 #: devPS.c:3453 devPS.c:4566 devWindows.c:2339
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
-" 半透過機能はこのデバイスではサポートされていません：ページ毎に一度だけレポー"
+" 半透過機能はこのデバイスではサポートされていません: ページ毎に一度だけレポー"
 "トされます "
 
 #: devPS.c:3559 devPS.c:3568
@@ -350,14 +338,14 @@ msgstr ""
 " %s "
 
 #: devPS.c:3754
-#, fuzzy, c-format
+#, c-format
 msgid "CID family '%s' not included in postscript() device"
-msgstr " ポストスクリプトデバイス中に CID ファミリ '%s' は含まれていません "
+msgstr " postscript() デバイス中に CID ファミリ '%s' は含まれていません "
 
 #: devPS.c:3772 devPS.c:3783 devPS.c:4221 devPS.c:4251 devPS.c:4356
-#, fuzzy, c-format
+#, c-format
 msgid "family '%s' not included in postscript() device"
-msgstr " ポストスクリプトデバイス中にフォントファミリ '%s' は含まれていません "
+msgstr " postscript() デバイス中にフォントファミリ '%s' は含まれていません "
 
 #: devPS.c:4296
 #, c-format
@@ -367,7 +355,7 @@ msgstr " 'mbcsToSbcs' 中に未知のエンコーディング '%s' がありま�
 #: devPS.c:4306
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
-msgstr " 'mbcsToSbcs' 中の '%s' で変換に失敗: <%02x>をドットで置き換えました "
+msgstr " 'mbcsToSbcs' 中の '%s' で変換に失敗: <%02x> をドットで置き換えました "
 
 #: devPS.c:4384
 #, c-format
@@ -380,9 +368,8 @@ msgid "failed in text conversion to encoding '%s'"
 msgstr " テキストをエンコーディング '%s' に変換することに失敗しました "
 
 #: devPS.c:4580
-#, fuzzy
 msgid "ran out of colors in xfig()"
-msgstr " xfig() 中で色数が多すぎました "
+msgstr " xfig() 中の色数が多すぎました "
 
 #: devPS.c:4609
 #, c-format
@@ -393,19 +380,17 @@ msgstr " 実装されていない線種 %08x: Dash-double-dotted を使います
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
 msgstr ""
-" 未知のポストスクリプトフォントファミリ　'%s' です。Helvetica を使います "
+" 未知のポストスクリプトフォントファミリ '%s' です。Helvetica を使います "
 
 #: devPS.c:4747
 msgid "invalid foreground/background color (xfig)"
 msgstr " 不正な前景/背景色です (xfig) "
 
 #: devPS.c:4780
-#, fuzzy
 msgid "only Type 1 fonts supported for XFig"
 msgstr " XFig に対しては Type 1 フォントだけがサポートされています "
 
 #: devPS.c:4793
-#, fuzzy
 msgid "failed to initialise default XFig font"
 msgstr " 既定の XFig フォントの初期化に失敗しました "
 
@@ -434,24 +419,21 @@ msgstr " エンコーディング '%s' を使うことができません "
 
 #: devPS.c:5544 devPS.c:5547
 msgid "failed to increase 'maxRaster'"
-msgstr " 'maxRaster'を増やすことはできませんでした "
+msgstr " 'maxRaster' を増やすことはできませんでした "
 
 #: devPS.c:5559
-#, fuzzy
 msgid "unable to allocate raster image"
 msgstr " ラスター画像を割り当てられません "
 
 #: devPS.c:5760
-#, fuzzy
 msgid "corrupt loaded encodings;  font not added"
 msgstr ""
-" ロードされたエンコーディングが破損しています；　　フォントは追加されません "
+" ロードされたエンコーディングが破損しています;  フォントは追加されません "
 
 #: devPS.c:5769
-#, fuzzy
 msgid "failed to record device encoding; font not added"
 msgstr ""
-" デバイスエンコーディングの記録に失敗しました；　フォントは追加されません "
+" デバイスエンコーディングの記録に失敗しました; フォントは追加されません "
 
 #: devPS.c:5880
 msgid "increasing the PDF version to 1.2"
@@ -462,12 +444,10 @@ msgid "failed to load default encoding"
 msgstr " 既定のエンコーディングのロードに失敗しました "
 
 #: devPS.c:5976
-#, fuzzy
 msgid "failed to initialise default PDF font"
 msgstr " 既定の PDF フォントの初期化に失敗しました "
 
 #: devPS.c:6031
-#, fuzzy
 msgid "failed to initialise additional PDF fonts"
 msgstr " 追加の PDF フォントの初期化に失敗しました "
 
@@ -489,7 +469,6 @@ msgid "invalid foreground/background color (pdf)"
 msgstr " 不正な前景/背景色 (pdf) "
 
 #: devPS.c:6255
-#, fuzzy
 msgid "invalid 'alpha' value in PDF"
 msgstr " PDF 中に不正なアルファ値 "
 
@@ -499,15 +478,13 @@ msgstr " PDF のバージョンを 1.4 に更新 "
 
 #: devPS.c:6331 devPS.c:6378
 msgid "unknown 'colormodel', using 'srgb'"
-msgstr " 未知の 'colormodel'です。'srgb' を使います "
+msgstr " 未知の 'colormodel' です。'srgb' を使います "
 
 #: devPS.c:6572
-#, fuzzy
 msgid "failed to load sRGB colorspace file"
 msgstr " sRGB 色空間ファイルのロードに失敗しました "
 
 #: devPS.c:6836
-#, fuzzy
 msgid "corrupt encodings in PDF device"
 msgstr " PDF デバイス中に破損したエンコーディング "
 
@@ -530,16 +507,14 @@ msgid ""
 "cannot open 'pdf' file argument '%s'\n"
 "  please shut down the PDF device"
 msgstr ""
-" 'pdf\" ファイル引数 '%s' を開くことができません \n"
+" 'pdf' ファイル引数 '%s' を開くことができません \n"
 " PDF デバイスを閉じてください "
 
 #: devPS.c:7657 devPS.c:8019 devPS.c:8066
-#, fuzzy
 msgid "failed to find or load PDF font"
 msgstr " PDF フォントが見付からないかロードできませんでした "
 
 #: devPS.c:7841 devPS.c:7974
-#, fuzzy
 msgid "failed to find or load PDF CID font"
 msgstr " PDF CID フォントが見付からないかロードできませんでした "
 
@@ -568,7 +543,7 @@ msgstr " デバイス %s() を開始できませんでした "
 #: devQuartz.c:651
 #, c-format
 msgid "font \"%s\" could not be found for family \"%s\""
-msgstr " フォント'%s'はフォントファミリー'%s'に対して見つかりません "
+msgstr " フォント \"%s\" はフォントファミリー \"%s\" に対して見つかりません "
 
 #: devQuartz.c:669
 msgid "font family name is too long"
@@ -577,27 +552,25 @@ msgstr " フォントファミリーの名前が長すぎます "
 #: devQuartz.c:709
 #, c-format
 msgid "no font could be found for family \"%s\""
-msgstr " フォントファミリー'%s'に対してフォントが見つかりません "
+msgstr " フォントファミリー \"%s\" に対してフォントが見つかりません "
 
 #: devQuartz.c:1374
 msgid "invalid 'file' argument"
 msgstr " 不正な 'file' 引数 "
 
 #: devQuartz.c:1401
-#, fuzzy
 msgid "invalid quartz() device size"
-msgstr " 不正なQuarts デバイスサイズ "
+msgstr " quartz() デバイスのサイズが不正です "
 
 #: devQuartz.c:1429
-#, fuzzy
 msgid "unable to create device description"
 msgstr " デバイスの内容を作成できませんでした "
 
 #: devQuartz.c:1479
-#, fuzzy
 msgid ""
 "unable to create quartz() device target, given type may not be supported"
-msgstr "Quartzデバイスを作成できません。与えられた型はサポートされていません "
+msgstr ""
+" quartz() デバイスを作成できません。与えられた型はサポートされていません "
 
 #: devQuartz.c:1606
 msgid "Quartz device is not available on this platform"
@@ -617,12 +590,10 @@ msgid "'%%' is not allowed in file name"
 msgstr " '%%' はファイル名には利用できません "
 
 #: devWindows.c:604
-#, fuzzy
 msgid "invalid font specification"
 msgstr " 不正なフォント指定 "
 
 #: devWindows.c:643
-#, fuzzy
 msgid "font family not found in Windows font database"
 msgstr " Windows のフォントデータベースにフォントファミリが見付かりません "
 
@@ -637,7 +608,7 @@ msgstr " 描画履歴がありません "
 #: devWindows.c:1796
 #, c-format
 msgid "filename too long in %s() call"
-msgstr " 呼出し %s() 中に長すぎるファイル名  "
+msgstr " 呼出し %s() 中に長すぎるファイル名 "
 
 #: devWindows.c:1805 devWindows.c:1844 devWindows.c:1878
 #, c-format
@@ -646,12 +617,11 @@ msgstr " 'width=%d, height=%d' はピクセル単位でありそうもない値�
 
 #: devWindows.c:1813 devWindows.c:1818 devWindows.c:1847 devWindows.c:1852
 #: devWindows.c:1881 devWindows.c:1886
-#, fuzzy
 msgid "unable to allocate bitmap"
 msgstr " ビットマップを割り当てられません "
 
 #: devWindows.c:1824 devWindows.c:1858 devWindows.c:2182
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open file '%s' for writing"
 msgstr " ファイル '%s' を書込み用に開くことができません "
 
@@ -661,19 +631,18 @@ msgstr " 呼出し jpeg() 中に長すぎるファイル名 "
 
 #: devWindows.c:1875
 msgid "filename too long in tiff() call"
-msgstr " 呼出し tiff() 中に長すぎるファイル名  "
+msgstr " 呼出し tiff() 中に長すぎるファイル名 "
 
 #: devWindows.c:1907
 msgid "filename too long in win.metafile() call"
 msgstr " 呼出し win.metafile() 中に長すぎるファイル名 "
 
 #: devWindows.c:1917
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open metafile '%s' for writing"
 msgstr " メタファイル '%s' を書込み用に開くことができません "
 
 #: devWindows.c:1919
-#, fuzzy
 msgid "unable to open clipboard to write metafile"
 msgstr " メタファイルを書込むためにクリップボードを開くことができません "
 
@@ -686,7 +655,6 @@ msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr " メモリ不足でサイズ変更できません。alpha blending を停止します "
 
 #: devWindows.c:2167
-#, fuzzy
 msgid "a clipboard metafile can store only one figure."
 msgstr " クリップボードメタファイルは一つの図だけを保管できます "
 
@@ -701,7 +669,7 @@ msgstr " R グラフィックス "
 
 #: devWindows.c:3124
 msgid "attempt to use the locator after dev.hold()"
-msgstr " dev.hold()のあとにロケーターを使おうとしています "
+msgstr " dev.hold() のあとにロケーターを使おうとしています "
 
 #: devWindows.c:3388
 msgid "option 'windowsTimeouts' should be integer"
@@ -709,20 +677,19 @@ msgstr " オプション 'windowsTimeouts' は整数でなければなりませ�
 
 #: devWindows.c:3409
 msgid "invalid device number in 'savePlot'"
-msgstr " savePlot　中に不正なデバイス番号 "
+msgstr " 'savePlot' 中に不正なデバイス番号 "
 
 #: devWindows.c:3411
 msgid "invalid device in 'savePlot'"
-msgstr " savePlot 中に不正なデバイス "
+msgstr " 'savePlot' 中に不正なデバイス "
 
 #: devWindows.c:3414
-#, fuzzy
 msgid "invalid filename argument in 'savePlot'"
-msgstr " savePlot 中に不正なファイル名引数 "
+msgstr " 'savePlot' 中に不正なファイル名引数 "
 
 #: devWindows.c:3419
 msgid "invalid type argument in 'savePlot'"
-msgstr " savePlot　に不正な型の引数 "
+msgstr " 'savePlot' に不正な型の引数 "
 
 #: devWindows.c:3446
 msgid "unknown type in savePlot"
@@ -747,28 +714,27 @@ msgstr " 不正な幅か高さ "
 
 #: devices.c:43
 msgid "argument must have positive length"
-msgstr ""
+msgstr " 引数は正の長さである必要があります "
 
 #: devices.c:52
-#, fuzzy
 msgid "invalid argument"
-msgstr " 不正な 'file' 引数 "
+msgstr " 引数が不正です "
 
 #: qdBitmap.c:79
 #, c-format
 msgid "QuartzBitmap_Output - unable to open file '%s'"
-msgstr "QuartzBitmap_Output - ファイル'%s'を開けません "
+msgstr " QuartzBitmap_Output - ファイル '%s' を開けません "
 
 #: qdBitmap.c:94
-#, fuzzy
 msgid "not a supported scheme, no image data written"
 msgstr ""
-" サポートされていないスキーム(scheme)なのでイメージデータは書き出されません "
+" サポートされていないスキーム (scheme) なのでイメージデータは書き出されませ"
+"ん "
 
 #: stubs.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr " 不正な 'file' 引数 "
+msgstr " 引数 '%s' が不正です "
 
 #~ msgid "Invalid line end"
 #~ msgstr " 行末が不正です "

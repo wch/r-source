@@ -6,16 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 19:36+0000\n"
-"PO-Revision-Date: 2011-03-25 08:30+0900 \n"
-"Last-Translator: Masahiro Hayashi <mh@m884.jp> \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2013-03-18 19:36+0000 \n"
+"PO-Revision-Date: 2013-03-19 13:41+0200 \n"
+"Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
-"X-Generator: Pootle 1.1.0 \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 #: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
 msgid "Not enough memory"
@@ -32,7 +33,7 @@ msgstr " クリップボードを開くことができません "
 
 #: src/gnuwin32/console.c:1914
 msgid "Insufficient memory. Please close the console"
-msgstr " メモリが不足しています.コンソールを閉じてください "
+msgstr " メモリが不足しています。コンソールを閉じてください "
 
 #: src/gnuwin32/console.c:1969 src/gnuwin32/console.c:2022
 #: src/gnuwin32/preferences.c:333
@@ -74,15 +75,15 @@ msgstr " 編集. \n"
 
 #: src/gnuwin32/console.c:2232
 msgid "  Moving the cursor: \n"
-msgstr "   カーソル移動:  \n"
+msgstr "   カーソル移動: \n"
 
 #: src/gnuwin32/console.c:2233
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
-msgstr "      左矢印 または Ctrl+B: 1文字戻る; \n"
+msgstr "      左矢印 または Ctrl+B: 1 文字戻る; \n"
 
 #: src/gnuwin32/console.c:2234
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
-msgstr "      右矢印 または Ctrl+F: 1文字進む; \n"
+msgstr "      右矢印 または Ctrl+F: 1 文字進む; \n"
 
 #: src/gnuwin32/console.c:2235
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
@@ -94,7 +95,7 @@ msgstr "      End または Ctrl+E: 行末に移動; \n"
 
 #: src/gnuwin32/console.c:2237
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
-msgstr "   履歴: 上矢印,下矢印,Ctrl+P, Ctrl+N \n"
+msgstr "   履歴: 上矢印、下矢印、Ctrl+P、Ctrl+N \n"
 
 #: src/gnuwin32/console.c:2238
 msgid "  Deleting:\n"
@@ -106,18 +107,18 @@ msgstr "      Delete または Ctrl+D: 現在選択している文字を消去; 
 
 #: src/gnuwin32/console.c:2240
 msgid "     Backspace: delete preceding character;\n"
-msgstr "      Backspace: 1つ前の文字を消去; \n"
+msgstr "      Backspace: 1 つ前の文字を消去; \n"
 
 #: src/gnuwin32/console.c:2241
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "      Ctrl+Del または Ctrl+K: 現在選択している文字から行末までの文字を全て消"
-"去. \n"
+"去。 \n"
 
 #: src/gnuwin32/console.c:2242
 msgid "     Ctrl+U: delete all text from current line.\n"
-msgstr "      Ctrl+U: 現在の行のテキストを全て消去. \n"
+msgstr "      Ctrl+U: 現在の行のテキストを全て消去。 \n"
 
 #: src/gnuwin32/console.c:2243
 msgid "  Copy and paste.\n"
@@ -127,29 +128,29 @@ msgstr "   コピー＆ペースト. \n"
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
-"      マウスの左ボタンを押しながらマウスを使って文字列をマーク（選択）しま"
-"す. \n"
+"      マウスの左ボタンを押しながらマウスを使って文字列をマーク (選択) しま"
+"す。 \n"
 
 #: src/gnuwin32/console.c:2245
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
-"      Shift+Del (または Ctrl+C) を使って,マーク（選択）した文字列をクリップ"
-"ボードにコピーし, \n"
+"      Shift+Del (または Ctrl+C) を使って、マーク (選択) した文字列をクリップ"
+"ボードにコピーし、 \n"
 
 #: src/gnuwin32/console.c:2246
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
-"      Shift+Ins (または Ctrl+V または Ctrl+Y) でクリップボードの内容（もしあ"
-"れば）をペーストして \n"
+"      Shift+Ins (または Ctrl+V または Ctrl+Y) でクリップボードの内容 (もしあ"
+"れば) をペーストして \n"
 
 #: src/gnuwin32/console.c:2247
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr ""
-"      ,コンソールへ出力します,また Ctrl+X でコピーした後にペーストしても構い"
-"ません \n"
+"      、コンソールへ出力します、また Ctrl+X でコピーした後にペーストしても構"
+"いません \n"
 
 #: src/gnuwin32/console.c:2248
 msgid "  Misc:\n"
@@ -157,7 +158,7 @@ msgstr "   その他: \n"
 
 #: src/gnuwin32/console.c:2249
 msgid "     Ctrl+L: Clear the console.\n"
-msgstr "      Ctrl+L: コンソール画面を全消去します. \n"
+msgstr "      Ctrl+L: コンソール画面を全消去します。 \n"
 
 #: src/gnuwin32/console.c:2250
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
@@ -196,7 +197,7 @@ msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
-" 'rcompgen'パッケージがインストールされていれば, TABで補完を開始します. \n"
+" 'rcompgen' パッケージがインストールされていれば, TAB で補完を開始します. \n"
 " \n"
 
 #: src/gnuwin32/console.c:2256
@@ -277,7 +278,7 @@ msgstr ""
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
-" これは選択されたコマンドをコンソールにコピーし,そのコマンドを評価します \n"
+" これは選択されたコマンドをコンソールにコピーし, そのコマンドを評価します \n"
 
 #: src/gnuwin32/editor.c:612
 msgid ""
@@ -286,7 +287,7 @@ msgstr " コマンドの選択がなければ現在行を実行し, \n"
 
 #: src/gnuwin32/editor.c:613
 msgid "the cursor by one line.\n"
-msgstr " カーソルを1行進めます \n"
+msgstr " カーソルを 1 行進めます \n"
 
 #: src/gnuwin32/editor.c:625 src/gnuwin32/editor.c:702
 #: src/gnuwin32/editor.c:760
@@ -477,7 +478,7 @@ msgstr ""
 " 全体的なコンソール設定を実行中に \n"
 " 変える事は出来ません \n"
 " \n"
-" これらを適用するためには、設定を保存してから、Rguiを再実行して下さい。 \n"
+" これらを適用するためには、設定を保存してから、Rgui を再実行して下さい。 \n"
 
 #: src/gnuwin32/preferences.c:306
 msgid ""
@@ -518,7 +519,7 @@ msgstr " ファイル %3$s の %2$d 行目にある '%1$s' を無視しました
 
 #: src/gnuwin32/preferences.c:789
 msgid "Rgui Configuration Editor"
-msgstr " Rgui設定エディター "
+msgstr " Rgui 設定エディター "
 
 #: src/gnuwin32/rui.c:140
 msgid "Select file to source"
@@ -787,7 +788,7 @@ msgstr " コンソール "
 
 #: src/gnuwin32/rui.c:1268
 msgid "'mname' is limited to 1000 bytes"
-msgstr " 'mname' は1000バイト分までに制限されています "
+msgstr " 'mname' は 1000 バイト分までに制限されています "
 
 #: src/gnuwin32/rui.c:1310
 #, c-format
@@ -1070,7 +1071,6 @@ msgid "Variable name"
 msgstr " 変数名 "
 
 #: src/library/grDevices/src/devWindows.c:1258
-#, fuzzy
 msgid "Variable doesn't contain any plots!"
 msgstr " 変数が存在しないか、いかなるプロットも含んでいません! "
 

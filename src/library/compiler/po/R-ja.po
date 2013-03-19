@@ -2,23 +2,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
-"PO-Revision-Date: 2011-04-01 13:28+0900 \n"
-"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
+"PO-Revision-Date: 2013-02-28 01:53+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 msgid "not a proper evaluation environment"
 msgstr " 評価環境が適切ではありません "
 
 msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr ""
-" 'ns' はネームスペースか, あるいは環境をインポートしたネームスペースでなけれ"
+" 'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなけれ"
 "ばなりません "
 
 msgid "bad assignment: %s"
@@ -52,13 +52,13 @@ msgid "bad assignment 2"
 msgstr " 付値の誤り 2 "
 
 msgid "invalid function in complex assignment"
-msgstr " complexの付値に不正な関数があります "
+msgstr " complex の付値に不正な関数があります "
 
 msgid "missing arguments are not allowed"
 msgstr " 引数の欠損は許されません "
 
 msgid "empty alternative in numeric switch"
-msgstr " 数値によるスイッチの中で, 代替選択肢が空です。 "
+msgstr " 数値によるスイッチの中で、代替選択肢が空です。 "
 
 msgid "no visible global function definition for '%s'"
 msgstr " グローバル関数 '%s' の明示された定義が見つかりません "
@@ -72,9 +72,8 @@ msgstr " '%s' に対する '<<-' 付値の明示されたバインディング�
 msgid "wrong number of arguments to '%s'"
 msgstr " '%s' に対する引数の数が違います "
 
-#, fuzzy
 msgid "more than one default provided in switch() call"
-msgstr " スイッチ呼び出しの中で, デフォルト選択肢が２つ以上あります "
+msgstr " switch() 呼び出しの中で、デフォルト選択肢が 2 つ以上あります "
 
 msgid "cannot compile a non-function"
 msgstr " 非関数はコンパイルできません "
@@ -83,25 +82,25 @@ msgid "compiling '%s'"
 msgstr " '%s' をコンパイルしています "
 
 msgid "saving to file \"%s\" ..."
-msgstr " ファイル　\"%s\"　に保存しています… "
+msgstr " ファイル \"%s\" に保存しています... "
 
 msgid "done"
 msgstr " 完了 "
 
 msgid "'env' must be a top level environment"
-msgstr " 'env'　はトップレベルの環境でなければなりません "
+msgstr " 'env' はトップレベルの環境でなければなりません "
 
 msgid "input and output file names are the same"
 msgstr " 入力ファイルと出力ファイルの名前が同じです "
 
 msgid "empty input file; no output written"
-msgstr " 空の入力ファイルです。アウトプットは出力されません "
+msgstr " 空の入力ファイルです; アウトプットは出力されません "
 
 msgid "file '%s' does not exist"
-msgstr " ファイル %s は存在しません "
+msgstr " ファイル '%s' は存在しません "
 
 msgid "'%s' is not a valid compiler option"
-msgstr " '%s'は有効なコンパイルオプションではありません "
+msgstr " '%s' は有効なコンパイルオプションではありません "
 
 msgid "function is not compiled"
 msgstr " 関数はコンパイルされません "

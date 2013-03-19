@@ -6,33 +6,34 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-01 08:55+0100\n"
-"PO-Revision-Date: 2011-03-25 14:54+0900 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2013-03-07 08:36+0000 \n"
+"PO-Revision-Date: 2013-03-01 04:12+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=utf-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
-"X-Generator: Pootle 1.1.0 \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 #: class_support.c:32
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
 msgstr ""
-" 'externalptr' オブジェクトに対する初期化用に C ルーティンを呼び出しています "
+" 'externalptr' オブジェクトを初期化する C ルーティンを呼び出しています "
 
 #: do_substitute_direct.c:41
 msgid "invalid list for substitution"
-msgstr " 代入するには不正なリスト "
+msgstr " 代入するリストが不正です "
 
 #: methods_list_dispatch.c:148
 msgid ""
 "could not find the skeleton calls for 'methods' (package detached?): expect "
 "very bad things to happen"
 msgstr ""
-" 'methods' に対するスケルトン呼び出しを見付けられませんでした(パッケージが切"
-"り離された？): 非常にまずいことが起きているようなvery bad things to happen "
+" 'methods' に対するスケルトンコールを見付けられませんでした (パッケージが "
+"detach された？): 非常にまずいことが起きるかもしれません "
 
 #: methods_list_dispatch.c:214
 #, c-format
@@ -40,19 +41,19 @@ msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
 "for function '%s'"
 msgstr ""
-" クラス \"%s\" のオブジェクト(関数 '%s' に対するメソッドリストとして使われる)"
-"中に \"allMethods\" スロットが見付かりませんでした "
+" 関数 '%s' のメソッドリストとして使われるクラス \"%s\" のオブジェクト中に "
+"\"allMethods\" スロットが見付かりませんでした "
 
 #: methods_list_dispatch.c:433
 #, c-format
 msgid "no generic function definition found for '%s'"
-msgstr " '%s' に対する総称的な関数定義はありません "
+msgstr " '%s' に対する総称的関数は定義されていません "
 
 #: methods_list_dispatch.c:436
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "no generic function definition found for '%s' in the supplied environment"
-msgstr " 与えられた環境中には '%s' に対する総称的な関数定義はありません  "
+msgstr " 与えられた環境中では '%s' に対する総称的関数は定義されていません "
 
 #: methods_list_dispatch.c:471
 #, c-format
@@ -60,17 +61,18 @@ msgid ""
 "invalid generic function object for method selection for function '%s': "
 "expected a function or a primitive, got an object of class \"%s\""
 msgstr ""
-" 関数 '%s' へのメソッド選択に対する不正な総称的関数オブジェクト：関数かプリミ"
+" 関数 '%s' のメソッド選択に対する不正な総称的関数オブジェクト: 関数かプリミ"
 "ティブを期待しましたが、クラス \"%s\" のオブジェクトを得ました "
 
 #: methods_list_dispatch.c:486
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
-msgstr " この呼び出しでは '%s' に対する直接的または継承メソッドはありません  "
+msgstr ""
+" この呼び出しでは 関数 '%s' に対する直接的または継承メソッドはありません "
 
 #: methods_list_dispatch.c:512 methods_list_dispatch.c:1040
 msgid "invalid object (non-function) used as method"
-msgstr " 不正なオブジェクト(非関数)がメソッドとして使われました "
+msgstr " (関数ではない) 不正なオブジェクトがメソッドとして使われました "
 
 #: methods_list_dispatch.c:533
 #, c-format
@@ -83,8 +85,8 @@ msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
 "a name, got an object of class \"%s\""
 msgstr ""
-" メソッド割り当て時、欠損引数に対する検査で不正なシンボルがありました：名前を"
-"期待しましたが、クラス \"%s\" のオブジェクトでした "
+" メソッド割り当て時、欠損引数のチェックで不正なシンボルがありました: 名前を期"
+"待しましたがクラス \"%s\" のオブジェクトでした "
 
 #: methods_list_dispatch.c:544
 msgid "use of NULL environment is defunct"
@@ -96,8 +98,8 @@ msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
 "dispatch: got an object of class \"%s\""
 msgstr ""
-" メソッド割り当て時、欠損引数 \"%s\" に対する検査で不正な環境がありました：ク"
-"ラス \"%s\" のオブジェクトでした "
+" メソッド割り当て時、欠損引数 '%s' に対するチェックで不正な環境がありました: "
+"クラス \"%s\" のオブジェクトでした "
 
 #: methods_list_dispatch.c:574
 #, c-format
@@ -105,8 +107,8 @@ msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
 "'argument' slot)"
 msgstr ""
-" クラス \"%s\" のオブジェクトが関数 '%s' に対するメソッドリストととして使われ"
-"ました('argument' スロットがありません) "
+" クラス \"%s\" のオブジェクトが関数 '%s' のメソッドリストととして使われまし"
+"た ('argument' スロットがありません) "
 
 #: methods_list_dispatch.c:585
 #, c-format
@@ -115,7 +117,7 @@ msgid ""
 "be used for methods dispatch"
 msgstr ""
 " (関数 '%s' に対するメソッドの選択時) '...' と関連する変数はメソッド割り当て"
-"には使えません  "
+"には使えません "
 
 #: methods_list_dispatch.c:588
 #, c-format
@@ -124,7 +126,7 @@ msgid ""
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
 " (関数 '%s' に対するメソッドの選択時) 割り当て用の 'environment' 引数は R 環"
-"境でなければなりません； クラス \"%s\" のオブジェクトでした  "
+"境でなければなりません; クラス \"%s\" のオブジェクトでした "
 
 #: methods_list_dispatch.c:602 methods_list_dispatch.c:614
 #: methods_list_dispatch.c:995
@@ -140,14 +142,14 @@ msgstr ""
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
-" 関数 '%s' に対するマッチするメソッド(引数 '%s' でクラス \"%s\" を持つ)はあり"
-"ませんでした "
+" 関数 '%s' に対するマッチするメソッド (引数 '%s' でクラス \"%s\" を持つ) はあ"
+"りませんでした "
 
 #: methods_list_dispatch.c:629
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
-msgstr " 既定メソッド無しの、メソッド選択時の関数 '%s' の再帰的使用です  "
+msgstr " 既定メソッド無しの、メソッド選択時の関数 '%s' の再帰的使用です "
 
 #: methods_list_dispatch.c:692
 msgid ""
@@ -160,7 +162,7 @@ msgstr ""
 #: methods_list_dispatch.c:705
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr " 'primitive' なメソッド '%s' の評価中にエラーが起きました "
+msgstr " 'primitive' なメソッド %s の評価中にエラーが起きました "
 
 #: methods_list_dispatch.c:797
 #, c-format
@@ -171,26 +173,26 @@ msgstr ""
 #: methods_list_dispatch.c:801
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
-msgstr " '%s' は空でない文字列でなければなりません；空の文字列でした "
+msgstr " '%s' は空でない文字列でなければなりません; 空の文字列でした "
 
 #: methods_list_dispatch.c:805
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
-" '%s' は単一の文字列でなければなりません(クラス \"%s\" のオブジェクトでした) "
+" '%s' は単一の文字列でなければなりません (クラス \"%s\" のオブジェクトでし"
+"た) "
 
 #: methods_list_dispatch.c:876
-#, fuzzy
 msgid "class should be either a character-string name or a class definition"
 msgstr " クラスは文字列の名前かクラス定義のどちらかでなければなりません "
 
 #: methods_list_dispatch.c:955
-#, fuzzy, c-format
+#, c-format
 msgid "failed to get the generic for the primitive \"%s\""
-msgstr " プリミティブな \"%s\" に対する総称(generic)を得るのに失敗しました "
+msgstr " プリミティブな \"%s\" に対する総称 (generic) を得るのに失敗しました "
 
 #: methods_list_dispatch.c:961
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""

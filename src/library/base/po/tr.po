@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 08:03+0000\n"
+"POT-Creation-Date: 2013-03-19 12:12+0000\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -612,7 +612,7 @@ msgstr "RNGçeşidinde geçersiz Normal tipi"
 msgid "'user_norm_rand' not in load table"
 msgstr "'user_norm_rand' yükleme tablosunda değil"
 
-#: src/main/RNG.c:516
+#: src/main/RNG.c:517
 msgid "supplied seed is not a valid integer"
 msgstr "verilen başlangıç değeri geçerli bir tamsayı değil"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r-2-15-branch\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 08:03+0000\n"
+"POT-Creation-Date: 2013-03-19 12:12+0000\n"
 "PO-Revision-Date: 2011-11-29 21:34+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -596,7 +596,7 @@ msgstr "ugyldig plottype '%c'"
 msgid "'user_norm_rand' not in load table"
 msgstr ""
 
-#: src/main/RNG.c:516
+#: src/main/RNG.c:517
 msgid "supplied seed is not a valid integer"
 msgstr ""
 

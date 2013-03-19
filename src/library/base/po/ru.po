@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 08:03+0000\n"
+"POT-Creation-Date: 2013-03-19 12:12+0000\n"
 "PO-Revision-Date: 2012-03-15 11:17-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -606,7 +606,7 @@ msgstr "у RNGkind неправильный Normal-тип"
 msgid "'user_norm_rand' not in load table"
 msgstr "'user_norm_rand' отсутствует в таблице загрузки"
 
-#: src/main/RNG.c:516
+#: src/main/RNG.c:517
 msgid "supplied seed is not a valid integer"
 msgstr "представленный 'seed' не является правильным целым числом"
 

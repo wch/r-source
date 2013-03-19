@@ -2,29 +2,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-16 08:17\n"
-"PO-Revision-Date: 2011-10-22 08:06+0900 \n"
-"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
+"POT-Creation-Date: 2013-03-07 08:36\n"
+"PO-Revision-Date: 2013-02-28 05:46+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"X-Generator: Pootle 2.0.5 \n"
 "Report- Msgid-Bugs-To: bugs@r-project.org \n"
 
 msgid "'a' is overridden by 'reg'"
-msgstr " 'a' は 'reg\" により無効にされます "
+msgstr " 'a' は 'reg' により無効にされます "
 
 msgid "only using the first two of %d regression coefficients"
-msgstr " %d 個の怪奇係数のうち最初の二つだけを使います "
+msgstr " %d 個の回帰係数のうち最初の二つだけを使います "
 
 msgid "'a' and 'b' are overridden by 'coef'"
 msgstr " 'a' と 'b' は 'coef' により置き換えられます "
 
 msgid "one of 'x1' and 'y1' must be given"
-msgstr " 'x1'と'y1'のどちらかは必要です "
+msgstr " 'x1' と 'y1' のどちらかは必要です "
 
 msgid "'x' must be a 2-d contingency table"
 msgstr " 'x' は二元分割表でなければなりません "
@@ -36,10 +36,10 @@ msgid "at least one entry of 'x' must be positive"
 msgstr " 'x' の少なくとも一つの項目は正値でなければなりません "
 
 msgid "incorrect 'col': must be length 2"
-msgstr " 誤った 'col'：長さは2でなければなりません "
+msgstr " 誤った 'col': 長さは 2 でなければなりません "
 
 msgid "only for 1-D table"
-msgstr " １次元のテーブル専用です "
+msgstr " 1 次元のテーブル専用です "
 
 msgid "'side' must be in {1:4}"
 msgstr " 'side' は範囲 {1:4} 中になければなりません "
@@ -80,9 +80,8 @@ msgstr " 最初の引数が無効です "
 msgid "'formula' missing or incorrect"
 msgstr " 'formula' が無いか不正確です "
 
-#, fuzzy
 msgid "'at' must have same length as 'z$n', i.e. %d"
-msgstr " 'at' は 'z$n' と同じ長さを持たなければなりません。すなわち  "
+msgstr " 'at' は 'z$n' と同じ長さ (すなわち %d) を持たなければなりません "
 
 msgid "invalid boxplot widths"
 msgstr " boxplot の幅が無効です "
@@ -100,7 +99,7 @@ msgstr " 従属変数は因子でなければなりません "
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr ""
-" y 軸のメモリは累積確率のスケールです、 'ylim' は区間 [0,1] 中になければなり"
+" y 軸のメモリは累積確率のスケールです、 'ylim' は区間 [0, 1] 中になければなり"
 "ません "
 
 msgid "no 'z' matrix specified"
@@ -122,7 +121,7 @@ msgid "'number' must be integer >= 1"
 msgstr " 'number' は 1 以上の整数でなければなりません "
 
 msgid "'overlap' must be < 1 (and typically >= 0)."
-msgstr " 'overlap' は 1 未満(そして典型的には非負)でなければなりません "
+msgstr " 'overlap' は 1 未満 (そして通常は非負) でなければなりません "
 
 msgid "invalid 'given.values'"
 msgstr " 'given.values' が無効です "
@@ -130,9 +129,8 @@ msgstr " 'given.values' が無効です "
 msgid "rows * columns too small"
 msgstr " 行数 * 列数が小さすぎます "
 
-#, fuzzy
 msgid "Missing rows: %s"
-msgstr " 行が欠けています "
+msgstr " 行が欠けています: %s "
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr " 'expr' は '%s' を含む関数、呼び出しまたは表現式でなければなりません "
@@ -144,7 +142,7 @@ msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr " log=\"x\" ならば 'from' と 'to' は正値でなければなりません "
 
 msgid "'expr' did not evaluate to an object of length 'n'"
-msgstr " 'expr' は長さ'n'のオブジェクトを評価しませんでした "
+msgstr " 'expr' は長さ 'n' のオブジェクトを評価しませんでした "
 
 msgid "wrong method"
 msgstr " 間違ったメソッドです "
@@ -181,14 +179,13 @@ msgid "incorrect 'margin' specification"
 msgstr " 不正確な 'margin' の指定です "
 
 msgid "incorrect geometry specification"
-msgstr " 不正確な寸法(geometry)の指定です "
+msgstr " 不正確な寸法 (geometry) の指定です "
 
 msgid "'x' must be numeric"
 msgstr " 'x' は数値でなければなりません "
 
-#, fuzzy
 msgid "invalid length(x)"
-msgstr " 無効な 'log' です "
+msgstr " 無効な length(x) です "
 
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr " 'breaks' が指定された時は、'nclass' は使用されません "
@@ -202,13 +199,11 @@ msgstr " 未知の 'breaks' アルゴリズムです "
 msgid "invalid number of 'breaks'"
 msgstr " 'breaks' の数が無効です "
 
-#, fuzzy
 msgid "hist.default: pretty() error, breaks=%s"
-msgstr " hist.default: pretty() の間違いです。分割点 = "
+msgstr " hist.default: pretty() の間違いです。分割点 = %s "
 
-#, fuzzy
 msgid "invalid length(breaks)"
-msgstr " 無効な座標長です "
+msgstr " 無効な length(breaks) です "
 
 msgid "'breaks' are not strictly increasing"
 msgstr " 'breaks' が狭義増加ではありません "
@@ -221,9 +216,8 @@ msgstr ""
 " 'x' の一部分が数えられていません。多分 'breaks' が 'x' の範囲全体をカバーし"
 "ていません "
 
-#, fuzzy
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
-msgstr " プロットの領域が誤まりです。むしろ freq=FALSE を使用して下さい "
+msgstr " プロットの領域が誤まりです。むしろ 'freq = FALSE' を使用して下さい "
 
 msgid "'x' is wrongly structured"
 msgstr " 'x' は不正な構造を持ちます "
@@ -243,41 +237,37 @@ msgstr " 無効な z の限界です "
 msgid "must have one more break than colour"
 msgstr " 分割点の数は色の数よりも一つ多くなければなりません "
 
-#, fuzzy
 msgid "'breaks' must all be finite"
-msgstr " 分割点はすべて有限でなければなりません "
+msgstr " 'breaks' はすべて有限でなければなりません "
 
 msgid "unsorted 'breaks' will be sorted before use"
-msgstr ""
+msgstr " 未ソートの 'breaks' は実行前にソートされます "
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr " z の次元が length(x)(-1) × length(y)(-1) ではありません "
 
-#, fuzzy
 msgid "%s can only be used with a regular grid"
-msgstr " useRaster=TRUE は規則的なグリッドと共にのみ使用することができます "
+msgstr " %s は規則的なグリッドと共にのみ使用することができます "
 
 msgid "integer colors must be non-negative"
-msgstr ""
+msgstr " 整数によりパレットから色を指定する場合、正の整数を指定してください "
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 " 'respect' は 'mat' と同じ次元の、論理値または行列でなければなりません "
 
-#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
 "to each of the values {1 ... %d}"
 msgstr ""
-" レイアウト行列は値 {1..n} の各値を、少なくとも一回参照 \n"
-" しなければなりません; ここで n = "
+" レイアウト行列は値 {1 ... %d} の各値を、少なくとも一回参照 \n"
+" しなければなりません "
 
-#, fuzzy
 msgid "invalid 'title'"
-msgstr " 無効なタイトルです "
+msgstr " 無効な 'title' です "
 
 msgid "'legend' is of length 0"
-msgstr " 'legend' が長さがゼロです "
+msgstr " 'legend' が長さが 0 です "
 
 msgid "invalid coordinate lengths"
 msgstr " 無効な座標長です "
@@ -285,9 +275,8 @@ msgstr " 無効な座標長です "
 msgid "'text.width' must be numeric, >= 0"
 msgstr " 'text.width' は非負の数値でなければなりません "
 
-#, fuzzy
 msgid "horizontal specification overrides: Number of columns := %d"
-msgstr " 水平方向の指定は無効とされました: 列の数 := "
+msgstr " 水平方向の指定は無効とされました: 列の数 := %d "
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr " 'merge = TRUE' はいかなる線分も描かれないときは効果がありません "
@@ -302,19 +291,19 @@ msgid "'x' and 'y' must have same number of rows"
 msgstr " 'x' と 'y' は同じ数の行を持たなければなりません "
 
 msgid "'x' and 'y' must have only 1 or the same number of columns"
-msgstr " 'x' と 'y' は一つだけか、または同じ数の列を持たなければなりません "
+msgstr " 'x' と 'y' は 1 つだけか、または同じ数の列を持たなければなりません "
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr " 既定の'pch'は列数よりも少ないため繰り返されます "
+msgstr " 既定の 'pch' は列数よりも少ないため繰り返されます "
 
 msgid "missing values in contingency table"
 msgstr " 分割表中に欠測値があります "
 
 msgid "'x' must not have 0 dimensionality"
-msgstr " 'x' の次元はゼロであってはなりません "
+msgstr " 'x' の次元は 0 であってはなりません "
 
 msgid "invalid 'shade' specification"
-msgstr " 無効な陰影('shade')の指定です "
+msgstr " 無効な陰影 ('shade') の指定です "
 
 msgid "length of 'sort' does not conform to 'dim(x)'"
 msgstr " 'sort' の長さは 'dim(x)' に合致しません "
@@ -389,13 +378,14 @@ msgid "'figs' must specify at least one screen"
 msgstr " 'figs' は少なくとも一つのスクリーンを指定しなければなりません "
 
 msgid "'nrpoints' should be numeric scalar with value >= 0."
-msgstr " 'nrpoints'は0以上の数値のスカラーでなければなりません "
+msgstr " 'nrpoints' は 0 以上の数値のスカラーでなければなりません "
 
 msgid "a 2-way table has to be specified"
-msgstr " 二元分類表を指定しなければなりません "
+msgstr " 二元分割表を指定しなければなりません "
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
-msgstr " x 軸の目盛は累積確率です、'xlim' は区間 [0,1] 中になければなりません "
+msgstr ""
+" x 軸の目盛は累積確率です、'xlim' は区間 [0, 1] 中になければなりません "
 
 msgid "'x' must be a matrix or a data frame"
 msgstr " 'x' は行列かデータフレームでなければなりません "
@@ -403,9 +393,8 @@ msgstr " 'x' は行列かデータフレームでなければなりません "
 msgid "data in 'x' must be numeric"
 msgstr " 'x' 中のデータは数値でなければなりません "
 
-#, fuzzy
 msgid "'nrow * ncol' is less than the number of observations"
-msgstr " nrow * ncol は観察値の数未満でなければなりません "
+msgstr " 'nrow * ncol' は観測値の数未満でなければなりません "
 
 msgid "labels do not make sense for a single location"
 msgstr " ラベルは位置が一つだけのときは無意味です "
@@ -429,10 +418,10 @@ msgid "invalid plotting method"
 msgstr " 無効な plot メソッドです "
 
 msgid "'at' must have length equal to the number %d of groups"
-msgstr " 'at' はグループ数 %d of と同じ長さを持たなければなりません "
+msgstr " 'at' はグループ数 %d と同じ長さを持たなければなりません "
 
 msgid "formula missing or incorrect"
-msgstr " formulaが無いか不正確です "
+msgstr " formula が無いか不正確です "
 
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr " 'number' は 'x' および 'y' と同じ長さでなければなりません "
@@ -440,17 +429,14 @@ msgstr " 'number' は 'x' および 'y' と同じ長さでなければなりま�
 msgid "exactly one symbol type must be specified"
 msgstr " 丁度一つのシンボルタイプを指定しなければなりません "
 
-#, fuzzy
 msgid "x log scale:  xinch() is nonsense"
-msgstr " x は対数スケール: xinch() はナンセンスです "
+msgstr " x は対数スケールです: xinch() は意味をなしていません "
 
-#, fuzzy
 msgid "y log scale:  yinch() is nonsense"
-msgstr " y は対数スケール: yinch() はナンセンスです "
+msgstr " y は対数スケールです: yinch() は意味をなしていません "
 
-#, fuzzy
 msgid "log scale:  xyinch() is nonsense"
-msgstr " 対数スケール: xyinch() はナンセンスです "
+msgstr " x または y が対数スケールです: xyinch() は意味をなしていません "
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
@@ -460,10 +446,9 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] " 引数 %s は使用されていません "
 
-#, fuzzy
 msgid "extra argument %s will be disregarded"
 msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] " 余分な引数(複数) %s は無視されます "
+msgstr[0] " 余分な引数 %s は無視されます "
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr ""

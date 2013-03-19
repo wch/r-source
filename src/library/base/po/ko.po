@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 08:03+0000\n"
+"POT-Creation-Date: 2013-03-19 12:12+0000\n"
 "PO-Revision-Date: 2013-03-10 12:09-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -695,7 +695,7 @@ msgid "'user_norm_rand' not in load table"
 msgstr "'user_norm_rand'은 로드테이블에 없습니다"
 
 # CHL20130305
-#: src/main/RNG.c:516
+#: src/main/RNG.c:517
 msgid "supplied seed is not a valid integer"
 msgstr "제공된 시드는 유효하지 않은 정수입니다"
 

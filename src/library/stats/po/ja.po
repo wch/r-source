@@ -6,36 +6,37 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
-"PO-Revision-Date: 2010-09-29 20:43+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2013-03-07 08:37+0000 \n"
+"PO-Revision-Date: 2013-03-01 05:19+0200 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
-"Language: \n"
+"Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
-"X-Generator: Pootle 1.1.0 \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 2.0.5 \n"
 
 #: Srunmed.c:55
 msgid "bandwidth/span of running medians is larger than n"
-msgstr " 移動中央値のバンド幅・バンド範囲(span)が n より大きくなっています "
+msgstr " 移動中央値のバンド幅・バンド範囲 (span) が n より大きくなっています "
 
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
-msgstr " qansari() 中で確率が [0,1] の範囲外です "
+msgstr " qansari() 中で確率が [0, 1] の範囲外です "
 
 #: approx.c:101
 msgid "approx(): invalid f value"
-msgstr " approx()：不正な f 値 "
+msgstr " approx(): 不正な f 値 "
 
 #: approx.c:104
 msgid "approx(): invalid interpolation method"
-msgstr " approx()：不正な補間法 "
+msgstr " approx(): 不正な補間法 "
 
 #: approx.c:110
 msgid "approx(): attempted to interpolate NA values"
-msgstr " approx()：NA値を補間しようとしました "
+msgstr " approx(): NA 値を補間しようとしました "
 
 #: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
@@ -68,7 +69,7 @@ msgstr " cov/cor 関数に欠損した観測値があります "
 
 #: cov.c:631
 msgid "'x' is NULL"
-msgstr " 'x' が空です "
+msgstr " 'x' が NULL です "
 
 #: cov.c:650 cov.c:656
 msgid "incompatible dimensions"
@@ -80,7 +81,7 @@ msgstr " 完全な要素のペアがありません "
 
 #: cov.c:688
 msgid "invalid 'use' (computational method)"
-msgstr " 'use' (計算法)が不正です "
+msgstr " 'use' (計算法) が不正です "
 
 #: cov.c:691
 msgid "'x' is empty"
@@ -88,7 +89,7 @@ msgstr " 'x' が空です "
 
 #: cov.c:785
 msgid "the standard deviation is zero"
-msgstr " 標準偏差が0です "
+msgstr " 標準偏差が 0 です "
 
 #: deriv.c:119
 msgid "invalid form in unary minus check"
@@ -110,7 +111,7 @@ msgstr " 最初の要素だけが変数名として使われました "
 #: deriv.c:648
 #, c-format
 msgid "invalid expression in '%s'"
-msgstr " \"%s\" 中の式が不正です "
+msgstr " '%s' 中の式が不正です "
 
 #: deriv.c:924 model.c:91
 msgid "invalid variable names"
@@ -122,7 +123,7 @@ msgstr " タグが不正です "
 
 #: distance.c:153
 msgid "treating non-finite values as NA"
-msgstr " 有限でない値をNAとして取り扱います "
+msgstr " 有限でない値を NA として取り扱います "
 
 #: distance.c:226
 msgid "distance(): invalid p"
@@ -148,7 +149,7 @@ msgstr " 値 %g は範囲 (0, 1) 外です "
 #: family.c:65 family.c:79 family.c:97
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
-msgstr " 引数 %s は空でない数値ベクトルでなければなりません  "
+msgstr " 引数 %s は空でない数値ベクトルでなければなりません "
 
 #: family.c:130 family.c:133
 #, c-format
@@ -165,7 +166,7 @@ msgstr " fft の因数分解エラーです "
 
 #: fourier.c:127
 msgid "vector-valued (multivariate) series required"
-msgstr " ベクトル値（多変量）の系列が必要です "
+msgstr " ベクトル値 (多変量) の系列が必要です "
 
 #: fourier.c:200
 msgid "no factors"
@@ -173,7 +174,7 @@ msgstr " 因子がありません "
 
 #: fourier.c:203
 msgid "invalid factors"
-msgstr " 因子（factor）が不正です "
+msgstr " 因子 (factor) が不正です "
 
 #: ksmooth.c:67
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
@@ -181,32 +182,31 @@ msgstr " sm.method=\"spline\" では 2500 行までしか扱えません "
 
 #: loessc.c:233
 msgid "span is too small"
-msgstr " 範囲(span)が小さすぎます "
+msgstr " 範囲 (span) が小さすぎます "
 
 #: loglin.c:369
 msgid "this should not happen"
-msgstr ""
+msgstr " これは起こるべきではありません "
 
 #: loglin.c:371
 msgid "algorithm did not converge"
-msgstr ""
+msgstr " アルゴリズムが収束しませんでした "
 
 #: loglin.c:373
 msgid "incorrect specification of 'table' or 'start'"
-msgstr ""
+msgstr " 'table' または 'start' の指定が誤っています "
 
 #: lowess.c:292
 msgid "'f' must be finite and > 0"
-msgstr ""
+msgstr " 'f' は有限かつ正数でなくてはなりません "
 
 #: lowess.c:295
-#, fuzzy
 msgid "'iter' must be finite and >= 0"
-msgstr " 'maxiter' は正数でなくてはなりません "
+msgstr " 'iter' は有限かつ 0 以上でなくてはなりません "
 
 #: lowess.c:298
 msgid "'delta' must be finite and > 0"
-msgstr ""
+msgstr " 'delta' は有限かつ正数でなくてはなりません "
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
@@ -253,7 +253,7 @@ msgstr " 型 (%s) は変数 '%s' に対しては不正です "
 #: model.c:153
 #, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr " 変数('%s'に基づく)の長さが異なります "
+msgstr " 変数 ('%s' に基づく) の長さが異なります "
 
 #: model.c:207
 msgid "invalid result from na.action"
@@ -275,7 +275,7 @@ msgstr " ケースの数が幾つあるか分かりません "
 #: model.c:408
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
-msgstr " 変数(%d変数に基づく)の長さが異なります "
+msgstr " 変数 (%d 変数に基づく) の長さが異なります "
 
 #: model.c:412 model.c:419
 #, c-format
@@ -300,7 +300,7 @@ msgstr " 行列は %.0g 行を必要とするかもしれません "
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
-" model.matrix 中の項 %d に問題があります：いかなる列も指定されていません "
+" model.matrix 中の項 %d に問題があります: いかなる列も指定されていません "
 
 #: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
 msgid "term names will be truncated"
@@ -354,7 +354,7 @@ msgstr " 引数は有効なモデルではありません "
 
 #: model.c:1664
 msgid "'specials' must be NULL or a character vector"
-msgstr " 'specials' はNULLまたは文字ベクタでなくてはなりません "
+msgstr " 'specials' は NULL または文字ベクタでなくてはなりません "
 
 #: model.c:1676
 msgid "'data' argument is of the wrong type"
@@ -366,15 +366,15 @@ msgstr " '.' が式中にありますが, 'data' 引数がありません "
 
 #: monoSpl.c:34
 msgid "n must be at least two"
-msgstr " n は最低でも２でなければなりません "
+msgstr " n は最低でも 2 でなければなりません "
 
 #: monoSpl.c:67
 msgid "Argument m must be numeric"
-msgstr " 引数 ｍ は数値でなければなりません  "
+msgstr " 引数 m は数値でなければなりません "
 
 #: monoSpl.c:70
 msgid "length(m) must be at least two"
-msgstr " length(m) は少なくとも２でなければなりません "
+msgstr " length(m) は少なくとも 2 でなければなりません "
 
 #: monoSpl.c:72
 msgid "Argument Sx must be numeric vector one shorter than m[]"
@@ -422,7 +422,7 @@ msgstr " NULL 環境の使用は廃止されました "
 
 #: nls.c:294
 msgid "'rho' should be an environment"
-msgstr " 'rho' は環境(environment)でなければなりません "
+msgstr " 'rho' は環境 (environment) でなければなりません "
 
 #: nls.c:297
 msgid "'dir' is not a numeric vector of the correct length"
@@ -449,12 +449,12 @@ msgstr " optim により有限でない値が与えられました "
 #: optim.c:80
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
-msgstr " optim の目的関数が一つではなくて %d 個の結果を評価しています "
+msgstr " optim の目的関数が 1 つではなくて %d 個の結果を評価しています "
 
 #: optim.c:107
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
-msgstr " optim 中で勾配は長さ %d (長さ %d ではなく)で評価されました "
+msgstr " optim 中で勾配は長さ %d (長さ %d ではなく) で評価されました "
 
 #: optim.c:185 optim.c:389
 msgid "'fn' is not a function"
@@ -521,7 +521,7 @@ msgstr " 'zeroin' における関数値が不正です "
 #: optimize.c:359 optimize.c:364
 #, c-format
 msgid "NA value for '%s' is not allowed"
-msgstr " '%s' に対してNAは認められません "
+msgstr " '%s' に対して NA は認められません "
 
 #: optimize.c:374
 msgid "'maxiter' must be positive"
@@ -601,12 +601,12 @@ msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr ""
-" *** nlm 関数から未知のエラーメッセージ (msg = %d)  \n"
+" *** nlm() 関数から未知のエラーメッセージ (msg = %d) \n"
 " *** これはあり得ないことです！ "
 
 #: optimize.c:661
 msgid "Relative gradient close to zero.\n"
-msgstr " 相対勾配が0に近くなっています \n"
+msgstr " 相対勾配が 0 に近くなっています \n"
 
 #: optimize.c:662 optimize.c:666
 msgid "Current iterate is probably solution.\n"
@@ -633,7 +633,7 @@ msgstr ""
 
 #: optimize.c:675
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
-msgstr " 繰り返し数が上限を超えました．アルゴリズムは破綻しました \n"
+msgstr " 繰り返し数が上限を超えました。アルゴリズムは破綻しました。 \n"
 
 #: optimize.c:678
 msgid ""
@@ -643,7 +643,7 @@ msgid ""
 "from above in some direction,\n"
 "or stepmx is too small.\n"
 msgstr ""
-" 最大ステップ幅を５回連続して超過しました。 \n"
+" 最大ステップ幅を 5 回連続して超過しました。 \n"
 " 関数は下に非有界であるか、 \n"
 " ある方向で上から漸近的に有限値に近づいているか、 \n"
 " または stepmx が小さすぎるか、です \n"
@@ -696,11 +696,11 @@ msgstr " ヘッシアン関数は次数 %d の正方数値行列を返さなけ�
 
 #: port.c:378
 msgid "'rho' must be an environment"
-msgstr " 'rho' は環境(environment)でなければなりません "
+msgstr " 'rho' は環境 (environment) でなければなりません "
 
 #: port.c:380 port.c:537
 msgid "'d' must be a nonempty numeric vector"
-msgstr " `d' は空でない数値ベクトルでなければなりません "
+msgstr " 'd' は空でない数値ベクトルでなければなりません "
 
 #: port.c:382
 msgid "When Hessian defined must also have gradient defined"
@@ -709,11 +709,11 @@ msgstr " ヘッシアンを定義した際は、グラディエントも定義�
 #: port.c:385
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr " 環境 `rho' は長さが %d の数値ベクトル `.par' を含まねばなりません "
+msgstr " 環境 'rho' は長さが %d の数値ベクトル '.par' を含まねばなりません "
 
 #: port.c:399
 msgid "'lower' and 'upper' must be numeric vectors"
-msgstr " lower' と 'upper' は数値ベクトルでなければなりません "
+msgstr " 'lower' と 'upper' は数値ベクトルでなければなりません "
 
 #: port.c:451
 msgid "'getElement' applies only to named lists"
@@ -727,7 +727,7 @@ msgstr " %s$%s() が見つかりません "
 #: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
-msgstr " 'gradient' は次元 (%d,%d) の数値行列でなければなりません "
+msgstr " 'gradient' は次元 (%d, %d) の数値行列でなければなりません "
 
 #: port.c:506
 #, c-format
@@ -745,25 +745,25 @@ msgstr " m はリストでなければなりません "
 
 #: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
-msgstr " lowerb と upperb は数値ベクトルでなければなりません "
+msgstr " 'lowerb' と 'upperb' は数値ベクトルでなければなりません "
 
 #: rWishart.c:51
 msgid "inconsistent degrees of freedom and dimension"
-msgstr ""
+msgstr " 自由度と次元が矛盾しています "
 
 #: rWishart.c:84
 msgid "'scal' must be a square, real matrix"
-msgstr ""
+msgstr " 'scal' は正方な実行列である必要があります "
 
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"
-msgstr ""
+msgstr " 行列 'scal' が正定値行列ではありません "
 
 #: random.c:66 random.c:70 random.c:75 random.c:80 random.c:161 random.c:167
 #: random.c:172 random.c:177 random.c:240 random.c:245 random.c:250
 #: random.c:264 random.c:355
 msgid "invalid arguments"
-msgstr " 引数(複数)が不正です "
+msgstr " 引数 (複数) が不正です "
 
 #: random.c:95 random.c:121 random.c:194 random.c:222 random.c:270
 #: random.c:289
@@ -782,11 +782,13 @@ msgstr " 二番目の引数 'size' が不正です "
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""
+" rcont2 [%d, %d]: exp がアンダーフローして 0 になりました; アルゴリズムが失敗"
+"しました "
 
 #: smooth.c:101
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
-msgstr " 3点移動中央値計算の終了ルールが不正です: %d "
+msgstr " 3 点移動中央値計算の終了ルールが不正です: %d "
 
 #: starma.c:366
 #, c-format

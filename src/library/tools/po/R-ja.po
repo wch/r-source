@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37\n"
-"PO-Revision-Date: 2012-02-26 14:22+0200 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2013-03-07 08:37 \n"
+"PO-Revision-Date: 2013-03-19 13:39+0200 \n"
+"Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: Pootle 2.0.5 \n"
 
 msgid "argument 'package' must be of length 1"
-msgstr " 引数 'package' は 長さ 1 でなければならない "
+msgstr " 引数 'package' は 長さ 1 でなければなりません "
 
 msgid "you must specify 'package' or 'dir'"
 msgstr " 'package' 又は 'dir' を指定する必要があります "
@@ -38,7 +38,7 @@ msgid "Undocumented S4 methods:"
 msgstr " ドキュメント化されてない S4 メソッド: "
 
 msgid "Prototyped non-primitives:"
-msgstr " プロトタイプ化された非プリミティブ： "
+msgstr " プロトタイプ化された非プリミティブ: "
 
 msgid "Undocumented %s:"
 msgstr " ドキュメント化されてない %s: "
@@ -49,14 +49,12 @@ msgstr " ディレクトリ '%s' は R コードを含んでいません "
 msgid "directory '%s' does not contain Rd objects"
 msgstr " ディレクトリ '%s' は Rd オブジェクトを含んでいません "
 
-#, fuzzy
 msgid ""
 "Functions or methods with usage in documentation object '%s' but not in code:"
 msgstr ""
 " ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはない関数もしく"
 "はメソッド: "
 
-#, fuzzy
 msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr ""
 " ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはないデータセッ"
@@ -69,13 +67,13 @@ msgid "Argument names in docs not in code:"
 msgstr " ドキュメント中にはあるがコード中には無い引数名: "
 
 msgid "Mismatches in argument names (first 3):"
-msgstr " 引数名のミスマッチ（最初の三つ）: "
+msgstr " 引数名のミスマッチ (最初の 3 つ): "
 
 msgid "Mismatches in argument names:"
 msgstr " 引数名のミスマッチ: "
 
 msgid "Mismatches in argument default values (first 3):"
-msgstr " 引数名既定値のミスマッチ（最初の三つ）: "
+msgstr " 引数名既定値のミスマッチ (最初の 3 つ): "
 
 msgid "Mismatches in argument default values:"
 msgstr " 引数名既定値のミスマッチ: "
@@ -90,7 +88,7 @@ msgid "Docs: %s"
 msgstr " ドキュメント: %s "
 
 msgid "S4 class codoc mismatches from documentation object '%s':"
-msgstr " S4 クラス codoc はドキュメントオブジェクト '%s' とマッチしません： "
+msgstr " S4 クラス codoc はドキュメントオブジェクト '%s' とマッチしません: "
 
 msgid "Slots for class '%s'"
 msgstr " クラス '%s' のためのスロット "
@@ -99,36 +97,33 @@ msgid "Data codoc mismatches from documentation object '%s':"
 msgstr " データ codoc はドキュメントオブジェクト '%s' とマッチしません: "
 
 msgid "Variables in data frame '%s'"
-msgstr " データ・フレーム '%s' 中の変数 "
+msgstr " データフレーム '%s' 中の変数 "
 
 msgid "Undocumented arguments in documentation object '%s'"
 msgstr " ドキュメントオブジェクト '%s' 中にドキュメントの無い引数 "
 
 msgid "Duplicated \\argument entries in documentation object '%s':"
-msgstr " ドキュメントオブジェクト '%s' 中に重複した \\argument 項目： "
+msgstr " ドキュメントオブジェクト '%s' 中に重複した \\argument 項目: "
 
 msgid "Documented arguments not in \\usage in documentation object '%s':"
 msgstr ""
 " ドキュメントオブジェクト '%s' 中の \\usage 中に存在しないドキュメントを持つ"
-"引数： "
+"引数: "
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr ""
-" ドキュメンテーションオブジェクト'%s' 中の\\alias がオブジェクト内の \\usage "
-"に存在しません: "
+" ドキュメンテーションオブジェクト '%s' 中の \\alias がオブジェクト内の "
+"\\usage に存在しません: "
 
 msgid "Assignments in \\usage in documentation object '%s':"
-msgstr " ドキュメントオブジェクト '%s' 中の \\usage 中の代入： "
+msgstr " ドキュメントオブジェクト '%s' 中の \\usage 中の代入: "
 
 msgid "Bad \\usage lines found in documentation object '%s':"
-msgstr ""
-" 不正な \\usage 行がドキュメントオブジェクト            '%s' 中に見つかりまし"
-"た: "
+msgstr " 不正な \\usage 行がドキュメントオブジェクト '%s' 中に見つかりました: "
 
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr ""
-" ドキュメンテーション・オブジェクト '%s' 中にフルネームで示されたS3メソッ"
-"ド： "
+" ドキュメンテーションオブジェクト '%s' 中にフルネームで示された S3 メソッド: "
 
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr " 'package', 'dir' もしくは 'file' を指定しなければなりません "
@@ -156,7 +151,7 @@ msgid "parse error in examples from file '%s':"
 msgstr " ファイル '%s' の例中に構文解析エラー : "
 
 msgid "File '%s':"
-msgstr " ファイル '%s'： "
+msgstr " ファイル '%s': "
 
 msgid "found T/F in %s"
 msgstr " %s 中に T/F が見つかりました "
@@ -165,13 +160,12 @@ msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 " パッケージ名 '%s' は無効のようです。代わりにディレクトリ名 '%s' を使います "
 
-#, fuzzy
 msgid ""
 "Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
 "Depends/Suggests/Imports entries."
 msgstr ""
-" ビニエット依存性(\\VignetteDepends{} 項目)は　DESCRIPTION の Depends/"
-"Suggests/Imports 項目に含まれなければなりません "
+" ビニエット依存性(%s 項目)は　DESCRIPTION の Depends/Suggests/Imports 項目に"
+"含まれなければなりません "
 
 msgid "Malformed package name"
 msgstr " 奇矯なパッケージ名です "
@@ -180,102 +174,101 @@ msgid "Unknown encoding"
 msgstr " 未知のエンコードです "
 
 msgid "Fields with non-ASCII tags:"
-msgstr " ASCIIタグのないフィールドです： "
+msgstr " ASCII タグのないフィールドです: "
 
 msgid "All field tags must be ASCII."
-msgstr " 全てのフィールドタグはASCIIでなければなりません "
+msgstr " 全てのフィールドタグは ASCII でなければなりません "
 
 msgid "Fields with non-ASCII values:"
-msgstr " ASCII値でないフィールドです： "
+msgstr " ASCII 値でないフィールドです: "
 
 msgid "These fields must have ASCII values."
-msgstr " これらのフィールドはASCII値でなければなりません "
+msgstr " これらのフィールドは ASCII 値でなければなりません "
 
 msgid "Required fields missing:"
-msgstr " 必要なフィールドは見当たりません． "
+msgstr " 必要なフィールドは見当たりません: "
 
 msgid "Malformed package version."
-msgstr " 不正なパッケージのバージョンです． "
+msgstr " 不正なパッケージのバージョンです。 "
 
 msgid "Malformed maintainer field."
-msgstr " 不正な　maintainer field　です． "
+msgstr " 不正な maintainer 欄です。 "
 
 msgid "Malformed Depends or Suggests or Imports or Enhances field."
-msgstr " 不備な Depends, Suggests, Imports, Enhanced 欄。 "
+msgstr " 不正な Depends, Suggests, Imports, Enhanced 欄です。 "
 
 msgid "Offending entries:"
-msgstr " 好ましくないエントリー： "
+msgstr " 好ましくないエントリー: "
 
 msgid ""
 "Entries must be names of packages optionally followed by '<=' or '>=', white "
 "space, and a valid version number in parentheses."
 msgstr ""
-" 項目はパッケージの名前(オプションで '<=' か '>=', 空白、そして括弧にはさまれ"
-"た適正なバージョン番号、が続く)でなければなりません. "
+" 項目はパッケージの名前 (オプションで '<=' か '>='、空白、そして括弧にはさま"
+"れた適正なバージョン番号、が続く) でなければなりません. "
 
 msgid "Entries with infeasible comparison operator:"
-msgstr " 実行不可能な比較演算子によるエントリ： "
+msgstr " 実行不可能な比較演算子によるエントリ: "
 
 msgid "Only operators '<=' and '>=' are possible."
-msgstr " 演算子 '<=' 及び '>=' のみ有効です. "
+msgstr " 演算子 '<=' 及び '>=' のみ有効です。 "
 
 msgid "Entries with infeasible version number:"
-msgstr " 実行不可能なバージョン番号がついたエントリーです： "
+msgstr " 実行不可能なバージョン番号がついたエントリーです: "
 
 msgid ""
 "Version numbers must be sequences of at least two non-negative integers, "
 "separated by single '.' or '-'."
 msgstr ""
-" バージョン番号は少なくとも2つの非負の整数列で，'.' または '-' で区切られてい"
-"なければいけません． "
+" バージョン番号は少なくとも 2 つの非負の整数列で、'.' または '-' で区切られて"
+"いなければいけません。 "
 
 msgid "Invalid Priority field."
-msgstr " 不正な優先フィールドです． "
+msgstr " 不正な優先フィールドです。 "
 
 msgid ""
 "Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
 "already be known to R."
 msgstr ""
-" パッケージが必要とする優先順位 'base' 'recommended' 'defunct-base' は、Rが既"
-"に知らなければならない. "
+" パッケージが必要とする優先順位 'base' 'recommended' 'defunct-base' は、R が"
+"既に知らなければならない。 "
 
 msgid ""
 "See the information on DESCRIPTION files in section 'Creating R packages' of "
 "the 'Writing R Extensions' manual."
 msgstr ""
-" マニュアル'Writing R Extensions' の章'Creating R packages'中のDESCRIPTION"
-"ファイルにある情報を参照してください． "
+" マニュアル 'Writing R Extensions' の章 'Creating R packages' 中の "
+"DESCRIPTION ファイルにある情報を参照してください。 "
 
 msgid "Malformed Authors@R field:"
-msgstr " 不正なAuthors@Rフィールドです。 "
+msgstr " 不正な Authors@R フィールドです: "
 
 msgid "Cannot extract Author field from Authors@R field:"
-msgstr "Authors@RフィールドからAuthorフィールドを抽出できません: "
+msgstr " Authors@R フィールドから Author フィールドを抽出できません: "
 
 msgid "Authors@R field gives no person with author role."
-msgstr "Authors@Rフィールドに役割が明示された人がいません "
+msgstr " Authors@R フィールドに役割が明示された人がいません "
 
-#, fuzzy
 msgid "Authors@R field gives persons with no valid roles:"
-msgstr "Authors@Rフィールドに役割が明示された人がいません "
+msgstr " Authors@Rフィールドに役割が明示されていない人がいます "
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
-msgstr "Authors@RフィールドからMaintainerフィールドを抽出できません: "
+msgstr " Authors@R フィールドから Maintainer フィールドを抽出できません: "
 
 msgid "Authors@R field gives no person with maintainer role and email address."
-msgstr "Authors@Rにメインテナの役割とe-mailアドレスを持った人がいません。 "
+msgstr " Authors@R にメインテナの役割と e-mail アドレスを持った人がいません。 "
 
 msgid "Encoding '%s' is not portable"
 msgstr " エンコーディング '%s' は移植出来ません "
 
 msgid "Unknown encoding with non-ASCII data"
-msgstr " 非ASCIIデータをもつ未知のエンコーディングです "
+msgstr " 非 ASCII データをもつ未知のエンコーディングです "
 
 msgid "Non-standard license specification:"
 msgstr " 標準ではないライセンス指定: "
 
 msgid "Standardizable: %s"
-msgstr " 標準化可能：%s "
+msgstr " 標準化可能: %s "
 
 msgid "Standardized license specification:"
 msgstr " 標準ではないライセンス指定: "
@@ -284,7 +277,7 @@ msgid "Invalid license file pointers: %s"
 msgstr " 不正なライセンスファイルのポインタ: %s "
 
 msgid "Components with restrictions not permitted:"
-msgstr ""
+msgstr " 制約付きのコンポネントは許されていません: "
 
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable フラグ: "
@@ -293,10 +286,9 @@ msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
 msgstr ""
-" パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないので xrefs"
-"をチェックできません "
+" パッケージ %s は存在しますが、R >= 2.10.0 でインストールされていないので "
+"xrefs をチェックできません "
 
-#, fuzzy
 msgid "Missing link or links in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
 
@@ -305,51 +297,46 @@ msgid ""
 "Extensions' manual."
 msgstr ""
 " マニュアル 'Writing R Extensions' の節 'Cross-references' 中の情報を参照して"
-"ください． "
+"ください。 "
 
 msgid "File %s:"
-msgstr " ファイル '%s'： "
+msgstr " ファイル %s: "
 
 msgid "%s has wrong argument list %s"
-msgstr " %sは誤った引数リスト%sを持っています "
+msgstr " %s は誤った引数リスト %s を持っています "
 
 msgid "%s calls:"
-msgstr " %sの呼び出し: "
+msgstr " %s の呼び出し: "
 
 msgid ""
 "Package startup functions should have two arguments with names starting with "
 "%s and %s, respectively."
 msgstr ""
-" パッケージのスターツアップ関数は%sと%sで始まる名前を持つ２つの引数が必要で"
-"す。 "
+" パッケージのスターツアップ関数は %s と %s で始まる名前を持つ 2 つの引数が必"
+"要です。 "
 
 msgid "Package startup functions should not change the search path."
 msgstr " パッケージのスターツアップ関数はサーチパスを変更できません。 "
 
 msgid "Package startup functions should use %s to generate messages."
 msgstr ""
-" パッケージのスターツアップ関数は%sを使ってメッセージを生成する必要がありま"
+" パッケージのスターツアップ関数は %s を使ってメッセージを生成する必要がありま"
 "す。 "
 
-#, fuzzy
 msgid "Package startup functions should not call %s."
-msgstr " パッケージのスターツアップ関数はサーチパスを変更できません。 "
+msgstr " パッケージのスタートアップ関数は %s を呼び出してはいけません。 "
 
-#, fuzzy
 msgid "See section %s in '%s'."
-msgstr " ?.onAttachのセクション%sを見てください。 "
+msgstr " セクション %s ('%s' 中) を見てください "
 
-#, fuzzy
 msgid ""
 "Package detach functions should have one arguments with names starting with "
 "%s."
 msgstr ""
-" パッケージのスターツアップ関数は%sと%sで始まる名前を持つ２つの引数が必要で"
-"す。 "
+" パッケージの切り離し関数は %s で始まる名前を持つ一つの引数が必要です。 "
 
-#, fuzzy
 msgid "Package detach functions should not call %s."
-msgstr " パッケージのスターツアップ関数はサーチパスを変更できません。 "
+msgstr " パッケージの切り離し関数は %s を呼び出してはいけません。 "
 
 msgid "unable to create"
 msgstr " 生成出来ません "
@@ -358,23 +345,21 @@ msgid "unable to write code files"
 msgstr " コードファイルを書き込めません "
 
 msgid "package 'methods' is used but not declared"
-msgstr " パッケージ \"methods\" が使われていますが、宣言されていません "
+msgstr " パッケージ 'methods' が使われていますが、宣言されていません "
 
 msgid "'::' or ':::' imports not declared from:"
-msgstr " '::' もしくは ':::'　によるインポートが以下から宣言されていません: "
+msgstr " '::' もしくは ':::' によるインポートが以下から宣言されていません: "
 
 msgid "'::' or ':::' import not declared from: %s"
-msgstr ""
-" '::' もしくは ':::'　によるインポートが以下から宣言されていません: %s "
+msgstr " '::' もしくは ':::' によるインポートが以下から宣言されていません: %s "
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
-" 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
+" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: "
 
-#, fuzzy
 msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
-" 'library' もしくは 'requires' 呼出しが以下から宣言されていません： ％ｓ "
+" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: %s "
 
 msgid "'data(package=)' calls not declared from:"
 msgstr " 'data(package=)' コールは以下から宣言されていません: "
@@ -384,18 +369,20 @@ msgstr " 'data(package=)' コールは以下から宣言されていません: %
 
 msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr ""
+" NB: CRAN の新規情報チェックを使うためにはインターネットにアクセスできる必要"
+"があります "
 
 msgid "Rd files with duplicated name '%s':"
 msgstr " 名前 '%s' が重複する Rd ファイル: "
 
 msgid "Rd files with duplicated alias '%s':"
-msgstr " 重複するエイリアス '%s' を持ったRdファイル： "
+msgstr " 重複するエイリアス '%s' を持った Rd ファイル: "
 
 msgid "Argument items with no description in Rd object '%s':"
-msgstr "Rdオブジェクト '%s' に説明のない引数: "
+msgstr " Rd オブジェクト '%s' に説明のない引数: "
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr "Rdオブジェクト '%s' に編集する必要のある自動生成された項目: "
+msgstr " Rd オブジェクト '%s' に編集する必要のある自動生成された項目: "
 
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
@@ -404,32 +391,31 @@ msgid ""
 "%s\n"
 "in NAMESPACE."
 msgstr ""
+" 総称的な 'g' ('env' %s 中) で '%s' エラー: %s \n"
+" 以下のようなものが必要かもしれません \n"
+" \n"
+" %s \n"
+" (NAMESPACE 中に)。 "
 
 msgid "argument 'file' must be a character string or connection"
 msgstr " 引数 'file' は文字列ベクトルかコネクションでなければなりません "
 
-#, fuzzy
 msgid "missing/empty %s field in '%s'"
-msgstr ""
-" '%s' 中に欠如もしくは空の  \n"
-" ame 欄があります "
+msgstr " 欠如もしくは空の %s 欄があります ('%s' 中) "
 
-#, fuzzy
 msgid "Rd files must have a non-empty %s."
-msgstr ""
-" Rdファイルは空でない  \n"
-" ame を持たなければなりません "
+msgstr " Rd ファイルは空でない %s を持たなければなりません "
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
 msgstr ""
 " マニュアル 'Writing R Extensions' 中の章 'Writing R documentation' を参照し"
-"てください． "
+"てください。 "
 
 msgid "missing/empty \\title field in '%s'"
 msgstr " '%s' 中に欠如もしくは空の \title 欄があります "
 
 msgid "Rd files must have a non-empty \\title."
-msgstr " Rdファイルには、空でない \title がなければならなりません "
+msgstr " Rd ファイルには、空でない \title がなければならなりません "
 
 msgid "argument 'outFile' must be a character string or connection"
 msgstr " 引数 'outFile' は文字列ベクトルかコネクションでなければなりません "
@@ -444,10 +430,10 @@ msgid "No help on %s found in RdDB %s"
 msgstr " %s に関するいかなるヘルプも RdDB %s 中にはありません "
 
 msgid "more than one \\examples section, using the first"
-msgstr " 2つ以上の\\examples節があります、1番目を用います "
+msgstr " 2 つ以上の \\examples 節があります、1 番目を用います "
 
 msgid "Converting Rd files to LaTeX ..."
-msgstr "RdファイルをLaTeXに変換しています "
+msgstr " Rd ファイルを LaTeX に変換しています "
 
 msgid "-t option without value"
 msgstr " 値のない -t オプション "
@@ -459,14 +445,14 @@ msgid "Warning: unknown option"
 msgstr " 警告: 未知のオプションです "
 
 msgid "exactly one Rd file must be specified"
-msgstr " 正確に1つのRdファイルは指定されなければなりません "
+msgstr " 正確に 1 つの Rd ファイルは指定されなければなりません "
 
 msgid "no 'type' specified"
 msgstr " 指定された 'type' ではありません "
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr ""
-" 'type'は'txt', 'html', 'latex', 'example'のいずれかである必要があります "
+" 'type' は 'txt', 'html', 'latex', 'example' のいずれかである必要があります "
 
 msgid "current working directory cannot be ascertained"
 msgstr " 現在の作業ディレクトリを確認することができません。 "
@@ -474,23 +460,20 @@ msgstr " 現在の作業ディレクトリを確認することができませ�
 msgid "no inputs"
 msgstr " 入力がありません "
 
-#, fuzzy
 msgid "Error in running tools::texi2pdf()"
-msgstr " tools::texi2pdf の実行時にエラーがありました "
+msgstr " tools::texi2pdf() の実行時にエラーが発生しました "
 
 msgid "invalid value for '%s' : %s"
 msgstr " '%s' に対する不正な値 : %s "
 
-#, fuzzy
 msgid "Only one Rd section per %s is supported."
-msgstr " \\SexprはRdセクションを1つしか持てません。 "
+msgstr " %s は Rd セクションを 1 つしか持てません。 "
 
-#, fuzzy
 msgid "Vignette product"
-msgstr " ビニエット: "
+msgstr " ビニエットプロダクト "
 
 msgid "does not have a known filename extension ("
-msgstr ""
+msgstr " 既知の拡張子を持っていません( "
 
 msgid ","
 msgstr " , "
@@ -498,52 +481,47 @@ msgstr " , "
 msgid ")"
 msgstr " ) "
 
-#, fuzzy
 msgid "Failed to locate the"
-msgstr " 生成出来ません "
+msgstr " 見つかりません: "
 
 msgid "output file (by engine"
-msgstr ""
+msgstr " 出力ファイル (エンジン "
 
 msgid "%s::%s"
-msgstr ""
+msgstr " %s::%s "
 
 msgid ") for vignette with name"
-msgstr ""
+msgstr " ) , ビニエット "
 
-#, fuzzy
 msgid ". The following files exists in directory"
-msgstr " このディレクトリにはファイルが存在しません "
+msgstr " . ディレクトリには以下のファイルがあります "
 
 msgid ":"
 msgstr " ： "
 
-#, fuzzy
 msgid "Located more than one"
-msgstr " 0か複数のマッチ "
+msgstr " 1個以上が見つかりました "
 
-#, fuzzy
 msgid "unable to create temp directory %s"
-msgstr " 仮ディレクトリを生成することが出来ません "
+msgstr " 一時ディレクトリ %s を生成することが出来ません "
 
-#, fuzzy
 msgid "Vignette"
-msgstr " ビニエット: "
+msgstr " ビニエット "
 
 msgid "overwrites the following"
-msgstr ""
+msgstr " 以下を上書きします "
 
 msgid "output by vignette"
-msgstr ""
+msgstr " ビニエットによる出力 "
 
 msgid "Detected vignette source files ("
-msgstr ""
+msgstr " ビニエットのソースファイルを検出しました ( "
 
 msgid ") with shared names ("
-msgstr ""
+msgstr " ) 共有名 ( "
 
 msgid ") and therefore risking overwriting each others output files"
-msgstr ""
+msgstr " ) 、したがってお互いの出力を上書きする危険があります "
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -552,16 +530,15 @@ msgstr ""
 " ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
 " %s "
 
-#, fuzzy
 msgid ""
 "tangling vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
-" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" ビニエット '%s' のtangling に失敗しました。診断情報: \n"
 " %s "
 
 msgid "running 'make' failed"
-msgstr " make の実行に失敗しました "
+msgstr " 'make' の実行に失敗しました "
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
@@ -573,72 +550,63 @@ msgstr " 引数 'vignette' は長さ1でなければなりません "
 msgid "file '%s' not found"
 msgstr " ファイル '%s' が見つかりません "
 
-#, fuzzy
 msgid "Unsupported engine name"
-msgstr " 未サポートのフィルタ %s "
+msgstr " 未サポートのエンジン名 "
 
-#, fuzzy
 msgid "None of packages"
-msgstr " パッケージ %s に対するヘルプが見つかりません "
+msgstr " どのパッケージもしていません "
 
 msgid "have registered vignette engines"
-msgstr ""
+msgstr " ビニエットエンジンを登録 "
 
-#, fuzzy
 msgid "Vignette engine"
-msgstr " ビニエット: "
+msgstr " ビニエットエンジン "
 
-#, fuzzy
 msgid "is not registered"
-msgstr " は存在しません "
+msgstr " は登録されていません "
 
 msgid "is not registered by any of the packages"
-msgstr ""
+msgstr " を登録しているパッケージはありません "
 
 msgid "Engine name"
-msgstr ""
+msgstr " エンジン名 "
 
-#, fuzzy
 msgid "and package"
-msgstr " 不正なパッケージです "
+msgstr " とパッケージ "
 
-#, fuzzy
 msgid "do not match"
-msgstr " は存在しません "
+msgstr " が合致しません "
 
-#, fuzzy
 msgid "Argument"
 msgstr " 以下に対する引数 "
 
 msgid "weave"
-msgstr ""
+msgstr " weave "
 
 msgid "must be a function and not"
-msgstr ""
+msgstr " は関数でなくてはならず、以下ではいけません: "
 
 msgid "tangle"
-msgstr ""
+msgstr " tangle "
 
 msgid "pattern"
-msgstr ""
+msgstr " pattern "
 
-#, fuzzy
 msgid "must be a character vector or NULL and not"
-msgstr " 'file' は文字列ベクトルかコネクションでなければなりません "
+msgstr ""
+" は文字列ベクトルか、あるいはNULLでなくてはならず、以下ではいけません: "
 
-#, fuzzy
 msgid "Cannot change the"
-msgstr " 強制変換できません "
+msgstr " 以下を変更できません "
 
 msgid "Sweave"
-msgstr ""
+msgstr " Sweave "
 
 msgid "engine or use an engine of that name"
-msgstr ""
+msgstr " エンジンもしくはその名前のエンジン "
 
-#, fuzzy
 msgid "vignette builder '%s' not found"
-msgstr " ファイル '%s' が見つかりません "
+msgstr " ビニエットビルダー '%s' が見つかりません "
 
 msgid "Invalid DESCRIPTION file"
 msgstr " 不正な DESCRIPTION ファイルです "
@@ -651,13 +619,13 @@ msgstr " ディレクトリ '%s' を開くことが出来ません "
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"
-msgstr " 警告： バージョン必要性がない無意味な 'R' への依存性を取り去ります "
+msgstr " 警告: バージョン必要性がない無意味な 'R' への依存性を取り去ります "
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
-msgstr " LC_LOCALE によるロケール依存のソーティングを終了できません  "
+msgstr " LC_LOCALE によるロケール依存のソーティングを終了できません "
 
 msgid "duplicated files in '%s' field:"
-msgstr " '%s' フィールド中に重複したファイルがあります： "
+msgstr " '%s' フィールド中に重複したファイルがあります: "
 
 msgid "files in '%s' field missing from '%s':"
 msgstr " '%s' 欄のファイルが '%s' から欠損しています: "
@@ -677,39 +645,37 @@ msgstr " ディレクトリ '%s' を生成することが出来ません "
 msgid "processing %s"
 msgstr " %s を処理中 "
 
-#, fuzzy
 msgid ""
 "running %s on vignette '%s' failed with message:\n"
 "%s"
 msgstr ""
-" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" %s をビニエット '%s' に対して実行することに失敗しました。メッセージは以下の"
+"通りです: \n"
 " %s "
 
-#, fuzzy
 msgid ""
 "compiling TeX file %s failed with message:\n"
 "%s"
 msgstr ""
-" ビニエット '%s' の処理に失敗しました。診断は以下の通りです: \n"
+" TeXファイル %s のコンパイルに失敗しました。メッセージは以下の通りです: \n"
 " %s "
 
 msgid "cannot copy '%s' to '%s'"
 msgstr " '%s' を '%s' にコピーすることが出来ません "
 
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
-msgstr " 警告：'DESCRIPTION' 中に混乱した 'Depends' 欄 "
+msgstr " 警告: 'DESCRIPTION' 中に不正な 'Depends' 欄があります "
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
 msgstr ""
-" エラー：この R はバージョン %s です。パッケージ '%s' は R %s %s を必要としま"
+" エラー: この R はバージョン %s です。パッケージ '%s' は R %s %s を必要としま"
 "す "
 
 msgid "ERROR: this R is version %s, required is R %s %s"
-msgstr " エラー：この R はバージョン %s です。 R %s %s を必要とします "
+msgstr " エラー: この R はバージョン %s です。 R %s %s を必要とします "
 
-#, fuzzy
 msgid "loading failed"
-msgstr " '%s' のロードに失敗しました "
+msgstr " ロードに失敗しました "
 
 msgid "Changes require specified 'style'"
 msgstr " 指定された 'style' の変更が必要です "
@@ -717,17 +683,14 @@ msgstr " 指定された 'style' の変更が必要です "
 msgid "The default JSS style may not be modified."
 msgstr " 既定の JSS スタイルは変更できないかもしれません "
 
-#, fuzzy
 msgid "invalid value for '--compact-vignettes', assuming %s"
-msgstr " --compact-vignettes に対する不正な値です、 \"qpdf\" であるとします "
+msgstr " '--compact-vignettes' に対する不正な値です、%s であるとします "
 
-#, fuzzy
 msgid "Error: cannot rename directory to %s"
-msgstr " エラー：ディレクトリの名前を以下に変更できません "
+msgstr " エラー: ディレクトリの名前を %s に変更できません "
 
-#, fuzzy
 msgid "cannot link from %s"
-msgstr " ディレクトリ '%s' を開くことが出来ません "
+msgstr " %s からリンク出来ません "
 
 msgid "-l option without value"
 msgstr " 値のない -l オプション "
@@ -740,36 +703,34 @@ msgstr ""
 " ただ一つの使用可能なサブアーキテクチャで '--multiarch' が指定されました "
 
 msgid "'--as-cran' turns off '--extra-arch'"
-msgstr ""
+msgstr " '--as-cran' は '--extra-arch' を停止します "
 
 msgid "Error: no packages were specified"
-msgstr " エラー：パッケージが指定されていません "
+msgstr " エラー: パッケージが指定されていません "
 
 msgid "ERROR: cannot create check dir %s"
-msgstr " エラー：チェックディレクトリ '%s' を生成することが出来ません "
+msgstr " エラー: チェックディレクトリ %s を生成することが出来ません "
 
-#, fuzzy
 msgid "package directory %s does not exist"
-msgstr " ディレクトリ '%s' が存在しません "
+msgstr " パッケージディレクトリ %s が存在しません "
 
 msgid "no packages to check"
-msgstr ""
+msgstr " チェックするパッケージがありません "
 
 msgid "downloading reverse dependencies ..."
-msgstr ""
+msgstr " 逆向き依存するものをダウンロードしています... "
 
 msgid "downloading %s ..."
-msgstr ""
+msgstr " %s をダウンロードしています... "
 
 msgid "installing dependencies %s"
-msgstr ""
+msgstr " 依存する %s をインストールしています "
 
-#, fuzzy
 msgid "checking %s ..."
-msgstr "DLLの作成中... "
+msgstr " %s をチェックしています... "
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
-msgstr ""
+msgstr " CITATION ファイルにエンコーディングの宣言なしの非アスキー入力 "
 
 msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "
@@ -799,7 +760,7 @@ msgid "No help found for package %s"
 msgstr " パッケージ %s に対するヘルプが見つかりません "
 
 msgid "Link %s in package %s could not be located"
-msgstr " リンク %s （パッケージ %s 中の）は所在不明です "
+msgstr " リンク %s (パッケージ %s 中の) は所在不明です "
 
 msgid "No docs found for package %s"
 msgstr " package %s にドキュメントは見つけられませんでした "
@@ -814,10 +775,10 @@ msgid "unsupported URL %s"
 msgstr " 未サポートのURL %s "
 
 msgid "URL %s was not found"
-msgstr "URL '%s' は見つかりませんでした "
+msgstr " URL %s は見つかりませんでした "
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
-msgstr " httpdサーバはR_DISABLE_HTTPDにより無効にしました "
+msgstr " httpd サーバは R_DISABLE_HTTPD により無効にしました "
 
 msgid "server already running"
 msgstr " サーバは既に稼働中です "
@@ -829,13 +790,13 @@ msgid "no running server to stop"
 msgstr " 停止する実行中のサーバーがありません "
 
 msgid "starting httpd help server ..."
-msgstr " httpdヘルプサーバーを起動... "
+msgstr " httpd ヘルプサーバーを起動... "
 
 msgid "done"
 msgstr " 完了 "
 
 msgid "failed to start the httpd server"
-msgstr " httpdサーバーを起動することができませんでした "
+msgstr " httpd サーバーを起動することができませんでした "
 
 msgid "cannot read index information in file '%s'"
 msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
@@ -850,22 +811,21 @@ msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Administration Manual'"
 msgstr ""
-" 'cleanup' は存在しますが実行できません -- 参照 'R Installation and "
-"Adminstration Manual' "
+" 'cleanup' は存在しますが実行できません。'R Installation and Adminstration "
+"Manual' を参照してください "
 
-#, fuzzy
 msgid "generating debug symbols (%s)"
-msgstr " デバッグシンボル (dSYM) を生成中 "
+msgstr " デバッグシンボル (%s) を生成中 "
 
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr " パッケージ %s の解凍およびMD5サムの検証に成功しました "
+msgstr " パッケージ %s の解凍および MD5 サムの検証に成功しました "
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
 msgstr ""
-"R の include ディレクトリが空です -- 恐らく R-devel.rpm か類似物をインストー"
-"ルする必要があります "
+" R の include ディレクトリが空です。恐らく R-devel.rpm か類似物をインストール"
+"する必要があります "
 
 msgid "no source files found"
 msgstr " ソースファイルが見つかりません "
@@ -876,9 +836,8 @@ msgstr " 'data' ディレクトリが空です "
 msgid "cannot create temporary directory"
 msgstr " 一時ディレクトリを生成することが出来ません "
 
-#, fuzzy
 msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
-msgstr " エラー: --merge-multiarch は単一の tarball だけに適用可能です "
+msgstr " エラー: '--merge-multiarch' は単一の tarball だけに適用可能です "
 
 msgid "invalid package"
 msgstr " 不正なパッケージです "
@@ -886,15 +845,14 @@ msgstr " 不正なパッケージです "
 msgid "ERROR: no packages specified"
 msgstr " パッケージが特定できません "
 
-#, fuzzy
 msgid "ERROR: cannot cd to directory %s"
-msgstr " エラー：ディレクトリの変更が出来ません "
+msgstr " エラー: ディレクトリ %s に変更出来ません "
 
 msgid "ERROR: no permission to install to directory"
-msgstr " エラー：ディレクトリへのインストール許可がありません "
+msgstr " エラー: ディレクトリへのインストール許可がありません "
 
 msgid "building a fake installation is disallowed"
-msgstr " まがい物(fake)インストールの構築は許されていません "
+msgstr " まがい物 (fake) インストールの構築は許されていません "
 
 msgid "there is no package called '%s'"
 msgstr " '%s' という名前のパッケージが見当たりません "
@@ -917,14 +875,14 @@ msgstr " ソースは環境またはリストでなければなりません "
 
 msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 msgstr ""
-" 'compress'　に対して不正な値が入力されています。FALSE, TRUE, 2, 3を入力すべ"
+" 'compress' に対して不正な値が入力されています。FALSE, TRUE, 2, 3 を入力すべ"
 "きです "
 
 msgid "this cannot be used for package 'base'"
 msgstr " これはパッケージ 'base' に使用することが出来ません "
 
 msgid "package contains no R code"
-msgstr " パッケージにRコードが含まれていません "
+msgstr " パッケージに R コードが含まれていません "
 
 msgid "package seems to be using lazy loading already"
 msgstr " パッケージは既に遅延読み込みを使用しているように見えます "
@@ -938,15 +896,15 @@ msgstr ""
 
 msgid "No news found in given file using old-style R-like format."
 msgstr ""
-" 旧来のR風の書式を使ったニュースは与えられたファイル中にはありません． "
+" 旧来の R 風の書式を使ったニュースは与えられたファイル中にはありません。 "
 
 msgid "No news found in given file using package default format."
 msgstr ""
-"  ペッケージの既定の書式を使ったニュースは与えられたファイル中にはありませ"
-"ん． "
+" パッケージの既定の書式を使ったニュースは与えられたファイル中にはありませ"
+"ん。 "
 
 msgid "Could not extract news from the following text chunks:"
-msgstr " 以下のテキストの集まりからニュースを取り出せませんでした： "
+msgstr " 以下のテキストの集まりからニュースを取り出せませんでした: "
 
 msgid ""
 "Chunk %s:\n"
@@ -967,10 +925,10 @@ msgid ""
 "  %s\n"
 "contains no \\itemize."
 msgstr ""
-"NEWS.Rd ファイルが壊れています: \n"
-"\n"
+" NEWS.Rd ファイルが壊れています: \n"
+" \n"
 " %s \n"
-" で始まるチャンクに、\\itemize が含まれていません "
+" で始まるチャンクに、\\itemize が含まれていません。 "
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -979,28 +937,27 @@ msgid ""
 "contains more than one \\itemize.\n"
 "Using the first one."
 msgstr ""
-"NEWS.Rd ファイルが壊れています: \n"
+" NEWS.Rd ファイルが壊れています: \n"
 "\n"
 " %s \n"
-" ではじまるチャンクに、２つ以上の\\itemize が含まれています。 \n"
-" 最初の１つを使用します "
+" ではじまるチャンクに、2 つ以上の \\itemize が含まれています。 \n"
+" 最初の 1 つを使用します。 "
 
 msgid "Processing packages:"
-msgstr " パッケージを処理中： "
+msgstr " パッケージを処理中: "
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr ""
 " %s は文字列ベクトルかファイル、もしくはコネクションでなければなりません "
 
 msgid "PDF header not found"
-msgstr "PDFヘッダが見つかりませんでした "
+msgstr " PDF ヘッダが見つかりませんでした "
 
 msgid "EOF marker not found"
-msgstr "EOFマーカーが見つかりませんでした "
+msgstr " EOF マーカーが見つかりませんでした "
 
-#, fuzzy
 msgid "cannot find 'startxref' keyword"
-msgstr " startxref が見つかりません "
+msgstr " 'startxref' キーワードが見つかりません "
 
 msgid "cannot find xref table"
 msgstr " xref テーブルが見つかりません "
@@ -1012,10 +969,10 @@ msgid "wrong class"
 msgstr " クラスが間違っています "
 
 msgid "attempting to select less than one element"
-msgstr " 1個未満の要素を選択しようとしました "
+msgstr " 1 個未満の要素を選択しようとしました "
 
 msgid "attempting to select more than one element"
-msgstr " 2個以上の要素を選択しようとしました "
+msgstr " 2 個以上の要素を選択しようとしました "
 
 msgid "looking at %s"
 msgstr " %s を見ています "
@@ -1024,7 +981,7 @@ msgid "cannot read literal string object"
 msgstr " 文字列リテラルオブジェクトを読めません "
 
 msgid "cannot read hexadecimal string object"
-msgstr " 16進数文字列オブジェクトを読めません "
+msgstr " 16 進数文字列オブジェクトを読めません "
 
 msgid "cannot read name object"
 msgstr " 名前オブジェクトを読めません "
@@ -1045,10 +1002,10 @@ msgid "cannot find object header at xrefed position %d"
 msgstr " クロスリファレンスされた位置 %d にオブジェクトヘッダが見つかりません "
 
 msgid "mismatch in object numbers (given: %d, found: %d)"
-msgstr " オブジェクト数に不一致があります( %d のはずが, %d 見つかりました ) "
+msgstr " オブジェクト数に不一致があります (%d のはずが、%d 見つかりました) "
 
 msgid "mismatch in generation numbers (given: %d, found: %d)"
-msgstr " 生成数に不一致があります (%d のはずが, %d 見つかりました) "
+msgstr " 生成数に不一致があります (%d のはずが、%d 見つかりました) "
 
 msgid "cannot read stream data"
 msgstr " ストリームデータを読めません "
@@ -1062,15 +1019,14 @@ msgstr " %s を展開中 "
 msgid "unsupported filter %s"
 msgstr " 未サポートのフィルタ %s "
 
-#, fuzzy
 msgid "unsupported %s predictor %d"
-msgstr " 未サポートの flatedecode predictor %d "
+msgstr " サポートされていない %s 予測子 %d "
 
 msgid "unsupported PNG filter %d"
-msgstr " 未サポートのPNGフィルタ %d "
+msgstr " 未サポートの PNG フィルタ %d "
 
 msgid "argument 'pkg' must be of length 1"
-msgstr " 引数 'pkg' は長さ1でなければなりません "
+msgstr " 引数 'pkg' は長さ 1 でなければなりません "
 
 msgid "package '%s' was not found"
 msgstr " パッケージ '%s' は見つかりませんでした "
@@ -1096,15 +1052,14 @@ msgstr " %s が見つかりました（おそらく %s から） "
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
 
-#, fuzzy
 msgid "Testing examples for package %s"
-msgstr " パッケージに対する例をテストしています "
+msgstr " %s パッケージに対する例をテストしています "
 
 msgid "comparing %s to %s ..."
-msgstr ""
+msgstr " %s と %s を比較しています... "
 
 msgid "OK"
-msgstr "OK "
+msgstr " OK "
 
 msgid "results differ from reference results"
 msgstr " 結果が参照結果と異なります "
@@ -1112,20 +1067,17 @@ msgstr " 結果が参照結果と異なります "
 msgid "no examples found for package %s"
 msgstr " パッケージ %s に対する例文が見つかりません "
 
-#, fuzzy
 msgid "Running specific tests for package %s"
-msgstr " 指定されたテストをパッケージに対して実行中 "
+msgstr " 指定されたテストをパッケージ %s に対して実行中 "
 
-#, fuzzy
 msgid "Running %s"
-msgstr " 実行中 "
+msgstr " %s を実行中 "
 
-#, fuzzy
 msgid "Running vignettes for package %s"
-msgstr " パッケージのビニエットを実行中 "
+msgstr " パッケージ %s に対してビニエットを実行中 "
 
 msgid "Comparing %s to %s ..."
-msgstr ""
+msgstr " %s と %s を比較中 ... "
 
 msgid "no parsed files found"
 msgstr " パースファイルが見つかりません "
@@ -1137,10 +1089,10 @@ msgid "running tests of random deviate generation -- fails occasionally"
 msgstr " ランダムな偏差の生成テストを実行中 -- 失敗する事もあります "
 
 msgid "R CMD build failed"
-msgstr ""
+msgstr " R CMD によるビルドに失敗 "
 
 msgid "'x' must be a single character string"
-msgstr " 引数 'txt' は１つの文字でなければなりません "
+msgstr " 'x' は 1 つの文字でなければなりません "
 
 msgid "test '%s' is not available"
 msgstr " テスト '%s' は利用出来ません "
@@ -1149,10 +1101,10 @@ msgid "argument 'x' must be a character vector"
 msgstr " 引数 'x' は文字型ベクトルでなければいけません "
 
 msgid "argument 'delim' must specify two characters"
-msgstr " 引数 'delim' は2つの文字を特定しなければいけません "
+msgstr " 引数 'delim' は 2 つの文字を特定しなければいけません "
 
 msgid "only Rd syntax is currently supported"
-msgstr " 現在はRd構文のみがサポートされています "
+msgstr " 現在は Rd 構文のみがサポートされています "
 
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
@@ -1173,10 +1125,10 @@ msgid "to logical"
 msgstr " 論理値へ "
 
 msgid "File 'DESCRIPTION' is missing."
-msgstr " ファイル'DESCRIPTION'が見当たりません。 "
+msgstr " ファイル 'DESCRIPTION' が見当たりません。 "
 
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
-msgstr " ファイル'DESCRIPTION'と'DESCRIPTION.in'が見当たりません。 "
+msgstr " ファイル 'DESCRIPTION' と 'DESCRIPTION.in' が見当たりません。 "
 
 msgid "invalid package layout"
 msgstr " 不正なパッケージ構成です "
@@ -1185,34 +1137,31 @@ msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "
 
 msgid "contains a blank line"
-msgstr ""
+msgstr " 空白行があります "
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr " 非ASCIIデータをもつ未知のエンコーディングです: ASCIIに変換します "
+msgstr " 非 ASCII データをもつ未知のエンコーディングです: ASCII に変換します "
 
 msgid "cannot source package code"
 msgstr " パッケージコードを読み込めません "
 
 msgid "Call sequence:"
-msgstr " 呼び出しシーケンス： "
+msgstr " 呼び出しシーケンス: "
 
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
 
-#, fuzzy
 msgid "Obsolete package %s in Rd xrefs"
 msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] " もう使われていない %s が Rd xrefs　中にあります "
+msgstr[0] " もう使われていないパッケージ %s が Rd xrefs 中にあります "
 
-#, fuzzy
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
-msgstr[0] "Rd xrefs をチェックするためのパッケージがありません: %s "
+msgstr[0] " Rd xrefs をチェックするためのパッケージがありません: %s "
 
-#, fuzzy
 msgid "Unknown package %s in Rd xrefs"
 msgid_plural "Unknown packages %s in Rd xrefs"
-msgstr[0] " Rd xrefs 中に未知のパッケージがあります "
+msgstr[0] " Rd xrefs 中に未知のパッケージ %s があります "
 
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
@@ -1224,71 +1173,68 @@ msgstr[0] " 注意: %d 個の UTF-8 コードの文字が見つかりました "
 
 msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
-msgstr[0] " 注意: %d 個の bytes コードの文字が見つかりました "
+msgstr[0] " 注意: %d 個の \"bytes\" コードの文字が見つかりました "
 
-#, fuzzy
 msgid "Warning in file %s:"
 msgid_plural "Warnings in file %s:"
-msgstr[0] " ファイル '%s' 中に警告: "
+msgstr[0] " ファイル %s 中に警告: "
 
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
 msgstr[0] " 以下の関数中に大局的かもしれない 'T' もしくは 'F' がありました: "
 
-#, fuzzy
 msgid ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
 msgstr[0] ""
-" 以下の Rd 例示ファイル中に大局的かもしれない 'T' もしくは 'F' がありました: "
+" 以下の Rd ファイルの例示中に大局的かもしれない 'T' もしくは 'F' がありまし"
+"た: "
 
-#, fuzzy
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
-msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました: "
 
-#, fuzzy
 msgid "Found a.Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
-msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+msgstr[0] ""
+" 以下の S4 関数に対するメソッド中に .Internal 呼び出しが見つかりました "
 
-#, fuzzy
 msgid "Found a .Internal call in methods for the following reference class:"
 msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
-msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+msgstr[0] ""
+" 以下の参照クラスに対するメソッド中に .Internal 呼び出しが見つかりました: "
 
-#, fuzzy
 msgid "Found an obsolete call in the following function:"
 msgid_plural "Found an obsolete call in the following functions:"
-msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+msgstr[0] " 以下の関数中にもはや使われていない呼び出しが見つかりました: "
 
-#, fuzzy
 msgid "Found an obsolete call in methods for the following S4 generic:"
 msgid_plural "Found an obsolete call in methods for the following S4 generics:"
-msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+msgstr[0] ""
+" 以下の S4 総称に対するメソッド中にもはや使われていない呼び出しが見つかりまし"
+"た: "
 
-#, fuzzy
 msgid "Found an obsolete call in methods for the following reference class:"
 msgid_plural ""
 "Found an obsolete call in methods for the following reference classes:"
-msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+msgstr[0] ""
+" 以下の参照クラスに対するメソッド中にもはや使われていない呼び出しが見つかりま"
+"した: "
 
 msgid "Found the deprecated function:"
 msgid_plural "Found the deprecated functions:"
-msgstr[0] ""
+msgstr[0] " 使用が推奨されていない関数が見つかりました: "
 
 msgid "Found the defunct/removed function:"
 msgid_plural "Found the defunct/removed functions:"
-msgstr[0] ""
+msgstr[0] " 廃止された関数が見つかりました: "
 
-#, fuzzy
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"
-msgstr[0] " メソッドを伴わない Generics があります "
+msgstr[0] " %s 中にメソッドを伴わない総称があります: %s "
 
-#, fuzzy
 msgid ""
 "missing/empty \\name field in Rd file\n"
 "%s"
@@ -1296,26 +1242,27 @@ msgid_plural ""
 "missing/empty \\name field in Rd files\n"
 "%s"
 msgstr[0] ""
-" Rd ファイル中に欠損もしくは空の  \n"
-" ame 欄 "
+" Rd ファイル中に欠損もしくは空の \n"
+" ame 欄 \n"
+" %s "
 
-#, fuzzy
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
-msgstr[0] " '%s' ('%s'行')を再エンコード出来ません "
+msgstr[0] " %s (%s行) を再エンコード出来ません "
 
-#, fuzzy
 msgid "Help on topic '%s' was found in the following package:"
 msgid_plural "Help on topic '%s' was found in the following packages:"
-msgstr[0] " '%s' に関するヘルプが以下のパッケージに見つかりました: "
+msgstr[0] " トピック '%s' に関するヘルプが以下のパッケージに見つかりました: "
 
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
-msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しにより生成されました "
 
-#, fuzzy
 #~ msgid "not found"
 #~ msgstr " が見つかりません "
+
+#~ msgid "engine"
+#~ msgstr " エンジン "
 
 #~ msgid "file '%s' was not created"
 #~ msgstr " ファイル '%s' は生成されませんでした "

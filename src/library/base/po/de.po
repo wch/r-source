@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 08:03+0000\n"
+"POT-Creation-Date: 2013-03-19 12:12+0000\n"
 "PO-Revision-Date: 2013-03-18 10:13+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -589,7 +589,7 @@ msgstr "ungültiger Normalverteilungstyp in 'RNGkind'"
 msgid "'user_norm_rand' not in load table"
 msgstr "'user_norm_rand' nicht in der Ladeliste"
 
-#: src/main/RNG.c:516
+#: src/main/RNG.c:517
 msgid "supplied seed is not a valid integer"
 msgstr "angegebener Startwert ist keine gültige ganze Zahl"
 
