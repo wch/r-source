@@ -242,10 +242,10 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c Actually, see http://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd, ix86 <=> i386.
-@samp{x86_64-@/apple-@/darwin}, @samp{i386-@/sun-@/solaris},
-@samp{sparc-@/sun-@/solaris} and @samp{x86_64-@/*-@/freebsd}, as well as
+@samp{x86_64-@/apple-@/darwin}, @samp{i386-@/sun-@/solaris} and
+@samp{sparc-@/sun-@/solaris} as well as
 perhaps (it is tested less frequently on these platforms)
-@samp{i386-@/apple-@/darwin}, @samp{i386-@/*-@/freebsd},
+@samp{i386-@/apple-@/darwin}, @samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
 @samp{i386-@/*-@/netbsd}, @samp{i386-@/*-@/openbsd} and
 @samp{powerpc-@/ibm-@/aix6*}
 
@@ -945,9 +945,8 @@ LANGUAGE=en LC_TIME=C
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows XP or later on ix86
-@acronym{CPU}s (including AMD64/Intel64@footnote{formerly known as
-EM64T.} chips and Windows x64).
+from @acronym{CRAN} to run on Windows XP or later on ix86 @acronym{CPU}s
+(including AMD64/Intel64 cpus and Windows x64).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
@@ -1230,7 +1229,7 @@ make check-all
 @noindent
 for @code{check-devel} and @code{check-recommended}.
 
-If a test fails, there will almost always be a @file{/Rout.fail} file in
+If a test fails, there will almost always be a @file{.Rout.fail} file in
 the directory being checked (often @file{tests/Examples} or
 @file{tests}): examine the file to help pinpoint the problem.
 
@@ -1286,7 +1285,7 @@ htmldocs @r{(the HTML documentation)}
 bitmapdll @r{(the bitmap support files)}
 cairodevices @r{(the cairo-based graphics devices)}
 recommended @r{(the recommended packages)}
-vignettes @r{(the vignettes in package @strong{grid}:}
+vignettes @r{(the vignettes in base packages:}
 	  @r{ only needed if building from an svn checkout)}
 manuals @r{(the PDF manuals)}
 rinstaller @r{(the install program)}
@@ -1369,7 +1368,7 @@ Installer.  This is intended for use by sysadmins doing automated
 installs, and is not recommended for casual use.
 
 It makes use of the Windows Installer XML (WiX) toolkit @emph{version
-3.5} (or perhaps 3.6 or 3.7, untested) available from
+3.5} (or perhaps later, untested) available from
 @uref{http://wix.sourceforge.net/} or @uref{http://wixtoolset.org/}.
 Once WiX is installed, set the path to its home directory in
 @file{MkRules.local}.
@@ -1470,7 +1469,7 @@ should run on all Macs from mid-2008 on.
 To install, just double-click on the icon of the file you downloaded.
 Note that (X11-based) Tcl/Tk needs to be installed separately if needed,
 from @uref{http://cran.r-project.org/bin/macosx/tools/}, and for
-Mountain Lion XQuartz will also need to be installed to use Tk.
+Mountain Lion or later, XQuartz will also need to be installed to use Tk.
 
 On Mountain Lion with `GateKeeper' active you may need to
 right/control-click on some of the packages (e.g.@: that for Tcl/Tk) and
@@ -1507,7 +1506,7 @@ see the next chapter of this manual.  There are some small differences
 which may surprise users of @R{} on other platforms, notably the default
 personal library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.0/library}), and that warnings, messages and
-other output to @file{stderr} are printed in bold.
+other output to @file{stderr} are highlighted in bold.
 
 
 @node Uninstalling under OS X,  , Running R under OS X, Installing R under OS X
@@ -1655,8 +1654,8 @@ collection.
 @R{} will automatically make use of a site-specific library
 @file{@var{R_HOME}/site-library} if this exists (it does not in a
 vanilla @R{} installation).  This location can be overridden by
-setting@footnote{its binding is locked once that files has been read, so
-users cannot easily change it.} @samp{.Library.site} in
+setting@footnote{its binding is locked once the startup files have been
+read, so users cannot easily change it.} @samp{.Library.site} in
 @file{@var{R_HOME}/etc/Rprofile.site}, or (not recommended) by setting
 the
 @enindex R_LIBS_SITE
@@ -2077,9 +2076,14 @@ wise to have a @file{src/contrib} area with a possibly empty
 @R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
+@code{"mac.binary"}: located at
+@file{bin/macosx/snowleopard/contrib/@var{3.y}} for @R{} versions
+@var{3.y.z} and containing @file{.tgz} files.
+
+@item 
 @code{"mac.binary.leopard"}: located at
-@file{bin/macosx/leopard/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
-and containing @file{.tgz} files.
+@file{bin/macosx/leopard/contrib/@var{2.y}} for @R{} versions
+@var{2.y.z} and containing @file{.tgz} files.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -2117,11 +2121,11 @@ Path: @var{path/to/subdirectory}
 It can be convenient to run @command{R CMD check} on an installed
 package, particularly on a platform which uses sub-architectures.  The
 outline of how to do this is, with the source package in directory
-@file{@var{pkgname}} (or a tarball filename):
+@file{@var{pkg}} (or a tarball filename):
 
 @example
-R CMD INSTALL -l @var{libdir} @var{pkgname} > @var{pkgname}.log 2>&1
-R CMD check -l @var{libdir} --install=check:@var{pkgname}.log @var{pkgname}
+R CMD INSTALL -l @var{libdir} @var{pkg} > @var{pkg}.log 2>&1
+R CMD check -l @var{libdir} --install=check:@var{pkg}.log @var{pkg}
 @end example
 
 @noindent
@@ -2129,7 +2133,7 @@ Where sub-architectures are in use the @command{R CMD check} line can be
 repeated with additional architectures by
 
 @example
-R --arch @var{arch} CMD check -l @var{libdir} --extra-arch --install=check:@var{pkgname}.log @var{pkgname}
+R --arch @var{arch} CMD check -l @var{libdir} --extra-arch --install=check:@var{pkg}.log @var{pkg}
 @end example
 
 @noindent
@@ -2148,9 +2152,9 @@ package from a tarball which has been tested on another platform one
 might use
 
 @example
-.../bin/i386/Rcmd INSTALL -l @var{libdir} @var{tarball} --build > @var{pkgname}.log 2>&1
-.../bin/i386/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkgname}.log @var{pkgname}
-.../bin/x64/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkgname}.log @var{pkgname}
+.../bin/i386/Rcmd INSTALL -l @var{libdir} @var{tarball} --build > @var{pkg}.log 2>&1
+.../bin/i386/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkg}.log @var{pkg}
+.../bin/x64/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkg}.log @var{pkg}
 @end example
 
 @noindent
@@ -2432,6 +2436,10 @@ issue with objects more than 10% of the size of the address space
 third (around 1Gb).
 
 @item
+Only 64-bit builds support `long vectors', those with @math{2^{31}} or
+more elements (each of which needs at least 16GB of storage).
+
+@item
 Most 32-bit OSes by default limit file sizes to 2GB (and this may also
 apply to 32-bit builds on 64-bit OSes).  This can often be worked
 around: and @command{configure} selects suitable defines if this is
@@ -2455,10 +2463,11 @@ This means that on chips like a desktop Intel Core 2 Duo the vanilla
 X.  (Laptop CPUs are usually relatively slower in 64-bit mode.)
 @end itemize
 
-So, for speed you may want to use a 32-bit build, but to handle large
-datasets (and perhaps large files) a 64-bit build.  You can often build
-both and install them in the same place: @xref{Sub-architectures}.
-(This is done for the Windows binary distributions.)
+So, for speed you may want to use a 32-bit build (especially on a
+laptop), but to handle large datasets (and perhaps large files) a 64-bit
+build.  You can often build both and install them in the same place:
+@xref{Sub-architectures}.  (This is done for the Windows binary
+distributions.)
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}, some of which stem from the
@@ -2835,7 +2844,8 @@ suitable code can be compiled.  These tests will fail if
 @command{pkg-config} is not installed, and are likely to fail if
 @code{cairo} was built statically (unusual).  Most systems with
 @code{Gtk+} 2.8 or later installed will have suitable libraries.  OS X
-comes with none of these libraries, but @code{cairo} support (without
+comes with none of these libraries (but XQuartz, as used for 10.8 and
+later, ships @code{cairo}), but @code{cairo} support (without
 @code{Pango}) has been added to the binary distribution (see
 @uref{http://r.research.att.com/libs/} you need @code{fontconfig},
 @code{freetype} and @code{pixman} too): @code{pkg-config} is still
@@ -2912,7 +2922,7 @@ this can be suppressed by @option{--without-ICU}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and also
 @code{embedFonts()} use ghostscript
-(@uref{http://www.cs.wisc.edu/@/~ghost}).  This should either be in your
+(@uref{http://www.ghostscript.com/}).  This should either be in your
 path when the command is run, or its full path specified by the
 environment variable @env{R_GSCMD} at that time.
 @enindex R_GSCMD
@@ -2982,7 +2992,7 @@ be supplied at configuration: in the example above this would be
 JAVA_HOME=/usr/lib/jvm/java-1.7.0/jre
 @end example
 
-Another alternative of overriding those setting is to  set
+Another way of overriding those setting is to set
 @enindex R_JAVA_LD_LIBRARY_PATH
 @env{R_JAVA_LD_LIBRARY_PATH} (e.g.@: in @file{~/.Renviron}), or use
 @file{/etc/ld.so.conf} to specify the Java runtime library paths to
@@ -3009,7 +3019,7 @@ library path when @R{} and all its packages are loaded, not just for the
 Java libraries and JVM.  This can cause problems with conflicts between
 libraries supplied for use with Java and system libraries, and
 @env{JAVA_LD_LIBRARY_PATH} may need to be adjusted.  Where the OS
-supports it, it is better to sent a run-time path (e.g.@: by @option{-R}
+supports it, it is better to set a run-time path (e.g.@: by @option{-R}
 or @option{-rpath}) as part of @env{JAVA_LIBS}.
 
 
@@ -4250,9 +4260,6 @@ be recognized as alphabetic by @code{make.names}.
 @section OS X
 @cindex OS X
 
-@strong{NB:}  Information on OS X is liable to change before release of
-@R{} 3.0.0.
-
 You can build @R{} using Apple's `Command Line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
 with @option{--without-readline}).
@@ -4282,7 +4289,7 @@ with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths()}).  Also use
 @option{--disable-R-framework} to install in the standard layout.
 
-`Command Line Tools for Xcode' used to be part of he Apple
+`Command Line Tools for Xcode' used to be part of the Apple
 Developer Tools (`Xcode') but nowadays need to be installed
 separately.  They can be downloaded from
 @uref{http://developer.apple.com/download} (you will need to register
@@ -4353,6 +4360,8 @@ CXX='g++ -arch x86_64'
 F77='gfortran -arch x86_64'
 OBJC='clang -arch x86_64'
 @end example
+
+@noindent
 in @file{config.site} or on the @command{configure} command line.
 
 Looking at the top of
@@ -4360,7 +4369,7 @@ Looking at the top of
 will show the compilers and configuration options used for the
 @acronym{CRAN} binary package for @R{}: at the time of writing
 @example
---with-system-zlib' --enable-memory-profiling --disable-openmp
+--with-system-zlib --enable-memory-profiling --disable-openmp
 @end example
 @noindent
 was used.
@@ -4439,6 +4448,8 @@ Configure @R{} with
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
 @end example
+
+@noindent
 (for the versions bundled with OS X, use paths starting with
 @file{/System/Library}).
 
@@ -4540,6 +4551,7 @@ The current sources can be checked out by
 @example
 svn co https://svn.r-project.org/R-packages/trunk/Mac-GUI
 @end example
+@noindent
 This can be built by loading @code{R.xcodeproj} project (select the
 @code{R} target and the @code{SnowLeopard64} or @code{Lion64}
 configuration), or from the command-line by e.g.@:
@@ -4643,7 +4655,7 @@ JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
   -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
 @end example
-
+@noindent
 With Solaris Studio 12.[23] on Sparc, @code{FCLIBS} needs to be
 
 @example
@@ -4669,7 +4681,7 @@ FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
   /opt/solarisstudio12.3/lib/amd64/libfui.so
   /opt/solarisstudio12.3/lib/amd64/libfsu.so"
 @end example
-
+@noindent
 For 64-bit Sparc, set in @file{config.site} something like
 @example
 FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
@@ -4804,6 +4816,7 @@ FC="/opt/csw/gcc4/bin/gfortran -m32"
 LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
 @end example
 
+@noindent
 (@code{-L/opt/csw/lib} is needed since TexLive 2011 was built using
 32-bit @code{gcc}, and we need @file{/opt/csw/lib} in
 @code{R_LD_LIBRARY_PATH}.)
@@ -5151,6 +5164,7 @@ PATH=c:\Rtools\bin;c:\Rtools\gcc-4.6.3\bin;c:\MiKTeX\miktex\bin;
      c:\R\R-3.0\bin\i386;c:\windows;c:\windows\system32
 @end example
 
+@noindent
 It is essential that the directory containing the command line tools
 comes first or second in the path: there are typically like-named
 tools@footnote{such as @command{sort}, @command{find} and perhaps
