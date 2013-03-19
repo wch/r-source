@@ -63,13 +63,30 @@ hist.default <-
 	} else if(is.function(breaks)) {
 	    breaks <- breaks(x)
 	}
-	if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1L)
-	    stop("invalid number of 'breaks'")
-	breaks <- pretty (range(x), n = breaks, min.n = 1)
-	nB <- length(breaks)
-	if(nB <= 1) ##-- Impossible !
-            stop(gettextf("hist.default: pretty() error, breaks=%s",
-                          format(breaks)), domain = NA)
+        ## if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1L)
+        ##     stop("invalid number of 'breaks'")
+        ## breaks <- pretty (range(x), n = breaks, min.n = 1)
+        ## nB <- length(breaks)
+        ## if(nB <= 1) ##-- Impossible !
+        ##     stop(gettextf("hist.default: pretty() error, breaks=%s",
+        ##                   format(breaks)), domain = NA)
+        if (length(breaks) == 1) {
+            if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1L)
+                stop("invalid number of 'breaks'")
+            breaks <- pretty (range(x), n = breaks, min.n = 1)
+            nB <- length(breaks)
+            if(nB <= 1) ##-- Impossible !
+                stop(gettextf("hist.default: pretty() error, breaks=%s",
+                              format(breaks)), domain = NA)
+        }
+        else {
+            if(!is.numeric(breaks) || length(breaks) <= 1)
+                stop(gettextf("Invalid breakpoints produced by 'breaks(x)': %s",
+                              format(breaks)), domain = NA)
+            breaks <- sort(breaks)
+            nB <- length(breaks)
+            use.br <- TRUE # To allow equidist=FALSE below (FIXME: Find better way?)
+        }
     }
     nB <- as.integer(nB)
     if(is.na(nB)) stop("invalid length(breaks)")

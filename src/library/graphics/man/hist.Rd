@@ -27,12 +27,15 @@ hist(x, \dots)
   \item{breaks}{one of:
     \itemize{
       \item a vector giving the breakpoints between histogram cells,
+      \item a function to compute the vector of breakpoints,
       \item a single number giving the number of cells for the histogram,
       \item a character string naming an algorithm to compute the
       number of cells (see \sQuote{Details}),
       \item a function to compute the number of cells.
     }
-    In the last three cases the number is a suggestion only.
+    In the last three cases the number is a suggestion only.  If
+     \code{breaks} is a function, the \code{x} vector is supplied to it
+     as the only argument. 
   }
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of
@@ -119,7 +122,8 @@ hist(x, \dots)
   \code{\link{nclass.scott}} and \code{\link{nclass.FD}}).
   Case is ignored and partial matching is used.
   Alternatively, a function can be supplied which
-  will compute the intended number of breaks as a function of \code{x}.
+  will compute the intended number of breaks or the actual breakpoints
+  as a function of \code{x}.
 }
 \value{
   an object of class \code{"histogram"} which is a list with components:

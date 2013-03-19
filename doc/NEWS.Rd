@@ -462,6 +462,11 @@
       \item \code{set.seed(NULL)} re-initializes \code{.Random.seed} as
       done at the beginning of the session if not already set.
       (Suggestion of Bill Dunlap.)
+
+      \item The \code{breaks} argument in \code{hist.default()} can now be
+      a function that returns the breakpoints to be used (previously it
+      could only return the suggested number of breakpoints).
+
     }
   }
 
