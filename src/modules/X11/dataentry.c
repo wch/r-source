@@ -1219,7 +1219,7 @@ static void printstring(DEstruct DE, const char *ibuf, int buflen, int row,
 	    for(j=0;*(wcspc+j)!=L'\0';j++)wcs[j]=*(wcspc+j);
 	    wcs[j]=L'\0';
 	    w_p=wcs;
-	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
+	    cnt = (int) wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
 	    if (textwidth(DE, s, (int) strlen(s)) < (bw - DE->text_offset)) break;
 	    *(wcspbuf + i - 2) = L'>';
@@ -2554,7 +2554,7 @@ static void calc_pre_edit_pos(DEstruct DE)
     int i;
     int w;
 
-    xpoint.x = (int) DE->boxw[0];
+    xpoint.x = (short) DE->boxw[0];
     for (i = 1; i < DE->ccol; i++)
 	xpoint.x += BOXW(DE->colmin + i - 1);
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
@@ -2566,7 +2566,7 @@ static void calc_pre_edit_pos(DEstruct DE)
     xpoint.x += (w > BOXW(DE->colmin + DE->ccol - 1)) ?
 	BOXW(DE->colmin + DE->ccol - 1) : w;
     xpoint.x += DE->text_offset;
-    xpoint.y = (int)(DE->hht + (DE->crow+1) * DE->box_h - DE->text_offset);
+    xpoint.y = (short)(DE->hht + (DE->crow+1) * DE->box_h - DE->text_offset);
 
     /*
       <FIXME>

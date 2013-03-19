@@ -430,7 +430,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	return local ? localtime(&t) : gmtime(&t);
     }
 
-    int day = floor(d/86400.0);
+    int day = (int) floor(d/86400.0);
     left = (int) (d - day * 86400.0 + 1e-6); // allow for fractional secs
 
     /* hour, min, and sec */
