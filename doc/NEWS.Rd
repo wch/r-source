@@ -8,6 +8,14 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{type.convert()} (hence \code{read.table()}) returns
+      as character string or factor when representing a numeric input
+      as a double would lose accuracy.  Similarly for complex inputs.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.

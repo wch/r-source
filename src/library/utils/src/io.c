@@ -163,10 +163,14 @@ static int Strtoi(const char *nptr, int base)
     return (int) res;
 }
 
+/* src/main/utils.h */
+extern double R_strtod5(const char *str, char **endptr, char dec, 
+			Rboolean NA, Rboolean exact);
+
 static double
 Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d)
 {
-    return R_strtod4(nptr, endptr, d->decchar, NA);
+    return R_strtod5(nptr, endptr, d->decchar, NA, TRUE);
 }
 
 static Rcomplex
@@ -461,6 +465,7 @@ typedef struct typecvt_possible_types {
     unsigned int isreal     : 1;
     unsigned int iscomplex  : 1;
 } Typecvt_Info;
+
 
 /* Sets fields of typeInfo, ruling out possible types based on s.
  *

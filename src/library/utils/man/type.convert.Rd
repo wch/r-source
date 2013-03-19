@@ -1,6 +1,6 @@
 % File src/library/utils/man/type.convert.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{type.convert}
@@ -34,15 +34,17 @@ type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".")
   Vectors which are entirely missing values are converted to logical,
   since \code{NA} is primarily logical.
 
-  Vectors containing \code{F}, \code{T}, \code{FALSE}, \code{TRUE} or
-  values from \code{na.strings} are converted to logical.  Vectors
+  Vectors containing just \code{F}, \code{T}, \code{FALSE}, \code{TRUE}
+  and values from \code{na.strings} are converted to logical.  Vectors
   containing optional whitespace followed by decimal constants
   representable as \R integers or values from \code{na.strings} are
   converted to integer.  Other vectors containing optional whitespace
   followed by other decimal or hexadecimal constants (see
   \link{NumericConstants}), or \code{NaN}, \code{Inf} or \code{infinity}
   (ignoring case) or values from \code{na.strings} are converted to
-  numeric.
+  numeric.  As from \R 3.1.0, where converting inputs to numeric or
+  complex would result in appreciable loss of accuracy (not just
+  representation error), they are returned as strings or factors.
 
   Since this is a helper function, the caller should always pass an
   appropriate value of \code{as.is}.
