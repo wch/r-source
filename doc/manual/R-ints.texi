@@ -1200,7 +1200,7 @@ length followed by a call to @code{WriteItem} for each element.  The
 code for @code{CHARSXP}s special-cases @code{NA_STRING} and writes it as
 length @code{-1} with no data.  Lengths no more than @code{2^31 - 1} are
 written in that way and larger lengths (which only occur on 64-bit
-sytems) as @code{-1} followed by the upper and lower 32-bits as integers
+systems) as @code{-1} followed by the upper and lower 32-bits as integers
 (regarded as unsigned).
 
 Environments are treated in several ways: as we have seen, some are
@@ -1883,7 +1883,7 @@ compiling the @R{} sources on Windows.
 @section Lazy loading
 
 Lazy loading is always used for code in packages but is optional
-(selected by the package maintiner) for datasets in packages.  When a
+(selected by the package maintainer) for datasets in packages.  When a
 package/namespace which uses it is loaded, the package/namespace
 environment is populated with promises for all the named objects: when
 these promises are evaluated they load the actual code from a database.
@@ -3062,7 +3062,7 @@ one, argument @samp{hadj} to @code{text} will be called as @code{0 ,0.5,
 position.  If it is two, continuous values in the range @code{[0, 1]}
 are assumed to be supported.
 
-Capabability @code{hasTextUTF8} if true, it has two consequences.
+Capability @code{hasTextUTF8} if true, it has two consequences.
 First, there are callbacks @code{textUTF8} and @code{strWidthUTF8} that
 should behave identically to @code{text} and @code{strWidth} except that
 @samp{str} is assumed to be in UTF-8 rather than the current locale's
