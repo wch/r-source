@@ -2770,275 +2770,8 @@ and contributed code, especially @R{} packages.  Users of @R{} are
 encouraged to join in the collaborative project and to submit their own
 packages to @acronym{CRAN}.
 
-Before submitting a package @var{mypkg}, read the CRAN policies linked
-from @uref{http://CRAN.R-project.org/web/packages/} and note that by
-submitting a package you are confirming that your package complies with
-them.  If this is a package new to CRAN, confirm that you have read and
-agree to those policies in your submission email.
-
-Next, do run the following steps to test it is complete and will install
-properly.  (Run from the directory containing @file{@var{mypkg}} as a
-subdirectory.)
-
-@enumerate
-@item
-Run @command{R CMD build} to make the release @file{.tar.gz} file.
-
-@item
-Run @command{R CMD check --as-cran} on the @file{.tar.gz} file to check
-that the package will install and will run its examples, and that the
-documentation is complete and can be processed.  If the package contains
-code that needs to be compiled, try to enable a reasonable amount of
-diagnostic messaging (``warnings'') when compiling, such as e.g.@:
-@option{-Wall -pedantic} for tools from GCC, the @acronym{GNU} Compiler
-Collection.  If @R{} was not configured accordingly, one can achieve
-this @emph{via} personal @file{Makevars} files.
-@ifset UseExternalXrefs
-@xref{Customizing package compilation, , Customizing package compilation,
- R-admin,  R Installation and Administration},
-@end ifset
-
-Note that it is particularly important to use @option{-Wall -pedantic}
-with C++ code: the @acronym{GNU} C++ compiler has many extensions which
-are not supported by other compilers, and this will report @emph{some}
-of them (such as the misuse of variable-length arrays).  If possible,
-check C++ code on a standards-conformant compiler.
-
-Although there is now a 2011 version of the C++ standard, it is not yet
-implemented (nor is it likely to be widely available for some years) and
-portable C++ code needs to follow the 1998 standard (and not use
-features from C99).
-
-Similarly, the 2011 C standard is unlikely to be widely implemented for
-several years.
-
-@item
-Study the output from running your examples, in file
-@file{@var{mypkg}.Rcheck/@var{mypkg}-Ex.Rout}.  Often warnings there
-indicate actual errors, and warnings about your mistakes (which the @R{}
-developers are warning you that they are working around for you) will
-just annoy or confuse your users.
-
-If your package has tests or vignettes, study their output too.
-
-@item
-Look for any problems with help file conversions.  For example, you
-should
-@itemize
-@item
-Read through the PDF manual that was produced by @code{R CMD check} at
-@file{@var{mypkg}.Rcheck/@var{mypkg}-manual.pdf}, or produce another copy by
-@code{R CMD Rd2pdf @var{mypkg}}.
-
-@item
-Look at the rendering of your help pages in text from within @R{}.
-@end itemize
-
-Many aspects of help rendering changed in @R{} 2.10.0, and in particular
-the interpretation of comment lines (which are rendered as blank lines,
-so do not put comment lines in the middle of a paragraph of text).
-
-@item
-Ensure that the package sources are not unnecessarily large.  In
-particular, @command{R CMD check} will report@footnote{provided a
-POSIX-compliant @command{du} program is found on the system: it is
-possible that some other @command{du} programs will incorrectly report
-double the actual size.  This can be disabled by setting
-@env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of
-more than 5Mb, detailing directories of more than 1Mb.  It warns about
-inefficient compression of data: @command{R CMD build --resave-data}
-will compact data as best it can.
-
-Watch out for unnecessary files in @file{inst/doc}: @command{R CMD
-check} will note files of types that probably should be installed, but
-it cannot distinguish PDF figures from PDF documents.  If files need to
-be in @file{inst/doc} but not installed, use a @file{.Rinstignore} file.
-
-The CRAN policy is that @file{doc} directories should not exceed 5Mb,
-and where @file{data} directories need to be more than 5--10Mb,
-consideration should be given to a separate package containing just the
-data.  (Similarly for external data directories, large @file{jar} files
-and other libraries that need to be installed.)
-
-See below for ways to reduce the size of PDF files such as vignettes.
-
-@item
-Ensure that checking the package takes no more time than is needed (the
-CRAN check farm is a resource shared between several thousand packages).
-
-See below for ways to find out where your package checks are taking
-significant time.
-@end enumerate
-
-@noindent
-Please ensure that you can run through the complete procedure with only
-warnings that you understand and have reasons not to eliminate.  In
-principle, packages must pass @code{R CMD check} without warnings or
-significant notes to be admitted to the main @acronym{CRAN} package
-area.  If there are warnings or notes you cannot eliminate (for example
-because you believe them to be spurious) send an explanatory note as
-part of your covering email.
-
-When all the testing is done, upload the @file{.tar.gz} file, using
-@samp{anonymous} as log-in name and your e-mail address as password, to
-@uref{ftp://CRAN.R-project.org/@/incoming/} (note: use
-@samp{ftp}@footnote{for Windows users the simplest way may be to open
-that URL in Internet Explorer and (depending on the version) follow the
-instructions to view it as a folder, then copy the submission to the
-folder.} and not @samp{sftp} to connect to this server, and passive
-@samp{ftp} is more often successful) and send a message to
-@email{CRAN@@R-project.org} about it (with your package name and version
-in the subject line of the form ``CRAN submission @var{package}
-@var{version}'', and please do not submit a package by email).  For a
-new submission, please note in the message that you have read and agreed
-to the CRAN policies.
-
-The @acronym{CRAN} maintainers will run these tests before putting a
-submission online.  (They will use the latest development version of
-@R{}, so if at all possible so should you.)
-
-Please note that submissions without an accompanying email to
-@email{CRAN@@R-project.org} will not be processed, and that emails
-should not be sent personally to members of the CRAN team.
-
-Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux,
-Fedora and Solaris check systems on @acronym{CRAN} use current
-TexLive; the Windows @acronym{CRAN} builder uses a reasonably recent
-version of MikTeX (including all packages available directly for
-MikTeX); the OS X builder uses a current full version of MacTeX,
-which includes all of the current TeXLive.  Developers wanting to have
-their vignettes use @TeX{} packages or style files not (yet) included
-in these distributions should add@footnote{if their license allows:
-this often requires also including the corresponding @file{.dtx}
-file.} the style files to the @file{vignettes} (or for the legacy
-layout, @file{inst/doc}) subdirectory of their package.
-
-@menu
-* PDF size::                    
-* Package timing::              
-* Windows external software::   
-@end menu
-
-@node PDF size, Package timing, Submitting a package to CRAN, Submitting a package to CRAN
-@subsection PDF size
-
-There are a several tools available to reduce the size of PDF files,
-including Adobe Acrobat (not Reader), Apple's Preview@footnote{Select
-`Save as', and select `Reduce file size' from the `Quartz filter' menu':
-this can be accessed in other ways, for example by Automator.},
-@command{qpdf} (@uref{http://qpdf.sourceforge.net/}), and Ghostscript
-(which converts PDF to PDF by
-
-@example
-ps2pdf @var{options} -dAutoRotatePages=/None @var{in}.pdf @var{out}.pdf
-@end example
-
-@noindent
-and suitable options might be
-
-@example
--dPDFSETTINGS=/ebook
--dPDFSETTINGS=/screen
-@end example
-
-@noindent
-; see @uref{http://www.ghostscript.com/@/doc/@/9.04/@/Ps2pdf.htm} for
-more such and consider all the options for image downsampling) as well
-as numerous commercial and shareware Windows programs.  Note that these
-do not all try the same size-reduction strategies, and Acrobat and
-@command{ps2pdf} can sometimes do much better at reducing the size of
-embedded bitmap images, and @command{ps2pdf} does not use PDF object
-compression (see below).
-
-Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
-for Windows and packages in Debian/Ubuntu/Fedora 17, and is installed as
-part of the @acronym{CRAN} OS X distribution of @R{}), there is an
-option @option{--compact-vignettes} to @command{R CMD build} to run
-@command{qpdf} over PDF files under @file{inst/doc} and replace them if
-at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
-command can be supplied as environment variable @env{R_QPDF} (and is on
-the CRAN binary of @R{} for OS X).  This option can take values
-@samp{qpdf} (the default) as well as @samp{gs} or @samp{both} to try
-harder to reduce the size.  These should definitely be tried before
-submission to CRAN for packages with more than 250Kb of PDF files: as
-@samp{gs} may make lossy changes such as downsampling bitmap images, do
-examine the results and if necessary use @command{ps2pdf} or
-@code{tools::compactPDF} directly.
-
-Most of the large PDFs we have encountered have been large because of
-the inclusion of figures, for example complex figures from @R{} (where
-@file{.png} versions may be more appropriate, and PDF compression was
-not used by @code{pdf()} prior to @R{} 2.14.0, so it may help to
-re-generate them) and screendumps.  However, some have been
-unnecessarily large due to @command{pdftex} settings.  The modern
-default is to use both PDF compression and PDF object compression (which
-needs PDF version 1.5 from 2003): this is the default in most @TeX{}
-distributions but not MiKTeX.  It can be overridden by code in the
-preamble of an Sweave or @LaTeX{} file: see how this is done for the
-@R{} reference manual at
-@uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
-
-@node Package timing, Windows external software, PDF size, Submitting a package to CRAN
-@subsection Package timing
-
-There are several ways to find out where time is being spent in the
-check process.  Start by setting the environment variable
-@env{_R_CHECK_TIMINGS_} to @samp{0}.  This will report the total CPU
-times (not Windows) and elapsed times for installation and running
-examples, tests and vignettes, under each sub-architecture if
-appropriate.  For tests and vignettes, it reports the time for each as
-well as the total.
-
-Setting @env{_R_CHECK_TIMINGS_} to a non-zero value sets a threshold (in
-seconds elapsed time) for reporting timings.
-
-If you need to look in more detail at the timings for examples, use
-option @option{--timings} to @command{R CMD check}.  This generates a
-file called @file{@var{mypkg}.Rcheck/@var{mypkg}-Ex.timings}
-containing timings for each help files (as given by
-@code{system.time()}).  It is a tab-delimited file which can be read
-into @R{} for further analysis.
-
-Timings for the tests and vignette runs are given at the bottom of the
-corresponding log file: note that log files for successful vignette runs
-are only retained if @env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_} is set
-to a true value.
-
-
-@node Windows external software,  , Package timing, Submitting a package to CRAN
-@subsection Windows external software
-
-Note that @acronym{CRAN} does not accept submissions of precompiled
-binaries due to security concerns, and does not allow binary executables
-in source packages.  Maintainers who need additional software for the
-Windows binaries of their packages on @acronym{CRAN} have three options
-@enumerate
-@item
-To arrange for installation of the package to download the
-additional software from a URL, as e.g.@: package @CRANpkg{Cairo} does.
-
-@item
-To negotiate with Uwe Ligges to host the additional components on
-WinBuilder, and write a @file{configure.win} file to install them.
-There are used to be many examples, e.g.@: package @CRANpkg{rgdal} (however
-nowadays CRAN prefers to use a uniform cross-compilation approach for
-software such as GDAL).
-
-@item
-To negotiate with Brian Ripley to host the package on @acronym{CRAN}
-extras, as was done for package @pkg{BRugs} versions 0.5-x.
-@end enumerate
-
-@noindent
-Be aware that in all cases license requirements will need to be met so
-you may need to supply the sources for the additional components (and
-will if your package has a GPL-like license).
-
-Also be aware that there are both 32- and 64-bit builds of @R{} for
-Windows with a combined distribution of binary packages, so the
-@acronym{CRAN} team will be unwilling to support a package that works
-under just one of the architectures.
-
+Current submission instructions are linked from
+@uref{http://cran.r-project.org/banner.shtml}.
 
 @node Package namespaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
 @section Package namespaces
@@ -3624,7 +3357,13 @@ unambiguously set methods on those generics.
 @node Writing portable packages, Diagnostic messages, Package namespaces, Creating R packages
 @section Writing portable packages
 
+This section contains advice on writing packages to be used on multiple
+platforms or for distribution (for example to be submitted to a package
+repository such as @acronym{CRAN}).
+
 @menu
+* PDF size::                    
+* Check timing::                
 * Encoding issues::             
 * Binary distribution::         
 @end menu
@@ -3633,7 +3372,9 @@ Portable packages should have simple file names: use only alphanumeric
 @acronym{ASCII} characters and @code{.}, and avoid those names not
 allowed under Windows which are mentioned above.
 
-@code{R CMD check} provides a basic set of checks, but often further
+Use @command{R CMD build} to make the release @file{.tar.gz} file.
+
+@command{R CMD check} provides a basic set of checks, but often further
 problems emerge when people try to install and use packages submitted to
 @acronym{CRAN} -- many of these involve compiled code.  Here are some
 further checks that you can do to make your package more portable.
@@ -3642,10 +3383,8 @@ further checks that you can do to make your package more portable.
 
 @item
 If your package has a @file{configure} script, provide a
-@file{configure.win} script to be used on Windows.  The @acronym{CRAN}
-binary packages for Windows are built automatically, and if your package
-does not build without intervention it is unlikely to be easily
-available to a high proportion of @R{} users.
+@file{configure.win} script to be used on Windows (an empty file if no
+actions are needed).
 
 @item
 If your package has a @file{Makevars} or @file{Makefile} file, make sure
@@ -3681,13 +3420,25 @@ use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
 
 @item
 Make use of the abilities of your compilers to check the
-standards-conformance of your code.  For example, @command{gcc} can be used
-with options @option{-Wall -pedantic} to alert you to potential
+standards-conformance of your code.  For example, @command{gcc} can be
+used with options @option{-Wall -pedantic} to alert you to potential
 problems.  This is particularly important for C++, where @code{g++ -Wall
 -pedantic} will alert you to the use of GNU extensions which fail to
-compile on most other C++ compilers.  @R{} assumes a C99 compiler as
-from version 2.12.0, but if you want your package to be portable to
-earlier versions you should write in C90.
+compile on most other C++ compilers. If @R{} was not configured
+accordingly, one can achieve this @emph{via} personal @file{Makevars}
+files.
+@ifset UseExternalXrefs
+@xref{Customizing package compilation, , Customizing package compilation,
+ R-admin,  R Installation and Administration},
+@end ifset
+
+Although there is a 2011 version of the C++ standard, it is not yet
+fully implemented (nor is it likely to be widely available for some
+years) and portable C++ code needs to follow the 1998 standard (and not
+use features from C99).
+
+Similarly, the 2011 C standard is unlikely to be widely implemented for
+several years.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
@@ -3721,11 +3472,11 @@ or @code{exit}: these terminate the user's @R{} process, quite possibly
 including all his unsaved work.  One usage that could call @code{abort}
 is the @code{assert} macro in C or C++ functions, which should never be
 active in production code.  The normal way to ensure that is to define
-the macro @code{NDEBUG}, and as from @R{} 2.15.0 @command{R CMD INSTALL}
-does so as part of the compilation flags.  If you wish to use
-@code{assert} during development. you can include @code{-UNDEBUG} in
-@code{PKG_CPPFLAGS}.  Note that your own @file{src/Makefile} or
-makefiles in sub-directories may also need to define @code{NDEBUG}.
+the macro @code{NDEBUG}, and @command{R CMD INSTALL} does so as part of
+the compilation flags.  If you wish to use @code{assert} during
+development. you can include @code{-UNDEBUG} in @code{PKG_CPPFLAGS}.
+Note that your own @file{src/Makefile} or makefiles in sub-directories
+may also need to define @code{NDEBUG}.
 
 This applies not only to your own code but to any external software you
 compile in or link to.
@@ -3756,8 +3507,9 @@ good way to avoid this.
 @item
 Conflicts between symbols in DLLs are handled in very platform-specific
 ways.  Good ways to avoid trouble are to make as many symbols as
-possible static (check with @code{nm -pg}), and to use unusual names, as
-well as ensuring you have used the @code{PACKAGE} argument.
+possible static (check with @code{nm -pg}), and to use names which are
+clearly tied to your package (which also helps users is anthing does go
+wrong).
 
 @item
 It is not portable to call compiled code in @R{} or other packages
@@ -3768,20 +3520,97 @@ process.
 
 @item
 Do not use (hard or symbolic) file links in your package sources.
-@command{R CMD build} packages the tarball with the @option{-h}
-@command{tar} flag which is documented to dereference links so this is
-not usually a problem, but versions 1.24 and later of GNU @command{tar}
-dereference some links to hard links which may not be handled correctly
-by @command{R CMD INSTALL}.
+Where possible @command{R CMD build} will replace them by copies.
 
 @item
-If you do not yourself have a Windows system, submit your source package
-to WinBuilder (@uref{http://win-builder.r-project.org/}) before
-distribution (including submission to @acronym{CRAN}).
+If you do not yourself have a Windows system, consider submitting your
+source package to WinBuilder (@uref{http://win-builder.r-project.org/})
+before distribution.
 
 @end itemize
 
-@node Encoding issues, Binary distribution, Writing portable packages, Writing portable packages
+@node PDF size, Check timing, Writing portable packages, Writing portable packages
+@subsection PDF size
+
+There are a several tools available to reduce the size of PDF files:
+often the size can be reduced substantially with no or minimal loss in
+quality. Not only do large files take up space: they can stress the PDF
+viewer and take many minutes to print (if they can be printed at all).
+
+@command{qpdf} (@uref{http://qpdf.sourceforge.net/}) can compress
+losslessly.  It is fairly readily available ((e.g.@: it has binaries for
+Windows and packages in Debian/Ubuntu/Fedora 17, and is installed as
+part of the @acronym{CRAN} OS X distribution of @R{}).  @command{R CMD
+build} has an option to run @command{qpdf} over PDF files under
+@file{inst/doc} and replace them if at least 10Kb and 10% is saved.  The
+full path to the @command{qpdf} command can be supplied as environment
+variable @env{R_QPDF} (and is on the CRAN binary of @R{} for OS X).  It
+seems MiKTeX does not use PDF object compression and so @command{qpdf}
+can reduce considerably the files it outputs: MiKTeX can be overridden by
+code in the preamble of an Sweave or @LaTeX{} file --- see how this is done
+for the @R{} reference manual at
+@uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
+
+Other tools can reduce the size of PDFs containing bitmap images at
+excessively high resolution.  These are often best re-generated (for
+example @code{Sweave} defaults to 300 ppi, and 100--150 is more
+appropriate for a package manual).  These tools include Adobe Acrobat
+(not Reader), Apple's Preview@footnote{Select `Save as', and select
+`Reduce file size' from the `Quartz filter' menu': this can be accessed
+in other ways, for example by Automator.}  and Ghostscript (which
+converts PDF to PDF by
+
+@example
+ps2pdf @var{options} -dAutoRotatePages=/None @var{in}.pdf @var{out}.pdf
+@end example
+
+@noindent
+and suitable options might be
+
+@example
+-dPDFSETTINGS=/ebook
+-dPDFSETTINGS=/screen
+@end example
+
+@noindent
+; see @uref{http://www.ghostscript.com/@/doc/@/9.07/@/Ps2pdf.htm} for
+more such and consider all the options for image downsampling).   We
+come across occasionally large PDF files containing excessively
+complicated figures using PDF vector graphics: such figures are often
+best redesigned or failing that, output as PNG files.
+
+Option @option{--compact-vignettes} to @command{R CMD build} defaults to
+value @samp{qpdf}: use @samp{both} to try harder to reduce the size.
+
+@node Check timing, Encoding issues, PDF size, Writing portable packages
+@subsection Check timing
+
+There are several ways to find out where time is being spent in the
+check process.  Start by setting the environment variable
+@env{_R_CHECK_TIMINGS_} to @samp{0}.  This will report the total CPU
+times (not Windows) and elapsed times for installation and running
+examples, tests and vignettes, under each sub-architecture if
+appropriate.  For tests and vignettes, it reports the time for each as
+well as the total.
+
+Setting @env{_R_CHECK_TIMINGS_} to a non-zero value sets a threshold (in
+seconds elapsed time) for reporting timings.
+
+If you need to look in more detail at the timings for examples, use
+option @option{--timings} to @command{R CMD check}.  This adds a summary
+to the check output for all the examples with CPU or elapsed time of
+more than 5 seconds. It produces a file
+@file{@var{mypkg}.Rcheck/@var{mypkg}-Ex.timings} containing timings for
+each help file: it is a tab-delimited file which can be read into @R{}
+for further analysis.
+
+Timings for the tests and vignette runs are given at the bottom of the
+corresponding log file: note that log files for successful vignette runs
+are only retained if @env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_} is set
+to a true value.
+
+
+@node Encoding issues, Binary distribution, Check timing, Writing portable packages
 @subsection Encoding issues
 
 Care is needed if your package contains non-@acronym{ASCII} text, and in
@@ -3870,6 +3699,30 @@ For OS X, using @code{R CMD otool -L} on the package's shared objects
 under @file{libs} will show what they depend on: watch for any
 dependencies in @file{/usr/local/lib}, notably
 @file{libgfortran.2.dylib}.
+
+Many people (including the @acronym{CRAN} package repository) will not
+accept source packages containing binary files as the latter are a
+security risk.  If you want to distribute a source package which needs
+external software on Windows or OS X, options include
+@itemize
+@item
+To arrange for installation of the package to download the
+additional software from a URL, as e.g.@: package @CRANpkg{Cairo} does.
+
+@item
+To negotiate with Uwe Ligges to host the additional components on
+WinBuilder, and write a @file{configure.win} file to install them.
+There used to be many examples, e.g.@: package @CRANpkg{rgdal} (however
+nowadays CRAN prefers to use a uniform cross-compilation approach for
+software such as GDAL).
+
+@end itemize
+
+@noindent
+Be aware that license requirements will need to be met so you may need
+to supply the sources for the additional components (and will if your
+package has a GPL-like license).
+
 
 @node Diagnostic messages, Internationalization, Writing portable packages, Creating R packages
 @section Diagnostic messages
