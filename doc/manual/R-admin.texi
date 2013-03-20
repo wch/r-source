@@ -4314,8 +4314,11 @@ from the Xcode distribution.  This is a version of gcc 4.2.1 with an
 LLVM backend.
 
 @item @command{gfortran}
-from @uref{http://r.research.att.com/tools}: there are versions of
-gfortran 4.2.x there to match various versions of Xcode.
+from
+@uref{http://cran.r-project.org/bin/macosx/tools/gfortran-4.2.3.pkg}.
+Note that this installs into @file{/usr/local/bin}, so make sure that is
+on your path.  Other compilers from
+@uref{http://r.research.att.com/tools/} can also be used.
 
 @item @command{clang}
 from the Xcode distribution, to compile the Objective-C parts of the
@@ -4326,15 +4329,16 @@ To use these, have in @file{config.site} something like
 
 @example
 CC="llvm-gcc-4.2"
-CXX="llvn-g++-4.2"
-F77="gfortran-4.2"
+CXX="llvm-g++-4.2"
+F77="gfortran-4.2 -arch x86_64"
 FC=$F77
 OBJC="clang"
 @end example
 
 @noindent
 Full names are not needed, but help to ensure that the intended
-compilers are used.
+compilers are used.  And the recommended Fortran compiler defaults to
+32-bit, so @code{-arch x86_64} is needed.
 
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
@@ -4358,15 +4362,8 @@ routines.  (Use of @code{Accelerate} with @option{--with-lapack} does
 not work on Snow Leopard: it may work there without.)
 
 Recent compilers default to 64-bit, but some older ones default to
-32-bit.  It may be necessary to explicitly specify the architecture by
-e.g.@:
-
-@example
-CC='gcc -arch x86_64'
-CXX='g++ -arch x86_64'
-F77='gfortran -arch x86_64'
-OBJC='clang -arch x86_64'
-@end example
+32-bit.  It may be necessary to explicitly specify the architecture as
+done for @command{gfortran-4.2} above.
 
 @noindent
 in @file{config.site} or on the @command{configure} command line.
