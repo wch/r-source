@@ -8,6 +8,7 @@
 \alias{[[.data.frame}
 \alias{[<-.data.frame}
 \alias{[[<-.data.frame}
+\alias{$.data.frame}
 \alias{$<-.data.frame}
 \title{Extract or Replace Parts of a Data Frame}
 \description{
@@ -18,6 +19,7 @@
 \method{[}{data.frame}(x, i, j) <- value
 \method{[[}{data.frame}(x, ..., exact = TRUE)
 \method{[[}{data.frame}(x, i, j) <- value
+\method{$}{data.frame}(x, name)
 \method{$}{data.frame}(x, name) <- value
 }
 \arguments{
@@ -50,10 +52,12 @@
   \code{x[[i]]}), they index the data frame as if it were a list.  In
   this usage a \code{drop} argument is ignored, with a warning.
 
-  There is no \code{data.frame} method for \code{$}, so \code{x$name}
-  uses the default method which treats \code{x} as a list.  There is a
-  replacement method which checks \code{value} for the correct number
-  of rows, and replicates it if necessary.
+  The \code{data.frame} method for \code{$}, treats \code{x} as a
+  list, except that (as of R-3.1.0) partial matching of \code{name} to
+  the names of \code{x} will generate a warning; this may become an
+  error in future versions.  The replacement method checks
+  \code{value} for the correct number of rows, and replicates it if
+  necessary.
 
   When \code{[} and \code{[[} are used with two indices (\code{x[i, j]}
   and \code{x[[i, j]]}) they act like indexing a matrix:  \code{[[} can

@@ -30,6 +30,12 @@
       \item [On Apr 12] \code{.find.package()} and \code{.path.package()} are
       defunct: only the public versions without the dot have ever
       been in the API.
+
+      \item Partial matching when using the \code{$} operator on data
+      frames now throws a warning and may become defunct in the
+      future. If partial matching is intended, replace \code{foo$bar}
+      with \code{foo[["bar", exact=FALSE]]}.
+
     }
   }
 }

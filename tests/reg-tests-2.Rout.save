@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2013-01-08 r61587) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-19 r62316) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin11.4.2/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3263,16 +3263,16 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 > meth2gen <- function(cl)
 +     noquote(sub(paste("\\.",cl,"$",sep=""),"", c(methods(class = cl))))
 > meth2gen("data.frame")
- [1] $<-           Math          Ops           Summary       [            
- [6] [<-           [[            [[<-          aggregate     anyDuplicated
-[11] as.data.frame as.list       as.matrix     by            cbind        
-[16] dim           dimnames      dimnames<-    droplevels    duplicated   
-[21] edit          format        formula       head          is.na        
-[26] merge         na.exclude    na.omit       plot          print        
-[31] prompt        rbind         row.names     row.names<-   rowsum       
-[36] split         split<-       stack         str           subset       
-[41] summary       t             tail          transform     unique       
-[46] unstack       within       
+ [1] $             $<-           Math          Ops           Summary      
+ [6] [             [<-           [[            [[<-          aggregate    
+[11] anyDuplicated as.data.frame as.list       as.matrix     by           
+[16] cbind         dim           dimnames      dimnames<-    droplevels   
+[21] duplicated    edit          format        formula       head         
+[26] is.na         merge         na.exclude    na.omit       plot         
+[31] print         prompt        rbind         row.names     row.names<-  
+[36] rowsum        split         split<-       stack         str          
+[41] subset        summary       t             tail          transform    
+[46] unique        unstack       within       
 > meth2gen("dendrogram")
  [1] [[         as.hclust  cophenetic cut        labels     merge     
  [7] plot       print      reorder    rev        str       
@@ -6398,15 +6398,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7ff61cd6daa8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7fcddbe7b378> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7ff61cd33f08> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7fcddbe3b2a0> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7ff61cd33f08> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7fcddbe3b2a0> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
