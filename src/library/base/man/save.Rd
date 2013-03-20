@@ -1,6 +1,6 @@
 % File src/library/base/man/save.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{save}
@@ -13,9 +13,8 @@
   date by using the function \code{load} (or \code{data} in some cases).
 
   \code{save.image()} is just a short-cut for \sQuote{save my current
-    workspace},
-  i.e., \code{save(list = ls(all = TRUE), file = ".RData")}.  It is also what
-  happens with \code{\link{q}("yes")}.
+    workspace}, i.e., \code{save(list = ls(all = TRUE), file =
+    ".RData")}.  It is also what happens with \code{\link{q}("yes")}.
 }
 \usage{
 save(\dots, list = character(),
@@ -34,7 +33,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     saved.}
   \item{file}{a (writable binary-mode) \link{connection} or the name of the
     file where the data will be saved (when \link{tilde expansion}
-    is done).  Must be a file name for \code{version = 1}.}
+    is done).  Must be a file name for \code{save.image} or
+    \code{version = 1}.}
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is
     written.  The default value of \code{ascii} is \code{FALSE} which
     leads to a binary file being written.}
@@ -45,10 +45,10 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{envir}{environment to search for objects to be saved.}
   \item{compress}{logical or character string specifying whether saving
     to a named file is to use compression.  \code{TRUE} corresponds to
-    \command{gzip} compression, and (from \R 2.10.0) character strings
-    \code{"gzip"}, \code{"bzip2"} or \code{"xz"} specify the
-    type of compression.  Ignored when \code{file} is a connection
-    and for workspace format version 1.}
+    \command{gzip} compression, and character strings \code{"gzip"},
+    \code{"bzip2"} or \code{"xz"} specify the type of
+    compression.  Ignored when \code{file} is a connection and
+    for workspace format version 1.} 
   \item{compression_level}{integer: the level of compression to be
     used.  Defaults to \code{6} for \command{gzip} compression and to
     \code{9} for \command{bzip2} or \command{xz} compression.}
@@ -87,18 +87,17 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{"save.defaults"} for function \code{save.image} (which allows
   this to have different defaults).
 
-  A connection that is not already open will be opened in mode
-  \code{"wb"}.
+  A connection that is not already open will be opened in mode \code{"wb"}.
 }
 
 \section{Compression}{
   Large files can be reduced considerably in size by compression.  A
-  particular 46MB dataset was saved as 35MB without compression in 2
+  particular 46MB object was saved as 35MB without compression in 2
   seconds, 22MB with \command{gzip} compression in 8 secs, 19MB with
   \command{bzip2} compression in 13 secs and 9.4MB with \command{xz}
   compression in 40 secs.  The load times were 1.3, 2.8, 5.5 and 5.7
   seconds respectively.  These results are indicative, but the relative
-  performances do depend on the actual file and \command{xz} did
+  performances do depend on the actual file: \command{xz} compressed
   unusually well here.
 
   It is possible to compress later (with \command{gzip}, \command{bzip2}
@@ -118,11 +117,6 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
       cannot open compressed file '.RDataTmp',
       probable reason 'Permission denied'
 }
-
-  The defaults were changed to use compressed saves for \code{save} in
-  2.3.0 and for \code{save.image} in 2.4.0.  Any recent version of \R
-  can read compressed save files, and a compressed file can be
-  uncompressed (by \code{gzip -d}) for use with very old versions of \R.
 #ifdef windows
 
   \code{file} can be a UTF-8-encoded filepath that cannot be translated to
