@@ -1897,6 +1897,13 @@ CFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
 CXXFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
 @end example
 
+@noindent
+and for at least one version of @command{gfortran-4.2} we needed
+@example
+FLIBS=-lgfortran
+@end example
+
+
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
 @subsection Customizing package compilation
 
