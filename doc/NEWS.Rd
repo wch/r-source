@@ -11,7 +11,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{type.convert()} (hence \code{read.table()}) returns
-      as character string or factor when representing a numeric input
+      a character vectors or factor when representing a numeric input
       as a double would lose accuracy.  Similarly for complex inputs.
     }
   }
@@ -19,17 +19,17 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.
-
-      \code{chol(LINPACK = TRUE)}, \code{ch2inv(LINPACK = TRUE)},
-      \code{eigen(EISPACK = TRUE)}, \code{solve(LINPACK = TRUE)} and
-      \code{svd(LINPACK = TRUE)} use LAPACK and no longer warn.
+      
+      Arguments \code{EISPACK} for \code{eigen()} and \code{LINPACK} for
+      \code{chol()}, \code{ch2inv()}, \code{solve()} and \code{svd()}
+      are ignored: LAPACK is always used.
 
       \item [Intended] The long-deprecated use of \code{\\synopsis} in the
       \samp{Usage} section of \file{.Rd} files has been removed.
 
-      \item [On Apr 12] \code{.find.package()} and \code{.path.package()} are
-      defunct: only the public versions without the dot have ever
-      been in the API.
+      \item [On Apr 12] \code{.find.package()} and
+      \code{.path.package()} are defunct: only the public versions
+      without the dot have ever been in the API.
 
       \item Partial matching when using the \code{$} operator on data
       frames now throws a warning and may become defunct in the
