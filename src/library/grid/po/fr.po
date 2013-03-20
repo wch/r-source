@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-10-02 09:51+0100\n"
-"PO-Revision-Date: 2010-10-01 20:58+0100\n"
+"PO-Revision-Date: 2013-03-19 12:10+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,48 +16,41 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: grid.c:214
-#, fuzzy
 msgid "cannot clip to rotated viewport"
-msgstr "Impossible de couper une vue pivotée"
+msgstr "impossible de couper une vue pivotée"
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-#, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
-"Impossible de rendre la vue de plus haut niveau active (grid et sorties "
-"graphiques mixées ?)"
+"impossible de rendre la vue de plus haut niveau active (sorties 'grid' et "
+"'graphics' mixées ?)"
 
 #: grid.c:952
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
 #: grid.c:1232
-#, fuzzy
 msgid "there is no layout defined"
-msgstr "Aucune mise en page définie"
+msgstr "aucune mise en page définie"
 
 #: grid.c:1452
-#, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
-msgstr "Polygône non trouvé (longueur ou largeur nulle?)"
+msgstr "extrémité de polygone non trouvé (longueur ou largeur nulle?)"
 
 #: grid.c:1461
-#, fuzzy
 msgid "polygon edge not found"
-msgstr "Extrémités de polygône non trouvées"
+msgstr "extrémités de polygone non trouvés"
 
 #: grid.c:1615
-#, fuzzy
 msgid "require at least two points to draw arrow"
-msgstr "Il faut au moins deux points pour tracer une flêche"
+msgstr "il faut au moins deux points pour tracer une flèche"
 
 #: grid.c:1931
-#, fuzzy
 msgid "non-finite control point in Xspline"
-msgstr "Point de contrôle non fini dans Xspline"
+msgstr "point de contrôle non fini dans Xspline"
 
 #: grid.c:2796
 msgid "non-finite x or y in graphics path"
@@ -68,58 +61,49 @@ msgid "invalid plotting symbol"
 msgstr "symboles graphiques incorrects"
 
 #: grid.c:3372
-#, fuzzy
 msgid "unable to clip to rotated rectangle"
-msgstr "Impossible de couper au rectangle pivoté"
+msgstr "impossible de couper au rectangle pivoté"
 
 #: layout.c:587
-#, fuzzy
 msgid "invalid 'layout.pos.row'"
-msgstr "layout.pos.row incorrect"
+msgstr "'layout.pos.row' incorrect"
 
 #: layout.c:591
-#, fuzzy
 msgid "invalid 'layout.pos.col'"
-msgstr "layout.pos.col incorrect"
+msgstr "'layout.pos.col' incorrect"
 
 #: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "matrice de transformation singulière"
 
 #: state.c:169
-#, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
 "Impossible de conserver l'état de 'grid'. Trop de périphériques ouverts ?"
 
 #: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-#, fuzzy
 msgid "unimplemented unit function"
-msgstr "Fonction d'unité non implémentée"
+msgstr "fonction d'unité non implémentée"
 
 #: unit.c:893 unit.c:1639
-#, fuzzy
 msgid "invalid unit or unit not yet implemented"
-msgstr "Unité non autorisée ou pas encore implémentée"
+msgstr "unité non autorisée ou pas encore implémentée"
 
 #: unit.c:1798
 msgid "Invalid unit"
 msgstr "Unité incorrecte"
 
 #: unit.c:1814
-#, fuzzy
 msgid "'units' must be character"
-msgstr "Les unités doivent être une chaîne de caractères"
+msgstr "les unités dans 'units' doivent être une chaîne de caractères"
 
 #: unit.c:1817
-#, fuzzy
 msgid "'units' must be of length > 0"
-msgstr "Les unités doivent être de longueur > 0"
+msgstr "Les unités dans 'units' doivent être de longueur > 0"
 
 #: viewport.c:317
-#, fuzzy
 msgid "non-finite location and/or size for viewport"
-msgstr "Position et / ou taille de vue non finies"
+msgstr "position et / ou taille de vue non finies"
 
 #~ msgid "Invalid circle radius (must be non-negative)"
 #~ msgstr "Rayon de cercle incorrect (doit être positif ou nul)"

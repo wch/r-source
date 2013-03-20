@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-30 14:07+0000\n"
-"PO-Revision-Date: 2011-10-18 22:44-0600\n"
+"PO-Revision-Date: 2013-03-19 22:36-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -18,8 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
@@ -33,121 +32,128 @@ msgstr "md5 на файле '%s' не удался"
 #: getfmts.c:51
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr ""
+msgstr "разрешается только %d аргументов"
 
 #: getfmts.c:56
 msgid "'fmt' is not a character vector"
-msgstr ""
+msgstr "'fmt' не текстовый вектор"
 
 #: getfmts.c:59
 msgid "'fmt' must be length 1"
-msgstr ""
+msgstr "'fmt' должен быть единичной длины"
 
 #: getfmts.c:65
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr ""
+msgstr "длина 'fmt' превышает максимальную длину формата %d"
 
 #: getfmts.c:86
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr ""
+msgstr "нераспознанное описание формата '%s'"
 
 #: getfmts.c:126
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr ""
+msgstr "самое большее одна звездочка '*' поддерживается в каждом описании преобразования"
 
-#: gramLatex.y:673 gramRd.y:1297
+#: gramLatex.y:673
+#: gramRd.y:1297
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr ""
+msgstr "не могу разместить буфер для длинной подстроки на строке %d"
 
-#: gramLatex.y:910 gramRd.y:1785 gramRd.y:1791
-#, fuzzy, c-format
+#: gramLatex.y:910
+#: gramRd.y:1785
+#: gramRd.y:1791
+#, c-format
 msgid "invalid '%s' value"
-msgstr "неправильный тип аргумента"
+msgstr "неправильное значение '%s'"
 
-#: gramRd.y:295 gramRd.y:298
+#: gramRd.y:295
+#: gramRd.y:298
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
-msgstr ""
+msgstr "плохая разметка (лишний пробел?) на %s:%d:%d"
 
 #: gramRd.y:534
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr ""
+msgstr "Макро '%s' уже определен."
 
 #: gramRd.y:543
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
-msgstr ""
+msgstr "Максимум 4 аргумента разрешены для пользовательских макросов."
 
 #: gramRd.y:577
 #, c-format
 msgid "No macro definition for '%s'."
-msgstr ""
+msgstr "Нет определения макроса для '%s'."
 
-#: gramRd.y:729 gramRd.y:733
+#: gramRd.y:729
+#: gramRd.y:733
 #, c-format
 msgid "newline within quoted string at %s:%d"
-msgstr ""
+msgstr "новая строка внутри закавыченной подстроки на %s:%d"
 
 #: gramRd.y:752
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
-msgstr ""
+msgstr "не могу разместить буфер для длинного макро на строке %d"
 
 #: gramRd.y:782
 msgid "macros nested too deeply: infinite recursion?"
-msgstr ""
+msgstr "макро вложены слишком глубоко: бесконечная рекурсия?"
 
 #: gramRd.y:1165
 #, c-format
 msgid "Unable to find macro %s"
-msgstr ""
+msgstr "Не могу найти макро %s"
 
 #: gramRd.y:1357
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr ""
+msgstr "Неожиданный конец ввода (в %c закавыченная строка открыта на %s:%d:%d)"
 
 #: gramRd.y:1796
 msgid "cannot open the connection"
-msgstr ""
+msgstr "не могу открыть соединение"
 
 #: gramRd.y:1803
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "не могу прочесть из этого соединения"
 
 #: gramRd.y:1811
 msgid "invalid Rd file"
-msgstr ""
+msgstr "неправильный Rd-файл"
 
 #: gramRd.y:1830
 msgid "'deparseRd' only supports deparsing character elements"
-msgstr ""
+msgstr "'deparseRd' поддерживает только deparsing-символы"
 
 #: gramRd.y:1833
 msgid "bad state"
-msgstr ""
+msgstr "плохое состояние"
 
 #: gramRd.y:1846
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
-msgstr ""
+msgstr "плохой текстовый режим %d в 'deparseRd'"
 
 #: http.c:32
 msgid "invalid bind address specification"
-msgstr ""
+msgstr "неправильное описание адреса привязки"
 
-#: install.c:96 install.c:117 install.c:119
-#, fuzzy, c-format
+#: install.c:96
+#: install.c:117
+#: install.c:119
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "неправильный тип аргумента"
+msgstr "неправильный аргумент '%s'"
 
 #: install.c:147
 msgid "write error during file append"
-msgstr ""
+msgstr "ошибка записи в процессе добавления файла"
 
 #: signals.c:43
 msgid "pskill() is not supported on this platform"
@@ -161,6 +167,8 @@ msgstr "psnice()  на этой платформе не поддерживается"
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
-#: text.c:222 text.c:244
+#: text.c:222
+#: text.c:244
 msgid "out of memory"
 msgstr "не хватает памяти"
+

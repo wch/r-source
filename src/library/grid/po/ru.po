@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-10-02 09:51+0100\n"
-"PO-Revision-Date: 2011-10-18 19:36-0600\n"
+"PO-Revision-Date: 2013-03-19 20:00-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -18,48 +18,42 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: grid.c:214
-#, fuzzy
 msgid "cannot clip to rotated viewport"
-msgstr "Не могу обрезать для повернутой оконницы"
+msgstr "не могу обрезать до повернутой оконницы"
 
-#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
-#, fuzzy
+#: grid.c:673
+#: grid.c:678
+#: grid.c:767
+#: grid.c:772
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr ""
-"Не могу извлечь оконницу верхнего уровня (выводы grid и graphics смешались?)"
+msgstr "не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' смешались?)"
 
 #: grid.c:952
 msgid "attempt to plot on null device"
 msgstr "попытка чертить на нулевом устройстве"
 
 #: grid.c:1232
-#, fuzzy
 msgid "there is no layout defined"
-msgstr "Нет заданного эскиза"
+msgstr "нет заданного эскиза"
 
 #: grid.c:1452
-#, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
-msgstr "Край многоугольника не найден (нулевая ширина или высота?)"
+msgstr "край многоугольника не найден (нулевая ширина или высота?)"
 
 #: grid.c:1461
-#, fuzzy
 msgid "polygon edge not found"
-msgstr "Край многоугольника не найден"
+msgstr "край многоугольника не найден"
 
 #: grid.c:1615
-#, fuzzy
 msgid "require at least two points to draw arrow"
-msgstr "Надо как минимум две точки, чтобы нарисовать стрелку"
+msgstr "надо как минимум две точки, чтобы нарисовать стрелку"
 
 #: grid.c:1931
-#, fuzzy
 msgid "non-finite control point in Xspline"
-msgstr "Не-конечная контрольная точка в Xspline"
+msgstr "не-конечная контрольная точка в Xspline"
 
 #: grid.c:2796
 msgid "non-finite x or y in graphics path"
@@ -70,57 +64,55 @@ msgid "invalid plotting symbol"
 msgstr "неправильный символ графика"
 
 #: grid.c:3372
-#, fuzzy
 msgid "unable to clip to rotated rectangle"
-msgstr "Не могу обрезать повернутый четырехугольник"
+msgstr "не могу обрезать до повернутого четырехугольника"
 
 #: layout.c:587
-#, fuzzy
 msgid "invalid 'layout.pos.row'"
-msgstr "неправильный layout.pos.row"
+msgstr "неправильный 'layout.pos.row'"
 
 #: layout.c:591
-#, fuzzy
 msgid "invalid 'layout.pos.col'"
-msgstr "неправильный layout.pos.col"
+msgstr "неправильный 'layout.pos.col'"
 
 #: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "сингулярная трансформационная матрица"
 
 #: state.c:169
-#, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr "Не могу сохранить состояние grid. Открыто слишком много устройств?"
+msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 
-#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
-#, fuzzy
+#: unit.c:260
+#: unit.c:410
+#: unit.c:1204
+#: unit.c:1284
+#: unit.c:1364
+#: unit.c:1444
 msgid "unimplemented unit function"
-msgstr "Не разработанная единичная функция"
+msgstr "не разработанная единичная функция"
 
-#: unit.c:893 unit.c:1639
-#, fuzzy
+#: unit.c:893
+#: unit.c:1639
 msgid "invalid unit or unit not yet implemented"
-msgstr "Неправильная или не разработанная единица"
+msgstr "неправильная или не разработанная единица"
 
 #: unit.c:1798
 msgid "Invalid unit"
 msgstr "Неправильная единица"
 
 #: unit.c:1814
-#, fuzzy
 msgid "'units' must be character"
-msgstr "Единицы должен быть буквами"
+msgstr "единицы должен быть буквами"
 
 #: unit.c:1817
-#, fuzzy
 msgid "'units' must be of length > 0"
-msgstr "Единицы должны быть длиной > 0"
+msgstr "единицы должны быть длиной > 0"
 
 #: viewport.c:317
-#, fuzzy
 msgid "non-finite location and/or size for viewport"
-msgstr "Не-конечное положение и/или размер оконницы"
+msgstr "не-конечное положение и/или размер оконницы"
 
 #~ msgid "Invalid circle radius (must be non-negative)"
 #~ msgstr "Неправильный радиус круга (должен быть неотрицательным)"
+

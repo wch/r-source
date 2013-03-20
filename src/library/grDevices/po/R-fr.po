@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-01-12 10:57\n"
-"PO-Revision-Date: 2011-10-15 15:14+0100\n"
+"PO-Revision-Date: 2013-03-19 12:06+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
+"X-Generator: Poedit 1.5.5\n"
 
 msgid "invalid 'filename'"
 msgstr "argument 'filename' incorrect"
@@ -54,37 +54,30 @@ msgstr "'start' et 'end' doivent être différents et dans [0, 1]."
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' doit être une valeur simple ou 'sRGB'"
 
-#, fuzzy
 msgid "Color space converter: %s"
-msgstr "Convertisseur de l'espace des couleurs :"
+msgstr "Convertisseur de l'espace des couleurs : %s"
 
-#, fuzzy
 msgid "Reference white: %s"
-msgstr "Blanc de référence :"
+msgstr "Blanc de référence : %s"
 
-#, fuzzy
 msgid "display gamma = %s"
-msgstr "gamma d'affichage"
+msgstr "valeur gamma d'affichage = %s"
 
-#, fuzzy
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr "'from' doit être un colorConverter ou une chaîne de caractères"
+msgstr ""
+"'from' doit être un objet \"colorConverter\" ou une chaîne de caractères"
 
-#, fuzzy
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr "'to' doit être un colorConverter ou une chaîne de caractères"
+msgstr "'to' doit être un objet \"colorConverter\" ou une chaîne de caractères"
 
-#, fuzzy
 msgid "'from.ref.white' disagrees with definition of %s"
-msgstr "'from.ref.white' en désaccord avec la définition de"
+msgstr "'from.ref.white' en désaccord avec la définition de %s"
 
-#, fuzzy
 msgid "'to.ref.white' disagrees with definition of %s"
-msgstr "'to.ref.white' en désaccord avec la définition de"
+msgstr "'to.ref.white' en désaccord avec la définition de %s"
 
-#, fuzzy
 msgid "color spaces use different reference whites"
-msgstr "les espaces de couleurs utilisent différents blancs de référence."
+msgstr "les espaces de couleurs utilisent différents blancs de référence"
 
 msgid "'name' must be a character vector"
 msgstr "'name' doit être un vecteur de type chaîne de caractère"
@@ -156,9 +149,8 @@ msgstr "impossible de réinitialiser '%s' car il n'existe pas"
 msgid "invalid options in '%s'"
 msgstr "options incorrectes dans '%s'"
 
-#, fuzzy
 msgid "NOT changing %s"
-msgstr "NE change(nt) PAS"
+msgstr "%s NE change(nt) PAS"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr ""
@@ -225,27 +217,22 @@ msgstr "Format de sortie incorrect"
 msgid "status %d in running command '%s'"
 msgstr "statut %d dans la commande en cours d'exécution '%s'"
 
-#, fuzzy
 msgid "range too small for 'min.n'"
-msgstr "étendue des valeurs trop petite pour min.n"
+msgstr "étendue des valeurs trop petite pour 'min.n'"
 
-#, fuzzy
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
-"Une matrice de pixels doit contenir des chaînes de caractères, des nombres "
+"une matrice de pixels doit contenir des chaînes de caractères, des nombres "
 "ou des valeurs logiques"
 
-#, fuzzy
 msgid "a raster array must be numeric"
-msgstr "Une matrice de pixels doit être numérique"
+msgstr "une matrice de pixels doit être numérique"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 dimensions"
-msgstr "Une matrice de pixels doit avoir exactement 3 dimensions"
+msgstr "une matrice de pixels doit avoir exactement 3 dimensions"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 or 4 planes"
-msgstr "Une matrice de pixels doit avoir exactement 3 ou 4 plans"
+msgstr "une matrice de pixels doit avoir exactement 3 ou 4 plans"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr "'drop' est toujours implicitement faux (FALSE) dans '[.raster'"
@@ -256,21 +243,18 @@ msgstr "indiçage d'image en mode point incorrect"
 msgid "invalid raster subassignment"
 msgstr "sous-assignement d'image en mode point incorrect"
 
-#, fuzzy
 msgid "operator not meaningful for raster objects"
-msgstr "Opérateur incohérent pour des objets de type 'raster'"
+msgstr "opérateur incohérent pour des objets de type 'raster'"
 
 msgid "no current device to record from"
 msgstr "aucun périphérique à partir duquel enregistrer"
 
-#, fuzzy
 msgid "argument is not of class %s"
-msgstr "l'argument n'est pas de classe \"recordedplot\""
+msgstr "l'argument n'est pas de classe %s"
 
-#, fuzzy
 msgid "loading snapshot from pre-3.0.0 R version"
 msgstr ""
-"chargement d'un instantané graphique à partir d'une version de R pre-2.0.0"
+"chargement d'un instantané graphique à partir d'une version de R pre-3.0.0"
 
 msgid "loading snapshot from different R version"
 msgstr ""
@@ -333,14 +317,12 @@ msgstr "'title' incorrect"
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "police Quartz incorrecte : doit être 4 chaînes de caractères"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr "arguments incorrects dans quartzFonts (il faut des noms de police)"
+msgstr "arguments incorrects dans 'quartzFonts' (il faut des noms de police)"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr ""
-"arguments incorrects dans quartzFonts (les arguments doivent être nommés)"
+"arguments incorrects dans 'quartzFonts' (les arguments doivent être nommés)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr ""
@@ -353,13 +335,12 @@ msgstr "famille inconnue pour X11(type = \"Xlib\")"
 msgid "invalid X11 font specification:"
 msgstr "spécification de police X11 incorrecte :"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
-msgstr "arguments incorrects dans '%s' (il faut des noms de police)"
+msgstr "arguments incorrects dans 'X11Fonts' (il faut des noms de police)"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (need named args)"
-msgstr "arguments incorrects dans '%s' (les arguments doivent être nommés)"
+msgstr ""
+"arguments incorrects dans 'X11Fonts' (les arguments doivent être nommés)"
 
 msgid "no such device"
 msgstr "aucun périphérique ne correspond"

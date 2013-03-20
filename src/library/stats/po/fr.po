@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-02-01 14:27+0000\n"
-"PO-Revision-Date: 2012-03-06 21:47+0100\n"
+"PO-Revision-Date: 2013-03-18 22:13+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: Srunmed.c:55
 msgid "bandwidth/span of running medians is larger than n"
@@ -186,28 +186,27 @@ msgstr "fenêtre trop étroite"
 
 #: loglin.c:369
 msgid "this should not happen"
-msgstr ""
+msgstr "ceci ne devrait pas se produire"
 
 #: loglin.c:371
 msgid "algorithm did not converge"
-msgstr ""
+msgstr "l'algorithme n'a pas convergé"
 
 #: loglin.c:373
 msgid "incorrect specification of 'table' or 'start'"
-msgstr ""
+msgstr "spécification de 'table' ou 'start' incorrecte"
 
 #: lowess.c:292
 msgid "'f' must be finite and > 0"
-msgstr ""
+msgstr "'f' doit être fini et > 0"
 
 #: lowess.c:295
-#, fuzzy
 msgid "'iter' must be finite and >= 0"
-msgstr "'maxiter' doit être positif"
+msgstr "'iter' doit être fini et >= 0"
 
 #: lowess.c:298
 msgid "'delta' must be finite and > 0"
-msgstr ""
+msgstr "'delta' doit être fini et > 0"
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
@@ -796,6 +795,8 @@ msgstr "second argument 'size' incorrect"
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""
+"rcont2 [%d,%d]: exp provoque un dépassement mémoire vers le bas à 0; "
+"l'algorithme a échoué"
 
 #: smooth.c:101
 #, c-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-30 14:07+0000\n"
-"PO-Revision-Date: 2011-10-15 17:16+0100\n"
+"PO-Revision-Date: 2013-03-19 20:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
@@ -30,121 +30,131 @@ msgstr "md5 a échoué sur le fichier '%s'"
 #: getfmts.c:51
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr ""
+msgstr "seuls %d arguments sont autorisés"
 
 #: getfmts.c:56
 msgid "'fmt' is not a character vector"
-msgstr ""
+msgstr "'fmt' n'est pas un vecteur de chaînes de caractères"
 
 #: getfmts.c:59
 msgid "'fmt' must be length 1"
-msgstr ""
+msgstr "'fmt' doit avoir une longueur 1"
 
 #: getfmts.c:65
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr ""
+msgstr "la longueur de 'fmt' dépasse le format maximal de longueur %d"
 
 #: getfmts.c:86
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr ""
+msgstr "spécification de format inconnu '%s'"
 
 #: getfmts.c:126
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
+"une seule astérisque '*' est supportée au maximum dans chaque spécification "
+"de conversion "
 
 #: gramLatex.y:673 gramRd.y:1297
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
+"impossibilité d'allouer une zone tampon pour une chaîne longue à la ligne %d"
 
 #: gramLatex.y:910 gramRd.y:1785 gramRd.y:1791
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' value"
-msgstr "type d'argument incorrect"
+msgstr "valeur '%s' incorrecte"
 
 #: gramRd.y:295 gramRd.y:298
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
-msgstr ""
+msgstr "marque erronée (espace additionel ?) à %s:%d:%d"
 
 #: gramRd.y:534
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr ""
+msgstr "La macro '%s' est déjà précédemment définie."
 
 #: gramRd.y:543
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr ""
+"Un maximum de 4 arguments est autorisé pour les macros définies par "
+"l'utilisateur."
 
 #: gramRd.y:577
 #, c-format
 msgid "No macro definition for '%s'."
-msgstr ""
+msgstr "Pas de définition de macro pour '%s'."
 
 #: gramRd.y:729 gramRd.y:733
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr ""
+"retour de ligne à l'intérieur d'une chaîne de caractères entre guillemets à "
+"%s:%d"
 
 #: gramRd.y:752
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr ""
+"impossible d'allouer de la mémoire tampon pour une longue macro à la lign %d"
 
 #: gramRd.y:782
 msgid "macros nested too deeply: infinite recursion?"
-msgstr ""
+msgstr "macros imbriquées trop profondément : récursion infinie ?"
 
 #: gramRd.y:1165
 #, c-format
 msgid "Unable to find macro %s"
-msgstr ""
+msgstr "Macro %s introuvable"
 
 #: gramRd.y:1357
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
+"Fin d'entrée inattendue (dans la chaîne entre guillements %c ouvertes à %s:"
+"%d:%d)"
 
 #: gramRd.y:1796
 msgid "cannot open the connection"
-msgstr ""
+msgstr "impossible d'ouvrir la connexion"
 
 #: gramRd.y:1803
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "impossible de lire depuis cette connexion"
 
 #: gramRd.y:1811
 msgid "invalid Rd file"
-msgstr ""
+msgstr "fichier Rd incorrect"
 
 #: gramRd.y:1830
 msgid "'deparseRd' only supports deparsing character elements"
-msgstr ""
+msgstr "'deparseRd' ne peut décoder que des éléments textuels"
 
 #: gramRd.y:1833
 msgid "bad state"
-msgstr ""
+msgstr "état incorrect"
 
 #: gramRd.y:1846
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
-msgstr ""
+msgstr "mode de texte %d erroné dans 'deparseRd'"
 
 #: http.c:32
 msgid "invalid bind address specification"
-msgstr ""
+msgstr "spécification d'adresse de lien incorrecte"
 
 #: install.c:96 install.c:117 install.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument"
-msgstr "type d'argument incorrect"
+msgstr "argument '%s' incorrect"
 
 #: install.c:147
 msgid "write error during file append"
-msgstr ""
+msgstr "erreur en écriture lors du rajout dans un fichier"
 
 #: signals.c:43
 msgid "pskill() is not supported on this platform"

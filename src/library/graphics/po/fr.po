@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-16 08:17+0000\n"
-"PO-Revision-Date: 2012-03-06 22:22+0100\n"
+"PO-Revision-Date: 2013-03-18 23:16+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,17 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: base.c:38
 msgid "no base graphics system is registered"
-msgstr ""
+msgstr "aucun système graphique de base n'est enregistré"
 
 #: base.c:328 base.c:335 base.c:343
-#, fuzzy
 msgid "the base graphics system is not registered"
-msgstr "trop de systèmes graphiques enregistrés"
+msgstr "le système graphique de base n'est pas enregistré"
 
 #: graphics.c:289
 #, c-format
@@ -38,9 +36,8 @@ msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique null"
 
 #: graphics.c:1830
-#, fuzzy
 msgid "outer margins too large (figure region too small)"
-msgstr "marges externes trop larges (fig.region trop petit)"
+msgstr "marges externes trop larges (région de figure trop petite)"
 
 #: graphics.c:1832
 msgid "figure region too large"
@@ -55,9 +52,9 @@ msgid "plot region too large"
 msgstr "zone de graphe trop large"
 
 #: graphics.c:1883
-#, fuzzy, c-format
+#, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
-msgstr "plage relative des valeurs = %4.0f * EPS trop petite (axe %d)"
+msgstr "plage relative des valeurs (%4.0f * EPS) trop petite (axe %d)"
 
 #: graphics.c:1935
 #, c-format
@@ -70,9 +67,8 @@ msgid "axis style \"%c\" unimplemented"
 msgstr "style d'axe \"%c\" non implémenté"
 
 #: graphics.c:2203
-#, fuzzy
 msgid "no graphics device is active"
-msgstr "Aucun périphérique graphique n'est actif"
+msgstr "aucun périphérique graphique n'est actif"
 
 #: graphics.c:2398
 msgid "plot.new has not been called yet"
@@ -101,9 +97,8 @@ msgid "invalid argument to GBox"
 msgstr "argument incorrect pour GBox"
 
 #: graphics.c:3363
-#, fuzzy
 msgid "metric information not available for this device"
-msgstr "Information de métrique non disponible pour ce périphérique"
+msgstr "information de métrique non disponible pour ce périphérique"
 
 #: par-common.c:138
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
@@ -137,14 +132,12 @@ msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "le paramètre \"j\" dans \"mfg\" est hors échelle"
 
 #: par.c:447
-#, fuzzy
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
-msgstr "la valeur de nr dans \"mfg\" est mauvaise et sera ignorée"
+msgstr "la valeur de 'nr' dans \"mfg\" est mauvaise et sera ignorée"
 
 #: par.c:449
-#, fuzzy
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
-msgstr "la valeur de nc dans \"mfg\" est mauvaise et sera ignorée"
+msgstr "la valeur de 'nc' dans \"mfg\" est mauvaise et sera ignorée"
 
 #: par.c:475
 msgid "calling par(new=TRUE) with no plot"
@@ -180,9 +173,8 @@ msgid "too many cells in layout, limit %d"
 msgstr "trop de cellules dans la mise en page, limité à %d"
 
 #: plot.c:75
-#, fuzzy
 msgid "invalid color specification"
-msgstr "choix de fonte incorrect"
+msgstr "choix de couleur incorrect"
 
 #: plot.c:141
 msgid "only NA allowed in logical plotting symbol"
@@ -204,9 +196,9 @@ msgid "invalid '%s' value"
 msgstr "valeur '%s' incorrecte"
 
 #: plot.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'vfont' value [typeface %d]"
-msgstr "valeur 'vfont' incorrecte [typeface]"
+msgstr "valeur 'vfont' incorrecte [typeface %d]"
 
 #: plot.c:332
 #, c-format
@@ -273,9 +265,9 @@ msgstr "'hadj' doit être de longueur unitaire"
 #: plot.c:888 plot.c:2096 plot.c:2373 plot.c:2379 plot.c:2386 plot.c:2394
 #: plot.c:2401 plot.c:2408 plot.c:2415 plot.c:2422 plot.c:2430 plot.c:2437
 #: plot.c:3155
-#, fuzzy, c-format
+#, c-format
 msgid "zero-length '%s' specified"
-msgstr "'side' choisi de taille nulle"
+msgstr "'%s' choisi de taille nulle"
 
 #: plot.c:957
 msgid "'labels' is supplied and not 'at'"
@@ -367,9 +359,9 @@ msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
 
 #: plot.c:3008 plot.c:3144
-#, fuzzy, c-format
+#, c-format
 msgid "invalid number of points in %s"
-msgstr "nombre de points incorrect dans locator()"
+msgstr "nombre de points incorrect dans %s"
 
 #: plot.c:3146
 msgid "incorrect argument type"
@@ -437,34 +429,30 @@ msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "données de jauges incorrectes (nécessite 3 ou 4 colonnes)"
 
 #: plot.c:3808
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'thermometers[, %s]'"
-msgstr "jauges[,%s] incorrectes"
+msgstr "'thermometers[, %s]' incorrects"
 
 #: plot.c:3811
-#, fuzzy, c-format
+#, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
-msgstr "jauges[,%s] non comprises dans [0,1] -- aspect étrange possible"
+msgstr "'thermometers[, %s]' non compris dans [0,1] -- aspect étrange possible"
 
 #: plot.c:3814
-#, fuzzy
 msgid "invalid 'thermometers[, 1:2]'"
-msgstr "jauges[,1:2] incorrectes"
+msgstr "'thermometers[, 1:2]' incorrects"
 
 #: plot.c:3853
-#, fuzzy
 msgid "invalid 'boxplots' data (need 5 columns)"
-msgstr "données de boites à dispersion incorrectes (nécessite 5 colonnes)"
+msgstr "données 'boxplot' incorrectes (nécessite 5 colonnes)"
 
 #: plot.c:3862
-#, fuzzy
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
-msgstr "boxplots[,5] en dehors de [0,1] -- peut paraitre bizarre"
+msgstr "'boxplots[, 5]' en dehors de [0,1] -- peut paraitre bizarre"
 
 #: plot.c:3864
-#, fuzzy
 msgid "invalid 'boxplots[, 1:4]'"
-msgstr "boxplots[, 1:4] incorrect"
+msgstr "'boxplots[, 1:4]' incorrect"
 
 #: plot.c:3910
 msgid "invalid symbol type"
@@ -572,7 +560,7 @@ msgstr "toutes les valeurs z sont NA"
 #: stem.c:156
 #, c-format
 msgid "long vector '%s' is not supported"
-msgstr ""
+msgstr "le vecteur long '%s' n'est pas supporté"
 
 #~ msgid "unable to allocate memory (in GPolygon)"
 #~ msgstr "impossible d'allouer de la mémoire (dans GPolygon)"
