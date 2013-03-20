@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-19 12:12+0000\n"
+"POT-Creation-Date: 2013-03-20 07:19+0000\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -229,12 +229,12 @@ msgstr "problema ao mostrar '%ls'"
 #: src/main/sysutils.c:600 src/main/sysutils.c:1611 src/main/sysutils.c:1615
 #: src/main/unique.c:966 src/main/unique.c:1289 src/main/unique.c:1349
 #: src/main/unique.c:1356 src/main/unique.c:1749 src/main/util.c:576
-#: src/main/util.c:579 src/main/util.c:1773 src/main/util.c:1941
-#: src/main/util.c:1942 src/main/util.c:1943 src/main/util.c:1960
-#: src/main/util.c:1984 src/main/util.c:1988 src/main/util.c:1990
-#: src/main/util.c:2015 src/main/util.c:2017 src/main/util.c:2019
-#: src/main/util.c:2022 src/main/util.c:2025 src/main/util.c:2029
-#: src/main/util.c:2031 src/modules/X11/devX11.c:3241
+#: src/main/util.c:579 src/main/util.c:1790 src/main/util.c:1958
+#: src/main/util.c:1959 src/main/util.c:1960 src/main/util.c:1977
+#: src/main/util.c:2001 src/main/util.c:2005 src/main/util.c:2007
+#: src/main/util.c:2032 src/main/util.c:2034 src/main/util.c:2036
+#: src/main/util.c:2039 src/main/util.c:2042 src/main/util.c:2046
+#: src/main/util.c:2048 src/modules/X11/devX11.c:3241
 #: src/modules/X11/devX11.c:3244 src/modules/X11/devX11.c:3247
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
@@ -6363,30 +6363,30 @@ msgstr "mensagem de erro truncada para 255 caracteres"
 msgid "warning message truncated to 255 chars"
 msgstr "mensagem de aviso truncada para 255 caracteres"
 
-#: src/main/util.c:1767
+#: src/main/util.c:1784
 #, fuzzy
 msgid "all arguments must be named"
 msgstr "os atributos devem ter nome"
 
-#: src/main/util.c:1840
+#: src/main/util.c:1857
 msgid "ICU is not supported on this build"
 msgstr "ICU não é suportado nessa plataforma"
 
-#: src/main/util.c:1901
+#: src/main/util.c:1918
 #, fuzzy
 msgid "'breaks' is not sorted"
 msgstr "tipo '%s' não é suportado"
 
-#: src/main/util.c:1935 src/main/util.c:1981
+#: src/main/util.c:1952 src/main/util.c:1998
 #, fuzzy, c-format
 msgid "long vector '%s' is not supported"
 msgstr "tipo '%s' não é suportado"
 
-#: src/main/util.c:2034
+#: src/main/util.c:2051
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
 
-#: src/main/util.c:2062
+#: src/main/util.c:2079
 #, fuzzy
 msgid "'x' must be a vector"
 msgstr "'x' deve ser um vetor de caracteres"

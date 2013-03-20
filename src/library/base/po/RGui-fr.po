@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RGui 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-03-18 19:36+0000\n"
-"PO-Revision-Date: 2010-10-01 20:56+0100\n"
+"PO-Revision-Date: 2013-03-18 21:59+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,8 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
 msgid "Not enough memory"
@@ -1074,9 +1073,8 @@ msgid "Variable name"
 msgstr "Nom de la variable"
 
 #: src/library/grDevices/src/devWindows.c:1258
-#, fuzzy
 msgid "Variable doesn't contain any plots!"
-msgstr "La variable n'existe pas ou ne contient aucun graphique!"
+msgstr "La variable ne contient aucun graphique!"
 
 #: src/library/grDevices/src/devWindows.c:1273
 msgid "Name of variable to save to"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-09-24 08:30\n"
-"PO-Revision-Date: 2010-10-01 21:00+0100\n"
+"PO-Revision-Date: 2013-03-18 22:10+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
+"X-Generator: Poedit 1.5.5\n"
 
 msgid "must have at least 'ord' knots"
 msgstr "il faut au moins 'ord' noeuds"
@@ -27,18 +27,15 @@ msgstr "la longueur de 'derivs' doit correspondre à la longueur de 'x'"
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord' doit être un entier positif, au nombre de noeuds au mieux"
 
-#, fuzzy
 msgid "need at least %s (=%d) knots"
-msgstr "il faut au moins 2*ord -1 (=%d) noeuds"
+msgstr "il faut au moins %s (=%d) noeuds"
 
-#, fuzzy
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
 msgstr ""
-"les données 'x' doivent être dans la plage %g to %g à moins de spécifier "
-"'outer.ok = TRUE'"
+"les données 'x' doivent être dans la plage %g to %g à moins de spécifier '%s'"
 
 msgid "%s needs package 'Matrix' correctly installed"
-msgstr ""
+msgstr "%s a besoin du package 'Matrix' installé correctement"
 
 msgid "values of 'x' must be distinct"
 msgstr "les valeurs de 'x' doivent être distinctes"
@@ -76,9 +73,8 @@ msgstr "la courbe spline doit être monotone"
 msgid "'degree' must be integer >= 1"
 msgstr "'degree' doit être un entier >= 1"
 
-#, fuzzy
 msgid "'df' was too small; have used %d"
-msgstr "'df' était trop petit ; nous avons utilisé"
+msgstr "'df' était trop petit ; nous avons utilisé %d"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr ""

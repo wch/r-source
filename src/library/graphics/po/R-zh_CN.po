@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-03-20 07:20\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -199,6 +199,9 @@ msgstr "'breaks'数目不对"
 
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: pretty()错误, breaks=%s"
+
+msgid "Invalid breakpoints produced by 'breaks(x)': %s"
+msgstr ""
 
 msgid "invalid length(breaks)"
 msgstr "length(breaks)不对"

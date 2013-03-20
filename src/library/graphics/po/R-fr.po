@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-16 08:17\n"
-"PO-Revision-Date: 2011-10-15 15:12+0100\n"
+"POT-Creation-Date: 2013-03-20 07:20\n"
+"PO-Revision-Date: 2013-03-18 23:21+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
+"X-Generator: Poedit 1.5.5\n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr "'a' est ignoré au bénéfice de 'reg'"
@@ -87,9 +87,8 @@ msgstr "premier argument incorrect"
 msgid "'formula' missing or incorrect"
 msgstr "'formula' manquante ou incorrecte"
 
-#, fuzzy
 msgid "'at' must have same length as 'z$n', i.e. %d"
-msgstr "'at' doit avoir la même longueur que 'z$n', c'est-à-dire"
+msgstr "'at' doit avoir la même longueur que 'z$n', c'est-à-dire %d"
 
 msgid "invalid boxplot widths"
 msgstr "largeurs des boites à dispersion incorrectes"
@@ -137,9 +136,8 @@ msgstr "'given.values' incorrect"
 msgid "rows * columns too small"
 msgstr "rows * columns trop petit"
 
-#, fuzzy
 msgid "Missing rows: %s"
-msgstr "Lignes manquantes"
+msgstr "Lignes manquantes : %s"
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr ""
@@ -193,9 +191,8 @@ msgstr "géométrie incorrecte"
 msgid "'x' must be numeric"
 msgstr "'x' doit être numérique"
 
-#, fuzzy
 msgid "invalid length(x)"
-msgstr "'log' incorrect"
+msgstr "'length(x)' incorrect"
 
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'nclass' non utilisé quand 'breaks' est fourni"
@@ -209,13 +206,14 @@ msgstr "algorithme inconnu pour 'breaks'"
 msgid "invalid number of 'breaks'"
 msgstr "nombre de 'breaks' incorrect"
 
-#, fuzzy
 msgid "hist.default: pretty() error, breaks=%s"
-msgstr "hist.default : erreur pour pretty(), breaks="
+msgstr "hist.default : erreur pour pretty(), breaks=%s"
 
-#, fuzzy
+msgid "Invalid breakpoints produced by 'breaks(x)': %s"
+msgstr ""
+
 msgid "invalid length(breaks)"
-msgstr "longueurs de coordonnées incorrectes"
+msgstr "length(breaks) incorrects"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks' ne sont pas strictement croissantes"
@@ -228,9 +226,8 @@ msgstr ""
 "des valeurs de 'x' n'ont pas été comptées ; peut-être 'breaks' ne couvrent "
 "pas l'étendue de 'x'"
 
-#, fuzzy
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
-msgstr "les SURFACES du graphe sont fausses -- utilisez plutôt freq=FALSE"
+msgstr "AREAS du graphe sont fausses -- utilisez plutôt 'freq = FALSE'"
 
 msgid "'x' is wrongly structured"
 msgstr "'x' n'est pas correctement structuré"
@@ -250,40 +247,38 @@ msgstr "limites de z incorrectes"
 msgid "must have one more break than colour"
 msgstr "il doit y avoir (nombre de couleurs + 1) limites de classes"
 
-#, fuzzy
 msgid "'breaks' must all be finite"
-msgstr "toutes les limites de classes doivent être finies"
+msgstr "'breaks' doivent être finis"
 
 msgid "unsorted 'breaks' will be sorted before use"
-msgstr ""
+msgstr "'breaks' non triés fournis et seront triès avant usage"
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr ""
 "les dimensions de z ne sont pas length(x)(-1) multiplié par length(y)(-1)"
 
-#, fuzzy
 msgid "%s can only be used with a regular grid"
-msgstr "useRaster = TRUE n'est utilisable qu'avec une grille régulière"
+msgstr "%s n'est utilisable qu'avec une grille régulière"
 
 msgid "integer colors must be non-negative"
 msgstr ""
+"les couleurs spécifiées sous forme d'entiers doivent être des nombres non "
+"négatifs"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 "'respect' doit être soit une valeur logique soit une matrice de même "
 "dimension que 'mat'"
 
-#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
 "to each of the values {1 ... %d}"
 msgstr ""
 "la matrice de mise en page doit contenir au moins une référence\n"
-"à chaque valeur {1..n} ; ici n ="
+"à chaque valeur {1 ... %d}"
 
-#, fuzzy
 msgid "invalid 'title'"
-msgstr "titre incorrect"
+msgstr "'title' incorrect"
 
 msgid "'legend' is of length 0"
 msgstr "'legend' est de longueur nulle"
@@ -294,9 +289,8 @@ msgstr "longueurs de coordonnées incorrectes"
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width' doit être numérique et >= 0"
 
-#, fuzzy
 msgid "horizontal specification overrides: Number of columns := %d"
-msgstr "argument horizontal supplante : nombre de colonnes :="
+msgstr "argument horizontal supplanté : nombre de colonnes := %d"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr ""
@@ -417,9 +411,8 @@ msgstr "'x' doit être une matrice ou un tableau de données"
 msgid "data in 'x' must be numeric"
 msgstr "les données dans 'x' doivent être numériques"
 
-#, fuzzy
 msgid "'nrow * ncol' is less than the number of observations"
-msgstr "nrow * ncol <  nombre d'observations"
+msgstr "'nrow * ncol' est plus petit que le nombre d'observations"
 
 msgid "labels do not make sense for a single location"
 msgstr "les étiquettes n'ont pas de sens pour un seul site"
@@ -454,15 +447,12 @@ msgstr "'number' doit être de même longueur que 'x' et 'y'"
 msgid "exactly one symbol type must be specified"
 msgstr "exactement un type de symbole doit être donné"
 
-#, fuzzy
 msgid "x log scale:  xinch() is nonsense"
 msgstr "l'échelle des x est logarithmique : xinch() n'a pas de sens"
 
-#, fuzzy
 msgid "y log scale:  yinch() is nonsense"
 msgstr "l'échelle des y est logarithmique : yinch() n'a pas de sens"
 
-#, fuzzy
 msgid "log scale:  xyinch() is nonsense"
 msgstr "échelle logarithmique : xyinch() n'a pas de sens"
 
@@ -479,11 +469,10 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] "l'argument %s n'est pas utilisé par"
 msgstr[1] "les arguments %s ne sont pas utilisés par"
 
-#, fuzzy
 msgid "extra argument %s will be disregarded"
 msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "les argument(s) supplémentaires %s seront ignorés"
-msgstr[1] "les argument(s) supplémentaires %s seront ignorés"
+msgstr[0] "l'argument supplémentaire %s sera ignoré"
+msgstr[1] "les arguments supplémentaires %s seront ignorés"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "'counts' négatif. Erreur interne dans le code C pour \"bincount\""

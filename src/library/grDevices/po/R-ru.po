@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-01-12 10:57\n"
-"PO-Revision-Date: 2011-10-18 19:29-0600\n"
+"PO-Revision-Date: 2013-03-19 19:20-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -18,8 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "invalid 'filename'"
 msgstr "неправильное 'filename'"
@@ -57,37 +56,29 @@ msgstr "'start' и 'end' должны быть различными и в пределах [0, 1]."
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma' должна быть скаляром или 'sRGB'"
 
-#, fuzzy
 msgid "Color space converter: %s"
-msgstr "Конвертер цветового пространства:"
+msgstr "Конвертер цветового пространства: %s"
 
-#, fuzzy
 msgid "Reference white: %s"
-msgstr "Стандартный белый:"
+msgstr "Стандартный белый: %s"
 
-#, fuzzy
 msgid "display gamma = %s"
-msgstr "отразить гамму"
+msgstr "отразить гамму = %s"
 
-#, fuzzy
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr "'from' должен быть colorConverter или строкой"
+msgstr "'from' должен быть объектом \"colorConverter\" или строкой"
 
-#, fuzzy
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr "'to' должен быть colorConverter или строкой"
+msgstr "'to' должен быть объектом \"colorConverter\" или строкой"
 
-#, fuzzy
 msgid "'from.ref.white' disagrees with definition of %s"
-msgstr "'from.ref.white' не согласуется с определением"
+msgstr "'from.ref.white' не согласуется с определением %s"
 
-#, fuzzy
 msgid "'to.ref.white' disagrees with definition of %s"
-msgstr "'to.ref.white' не согласуется с определением"
+msgstr "'to.ref.white' не согласуется с определением %s"
 
-#, fuzzy
 msgid "color spaces use different reference whites"
-msgstr "цветовые пространства используют разные стандарты белого."
+msgstr "цветовые пространства используют разные стандарты белого"
 
 msgid "'name' must be a character vector"
 msgstr "'name' должен быть непустой текстовой строкой"
@@ -158,13 +149,11 @@ msgstr "не могу перегрузить несуществующий '%s'"
 msgid "invalid options in '%s'"
 msgstr "неправильные опции в '%s'"
 
-#, fuzzy
 msgid "NOT changing %s"
-msgstr "НЕ изменяется"
+msgstr "НЕ изменяется %s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr ""
-"аргумент 'append' предназначен для обратной совместимости и будет пропущен"
+msgstr "аргумент 'append' предназначен для обратной совместимости и будет пропущен"
 
 msgid "unknown family '%s'"
 msgstr "неизвестное семейство '%s'"
@@ -226,27 +215,20 @@ msgstr "Неправильный формат вывода"
 msgid "status %d in running command '%s'"
 msgstr "статус %d выполняющейся команды '%s'"
 
-#, fuzzy
 msgid "range too small for 'min.n'"
-msgstr "размах слишком мал для min.m"
+msgstr "размах слишком мал для 'min.n'"
 
-#, fuzzy
 msgid "a raster matrix must be character, or numeric, or logical"
-msgstr ""
-"Растровая матрица должна быть символом, числом или логическим выражением"
+msgstr "растровая матрица должна быть символом, числом или логическим выражением"
 
-#, fuzzy
 msgid "a raster array must be numeric"
-msgstr "Растровая многомерная матрица должна быть числовой"
+msgstr "растровая многомерная матрица должна быть числовой"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 dimensions"
-msgstr "Растровая многомерная матрица должна быть в точности трехмерной"
+msgstr "растровая многомерная матрица должна быть в точности трехмерной"
 
-#, fuzzy
 msgid "a raster array must have exactly 3 or 4 planes"
-msgstr ""
-"Растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
+msgstr "растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr "'drop' всегда неявно выставлен в FALSE в '[.raster'"
@@ -257,20 +239,17 @@ msgstr "неправильное извлечение элемента растра"
 msgid "invalid raster subassignment"
 msgstr "неправильная замена жлемента растра"
 
-#, fuzzy
 msgid "operator not meaningful for raster objects"
-msgstr "Оператор не имеет смысла для объектов растра"
+msgstr "оператор не имеет смысла для объектов растра"
 
 msgid "no current device to record from"
 msgstr "нет устройства, которое надо записывать"
 
-#, fuzzy
 msgid "argument is not of class %s"
-msgstr "аргумент не принадлежит к классу \"recordedplot\""
+msgstr "аргумент не принадлежит к классу %s"
 
-#, fuzzy
 msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "загрузка снимка из версии R до 2.0.0"
+msgstr "загрузка снимка из версии R до 3.0.0"
 
 msgid "loading snapshot from different R version"
 msgstr "загрузка снимка из другой версии R"
@@ -332,18 +311,14 @@ msgstr "неправильный 'title'"
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "неправильный шрифт Quartz:  должно быть 4 строки"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr "неправильные аргументы в quartzFonts (должен быть имена шрифтов)"
+msgstr "неправильные аргументы в 'quartzFonts' (должны быть имена шрифтов)"
 
-#, fuzzy
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr "неправильные аргументы в quartzFonts (нужны именованные аргументы)"
+msgstr "неправильные аргументы в эquartzFontsэ (нужны именованные аргументы)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
-"типы, основанные на cairo, в этой сборке не поддерживаются -- использую "
-"\"Xlib\""
+msgstr "типы, основанные на cairo, в этой сборке не поддерживаются -- использую \"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr "неизвестное семейство X11(type = \"XLib\")"
@@ -351,13 +326,11 @@ msgstr "неизвестное семейство X11(type = \"XLib\")"
 msgid "invalid X11 font specification:"
 msgstr "неправильное указание шрифта X11:"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
-msgstr "неправильные аргументы в '%s' (должны быть имена шрифтов)"
+msgstr "неправильные аргументы в 'X11Fonts' (должны быть имена шрифтов)"
 
-#, fuzzy
 msgid "invalid arguments in 'X11Fonts' (need named args)"
-msgstr "неправильные аргументы в '%s' (нужны именованные аргументы)"
+msgstr "неправильные аргументы в 'X11Fonts' (нужны именованные аргументы)"
 
 msgid "no such device"
 msgstr "нет такого устройства"
@@ -424,17 +397,14 @@ msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "могу печатать только с экранного устройства"
-
 #~ msgid "'maxRasters' is no longer needed, and will be ignored"
 #~ msgstr "'maxRasters' больше не нужны и будут пропущены"
-
 #~ msgid "The 'gamma' argument is deprecated and has no effect"
 #~ msgstr "Аргумент 'gamma' устарел и не возымеем никакого эффекта"
-
 #~ msgid "invalid value for 'antialias'"
 #~ msgstr "неправильное значение 'antialias'"
-
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr ""
 #~ "устройство quartz() интерактивно сокращено без использования обработчика "
 #~ "циклов"
+

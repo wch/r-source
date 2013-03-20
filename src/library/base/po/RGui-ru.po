@@ -8,26 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 19:36+0000\n"
-"PO-Revision-Date: 2010-09-30 01:27-0600\n"
+"POT-Creation-Date: 2013-03-18 19:30+0000\n"
+"PO-Revision-Date: 2013-03-19 17:46-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <dactylorhiza at gmail>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
+#: src/gnuwin32/console.c:1167
+#: src/gnuwin32/console.c:1209
 msgid "Not enough memory"
 msgstr "Недостаточно памяти"
 
-#: src/gnuwin32/console.c:1256 src/gnuwin32/console.c:1260
+#: src/gnuwin32/console.c:1256
+#: src/gnuwin32/console.c:1260
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Недостаточно памяти: текст не скопирован в буфер обмена"
 
-#: src/gnuwin32/console.c:1296 src/extra/graphapp/clipboard.c:53
+#: src/gnuwin32/console.c:1296
+#: src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Не могу открыть буфер обмена"
@@ -36,7 +38,8 @@ msgstr "Не могу открыть буфер обмена"
 msgid "Insufficient memory. Please close the console"
 msgstr "Недостаточно памяти. Пожалуйста, закройте консоль"
 
-#: src/gnuwin32/console.c:1969 src/gnuwin32/console.c:2022
+#: src/gnuwin32/console.c:1969
+#: src/gnuwin32/console.c:2022
 #: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
@@ -111,11 +114,8 @@ msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: удалить предыдущий символ;\n"
 
 #: src/gnuwin32/console.c:2241
-msgid ""
-"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr ""
-"     Ctrl+Del или Ctrl+K: удалить текст от текущего символа до конца "
-"строки.\n"
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "     Ctrl+Del или Ctrl+K: удалить текст от текущего символа до конца строки.\n"
 
 #: src/gnuwin32/console.c:2242
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -126,24 +126,16 @@ msgid "  Copy and paste.\n"
 msgstr "  Копирование и вставка:\n"
 
 #: src/gnuwin32/console.c:2244
-msgid ""
-"     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr ""
-"     Использовать мышь (с нажатой левой кнопкой) для выделения текста.\n"
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     Использовать мышь (с нажатой левой кнопкой) для выделения текста.\n"
 
 #: src/gnuwin32/console.c:2245
-msgid ""
-"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr ""
-"     Использовать Shift+Del (или Ctrl+C) для копирования выделения в буфер\n"
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr "     Использовать Shift+Del (или Ctrl+C) для копирования выделения в буфер\n"
 
 #: src/gnuwin32/console.c:2246
-msgid ""
-"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
-"(if any)  \n"
-msgstr ""
-"     Shift+Ins (или Ctrl+V или Ctrl+Y) для вставки содержимого буфера (если "
-"есть)  \n"
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
+msgstr "     Shift+Ins (или Ctrl+V или Ctrl+Y) для вставки содержимого буфера (если есть)  \n"
 
 #: src/gnuwin32/console.c:2247
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -205,7 +197,8 @@ msgstr "Стандартные клавиши Windows можно использовать для перехода к\n"
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "окну графики (Ctrl+Tab или Ctrl+F6 в MDI, Alt+Tab в SDI)"
 
-#: src/gnuwin32/editor.c:88 src/gnuwin32/editor.c:90
+#: src/gnuwin32/editor.c:88
+#: src/gnuwin32/editor.c:90
 msgid "R Editor"
 msgstr "Редактор R"
 
@@ -228,12 +221,16 @@ msgstr "Не могу сохранить файл '%s'"
 msgid "Save script as"
 msgstr "Сохранить скрипт как"
 
-#: src/gnuwin32/editor.c:377 src/gnuwin32/editor.c:694
-#: src/gnuwin32/pager.c:431 src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:377
+#: src/gnuwin32/editor.c:694
+#: src/gnuwin32/pager.c:431
+#: src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "Открыть скрипт"
 
-#: src/gnuwin32/editor.c:500 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
+#: src/gnuwin32/editor.c:500
+#: src/gnuwin32/pager.c:185
+#: src/gnuwin32/pager.c:205
 msgid "No RGui console to paste to"
 msgstr "Нет графической консоли для вставки"
 
@@ -266,50 +263,61 @@ msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "     Нажмите на панели кнопку \"Запустить строку или блок\"\n"
 
 #: src/gnuwin32/editor.c:611
-msgid ""
-"This will copy the selected commands to the console and evaluate them.\n"
-msgstr ""
-"В результате выбранные команды скопируются на консоль и запустятся там.\n"
+msgid "This will copy the selected commands to the console and evaluate them.\n"
+msgstr "В результате выбранные команды скопируются на консоль и запустятся там.\n"
 
 #: src/gnuwin32/editor.c:612
-msgid ""
-"If there is no selection, this will just run the current line and advance\n"
+msgid "If there is no selection, this will just run the current line and advance\n"
 msgstr "Если выделения нет, будет запущена текущая строка, а курсор\n"
 
 #: src/gnuwin32/editor.c:613
 msgid "the cursor by one line.\n"
 msgstr "переместится на строку вниз.\n"
 
-#: src/gnuwin32/editor.c:625 src/gnuwin32/editor.c:702
+#: src/gnuwin32/editor.c:625
+#: src/gnuwin32/editor.c:702
 #: src/gnuwin32/editor.c:760
 msgid "Run line or selection"
 msgstr "Запустить строку или блок"
 
-#: src/gnuwin32/editor.c:627 src/gnuwin32/editor.c:745
+#: src/gnuwin32/editor.c:627
+#: src/gnuwin32/editor.c:745
 msgid "Undo"
 msgstr "Отменить"
 
-#: src/gnuwin32/editor.c:629 src/gnuwin32/editor.c:748
+#: src/gnuwin32/editor.c:629
+#: src/gnuwin32/editor.c:748
 msgid "Cut"
 msgstr "Вырезать"
 
-#: src/gnuwin32/editor.c:630 src/gnuwin32/editor.c:750
-#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859
-#: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
+#: src/gnuwin32/editor.c:630
+#: src/gnuwin32/editor.c:750
+#: src/gnuwin32/pager.c:305
+#: src/gnuwin32/pager.c:478
+#: src/gnuwin32/rui.c:859
+#: src/gnuwin32/rui.c:1088
+#: src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "Копировать"
 
-#: src/gnuwin32/editor.c:631 src/gnuwin32/editor.c:752 src/gnuwin32/rui.c:860
-#: src/gnuwin32/rui.c:1092 src/gnuwin32/rui.c:1145
+#: src/gnuwin32/editor.c:631
+#: src/gnuwin32/editor.c:752
+#: src/gnuwin32/rui.c:860
+#: src/gnuwin32/rui.c:1092
+#: src/gnuwin32/rui.c:1145
 msgid "Paste"
 msgstr "Вставить"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:754
+#: src/gnuwin32/editor.c:632
+#: src/gnuwin32/editor.c:754
 msgid "Delete"
 msgstr "Удалить"
 
-#: src/gnuwin32/editor.c:634 src/gnuwin32/editor.c:756
-#: src/gnuwin32/pager.c:308 src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866
+#: src/gnuwin32/editor.c:634
+#: src/gnuwin32/editor.c:756
+#: src/gnuwin32/pager.c:308
+#: src/gnuwin32/pager.c:484
+#: src/gnuwin32/rui.c:866
 #: src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "Выделить все"
@@ -318,7 +326,8 @@ msgstr "Выделить все"
 msgid "Save script"
 msgstr "Сохранить скрипт"
 
-#: src/gnuwin32/editor.c:706 src/gnuwin32/pager.c:451
+#: src/gnuwin32/editor.c:706
+#: src/gnuwin32/pager.c:451
 #: src/library/grDevices/src/devWindows.c:1594
 msgid "Return focus to Console"
 msgstr "Вернуть фокус в консоль"
@@ -327,22 +336,30 @@ msgstr "Вернуть фокус в консоль"
 msgid "Print script"
 msgstr "Печатать скрипт"
 
-#: src/gnuwin32/editor.c:711 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1104
+#: src/gnuwin32/editor.c:711
+#: src/gnuwin32/pager.c:446
+#: src/gnuwin32/rui.c:1104
 #: src/library/grDevices/src/devWindows.c:1588
 msgid "Print"
 msgstr "Печать"
 
-#: src/gnuwin32/editor.c:729 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:729
+#: src/gnuwin32/pager.c:467
+#: src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1790
 #: src/library/grDevices/src/devWindows.c:1626
 msgid "File"
 msgstr "Файл"
 
-#: src/gnuwin32/editor.c:730 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:730
+#: src/gnuwin32/pager.c:468
+#: src/gnuwin32/rui.c:1124
 msgid "New script"
 msgstr "Новый скрипт"
 
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1125
+#: src/gnuwin32/editor.c:732
+#: src/gnuwin32/pager.c:469
+#: src/gnuwin32/rui.c:1125
 msgid "Open script..."
 msgstr "Открыть скрипт..."
 
@@ -354,7 +371,9 @@ msgstr "Сохранить"
 msgid "Save as..."
 msgstr "Сохранить как..."
 
-#: src/gnuwin32/editor.c:739 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1138
+#: src/gnuwin32/editor.c:739
+#: src/gnuwin32/pager.c:470
+#: src/gnuwin32/rui.c:1138
 #: src/library/grDevices/src/devWindows.c:1689
 msgid "Print..."
 msgstr "Печать..."
@@ -363,12 +382,15 @@ msgstr "Печать..."
 msgid "Close script"
 msgstr "Закрыть скрипт"
 
-#: src/gnuwin32/editor.c:744 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:744
+#: src/gnuwin32/pager.c:477
+#: src/gnuwin32/rui.c:1143
 #: src/library/utils/src/windows/dataentry.c:1796
 msgid "Edit"
 msgstr "Правка"
 
-#: src/gnuwin32/editor.c:758 src/gnuwin32/rui.c:1150
+#: src/gnuwin32/editor.c:758
+#: src/gnuwin32/rui.c:1150
 msgid "Clear console"
 msgstr "Очистить консоль"
 
@@ -384,11 +406,13 @@ msgstr "Найти..."
 msgid "Replace..."
 msgstr "Заменить..."
 
-#: src/gnuwin32/editor.c:770 src/gnuwin32/rui.c:1154
+#: src/gnuwin32/editor.c:770
+#: src/gnuwin32/rui.c:1154
 msgid "GUI preferences..."
 msgstr "Настройки интерфейса..."
 
-#: src/gnuwin32/editor.c:780 src/gnuwin32/rui.c:1186
+#: src/gnuwin32/editor.c:780
+#: src/gnuwin32/rui.c:1186
 #: src/library/utils/src/windows/dataentry.c:1697
 #: src/library/utils/src/windows/dataentry.c:1807
 msgid "Help"
@@ -410,7 +434,8 @@ msgstr "Не могу создать окно редактора"
 msgid "Untitled"
 msgstr "Безымянный"
 
-#: src/gnuwin32/extra.c:823 src/gnuwin32/rui.c:1224
+#: src/gnuwin32/extra.c:823
+#: src/gnuwin32/rui.c:1224
 msgid "Select file"
 msgstr "Выбрать файл"
 
@@ -422,36 +447,47 @@ msgstr "Ошибка открытия файла"
 msgid "Insufficient memory to display file in internal pager"
 msgstr "Не хватает памяти для отражения файла во внутреннем просмотрщике"
 
-#: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
-#: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
+#: src/gnuwin32/pager.c:177
+#: src/gnuwin32/pager.c:189
+#: src/gnuwin32/pager.c:209
+#: src/gnuwin32/rui.c:237
+#: src/gnuwin32/rui.c:264
 msgid "No selection"
 msgstr "Нет выделения"
 
-#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:436 src/gnuwin32/pager.c:480
+#: src/gnuwin32/pager.c:306
+#: src/gnuwin32/pager.c:436
+#: src/gnuwin32/pager.c:480
 msgid "Paste to console"
 msgstr "Вставить на консоль"
 
-#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:441 src/gnuwin32/pager.c:482
+#: src/gnuwin32/pager.c:307
+#: src/gnuwin32/pager.c:441
+#: src/gnuwin32/pager.c:482
 msgid "Paste commands to console"
 msgstr "Вставить команды на консоль"
 
-#: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
+#: src/gnuwin32/pager.c:310
+#: src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1703
 #: src/library/grDevices/src/devWindows.c:1686
 msgid "Stay on top"
 msgstr "Расположить сверху"
 
-#: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
+#: src/gnuwin32/pager.c:312
+#: src/gnuwin32/pager.c:475
 #: src/library/utils/src/windows/dataentry.c:1705
 #: src/library/utils/src/windows/dataentry.c:1792
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1139
+#: src/gnuwin32/pager.c:472
+#: src/gnuwin32/rui.c:1139
 msgid "Save to File..."
 msgstr "Сохранить в файл..."
 
-#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/pager.c:487
+#: src/gnuwin32/rui.c:1156
 msgid "View"
 msgstr "Вид"
 
@@ -532,7 +568,8 @@ msgstr "Загрузить историю команд из"
 msgid "Save history in"
 msgstr "Сохранить историю команд в"
 
-#: src/gnuwin32/rui.c:246 src/gnuwin32/rui.c:255
+#: src/gnuwin32/rui.c:246
+#: src/gnuwin32/rui.c:255
 msgid "No text available"
 msgstr "Нет доступного текста"
 
@@ -569,11 +606,13 @@ msgstr "Подсказать команды"
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "Можно перетащить только файлы .R, .Rdata и .rda"
 
-#: src/gnuwin32/rui.c:861 src/gnuwin32/rui.c:1146
+#: src/gnuwin32/rui.c:861
+#: src/gnuwin32/rui.c:1146
 msgid "Paste commands only"
 msgstr "Вставить только команды"
 
-#: src/gnuwin32/rui.c:862 src/gnuwin32/rui.c:1096
+#: src/gnuwin32/rui.c:862
+#: src/gnuwin32/rui.c:1096
 msgid "Copy and paste"
 msgstr "Копировать и вставить"
 
@@ -581,7 +620,8 @@ msgstr "Копировать и вставить"
 msgid "Clear window"
 msgstr "Очистить окно"
 
-#: src/gnuwin32/rui.c:868 src/gnuwin32/rui.c:1169
+#: src/gnuwin32/rui.c:868
+#: src/gnuwin32/rui.c:1169
 msgid "Buffered output"
 msgstr "Буферизованный вывод"
 
@@ -621,7 +661,8 @@ msgstr "ЧаВО по R"
 msgid "FAQ on R for &Windows"
 msgstr "ЧаВО по R для Windows"
 
-#: src/gnuwin32/rui.c:952 src/gnuwin32/rui.c:955
+#: src/gnuwin32/rui.c:952
+#: src/gnuwin32/rui.c:955
 msgid "Manuals (in PDF)"
 msgstr "Руководства (в PDF)"
 
@@ -653,19 +694,23 @@ msgstr "Домашняя страница архива CRAN"
 msgid "About"
 msgstr "О программе"
 
-#: src/gnuwin32/rui.c:1008 src/extra/graphapp/gmenus.c:52
+#: src/gnuwin32/rui.c:1008
+#: src/extra/graphapp/gmenus.c:52
 msgid "Windows"
 msgstr "Окна"
 
-#: src/gnuwin32/rui.c:1009 src/extra/graphapp/gmenus.c:53
+#: src/gnuwin32/rui.c:1009
+#: src/extra/graphapp/gmenus.c:53
 msgid "Cascade"
 msgstr "Лесенкой"
 
-#: src/gnuwin32/rui.c:1010 src/extra/graphapp/gmenus.c:54
+#: src/gnuwin32/rui.c:1010
+#: src/extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
 msgstr "Слева направо"
 
-#: src/gnuwin32/rui.c:1011 src/extra/graphapp/gmenus.c:55
+#: src/gnuwin32/rui.c:1011
+#: src/extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
 msgstr "Сверху вниз"
 
@@ -798,15 +843,19 @@ msgstr "базовое меню не существует"
 msgid "failed to allocate menu"
 msgstr "не получилось разместить меню"
 
-#: src/gnuwin32/rui.c:1405 src/gnuwin32/rui.c:1529
+#: src/gnuwin32/rui.c:1405
+#: src/gnuwin32/rui.c:1529
 msgid "menu + item is limited to 1000 bytes"
 msgstr "меню + пункт меню ограничены: 1000 знаков"
 
-#: src/gnuwin32/rui.c:1413 src/gnuwin32/rui.c:1496
+#: src/gnuwin32/rui.c:1413
+#: src/gnuwin32/rui.c:1496
 msgid "menu does not exist"
 msgstr "меню не существует"
 
-#: src/gnuwin32/rui.c:1431 src/gnuwin32/rui.c:1454 src/gnuwin32/rui.c:1459
+#: src/gnuwin32/rui.c:1431
+#: src/gnuwin32/rui.c:1454
+#: src/gnuwin32/rui.c:1459
 msgid "failed to allocate char storage"
 msgstr "не получилось разместить хранилище знаков"
 
@@ -826,11 +875,13 @@ msgstr "меню или пункт меню не существует"
 msgid "Save workspace image?"
 msgstr "Сохранить рабочее пространство?"
 
-#: src/extra/graphapp/clipboard.c:69 src/extra/graphapp/clipboard.c:73
+#: src/extra/graphapp/clipboard.c:69
+#: src/extra/graphapp/clipboard.c:73
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr "Мало памяти: ячейки не скопировались в буфер"
 
-#: src/extra/graphapp/dialogs.c:147 src/extra/graphapp/dialogs.c:164
+#: src/extra/graphapp/dialogs.c:147
+#: src/extra/graphapp/dialogs.c:164
 #: src/extra/graphapp/dialogs.c:181
 msgid "Question"
 msgstr "Вопрос"
@@ -844,14 +895,18 @@ msgstr " Изменить рабочую папку на:"
 msgid "Unable to set '%s' as working directory"
 msgstr "Не могу установить '%s' как рабочую папку"
 
-#: src/extra/graphapp/dialogs.c:602 src/extra/graphapp/dialogs.c:620
-#: src/extra/graphapp/dialogs.c:626 src/extra/graphapp/dialogs.c:725
-#: src/extra/graphapp/dialogs.c:739 src/extra/graphapp/dialogs.c:745
+#: src/extra/graphapp/dialogs.c:602
+#: src/extra/graphapp/dialogs.c:620
+#: src/extra/graphapp/dialogs.c:626
+#: src/extra/graphapp/dialogs.c:725
+#: src/extra/graphapp/dialogs.c:739
+#: src/extra/graphapp/dialogs.c:745
 #: src/library/utils/src/windows/widgets.c:125
 msgid "Cancel"
 msgstr "Отменить"
 
-#: src/extra/graphapp/dialogs.c:622 src/extra/graphapp/dialogs.c:741
+#: src/extra/graphapp/dialogs.c:622
+#: src/extra/graphapp/dialogs.c:741
 #: src/library/utils/src/windows/widgets.c:124
 msgid "OK"
 msgstr "OK"
@@ -864,7 +919,8 @@ msgstr "Пользователь"
 msgid "Password"
 msgstr "Пароль"
 
-#: src/extra/graphapp/dialogs.c:900 src/extra/graphapp/dialogs.c:906
+#: src/extra/graphapp/dialogs.c:900
+#: src/extra/graphapp/dialogs.c:906
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\" не найден"
@@ -1059,9 +1115,8 @@ msgid "Variable name"
 msgstr "Имя переменной"
 
 #: src/library/grDevices/src/devWindows.c:1258
-#, fuzzy
 msgid "Variable doesn't contain any plots!"
-msgstr "Переменная не существует или не содержит графиков!"
+msgstr "Переменная не содержит графиков!"
 
 #: src/library/grDevices/src/devWindows.c:1273
 msgid "Name of variable to save to"
@@ -1203,3 +1258,4 @@ msgstr "Ожидаю подтверждения смены страницы..."
 #: src/library/grDevices/src/devWindows.c:3775
 msgid "Click or hit ENTER for next page"
 msgstr "Следующая страница: щелкните или нажмите ENTER "
+

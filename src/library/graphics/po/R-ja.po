@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-03-20 07:20\n"
 "PO-Revision-Date: 2013-02-28 05:46+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -201,6 +201,9 @@ msgstr " 'breaks' の数が無効です "
 
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr " hist.default: pretty() の間違いです。分割点 = %s "
+
+msgid "Invalid breakpoints produced by 'breaks(x)': %s"
+msgstr ""
 
 msgid "invalid length(breaks)"
 msgstr " 無効な length(breaks) です "

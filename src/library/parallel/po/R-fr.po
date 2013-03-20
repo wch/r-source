@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-02-19 07:12\n"
-"PO-Revision-Date: 2012-03-06 21:44+0100\n"
+"PO-Revision-Date: 2013-03-18 22:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2;plural=(n > 1);\n"
-"X-Poedit-Language: French\n"
+"X-Generator: Poedit 1.5.5\n"
 
 msgid "invalid value of 'seed'"
 msgstr "valeur incorrecte pour 'seed'"
@@ -24,7 +24,6 @@ msgstr "valeur incorrecte pour 'seed'"
 msgid "need at least one argument"
 msgstr "au moins un argument est requis"
 
-#, fuzzy
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 "Les entrées de longueur nulle ne peuvent être mélangées à celles de longueur "
@@ -39,9 +38,8 @@ msgstr "'X' doit avoir des dimnames nommés"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "les éléments de 'MARGIN' ne sont pas tous des noms de dimensions"
 
-#, fuzzy
 msgid "no cluster 'cl' supplied and none is registered"
-msgstr "pas de grappe fournie et aucune n'est enregistrée"
+msgstr "pas de grappe 'cl' fournie et aucune n'est enregistrée"
 
 msgid "not a valid cluster"
 msgstr "groupe de processus invalide"
@@ -53,7 +51,7 @@ msgid "node of a socket cluster on host %s with pid %d"
 msgstr "noeud d'un groupe de processus socket sur l'hôte %s avec le pid %d"
 
 msgid "PORT must be specified"
-msgstr ""
+msgstr "PORT doit être fourni"
 
 msgid "'nnodes' must be >= 1"
 msgstr "'nnodes' doit être >= 1"
@@ -64,9 +62,8 @@ msgstr "argument 'child' incorrect"
 msgid "'children' must be a list of processes or a single process"
 msgstr "'children' doit être une liste de processus ou un seul processus"
 
-#, fuzzy
 msgid "'process' must be of class %s"
-msgstr "'process' doit être de classe \"process\""
+msgstr "'process' doit être de classe %s"
 
 msgid "'child' must be a valid child process"
 msgstr "'child' doit être un processus fils valide"
@@ -108,7 +105,6 @@ msgstr ""
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "'mc.cores' > 1 n'est pas supporté sous Windows"
 
-#, fuzzy
 msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
 msgstr[0] "groupe de processus socket avec %d noeuds sur l'hôte %s"

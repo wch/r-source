@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-16 08:17\n"
-"PO-Revision-Date: 2011-10-18 19:34-0600\n"
+"POT-Creation-Date: 2013-03-20 07:20\n"
+"PO-Revision-Date: 2013-03-19 19:36-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -91,9 +91,8 @@ msgstr "неправильный первый аргумент"
 msgid "'formula' missing or incorrect"
 msgstr "'formula' пропущена или неправильная"
 
-#, fuzzy
 msgid "'at' must have same length as 'z$n', i.e. %d"
-msgstr "'at' должен иметь ту же длину, что и 'z$n', т.е."
+msgstr "'at' должен иметь ту же длину, что и 'z$n', т.е. %d"
 
 msgid "invalid boxplot widths"
 msgstr "неправильные ширины у ящиков-с-усами"
@@ -140,9 +139,8 @@ msgstr "неправильные 'given.values'"
 msgid "rows * columns too small"
 msgstr "слишком маленькое произведение строки * колонки"
 
-#, fuzzy
 msgid "Missing rows: %s"
-msgstr "Пропущенные строки"
+msgstr "Пропущенные строки: %s"
 
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr "'expr' должен быть функцией, вызовом или выражением содержащим '%s'"
@@ -195,9 +193,8 @@ msgstr "неправильное указание геометрии"
 msgid "'x' must be numeric"
 msgstr "'x' должен быть числовым"
 
-#, fuzzy
 msgid "invalid length(x)"
-msgstr "неправильный 'log'"
+msgstr "неправильный length(x)"
 
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'nclass' не используется, когда указаны 'breaks'"
@@ -211,13 +208,14 @@ msgstr "неизвестный алгоритм 'breaks'"
 msgid "invalid number of 'breaks'"
 msgstr "неправильное количество 'breaks'"
 
-#, fuzzy
 msgid "hist.default: pretty() error, breaks=%s"
-msgstr "hist.default: ошибка в pretty(), breaks="
+msgstr "hist.default: ошибка в pretty(), breaks=%s"
 
-#, fuzzy
+msgid "Invalid breakpoints produced by 'breaks(x)': %s"
+msgstr ""
+
 msgid "invalid length(breaks)"
-msgstr "неправильные длины координат"
+msgstr "неправильные length(breaks)"
 
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks' не возрастают строго"
@@ -229,9 +227,8 @@ msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr ""
 "некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
 
-#, fuzzy
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
-msgstr "Неправильные AREAS на графике -- используйте лучше freq=FALSE"
+msgstr "неправильные AREAS на графике -- лучше используйте 'freq=FALSE'"
 
 msgid "'x' is wrongly structured"
 msgstr "'x' неправильно структурирован"
@@ -251,37 +248,33 @@ msgstr "неправильные границы z"
 msgid "must have one more break than colour"
 msgstr "'breaks' нужно брать на один больше, чем 'colours'"
 
-#, fuzzy
 msgid "'breaks' must all be finite"
 msgstr "все 'breaks' должны быть конечными"
 
 msgid "unsorted 'breaks' will be sorted before use"
-msgstr ""
+msgstr "несортированные 'breaks' будут отсортированы перед использованием"
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "размерность z не является произведением length(x)(-1) на length(y)(-1)"
 
-#, fuzzy
 msgid "%s can only be used with a regular grid"
-msgstr "useRaster = TRUE можно использовать только с регулярной сеткой"
+msgstr "%s можно использовать только с регулярной сеткой"
 
 msgid "integer colors must be non-negative"
-msgstr ""
+msgstr "целочисленные цвета должны быть неотрицательными"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 "'respect' должен быть логическим или матрицей с той же размерностью, что и "
 "'mat'"
 
-#, fuzzy
 msgid ""
 "layout matrix must contain at least one reference\n"
 "to each of the values {1 ... %d}"
 msgstr ""
 "матрица-макет должна содержать по крайней мере одну ссылку\n"
-"на каждое из значений {1..n}; здесь же  n ="
+"на каждое из значений {1 ... %d}"
 
-#, fuzzy
 msgid "invalid 'title'"
 msgstr "неправильный 'title'"
 
@@ -294,9 +287,8 @@ msgstr "неправильные длины координат"
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width' должен быть числовым и >= 0"
 
-#, fuzzy
 msgid "horizontal specification overrides: Number of columns := %d"
-msgstr "горизонтальное указание превышено: Число колонок :="
+msgstr "горизонтальное указание превышено: Число колонок := %d"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "'merge = TRUE' не дает результата, покуда не нарисованы сегменты линии"
@@ -415,9 +407,8 @@ msgstr "'x' должен быть матрицей или таблицей данных"
 msgid "data in 'x' must be numeric"
 msgstr "данные в 'x' должны быть числовыми"
 
-#, fuzzy
 msgid "'nrow * ncol' is less than the number of observations"
-msgstr "nrow * ncol <  числа наблюдений"
+msgstr "'nrow * ncol' меньше числа наблюдений"
 
 msgid "labels do not make sense for a single location"
 msgstr "метки не имеют смысла для единственной точки"
@@ -452,15 +443,12 @@ msgstr "'number' должен иметь ту же длину, что и 'x' и 'y'"
 msgid "exactly one symbol type must be specified"
 msgstr "должен быть указан в точности один тип символа"
 
-#, fuzzy
 msgid "x log scale:  xinch() is nonsense"
 msgstr "логарифмическая шкала x:  xinch() бессмысленно"
 
-#, fuzzy
 msgid "y log scale:  yinch() is nonsense"
 msgstr "логарифмическая шкала y:  yinch() бессмысленно"
 
-#, fuzzy
 msgid "log scale:  xyinch() is nonsense"
 msgstr "логарифмическая шкала:  xyinch() бессмысленно"
 
@@ -476,12 +464,11 @@ msgstr[0] "аргумент %s не для использования"
 msgstr[1] "аргументы %s не для использования"
 msgstr[2] "аргументы %s не для использования"
 
-#, fuzzy
 msgid "extra argument %s will be disregarded"
 msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "дополнительный(е) аргумент(ы) %s будут отброшены"
-msgstr[1] "дополнительный(е) аргумент(ы) %s будут отброшены"
-msgstr[2] "дополнительный(е) аргумент(ы) %s будут отброшены"
+msgstr[0] "дополнительный аргумент %s будет отброшен"
+msgstr[1] "дополнительные аргументы %s будут отброшены"
+msgstr[2] "дополнительные аргументы %s будут отброшены"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""

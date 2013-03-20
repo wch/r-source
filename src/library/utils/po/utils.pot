@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37+0000\n"
+"POT-Creation-Date: 2013-03-20 07:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: io.c:310 io.c:314 io.c:324 io.c:538 io.c:719 io.c:770 io.c:782 io.c:786
-#: io.c:792 io.c:1007 io.c:1008 io.c:1010 io.c:1011 io.c:1012 io.c:1013
-#: io.c:1014 io.c:1015 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:314 io.c:318 io.c:328 io.c:543 io.c:724 io.c:775 io.c:787 io.c:791
+#: io.c:797 io.c:1012 io.c:1013 io.c:1015 io.c:1016 io.c:1017 io.c:1018
+#: io.c:1019 io.c:1020 stubs.c:39 stubs.c:59 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -28,62 +28,62 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr ""
 
-#: io.c:333 io.c:779
+#: io.c:337 io.c:784
 msgid "invalid quote symbol set"
 msgstr ""
 
-#: io.c:345 io.c:800 io.c:995
+#: io.c:349 io.c:805 io.c:1000
 msgid "cannot open the connection"
 msgstr ""
 
-#: io.c:348 io.c:352
+#: io.c:352 io.c:356
 msgid "cannot read from this connection"
 msgstr ""
 
-#: io.c:396 io.c:414
+#: io.c:400 io.c:418
 msgid "string terminated by newline or EOF"
 msgstr ""
 
-#: io.c:534
+#: io.c:539
 msgid "the first argument must be of mode character"
 msgstr ""
 
-#: io.c:721
+#: io.c:726
 #, c-format
 msgid "Selection: "
 msgstr ""
 
-#: io.c:809 io.c:822
+#: io.c:814 io.c:827
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr ""
 
-#: io.c:833
+#: io.c:838
 msgid "\\ followed by EOF"
 msgstr ""
 
-#: io.c:878 io.c:881
+#: io.c:883 io.c:886
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr ""
 
-#: io.c:988
+#: io.c:993
 msgid "'file' is not a connection"
 msgstr ""
 
-#: io.c:991
+#: io.c:996
 msgid "cannot write to this connection"
 msgstr ""
 
-#: io.c:1021
+#: io.c:1026
 msgid "'dec' must be a single character"
 msgstr ""
 
-#: io.c:1048
+#: io.c:1053
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 
-#: io.c:1096
+#: io.c:1101
 msgid "corrupt matrix -- dims not not match length"
 msgstr ""
 

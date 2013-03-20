@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-16 08:17\n"
+"POT-Creation-Date: 2013-03-20 07:20\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -380,6 +380,9 @@ msgstr "niepoprawna liczba 'breaks'"
 #                           format(breaks)), domain = NA)
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: błąd 'pretty()', przerwy=%s"
+
+msgid "Invalid breakpoints produced by 'breaks(x)': %s"
+msgstr ""
 
 # graphics/R/hist.R: 75
 # stop("invalid length(breaks)")
