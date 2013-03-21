@@ -3500,6 +3500,43 @@ before distribution.
 
 @end itemize
 
+Do be careful in what your tests actually test.  Bad practice seen in
+distributed packages include:
+
+@itemize
+
+@item   
+It is not reasonable to test the time taken by a command: you cannot
+know how fast or how heavily loaded an @R{} platform might be.  At best
+you can test a ratio of times, and even that is fraught with
+difficulties.
+
+@item
+Do not test the exact format of @R{} error messages: they change, and
+they can be translated.
+
+@item
+Only test the accuracy of results if you have done a formal error
+analysis.  Things such as checking that probabilities numerically sum to
+one are silly: numerical tests should always have a tolerance.  That the
+tests on your platform achieve a particular tolerance says little about
+other platforms.  Most @R{} platforms use @cputype{ix86} or
+@cputype{x86_64} CPUs: these use extended precision registers on some
+but not all of their FPU instructions.  Thus the achieved precision can
+depend on the compiler version and optimization flags---our experience
+is that 32-bit builds tend to be less precise than 64-bit ones.  But not
+all platforms use those CPUs, and not all@footnote{Not doing so is the
+default on Windows, overridden for the @R{} executables.  It is also the
+default on some Solaris compilers.}  which use them configure them allow
+the use of extended precision.
+
+If you must try to establish a tolerance empirically, configure and
+build @R{} with @option{--disable-long-doubles} and use appropriate
+compiler flags (such as @option{-ffloat-store} for @command{gcc}) to
+mitigate the effects of extended-precision calculations.
+
+@end itemize
+
 @node PDF size, Check timing, Writing portable packages, Writing portable packages
 @subsection PDF size
 
@@ -4086,7 +4123,7 @@ for exchanging information between developers and/or interested useRs.
 * Dynamic pages::               
 * User-defined macros::         
 * Encoding::                    
-* Processing Rd format::        
+* Processing documentation files::  
 * Editing Rd files::            
 @end menu
 
@@ -5392,7 +5429,7 @@ will expand to
 @end example
 when parsed.
 
-@node Encoding, Processing Rd format, User-defined macros, Writing R documentation files
+@node Encoding, Processing documentation files, User-defined macros, Writing R documentation files
 @section Encoding
 @cindex encoding
 
@@ -5458,8 +5495,8 @@ UTF-8 in @LaTeX{} is quite low.
 
 
 
-@node Processing Rd format, Editing Rd files, Encoding, Writing R documentation files
-@section Processing Rd format
+@node Processing documentation files, Editing Rd files, Encoding, Writing R documentation files
+@section Processing documentation files
 @cindex Processing Rd format
 
 There are several commands to process Rd files from the system command
@@ -5494,7 +5531,7 @@ the tools to build packages from source as described in the ``R
 Installation and Administration'' manual, although typically all that is
 needed is a @LaTeX{} installation.
 
-@node Editing Rd files,  , Processing Rd format, Writing R documentation files
+@node Editing Rd files,  , Processing documentation files, Writing R documentation files
 @section Editing Rd files
 @cindex Editing Rd files
 
