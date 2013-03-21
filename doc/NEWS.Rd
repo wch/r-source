@@ -17,6 +17,12 @@
       If a file contains numeric data with unrepresentable numbers of
       decimal places that are intended to be read as numeric, specify
       \code{colClasses} in \code{read.table()} to be \code{"numeric"}.
+
+      \item \code{mcparallel} has a new argument \code{mc.interactive}
+      which can modify the interactive flag in the child process. The
+      new default is \code{FALSE} which makes child processes
+      non-interactive by default (this prevents lock-ups due to children
+      waiting for interactive input).
     }
   }
 

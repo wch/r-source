@@ -50,6 +50,7 @@ SEXP mc_send_master(SEXP);
 SEXP mc_select_children(SEXP, SEXP);
 SEXP mc_send_child_stdin(SEXP, SEXP);
 SEXP mc_affinity(SEXP);
+SEXP mc_interactive(SEXP);
 #else
 SEXP ncpus(SEXP);
 #endif
