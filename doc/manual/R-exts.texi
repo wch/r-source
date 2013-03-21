@@ -255,7 +255,7 @@ license to the package.  Whereas you should feel free to include a
 license file in your @emph{source} distribution, please do not arrange
 to @emph{install} yet another copy of the @acronym{GNU} @file{COPYING}
 or @file{COPYING.LIB} files but refer to the copies on
-@uref{http://www.r-project.org/@/Licenses/} and included in the @R{}
+@uref{http://www.R-project.org/@/Licenses/} and included in the @R{}
 distribution (in directory @file{share/licenses}).  Since files named
 @file{LICENSE} or @file{LICENCE} @emph{will} be installed, do not use
 these names for standard license files.  To include comments about the
@@ -400,7 +400,7 @@ One of the ``standard'' short specifications
 @example
 GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-2.0
 @end example
-as made available @emph{via} @uref{http://www.r-project.org/@/Licenses/} and
+as made available @emph{via} @uref{http://www.R-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the @R{} source or home
 directory.
 @item
@@ -1960,7 +1960,7 @@ versions of @R{} for Unix OSes still do.}) platforms have no Fortran
 
 This means that portable packages need to be written in correct
 FORTRAN 77, which will also be valid Fortran 95.  See
-@uref{http://developer.r-project.org/@/Portability.html} for reference
+@uref{http://developer.R-project.org/@/Portability.html} for reference
 resources.  In particular, @emph{free source form} F95 code is not
 portable.
 
@@ -2469,7 +2469,7 @@ favour of @command{R CMD INSTALL --build}.
 
 Finally, at least one web-based service is available for building binary
 packages from (checked) source code: WinBuilder (see
-@uref{http://win-builder.r-project.org/}) is able to build Windows
+@uref{http://win-builder.R-project.org/}) is able to build Windows
 binaries. Note that this is intended for developers on other platforms
 who do not have access to Windows but wish to provide binaries for the
 Windows platform.
@@ -2739,7 +2739,7 @@ encouraged to join in the collaborative project and to submit their own
 packages to @acronym{CRAN}.
 
 Current submission instructions are linked from
-@uref{http://cran.r-project.org/banner.shtml}.
+@uref{http://CRAN.R-project.org/banner.shtml#submitting}.
 
 @node Package namespaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
 @section Package namespaces
