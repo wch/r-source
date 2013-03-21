@@ -100,9 +100,10 @@
   coercions possibly taking place.
 
   Both \code{[} and \code{[[} extraction methods partially match row
-  names.  By default neither partially match column names, but
-  \code{[[} will unless \code{exact = TRUE}.  If you want to do exact
-  matching on row names use \code{\link{match}} as in the examples.
+  names.  By default neither partially match column names, but \code{[[}
+  will if \code{exact = FALSE} (and with a warning if \code{exact =
+  NA}).  If you want to exact matching on row names use
+  \code{\link{match}}, as in the examples.
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated

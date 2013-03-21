@@ -11,8 +11,12 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{type.convert()} (hence \code{read.table()}) returns
-      a character vectors or factor when representing a numeric input
+      a character vector or factor when representing a numeric input
       as a double would lose accuracy.  Similarly for complex inputs.
+
+      If a file contains numeric data with unrepresentable numbers of
+      decimal places that are intended to be read as numeric, specify
+      \code{colClasses} in \code{read.table()} to be \code{"numeric"}.
     }
   }
 
@@ -31,11 +35,10 @@
       \code{.path.package()} are defunct: only the public versions
       without the dot have ever been in the API.
 
-      \item Partial matching when using the \code{$} operator on data
-      frames now throws a warning and may become defunct in the
+      \item Partial matching when using the \code{$} operator \emph{on
+	data frames} now throws a warning and may become defunct in the
       future. If partial matching is intended, replace \code{foo$bar}
-      with \code{foo[["bar", exact=FALSE]]}.
-
+      by \code{foo[["bar", exact = FALSE]]}.
     }
   }
 }
