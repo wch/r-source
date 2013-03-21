@@ -39,8 +39,9 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     \code{\link{checkPoFile}} is called on the updated file, and if
     there are no problems the file is  compiled and installed under
     \file{inst/po}.
-    \item A file \file{R-en@quot.po} is created with UTF-8 directional
-    quotes, compiled and installed under \file{inst/po}.
+    \item In a UTF-8 locale, a \sQuote{translation} \file{R-en@quot.po}
+    is created with UTF-8 directional quotes, compiled and installed
+    under \file{inst/po}.
    \item The remaining steps are done only if file
     \file{po/\var{pkgname}.pot} already exists.  The
     \file{src/*.\{c,cc,cpp,m,mm\}} files in the package are examined to
@@ -52,9 +53,16 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     \code{\link{checkPoFile}} is called on the updated file, and if
     there are no problems the file is  compiled and
     installed under \file{inst/po}.
-    \item A file \file{en@quot.po} is created with UTF-8 directional
-    quotes, compiled and installed under \file{inst/po}.
+    \item In a UTF-8 locale, a \sQuote{translation} \file{en@quot.po} is
+    created with UTF-8 directional quotes, compiled and installed under
+    \file{inst/po}.
   }
+
+  Note that C/C++ messages are not automatically prepared for
+  translation as they need to be explicitly marked for translation in
+  the source files.  Once that has been done, create an empty file
+  \file{po/\var{pkgname}.pot} in the package sources and run this
+  function again.
 
   \code{pkg = "base"} is special (and for use by \R developers only):
   the C files are not in the package directory but in the main sources.
