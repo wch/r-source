@@ -148,17 +148,21 @@ function(package, dir, lib.loc = NULL,
             .eval_with_capture({
                 result$tangle[[file]] <- tryCatch({
                     engine$tangle(file, quiet = TRUE)
+                    setwd(startdir) # in case a vignette changes the working dir 
                     find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
                 }, error = function(e) e)
             })
-        if(weave)
+        if(weave) {
+            setwd(startdir) # in case a vignette changes the working dir then errored out
             .eval_with_capture({
                 result$weave[[file]] <- tryCatch({
                     engine$weave(file, quiet = TRUE)
+                    setwd(startdir)
                     find_vignette_product(name, by = "weave", engine = engine)
                 }, error = function(e) e)
             })
-        setwd(startdir) # in case a vignette changes the working dir
+        }
+        setwd(startdir) # in case a vignette changes the working dir then errored out
     }
 
     # Assert that output files were not overwritten
@@ -437,12 +441,12 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
 
         output <- tryCatch({
             engine$weave(file, quiet = quiet)
+            setwd(startdir)
             find_vignette_product(name, by = "weave", engine = engine)
         }, error = function(e) {
             stop(gettextf("processing vignette '%s' failed with diagnostics:\n%s",
                  file, conditionMessage(e)), domain = NA, call. = FALSE)
         })
-        setwd(startdir)
 
         ## This can fail if run in a directory whose path contains spaces.
         if(!have.makefile && vignette_is_tex(output)) {
@@ -454,6 +458,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
         if (tangle) {  # This is set for custom engines
             output <- tryCatch({
                 engine$tangle(file, quiet = quiet)
+                setwd(startdir)
                 find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
             }, error = function(e) {
                 stop(gettextf("tangling vignette '%s' failed with diagnostics:\n%s",
@@ -887,8 +892,8 @@ vignetteEngine <- local({
             } else {
                 for (pkg in package) { 
                     key <- engineKey(name, pkg)
-                    name <- paste(key, collapse = "::")
-                    result <- registry[[name]]
+                    nameT <- paste(key, collapse = "::")
+                    result <- registry[[nameT]]
                     if (!is.null(result))
                         break
                 }

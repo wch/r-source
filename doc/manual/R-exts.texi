@@ -2521,7 +2521,7 @@ accessible by either placing them in the @file{inst/doc} hierarchy of
 the source package or by using calls to @code{system.file()}.  All other
 files needed to re-make the vignette PDFs (such as LaTeX style files,
 BiBTeX input files and files for any figures not created by running the
-code in the vignette) must in the vignette source directory.
+code in the vignette) must be in the vignette source directory.
 
 @code{R CMD build} will automatically@footnote{unless inhibited by using
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create PDF
