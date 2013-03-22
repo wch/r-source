@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2012   The R Core Team.
+ *  Copyright (C) 1999-2013   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -801,7 +801,11 @@ Rboolean R_HasFancyBindings(SEXP rho);
 
 /* ../main/errors.c : */
 /* needed for R_load/savehistory handling in front ends */
+#if defined(__GNUC__) && __GNUC__ >= 3
+void Rf_errorcall(SEXP, const char *, ...) __attribute__((noreturn));
+#else
 void Rf_errorcall(SEXP, const char *, ...);
+#endif
 void Rf_warningcall(SEXP, const char *, ...);
 void Rf_warningcall_immediate(SEXP, const char *, ...);
 
