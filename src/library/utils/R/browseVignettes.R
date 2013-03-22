@@ -84,10 +84,10 @@ print.browseVignettes <- function(x, ...)
                        sprintf("<a href='%s/%s'>%s</a>&nbsp;", 
                                prefix, pdf, toupper(pdfext)),
                        ""),
-                ifelse(nzchar(rcode),
+		sprintf("<a href='%s/%s'>source</a>&nbsp;", prefix, src),
+		ifelse(nzchar(rcode),
                        sprintf("<a href='%s/%s'>R code</a>&nbsp;", prefix, rcode),
-                       ""),
-                sprintf("<a href='%s/%s'>source</a>&nbsp;", prefix, src))
+                       ""))
     }
     
     if (tools:::httpdPort == 0L)
