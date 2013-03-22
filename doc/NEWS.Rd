@@ -489,7 +489,11 @@
       \item The \code{breaks} argument in \code{hist.default()} can now be
       a function that returns the breakpoints to be used (previously it
       could only return the suggested number of breakpoints).
-
+      
+      \item File \file{share/licenses/licenses.db} has some
+      clarifications, especially as to which variants of \sQuote{BSD}
+      and \sQuote{MIT} is intended and how to apply them to packages.
+      The problematic licence \sQuote{Artistic-1.0} has been removed.
     }
   }
 
