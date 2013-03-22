@@ -498,23 +498,21 @@
   }
 
   \subsection{LONG VECTORS}{
+    This section applies only to 64-bit platforms.
     \itemize{
       \item There is support for vectors longer than \eqn{2^{31}-1}{2^31
-      - 1} elements on 64-bit platforms.  This applies to raw, logical,
-      integer, double, complex and character vectors, as well as lists.
-      (Elements of character vectors remain limited to
-      \eqn{2^{31}-1}{2^31 - 1} bytes.)
-
-      Not all aspects of such vectors are completely implemented (nor
-      completely tested).
+      - 1} elements.  This applies to raw, logical, integer, double,
+      complex and character vectors, as well as lists.  (Elements of
+      character vectors remain limited to \eqn{2^{31}-1}{2^31 - 1}
+      bytes.)
 
       \item Most operations which can sensibly be done with long vectors
-      now work: others may return the error \sQuote{long vectors not
+      work: others may return the error \sQuote{long vectors not
       supported yet}.  Most of these are because they explicitly work
       with integer indices (e.g. \code{anyDuplicated()} and
-      \code{match()}) or because of other limits (e.g. of character
-      strings or matrix dimensions) would be exceeded or the operations
-      would be extremely slow.
+      \code{match()}) or because other limits (e.g. of character strings
+      or matrix dimensions) would be exceeded or the operations would be
+      extremely slow.
 
       \item \code{length()} returns a double for long vectors, and
       lengths can be set to \eqn{2^{31}}{2^31} or more by the
@@ -535,11 +533,11 @@
       than 65536 rows (but for example \code{hclust()} cannot process
       such objects).
 
-      \item \code{serialize()} to a raw vector is no longer limited in
-      size (except by resources) on 64-bit platforms.
+      \item \code{serialize()} to a raw vector is unlimited in size
+      (except by resources).
 
       \item The C-level function \code{R_alloc} can now allocate
-      \eqn{2^{35}}{2^35} or more bytes on 64-bit platforms.
+      \eqn{2^{35}}{2^35} or more bytes.
 
       \item \code{agrep()} and \code{grep()} will return double vectors
       of indices for long vector inputs.
