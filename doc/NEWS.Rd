@@ -626,21 +626,24 @@
       besides \code{Sweave}; see \sQuote{Writing R Extensions} and the
       \code{tools::vignetteEngine} help topic for details.
       
-      \item The \file{*.R} tangled \command{R CMD build} source code
-      for vignettes is now included in tarballs when \command{R CMD
-      build} is used to produce them. In \R 3.0.0, missing \file{*.R}
-      files will be produced at install time, but eventually this 
-      will be dropped.
+      \item The \file{*.R} tangled source code for vignettes is now
+      included in tarballs when \command{R CMD build} is used to produce
+      them.  In \R 3.0.0, \file{*.R} files not in the sources will be
+      produced at install time, but eventually this will be dropped.
 
-      \item The package type \code{"mac.binary"} now results in a path
-      without Mac subtype (which used to be \code{"universal"}).  This
-      is the type used for the \acronym{CRAN} binary distribution for OS
-      X as from \R 3.0.0.
+      \item The package type \code{"mac.binary"} now looks in a path in
+      the repository without any Mac subtype (which used to be
+      \samp{universal} or \samp{leopard}): it looks in
+      \file{bin/macosx/contrib/3.0} rather than
+      \file{bin/macosx/leopard/contrib/2.15}).  This is the type used
+      for the \acronym{CRAN} binary distribution for OS X as from \R
+      3.0.0.
       
       \item File \file{etc/Makeconf} makes more use of the macros
       \code{$(CC)}, \code{$(CXX)}, \code{$(F77)} and \code{$(FC)}, so
       the compiler in use can be changed by setting just these (and if
-      necessary the corresponding flags) in file \file{~/.R/Makevars}.
+      necessary the corresponding flags and \code{FLIBS}) in file
+      \file{~/.R/Makevars}.
 
       This is convenient for those working with binary distributions of
       \R, e.g. on OS X.

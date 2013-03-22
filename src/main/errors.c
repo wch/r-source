@@ -64,7 +64,7 @@ static char * R_ConciseTraceback(SEXP call, int skip);
 
 /* Interface / Calling Hierarchy :
 
-  R__stop()   -> do_error ->   errorcall --> jump_to_top_ex
+  R__stop()   -> do_error ->   errorcall --> (eventually) jump_to_top_ex
 			 /
 		    error
 
