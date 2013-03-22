@@ -344,16 +344,13 @@ get_exclude_patterns <- function()
                     Sys.setenv(R_LIBS = libdir)
                 }
                 
-                # If a custom builder is used, we tangle all vignettes now in 
-                # case the tangler is not available at INSTALL time.
-                # We could just tangle the custom ones, but mixed Sweave/custom
-                # vignettes are likely to be rare, and this is simpler
+                # Tangle all vignettes now.  We'll try again at INSTALL time in 3.0.0,
+                # but eventually this is the only place the tangling will happen.
                 
-                custom <- !is.na(desc["VignetteBuilder"])
                 cmd <- file.path(R.home("bin"), "Rscript")
                 args <- c("--vanilla",
                           "--default-packages=", # some vignettes assume methods
-                          "-e", shQuote(paste0("tools::buildVignettes(dir = '.', tangle=", custom, ")")))
+                          "-e", shQuote("tools::buildVignettes(dir = '.', tangle = TRUE)"))
                 ## since so many people use 'R CMD' in Makefiles,
                 oPATH <- Sys.getenv("PATH")
                 Sys.setenv(PATH = paste(R.home("bin"), oPATH,
@@ -369,33 +366,15 @@ get_exclude_patterns <- function()
                     vigns <- pkgVignettes(dir = '.', output = TRUE, source = TRUE)
                     stopifnot(!is.null(vigns))
 
-                    if (!custom) {
-			## Do any of the .R files which will be generated at install time
-			## exist in inst/doc?  If so the latter should be removed.
-			sources <- basename(list_files_with_exts(doc_dir, "R"))
-			if (length(sources)) {
-			    new_sources <- unlist(vigns$sources)
-			    dups <- sources[sources %in% new_sources]
-			    if(length(dups)) {
-				warningLog(Log)
-				printLog(Log,
-					 paste(c("  Unused files in inst/doc which are pointless or misleading",
-						 "  as they will be re-created from the vignettes on installation:",
-						 paste("  ", dups),
-						 "  have been removed", ""),
-					       collapse = "\n"))
-				unlink(file.path(doc_dir, dups))
-			    } else resultLog(Log, "OK")
-			} else resultLog(Log, "OK")
-                    } else resultLog(Log, "OK")
+                    resultLog(Log, "OK")
                 }
 
                 ## We may need to install them.
                 if (basename(vigns$dir) == "vignettes") {
                     ## inst may not yet exist
                     dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
-                    file.copy(c(vigns$docs, vigns$outputs), doc_dir)
-                    unlink(vigns$outputs)
+                    file.copy(c(vigns$docs, vigns$outputs, unlist(vigns$sources)), doc_dir)
+                    unlink(c(vigns$outputs, unlist(vigns$sources)))
                     extras_file <- file.path("vignettes", ".install_extras")
                     if (file.exists(extras_file)) {
                         extras <- readLines(extras_file, warn = FALSE)
