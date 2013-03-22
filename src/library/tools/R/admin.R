@@ -666,6 +666,7 @@ function(dir, outDir, keep.source = TRUE)
         output <- tryCatch({
             engine$weave(file, pdf = TRUE, eps = FALSE, quiet = TRUE,
                         keep.source = keep.source, stylepath = FALSE)
+            setwd(buildDir)
             find_vignette_product(name, by = "weave", engine = engine)
         }, error = function(e) {
             stop(gettextf("running %s on vignette '%s' failed with message:\n%s",
