@@ -625,6 +625,12 @@
       \item Package vignettes can now be processed by other engines
       besides \code{Sweave}; see \sQuote{Writing R Extensions} and the
       \code{tools::vignetteEngine} help topic for details.
+      
+      \item The \file{*.R} tangled \command{R CMD build} source code
+      for vignettes is now included in tarballs when \command{R CMD
+      build} is used to produce them. In \R 3.0.0, missing \file{*.R}
+      files will be produced at install time, but eventually this 
+      will be dropped.
 
       \item The package type \code{"mac.binary"} now results in a path
       without Mac subtype (which used to be \code{"universal"}).  This

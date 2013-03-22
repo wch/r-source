@@ -521,12 +521,14 @@ function(dir, outDir, encoding = "")
 
 	loadVignetteBuilder(dir, mustwork = FALSE)
 
-        ## install tangled versions of Sweave vignettes.  FIXME:  Custom
-        ## engine vignettes should have been included when the package was built,
+        ## install tangled versions of Sweave vignettes.  FIXME:  Vignette
+        ## *.R files should have been included when the package was built,
         ## but in the interim before they are all built with the new code,
-        ## this is needed for all packages.
+        ## this is needed.
         for(i in seq_along(vigns$docs)) {
             file <- vigns$docs[i]
+            if (!is.null(vigns$sources) && !is.null(vigns$sources[i])) # already there?
+            	next
             file <- basename(file)
             enc <- getVignetteEncoding(file, TRUE)
             if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
@@ -537,6 +539,7 @@ function(dir, outDir, encoding = "")
 	    engine <- try(vignetteEngine(vigns$engines[i]), silent = TRUE)
 	    if (!inherits(engine, "try-error"))
             	engine$tangle(file, quiet = TRUE, encoding = enc)
+            setwd(outVignetteDir) # just in case some strange tangle function changed it
         }
         setwd(cwd)
 
