@@ -210,9 +210,20 @@ SEXP doSetViewport(SEXP vp,
 	if (rotationAngle != 0 &&
             rotationAngle != 90 &&
             rotationAngle != 270 &&
-            rotationAngle != 360)
+            rotationAngle != 360) {
 	    warning(_("cannot clip to rotated viewport"));
-	else {
+            /* Still need to set clip region for this viewport.
+               So "inherit" parent clip region.
+               In other words, 'clip=TRUE' + 'rot=15' = 'clip=FALSE'
+            */
+            SEXP parentClip;
+            PROTECT(parentClip = viewportClipRect(viewportParent(vp)));
+            xx1 = REAL(parentClip)[0];
+            yy1 = REAL(parentClip)[1];
+            xx2 = REAL(parentClip)[2];
+            yy2 = REAL(parentClip)[3];
+            UNPROTECT(1);
+        } else {
 	    /* Calculate a clipping region and set it
 	     */
 	    SEXP x1, y1, x2, y2;
