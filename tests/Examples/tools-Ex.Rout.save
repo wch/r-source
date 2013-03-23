@@ -1,5 +1,5 @@
 
-R version 3.0.0 alpha (2013-03-12 r62214) -- "Unsuffered Consequences"
+R version 3.0.0 beta (2013-03-23 r62377) -- "Masked Marvel"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x28abbe8>
+<environment: 0x25fc1a8>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x28abbe8>
+<environment: 0x25fc1a8>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x28abbe8>
+<environment: 0x25fc1a8>
 
 $showURLs
 [1] FALSE
@@ -234,7 +234,7 @@ $underline_titles
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x27d0ef8>
+<environment: 0x25205b8>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -965,7 +965,7 @@ List of 5
 > ### * <FOOTER>
 > ###
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.34 0.009 0.349 0 0 
+Time elapsed:  0.379 0.011 0.393 0 0 
 > grDevices::dev.off()
 null device 
           1 

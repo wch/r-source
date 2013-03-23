@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-03-04 r62121) -- "Unsuffered Consequences"
+R version 3.0.0 beta (2013-03-23 r62377) -- "Masked Marvel"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1316,5 +1316,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.585 0.028 1.63 0 0 
+Time elapsed:  0.925 0.009 0.936 0 0 
 > 
