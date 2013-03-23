@@ -908,6 +908,12 @@
       \item If a \code{.External} call is registered with a number of
       arguments (other than \code{-1}), the number of arguments passed
       is checked for each call (as for other foreign function calls).
+
+      \item It is now possible to write custom connection
+      implementations outside core R using \file{R_ext/Connections.h}.
+      Please note that the implementation of connections is still
+      considered internal and may change in the future (see the above
+      file for details).
     }
   }
 
