@@ -43,6 +43,7 @@
 #endif
 
 
+/* FIXME: use 64-bit integer accumulator? */
 static Rboolean isum(int *x, R_xlen_t n, int *value, Rboolean narm, SEXP call)
 {
     double s = 0.0;
