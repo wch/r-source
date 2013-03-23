@@ -742,7 +742,7 @@ print.summary.nls <-
     printCoefmat(x$coefficients, digits = digits, signif.stars = signif.stars,
                  ...)
     cat("\nResidual standard error:",
-        format(signif(x$sigma, digits)), " on ", rdf, " degrees of freedom")
+        format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom")
     cat("\n")
     correl <- x$correlation
     if (!is.null(correl)) {

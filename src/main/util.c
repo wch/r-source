@@ -1563,11 +1563,11 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	goto done;
     }
     if (exact && ans > 9e15) { // lost accuracy
+//	error("lost accuracy in '%s'\n", str);
 	ans = NA_REAL;
 	p = str; /* back out */
 	goto done;
     }
-
 
     if (*p == 'e' || *p == 'E') {
 	int expsign = 1;
