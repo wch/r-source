@@ -487,8 +487,9 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
                 "ok-errors", "method-dispatch", "d-p-q-r-tests")
     tests2 <- c("complex", "print-tests", "lapack", "datasets")
-    tests3 <- c("reg-tests-1a", "reg-tests-1b", "reg-tests-2",
-                "reg-IO", "reg-IO2", "reg-S4")
+    tests3 <- c("reg-tests-1a", "reg-tests-1b", "reg-tests-1c", "reg-tests-2",
+                "reg-examples1", "reg-examples2", "reg-packages",
+                "reg-IO", "reg-IO2", "reg-S4", "reg-plot", "reg-BLAS")
 
     runone <- function(f, diffOK = FALSE, inC = TRUE)
     {
@@ -545,10 +546,10 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         for (f in tests3) {
             if (runone(f)) return(invisible(1L))
             if (f == "reg-plot") {
-                message("  comparing 'reg-plot.ps' to 'reg-plot.ps.save' ...",
+                message("  comparing 'reg-plot.pdf' to 'reg-plot.pdf.save' ...",
                         appendLF = FALSE, domain = NA)
-                system("diff reg-plot.ps reg-plot.ps.save")
-                message("OK")
+                res <- Rdiff("reg-plot.pdf", "reg-plot.pdf.save")
+                if(res != 0L) message("DIFFERED") else message("OK")
             }
         }
         runone("reg-tests-3", TRUE)
@@ -556,10 +557,10 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         message("  expect failure or some differences if not in a Latin or UTF-8 locale", domain = NA)
 
         runone("reg-plot-latin1", TRUE, FALSE)
-        message("  comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ...",
+        message("  comparing 'reg-plot-latin1.pdf' to 'reg-plot-latin1.pdf.save' ...",
                 appendLF = FALSE, domain = NA)
-        system("diff reg-plot-latin1.ps reg-plot-latin1.ps.save")
-        message("OK")
+        res <- Rdiff("reg-plot-latin1.pdf", "reg-plot-latin1.pdf.save")
+        if(res != 0L) message("DIFFERED") else message("OK")
     }
 
     if (scope %in% c("devel", "both")) {
