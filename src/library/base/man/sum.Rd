@@ -1,6 +1,6 @@
 % File src/library/base/man/sum.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sum}
@@ -39,6 +39,12 @@ sum(\dots, na.rm = FALSE)
   Logical true values are regarded as one, false values as zero.
   For historical reasons, \code{NULL} is accepted and treated as if it
   were \code{integer(0)}.
+
+  Loss of accuracy can occur when summing values of different signs:
+  this can even occur for sufficiently long integer inputs if the
+  partial sums would cause integer overflow.  Where possible
+  extended-precision accumulators are used, but this is
+  platform-dependent.
 }
 \section{S4 methods}{
   This is part of the S4 \code{\link[=S4groupGeneric]{Summary}}
