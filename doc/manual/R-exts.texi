@@ -247,20 +247,6 @@ shell) script files which are, respectively, executed before and
 Unix-alikes, see @ref{Configure and cleanup}.  The analogues on Windows
 are @file{configure.win} and @file{cleanup.win}.
 
-@cindex LICENSE file
-@cindex LICENCE file
-
-The optional file @file{LICENSE}/@file{LICENCE} contains a copy of the
-license to the package.  Whereas you should feel free to include a
-license file in your @emph{source} distribution, please do not arrange
-to @emph{install} yet another copy of the @acronym{GNU} @file{COPYING}
-or @file{COPYING.LIB} files but refer to the copies on
-@uref{http://www.R-project.org/@/Licenses/} and included in the @R{}
-distribution (in directory @file{share/licenses}).  Since files named
-@file{LICENSE} or @file{LICENCE} @emph{will} be installed, do not use
-these names for standard license files.  To include comments about the
-licensing rather than the body of a license, use a file named something
-like @file{LICENSE.note}.
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
@@ -310,13 +296,14 @@ structure for a new package: see its help page for details.
 
 @menu
 * The DESCRIPTION file::        
+* Licensing::                   
 * The INDEX file::              
 * Package subdirectories::      
 * Data in packages::            
 * Non-R scripts in packages::   
 @end menu
 
-@node The DESCRIPTION file, The INDEX file, Package structure, Package structure
+@node The DESCRIPTION file, Licensing, Package structure, Package structure
 @subsection The @file{DESCRIPTION} file
 @cindex DESCRIPTION file
 
@@ -388,79 +375,8 @@ version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
 were @samp{0.1-0}.  It is @strong{not} a decimal number, so for example
 @code{0.9 < 0.75} since @code{9 < 75}.
 
-@c DESCRIPTION field License
-@c DESCRIPTION field License_is_FOSS
-@c DESCRIPTION field License_restricts_use
-The mandatory @samp{License} field should specify the license of the
-package in a standardized form.  Alternatives are indicated @emph{via}
-vertical bars.  Individual specifications must be one of
-@itemize @bullet
-@item
-One of the ``standard'' short specifications
-@example
-GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-2.0
-@end example
-as made available @emph{via} @uref{http://www.R-project.org/@/Licenses/} and
-contained in subdirectory @file{share/licenses} of the @R{} source or home
-directory.
-@item
-The names and abbreviations of ``standard'' and mostly free or open
-source software (FOSS, e.g.,
-@uref{http://en.wikipedia.org/@/wiki/@/FOSS}) licenses contained in the
-license data base in file @file{share/licenses/license.db} in the @R{}
-source or home directory, possibly (for versioned licenses) followed by
-a version restriction of the form @samp{(@var{op} @var{v})} with
-@var{op} one of the comparison operators @samp{<}, @samp{<=}, @samp{>},
-@samp{>=}, @samp{==}, or @samp{!=} and @var{v} a numeric version
-specification (strings of non-negative integers separated by @samp{.}),
-possibly combined @emph{via} @samp{,} (see below for an example).  For
-versioned licenses, one can also specify the name followed by the
-version, or combine an existing abbreviation and the version with a
-@samp{-}.
-@item
-One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
-to a file named @file{LICENSE} or @file{LICENCE} in the package (source
-and installation) top-level directory.
-@item
-The string @samp{Unlimited}, meaning that there are no restrictions on
-distribution or use other than those imposed by relevant laws (including
-copyright laws).
-@end itemize
-If a package license @emph{restricts} a base license (where permitted, e.g.,
-using GPL-3 or AGPL-3 with an attribution clause), the additional terms
-should be placed in file @file{LICENSE} (or @file{LICENCE}), and the
-string @samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively)
-should be appended to the corresponding individual license
-specification.
+The mandatory @samp{License} field is discussed in the next subsection.
 
-Examples of standardized specifications include
-@example
-License: GPL-2
-License: GPL (>= 2) | BSD
-License: LGPL (>= 2.0, < 3) | Mozilla Public License
-License: GPL-2 | file LICENCE
-License: Artistic-1.0 | AGPL-3 + file LICENSE
-@end example
-Please note in particular that ``Public domain'' is not a valid license,
-since it is not recognized in some jurisdictions.
-
-It is very important that you include this license information!
-Otherwise, it may not even be legally correct for others to distribute
-copies of the package.  Do not use the @samp{License} field for
-copyright information: if needed, use a @samp{Copyright} field.
-
-Please ensure that the license you choose also covers any dependencies
-(including system dependencies) of your package: it is particularly
-important that any restrictions on the use of such dependencies are
-evident to people reading your @file{DESCRIPTION} file.
-
-Fields @samp{License_is_FOSS} and @samp{License_restricts_use} may be
-added by repositories where information cannot be computed from the name
-of the license.  @samp{License_is_FOSS: yes} is used for licenses which
-are known to be FOSS, and @samp{License_restricts_use} can have values
-@samp{yes} or @samp{no} if the @file{LICENSE} file is known to restrict
-users or usage, or known not to.  These are used by, e.g.@:, the
-@code{available.packages} filters.
 
 @c DESCRIPTION field Description
 The mandatory @samp{Description} field should give a comprehensive
@@ -704,8 +620,8 @@ The @samp{BuildVignettes} logical field can be set to a false value to
 stop @command{R CMD build} from attempting to rebuild the vignettes, as
 well as preventing @command{R CMD check} from testing this.  This should
 only be used exceptionally, for example if the PDFs include large
-figures which are not part of the package sources (and hence do not have
-an Open Source license).
+figures which are not part of the package sources (and hence only in
+packages which do not have an Open Source license).
 
 @c DESCRIPTION field VignetteBuilder
 The @samp{VignetteBuilder} field names a package that provides 
@@ -758,11 +674,11 @@ Journal of Economic Literature Classification System,
 @samp{Classification/MSC} (the Mathematics Subject Classification of the
 American Mathematical Society, @uref{http://www.ams.org/msc/}).  The
 subject classifications should be comma-separated lists of the
-respective classification codes, e.g., @samp{Classification/ACM: G.4,
-H.2.8, I.5.1}.
+respective classification codes, e.g., 
+@samp{Classification/ACM: G.4, H.2.8, I.5.1}.
 
 @c DESCRIPTION field Language
-An @samp{Language} field can be used to indicate if the package
+A @samp{Language} field can be used to indicate if the package
 documentation is not in English: this should be a comma-separated list
 of standard (not private use or grandfathered) IETF language tags as
 currently defined by RFC 5646
@@ -790,8 +706,120 @@ authors/developers) and @code{MailingList} are in common use. Some
 repositories (including @acronym{CRAN} and R-forge) add their own
 fields.
 
+@node Licensing, The INDEX file, The DESCRIPTION file, Package structure
+@subsection Licensing
 
-@node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
+Licensing for a package which might be distributed is an important but
+potentially complex subject.
+
+It is very important that you include license information!  Otherwise,
+it may not even be legally correct for others to distribute copies of
+the package, let alone use it.
+
+The package management tools use the concept of 
+`free or open source software' 
+(FOSS, e.g., @uref{http://en.wikipedia.org/@/wiki/@/FOSS})
+licenses: the idea being that some users of @R{} and its packages want
+to restrict themselves to such software.  Others need to ensure that
+there are no restrictions stopping them using a package, e.g.@:
+forbidding commercial or military use.  It is a central tenet of FOSS
+software that there are no restrictions on users nor usage.
+
+Do not use the @samp{License} field for information on copyright
+holders: if needed, use a @samp{Copyright} field.
+
+@c DESCRIPTION field License
+@c DESCRIPTION field License_is_FOSS
+@c DESCRIPTION field License_restricts_use
+The mandatory @samp{License} field in the @file{DESCRIPTION} file should
+specify the license of the package in a standardized form.  Alternatives
+are indicated @emph{via} vertical bars.  Individual specifications must
+be one of
+@itemize @bullet
+@item
+One of the ``standard'' short specifications
+@example
+GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-2.0
+BSD_2_clause BSD_3_clause MIT
+@end example
+as made available @emph{via} @uref{http://www.R-project.org/@/Licenses/} and
+contained in subdirectory @file{share/licenses} of the @R{} source or home
+directory.
+@item
+The names or abbreviations of other licenses contained in the license
+data base in file @file{share/licenses/license.db} in the @R{} source or
+home directory, possibly (for versioned licenses) followed by a version
+restriction of the form @samp{(@var{op} @var{v})} with @samp{@var{op}} one of
+the comparison operators @samp{<}, @samp{<=}, @samp{>}, @samp{>=},
+@samp{==}, or @samp{!=} and @samp{@var{v}} a numeric version specification
+(strings of non-negative integers separated by @samp{.}), possibly
+combined @emph{via} @samp{,} (see below for an example).  For versioned
+licenses, one can also specify the name followed by the version, or
+combine an existing abbreviation and the version with a @samp{-}.
+@item
+One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
+to a file named @file{LICENSE} or @file{LICENCE} in the package (source
+and installation) top-level directory.
+@item
+The string @samp{Unlimited}, meaning that there are no restrictions on
+distribution or use other than those imposed by relevant laws (including
+copyright laws).
+@end itemize
+If a package license @emph{restricts} a base license (where permitted, e.g.,
+using GPL-3 or AGPL-3 with an attribution clause), the additional terms
+should be placed in file @file{LICENSE} (or @file{LICENCE}), and the
+string @samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively)
+should be appended to the corresponding individual license
+specification.
+
+Examples of standardized specifications include
+@example
+License: GPL-2
+License: GPL (>= 2) | BSD
+License: LGPL (>= 2.0, < 3) | Mozilla Public License
+License: GPL-2 | file LICENCE
+License: Artistic-1.0 | AGPL-3 + file LICENSE
+@end example
+Please note in particular that ``Public domain'' is not a valid license,
+since it is not recognized in some jurisdictions.
+
+Please ensure that the license you choose also covers any dependencies
+(including system dependencies) of your package: it is particularly
+important that any restrictions on the use of such dependencies are
+evident to people reading your @file{DESCRIPTION} file.
+
+Fields @samp{License_is_FOSS} and @samp{License_restricts_use} may be
+added by repositories where information cannot be computed from the name
+of the license.  @samp{License_is_FOSS: yes} is used for licenses which
+are known to be FOSS, and @samp{License_restricts_use} can have values
+@samp{yes} or @samp{no} if the @file{LICENSE} file is known to restrict
+users or usage, or known not to.  These are used by, e.g.@:, the
+@code{available.packages} filters.
+
+
+@cindex LICENSE file
+@cindex LICENCE file
+The optional file @file{LICENSE}/@file{LICENCE} contains a copy of the
+license to the package.  To avoid any confusion only include such a file
+if it is referred to in the @samp{License} field of the
+@file{DESCRIPTION} file.
+
+Whereas you should feel free to include a license file in your
+@emph{source} distribution, please do not arrange to @emph{install} yet
+another copy of the @acronym{GNU} @file{COPYING} or @file{COPYING.LIB}
+files but refer to the copies on
+@uref{http://www.R-project.org/@/Licenses/} and included in the @R{}
+distribution (in directory @file{share/licenses}).  Since files named
+@file{LICENSE} or @file{LICENCE} @emph{will} be installed, do not use
+these names for standard license files.  To include comments about the
+licensing rather than the body of a license, use a file named something
+like @file{LICENSE.note}.
+
+A few ``standard'' licenses are rather license templates which need
+additional information to be completed @emph{via} @samp{+ file LICENSE}.
+
+
+@node The INDEX file, Package subdirectories, Licensing, Package structure
 @subsection The @file{INDEX} file
 @cindex INDEX file
 
@@ -806,7 +834,7 @@ The file is part of the information given by @code{library(help =
 @var{pkgname})}.
 
 Rather than editing this file, it is preferable to put customized
-information about the package into an overview man page
+information about the package into an overview help page
 (@pxref{Documenting packages}) and/or a vignette (@pxref{Writing package
 vignettes}).
 
@@ -865,18 +893,19 @@ The documentation filenames must start with an @acronym{ASCII} (lower or
 upper case) letter or digit and have the extension @file{.Rd} (the
 default) or @file{.rd}.  Further, the names must be valid in
 @samp{file://} URLs, which means@footnote{More precisely, they can
-contain the English alphanumeric characters and the symbols @samp{$ - _
-. + ! ' ( ) , ; @ = &}.}  they must be entirely @acronym{ASCII} and not
-contain @samp{%}.  @xref{Writing R documentation files}, for more
-information.  Note that all user-level objects in a package should be
-documented; if a package @var{pkg} contains user-level objects which are
-for ``internal'' use only, it should provide a file
-@file{@var{pkg}-internal.Rd} which documents all such objects, and
-clearly states that these are not meant to be called by the user.  See
-e.g.@: the sources for package @pkg{grid} in the @R{} distribution for
-an example.  Note that packages which use internal objects extensively
-should not export those objects from their namespace, when they do not
-need to be documented (@pxref{Package namespaces}).
+contain the English alphanumeric characters and the symbols 
+@samp{$ - _ . + ! ' ( ) , ; @ = &}.}  
+they must be entirely @acronym{ASCII} and not contain @samp{%}.
+@xref{Writing R documentation files}, for more information.  Note that
+all user-level objects in a package should be documented; if a package
+@var{pkg} contains user-level objects which are for ``internal'' use
+only, it should provide a file @file{@var{pkg}-internal.Rd} which
+documents all such objects, and clearly states that these are not meant
+to be called by the user.  See e.g.@: the sources for package @pkg{grid}
+in the @R{} distribution for an example.  Note that packages which use
+internal objects extensively should not export those objects from their
+namespace, when they do not need to be documented (@pxref{Package
+namespaces}).
 
 Having a @file{man} directory containing no documentation files may give
 an installation error.
@@ -915,9 +944,10 @@ can be used together and mixing C and C++ seems to be widely successful.
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{WIN32} will be defined: on 64-bit Windows builds also
-@samp{WIN64}, and on OS X @samp{__APPLE__} is
-defined.@footnote{Currently also @samp{__APPLE_CC__}, but that indicates
-a compiler with Apple-specific features, not the OS.}
+@samp{WIN64}, and on OS X @samp{__APPLE__} is defined.@footnote{There is
+also @samp{__APPLE_CC__}, but that indicates a compiler with
+Apple-specific features, not the OS.  It is used in
+@file{Rinlinedfuns.h}.}
 
 The default rules can be tweaked by setting macros@footnote{the POSIX
 terminology, called `make variables' by GNU make.} in a file
@@ -3830,8 +3860,9 @@ if((length(nopkgs) > 0) && !missing(lib.loc)) @{
 
 @noindent
 Note that it is much better to have complete clauses as here, since
-in another language one might need to say `There is no package in library
-%s' or `There are no packages in libraries %s'.
+in another language one might need to say 
+`There is no package in library %s' or
+`There are no packages in libraries %s'.
 
 @end itemize
 
