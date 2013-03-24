@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2012   The R Core Team
+ *  Copyright (C) 1997-2013   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,22 +42,20 @@
 #define DbgP3(s,a,b)
 #endif
 
-
-/* FIXME: use 64-bit integer accumulator? */
+/* Since we have long vectors, this could integer overflow */
 static Rboolean isum(int *x, R_xlen_t n, int *value, Rboolean narm, SEXP call)
 {
-    double s = 0.0;
-    R_xlen_t i;
+    LONG_INT s = 0;  // at least 64-bit
     Rboolean updated = FALSE;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
 	    if(!updated) updated = TRUE;
 	    s += x[i];
 	} else if (!narm) {
 	    if(!updated) updated = TRUE;
 	    *value = NA_INTEGER;
-	    return(updated);
+	    return updated;
 	}
     }
     if(s > INT_MAX || s < R_INT_MIN){
@@ -66,16 +64,15 @@ static Rboolean isum(int *x, R_xlen_t n, int *value, Rboolean narm, SEXP call)
     }
     else *value = (int) s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean rsum(double *x, R_xlen_t n, double *value, Rboolean narm)
 {
     LDOUBLE s = 0.0;
-    R_xlen_t i;
     Rboolean updated = FALSE;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (!narm || !ISNAN(x[i])) {
 	    if(!updated) updated = TRUE;
 	    s += x[i];
@@ -83,16 +80,15 @@ static Rboolean rsum(double *x, R_xlen_t n, double *value, Rboolean narm)
     }
     *value = (double) s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean csum(Rcomplex *x, R_xlen_t n, Rcomplex *value, Rboolean narm)
 {
     LDOUBLE sr = 0.0, si = 0.0;
-    R_xlen_t i;
     Rboolean updated = FALSE;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (!narm || (!ISNAN(x[i].r) && !ISNAN(x[i].i))) {
 	    if(!updated) updated = TRUE;
 	    sr += x[i].r;
@@ -102,17 +98,16 @@ static Rboolean csum(Rcomplex *x, R_xlen_t n, Rcomplex *value, Rboolean narm)
     value->r = (double) sr;
     value->i = (double) si;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean imin(int *x, R_xlen_t n, int *value, Rboolean narm)
 {
     int s = 0 /* -Wall */;
-    R_xlen_t i;
     Rboolean updated = FALSE;
 
     /* Used to set s = INT_MAX, but this ignored INT_MAX in the input */
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
 	    if (!updated || s > x[i]) {
 		s = x[i];
@@ -126,17 +121,16 @@ static Rboolean imin(int *x, R_xlen_t n, int *value, Rboolean narm)
     }
     *value = s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean rmin(double *x, R_xlen_t n, double *value, Rboolean narm)
 {
     double s = 0.0; /* -Wall */
-    R_xlen_t i;
     Rboolean updated = FALSE;
 
     /* s = R_PosInf; */
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
 		if(!ISNA(s)) s = x[i]; /* so any NA trumps all NaNs */
@@ -150,16 +144,15 @@ static Rboolean rmin(double *x, R_xlen_t n, double *value, Rboolean narm)
     }
     *value = s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean smin(SEXP x, SEXP *value, Rboolean narm)
 {
-    R_xlen_t i;
     SEXP s = NA_STRING; /* -Wall */
     Rboolean updated = FALSE;
 
-    for (i = 0; i < XLENGTH(x); i++) {
+    for (R_xlen_t i = 0; i < XLENGTH(x); i++) {
 	if (STRING_ELT(x, i) != NA_STRING) {
 	    if (!updated ||
 		(s != STRING_ELT(x, i) && Scollate(s, STRING_ELT(x, i)) > 0)) {
@@ -174,16 +167,15 @@ static Rboolean smin(SEXP x, SEXP *value, Rboolean narm)
     }
     *value = s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean imax(int *x, R_xlen_t n, int *value, Rboolean narm)
 {
     int s = 0 /* -Wall */;
-    R_xlen_t i;
     Rboolean updated = FALSE;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
 	    if (!updated || s < x[i]) {
 		s = x[i];
@@ -196,16 +188,15 @@ static Rboolean imax(int *x, R_xlen_t n, int *value, Rboolean narm)
     }
     *value = s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean rmax(double *x, R_xlen_t n, double *value, Rboolean narm)
 {
     double s = 0.0 /* -Wall */;
-    R_xlen_t i;
     Rboolean updated = FALSE;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
 		if(!ISNA(s)) s = x[i]; /* so any NA trumps all NaNs */
@@ -219,16 +210,15 @@ static Rboolean rmax(double *x, R_xlen_t n, double *value, Rboolean narm)
     }
     *value = s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean smax(SEXP x, SEXP *value, Rboolean narm)
 {
-    R_xlen_t i;
     SEXP s = NA_STRING; /* -Wall */
     Rboolean updated = FALSE;
 
-    for (i = 0; i < XLENGTH(x); i++) {
+    for (R_xlen_t i = 0; i < XLENGTH(x); i++) {
 	if (STRING_ELT(x, i) != NA_STRING) {
 	    if (!updated ||
 		(s != STRING_ELT(x, i) && Scollate(s, STRING_ELT(x, i)) < 0)) {
@@ -243,16 +233,15 @@ static Rboolean smax(SEXP x, SEXP *value, Rboolean narm)
     }
     *value = s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean iprod(int *x, R_xlen_t n, double *value, Rboolean narm)
 {
-    double s = 1.0;
-    R_xlen_t i;
+    LDOUBLE s = 1.0;
     Rboolean updated = FALSE;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
 	    s *= x[i];
 	    if(!updated) updated = TRUE;
@@ -260,26 +249,25 @@ static Rboolean iprod(int *x, R_xlen_t n, double *value, Rboolean narm)
 	else if (!narm) {
 	    if(!updated) updated = TRUE;
 	    *value = NA_REAL;
-	    return(updated);
+	    return updated;
 	}
 
 	if(ISNAN(s)) {  /* how can this happen? */
 	    *value = NA_REAL;
-	    return(updated);
+	    return updated;
 	}
     }
     *value = s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean rprod(double *x, R_xlen_t n, double *value, Rboolean narm)
 {
     LDOUBLE s = 1.0;
-    R_xlen_t i;
     Rboolean updated = FALSE;
 
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (!narm || !ISNAN(x[i])) {
 	    if(!updated) updated = TRUE;
 	    s *= x[i];
@@ -287,21 +275,17 @@ static Rboolean rprod(double *x, R_xlen_t n, double *value, Rboolean narm)
     }
     *value = (double) s;
 
-    return(updated);
+    return updated;
 }
 
 static Rboolean cprod(Rcomplex *x, R_xlen_t n, Rcomplex *value, Rboolean narm)
 {
-    LDOUBLE sr, si, tr, ti;
-    R_xlen_t i;
+    LDOUBLE sr = 1.0, si = 0.0;
     Rboolean updated = FALSE;
-    sr = 1;
-    si = 0;
-    for (i = 0; i < n; i++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (!narm || (!ISNAN(x[i].r) && !ISNAN(x[i].i))) {
 	    if(!updated) updated = TRUE;
-	    tr = sr;
-	    ti = si;
+	    LDOUBLE tr = sr, ti = si;
 	    sr = tr * x[i].r - ti * x[i].i;
 	    si = tr * x[i].i + ti * x[i].r;
 	}
@@ -309,7 +293,7 @@ static Rboolean cprod(Rcomplex *x, R_xlen_t n, Rcomplex *value, Rboolean narm)
     value->r = (double) sr;
     value->i = (double) si;
 
-    return(updated);
+    return updated;
 }
 
 
@@ -359,7 +343,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, a, stmp = NA_STRING /* -Wall */, scum = NA_STRING, call2;
     double tmp = 0.0, s;
     Rcomplex z, ztmp, zcum={0.0, 0.0} /* -Wall */;
-    int itmp = 0, icum=0, int_a, real_a, empty, warn = 0 /* dummy */;
+    int itmp = 0, icum = 0, int_a, real_a, empty, warn = 0 /* dummy */;
     SEXPTYPE ans_type;/* only INTEGER, REAL, COMPLEX or STRSXP here */
 
     Rboolean narm;
@@ -648,7 +632,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		break;/* prod() part */
 
-	    }/* switch(iop) */
+	    } /* switch(iop) */
 
 	} else { /* len(a)=0 */
 	    /* Even though this has length zero it can still be invalid,

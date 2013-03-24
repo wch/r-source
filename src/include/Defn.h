@@ -1246,6 +1246,20 @@ extern void *alloca(size_t);
 # define LDOUBLE double
 #endif
 
+/* int_fast64_t is required by C99/C11
+   Alternative would be to use intmax_t.
+ */
+#ifdef int64_t
+# define LONG_INT int64_t
+# define LONG_INT_MAX INT64_MAX
+#elif defined(int_fast64_t)
+# define LONG_INT int_fast64_t
+# define LONG_INT_MAX INT_FAST64_MAX
+#else
+# define LONG_INT int
+# define LONG_INT_MAX INT_MAX
+#endif
+
 #endif /* DEFN_H_ */
 /*
  *- Local Variables:

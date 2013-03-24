@@ -23,6 +23,12 @@
       new default is \code{FALSE} which makes child processes
       non-interactive by default (this prevents lock-ups due to children
       waiting for interactive input).
+      
+      \item \code{sum()} for integer arguments now uses an integer
+      accumulator of at least 64 bits and so will be more accurate in
+      the very rare case that a cumulative sum exceeds
+      \eqn{2^{53}}{2^53} (necessarily summing more than 4 million
+      elements).
     }
   }
 
