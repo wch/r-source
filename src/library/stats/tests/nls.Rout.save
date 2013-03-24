@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2012-10-24 r61009) -- "Unsuffered Consequences"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-03-23 r62384) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -69,23 +69,23 @@ function (x, Asym, xmid, scal)
 > curve(a+b*x+c*x^2, add = TRUE)
 > nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1), algorithm = "port")
 Nonlinear regression model
-  model:  y ~ a + b * x + c * I(x^2) 
-   data:  parent.frame() 
+  model: y ~ a + b * x + c * I(x^2)
+   data: parent.frame()
       a       b       c 
  1.0058  0.9824 -0.0897 
  residual sum-of-squares: 0.46
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 > (fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1),
 +            algorithm = "port", lower = c(0, 0, 0)))
 Nonlinear regression model
-  model:  y ~ a + b * x + c * I(x^2) 
-   data:  parent.frame() 
+  model: y ~ a + b * x + c * I(x^2)
+   data: parent.frame()
    a    b    c 
 1.02 0.89 0.00 
  residual sum-of-squares: 0.468
 
-Algorithm "port", convergence message: both X-convergence and relative convergence (5) 
+Algorithm "port", convergence message: both X-convergence and relative convergence (5)
 > confint(fm)
 Waiting for profiling to be done...
      2.5%    97.5%
@@ -115,8 +115,8 @@ Coefficients:
 x            0.99915    0.00119  841.38   <2e-16
 
 Residual standard error: 0.0132 on 7 degrees of freedom
-Multiple R-squared:    1,	Adjusted R-squared:    1 
-F-statistic: 7.08e+05 on 1 and 7 DF,  p-value: <2e-16 
+Multiple R-squared:     1,	Adjusted R-squared:     1 
+F-statistic: 7.08e+05 on 1 and 7 DF,  p-value: <2e-16
 
 Correlation of Coefficients:
   (Intercept)
@@ -125,8 +125,8 @@ x -0.89
 > cf0 <- coef(summary(fit0))[, 1:2]
 > fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +            weights = wts, trace = TRUE)
-112.14 :  0.12345 0.54321 
-0.0012128 :  0.0051705 0.9991529 
+112.14 :  0.12345 0.54321
+0.0012128 :  0.0051705 0.9991529
 > summary(fit, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -167,7 +167,7 @@ Correlation of Parameter Estimates:
   a    
 b -0.89
 
-Algorithm "port", convergence message: both X-convergence and relative convergence (5) 
+Algorithm "port", convergence message: both X-convergence and relative convergence (5)
 
 > cf2 <- coef(summary(fit2))[, 1:2]
 > rownames(cf0) <- c("a", "b")
@@ -309,7 +309,7 @@ scal   1.0385     0.0304    34.1  4.2e-14
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 
 > stopifnot(all.equal(coef(summary(fm5)), coef(summary(fm1)), tol = 1e-6))
 > stopifnot(all.equal(residuals(fm5), residuals(fm1), tol = 1e-5))
@@ -358,8 +358,8 @@ scal 0.9757 1.1063
 +     print(confint(fm))
 + }
 Nonlinear regression model
-  model:  y ~ x^b 
-   data:  parent.frame() 
+  model: y ~ x^b
+   data: parent.frame()
     b 
 0.695 
  residual sum-of-squares: 2.39
@@ -367,19 +367,19 @@ Waiting for profiling to be done...
    2.5%   97.5% 
 0.68704 0.70281 
 Nonlinear regression model
-  model:  y ~ x^b 
-   data:  parent.frame() 
+  model: y ~ x^b
+   data: parent.frame()
     b 
 0.695 
  residual sum-of-squares: 2.39
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 Waiting for profiling to be done...
    2.5%   97.5% 
 0.68704 0.70281 
 Nonlinear regression model
-  model:  y2 ~ a * x^b 
-   data:  parent.frame() 
+  model: y2 ~ a * x^b
+   data: parent.frame()
     a     b 
 0.502 0.724 
  residual sum-of-squares: 2.51
@@ -388,20 +388,20 @@ Waiting for profiling to be done...
 a 0.49494 0.50893
 b 0.70019 0.74767
 Nonlinear regression model
-  model:  y2 ~ a * x^b 
-   data:  parent.frame() 
+  model: y2 ~ a * x^b
+   data: parent.frame()
     a     b 
 0.502 0.724 
  residual sum-of-squares: 2.51
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 Waiting for profiling to be done...
      2.5%   97.5%
 a 0.49494 0.50893
 b 0.70019 0.74767
 Nonlinear regression model
-  model:  y3 ~ a * (x + exp(logc))^b 
-   data:  parent.frame() 
+  model: y3 ~ a * (x + exp(logc))^b
+   data: parent.frame()
      a      b   logc 
  0.558  0.603 -0.176 
  residual sum-of-squares: 2.44
@@ -411,13 +411,13 @@ a     0.35006 0.66057
 b     0.45107 0.91473
 logc -0.64627 0.40946
 Nonlinear regression model
-  model:  y3 ~ a * (x + exp(logc))^b 
-   data:  parent.frame() 
+  model: y3 ~ a * (x + exp(logc))^b
+   data: parent.frame()
      a      b   logc 
  0.558  0.603 -0.176 
  residual sum-of-squares: 2.44
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 Waiting for profiling to be done...
          2.5%   97.5%
 a     0.35006 0.66057
@@ -478,13 +478,13 @@ $b
 
 attr(,"original.fit")
 Nonlinear regression model
-  model:  y ~ gfun(a, b, x) 
-   data:  parent.frame() 
+  model: y ~ gfun(a, b, x)
+   data: parent.frame()
     a     b 
 1.538 0.263 
  residual sum-of-squares: 0.389
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 attr(,"summary")
 
 Formula: y ~ gfun(a, b, x)
@@ -496,7 +496,7 @@ b    0.263      0.352    0.75    0.476
 
 Residual standard error: 0.221 on 8 degrees of freedom
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 
 attr(,"class")
 [1] "profile.nls" "profile"    
@@ -530,13 +530,13 @@ $b
 
 attr(,"original.fit")
 Nonlinear regression model
-  model:  y ~ gfun(a, b, x) 
-   data:  parent.frame() 
+  model: y ~ gfun(a, b, x)
+   data: parent.frame()
     a     b 
 1.500 0.243 
  residual sum-of-squares: 0.39
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 attr(,"summary")
 
 Formula: y ~ gfun(a, b, x)
@@ -548,7 +548,7 @@ b    0.243      0.356    0.68    0.514
 
 Residual standard error: 0.221 on 8 degrees of freedom
 
-Algorithm "port", convergence message: relative convergence (4) 
+Algorithm "port", convergence message: relative convergence (4)
 
 attr(,"class")
 [1] "profile.nls" "profile"    
@@ -570,16 +570,16 @@ b    NA 0.611
 +     nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=TRUE)
 + }
 > test()
-8291.9 :  1 1 
-726.02 :  0.80544 2.42971 
-552.85 :  1.290 2.129 
-70.431 :  1.9565 1.9670 
-26.555 :  1.9788 2.0064 
-26.503 :  1.9798 2.0046 
-26.503 :  1.9799 2.0046 
+8291.9 :  1 1
+726.02 :  0.80544 2.42971
+552.85 :  1.290 2.129
+70.431 :  1.9565 1.9670
+26.555 :  1.9788 2.0064
+26.503 :  1.9798 2.0046
+26.503 :  1.9799 2.0046
 Nonlinear regression model
-  model:  y ~ myf(x, a, b, n) 
-   data:  xy 
+  model: y ~ myf(x, a, b, n)
+   data: xy
    a    b 
 1.98 2.00 
  residual sum-of-squares: 26.5
@@ -632,7 +632,7 @@ sp2 9.99e-01   5.00e-03   199.8   <2e-16
 
 Residual standard error: 0.00205 on 96 degrees of freedom
 
-Algorithm "port", convergence message: both X-convergence and relative convergence (5) 
+Algorithm "port", convergence message: both X-convergence and relative convergence (5)
 
 > 
 > 

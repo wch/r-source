@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-08-04 r56621)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-03-23 r62384) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin12.3.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -24,9 +24,9 @@ Type 'q()' to quit R.
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  ds1 
+data:  ds1
 D = 0.274, p-value = 0.4407
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 Warning message:
 In ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216) :
@@ -38,9 +38,9 @@ In ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216) :
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  ds1 
+data:  ds1
 D = 0.274, p-value = 0.3715
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 Warning message:
 In ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE) :
@@ -53,26 +53,26 @@ In ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE) :
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  ds2 
+data:  ds2
 D = 0.0194, p-value = 0.8452
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 > ks.test(ds2, "pnorm", exact = TRUE)
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  ds2 
+data:  ds2
 D = 0.0194, p-value = 0.8379
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 > ## next two are still close
 > ks.test(round(ds2, 2), "pnorm")
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  round(ds2, 2) 
+data:  round(ds2, 2)
 D = 0.0192, p-value = 0.856
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 Warning message:
 In ks.test(round(ds2, 2), "pnorm") :
@@ -81,9 +81,9 @@ In ks.test(round(ds2, 2), "pnorm") :
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  round(ds2, 2) 
+data:  round(ds2, 2)
 D = 0.0192, p-value = 0.8489
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 Warning message:
 In ks.test(round(ds2, 2), "pnorm", exact = TRUE) :
@@ -93,9 +93,9 @@ In ks.test(round(ds2, 2), "pnorm", exact = TRUE) :
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  round(ds2, 1) 
+data:  round(ds2, 1)
 D = 0.0367, p-value = 0.1344
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 Warning message:
 In ks.test(round(ds2, 1), "pnorm") :
@@ -104,9 +104,9 @@ In ks.test(round(ds2, 1), "pnorm") :
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  round(ds2, 1) 
+data:  round(ds2, 1)
 D = 0.0367, p-value = 0.1311
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 Warning message:
 In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
