@@ -1738,8 +1738,8 @@ AC_SUBST(FW_VERSION)
 ##
 ## (The Fortran 77 compiler is never used for linking by default.)
 
-if test "x${main_ld_was_given}" = xno -a "${MAIN_LD}" = "${CC}" -a \
-        "x${dylib_ld_was_given}" = xno -a "${DYLIB_LD}" = "${CC}" -a \
+if test "x${main_ld_was_given}" = xno -a "${MAIN_LD}" = "\$(CC)" -a \
+        "x${dylib_ld_was_given}" = xno -a "${DYLIB_LD}" = "\$(CC)" -a \
         "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
         "x${ac_cv_prog_c_openmp}" != "x"; then
   R_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
@@ -1850,13 +1850,12 @@ R_CHECK_FUNCS([sched_setaffinity sched_getaffinity], [#include <sched.h>])
 ## utime was declared obsolescent in POSIX 2008 (use utimes instead)
 R_CHECK_FUNCS([utime], [#include <utime.h>])
 ## clock_gettime is POSIX 1993, but not on MacOS X
-## Some OSes need -lrt: Linux, Solaris, not FreeBSD.
+## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
+## not FreeBSD. 
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
 ## timespec_get is C11.
-R_CHECK_FUNCS([clock_gettime timespec_get], [#include <time.h>])
-if test "${ac_cv_have_decl_clock_gettime}" = "yes"; then
 AC_CHECK_LIB(rt, clock_gettime)
-fi
+R_CHECK_FUNCS([clock_gettime timespec_get], [#include <time.h>])
 ## We need setenv or putenv.  It seems that everyone does have
 ## putenv, as earlier versions of R would have failed without it.
 ## It is not always declared, so we do not require a declaration.
@@ -2334,14 +2333,14 @@ AC_SUBST(FCLIBS)
 ## OpenMP package stuff (needs to come *after* configuration of all
 ## compilers).
 if test "x${shlib_ld_was_given}" = xno -a \
-        "${SHLIB_LD}" = "${CC}" -a \
+        "${SHLIB_LD}" = "\$(CC)" -a \
         "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
         "x${ac_cv_prog_c_openmp}" != "x" -a \
         "x${shlib_cxxld_was_given}" = xno -a \
-        "${SHLIB_CXXLD}" = "${CXX}" -a \
+        "${SHLIB_CXXLD}" = "\$(CXX)" -a \
         "x${ac_cv_prog_cxx_openmp}" != "xunsupported" -a \
         "x${shlib_fcld_was_given}" = xno -a \
-        "${SHLIB_FCLD}" = "${FC}" -a \
+        "${SHLIB_FCLD}" = "\$(FC)" -a \
         "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
   SHLIB_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
   SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"
