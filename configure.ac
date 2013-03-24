@@ -1739,8 +1739,8 @@ AC_SUBST(FW_VERSION)
 ##
 ## (The Fortran 77 compiler is never used for linking by default.)
 
-if test "x${main_ld_was_given}" = xno -a "${MAIN_LD}" = "${CC}" -a \
-        "x${dylib_ld_was_given}" = xno -a "${DYLIB_LD}" = "${CC}" -a \
+if test "x${main_ld_was_given}" = xno -a "${MAIN_LD}" = "\$(CC)" -a \
+        "x${dylib_ld_was_given}" = xno -a "${DYLIB_LD}" = "\$(CC)" -a \
         "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
         "x${ac_cv_prog_c_openmp}" != "x"; then
   R_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
@@ -2334,14 +2334,14 @@ AC_SUBST(FCLIBS)
 ## OpenMP package stuff (needs to come *after* configuration of all
 ## compilers).
 if test "x${shlib_ld_was_given}" = xno -a \
-        "${SHLIB_LD}" = "${CC}" -a \
+        "${SHLIB_LD}" = "\$(CC)" -a \
         "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
         "x${ac_cv_prog_c_openmp}" != "x" -a \
         "x${shlib_cxxld_was_given}" = xno -a \
-        "${SHLIB_CXXLD}" = "${CXX}" -a \
+        "${SHLIB_CXXLD}" = "\$(CXX)" -a \
         "x${ac_cv_prog_cxx_openmp}" != "xunsupported" -a \
         "x${shlib_fcld_was_given}" = xno -a \
-        "${SHLIB_FCLD}" = "${FC}" -a \
+        "${SHLIB_FCLD}" = "\$(FC)" -a \
         "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
   SHLIB_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
   SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"
