@@ -1464,7 +1464,8 @@ The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it.  This runs on OS X 10.6 and later (Snow Leopard, Lion,
 Mountain Lion, @dots{}); it is a 64-bit (@cputype{x86_64}) build which
-should run on all Macs from mid-2008 on.
+should run on all Macs from mid-2008 on.  For older Intel Macs and some
+older versions of the OS you can install @R{} from the sources.
 
 To install, just double-click on the icon of the file you downloaded.
 Note that (X11-based) Tcl/Tk needs to be installed separately if needed,
@@ -1472,8 +1473,7 @@ from @uref{http://cran.r-project.org/bin/macosx/tools/}, and for
 Mountain Lion or later, XQuartz will also need to be installed to use Tk.
 
 On Mountain Lion with `GateKeeper' active you may need to
-right/control-click on some of the packages (e.g.@: that for Tcl/Tk) and
-select @samp{Open}.
+right/control-click on some of the packages and select @samp{Open}.
 
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
@@ -4280,7 +4280,10 @@ on earlier versions of OS X instead of the Apple version.
 
 In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
 but this has not been tested recently: 10.6 (Snow Leopard) is the
-earliest version currently tested.
+earliest version currently tested.  32-bit Intel builds of @R{} 3.0.0
+were tested: they would be needed for Snow Leopard running on very old
+machines with Core Solo or Core Duo CPUs.  The instructions here
+concentrate on @cputype{x86_64} builds.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
@@ -4337,8 +4340,9 @@ OBJC="clang"
 
 @noindent
 Full names are not needed, but help to ensure that the intended
-compilers are used.  And the recommended Fortran compiler defaults to
-32-bit, so @code{-arch x86_64} is needed.
+compilers are used.  The recommended Fortran compiler defaults to
+32-bit, so @code{-arch x86_64} is needed.  (For a 32-bit build, add
+@code{-arch i386} to all compiler commands.)
 
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
@@ -4360,13 +4364,6 @@ The @code{Accelerate} library can be used @emph{via} the configuration options
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
 routines.  (Use of @code{Accelerate} with @option{--with-lapack} does
 not work on Snow Leopard: it may work there without.)
-
-Recent compilers default to 64-bit, but some older ones default to
-32-bit.  It may be necessary to explicitly specify the architecture as
-done for @command{gfortran-4.2} above.
-
-@noindent
-in @file{config.site} or on the @command{configure} command line.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -4397,11 +4394,6 @@ required in @file{config.site}, or you can use the @command{configure}
 options @option{--x-includes=/usr/X11/include
 --x-libraries=/usr/X11/lib.}.
 
-The versions of Xcode supplied for Snow Leopard contained usable C and
-C++ compilers.  A matching @command{gfortran} can be installed from
-@uref{http://r.research.att.com/tools/} (it needs to match the version
-of Xcode in use).
-
 @node Lion, Mountain Lion, Snow Leopard, OS X
 @subsection Lion
 
@@ -4413,10 +4405,13 @@ Lion if XQuartz is in use.
 
 The X11 system used with Mountain Lion will be XQuartz.  To build the
 graphics devices depending on cairographics the XQuartz path for
-@command{pkg-config} files (default @file{/opt/X11/lib/pkgconfig}) needs
-to be known to @command{pkg-config} when @command{configure} is run:
-this usually means adding it to the @env{PKG_CONFIG_PATH} environment
-variable.
+@command{pkg-config} files needs to be known to @command{pkg-config}
+when @command{configure} is run: this usually means adding it to the
+@env{PKG_CONFIG_PATH} environment variable, e.g.
+
+@example
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
 
 @node Tcl/Tk headers and libraries, Java (OS X), Mountain Lion, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4424,7 +4419,7 @@ variable.
 If you plan to use the @code{tcltk} package for @R{}, you need to
 install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to install
-@uref{http://cran.r-project.org/bin/macosx/tools/tcltk-8.5.5-x11.dmg}
+@uref{http://cran.r-project.org/bin/macosx/tools/tcltk-8.5.5-x11.pkg}
 which is a binary package for the X11-based Tcl/Tk (as used on other
 Unix-alikes).  This may need
 @example
@@ -4432,8 +4427,8 @@ Unix-alikes).  This may need
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
 @noindent
-and on a system with XQuartz, @file{tkConfig.sh} needed to be edited to
-have
+and on a system with XQuartz, @file{/usr/local/lib/tkConfig.sh} needed
+to be edited to have
 @example
 TK_XINCLUDES='-I/opt/X11/include'
 @end example
