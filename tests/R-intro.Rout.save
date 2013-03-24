@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2012-09-30 r60839) -- "Unsuffered Consequences"
-Copyright (C) 2012 The R Foundation for Statistical Computing
+R Under development (unstable) (2013-03-24 r62387) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin12.3.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -547,7 +547,7 @@ incomef   act nsw nt qld sa tas vic wa
 
 	Shapiro-Wilk normality test
 
-data:  long 
+data:  long
 W = 0.9793, p-value = 0.01052
 
 > 
@@ -555,9 +555,9 @@ W = 0.9793, p-value = 0.01052
 
 	One-sample Kolmogorov-Smirnov test
 
-data:  long 
+data:  long
 D = 0.0661, p-value = 0.4284
-alternative hypothesis: two-sided 
+alternative hypothesis: two-sided
 
 Warning message:
 In ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long))) :
@@ -584,11 +584,11 @@ In ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long))) :
 
 	Welch Two Sample t-test
 
-data:  A and B 
+data:  A and B
 t = 3.2499, df = 12.027, p-value = 0.006939
-alternative hypothesis: true difference in means is not equal to 0 
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 0.013855 0.070183 
+ 0.013855 0.070183
 sample estimates:
 mean of x mean of y 
    80.021    79.979 
@@ -598,11 +598,11 @@ mean of x mean of y
 
 	F test to compare two variances
 
-data:  A and B 
+data:  A and B
 F = 0.5837, num df = 12, denom df = 7, p-value = 0.3938
-alternative hypothesis: true ratio of variances is not equal to 1 
+alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.12511 2.10527 
+ 0.12511 2.10527
 sample estimates:
 ratio of variances 
            0.58374 
@@ -612,11 +612,11 @@ ratio of variances
 
 	Two Sample t-test
 
-data:  A and B 
+data:  A and B
 t = 3.4722, df = 19, p-value = 0.002551
-alternative hypothesis: true difference in means is not equal to 0 
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 0.016691 0.067348 
+ 0.016691 0.067348
 sample estimates:
 mean of x mean of y 
    80.021    79.979 
@@ -626,9 +626,9 @@ mean of x mean of y
 
 	Wilcoxon rank sum test with continuity correction
 
-data:  A and B 
+data:  A and B
 W = 89, p-value = 0.007497
-alternative hypothesis: true location shift is not equal to 0 
+alternative hypothesis: true location shift is not equal to 0
 
 Warning message:
 In wilcox.test.default(A, B) : cannot compute exact p-value with ties
@@ -702,11 +702,11 @@ Coefficients:
 (Intercept)  -0.5431     0.8902   -0.61     0.55    
 x             0.9653     0.0743   12.99  1.4e-10 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 1.92 on 18 degrees of freedom
-Multiple R-squared: 0.904,	Adjusted R-squared: 0.898 
-F-statistic:  169 on 1 and 18 DF,  p-value: 1.39e-10 
+Multiple R-squared:  0.904,	Adjusted R-squared:  0.898 
+F-statistic:  169 on 1 and 18 DF,  p-value: 1.39e-10
 
 > fm1 <- lm(y ~ x, data=dummy, weight=1/w^2)
 > summary(fm1)
@@ -723,11 +723,11 @@ Coefficients:
 (Intercept)  -0.6155     0.6513   -0.94     0.36    
 x             0.9721     0.0664   14.64  1.9e-11 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.72 on 18 degrees of freedom
-Multiple R-squared: 0.922,	Adjusted R-squared: 0.918 
-F-statistic:  214 on 1 and 18 DF,  p-value: 1.94e-11 
+Multiple R-squared:  0.922,	Adjusted R-squared:  0.918 
+F-statistic:  214 on 1 and 18 DF,  p-value: 1.94e-11
 
 > attach(dummy)
 The following object is masked _by_ .GlobalEnv:
@@ -865,7 +865,7 @@ Run         19 113344    5965    1.11 0.3632
 Expt         4  94514   23629    4.38 0.0031 **
 Residuals   76 410166    5397                  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > fm0 <- update(fm, . ~ . - Run)
 > anova(fm0, fm)
 Analysis of Variance Table
