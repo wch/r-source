@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -485,8 +485,9 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
     ## We need to force C collation: might not work
     Sys.setlocale("LC_COLLATE", "C")
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
-                "ok-errors", "method-dispatch", "d-p-q-r-tests")
-    tests2 <- c("complex", "print-tests", "lapack", "datasets")
+                "ok-errors", "method-dispatch", "array-subset",
+                "any-all", "d-p-q-r-tests")
+    tests2 <- c("complex", "print-tests", "lapack", "datasets", "iec60559")
     tests3 <- c("reg-tests-1a", "reg-tests-1b", "reg-tests-1c", "reg-tests-2",
                 "reg-examples1", "reg-examples2", "reg-packages",
                 "reg-IO", "reg-IO2", "reg-S4", "reg-plot", "reg-BLAS")
@@ -498,8 +499,10 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
             if (!file.exists(fin <- paste0(f, "in")))
                 stop("file ", sQuote(f), " not found", domain = NA)
             message("creating ", sQuote(f), domain = NA)
+            ## FIXME: this creates an extra trailing space compared to
+            ## .Rin.R rule
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                         "CMD BATCH --no-timing --vanilla --slave", fin)
+                         "--vanilla --slave -f", fin)
             if (system(cmd))
                 stop("creation of ", sQuote(f), " failed", domain = NA)
             on.exit(unlink(f))
