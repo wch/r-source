@@ -527,7 +527,7 @@ function(dir, outDir, encoding = "")
         ## this is needed.
         for(i in seq_along(vigns$docs)) {
             file <- vigns$docs[i]
-            if (!is.null(vigns$sources) && !is.null(vigns$sources[i])) # already there?
+            if (!is.null(vigns$sources) && !is.null(vigns$sources[file][[1]]))
             	next
             file <- basename(file)
             enc <- getVignetteEncoding(file, TRUE)
