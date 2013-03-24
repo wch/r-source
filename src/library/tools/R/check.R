@@ -2314,29 +2314,30 @@ setRlibs <-
             }
         }
 
-        ## Do any of the .R files which will be generated
-        ## exist in inst/doc?  If so the latter will be ignored,
-        sources <-
-            basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
-        custom <- !is.na(desc["VignetteBuilder"])
-        if (length(sources) && !custom) {
-            new_sources <- paste0(vigns$names, ".R")
-            dups <- sources[sources %in% new_sources]
-            if(nb <- length(dups)) {
-                if(!any) warningLog(Log)
-                any <- TRUE
-                msg <- ngettext(nb,
-                                "Unused file in 'inst/doc' which is pointless or misleading",
-                                "Unused files in 'inst/doc' which are pointless or misleading", domain = NA)
-                printLog(Log, "  ",
-                         paste(msg,
-                               "  as they will be re-created from the vignettes:", "",
-                               sep = "\n"))
-                printLog(Log,
-                         paste(c(paste("  ", dups), "", ""),
-                               collapse = "\n"))
-            }
-        }
+# FIXME:  we should do this check in build, not here.  Currently not doing it at all.
+#        ## Do any of the .R files which will be generated
+#        ## exist in inst/doc?  If so the latter will be ignored,
+#        sources <-
+#            basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
+#        custom <- !is.na(desc["VignetteBuilder"])
+#        if (length(sources) && !custom) {
+#            new_sources <- paste0(vigns$names, ".R")
+#            dups <- sources[sources %in% new_sources]
+#            if(nb <- length(dups)) {
+#                if(!any) warningLog(Log)
+#                any <- TRUE
+#                msg <- ngettext(nb,
+#                                "Unused file in 'inst/doc' which is pointless or misleading",
+#                                "Unused files in 'inst/doc' which are pointless or misleading", domain = NA)
+#                printLog(Log, "  ",
+#                         paste(msg,
+#                               "  as they will be re-created from the vignettes:", "",
+#                               sep = "\n"))
+#                printLog(Log,
+#                         paste(c(paste("  ", dups), "", ""),
+#                               collapse = "\n"))
+#            }
+#        }
         ## avoid case-insensitive matching
         if ("makefile" %in% dir(vigns$dir)) {
             if(!any) warningLog(Log)
