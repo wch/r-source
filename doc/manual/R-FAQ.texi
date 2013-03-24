@@ -816,8 +816,8 @@ sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
 binaries.
 
-The @CRAN{} master site at Wirtschaftsuniversit@"at Wien, Austria, can
-be found at the @acronym{URL}
+The @CRAN{} master site at WU (Wirtschaftsuniversit@"at Wien) in Austria
+can be found at the @acronym{URL}
 
 @quotation
 @c @multitable @columnfractions .45 .30
@@ -872,20 +872,6 @@ prebuilt binaries for various operating systems (Linux, Mac OS Classic,
 Mac OS X, and MS Windows).  @CRAN{} also provides access to
 documentation on R, existing mailing lists and the R Bug Tracking
 system.
-
-To ``submit'' to @CRAN{}, check that your submission meets the
-@url{http://CRAN.R-project.org/web/packages/policies.html, CRAN
-Repository Policy}, upload to @url{ftp://CRAN.R-project.org/incoming/}
-and send an email to @email{CRAN@@R-project.org}.  Note that @CRAN{}
-generally does not accept submissions of precompiled binaries due to
-security reasons.  In particular, binary packages for Windows and Mac OS
-X are provided by the respective binary package maintainers.
-
-@quotation Note
-It is very important that you indicate the copyright (license)
-information (@acronym{GPL-2}, @acronym{GPL-3}, @acronym{BSD}, Artistic,
-@dots{}) in your submission.
-@end quotation
 
 Please always use the @acronym{URL} of the master site when referring to
 @CRAN{}.
