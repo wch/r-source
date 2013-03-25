@@ -7881,7 +7881,7 @@ package @pkg{packB}.  The only issue is to find package @pkg{packB}, and
 for that we can ask @R{} by something like (lines broken for display here)
 
 @example
-PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch,
+PKGB_PATH=`echo 'cat(system.file("libs", .Platform$$r_arch,
  package="packB", mustWork=TRUE))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS="$(PKGB_PATH)/libpackB.a"
@@ -7895,7 +7895,7 @@ For a dynamic library @file{packB/libs/libpackB.so}
 (@file{packB/libs/libpackB.dylib} on OS X) we could use
 
 @example
-PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, 
+PKGB_PATH=`echo 'cat(system.file("libs", .Platform$$r_arch, 
   package="packB", mustWork=TRUE))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)" -lpackB
