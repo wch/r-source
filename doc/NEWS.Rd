@@ -23,7 +23,7 @@
       new default is \code{FALSE} which makes child processes
       non-interactive by default (this prevents lock-ups due to children
       waiting for interactive input).
-      
+
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
       the very rare case that a cumulative sum exceeds
@@ -38,7 +38,7 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.
-      
+
       Arguments \code{EISPACK} for \code{eigen()} and \code{LINPACK} for
       \code{chol()}, \code{ch2inv()}, \code{solve()} and \code{svd()}
       are ignored: LAPACK is always used.
@@ -475,7 +475,7 @@
       garbage collection and memory growth to be controlled by setting
       the environment variable \env{R_GC_MEM_GROW}. See \code{?Memory}
       for more details.
-      
+
       \item (\sQuote{For experts only}, as the introductory manual
       says.)  The use of environment variables \env{R_NSIZE} and
       \env{R_VSIZE} to control the initial (= minimum) garbade
@@ -490,7 +490,7 @@
 
       \code{win.metafile()} still uses the file name: the exact form is
       used by package \CRANpkg{tkrplot}.
-      
+
       \item \code{set.seed(NULL)} re-initializes \code{.Random.seed} as
       done at the beginning of the session if not already set.
       (Suggestion of Bill Dunlap.)
@@ -498,7 +498,7 @@
       \item The \code{breaks} argument in \code{hist.default()} can now be
       a function that returns the breakpoints to be used (previously it
       could only return the suggested number of breakpoints).
-      
+
       \item File \file{share/licenses/licenses.db} has some
       clarifications, especially as to which variants of \sQuote{BSD}
       and \sQuote{MIT} is intended and how to apply them to packages.
@@ -634,7 +634,7 @@
       \item Package vignettes can now be processed by other engines
       besides \code{Sweave}; see \sQuote{Writing R Extensions} and the
       \code{tools::vignetteEngine} help topic for details.
-      
+
       \item The \file{*.R} tangled source code for vignettes is now
       included in tarballs when \command{R CMD build} is used to produce
       them.  In \R 3.0.0, \file{*.R} files not in the sources will be
@@ -647,7 +647,7 @@
       \file{bin/macosx/leopard/contrib/2.15}).  This is the type used
       for the \acronym{CRAN} binary distribution for OS X as from \R
       3.0.0.
-      
+
       \item File \file{etc/Makeconf} makes more use of the macros
       \code{$(CC)}, \code{$(CXX)}, \code{$(F77)} and \code{$(FC)}, so
       the compiler in use can be changed by setting just these (and if
@@ -980,11 +980,11 @@
 
       \item There is now support for \command{makeinfo} version 5.0
       (which requires a slightly different \file{.texi} syntax).
-      
+
       \item The minimum versions for \option{--use-system-zlib} and
       \code{--use-system-pcre} are now tested as 1.2.5 and 8.10
       respectively.
-      
+
       \item On Windows, the stack size is reduced to 16MB on 32-bit
       systems: misguided users were launching many threads without
       controlling the stack size.
@@ -1070,9 +1070,12 @@
       \item \code{ftable(x, row.vars, col.vars)} now also works when the
       \code{*.vars} arguments are (integer or character vectors) of
       length zero.
-      
+
       \item Calling \code{cat()} on a malformed UTF-8 string could cause
       the Windows GUI to lock up. (\PR{15227})
+
+      \item \code{removeClass(cc)} gave "node stack overflow" for some
+      class definitions containing \code{"array"} or \code{"matrix"}.
     }
   }
 }
