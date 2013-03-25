@@ -29,6 +29,9 @@
       the very rare case that a cumulative sum exceeds
       \eqn{2^{53}}{2^53} (necessarily summing more than 4 million
       elements).
+
+      \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain
+      an \code{ind} argument (like \code{setRepositories()}).
     }
   }
 
