@@ -1,7 +1,7 @@
 #  File src/library/methods/R/BasicClasses.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -107,14 +107,15 @@
 
     setIs("array", "structure", where = envir)
     setIs("matrix", "array", where = envir)
-    setIs("array", "matrix", test = .gblEnv(function(object) length(dim(object)) == 2),
-          replace = .gblEnv(function(from, to, value) {
-              if(is(value, "matrix"))
-                  value
-              else
-                  stop("replacement value is not a matrix")
-          }),
-          where = envir)
+### Rather want a simple  setAs("array", "matrix", ..) method..
+    ## setIs("array", "matrix", test = .gblEnv(function(object) length(dim(object)) == 2),
+    ##       replace = .gblEnv(function(from, to, value) {
+    ##           if(is(value, "matrix"))
+    ##               value
+    ##           else
+    ##               stop("replacement value is not a matrix")
+    ##       }),
+    ##       where = envir)
 
     ## Some class definitions extending "language", delayed to here so
     ## setIs will work.
