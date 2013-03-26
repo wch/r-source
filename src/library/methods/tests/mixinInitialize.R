@@ -69,8 +69,11 @@ setClassUnion("AM", c("array", "matrix"));  removeClass("AM")#  (ditto)
 ## as had "matrix" -> "array" -> "matrix" ... recursion
 
 ## and we want this to *still* work:
-stopifnot(is(tryCatch(as(array(1:24, 2:4), "matrix"), error=function(e)e),
+stopifnot(is(tryCatch(as(a3 <- array(1:24, 2:4), "matrix"), error=function(e)e),
 	     "error"),
-	  is(as(array(1:12, 3:4), "matrix"),
-	     "matrix"))
+	  is(as(a2 <- array(1:12, 3:4), "matrix"),
+	     "matrix"),
+	  is(a2, "matrix"), is(a2, "array"), is(a3, "array"), !is(a3, "matrix"),
+	  ## and yes, "for now":
+	  identical(a2, matrix(1:12, 3)))
 
