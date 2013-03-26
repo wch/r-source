@@ -826,6 +826,12 @@
       \item \code{.find.package()} and \code{.path.package()} are
       deprecated: only the public versions without the dot have ever
       been in the API.
+      
+      \item In a package's \file{DESCRIPTION} file, \preformatted{    License: X11}
+      is deprecated, since it includes
+      \sQuote{Copyright (C) 1996 X Consortium} which cannot be
+      appropriate for a current \R package.  Use \sQuote{MIT} or
+      \sQuote{BSD_2_clause} instead.
     }
   }
 
