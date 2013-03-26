@@ -26,6 +26,7 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
     differences found?}
 }
 \details{
+  
   The \R startup banner and any timing information from \command{R CMD
     BATCH} are removed from both files, together with lines about
   loading packages.  UTF-8 fancy quotes (see \code{\link{sQuote}}) and
@@ -35,12 +36,12 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   (e.g. \code{<environment: 0x12345678>}) are mapped to
   \code{0x00000000}.  The files are then compared line-by-line.  If
   there are the same number of lines and \code{useDiff} is false, a
-  simple \command{diff}-like display of differences is printed (which
-  ignores differences in consecutive spaces), otherwise \command{diff
-    -bw} is called on the edited files.  (This tries to ignore all
-  differences in whitespace: note that flag \option{-w} is not
-  required by POSIX but is supported by GNU, Solaris and FreeBSD
-  versions.)
+  simple \command{diff -b} -like display of differences is printed
+  (which ignores trailing spaces and differences in numbers of
+  consecutive spaces), otherwise \command{diff -bw} is called on the
+  edited files.  (This tries to ignore all differences in whitespace:
+  note that flag \option{-w} is not required by POSIX but is supported
+  by GNU, Solaris and FreeBSD versions.)
 
   This can compare uncompressed PDF files, ignoring differences in
   creation and modification dates.

@@ -32,6 +32,10 @@
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain
       an \code{ind} argument (like \code{setRepositories()}).
+      
+      \item \code{tools::Rdiff(useDiff = FALSE)} is closer to the POSIX
+      definition of \command{diff -b} (as distinct from the description
+      in the \command{man} pages of most systems).
     }
   }
 
