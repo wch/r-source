@@ -4,14 +4,13 @@ bibentry("Manual",
          organization = "R Foundation for Statistical Computing",
          address      = "Vienna, Austria",
          year         = version$year,
-         note         = "{ISBN} 3-900051-07-0",
          url          = "http://www.R-project.org/",
          
          textVersion = 
          paste("R Core Team (", version$year, "). ", 
                "R: A language and environment for statistical computing. ",
                "R Foundation for Statistical Computing, Vienna, Austria. ",
-               "ISBN 3-900051-07-0, URL http://www.R-project.org/.",
+               "URL http://www.R-project.org/.",
                sep=""),
 	       
          mheader = "To cite R in publications use:",

@@ -974,6 +974,10 @@
       in the installer is now the full reference index, including all
       base and recommended packages.
 
+      \item \R help pages and manuals have no ISBNs because ISBN
+      rules no longer allow constantly changing content to be assigned
+      an ISBN.
+
       \item The Windows installer no longer installs a Start Menu
       link to the static help pages; as most pages are generated
       dynamically, this led to a lot of broken links.

@@ -171,8 +171,7 @@ rref <- bibentry(
    author = person("R Core Team"),
    organization = "R Foundation for Statistical Computing",
    address = "Vienna, Austria",
-   year = 2012,
-   isbn = "3-900051-07-0",
+   year = 2013,
    url = "http://www.R-project.org/")
 
 ## Different printing styles
