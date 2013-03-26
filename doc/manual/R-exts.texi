@@ -7913,7 +7913,7 @@ support it, the path to the dynamic library can be hardcoded at install
 time (which assumes that the location of package @pkg{packB} will not be
 changed) nor the package updated to a changed API).  On systems with the
 @acronym{GNU} linker (e.g.@: Linux) and some others (e.g.@: OS X)
-this can be done by
+this can be done by e.g.@:
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
@@ -7967,7 +7967,7 @@ where it is by something like
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
  | rterm --vanilla --slave`
-PKG_LIBS= -L"$(PKGB_PATH)" -lexB
+PKG_LIBS= -L"$(PKGB_PATH)"$(R_ARCH) -lexB
 @end example
 
 Another possibility is to use an import library, shipping with package
