@@ -938,6 +938,9 @@ try setting
 LANGUAGE=en LC_TIME=C
 @end example
 
+@noindent
+but use a UTF-8 or Latin-1 locale.
+
 
 @node Installing R under Windows, Installing R under OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
