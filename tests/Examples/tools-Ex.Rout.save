@@ -1,7 +1,6 @@
 
-R version 3.0.0 beta (2013-03-23 r62377) -- "Masked Marvel"
+R version 3.0.0 beta (2013-03-26 r62416) -- "Masked Marvel"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -101,7 +100,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x25fc1a8>
+<environment: 0x2a05520>
 
 $showURLs
 [1] FALSE
@@ -135,7 +134,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x25fc1a8>
+<environment: 0x2a05520>
 
 $showURLs
 [1] FALSE
@@ -169,7 +168,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x25fc1a8>
+<environment: 0x2a05520>
 
 $showURLs
 [1] FALSE
@@ -220,7 +219,6 @@ $underline_titles
 +     organization = "R Foundation for Statistical Computing",
 +     address = "Vienna, Austria",
 +     year = 2013,
-+     isbn = "3-900051-07-0",
 +     url = "http://www.R-project.org"),
 +   bibentry(bibtype = "article",
 +     author = c(person(c("George", "E.", "P."), "Box"),
@@ -234,11 +232,11 @@ $underline_titles
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x25205b8>
+<environment: 0x292af08>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
-ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
+<URL: http://www.R-project.org>.
 
 [2] Box GEP and Cox DR (1964). "An Analysis of Transformations."
 _Journal of the Royal Statistical Society, Series B_, *26*, pp.
@@ -965,7 +963,7 @@ List of 5
 > ### * <FOOTER>
 > ###
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.379 0.011 0.393 0 0 
+Time elapsed:  0.684 0.013 0.928 0 0 
 > grDevices::dev.off()
 null device 
           1 
