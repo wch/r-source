@@ -39,6 +39,16 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
+      is no longer recognized as valid, since it includes
+      \sQuote{Copyright (C) 1996 X Consortium} which cannot be
+      appropriate for a current \R package.  Use \sQuote{MIT} or
+      \sQuote{BSD_2_clause} instead.
+    }
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.

@@ -168,12 +168,6 @@ FSF: free_and_GPLv3_compatible (http://www.gnu.org/licenses/license-list.html#MP
 URL: http://www.mozilla.org/MPL/2.0
 FOSS: yes
 
-Name: X11 License
-Abbrev: X11
-FSF: free_and_GPLv3_compatible (http://www.gnu.org/licenses/license-list.html#X11License)
-URL: http://www.xfree86.org/3.3.6/COPYRIGHT2.html#3
-FOSS: yes
-
 Name: Common Public License
 Abbrev: CPL
 Version: 1.0
