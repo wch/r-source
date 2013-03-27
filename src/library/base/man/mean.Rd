@@ -1,6 +1,6 @@
 % File src/library/base/man/mean.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mean}
@@ -15,9 +15,8 @@ mean(x, \dots)
 \arguments{
   \item{x}{An \R object.  Currently there are methods for
     numeric/logical vectors and \link[=Dates]{date},
-    \link{date-time} and \link{time interval} objects, and for data
-    frames all of whose columns have a method.  Complex vectors are
-    allowed for \code{trim = 0}, only.}
+    \link{date-time} and \link{time interval} objects.  Complex vectors
+    are allowed for \code{trim = 0}, only.}
   \item{trim}{the fraction (0 to 0.5) of observations to be
     trimmed from each end of \code{x} before the mean is computed.
     Values of trim outside that range are taken as the nearest endpoint.
