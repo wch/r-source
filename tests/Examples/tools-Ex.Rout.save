@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-03-16 r62274) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-27 r62419) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -220,7 +220,6 @@ $underline_titles
 +     organization = "R Foundation for Statistical Computing",
 +     address = "Vienna, Austria",
 +     year = 2013,
-+     isbn = "3-900051-07-0",
 +     url = "http://www.R-project.org"),
 +   bibentry(bibtype = "article",
 +     author = c(person(c("George", "E.", "P."), "Box"),
@@ -238,7 +237,7 @@ $underline_titles
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
-ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
+<URL: http://www.R-project.org>.
 
 [2] Box GEP and Cox DR (1964). "An Analysis of Transformations."
 _Journal of the Royal Statistical Society, Series B_, *26*, pp.
