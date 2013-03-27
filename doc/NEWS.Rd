@@ -30,9 +30,6 @@
       \eqn{2^{53}}{2^53} (necessarily summing more than 4 million
       elements).
 
-      \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain
-      an \code{ind} argument (like \code{setRepositories()}).
-      
       \item \code{tools::Rdiff(useDiff = FALSE)} is closer to the POSIX
       definition of \command{diff -b} (as distinct from the description
       in the \command{man} pages of most systems).
@@ -42,9 +39,7 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
-      is no longer recognized as valid, since it includes
-      \sQuote{Copyright (C) 1996 X Consortium} which cannot be
-      appropriate for a current \R package.  Use \sQuote{MIT} or
+      is no longer recognized as valid.  Use \sQuote{MIT} or
       \sQuote{BSD_2_clause} instead.
     }
   }
@@ -73,6 +68,13 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.0.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain
+      an \code{ind} argument (like \code{setRepositories()}).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{sys.source()} did not report error locations when

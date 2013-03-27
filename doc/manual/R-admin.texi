@@ -935,7 +935,7 @@ messages: for maximal similarity to reference results you may want to
 try setting
 
 @example
-LANGUAGE=en LC_TIME=C
+LANGUAGE=en LC_TIME=C LC_COLLATE=C
 @end example
 
 @noindent

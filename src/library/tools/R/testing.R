@@ -504,7 +504,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
                 stop("file ", sQuote(f), " not found", domain = NA)
             message("creating ", sQuote(f), domain = NA)
             ## FIXME: this creates an extra trailing space compared to
-            ## .Rin.R rule
+            ## the .Rin.R rule
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                          "--vanilla --slave -f", fin)
             if (system(cmd))
@@ -516,7 +516,8 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla --no-timing",
                      shQuote(f), shQuote(outfile))
-        extra <- paste("LANGUAGE=C", "R_DEFAULT_PACKAGES=", "SRCDIR=.")
+        extra <- paste("LANGUAGE=en", "LC_COLLATE=C",
+                       "R_DEFAULT_PACKAGES=", "SRCDIR=.")
         if (inC) extra <- paste(extra,  "LC_ALL=C")
         if (.Platform$OS.type == "windows") {
             Sys.setenv(LANGUAGE="C")
