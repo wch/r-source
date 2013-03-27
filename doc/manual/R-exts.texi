@@ -7892,7 +7892,8 @@ which will give an empty path component if sub-architectures are not in
 use (but that works on current platforms).
 
 For a dynamic library @file{packB/libs/libpackB.so}
-(@file{packB/libs/libpackB.dylib} on OS X) we could use
+(@file{packB/libs/libpackB.dylib} on OS X: note that you cannot link to
+a shared object, @file{.so} on that platform) we could use
 
 @example
 PKGB_PATH=`echo 'cat(system.file("libs", .Platform$$r_arch, 

@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/TclInterface.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TclInterface}
@@ -249,9 +249,12 @@ tclRequire(package, warn = TRUE)
   Tcl packages can be loaded with \code{tclRequire}; it may be necessary
   to add the directory where they are found to the Tcl search path with
   \code{addTclPath}.  The return value is a class \code{"tclObj"} object
-  if it succeeds, or \code{FALSE} if it fails (when a warning is issued).
+  if it succeeds, or \code{FALSE} if it fails (when a warning is
+  issued).  To see the current search path as an \R character vector, use
+\preformatted{strsplit(tclvalue('auto_path'), " ")[[1]]}.
 }
-\note{ Strings containing unbalanced braces are currently not handled
+\note{
+  Strings containing unbalanced braces are currently not handled
   well in many circumstances.
 }
 \seealso{
