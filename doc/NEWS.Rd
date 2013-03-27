@@ -72,6 +72,15 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.0.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{sys.source()} did not report error locations when
+      \code{keep.source = TRUE}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.0.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
