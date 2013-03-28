@@ -451,8 +451,7 @@ You will not be able to build any of these unless you have
 have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
 of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
 @file{texinfo.tex}, often made part of the @TeX{} package in
-re-distributions).  It should be possible to use @command{makeinfo}
-version 5.0, but e.g..@: 4.13 produces better-formatted output.
+re-distributions).
 
 The PDF versions can be viewed using any recent PDF viewer: they have
 hyperlinks that can be followed.  The info files are suitable for
@@ -4132,8 +4131,8 @@ the additional flags being needed to resolve problems linking against
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
-C++ compilers (@uref{http://clang.llvm.org}, versions 3.0 and 3.2) based
-on the Clang front-ends, invoked by @code{CC=clang CXX=clang++},
+C++ compilers (@uref{http://clang.llvm.org}, versions 3.0 and 3.2.2)
+based on the Clang front-ends, invoked by @code{CC=clang CXX=clang++},
 together with @command{gfortran}.  These take very similar options to
 the corresponding GCC compilers.
 
@@ -4141,8 +4140,8 @@ This has to be used in conjunction with a Fortran compiler: the
 @command{configure} code will remove @option{-lgcc} from @env{FLIBS},
 which is needed for some versions of @command{gfortran}.
 
-Note that @command{clang++} 3.0 as in Fedora 17 is rather broken when
-used with @command{g++} C++ headers.
+Note that @command{clang++} 3.0 is rather broken when used with
+@command{g++} C++ headers.
 
 @node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
 @subsection Intel compilers
