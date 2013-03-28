@@ -100,7 +100,6 @@ massageExamples <-
         }
 
         if(addTiming) {
-            options(digits = 7L)
             cat("\nbase::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
             cat("base::cat(\"", nm, "\", base::get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=base::get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
         }
@@ -116,7 +115,8 @@ massageExamples <-
 }
 
 ## compares 2 files
-Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, Log=FALSE)
+Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
+                  nullPointers=TRUE, Log = FALSE)
 {
     clean <- function(txt)
     {
@@ -126,9 +126,12 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
                               txt, perl = TRUE, useBytes = TRUE)) &&
            length(bot <- grep("quit R.$", txt, perl = TRUE, useBytes = TRUE)))
             txt <- txt[-(top[1L]:bot[1L])]
+        ## for massageExamples()
+        ll <- grep("<FOOTER>", txt, fixed = TRUE, useBytes = TRUE)
+        if(length(ll)) txt <- txt[seq_len(max(ll) - 1L)]
         ## remove BATCH footer
         nl <- length(txt)
-        if(nl > 3L && grepl("^> proc.time()", txt[nl-2L])) txt <- txt[1:(nl-3L)]
+        if(nl > 3L && grepl("^> proc.time\\(\\)", txt[nl-2L])) txt <- txt[1:(nl-3L)]
         if (nullPointers)
         ## remove pointer addresses from listings
             txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
@@ -192,7 +195,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
             tf <- tempfile()
             status <- system2("diff", c("-bw", shQuote(a), shQuote(b)),
                               stdout = tf, stderr = tf)
-            list(status=status, out=c(out, readLines(tf)))
+            list(status = status, out = c(out, readLines(tf)))
         } else system(paste("diff -bw", shQuote(a), shQuote(b)))
     }
 }
