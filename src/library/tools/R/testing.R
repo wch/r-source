@@ -57,7 +57,7 @@ massageExamples <-
             "function(x) {",
             "  if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]",
             "  if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]",
-            "  format(x[1L:3L])",
+            "  format(x[1L:3L], digits = 7L)",
             "},",
             "pos = 'CheckExEnv')\n", sep = "\n", file = out)
     }
@@ -100,6 +100,7 @@ massageExamples <-
         }
 
         if(addTiming) {
+            options(digits = 7L)
             cat("\nbase::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
             cat("base::cat(\"", nm, "\", base::get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=base::get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
         }
