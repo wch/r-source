@@ -18,12 +18,6 @@
       decimal places that are intended to be read as numeric, specify
       \code{colClasses} in \code{read.table()} to be \code{"numeric"}.
 
-      \item \code{mcparallel} has a new argument \code{mc.interactive}
-      which can modify the interactive flag in the child process. The
-      new default is \code{FALSE} which makes child processes
-      non-interactive by default (this prevents lock-ups due to children
-      waiting for interactive input).
-
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
       the very rare case that a cumulative sum exceeds
@@ -72,6 +66,12 @@
     \itemize{
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain
       an \code{ind} argument (like \code{setRepositories()}).
+
+      \item \code{mcparallel} has a new argument \code{mc.interactive}
+      which can modify the interactive flag in the child process. The
+      new default is \code{FALSE} which makes child processes
+      non-interactive by default (this prevents lock-ups due to children
+      waiting for interactive input).
     }
   }
   
@@ -79,6 +79,10 @@
     \itemize{
       \item \code{sys.source()} did not report error locations when
       \code{keep.source = TRUE}.
+
+      \item \code{as.POSIXct.numeric} was coercing \code{origin} using
+      the \code{tz} argument and not \code{"GMT"} as documented
+      (\PR{14973}).
     }
   }
 }
