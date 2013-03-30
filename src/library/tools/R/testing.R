@@ -526,6 +526,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         if (.Platform$OS.type == "windows") {
             Sys.setenv(LANGUAGE="C")
             Sys.setenv(R_DEFAULT_PACKAGES="")
+            Sys.setenv(LC_COLLATE="C")
             Sys.setenv(SRCDIR=".")
             ## ignore inC and hope
         } else cmd <- paste(extra, cmd)

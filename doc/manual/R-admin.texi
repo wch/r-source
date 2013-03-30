@@ -903,8 +903,10 @@ has been changed, for example by OS updates or by substituting the
 
 Alternatively, the installed @R{} can be run, preferably with
 @option{--vanilla}.  Then
+@enindex LC_COLLATE
 
 @example
+Sys.setenv(LC_COLLATE = "C", LANGUAGE = "en")
 library("tools")
 testInstalledBasic("both")
 testInstalledPackages(scope = "base")
@@ -919,11 +921,7 @@ directory and run slightly fewer tests than the first approach: in
 particular they do not test Internet access.
 
 These tests work best if @command{diff} (in @file{Rtools*.exe} for
-Windows users) is in the path, and on some systems need the collation
-locale set manually (the @R{} code tries to do so but it may not be
-possible to reset it): so if needed try setting the environment variable
-@env{LC_COLLATE} to @samp{C} before starting @R{}.
-@enindex LC_COLLATE
+Windows users) is in the path.
 
 It is possible to test the installed packages (but not the
 package-specific tests) by @code{testInstalledPackages} even if
@@ -1440,6 +1438,7 @@ Launch either @code{Rgui} or @code{Rterm}, preferably with
 @option{--vanilla}.  Then run
 
 @example
+Sys.setenv(LC_COLLATE = "C", LANGUAGE = "en")
 library("tools")
 testInstalledBasic("both")
 testInstalledPackages(scope = "base", errorsAreFatal = FALSE)
@@ -1449,9 +1448,13 @@ testInstalledPackages(scope = "recommended", errorsAreFatal = FALSE)
 @noindent
 runs the basic tests and then all the tests on the standard and
 recommended packages.  These tests can be run from anywhere: they write
-their results in the @file{tests} folder of the @R{} home directory (as
-given by @code{R.home()}), and hence may need to be run under the
-account used to install @R{}.
+some of their results in the @file{tests} folder of the @R{} home
+directory (as given by @code{R.home()}), and hence may need to be run
+under the account used to install @R{}.
+
+The results of @code{example(md5sums)} when testing @pkg{tools} will
+differ from the reference output as some files are installed with
+Windows' CRLF line endings.
 
 
 @node Installing R under OS X, Running R, Installing R under Windows, Top
