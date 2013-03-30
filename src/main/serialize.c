@@ -2674,11 +2674,11 @@ static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 
 /* from connections.c */
 SEXP R_compress1(SEXP in);
-SEXP R_decompress1(SEXP in);
+SEXP R_decompress1(SEXP in, Rboolean *err);
 SEXP R_compress2(SEXP in);
-SEXP R_decompress2(SEXP in);
+SEXP R_decompress2(SEXP in, Rboolean *err);
 SEXP R_compress3(SEXP in);
-SEXP R_decompress3(SEXP in);
+SEXP R_decompress3(SEXP in, Rboolean *err);
 
 /* Serializes and, optionally, compresses a value and appends the
    result to a file.  Returns the key position/length key for
@@ -2714,7 +2714,7 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP key, file, compsxp, hook;
     PROTECT_INDEX vpi;
-    Rboolean compressed;
+    Rboolean compressed, err = FALSE;
     SEXP val;
 
     checkArity(op, args);
@@ -2726,11 +2726,12 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT_WITH_INDEX(val = readRawFromFile(file, key), &vpi);
     if (compressed == 3)
-	REPROTECT(val = R_decompress3(val), vpi);
+	REPROTECT(val = R_decompress3(val, &err), vpi);
     else if (compressed == 2)
-	REPROTECT(val = R_decompress2(val), vpi);
+	REPROTECT(val = R_decompress2(val, &err), vpi);
     else if (compressed)
-	REPROTECT(val = R_decompress1(val), vpi);
+	REPROTECT(val = R_decompress1(val, &err), vpi);
+    if (err) error("lazy-load database '%s' is corrupt", file);
     val = R_unserialize(val, hook);
     if (TYPEOF(val) == PROMSXP) {
 	REPROTECT(val, vpi);
