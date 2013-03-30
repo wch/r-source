@@ -1883,7 +1883,7 @@ sudo mv bwidget-1.9.6 /usr/local/lib
 @end example
 @end itemize
 
-It may be possible to use other compilers with the @acronym{CRAN}
+It is often possible to use other compilers with the @acronym{CRAN}
 distribution of @R{}, but the settings in the file
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} will need
 to be changed, either by editing that file or in a file such as
@@ -1903,7 +1903,8 @@ CXXFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
 @end example
 
 @noindent
-and for at least one version of @command{gfortran-4.2} we needed
+(this is expected to become necessary once Xcode 4.7 is released) and
+for another version of @command{gfortran-4.2} we needed
 @example
 FLIBS=-lgfortran
 @end example
@@ -4134,7 +4135,7 @@ the additional flags being needed to resolve problems linking against
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
-C++ compilers (@uref{http://clang.llvm.org}, versions 3.0 and 3.2.2)
+C++ compilers (@uref{http://clang.llvm.org}, versions 3.0 and 3.2)
 based on the Clang front-ends, invoked by @code{CC=clang CXX=clang++},
 together with @command{gfortran}.  These take very similar options to
 the corresponding GCC compilers.
@@ -4142,9 +4143,6 @@ the corresponding GCC compilers.
 This has to be used in conjunction with a Fortran compiler: the
 @command{configure} code will remove @option{-lgcc} from @env{FLIBS},
 which is needed for some versions of @command{gfortran}.
-
-Note that @command{clang++} 3.0 is rather broken when used with
-@command{g++} C++ headers.
 
 @node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
 @subsection Intel compilers
@@ -4319,7 +4317,9 @@ is built using
 @itemize
 @item @command{gcc}
 from the Xcode distribution.  This is a version of gcc 4.2.1 with an
-LLVM backend.
+LLVM backend.  Note that Apple have announced that Xcode 4.6 will be the
+last `release' with this compiler (4.6.1 does contain it), and
+@command{clang} can also be used.
 
 @item @command{gfortran}
 from

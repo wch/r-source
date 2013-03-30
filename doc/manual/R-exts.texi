@@ -6668,10 +6668,11 @@ variable @env{PKG_MAKE_DSYM} to a non-empty value.)
 
 
 Sooner or later programmers will be faced with the need to debug
-compiled code loaded into @R{}.   This section is geared to platforms
+compiled code loaded into @R{}.  This section is geared to platforms
 using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with front-ends to @command{gdb} such as @command{ddd} and
-@command{insight}, and other debuggers such as Sun's @command{dbx}.
+@command{insight}, and other debuggers such as @command{lldb} (used on
+OS X) and Sun's @command{dbx}.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
 an illegal memory access (a `segfault' or `bus error'), illegal
