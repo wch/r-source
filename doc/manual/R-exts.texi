@@ -756,6 +756,9 @@ the comparison operators @samp{<}, @samp{<=}, @samp{>}, @samp{>=},
 combined @emph{via} @samp{,} (see below for an example).  For versioned
 licenses, one can also specify the name followed by the version, or
 combine an existing abbreviation and the version with a @samp{-}.
+
+Abbreviations @code{GPL} and @code{LGPL} are ambiguous and taken to mean
+any version of the license: but it is better not to use them.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
 to a file named @file{LICENSE} or @file{LICENCE} in the package (source
