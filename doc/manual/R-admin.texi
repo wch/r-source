@@ -4307,7 +4307,7 @@ library (see @code{?.libPaths()}).  Also use
 `Command Line Tools for Xcode' used to be part of the Apple
 Developer Tools (`Xcode') but nowadays need to be installed
 separately.  They can be downloaded from
-@uref{http://developer.apple.com/download} (you will need to register
+@uref{http://developer.apple.com/devcenter/mac/} (you will need to register
 there) or if you have a recent Xcode installed (from the App Store or
 from @uref{https://developer.apple.com/devcenter/mac/}) you can install
 the command-line tools from within Xcode, from the @samp{Downloads} pane
