@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-01-10 r61603) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -2563,6 +2562,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.932 0.181 1.112 0 0 
+Time elapsed:  0.402 0.011 0.415 0 0 
 > 
 > 

@@ -1,14 +1,11 @@
 
-R Under development (unstable) (2011-08-04 r56618)
-Copyright (C) 2011 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -41,9 +38,9 @@ boot.ci(boot.out = cd4.boot, conf = 0.9, type = c("norm", "basic",
 
 Intervals : 
 Level      Normal              Basic              Percentile     
-90%   ( 0.4610,  0.8577 )   ( 0.4617,  0.8577 )   ( 0.4959,  0.8690 )  
+90%   ( 0.4575,  0.8547 )   ( 0.4703,  0.8575 )   ( 0.4964,  0.8663 )  
 Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  1.838   0.278   9.055 
+  0.142   0.024   0.256 

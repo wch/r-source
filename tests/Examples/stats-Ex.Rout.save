@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-03-06 r62150) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -917,7 +916,7 @@ lrc    -3.2176     0.1386 -23.218 0.000175 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.7493  on  3  degrees of freedom
+Residual standard error: 0.7493 on 3 degrees of freedom
 
 > ## Don't show: 
 > require(graphics)
@@ -1002,7 +1001,7 @@ c0    51.2232    11.6698   4.389   0.0118 *
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 1.663  on  4  degrees of freedom
+Residual standard error: 1.663 on 4 degrees of freedom
 
 > ## Don't show: 
 > require(graphics)
@@ -1125,7 +1124,7 @@ lrc2  -1.7878     0.7871  -2.271  0.05737 .
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.04103  on  7  degrees of freedom
+Residual standard error: 0.04103 on 7 degrees of freedom
 
 > ## Don't show: 
 >   require(graphics)
@@ -1212,7 +1211,7 @@ lCl  -3.9159     0.1273 -30.768 1.35e-09 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.732  on  8  degrees of freedom
+Residual standard error: 0.732 on 8 degrees of freedom
 
 > 
 > 
@@ -1271,7 +1270,7 @@ scal    6.673      1.002   6.662 0.000159 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 2.351  on  8  degrees of freedom
+Residual standard error: 2.351 on 8 degrees of freedom
 
 > ## Don't show: 
 > require(graphics)
@@ -1366,7 +1365,7 @@ b3    0.71647    0.02206  32.475 7.85e-14 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.02684  on  13  degrees of freedom
+Residual standard error: 0.02684 on 13 degrees of freedom
 
 > 
 > 
@@ -1462,7 +1461,7 @@ K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 10.93  on  10  degrees of freedom
+Residual standard error: 10.93 on 10 degrees of freedom
 
 > ## Alternative call using the subset argument
 > fm2 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
@@ -1478,7 +1477,7 @@ K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 10.93  on  10  degrees of freedom
+Residual standard error: 10.93 on 10 degrees of freedom
 
 > ## Don't show: 
 > require(graphics)
@@ -1557,7 +1556,7 @@ pwr    2.6461     0.1613   16.41 7.62e-07 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 2.061  on  7  degrees of freedom
+Residual standard error: 2.061 on 7 degrees of freedom
 
 > 
 > 
@@ -3714,7 +3713,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x2faf130>
+<environment: 0x3a22b68>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4715,7 +4714,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x65ddc68>
+<bytecode: 0x5c15538>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6732,8 +6731,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x2d74a58>
-<environment: 0x90c38f8>
+<bytecode: 0x3614698>
+<environment: 0x7fe7400>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7134,7 +7133,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x9289270>
+<environment: 0x7fb07d0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -10256,7 +10255,7 @@ scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.0192  on  13  degrees of freedom
+Residual standard error: 0.0192 on 13 degrees of freedom
 
 > ## the coefficients only:
 > coef(fm1DNase1)
@@ -10286,7 +10285,7 @@ scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.0192  on  13  degrees of freedom
+Residual standard error: 0.0192 on 13 degrees of freedom
 
 > 
 > ## without conditional linearity
@@ -10305,7 +10304,7 @@ scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.0192  on  13  degrees of freedom
+Residual standard error: 0.0192 on 13 degrees of freedom
 
 > 
 > ## using Port's nl2sol algorithm
@@ -10325,7 +10324,7 @@ scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.0192  on  13  degrees of freedom
+Residual standard error: 0.0192 on 13 degrees of freedom
 
 Algorithm "port", convergence message: relative convergence (4)
 
@@ -10358,7 +10357,7 @@ K  5.46e-02   7.98e-03    6.84  4.5e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 1.21  on  10  degrees of freedom
+Residual standard error: 1.21 on 10 degrees of freedom
 
 > 
 > ## Passing arguments using a list that can not be coerced to a data.frame
@@ -10475,7 +10474,7 @@ th       0.608      0.115    5.31  1.9e-06 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 4.67  on  57  degrees of freedom
+Residual standard error: 4.67 on 57 degrees of freedom
 
 > 
 > ## Then we use nls' indexing feature for parameters in non-linear
@@ -10539,7 +10538,7 @@ th     0.797      0.127    6.30  8.0e-06 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 1.11  on  17  degrees of freedom
+Residual standard error: 1.11 on 17 degrees of freedom
 
 > ## Don't show: 
 > options(od)
@@ -11710,26 +11709,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x2d94818>
-<environment: 0x8eca498>
+<bytecode: 0x3611888>
+<environment: 0x8db5ea8>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x2d948c0>
-<environment: 0x8eca498>
+<bytecode: 0x3611818>
+<environment: 0x8db5ea8>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x2d949a0>
-<environment: 0x8eca498>
+<bytecode: 0x36117a8>
+<environment: 0x8db5ea8>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x2d94d20>
-<environment: 0x8eca498>
+<bytecode: 0x3612d10>
+<environment: 0x8db5ea8>
 
 $name
 [1] "identity"
@@ -11740,14 +11739,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x8ecbc10>
-<environment: 0x8eb9f48>
+<bytecode: 0x8d7dda0>
+<environment: 0x9052798>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x8ecbd28>
-<environment: 0x8eb9f48>
+<bytecode: 0x8d7dc88>
+<environment: 0x9052798>
 
 > 
 > 
@@ -15541,8 +15540,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3112fa8>
-<environment: 0xa1a69a8>
+<bytecode: 0x3a8d510>
+<environment: 0xb089de8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17765,8 +17764,9 @@ Number of Fisher Scoring iterations: 6
 > base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
 > ### * <FOOTER>
 > ###
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  14.903 0.323 15.983 0 0 
+Time elapsed:  7.445 0.196 7.669 0 0 
 > grDevices::dev.off()
 null device 
           1 

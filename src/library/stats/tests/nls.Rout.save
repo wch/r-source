@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-03-23 r62384) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -657,8 +656,8 @@ In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 +      stopifnot(isConv == FALSE, stopCode == 300))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.565 0.018 2.69 0 0 
+Time elapsed:  1.195 0.006 1.209 0 0 
 > 
 > proc.time()
    user  system elapsed 
-  2.841   0.067   3.096 
+  1.320   0.017   1.335 

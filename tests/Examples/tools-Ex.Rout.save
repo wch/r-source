@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-03-27 r62419) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -101,7 +100,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x21de800>
+<environment: 0x35b3ad0>
 
 $showURLs
 [1] FALSE
@@ -135,7 +134,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x21de800>
+<environment: 0x35b3ad0>
 
 $showURLs
 [1] FALSE
@@ -169,7 +168,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x21de800>
+<environment: 0x35b3ad0>
 
 $showURLs
 [1] FALSE
@@ -233,7 +232,7 @@ $underline_titles
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x2b6b458>
+<environment: 0x34d6e68>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -963,8 +962,9 @@ List of 5
 > 
 > ### * <FOOTER>
 > ###
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.283 0.017 0.3 0 0 
+Time elapsed:  0.322 0.006 0.329 0 0 
 > grDevices::dev.off()
 null device 
           1 

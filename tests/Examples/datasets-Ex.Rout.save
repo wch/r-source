@@ -1,7 +1,6 @@
 
-R Under development (unstable) (2013-01-30 r61784) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -117,7 +116,7 @@ lrc   -0.633      0.382   -1.65   0.1733
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 2.55  on  4  degrees of freedom
+Residual standard error: 2.55 on 4 degrees of freedom
 
 > ## Don't show: 
 > options(old)
@@ -179,7 +178,7 @@ scal  1.062579   0.056996  18.643 3.16e-10 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.01981  on  12  degrees of freedom
+Residual standard error: 0.01981 on 12 degrees of freedom
 
 > anova(fm1, fm2)
 Analysis of Variance Table
@@ -1090,7 +1089,7 @@ K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 10.93  on  10  degrees of freedom
+Residual standard error: 10.93 on 10 degrees of freedom
 
 > summary(fm2)
 
@@ -1103,7 +1102,7 @@ K  4.771e-02  7.782e-03   6.131 0.000173 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 9.773  on  9  degrees of freedom
+Residual standard error: 9.773 on 9 degrees of freedom
 
 > ## add fitted lines to the plot
 > conc <- seq(0, 1.2, length.out = 101)
@@ -1152,7 +1151,7 @@ lCl  -3.2861     0.1448 -22.695 1.51e-08 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.8465  on  8  degrees of freedom
+Residual standard error: 0.8465 on 8 degrees of freedom
 
 > plot(conc ~ Time, data = Theoph.4,
 +      xlab = "Time since drug administration (hr)",
@@ -3412,7 +3411,7 @@ c0    -4.3806     0.2042 -21.457 2.79e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 1.663  on  4  degrees of freedom
+Residual standard error: 1.663 on 4 degrees of freedom
 
 > ## fit each plant separately
 > fmlist <- list()
@@ -3435,8 +3434,9 @@ c0   -5.14
 > 
 > ### * <FOOTER>
 > ###
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.88 0.034 1.922 0 0 
+Time elapsed:  1.822 0.039 1.869 0 0 
 > grDevices::dev.off()
 null device 
           1 
