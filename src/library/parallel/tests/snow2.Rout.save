@@ -1,14 +1,11 @@
 
-R Under development (unstable) (2011-08-04 r56618)
-Copyright (C) 2011 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+R version 3.0.0 RC (2013-03-29 r62438) -- "Masked Marvel"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -44,11 +41,11 @@ boot.ci(boot.out = cd4.boot, conf = 0.9, type = c("norm", "basic",
 
 Intervals : 
 Level      Normal              Basic              Percentile     
-90%   ( 0.4631,  0.8583 )   ( 0.4679,  0.8578 )   ( 0.4957,  0.8671 )  
+90%   ( 0.4705,  0.8589 )   ( 0.4620,  0.8597 )   ( 0.4900,  0.8689 )  
 Calculations on Transformed Scale;  Intervals on Original Scale
 > stopCluster(cl)
 > 
 > 
 > proc.time()
    user  system elapsed 
-  1.092   0.164   4.819 
+  0.151   0.022   0.587 

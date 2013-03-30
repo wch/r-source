@@ -1,7 +1,6 @@
 
-R version 3.0.0 beta (2013-03-23 r62377) -- "Masked Marvel"
+R version 3.0.0 RC (2013-03-29 r62438) -- "Masked Marvel"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -407,4 +406,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.265   0.014   0.275 
+  0.226   0.017   0.232 

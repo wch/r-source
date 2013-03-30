@@ -1,7 +1,6 @@
 
-R version 3.0.0 beta (2013-03-23 r62377) -- "Masked Marvel"
+R version 3.0.0 RC (2013-03-29 r62438) -- "Masked Marvel"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -2563,6 +2562,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.461 0.009 0.473 0 0 
+Time elapsed:  0.421 0.008 0.431 0 0 
 > 
 > 
