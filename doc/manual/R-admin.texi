@@ -1473,9 +1473,6 @@ should run on all Macs from mid-2008 on.  For older Intel Macs and some
 older versions of the OS you can install @R{} from the sources.
 
 To install, just double-click on the icon of the file you downloaded.
-Note that (X11-based) Tcl/Tk needs to be installed separately if needed,
-from @uref{http://cran.r-project.org/bin/macosx/tools/}, and for
-Mountain Lion or later, XQuartz will also need to be installed to use Tk.
 
 On Mountain Lion with `GateKeeper' active you may need to
 right/control-click on some of the packages and select @samp{Open}.
@@ -1532,14 +1529,15 @@ rm -rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/bin/R /usr/bin/Rscript
 @end example
 
-The installation consisted of two Apple packages:
-@code{org.r-project.R.Leopard.fw.pkg} and
-@code{org.r-project.R.Leopard.GUI.pkg}. You can use @code{pkgutil
---unlink} (not supported by Lion or later) to remove their files or
-@code{pkgutil --forget} if you want the Apple Installer to forget about
-the package without deleting its files (useful for the @R{} framework
-when installing multiple R versions in parallel), or after you have
-deleted the files.
+The installation consisted of three Apple packages:
+@code{org.r-project.R.Leopard.fw.pkg},
+@code{org.r-project.R.Leopard.GUI.pkg} and
+@code{org.r-project.x86_64.tcltk.x11} (not all of which need be
+installed). You can use @code{pkgutil --unlink} (not supported by Lion
+or later) to remove their files or @code{pkgutil --forget} if you want
+the Apple Installer to forget about the package without deleting its
+files (useful for the @R{} framework when installing multiple R versions
+in parallel), or after you have deleted the files.
 
 
 @node Running R, Add-on packages, Installing R under OS X, Top
@@ -1869,10 +1867,10 @@ installed: for Mountain Lion see @ref{Mountain Lion}.  Several packages
 need X11 installed, including those using Tk: for Mountain Lion see
 @ref{Mountain Lion}.
 
-The version of Tcl/Tk available for download from @acronym{CRAN} comes
-with the @code{Tktable} extension, but not with @code{BWidget} which
-quite a few packages require without declaring it (maybe because it is
-shipped as part of @R{} for Windows).  It is easy to install:
+The version of Tcl/Tk available for download from @acronym{CRAN} does
+not come with @code{BWidget} which quite a few packages require without
+declaring it (maybe because it is shipped as part of @R{} for Windows).
+It is easy to install:
 
 @itemize
 @item Download the sources from @uref{http://sourceforge.net/projects/tcllib/files/BWidget/}.
@@ -4318,8 +4316,8 @@ is built using
 @item @command{gcc}
 from the Xcode distribution.  This is a version of gcc 4.2.1 with an
 LLVM backend.  Note that Apple have announced that Xcode 4.6 will be the
-last `release' with this compiler (4.6.1 does contain it), and
-@command{clang} can also be used.
+last `release' with this compiler (4.6.1 does contain it), and it is
+likely that @command{clang} will be used before @R{} 3.1.0 is released.
 
 @item @command{gfortran}
 from
@@ -4346,8 +4344,8 @@ OBJC="clang"
 @noindent
 Full names are not needed, but help to ensure that the intended
 compilers are used.  The recommended Fortran compiler defaults to
-32-bit, so @code{-arch x86_64} is needed.  (For a 32-bit build, add
-@code{-arch i386} to all compiler commands.)
+32-bit, so @code{-arch x86_64} is needed.  (For a 32-bit build, use
+@code{-arch i386} for all compiler commands.)
 
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
@@ -4399,6 +4397,10 @@ required in @file{config.site}, or you can use the @command{configure}
 options @option{--x-includes=/usr/X11/include
 --x-libraries=/usr/X11/lib.}.
 
+The @acronym{CRAN} binaries are built using Xcode 4.2, a version
+available ony to subscribing developers.  It is expected that 3.2.x (the
+lastly public free version for Snow Leopard) will work.
+
 @node Lion, Mountain Lion, Snow Leopard, OS X
 @subsection Lion
 
@@ -4423,21 +4425,12 @@ export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
 install a distribution of Tcl/Tk.  There are two alternatives.  If you
-use @Rapp{} you will want to install
-@uref{http://cran.r-project.org/bin/macosx/tools/tcltk-8.5.5-x11.pkg}
-which is a binary package for the X11-based Tcl/Tk (as used on other
-Unix-alikes).  This may need
+use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
+Unix-alikes), which is part of the CRAN binary for @R{}.  This may need
 @example
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
-@noindent
-and on a system with XQuartz, @file{/usr/local/lib/tkConfig.sh} needed
-to be edited to have
-@example
-TK_XINCLUDES='-I/opt/X11/include'
-@end example
-
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
