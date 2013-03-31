@@ -1214,8 +1214,8 @@ this should be declared in the @samp{SystemRequirements} field of its
 extensions @samp{BWidget} and @samp{Tktable} which are included with the
 @R{} for Windows installer @emph{are} extensions and do need to be
 declared.  @samp{Tktable} did ship as part of the X11-based Tcl/Tk
-provided on CRAN for OS X, prior to @R{} 3.0.0, but you will need to
-tell your users how to make use of it:
+provided on @acronym{CRAN} for OS X prior to @R{} 3.0.0, but you will
+need to tell your users how to make use of it:
 
 @example
 > addTclPath('/usr/local/lib/Tktable2.9')
@@ -1750,7 +1750,9 @@ Solaris platforms, but portable packages cannot assume that end users
 have recent versions (there are some years-old versions of Linux in
 use), and it may be safest to assume version 2.5.  The compilers
 currently used on OS X have partial support for OpenMP 2.5, but this is
-not enabled in the @acronym{CRAN} build (and unreliable).
+not enabled in the @acronym{CRAN} build. (Apple have announced the
+imminent discontinuation of support for those compilers, and the
+preferred alternative, @command{clang}, has no OpenMP support.)
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and OS X (where available) implementations have substantial
@@ -1823,7 +1825,7 @@ external software to which this is an @R{} interface.
 
 One simple way is simply to set @code{OBJECTS} to be all the objects
 that need to be compiled, including in sub-directories.  For example,
-CRAN package @CRANpkg{RSiena} has
+@acronym{CRAN} package @CRANpkg{RSiena} has
 
 @smallexample
 SOURCES = $(wildcard data/*.cpp network/*.cpp utils/*.cpp model/*.cpp model/*/*.cpp model/*/*/*.cpp)
@@ -1834,7 +1836,7 @@ OBJECTS = siena07utilities.o siena07internals.o siena07setup.o siena07models.o $
 @noindent
 One problem with that approach is that unless GNU make extensions are
 used, the source files need to be listed and kept up-to-date.  As in the
-following from CRAN package @CRANpkg{lossDev}:
+following from @acronym{CRAN} package @CRANpkg{lossDev}:
 
 @smallexample
 OBJECTS.samplers = samplers/ExpandableArray.o samplers/Knots.o \
@@ -2521,9 +2523,9 @@ CMD INSTALL --help}, and platform-specific details for special cases
 platform-specific FAQs.
 
 
-In earlier versions of @R{}, @command{R CMD build --binary} could build
-a binary version of a package, but this approach is now deprecated in
-favour of @command{R CMD INSTALL --build}.
+In much earlier versions of @R{}, @command{R CMD build --binary} could
+build a binary version of a package, but this approach is now deprecated
+in favour of @command{R CMD INSTALL --build}.
 
 
 Finally, at least one web-based service is available for building binary
