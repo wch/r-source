@@ -987,7 +987,7 @@
             } else character()
             for(e in ignore)
                 i_dirs <- grep(e, i_dirs, perl = TRUE, invert = TRUE,
-                               value = TRUE, ignore.case = WINDOWS)
+                               value = TRUE, ignore.case = TRUE)
             lapply(gsub("^inst", instdir, i_dirs),
                    function(p) dir.create(p, FALSE, TRUE)) # be paranoid
             i_files <- list.files("inst", all.files = TRUE,
@@ -996,7 +996,7 @@
                             invert = TRUE, value = TRUE)
             for(e in ignore)
                 i_files <- grep(e, i_files, perl = TRUE, invert = TRUE,
-                                value = TRUE, ignore.case = WINDOWS)
+                                value = TRUE, ignore.case = TRUE)
             i_files <- i_files[!i_files %in%
                                c("inst/doc/Rplots.pdf", "inst/doc/Rplots.ps")]
             i_files <- grep("inst/doc/.*[.](log|aux|bbl|blg|dvi)$",

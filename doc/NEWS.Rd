@@ -35,9 +35,20 @@
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
       is no longer recognized as valid.  Use \sQuote{MIT} or
       \sQuote{BSD_2_clause} instead.
+
+      \item For consistency, entries in \file{.Rinstignore} are now matched
+      case-insensitively on all platforms.
     }
   }
   
+  \subsection{UTILITIES}{
+    \itemize{
+      \item For consistency, \command{R CMD build} now matches entries
+    in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
+    case-insensitively on all platforms (not just on Windows).
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.

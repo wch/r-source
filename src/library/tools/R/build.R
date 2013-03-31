@@ -343,10 +343,10 @@ get_exclude_patterns <- function()
                     on.exit(Sys.unsetenv("R_LIBS"), add = TRUE)
                     Sys.setenv(R_LIBS = libdir)
                 }
-                
+
                 # Tangle all vignettes now.  We'll try again at INSTALL time in 3.0.0,
                 # but eventually this is the only place the tangling will happen.
-                
+
                 cmd <- file.path(R.home("bin"), "Rscript")
                 args <- c("--vanilla",
                           "--default-packages=", # some vignettes assume methods
@@ -385,7 +385,7 @@ get_exclude_patterns <- function()
                             inst <- rep(FALSE, length(allfiles))
                             for (e in extras)
                                 inst <- inst | grepl(e, allfiles, perl = TRUE,
-                                                     ignore.case = WINDOWS)
+                                                     ignore.case = TRUE)
                             file.copy(allfiles[inst], doc_dir, recursive = TRUE)
                         }
                     }
@@ -947,7 +947,7 @@ get_exclude_patterns <- function()
             ignore <- c(ignore, readLines(ignore_file, warn = FALSE))
         for(e in ignore[nzchar(ignore)])
             exclude <- exclude | grepl(e, allfiles, perl = TRUE,
-                                       ignore.case = WINDOWS)
+                                       ignore.case = TRUE)
 
         isdir <- file_test("-d", allfiles)
         ## old (pre-2.10.0) dirnames
