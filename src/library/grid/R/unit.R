@@ -479,6 +479,19 @@ print.unit <- function(x, ...) {
 # Write `[<-.unit` methods too ??
 
 #########################
+# str() method
+#########################
+
+# Should work fine on atomic units and on unit.list
+# The problem arises with unit.arithmetic, which are stored as lists
+# but act like vectors
+# (e.g., report length greater than number of list components)
+str.unit.arithmetic <- function(object, ...) {
+    cat("Class 'unit.arithmetic' [1:", length(object), "] ", sep="")
+    str(unclass(object), ...)
+}
+
+#########################
 # "c"ombining unit objects
 #########################
 
