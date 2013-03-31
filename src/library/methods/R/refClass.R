@@ -716,35 +716,23 @@ class method modifies a field.
         ## write-once into the metaName object
         f <-  eval(substitute(function(value) {
             if(missing(value))
-                dummyField
+                dummyFieldName
             else {
-                selfEnv <- as.environment(.self)
-                if(bindingIsLocked(metaName, selfEnv))
-                    stop(gettextf("field %s is read-only", sQuote(thisField)),
-                         domain = NA)
-                else {
-                    dummyField <<- value
-                    lockBinding(metaName, selfEnv)
-                }
+                methods:::.setDummyField(.self, dummyField, dummyClass, thisField, TRUE, value)
                 value
             }
-        }, list(dummyField = as.name(metaName), thisField = fieldName,
-                metaName = metaName)))
+        }, list(dummyField = metaName, thisField = fieldName,
+                dummyClass = fieldClass, dummyFieldName = as.name(metaName))))
     else
         f <- eval(substitute(function(value) {
             if(missing(value))
-                dummyField
+                dummyFieldName
             else {
-                if(is(value, dummyClass))
-                    value <- as(value, dummyClass, strict = FALSE)
-                else
-                    stop(gettextf("invalid replacement for field %s, should be from class %s or a subclass (was class %s)",
-                       sQuote(thisField), dQuote(dummyClass), dQuote(class(value))))
-                dummyField <<- value
+                methods:::.setDummyField(.self, dummyField, dummyClass, thisField, FALSE, value)
                 value
             }
-        }, list(dummyField = as.name(metaName), dummyClass = fieldClass,
-                thisField = fieldName)))
+        }, list(dummyField = metaName, dummyClass = fieldClass,
+                thisField = fieldName, dummyFieldName = as.name(metaName))))
     environment(f) <- where ## <note> Does this matter? </note>
     f <- new("defaultBindingFunction", f,
              field = fieldName, className = fieldClass)
@@ -757,6 +745,25 @@ class method modifies a field.
     value
 }
 
+.setDummyField <- function(self, metaName, fieldClass, fieldName, onceOnly, value) {
+    if(is(value, fieldClass))
+        value <- as(value, fieldClass, strict = FALSE) # could be more efficient?
+    else
+        stop(gettextf("invalid assignment for reference class field %s, should be from class %s or a subclass (was class %s)",
+                       sQuote(fieldName), dQuote(fieldClass), dQuote(class(value))), call. = FALSE)
+    selfEnv <- as.environment(self)
+    if(onceOnly) {
+        if(bindingIsLocked(metaName, selfEnv))
+            stop(gettextf("invalid replacement: reference class field %s is read-only", sQuote(fieldName)),
+                 call. = FALSE)
+        else {
+            assign(metaName, value, envir = selfEnv)
+            lockBinding(metaName, selfEnv)
+        }
+    }
+    else
+       assign(metaName, value, envir = selfEnv)
+}
 
 refClassInformation <- function(Class, contains, fields, refMethods, where) {
     if(length(contains) > 0) {
