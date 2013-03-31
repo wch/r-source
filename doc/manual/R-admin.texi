@@ -1473,14 +1473,19 @@ should run on all Macs from mid-2008 on.  For older Intel Macs and some
 older versions of the OS you can install @R{} from the sources.
 
 To install, just double-click on the icon of the file you downloaded.
-
-On Mountain Lion with `GateKeeper' active you may need to
-right/control-click on some of the packages and select @samp{Open}.
+At the `Installation Type' stage, note the option to `Customize'.  This
+currently shows three components (`Package Name').  Everyone will need
+the `R Framework' component: the `R GUI' and `Tcl/Tk' components are
+optional (the latter being needed to use package @pkg{tcltk}).
 
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
 ``Show All Log'') is useful for tracking down problems.
+
+On Mountain Lion with `GateKeeper' active you may need to
+right/control-click on any unsigned packages and select @samp{Open}:
+recent @acronym{CRAN} packages are signed.
 
 For building @R{} from source, see @ref{OS X}.
 
@@ -1538,6 +1543,18 @@ or later) to remove their files or @code{pkgutil --forget} if you want
 the Apple Installer to forget about the package without deleting its
 files (useful for the @R{} framework when installing multiple R versions
 in parallel), or after you have deleted the files.
+
+Uninstalling the Tcl/Tk component (which is installed under
+@file{/usr/local}) is not simple.  You can list the files it installed
+in a Terminal by
+
+@example
+pkgutil --files org.r-project.x86_64.tcltk.x11
+@end example
+
+@noindent
+Note that some but not all of these files supersede the Tcl/Tk 8.5.5
+installation used for @R{} 2.x.
 
 
 @node Running R, Add-on packages, Installing R under OS X, Top
