@@ -1,24 +1,17 @@
 \input texinfo
+
 @c %**start of header
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2013
-@set FAQ_DATE @value{FAQ_YEAR}-02-08
+@set FAQ_DATE @value{FAQ_YEAR}-03-31
 @set REL_YEAR 2013
-@set REL_MAJOR 2
-@set REL_MINOR 15
-@set REL_PATCHLEVEL 3
+@set REL_MAJOR 3
+@set REL_MINOR 0
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
-
-@c <COMMENT>
-@c ISBNs for R 1.x.
-@c @set FAQ_ISBN 3-900051-01-1
-@c @set R_ISBN 3-900051-00-3
-@c </COMMENT>
-@set FAQ_ISBN 3-900051-08-9
-@set R_ISBN 3-900051-07-0
 @documentlanguage en
 @documentencoding ISO-8859-1
 @c %**end of header
@@ -66,7 +59,6 @@ FORTRAN
 @title R @acronym{FAQ}
 @subtitle Frequently Asked Questions on R
 @subtitle Version @value{FAQ_VERSION}
-@subtitle ISBN @value{FAQ_ISBN}
 @author Kurt Hornik
 @end titlepage
 
@@ -75,7 +67,6 @@ FORTRAN
 R FAQ                            @*
 Frequently Asked Questions on R  @*
 Version @value{FAQ_VERSION}      @*
-ISBN @value{FAQ_ISBN}            @*
 Kurt Hornik                      @*
 
 @sp 2
@@ -92,7 +83,6 @@ Kurt Hornik                      @*
 @html
 <h2>Frequently Asked Questions on R</h2>
 <h2>Version @value{FAQ_VERSION}</h2>
-<h2>ISBN @value{FAQ_ISBN}</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 @end html
@@ -179,7 +169,7 @@ subdirectory of a @CRAN{} site (@pxref{What is CRAN?}).
 
 In publications, please refer to this @acronym{FAQ} as Hornik
 (@value{FAQ_YEAR}), ``The R @acronym{FAQ}'', and give the above,
-@emph{official} @acronym{URL} and the ISBN @value{FAQ_ISBN}:
+@emph{official} @acronym{URL}:
 
 @example
 @group
@@ -187,7 +177,6 @@ In publications, please refer to this @acronym{FAQ} as Hornik
   author        = @{Kurt Hornik@},
   title         = @{The @{R@} @{FAQ@}@},
   year          = @{@value{REL_YEAR}@},
-  note          = @{@{ISBN@} @value{FAQ_ISBN}@},
   url           = @{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
 @}
 @end group
@@ -724,7 +713,6 @@ To cite R in publications, use
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
   year         = @value{REL_YEAR},
-  note         = @{@{ISBN@} @value{R_ISBN}@},
   url          = @{http://www.R-project.org@}
 @}
 @end group
