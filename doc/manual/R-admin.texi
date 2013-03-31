@@ -1884,10 +1884,10 @@ installed: for Mountain Lion see @ref{Mountain Lion}.  Several packages
 need X11 installed, including those using Tk: for Mountain Lion see
 @ref{Mountain Lion}.
 
-The version of Tcl/Tk available for download from @acronym{CRAN} does
-not come with @code{BWidget} which quite a few packages require without
-declaring it (maybe because it is shipped as part of @R{} for Windows).
-It is easy to install:
+The version of Tcl/Tk available for download from @acronym{CRAN} for
+@R{} 2.x.y did not come with @code{BWidget} which quite a few packages
+require without declaring it (maybe because it is shipped as part of
+@R{} for Windows).  It is easy to install:
 
 @itemize
 @item Download the sources from @uref{http://sourceforge.net/projects/tcllib/files/BWidget/}.
@@ -1897,6 +1897,10 @@ tar xf bwidget-1.9.6.tar.gz
 sudo mv bwidget-1.9.6 /usr/local/lib
 @end example
 @end itemize
+
+@noindent
+Both @code{BWidget} and @code{Tktable} are part of the Tcl/Tk contained
+in the @R{} installer for 3.0.0 and later.
 
 It is often possible to use other compilers with the @acronym{CRAN}
 distribution of @R{}, but the settings in the file

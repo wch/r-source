@@ -1230,8 +1230,7 @@ need to tell your users how to make use of it:
 @end example
 
 @noindent
-It is not part of the Tcl/Tk installation provided for @R{} 3.0.0, but
-will be found from the earlier version.
+It should work with no further user action as from @R{} 3.0.0.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
