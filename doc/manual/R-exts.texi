@@ -85,9 +85,10 @@ The current version of this document is @value{VERSION}.
 @unnumbered Acknowledgements
 
 
-The contributions of Saikat DebRoy (who wrote the first draft of a guide
-to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
-provided information on the C++ interface) are gratefully acknowledged.
+The contributions to early versions of this manual by Saikat DebRoy
+(who wrote the first draft of a guide to using @code{.Call} and
+@code{.External}) and Adrian Trapletti (who provided information on the
+C++ interface) are gratefully acknowledged.
 
 @node Creating R packages, Writing R documentation files, Acknowledgements, Top
 @chapter Creating R packages
@@ -137,45 +138,64 @@ package.  On some platforms (notably OS X and Windows) there are also
 installed package which can be unpacked rather than installing from
 sources.
 
-A package is @strong{not}@footnote{although this is common mis-usage.
-It seems to stem from S, whose analogues of @R{}'s packages were
-officially known as @emph{library sections} and later as
+A package is @strong{not}@footnote{although this is a persistent
+mis-usage.  It seems to stem from S, whose analogues of @R{}'s packages
+were officially known as @emph{library sections} and later as
 @emph{chapters}, but almost always referred to as @emph{libraries}.} a
 @emph{library}.  The latter is used in two senses in @R{} documentation.
-The first is a directory into which packages are installed, e.g.@:
+
+@itemize
+
+@item
+A directory into which packages are installed, e.g.@:
 @file{/usr/lib/R/library}: in that sense it is sometimes referred to as
 a @emph{library directory} or @emph{library tree} (since the library is
 a directory which contains packages as directories, which themselves
-contain directories).  The second sense is that used by the operating
-system, as a shared, dynamic or static library or (especially on
-Windows) a DLL, where the second L stands for `library'.  Installed
-packages may contain compiled code in what is known on most Unix-alikes
-as a @emph{shared object} and on Windows as a DLL (and used to be called
-a @emph{shared library} on some Unix-alikes).  The concept of a
-@emph{shared library} (@emph{dynamic library} on OS X) as a collection
-of compiled code to which a package might link is also used, especially
-for @R{} itself on some platforms.
+contain directories).
 
-There are a number of well-defined operations on source packages.  The
-most common is @emph{installation} which takes a source package and
+@item
+That used by the operating system, as a shared, dynamic or static
+library or (especially on Windows) a DLL, where the second L stands for
+`library'.  Installed packages may contain compiled code in what is
+known on Unix-alikes as a @emph{shared object} and on Windows as a DLL.
+The concept of a @emph{shared library} (@emph{dynamic library} on OS X)
+as a collection of compiled code to which a package might link is also
+used, especially for @R{} itself on some platforms. On most platforms
+these concepts are interchangeable (shared objects and DLL can both be
+loaded into the @R{} process and be linked against), but OS X
+distinguishes between shared objects (extension @file{.so}) and dynamic
+libraries (extension @file{.dylib}).
+
+@end itemize
+
+There are a number of well-defined operations on source packages. 
+
+@itemize
+
+@item
+The most common is @emph{installation} which takes a source package and
 installs it in a library using @command{R CMD INSTALL} or
-@code{install.packages}.  Source packages can be @emph{built}, a
-distinct concept.  This involves taking a source directory and creating
-a tarball ready for distribution, including cleaning it up and creating
-PDF documentation from any @emph{vignettes} it may contain.  Source
-packages (and most often tarballs) can be @emph{checked}, when a test
-installation is done and tested (including running its examples); also,
-the contents of the package are tested in various ways for consistency
-and portability.
+@code{install.packages}.  
 
+@item
+Source packages can be @emph{built}.  This involves taking a source
+directory and creating a tarball ready for distribution, including
+cleaning it up and creating PDF documentation from any @emph{vignettes}
+it may contain.  Source packages (and most often tarballs) can be
+@emph{checked}, when a test installation is done and tested (including
+running its examples); also, the contents of the package are tested in
+various ways for consistency and portability.
+
+@item
 @emph{Compilation} is not a correct term for a package.  Installing a
 source package which contains C, C++ or Fortran code will involve
-compiling that code.  There is also the possibility of (`byte')
-compiling the @R{} code in a package (using the facilities of package
+compiling that code.  There is also the possibility of `byte' compiling
+the @R{} code in a package (using the facilities of package
 @pkg{compiler}): already the base and recommended packages are
 byte-compiled.  At some future time this might be done routinely, so
 @emph{compiling} a package may come to mean compiling its @R{} code.
 
+@item
 It used to be unambiguous to talk about @emph{loading} an installed
 package using @code{library()}, but since the advent of package
 namespaces this has been less clear: people now often talk about
@@ -185,13 +205,15 @@ package so it becomes visible on the search path.  Function
 loaded without the package being attached (for example by calls like
 @code{splines::ns}).
 
-The option of @emph{lazy loading} of code or data is mentioned at
+@end itemize
+
+The concept of @emph{lazy loading} of code or data is mentioned at
 several points.  This is part of the installation, always selected for
-@R{} code but optional for data.  When used
-the @R{} objects of the package are created at installation time, and
-stored in a database in the @file{R} directory of the installed package,
-being loaded into the session at first use.  This makes the @R{} session
-run faster and use less (virtual) memory.
+@R{} code but optional for data.  When used the @R{} objects of the
+package are created at installation time and stored in a database in the
+@file{R} directory of the installed package, being loaded into the
+session at first use.  This makes the @R{} session start up faster and
+use less (virtual) memory.
 @ifset UseExternalXrefs
 (For technical details,
 @pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
@@ -218,15 +240,15 @@ run faster and use less (virtual) memory.
 @cindex Package structure
 
 The sources of an @R{} package consists of a subdirectory containing a
-file @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
-@file{demo}, @file{exec}, @file{inst}, @file{man}, @file{po},
-@file{src}, and @file{tests} (some of which can be missing, but which
-should not be empty).  The package subdirectory may also contain files
-@file{INDEX}, @file{NAMESPACE}, @file{configure}, @file{cleanup},
-@file{LICENSE}, @file{LICENCE} and @file{NEWS}.  Other files such as
-@file{INSTALL} (for non-standard installation instructions),
-@file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
-useful to end users.
+files @file{DESCRIPTION} and @file{NAMESPACE}, and the subdirectories
+@file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
+@file{man}, @file{po}, @file{src}, @file{tests} and @file{vignettes}
+(some of which can be missing, but which should not be empty).  The
+package subdirectory may also contain files @file{INDEX},
+@file{configure}, @file{cleanup}, @file{LICENSE}, @file{LICENCE} and
+@file{NEWS}.  Other files such as @file{INSTALL} (for non-standard
+installation instructions), @file{README} or @file{ChangeLog} will be
+ignored by @R{}, but may be useful to end users.
 
 Except where specifically mentioned,@footnote{currently, top-level files
 @file{.Rbuildignore} and @file{.Rinstignore}, and
@@ -277,10 +299,8 @@ utilities do not accept spaces in file paths): non-English alphabetic
 characters cannot be guaranteed to be supported in all locales.  It
 would be good practice to avoid the shell metacharacters
 @code{()@{@}'[]$~}.  In addition, packages are normally distributed as
-tarballs, and these have a limit on path lengths (including the package
-name): for maximal portability 100 bytes, and less portably up to 256
-bytes with restrictions including a final component of no more than 100
-bytes.
+tarballs, and these have a limit on path lengths: for maximal
+portability 100 bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
@@ -757,8 +777,8 @@ combined @emph{via} @samp{,} (see below for an example).  For versioned
 licenses, one can also specify the name followed by the version, or
 combine an existing abbreviation and the version with a @samp{-}.
 
-Abbreviations @code{GPL} and @code{LGPL} are ambiguous and taken to mean
-any version of the license: but it is better not to use them.
+Abbreviations @code{GPL} and @code{LGPL} are ambiguous and usually taken
+to mean any version of the license: but it is better not to use them.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
 to a file named @file{LICENSE} or @file{LICENCE} in the package (source
@@ -768,12 +788,15 @@ The string @samp{Unlimited}, meaning that there are no restrictions on
 distribution or use other than those imposed by relevant laws (including
 copyright laws).
 @end itemize
-If a package license @emph{restricts} a base license (where permitted, e.g.,
-using GPL-3 or AGPL-3 with an attribution clause), the additional terms
-should be placed in file @file{LICENSE} (or @file{LICENCE}), and the
-string @samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively)
-should be appended to the corresponding individual license
-specification.
+
+If a package license @emph{restricts} a base license (where permitted,
+e.g., using GPL-3 or AGPL-3 with an attribution clause), the additional
+terms should be placed in file @file{LICENSE} (or @file{LICENCE}), and
+the string @samp{+ file LICENSE} (or @samp{+ file LICENCE},
+respectively) should be appended to the corresponding individual license
+specification.  Note that several commonly used licenses do not permit
+restrictions: this includes GPL-2 and hence any specification which
+includes it.
 
 Examples of standardized specifications include
 @example
@@ -781,7 +804,7 @@ License: GPL-2
 License: GPL (>= 2) | BSD
 License: LGPL (>= 2.0, < 3) | Mozilla Public License
 License: GPL-2 | file LICENCE
-License: Artistic-1.0 | AGPL-3 + file LICENSE
+License: Artistic-2.0 | AGPL-3 + file LICENSE
 @end example
 Please note in particular that ``Public domain'' is not a valid license,
 since it is not recognized in some jurisdictions.
@@ -905,10 +928,9 @@ all user-level objects in a package should be documented; if a package
 only, it should provide a file @file{@var{pkg}-internal.Rd} which
 documents all such objects, and clearly states that these are not meant
 to be called by the user.  See e.g.@: the sources for package @pkg{grid}
-in the @R{} distribution for an example.  Note that packages which use
-internal objects extensively should not export those objects from their
-namespace, when they do not need to be documented (@pxref{Package
-namespaces}).
+in the @R{} distribution.  Note that packages which use internal objects
+extensively should not export those objects from their namespace, when
+they do not need to be documented (@pxref{Package namespaces}).
 
 Having a @file{man} directory containing no documentation files may give
 an installation error.
@@ -1118,7 +1140,7 @@ note that @file{.csv} is @strong{not} the standard@footnote{e.g@:
 not be hidden (have names starting with a dot).  Note that @R{} code
 should be ``self-sufficient'' and not make use of extra functionality
 provided by the package, so that the data file can also be used without
-having to load the package.
+having to load the package or its namespace.
 
 Images (extensions @file{.RData} or @file{.rda}) can contain references
 to the namespaces of packages that were used to create them.  Preferably
@@ -1148,10 +1170,9 @@ implications of large datasets for your users: they can make packages
 very slow to download and use up unwelcome amounts of storage space, as
 well as taking many seconds to load.  It is normally best to distribute
 large datasets as @file{.rda} images prepared by @code{save(, compress =
-TRUE)} (the default): there is no excuse for distributing ASCII saves.
-Using @command{bzip2} or @command{xz} compression will usually reduce
-the size of both the package tarball and the installed package, in some
-cases by a factor of two or more.
+TRUE)} (the default).  Using @command{bzip2} or @command{xz} compression
+will usually reduce the size of both the package tarball and the
+installed package, in some cases by a factor of two or more.
 
 Package @pkg{tools} has a couple of functions to help with data images:
 @code{checkRdaFiles} reports on the way the image was saved, and
@@ -1169,7 +1190,8 @@ is best is to try them all and look at the size of the
 @file{@var{pkgname}/data/Rdata.rdb} file.
 
 Lazy-loading is not supported for very large datasets (those which when
-serialized exceed 2GB).
+serialized exceed 2GB, the limit for the format on 32-bit platforms and
+all platforms prior to @R{} 3.0.0).
 
 @node Non-R scripts in packages,  , Data in packages, Package structure
 @subsection Non-R scripts in packages
@@ -1191,15 +1213,19 @@ this should be declared in the @samp{SystemRequirements} field of its
 @file{DESCRIPTION} file.  Windows users should be aware that the Tcl
 extensions @samp{BWidget} and @samp{Tktable} which are included with the
 @R{} for Windows installer @emph{are} extensions and do need to be
-declared.  @samp{Tktable} does ship as part of the Tcl/Tk provided on
-CRAN for OS X, but you will need to tell your users how to make use
-of it:
+declared.  @samp{Tktable} did ship as part of the X11-based Tcl/Tk
+provided on CRAN for OS X, prior to @R{} 3.0.0, but you will need to
+tell your users how to make use of it:
 
 @example
 > addTclPath('/usr/local/lib/Tktable2.9')
 > tclRequire('Tktable')
 <Tcl> 2.9
 @end example
+
+@noindent
+It is not part of the Tcl/Tk installation provided for @R{} 3.0.0, but
+will be found from the earlier version.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
