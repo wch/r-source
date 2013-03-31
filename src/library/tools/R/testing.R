@@ -39,15 +39,6 @@ massageExamples <-
     cat(lines, sep = "\n", file = out)
     if(.Platform$OS.type == "windows")
         cat("options(pager = \"console\")\n", file = out)
-
-    if(pkg == "tcltk") {
-        if(capabilities("tcltk")) cat("require('tcltk')\n\n", file = out)
-        else cat("q()\n\n", file = out)
-    } else if(pkg != "base")
-        cat("library('", pkg, "')\n\n", sep = "", file = out)
-
-    cat("base::assign(\".oldSearch\", base::search(), pos = 'CheckExEnv')\n", file = out)
-    ## cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n", file = out)
     if(addTiming) {
         ## adding timings
         cat("base::assign(\".ExTimings\", \"", pkg,
@@ -60,7 +51,17 @@ massageExamples <-
             "  format(x[1L:3L], digits = 7L)",
             "},",
             "pos = 'CheckExEnv')\n", sep = "\n", file = out)
+        cat("### * </HEADER>\n", file = out)
     }
+
+    if(pkg == "tcltk") {
+        if(capabilities("tcltk")) cat("require('tcltk')\n\n", file = out)
+        else cat("q()\n\n", file = out)
+    } else if(pkg != "base")
+        cat("library('", pkg, "')\n\n", sep = "", file = out)
+
+    cat("base::assign(\".oldSearch\", base::search(), pos = 'CheckExEnv')\n", file = out)
+    ## cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n", file = out)
     for(file in files) {
         nm <- sub("\\.R$", "", basename(file))
         ## make a syntactic name out of the filename
@@ -100,7 +101,7 @@ massageExamples <-
         }
 
         if(addTiming) {
-            cat("\nbase::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
+            cat("base::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
             cat("base::cat(\"", nm, "\", base::get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=base::get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
         }
         if(have_par)
@@ -127,6 +128,8 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
            length(bot <- grep("quit R.$", txt, perl = TRUE, useBytes = TRUE)))
             txt <- txt[-(top[1L]:bot[1L])]
         ## for massageExamples()
+        ll <- grep("</HEADER>", txt, fixed = TRUE, useBytes = TRUE)
+        if(length(ll)) txt <- txt[-seq_len(max(ll))]
         ll <- grep("<FOOTER>", txt, fixed = TRUE, useBytes = TRUE)
         if(length(ll)) txt <- txt[seq_len(max(ll) - 1L)]
         ## remove BATCH footer
@@ -157,6 +160,9 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     right <- clean(readLines(to))
     if (forEx) {
         left <- clean2(left)
+        ## remove lines from R CMD check --timings
+        left <- grep("[.](format_|)ptime", left, value = TRUE,
+                     invert = TRUE, useBytes = TRUE)
         right <- clean2(right)
     }
     if (!useDiff && (length(left) == length(right))) {
