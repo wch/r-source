@@ -1492,6 +1492,7 @@ For building @R{} from source, see @ref{OS X}.
 @menu
 * Running R under OS X::        
 * Uninstalling under OS X::     
+* Multiple versions::           
 @end menu
 
 @node Running R under OS X, Uninstalling under OS X, Installing R under OS X, Installing R under OS X
@@ -1516,7 +1517,7 @@ e.g. @file{~/Library/R/3.0/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 
-@node Uninstalling under OS X,  , Running R under OS X, Installing R under OS X
+@node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
 
 @R{} for OS X consists of two parts: the GUI (@Rapp{}) and the R
@@ -1553,8 +1554,32 @@ pkgutil --files org.r-project.x86_64.tcltk.x11
 @end example
 
 @noindent
-Note that some but not all of these files supersede the Tcl/Tk 8.5.5
-installation used for @R{} 2.x.
+Note that some but not all of these files replace those in the Tcl/Tk 8.5.5
+installation used for @R{} 2.x, so care is needed if removing either.
+
+@node Multiple versions,  , Uninstalling under OS X, Installing R under OS X
+@section Multiple versions
+
+The installer will remove any previous version of the @R{} framework
+which it finds installed.  This can be avoided by using @command{pkgutil
+--forget} (see the previous section).  However, note that different
+versions are installed under
+@file{/Library/Frameworks/R.framework/Versions} as @file{2.15},
+@file{3.0} and so on, so it is not possible to have different
+@samp{3.x.y} versions installed for the same @samp{x}.
+
+A version of @R{} can be run directly from the command-line as e.g.@:
+@example
+/Library/Frameworks/R.framework/Versions/3.0/Resourcesbin/R
+@end example
+
+@noindent
+However, @Rapp{} will always run the `current' version, that is the last
+installed version.  A small utility, @command{Rswitch.app} (available at
+@url{http://r.research.att.com/#other}), can be used to change the
+`current' version.  However, this is of limited use as @Rapp{} is
+compiled against a particular version of @R{} and will likely crash if
+switched to an earlier version.
 
 
 @node Running R, Add-on packages, Installing R under OS X, Top
@@ -1884,23 +1909,9 @@ installed: for Mountain Lion see @ref{Mountain Lion}.  Several packages
 need X11 installed, including those using Tk: for Mountain Lion see
 @ref{Mountain Lion}.
 
-The version of Tcl/Tk available for download from @acronym{CRAN} for
-@R{} 2.x.y did not come with @code{BWidget} which quite a few packages
-require without declaring it (maybe because it is shipped as part of
-@R{} for Windows).  It is easy to install:
-
-@itemize
-@item Download the sources from @uref{http://sourceforge.net/projects/tcllib/files/BWidget/}.
-@item In a Terminal run something like (depending on the version you downloaded)
-@example
-tar xf bwidget-1.9.6.tar.gz
-sudo mv bwidget-1.9.6 /usr/local/lib
-@end example
-@end itemize
-
-@noindent
-Both @code{BWidget} and @code{Tktable} are part of the Tcl/Tk contained
-in the @R{} installer for 3.0.0 and later.
+Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
+Tcl/Tk contained in the @R{} installer for 3.0.0 and later.  These are
+required by a number of @acronym{CRAN} and Bioconducor packages.
 
 It is often possible to use other compilers with the @acronym{CRAN}
 distribution of @R{}, but the settings in the file

@@ -1216,12 +1216,12 @@ directory, for example @file{AMA/inst/java}, @file{WriteXLS/inst/Perl},
 
 If your package requires one of these interpreters or an extension then
 this should be declared in the @samp{SystemRequirements} field of its
-@file{DESCRIPTION} file.  Windows users should be aware that the Tcl
-extensions @samp{BWidget} and @samp{Tktable} which are included with the
-@R{} for Windows installer @emph{are} extensions and do need to be
-declared.  @samp{Tktable} did ship as part of the X11-based Tcl/Tk
-provided on @acronym{CRAN} for OS X prior to @R{} 3.0.0, but you will
-need to tell your users how to make use of it:
+@file{DESCRIPTION} file.  Windows and Mac users should be aware that the
+Tcl extensions @samp{BWidget} and @samp{Tktable} which are currently
+included with the @R{} for Windows and OS X installers @emph{are}
+extensions and do need to be declared.  @samp{Tktable} did ship as part
+of the X11-based Tcl/Tk provided on @acronym{CRAN} for OS X prior to
+@R{} 3.0.0, but you will need to tell your users how to make use of it:
 
 @example
 > addTclPath('/usr/local/lib/Tktable2.9')
@@ -1231,6 +1231,28 @@ need to tell your users how to make use of it:
 
 @noindent
 It should work with no further user action as from @R{} 3.0.0.
+
+@samp{BWidget} needs to be installed by the user for OS X with @R{}
+2.x.y and on other OSes.  This is fairly easy to do: first find the
+Tcl/Tk search path:
+
+@example
+library(tcltk)
+strsplit(tclvalue('auto_path'), " ")[[1]]
+@end example
+
+@noindent
+then downoad the sources from
+@uref{http://sourceforge.net/projects/tcllib/files/BWidget/} and
+at the command line run
+
+@example
+tar xf bwidget-1.9.6.tar.gz
+sudo mv bwidget-1.9.6 /usr/local/lib
+@end example
+substituting a location on the Tcl/Tk search path for @file{/usr/local/lib} if
+needed.
+
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
@@ -1796,7 +1818,7 @@ PKG_LIBS = -lpthread
 @noindent
 (and note that the library name is singular).  This is what
 @option{-pthread} does on all known current platforms (although earlier
-version of OpenBSD used a different library name).
+versions of OpenBSD used a different library name).
 
 For a tutorial see
 @uref{https://computing.llnl.gov/@/tutorials/@/pthreads/}.
