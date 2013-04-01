@@ -44,8 +44,8 @@
   \subsection{UTILITIES}{
     \itemize{
       \item For consistency, \command{R CMD build} now matches entries
-    in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
-    case-insensitively on all platforms (not just on Windows).
+      in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
+      case-insensitively on all platforms (not just on Windows).
     }
   }
 
