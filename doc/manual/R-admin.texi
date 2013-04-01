@@ -1913,6 +1913,13 @@ Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer for 3.0.0 and later.  These are
 required by a number of @acronym{CRAN} and Bioconducor packages.
 
+A few of the binary packages need other software to be installed on your
+system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
+@CRANpkg{cairoDevice} and those that depend on them) need the GTK
+framework installed from @uref{http://r.research.att.com/libs/}: the
+appropriate version at the time of writing was
+@uref{http://r.research.att.com/libs/GTK_2.24.17-X11.pkg}
+
 It is often possible to use other compilers with the @acronym{CRAN}
 distribution of @R{}, but the settings in the file
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} will need
@@ -4452,6 +4459,9 @@ when @command{configure} is run: this usually means adding it to the
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 
+For some pre-compiled software, for example the GTK framework,
+@file{/opt/X11/include} may need to be added to the include paths.
+
 @node Tcl/Tk headers and libraries, Java (OS X), Mountain Lion, OS X
 @subsection Tcl/Tk headers and libraries
 
@@ -4541,9 +4551,7 @@ avoided as in some JDKs it contains libraries which conflict with system
 libraries.
 
 Note that it is necessary to set the environment variable @env{NOAWT}
-e.g.@: to @code{1} to install some Java-using packages such as
-@CRANpkg{iplots}.
-
+to @code{1} to install many of the Java-using packages.
 
 
 @node Frameworks, Building R.app, Java (OS X), OS X
