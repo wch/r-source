@@ -3972,10 +3972,10 @@ Windows: _WIN32, _WIN64
 @menu
 * X11 issues::                  
 * Linux::                       
-* FreeBSD::                     
 * OS X::                        
 * Solaris::                     
 * AIX::                         
+* FreeBSD::                     
 * Cygwin::                      
 * New platforms::               
 @end menu
@@ -4068,7 +4068,7 @@ directory or elsewhere, for example,
 @end example
 
 
-@node Linux, FreeBSD, X11 issues, Platform notes
+@node Linux, OS X, X11 issues, Platform notes
 @section Linux
 @cindex Linux
 
@@ -4260,55 +4260,8 @@ Others have found on at least some versions of @cputype{ix86} Linux that
 the configure flag @option{--disable-largefile} was needed (since
 @file{glob.h} on that platform presumed @command{gcc} was being used).
 
-@node FreeBSD, OS X, Linux, Platform notes
-@section FreeBSD
-@cindex FreeBSD
 
-The reports here were for @R{} 2.15.x.
-
-Rainer Hurling has reported success on @cputype{amd64} FreeBSD 9.0 (and
-on earlier versions in the past), and Brian Ripley tested
-@cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of OS X) is
-based on FreeBSD we find testing on Darwin tends to pick up most
-potential problems on FreeBSD.  However, FreeBSD lacks adequate
-character type (e.g.@: which are alphabetic) and collation support for
-multi-byte locales (but a port of ICU is available), and does not yet
-implement C99 complex math functions (for which @R{}'s substitutes are
-used).
-
-The native BSD @command{make} suffices to build @R{} but a number of
-packages require @acronym{GNU} @command{make}, despite the
-recommendations of the ``Writing R Extensions'' manual.
-
-The simplest way to get the additional software needed to build @R{} is
-to install a pre-compiled version first, e.g.@: by
-
-@example
-pkg_add -r R
-@end example
-
-@noindent
-(on the system this was tested on, this installed Tcl, Tk, blas, lapack
-and @code{gcc-4.6.2} which includes @command{gfortran46}).  A listing of
-dependencies (not necessarily for current @R{}) can be found at
-@uref{http://www.freebsd.org/@/ports/@/lang.html}: you will however also
-need a @TeX{} system@footnote{TeXLive is recommended.} to build the
-manuals.
-
-Then @R{} itself can be built by something like
-
-@example
-./configure CC=gcc46 F77=gfortran46 CXX=g++46 FC=gfortran46
-@end example
-
-There are also FreeBSD packages for a small eclectic collection of
-@acronym{CRAN} packages.
-
-Beware that the lack of adequate support for non-ASCII characters in
-UTF-8 locales has many consequences in @R{}: for example names will not
-be recognized as alphabetic by @code{make.names}.
-
-@node OS X, Solaris, FreeBSD, Platform notes
+@node OS X, Solaris, Linux, Platform notes
 @section OS X
 @cindex OS X
 
@@ -4880,7 +4833,7 @@ FCPICFLAGS=$FPICFLAGS
 LDFLAGS="-L/opt/csw/gcc4/lib/amd64 -L/opt/csw/lib/amd64"
 @end example
 
-@node AIX, Cygwin, Solaris, Platform notes
+@node AIX, FreeBSD, Solaris, Platform notes
 @section AIX
 @cindex AIX
 
@@ -5027,7 +4980,55 @@ Further installation instructions to set up a proper R development
 environment can be found in the ``R on AIX'' project on R-Forge
 (@uref{http://R-Forge.R-project.org/@/projects/@/aix/}).
 
-@node Cygwin, New platforms, AIX, Platform notes
+@node FreeBSD, Cygwin, AIX, Platform notes
+@section FreeBSD
+@cindex FreeBSD
+
+The reports here were for @R{} 2.15.x.
+
+Rainer Hurling has reported success on @cputype{amd64} FreeBSD 9.0 (and
+on earlier versions in the past), and Brian Ripley tested
+@cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of OS X) is
+based on FreeBSD we find testing on Darwin tends to pick up most
+potential problems on FreeBSD.  However, FreeBSD lacks adequate
+character type (e.g.@: which are alphabetic) and collation support for
+multi-byte locales (but a port of ICU is available), and does not yet
+implement C99 complex math functions (for which @R{}'s substitutes are
+used).
+
+The native BSD @command{make} suffices to build @R{} but a number of
+packages require @acronym{GNU} @command{make}, despite the
+recommendations of the ``Writing R Extensions'' manual.
+
+The simplest way to get the additional software needed to build @R{} is
+to install a pre-compiled version first, e.g.@: by
+
+@example
+pkg_add -r R
+@end example
+
+@noindent
+(on the system this was tested on, this installed Tcl, Tk, blas, lapack
+and @code{gcc-4.6.2} which includes @command{gfortran46}).  A listing of
+dependencies (not necessarily for current @R{}) can be found at
+@uref{http://www.freebsd.org/@/ports/@/lang.html}: you will however also
+need a @TeX{} system@footnote{TeXLive is recommended.} to build the
+manuals.
+
+Then @R{} itself can be built by something like
+
+@example
+./configure CC=gcc46 F77=gfortran46 CXX=g++46 FC=gfortran46
+@end example
+
+There are also FreeBSD packages for a small eclectic collection of
+@acronym{CRAN} packages.
+
+Beware that the lack of adequate support for non-ASCII characters in
+UTF-8 locales has many consequences in @R{}: for example names will not
+be recognized as alphabetic by @code{make.names}.
+
+@node Cygwin, New platforms, FreeBSD, Platform notes
 @section Cygwin
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
