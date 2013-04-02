@@ -257,7 +257,7 @@ static Rboolean iprod(int *x, R_xlen_t n, double *value, Rboolean narm)
 	    return updated;
 	}
     }
-    *value = s;
+    *value = (double) s;
 
     return updated;
 }
