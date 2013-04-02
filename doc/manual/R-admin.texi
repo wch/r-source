@@ -2487,7 +2487,8 @@ third (around 1Gb).
 
 @item
 Only 64-bit builds support `long vectors', those with @math{2^{31}} or
-more elements (each of which needs at least 16GB of storage).
+more elements (each of which needs at least 8GB of storage, 16GB for a
+numeric vector).
 
 @item
 Most 32-bit OSes by default limit file sizes to 2GB (and this may also
@@ -2630,7 +2631,8 @@ The example file @file{test.c} does nothing useful, but is provided to
 test the process (via @command{make test}).  Note that you will probably
 not be able to run it unless you add the directory containing
 @enindex LD_LIBRARY_PATH
-@file{libRmath.so} to the @env{LD_LIBRARY_PATH} environment variable.
+@file{libRmath.so} to the @env{LD_LIBRARY_PATH} environment variable
+(@file{libRmath.dylib}, @env{DYLD_LIBRARY_PATH} on OS X).
 
 The targets
 
@@ -3193,8 +3195,8 @@ multi-threaded version of ATLAS, by specifying
 @end example
 
 Consult its file @file{INSTALL.txt} for how to build ATLAS with
-position-independent code (at least on version 3.8.0 and later): that
-file also describes how to build ATLAS as a shared library.
+position-independent code: that file also describes how to build ATLAS
+as a shared library.
 
 @node ACML, Goto and OpenBLAS, ATLAS, BLAS
 @subsubsection ACML
@@ -3233,10 +3235,10 @@ handling of @code{NA}s.
 @node Goto and OpenBLAS, MKL, ACML, BLAS
 @subsubsection Goto and OpenBLAS
 
-Dr Kazushige Goto wrote another tuned @acronym{BLAS} which is
-available for several processors and OSes.  The current version is known
-as GotoBLAS2, and has (in November 2010) been re-released under a much
-less restrictive licence.  Source code can be obtained from
+Dr Kazushige Goto wrote another tuned @acronym{BLAS} which is available
+for several processors and OSes.  The final version is known as
+GotoBLAS2, and was re-released under a much less restrictive licence.
+Source code can be obtained from
 @uref{http://www.tacc.utexas.edu/@/tacc-projects/@/gotoblas2/}
 
 Once it is built and installed, it can be used by configuring @R{} with
@@ -3251,7 +3253,7 @@ way to use it.
 Our understanding is that this project is now frozen and so will not be
 updated for CPUs released since mid-2010.  However, OpenBLAS
 (@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant project with
-support for some current CPUs.
+support for some current CPUs (e.g.@: Intel Sandy Bridge and AMD Bulldozer).
 
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
@@ -3481,6 +3483,7 @@ may be possible to use CLAPACK from
 @example
 -with-lapack="-lclapack -lf2c"
 @end example
+@noindent
 provided these were built with position-independent code and the calling
 conventions for double complex function return values match those in the
 BLAS used, so it may be simpler to use CLAPACK built to use CBLAS and
@@ -4261,6 +4264,8 @@ the configure flag @option{--disable-largefile} was needed (since
 @section FreeBSD
 @cindex FreeBSD
 
+The reports here were for @R{} 2.15.x.
+
 Rainer Hurling has reported success on @cputype{amd64} FreeBSD 9.0 (and
 on earlier versions in the past), and Brian Ripley tested
 @cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of OS X) is
@@ -4388,6 +4393,7 @@ compilers are used.  The recommended Fortran compiler defaults to
 
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
+The alternative, @command{clang}, has no OpenMP support.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
@@ -4437,8 +4443,8 @@ options @option{--x-includes=/usr/X11/include
 --x-libraries=/usr/X11/lib.}.
 
 The @acronym{CRAN} binaries are built using Xcode 4.2, a version
-available ony to subscribing developers.  It is expected that 3.2.x (the
-lastly public free version for Snow Leopard) will work.
+available only to subscribing developers.  It is expected that 3.2.6 (the
+last public free version for Snow Leopard) will work.
 
 @node Lion, Mountain Lion, Snow Leopard, OS X
 @subsection Lion
@@ -4456,7 +4462,8 @@ when @command{configure} is run: this usually means adding it to the
 @env{PKG_CONFIG_PATH} environment variable, e.g.
 
 @example
-export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+export PKG_CONFIG_PATH= \
+  /opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 
 For some pre-compiled software, for example the GTK framework,
@@ -4468,7 +4475,8 @@ For some pre-compiled software, for example the GTK framework,
 If you plan to use the @code{tcltk} package for @R{}, you need to
 install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
-Unix-alikes), which is part of the CRAN binary for @R{}.  This may need
+Unix-alikes), which is installed as part of the CRAN binary for @R{}.
+This may need
 @example
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
@@ -4589,7 +4597,7 @@ The current sources can be checked out by
 svn co https://svn.r-project.org/R-packages/trunk/Mac-GUI
 @end example
 @noindent
-This can be built by loading @code{R.xcodeproj} project (select the
+This can be built by loading the @code{R.xcodeproj} project (select the
 @code{R} target and the @code{SnowLeopard64} or @code{Lion64}
 configuration), or from the command-line by e.g.@:
 @example
@@ -5030,7 +5038,8 @@ implementation of @code{cacos} gives incorrect results, so we undefine
 @code{HAVE_CACOS} in @file{src/main/complex.c} on that platform.
 
 Many versions of Cygwin during 2011 were unable to build @R{}: 1.7.9-1
-with @acronym{GCC} 4.5.3-3 in November 2011 was able to do so.
+with @acronym{GCC} 4.5.3-3 in November 2011 was able to do so.  Cygwin
+has not been tested for @R{} 3.0.0 or later.
 
 Only building as a shared library can possibly work,@footnote{Windows
 DLLs need to have all links resolved at build time and so cannot resolve
