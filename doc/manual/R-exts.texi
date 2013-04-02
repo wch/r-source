@@ -1250,6 +1250,8 @@ at the command line run
 tar xf bwidget-1.9.6.tar.gz
 sudo mv bwidget-1.9.6 /usr/local/lib
 @end example
+
+@noindent
 substituting a location on the Tcl/Tk search path for @file{/usr/local/lib} if
 needed.
 
