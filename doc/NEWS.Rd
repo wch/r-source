@@ -518,7 +518,7 @@
 
       \item (\sQuote{For experts only}, as the introductory manual
       says.)  The use of environment variables \env{R_NSIZE} and
-      \env{R_VSIZE} to control the initial (= minimum) garbade
+      \env{R_VSIZE} to control the initial (= minimum) garbage
       collection trigger for number of cons cels and size of heap has
       been restored: they can be overridden by the command-line options
       \code{--min-nsize} and \code{--min-vsize}; see \code{?Memory}.
