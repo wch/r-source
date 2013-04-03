@@ -352,8 +352,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(length(grep("MiKTeX", ver[1L]))) {
             ## AFAICS need separate -I for each element of texinputs.
             texinputs <- c(texinputs0, Rtexinputs, Rbstinputs)
-	    texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
-	    paths <- paste ("-I", shQuote(texinputs))
+        texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
+        paths <- paste ("-I", shQuote(texinputs))
             extra <- paste(extra, paste(paths, collapse = " "))
         }
         ## 'file' could be a file path
@@ -441,7 +441,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .BioC_version_associated_with_R_version
 
 .BioC_version_associated_with_R_version <-
-    numeric_version("2.12")
+    numeric_version("2.13")
 ## Things are more complicated from R-2.15.x with still two BioC
 ## releases a year, so we do need to set this manually.
 
@@ -1070,9 +1070,9 @@ function(x)
     raw_ub <- charToRaw("\x7f")
     raw_lb <- charToRaw("\xa0")
     vapply(as.character(x), function(txt) {
-	    raw <- charToRaw(txt)
-	    all(raw <= raw_ub | raw >= raw_lb)
-	}, NA)
+        raw <- charToRaw(txt)
+        all(raw <= raw_ub | raw >= raw_lb)
+    }, NA)
 }
 
 ### ** .is_primitive_in_base
@@ -1108,7 +1108,7 @@ function(fname, envir, mustMatch = TRUE)
     ## If we use something like: a generic has to be
     ##      function(e) <UME>  # UME = UseMethod Expression
     ## with
-    ##	    <UME> = UseMethod(...) |
+    ##      <UME> = UseMethod(...) |
     ##             if (...) <UME> [else ...] |
     ##             if (...) ... else <UME>
     ##             { ... <UME> ... }
@@ -1290,10 +1290,10 @@ function(package)
              SMPracticals = "exp.gibbs",
              XML = "text.SAX",
              ape = "sort.index",
-	     assist = "chol.new",
+         assist = "chol.new",
              boot = "exp.tilt",
              car = "scatterplot.matrix",
-	     calibrator = "t.fun",
+         calibrator = "t.fun",
              clusterfly = "ggobi.som",
              coda = "as.mcmc.list",
              crossdes = "all.combn",
@@ -1327,7 +1327,7 @@ function(package)
              "influence.measures", "t.test",
              "plot.spec.phase", "plot.spec.coherency"),
              supclust = c("sign.change", "sign.flip"),
-	     tensorA = "chol.tensor",
+         tensorA = "chol.tensor",
              utils = c("close.socket", "flush.console", "update.packages")
              )
     if(is.null(package)) return(unlist(stopList))
@@ -1430,7 +1430,7 @@ function(dfile)
                                   dfile),
                          domain = NA, call. = FALSE))
     if (nrow(out) != 1)
-    	stop("contains a blank line", call. = FALSE)
+        stop("contains a blank line", call. = FALSE)
     out <- out[1,]
     if(!is.na(encoding <- out["Encoding"])) {
         ## could convert everything to UTF-8
