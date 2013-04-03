@@ -1911,7 +1911,7 @@ need X11 installed, including those using Tk: for Mountain Lion see
 
 Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer for 3.0.0 and later.  These are
-required by a number of @acronym{CRAN} and Bioconducor packages.
+required by a number of @acronym{CRAN} and Bioconductor packages.
 
 A few of the binary packages need other software to be installed on your
 system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},

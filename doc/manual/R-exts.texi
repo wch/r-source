@@ -1242,7 +1242,7 @@ strsplit(tclvalue('auto_path'), " ")[[1]]
 @end example
 
 @noindent
-then downoad the sources from
+then download the sources from
 @uref{http://sourceforge.net/projects/tcllib/files/BWidget/} and
 at the command line run
 
