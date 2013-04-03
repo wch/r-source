@@ -20,7 +20,7 @@
 }
 \usage{
 mcparallel(expr, name, mc.set.seed = TRUE, silent = FALSE,
-           mc.affinity = NULL)
+           mc.affinity = NULL, mc.interactive = FALSE)
 
 mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 }
@@ -35,6 +35,10 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   \item{mc.affinity}{either a numeric vector specifying CPUs to restrict
     the child process to (1-based) or \code{NULL} to not modify the CPU
     affinity}
+  \item{mc.interactive}{logical, if \code{TRUE} or \code{FALSE} then the
+    child process will be set as interactive or non-interactive
+    respectively. If \code{NA} then the child process will inherit the
+    interactive flag from the parent.}
   \item{jobs}{list of jobs (or a single job) to collect results
     for.  Alternatively \code{jobs} can also be an integer vector of
     process IDs.  If omitted \code{collect} will wait for all currently

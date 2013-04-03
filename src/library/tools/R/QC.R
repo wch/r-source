@@ -3348,7 +3348,7 @@ function(package, lib.loc = NULL)
             assign("savePlot",
                    function (filename = "Rplot",
                              type = c("wmf", "emf", "png", "jpeg", "jpg",
-                             "bmp", "ps", "eps", "pdf"),
+                                      "bmp", "ps", "eps", "pdf"),
                              device = dev.cur(), restoreConsole = TRUE) {},
                    envir = compat)
             assign("win.graph",
@@ -3356,21 +3356,21 @@ function(package, lib.loc = NULL)
                             restoreConsole = FALSE) {}, envir = compat)
             assign("win.metafile",
                    function (filename = "", width = 7, height = 7,
-                             pointsize = 12, restoreConsole = TRUE) {},
+                             pointsize = 12, family = "",
+                             restoreConsole = TRUE) {},
                    envir = compat)
             assign("win.print",
                    function(width = 7, height = 7, pointsize = 12,
-                            printer = "", restoreConsole = TRUE) {},
+                            printer = "", family = "", antialias = "default",
+                            restoreConsole = TRUE) {},
                    envir = compat)
             assign("windows",
-                   function(width = 7, height = 7, pointsize = 12,
-                            record = getOption("graphics.record"),
-                            rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-                            bg = "transparent", canvas = "white",
-                            gamma = getOption("gamma"),
-                            xpos = NA, ypos = NA,
-                            buffered = getOption("windowsBuffered"),
-                            restoreConsole = FALSE) {}, envir = compat)
+                   function(width, height, pointsize,
+                            record, rescale, xpinch, ypinch,
+                            bg, canvas, gamma, xpos, ypos,
+                            buffered, title, restoreConsole, clickToConfirm,
+                            fillOddEven, family = "", antialias) {},
+                            envir = compat)
             assign("windowsFont", function(font) {}, envir = compat)
             assign("windowsFonts", function(...) {}, envir = compat)
             assign("windows.options", function(..., reset = TRUE) {},

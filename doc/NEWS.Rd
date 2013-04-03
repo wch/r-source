@@ -7,6 +7,32 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.0.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain
+      an \code{ind} argument (like \code{setRepositories()}).
+
+      \item \code{mcparallel} has a new argument \code{mc.interactive}
+      which can modify the interactive flag in the child process. The
+      new default is \code{FALSE} which makes child processes
+      non-interactive by default (this prevents lock-ups due to children
+      waiting for interactive input).
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{sys.source()} did not report error locations when
+      \code{keep.source = TRUE}.
+
+      \item \code{as.POSIXct.numeric} was coercing \code{origin} using
+      the \code{tz} argument and not \code{"GMT"} as documented
+      (\PR{14973}).
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.0.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{

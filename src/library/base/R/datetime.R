@@ -142,7 +142,7 @@ as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 as.POSIXct.numeric <- function(x, tz = "", origin, ...)
 {
     if(missing(origin)) stop("'origin' must be supplied")
-    as.POSIXct(origin, tz=tz, ...) + x
+    .POSIXct(as.POSIXct(origin, tz="GMT", ...) + x, tz)
 }
 
 as.POSIXct.default <- function(x, tz = "", ...)

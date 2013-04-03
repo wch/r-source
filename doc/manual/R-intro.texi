@@ -2041,17 +2041,13 @@ is the matrix product.  If @code{x} is a vector, then
 
 @noindent
 is a quadratic form.@footnote{Note that @code{x %*% x} is ambiguous, as
-it could mean either @xTx{} 
- or @xxT{}, 
- where @eqn{@strong{x},x} 
- is the column form.  In such cases the smaller matrix seems implicitly to be
-the interpretation adopted, so the scalar @xTx{} 
- is in this case the result.  The matrix @xxT{} 
- may be calculated either by @code{cbind(x)%*% x} or @code{x %*% rbind(x)} since the result of @code{rbind()} or
+it could mean either @xTx{} or @xxT{}, where @eqn{@strong{x},x} is the
+column form.  In such cases the smaller matrix seems implicitly to be
+the interpretation adopted, so the scalar @xTx{} is in this case the
+result.  The matrix @xxT{} may be calculated either by @code{cbind(x)
+%*% x} or @code{x %*% rbind(x)} since the result of @code{rbind()} or
 @code{cbind()} is always a matrix.  However, the best way to compute
-@xTx{}
- or @xxT{} 
- is @code{crossprod(x)} or @code{x %o% x}
+@xTx{} or @xxT{} is @code{crossprod(x)} or @code{x %o% x}
 respectively.}
 
 @findex crossprod
@@ -2107,16 +2103,12 @@ but rarely is needed.  Numerically, it is both inefficient and
 potentially unstable to compute @code{x <- solve(A) %*% b} instead of
 @code{solve(A,b)}.
 
-The quadratic form @eqn{@strong{x^T  A^{-1} x} ,@ @code{x %*% A^@{-1@} %*%x} @ } 
-, which is used in multivariate computations, should be computed by
+The quadratic form @eqn{@strong{x^T  A^{-1} x},@ @code{x %*% A^@{-1@} %*%
+x} @ } which is used in multivariate computations, should be computed by
 something like@footnote{Even better would be to form a matrix square
-root @eqn{B, B}
- with @eqn{A = BB^T, A = BB'}
- and find the squared length of the
-solution of @eqn{By = x, By = x},
-perhaps using the Cholesky or
-eigendecomposition of @eqn{A, A}.
-} @code{x %*% solve(A,x)}, rather than
+root @eqn{B, B} with @eqn{A = BB^T, A = BB'} and find the squared length of the
+solution of @eqn{By = x, By = x}, perhaps using the Cholesky or
+eigendecomposition of @eqn{A, A}.} @code{x %*% solve(A,x)}, rather than
 computing the inverse of @code{A}.
 
 @node Eigenvalues and eigenvectors, Singular value decomposition and determinants, Linear equations and inversion, Matrix facilities
