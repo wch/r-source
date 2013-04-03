@@ -29,6 +29,11 @@
       \item \code{as.POSIXct.numeric} was coercing \code{origin} using
       the \code{tz} argument and not \code{"GMT"} as documented
       (\PR{14973}).
+
+      \item The active binding to assign fields in reference classes
+      has been cleaned up to reduce dependence on the class' package
+      environment, also fixing bug in initializing read-only fields
+      (inspired by a report from Hadley Wickham).
     }
   }
 }
