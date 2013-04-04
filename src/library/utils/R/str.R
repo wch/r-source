@@ -281,8 +281,10 @@ str.default <-
 	    if (is.na(max.level) || nest.lev < max.level) {
 		nam.ob <-
 		    if(is.null(nam.ob <- names(object))) rep.int("", le)
-		    else { max.ncnam <- max(nchar(nam.ob, type="w"))
-			   format(nam.ob, width = max.ncnam, justify="left")
+		    else { ncn <- nchar(nam.ob, type="w")
+			   if(any(is.na(ncn))) ## slower, but correct:
+			      ncn <- vapply(nam.ob, format.info, 0L)
+			   format(nam.ob, width = max(ncn), justify="left")
 		       }
 		for (i in seq_len(min(list.len,le) ) ) {
 		    cat(indent.str, comp.str, nam.ob[i], ":", sep = "")

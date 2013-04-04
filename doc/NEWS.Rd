@@ -40,7 +40,7 @@
       case-insensitively on all platforms.
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item For consistency, \command{R CMD build} now matches entries
@@ -85,7 +85,7 @@
       waiting for interactive input).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{sys.source()} did not report error locations when
@@ -94,6 +94,9 @@
       \item \code{as.POSIXct.numeric} was coercing \code{origin} using
       the \code{tz} argument and not \code{"GMT"} as documented
       (\PR{14973}).
+
+      \item \code{str(d)} no longer gives an error when \code{names(d)}
+      contain illegal multibyte strings (\PR{15247}).
     }
   }
 }
@@ -852,7 +855,7 @@
       \item \code{.find.package()} and \code{.path.package()} are
       deprecated: only the public versions without the dot have ever
       been in the API.
-      
+
       \item In a package's \file{DESCRIPTION} file, \preformatted{    License: X11}
       is deprecated, since it includes
       \sQuote{Copyright (C) 1996 X Consortium} which cannot be
