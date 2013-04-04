@@ -2677,13 +2677,20 @@ options(op)
 ## PR#15179: user defined binary ops were not deparsed properly
 quote( `%^%`(x, `%^%`(y,z)) )
 quote( `%^%`(x) )
-## 
+##
 
 ## Anonymous function calls were not deparsed properly
-substitute(f(x), list(f = function(x) x + 1)) 
+substitute(f(x), list(f = function(x) x + 1))
 substitute(f(x), list(f = quote(function(x) x + 1)))
 substitute(f(x), list(f = quote(f+g)))
 substitute(f(x), list(f = quote(base::mean)))
 substitute(f(x), list(f = quote(a[n])))
 substitute(f(x), list(f = quote(g(y))))
 ## The first three need parens, the last three don't.
+
+## PR#15247 : str() on invalid data frame names (where print() works):
+d <- data.frame(1:3, "B", 4); names(d) <- c("A", "B\xba","C\xabcd")
+d
+str(d)
+## gave an error in R <= 3.0.0
+

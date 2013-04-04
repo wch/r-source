@@ -20,7 +20,7 @@
       waiting for interactive input).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{sys.source()} did not report error locations when
@@ -34,6 +34,9 @@
       has been cleaned up to reduce dependence on the class' package
       environment, also fixing bug in initializing read-only fields
       (inspired by a report from Hadley Wickham).
+
+      \item \code{str(d)} no longer gives an error when \code{names(d)}
+      contain illegal multibyte strings (\PR{15247}).
     }
   }
 }
@@ -792,7 +795,7 @@
       \item \code{.find.package()} and \code{.path.package()} are
       deprecated: only the public versions without the dot have ever
       been in the API.
-      
+
       \item In a package's \file{DESCRIPTION} file, \preformatted{    License: X11}
       is deprecated, since it includes
       \sQuote{Copyright (C) 1996 X Consortium} which cannot be
