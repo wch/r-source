@@ -240,7 +240,7 @@ summary(lm.D90)
 opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 plot(lm.D9, las = 1)      # Residuals, Fitted, ...
 par(opar)
-\testonly{
+\dontshow{
 ## model frame :
 stopifnot(identical(lm(weight ~ group, method = "model.frame"),
                     model.frame(lm.D9)))

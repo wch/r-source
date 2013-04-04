@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-04-04 r62490) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3713,7 +3713,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3a22b68>
+<environment: 0x20ac770>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4714,7 +4714,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5c15538>
+<bytecode: 0x5b5e698>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6731,8 +6731,8 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x3614698>
-<environment: 0x7fe7400>
+<bytecode: 0x2957e68>
+<environment: 0x7fd2988>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7133,7 +7133,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x7fb07d0>
+<environment: 0x7e32eb0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11709,26 +11709,26 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x3611888>
-<environment: 0x8db5ea8>
+<bytecode: 0x29594c8>
+<environment: 0xa35f508>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x3611818>
-<environment: 0x8db5ea8>
+<bytecode: 0x2959538>
+<environment: 0xa35f508>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x36117a8>
-<environment: 0x8db5ea8>
+<bytecode: 0x29595e0>
+<environment: 0xa35f508>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x3612d10>
-<environment: 0x8db5ea8>
+<bytecode: 0x29597a0>
+<environment: 0xa35f508>
 
 $name
 [1] "identity"
@@ -11739,14 +11739,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x8d7dda0>
-<environment: 0x9052798>
+<bytecode: 0xa360c80>
+<environment: 0xa3565f0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x8d7dc88>
-<environment: 0x9052798>
+<bytecode: 0xa360d98>
+<environment: 0xa3565f0>
 
 > 
 > 
@@ -15540,8 +15540,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3a8d510>
-<environment: 0xb089de8>
+<bytecode: 0x38ced58>
+<environment: 0x9d977e8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -15788,6 +15788,33 @@ F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16
          Estimate Std. Error  t value     Pr(>|t|)
 groupCtl    5.032  0.2202177 22.85012 9.547128e-15
 groupTrt    4.661  0.2202177 21.16542 3.615345e-14
+> 
+> ## model with *aliased* coefficient:
+> lm.D9. <- lm(weight ~ group + I(group != "Ctl"))
+> Sm.D9. <- summary(lm.D9.)
+> Sm.D9. #  shows the NA NA NA NA  line
+
+Call:
+lm(formula = weight ~ group + I(group != "Ctl"))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.0710 -0.4938  0.0685  0.2462  1.3690 
+
+Coefficients: (1 not defined because of singularities)
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             5.0320     0.2202  22.850 9.55e-15 ***
+groupTrt               -0.3710     0.3114  -1.191    0.249    
+I(group != "Ctl")TRUE       NA         NA      NA       NA    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.6964 on 18 degrees of freedom
+Multiple R-squared:  0.07308,	Adjusted R-squared:  0.02158 
+F-statistic: 1.419 on 1 and 18 DF,  p-value: 0.249
+
+> stopifnot(length(cc <- coef(lm.D9.)) == 3, is.na(cc[3]),
++           dim(coef(Sm.D9.)) == c(2,4), Sm.D9.$df == c(2, 18, 3))
 > 
 > 
 > 
@@ -17766,7 +17793,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.445 0.196 7.669 0 0 
+Time elapsed:  15.351 0.34 16.278 0 0 
 > grDevices::dev.off()
 null device 
           1 

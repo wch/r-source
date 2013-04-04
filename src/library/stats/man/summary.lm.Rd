@@ -37,6 +37,9 @@
   coefficients, standard errors, etc. and additionally gives
   \sQuote{significance stars} if \code{signif.stars} is \code{TRUE}.
 
+  Aliased coefficients are omitted in the returned object but restored
+  by the \code{print} method.
+
   Correlations are printed to two decimal places (or symbolically): to
   see the actual correlations print \code{summary(object)$correlation}
   directly.
@@ -58,8 +61,9 @@
     error
     \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{w_i R_i^2},}{\sigma^2 = 1/(n-p) Sum(w[i] R[i]^2),}
     where \eqn{R_i}{R[i]} is the \eqn{i}-th residual, \code{residuals[i]}.}
-  \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}, the last
-    being the number of non-aliased coefficients.}
+  \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}, the first
+    being the number of non-aliased coefficients, the last being the total
+    number of coefficients.}
   \item{fstatistic}{(for models including non-intercept terms)
     a 3-vector with the value of the F-statistic with
     its numerator and denominator degrees of freedom.}
@@ -91,6 +95,13 @@ coef(lm.D90)  # the bare coefficients
 sld90 <- summary(lm.D90 <- lm(weight ~ group -1))  # omitting intercept
 sld90
 coef(sld90)  # much more
+
+## model with *aliased* coefficient:
+lm.D9. <- lm(weight ~ group + I(group != "Ctl"))
+Sm.D9. <- summary(lm.D9.)
+Sm.D9. #  shows the NA NA NA NA  line
+stopifnot(length(cc <- coef(lm.D9.)) == 3, is.na(cc[3]),
+          dim(coef(Sm.D9.)) == c(2,4), Sm.D9.$df == c(2, 18, 3))
 }
 \keyword{regression}
 \keyword{models}
