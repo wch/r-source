@@ -41,45 +41,12 @@
 ## Deprecated in 3.0.0
 .find.package <- function(...)
 {
-    .Deprecated <- function(new, package = NULL, msg,
-                            old = as.character(sys.call(sys.parent()))[1L])
-    {
-        msg <- if( missing(msg) ) {
-            msg <- gettextf("'%s' is deprecated.\n", old)
-            if(!missing(new))
-                msg <- c(msg, gettextf("Use '%s' instead.\n", new))
-            c(msg,
-              if(!is.null(package))
-              gettextf("See help(\"Deprecated\") and help(\"%s-deprecated\").",
-                       package)
-              else gettext("See help(\"Deprecated\")"))
-        }
-        else as.character(msg)
-        message(paste(msg, collapse=""), domain = NA)
-    }
-
     .Deprecated("find.package")
     find.package(...)
 }
 
 .path.package <- function(...)
 {
-    .Deprecated <- function(new, package = NULL, msg,
-                            old = as.character(sys.call(sys.parent()))[1L])
-    {
-        msg <- if( missing(msg) ) {
-            msg <- gettextf("'%s' is deprecated.\n", old)
-            if(!missing(new))
-                msg <- c(msg, gettextf("Use '%s' instead.\n", new))
-            c(msg,
-              if(!is.null(package))
-              gettextf("See help(\"Deprecated\") and help(\"%s-deprecated\").",
-                       package)
-              else gettext("See help(\"Deprecated\")"))
-        }
-        else as.character(msg)
-        message(paste(msg, collapse=""), domain = NA)
-    }
     .Deprecated("path.package")
     path.package(...)
 }
