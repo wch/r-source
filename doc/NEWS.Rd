@@ -97,6 +97,9 @@
 
       \item \code{str(d)} no longer gives an error when \code{names(d)}
       contain illegal multibyte strings (\PR{15247}).
+      
+      \item Profiling of built-in functions with \code{line.profiling=
+      TRUE} did not record the line from which they were called.      
     }
   }
 }
