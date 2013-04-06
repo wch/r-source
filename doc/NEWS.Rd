@@ -114,6 +114,9 @@
       
       \item Profiling of built-in functions with \code{line.profiling=
       TRUE} did not record the line from which they were called.      
+      
+      \item \code{citation(pkg)} dropped the header and footer specified
+      in the \file{CITATION} file (\PR{15257}).
     }
   }
 }
