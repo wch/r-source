@@ -5,7 +5,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002-10 The R Core Team
+## Copyright (C) 2002-13 The R Core Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ revision='$Revision$'
 version=`set - ${revision}; echo ${2}`
 version="R configuration information retrieval script: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-6 The R Core Team.
+Copyright (C) 2002-13 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -41,6 +41,7 @@ Options:
 			a program using R as a library
       --ldflags         print linker flags needed for linking against
 			the R library
+      --no-personal    ignore customization files under ~/.R
 
 Variables:
   BLAS_LIBS     flags needed for linking against external BLAS libraries
@@ -149,6 +150,7 @@ else
 fi
 
 var=
+personal="yes"
 while test -n "${1}"; do
   case "${1}" in
     -h|--help)
@@ -179,6 +181,9 @@ while test -n "${1}"; do
       fi
       exit 0
       ;;
+    --no-personal)
+      personal="no"
+      ;;
     *)
       if test -z "${var}"; then
 	var="${1}"
@@ -190,6 +195,26 @@ while test -n "${1}"; do
   esac
   shift
 done
+
+if test "${personal}" = "yes"; then
+  if test "${R_OSTYPE}" = "windows"; then
+    if test ${R_ARCH} = "/x64" -a -f "${HOME}/.R/Makevars.win64"; then
+      makefiles="${makefiles} -f ${HOME}/.R/Makevars.win64"
+    elif test -f "${HOME}/.R/Makevars.win"; then
+      makefiles="${makefiles} -f ${HOME}/.R/Makevars.win"
+    elif test -f "${HOME}/.R/Makevars"; then
+      makefiles="${makefiles} -f ${HOME}/.R/Makevars"
+    fi
+  else
+    . ${R_HOME}/etc/Renviron
+    if test -f "${HOME}/.R/Makevars-${R_PLATFORM}"; then
+      makefiles="${makefiles} -f ${HOME}/.R/Makevars-${R_PLATFORM}"
+    elif test -f "${HOME}/.R/Makevars"; then
+      makefiles="${makefiles} -f ${HOME}/.R/Makevars"
+    fi
+  fi
+  query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
+fi
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
 ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"

@@ -86,6 +86,20 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD config} now make use of personal
+      \file{Makevars} files under \file{~/.R}, in the same way as
+      \command{R CMD SHLIB} and \command{R CMD INSTALL}.  This makes the
+      utility more useful in package \command{configure} scripts.
+
+      On Windows this may require the environment variable \env{HOME} set.
+
+      The old behaviour can be obtained with the new option
+      \option{--no-personal}.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{sys.source()} did not report error locations when
