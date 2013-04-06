@@ -534,6 +534,9 @@ function(x, force = FALSE)
 
 bibentry_attribute_names <-
     c("bibtype", "textVersion", "header", "footer", "key")
+    
+bibentry_list_attribute_names <-
+    c("mheader", "mfooter")
 
 .bibentry_get_key <-
 function(x)
@@ -565,6 +568,7 @@ function(x, i)
         warning("subscript out of bounds")
         y <- y[ok]
     }
+    attributes(y) <- attributes(x)[bibentry_list_attribute_names]
     class(y) <- cl
     y
 }
