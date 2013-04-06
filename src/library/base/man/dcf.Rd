@@ -67,6 +67,8 @@ write.dcf(x, file = "", append = FALSE,
     multi-paragraph field values).
     \item Records are separated by one or more empty (i.e., whitespace
     only) lines.
+    \item Individual lines may not be arbitrarily long; currently the
+    length limit is approximately 8192 bytes per line.
   }
 
   Note that \code{read.dcf(all = FALSE)} reads the file byte-by-byte.
