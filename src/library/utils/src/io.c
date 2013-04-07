@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012   The R Core Team.
+ *  Copyright (C) 1998-2013   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -376,7 +376,10 @@ SEXP countfields(SEXP args)
 	    goto donecf;
 	}
 	else if (c == '\n') {
-	    if (nfields || !blskip) {
+	    if (inquote) {
+	    	INTEGER(ans)[nlines] = NA_INTEGER;
+	    	nlines++;
+	    } else if (nfields || !blskip) {
 		INTEGER(ans)[nlines] = nfields;
 		nlines++;
 		nfields = 0;
@@ -395,14 +398,14 @@ SEXP countfields(SEXP args)
 	else if (data.sepchar) {
 	    if (nfields == 0)
 		nfields++;
-	    if (inquote && (c == R_EOF || c == '\n')) {
+	    if (inquote && c == R_EOF) {
 		if(!data.wasopen) data.con->close(data.con);
-		error(_("string terminated by newline or EOF"));
+		error(_("quoted string on line %d terminated by EOF"), inquote);
 	    }
 	    if (inquote && c == quote)
 		inquote = 0;
 	    else if (strchr(data.quoteset, c)) {
-		inquote = 1;
+		inquote = nlines + 1;
 		quote = c;
 	    }
 	    if (c == data.sepchar && !inquote)
@@ -411,11 +414,22 @@ SEXP countfields(SEXP args)
 	else if (!Rspace(c)) {
 	    if (strchr(data.quoteset, c)) {
 		quote = c;
-		inquote = 1;
+		inquote = nlines + 1;
 		while ((c = scanchar(inquote, &data)) != quote) {
-		    if (c == R_EOF || c == '\n') {
+		    if (c == R_EOF) {
 			if(!data.wasopen) data.con->close(data.con);
-			error(_("string terminated by newline or EOF"));
+		        error(_("quoted string on line %d terminated by EOF"), inquote);
+		    } else if (c == '\n') {
+		        INTEGER(ans)[nlines] = NA_INTEGER;
+		        nlines++;
+		        if (nlines == blocksize) {
+			    bns = ans;
+			    blocksize = 2 * blocksize;
+			    ans = allocVector(INTSXP, blocksize);
+			    UNPROTECT(1);
+			    PROTECT(ans);
+			    copyVector(ans, bns);
+	    		}
 		    }
 		}
 		inquote = 0;

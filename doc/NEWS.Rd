@@ -86,6 +86,12 @@
       
       \item \code{scan()} now warns when end-of-file occurs within
       a quoted string.
+      
+      \item \code{count.fields()} is now consistent with \code{scan()}
+      in handling newlines in quoted strings.  Instead of triggering
+      an error, this results in the current line receiving \code{NA}
+      as the field count, with the next line getting the total count
+      of the two lines.      
     }
   }
 
