@@ -299,7 +299,7 @@ SEXP countfields(SEXP args)
     const char *p;
     Rboolean dbcslocale = (MB_CUR_MAX == 2);
     LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE};
+		      FALSE, 0, FALSE,	 FALSE};
     data.NAstrings = R_NilValue;
 
     args = CDR(args);
@@ -757,7 +757,7 @@ SEXP readtablehead(SEXP args)
     SEXP file, comstr, ans = R_NilValue, ans2, quotes, sep;
     int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
     const char *p; char *buf;
-    Rboolean empty, skip;
+    Rboolean empty, skip, firstnonwhite;
     LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
@@ -815,7 +815,7 @@ SEXP readtablehead(SEXP args)
 
     PROTECT(ans = allocVector(STRSXP, nlines));
     for(nread = 0; nread < nlines; ) {
-	nbuf = 0; empty = TRUE, skip = FALSE;
+	nbuf = 0; empty = TRUE; skip = FALSE; firstnonwhite = TRUE;
 	if (data.ttyflag) sprintf(ConsolePrompt, "%d: ", nread);
 	/* want to interpret comments here, not in scanchar */
 	while((c = scanchar(TRUE, &data)) != R_EOF) {
@@ -851,7 +851,9 @@ SEXP readtablehead(SEXP args)
 			}
 		    }
 		}
-	    } else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
+	    } else if(!skip && firstnonwhite && strchr(data.quoteset, c)) quote = c;
+	    else if (Rspace(c)) firstnonwhite = TRUE;
+	    else firstnonwhite = FALSE;
 	    /* A line is empty only if it contains nothing before
 	       EOL, EOF or a comment char.
 	       A line containing just white space is not empty if sep=","

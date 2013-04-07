@@ -354,6 +354,8 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		if(dbcslocale && btowc(c) == WEOF)
 		    buffer->data[m++] = (char) scanchar2(d);
 	    }
+	    if (c == R_EOF)
+	    	warning(_("EOF within quoted string"));
 	    c = scanchar(FALSE, d);
 	    mm = m;
 	}
@@ -402,6 +404,8 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			if(dbcslocale && btowc(c) == WEOF)
 			    buffer->data[m++] = (char) scanchar2(d);
 		    }
+		    if (c == R_EOF)
+		    	warning(_("EOF within quoted string"));
 		    c = scanchar(TRUE, d); /* only peek at lead byte
 					      unless ASCII */
 		    if (c == quote) {

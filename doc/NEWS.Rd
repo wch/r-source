@@ -83,6 +83,9 @@
       new default is \code{FALSE} which makes child processes
       non-interactive by default (this prevents lock-ups due to children
       waiting for interactive input).
+      
+      \item \code{scan()} now warns when end-of-file occurs within
+      a quoted string.
     }
   }
 
@@ -117,6 +120,10 @@
       
       \item \code{citation(pkg)} dropped the header and footer specified
       in the \file{CITATION} file (\PR{15257}).
+      
+      \item Quotes were handled differently when reading the first
+      line and reading the rest, so \code{read.table()} misread files
+      that contained quote characters (\PR{15245})
     }
   }
 }
