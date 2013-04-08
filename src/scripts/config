@@ -202,8 +202,8 @@ while test -n "${1}"; do
 done
 
 if test "${site}" = "yes"; then
-  if test -f " ${R_HOME}/etc${R_ARCH}/Makevars"; then
-    makefiles="${makefiles} -f ${R_HOME}/etc${R_ARCH}/Makevars"
+  if test -f " ${R_HOME}/etc${R_ARCH}/Makevars.site"; then
+    makefiles="${makefiles} -f ${R_HOME}/etc${R_ARCH}/Makevars.site"
   fi
 fi
 if test "${personal}" = "yes"; then
