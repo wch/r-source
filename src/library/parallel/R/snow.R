@@ -254,7 +254,7 @@ stopCluster.spawnedMPIcluster <- function(cl) {
 
 stopCluster.NWScluster <- function(cl) {
     NextMethod()
-    new::nwsDeleteWs(cl[[1]]$wsServer, nws::nwsWsName(cl[[1]]$ws))
+    nws::nwsDeleteWs(cl[[1]]$wsServer, nws::nwsWsName(cl[[1]]$ws))
     close(cl[[1]]$wsServer)
 }
 
