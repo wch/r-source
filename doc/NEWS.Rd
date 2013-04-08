@@ -132,6 +132,9 @@
       \item Quotes were handled differently when reading the first
       line and reading the rest, so \code{read.table()} misread files
       that contained quote characters (\PR{15245})
+      
+      \item On Windows in R 3.0.0, \code{savePlot()} failed because of a
+      bad check on the argument count.
     }
   }
 }
