@@ -5849,6 +5849,13 @@ function(dir)
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
 
+    uses <- character()
+    for (field in c("Depends", "Imports", "Suggests")) {
+        p <- strsplit(meta[field], " *, *")[[1L]]
+        p <- grep("^(multicore|snow)( |\\(|$)", p, value = TRUE)
+        uses <- c(uses, p)
+    }
+    if (length(uses)) out$uses <- sort(unique(uses))
     out
 }
 
@@ -5935,6 +5942,12 @@ function(x, ...)
                    "packages which may restrict use:",
                    "package which may restrict use:"),
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+      },
+      if (length(y <- x$uses)) {
+          paste(ifelse(length(y) > 1L,
+                       "Uses the superseded packages:",
+                       "Uses the superseded package:"),
+                paste(sQuote(y), collapse = ", "))
       }
       )
 }
