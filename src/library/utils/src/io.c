@@ -866,7 +866,7 @@ SEXP readtablehead(SEXP args)
 		    }
 		}
 	    } else if(!skip && firstnonwhite && strchr(data.quoteset, c)) quote = c;
-	    else if (Rspace(c)) firstnonwhite = TRUE;
+	    else if (Rspace(c) || c == data.sepchar) firstnonwhite = TRUE;
 	    else firstnonwhite = FALSE;
 	    /* A line is empty only if it contains nothing before
 	       EOL, EOF or a comment char.
