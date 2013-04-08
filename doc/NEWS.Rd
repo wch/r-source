@@ -98,14 +98,16 @@
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD config} now make use of personal
-      \file{Makevars} files under \file{~/.R}, in the same way as
-      \command{R CMD SHLIB} and \command{R CMD INSTALL}.  This makes the
-      utility more useful in package \command{configure} scripts.
+      \file{Makevars} files under \file{~/.R} and a site file
+      \file{Makevars.site}, in the same way as \command{R CMD SHLIB} and
+      \command{R CMD INSTALL}.  This makes the utility more useful in
+      package \command{configure} scripts.
 
-      On Windows this may require the environment variable \env{HOME} set.
+      On Windows the personal files may require the environment variable
+      \env{HOME} set.
 
-      The old behaviour can be obtained with the new option
-      \option{--no-personal}.
+      The old behaviour can be obtained with the new options
+      \option{--no-user-files} and \option{--no-site-files}.
     }
   }
   

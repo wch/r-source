@@ -41,7 +41,8 @@ Options:
 			a program using R as a library
       --ldflags         print linker flags needed for linking against
 			the R library
-      --no-personal    ignore customization files under ~/.R
+      --no-user-files  ignore customization files under ~/.R
+      --no-site-files  ignore site customization files under R_HOME/etc
 
 Variables:
   BLAS_LIBS     flags needed for linking against external BLAS libraries
@@ -151,6 +152,7 @@ fi
 
 var=
 personal="yes"
+site="yes"
 while test -n "${1}"; do
   case "${1}" in
     -h|--help)
@@ -181,8 +183,11 @@ while test -n "${1}"; do
       fi
       exit 0
       ;;
-    --no-personal)
+    --no-user-files)
       personal="no"
+      ;;
+    --no-site-files)
+      site="no"
       ;;
     *)
       if test -z "${var}"; then
@@ -196,6 +201,11 @@ while test -n "${1}"; do
   shift
 done
 
+if test "${site}" = "yes"; then
+  if test -f " ${R_HOME}/etc${R_ARCH}/Makevars"; then
+    makefiles="${makefiles} -f ${R_HOME}/etc${R_ARCH}/Makevars"
+  fi
+fi
 if test "${personal}" = "yes"; then
   if test "${R_OSTYPE}" = "windows"; then
     if test ${R_ARCH} = "/x64" -a -f "${HOME}/.R/Makevars.win64"; then
@@ -213,8 +223,8 @@ if test "${personal}" = "yes"; then
       makefiles="${makefiles} -f ${HOME}/.R/Makevars"
     fi
   fi
-  query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 fi
+query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
 ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
