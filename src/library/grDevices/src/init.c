@@ -101,7 +101,6 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(devprev, 1),
     EXTDEF(devset, 1),
     EXTDEF(devsize, 0),
-    EXTDEF(savePlot, 3),
     EXTDEF(contourLines, 4),
     EXTDEF(getSnapshot, 0),
     EXTDEF(playSnapshot, 1),
@@ -111,8 +110,10 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(devAskNewPage, 1),
 
 #ifdef WIN32
+    EXTDEF(savePlot, 4),
     EXTDEF(devga, 21),
 #else
+    EXTDEF(savePlot, 3),
     EXTDEF(Quartz, 11),
     EXTDEF(X11, 17),
 #endif
