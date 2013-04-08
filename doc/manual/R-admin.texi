@@ -1570,7 +1570,7 @@ versions are installed under
 
 A version of @R{} can be run directly from the command-line as e.g.@:
 @example
-/Library/Frameworks/R.framework/Versions/3.0/Resourcesbin/R
+/Library/Frameworks/R.framework/Versions/3.0/Resources/bin/R
 @end example
 
 @noindent
@@ -1579,7 +1579,9 @@ installed version.  A small utility, @command{Rswitch.app} (available at
 @url{http://r.research.att.com/#other}), can be used to change the
 `current' version.  However, this is of limited use as @Rapp{} is
 compiled against a particular version of @R{} and will likely crash if
-switched to an earlier version.
+switched to an earlier version.  This may allow you to install a
+development version of @R{} (de-selecting @Rapp{}) and then switch back
+to the release version.
 
 
 @node Running R, Add-on packages, Installing R under OS X, Top
