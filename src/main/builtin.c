@@ -578,7 +578,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (iobj = 0; iobj < nobjs; iobj++) {
 	s = VECTOR_ELT(objs, iobj);
 	if (iobj != 0 && !isNull(s))
-	    cat_printsep(sepr, 0);
+	    cat_printsep(sepr, ntot++);
 	n = length(s);
 	/* 0-length objects are ignored */
 	if (n > 0) {
@@ -643,7 +643,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 			cat_newline(labs, &width, lablen, nlines);
 			nlines++;
 		    }
-		}
+		} else ntot--; /* we don't print sep after last, so don't advance */
 	    }
 	}
     }
