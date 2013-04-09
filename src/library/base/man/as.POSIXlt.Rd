@@ -155,8 +155,6 @@ z <- 1472562988
 # ways to convert this
 as.POSIXct(z, origin = "1960-01-01")                # local
 as.POSIXct(z, origin = "1960-01-01", tz = "GMT")    # in UTC
-as.POSIXct(z, origin = ISOdatetime(1960,1,1,0,0,0)) # local
-ISOdatetime(1960,1,1,0,0,0) + z                   # local
 
 ## SPSS dates (R-help 2006-02-16)
 z <- c(10485849600, 10477641600, 10561104000, 10562745600)
