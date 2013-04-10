@@ -2129,7 +2129,7 @@ wise to have a @file{src/contrib} area with a possibly empty
 
 @item 
 @code{"mac.binary"}: located at
-@file{bin/macosx/snowleopard/contrib/@var{3.y}} for @R{} versions
+@file{bin/macosx/contrib/@var{3.y}} for @R{} versions
 @var{3.y.z} and containing @file{.tgz} files.
 
 @item 
