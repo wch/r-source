@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/quartz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 assign(".quartz.Options",
        list(title = "Quartz %d",
-            width = 7, height = 7, pointsize=12,
+            width = 7, height = 7, pointsize = 12,
             family = "Helvetica",
             antialias = TRUE,
             type = "native",
@@ -42,8 +42,8 @@ quartz.options <- function(..., reset = FALSE)
     }
     l... <- length(new <- list(...))
     check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv,
-                  assign.opt = l... > 0)
-    if(reset || l... > 0) invisible(old) else old
+                  assign.opt = l... > 0L)
+    if(reset || l... > 0L) invisible(old) else old
 }
 
 quartz <- function(title, width, height, pointsize, family, antialias,
@@ -88,7 +88,7 @@ setQuartzFonts <- function(fonts, fontNames) {
     fonts <- lapply(fonts, checkQuartzFont)
     fontDB <- get(".Quartz.Fonts", envir=.Quartzenv)
     existingFonts <- fontNames %in% names(fontDB)
-    if (sum(existingFonts) > 0)
+    if (sum(existingFonts) > 0L)
         fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
     if (sum(existingFonts) < length(fontNames))
         fontDB <- c(fontDB, fonts[!existingFonts])
@@ -112,12 +112,12 @@ printFonts <- function(fonts) {
 # all of which must be named args)
 quartzFonts <- function(...) {
     ndots <- length(fonts <- list(...))
-    if (ndots == 0)
+    if (ndots == 0L)
         get(".Quartz.Fonts", envir=.Quartzenv)
     else {
         fontNames <- names(fonts)
         nnames <- length(fontNames)
-        if (nnames == 0) {
+        if (nnames == 0L) {
             if (!all(sapply(fonts, is.character)))
                 stop("invalid arguments in 'quartzFonts' (must be font names)")
             else
@@ -138,10 +138,11 @@ quartzFont <- function(family) {
 quartzFonts(# Default Serif font is Times
             serif = quartzFont(c("Times-Roman", "Times-Bold",
             "Times-Italic", "Times-BoldItalic")),
-                # Default Sans Serif font is Helvetica
+            ## Default Sans Serif font is Helvetica,
+            ## even the device default is Arial
             sans = quartzFont(c("Helvetica", "Helvetica-Bold",
             "Helvetica-Oblique", "Helvetica-BoldOblique")),
-                # Default Monospace font is Courier
+            ## Default Monospace font is Courier
             mono = quartzFont(c("Courier", "Courier-Bold",
             "Courier-Oblique", "Courier-BoldOblique")))
 
@@ -151,11 +152,11 @@ quartz.save <- function(file, type = 'png', device = dev.cur(), dpi = 100, ...)
     ## modified version of dev.copy2pdf
     dev.set(device)
     current.device <- dev.cur()
-    nm <- names(current.device)[1]
+    nm <- names(current.device)[1L]
     if (nm == "null device") stop("no device to print from")
     if (!dev.displaylist()) stop("can only print from a screen device")
     oc <- match.call()
-    oc[[1]] <- as.name("dev.copy")
+    oc[[1L]] <- as.name("dev.copy")
     oc$file <- NULL
     oc$device <- quartz
     oc$type <- type
@@ -163,8 +164,8 @@ quartz.save <- function(file, type = 'png', device = dev.cur(), dpi = 100, ...)
     oc$file <- file
     oc$dpi <- dpi
     din <- dev.size("in")
-    w <- din[1]
-    h <- din[2]
+    w <- din[1L]
+    h <- din[2L]
     if (is.null(oc$width))
         oc$width <- if (!is.null(oc$height)) w/h * eval.parent(oc$height) else w
     if (is.null(oc$height))

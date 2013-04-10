@@ -31,7 +31,8 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \item{height}{the height of the plotting area in inches.  Default \code{7}.}
   \item{pointsize}{the default pointsize to be used.  Default \code{12}.}
   \item{family}{this is the family name of the font
-    that will be used by the device.  Default \code{"Helvetica"}.}
+    that will be used by the device.  Default \code{"Arial"}.  This will
+    be the base name of a font as  shown in Font Book.}
   \item{antialias}{whether to use antialiasing.  Default \code{TRUE}.}
   \item{type}{the type of output to use.  See \sQuote{Details} for
     more information.  Default \code{"native"}.}
@@ -57,21 +58,14 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \sQuote{factory-fresh} defaults.
 
   The Quartz graphics device supports a variety of output types.
-  On-screen output types are \code{""} or \code{"native"} (picks the best
-  possible on-screen output), \code{"Cocoa"} (Mac OS X 10.4 and later)
-  and \code{"Carbon"} (not currently implemented -- potentially
-  Mac OS X 10.3 and earlier).   Off-screen output
-  types produce output files and utilize the \code{file} argument.
-  \code{type = "pdf"} gives PDF output. The following bitmap formats may
-  be supported (on OS X 10.4 and later): \code{"png"}, \code{"jpeg"},
-  \code{"jpg"}, \code{"jpeg2000"}, \code{"tif"}, \code{"tiff"},
-  \code{"gif"}, \code{"psd"} (Adobe Photoshop), \code{"bmp"} (Windows
-  bitmap), \code{"sgi"} and \code{"pict"}.  (The availability of some
-  formats is OS-version-dependent.)
-
-%   To reproduce the default of older Quartz devices on-screen, set
-%   \code{dpi = 72} (for a permanent solution set
-%   \code{quartz.options(dpi = 72)}).
+  On-screen output types are \code{""} or \code{"native"} or
+  \code{"Cocoa"}.  Off-screen output types produce output files and
+  utilize the \code{file} argument.  \code{type = "pdf"} gives PDF
+  output.  The following bitmap formats may be supported (depending on
+  the OS version): \code{"png"}, \code{"jpeg"}, \code{"jpg"},
+  \code{"jpeg2000"}, \code{"tif"}, \code{"tiff"}, \code{"gif"},
+  \code{"psd"} (Adobe Photoshop), \code{"bmp"} (Windows bitmap),
+  \code{"sgi"} and \code{"pict"}.
 
   The \code{file} argument is used for off-screen drawing.  The actual
   file is only created when the device is closed (e.g. using
@@ -84,12 +78,13 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \code{Rplot\%03d.\var{type}}.  Tilde expansion
   (see \code{\link{path.expand}}) is done.
 
-
-  If a device-independent \R graphics font family is specified
-  (e.g., via \code{par(family =)} in the graphics package),
-  the Quartz device makes use of the Quartz font database
-  (see \code{quartzFonts}) to convert the R graphics font family
-  to a Quartz-specific font family description.
+  If a device-independent \R graphics font family is specified (e.g.,
+  via \code{par(family =)} in the graphics package), the Quartz device
+  makes use of the Quartz font database (see \code{quartzFonts}) to
+  convert the R graphics font family to a Quartz-specific font family
+  description.  The default conversions are (MonoType TrueType versions
+  of) \code{Helvetica} for \code{sans}, \code{Times-Roman} for
+  \code{serif} and \code{Courier} for \code{mono}.
 
   On-screen devices are launched with a semi-transparent canvas.  Once a
   new plot is created, the canvas is first painted with the
@@ -126,11 +121,17 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \itemize{
     \item The default device size is 7 inches square.
     \item Font sizes are in big points.
-    \item The default font family is Helvetica.
+    \item The default font family is Arial.
     \item Line widths are a multiple of 1/96 inch with no minimum set by \R.
     \item Circle radii are real-valued with no minimum set by \R.
     \item Colours are specified as sRGB.
   }
+}
+
+\note{
+  For a long time the default font family was documented as
+  \code{"Helvetica"} after it had been changed to \code{"Arial"} to work
+  around a deficiency in OS X 10.4.   It may be changed back in future.
 }
 \seealso{
   \code{\link{quartzFonts}}, \code{\link{Devices}}.
