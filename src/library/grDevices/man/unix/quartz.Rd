@@ -107,7 +107,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   The font family chosen needs to cover the characters to be used:
   characters not in the font are rendered as empty oblongs.  For
   non-Western-European languages something other than the default of
-  \code{"Helvetica"} is likely to be needed---one choice for Chinese is
+  \code{"Arial"} is likely to be needed---one choice for Chinese is
   \code{"MingLiU"}.
 
   \code{quartz.save} is a modified version of \code{\link{dev.copy2pdf}}
@@ -132,6 +132,12 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   For a long time the default font family was documented as
   \code{"Helvetica"} after it had been changed to \code{"Arial"} to work
   around a deficiency in OS X 10.4.   It may be changed back in future.
+  
+  A fairly common Mac problem is no text appearing on plots due to
+  corrupted or duplicated fonts on your system.  You may be able to
+  confirm this by using another font family, e.g. \code{family =
+  "serif"}.  Open the \code{Font Book} application (in
+  \code{Applications}) and check the fonts that you are using.
 }
 \seealso{
   \code{\link{quartzFonts}}, \code{\link{Devices}}.
