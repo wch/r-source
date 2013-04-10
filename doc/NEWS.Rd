@@ -137,8 +137,12 @@
       greater than one and more than one argument was using
       separators inconsistently (\PR{15261}).
       
-      \item On Windows in \R 3.0.0, \code{savePlot()} failed because of a
-      bad check on the argument count.
+      \item On Windows in \R 3.0.0, \code{savePlot()} failed because of
+      an incorrect check on the argument count.
+      
+      \item \code{unzip(list = TRUE)} returned a factor and no a
+      character vector (as documented) for \code{Names} in the internal
+      method.  (Noticed by Sean O'Riordain.)
     }
   }
 }
