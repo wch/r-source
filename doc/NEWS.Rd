@@ -133,14 +133,14 @@
       line and reading the rest, so \code{read.table()} misread files
       that contained quote characters (\PR{15245}).
 
-      \item \code{cat()} with \code{sep} string vector of length
-      greater than one and more than one argument was using
-      separators inconsistently (\PR{15261}).
+      \item \code{cat()} with \code{sep} a character vector of length
+      greater than one and more than one argument was using separators
+      inconsistently (\PR{15261}).
       
       \item On Windows in \R 3.0.0, \code{savePlot()} failed because of
       an incorrect check on the argument count.
       
-      \item \code{unzip(list = TRUE)} returned a factor and no a
+      \item \code{unzip(list = TRUE)} returned a factor and not a
       character vector (as documented) for \code{Names} in the internal
       method.  (Noticed by Sean O'Riordain.)
     }
