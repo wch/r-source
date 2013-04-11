@@ -5,8 +5,6 @@
 
 \name{base-deprecated}
 \alias{base-deprecated}
-\alias{.find.package}
-\alias{.path.package}
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for EACH !
@@ -14,24 +12,14 @@
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as the next release.
 }
-% \usage{
-% Sys.putenv(\dots)
-% }
-% \arguments{
-%   \item{\dots}{named arguments with values coercible to a character string.}
-% }
-\usage{
-.find.package(\dots)
-.path.package(\dots)
-}
-\arguments{
-   \item{\dots}{arguments to be passed to the public version of the function.}
-}
+%% \usage{
+%% .find.package(\dots)
+%% .path.package(\dots)
+%% }
+%% \arguments{
+%%    \item{\dots}{}
+%% }
 \details{
-  \code{.find.package} and \code{.path.package} were internal-only
-  versions prior to \R 2.13.0, and are now deprecated wrappers for
-  \code{\link{find.package}} and \code{\link{path.package}}.
-  
   The original help page for these functions is often
   available at \code{help("oldName-deprecated")} (note the quotes).
   Functions in standard packages other than the base package are listed in

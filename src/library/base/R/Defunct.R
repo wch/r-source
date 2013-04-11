@@ -199,3 +199,10 @@ mem.limits <- function(nsize=NA, vsize=NA) .Defunct("gc")
 ## Removed in 2.15.0
 # Sys.putenv <- function(...) .Defunct("Sys.setenv")
 ## </entry>
+
+## <entry>
+## Deprecated in 3.0.0
+## Defunct in 3.1.0
+.find.package <- function(...).Defunct("find.package")
+.path.package <- function(...).Defunct("path.package")
+## </entry>

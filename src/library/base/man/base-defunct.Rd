@@ -64,6 +64,8 @@
 \alias{real}
 \alias{as.real}
 \alias{is.real}
+\alias{.find.package}
+\alias{.path.package}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -153,6 +155,10 @@ Sys.putenv(\dots)
 real(length = 0)
 as.real(x, \dots)
 is.real(x)
+
+# Defunct in 3.1.0
+.find.package(\dots)
+.path.package(\dots)
 }
 \details{
   Some of these have stubs which report that they are defunct, but most
@@ -267,6 +273,10 @@ is.real(x)
 
   \code{real}, \code{as.real} and \code{is.real} were long-deprecated
   synonyms for the \code{double} versions.
+
+  \code{.find.package} and \code{.path.package} were internal-only
+  versions prior to \R 2.13.0, and since deprecated wrappers for
+  \code{\link{find.package}} and \code{\link{path.package}}.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}

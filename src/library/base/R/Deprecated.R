@@ -39,15 +39,15 @@
 
 ## <entry>
 ## Deprecated in 3.0.0
-.find.package <- function(...)
-{
-    .Deprecated("find.package")
-    find.package(...)
-}
+## .find.package <- function(...)
+## {
+##     .Deprecated("find.package")
+##     find.package(...)
+## }
 
-.path.package <- function(...)
-{
-    .Deprecated("path.package")
-    path.package(...)
-}
+## .path.package <- function(...)
+## {
+##     .Deprecated("path.package")
+##     path.package(...)
+## }
 ## </entry>

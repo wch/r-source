@@ -5423,7 +5423,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 .check_depdef <-
 function(package, dir, lib.loc = NULL)
 {
-    bad_depr <- c(".find.package", ".path.package")
+    bad_depr <- character()
 
     bad_def <- c("La.eigen", "tetragamma", "pentagamma",
                  "package.description", "gammaCody",
@@ -5434,7 +5434,8 @@ function(package, dir, lib.loc = NULL)
                  "tkfile.tail", "tkfile.dir", "tkopen", "tkclose",
                  "tkputs", "tkread", "Rd_parse", "CRAN.packages",
                  "zip.file.extract",
-                 "real", "as.real", "is.real")
+                 "real", "as.real", "is.real",
+                 ".find.package", ".path.package")
 
     bad <- c(bad_depr, bad_def)
     bad_closures <- character()
