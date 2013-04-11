@@ -85,6 +85,10 @@ iconvlist()
   Note that you cannot rely on invalid inputs being detected, especially
   for \code{to = "ASCII"} where some implementations allow 8-bit
   characters and pass them through unchanged or with transliteration.
+  
+  Some of the implementations have interesting extra encodings: for
+  example GNU \samp{libiconv} allows \code{to = "C99"} to use
+  \code{\\uxxx} escapes for non-ASCII characters.
 }
 
 \value{
