@@ -1793,6 +1793,30 @@ they will need to read the source code to determine if it is
 thread-safe.  In particular, code which makes use of the stack-checking
 mechanism must not be called from threaded code.
 
+Packages are not standard-alone programs, and an @R{} process could
+contain more than one OpenMP-enabled package as well as other components
+(for example, an optimized BLAS) making use of OpenMP.  So careful
+consideration needs to be given to resource usage.  OpenMP works with
+parallel regions, and for most implementations the default is to use as
+many threads as `CPUs' for such regions.  Parallel regions can be
+nested, although it is common to use only a single thread below the
+first level.  The detected number of `CPUs' and the assumption that the
+@R{} process is entitled to use them all are both dubious assumptions.
+The best way to limit resources is to limit the overall number of
+threads available to OpenMP in the R process: this can be done via
+environment variable @env{OMP_THREAD_LIMIT}, where
+implemented.@footnote{Which it was at the time of writing with GCC,
+Solaris Studio and Intel compilers.}  Alternatively, the number of
+threads per region can be limited by the environment variable
+@env{OMP_NUM_THREADS} or API call @code{omp_set_num_threads}, or,
+better, for the regions in your code as part of their
+specification. E.g.@: @R{} uses
+@example
+#pragma omp parallel for num_threads(nthreads) @dots{}
+@end example
+@noindent
+That way you only control your own code and not that of other OpenMP users.
+
 @node Using pthreads, Compiling in sub-directories, OpenMP support, Using Makevars
 @subsubsection Using pthreads
 
