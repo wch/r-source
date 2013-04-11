@@ -1825,8 +1825,8 @@ There is no direct support for the POSIX threads (more commonly known as
 were using it unconditionally so it seems that nowadays it is
 universally available on POSIX operating systems (hence not Windows).
 
-For reasonably recent versions of @command{gcc} the correct
-specification is
+For reasonably recent versions of @command{gcc} and @command{clang} the
+correct specification is
 
 @example
 PKG_CPPFLAGS = -pthread
@@ -1917,11 +1917,11 @@ Csdp/lib/libsdp.a
 @end smallexample
 
 @noindent
-Note the quotes: the macros can contain spaces, e.g.@: @code{gcc -m64
--std=gnu99}.  Several authors have forgotten about parallel makes: the
-static library in the subdirectory must be made before the shared
-library and so must depend on the latter.  Others forget the need for
-position-independent code.
+Note the quotes: the macros can contain spaces, e.g.@: @code{CC = "gcc
+-m64 -std=gnu99"}.  Several authors have forgotten about parallel makes:
+the static library in the subdirectory must be made before the shared
+object (@code{$(SHLIB)}) and so the latter must depend on the former.
+Others forget the need for position-independent code.
 
 We really do not recommend using a @file{src/Makefile} instead on
 @file{src/Makevars}, and as the example above shows, it is not necessary.
@@ -6558,6 +6558,7 @@ collections after objects have been deleted).
 @menu
 * Using gctorture::             
 * Using valgrind::              
+* Using AddressSanitizer::      
 @end menu
 
 @node Using gctorture, Using valgrind, Using gctorture and valgrind, Using gctorture and valgrind
@@ -6624,7 +6625,7 @@ Used with a debugger and with @code{gctorture} or @code{gctorture2} this
 mechanism can be helpful in isolating memory protect problems.
 
 
-@node Using valgrind,  , Using gctorture, Using gctorture and valgrind
+@node Using valgrind, Using AddressSanitizer, Using gctorture, Using gctorture and valgrind
 @subsection Using valgrind
 
 If you have access to Linux on an @cputype{ix86}, @cputype{x86_64},
@@ -6732,6 +6733,20 @@ slow.  Installing packages with @command{R CMD INSTALL --dsym} installs
 the dumped symbols.  (This can also be done by setting environment
 variable @env{PKG_MAKE_DSYM} to a non-empty value.)
 
+@node Using AddressSanitizer,  , Using valgrind, Using gctorture and valgrind
+@subsection Using AddressSanitizer
+
+@command{AddressSanitizer} is a tool with similar aims to the memory
+checked in @command{valgrind}.  It is available with suitable builds of
+@command{gcc} 4.8.0 and @command{clang} 3.1 and later, on common Linux
+platforms and 64-bit Mac OS X.  See
+@uref{https://code.google.com/p/address-sanitizer/}.
+
+It requires code to have been compiled with @option{-fsanitize=address}
+(@command{gcc}) or @option{-faddress-sanitizer} (@command{clang}), and
+using @code{-fno-omit-frame-pointer} will give more legible reports.  It
+is reported to run very much faster than @command{valgrind} (a runtime
+penalty of 2--3, but extended compilation times).
 
 @node Debugging compiled code,  , Using gctorture and valgrind, Debugging
 @section Debugging compiled code
