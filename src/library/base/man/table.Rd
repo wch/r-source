@@ -111,6 +111,9 @@ is.table(x)
   Use \code{\link{ftable}} for printing (and more) of
   multidimensional tables.  \code{\link{margin.table}},
   \code{\link{prop.table}}, \code{\link{addmargins}}.
+
+  \code{\link{xtabs}} for cross tabulation of data frames with a
+  formula interface.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
