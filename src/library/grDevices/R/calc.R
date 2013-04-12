@@ -69,6 +69,8 @@ function (x = seq(0, 1, length.out = nrow(z)),
 	stop("increasing 'x' and 'y' values expected")
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
 	stop("no proper 'z' matrix specified")
+    if (1.0 * length(x) * length(y) != length(z))
+        stop("dimensions of 'x', 'y' and 'z' do not match")
     invisible(.External2(C_contourLines, x, y, z, levels))
 }
 
