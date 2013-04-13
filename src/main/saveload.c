@@ -602,7 +602,12 @@ static void RestoreSEXP(SEXP s, FILE *fp, InputRoutines *m, NodeInfo *node, int 
     case BUILTINSXP:
 	len = m->InInteger(fp, d);
 	R_AllocStringBuffer(MAXELTSIZE - 1, &(d->buffer));
-	SET_PRIMOFFSET(s, StrToInternal(m->InString(fp, d)));
+	int index = StrToInternal(m->InString(fp, d));
+	if (index == NA_INTEGER) {
+	    warning(_("unrecognized internal function name \"%s\""), d->buffer.data); 
+	    index = 0;   /* zero doesn't make sense, but is back compatible with 3.0.0 and earlier */
+	}
+	SET_PRIMOFFSET(s, index);
 	break;
     case CHARSXP:
 	len = m->InInteger(fp, d);
@@ -1260,7 +1265,12 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp,
     case SPECIALSXP:
     case BUILTINSXP:
 	R_AllocStringBuffer(MAXELTSIZE - 1, &(d->buffer));
-	PROTECT(s = mkPRIMSXP(StrToInternal(m->InString(fp, d)), type == BUILTINSXP));
+	int index = StrToInternal(m->InString(fp, d));
+	if (index == NA_INTEGER) {
+	    warning(_("unrecognized internal function name \"%s\""), d->buffer.data); 
+	    PROTECT(s = R_NilValue);
+	} else
+	    PROTECT(s = mkPRIMSXP(index, type == BUILTINSXP));
 	break;
     case CHARSXP:
     case LGLSXP:

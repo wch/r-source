@@ -300,7 +300,6 @@
  Rf_PrintVersion
  Rf_PrintVersionString
  Rf_PrintVersion_part_1
- Rf_PrintWarnings
  Rf_RealFromComplex
  Rf_RealFromInteger
  Rf_RealFromLogical
