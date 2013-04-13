@@ -38,8 +38,8 @@
       \command{R CMD INSTALL}.  This makes the utility more useful in
       package \command{configure} scripts.
 
-      On Windows the personal files may require the environment variable
-      \env{HOME} set.
+      On Windows finding the personal files may require the environment
+      variable \env{HOME} set.
 
       The old behaviour can be obtained with the new options
       \option{--no-user-files} and \option{--no-site-files}.
@@ -69,20 +69,24 @@
       \item \code{citation(pkg)} dropped the header and footer specified
       in the \file{CITATION} file (\PR{15257}).
       
-      \item Quotes were handled differently when reading the first
-      line and reading the rest, so \code{read.table()} misread files
+      \item Quotes were handled differently when reading the first line
+      and reading the rest, so \code{read.table()} misread some files
       that contained quote characters (\PR{15245}).
 
-      \item \code{cat()} with \code{sep} string vector of length
-      greater than one and more than one argument was using
-      separators inconsistently (\PR{15261}).
+      \item \code{cat()} with \code{sep} a character vector of length
+      greater than one and more than one argument was using separators
+      inconsistently (\PR{15261}).
       
       \item On Windows in \R 3.0.0, \code{savePlot()} failed because of
       an incorrect check on the argument count.
       
-      \item \code{unzip(list = TRUE)} returned a factor and no a
+      \item \code{unzip(list = TRUE)} returned a factor and not a
       character vector (as documented) for \code{Names} in the internal
       method.  (Noticed by Sean O'Riordain.)
+      
+      \item \code{contourLines()} now checks more comprehensively for
+      conformance of its \code{x}, \code{y} and \code{z} arguents (it
+      was used incorrectly in package \CRANpkg{R2G2}).
     }
   }
 }
