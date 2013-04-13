@@ -148,6 +148,12 @@
       \item \code{contourLines()} now checks more comprehensively for
       conformance of its \code{x}, \code{y} and \code{z} arguents (it
       was used incorrectly in package \CRANpkg{R2G2}).
+      
+      \item Saved graphics display lists are \R version-specific.
+      Attempting to load workspaces containing them (or some other
+      version-specific objects) aborted the load in \R 3.0.0 and
+      earlier; now it does a partial load and generates a warning
+      instead.
     }
   }
 }

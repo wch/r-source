@@ -1595,7 +1595,12 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		char cbuf[length+1];
 		InString(stream, cbuf, length);
 		cbuf[length] = '\0';
-		PROTECT(s = mkPRIMSXP(StrToInternal(cbuf), type == BUILTINSXP));
+		int index = StrToInternal(cbuf);
+		if (index == NA_INTEGER) {
+		    warning(_("unrecognized internal function name \"%s\""), cbuf); 
+		    PROTECT(s = R_NilValue);
+		} else
+		    PROTECT(s = mkPRIMSXP(index, type == BUILTINSXP));
 	    }
 	    break;
 	case CHARSXP:
