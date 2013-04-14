@@ -140,10 +140,10 @@
       
       \item On Windows in \R 3.0.0, \code{savePlot()} failed because of
       an incorrect check on the argument count.
-      
-      \item \code{unzip(list = TRUE)} returned a factor and not a
-      character vector (as documented) for \code{Names} in the internal
-      method.  (Noticed by Sean O'Riordain.)
+
+      \item \code{unzip(list = TRUE)} returned \code{Names} as a factor
+      and not a character vector (as documented) for the internal method.
+      (Noticed by Sean O'Riordain.)
       
       \item \code{contourLines()} now checks more comprehensively for
       conformance of its \code{x}, \code{y} and \code{z} arguents (it
@@ -157,7 +157,11 @@
       
       \item In \R 3.0.0, \code{identify()} and \code{locator()} did
       not record information correctly, so replaying a graph (e.g. by
-      copying it to another device) would fail. (\PR{15271})      
+      copying it to another device) would fail. (\PR{15271})
+
+      \item Calling \code{file.copy()} or \code{dirname()} with the
+      invalid input \code{""} (which was being used in packages, despite
+      not being a file path) could have caused a segfault.
     }
   }
 }
