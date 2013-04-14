@@ -6713,6 +6713,9 @@ stack trace is not sufficiently informative the option
 a post-mortem debugger (by default @code{gdb}) so that variables in the
 C code can be inspected (@pxref{Inspecting R objects}).
 
+@command{valgrind} is good at spotting the use of uninitalized values:
+use option @option{--track-origins=yes} to show where these originated
+from.
 
 It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{valgrind} by using the option
@@ -6721,22 +6724,22 @@ It is possible to run all the examples, tests and vignettes covered by
 @file{~/.valgrindrc} file containing
 
 @example
---tool=memcheck
---memcheck:leak-check=full
+--leak-check=full
+--track-origins=yes
 @end example
 
 @noindent
 or setting the environment variable @env{VALGRIND_OPTS}.
 
-On OS X you may need to ensure that debugging symbols are made
-available (so @command{valgrind} reports line numbers in files).  This
-can usually be done with the @command{valgrind} option
-@option{--dysmutil=yes} to ask for the symbols to be dumped when the
-@file{.so} file is loaded.  This will not work where packages are
-installed into a system area (such as the @file{R.framework}) and can be
-slow.  Installing packages with @command{R CMD INSTALL --dsym} installs
-the dumped symbols.  (This can also be done by setting environment
-variable @env{PKG_MAKE_DSYM} to a non-empty value.)
+On OS X you may need to ensure that debugging symbols are made available
+(so @command{valgrind} reports line numbers in files).  This can usually
+be done with the @command{valgrind} option @option{--dysmutil=yes} to
+ask for the symbols to be dumped when the @file{.so} file is loaded.
+This will not work where packages are installed into a system area (such
+as the @file{R.framework}) and can be slow.  Installing packages with
+@command{R CMD INSTALL --dsym} installs the dumped symbols.  (This can
+also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
+non-empty value before the @command{INSTALL}.)
 
 @node Using AddressSanitizer,  , Using valgrind, Using gctorture and valgrind
 @subsection Using AddressSanitizer
