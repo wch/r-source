@@ -1068,7 +1068,8 @@ The Tcl/Tk support files are contained in @file{Rtools30.exe} and
 available as @file{.zip} files from
 @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
 install the right version: there is a 32-bit version and a 64-bit
-version.
+version.  They should be installed to @file{@var{R_HOME}}, creating
+directory @file{Tcl} there.
 
 @item
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
