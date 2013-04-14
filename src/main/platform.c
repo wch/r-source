@@ -2345,23 +2345,25 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 		wcsncpy(from,
 			filenameToWchar(STRING_ELT(fn, i), TRUE),
 			PATH_MAX);
-		/* If there was a trailing sep, this is a mistake */
-		p = from + (wcslen(from) - 1);
-		if(*p == L'\\') *p = L'\0';
-		p = wcsrchr(from, L'\\') ;
-		if (p) {
-		    wcsncpy(name, p+1, PATH_MAX);
-		    *(p+1) = L'\0';
-		} else {
-		    if(wcslen(from) > 2 && from[1] == L':') {
-			wcsncpy(name, from+2, PATH_MAX);
-			from[2] = L'\0';
+		if(wcslen(from)) {
+		    /* If there was a trailing sep, this is a mistake */
+		    p = from + (wcslen(from) - 1);
+		    if(*p == L'\\') *p = L'\0';
+		    p = wcsrchr(from, L'\\') ;
+		    if (p) {
+			wcsncpy(name, p+1, PATH_MAX);
+			*(p+1) = L'\0';
 		    } else {
-			wcsncpy(name, from, PATH_MAX);
-			wcsncpy(from, L".\\", PATH_MAX);
+			if(wcslen(from) > 2 && from[1] == L':') {
+			    wcsncpy(name, from+2, PATH_MAX);
+			    from[2] = L'\0';
+			} else {
+			    wcsncpy(name, from, PATH_MAX);
+			    wcsncpy(from, L".\\", PATH_MAX);
+			}
 		    }
-		}
-		nfail = do_copy(from, name, dir, over, recursive, perms, 1);
+		    nfail = do_copy(from, name, dir, over, recursive, perms, 1);
+		} else nfail = 1;
 	    } else nfail = 1;
 	    LOGICAL(ans)[i] = (nfail == 0);
 	}
