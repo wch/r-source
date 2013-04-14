@@ -154,6 +154,10 @@
       version-specific objects) aborted the load in \R 3.0.0 and
       earlier; now it does a partial load and generates a warning
       instead.
+      
+      \item In \R 3.0.0, \code{identify()} and \code{locator()} did
+      not record information correctly, so replaying a graph (e.g. by
+      copying it to another device) would fail. (\PR{15271})      
     }
   }
 }

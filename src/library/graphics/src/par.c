@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team.
+ *  Copyright (C) 1997--2013  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1053,7 +1053,7 @@ static SEXP Query(const char *what, pGEDevDesc dd)
     return value;
 }
 
-SEXP C_par(SEXP call, SEXP op, SEXP args)
+SEXP C_par(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value;
     SEXP originalArgs = args;
