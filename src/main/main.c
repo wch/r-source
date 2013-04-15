@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012   The R Core Team
+ *  Copyright (C) 1998-2013   The R Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -134,7 +134,7 @@ static const char *R_PromptString(int browselevel, int type)
     else {
 	if(type == 1) {
 	    if(browselevel) {
-		sprintf(BrowsePrompt, "Browse[%d]> ", browselevel);
+		snprintf(BrowsePrompt, 20, "Browse[%d]> ", browselevel);
 		return BrowsePrompt;
 	    }
 	    return CHAR(STRING_ELT(GetOption1(install("prompt")), 0));
@@ -1263,8 +1263,8 @@ Rf_addTaskCallback(R_ToplevelCallback cb, void *data,
     }
 
     if(!name) {
-	char buf[5];
-	sprintf(buf, "%d", which+1);
+	char buf[10];
+	snprintf(buf, 10, "%d", which+1);
 	el->name = strdup(buf);
     } else
 	el->name = strdup(name);

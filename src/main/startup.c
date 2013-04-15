@@ -1,7 +1,7 @@
 /*
   R : A Computer Language for Statistical Data Analysis
   Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
-  Copyright (C) 1997-2012   The R Core Team
+  Copyright (C) 1997-2013   The R Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -200,15 +200,17 @@ static void SetSize(R_size_t vsize, R_size_t nsize)
 	vsize *= (R_size_t) Mega;
     }
     if(vsize < Min_Vsize || vsize > Max_Vsize) {
-	sprintf(msg, "WARNING: invalid v(ector heap)size `%lu' ignored\n"
+	snprintf(msg, 1024, 
+		 "WARNING: invalid v(ector heap)size `%lu' ignored\n"
 		 "using default = %gM\n", (unsigned long) vsize,
-		R_VSIZE / Mega);
+		 R_VSIZE / Mega);
 	R_ShowMessage(msg);
 	R_VSize = R_VSIZE;
     } else
 	R_VSize = vsize;
     if(nsize < Min_Nsize || nsize > Max_Nsize) {
-	sprintf(msg, "WARNING: invalid language heap (n)size `%lu' ignored,"
+	snprintf(msg, 1024,
+		 "WARNING: invalid language heap (n)size `%lu' ignored,"
 		 " using default = %ld\n", (unsigned long) nsize, R_NSIZE);
 	R_ShowMessage(msg);
 	R_NSize = R_NSIZE;

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2012  The R Core Team.
+ *  Copyright (C) 1998--2013  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1034,9 +1034,9 @@ void PrintDefaults(void);
 void PrintGreeting(void);
 void PrintValueEnv(SEXP, SEXP);
 void PrintValueRec(SEXP, SEXP);
-void PrintVersion(char *);
-void PrintVersion_part_1(char *);
-void PrintVersionString(char *);
+void PrintVersion(char *, size_t len);
+void PrintVersion_part_1(char *, size_t len);
+void PrintVersionString(char *, size_t len);
 void PrintWarnings(void);
 void process_site_Renviron(void);
 void process_system_Renviron(void);

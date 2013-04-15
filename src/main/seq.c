@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012  The R Core Team.
+ *  Copyright (C) 1998-2013  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,9 +71,9 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 	    size_t vs = strlen(vi);
 	    for (j = 0; j < nlt; j++) {
 		const char *vj = translateChar(STRING_ELT(lt, j));
-		size_t vt = strlen(vj);
-		cbuf = R_AllocStringBuffer(vs + vt + 1, &cbuff);
-		sprintf(cbuf, "%s:%s", vi, vj);
+		size_t vt = strlen(vj), len = vs + vt + 2;
+		cbuf = R_AllocStringBuffer(len, &cbuff);
+		snprintf(cbuf, len, "%s:%s", vi, vj);
 		SET_STRING_ELT(la, k, mkChar(cbuf));
 		k++;
 	    }

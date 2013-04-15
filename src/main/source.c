@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-12     The R Core Team
+ *  Copyright (C) 2001-13     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -140,14 +140,14 @@ void parseError(SEXP call, int linenum)
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg);
 	    break;
 	case 1: // replaces use of %n
-	    width = sprintf(buffer, "%d: ", R_ParseContextLine); 
+	    width = snprintf(buffer, 10, "%d: ", R_ParseContextLine); 
 	    error("%s%d:%d: %s\n%d: %s\n%*s",
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
 		  R_ParseContextLine, CHAR(STRING_ELT(context, 0)), 
 		  width+R_ParseErrorCol, "^");
 	    break;
 	default:
-	    width = sprintf(buffer, "%d:", R_ParseContextLine);
+	    width = snprintf(buffer, 10, "%d:", R_ParseContextLine);
 	    error("%s%d:%d: %s\n%d: %s\n%d: %s\n%*s",
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
 		  R_ParseContextLine-1, CHAR(STRING_ELT(context, len-2)),

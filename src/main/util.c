@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -141,7 +141,7 @@ SEXP asChar(SEXP x)
     if (XLENGTH(x) >= 1) {
 	if (isVectorAtomic(x)) {
 	    int w, d, e, wi, di, ei;
-	    char buf[MAXELTSIZE];  /* probably 100 would suffice */
+	    char buf[MAXELTSIZE];  /* Probably 100 would suffice */
 
 	    switch (TYPEOF(x)) {
 	    case LGLSXP:
@@ -155,7 +155,7 @@ SEXP asChar(SEXP x)
 	    case INTSXP:
 		if (INTEGER(x)[0] == NA_INTEGER)
 		    return NA_STRING;
-		sprintf(buf, "%d", INTEGER(x)[0]);
+		snprintf(buf, MAXELTSIZE, "%d", INTEGER(x)[0]);
 		return mkChar(buf);
 	    case REALSXP:
 		PrintDefaults();

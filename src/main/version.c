@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2012  The R Core Team
+ *  Copyright (C) 1998--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ void attribute_hidden PrintGreeting(void)
     char buf[384];
 
     Rprintf("\n");
-    PrintVersion_part_1(buf);
+    PrintVersion_part_1(buf, 384);
     Rprintf("%s\n", buf);
 
     Rprintf(_("R is free software and comes with ABSOLUTELY NO WARRANTY.\n\
@@ -61,7 +61,7 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(names, 2, mkChar("os"));
     SET_VECTOR_ELT(value, 2, mkString(R_OS));
 
-    sprintf(buf,"%s, %s", R_CPU, R_OS);
+    snprintf(buf, 128, "%s, %s", R_CPU, R_OS);
     SET_STRING_ELT(names, 3, mkChar("system"));
     SET_VECTOR_ELT(value, 3, mkString(buf));
 
@@ -79,12 +79,12 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_VECTOR_ELT(value, 9, mkString(R_DAY));
     SET_STRING_ELT(names, 10, mkChar("svn rev"));
 
-    sprintf(buf,"%d", R_SVN_REVISION);
+    snprintf(buf, 128, "%d", R_SVN_REVISION);
     SET_VECTOR_ELT(value, 10, mkString(buf));
     SET_STRING_ELT(names, 11, mkChar("language"));
     SET_VECTOR_ELT(value, 11, mkString("R"));
 
-    PrintVersionString(buf);
+    PrintVersionString(buf, 128);
     SET_STRING_ELT(names, 12, mkChar("version.string"));
     SET_VECTOR_ELT(value, 12, mkString(buf));
     SET_STRING_ELT(names, 13, mkChar("nickname"));
@@ -95,9 +95,9 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     return value;
 }
 
-void attribute_hidden PrintVersion(char *s)
+void attribute_hidden PrintVersion(char *s, size_t len)
 {
-    PrintVersion_part_1(s);
+    PrintVersion_part_1(s, len);
 
     strcat(s, "\n"
 	   "R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
@@ -107,33 +107,33 @@ void attribute_hidden PrintVersion(char *s)
 	   "http://www.gnu.org/licenses/.\n");
 }
 
-void attribute_hidden PrintVersionString(char *s)
+void attribute_hidden PrintVersionString(char *s, size_t len)
 {
     if(R_SVN_REVISION <= 0) {// 'svn info' failed in ../../Makefile.in
-	sprintf(s, "R version %s.%s %s (%s-%s-%s)",
+	snprintf(s, len, "R version %s.%s %s (%s-%s-%s)",
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     } else if(strlen(R_STATUS) == 0) {
-	sprintf(s, "R version %s.%s (%s-%s-%s)",
+	snprintf(s, len, "R version %s.%s (%s-%s-%s)",
 		R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
     } else if(strcmp(R_STATUS, "Under development (unstable)") == 0) {
-	sprintf(s, "R %s (%s-%s-%s r%d)",
+	snprintf(s, len, "R %s (%s-%s-%s r%d)",
 		R_STATUS, R_YEAR, R_MONTH, R_DAY, R_SVN_REVISION);
     } else {
-	sprintf(s, "R version %s.%s %s (%s-%s-%s r%d)",
+	snprintf(s, len, "R version %s.%s %s (%s-%s-%s r%d)",
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
 		R_SVN_REVISION);
     }
 }
 
-void attribute_hidden PrintVersion_part_1(char *s)
+void attribute_hidden PrintVersion_part_1(char *s, size_t len)
 {
-#define SPRINTF_2(_FMT, _OBJ) sprintf(tmp, _FMT, _OBJ); strcat(s, tmp)
+#define SPRINTF_2(_FMT, _OBJ) snprintf(tmp, 128, _FMT, _OBJ); strcat(s, tmp)
     char tmp[128];
 
-    PrintVersionString(s);
+    PrintVersionString(s, len);
     if(strlen(R_NICK) != 0) {
-	char nick[64];
-	sprintf(nick, " -- \"%s\"", R_NICK);
+	char nick[128];
+	snprintf(nick, 128, " -- \"%s\"", R_NICK);
 	strcat(s, nick);
     }
     SPRINTF_2("\nCopyright (C) %s The R Foundation for Statistical Computing\n",

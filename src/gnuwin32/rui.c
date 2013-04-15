@@ -662,7 +662,7 @@ static void menuabout(control m)
     char  s[256], s2[256];
 
 
-    PrintVersionString(s2);
+    PrintVersionString(s2, 256);
     sprintf(s, "%s\n%s %s %s",
 	    s2,
 	    "Copyright (C)", R_YEAR,
@@ -1111,7 +1111,7 @@ int setupui(void)
     }
     if (ismdi()) {
 	char s[256];
-	PrintVersionString(s);
+	PrintVersionString(s, 256);
 	setstatus(s);
     }
     addto(RConsole);
