@@ -858,7 +858,7 @@ int cmdlineoptions(int ac, char **av)
     R_Home = getRHOME(3);
     /* need this for moduleCdynload for iconv.dll */
     InitFunctionHashing();
-    snprintf(RHome, MAXPATH+7, "R_HOME=%s", R_Home);
+    snprintf(RHome, MAX_PATH+7, "R_HOME=%s", R_Home);
     putenv(RHome);
     BindDomain(R_Home);
 
