@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -650,7 +650,7 @@ static int char_YesNoCancel(const char *s)
     char  ss[128];
     unsigned char a[3];
 
-    sprintf(ss, "%s [y/n/c]: ", s);
+    snprintf(ss, 128, "%s [y/n/c]: ", s);
     R_ReadConsole(ss, a, 3, 0);
     switch (a[0]) {
     case 'y':
@@ -697,7 +697,7 @@ void R_SetWin32(Rstart Rp)
     R_CStackDir = 1;
     R_Home = Rp->rhome;
     if(strlen(R_Home) >= MAX_PATH) R_Suicide("Invalid R_HOME");
-    sprintf(RHome, "R_HOME=%s", R_Home);
+    snprintf(RHome, MAX_PATH+7, "R_HOME=%s", R_Home);
     for (char *p = RHome; *p; p++) if (*p == '\\') *p = '/';
     putenv(RHome);
     strcpy(UserRHome, "R_USER=");
@@ -858,7 +858,7 @@ int cmdlineoptions(int ac, char **av)
     R_Home = getRHOME(3);
     /* need this for moduleCdynload for iconv.dll */
     InitFunctionHashing();
-    sprintf(RHome, "R_HOME=%s", R_Home);
+    snprintf(RHome, MAXPATH+7, "R_HOME=%s", R_Home);
     putenv(RHome);
     BindDomain(R_Home);
 
@@ -961,7 +961,8 @@ int cmdlineoptions(int ac, char **av)
     if (q && q[0]) {
 	value = R_Decode2Long(q, &ierr);
 	if(ierr || value < 32 * Mega || value > Virtual) {
-	    sprintf(s, _("WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"));
+	    snprintf(s, 1024,
+		     _("WARNING: R_MAX_MEM_SIZE value is invalid: ignored\n"));
 	    R_ShowMessage(s);
 	} else R_max_memory = value;
     }
@@ -999,20 +1000,24 @@ int cmdlineoptions(int ac, char **av)
 		value = R_Decode2Long(p, &ierr);
 		if(ierr) {
 		    if(ierr < 0)
-			sprintf(s, _("WARNING: --max-mem-size value is invalid: ignored\n"));
+			snprintf(s, 1024,
+				 _("WARNING: --max-mem-size value is invalid: ignored\n"));
 		    else
-			sprintf(s, _("WARNING: --max-mem-size=%lu%c: too large and ignored\n"),
+			snprintf(s, 1024,
+				 _("WARNING: --max-mem-size=%lu%c: too large and ignored\n"),
 				(unsigned long) value,
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K': 'G'));
 		    R_ShowMessage(s);
 		} else if (value < 32 * Mega) {
-		    sprintf(s, _("WARNING: --max-mem-size=%4.1fM: too small and ignored\n"),
-			    value/(1024.0 * 1024.0));
+		    snprintf(s, 1024,
+			     _("WARNING: --max-mem-size=%4.1fM: too small and ignored\n"),
+			     value/(1024.0 * 1024.0));
 		    R_ShowMessage(s);
 		} else if (value > Virtual) {
-		    sprintf(s, _("WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"),
-			    value/(1024.0 * 1024.0),
-			    (unsigned int) (Virtual/(1024.0 * 1024.0)));
+		    snprintf(s, 1024,
+			     _("WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"),
+			     value/(1024.0 * 1024.0),
+			     (unsigned int) (Virtual/(1024.0 * 1024.0)));
 		    R_max_memory = Virtual;
 		    R_ShowMessage(s);
 		} else
@@ -1100,8 +1105,8 @@ int cmdlineoptions(int ac, char **av)
 		}
 	    }
 	    /* in case getpid() is not unique -- has been seen under Windows */
-	    sprintf(ifile, "%s/Rscript%x%x", tm, getpid(), 
-		    (unsigned int) GetTickCount());
+	    snprintf(ifile, 1024, "%s/Rscript%x%x", tm, getpid(), 
+		     (unsigned int) GetTickCount());
 	    ifp = fopen(ifile, "w+b");
 	    if(!ifp) R_Suicide(_("creation of tmpfile failed -- set TMPDIR suitably?"));
 	}

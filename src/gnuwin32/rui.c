@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004--2011  The R Foundation
+ *  Copyright (C) 2004--2013  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -395,7 +395,7 @@ static void menufncomplete(control m)
 	check(mfncomplete);
 	filename_completion_on = 1;
     }
-    sprintf(cmd, "utils::rc.settings(files=%s)", c0);
+    snprintf(cmd, 200, "utils::rc.settings(files=%s)", c0);
     consolecmd(RConsole, cmd);
 
 }
@@ -663,10 +663,10 @@ static void menuabout(control m)
 
 
     PrintVersionString(s2, 256);
-    sprintf(s, "%s\n%s %s %s",
-	    s2,
-	    "Copyright (C)", R_YEAR,
-	    "The R Foundation for Statistical Computing");
+    snprintf(s, 256, "%s\n%s %s %s",
+	     s2,
+	     "Copyright (C)", R_YEAR,
+	     "The R Foundation for Statistical Computing");
     askok(s);
 /*    show(RConsole); */
 }
@@ -775,16 +775,16 @@ void readconsolecfg()
 {
     char  fn[128];
     int   sty = Plain;
-    char  optf[PATH_MAX];
+    char  optf[PATH_MAX+1];
 
     struct structGUI gui;
 
     getDefaults(&gui);
 
     if (R_LoadRconsole) {
-	sprintf(optf, "%s/Rconsole", getenv("R_USER"));
+	snprintf(optf, PATH_MAX+1, "%s/Rconsole", getenv("R_USER"));
 	if (!loadRconsole(&gui, optf)) {
-	    sprintf(optf, "%s/etc/Rconsole", getenv("R_HOME"));
+	    snprintf(optf, PATH_MAX+1, "%s/etc/Rconsole", getenv("R_HOME"));
 	    if (!loadRconsole(&gui, optf)) {
 		app_cleanup();
 		RConsole = NULL;
@@ -819,7 +819,7 @@ void readconsolecfg()
 
     if(strlen(gui.language)) {
 	char *buf = malloc(50);
-	sprintf(buf, "LANGUAGE=%s", gui.language);
+	snprintf(buf, 50, "LANGUAGE=%s", gui.language);
 	putenv(buf);
     }
     setconsoleoptions(fn, sty, gui.pointsize, gui.crows, gui.ccols,
@@ -1259,7 +1259,7 @@ char *getusermenuname(int pos) {
 menuItems *wingetmenuitems(const char *mname, char *errmsg) {
     menuItems *items;
     char mitem[1002], *p, *q, *r;
-    int i,j=0;
+    int i,j = 0;
 
     q = (char *)malloc(1000 * sizeof(char));
     r = (char *)malloc(1000 * sizeof(char));
@@ -1291,7 +1291,7 @@ menuItems *wingetmenuitems(const char *mname, char *errmsg) {
 	/* determined if this is say item 'foo' from menu 'Blah/bar' */
 	/* or item 'bar/foo' from menu 'Blah'.  Check this manually */
 	/* by adding the item label to the menu we're looking for. */
-	sprintf(r, "%s%s", mitem, umitems[i]->m->text);
+	snprintf(r, 1000, "%s%s", mitem, umitems[i]->m->text);
 	if (strcmp(r, p) != 0)
 	    continue;
 
