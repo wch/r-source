@@ -89,7 +89,8 @@
   \item{dispersion}{either the supplied argument or the inferred/estimated
     dispersion if the latter is \code{NULL}.}
   \item{df}{a 3-vector of the rank of the model and the number of
-    residual degrees of freedom, plus number of non-aliased coefficients.}
+    residual degrees of freedom, plus number of coefficients (including
+    aliased ones).}
   \item{cov.unscaled}{the unscaled (\code{dispersion = 1}) estimated covariance
     matrix of the estimated coefficients.}
   \item{cov.scaled}{ditto, scaled by \code{dispersion}.}

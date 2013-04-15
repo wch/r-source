@@ -1,12 +1,12 @@
 % File src/library/utils/man/combn.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012 R Core Team
+% Copyright 2012-3 R Core Team
 % Distributed under GPL 2 or later
 
 \name{globalVariables}
 \alias{globalVariables}
 \title{
-Declare Variables to be Treated as Global in Checking a Package
+  Declare Variables to be Treated as Global in Checking a Package
 }
 \description{
   The names supplied are of functions or other objects that should be
@@ -48,6 +48,9 @@ globalVariables(names, package, add = TRUE)
   The check command, as implemented in package \code{utils}, queries the
   global variables list before checking the \R{} source code in the
   package for possible problems.
+
+  This was introduced in \R 2.15.1 so should be used conditionally: see
+  the example.
 }
 \value{
   The current list of declared global variables, possibly modified by
@@ -58,18 +61,18 @@ globalVariables(names, package, add = TRUE)
 }
 \note{
   The global variables list really belongs to a restricted scope (a
-  function or a group of method definitions, for example) rather than the
-  package as a whole.  However, implementing finer control would require changes
-  in \code{check} and/or in \code{codetools}, so in this version the
-  information is stored at the package level.
+  function or a group of method definitions, for example) rather than
+  the package as a whole.  However, implementing finer control would
+  require changes in \code{check} and/or in \code{codetools}, so in this
+  version the information is stored at the package level.
 }
 
 \examples{
 \dontrun{
 ## assume your package has some code that assigns ".obj1" and ".obj2"
-## but not in a way that codetools can find.  In the same source file
-## (to remind you that you did it) add:
-utils::globalVariables(c(".obj1", "obj2"))
+## but not in a way that codetools can find.
+## In the same source file (to remind you that you did it) add:
+if(getRversion() >= "2.15.1")  utils::globalVariables(c(".obj1", "obj2"))
 }
 }
 \keyword{ packages }

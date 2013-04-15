@@ -1,6 +1,6 @@
 % File src/library/base/man/basename.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{basename}
@@ -34,21 +34,25 @@ dirname(path)
   separator, but \code{dirname} will return a path using \code{/}
   (except if on a network share, when the leading \code{\\\\} will be
   preserved).  Expect these only to be able to handle complete
-  paths, and not for example just a share or a drive.
+  paths, and not for example just a network share or a drive.
 
-  UTF-8-encoded dirnames not valid in the current locale can be used.
+  UTF-8-encoded path names not valid in the current locale can be used.
 }
 \note{
   These are not wrappers for the POSIX system functions of the same
   names: in particular they do \strong{not} have the special handling of
-  the path \code{"/"} and of returning \code{"."} for empty strings in
-  \code{basename}.
+  the path \code{"/"} and of returning \code{"."} for empty strings.
 }
 \value{
   A character vector of the same length as \code{path}.  A zero-length
   input will give a zero-length output with no error.
 
+  Paths not containing any separators are taken to be in the current
+  directory, so \code{dirname} returns \code{"."}.
+
   If an element of \code{path} is \code{\link{NA}}, so is the result.
+
+  \code{""} is not a valid pathname, but is returned unchanged.
 }
 \seealso{
   \code{\link{file.path}}, \code{\link{path.expand}}.

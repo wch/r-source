@@ -534,6 +534,9 @@ function(x, force = FALSE)
 
 bibentry_attribute_names <-
     c("bibtype", "textVersion", "header", "footer", "key")
+    
+bibentry_list_attribute_names <-
+    c("mheader", "mfooter")
 
 .bibentry_get_key <-
 function(x)
@@ -546,7 +549,7 @@ function(x)
 
 `[[.bibentry` <-
 `[.bibentry` <-
-function(x, i)
+function(x, i, drop = TRUE)
 {
     if(!length(x)) return(x)
 
@@ -565,6 +568,8 @@ function(x, i)
         warning("subscript out of bounds")
         y <- y[ok]
     }
+    if(!drop)
+        attributes(y) <- attributes(x)[bibentry_list_attribute_names]
     class(y) <- cl
     y
 }
@@ -587,12 +592,13 @@ function(style)
 }
 
 format.bibentry <-
-    function(x, style = "text", .bibstyle = NULL,
-	     citation.bibtex.max = getOption("citation.bibtex.max", 1), ...)
+function(x, style = "text", .bibstyle = NULL,
+         citation.bibtex.max = getOption("citation.bibtex.max", 1),
+         sort = FALSE, ...)
 {
     style <- .bibentry_match_format_style(style)
 
-    x <- sort(x, .bibstyle = .bibstyle)
+    if(sort) x <- sort(x, .bibstyle = .bibstyle)
     x$.index <- as.list(seq_along(x))
 
     .format_bibentry_via_Rd <- function(f) {
@@ -708,7 +714,8 @@ function(x, more = list())
     x
 }
 
-print.bibentry <- function(x, style = "text", .bibstyle = NULL, ...)
+print.bibentry <-
+function(x, style = "text", .bibstyle = NULL, ...)
 {
     style <- .bibentry_match_format_style(style)
 
@@ -966,9 +973,12 @@ function(object, ...)
 }
 
 sort.bibentry <-
-function(x, decreasing = FALSE, .bibstyle = NULL, ...)
-    x[ order( tools::bibstyle(.bibstyle)$sortKeys(x),
-              decreasing = decreasing) ]
+function(x, decreasing = FALSE, .bibstyle = NULL, drop = FALSE, ...)
+{
+    x[order(tools::bibstyle(.bibstyle)$sortKeys(x),
+            decreasing = decreasing),
+      drop = drop]
+}
 
 rep.bibentry <-
 function(x, ...)
@@ -1171,7 +1181,8 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     .citation(rval)
 }
 
-.citation <- function(x)
+.citation <-
+function(x)
 {
     class(x) <- c("citation", "bibentry")
     x
@@ -1294,7 +1305,9 @@ function(x)
 
 # Cite using the default style (which is usually citeNatbib)
 
-cite <- function(keys, bib, ...) {
+cite <-
+function(keys, bib, ...)
+{
     fn <- tools::bibstyle()$cite
     if (is.null(fn))
     	fn <- citeNatbib
@@ -1305,7 +1318,8 @@ cite <- function(keys, bib, ...) {
 # choose some of these options and just have a cite(keys, bib, previous)
 # function within it.
 
-citeNatbib <- local({
+citeNatbib <-
+local({
     cited <- c()
 
     function(keys, bib, textual = FALSE, before = NULL, after = NULL,

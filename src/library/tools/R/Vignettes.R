@@ -30,8 +30,8 @@ vignette_type <- function(file) {
     unname(type)
 }
 
-# Locates the vignette weave, tangle and texi2pdf product(s) based on the 
-# vignette name.   All such products must have the name as their filename 
+# Locates the vignette weave, tangle and texi2pdf product(s) based on the
+# vignette name.   All such products must have the name as their filename
 # prefix (i.e. "^<name>").
 # For weave, final = TRUE will look for <name>.pdf and <name>.pdf, whereas
 # with final = FALSE it also looks for <name>.tex (if <name>.pdf is also
@@ -54,7 +54,7 @@ find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), f
         exts <- "pdf"
     }
     exts <- c(exts, toupper(exts))
-    pattern <- sprintf("^%s%s[.](%s)$", name, if (main) "" else ".*", 
+    pattern <- sprintf("^%s%s[.](%s)$", name, if (main) "" else ".*",
                                           paste(exts, collapse = "|"))
 
     output0 <- list.files(path = dir, all.files = FALSE, full.names = FALSE, no..=TRUE)
@@ -144,14 +144,16 @@ function(package, dir, lib.loc = NULL,
         name <- vigns$names[i]
     	engine <- vignetteEngine(vigns$engines[i])
 
-        if(tangle)
+        if(tangle) {
+            message("  Running ", sQuote(file))
             .eval_with_capture({
                 result$tangle[[file]] <- tryCatch({
                     engine$tangle(file, quiet = TRUE)
-                    setwd(startdir) # in case a vignette changes the working dir 
+                    setwd(startdir) # in case a vignette changes the working dir
                     find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
                 }, error = function(e) e)
             })
+        }
         if(weave) {
             setwd(startdir) # in case a vignette changes the working dir then errored out
             .eval_with_capture({
@@ -383,7 +385,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
 
     class(z) <- "pkgVignettes"
     z
-} 
+}
 
 
 ### * buildVignettes
@@ -397,7 +399,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(invisible())
 
-    ## Assert that duplicated vignette names do not exist, e.g. 
+    ## Assert that duplicated vignette names do not exist, e.g.
     ## 'vig' and 'vig' from 'vig.Rnw' and 'vig.Snw'.
     dups <- duplicated(vigns$names)
     if (any(dups)) {
@@ -495,7 +497,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
             ## some packages, e.g. SOAR, create directories
             unlink(f[newer], recursive = TRUE)
         }
-        f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), 
+        f <- setdiff(list.files(all.files = TRUE, no.. = TRUE),
                      c(keep, origfiles))
         f <- f[file_test("-f", f)]
         file.remove(f)
@@ -627,7 +629,7 @@ function(vigns)
     if(nvigns == 0L) {
         out <- data.frame(File = character(),
                           Title = character(),
-                          PDF = character(), 	
+                          PDF = character(),
                           stringsAsFactors = FALSE)
         out$Depends <- list()
         out$Keywords <- list()
@@ -890,7 +892,7 @@ vignetteEngine <- local({
                 if (is.null(result))
                     stop("Vignette engine ", sQuote(name), " is not registered")
             } else {
-                for (pkg in package) { 
+                for (pkg in package) {
                     key <- engineKey(name, pkg)
                     nameT <- paste(key, collapse = "::")
                     result <- registry[[nameT]]
@@ -900,7 +902,7 @@ vignetteEngine <- local({
                 if (is.null(result))
                     stop("Vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse = ", "))
             }
-   
+
             if (!is.null(package) && !is.element(result$package, package))
                 stop("Vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse = ", "))
         }
@@ -940,7 +942,7 @@ vignetteEngine <- local({
         result
     }
 
-    setEngine(name = "Sweave", package = "utils", pattern = NULL, 
+    setEngine(name = "Sweave", package = "utils", pattern = NULL,
               weave = function(...) utils::Sweave(...),
               tangle = function(...) utils::Stangle(...))
 
@@ -974,7 +976,7 @@ function(pkgdir, mustwork = TRUE)
 
     for (pkg in pkgs) {
         res <- try(loadNamespace(pkg), silent = TRUE)
-        if (mustwork && inherits(res, "try-error")) 
+        if (mustwork && inherits(res, "try-error"))
             stop(gettextf("vignette builder '%s' not found", pkg), domain = NA)
     }
     pkgs

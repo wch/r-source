@@ -1,8 +1,8 @@
 %%
 %% This is file `jss.cls',
-\def\fileversion{2.1}
+\def\fileversion{2.2}
 \def\filename{jss}
-\def\filedate{2012/06/07}
+\def\filedate{2013/04/06}
 %%
 %% Package `jss' to use with LaTeX2e for JSS publications (http://www.jstatsoft.org/)
 %% License: GPL-2
@@ -51,7 +51,7 @@
 \ProcessOptions
 \LoadClass[11pt,a4paper,twoside]{article}
 %% required packages
-\RequirePackage{graphicx,a4wide,color,ae,fancyvrb}
+\RequirePackage{graphicx,color,ae,fancyvrb}
 \RequirePackage[T1]{fontenc}
 \IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
 %% bibliography
@@ -62,6 +62,17 @@
 \fi
 \bibpunct{(}{)}{;}{a}{}{,}
 \bibliographystyle{jss}
+%% page layout
+\topmargin 0pt
+\textheight 46\baselineskip
+\advance\textheight by \topskip
+\oddsidemargin 0.1in
+\evensidemargin 0.15in
+\marginparwidth 1in
+\oddsidemargin 0.125in
+\evensidemargin 0.125in
+\marginparwidth 0.75in
+\textwidth 6.125in
 %% paragraphs
 \setlength{\parskip}{0.7ex plus0.1ex minus0.1ex}
 \setlength{\parindent}{0em}

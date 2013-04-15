@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *  Copyright (C) 2002--2009  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2977,7 +2977,8 @@ SEXP C_locator(SEXP call, SEXP op, SEXP args, SEXP rho)
     char type = 'p';
     double xp, yp, xold=0, yold=0;
     pGEDevDesc dd = GEcurrentDevice();
-
+    SEXP name = CAR(args);
+    
     args = CDR(args);
     /* If replaying, just draw the points and lines that were recorded */
     if (call == R_NilValue) {
@@ -3040,15 +3041,18 @@ SEXP C_locator(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SETCAR(ans, x);
 	SETCADR(ans, y);
 	SETCADDR(ans, nobs);
-	PROTECT(saveans = allocList(4));
-	SETCAR(saveans, x);
-	SETCADR(saveans, y);
-	SETCADDR(saveans, nobs);
-	SETCADDDR(saveans, CAR(args));
-	/* Record the points and lines that were drawn in the display list */
-	// FIXME: should only be if recording
-	GErecordGraphicOperation(op, saveans, dd);
-	UNPROTECT(5);
+	if (GRecording(call, dd)) {
+	    PROTECT(saveans = allocList(5));
+	    SETCAR(saveans, name);
+	    SETCADR(saveans, x);
+	    SETCADDR(saveans, y);
+	    SETCADDDR(saveans, nobs);
+	    SETCAD4R(saveans, CAR(args));
+	    /* Record the points and lines that were drawn in the display list */
+	    GErecordGraphicOperation(op, saveans, dd);
+	    UNPROTECT(1);
+	}
+	UNPROTECT(4);
 	return ans;
     }
 }
@@ -3090,7 +3094,8 @@ SEXP C_identify(SEXP call, SEXP op, SEXP args, SEXP rho)
     double xi, yi, xp, yp, d, dmin, offset, tol;
     int atpen, i, imin, k, n, nl, npts, plot, posi, warn;
     pGEDevDesc dd = GEcurrentDevice();
-
+    SEXP name = CAR(args);
+    
     args = CDR(args);
     /* If we are replaying the display list, then just redraw the
        labels beside the identified points */
@@ -3256,20 +3261,23 @@ SEXP C_identify(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ans = allocList(2));
 	SETCAR(ans, ind);
 	SETCADR(ans, pos);
-	PROTECT(saveans = allocList(7));
-	SETCAR(saveans, ind);
-	SETCADR(saveans, pos);
-	SETCADDR(saveans, x);
-	SETCADDDR(saveans, y);
-	SETCAD4R(saveans, Offset);
-	SETCAD4R(CDR(saveans), l);
-	SETCAD4R(CDDR(saveans), ScalarLogical(plot));
+	if (GRecording(call, dd)) {
+	    /* If we are recording, save enough information to be able to
+	       redraw the text labels beside identified points */
+	    PROTECT(saveans = allocList(8));
+	    SETCAR(saveans, name);
+	    SETCADR(saveans, ind);
+	    SETCADDR(saveans, pos);
+	    SETCADDDR(saveans, x);
+	    SETCAD4R(saveans, y);
+	    SETCAR(nthcdr(saveans,5), Offset);
+	    SETCAR(nthcdr(saveans,6), l);
+	    SETCAR(nthcdr(saveans,7), ScalarLogical(plot));
 
-	/* If we are recording, save enough information to be able to
-	   redraw the text labels beside identified points */
-	if (GRecording(call, dd))
 	    GErecordGraphicOperation(op, saveans, dd);
-	UNPROTECT(6);
+	    UNPROTECT(1);
+	}
+	UNPROTECT(5);
 
 	return ans;
     }

@@ -29,3 +29,20 @@ z <- as.POSIXct(2^31+c(0.4, 0.8), origin=ISOdatetime(1970,1,1,0,0,0,tz="GMT"))
 zz <- format(z)
 stopifnot(zz[1] == zz[2])
 ## printed form rounded not truncated in R < 3.0.0
+
+## origin coerced in tz and not GMT by as.POSIXct.numeric()
+x <- as.POSIXct(1262304000, origin="1970-01-01", tz="EST")
+y <- as.POSIXct(1262304000, origin=.POSIXct(0, "GMT"), tz="EST")
+stopifnot(identical(x, y))
+
+## Handling records with quotes in names
+x <- c("a b' c",
+"'d e' f g",
+"h i 'j",
+"k l m'")
+y <- data.frame(V1 = c("a", "d e", "h"), V2 = c("b'", "f", "i"), V3 = c("c", "g", "j\nk l m")) 
+f <- tempfile()
+writeLines(x, f)
+stopifnot(identical(count.fields(f), c(3L, 3L, NA_integer_, 3L)))
+stopifnot(identical(read.table(f), y))
+stopifnot(identical(scan(f, ""), as.character(t(as.matrix(y)))))

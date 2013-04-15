@@ -1,6 +1,6 @@
 % File src/library/base/man/quit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quit}
@@ -79,13 +79,19 @@ quit(save = "default", status = 0, runLast = TRUE)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
-\seealso{\code{\link{.First}} for setting things on startup.
+\note{
+  The \code{R.app} GUI on OS X has its own version of these functions
+  with slightly different behaviour for the \code{save} argument (the
+  \sQuote{Startup} preferences for this action are taken into account).
+}
+\seealso{
+  \code{\link{.First}} for setting things on startup.
 }
 \examples{
 \dontrun{## Unix-flavour example
 .Last <- function() {
-  cat("Now sending PostScript graphics to the printer:\n")
-  system("lpr Rplots.ps")
+  cat("Now sending PDF graphics to the printer:\n")
+  system("lpr Rplots.pdf")
   cat("bye bye...\n")
 }
 quit("yes")}

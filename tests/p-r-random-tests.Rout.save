@@ -1,7 +1,6 @@
 
-R version 3.0.0 beta (2013-03-23 r62377) -- "Masked Marvel"
+R version 3.0.0 RC (2013-03-29 r62438) -- "Masked Marvel"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -279,6 +278,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.336 0.002 1.341 0 0 
+Time elapsed:  1.231 0.002 1.236 0 0 
 > 
 > 

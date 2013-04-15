@@ -39,15 +39,6 @@ massageExamples <-
     cat(lines, sep = "\n", file = out)
     if(.Platform$OS.type == "windows")
         cat("options(pager = \"console\")\n", file = out)
-
-    if(pkg == "tcltk") {
-        if(capabilities("tcltk")) cat("require('tcltk')\n\n", file = out)
-        else cat("q()\n\n", file = out)
-    } else if(pkg != "base")
-        cat("library('", pkg, "')\n\n", sep = "", file = out)
-
-    cat("base::assign(\".oldSearch\", base::search(), pos = 'CheckExEnv')\n", file = out)
-    ## cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n", file = out)
     if(addTiming) {
         ## adding timings
         cat("base::assign(\".ExTimings\", \"", pkg,
@@ -57,10 +48,20 @@ massageExamples <-
             "function(x) {",
             "  if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]",
             "  if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]",
-            "  format(x[1L:3L])",
+            "  format(x[1L:3L], digits = 7L)",
             "},",
             "pos = 'CheckExEnv')\n", sep = "\n", file = out)
+        cat("### * </HEADER>\n", file = out)
     }
+
+    if(pkg == "tcltk") {
+        if(capabilities("tcltk")) cat("require('tcltk')\n\n", file = out)
+        else cat("q()\n\n", file = out)
+    } else if(pkg != "base")
+        cat("library('", pkg, "')\n\n", sep = "", file = out)
+
+    cat("base::assign(\".oldSearch\", base::search(), pos = 'CheckExEnv')\n", file = out)
+    ## cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n", file = out)
     for(file in files) {
         nm <- sub("\\.R$", "", basename(file))
         ## make a syntactic name out of the filename
@@ -100,7 +101,7 @@ massageExamples <-
         }
 
         if(addTiming) {
-            cat("\nbase::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
+            cat("base::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
             cat("base::cat(\"", nm, "\", base::get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=base::get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
         }
         if(have_par)
@@ -115,7 +116,8 @@ massageExamples <-
 }
 
 ## compares 2 files
-Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, Log=FALSE)
+Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
+                  nullPointers=TRUE, Log = FALSE)
 {
     clean <- function(txt)
     {
@@ -125,9 +127,14 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
                               txt, perl = TRUE, useBytes = TRUE)) &&
            length(bot <- grep("quit R.$", txt, perl = TRUE, useBytes = TRUE)))
             txt <- txt[-(top[1L]:bot[1L])]
+        ## for massageExamples()
+        ll <- grep("</HEADER>", txt, fixed = TRUE, useBytes = TRUE)
+        if(length(ll)) txt <- txt[-seq_len(max(ll))]
+        ll <- grep("<FOOTER>", txt, fixed = TRUE, useBytes = TRUE)
+        if(length(ll)) txt <- txt[seq_len(max(ll) - 1L)]
         ## remove BATCH footer
         nl <- length(txt)
-        if(nl > 3L && grepl("^> proc.time()", txt[nl-2L])) txt <- txt[1:(nl-3L)]
+        if(nl > 3L && grepl("^> proc.time\\(\\)", txt[nl-2L])) txt <- txt[1:(nl-3L)]
         if (nullPointers)
         ## remove pointer addresses from listings
             txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
@@ -153,6 +160,9 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
     right <- clean(readLines(to))
     if (forEx) {
         left <- clean2(left)
+        ## remove lines from R CMD check --timings
+        left <- grep("[.](format_|)ptime", left, value = TRUE,
+                     invert = TRUE, useBytes = TRUE)
         right <- clean2(right)
     }
     if (!useDiff && (length(left) == length(right))) {
@@ -187,7 +197,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
             tf <- tempfile()
             status <- system2("diff", c("-bw", shQuote(a), shQuote(b)),
                               stdout = tf, stderr = tf)
-            list(status=status, out=c(out, readLines(tf)))
+            list(status = status, out = c(out, readLines(tf)))
         } else system(paste("diff -bw", shQuote(a), shQuote(b)))
     }
 }
@@ -500,7 +510,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
                 stop("file ", sQuote(f), " not found", domain = NA)
             message("creating ", sQuote(f), domain = NA)
             ## FIXME: this creates an extra trailing space compared to
-            ## .Rin.R rule
+            ## the .Rin.R rule
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                          "--vanilla --slave -f", fin)
             if (system(cmd))
@@ -512,11 +522,13 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla --no-timing",
                      shQuote(f), shQuote(outfile))
-        extra <- paste("LANGUAGE=C", "R_DEFAULT_PACKAGES=", "SRCDIR=.")
+        extra <- paste("LANGUAGE=en", "LC_COLLATE=C",
+                       "R_DEFAULT_PACKAGES=", "SRCDIR=.")
         if (inC) extra <- paste(extra,  "LC_ALL=C")
         if (.Platform$OS.type == "windows") {
             Sys.setenv(LANGUAGE="C")
             Sys.setenv(R_DEFAULT_PACKAGES="")
+            Sys.setenv(LC_COLLATE="C")
             Sys.setenv(SRCDIR=".")
             ## ignore inC and hope
         } else cmd <- paste(extra, cmd)

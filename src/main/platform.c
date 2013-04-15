@@ -2345,23 +2345,25 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 		wcsncpy(from,
 			filenameToWchar(STRING_ELT(fn, i), TRUE),
 			PATH_MAX);
-		/* If there was a trailing sep, this is a mistake */
-		p = from + (wcslen(from) - 1);
-		if(*p == L'\\') *p = L'\0';
-		p = wcsrchr(from, L'\\') ;
-		if (p) {
-		    wcsncpy(name, p+1, PATH_MAX);
-		    *(p+1) = L'\0';
-		} else {
-		    if(wcslen(from) > 2 && from[1] == L':') {
-			wcsncpy(name, from+2, PATH_MAX);
-			from[2] = L'\0';
+		if(wcslen(from)) {
+		    /* If there was a trailing sep, this is a mistake */
+		    p = from + (wcslen(from) - 1);
+		    if(*p == L'\\') *p = L'\0';
+		    p = wcsrchr(from, L'\\') ;
+		    if (p) {
+			wcsncpy(name, p+1, PATH_MAX);
+			*(p+1) = L'\0';
 		    } else {
-			wcsncpy(name, from, PATH_MAX);
-			wcsncpy(from, L".\\", PATH_MAX);
+			if(wcslen(from) > 2 && from[1] == L':') {
+			    wcsncpy(name, from+2, PATH_MAX);
+			    from[2] = L'\0';
+			} else {
+			    wcsncpy(name, from, PATH_MAX);
+			    wcsncpy(from, L".\\", PATH_MAX);
+			}
 		    }
-		}
-		nfail = do_copy(from, name, dir, over, recursive, perms, 1);
+		    nfail = do_copy(from, name, dir, over, recursive, perms, 1);
+		} else nfail = 1;
 	    } else nfail = 1;
 	    LOGICAL(ans)[i] = (nfail == 0);
 	}
@@ -2514,18 +2516,21 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 		strncpy(from,
 			R_ExpandFileName(translateChar(STRING_ELT(fn, i))),
 			PATH_MAX);
-		/* If there is a trailing sep, this is a mistake */
-		p = from + (strlen(from) - 1);
-		if(*p == '/') *p = '\0';
-		p = strrchr(from, '/') ;
-		if (p) {
-		    strncpy(name, p+1, PATH_MAX);
-		    *(p+1) = '\0';
-		} else {
-		    strncpy(name, from, PATH_MAX);
-		    strncpy(from, "./", PATH_MAX);
-		}
-		nfail = do_copy(from, name, dir, over, recursive, perms, 1);
+		size_t ll = strlen(from);
+		if (ll) {  // people do pass ""
+		    /* If there is a trailing sep, this is a mistake */
+		    p = from + (ll - 1);
+		    if(*p == '/') *p = '\0';
+		    p = strrchr(from, '/') ;
+		    if (p) {
+			strncpy(name, p+1, PATH_MAX);
+			*(p+1) = '\0';
+		    } else {
+			strncpy(name, from, PATH_MAX);
+			strncpy(from, "./", PATH_MAX);
+		    }
+		    nfail = do_copy(from, name, dir, over, recursive, perms, 1);
+		} else nfail = 1;
 	    } else nfail = 1;
 	    LOGICAL(ans)[i] = (nfail == 0);
 	}

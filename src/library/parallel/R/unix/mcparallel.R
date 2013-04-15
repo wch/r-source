@@ -20,7 +20,7 @@
 
 mcaffinity <- function(affinity = NULL) .Call(C_mc_affinity, affinity)
 
-mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affinity = NULL)
+mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affinity = NULL, mc.interactive = FALSE)
 {
     f <- mcfork()
     env <- parent.frame()
@@ -29,6 +29,9 @@ mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affini
         on.exit(mcexit(1L, structure("fatal error in wrapper code",
                                   class = "try-error")))
         if (isTRUE(mc.set.seed)) mc.set.stream()
+        mc.interactive <- as.logical(mc.interactive)
+        if (isTRUE(mc.interactive)) .Call(C_mc_interactive, TRUE)
+        if (isTRUE(!mc.interactive)) .Call(C_mc_interactive, FALSE)
         if (!is.null(mc.affinity)) .Call(C_mc_affinity, mc.affinity)
         if (isTRUE(silent)) closeStdout()
         sendMaster(try(eval(expr, env), silent = TRUE))

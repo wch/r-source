@@ -238,6 +238,7 @@ setAs <-
                stop(gettextf("'as' method should have one argument, or match the arguments of coerce(): got  (%s)",
                            paste(formalArgs(def), collapse = ", ")),
                   domain = NA)
+    ## coerce@.Data is the "prototype" from which we construct the method
         method <- as.list(coerce@.Data) # the function def'n, just to get arguments correct
         method$to <- to
         method <- as.function(method)

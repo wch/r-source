@@ -1,6 +1,6 @@
 % File src/library/utils/man/count.fields.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{count.fields}
@@ -39,6 +39,13 @@ count.fields(file, sep = "", quote = "\"'", skip = 0,
   useful in discovering problems in reading a file by that function.
 
   For the handling of comments, see \code{\link{scan}}.
+  
+  Consistent with \code{\link{scan}}, \code{count.fields} allows
+  quoted strings to contain newline characters.  In such a case the
+  starting line will have the field count recorded as \code{NA}, and
+  the ending line will include the count of all fields from the
+  beginning of the record.
+  
 }
 \value{
   A vector with the numbers of fields found.

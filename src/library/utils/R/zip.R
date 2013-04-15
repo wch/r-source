@@ -1,7 +1,7 @@
 #  File src/library/utils/R/zip.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ unzip <-
         if(list) {
             dates <- as.POSIXct(res[[3]], "%Y-%m-%d %H:%M",  tz="UTC")
             data.frame(Name = res[[1]], Length = res[[2]], Date = dates,
-                       stringsAsFactors = TRUE)
+                       stringsAsFactors = FALSE)
         } else invisible(attr(res, "extracted"))
     } else {
         WINDOWS <- .Platform$OS.type == "windows"

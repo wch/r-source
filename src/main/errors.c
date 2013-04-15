@@ -36,6 +36,13 @@
 #define min(a, b) (a<b?a:b)
 #endif
 
+#if defined(__GNUC__) && __GNUC__ >= 3
+#define NORET __attribute__((noreturn))
+#else
+#define NORET
+#endif
+
+
 /* Total line length, in chars, before splitting in warnings/errors */
 #define LONGWARN 75
 
@@ -49,7 +56,9 @@ static int inPrintWarnings = 0;
 static int immediateWarning = 0;
 
 static void try_jump_to_restart(void);
-static void jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
+// The next is crucial to the use of NORET attributes.
+static void NORET
+jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
 static void signalInterrupt(void);
 static char * R_ConciseTraceback(SEXP call, int skip);
 
@@ -569,7 +578,8 @@ static void restore_inError(void *data)
     R_Expressions = R_Expressions_keep;
 }
 
-static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
+static void NORET
+verrorcall_dflt(SEXP call, const char *format, va_list ap)
 {
     RCNTXT cntxt;
     const char *dcall;
@@ -694,7 +704,7 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
     inError = oldInError;
 }
 
-static void errorcall_dflt(SEXP call, const char *format,...)
+static void NORET errorcall_dflt(SEXP call, const char *format,...)
 {
     va_list(ap);
 
@@ -703,7 +713,7 @@ static void errorcall_dflt(SEXP call, const char *format,...)
     va_end(ap);
 }
 
-void errorcall(SEXP call, const char *format,...)
+void NORET errorcall(SEXP call, const char *format,...)
 {
     va_list(ap);
 

@@ -85,9 +85,10 @@ The current version of this document is @value{VERSION}.
 @unnumbered Acknowledgements
 
 
-The contributions of Saikat DebRoy (who wrote the first draft of a guide
-to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
-provided information on the C++ interface) are gratefully acknowledged.
+The contributions to early versions of this manual by Saikat DebRoy
+(who wrote the first draft of a guide to using @code{.Call} and
+@code{.External}) and Adrian Trapletti (who provided information on the
+C++ interface) are gratefully acknowledged.
 
 @node Creating R packages, Writing R documentation files, Acknowledgements, Top
 @chapter Creating R packages
@@ -137,45 +138,64 @@ package.  On some platforms (notably OS X and Windows) there are also
 installed package which can be unpacked rather than installing from
 sources.
 
-A package is @strong{not}@footnote{although this is common mis-usage.
-It seems to stem from S, whose analogues of @R{}'s packages were
-officially known as @emph{library sections} and later as
+A package is @strong{not}@footnote{although this is a persistent
+mis-usage.  It seems to stem from S, whose analogues of @R{}'s packages
+were officially known as @emph{library sections} and later as
 @emph{chapters}, but almost always referred to as @emph{libraries}.} a
 @emph{library}.  The latter is used in two senses in @R{} documentation.
-The first is a directory into which packages are installed, e.g.@:
+
+@itemize
+
+@item
+A directory into which packages are installed, e.g.@:
 @file{/usr/lib/R/library}: in that sense it is sometimes referred to as
 a @emph{library directory} or @emph{library tree} (since the library is
 a directory which contains packages as directories, which themselves
-contain directories).  The second sense is that used by the operating
-system, as a shared, dynamic or static library or (especially on
-Windows) a DLL, where the second L stands for `library'.  Installed
-packages may contain compiled code in what is known on most Unix-alikes
-as a @emph{shared object} and on Windows as a DLL (and used to be called
-a @emph{shared library} on some Unix-alikes).  The concept of a
-@emph{shared library} (@emph{dynamic library} on OS X) as a collection
-of compiled code to which a package might link is also used, especially
-for @R{} itself on some platforms.
+contain directories).
 
-There are a number of well-defined operations on source packages.  The
-most common is @emph{installation} which takes a source package and
+@item
+That used by the operating system, as a shared, dynamic or static
+library or (especially on Windows) a DLL, where the second L stands for
+`library'.  Installed packages may contain compiled code in what is
+known on Unix-alikes as a @emph{shared object} and on Windows as a DLL.
+The concept of a @emph{shared library} (@emph{dynamic library} on OS X)
+as a collection of compiled code to which a package might link is also
+used, especially for @R{} itself on some platforms. On most platforms
+these concepts are interchangeable (shared objects and DLL can both be
+loaded into the @R{} process and be linked against), but OS X
+distinguishes between shared objects (extension @file{.so}) and dynamic
+libraries (extension @file{.dylib}).
+
+@end itemize
+
+There are a number of well-defined operations on source packages. 
+
+@itemize
+
+@item
+The most common is @emph{installation} which takes a source package and
 installs it in a library using @command{R CMD INSTALL} or
-@code{install.packages}.  Source packages can be @emph{built}, a
-distinct concept.  This involves taking a source directory and creating
-a tarball ready for distribution, including cleaning it up and creating
-PDF documentation from any @emph{vignettes} it may contain.  Source
-packages (and most often tarballs) can be @emph{checked}, when a test
-installation is done and tested (including running its examples); also,
-the contents of the package are tested in various ways for consistency
-and portability.
+@code{install.packages}.  
 
+@item
+Source packages can be @emph{built}.  This involves taking a source
+directory and creating a tarball ready for distribution, including
+cleaning it up and creating PDF documentation from any @emph{vignettes}
+it may contain.  Source packages (and most often tarballs) can be
+@emph{checked}, when a test installation is done and tested (including
+running its examples); also, the contents of the package are tested in
+various ways for consistency and portability.
+
+@item
 @emph{Compilation} is not a correct term for a package.  Installing a
 source package which contains C, C++ or Fortran code will involve
-compiling that code.  There is also the possibility of (`byte')
-compiling the @R{} code in a package (using the facilities of package
+compiling that code.  There is also the possibility of `byte' compiling
+the @R{} code in a package (using the facilities of package
 @pkg{compiler}): already the base and recommended packages are
 byte-compiled.  At some future time this might be done routinely, so
 @emph{compiling} a package may come to mean compiling its @R{} code.
 
+@item
 It used to be unambiguous to talk about @emph{loading} an installed
 package using @code{library()}, but since the advent of package
 namespaces this has been less clear: people now often talk about
@@ -185,13 +205,15 @@ package so it becomes visible on the search path.  Function
 loaded without the package being attached (for example by calls like
 @code{splines::ns}).
 
-The option of @emph{lazy loading} of code or data is mentioned at
+@end itemize
+
+The concept of @emph{lazy loading} of code or data is mentioned at
 several points.  This is part of the installation, always selected for
-@R{} code but optional for data.  When used
-the @R{} objects of the package are created at installation time, and
-stored in a database in the @file{R} directory of the installed package,
-being loaded into the session at first use.  This makes the @R{} session
-run faster and use less (virtual) memory.
+@R{} code but optional for data.  When used the @R{} objects of the
+package are created at installation time and stored in a database in the
+@file{R} directory of the installed package, being loaded into the
+session at first use.  This makes the @R{} session start up faster and
+use less (virtual) memory.
 @ifset UseExternalXrefs
 (For technical details,
 @pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
@@ -218,15 +240,15 @@ run faster and use less (virtual) memory.
 @cindex Package structure
 
 The sources of an @R{} package consists of a subdirectory containing a
-file @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
-@file{demo}, @file{exec}, @file{inst}, @file{man}, @file{po},
-@file{src}, and @file{tests} (some of which can be missing, but which
-should not be empty).  The package subdirectory may also contain files
-@file{INDEX}, @file{NAMESPACE}, @file{configure}, @file{cleanup},
-@file{LICENSE}, @file{LICENCE} and @file{NEWS}.  Other files such as
-@file{INSTALL} (for non-standard installation instructions),
-@file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
-useful to end users.
+files @file{DESCRIPTION} and @file{NAMESPACE}, and the subdirectories
+@file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
+@file{man}, @file{po}, @file{src}, @file{tests} and @file{vignettes}
+(some of which can be missing, but which should not be empty).  The
+package subdirectory may also contain files @file{INDEX},
+@file{configure}, @file{cleanup}, @file{LICENSE}, @file{LICENCE} and
+@file{NEWS}.  Other files such as @file{INSTALL} (for non-standard
+installation instructions), @file{README} or @file{ChangeLog} will be
+ignored by @R{}, but may be useful to end users.
 
 Except where specifically mentioned,@footnote{currently, top-level files
 @file{.Rbuildignore} and @file{.Rinstignore}, and
@@ -277,10 +299,8 @@ utilities do not accept spaces in file paths): non-English alphabetic
 characters cannot be guaranteed to be supported in all locales.  It
 would be good practice to avoid the shell metacharacters
 @code{()@{@}'[]$~}.  In addition, packages are normally distributed as
-tarballs, and these have a limit on path lengths (including the package
-name): for maximal portability 100 bytes, and less portably up to 256
-bytes with restrictions including a final component of no more than 100
-bytes.
+tarballs, and these have a limit on path lengths: for maximal
+portability 100 bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
@@ -756,6 +776,9 @@ the comparison operators @samp{<}, @samp{<=}, @samp{>}, @samp{>=},
 combined @emph{via} @samp{,} (see below for an example).  For versioned
 licenses, one can also specify the name followed by the version, or
 combine an existing abbreviation and the version with a @samp{-}.
+
+Abbreviations @code{GPL} and @code{LGPL} are ambiguous and usually taken
+to mean any version of the license: but it is better not to use them.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
 to a file named @file{LICENSE} or @file{LICENCE} in the package (source
@@ -765,12 +788,15 @@ The string @samp{Unlimited}, meaning that there are no restrictions on
 distribution or use other than those imposed by relevant laws (including
 copyright laws).
 @end itemize
-If a package license @emph{restricts} a base license (where permitted, e.g.,
-using GPL-3 or AGPL-3 with an attribution clause), the additional terms
-should be placed in file @file{LICENSE} (or @file{LICENCE}), and the
-string @samp{+ file LICENSE} (or @samp{+ file LICENCE}, respectively)
-should be appended to the corresponding individual license
-specification.
+
+If a package license @emph{restricts} a base license (where permitted,
+e.g., using GPL-3 or AGPL-3 with an attribution clause), the additional
+terms should be placed in file @file{LICENSE} (or @file{LICENCE}), and
+the string @samp{+ file LICENSE} (or @samp{+ file LICENCE},
+respectively) should be appended to the corresponding individual license
+specification.  Note that several commonly used licenses do not permit
+restrictions: this includes GPL-2 and hence any specification which
+includes it.
 
 Examples of standardized specifications include
 @example
@@ -778,7 +804,7 @@ License: GPL-2
 License: GPL (>= 2) | BSD
 License: LGPL (>= 2.0, < 3) | Mozilla Public License
 License: GPL-2 | file LICENCE
-License: Artistic-1.0 | AGPL-3 + file LICENSE
+License: Artistic-2.0 | AGPL-3 + file LICENSE
 @end example
 Please note in particular that ``Public domain'' is not a valid license,
 since it is not recognized in some jurisdictions.
@@ -902,10 +928,9 @@ all user-level objects in a package should be documented; if a package
 only, it should provide a file @file{@var{pkg}-internal.Rd} which
 documents all such objects, and clearly states that these are not meant
 to be called by the user.  See e.g.@: the sources for package @pkg{grid}
-in the @R{} distribution for an example.  Note that packages which use
-internal objects extensively should not export those objects from their
-namespace, when they do not need to be documented (@pxref{Package
-namespaces}).
+in the @R{} distribution.  Note that packages which use internal objects
+extensively should not export those objects from their namespace, when
+they do not need to be documented (@pxref{Package namespaces}).
 
 Having a @file{man} directory containing no documentation files may give
 an installation error.
@@ -1115,7 +1140,7 @@ note that @file{.csv} is @strong{not} the standard@footnote{e.g@:
 not be hidden (have names starting with a dot).  Note that @R{} code
 should be ``self-sufficient'' and not make use of extra functionality
 provided by the package, so that the data file can also be used without
-having to load the package.
+having to load the package or its namespace.
 
 Images (extensions @file{.RData} or @file{.rda}) can contain references
 to the namespaces of packages that were used to create them.  Preferably
@@ -1145,10 +1170,9 @@ implications of large datasets for your users: they can make packages
 very slow to download and use up unwelcome amounts of storage space, as
 well as taking many seconds to load.  It is normally best to distribute
 large datasets as @file{.rda} images prepared by @code{save(, compress =
-TRUE)} (the default): there is no excuse for distributing ASCII saves.
-Using @command{bzip2} or @command{xz} compression will usually reduce
-the size of both the package tarball and the installed package, in some
-cases by a factor of two or more.
+TRUE)} (the default).  Using @command{bzip2} or @command{xz} compression
+will usually reduce the size of both the package tarball and the
+installed package, in some cases by a factor of two or more.
 
 Package @pkg{tools} has a couple of functions to help with data images:
 @code{checkRdaFiles} reports on the way the image was saved, and
@@ -1166,7 +1190,8 @@ is best is to try them all and look at the size of the
 @file{@var{pkgname}/data/Rdata.rdb} file.
 
 Lazy-loading is not supported for very large datasets (those which when
-serialized exceed 2GB).
+serialized exceed 2GB, the limit for the format on 32-bit platforms and
+all platforms prior to @R{} 3.0.0).
 
 @node Non-R scripts in packages,  , Data in packages, Package structure
 @subsection Non-R scripts in packages
@@ -1185,18 +1210,45 @@ directory, for example @file{AMA/inst/java}, @file{WriteXLS/inst/Perl},
 
 If your package requires one of these interpreters or an extension then
 this should be declared in the @samp{SystemRequirements} field of its
-@file{DESCRIPTION} file.  Windows users should be aware that the Tcl
-extensions @samp{BWidget} and @samp{Tktable} which are included with the
-@R{} for Windows installer @emph{are} extensions and do need to be
-declared.  @samp{Tktable} does ship as part of the Tcl/Tk provided on
-CRAN for OS X, but you will need to tell your users how to make use
-of it:
+@file{DESCRIPTION} file.  Windows and Mac users should be aware that the
+Tcl extensions @samp{BWidget} and @samp{Tktable} which are currently
+included with the @R{} for Windows and OS X installers @emph{are}
+extensions and do need to be declared.  @samp{Tktable} did ship as part
+of the X11-based Tcl/Tk provided on @acronym{CRAN} for OS X prior to
+@R{} 3.0.0, but you will need to tell your users how to make use of it:
 
 @example
 > addTclPath('/usr/local/lib/Tktable2.9')
 > tclRequire('Tktable')
 <Tcl> 2.9
 @end example
+
+@noindent
+It should work with no further user action as from @R{} 3.0.0.
+
+@samp{BWidget} needs to be installed by the user for OS X with @R{}
+2.x.y and on other OSes.  This is fairly easy to do: first find the
+Tcl/Tk search path:
+
+@example
+library(tcltk)
+strsplit(tclvalue('auto_path'), " ")[[1]]
+@end example
+
+@noindent
+then downoad the sources from
+@uref{http://sourceforge.net/projects/tcllib/files/BWidget/} and
+at the command line run
+
+@example
+tar xf bwidget-1.9.6.tar.gz
+sudo mv bwidget-1.9.6 /usr/local/lib
+@end example
+
+@noindent
+substituting a location on the Tcl/Tk search path for @file{/usr/local/lib} if
+needed.
+
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
@@ -1721,7 +1773,9 @@ Solaris platforms, but portable packages cannot assume that end users
 have recent versions (there are some years-old versions of Linux in
 use), and it may be safest to assume version 2.5.  The compilers
 currently used on OS X have partial support for OpenMP 2.5, but this is
-not enabled in the @acronym{CRAN} build (and unreliable).
+not enabled in the @acronym{CRAN} build. (Apple have announced the
+imminent discontinuation of support for those compilers, and the
+preferred alternative, @command{clang}, has no OpenMP support.)
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and OS X (where available) implementations have substantial
@@ -1733,6 +1787,30 @@ they will need to read the source code to determine if it is
 thread-safe.  In particular, code which makes use of the stack-checking
 mechanism must not be called from threaded code.
 
+Packages are not standard-alone programs, and an @R{} process could
+contain more than one OpenMP-enabled package as well as other components
+(for example, an optimized BLAS) making use of OpenMP.  So careful
+consideration needs to be given to resource usage.  OpenMP works with
+parallel regions, and for most implementations the default is to use as
+many threads as `CPUs' for such regions.  Parallel regions can be
+nested, although it is common to use only a single thread below the
+first level.  The detected number of `CPUs' and the assumption that the
+@R{} process is entitled to use them all are both dubious assumptions.
+The best way to limit resources is to limit the overall number of
+threads available to OpenMP in the R process: this can be done via
+environment variable @env{OMP_THREAD_LIMIT}, where
+implemented.@footnote{Which it was at the time of writing with GCC,
+Solaris Studio and Intel compilers.}  Alternatively, the number of
+threads per region can be limited by the environment variable
+@env{OMP_NUM_THREADS} or API call @code{omp_set_num_threads}, or,
+better, for the regions in your code as part of their
+specification. E.g.@: @R{} uses
+@example
+#pragma omp parallel for num_threads(nthreads) @dots{}
+@end example
+@noindent
+That way you only control your own code and not that of other OpenMP users.
+
 @node Using pthreads, Compiling in sub-directories, OpenMP support, Using Makevars
 @subsubsection Using pthreads
 
@@ -1741,8 +1819,8 @@ There is no direct support for the POSIX threads (more commonly known as
 were using it unconditionally so it seems that nowadays it is
 universally available on POSIX operating systems (hence not Windows).
 
-For reasonably recent versions of @command{gcc} the correct
-specification is
+For reasonably recent versions of @command{gcc} and @command{clang} the
+correct specification is
 
 @example
 PKG_CPPFLAGS = -pthread
@@ -1760,7 +1838,7 @@ PKG_LIBS = -lpthread
 @noindent
 (and note that the library name is singular).  This is what
 @option{-pthread} does on all known current platforms (although earlier
-version of OpenBSD used a different library name).
+versions of OpenBSD used a different library name).
 
 For a tutorial see
 @uref{https://computing.llnl.gov/@/tutorials/@/pthreads/}.
@@ -1794,7 +1872,7 @@ external software to which this is an @R{} interface.
 
 One simple way is simply to set @code{OBJECTS} to be all the objects
 that need to be compiled, including in sub-directories.  For example,
-CRAN package @CRANpkg{RSiena} has
+@acronym{CRAN} package @CRANpkg{RSiena} has
 
 @smallexample
 SOURCES = $(wildcard data/*.cpp network/*.cpp utils/*.cpp model/*.cpp model/*/*.cpp model/*/*/*.cpp)
@@ -1805,7 +1883,7 @@ OBJECTS = siena07utilities.o siena07internals.o siena07setup.o siena07models.o $
 @noindent
 One problem with that approach is that unless GNU make extensions are
 used, the source files need to be listed and kept up-to-date.  As in the
-following from CRAN package @CRANpkg{lossDev}:
+following from @acronym{CRAN} package @CRANpkg{lossDev}:
 
 @smallexample
 OBJECTS.samplers = samplers/ExpandableArray.o samplers/Knots.o \
@@ -1833,11 +1911,11 @@ Csdp/lib/libsdp.a
 @end smallexample
 
 @noindent
-Note the quotes: the macros can contain spaces, e.g.@: @code{gcc -m64
--std=gnu99}.  Several authors have forgotten about parallel makes: the
-static library in the subdirectory must be made before the shared
-library and so must depend on the latter.  Others forget the need for
-position-independent code.
+Note the quotes: the macros can contain spaces, e.g.@: @code{CC = "gcc
+-m64 -std=gnu99"}.  Several authors have forgotten about parallel makes:
+the static library in the subdirectory must be made before the shared
+object (@code{$(SHLIB)}) and so the latter must depend on the former.
+Others forget the need for position-independent code.
 
 We really do not recommend using a @file{src/Makefile} instead on
 @file{src/Makevars}, and as the example above shows, it is not necessary.
@@ -2492,9 +2570,9 @@ CMD INSTALL --help}, and platform-specific details for special cases
 platform-specific FAQs.
 
 
-In earlier versions of @R{}, @command{R CMD build --binary} could build
-a binary version of a package, but this approach is now deprecated in
-favour of @command{R CMD INSTALL --build}.
+In much earlier versions of @R{}, @command{R CMD build --binary} could
+build a binary version of a package, but this approach is now deprecated
+in favour of @command{R CMD INSTALL --build}.
 
 
 Finally, at least one web-based service is available for building binary
@@ -2734,10 +2812,15 @@ engine supplied with @R{}, the package providing any other engine must
 be specified in the @samp{VignetteBuilder} field of the package
 @file{DESCRIPTION} file, and also specified in the @samp{Suggests},
 @samp{Imports} or @samp{Depends} field (since its namespace must be
-available to build or check your package). If more than one package is
+available to build or check your package).  If more than one package is
 specified as a builder, they will be searched in the order given
 there.  The @pkg{utils} package is always implicitly appended to the
 list of builder packages.
+
+Note that a package with non-Sweave vignettes should always have a
+@samp{VignetteBuilder} field in the @file{DESCRIPTION} file, since this
+is how @command{R CMD check} recognizes that there are vignettes to be
+checked.
 
 The vignette engine can produce @file{.tex}, @file{.pdf}, or @file{.html}
 files as output.  If it produces @file{.tex} files, @R{} will 
@@ -6487,6 +6570,7 @@ collections after objects have been deleted).
 @menu
 * Using gctorture::             
 * Using valgrind::              
+* Using AddressSanitizer::      
 @end menu
 
 @node Using gctorture, Using valgrind, Using gctorture and valgrind, Using gctorture and valgrind
@@ -6553,7 +6637,7 @@ Used with a debugger and with @code{gctorture} or @code{gctorture2} this
 mechanism can be helpful in isolating memory protect problems.
 
 
-@node Using valgrind,  , Using gctorture, Using gctorture and valgrind
+@node Using valgrind, Using AddressSanitizer, Using gctorture, Using gctorture and valgrind
 @subsection Using valgrind
 
 If you have access to Linux on an @cputype{ix86}, @cputype{x86_64},
@@ -6636,6 +6720,9 @@ stack trace is not sufficiently informative the option
 a post-mortem debugger (by default @code{gdb}) so that variables in the
 C code can be inspected (@pxref{Inspecting R objects}).
 
+@command{valgrind} is good at spotting the use of uninitalized values:
+use option @option{--track-origins=yes} to show where these originated
+from.
 
 It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{valgrind} by using the option
@@ -6644,23 +6731,40 @@ It is possible to run all the examples, tests and vignettes covered by
 @file{~/.valgrindrc} file containing
 
 @example
---tool=memcheck
---memcheck:leak-check=full
+--leak-check=full
+--track-origins=yes
 @end example
 
 @noindent
 or setting the environment variable @env{VALGRIND_OPTS}.
 
-On OS X you may need to ensure that debugging symbols are made
-available (so @command{valgrind} reports line numbers in files).  This
-can usually be done with the @command{valgrind} option
-@option{--dysmutil=yes} to ask for the symbols to be dumped when the
-@file{.so} file is loaded.  This will not work where packages are
-installed into a system area (such as the @file{R.framework}) and can be
-slow.  Installing packages with @command{R CMD INSTALL --dsym} installs
-the dumped symbols.  (This can also be done by setting environment
-variable @env{PKG_MAKE_DSYM} to a non-empty value.)
+On OS X you may need to ensure that debugging symbols are made available
+(so @command{valgrind} reports line numbers in files).  This can usually
+be done with the @command{valgrind} option @option{--dysmutil=yes} to
+ask for the symbols to be dumped when the @file{.so} file is loaded.
+This will not work where packages are installed into a system area (such
+as the @file{R.framework}) and can be slow.  Installing packages with
+@command{R CMD INSTALL --dsym} installs the dumped symbols.  (This can
+also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
+non-empty value before the @command{INSTALL}.)
 
+@node Using AddressSanitizer,  , Using valgrind, Using gctorture and valgrind
+@subsection Using AddressSanitizer
+
+@command{AddressSanitizer} (`ASan') is a tool with similar aims to the
+memory checker in @command{valgrind}.  It is available with suitable
+builds of @command{gcc} 4.8.x and @command{clang} 3.1 and
+later@footnote{not including the version distributed by Apple in
+@code{Xcode} 4.6.}, on common Linux platforms and 64-bit Mac OS X.  See
+@uref{https://code.google.com/p/address-sanitizer/}.
+
+It requires code to have been compiled and linked with
+@option{-fsanitize=address} (@command{gcc}) or
+@option{-faddress-sanitizer} (@command{clang}), and using
+@code{-fno-omit-frame-pointer} will give more legible reports.  It is
+reported to run very much faster than @command{valgrind} (a runtime
+penalty of 2--3, but with extended compilation times).  It can detect
+problems with stack variables, but not the use of uninitialized memory.
 
 @node Debugging compiled code,  , Using gctorture and valgrind, Debugging
 @section Debugging compiled code
@@ -6668,10 +6772,11 @@ variable @env{PKG_MAKE_DSYM} to a non-empty value.)
 
 
 Sooner or later programmers will be faced with the need to debug
-compiled code loaded into @R{}.   This section is geared to platforms
+compiled code loaded into @R{}.  This section is geared to platforms
 using @command{gdb} with code compiled by @code{gcc}, but similar things
 are possible with front-ends to @command{gdb} such as @command{ddd} and
-@command{insight}, and other debuggers such as Sun's @command{dbx}.
+@command{insight}, and other debuggers such as @command{lldb} (used on
+OS X) and Sun's @command{dbx}.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
 an illegal memory access (a `segfault' or `bus error'), illegal
@@ -7881,7 +7986,7 @@ package @pkg{packB}.  The only issue is to find package @pkg{packB}, and
 for that we can ask @R{} by something like (lines broken for display here)
 
 @example
-PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch,
+PKGB_PATH=`echo 'cat(system.file("libs", .Platform$$r_arch,
  package="packB", mustWork=TRUE))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS="$(PKGB_PATH)/libpackB.a"
@@ -7892,10 +7997,11 @@ which will give an empty path component if sub-architectures are not in
 use (but that works on current platforms).
 
 For a dynamic library @file{packB/libs/libpackB.so}
-(@file{packB/libs/libpackB.dylib} on OS X) we could use
+(@file{packB/libs/libpackB.dylib} on OS X: note that you cannot link to
+a shared object, @file{.so} on that platform) we could use
 
 @example
-PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, 
+PKGB_PATH=`echo 'cat(system.file("libs", .Platform$$r_arch, 
   package="packB", mustWork=TRUE))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)" -lpackB
@@ -7913,7 +8019,7 @@ support it, the path to the dynamic library can be hardcoded at install
 time (which assumes that the location of package @pkg{packB} will not be
 changed) nor the package updated to a changed API).  On systems with the
 @acronym{GNU} linker (e.g.@: Linux) and some others (e.g.@: OS X)
-this can be done by
+this can be done by e.g.@:
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
@@ -7967,7 +8073,7 @@ where it is by something like
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
  | rterm --vanilla --slave`
-PKG_LIBS= -L"$(PKGB_PATH)" -lexB
+PKG_LIBS= -L"$(PKGB_PATH)"$(R_ARCH) -lexB
 @end example
 
 Another possibility is to use an import library, shipping with package

@@ -7,6 +7,107 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.0.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain
+      an \code{ind} argument (like \code{setRepositories()}).
+
+      \item \code{mcparallel} has a new argument \code{mc.interactive}
+      which can modify the interactive flag in the child process. The
+      new default is \code{FALSE} which makes child processes
+      non-interactive by default (this prevents lock-ups due to children
+      waiting for interactive input).
+      
+      \item \code{scan()} now warns when end-of-file occurs within
+      a quoted string.
+      
+      \item \code{count.fields()} is now consistent with \code{scan()}
+      in handling newlines in quoted strings.  Instead of triggering
+      an error, this results in the current line receiving \code{NA}
+      as the field count, with the next line getting the total count
+      of the two lines.      
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD config} now make use of personal
+      \file{Makevars} files under \file{~/.R} and a site file
+      \file{Makevars.site}, in the same way as \command{R CMD SHLIB} and
+      \command{R CMD INSTALL}.  This makes the utility more useful in
+      package \command{configure} scripts.
+
+      On Windows finding the personal files may require the environment
+      variable \env{HOME} set.
+
+      The old behaviour can be obtained with the new options
+      \option{--no-user-files} and \option{--no-site-files}.
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{sys.source()} did not report error locations when
+      \code{keep.source = TRUE}.
+
+      \item \code{as.POSIXct.numeric} was coercing \code{origin} using
+      the \code{tz} argument and not \code{"GMT"} as documented
+      (\PR{14973}).
+
+      \item The active binding to assign fields in reference classes
+      has been cleaned up to reduce dependence on the class' package
+      environment, also fixing bug in initializing read-only fields
+      (inspired by a report from Hadley Wickham).
+
+      \item \code{str(d)} no longer gives an error when \code{names(d)}
+      contain illegal multibyte strings (\PR{15247}).
+      
+      \item Profiling of built-in functions with \code{line.profiling=
+      TRUE} did not record the line from which they were called.      
+      
+      \item \code{citation(pkg)} dropped the header and footer specified
+      in the \file{CITATION} file (\PR{15257}).
+      
+      \item Quotes were handled differently when reading the first line
+      and reading the rest, so \code{read.table()} misread some files
+      that contained quote characters (\PR{15245}).
+
+      \item \code{cat()} with \code{sep} a character vector of length
+      greater than one and more than one argument was using separators
+      inconsistently (\PR{15261}).
+      
+      \item On Windows in \R 3.0.0, \code{savePlot()} failed because of
+      an incorrect check on the argument count.
+
+      \item \code{unzip(list = TRUE)} returned \code{Names} as a factor
+      and not a character vector (as documented) for the internal method.
+      (Noticed by Sean O'Riordain.)
+      
+      \item \code{contourLines()} now checks more comprehensively for
+      conformance of its \code{x}, \code{y} and \code{z} arguents (it
+      was used incorrectly in package \CRANpkg{R2G2}).
+      
+      \item Saved graphics display lists are \R version-specific.
+      Attempting to load workspaces containing them (or some other
+      version-specific objects) aborted the load in \R 3.0.0 and
+      earlier; now it does a partial load and generates a warning
+      instead.
+      
+      \item In \R 3.0.0, \code{identify()} and \code{locator()} did
+      not record information correctly, so replaying a graph (e.g. by
+      copying it to another device) would fail. (\PR{15271})
+
+      \item Calling \code{file.copy()} or \code{dirname()} with the
+      invalid input \code{""} (which was being used in packages, despite
+      not being a file path) could have caused a segfault.
+      
+      \code{dirname("")} is now \code{""} rather than \code{"."} (unless
+      it segfaulted).
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.0.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -424,10 +525,10 @@
       garbage collection and memory growth to be controlled by setting
       the environment variable \env{R_GC_MEM_GROW}. See \code{?Memory}
       for more details.
-      
+
       \item (\sQuote{For experts only}, as the introductory manual
       says.)  The use of environment variables \env{R_NSIZE} and
-      \env{R_VSIZE} to control the initial (= minimum) garbade
+      \env{R_VSIZE} to control the initial (= minimum) garbage
       collection trigger for number of cons cels and size of heap has
       been restored: they can be overridden by the command-line options
       \code{--min-nsize} and \code{--min-vsize}; see \code{?Memory}.
@@ -439,7 +540,7 @@
 
       \code{win.metafile()} still uses the file name: the exact form is
       used by package \CRANpkg{tkrplot}.
-      
+
       \item \code{set.seed(NULL)} re-initializes \code{.Random.seed} as
       done at the beginning of the session if not already set.
       (Suggestion of Bill Dunlap.)
@@ -447,7 +548,7 @@
       \item The \code{breaks} argument in \code{hist.default()} can now be
       a function that returns the breakpoints to be used (previously it
       could only return the suggested number of breakpoints).
-      
+
       \item File \file{share/licenses/licenses.db} has some
       clarifications, especially as to which variants of \sQuote{BSD}
       and \sQuote{MIT} is intended and how to apply them to packages.
@@ -583,7 +684,7 @@
       \item Package vignettes can now be processed by other engines
       besides \code{Sweave}; see \sQuote{Writing R Extensions} and the
       \code{tools::vignetteEngine} help topic for details.
-      
+
       \item The \file{*.R} tangled source code for vignettes is now
       included in tarballs when \command{R CMD build} is used to produce
       them.  In \R 3.0.0, \file{*.R} files not in the sources will be
@@ -596,7 +697,7 @@
       \file{bin/macosx/leopard/contrib/2.15}).  This is the type used
       for the \acronym{CRAN} binary distribution for OS X as from \R
       3.0.0.
-      
+
       \item File \file{etc/Makeconf} makes more use of the macros
       \code{$(CC)}, \code{$(CXX)}, \code{$(F77)} and \code{$(FC)}, so
       the compiler in use can be changed by setting just these (and if
@@ -761,6 +862,12 @@
       \item \code{.find.package()} and \code{.path.package()} are
       deprecated: only the public versions without the dot have ever
       been in the API.
+
+      \item In a package's \file{DESCRIPTION} file, \preformatted{    License: X11}
+      is deprecated, since it includes
+      \sQuote{Copyright (C) 1996 X Consortium} which cannot be
+      appropriate for a current \R package.  Use \sQuote{MIT} or
+      \sQuote{BSD_2_clause} instead.
     }
   }
 
@@ -919,6 +1026,10 @@
       in the installer is now the full reference index, including all
       base and recommended packages.
 
+      \item \R help pages and manuals have no ISBNs because ISBN
+      rules no longer allow constantly changing content to be assigned
+      an ISBN.
+
       \item The Windows installer no longer installs a Start Menu
       link to the static help pages; as most pages are generated
       dynamically, this led to a lot of broken links.
@@ -929,11 +1040,11 @@
 
       \item There is now support for \command{makeinfo} version 5.0
       (which requires a slightly different \file{.texi} syntax).
-      
+
       \item The minimum versions for \option{--use-system-zlib} and
       \code{--use-system-pcre} are now tested as 1.2.5 and 8.10
       respectively.
-      
+
       \item On Windows, the stack size is reduced to 16MB on 32-bit
       systems: misguided users were launching many threads without
       controlling the stack size.
@@ -1019,9 +1130,12 @@
       \item \code{ftable(x, row.vars, col.vars)} now also works when the
       \code{*.vars} arguments are (integer or character vectors) of
       length zero.
-      
+
       \item Calling \code{cat()} on a malformed UTF-8 string could cause
       the Windows GUI to lock up. (\PR{15227})
+
+      \item \code{removeClass(cc)} gave "node stack overflow" for some
+      class definitions containing \code{"array"} or \code{"matrix"}.
     }
   }
 }
