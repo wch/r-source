@@ -162,6 +162,9 @@
       \item Calling \code{file.copy()} or \code{dirname()} with the
       invalid input \code{""} (which was being used in packages, despite
       not being a file path) could have caused a segfault.
+      
+      \code{dirname("")} is now \code{""} rather than \code{"."} (unless
+      it segfaulted).
     }
   }
 }
