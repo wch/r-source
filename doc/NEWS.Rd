@@ -165,6 +165,10 @@
       
       \code{dirname("")} is now \code{""} rather than \code{"."} (unless
       it segfaulted).
+
+      \item \code{supsmu()} could read/write outside its input vectors
+      for very short inputs (seen in package \CRANpkg{rms} for \code{n =
+	4}).
     }
   }
 }

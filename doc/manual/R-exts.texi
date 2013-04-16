@@ -6150,7 +6150,7 @@ which provide complementary examples to those given here.)
 @menu
 * Browsing::                    
 * Debugging R code::            
-* Using gctorture and valgrind::  
+* Using gctorture and memory access::  
 * Debugging compiled code::     
 @end menu
 
@@ -6234,7 +6234,7 @@ really necessary, objects can be assigned to the workspace from the
 browser prompt (by using @code{<<-} if the name is not already in
 scope).
 
-@node Debugging R code, Using gctorture and valgrind, Browsing, Debugging
+@node Debugging R code, Using gctorture and memory access, Browsing, Debugging
 @section Debugging R code
 
 @findex traceback
@@ -6550,8 +6550,8 @@ temporary code, but @code{trace} can help with functions in a namespace
 @code{trace(,edit=TRUE)} to insert code visually.
 
 
-@node Using gctorture and valgrind, Debugging compiled code, Debugging R code, Debugging
-@section Using gctorture and valgrind
+@node Using gctorture and memory access, Debugging compiled code, Debugging R code, Debugging
+@section Using gctorture and memory access
 
 Errors in memory allocation and reading/writing outside arrays are very
 common causes of crashes (e.g.,@: segfaults) on some machines.  Often
@@ -6560,13 +6560,17 @@ damage to the structures which @R{} itself has allocated may only become
 apparent at the next garbage collection (or even at later garbage
 collections after objects have been deleted).
 
+Note that memory access errors may be seen with LAPACK, BLAS and
+Java-using packages: some at least of these seem to be intentional.
+
 @menu
 * Using gctorture::             
 * Using valgrind::              
 * Using AddressSanitizer::      
+* Fortran array bounds checking::  
 @end menu
 
-@node Using gctorture, Using valgrind, Using gctorture and valgrind, Using gctorture and valgrind
+@node Using gctorture, Using valgrind, Using gctorture and memory access, Using gctorture and memory access
 @subsection Using gctorture
 
 @findex gctorture
@@ -6630,7 +6634,7 @@ Used with a debugger and with @code{gctorture} or @code{gctorture2} this
 mechanism can be helpful in isolating memory protect problems.
 
 
-@node Using valgrind, Using AddressSanitizer, Using gctorture, Using gctorture and valgrind
+@node Using valgrind, Using AddressSanitizer, Using gctorture, Using gctorture and memory access
 @subsection Using valgrind
 
 If you have access to Linux on an @cputype{ix86}, @cputype{x86_64},
@@ -6741,7 +6745,7 @@ as the @file{R.framework}) and can be slow.  Installing packages with
 also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
 non-empty value before the @command{INSTALL}.)
 
-@node Using AddressSanitizer,  , Using valgrind, Using gctorture and valgrind
+@node Using AddressSanitizer, Fortran array bounds checking, Using valgrind, Using gctorture and memory access
 @subsection Using AddressSanitizer
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
@@ -6759,7 +6763,41 @@ reported to run very much faster than @command{valgrind} (a runtime
 penalty of 2--3, but with extended compilation times).  It can detect
 problems with stack variables, but not the use of uninitialized memory.
 
-@node Debugging compiled code,  , Using gctorture and valgrind, Debugging
+Current versions do not return symbolic addresses for the location of
+the error without some help (but this is expected to change).  One
+possibility is to use an external symbolizer such as
+@command{asan_symbolize.py} or @command{llvm-symbolizer} (both from
+@url{http://llvm.org}).  For example, the output can be piped through
+@command{asan_symbolize.py} and perhaps then @command{c++filt}.
+
+@node Fortran array bounds checking,  , Using AddressSanitizer, Using gctorture and memory access
+@subsection Fortran array bounds checking
+
+Most of the Fortran compilers used with @R{} allow code to be compiled
+with checking of array bounds: for example @command{gfortran} has option
+@option{-fbounds-check} and Solaris Studio has @option{-C}.  This gives
+an error when the upper or lower bound is exceeded, e.g.
+@example
+At line 97 of file .../src/appl/dqrdc2.f
+Fortran runtime error: Index '1' of dimension 1 of array 'x' above upper bound of 0
+@end example
+
+One does need to be aware that lazy programmers often specify Fortran
+dimensions as @code{1} rather than @code{*} or a real bound:
+@file{stats/src/portsrc.f} was a prolific example.
+
+It is easy to arrange to use this check on just the code in your
+package: add to @file{~/.R/Makevars} something like (for
+@command{gfortran})
+@example
+FCFLAGS = -g -O2 -mtune=native -fbounds-check
+FFLAGS = -g -O2 -mtune=native -fbounds-check
+@end example
+
+@noindent
+when you run @command{R CMD check}.
+
+@node Debugging compiled code,  , Using gctorture and memory access, Debugging
 @section Debugging compiled code
 @cindex Debugging
 
