@@ -1,6 +1,6 @@
 % File src/library/stats/man/lmfit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm.fit}
@@ -41,20 +41,21 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
   \item{\dots}{currently disregarded.}
 }
 \value{
-%% S(-PLUS) returns an object of class "lm"
-%% such that print.lm, summary,... work; but that'd need more changes for R.
   a list with components
   \item{coefficients}{\code{p} vector}
   \item{residuals}{\code{n} vector or matrix}
   \item{fitted.values}{\code{n} vector or matrix}
-  \item{effects}{(not null fits)\code{n} vector of orthogonal single-df
+  \item{effects}{\code{n} vector of orthogonal single-df
     effects.  The first \code{rank} of them correspond to non-aliased
     coefficients, and are named accordingly.}
   \item{weights}{\code{n} vector --- \emph{only} for the \code{*wfit*}
     functions.}
   \item{rank}{integer, giving the rank}
   \item{df.residual}{degrees of freedom of residuals}
-  \item{qr}{(not null fits) the QR decomposition, see \code{\link{qr}}.}
+  \item{qr}{the QR decomposition, see \code{\link{qr}}.}
+
+  Fits without any columns or non-zero weights do not have the
+  \code{effects} and \code{qr} components.
 }
 \seealso{
   \code{\link{lm}} which you should use for linear least squares regression,

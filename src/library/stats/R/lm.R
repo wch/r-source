@@ -195,6 +195,11 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
                     fitted.values = 0 * y, weights = w, rank = 0L,
                     df.residual = length(y)))
     }
+    if (n == 0) { # all cases have weight zero
+        return(list(coefficients = rep(NA_real_, p), residuals = y,
+                    fitted.values = 0 * y, weights = w, rank = 0L,
+                    df.residual = 0L))
+    }
     wts <- sqrt(w)
     z <- .Call(C_Cdqrls, x * wts, y * wts, tol)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")

@@ -71,6 +71,15 @@
       has been removed.
     }
   }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Calling \code{lm.wfit()} with no non-zero weights gave an
+      array-overrun in the Fortran code and a not very sensible answer.
+      It is now special-cased with a simpler answer (no \code{qr}
+      component).
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.0.0 patched}{
