@@ -249,7 +249,7 @@ SEXP Win_dataentry(SEXP args)
 	PROTECT_WITH_INDEX(DE->names = allocVector(STRSXP, DE->xmaxused),
 			   &DE->npi);
 	for(i = 0; i < DE->xmaxused; i++) {
-	    sprintf(clab, "var%d", i);
+	    snprintf(clab, 25, "var%d", i);
 	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
     } else
@@ -507,7 +507,7 @@ static const char *get_col_name(DEstruct DE, int col)
 	SEXP tmp = STRING_ELT(DE->names, col - 1);
 	if(tmp != NA_STRING) return(CHAR(tmp));
     }
-    sprintf(clab, "var%d", col);
+    snprintf(clab, 25, "var%d", col);
     return clab;
 }
 
@@ -593,7 +593,7 @@ static void drawrow(DEstruct DE, int whichrow)
 	      (whichrow > 0) ? DE->p->guiColors[dataeditbg] : bbg);
     drawrectangle(DE, src_x, src_y, DE->boxw[0], DE->box_h, 1, 1);
 
-    sprintf(rlab, DE->labform, whichrow);
+    snprintf(rlab, 15, DE->labform, whichrow);
     printstring(DE, rlab, strlen(rlab), row, 0, 0);
 
     w = DE->bwidth + DE->boxw[0];
@@ -741,7 +741,7 @@ static Rboolean getccol(DEstruct DE)
 	REPROTECT(DE->work = lengthgets(DE->work, wcol), DE->wpi);
 	REPROTECT(DE->names = lengthgets(DE->names, wcol), DE->npi);
 	for (i = DE->xmaxused; i < wcol; i++) {
-	    sprintf(clab, "var%d", i + 1);
+	    snprintf(clab, 25, "var%d", i + 1);
 	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
 	REPROTECT(DE->lens = lengthgets(DE->lens, wcol), DE->lpi);
@@ -1016,7 +1016,7 @@ static void printlabs(DEstruct DE)
 	printstring(DE, p, strlen(p), 0, i - DE->colmin + 1, 0);
     }
     for (i = DE->rowmin; i <= DE->rowmax; i++) {
-	sprintf(clab, DE->labform, i);
+	snprintf(clab, 15, DE->labform, i);
 	printstring(DE, clab, strlen(clab), i - DE->rowmin + 1, 0, 0);
     }
 }
@@ -1416,7 +1416,7 @@ static Rboolean initwin(DEstruct DE, const char *title)
     /* this used to presume 4 chars sufficed for row numbering */
     labdigs = max(3, 1+floor(log10((double)DE->ymaxused)));
     DE->boxw[0] = (1+labdigs)*(DE->p->fw) + 8;
-    sprintf(DE->labform, "%%%dd", labdigs);
+    snprintf(DE->labform, 6, "%%%dd", labdigs);
     for(i = 1; i < 100; i++)
 	DE->boxw[i] = get_col_width(DE, i) * (DE->p->fw) + 8;
     DE->box_h = (DE->p->fh) + 4;
@@ -1478,7 +1478,7 @@ static void popupclose(control c)
 	REPROTECT(DE->names = lengthgets(DE->names, popupcol), DE->npi);
 	/* Last col name is set later */
 	for (i = DE->xmaxused+1; i < popupcol - 1; i++) {
-	    sprintf(clab, "var%d", i + 1);
+	    snprintf(clab, 25, "var%d", i + 1);
 	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
 	REPROTECT(DE->lens = lengthgets(DE->lens, popupcol), DE->lpi);
@@ -1643,7 +1643,7 @@ static void de_popup_vw(DEstruct DE)
     setclose(devw, vw_close);
     setbackground(devw, bbg);
     lwhat = newlabel(G_("Cell width"), rect(10, 20, 70, 20), AlignLeft);
-    sprintf(blah, "%d", DE->nboxchars);
+    snprintf(blah, 25, "%d", DE->nboxchars);
     varname = newfield(blah, rect(80, 20, 40, 20));
     varwidths = newcheckbox(G_("variable"), rect(150, 20, 80, 20), vw_callback);
     if (DE->nboxchars == 0) {

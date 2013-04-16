@@ -1085,6 +1085,7 @@ c Var
       ibw=0.5d0*span*n+0.5d0
       if (ibw.lt.2) ibw=2
       it=2*ibw+1
+      if (it .gt. n) it = n
       do 20 i=1,it
          j=i
          if (jper.eq.2) j=i-ibw-1

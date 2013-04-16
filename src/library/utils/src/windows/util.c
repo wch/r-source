@@ -3,7 +3,7 @@
  *  file util.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2012  The R Core Team
+ *  Copyright (C) 2005--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -51,9 +51,9 @@ SEXP winver(void)
 	SYSTEM_INFO si;
 	if(osvi.dwMajorVersion > 6 
 	   || (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 2) ) { /* future proof, but see also below */
-	    sprintf(ver, "Windows %d.%d (build %d)",
-		    (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion,
-		    LOWORD(osvi.dwBuildNumber));
+	    snprintf(ver, 256, "Windows %d.%d (build %d)",
+		     (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion,
+		     LOWORD(osvi.dwBuildNumber));
 	} else if(osvi.dwMajorVersion == 6) {
 	    if(osvi.wProductType == VER_NT_WORKSTATION) {
 		if(osvi.dwMinorVersion == 0) desc = "Vista";
@@ -82,20 +82,20 @@ SEXP winver(void)
 	    type = " x64";
 
 	if(osvi.wServicePackMajor > 0)
-	    sprintf(ver,
-		    "Windows %s%s (build %d) Service Pack %d",
-		    desc, type,
-		    LOWORD(osvi.dwBuildNumber),
-		    (int) osvi.wServicePackMajor);
+	    snprintf(ver, 256,
+		     "Windows %s%s (build %d) Service Pack %d",
+		     desc, type,
+		     LOWORD(osvi.dwBuildNumber),
+		     (int) osvi.wServicePackMajor);
 	else
-	    sprintf(ver,
-		    "Windows %s%s (build %d)",
-		    desc, type,
-		    LOWORD(osvi.dwBuildNumber));
+	    snprintf(ver, 256,
+		     "Windows %s%s (build %d)",
+		     desc, type,
+		     LOWORD(osvi.dwBuildNumber));
     } else { /* should not get here */
-	sprintf(ver, "Windows %d.%d (build %d) %s",
-		(int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion,
-		LOWORD(osvi.dwBuildNumber), osvi.szCSDVersion);
+	snprintf(ver, 256, "Windows %d.%d (build %d) %s",
+		 (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion,
+		 LOWORD(osvi.dwBuildNumber), osvi.szCSDVersion);
     }
 
     return mkString(ver);

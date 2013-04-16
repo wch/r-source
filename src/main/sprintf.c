@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2012     The R Core Team
+ *  Copyright (C) 2002--2013     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -235,7 +235,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if (fmt[strlen(fmt) - 1] == '%') {
 			/* handle % with formatting options */
 			if (has_star)
-			    sprintf(bit, fmt, star_arg);
+			    snprintf(bit, MAXLINE+1, fmt, star_arg);
 			else
 			    strcpy(bit, fmt);
 			/* was sprintf(..)  for which some compiler warn */

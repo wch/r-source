@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2012 The R Core Team
+ *  Copyright (C) 1997-2013 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -549,12 +549,13 @@ static DllInfo* AddDLL(const char *path, int asLocal, int now,
     */
     if(info) {
 	const char *nm = info->name;
-	char tmp[strlen(nm) + 9]; // R_init_ + underscore + null
+	size_t len = strlen(nm) + 9;
+	char tmp[len]; // R_init_ + underscore + null
 	DllInfoInitCall f;
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
-	sprintf(tmp, "%s%s","R_init_", info->name);
+	snprintf(tmp, len,  "%s%s","R_init_", info->name);
 #else
-	sprintf(tmp, "_%s%s","R_init_", info->name);
+	snprintf(tmp, len, "_%s%s","R_init_", info->name);
 #endif
 	f = (DllInfoInitCall) R_osDynSymbol->dlsym(info, tmp);
 	/* If that failed, might have used the package name with
@@ -759,7 +760,8 @@ DL_FUNC attribute_hidden
 R_dlsym(DllInfo *info, char const *name,
 	R_RegisteredNativeSymbol *symbol)
 {
-    char buf[strlen(name) + 4]; /* up to 3 additional underscores */
+    size_t len = strlen(name) + 4; 
+    char buf[len]; /* up to 3 additional underscores */
     DL_FUNC f;
 
     f = R_getDLLRegisteredSymbol(info, name, symbol);
@@ -769,9 +771,9 @@ R_dlsym(DllInfo *info, char const *name,
     if(info->useDynamicLookup == FALSE) return(NULL);
 
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
-    sprintf(buf, "%s", name);
+    snprintf(buf, len, "%s", name);
 #else
-    sprintf(buf, "_%s", name);
+    snprintf(buf, len, "_%s", name);
 #endif
 
 #ifdef HAVE_F77_UNDERSCORE

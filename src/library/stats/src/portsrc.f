@@ -453,7 +453,7 @@ C
 C  ***  PARAMETERS  ***
 C
       INTEGER N
-      DOUBLE PRECISION A(1), L(1)
+      DOUBLE PRECISION A(*), L(*)
 C     DIMENSION A(N*(N+1)/2), L(N*(N+1)/2)
 C
 C  ***  LOCAL VARIABLES  ***
@@ -1449,7 +1449,7 @@ C  ***  PERMUTE COLUMN K OF R TO COLUMN P, MODIFY QTR ACCORDINGLY  ***
 C
       LOGICAL HAVQTR
       INTEGER K, P
-      DOUBLE PRECISION QTR(P), R(1), W(P)
+      DOUBLE PRECISION QTR(P), R(*), W(P)
 C     DIMENSION R(P*(P+1)/2)
 C
       DOUBLE PRECISION DH2RFG
@@ -1648,7 +1648,7 @@ C  ***  MATRIX STORED COMPACTLY BY ROWS.  X AND Y MAY OCCUPY THE SAME
 C  ***  STORAGE.  ***
 C
       INTEGER N
-      DOUBLE PRECISION X(N), L(1), Y(N)
+      DOUBLE PRECISION X(N), L(*), Y(N)
 C     DIMENSION L(N*(N+1)/2)
       INTEGER I, II, IJ, I0, J, NP1
       DOUBLE PRECISION T, ZERO
@@ -2318,7 +2318,7 @@ C  ***  COMPUTE HEURISTIC BOUNDED NEWTON STEP  ***
 C
       INTEGER KA, LV, P, P0, PC
       INTEGER IPIV(P), IPIV1(P), IPIV2(P)
-      DOUBLE PRECISION B(2,P), D(P), DIHDI(1), G(P), L(1),
+      DOUBLE PRECISION B(2,P), D(P), DIHDI(*), G(P), L(*),
      1                 STEP(P,2), TD(P), TG(P), V(LV), W(P), X0(P), X(P)
 C     DIMENSION DIHDI(P*(P+1)/2), L(P*(P+1)/2)
 C
@@ -2401,7 +2401,7 @@ C
 C  ***  PARAMETER DECLARATIONS  ***
 C
       INTEGER P
-      DOUBLE PRECISION L(1), X(P), Y(P)
+      DOUBLE PRECISION L(*), X(P), Y(P)
 C     DIMENSION L(P*(P+1)/2)
 C
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -2736,7 +2736,7 @@ C
 C  ***  PARAMETERS  ***
 C
       INTEGER N1, N, IRC
-      DOUBLE PRECISION L(1), A(1)
+      DOUBLE PRECISION L(*), A(*)
 C     DIMENSION L(N*(N+1)/2), A(N*(N+1)/2)
 C
 C  ***  LOCAL VARIABLES  ***
@@ -2796,7 +2796,7 @@ C
 C  ***  PARAMETER DECLARATIONS  ***
 C
       INTEGER P
-      DOUBLE PRECISION L(1), X(P), Y(P)
+      DOUBLE PRECISION L(*), X(P), Y(P)
 C     DIMENSION L(P*(P+1)/2)
 C
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -2968,7 +2968,7 @@ C
 C  ***  PARAMETER DECLARATIONS  ***
 C
       INTEGER P
-      DOUBLE PRECISION S(1), X(P), Y(P)
+      DOUBLE PRECISION S(*), X(P), Y(P)
 C     DIMENSION S(P*(P+1)/2)
 C
 C  ***  LOCAL VARIABLES  ***
@@ -3051,7 +3051,7 @@ C
 C  ***  PARAMETERS  ***
 C
       INTEGER N
-      DOUBLE PRECISION L(1), LIN(1)
+      DOUBLE PRECISION L(*), LIN(*)
 C     DIMENSION L(N*(N+1)/2), LIN(N*(N+1)/2)
 C
 C  ***  LOCAL VARIABLES  ***
@@ -3285,7 +3285,7 @@ C  THUS H.OUTPUT(I,J) = H.INPUT(IP(I), IP(J)).
 C
       INTEGER P
       INTEGER IP(P)
-      DOUBLE PRECISION H(1)
+      DOUBLE PRECISION H(*)
 C
       INTEGER I, J, J1, JM, K, K1, KK, KM, KMJ, L, M
       DOUBLE PRECISION T
@@ -5006,7 +5006,7 @@ C
 C  ***  PARAMETER DECLARATIONS  ***
 C
       INTEGER P
-      DOUBLE PRECISION A(1), COSMIN, SIZE, STEP(P), U(P), W(P),
+      DOUBLE PRECISION A(*), COSMIN, SIZE, STEP(P), U(P), W(P),
      1                 WCHMTD(P), WSCALE, Y(P)
 C     DIMENSION A(P*(P+1)/2)
 C
@@ -5064,7 +5064,7 @@ C  ***  PARAMETER DECLARATIONS  ***
 C
       INTEGER IERR, KA, P
       INTEGER IPIVOT(P)
-      DOUBLE PRECISION D(P), G(P), QTR(P), R(1), STEP(P), V(21), W(1)
+      DOUBLE PRECISION D(P), G(P), QTR(P), R(*), STEP(P), V(21), W(*)
 C     DIMENSION W(P*(P+5)/2 + 4)
 C
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -6807,7 +6807,7 @@ C  ***  COMPUTE BOUNDED MODIFIED NEWTON STEP  ***
 C
       INTEGER KB, LV, NS, P, P1
       INTEGER IPIV(P), IPIV1(P), IPIV2(P)
-      DOUBLE PRECISION B(2,P), D(P), DST(P), L(1),
+      DOUBLE PRECISION B(2,P), D(P), DST(P), L(*),
      1                 STEP(P), TD(P), TG(P), V(LV), W(P), X(P),
      2                 X0(P)
 C     DIMENSION L(P*(P+1)/2)
@@ -7790,8 +7790,8 @@ C  ***  COMPUTE HEURISTIC BOUNDED NEWTON STEP  ***
 C
       INTEGER IERR, KA, LV, P, P0, PC
       INTEGER IPIV(P), IPIV1(P), IPIV2(P)
-      DOUBLE PRECISION B(2,P), D(P), G(P), LMAT(1), QTR(P), RMAT(1),
-     1                 STEP(P,3), TD(P), TG(P), V(LV), W(P), WLM(1),
+      DOUBLE PRECISION B(2,P), D(P), G(P), LMAT(*), QTR(P), RMAT(*),
+     1                 STEP(P,3), TD(P), TG(P), V(LV), W(P), WLM(*),
      2                 X0(P), X(P)
 C     DIMENSION LMAT(P*(P+1)/2), RMAT(P*(P+1)/2), WLM(P*(P+5)/2 + 4)
 C
@@ -8017,7 +8017,7 @@ C  ***  CORRESPONDING TO W.  QTR, Y REFERENCED ONLY IF QTRSET = .TRUE.
 C
       LOGICAL QTRSET
       INTEGER N, NN, P
-      DOUBLE PRECISION QTR(P), RMAT(1), W(NN,P), Y(N)
+      DOUBLE PRECISION QTR(P), RMAT(*), W(NN,P), Y(N)
 C     DIMENSION RMAT(P*(P+1)/2)
 C/+
       DOUBLE PRECISION DSQRT
@@ -8832,7 +8832,7 @@ C  ***  TRIANGULAR MATRIX STORED COMPACTLY BY ROWS.  X AND Y MAY
 C  ***  OCCUPY THE SAME STORAGE.  ***
 C
       INTEGER N
-      DOUBLE PRECISION X(N), L(1), Y(N)
+      DOUBLE PRECISION X(N), L(*), Y(N)
 C     DIMENSION L(N*(N+1)/2)
       INTEGER I, IJ, I0, J
       DOUBLE PRECISION YI, ZERO
@@ -8858,7 +8858,7 @@ C  ***  MATRIX STORED COMPACTLY BY ROWS.  X AND Y MAY OCCUPY THE SAME
 C  ***  STORAGE.  ***
 C
       INTEGER N
-      DOUBLE PRECISION X(N), L(1), Y(N)
+      DOUBLE PRECISION X(N), L(*), Y(N)
       INTEGER I, II, IJ, IM1, I0, J, NP1
       DOUBLE PRECISION XI, ZERO
       PARAMETER (ZERO=0.D+0)
@@ -9613,8 +9613,8 @@ C
 C  ***  PARAMETER DECLARATIONS  ***
 C
       INTEGER KA, P
-      DOUBLE PRECISION D(P), DIG(P), DIHDI(1), L(1), V(21), STEP(P),
-     1                 W(1)
+      DOUBLE PRECISION D(P), DIG(P), DIHDI(*), L(*), V(21), STEP(P),
+     1                 W(*)
 C     DIMENSION DIHDI(P*(P+1)/2), L(P*(P+1)/2), W(4*P+7)
 C
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -10242,7 +10242,7 @@ C
 C  ***  COMPUTE  Y  AND  Z  FOR  DL7UPD  CORRESPONDING TO BFGS UPDATE.
 C
       INTEGER N
-      DOUBLE PRECISION L(1), S(N), W(N), Y(N), Z(N)
+      DOUBLE PRECISION L(*), S(N), W(N), Y(N), Z(N)
 C     DIMENSION L(N*(N+1)/2)
 C
 C--------------------------  PARAMETER USAGE  --------------------------
@@ -10406,7 +10406,7 @@ C  ***  MATRIX STORED COMPACTLY BY ROWS.  X AND Y MAY OCCUPY THE SAME
 C  ***  STORAGE.  ***
 C
       INTEGER N
-      DOUBLE PRECISION X(N), L(1), Y(N)
+      DOUBLE PRECISION X(N), L(*), Y(N)
       DOUBLE PRECISION DD7TPR
       EXTERNAL DD7TPR
       INTEGER I, J, K
@@ -10799,7 +10799,7 @@ C
 C  ***  PARAMETER DECLARATIONS  ***
 C
       INTEGER N
-      DOUBLE PRECISION BETA(N), GAMMA(N), L(1), LAMBDA(N), LPLUS(1),
+      DOUBLE PRECISION BETA(N), GAMMA(N), L(*), LAMBDA(N), LPLUS(*),
      1                 W(N), Z(N)
 C     DIMENSION L(N*(N+1)/2), LPLUS(N*(N+1)/2)
 C
@@ -11369,7 +11369,7 @@ C  ***  L = N X N LOWER TRIANG. MATRIX STORED ROWWISE.  ***
 C  ***  A IS ALSO STORED ROWWISE AND MAY SHARE STORAGE WITH L.  ***
 C
       INTEGER N
-      DOUBLE PRECISION A(1), L(1)
+      DOUBLE PRECISION A(*), L(*)
 C     DIMENSION A(N*(N+1)/2), L(N*(N+1)/2)
 C
       INTEGER I, II, IIM1, I1, J, K, M
@@ -11746,7 +11746,7 @@ C  ***  COMPUTE DOUBLE-DOGLEG STEP, SUBJECT TO SIMPLE BOUNDS ON X  ***
 C
       INTEGER LV, KA, P, PC
       INTEGER IPIV(P)
-      DOUBLE PRECISION B(2,P), D(P), DIG(P), DST(P), G(P), L(1),
+      DOUBLE PRECISION B(2,P), D(P), DIG(P), DST(P), G(P), L(*),
      1                 NWTST(P), STEP(P), TD(P), TG(P), V(LV), W(P),
      2                 X0(P)
 C

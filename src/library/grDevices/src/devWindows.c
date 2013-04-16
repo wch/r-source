@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-11     The R Core Team
+ *  Copyright (C) 2004-13     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -545,12 +545,12 @@ static void RFontInit()
     char *opt[2];
     char  oops[256];
 
-    sprintf(oops, "%s/Rdevga", getenv("R_USER"));
+    snprintf(oops, 256, "%s/Rdevga", getenv("R_USER"));
     notdone = 1;
     fontnum = 0;
     fontinitdone = 1;
     if (!optopenfile(oops)) {
-	sprintf(oops, "%s/etc/Rdevga", getenv("R_HOME"));
+	snprintf(oops, 256, "%s/etc/Rdevga", getenv("R_HOME"));
 	if (!optopenfile(oops)) {
 	    RStandardFonts();
 	    notdone = 0;
@@ -560,7 +560,7 @@ static void RFontInit()
 	oops[0] = '\0';
 	notdone = optread(opt, ':');
 	if (notdone == 1)
-	    sprintf(oops, "[%s] Error at line %d.", optfile(), optline());
+	    snprintf(oops, 256, "[%s] Error at line %d.", optfile(), optline());
 	else if (notdone == 2) {
 	    fontname[fontnum] = strdup(opt[0]);
 	    if (!fontname[fontnum])
@@ -575,7 +575,7 @@ static void RFontInit()
 		else if (!strcmpi(opt[1], "bold&italic"))
 		    fontstyle[fontnum] = BoldItalic;
 		else
-		    sprintf(oops, "Unknown style at line %d. ", optline());
+		    snprintf(oops, 256, "Unknown style at line %d. ", optline());
 		fontnum += 1;
 	    }
 	}
@@ -990,7 +990,7 @@ static void menuwm(control m)
 	askok(G_("file path selected is too long: only 512 bytes are allowed"));
 	return;
     }
-    sprintf(display, "win.metafile:%s", fn);
+    snprintf(display, 550, "win.metafile:%s", fn);
     SaveAsWin(dd, display, TRUE);
 }
 
@@ -2229,7 +2229,7 @@ static void deleteGraphMenus(int devnum)
 {
     char prefix[15];
 
-    sprintf(prefix, "$Graph%i", devnum);
+    snprintf(prefix, 15, "$Graph%i", devnum);
     windelmenus(prefix);
 }
 
@@ -2303,7 +2303,7 @@ static void GA_Activate(pDevDesc dd)
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
-	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
+	snprintf(t, 150, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (ACTIVE)");
     settext(xd->gawin, t);
@@ -2331,7 +2331,7 @@ static void GA_Deactivate(pDevDesc dd)
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
-	sprintf(t, "R Graphics: Device %d", ndevNumber(dd) + 1);
+	snprintf(t, 150, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
     strcat(t, " (inactive)");
     settext(xd->gawin, t);
@@ -3438,7 +3438,7 @@ SEXP savePlot(SEXP args)
 	    askok(G_("file path selected is too long: only 512 bytes are allowed"));
 	    return R_NilValue;
 	}
-	sprintf(display, "win.metafile:%s", fn);
+	snprintf(display, 550, "win.metafile:%s", fn);
 	SaveAsWin(dd, display, restoreConsole);
     } else if (!strcmp(tp, "ps") || !strcmp(tp, "eps")) {
 	SaveAsPostscript(dd, fn);

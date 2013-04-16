@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright  (C) 1999-2001  Guido Masarotto  and Brian Ripley
- *             (C) 2007-12    The R Core Team
+ *             (C) 2007-13    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -399,7 +399,7 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
 	cntxt.cenddata = &pi;
 	ret = pwait2(pi.hProcess);
 	endcontext(&cntxt);
-	sprintf(RunError, _("Exit code was %d"), ret);
+	snprintf(RunError, 501, _("Exit code was %d"), ret);
 	ret &= 0xffff;
     } else ret = 0;
     CloseHandle(pi.hProcess);

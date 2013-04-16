@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2010  The R Core Team
+ *  Copyright (C) 2000--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -578,7 +578,7 @@ static void callback_closure(char * buf, int buflen, SEXP closure)
 
     formals = FORMALS(closure);
 
-    sprintf(buf, "R_call %p", (void *) closure);
+    snprintf(buf, buflen, "R_call %p", (void *) closure);
 
     while ( formals != R_NilValue )
     {
@@ -592,9 +592,9 @@ static void callback_closure(char * buf, int buflen, SEXP closure)
     }
 }
 
-static void callback_lang(char *buf, SEXP call, SEXP env)
+static void callback_lang(char *buf, int buflen, SEXP call, SEXP env)
 {
-    sprintf(buf, "R_call_lang %p %p", (void *) call, (void *) env);
+    snprintf(buf, buflen, "R_call_lang %p %p", (void *) call, (void *) env);
 
 }
 
@@ -616,7 +616,7 @@ SEXP dotTclcallback(SEXP args)
         callback_closure(buff, BUFFLEN, callback);
     else if (isLanguage(callback)) {
         env = CADDR(args);
-        callback_lang(buff, callback, env);
+        callback_lang(buff, BUFFLEN, callback, env);
     }
     else
     	error(_("argument is not of correct type"));

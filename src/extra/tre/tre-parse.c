@@ -84,7 +84,7 @@ tre_expand_macro(const tre_char_t *regex, const tre_char_t *regex_end,
 	  unsigned int j;
 	  DPRINT(("Expanding macro '%c' => '%s'\n",
 		  tre_macros[i].c, tre_macros[i].expansion));
-	  for (j = 0; tre_macros[i].expansion[j] && j < buf_len; j++)
+	  for (j = 0; tre_macros[i].expansion[j] && j < buf_len - 1; j++)
 	    buf[j] = tre_macros[i].expansion[j];
 	  buf[j] = 0;
 	  break;
