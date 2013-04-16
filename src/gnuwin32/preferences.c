@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.c
- *  Copyright (C) 2000    Guido Masarotto and Brian Ripley
- *                2004-8  R Core Team
+ *  Copyright (C) 2000     Guido Masarotto and Brian Ripley
+ *                2004-13  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -304,7 +304,7 @@ void applyGUI(Gui newGUI)
     if(strcmp(newGUI->language, curGUI.language)) {
 	char *buf = malloc(50);
 	askok(G_("The language for menus cannot be changed on a\n running console.\n\nSave the preferences and restart Rgui to apply to menus.\n"));
-	sprintf(buf, "LANGUAGE=%s", newGUI->language);
+	snprintf(buf, 50, "LANGUAGE=%s", newGUI->language);
 	putenv(buf);
     }
 
@@ -329,9 +329,9 @@ void applyGUI(Gui newGUI)
 	    consolefn = gnewfont(NULL, fontname, fontsty, pointsize, 0.0, 1);
 	else consolefn = FixedFont;
 	if (!consolefn) {
-	    sprintf(msg,
-		    G_("Font %s-%d-%d  not found.\nUsing system fixed font"),
-		    fontname, fontsty | FixedWidth, pointsize);
+	    snprintf(msg, LF_FACESIZE + 128,
+		     G_("Font %s-%d-%d  not found.\nUsing system fixed font"),
+		     fontname, fontsty | FixedWidth, pointsize);
 	    R_ShowMessage(msg);
 	    consolefn = FixedFont;
 	}
@@ -356,8 +356,8 @@ void applyGUI(Gui newGUI)
 	r.width = (consolec + 1) * FW;
 	r.height = (consoler + 1) * FH;
 	resize(RConsole, r);
-	sprintf(buf, "%d", ROWS); settext(f_crows, buf);
-	sprintf(buf, "%d", COLS); settext(f_ccols, buf);
+	snprintf(buf, 20, "%d", ROWS); settext(f_crows, buf);
+	snprintf(buf, 20, "%d", COLS); settext(f_ccols, buf);
     }
     if (p->lbuf->dim != newGUI->cbb || p->lbuf->ms != newGUI->cbl)
 	xbufgrow(p->lbuf, newGUI->cbb, newGUI->cbl);
@@ -826,7 +826,7 @@ static void showDialog(Gui gui)
 
     l_point = newlabel("size", rect(310, 100, 30, 20), AlignLeft);
     d_point = newdropfield(PointsList, rect(345, 100, 50, 20), scrollPoints);
-    sprintf(buf, "%d", gui->pointsize);
+    snprintf(buf, 100, "%d", gui->pointsize);
     settext(d_point, buf);
     l_style = newlabel("style", rect(410, 100, 40, 20), AlignLeft);
     f_style = newdroplist(StyleList, rect(450, 100, 80, 20), scrollStyle);
@@ -834,16 +834,16 @@ static void showDialog(Gui gui)
 
 /* Console size, set widthonresize */
     l_crows = newlabel("Console   rows", rect(10, 150, 100, 20), AlignLeft);
-    sprintf(buf, "%d", gui->crows);
+    snprintf(buf, 100, "%d", gui->crows);
     f_crows = newfield(buf, rect(110, 150, 30, 20));
     l_ccols = newlabel("columns", rect(150, 150, 60, 20), AlignLeft);
-    sprintf(buf, "%d", gui->ccols);
+    snprintf(buf, 100, "%d", gui->ccols);
     f_ccols = newfield(buf, rect(220, 150, 30, 20));
     l_cx = newlabel("Initial left", rect(270, 150, 70, 20), AlignLeft);
-    sprintf(buf, "%d", gui->cx);
+    snprintf(buf, 100, "%d", gui->cx);
     f_cx = newfield(buf, rect(350, 150, 40, 20));
     l_cy = newlabel("top", rect(430, 150, 30, 20), AlignLeft);
-    sprintf(buf, "%d", gui->cy);
+    snprintf(buf, 100, "%d", gui->cy);
     f_cy = newfield(buf, rect(480, 150, 40, 20));
 
     c_resize = newcheckbox("set options(width) on resize?",
@@ -851,10 +851,10 @@ static void showDialog(Gui gui)
     if(gui->setWidthOnResize) check(c_resize);
 
     l_cbb = newlabel("buffer chars", rect(270, 175, 70, 20), AlignLeft);
-    sprintf(buf, "%d", gui->cbb);
+    snprintf(buf, 100, "%d", gui->cbb);
     f_cbb = newfield(buf, rect(350, 175, 60, 20));
     l_cbl = newlabel("lines", rect(430, 175, 50, 20), AlignLeft);
-    sprintf(buf, "%d", gui->cbl);
+    snprintf(buf, 100, "%d", gui->cbl);
     f_cbl = newfield(buf, rect(480, 175, 40, 20));
 
     c_buff = newcheckbox("buffer console by default?",
@@ -869,19 +869,19 @@ static void showDialog(Gui gui)
     
 /* Pager size */
     l_prows = newlabel("Pager   rows", rect(10, 230, 100, 20), AlignLeft);
-    sprintf(buf, "%d", gui->prows);
+    snprintf(buf, 100, "%d", gui->prows);
     f_prows = newfield(buf, rect(110, 230, 30, 20));
     l_pcols = newlabel("columns", rect(150, 230, 60, 20), AlignLeft);
-    sprintf(buf, "%d", gui->pcols);
+    snprintf(buf, 100, "%d", gui->pcols);
     f_pcols = newfield(buf, rect(220, 230, 30, 20));
 
 /* Graphics window */
     l_grx = newlabel("Graphics windows: initial left",
 		     rect(10, 270, 190, 20), AlignLeft);
-    sprintf(buf, "%d", gui->grx);
+    snprintf(buf, 100, "%d", gui->grx);
     f_grx = newfield(buf, rect(200, 270, 40, 20));
     l_gry = newlabel("top", rect(270, 270, 30, 20), AlignLeft);
-    sprintf(buf, "%d", gui->gry);
+    snprintf(buf, 100, "%d", gui->gry);
     f_gry = newfield(buf, rect(300, 270, 40, 20));
 
 /* Font colours */

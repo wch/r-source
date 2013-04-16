@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-8 The R Core Team
+ *                2003-13 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -502,8 +502,8 @@ SEXP L_downviewport(SEXP name, SEXP strict)
          * downViewport() will be recorded on the engine DL!
          */
         char msg[1024];
-        sprintf(msg, "Viewport '%s' was not found", 
-                CHAR(STRING_ELT(name, 0)));
+        snprintf(msg, 1024, "Viewport '%s' was not found", 
+		 CHAR(STRING_ELT(name, 0)));
         UNPROTECT(1);    
         error(_(msg));
     }
@@ -646,8 +646,8 @@ SEXP L_downvppath(SEXP path, SEXP name, SEXP strict)
          * downViewport() will be recorded on the engine DL!
          */
         char msg[1024];
-        sprintf(msg, "Viewport '%s' was not found", 
-                CHAR(STRING_ELT(name, 0)));
+        snprintf(msg, 1024, "Viewport '%s' was not found", 
+		 CHAR(STRING_ELT(name, 0)));
         UNPROTECT(1);    
         error(_(msg));
     }

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2012  The R Core Team.
+ *  Copyright (C) 1995--2013  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -647,7 +647,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	Rvsnprintf(tmp, min(BUFSIZE, R_WarnLength) - strlen(head), format, ap);
 	dcall = CHAR(STRING_ELT(deparse1s(call), 0));
 	if (len + strlen(dcall) + strlen(tmp) < BUFSIZE) {
-	    sprintf(errbuf, "%s%s%s", head, dcall, mid);
+	    snprintf(errbuf, BUFSIZE,  "%s%s%s", head, dcall, mid);
 	    if (mbcslocale) {
 		int msgline1;
 		char *p = strchr(tmp, '\n');
@@ -667,13 +667,13 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	    }
 	    strcat(errbuf, tmp);
 	} else {
-	    sprintf(errbuf, _("Error: "));
-	    strcat(errbuf, tmp);
+	    snprintf(errbuf, BUFSIZE, _("Error: "));
+	    strcat(errbuf, tmp); // FIXME
 	}
 	UNPROTECT(protected);
     }
     else {
-	sprintf(errbuf, _("Error: "));
+	snprintf(errbuf, BUFSIZE, _("Error: "));
 	p = errbuf + strlen(errbuf);
 	Rvsnprintf(p, min(BUFSIZE, R_WarnLength) - strlen(errbuf), format, ap);
     }
@@ -956,9 +956,10 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    rho = CDR(rho);
 	}
 	if(strlen(domain)) {
-	    R_CheckStack2(strlen(domain)+3);
-	    buf = (char *) alloca(strlen(domain)+3);
-	    sprintf(buf, "R-%s", domain);
+	    size_t len = strlen(domain)+3;
+	    R_CheckStack2(len);
+	    buf = (char *) alloca(len);
+	    snprintf(buf, len, "R-%s", domain);
 	    domain = buf;
 	}
     } else if(isString(CAR(args)))
@@ -1058,9 +1059,10 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    rho = CDR(rho);
 	}
 	if(strlen(domain)) {
-	    R_CheckStack2(strlen(domain)+3);
-	    buf = (char *) alloca(strlen(domain)+3);
-	    sprintf(buf, "R-%s", domain);
+	    size_t len = strlen(domain)+3;
+	    R_CheckStack2(len);
+	    buf = (char *) alloca(len);
+	    snprintf(buf, len, "R-%s", domain);
 	    domain = buf;
 	}
     } else if(isString(sdom))

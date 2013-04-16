@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (VECTOR_ELT(dots, i) == R_NilValue) continue;
 	ss = translateChar(STRING_ELT(dotnames, i));
 	if(strlen(ss) + 3 > 256) error(_("overlong names in '%s'"), ss);
-	sprintf(buf, "(%s)", ss);
+	snprintf(buf, 256, "(%s)", ss);
 	SET_VECTOR_ELT(data, nvars + j, VECTOR_ELT(dots, i));
 	SET_STRING_ELT(names, nvars + j,  mkChar(buf));
 	j++;

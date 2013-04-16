@@ -638,7 +638,7 @@ const char *locale2charset(const char *locale)
 	*/
     case 1257: return "ISO8859-13";
     default:
-	sprintf(charset, "CP%u", cp);
+	snprintf(charset, 128, "CP%u", cp);
 	return charset;
     }
 #endif
@@ -662,13 +662,13 @@ const char *locale2charset(const char *locale)
 
 	/* cut encoding old linux cp- */
 	if (0 == strncmp(enc, "cp-", 3)){
-	    sprintf(charset,"CP%s", enc+3);
+	    snprintf(charset, 128, "CP%s", enc+3);
 	    return charset;
 	}
 	/* cut encoding IBM ibm- */
 	if (0 == strncmp(enc, "ibm", 3)){
 	    cp = atoi(enc + 3);
-	    sprintf(charset, "IBM-%d", abs(cp));
+	    snprintf(charset, 128, "IBM-%d", abs(cp));
 	    /* IBM-[0-9]+ case */
 	    if(cp != 0) return charset;
 	    /* IBM-eucXX case */

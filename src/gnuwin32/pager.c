@@ -486,7 +486,7 @@ static pager pagercreate(void)
     if (!pagerMultiple) {
 	MCHECK(newmenu(G_("View")));
 	for (i = 0; i < PAGERMAXKEPT; i++) {
-	    sprintf(pagerTitles[i], "&%c.  ", 'A' + i);
+	    snprintf(pagerTitles[i], PAGERMAXTITLE+8, "&%c.  ", 'A' + i);
 	    MCHECK(pagerMenus[i] = newmenuitem(&pagerTitles[i][1], 0,
 					       pagerchangeview));
 	    setvalue(pagerMenus[i], i);

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-12   The R Core Team.
+ *  Copyright (C) 2000-13   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1231,8 +1231,8 @@ static Rboolean gzfile_open(Rconnection con)
 
     strcpy(mode, con->mode);
     /* Must open as binary */
-    if(strchr(con->mode, 'w')) sprintf(mode, "wb%1d", gzcon->compress);
-    else if (con->mode[0] == 'a') sprintf(mode, "ab%1d", gzcon->compress);
+    if(strchr(con->mode, 'w')) snprintf(mode, 6, "wb%1d", gzcon->compress);
+    else if (con->mode[0] == 'a') snprintf(mode, 6, "ab%1d", gzcon->compress);
     else strcpy(mode, "rb");
     errno = 0; /* precaution */
     fp = R_gzopen(R_ExpandFileName(con->description), mode);
@@ -4962,7 +4962,7 @@ static Rboolean gzcon_open(Rconnection con)
     } else {
 	/* write a header */
 	char head[11];
-	sprintf(head, "%c%c%c%c%c%c%c%c%c%c", gz_magic[0], gz_magic[1],
+	snprintf(head, 11, "%c%c%c%c%c%c%c%c%c%c", gz_magic[0], gz_magic[1],
 		Z_DEFLATED, 0 /*flags*/, 0,0,0,0 /*time*/, 0 /*xflags*/,
 		OS_CODE);
 	icon->write(head, 1, 10, icon);
@@ -5194,7 +5194,7 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("allocation of 'gzcon' connection failed"));
     }
     strcpy(new->class, "gzcon");
-    sprintf(description, "gzcon(%s)", incon->description);
+    snprintf(description, 1000, "gzcon(%s)", incon->description);
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
 	free(new->class); free(new);

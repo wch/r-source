@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2008  The R Core Team
+ *  Copyright (C) 1999-2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -252,7 +252,7 @@ static void editorprint(control m)
     while (i < strlen(contents)) {
 	if ( linep + fh >= rr ) { /* new page */
 	    if (page > 1) nextpage(lpr);
-	    sprintf(msg, "Page %d", page++);
+	    snprintf(msg, LF_FACESIZE + 128, "Page %d", page++);
 	    gdrawstr(lpr, f, Black, pt(cc - gstrwidth(lpr, f, msg) - 1, top),
 		     msg);
 	    linep = top + 2*fh;
