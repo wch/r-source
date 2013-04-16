@@ -155,7 +155,7 @@
       (Noticed by Sean O'Riordain.)
       
       \item \code{contourLines()} now checks more comprehensively for
-      conformance of its \code{x}, \code{y} and \code{z} arguents (it
+      conformance of its \code{x}, \code{y} and \code{z} arguments (it
       was used incorrectly in package \CRANpkg{R2G2}).
       
       \item Saved graphics display lists are \R version-specific.

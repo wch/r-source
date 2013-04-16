@@ -6717,7 +6717,7 @@ stack trace is not sufficiently informative the option
 a post-mortem debugger (by default @code{gdb}) so that variables in the
 C code can be inspected (@pxref{Inspecting R objects}).
 
-@command{valgrind} is good at spotting the use of uninitalized values:
+@command{valgrind} is good at spotting the use of uninitialized values:
 use option @option{--track-origins=yes} to show where these originated
 from.
 
