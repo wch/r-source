@@ -69,7 +69,7 @@ p.adjust.methods
   Benjamini, Y., and Hochberg, Y. (1995).
   Controlling the false discovery rate: a practical and powerful
   approach to multiple testing.
-  \emph{Journal of the Royal Statistical Society Series} B, \bold{57},
+  \emph{Journal of the Royal Statistical Society Series B} \bold{57},
   289--300.
 
   Benjamini, Y., and Yekutieli, D. (2001).
@@ -79,36 +79,36 @@ p.adjust.methods
 
   Holm, S. (1979).
   A simple sequentially rejective multiple test procedure.
-  \emph{Scandinavian Journal of Statistics}, \bold{6}, 65--70.
+  \emph{Scandinavian Journal of Statistics} \bold{6}, 65--70.
 
   Hommel, G. (1988).
   A stagewise rejective multiple test procedure based on a modified
   Bonferroni test.
-  \emph{Biometrika}, \bold{75}, 383--386.
+  \emph{Biometrika} \bold{75}, 383--386.
 
   Hochberg, Y. (1988).
   A sharper Bonferroni procedure for multiple tests of significance.
-  \emph{Biometrika}, \bold{75}, 800--803.
+  \emph{Biometrika} \bold{75}, 800--803.
 
   Shaffer, J. P. (1995).
   Multiple hypothesis testing.
-  \emph{Annual Review of Psychology}, \bold{46}, 561--576.
+  \emph{Annual Review of Psychology} \bold{46}, 561--576.
   (An excellent review of the area.)
 
   Sarkar, S. (1998).
   Some probability inequalities for ordered MTP2 random variables: a
   proof of Simes conjecture.
-  \emph{Annals of Statistics}, \bold{26}, 494--504.
+  \emph{Annals of Statistics} \bold{26}, 494--504.
 
   Sarkar, S., and Chang, C. K. (1997).
   Simes' method for multiple hypothesis testing with positively
   dependent test statistics.
-  \emph{Journal of the American Statistical Association}, \bold{92},
+  \emph{Journal of the American Statistical Association} \bold{92},
   1601--1608.
 
   Wright, S. P. (1992).
   Adjusted P-values for simultaneous inference.
-  \emph{Biometrics}, \bold{48}, 1005--1013.
+  \emph{Biometrics} \bold{48}, 1005--1013.
   (Explains the adjusted P-value approach.)
 }
 
