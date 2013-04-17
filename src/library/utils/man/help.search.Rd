@@ -127,9 +127,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   query.  This mechanism is experimental, and may change in future
   versions of \R.
 
-  In R.app on Mac OS X, this will show up a browser with selectable items. On
-  exiting this browser, the help pages for the selected items will be
-  shown in separate help windows.
+  In \code{R.app} on OS X, this will show up a browser with selectable
+  items. On exiting this browser, the help pages for the selected items
+  will be shown in separate help windows.
 
   The internal format of the class is undocumented and subject to change.
 }

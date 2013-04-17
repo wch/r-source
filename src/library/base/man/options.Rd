@@ -387,7 +387,7 @@ getOption(x, default = NULL)
     \item{\code{bitmapType}:}{(Unix-only) character.  The default type for the
       bitmap devices such as \code{\link{png}}.  Defaults to
       \code{"cairo"} on systems where that is available, or to
-      \code{"quartz"} on Mac OS X where that is available.}
+      \code{"quartz"} on OS X where that is available.}
 #endif
 
     \item{\code{device}:}{a character string giving
@@ -525,7 +525,7 @@ getOption(x, default = NULL)
 
     \item{\code{install.lock}:}{logical: should per-directory package
       locking be used by \code{\link{install.packages}}?  Most useful
-      for binary installs on Mac OS X and Windows, but can be used in a
+      for binary installs on OS X and Windows, but can be used in a
       startup file for source installs \emph{via}
       \command{R CMD \link{INSTALL}}.  For binary installs, can also be
       the character string \code{"pkgloack"}.}
@@ -548,12 +548,12 @@ getOption(x, default = NULL)
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
       Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.  Some Mac OS X builds use \code{"mac.binary.leopard"}.
+      \code{"source"}.  Some OS X builds use \code{"mac.binary"}.
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under the
-      CRAN Mac OS X build) and \code{"mac.binary.leopard"}.  Windows
-      uses  \code{"win.binary"}.  (\code{"mac.binary"} and
+      CRAN OS X build) and \code{"mac.binary."}.  Windows
+      uses  \code{"win.binary"}.  (\code{"mac.binary.leopard"} and
       \code{"mac.binary.universal"} are no longer in use.)
 #endif
     }

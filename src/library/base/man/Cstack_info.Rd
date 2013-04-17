@@ -19,11 +19,11 @@ Cstack_info()
   stack-checking is not performed.
 
   The information on the stack base address is thought to be accurate on
-  Windows, Linux and FreeBSD (including Mac OS X), but a heuristic is
-  used on other platforms.  Because this might be slightly inaccurate,
-  the current usage could be estimated as negative.  (The heuristic is
-  not used on embedded uses of \R on platforms where the stack base
-  is not thought to be accurate.)
+  Windows, Linux, OS X and FreeBSD but a heuristic is used on other
+  platforms.  Because this might be slightly inaccurate, the current
+  usage could be estimated as negative.  (The heuristic is not used on
+  embedded uses of \R on platforms where the stack base is not thought
+  to be accurate.)
 
   The \sQuote{evaluation depth} is the number of nested \R expressions
   currently under evaluation: this has a limit controlled by

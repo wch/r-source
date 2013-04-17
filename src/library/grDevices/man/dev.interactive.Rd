@@ -28,7 +28,7 @@ deviceIsInteractive(name = NULL)
 }
 \details{
   The \code{X11} (Unix), \code{windows} (Windows) and \code{quartz}
-  (Mac OS X, on-screen types only) are regarded as interactive, together
+  (OS X, on-screen types only) are regarded as interactive, together
   with \code{JavaGD} (from the package of the same name) and
   \code{CairoWin} and \code{CairoX11} (from package \CRANpkg{Cairo}).
   Packages can add their devices to the list by calling

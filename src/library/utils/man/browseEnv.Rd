@@ -41,7 +41,7 @@ browseEnv(envir = .GlobalEnv, pattern,
 
 \details{
   Very experimental code: displays a static HTML page on all platforms
-  except \command{R.app} on Mac OS X.
+  except \command{R.app} on OS X.
 
   Only allows one level of recursion into object structures.
 

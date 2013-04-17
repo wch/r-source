@@ -102,7 +102,7 @@
 #endif
 #ifdef unix
 
-  Some platforms (notably Mac OS X and Windows) support
+  Some platforms (notably OS X and Windows) support
   sub-architectures in which binaries for different CPUs are installed
   within the same library tree. For such installations, the default
   behaviour is to try to build packages for all installed

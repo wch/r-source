@@ -147,8 +147,8 @@ require(package, lib.loc = NULL, quietly = FALSE,
 
   The package name given to \code{library} and \code{require} must match
   the name given in the package's \file{DESCRIPTION} file exactly, even
-  on case-insensitive file systems such as are common on MS Windows and
-  Mac OS X.
+  on case-insensitive file systems such as are common on Windows and
+  OS X.
 }
 \seealso{
   \code{\link{.libPaths}}, \code{\link{.packages}}.

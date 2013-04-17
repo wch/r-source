@@ -128,7 +128,7 @@
   in particular the outermost level of (single or double) quotes is
   stripped, and backslashes are removed except inside quotes.
 
-  On systems with sub-architectures (mainly Mac OS X and Windows), the
+  On systems with sub-architectures (mainly Windows), the
   files \file{Renviron.site} and \file{Rprofile.site} are looked for
   first in architecture-specific directories,
   e.g. \file{\var{\link{R_HOME}}/etc/i386/Renviron.site}.

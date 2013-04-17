@@ -64,7 +64,7 @@ iconvlist()
 \section{Implementation Details}{
   There are three main implementations of \code{iconv} in use.
   \samp{glibc} (as used on Linux) contains one.  Several platforms
-  supply GNU \samp{libiconv}, including Mac OS X, FreeBSD and Cygwin.
+  supply GNU \samp{libiconv}, including OS X, FreeBSD and Cygwin.
   On Windows we use a version of Yukihiro Nakadaira's \samp{win_iconv},
   which is based on Windows' codepages.  All three have
   \code{iconvlist}, ignore case in encoding names and support
