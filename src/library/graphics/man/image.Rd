@@ -1,6 +1,6 @@
 % File src/library/graphics/man/image.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -85,14 +85,19 @@ image(x, \dots)
   cells must be specified.
 
   Rectangles corresponding to missing values are not plotted (and so are
-  transparent and (unless \code{add=TRUE}) the default background painted
-  in \code{par("bg")} will show though and if that is transparent, the
-  canvas colour will be seen).
+  transparent and (unless \code{add = TRUE}) the default background
+  painted in \code{par("bg")} will show though and if that is
+  transparent, the canvas colour will be seen).
 
   If \code{breaks} is specified then \code{zlim} is unused and the
   algorithm used follows \code{\link{cut}}, so intervals are closed on
   the right and open on the left except for the lowest interval which is
   closed at both ends.
+
+  The axes, where plotted, make use of the classes of \code{xlim} and
+  \code{ylim} (and hence by default the classes of \code{x} and
+  \code{y}): this will mean that for example dates are labelled as
+  such.  (As from \R 3.1.0.)
 
   Notice that \code{image} interprets the \code{z} matrix as a table of
   \code{f(x[i], y[j])} values, so that the x axis corresponds to row
@@ -119,9 +124,11 @@ image(x, \dots)
   and either \code{\link{dev.capabilities}("raster")} is \code{"yes"} or
   it is \code{"non-missing"} and there are no missing values.
 }
+
 \note{
   Originally based on a function by Thomas Lumley.
 }
+
 \seealso{
   \code{\link{filled.contour}} or \code{\link{heatmap}} which can
   look nicer (but are less modular),
@@ -136,6 +143,7 @@ image(x, \dots)
   \code{\link{dev.capabilities}} to see if \code{useRaster = TRUE} is
   supported on the current device.
 }
+
 \examples{
 require(grDevices) # for colours
 x <- y <- seq(-4*pi, 4*pi, len = 27)
