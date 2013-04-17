@@ -80,7 +80,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
   For \code{category = "LC_ALL"} the details of the string are
   system-specific: it might be a single locale name or a set of locale
-  names separated by \code{"/"} (Solaris, Mac OS X) or \code{";"}
+  names separated by \code{"/"} (Solaris, OS X) or \code{";"}
   (Windows, Linux).  For portability, it is best to query categories
   individually: it is not necessarily the case that the result of
   \code{foo <- Sys.getlocale()} can be used in

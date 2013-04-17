@@ -26,7 +26,7 @@ detectCores(all.tests = FALSE, logical = FALSE)
   This attempts to detect the number of CPU cores in the current
   machine.
 
-  It has methods to do so for Linux, Darwin (Mac OS X), FreeBSD, Solaris,
+  It has methods to do so for Linux, OS X, FreeBSD, Solaris,
   Irix and Windows.  \code{detectCores(TRUE)} could be tried on other
   Unix-alike systems.
 }

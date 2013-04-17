@@ -8,9 +8,9 @@
 \alias{quartz.options}
 \alias{quartz.save}
 
-\title{MacOS X Quartz Device}
+\title{OS X Quartz Device}
 \description{
-  \code{quartz} starts a graphics device driver for the Mac OS X System.
+  \code{quartz} starts a graphics device driver for the OS X System.
   It supports plotting both to the screen (the default) and to various
   graphics file formats.
 }

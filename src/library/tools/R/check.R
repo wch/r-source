@@ -416,7 +416,7 @@ setRlibs <-
         }
 
         ## Next check for name clashes on case-insensitive file systems
-        ## (that is on Windows and (by default) on Mac OS X).
+        ## (that is on Windows and (by default) on OS X).
 
         dups <- unique(allfiles[duplicated(tolower(allfiles))])
         if (nb <- length(dups)) {

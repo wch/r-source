@@ -15,7 +15,7 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL)
 }
 \arguments{
   \item{graphics}{logical.  If true, use a graphical list: on Windows or
-    Mac OS X GUI use a list box, and on a Unix-alike if package
+    the OS X GUI use a list box, and on a Unix-alike if package
     \pkg{tcltk} and an X server are available, use a Tk
     widget.  Otherwise use a text \code{\link{menu}}.}
   

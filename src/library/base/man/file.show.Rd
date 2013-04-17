@@ -53,7 +53,7 @@ file.show(\dots, header = rep("", nfiles),
     title, delete.file)} corresponding to the first four arguments of
   \code{file.show} and take care of interfacing to the GUI.
 
-  The \command{R.app} Mac OS X GUI uses its internal pager irrespective
+  The \command{R.app} GUI on OS X uses its internal pager irrespective
   of the setting of \code{pager}.
 
   Not all implementations will honour \code{delete.file}.  In

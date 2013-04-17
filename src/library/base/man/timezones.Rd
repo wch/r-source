@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -24,7 +24,7 @@ Sys.timezone()
 
 \details{
   Time zones are a system-specific topic, but these days almost all \R
-  platforms use the same underlying code, used by Linux, Mac OS X,
+  platforms use the same underlying code, used by Linux, OS X,
   Solaris, AIX, FreeBSD, Sun Java >= 1.4 and Tcl >= 8.5, and installed
   with \R on Windows.
 
@@ -102,7 +102,7 @@ Sys.timezone()
 
   For most Unix-alikes use the Olson database.  The system-specific
   default location in the file system varies, e.g.
-  \file{/usr/share/zoneinfo} (Linux, Mac OS X, FreeBSD),
+  \file{/usr/share/zoneinfo} (Linux, OS X, FreeBSD),
   \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \file{/usr/etc/zoneinfo},
   \ldots.  It is likely that there is a file \file{zone.tab} in that
   directory listing the locations known as time-zone names (but not for

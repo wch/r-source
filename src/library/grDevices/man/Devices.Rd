@@ -37,8 +37,8 @@
     \item \code{\link{tiff}} TIFF bitmap device
 #ifdef unix
 
-    \item \code{\link{quartz}} The graphics device for the Mac OS X
-    native Quartz 2d graphics system.  (This is only functional on Mac
+    \item \code{\link{quartz}} The graphics device for the OS X
+    native Quartz 2d graphics system.  (This is only functional on
     OS X where it can be used from the \code{R.app} GUI and from the
     command line: but it will display on the local screen even for a
     remote session.)

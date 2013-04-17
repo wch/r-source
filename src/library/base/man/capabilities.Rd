@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -18,7 +18,7 @@ capabilities(what = NULL)
     required components.  \code{NULL} implies that all are required.}
 }
 #ifdef unix
-\section{Note to Mac OS X users}{
+\section{Note to OS X users}{
   Capabilities \code{"jpeg"}, \code{"png"} and \code{"tiff"} refer to
   the X11-based versions of these devices.  If
   \code{capabilities("aqua")} is true, then these devices with
@@ -45,14 +45,14 @@ capabilities(what = NULL)
       already loaded, and checks that the default display can be
       contacted unless a \code{X11} device has already been used.}
     \item{aqua}{Are the \code{R.app} GUI components and the
-      \code{\link{quartz}} function operational?  Only on some Mac OS X
+      \code{\link{quartz}} function operational?  Only on some OS X
       builds.  Note that this is distinct from
       \code{.Platform$GUI == "AQUA"}, which is true when using the Mac
       \code{R.app} GUI console.}
 #endif
 #ifdef windows
     \item{X11}{always \code{FALSE} on Windows.}
-    \item{aqua}{\code{FALSE} except on Mac OS X.}
+    \item{aqua}{\code{FALSE} except on OS X.}
 #endif
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}

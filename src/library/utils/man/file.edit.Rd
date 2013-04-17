@@ -36,7 +36,7 @@ file.edit(\dots, title = file, editor = getOption("editor"),
 
   The default for \code{editor} is system-dependent.   On
   Windows it defaults to \code{"internal"}, the script editor, and in
-  the Mac OS X GUI the document editor is used whatever the value of
+  the OS X GUI the document editor is used whatever the value of
   \code{editor}.  On Unix the default is set from the environment
   variables \env{EDITOR} or \env{VISUAL} if either is set, otherwise
   \code{vi} is used.
