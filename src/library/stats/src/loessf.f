@@ -368,6 +368,7 @@ c     singular value decomposition
    20 continue
       do 22 i=1,k
          do 23 j=i,k
+c FIXME: this has i = 3 vs bound 2 in a ggplot2 test
             u(i,j)=b(i,j)
    23    continue
    22 continue
