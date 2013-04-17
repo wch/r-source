@@ -202,13 +202,16 @@ while test -n "${1}"; do
 done
 
 if test "${site}" = "yes"; then
-  if test -f " ${R_HOME}/etc${R_ARCH}/Makevars.site"; then
-    makefiles="${makefiles} -f ${R_HOME}/etc${R_ARCH}/Makevars.site"
+: ${R_MAKEVARS_SITE="${R_HOME}/etc${R_ARCH}/Makevars.site"}
+  if test -f "${R_MAKEVARS_SITE}"; then
+    makefiles="${makefiles} -f ${R_MAKEVARS_SITE}"
   fi
 fi
 if test "${personal}" = "yes"; then
   if test "${R_OSTYPE}" = "windows"; then
-    if test ${R_ARCH} = "/x64" -a -f "${HOME}/.R/Makevars.win64"; then
+    if test -n "${R_MAKEVARS_USER}"; then
+      makefiles="${makefiles} -f ${R_MAKEVARS_USER}"
+    elif test ${R_ARCH} = "/x64" -a -f "${HOME}/.R/Makevars.win64"; then
       makefiles="${makefiles} -f ${HOME}/.R/Makevars.win64"
     elif test -f "${HOME}/.R/Makevars.win"; then
       makefiles="${makefiles} -f ${HOME}/.R/Makevars.win"
@@ -217,7 +220,9 @@ if test "${personal}" = "yes"; then
     fi
   else
     . ${R_HOME}/etc/Renviron
-    if test -f "${HOME}/.R/Makevars-${R_PLATFORM}"; then
+    if test -n "${R_MAKEVARS_USER}"; then
+      makefiles="${makefiles} -f ${R_MAKEVARS_USER}"
+    elif test -f "${HOME}/.R/Makevars-${R_PLATFORM}"; then
       makefiles="${makefiles} -f ${HOME}/.R/Makevars-${R_PLATFORM}"
     elif test -f "${HOME}/.R/Makevars"; then
       makefiles="${makefiles} -f ${HOME}/.R/Makevars"

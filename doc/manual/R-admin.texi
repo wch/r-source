@@ -1960,7 +1960,8 @@ added to by setting the appropriate Make variables in the personal file
 on Windows), or if that does not exist, @file{@var{HOME}/.R/Makevars},
 where @samp{R_PLATFORM} is the platform for which R was built, as
 available in the @code{platform} component of the R variable
-@code{R.version}.
+@code{R.version}.  An alternative personal file can be specified
+@emph{via} the environemnt variable @env{R_MAKEVARS_USER}.
 
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
@@ -1983,7 +1984,9 @@ FCFLAGS=-g -O -mtune=native
 
 There is also provision for a site-wide @file{Makevars.site} file under
 @file{@var{R_HOME}/etc} (in a sub-architecture-specific directory if
-appropriate).  This is read immediately after @file{Makeconf}.
+appropriate).  This is read immediately after @file{Makeconf}, and an
+alternative file can be specified by environment variable
+@env{R_MAKEVARS_SITE}.
 
 @node Multiple sub-architectures, Byte-compilation, Customizing package compilation, Installing packages
 @subsection Multiple sub-architectures

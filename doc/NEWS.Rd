@@ -43,6 +43,11 @@
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
+      
+      \item Alternative site and user customization files
+      \file{Makevars.site} and \file{~/.R/Makevars} can be specified
+      \emph{via} the environment variables \env{R_MAKEVARS_SITE} and
+      \env{R_MAKEVARS_USER} respectively.
     }
   }
 

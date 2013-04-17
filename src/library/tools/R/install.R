@@ -176,7 +176,7 @@
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
             "			set variables for the configure scripts (if any)",
-            "      --dsym            (Mac OS X only) generate dSYM directory",
+            "      --dsym            (OS X only) generate dSYM directory",
             "\nand on Windows only",
             "      --force-biarch	attempt to build both architectures",
             "			even if there is a non-empty configure.win",
@@ -661,7 +661,9 @@
             if (WINDOWS) {
                 owd <- setwd("src")
                 makefiles <- character()
-                if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+                if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA))) {
+                    if (file.exists(f))  makefiles <- f
+                } else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
                     makefiles <- f
                 else if (file.exists(f <- path.expand("~/.R/Makevars")))
                     makefiles <- f
@@ -738,15 +740,17 @@
                     arch <- substr(rarch, 2, 1000)
                     starsmsg(stars, "arch - ", arch)
                     owd <- setwd("src")
-                    system_makefile <- file.path(R.home(), paste0("etc", rarch),
-                                                 "Makeconf")
-                    site <- file.path(paste0(R.home("etc"), rarch),
-                                      "Makevars.site")
+                    system_makefile <-
+                        file.path(R.home(), paste0("etc", rarch), "Makeconf")
+                    site <- Sys.getenv("R_MAKEVARS_SITE", NA)
+                    if (is.na(site)) site <- file.path(paste0(R.home("etc"), rarch), "Makevars.site")
                     makefiles <- c(system_makefile,
                                    if(file.exists(site)) site,
                                    "Makefile")
-                    if (file.exists(f <- path.expand(paste("~/.R/Makevars",
-                                                           Sys.getenv("R_PLATFORM"), sep = "-"))))
+                    if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA))) {
+                        if (file.exists(f))  makefiles <- c(makefiles, f)
+                    } else if (file.exists(f <- path.expand(paste("~/.R/Makevars",
+                                                                  Sys.getenv("R_PLATFORM"), sep = "-"))))
                         makefiles <- c(makefiles, f)
                     else if (file.exists(f <- path.expand("~/.R/Makevars")))
                         makefiles <- c(makefiles, f)
@@ -1647,7 +1651,9 @@
 
     objs <- character()
     shlib <- ""
-    site <- file.path(paste0(R.home("etc"), rarch), "Makevars.site")
+    site <- Sys.getenv("R_MAKEVARS_SITE", NA)
+    if (is.na(site))
+        site <- file.path(paste0(R.home("etc"), rarch), "Makevars.site")
     makefiles <-
         c(file.path(paste0(R.home("etc"), rarch), "Makeconf"),
           if(file.exists(site)) site,
@@ -1733,15 +1739,19 @@
     if (length(objs)) objs <- paste0(objs, OBJ_EXT, collapse = " ")
 
     if (WINDOWS) {
-        if (rarch == "/x64" &&
-            file.exists(f <- path.expand("~/.R/Makevars.win64")))
+        if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA))) {
+            if (file.exists(f))  makefiles <- c(makefiles, f)
+        } else if (rarch == "/x64" &&
+                   file.exists(f <- path.expand("~/.R/Makevars.win64")))
             makefiles <- c(makefiles, f)
         else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
             makefiles <- c(makefiles, f)
         else if (file.exists(f <- path.expand("~/.R/Makevars")))
             makefiles <- c(makefiles, f)
     } else {
-        if (file.exists(f <- path.expand(paste("~/.R/Makevars",
+        if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA))) {
+            if (file.exists(f))  makefiles <- c(makefiles, f)
+        } else if (file.exists(f <- path.expand(paste("~/.R/Makevars",
                                                Sys.getenv("R_PLATFORM"),
                                                sep = "-"))))
             makefiles <- c(makefiles, f)
