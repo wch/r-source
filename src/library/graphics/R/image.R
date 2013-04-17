@@ -94,8 +94,8 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
         ## spatstat passes a factor matrix here, but .bincode converts to double
         zi <- .bincode(z, breaks, TRUE, TRUE) - 1L
     }
-    if (!add)
-	plot(NA, NA, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
+    if (!add) # use xlim, ylim here to get dispatch on Axis.
+	plot(xlim, ylim, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
 	     yaxs = yaxs, xlab = xlab, ylab = ylab, ...)
     ## need plot set up before we do this
     if (length(x) <= 1) x <- par("usr")[1L:2]

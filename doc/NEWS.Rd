@@ -27,7 +27,12 @@
       \item \code{tools::Rdiff(useDiff = FALSE)} is closer to the POSIX
       definition of \command{diff -b} (as distinct from the description
       in the \command{man} pages of most systems).
-    }
+      
+  
+      \item The default method of \code{image(}} will plot axes of the
+      class of \code{xlim} and \code{ylim} (and hence of \code{x} and
+      \code{y} if there is a suitable \code{range()} method).  Based on
+      a suggestion of Michael Sumner.
   }
 
   \subsection{PACKAGE INSTALLATION}{
