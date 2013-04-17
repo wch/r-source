@@ -47,7 +47,7 @@ X11Fonts(...)
   further mappings are provided for \code{"Helvetica"} (the device
   default), \code{"Times"}, \code{"CyrHelvetica"}, \code{"CyrTimes"}
   (versions of these fonts with Cyrillic support, at least on Linux),
-  \code{"Arial"} (on some platforms including Mac OS X and Solaris) and
+  \code{"Arial"} (on some platforms including OS X and Solaris) and
   \code{"Mincho"} (a CJK font).
 }
 \seealso{

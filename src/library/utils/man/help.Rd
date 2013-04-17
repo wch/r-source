@@ -49,7 +49,7 @@ help(topic, package = NULL, lib.loc = NULL,
     \item HTML help pages with hyperlinks to other topics, shown in a
     browser by \code{\link{browseURL}}.
 #ifdef unix
-    (Where possible an existing browser window is re-used: the Mac OS X
+    (Where possible an existing browser window is re-used: the OS X
     GUI uses its own browser window.)
 #endif
     If for some reason HTML help is unavailable (see

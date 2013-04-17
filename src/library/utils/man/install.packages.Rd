@@ -36,7 +36,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 #ifdef unix
     \file{.tar.gz} files.  These can be source archives or binary
     package archive files (as created by \command{R CMD build --binary}).
-    On a CRAN build of \R for Mac OS X these can be \file{.tgz} files
+    On a CRAN build of \R for OS X these can be \file{.tgz} files
     containing binary package archives.
     Tilde-expansion will be done on the file paths.
 #endif
@@ -109,7 +109,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     but not installed on other platforms.
 
     The default is the appropriate binary type on Windows and on the
-    CRAN binary Mac OS X distribution, otherwise \code{"source"}.  For
+    CRAN binary OS X distribution, otherwise \code{"source"}.  For
     the platforms where binary packages are the default, an alternative
     is \code{"both"} which means \sQuote{try binary if available,
     otherwise try source}.  (This will only choose the binary package if
@@ -178,7 +178,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{\dots}{
     Arguments to be passed to \code{\link{download.file}} or to the
-    functions for binary installs on Mac OS X and Windows (which accept
+    functions for binary installs on OS X and Windows (which accept
     an argument \code{"lock"}: see the section on \sQuote{Locking}).
   }
 }
@@ -186,11 +186,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \R packages are primarily distributed as \emph{source} packages, but
   \emph{binary} packages (a packaging up of the installed package) are
   also supported, and the type most commonly used on Windows and from
-  the CRAN distribution for Mac OS X.  This function can install either
+  the CRAN distribution for OS X.  This function can install either
   type where supported, either by downloading a file from a repository
   or from a local file.  The default type is given by
   \code{\link{getOption}("pkgType")}: this defaults to \code{"source"}
-  apart from under Windows or a CRAN binary distribution for Mac OS X.
+  apart from under Windows or a CRAN binary distribution for OS X.
 
   This is the main function to install packages.  It takes
   a vector of names and a destination library, downloads the packages
@@ -260,7 +260,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \option{--no-lock}.
   % and also options(install.lock = FALSE) in an \R startup file.
 
-  For a Mac OS X or Windows binary install, no locking is done by
+  For an OS X or Windows binary install, no locking is done by
   default.  Setting argument \code{lock} to \code{TRUE} (it defaults to
   the value of \code{\link{getOption}("install.lock", FALSE)}) will use
   per-directory locking as described for source installs: if the value

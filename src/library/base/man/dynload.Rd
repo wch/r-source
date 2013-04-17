@@ -1,6 +1,6 @@
 % File src/library/base/man/dynload.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
@@ -59,13 +59,14 @@ is.loaded(symbol, PACKAGE = "", type = "")
     default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
 \details{
+  
   The objects \code{dyn.load} loads are called \sQuote{dynamically
     loadable libraries} (abbreviated to \sQuote{DLL}) on all platforms
-  except Mac OS X, which unfortunately uses the term for a different
-  sort of sobject.  On Unix-alikes they are also called \sQuote{dynamic
+  except OS X, which uses the term for a different sort
+  of object.  On Unix-alikes they are also called \sQuote{dynamic
     shared objects} (\sQuote{DSO}), or \sQuote{shared objects} for
-  short.  (The POSIX standards use \sQuote{executable object file}, but
-  no one else does.)
+  short.  (The POSIX standards use \sQuote{executable object file},
+  but no one else does.)
 
   See \sQuote{See Also} and the \sQuote{Writing R Extensions} and
   \sQuote{R Installation and Administration} manuals for how to create
