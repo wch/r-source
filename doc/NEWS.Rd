@@ -23,10 +23,15 @@
       a quoted string.
       
       \item \code{count.fields()} is now consistent with \code{scan()}
-      in handling newlines in quoted strings.  Instead of triggering
-      an error, this results in the current line receiving \code{NA}
-      as the field count, with the next line getting the total count
-      of the two lines.      
+      in its handling of newlines in quoted strings.  Instead of
+      triggering an error, this results in the current line receiving
+      \code{NA} as the field count, with the next line getting the total
+      count of the two lines.
+      
+      \item The default method of \code{image()} will plot axes of the
+      class of \code{xlim} and \code{ylim} (and hence of \code{x} and
+      \code{y} if there is a suitable \code{range()} method).  Based on
+      a suggestion of Michael Sumner.
     }
   }
 
