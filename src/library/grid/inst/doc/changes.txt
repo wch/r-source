@@ -1,3 +1,11 @@
+
+Changes from grid_3.0.0 to grid_3.0.1:
+-------------------------------------
+
+1.  Added str() method for "unit.arithmetic"
+    Reported by Andreas Leha.
+
+
 Changes from grid_2.15.0 to grid_3.0.0:
 --------------------------------------
 
