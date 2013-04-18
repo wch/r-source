@@ -51,6 +51,17 @@
     }
   }
   
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Alternatives to the site and user customization files
+      \file{Makevars.site} and \file{~/.R/Makevars} can be specified
+      \emph{via} the environment variables \env{R_MAKEVARS_SITE} and
+      \env{R_MAKEVARS_USER} respectively.  These can be used to suppress
+      the use of the default files by setting an empty value (where
+      possible) or a non-existent path.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{sys.source()} did not report error locations when
