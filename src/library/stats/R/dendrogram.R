@@ -43,8 +43,8 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	    attr(zk[[1L]], "label") <- objlabels[1L]
 	    attr(zk[[2L]], "label") <- objlabels[2L]
 	    attr(zk[[1L]], "members") <- attr(zk[[2L]], "members") <- 1L
-	    attr(zk[[1L]], "height") <- attr(zk[[2L]], "height") <- h0
-	    attr(zk[[1L]], "leaf") <- attr(zk[[2L]], "leaf") <- TRUE
+	    attr(zk[[1L]], "height")  <- attr(zk[[2L]], "height") <- h0
+	    attr(zk[[1L]], "leaf")    <- attr(zk[[2L]], "leaf") <- TRUE
 	}
 	else if (any(neg)) {		# one leaf, one node
 	    X <- as.character(x)
@@ -61,6 +61,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	    attr(zk[[2 - isL]], "height") <- h0
 	    attr(zk[[2 - isL]], "label") <- object$labels[-x[2 - isL]]
 	    attr(zk[[2 - isL]], "leaf") <- TRUE
+	    z[[X[1 + isL]]] <- NULL
 	}
 	else {				# two non-leaf nodes
 	    x <- as.character(x)
@@ -71,6 +72,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	    attr(zk, "midpoint") <- (attr(z[[x[1L]]], "members") +
 				     attr(z[[x[1L]]], "midpoint") +
 				     attr(z[[x[2L]]], "midpoint"))/2
+	    z[[x[1L]]] <- z[[x[2L]]] <- NULL
 	}
 	attr(zk, "height") <- oHgt[k]
 	z[[as.character(k)]] <- zk
