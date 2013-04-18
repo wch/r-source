@@ -94,10 +94,10 @@ image(x, \dots)
   the right and open on the left except for the lowest interval which is
   closed at both ends.
 
-  The axes, where plotted, make use of the classes of \code{xlim} and
+  The axes (where plotted) make use of the classes of \code{xlim} and
   \code{ylim} (and hence by default the classes of \code{x} and
   \code{y}): this will mean that for example dates are labelled as
-  such.  (As from \R 3.1.0.)
+  such.  (As from \R 3.0.1.)
 
   Notice that \code{image} interprets the \code{z} matrix as a table of
   \code{f(x[i], y[j])} values, so that the x axis corresponds to row
