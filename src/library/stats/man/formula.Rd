@@ -1,6 +1,6 @@
 % File src/library/stats/man/formula.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formula}
@@ -25,13 +25,13 @@ as.formula(object, env = parent.frame())
 
   \code{as.formula} is almost identical, additionally preserving
   attributes when \code{object} already inherits from
-  \code{"formula"}.  The default value of the \code{env} argument is
-  used only when the formula would otherwise lack an environment.
+  \code{"formula"}.
 }
 \arguments{
   \item{x, object}{\R object.}
   \item{\dots}{further arguments passed to or from other methods.}
-  \item{env}{the environment to associate with the result.}
+  \item{env}{the environment to associate with the result, if not
+    already a formula.}
   \item{showEnv}{logical indicating if the environment should be printed
     as well.}
 }
@@ -118,9 +118,7 @@ as.formula(object, env = parent.frame())
   Formulas created with the \code{~} operator use the
   environment in which they were created.  Formulas created with
   \code{as.formula} will use the \code{env} argument for their
-  environment.  Pre-existing formulas extracted with
-  \code{as.formula} will only have their environment changed if
-  \code{env} is given explicitly.
+  environment.
 }
 \value{
   All the functions above produce an object of class \code{"formula"}
