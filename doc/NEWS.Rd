@@ -29,7 +29,7 @@
       in the \command{man} pages of most systems).
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
@@ -38,7 +38,7 @@
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
-      
+
       \item Alternative site and user customization files
       \file{Makevars.site} and \file{~/.R/Makevars} can be specified
       \emph{via} the environment variables \env{R_MAKEVARS_SITE} and
@@ -76,7 +76,7 @@
       has been removed.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Calling \code{lm.wfit()} with no non-zero weights gave an
@@ -98,16 +98,16 @@
       new default is \code{FALSE} which makes child processes
       non-interactive by default (this prevents lock-ups due to children
       waiting for interactive input).
-      
+
       \item \code{scan()} now warns when end-of-file occurs within
       a quoted string.
-      
+
       \item \code{count.fields()} is now consistent with \code{scan()}
       in its handling of newlines in quoted strings.  Instead of
       triggering an error, this results in the current line receiving
       \code{NA} as the field count, with the next line getting the total
       count of the two lines.
-      
+
       \item The default method of \code{image()} will plot axes of the
       class of \code{xlim} and \code{ylim} (and hence of \code{x} and
       \code{y} if there is a suitable \code{range()} method).  Based on
@@ -130,7 +130,7 @@
       \option{--no-user-files} and \option{--no-site-files}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{sys.source()} did not report error locations when
@@ -142,13 +142,13 @@
 
       \item \code{str(d)} no longer gives an error when \code{names(d)}
       contain illegal multibyte strings (\PR{15247}).
-      
+
       \item Profiling of built-in functions with \code{line.profiling=
-      TRUE} did not record the line from which they were called.      
-      
+      TRUE} did not record the line from which they were called.
+
       \item \code{citation(pkg)} dropped the header and footer specified
       in the \file{CITATION} file (\PR{15257}).
-      
+
       \item Quotes were handled differently when reading the first line
       and reading the rest, so \code{read.table()} misread some files
       that contained quote characters (\PR{15245}).
@@ -156,24 +156,24 @@
       \item \code{cat()} with \code{sep} a character vector of length
       greater than one and more than one argument was using separators
       inconsistently (\PR{15261}).
-      
+
       \item On Windows in \R 3.0.0, \code{savePlot()} failed because of
       an incorrect check on the argument count.
 
       \item \code{unzip(list = TRUE)} returned \code{Names} as a factor
       and not a character vector (as documented) for the internal method.
       (Noticed by Sean O'Riordain.)
-      
+
       \item \code{contourLines()} now checks more comprehensively for
       conformance of its \code{x}, \code{y} and \code{z} arguments (it
       was used incorrectly in package \CRANpkg{R2G2}).
-      
+
       \item Saved graphics display lists are \R version-specific.
       Attempting to load workspaces containing them (or some other
       version-specific objects) aborted the load in \R 3.0.0 and
       earlier; now it does a partial load and generates a warning
       instead.
-      
+
       \item In \R 3.0.0, \code{identify()} and \code{locator()} did
       not record information correctly, so replaying a graph (e.g. by
       copying it to another device) would fail. (\PR{15271})
@@ -181,13 +181,16 @@
       \item Calling \code{file.copy()} or \code{dirname()} with the
       invalid input \code{""} (which was being used in packages, despite
       not being a file path) could have caused a segfault.
-      
+
       \code{dirname("")} is now \code{""} rather than \code{"."} (unless
       it segfaulted).
 
       \item \code{supsmu()} could read/write outside its input vectors
-      for very short inputs (seen in package \CRANpkg{rms} for \code{n =
-	4}).
+      for very short inputs (seen in package \CRANpkg{rms} for \code{n = 4}).
+
+      \item \code{as.dendrogram()}'s \code{hclust} method uses less
+      memory and hence gets considerably faster for large (n ~ 1000)
+      clusterings, thanks to Daniel Müllner. (\PR{15174})
     }
   }
 }
