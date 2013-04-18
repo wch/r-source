@@ -38,11 +38,6 @@
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
-
-      \item Alternative site and user customization files
-      \file{Makevars.site} and \file{~/.R/Makevars} can be specified
-      \emph{via} the environment variables \env{R_MAKEVARS_SITE} and
-      \env{R_MAKEVARS_USER} respectively.
     }
   }
 
@@ -128,6 +123,17 @@
 
       The old behaviour can be obtained with the new options
       \option{--no-user-files} and \option{--no-site-files}.
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Alternatives to the site and user customization files
+      \file{Makevars.site} and \file{~/.R/Makevars} can be specified
+      \emph{via} the environment variables \env{R_MAKEVARS_SITE} and
+      \env{R_MAKEVARS_USER} respectively.  These can be used to suppress
+      the use of the default files by setting an empty value (where
+      possible) or a non-existent path.
     }
   }
 
