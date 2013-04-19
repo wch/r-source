@@ -82,6 +82,10 @@
       array-overrun in the Fortran code and a not very sensible answer.
       It is now special-cased with a simpler answer (no \code{qr}
       component).
+
+      \item On system where \code{mktime()} does not set \code{ERRNO}, the
+      last second before the epoch could not be converted from \code{POSIXlt} 
+      to \code{POSIXct}. (Reported by Bill Dunlap).
     }
   }
 }
