@@ -92,6 +92,9 @@ is.na.data.frame <- function (x)
     y
 }
 
+## not needed, as  anyNA() works recursively on list()s :
+## anyNA.data.frame <- function(x) any(vapply(x, anyNA, NA, USE.NAMES=FALSE))
+
 is.data.frame <- function(x) inherits(x, "data.frame")
 
 I <- function(x) { structure(x, class = unique(c("AsIs", oldClass(x)))) }
@@ -1134,7 +1137,7 @@ data.frame <-
   if (!is.null(a)) warning("Name partially matched in data frame")
   return(a)
 }
-   
+
 
 xpdrows.data.frame <- function(x, old.rows, new.rows)
 {

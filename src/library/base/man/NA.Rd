@@ -13,6 +13,7 @@
 \alias{is.na.data.frame}
 \alias{is.na<-}
 \alias{is.na<-.default}
+\alias{anyNA}
 \title{\sQuote{Not Available} / Missing Values}
 \description{
   \code{NA} is a logical constant of length 1 which contains a missing
@@ -25,6 +26,10 @@
   The generic function \code{is.na} indicates which elements are missing.
 
   The generic function \code{is.na<-} sets elements to \code{NA}.
+
+  The generic function \code{anyNA} with its default and a
+  \code{"data.frame"} method implements \code{any(is.na(x))} in a fast
+  way.
 }
 \usage{
 NA
@@ -97,6 +102,35 @@ is.na(paste(c(1, NA))) #> FALSE FALSE
 (xx <- c(0:4))
 is.na(xx) <- c(2, 4)
 xx                     #> 0 NA  2 NA  4
+anyNA(xx) # TRUE
+
+## Measure speed difference in an extreme case:
+if(require("microbenchmark")) {
+  x <- c(NaN, 1:10000)
+  print(microbenchmark(any(is.na(x)), anyNA(x)))
+} else { ## much less accurate
+  x <- c(NaN, 1e6)
+  nSim <- 2^13
+  print(rbind(is.na = system.time(replicate(nSim, any(is.na(x)))),
+              anyNA = system.time(replicate(nSim, anyNA(x)))))
+}
+
+## anyNA() works recursively with list()s:
+LL <- list(1:5, c(NA, 5:8), c("A","NA"), c("a", NA_character_))
+L2 <- LL[c(1,3)]
+sapply(LL, anyNA); anyNA(LL)
+sapply(L2, anyNA); anyNA(L2)
+
+## ... lists, and hence data frames, too; no method needed:
+dN <- dd <- USJudgeRatings; dN[3,6] <- NA
+anyNA(dd) # FALSE
+anyNA(dN) # TRUE
+\dontshow{
+stopifnot(anyNA(x), anyNA(xx),
+          anyNA(LL), !anyNA(L2),
+          anyNA(dN), !anyNA(dd), !any(is.na(dd)),
+          all(c(3,6) == which(is.na(dN), arr.ind=TRUE)))
+}
 }
 \keyword{NA}
 \keyword{logic}

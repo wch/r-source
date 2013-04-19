@@ -27,6 +27,10 @@
       \item \code{tools::Rdiff(useDiff = FALSE)} is closer to the POSIX
       definition of \command{diff -b} (as distinct from the description
       in the \command{man} pages of most systems).
+
+      \item New \code{anyNA()} is a fast version of \code{any(is.na(.))},
+      based on a proposal by Tim Hesterberg. (Wish of \PR{15239}).
+      %% Planned porting to 3.0.0 patched, after waiting/more testing..
     }
   }
 

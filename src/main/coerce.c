@@ -1130,7 +1130,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error(_("(list) object cannot be coerced to type '%s'"), 
+	error(_("(list) object cannot be coerced to type '%s'"),
 	      type2char(type));
 
     if (warn) CoercionWarning(warn);
@@ -1149,11 +1149,11 @@ static SEXP coerceSymbol(SEXP v, SEXPTYPE type)
 	SET_VECTOR_ELT(rval, 0, v);
 	UNPROTECT(1);
     } else if (type == CHARSXP)
-	rval = PRINTNAME(v);	
+	rval = PRINTNAME(v);
     else if (type == STRSXP)
 	rval = ScalarString(PRINTNAME(v));
     else
-	warning(_("(symbol) object cannot be coerced to type '%s'"), 
+	warning(_("(symbol) object cannot be coerced to type '%s'"),
 		type2char(type));
     return rval;
 }
@@ -1420,7 +1420,7 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Method dispatch has failed, we now just */
     /* run the generic internal code */
-    
+
     checkArity(op, args);
     x = CAR(args);
     if(TYPEOF(x) == type) {
@@ -1941,7 +1941,7 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (streql(stype, "any")) {
 	/* isVector is inlined, means atomic or VECSXP or EXPRSXP */
 	LOGICAL(ans)[0] = isVector(x);
-    } 
+    }
     else if (streql(stype, "numeric")) {
 	LOGICAL(ans)[0] = (isNumeric(x) && !isLogical(x));
     }
@@ -2080,6 +2080,78 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1); /*ans*/
     return ans;
 }
+
+/* Original code:
+   Copyright 2012 Google Inc. All Rights Reserved.
+   Author: Tim Hesterberg <rocket@google.com>
+   Distributed under GPL 2 or later
+*/
+// Check if x has missing values; the  anyNA.default() method:
+SEXP attribute_hidden anyNA(SEXP x)
+{
+    double *xD;
+    int *xI, i, n = xlength(x);
+
+    switch (TYPEOF(x)) {
+    case REALSXP:
+	xD = REAL(x);
+	for (i = 0; i < n; i++)
+	    if (ISNAN(xD[i])) return Rf_ScalarLogical(TRUE);
+	break;
+    case INTSXP:
+	xI = INTEGER(x);
+	for (i = 0; i < n; i++)
+	    if (xI[i] == NA_INTEGER) return Rf_ScalarLogical(TRUE);
+	break;
+    case LGLSXP:
+	xI = LOGICAL(x);
+	for (i = 0; i < n; i++)
+	    if (xI[i] == NA_LOGICAL) return Rf_ScalarLogical(TRUE);
+	break;
+    case CPLXSXP:
+	for (i = 0; i < n; i++)
+	    if (ISNAN(COMPLEX(x)[i].r) ||
+		ISNAN(COMPLEX(x)[i].i)) return Rf_ScalarLogical(TRUE);
+	break;
+    case STRSXP:
+	for (i = 0; i < n; i++)
+	    if (STRING_ELT(x, i) == NA_STRING) return Rf_ScalarLogical(TRUE);
+	break;
+ // Note that the recursive calls to anyNA() below never will do method dispatch
+    case LISTSXP:
+	for (i = 0; i < n; i++) {
+	    if (LOGICAL(anyNA(CAR(x)))[0]) return Rf_ScalarLogical(TRUE);
+	    x = CDR(x);
+	}
+	break;
+    case VECSXP:
+	for (i = 0; i < n; i++) {
+	    SEXP s = VECTOR_ELT(x, i);
+	    if (LOGICAL(anyNA(s))[0]) return Rf_ScalarLogical(TRUE);
+	}
+	break;
+    case RAWSXP: /* no such thing as a raw NA:  is.na(.) gives FALSE always */
+	return Rf_ScalarLogical(FALSE);
+
+    default:
+	error("anyNA() applied to non-(list or vector) of type '%s'",
+	      type2char(TYPEOF(x)));
+    }
+    return Rf_ScalarLogical(FALSE);
+} // anyNA()
+
+SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    check1arg(args, call, "x");
+
+    SEXP ans;
+    if (DispatchOrEval(call, op, "anyNA", args, rho, &ans, 0, 1))
+	return(ans);
+    // else
+    return anyNA(CAR(args));
+}
+
 
 SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -2318,8 +2390,13 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !(isString(fun) && length(fun) == 1) && !isFunction(fun) )
 	error(_("'what' must be a character string or a function"));
 
+#ifdef __maybe_in_the_future__
+    if (!isNull(args) && !isVectorList(args))
+	error(_("'args' must be a list or expression"));
+#else
     if (!isNull(args) && !isNewList(args))
 	error(_("'args' must be a list"));
+#endif
 
     if (!isEnvironment(envir))
 	error(_("'envir' must be an environment"));
@@ -2491,7 +2568,7 @@ SEXP attribute_hidden do_quote(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "expr");
-    SEXP val = CAR(args); 
+    SEXP val = CAR(args);
     /* Make sure expression has NAMED == 2 before being returning
        in to avoid modification of source code */
     if (NAMED(val) != 2) SET_NAMED(val, 2);
