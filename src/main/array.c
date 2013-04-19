@@ -1584,7 +1584,6 @@ SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (upper == NA_INTEGER) error(_("invalid '%s' argument"), "upper.tri");
     int trans = asLogical(CAR(args));
     if (trans == NA_INTEGER) error(_("invalid '%s' argument"), "transpose");
-    SEXP ans;
     if (TYPEOF(r) != REALSXP) {PROTECT(r = coerceVector(r, REALSXP)); nprot++;}
     if (TYPEOF(b) != REALSXP) {PROTECT(b = coerceVector(b, REALSXP)); nprot++;}
     double *rr = REAL(r);
@@ -1597,7 +1596,7 @@ SEXP attribute_hidden do_backsolve(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  i + 1);
     }
 
-    PROTECT(ans = allocMatrix(REALSXP, k, ncb));
+    SEXP ans = PROTECT(allocMatrix(REALSXP, k, ncb));
     if (k > 0 && ncb > 0) {
        /* copy (part) cols of b to ans */
 	for(R_xlen_t j = 0; j < ncb; j++)
@@ -1617,9 +1616,8 @@ SEXP attribute_hidden do_maxcol(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP m = CAR(args);
     int method = asInteger(CADR(args));
     int nr = nrows(m), nc = ncols(m), nprot = 1;
-    if (TYPEOF(m) != REALSXP) PROTECT(m = coerceVector(m, REALSXP));
-    SEXP ans = allocVector(INTSXP, nr);
-    PROTECT(ans);
+    if (TYPEOF(m) != REALSXP) {PROTECT(m = coerceVector(m, REALSXP)); nprot++;}
+    SEXP ans = PROTECT(allocVector(INTSXP, nr));
     R_max_col(REAL(m), &nr, &nc, INTEGER(ans), &method);
     UNPROTECT(nprot);
     return ans;
