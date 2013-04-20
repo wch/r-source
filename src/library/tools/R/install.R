@@ -366,7 +366,7 @@
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
         TAR <- Sys.getenv("TAR", 'tar')
-        res <- system(paste("cp -r .", shQuote(instdir),
+        res <- system(paste("cp -R .", shQuote(instdir),
                             "|| (", TAR, "cd - .| (cd", shQuote(instdir), "&&", TAR, "-xf -))"
                             ))
         if (res) errmsg("installing binary package failed")
