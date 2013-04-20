@@ -19,7 +19,7 @@ all: Makefile
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkdesc
-	@cp -r `ls -d $(srcdir)/inst/*` $(top_builddir)/library/$(pkg)
+	@cp -R `ls -d $(srcdir)/inst/*` $(top_builddir)/library/$(pkg)
 	@find "$(top_builddir)/library/$(pkg)" -name .svn -type d -prune \
             -exec rm -rf \{\} \; 2>/dev/null
 	@cp DESCRIPTION $(top_builddir)/library/$(pkg)

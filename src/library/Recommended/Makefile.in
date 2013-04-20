@@ -82,7 +82,7 @@ install-tests:
 	 for pkg in $(R_PKGS_RECOMMENDED); do \
 	  if test -d $${pkg}/tests; then \
 	    $${abs_MKINSTALLDIRS} "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
-	    cp -r $${pkg}/tests/* "$(DESTDIR)$(rhome)/library/$${pkg}/tests"; \
+	    cp -R $${pkg}/tests/* "$(DESTDIR)$(rhome)/library/$${pkg}/tests"; \
 	  fi; \
 	 done)
 

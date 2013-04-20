@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -43,7 +43,8 @@ Sys.junction(from, to)
   \item{overwrite}{logical; should existing destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical.  If \code{to} is a directory, should
-    directories in \code{from} be copied (and their contents)?}
+    directories in \code{from} be copied (and their contents)?  (Like
+    \command{cp -R} on POSIX OSes.)}
   \item{copy.mode}{logical:  should file permission bits be copied where
     possible?  This applies to both files and directories.}
 }
@@ -108,7 +109,8 @@ Sys.junction(from, to)
   permissions are copied where possible, restricted by
   \sQuote{\link{umask}}.  Other security attributes such as ACLs are not
   copied.  On a POSIX filesystem the targets of symbolic links will be
-  copied rather than the links themselves.
+  copied rather than the links themselves, and hard links are copied
+  separately.
 
   \code{file.symlink} and \code{file.link} make symbolic and hard links
   on those file systems which support them.  For \code{file.symlink} the
