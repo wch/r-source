@@ -267,7 +267,7 @@ distclean: clean
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
 	@$(MAKE) -C ../../tests -f Makefile.win distclean
-	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
+	$(RM) -R ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \
 	../include/libintl.h
@@ -277,7 +277,7 @@ distclean: clean
 	$(RM) ../library/*/src/windows/*.o ../library/*/src/windows/*.a
 	$(RM) ../library/*/src/windows/*.d ../library/*/src/windows/Makedeps
 	$(RM) ../library/*/src/windows/*.dll
-	$(RM) -r ../library/*/check
+	$(RM) -R ../library/*/check
 	$(RM) ../library/*/tests/*.ps ../library/*/tests/*.pdf
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def
@@ -290,8 +290,8 @@ distclean: clean
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
 	../../etc/Rprofile.site ../../etc/rgb.txt ../../etc/Rcmd_environ \
 	../../tests/*.Rout ../../tests/*.Rout.fail
-	$(RM) -r ../../etc/i386 ../../etc/x64 # do both sub-archs
-	$(RM) -r ../../share/zoneinfo
+	$(RM) -R ../../etc/i386 ../../etc/x64 # do both sub-archs
+	$(RM) -R ../../share/zoneinfo
 	$(MAKE) -C fixed distclean
 	$(MAKE) -C ../include -f Makefile.win distclean
 	-$(MAKE) -C installer distclean
@@ -301,8 +301,8 @@ distclean: clean
 	$(RM) ../../SVN-REVISION.bak
 	$(RM) ../../doc/manual/rw-FAQ
 	$(MAKE) -C cran clean
-	$(RM) -r ../library/.vignettes # it gets left behind if there is an error
-	$(RM) -r ../../share/locale # relic of earlier versions
+	$(RM) -R ../library/.vignettes # it gets left behind if there is an error
+	$(RM) -R ../../share/locale # relic of earlier versions
 	$(RM) MkRules Rpwd.exe # do this last of all
 
 veryclean: distclean
