@@ -53,10 +53,10 @@ msi: $(RPREFIX)-$(SUFF).msi
 imagedir:
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
-	$(CP) -pr $(R_HOME)/bin $(R_HOME)/modules $(RPREFIX)
+	$(CP) -pR $(R_HOME)/bin $(R_HOME)/modules $(RPREFIX)
 # copy base and recommended packages
 	$(MKDIR) -p $(RPREFIX)/library
-	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
+	$(CP) -pR $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/library/*/MD5
 	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) -p $(RPREFIX)/etc$(R_ARCH)
@@ -66,7 +66,7 @@ imagedir:
 	$(MKDIR) -p $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/CRAN_mirrors.csv $(RPREFIX)/doc
 	$(MKDIR) -p $(RPREFIX)/doc/manual
-	$(CP) -pr $(R_HOME)/doc/html $(RPREFIX)/doc
+	$(CP) -pR $(R_HOME)/doc/html $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/manual/*.html $(R_HOME)/doc/manual/*.pdf \
 	  $(RPREFIX)/doc/manual
 #	html copies of these are in doc/manual, and we don't have FAQ PDF on menus
@@ -94,11 +94,11 @@ imagedir:
 	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32
 	$(CP) $(R_HOME)/doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
-	$(CP) -pr $(R_HOME)/include $(RPREFIX)
-	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
+	$(CP) -pR $(R_HOME)/include $(RPREFIX)
+	$(CP) -pR $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
 # This is odd -- better to clean the copy
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
-	$(CP) -pr ../windlgs $(RPREFIX)/src/library
+	$(CP) -pR ../windlgs $(RPREFIX)/src/library
 #
 # test dir
 	mkdir $(RPREFIX)/tests
@@ -118,7 +118,7 @@ PDF_FILES = $(wildcard $(RPREFIX)/library/*/doc/*.pdf)
 
 fixups:
 	echo "make.packages.html(.Library,temp=FALSE,verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
-	$(CP) -prf $(R_HOME)/Tcl $(RPREFIX)
+	$(CP) -pRf $(R_HOME)/Tcl $(RPREFIX)
 	$(RM) $(RPREFIX)/Tcl*/lib/*.lib
 ifneq ($(strip $(QPDF)),)
 	@for f in $(PDF_FILES); do \
@@ -135,7 +135,7 @@ ifneq ($(strip $(HOME32)),)
 	unzip -qo "$(HOME32)/32bit" -d $(RPREFIX)
 	rm "$(HOME32)/32bit.zip"
 	mkdir -p $(RPREFIX)/Tcl
-	$(CP) -prf "$(HOME32)/Tcl/bin" "$(HOME32)/Tcl/lib" $(RPREFIX)/Tcl
+	$(CP) -pRf "$(HOME32)/Tcl/bin" "$(HOME32)/Tcl/lib" $(RPREFIX)/Tcl
 	for f in $(R_PKGS_RECOMMENDED); do \
 	   sed -e 's/Archs: x64/Archs: i386, x64/' \
              ../../../library/$${f}/DESCRIPTION \

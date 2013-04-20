@@ -118,7 +118,7 @@ metadata:
 
 install: installdirs
 	@$(ECHO) "installing packages ..."
-	@cp -r $(top_builddir)/library "$(DESTDIR)$(rhome)" || \
+	@cp -R $(top_builddir)/library "$(DESTDIR)$(rhome)" || \
 	  (cd $(top_builddir)/library; \
 	    $(TAR) cf - . | (cd "$(DESTDIR)$(rhome)/library"; $(TAR) xmof -))
 	@$(ECHO) "  building HTML index ..."

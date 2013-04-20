@@ -305,7 +305,7 @@ testInstalledPackage <-
         this <- paste(pkg, "tests", sep = "-")
         unlink(this, recursive = TRUE)
         dir.create(this)
-        ## system(paste("cp -pr", file.path(d, "*"), this))
+        ## system(paste("cp -pR", file.path(d, "*"), this))
         file.copy(Sys.glob(file.path(d, "*")), this, recursive = TRUE)
         setwd(this)
         message(gettextf("Running specific tests for package %s",
