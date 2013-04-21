@@ -4530,17 +4530,19 @@ function(dir)
         ## (This may fail for conditionalized code not meant for R
         ## [e.g., argument 'where'].)
         mc <- tryCatch(match.call(base::assign, e), error = identity)
-        (!inherits(mc, "error") &&
-         (mc$x != ".Random.seed") &&
-         ((is.name(pos <- mc$pos) &&
-           as.character(pos) == ".GlobalEnv") ||
-          (is.call(pos) &&
-           as.character(pos) == "globalenv") ||
-          (is.numeric(pos) && pos == 1) ||
-          (is.name(env <- mc$envir) &&
-           as.character(env) == ".GlobalEnv") ||
-          (is.call(env) &&
-           as.character(env) == "globalenv")))
+        if(inherits(mc, "error") || mc$x == ".Random.seed")
+            return(FALSE)
+        if(!is.null(env <- mc$envir) &&
+           identical(tryCatch(eval(env),
+                              error = identity),
+                     globalenv()))
+            return(TRUE)
+        if(!is.null(pos <- mc$pos) &&
+           identical(tryCatch(eval(call("as.environment", pos)),
+                              error = identity),
+                     globalenv()))
+            return(TRUE)
+        FALSE
     }
 
     calls <- Filter(length,
