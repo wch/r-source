@@ -1342,7 +1342,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
        the setjmp and longjmp calls. Theoretically this does not
        include n and bgn, but gcc -O2 -Wclobbered warns about these so
        to be safe we declare them volatile as well. */
-    volatile int i, n, bgn;
+    volatile int i = 0, n, bgn;
     volatile SEXP v, val;
     int dbg, val_type;
     SEXP sym, body;
