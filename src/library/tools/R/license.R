@@ -75,39 +75,76 @@ function(s, group = TRUE) {
 }
 
 .make_R_license_db <-
-function()
+function(paths = NULL)
 {
-    ldb <- read.dcf(file.path(R.home("share"), "licenses", "license.db"))
+    if(is.null(paths))
+        paths <- unlist(strsplit(Sys.getenv("R_LICENSE_DB_PATHS"),
+                                 .Platform$path.sep, fixed = TRUE))
+    paths <- c(paths,
+               file.path(R.home("share"), "licenses", "license.db"))
+    ldb <- Reduce(function(u, v) merge(u, v, all = TRUE), 
+                  lapply(unique(normalizePath(paths)), read.dcf))
+    ## Merging matrices gives a data frame.
+    ldb <- as.matrix(ldb)
     ldb[is.na(ldb)] <- ""
-    ## (Could also keeps NAs and filter on is.finite() in subsequent
+    ## (Could also keep NAs and filter on is.finite() in subsequent
     ## computations.)
     ## FOSS == "yes" implues Restricts_use = "no":
     ldb[ldb[, "FOSS"] == "yes", "Restricts_use"] <- "no"
-    data.frame(ldb, stringsAsFactors = FALSE)
+    ldb <- data.frame(ldb, stringsAsFactors = FALSE)
+    ldb$Labels <- R_license_db_labels(ldb)
+    ldb[!duplicated(ldb$Labels), ]
 }
 
-R_license_db <- .make_R_license_db()
+R_license_db_labels <-
+function(ldb)
+{
+    if(is.null(ldb)) return(NULL)
+    lab <- ldb$SSS
+    pos <- which(lab == "")
+    abbrevs <- ldb$Abbrev[pos]
+    versions <- ldb$Version[pos]
+    lab[pos] <- ifelse(abbrevs != "", abbrevs, ldb$Name[pos])
+    ind <- nzchar(versions)
+    pos <- pos[ind]
+    lab[pos] <- sprintf("%s version %s", lab[pos], versions[ind])
+    lab
+}
+
+R_license_db <- local({
+    val <- NULL
+    function(new) {
+        if(!missing(new))
+            val <<- new
+        else
+            val
+    }
+})
+
+R_license_db(.make_R_license_db())
 
 .make_R_license_db_vars <-
 function()
 {
     ## Build license regexps and tables according to the specs.
 
+    ldb <- R_license_db()
+
     ## Standard short specification (SSS field) from the R license db.
-    pos <- which(nzchar(R_license_db$SSS))
-    names(pos) <- R_license_db$SSS[pos]
+    pos <- which(nzchar(ldb$SSS))
+    names(pos) <- ldb$SSS[pos]
     tab_sss <- pos
 
-    has_version <- nzchar(R_license_db$Version)
-    has_abbrev <- nzchar(R_license_db$Abbrev)
+    has_version <- nzchar(ldb$Version)
+    has_abbrev <- nzchar(ldb$Abbrev)
 
     ## Name or abbreviation of an unversioned license from the R license
     ## db.
     pos <- which(!has_version)
-    names(pos) <- R_license_db$Name[pos]
+    names(pos) <- ldb$Name[pos]
     tab_unversioned <- pos
     pos <- which(has_abbrev & !has_version)
-    tab_unversioned[R_license_db$Abbrev[pos]] <- pos
+    tab_unversioned[ldb$Abbrev[pos]] <- pos
 
     ## Versioned licenses from the R license db.
     ## Style A: Name of abbreviation of a versioned license, optionally
@@ -115,19 +152,19 @@ function()
     ## Style B: Name of a versioned license followed by the version.
     ## Style C: Abbrevation of a versioned license combined with '-'.
     pos <- which(has_version)
-    names(pos) <- R_license_db$Name[pos]
+    names(pos) <- ldb$Name[pos]
     tab_versioned_style_A <- split(pos, names(pos))
     tab_versioned_style_B <- pos
     names(tab_versioned_style_B) <-
-        paste(names(pos), R_license_db$Version[pos])
+        paste(names(pos), ldb$Version[pos])
     pos <- which(has_version & has_abbrev)
     tab_versioned_style_A <-
-        c(tab_versioned_style_A, split(pos, R_license_db$Abbrev[pos]))
+        c(tab_versioned_style_A, split(pos, ldb$Abbrev[pos]))
     tab_versioned_style_C <- pos
     names(tab_versioned_style_C) <-
         sprintf("%s-%s",
-                R_license_db$Abbrev[pos],
-                R_license_db$Version[pos])
+                ldb$Abbrev[pos],
+                ldb$Version[pos])
 
     operators <- c("<", "<=", ">", ">=", "==", "!=")
     re_numeric_version <- .standard_regexps()$valid_numeric_version
@@ -151,9 +188,9 @@ function()
                paste0("(", re_version_spec, ")*"))
     ## Let's be nice ...
     re_versioned_style_B <-
-        re_or(paste0(R_license_db$Name[has_version],
+        re_or(paste0(ldb$Name[has_version],
                      "[[:space:]]+([Vv]ersion[[:space:]]+)?",
-                     R_license_db$Version[has_version]))
+                     ldb$Version[has_version]))
     re_versioned_style_C <- re_or(names(tab_versioned_style_C))
 
     re_license_in_db <-
@@ -200,7 +237,25 @@ function()
          tab_versioned_style_C = tab_versioned_style_C)
 }
 
-R_license_db_vars <- .make_R_license_db_vars()
+R_license_db_vars <- local({
+    val <- NULL
+    function(new) {
+        if(!missing(new))
+            val <<- new
+        else
+            val
+    }
+})
+
+
+R_license_db_vars(.make_R_license_db_vars())
+
+R_license_db_refresh_cache <-
+function(paths = NULL)
+{
+    R_license_db(.make_R_license_db(paths))
+    R_license_db_vars(.make_R_license_db_vars())
+}
 
 ## Standardizable license specs:
 
@@ -407,6 +462,8 @@ function(x)
                               is_standardizable = FALSE,
                               is_verified = FALSE,
                               standardization = NA_character_,
+                              components = NULL,
+                              expansions = NULL,
                               extensions = NULL,
                               pointers = NULL,
                               is_FOSS = NA,
@@ -417,6 +474,8 @@ function(x)
              is_standardizable = is_standardizable,
              is_verified = is_verified,
              standardization = standardization,
+             components = components,
+             expansions = expansions,
              extensions = extensions,
              pointers = pointers,
              is_FOSS = is_FOSS,
@@ -433,6 +492,7 @@ function(x)
 
     pointers <- NULL
     extensions <- NULL
+    expansions <- NULL
     is_verified <- FALSE
     is_FOSS <- NA
     restricts_use <- NA
@@ -442,7 +502,7 @@ function(x)
         .strip_whitespace(unlist(strsplit(x, "|", fixed = TRUE)))
 
     ## Now analyze the individual components.
-    ok <- grepl(R_license_db_vars$re_component, components)
+    ok <- grepl(R_license_db_vars()$re_component, components)
     bad_components <- components[!ok]
     is_canonical <- all(ok)
 
@@ -527,23 +587,38 @@ function(x)
         } else
             NA
 
-        pos <- grep(sprintf("%s$", R_license_db_vars$re_license_file),
-                    components)
+        re <- R_license_db_vars()$re_license_file
+        pos <- grep(sprintf("%s$", re), components)
         if(length(pos)) {
-            components <- components[pos]
+            elements <- components[pos]
             ## Components with license file pointers.
-            pointers <- sub(".*file ", "", components)
+            pointers <- sub(".*file ", "", elements)
             ## Components with license extensions.
-            ind <- grepl("+", components, fixed = TRUE)
+            ind <- grepl("+", elements, fixed = TRUE)
             if(any(ind))
                 extensions <-
-                    data.frame(components = components[ind],
+                    data.frame(components = elements[ind],
                                extensible =
                                sapply(expansions[pos[ind]],
                                       function(e)
                                       verifiable(e$Extensible)),
                                stringsAsFactors = FALSE)
         }
+
+        ## Replace expansions by their labels from the license db.
+        ## (As these are unique, we can always easily get the full
+        ## expansions back.)
+        expansions <- lapply(expansions, `[[`, "Labels")
+        ## Components which are "Unlimited" or "file LICEN[CS]E" have
+        ## empty expansions:
+        ind <- grepl(sprintf("^(Unlimited|%s)$", re), components)
+        if(any(ind)) expansions[ind] <- as.list(components[ind])
+        ## Components with license extensions have this dropped in the
+        ## expansion.
+        m <- regexpr(sprintf("\\+ *%s$", re), components)
+        ind <- (m > -1L)
+        expansions[ind] <-
+            Map(paste, expansions[ind], regmatches(components, m))
     }
 
     .make_results(is_canonical = is_canonical,
@@ -551,6 +626,8 @@ function(x)
                   is_standardizable = is_standardizable,
                   standardization = standardization,
                   is_verified = is_verified,
+                  components = components,
+                  expansions = expansions,    
                   extensions = extensions,
                   pointers = pointers,
                   is_FOSS = is_FOSS,
@@ -675,30 +752,47 @@ function(x)
     ## Determine the license from the db matching a license spec
     ## component.
 
+    ldb <- R_license_db()
+    ldb_vars <- R_license_db_vars()
+
+    .numeric_version_meets_constraints_p <-
+    function(version, constraints)
+    {
+        version <- as.numeric_version(version)
+        for(term in constraints) {
+            re <- ldb_vars$re_single_version_spec
+            op <- sub(re, "\\1", term)
+            target <- sub(re, "\\2", term)
+            if(!eval(parse(text = paste("version", op, "target"))))
+                return(FALSE)
+        }
+        TRUE
+    }
+    
     if(x == "Unlimited" ||
-       grepl(x, R_license_db_vars$re_license_file))
+       grepl(x, ldb_vars$re_license_file))
         return(NULL)
 
     ## Drop possible license extension.
-    x <- sub(R_license_db_vars$re_license_extension, "", x)
+    x <- sub(ldb_vars$re_license_extension, "", x)
 
-    if(grepl(re_anchor(R_license_db_vars$re_sss), x)) {
-        pos <- R_license_db_vars$tab_sss[x]
-        R_license_db[pos, ]
+    if(grepl(re_anchor(ldb_vars$re_sss), x)) {
+        pos <- ldb_vars$tab_sss[x]
+        ldb[pos, ]
     }
-    else if(grepl(re_anchor(R_license_db_vars$re_unversioned), x)) {
-        pos <- R_license_db_vars$tab_unversioned[x]
-        R_license_db[pos, ]
+    else if(grepl(re_anchor(ldb_vars$re_unversioned), x)) {
+        pos <- ldb_vars$tab_unversioned[x]
+        ldb[pos, ]
     }
     else if(grepl(re <-
-                  re_anchor(R_license_db_vars$re_versioned_style_A),
+                  re_anchor(ldb_vars$re_versioned_style_A),
                   x)) {
         ## Extract name/abbrev and version spec.
         v <- sub(re, "\\2", x)
         x <- sub(re, "\\1", x)
         ## First, find the matching entries matching the name/abbrev.
-        pos <- R_license_db_vars$tab_versioned_style_A[[x]]
-        entries <- R_license_db[pos, ]
+        pos <- ldb_vars$tab_versioned_style_A[[x]]
+        entries <- ldb[pos, ]
         ## Now determine the entries satisfying the version spec.
         v <- sub("[[:space:]]*\\((.*)\\)[[:space:]]*", "\\1", v)
         if(v != "") {
@@ -711,33 +805,18 @@ function(x)
         }
         entries
     }
-    else if(grepl(re_anchor(R_license_db_vars$re_versioned_style_B),
+    else if(grepl(re_anchor(ldb_vars$re_versioned_style_B),
                   x)) {
         re <- sprintf("[[:space:]]+([Vv]ersion[[:space:]]+)?(%s)",
                       .standard_regexps()$valid_numeric_version)
         x <- sub(re, " \\2", x)
-        pos <- R_license_db_vars$tab_versioned_style_B[x]
-        R_license_db[pos, ]
+        pos <- ldb_vars$tab_versioned_style_B[x]
+        ldb[pos, ]
     }
-    else if(grepl(re_anchor(R_license_db_vars$re_versioned_style_C),
+    else if(grepl(re_anchor(ldb_vars$re_versioned_style_C),
                   x)) {
-        pos <- R_license_db_vars$tab_versioned_style_C[x]
-        R_license_db[pos, ]
+        pos <- ldb_vars$tab_versioned_style_C[x]
+        ldb[pos, ]
     }
 
 }
-
-.numeric_version_meets_constraints_p <-
-function(version, constraints)
-{
-    version <- as.numeric_version(version)
-    for(term in constraints) {
-        re <- R_license_db_vars$re_single_version_spec
-        op <- sub(re, "\\1", term)
-        target <- sub(re, "\\2", term)
-        if(!eval(parse(text = paste("version", op, "target"))))
-            return(FALSE)
-    }
-    TRUE
-}
-
