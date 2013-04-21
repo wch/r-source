@@ -2694,7 +2694,7 @@ R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
 			SEXP compsxp, SEXP hook)
 {
     PROTECT_INDEX vpi;
-    Rboolean compress = asInteger(compsxp);
+    int compress = asInteger(compsxp);
     SEXP key;
 
     value = R_serialize(value, R_NilValue, ascii, R_NilValue, hook);
