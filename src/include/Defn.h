@@ -1255,9 +1255,6 @@ extern void *alloca(size_t);
 #elif defined(HAVE_INT_FAST64_T)
 # define LONG_INT int_fast64_t
 # define LONG_INT_MAX INT_FAST64_MAX
-#else
-# define LONG_INT int
-# define LONG_INT_MAX INT_MAX
 #endif
 
 #endif /* DEFN_H_ */

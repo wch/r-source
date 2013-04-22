@@ -42,10 +42,49 @@
 #define DbgP3(s,a,b)
 #endif
 
-/* Since we have long vectors, this could integer overflow */
+#ifdef LONG_INT
 static Rboolean isum(int *x, R_xlen_t n, int *value, Rboolean narm, SEXP call)
 {
     LONG_INT s = 0;  // at least 64-bit
+    Rboolean updated = FALSE;
+#ifdef LONG_VECTOR_SUPPORT
+    int ii = R_INT_MIN; // need > 2^32 entries to overflow.
+#endif
+
+    for (R_xlen_t i = 0; i < n; i++, ii++) {
+	if (x[i] != NA_INTEGER) {
+	    if(!updated) updated = TRUE;
+	    s += x[i];
+#ifdef LONG_VECTOR_SUPPORT
+	    if (ii > 1000) {
+		ii = 0;
+		if (s > 9000000000000000L || s < -9000000000000000L) {
+		    if(!updated) updated = TRUE;
+		    *value = NA_INTEGER;
+		    warningcall(call, _("integer overflow - use sum(as.numeric(.))"));
+		    return updated;
+		}
+	    }
+#endif
+	} else if (!narm) {
+	    if(!updated) updated = TRUE;
+	    *value = NA_INTEGER;
+	    return updated;
+	}
+    }
+    if(s > INT_MAX || s < R_INT_MIN){
+	warningcall(call, _("integer overflow - use sum(as.numeric(.))"));
+	*value = NA_INTEGER;
+    }
+    else *value = (int) s;
+
+    return updated;
+}
+#else
+/* Version from R 3.0.0: should never be used with a C99/C11 compiler */
+static Rboolean isum(int *x, R_xlen_t n, int *value, Rboolean narm, SEXP call)
+{
+    double s = 0.0;
     Rboolean updated = FALSE;
 
     for (R_xlen_t i = 0; i < n; i++) {
@@ -66,6 +105,7 @@ static Rboolean isum(int *x, R_xlen_t n, int *value, Rboolean narm, SEXP call)
 
     return updated;
 }
+#endif
 
 static Rboolean rsum(double *x, R_xlen_t n, double *value, Rboolean narm)
 {
