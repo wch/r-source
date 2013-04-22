@@ -6672,14 +6672,13 @@ maximal information use a build with debugging symbols.  We know there
 will be some small memory leaks from @code{readline} and @R{} itself ---
 these are memory areas that are in use right up to the end of the @R{}
 session.  Expect this to run around 20x slower than without
-@code{valgrind}, and in some cases even slower than that.  Earlier
-versions of @code{valgrind} were not happy with many optimized BLASes
-that use @acronym{CPU}-specific instructions (3D now, SSE, SSE2, SSE3
-and similar) so you may need to build a version of @R{} specifically to
-use with @code{valgrind}.
+@code{valgrind}, and in some cases even slower than that.  Several
+versions of @code{valgrind} were not happy with some optimized BLASes
+that use @acronym{CPU}-specific instructions so you may need to build a
+version of @R{} specifically to use with @code{valgrind}.
 
-On Mac OS 10.6/7 the valgrind session is liable to hang when @R{}
-terminates with @command{valgrind} prior to 3.8.1.
+On Mac OS 10.6 and later the valgrind session is liable to hang when
+@R{} terminates with @command{valgrind} prior to 3.8.1.
 
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in
@@ -6733,7 +6732,8 @@ C code can be inspected (@pxref{Inspecting R objects}).
 
 @command{valgrind} is good at spotting the use of uninitialized values:
 use option @option{--track-origins=yes} to show where these originated
-from.
+from.  What it cannot detect is the misuse of arrays allocated on the
+stack: this includes C automatic variables and most Fortran arrays.
 
 It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{valgrind} by using the option
@@ -6769,21 +6769,50 @@ later@footnote{not including the version distributed by Apple in
 @code{Xcode} 4.6.}, on common Linux platforms and 64-bit Mac OS X.  See
 @uref{https://code.google.com/p/address-sanitizer/}.
 
-It requires code to have been compiled and linked with
+It requires code to have been compiled @emph{and linked} with
 @option{-fsanitize=address} (@command{gcc} and recent versions of
-@command{clang}) or @option{-faddress-sanitizer} (some versions of
-@command{clang}), and using @code{-fno-omit-frame-pointer} will give
-more legible reports.  It is reported to run very much faster than
-@command{valgrind} (a runtime penalty of 2--3, but with extended
-compilation times).  It can detect problems with stack variables, but
-not the use of uninitialized memory.
+@command{clang}) or @option{-faddress-sanitizer} (@command{clang} 3.1),
+and using @code{-fno-omit-frame-pointer} will give more legible reports.
+It has a runtime penalty of 2--3x, extended compilation times and uses
+substantially more memory, often 1--2GB, at run time.  In contrast to
+@command{valgrind}, it can detect misuse of stack variables but not the
+use of uninitialized memory (although that may come with
+@option{-fsanitize=memory} in future versions of @command{clang}).
 
 Current versions do not return symbolic addresses for the location of
-the error without some help (but this is expected to change).  One
-possibility is to use an external symbolizer such as
-@command{asan_symbolize.py} or @command{llvm-symbolizer} (both from
-@url{http://llvm.org}).  For example, the output can be piped through
-@command{asan_symbolize.py} and perhaps then @command{c++filt}.
+the error without some help.  One possibility is to use an external
+symbolizer such as @command{asan_symbolize.py} from
+@url{http://llvm.org}: it makes use of @command{llvm-symbolizer} if
+available.  For example, the check output can be piped through
+@command{asan_symbolize.py} and then (for compiled C++ code)
+@command{c++filt}.
+
+The simplest way to make use of this is to build a version of @R{} with
+something like
+
+@example
+CC="gcc-4.8.0 -std=gnu99 -fsanitize=address"
+CFLAGS="-fno-omit-frame-pointer -O2 -Wall -pedantic -mtune=native"
+@end example
+
+@noindent
+which will ensure that the @code{libasan} run-time library is compiled
+into the @R{} executable.  However, building @R{} with e.g.@:
+
+@example
+MAIN_LD="gcc-4.8.0 -std=gnu99 -fsanitize=address"
+@end example
+
+@noindent
+allows this check to be enabled on a per-package basis by using a
+@file{~/.R/Makevars} file like
+@example
+CC = gcc-4.8.0 -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
+CXX = g++-4.8.0 -fsanitize=address -fno-omit-frame-pointer
+F77 = gfortran-4.8.0 -fsanitize=address
+FC = gfortran-4.8.0 -fsanitize=address
+@end example
+
 
 @node Fortran array bounds checking,  , Using AddressSanitizer, Using gctorture and memory access
 @subsection Fortran array bounds checking
