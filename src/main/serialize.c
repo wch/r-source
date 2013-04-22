@@ -2719,7 +2719,8 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP key, file, compsxp, hook;
     PROTECT_INDEX vpi;
-    Rboolean compressed, err = FALSE;
+    int compressed;
+    Rboolean err = FALSE;
     SEXP val;
 
     checkArity(op, args);
