@@ -51,12 +51,12 @@ static Rboolean isum(int *x, R_xlen_t n, int *value, Rboolean narm, SEXP call)
     int ii = R_INT_MIN; // need > 2^32 entries to overflow.
 #endif
 
-    for (R_xlen_t i = 0; i < n; i++, ii++) {
+    for (R_xlen_t i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
 	    if(!updated) updated = TRUE;
 	    s += x[i];
 #ifdef LONG_VECTOR_SUPPORT
-	    if (ii > 1000) {
+	    if (ii++ > 1000) {
 		ii = 0;
 		if (s > 9000000000000000L || s < -9000000000000000L) {
 		    if(!updated) updated = TRUE;
