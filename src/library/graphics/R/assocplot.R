@@ -21,7 +21,7 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
 {
     if(length(dim(x)) != 2L)
         stop("'x' must be a 2-d contingency table")
-    if(any(x < 0) || any(is.na(x)))
+    if(any(x < 0) || anyMissing(x))
         stop("all entries of 'x' must be nonnegative and finite")
     if((n <- sum(x)) == 0L)
         stop("at least one entry of 'x' must be positive")

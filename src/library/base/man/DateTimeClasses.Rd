@@ -29,6 +29,7 @@
 \alias{as.data.frame.POSIXlt}
 \alias{as.list.POSIXct}
 \alias{.leap.seconds}
+\alias{anyMissing.POSIXlt}
 \alias{is.na.POSIXlt}
 \alias{c.POSIXct}
 \alias{c.POSIXlt}

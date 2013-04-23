@@ -66,6 +66,6 @@ char.expand <- function(input, target, nomatch = stop("no match"))
     if(!(is.character(input) && is.character(target)))
 	stop("'input' and 'target' must be character vectors")
     y <- .Internal(charmatch(input, target, NA_integer_))
-    if(any(is.na(y))) eval(nomatch)
+    if(anyMissing(y)) eval(nomatch)
     target[y]
 }

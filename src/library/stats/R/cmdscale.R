@@ -18,7 +18,7 @@
 
 cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 {
-    if (any(is.na(d)))
+    if (anyMissing(d))
 	stop("NA values not allowed in 'd'")
     if (is.null(n <- attr(d, "Size"))) {
         if(add) d <- as.matrix(d)

@@ -22,7 +22,7 @@ isoreg <- function(x, y = NULL)
 {
     xy <- xy.coords(x,y)
     x <- xy$x
-    if(any(is.na(x)) || any(is.na(xy$y)))
+    if(anyMissing(x) || any(is.na(xy$y)))
 	stop("missing values not allowed")
     isOrd <- ((!is.null(xy$xlab) && xy$xlab == "Index")
               || !is.unsorted(x, strictly = TRUE))

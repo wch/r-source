@@ -29,7 +29,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
     if(is.matrix(x)) {
         if(any(dim(x) < 2L))
             stop("'x' must have at least 2 rows and columns")
-        if(!is.numeric(x) || any(x < 0) || any(is.na(x)))
+        if(!is.numeric(x) || any(x < 0) || anyMissing(x))
             stop("all entries of 'x' must be nonnegative and finite")
         if(!is.integer(x)) {
             xo <- x

@@ -94,6 +94,7 @@ as.matrix.raster <- function(x, ...)
 }
 
 is.na.raster <- function(x) is.na(as.matrix(x))
+anyMissing.raster <- function(x) anyMissing(as.matrix(x))
 
 # FIXME:
 # It would be useful to have conversion to array (rgb[a])

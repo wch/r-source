@@ -26,7 +26,7 @@ arrow <- function(angle=30, length=unit(0.25, "inches"),
         stop("'length' must be a 'unit' object")
     ends <- as.integer(match(ends, c("first", "last", "both")))
     type <- as.integer(match(type, c("open", "closed")))
-    if (any(is.na(ends)) || any(is.na(type)) ||
+    if (anyMissing(ends) || anyMissing(type) ||
         length(ends) == 0 || length(type) == 0)
         stop("invalid 'ends' or 'type' argument")
     a <- list(angle=angle, length=length,

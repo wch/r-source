@@ -75,7 +75,7 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
     if (lag.max < 1) stop("'lag.max' must be at least 1")
 
     if(is.matrix(x)) {
-        if(any(is.na(x))) stop("NAs in 'x'")
+        if(anyMissing(x)) stop("NAs in 'x'")
         nser <- ncol(x)
         x <- sweep(x, 2, colMeans(x), check.margin=FALSE)
         lag <- matrix(1, nser, nser)

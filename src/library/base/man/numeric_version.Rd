@@ -1,6 +1,6 @@
 % File src/library/base/man/numeric_version.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{numeric_version}
@@ -25,6 +25,7 @@
 \alias{c.numeric_version}
 \alias{duplicated.numeric_version}
 \alias{format.numeric_version}
+\alias{anyMissing.na.numeric_version}
 \alias{is.na.numeric_version}
 \alias{print.numeric_version}
 \alias{rep.numeric_version}
@@ -96,5 +97,9 @@ x[[2, 3]] <- 0   # zero the patchlevel
 x[[c(2, 3)]] <- 0 # same
 x
 x[[3]] <- "2.2.3"; x
+x <- c(x, package_version("0.0"))
+is.na(x)[4] <- TRUE
+stopifnot(identical(is.na(x), c(rep(FALSE,3), TRUE)),
+          anyMissing(x))
 }
 \keyword{utilities}

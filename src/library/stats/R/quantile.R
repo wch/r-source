@@ -32,7 +32,7 @@ quantile.default <-
     } else lx <- NULL
     if (na.rm)
 	x <- x[!is.na(x)]
-    else if (any(is.na(x)))
+    else if (anyMissing(x))
 	stop("missing values and NaN's not allowed if 'na.rm' is FALSE")
     eps <- 100*.Machine$double.eps
     if (any((p.ok <- !is.na(probs)) & (probs < -eps | probs > 1+eps)))

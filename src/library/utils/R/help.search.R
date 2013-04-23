@@ -119,7 +119,7 @@ help.search <-
 	if(!is.character(pattern) || (length(pattern) > 1L))
 	    stop(.wrong_args("pattern"), domain = NA)
 	i <- pmatch(fields, FIELDS)
-	if(any(is.na(i)))
+	if(anyMissing(i))
 	    stop("incorrect field specification")
 	else
 	    fields <- FIELDS[i]
@@ -149,7 +149,7 @@ help.search <-
 	stop("do not know what to search")
     }
     i <- pmatch(types, TYPES)
-    if (any(is.na(i)))
+    if (anyMissing(i))
 	stop("incorrect type specification")
     else
 	types <- TYPES[i]
@@ -213,7 +213,7 @@ help.search <-
                     if (file.exists(pfile))
                         info <- readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
                     else next
-                    if ( (length(info) != 2L) || any(is.na(info)) ) next
+                    if ( (length(info) != 2L) || anyMissing(info) ) next
                     if (!grepl(valid_package_version_regexp, info["Version"])) next
                     ans <- c(ans, nam)
                     paths <- c(paths, file.path(lib, nam))

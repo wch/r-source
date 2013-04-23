@@ -19,7 +19,7 @@
 ## What a silly name ...
 .is_not_nonempty_text <-
 function(x)
-    is.null(x) || any(is.na(x)) || all(grepl("^[[:space:]]*$", x))
+    is.null(x) || anyMissing(x) || all(grepl("^[[:space:]]*$", x))
 
 person <-
 function(given = NULL, family = NULL, middle = NULL,
@@ -534,7 +534,7 @@ function(x, force = FALSE)
 
 bibentry_attribute_names <-
     c("bibtype", "textVersion", "header", "footer", "key")
-    
+
 bibentry_list_attribute_names <-
     c("mheader", "mfooter")
 
@@ -890,7 +890,7 @@ function(x, name, value)
         BibTeX_names <- names(tools:::BibTeX_entry_field_db)
         value <- unlist(value)
         pos <- match(tolower(value), tolower(BibTeX_names))
-        if(any(is.na(pos)))
+        if(anyMissing(pos))
             stop(gettextf("%s has to be one of %s",
                           sQuote("bibtype"),
                           paste(BibTeX_names, collapse = ", ")),

@@ -723,7 +723,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                                      error = identity)
                     if(inherits(info, "error")
                        || (length(info) != 2L)
-                       || any(is.na(info)))
+                       || anyMissing(info))
                         c(Package = NA, Version = NA) # need dimnames below
                     else
                         info

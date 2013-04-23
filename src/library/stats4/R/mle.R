@@ -49,7 +49,7 @@ mle <- function(minuslogl, start = formals(minuslogl), method = "BFGS",
     start <- sapply(start, eval.parent) # expressions are allowed
     nm <- names(start)
     oo <- match(nm, names(fullcoef))
-    if (any(is.na(oo)))
+    if (anyMissing(oo))
         stop("some named arguments in 'start' are not arguments to the supplied log-likelihood")
     start <- start[order(oo)]
     nm <- names(start) ## reordered names needed

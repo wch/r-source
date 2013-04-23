@@ -22,7 +22,7 @@ mcnemar.test <- function(x, y = NULL, correct = TRUE)
         r <- nrow(x)
         if ((r < 2) || (ncol (x) != r))
             stop("'x' must be square with at least two rows and columns")
-        if (any(x < 0) || any(is.na(x)))
+        if (any(x < 0) || anyMissing(x))
             stop("all entries of 'x' must be nonnegative and finite")
         DNAME <- deparse(substitute(x))
     }

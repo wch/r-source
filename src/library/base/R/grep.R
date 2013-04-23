@@ -143,7 +143,7 @@ function(x = 0.1)
             c("cost", "insertions", "deletions", "substitutions", "all")
         ## Partial matching.
         pos <- pmatch(names(x), table)
-        if(any(is.na(pos))) {
+        if(anyMissing(pos)) {
             warning("unknown match distance components ignored")
             x <- x[!is.na(pos)]
         }
@@ -178,7 +178,7 @@ function(x = NULL)
         x <- as.list(x)
         ## Partial matching.
         pos <- pmatch(names(x), names(costs))
-        if(any(is.na(pos))) {
+        if(anyMissing(pos)) {
             warning("unknown cost components ignored")
             x <- x[!is.na(pos)]
         }
@@ -291,7 +291,7 @@ function(x, m, invert = FALSE, value)
         ## of replacement values with length the number of matched
         ## elements.
         value <- as.character(value)
-        if(any(is.na(value)))
+        if(anyMissing(value))
             stop("missing replacement values are not allowed")
         ## Entries for matched elements have length 2.
         pos <- which(sapply(y, length) == 2L)
@@ -309,7 +309,7 @@ function(x, m, invert = FALSE, value)
     ## We need a list of character vectors without missings, which has
     ## the same length as x.
     value <- lapply(value, as.character)
-    if(any(is.na(unlist(value))))
+    if(anyMissing(value)) # {recursively!}
         stop("missing replacement values are not allowed")
     if(!length(value))
         stop("value does not provide any replacement values")
