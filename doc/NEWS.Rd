@@ -28,7 +28,7 @@
       definition of \command{diff -b} (as distinct from the description
       in the \command{man} pages of most systems).
 
-      \item New \code{anyNA()} is a fast version of \code{any(is.na(.))},
+      \item New \code{anyMissing()} is a fast version of \code{any(is.na(.))},
       based on a proposal by Tim Hesterberg. (Wish of \PR{15239}).
       %% Planned porting to 3.0.0 patched, after waiting/more testing..
     }
@@ -84,7 +84,7 @@
       component).
 
       \item On system where \code{mktime()} does not set \code{ERRNO}, the
-      last second before the epoch could not be converted from \code{POSIXlt} 
+      last second before the epoch could not be converted from \code{POSIXlt}
       to \code{POSIXct}. (Reported by Bill Dunlap).
     }
   }

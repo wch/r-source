@@ -2086,8 +2086,8 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
    Author: Tim Hesterberg <rocket@google.com>
    Distributed under GPL 2 or later
 */
-// Check if x has missing values; the  anyNA.default() method:
-SEXP attribute_hidden anyNA(SEXP x)
+// Check if x has missing values; the  anyMissing.default() method:
+SEXP anyNA(SEXP x)
 {
     double *xD;
     int *xI, i, n = xlength(x);
@@ -2125,28 +2125,27 @@ SEXP attribute_hidden anyNA(SEXP x)
 	}
 	break;
     case VECSXP:
-	for (i = 0; i < n; i++) {
-	    SEXP s = VECTOR_ELT(x, i);
-	    if (LOGICAL(anyNA(s))[0]) return Rf_ScalarLogical(TRUE);
-	}
+	for (i = 0; i < n; i++)
+	    if (LOGICAL(anyNA(VECTOR_ELT(x, i)))[0])
+		return Rf_ScalarLogical(TRUE);
 	break;
     case RAWSXP: /* no such thing as a raw NA:  is.na(.) gives FALSE always */
 	return Rf_ScalarLogical(FALSE);
 
     default:
-	error("anyNA() applied to non-(list or vector) of type '%s'",
+	error("anyMissing() applied to non-(list or vector) of type '%s'",
 	      type2char(TYPEOF(x)));
     }
     return Rf_ScalarLogical(FALSE);
 } // anyNA()
 
-SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_anyMissing(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
 
     SEXP ans;
-    if (DispatchOrEval(call, op, "anyNA", args, rho, &ans, 0, 1))
+    if (DispatchOrEval(call, op, "anyMissing", args, rho, &ans, 0, 1))
 	return(ans);
     // else
     return anyNA(CAR(args));

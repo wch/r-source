@@ -140,7 +140,7 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 
 
 .S3PrimitiveGenerics <-
-  c("anyNA", "as.character", "as.complex", "as.double", "as.environment",
+  c("anyMissing", "as.character", "as.complex", "as.double", "as.environment",
     "as.integer", "as.logical", "as.numeric", "as.raw",
     "c", "dim", "dim<-", "dimnames", "dimnames<-",
     "is.array", "is.finite",
