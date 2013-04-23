@@ -1404,7 +1404,7 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(args) >= 2 &&
 	isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
 	double digits = 0;
-	if(PRIMVAL(op) == 10004) digits = 6.0;
+	if(PRIMVAL(op) == 10004) digits = 6.0; // for signif()
 	PROTECT(args = list2(CAR(args), ScalarReal(digits))); nprotect++;
     }
 

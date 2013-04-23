@@ -1028,7 +1028,7 @@ static BBOX RenderSymbolStr(const char *str, int draw, mathContext *mc,
 		if (draw) {
 		    chr[0] = *s;
 		    PMoveAcross(lastItalicCorr, mc);
-		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr, 
+		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
 			   CE_NATIVE,
 			   0.0, 0.0, mc->CurrentAngle, gc, dd);
 		    PMoveAcross(bboxWidth(glyphBBox), mc);
