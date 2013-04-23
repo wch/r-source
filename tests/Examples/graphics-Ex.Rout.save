@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-04-22 r62639) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1621,10 +1621,12 @@ armed.forces
 +    plot(0:1, 0:1, type = "n", axes = FALSE, ann = FALSE)
 +    y <- (n:1)/(n+1)
 +    clty <- as.character(ltys)
-+    mytext <- function(x,y, txt) text(x, y, txt, adj = c(0, -.3), cex = 0.8, ...)
++    mytext <- function(x, y, txt)
++       text(x, y, txt, adj = c(0, -.3), cex = 0.8, ...)
 +    abline(h = y, lty = ltys, ...); mytext(xoff, y, clty)
 +    y <- y - 1/(3*(n+1))
-+    abline(h = y, lty = ltys, lwd = 2, ...); mytext(1/8+xoff, y, paste(clty," lwd = 2"))
++    abline(h = y, lty = ltys, lwd = 2, ...)
++    mytext(1/8+xoff, y, paste(clty," lwd = 2"))
 + }
 > showLty(c("solid", "dashed", "dotted", "dotdash", "longdash", "twodash"))
 > par(new = TRUE)  # the same:
@@ -2024,7 +2026,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x2bba660>
+<bytecode: 0x2cc82d8>
 <environment: namespace:graphics>
 > 
 > 
@@ -2924,7 +2926,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x39060c0>
+<bytecode: 0x36a3110>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3004,7 +3006,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.686 0.046 3.743 0 0 
+Time elapsed:  4.596 0.068 4.683 0 0 
 > grDevices::dev.off()
 null device 
           1 
