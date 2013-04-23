@@ -210,7 +210,10 @@
       \code{parallel::mclapply(mc.presechedule = TRUE)} was a list of
       strings and not of error objects.  (Spotted by Karl Forner and
       Bernd Bischl.) 
-  
+      
+      \item In \R 3.0.0, when \code{help()} found multiple pages with
+      the same alias, the HTML display of all the selections was not
+      produced.  (\PR{15282})  
     }
   }
 }
