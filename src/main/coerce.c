@@ -2131,6 +2131,8 @@ SEXP anyNA(SEXP x)
 	break;
     case RAWSXP: /* no such thing as a raw NA:  is.na(.) gives FALSE always */
 	return Rf_ScalarLogical(FALSE);
+    case NILSXP: // is.na() gives a warning..., but we do not.
+	return Rf_ScalarLogical(FALSE);
 
     default:
 	error("anyMissing() applied to non-(list or vector) of type '%s'",
