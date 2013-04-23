@@ -226,7 +226,7 @@ httpd <- function(path, query, ...)
     if (grepl(topicRegexp, path)) {
         ## ----------------------- package help by topic ---------------------
     	pkg <- sub(topicRegexp, "\\1", path)
-    	if (pkg == "NULL") pkg <- NULL  # how can this occur?
+    	if (pkg == "NULL") pkg <- NULL  # There were multiple hits in the console
     	topic <- sub(topicRegexp, "\\2", path)
         ## if a package is specified, look there first, then everywhere
     	if (!is.null(pkg)) # () avoids deparse here
@@ -260,7 +260,7 @@ httpd <- function(path, query, ...)
                 tmp <- try(readRDS(fp[i]))
                 titles[i] <- if(inherits(tmp, "try-error"))
                     "unknown title" else
-                    tmp[file_path_sans_ext(tmp$PDF) == tp[i], "Title"]
+                    tmp[file_path_sans_ext(tmp$File) == tp[i], "Title"]
             }
             packages <- paste('<dt><a href="../../', basename(paths), '/html/',
                               basename(file), '.html">', titles,
