@@ -161,7 +161,8 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                 }
             }
     }
-    for (i in seq_len(cores)) res[sindex[[i]]] <- job.res[[i]]
+##    for (i in seq_len(cores)) res[sindex[[i]]] <- job.res[[i]]
+    for (i in seq_len(cores)) for (j in sindex[[i]]) res[[j]] <- job.res[[i]]
     if (length(has.errors)) {
         if (length(has.errors) == cores)
             warning("all scheduled cores encountered errors in user code")
