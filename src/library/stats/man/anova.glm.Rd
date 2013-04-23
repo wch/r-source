@@ -87,7 +87,8 @@ example("glm", echo = FALSE)}
 anova(glm.D93)
 anova(glm.D93, test = "Cp")
 anova(glm.D93, test = "Chisq")
-glm.D93a <- update(glm.D93, ~treatment*outcome) ## equivalent to Pearson Chi-square
+glm.D93a <-
+   update(glm.D93, ~treatment*outcome) # equivalent to Pearson Chi-square
 anova(glm.D93, glm.D93a, test = "Rao")
 }
 \keyword{models}
