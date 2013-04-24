@@ -161,8 +161,12 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                 }
             }
     }
-##    for (i in seq_len(cores)) res[sindex[[i]]] <- job.res[[i]]
-    for (i in seq_len(cores)) for (j in sindex[[i]]) res[[j]] <- job.res[[i]]
+    for (i in seq_len(cores)) {
+        this <- job.res[[i]]
+        if (inherits(this, "try-error")) { ## length-1 result
+            for (j in sindex[[i]]) res[[j]] <- this
+        } else res[sindex[[i]]] <- this
+    }
     if (length(has.errors)) {
         if (length(has.errors) == cores)
             warning("all scheduled cores encountered errors in user code")
