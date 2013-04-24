@@ -1,7 +1,7 @@
 #  File src/library/base/R/which.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,11 +29,13 @@ arrayInd <- function(ind, .dim, .dimnames = NULL, useNames = FALSE) {
     rank <- length(.dim)
     wh1 <- ind - 1L
     ind <- 1L + wh1 %% .dim[1L]
-    ind <- matrix(ind, nrow = m, ncol = rank,
-		  dimnames = if(useNames)
-		  list(.dimnames[[1L]][ind],
-		       if(rank == 2L) c("row", "col") # for matrices
-		       else paste0("dim", seq_len(rank))))
+    dnms <- if(useNames) {
+	list(.dimnames[[1L]][ind],
+	     if(any(nzchar(nd <- names(.dimnames)))) nd else
+	     if(rank == 2L) c("row", "col") # for matrices
+	     else paste0("dim", seq_len(rank)))
+    }
+    ind <- matrix(ind, nrow = m, ncol = rank, dimnames = dnms)
     if(rank >= 2L) {
 	denom <- 1L
 	for (i in 2L:rank) {
