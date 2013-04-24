@@ -10,13 +10,14 @@
   Reload datasets written with the function \code{save}.
 }
 \usage{
-load(file, envir = parent.frame())
+load(file, envir = parent.frame(), verbose = FALSE)
 }
 \arguments{
   \item{file}{a (readable binary-mode) \link{connection} or a character string
     giving the name of the file to load (when \link{tilde expansion}
     is done).}
   \item{envir}{the environment where the data should be loaded.}
+  \item{verbose}{should item names be printed during loading?}
 }
 \details{
   \code{load} can load \R objects saved in the current or any earlier
@@ -41,6 +42,13 @@ load(file, envir = parent.frame())
   0.99.0, and \code{RD[ABX]1} from \R 0.99.0 to \R 1.3.1.  These are all
   obsolete, and you are strongly recommended to re-save such files in a
   current format.
+  
+  The \code{verbose} argument is mainly intended for debugging.  If it
+  is \code{TRUE}, then as objects from the file are loaded, their
+  names will be printed to the console.  If \code{verbose} is set to 
+  an integer value greater than one, additional names corresponding to
+  attributes and other parts of individual objects will also be printed.
+  Larger values will print names to a greater depth.
 }
 \value{
   A character vector of the names of objects created, invisibly.

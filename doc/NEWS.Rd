@@ -35,6 +35,10 @@
       \item \code{arrayInd(*, useNames=TRUE)} and, analogously,
       \code{which(*, arr.ind=TRUE)} now make use of
       \code{names(.dimnames)} when available.
+      
+      \item \code{load()} now has a \code{verbose} argument for
+      debugging support, to print the names of objects just before
+      loading them.      
     }
   }
 
