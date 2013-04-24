@@ -1,6 +1,6 @@
 % File src/library/base/man/vector.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{vector}
@@ -16,12 +16,13 @@ as.vector(x, mode = "any")
 is.vector(x, mode = "any")
 }
 \arguments{
-  \item{mode}{A character string giving an atomic mode or
+  \item{mode}{character string giving an atomic mode or
     \code{"list"}, or (except for \code{vector}) \code{"any"}.}
-  \item{length}{A non-negative integer specifying the desired length.
-    Double values will be coerced to integer:
-    supplying an argument of length other than one is an error.}
-  \item{x}{An object.}
+  \item{length}{a non-negative integer specifying the desired length.
+    For a long vector, i.e., \code{length > .Machine$integer.max}, it
+    has to be of type \code{"double"}.  Supplying an argument of length
+    other than one is an error.}
+  \item{x}{an \R object.}
 }
 %% The implementation of is.vector allows any _type_ to be named,
 %% and MM uses "symbol" and "language" in str.default()
