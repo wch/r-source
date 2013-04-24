@@ -86,6 +86,10 @@
       \item On system where \code{mktime()} does not set \code{ERRNO}, the
       last second before the epoch could not be converted from \code{POSIXlt}
       to \code{POSIXct}. (Reported by Bill Dunlap).
+
+      \item If \code{x} is a symbol, \code{is.vector(x, "name")} now returns 
+      \code{TRUE}, since \code{"name"} and \code{"symbol"} should be synonyms. 
+      (Reported by Hervé Pagès.)
     }
   }
 }

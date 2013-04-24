@@ -1937,6 +1937,10 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stype = CHAR(STRING_ELT(CADR(args), 0)); /* ASCII */
 
+    /* "name" and "symbol" are synonymous */
+    if (streql(stype, "name"))
+      stype = "symbol";
+
     PROTECT(ans = allocVector(LGLSXP, 1));
     if (streql(stype, "any")) {
 	/* isVector is inlined, means atomic or VECSXP or EXPRSXP */
