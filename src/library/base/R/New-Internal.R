@@ -154,7 +154,7 @@ gctorture2 <- function(step, wait = step, inhibit_release = FALSE)
 
 is.unsorted <- function(x, na.rm = FALSE, strictly = FALSE)
 {
-    if(is.null(x)) return(FALSE)
+    if(length(x) <= 1) return(FALSE)
     if(!na.rm && anyNA(x))
 	return(NA)
     ## else

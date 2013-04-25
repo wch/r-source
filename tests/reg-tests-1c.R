@@ -40,9 +40,13 @@ x <- c("a b' c",
 "'d e' f g",
 "h i 'j",
 "k l m'")
-y <- data.frame(V1 = c("a", "d e", "h"), V2 = c("b'", "f", "i"), V3 = c("c", "g", "j\nk l m")) 
+y <- data.frame(V1 = c("a", "d e", "h"), V2 = c("b'", "f", "i"), V3 = c("c", "g", "j\nk l m"))
 f <- tempfile()
 writeLines(x, f)
 stopifnot(identical(count.fields(f), c(3L, 3L, NA_integer_, 3L)))
 stopifnot(identical(read.table(f), y))
 stopifnot(identical(scan(f, ""), as.character(t(as.matrix(y)))))
+
+## docu always said  'length 1 is sorted':
+stopifnot(!is.unsorted(NA))
+
