@@ -113,7 +113,7 @@ function(x, ...)
                         vstrings,
                         ifelse(is.na(dates), "",
                                sprintf(" (%s)", dates)))
-        }
+        } else vheaders <- character()
 
         format_items <- function(x)
             paste0("    o   ", gsub("\n", "\n\t", x$Text))
