@@ -230,6 +230,10 @@
       \item In \R 3.0.0, when \code{help()} found multiple pages with
       the same alias, the HTML display of all the selections was not
       produced.  (\PR{15282})
+      
+      \item \code{splinefun(method="monoH.FC")} now produces a
+      function with first argument named \code{x} and allows
+      \code{deriv=3}, as documented. (\PR{15273})      
     }
   }
 }
