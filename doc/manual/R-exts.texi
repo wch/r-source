@@ -10608,6 +10608,12 @@ used.  (Passing values @emph{via} arguments is safer.)
 The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
+Passing character strings from C to FORTRAN 77 or @emph{vice versa} is
+not portable (and to Fortran 90 or later is even less so).  We have
+found that it helps to ensure that a C string to be passed is followed
+by several @code{nul}s (and not just the one needed as a C terminator).
+But for maximal portability character strings in FORTRAN should be
+avoided.
 
 
 @node Numerical analysis subroutines, Optimization, Calling C from FORTRAN and vice versa, The R API
