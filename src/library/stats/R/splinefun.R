@@ -179,7 +179,7 @@ splinefunH <- function(x, y, m)
         m <- m[i]
     }
     dx <- x[-1L] - x[-n]
-    if(anyMissing(dx) || any(dx == 0))
+    if(anyNA(dx) || any(dx == 0))
         stop("'x' must be *strictly* increasing (non - NA)")
     splinefunH0(x, y, m, dx=dx)
 }

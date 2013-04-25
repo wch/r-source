@@ -22,7 +22,7 @@ rowsum.default <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
 {
     if (!is.numeric(x)) stop("'x' must be numeric")
     if (length(group) != NROW(x)) stop("incorrect length for 'group'")
-    if (anyMissing(group)) warning("missing values for 'group'")
+    if (anyNA(group)) warning("missing values for 'group'")
     ugroup <- unique(group)
     if (reorder) ugroup <- sort(ugroup, na.last = TRUE, method = "quick")
     ## ugroup can be either a vector or a factor, so do as.character here
@@ -33,7 +33,7 @@ rowsum.data.frame <- function(x, group, reorder = TRUE, na.rm = FALSE, ...)
 {
     if (!is.data.frame(x)) stop("not a data frame") ## make MM happy
     if (length(group) != NROW(x)) stop("incorrect length for 'group'")
-    if (anyMissing(group)) warning("missing values for 'group'")
+    if (anyNA(group)) warning("missing values for 'group'")
     ugroup <- unique(group)
     if (reorder) ugroup <- sort(ugroup, na.last = TRUE, method = "quick")
     .Internal(rowsum_df(x, group, ugroup, na.rm, as.character(ugroup)))

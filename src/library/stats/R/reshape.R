@@ -153,7 +153,7 @@ reshape <-
         ## times <- sort(unique(data[,timevar]))
         ## varying and times must have the same order
         times <- unique(data[, timevar])
-        if (anyMissing(times))
+        if (anyNA(times))
             warning("there are records with missing times, which will be dropped.")
         undoInfo$times <- times
 

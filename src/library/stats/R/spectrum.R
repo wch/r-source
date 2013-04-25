@@ -61,7 +61,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
         x <- ar(x, is.null(order), order, na.action=na.action, method=method)
     } else { ## result of ar()
         cn <- match(c("ar", "var.pred", "order"), names(x))
-        if(anyMissing(cn))
+        if(anyNA(cn))
             stop("'x' must be a time series or an ar() fit")
         series <- x$series
         xfreq <- x$frequency

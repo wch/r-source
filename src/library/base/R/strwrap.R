@@ -52,7 +52,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             ## Format paragraph j in x[i].
             words <- z[[i]][[j]]
             nc <- nchar(words, type="w")
-	    if(anyMissing(nc)) {
+	    if(anyNA(nc)) {
 		## use byte count as a reasonable substitute
 		nc0 <- nchar(words, type="b")
 		nc[is.na(nc)] <- nc0[is.na(nc)]

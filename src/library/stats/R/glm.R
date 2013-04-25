@@ -219,7 +219,7 @@ glm.fit <-
         for (iter in 1L:control$maxit) {
             good <- weights > 0
             varmu <- variance(mu)[good]
-            if (anyMissing(varmu))
+            if (anyNA(varmu))
                 stop("NAs in V(mu)")
             if (any(varmu == 0))
                 stop("0s in V(mu)")

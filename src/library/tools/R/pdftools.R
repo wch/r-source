@@ -1123,7 +1123,7 @@ function(con, pos, num = NA_integer_, gen = NA_integer_, doc = NULL)
     ## Read header first.
     hdr <- pdf_read_object_header(con)
     ## Be paranoid.
-    if(anyMissing(hdr))
+    if(anyNA(hdr))
         stop(gettextf("cannot find object header at xrefed position %d",
                       pos),
              domain = NA)

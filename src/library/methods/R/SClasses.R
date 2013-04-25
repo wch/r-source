@@ -685,7 +685,7 @@ initialize <- function(.Object, ...) {
                               paste(sQuote(snames[duplicated(snames)]),
                                     collapse = ", ")), domain = NA)
             which  <- match(snames, names(slotDefs))
-            if(anyMissing(which))
+            if(anyNA(which))
                 stop(sprintf(ngettext(sum(is.na(which)),
                                       "invalid name for slot of class %s: %s",
                                       "invalid names for slots of class %s: %s"),

@@ -76,7 +76,7 @@ axTicks <- function(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
     if(is.null(axp)) axp <- par(XY("axp"))
     else if(!is.numeric(axp) || length(axp) != 3) stop("invalid 'axp'")
     if(is.null(log)) log <- par(XY("log"))
-    else if(!is.logical(log) || anyMissing(log)) stop("invalid 'log'")
+    else if(!is.logical(log) || anyNA(log)) stop("invalid 'log'")
     if(log && axp[3L] > 0) { ## special log-scale axp[]
         if(!any((iC <- as.integer(axp[3L])) == 1L:3L))
             stop("invalid positive 'axp[3]'")

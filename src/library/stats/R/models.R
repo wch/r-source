@@ -493,7 +493,7 @@ model.matrix.default <- function(object, data = environment(object),
 	reorder <- match(sapply(attr(t,"variables"),deparse,
                                 width.cutoff=500)[-1L],
                          names(data))
-	if (anyMissing(reorder))
+	if (anyNA(reorder))
 	    stop("model frame and formula mismatch in model.matrix()")
 	if(!identical(reorder, seq_len(ncol(data))))
 	    data <- data[,reorder, drop=FALSE]

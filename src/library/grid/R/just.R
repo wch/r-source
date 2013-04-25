@@ -38,7 +38,7 @@ valid.charjust <- function(just) {
     # single value may be any valid just
     just <- as.integer(match(just[1L], c("left", "right", "bottom", "top",
                                         "centre", "center")) - 1)
-    if (anyMissing(just))
+    if (anyNA(just))
       stop("invalid justification")
   } else if (length(just) > 1) {
     # first value must be one of "left", "right", "centre", or "center"
@@ -70,7 +70,7 @@ valid.charjust <- function(just) {
   just <- c(switch(just[1L] + 1, 0, 1, NA, NA, 0.5, 0.5),
             switch(just[2L] + 1, NA, NA, 0, 1, 0.5, 0.5))
   # Final paranoid check
-  if (anyMissing(just))
+  if (anyNA(just))
     stop("invalid justification")
   just
 }

@@ -32,7 +32,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
     if(trim > 0 && n) {
 	if(is.complex(x))
 	    stop("trimmed means are not defined for complex data")
-        if(anyMissing(x)) return(NA_real_)
+        if(anyNA(x)) return(NA_real_)
 	if(trim >= 0.5) return(stats::median(x, na.rm=FALSE))
 	lo <- floor(n*trim)+1
 	hi <- n+1-lo

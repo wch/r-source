@@ -46,7 +46,7 @@ check.options <-
     oldnames <- names(old)
     if(lnew > 0) {
 	matches <- pmatch(newnames, oldnames)
-	if(anyMissing(matches))
+	if(anyNA(matches))
 	    stop(sprintf(ngettext(as.integer(sum(is.na(matches))),
                                  "invalid argument name %s in '%s'",
                                  "invalid argument names %s in '%s'"),

@@ -29,7 +29,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
     filter <- as.double(filter)
     nfilt <- as.integer(length(filter))
     if (is.na(n)) stop("invalid value of length(filter)", domain = NA)
-    if(anyMissing(filter)) stop("missing values in 'filter'")
+    if(anyNA(filter)) stop("missing values in 'filter'")
 
     if(method == "convolution") {
         if(nfilt > n) stop("'filter' is longer than time series")

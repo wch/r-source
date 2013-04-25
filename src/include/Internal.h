@@ -47,7 +47,7 @@ SEXP do_addTryHandlers(SEXP, SEXP, SEXP, SEXP);
 SEXP do_adist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_agrep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_allnames(SEXP, SEXP, SEXP, SEXP);
-SEXP do_anyMissing(SEXP, SEXP, SEXP, SEXP);
+SEXP do_anyNA(SEXP, SEXP, SEXP, SEXP);
 SEXP do_aperm(SEXP, SEXP, SEXP, SEXP);
 SEXP do_aregexec(SEXP, SEXP, SEXP, SEXP);
 SEXP do_args(SEXP, SEXP, SEXP, SEXP);

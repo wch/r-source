@@ -79,7 +79,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         } else {
             function(x, con, outputEncoding, ...) {
                 x <- iconv(x, "UTF-8", outputEncoding,  mark=FALSE)
-                if (anyMissing(x)) {
+                if (anyNA(x)) {
                     x <- iconv(x, "UTF-8", outputEncoding,
                                sub="byte", mark=FALSE)
                     encode_warn <<- TRUE

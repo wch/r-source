@@ -77,7 +77,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
     }
     if(degree < 1)
         stop("'degree' must be at least 1")
-    if(anyMissing(x)) stop("missing values are not allowed in 'poly'")
+    if(anyNA(x)) stop("missing values are not allowed in 'poly'")
     n <- degree + 1
     if(raw) {
         Z <- outer(x, 1L:degree, "^")

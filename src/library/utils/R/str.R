@@ -282,7 +282,7 @@ str.default <-
 		nam.ob <-
 		    if(is.null(nam.ob <- names(object))) rep.int("", le)
 		    else { ncn <- nchar(nam.ob, type="w")
-			   if(anyMissing(ncn)) ## slower, but correct:
+			   if(anyNA(ncn)) ## slower, but correct:
 			      ncn <- vapply(nam.ob, format.info, 0L)
 			   format(nam.ob, width = max(ncn), justify="left")
 		       }

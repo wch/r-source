@@ -28,17 +28,17 @@
       definition of \command{diff -b} (as distinct from the description
       in the \command{man} pages of most systems).
 
-      \item New \code{anyMissing()} is a fast version of \code{any(is.na(.))},
+      \item New \code{anyNA()} is a fast version of \code{any(is.na(.))},
       based on a proposal by Tim Hesterberg. (Wish of \PR{15239}).
       %% Planned porting to 3.0.0 patched, after waiting/more testing..
 
       \item \code{arrayInd(*, useNames=TRUE)} and, analogously,
       \code{which(*, arr.ind=TRUE)} now make use of
       \code{names(.dimnames)} when available.
-      
+
       \item \code{load()} now has a \code{verbose} argument for
       debugging support, to print the names of objects just before
-      loading them.      
+      loading them.
     }
   }
 

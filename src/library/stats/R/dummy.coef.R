@@ -64,7 +64,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     ## NaNs and set to NA afterwards.
     mf <- model.frame(Terms, dummy, na.action=function(x)x, xlev=xl)
     mm <- model.matrix(Terms, mf, object$contrasts, xl)
-    if(anyMissing(mm)) {
+    if(anyNA(mm)) {
         warning("some terms will have NAs due to the limits of the method")
         mm[is.na(mm)] <- NA
     }

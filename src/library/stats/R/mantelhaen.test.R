@@ -24,7 +24,7 @@ function(x, y = NULL, z = NULL,
     DNAME <- deparse(substitute(x))
     if(is.array(x)) {
         if(length(dim(x)) == 3L) {
-            if(anyMissing(x)) stop("NAs are not allowed")
+            if(anyNA(x)) stop("NAs are not allowed")
             if(any(dim(x) < 2L)) stop("each dimension in table must be >= 2")
         }
         else

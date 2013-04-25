@@ -1286,7 +1286,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
         vlist[[i]] <- do.call("substitute", list(vlist[[i]], slist))
     dnames <- names(dlist)
     whereNames <- match(old, dnames)
-    if(anyMissing(whereNames))
+    if(anyNA(whereNames))
 	stop(gettextf("in changing formal arguments in %s, some of the old names are not in fact arguments: %s",
 		      msg, paste0("\"", old[is.na(match(old, names(dlist)))], "\"", collapse=", ")),
 	     domain = NA)

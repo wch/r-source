@@ -2090,7 +2090,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
    Author: Tim Hesterberg <rocket@google.com>
    Distributed under GPL 2 or later
 */
-// Check if x has missing values; the  anyMissing.default() method:
+// Check if x has missing values; the  anyNA.default() method:
 SEXP anyNA(SEXP x)
 {
     double *xD;
@@ -2139,19 +2139,19 @@ SEXP anyNA(SEXP x)
 	return Rf_ScalarLogical(FALSE);
 
     default:
-	error("anyMissing() applied to non-(list or vector) of type '%s'",
+	error("anyNA() applied to non-(list or vector) of type '%s'",
 	      type2char(TYPEOF(x)));
     }
     return Rf_ScalarLogical(FALSE);
 } // anyNA()
 
-SEXP attribute_hidden do_anyMissing(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "x");
 
     SEXP ans;
-    if (DispatchOrEval(call, op, "anyMissing", args, rho, &ans, 0, 1))
+    if (DispatchOrEval(call, op, "anyNA", args, rho, &ans, 0, 1))
 	return(ans);
     // else
     return anyNA(CAR(args));

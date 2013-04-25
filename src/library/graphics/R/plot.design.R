@@ -33,7 +33,7 @@ plot.design <-
 	if(!all(sapply(x, is.factor)) & !is.factor(x)) # incl "ordered"
 	    stop("all columns/components of 'x' must be factors")
 	k <- ncol(x)
-        if(anyMissing(y)) {
+        if(anyNA(y)) {
             FUN <- fun; fun <- function(u) FUN(u [!is.na(u)])
         }
 	tot <- fun(y)

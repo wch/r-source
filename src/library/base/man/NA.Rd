@@ -13,8 +13,8 @@
 \alias{is.na.data.frame}
 \alias{is.na<-}
 \alias{is.na<-.default}
-\alias{anyNA}% "obvious" alternative name
-\alias{anyMissing}
+\alias{anyNA}
+\alias{anyMissing}% an alternative name (in Biobase and S+ as of ~2006)
 \title{\sQuote{Not Available} / Missing Values}
 \description{
   \code{NA} is a logical constant of length 1 which contains a missing
@@ -28,13 +28,13 @@
 
   The generic function \code{is.na<-} sets elements to \code{NA}.
 
-  The generic function \code{anyMissing} with its default method
+  The generic function \code{anyNA} with its default method
   implements \code{any(is.na(x))} in a fast way.
 }
 \usage{
 NA
 is.na(x)
-anyMissing(x)
+anyNA(x)
 \method{is.na}{data.frame}(x)
 
 is.na(x) <- value
@@ -77,7 +77,7 @@ is.na(x) <- value
   is a length-one atomic vector and the single element of that vector is
   regarded as \code{NA} or \code{NaN}.\cr
 
-  For \code{anyMissing}, such lists are treated \emph{recursively}, such
+  For \code{anyNA}, such lists are treated \emph{recursively}, such
   that the result is only false if there is no \code{NA} or \code{NaN} in any
   element (which may be a list itself).
 
@@ -108,33 +108,33 @@ is.na(paste(c(1, NA))) #> FALSE FALSE
 (xx <- c(0:4))
 is.na(xx) <- c(2, 4)
 xx                     #> 0 NA  2 NA  4
-anyMissing(xx) # TRUE
+anyNA(xx) # TRUE
 
 ## Measure speed difference in an extreme case:
 if(require("microbenchmark")) {
   x <- c(NaN, 1:10000)
-  print(microbenchmark(any(is.na(x)), anyMissing(x)))
+  print(microbenchmark(any(is.na(x)), anyNA(x)))
 } else { ## much less accurate
   x <- c(NaN, 1e6)
   nSim <- 2^13
   print(rbind(is.na = system.time(replicate(nSim, any(is.na(x)))),
-              anyMissing = system.time(replicate(nSim, anyMissing(x)))))
+              anyNA = system.time(replicate(nSim, anyNA(x)))))
 }
 
-## anyMissing() works recursively with list()s:
+## anyNA() works recursively with list()s:
 LL <- list(1:5, c(NA, 5:8), c("A","NA"), c("a", NA_character_))
 L2 <- LL[c(1,3)]
-sapply(LL, anyMissing); anyMissing(LL)
-sapply(L2, anyMissing); anyMissing(L2)
+sapply(LL, anyNA); anyNA(LL)
+sapply(L2, anyNA); anyNA(L2)
 
 ## ... lists, and hence data frames, too; no method needed:
 dN <- dd <- USJudgeRatings; dN[3,6] <- NA
-anyMissing(dd) # FALSE
-anyMissing(dN) # TRUE
+anyNA(dd) # FALSE
+anyNA(dN) # TRUE
 \dontshow{
-stopifnot(anyMissing(x), anyMissing(xx),
-          anyMissing(LL), !anyMissing(L2),
-          anyMissing(dN), !anyMissing(dd), !any(is.na(dd)),
+stopifnot(anyNA(x), anyNA(xx),
+          anyNA(LL), !anyNA(L2),
+          anyNA(dN), !anyNA(dd), !any(is.na(dd)),
           all(c(3,6) == which(is.na(dN), arr.ind=TRUE)))
 }
 }

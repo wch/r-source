@@ -164,7 +164,7 @@ summary.data.frame <-
     }
     z <- unlist(z, use.names=TRUE)
     dim(z) <- c(nr, nv)
-    if(anyMissing(lw))
+    if(anyNA(lw))
 	warning("probably wrong encoding in names(.) of column ",
 		paste(which(is.na(lw)), collapse = ", "))
     blanks <- paste(character(max(lw, na.rm=TRUE) + 2L), collapse = " ")

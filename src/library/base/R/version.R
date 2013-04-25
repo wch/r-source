@@ -177,7 +177,7 @@ function(x, i, j)
     else
         lapply(unclass(x)[i], "[", j)
     ## Change sequences which are NULL or contains NAs to integer().
-    bad <- vapply(y, function(t) is.null(t) || anyMissing(t), NA)
+    bad <- vapply(y, function(t) is.null(t) || anyNA(t), NA)
     if(any(bad))
         y[bad] <- rep.int(list(integer()), length(bad))
     class(y) <- class(x)
@@ -310,7 +310,7 @@ function(x, ...)
 }
 
 is.na.numeric_version <- function(x) is.na(.encode_numeric_version(x))
-anyMissing.numeric_version <- function(x) anyMissing(.encode_numeric_version(x))
+anyNA.numeric_version <- function(x) anyNA(.encode_numeric_version(x))
 
 print.numeric_version <-
 function(x, ...)

@@ -24,7 +24,7 @@ smooth <- function(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
                    endrule = "Tukey", do.ends = FALSE)
 {
     if(!is.numeric(x)) stop("attempt to smooth non-numeric values")
-    if(anyMissing(x)) stop("attempt to smooth NA values")
+    if(anyNA(x)) stop("attempt to smooth NA values")
     rules <- c("copy","Tukey")#- exact order matters!
     if(is.na(iend <- pmatch(endrule, rules))) stop("invalid 'endrule' argument")
     n <- as.integer(length(x))

@@ -118,7 +118,7 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
     {
 	## Draw single box plot
         ok <- TRUE
-	if(!anyMissing(stats)) {
+	if(!anyNA(stats)) {
 	    ## stats = +/- Inf:	polygon & segments should handle
 
 	    ## Compute 'x + w' -- "correctly" in log-coord. case:
@@ -259,7 +259,7 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
 
     width <-
 	if(!is.null(width)) {
-	    if(length(width) != n | anyMissing(width) | any(width <= 0))
+	    if(length(width) != n | anyNA(width) | any(width <= 0))
 		stop("invalid boxplot widths")
 	    boxwex * width/max(width)
 	}

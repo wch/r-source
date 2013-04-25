@@ -49,7 +49,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
                        paste(DNAME2, collapse = "\n"))
     }
 
-    if (any(x < 0) || anyMissing(x))
+    if (any(x < 0) || anyNA(x))
 	stop("all entries of 'x' must be nonnegative and finite")
     if ((n <- sum(x)) == 0)
 	stop("at least one entry of 'x' must be positive")

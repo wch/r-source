@@ -248,7 +248,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
             stop("invalid 'row.names' length")
         if (anyDuplicated(row.names))
             stop("duplicate 'row.names' are not allowed")
-        if (anyMissing(row.names))
+        if (anyNA(row.names))
             stop("missing values in 'row.names' are not allowed")
     }
 

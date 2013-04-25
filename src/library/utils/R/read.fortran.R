@@ -35,7 +35,7 @@ read.fortran <- function(file, format, ..., as.is = TRUE, colClasses = NA)
         lengths[charskip] <- reps[charskip]*lengths[charskip]
         reps[charskip] <- 1
 
-        if (anyMissing(lengths))
+        if (anyNA(lengths))
             stop("missing lengths for some fields")
 
         lengths <- rep(lengths,reps)

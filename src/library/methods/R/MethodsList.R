@@ -552,7 +552,7 @@ matchSignature <-
     ## Assertion:  match.call has permuted the args into the order of formal args,
     ## and carried along the values.  Get the supplied classes in that
     ## order, from the matched args in the call object.
-    if(anyMissing(which))
+    if(anyNA(which))
         stop(sprintf(ngettext(sum(is.na(which)),
                               "in the method signature for function %s invalid argument name in the signature: %s",
                               "in the method signature for function %s invalid argument names in the signature: %s"),
