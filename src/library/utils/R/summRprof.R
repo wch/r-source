@@ -1,7 +1,7 @@
 #  File src/library/utils/R/summRprof.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -138,8 +138,6 @@ summaryRprof <-
            umem <- rowsum(c(new.umem, umem), c(names(new.utable), fnames))
 
        fnames <- sort(unique(c(fnames, names(new.utable))))
-
-       if (length(chunk) < chunksize) break
     })
 
     firstnum <- fcounts*sample.interval
