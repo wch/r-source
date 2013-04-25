@@ -27,6 +27,7 @@
 \alias{.knownS3Generics}
 \alias{loadingNamespaceInfo}
 \alias{.getNamespace}
+\alias{..getNamespace}
 \usage{
 asNamespace(ns, base.OK = TRUE)
 getNamespaceInfo(ns, which)
@@ -48,6 +49,7 @@ setNamespaceInfo(ns, which, val)
 .knownS3Generics
 loadingNamespaceInfo()
 .getNamespace(name)
+..getNamespace(name, where)
 }
 
 \arguments{
