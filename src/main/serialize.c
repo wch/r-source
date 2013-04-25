@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2012  The R Core Team
+ *  Copyright (C) 1995--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1285,6 +1285,7 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
 
 int R_ReadItemDepth = 0;
 int R_InitReadItemDepth;
+static char lastname[8192];
 
 #define INITIAL_REFREAD_TABLE_SIZE 128
 
@@ -1477,6 +1478,20 @@ static R_xlen_t ReadLENGTH (R_inpstream_t stream)
 #endif
 }
 
+/* differs when it fails from version in envir.c */
+static SEXP R_FindNamespace1(SEXP info)
+{
+    SEXP expr, val, where;
+    PROTECT(info);
+    where = PROTECT(ScalarString(mkChar(lastname)));
+    PROTECT(expr = LCONS(install("..getNamespace"), 
+			 LCONS(info, LCONS(where, R_NilValue))));
+    val = eval(expr, R_GlobalEnv);
+    UNPROTECT(3);
+    return val;
+}
+
+
 static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 {
     SEXPTYPE type;
@@ -1522,7 +1537,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	return s;
     case NAMESPACESXP:
 	PROTECT(s = InStringVec(stream, ref_table));
-	s = R_FindNamespace(s);
+	s = R_FindNamespace1(s);
 	AddReadRef(ref_table, s);
 	UNPROTECT(1);
 	return s;
@@ -1573,6 +1588,10 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	R_ReadItemDepth++;
 	SET_ATTRIB(s, hasattr ? ReadItem(ref_table, stream) : R_NilValue);
 	SET_TAG(s, hastag ? ReadItem(ref_table, stream) : R_NilValue);
+	if (hastag && R_ReadItemDepth == R_InitReadItemDepth + 1 &&
+	    isSymbol(TAG(s))) {
+	    snprintf(lastname, 8192, "%s", CHAR(PRINTNAME(TAG(s))));
+	}
 	if (hastag && R_ReadItemDepth <= 0) {
 	    Rprintf("%*s", 2*(R_ReadItemDepth - R_InitReadItemDepth), "");
 	    PrintValue(TAG(s));

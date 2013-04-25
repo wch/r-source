@@ -19,13 +19,13 @@
 \alias{[[<-.numeric_version}
 \alias{Ops.numeric_version}
 \alias{Summary.numeric_version}
+\alias{anyNA.numeric_version}
 \alias{as.character.numeric_version}
 \alias{as.data.frame.numeric_version}
 \alias{as.list.numeric_version}
 \alias{c.numeric_version}
 \alias{duplicated.numeric_version}
 \alias{format.numeric_version}
-\alias{anyNA.na.numeric_version}
 \alias{is.na.numeric_version}
 \alias{print.numeric_version}
 \alias{rep.numeric_version}

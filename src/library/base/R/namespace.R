@@ -31,6 +31,18 @@ getNamespace <- function(name) {
 
 .getNamespace <- function(name) .Internal(getRegisteredNamespace(as.name(name)))
 
+..getNamespace <- function(name, where) {
+    ns <- .Internal(getRegisteredNamespace(as.name(name)))
+    if (! is.null(ns)) ns
+    else tryCatch(loadNamespace(name),
+                  error = function(e) {
+                      warning(gettextf("namespace %s is not available and has been replaced by .GlobalEnv when processing %s",
+                                       sQuote(name)[1L], sQuote(where)),
+                              domain = NA, call. = FALSE, immediate. = TRUE)
+                      .GlobalEnv
+                  })
+}
+
 loadedNamespaces <- function()
     ls(.Internal(getNamespaceRegistry()), all.names = TRUE)
 

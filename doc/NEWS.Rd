@@ -39,6 +39,10 @@
       \item \code{load()} now has a \code{verbose} argument for
       debugging support, to print the names of objects just before
       loading them.
+
+      \item When loading a serialized object encounters a reference to a
+      namespace which cannot be loaded, this is replaced by a reference
+      to the global environment, with a warning.
     }
   }
 

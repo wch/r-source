@@ -49,6 +49,13 @@ load(file, envir = parent.frame(), verbose = FALSE)
   an integer value greater than one, additional names corresponding to
   attributes and other parts of individual objects will also be printed.
   Larger values will print names to a greater depth.
+  
+  Objects can be saved with references to namespaces, usually as part of
+  the environment of a function or formula.  As from \R 3.1.0 such
+  objects can be loaded even if the namespace is not available: it is
+  replaced by a reference to the global environment with a warning.  The
+  warning identifies the first object with such a reference (but there
+  may be more than one).
 }
 \value{
   A character vector of the names of objects created, invisibly.
