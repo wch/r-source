@@ -76,13 +76,14 @@ is.na(x) <- value
   The default methods also works for lists and pairlists:\cr
   For \code{is.na}, elementwise the result is false unless that element
   is a length-one atomic vector and the single element of that vector is
-  regarded as \code{NA} or \code{NaN}.\cr
+  regarded as \code{NA} or \code{NaN} (note that any \code{is.na}
+  methods for the class of the atomic vector is ignored).
 
   For \code{anyNA}, such lists are treated \emph{recursively}, such
   that the result is only false if there is no \code{NA} or \code{NaN} in any
   element (which may be a list itself).
 
-  The method data frame method for \code{is.na} returns a logical matrix
+  The data frame method for \code{is.na} returns a logical matrix
   with the same dimensions as the data frame, and with dimnames taken
   from the row and column names of the data frame.
 }
