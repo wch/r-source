@@ -1,6 +1,6 @@
 % File src/library/graphics/man/rasterImage.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rasterImage}
@@ -40,6 +40,9 @@ rasterImage(image,
   Problems with the rendering of raster images have been reported by
   users of \code{windows()} devices under Remote Desktop, at least under
   its default settings.
+
+  You should not expect a raster image to be re-sized when an on-screen
+  device is re-sized: whether it is is device-dependent.
 }
 \seealso{
   \code{\link{rect}},
