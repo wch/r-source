@@ -36,14 +36,6 @@
       \item \code{arrayInd(*, useNames = TRUE)} and, analogously,
       \code{which(*, arr.ind = TRUE)} now make use of
       \code{names(.dimnames)} when available.
-
-      \item \code{load()} now has a \code{verbose} argument for
-      debugging support, to print the names of objects just before
-      loading them.
-
-      \item When loading a serialized object encounters a reference to a
-      namespace which cannot be loaded, this is replaced by a reference
-      to the global environment, with a warning.
     }
   }
 
@@ -132,6 +124,14 @@
       class of \code{xlim} and \code{ylim} (and hence of \code{x} and
       \code{y} if there is a suitable \code{range()} method).  Based on
       a suggestion of Michael Sumner.
+
+      \item \code{load()} now has a \code{verbose} argument for
+      debugging support, to print the names of objects just before
+      loading them.
+
+      \item When loading a serialized object encounters a reference to a
+      namespace which cannot be loaded, this is replaced by a reference
+      to the global environment, with a warning.
     }
   }
 

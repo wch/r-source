@@ -36,7 +36,7 @@ getNamespace <- function(name) {
     if (! is.null(ns)) ns
     else tryCatch(loadNamespace(name),
                   error = function(e) {
-                      warning(gettextf("namespace %s is not available and has been replaced by .GlobalEnv when processing %s",
+                      warning(gettextf("namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s",
                                        sQuote(name)[1L], sQuote(where)),
                               domain = NA, call. = FALSE, immediate. = TRUE)
                       .GlobalEnv
