@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2323,9 +2323,12 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* Read and checks the magic number, open the connection if needed */
 
+extern int R_ReadItemDepth;
+extern int R_InitReadItemDepth;
+
 SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* loadFromConn2(conn, environment) */
+    /* loadFromConn2(conn, environment, verbose) */
 
     struct R_inpstream_st in;
     Rconnection con;
@@ -2338,7 +2341,7 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     con = getConnection(asInteger(CAR(args)));
-
+    
     wasopen = con->isopen;
     if(!wasopen) {
 	char mode[5];	
@@ -2371,7 +2374,9 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 	strncmp((char*)buf, "RDX2\n", 5) == 0) {
 	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
 	/* PROTECT is paranoia: some close() method might allocate */
+	R_InitReadItemDepth = R_ReadItemDepth = -asInteger(CADDR(args));
 	PROTECT(res = RestoreToEnv(R_Unserialize(&in), aenv));
+	R_ReadItemDepth = 0;
 	if(!wasopen) {endcontext(&cntxt); con->close(con);}
 	UNPROTECT(1);
     } else
