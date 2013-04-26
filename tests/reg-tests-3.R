@@ -122,5 +122,13 @@ contr.sum(2) # needed drop=FALSE at one point.
 ## xtabs did not exclude levels from factors
 x1 <- c('a','b','a','b','c', NA)
 x2 <- factor(x1, exclude=NULL)
-print(xtabs(~ x1 + x2, na.action = na.pass)) 
-print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass)) 
+print(xtabs(~ x1 + x2, na.action = na.pass))
+print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass))
+
+
+## median should work by default for a suitable S4 class.
+## adapted from adaptsmoFMRI
+library(Matrix)
+x <- matrix(c(1,2,3,4))
+median(x)
+median(as(x, "dgeMatrix"))
