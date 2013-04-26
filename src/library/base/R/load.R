@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-load <- function (file, envir = parent.frame())
+load <- function (file, envir = parent.frame(), verbose = FALSE)
 {
     if (is.character(file)) {
         ## files are allowed to be of an earlier format
@@ -45,7 +45,10 @@ load <- function (file, envir = parent.frame())
                else gzcon(file)
     } else stop("bad 'file' argument")
 
-    .Internal(loadFromConn2(con, envir))
+    if (verbose)
+    	cat("Loading objects:\n")
+    	
+    .Internal(loadFromConn2(con, envir, verbose))
 }
 
 save <- function(..., list = character(),
