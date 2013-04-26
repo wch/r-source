@@ -1,6 +1,6 @@
 % File src/library/base/man/NA.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NA}
@@ -66,13 +66,15 @@ is.na(x) <- value
   otherwise.  \code{dim}, \code{dimnames} and \code{names} attributes
   are preserved.
 
-  The default method also works for lists and pairlists: the result for an
-  element is false unless that element is a length-one atomic vector and
-  the single element of that vector is regarded as \code{NA} or \code{NaN}.
+  The default methods also works for lists and pairlists:\cr
+  For \code{is.na}, elementwise the result is false unless that element
+  is a length-one atomic vector and the single element of that vector is
+  regarded as \code{NA} or \code{NaN} (note that any \code{is.na}
+  methods for the class of the atomic vector is ignored).
 
-  The method \code{is.na.data.frame} returns a logical matrix with the
-  same dimensions as the data frame, and with dimnames taken from the
-  row and column names of the data frame.
+  The data frame method for \code{is.na} returns a logical matrix
+  with the same dimensions as the data frame, and with dimnames taken
+  from the row and column names of the data frame.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
