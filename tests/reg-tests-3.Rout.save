@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-04-26 r62672) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -735,16 +735,26 @@ b . 1
 > ## xtabs did not exclude levels from factors
 > x1 <- c('a','b','a','b','c', NA)
 > x2 <- factor(x1, exclude=NULL)
-> print(xtabs(~ x1 + x2, na.action = na.pass)) 
+> print(xtabs(~ x1 + x2, na.action = na.pass))
    x2
 x1  a b c <NA>
   a 2 0 0    0
   b 0 2 0    0
   c 0 0 1    0
-> print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass)) 
+> print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass))
       x2
 x1     a b <NA>
   a    2 0    0
   b    0 2    0
   <NA> 0 0    1
+> 
+> 
+> ## median should work by default for a suitable S4 class.
+> ## adapted from adaptsmoFMRI
+> library(Matrix)
+> x <- matrix(c(1,2,3,4))
+> median(x)
+[1] 2.5
+> median(as(x, "dgeMatrix"))
+[1] 2.5
 > 

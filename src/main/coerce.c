@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
- *  Copyright (C) 1997-2012  The R Core Team
+ *  Copyright (C) 1997-2013  The R Core Team
  *  Copyright (C) 2003-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2085,64 +2085,65 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+static Rboolean anyNA(SEXP x)
 /* Original code:
    Copyright 2012 Google Inc. All Rights Reserved.
    Author: Tim Hesterberg <rocket@google.com>
    Distributed under GPL 2 or later
 */
 // Check if x has missing values; the  anyNA.default() method:
-SEXP anyNA(SEXP x)
 {
-    double *xD;
-    int *xI, i, n = xlength(x);
+    R_xlen_t i, n = xlength(x);
 
     switch (TYPEOF(x)) {
     case REALSXP:
-	xD = REAL(x);
+    {
+	double *xD = REAL(x);
 	for (i = 0; i < n; i++)
-	    if (ISNAN(xD[i])) return Rf_ScalarLogical(TRUE);
+	    if (ISNAN(xD[i])) return TRUE;
 	break;
+    }
     case INTSXP:
-	xI = INTEGER(x);
+    {
+	int *xI = INTEGER(x);
 	for (i = 0; i < n; i++)
-	    if (xI[i] == NA_INTEGER) return Rf_ScalarLogical(TRUE);
+	    if (xI[i] == NA_INTEGER) return TRUE;
 	break;
+    }
     case LGLSXP:
-	xI = LOGICAL(x);
+    {
+	int *xI = LOGICAL(x);
 	for (i = 0; i < n; i++)
-	    if (xI[i] == NA_LOGICAL) return Rf_ScalarLogical(TRUE);
+	    if (xI[i] == NA_LOGICAL) return TRUE;
 	break;
+    }
     case CPLXSXP:
 	for (i = 0; i < n; i++)
 	    if (ISNAN(COMPLEX(x)[i].r) ||
-		ISNAN(COMPLEX(x)[i].i)) return Rf_ScalarLogical(TRUE);
+		ISNAN(COMPLEX(x)[i].i)) return TRUE;
 	break;
     case STRSXP:
 	for (i = 0; i < n; i++)
-	    if (STRING_ELT(x, i) == NA_STRING) return Rf_ScalarLogical(TRUE);
+	    if (STRING_ELT(x, i) == NA_STRING) return TRUE;
 	break;
  // Note that the recursive calls to anyNA() below never will do method dispatch
     case LISTSXP:
-	for (i = 0; i < n; i++) {
-	    if (LOGICAL(anyNA(CAR(x)))[0]) return Rf_ScalarLogical(TRUE);
-	    x = CDR(x);
-	}
+	for (i = 0; i < n; i++, x = CDR(x)) if (anyNA(CAR(x))) return TRUE;
 	break;
     case VECSXP:
 	for (i = 0; i < n; i++)
-	    if (LOGICAL(anyNA(VECTOR_ELT(x, i)))[0])
-		return Rf_ScalarLogical(TRUE);
+	    if (anyNA(VECTOR_ELT(x, i))) return TRUE;
 	break;
     case RAWSXP: /* no such thing as a raw NA:  is.na(.) gives FALSE always */
-	return Rf_ScalarLogical(FALSE);
+	return FALSE;
     case NILSXP: // is.na() gives a warning..., but we do not.
-	return Rf_ScalarLogical(FALSE);
+	return FALSE;
 
     default:
 	error("anyNA() applied to non-(list or vector) of type '%s'",
 	      type2char(TYPEOF(x)));
     }
-    return Rf_ScalarLogical(FALSE);
+    return FALSE;
 } // anyNA()
 
 SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -2154,7 +2155,7 @@ SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (DispatchOrEval(call, op, "anyNA", args, rho, &ans, 0, 1))
 	return(ans);
     // else
-    return anyNA(CAR(args));
+    return ScalarLogical(anyNA(CAR(args)));
 }
 
 

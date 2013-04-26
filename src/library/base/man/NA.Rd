@@ -28,8 +28,9 @@
 
   The generic function \code{is.na<-} sets elements to \code{NA}.
 
-  The generic function \code{anyNA} with its default method
-  implements \code{any(is.na(x))} in a fast way.
+  The generic function \code{anyNA} with its default method implements
+  \code{any(is.na(x))} in a fast way, not dispatching methods for
+  \code{is.na} and \code{any}.
 }
 \usage{
 NA
@@ -81,9 +82,9 @@ is.na(x) <- value
   that the result is only false if there is no \code{NA} or \code{NaN} in any
   element (which may be a list itself).
 
-  The method \code{is.na.data.frame} returns a logical matrix with the
-  same dimensions as the data frame, and with dimnames taken from the
-  row and column names of the data frame.
+  The method data frame method for \code{is.na} returns a logical matrix
+  with the same dimensions as the data frame, and with dimnames taken
+  from the row and column names of the data frame.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

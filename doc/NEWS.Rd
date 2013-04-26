@@ -28,12 +28,13 @@
       definition of \command{diff -b} (as distinct from the description
       in the \command{man} pages of most systems).
 
-      \item New \code{anyNA()} is a fast version of \code{any(is.na(.))},
-      based on a proposal by Tim Hesterberg. (Wish of \PR{15239}).
-      %% Planned porting to 3.0.0 patched, after waiting/more testing..
+      \item New function \code{anyNA()}, a fast version of
+      \code{any(is.na(.))}, \emph{where neither \code{is.na()} nor
+      \code{any()} has a relevant method}, based on a proposal by Tim
+      Hesterberg. (Wish of \PR{15239}.)
 
-      \item \code{arrayInd(*, useNames=TRUE)} and, analogously,
-      \code{which(*, arr.ind=TRUE)} now make use of
+      \item \code{arrayInd(*, useNames = TRUE)} and, analogously,
+      \code{which(*, arr.ind = TRUE)} now make use of
       \code{names(.dimnames)} when available.
 
       \item \code{load()} now has a \code{verbose} argument for
