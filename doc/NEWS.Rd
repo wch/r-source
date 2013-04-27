@@ -36,6 +36,9 @@
       \item \code{arrayInd(*, useNames = TRUE)} and, analogously,
       \code{which(*, arr.ind = TRUE)} now make use of
       \code{names(.dimnames)} when available.
+
+      \item \code{is.unsorted()} now works for \code{raw} vectors as
+      well, and \code{is.unsorted(NA)} is false.
     }
   }
 
@@ -231,12 +234,12 @@
       \item In \R 3.0.0, when \code{help()} found multiple pages with
       the same alias, the HTML display of all the selections was not
       produced.  (\PR{15282})
-      
+
       \item \code{splinefun(method="monoH.FC")} now produces a
       function with first argument named \code{x} and allows
-      \code{deriv=3}, as documented. (\PR{15273})     
-      
-      \item \code{summaryRprof()} would only read the first 
+      \code{deriv=3}, as documented. (\PR{15273})
+
+      \item \code{summaryRprof()} would only read the first
       \code{chunksize} lines of an \code{Rprof} file produced with
       \code{line.profiling=TRUE}. By default, this is the first 100
       seconds.  (\PR{15288})

@@ -198,7 +198,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{"Knuth-TAOCP"} \link{RNG}.
 
   \code{.gt} and \code{.gtn} are callbacks from \code{\link{rank}} and
-  \code{\link{is.unsorted}} used for classed objects.
+  \code{\link{is.unsorted}} used for S3 classed objects.
 
   \code{.primTrace} and \code{.primUntrace} are the \link{primitive}
   functions underlying \code{\link{trace}} and \code{\link{untrace}}

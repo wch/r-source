@@ -603,9 +603,21 @@ aa <- 11:16
 a <- new("A", aa=aa)
 setMethod(length, "A", function(x) length(x@aa))
 setMethod(`[[`,   "A", function(x, i, j, ...) x@aa[[i]])
+setMethod(`[`,    "A", function(x, i, j, ...) new("A", aa = x@aa[i]))
 stopifnot(length(a) == 6, identical(a[[5]], aa[[5]]),
+          identical(a, rev(rev(a))), # using '['
 	  identical(mapply(`*`, aa, rep(1:3, 2)),
 		    mapply(`*`, a,  rep(1:3, 2))))
 ## Up to R 2.15.2, internally 'a' is treated as if it was of length 1
 ## because internal dispatch did not work for length().
 
+## is.unsorted() for formal classes - and R > 3.0.0 :
+## Fails, unfortunately (from C, base::.gtn() is called w/o dispatch)
+## setMethod("anyNA", "A", function(x) anyNA(x@aa))
+## setMethod(".gtn", "A", function(x,strictly) .gtn(x@aa, strictly))
+## but this now works (thanks to DispatchOrEval() ):
+setMethod("is.unsorted", "A", function(x, na.rm=FALSE, strictly=FALSE)
+    is.unsorted(x@aa, na.rm=na.rm, strictly=strictly))
+
+stopifnot(!is.unsorted(a), # 11:16 *is* sorted
+	  is.unsorted(rev(a)))

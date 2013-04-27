@@ -143,36 +143,52 @@ Rboolean isUnsorted(SEXP x, Rboolean strictly)
 			return TRUE;
 	    }
 	    break;
+	case RAWSXP: // being compatible with raw_relop() in ./relop.c
+	    if(strictly) {
+		for(i = 0; i+1 < n ; i++)
+		    if(RAW(x)[i] >= RAW(x)[i+1])
+			return TRUE;
+
+	    } else {
+		for(i = 0; i+1 < n ; i++)
+		    if(RAW(x)[i] > RAW(x)[i+1])
+			return TRUE;
+	    }
+	    break;
 	default:
 	    UNIMPLEMENTED_TYPE("isUnsorted", x);
 	}
     return FALSE;/* sorted */
-}
+} // isUnsorted()
 
 SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int strictly;
-    SEXP x, ans;
-    int res = TRUE;
-
     checkArity(op, args);
-    x = CAR(args);
-    strictly = asLogical(CADR(args));
+
+    SEXP ans, x = CAR(args);
+    if(DispatchOrEval(call, op, "is.unsorted", args, rho, &ans, 0, 1))
+	return ans;
+    PROTECT(args = ans); // args evaluated now
+
+    int strictly = asLogical(CADR(args));
     if(strictly == NA_LOGICAL)
 	errorcall(call, _("invalid '%s' argument"), "strictly");
-    R_xlen_t n = xlength(x);
-    if(n < 2) return ScalarLogical(FALSE);
-    if(isVectorAtomic(x))
-	return ScalarLogical(isUnsorted(x, strictly));
-    if(isObject(x)) {
-	/* try dispatch */
-	SEXP call;
-	PROTECT(call = lang3(install(".gtn"), x, CADR(args)));
-	ans = eval(call, rho);
+    if(isVectorAtomic(x)) {
 	UNPROTECT(1);
+	return (xlength(x) < 2) ? ScalarLogical(FALSE) :
+	    ScalarLogical(isUnsorted(x, strictly));
+    }
+    if(isObject(x)) {
+	// try dispatch -- fails entirely for S4: need "DispatchOrEval()" ?
+	SEXP call;
+	PROTECT(call = 	// R>  .gtn(x, strictly) :
+		lang3(install(".gtn"), x, CADR(args)));
+	ans = eval(call, rho);
+	UNPROTECT(2);
 	return ans;
-    } else res = NA_LOGICAL;
-    return ScalarLogical(res);
+    } // else
+	UNPROTECT(1);
+    return ScalarLogical(NA_LOGICAL);
 }
 
 

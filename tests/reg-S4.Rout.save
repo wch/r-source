@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-03-30 r62438) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-04-24 r62658) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -865,10 +865,25 @@ Creating a new generic function for 'qqplot' in the global environment
 [1] "length"
 > setMethod(`[[`,   "A", function(x, i, j, ...) x@aa[[i]])
 [1] "[["
+> setMethod(`[`,    "A", function(x, i, j, ...) new("A", aa = x@aa[i]))
+[1] "["
 > stopifnot(length(a) == 6, identical(a[[5]], aa[[5]]),
++           identical(a, rev(rev(a))), # using '['
 + 	  identical(mapply(`*`, aa, rep(1:3, 2)),
 + 		    mapply(`*`, a,  rep(1:3, 2))))
 > ## Up to R 2.15.2, internally 'a' is treated as if it was of length 1
 > ## because internal dispatch did not work for length().
 > 
+> ## is.unsorted() for formal classes - and R > 3.0.0 :
+> ## Fails, unfortunately (from C, base::.gtn() is called w/o dispatch)
+> ## setMethod("anyNA", "A", function(x) anyNA(x@aa))
+> ## setMethod(".gtn", "A", function(x,strictly) .gtn(x@aa, strictly))
+> ## but this now works (thanks to DispatchOrEval() ):
+> setMethod("is.unsorted", "A", function(x, na.rm=FALSE, strictly=FALSE)
++     is.unsorted(x@aa, na.rm=na.rm, strictly=strictly))
+Creating a generic function for 'is.unsorted' from package 'base' in the global environment
+[1] "is.unsorted"
+> 
+> stopifnot(!is.unsorted(a), # 11:16 *is* sorted
++ 	  is.unsorted(rev(a)))
 > 
