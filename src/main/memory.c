@@ -3391,11 +3391,12 @@ void attribute_hidden (LOCK_BINDING)(SEXP b) {LOCK_BINDING(b);}
 void attribute_hidden (UNLOCK_BINDING)(SEXP b) {UNLOCK_BINDING(b);}
 
 /* R_FunTab accessors, only needed when write barrier is on */
-attribute_hidden
+/* Not hidden to allow experimentaiton withour rebuilding R - LT */
+/* attribute_hidden */
 int (PRIMVAL)(SEXP x) { return PRIMVAL(x); }
-attribute_hidden
+/* attribute_hidden */
 CCODE (PRIMFUN)(SEXP x) { return PRIMFUN(x); }
-attribute_hidden
+/* attribute_hidden */
 void (SET_PRIMFUN)(SEXP x, CCODE f) { PRIMFUN(x) = f; }
 
 /* for use when testing the write barrier */
