@@ -1961,7 +1961,7 @@ on Windows), or if that does not exist, @file{@var{HOME}/.R/Makevars},
 where @samp{R_PLATFORM} is the platform for which R was built, as
 available in the @code{platform} component of the R variable
 @code{R.version}.  An alternative personal file can be specified
-@emph{via} the environemnt variable @env{R_MAKEVARS_USER}.
+@emph{via} the environment variable @env{R_MAKEVARS_USER}.
 
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
