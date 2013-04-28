@@ -41,7 +41,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
             	if (missing(srcfile))
             	    srcfile <- filename
             	if (keep.source) {
-		    text <- readLines(file)
+		    text <- readLines(file, warn = FALSE)
 		    if (!length(text)) text <- ""
             	    close(file)
             	    file <- stdin()
