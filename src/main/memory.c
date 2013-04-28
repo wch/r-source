@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2012  The R Core Team.
+ *  Copyright (C) 1998--2013  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3391,7 +3391,7 @@ void attribute_hidden (LOCK_BINDING)(SEXP b) {LOCK_BINDING(b);}
 void attribute_hidden (UNLOCK_BINDING)(SEXP b) {UNLOCK_BINDING(b);}
 
 /* R_FunTab accessors, only needed when write barrier is on */
-/* Not hidden to allow experimentaiton withour rebuilding R - LT */
+/* Not hidden to allow experimentaiton without rebuilding R - LT */
 /* attribute_hidden */
 int (PRIMVAL)(SEXP x) { return PRIMVAL(x); }
 /* attribute_hidden */
