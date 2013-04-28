@@ -55,8 +55,6 @@
  MDIset
  MDIsize
  MainThread
- PRIMFUN
- PRIMVAL
  PrintUsage
  ProfileEvent
  R_BCNodeStackBase
@@ -413,7 +411,6 @@
  SET_CXTAIL
  SET_HASHASH
  SET_LATIN1
- SET_PRIMFUN
  SET_PRIMOFFSET
  SET_UTF8
  Sys_TempDir
