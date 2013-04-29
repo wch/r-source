@@ -111,6 +111,8 @@ function(file, encoding = "ASCII")
            })
 
     out <- Filter(Negate(is.null), out)
+    ## If we found nothing return nothing ...
+    if(!length(out)) return(NULL)
     entries <- sapply(out, `[[`, 1L)
     fields <- lapply(out, `[[`, 2L)
     out <- data.frame(File = file,
