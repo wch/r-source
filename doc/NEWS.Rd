@@ -243,6 +243,10 @@
       \code{chunksize} lines of an \code{Rprof} file produced with
       \code{line.profiling=TRUE}. By default, this is the first 100
       seconds.  (\PR{15288})
+
+      \item \code{lsfit()} produced an incorrect error message when
+      argument \code{x} had more columns than rows or \code{x} had a 
+      different number of rows than \code{y}. (Spotted by Renaud Gaujoux.)
     }
   }
 }
