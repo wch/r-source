@@ -314,4 +314,3 @@ ls.print <- function(ls.out, digits = 4L, print.it = TRUE)
 
     invisible(list(summary = summary, coef.table = coef.table))
 }
- nobs <- 5; nvar <- 6; lsfit(matrix(runif(nobs*nvar), ncol=nvar), runif(nobs), intercept=FALSE)
