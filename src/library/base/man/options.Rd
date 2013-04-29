@@ -306,7 +306,7 @@ getOption(x, default = NULL)
     \item{\code{warn}:}{sets the handling of warning messages.  If
       \code{warn} is negative all warnings are ignored.  If \code{warn}
       is zero (the default) warnings are stored until the top--level
-      function returns.  If fewer than 10 warnings were signalled they
+      function returns.  If 10 or fewer warnings were signalled they
       will be printed otherwise a message saying how many were
       signalled.  An object called \code{last.warning} is
       created and can be printed through the function
