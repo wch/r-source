@@ -5337,9 +5337,27 @@ function(dir)
 ### * .check_citation
 
 .check_citation <-
-function(cfile)
+function(cfile, dir = NULL)
 {
     cfile <- file_path_as_absolute(cfile)
+
+    if(!is.null(dir)) {
+        meta <- utils::packageDescription(basename(dir), dirname(dir))
+        db <- tryCatch(suppressMessages(utils::readCitationFile(cfile,
+                                                                meta)),
+                       error = identity)
+        if(inherits(db, "error")) {
+            msg <- conditionMessage(db)
+            call <- conditionCall(db)
+            if(is.null(call))
+                msg <- c("Error: ", msg)
+            else
+                msg <- c("Error in ", deparse(call), ": ", msg)
+            writeLines(paste(msg, collapse = ""))
+        }
+        return(invisible())
+    }
+    
     meta <- if(basename(dir <- dirname(cfile)) == "inst")
         as.list(.get_package_metadata(dirname(dir)))
     else
