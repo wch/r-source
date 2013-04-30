@@ -7060,4 +7060,10 @@ g(y)(x)
  $ C«cd: num  4 4 4
 > ## gave an error in R <= 3.0.0
 > 
+> ## PR#15299 : adding a simple vector to a classed object produced a bad result:
+> 1:2 + table(1:2)
+
+1 2 
+2 3 
+> ## Printed the class attribute in R <= 3.0.0
 > 

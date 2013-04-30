@@ -2693,3 +2693,6 @@ d <- data.frame(1:3, "B", 4); names(d) <- c("A", "B\xba","C\xabcd")
 str(d)
 ## gave an error in R <= 3.0.0
 
+## PR#15299 : adding a simple vector to a classed object produced a bad result:
+1:2 + table(1:2)
+## Printed the class attribute in R <= 3.0.0

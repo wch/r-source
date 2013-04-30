@@ -247,6 +247,10 @@
       \item \code{lsfit()} produced an incorrect error message when
       argument \code{x} had more columns than rows or \code{x} had a 
       different number of rows than \code{y}. (Spotted by Renaud Gaujoux.)
+      
+      \item Binary operations on equal length vectors copied the
+      class name from the second operand when the first had no 
+      class name, but did not set the object bit. (\PR{15299})
     }
   }
 }
