@@ -276,7 +276,7 @@ void copyMostAttrib(SEXP inp, SEXP ans)
 	    installAttrib(ans, TAG(s), CAR(s));
 	}
     }
-    SET_OBJECT(ans, OBJECT(inp));
+    if (OBJECT(inp)) SET_OBJECT(ans, 1);
     IS_S4_OBJECT(inp) ?  SET_S4_OBJECT(ans) : UNSET_S4_OBJECT(ans);
     UNPROTECT(2);
 }
