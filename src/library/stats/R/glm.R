@@ -415,7 +415,7 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
 	warning("the following arguments to 'anova.glm' are invalid and dropped: ",
 		paste(deparse(dotargs[named]), collapse=", "))
     dotargs <- dotargs[!named]
-    is.glm <- unlist(lapply(dotargs,function(x) inherits(x,"glm")))
+    is.glm <- vapply(dotargs,function(x) inherits(x,"glm"), NA)
     dotargs <- dotargs[is.glm]
     if (length(dotargs))
 	return(anova.glmlist(c(list(object), dotargs),
@@ -494,7 +494,7 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
                           x=x,
                           y=r,
                           weights=w))
-          score[nvars] <-  zz$null.deviance - zz$deviance
+          score[nvars] <- zz$null.deviance - zz$deviance
         }
     }
 
