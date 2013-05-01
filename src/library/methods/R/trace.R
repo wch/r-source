@@ -65,7 +65,7 @@
             stop("argument 'signature' is not meaningful for tracing reference methods")
         .where <- where # to avoid substituting where in the eval() below
         ## A reference class object or its class or its generator
-        if(is(.where, "refObjectGenerator") && !classMethod)
+        if(is(.where, "refGeneratorSlot") && !classMethod)
             .where <- .where$def # should now be the refClassRepresentation
         if(is(.where, "refClassRepresentation")) {
             pname <- .where@className

@@ -161,6 +161,9 @@
       \item Binary operations on equal length vectors copied the
       class name from the second operand when the first had no 
       class name, but did not set the object bit. (\PR{15299})
+
+      \item The \code{trace()} method for reference generator objects
+      failed after those objects became function definitions.
     }
   }
 }
