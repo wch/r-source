@@ -60,6 +60,9 @@ pairs(x, \dots)
   \item{text.panel}{optional \code{function(x, y, labels, cex,
       font, \dots)} to be applied on the diagonals.}
   \item{label.pos}{\code{y} position of labels in the text panel.}
+  \item{line.main}{if \code{main} is specified, \code{line.main} gives
+    the \code{line} argument to \code{\link{mtext}()} which draws the
+    title.  You may want to specify \code{oma} when changing \code{line.main}.}
   \item{cex.labels, font.labels}{graphics parameters for the text panel.}
   \item{row1attop}{logical. Should the layout be matrix-like with row 1
     at the top, or graph-like with row 1 at the bottom?}
@@ -146,6 +149,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 pairs(USJudgeRatings, lower.panel = panel.smooth, upper.panel = panel.cor)
 
 pairs(iris[-5], log = "xy") # plot all variables on log scale
-pairs(iris, log = 1:4) # log the first four
+pairs(iris, log = 1:4, # log the first four
+      main = "Lengths and Widths in [log]", line.main=1.5, oma=c(2,2,3,2))
 }
 \keyword{hplot}

@@ -1,5 +1,5 @@
 
-R version 3.0.0 RC (2013-03-29 r62438) -- "Masked Marvel"
+R version 3.0.0 Patched (2013-05-01 r62701) -- "Masked Marvel"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1520,7 +1520,8 @@ List of 2
 > pairs(USJudgeRatings, lower.panel = panel.smooth, upper.panel = panel.cor)
 > 
 > pairs(iris[-5], log = "xy") # plot all variables on log scale
-> pairs(iris, log = 1:4) # log the first four
+> pairs(iris, log = 1:4, # log the first four
++       main = "Lengths and Widths in [log]", line.main=1.5, oma=c(2,2,3,2))
 > 
 > 
 > 
@@ -2024,7 +2025,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x3eabef0>
+<bytecode: 0x3f8a6b8>
 <environment: namespace:graphics>
 > 
 > 
@@ -2924,7 +2925,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x4ac9758>
+<bytecode: 0x4773828>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3002,8 +3003,9 @@ function (xy = 1, warn.log = TRUE)
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > ### * <FOOTER>
 > ###
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.682 0.065 3.76 0 0 
+Time elapsed:  7.676 0.165 7.975 0 0 
 > grDevices::dev.off()
 null device 
           1 
