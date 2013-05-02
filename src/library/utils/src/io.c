@@ -956,6 +956,8 @@ static const char
     char *q;
     const char *p, *p0;
 
+    if (indx < 0 || indx >= length(x))
+	error(_("index out of range"));
     if(TYPEOF(x) == STRSXP) {
 	p0 = translateChar(STRING_ELT(x, indx));
 	if(!quote) return p0;
@@ -1097,7 +1099,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 						 quote_col[j], qmethod,
 						 &strBuf, cdec);
 			else
-			    error("column %s claims to be a factor but does not have numeric codes", j+1);
+			    error(_("column %s claims to be a factor but does not have numeric codes"), j+1);
 		    } else {
 			tmp = EncodeElement2(xj, i, quote_col[j], qmethod,
 					     &strBuf, cdec);

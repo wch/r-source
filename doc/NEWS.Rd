@@ -253,6 +253,10 @@
       \item Binary operations on equal length vectors copied the
       class name from the second operand when the first had no
       class name, but did not set the object bit. (\PR{15299})
+      
+      \item \code{write.table()} did not check that factors were
+      constructed correctly, and so caused a segment fault when
+      writing bad ones. (\PR{15300})
     }
   }
 }
