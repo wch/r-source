@@ -40,6 +40,8 @@
       \item When loading a serialized object encounters a reference to a
       namespace which cannot be loaded, this is replaced by a reference
       to the global environment, with a warning.
+
+      \item \code{pairs()} gains a \code{line.main} option for title placement.
     }
   }
 
@@ -155,11 +157,11 @@
       seconds.  (\PR{15288})
       
       \item \code{lsfit()} produced an incorrect error message when
-      argument \code{x} had more columns than rows or \code{x} had a 
+      argument \code{x} had more columns than rows or \code{x} had a
       different number of rows than \code{y}. (Spotted by Renaud Gaujoux.)      
-      
+
       \item Binary operations on equal length vectors copied the
-      class name from the second operand when the first had no 
+      class name from the second operand when the first had no
       class name, but did not set the object bit. (\PR{15299})
 
       \item The \code{trace()} method for reference generator objects
