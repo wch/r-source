@@ -166,6 +166,10 @@
 
       \item The \code{trace()} method for reference generator objects
       failed after those objects became function definitions.
+
+      \item \code{write.table()} did not check that factors were
+      constructed correctly, and so caused a segment fault when
+      writing bad ones. (\PR{15300})
     }
   }
 }
