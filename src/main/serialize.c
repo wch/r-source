@@ -2336,18 +2336,19 @@ typedef struct membuf_st {
 #define INCR MAXELTSIZE
 static void resize_buffer(membuf_t mb, R_size_t needed)
 {
-    /* This used to allocate double 'needed', but that was problematic for
-       large buffers */
-    /* FIXME: no longer limited */
-    /* we need to store the result in a RAWSXP so limited to INT_MAX */
-    if(needed > INT_MAX)
+    if(needed > R_XLEN_T_MAX)
 	error(_("serialization is too large to store in a raw vector"));
     if(needed < 10000000) /* ca 10MB */
 	needed = (1+2*needed/INCR) * INCR;
-    if(needed < 1000000000) /* ca 1GB */
-	needed = (int)((1+1.2*(double)needed/INCR) * INCR);
+#ifdef LONG_VECTOR_SUPPORT
+    else 
+	needed = (R_size_t)((1+1.2*(double)needed/INCR) * INCR);
+#else
+    else if(needed < 1000000000) /* ca 1GB */
+	needed = (R_size_t)((1+1.2*(double)needed/INCR) * INCR);
     else if(needed < INT_MAX - INCR)
 	needed = (1+needed/INCR) * INCR;
+#endif
     unsigned char *tmp = realloc(mb->buf, needed);
     if (tmp == NULL) {
 	free(mb->buf); mb->buf = NULL;
@@ -2368,9 +2369,11 @@ static void OutBytesMem(R_outpstream_t stream, void *buf, int length)
 {
     membuf_t mb = stream->data;
     R_size_t needed = mb->count + (R_size_t) length;
+#ifndef LONG_VECTOR_SUPPORT
     /* There is a potential overflow here on 32-bit systems */
     if((double) mb->count + length > (double) INT_MAX)
 	error(_("serialization is too large to store in a raw vector"));
+#endif
     if (needed > mb->size) resize_buffer(mb, needed);
     memcpy(mb->buf + mb->count, buf, length);
     mb->count = needed;
