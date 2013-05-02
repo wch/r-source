@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-11 R Core Team
+% Copyright 2009-13 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.readlink}
@@ -12,7 +12,8 @@
   Find out if a file path is a symbolic link, and if so what it is
   linked to, \emph{via} the system call \code{readlink}.
 
-  Symbolic links are a Unix concept, not implemented on Windows.
+  Symbolic links are a POSIX concept, not implemented on Windows but for
+  most filesystems on Unix-alikes.
 }
 \usage{
 Sys.readlink(paths)
@@ -26,8 +27,12 @@ Sys.readlink(paths)
   entries are the path of the file linked to, \code{""} if the path is
   not a symbolic link, and \code{NA} if there is an error (e.g., the
   path does not exist).
+
+  On platforms without the \code{readlink} system call, all elements are
+  \code{""}.
 }
 \seealso{
-  \code{\link{file.symlink}}, \code{\link{file.info}}
+  \code{\link{file.symlink}} for the creation of symbolic links (and
+  their Windows analogues), \code{\link{file.info}}
 }
 \keyword{file}
