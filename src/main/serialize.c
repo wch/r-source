@@ -2338,13 +2338,15 @@ static void resize_buffer(membuf_t mb, R_size_t needed)
 {
     if(needed > R_XLEN_T_MAX)
 	error(_("serialization is too large to store in a raw vector"));
+#ifdef LONG_VECTOR_SUPPORT
     if(needed < 10000000) /* ca 10MB */
 	needed = (1+2*needed/INCR) * INCR;
-#ifdef LONG_VECTOR_SUPPORT
     else 
 	needed = (R_size_t)((1+1.2*(double)needed/INCR) * INCR);
 #else
-    else if(needed < 1000000000) /* ca 1GB */
+    if(needed < 10000000) /* ca 10MB */
+	needed = (1+2*needed/INCR) * INCR;
+    else if(needed < 1700000000) /* close to 2GB/1.2 */
 	needed = (R_size_t)((1+1.2*(double)needed/INCR) * INCR);
     else if(needed < INT_MAX - INCR)
 	needed = (1+needed/INCR) * INCR;
