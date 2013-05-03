@@ -42,6 +42,11 @@
       to the global environment, with a warning.
 
       \item \code{pairs()} gains a \code{line.main} option for title placement.
+      
+      \item The remaining instances in which serialization to a raw
+      vector was limited to 2GB have been unlimited on a 64-bit
+      platform, and in most cases serialization to a vector of more than
+      1GB will be substantially faster.
     }
   }
 
