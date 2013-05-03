@@ -185,7 +185,8 @@ static void lineprof(char* buf, SEXP srcref)
 /* FIXME: This should be done wih a proper configure test, also making
    sure that the pthreads library is linked in. LT */ 
 #ifndef Win32
-#if defined(HAVE_OPENMP) && ! defined(HAVE_PTHREAD)
+#if (defined(__APPLE__) || defined(_REENTRANT) || defined(HAVE_OPENMP)) && \
+     ! defined(HAVE_PTHREAD)
 # define HAVE_PTHREAD
 #endif
 #ifdef HAVE_PTHREAD
