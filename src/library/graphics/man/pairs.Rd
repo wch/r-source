@@ -21,7 +21,7 @@ pairs(x, \dots)
 \method{pairs}{default}(x, labels, panel = points, \dots,
       lower.panel = panel, upper.panel = panel,
       diag.panel = NULL, text.panel = textPanel,
-      label.pos = 0.5 + has.diag/3,
+      label.pos = 0.5 + has.diag/3, line.main = 3,
       cex.labels = NULL, font.labels = 1,
       row1attop = TRUE, gap = 1, log = "")
 }
