@@ -182,6 +182,18 @@ static void lineprof(char* buf, SEXP srcref)
     }
 }
 
+/* FIXME: This should be done wih a proper configure test, also making
+   sure that the pthreads library is linked in. LT */ 
+#ifndef Win32
+#if defined(HAVE_OPENMP) && ! defined(HAVE_PTHREAD)
+# define HAVE_PTHREAD
+#endif
+#ifdef HAVE_PTHREAD
+# include <pthread.h>
+static pthread_t R_profiled_thread;
+# endif
+#endif
+
 static void doprof(int sig)  /* sig is ignored in Windows */
 {
     RCNTXT *cptr;
@@ -194,6 +206,11 @@ static void doprof(int sig)  /* sig is ignored in Windows */
     
 #ifdef Win32
     SuspendThread(MainThread);
+#elif defined(HAVE_PTHREAD)
+    if (! pthread_equal(pthread_self(), R_profiled_thread)) {
+	pthread_kill(R_profiled_thread, sig);
+	return;
+    }
 #endif /* Win32 */
 
     if (R_Mem_Profiling){
@@ -277,6 +294,7 @@ static void R_EndProfiling(void)
     itv.it_value.tv_usec = 0;
     setitimer(ITIMER_PROF, &itv, NULL);
     signal(SIGPROF, doprof_null);
+
 #endif /* not Win32 */
     if(R_ProfileOutfile) fclose(R_ProfileOutfile);
     R_ProfileOutfile = NULL;
@@ -345,6 +363,10 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 	R_Suicide("unable to create profiling thread");
     Sleep(wait/2); /* suspend this thread to ensure that the other one starts */
 #else /* not Win32 */
+#ifdef HAVE_PTHREAD
+    R_profiled_thread = pthread_self();
+#endif
+
     signal(SIGPROF, doprof);
 
     itv.it_interval.tv_sec = 0;
