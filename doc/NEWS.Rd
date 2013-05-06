@@ -7,7 +7,7 @@
 \title{ R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.0.0 patched}{
+\section{\Rlogo CHANGES IN R 3.0.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain
