@@ -58,6 +58,9 @@
       \item For consistency, \command{R CMD build} now matches entries
       in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
       case-insensitively on all platforms (not just on Windows).
+
+      \item \command{R CMD check --as-cran} checks the line widths in
+      usage and examples sections of the package Rd files.
     }
   }
 
