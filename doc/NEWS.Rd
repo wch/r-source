@@ -265,6 +265,11 @@
       \item \code{write.table()} did not check that factors were
       constructed correctly, and so caused a segment fault when
       writing bad ones. (\PR{15300})
+
+      \item The internal HTTP server no longer chokes on POST requests
+      without body. It will also pass-through other request types for
+      custom handlers (with the method stored in Request-Method header)
+      instad of failing.
     }
   }
 }
