@@ -290,7 +290,12 @@ function(package, dir, lib.loc = NULL)
         if(file_test("-f", paste(db_file, "rdx", sep = "."))) {
             db <- fetchRdDB(db_file)
             pathfile <- file.path(dir, "help", "paths.rds")
-            if(file.exists(pathfile)) names(db) <- readRDS(pathfile)
+            if(file.exists(pathfile)) {
+                paths <- readRDS(pathfile)
+                if(!is.null(first <- attr(paths, "first")))
+                    paths <- substring(paths, first)
+                names(db) <- paths
+            }
             return(db)
         }
         db_file <- file.path(docs_dir, sprintf("%s.Rd.gz", package))
@@ -338,6 +343,10 @@ function(package, dir, lib.loc = NULL)
         db <- .build_Rd_db(dir,
                            stages = "build",
                            built_file = built_file)
+        if(length(db)) {
+            first <- nchar(file.path(dir, "man", "")) + 1L
+            names(db) <- substring(names(db), first)
+        }
     }
 
     db

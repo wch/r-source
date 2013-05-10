@@ -771,7 +771,9 @@ function(dir, outDir, encoding = "unknown")
         db <- .build_Rd_db(dir, manfiles, db_file = db_file,
                            encoding = encoding, built_file = built_file)
         nm <- as.character(names(db)) # Might be NULL
-        saveRDS(nm, pathsFile)
+        saveRDS(structure(nm,
+                          first = nchar(file.path(mandir, "")) + 1L),
+                pathsFile)
         names(db) <- sub("\\.[Rr]d$", "", basename(nm))
         makeLazyLoadDB(db, file.path(manOutDir, basename(outDir)))
     }
