@@ -152,9 +152,10 @@ static struct sockaddr *build_sin(struct sockaddr_in *sa, const char *ip, int po
 #define PART_HEADER  1
 #define PART_BODY    2
 
-#define METHOD_POST 1
-#define METHOD_GET  2
-#define METHOD_HEAD 3
+#define METHOD_POST  1
+#define METHOD_GET   2
+#define METHOD_HEAD  3
+#define METHOD_OTHER 8 /* for custom requests only */
 
 /* attributes of a connection/worker */
 #define CONNECTION_CLOSE  0x01 /* Connection: close response behavior is requested */
@@ -817,7 +818,9 @@ static void worker_input_handler(void *data) {
 		/* move the body part to the beginning of the buffer */
 		c->line_pos -= s - c->line_buf;
 		memmove(c->line_buf, s, c->line_pos);
-		if (c->method != METHOD_POST) { /* anything but POST can be processed right away */
+		/* GET/HEAD or no content length mean no body */
+		if (c->method == METHOD_GET || c->method == METHOD_HEAD ||
+		    !(c->attr & CONTENT_LENGTH) || c->content_length == 0) {
 		    if (c->attr & CONTENT_LENGTH) {
 			send_http_response(c, " 400 Bad Request (GET/HEAD with body)\r\n\r\n");
 			remove_worker(c);
@@ -872,16 +875,34 @@ static void worker_input_handler(void *data) {
 		    if (c->part == PART_REQUEST) {
 			/* --- process request line --- */
 			size_t rll = strlen(bol); /* request line length */
-			char *url = bol + 5;
-			if (rll < 14 || strncmp(bol + rll - 9, " HTTP/1.", 8)) { /* each request must have at least 14 characters [GET / HTTP/1.0] and have HTTP/1.x */
+			char *url = strchr(bol, ' ');
+			if (!url || rll < 14 || strncmp(bol + rll - 9, " HTTP/1.", 8)) { /* each request must have at least 14 characters [GET / HTTP/1.0] and have HTTP/1.x */
 			    send_response(c->sock, "HTTP/1.0 400 Bad Request\r\n\r\n", 28);
 			    remove_worker(c);
 			    return;
 			}
+			url++;
 			if (!strncmp(bol + rll - 3, "1.0", 3)) c->attr |= HTTP_1_0;
-			if (!strncmp(bol, "GET ", 4)) { c->method = METHOD_GET; url--; }
+			if (!strncmp(bol, "GET ", 4)) c->method = METHOD_GET;
 			if (!strncmp(bol, "POST ", 5)) c->method = METHOD_POST;
 			if (!strncmp(bol, "HEAD ", 5)) c->method = METHOD_HEAD;
+			/* only custom handlers can use other methods */
+			if (!c->method && !strncmp(url, "/custom/", 8)) {
+			    char *mend = url - 1;
+			    /* we generate a header with the method so it can be passed to the handler */
+			    if (!c->headers)
+				c->headers = alloc_buffer(1024, NULL);
+			    /* make sure it fits */
+			    if (c->headers->size - c->headers->length >= 18 + (mend - bol)) {
+				c->method = METHOD_OTHER;
+				/* add "Request-Method: xxx" */
+				memcpy(c->headers->data + c->headers->length, "Request-Method: ", 16);
+				c->headers->length += 16;
+				memcpy(c->headers->data + c->headers->length, bol, mend - bol);
+				c->headers->length += mend - bol;	
+				c->headers->data[c->headers->length++] = '\n';
+			    }
+			}
 			if (!c->method) {
 			    send_http_response(c, " 501 Invalid or unimplemented method\r\n\r\n");
 			    remove_worker(c);
