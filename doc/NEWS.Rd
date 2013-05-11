@@ -179,7 +179,7 @@
       \item The internal HTTP server no longer chokes on POST requests
       without body. It will also pass-through other request types for
       custom handlers (with the method stored in Request-Method header)
-      instad of failing.
+      instead of failing.
     }
   }
 }
