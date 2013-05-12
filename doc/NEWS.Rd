@@ -105,7 +105,16 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.0.0 patched}{
+\section{\Rlogo CHANGES IN R 3.0.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{help.request()} could not determine the current version
+      of \R on CRAN.  (\PR{15241})
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.0.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} gain

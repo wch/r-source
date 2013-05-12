@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/help.request.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -95,10 +95,9 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
 	if(no(other)) return("Please do this first.")
     }
 
-    man <- url("http://cran.r-project.org/manuals.html")
-    ver <- scan(man, what = character(0L), sep = "\n", skip = 13L, nlines = 1L,
-		quiet = TRUE)
-    ver <- strsplit(ver, " ")[[1L]][3L]
+    page <- url("http://cran.r-project.org/bin/windows/base")
+    title <- grep("<title>", readLines(page, 10L), fixed = TRUE, value = TRUE)
+    ver <- sub("^.*R-([^ ]*) for Windows.*$", "\\1", title)
     if (getRversion() < numeric_version(ver)) {
 	update <- readMyLine("Your R version is out-of-date,",
 			     "would you like to update now?")
