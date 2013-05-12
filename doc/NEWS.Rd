@@ -101,6 +101,10 @@
       \item If \code{x} is a symbol, \code{is.vector(x, "name")} now returns
       \code{TRUE}, since \code{"name"} and \code{"symbol"} should be synonyms.
       (Reported by Hervé Pagès.)
+      
+      \item The parser now enforces formatting of floating point
+      hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
+      unintended values. (\PR{15234})
     }
   }
 }
@@ -1185,7 +1189,7 @@
       installer, so can be omitted if desired.
 
       \item The markup for many messages has been changed to make them
-      easier to translate, incorporating suggestions from Łukasz Daniel.
+      easier to translate, incorporating suggestions from ?ukasz Daniel.
     }
   }
 
@@ -2023,7 +2027,7 @@
       \item The NA warning messages from e.g. \code{pchisq()} now report
       the call to the closure and not that of the \code{.Internal}.
 
-      \item Added Polish translations by Łukasz Daniel.
+      \item Added Polish translations by ?ukasz Daniel.
     }
   }
 
