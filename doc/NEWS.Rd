@@ -102,9 +102,9 @@
       \code{TRUE}, since \code{"name"} and \code{"symbol"} should be synonyms.
       (Reported by Hervé Pagès.)
       
-      \item The parser now enforces formatting of floating point
+      \item The parser now enforces C99 syntax for floating point
       hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
-      unintended values. (\PR{15234})
+      unintended values for malformed constants. (\PR{15234})
     }
   }
 }
