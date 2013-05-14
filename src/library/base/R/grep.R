@@ -302,6 +302,7 @@ function(x, m, invert = FALSE, value)
                 stop("must have replacement values for matches")
             value <- rep_len(value, np)
         }
+        y <- y[pos]
         x[pos] <- paste0(sapply(y, `[`, 1L), value, sapply(y, `[`, 2L))
         return(x)
     }

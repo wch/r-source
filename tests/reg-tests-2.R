@@ -2696,3 +2696,10 @@ str(d)
 ## PR#15299 : adding a simple vector to a classed object produced a bad result:
 1:2 + table(1:2)
 ## Printed the class attribute in R <= 3.0.0
+
+## PR#15311 : regmatches<- mishandled regexpr results.
+  x <- c('1', 'B', '3')
+  m <- regexpr('\\d', x)
+  regmatches(x, m) <- c('A', 'C')
+  print(x)
+## Gave a warning and a wrong result up to 3.0.1
