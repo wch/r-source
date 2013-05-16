@@ -18,6 +18,10 @@
       
       \item The \code{`regmatches<-`} assignment function mishandled
       results coming from \code{regexpr}.  (\PR{15311})
+
+      \item Documentation for \code{setClass} and
+      \code{representation} still suggested the deprecated argument
+      \code{representation=}. (\PR{15312})
     }
   }
 }

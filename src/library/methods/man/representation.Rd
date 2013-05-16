@@ -8,13 +8,15 @@
 \alias{prototype}
 \title{ Construct a Representation or a Prototype for a Class Definition}
 \description{
-  In calls to
-  \code{\link{setClass}}, these two functions construct,
-  respectively, the \code{representation} and \code{prototype}
-  arguments.  They do various checks and handle special cases.  You're
-  encouraged to use them when defining classes that, for
-  example, extend other classes as a data part or have multiple
-  superclasses, or that combine extending a class and slots.
+  These are old utility functions  to construct, respectively
+  a list designed to represent the slots and superclasses and
+  a list of prototype specifications.  The \code{representation()}
+  function is no longer useful, since the arguments \code{slots} and
+  \code{contains} to \code{\link{setClass}} are now recommended.
+
+  The \code{prototype()} function may still be used for the
+  corresponding argument, but a
+  simple list of the same arguments works as well.
 }
 \usage{
 representation(...)
