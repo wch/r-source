@@ -64,6 +64,6 @@ $(srcdir)/gramRd.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramRd.y
 $(srcdir)/gramLatex.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramLatex.y
 	@$(ECHO) "re-making gramLatex.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gramLatex.y
-	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramLatex.
+	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramLatex.c
 
 ## Automagically generated dependencies:
