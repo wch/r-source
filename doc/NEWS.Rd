@@ -7,6 +7,15 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.0.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{help.request()} could not determine the current version
+      of \R on CRAN.  (\PR{15241})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.0.1}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -1083,7 +1092,7 @@
       installer, so can be omitted if desired.
 
       \item The markup for many messages has been changed to make them
-      easier to translate, incorporating suggestions from Łukasz Daniel.
+      easier to translate, incorporating suggestions from ?ukasz Daniel.
     }
   }
 
@@ -1921,7 +1930,7 @@
       \item The NA warning messages from e.g. \code{pchisq()} now report
       the call to the closure and not that of the \code{.Internal}.
 
-      \item Added Polish translations by Łukasz Daniel.
+      \item Added Polish translations by ?ukasz Daniel.
     }
   }
 
