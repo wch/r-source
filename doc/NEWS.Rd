@@ -12,6 +12,9 @@
     \itemize{
       \item \code{help.request()} could not determine the current version
       of \R on CRAN.  (\PR{15241})
+      
+      \item On Windows, \code{file.info()} failed on root directories unless
+      the path was terminated with an explicit \code{"."}.  (\PR{15302})
     }
   }
 }
