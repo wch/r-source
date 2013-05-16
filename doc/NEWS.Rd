@@ -1095,7 +1095,7 @@
       installer, so can be omitted if desired.
 
       \item The markup for many messages has been changed to make them
-      easier to translate, incorporating suggestions from ?ukasz Daniel.
+      easier to translate, incorporating suggestions from Łukasz Daniel.
     }
   }
 
@@ -1933,7 +1933,7 @@
       \item The NA warning messages from e.g. \code{pchisq()} now report
       the call to the closure and not that of the \code{.Internal}.
 
-      \item Added Polish translations by ?ukasz Daniel.
+      \item Added Polish translations by Łukasz Daniel.
     }
   }
 
