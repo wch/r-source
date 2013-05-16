@@ -7067,3 +7067,11 @@ g(y)(x)
 2 3 
 > ## Printed the class attribute in R <= 3.0.0
 > 
+> ## PR#15311 : regmatches<- mishandled regexpr results.
+>   x <- c('1', 'B', '3')
+>   m <- regexpr('\\d', x)
+>   regmatches(x, m) <- c('A', 'C')
+>   print(x)
+[1] "A" "B" "C"
+> ## Gave a warning and a wrong result up to 3.0.1
+> 

@@ -15,6 +15,9 @@
       
       \item On Windows, \code{file.info()} failed on root directories unless
       the path was terminated with an explicit \code{"."}.  (\PR{15302})
+      
+      \item The \code{`regmatches<-`} assignment function mishandled
+      results coming from \code{regexpr}.  (\PR{15311})
     }
   }
 }
