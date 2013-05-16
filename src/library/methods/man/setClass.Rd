@@ -15,7 +15,7 @@
   is returned as the value of \code{setClass()}, suitable for creating
   objects from the class if the class is not virtual.  Of the many
   arguments to the function only \code{Class},
-  \code{representation} and \code{contains} are usually needed.
+  \code{slots=} and \code{contains=} are usually needed.
 }
 \usage{
 setClass(Class, representation, prototype, contains=character(),
