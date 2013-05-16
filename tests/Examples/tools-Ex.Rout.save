@@ -906,7 +906,7 @@ attr(,"class")
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: vignetteEngine
-> ### Title: Set or get a vignette processing engine.
+> ### Title: Set or Get a Vignette Processing Engine
 > ### Aliases: vignetteEngine
 > ### Keywords: utilities documentation
 > 
