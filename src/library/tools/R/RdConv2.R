@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -569,13 +569,13 @@ prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
 
 sectionOrder <- c("\\title"=1, "\\name"=2, "\\alias"=2.1, "\\concept"=2.2,
                   "\\keyword"=2.3, "\\encoding"=2.4,
-    "\\description"=3, "\\usage"=4, "\\synopsis"=4, "\\arguments"=5,
+    "\\description"=3, "\\usage"=4, "\\arguments"=5,
     "\\format"=6, "\\details"=7, "\\value"=8, "\\section"=9,
     "\\note"=10, "\\author" = 11, "\\source"=12, "\\references"=13,
     "\\seealso"=14, "\\examples"=15)
 
 sectionTitles <-
-    c("\\description"="Description", "\\usage"="Usage", "\\synopsis"="Usage",
+    c("\\description"="Description", "\\usage"="Usage",
       "\\arguments"="Arguments", "\\format"="Format", "\\details"="Details",
       "\\note"="Note", "\\section"="section", "\\author"="Author(s)",
       "\\references"="References", "\\source"="Source",
@@ -893,9 +893,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     	} else tagtitle <- tag
         has_text <<- FALSE
         if (tag == "\\synopsis")
-            warnRd(section, Rdfile, level = 3,
-                   "\\synopsis will be removed in R 3.1.0")
-        if (tag %in% c("\\usage", "\\synopsis", "\\examples"))
+            stopRd(section, Rdfile, "\\synopsis was removed in R 3.1.0")
+        if (tag %in% c("\\usage", "\\examples"))
             checkCodeBlock(section, tag)
     	else checkContent(section, tag)
         if(!has_text) warnRd(section, Rdfile, level = 3,

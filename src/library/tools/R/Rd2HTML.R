@@ -1,7 +1,7 @@
 
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -725,7 +725,7 @@ Rd2HTML <-
     	} else
     	    of1(sectionTitles[tag])
         of1(paste0("</h", sectionLevel+2L, ">\n\n"))
-        if (tag %in% c("\\examples", "\\synopsis", "\\usage")) {
+        if (tag %in% c("\\examples", "\\usage")) {
             of1("<pre>")
             inPara <<- NA
             pre <- TRUE

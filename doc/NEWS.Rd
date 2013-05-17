@@ -81,9 +81,9 @@
       future. If partial matching is intended, replace \code{foo$bar}
       by \code{foo[["bar", exact = FALSE]]}.
 
-      \item [Not later than May 10] The long-deprecated use of
-      \code{\\synopsis} in the \samp{Usage} section of \file{.Rd} files
-      has been removed.
+      \item The long-deprecated use of \code{\\synopsis} in the
+      \samp{Usage} section of \file{.Rd} files has been removed: such
+      sections are now ignored (with a warning).
     }
   }
 
