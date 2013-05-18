@@ -16,12 +16,16 @@
       \item On Windows, \code{file.info()} failed on root directories unless
       the path was terminated with an explicit \code{"."}.  (\PR{15302})
       
-      \item The \code{`regmatches<-`} assignment function mishandled
+      \item The \code{`regmatches<-`} replacement function mishandled
       results coming from \code{regexpr}.  (\PR{15311})
 
       \item Documentation for \code{setClass} and
       \code{representation} still suggested the deprecated argument
       \code{representation=}. (\PR{15312})
+      
+      \item \command{R CMD config} failed in an installed build of \R
+      3.0.1 (only) when a sub-architecture was used.  (Reported by
+      Berwin Turlach.)
     }
   }
 }
