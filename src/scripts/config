@@ -219,7 +219,7 @@ if test "${personal}" = "yes"; then
       makefiles="${makefiles} -f ${HOME}/.R/Makevars"
     fi
   else
-    . ${R_HOME}/etc/Renviron
+    . ${R_HOME}/etc${R_ARCH}/Renviron
     if test -n "${R_MAKEVARS_USER}"; then
       makefiles="${makefiles} -f ${R_MAKEVARS_USER}"
     elif test -f "${HOME}/.R/Makevars-${R_PLATFORM}"; then
