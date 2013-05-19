@@ -26,6 +26,10 @@
       \item \command{R CMD config} failed in an installed build of \R
       3.0.1 (only) when a sub-architecture was used.  (Reported by
       Berwin Turlach.)
+      
+      \item On Windows, the installer modified the \file{etc/Rconsole} and
+      \file{etc/Rprofile.site} files even when default options were 
+      chosen.  (Reported by Tal Galili.)
     }
   }
 }

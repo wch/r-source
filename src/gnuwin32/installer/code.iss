@@ -133,17 +133,22 @@ begin
     SetIniString('R', 'Internet', Internet, INIFilename);
 end;
 
-procedure SetCommentMarker(var lines: TArrayOfString; option: String; active: boolean);
+function SetCommentMarker(var lines: TArrayOfString; option: String; active: boolean) : boolean;
 var
   i : integer;
+  old : string;
 begin
+  Result := false;
   for i := 0 to pred(GetArrayLength(lines)) do
     if pos(option, lines[i]) > 0 then 
     begin
+      old := lines[i];
       if active then
         lines[i][1] := ' '
       else
         lines[i][1] := '#';
+      if old <> lines[i] then
+        Result := true;  
       exit;
     end;
 end;
@@ -152,17 +157,20 @@ procedure EditOptions();
 var
   lines : TArrayOfString;
   filename : String;
+  changed : boolean;
 begin
+  changed := false;
   filename := ExpandConstant(CurrentFilename);
   LoadStringsFromFile(filename, lines);
   
-  SetCommentMarker(lines, 'MDI = yes', MDISDIPage.SelectedValueIndex = 0);
-  SetCommentMarker(lines, 'MDI = no', MDISDIPage.SelectedValueIndex = 1);
+  changed := changed or SetCommentMarker(lines, 'MDI = yes', MDISDIPage.SelectedValueIndex = 0);
+  changed := changed or SetCommentMarker(lines, 'MDI = no', MDISDIPage.SelectedValueIndex = 1);
   
-  SetCommentMarker(lines, 'options(help_type="text"', HelpStylePage.SelectedValueIndex = 0);
-  SetCommentMarker(lines, 'options(help_type="html"', HelpStylePage.SelectedValueIndex = 1);
+  changed := changed or SetCommentMarker(lines, 'options(help_type="text"', HelpStylePage.SelectedValueIndex = 0);
+  changed := changed or SetCommentMarker(lines, 'options(help_type="html"', HelpStylePage.SelectedValueIndex = 1);
   
-  SaveStringsToFile(filename, lines, False);
+  if changed then
+    SaveStringsToFile(filename, lines, False);
 end;
 
 function CmdParms(Param:String): String;
