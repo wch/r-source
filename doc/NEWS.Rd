@@ -37,8 +37,10 @@
       \code{which(*, arr.ind = TRUE)} now make use of
       \code{names(.dimnames)} when available.
 
-      \item \code{is.unsorted()} now works for \code{raw} vectors as
-      well, and \code{is.unsorted(NA)} is false.
+      \item \code{is.unsorted()} now also works for \code{raw} vectors
+
+      \item \code{abbreviate()} handles without warning non-ASCII input
+      strings which require no abbreviation.
     }
   }
 
@@ -105,6 +107,9 @@
       \item The parser now enforces C99 syntax for floating point
       hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
       unintended values for malformed constants. (\PR{15234})
+
+      \item \code{is.unsorted(NA)} is false as documented (rather than
+      \code{NA}).
     }
   }
 }
@@ -1425,7 +1430,7 @@
       \item The cairo-based versions of \code{X11()} now work with
       current versions of cairographics (e.g. 1.12.10).  (\PR{15168})
 
-      A workaround for earlier versions of \R is to use
+      A workon average for earlier versions of \R is to use
       \code{X11.options(type = "nbcairo")}.
 
       \item Configuration and \command{R CMD javareconf} now come up
@@ -1524,7 +1529,7 @@
       \item The \code{exclude} argument to \code{xtabs()} was ignored
       for \code{"factor"} arguments.
 
-      \item On Windows, work around an event-timing problem when
+      \item On Windows, work on average an event-timing problem when
       the RGui console was closed from the \sQuote{X} control and the closure
       cancelled. (This would on some 64-bit systems crash \R, typically
       those with a slow GPU relative to the CPU.)
