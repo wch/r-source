@@ -41,6 +41,8 @@
 
       \item \code{abbreviate()} handles without warning non-ASCII input
       strings which require no abbreviation.
+
+      \item The included version of LAPACK has been updated to 3.4.2.
     }
   }
 

@@ -1,4 +1,4 @@
-*> \brief \b DZSUM1
+*> \brief \b DZSUM1 forms the 1-norm of the complex vector using the true absolute value.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -69,7 +69,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -81,10 +81,10 @@
 *  =====================================================================
       DOUBLE PRECISION FUNCTION DZSUM1( N, CX, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -138,7 +138,7 @@
 *     End of DZSUM1
 *
       END
-*> \brief \b ILAZLC
+*> \brief \b ILAZLC scans a matrix for its last non-zero column.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -211,17 +211,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       INTEGER FUNCTION ILAZLC( M, N, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            M, N, LDA
@@ -256,7 +256,7 @@
       END IF
       RETURN
       END
-*> \brief \b ILAZLR
+*> \brief \b ILAZLR scans a matrix for its last non-zero row.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -329,17 +329,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date April 2012
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       INTEGER FUNCTION ILAZLR( M, N, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.4.1) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     April 2012
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            M, N, LDA
@@ -377,7 +377,7 @@
       END IF
       RETURN
       END
-*> \brief \b IZMAX1
+*> \brief \b IZMAX1 finds the index of the vector element whose real part has maximum absolute value.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -448,7 +448,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -460,10 +460,10 @@
 *  =====================================================================
       INTEGER          FUNCTION IZMAX1( N, CX, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -1374,7 +1374,7 @@
 *     End of ZBDSQR
 *
       END
-*> \brief \b ZDRSCL
+*> \brief \b ZDRSCL multiplies a vector by the reciprocal of a real scalar.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -1453,17 +1453,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZDRSCL( N, SA, SX, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -2231,7 +2231,7 @@
 *     End of ZGEBAL
 *
       END
-*> \brief \b ZGEBD2
+*> \brief \b ZGEBD2 reduces a general matrix to bidiagonal form using an unblocked algorithm.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -2365,7 +2365,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16GEcomputational
 *
@@ -2422,10 +2422,10 @@
 *  =====================================================================
       SUBROUTINE ZGEBD2( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -3673,7 +3673,7 @@
 *     End of ZGEEV
 *
       END
-*> \brief \b ZGEHD2
+*> \brief \b ZGEHD2 reduces a general square matrix to upper Hessenberg form using an unblocked algorithm.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -3781,7 +3781,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16GEcomputational
 *
@@ -3824,10 +3824,10 @@
 *  =====================================================================
       SUBROUTINE ZGEHD2( N, ILO, IHI, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, ILO, INFO, LDA, N
@@ -4249,7 +4249,7 @@
 *     End of ZGEHRD
 *
       END
-*> \brief \b ZGELQ2
+*> \brief \b ZGELQ2 computes the LQ factorization of a general rectangular matrix using an unblocked algorithm.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -4347,7 +4347,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16GEcomputational
 *
@@ -4372,10 +4372,10 @@
 *  =====================================================================
       SUBROUTINE ZGELQ2( M, N, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -4841,7 +4841,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16GEcomputational
 *
@@ -4858,7 +4858,7 @@
 *>
 *>     H(i) = I - tau * v * v**H
 *>
-*>  where tau is a real/complex scalar, and v is a real/complex vector
+*>  where tau is a complex scalar, and v is a real/complex vector
 *>  with v(1:i-1) = 0 and v(i) = 1; v(i+1:m) is stored on exit in
 *>  A(i+1:m,i), and tau in TAU(i).
 *> \endverbatim
@@ -4873,10 +4873,10 @@
       SUBROUTINE ZGEQP3( M, N, A, LDA, JPVT, TAU, WORK, LWORK, RWORK,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -5090,7 +5090,7 @@
 *     End of ZGEQP3
 *
       END
-*> \brief \b ZGEQR2
+*> \brief \b ZGEQR2 computes the QR factorization of a general rectangular matrix using an unblocked algorithm.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -5188,7 +5188,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16GEcomputational
 *
@@ -5213,10 +5213,10 @@
 *  =====================================================================
       SUBROUTINE ZGEQR2( M, N, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -9426,7 +9426,7 @@
 *     End of ZGESVD
 *
       END
-*> \brief \b ZGETF2
+*> \brief \b ZGETF2 computes the LU factorization of a general m-by-n matrix using partial pivoting with row interchanges (unblocked algorithm).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -9529,17 +9529,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16GEcomputational
 *
 *  =====================================================================
       SUBROUTINE ZGETF2( M, N, A, LDA, IPIV, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -10388,7 +10388,7 @@
 *     End of ZHEEV
 *
       END
-*> \brief \b ZHETD2
+*> \brief \b ZHETD2 reduces a Hermitian matrix to real symmetric tridiagonal form by an unitary similarity transformation (unblocked algorithm).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -10512,7 +10512,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16HEcomputational
 *
@@ -10565,10 +10565,10 @@
 *  =====================================================================
       SUBROUTINE ZHETD2( UPLO, N, A, LDA, D, E, TAU, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -11598,7 +11598,7 @@
 *     ==== End of ZHSEQR ====
 *
       END
-*> \brief \b ZLABRD
+*> \brief \b ZLABRD reduces the first nb rows and columns of a general matrix to a bidiagonal form.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -11757,7 +11757,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -11812,10 +11812,10 @@
       SUBROUTINE ZLABRD( M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX, Y,
      $                   LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, LDX, LDY, M, N, NB
@@ -12018,7 +12018,7 @@
 *     End of ZLABRD
 *
       END
-*> \brief \b ZLACGV
+*> \brief \b ZLACGV conjugates a complex vector.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -12087,17 +12087,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLACGV( N, X, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -12134,7 +12134,7 @@
 *     End of ZLACGV
 *
       END
-*> \brief \b ZLACN2
+*> \brief \b ZLACN2 estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -12232,7 +12232,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -12269,10 +12269,10 @@
 *  =====================================================================
       SUBROUTINE ZLACN2( N, V, X, EST, KASE, ISAVE )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            KASE, N
@@ -12432,7 +12432,7 @@
 *     End of ZLACN2
 *
       END
-*> \brief \b ZLACPY
+*> \brief \b ZLACPY copies all or part of one two-dimensional array to another.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -12530,17 +12530,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLACPY( UPLO, M, N, A, LDA, B, LDB )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -12591,7 +12591,7 @@
 *     End of ZLACPY
 *
       END
-*> \brief \b ZLADIV
+*> \brief \b ZLADIV performs complex division in real arithmetic, avoiding unnecessary overflow.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -12650,17 +12650,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       COMPLEX*16     FUNCTION ZLADIV( X, Y )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       COMPLEX*16         X, Y
@@ -12688,7 +12688,7 @@
 *     End of ZLADIV
 *
       END
-*> \brief \b ZLAHQR
+*> \brief \b ZLAHQR computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -12861,7 +12861,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -12885,10 +12885,10 @@
       SUBROUTINE ZLAHQR( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
      $                   IHIZ, Z, LDZ, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, N
@@ -13256,7 +13256,7 @@
 *     End of ZLAHQR
 *
       END
-*> \brief \b ZLAHR2
+*> \brief \b ZLAHR2 reduces the specified number of first columns of a general rectangular matrix A so that elements below the specified subdiagonal are zero, and returns auxiliary matrices which are needed to apply the transformation to the unreduced part of A.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -13381,7 +13381,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -13439,10 +13439,10 @@
 *  =====================================================================
       SUBROUTINE ZLAHR2( N, K, NB, A, LDA, TAU, T, LDT, Y, LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            K, LDA, LDT, LDY, N, NB
@@ -13584,7 +13584,7 @@
 *     End of ZLAHR2
 *
       END
-*> \brief \b ZLAHRD
+*> \brief \b ZLAHRD reduces the first nb columns of a general rectangular matrix A so that elements below the k-th subdiagonal are zero, and returns auxiliary matrices which are needed to apply the transformation to the unreduced part of A.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -13710,7 +13710,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -13755,10 +13755,10 @@
 *  =====================================================================
       SUBROUTINE ZLAHRD( N, K, NB, A, LDA, TAU, T, LDT, Y, LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            K, LDA, LDT, LDY, N, NB
@@ -13988,17 +13988,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16GEauxiliary
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANGE( NORM, M, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -14210,17 +14210,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16HEauxiliary
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANHE( NORM, UPLO, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM, UPLO
@@ -14453,17 +14453,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANHS( NORM, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -14692,7 +14692,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -14700,10 +14700,10 @@
       DOUBLE PRECISION FUNCTION ZLANTR( NORM, UPLO, DIAG, M, N, A, LDA,
      $                 WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -14911,7 +14911,7 @@
 *     End of ZLANTR
 *
       END
-*> \brief \b ZLAQP2
+*> \brief \b ZLAQP2 computes a QR factorization with column pivoting of the matrix block.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -15035,7 +15035,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -15062,10 +15062,10 @@
       SUBROUTINE ZLAQP2( M, N, OFFSET, A, LDA, JPVT, TAU, VN1, VN2,
      $                   WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, M, N, OFFSET
@@ -15177,7 +15177,7 @@
 *     End of ZLAQP2
 *
       END
-*> \brief \b ZLAQPS
+*> \brief \b ZLAQPS computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -15329,7 +15329,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -15356,10 +15356,10 @@
       SUBROUTINE ZLAQPS( M, N, OFFSET, NB, KB, A, LDA, JPVT, TAU, VN1,
      $                   VN2, AUXV, F, LDF )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            KB, LDA, LDF, M, N, NB, OFFSET
@@ -15547,7 +15547,7 @@
 *     End of ZLAQPS
 *
       END
-*> \brief \b ZLAQR0
+*> \brief \b ZLAQR0 computes the eigenvalues of a Hessenberg matrix, and optionally the matrices from the Schur decomposition.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -15764,7 +15764,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -15790,10 +15790,10 @@
       SUBROUTINE ZLAQR0( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
      $                   IHIZ, Z, LDZ, WORK, LWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, LWORK, N
@@ -16250,7 +16250,7 @@
 *     ==== End of ZLAQR0 ====
 *
       END
-*> \brief \b ZLAQR1
+*> \brief \b ZLAQR1 sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -16346,7 +16346,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -16359,10 +16359,10 @@
 *  =====================================================================
       SUBROUTINE ZLAQR1( N, H, LDH, S1, S2, V )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       COMPLEX*16         S1, S2
@@ -16422,7 +16422,7 @@
          END IF
       END IF
       END
-*> \brief \b ZLAQR2
+*> \brief \b ZLAQR2 performs the unitary similarity transformation of a Hessenberg matrix to detect and deflate fully converged eigenvalues from a trailing principal submatrix (aggressive early deflation).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -16679,7 +16679,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -16694,10 +16694,10 @@
      $                   IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
      $                   NV, WV, LDWV, WORK, LWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            IHIZ, ILOZ, KBOT, KTOP, LDH, LDT, LDV, LDWV,
@@ -16989,7 +16989,7 @@
 *     ==== End of ZLAQR2 ====
 *
       END
-*> \brief \b ZLAQR3
+*> \brief \b ZLAQR3 performs the unitary similarity transformation of a Hessenberg matrix to detect and deflate fully converged eigenvalues from a trailing principal submatrix (aggressive early deflation).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -17243,7 +17243,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -17258,10 +17258,10 @@
      $                   IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
      $                   NV, WV, LDWV, WORK, LWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            IHIZ, ILOZ, KBOT, KTOP, LDH, LDT, LDV, LDWV,
@@ -17567,7 +17567,7 @@
 *     ==== End of ZLAQR3 ====
 *
       END
-*> \brief \b ZLAQR4
+*> \brief \b ZLAQR4 computes the eigenvalues of a Hessenberg matrix, and optionally the matrices from the Schur decomposition.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -17790,7 +17790,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -17816,10 +17816,10 @@
       SUBROUTINE ZLAQR4( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
      $                   IHIZ, Z, LDZ, WORK, LWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, LWORK, N
@@ -18270,7 +18270,7 @@
 *     ==== End of ZLAQR4 ====
 *
       END
-*> \brief \b ZLAQR5
+*> \brief \b ZLAQR5 performs a single small-bulge multi-shift QR sweep.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -18500,7 +18500,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -18523,10 +18523,10 @@
      $                   H, LDH, ILOZ, IHIZ, Z, LDZ, V, LDV, U, LDU, NV,
      $                   WV, LDWV, NH, WH, LDWH )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            IHIZ, ILOZ, KACC22, KBOT, KTOP, LDH, LDU, LDV,
@@ -19180,7 +19180,7 @@
 *     ==== End of ZLAQR5 ====
 *
       END
-*> \brief \b ZLARF
+*> \brief \b ZLARF applies an elementary reflector to a general rectangular matrix.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -19303,17 +19303,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLARF( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE
@@ -19412,7 +19412,7 @@
 *     End of ZLARF
 *
       END
-*> \brief \b ZLARFB
+*> \brief \b ZLARFB applies a block reflector or its conjugate-transpose to a general rectangular matrix.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -19573,7 +19573,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -19609,10 +19609,10 @@
       SUBROUTINE ZLARFB( SIDE, TRANS, DIRECT, STOREV, M, N, K, V, LDV,
      $                   T, LDT, C, LDC, WORK, LDWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIRECT, SIDE, STOREV, TRANS
@@ -19796,15 +19796,14 @@
 *              Form  H * C  or  H**H * C  where  C = ( C1 )
 *                                                    ( C2 )
 *
-               LASTV = MAX( K, ILAZLR( M, K, V, LDV ) )
-               LASTC = ILAZLC( LASTV, N, C, LDC )
+               LASTC = ILAZLC( M, N, C, LDC )
 *
 *              W := C**H * V  =  (C1**H * V1 + C2**H * V2)  (stored in WORK)
 *
 *              W := C2**H
 *
                DO 70 J = 1, K
-                  CALL ZCOPY( LASTC, C( LASTV-K+J, 1 ), LDC,
+                  CALL ZCOPY( LASTC, C( M-K+J, 1 ), LDC,
      $                 WORK( 1, J ), 1 )
                   CALL ZLACGV( LASTC, WORK( 1, J ), 1 )
    70          CONTINUE
@@ -19812,14 +19811,14 @@
 *              W := W * V2
 *
                CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V( LASTV-K+1, 1 ), LDV,
+     $              LASTC, K, ONE, V( M-K+1, 1 ), LDV,
      $              WORK, LDWORK )
-               IF( LASTV.GT.K ) THEN
+               IF( M.GT.K ) THEN
 *
 *                 W := W + C1**H*V1
 *
                   CALL ZGEMM( 'Conjugate transpose', 'No transpose',
-     $                 LASTC, K, LASTV-K,
+     $                 LASTC, K, M-K,
      $                 ONE, C, LDC, V, LDV,
      $                 ONE, WORK, LDWORK )
                END IF
@@ -19831,12 +19830,12 @@
 *
 *              C := C - V * W**H
 *
-               IF( LASTV.GT.K ) THEN
+               IF( M.GT.K ) THEN
 *
 *                 C1 := C1 - V1 * W**H
 *
                   CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 LASTV-K, LASTC, K,
+     $                 M-K, LASTC, K,
      $                 -ONE, V, LDV, WORK, LDWORK,
      $                 ONE, C, LDC )
                END IF
@@ -19844,14 +19843,14 @@
 *              W := W * V2**H
 *
                CALL ZTRMM( 'Right', 'Upper', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V( LASTV-K+1, 1 ), LDV,
+     $              'Unit', LASTC, K, ONE, V( M-K+1, 1 ), LDV,
      $              WORK, LDWORK )
 *
 *              C2 := C2 - W**H
 *
                DO 90 J = 1, K
                   DO 80 I = 1, LASTC
-                     C( LASTV-K+J, I ) = C( LASTV-K+J, I ) -
+                     C( M-K+J, I ) = C( M-K+J, I ) -
      $                               DCONJG( WORK( I, J ) )
    80             CONTINUE
    90          CONTINUE
@@ -19860,29 +19859,28 @@
 *
 *              Form  C * H  or  C * H**H  where  C = ( C1  C2 )
 *
-               LASTV = MAX( K, ILAZLR( N, K, V, LDV ) )
-               LASTC = ILAZLR( M, LASTV, C, LDC )
+               LASTC = ILAZLR( M, N, C, LDC )
 *
 *              W := C * V  =  (C1*V1 + C2*V2)  (stored in WORK)
 *
 *              W := C2
 *
                DO 100 J = 1, K
-                  CALL ZCOPY( LASTC, C( 1, LASTV-K+J ), 1,
+                  CALL ZCOPY( LASTC, C( 1, N-K+J ), 1,
      $                 WORK( 1, J ), 1 )
   100          CONTINUE
 *
 *              W := W * V2
 *
                CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V( LASTV-K+1, 1 ), LDV,
+     $              LASTC, K, ONE, V( N-K+1, 1 ), LDV,
      $              WORK, LDWORK )
-               IF( LASTV.GT.K ) THEN
+               IF( N.GT.K ) THEN
 *
 *                 W := W + C1 * V1
 *
                   CALL ZGEMM( 'No transpose', 'No transpose',
-     $                 LASTC, K, LASTV-K,
+     $                 LASTC, K, N-K,
      $                 ONE, C, LDC, V, LDV, ONE, WORK, LDWORK )
                END IF
 *
@@ -19893,26 +19891,26 @@
 *
 *              C := C - W * V**H
 *
-               IF( LASTV.GT.K ) THEN
+               IF( N.GT.K ) THEN
 *
 *                 C1 := C1 - W * V1**H
 *
                   CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 LASTC, LASTV-K, K, -ONE, WORK, LDWORK, V, LDV,
+     $                 LASTC, N-K, K, -ONE, WORK, LDWORK, V, LDV,
      $                 ONE, C, LDC )
                END IF
 *
 *              W := W * V2**H
 *
                CALL ZTRMM( 'Right', 'Upper', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V( LASTV-K+1, 1 ), LDV,
+     $              'Unit', LASTC, K, ONE, V( N-K+1, 1 ), LDV,
      $              WORK, LDWORK )
 *
 *              C2 := C2 - W
 *
                DO 120 J = 1, K
                   DO 110 I = 1, LASTC
-                     C( I, LASTV-K+J ) = C( I, LASTV-K+J )
+                     C( I, N-K+J ) = C( I, N-K+J )
      $                    - WORK( I, J )
   110             CONTINUE
   120          CONTINUE
@@ -20057,15 +20055,14 @@
 *              Form  H * C  or  H**H * C  where  C = ( C1 )
 *                                                    ( C2 )
 *
-               LASTV = MAX( K, ILAZLC( K, M, V, LDV ) )
-               LASTC = ILAZLC( LASTV, N, C, LDC )
+               LASTC = ILAZLC( M, N, C, LDC )
 *
 *              W := C**H * V**H  =  (C1**H * V1**H + C2**H * V2**H) (stored in WORK)
 *
 *              W := C2**H
 *
                DO 190 J = 1, K
-                  CALL ZCOPY( LASTC, C( LASTV-K+J, 1 ), LDC,
+                  CALL ZCOPY( LASTC, C( M-K+J, 1 ), LDC,
      $                 WORK( 1, J ), 1 )
                   CALL ZLACGV( LASTC, WORK( 1, J ), 1 )
   190          CONTINUE
@@ -20073,14 +20070,14 @@
 *              W := W * V2**H
 *
                CALL ZTRMM( 'Right', 'Lower', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V( 1, LASTV-K+1 ), LDV,
+     $              'Unit', LASTC, K, ONE, V( 1, M-K+1 ), LDV,
      $              WORK, LDWORK )
-               IF( LASTV.GT.K ) THEN
+               IF( M.GT.K ) THEN
 *
 *                 W := W + C1**H * V1**H
 *
                   CALL ZGEMM( 'Conjugate transpose',
-     $                 'Conjugate transpose', LASTC, K, LASTV-K,
+     $                 'Conjugate transpose', LASTC, K, M-K,
      $                 ONE, C, LDC, V, LDV, ONE, WORK, LDWORK )
                END IF
 *
@@ -20091,26 +20088,26 @@
 *
 *              C := C - V**H * W**H
 *
-               IF( LASTV.GT.K ) THEN
+               IF( M.GT.K ) THEN
 *
 *                 C1 := C1 - V1**H * W**H
 *
                   CALL ZGEMM( 'Conjugate transpose',
-     $                 'Conjugate transpose', LASTV-K, LASTC, K,
+     $                 'Conjugate transpose', M-K, LASTC, K,
      $                 -ONE, V, LDV, WORK, LDWORK, ONE, C, LDC )
                END IF
 *
 *              W := W * V2
 *
                CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V( 1, LASTV-K+1 ), LDV,
+     $              LASTC, K, ONE, V( 1, M-K+1 ), LDV,
      $              WORK, LDWORK )
 *
 *              C2 := C2 - W**H
 *
                DO 210 J = 1, K
                   DO 200 I = 1, LASTC
-                     C( LASTV-K+J, I ) = C( LASTV-K+J, I ) -
+                     C( M-K+J, I ) = C( M-K+J, I ) -
      $                               DCONJG( WORK( I, J ) )
   200             CONTINUE
   210          CONTINUE
@@ -20119,29 +20116,28 @@
 *
 *              Form  C * H  or  C * H**H  where  C = ( C1  C2 )
 *
-               LASTV = MAX( K, ILAZLC( K, N, V, LDV ) )
-               LASTC = ILAZLR( M, LASTV, C, LDC )
+               LASTC = ILAZLR( M, N, C, LDC )
 *
 *              W := C * V**H  =  (C1*V1**H + C2*V2**H)  (stored in WORK)
 *
 *              W := C2
 *
                DO 220 J = 1, K
-                  CALL ZCOPY( LASTC, C( 1, LASTV-K+J ), 1,
+                  CALL ZCOPY( LASTC, C( 1, N-K+J ), 1,
      $                 WORK( 1, J ), 1 )
   220          CONTINUE
 *
 *              W := W * V2**H
 *
                CALL ZTRMM( 'Right', 'Lower', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V( 1, LASTV-K+1 ), LDV,
+     $              'Unit', LASTC, K, ONE, V( 1, N-K+1 ), LDV,
      $              WORK, LDWORK )
-               IF( LASTV.GT.K ) THEN
+               IF( N.GT.K ) THEN
 *
 *                 W := W + C1 * V1**H
 *
                   CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 LASTC, K, LASTV-K, ONE, C, LDC, V, LDV, ONE,
+     $                 LASTC, K, N-K, ONE, C, LDC, V, LDV, ONE,
      $                 WORK, LDWORK )
                END IF
 *
@@ -20152,27 +20148,26 @@
 *
 *              C := C - W * V
 *
-               IF( LASTV.GT.K ) THEN
+               IF( N.GT.K ) THEN
 *
 *                 C1 := C1 - W * V1
 *
                   CALL ZGEMM( 'No transpose', 'No transpose',
-     $                 LASTC, LASTV-K, K, -ONE, WORK, LDWORK, V, LDV,
+     $                 LASTC, N-K, K, -ONE, WORK, LDWORK, V, LDV,
      $                 ONE, C, LDC )
                END IF
 *
 *              W := W * V2
 *
                CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V( 1, LASTV-K+1 ), LDV,
+     $              LASTC, K, ONE, V( 1, N-K+1 ), LDV,
      $              WORK, LDWORK )
 *
 *              C1 := C1 - W
 *
                DO 240 J = 1, K
                   DO 230 I = 1, LASTC
-                     C( I, LASTV-K+J ) = C( I, LASTV-K+J )
-     $                    - WORK( I, J )
+                     C( I, N-K+J ) = C( I, N-K+J ) - WORK( I, J )
   230             CONTINUE
   240          CONTINUE
 *
@@ -20186,7 +20181,7 @@
 *     End of ZLARFB
 *
       END
-*> \brief \b ZLARFG
+*> \brief \b ZLARFG generates an elementary reflector (Householder matrix).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -20287,17 +20282,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLARFG( N, ALPHA, X, INCX, TAU )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -20389,7 +20384,7 @@
 *     End of ZLARFG
 *
       END
-*> \brief \b ZLARFT
+*> \brief \b ZLARFT forms the triangular factor T of a block reflector H = I - vtvH
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -20521,7 +20516,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date April 2012
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -20554,10 +20549,10 @@
 *  =====================================================================
       SUBROUTINE ZLARFT( DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT )
 *
-*  -- LAPACK auxiliary routine (version 3.4.1) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     April 2012
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIRECT, STOREV
@@ -20716,7 +20711,7 @@
 *     End of ZLARFT
 *
       END
-*> \brief \b ZLARFX
+*> \brief \b ZLARFX applies an elementary reflector to a general rectangular matrix, with loop unrolling when the reflector has order ≤ 10.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -20830,17 +20825,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLARFX( SIDE, M, N, V, TAU, C, LDC, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE
@@ -21416,7 +21411,7 @@
 *     End of ZLARFX
 *
       END
-*> \brief \b ZLARTG
+*> \brief \b ZLARTG generates a plane rotation with real cosine and complex sine.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -21503,7 +21498,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -21521,10 +21516,10 @@
 *  =====================================================================
       SUBROUTINE ZLARTG( F, G, CS, SN, R )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   CS
@@ -21674,7 +21669,7 @@
 *     End of ZLARTG
 *
       END
-*> \brief \b ZLASCL
+*> \brief \b ZLASCL multiplies a general rectangular matrix by a real scalar defined as cto/cfrom.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -21808,17 +21803,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLASCL( TYPE, KL, KU, CFROM, CTO, M, N, A, LDA, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          TYPE
@@ -22038,7 +22033,7 @@
 *     End of ZLASCL
 *
       END
-*> \brief \b ZLASET
+*> \brief \b ZLASET initializes the off-diagonal elements and the diagonal elements of a matrix to given values.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -22139,17 +22134,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLASET( UPLO, M, N, ALPHA, BETA, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -22222,7 +22217,7 @@
 *     End of ZLASET
 *
       END
-*> \brief \b ZLASR
+*> \brief \b ZLASR applies a sequence of plane rotations to a general rectangular matrix.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -22417,17 +22412,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLASR( SIDE, PIVOT, DIRECT, M, N, C, S, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIRECT, PIVOT, SIDE
@@ -22762,17 +22757,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLASSQ( N, X, INCX, SCALE, SUMSQ )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -22829,7 +22824,7 @@
 *     End of ZLASSQ
 *
       END
-*> \brief \b ZLASWP
+*> \brief \b ZLASWP performs a series of row interchanges on a general rectangular matrix.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -22929,7 +22924,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -22945,10 +22940,10 @@
 *  =====================================================================
       SUBROUTINE ZLASWP( N, A, LDA, K1, K2, IPIV, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, K1, K2, LDA, N
@@ -23020,7 +23015,7 @@
 *     End of ZLASWP
 *
       END
-*> \brief \b ZLATRD
+*> \brief \b ZLATRD reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an unitary similarity transformation.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -23162,7 +23157,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -23221,10 +23216,10 @@
 *  =====================================================================
       SUBROUTINE ZLATRD( UPLO, N, NB, A, LDA, E, TAU, W, LDW )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -23378,7 +23373,7 @@
 *     End of ZLATRD
 *
       END
-*> \brief \b ZLATRS
+*> \brief \b ZLATRS solves a triangular system of equations with the scale factor set to prevent overflow.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -23539,7 +23534,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date April 2012
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -23619,10 +23614,10 @@
       SUBROUTINE ZLATRS( UPLO, TRANS, DIAG, NORMIN, N, A, LDA, X, SCALE,
      $                   CNORM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.1) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     April 2012
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORMIN, TRANS, UPLO
@@ -24344,7 +24339,7 @@
 *     End of ZLATRS
 *
       END
-*> \brief \b ZPOTF2
+*> \brief \b ZPOTF2 computes the Cholesky factorization of a symmetric/Hermitian positive definite matrix (unblocked algorithm).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -24448,17 +24443,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16POcomputational
 *
 *  =====================================================================
       SUBROUTINE ZPOTF2( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -24830,7 +24825,7 @@
 *     End of ZPOTRF
 *
       END
-*> \brief \b ZROT
+*> \brief \b ZROT applies a plane rotation with real cosine and complex sine to a pair of complex vectors.
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -24928,17 +24923,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZROT( N, CX, INCX, CY, INCY, C, S )
 *
-*  -- LAPACK auxiliary routine (version 3.4.0) --
+*  -- LAPACK auxiliary routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, INCY, N
@@ -26803,7 +26798,7 @@
 *     End of ZTRTRS
 *
       END
-*> \brief \b ZUNG2L
+*> \brief \b ZUNG2L generates all or part of the unitary matrix Q from a QL factorization determined by cgeqlf (unblocked algorithm).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -26912,17 +26907,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERcomputational
 *
 *  =====================================================================
       SUBROUTINE ZUNG2L( M, N, K, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, M, N
@@ -27783,7 +27778,7 @@
 *     End of ZUNGHR
 *
       END
-*> \brief \b ZUNGL2
+*> \brief \b ZUNGL2 generates all or part of the unitary matrix Q from an LQ factorization determined by cgelqf (unblocked algorithm).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -27891,17 +27886,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERcomputational
 *
 *  =====================================================================
       SUBROUTINE ZUNGL2( M, N, K, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, M, N
@@ -28865,7 +28860,7 @@
 *     End of ZUNGQR
 *
       END
-*> \brief \b ZUNGR2
+*> \brief \b ZUNGR2 generates all or part of the unitary matrix Q from an RQ factorization determined by cgerqf (unblocked algorithm).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -28974,17 +28969,17 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERcomputational
 *
 *  =====================================================================
       SUBROUTINE ZUNGR2( M, N, K, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, M, N
@@ -29623,7 +29618,7 @@
 *     End of ZUNGTR
 *
       END
-*> \brief \b ZUNM2R
+*> \brief \b ZUNM2R multiplies a general matrix by the unitary matrix from a QR factorization determined by cgeqrf (unblocked algorithm).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -29776,7 +29771,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -29784,10 +29779,10 @@
       SUBROUTINE ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -30582,7 +30577,7 @@
 *     End of ZUNMHR
 *
       END
-*> \brief \b ZUNML2
+*> \brief \b ZUNML2 multiplies a general matrix by the unitary matrix from a LQ factorization determined by cgelqf (unblocked algorithm).
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -30735,7 +30730,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date September 2012
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -30743,10 +30738,10 @@
       SUBROUTINE ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.4.2) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     September 2012
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS

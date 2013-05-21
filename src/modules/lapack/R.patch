@@ -1,7 +1,17 @@
-diff -ru dorcsd.f /tmp/dorcsd.f
---- dorcsd.f	2012-04-11 20:42:32.000000000 +0100
-+++ /tmp/dorcsd.f	2012-07-21 13:48:01.000000000 +0100
-@@ -427,19 +428,26 @@
+diff -u /tmp/dlapack.f ./dlapack.f
+--- /tmp/dlapack.f	2013-05-21 10:11:22.000000000 +0100
++++ ./dlapack.f	2013-05-21 14:11:49.000000000 +0100
+@@ -21128,7 +21128,8 @@
+ *
+ *        Compute Householder transform when N=1
+ *
+-         CALL DLARFG( M, A, A( MIN( 2, M ), 1 ), 1, T )
++*  R change to stop gfortran warning
++         CALL DLARFG( M, A(1,1), A( MIN( 2, M ), 1 ), 1, T(1,1) )
+ *         
+       ELSE
+ *
+@@ -96739,19 +96740,26 @@
           ITAUQ1 = ITAUP2 + MAX( 1, M - P )
           ITAUQ2 = ITAUQ1 + MAX( 1, Q )
           IORGQR = ITAUQ2 + MAX( 1, M - Q )
@@ -33,7 +43,7 @@ diff -ru dorcsd.f /tmp/dorcsd.f
           LORBDBWORKOPT = INT( WORK(1) )
           LORBDBWORKMIN = LORBDBWORKOPT
           IB11D = ITAUQ2 + MAX( 1, M - Q )
-@@ -451,9 +459,15 @@
+@@ -96763,9 +96771,15 @@
           IB22D = IB21E + MAX( 1, Q - 1 )
           IB22E = IB22D + MAX( 1, Q )
           IBBCSD = IB22E + MAX( 1, Q - 1 )
@@ -52,14 +62,10 @@ diff -ru dorcsd.f /tmp/dorcsd.f
           LBBCSDWORKOPT = INT( WORK(1) )
           LBBCSDWORKMIN = LBBCSDWORKOPT
           LWORKOPT = MAX( IORGQR + LORGQRWORKOPT, IORGLQ + LORGLQWORKOPT,
-@@ -595,4 +609,3 @@
- *     End DORCSD
- *
-       END
--
---- zgesvd.f	2012-04-13 19:13:07.000000000 +0100
-+++ /tmp/zgesvd.f	2012-07-23 09:14:24.000000000 +0100
-@@ -321,24 +321,24 @@
+diff -u /tmp/cmplx.f ./cmplx.f
+--- /tmp/cmplx.f	2013-05-21 10:11:22.000000000 +0100
++++ ./cmplx.f	2013-05-21 10:16:35.000000000 +0100
+@@ -6054,24 +6054,24 @@
  *
              MNTHR = ILAENV( 6, 'ZGESVD', JOBU // JOBVT, M, N, 0, 0 )
  *           Compute space needed for ZGEQRF
@@ -99,7 +105,7 @@ diff -ru dorcsd.f /tmp/dorcsd.f
  *
              IF( M.GE.MNTHR ) THEN
                 IF( WNTUN ) THEN
-@@ -443,20 +443,20 @@
+@@ -6176,20 +6176,20 @@
  *
  *              Path 10 (M at least N, but not much larger)
  *
@@ -129,7 +135,7 @@ diff -ru dorcsd.f /tmp/dorcsd.f
                    MAXWRK = MAX( MAXWRK, 2*N+LWORK_ZUNGBR_Q )
                 END IF
                 IF( .NOT.WNTVN ) THEN
-@@ -470,25 +470,26 @@
+@@ -6203,25 +6203,26 @@
  *
              MNTHR = ILAENV( 6, 'ZGESVD', JOBU // JOBVT, M, N, 0, 0 )
  *           Compute space needed for ZGELQF
@@ -171,7 +177,7 @@ diff -ru dorcsd.f /tmp/dorcsd.f
              IF( N.GE.MNTHR ) THEN
                 IF( WNTVN ) THEN
  *
-@@ -592,21 +593,21 @@
+@@ -6325,21 +6326,21 @@
  *
  *              Path 10t(N greater than M, but not much larger)
  *

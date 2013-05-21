@@ -1,5 +1,5 @@
-The Fortran routines here are extracted from LAPACK 3.1.0, then 3.1.1, 3.4.1
-(http://www.netlib.org/lapack and mirrors), then from SVN in July 2012.
+The Fortran routines here are extracted from LAPACK 3.1.0, then 3.1.1,
+3.4.1, 3.4.2.  (http://www.netlib.org/lapack and mirrors).
 
 dlapack?.f are support routines for `real' LAPACK calls
 cmplx.f are support routines for LAPACK calls from complex arithmetic
@@ -21,9 +21,6 @@ all these files must be updated {path relative to R's topdir}:
   src/modules/lapack/cmplx.f or dlapack.f
 
 We have tried to avoid including any single-precision routines.
-
-There is also a patch to avoid a gfortran warning at lines 21131:2
-of dlapack.f, in DGEQRT3.
 
 dlapack.f is the concatenation of
 
