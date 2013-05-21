@@ -559,9 +559,11 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    s = translateChar(STRING_ELT(x, i));
-	    warn = warn | !strIsASCII(s);
-	    R_AllocStringBuffer(strlen(s), &cbuff);
-	    SET_STRING_ELT(ans, i, stripchars(s, minlen));
+	    if(strlen(s) > minlen) {
+		warn = warn | !strIsASCII(s);
+		R_AllocStringBuffer(strlen(s), &cbuff);
+		SET_STRING_ELT(ans, i, stripchars(s, minlen));
+	    } else SET_STRING_ELT(ans, i, mkChar(s));
 	}
 	vmaxset(vmax);
     }
