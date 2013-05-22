@@ -821,7 +821,7 @@ static void worker_input_handler(void *data) {
 		/* GET/HEAD or no content length mean no body */
 		if (c->method == METHOD_GET || c->method == METHOD_HEAD ||
 		    !(c->attr & CONTENT_LENGTH) || c->content_length == 0) {
-		    if (c->attr & CONTENT_LENGTH) {
+		    if ((c->attr & CONTENT_LENGTH) && c->content_length > 0) {
 			send_http_response(c, " 400 Bad Request (GET/HEAD with body)\r\n\r\n");
 			remove_worker(c);
 			return;
