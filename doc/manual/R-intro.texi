@@ -1981,12 +1981,27 @@ is available, so we could have used @code{B <- t(A)}.
 @node Matrix facilities, Forming partitioned matrices, Generalized transpose of an array, Arrays and matrices
 @section Matrix facilities
 
+@iftex
 @macro xTx{}
- @eqn{@strong{x}^T @strong{x}, x'x}
+@tex
+$@strong{x}^T @strong{x}$%
+@end tex
 @end macro
 @macro xxT{}
- @eqn{@strong{x}@strong{x}^T, x x'}
+@tex
+$@strong{x}@strong{x}^T$%
+@end tex
 @end macro
+@end iftex
+
+@ifnottex
+@macro xTx{}
+x'x
+@end macro
+@macro xxT{}
+x x'
+@end macro
+@end ifnottex
 
 As noted above, a matrix is just an array with two subscripts.  However
 it is such an important special case it needs a separate discussion.
@@ -2103,13 +2118,17 @@ but rarely is needed.  Numerically, it is both inefficient and
 potentially unstable to compute @code{x <- solve(A) %*% b} instead of
 @code{solve(A,b)}.
 
+@c This strange formatting is needed to get @eqn to work inside
+@c @footnote in makeinfo 5.x.  Check footnote 16 in the HTML version
 The quadratic form @eqn{@strong{x^T  A^{-1} x},@ @code{x %*% A^@{-1@} %*%
 x} @ } which is used in multivariate computations, should be computed by
 something like@footnote{Even better would be to form a matrix square
-root @eqn{B, B} with @eqn{A = BB^T, A = BB'} and find the squared length of the
-solution of @eqn{By = x, By = x}, perhaps using the Cholesky or
-eigendecomposition of @eqn{A, A}.} @code{x %*% solve(A,x)}, rather than
-computing the inverse of @code{A}.
+root @eqn{B, B}
+ with @eqn{A = BB^T, A = BB'}
+ and find the squared length of the solution of 
+@eqn{By = x, By = x}
+, perhaps using the Cholesky or eigendecomposition of @eqn{A, A}.
+} @code{x %*% solve(A,x)}, rather than computing the inverse of @code{A}.
 
 @node Eigenvalues and eigenvectors, Singular value decomposition and determinants, Linear equations and inversion, Matrix facilities
 @subsection Eigenvalues and eigenvectors
