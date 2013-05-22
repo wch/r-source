@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-04-22 r62639) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-05-22 r62770) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2650,6 +2650,26 @@ pdf
 > 
 > 
 > cleanEx()
+> nameEx("png")
+> ### * png
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: png
+> ### Title: BMP, JPEG, PNG and TIFF graphics devices
+> ### Aliases: png jpeg tiff bmp
+> ### Keywords: device
+> 
+> ### ** Examples
+> 
+> ## these examples will work only if the devices are available
+> ## and cairo or an X11 display or an OS X display is available.
+> 
+> ## copy current plot to a (large) PNG file
+> ## Not run: dev.print(png, file = "myplot.png", width = 1024, height = 768)
+> 
+> 
+> cleanEx()
 > nameEx("postscriptFonts")
 > ### * postscriptFonts
 > 
@@ -3302,6 +3322,64 @@ List of 18
 > 
 > 
 > cleanEx()
+> nameEx("quartz")
+> ### * quartz
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: quartz
+> ### Title: OS X Quartz Device
+> ### Aliases: quartz quartz.options quartz.save
+> ### Keywords: device
+> 
+> ### ** Examples
+> ## Not run: 
+> ##D ## put something like this is your .Rprofile to customize the defaults
+> ##D setHook(packageEvent("grDevices", "onLoad"),
+> ##D         function(...) grDevices::quartz.options(width = 8, height = 6,
+> ##D                                                 pointsize = 10))
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("quartzFonts")
+> ### * quartzFonts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: quartzFonts
+> ### Title: quartz Fonts
+> ### Aliases: quartzFont quartzFonts
+> ### Keywords: device
+> 
+> ### ** Examples
+> 
+> quartzFonts()
+$serif
+[1] "Times-Roman"      "Times-Bold"       "Times-Italic"     "Times-BoldItalic"
+
+$sans
+[1] "Helvetica"             "Helvetica-Bold"        "Helvetica-Oblique"    
+[4] "Helvetica-BoldOblique"
+
+$mono
+[1] "Courier"             "Courier-Bold"        "Courier-Oblique"    
+[4] "Courier-BoldOblique"
+
+> quartzFonts("mono")
+$mono
+[1] "Courier"             "Courier-Bold"        "Courier-Oblique"    
+[4] "Courier-BoldOblique"
+
+> ## Not run: 
+> ##D ## for CJK locales you can use something like
+> ##D quartzFonts(sans = quartzFont(rep("AppleGothic", 4)),
+> ##D             serif = quartzFont(rep("AppleMyungjp", 4)))
+> ##D ## since the default fonts may well not have the glyphs needed
+> ## End(Not run)
+> 
+> 
+> cleanEx()
 > nameEx("recordGraphics")
 > ### * recordGraphics
 > 
@@ -3476,6 +3554,76 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 > 
 > ## See  help(persp) {after attaching the 'graphics' package}
 > ##      -----------
+> 
+> 
+> 
+> cleanEx()
+> nameEx("x11")
+> ### * x11
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: x11
+> ### Title: X Window System Graphics
+> ### Aliases: x11 X11 X11.options
+> ### Keywords: device
+> 
+> ### ** Examples
+> ## Not run: 
+> ##D ## put something like this is your .Rprofile to customize the defaults
+> ##D setHook(packageEvent("grDevices", "onLoad"),
+> ##D         function(...) grDevices::X11.options(width = 8, height = 6, xpos = 0,
+> ##D                                              pointsize = 10))
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("x11Fonts")
+> ### * x11Fonts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: X11Fonts
+> ### Title: X11 Fonts
+> ### Aliases: X11Font X11Fonts
+> ### Keywords: device
+> 
+> ### ** Examples
+> 
+> X11Fonts()
+$serif
+[1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$sans
+[1] "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Times
+[1] "-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Helvetica
+[1] "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrTimes
+[1] "-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrHelvetica
+[1] "-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Arial
+[1] "-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Mincho
+[1] "-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> X11Fonts("mono")
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
+> X11Fonts(utopia = utopia)
 > 
 > 
 > 
