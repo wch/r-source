@@ -17,16 +17,18 @@ S
 @acronym{HTML}
 @end macro
 
-@macro eqn {t, a}
 @iftex
+@macro eqn {t, a}
 @tex
 $\t\$%
 @end tex
+@end macro
 @end iftex
 @ifnottex
+@macro eqn {t, a}
 \a\@c
-@end ifnottex
 @end macro
+@end ifnottex
 
 @macro pkg {p}
 @strong{\p\}

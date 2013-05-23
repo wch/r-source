@@ -2863,7 +2863,7 @@ Solaris.}  Further, the versions of @command{texi2dvi} and
 @file{texinfo.tex} need to be compatible: we have seen problems with
 older @TeX{} distributions (TeXLive 2007 and MiKTeX 2.8) used with
 @pkg{texinfo} 4.13.  It should be possible to use @command{makeinfo}
-version 5.0, but e.g..@: 4.13 produces better-formatted output.
+version 5.x.
 
 @cindex Vignettes
 The PDF documentation (including @file{doc/NEWS.pdf}) and building
