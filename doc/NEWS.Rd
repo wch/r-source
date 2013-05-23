@@ -8,6 +8,13 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.0.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The macros used for the texinfo manuals have been changed to
+      work better with the incompatible changes made in texinfo 5.x.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{help.request()} could not determine the current version
@@ -16,8 +23,8 @@
       \item On Windows, \code{file.info()} failed on root directories unless
       the path was terminated with an explicit \code{"."}.  (\PR{15302})
       
-      \item The \code{`regmatches<-`} replacement function mishandled
-      results coming from \code{regexpr}.  (\PR{15311})
+      \item The \code{regmatches<-()} replacement function mishandled
+      results coming from \code{regexpr()}.  (\PR{15311})
 
       \item Documentation for \code{setClass} and
       \code{representation} still suggested the deprecated argument
