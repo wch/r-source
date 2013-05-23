@@ -84,7 +84,9 @@ Copyright @copyright{} 1997-- R Core Team@*
 @top An Introduction to R
 
 This is an introduction to R (``GNU S''), a language and environment for
-statistical computing and graphics.  R is similar to the award-winning S
+statistical computing and graphics.  R is similar to the
+award-winning@footnote{ACM Software Systems award, 1998:
+@uref{http://awards.acm.org/award_winners/chambers_6640862.cfm}.} S
 system, which was developed at Bell Laboratories by John Chambers et al.
 It provides a wide variety of statistical and graphical techniques
 (linear and nonlinear modelling, statistical tests, time series
@@ -149,8 +151,8 @@ A.  This should give some familiarity with the style of @R{} sessions
 and more importantly some instant feedback on what actually happens.
 
 Many users will come to @R{} mainly for its graphical facilities.
-@ref{Graphics} on the graphics facilities can be read at almost any time
-and need not wait until all the preceding sections have been digested.
+@xref{Graphics} which can be read at almost any time and need not wait
+until all the preceding sections have been digested.
 
 @menu
 * Introduction and preliminaries::
@@ -2054,10 +2056,12 @@ is the matrix product.  If @code{x} is a vector, then
 > x %*% A %*% x
 @end example
 
+@c This strange formatting is needed to get @eqn to work inside
+@c @footnote in makeinfo 5.x.  Check footnote 16 in the HTML version
 @noindent
 is a quadratic form.@footnote{Note that @code{x %*% x} is ambiguous, as
-it could mean either @xTx{} or @xxT{}, where @eqn{@strong{x},x} is the
-column form.  In such cases the smaller matrix seems implicitly to be
+it could mean either @xTx{} or @xxT{}, where @eqn{@strong{x},x}
+ is the column form.  In such cases the smaller matrix seems implicitly to be
 the interpretation adopted, so the scalar @xTx{} is in this case the
 result.  The matrix @xxT{} may be calculated either by @code{cbind(x)
 %*% x} or @code{x %*% rbind(x)} since the result of @code{rbind()} or
@@ -2119,7 +2123,7 @@ potentially unstable to compute @code{x <- solve(A) %*% b} instead of
 @code{solve(A,b)}.
 
 @c This strange formatting is needed to get @eqn to work inside
-@c @footnote in makeinfo 5.x.  Check footnote 16 in the HTML version
+@c @footnote in makeinfo 5.x.  Check footnote 17 in the HTML version
 The quadratic form @eqn{@strong{x^T  A^{-1} x},@ @code{x %*% A^@{-1@} %*%
 x} @ } which is used in multivariate computations, should be computed by
 something like@footnote{Even better would be to form a matrix square
@@ -2127,7 +2131,7 @@ root @eqn{B, B}
  with @eqn{A = BB^T, A = BB'}
  and find the squared length of the solution of 
 @eqn{By = x, By = x}
-, perhaps using the Cholesky or eigendecomposition of @eqn{A, A}.
+, perhaps using the Cholesky or eigen decomposition of @eqn{A, A}.
 } @code{x %*% solve(A,x)}, rather than computing the inverse of @code{A}.
 
 @node Eigenvalues and eigenvectors, Singular value decomposition and determinants, Linear equations and inversion, Matrix facilities
@@ -2747,9 +2751,9 @@ rather than entered during an @R{} session at the keyboard.  @R{} input
 facilities are simple and their requirements are fairly strict and even
 rather inflexible.  There is a clear presumption by the designers of
 @R{} that you will be able to modify your input files using other tools,
-such as file editors or Perl@footnote{Under UNIX, the utilities Sed or
-Awk can be used.} to fit in with the requirements of @R{}.  Generally
-this is very simple.
+such as file editors or Perl@footnote{Under UNIX, the utilities
+@command{sed} or@command{awk} can be used.} to fit in with the
+requirements of @R{}.  Generally this is very simple.
 
 If variables are to be held mainly in data frames, as we strongly
 suggest they should be, an entire data frame can be read directly with
