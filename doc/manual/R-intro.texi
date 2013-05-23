@@ -151,7 +151,7 @@ A.  This should give some familiarity with the style of @R{} sessions
 and more importantly some instant feedback on what actually happens.
 
 Many users will come to @R{} mainly for its graphical facilities.
-@xref{Graphics} which can be read at almost any time and need not wait
+@xref{Graphics}, which can be read at almost any time and need not wait
 until all the preceding sections have been digested.
 
 @menu
