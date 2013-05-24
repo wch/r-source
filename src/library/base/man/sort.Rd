@@ -72,7 +72,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   are more than 10.)  Names are discarded for partial sorting.
 
   Method \code{"shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant from
-  Sedgewick (1996)).  If \code{x} has names a stable modification is
+  Sedgewick (1986)).  If \code{x} has names a stable modification is
   used, so ties are not reordered.  (This only matters if names are
   present.)
 
