@@ -8066,28 +8066,24 @@ This is easiest if @pkg{packB} provides a static library
 package @pkg{packB} is incorporated when package @pkg{packA} is
 installed, we only need to find the static library at install time for
 package @pkg{packB}.  The only issue is to find package @pkg{packB}, and
-for that we can ask @R{} by something like (lines broken for display here)
+for that we can ask @R{} by something like (long lines broken for display here)
 
 @example
-PKGB_PATH=`echo 'cat(system.file("libs", .Platform$$r_arch,
- package="packB", mustWork=TRUE))' \
+PKGB_PATH=`echo 'library(packB);
+  cat(system.file("libs",  package="packB", mustWork=TRUE))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
-PKG_LIBS="$(PKGB_PATH)/libpackB.a"
+PKG_LIBS="$(PKGB_PATH)$(R_ARCH)/libpackB.a"
 @end example
-
-@noindent
-which will give an empty path component if sub-architectures are not in
-use (but that works on current platforms).
 
 For a dynamic library @file{packB/libs/libpackB.so}
 (@file{packB/libs/libpackB.dylib} on OS X: note that you cannot link to
 a shared object, @file{.so} on that platform) we could use
 
 @example
-PKGB_PATH=`echo 'cat(system.file("libs", .Platform$$r_arch, 
-  package="packB", mustWork=TRUE))' \
+PKGB_PATH=`echo 'library(packB); 
+  cat(system.file("libs", package="packB", mustWork=TRUE))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
-PKG_LIBS=-L"$(PKGB_PATH)" -lpackB
+PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -lpackB
 @end example
 
 @noindent
@@ -8105,9 +8101,10 @@ changed) nor the package updated to a changed API).  On systems with the
 this can be done by e.g.@:
 
 @example
-PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
+PKGB_PATH=`echo 'library(packB); 
+  cat(system.file("libs", package="packB", mustWork=TRUE)))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
-PKG_LIBS=-L"$(PKGB_PATH)" -rpath "$(PKGB_PATH)" -lpackB
+PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -rpath "$(PKGB_PATH)$(R_ARCH)" -lpackB
 @end example
 
 @noindent
@@ -8154,9 +8151,10 @@ installed @file{pkgB/libs} directory.  To find that we need to ask @R{}
 where it is by something like
 
 @example
-PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
+PKGB_PATH=`echo 'library(packB); 
+  cat(system.file("libs", package="packB", mustWork=TRUE))' \
  | rterm --vanilla --slave`
-PKG_LIBS= -L"$(PKGB_PATH)"$(R_ARCH) -lexB
+PKG_LIBS= -L"$(PKGB_PATH)$(R_ARCH)" -lexB
 @end example
 
 Another possibility is to use an import library, shipping with package
@@ -8182,7 +8180,7 @@ If @code{exB.dll} was used by package @pkg{packB} (because it is in fact
 @file{packB.dll} or @file{packB.dll} depends on it) and @pkg{packB} has
 been loaded before @pkg{packA}, then nothing more needs to be done as
 @file{exB.dll} will already be loaded into the @R{} executable.  (This
-is the most common scenario).
+is the most common scenario.)
 
 More generally, we can use the @code{DLLpath} argument to
 @code{library.dynam} to ensure that @code{exB.dll} is found, for example
