@@ -1,5 +1,5 @@
 
-R version 3.0.0 RC (2013-03-29 r62438) -- "Masked Marvel"
+R version 3.0.1 Patched (2013-05-24 r62792) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.241 0.002 0.243 0 0 
+Time elapsed:  0.24 0.004 0.245 0 0 
 > 
