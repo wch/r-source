@@ -1,6 +1,6 @@
 % File src/library/base/man/table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{table}
@@ -35,8 +35,9 @@ is.table(x)
 \arguments{
   \item{\dots}{one or more objects which can be interpreted as factors
     (including character strings), or a list (or data frame) whose
-    components can be so interpreted.  (For \code{as.table} and
-    \code{as.data.frame}, arguments passed to specific methods.)}
+    components can be so interpreted.  (For \code{as.table}, arguments
+    passed to specific methods; for \code{as.data.frame}, arguments
+    passed to \code{\link{provideDimnames}}.)}
   \item{exclude}{levels to remove for all factors in \code{\dots}.
     If set to \code{NULL}, it implies \code{useNA = "always"}.  See
     \sQuote{Details} for its interpretation for non-factor arguments.}

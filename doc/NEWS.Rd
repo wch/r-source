@@ -43,6 +43,9 @@
       strings which require no abbreviation.
 
       \item The included version of LAPACK has been updated to 3.4.2.
+
+      \item \code{as.data.frame.table()} now makes use of its
+      \code{\dots} by passing them to \code{provideDimnames}.
     }
   }
 
@@ -105,7 +108,7 @@
       \item If \code{x} is a symbol, \code{is.vector(x, "name")} now returns
       \code{TRUE}, since \code{"name"} and \code{"symbol"} should be synonyms.
       (Reported by Hervé Pagès.)
-      
+
       \item The parser now enforces C99 syntax for floating point
       hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
       unintended values for malformed constants. (\PR{15234})
@@ -123,28 +126,28 @@
       work better with the incompatible changes made in texinfo 5.x.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{help.request()} could not determine the current version
       of \R on CRAN.  (\PR{15241})
-      
+
       \item On Windows, \code{file.info()} failed on root directories unless
       the path was terminated with an explicit \code{"."}.  (\PR{15302})
-      
+
       \item The \code{regmatches<-()} replacement function mishandled
       results coming from \code{regexpr()}.  (\PR{15311})
 
       \item Documentation for \code{setClass} and
       \code{representation} still suggested the deprecated argument
       \code{representation=}. (\PR{15312})
-      
+
       \item \command{R CMD config} failed in an installed build of \R
       3.0.1 (only) when a sub-architecture was used.  (Reported by
       Berwin Turlach.)
-      
+
       \item On Windows, the installer modified the \file{etc/Rconsole} and
-      \file{etc/Rprofile.site} files even when default options were 
+      \file{etc/Rprofile.site} files even when default options were
       chosen.  (Reported by Tal Galili.)
     }
   }
@@ -185,7 +188,7 @@
       to the global environment, with a warning.
 
       \item \code{pairs()} gains a \code{line.main} option for title placement.
-      
+
       \item The remaining instances in which serialization to a raw
       vector was limited to 2GB have been unlimited on a 64-bit
       platform, and in most cases serialization to a vector of more than
@@ -306,7 +309,7 @@
       \item Binary operations on equal length vectors copied the
       class name from the second operand when the first had no
       class name, but did not set the object bit. (\PR{15299})
-      
+
       \item \code{write.table()} did not check that factors were
       constructed correctly, and so caused a segment fault when
       writing bad ones. (\PR{15300})

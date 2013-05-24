@@ -1,6 +1,6 @@
 % File src/library/base/man/dimnames.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dimnames}
@@ -102,7 +102,6 @@ colnames0 <- function(x) dimnames(x)[[2]]
 A0 <- A; dimnames(A)[2:3] <- list(NULL)
 stopifnot(identical(A0, provideDimnames(A)))
 strd <- function(x) utils::str(dimnames(x))
-strd(provideDimnames(A, base= list(letters[-(1:9)], tail(LETTERS))))
 strd(provideDimnames(A, base= list(letters[-(1:9)], tail(LETTERS))))
 strd(provideDimnames(N, base= list(letters[-(1:9)], tail(LETTERS)))) # recycling
 strd(provideDimnames(A, base= list(c("AA","BB")))) # recycling on both levels
