@@ -150,7 +150,7 @@
 
 /* These conflict with definitions in R_ext/Boolean.h */
 #ifndef R_EXT_BOOLEAN_H_
-#Ifndef TRUE
+#ifndef TRUE
 #define TRUE 1
 #endif
 #ifndef FALSE
