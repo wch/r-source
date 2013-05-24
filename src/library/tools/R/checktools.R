@@ -202,18 +202,28 @@ function(dir,
         ##   outdir/install_stderr.txt
         ## But using several CPUs uses Make to install, which seems to
         ## write to stdout/stderr "directly" ... so using sink() will
-        ## not work.
+        ## not work.  Hence, use 'keep_outputs' to capture "outputs"
+        ## (combining install stdout and stderr into one file).
         message("")
         iflags <- as.list(rep.int("--fake",
                                   length(pnames_using_install_fake)))
         names(iflags) <- pnames_using_install_fake
+        tmpdir <- tempfile(tmpdir = outdir)
+        dir.create(tmpdir)
         utils::install.packages(depends, lib = libdir,
                                 contriburl = curls,
                                 available = available,
                                 dependencies = TRUE,
                                 INSTALL_opts = iflags,
+                                keep_outputs = tmpdir,
                                 Ncpus = Ncpus, 
                                 type = "source")
+        outfiles <- Sys.glob(file.path(tmpdir, "*.out"))
+        file.rename(outfiles,
+                    file.path(outdir,
+                              sprintf("install_%s",
+                                      basename(outfiles))))
+        unlink(tmpdir, recursive = TRUE)
         message("")
         ## </NOTE>
     }
