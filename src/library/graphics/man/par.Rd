@@ -729,10 +729,12 @@ showLty <- function(ltys, xoff = 0, ...) {
    plot(0:1, 0:1, type = "n", axes = FALSE, ann = FALSE)
    y <- (n:1)/(n+1)
    clty <- as.character(ltys)
-   mytext <- function(x,y, txt) text(x, y, txt, adj = c(0, -.3), cex = 0.8, ...)
+   mytext <- function(x, y, txt)
+      text(x, y, txt, adj = c(0, -.3), cex = 0.8, ...)
    abline(h = y, lty = ltys, ...); mytext(xoff, y, clty)
    y <- y - 1/(3*(n+1))
-   abline(h = y, lty = ltys, lwd = 2, ...); mytext(1/8+xoff, y, paste(clty," lwd = 2"))
+   abline(h = y, lty = ltys, lwd = 2, ...)
+   mytext(1/8+xoff, y, paste(clty," lwd = 2"))
 }
 showLty(c("solid", "dashed", "dotted", "dotdash", "longdash", "twodash"))
 par(new = TRUE)  # the same:

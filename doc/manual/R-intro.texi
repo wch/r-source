@@ -5356,13 +5356,15 @@ of the @R{} environment.  It is possible to use the facilities to
 display a wide variety of statistical graphs and also to build entirely
 new types of graph.
 
-The graphics facilities can be used in both interactive and batch modes, but in
-most cases, interactive use is more productive.  Interactive use is also
-easy because at startup time @R{} initiates a graphics @emph{device
-driver} which opens a special @emph{graphics window} for the display of
-interactive graphics.  Although this is done automatically, it is useful
-to know that the command used is @code{X11()} under UNIX,
-@code{windows()} under Windows and @code{quartz()} under OS X.
+The graphics facilities can be used in both interactive and batch modes,
+but in most cases, interactive use is more productive.  Interactive use
+is also easy because at startup time @R{} initiates a graphics
+@emph{device driver} which opens a special @emph{graphics window} for
+the display of interactive graphics.  Although this is done
+automatically, it may useful to know that the command used is
+@code{X11()} under UNIX, @code{windows()} under Windows and
+@code{quartz()} under OS X.  A new device can always be opened by
+@code{dev.new()}.
 
 Once the device driver is running, @R{} plotting commands can be used to
 produce a variety of graphical displays and to create entirely new kinds

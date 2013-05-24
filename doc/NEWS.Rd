@@ -176,28 +176,28 @@
       \item \code{as.dendrogram()}'s \code{hclust} method uses less
       memory and hence gets considerably faster for large (n ~ 1000)
       clusterings, thanks to Daniel Müllner. (\PR{15174})
-      
+
       \item The return value when all workers failed from
       \code{parallel::mclapply(mc.presechedule = TRUE)} was a list of
       strings and not of error objects.  (Spotted by Karl Forner and
-      Bernd Bischl.) 
-      
+      Bernd Bischl.)
+
       \item In \R 3.0.0, when \code{help()} found multiple pages with
       the same alias, the HTML display of all the selections was not
-      produced.  (\PR{15282})  
-      
+      produced.  (\PR{15282})
+
       \item \code{splinefun(method="monoH.FC")} now produces a
       function with first argument named \code{x} and allows
-      \code{deriv=3}, as documented. (\PR{15273})     
-      
-      \item \code{summaryRprof()} would only read the first 
+      \code{deriv=3}, as documented. (\PR{15273})
+
+      \item \code{summaryRprof()} would only read the first
       \code{chunksize} lines of an \code{Rprof} file produced with
       \code{line.profiling=TRUE}. By default, this is the first 100
       seconds.  (\PR{15288})
-      
+
       \item \code{lsfit()} produced an incorrect error message when
       argument \code{x} had more columns than rows or \code{x} had a
-      different number of rows than \code{y}. (Spotted by Renaud Gaujoux.)      
+      different number of rows than \code{y}. (Spotted by Renaud Gaujoux.)
 
       \item Binary operations on equal length vectors copied the
       class name from the second operand when the first had no

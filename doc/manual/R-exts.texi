@@ -219,13 +219,19 @@ use less (virtual) memory.
 @pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
 @end ifset
 
+@cindex CRAN
+@acronym{CRAN} is a network of WWW sites holding the @R{} distributions
+and contributed code, especially @R{} packages.  Users of @R{} are
+encouraged to join in the collaborative project and to submit their own
+packages to @acronym{CRAN}: current instructions are linked from
+@uref{http://CRAN.R-project.org/banner.shtml#submitting}.
+
 
 @menu
 * Package structure::           
 * Configure and cleanup::       
 * Checking and building packages::  
 * Writing package vignettes::   
-* Submitting a package to CRAN::  
 * Package namespaces::          
 * Writing portable packages::   
 * Diagnostic messages::         
@@ -1236,7 +1242,7 @@ strsplit(tclvalue('auto_path'), " ")[[1]]
 @end example
 
 @noindent
-then downoad the sources from
+then download the sources from
 @uref{http://sourceforge.net/projects/tcllib/files/BWidget/} and
 at the command line run
 
@@ -2596,7 +2602,7 @@ binaries. Note that this is intended for developers on other platforms
 who do not have access to Windows but wish to provide binaries for the
 Windows platform.
 
-@node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
+@node Writing package vignettes, Package namespaces, Checking and building packages, Creating R packages
 @section Writing package vignettes
 @cindex vignettes
 @cindex Sweave
@@ -2854,21 +2860,8 @@ it supports other input formats as well as @file{.Rmd}.)
 See the @code{?tools::vignetteEngine} help topic for details
 on engine registration.
 
-@node Submitting a package to CRAN, Package namespaces, Writing package vignettes, Creating R packages
-@section Submitting a package to @acronym{CRAN}
-@cindex CRAN
-@cindex CRAN submission
-@cindex Submitting to CRAN
 
-@acronym{CRAN} is a network of WWW sites holding the @R{} distributions
-and contributed code, especially @R{} packages.  Users of @R{} are
-encouraged to join in the collaborative project and to submit their own
-packages to @acronym{CRAN}.
-
-Current submission instructions are linked from
-@uref{http://CRAN.R-project.org/banner.shtml#submitting}.
-
-@node Package namespaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
+@node Package namespaces, Writing portable packages, Writing package vignettes, Creating R packages
 @section Package namespaces
 @cindex namespaces
 
@@ -10613,6 +10606,12 @@ used.  (Passing values @emph{via} arguments is safer.)
 The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
+Passing character strings from C to FORTRAN 77 or @emph{vice versa} is
+not portable (and to Fortran 90 or later is even less so).  We have
+found that it helps to ensure that a C string to be passed is followed
+by several @code{nul}s (and not just the one needed as a C terminator).
+But for maximal portability character strings in FORTRAN should be
+avoided.
 
 
 @node Numerical analysis subroutines, Optimization, Calling C from FORTRAN and vice versa, The R API

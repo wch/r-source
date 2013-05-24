@@ -21,10 +21,11 @@ median(x, na.rm = FALSE)
 }
 \details{
   This is a generic function for which methods can be written.  However,
-  the default method makes use of \code{sort} and \code{mean} from
-  package \pkg{base} both of which are generic, and so the default
-  method will work for most classes (e.g. \code{"\link{Date}"}) for
-  which a median is a reasonable concept.
+  the default method makes use of \code{is.na}, \code{sort} and
+  \code{mean} from package \pkg{base} all of which are generic, and so
+  the default method will work for most classes
+  (e.g. \code{"\link{Date}"}) for which a median is a reasonable
+  concept.
 }
 \value{
   The default method returns a length-one object of the same type as

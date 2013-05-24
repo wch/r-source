@@ -29,7 +29,7 @@
 #include <Rmath.h>
 #include <float.h>
 #include "stats.h"
-#ifdef HAVE_OPENMP
+#ifdef _OPENMP
 # include <R_ext/MathThreads.h>
 #endif
 
@@ -201,7 +201,7 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
     int dc, i, j;
     size_t  ij;  /* can exceed 2^31 - 1 */
     double (*distfun)(double*, int, int, int, int) = NULL;
-#ifdef HAVE_OPENMP
+#ifdef _OPENMP
     int nthreads;
 #endif
 
@@ -229,7 +229,7 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 	error(_("distance(): invalid distance"));
     }
     dc = (*diag) ? 0 : 1; /* diag=1:  we do the diagonal */
-#ifdef HAVE_OPENMP
+#ifdef _OPENMP
     if (R_num_math_threads > 0)
 	nthreads = R_num_math_threads;
     else

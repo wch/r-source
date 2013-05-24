@@ -1473,10 +1473,6 @@ Mountain Lion, @dots{}); it is a 64-bit (@cputype{x86_64}) build which
 should run on all Macs from mid-2008 on.  For older Intel Macs and some
 older versions of the OS you can install @R{} from the sources.
 
-Note that unlike @acronym{CRAN} binary distributions of @R{} 2.x.y,
-there is only a 64-bit version (and hence no separate @code{R64.app}
-application, nor @command{R64}/@command{R32} front-ends).
-
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
 currently shows three components (`Package Name').  Everyone will need
@@ -1904,8 +1900,7 @@ menus for installation of either binary or source packages, from
 @acronym{CRAN} or local files.
 
 Note that many binary packages including compiled code are tied to a
-particular series (e.g.@: @R{} 2.15.x or 3.0.x) of @R{}: in any case @R{} 3.0.x
-cannot use any binary packages built for @R{} 2.15.x or earlier.
+particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the `Command
