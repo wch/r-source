@@ -1439,7 +1439,7 @@
       \item The cairo-based versions of \code{X11()} now work with
       current versions of cairographics (e.g. 1.12.10).  (\PR{15168})
 
-      A workon average for earlier versions of \R is to use
+      A workaround for earlier versions of \R is to use
       \code{X11.options(type = "nbcairo")}.
 
       \item Configuration and \command{R CMD javareconf} now come up
@@ -1538,7 +1538,7 @@
       \item The \code{exclude} argument to \code{xtabs()} was ignored
       for \code{"factor"} arguments.
 
-      \item On Windows, work on average an event-timing problem when
+      \item On Windows, work around an event-timing problem when
       the RGui console was closed from the \sQuote{X} control and the closure
       cancelled. (This would on some 64-bit systems crash \R, typically
       those with a slow GPU relative to the CPU.)

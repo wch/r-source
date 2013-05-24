@@ -66,7 +66,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 }
 \section{Warning}{
   This is really only suitable for English, and does not work correctly with
-  non-ASCII characters in multibyte locales.   It will warn if used with
+  non-ASCII characters in multibyte locales.  It will warn if used with
   non-ASCII characters (and required to reduce the length).
 }
 \seealso{
