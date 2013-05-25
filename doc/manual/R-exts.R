@@ -71,7 +71,7 @@ zero(cube1, c(0, 5))
 
 ## ----- numerical derivatives -----
 
-numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
+numeric.deriv <- function(expr, theta, rho = sys.frame(sys.parent()))
 {
     eps <- sqrt(.Machine$double.eps)
     ans <- eval(substitute(expr), rho)

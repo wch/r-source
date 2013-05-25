@@ -7280,12 +7280,12 @@ easy in C code.)  We could do this using @code{.C} by
 @group
 void convolve(double *a, int *na, double *b, int *nb, double *ab)
 @{
-    int i, j, nab = *na + *nb - 1;
+    int nab = *na + *nb - 1;
 
-    for(i = 0; i < nab; i++)
+    for(int i = 0; i < nab; i++)
         ab[i] = 0.0;
-    for(i = 0; i < *na; i++)
-        for(j = 0; j < *nb; j++)
+    for(int i = 0; i < *na; i++)
+        for(int j = 0; j < *nb; j++)
             ab[i + j] += a[i] * b[j];
 @}
 @end group
@@ -8200,9 +8200,8 @@ internal @R{} data structures, then that can be done using the
 @code{.Call} and @code{.External} functions.  The syntax for the calling
 function in @R{} in each case is similar to that of @code{.C}, but the
 two functions have different C interfaces.  Generally the @code{.Call}
-interface (which is modelled on the interface of the same name in @Sl{}
-version 4) is a little simpler to use, but @code{.External} is a little
-more general.
+interface is simpler to use, but @code{.External} is a little more
+general.
 @findex .Call
 @findex .External
 
@@ -8263,23 +8262,21 @@ look at other alternatives.  First, consider working in interpreted @R{}
 code; if this is fast enough, this is normally the best option.  You
 should also see if using @code{.C} is enough.  If the task to be
 performed in C is simple enough involving only atomic vectors and
-requiring no call to @R{}, @code{.C} suffices.  The new interfaces are
-relatively recent additions to @Sl{} and @R{}, and a great deal of
-useful code has been written using just @code{.C} before they were
-available.  The @code{.Call} and @code{.External} interfaces allow much
-more control, but they also impose much greater responsibilities so need
-to be used with care.  Neither @code{.Call} nor @code{.External} copy
-their arguments: you should treat arguments you receive through these
+requiring no call to @R{}, @code{.C} suffices. A great deal of useful
+code was written using just @code{.C} before @code{.Call} and
+@code{.External} were available.  These interfaces allow much more
+control, but they also impose much greater responsibilities so need to
+be used with care.  Neither @code{.Call} nor @code{.External} copy their
+arguments: you should treat arguments you receive through these
 interfaces as read-only.
 
-There are two approaches that can be taken to handling @R{} objects from
-within C code.  The first (historically) is to use the macros and
-functions that have been used to implement the core parts of @R{}
-through @code{.Internal} calls.  A public@footnote{ @pxref{The R API}:
-note that these are not all part of the API.}  subset of these is
-defined in the header file @file{Rinternals.h} in the directory
-@file{@var{R_INCLUDE_DIR}} (default @file{@var{R_HOME}/include}) that
-should be available on any @R{} installation.
+To handle @R{} objects from within C code we use the macros and functions
+that have been used to implement the core parts of @R{}.  A
+public@footnote{ @pxref{The R API}: note that these are not all part of
+the API.}  subset of these is defined in the header file
+@file{Rinternals.h} in the directory @file{@var{R_INCLUDE_DIR}} (default
+@file{@var{R_HOME}/include}) that should be available on any @R{}
+installation.
 
 Another approach is to use @R{} versions of the macros and functions
 defined for the @Sl{} version 4 interface @code{.Call}, which are
@@ -8290,10 +8287,10 @@ tested.  Note too that some idiomatic S4 constructions with these macros
 (such as assigning elements of character vectors or lists) are invalid
 in @R{}.
 
-A substantial amount of @R{} is implemented using the functions and
-macros described here, so the @R{} source code provides a rich source of
-examples and ``how to do it'': do make use of the source code for
-inspirational examples.
+A substantial amount of @R{}, including the standard packages, is
+implemented using the functions and macros described here, so the @R{}
+source code provides a rich source of examples and ``how to do it'': do
+make use of the source code for inspirational examples.
 
 It is necessary to know something about how @R{} objects are handled in
 C code.  All the @R{} objects you will deal with will be handled with
@@ -8377,7 +8374,7 @@ First we use the macros in @file{Rinternals.h}:
 
     SEXP ab;
       ....
-    PROTECT(ab = allocVector(REALSXP, 2));
+    ab = PROTECT(allocVector(REALSXP, 2));
     REAL(ab)[0] = 123.45;
     REAL(ab)[1] = 67.89;
     UNPROTECT(1);
@@ -8394,7 +8391,7 @@ and then those in @file{Rdefines.h}:
 
     SEXP ab;
       ....
-    PROTECT(ab = NEW_NUMERIC(2));
+    ab = PROTECT(NEW_NUMERIC(2));
     NUMERIC_POINTER(ab)[0] = 123.45;
     NUMERIC_POINTER(ab)[1] = 67.89;
     UNPROTECT(1);
@@ -8441,8 +8438,8 @@ For example (from the internal code for @code{optim})
     PROTECT_INDEX ipx;
 
     ....
-    PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
-    REPROTECT(s = coerceVector(s, REALSXP), ipx);
+    s = PROTECT_WITH_INDEX(eval(OS->R_fcall, OS->R_env), &ipx);
+    s = REPROTECT(coerceVector(s, REALSXP), ipx);
 @end example
 
 Note that it is dangerous to mix @code{UNPROTECT_PTR} with
@@ -8456,10 +8453,7 @@ unprotected.
 
 For many purposes it is sufficient to allocate @R{} objects and
 manipulate those.  There are quite a few @code{alloc@var{Xxx}} functions
-defined in @file{Rinternals.h}---you may want to explore them.  These
-allocate @R{} objects of various types, and for the standard vector
-types there are equivalent @code{NEW_@var{XXX}} macros defined in
-@file{Rdefines.h}.
+defined in @file{Rinternals.h}---you may want to explore them.
 
 If storage is required for C objects during the calculations this is
 best allocating by calling @code{R_alloc}; @pxref{Memory allocation}.
@@ -8520,14 +8514,14 @@ object to the correct type.  For example, if you find that an
 object, you can change the type by using, equivalently,
 
 @example
-PROTECT(@var{newSexp} = coerceVector(@var{oldSexp}, REALSXP));
+@var{newSexp} = PROTECT(coerceVector(@var{oldSexp}, REALSXP));
 @end example
 
 @noindent
 or
 
 @example
-PROTECT(@var{newSexp} = AS_NUMERIC(@var{oldSexp}));
+@var{newSexp} = PROTECT(AS_NUMERIC(@var{oldSexp}));
 @end example
 
 @noindent
@@ -8584,15 +8578,15 @@ C code to do the computations is
 
 SEXP out(SEXP x, SEXP y)
 @{
-    int i, j, nx = length(x), ny = length(y);
-    double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
+    int nx = length(x), ny = length(y);
+    double *rx = REAL(x), *ry = REAL(y), *rans;
     SEXP ans;
 
-    PROTECT(ans = allocMatrix(REALSXP, nx, ny));
+    ans = PROTECT(allocMatrix(REALSXP, nx, ny));
     rans = REAL(ans);
-    for(i = 0; i < nx; i++) @{
-        tmp = rx[i];
-        for(j = 0; j < ny; j++)
+    for(int i = 0; i < nx; i++) @{
+        double tmp = rx[i];
+        for(int j = 0; j < ny; j++)
             rans[i + nx*j] = tmp * ry[j];
     @}
     UNPROTECT(1);
@@ -8616,29 +8610,29 @@ set the @code{dim} attribute directly.
 @group
 SEXP out(SEXP x, SEXP y)
 @{
-    int i, j, nx = length(x), ny = length(y);
-    double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
+    int nx = length(x), ny = length(y);
+    double *rx = REAL(x), *ry = REAL(y), *rans;
     SEXP ans, dim, dimnames;
 @end group
 
 @group
-    PROTECT(ans = allocVector(REALSXP, nx*ny));
+    ans = PROTECT(allocVector(REALSXP, nx*ny));
     rans = REAL(ans);
-    for(i = 0; i < nx; i++) @{
-    tmp = rx[i];
-    for(j = 0; j < ny; j++)
-         rans[i + nx*j] = tmp * ry[j];
+    for(int i = 0; i < nx; i++) @{
+      double tmp = rx[i];
+      for(int j = 0; j < ny; j++)
+        rans[i + nx*j] = tmp * ry[j];
     @}
 @end group
 
 @group
-    PROTECT(dim = allocVector(INTSXP, 2));
+    dim = PROTECT(allocVector(INTSXP, 2));
     INTEGER(dim)[0] = nx; INTEGER(dim)[1] = ny;
     setAttrib(ans, R_DimSymbol, dim);
 @end group
 
 @group
-    PROTECT(dimnames = allocVector(VECSXP, 2));
+    dimnames = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(dimnames, 0, getAttrib(x, R_NamesSymbol));
     SET_VECTOR_ELT(dimnames, 1, getAttrib(y, R_NamesSymbol));
     setAttrib(ans, R_DimNamesSymbol, dimnames);
@@ -8675,7 +8669,7 @@ need to add a symbol for it @emph{via} a call to
 @example
 @group
     SEXP version;
-    PROTECT(version = allocVector(REALSXP, 1));
+    version = PROTECT(allocVector(REALSXP, 1));
     REAL(version)[0] = 3.0;
     setAttrib(ans, install("version"), version);
     UNPROTECT(1);
@@ -8708,11 +8702,11 @@ We can use
 @example
 @group
 #include <R.h>
-#include <Rdefines.h>
+#include <Rinternals.h>
       ....
     SEXP ans, dim, dimnames, class;
       ....
-    PROTECT(class = allocVector(STRSXP, 1));
+    class = PROTECT(allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("mat"));
     classgets(ans, class);
     UNPROTECT(4);
@@ -9109,19 +9103,18 @@ Now for the version in @file{Rinternals.h} style.  Only the C code changes.
 
 SEXP convolve2(SEXP a, SEXP b)
 @{
-    int i, j, na, nb, nab;
+    int na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
-    PROTECT(a = coerceVector(a, REALSXP));
-    PROTECT(b = coerceVector(b, REALSXP));
+    a = PROTECT(coerceVector(a, REALSXP));
+    b = PROTECT(coerceVector(b, REALSXP));
     na = length(a); nb = length(b); nab = na + nb - 1;
-    PROTECT(ab = allocVector(REALSXP, nab));
-    xa = REAL(a); xb = REAL(b);
-    xab = REAL(ab);
-    for(i = 0; i < nab; i++) xab[i] = 0.0;
-    for(i = 0; i < na; i++)
-        for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
+    ab = PROTECT(allocVector(REALSXP, nab));
+    xa = REAL(a); xb = REAL(b); xab = REAL(ab);
+    for(int i = 0; i < nab; i++) xab[i] = 0.0;
+    for(int i = 0; i < na; i++)
+        for(int j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
     UNPROTECT(3);
     return(ab);
 @}
@@ -9159,8 +9152,8 @@ SEXP convolveE(SEXP args)
     double *xa, *xb, *xab;
     SEXP a, b, ab;
 
-    PROTECT(a = coerceVector(CADR(args), REALSXP));
-    PROTECT(b = coerceVector(CADDR(args), REALSXP));
+    a = PROTECT(coerceVector(CADR(args), REALSXP));
+    b = PROTECT(coerceVector(CADDR(args), REALSXP));
     ...
 @}
 @end group
@@ -9294,8 +9287,8 @@ or @code{convolveE}:
 @example
 @group
     ...
-  for(i = 0; i < na; i++)
-    for(j = 0; j < nb; j++)
+  for(int i = 0; i < na; i++)
+    for(int j = 0; j < nb; j++)
         if(ISNA(xa[i]) || ISNA(xb[j]) || ISNA(xab[i + j]))
             xab[i + j] = NA_REAL;
         else
@@ -9350,13 +9343,13 @@ with C code
 @group
 SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 @{
-    int i, n = length(list);
+    int n = length(list);
     SEXP ans;
 
     if(!isNewList(list)) error("'list' must be a list");
     if(!isEnvironment(rho)) error("'rho' should be an environment");
-    PROTECT(ans = allocVector(VECSXP, n));
-    for(i = 0; i < n; i++) @{
+    ans = PROTECT(allocVector(VECSXP, n));
+    for(int i = 0; i < n; i++) @{
         defineVar(install("x"), VECTOR_ELT(list, i), rho);
         SET_VECTOR_ELT(ans, i, eval(expr, rho));
     @}
@@ -9377,15 +9370,15 @@ obscure) to do this in C code.  The following is based on the code in
 @group
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 @{
-    int i, n = length(list);
+    int n = length(list);
     SEXP R_fcall, ans;
 
     if(!isNewList(list)) error("'list' must be a list");
     if(!isFunction(fn)) error("'fn' must be a function");
     if(!isEnvironment(rho)) error("'rho' should be an environment");
-    PROTECT(R_fcall = lang2(fn, R_NilValue));
-    PROTECT(ans = allocVector(VECSXP, n));
-    for(i = 0; i < n; i++) @{
+    R_fcall = PROTECT(lang2(fn, R_NilValue));
+    ans = PROTECT(allocVector(VECSXP, n));
+    for(int i = 0; i < n; i++) @{
         SETCADR(R_fcall, VECTOR_ELT(list, i));
         SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
     @}
@@ -9419,7 +9412,7 @@ and evaluating, consider the following fragment of
        See do_docall for the template for this sort of thing.
     */
     SEXP s, t;
-    PROTECT(t = s = allocList(3));
+    t = s = PROTECT(allocList(3));
     SET_TYPEOF(s, LANGSXP);
     SETCAR(t, install("print")); t = CDR(t);
     SETCAR(t,  CAR(a)); t = CDR(t);
@@ -9480,7 +9473,7 @@ The C code is
 SEXP mkans(double x)
 @{
     SEXP ans;
-    PROTECT(ans = allocVector(REALSXP, 1));
+    ans = PROTECT(allocVector(REALSXP, 1));
     REAL(ans)[0] = x;
     UNPROTECT(1);
     return ans;
@@ -9595,7 +9588,7 @@ SEXP numeric_deriv(SEXP args)
 @{
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
     double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
-    int start, i, j;
+    int i, start;
 @end group
 
 @group
@@ -9607,20 +9600,20 @@ SEXP numeric_deriv(SEXP args)
 @end group
 
 @group
-    PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
-    PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
+    ans = PROTECT(coerceVector(eval(expr, rho), REALSXP));
+    gradient = PROTECT(allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
     rgr = REAL(gradient); rans = REAL(ans);
 @end group
 
 @group
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-        PROTECT(par = findVar(install(CHAR(STRING_ELT(theta, i))), rho));
+        par = PROTECT(findVar(install(CHAR(STRING_ELT(theta, i))), rho));
         tt = REAL(par)[0];
         xx = fabs(tt);
         delta = (xx < 1) ? eps : xx*eps;
         REAL(par)[0] += delta;
-        PROTECT(ans1 = coerceVector(eval(expr, rho), REALSXP));
-        for(j = 0; j < LENGTH(ans); j++)
+        ans1 = PROTECT(coerceVector(eval(expr, rho), REALSXP));
+        for(int j = 0; j < LENGTH(ans); j++)
             rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
         REAL(par)[0] = tt;
         UNPROTECT(2); /* par, ans1 */
@@ -9628,7 +9621,7 @@ SEXP numeric_deriv(SEXP args)
 @end group
 
 @group
-    PROTECT(dimnames = allocVector(VECSXP, 2));
+    dimnames = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(dimnames, 1,  theta);
     dimnamesgets(gradient, dimnames);
     setAttrib(ans, install("gradient"), gradient);
@@ -9661,14 +9654,14 @@ The first step in the code is to evaluate the expression in the
 environment @code{rho}, by
 
 @example
-    PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
+    ans = PROTECT(coerceVector(eval(expr, rho), REALSXP));
 @end example
 
 @noindent
 We then allocate space for the calculated derivative by
 
 @example
-    PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
+    gradient = PROTECT(allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
 @end example
 
 @noindent
@@ -9679,7 +9672,7 @@ arguments are the numbers of rows and columns.
 @example
 @group
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-        PROTECT(par = findVar(install(CHAR(STRING_ELT(theta, i))), rho));
+        par = PROTECT(findVar(install(CHAR(STRING_ELT(theta, i))), rho));
 @end group
 @end example
 
@@ -9700,7 +9693,7 @@ install the name and use @code{findVar} to find its value.
         xx = fabs(tt);
         delta = (xx < 1) ? eps : xx*eps;
         REAL(par)[0] += delta;
-        PROTECT(ans1 = coerceVector(eval(expr, rho), REALSXP));
+        ans1 = PROTECT(coerceVector(eval(expr, rho), REALSXP));
 @end group
 @end example
 
@@ -9715,7 +9708,7 @@ changed parameter value.
 
 @example
 @group
-        for(j = 0; j < LENGTH(ans); j++)
+        for(int j = 0; j < LENGTH(ans); j++)
             rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
         REAL(par)[0] = tt;
         UNPROTECT(2);
@@ -9729,7 +9722,7 @@ it is accessed: @R{} stores matrices by column (like FORTRAN).
 
 @example
 @group
-    PROTECT(dimnames = allocVector(VECSXP, 2));
+    dimnames = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(dimnames, 1, theta);
     dimnamesgets(gradient, dimnames);
     setAttrib(ans, install("gradient"), gradient);
@@ -9775,7 +9768,7 @@ SEXP menu_ttest3()
     ParseStatus status;
    ...
     if(done == 1) @{
-        PROTECT(cmdSexp = allocVector(STRSXP, 1));
+        cmdSexp = PROTECT(allocVector(STRSXP, 1));
         SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
         cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
         if (status != PARSE_OK) @{
@@ -9979,7 +9972,7 @@ is created by
 
 @example
     SEXP ans, ptr;
-    PROTECT(ans = allocVector(INTSXP, 1));
+    ans = PROTECT(allocVector(INTSXP, 1));
     ptr = R_MakeExternalPtr(thisHandle, install("RODBC_channel"), R_NilValue);
     PROTECT(ptr);
     R_RegisterCFinalizerEx(ptr, chanFinalizer, TRUE);

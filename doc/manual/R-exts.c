@@ -13,26 +13,23 @@
 /* second version */
 SEXP out(SEXP x, SEXP y)
 {
-    int i, j, nx = length(x), ny = length(y);
-    double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
-    SEXP ans, dim, dimnames;
+    int nx = length(x), ny = length(y);
+    double *rx = REAL(x), *ry = REAL(y), *rans;
+    SEXP ans, dimnames;
 
-    PROTECT(ans = allocMatrix(REALSXP, nx, ny));
+    ans = PROTECT(allocMatrix(REALSXP, nx, ny));
     rans = REAL(ans);
-    for(i = 0; i < nx; i++) {
-	tmp = rx[i];
-	for(j = 0; j < ny; j++)
+    for(int i = 0; i < nx; i++) {
+	double tmp = rx[i];
+	for(int j = 0; j < ny; j++)
 	    rans[i + nx*j] = tmp * ry[j];
     }
-    PROTECT(dim = allocVector(INTSXP, 2));
-    INTEGER(dim)[0] = nx; INTEGER(dim)[1] = ny;
-    setAttrib(ans, R_DimSymbol, dim);
 
-    PROTECT(dimnames = allocVector(VECSXP, 2));
+    dimnames = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(dimnames, 0, getAttrib(x, R_NamesSymbol));
     SET_VECTOR_ELT(dimnames, 1, getAttrib(y, R_NamesSymbol));
     setAttrib(ans, R_DimNamesSymbol, dimnames);
-    UNPROTECT(3);
+    UNPROTECT(2);
     return(ans);
 }
 
@@ -68,7 +65,7 @@ SEXP getvar(SEXP name, SEXP rho)
 #include <Rdefines.h>
 SEXP convolve2(SEXP a, SEXP b)
 {
-    int i, j, na, nb, nab;
+    int na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
@@ -78,28 +75,28 @@ SEXP convolve2(SEXP a, SEXP b)
     PROTECT(ab = NEW_NUMERIC(nab));
     xa = NUMERIC_POINTER(a); xb = NUMERIC_POINTER(b);
     xab = NUMERIC_POINTER(ab);
-    for(i = 0; i < nab; i++) xab[i] = 0.0;
-    for(i = 0; i < na; i++)
-	for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
+    for(int i = 0; i < nab; i++) xab[i] = 0.0;
+    for(int i = 0; i < na; i++)
+	for(int j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
     UNPROTECT(3);
     return(ab);
 }
 
+#include <Rinternals.h>
 SEXP convolve2b(SEXP a, SEXP b)
 {
-    int i, j, na, nb, nab;
+    int  na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
-    PROTECT(a = coerceVector(a, REALSXP));
-    PROTECT(b = coerceVector(b, REALSXP));
+    a = PROTECT(coerceVector(a, REALSXP));
+    b = PROTECT(coerceVector(b, REALSXP));
     na = length(a); nb = length(b); nab = na + nb - 1;
-    PROTECT(ab = allocVector(REALSXP, nab));
-    xa = REAL(a); xb = REAL(b);
-    xab = REAL(ab);
-    for(i = 0; i < nab; i++) xab[i] = 0.0;
-    for(i = 0; i < na; i++)
-	for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
+    ab = PROTECT(allocVector(REALSXP, nab));
+    xa = REAL(a); xb = REAL(b); xab = REAL(ab);
+    for(int i = 0; i < nab; i++) xab[i] = 0.0;
+    for(int i = 0; i < na; i++)
+        for(int j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
     UNPROTECT(3);
     return(ab);
 }
@@ -108,19 +105,18 @@ SEXP convolve2b(SEXP a, SEXP b)
 
 SEXP convolveE(SEXP args)
 {
-    int i, j, na, nb, nab;
+    int na, nb, nab;
     double *xa, *xb, *xab;
     SEXP a, b, ab;
 
-    PROTECT(a = coerceVector(CADR(args), REALSXP));
-    PROTECT(b = coerceVector(CADDR(args), REALSXP));
+    a = PROTECT(coerceVector(CADR(args), REALSXP));
+    b = PROTECT(coerceVector(CADDR(args), REALSXP));
     na = length(a); nb = length(b); nab = na + nb - 1;
-    PROTECT(ab = allocVector(REALSXP, nab));
-    xa = REAL(a); xb = REAL(b);
-    xab = REAL(ab);
-    for(i = 0; i < nab; i++) xab[i] = 0.0;
-    for(i = 0; i < na; i++)
-	for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
+    ab = PROTECT(allocVector(REALSXP, nab));
+    xa = REAL(a); xb = REAL(b); xab = REAL(ab);
+    for(int i = 0; i < nab; i++) xab[i] = 0.0;
+    for(int i = 0; i < na; i++)
+	for(int j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
     UNPROTECT(3);
     return(ab);
 }
@@ -200,13 +196,13 @@ SEXP showArgs1(SEXP largs)
 
 SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 {
-    int i, n = length(list);
+    int n = length(list);
     SEXP ans;
 
     if(!isNewList(list)) error("'list' must be a list");
     if(!isEnvironment(rho)) error("'rho' should be an environment");
-    PROTECT(ans = allocVector(VECSXP, n));
-    for(i = 0; i < n; i++) {
+    ans = PROTECT(allocVector(VECSXP, n));
+    for(int i = 0; i < n; i++) {
 	defineVar(install("x"), VECTOR_ELT(list, i), rho);
 	SET_VECTOR_ELT(ans, i, eval(expr, rho));
     }
@@ -217,15 +213,15 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 {
-    int i, n = length(list);
+    int n = length(list);
     SEXP R_fcall, ans;
 
     if(!isNewList(list)) error("'list' must be a list");
     if(!isFunction(fn)) error("'fn' must be a function");
     if(!isEnvironment(rho)) error("'rho' should be an environment");
-    PROTECT(R_fcall = lang2(fn, R_NilValue));
-    PROTECT(ans = allocVector(VECSXP, n));
-    for(i = 0; i < n; i++) {
+    R_fcall = PROTECT(lang2(fn, R_NilValue));
+    ans = PROTECT(allocVector(VECSXP, n));
+    for(int i = 0; i < n; i++) {
 	SETCADR(R_fcall, VECTOR_ELT(list, i));
 	SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
     }
@@ -239,7 +235,7 @@ SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 SEXP mkans(double x)
 {
     SEXP ans;
-    PROTECT(ans = allocVector(REALSXP, 1));
+    ans = PROTECT(allocVector(REALSXP, 1));
     REAL(ans)[0] = x;
     UNPROTECT(1);
     return ans;
@@ -285,7 +281,7 @@ SEXP numeric_deriv(SEXP args)
 {
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
     double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
-    int start, i, j;
+    int i, start;
 
     expr = CADR(args);
     if(!isString(theta = CADDR(args)))
@@ -293,8 +289,8 @@ SEXP numeric_deriv(SEXP args)
     if(!isEnvironment(rho = CADDDR(args)))
 	error("rho should be an environment");
 
-    PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
-    PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
+    ans = PROTECT(coerceVector(eval(expr, rho), REALSXP));
+    gradient = PROTECT(allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
     rgr = REAL(gradient); rans = REAL(ans);
 
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) {
@@ -303,14 +299,14 @@ SEXP numeric_deriv(SEXP args)
 	xx = fabs(tt);
 	delta = (xx < 1) ? eps : xx*eps;
 	REAL(par)[0] += delta;
-	PROTECT(ans1 = coerceVector(eval(expr, rho), REALSXP));
-	for(j = 0; j < LENGTH(ans); j++)
+	ans1 = PROTECT(coerceVector(eval(expr, rho), REALSXP));
+	for(int j = 0; j < LENGTH(ans); j++)
             rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
 	REAL(par)[0] = tt;
 	UNPROTECT(2); /* par, ans1 */
     }
 
-    PROTECT(dimnames = allocVector(VECSXP, 2));
+    dimnames = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(dimnames, 1,  theta);
     dimnamesgets(gradient, dimnames);
     setAttrib(ans, install("gradient"), gradient);
