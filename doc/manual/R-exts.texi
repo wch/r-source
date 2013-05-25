@@ -8270,7 +8270,7 @@ be used with care.  Neither @code{.Call} nor @code{.External} copy their
 arguments: you should treat arguments you receive through these
 interfaces as read-only.
 
-To handle @R{} objects from within C codewe use the macros and functions
+To handle @R{} objects from within C code we use the macros and functions
 that have been used to implement the core parts of @R{}.  A
 public@footnote{ @pxref{The R API}: note that these are not all part of
 the API.}  subset of these is defined in the header file
@@ -9537,7 +9537,7 @@ SEXP numeric_deriv(SEXP args)
 
 @group
     ans = PROTECT(coerceVector(eval(expr, rho), REALSXP));
-    PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
+    gradient = PROTECT(allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
     rgr = REAL(gradient); rans = REAL(ans);
 @end group
 
