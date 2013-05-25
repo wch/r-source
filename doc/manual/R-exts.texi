@@ -8250,11 +8250,13 @@ SEXP convolveE(SEXP args)
 Here @code{args} is a @code{LISTSXP}, a Lisp-style pairlist from which
 the arguments can be extracted.
 
-In each case the @R{} objects are available for manipulation @emph{via} a set
-of functions and macros defined in the header file @file{Rinternals.h}
-or some S4-compatibility macros defined in @file{Rdefines.h}.  See
-@ref{Interface functions .Call and .External} for details on
-@code{.Call} and @code{.External}.
+In each case the @R{} objects are available for manipulation @emph{via}
+a set of functions and macros defined in the header file
+@file{Rinternals.h} or some @Sl{}-compatibility macros@footnote{That is,
+similar to those defined in @Sl{} version 4 from the 1990s: these are
+not kept up to date and are not recommended for new projects.} defined
+in @file{Rdefines.h}.  See @ref{Interface functions .Call and .External}
+for details on @code{.Call} and @code{.External}.
 
 Before you decide to use @code{.Call} or @code{.External}, you should
 look at other alternatives.  First, consider working in interpreted @R{}
@@ -8470,12 +8472,10 @@ if the memory cannot be allocated.
 @cindex Details of R types
 
 Users of the @file{Rinternals.h} macros will need to know how the @R{}
-types are known internally: if the @file{Rdefines.h} macros are used
-then S4-compatible names are used.
-
-The different @R{} data types are represented in C by @dfn{SEXPTYPE}.
-Some of these are familiar from @R{} and some are internal data types.
-The usual @R{} object modes are given in the table.
+types are known internally.  The different @R{} data types are
+represented in C by @dfn{SEXPTYPE}.  Some of these are familiar from
+@R{} and some are internal data types.  The usual @R{} object modes are
+given in the table.
 
 @quotation
 @multitable {SEXPTYPE} {numeric with storage mode integer integer}
@@ -8510,8 +8510,7 @@ the C code.  You can use functions like @code{isReal}, @code{isInteger}
 and @code{isString} to do type checking.  See the header file
 @file{Rinternals.h} for definitions of other such functions.  All of
 these take a @code{SEXP} as argument and return 1 or 0 to indicate
-@var{TRUE} or @var{FALSE}.  Once again there are two ways to do this,
-and @file{Rdefines.h} has macros such as @code{IS_NUMERIC}.
+@var{TRUE} or @var{FALSE}.
 
 What happens if the @code{SEXP} is not of the correct type?  Sometimes
 you have no other option except to generate an error.  You can use the
