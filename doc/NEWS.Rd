@@ -44,8 +44,9 @@
 
       \item The included version of LAPACK has been updated to 3.4.2.
 
-      \item \code{as.data.frame.table()} now makes use of its
-      \code{\dots} by passing them to \code{provideDimnames}.
+      \item The \code{"table"} method for \code{as.data.frame()} now makes use
+      of \code{\dots} by passing \code{sep} and \code{base} arguments
+      to \code{provideDimnames()}.
     }
   }
 

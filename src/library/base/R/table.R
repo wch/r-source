@@ -204,8 +204,11 @@ as.data.frame.table <-
     function(x, row.names = NULL, ..., responseName = "Freq",
              stringsAsFactors = TRUE)
 {
+    my.pDnm <- function(x, ..., sep = "", base = list(LETTERS))
+        provideDimnames(x = x, sep = sep, base = base)
+
     ex <- quote(data.frame(do.call("expand.grid",
-				   c(dimnames(provideDimnames(x, ...)),
+				   c(dimnames(my.pDnm(x, ...)),
 				     KEEP.OUT.ATTRS = FALSE,
                                      stringsAsFactors = stringsAsFactors)),
                            Freq = c(x),
