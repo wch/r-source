@@ -33,9 +33,6 @@ conv <- function(a, b) .Call("convolve2", a, b)
 u <- rep(1, 5)
 conv(u, u)
 
-conv <- function(a, b) .Call("convolve2b", a, b)
-conv(u, u)
-
 convE <- function(a, b) .External("convolveE", a, b)
 convE(u, u)
 
@@ -71,7 +68,7 @@ zero(cube1, c(0, 5))
 
 ## ----- numerical derivatives -----
 
-numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
+numeric.deriv <- function(expr, theta, rho = sys.frame(sys.parent()))
 {
     eps <- sqrt(.Machine$double.eps)
     ans <- eval(substitute(expr), rho)
