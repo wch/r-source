@@ -20,7 +20,7 @@
 
 Rd2ex <-
     function(Rd, out="", defines=.Platform$OS.type, stages="render",
-             outputEncoding="UTF-8", ...)
+             outputEncoding="UTF-8", commentDontrun = TRUE, ...)
 {
     encode_warn <- FALSE
     WriteLines <- function(x, con, outputEncoding, ...) {
@@ -73,21 +73,22 @@ Rd2ex <-
                 writeLines("", con)
             of1("## End Don't show")
         } else if (tag  == "\\dontrun") {
-            ## Special case for one line.
-            if (length(x) == 1L) {
+            if (commentDontrun)
                 of1("## Not run: ")
+            ## Special case for one line.
+            if (length(x) == 1L && commentDontrun) {
                 render(x[[1L]], prefix)
             } else {
-                of1("## Not run: ")
                 if (!grepl("^\n", x[[1L]][1L], perl = TRUE) && RdTags(x)[1L] != "COMMENT") {
                     writeLines("", con)
-                    render(x[[1L]], paste("##D", prefix))
+                    render(x[[1L]], paste0(if (commentDontrun) "##D ", prefix))
                 } else render(x[[1L]], prefix)
-                for(i in 2:length(x)) render(x[[i]], paste("##D", prefix))
+                for(i in 2:length(x)) render(x[[i]], paste0(if (commentDontrun) "##D ", prefix))
                 last <- x[[length(x)]]
                 if (!grepl("\n$", last[length(last)], perl = TRUE))
                     writeLines("", con)
-                of1("## End(Not run)")
+                if (commentDontrun)
+                    of1("## End(Not run)")
             }
         } else if (tag  == "\\donttest") {
             of1("## No test: ")

@@ -30,7 +30,8 @@ Rd2latex(Rd, out = "", defines = .Platform$OS.type,
          fragment = FALSE, ..., writeEncoding = TRUE)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
-      stages = "render", outputEncoding = "UTF-8", ...)
+      stages = "render", outputEncoding = "UTF-8", 
+      commentDontrun = TRUE, ...)
 }
 \arguments{
   \item{Rd}{ a filename or \code{Rd} object to use as input. }
@@ -57,6 +58,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
     \code{Rd} is a filename. }
   \item{writeEncoding}{should \verb{\inputencoding} lines be written in
       the file for non-ASCII encodings?}
+  \item{commentDontrun}{should \verb{\dontrun} sections be commented
+      out?}
 }
 \details{
   These functions convert help documents: \code{Rd2HTML} produces HTML,

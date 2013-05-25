@@ -12,6 +12,10 @@
     \itemize{
       \item The macros used for the texinfo manuals have been changed to
       work better with the incompatible changes made in texinfo 5.x.
+      
+      \item The \code{example()} and \code{tools::Rd2ex()} functions now
+      have parameters to allow them to ignore \verb{\dontrun} markup in
+      examples.  (Suggested by Peter Solymos.)
     }
   }
   
