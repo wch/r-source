@@ -202,13 +202,10 @@ function(x, digits = max(1L, getOption("digits") - 3L), ...)
 
 as.data.frame.table <-
     function(x, row.names = NULL, ..., responseName = "Freq",
-             stringsAsFactors = TRUE)
+             stringsAsFactors = TRUE, sep="", base = list(LETTERS))
 {
-    my.pDnm <- function(x, ..., sep = "", base = list(LETTERS))
-        provideDimnames(x = x, sep = sep, base = base)
-
     ex <- quote(data.frame(do.call("expand.grid",
-				   c(dimnames(my.pDnm(x, ...)),
+				   c(dimnames(provideDimnames(x, sep=sep, base=base)),
 				     KEEP.OUT.ATTRS = FALSE,
                                      stringsAsFactors = stringsAsFactors)),
                            Freq = c(x),

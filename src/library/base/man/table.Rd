@@ -30,14 +30,14 @@ as.table(x, \dots)
 is.table(x)
 
 \method{as.data.frame}{table}(x, row.names = NULL, \dots,
-              responseName = "Freq", stringsAsFactors = TRUE)
+              responseName = "Freq", stringsAsFactors = TRUE,
+              sep = "", base = list(LETTERS))
 }
 \arguments{
   \item{\dots}{one or more objects which can be interpreted as factors
     (including character strings), or a list (or data frame) whose
     components can be so interpreted.  (For \code{as.table}, arguments
-    passed to specific methods; for \code{as.data.frame}, arguments
-    passed to \code{\link{provideDimnames}}.)}
+    passed to specific methods; for \code{as.data.frame}, unused.)}
   \item{exclude}{levels to remove for all factors in \code{\dots}.
     If set to \code{NULL}, it implies \code{useNA = "always"}.  See
     \sQuote{Details} for its interpretation for non-factor arguments.}
@@ -48,13 +48,16 @@ is.table(x)
   \item{deparse.level}{controls how the default \code{dnn} is
     constructed.  See \sQuote{Details}.}
   \item{x}{an arbitrary \R object, or an object inheriting from class
-    \code{"table"} for the \code{as.data.frame} method.}
+    \code{"table"} for the \code{as.data.frame} method. Note that
+    \code{as.data.frame.table(x, *)} may be called explicitly for
+    non-table \code{x} for \dQuote{reshaping} \code{\link{array}}s.}
   \item{row.names}{a character vector giving the row names for the data
     frame.}
   \item{responseName}{The name to be used for the column of table
     entries, usually counts.}
   \item{stringsAsFactors}{logical: should the classifying factors be
     returned as factors (the default) or character vectors?}
+  \item{sep, base}{passed to \code{\link{provideDimnames}}.}
 }
 \details{
   If the argument \code{dnn} is not supplied, the internal function

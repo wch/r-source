@@ -44,9 +44,9 @@
 
       \item The included version of LAPACK has been updated to 3.4.2.
 
-      \item The \code{"table"} method for \code{as.data.frame()} now makes use
-      of \code{\dots} by passing \code{sep} and \code{base} arguments
-      to \code{provideDimnames()}.
+      \item The \code{"table"} method for \code{as.data.frame()}, also
+      useful as \code{as.data.frame.table()}, now passes \code{sep} and
+      \code{base} arguments to \code{provideDimnames()}.
     }
   }
 
@@ -136,7 +136,7 @@
       up-to-date, and \file{Rinternals.h} is preferred for new code.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{help.request()} could not determine the current version
