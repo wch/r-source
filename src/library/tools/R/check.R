@@ -2901,10 +2901,12 @@ setRlibs <-
                              # these are from era of static HTML
                              "missing links?:")
                 ## Warnings spotted by gcc with
-                ## '-Wimplicit-function-declaration', which is
-                ## implied by '-Wall'.  Currently only accessible
-                ## via an internal environment variable.
-                check_src_flag <- Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "FALSE")
+                ##   '-Wimplicit-function-declaration'
+                ## which is implied by '-Wall'.
+                ## Currently only accessible via an internal environment
+                ## variable.
+                check_src_flag <-
+                    Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "FALSE")
                 ## (Not quite perfect, as the name should really
                 ## include 'IMPLICIT_FUNCTION_DECLARATION'.)
                 if (config_val_to_logical(check_src_flag)) {
@@ -2944,9 +2946,11 @@ setRlibs <-
                                   lines, invert = TRUE, value = TRUE, useBytes = TRUE)
                 }
 
-                ## Warnings spotted by gcc with '-Wunused', which is
-                ## implied by '-Wall'.  Currently only accessible
-                ## via an internal environment variable.
+                ## Warnings spotted by gcc with
+                ##   '-Wunused'
+                ## which is implied by '-Wall'.
+                ## Currently only accessible via an internal environment
+                ## variable.
                 check_src_flag <-
                     Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
                 if (!config_val_to_logical(check_src_flag)) {
@@ -2958,14 +2962,28 @@ setRlibs <-
                 }
                 ## (gfortran seems to use upper case.)
 
+                ## Warnings spotted by clang with
+                ##   '-Wsometimes-uninitialized'
+                ## which is implied by '-Wall'.
+                ## Currently only accessible via an internal environment
+                ## variable.
+                check_src_flag <-
+                    Sys.getenv("_R_CHECK_SRC_MINUS_W_SOMETIMES_UNINITIALIZED_",
+                               "FALSE")
+                if (!config_val_to_logical(check_src_flag)) {
+                    lines <- grep("warning: .* is used uninitialized whenever",
+                                  lines,
+                                  invert = TRUE, value = TRUE, useBytes
+                                  = TRUE)
+                }
 
-                ## Warnings spotted by gfortran >= 4.0 with
-                ## -Wall.  Justified in principle, it seems.  Let's
-                ## filter them for the time being, and maybe revert
-                ## this later on ... but make it possible to suppress
-                ## filtering out by setting the internal environment
-                ## variable _R_CHECK_WALL_FORTRAN_ to something
-                ## "true".
+                ## Warnings spotted by gfortran >= 4.0 with '-Wall'.
+                ## Justified in principle, it seems.
+                ## Let's filter them for the time being, and maybe
+                ## revert this later on ... but make it possible to
+                ## suppress filtering out by setting the internal
+                ## environment variable _R_CHECK_WALL_FORTRAN_ to
+                ## something "true".
                 check_src_flag <- Sys.getenv("_R_CHECK_WALL_FORTRAN_", "FALSE")
                 if (!config_val_to_logical(check_src_flag)) {
                     warn_re <-
