@@ -148,14 +148,17 @@
 #define s_object                SEXPREC
 #define S_EVALUATOR             /**/
 
-/* These conflict with definitions in R_ext/Boolean.h */
-#ifndef R_EXT_BOOLEAN_H_
-#ifndef TRUE
-#define TRUE 1
-#endif
-#ifndef FALSE
-#define FALSE 0
-#endif
+/* These conflict with definitions in R_ext/Boolean.h,
+   but spatstat relies on them in a C file */
+#ifdef __cplusplus
+# ifndef R_EXT_BOOLEAN_H_
+#  ifndef TRUE
+#   define TRUE 1
+#  endif
+#  ifndef FALSE
+#   define FALSE 0
+#  endif
+# endif
 #endif
 
 #define COPY_TO_USER_STRING(x)	mkChar(x)
