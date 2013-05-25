@@ -16,7 +16,8 @@ example(topic, package = NULL, lib.loc = NULL,
         character.only = FALSE, give.lines = FALSE, local = FALSE,
         echo = TRUE, verbose = getOption("verbose"),
         setRNG = FALSE, ask = getOption("example.ask"),
-        prompt.prefix = abbreviate(topic, 6))
+        prompt.prefix = abbreviate(topic, 6),
+        run.dontrun = FALSE)
 }
 \arguments{
   \item{topic}{name or literal character string: the online
@@ -53,6 +54,8 @@ example(topic, package = NULL, lib.loc = NULL,
     device and to any devices opened by the example code.}
   \item{prompt.prefix}{character; prefixes the prompt to be used if
     \code{echo = TRUE}.}
+  \item{run.dontrun}{logical indicating that \verb{\dontrun}
+    should be ignored.}
 }
 \value{
   The value of the last evaluated expression, unless \code{give.lines}

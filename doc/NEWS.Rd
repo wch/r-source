@@ -125,6 +125,10 @@
     \itemize{
       \item The macros used for the texinfo manuals have been changed to
       work better with the incompatible changes made in texinfo 5.x.
+      
+      \item The \code{example()} and \code{tools::Rd2ex()} functions now
+      have parameters to allow them to ignore \verb{\dontrun} markup in
+      examples.  (Suggested by Peter Solymos.)
     }
   }
 
@@ -716,7 +720,7 @@
       now detects tables with 0-extents and prints the results as, e.g.,
       \samp{< table of extent 0 x 1 x 2 >}. (Wish of \PR{15198}.)
 
-      \item Deparsing involving calls to anonymous functions and has been
+      \item Deparsing involving calls to anonymous functions has been
       made closer to reversible by the addition of extra parentheses.
 
       \item The function \code{utils::packageName()} has been added as

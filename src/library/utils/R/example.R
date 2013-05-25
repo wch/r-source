@@ -22,7 +22,8 @@ function(topic, package = NULL, lib.loc = NULL,
          character.only = FALSE, give.lines = FALSE, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
          ask = getOption("example.ask"),
-	 prompt.prefix = abbreviate(topic, 6))
+	 prompt.prefix = abbreviate(topic, 6),
+	 run.dontrun = FALSE)
 {
     if (!character.only) {
         topic <- substitute(topic)
@@ -39,7 +40,7 @@ function(topic, package = NULL, lib.loc = NULL,
     pkgname <- basename(packagePath)
     lib <- dirname(packagePath)
     tf <- tempfile("Rex")
-    tools::Rd2ex(.getHelpFile(file), tf)
+    tools::Rd2ex(.getHelpFile(file), tf, commentDontrun = !run.dontrun)
     if (!file.exists(tf)) {
 	if(give.lines) return(character())
         warning(gettextf("%s has a help file but no examples", sQuote(topic)),
