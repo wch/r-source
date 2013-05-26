@@ -62,30 +62,10 @@ SEXP getvar(SEXP name, SEXP rho)
 
 /* ----- Convolution via .Call  ----- */
 
-#include <Rdefines.h>
+#include <Rinternals.h>
 SEXP convolve2(SEXP a, SEXP b)
 {
     int na, nb, nab;
-    double *xa, *xb, *xab;
-    SEXP ab;
-
-    PROTECT(a = AS_NUMERIC(a));
-    PROTECT(b = AS_NUMERIC(b));
-    na = LENGTH(a); nb = LENGTH(b); nab = na + nb - 1;
-    PROTECT(ab = NEW_NUMERIC(nab));
-    xa = NUMERIC_POINTER(a); xb = NUMERIC_POINTER(b);
-    xab = NUMERIC_POINTER(ab);
-    for(int i = 0; i < nab; i++) xab[i] = 0.0;
-    for(int i = 0; i < na; i++)
-	for(int j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
-    UNPROTECT(3);
-    return(ab);
-}
-
-#include <Rinternals.h>
-SEXP convolve2b(SEXP a, SEXP b)
-{
-    int  na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 

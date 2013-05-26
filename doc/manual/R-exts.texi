@@ -8278,15 +8278,6 @@ the API.}  subset of these is defined in the header file
 @file{@var{R_HOME}/include}) that should be available on any @R{}
 installation.
 
-Another approach is to use @R{} versions of the macros and functions
-defined for the @Sl{} version 4 interface @code{.Call}, which are
-defined in the header file @file{Rdefines.h}.  This is a somewhat
-simpler approach, and is to be preferred if the code is intended to be
-shared with @Sl{}.  However, it is less well documented and even less
-tested.  Note too that some idiomatic S4 constructions with these macros
-(such as assigning elements of character vectors or lists) are invalid
-in @R{}.
-
 A substantial amount of @R{}, including the standard packages, is
 implemented using the functions and macros described here, so the @R{}
 source code provides a rich source of examples and ``how to do it'': do
@@ -8364,8 +8355,7 @@ objects which were protected.  The calls to @code{PROTECT} and
 warn about @code{"stack imbalance in .Call"} (or @code{.External}) if
 the housekeeping is wrong.
 
-Here is a small example of creating an @R{} numeric vector in C code.
-First we use the macros in @file{Rinternals.h}:
+Here is a small example of creating an @R{} numeric vector in C code:
 
 @example
 @group
@@ -8377,23 +8367,6 @@ First we use the macros in @file{Rinternals.h}:
     ab = PROTECT(allocVector(REALSXP, 2));
     REAL(ab)[0] = 123.45;
     REAL(ab)[1] = 67.89;
-    UNPROTECT(1);
-@end group
-@end example
-
-@noindent
-and then those in @file{Rdefines.h}:
-
-@example
-@group
-#include <R.h>
-#include <Rdefines.h>
-
-    SEXP ab;
-      ....
-    ab = PROTECT(NEW_NUMERIC(2));
-    NUMERIC_POINTER(ab)[0] = 123.45;
-    NUMERIC_POINTER(ab)[1] = 67.89;
     UNPROTECT(1);
 @end group
 @end example
@@ -8511,17 +8484,10 @@ you have no other option except to generate an error.  You can use the
 function @code{error} for this.  It is usually better to coerce the
 object to the correct type.  For example, if you find that an
 @code{SEXP} is of the type @code{INTEGER}, but you need a @code{REAL}
-object, you can change the type by using, equivalently,
+object, you can change the type by using
 
 @example
 @var{newSexp} = PROTECT(coerceVector(@var{oldSexp}, REALSXP));
-@end example
-
-@noindent
-or
-
-@example
-@var{newSexp} = PROTECT(AS_NUMERIC(@var{oldSexp}));
 @end example
 
 @noindent
@@ -9057,8 +9023,8 @@ is more complex but allows a variable number of arguments.
 
 @findex .Call
 
-Let us convert our finite convolution example to use @code{.Call}, first
-using the @file{Rdefines.h} macros.  The calling function in @R{} is
+Let us convert our finite convolution example to use @code{.Call}.  The
+calling function in @R{} is
 
 @example
 conv <- function(a, b) .Call("convolve2", a, b)
@@ -9067,34 +9033,6 @@ conv <- function(a, b) .Call("convolve2", a, b)
 @noindent
 which could hardly be simpler, but as we shall see all the type checking
 must be transferred to the C code, which is
-
-@example
-@group
-#include <R.h>
-#include <Rdefines.h>
-
-SEXP convolve2(SEXP a, SEXP b)
-@{
-    int i, j, na, nb, nab;
-    double *xa, *xb, *xab;
-    SEXP ab;
-
-    PROTECT(a = AS_NUMERIC(a));
-    PROTECT(b = AS_NUMERIC(b));
-    na = LENGTH(a); nb = LENGTH(b); nab = na + nb - 1;
-    PROTECT(ab = NEW_NUMERIC(nab));
-    xa = NUMERIC_POINTER(a); xb = NUMERIC_POINTER(b);
-    xab = NUMERIC_POINTER(ab);
-    for(i = 0; i < nab; i++) xab[i] = 0.0;
-    for(i = 0; i < na; i++)
-         for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
-    UNPROTECT(3);
-    return(ab);
-@}
-@end group
-@end example
-
-Now for the version in @file{Rinternals.h} style.  Only the C code changes.
 
 @example
 @group
@@ -9120,9 +9058,6 @@ SEXP convolve2(SEXP a, SEXP b)
 @}
 @end group
 @end example
-
-@noindent
-This is called in exactly the same way.
 
 @node Calling .External, Missing and special values, Calling .Call, Interface functions .Call and .External
 @subsection Calling @code{.External}

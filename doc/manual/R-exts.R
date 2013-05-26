@@ -33,9 +33,6 @@ conv <- function(a, b) .Call("convolve2", a, b)
 u <- rep(1, 5)
 conv(u, u)
 
-conv <- function(a, b) .Call("convolve2b", a, b)
-conv(u, u)
-
 convE <- function(a, b) .External("convolveE", a, b)
 convE(u, u)
 
