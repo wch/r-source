@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2007 The R Core Team.
+ *  Copyright (C) 1999-2013 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -133,6 +133,7 @@
 #define SET_DIMNAMES(x, n)     	setAttrib(x, R_DimNamesSymbol, n)
 #define SET_LEVELS(x, l)       	setAttrib(x, R_LevelsSymbol, l)
 #define SET_NAMES(x, n)		setAttrib(x, R_NamesSymbol, n)
+/* These do not support long vectors */
 #define GET_LENGTH(x)		length(x)
 #define SET_LENGTH(x, n)	(x = lengthgets(x, n))
 
@@ -146,11 +147,25 @@
 
 #define s_object                SEXPREC
 #define S_EVALUATOR             /**/
-#ifndef TRUE
-#define TRUE 1
-#endif
-#ifndef FALSE
-#define FALSE 0
+
+/* These conflict with definitions in R_ext/Boolean.h,
+   but spatstat relies on them in a C file */
+#ifdef __cplusplus
+# ifndef R_EXT_BOOLEAN_H_
+#  ifndef TRUE
+#   define TRUE 1
+#  endif
+#  ifndef FALSE
+#   define FALSE 0
+#  endif
+# endif
+#else
+#  ifndef TRUE
+#   define TRUE 1
+#  endif
+#  ifndef FALSE
+#   define FALSE 0
+#  endif
 #endif
 
 #define COPY_TO_USER_STRING(x)	mkChar(x)
