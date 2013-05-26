@@ -8545,18 +8545,15 @@ C code to do the computations is
 SEXP out(SEXP x, SEXP y)
 @{
     int nx = length(x), ny = length(y);
-    double *rx = REAL(x), *ry = REAL(y), *rans;
-    SEXP ans;
-
-    ans = PROTECT(allocMatrix(REALSXP, nx, ny));
-    rans = REAL(ans);
+    SEXP ans = PROTECT(allocMatrix(REALSXP, nx, ny));
+    double *rx = REAL(x), *ry = REAL(y), *rans = REAL(ans);
     for(int i = 0; i < nx; i++) @{
         double tmp = rx[i];
         for(int j = 0; j < ny; j++)
             rans[i + nx*j] = tmp * ry[j];
     @}
     UNPROTECT(1);
-    return(ans);
+    return ans;
 @}
 @end group
 @end example
@@ -8577,28 +8574,16 @@ set the @code{dim} attribute directly.
 SEXP out(SEXP x, SEXP y)
 @{
     int nx = length(x), ny = length(y);
-    double *rx = REAL(x), *ry = REAL(y), *rans;
-    SEXP ans, dim, dimnames;
-@end group
+    SEXP ans = PROTECT(allocMatrix(REALSXP, nx, ny));
+    double *rx = REAL(x), *ry = REAL(y), *rans = REAL(ans);
 
-@group
-    ans = PROTECT(allocVector(REALSXP, nx*ny));
-    rans = REAL(ans);
     for(int i = 0; i < nx; i++) @{
       double tmp = rx[i];
       for(int j = 0; j < ny; j++)
         rans[i + nx*j] = tmp * ry[j];
     @}
-@end group
 
-@group
-    dim = PROTECT(allocVector(INTSXP, 2));
-    INTEGER(dim)[0] = nx; INTEGER(dim)[1] = ny;
-    setAttrib(ans, R_DimSymbol, dim);
-@end group
-
-@group
-    dimnames = PROTECT(allocVector(VECSXP, 2));
+    SEXP dimnames = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(dimnames, 0, getAttrib(x, R_NamesSymbol));
     SET_VECTOR_ELT(dimnames, 1, getAttrib(y, R_NamesSymbol));
     setAttrib(ans, R_DimNamesSymbol, dimnames);
@@ -8606,7 +8591,7 @@ SEXP out(SEXP x, SEXP y)
 
 @group
     UNPROTECT(3);
-    return(ans);
+    return ans;
 @}
 @end group
 @end example
@@ -8654,7 +8639,18 @@ static SEXP VerSymbol = NULL;
 @end example
 
 @noindent
-if it is to be done frequently.
+if it is to be done frequently. 
+
+This example can be simplified by another convenience function:
+
+@example
+@group
+    SEXP version = PROTECT(ScalarReal(3.0));
+    setAttrib(ans, install("version"), version);
+    UNPROTECT(1);
+@end group
+@end example
+
 
 @node Classes, Handling lists, Attributes, Handling R objects in C
 @subsection Classes
@@ -8676,7 +8672,7 @@ We can use
     SET_STRING_ELT(class, 0, mkChar("mat"));
     classgets(ans, class);
     UNPROTECT(4);
-    return(ans);
+    return ans;
 @}
 @end group
 @end example
@@ -8802,7 +8798,7 @@ SEXP getvar(SEXP name, SEXP rho)
         error("rho should be an environment");
     ans = findVar(install(CHAR(STRING_ELT(name, 0))), rho);
     Rprintf("first value is %f\n", REAL(ans)[0]);
-    return(R_NilValue);
+    return R_NilValue;
 @}
 @end group
 @end example
@@ -9031,8 +9027,8 @@ conv <- function(a, b) .Call("convolve2", a, b)
 @end example
 
 @noindent
-which could hardly be simpler, but as we shall see all the type checking
-must be transferred to the C code, which is
+which could hardly be simpler, but as we shall see all the type
+coercion is transferred to the C code, which is
 
 @example
 @group
@@ -9054,7 +9050,7 @@ SEXP convolve2(SEXP a, SEXP b)
     for(int i = 0; i < na; i++)
         for(int j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
     UNPROTECT(3);
-    return(ab);
+    return ab;
 @}
 @end group
 @end example
@@ -9178,7 +9174,7 @@ SEXP showArgs(SEXP args)
             Rprintf("[%d] '%s' R type\n", i+1, name);
        @}
     @}
-    return(R_NilValue);
+    return R_NilValue;
 @}
 @end group
 @end example
@@ -9290,7 +9286,7 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
     @}
     setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
     UNPROTECT(1);
-    return(ans);
+    return ans;
 @}
 @end group
 @end example
@@ -9319,7 +9315,7 @@ SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
     @}
     setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
     UNPROTECT(2);
-    return(ans);
+    return ans;
 @}
 @end group
 @end example
@@ -9419,7 +9415,7 @@ SEXP mkans(double x)
 double feval(double x, SEXP f, SEXP rho)
 @{
     defineVar(install("x"), mkans(x), rho);
-    return(REAL(eval(f, rho))[0]);
+    return REAL(eval(f, rho))[0];
 @}
 @end group
 
