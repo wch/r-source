@@ -69,6 +69,8 @@
 
       \item \command{R CMD check --as-cran} checks the line widths in
       usage and examples sections of the package Rd files.
+
+      It now implies \option{--timings}.
     }
   }
 

@@ -3728,9 +3728,10 @@ Setting @env{_R_CHECK_TIMINGS_} to a positive value sets a threshold (in
 seconds elapsed time) for reporting timings.
 
 If you need to look in more detail at the timings for examples, use
-option @option{--timings} to @command{R CMD check}.  This adds a summary
-to the check output for all the examples with CPU or elapsed time of
-more than 5 seconds. It produces a file
+option @option{--timings} to @command{R CMD check} (this is implied by
+@option{--as-cran} as from @R{} 3.1.0).  This adds a summary to the
+check output for all the examples with CPU or elapsed time of more than
+5 seconds.  It produces a file
 @file{@var{mypkg}.Rcheck/@var{mypkg}-Ex.timings} containing timings for
 each help file: it is a tab-delimited file which can be read into @R{}
 for further analysis.
