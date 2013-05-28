@@ -347,6 +347,7 @@ tar <- function(tarfile, files = NULL,
                 if (grepl("darwin8", R.version$os)) # 10.4, Tiger
                     tar <- paste("COPY_EXTENDED_ATTRIBUTES_DISABLE=1", tar)
             }
+            if (is.null(extra_flags)) extra_flags <- ""
             ## 'tar' might be a command + flags, so don't quote it
             cmd <- paste(tar, extra_flags, flags, shQuote(tarfile),
                          paste(shQuote(files), collapse=" "))
@@ -418,7 +419,14 @@ tar <- function(tarfile, files = NULL,
             }
         }
         header[seq_along(name)] <- name
-        header[101:107] <- charToRaw(sprintf("%07o", info$mode))
+        mode <- info$mode
+        ## for use by R CMD build
+        if (is.null(extra_flags) && grepl("/(configure|cleanup)$", f) &&
+            (mode & "111") != as.octmode("111")) {
+            warning(gettextf("file '%s' did not have execute permissions: corrected", f), domain = NA, call. = FALSE)
+            mode <- mode | "111"
+        }
+        header[101:107] <- charToRaw(sprintf("%07o", mode))
         ## Windows does not have uid, gid: defaults to 0, which isn't great
         uid <- info$uid
         if(!is.null(uid) && !is.na(uid))
