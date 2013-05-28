@@ -2648,13 +2648,19 @@ setRlibs <-
         ## this is tailored to the FreeBSD/Linux 'file',
         ## see http://www.darwinsys.com/file/
         ## (Solaris has a different 'file' without --version)
-        ## Most systems are now on 5.03/7, but Mac OS 10.5 is 4.17
+        ## Most systems are now on >= 5.03, but Mac OS 10.5 was 4.17
         ## version 4.21 writes to stdout,
         ## 4.23 to stderr and sets an error status code
-        lines <- suppressWarnings(tryCatch(system2("file", "--version", TRUE, TRUE), error = function(e) "error"))
+        FILE <- "file"
+        lines <- suppressWarnings(tryCatch(system2(FILE, "--version", TRUE, TRUE), error = function(e) "error"))
         ## a reasonable check -- it does not identify itself well
-        have_free_file <-
-            any(grepl("^(file-[45]|magic file from)", lines))
+        have_free_file <- any(grepl("^(file-[45]|magic file from)", lines))
+        if (!have_free_file) {
+            ## OpenCSW calls this 'gfile'
+            FILE <- "gfile"
+            lines <- suppressWarnings(tryCatch(system2(FILE, "--version", TRUE, TRUE), error = function(e) "error"))
+            have_free_file <- any(grepl("magic file from", lines))
+        }
         if (have_free_file) {
             checkingLog(Log, "for executable files")
             ## Watch out for spaces in file names here
@@ -2666,7 +2672,7 @@ setRlibs <-
                 chunk <- seq_len(min(100, ll))
                 these <- files[chunk]
                 files <- files[-chunk]
-                lines <- suppressWarnings(system2("file", shQuote(these), TRUE, TRUE))
+                lines <- suppressWarnings(system2(FILE, shQuote(these), TRUE, TRUE))
                 ## avoid match to is_executable.Rd
                 ex <- grepl(" executable", lines, useBytes=TRUE)
 		ex2 <- grepl("script", lines, useBytes=TRUE) &

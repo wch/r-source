@@ -19,6 +19,14 @@
     }
   }
   
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} looks for command \command{gfile} if a
+      suitable \command{file} is not found.  (Although \command{file} is
+      not from GNU, OpenCSW on Solaris installs it as \command{gfile}.)
+    }
+  }
+  
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \file{Rdefines.h} has been tweaked so it can be included in
@@ -39,8 +47,8 @@
       \item The \code{regmatches<-()} replacement function mishandled
       results coming from \code{regexpr()}.  (\PR{15311})
 
-      \item Documentation for \code{setClass} and
-      \code{representation} still suggested the deprecated argument
+      \item The help for \code{setClass()} and
+      \code{representation()} still suggested the deprecated argument
       \code{representation=}. (\PR{15312})
       
       \item \command{R CMD config} failed in an installed build of \R

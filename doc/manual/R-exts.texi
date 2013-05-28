@@ -2177,7 +2177,8 @@ The files and directories are checked for sufficient permissions
 @item
 The files are checked for binary executables, using a suitable version
 of @command{file} if available@footnote{A suitable @command{file.exe} is
-part of the Windows toolset.}.  (There may be rare false positives.)
+part of the Windows toolset: it checks for @command{gfile} if a suitable
+@command{file} is not found.}.  (There may be rare false positives.)
 
 @item
 The @file{DESCRIPTION} file is checked for completeness, and some of its
