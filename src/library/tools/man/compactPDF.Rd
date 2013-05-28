@@ -1,6 +1,6 @@
 % File src/library/tools/man/compactPDF.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2011-2 R Core Team
+% Copyright 2011-3 R Core Team
 % Distributed under GPL 2 or later
 
 \name{compactPDF}
@@ -30,8 +30,9 @@ compactPDF(paths,
     command.  If empty, \command{qpdf} will not be used.}
   \item{gs_cmd}{Character string giving the path to the GhostScript
     executable, if that is to be used.  On Windows this is the path to
-    \file{gswin32c.exe} or \file{gswin64c.exe}.  If \code{""}, the
-    function will try to find a platform-specific path to GhostScript.}
+    \file{gswin32c.exe} or \file{gswin64c.exe}.  If \code{""} (the
+    default), the function will try to find a platform-specific path to
+    GhostScript where required.}
   \item{gs_quality}{A character string indicating the quality required:
     the options are \code{"none"} (so GhostScript is not used),
     \code{"printer"} (300dpi), \code{"ebook"} (150dpi) and
@@ -50,7 +51,7 @@ compactPDF(paths,
   included with the CRAN Mac OS X distribution of \R.  If \code{gs_cmd}
   is non-empty and \code{gs_quality != "none"}, GhostScript will used
   first, then \command{qpdf} if it is available.  If \code{gs_quality !=
-  "none"} and \code{gs_cmd} is empty, an attempt will be made to find a
+  "none"} and \code{gs_cmd} is \code{""}, an attempt will be made to find a
   GhostScript executable.
 
   \command{qpdf} and/or \command{gs_cmd} are run on all PDF files found,
@@ -58,7 +59,7 @@ compactPDF(paths,
   replaced.
 
   The strategy of our use of \command{qpdf} is to (losslessly) compress
-  both PDF streams and objects.  Ghostscript compresses streams and more
+  both PDF streams and objects.  GhostScript compresses streams and more
   (including downsampling and compressing embedded images) and
   consequently is much slower and may lose quality (but can also produce
   much smaller PDF files).  However, quality \code{"ebook"} is perfectly
@@ -76,7 +77,7 @@ compactPDF(paths,
   files (and especially package vignettes), using GhostScript can
   dramatically reduce the space taken by embedded images (often screenshots).
 
-  Where both Ghostscript and \command{qpdf} are selected (when
+  Where both GhostScript and \command{qpdf} are selected (when
   \code{gs_quality != "none"} and both executables are found), they are
   run in that order and the size reductions apply to the total
   compression achieved.
@@ -94,6 +95,9 @@ compactPDF(paths,
 
 \note{
   The external tools used may change in future releases.
+
+  Versions of GhostScript 9.06 and later give several times better
+  compression than 9.05 on some vignettes in CRAN packages.
 }
 
 \seealso{
