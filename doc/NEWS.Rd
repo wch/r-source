@@ -24,6 +24,11 @@
       \item \command{R CMD check} looks for command \command{gfile} if a
       suitable \command{file} is not found.  (Although \command{file} is
       not from GNU, OpenCSW on Solaris installs it as \command{gfile}.)
+
+      \item \command{R CMD build} (with the internal \code{tar}) checks
+      the permissions of \file{configure} and \file{cleanup} files and
+      adds execute permission if needed, with a warning.  This is useful
+      on OSes and file systems which do not support execute permissions.
     }
   }
   

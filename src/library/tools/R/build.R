@@ -1042,11 +1042,12 @@ get_exclude_patterns <- function()
         ## Finalize
         filename <- paste0(pkgname, "_", desc["Version"], ".tar.gz")
         filepath <- file.path(startdir, filename)
-        ## NB: naughty reg-packages.R relies on this exact format!
+        ## NB: tests/reg-packages.R relies on this exact format!
         messageLog(Log, "building ", sQuote(filename))
         res <- utils::tar(filepath, pkgname, compression = "gzip",
                           compression_level = 9L,
-                          tar = Sys.getenv("R_BUILD_TAR"))
+                          tar = Sys.getenv("R_BUILD_TAR"),
+                          extra_flags = NULL) # use trapdoor
         if (res) {
             errorLog(Log, "packaging into .tar.gz failed")
             do_exit(1L)
