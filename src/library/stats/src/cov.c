@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#ifdef LONG_DOUBLE
+#ifdef HAVE_LONG_DOUBLE
 # define SQRTL sqrtl
 #else
 # define SQRTL sqrt
