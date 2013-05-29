@@ -35,9 +35,11 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \file{Rdefines.h} has been tweaked so it can be included in
-      C++ code with \file{R_exts/Boolean.h} (which is included by
-      \file{R.h}).  Note though that \file{Rdefines.h} is not kept
-      up-to-date, and \file{Rinternals.h} is preferred for new code.
+      C++ code with \file{R_ext/Boolean.h} (which is included by
+      \file{R.h}).
+
+      Note that \file{Rdefines.h} is not kept up-to-date, and
+      \file{Rinternals.h} is preferred for new code.
     }
   }
   

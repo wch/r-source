@@ -1091,8 +1091,8 @@ directories can also be set there.
 Example:
 
 @example
-> tar -zxf libpng-1.5.14.tar.gz
-> mv libpng-1.5.14 libpng
+> tar -zxf libpng-1.6.2.tar.gz
+> mv libpng-1.6.2 libpng
 > tar -zxf jpegsrc.v9.tar.gz
 > tar -zxf tiff-4.0.3.tar.gz
 > mv tiff-4.0.3/libtiff .
@@ -2932,12 +2932,12 @@ coverage.  See the @R{} help on @code{X11} on selecting such fonts.
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
-@code{libpng} (version 1.2.7 or later, including 1.4.x and 1.5.x) and
-@code{zlib} or @code{libtiff} (any recent version -- 3.9.[4567] and
-4.0.[23] have been tested) respectively.  They also need support for
-either @code{X11} or @code{cairo} (see above).  Should support for these
-devices @strong{not} be required or broken system libraries need to be
-avoided there are @command{configure} options @option{--without-libpng},
+@code{libpng} (version 1.2.7 or later) and @code{zlib} or @code{libtiff}
+(any recent version -- 3.9.[4567] and 4.0.[23] have been tested)
+respectively.  They also need support for either @code{X11} or
+@code{cairo} (see above).  Should support for these devices @strong{not}
+be required or broken system libraries need to be avoided there are
+@command{configure} options @option{--without-libpng},
 @option{--without-jpeglib} and @option{--without-libtiff}.  For most
 system installations the TIFF libraries will require JPEG libraries to
 be present and perhaps linked explicitly, so @option{--without-jpeglib}
