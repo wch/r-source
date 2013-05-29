@@ -6120,6 +6120,93 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
+### * .check_Rd_line_widths
+
+.check_Rd_line_widths <-
+function(dir, limit = c(usage = 95, examples = 105), installed = FALSE)
+{
+    db <- if(installed)
+        Rd_db(basename(dir), lib.loc = dirname(dir))
+    else
+        Rd_db(dir = dir)
+    out <- find_wide_Rd_lines_in_Rd_db(db, limit)
+    class(out) <- "check_Rd_line_widths"
+    attr(out, "limit") <- limit
+    out
+}
+
+format.check_Rd_line_widths <-
+function(x, ...)
+{
+    if(!length(x)) return(character())
+
+    .truncate <- function(s) {
+        ifelse(nchar(s) > 140L,
+               paste(substring(s, 1, 140L),
+                     "... [TRUNCATED]"),
+               s)
+    }
+    
+    limit <- attr(x, "limit")
+    sections <- names(limit)
+
+    .fmt <- function(nm) {
+        y <- x[[nm]]
+        c(sprintf("Rd file '%s':", nm),
+          unlist(lapply(sections,
+                        function(s) {
+                            lines <- y[[s]]
+                            if(!length(lines)) character() else {
+                                c(sprintf("  \\%s lines wider than %d characters:",
+                                          s, limit[s]),
+                                  .truncate(lines))
+                            }
+                        }),
+                 use.names = FALSE),
+          "")
+    }
+
+    as.character(unlist(lapply(names(x), .fmt)))
+}                
+
+find_wide_Rd_lines_in_Rd_db <-
+function(x, limit = NULL)
+{
+    y <- lapply(x, find_wide_Rd_lines_in_Rd_object, limit)
+    Filter(length, y)
+}
+
+find_wide_Rd_lines_in_Rd_object <-
+function(x, limit = NULL)
+{
+    if(is.null(limit))
+        limit <- list(usage = c(79, 95), examples = c(87, 105))
+    sections <- names(limit)
+    if(is.null(sections))
+        stop("no Rd sections specified")
+    y <- Map(function(s, l) {
+        out <- NULL
+        zz <- textConnection("out", "w", local = TRUE)
+        on.exit(close(zz))
+        pos <- which(RdTags(x) == s)
+        Rd2txt(x[pos[1L]], out = zz, fragment = TRUE)
+        nc <- nchar(out)
+        if(length(l) > 1L) {
+            ind_warn <- (nc > max(l))
+            ind_note <- (nc > min(l)) & !ind_warn
+            Filter(length,
+                   list(warn = out[ind_warn], note = out[ind_note]))
+        } else {
+            out[nc > l]
+        }
+    },
+             paste0("\\", sections),
+             limit)
+    names(y) <- sections
+    Filter(length, y)
+}
+
+
 ### * .find_charset
 
 .find_charset <-

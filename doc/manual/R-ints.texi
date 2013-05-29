@@ -3768,9 +3768,12 @@ Default: false.
 If true, give an error if suggested packages are not available.
 Default: true (but false for CRAN submission checks).
 @item _R_CHECK_RD_CONTENTS_
-If true, check @file{Rd} files for auto-generated content which needs editing,
-and missing argument documentation.
+If true, check @file{Rd} files for auto-generated content which needs
+editing, and missing argument documentation.
 Default: true.
+@item _R_CHECK_RD_LINE_WIDTHS_
+If true, check @file{Rd} line widths in usage and examples sections.
+Default: false (but true for CRAN submission checks).
 @item _R_CHECK_RD_STYLE_
 If true, check whether @file{Rd} usage entries for S3 methods use the full
 function name rather than the appropriate @code{\method} markup.
@@ -3780,7 +3783,7 @@ If true, check the cross-references in @file{.Rd} files.
 Default: true.
 @item _R_CHECK_SUBDIRS_NOCASE_
 If true, check the case of directories such as @file{R} and @file{man}.
-Default: true
+Default: true.
 @item _R_CHECK_SUBDIRS_STRICT_
 Initial setting for @option{--check-subdirs}.
 Default: @samp{default} (which checks only tarballs, and checks in the

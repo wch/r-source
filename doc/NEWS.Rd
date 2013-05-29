@@ -18,9 +18,12 @@
       examples.  (Suggested by Peter Solymos.)
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
+      \item \command{R CMD check --as-cran} checks the line widths in
+      usage and examples sections of the package Rd files.
+      
       \item \command{R CMD check} looks for command \command{gfile} if a
       suitable \command{file} is not found.  (Although \command{file} is
       not from GNU, OpenCSW on Solaris installs it as \command{gfile}.)
@@ -42,28 +45,28 @@
       \file{Rinternals.h} is preferred for new code.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{help.request()} could not determine the current version
       of \R on CRAN.  (\PR{15241})
-      
+
       \item On Windows, \code{file.info()} failed on root directories unless
       the path was terminated with an explicit \code{"."}.  (\PR{15302})
-      
+
       \item The \code{regmatches<-()} replacement function mishandled
       results coming from \code{regexpr()}.  (\PR{15311})
 
       \item The help for \code{setClass()} and
       \code{representation()} still suggested the deprecated argument
       \code{representation=}. (\PR{15312})
-      
+
       \item \command{R CMD config} failed in an installed build of \R
       3.0.1 (only) when a sub-architecture was used.  (Reported by
       Berwin Turlach.)
-      
+
       \item On Windows, the installer modified the \file{etc/Rconsole} and
-      \file{etc/Rprofile.site} files even when default options were 
+      \file{etc/Rprofile.site} files even when default options were
       chosen.  (Reported by Tal Galili.)
     }
   }
@@ -104,7 +107,7 @@
       to the global environment, with a warning.
 
       \item \code{pairs()} gains a \code{line.main} option for title placement.
-      
+
       \item The remaining instances in which serialization to a raw
       vector was limited to 2GB have been unlimited on a 64-bit
       platform, and in most cases serialization to a vector of more than
@@ -630,7 +633,7 @@
       now detects tables with 0-extents and prints the results as, e.g.,
       \samp{< table of extent 0 x 1 x 2 >}. (Wish of \PR{15198}.)
 
-      \item Deparsing involving calls to anonymous functions and has been
+      \item Deparsing involving calls to anonymous functions has been
       made closer to reversible by the addition of extra parentheses.
 
       \item The function \code{utils::packageName()} has been added as

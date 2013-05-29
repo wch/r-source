@@ -1338,6 +1338,26 @@ setRlibs <-
             } else resultLog(Log, "OK")
         }
 
+        ## Check Rd line widths.
+        if(dir.exists("man") && R_check_Rd_line_widths) {
+            checkingLog(Log, "Rd line widths")
+            Rcmd <- paste("options(warn=1)\n",
+                          if(do_install)
+                          sprintf("tools:::.check_Rd_line_widths(\"%s\", installed = TRUE)\n",
+                                  file.path(if(is_base_pkg) .Library else libdir,
+                                            pkgname))
+                          else
+                          sprintf("tools:::.check_Rd_line_widths(\"%s\")\n",
+                                  pkgdir))
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            if(length(out)) {
+                noteLog(Log)
+                printLog(Log, paste(c(out, ""), collapse = "\n"))
+                wrapLog("These lines will be truncated in the PDF manual.\n")
+                
+            } else resultLog(Log, "OK")
+        }
+        
         ## Check cross-references in R documentation files.
 
         ## <NOTE>
@@ -3550,12 +3570,16 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE"))
     R_check_subdirs_strict <-
         Sys.getenv("_R_CHECK_SUBDIRS_STRICT_", "default")
+    R_check_Rd_contents <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_", "TRUE"))
+    R_check_Rd_line_widths <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_LINE_WIDTHS_", "FALSE"))
+    R_check_Rd_style <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_STYLE_", "TRUE"))
     R_check_Rd_xrefs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE"))
     R_check_use_codetools <-
         config_val_to_logical(Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE"))
-    R_check_Rd_style <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_RD_STYLE_", "TRUE"))
     R_check_executables <-
         config_val_to_logical(Sys.getenv("_R_CHECK_EXECUTABLES_", "TRUE"))
     R_check_executables_exclusions <-
@@ -3567,8 +3591,6 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DOT_INTERNAL_", "TRUE"))
     R_check_depr_def <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPRECATED_DEFUNCT_", "FALSE"))
-    R_check_Rd_contents <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_", "TRUE"))
     R_check_ascii_code <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_CODE_", "TRUE"))
     R_check_ascii_data <-
@@ -3632,6 +3654,7 @@ setRlibs <-
         R_check_code_attach <- TRUE
         R_check_code_data_into_globalenv <- TRUE
         R_check_depr_def <- TRUE
+        R_check_Rd_line_widths <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
@@ -3640,7 +3663,7 @@ setRlibs <-
     }
 
 
-    if (extra_arch)
+    if (extra_arch) {
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
             R_check_Rd_xrefs <- R_check_use_codetools <- R_check_Rd_style <-
                 R_check_executables <- R_check_permissions <-
@@ -3649,6 +3672,8 @@ setRlibs <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
                                 R_check_doc_sizes2 <-
                                     R_check_unsafe_calls <- FALSE
+        R_check_Rd_line_widths <- FALSE        
+    }
 
     startdir <- getwd()
     if (is.null(startdir))
