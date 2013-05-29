@@ -67,10 +67,7 @@
       in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
       case-insensitively on all platforms (not just on Windows).
 
-      \item \command{R CMD check --as-cran} checks the line widths in
-      usage and examples sections of the package Rd files.
-
-      It now implies \option{--timings}.
+      \item \command{R CMD check --as-cran} now implies \option{--timings}.
     }
   }
 
@@ -136,6 +133,9 @@
 
   \subsection{UTILITIES}{
     \itemize{
+      \item \command{R CMD check --as-cran} checks the line widths in
+      usage and examples sections of the package Rd files.
+      
       \item \command{R CMD check} looks for command \command{gfile} if a
       suitable \command{file} is not found.  (Although \command{file} is
       not from GNU, OpenCSW on Solaris installs it as \command{gfile}.)
