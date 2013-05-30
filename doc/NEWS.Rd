@@ -47,6 +47,9 @@
       \item The \code{"table"} method for \code{as.data.frame()}, also
       useful as \code{as.data.frame.table()}, now passes \code{sep} and
       \code{base} arguments to \code{provideDimnames()}.
+
+      \item The new \code{unirootS()} function is a "safe" version of
+      \code{uniroot()} auto-extending the search interval when needed.
     }
   }
 
@@ -124,7 +127,7 @@
     \itemize{
       \item The macros used for the texinfo manuals have been changed to
       work better with the incompatible changes made in texinfo 5.x.
-      
+
       \item The \code{example()} and \code{tools::Rd2ex()} functions now
       have parameters to allow them to ignore \verb{\dontrun} markup in
       examples.  (Suggested by Peter Solymos.)
@@ -135,7 +138,7 @@
     \itemize{
       \item \command{R CMD check --as-cran} checks the line widths in
       usage and examples sections of the package Rd files.
-      
+
       \item \command{R CMD check} looks for command \command{gfile} if a
       suitable \command{file} is not found.  (Although \command{file} is
       not from GNU, OpenCSW on Solaris installs it as \command{gfile}.)
@@ -146,7 +149,7 @@
       on OSes and file systems which do not support execute permissions.
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \file{Rdefines.h} has been tweaked so it can be included in

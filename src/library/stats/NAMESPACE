@@ -65,7 +65,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        summary.infl, summary.lm, summary.manova, summary.mlm, symnum,
        termplot, terms, terms.aovlist, terms.default, terms.formula,
        terms.terms, time, ts, tsp, "tsp<-", TukeyHSD, TukeyHSD.aov,
-       uniroot, update, update.default, update.formula, var,
+       uniroot, unirootS, update, update.default, update.formula, var,
        variable.names, vcov, weighted.mean, weighted.residuals,
        weights, window, "window<-", write.ftable, xtabs, pbirthday,
        qbirthday)

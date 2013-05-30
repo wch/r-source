@@ -16907,7 +16907,7 @@ Frequency = 1
 > 
 > ### Name: uniroot
 > ### Title: One Dimensional Root (Zero) Finding
-> ### Aliases: uniroot
+> ### Aliases: uniroot unirootS
 > ### Keywords: optimize
 > 
 > ### ** Examples
