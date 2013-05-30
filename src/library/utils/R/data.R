@@ -171,7 +171,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                             Rdatadir <- tempfile("Rdata")
                             dir.create(Rdatadir, showWarnings=FALSE)
                             topic <- basename(file)
-                            rc <- .Call(C_unzip, zipname, topic, Rdatadir, FALSE, TRUE, FALSE)
+                            rc <- .External(C_unzip, zipname, topic, Rdatadir, FALSE, TRUE, FALSE, FALSE)
                             if(rc == 0L) zfile <- file.path(Rdatadir, topic)
                         }
                         if(zfile != file) on.exit(unlink(zfile))
