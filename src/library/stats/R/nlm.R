@@ -82,12 +82,13 @@ unirootS <- function(f, interval, ...,
 		     Sig = NULL, check.conv = FALSE,
 		     tol = .Machine$double.eps^0.25, maxiter = 1000, trace = 0)
 {
-    if (   is.null(Sig) && f.lower * f.upper > 0 ||
-	is.numeric(Sig) && (Sig*f.lower > 0 || Sig*f.upper < 0)) {
+    doX <- (   is.null(Sig) && f.lower * f.upper > 0 ||
+            is.numeric(Sig) && (Sig*f.lower > 0 || Sig*f.upper < 0))
+    if(doX) {
 	if(trace)
 	    cat(sprintf("search in [%g,%g]%s", lower, upper,
 			if(trace >= 2)"\n" else " ... "))
-	Delta <- function(u) 0.01* pmax(1e-7, abs(u))
+	Delta <- function(u) 0.01* pmax(1e-4, abs(u))
         it <- 0L
 	## Two cases:
 	if(is.null(Sig)) {
@@ -106,14 +107,14 @@ unirootS <- function(f, interval, ...,
 	    }
 	} else {
 	    ## case 2) 'Sig' specified --> typically change only *one* of lower, upper
-	    ## make sure we have Sig*f(lower) < 0 and Sig*f(upper) > 0:
+	    ## make sure we have Sig*f(lower) <= 0 and Sig*f(upper) >= 0:
 	    delta <- Delta(lower)
 	    while(isTRUE(Sig*f.lower > 0)) {
 		if((it <- it + 1L) > maxiter)
 		    stop(gettextf("no sign change found in %d iterations", it-1),
 			 domain=NA)
 		f.lower <- f(lower <- lower - delta)
-		if(trace) cat(sprintf(" .. modified lower: %g\n", lower))
+		if(trace >= 2) cat(sprintf(" .. modified lower: %g\n", lower))
 		delta <- 2 * delta
 	    }
 	    delta <- Delta(upper)
@@ -122,15 +123,17 @@ unirootS <- function(f, interval, ...,
 		    stop(gettextf("no sign change found in %d iterations", it-1),
 			 domain=NA)
 		f.upper <- f(upper <- upper + delta)
-		if(trace) cat(sprintf(" .. modified upper: %g\n", upper))
+		if(trace >= 2) cat(sprintf(" .. modified upper: %g\n", upper))
 		delta <- 2 * delta
 	    }
 	}
 	if(trace && trace < 2)
-	    cat(sprintf("extended to [%g, %g]\n", lower, upper))
+            cat(sprintf("extended to [%g, %g] in %d steps\n", lower, upper, it))
     }
     if(!isTRUE(f.lower * f.upper <= 0))
-	stop("did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0")
+	stop(if(doX)
+	"did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
+	     else "f() values at end points not of opposite sign")
     if(check.conv) {
 	r <- tryCatch(uniroot(f, ..., lower=lower, upper=upper,
 			      f.lower=f.lower, f.upper=f.upper,

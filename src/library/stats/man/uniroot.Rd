@@ -34,10 +34,13 @@ unirootS(f, interval, \dots,
   \item{tol}{the desired accuracy (convergence tolerance).}
   \item{maxiter}{the maximum number of iterations.}
 
-  \item{Sig}{\emph{desired} sign of \code{f(upper)}, or \code{\link{NULL}}.}
+  \item{Sig}{\emph{desired} sign of \code{f(upper)}, or \code{\link{NULL}};
+    setting \code{Sig = 0} keeps the search interval and hence produces
+    an error when \code{f()} does not have differing signs at the endpoints.}
   \item{check.conv}{logical indicating whether a convergence warning of the
     underlying \code{\link{uniroot}} should be caught as an error.}
-  \item{trace}{integer number determining tracing}
+  \item{trace}{integer number; if positive, tracing information is
+    produced.  Higher values giving more details.}
 }
 \description{
   The function \code{uniroot} searches the interval from \code{lower}
@@ -154,11 +157,12 @@ try(uniroot(f2, c(0,2)))
 unirootS(f1, c(0,10),trace=1)
 unirootS(f2, c(0,2), trace=2)
 
-## no way to find a zero of a positive function:
+## no way to find a zero of a positive function
+## (but numerically f(-|M|) becomes zero !):
 try( unirootS(exp, c(0,2), trace=TRUE) )
 
 ## Nonsense example (must give an error):
-try( uniroot(function(x) 1, 0:1) )
+try( unirootS(function(x) 1, 0:1) )
 
 ## Convergence checking :
 sinc <- function(x) ifelse(x == 0, 1, sin(x)/x)
