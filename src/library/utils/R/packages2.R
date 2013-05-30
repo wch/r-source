@@ -16,6 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+if (.Platform$OS.type == "windows")
+    .install.macbinary <- function(...) NULL	# globalVariables isn't available, so use this to suppress the warning
+
 getDependencies <-
     function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L])
 {

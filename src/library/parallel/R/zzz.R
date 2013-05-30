@@ -18,6 +18,9 @@
 
 .noGenerics <- TRUE
 
+if (.Platform$OS.type == "windows")
+    utils::globalVariables(c("mc_pids", "clean_pids"), add = TRUE)
+
 .onLoad <- function(libname, pkgname)
 {
     initDefaultClusterOptions(libname)

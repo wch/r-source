@@ -18,6 +18,9 @@
 
 .noGenerics <- TRUE
 
+if (.Platform$OS.type == "windows")
+    utils::globalVariables(c("C_cairoProps", "C_makeQuartzDefault"), add = TRUE)
+    
 .onLoad <- function(libname, pkgname)
 {
     op <- options()
