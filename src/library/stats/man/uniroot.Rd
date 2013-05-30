@@ -157,6 +157,9 @@ unirootS(f2, c(0,2), trace=2)
 ## no way to find a zero of a positive function:
 try( unirootS(exp, c(0,2), trace=TRUE) )
 
+## Nonsense example (must give an error):
+try( uniroot(function(x) 1, 0:1) )
+
 ## Convergence checking :
 sinc <- function(x) ifelse(x == 0, 1, sin(x)/x)
 curve(sinc, -6,18); abline(h=0,v=0, lty=3, col=adjustcolor("gray", 0.8))

@@ -88,11 +88,15 @@ unirootS <- function(f, interval, ...,
 	    cat(sprintf("search in [%g,%g]%s", lower, upper,
 			if(trace >= 2)"\n" else " ... "))
 	Delta <- function(u) 0.01* pmax(1e-7, abs(u))
+        it <- 0L
 	## Two cases:
 	if(is.null(Sig)) {
 	    ## case 1)	'Sig' unspecified --> extend (lower, upper) at the same time
 	    delta <- Delta(c(lower,upper))
 	    while(isTRUE(f.lower*f.upper > 0) && any(iF <- is.finite(c(lower,upper)))) {
+		if((it <- it + 1L) > maxiter)
+		    stop(gettextf("no sign change found in %d iterations", it-1),
+			 domain=NA)
 		if(iF[1]) f.lower <- f(lower <- lower - delta[1])
 		if(iF[2]) f.upper <- f(upper <- upper + delta[2])
 		if(trace >= 2)
@@ -105,12 +109,18 @@ unirootS <- function(f, interval, ...,
 	    ## make sure we have Sig*f(lower) < 0 and Sig*f(upper) > 0:
 	    delta <- Delta(lower)
 	    while(isTRUE(Sig*f.lower > 0)) {
+		if((it <- it + 1L) > maxiter)
+		    stop(gettextf("no sign change found in %d iterations", it-1),
+			 domain=NA)
 		f.lower <- f(lower <- lower - delta)
 		if(trace) cat(sprintf(" .. modified lower: %g\n", lower))
 		delta <- 2 * delta
 	    }
 	    delta <- Delta(upper)
 	    while(isTRUE(Sig*f.upper < 0)) {
+		if((it <- it + 1L) > maxiter)
+		    stop(gettextf("no sign change found in %d iterations", it-1),
+			 domain=NA)
 		f.upper <- f(upper <- upper + delta)
 		if(trace) cat(sprintf(" .. modified upper: %g\n", upper))
 		delta <- 2 * delta
