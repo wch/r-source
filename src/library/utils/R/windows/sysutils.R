@@ -48,7 +48,7 @@ setWindowTitle <- function(suffix, title = paste(getIdentification(), suffix))
 
 getWindowTitle <- function() .Call(C_getWindowTitle)
 
-setStatusBar <- function(text) .Call(setStatusBar, text)
+setStatusBar <- function(text) .Call(C_setStatusBar, text)
 
 getWindowsHandle <- function(which = "Console") {
     if (is.numeric(which)) {

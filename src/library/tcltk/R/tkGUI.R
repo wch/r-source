@@ -16,6 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+if (.Platform$OS.type == "windows")
+    utils::globalVariables(".C_RTcl_ActivateConsole", add = TRUE)
+
 tkStartGUI <- function()
 {
     ## Philippe Grosjean: this is added for more explicit error message under Windows
