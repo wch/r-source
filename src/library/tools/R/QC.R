@@ -3226,7 +3226,7 @@ function(dir)
         return(bad_flags)
 
     ## Try to be careful ...
-    pkg_flags_re <- "^PKG_(CPP|C|CXX|F|FC|OBJC|OBJCCXX)FLAGS: "
+    pkg_flags_re <- "^PKG_(CPP|C|CXX|F|FC|OBJC|OBJCXX)FLAGS: "
     lines <- lines[grepl(pkg_flags_re, lines)]
     names <- sub(":.*", "", lines)
     lines <- sub(pkg_flags_re, "", lines)

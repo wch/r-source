@@ -7790,11 +7790,13 @@ specify additional flags by setting some of the variables
 @vindex PKG_FFLAGS
 @vindex PKG_FCFLAGS
 @vindex PKG_OBJCFLAGS
+@vindex PKG_OBJCXXFLAGS
 @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, @code{PKG_FFLAGS},
-@code{PKG_FCFLAGS}, and @code{PKG_OBJCFLAGS} (for the C, C++, FORTRAN
-77, Fortran 9x, and Objective C compilers, respectively) in the file
-@file{Makevars} in the compilation directory (or, of course, create the
-object files directly from the command line).
+@code{PKG_FCFLAGS}, @code{PKG_OBJCFLAGS}, and @code{PKG_OBJCXXFLAGS}
+(for the C, C++, FORTRAN 77, Fortran 9x, Objective C, and Objective C++
+compilers, respectively) in the file @file{Makevars} in the compilation
+directory (or, of course, create the object files directly from the
+command line).
 @vindex PKG_LIBS
 Similarly, variable @code{PKG_LIBS} in @file{Makevars} can be used for
 additional @samp{-l} and @samp{-L} flags to be passed to the linker when
