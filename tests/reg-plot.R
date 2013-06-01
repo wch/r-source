@@ -143,3 +143,9 @@ plot(i, x, xaxt="n")# ok in 2.6.2 and not in 2.7.0
 ## table methods should be bypassed:
 dotchart(table(infert$education))
 ## failed in 2.12.[12]
+
+## cex as "..."  in "high level" function
+hc <- hclust(dst <- dist(c(1:2, 5)), method="ave")
+plot(hc, cex = 2, axes=FALSE, ann=FALSE)
+## cex was not used in 3.0.[01]
+

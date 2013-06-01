@@ -2,10 +2,10 @@
 %Å‚Å„ÅœÅ”\r
 1 0 obj
 <<
-/CreationDate (D:20121210185333)
-/ModDate (D:20121210185333)
+/CreationDate (D:20130601183129)
+/ModDate (D:20130601183129)
 /Title (R Graphics Output)
-/Producer (R 3.0.0)
+/Producer (R 3.1.0)
 /Creator (R)
 >>
 endobj
@@ -5158,13 +5158,58 @@ endobj
 93 0 obj
 1575
 endobj
+94 0 obj
+<< /Type /Page /Parent 3 0 R /Contents 95 0 R /Resources 4 0 R >>
+endobj
+95 0 obj
+<<
+/Length 96 0 R
+>>
+stream
+1 J 1 j q
+Q q 227.98 119.08 414.72 371.52 re W n
+Q q 168.94 45.64 504.00 504.00 re W n
+BT
+/sRGB cs
+0.000 0.000 0.000 scn
+/F2 1 Tf 0.00 24.00 -24.00 0.00 248.51 415.04 Tm (3) Tj
+ET
+BT
+/F2 1 Tf 0.00 24.00 -24.00 0.00 440.51 130.37 Tm (1) Tj
+ET
+BT
+/F2 1 Tf 0.00 24.00 -24.00 0.00 632.51 130.37 Tm (2) Tj
+ET
+/sRGB CS
+0.000 0.000 0.000 SCN
+0.75 w
+[] 0 d
+1 J
+1 j
+10.00 M
+435.34 163.70 m
+435.34 192.17 l
+627.34 192.17 l
+627.34 163.70 l
+S
+243.34 448.37 m
+243.34 476.84 l
+531.34 476.84 l
+531.34 192.17 l
+S
+Q
+endstream
+endobj
+96 0 obj
+499
+endobj
 3 0 obj
-<< /Type /Pages /Kids [ 7 0 R 10 0 R 13 0 R 16 0 R 19 0 R 22 0 R 25 0 R 28 0 R 31 0 R 34 0 R 37 0 R 40 0 R 43 0 R 46 0 R 49 0 R 52 0 R 55 0 R 58 0 R 61 0 R 64 0 R 67 0 R 70 0 R 73 0 R 76 0 R 79 0 R 82 0 R 85 0 R 88 0 R 91 0 R ] /Count 29 /MediaBox [0 0 841 595] >>
+<< /Type /Pages /Kids [ 7 0 R 10 0 R 13 0 R 16 0 R 19 0 R 22 0 R 25 0 R 28 0 R 31 0 R 34 0 R 37 0 R 40 0 R 43 0 R 46 0 R 49 0 R 52 0 R 55 0 R 58 0 R 61 0 R 64 0 R 67 0 R 70 0 R 73 0 R 76 0 R 79 0 R 82 0 R 85 0 R 88 0 R 91 0 R 94 0 R ] /Count 30 /MediaBox [0 0 841 595] >>
 endobj
 4 0 obj
 <<
 /ProcSet [/PDF /Text]
-/Font << /F1 95 0 R /F2 96 0 R /F3 97 0 R /F6 98 0 R >>
+/Font << /F1 98 0 R /F2 99 0 R /F3 100 0 R /F6 101 0 R >>
 /ExtGState << >>
 /ColorSpace << /sRGB 5 0 R >>
 >>
@@ -5374,7 +5419,7 @@ f9 c7 fa 57 fa e7 fb 77 fc 07 fc 98 fd 29 fd ba
 fe 4b fe dc ff 6d ff ff >
 endstream
 endobj
-94 0 obj
+97 0 obj
 <<
 /Type /Encoding /BaseEncoding /WinAnsiEncoding
 /Differences [ 45/minus 96/quoteleft
@@ -5382,30 +5427,30 @@ endobj
 /dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek /caron /space]
 >>
 endobj
-95 0 obj
+98 0 obj
 << /Type /Font /Subtype /Type1 /Name /F1 /BaseFont /ZapfDingbats >>
 endobj
-96 0 obj
+99 0 obj
 << /Type /Font /Subtype /Type1 /Name /F2 /BaseFont /Helvetica
-/Encoding 94 0 R >>
+/Encoding 97 0 R >>
 endobj
-97 0 obj
+100 0 obj
 << /Type /Font /Subtype /Type1 /Name /F3 /BaseFont /Helvetica-Bold
-/Encoding 94 0 R >>
+/Encoding 97 0 R >>
 endobj
-98 0 obj
+101 0 obj
 << /Type /Font /Subtype /Type1 /Name /F6 /BaseFont /Symbol
 >>
 endobj
 xref
-0 99
+0 102
 0000000000 65535 f 
 0000000021 00000 n 
 0000000163 00000 n 
-0000094427 00000 n 
-0000094707 00000 n 
-0000094853 00000 n 
-0000094886 00000 n 
+0000095082 00000 n 
+0000095369 00000 n 
+0000095517 00000 n 
+0000095550 00000 n 
 0000000212 00000 n 
 0000000292 00000 n 
 0000001974 00000 n 
@@ -5493,13 +5538,16 @@ xref
 0000092695 00000 n 
 0000092777 00000 n 
 0000094406 00000 n 
-0000104422 00000 n 
-0000104680 00000 n 
-0000104764 00000 n 
-0000104862 00000 n 
-0000104965 00000 n 
+0000094427 00000 n 
+0000094509 00000 n 
+0000095062 00000 n 
+0000105086 00000 n 
+0000105344 00000 n 
+0000105428 00000 n 
+0000105526 00000 n 
+0000105630 00000 n 
 trailer
-<< /Size 99 /Info 1 0 R /Root 2 0 R >>
+<< /Size 102 /Info 1 0 R /Root 2 0 R >>
 startxref
-105043
+105709
 %%EOF
