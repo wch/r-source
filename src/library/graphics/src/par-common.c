@@ -66,12 +66,16 @@
     else if (streql(what, "cex")) {
 #ifdef FOR_PAR
 	lengthCheck(what, value, 1);
+/* else: cex can be a vector of length > 1, so pick off first value
+   (as e.g. pch always did) */
 #endif
 	x = asReal(value);
 	posRealCheck(x, what);
-	R_DEV__(cex) = 1.0;
 #ifdef FOR_PAR
+	R_DEV__(cex) = 1.0;
 	R_DEV__(cexbase) = x;
+#else
+	R_DEV__(cex) = x; // not setting cexbase here
 #endif
     }
     else if (streql(what, "cex.main")) {

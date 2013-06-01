@@ -68,6 +68,9 @@
       \item On Windows, the installer modified the \file{etc/Rconsole} and
       \file{etc/Rprofile.site} files even when default options were
       chosen.  (Reported by Tal Galili.)
+
+      \item \code{cex = .} is made use of again in \code{plot(hclust(*))}
+      (and possibly others).  (Reported by Peter Langfelder.)
     }
   }
 }
