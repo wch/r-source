@@ -1714,9 +1714,9 @@ site libraries are always included by @samp{.libPaths()}.
 @cindex User libraries
 @enindex R_LIBS_USER
 Users can have one or more libraries, normally specified by the
-environment variable @env{R_LIBS_USER}.  This has a default value (use
-@samp{Sys.getenv("R_LIBS_USER")} within an @R{} session to see what it
-is), but only is used if the corresponding directory actually exists
+environment variable @env{R_LIBS_USER}.  This has a default value (to
+see it, use @samp{Sys.getenv("R_LIBS_USER")} within an @R{} session),
+but that is only used if the corresponding directory actually exists
 (which by default it will not).
 
 Both @env{R_LIBS_USER} and @env{R_LIBS_SITE} can specify multiple
@@ -1886,6 +1886,19 @@ If you have a package without compiled code and no Windows-specific
 help, you can zip up an installation on another OS and install from the
 that zip file on Windows.  However, such a package can be installed from
 the sources on Windows without any additional tools.
+
+
+@enindex LOCAL_SOFT
+There is provision to make use of a system-wide library of installed
+external software by setting the @command{make} variable
+@code{LOCAL_SOFT}, to give an equivalent of @file{/usr/local} on a
+Unix-alike.  This can be set in @file{src/gnuwin/MkRules.local} when
+@R{} is built from sources (see the comments in
+@file{src/gnuwin/MkRules.dist}), or in file@footnote{or by adding it in
+a file such as @file{etc/i386/Makevars.site}, which does not exist by
+default.}  @file{etc/i386/Makeconf} or @file{etc/x64/Makeconf} for an
+installed version of @R{}.  The version used by @acronym{CRAN} can be
+downloaded from @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html}.
 
 @node OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection OS X
