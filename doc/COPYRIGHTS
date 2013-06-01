@@ -280,6 +280,10 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f
 
   but no copyright statements appear in the sources.
 
+  LAPACK 3.4.2 contains a LICENSE file, copied to src/modules/lapack
+  (but many of these routines were originally copied from earlier
+  versions of LAPACK).
+
 
 src/extra/xdr/*
 
