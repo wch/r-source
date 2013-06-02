@@ -36,6 +36,13 @@
     }
   }
   
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Installation is aborted immediately if a \code{LinkingTo}
+      package is not installed.
+    }
+  }
+      
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \file{Rdefines.h} has been tweaked so it can be included in

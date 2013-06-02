@@ -144,10 +144,11 @@ function(db, verbose = FALSE)
     Rdeps <- as.vector(Rdeps)
     Suggests <- .split_dependencies(db[names(db) %in% "Suggests"])
     Imports <- .split_dependencies(db[names(db) %in% "Imports"])
+    LinkingTo <- .split_dependencies(db[names(db) %in% "LinkingTo"])
     structure(list(DESCRIPTION = db, Built = Built,
                    Rdepends = Rdeps, Rdepends2 = Rdeps2,
                    Depends = Depends, Suggests = Suggests,
-                   Imports = Imports),
+                   Imports = Imports, LinkingTo = LinkingTo),
               class = "packageDescription2")
 }
 
