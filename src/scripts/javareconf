@@ -134,13 +134,13 @@ if test -z "$JAVAC"; then
 fi
 
 : ${TMPDIR=/tmp}
-{ tempdir=`(mktemp -d -q "${TMPDIR}/RJRECONF.XXXXXX") 2>/dev/null` \
+{ tempdir=`(mktemp -d -q "${TMPDIR}/Rjavareconf.XXXXXX") 2>/dev/null` \
 	&& test -n "${tempdir}" && test -d "${tempdir}" ; } ||
-{ test -n "${RANDOM}" && tempdir=${TMPDIR}/RJRECONF$$-${RANDOM} \
+{ test -n "${RANDOM}" && tempdir=${TMPDIR}/Rjavareconf.$$-${RANDOM} \
 	&& (mkdir "${tempdir}") ; } ||
-{ tempdir=${TMPDIR}/RJRECONF.$$-`date +%m%d%H%M%S` \
+{ tempdir=${TMPDIR}/Rjavareconf.$$-`date +%m%d%H%M%S` \
 	&& (mkdir "${tempdir}"); } ||
-{ tempdir=${TMPDIR}/RJRECONF.$$ && (mkdir "${tempdir}") ; } ||
+{ tempdir=${TMPDIR}/Rjavareconf.$$ && (mkdir "${tempdir}") ; } ||
     (error "cannot create temporary directory" && exit 1)
 
 # test functionality of the compiler

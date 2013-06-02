@@ -30,15 +30,16 @@
 
       \item \command{R CMD build} (with the internal \code{tar}) checks
       the permissions of \file{configure} and \file{cleanup} files and
-      adds execute permission if needed, with a warning.  This is useful
-      on OSes and file systems which do not support execute permissions.
+      adds execute permission to the recorded permissions for these
+      files if needed, with a warning.  This is useful on OSes and file
+      systems which do not support execute permissions.
     }
   }
   
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \file{Rdefines.h} has been tweaked so it can be included in
-      C++ code with \file{R_ext/Boolean.h} (which is included by
+      C++ code after \file{R_ext/Boolean.h} (which is included by
       \file{R.h}).
 
       Note that \file{Rdefines.h} is not kept up-to-date, and
@@ -65,12 +66,13 @@
       3.0.1 (only) when a sub-architecture was used.  (Reported by
       Berwin Turlach.)
 
-      \item On Windows, the installer modified the \file{etc/Rconsole} and
-      \file{etc/Rprofile.site} files even when default options were
-      chosen.  (Reported by Tal Galili.)
+      \item On Windows, the installer modified the \file{etc/Rconsole}
+      and \file{etc/Rprofile.site} files even when default options were
+      chosen, so the MD5 sums did not refer to the installed versions.
+      (Reported by Tal Galili.)
 
-      \item \code{cex = .} is made use of again in \code{plot(hclust(*))}
-      (and possibly others).  (Reported by Peter Langfelder.)
+      \item \code{plot(hclust(), cex =} respects \code{cex} again
+      (and possibly other similarly).  (Reported by Peter Langfelder.)
     }
   }
 }
