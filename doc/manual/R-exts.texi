@@ -10874,9 +10874,11 @@ header @file{R_ext/Constants.h}, mainly for compatibility with @Sl{}.
 
 @findex TRUE
 @findex FALSE
-Further, the included header @file{R_ext/Boolean.h} has constants
-@code{TRUE} and @code{FALSE = 0} of type @code{Rboolean} in order to
-provide a way of using ``logical'' variables in C consistently.
+Further, the included header @file{R_ext/Boolean.h} has enumeration
+constants @code{TRUE} and @code{FALSE} of type @code{Rboolean} in
+order to provide a way of using ``logical'' variables in C consistently.
+This can conflict with other sofware: for example it conflicts with the
+headers in IJG's @code{jpeg-9} (but not earlier versions).
 
 
 @node Optimization, Integration, Numerical analysis subroutines, The R API
