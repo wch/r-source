@@ -547,7 +547,8 @@
         ## going on in parallel
 
         pkgInfo <- .split_description(.read_description("DESCRIPTION"))
-        pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports)))
+        pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports),
+                         names(pkgInfo$LinkingTo)))
         if (length(pkgs)) {
             miss <- character()
             for (pkg in pkgs) {
