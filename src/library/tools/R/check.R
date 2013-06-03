@@ -3415,7 +3415,7 @@ setRlibs <-
     clean <- TRUE
     do_codoc <- TRUE
     do_examples <- TRUE
-    do_install <- TRUE; install <- ""
+    do_install_arg <- TRUE; install <- ""
     do_tests <- TRUE
     do_vignettes <- TRUE
     do_build_vignettes <- TRUE
@@ -3467,7 +3467,7 @@ setRlibs <-
         } else if (a == "--no-examples") {
             do_examples  <- FALSE
         } else if (a == "--no-install") {
-            do_install  <- FALSE
+            do_install_arg  <- FALSE
         } else if (substr(a, 1, 10) == "--install=") {
             install <- substr(a, 11, 1000)
         } else if (a == "--no-tests") {
@@ -3514,10 +3514,10 @@ setRlibs <-
     ## record some of the options used.
     opts <- character()
     if (install == "fake") opts <- c(opts, "--install=fake")
-    if (!do_install) opts <- c(opts, "--no-install")
+    if (!do_install_arg) opts <- c(opts, "--no-install")
     if (install == "no") {
         opts <- c(opts, "--install=no")
-        do_install <- FALSE
+        do_install_arg <- FALSE
     }
 
     if (install == "fake") {
@@ -3618,7 +3618,7 @@ setRlibs <-
 
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
-        do_install && config_val_to_logical(Sys.getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"))
+        do_install_arg && config_val_to_logical(Sys.getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"))
     R_check_force_suggests <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE"))
     R_check_skip_tests_arch <-
@@ -3716,6 +3716,9 @@ setRlibs <-
         ## pkg should be the path to the package root source
         ## directory, either absolute or relative to startdir.
         ## As from 2.1.0 it can also be a tarball
+        
+        ## The previous package may have set do_install to FALSE 
+        do_install <- do_install_arg
 
         ## $pkgdir is the corresponding absolute path.
         ## pkgname0 is the name of the top-level directory

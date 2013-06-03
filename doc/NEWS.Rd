@@ -80,6 +80,11 @@
 
       \item \code{plot(hclust(), cex =} respects \code{cex} again
       (and possibly other similarly).  (Reported by Peter Langfelder.)
+      
+      \item If multiple packages were checked by \command{R CMD check}, 
+      and one was written for a different OS, it would set
+      \command{--no-install} for all following packages as well as
+      itself.      
     }
   }
 }
