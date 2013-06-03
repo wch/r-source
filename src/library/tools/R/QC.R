@@ -1761,6 +1761,9 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
+suppressCheck <- function(e)
+    length(e) == 2 && is.call(e) && is.symbol(e[[1]]) && as.character(e[[1]]) == "dontCheck"
+    
 ### * checkFF
 
 checkFF <-
@@ -1768,6 +1771,7 @@ function(package, dir, file, lib.loc = NULL,
          verbose = getOption("verbose"))
 {
     has_namespace <- FALSE
+    is_installed_msg <- is_installed <- FALSE
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1L)
@@ -1793,6 +1797,7 @@ function(package, dir, file, lib.loc = NULL,
             ce
         } else
             .package_env(package)
+        is_installed <- TRUE
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
@@ -1844,7 +1849,8 @@ function(package, dir, file, lib.loc = NULL,
     ## *invisibly* (so that output is not duplicated).
     ## Otherwise, if not verbose, we return the list of bad FF calls.
 
-    bad_exprs <- empty_exprs <- wrong_pkg <- list()
+    bad_exprs <- empty_exprs <- wrong_pkg <- other_problem <- list()
+    other_desc <- character()
     bad_pkg <- character()
     FF_funs <- FF_fun_names <- c(".C", ".Fortran", ".Call", ".External",
                                  ".Call.graphics", ".External.graphics")
@@ -1864,7 +1870,66 @@ function(package, dir, file, lib.loc = NULL,
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
 
     allowed <- character()
+    
+    check_registration <- function(e) {
+    	sym <- e[[2L]]
+    	name <- deparse(sym, nlines = 1L)
+        if (!is_installed) {
+            if (!is_installed_msg) {
+        	other_problem <<- c(other_problem, e)
+        	other_desc <<- c(other_desc, "foreign function registration not tested, as package was not installed") 
+        	is_installed_msg <<- TRUE
+            }
+            return("OTHER")  # registration checks need the package to be installed
+        }
+    	if (is.symbol(sym)) { # it might be something like pkg::sym 
+	    if (!exists(name, code_env, inherits=FALSE)) {
+		if (name %in% suppressForeignCheck(, package))
+		    return ("SYMBOL OK")  # skip false positives
+    	    
+    	    	other_problem <<- c(other_problem, e)
+    	    	other_desc <<- c(other_desc, sprintf("symbol \"%s\" not in package", name))
+    	    	return("OTHER")
+    	    }
+    	} else if (suppressCheck(sym))
+    	    return("SKIPPED")
+    	    
+    	sym <- tryCatch(eval(sym, code_env), error = function(e) e)
+    	if (inherits(sym, "error")) {
+    	    other_problem <<- c(other_problem, e)
+    	    other_desc <<- c(other_desc, sprintf("Evaluating \"%s\" during check gives error\n\"%s\"", name, sym$message))
+    	    return("OTHER")
+    	}
+    	if (!inherits(sym, "NativeSymbolInfo")) {
+    	    other_problem <<- c(other_problem, e)
+    	    other_desc <<- c(other_desc, sprintf("\"%s\" is not of class \"%s\"", name, "NativeSymbolInfo"))
+    	    return("OTHER")
+    	}
+    	numparms <- sym$numParameters
+    	callparms <- length(e) - 2
+    	if ("PACKAGE" %in% names(e)) callparms <- callparms - 1
+    	FF_fun <- as.character(e[[1L]])
+    	if (FF_fun %in% c(".C", ".Fortran")) 
+    	    callparms <- callparms - length(intersect(names(e), c("NAOK", "DUP", "ENCODING")))
+    	if (!is.null(numparms) && numparms >= 0 && numparms != callparms) {
+    	    other_problem <<- c(other_problem, e)
+    	    other_desc <<- c(other_desc, sprintf("call to \"%s\" with %d parameters, expected %d", name, callparms, numparms))
+    	    return("OTHER")
+    	}
+    	if (inherits(sym, "CallRoutine") && !(FF_fun %in% c(".Call", ".Call.graphics"))) {
+    	    other_problem <<- c(other_problem, e)
+    	    other_desc <<- c(other_desc, sprintf("\"%s\" registered as %s, but called with %s", name, ".Call", FF_fun))
+    	    return("OTHER")
+    	}
+    	if (inherits(sym, "ExternalRoutine") && !(FF_fun %in% c(".External", ".External.graphics"))) {
+	    other_problem <<- c(other_problem, e)
+	    other_desc <<- c(other_desc, sprintf("\"%s\" registered as %s, but called with %s", name, ".External", FF_fun))
+	    return("OTHER")
+	}
 
+        "SYMBOL OK"
+    }
+    	
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
@@ -1875,7 +1940,7 @@ function(package, dir, file, lib.loc = NULL,
             ## </NOTE>
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
                 this <- ""
-                if(!is.character(e[[2L]])) parg <- "Called with symbol"
+                if(!is.character(e[[2L]])) parg <- check_registration(e)
                 else {
                     this <- parg <- e[["PACKAGE"]]
                     if (!is.na(pkg) && is.character(parg) &&
@@ -1931,8 +1996,7 @@ function(package, dir, file, lib.loc = NULL,
                 exprs <- c(exprs, exprs2)
             }
        }
-    }
-    else {
+    } else {
         if(!is.na(enc) &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
             ## FIXME: what if conversion fails on e.g. UTF-8 comments
@@ -1951,6 +2015,8 @@ function(package, dir, file, lib.loc = NULL,
     attr(bad_exprs, "wrong_pkg") <- wrong_pkg
     attr(bad_exprs, "bad_pkg") <- bad_pkg
     attr(bad_exprs, "empty") <- empty_exprs
+    attr(bad_exprs, "other_problem") <- other_problem
+    attr(bad_exprs, "other_desc") <- other_desc
     if (length(bad_pkg)) { # check against dependencies.
         bases <- .get_standard_package_names()$base
         bad <- bad_pkg[!bad_pkg %in% bases]
@@ -1977,6 +2043,7 @@ function(x, ...)
     y <- attr(x, "wrong_pkg")
     z <- attr(x, "bad_pkg")
     zz <- attr(x, "undeclared")
+    other_problem <- attr(x, "other_problem")
 
     res <- character()
     if (length(x)) {
@@ -2032,6 +2099,18 @@ function(x, ...)
                         "Undeclared packages in foreign function calls:",
                         domain = NA)
         res <- c(res, msg, paste("  ", paste(sQuote(sort(zz)), collapse = ", ")))
+    }
+    if (length(other_problem)) {
+    	msg <- ngettext(length(other_problem),
+    		        "Registration problem:",
+    		        "Registration problems:",
+    		        domain = NA)
+        res <- c(res, msg)
+        other_desc <- attr(x, "other_desc")
+        for (i in seq_along(other_problem)) {
+            res <- c(res, paste0("  ", other_desc[i], ":"),
+                          paste0("   ", deparse(other_problem[[i]])))
+        }
     }
     res
 }

@@ -16,8 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-if (.Platform$OS.type == "windows")
-    utils::globalVariables(".C_RTcl_ActivateConsole", add = TRUE)
+if (.Platform$OS.type == "windows") {
+    utils::globalVariables(".C_RTcl_ActivateConsole")
+    utils::suppressForeignCheck(".C_RTcl_ActivateConsole")
+}
 
 tkStartGUI <- function()
 {

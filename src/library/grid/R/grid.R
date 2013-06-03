@@ -440,7 +440,7 @@ grid.DLapply <- function(FUN, ...) {
 # you are doing -- this will be a bit of overkill, but is for safety
 grid.Call <- function(fnname, ...) {
   .Call(L_gridDirty)
-  .Call(fnname, ...)
+  .Call(dontCheck(fnname), ...)  # skip code analysis checks, keep runtime checks
 }
 
 grid.Call.graphics <- function(fnname, ...) {
@@ -453,10 +453,10 @@ grid.Call.graphics <- function(fnname, ...) {
     # operation;  this is necessary in case the display list is
     # played on another device (e.g., via replayPlot() or dev.copy())
     .Call.graphics(L_gridDirty)
-    result <- .Call.graphics(fnname, ...)
+    result <- .Call.graphics(dontCheck(fnname), ...)
   } else {
     .Call(L_gridDirty)
-    result <- .Call(fnname, ...)
+    result <- .Call(dontCheck(fnname), ...)
   }
   result
 }

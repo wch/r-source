@@ -5,23 +5,40 @@
 
 \name{globalVariables}
 \alias{globalVariables}
+\alias{suppressForeignCheck}
 \title{
-  Declare Variables to be Treated as Global in Checking a Package
+  Declarations Used in Checking a Package
 }
 \description{
-  The names supplied are of functions or other objects that should be
-  regarded as defined globally when the \code{check} tool is applied to
-  this package.  The call to \code{globalVariables} will be included in
-  the package's source.  Repeated calls in the same package accumulate
-  the names of the global variables.
+  For \code{globalVariables}, the names supplied are of functions or
+  other objects that should be regarded as defined globally when the
+  \code{check} tool is applied to this package.  The call to
+  \code{globalVariables} will be included in the package's source.
+  Repeated calls in the same package accumulate the names of the
+  global variables.
 
   Typical examples are the fields and methods in reference classes,
   which appear to be global objects to \code{codetools}.
   (This case is handled automatically by \code{\link{setRefClass}()} and
   friends, using the supplied field and method names.)
+  
+  For \code{suppressForeignCheck}, the names supplied are of variables
+  used as \code{.NAME} in foreign function calls which should not be
+  checked during \command{R CMD check} code analysis.  Without this
+  declaration, expressions other than simple character strings are
+  assumed to evaluate to registered native symbol objects.  The type
+  of call (\code{.Call}, \code{.External}, etc.) and argument counts
+  will be checked.  With this declaration, no checks will be done on
+  those names.  (If the code uses an expression that should only be
+  evaluated at runtime, the message can be suppressed by wrapping it
+  in the \code{\link{dontCheck}} function call, or by saving it to
+  a local variable, and suppressing messages about that variable. See
+  the example below.)
+  
 }
 \usage{
 globalVariables(names, package, add = TRUE)
+suppressForeignCheck(names, package, add = TRUE)
 }
 \arguments{
   \item{names}{
@@ -32,8 +49,9 @@ globalVariables(names, package, add = TRUE)
     The relevant package, usually the character string name of the package
     but optionally its corresponding namespace environment.
 
-    When the call to \code{globalVariables} comes in the package's source
-    file, the argument is normally omitted, as in the example below.
+    When the call to \code{globalVariables} or
+    \code{suppressForeignCheck} comes in the package's source file,
+    the argument is normally omitted, as in the example below.
   }
   \item{add}{
     Should the contents of \code{names} be added to the current global
@@ -41,23 +59,28 @@ globalVariables(names, package, add = TRUE)
   }
 }
 \details{
-  The list of declared global variables is stored in a metadata object
-  in the package's namespace, assuming the \code{globalVariables} call(s)
-  occur as top-level calls in the package's source code.
+  The lists of declared global variables and native symbol objects are
+  stored in a metadata object in the package's namespace, assuming the
+  \code{globalVariables} or \code{suppressForeignCheck} call(s) occur
+  as top-level calls in the package's source code.
 
-  The check command, as implemented in package \code{utils}, queries the
-  global variables list before checking the \R{} source code in the
-  package for possible problems.
+  The check command, as implemented in package \code{tools}, queries
+  the list before checking the \R{} source code in the package for
+  possible problems.
 
-  This was introduced in \R 2.15.1 so should be used conditionally: see
-  the example.
+  \code{globalVariables} was introduced in \R 2.15.1 and
+  \code{suppressForeignCheck} was introduced in \R 3.0.2 so both
+  should be used conditionally: see the example.  
 }
 \value{
-  The current list of declared global variables, possibly modified by
-  this call.
+  \code{globalVariables} returns the current list of declared global
+  variables, possibly modified by this call.
+  
+  \code{suppressForeignCheck} returns the current list of native
+  symbol objects which are not to be checked.  
 }
 \author{
-  John Chambers
+  John Chambers and Duncan Murdoch
 }
 \note{
   The global variables list really belongs to a restricted scope (a
@@ -73,6 +96,20 @@ globalVariables(names, package, add = TRUE)
 ## but not in a way that codetools can find.
 ## In the same source file (to remind you that you did it) add:
 if(getRversion() >= "2.15.1")  utils::globalVariables(c(".obj1", "obj2"))
+
+## To suppress messages about a run-time calculated native symbol, 
+## save it to a local variable.
+
+## At top level, put this:
+if(getRversion() > "3.0.1") utils::suppressForeignCheck("localvariable")
+
+## Within your function, do the call like this:
+localvariable <- if (condition) entry1 else entry2
+.Call(localvariable, 1, 2, 3)
+
+## Alternatively, like this:
+if(getRversion() <= "3.0.1") dontCheck <- identity
+.Call(dontCheck(if (condition) entry1 else entry2), 1, 2, 3)
 }
 }
 \keyword{ packages }

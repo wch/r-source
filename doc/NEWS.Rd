@@ -71,6 +71,12 @@
       case-insensitively on all platforms (not just on Windows).
 
       \item \command{R CMD check --as-cran} now implies \option{--timings}.
+      
+      \item \command{R CMD check} now checks foreign function calls
+      for consistency with the registered type and argument count. The
+      \code{suppressForeignCheck()} and \code{dontCheck()} functions
+      have been added to allow package authors to suppress false
+      positive reports.      
     }
   }
 
