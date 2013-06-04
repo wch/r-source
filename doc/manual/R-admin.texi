@@ -1076,7 +1076,8 @@ You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
 (available, e.g., from @uref{http://www.libpng.org/},
 @uref{http://www.ijg.org} and
 @uref{http://download.osgeo.org/@/libtiff/}); current versions are
-recommended.  It is also possible to use @samp{libjpeg-turbo} from
+recommended and 7 or later is required.  It is also possible to use
+@samp{libjpeg-turbo} from
 @uref{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
@@ -2955,7 +2956,7 @@ be required or broken system libraries need to be avoided there are
 system installations the TIFF libraries will require JPEG libraries to
 be present and perhaps linked explicitly, so @option{--without-jpeglib}
 may also disable the @code{tiff()} device.  The @code{tiff()} devices
-only requires a basic build of @code{libtiff} (not even JPEG support is
+only require a basic build of @code{libtiff} (not even JPEG support is
 needed).  Recent versions allow several other libraries to be linked
 into @code{libtiff} such as @code{lzma}, @code{jbig} and @code{jpeg12},
 and these may need also to be present.

@@ -32,7 +32,8 @@
       the permissions of \file{configure} and \file{cleanup} files and
       adds execute permission to the recorded permissions for these
       files if needed, with a warning.  This is useful on OSes and file
-      systems which do not support execute permissions.
+      systems which do not support execute permissions (notably, on
+      Windows).
     }
   }
   
@@ -78,8 +79,8 @@
       chosen, so the MD5 sums did not refer to the installed versions.
       (Reported by Tal Galili.)
 
-      \item \code{plot(hclust(), cex =} respects \code{cex} again
-      (and possibly other similarly).  (Reported by Peter Langfelder.)
+      \item \code{plot(hclust(), cex =)} respects \code{cex} again
+      (and possibly others similarly).  (Reported by Peter Langfelder.)
       
       \item If multiple packages were checked by \command{R CMD check}, 
       and one was written for a different OS, it would set
