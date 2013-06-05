@@ -1132,13 +1132,16 @@ setRlibs <-
         ## The neverending story ...
         ## For the time being, allow to turn this off by setting the environment
         ## variable _R_CHECK_FF_CALLS_ to an empty value.
-        if (nzchar(Sys.getenv("_R_CHECK_FF_CALLS_", "true"))) {
+        if (nzchar(R_check_FF)) {
+            registration <- identical(R_check_FF, "registration")
             checkingLog(Log, "foreign function calls")
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
-                          sprintf("tools::checkFF(package = \"%s\")\n", pkgname)
+                          sprintf("tools::checkFF(package = \"%s\", registration = %s)\n",
+                                  pkgname, registration)
                           else
-                          sprintf("tools::checkFF(dir = \"%s\")\n", pkgdir))
+                          sprintf("tools::checkFF(dir = \"%s\", registration = %s)\n",
+                                  pkgdir, registration))
             out <- R_runR2(Rcmd)
             if (length(out)) {
                 if(any(grepl("^Foreign function calls? with(out| empty)", out)) ||
@@ -3656,6 +3659,7 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
+    R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -3678,6 +3682,7 @@ setRlibs <-
         R_check_code_data_into_globalenv <- TRUE
         R_check_depr_def <- TRUE
         R_check_Rd_line_widths <- TRUE
+        R_check_FF <- "registration"
         do_timings <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
@@ -3740,8 +3745,8 @@ setRlibs <-
         ## pkg should be the path to the package root source
         ## directory, either absolute or relative to startdir.
         ## As from 2.1.0 it can also be a tarball
-        
-        ## The previous package may have set do_install to FALSE 
+
+        ## The previous package may have set do_install to FALSE
         do_install <- do_install_arg
 
         ## $pkgdir is the corresponding absolute path.

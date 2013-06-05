@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkFF.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkFF}
@@ -9,6 +9,7 @@
 \title{Check Foreign Function Calls}
 \usage{
 checkFF(package, dir, file, lib.loc = NULL,
+        registration = FALSE,
         verbose = getOption("verbose"))
 }
 \description{
@@ -30,6 +31,8 @@ checkFF(package, dir, file, lib.loc = NULL,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
     search for \code{package}.}
+  \item{registration}{a logical.  If \code{TRUE} (the default), checks
+    the registration information on the call (if available).}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed (and the result is returned invisibly).}
 }
@@ -43,13 +46,13 @@ checkFF(package, dir, file, lib.loc = NULL,
   reported as their symbols will be preferentially looked up in the DLL
   named in the first \code{useDynLib} directive.
 
-  As from \R 2.15.2, this also checks that calls with \code{PACKAGE}
-  specified are to the same package, and reports separately those which
-  are in base packages and those which are in other packages (and if
-  those packages are specified in the \file{DESCRIPTION} file).  Direct
-  calls to the FORTRAN entry points for LINPACK in \R itself are not
-  reported (but this does not include modifications of LINPACK routines
-  such as \code{dqrls}).
+  This checks that calls with \code{PACKAGE} specified are to the
+  same package, and reports separately those which are in base packages
+  and those which are in other packages (and if those packages are
+  specified in the \file{DESCRIPTION} file).  Direct calls to the
+  FORTRAN entry points for LINPACK in \R itself are not reported (but
+  this does not include modifications of LINPACK routines such as
+  \code{dqrls}).
 }
 \value{
   An object of class \code{"checkFF"}, which currently is a list of the

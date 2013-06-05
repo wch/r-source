@@ -72,11 +72,16 @@
 
       \item \command{R CMD check --as-cran} now implies \option{--timings}.
       
-      \item \command{R CMD check} now checks foreign function calls
-      for consistency with the registered type and argument count. The
-      \code{suppressForeignCheck()} and \code{dontCheck()} functions
+      \item \code{checkFF()} (called by \command{R CMD check} by
+      default) can optionally check foreign function calls for
+      consistency with the registered type and argument count.  This is
+      the default for \command{R CMD check --as-cran} or can be enabled
+      by setting environment variable \env{_R_CHECK_FF_CALLS_} to
+      \samp{registration}.
+
+      Functions \code{suppressForeignCheck()} and \code{dontCheck()}
       have been added to allow package authors to suppress false
-      positive reports.      
+      positive reports.
     }
   }
 

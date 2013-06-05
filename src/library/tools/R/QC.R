@@ -1763,11 +1763,12 @@ function(x, ...)
 
 suppressCheck <- function(e)
     length(e) == 2 && is.call(e) && is.symbol(e[[1]]) && as.character(e[[1]]) == "dontCheck"
-    
+
 ### * checkFF
 
 checkFF <-
 function(package, dir, file, lib.loc = NULL,
+         registration = FALSE,
          verbose = getOption("verbose"))
 {
     has_namespace <- FALSE
@@ -1870,30 +1871,30 @@ function(package, dir, file, lib.loc = NULL,
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
 
     allowed <- character()
-    
+
     check_registration <- function(e) {
     	sym <- e[[2L]]
     	name <- deparse(sym, nlines = 1L)
         if (!is_installed) {
             if (!is_installed_msg) {
         	other_problem <<- c(other_problem, e)
-        	other_desc <<- c(other_desc, "foreign function registration not tested, as package was not installed") 
+        	other_desc <<- c(other_desc, "foreign function registration not tested, as package was not installed")
         	is_installed_msg <<- TRUE
             }
             return("OTHER")  # registration checks need the package to be installed
         }
-    	if (is.symbol(sym)) { # it might be something like pkg::sym 
+    	if (is.symbol(sym)) { # it might be something like pkg::sym
 	    if (!exists(name, code_env, inherits=FALSE)) {
 		if (name %in% suppressForeignCheck(, package))
 		    return ("SYMBOL OK")  # skip false positives
-    	    
+
     	    	other_problem <<- c(other_problem, e)
     	    	other_desc <<- c(other_desc, sprintf("symbol \"%s\" not in package", name))
     	    	return("OTHER")
     	    }
     	} else if (suppressCheck(sym))
     	    return("SKIPPED")
-    	    
+
     	sym <- tryCatch(eval(sym, code_env), error = function(e) e)
     	if (inherits(sym, "error")) {
     	    other_problem <<- c(other_problem, e)
@@ -1909,7 +1910,7 @@ function(package, dir, file, lib.loc = NULL,
     	callparms <- length(e) - 2
     	if ("PACKAGE" %in% names(e)) callparms <- callparms - 1
     	FF_fun <- as.character(e[[1L]])
-    	if (FF_fun %in% c(".C", ".Fortran")) 
+    	if (FF_fun %in% c(".C", ".Fortran"))
     	    callparms <- callparms - length(intersect(names(e), c("NAOK", "DUP", "ENCODING")))
     	if (!is.null(numparms) && numparms >= 0 && numparms != callparms) {
     	    other_problem <<- c(other_problem, e)
@@ -1929,7 +1930,7 @@ function(package, dir, file, lib.loc = NULL,
 
         "SYMBOL OK"
     }
-    	
+
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
@@ -1940,7 +1941,8 @@ function(package, dir, file, lib.loc = NULL,
             ## </NOTE>
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
                 this <- ""
-                if(!is.character(e[[2L]])) parg <- check_registration(e)
+                if(registration && !is.character(e[[2L]]))
+                    parg <- check_registration(e)
                 else {
                     this <- parg <- e[["PACKAGE"]]
                     if (!is.na(pkg) && is.character(parg) &&
@@ -5436,7 +5438,7 @@ function(cfile, dir = NULL)
         }
         return(invisible())
     }
-    
+
     meta <- if(basename(dir <- dirname(cfile)) == "inst")
         as.list(.get_package_metadata(dirname(dir)))
     else
@@ -6259,7 +6261,7 @@ function(x, ...)
                      "... [TRUNCATED]"),
                s)
     }
-    
+
     limit <- attr(x, "limit")
     ## Rd2txt() by default adds a section indent of 5 also incorporated
     ## in the limits used for checking.  But users actually look at the
@@ -6268,7 +6270,7 @@ function(x, ...)
     ## (This should reduce confusion as long as we only check the line
     ## widths in verbatim type sections.)
     limit <- limit - 5L
-    
+
     sections <- names(limit)
 
     .fmt <- function(nm) {
@@ -6288,7 +6290,7 @@ function(x, ...)
     }
 
     as.character(unlist(lapply(names(x), .fmt)))
-}                
+}
 
 find_wide_Rd_lines_in_Rd_db <-
 function(x, limit = NULL)

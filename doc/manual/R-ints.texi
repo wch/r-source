@@ -3822,7 +3822,8 @@ removed eventually.
 Control whether permissions of files should be checked.
 Default: true iff @code{.Platform$OS.type == "unix"}.
 @item _R_CHECK_FF_CALLS_
-Allows turning off @code{checkFF()} testing.  Legacy mostly.
+Allows turning off @code{checkFF()} testing. If set to
+@samp{registration}, checks the registration of such calls.
 Default: true.
 @item _R_CHECK_LICENSE_
 Control whether/how license checks are performed. A possible value is
