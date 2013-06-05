@@ -18,6 +18,9 @@
       examples.  (Suggested by Peter Solymos.)
       
       \item The included version of PCRE has been updated to 8.33.
+      
+      \item The included version of zlib has been updated to 1.2.8, a
+      bug-fix release.
     }
   }
 

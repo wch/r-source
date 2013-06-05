@@ -342,7 +342,7 @@ src/extra/xdr/*
 
 src/extra/zlib/README, *.c, *.h
 
-  Taken from zlib-1.2.7 (C) 1995-2012 Jean-loup Gailly and Mark Adler
+  Taken from zlib-1.2.8 (C) 1995-2013 Jean-loup Gailly and Mark Adler
   See src/extra/zlib/README for the licence.
 
 src/main/connections.c, src/main/gzio.h
