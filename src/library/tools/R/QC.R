@@ -3315,22 +3315,34 @@ function(dir)
     mfile <- paths[1L]
     make <- Sys.getenv("MAKE")
     if(make == "") make <- "make"
-
-    lines <-
-        suppressWarnings(tryCatch(system(sprintf("%s -f %s -f %s",
-                                                 make,
-                                                 shQuote(mfile),
-                                                 shQuote(file.path(R.home("share"), "make", "check.mk"))),
-                                         intern = TRUE, ignore.stderr = TRUE),
-                                  error = identity))
+    command <- sprintf("%s -f %s -f %s -f %s",
+                       make,
+                       shQuote(file.path(R.home("share"), "make",
+                                         "check_vars_ini.mk")),
+                       shQuote(mfile),
+                       shQuote(file.path(R.home("share"), "make",
+                                         "check_vars_out.mk")))
+    lines <- suppressWarnings(tryCatch(system(command, intern = TRUE,
+                                              ignore.stderr = TRUE),
+                                       error = identity))
     if(!length(lines) || inherits(lines, "error"))
         return(bad_flags)
 
+    prefixes <- c("CPP", "C", "CXX", "F", "FC", "OBJC", "OBJCXX")
+
+    uflags_re <- sprintf("^(%s)FLAGS: *(.*)$",
+                         paste(prefixes, collapse = "|"))
+    pos <- grep(uflags_re, lines)
+    ind <- (sub(uflags_re, "\\2", lines[pos]) != "-o /dev/null")
+    if(any(ind))
+        bad_flags$uflags <- lines[pos[ind]]
+
     ## Try to be careful ...
-    pkg_flags_re <- "^PKG_(CPP|C|CXX|F|FC|OBJC|OBJCXX)FLAGS: "
-    lines <- lines[grepl(pkg_flags_re, lines)]
+    pflags_re <- sprintf("^PKG_(%s)FLAGS: ",
+                         paste(prefixes, collapse = "|"))
+    lines <- lines[grepl(pflags_re, lines)]
     names <- sub(":.*", "", lines)
-    lines <- sub(pkg_flags_re, "", lines)
+    lines <- sub(pflags_re, "", lines)
     flags <- strsplit(lines, "[[:space:]]+")
     ## Bad flags:
     ##   -O*
@@ -3352,8 +3364,9 @@ function(dir)
     for(i in seq_along(lines)) {
         bad <- grep(bad_flags_regexp, flags[[i]], value = TRUE)
         if(length(bad))
-            bad_flags <- c(bad_flags,
-                           structure(list(bad), names = names[i]))
+            bad_flags$pflags <-
+                c(bad_flags$pflags,
+                  structure(list(bad), names = names[i]))
     }
 
     class(bad_flags) <- "check_make_vars"
@@ -3363,13 +3376,20 @@ function(dir)
 format.check_make_vars <-
 function(x, ...)
 {
-    .fmt <- function(i) {
-        c(gettextf("Non-portable flags in variable '%s':",
-                   names(x)[i]),
-          sprintf("  %s", paste(x[[i]], collapse = " ")))
+    .fmt <- function(x) {
+        s <- Map(c,
+                 gettextf("Non-portable flags in variable '%s':",
+                          names(x)),
+                 sprintf("  %s", lapply(x, paste, collapse = " ")))
+        as.character(unlist(s))
     }
-
-    as.character(unlist(lapply(seq_along(x), .fmt)))
+    
+    c(character(),
+      if(length(bad <- x$pflags)) .fmt(bad),
+      if(length(bad <- x$uflags)) {
+          c(gettextf("Variables overriding user/site settings:"),
+            sprintf("  %s", bad))
+      })
 }
 
 ### * .check_code_usage_in_package
