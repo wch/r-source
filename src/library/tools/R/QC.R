@@ -1872,9 +1872,10 @@ function(package, dir, file, lib.loc = NULL,
 
     allowed <- character()
 
-    check_registration <- function(e) {
+    check_registration <- function(e, fr) {
     	sym <- e[[2L]]
     	name <- deparse(sym, nlines = 1L)
+        if (name == "...")  return ("SYMBOL OK") # we cannot check this, e.g. RProtoBuf
         if (!is_installed) {
             if (!is_installed_msg) {
         	other_problem <<- c(other_problem, e)
@@ -1883,13 +1884,17 @@ function(package, dir, file, lib.loc = NULL,
             }
             return("OTHER")  # registration checks need the package to be installed
         }
-    	if (is.symbol(sym)) { # it might be something like pkg::sym
-	    if (!exists(name, code_env, inherits=FALSE)) {
+    	if (is.symbol(sym)) { # it might be something like pkg::sym (that's a call)
+	    if (!exists(name, code_env, inherits = FALSE)) {
 		if (name %in% suppressForeignCheck(, package))
 		    return ("SYMBOL OK")  # skip false positives
-
-    	    	other_problem <<- c(other_problem, e)
-    	    	other_desc <<- c(other_desc, sprintf("symbol \"%s\" not in package", name))
+                if(FALSE && name %in% fr) {
+                    other_problem <<- c(other_problem, e)
+                    other_desc <<- c(other_desc, sprintf("symbol \"%s\" in the local frame", name))
+                } else {
+                    other_problem <<- c(other_problem, e)
+                    other_desc <<- c(other_desc, sprintf("symbol \"%s\" not in namespace", name))
+                }
     	    	return("OTHER")
     	    }
     	} else if (suppressCheck(sym))
@@ -1901,18 +1906,27 @@ function(package, dir, file, lib.loc = NULL,
     	    other_desc <<- c(other_desc, sprintf("Evaluating \"%s\" during check gives error\n\"%s\"", name, sym$message))
     	    return("OTHER")
     	}
-    	if (!inherits(sym, "NativeSymbolInfo")) {
+
+        ## These are allowed and used by SU's packages and lmom,
+        ## so skip over for now
+    	if (inherits(sym, "NativeSymbolInfo")
+            || inherits(sym, "NativeSymbol")
+            || is.character(sym))
+            return ("SYMBOL OK")
+
+        if (!inherits(sym, "NativeSymbolInfo")) {
     	    other_problem <<- c(other_problem, e)
-    	    other_desc <<- c(other_desc, sprintf("\"%s\" is not of class \"%s\"", name, "NativeSymbolInfo"))
+#    	    other_desc <<- c(other_desc, sprintf("\"%s\" is not of class \"%s\"", name, "NativeSymbolInfo"))
+    	    other_desc <<- c(other_desc, sprintf("\"%s\" is of class \"%s\"", name, class(sym)))
     	    return("OTHER")
     	}
     	numparms <- sym$numParameters
-    	callparms <- length(e) - 2
-    	if ("PACKAGE" %in% names(e)) callparms <- callparms - 1
+    	callparms <- length(e) - 2L
+    	if ("PACKAGE" %in% names(e)) callparms <- callparms - 1L
     	FF_fun <- as.character(e[[1L]])
     	if (FF_fun %in% c(".C", ".Fortran"))
     	    callparms <- callparms - length(intersect(names(e), c("NAOK", "DUP", "ENCODING")))
-    	if (!is.null(numparms) && numparms >= 0 && numparms != callparms) {
+    	if (!is.null(numparms) && numparms >= 0L && numparms != callparms) {
     	    other_problem <<- c(other_problem, e)
     	    other_desc <<- c(other_desc, sprintf("call to \"%s\" with %d parameters, expected %d", name, callparms, numparms))
     	    return("OTHER")
@@ -1942,7 +1956,7 @@ function(package, dir, file, lib.loc = NULL,
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
                 this <- ""
                 if(registration && !is.character(e[[2L]]))
-                    parg <- check_registration(e)
+                    parg <- check_registration(e, fr)
                 else {
                     this <- parg <- e[["PACKAGE"]]
                     if (!is.na(pkg) && is.character(parg) &&
@@ -1970,17 +1984,22 @@ function(package, dir, file, lib.loc = NULL,
                             parg, "\n", sep = "")
             }
             for(i in seq_along(e)) Recall(e[[i]])
-        }
+        } # else if(is.symbol(e)) fr <<- c(fr, as.character(e))
     }
 
     if(!missing(package)) {
+        checkFFmy <- function(f)
+            if(typeof(f) == "closure") {
+                env <- environment(f)
+                if(isNamespace(env)) {
+                    nm <- getNamespaceName(env)
+                    if (nm == package) body(f) else NULL
+                } else body(f)
+            } else NULL
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = code_env)  # get is expensive
-                            if(typeof(f) == "closure")
-                                body(f)
-                            else
-                                NULL
+                            checkFFmy(f)
                         })
         if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
@@ -1992,9 +2011,7 @@ function(package, dir, file, lib.loc = NULL,
             }
             refs <- .get_ref_classes(code_env)
             if(length(refs)) {
-                exprs2 <- lapply(unlist(refs, FALSE), function(f)
-                                         if(typeof(f) == "closure") body(f)
-                                         else NULL)
+                exprs2 <- lapply(unlist(refs, FALSE), checkFFmy)
                 exprs <- c(exprs, exprs2)
             }
        }
@@ -2013,7 +2030,10 @@ function(package, dir, file, lib.loc = NULL,
                                    .massage_file_parse_error_message(conditionMessage(e))),
                                domain = NA, call. = FALSE))
     }
-    for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+    for(i in seq_along(exprs)) {
+        fr <- character()
+        find_bad_exprs(exprs[[i]])
+    }
     attr(bad_exprs, "wrong_pkg") <- wrong_pkg
     attr(bad_exprs, "bad_pkg") <- bad_pkg
     attr(bad_exprs, "empty") <- empty_exprs
