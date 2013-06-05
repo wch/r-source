@@ -16,6 +16,8 @@
       \item The \code{example()} and \code{tools::Rd2ex()} functions now
       have parameters to allow them to ignore \verb{\dontrun} markup in
       examples.  (Suggested by Peter Solymos.)
+      
+      \item The included version of PCRE has been updated to 8.33.
     }
   }
 

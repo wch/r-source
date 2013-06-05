@@ -360,9 +360,9 @@ src/extra/pcre/LICENCE
 src/extra/pcre/*.[ch]
 src/main/valid_utf8.h
 
-   Copyright (c) 1997-2012 University of Cambridge
+   Copyright (c) 1997-2013 University of Cambridge
    All rights reserved.
-   Copyright(c) 2009-2012 Zoltan Herczeg
+   Copyright(c) 2009-2013 Zoltan Herczeg
 
 See file src/extra/pcre/LICENCE.  For binary builds of R that requires
 us to include
