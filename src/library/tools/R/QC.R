@@ -1784,6 +1784,7 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         if(basename(dir) != "base")
             .load_package_quietly(package, lib.loc)
+        else has_namespace <- TRUE
         code_env <- if(packageHasNamespace(package, dirname(dir))) {
             ce <- asNamespace(package)
             if(exists("DLLs", envir = ce$.__NAMESPACE__.)) {
@@ -1808,9 +1809,10 @@ function(package, dir, file, lib.loc = NULL,
             db <- .read_description(dfile)
             enc <- db["Encoding"]
         }
+        if(pkg == "base") has_namespace <- TRUE
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             nm <- parseNamespaceFile(basename(dir), dirname(dir))
-            has_namespace <- length(nm$dynlibs)
+            has_namespace <- length(nm$dynlibs) > 0L
         }
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -1875,29 +1877,26 @@ function(package, dir, file, lib.loc = NULL,
             ## </NOTE>
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
                 this <- ""
-                if(!is.character(e[[2L]])) parg <- "Called with symbol"
-                else {
-                    this <- parg <- e[["PACKAGE"]]
-                    if (!is.na(pkg) && is.character(parg) &&
-                        nzchar(parg) && parg != pkg) {
-                        wrong_pkg <<- c(wrong_pkg, e)
-                        bad_pkg <<- c(bad_pkg, this)
-                    }
-                    parg <- if(!is.null(parg) && (parg != "")) "OK"
-                    else if(identical(parg, "")) {
-                        empty_exprs <<- c(empty_exprs, e)
-                        "EMPTY"
-                    }
-                    else if(!has_namespace) {
-                        bad_exprs <<- c(bad_exprs, e)
-                        "MISSING"
-                    } else "MISSING but in a function in a namespace"
+                this <- parg <- e[["PACKAGE"]]
+                if (!is.na(pkg) && is.character(parg) &&
+                    nzchar(parg) && parg != pkg) {
+                    wrong_pkg <<- c(wrong_pkg, e)
+                    bad_pkg <<- c(bad_pkg, this)
                 }
+                parg <- if(!is.null(parg) && (parg != "")) "OK"
+                else if(identical(parg, "")) {
+                    empty_exprs <<- c(empty_exprs, e)
+                    "EMPTY"
+                } else if(!is.character(e[[2L]])) "Called with symbol"
+                else if(!has_namespace) {
+                    bad_exprs <<- c(bad_exprs, e)
+                    "MISSING"
+                } else "MISSING but in a function in a namespace"
                 if(verbose)
                     if(is.null(this))
-                         cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
+                        cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
                             ", ... ): ", parg, "\n", sep = "")
-                   else
+                    else
                         cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
                             ", ..., PACKAGE = \"", this, "\"): ",
                             parg, "\n", sep = "")
@@ -1907,13 +1906,18 @@ function(package, dir, file, lib.loc = NULL,
     }
 
     if(!missing(package)) {
+        checkFFmy <- function(f)
+            if(typeof(f) == "closure") {
+                env <- environment(f)
+                if(isNamespace(env)) {
+                    nm <- getNamespaceName(env)
+                    if (nm == package) body(f) else NULL
+                } else body(f)
+            } else NULL
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = code_env)  # get is expensive
-                            if(typeof(f) == "closure")
-                                body(f)
-                            else
-                                NULL
+                            checkFFmy(f)
                         })
         if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
@@ -1925,9 +1929,7 @@ function(package, dir, file, lib.loc = NULL,
             }
             refs <- .get_ref_classes(code_env)
             if(length(refs)) {
-                exprs2 <- lapply(unlist(refs, FALSE), function(f)
-                                         if(typeof(f) == "closure") body(f)
-                                         else NULL)
+                exprs2 <- lapply(unlist(refs, FALSE), checkFFmy)
                 exprs <- c(exprs, exprs2)
             }
        }
@@ -6146,7 +6148,7 @@ function(x, ...)
                      "... [TRUNCATED]"),
                s)
     }
-    
+
     limit <- attr(x, "limit")
     sections <- names(limit)
 
@@ -6167,7 +6169,7 @@ function(x, ...)
     }
 
     as.character(unlist(lapply(names(x), .fmt)))
-}                
+}
 
 find_wide_Rd_lines_in_Rd_db <-
 function(x, limit = NULL)
