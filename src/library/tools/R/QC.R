@@ -1928,12 +1928,13 @@ function(package, dir, file, lib.loc = NULL,
     	}
         ## This might be symbol from another (base?) package.
         parg <- unclass(sym$dll)$name
-        if(! parg %in% pkg) {
+        if(length(parg) == 1L && ! parg %in% pkg) {
             wrong_pkg <<- c(wrong_pkg, e)
             bad_pkg <<- c(bad_pkg, parg)
         }
     	numparms <- sym$numParameters
-        if (numparms >= 0) {
+        FF_fun <- as.character(e[[1L]])
+        if (length(numparms) && numparms >= 0) {
             ## We have to be careful if ... is in the call.
             if (any(as.character(e) == "...")) {
                 other_problem <<- c(other_problem, e)
@@ -1941,7 +1942,6 @@ function(package, dir, file, lib.loc = NULL,
             } else {
                 callparms <- length(e) - 2L
                 if ("PACKAGE" %in% names(e)) callparms <- callparms - 1L
-                FF_fun <- as.character(e[[1L]])
                 if (FF_fun %in% c(".C", ".Fortran"))
                     callparms <- callparms - length(intersect(names(e), c("NAOK", "DUP", "ENCODING")))
                 if (!is.null(numparms) && numparms >= 0L && numparms != callparms) {
