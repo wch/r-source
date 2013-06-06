@@ -1954,26 +1954,24 @@ function(package, dir, file, lib.loc = NULL,
             ## BDR 2002-11-28
             ## </NOTE>
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
-                this <- ""
-                if(registration && !is.character(e[[2L]]))
-                    parg <- check_registration(e, fr)
-                else {
-                    this <- parg <- e[["PACKAGE"]]
-                    if (!is.na(pkg) && is.character(parg) &&
-                        nzchar(parg) && parg != pkg) {
-                        wrong_pkg <<- c(wrong_pkg, e)
-                        bad_pkg <<- c(bad_pkg, this)
-                    }
-                    parg <- if(!is.null(parg) && (parg != "")) "OK"
-                    else if(identical(parg, "")) {
-                        empty_exprs <<- c(empty_exprs, e)
-                        "EMPTY"
-                    }
-                    else if(!has_namespace) {
-                        bad_exprs <<- c(bad_exprs, e)
-                        "MISSING"
-                    } else "MISSING but in a function in a namespace"
+                if(registration && !is.character(e[[2L]])) {
+                    check_registration(e, fr)
                 }
+                this <- parg <- e[["PACKAGE"]]
+                if (!is.na(pkg) && is.character(parg) &&
+                    nzchar(parg) && parg != pkg) {
+                    wrong_pkg <<- c(wrong_pkg, e)
+                    bad_pkg <<- c(bad_pkg, this)
+                }
+                parg <- if(!is.null(parg) && (parg != "")) "OK"
+                else if(identical(parg, "")) {
+                    empty_exprs <<- c(empty_exprs, e)
+                    "EMPTY"
+                }
+                else if(!has_namespace) {
+                    bad_exprs <<- c(bad_exprs, e)
+                    "MISSING"
+                } else "MISSING but in a function in a namespace"
                 if(verbose)
                     if(is.null(this))
                         cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
