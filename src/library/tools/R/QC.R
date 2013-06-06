@@ -1882,12 +1882,12 @@ function(package, dir, file, lib.loc = NULL,
         	other_desc <<- c(other_desc, "foreign function registration not tested, as package was not installed")
         	is_installed_msg <<- TRUE
             }
-            return("OTHER")  # registration checks need the package to be installed
+            return("OTHER") # registration checks need the package to be installed
         }
     	if (is.symbol(sym)) { # it might be something like pkg::sym (that's a call)
 	    if (!exists(name, code_env, inherits = FALSE)) {
 		if (name %in% suppressForeignCheck(, package))
-		    return ("SYMBOL OK")  # skip false positives
+		    return ("SYMBOL OK") # skip false positives
                 if(FALSE && name %in% fr) {
                     other_problem <<- c(other_problem, e)
                     other_desc <<- c(other_desc, sprintf("symbol \"%s\" in the local frame", name))
@@ -1916,7 +1916,7 @@ function(package, dir, file, lib.loc = NULL,
 
         if (!inherits(sym, "NativeSymbolInfo")) {
     	    other_problem <<- c(other_problem, e)
-#    	    other_desc <<- c(other_desc, sprintf("\"%s\" is not of class \"%s\"", name, "NativeSymbolInfo"))
+                                        #    	    other_desc <<- c(other_desc, sprintf("\"%s\" is not of class \"%s\"", name, "NativeSymbolInfo"))
     	    other_desc <<- c(other_desc, sprintf("\"%s\" is of class \"%s\"", name, class(sym)))
     	    return("OTHER")
     	}
@@ -1976,15 +1976,15 @@ function(package, dir, file, lib.loc = NULL,
                 }
                 if(verbose)
                     if(is.null(this))
-                         cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
+                        cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
                             ", ... ): ", parg, "\n", sep = "")
-                   else
+                    else
                         cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
                             ", ..., PACKAGE = \"", this, "\"): ",
                             parg, "\n", sep = "")
             }
             for(i in seq_along(e)) Recall(e[[i]])
-        } # else if(is.symbol(e)) fr <<- c(fr, as.character(e))
+        }        # else if(is.symbol(e)) fr <<- c(fr, as.character(e))
     }
 
     if(!missing(package)) {
@@ -1998,7 +1998,7 @@ function(package, dir, file, lib.loc = NULL,
             } else NULL
         exprs <- lapply(ls(envir = code_env, all.names = TRUE),
                         function(f) {
-                            f <- get(f, envir = code_env)  # get is expensive
+                            f <- get(f, envir = code_env) # get is expensive
                             checkFFmy(f)
                         })
         if(.isMethodsDispatchOn()) {
@@ -2014,7 +2014,7 @@ function(package, dir, file, lib.loc = NULL,
                 exprs2 <- lapply(unlist(refs, FALSE), checkFFmy)
                 exprs <- c(exprs, exprs2)
             }
-       }
+        }
     } else {
         if(!is.na(enc) &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
@@ -2028,7 +2028,7 @@ function(package, dir, file, lib.loc = NULL,
                      stop(gettextf("parse error in file '%s':\n%s",
                                    file,
                                    .massage_file_parse_error_message(conditionMessage(e))),
-                               domain = NA, call. = FALSE))
+                          domain = NA, call. = FALSE))
     }
     for(i in seq_along(exprs)) {
         fr <- character()
@@ -2039,7 +2039,7 @@ function(package, dir, file, lib.loc = NULL,
     attr(bad_exprs, "empty") <- empty_exprs
     attr(bad_exprs, "other_problem") <- other_problem
     attr(bad_exprs, "other_desc") <- other_desc
-    if (length(bad_pkg)) { # check against dependencies.
+    if (length(bad_pkg)) {              # check against dependencies.
         bases <- .get_standard_package_names()$base
         bad <- bad_pkg[!bad_pkg %in% bases]
         if (length(bad)) {
@@ -2049,7 +2049,7 @@ function(package, dir, file, lib.loc = NULL,
             enhances <- .get_requires_from_package_db(db, "Enhances")
             bad <- bad[!bad %in% c(depends, imports, suggests, enhances)]
             attr(bad_exprs, "undeclared") <- bad
-       }
+        }
     }
     class(bad_exprs) <- "checkFF"
     if(verbose)
@@ -3383,7 +3383,7 @@ function(x, ...)
                  sprintf("  %s", lapply(x, paste, collapse = " ")))
         as.character(unlist(s))
     }
-    
+
     c(character(),
       if(length(bad <- x$pflags)) .fmt(bad),
       if(length(bad <- x$uflags)) {
