@@ -1876,6 +1876,9 @@ function(package, dir, file, lib.loc = NULL,
 
     check_registration <- function(e, fr) {
     	sym <- e[[2L]]
+        ## FIXME: we could try to look this up.
+        if (is.character(sym)) return ("SYMBOL OK")
+
     	name <- deparse(sym, nlines = 1L)
         if (name == "...")  return ("SYMBOL OK") # we cannot check this, e.g. RProtoBuf
         if (!is_installed) {
@@ -1890,7 +1893,8 @@ function(package, dir, file, lib.loc = NULL,
 	    if (!exists(name, code_env, inherits = FALSE)) {
 		if (name %in% suppressForeignCheck(, package))
 		    return ("SYMBOL OK") # skip false positives
-                if(FALSE && name %in% fr) {
+                if(name %in% fr) {
+                    return("OTHER")
                     other_problem <<- c(other_problem, e)
                     other_desc <<- c(other_desc, sprintf("symbol \"%s\" in the local frame", name))
                 } else {
@@ -1911,28 +1915,42 @@ function(package, dir, file, lib.loc = NULL,
 
         ## These are allowed and used by SU's packages and lmom,
         ## so skip over for now
-    	if (inherits(sym, "NativeSymbolInfo")
+    	if (inherits(sym, "RegisteredNativeSymbol")
             || inherits(sym, "NativeSymbol")
             || is.character(sym))
             return ("SYMBOL OK")
 
         if (!inherits(sym, "NativeSymbolInfo")) {
     	    other_problem <<- c(other_problem, e)
-                                        #    	    other_desc <<- c(other_desc, sprintf("\"%s\" is not of class \"%s\"", name, "NativeSymbolInfo"))
+            ## other_desc <<- c(other_desc, sprintf("\"%s\" is not of class \"%s\"", name, "NativeSymbolInfo"))
     	    other_desc <<- c(other_desc, sprintf("\"%s\" is of class \"%s\"", name, class(sym)))
     	    return("OTHER")
     	}
+        ## This might be symbol from another (base?) package.
+        parg <- unclass(sym$dll)$name
+        if(! parg %in% pkg) {
+            wrong_pkg <<- c(wrong_pkg, e)
+            bad_pkg <<- c(bad_pkg, parg)
+        }
     	numparms <- sym$numParameters
-    	callparms <- length(e) - 2L
-    	if ("PACKAGE" %in% names(e)) callparms <- callparms - 1L
-    	FF_fun <- as.character(e[[1L]])
-    	if (FF_fun %in% c(".C", ".Fortran"))
-    	    callparms <- callparms - length(intersect(names(e), c("NAOK", "DUP", "ENCODING")))
-    	if (!is.null(numparms) && numparms >= 0L && numparms != callparms) {
-    	    other_problem <<- c(other_problem, e)
-    	    other_desc <<- c(other_desc, sprintf("call to \"%s\" with %d parameters, expected %d", name, callparms, numparms))
-    	    return("OTHER")
-    	}
+        if (numparms >= 0) {
+            ## We have to be careful if ... is in the call.
+            if (any(as.character(e) == "...")) {
+                other_problem <<- c(other_problem, e)
+                other_desc <<- c(other_desc, sprintf("call includes ..., expected %d parameters", numparms))
+            } else {
+                callparms <- length(e) - 2L
+                if ("PACKAGE" %in% names(e)) callparms <- callparms - 1L
+                FF_fun <- as.character(e[[1L]])
+                if (FF_fun %in% c(".C", ".Fortran"))
+                    callparms <- callparms - length(intersect(names(e), c("NAOK", "DUP", "ENCODING")))
+                if (!is.null(numparms) && numparms >= 0L && numparms != callparms) {
+                    other_problem <<- c(other_problem, e)
+                    other_desc <<- c(other_desc, sprintf("call to \"%s\" with %d parameters, expected %d", name, callparms, numparms))
+                    return("OTHER")
+                }
+            }
+        }
     	if (inherits(sym, "CallRoutine") && !(FF_fun %in% c(".Call", ".Call.graphics"))) {
     	    other_problem <<- c(other_problem, e)
     	    other_desc <<- c(other_desc, sprintf("\"%s\" registered as %s, but called with %s", name, ".Call", FF_fun))
@@ -1956,7 +1974,7 @@ function(package, dir, file, lib.loc = NULL,
             ## BDR 2002-11-28
             ## </NOTE>
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
-                if(registration && !is.character(e[[2L]])) {
+                if(registration) {
                     check_registration(e, fr)
                 }
                 this <- ""
@@ -1983,9 +2001,11 @@ function(package, dir, file, lib.loc = NULL,
                         cat(deparse(e[[1L]]), "(", deparse(e[[2L]]),
                             ", ..., PACKAGE = \"", this, "\"): ",
                             parg, "\n", sep = "")
+            } else if (deparse(e[[1L]])[1L] %in% "<-") {
+                fr <<- c(fr, as.character(e[[2L]]))
             }
             for(i in seq_along(e)) Recall(e[[i]])
-        }        # else if(is.symbol(e)) fr <<- c(fr, as.character(e))
+        }
     }
 
     if(!missing(package)) {
