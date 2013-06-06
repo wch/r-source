@@ -1126,6 +1126,7 @@ int	Rstrlen(SEXP, int);
 const char *EncodeRaw(Rbyte);
 const char *EncodeString(SEXP, int, int, Rprt_adj);
 const char *EncodeReal2(double, int, int, int);
+const char *EncodeChar(SEXP);
 
 
 /* main/sort.c */

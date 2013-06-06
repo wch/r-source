@@ -702,6 +702,15 @@ const char *EncodeElement(SEXP x, int indx, int quote, char dec)
     return res;
 }
 
+/* EncodeChar is a simple wrapper for EncodeString
+   called by error messages to display CHARSXP values */
+attribute_hidden
+const char *EncodeChar(SEXP x)
+{
+    return EncodeString(x, 0, 0, Rprt_adj_left);
+}
+
+
 void Rprintf(const char *format, ...)
 {
     va_list(ap);

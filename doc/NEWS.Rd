@@ -117,7 +117,7 @@
 
       \item On system where \code{mktime()} does not set \code{ERRNO}, the
       last second before the epoch could not be converted from \code{POSIXlt}
-      to \code{POSIXct}. (Reported by Bill Dunlap).
+      to \code{POSIXct}. (Reported by Bill Dunlap.)
 
       \item If \code{x} is a symbol, \code{is.vector(x, "name")} now returns
       \code{TRUE}, since \code{"name"} and \code{"symbol"} should be synonyms.
@@ -129,6 +129,10 @@
 
       \item \code{is.unsorted(NA)} is false as documented (rather than
       \code{NA}).
+      
+      \item Error messages involving non-syntactic names (e.g. as produced
+      by \code{`\\r`} when that object does not exist) now encode
+      the control characters.  (Reported by Hadley Wickham.)
     }
   }
 }

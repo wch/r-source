@@ -1330,7 +1330,7 @@ SEXP findFun(SEXP symbol, SEXP rho)
 	}
 	rho = ENCLOS(rho);
     }
-    error(_("could not find function \"%s\""), CHAR(PRINTNAME(symbol)));
+    error(_("could not find function \"%s\""), EncodeChar(PRINTNAME(symbol)));
     /* NOT REACHED */
     return R_UnboundValue;
 }
@@ -1694,7 +1694,7 @@ SEXP attribute_hidden do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	if (!done)
 	    warning(_("object '%s' not found"),
-		    CHAR(PRINTNAME(tsym)));
+		    EncodeChar(PRINTNAME(tsym)));
     }
     return R_NilValue;
 }
@@ -1776,7 +1776,7 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (rval == R_UnboundValue) {
 	    if (gmode == ANYSXP)
 		error(_("object '%s' not found"),
-		      CHAR(PRINTNAME(t1)));
+		      EncodeChar(PRINTNAME(t1)));
 	    else
 		error(_("object '%s' of mode '%s' was not found"),
 		      CHAR(PRINTNAME(t1)),
@@ -2886,7 +2886,7 @@ void R_LockBinding(SEXP sym, SEXP env)
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
 	if (binding == R_NilValue)
-	    error(_("no binding for \"%s\""), CHAR(PRINTNAME(sym)));
+	    error(_("no binding for \"%s\""), EncodeChar(PRINTNAME(sym)));
 	LOCK_BINDING(binding);
     }
 }
@@ -2907,7 +2907,7 @@ void R_unLockBinding(SEXP sym, SEXP env)
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
 	if (binding == R_NilValue)
-	    error(_("no binding for \"%s\""), CHAR(PRINTNAME(sym)));
+	    error(_("no binding for \"%s\""), EncodeChar(PRINTNAME(sym)));
 	UNLOCK_BINDING(binding);
     }
 }
@@ -2965,7 +2965,7 @@ Rboolean R_BindingIsLocked(SEXP sym, SEXP env)
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
 	if (binding == R_NilValue)
-	    error(_("no binding for \"%s\""), CHAR(PRINTNAME(sym)));
+	    error(_("no binding for \"%s\""), EncodeChar(PRINTNAME(sym)));
 	return BINDING_IS_LOCKED(binding) != 0;
     }
 }
@@ -2986,7 +2986,7 @@ Rboolean R_BindingIsActive(SEXP sym, SEXP env)
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
 	if (binding == R_NilValue)
-	    error(_("no binding for \"%s\""), CHAR(PRINTNAME(sym)));
+	    error(_("no binding for \"%s\""), EncodeChar(PRINTNAME(sym)));
 	return IS_ACTIVE_BINDING(binding) != 0;
     }
 }

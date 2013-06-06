@@ -712,7 +712,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     else {
 	if(strlen(CHAR(PRINTNAME(CAR(cptr->call)))) >= 512)
 	   error(_("call name too long in '%s'"),
-		 CHAR(PRINTNAME(CAR(cptr->call))));
+		 EncodeChar(PRINTNAME(CAR(cptr->call))));
 	snprintf(b, 512, "%s", CHAR(PRINTNAME(CAR(cptr->call))));
     }
 
