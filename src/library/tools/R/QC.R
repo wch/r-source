@@ -1789,6 +1789,7 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         if(basename(dir) != "base")
             .load_package_quietly(package, lib.loc)
+        else has_namespace <- TRUE
         code_env <- if(packageHasNamespace(package, dirname(dir))) {
             ce <- asNamespace(package)
             if(exists("DLLs", envir = ce$.__NAMESPACE__.)) {
@@ -1814,9 +1815,10 @@ function(package, dir, file, lib.loc = NULL,
             db <- .read_description(dfile)
             enc <- db["Encoding"]
         }
+        if(pkg == "base") has_namespace <- TRUE
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             nm <- parseNamespaceFile(basename(dir), dirname(dir))
-            has_namespace <- length(nm$dynlibs)
+            has_namespace <- length(nm$dynlibs) > 0L
         }
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -1957,6 +1959,7 @@ function(package, dir, file, lib.loc = NULL,
                 if(registration && !is.character(e[[2L]])) {
                     check_registration(e, fr)
                 }
+                this <- ""
                 this <- parg <- e[["PACKAGE"]]
                 if (!is.na(pkg) && is.character(parg) &&
                     nzchar(parg) && parg != pkg) {
@@ -1967,7 +1970,7 @@ function(package, dir, file, lib.loc = NULL,
                 else if(identical(parg, "")) {
                     empty_exprs <<- c(empty_exprs, e)
                     "EMPTY"
-                }
+                } else if(!is.character(e[[2L]])) "Called with symbol"
                 else if(!has_namespace) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
