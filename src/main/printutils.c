@@ -704,7 +704,7 @@ const char *EncodeElement(SEXP x, int indx, int quote, char dec)
 
 /* EncodeChar is a simple wrapper for EncodeString
    called by error messages to display CHARSXP values */
-attribute_hidden
+//attribute_hidden
 const char *EncodeChar(SEXP x)
 {
     return EncodeString(x, 0, 0, Rprt_adj_left);
