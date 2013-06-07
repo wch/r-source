@@ -1793,8 +1793,9 @@ function(package, dir, file, lib.loc = NULL,
             code_env <- asNamespace(package)
             if(exists("DLLs", envir = code_env$.__NAMESPACE__.)) {
                 DLLs <- get("DLLs", envir = code_env$.__NAMESPACE__.)
+                ## fake installs have this, of class DLLInfoList
+                if(length(DLLs)) has_namespace <- TRUE
                 if(length(DLLs) && inherits(DLLs[[1L]], "DLLInfo")) {
-                    has_namespace <- TRUE
                     pkgDLL <- unclass(DLLs[[1L]])$name # different for data.table
                     if(registration) {
                         reg <- getDLLRegisteredRoutines(DLLs[[1L]])
