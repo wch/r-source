@@ -3823,7 +3823,9 @@ Control whether permissions of files should be checked.
 Default: true iff @code{.Platform$OS.type == "unix"}.
 @item _R_CHECK_FF_CALLS_
 Allows turning off @code{checkFF()} testing. If set to
-@samp{registration}, checks the registration of such calls.
+@samp{registration}, checks the registration information (number of
+arguments, correct choice of @code{.C/.Fortran/.Call/.External}) for
+such calls provided the package is installed.
 Default: true.
 @item _R_CHECK_LICENSE_
 Control whether/how license checks are performed. A possible value is

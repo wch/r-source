@@ -1141,7 +1141,7 @@ setRlibs <-
                                   pkgname, registration)
                           else
                           sprintf("tools::checkFF(dir = \"%s\", registration = %s)\n",
-                                  pkgdir, registration))
+                                  pkgdir, "FALSE"))
             out <- R_runR2(Rcmd)
             if (length(out)) {
                 if(any(grepl("^Foreign function calls? with(out| empty)", out)) ||

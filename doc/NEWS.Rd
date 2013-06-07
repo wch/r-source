@@ -77,7 +77,8 @@
       consistency with the registered type and argument count.  This is
       the default for \command{R CMD check --as-cran} or can be enabled
       by setting environment variable \env{_R_CHECK_FF_CALLS_} to
-      \samp{registration}.
+      \samp{registration} (but is in any case supressed by
+      \option{--install=no}).
 
       Functions \code{suppressForeignCheck()} and \code{dontCheck()}
       have been added to allow package authors to suppress false
