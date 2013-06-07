@@ -1780,7 +1780,7 @@ function(package, dir, file, lib.loc = NULL,
         dir <- find.package(package, lib.loc)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
-        pkg <- basename(dir)
+        pkg <- pkgDLL <- basename(dir)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -1793,10 +1793,11 @@ function(package, dir, file, lib.loc = NULL,
             code_env <- asNamespace(package)
             if(exists("DLLs", envir = code_env$.__NAMESPACE__.)) {
                 DLLs <- get("DLLs", envir = code_env$.__NAMESPACE__.)
-                if(length(DLLs)) {
+                if(length(DLLs) && inherits(DLLs[[1L]], "DLLInfo")) {
                     has_namespace <- TRUE
+                    pkgDLL <- unclass(DLLs[[1L]])$name # different for data.table
                     if(registration) {
-                        reg <- getDLLRegisteredRoutines(DLLs[[1L]], FALSE)
+                        reg <- getDLLRegisteredRoutines(DLLs[[1L]])
                         have_registration <- sum(sapply(reg, length)) > 0L
                     }
                 }
@@ -1815,7 +1816,7 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        pkg <- basename(dir)
+        pkg <- pkgDLL <- basename(dir)
         dfile <- file.path(dir, "DESCRIPTION")
         enc <- NA; db <- NULL
         if(file.exists(dfile)) {
@@ -1883,11 +1884,17 @@ function(package, dir, file, lib.loc = NULL,
 
     check_registration <- function(e, fr) {
     	sym <- e[[2L]]
-        ## FIXME: we could try to look this up.
-        if (is.character(sym)) return ("SYMBOL OK")
-
     	name <- deparse(sym, nlines = 1L)
-        if (name == "...")  return ("SYMBOL OK") # we cannot check this, e.g. RProtoBuf
+        if (name == "...")
+            return ("SYMBOL OK") # we cannot check this, e.g. RProtoBuf
+
+        if (is.character(sym)) {
+            if (!have_registration) return ("SYMBOL OK")
+            FF_fun <- as.character(e[[1L]])
+            sym <- reg[[FF_fun]][[sym]]
+            if(is.null(sym)) return ("SYMBOL OK")
+        }
+
         if (!is_installed) {
             if (!is_installed_msg) {
         	other_problem <<- c(other_problem, e)
@@ -1906,7 +1913,10 @@ function(package, dir, file, lib.loc = NULL,
                     other_desc <<- c(other_desc, sprintf("symbol \"%s\" in the local frame", name))
                 } else {
                     other_problem <<- c(other_problem, e)
-                    other_desc <<- c(other_desc, sprintf("symbol \"%s\" not in namespace", name))
+                    other_desc <<- c(other_desc,
+                                     sprintf("symbol \"%s\" not in namespace%s",
+                                             name,
+                                             if(!have_registration) ", which does not have registered symbols" else ""))
                 }
     	    	return("OTHER")
     	    }
@@ -1935,7 +1945,7 @@ function(package, dir, file, lib.loc = NULL,
     	}
         ## This might be symbol from another (base?) package.
         parg <- unclass(sym$dll)$name
-        if(length(parg) == 1L && ! parg %in% pkg) {
+        if(length(parg) == 1L && ! parg %in% pkgDLL) {
             wrong_pkg <<- c(wrong_pkg, e)
             bad_pkg <<- c(bad_pkg, parg)
         }
@@ -1996,7 +2006,7 @@ function(package, dir, file, lib.loc = NULL,
                 this <- ""
                 this <- parg <- e[["PACKAGE"]]
                 if (!is.na(pkg) && is.character(parg) &&
-                    nzchar(parg) && parg != pkg) {
+                    nzchar(parg) && parg != pkgDLL) {
                     wrong_pkg <<- c(wrong_pkg, e)
                     bad_pkg <<- c(bad_pkg, this)
                 }
@@ -2126,9 +2136,13 @@ function(x, ...)
 
     if (length(y)) {
         bases <- .get_standard_package_names()$base
-        .fmt2 <- function(x, z)
-            paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]),
-                   ", ..., PACKAGE = \"", z, "\")")
+        .fmt2 <- function(x, z) {
+            if("PACKAGE" %in% names(x))
+                paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]),
+                       ", ..., PACKAGE = \"", z, "\")")
+            else
+                paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
+        }
         base <- z %in% bases
         if(any(base)) {
             xx <- unlist(lapply(seq_along(y)[base],
