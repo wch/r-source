@@ -1944,8 +1944,9 @@ function(package, dir, file, lib.loc = NULL,
     	    return("OTHER")
     	}
         ## This might be symbol from another (base?) package.
+        ## Allow for Rcpp modules
         parg <- unclass(sym$dll)$name
-        if(length(parg) == 1L && ! parg %in% pkgDLL) {
+        if(length(parg) == 1L && ! parg %in% c("Rcpp", pkgDLL)) {
             wrong_pkg <<- c(wrong_pkg, e)
             bad_pkg <<- c(bad_pkg, parg)
         }

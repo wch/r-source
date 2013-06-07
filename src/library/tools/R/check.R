@@ -1133,7 +1133,8 @@ setRlibs <-
         ## For the time being, allow to turn this off by setting the environment
         ## variable _R_CHECK_FF_CALLS_ to an empty value.
         if (nzchar(R_check_FF)) {
-            registration <- identical(R_check_FF, "registration")
+            registration <-
+                identical(R_check_FF, "registration") && install != "fake"
             checkingLog(Log, "foreign function calls")
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
