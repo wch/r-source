@@ -1787,21 +1787,28 @@ function(package, dir, file, lib.loc = NULL,
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
-        if(basename(dir) != "base")
+        have_registration <- FALSE
+        if(basename(dir) != "base") {
             .load_package_quietly(package, lib.loc)
-        else has_namespace <- TRUE
-        code_env <- if(packageHasNamespace(package, dirname(dir))) {
-            ce <- asNamespace(package)
-            if(exists("DLLs", envir = ce$.__NAMESPACE__.)) {
-                DLLs <- get("DLLs", envir = ce$.__NAMESPACE__.)
-                has_namespace <- length(DLLs) > 0L
+            code_env <- asNamespace(package)
+            if(exists("DLLs", envir = code_env$.__NAMESPACE__.)) {
+                DLLs <- get("DLLs", envir = code_env$.__NAMESPACE__.)
+                if(length(DLLs)) {
+                    has_namespace <- TRUE
+                    if(registration) {
+                        reg <- getDLLRegisteredRoutines(DLLs[[1L]], FALSE)
+                        have_registration <- sum(sapply(reg, length)) > 0L
+                    }
+                }
             }
-            ce
-        } else
-            .package_env(package)
+        } else {
+            has_namespace <- have_registration <- TRUE
+            code_env <-.package_env(package)
+        }
         is_installed <- TRUE
     }
     else if(!missing(dir)) {
+        have_registration <- FALSE
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(gettextf("directory '%s' does not exist", dir),
@@ -1938,7 +1945,11 @@ function(package, dir, file, lib.loc = NULL,
             ## We have to be careful if ... is in the call.
             if (any(as.character(e) == "...")) {
                 other_problem <<- c(other_problem, e)
-                other_desc <<- c(other_desc, sprintf("call includes ..., expected %d parameters", numparms))
+                other_desc <<-
+                    c(other_desc,
+                      sprintf("call includes ..., expected %d %s",
+                              if(numparms > 1L) "parameters" else "parameter",
+                              numparms))
             } else {
                 callparms <- length(e) - 2L
                 if ("PACKAGE" %in% names(e)) callparms <- callparms - 1L
@@ -1946,7 +1957,12 @@ function(package, dir, file, lib.loc = NULL,
                     callparms <- callparms - length(intersect(names(e), c("NAOK", "DUP", "ENCODING")))
                 if (!is.null(numparms) && numparms >= 0L && numparms != callparms) {
                     other_problem <<- c(other_problem, e)
-                    other_desc <<- c(other_desc, sprintf("call to \"%s\" with %d parameters, expected %d", name, callparms, numparms))
+                    other_desc <<-
+                        c(other_desc,
+                          sprintf("call to \"%s\" with %d %s, expected %d",
+                                  name, callparms,
+                                  if(callparms > 1L) "parameters" else "parameter",
+                                  numparms))
                     return("OTHER")
                 }
             }
