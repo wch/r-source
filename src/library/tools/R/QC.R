@@ -2156,8 +2156,8 @@ function(x, ...)
                                 function(i) .fmt2(y[[i]], z[i])))
             xx <- unique(xx)
             msg <- ngettext(length(xx),
-                            "Foreign function call with 'PACKAGE' argument in a base package:",
-                            "Foreign function calls with 'PACKAGE' argument in a base package:",
+                            "Foreign function call to a base package:",
+                            "Foreign function calls to a base package:",
                             domain = NA)
             res <- c(res, msg, sort(xx))
         }
@@ -2166,8 +2166,8 @@ function(x, ...)
                                  function(i) .fmt2(y[[i]], z[i])))
             xx <- unique(xx)
             msg <- ngettext(length(xx),
-                            "Foreign function call with 'PACKAGE' argument in a different package:",
-                            "Foreign function calls with 'PACKAGE' argument in a different package:",
+                            "Foreign function call to a different package:",
+                            "Foreign function calls to a different package:",
                             domain = NA)
             res <- c(res, msg, sort(xx))
         }
