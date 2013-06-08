@@ -118,12 +118,14 @@ make.link <- function (link)
                linkfun <- function(mu) 1/mu
                linkinv <- function(eta) 1/eta
                mu.eta <- function(eta) -1/(eta^2)
-               valideta <- function(eta) all(eta!=0)
+               valideta <- function(eta) all(eta != 0)
            },
            ## else :
            stop(gettextf("%s link not recognised", sQuote(link)),
                 domain = NA)
            )# end switch(.)
+    environment(linkfun) <- environment(linkinv) <- environment(mu.eta) <-
+        environment(valideta) <- asNamespace("stats")
     structure(list(linkfun = linkfun, linkinv = linkinv,
                    mu.eta = mu.eta, valideta = valideta, name = link),
               class="link-glm")
