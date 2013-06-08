@@ -1933,6 +1933,7 @@ function(package, dir, file, lib.loc = NULL,
 
         FF_fun <- as.character(e[[1L]])
         ## lmom's sym evaluate to character, so try to look up.
+        ## FIXME: maybe check this is not PACKAGE = "another package"
         if (is.character(sym)) {
             if (!have_registration) return ("SYMBOL OK")
             sym <- reg[[FF_fun]][[sym]]
@@ -2021,8 +2022,22 @@ function(package, dir, file, lib.loc = NULL,
                 else if(identical(parg, "")) {
                     empty_exprs <<- c(empty_exprs, e)
                     "EMPTY"
-                } else if(!is.character(e[[2L]])) "Called with symbol"
-                else if(!has_namespace) {
+                } else if(!is.character(sym <- e[[2L]])) {
+                    if (!registration) {
+                        sym <- tryCatch(eval(sym, code_env),
+                                        error = function(e) e)
+                        if (inherits(sym, "NativeSymbolInfo")) {
+                            ## This might be symbol from another package.
+                            ## Allow for Rcpp modules
+                            parg <- unclass(sym$dll)$name
+                            if(length(parg) == 1L && !parg %in% c("Rcpp", pkgDLL)) {
+                                wrong_pkg <<- c(wrong_pkg, e)
+                                bad_pkg <<- c(bad_pkg, parg)
+                            }
+                        }
+                    }
+                    "Called with symbol"
+                } else if(!has_namespace) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
                 } else "MISSING but in a function in a namespace"
