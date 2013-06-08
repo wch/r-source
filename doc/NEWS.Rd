@@ -71,7 +71,7 @@
       case-insensitively on all platforms (not just on Windows).
 
       \item \command{R CMD check --as-cran} now implies \option{--timings}.
-      
+
       \item \code{checkFF()} (called by \command{R CMD check} by
       default) can optionally check foreign function calls for
       consistency with the registered type and argument count.  This is
@@ -132,7 +132,7 @@
 
       \item \code{is.unsorted(NA)} is false as documented (rather than
       \code{NA}).
-      
+
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
@@ -149,11 +149,14 @@
       \item The \code{example()} and \code{tools::Rd2ex()} functions now
       have parameters to allow them to ignore \verb{\dontrun} markup in
       examples.  (Suggested by Peter Solymos.)
-      
+
       \item The included version of PCRE has been updated to 8.33.
-      
+
       \item The included version of zlib has been updated to 1.2.8, a
       bug-fix release.
+
+      \item \code{str(x)} is considerably faster for very large lists,
+      or factors with 100'000 levels, the latter as in \PR{15337}.
     }
   }
 
@@ -181,7 +184,7 @@
       package is not installed.
     }
   }
-      
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \file{Rdefines.h} has been tweaked so it can be included in
@@ -219,11 +222,11 @@
 
       \item \code{plot(hclust(), cex =)} respects \code{cex} again
       (and possibly others similarly).  (Reported by Peter Langfelder.)
-      
-      \item If multiple packages were checked by \command{R CMD check}, 
+
+      \item If multiple packages were checked by \command{R CMD check},
       and one was written for a different OS, it would set
       \command{--no-install} for all following packages as well as
-      itself.      
+      itself.
     }
   }
 }

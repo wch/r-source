@@ -50,3 +50,12 @@ stopifnot(identical(scan(f, ""), as.character(t(as.matrix(y)))))
 ## docu always said  'length 1 is sorted':
 stopifnot(!is.unsorted(NA))
 
+## str(.) for large factors should be fast:
+str(L <- c(letters, LETTERS, 0:9))
+str(words <- c(outer(L, c(outer(L,L,paste0)), paste0)))
+uids <- factor(words[sample.int(length(words)/10, 1e5, replace=TRUE)],
+	       levels = words)
+st <- system.time(str(uids, vec.len=1))
+stopifnot(st[["elapsed"]] < 0.020)
+## needed about 0.8 seconds for R <= 3.0.1
+
