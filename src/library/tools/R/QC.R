@@ -1775,7 +1775,7 @@ function(package, dir, file, lib.loc = NULL,
         dir <- find.package(package, lib.loc)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
-        pkg <- basename(dir)
+        pkg <- pkgDLL <- basename(dir)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -1790,6 +1790,8 @@ function(package, dir, file, lib.loc = NULL,
             if(exists("DLLs", envir = ce$.__NAMESPACE__.)) {
                 DLLs <- get("DLLs", envir = ce$.__NAMESPACE__.)
                 has_namespace <- length(DLLs) > 0L
+                if(length(DLLs) && inherits(DLLs[[1L]], "DLLInfo"))
+                    pkgDLL <- unclass(DLLs[[1L]])$name # different for data.tabl
             }
             ce
         } else
@@ -1802,7 +1804,7 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        pkg <- basename(dir)
+        pkg <- pkgDLL <- basename(dir)
         dfile <- file.path(dir, "DESCRIPTION")
         enc <- NA; db <- NULL
         if(file.exists(dfile)) {
@@ -1879,7 +1881,7 @@ function(package, dir, file, lib.loc = NULL,
                 this <- ""
                 this <- parg <- e[["PACKAGE"]]
                 if (!is.na(pkg) && is.character(parg) &&
-                    nzchar(parg) && parg != pkg) {
+                    nzchar(parg) && parg != pkgDLL) {
                     wrong_pkg <<- c(wrong_pkg, e)
                     bad_pkg <<- c(bad_pkg, this)
                 }
@@ -1887,8 +1889,19 @@ function(package, dir, file, lib.loc = NULL,
                 else if(identical(parg, "")) {
                     empty_exprs <<- c(empty_exprs, e)
                     "EMPTY"
-                } else if(!is.character(e[[2L]])) "Called with symbol"
-                else if(!has_namespace) {
+                } else if(!is.character(sym <- e[[2L]])) {
+                    sym <- tryCatch(eval(sym, code_env), error = function(e) e)
+                    if (inherits(sym, "NativeSymbolInfo")) {
+                        ## This might be symbol from another (base?) package.
+                        ## Allow for Rcpp modules
+                        parg <- unclass(sym$dll)$name
+                        if(length(parg) == 1L && !parg %in% c("Rcpp", pkgDLL)) {
+                            wrong_pkg <<- c(wrong_pkg, e)
+                            bad_pkg <<- c(bad_pkg, parg)
+                        }
+                    }
+                    "Called with symbol"
+                } else if(!has_namespace) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
                 } else "MISSING but in a function in a namespace"
@@ -2002,17 +2015,21 @@ function(x, ...)
 
     if (length(y)) {
         bases <- .get_standard_package_names()$base
-        .fmt2 <- function(x, z)
-            paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]),
-                   ", ..., PACKAGE = \"", z, "\")")
+        .fmt2 <- function(x, z) {
+            if("PACKAGE" %in% names(x))
+                paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]),
+                       ", ..., PACKAGE = \"", z, "\")")
+            else
+                paste0("  ", deparse(x[[1L]]), "(", deparse(x[[2L]]), ", ...)")
+        }
         base <- z %in% bases
         if(any(base)) {
             xx <- unlist(lapply(seq_along(y)[base],
                                 function(i) .fmt2(y[[i]], z[i])))
             xx <- unique(xx)
             msg <- ngettext(length(xx),
-                            "Foreign function call with 'PACKAGE' argument in a base package:",
-                            "Foreign function calls with 'PACKAGE' argument in a base package:",
+                            "Foreign function call to a base package:",
+                            "Foreign function calls to a base package:",
                             domain = NA)
             res <- c(res, msg, sort(xx))
         }
@@ -2021,8 +2038,8 @@ function(x, ...)
                                  function(i) .fmt2(y[[i]], z[i])))
             xx <- unique(xx)
             msg <- ngettext(length(xx),
-                            "Foreign function call with 'PACKAGE' argument in a different package:",
-                            "Foreign function calls with 'PACKAGE' argument in a different package:",
+                            "Foreign function call to a different package:",
+                            "Foreign function calls to a different package:",
                             domain = NA)
             res <- c(res, msg, sort(xx))
         }

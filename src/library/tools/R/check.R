@@ -1137,14 +1137,15 @@ setRlibs <-
             out <- R_runR2(Rcmd)
             if (length(out)) {
                 if(any(grepl("^Foreign function calls? with(out| empty)", out)) ||
-                   (!is_base_pkg && any(grepl("in a base package:", out))) ||
+                   (!is_base_pkg && any(grepl("to a base package:", out))) ||
                    any(grepl("^Undeclared packages? in", out))
                    ) warningLog(Log)
                 else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
-                if(!is_base_pkg && any(grepl("in a base package:", out)))
-                    wrapLog("Packages should not make .C/.Call/.Fortran",
-                            "calls to base packages.",
+                if(!is_base_pkg && any(grepl("to a base package:", out)))
+                    wrapLog("Packages should not make",
+                            ".C/.Call/.External/.Fortran",
+                            "calls to a base package.",
                             "They are not part of the API,",
                             "for use only by R itself",
                             "and subject to change without notice.")
@@ -1354,10 +1355,10 @@ setRlibs <-
                 noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog("These lines will be truncated in the PDF manual.\n")
-                
+
             } else resultLog(Log, "OK")
         }
-        
+
         ## Check cross-references in R documentation files.
 
         ## <NOTE>
@@ -3672,7 +3673,7 @@ setRlibs <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
                                 R_check_doc_sizes2 <-
                                     R_check_unsafe_calls <- FALSE
-        R_check_Rd_line_widths <- FALSE        
+        R_check_Rd_line_widths <- FALSE
     }
 
     startdir <- getwd()
@@ -3716,8 +3717,8 @@ setRlibs <-
         ## pkg should be the path to the package root source
         ## directory, either absolute or relative to startdir.
         ## As from 2.1.0 it can also be a tarball
-        
-        ## The previous package may have set do_install to FALSE 
+
+        ## The previous package may have set do_install to FALSE
         do_install <- do_install_arg
 
         ## $pkgdir is the corresponding absolute path.
