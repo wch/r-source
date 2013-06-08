@@ -397,7 +397,7 @@ str.default <-
 		## as from 2.1.0, quotes are included ==> '-2':
 		lenl <- cumsum(3 + (nchar(lev.att, type="w") - 2))# level space
 		ml <- if(n.l <= 1 || lenl[n.l] <= 13)
-		    n.l else which(lenl > 13)[1L]
+		    n.l else which.max(lenl > 13)
 		lev.att <- maybe_truncate(lev.att[seq_len(ml)])
 	    }
 	    else # nl == 0

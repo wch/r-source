@@ -80,7 +80,7 @@ transformMethod <- function(i, blocks, Rdfile) {
     	    	chars <- strsplit(blocks[[j]], "")[[1]]
     		parens <- cumsum( (chars == "(") - (chars == ")") )
     		if (any(parens > 0)) {
-    	   	    char <- which(parens > 0)[1]
+		    char <- which.max(parens > 0)
     	   	    break
     	   	}
     	    }
@@ -103,7 +103,7 @@ transformMethod <- function(i, blocks, Rdfile) {
 		chars <- strsplit(blocks[[j]], "")[[1]]
 		parens <- level + cumsum( (chars == "(") - (chars == ")") )
 		if (any(parens == 1 & chars == ",")) {
-		    char <- which(parens == 1 & chars == ",")[1]
+		    char <- which.max(parens == 1 & chars == ",")
 		    break
 		}
 		if (any(parens == 0))

@@ -165,7 +165,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                  comment.char = comment.char, allowEscapes = allowEscapes,
                  flush = flush, encoding = encoding)
 
-    nlines <- length(data[[ which(keep)[1L] ]])
+    nlines <- length(data[[ which.max(keep) ]])
 
     ##	now we have the data;
     ##	convert to numeric or factor variables

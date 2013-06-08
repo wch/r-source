@@ -160,7 +160,7 @@ Rd2ex <-
         nameblk <- sections == "\\name"
         if (any(nameblk)) {
             ## perl wrapped here, but it seems unnecessary
-            name <- as.character(Rd[[ which(nameblk)[1L] ]])
+            name <- as.character(Rd[[ which.max(nameblk) ]])
             of0("### Name: ", name, "\n")
         }
         title <- .Rd_format_title(.Rd_get_title(Rd))
