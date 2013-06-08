@@ -12,15 +12,18 @@
     \itemize{
       \item The macros used for the texinfo manuals have been changed to
       work better with the incompatible changes made in texinfo 5.x.
-      
+
       \item The \code{example()} and \code{tools::Rd2ex()} functions now
       have parameters to allow them to ignore \verb{\dontrun} markup in
       examples.  (Suggested by Peter Solymos.)
-      
+
       \item The included version of PCRE has been updated to 8.33.
-      
+
       \item The included version of zlib has been updated to 1.2.8, a
       bug-fix release.
+
+      \item \code{str(x)} is considerably faster for very large lists,
+      or factors with 100,000 levels, the latter as in \PR{15337}.
     }
   }
 
@@ -28,7 +31,7 @@
     \itemize{
       \item \command{R CMD check --as-cran} checks the line widths in
       usage and examples sections of the package Rd files.
-      
+
       \item \command{R CMD check} looks for command \command{gfile} if a
       suitable \command{file} is not found.  (Although \command{file} is
       not from GNU, OpenCSW on Solaris installs it as \command{gfile}.)
@@ -39,16 +42,22 @@
       files if needed, with a warning.  This is useful on OSes and file
       systems which do not support execute permissions (notably, on
       Windows).
+      
+      \item \code{checkFF()} (used by \command{R CMD check}) does a
+      better job of detecting calls from other packages, including not
+      reporting those where a function has been copied from another
+      namespace (e.g. as a default method).  It now reports calls where
+      \code{.NAME} is a symbol registered in another package.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Installation is aborted immediately if a \code{LinkingTo}
       package is not installed.
     }
   }
-      
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \file{Rdefines.h} has been tweaked so it can be included in
@@ -86,11 +95,11 @@
 
       \item \code{plot(hclust(), cex =)} respects \code{cex} again
       (and possibly others similarly).  (Reported by Peter Langfelder.)
-      
-      \item If multiple packages were checked by \command{R CMD check}, 
+
+      \item If multiple packages were checked by \command{R CMD check},
       and one was written for a different OS, it would set
       \command{--no-install} for all following packages as well as
-      itself.      
+      itself.
     }
   }
 }
