@@ -100,6 +100,9 @@
       and one was written for a different OS, it would set
       \command{--no-install} for all following packages as well as
       itself.
+      
+      \item \code{qr.coef()} and related functions did not properly coerce
+      real vectors to complex when necessary.  (\PR{15332})
     }
   }
 }
