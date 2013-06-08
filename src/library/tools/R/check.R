@@ -1152,7 +1152,8 @@ setRlibs <-
                 else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
                 if(!is_base_pkg && any(grepl("to a base package:", out)))
-                    wrapLog("Packages should not make .C/.Call/.Fortran",
+                    wrapLog("Packages should not make",
+                            ".C/.Call/.External/.Fortran",
                             "calls to base packages.",
                             "They are not part of the API,",
                             "for use only by R itself",
