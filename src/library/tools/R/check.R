@@ -1146,12 +1146,12 @@ setRlibs <-
             out <- R_runR2(Rcmd)
             if (length(out)) {
                 if(any(grepl("^Foreign function calls? with(out| empty)", out)) ||
-                   (!is_base_pkg && any(grepl("in a base package:", out))) ||
+                   (!is_base_pkg && any(grepl("to a base package:", out))) ||
                    any(grepl("^Undeclared packages? in", out))
                    ) warningLog(Log)
                 else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
-                if(!is_base_pkg && any(grepl("in a base package:", out)))
+                if(!is_base_pkg && any(grepl("to a base package:", out)))
                     wrapLog("Packages should not make .C/.Call/.Fortran",
                             "calls to base packages.",
                             "They are not part of the API,",
