@@ -157,7 +157,7 @@
       bug-fix release.
 
       \item \code{str(x)} is considerably faster for very large lists,
-      or factors with 100'000 levels, the latter as in \PR{15337}.
+      or factors with 100,000 levels, the latter as in \PR{15337}.
     }
   }
 
@@ -176,6 +176,12 @@
       files if needed, with a warning.  This is useful on OSes and file
       systems which do not support execute permissions (notably, on
       Windows).
+      
+      \item \code{checkFF()} (used by \command{R CMD check}) does a
+      better job of detecting calls from other packages, including not
+      reporting those where a function has been copied from another
+      namespace (e.g. as a default method).  It now reports calls where
+      \code{.NAME} is a symbol registered in another package.
     }
   }
 
