@@ -241,7 +241,7 @@ function(ap)
         wh <- which(dp == pkgs)
         vers <- package_version(ap[wh, "Version"])
         keep_ver <- max(vers)
-        keep_idx = which(vers == keep_ver)[1L] # they might all be max
+	keep_idx <- which.max(vers == keep_ver) # they might all be max
         wh <- wh[-keep_idx]
         end_i <- i + length(wh) - 1L
         stale_dups[i:end_i] <- wh

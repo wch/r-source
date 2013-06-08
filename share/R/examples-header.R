@@ -64,3 +64,14 @@ grDevices::pdf(paste(pkgname, "-Ex.pdf", sep=""), encoding = "ISOLatin1")
 
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+
+
+if(identical("maechler", unname(Sys.getenv("USER")))) {
+    if(identical("true", unname(Sys.getenv("R_MM_PKG_CHECKING")))) {## when using R-pkg-check
+        cat("Command line [commandArgs()]:\n"); print(commandArgs())
+        cat("Sys.getenv(\"R_LIBS\")  [split at ':']:\n")
+        print(strsplit(Sys.getenv("R_LIBS"), ":", fixed=TRUE))
+        ## cat(".libPaths():\n"); print(.libPaths())
+        cat(".libPaths() :\n"); dput(.libPaths())
+    }
+}

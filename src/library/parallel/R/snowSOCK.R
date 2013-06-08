@@ -108,7 +108,7 @@ recvOneData.SOCKcluster <- function(cl)
         ready <- socketSelect(socklist)
         if (length(ready) > 0) break;
     }
-    n <- which(ready)[1L]  # may need rotation or some such for fairness
+    n <- which.max(ready) # may need rotation or some such for fairness
     list(node = n, value = unserialize(socklist[[n]]))
 }
 

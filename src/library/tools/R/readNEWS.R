@@ -41,7 +41,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	n <- length(cvec); if(n <= 1L) return(cvec)
 	## else	 n >= 2
 	empty <- grep("^[\t ]*$", cvec)
-	cvec[if(any(!empty)) which(!empty)[1L] else 1L]
+	cvec[if(any(!empty)) which.max(!empty) else 1L]
     }
 
     chopPara <- function(cvec) {
@@ -51,7 +51,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	## the first non-empty ``from the right''
 	nm <- 1L:n %nIN% (n + 1 - rev(empty))
 	if(any(nm))
-	    cvec[1L:(n - (which(nm)[1L] - 1))]
+	    cvec[1L:(n - (which.max(nm) - 1L))]
 	else ## all are empty; return just one
 	    cvec[1L]
     }

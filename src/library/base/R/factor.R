@@ -135,7 +135,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
                                         # 3='...', 3=#lev, 1=extra
                 lenl <- cumsum(nchar(lev, "w") + nchar(colsep, "w"))
                 if(n <= 1L || lenl[n] <= width) n
-                else max(1L, which(lenl > width)[1L] - 1L)
+		else max(1L, which.max(lenl > width) - 1L)
             }
         drop <- n > maxl
         cat(if(drop) paste(format(n), ""), T0,
