@@ -1931,11 +1931,17 @@ function(package, dir, file, lib.loc = NULL,
     	    return("OTHER")
     	}
 
-        ## These are allowed and used by SU's packages and lmom,
-        ## so skip over for now
+        FF_fun <- as.character(e[[1L]])
+        ## lmom's sym evaluate to character, so try to look up.
+        if (is.character(sym)) {
+            if (!have_registration) return ("SYMBOL OK")
+            sym <- reg[[FF_fun]][[sym]]
+            if(is.null(sym)) return ("SYMBOL OK")
+        }
+
+        ## These are allowed and used by SU's packages so skip for now
     	if (inherits(sym, "RegisteredNativeSymbol")
-            || inherits(sym, "NativeSymbol")
-            || is.character(sym))
+            || inherits(sym, "NativeSymbol"))
             return ("SYMBOL OK")
 
         if (!inherits(sym, "NativeSymbolInfo")) {
@@ -1952,7 +1958,6 @@ function(package, dir, file, lib.loc = NULL,
             bad_pkg <<- c(bad_pkg, parg)
         }
     	numparms <- sym$numParameters
-        FF_fun <- as.character(e[[1L]])
         if (length(numparms) && numparms >= 0) {
             ## We have to be careful if ... is in the call.
             if (any(as.character(e) == "...")) {
