@@ -48,8 +48,9 @@
       useful as \code{as.data.frame.table()}, now passes \code{sep} and
       \code{base} arguments to \code{provideDimnames()}.
 
-      \item The new \code{unirootS()} function is a "safe" version of
-      \code{uniroot()} auto-extending the search interval when needed.
+      \item The new \code{unirootS()} function is a \sQuote{safe}
+      version of \code{uniroot()} auto-extending the search interval
+      when needed.
     }
   }
 
