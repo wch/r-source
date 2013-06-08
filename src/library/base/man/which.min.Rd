@@ -1,6 +1,6 @@
 % File src/library/base/man/which.min.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -8,14 +8,19 @@
 \name{which.min}
 \alias{which.min}
 \alias{which.max}
-\title{Where is the Min() or Max() ?}
+\title{Where is the Min() or Max() or first TRUE or FALSE ?}
 \concept{argmin}
 \concept{argmax}
 \concept{index of minimum}
 \concept{index of maximum}
+\concept{index of first TRUE}
+\concept{index of first FALSE}
 \description{
   Determines the location, i.e., index of the (first) minimum or maximum
-  of a numeric vector.
+  of a numeric (or logical) vector.
+
+  For a logical vector \code{x}, \code{which.min(x)} and \code{which.max(x)}
+  return the index of the first \code{FALSE} or \code{TRUE}, respectively.
 }
 \usage{
 which.min(x)
@@ -57,5 +62,10 @@ presidents[1:30]
 range(presidents, na.rm = TRUE)
 which.min(presidents) # 28
 which.max(presidents) #  2
+
+## Find the first occurrence, i.e. the first TRUE:
+x <- rpois(10000, lambda = 10); x[sample.int(50, 20)] <- NA
+## where is the first value >= 20 ?
+which.max(x >= 20)
 }
 \keyword{utilities}
