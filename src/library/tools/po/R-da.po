@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37\n"
+"POT-Creation-Date: 2013-06-09 21:23\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -274,6 +274,9 @@ msgstr ""
 msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
+msgid "Variables overriding user/site settings:"
+msgstr ""
+
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
@@ -362,6 +365,9 @@ msgid "Argument items with no description in Rd object '%s':"
 msgstr ""
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr ""
+
+msgid "no Rd sections specified"
 msgstr ""
 
 msgid ""
@@ -478,6 +484,9 @@ msgstr ""
 #, fuzzy
 msgid "unable to create temp directory %s"
 msgstr "kan ikke oprette"
+
+msgid "Running"
+msgstr ""
 
 msgid "Vignette"
 msgstr ""
@@ -1019,6 +1028,9 @@ msgid "no parsed files found"
 msgstr ""
 
 msgid "FAILED"
+msgstr ""
+
+msgid "DIFFERED"
 msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"

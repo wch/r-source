@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-20 07:21+0000\n"
+"POT-Creation-Date: 2013-06-09 21:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: io.c:314 io.c:318 io.c:328 io.c:543 io.c:724 io.c:775 io.c:787 io.c:791
-#: io.c:797 io.c:1012 io.c:1013 io.c:1015 io.c:1016 io.c:1017 io.c:1018
-#: io.c:1019 io.c:1020 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:314 io.c:318 io.c:328 io.c:557 io.c:738 io.c:789 io.c:801 io.c:805
+#: io.c:811 io.c:1031 io.c:1032 io.c:1034 io.c:1035 io.c:1036 io.c:1037
+#: io.c:1038 io.c:1039 stubs.c:39 stubs.c:59 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -28,11 +28,11 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr ""
 
-#: io.c:337 io.c:784
+#: io.c:337 io.c:798
 msgid "invalid quote symbol set"
 msgstr ""
 
-#: io.c:349 io.c:805 io.c:1000
+#: io.c:349 io.c:819 io.c:1019
 msgid "cannot open the connection"
 msgstr ""
 
@@ -40,50 +40,60 @@ msgstr ""
 msgid "cannot read from this connection"
 msgstr ""
 
-#: io.c:400 io.c:418
-msgid "string terminated by newline or EOF"
+#: io.c:403 io.c:421
+#, c-format
+msgid "quoted string on line %d terminated by EOF"
 msgstr ""
 
-#: io.c:539
+#: io.c:553
 msgid "the first argument must be of mode character"
 msgstr ""
 
-#: io.c:726
+#: io.c:740
 #, c-format
 msgid "Selection: "
 msgstr ""
 
-#: io.c:814 io.c:827
+#: io.c:828 io.c:842
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr ""
 
-#: io.c:838
+#: io.c:853
 msgid "\\ followed by EOF"
 msgstr ""
 
-#: io.c:883 io.c:886
+#: io.c:900 io.c:903
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr ""
 
-#: io.c:993
+#: io.c:960
+msgid "index out of range"
+msgstr ""
+
+#: io.c:1012
 msgid "'file' is not a connection"
 msgstr ""
 
-#: io.c:996
+#: io.c:1015
 msgid "cannot write to this connection"
 msgstr ""
 
-#: io.c:1026
+#: io.c:1045
 msgid "'dec' must be a single character"
 msgstr ""
 
-#: io.c:1053
+#: io.c:1072
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 
-#: io.c:1101
+#: io.c:1102
+#, c-format
+msgid "column %s claims to be a factor but does not have numeric codes"
+msgstr ""
+
+#: io.c:1120
 msgid "corrupt matrix -- dims not not match length"
 msgstr ""
 

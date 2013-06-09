@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-06-09 21:23\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -323,6 +323,10 @@ msgstr "sostituzione di un elemento nella colonna non esistente:"
 
 msgid "only a single element should be replaced"
 msgstr "si può sostituire un solo elemento alla volta"
+
+#, fuzzy
+msgid "Name partially matched in data frame"
+msgstr "variabile non numerica nel data frame:"
 
 #, fuzzy
 msgid "names do not match previous names"
@@ -1074,6 +1078,11 @@ msgstr ""
 "caricare il namespace methods"
 
 msgid "invalid to change the storage mode of a factor"
+msgstr ""
+
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
 msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"

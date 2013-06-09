@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37\n"
+"POT-Creation-Date: 2013-06-09 21:23\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -268,6 +268,9 @@ msgstr ""
 msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
+msgid "Variables overriding user/site settings:"
+msgstr ""
+
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
@@ -357,6 +360,9 @@ msgid "Argument items with no description in Rd object '%s':"
 msgstr ""
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr ""
+
+msgid "no Rd sections specified"
 msgstr ""
 
 msgid ""
@@ -470,6 +476,9 @@ msgid "Located more than one"
 msgstr ""
 
 msgid "unable to create temp directory %s"
+msgstr ""
+
+msgid "Running"
 msgstr ""
 
 msgid "Vignette"
@@ -1013,6 +1022,9 @@ msgid "no parsed files found"
 msgstr ""
 
 msgid "FAILED"
+msgstr ""
+
+msgid "DIFFERED"
 msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"

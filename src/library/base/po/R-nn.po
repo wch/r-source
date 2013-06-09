@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-06-09 21:23\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -307,6 +307,10 @@ msgstr "byt ut element i ikkje-eksisterande kolonne:"
 
 msgid "only a single element should be replaced"
 msgstr "berre eit enkeltelement skal erstattast"
+
+#, fuzzy
+msgid "Name partially matched in data frame"
+msgstr "ikkje numerisk variabel i dataramme:"
 
 msgid "names do not match previous names"
 msgstr "namna er ikkje i samsvar med dei gamle namna"
@@ -1004,6 +1008,11 @@ msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "kan ikkje endra lagringsmodus til ein faktor"
+
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
+msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "«%s» er ikkje eit eksportert objekt frå «namespace:%s»"

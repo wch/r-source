@@ -10,10 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2013-06-09 21:23+0100\n"
 "PO-Revision-Date: 2013-02-21 20:40-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu.org>\n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
+"org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,126 +32,173 @@ msgstr "'externalptr' 객체들에 대한 초기화 매체로서 사용될 C 루
 msgid "invalid list for substitution"
 msgstr "대입에 유효하지 않은 목록입니다"
 
-#: methods_list_dispatch.c:148
-msgid "could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"
-msgstr "'methods'에 대한 skeleton calls를 찾지 못했습니다 (패키지가 분리되어 있나요?):  매우 안 좋은 경우가 발생할 것 같습니다"
+#: methods_list_dispatch.c:149
+msgid ""
+"could not find the skeleton calls for 'methods' (package detached?): expect "
+"very bad things to happen"
+msgstr ""
+"'methods'에 대한 skeleton calls를 찾지 못했습니다 (패키지가 분리되어 있나"
+"요?):  매우 안 좋은 경우가 발생할 것 같습니다"
 
-#: methods_list_dispatch.c:214
+#: methods_list_dispatch.c:215
 #, c-format
-msgid "no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"
-msgstr "함수 '%2$s'에 대한 메소드 목록으로서 사용될 클래스 \"%1$s\"의 객체 내에서 \"allMethods\" 슬롯을 찾을 수 없습니다"
+msgid ""
+"no \"allMethods\" slot found in object of class \"%s\" used as methods list "
+"for function '%s'"
+msgstr ""
+"함수 '%2$s'에 대한 메소드 목록으로서 사용될 클래스 \"%1$s\"의 객체 내에서 "
+"\"allMethods\" 슬롯을 찾을 수 없습니다"
 
-#: methods_list_dispatch.c:433
+#: methods_list_dispatch.c:434
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "'%s'을 위한 제네릭 함수정의를 찾을 수 없습니다"
 
-#: methods_list_dispatch.c:436
+#: methods_list_dispatch.c:437
 #, c-format
-msgid "no generic function definition found for '%s' in the supplied environment"
+msgid ""
+"no generic function definition found for '%s' in the supplied environment"
 msgstr "주어진 environment에서 '%s'를 위한 제네릭 함수정의를 찾을 수 없습니다"
 
-#: methods_list_dispatch.c:471
+#: methods_list_dispatch.c:472
 #, c-format
-msgid "invalid generic function object for method selection for function '%s': expected a function or a primitive, got an object of class \"%s\""
-msgstr "함수 '%1$s'를 위한 메소드선택에 유효하지 않은 제네릭 함수객체입니다:  함수 또는 프리미티브가 와야하는데 클래스 \"%2$s\"의 객체를 얻었습니다"
+msgid ""
+"invalid generic function object for method selection for function '%s': "
+"expected a function or a primitive, got an object of class \"%s\""
+msgstr ""
+"함수 '%1$s'를 위한 메소드선택에 유효하지 않은 제네릭 함수객체입니다:  함수 또"
+"는 프리미티브가 와야하는데 클래스 \"%2$s\"의 객체를 얻었습니다"
 
-#: methods_list_dispatch.c:486
+#: methods_list_dispatch.c:487
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "이 호출을 위해 함수 '%s'에 대한 직접적 또는 상속적인 메소드가 없습니다"
 
-#: methods_list_dispatch.c:512
-#: methods_list_dispatch.c:1040
+#: methods_list_dispatch.c:513 methods_list_dispatch.c:1041
 msgid "invalid object (non-function) used as method"
 msgstr "메소드로서 사용된 유효하지 않은 객체입니다"
 
-#: methods_list_dispatch.c:533
+#: methods_list_dispatch.c:534
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr "호출 프레임에서 심볼 '%s'를 찾을 수 없었습니다"
 
-#: methods_list_dispatch.c:541
+#: methods_list_dispatch.c:542
 #, c-format
-msgid "invalid symbol in checking for missing argument in method dispatch: expected a name, got an object of class \"%s\""
-msgstr "메소드 디스패치에서 누락된 인자를 확인하는데 유효하지 않은 심볼입니다:  이름이 와야하는데 클래스 \"%s\"의 객체를 얻었습니다"
+msgid ""
+"invalid symbol in checking for missing argument in method dispatch: expected "
+"a name, got an object of class \"%s\""
+msgstr ""
+"메소드 디스패치에서 누락된 인자를 확인하는데 유효하지 않은 심볼입니다:  이름"
+"이 와야하는데 클래스 \"%s\"의 객체를 얻었습니다"
 
-#: methods_list_dispatch.c:544
+#: methods_list_dispatch.c:545
 msgid "use of NULL environment is defunct"
 msgstr "NULL environment의 사용은 더이상 지원되지 않습니다"
 
-#: methods_list_dispatch.c:548
+#: methods_list_dispatch.c:549
 #, c-format
-msgid "invalid environment in checking for missing argument, '%s', in methods dispatch: got an object of class \"%s\""
-msgstr "메소드 디스패치에 누락된 인자 '%1$s'를 확인하는데 유효하지 않은 environment인데, 클래스 \"%2$s\"의 객체를 얻었습니다"
+msgid ""
+"invalid environment in checking for missing argument, '%s', in methods "
+"dispatch: got an object of class \"%s\""
+msgstr ""
+"메소드 디스패치에 누락된 인자 '%1$s'를 확인하는데 유효하지 않은 environment인"
+"데, 클래스 \"%2$s\"의 객체를 얻었습니다"
 
-#: methods_list_dispatch.c:574
+#: methods_list_dispatch.c:575
 #, c-format
-msgid "object of class \"%s\" used as methods list for function '%s' ( no 'argument' slot)"
-msgstr "함수 '%2$s'를 위한 메소드 목록으로서 사용된 클래스 \"%1$s\"의 객체입니다 ('argument' 슬롯이 없습니다)"
+msgid ""
+"object of class \"%s\" used as methods list for function '%s' ( no "
+"'argument' slot)"
+msgstr ""
+"함수 '%2$s'를 위한 메소드 목록으로서 사용된 클래스 \"%1$s\"의 객체입니다 "
+"('argument' 슬롯이 없습니다)"
 
-#: methods_list_dispatch.c:585
+#: methods_list_dispatch.c:586
 #, c-format
-msgid "(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"
-msgstr "(함수 '%s'를 위한 메소드를 선택을 할 때) '...'와 관계가 있는 변수들은 메소드 디스패치에 사용될 수 없습니다"
+msgid ""
+"(in selecting a method for function '%s') '...' and related variables cannot "
+"be used for methods dispatch"
+msgstr ""
+"(함수 '%s'를 위한 메소드를 선택을 할 때) '...'와 관계가 있는 변수들은 메소드 "
+"디스패치에 사용될 수 없습니다"
 
-#: methods_list_dispatch.c:588
+#: methods_list_dispatch.c:589
 #, c-format
-msgid "(in selecting a method for function '%s') the 'environment' argument for dispatch must be an R environment; got an object of class \"%s\""
-msgstr "(함수 '%1$s'를 위한 메소드를 선택할 때) 디스패치를 위한 'environment' 인자는 반드시 R environment이어야 하는데, 클래스 \"%2$s\"를 얻습니다"
+msgid ""
+"(in selecting a method for function '%s') the 'environment' argument for "
+"dispatch must be an R environment; got an object of class \"%s\""
+msgstr ""
+"(함수 '%1$s'를 위한 메소드를 선택할 때) 디스패치를 위한 'environment' 인자는 "
+"반드시 R environment이어야 하는데, 클래스 \"%2$s\"를 얻습니다"
 
-#: methods_list_dispatch.c:602
-#: methods_list_dispatch.c:614
-#: methods_list_dispatch.c:995
+#: methods_list_dispatch.c:603 methods_list_dispatch.c:615
+#: methods_list_dispatch.c:996
 #, c-format
-msgid "error in evaluating the argument '%s' in selecting a method for function '%s': %s"
-msgstr "함수 '%2$s'를 위한 메소드 선택시 인수 '%1$s'를 평가하는데 오류가 발생했습니다: %3$s"
+msgid ""
+"error in evaluating the argument '%s' in selecting a method for function "
+"'%s': %s"
+msgstr ""
+"함수 '%2$s'를 위한 메소드 선택시 인수 '%1$s'를 평가하는데 오류가 발생했습니"
+"다: %3$s"
 
-#: methods_list_dispatch.c:622
+#: methods_list_dispatch.c:623
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
-msgstr "함수 '%1$s'에 일치하는 메소드가 없습니다 (클래스 \"%3$s\"을 가지는 인자 '%2$s')"
+msgstr ""
+"함수 '%1$s'에 일치하는 메소드가 없습니다 (클래스 \"%3$s\"을 가지는 인자 "
+"'%2$s')"
 
-#: methods_list_dispatch.c:629
+#: methods_list_dispatch.c:630
 #, c-format
-msgid "recursive use of function '%s' in method selection, with no default method"
+msgid ""
+"recursive use of function '%s' in method selection, with no default method"
 msgstr "메소드 선택시 기본 메소드가 없는 함수 '%s'의 재귀적 사용입니다"
 
-#: methods_list_dispatch.c:692
-msgid "in processing 'callNextMethod', found a '...' in the matched call, but no corresponding '...' argument"
-msgstr "'callNextMethod'를 처리중, 일치하는 호출에서 '...'를 찾았지만, 상응하느느 '...' 인자는 없었습니다"
+#: methods_list_dispatch.c:693
+msgid ""
+"in processing 'callNextMethod', found a '...' in the matched call, but no "
+"corresponding '...' argument"
+msgstr ""
+"'callNextMethod'를 처리중, 일치하는 호출에서 '...'를 찾았지만, 상응하느느 "
+"'...' 인자는 없었습니다"
 
-#: methods_list_dispatch.c:705
+#: methods_list_dispatch.c:706
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "'primitive' 다음 메소드를 평가하는 중에 에러가 발생했습니다:%s"
 
-#: methods_list_dispatch.c:797
+#: methods_list_dispatch.c:798
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
-msgstr "'%s'는 반드시 단일 문자열이어야 합니다 (길이가 %d인 문자형 벡터를 얻습니다)"
+msgstr ""
+"'%s'는 반드시 단일 문자열이어야 합니다 (길이가 %d인 문자형 벡터를 얻습니다)"
 
-#: methods_list_dispatch.c:801
+#: methods_list_dispatch.c:802
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s'는 반드시 빈 문자열이어야 하는데, 빈 문자열을 얻었습니다"
 
-#: methods_list_dispatch.c:805
+#: methods_list_dispatch.c:806
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
-msgstr "'%s'는 반드시 단일 문자열이어야 합니다 (클래스 \"%s\"의 객체를 얻었습니다)"
+msgstr ""
+"'%s'는 반드시 단일 문자열이어야 합니다 (클래스 \"%s\"의 객체를 얻었습니다)"
 
-#: methods_list_dispatch.c:876
+#: methods_list_dispatch.c:877
 msgid "class should be either a character-string name or a class definition"
 msgstr "클래스는 문자열 이름 또는 클래스 정의 중 하나 이어야 합니다"
 
-#: methods_list_dispatch.c:955
+#: methods_list_dispatch.c:956
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "프리미티브 \"%s\"를 위한 제네릭을 얻는데 실패했습니다"
 
-#: methods_list_dispatch.c:961
+#: methods_list_dispatch.c:962
 #, c-format
-msgid "expected a generic function or a primitive for dispatch, got an object of class \"%s\""
-msgstr "제네릭 함수 또는 디스패치를 위한 프리미티브가 와야 하는데, 클래스 \"%s\"의 객체를 얻었습니다"
-
+msgid ""
+"expected a generic function or a primitive for dispatch, got an object of "
+"class \"%s\""
+msgstr ""
+"제네릭 함수 또는 디스패치를 위한 프리미티브가 와야 하는데, 클래스 \"%s\"의 객"
+"체를 얻었습니다"

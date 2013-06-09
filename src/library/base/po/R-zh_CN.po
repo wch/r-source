@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-06-09 21:23\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -293,6 +293,10 @@ msgstr "在不存在的列里替换单元: %s"
 
 msgid "only a single element should be replaced"
 msgstr "只能替换一个单元"
+
+#, fuzzy
+msgid "Name partially matched in data frame"
+msgstr "数据框里有非数值的参数"
 
 msgid "names do not match previous names"
 msgstr "名字同原来已有的名字不相对"
@@ -945,6 +949,11 @@ msgstr "追蹤函数需要'methods'程辑包，但在载入'methods'名字空间
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "不能改变因子的存储状态"
+
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
+msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
