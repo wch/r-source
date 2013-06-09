@@ -1913,16 +1913,20 @@ function(package, dir, file, lib.loc = NULL,
 		if (allow_suppress &&
                     name %in% suppressForeignCheck(, package))
 		    return ("SYMBOL OK") # skip false positives
-                if(name %in% fr) {
-                    return("OTHER")
-                    other_problem <<- c(other_problem, e)
-                    other_desc <<- c(other_desc, sprintf("symbol \"%s\" in the local frame", name))
-                } else {
-                    other_problem <<- c(other_problem, e)
-                    other_desc <<- c(other_desc,
-                                     sprintf("symbol \"%s\" not in namespace%s",
-                                             name,
-                                             if(!have_registration) ", which does not have registered symbols" else ""))
+                if (have_registration || !allow_suppress) {
+                    if (name %in% fr) {
+                        other_problem <<- c(other_problem, e)
+                        other_desc <<-
+                            c(other_desc, sprintf("symbol %s in the local%s frame",
+                                                  sQuote(name),
+                                                  if(!have_registration) ", but no registered symbols" else ""))
+                    } else {
+                        other_problem <<- c(other_problem, e)
+                        other_desc <<- c(other_desc,
+                                         sprintf("symbol %s not in namespace%s",
+                                             sQuote(name),
+                                                 if(!have_registration) ", which does not have registered symbols" else ""))
+                    }
                 }
     	    	return("OTHER")
     	    }
@@ -1931,8 +1935,12 @@ function(package, dir, file, lib.loc = NULL,
 
     	sym <- tryCatch(eval(sym, code_env), error = function(e) e)
     	if (inherits(sym, "error")) {
-    	    other_problem <<- c(other_problem, e)
-    	    other_desc <<- c(other_desc, sprintf("Evaluating \"%s\" during check gives error\n\"%s\"", name, sym$message))
+            if (have_registration || !allow_suppress)  {
+                other_problem <<- c(other_problem, e)
+                other_desc <<-
+                    c(other_desc, sprintf("Evaluating %s during check gives error\n%s",
+                                          sQuote(name), sQuote(sym$message)))
+            }
     	    return("OTHER")
     	}
 
@@ -1953,7 +1961,8 @@ function(package, dir, file, lib.loc = NULL,
         if (!inherits(sym, "NativeSymbolInfo")) {
     	    other_problem <<- c(other_problem, e)
             ## other_desc <<- c(other_desc, sprintf("\"%s\" is not of class \"%s\"", name, "NativeSymbolInfo"))
-    	    other_desc <<- c(other_desc, sprintf("\"%s\" is of class \"%s\"", name, class(sym)))
+    	    other_desc <<- c(other_desc, sprintf("%s is of class \"%s\"",
+                                                 sQuote(name), class(sym)))
     	    return("OTHER")
     	}
         ## This might be symbol from another (base?) package.
@@ -1982,8 +1991,8 @@ function(package, dir, file, lib.loc = NULL,
                     other_problem <<- c(other_problem, e)
                     other_desc <<-
                         c(other_desc,
-                          sprintf("call to \"%s\" with %d %s, expected %d",
-                                  name, callparms,
+                          sprintf("call to %s with %d %s, expected %d",
+                                  sQuote(name), callparms,
                                   if(callparms > 1L) "parameters" else "parameter",
                                   numparms))
                     return("OTHER")
@@ -1992,12 +2001,12 @@ function(package, dir, file, lib.loc = NULL,
         }
     	if (inherits(sym, "CallRoutine") && !(FF_fun %in% c(".Call", ".Call.graphics"))) {
     	    other_problem <<- c(other_problem, e)
-    	    other_desc <<- c(other_desc, sprintf("\"%s\" registered as %s, but called with %s", name, ".Call", FF_fun))
+    	    other_desc <<- c(other_desc, sprintf("%s registered as %s, but called with %s", sQuote(name), ".Call", FF_fun))
     	    return("OTHER")
     	}
     	if (inherits(sym, "ExternalRoutine") && !(FF_fun %in% c(".External", ".External.graphics"))) {
 	    other_problem <<- c(other_problem, e)
-	    other_desc <<- c(other_desc, sprintf("\"%s\" registered as %s, but called with %s", name, ".External", FF_fun))
+	    other_desc <<- c(other_desc, sprintf("%s registered as %s, but called with %s", sQuote(name), ".External", FF_fun))
 	    return("OTHER")
 	}
 

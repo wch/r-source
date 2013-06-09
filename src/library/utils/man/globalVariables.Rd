@@ -109,6 +109,10 @@ localvariable <- if (condition) entry1 else entry2
 ## Alternatively, like this:
 if(getRversion() < "3.1.0") dontCheck <- identity
 .Call(dontCheck(if (condition) entry1 else entry2), 1, 2, 3)
+
+## HOWEVER, it is much better practice to write code
+## that can be checked thoroughly, e.g.
+if(condition) .Call(entry1, 1, 2, 3) else .Call(entry2, 1, 2, 3)
 }
 }
 \keyword{ packages }
