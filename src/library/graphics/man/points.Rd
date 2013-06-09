@@ -240,7 +240,8 @@ TestChars <- function(sign = 1, font = 1, ...)
 }
 TestChars()
 try(TestChars(sign = -1))
-TestChars(font = 5)  # Euro might be at 160 (0+10*16).  Mac OS has apple at 240 (0+15*16).
+TestChars(font = 5)  # Euro might be at 160 (0+10*16).
+                     # Mac OS has apple at 240 (0+15*16).
 try(TestChars(-1, font = 2))  # bold
 }}
 \keyword{aplot}
