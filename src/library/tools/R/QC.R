@@ -1769,7 +1769,7 @@ function(package, dir, file, lib.loc = NULL,
          registration = FALSE,
          verbose = getOption("verbose"))
 {
-    allow_suppress <- nzchar(Sys.getenv("_R_CHECK_AS_CRAN_"))
+    allow_suppress <- !nzchar(Sys.getenv("_R_CHECK_FF_AS_CRAN_"))
     suppressCheck <- function(e)
         allow_suppress &&
             length(e) == 2L && is.call(e) && is.symbol(e[[1L]]) &&
@@ -1971,8 +1971,8 @@ function(package, dir, file, lib.loc = NULL,
                 other_desc <<-
                     c(other_desc,
                       sprintf("call includes ..., expected %d %s",
-                              if(numparms > 1L) "parameters" else "parameter",
-                              numparms))
+                              numparms,
+                              if(numparms > 1L) "parameters" else "parameter"))
             } else {
                 callparms <- length(e) - 2L
                 if ("PACKAGE" %in% names(e)) callparms <- callparms - 1L

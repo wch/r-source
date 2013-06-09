@@ -1136,6 +1136,7 @@ setRlibs <-
             registration <-
                 identical(R_check_FF, "registration") && install != "fake"
             checkingLog(Log, "foreign function calls")
+            if(as_cran) Sys.setenv("_R_CHECK_FF_AS_CRAN_" = "TRUE")
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
                           sprintf("tools::checkFF(package = \"%s\", registration = %s)\n",
@@ -1144,6 +1145,7 @@ setRlibs <-
                           sprintf("tools::checkFF(dir = \"%s\", registration = %s)\n",
                                   pkgdir, "FALSE"))
             out <- R_runR2(Rcmd)
+            Sys.unsetenv("_R_CHECK_FF_AS_CRAN_")
             if (length(out)) {
                 if(any(grepl("^Foreign function calls? with(out| empty)", out)) ||
                    (!is_base_pkg && any(grepl("to a base package:", out))) ||
@@ -3670,8 +3672,6 @@ setRlibs <-
             message("'--as-cran' turns off '--extra-arch'")
             extra_arch <- FALSE
         }
-        ## used in checkFF
-        Sys.setenv("_R_CHECK_AS_CRAN_" = "TRUE")
         Sys.setenv("_R_CHECK_TIMINGS_" = "10")
         Sys.setenv("_R_CHECK_INSTALL_DEPENDS_" = "TRUE")
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
