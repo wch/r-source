@@ -24,17 +24,16 @@
   
   For \code{suppressForeignCheck}, the names supplied are of variables
   used as \code{.NAME} in foreign function calls which should not be
-  checked during \command{R CMD check} code analysis.  Without this
+  checked by \code{\link{checkFF}(registration = TRUE)}.  Without this
   declaration, expressions other than simple character strings are
-  assumed to evaluate to registered native symbol objects.  The type
-  of call (\code{.Call}, \code{.External}, etc.) and argument counts
-  will be checked.  With this declaration, no checks will be done on
-  those names.  (If the code uses an expression that should only be
-  evaluated at runtime, the message can be suppressed by wrapping it
-  in the \code{\link{dontCheck}} function call, or by saving it to
-  a local variable, and suppressing messages about that variable. See
-  the example below.)
-  
+  assumed to evaluate to registered native symbol objects.  The type of
+  call (\code{.Call}, \code{.External}, etc.) and argument counts will
+  be checked.  With this declaration, checks on those names will usually
+  be suppressed.  (If the code uses an expression that should only be
+  evaluated at runtime, the message can be suppressed by wrapping it in
+  a \code{\link{dontCheck}} function call, or by saving it to a local
+  variable, and suppressing messages about that variable. See the
+  example below.)
 }
 \usage{
 globalVariables(names, package, add = TRUE)
@@ -69,7 +68,7 @@ suppressForeignCheck(names, package, add = TRUE)
   possible problems.
 
   \code{globalVariables} was introduced in \R 2.15.1 and
-  \code{suppressForeignCheck} was introduced in \R 3.0.2 so both
+  \code{suppressForeignCheck} was introduced in \R 3.1.0 so both
   should be used conditionally: see the example.  
 }
 \value{
@@ -101,14 +100,14 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".obj1", "obj2"))
 ## save it to a local variable.
 
 ## At top level, put this:
-if(getRversion() > "3.0.1") utils::suppressForeignCheck("localvariable")
+if(getRversion() >= "3.1.0") utils::suppressForeignCheck("localvariable")
 
 ## Within your function, do the call like this:
 localvariable <- if (condition) entry1 else entry2
 .Call(localvariable, 1, 2, 3)
 
 ## Alternatively, like this:
-if(getRversion() <= "3.0.1") dontCheck <- identity
+if(getRversion() < "3.1.0") dontCheck <- identity
 .Call(dontCheck(if (condition) entry1 else entry2), 1, 2, 3)
 }
 }

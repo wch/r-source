@@ -172,6 +172,7 @@ test-Specific:
 test-Packages:
 	@for p in $(R_PKGS_BASE); do \
 	  $(ECHO) "checking package '$${p}'"; \
+	  _R_CHECK_FF_CALLS_=registration \
 	  $(top_builddir)/bin/R CMD check --install=skip \
 	    --no-rebuild-vignettes \
 	    $(top_srcdir)/src/library/$${p} || $(ECHO); \

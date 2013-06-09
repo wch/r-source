@@ -1761,8 +1761,6 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
-suppressCheck <- function(e)
-    length(e) == 2 && is.call(e) && is.symbol(e[[1]]) && as.character(e[[1]]) == "dontCheck"
 
 ### * checkFF
 
@@ -1771,6 +1769,12 @@ function(package, dir, file, lib.loc = NULL,
          registration = FALSE,
          verbose = getOption("verbose"))
 {
+    allow_suppress <- nzchar(Sys.getenv("_R_CHECK_AS_CRAN_"))
+    suppressCheck <- function(e)
+        allow_suppress &&
+            length(e) == 2L && is.call(e) && is.symbol(e[[1L]]) &&
+                as.character(e[[1L]]) == "dontCheck"
+
     has_namespace <- FALSE
     is_installed_msg <- is_installed <- FALSE
     ## Argument handling.
@@ -1906,7 +1910,8 @@ function(package, dir, file, lib.loc = NULL,
         }
     	if (is.symbol(sym)) { # it might be something like pkg::sym (that's a call)
 	    if (!exists(name, code_env, inherits = FALSE)) {
-		if (name %in% suppressForeignCheck(, package))
+		if (allow_suppress &&
+                    name %in% suppressForeignCheck(, package))
 		    return ("SYMBOL OK") # skip false positives
                 if(name %in% fr) {
                     return("OTHER")

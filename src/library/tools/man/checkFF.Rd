@@ -31,7 +31,7 @@ checkFF(package, dir, file, lib.loc = NULL,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
     search for \code{package}.}
-  \item{registration}{a logical.  If \code{TRUE} (the default), checks
+  \item{registration}{a logical.  If \code{TRUE}, checks
     the registration information on the call (if available).}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed (and the result is returned invisibly).}
@@ -49,18 +49,13 @@ checkFF(package, dir, file, lib.loc = NULL,
   This checks that calls with \code{PACKAGE} specified are to the
   same package, and reports separately those which are in base packages
   and those which are in other packages (and if those packages are
-  specified in the \file{DESCRIPTION} file).  Direct calls to the
-  FORTRAN entry points for LINPACK in \R itself are not reported (but
-  this does not include modifications of LINPACK routines such as
-  \code{dqrls}).
+  specified in the \file{DESCRIPTION} file).
 }
 \value{
-  An object of class \code{"checkFF"}, which currently is a list of the
-  (parsed) foreign function calls with a character first argument and
-  no \code{PACKAGE} argument.
+  An object of class \code{"checkFF"}.
 
-  There is a \code{print} method to display the information contained in
-  such objects.
+  There are \code{formaat} and  \code{print} methods to display the
+  information contained in such objects.
 }
 \seealso{
   \code{\link{.C}},

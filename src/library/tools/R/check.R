@@ -3670,6 +3670,8 @@ setRlibs <-
             message("'--as-cran' turns off '--extra-arch'")
             extra_arch <- FALSE
         }
+        ## used in checkFF
+        Sys.setenv("_R_CHECK_AS_CRAN_" = "TRUE")
         Sys.setenv("_R_CHECK_TIMINGS_" = "10")
         Sys.setenv("_R_CHECK_INSTALL_DEPENDS_" = "TRUE")
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
