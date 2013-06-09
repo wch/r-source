@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-06-09 21:52\n"
 "PO-Revision-Date: 2013-03-19 19:20-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "invalid 'filename'"
 msgstr "неправильное 'filename'"
@@ -34,6 +35,9 @@ msgstr "ожидается увеличение значений 'x' и 'y'"
 
 msgid "no proper 'z' matrix specified"
 msgstr "не указана подходящая 'z'-матрица"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' должен быть положительным"
@@ -153,7 +157,8 @@ msgid "NOT changing %s"
 msgstr "НЕ изменяется %s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr "аргумент 'append' предназначен для обратной совместимости и будет пропущен"
+msgstr ""
+"аргумент 'append' предназначен для обратной совместимости и будет пропущен"
 
 msgid "unknown family '%s'"
 msgstr "неизвестное семейство '%s'"
@@ -219,7 +224,8 @@ msgid "range too small for 'min.n'"
 msgstr "размах слишком мал для 'min.n'"
 
 msgid "a raster matrix must be character, or numeric, or logical"
-msgstr "растровая матрица должна быть символом, числом или логическим выражением"
+msgstr ""
+"растровая матрица должна быть символом, числом или логическим выражением"
 
 msgid "a raster array must be numeric"
 msgstr "растровая многомерная матрица должна быть числовой"
@@ -228,7 +234,8 @@ msgid "a raster array must have exactly 3 dimensions"
 msgstr "растровая многомерная матрица должна быть в точности трехмерной"
 
 msgid "a raster array must have exactly 3 or 4 planes"
-msgstr "растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
+msgstr ""
+"растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr "'drop' всегда неявно выставлен в FALSE в '[.raster'"
@@ -318,7 +325,9 @@ msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr "неправильные аргументы в эquartzFontsэ (нужны именованные аргументы)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr "типы, основанные на cairo, в этой сборке не поддерживаются -- использую \"Xlib\""
+msgstr ""
+"типы, основанные на cairo, в этой сборке не поддерживаются -- использую "
+"\"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr "неизвестное семейство X11(type = \"XLib\")"
@@ -397,14 +406,17 @@ msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "могу печатать только с экранного устройства"
+
 #~ msgid "'maxRasters' is no longer needed, and will be ignored"
 #~ msgstr "'maxRasters' больше не нужны и будут пропущены"
+
 #~ msgid "The 'gamma' argument is deprecated and has no effect"
 #~ msgstr "Аргумент 'gamma' устарел и не возымеем никакого эффекта"
+
 #~ msgid "invalid value for 'antialias'"
 #~ msgstr "неправильное значение 'antialias'"
+
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr ""
 #~ "устройство quartz() интерактивно сокращено без использования обработчика "
 #~ "циклов"
-

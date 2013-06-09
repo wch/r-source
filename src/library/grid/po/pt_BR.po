@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 09:51+0100\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -22,51 +22,51 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "Não é possível cortar sobre uma viewport rotacionada"
 
-#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
+#: grid.c:684 grid.c:689 grid.c:778 grid.c:783
 #, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "Não é possível mostrar a viewport de nível máximo (saidas gráficas e grid "
 "misturadas?) "
 
-#: grid.c:952
+#: grid.c:963
 msgid "attempt to plot on null device"
 msgstr "tentativa de fazer um gráfico no dispositivo nulo"
 
-#: grid.c:1232
+#: grid.c:1243
 #, fuzzy
 msgid "there is no layout defined"
 msgstr "Não há layout definido"
 
-#: grid.c:1452
+#: grid.c:1463
 #, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Limite do polígono não encontrado (largura ou altura zero?)"
 
-#: grid.c:1461
+#: grid.c:1472
 #, fuzzy
 msgid "polygon edge not found"
 msgstr "Limite do polígono não encontrado"
 
-#: grid.c:1615
+#: grid.c:1626
 #, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "Pelo menos dois pontos são necessários para desenhar uma seta"
 
-#: grid.c:1931
+#: grid.c:1942
 #, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "Ponto de controle não-finito em Xspline"
 
-#: grid.c:2796
+#: grid.c:2807
 msgid "non-finite x or y in graphics path"
 msgstr "valores não-finitos de x ou y no caminho do gráfico"
 
-#: grid.c:3286
+#: grid.c:3297
 msgid "invalid plotting symbol"
 msgstr "simbolo para gráfico inválido"
 
-#: grid.c:3372
+#: grid.c:3383
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Não é possível cortar sobre um retângulo rotacionado"

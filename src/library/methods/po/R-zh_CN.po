@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:27\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -16,9 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid "replacement value is not a matrix"
-msgstr "替换值不是矩阵"
 
 msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
 msgstr "啊呀：'.OldClassesPrototypes'里第%d行哪里出错了"
@@ -1322,13 +1319,14 @@ msgid ""
 "field definition (\"%s\")"
 msgstr "场%2$s的首要类(\"%1$s\")不是已经存在了的场定义的子类别(\"%3$s\")"
 
-msgid "field %s is read-only"
-msgstr "场%s只能读不能改"
-
+#, fuzzy
 msgid ""
-"invalid replacement for field %s, should be from class %s or a subclass (was "
-"class %s)"
+"invalid assignment for reference class field %s, should be from class %s or "
+"a subclass (was class %s)"
 msgstr "场%s的替换值不对，应当是%s类别或子类（原来是%s类别）"
+
+msgid "invalid replacement: reference class field %s is read-only"
+msgstr ""
 
 msgid ""
 "the 'contains' argument should be the names of superclasses:  got an element "
@@ -1638,6 +1636,12 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
+
+#~ msgid "replacement value is not a matrix"
+#~ msgstr "替换值不是矩阵"
+
+#~ msgid "field %s is read-only"
+#~ msgstr "场%s只能读不能改"
 
 #~ msgid "not a package name: %s"
 #~ msgstr "不是程輯包名: %s"

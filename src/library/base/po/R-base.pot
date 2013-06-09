@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.0.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-06-09 21:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -909,6 +909,9 @@ msgid "tracing functions requires the 'methods' package, but unable to load the 
 msgstr ""
 
 msgid "invalid to change the storage mode of a factor"
+msgstr ""
+
+msgid "namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s"
 msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"

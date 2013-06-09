@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 08:17\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-19 20:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -2170,9 +2170,6 @@ msgstr ""
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' doit être compris entre 0 et 3"
 
-msgid "'deriv' must be between 0 and 2"
-msgstr "'deriv' doit être compris entre 0 et 2"
-
 msgid "'x' must be *strictly* increasing (non - NA)"
 msgstr "'x' doit être *strictement* croissant (non - NA)"
 
@@ -2521,23 +2518,27 @@ msgid_plural "%d missing values deleted"
 msgstr[0] "%d valeur manquante supprimée"
 msgstr[1] "%d valeurs manquantes supprimées"
 
-msgid "'X' matrix has %d response"
-msgid_plural "'X' matrix has %d responses"
+#, fuzzy
+msgid "'X' matrix has %d case (row)"
+msgid_plural "'X' matrix has %d cases (rows)"
 msgstr[0] "la matrice 'X' a %d réponse"
 msgstr[1] "la matrice 'X' a %d réponses"
 
-msgid "'Y' has %d response"
-msgid_plural "'Y' has %d responses"
+#, fuzzy
+msgid "'Y' has %d case (row)"
+msgid_plural "'Y' has %d cases (rows)"
 msgstr[0] "'Y' a %d réponse"
 msgstr[1] "'Y' a %d réponses"
 
-msgid "%d response"
-msgid_plural "%d responses"
-msgstr[0] "%d réponse"
-msgstr[1] "%d réponses"
+#, fuzzy
+msgid "only %d case"
+msgid_plural "only %d cases"
+msgstr[0] "mais seulement %d variable"
+msgstr[1] "mais seulement %d variables"
 
-msgid "but only %d variable"
-msgid_plural "but only %d variables"
+#, fuzzy
+msgid "but %d variable"
+msgid_plural "but %d variables"
 msgstr[0] "mais seulement %d variable"
 msgstr[1] "mais seulement %d variables"
 
@@ -2595,6 +2596,14 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' est trop court : il faut %d point"
 msgstr[1] "'start.innov' est trop court : il faut %d points"
+
+#~ msgid "'deriv' must be between 0 and 2"
+#~ msgstr "'deriv' doit être compris entre 0 et 2"
+
+#~ msgid "%d response"
+#~ msgid_plural "%d responses"
+#~ msgstr[0] "%d réponse"
+#~ msgstr[1] "%d réponses"
 
 #~ msgid "character variable '%s' changed to a factor"
 #~ msgstr "la variable chaîne de caractères '%s' est convertie en facteur"

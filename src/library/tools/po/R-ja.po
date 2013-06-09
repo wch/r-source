@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:24\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-19 13:39+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -384,6 +384,10 @@ msgstr " Rd オブジェクト '%s' に説明のない引数: "
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr " Rd オブジェクト '%s' に編集する必要のある自動生成された項目: "
 
+#, fuzzy
+msgid "no Rd sections specified"
+msgstr " 指定された 'type' ではありません "
+
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
 "May need something like\n"
@@ -504,6 +508,10 @@ msgstr " 1個以上が見つかりました "
 
 msgid "unable to create temp directory %s"
 msgstr " 一時ディレクトリ %s を生成することが出来ません "
+
+#, fuzzy
+msgid "Running"
+msgstr " %s を実行中 "
 
 msgid "Vignette"
 msgstr " ビニエット "
@@ -1084,6 +1092,9 @@ msgstr " パースファイルが見つかりません "
 
 msgid "FAILED"
 msgstr " 失敗 "
+
+msgid "DIFFERED"
+msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr " ランダムな偏差の生成テストを実行中 -- 失敗する事もあります "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-06-09 21:52\n"
 "PO-Revision-Date: 2013-03-01 10:55+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -30,6 +30,9 @@ msgstr "ansteigende 'x' und 'y' Werte erwarted"
 
 msgid "no proper 'z' matrix specified"
 msgstr "keine geeignete 'z' Matrix angegeben"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' muss positiv sein"

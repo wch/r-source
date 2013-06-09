@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -927,6 +927,9 @@ msgid "unsupported entry type"
 msgstr ""
 
 msgid "file '%s' not found"
+msgstr ""
+
+msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
 msgid "file size is limited to 8GB"

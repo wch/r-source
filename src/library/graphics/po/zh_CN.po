@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-16 08:17+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -98,74 +98,74 @@ msgstr "GBox参数不对"
 msgid "metric information not available for this device"
 msgstr "公制信息不适用于这个设备"
 
-#: par-common.c:138
+#: par-common.c:142
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "图形参数'family'最多只能有20字节"
 
-#: par.c:158
+#: par.c:159
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "图形参数\"%s\"的值设得不对"
 
-#: par.c:165
+#: par.c:166
 #, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "图形参数\"%s\"的长度不对"
 
-#: par.c:260 par.c:670
+#: par.c:261 par.c:671
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "无法设定图形参数\"%s\""
 
-#: par.c:432
+#: par.c:433
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "参数\"mfg\"的长度不对"
 
-#: par.c:440
+#: par.c:441
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "\"mfg\"里的参数\"i\"超出了合适的范围"
 
-#: par.c:442
+#: par.c:443
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\"里的参数\"j\"超出了合适的范围"
 
-#: par.c:447
+#: par.c:448
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\"里的'nr'值不对，略过不用"
 
-#: par.c:449
+#: par.c:450
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\"里的'nc'值不对，略过不用"
 
-#: par.c:475
+#: par.c:476
 msgid "calling par(new=TRUE) with no plot"
 msgstr "不绘图就不能调用par(new=TRUE)"
 
-#: par.c:662 par.c:1046
+#: par.c:663 par.c:1047
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "图形参数\"%s\"已过期不用了"
 
-#: par.c:666 par.c:1050
+#: par.c:667 par.c:1051
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\"不是图形参数"
 
-#: par.c:1103
+#: par.c:1104
 msgid "invalid argument passed to par()"
 msgstr "传给par()的参数错误"
 
-#: par.c:1147
+#: par.c:1148
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "layout里的行数太多, 极限为%d"
 
-#: par.c:1153
+#: par.c:1154
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "layout里的列数太多, 极限为%d"
 
-#: par.c:1155
+#: par.c:1156
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "layout里的元素太多, 极限为%d"
@@ -187,7 +187,7 @@ msgid "invalid font specification"
 msgstr "字形设定不对"
 
 #: plot.c:291 plot.c:305 plot.c:496 plot.c:501 plot.c:2124 plot.c:2131
-#: plot.c:3148 plot.c:3150 plot.c:3152 plot.c:3304 plot3d.c:1155 plot3d.c:1159
+#: plot.c:3153 plot.c:3155 plot.c:3157 plot.c:3312 plot3d.c:1155 plot3d.c:1159
 #: plot3d.c:1161 plot3d.c:1895
 #, c-format
 msgid "invalid '%s' value"
@@ -246,7 +246,7 @@ msgstr "座标標記种类不对"
 
 #: plot.c:780 plot.c:1313 plot.c:1634 plot.c:1699 plot.c:1774 plot.c:1840
 #: plot.c:1913 plot.c:2008 plot.c:2084 plot.c:2362 plot.c:2536 plot.c:2752
-#: plot.c:3286 plot.c:3413 plot.c:3489 plot.c:3655 plot.c:3935 plot3d.c:1864
+#: plot.c:3294 plot.c:3421 plot.c:3497 plot.c:3663 plot.c:3943 plot3d.c:1864
 msgid "too few arguments"
 msgstr "参数数目太少"
 
@@ -261,7 +261,7 @@ msgstr "'hadj'的长度必需为一"
 
 #: plot.c:888 plot.c:2096 plot.c:2373 plot.c:2379 plot.c:2386 plot.c:2394
 #: plot.c:2401 plot.c:2408 plot.c:2415 plot.c:2422 plot.c:2430 plot.c:2437
-#: plot.c:3155
+#: plot.c:3160
 #, c-format
 msgid "zero-length '%s' specified"
 msgstr "'%s'长度不能设成零"
@@ -293,7 +293,7 @@ msgstr "%s()里的'x'和'y'的长度不一样"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "绘图种类'%s'被缩短成第一个字符"
 
-#: plot.c:1346 plot.c:3013
+#: plot.c:1346 plot.c:3014
 msgid "invalid plot type"
 msgstr "绘图种类不对"
 
@@ -346,115 +346,115 @@ msgstr "a=, b= 设定不对"
 msgid "'a' and 'b' must be finite"
 msgstr "'a'和'b'的值必需是有限的"
 
-#: plot.c:2937 plot.c:4055 plot.c:4059 plot.c:4062 plot.c:4082 plot.c:4086
-#: plot.c:4089 plot3d.c:1077 plot3d.c:1081 plot3d.c:1086 plot3d.c:1090
+#: plot.c:2937 plot.c:4063 plot.c:4067 plot.c:4070 plot.c:4090 plot.c:4094
+#: plot.c:4097 plot3d.c:1077 plot3d.c:1081 plot3d.c:1086 plot3d.c:1090
 #: plot3d.c:1094 plot3d.c:1098 stem.c:159 stem.c:160 stem.c:162 stem.c:163
 #: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
 
-#: plot.c:3008 plot.c:3144
+#: plot.c:3009 plot.c:3149
 #, c-format
 msgid "invalid number of points in %s"
 msgstr "%s里点的数目不对"
 
-#: plot.c:3146
+#: plot.c:3151
 msgid "incorrect argument type"
 msgstr "参数种类不对"
 
-#: plot.c:3158
+#: plot.c:3163
 msgid "different argument lengths"
 msgstr "参数长度不一样"
 
-#: plot.c:3160
+#: plot.c:3165
 msgid "more 'labels' than points"
 msgstr "'labels'比点还要多"
 
-#: plot.c:3209
+#: plot.c:3214
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "警告: 没有点在%.2f英尺内\n"
 
-#: plot.c:3215
+#: plot.c:3220
 msgid "warning: nearest point already identified\n"
 msgstr "警告: 已经找到了最近的点\n"
 
-#: plot.c:3297
+#: plot.c:3305
 msgid "invalid units"
 msgstr "单位不对"
 
-#: plot.c:3473 plot.c:3580
+#: plot.c:3481 plot.c:3588
 msgid "invalid dendrogram input"
 msgstr "谱系图输入不对"
 
-#: plot.c:3637
+#: plot.c:3645
 msgid "invalid symbol parameter vector"
 msgstr "符号参数矢量不对"
 
-#: plot.c:3660
+#: plot.c:3668
 msgid "invalid symbol coordinates"
 msgstr "符号座标不对"
 
-#: plot.c:3668
+#: plot.c:3676
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/参数长度不一样"
 
-#: plot.c:3687
+#: plot.c:3695
 msgid "invalid circles data"
 msgstr "圆圈数据不对"
 
-#: plot.c:3689 plot.c:3710 plot.c:3735 plot.c:3765
+#: plot.c:3697 plot.c:3718 plot.c:3743 plot.c:3773
 msgid "invalid symbol parameter"
 msgstr "符号参数不对"
 
-#: plot.c:3708
+#: plot.c:3716
 msgid "invalid squares data"
 msgstr "正方形数据不对"
 
-#: plot.c:3733
+#: plot.c:3741
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "长方形数据不对(需要两个列)"
 
-#: plot.c:3763
+#: plot.c:3771
 msgid "invalid stars data"
 msgstr "星形数据不对"
 
-#: plot.c:3805
+#: plot.c:3813
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "温度计数据不对(需要三或四个列)"
 
-#: plot.c:3808
+#: plot.c:3816
 #, c-format
 msgid "invalid 'thermometers[, %s]'"
 msgstr "'thermometers[,%s]'不对"
 
-#: plot.c:3811
+#: plot.c:3819
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "'thermometers[,%s]'在[0,1]范围外--看起来会有点不对"
 
-#: plot.c:3814
+#: plot.c:3822
 msgid "invalid 'thermometers[, 1:2]'"
 msgstr "'thermometers[,1:2]'"
 
-#: plot.c:3853
+#: plot.c:3861
 msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "'boxplots'数据不对(需要五个列)"
 
-#: plot.c:3862
+#: plot.c:3870
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "'boxplots[, 5]'在[0,1]范围外--看起来会有点不对"
 
-#: plot.c:3864
+#: plot.c:3872
 msgid "invalid 'boxplots[, 1:4]'"
 msgstr "'boxplots[, 1:4]'不对"
 
-#: plot.c:3910
+#: plot.c:3918
 msgid "invalid symbol type"
 msgstr "符号种类不对"
 
-#: plot.c:3948 plot.c:3950 plot.c:3955 plot.c:3957
+#: plot.c:3956 plot.c:3958 plot.c:3963 plot.c:3965
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "'%s'参数的长度不对"

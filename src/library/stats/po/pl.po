@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -95,13 +95,13 @@ msgstr "nie wszystkie argumenty mają tę samą długość"
 
 # stats/src/cov.c: 553
 # error(_("missing observations in cov/cor"))
-#: cov.c:553
+#: cov.c:559
 msgid "missing observations in cov/cor"
 msgstr "brakujące obserwacje w macierzy kowariancji/korelacji"
 
 # stats/src/cov.c: 631
 # error(_("'x' is NULL"))
-#: cov.c:631
+#: cov.c:637
 msgid "'x' is NULL"
 msgstr "'x' ma wartość NULL"
 
@@ -113,7 +113,7 @@ msgstr "'x' ma wartość NULL"
 # error(_("incompatible dimensions"))
 # stats/src/cov.c: 656
 # error(_("incompatible dimensions"))
-#: cov.c:650 cov.c:656
+#: cov.c:656 cov.c:662
 msgid "incompatible dimensions"
 msgstr "niezgodne wymiary"
 
@@ -123,13 +123,13 @@ msgstr "niezgodne wymiary"
 # error(_("no complete element pairs"))
 # stats/src/cov.c: 749
 # error(_("no complete element pairs"))
-#: cov.c:675 cov.c:716 cov.c:749
+#: cov.c:681 cov.c:722 cov.c:755
 msgid "no complete element pairs"
 msgstr "brak kompletnych par elementów"
 
 # stats/src/cov.c: 688
 # error(_("invalid 'use' (computational method)"))
-#: cov.c:688
+#: cov.c:694
 msgid "invalid 'use' (computational method)"
 msgstr "niepoprawne 'use' (metoda obliczeniowa)"
 
@@ -137,13 +137,13 @@ msgstr "niepoprawne 'use' (metoda obliczeniowa)"
 # stop("'x' is empty")
 # stats/src/cov.c: 691
 # error(_("'x' is empty"))
-#: cov.c:691
+#: cov.c:697
 msgid "'x' is empty"
 msgstr "'x' jest puste"
 
 # stats/src/cov.c: 785
 # warning(_("the standard deviation is zero"))
-#: cov.c:785
+#: cov.c:791
 msgid "the standard deviation is zero"
 msgstr "odchylenie standardowe wynosi zero"
 
@@ -426,7 +426,7 @@ msgstr "niepoprawny wynik z 'na.action'"
 # error(_("invalid '%s' argument"), "terms")
 # stats/src/optim.c: 189
 # error(_("invalid '%s' argument"), "method")
-#: model.c:363 model.c:371 optim.c:189
+#: model.c:363 model.c:371 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
@@ -763,7 +763,7 @@ msgstr "gradient w 'optim' obliczony do długości %d a nie %d"
 # error(_("'fn' is not a function"))
 # stats/src/optim.c: 389
 # error(_("'fn' is not a function"))
-#: optim.c:185 optim.c:389
+#: optim.c:186 optim.c:391
 msgid "'fn' is not a function"
 msgstr "'fn' nie jest funkcją"
 
@@ -771,19 +771,19 @@ msgstr "'fn' nie jest funkcją"
 # error(_("'parscale' is of the wrong length"))
 # stats/src/optim.c: 395
 # error(_("'parscale' is of the wrong length"))
-#: optim.c:202 optim.c:395
+#: optim.c:204 optim.c:397
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale' ma niepoprawną długość"
 
 # stats/src/optim.c: 231
 # error(_("'maxit' is not an integer"))
-#: optim.c:231
+#: optim.c:233
 msgid "'maxit' is not an integer"
 msgstr "'maxit' nie jest liczbą całkowitą"
 
 # stats/src/optim.c: 250
 # error(_("'tmax' is not an integer"))
-#: optim.c:250
+#: optim.c:252
 msgid "'tmax' is not an integer"
 msgstr "'tmax' nie jest liczbą całkowitą"
 
@@ -797,7 +797,7 @@ msgstr "'tmax' nie jest liczbą całkowitą"
 # error(_("'gr' is not a function"))
 # stats/src/optim.c: 403
 # error(_("'gr' is not a function"))
-#: optim.c:252 optim.c:269 optim.c:294 optim.c:324 optim.c:403
+#: optim.c:254 optim.c:271 optim.c:296 optim.c:326 optim.c:405
 msgid "'gr' is not a function"
 msgstr "'gr' nie jest funkcją"
 
@@ -809,13 +809,13 @@ msgstr "'gr' nie jest funkcją"
 # error(_("'ndeps' is of the wrong length"))
 # stats/src/optim.c: 409
 # error(_("'ndeps' is of the wrong length"))
-#: optim.c:275 optim.c:300 optim.c:330 optim.c:409
+#: optim.c:277 optim.c:302 optim.c:332 optim.c:411
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps' ma niepoprawną długość"
 
 # stats/src/optim.c: 360
 # error(_("unknown 'method'"))
-#: optim.c:360
+#: optim.c:362
 msgid "unknown 'method'"
 msgstr "nieznana wartość 'method'"
 

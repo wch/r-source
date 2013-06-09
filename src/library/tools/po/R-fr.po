@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-19 21:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -396,6 +396,10 @@ msgstr "Arguments sans description dans l'objet Rd '%s' :"
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "Contenu automatique de l'objet Rd '%s' à éditer :"
 
+#, fuzzy
+msgid "no Rd sections specified"
+msgstr "aucun 'type' spécifié"
+
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
 "May need something like\n"
@@ -518,6 +522,10 @@ msgstr "Localisation plus d'une fois"
 
 msgid "unable to create temp directory %s"
 msgstr "impossible de créer le répertoire temporaire %s"
+
+#, fuzzy
+msgid "Running"
+msgstr "Exécution de %s"
 
 msgid "Vignette"
 msgstr "Vignette"
@@ -672,8 +680,7 @@ msgid ""
 "compiling TeX file %s failed with message:\n"
 "%s"
 msgstr ""
-"la compilation du fichier TeX %s a échoué avec le "
-"diagnostic :\n"
+"la compilation du fichier TeX %s a échoué avec le diagnostic :\n"
 "%s"
 
 msgid "cannot copy '%s' to '%s'"
@@ -1099,6 +1106,9 @@ msgstr "aucun fichier source n'est trouvé"
 
 msgid "FAILED"
 msgstr "ECHEC"
+
+msgid "DIFFERED"
+msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""

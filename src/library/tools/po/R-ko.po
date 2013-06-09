@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-10 19:40-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -389,6 +389,10 @@ msgstr "다음은 Rd 객체 '%s'에 아무런 설명이 없는 인자항목들�
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "다음은 Rd 객체 '%s'를 편집하는데 필요한 자동으로 생성된 컨텐츠입니다:"
 
+#, fuzzy
+msgid "no Rd sections specified"
+msgstr "'type'이 지정되지 않았습니다"
+
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
 "May need something like\n"
@@ -503,6 +507,10 @@ msgstr ""
 
 msgid "unable to create temp directory %s"
 msgstr "임시디렉토리 %s를 생성하지 못했습니다"
+
+#, fuzzy
+msgid "Running"
+msgstr "%s를 실행중입니다"
 
 msgid "Vignette"
 msgstr ""
@@ -1055,6 +1063,9 @@ msgstr ""
 
 msgid "FAILED"
 msgstr "실패했습니다"
+
+msgid "DIFFERED"
+msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""

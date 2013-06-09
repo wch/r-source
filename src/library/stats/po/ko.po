@@ -10,10 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2013-02-21 20:47-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu.org>\n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
+"org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,16 +44,11 @@ msgstr "approx(): 유효하지 않은 보간법입니다"
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): NA값들의 보간을 시도했습니다"
 
-#: arima.c:69
-#: arima.c:183
-#: arima.c:359
+#: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
 msgstr "유효하지 않은 인자 타입입니다"
 
-#: arima.c:418
-#: arima.c:502
-#: pacf.c:331
-#: pacf.c:371
+#: arima.c:418 arima.c:502 pacf.c:331 pacf.c:371
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0에서는 최대 100개의 파라미터들을 변환할 수 있습니다"
 
@@ -73,34 +69,31 @@ msgstr "경우의 수를 결정할 수 있는 입력이 없습니다"
 msgid "not all arguments have the same length"
 msgstr "모든 인자들이 같은 길이를 가지고 있지 않습니다"
 
-#: cov.c:553
+#: cov.c:559
 msgid "missing observations in cov/cor"
 msgstr "cov/cor에 결측치들이 있습니다"
 
-#: cov.c:631
+#: cov.c:637
 msgid "'x' is NULL"
 msgstr "'x'는 NULL입니다"
 
-#: cov.c:650
-#: cov.c:656
+#: cov.c:656 cov.c:662
 msgid "incompatible dimensions"
 msgstr ""
 
-#: cov.c:675
-#: cov.c:716
-#: cov.c:749
+#: cov.c:681 cov.c:722 cov.c:755
 msgid "no complete element pairs"
 msgstr ""
 
-#: cov.c:688
+#: cov.c:694
 msgid "invalid 'use' (computational method)"
 msgstr "유효하지 않은 'use'입니다 (computational method)"
 
-#: cov.c:691
+#: cov.c:697
 msgid "'x' is empty"
 msgstr "'x'가 비어있습니다"
 
-#: cov.c:785
+#: cov.c:791
 msgid "the standard deviation is zero"
 msgstr "표준편차가 0입니다"
 
@@ -126,8 +119,7 @@ msgstr "오로지 첫번째 요소만이 변수명으로서 사용되었습니�
 msgid "invalid expression in '%s'"
 msgstr "'%s'에 유효하지 않은 표현식이 있습니다"
 
-#: deriv.c:924
-#: model.c:91
+#: deriv.c:924 model.c:91
 msgid "invalid variable names"
 msgstr "유효하지 않은 변수명입니다"
 
@@ -160,27 +152,21 @@ msgstr "수치형이 아닌 인자가 수학함수에 이용되었습니다"
 msgid "Value %g out of range (0, 1)"
 msgstr "%g의 값은 (0,1)의 범위외에 있습니다"
 
-#: family.c:65
-#: family.c:79
-#: family.c:97
+#: family.c:65 family.c:79 family.c:97
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "인자 %s는 반드시 비어있지 않은 수치형 벡터이어야 합니다"
 
-#: family.c:130
-#: family.c:133
+#: family.c:130 family.c:133
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "인자 %s는 반드시 길이가 1 이거나 %d인 수치형 벡터이어야 합니다"
 
-#: fourier.c:54
-#: fourier.c:141
+#: fourier.c:54 fourier.c:141
 msgid "non-numeric argument"
 msgstr "숫자값을 가지지 않는 인자입니다"
 
-#: fourier.c:72
-#: fourier.c:87
-#: fourier.c:155
+#: fourier.c:72 fourier.c:87 fourier.c:155
 msgid "fft factorization error"
 msgstr "fft 팩토라이제이션 에러입니다"
 
@@ -198,7 +184,9 @@ msgstr "유효하지 않은 요인입니다"
 
 #: ksmooth.c:67
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
-msgstr "sm.method에 \"spline\"이 주어졌을 때에는 최대로 사용할 수 있는 행의 개수는 2500개입니다"
+msgstr ""
+"sm.method에 \"spline\"이 주어졌을 때에는 최대로 사용할 수 있는 행의 개수는 "
+"2500개입니다"
 
 #: loessc.c:233
 msgid "span is too small"
@@ -248,8 +236,7 @@ msgstr "partial correlation을 찾기 위해 사용된 Burg의 알고리즘이 �
 msgid "invalid variables"
 msgstr "유효하지 않은 변수들입니다"
 
-#: model.c:93
-#: model.c:98
+#: model.c:93 model.c:98
 msgid "number of variables != number of variable names"
 msgstr "변수의 개수가 변수명의 개수와 같지 않습니다"
 
@@ -280,9 +267,7 @@ msgstr ""
 msgid "invalid result from na.action"
 msgstr "na.action으로부터 결과가 유효하지 않습니다"
 
-#: model.c:363
-#: model.c:371
-#: optim.c:189
+#: model.c:363 model.c:371 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "유효하지 않은 '%s' 인자입니다"
@@ -300,8 +285,7 @@ msgstr "얼마나 많은 경우들이 있는지 모릅니다"
 msgid "variable lengths differ (found for variable %d)"
 msgstr ""
 
-#: model.c:412
-#: model.c:419
+#: model.c:412 model.c:419
 #, c-format
 msgid "variable %d has no levels"
 msgstr "변수 %d은 아무런 level을 가지고 있지 않습니다"
@@ -323,14 +307,11 @@ msgstr "행렬은 %.0g 열들을 필요로 합니다"
 #: model.c:566
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
-msgstr "model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습니다"
+msgstr ""
+"model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습니"
+"다"
 
-#: model.c:615
-#: model.c:620
-#: model.c:626
-#: model.c:637
-#: model.c:643
-#: model.c:649
+#: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
 msgid "term names will be truncated"
 msgstr "항 이름들이 잘려질 것입니다"
 
@@ -359,8 +340,7 @@ msgstr "모델식에 유효하지 않은 항이 있습니다"
 msgid "invalid model formula"
 msgstr "유효하지 않은 모델식입니다"
 
-#: model.c:1141
-#: model.c:1389
+#: model.c:1141 model.c:1389
 msgid "invalid power in formula"
 msgstr ""
 
@@ -417,17 +397,8 @@ msgstr "'control'은 반드시 리스트이어야 합니다"
 msgid "'m' must be a list"
 msgstr "'m'은 반드시 리스트이어야 합니다"
 
-#: nls.c:105
-#: nls.c:110
-#: nls.c:115
-#: nls.c:120
-#: nls.c:125
-#: nls.c:166
-#: nls.c:171
-#: nls.c:176
-#: nls.c:181
-#: nls.c:186
-#: nls.c:191
+#: nls.c:105 nls.c:110 nls.c:115 nls.c:120 nls.c:125 nls.c:166 nls.c:171
+#: nls.c:176 nls.c:181 nls.c:186 nls.c:191
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s'가 빠졌습니다"
@@ -454,8 +425,7 @@ msgstr "수렴했습니다"
 msgid "'theta' should be of type character"
 msgstr "'theta'는 반드시 문자형이어야 합니다"
 
-#: nls.c:290
-#: port.c:374
+#: nls.c:290 port.c:374
 msgid "use of NULL environment is defunct"
 msgstr "NULL environment의 사용은 더 이상 지원되지 않습니다"
 
@@ -467,8 +437,7 @@ msgstr "'rho'는 반드시 environment이어야 합니다"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'은 올바른 길이를 가지는 수치형 벡터가 아닙니다"
 
-#: nls.c:314
-#: nls.c:342
+#: nls.c:314 nls.c:342
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "모델 평가시에 값이 누락되거나 무한값이 생성되었습니다"
 
@@ -482,8 +451,7 @@ msgstr "변수 '%s'는 약분할 수 없는 정수입니다"
 msgid "variable '%s' is not numeric"
 msgstr "변수 '%s'는 수치형이 아닙니다"
 
-#: optim.c:73
-#: optim.c:100
+#: optim.c:73 optim.c:100
 msgid "non-finite value supplied by optim"
 msgstr "무한값이 optim에 의해 제공되었습니다"
 
@@ -497,52 +465,39 @@ msgstr "optim에 사용된 목적함수의 길이가 1이 아닌 %d입니다"
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "optim에 사용된 그래디언트가 길이가 %2$d가 아닌 %1$d입니다"
 
-#: optim.c:185
-#: optim.c:389
+#: optim.c:186 optim.c:391
 msgid "'fn' is not a function"
 msgstr "'fn'은 함수가 아닙니다"
 
-#: optim.c:202
-#: optim.c:395
+#: optim.c:204 optim.c:397
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale'의 길이가 잘못되었습니다"
 
-#: optim.c:231
+#: optim.c:233
 msgid "'maxit' is not an integer"
 msgstr "'maxit'은 정수가 아닙니다"
 
-#: optim.c:250
+#: optim.c:252
 msgid "'tmax' is not an integer"
 msgstr "'tmax'는 정수가 아닙니다"
 
-#: optim.c:252
-#: optim.c:269
-#: optim.c:294
-#: optim.c:324
-#: optim.c:403
+#: optim.c:254 optim.c:271 optim.c:296 optim.c:326 optim.c:405
 msgid "'gr' is not a function"
 msgstr "'gr'은 함수가 아닙니다"
 
-#: optim.c:275
-#: optim.c:300
-#: optim.c:330
-#: optim.c:409
+#: optim.c:277 optim.c:302 optim.c:332 optim.c:411
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps'의 길이가 잘못되었습니다"
 
-#: optim.c:360
+#: optim.c:362
 msgid "unknown 'method'"
 msgstr "알수없는 'method'입니다"
 
-#: optimize.c:210
-#: optimize.c:302
-#: optimize.c:523
+#: optimize.c:210 optimize.c:302 optimize.c:523
 msgid "NA replaced by maximum positive value"
 msgstr "NA가 양의 최대값으로 대체되었습니다"
 
-#: optimize.c:218
-#: optimize.c:314
-#: optimize.c:531
+#: optimize.c:218 optimize.c:314 optimize.c:531
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf가 양의 최대값으로 대체되었습니다"
 
@@ -550,24 +505,17 @@ msgstr "NA/Inf가 양의 최대값으로 대체되었습니다"
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize'에 유효하지 않은 함수값이 있습니다"
 
-#: optimize.c:245
-#: optimize.c:343
-#: optimize.c:716
+#: optimize.c:245 optimize.c:343 optimize.c:716
 msgid "attempt to minimize non-function"
 msgstr "함수가 아닌 것을 최소화하려 하였습니다"
 
-#: optimize.c:252
-#: optimize.c:259
-#: optimize.c:268
-#: optimize.c:348
-#: optimize.c:353
+#: optimize.c:252 optimize.c:259 optimize.c:268 optimize.c:348 optimize.c:353
 #: optimize.c:369
 #, c-format
 msgid "invalid '%s' value"
 msgstr "유효하지 않은 '%s'값입니다"
 
-#: optimize.c:261
-#: optimize.c:354
+#: optimize.c:261 optimize.c:354
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin'가 'xmax'보다 적습니다"
 
@@ -579,8 +527,7 @@ msgstr "-Inf는 음의 최대값으로 대체되었습니다"
 msgid "invalid function value in 'zeroin'"
 msgstr "'zeroin'내에 유효하지 않은 함수값이 있습니다"
 
-#: optimize.c:359
-#: optimize.c:364
+#: optimize.c:359 optimize.c:364
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "'%s'에 NA값은 허용되지 않습니다"
@@ -597,8 +544,7 @@ msgstr "무한값이 'nlm'에 의해 제공되었습니다"
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm' 옵티마이저에서 유효하지 않은 함수값이 있습니다"
 
-#: optimize.c:561
-#: optimize.c:576
+#: optimize.c:561 optimize.c:576
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
 
@@ -614,8 +560,7 @@ msgstr "파마미터의 길이들이 일치하지 않습니다"
 msgid "invalid parameter length"
 msgstr "유효하지 않은 파라미터 길이입니다"
 
-#: optimize.c:609
-#: optimize.c:616
+#: optimize.c:609 optimize.c:616
 msgid "missing value in parameter"
 msgstr "파라미터에 누락된 값이 있습니다"
 
@@ -672,8 +617,7 @@ msgstr ""
 msgid "Relative gradient close to zero.\n"
 msgstr "Relative gradient의 값이 0에 가깝습니다.\n"
 
-#: optimize.c:662
-#: optimize.c:666
+#: optimize.c:662 optimize.c:666
 msgid "Current iterate is probably solution.\n"
 msgstr "current iterate가 아마도 찾고자 하는 솔루션일 것입니다.\n"
 
@@ -708,13 +652,8 @@ msgid ""
 "or stepmx is too small.\n"
 msgstr ""
 
-#: optimize.c:740
-#: optimize.c:745
-#: optimize.c:749
-#: optimize.c:753
-#: optimize.c:757
-#: optimize.c:761
-#: optimize.c:766
+#: optimize.c:740 optimize.c:745 optimize.c:749 optimize.c:753 optimize.c:757
+#: optimize.c:761 optimize.c:766
 msgid "invalid NA value in parameter"
 msgstr "파라미터에 유효하지 않은 NA값이 있습니다"
 
@@ -757,14 +696,14 @@ msgstr "gradient function은 반드시 길이가 %d인 수치형 벡터를 반�
 #: port.c:324
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr "Hessian function은 반드시 사이즈가 %d인 수치형 정방행렬을 반환해야 합니다"
+msgstr ""
+"Hessian function은 반드시 사이즈가 %d인 수치형 정방행렬을 반환해야 합니다"
 
 #: port.c:378
 msgid "'rho' must be an environment"
 msgstr "'rho'는 반드시 environment이어야 합니다"
 
-#: port.c:380
-#: port.c:537
+#: port.c:380 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'는 반드시 비어있지 않은 수치형 벡터이어야 합니다"
 
@@ -775,7 +714,8 @@ msgstr "Hessian이 정의되었다면, 반드시 gradient 또한 정의되어져
 #: port.c:385
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr "environment 'rho'는 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
+msgstr ""
+"environment 'rho'는 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
 
 #: port.c:399
 msgid "'lower' and 'upper' must be numeric vectors"
@@ -798,7 +738,9 @@ msgstr "'gradient'는 반드시 크기가 (%d,%d)인 수치형 행렬이어야 �
 #: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr "fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하였습니다"
+msgstr ""
+"fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하"
+"였습니다"
 
 #: port.c:519
 msgid "invalid type for eval_check_store"
@@ -824,27 +766,13 @@ msgstr "'scal'은 반드시 실수형 정방행렬이어야 합니다"
 msgid "'scal' matrix is not positive-definite"
 msgstr "'scal'행렬은 positive-definite가 아닙니다"
 
-#: random.c:66
-#: random.c:70
-#: random.c:75
-#: random.c:80
-#: random.c:161
-#: random.c:167
-#: random.c:172
-#: random.c:177
-#: random.c:240
-#: random.c:245
-#: random.c:250
-#: random.c:264
-#: random.c:355
+#: random.c:66 random.c:70 random.c:75 random.c:80 random.c:161 random.c:167
+#: random.c:172 random.c:177 random.c:240 random.c:245 random.c:250
+#: random.c:264 random.c:355
 msgid "invalid arguments"
 msgstr "유효하지 않은 인자들입니다"
 
-#: random.c:95
-#: random.c:121
-#: random.c:194
-#: random.c:222
-#: random.c:270
+#: random.c:95 random.c:121 random.c:194 random.c:222 random.c:270
 #: random.c:289
 msgid "NAs produced"
 msgstr "NA가 생성되었습니다"
@@ -871,4 +799,3 @@ msgstr ""
 #, c-format
 msgid "missing value in last %d observations"
 msgstr ""
-

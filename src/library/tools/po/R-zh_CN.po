@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:24\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -359,6 +359,10 @@ msgstr "Rd对象'%s'里存在没有描述的参数："
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "在Rd对象'%s'里自动产生的内容需要修改："
 
+#, fuzzy
+msgid "no Rd sections specified"
+msgstr "没有设定'type'"
+
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
 "May need something like\n"
@@ -476,6 +480,10 @@ msgstr "找到一个以上的"
 
 msgid "unable to create temp directory %s"
 msgstr "无法建立临时目录%s"
+
+#, fuzzy
+msgid "Running"
+msgstr "执行%s"
 
 msgid "Vignette"
 msgstr "简介："
@@ -1036,6 +1044,9 @@ msgstr "没有找到句法分析过的文件"
 
 msgid "FAILED"
 msgstr "失败"
+
+msgid "DIFFERED"
+msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr "执行随机偏离检验--偶尔会失败"

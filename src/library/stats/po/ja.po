@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2013-03-01 05:19+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -63,31 +63,31 @@ msgstr " ケースの数を決定する入力がありません "
 msgid "not all arguments have the same length"
 msgstr " 引数の中に異なった長さのものがあります "
 
-#: cov.c:553
+#: cov.c:559
 msgid "missing observations in cov/cor"
 msgstr " cov/cor 関数に欠損した観測値があります "
 
-#: cov.c:631
+#: cov.c:637
 msgid "'x' is NULL"
 msgstr " 'x' が NULL です "
 
-#: cov.c:650 cov.c:656
+#: cov.c:656 cov.c:662
 msgid "incompatible dimensions"
 msgstr " 互換性のない次元です "
 
-#: cov.c:675 cov.c:716 cov.c:749
+#: cov.c:681 cov.c:722 cov.c:755
 msgid "no complete element pairs"
 msgstr " 完全な要素のペアがありません "
 
-#: cov.c:688
+#: cov.c:694
 msgid "invalid 'use' (computational method)"
 msgstr " 'use' (計算法) が不正です "
 
-#: cov.c:691
+#: cov.c:697
 msgid "'x' is empty"
 msgstr " 'x' が空です "
 
-#: cov.c:785
+#: cov.c:791
 msgid "the standard deviation is zero"
 msgstr " 標準偏差が 0 です "
 
@@ -259,7 +259,7 @@ msgstr " 変数 ('%s' に基づく) の長さが異なります "
 msgid "invalid result from na.action"
 msgstr " na.action の結果が不正です "
 
-#: model.c:363 model.c:371 optim.c:189
+#: model.c:363 model.c:371 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
@@ -456,31 +456,31 @@ msgstr " optim の目的関数が 1 つではなくて %d 個の結果を評価�
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr " optim 中で勾配は長さ %d (長さ %d ではなく) で評価されました "
 
-#: optim.c:185 optim.c:389
+#: optim.c:186 optim.c:391
 msgid "'fn' is not a function"
 msgstr " 'fn' が関数ではありません "
 
-#: optim.c:202 optim.c:395
+#: optim.c:204 optim.c:397
 msgid "'parscale' is of the wrong length"
 msgstr " 'parscale' の長さが不正です "
 
-#: optim.c:231
+#: optim.c:233
 msgid "'maxit' is not an integer"
 msgstr " 'maxit' が整数ではありません "
 
-#: optim.c:250
+#: optim.c:252
 msgid "'tmax' is not an integer"
 msgstr " 'tmax' が整数値ではありません "
 
-#: optim.c:252 optim.c:269 optim.c:294 optim.c:324 optim.c:403
+#: optim.c:254 optim.c:271 optim.c:296 optim.c:326 optim.c:405
 msgid "'gr' is not a function"
 msgstr " 'gr' は関数ではありません "
 
-#: optim.c:275 optim.c:300 optim.c:330 optim.c:409
+#: optim.c:277 optim.c:302 optim.c:332 optim.c:411
 msgid "'ndeps' is of the wrong length"
 msgstr " 'ndeps' の長さが誤っています "
 
-#: optim.c:360
+#: optim.c:362
 msgid "unknown 'method'"
 msgstr " 未知の 'method' です "
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:24\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -896,6 +896,12 @@ msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr ""
 "Automatycznie wygenerowana treść wymaga wykonania edycji w obiekcie Rd '%s':"
 
+# tools/R/Rd2pdf.R: 434
+# stop("no 'type' specified", call. = FALSE)
+#, fuzzy
+msgid "no Rd sections specified"
+msgstr "nie określono 'type'"
+
 # tools/R/QC.R: 6260
 # warning(gettextf("Generics 'g' in 'env' %s where '%s' errors: %s\nMay need something like\n\n%s\nin NAMESPACE.",
 #                              format(env),
@@ -1306,6 +1312,15 @@ msgstr "Znaleziono więcej niż jeden"
 #                  domain = NA)
 msgid "unable to create temp directory %s"
 msgstr "nie można utworzyć katalogu tymczasowego %s"
+
+# tools/R/testing.R: 301
+# message(gettextf("  Running %s", sQuote(f)), domain = NA)
+# tools/R/testing.R: 370
+# message(gettextf("  Running %s", sQuote(f)),
+#                 appendLF = FALSE, domain = NA)
+#, fuzzy
+msgid "Running"
+msgstr "Uruchamianie %s"
 
 # tools/R/Vignettes.R: 183
 # stop("Vignette ", sQuote(basename(names(resultsT)[j])), " overwrites the following ", sQuote(name), " output by vignette ", sQuote(basename(names(resultsT)[i])), ": ", paste(basename(bad), collapse=", "))
@@ -2456,6 +2471,9 @@ msgstr "nie znaleziono plików przeanalizowanych składniowo"
 # message("FAILED")
 msgid "FAILED"
 msgstr "NIE POWIODŁO SIĘ"
+
+msgid "DIFFERED"
+msgstr ""
 
 # tools/R/testing.R: 568
 # message("running tests of random deviate generation -- fails occasionally")

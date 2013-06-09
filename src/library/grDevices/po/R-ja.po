@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-06-09 21:52\n"
 "PO-Revision-Date: 2013-02-28 05:58+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -27,6 +27,9 @@ msgstr " 'x' と 'y' の値は昇順でなければなりません "
 
 msgid "no proper 'z' matrix specified"
 msgstr " 適切な 'z' 行列が指定されていません "
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr " 'bias' は正の値でなければなりません "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:27\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -15,11 +15,6 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 1.5.5\n"
-
-# methods/R/BasicClasses.R: 115
-# stop("replacement value is not a matrix")
-msgid "replacement value is not a matrix"
-msgstr "wartość zamiany nie jest macierzą"
 
 # methods/R/BasicClasses.R: 158
 # warning(gettextf("OOPS: something wrong with line %d in '.OldClassesPrototypes'", i), domain = NA)
@@ -2778,21 +2773,19 @@ msgstr ""
 "nadrzędna 'class(\"%s\")' pola %s nie jest podklasą istniejącej definicji "
 "pola (\"%s\")"
 
-# methods/R/refClass.R: 723
-# stop(gettextf("field %s is read-only", sQuote(thisField)),
-#                          domain = NA)
-msgid "field %s is read-only"
-msgstr "pole %s jest tylko do odczytu"
-
 # methods/R/refClass.R: 741
 # stop(gettextf("invalid replacement for field %s, should be from class %s or a subclass (was class %s)",
 #                        sQuote(thisField), dQuote(dummyClass), dQuote(class(value))))
+#, fuzzy
 msgid ""
-"invalid replacement for field %s, should be from class %s or a subclass (was "
-"class %s)"
+"invalid assignment for reference class field %s, should be from class %s or "
+"a subclass (was class %s)"
 msgstr ""
 "niepoprawna zamiana dla pola %s, powinien być z klasy %s lub podklasy (była "
 "klasa %s)"
+
+msgid "invalid replacement: reference class field %s is read-only"
+msgstr ""
 
 # methods/R/refClass.R: 770
 # stop(gettextf("the 'contains' argument should be the names of superclasses:  got an element of class %s",
@@ -3511,6 +3504,17 @@ msgid_plural ""
 msgstr[0] "brak definicji klasy %s we wskazanym położeniu, %s, definicja: %s"
 msgstr[1] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
 msgstr[2] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
+
+# methods/R/BasicClasses.R: 115
+# stop("replacement value is not a matrix")
+#~ msgid "replacement value is not a matrix"
+#~ msgstr "wartość zamiany nie jest macierzą"
+
+# methods/R/refClass.R: 723
+# stop(gettextf("field %s is read-only", sQuote(thisField)),
+#                          domain = NA)
+#~ msgid "field %s is read-only"
+#~ msgstr "pole %s jest tylko do odczytu"
 
 #~ msgid "not a package name: %s"
 #~ msgstr "to nie jest nazwa pakietu: %s"

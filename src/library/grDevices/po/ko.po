@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 19:31+0000\n"
+"POT-Creation-Date: 2013-06-09 21:52+0100\n"
 "PO-Revision-Date: 2013-02-21 18:58-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -307,7 +307,7 @@ msgstr ""
 msgid "invalid page type '%s' (postscript)"
 msgstr "유효하지 않은 페이지 타입 '%s' (postscript)"
 
-#: devPS.c:3453 devPS.c:4566 devWindows.c:2339
+#: devPS.c:3453 devPS.c:4566 devWindows.c:2341
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -521,14 +521,14 @@ msgstr "%s에 유효하지 않은 'family' 파라미터가 있습니다"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s에 유효하지 않은 'fonts' 파라미터가 있습니다"
 
-#: devPS.c:8233 devPS.c:8395 devPS.c:8398 devWindows.c:3644 devWindows.c:3648
-#: devWindows.c:3656 devWindows.c:3667 devWindows.c:3673 devWindows.c:3680
-#: devWindows.c:3687 devWindows.c:3691
+#: devPS.c:8233 devPS.c:8395 devPS.c:8398 devWindows.c:3646 devWindows.c:3650
+#: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
+#: devWindows.c:3689 devWindows.c:3693
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "유효하지 않은 '%s'의 값입니다"
 
-#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3728
+#: devPS.c:8246 devPS.c:8313 devPS.c:8412 devPicTeX.c:739 devWindows.c:3730
 #, c-format
 msgid "unable to start %s() device"
 msgstr "%s() 장치를 시작할 수 없습니다"
@@ -599,110 +599,110 @@ msgstr "플랏 히스토리가 손상된 것 같습니다"
 msgid "no plot history!"
 msgstr "플랏 히스토리가 없습니다!"
 
-#: devWindows.c:1796
+#: devWindows.c:1798
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "%s() 호출시 파일명이 너무 깁니다"
 
-#: devWindows.c:1805 devWindows.c:1844 devWindows.c:1878
+#: devWindows.c:1807 devWindows.c:1846 devWindows.c:1880
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d'는 픽셀에서 사용가능한 값들이 아닙니다"
 
-#: devWindows.c:1813 devWindows.c:1818 devWindows.c:1847 devWindows.c:1852
-#: devWindows.c:1881 devWindows.c:1886
+#: devWindows.c:1815 devWindows.c:1820 devWindows.c:1849 devWindows.c:1854
+#: devWindows.c:1883 devWindows.c:1888
 msgid "unable to allocate bitmap"
 msgstr "bitmap을 할당할 수 없습니다"
 
-#: devWindows.c:1824 devWindows.c:1858 devWindows.c:2182
+#: devWindows.c:1826 devWindows.c:1860 devWindows.c:2184
 #, c-format
 msgid "unable to open file '%s' for writing"
 msgstr "쓰기 위해서 파일 '%s'를 열 수 없습니다"
 
-#: devWindows.c:1841
+#: devWindows.c:1843
 msgid "filename too long in jpeg() call"
 msgstr "jpeg() 호출에 파일명이 너무 깁니다"
 
-#: devWindows.c:1875
+#: devWindows.c:1877
 msgid "filename too long in tiff() call"
 msgstr "tiff() 호출에 파일명이 너무 깁니다"
 
-#: devWindows.c:1907
+#: devWindows.c:1909
 msgid "filename too long in win.metafile() call"
 msgstr "win.metafile() 호출에 파일명이 너무 깁니다"
 
-#: devWindows.c:1917
+#: devWindows.c:1919
 #, c-format
 msgid "unable to open metafile '%s' for writing"
 msgstr "쓰기 위해서 메타파일 '%s'를 열 수 없습니다"
 
-#: devWindows.c:1919
+#: devWindows.c:1921
 msgid "unable to open clipboard to write metafile"
 msgstr "메타파일을 쓰기 위한 클립보드를 열 수 없습니다"
 
-#: devWindows.c:2130
+#: devWindows.c:2132
 msgid "Insufficient memory for resize. Killing device"
 msgstr "크기재조정을 위한 메모리가 충분하지 않으므로 장치를 꺼주세요"
 
-#: devWindows.c:2138
+#: devWindows.c:2140
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "크기재조정을 위한 메모리가 충분하지 않으므로 알파 블렌딩은 꺼주세요"
 
-#: devWindows.c:2167
+#: devWindows.c:2169
 msgid "a clipboard metafile can store only one figure."
 msgstr "클립보드 메타파일은 오로지 한개의 figure만을 저장할 수 있습니다"
 
-#: devWindows.c:2173
+#: devWindows.c:2175
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "메타파일 '%s'은 생성되지 않을 것입니다"
 
-#: devWindows.c:3110 devWindows.c:3752
+#: devWindows.c:3112 devWindows.c:3754
 msgid "R Graphics"
 msgstr "R 그래픽스"
 
-#: devWindows.c:3124
+#: devWindows.c:3126
 msgid "attempt to use the locator after dev.hold()"
 msgstr "dev.hold() 이후에 로케이터를 사용하려고 시도합니다"
 
-#: devWindows.c:3388
+#: devWindows.c:3390
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "옵션 'windowsTimeouts'은 반드시 정수이어야 합니다"
 
-#: devWindows.c:3409
+#: devWindows.c:3411
 msgid "invalid device number in 'savePlot'"
 msgstr "'savePlot'에 유효하지 않은 장치번호가 있습니다"
 
-#: devWindows.c:3411
+#: devWindows.c:3413
 msgid "invalid device in 'savePlot'"
 msgstr "'savePlot'에 유효하지 않은 장치가 있습니다"
 
-#: devWindows.c:3414
+#: devWindows.c:3416
 msgid "invalid filename argument in 'savePlot'"
 msgstr "'savePlot'에 유효하지 않은 filename 인수가 있습니다"
 
-#: devWindows.c:3419
+#: devWindows.c:3421
 msgid "invalid type argument in 'savePlot'"
 msgstr "'savePlot'에 유효하지 않은 type 인수가 있습니다"
 
-#: devWindows.c:3446
+#: devWindows.c:3448
 msgid "unknown type in savePlot"
 msgstr "savePlot에 알 수 없는 유형입니다"
 
-#: devWindows.c:3491 devWindows.c:3524 devWindows.c:3553 devWindows.c:3585
-#: devWindows.c:3610
+#: devWindows.c:3493 devWindows.c:3526 devWindows.c:3555 devWindows.c:3587
+#: devWindows.c:3612
 msgid "processing of the plot ran out of memory"
 msgstr ""
 
-#: devWindows.c:3570
+#: devWindows.c:3572
 msgid "Impossible to open "
 msgstr "열 수 없습니다"
 
-#: devWindows.c:3597
+#: devWindows.c:3599
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Rbitmap.dll을 로드할 수 없습니다"
 
-#: devWindows.c:3639
+#: devWindows.c:3641
 msgid "invalid 'width' or 'height'"
 msgstr "유효하지 않은 'width' 또는 'height'입니다"
 

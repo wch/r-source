@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:27\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-19 23:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -17,9 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.5\n"
-
-msgid "replacement value is not a matrix"
-msgstr "la valeur de remplacement n'est pas une matrice"
 
 msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
 msgstr ""
@@ -1635,15 +1632,16 @@ msgstr ""
 "la redéfinition de classe (\"%s\") pour le champ %s n'est pas une sous-"
 "classe de la définition de champ existante (\"%s\")"
 
-msgid "field %s is read-only"
-msgstr "champ %s en lecture seule"
-
+#, fuzzy
 msgid ""
-"invalid replacement for field %s, should be from class %s or a subclass (was "
-"class %s)"
+"invalid assignment for reference class field %s, should be from class %s or "
+"a subclass (was class %s)"
 msgstr ""
 "le remplaçant pour le champ %s doit être de la classe %s ou d'une sous-"
 "classe (un classe %s est obtenue à la place)"
+
+msgid "invalid replacement: reference class field %s is read-only"
+msgstr ""
 
 msgid ""
 "the 'contains' argument should be the names of superclasses:  got an element "
@@ -2054,6 +2052,12 @@ msgstr[0] ""
 msgstr[1] ""
 "aucune définition de la classe %s n'existe à la position spécifiée, %s, "
 "définitions dans : %s"
+
+#~ msgid "replacement value is not a matrix"
+#~ msgstr "la valeur de remplacement n'est pas une matrice"
+
+#~ msgid "field %s is read-only"
+#~ msgstr "champ %s en lecture seule"
 
 #~ msgid "not a package name: %s"
 #~ msgstr "ceci n'est pas un nom de package : %s"

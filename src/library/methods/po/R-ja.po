@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:27\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-01 05:13+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -12,9 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.0.5 \n"
-
-msgid "replacement value is not a matrix"
-msgstr " 置き換え値は行列ではありません "
 
 msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
 msgstr " おや、'.OldClassesPrototypes' の第 %d 行目が何か変です "
@@ -1541,15 +1538,16 @@ msgstr ""
 " 上書きクラス (\"%s\") (欄 %s の) は既存の欄定義 (\"%s\") の下位クラスではあ"
 "りません "
 
-msgid "field %s is read-only"
-msgstr " 欄 %s は読み取り専用です "
-
+#, fuzzy
 msgid ""
-"invalid replacement for field %s, should be from class %s or a subclass (was "
-"class %s)"
+"invalid assignment for reference class field %s, should be from class %s or "
+"a subclass (was class %s)"
 msgstr ""
 " 欄 %s に対する不正な置き換えです、クラス %s かサブクラスからでなければなりま"
 "せん (クラス %s でした) "
+
+msgid "invalid replacement: reference class field %s is read-only"
+msgstr ""
 
 msgid ""
 "the 'contains' argument should be the names of superclasses:  got an element "
@@ -1907,6 +1905,12 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
 " クラス %s の定義は指定された位置 %s にありません、以下に関する定義です: %s "
+
+#~ msgid "replacement value is not a matrix"
+#~ msgstr " 置き換え値は行列ではありません "
+
+#~ msgid "field %s is read-only"
+#~ msgstr " 欄 %s は読み取り専用です "
 
 #~ msgid "not a package name: %s"
 #~ msgstr " パッケージ名ではありません: %s "

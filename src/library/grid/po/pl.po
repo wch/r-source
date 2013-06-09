@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -30,7 +30,7 @@ msgstr "nie można przypiąć do obróconego okienka ekranu"
 # error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
 # grid/src/grid.c: 772
 # error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
-#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
+#: grid.c:684 grid.c:689 grid.c:778 grid.c:783
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "nie można wyświetlić okienka ekranu na wierzchu (siatka oraz grafika "
@@ -38,56 +38,56 @@ msgstr ""
 
 # grid/src/grid.c: 952
 # error(_("attempt to plot on null device"))
-#: grid.c:952
+#: grid.c:963
 msgid "attempt to plot on null device"
 msgstr "próba rysowania na pustym urządzeniu"
 
 # grid/src/grid.c: 1232
 # error(_("there is no layout defined"))
-#: grid.c:1232
+#: grid.c:1243
 msgid "there is no layout defined"
 msgstr "nie określono układu"
 
 # grid/src/grid.c: 1452
 # error(_("polygon edge not found (zero-width or zero-height?)"))
-#: grid.c:1452
+#: grid.c:1463
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 "nie znaleziono krawędzi wielokąta (zerowa szerokość lub zerowa wysokość?)"
 
 # grid/src/grid.c: 1461
 # error(_("polygon edge not found"))
-#: grid.c:1461
+#: grid.c:1472
 msgid "polygon edge not found"
 msgstr "nie znaleziono krawędzi wielokąta"
 
 # grid/src/grid.c: 1615
 # error(_("require at least two points to draw arrow"))
-#: grid.c:1615
+#: grid.c:1626
 msgid "require at least two points to draw arrow"
 msgstr "wymaga co najmniej dwu punktów, aby narysować strzałkę"
 
 # grid/src/grid.c: 1931
 # error(_("non-finite control point in Xspline"))
-#: grid.c:1931
+#: grid.c:1942
 msgid "non-finite control point in Xspline"
 msgstr "nieskończony punkt kontrolny w 'Xspline'"
 
 # grid/src/grid.c: 2796
 # error(_("non-finite x or y in graphics path"))
-#: grid.c:2796
+#: grid.c:2807
 msgid "non-finite x or y in graphics path"
 msgstr "nieskończony 'x' lub 'y' w ścieżce grafiki"
 
 # grid/src/grid.c: 3286
 # error(_("invalid plotting symbol"))
-#: grid.c:3286
+#: grid.c:3297
 msgid "invalid plotting symbol"
 msgstr "Nieprawidłowy rysowany symbol"
 
 # grid/src/grid.c: 3372
 # warning(_("unable to clip to rotated rectangle"))
-#: grid.c:3372
+#: grid.c:3383
 msgid "unable to clip to rotated rectangle"
 msgstr "nie można przypiąć do obróconego prostokąta"
 

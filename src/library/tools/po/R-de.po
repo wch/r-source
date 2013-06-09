@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:24\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-18 10:24+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -381,6 +381,10 @@ msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr ""
 "Automatisch generierter Inhalt benötigt noch Nacharbeit in Rd Objekt '%s':"
 
+#, fuzzy
+msgid "no Rd sections specified"
+msgstr "kein 'type' angegeben"
+
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
 "May need something like\n"
@@ -500,6 +504,10 @@ msgstr "mehr als eine gefunden"
 msgid "unable to create temp directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
+#, fuzzy
+msgid "Running"
+msgstr "Ausführen von %s"
+
 msgid "Vignette"
 msgstr "Vignette"
 
@@ -516,7 +524,8 @@ msgid ") with shared names ("
 msgstr ") mit gemeinsamen Namen ("
 
 msgid ") and therefore risking overwriting each others output files"
-msgstr ") und deshalb besteht Gefahr des gegenseitigen Überschreibens von Ausgaben"
+msgstr ""
+") und deshalb besteht Gefahr des gegenseitigen Überschreibens von Ausgaben"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -1073,6 +1082,9 @@ msgstr "keine gparsten Dateien gefunden"
 
 msgid "FAILED"
 msgstr "fehlgeschlagen"
+
+msgid "DIFFERED"
+msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""

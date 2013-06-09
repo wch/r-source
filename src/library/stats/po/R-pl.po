@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -4172,11 +4172,6 @@ msgstr ""
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' musi być pomiędzy 0 a 3"
 
-# stats/R/splinefun.R: 106
-# stop("'deriv' must be between 0 and 2")
-msgid "'deriv' must be between 0 and 2"
-msgstr "'deriv' musi być pomiędzy 0 a 2"
-
 # stats/R/splinefun.R: 183
 # stop("'x' must be *strictly* increasing (non - NA)")
 msgid "'x' must be *strictly* increasing (non - NA)"
@@ -4813,8 +4808,9 @@ msgstr[2] "%d brakujących wartości zostało skasowanych"
 #                        "'Y' has %d responses"),
 #                        nrx, nry),
 #                        domain = NA)
-msgid "'X' matrix has %d response"
-msgid_plural "'X' matrix has %d responses"
+#, fuzzy
+msgid "'X' matrix has %d case (row)"
+msgid_plural "'X' matrix has %d cases (rows)"
 msgstr[0] "macierz 'X' ma %d zmienną zależną"
 msgstr[1] "macierz 'X' ma %d zmienne zależne"
 msgstr[2] "macierz 'X' ma %d zmiennych zależnych"
@@ -4829,8 +4825,9 @@ msgstr[2] "macierz 'X' ma %d zmiennych zależnych"
 #                        "'Y' has %d responses"),
 #                        nrx, nry),
 #                        domain = NA)
-msgid "'Y' has %d response"
-msgid_plural "'Y' has %d responses"
+#, fuzzy
+msgid "'Y' has %d case (row)"
+msgid_plural "'Y' has %d cases (rows)"
 msgstr[0] "'Y' ma %d zmienną zależną"
 msgstr[1] "'Y' ma %d zmienne zależne"
 msgstr[2] "'Y' ma %d zmiennych zależnych"
@@ -4845,11 +4842,12 @@ msgstr[2] "'Y' ma %d zmiennych zależnych"
 #                               "but only %d variables"),
 #                      nry, ncx),
 #              domain = NA)
-msgid "%d response"
-msgid_plural "%d responses"
-msgstr[0] "%d zmienna zależna"
-msgstr[1] "%d zmienne zależne"
-msgstr[2] "%d zmiennych zależnych"
+#, fuzzy
+msgid "only %d case"
+msgid_plural "only %d cases"
+msgstr[0] "ale tylko %d zmienna"
+msgstr[1] "ale tylko %d zmienne"
+msgstr[2] "ale tylko %d zmiennych"
 
 # stats/R/lsfit.R: 72
 # stop(sprintf(ngettext(nry,
@@ -4861,8 +4859,9 @@ msgstr[2] "%d zmiennych zależnych"
 #                               "but only %d variables"),
 #                      nry, ncx),
 #              domain = NA)
-msgid "but only %d variable"
-msgid_plural "but only %d variables"
+#, fuzzy
+msgid "but %d variable"
+msgid_plural "but %d variables"
 msgstr[0] "ale tylko %d zmienna"
 msgstr[1] "ale tylko %d zmienne"
 msgstr[2] "ale tylko %d zmiennych"
@@ -5007,6 +5006,27 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' jest zbyt krótki: potrzeba %d punktu"
 msgstr[1] "'start.innov' jest zbyt krótki: potrzeba %d punktów"
 msgstr[2] "'start.innov' jest zbyt krótki: potrzeba %d punktów"
+
+# stats/R/splinefun.R: 106
+# stop("'deriv' must be between 0 and 2")
+#~ msgid "'deriv' must be between 0 and 2"
+#~ msgstr "'deriv' musi być pomiędzy 0 a 2"
+
+# stats/R/lsfit.R: 72
+# stop(sprintf(ngettext(nry,
+#                               "%d response",
+#                               "%d responses"),
+#                      ", ",
+#                      ngettext(ncx,
+#                               "but only %d variable",
+#                               "but only %d variables"),
+#                      nry, ncx),
+#              domain = NA)
+#~ msgid "%d response"
+#~ msgid_plural "%d responses"
+#~ msgstr[0] "%d zmienna zależna"
+#~ msgstr[1] "%d zmienne zależne"
+#~ msgstr[2] "%d zmiennych zależnych"
 
 #~ msgid "character variable '%s' changed to a factor"
 #~ msgstr "zmienna tekstowa '%s' została zmieniona na czynnik"

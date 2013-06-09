@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-06-09 21:52\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -27,6 +27,9 @@ msgstr "valores de 'x' e 'y' crescente esperados"
 
 msgid "no proper 'z' matrix specified"
 msgstr "nenhuma matriz 'z' própria especificada"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' deve ser positivo"

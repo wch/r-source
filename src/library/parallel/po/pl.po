@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -20,38 +20,38 @@ msgstr ""
 # error(_("unable to create a pipe"))
 # parallel/src/fork.c: 138
 # error(_("unable to create a pipe"))
-#: fork.c:135 fork.c:138
+#: fork.c:136 fork.c:139
 msgid "unable to create a pipe"
 msgstr "nie można utworzyć potoku"
 
 # parallel/src/fork.c: 149
 # error(_("unable to fork, possible reason: %s"), strerror(errno))
-#: fork.c:149
+#: fork.c:150
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "nie można rozdzielić, prawdopodobny powód: %s"
 
 # parallel/src/fork.c: 178
 # error(_("memory allocation error"))
-#: fork.c:178
+#: fork.c:179
 msgid "memory allocation error"
 msgstr "błąd przydziału pamięci"
 
 # parallel/src/fork.c: 216
 # error(_("only children can send data to the master process"))
-#: fork.c:216
+#: fork.c:217
 msgid "only children can send data to the master process"
 msgstr "tylko potomne procesy mogą przesłać dane do procesu głównego"
 
 # parallel/src/fork.c: 218
 # error(_("there is no pipe to the master process"))
-#: fork.c:218
+#: fork.c:219
 msgid "there is no pipe to the master process"
 msgstr "nie ma potoku do procesu głównego"
 
 # parallel/src/fork.c: 220
 # error(_("content to send must be RAW, use serialize() if needed"))
-#: fork.c:220
+#: fork.c:221
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 "zawartość do wysłania musi być PUSTA, użyj 'serialize()' jeśli konieczne"
@@ -62,26 +62,26 @@ msgstr ""
 # error(_("write error, closing pipe to the master"))
 # parallel/src/fork.c: 566
 # error(_("write error, closing pipe to the master"))
-#: fork.c:229 fork.c:236 fork.c:566
+#: fork.c:230 fork.c:237 fork.c:567
 msgid "write error, closing pipe to the master"
 msgstr "błąd zapisu, zamykanie potoku do procesu głównego"
 
 # parallel/src/fork.c: 249
 # error(_("only the master process can send data to a child process"))
-#: fork.c:249
+#: fork.c:250
 msgid "only the master process can send data to a child process"
 msgstr "tylko główny proces może przesłać dane do potomnego procesu"
 
 # parallel/src/fork.c: 256
 # error(_("child %d does not exist"), pid)
-#: fork.c:256
+#: fork.c:257
 #, c-format
 msgid "child %d does not exist"
 msgstr "potomny proces %d nie istnieje"
 
 # parallel/src/fork.c: 262
 # error(_("write error"))
-#: fork.c:262
+#: fork.c:263
 msgid "write error"
 msgstr "błąd zapisu"
 
@@ -89,26 +89,26 @@ msgstr "błąd zapisu"
 # warning(_("error '%s' in select"), strerror(errno))
 # parallel/src/fork.c: 464
 # warning(_("error '%s' in select"), strerror(errno))
-#: fork.c:342 fork.c:464
+#: fork.c:343 fork.c:465
 #, c-format
 msgid "error '%s' in select"
 msgstr "błąd '%s' przy wyborze"
 
 # parallel/src/fork.c: 548
 # error(_("'mckill' failed"))
-#: fork.c:548
+#: fork.c:549
 msgid "'mckill' failed"
 msgstr "'mckill' nie powiodło się"
 
 # parallel/src/fork.c: 558
 # error(_("'mcexit' can only be used in a child process"))
-#: fork.c:558
+#: fork.c:559
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' może być użyty jedynie w potomnym procesie"
 
 # parallel/src/fork.c: 579
 # error(_("'mcexit' failed"))
-#: fork.c:579
+#: fork.c:580
 msgid "'mcexit' failed"
 msgstr "'mcexit' nie powiodło się"
 
@@ -116,18 +116,18 @@ msgstr "'mcexit' nie powiodło się"
 # error(_("invalid CPU affinity specification"))
 # parallel/src/fork.c: 610
 # error(_("invalid CPU affinity specification"))
-#: fork.c:601 fork.c:610
+#: fork.c:610 fork.c:619
 msgid "invalid CPU affinity specification"
 msgstr "niepoprawne określenie koligacji CPU"
 
 # parallel/src/fork.c: 621
 # error(_("requested CPU set is too large for this system"))
-#: fork.c:621
+#: fork.c:630
 msgid "requested CPU set is too large for this system"
 msgstr "zażądane ustawienie CPU jest zbyt duże dla tego systemu"
 
 # parallel/src/fork.c: 644
 # error(_("retrieving CPU affinity set failed"))
-#: fork.c:644
+#: fork.c:653
 msgid "retrieving CPU affinity set failed"
 msgstr "pozyskiwanie ustawienia koligacji CPU nie powiodło się"

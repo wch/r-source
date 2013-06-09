@@ -10,10 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2013-02-21 22:26-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu.org>\n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
+"org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,46 +28,45 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "회전된 뷰포트에 고정 할 수 없습니다"
 
-#: grid.c:673
-#: grid.c:678
-#: grid.c:767
-#: grid.c:772
+#: grid.c:684 grid.c:689 grid.c:778 grid.c:783
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr "최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나요?)"
+msgstr ""
+"최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나"
+"요?)"
 
-#: grid.c:952
+#: grid.c:963
 msgid "attempt to plot on null device"
 msgstr "null 장치위에 플랏을 시도합니다"
 
-#: grid.c:1232
+#: grid.c:1243
 msgid "there is no layout defined"
 msgstr "정의된 레이아웃이 없습니다"
 
-#: grid.c:1452
+#: grid.c:1463
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "다각형의 끝점을 찾을 수 없습니다 (혹시 너비 또는 높이가 0인가요?)"
 
-#: grid.c:1461
+#: grid.c:1472
 msgid "polygon edge not found"
 msgstr "다각형의 끝점을 찾을 수 없습니다"
 
-#: grid.c:1615
+#: grid.c:1626
 msgid "require at least two points to draw arrow"
 msgstr "화살표를 그리기 위해서는 최소한 두개의 점이 필요합니다"
 
-#: grid.c:1931
+#: grid.c:1942
 msgid "non-finite control point in Xspline"
 msgstr "Xspline에서 유한하지 않은 컨트롤 포인트입니다"
 
-#: grid.c:2796
+#: grid.c:2807
 msgid "non-finite x or y in graphics path"
 msgstr "그래픽 패스에 유한하지 않은 x 또는 y가 있습니다"
 
-#: grid.c:3286
+#: grid.c:3297
 msgid "invalid plotting symbol"
 msgstr "유효하지 않은 플랏팅 기호입니다"
 
-#: grid.c:3372
+#: grid.c:3383
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 
@@ -86,17 +86,11 @@ msgstr ""
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "'grid'상태를 저장할 수 없는데 혹시 너무 많은 장치가 열려있나요?"
 
-#: unit.c:260
-#: unit.c:410
-#: unit.c:1204
-#: unit.c:1284
-#: unit.c:1364
-#: unit.c:1444
+#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
 msgid "unimplemented unit function"
 msgstr "구현되지 않은 유닛함수입니다"
 
-#: unit.c:893
-#: unit.c:1639
+#: unit.c:893 unit.c:1639
 msgid "invalid unit or unit not yet implemented"
 msgstr "유효하지 않은 유닛이거나 아직 구현되지 않은 유닛입니다"
 
@@ -115,4 +109,3 @@ msgstr "유닛은 반드시 길이가 0 보다 커야 합니다"
 #: viewport.c:317
 msgid "non-finite location and/or size for viewport"
 msgstr "뷰포트의 위치 그리고/또는 크기가 유한하지 않습니다"
-

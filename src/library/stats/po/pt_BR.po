@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -65,31 +65,31 @@ msgstr "nenhuma entrada pôde determinar o número de casos"
 msgid "not all arguments have the same length"
 msgstr "nem todos os argumentos tem o mesmo comprimento"
 
-#: cov.c:553
+#: cov.c:559
 msgid "missing observations in cov/cor"
 msgstr "observações faltantas em cov/cor"
 
-#: cov.c:631
+#: cov.c:637
 msgid "'x' is NULL"
 msgstr "'x' é NULL"
 
-#: cov.c:650 cov.c:656
+#: cov.c:656 cov.c:662
 msgid "incompatible dimensions"
 msgstr "dimensões incompatíveis"
 
-#: cov.c:675 cov.c:716 cov.c:749
+#: cov.c:681 cov.c:722 cov.c:755
 msgid "no complete element pairs"
 msgstr "nenhum par de elementos completo"
 
-#: cov.c:688
+#: cov.c:694
 msgid "invalid 'use' (computational method)"
 msgstr "'use' inválido (método computacional)"
 
-#: cov.c:691
+#: cov.c:697
 msgid "'x' is empty"
 msgstr "'x' é vazio"
 
-#: cov.c:785
+#: cov.c:791
 msgid "the standard deviation is zero"
 msgstr "o desvio padrão é zero"
 
@@ -262,7 +262,7 @@ msgstr "comprimentos das variáveis diferem (encontradas em '%s')"
 msgid "invalid result from na.action"
 msgstr "resultado inválido de na.action"
 
-#: model.c:363 model.c:371 optim.c:189
+#: model.c:363 model.c:371 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argumento '%s' inválido"
@@ -461,31 +461,31 @@ msgstr "função alvo em optim retorna um objeto de comprimento %d ao invés de 
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "gradiente em optim retorna um objeto de comprimento %d ao invés de %d"
 
-#: optim.c:185 optim.c:389
+#: optim.c:186 optim.c:391
 msgid "'fn' is not a function"
 msgstr "'fn' não é uma função"
 
-#: optim.c:202 optim.c:395
+#: optim.c:204 optim.c:397
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale' tem comprimento errado"
 
-#: optim.c:231
+#: optim.c:233
 msgid "'maxit' is not an integer"
 msgstr "'maxit' não é um inteiro"
 
-#: optim.c:250
+#: optim.c:252
 msgid "'tmax' is not an integer"
 msgstr "'tmax' não é um inteiro"
 
-#: optim.c:252 optim.c:269 optim.c:294 optim.c:324 optim.c:403
+#: optim.c:254 optim.c:271 optim.c:296 optim.c:326 optim.c:405
 msgid "'gr' is not a function"
 msgstr "'gr' não é uma função"
 
-#: optim.c:275 optim.c:300 optim.c:330 optim.c:409
+#: optim.c:277 optim.c:302 optim.c:332 optim.c:411
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps' tem o comprimento errado"
 
-#: optim.c:360
+#: optim.c:362
 msgid "unknown 'method'"
 msgstr "'method' desconhecido"
 

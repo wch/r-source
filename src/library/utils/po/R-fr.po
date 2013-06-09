@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-19 22:02+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -992,6 +992,9 @@ msgstr "type d'entrée non supporté"
 
 msgid "file '%s' not found"
 msgstr "fichier '%s' introuvable"
+
+msgid "file '%s' did not have execute permissions: corrected"
+msgstr ""
 
 msgid "file size is limited to 8GB"
 msgstr "la taille du fichier est limitée à 8GB"

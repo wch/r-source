@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 08:17\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-19 13:40+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -2076,9 +2076,6 @@ msgstr ""
 msgid "'deriv' must be between 0 and 3"
 msgstr " 'deriv' は 0 と 3 の間になければなりません "
 
-msgid "'deriv' must be between 0 and 2"
-msgstr " 'deriv' は 0 と 2 の間になければなりません "
-
 msgid "'x' must be *strictly* increasing (non - NA)"
 msgstr " 'x' は厳密に増加している必要があります (non - NA) "
 
@@ -2391,20 +2388,24 @@ msgid "%d missing value deleted"
 msgid_plural "%d missing values deleted"
 msgstr[0] " %d 個の欠測値が削除されました "
 
-msgid "'X' matrix has %d response"
-msgid_plural "'X' matrix has %d responses"
+#, fuzzy
+msgid "'X' matrix has %d case (row)"
+msgid_plural "'X' matrix has %d cases (rows)"
 msgstr[0] " 行列 'X' には %d 個の観測値があります "
 
-msgid "'Y' has %d response"
-msgid_plural "'Y' has %d responses"
+#, fuzzy
+msgid "'Y' has %d case (row)"
+msgid_plural "'Y' has %d cases (rows)"
 msgstr[0] " 'Y' には %d 個の観測値があります "
 
-msgid "%d response"
-msgid_plural "%d responses"
-msgstr[0] " %d 個の観測値があります "
+#, fuzzy
+msgid "only %d case"
+msgid_plural "only %d cases"
+msgstr[0] " 変数が %d 個しかありません "
 
-msgid "but only %d variable"
-msgid_plural "but only %d variables"
+#, fuzzy
+msgid "but %d variable"
+msgid_plural "but %d variables"
 msgstr[0] " 変数が %d 個しかありません "
 
 msgid "medpolish() did not converge in %d iteration"
@@ -2450,6 +2451,13 @@ msgstr[0] " NA, NaN および Inf を含む %d 個のの観測値は削除され
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "'deriv' must be between 0 and 2"
+#~ msgstr " 'deriv' は 0 と 2 の間になければなりません "
+
+#~ msgid "%d response"
+#~ msgid_plural "%d responses"
+#~ msgstr[0] " %d 個の観測値があります "
 
 #~ msgid "character variable '%s' changed to a factor"
 #~ msgstr " 文字変数 '%s' は因子に変換されました "

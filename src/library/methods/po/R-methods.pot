@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.0.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:27\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,9 +10,6 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-
-msgid "replacement value is not a matrix"
-msgstr ""
 
 msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
 msgstr ""
@@ -977,10 +974,10 @@ msgstr ""
 msgid "the overriding class (\"%s\") of field %s is not a subclass of the existing field definition (\"%s\")"
 msgstr ""
 
-msgid "field %s is read-only"
+msgid "invalid assignment for reference class field %s, should be from class %s or a subclass (was class %s)"
 msgstr ""
 
-msgid "invalid replacement for field %s, should be from class %s or a subclass (was class %s)"
+msgid "invalid replacement: reference class field %s is read-only"
 msgstr ""
 
 msgid "the 'contains' argument should be the names of superclasses:  got an element of class %s"

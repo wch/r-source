@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -981,6 +981,9 @@ msgstr " サポートされないエントリー型 "
 
 msgid "file '%s' not found"
 msgstr " ファイル '%s' が見付かりません "
+
+msgid "file '%s' did not have execute permissions: corrected"
+msgstr ""
 
 msgid "file size is limited to 8GB"
 msgstr " ファイルサイズは 8GB に制限されています "

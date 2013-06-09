@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2013-03-10 19:59-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -2090,9 +2090,6 @@ msgstr "spline: 처음과 마지막 y 값들이 다릅니다 - 양쪽 모두 y[1
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv'는 반드시 0과 3사이에 있어야 합니다"
 
-msgid "'deriv' must be between 0 and 2"
-msgstr "'deriv'는 반드시 0과 2사이에 있어야 합니다"
-
 msgid "'x' must be *strictly* increasing (non - NA)"
 msgstr "'x'는 반드시 *단조* 증가해야합니다 (non - NA)"
 
@@ -2412,20 +2409,21 @@ msgid "%d missing value deleted"
 msgid_plural "%d missing values deleted"
 msgstr[0] ""
 
-msgid "'X' matrix has %d response"
-msgid_plural "'X' matrix has %d responses"
+#, fuzzy
+msgid "'X' matrix has %d case (row)"
+msgid_plural "'X' matrix has %d cases (rows)"
+msgstr[0] "'X'행렬은 collinear입니다"
+
+msgid "'Y' has %d case (row)"
+msgid_plural "'Y' has %d cases (rows)"
 msgstr[0] ""
 
-msgid "'Y' has %d response"
-msgid_plural "'Y' has %d responses"
+msgid "only %d case"
+msgid_plural "only %d cases"
 msgstr[0] ""
 
-msgid "%d response"
-msgid_plural "%d responses"
-msgstr[0] ""
-
-msgid "but only %d variable"
-msgid_plural "but only %d variables"
+msgid "but %d variable"
+msgid_plural "but %d variables"
 msgstr[0] ""
 
 msgid "medpolish() did not converge in %d iteration"
@@ -2471,6 +2469,9 @@ msgstr[0] "NA, NaNs 그리고/또는 Infs를 가지는 %d개의 관측치들은 
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid "'deriv' must be between 0 and 2"
+#~ msgstr "'deriv'는 반드시 0과 2사이에 있어야 합니다"
 
 #~ msgid "character variable '%s' changed to a factor"
 #~ msgstr "문자형 변수 '%s'가 요인으로 변경되었습니다"

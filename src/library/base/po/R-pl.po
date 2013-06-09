@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-22 09:52\n"
+"POT-Creation-Date: 2013-06-09 21:52\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2113,6 +2113,11 @@ msgstr ""
 # error(_("invalid to change the storage mode of a factor"))
 msgid "invalid to change the storage mode of a factor"
 msgstr "zmiana trybu przechowywania czynnika jest niepoprawnym działaniem"
+
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
+msgstr ""
 
 # src/library/base/R/namespace.R: 83
 # stop(gettextf("'%s' is not an exported object from 'namespace:%s'",

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -62,32 +62,32 @@ msgstr ""
 msgid "not all arguments have the same length"
 msgstr "non tutti gli argomenti hanno la stessa lunghezza"
 
-#: cov.c:553
+#: cov.c:559
 msgid "missing observations in cov/cor"
 msgstr "osservazioni mancanti in cov/cor"
 
-#: cov.c:631
+#: cov.c:637
 #, fuzzy
 msgid "'x' is NULL"
 msgstr "'x' è vuoto"
 
-#: cov.c:650 cov.c:656
+#: cov.c:656 cov.c:662
 msgid "incompatible dimensions"
 msgstr "dimensioni incompatibili"
 
-#: cov.c:675 cov.c:716 cov.c:749
+#: cov.c:681 cov.c:722 cov.c:755
 msgid "no complete element pairs"
 msgstr ""
 
-#: cov.c:688
+#: cov.c:694
 msgid "invalid 'use' (computational method)"
 msgstr "'use' non valido (metodo computazionale)"
 
-#: cov.c:691
+#: cov.c:697
 msgid "'x' is empty"
 msgstr "'x' è vuoto"
 
-#: cov.c:785
+#: cov.c:791
 msgid "the standard deviation is zero"
 msgstr "la deviazione standard è zero"
 
@@ -260,7 +260,7 @@ msgstr "la lunghezza delle variabili differisce"
 msgid "invalid result from na.action"
 msgstr "risultato non valido da na.action"
 
-#: model.c:363 model.c:371 optim.c:189
+#: model.c:363 model.c:371 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
@@ -463,31 +463,31 @@ msgstr ""
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "il gradiente in optim restituisce valori di lunghezza %d e non %d"
 
-#: optim.c:185 optim.c:389
+#: optim.c:186 optim.c:391
 msgid "'fn' is not a function"
 msgstr "'fn' non è una funzione"
 
-#: optim.c:202 optim.c:395
+#: optim.c:204 optim.c:397
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale' è della lunghezza sbagliata"
 
-#: optim.c:231
+#: optim.c:233
 msgid "'maxit' is not an integer"
 msgstr "'maxit' non è un intero"
 
-#: optim.c:250
+#: optim.c:252
 msgid "'tmax' is not an integer"
 msgstr "'tmax' non è un intero"
 
-#: optim.c:252 optim.c:269 optim.c:294 optim.c:324 optim.c:403
+#: optim.c:254 optim.c:271 optim.c:296 optim.c:326 optim.c:405
 msgid "'gr' is not a function"
 msgstr "'gr' non è una funzione"
 
-#: optim.c:275 optim.c:300 optim.c:330 optim.c:409
+#: optim.c:277 optim.c:302 optim.c:332 optim.c:411
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps' è della lunghezza sbagliata"
 
-#: optim.c:360
+#: optim.c:362
 msgid "unknown 'method'"
 msgstr "'method' sconosciuto"
 

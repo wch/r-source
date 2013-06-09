@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 08:17\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -2157,9 +2157,6 @@ msgstr ""
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' deve estar entre 0 e 3"
 
-msgid "'deriv' must be between 0 and 2"
-msgstr "'deriv' deve estar entre 0 e 2"
-
 msgid "'x' must be *strictly* increasing (non - NA)"
 msgstr ""
 
@@ -2495,25 +2492,25 @@ msgstr[0] "%d valores em falta excluídos"
 msgstr[1] "%d valores em falta excluídos"
 
 #, fuzzy
-msgid "'X' matrix has %d response"
-msgid_plural "'X' matrix has %d responses"
+msgid "'X' matrix has %d case (row)"
+msgid_plural "'X' matrix has %d cases (rows)"
 msgstr[0] "matriz 'X' tem %d respostas, 'Y' tem %d respostas"
 msgstr[1] "matriz 'X' tem %d respostas, 'Y' tem %d respostas"
 
-msgid "'Y' has %d response"
-msgid_plural "'Y' has %d responses"
+msgid "'Y' has %d case (row)"
+msgid_plural "'Y' has %d cases (rows)"
 msgstr[0] ""
 msgstr[1] ""
 
 #, fuzzy
-msgid "%d response"
-msgid_plural "%d responses"
-msgstr[0] "modelos com resposta"
-msgstr[1] "modelos com resposta"
+msgid "only %d case"
+msgid_plural "only %d cases"
+msgstr[0] "%d respostas, mas apenas %d variáveis"
+msgstr[1] "%d respostas, mas apenas %d variáveis"
 
 #, fuzzy
-msgid "but only %d variable"
-msgid_plural "but only %d variables"
+msgid "but %d variable"
+msgid_plural "but %d variables"
 msgstr[0] "%d respostas, mas apenas %d variáveis"
 msgstr[1] "%d respostas, mas apenas %d variáveis"
 
@@ -2582,6 +2579,15 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'deriv' must be between 0 and 2"
+#~ msgstr "'deriv' deve estar entre 0 e 2"
+
+#, fuzzy
+#~ msgid "%d response"
+#~ msgid_plural "%d responses"
+#~ msgstr[0] "modelos com resposta"
+#~ msgstr[1] "modelos com resposta"
 
 #~ msgid "character variable '%s' changed to a factor"
 #~ msgstr "variável de caracter '%s' trocado para um fator"

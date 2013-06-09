@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 08:17\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -2215,10 +2215,6 @@ msgstr ""
 msgid "'deriv' must be between 0 and 3"
 msgstr "'p' deve essere tra 0 e 0.5"
 
-#, fuzzy
-msgid "'deriv' must be between 0 and 2"
-msgstr "'p' deve essere tra 0 e 0.5"
-
 msgid "'x' must be *strictly* increasing (non - NA)"
 msgstr ""
 
@@ -2578,25 +2574,25 @@ msgstr[0] "eliminati %d valori mancanti"
 msgstr[1] "eliminati %d valori mancanti"
 
 #, fuzzy
-msgid "'X' matrix has %d response"
-msgid_plural "'X' matrix has %d responses"
+msgid "'X' matrix has %d case (row)"
+msgid_plural "'X' matrix has %d cases (rows)"
 msgstr[0] "la matrice 'X' ha %d risposte, 'Y' ha %d risposte"
 msgstr[1] "la matrice 'X' ha %d risposte, 'Y' ha %d risposte"
 
-msgid "'Y' has %d response"
-msgid_plural "'Y' has %d responses"
+msgid "'Y' has %d case (row)"
+msgid_plural "'Y' has %d cases (rows)"
 msgstr[0] ""
 msgstr[1] ""
 
 #, fuzzy
-msgid "%d response"
-msgid_plural "%d responses"
-msgstr[0] "modelli con risposta"
-msgstr[1] "modelli con risposta"
+msgid "only %d case"
+msgid_plural "only %d cases"
+msgstr[0] "%d risposte, ma solo %d variabili"
+msgstr[1] "%d risposte, ma solo %d variabili"
 
 #, fuzzy
-msgid "but only %d variable"
-msgid_plural "but only %d variables"
+msgid "but %d variable"
+msgid_plural "but %d variables"
 msgstr[0] "%d risposte, ma solo %d variabili"
 msgstr[1] "%d risposte, ma solo %d variabili"
 
@@ -2661,6 +2657,16 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "'deriv' must be between 0 and 2"
+#~ msgstr "'p' deve essere tra 0 e 0.5"
+
+#, fuzzy
+#~ msgid "%d response"
+#~ msgid_plural "%d responses"
+#~ msgstr[0] "modelli con risposta"
+#~ msgstr[1] "modelli con risposta"
 
 #, fuzzy
 #~ msgid "character variable '%s' changed to a factor"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-10-02 09:51+0100\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2013-03-19 20:00-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -18,52 +18,52 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: grid.c:214
 msgid "cannot clip to rotated viewport"
 msgstr "не могу обрезать до повернутой оконницы"
 
-#: grid.c:673
-#: grid.c:678
-#: grid.c:767
-#: grid.c:772
+#: grid.c:684 grid.c:689 grid.c:778 grid.c:783
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr "не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' смешались?)"
+msgstr ""
+"не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' "
+"смешались?)"
 
-#: grid.c:952
+#: grid.c:963
 msgid "attempt to plot on null device"
 msgstr "попытка чертить на нулевом устройстве"
 
-#: grid.c:1232
+#: grid.c:1243
 msgid "there is no layout defined"
 msgstr "нет заданного эскиза"
 
-#: grid.c:1452
+#: grid.c:1463
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "край многоугольника не найден (нулевая ширина или высота?)"
 
-#: grid.c:1461
+#: grid.c:1472
 msgid "polygon edge not found"
 msgstr "край многоугольника не найден"
 
-#: grid.c:1615
+#: grid.c:1626
 msgid "require at least two points to draw arrow"
 msgstr "надо как минимум две точки, чтобы нарисовать стрелку"
 
-#: grid.c:1931
+#: grid.c:1942
 msgid "non-finite control point in Xspline"
 msgstr "не-конечная контрольная точка в Xspline"
 
-#: grid.c:2796
+#: grid.c:2807
 msgid "non-finite x or y in graphics path"
 msgstr "бесконечный x или y в кривой крафика"
 
-#: grid.c:3286
+#: grid.c:3297
 msgid "invalid plotting symbol"
 msgstr "неправильный символ графика"
 
-#: grid.c:3372
+#: grid.c:3383
 msgid "unable to clip to rotated rectangle"
 msgstr "не могу обрезать до повернутого четырехугольника"
 
@@ -83,17 +83,11 @@ msgstr "сингулярная трансформационная матрица"
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 
-#: unit.c:260
-#: unit.c:410
-#: unit.c:1204
-#: unit.c:1284
-#: unit.c:1364
-#: unit.c:1444
+#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
 msgid "unimplemented unit function"
 msgstr "не разработанная единичная функция"
 
-#: unit.c:893
-#: unit.c:1639
+#: unit.c:893 unit.c:1639
 msgid "invalid unit or unit not yet implemented"
 msgstr "неправильная или не разработанная единица"
 
@@ -115,4 +109,3 @@ msgstr "не-конечное положение и/или размер оконницы"
 
 #~ msgid "Invalid circle radius (must be non-negative)"
 #~ msgstr "Неправильный радиус круга (должен быть неотрицательным)"
-

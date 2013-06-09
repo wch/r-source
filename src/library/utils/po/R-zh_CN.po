@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-05 06:50\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -930,6 +930,9 @@ msgstr "不支持这一项目种类"
 
 msgid "file '%s' not found"
 msgstr "找不到'%s'这一文件"
+
+msgid "file '%s' did not have execute permissions: corrected"
+msgstr ""
 
 msgid "file size is limited to 8GB"
 msgstr "文件大小限制为8GB"

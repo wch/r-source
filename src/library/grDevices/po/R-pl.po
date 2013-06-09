@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-06-09 21:52\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -70,6 +70,9 @@ msgstr "oczekiwano rosnących wartości 'x' oraz 'y'"
 # stop("no proper 'z' matrix specified")
 msgid "no proper 'z' matrix specified"
 msgstr "nie określono odpowiedniej macierzy 'z'"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
 
 # grDevices/R/colorRamp.R: 33
 # stop("'bias' must be positive")

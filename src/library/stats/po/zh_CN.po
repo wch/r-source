@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-01 14:27+0000\n"
+"POT-Creation-Date: 2013-06-09 21:53+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -62,31 +62,31 @@ msgstr "无法用输入来确定个案数目"
 msgid "not all arguments have the same length"
 msgstr "不是所有的参数都一样长"
 
-#: cov.c:553
+#: cov.c:559
 msgid "missing observations in cov/cor"
 msgstr "cov/cor中有遗漏值"
 
-#: cov.c:631
+#: cov.c:637
 msgid "'x' is NULL"
 msgstr "'x'为NULL"
 
-#: cov.c:650 cov.c:656
+#: cov.c:656 cov.c:662
 msgid "incompatible dimensions"
 msgstr "不兼容的量度"
 
-#: cov.c:675 cov.c:716 cov.c:749
+#: cov.c:681 cov.c:722 cov.c:755
 msgid "no complete element pairs"
 msgstr "不存在完的一对"
 
-#: cov.c:688
+#: cov.c:694
 msgid "invalid 'use' (computational method)"
 msgstr "'use'不对(计算方法)"
 
-#: cov.c:691
+#: cov.c:697
 msgid "'x' is empty"
 msgstr "'x'是空的"
 
-#: cov.c:785
+#: cov.c:791
 msgid "the standard deviation is zero"
 msgstr "标准差为零"
 
@@ -258,7 +258,7 @@ msgstr "变数的长度不一样('%s')"
 msgid "invalid result from na.action"
 msgstr "na.action的结果有错"
 
-#: model.c:363 model.c:371 optim.c:189
+#: model.c:363 model.c:371 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
@@ -454,31 +454,31 @@ msgstr "optim内的目标函数长度被评估为%d，而不是一"
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "optim梯度长度被评估为%d，而不是%d"
 
-#: optim.c:185 optim.c:389
+#: optim.c:186 optim.c:391
 msgid "'fn' is not a function"
 msgstr "'fn'不是函数"
 
-#: optim.c:202 optim.c:395
+#: optim.c:204 optim.c:397
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale'的长度不对"
 
-#: optim.c:231
+#: optim.c:233
 msgid "'maxit' is not an integer"
 msgstr "'maxit'不是整数"
 
-#: optim.c:250
+#: optim.c:252
 msgid "'tmax' is not an integer"
 msgstr "'tmax'不是整数"
 
-#: optim.c:252 optim.c:269 optim.c:294 optim.c:324 optim.c:403
+#: optim.c:254 optim.c:271 optim.c:296 optim.c:326 optim.c:405
 msgid "'gr' is not a function"
 msgstr "'gr'不是函数"
 
-#: optim.c:275 optim.c:300 optim.c:330 optim.c:409
+#: optim.c:277 optim.c:302 optim.c:332 optim.c:411
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps'长度不对"
 
-#: optim.c:360
+#: optim.c:362
 msgid "unknown 'method'"
 msgstr "没有这样的'method'"
 

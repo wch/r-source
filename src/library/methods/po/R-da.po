@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:27\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,9 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
-
-msgid "replacement value is not a matrix"
-msgstr "erstatningsværdi er ikke en matrix"
 
 #, fuzzy
 msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
@@ -1271,12 +1268,12 @@ msgid ""
 "field definition (\"%s\")"
 msgstr ""
 
-msgid "field %s is read-only"
+msgid ""
+"invalid assignment for reference class field %s, should be from class %s or "
+"a subclass (was class %s)"
 msgstr ""
 
-msgid ""
-"invalid replacement for field %s, should be from class %s or a subclass (was "
-"class %s)"
+msgid "invalid replacement: reference class field %s is read-only"
 msgstr ""
 
 #, fuzzy
@@ -1594,6 +1591,9 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "replacement value is not a matrix"
+#~ msgstr "erstatningsværdi er ikke en matrix"
 
 #~ msgid "in .OldClassesPrototypes"
 #~ msgstr "i .OldClassesPrototypes"

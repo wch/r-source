@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-05 07:27\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -16,9 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.0.5\n"
-
-msgid "replacement value is not a matrix"
-msgstr "valor de substituição não é uma matriz"
 
 #, fuzzy
 msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
@@ -1611,16 +1608,16 @@ msgid ""
 "field definition (\"%s\")"
 msgstr ""
 
-msgid "field %s is read-only"
-msgstr ""
-
 #, fuzzy
 msgid ""
-"invalid replacement for field %s, should be from class %s or a subclass (was "
-"class %s)"
+"invalid assignment for reference class field %s, should be from class %s or "
+"a subclass (was class %s)"
 msgstr ""
 "argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
 "objeto de classe  \"%s\""
+
+msgid "invalid replacement: reference class field %s is read-only"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -1995,6 +1992,9 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "nenhuma definição existente para função '%s'"
 msgstr[1] "nenhuma definição existente para função '%s'"
+
+#~ msgid "replacement value is not a matrix"
+#~ msgstr "valor de substituição não é uma matriz"
 
 #, fuzzy
 #~ msgid "not a package name: %s"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:24\n"
+"POT-Creation-Date: 2013-06-09 21:53\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -369,6 +369,9 @@ msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr ""
 
+msgid "no Rd sections specified"
+msgstr ""
+
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
 "May need something like\n"
@@ -492,6 +495,10 @@ msgstr "non più di una corrispondenza"
 #, fuzzy
 msgid "unable to create temp directory %s"
 msgstr "impossibile creare directory temporanea"
+
+#, fuzzy
+msgid "Running"
+msgstr "analizzo '%s'"
 
 msgid "Vignette"
 msgstr ""
@@ -1075,6 +1082,9 @@ msgid "no parsed files found"
 msgstr ""
 
 msgid "FAILED"
+msgstr ""
+
+msgid "DIFFERED"
 msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"
