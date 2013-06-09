@@ -1149,7 +1149,8 @@ setRlibs <-
             if (length(out)) {
                 if(any(grepl("^Foreign function calls? with(out| empty)", out)) ||
                    (!is_base_pkg && any(grepl("to a base package:", out))) ||
-                   any(grepl("^Undeclared packages? in", out))
+                   any(grepl("^Undeclared packages? in", out)) ||
+                   any(grepl("parameter[s]*, expected ", out))
                    ) warningLog(Log)
                 else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
