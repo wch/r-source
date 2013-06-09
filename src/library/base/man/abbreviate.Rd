@@ -30,7 +30,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   unless \code{strict = TRUE}.
 }
 \details{
-  The defuault algorithm (\code{method = "left.kept"}) used is similar
+  The default algorithm (\code{method = "left.kept"}) used is similar
   to that of S.  For a single string it works as follows.
   First all spaces at the beginning of the string are stripped.
   Then (if necessary) any other spaces are stripped.

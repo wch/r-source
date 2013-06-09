@@ -78,7 +78,7 @@
       consistency with the registered type and argument count.  This is
       the default for \command{R CMD check --as-cran} or can be enabled
       by setting environment variable \env{_R_CHECK_FF_CALLS_} to
-      \samp{registration} (but is in any case supressed by
+      \samp{registration} (but is in any case suppressed by
       \option{--install=no}).   Because this checks calls in which
       \code{.NAME} is an \R object and not just a literal character
       string, some other problems are detected for such calls.

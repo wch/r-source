@@ -10888,7 +10888,7 @@ header @file{R_ext/Constants.h}, mainly for compatibility with @Sl{}.
 Further, the included header @file{R_ext/Boolean.h} has enumeration
 constants @code{TRUE} and @code{FALSE} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
-This can conflict with other sofware: for example it conflicts with the
+This can conflict with other software: for example it conflicts with the
 headers in IJG's @code{jpeg-9} (but not earlier versions).
 
 
