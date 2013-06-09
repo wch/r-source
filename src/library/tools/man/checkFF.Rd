@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkFF.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkFF}
@@ -43,21 +43,16 @@ checkFF(package, dir, file, lib.loc = NULL,
   reported as their symbols will be preferentially looked up in the DLL
   named in the first \code{useDynLib} directive.
 
-  As from \R 2.15.2, this also checks that calls with \code{PACKAGE}
-  specified are to the same package, and reports separately those which
-  are in base packages and those which are in other packages (and if
-  those packages are specified in the \file{DESCRIPTION} file).  Direct
-  calls to the FORTRAN entry points for LINPACK in \R itself are not
-  reported (but this does not include modifications of LINPACK routines
-  such as \code{dqrls}).
+  This checks that calls with \code{PACKAGE} specified are to the
+  same package, and reports separately those which are in base packages
+  and those which are in other packages (and if those packages are
+  specified in the \file{DESCRIPTION} file).
 }
 \value{
-  An object of class \code{"checkFF"}, which currently is a list of the
-  (parsed) foreign function calls with a character first argument and
-  no \code{PACKAGE} argument.
+  An object of class \code{"checkFF"}.
 
-  There is a \code{print} method to display the information contained in
-  such objects.
+  There are \code{formaat} and  \code{print} methods to display the
+  information contained in such objects.
 }
 \seealso{
   \code{\link{.C}},
