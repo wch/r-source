@@ -59,3 +59,7 @@ st <- system.time(str(uids, vec.len=1))
 stopifnot(st[["elapsed"]] < 0.020)
 ## needed about 0.8 seconds for R <= 3.0.1
 
+## ftable(<array with unusual dimnames>)
+(m <- matrix(1:12, 3,4, dimnames=list(ROWS=paste0("row",1:3), COLS=NULL)))
+ftable(m)
+## failed to format (and hence print) because of NULL 'COLS' dimnames

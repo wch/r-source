@@ -26,10 +26,10 @@ ftable.default <- function(..., exclude = c(NA, NaN),
     x <- args[[1L]]
     if(is.list(x))
 	x <- table(x, exclude = exclude)
-    else if(inherits(x, "ftable")) {
-	x <- as.table(x)
+    else if(inherits(x, "ftable") || (arr <- is.array(x))) {
+	x <- as.table(x) # regularizes dimnames for an array
     }
-    else if(!(is.array(x) && (length(dim(x)) > 1L))) {
+    else if(!(arr && (length(dim(x)) > 1L))) {
 	x <- table(..., exclude = exclude)
     }
     dn <- dimnames(x)

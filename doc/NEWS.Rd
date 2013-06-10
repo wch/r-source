@@ -131,7 +131,7 @@
       hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
       unintended values for malformed constants. (\PR{15234})
 
-      \item \code{is.unsorted(NA)} is false as documented (rather than
+      \item \code{is.unsorted(NA)} returns false as documented (rather than
       \code{NA}).
 
       \item Error messages involving non-syntactic names (e.g. as produced
@@ -179,7 +179,7 @@
       files if needed, with a warning.  This is useful on OSes and file
       systems which do not support execute permissions (notably, on
       Windows).
-      
+
       \item \code{checkFF()} (used by \command{R CMD check}) does a
       better job of detecting calls from other packages, including not
       reporting those where a function has been copied from another
@@ -237,9 +237,12 @@
       and one was written for a different OS, it would set
       \command{--no-install} for all following packages as well as
       itself.
-      
+
       \item \code{qr.coef()} and related functions did not properly coerce
       real vectors to complex when necessary.  (\PR{15332})
+
+      \item \code{ftable(a)} now fixes up empty \code{dimnames} such
+      that the result is printable.
     }
   }
 }
@@ -376,7 +379,7 @@
       clusterings, thanks to Daniel Müllner. (\PR{15174})
 
       \item The return value when all workers failed from
-      \code{parallel::mclapply(mc.presechedule = TRUE)} was a list of
+      \code{parallel::mclapply(mc.preschedule = TRUE)} was a list of
       strings and not of error objects.  (Spotted by Karl Forner and
       Bernd Bischl.)
 
