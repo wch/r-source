@@ -2085,7 +2085,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-static Rboolean anyNA(SEXP x)
+static Rboolean anyNA(SEXP x, SEXP env)
 /* Original code:
    Copyright 2012 Google Inc. All Rights Reserved.
    Author: Tim Hesterberg <rocket@google.com>
@@ -2128,11 +2128,11 @@ static Rboolean anyNA(SEXP x)
 	break;
  // Note that the recursive calls to anyNA() below never will do method dispatch
     case LISTSXP:
-	for (i = 0; i < n; i++, x = CDR(x)) if (anyNA(CAR(x))) return TRUE;
+	for (i = 0; i < n; i++, x = CDR(x)) if (anyNA(CAR(x), env)) return TRUE;
 	break;
     case VECSXP:
 	for (i = 0; i < n; i++)
-	    if (anyNA(VECTOR_ELT(x, i))) return TRUE;
+	    if (anyNA(VECTOR_ELT(x, i), env)) return TRUE;
 	break;
     case RAWSXP: /* no such thing as a raw NA:  is.na(.) gives FALSE always */
 	return FALSE;
@@ -2140,8 +2140,18 @@ static Rboolean anyNA(SEXP x)
 	return FALSE;
 
     default:
-	error("anyNA() applied to non-(list or vector) of type '%s'",
-	      type2char(TYPEOF(x)));
+	if(IS_S4_OBJECT(x)) { // --> any(is.na(.))
+	    SEXP e, isna;
+	    // is.na(x) which *should* use dispatch (S4, typically):
+	    PROTECT(e = lang2(install("is.na"),x));
+	    PROTECT(isna = eval(e, env));
+	    int *x_is_na = LOGICAL(isna);
+	    for(i = 0; i < n; i++) // maybe use  xlength(isna) instead of n ?
+		if(x_is_na[i]) { UNPROTECT(2); return TRUE; }
+	    UNPROTECT(2);
+	} else
+	    error("anyNA() applied to non-(list or vector) of type '%s'",
+		  type2char(TYPEOF(x)));
     }
     return FALSE;
 } // anyNA()
@@ -2155,7 +2165,7 @@ SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (DispatchOrEval(call, op, "anyNA", args, rho, &ans, 0, 1))
 	return(ans);
     // else
-    return ScalarLogical(anyNA(CAR(args)));
+    return ScalarLogical(anyNA(CAR(args), rho));
 }
 
 
