@@ -109,6 +109,9 @@
       \item The long-deprecated use of \code{\\synopsis} in the
       \samp{Usage} section of \file{.Rd} files has been removed: such
       sections are now ignored (with a warning).
+
+      \item \code{package.skeleton()}'s deprecated argument
+      \code{namespace} has been removed.
     }
   }
 
