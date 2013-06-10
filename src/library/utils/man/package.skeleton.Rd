@@ -1,6 +1,6 @@
 % File src/library/utils/man/package.skeleton.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{package.skeleton}
@@ -42,8 +42,8 @@ package.skeleton(name = "anRpackage", list,
   provide alternative ways to initialize the package.  If
   \code{code_files} is supplied, the files so named will be sourced to
   form the environment, then used to generate the package skeleton.
-  Otherwise \code{list} defaults to the non-hidden files in
-  \code{environment} (those whose name does not start with \code{.}),
+  Otherwise \code{list} defaults to the akk objects in
+  \code{environment} (including those whose names start with \code{.}),
   but can be supplied to select a subset of the objects in that
   environment.
 
