@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/col2rgb.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{col2rgb}
@@ -17,14 +17,18 @@ col2rgb(col, alpha = FALSE)
     i.e., either a color name (as listed by \code{\link{colors}()}), a
     hexadecimal string of the form \code{"#rrggbb"} or
     \code{"#rrggbbaa"} (see \code{\link{rgb}}), or a positive integer
-    \code{i} meaning \code{\link{palette}()[i]}.  Non-numeric values
-    are coerced to character.}
+    \code{i} meaning \code{\link{palette}()[i]}.}
   \item{alpha}{logical value indicating whether the alpha channel (opacity)
     values should be returned.}
 }
 \details{
   \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
-
+  
+  Values of \code{col} not of one of these types are coerced: real
+  vectors are coerced to integer and other types to character.  (Prior to
+  \R 3.0.2 factors were coerced to their integer codes: in all other
+  cases the class is still ignored when doing the coercion.)
+  
   Prior to \R 3.0.0, \code{col = 0} could be used to refer to the
   background color of the current device in base graphics: this is now
   an error.

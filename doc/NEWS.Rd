@@ -24,6 +24,9 @@
 
       \item \code{str(x)} is considerably faster for very large lists,
       or factors with 100,000 levels, the latter as in \PR{15337}.
+      
+      \item \code{col2rgb()} now converts factors to character strings
+      not integer codes (suggested by Bryan Hanson).
     }
   }
 
