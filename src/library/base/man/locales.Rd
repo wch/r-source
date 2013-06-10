@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -68,9 +68,9 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   character set) during a session may not work and are likely to lead to
   some confusion.
 
-  Note that the \env{\link{LANGUAGE}} environment variable has
-  precedence over \code{"LC_MESSAGES"} in selecting the language of
-  message translation on most \R platforms.
+  Note that the \env{LANGUAGE} environment variable has precedence over
+  \code{"LC_MESSAGES"} in selecting the language for message translation
+  on most \R platforms.
 }
 \value{
   A character string of length one describing the locale in use (after
