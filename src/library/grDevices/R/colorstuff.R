@@ -27,6 +27,7 @@ col2rgb <- function(col, alpha = FALSE)
     ## R-level trap for now.
     if(any(as.character(col) %in% "0"))
         stop("numerical color values must be positive", domain = NA)
+    if (is.factor(col)) col <- as.character(col)
     .Call(C_col2rgb, col, alpha)
 }
 
