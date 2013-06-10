@@ -42,10 +42,9 @@ package.skeleton(name = "anRpackage", list,
   provide alternative ways to initialize the package.  If
   \code{code_files} is supplied, the files so named will be sourced to
   form the environment, then used to generate the package skeleton.
-  Otherwise \code{list} defaults to the akk objects in
-  \code{environment} (including those whose names start with \code{.}),
-  but can be supplied to select a subset of the objects in that
-  environment.
+  Otherwise \code{list} defaults to the objects in \code{environment}
+  (including those whose names start with \code{.}), but can be supplied
+  to select a subset of the objects in that environment.
 
   Stubs of help files are generated for functions, data objects, and
   S4 classes and methods, using the \code{\link{prompt}},
@@ -68,6 +67,9 @@ package.skeleton(name = "anRpackage", list,
   the code and help files should have names starting with an ASCII
   letter or digit, and this is checked and if necessary \code{z}
   prepended.
+
+  Functions with names starting with a dot are placed in file
+  \file{R/\var{name}-internal.R}.
 
   When you are done, delete the \file{Read-and-delete-me} file, as it
   should not be distributed.

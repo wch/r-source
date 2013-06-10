@@ -109,6 +109,10 @@
 
       \item \code{ftable(a)} now fixes up empty \code{dimnames} such
       that the result is printable.
+
+      \item \code{package.skeleton()} was not starting its search for
+      function objects in the correct place if \code{environment} was
+      supplied.  (Reported by Karl Forner.)
     }
   }
 }
