@@ -23,20 +23,13 @@ col2rgb(col, alpha = FALSE)
 }
 \details{
   \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
-  
+
   Values of \code{col} not of one of these types are coerced: real
   vectors are coerced to integer and other types to character.  (Prior to
   \R 3.0.2 factors were coerced to their integer codes: in all other
   cases the class is still ignored when doing the coercion.)
-  
-  Prior to \R 3.0.0, \code{col = 0} could be used to refer to the
-  background color of the current device in base graphics: this is now
-  an error.
 
-  Before \R 3.0.0 negative integer values were accepted and wrapped
-  around to colors in the palette: this was not how either the base or
-  grid graphics systems usually resolved such values.  They are now
-  always an error.
+  Zero and negative values of \code{col} are an error.
 }
 \value{
   An integer matrix with three or four (for \code{alpha = TRUE}) rows
