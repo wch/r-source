@@ -1,6 +1,6 @@
 % File src/library/stats/man/sd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sd}
@@ -28,7 +28,7 @@ sd(x, na.rm = FALSE)
   The standard deviation of a length-one vector is \code{NA}.
 
   Prior to \R 2.14.0, \code{sd(dfrm)} worked directly for a
-  \link{data.frame} \code{dfrm}.  This is now deprecated and you are
+  \link{data.frame} \code{dfrm}.  This is now defunct and you are
   expected to use \code{\link{sapply}(dfrm, sd)}.
 }
 \seealso{
