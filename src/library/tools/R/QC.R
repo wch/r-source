@@ -1917,7 +1917,7 @@ function(package, dir, file, lib.loc = NULL,
                     if (name %in% fr) {
                         other_problem <<- c(other_problem, e)
                         other_desc <<-
-                            c(other_desc, sprintf("symbol %s in the local%s frame",
+                            c(other_desc, sprintf("symbol %s in the local frame%s",
                                                   sQuote(name),
                                                   if(!have_registration) ", but no registered symbols" else ""))
                     } else {
