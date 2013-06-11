@@ -82,7 +82,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(logit_mu_eta, 1),
     CALLDEF(binomial_dev_resids, 3),
     CALLDEF(rWishart, 3),
-    CALLDEF(Cdqrls, 3),
+    CALLDEF(Cdqrls, 4),
     CALLDEF(Cdist, 4),
     CALLDEF(cor, 4),
     CALLDEF(cov, 4),

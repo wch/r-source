@@ -29,7 +29,7 @@ SEXP binomial_dev_resids(SEXP y, SEXP mu, SEXP wt);
 
 SEXP cutree(SEXP merge, SEXP which);
 SEXP rWishart(SEXP ns, SEXP nuP, SEXP scal);
-SEXP Cdqrls(SEXP x, SEXP y, SEXP tol);
+SEXP Cdqrls(SEXP x, SEXP y, SEXP tol, SEXP chk);
 SEXP Cdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
 SEXP r2dtable(SEXP n, SEXP r, SEXP c);
 SEXP cor(SEXP x, SEXP y, SEXP na_method, SEXP method);
@@ -83,7 +83,7 @@ SEXP SplineCoef(SEXP method, SEXP x, SEXP y);
 SEXP SplineEval(SEXP xout, SEXP z);
 
 SEXP ApproxTest(SEXP x, SEXP y, SEXP method, SEXP sf);
-SEXP Approx(SEXP x, SEXP y, SEXP v, SEXP method, 
+SEXP Approx(SEXP x, SEXP y, SEXP v, SEXP method,
 	    SEXP yleft, SEXP yright, SEXP sf);
 
 SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start,

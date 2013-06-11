@@ -51,6 +51,10 @@
       \item The new \code{unirootS()} function is a \sQuote{safe}
       version of \code{uniroot()} auto-extending the search interval
       when needed.
+
+      % advertize at all?
+      % \item New \code{.lm.fit()} for benchmark lovers but not Joe
+      % Average.
     }
   }
 
@@ -161,7 +165,7 @@
 
       \item \code{str(x)} is considerably faster for very large lists,
       or factors with 100,000 levels, the latter as in \PR{15337}.
-      
+
       \item \code{col2rgb()} now converts factors to character strings
       not integer codes (suggested by Bryan Hanson).
     }

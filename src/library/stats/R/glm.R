@@ -240,7 +240,7 @@ glm.fit <-
             ngoodobs <- as.integer(nobs - sum(!good))
             ## call Fortran code via C wrapper
             fit <- .Call(C_Cdqrls, x[good, , drop = FALSE] * w, z * w,
-                         min(1e-7, control$epsilon/1000))
+                         min(1e-7, control$epsilon/1000), check=FALSE)
             if (any(!is.finite(fit$coefficients))) {
                 conv <- FALSE
                 warning(gettextf("non-finite coefficients at iteration %d", iter), domain = NA)

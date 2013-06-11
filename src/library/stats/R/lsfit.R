@@ -94,7 +94,7 @@ lsfit <- function(x, y, wt = NULL, intercept = TRUE, tolerance = 1e-07,
     }
 
     # Here y is a matrix, so z$residuals and z$effects will be
-    z <- .Call(C_Cdqrls, x, y, tolerance)
+    z <- .Call(C_Cdqrls, x, y, tolerance, check=FALSE)
 
     resids <- array(NA, dim = dimy)
     dim(z$residuals) <- c(nry, ncy)

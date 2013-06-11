@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -116,7 +116,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     else if(length(dots) == 1L)
 	warning("extra argument ", sQuote(names(dots)),
                 " is disregarded.", domain = NA)
-    z <- .Call(C_Cdqrls, x, y, tol)
+    z <- .Call(C_Cdqrls, x, y, tol, FALSE)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
@@ -147,6 +147,8 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
 	   qr = structure(qr, class="qr"),
 	   df.residual = n - z$rank))
 }
+
+.lm.fit <- function(x, y, tol = 1e-07) .Call(C_Cdqrls, x, y, tol, check=TRUE)
 
 lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
                      singular.ok = TRUE, ...)
@@ -201,7 +203,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
                     df.residual = 0L))
     }
     wts <- sqrt(w)
-    z <- .Call(C_Cdqrls, x * wts, y * wts, tol)
+    z <- .Call(C_Cdqrls, x * wts, y * wts, tol, FALSE)
     if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
