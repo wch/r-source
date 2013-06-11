@@ -3048,7 +3048,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.9.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.19.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
@@ -3057,42 +3057,17 @@ installed, and so may need updating if the Java installation is updated.
 This can be done by running @code{R CMD javareconf} which updates
 settings in both @file{etc/Makeconf} and
 @file{@var{R_HOME}/etc/ldpaths}. See @code{R CMD javareconf --help} for
-details.  Alternatively a less specific version of @env{JAVA_HOME} can
-be supplied at configuration: in the example above this would be
+details.
+
+Another way of overriding those settings is to set the environment variable
+@enindex R_JAVA_LD_LIBRARY_PATH
+@env{R_JAVA_LD_LIBRARY_PATH} (before @R{} is started, hence not in
+@file{~/.Renviron}), which suffices to run already-installed
+Java-using packages.  For example
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.7.0/jre
+R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.7.0/jre/lib/amd64/server
 @end example
-
-Another way of overriding those setting is to set
-@enindex R_JAVA_LD_LIBRARY_PATH
-@env{R_JAVA_LD_LIBRARY_PATH} (e.g.@: in @file{~/.Renviron}), or use
-@file{/etc/ld.so.conf} to specify the Java runtime library paths to
-the system. Other settings are recorded in @file{etc/Makeconf} (or a
-sub-architecture-specific version), e.g.
-
-@example
-JAVA = /usr/bin/java
-JAVAC = /usr/bin/javac
-JAVA_HOME = /usr/java/jdk1.7.0_17/jre
-JAVA_LD_LIBRARY_PATH = $(JAVA_HOME)/lib/amd64/server
-JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server -ljvm
-@end example
-
-@noindent
-where @samp{JAVA_LIBS} contains flags necessary to link JNI programs.
-Some of the above variables can be queried using @code{R CMD config}.
-
-@enindex R_JAVA_LD_LIBRARY_PATH
-Beware that on most OSes@footnote{on e.g.@: Linux and Solaris is
-prepended to the library path; as from @R{}@tie{}3.0.0 it is effectively
-appended on OS X.} setting @env{R_JAVA_LD_LIBRARY_PATH} changes the
-library path when @R{} and all its packages are loaded, not just for the
-Java libraries and JVM.  This can cause problems with conflicts between
-libraries supplied for use with Java and system libraries, and
-@env{JAVA_LD_LIBRARY_PATH} may need to be adjusted.  Where the OS
-supports it, it is better to set a run-time path (e.g.@: by @option{-R}
-or @option{-rpath}) as part of @env{JAVA_LIBS}.
 
 
 @node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under a Unix-alike
