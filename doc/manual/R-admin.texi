@@ -1470,9 +1470,10 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it.  This runs on OS X 10.6 and later (Snow Leopard, Lion,
-Mountain Lion, @dots{}); it is a 64-bit (@cputype{x86_64}) build which
-should run on all Macs from mid-2008 on.  For older Intel Macs and some
-older versions of the OS you can install @R{} from the sources.
+Mountain Lion, Mavericks, @dots{}); it is a 64-bit (@cputype{x86_64})
+build which should run on all Macs from mid-2008 on.  For older Intel
+Macs and some older versions of the OS you can install @R{} from the
+sources.
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -1485,7 +1486,7 @@ the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
 ``Show All Log'') is useful for tracking down problems.
 
-On Mountain Lion with `GateKeeper' active you may need to
+On Mountain Lion and later with `GateKeeper' active you will need to
 right/control-click on any unsigned packages and select @samp{Open}:
 recent @acronym{CRAN} packages are signed.
 
@@ -1922,9 +1923,8 @@ Line Tools' for @command{Xcode} and compilers which match those used to
 build @R{}: see @ref{OS X}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
-installed: for Mountain Lion see @ref{Mountain Lion}.  Several packages
-need X11 installed, including those using Tk: for Mountain Lion see
-@ref{Mountain Lion}.
+installed and several packages need X11 installed, including those using
+Tk.  For Mountain Lion and Mavericks see @ref{OS X} and @ref{Java (OS X)}.
 
 Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer for 3.0.0 and later.  These are
@@ -4292,7 +4292,7 @@ with @option{--without-readline}).
 You may also need to install an X sub-system (or you will need to
 configure with @option{--without-x}): X is part of the standard OS X
 distribution in versions prior to Mountain Lion, but not always
-installed.  For Mountain Lion, see
+installed.  For Mountain Lion and later, see
 @uref{http://xquartz.macosforge.org/}: some people prefer to use XQuartz
 on earlier versions of OS X instead of the Apple version.
 
@@ -4333,8 +4333,9 @@ is built using
 @item @command{gcc}
 from the Xcode distribution.  This is a version of gcc 4.2.1 with an
 LLVM backend.  Note that Apple have announced that Xcode 4.6 will be the
-last `release' with this compiler (4.6.1 does contain it), and it is
-likely that @command{clang} will be used before @R{} 3.1.0 is released.
+last `release' with this compiler (4.6.2 does contain it but 5 is
+expected not to), and it is likely that @command{clang} will be used
+before @R{} 3.1.0 is released.
 
 @item @command{gfortran}
 from
@@ -4371,7 +4372,8 @@ The alternative, @command{clang}, has no OpenMP support.
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
 most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
-(and perhaps @code{tiff}).
+(and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
+and useful for many packages.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4428,11 +4430,12 @@ Lion if XQuartz is in use.
 @node Mountain Lion, Tcl/Tk headers and libraries, Lion, OS X
 @subsection Mountain Lion
 
-The X11 system used with Mountain Lion will be XQuartz.  To build the
-graphics devices depending on cairographics the XQuartz path for
-@command{pkg-config} files needs to be known to @command{pkg-config}
-when @command{configure} is run: this usually means adding it to the
-@env{PKG_CONFIG_PATH} environment variable, e.g.
+The X11 system used with Mountain Lion and later will be XQuartz (see above).
+
+To build the graphics devices depending on cairographics the XQuartz
+path for @command{pkg-config} files needs to be known to
+@command{pkg-config} when @command{configure} is run: this usually means
+adding it to the @env{PKG_CONFIG_PATH} environment variable, e.g.
 
 @example
 export PKG_CONFIG_PATH= \
@@ -4478,11 +4481,11 @@ Configure @R{} with
 
 The situation with Java support on OS X is messy, with Apple essentially
 no longer supporting Java (and what it does support is Java 6, which has
-reached end-of-life).  Snow Leopard and Lion shipped with a Java runtime
-(JRE).
+reached end-of-life).  Snow Leopard and Lion shipped with a Java 6
+runtime (JRE).
 
-Mountain Lion does not come with an installed JRE, and an upgrade to
-Mountain Lion removes one if already installed.  It is intended to be
+Mountain Lion did not come with an installed JRE, and an upgrade to
+Mountain Lion removed one if already installed.  It is intended to be
 installed at first use. Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed this should prompt you to install it.
