@@ -71,7 +71,10 @@ str.Date <- str.POSIXt <- function(object, ...) {
 
     le.str <- if(give.length) paste0("[1:",as.character(n),"]")
     cat(" ", cl[1L], le.str,", format: ", sep = "")
-    do.call(str, c(list(format(object), give.head = FALSE), larg))
+    ## do.call(str, c(list(format(object), give.head = FALSE), larg))
+    ## ensuring 'object' is *not* copied:
+    str.f.obj <- function(...) str(format(object), ...)
+    do.call(str.f.obj, c(list(give.head = FALSE), larg))
 }
 
 strOptions <- function(strict.width = "no", digits.d = 3, vec.len = 4,
@@ -180,7 +183,10 @@ str.default <-
 			  names(match.call())[-(1:2)], "...")
 	aList <- as.list(fStr)[nf]
 	aList[] <- lapply(nf, function(n) eval(as.name(n)))
-	do.call(str, c(list(object=obj), aList, list(...)), quote=TRUE)
+	## do.call(str, c(list(object=obj), aList, list(...)), quote=TRUE)
+	## ensuring 'obj' is *not* copied:
+	strObj <- function(...) str(obj, ...)
+	do.call(strObj, c(aList, list(...)), quote = TRUE)
     }
 
     ## le.str: not used for arrays:
@@ -379,18 +385,20 @@ str.default <-
 	    if(!is.character(lev.att)) {# should not happen..
 		warning("'object' does not have valid levels()")
 		nl <- 0
-	    } else lev.att <- encodeString(lev.att, na.encode = FALSE, quote = '"')
+	    } else { ## protect against large nl:
+                w <- min(max(width/2, 10), 1000)
+                if(nl > w) lev.att <- lev.att[seq_len(w)]
+                n.l <- length(lev.att) # possibly  n.l << nl
+                lev.att <- encodeString(lev.att, na.encode = FALSE, quote = '"')
+            }
 	    ord <- is.ordered(object)
 	    object <- unclass(object)
 	    if(nl) {
 		## as from 2.1.0, quotes are included ==> '-2':
 		lenl <- cumsum(3 + (nchar(lev.att, type="w") - 2))# level space
-		ml <- if(nl <= 1 || lenl[nl] <= 13)
-		    nl else which.max(lenl > 13)
+		ml <- if(n.l <= 1 || lenl[n.l] <= 13)
+		    n.l else which.max(lenl > 13)
 		lev.att <- maybe_truncate(lev.att[seq_len(ml)])
-##		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
-##		    lev.att[ml] <-
-##			paste0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
 	    }
 	    else # nl == 0
 		ml <- length(lev.att <- "")
@@ -617,9 +625,14 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
 		if(length(grep("missing|not found", o$message)))
 		"<missing>" else o$message, "\n", sep = "")
 	}
-	else
-	    do.call(str, c(list(o), strargs),
-		    quote = is.call(o) || is.symbol(o)) # protect calls from evaluation
+	else {
+	    ## do.call(str, c(list(o), strargs),
+	    ##	  quote = is.call(o) || is.symbol(o)) # protect calls from eval.
+	    ## ensuring 'obj' is *not* copied:
+	    strO <- function(...) str(o, ...)
+	    do.call(strO, strargs, quote = is.call(o) || is.symbol(o))
+					# protect calls from eval.
+	}
     }
     invisible(x)
 }
