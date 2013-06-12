@@ -104,7 +104,7 @@ package.skeleton <-
 	file = description, sep = "")
     close(description)
 
-    if(!namespace)
+    if(!missing(namespace))
 	warning("From R 2.14.0 on, every package gets a NAMESPACE.",
 		" Argument 'namespace' is deprecated.", domain = NA)
     ## NAMESPACE

@@ -71,7 +71,15 @@
       \file{Rinternals.h} is preferred for new code.
     }
   }
-
+  
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The unused \code{namespace} argument to
+      \code{package.skeleton()} is now formally deprecated and will be
+      removed in \R 3.1.0.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{help.request()} could not determine the current version

@@ -28,9 +28,7 @@ package.skeleton(name = "anRpackage", list,
     \sQuote{Details}.}
   \item{path}{path to put the package directory in.}
   \item{force}{If \code{FALSE} will not overwrite an existing directory.}
-  \item{namespace}{a logical, no longer used, and hence deprecated.  A
-    \code{NAMESPACE} file is always created to export all objects whose
-    names begin with a letter, plus all S4 methods and classes.}
+  \item{namespace}{a logical, no longer used, and hence deprecated.}
   \item{code_files}{a character vector with the paths to R code files to
     build the package around.  See \sQuote{Details}.}
 }
@@ -53,12 +51,11 @@ package.skeleton(name = "anRpackage", list,
   The package sources are placed in subdirectory \code{name} of
   \code{path}.  If \code{code_files} is supplied, these files are
   copied; otherwise, objects will be dumped into individual source
-  files.
-  The file names in \code{code_files} should  have suffix \code{".R"} and
-  be in the current working directory.
+  files.  The file names in \code{code_files} should have suffix
+  \code{".R"} and be in the current working directory.
 
   The filenames created for source and documentation try to be valid for
-  all OSes known to run R.  Invalid characters are replaced by \samp{_},
+  all OSes known to run \R.  Invalid characters are replaced by \samp{_},
   invalid names are preceded by \samp{zz}, names are converted to lower
   case (to avoid case collisions on case-insensitive file systems) and
   finally the converted names are made unique by
