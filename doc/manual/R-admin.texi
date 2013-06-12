@@ -1927,8 +1927,8 @@ installed and several packages need X11 installed, including those using
 Tk.  For Mountain Lion and Mavericks see @ref{OS X} and @ref{Java (OS X)}.
 
 Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
-Tcl/Tk contained in the @R{} installer for 3.0.0 and later.  These are
-required by a number of @acronym{CRAN} and Bioconductor packages.
+Tcl/Tk contained in the @R{} installer.  These are required by a number
+of @acronym{CRAN} and Bioconductor packages.
 
 A few of the binary packages need other software to be installed on your
 system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
@@ -1957,7 +1957,7 @@ CXXFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
 @end example
 
 @noindent
-(this is expected to become necessary once Xcode 4.7 is released) and
+(this is expected to become necessary once Xcode 5 is released) and
 for another version of @command{gfortran-4.2} we needed
 @example
 FLIBS=-lgfortran
@@ -3468,9 +3468,9 @@ special values such as INF or NaN values. Using these special values may
 cause LAPACK to return unexpected results or become unstable.
 @end quotation
 
-As from @R{} 3.0.0 we rely on limited support in LAPACK for matrices
-with @math{2^{31}} or more elements: it is quite possible that an
-external LAPACK will not have that support.
+We rely on limited support in LAPACK for matrices with @math{2^{31}} or
+more elements: it is quite possible that an external LAPACK will not
+have that support.
 
 If you have a pure FORTRAN 77 compiler which cannot compile LAPACK it
 may be possible to use CLAPACK from
@@ -4170,7 +4170,7 @@ the additional flags being needed to resolve problems linking against
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
-C++ compilers (@uref{http://clang.llvm.org}, versions 3.0 and 3.2)
+C++ compilers (@uref{http://clang.llvm.org}, versions 3.0, 3.2 and 3.3)
 based on the Clang front-ends, invoked by @code{CC=clang CXX=clang++},
 together with @command{gfortran}.  These take very similar options to
 the corresponding GCC compilers.
@@ -4377,6 +4377,7 @@ was used.
 * Snow Leopard::                
 * Lion::                        
 * Mountain Lion::               
+* Mavericks::                   
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
@@ -4402,10 +4403,10 @@ last public free version for Snow Leopard) will work.
 No tweaks are known to be needed on Lion.  See the notes on Mountain
 Lion if XQuartz is in use.
 
-@node Mountain Lion, Tcl/Tk headers and libraries, Lion, OS X
+@node Mountain Lion, Mavericks, Lion, OS X
 @subsection Mountain Lion
 
-The X11 system used with Mountain Lion and later will be XQuartz (see above).
+The X11 system used with Mountain Lion is XQuartz (see above).
 
 To build the graphics devices depending on cairographics the XQuartz
 path for @command{pkg-config} files needs to be known to
@@ -4420,7 +4421,24 @@ export PKG_CONFIG_PATH= \
 For some pre-compiled software, for example the GTK framework,
 @file{/opt/X11/include} may need to be added to the include paths.
 
-@node Tcl/Tk headers and libraries, Java (OS X), Mountain Lion, OS X
+@node Mavericks, Tcl/Tk headers and libraries, Mountain Lion, OS X
+@subsection Mavericks
+
+Mavericks is associated with Xcode 5, and is said to download software
+components as needed without installing all of Xcode.
+
+It is likely that @command{clang} will be the preferred C compiler,
+using something like
+
+@example
+CC="clang"
+CXX="clang++"
+F77="gfortran-4.2 -arch x86_64"
+FC=$F77
+OBJC="clang"
+@end example
+
+@node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -4503,11 +4521,10 @@ JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
-in @file{config.site}.  As from @R{} 3.0.0 @env{JAVA_LD_LIBRARY_PATH} is
-used as part of @env{DYLD_FALLBACK_LIBRARY_PATH} and so is less likely
-to cause conflicts, but @file{$@{JAVA_HOME@}/jre/lib} is still best
-avoided as in some JDKs it contains libraries which conflict with system
-libraries.
+in @file{config.site}.  @env{JAVA_LD_LIBRARY_PATH} is used as part of
+@env{DYLD_FALLBACK_LIBRARY_PATH} and so is less likely to cause
+conflicts, but @file{$@{JAVA_HOME@}/jre/lib} is still best avoided as in
+some JDKs it contains libraries which conflict with system libraries.
 
 Note that it is necessary to set the environment variable @env{NOAWT}
 to @code{1} to install many of the Java-using packages.
@@ -4750,9 +4767,9 @@ places.  At the time of writing it fails in @file{tests/reg-BLAS.R}, and on
 some builds, including for @cputype{amd64}, it fails in
 @code{example(eigen)}.
 
-As from @R{} 3.0.0 parsing very complex expressions needs a lot of stack
-space when the Oracle compilers are used: several packages require the
-stack increased to say 20MB.
+Parsing very complex expressions needs a lot of stack space when the
+Oracle compilers are used: several packages require the stack increased
+to say 20MB.
 
 
 @menu
