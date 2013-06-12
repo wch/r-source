@@ -4377,6 +4377,7 @@ was used.
 * Snow Leopard::                
 * Lion::                        
 * Mountain Lion::               
+* Mavericks::                   
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
@@ -4402,10 +4403,10 @@ last public free version for Snow Leopard) will work.
 No tweaks are known to be needed on Lion.  See the notes on Mountain
 Lion if XQuartz is in use.
 
-@node Mountain Lion, Tcl/Tk headers and libraries, Lion, OS X
+@node Mountain Lion, Mavericks, Lion, OS X
 @subsection Mountain Lion
 
-The X11 system used with Mountain Lion and later will be XQuartz (see above).
+The X11 system used with Mountain Lion is XQuartz (see above).
 
 To build the graphics devices depending on cairographics the XQuartz
 path for @command{pkg-config} files needs to be known to
@@ -4420,7 +4421,24 @@ export PKG_CONFIG_PATH= \
 For some pre-compiled software, for example the GTK framework,
 @file{/opt/X11/include} may need to be added to the include paths.
 
-@node Tcl/Tk headers and libraries, Java (OS X), Mountain Lion, OS X
+@node Mavericks, Tcl/Tk headers and libraries, Mountain Lion, OS X
+@subsection Mavericks
+
+Mavericks is associated with Xcode 5, and is said to download software
+components as needed without installing all of Xcode.
+
+It is likely that @command{clang} will be the preferred C compiler,
+using something like
+
+@example
+CC="clang"
+CXX="clang++"
+F77="gfortran-4.2 -arch x86_64"
+FC=$F77
+OBJC="clang"
+@end example
+
+@node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
