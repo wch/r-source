@@ -212,7 +212,7 @@
       \file{Rinternals.h} is preferred for new code.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The unused \code{namespace} argument to
@@ -220,7 +220,7 @@
       removed in \R 3.1.0.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{help.request()} could not determine the current version
@@ -306,6 +306,8 @@
       vector was limited to 2GB have been unlimited on a 64-bit
       platform, and in most cases serialization to a vector of more than
       1GB will be substantially faster.
+
+      \item \code{tail(warnings())} now works, via the new \code{`[`} method.
     }
   }
 

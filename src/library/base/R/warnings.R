@@ -24,6 +24,9 @@ warnings <- function(...)
     structure(last.warning, dots=list(...), class="warnings")
 }
 
+`[.warnings` <- function(x, ...)
+    structure(NextMethod("["), class="warnings")
+
 print.warnings <- function(x, ...)
 {
     if(n <- length(x)) {
