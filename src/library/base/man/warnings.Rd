@@ -1,13 +1,14 @@
 % File src/library/base/man/warnings.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{warnings}
+\title{Print Warning Messages}
 \alias{warnings}
 \alias{last.warning}
 \alias{print.warnings}
-\title{Print Warning Messages}
+\alias{[.warnings}
 \description{
   \code{warnings} and its \code{print} method print the
   variable \code{last.warning} in a pleasing form.
@@ -51,6 +52,7 @@ for(w in -1:1) {
 }
 warnings()
 options(ow) # reset
+tail(warnings(), 2) # see the last two warnings only (via '[' method)
 }
 \keyword{programming}
 \keyword{error}

@@ -76,8 +76,8 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
   arguments \code{...} on each node.
 
   \code{clusterEvalQ} evaluates a literal expression on each cluster
-  node.  It a parallel version of \code{\link{evalq}}, and is a convenience
-  function invoking \code{clusterCall}.
+  node.  It is a parallel version of \code{\link{evalq}}, and is a
+  convenience function invoking \code{clusterCall}.
 
   \code{clusterApply} calls \code{fun} on the first node with
   arguments \code{seq[[1]]} and \code{...}, on the second node with
