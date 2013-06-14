@@ -39,7 +39,7 @@ static const R_CMethodDef CEntries[]  = {
 static const R_CallMethodDef CallEntries[] = {
     CALLDEF(codeFilesAppend, 2),
     CALLDEF(delim_match, 2),
-    CALLDEF(dirchmod, 1),
+    CALLDEF(dirchmod, 2),
     {"C_getfmts", (DL_FUNC) &getfmts, 1},
     CALLDEF(Rmd5, 1),
     CALLDEF(check_nonASCII, 2),
