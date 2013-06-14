@@ -58,8 +58,7 @@ From the announcement of the change (2001-Feb-05)
     To avoid any anomalies, the versions of the same files in R versions
     1.0.0 to 1.2.1 may also be used under LGPL or GPL.
 
-As from R 2.3.0 import libraries are no longer used under Windows, and
-as from R 2.4.0 fewer export files are used under AIX.
+Import libraries are no longer used under Windows.
 
 Some contributed files are also covered by the Library General Public License.
 These include (see also below)
@@ -111,7 +110,7 @@ in part
 	Copyright (C) 1997 R. Gentleman & R. Ihaka
 	Copyright (C) 1997, 1998 M. Maechler
 
-shares/licenses/*
+share/licenses/*
 
 	See the individual files.
 
@@ -272,7 +271,7 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f
   *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
   *     November 2011
 
-  where the version number and date vary by subroutine.
+  where the version number, providers and date vary by subroutine.
 
   The LAPACK README says
 
