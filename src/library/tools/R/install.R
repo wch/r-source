@@ -171,6 +171,8 @@
             "      --no-test-load	skip test of loading installed package",
             "      --no-clean-on-error	do not remove installed package on error",
             "      --merge-multiarch	multi-arch by merging (from a single tarball only)",
+	    "      --group-writable	set file permissions to group-writable,",
+	    "			such that group members can update.packages()",
            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
@@ -184,7 +186,7 @@
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste0("for this one it is ",
-                   ifelse(static_html, "--html", "--no-html"), "."),
+		   if(static_html) "--html" else "--no-html", "."),
             "",
             "Report bugs at bugs.r-project.org .", sep = "\n")
     }
@@ -294,7 +296,8 @@
             do_install_binary(pkg_name, instdir, desc)
 
         ## Add read permission to all, write permission to owner
-        .Call(dirchmod, instdir)
+        ## If group-write permissions were requested, set them
+        .Call(dirchmod, instdir, group.writable)
         is_first_package <<- FALSE
 
         if (tar_up) { # Unix only
@@ -392,7 +395,7 @@
                 for(arch in archs) {
                     ss <- paste("src", arch, sep = "-")
                     ## it seems fixing permissions is sometimes needed
-                    .Call(dirchmod, ss)
+                    .Call(dirchmod, ss, group.writable)
                     unlink(ss, recursive = TRUE)
                 }
 
@@ -426,7 +429,7 @@
         on.exit(Sys.unsetenv("R_INSTALL_PKG"))
         shlib_install <- function(instdir, arch)
         {
-            ## install.lib.R allows customization of the libs installation process
+            ## install.libs.R allows customization of the libs installation process
             if (file.exists("install.libs.R")) {
                 message("installing via 'install.libs.R' to ", instdir,
                         domain = NA)
@@ -452,7 +455,9 @@
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
                 ## not clear if this is still necessary, but sh version did so
-                if (!WINDOWS) Sys.chmod(file.path(dest, files), "755")
+		if (!WINDOWS)
+		    Sys.chmod(file.path(dest, files),
+			      if(group.writable) "775" else "755")
 		## OS X does not keep debugging symbols in binaries
 		## anymore so optionally we can create dSYMs. This is
 		## important since we will blow away .o files so there
@@ -541,6 +546,13 @@
                 errmsg(" Windows-only package")
         }
 
+	if(group.writable) { ## group-write modes if requested:
+	    fmode <- "664"
+	    dmode <- "775"
+	} else {
+	    fmode <- "644"
+	    dmode <- "755"
+	}
 
         ## At this point we check that we have the dependencies we need.
         ## We cannot use installed.packages() as other installs might be
@@ -627,7 +639,7 @@
             for (f in c("NAMESPACE", "LICENSE", "LICENCE", "NEWS"))
                 if (file.exists(f)) {
                     file.copy(f, instdir, TRUE)
-                    Sys.chmod(file.path(instdir, f), "644")
+		    Sys.chmod(file.path(instdir, f), fmode)
                 }
 
             res <- try(.install_package_description('.', instdir))
@@ -724,7 +736,7 @@
                             dir.create(ss, showWarnings = FALSE)
                             file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
                             ## avoid read-only files/dir such as nested .svn
-                            .Call(dirchmod, ss)
+			    .Call(dirchmod, ss, group.writable)
                             setwd(ss)
 
                             ra <- paste0("/", arch)
@@ -923,7 +935,7 @@
 			resaveRdaFiles(paths, compress = "auto")
 		    }
 		}
-		Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
+		Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), fmode)
 		if (thislazy) {
 		    starsmsg(paste0(stars, "*"),
                              "moving datasets to lazyload DB")
@@ -957,7 +969,7 @@
 	    res <- try(.install_package_demos(".", instdir))
 	    if (inherits(res, "try-error"))
 		pkgerrmsg("ERROR: installing demos failed")
-	    Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), "644")
+	    Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), fmode)
 	}
 
         ## dotnames are ignored.
@@ -970,7 +982,7 @@
 	    if (length(files)) {
 		file.copy(files, file.path(instdir, "exec"), TRUE)
                 if (!WINDOWS)
-                    Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
+		    Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), dmode)
 	    }
 	}
 
@@ -1019,7 +1031,7 @@
                 ## make executable if the source file was (for owner)
                 modes <- file.info(i_files)$mode
                 execs <- as.logical(modes & as.octmode("100"))
-                Sys.chmod(i2_files[execs], "755")
+		Sys.chmod(i2_files[execs], dmode)
             }
             if (compact_docs) {
                 pdfs <- dir(file.path(instdir, "doc"), pattern="\\.pdf",
@@ -1214,7 +1226,8 @@
     test_load <- TRUE
     merge <- FALSE
     dsym <- nzchar(Sys.getenv("PKG_MAKE_DSYM"))
-
+    group.writable <- getOption("group.writable.pkgs",FALSE) ||
+		       nzchar(Sys.getenv("R_PKG_GROUP_WRITABLE"))
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
     resave_data <- FALSE
@@ -1345,6 +1358,8 @@
             byte_compile <- TRUE
         } else if (a == "--dsym") {
             dsym <- TRUE
+        } else if (a == "--group-writable") {
+            group.writable <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a), domain = NA)
         } else pkgs <- c(pkgs, a)
@@ -1509,6 +1524,14 @@
         stop("ERROR: no permission to install to directory ",
              sQuote(lib), call. = FALSE)
 
+    if(group.writable && !WINDOWS) {
+	## group-writable package should be in group-writable lib
+	m <- file.info(lib)$mode
+	if((m & "770") < as.octmode("770"))
+	    warning("Group-writable package installation into a library\nwithout group write permission is questionable",
+		    call.=FALSE)
+    }
+
     if (libs_only) {
 	install_R <- FALSE
 	install_data <- FALSE
@@ -1586,7 +1609,7 @@
     do_cleanup()
     on.exit()
     invisible()
-}
+} ## .install_packages()
 
 ## for R CMD SHLIB on all platforms
 .SHLIB <- function()

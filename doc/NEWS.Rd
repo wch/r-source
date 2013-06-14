@@ -51,6 +51,10 @@
       reporting those where a function has been copied from another
       namespace (e.g. as a default method).  It now reports calls where
       \code{.NAME} is a symbol registered in another package.
+
+      \item \command{R CMD INSTALL --group-writable} installs packages
+      group writably, such that \code{update.packages()} works for other
+      group members (suggested and from a patch by Dirk Eddelbuettel).
     }
   }
 

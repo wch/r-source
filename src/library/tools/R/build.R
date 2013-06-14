@@ -870,8 +870,8 @@ get_exclude_patterns <- function()
         ## This does not easily work if $pkg is a symbolic link.
         ## Hence, we now convert to absolute paths.'
         setwd(startdir)
-        res <- try(setwd(pkg), silent = TRUE)
-        if (inherits(res, "try-error")) {
+	res <- tryCatch(setwd(pkg), error = function(e)e)
+	if (inherits(res, "error")) {
             errorLog(Log, "cannot change to directory ", sQuote(pkg))
             do_exit(1L)
         }
@@ -979,7 +979,7 @@ get_exclude_patterns <- function()
         setwd(Tdir)
         ## Fix permissions for all files to be at least 644, and dirs 755
         ## Not restricted by umask.
-        if (!WINDOWS) .Call(dirchmod, pkgname)
+	if (!WINDOWS) .Call(dirchmod, pkgname, group.writable=FALSE)
         ## Add build stamp to the DESCRIPTION file.
         add_build_stamp_to_description_file(file.path(pkgname,
                                                       "DESCRIPTION"))
