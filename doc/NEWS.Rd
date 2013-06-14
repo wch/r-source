@@ -121,6 +121,9 @@
       \item \code{package.skeleton()} was not starting its search for
       function objects in the correct place if \code{environment} was
       supplied.  (Reported by Karl Forner.)
+
+      \item Parsing code was changing the length field of vectors and
+      confusing the memory manager.  (\PR{15345})
     }
   }
 }

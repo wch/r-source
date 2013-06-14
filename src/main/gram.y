@@ -48,7 +48,7 @@ static void initData(void);
 static void initId(void);
 static void record_( int, int, int, int, int, int, char* ) ;
 
-static void yyerror(char *);
+static void yyerror(const char *);
 static int yylex();
 int yyparse(void);
 
@@ -1851,7 +1851,7 @@ SEXP mkFalse(void)
     return s;
 }
 
-static void yyerror(char *s)
+static void yyerror(const char *s)
 {
     static const char *const yytname_translations[] =
     {
@@ -3266,12 +3266,31 @@ static void modif_token( yyltype* loc, int tok ){
 	
 }
 
+static void shrinkData()
+{
+    int data_size = ParseState.data_count * DATA_ROWS;
+    int text_size = ParseState.data_count;
+
+    if (LENGTH(ParseState.data) > data_size) {
+	SEXP newdata = allocVector(INTSXP, data_size);
+	for (int i = 0; i < data_size; i++)
+	    INTEGER(newdata)[i] = INTEGER(ParseState.data)[i];
+	REPROTECT(ParseState.data = newdata, ParseState.DATA_INDEX);
+    }
+
+    if (LENGTH(ParseState.text) > text_size) {
+	SEXP newtext = allocVector(STRSXP, text_size);
+	for (int i = 0; i < text_size; i++)
+	    SET_STRING_ELT(newtext, i, STRING_ELT(ParseState.text, i));
+	REPROTECT(ParseState.text = newtext, ParseState.TEXT_INDEX);
+    }
+}
+
 static void finalizeData( ){
 	
     int nloc = ParseState.data_count ;
 
-    SETLENGTH( ParseState.data, ParseState.data_count * DATA_ROWS ) ;
-    SETLENGTH( ParseState.text, ParseState.data_count );
+    shrinkData();
 
     // int maxId = _ID(nloc-1) ;
     int i, j, id ;
