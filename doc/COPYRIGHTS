@@ -497,9 +497,7 @@ share/licenses/LGPL-2
 share/licenses/LGPL-2.1
 share/licenses/LGPL-3
 src/main/strdup.c
-tools/config.quess
 tools/config.rpath
-tools/config.sub
 tools/help2man.pl
 tools/ltmain.sh
 tools/mdate-sh
@@ -507,6 +505,11 @@ tools/missing
 
    Copyright various dates Free Software Foundation
 
+tools/config.quess
+tools/config.sub
+
+   Copyright 1992-2013 Free Software Foundation.  
+   The Exception to GPL-3 applies.
 
 tools/install-sh:
 
