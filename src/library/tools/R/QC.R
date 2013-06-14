@@ -5629,10 +5629,10 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     for (f in pg) {
         ## Kludge for now
         if(basename(f) %in%  c("iconv.Rd", "showNonASCII.Rd")) def_enc <- TRUE
-        tmp <- try(suppressMessages(checkRd(f, encoding = enc,
-                                            def_enc = def_enc)),
-                   silent=TRUE)
-        if(inherits(tmp, "try-error")) {
+	tmp <- tryCatch(suppressMessages(checkRd(f, encoding = enc,
+						 def_enc = def_enc)),
+			error = function(e)e)
+	if(inherits(tmp, "error")) {
 	    bad <- c(bad, f)
             if(!silent) message(geterrmessage())
         } else print(tmp, minlevel = minlevel)
@@ -6160,22 +6160,22 @@ function(x, ...)
       },
       if(length(y <- x$depends_with_restricts_use_TRUE)) {
           c("Package has a FOSS license but eventually depends on the following",
-            ifelse(length(y) > 1L,
-                   "packages which restrict use:",
-                   "package which restricts use:"),
+	    if(length(y) > 1L)
+	    "packages which restrict use:" else
+	    "package which restricts use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if(length(y <- x$depends_with_restricts_use_NA)) {
           c("Package has a FOSS license but eventually depends on the following",
-            ifelse(length(y) > 1L,
-                   "packages which may restrict use:",
-                   "package which may restrict use:"),
+	    if(length(y) > 1L)
+            "packages which may restrict use:" else
+	    "package which may restrict use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if (length(y <- x$uses)) {
-          paste(ifelse(length(y) > 1L,
-                       "Uses the superseded packages:",
-                       "Uses the superseded package:"),
+          paste(if(length(y) > 1L)
+		"Uses the superseded packages:" else
+		"Uses the superseded package:",
                 paste(sQuote(y), collapse = ", "))
       }
       )
