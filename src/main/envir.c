@@ -167,7 +167,6 @@ static SEXP getActiveValue(SEXP fun)
 #define HASHPRI(x)	     TRUELENGTH(x)
 #define HASHTABLEGROWTHRATE  1.2
 #define HASHMINSIZE	     29
-#define SET_HASHSIZE(x,v)    SETLENGTH(x,v)
 #define SET_HASHPRI(x,v)     SET_TRUELENGTH(x,v)
 
 #define IS_HASHED(x)	     (HASHTAB(x) != R_NilValue)
@@ -318,7 +317,6 @@ static SEXP R_NewHashTable(int size)
 
     /* Allocate hash table in the form of a vector */
     PROTECT(table = allocVector(VECSXP, size));
-    SET_HASHSIZE(table, size);
     SET_HASHPRI(table, 0);
     UNPROTECT(1);
     return(table);
