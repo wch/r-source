@@ -28,36 +28,12 @@ Copyright @copyright{} 1990 W.@: N.@: Venables@*
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
 Copyright @copyright{} 1997, 1998 M.@: Maechler@*
-Copyright @copyright{} 1997-- R Core Team@*
 @Rcopyright{1999}
 
 @quotation
 @permission{}
 @end quotation
 @end copying
-
-@ifnottex
-@macro RIcopyright{}
-Copyright @copyright{} 1990 W.@: N.@: Venables@*
-Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
-Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
-Copyright @copyright{} 1997, 1998 M.@: Maechler@*
-Copyright @copyright{} 1997-- R Core Team@*
-@Rcopyright{1999}
-@end macro
-@end ifnottex
-
-@iftex
-@macro RIcopyright{}
-@noindent
-Copyright @copyright{} 1990 W.@: N.@: Venables
-Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith
-Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka
-Copyright @copyright{} 1997, 1998 M.@: Maechler
-Copyright @copyright{} 1997-- R Core Team@*
-@Rcopyright{1999}
-@end macro
-@end iftex
 
 @c <FIXME>
 @c Apparently AUCTeX 11.06 has a problem with '@appendixsection' entries

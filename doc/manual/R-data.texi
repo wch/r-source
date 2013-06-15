@@ -40,9 +40,9 @@ This manual is for R, version @value{VERSION}.
 @insertcopying
 @end ifplaintext
 
-@ifnothtml
+@c @ifnothtml
 @contents
-@end ifnothtml
+@c @end ifnothtml
 
 @ifnottex
 @node Top, Acknowledgements, (dir), (dir)
