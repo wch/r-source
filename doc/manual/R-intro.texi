@@ -27,8 +27,7 @@ Copyright @copyright{} 1990 W.@: N.@: Venables@*
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
 Copyright @copyright{} 1997, 1998 M.@: Maechler@*
-Copyright @copyright{} 1997-- R Core Team@*
-@Rcopyright{1999}
+@Rcopyright{2013}
 @end macro
 @end ifnottex
 
@@ -39,8 +38,7 @@ Copyright @copyright{} 1990 W.@: N.@: Venables
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka
 Copyright @copyright{} 1997, 1998 M.@: Maechler
-Copyright @copyright{} 1997-- R Core Team@*
-@Rcopyright{1999}
+@Rcopyright{2013}
 @end macro
 @end iftex
 

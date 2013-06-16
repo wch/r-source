@@ -72,13 +72,6 @@ Kurt Hornik                      @*
 @sp 2
 @end ifinfo
 
-@ifnothtml
-@contents
-@end ifnothtml
-
-@ifnottex
-@node Top, Introduction, (dir), (dir)
-@top R FAQ
 @ifhtml
 @html
 <h2>Frequently Asked Questions on R</h2>
@@ -87,6 +80,14 @@ Kurt Hornik                      @*
 <p><p><hr><p>
 @end html
 @end ifhtml
+
+@c @ifnothtml
+@contents
+@c @end ifnothtml
+
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top R FAQ
 @end ifnottex
 
 @menu
