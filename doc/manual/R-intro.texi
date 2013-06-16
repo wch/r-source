@@ -27,7 +27,7 @@ Copyright @copyright{} 1990 W.@: N.@: Venables@*
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
 Copyright @copyright{} 1997, 1998 M.@: Maechler@*
-@Rcopyright{2013}
+@Rcopyright{1999}
 @end macro
 @end ifnottex
 
@@ -38,7 +38,7 @@ Copyright @copyright{} 1990 W.@: N.@: Venables
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka
 Copyright @copyright{} 1997, 1998 M.@: Maechler
-@Rcopyright{2013}
+@Rcopyright{1999}
 @end macro
 @end iftex
 
