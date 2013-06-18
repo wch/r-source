@@ -171,8 +171,8 @@
             "      --no-test-load	skip test of loading installed package",
             "      --no-clean-on-error	do not remove installed package on error",
             "      --merge-multiarch	multi-arch by merging (from a single tarball only)",
-	    "      --group-writable	set file permissions to group-writable,",
-	    "			such that group members can update.packages()",
+	    ## "      --group-writable	set file permissions to group-writable,",
+	    ## "			such that group members can update.packages()",
            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
@@ -1226,8 +1226,8 @@
     test_load <- TRUE
     merge <- FALSE
     dsym <- nzchar(Sys.getenv("PKG_MAKE_DSYM"))
-    group.writable <- getOption("group.writable.pkgs",FALSE) ||
-		       nzchar(Sys.getenv("R_PKG_GROUP_WRITABLE"))
+    ## group.writable <- getOption("group.writable.pkgs",FALSE) ||
+    ##     	       nzchar(Sys.getenv("R_PKG_GROUP_WRITABLE"))
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
     resave_data <- FALSE
@@ -1358,8 +1358,8 @@
             byte_compile <- TRUE
         } else if (a == "--dsym") {
             dsym <- TRUE
-        } else if (a == "--group-writable") {
-            group.writable <- TRUE
+        ## } else if (a == "--group-writable") {
+        ##     group.writable <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a), domain = NA)
         } else pkgs <- c(pkgs, a)
@@ -1524,12 +1524,10 @@
         stop("ERROR: no permission to install to directory ",
              sQuote(lib), call. = FALSE)
 
-    if(group.writable && !WINDOWS) {
-	## group-writable package should be in group-writable lib
+    group.writable <- if(WINDOWS) FALSE else {
+	## install package group-writable  iff  in group-writable lib
 	m <- file.info(lib)$mode
-	if((m & "770") < as.octmode("770"))
-	    warning("Group-writable package installation into a library\nwithout group write permission is questionable",
-		    call.=FALSE)
+	(m & "020") == as.octmode("020") ## TRUE  iff  g-bit is "w"
     }
 
     if (libs_only) {

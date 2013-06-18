@@ -193,9 +193,10 @@
       namespace (e.g. as a default method).  It now reports calls where
       \code{.NAME} is a symbol registered in another package.
 
-      \item \command{R CMD INSTALL --group-writable} installs packages
-      group writably, such that \code{update.packages()} works for other
-      group members (suggested and from a patch by Dirk Eddelbuettel).
+      \item \command{R CMD INSTALL} now installs packages
+      group writably whenever the library (\code{lib.loc}) is group
+      writable.  Hence, \code{update.packages()} works for other group
+      members (suggested originally and from a patch by Dirk Eddelbuettel).
     }
   }
 
