@@ -56,7 +56,7 @@ str(words <- c(outer(L, c(outer(L,L,paste0)), paste0)))
 uids <- factor(words[sample.int(length(words)/10, 1e5, replace=TRUE)],
 	       levels = words)
 st <- system.time(str(uids, vec.len=1))
-stopifnot(st[["elapsed"]] < 0.020)
+stopifnot(st[[1]] < 0.100) ## (2012 machine: <= 0.002)
 ## needed about 0.8 seconds for R <= 3.0.1
 
 ## ftable(<array with unusual dimnames>)
