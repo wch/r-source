@@ -61,7 +61,8 @@ SEXP isoreg(SEXP y)
 	    REAL(yf)[i] = (REAL(yc)[ip] - REAL(yc)[known]) / (ip - known);
     } while ((known = ip) < n);
 
-    SETLENGTH(iKnots, n_ip);
+    if (n_ip < n)
+	SET_VECTOR_ELT(ans, 3, lengthgets(iKnots, n_ip));
     UNPROTECT(1);
     return(ans);
 }
