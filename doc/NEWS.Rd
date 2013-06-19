@@ -27,6 +27,18 @@
       
       \item \code{col2rgb()} now converts factors to character strings
       not integer codes (suggested by Bryan Hanson).
+
+      \item There is now support for the LaTeX style file \file{zi4.sty}
+      which has in some distributions replaced \file{inconsolata.sty}
+      (which has been removed without any warning or comment).
+
+      On a Unix-alike \command{configure} will select \file{zi4.sty} if
+      found.  For an existing installation environment variable
+      \env{R_RD4PDF} can be set in the environment or file
+      \file{etc/Renviron} to \samp{times,zi4,hyper}.
+
+      Windows users will need to set \env{R_RD4PDF} in the environment
+      or file \file{etc/Rcmd_environ} to \samp{times,zi4,hyper}.
     }
   }
 

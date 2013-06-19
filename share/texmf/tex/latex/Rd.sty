@@ -23,6 +23,7 @@
 \newboolean{Rd@use@lm}
 \newboolean{Rd@use@beramono}
 \newboolean{Rd@use@inconsolata}
+\newboolean{Rd@use@zi4}
 \DeclareOption{ae}{\setboolean{Rd@use@ae}{true}}
 \DeclareOption{hyper}{\setboolean{Rd@use@hyper}{true}}
 \DeclareOption{times}{\setboolean{Rd@use@times}{true}}
@@ -30,6 +31,7 @@
 \DeclareOption{cm-super}{\setboolean{Rd@use@cm-super}{true}}
 \DeclareOption{beramono}{\setboolean{Rd@use@beramono}{true}}
 \DeclareOption{inconsolata}{\setboolean{Rd@use@inconsolata}{true}}
+\DeclareOption{zi4}{\setboolean{Rd@use@zi4}{true}}
 \ProcessOptions
 \RequirePackage{longtable}
 \setcounter{LTchunksize}{250}
@@ -50,6 +52,7 @@
 %% Hence, we add to \verbatim@font ... suggestion by Bernd Raichle
 %% <raichle@Informatik.Uni-Stuttgart.DE>.
 \ifthenelse{\boolean{Rd@use@inconsolata}}{}{\RequirePackage{upquote}}
+\ifthenelse{\boolean{Rd@use@zi4}}{}{\RequirePackage{upquote}}
 \g@addto@macro\verbatim@font\@noligs
 
 \addtolength{\textheight}{12mm}
@@ -278,6 +281,8 @@
   \usepackage[scaled=.8]{beramono}}{}
 \ifthenelse{\boolean{Rd@use@inconsolata}}{%
   \usepackage{inconsolata}}{}
+\ifthenelse{\boolean{Rd@use@zi4}}{%
+  \usepackage{zi4}}{}
 
 \ifthenelse{\boolean{Rd@use@hyper}}{%
   \RequirePackage{color}    
