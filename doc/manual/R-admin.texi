@@ -521,7 +521,7 @@ The default can be overridden by setting the environment variable
 @enindex R_RD4PDF
 @env{R_RD4PDF}.  (On Unix-alikes, this will be picked up at install time
 and stored in @file{etc/Renviron}, but can still be overridden when the
-manuals are built, using @comamnd{make -e}.)  The usual @footnote{on a
+manuals are built, using @command{make -e}.)  The usual @footnote{on a
 Unix-alike, @samp{incosolata} is omitted if not found by
 @command{configure}.}  default value for @env{R_RD4PDF} is
 @samp{times,inconsolata,hyper}: omit @samp{hyper} if you do not want
