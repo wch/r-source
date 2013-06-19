@@ -193,7 +193,7 @@
       namespace (e.g. as a default method).  It now reports calls where
       \code{.NAME} is a symbol registered in another package.
 
-      \item \command{R CMD INSTALL} now installs packages
+      \item On Unix-alike systems, \command{R CMD INSTALL} now installs packages
       group writably whenever the library (\code{lib.loc}) is group
       writable.  Hence, \code{update.packages()} works for other group
       members (suggested originally and from a patch by Dirk Eddelbuettel).
