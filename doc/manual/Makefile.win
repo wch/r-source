@@ -45,8 +45,6 @@ TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
 R_PAPERSIZE = a4
 # omit 'hyper' to omit the hyperlinks
 R_RD4PDF = times,inconsolata,hyper
-## versions of MiKTeX after 2013-06-16 need
-##R_RD4PDF = times,zi4,hyper
 
 texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
 texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
