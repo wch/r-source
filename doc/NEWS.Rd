@@ -143,6 +143,11 @@
 
       \item Parsing code was changing the length field of vectors and
       confusing the memory manager.  (\PR{15345})
+
+      \item The Fortran routine \code{ZHER2K} in the reference BLAS 
+      had a comment-out bug in two places. 
+      This caused trouble with \code{eigen()} for Hermitian matrices. 
+      (\PR{15345} and report from Robin Hankin)
     }
   }
 }
