@@ -478,17 +478,15 @@ fonts.  We have provided four alternatives:
 and Courier.  This works well both for on-screen viewing and for
 printing.  One disadvantage is that the Usage and Examples sections may
 come out rather wide: this can be overcome by using @emph{in addition}
-either of the options @code{inconsolata} (which is part of the current
-default@footnote{as from June 2013 some systems, including MiKTeX have
-replaced this by @code{zi4}.}, on a Unix-alike only if found by
+either of the options @code{inconsolata}, on a Unix-alike only if found by
 @command{configure}) or @code{beramono}, which replace the Courier
 monospaced font by Inconsolata or Bera Sans mono respectively.  (You
 will need the appropriate @LaTeX{} package @pkg{inconsolata} or
-@pkg{bera} installed.@footnote{Many Debian/Ubuntu systems use a rather
+@pkg{bera} installed.@footnote{Some Debian/Ubuntu systems use a rather
 old version of TeXLive and so need Debian package
 @samp{texlive-fonts-extra} installed.  Fedora prior to 18 used an even
-older version of TeXLive: the best option is to update to TeXLive 2012,
-from the sources or see
+older version of TeXLive: the best option is to update to TeXLive 2012
+or later, from the sources or see
 @uref{http://fedoraproject.org/wiki/Features/TeXLive}.})
 
 Note that in most @LaTeX{} installations this will not actually use the
@@ -523,13 +521,16 @@ The default can be overridden by setting the environment variable
 @enindex R_RD4PDF
 @env{R_RD4PDF}.  (On Unix-alikes, this will be picked up at install time
 and stored in @file{etc/Renviron}, but can still be overridden when the
-manuals are built.)  The usual @footnote{on a Unix-alike,
-@samp{incosolata} is omitted if not found by @command{configure}.}
-default value for @env{R_RD4PDF} is @samp{times,inconsolata,hyper}: omit
-@samp{hyper} if you do not want hyperlinks (e.g.@: for printing the
-manual) or do not have @LaTeX{} package @pkg{hyperref}, and omit
-@samp{inconsolata} if you do not have @LaTeX{} package @pkg{inconsolata}
-installed.
+manuals are built, using @comamnd{make -e}.)  The usual @footnote{on a
+Unix-alike, @samp{incosolata} is omitted if not found by
+@command{configure}.}  default value for @env{R_RD4PDF} is
+@samp{times,inconsolata,hyper}: omit @samp{hyper} if you do not want
+hyperlinks (e.g.@: for printing the manual) or do not have @LaTeX{}
+package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
+@LaTeX{} package @pkg{inconsolata} installed, or replace it by
+@samp{zi4} if you have a version of @pkg{inconsolata} later than June
+2013 which includes file @file{zi4.sty} rather than file
+@file{inconsolata.sty}.
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
 @section Installation
@@ -2885,8 +2886,8 @@ vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of @LaTeX{} packages are required (including
 @pkg{url.sty}, and @pkg{listings.sty}) and others such as @pkg{hyperref}
-and @pkg{inconsolata} are desirable (and without them you may need to
-change @R{}'s defaults: @pxref{Making the manuals}).
+and @pkg{inconsolata} are desirable (and without them you may need to change
+@R{}'s defaults: @pxref{Making the manuals}).
 
 
 If you want to build from the R Subversion repository you need both
@@ -4119,7 +4120,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 16 we used
+on @cputype{x86_64} with Fedora 18 we used
 
 @example
 CC="gcc -m32"
