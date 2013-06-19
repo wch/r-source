@@ -15,6 +15,7 @@ BSTINPUTS=.;${BSTINPUTS};${R_SHARE_DIR}/texmf/bibtex/bst;
 R_PAPERSIZE_USER=${R_PAPERSIZE}
 R_PAPERSIZE=${R_PAPERSIZE-'a4'}
 # for Rd2dpf, reference manual
+# change to 'times,zi4,hyper' for MiKTeX from 2013-06-16
 R_RD4PDF=${R_RD4PDF-'times,inconsolata,hyper'}
 ## used for options("texi2dvi")
 # R_TEXI2DVICMD=${R_TEXI2DVICMD-${TEXI2DVI-'texi2dvi'}}
