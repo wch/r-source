@@ -527,10 +527,7 @@ Unix-alike, @samp{incosolata} is omitted if not found by
 @samp{times,inconsolata,hyper}: omit @samp{hyper} if you do not want
 hyperlinks (e.g.@: for printing the manual) or do not have @LaTeX{}
 package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
-@LaTeX{} package @pkg{inconsolata} installed, or replace it by
-@samp{zi4} if you have a version of @pkg{inconsolata} later than June
-2013 which includes file @file{zi4.sty} rather than file
-@file{inconsolata.sty}.
+@LaTeX{} package @pkg{inconsolata} installed.
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
 @section Installation
@@ -5269,7 +5266,9 @@ It is also possible to use the TeXLive distribution from
 Please read @ref{Making the manuals} about how to make @file{fullrefman.pdf}
 and set the environment variable @env{R_RD4PDF} suitably; ensure you
 have the required fonts installed or that @samp{MiKTeX} is set up to
-install @LaTeX{} on first use.
+install @LaTeX{} packages on first use.  (In any case ensure that the
+@pkg{inconsolata} package is installed---you can check with the MiKTeX
+Package Manager.)
 
 @node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
 @section The Inno Setup installer

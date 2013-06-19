@@ -5331,7 +5331,7 @@ r_rd4pdf="times,inconsolata,hyper"
 if test -n "${KPSEWHICH}"; then
   ${KPSEWHICH} zi4.sty
   if test $? -eq 0; then
-     r_rd4pdf="times,zi4,hyper"
+     r_rd4pdf="times,inconsolata,hyper"
   else
     ${KPSEWHICH} inconsolata.sty
     if test $? -ne 0; then
