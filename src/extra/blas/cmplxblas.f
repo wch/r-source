@@ -1534,7 +1534,7 @@ c               END IF
                END IF
                DO 120 L = 1, K
 c                  IF( ( A( J, L ).NE.ZERO ) .OR. ( B( J, L ).NE.ZERO ) )
-     $                 THEN
+c     $                 THEN
                      TEMP1 = ALPHA*DCONJG( B( J, L ) )
                      TEMP2 = DCONJG( ALPHA*A( J, L ) )
                      DO 110 I = 1, J - 1
@@ -1562,7 +1562,7 @@ c                  END IF
                END IF
                DO 170 L = 1, K
 c                  IF( ( A( J, L ).NE.ZERO ) .OR. ( B( J, L ).NE.ZERO ) )
-     $                 THEN
+c     $                 THEN
                      TEMP1 = ALPHA*DCONJG( B( J, L ) )
                      TEMP2 = DCONJG( ALPHA*A( J, L ) )
                      DO 160 I = J + 1, N
