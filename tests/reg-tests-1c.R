@@ -51,13 +51,12 @@ stopifnot(identical(scan(f, ""), as.character(t(as.matrix(y)))))
 stopifnot(!is.unsorted(NA))
 
 ## str(.) for large factors should be fast:
-str(L <- c(letters, LETTERS, 0:9))
-str(words <- c(outer(L, c(outer(L,L,paste0)), paste0)))
-uids <- factor(words[sample.int(length(words)/10, 1e5, replace=TRUE)],
-	       levels = words)
-st <- system.time(str(uids, vec.len=1))
-stopifnot(st[[1]] < 0.100) ## (2012 machine: <= 0.002)
-## needed about 0.8 seconds for R <= 3.0.1
+u <- as.character(runif(1e5))
+t1 <- max(0.001, system.time(str(u))[[1]]) # get a baseline > 0
+uf <- factor(u)
+(t2 <- system.time(str(uf))[[1]]) / t1 # typically around 1--2
+stopifnot(t2  / t1 < 20)
+## was around 600--850 for R <= 3.0.1
 
 ## ftable(<array with unusual dimnames>)
 (m <- matrix(1:12, 3,4, dimnames=list(ROWS=paste0("row",1:3), COLS=NULL)))
