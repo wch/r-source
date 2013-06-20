@@ -176,6 +176,11 @@
       which has in some distributions replaced \file{inconsolata.sty}
       (which has been removed from the \pkg{inconsolata} LaTeX package
       without any warning).
+
+      \item \code{unlist(x)} now typically returns all non-list
+      \code{x}s unchanged, not just the \dQuote{vector} ones.
+      Consequently, \code{format(lst)} now also works when the list
+      \code{lst} has non-vector elements.
     }
   }
 
@@ -279,9 +284,9 @@
       \item Parsing code was changing the length field of vectors and
       confusing the memory manager.  (\PR{15345})
 
-      \item The Fortran routine \code{ZHER2K} in the reference BLAS 
-      had a comment-out bug in two places. 
-      This caused trouble with \code{eigen()} for Hermitian matrices. 
+      \item The Fortran routine \code{ZHER2K} in the reference BLAS
+      had a comment-out bug in two places.
+      This caused trouble with \code{eigen()} for Hermitian matrices.
       (\PR{15345} and report from Robin Hankin)
     }
   }

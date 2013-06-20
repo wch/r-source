@@ -1,7 +1,7 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
-% Copyright 2003-2011 The R Foundation
+% Copyright 1995-2013 R Core Team
+% Copyright 2003-2013 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{format}
@@ -164,9 +164,12 @@ format(2^31-1, scientific = TRUE)
 
 ## a list
 z <- list(a = letters[1:3], b = (-pi+0i)^((-2:2)/2), c = c(1,10,100,1000),
-          d = c("a", "longer", "character", "string"))
-format(z, digits = 2)
-format(z, digits = 2, justify = "left", trim = FALSE)
+          d = c("a", "longer", "character", "string"),
+          q = quote( a + b ), e = expression(1+x))
+## can you find the "2" small differences?
+(f1 <- format(z, digits = 2))
+(f2 <- format(z, digits = 2, justify = "left", trim = FALSE))
+f1 == f2 ## 2 FALSE, 4 TRUE
 }
 \keyword{character}
 \keyword{print}

@@ -55,6 +55,8 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   are not coerced, and so a list containing one or more of these remains a
   list.  (The effect of unlisting an \code{\link{lm}} fit is a list which
   has individual residuals as components.)
+  Note that \code{unlist(x)} now returns \code{x} unchanged also for
+  non-vector \code{x}, instead of signalling an error in that case.
 }
 \value{
   \code{NULL} or an expression or a vector of an appropriate mode to
@@ -85,6 +87,11 @@ l1 <- list(a = "a", b = 2, c = pi+2i)
 unlist(l1) # a character vector
 l2 <- list(a = "a", b = as.name("b"), c = pi+2i)
 unlist(l2) # remains a list
+
+ll <- list(as.name("sinc"), quote( a + b ), 1:10, letters, expression(1+x))
+utils::str(ll)
+for(x in ll)
+stopifnot(identical(x, unlist(x)))
 }
 \keyword{list}
 \keyword{manip}
