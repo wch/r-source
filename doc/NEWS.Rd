@@ -24,13 +24,13 @@
 
       \item \code{str(x)} is considerably faster for very large lists,
       or factors with 100,000 levels, the latter as in \PR{15337}.
-      
+
       \item \code{col2rgb()} now converts factors to character strings
       not integer codes (suggested by Bryan Hanson).
 
       \item \code{tail(warnings())} now works, via the new \code{`[`}
       method.
-      
+
       \item There is now support for the LaTeX style file \file{zi4.sty}
       which has in some distributions replaced \file{inconsolata.sty}
       (which has been removed from the \pkg{inconsolata} LaTeX package
@@ -60,9 +60,10 @@
       namespace (e.g. as a default method).  It now reports calls where
       \code{.NAME} is a symbol registered in another package.
 
-      \item \command{R CMD INSTALL --group-writable} installs packages
-      group writably, such that \code{update.packages()} works for other
-      group members (suggested and from a patch by Dirk Eddelbuettel).
+      \item On Unix-alike systems, \command{R CMD INSTALL} now installs packages
+      group writably whenever the library (\code{lib.loc}) is group
+      writable.  Hence, \code{update.packages()} works for other group
+      members (suggested originally and from a patch by Dirk Eddelbuettel).
     }
   }
 
@@ -137,9 +138,9 @@
       \item Parsing code was changing the length field of vectors and
       confusing the memory manager.  (\PR{15345})
 
-      \item The Fortran routine \code{ZHER2K} in the reference BLAS 
-      had a comment-out bug in two places. 
-      This caused trouble with \code{eigen()} for Hermitian matrices. 
+      \item The Fortran routine \code{ZHER2K} in the reference BLAS
+      had a comment-out bug in two places.
+      This caused trouble with \code{eigen()} for Hermitian matrices.
       (\PR{15345} and report from Robin Hankin)
     }
   }
