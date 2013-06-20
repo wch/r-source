@@ -35,6 +35,11 @@
       which has in some distributions replaced \file{inconsolata.sty}
       (which has been removed from the \pkg{inconsolata} LaTeX package
       without any warning).
+
+      \item \code{unlist(x)} now typically returns all non-list
+      \code{x}s unchanged, not just the \dQuote{vector} ones.
+      Consequently, \code{format(lst)} now also works when the list
+      \code{lst} has non-vector elements.
     }
   }
 
