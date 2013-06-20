@@ -28,6 +28,9 @@
       \item \code{col2rgb()} now converts factors to character strings
       not integer codes (suggested by Bryan Hanson).
 
+      \item \code{tail(warnings())} now works, via the new \code{`[`}
+      method.
+      
       \item There is now support for the LaTeX style file \file{zi4.sty}
       which has in some distributions replaced \file{inconsolata.sty}
       (which has been removed from the \pkg{inconsolata} LaTeX package
@@ -182,8 +185,6 @@
       vector was limited to 2GB have been unlimited on a 64-bit
       platform, and in most cases serialization to a vector of more than
       1GB will be substantially faster.
-
-      \item \code{tail(warnings())} now works, via the new \code{`[`} method.
     }
   }
 
