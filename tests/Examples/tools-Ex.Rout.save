@@ -603,6 +603,22 @@ attr(,"class")
 > 
 > 
 > cleanEx()
+> nameEx("getVignetteInfo")
+> ### * getVignetteInfo
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getVignetteInfo
+> ### Title: Get information on installed vignettes.
+> ### Aliases: getVignetteInfo
+> ### Keywords: utilities documentation
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
 > nameEx("installFoundDepends")
 > ### * installFoundDepends
 > 

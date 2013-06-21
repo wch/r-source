@@ -982,6 +982,45 @@ function(pkgdir, mustwork = TRUE)
     pkgs
 }
 
+# This gets the info for installed packages
+
+getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE) 
+{
+    if (is.null(package)) {
+        package <- .packages(all.available = all, lib.loc)
+        ## allow for misnamed dirs
+        paths <- find.package(package, lib.loc, quiet = TRUE)
+    } else paths <- find.package(package, lib.loc)
+
+    ## Find the directories with a 'doc' subdirectory *possibly*
+    ## containing vignettes.
+
+    paths <- paths[file_test("-d", file.path(paths, "doc"))]
+
+    getVinfo <- function(dir) {
+        entries <- NULL
+        if (file.exists(INDEX <- file.path(dir, "Meta", "vignette.rds")))
+            entries <- readRDS(INDEX)
+        if (NROW(entries) > 0) {
+            cbind(Package = basename(dir),
+                  Dir = dir,
+                  File = basename(entries$File),
+                  Title = entries$Title,
+                  ## FIXME: test unnecessary once packages are reinstalled
+                  R = if (is.null(entries$R)) "" else entries$R,
+                  PDF = entries$PDF)[order(entries$Title), , drop=FALSE]
+        }
+        else cbind(Package = character(0),
+                   Dir = character(0), 
+                   File = character(0),
+                   Title = character(0),
+                   R = character(0),
+                   PDF = character(0))
+    }
+
+    do.call(rbind, lapply(paths, getVinfo))
+}
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

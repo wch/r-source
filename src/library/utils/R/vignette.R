@@ -1,7 +1,7 @@
 #  File src/library/utils/R/vignette.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,37 +19,19 @@
 vignette <-
     function(topic, package = NULL, lib.loc = NULL, all = TRUE)
 {
-    if (is.null(package)) {
-        package <- .packages(all.available = all, lib.loc)
-        ## allow for misnamed dirs
-        paths <- find.package(package, lib.loc, quiet = TRUE)
-    } else paths <- find.package(package, lib.loc)
-
-    ## Find the directories with a 'doc' subdirectory *possibly*
-    ## containing vignettes.
-
-    paths <- paths[file_test("-d", file.path(paths, "doc"))]
-
-    vignettes <-
-        lapply(paths,
-               function(dir) {
-                   tools::list_files_with_type(file.path(dir, "doc"),
-                                               "vignette")
-               })
-
+    vinfo <- tools:::getVignetteInfo(package, lib.loc, all)
+    
     if(!missing(topic)) {
         topic <- topic[1L]               # Just making sure ...
-        vignettes <- as.character(unlist(vignettes))
-        vidx <- (tools::file_path_sans_ext(basename(vignettes)) == topic)
-        if(any(vidx)) {
+        vinfo <- vinfo[tools::file_path_sans_ext(vinfo[, "File"]) == topic,,drop=FALSE]
+        if(length(vinfo)) {
 
-            pdf <- sub("\\.[[:alpha:]]+$", ".pdf", vignettes)
-            pidx <- file_test("-f", pdf)
-            ok <- vidx & pidx
+            pdf <- vinfo[, "PDF"]
+            pidx <- file_test("-f", file.path(vinfo[, "Dir"], "doc", vinfo[, "PDF"]))
 
-            if(any(ok)){
-                idx <- min(which(ok))
-                if(sum(ok)>1){
+            if(any(pidx)){
+                idx <- min(which(pidx))
+                if(sum(pidx)>1){
                     ## <FIXME>
                     ## Should really offer a menu to select from.
                     warning(gettextf("vignette %s found more than once,\nusing the one found in %s",
@@ -57,11 +39,18 @@ vignette <-
                             call. = FALSE, domain = NA)
                     ## </FIXME>
                 }
-
-                z <- list(file=vignettes[idx], pdf=pdf[idx])
+		vinfo <- vinfo[idx,,drop=FALSE]
+		Dir <- vinfo[, "Dir"]
+		File <- vinfo[, "File"]
+		PDF <- vinfo[, "PDF"]
+                z <- list(file=file.path(Dir, "doc", File),
+                          pdf=file.path(Dir, "doc", PDF))
             }
             else{
-                z <- list(file=vignettes[vidx][1L], pdf=character(0L))
+		Dir <- vinfo[1, "Dir"]
+		File <- vinfo[1, "File"]
+                z <- list(file=file.path(Dir, "doc", File),
+                          pdf=character(0L))
             }
             z$topic <- topic
             class(z) <- "vignette"
@@ -75,37 +64,18 @@ vignette <-
     if(missing(topic)) {
         ## List all possible vignettes.
 
-        vDB <- matrix(character(0L), nrow = 0L, ncol = 4L)
-        colnames(vDB) <- c("Dir", "File", "Title", "PDF")
-
-        for(db in vignettes[sapply(vignettes, length) > 0L]) {
-            dir <- dirname(dirname(db[1L]))
-            entries <- NULL
-            ## Check for new-style 'Meta/vignette.rds' ...
-            if(file.exists(INDEX <-
-                           file.path(dir, "Meta", "vignette.rds")))
-                entries <- readRDS(INDEX)
-            if(NROW(entries) > 0)
-                vDB <- rbind(vDB,
-                             cbind(dir,
-                                   entries$File,
-                                   entries$Title,
-                                   entries$PDF))
-        }
-
-        ## Now compute info on available PDFs ...
-        title <- if(NROW(vDB)) {
-            paste(vDB[, "Title"],
-                  paste0(rep.int("(source", NROW(vDB)),
-                        ifelse(vDB[, "PDF"] != "", ", pdf", ""),
+        title <- if(nrow(vinfo)) {
+            paste(vinfo[, "Title"],
+                  paste0(rep.int("(source", nrow(vinfo)),
+                        ifelse(vinfo[, "PDF"] != "", paste0(", ", tools::file_ext(vinfo[, "PDF"])), ""),
                         ")"))
         }
         else
             character()
         ## ... and rewrite into the form used by packageIQR.
-        db <- cbind(Package = basename(vDB[, "Dir"]),
-                    LibPath = dirname(vDB[, "Dir"]),
-                    Item = tools::file_path_sans_ext(basename(vDB[, "File"])),
+        db <- cbind(Package = basename(vinfo[, "Dir"]),
+                    LibPath = dirname(vinfo[, "Dir"]),
+                    Item = tools::file_path_sans_ext(basename(vinfo[, "File"])),
                     Title = title)
 	footer <- if (all) NULL else
 		  paste0("Use ",
@@ -126,15 +96,20 @@ print.vignette <- function(x, ...){
         ## <FIXME>
         ## Should really abstract this into a BioC style
         ## openPDF() along the lines of browseURL() ...
-        pdfviewer <- getOption("pdfviewer")
-        if(identical(pdfviewer, "false")) {
-        } else if(.Platform$OS.type == "windows" &&
-                  identical(pdfviewer, file.path(R.home("bin"), "open.exe")))
-            shell.exec(x$pdf)
-        else system2(pdfviewer, shQuote(x$pdf), wait = FALSE)
-        ## </FIXME>
+        ext <- tools::file_ext(x$pdf)
+        if (tolower(ext) == "pdf") {
+            pdfviewer <- getOption("pdfviewer")
+            if(identical(pdfviewer, "false")) {
+            } else if(.Platform$OS.type == "windows" &&
+                      identical(pdfviewer, file.path(R.home("bin"), "open.exe")))
+            	shell.exec(x$pdf)
+            else system2(pdfviewer, shQuote(x$pdf), wait = FALSE)
+        ## </FIXME>         
+        } else 
+             browseURL(x$pdf)
+
     } else {
-        warning(gettextf("vignette %s has no PDF", sQuote(x$topic)),
+        warning(gettextf("vignette %s has no PDF/HTML", sQuote(x$topic)),
                 call. = FALSE, domain = NA)
     }
     invisible(x)

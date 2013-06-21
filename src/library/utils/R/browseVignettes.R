@@ -20,43 +20,19 @@
 
 browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
 {
-    ## adapted from vignette()
-    if (is.null(package)) {
-        package <- .packages(all.available = all, lib.loc)
-        ## allow for misnamed dirs
-        paths <- find.package(package, lib.loc, quiet = TRUE)
-    } else paths <- find.package(package, lib.loc)
-    paths <- paths[tools:::file_test("-d", file.path(paths, "doc"))]
-    vignettes <- lapply(paths, function(dir) {
-        tools::list_files_with_type(file.path(dir, "doc"), "vignette")
-    })
-    names(vignettes) <- basename(paths)
-    getVinfo <- function(db) {
-        dir <- dirname(dirname(db[1L]))
-        entries <- NULL
-        if (file.exists(INDEX <- file.path(dir, "Meta", "vignette.rds")))
-            entries <- readRDS(INDEX)
-        if (NROW(entries) > 0) {
-            cbind(Dir = dir,
-                  File = basename(entries$File),
-                  Title = entries$Title,
-                  ## FIXME: test unnecessary once packages are reinstalled
-                  R = if (is.null(entries$R)) "" else entries$R,
-                  PDF = entries$PDF)[order(entries$Title), , drop=FALSE]
-        }
-        else NULL
-    }
-    vinfo <- lapply(vignettes[sapply(vignettes, length) > 0L], getVinfo)
-    attr(vinfo, "call") <- sys.call()
-    attr(vinfo, "footer") <-
+   
+    vinfo <- tools:::getVignetteInfo(package, lib.loc, all)
+    pkgs <- unique(vinfo[, "Package"])
+    db <- lapply(pkgs, function(p) vinfo[vinfo[,"Package"] == p,,drop=FALSE])
+    names(db) <- pkgs
+    attr(db, "call") <- sys.call()
+    attr(db, "footer") <-
         if (all) ""
         else sprintf(gettext("Use <code> %s </code> \n to list the vignettes in all <strong>available</strong> packages."),
                      "browseVignettes(all = TRUE)")
-    class(vinfo) <- "browseVignettes"
-    return(vinfo)
+    class(db) <- "browseVignettes"
+    return(db)
 }
-
-
 
 print.browseVignettes <- function(x, ...)
 {
@@ -81,7 +57,7 @@ print.browseVignettes <- function(x, ...)
         sprintf("  <li>%s  -  \n    %s  \n    %s  \n    %s \n  </li>\n",
                 title,
                 ifelse(nzchar(pdf),
-                       sprintf("<a href='%s/%s'>%s</a>&nbsp;", 
+                       sprintf("<a href='%s/%s'>%s</a>&nbsp;",
                                prefix, pdf, toupper(pdfext)),
                        ""),
 		sprintf("<a href='%s/%s'>source</a>&nbsp;", prefix, src),
@@ -89,7 +65,7 @@ print.browseVignettes <- function(x, ...)
                        sprintf("<a href='%s/%s'>R code</a>&nbsp;", prefix, rcode),
                        ""))
     }
-    
+
     if (tools:::httpdPort == 0L)
         tools::startDynamicHelp()
 
