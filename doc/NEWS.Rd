@@ -74,9 +74,7 @@
       \item For consistency, \command{R CMD build} now matches entries
       in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
       case-insensitively on all platforms (not just on Windows).
-
-      \item \command{R CMD check --as-cran} now implies \option{--timings}.
-
+      
       \item \code{checkFF()} (called by \command{R CMD check} by
       default) can optionally check foreign function calls for
       consistency with the registered type and argument count.  This is
@@ -171,7 +169,7 @@
 
       \item \code{tail(warnings())} now works, via the new \code{`[`}
       method.
-      
+
       \item There is now support for the LaTeX style file \file{zi4.sty}
       which has in some distributions replaced \file{inconsolata.sty}
       (which has been removed from the \pkg{inconsolata} LaTeX package
@@ -192,6 +190,8 @@
     \itemize{
       \item \command{R CMD check --as-cran} checks the line widths in
       usage and examples sections of the package Rd files.
+
+      \item \command{R CMD check --as-cran} now implies \option{--timings}.
 
       \item \command{R CMD check} looks for command \command{gfile} if a
       suitable \command{file} is not found.  (Although \command{file} is
