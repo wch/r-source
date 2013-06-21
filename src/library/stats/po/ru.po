@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-06-21 09:09+0100\n"
 "PO-Revision-Date: 2013-03-19 21:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -183,6 +183,21 @@ msgstr "неправильные факторы"
 #: ksmooth.c:67
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "только 2500 строк разрешается для sm.method=\"spline\""
+
+#: lm.c:57
+#, fuzzy
+msgid "'x' is not a matrix"
+msgstr "'tmax' не является целым числом"
+
+#: lm.c:62
+#, c-format
+msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
+msgstr ""
+
+#: lm.c:77 lm.c:81
+#, c-format
+msgid "NA/NaN/Inf in '%s'"
+msgstr ""
 
 #: loessc.c:233
 msgid "span is too small"

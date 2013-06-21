@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-06-21 09:09+0100\n"
 "PO-Revision-Date: 2013-03-18 22:13+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -179,6 +179,21 @@ msgstr "variables facteur incorrectes"
 #: ksmooth.c:67
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "seulement 2500 lignes autorisées pour sm.method=\"spline\""
+
+#: lm.c:57
+#, fuzzy
+msgid "'x' is not a matrix"
+msgstr "'tmax' n'est pas un entier"
+
+#: lm.c:62
+#, c-format
+msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
+msgstr ""
+
+#: lm.c:77 lm.c:81
+#, c-format
+msgid "NA/NaN/Inf in '%s'"
+msgstr ""
 
 #: loessc.c:233
 msgid "span is too small"

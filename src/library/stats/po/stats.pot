@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-06-21 09:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -177,6 +177,20 @@ msgstr ""
 
 #: ksmooth.c:67
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
+msgstr ""
+
+#: lm.c:57
+msgid "'x' is not a matrix"
+msgstr ""
+
+#: lm.c:62
+#, c-format
+msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
+msgstr ""
+
+#: lm.c:77 lm.c:81
+#, c-format
+msgid "NA/NaN/Inf in '%s'"
 msgstr ""
 
 #: loessc.c:233

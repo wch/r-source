@@ -2402,9 +2402,9 @@ msgstr[2] "здесь %d ошибочных выражений: разрешено лишь одно"
 
 msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
-msgstr[0] "неизвестное имя в 'split'-списке"
-msgstr[1] "неизвестные имена в 'split'-списке"
-msgstr[2] "неизвестные имена в 'split'-списке"
+msgstr[0] "неизвестное имя %s в 'split'-списке"
+msgstr[1] "неизвестные имена %s в 'split'-списке"
+msgstr[2] "неизвестные имена %s в 'split'-списке"
 
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
