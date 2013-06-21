@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:53\n"
+"POT-Creation-Date: 2013-06-21 09:14\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1919,7 +1919,8 @@ msgstr "ilustracja %s nie została znaleziona"
 # utils/R/vignette.R: 137
 # warning(gettextf("vignette %s has no PDF", sQuote(x$topic)),
 #                 call. = FALSE, domain = NA)
-msgid "vignette %s has no PDF"
+#, fuzzy
+msgid "vignette %s has no PDF/HTML"
 msgstr "ilustracja %s nie posiada PDF"
 
 # utils/R/widgets.R: 23

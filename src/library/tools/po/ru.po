@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:53+0100\n"
+"POT-Creation-Date: 2013-06-21 09:14+0100\n"
 "PO-Revision-Date: 2013-03-19 22:36-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -142,12 +142,12 @@ msgstr "плохой текстовый режим %d в 'deparseRd'"
 msgid "invalid bind address specification"
 msgstr "неправильное описание адреса привязки"
 
-#: install.c:96 install.c:117 install.c:119
+#: install.c:102 install.c:123 install.c:125
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
 
-#: install.c:147
+#: install.c:153
 msgid "write error during file append"
 msgstr "ошибка записи в процессе добавления файла"
 

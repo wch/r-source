@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:53+0100\n"
+"POT-Creation-Date: 2013-06-21 09:14+0100\n"
 "PO-Revision-Date: 2013-03-19 20:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -147,12 +147,12 @@ msgstr "mode de texte %d erroné dans 'deparseRd'"
 msgid "invalid bind address specification"
 msgstr "spécification d'adresse de lien incorrecte"
 
-#: install.c:96 install.c:117 install.c:119
+#: install.c:102 install.c:123 install.c:125
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
 
-#: install.c:147
+#: install.c:153
 msgid "write error during file append"
 msgstr "erreur en écriture lors du rajout dans un fichier"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r-2-15-branch\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:52+0100\n"
+"POT-Creation-Date: 2013-06-21 09:13+0100\n"
 "PO-Revision-Date: 2011-11-29 21:34+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -181,13 +181,13 @@ msgstr "problem med visning af '%ls'"
 #: src/main/dotcode.c:476 src/main/dotcode.c:480 src/main/dotcode.c:485
 #: src/main/dounzip.c:320 src/main/dounzip.c:327 src/main/dounzip.c:337
 #: src/main/dounzip.c:342 src/main/dounzip.c:346 src/main/dounzip.c:350
-#: src/main/envir.c:1552 src/main/envir.c:1555 src/main/envir.c:1674
-#: src/main/envir.c:1679 src/main/envir.c:1745 src/main/envir.c:1761
-#: src/main/envir.c:1767 src/main/envir.c:1864 src/main/envir.c:1872
-#: src/main/envir.c:1879 src/main/envir.c:1890 src/main/envir.c:2104
-#: src/main/envir.c:2225 src/main/envir.c:2484 src/main/envir.c:2694
-#: src/main/envir.c:2708 src/main/envir.c:2715 src/main/envir.c:2731
-#: src/main/envir.c:3294 src/main/errors.c:1036 src/main/eval.c:397
+#: src/main/envir.c:1550 src/main/envir.c:1553 src/main/envir.c:1672
+#: src/main/envir.c:1677 src/main/envir.c:1743 src/main/envir.c:1759
+#: src/main/envir.c:1765 src/main/envir.c:1862 src/main/envir.c:1870
+#: src/main/envir.c:1877 src/main/envir.c:1888 src/main/envir.c:2102
+#: src/main/envir.c:2223 src/main/envir.c:2482 src/main/envir.c:2692
+#: src/main/envir.c:2706 src/main/envir.c:2713 src/main/envir.c:2729
+#: src/main/envir.c:3292 src/main/errors.c:1036 src/main/eval.c:397
 #: src/main/eval.c:406 src/main/eval.c:409 src/main/grep.c:767
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
@@ -1107,8 +1107,8 @@ msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr ""
 
 #: src/main/attrib.c:1046 src/main/builtin.c:75 src/main/builtin.c:112
-#: src/main/envir.c:1540 src/main/envir.c:1666 src/main/envir.c:1728
-#: src/main/envir.c:1850 src/main/paste.c:74 src/main/paste.c:292
+#: src/main/envir.c:1538 src/main/envir.c:1664 src/main/envir.c:1726
+#: src/main/envir.c:1848 src/main/paste.c:74 src/main/paste.c:292
 #: src/main/random.c:487 src/main/random.c:516 src/main/unique.c:1748
 msgid "invalid first argument"
 msgstr ""
@@ -1210,46 +1210,47 @@ msgid ""
 "object "
 msgstr ""
 
-#: src/main/bind.c:153
+#: src/main/bind.c:161
 #, c-format
 msgid "resulting vector exceeds vector length limit in '%s'"
 msgstr ""
 
-#: src/main/bind.c:281 src/main/bind.c:317 src/main/bind.c:366
-#: src/main/bind.c:439 src/main/bind.c:467
+#: src/main/bind.c:289 src/main/bind.c:325 src/main/bind.c:374
+#: src/main/bind.c:447 src/main/bind.c:475
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr ""
 
-#: src/main/bind.c:670
+#: src/main/bind.c:678
 msgid "repeated formal argument 'recursive'"
 msgstr ""
 
-#: src/main/bind.c:681
+#: src/main/bind.c:689
 msgid "repeated formal argument 'use.names'"
 msgstr ""
 
-#: src/main/bind.c:878
+#: src/main/bind.c:887
 msgid "argument not a list"
 msgstr ""
 
-#: src/main/bind.c:1022 src/main/eval.c:2553 src/main/eval.c:2562
+#: src/main/bind.c:1031 src/main/eval.c:2553 src/main/eval.c:2562
 #: src/main/objects.c:313 src/main/objects.c:348 src/main/objects.c:723
 #: src/main/objects.c:740 src/main/objects.c:747
 #, c-format
 msgid "class name too long in '%s'"
 msgstr ""
 
-#: src/main/bind.c:1097
-msgid "cannot create a matrix from these types"
-msgstr ""
+#: src/main/bind.c:1107
+#, fuzzy, c-format
+msgid "cannot create a matrix from type '%s'"
+msgstr "kan ikke oprette mappe '%s', årsag '%s'"
 
-#: src/main/bind.c:1167
+#: src/main/bind.c:1178
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr ""
 
-#: src/main/bind.c:1411
+#: src/main/bind.c:1422
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr ""
@@ -1274,12 +1275,12 @@ msgstr ""
 #: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:293
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
 #: src/main/coerce.c:1536 src/main/connections.c:2833 src/main/engine.c:2967
-#: src/main/envir.c:946 src/main/envir.c:999 src/main/envir.c:1089
-#: src/main/envir.c:1549 src/main/envir.c:1671 src/main/envir.c:1739
-#: src/main/envir.c:1857 src/main/envir.c:2514 src/main/envir.c:2574
-#: src/main/envir.c:2849 src/main/envir.c:2878 src/main/envir.c:2899
-#: src/main/envir.c:2922 src/main/envir.c:2957 src/main/envir.c:2978
-#: src/main/envir.c:3284 src/main/envir.c:3289 src/main/eval.c:5119
+#: src/main/envir.c:944 src/main/envir.c:997 src/main/envir.c:1087
+#: src/main/envir.c:1547 src/main/envir.c:1669 src/main/envir.c:1737
+#: src/main/envir.c:1855 src/main/envir.c:2512 src/main/envir.c:2572
+#: src/main/envir.c:2847 src/main/envir.c:2876 src/main/envir.c:2897
+#: src/main/envir.c:2920 src/main/envir.c:2955 src/main/envir.c:2976
+#: src/main/envir.c:3282 src/main/envir.c:3287 src/main/eval.c:5119
 #: src/main/objects.c:193 src/main/objects.c:199 src/main/saveload.c:2070
 #: src/main/saveload.c:2364 src/main/serialize.c:2709
 msgid "use of NULL environment is defunct"
@@ -2410,7 +2411,7 @@ msgstr "forkert længde for argument"
 msgid "'opts' should be small non-negative integer"
 msgstr ""
 
-#: src/main/deparse.c:411 src/main/envir.c:1696 src/main/envir.c:1778
+#: src/main/deparse.c:411 src/main/envir.c:1694 src/main/envir.c:1776
 #: src/main/eval.c:548 src/main/eval.c:1210 src/main/eval.c:3491
 #: src/main/saveload.c:1978 src/main/saveload.c:2309 src/main/serialize.c:2727
 #, c-format
@@ -2877,245 +2878,245 @@ msgstr ""
 msgid "cannot change value of locked binding for '%s'"
 msgstr ""
 
-#: src/main/envir.c:230 src/main/envir.c:1388
+#: src/main/envir.c:229 src/main/envir.c:1386
 msgid "cannot add bindings to a locked environment"
 msgstr ""
 
-#: src/main/envir.c:725
+#: src/main/envir.c:723
 msgid "invalid cached value in R_GetGlobalCache"
 msgstr ""
 
-#: src/main/envir.c:783
+#: src/main/envir.c:781
 msgid "cannot unbind in the base namespace"
 msgstr ""
 
-#: src/main/envir.c:785
+#: src/main/envir.c:783
 msgid "unbind in the base environment is unimplemented"
 msgstr ""
 
-#: src/main/envir.c:787 src/main/envir.c:1618
+#: src/main/envir.c:785 src/main/envir.c:1616
 msgid "cannot remove bindings from a locked environment"
 msgstr ""
 
-#: src/main/envir.c:1092
+#: src/main/envir.c:1090
 #, c-format
 msgid "argument to '%s' is not an environment"
 msgstr ""
 
-#: src/main/envir.c:1253
+#: src/main/envir.c:1251
 #, c-format
 msgid "the ... list does not contain %d elements"
 msgstr ""
 
-#: src/main/envir.c:1255
+#: src/main/envir.c:1253
 #, c-format
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr ""
 
-#: src/main/envir.c:1328 src/main/envir.c:1774 src/main/eval.c:552
+#: src/main/envir.c:1326 src/main/envir.c:1772 src/main/eval.c:552
 #: src/main/eval.c:3482
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr ""
 
-#: src/main/envir.c:1333
+#: src/main/envir.c:1331
 #, c-format
 msgid "could not find function \"%s\""
 msgstr ""
 
-#: src/main/envir.c:1356
+#: src/main/envir.c:1354
 msgid "cannot assign values in the empty environment"
 msgstr ""
 
-#: src/main/envir.c:1362 src/main/envir.c:1431
+#: src/main/envir.c:1360 src/main/envir.c:1429
 msgid "cannot assign variables to this database"
 msgstr ""
 
-#: src/main/envir.c:1514
+#: src/main/envir.c:1512
 #, c-format
 msgid "cannot add binding of '%s' to the base environment"
 msgstr ""
 
-#: src/main/envir.c:1543
+#: src/main/envir.c:1541
 msgid "only the first element is used as variable name"
 msgstr ""
 
-#: src/main/envir.c:1575
+#: src/main/envir.c:1573
 msgid "first argument must be a named list"
 msgstr ""
 
-#: src/main/envir.c:1580
+#: src/main/envir.c:1578
 msgid "names(x) must be a character vector of the same length as x"
 msgstr ""
 
-#: src/main/envir.c:1583
+#: src/main/envir.c:1581
 msgid "'envir' argument must be an environment"
 msgstr ""
 
-#: src/main/envir.c:1612
+#: src/main/envir.c:1610
 msgid "cannot remove variables from base namespace"
 msgstr ""
 
-#: src/main/envir.c:1614
+#: src/main/envir.c:1612
 msgid "cannot remove variables from the base environment"
 msgstr ""
 
-#: src/main/envir.c:1616
+#: src/main/envir.c:1614
 msgid "cannot remove variables from the empty environment"
 msgstr ""
 
-#: src/main/envir.c:1624
+#: src/main/envir.c:1622
 msgid "cannot remove variables from this database"
 msgstr ""
 
-#: src/main/envir.c:1781
+#: src/main/envir.c:1779
 #, c-format
 msgid "object '%s' of mode '%s' was not found"
 msgstr ""
 
-#: src/main/envir.c:1853
+#: src/main/envir.c:1851
 #, c-format
 msgid "invalid name in position %d"
 msgstr ""
 
-#: src/main/envir.c:1859
+#: src/main/envir.c:1857
 msgid "second argument must be an environment"
 msgstr ""
 
-#: src/main/envir.c:1867 src/main/envir.c:1875
+#: src/main/envir.c:1865 src/main/envir.c:1873
 #, c-format
 msgid "wrong length for '%s' argument"
 msgstr "forkert længde for '%s'-argument"
 
-#: src/main/envir.c:1994
+#: src/main/envir.c:1992
 msgid "invalid use of 'missing'"
 msgstr "ugyldig brug af 'missing'"
 
-#: src/main/envir.c:2019
+#: src/main/envir.c:2017
 msgid "'missing' can only be used for arguments"
 msgstr "'missing' kan kun bruges for argumenter"
 
-#: src/main/envir.c:2100
+#: src/main/envir.c:2098
 msgid "'pos' must be an integer"
 msgstr "'pos' skal være et heltal"
 
-#: src/main/envir.c:2114
+#: src/main/envir.c:2112
 msgid "all elements of a list must be named"
 msgstr "alle elementer på en liste skal være navngivet"
 
-#: src/main/envir.c:2137
+#: src/main/envir.c:2135
 msgid "'attach' only works for lists, data frames and environments"
 msgstr "'attach' virker kun forlister, datarammer og miljøer"
 
-#: src/main/envir.c:2220
+#: src/main/envir.c:2218
 msgid "detaching \"package:base\" is not allowed"
 msgstr ""
 
-#: src/main/envir.c:2521 src/main/envir.c:2576
+#: src/main/envir.c:2519 src/main/envir.c:2574
 msgid "argument must be an environment"
 msgstr "argument skal være et miljø"
 
-#: src/main/envir.c:2580
+#: src/main/envir.c:2578
 msgid "arguments must be symbolic"
 msgstr "arguments skal være symbolske"
 
-#: src/main/envir.c:2704
+#: src/main/envir.c:2702
 msgid "no enclosing environment"
 msgstr ""
 
-#: src/main/envir.c:2754
+#: src/main/envir.c:2752
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr ""
 
-#: src/main/envir.c:2777
+#: src/main/envir.c:2775
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr ""
 
-#: src/main/envir.c:2783
+#: src/main/envir.c:2781
 msgid "S4 object does not extend class \"environment\""
 msgstr "S4-objekt udvider ikke klasse »environment«"
 
-#: src/main/envir.c:2798
+#: src/main/envir.c:2796
 msgid "invalid object for 'as.environment'"
 msgstr "ugyldigt objekt for »as.environment«"
 
-#: src/main/envir.c:2824 src/main/envir.c:2852 src/main/envir.c:2881
-#: src/main/envir.c:2902 src/main/envir.c:2925 src/main/envir.c:2960
-#: src/main/envir.c:2981
+#: src/main/envir.c:2822 src/main/envir.c:2850 src/main/envir.c:2879
+#: src/main/envir.c:2900 src/main/envir.c:2923 src/main/envir.c:2958
+#: src/main/envir.c:2979
 msgid "not an environment"
 msgstr "ikke et miljø"
 
-#: src/main/envir.c:2876 src/main/envir.c:2897 src/main/envir.c:2918
-#: src/main/envir.c:2955 src/main/envir.c:2976 src/main/envir.c:3075
+#: src/main/envir.c:2874 src/main/envir.c:2895 src/main/envir.c:2916
+#: src/main/envir.c:2953 src/main/envir.c:2974 src/main/envir.c:3073
 msgid "not a symbol"
 msgstr "ikke et symbol"
 
-#: src/main/envir.c:2889 src/main/envir.c:2910 src/main/envir.c:2968
-#: src/main/envir.c:2989
+#: src/main/envir.c:2887 src/main/envir.c:2908 src/main/envir.c:2966
+#: src/main/envir.c:2987
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "ingen binding for »%s«"
 
-#: src/main/envir.c:2920
+#: src/main/envir.c:2918
 msgid "not a function"
 msgstr "ikke en funktion"
 
-#: src/main/envir.c:2928 src/main/envir.c:2944
+#: src/main/envir.c:2926 src/main/envir.c:2942
 msgid "symbol already has a regular binding"
 msgstr "symbol har allerede en regulær binding"
 
-#: src/main/envir.c:2930 src/main/envir.c:2946
+#: src/main/envir.c:2928 src/main/envir.c:2944
 msgid "cannot change active binding if binding is locked"
 msgstr "kan ikke ændre aktive binding hvis binding er låst"
 
-#: src/main/envir.c:3034
+#: src/main/envir.c:3032
 msgid "unknown op"
 msgstr ""
 
-#: src/main/envir.c:3079
+#: src/main/envir.c:3077
 msgid "cannot unbind a locked binding"
 msgstr ""
 
-#: src/main/envir.c:3081
+#: src/main/envir.c:3079
 msgid "cannot unbind an active binding"
 msgstr ""
 
-#: src/main/envir.c:3216
+#: src/main/envir.c:3214
 msgid "bad namespace name"
 msgstr ""
 
-#: src/main/envir.c:3228
+#: src/main/envir.c:3226
 msgid "namespace already registered"
 msgstr "navnerum er allerede registreret"
 
-#: src/main/envir.c:3240
+#: src/main/envir.c:3238
 msgid "namespace not registered"
 msgstr "navnerum er ikke registreret"
 
-#: src/main/envir.c:3287
+#: src/main/envir.c:3285
 msgid "bad import environment argument"
 msgstr "ugyldigt arguement for importmiljø"
 
-#: src/main/envir.c:3292
+#: src/main/envir.c:3290
 msgid "bad export environment argument"
 msgstr "ugyldigt argument for eksportmiljø"
 
-#: src/main/envir.c:3296
+#: src/main/envir.c:3294
 msgid "length of import and export names must match"
 msgstr "længden på import- og eksportnavne skal matche"
 
-#: src/main/envir.c:3319
+#: src/main/envir.c:3317
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "eksporteret symbol '%s' har ingen værdi"
 
-#: src/main/envir.c:3484
+#: src/main/envir.c:3482
 #, c-format
 msgid "unknown encoding: %d"
 msgstr "ukendt kodning: %d"
 
-#: src/main/envir.c:3504
+#: src/main/envir.c:3502
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "indlejret nul i streng: '%s'"

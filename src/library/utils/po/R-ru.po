@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:53\n"
+"POT-Creation-Date: 2013-06-21 09:14\n"
 "PO-Revision-Date: 2013-03-19 22:58-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -984,7 +984,8 @@ msgstr ""
 msgid "vignette %s not found"
 msgstr "миниатюра %s не найдена"
 
-msgid "vignette %s has no PDF"
+#, fuzzy
+msgid "vignette %s has no PDF/HTML"
 msgstr "у миниатюры %s нет PDF"
 
 msgid "select.list() cannot be used non-interactively"

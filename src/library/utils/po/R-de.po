@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:53\n"
+"POT-Creation-Date: 2013-06-21 09:14\n"
 "PO-Revision-Date: 2013-03-18 10:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -981,7 +981,8 @@ msgstr ""
 msgid "vignette %s not found"
 msgstr "Vignette %s nicht gefunden"
 
-msgid "vignette %s has no PDF"
+#, fuzzy
+msgid "vignette %s has no PDF/HTML"
 msgstr "Vignette %s enthält kein PDF"
 
 msgid "select.list() cannot be used non-interactively"
