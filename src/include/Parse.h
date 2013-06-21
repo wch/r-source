@@ -41,6 +41,9 @@ struct SrcRefState {
     SEXP data;			/* Detailed info on parse */
     SEXP text;
     SEXP ids;
+    PROTECT_INDEX DATA_INDEX;
+    PROTECT_INDEX TEXT_INDEX;
+    PROTECT_INDEX ID_INDEX;
     int data_count;
     				/* Position information about the current parse */
     int xxlineno;		/* Line number according to #line directives */
@@ -51,15 +54,13 @@ struct SrcRefState {
     SrcRefState* prevState;
 };
 
-void InitParser(void);
-
-void R_InitSrcRefState(void);
+void R_InitSrcRefState(SrcRefState *state);
 void R_FinalizeSrcRefState(void);
 
 SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *); /* in ReplIteration,
 						       R_ReplDLLdo1 */
 SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP, SEXP); /* in source.c */
-SEXP R_Parse1File(FILE*, int, ParseStatus *); /* in R_ReplFile */
+SEXP R_Parse1File(FILE*, int, ParseStatus *, SrcRefState *); /* in R_ReplFile */
 SEXP R_ParseFile(FILE*, int, ParseStatus *, SEXP);  /* in edit.c */
 
 #ifndef HAVE_RCONNECTION_TYPEDEF
