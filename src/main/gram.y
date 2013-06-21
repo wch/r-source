@@ -77,9 +77,11 @@ typedef struct yyltype
 } yyltype;
 
 
-#define NLINES 1000       /* originally, number of lines in the file */
-#define DATA_SIZE  (length( ParseState.data ) / DATA_ROWS)
-#define ID_SIZE    (length( ParseState.ids ) / 2 - 1)
+#define INIT_DATA_COUNT 16384    	/* init parser data to this size */
+#define MAX_DATA_COUNT   65536		/* release it at the end if it is this size or larger*/
+
+#define DATA_COUNT  (ParseState.data ? length( ParseState.data ) / DATA_ROWS : 0)
+#define ID_COUNT    ((ParseState.ids ? length( ParseState.ids ) / 2 : 0) - 1)
 
 static void finalizeData( ) ;
 static void growData( ) ;
@@ -1179,26 +1181,32 @@ static char	contextstack[CONTEXTSTACK_SIZE], *contextp;
 static void PutSrcRefState(SrcRefState *state);
 static void UseSrcRefState(SrcRefState *state);
 
+/* This is called once when R starts up. */
 attribute_hidden
-void R_InitSrcRefState(SrcRefState *state)
+void InitParser(void)
+{
+    ParseState.data = NULL;
+    ParseState.ids = NULL;
+}
+
+/* This is called each time a new parse sequence begins */
+attribute_hidden
+void R_InitSrcRefState(void)
 {
     if (busy) {
-    	state->prevState = malloc(sizeof(SrcRefState));
-    	PutSrcRefState(state->prevState);
+    	ParseState.prevState = malloc(sizeof(SrcRefState));
+    	PutSrcRefState(ParseState.prevState);
     } else
-        state->prevState = NULL;
-    state->keepSrcRefs = FALSE;
-    state->didAttach = FALSE;
-    PROTECT_WITH_INDEX(state->SrcFile = R_NilValue, &(state->SrcFileProt));
-    PROTECT_WITH_INDEX(state->Original = R_NilValue, &(state->OriginalProt));
-    PROTECT_WITH_INDEX(state->data = R_NilValue, &(state->DATA_INDEX)) ;
-    PROTECT_WITH_INDEX(state->text = R_NilValue, &(state->TEXT_INDEX)) ;
-    PROTECT_WITH_INDEX(state->ids = R_NilValue, &(state->ID_INDEX)) ;
-    state->data_count = 0;
-    state->xxlineno = 1;
-    state->xxcolno = 0;
-    state->xxbyteno = 0;
-    state->xxparseno = 1;
+        ParseState.prevState = NULL;
+    ParseState.keepSrcRefs = FALSE;
+    ParseState.didAttach = FALSE;
+    PROTECT_WITH_INDEX(ParseState.SrcFile = R_NilValue, &(ParseState.SrcFileProt));
+    PROTECT_WITH_INDEX(ParseState.Original = R_NilValue, &(ParseState.OriginalProt));
+    ParseState.data_count = 0;
+    ParseState.xxlineno = 1;
+    ParseState.xxcolno = 0;
+    ParseState.xxbyteno = 0;
+    ParseState.xxparseno = 1;
     busy = TRUE;
 }
 
@@ -1207,19 +1215,34 @@ void R_FinalizeSrcRefState(void)
 {
     UNPROTECT_PTR(ParseState.SrcFile);
     UNPROTECT_PTR(ParseState.Original);
-    UNPROTECT_PTR(ParseState.data);
-    UNPROTECT_PTR(ParseState.text);
-    UNPROTECT_PTR(ParseState.ids);
+    /* Free the data, text and ids if we are restoring a previous state,
+       or if they have grown too large */
+    if (ParseState.data) {
+    	if (ParseState.prevState || DATA_COUNT > MAX_DATA_COUNT) {
+	    R_ReleaseObject(ParseState.data);
+	    R_ReleaseObject(ParseState.text);
+	    ParseState.data = NULL;
+	} else /* Remove all the strings from the text vector so they don't take up memory, and clean up data */
+	    for (int i=0; i < ParseState.data_count; i++) {
+	    	SET_STRING_ELT(ParseState.text, i, NA_STRING);
+		_PARENT(i) = 0;
+	    }
+    } 
+    if (ParseState.ids && (ParseState.prevState || ID_COUNT > MAX_DATA_COUNT)) {
+        R_ReleaseObject(ParseState.ids);
+        ParseState.ids = NULL;
+    } else {/* Remove the parent records */
+        if (identifier > ID_COUNT) identifier = ID_COUNT;
+        for (int i=0; i < identifier; i++)
+	    ID_PARENT(i) = 0;
+    }
     ParseState.SrcFileProt = NA_INTEGER;
     ParseState.OriginalProt = NA_INTEGER;
-    ParseState.DATA_INDEX = NA_INTEGER;
-    ParseState.TEXT_INDEX = NA_INTEGER;
-    ParseState.ID_INDEX = NA_INTEGER;
     ParseState.data_count = NA_INTEGER;
     if (ParseState.prevState) {
-    	UseSrcRefState(ParseState.prevState);
-    	free(ParseState.prevState);
-    	ParseState.prevState = NULL;
+        SrcRefState *prev = ParseState.prevState;
+    	UseSrcRefState(prev);
+    	free(prev);
     } else
         busy = FALSE;
 }
@@ -1234,9 +1257,6 @@ static void UseSrcRefState(SrcRefState *state)
     ParseState.data = state->data;
     ParseState.text = state->text;
     ParseState.ids = state->ids;
-    ParseState.DATA_INDEX = state->DATA_INDEX;
-    ParseState.TEXT_INDEX = state->TEXT_INDEX;
-    ParseState.ID_INDEX = state->ID_INDEX;
     ParseState.data_count = state->data_count;
     ParseState.xxlineno = state->xxlineno;
     ParseState.xxcolno = state->xxcolno;
@@ -1257,9 +1277,6 @@ static void PutSrcRefState(SrcRefState *state)
 	state->data = ParseState.data;
 	state->text = ParseState.text;
 	state->ids = ParseState.ids;
-	state->DATA_INDEX = ParseState.DATA_INDEX;
-	state->TEXT_INDEX = ParseState.TEXT_INDEX;
-	state->ID_INDEX = ParseState.ID_INDEX;
 	state->data_count = ParseState.data_count;
 	state->xxlineno = ParseState.xxlineno;
 	state->xxcolno = ParseState.xxcolno;
@@ -1285,22 +1302,8 @@ static void ParseInit(void)
 static void initData(void)
 {
     ParseState.data_count = 0 ;
-
-    growData( ) ;
 }
 
-/* We need to be careful with our protections.  Objects protected with an
-   index have to go on the stack before anything that is unprotected
-   with UNPROTECT_PTR, because that shifts the locations of later items. 
-   But they also can't go into loops, because that could blow up the
-   protection stack.  So we separate the allocation and initialization. */
-
-static void ParseContextClear(void)
-{
-    REPROTECT( ParseState.data = R_NilValue, ParseState.DATA_INDEX ) ;
-    REPROTECT( ParseState.text = R_NilValue, ParseState.TEXT_INDEX ) ;
-    REPROTECT( ParseState.ids = R_NilValue, ParseState.ID_INDEX ) ;
-}
 
 static void ParseContextInit(void)
 {
@@ -1309,14 +1312,10 @@ static void ParseContextInit(void)
     
     colon = 0 ;
 
-    /* Clear the data, text and ids to NULL */
-    ParseContextClear();
-
     /* starts the identifier counter*/
     initId();
 
     initData();
-    growID(15*NLINES);
 }
 
 static SEXP R_Parse1(ParseStatus *status)
@@ -1350,10 +1349,9 @@ static int file_getc(void)
 
 /* used in main.c */
 attribute_hidden
-SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status, SrcRefState *state)
+SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
 {
     int savestack;
-    UseSrcRefState(state);
     savestack = R_PPStackTop;    
     ParseInit();
     ParseContextInit();
@@ -1362,7 +1360,6 @@ SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status, SrcRefState *state
     ptr_getc = file_getc;
     R_Parse1(status);
     R_PPStackTop = savestack;
-    PutSrcRefState(state);
     return R_CurrentExpr;
 }
 
@@ -1380,7 +1377,7 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
     Rboolean keepSource = FALSE; 
     int savestack;    
 
-    R_InitSrcRefState(&ParseState);
+    R_InitSrcRefState();
     savestack = R_PPStackTop;       
     if (gencode) {
     	keepSource = asLogical(GetOption1(install("keep.source")));
@@ -1434,7 +1431,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     int i;
     SEXP t, rval;
 
-    R_InitSrcRefState(&ParseState);
+    R_InitSrcRefState();
     savestack = R_PPStackTop;
     
     ParseContextInit();
@@ -1562,7 +1559,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
     R_IoBufferWriteReset(buffer);
     buf[0] = '\0';
     bufp = buf;
-    R_InitSrcRefState(&ParseState);    
+    R_InitSrcRefState();    
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
     
@@ -1597,7 +1594,6 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
 	ParseContextInit();
 	R_Parse1(status);
 	rval = R_CurrentExpr;
-	ParseContextClear();
 
 	switch(*status) {
 	case PARSE_NULL:
@@ -3179,6 +3175,9 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
 	// don't care about zero sized things
 	if( !yytext[0] ) return ;
 	
+	if (ParseState.data_count == DATA_COUNT)
+	    growData();
+	
 	_FIRST_COLUMN( ParseState.data_count ) = first_column; 
 	_FIRST_PARSED( ParseState.data_count ) = first_parsed;
 	_LAST_COLUMN( ParseState.data_count )  = last_column;  
@@ -3191,16 +3190,12 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
 	else
 	    SET_STRING_ELT(ParseState.text, ParseState.data_count, mkChar(""));
 	
-	if( id > ID_SIZE ){
+	if( id > ID_COUNT ){
 		growID(id) ;
 	}
 	ID_ID( id ) = ParseState.data_count ; 
 	
 	ParseState.data_count++ ;
-	if( ParseState.data_count == DATA_SIZE ){
-		growData( ) ;
-	}
-	
 }
 
 /**
@@ -3214,7 +3209,7 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
  */
 static void recordParents( int parent, yyltype * childs, int nchilds){
 	
-	if( parent > ID_SIZE ){
+	if( parent > ID_COUNT ){
 		growID(parent) ;
 	}
 	
@@ -3245,7 +3240,7 @@ static void modif_token( yyltype* loc, int tok ){
 	
 	int id = loc->id ;
 	
-	if (!ParseState.keepSrcRefs || id < 0 || id > ID_SIZE) 
+	if (!ParseState.keepSrcRefs || id < 0 || id > ID_COUNT) 
 	    return;
 	    
 	if( tok == SYMBOL_FUNCTION_CALL ){
@@ -3253,7 +3248,7 @@ static void modif_token( yyltype* loc, int tok ){
 		int j = ID_ID( id ) ;
 		int parent = id ;
 		
-		if (j < 0 || j > ID_SIZE)
+		if (j < 0 || j > ID_COUNT)
 	            return;
 	            
 		while( ID_PARENT( _ID(j) ) != parent ){
@@ -3272,31 +3267,30 @@ static void modif_token( yyltype* loc, int tok ){
 	
 }
 
-static void shrinkData()
-{
-    int data_size = ParseState.data_count * DATA_ROWS;
-    int text_size = ParseState.data_count;
-
-    if (LENGTH(ParseState.data) > data_size) {
-	SEXP newdata = allocVector(INTSXP, data_size);
-	for (int i = 0; i < data_size; i++)
-	    INTEGER(newdata)[i] = INTEGER(ParseState.data)[i];
-	REPROTECT(ParseState.data = newdata, ParseState.DATA_INDEX);
+/* this local version of lengthgets() always copies and doesn't fill with NA */
+static SEXP lengthgets2(SEXP x, int len) {
+    SEXP result;
+    PROTECT(result = allocVector( TYPEOF(x), len ));
+    len = (len < length(x)) ? len : length(x);
+    switch(TYPEOF(x)) {
+    	case INTSXP: 
+    	    for (int i = 0; i < len; i++)
+    	    	INTEGER(result)[i] = INTEGER(x)[i];
+    	    break;
+    	case STRSXP:
+    	    for (int i = 0; i < len; i++)
+    	    	SET_STRING_ELT(result, i, STRING_ELT(x, i));
+    	    break;
+    	default:
+	    UNIMPLEMENTED_TYPE("lengthgets2", x);
     }
-
-    if (LENGTH(ParseState.text) > text_size) {
-	SEXP newtext = allocVector(STRSXP, text_size);
-	for (int i = 0; i < text_size; i++)
-	    SET_STRING_ELT(newtext, i, STRING_ELT(ParseState.text, i));
-	REPROTECT(ParseState.text = newtext, ParseState.TEXT_INDEX);
-    }
+    UNPROTECT(1);
+    return result;
 }
 
 static void finalizeData( ){
 	
     int nloc = ParseState.data_count ;
-
-    shrinkData();
 
     // int maxId = _ID(nloc-1) ;
     int i, j, id ;
@@ -3373,13 +3367,6 @@ static void finalizeData( ){
 	}
     }
 
-    SEXP dims ;
-    PROTECT( dims = allocVector( INTSXP, 2 ) ) ;
-    INTEGER(dims)[0] = DATA_ROWS ;
-    INTEGER(dims)[1] = ParseState.data_count ;
-    setAttrib( ParseState.data, install( "dim" ), dims ) ;
-    UNPROTECT(1) ; // dims
-
     /* attach the token names as an attribute so we don't need to switch to a dataframe, and decide on terminals */
     SEXP tokens;
     PROTECT(tokens = allocVector( STRSXP, nloc ) );
@@ -3391,69 +3378,67 @@ static void finalizeData( ){
     	SET_STRING_ELT(tokens, i, mkChar(yytname[xlat]));
     	_TERMINAL(i) = xlat < YYNTOKENS;
     }
-    setAttrib( ParseState.data, install("tokens"), tokens );
-    setAttrib( ParseState.data, install("text"), ParseState.text );
-    UNPROTECT(1);
+    SEXP dims, newdata, newtext;
+    PROTECT( newdata = lengthgets2(ParseState.data, nloc * DATA_ROWS));
+    PROTECT( newtext = lengthgets2(ParseState.text, nloc));
+    PROTECT( dims = allocVector( INTSXP, 2 ) ) ;
+    INTEGER(dims)[0] = DATA_ROWS ;
+    INTEGER(dims)[1] = nloc ;
+    setAttrib( newdata, install( "dim" ), dims ) ;
+    setAttrib( newdata, install("tokens"), tokens );
+    setAttrib( newdata, install("text"), newtext );
     
-    setAttrib( ParseState.data, R_ClassSymbol, mkString("parseData"));
+    setAttrib(newdata, R_ClassSymbol, mkString("parseData"));
     
     /* Put it into the srcfile environment */
     if (isEnvironment(ParseState.SrcFile)) 
-    	defineVar(install("parseData"), ParseState.data, ParseState.SrcFile);
-
+    	defineVar(install("parseData"), newdata, ParseState.SrcFile);
+    UNPROTECT(4);
 }
 
 /**
  * Grows the data
  */
 static void growData(){
+   
+    SEXP bigger, biggertext ; 
+    int new_data_count;	
+    if (!ParseState.data) {
+        new_data_count = INIT_DATA_COUNT;
+    	R_PreserveObject(ParseState.data = allocVector(INTSXP, 0));
+    	R_PreserveObject(ParseState.text = allocVector(STRSXP, 0));
+    } else
+        new_data_count = 2*DATA_COUNT;
 	
-	SEXP bigger, biggertext ; 
-	int current_data_size = DATA_SIZE;
-	int data_size = current_data_size;
-	data_size += NLINES * 10 ;
-	
-	PROTECT( bigger = allocVector( INTSXP, data_size * DATA_ROWS ) ) ; 
-	PROTECT( biggertext = allocVector( STRSXP, data_size ) );
-
-	if( current_data_size > 0 ){
-	    int i,j,k;         
-	    for( i=0,k=0; i<current_data_size; i++){
-		for( j=0; j<DATA_ROWS; j++,k++){
-		    INTEGER( bigger )[k] = INTEGER(ParseState.data)[k] ;
-		}
-		SET_STRING_ELT( biggertext, i, STRING_ELT( ParseState.text, i ) );
-	    }
-	}
-	REPROTECT( ParseState.data = bigger, ParseState.DATA_INDEX ) ;
-	REPROTECT( ParseState.text = biggertext, ParseState.TEXT_INDEX ) ;
-	UNPROTECT( 2 ) ;
-	
+    R_PreserveObject( bigger = lengthgets2(ParseState.data, new_data_count * DATA_ROWS ) ) ; 
+    R_PreserveObject( biggertext = lengthgets2(ParseState.text, new_data_count ) );
+    R_ReleaseObject( ParseState.data );
+    R_ReleaseObject( ParseState.text );
+    ParseState.data = bigger;
+    ParseState.text = biggertext;
 }
 
 /**
  * Grows the ids vector so that ID_ID(target) can be called
  */
 static void growID( int target ){
-	
-	SEXP newid ;
-	int current_id_size = ID_SIZE ;
-	int id_size;
-	id_size = target + NLINES * 15 ;
-	PROTECT( newid = allocVector( INTSXP, ( 1 + id_size ) * 2) ) ;
-	int i=0,j,k=0;
-	if( current_id_size > 0 ){ 
-		for( ; i<(current_id_size+1); i++){
-			for(j=0;j<2; j++,k++){
-				INTEGER( newid )[k] = INTEGER( ParseState.ids )[k] ;
-			}
-		}
-	}
-	for( ;i<(id_size+1);i++){
-		for(j=0;j<2; j++,k++){
-			INTEGER( newid )[k] = 0 ;
-		}
-	}
-	REPROTECT( ParseState.ids = newid, ParseState.ID_INDEX ) ;
-	UNPROTECT(1) ;
+
+    SEXP bigger;
+    int new_count;
+    if (!ParseState.ids) {
+        new_count = INIT_DATA_COUNT/2 - 1;
+        R_PreserveObject(ParseState.ids = allocVector(INTSXP, 0));
+    } else
+    	new_count = ID_COUNT;
+    	
+    while (target > new_count)
+    	new_count = 2*new_count + 1;
+    	
+    if (new_count <= ID_COUNT)
+    	return;
+    
+    int new_size = (1 + new_count)*2;
+    R_PreserveObject( bigger = lengthgets2(ParseState.ids, new_size ) );
+    R_ReleaseObject( ParseState.ids );
+    ParseState.ids = bigger;
 }

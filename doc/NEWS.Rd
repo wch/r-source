@@ -292,7 +292,8 @@
       supplied.  (Reported by Karl Forner.)
 
       \item Parsing code was changing the length field of vectors and
-      confusing the memory manager.  (\PR{15345})
+      confusing the memory manager.  It has also been modified to make 
+      fewer allocations. (\PR{15345})
 
       \item The Fortran routine \code{ZHER2K} in the reference BLAS
       had a comment-out bug in two places.
