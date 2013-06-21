@@ -40,6 +40,10 @@
       \code{x}s unchanged, not just the \dQuote{vector} ones.
       Consequently, \code{format(lst)} now also works when the list
       \code{lst} has non-vector elements.
+
+      \item The \code{tools::getVignetteInfo()} function has been added
+      to give information about installed vignettes.
+
     }
   }
 
@@ -147,6 +151,9 @@
       had a comment-out bug in two places.
       This caused trouble with \code{eigen()} for Hermitian matrices.
       (\PR{15345} and report from Robin Hankin)
+      
+      \item \code{vignette()} and \code{browseVignettes()} did not 
+      display non-Sweave vignettes properly.
     }
   }
 }

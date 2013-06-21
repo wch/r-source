@@ -51,13 +51,10 @@ httpd <- function(path, query, ...)
 
         out <- HTMLheader("R User Manuals")
         for (pkg in pkgs) {
-            filename <- system.file(file.path("Meta", "vignette.rds"),
-            			    package=pkg)
-     	    if (file.exists(filename)) {
-     	    	vignettes <- readRDS(filename)
+            vinfo <- getVignetteInfo(pkg)
+     	    if (nrow(vinfo)) 
          	out <- c(out, paste0('<h2>Manuals in package', sQuote(pkg),'</h2>'),
-         		 makeVignetteTable(cbind(Package=pkg, as.matrix(vignettes[,c("File", "Title", "PDF", "R")]))))
-            }
+         		 makeVignetteTable(cbind(Package=pkg, vinfo[,c("File", "Title", "PDF", "R")])))
      	}
         out <- c(out, "<hr>\n</body></html>")
         list(payload = paste(out, collapse="\n"))
