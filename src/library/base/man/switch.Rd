@@ -1,6 +1,6 @@
 % File src/library/base/man/switch.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{switch}
@@ -26,13 +26,15 @@ switch(EXPR, \dots)
   argument evaluates to a character string or a number.
 
   If the value of \code{EXPR} is not a character string it is coerced to
-  integer.  If this is between 1 and \code{nargs()-1} then the
-  corresponding element of \code{\dots} is evaluated and the result
-  returned: thus if the first argument is \code{3} then the fourth
-  argument is evaluated and returned.
+  integer.  Note that this also happens for \code{\link{factor}}s, with
+  a warning, as typically the character level is meant.  If the integer
+  is between 1 and \code{nargs()-1} then the corresponding element of
+  \code{\dots} is evaluated and the result returned: thus if the first
+  argument is \code{3} then the fourth argument is evaluated and
+  returned.
 
   If \code{EXPR} evaluates to a character string then that string is
-  matched (exactly)to the names of the elements in \code{\dots}.  If
+  matched (exactly) to the names of the elements in \code{\dots}.  If
   there is a match then that element is evaluated unless it is missing,
   in which case the next non-missing element is evaluated, so for
   example \code{switch("cc", a = 1, cc =, cd =, d = 2)} evaluates to
@@ -91,6 +93,13 @@ for(ch in ccc)
     cat(ch,":", switch(EXPR = ch, a = 1, b = 2:3), "\n")
 for(ch in ccc)
     cat(ch,":", switch(EXPR = ch, a =, A = 1, b = 2:3, "Otherwise: last"),"\n")
+
+## switch(f, *) with a factor f
+ff <- gl(3,1, labels=LETTERS[3:1])
+ff[1] # C
+## so one might expect " is C" here, but
+switch(ff[1], A = "I am A", B="Bb..", C=" is C")# -> "A"
+## so we give a warning
 
 ## Numeric EXPR does not allow a default value to be specified
 ## -- it is always NULL

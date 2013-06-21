@@ -55,6 +55,12 @@
       % advertize at all?
       % \item New \code{.lm.fit()} for benchmark lovers but not Joe
       % Average.
+
+      %% Move to 3.0.1 patched after a while:
+      \item \code{switch(f, ...)} now warns when \code{f} is a factor,
+      as this typically happens accidentally where the useR meant to
+      pass a character, but \code{f} is treated as integer (as always
+      documented).
     }
   }
 
@@ -74,7 +80,7 @@
       \item For consistency, \command{R CMD build} now matches entries
       in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
       case-insensitively on all platforms (not just on Windows).
-      
+
       \item \code{checkFF()} (called by \command{R CMD check} by
       default) can optionally check foreign function calls for
       consistency with the registered type and argument count.  This is
@@ -292,8 +298,8 @@
       had a comment-out bug in two places.
       This caused trouble with \code{eigen()} for Hermitian matrices.
       (\PR{15345} and report from Robin Hankin)
-      
-      \item \code{vignette()} and \code{browseVignettes()} did not 
+
+      \item \code{vignette()} and \code{browseVignettes()} did not
       display non-Sweave vignettes properly.
     }
   }
