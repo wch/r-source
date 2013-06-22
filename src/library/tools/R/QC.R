@@ -5846,6 +5846,18 @@ function(dir)
 
     urls <- .get_standard_repository_URLs()
 
+    parse_description_field <- function(desc, field, default = TRUE)
+    {
+        tmp <- desc[field]
+        if (is.na(tmp)) default
+        else switch(tmp,
+                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
+                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
+                    ## default
+                    errmsg("invalid value of ", field, " field in DESCRIPTION")
+                    )
+    }
+
     ## If a package has a FOSS license, check whether any of its strong
     ## recursive dependencies restricts use.
     if(foss) {
@@ -5878,6 +5890,8 @@ function(dir)
         bad <- intersect(depends, pnames_restricts_use_NA)
         if(length(bad))
             out$depends_with_restricts_use_NA <- bad
+        out$foss_with_BuildVigettes <-
+            parse_description_field(meta, "BuildVignettes", TRUE)
     }
 
     ## Check for possibly mis-spelled field names.
@@ -6138,6 +6152,9 @@ function(x, ...)
             sprintf("  %s (%s)",
                     names(s),
                     lapply(s, paste, collapse = ", ")))
+      },
+      if(!x$foss_with_BuildVigettes) {
+          "FOSS licence with BuildVignettes false"
       },
       if(length(y <- x$fields)) {
           c("Possibly mis-spelled fields in DESCRIPTION:",
