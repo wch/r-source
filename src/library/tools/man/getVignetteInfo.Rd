@@ -21,7 +21,7 @@ Whether to search all installed packages, or just attached packages.
 }
 }
 \value{
-A dataframe with columns
+A matrix with columns
 \item{Package}{the name of the package}
 \item{Dir}{the directory where the package is installed}
 \item{File}{the base filename of the source of the vignette}

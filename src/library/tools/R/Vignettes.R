@@ -996,6 +996,13 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
     ## containing vignettes.
 
     paths <- paths[file_test("-d", file.path(paths, "doc"))]
+    
+    empty <- cbind(Package = character(0),
+                   Dir = character(0), 
+                   File = character(0),
+                   Title = character(0),
+                   R = character(0),
+                   PDF = character(0))
 
     getVinfo <- function(dir) {
         entries <- NULL
@@ -1010,15 +1017,13 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
                   R = if (is.null(entries$R)) "" else entries$R,
                   PDF = entries$PDF)[order(entries$Title), , drop=FALSE]
         }
-        else cbind(Package = character(0),
-                   Dir = character(0), 
-                   File = character(0),
-                   Title = character(0),
-                   R = character(0),
-                   PDF = character(0))
+        else empty
     }
 
-    do.call(rbind, lapply(paths, getVinfo))
+    if (length(paths))
+    	do.call(rbind, lapply(paths, getVinfo))
+    else
+    	empty
 }
 
 ### Local variables: ***
