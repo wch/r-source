@@ -8441,6 +8441,14 @@ For many purposes it is sufficient to allocate @R{} objects and
 manipulate those.  There are quite a few @code{alloc@var{Xxx}} functions
 defined in @file{Rinternals.h}---you may want to explore them.
 
+@findex allocVector
+One that is commonly used is @code{allocVector}, the C-level equivalent
+of @R{}-level @code{vector()} and its wrappers such as @code{integer()}
+and @code{character()}.  One distinction is that whereas the @R{}
+functions always initialize the elements of the vector,
+@code{allocVector} only does so for lists, expressions and character
+vectors (the cases where the elements are themselves @R{} objects).
+
 If storage is required for C objects during the calculations this is
 best allocating by calling @code{R_alloc}; @pxref{Memory allocation}.
 All of these memory allocation routines do their own error-checking, so
