@@ -2100,12 +2100,14 @@ code can be mixed with any other type of compiled code, nor that a build
 of @R{} will have support for such packages.
 
 Some (but not) all compilers specified by the @samp{FC} macro will
-accept Fortran 2003 or 2008 code.  For platforms using
+accept Fortran 2003 or 2008 code: such code should still use file
+extension @file{.f90} or @file{.f95}.  For platforms using
 @command{gfortran}, you may need to include @option{-std=f2003} or
 @option{-std=f2008} in @code{PKG_FCFLAGS}: the default is `GNU Fortran',
 Fortran 95 with non-standard extensions.  The Solaris @command{f95}
-compiler `accepts some Fortran 2003 features'.  Such code should still
-use file extension @file{.f90} or @file{.f95}.
+compiler `accepts some Fortran 2003 features'.  Note that the compiler
+used for OS X is @command{gfortran 4.2.3} which has limited Fortran 2003
+support (@uref{http://gcc.gnu.org/onlinedocs/gcc-4.2.3/gfortran/}).
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -8514,7 +8516,8 @@ object, you can change the type by using
 @noindent
 Protection is needed as a new @emph{object} is created; the object
 formerly pointed to by the @code{SEXP} is still protected but now
-unused.
+unused.@footnote{If no coercion was required, @code{coerceVector} would
+have passed the old object through uncnanged.}
 
 All the coercion functions do their own error-checking, and generate
 @code{NA}s with a warning or stop with an error as appropriate.
@@ -8583,9 +8586,7 @@ SEXP out(SEXP x, SEXP y)
 Note the way @code{REAL} is used: as it is a function call it can be
 considerably faster to store the result and index that.
 
-However, we would like to set the @code{dimnames} of the result.
-Although @code{allocMatrix} provides a short cut, we will show how to
-set the @code{dim} attribute directly.
+However, we would like to set the @code{dimnames} of the result.  We can use
 
 @example
 #include <R.h>
