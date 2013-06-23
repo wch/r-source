@@ -1,6 +1,6 @@
 % File src/library/datasets/man/attitude.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attitude}
@@ -15,7 +15,7 @@
   responses to seven questions in each department.}
 \usage{attitude}
 \format{
-  A dataframe with 30 observations on 7 variables. The first column are
+  A data frame with 30 observations on 7 variables. The first column are
   the short names from the reference, the second one the variable names
   in the data frame:
   \tabular{rlll}{

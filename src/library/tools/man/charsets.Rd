@@ -1,6 +1,6 @@
 % File src/library/tools/man/charsets.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{charsets}
@@ -12,7 +12,7 @@
   \code{charset_to_Unicode} is a matrix of Unicode points with columns
   for the common 8-bit encodings.
 
-  \code{Adobe_glyphs} is a dataframe which gives Adobe glyph names for
+  \code{Adobe_glyphs} is a data frame which gives Adobe glyph names for
   Unicode points. It has two character columns, \code{"adobe"} and
   \code{"unicode"} (a 4-digit hex representation).
 }

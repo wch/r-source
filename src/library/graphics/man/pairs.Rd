@@ -1,6 +1,6 @@
 % File src/library/graphics/man/pairs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pairs}
@@ -27,7 +27,7 @@ pairs(x, \dots)
 }
 \arguments{
   \item{x}{the coordinates of points given as numeric columns of a
-    matrix or dataframe.  Logical and factor columns are converted to
+    matrix or data frame.  Logical and factor columns are converted to
     numeric in the same way that \code{\link{data.matrix}} does.
   }
   \item{formula}{a formula, such as \code{~ x + y + z}.  Each term will
