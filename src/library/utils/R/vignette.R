@@ -23,7 +23,7 @@ vignette <-
     
     if(!missing(topic)) {
         topic <- topic[1L]               # Just making sure ...
-        vinfo <- vinfo[tools::file_path_sans_ext(vinfo[, "File"]) == topic,,drop=FALSE]
+        vinfo <- vinfo[vinfo[, "Topic"] == topic,,drop=FALSE]
         if(length(vinfo)) {
 
             pdf <- vinfo[, "PDF"]
@@ -75,7 +75,7 @@ vignette <-
         ## ... and rewrite into the form used by packageIQR.
         db <- cbind(Package = basename(vinfo[, "Dir"]),
                     LibPath = dirname(vinfo[, "Dir"]),
-                    Item = tools::file_path_sans_ext(basename(vinfo[, "File"])),
+                    Item = vinfo[, "Topic"],
                     Title = title)
 	footer <- if (all) NULL else
 		  paste0("Use ",

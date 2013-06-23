@@ -998,7 +998,8 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
     paths <- paths[file_test("-d", file.path(paths, "doc"))]
     
     empty <- cbind(Package = character(0),
-                   Dir = character(0), 
+                   Dir = character(0),
+                   Topic = character(0),
                    File = character(0),
                    Title = character(0),
                    R = character(0),
@@ -1009,13 +1010,19 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
         if (file.exists(INDEX <- file.path(dir, "Meta", "vignette.rds")))
             entries <- readRDS(INDEX)
         if (NROW(entries) > 0) {
+            # FIXME:  this test is unnecessary?
+            if (is.null(entries$R)) R <- rep("", NROW(entries))
+            else R <- entries$R
+            file <- basename(entries$File)
+            pdf <- entries$PDF
+            topic <- file_path_sans_ext(ifelse(R == "", ifelse(pdf = "", file, pdf), R)) 
             cbind(Package = basename(dir),
                   Dir = dir,
-                  File = basename(entries$File),
+                  Topic = topic,
+                  File = file,
                   Title = entries$Title,
-                  ## FIXME: test unnecessary once packages are reinstalled
-                  R = if (is.null(entries$R)) "" else entries$R,
-                  PDF = entries$PDF)[order(entries$Title), , drop=FALSE]
+                  R = R,
+                  PDF = pdf)[order(entries$Title), , drop=FALSE]
         }
         else empty
     }
