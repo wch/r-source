@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/rgb.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -38,7 +38,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
     range, see above.}
 }
 \details{
-  The colors may be specified by passing a matrix or dataframe as argument
+  The colors may be specified by passing a matrix or data frame as argument
   \code{red}, and leaving \code{blue} and \code{green} missing.
   In this case the first three columns of \code{red} are taken to be
   the \code{red}, \code{green} and \code{blue} values.

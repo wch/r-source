@@ -1,6 +1,6 @@
 % File src/library/utils/man/getParseData.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012 R Core Team
+% Copyright 2012-3 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -29,7 +29,7 @@ getParseText(parseData, id)
     logical; whether to include the text of parsed items in the result
   }
   \item{parseData}{
-    a dataframe returned from \code{getParseData}
+    a data frame returned from \code{getParseData}
   }
   \item{id}{
     a vector of item identifiers whose text is to be retrieved
@@ -46,7 +46,7 @@ getParseText(parseData, id)
 \value{
   For \code{getParseData}:\cr
   If parse data is not present, \code{NULL}.  Otherwise
-  a dataframe is returned, containing the following columns:
+  a data frame is returned, containing the following columns:
   \item{line1}{integer. The line number where the item starts.  This is the
     parsed line number called \code{"parse"} in \code{\link{getSrcLocation}},
     which ignores \verb{#line} directives.}
@@ -63,8 +63,8 @@ getParseText(parseData, id)
     text of all tokens; if it is \code{NA} (the default), the text of terminal
     tokens.  If \code{includeText == FALSE}, this column is not included.}
 
-  The rownames of the dataframe will be equal to the \code{id} values,
-  and the dataframe will have a \code{"srcfile"} attribute containing
+  The rownames of the data frame will be equal to the \code{id} values,
+  and the data frame will have a \code{"srcfile"} attribute containing
   the \code{\link{srcfile}} record which was used.  The rows will be
   ordered by starting position within the source file, with parent items
   occurring before their children.
