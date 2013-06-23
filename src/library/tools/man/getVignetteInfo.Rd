@@ -24,6 +24,7 @@ Whether to search all installed packages, or just attached packages.
 A matrix with columns
 \item{Package}{the name of the package}
 \item{Dir}{the directory where the package is installed}
+\item{Topic}{the name of the vignette}
 \item{File}{the base filename of the source of the vignette}
 \item{Title}{the title of the vignette}
 \item{R}{the tangled R source from the vignette}
