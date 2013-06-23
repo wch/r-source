@@ -1067,7 +1067,7 @@ known to users of Windows and OS X compiled packages (and not seen
 by those who use @command{R CMD INSTALL} or @command{install.packages}
 on the tarball).  So any information files you wish an end user to see
 should be included in @file{inst}.  Note that if the named exceptions
-also occur in @file{inst}, the versions in @file{inst} will be that seen
+also occur in @file{inst}, the version in @file{inst} will be that seen
 in the installed package.
 
 @findex CITATION
@@ -1607,7 +1607,7 @@ included before the default makefile and @command{make} will call the
 first target, intended to be @code{all} in the default makefile.  If you
 really need to circumvent that, use a suitable (phony) target @code{all}
 before any actual targets in @file{Makevars.[win]}: for example package
-@CRANpkg{fastICA} has
+@CRANpkg{fastICA} used to have
 
 @example
 PKG_LIBS = @@BLAS_LIBS@@
@@ -1622,7 +1622,7 @@ slamc.o: slamc.f
 
 @noindent
 needed to ensure that the LAPACK routines find some constants without
-infinite looping.  The Windows equivalent is
+infinite looping.  The Windows equivalent was
 
 @example
 all: $(SHLIB)
@@ -1633,7 +1633,7 @@ slamc.o: slamc.f
 
 @noindent
 (since the other macros are all empty on that platform, and @R{}'s
-internal BLAS is not used).  Note that the first target in
+internal BLAS was not used).  Note that the first target in
 @file{Makevars} will be called, but for back-compatibility it is best
 named @code{all}.
 
@@ -1931,8 +1931,9 @@ the static library in the subdirectory must be made before the shared
 object (@code{$(SHLIB)}) and so the latter must depend on the former.
 Others forget the need for position-independent code.
 
-We really do not recommend using a @file{src/Makefile} instead on
-@file{src/Makevars}, and as the example above shows, it is not necessary.
+We really do not recommend using @file{src/Makefile} instead of
+@file{src/Makevars}, and as the example above shows, it is not
+necessary.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
