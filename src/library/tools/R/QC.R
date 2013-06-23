@@ -5853,9 +5853,7 @@ function(dir)
         else switch(tmp,
                     "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
                     "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                    ## default
-                    errmsg("invalid value of ", field, " field in DESCRIPTION")
-                    )
+                    default)
     }
 
     ## If a package has a FOSS license, check whether any of its strong
