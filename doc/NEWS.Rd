@@ -61,6 +61,8 @@
       as this typically happens accidentally where the useR meant to
       pass a character, but \code{f} is treated as integer (as always
       documented).
+      
+      \item The parser has been modified to use less memory.
     }
   }
 
