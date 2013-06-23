@@ -8510,7 +8510,7 @@ object, you can change the type by using
 Protection is needed as a new @emph{object} is created; the object
 formerly pointed to by the @code{SEXP} is still protected but now
 unused.@footnote{If no coercion was required, @code{coerceVector} would
-have passed the old object through uncnanged.}
+have passed the old object through unchanged.}
 
 All the coercion functions do their own error-checking, and generate
 @code{NA}s with a warning or stop with an error as appropriate.
