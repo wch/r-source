@@ -1196,6 +1196,8 @@ void R_InitSrcRefState(void)
     if (busy) {
     	ParseState.prevState = malloc(sizeof(SrcRefState));
     	PutSrcRefState(ParseState.prevState);
+	ParseState.data = NULL;
+	ParseState.ids = NULL;
     } else
         ParseState.prevState = NULL;
     ParseState.keepSrcRefs = FALSE;
