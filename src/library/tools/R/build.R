@@ -343,10 +343,10 @@ get_exclude_patterns <- function()
                     on.exit(Sys.unsetenv("R_LIBS"), add = TRUE)
                     Sys.setenv(R_LIBS = libdir)
                 }
-                
+
                 # Tangle all vignettes now.  We'll try again at INSTALL time in 3.0.0,
                 # but eventually this is the only place the tangling will happen.
-                
+
                 cmd <- file.path(R.home("bin"), "Rscript")
                 args <- c("--vanilla",
                           "--default-packages=", # some vignettes assume methods
@@ -819,6 +819,8 @@ get_exclude_patterns <- function()
         } else if (a == "--no-build-vignettes") {
             vignettes <- FALSE
         } else if (a == "--no-vignettes") { # pre-3.0.0 version
+            warning("'--no-vignettes' is deprecated:\n  use '--no-build-vignettes' instead",
+                    immediate. = TRUE, call. = FALSE, domain = NA)
             vignettes <- FALSE
         } else if (a == "--resave-data") {
             resave_data <- "best"
