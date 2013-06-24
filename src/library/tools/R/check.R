@@ -3512,8 +3512,9 @@ setRlibs <-
         } else if (a == "--no-build-vignettes") {
             do_build_vignettes  <- FALSE
         } else if (a == "--no-rebuild-vignettes") { # pre-3.0.0 version
-            do_build_vignettes  <- FALSE
-        } else if (a == "--no-vignettes") {
+            stop("'--no-rebuild-vignettes' is defunct: use '--no-build-vignettes' instead",
+                 call. = FALSE, domain = NA)
+      } else if (a == "--no-vignettes") {
             do_vignettes  <- FALSE
         } else if (a == "--no-manual") {
             do_manual  <- FALSE
