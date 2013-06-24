@@ -101,6 +101,10 @@
       \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
       packages, and ignores it (as an Open Source package needs to have
       complete sources for its vignettes).
+
+      \item \code{R CMD check --no-rebuild-vignettes} is defunct:
+      \code{R CMD check --no-build-vignettes} has been preferred since
+      \R 3.0.0.
     }
   }
 
