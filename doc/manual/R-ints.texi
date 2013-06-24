@@ -3689,7 +3689,7 @@ already set.
 @command{gfortran} is installed.
 
 @item
-The default HTML browser is switched to the one in @command{R.app}.
+The default @HTML{} browser is switched to the one in @command{R.app}.
 
 @item
 Various widgets are switched to the versions provided in
@@ -4198,9 +4198,9 @@ if you change internal structures.]
 Various dialects of TeX and used for different purposes in @R{}.  The
 policy is that manuals be written in @samp{texinfo}, and for convenience
 the main and Windows FAQs are also.  This has the advantage that is is
-easy to produce HTML and plain text versions as well as typeset manuals.
+easy to produce @HTML{} and plain text versions as well as typeset manuals.
 
-LaTeX is not used directly, but rather as an intermediate format for
+@LaTeX{} is not used directly, but rather as an intermediate format for
 typeset help documents and for vignettes.
 
 Care needs to be taken about the assumptions made about the @R{} user's
@@ -4223,9 +4223,10 @@ This process has been rather vulnerable to the versions of the external
 software used: particular issues have been @command{texi2dvi} and
 @file{texinfo.tex} updates, mismatches between the two@footnote{Linux
 distributions tend to unbundle @file{texinfo.tex} from @samp{texinfo}.},
-versions of the LaTeX package @samp{hyperref} and quirks in index
-production.  The licenses used for LaTeX and latterly @samp{texinfo}
-prohibit us from including `known good' versions in the @R{} distribution.
+versions of the @LaTeX{} package @samp{hyperref} and quirks in index
+production.  The licenses used for @LaTeX{} and latterly @samp{texinfo}
+prohibit us from including `known good' versions in the @R{}
+distribution.
 
 On a Unix-alike @command{configure} looks for the executables for TeX and
 friends and if found records the absolute paths in the system

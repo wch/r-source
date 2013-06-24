@@ -2634,7 +2634,7 @@ is installed.  Pointers from package help indices to the installed
 documents are automatically created.  Documents in @file{inst/doc} can
 be in arbitrary format, however we strongly recommend providing them in
 PDF format, so users on almost all platforms can easily read them.  To
-ensure that they can be accessed from a browser (as an HTML index is
+ensure that they can be accessed from a browser (as an @HTML{} index is
 provided), the file names should start with an @acronym{ASCII} letter
 and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
@@ -2661,7 +2661,7 @@ is a @emph{copy} of the vignette source directory.  Make sure all files
 needed to run the @R{} code in the vignette (data sets, @dots{}) are
 accessible by either placing them in the @file{inst/doc} hierarchy of
 the source package or by using calls to @code{system.file()}.  All other
-files needed to re-make the vignette PDFs (such as LaTeX style files,
+files needed to re-make the vignette PDFs (such as @LaTeX{} style files,
 BiBTeX input files and files for any figures not created by running the
 code in the vignette) must be in the vignette source directory.
 
@@ -2719,7 +2719,7 @@ would be generated from vignettes, as these will be re-generated when
 the package is installed (unless the vignette does not generate any @R{}
 code, in which case it is also pointless/misleading).
 
-Metadata lines can be placed in the source file, preferably in LaTeX
+Metadata lines can be placed in the source file, preferably in @LaTeX{}
 comments in the preamble.  One such is a @code{\VignetteIndexEntry} of
 the form
 @example
@@ -2740,7 +2740,7 @@ unless a file @file{index.html} exists in directory
 @file{inst/doc}. This index is linked from the @HTML{} help index for
 the package.  If you do supply a @file{inst/doc/index.html} file it
 should contain relative links only to files under the installed
-@file{doc} directory, or perhaps (not really an index) to HTML help
+@file{doc} directory, or perhaps (not really an index) to @HTML{} help
 files or to the @file{DESCRIPTION} file.
 
 Sweave/Stangle allows the document to specify the @code{split=TRUE}
@@ -4402,7 +4402,7 @@ the @file{Rd} object represented by the file and has to be unique in a
 package.  To avoid problems with indexing the package manual, it may not
 @c Problems seen in 2.13.x but not 2.14.0
 contain @samp{!}  @samp{|} nor @samp{@@}, and to avoid possible problems
-with the HTML help system it should not contain @samp{/} nor a space.
+with the @HTML{} help system it should not contain @samp{/} nor a space.
 (@LaTeX{} special characters are allowed, but may not be collated
 correctly in the index.)  There can only be one @code{\name} entry in a
 file, and it must not contain any markup.  Entries in the package manual
@@ -4714,7 +4714,7 @@ help page, but @code{foo} is excluded from several object indices,
 including the alphabetical list of objects in the @HTML{} help system.
 
 @code{help.search()} can search by keyword, including user-defined
-values: however the `Search Engine & Keywords' HTML page accessed
+values: however the `Search Engine & Keywords' @HTML{} page accessed
 @emph{via} @code{help.start()} provides single-click access only to a
 pre-defined list of keywords.
 @end table
@@ -5003,14 +5003,14 @@ to be escaped.  Displayed using a distinct font if possible.
 @item \email@{@var{email_address}@}
 @findex \email
 Indicate an electronic mail address.  @LaTeX{}-like, will be rendered as
-a hyperlink in HTML and PDF conversion.  Displayed using
+a hyperlink in @HTML{} and PDF conversion.  Displayed using
 @code{typewriter} font if possible.
 
 @item \url@{@var{uniform_resource_locator}@}
 @findex \url
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.  The argument is handled verbatim, and rendered as a hyperlink in
-HTML and PDF conversion.  Displayed using @code{typewriter} font if
+@HTML{} and PDF conversion.  Displayed using @code{typewriter} font if
 possible.
 
 @item \href@{@var{uniform_resource_locator}@}@{@var{text}@}
@@ -5023,7 +5023,7 @@ second argument of @LaTeX{}-like text displayed to the user.
 @findex \var
 Indicate a metasyntactic variable.  In some cases this will be rendered
 distinctly, e.g.@: in italic, but not in all@footnote{Currently it is
-rendered differently only in HTML conversions, and @LaTeX{} conversion
+rendered differently only in @HTML{} conversions, and @LaTeX{} conversion
 outside @samp{\usage} and @samp{\examples} environments.}. @LaTeX{}-like.
 @item \env@{@var{environment_variable}@}
 @findex \env
@@ -5153,13 +5153,13 @@ will resolve the link at run time) or in the normally undesirable event
 that more than one package offers help on a topic@footnote{a common
 example in @acronym{CRAN} packages is @code{\link[mgcv]@{gam@}}.} (in
 which case the present package has precedence so this is only needed to
-refer to other packages).  They are currently only used in HTML help
+refer to other packages).  They are currently only used in @HTML{} help
 (and ignored for hyperlinks in @LaTeX{} conversions of help pages), and
 link to the file rather than the topic (since there is no way to know
 which topics are in which files in an uninstalled package).  The
 @strong{only} reason to use these forms for base and recommended
 packages is to force a reference to a package that might be further down
-the search path.  Because they have been frequently misused, the HTML
+the search path.  Because they have been frequently misused, the @HTML{}
 help system looks for topic @code{@var{foo}} in package @pkg{@var{pkg}}
 if it does not find file @file{@var{foo}.html}.
 
@@ -5220,7 +5220,7 @@ for x = 0, 1, 2, ....
 @end cartouche
 @end quotation
 
-Greek letters (both cases) will be rendered in HTML if preceded by a
+Greek letters (both cases) will be rendered in @HTML{} if preceded by a
 backslash, @code{\dots} and @code{\ldots} will be rendered as ellipses
 and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical symbols.
 
@@ -5237,24 +5237,24 @@ are three forms.
 
 The two commonly used simple forms are @code{\figure@{@var{filename}@}}
 and @code{\figure@{@var{filename}@}@{@var{alternate text}@}}.  This will
-include a copy of the figure in either HTML or @LaTeX{} output.  In text
+include a copy of the figure in either @HTML{} or @LaTeX{} output.  In text
 output, the alternate text will be displayed instead.  (When the second
 argument is omitted, the filename will be used.)  Both the filename and
 the alternate text will be parsed verbatim, and should not include
-special characters that are significant in HTML or @LaTeX{}.
+special characters that are significant in @HTML{} or @LaTeX{}.
 
 The expert form is @code{\figure@{@var{filename}@}@{options:
 @var{string}@}}.  (The word @samp{options:} must be typed exactly as
 shown and followed by at least one space.)  In this form, the
-@var{string} is copied into the HTML @code{img} tag as attributes
+@var{string} is copied into the @HTML{} @code{img} tag as attributes
 following the @code{src} attribute, or into the second argument of the
-@code{\Figure} macro in LaTeX, which by default is used as options to an
-@code{\includegraphics} call.  As it is unlikely that any single string
-would suffice for both display modes, the expert form would normally be
-wrapped in conditionals.  It is up to the author to make sure that legal
-HTML/LaTeX is used.  For example, to include a logo in both HTML (using
-the simple form) and LaTeX (using the expert form), the following could
-be used:
+@code{\Figure} macro in @LaTeX{}, which by default is used as options to
+an @code{\includegraphics} call.  As it is unlikely that any single
+string would suffice for both display modes, the expert form would
+normally be wrapped in conditionals.  It is up to the author to make
+sure that legal @HTML{}/@LaTeX{} is used.  For example, to include a
+logo in both @HTML{} (using the simple form) and @LaTeX{} (using the
+expert form), the following could be used:
 
 @example
 \if@{html@}@{\figure@{logo.jpg@}@{Our logo@}@}
@@ -5265,7 +5265,7 @@ The files containing the figures should be stored in the directory
 @file{man/figures}.  Files with extensions @file{.jpg}, @file{.pdf},
 @file{.png} and @file{.svg} from that directory will be copied to the
 @file{help/figures} directory at install time. (Figures
-in PDF format will not display in most HTML browsers, but
+in PDF format will not display in most @HTML{} browsers, but
 might be the best choice in reference manuals.)  Specify the filename
 relative to @file{man/figures} in the @code{\figure} directive.
 
@@ -5283,7 +5283,7 @@ distinction between @code{\dots} and @code{\ldots}.  It is technically
 incorrect to use @code{\ldots} in code blocks and @code{tools::checkRd}
 will warn about this---on the other hand the current converters treat
 them the same way in code blocks, and elsewhere apart from the small
-distinction between the two in LaTeX.}  These can be followed by
+distinction between the two in @LaTeX{}.}  These can be followed by
 @code{@{@}}, and should be unless followed by whitespace.
 
 After an unescaped @samp{%}, you can put your own comments regarding the
@@ -5417,7 +5417,7 @@ the @var{text} part of @code{\if@{@var{format}@}@{@var{text}@}}.  It
 causes the renderer to output the literal text exactly, with no
 attempt to escape special characters.  For example, use
 the following to output the markup necessary to display the Greek letter in
-@LaTeX{} or HTML, and the text string @code{alpha} in other formats:
+@LaTeX{} or @HTML{}, and the text string @code{alpha} in other formats:
 @example
 \if@{latex@}@{\out@{\alpha@}@}\ifelse@{html@}@{\out@{&alpha;@}@}@{alpha@}
 @end example
@@ -5530,7 +5530,7 @@ For more details, see the online document
 
 The @code{\newcommand} and @code{\renewcommand} macros allow new macros
 to be defined within an Rd file.  These are similar but not identical to
-the same-named LaTeX macros.
+the same-named @LaTeX{} macros.
 
 They each take two arguments which are parsed verbatim.  The first is
 the name of the new macro including the initial backslash, and the second
@@ -8517,7 +8517,7 @@ object, you can change the type by using
 Protection is needed as a new @emph{object} is created; the object
 formerly pointed to by the @code{SEXP} is still protected but now
 unused.@footnote{If no coercion was required, @code{coerceVector} would
-have passed the old object through uncnanged.}
+have passed the old object through unchanged.}
 
 All the coercion functions do their own error-checking, and generate
 @code{NA}s with a warning or stop with an error as appropriate.

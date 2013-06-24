@@ -393,7 +393,7 @@ has the version for the latest release of @R{}).
 By default @HTML{} help pages are created when needed rather than being
 built at install time.
 
-If you need to disable the server and want HTML help, there is the
+If you need to disable the server and want @HTML{} help, there is the
 option to build @HTML{} pages when packages are installed
 (including those installed with @R{}).  This is enabled by the
 @command{configure} option @option{--enable-prebuilt-html}.  Whether
@@ -3665,9 +3665,9 @@ produce the default.)
 @subsection Setting the browsers
 
 @enindex R_BROWSER
-Another precious variable is @env{R_BROWSER}, the default HTML browser, which
-should take a value of an executable in the user's path or specify
-a full path.
+Another precious variable is @env{R_BROWSER}, the default @HTML{}
+browser, which should take a value of an executable in the user's path
+or specify a full path.
 
 @enindex R_PDFVIEWER
 Its counterpart for PDF files is  @env{R_PDFVIEWER}.

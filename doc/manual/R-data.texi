@@ -429,7 +429,7 @@ standard for general data markup and exchange.  It is being used by
 different communities to describe geographical data such as maps,
 graphical displays, mathematics and so on.
 
-XML provides a way to specify the file's encoding, e.g.@:
+@acronym{XML} provides a way to specify the file's encoding, e.g.@:
 
 @example
 <?xml version="1.0" encoding="UTF-8"?>
