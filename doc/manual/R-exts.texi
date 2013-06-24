@@ -6766,7 +6766,7 @@ or setting the environment variable @env{VALGRIND_OPTS}.
 
 On OS X you may need to ensure that debugging symbols are made available
 (so @command{valgrind} reports line numbers in files).  This can usually
-be done with the @command{valgrind} option @option{--dysmutil=yes} to
+be done with the @command{valgrind} option @option{--dsymutil=yes} to
 ask for the symbols to be dumped when the @file{.so} file is loaded.
 This will not work where packages are installed into a system area (such
 as the @file{R.framework}) and can be slow.  Installing packages with
