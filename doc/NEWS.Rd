@@ -105,6 +105,10 @@
       \item \code{R CMD check --no-rebuild-vignettes} is defunct:
       \code{R CMD check --no-build-vignettes} has been preferred since
       \R 3.0.0.
+
+      \item \code{R CMD build --no-vignettes} is defunct:
+      \code{R CMD build --no-build-vignettes} has been preferred since
+      \R 3.0.0.
     }
   }
 

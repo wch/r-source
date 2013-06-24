@@ -819,7 +819,8 @@ get_exclude_patterns <- function()
         } else if (a == "--no-build-vignettes") {
             vignettes <- FALSE
         } else if (a == "--no-vignettes") { # pre-3.0.0 version
-            vignettes <- FALSE
+            stop("'--no-vignettes' is defunct:\n  use '--no-build-vignettes' instead",
+                 call. = FALSE, domain = NA)
         } else if (a == "--resave-data") {
             resave_data <- "best"
         } else if (a == "--no-resave-data") {
