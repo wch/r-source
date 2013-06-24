@@ -1247,7 +1247,6 @@ void R_FinalizeSrcRefState(void)
         SrcRefState *prev = ParseState.prevState;
     	UseSrcRefState(prev);
     	free(prev);
-	prev = NULL;
     } else
         busy = FALSE;
 }
