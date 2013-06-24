@@ -984,7 +984,7 @@ function(pkgdir, mustwork = TRUE)
 
 # This gets the info for installed packages
 
-getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE) 
+getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
 {
     if (is.null(package)) {
         package <- .packages(all.available = all, lib.loc)
@@ -996,7 +996,7 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
     ## containing vignettes.
 
     paths <- paths[file_test("-d", file.path(paths, "doc"))]
-    
+
     empty <- cbind(Package = character(0),
                    Dir = character(0),
                    Topic = character(0),
@@ -1015,7 +1015,7 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
             else R <- entries$R
             file <- basename(entries$File)
             pdf <- entries$PDF
-            topic <- file_path_sans_ext(ifelse(R == "", ifelse(pdf = "", file, pdf), R)) 
+            topic <- file_path_sans_ext(ifelse(R == "", ifelse(pdf == "", file, pdf), R))
             cbind(Package = basename(dir),
                   Dir = dir,
                   Topic = topic,
