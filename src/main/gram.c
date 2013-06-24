@@ -3567,8 +3567,9 @@ attribute_hidden
 void R_InitSrcRefState(void)
 {
     if (busy) {
-    	ParseState.prevState = malloc(sizeof(SrcRefState));
-    	PutSrcRefState(ParseState.prevState);
+    	SrcRefState *prev = malloc(sizeof(SrcRefState));
+    	PutSrcRefState(prev);
+	ParseState.prevState = prev;
 	ParseState.data = NULL;
 	ParseState.ids = NULL;
     } else
