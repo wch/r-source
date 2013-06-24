@@ -5890,7 +5890,7 @@ function(dir)
             out$depends_with_restricts_use_NA <- bad
         out$foss_with_BuildVigettes <-
             parse_description_field(meta, "BuildVignettes", TRUE)
-    }
+    } else out$foss_with_BuildVigettes <- TRUE
 
     ## Check for possibly mis-spelled field names.
     nms <- names(meta)
