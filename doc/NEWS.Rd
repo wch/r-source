@@ -96,6 +96,11 @@
       Functions \code{suppressForeignCheck()} and \code{dontCheck()}
       have been added to allow package authors to suppress false
       positive reports.
+      
+      \item \code{R CMD check --as-cran} warns about a false value of the
+      \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
+      packages, and ignores it (as an Open Source package needs to have
+      complete sources for its vignettes).
     }
   }
 

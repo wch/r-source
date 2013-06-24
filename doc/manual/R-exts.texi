@@ -635,10 +635,11 @@ The @samp{Biarch} logical field is used on Windows to select the
 @c DESCRIPTION field BuildVignettes
 The @samp{BuildVignettes} logical field can be set to a false value to
 stop @command{R CMD build} from attempting to rebuild the vignettes, as
-well as preventing @command{R CMD check} from testing this.  This should
-only be used exceptionally, for example if the PDFs include large
-figures which are not part of the package sources (and hence only in
-packages which do not have an Open Source license).
+well as preventing@footnote{But it is checked for Open Source packages
+by @command{R CMD check --as-cran}.}  @command{R CMD check} from testing
+this.  This should only be used exceptionally, for example if the PDFs
+include large figures which are not part of the package sources (and
+hence only in packages which do not have an Open Source license).
 
 @c DESCRIPTION field VignetteBuilder
 The @samp{VignetteBuilder} field names a package that provides 
