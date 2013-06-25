@@ -161,7 +161,10 @@
       the (optional) warning produced by a partial name match
       with a pairlist, the error message from a zero length argument to
       the \code{:} operator.  (Found by Radford Neal; \PR{15358}, 
-      \PR{15356}.)
+      \PR{15356})
+      
+      \item \code{svd()} returned \code{NULL} rather than omitting
+      components as documented.  (Found by Radford Neal; \PR{15360})
     }
   }
 }
