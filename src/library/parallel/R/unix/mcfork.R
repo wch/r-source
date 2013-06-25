@@ -128,8 +128,8 @@ masterDescriptor <- function() .Call(C_mc_master_fd)
 
 isChild <- function() .Call(C_mc_is_child)
 
-closeStdout <- function() .Call(C_mc_close_stdout)
-closeStderr <- function() .Call(C_mc_close_stderr)
+closeStdout <- function(to.null=FALSE) .Call(C_mc_close_stdout, to.null)
+closeStderr <- function(to.null=FALSE) .Call(C_mc_close_stderr, to.null)
 closeFD <- function(fds) .Call(C_mc_close_fds, as.integer(fds))
 
 closeAll <- function(includeStd = FALSE)

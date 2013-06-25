@@ -165,6 +165,14 @@
       
       \item \code{svd()} returned \code{NULL} rather than omitting
       components as documented.  (Found by Radford Neal; \PR{15360})
+
+      \item \code{mclapply()} and \code{mcparallel()} with
+      \code{silent=TRUE} could break a process that uses \code{stdout}
+      output unguarded against broken pipes (e.g., \code{zip} will fail
+      silently). To work around such issues, they now replace
+      \code{stdout} with a descriptor pointed to \file{/dev/null}
+      instead. For this purpose, internal \code{closeStdout} and
+      \code{closeStderr} functions have gained the \code{to.null} flag.
     }
   }
 }

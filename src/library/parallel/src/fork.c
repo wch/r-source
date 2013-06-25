@@ -36,6 +36,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #include <R.h>
 #include <Rinternals.h>
@@ -187,15 +188,29 @@ SEXP mc_fork()
 }
 
 
-SEXP mc_close_stdout() 
+SEXP mc_close_stdout(SEXP toNULL) 
 {
-    close(STDOUT_FILENO);
+    if (asLogical(toNULL) == 1) {
+	int fd = open("/dev/null", O_WRONLY);
+	if (fd != -1) {
+	    dup2(fd, STDOUT_FILENO);
+	    close(fd);
+	} else close(STDOUT_FILENO);
+    } else
+	close(STDOUT_FILENO);
     return R_NilValue;
 }
 
-SEXP mc_close_stderr() 
+SEXP mc_close_stderr(SEXP toNULL) 
 {
-    close(STDERR_FILENO);
+    if (asLogical(toNULL) == 1) {
+	int fd = open("/dev/null", O_WRONLY);
+	if (fd != -1) {
+	    dup2(fd, STDERR_FILENO);
+	    close(fd);
+	} else close(STDERR_FILENO);
+    } else
+	close(STDERR_FILENO);
     return R_NilValue;
 }
 

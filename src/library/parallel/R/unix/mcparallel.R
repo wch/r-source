@@ -33,7 +33,7 @@ mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affini
         if (isTRUE(mc.interactive)) .Call(C_mc_interactive, TRUE)
         if (isTRUE(!mc.interactive)) .Call(C_mc_interactive, FALSE)
         if (!is.null(mc.affinity)) .Call(C_mc_affinity, mc.affinity)
-        if (isTRUE(silent)) closeStdout()
+        if (isTRUE(silent)) closeStdout(TRUE)
         sendMaster(try(eval(expr, env), silent = TRUE))
         mcexit(0L)
     }
