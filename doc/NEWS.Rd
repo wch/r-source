@@ -157,8 +157,11 @@
       \item \code{vignette()} and \code{browseVignettes()} did not 
       display non-Sweave vignettes properly.
       
-      \item The (optional) warning produced by a partial name match
-      with a pairlist could be incorrect.  (Found by Radford Neal.)
+      \item Two warning/error messages have been corrected:
+      the (optional) warning produced by a partial name match
+      with a pairlist, the error message from a zero length argument to
+      the \code{:} operator.  (Found by Radford Neal; \PR{15358}, 
+      \PR{15356}.)
     }
   }
 }
