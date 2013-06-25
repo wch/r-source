@@ -2631,12 +2631,15 @@ static void gc_end_timing(void)
     if (gctime_enabled) {
 	double times[5], delta;
 	R_getProcTime(times);
-	delta = R_getClockIncrement();
 
-	/* add delta to compensate for timer resolution:
-	   NB: as all current Unix-alike systems use getrusage, 
-	   this may over-compensate.
-	 */
+	/* add delta to compensate for timer resolution */
+#if 0
+	/* this seems to over-compensate too */
+	delta = R_getClockIncrement();
+#else
+	delta = 0;
+#endif
+
 	gctimes[0] += times[0] - gcstarttimes[0] + delta;
 	gctimes[1] += times[1] - gcstarttimes[1] + delta;
 	gctimes[2] += times[2] - gcstarttimes[2];
