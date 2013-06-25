@@ -61,7 +61,7 @@
       as this typically happens accidentally where the useR meant to
       pass a character, but \code{f} is treated as integer (as always
       documented).
-      
+
       \item The parser has been modified to use less memory.
     }
   }
@@ -96,7 +96,7 @@
       Functions \code{suppressForeignCheck()} and \code{dontCheck()}
       have been added to allow package authors to suppress false
       positive reports.
-      
+
       \item \code{R CMD check --as-cran} warns about a false value of the
       \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
       packages, and ignores it (as an Open Source package needs to have
@@ -203,6 +203,9 @@
 
       \item The \code{tools::getVignetteInfo()} function has been added
       to give information about installed vignettes.
+
+      \item New \code{assertCondition()} utility in \pkg{tools}, useful
+      for testing.
 
     }
   }
@@ -316,11 +319,11 @@
 
       \item \code{vignette()} and \code{browseVignettes()} did not
       display non-Sweave vignettes properly.
-      
+
       \item Two warning/error messages have been corrected:
       the (optional) warning produced by a partial name match
       with a pairlist, the error message from a zero length argument to
-      the \code{:} operator.  (Found by Radford Neal; \PR{15358}, 
+      the \code{:} operator.  (Found by Radford Neal; \PR{15358},
       \PR{15356})
       
       \item \code{svd()} returned \code{NULL} rather than omitting

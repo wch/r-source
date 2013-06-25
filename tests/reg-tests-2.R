@@ -2608,14 +2608,10 @@ is.unsorted(data.frame(x=3:4, y=1:2))
 ## R < 2.15.1 got these as FALSE, TRUE, FALSE.
 
 
-## Error in constructing the error message
-assertErrorPrint <- function(expr) {
-    stopifnot(inherits(e <- tryCatch(expr, error=function(e)e), "error"))
-    cat("Asserted Error:", e[["message"]],"\n")
-}
 library("methods")# (not needed here)
-assertErrorPrint( getMethod(ls, "bar", fdef=ls) )
-assertErrorPrint( getMethod(show, "bar") )
+assertCondition <- tools::assertCondition
+assertCondition( getMethod(ls, "bar", fdef=ls), "error", verbose=TRUE)
+assertCondition( getMethod(show, "bar"),        "error", verbose=TRUE)
 ## R < 2.15.1 gave
 ##   cannot coerce type 'closure' to vector of type 'character'
 
