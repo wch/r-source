@@ -2989,7 +2989,8 @@ package @pkg{foo} are to be imported.  Using @code{importFrom}
 selectively rather than @code{import} is good practice.
 
 It is possible to export variables from a namespace which it has
-imported from other namespaces.
+imported from other namespaces: this has to be done explicitly and not
+@emph{via} @code{exportPattern}.
 
 If a package only needs a few objects from another package it can use a
 fully qualified variable reference in the code instead of a formal
@@ -2997,7 +2998,7 @@ import.  A fully qualified reference to the function @code{f} in package
 @pkg{foo} is of the form @code{foo::f}.  This is slightly less efficient
 than a formal import and also loses the advantage of recording all
 dependencies in the @file{NAMESPACE} file (but they still need to be
-recorded in the @file{DESCRIPTION} file.  Evaluating @code{foo::f} will
+recorded in the @file{DESCRIPTION} file).  Evaluating @code{foo::f} will
 cause package @pkg{foo} to be loaded, but not attached, if it was not
 loaded already---this can be an advantage in delaying the loading of a
 rarely used package.
