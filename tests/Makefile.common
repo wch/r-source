@@ -173,7 +173,7 @@ test-Packages:
 	@for p in $(R_PKGS_BASE); do \
 	  $(ECHO) "checking package '$${p}'"; \
 	  $(top_builddir)/bin/R CMD check --install=skip \
-	    --no-rebuild-vignettes \
+	    --no-build-vignettes \
 	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
 
