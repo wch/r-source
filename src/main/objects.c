@@ -48,26 +48,26 @@ static SEXP GetObject(RCNTXT *cptr)
 
     tag = TAG(formals);
     if (tag != R_NilValue && tag != R_DotsSymbol) {
-	s = R_NilValue;
+	s = NULL;
 	/** exact matches **/
 	for (b = cptr->promargs ; b != R_NilValue ; b = CDR(b))
 	    if (TAG(b) != R_NilValue && pmatch(tag, TAG(b), 1)) {
-		if (s != R_NilValue)
+		if (s != NULL)
 		    error(_("formal argument \"%s\" matched by multiple actual arguments"), tag);
 		else
 		    s = CAR(b);
 	    }
 
-	if (s == R_NilValue)
+	if (s == NULL)
 	    /** partial matches **/
 	    for (b = cptr->promargs ; b != R_NilValue ; b = CDR(b))
 		if (TAG(b) != R_NilValue && pmatch(tag, TAG(b), 0)) {
-		    if ( s != R_NilValue)
+		    if ( s != NULL)
 			error(_("formal argument \"%s\" matched by multiple actual arguments"), tag);
 		    else
 			s = CAR(b);
 		}
-	if (s == R_NilValue)
+	if (s == NULL)
 	    /** first untagged argument **/
 	    for (b = cptr->promargs ; b != R_NilValue ; b = CDR(b))
 		if (TAG(b) == R_NilValue )
@@ -75,7 +75,7 @@ static SEXP GetObject(RCNTXT *cptr)
 		    s = CAR(b);
 		    break;
 		}
-	if (s == R_NilValue)
+	if (s == NULL)
 	    s = CAR(cptr->promargs);
 /*
 	    error("failed to match argument for dispatch");
