@@ -784,7 +784,10 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
         old <- as.character(spec)
         new <- names(spec)
         if (is.null(new)) new <- old
-        else new[new == ""] <- old[new == ""]
+        else {
+            change <- !nzchar(new)
+            new[change] <- old[change]
+        }
         names(old) <- new
         old
     }
@@ -1007,7 +1010,10 @@ namespaceExport <- function(ns, vars) {
             old <- as.character(spec)
             new <- names(spec)
             if (is.null(new)) new <- old
-            else new[new == ""] <- old[new == ""]
+            else {
+                change <- !nzchar(new)
+                new[change] <- old[change]
+            }
             names(old) <- new
             old
         }
