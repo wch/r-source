@@ -5760,8 +5760,13 @@ static void finalizeData( ){
     	_TERMINAL(i) = xlat < YYNTOKENS;
     }
     SEXP dims, newdata, newtext;
-    PROTECT( newdata = lengthgets2(ParseState.data, nloc * DATA_ROWS));
-    PROTECT( newtext = lengthgets2(ParseState.text, nloc));
+    if (nloc) {
+	PROTECT( newdata = lengthgets2(ParseState.data, nloc * DATA_ROWS));
+	PROTECT( newtext = lengthgets2(ParseState.text, nloc));
+    } else {
+	PROTECT( newdata = allocVector( INTSXP, 0));
+	PROTECT( newtext = allocVector( STRSXP, 0));
+    }
     PROTECT( dims = allocVector( INTSXP, 2 ) ) ;
     INTEGER(dims)[0] = DATA_ROWS ;
     INTEGER(dims)[1] = nloc ;
