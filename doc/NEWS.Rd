@@ -316,6 +316,9 @@
 
       \item \code{vignette()} and \code{browseVignettes()} did not
       display non-Sweave vignettes properly.
+      
+      \item The (optional) warning produced by a partial name match
+      with a pairlist could be incorrect.  (Found by Radford Neal.)
     }
   }
 }

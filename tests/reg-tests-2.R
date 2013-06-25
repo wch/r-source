@@ -2703,3 +2703,10 @@ str(d)
   regmatches(x, m) <- c('A', 'C')
   print(x)
 ## Gave a warning and a wrong result up to 3.0.1
+
+## Bad warning found by Radford Neal
+  saveopt <- options(warnPartialMatchDollar=TRUE)
+  pl <- pairlist(abc=1, def=2)
+  pl$ab
+  if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
+## 'abc' was just ''

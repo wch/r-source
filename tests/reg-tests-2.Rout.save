@@ -7075,3 +7075,13 @@ g(y)(x)
 [1] "A" "B" "C"
 > ## Gave a warning and a wrong result up to 3.0.1
 > 
+> ## Bad warning found by Radford Neal
+>   saveopt <- options(warnPartialMatchDollar=TRUE)
+>   pl <- pairlist(abc=1, def=2)
+>   pl$ab
+[1] 1
+Warning message:
+In pl$ab : partial match of 'ab' to 'abc'
+>   if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
+> ## 'abc' was just ''
+> 
