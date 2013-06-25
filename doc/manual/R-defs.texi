@@ -63,6 +63,8 @@ except that this permission notice may be stated in a translation
 approved by the R Core Team.
 @end macro
 
+@hyphenation{name-space name-spaces}
+
 @set ISBN-FAQ 
 @set ISBN-admin 
 @set ISBN-data 
