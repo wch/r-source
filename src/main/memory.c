@@ -727,7 +727,7 @@ static R_size_t R_NodesInUse = 0;
 #ifdef DEBUG_GC
 static void CheckNodeGeneration(SEXP x, int g)
 {
-    if (NODE_GENERATION(x) < g) {
+    if (x && NODE_GENERATION(x) < g) {
 	REprintf("untraced old-to-new reference\n");
     }
 }
