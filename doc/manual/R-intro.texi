@@ -6892,7 +6892,11 @@ Print version information to standard output and exit successfully.
 @item --encoding=@var{enc}
 Specify the encoding to be assumed for input from the console or
 @code{stdin}.  This needs to be an encoding known to @code{iconv}: see
-its help page.  (@code{--encoding @var{enc}} is also accepted.)
+its help page.  (@code{--encoding @var{enc}} is also accepted.)  The
+input is re-encoded to the locale @R{} is running in and needs to be
+representable in the latter's encoding (so e.g.@ you cannot re-encode
+Greek text in a French locale unless that locale uses the UTF-8
+encoding).
 
 @item RHOME
 Print the path to the @R{} ``home directory'' to standard output and
