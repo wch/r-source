@@ -1425,6 +1425,7 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
     if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	if(n == 1) {
 	    double digits = 0.0;
+	    check1arg(args, call, "x");
 	    if(PRIMVAL(op) == 10004) digits = 6.0;
 	    SETCDR(args, CONS(ScalarReal(digits), R_NilValue));
 	} else {
@@ -1488,11 +1489,11 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(args = evalListKeepMissing(args, env));
     PROTECT(call2 = lang2(CAR(call), R_NilValue));
     SETCDR(call2, args);
-    n = length(args);
 
     if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	switch (n) {
 	case 1:
+	    check1arg(args, call, "x");
 	    if (isComplex(CAR(args)))
 		res = complex_math1(call, op, args, env);
 	    else

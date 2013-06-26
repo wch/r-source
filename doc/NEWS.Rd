@@ -163,6 +163,9 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
+      
+      \item \code{log()}, \code{signif()} and \code{round()} now raise an 
+      error if a single named argument is not named \code{x}.  (\PR{15361})
     }
   }
 }
