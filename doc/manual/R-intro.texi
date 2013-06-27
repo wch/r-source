@@ -7072,10 +7072,10 @@ plain text, and extracting the examples.  @code{Rd2txt} can be used as
 shorthand for @code{Rd2conv -t txt}.
 @item Rd2pdf
 Convert Rd format to PDF.
-@item Stangle
-Extract S/R code from Sweave documentation
-@item Sweave
-Process Sweave documentation
+@item tangle
+Extract S/R code from Sweave or other vignette documentation
+@item weave
+Process Sweave or other vignette documentation
 @item Rdiff
 Diff @R{} output ignoring headers etc
 @item config

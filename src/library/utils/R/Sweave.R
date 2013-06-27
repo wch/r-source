@@ -416,16 +416,17 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
 
     Usage <- function() {
-        cat("Usage: R CMD Sweave [options] file",
+        cat("Usage: R CMD weave [options] file",
             "",
-            "A front-end for Sweave",
+            "A front-end for Sweave and other vignette engines",
             "",
             "Options:",
             "  -h, --help      print this help message and exit",
             "  -v, --version   print version info and exit",
             "  --driver=name   use named Sweave driver",
+            "  --engine=pkg::engine  use named vignette engine",
             "  --encoding=enc  default encoding 'enc' for file",
-            "  --options=      comma-separated list of Sweave options",
+            "  --options=      comma-separated list of Sweave/engine options",
             "  --pdf           convert to PDF document",
             "  --compact=      try to compact PDF document:",
             '                  "no" (default), "qpdf", "gs", "gs+qpdf", "both"',
@@ -443,6 +444,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
     file <- character()
     driver <- encoding <- options <- ""
+    engine <- NULL
     toPDF <- FALSE
     compact <- Sys.getenv("_R_SWEAVE_COMPACT_PDF_", "no")
     while(length(args)) {
@@ -456,13 +458,15 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2006-2011 The R Core Team.",
+                "Copyright (C) 2006-2013 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
             do_exit()
         } else if (substr(a, 1, 9) == "--driver=") {
             driver <- substr(a, 10, 1000)
+        } else if (substr(a, 1, 9) == "--engine=") {
+            engine <- substr(a, 10, 1000)
         } else if (substr(a, 1, 11) == "--encoding=") {
             encoding <- substr(a, 12, 1000)
         } else if (substr(a, 1, 10) == "--options=") {
@@ -483,20 +487,16 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         Usage()
         do_exit(1L)
     }
-    args <- list(file)
+    args <- list(file=file, tangle=FALSE, latex=toPDF, engine=engine)
     if(nzchar(driver)) args <- c(args, driver)
     args <- c(args, encoding = encoding)
     if(nzchar(options)) {
         opts <- eval(parse(text = paste("list(", options, ")")))
         args <- c(args, opts)
     }
-    do.call(Sweave, args)
+    output <- do.call(tools::buildVignette, args)
+    message("Output file:  ", output)
     if (toPDF) {
-        texfile <- basename(sub("\\.[rsRS][[:alpha:]]+$", ".tex", file))
-        tools::texi2pdf(texfile, clean = TRUE)
-        ofile <- sub("\\.tex$", ".pdf", texfile)
-        message(gettextf("Created PDF document %s", sQuote(ofile)),
-                domain = NA)
         if(compact != "no") {
             ## <NOTE>
             ## Same code as used for --compact-vignettes in
@@ -533,13 +533,14 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
 
     Usage <- function() {
-        cat("Usage: R CMD Stangle file",
+        cat("Usage: R CMD tangle file",
             "",
-            "A front-end for Stangle",
+            "A front-end for Stangle and other vignette engines",
             "",
             "Options:",
             "  -h, --help     print this help message and exit",
             "  -v, --version  print version info and exit",
+	    "  --engine=pkg::engine  use named vignette engine",
             "  --encoding=enc  assume encoding 'enc' for file",
             "  --options=      comma-separated list of Stangle options",
             "",
@@ -556,6 +557,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
 
     file <- character()
     encoding <- options <- ""
+    engine <- NULL
     while(length(args)) {
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
@@ -572,6 +574,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
             do_exit()
+        } else if (substr(a, 1, 9) == "--engine=") {
+            engine <- substr(a, 10, 1000)
         } else if (substr(a, 1, 11) == "--encoding=") {
             encoding <- substr(a, 12, 1000)
         } else if (substr(a, 1, 10) == "--options=") {
@@ -586,12 +590,13 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         Usage()
         do_exit(1L)
     }
-    args <- list(file)
-    args <- c(args, encoding = encoding)
+    args <- list(file=file, tangle=TRUE, weave=FALSE, engine=engine, 
+                 encoding=encoding)
     if(nzchar(options)) {
         opts <- eval(parse(text = paste("list(", options, ")")))
         args <- c(args, opts)
     }
-    do.call(Stangle, args)
+    output <- do.call(tools::buildVignette, args)
+    message("Output file:  ", output)
     do_exit()
 }

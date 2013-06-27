@@ -64,14 +64,15 @@ find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), f
     if (by == "weave") {
         if (length(output) == 0L)
             stop("Failed to locate the ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(output0), collapse=", "))
-        if (length(output) > 1L) {
-            if (final)
-                stop("Located more than one ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ": ", paste(sQuote(output), collapse=", "))
-            # If weave produced a TeX and then a PDF without cleaning out
-            # the TeX, consider PDF as the weave product
-            idxs <- match(tolower(file_ext(output)), exts)
-            output <- output[order(idxs)][1L]
-            stopifnot(length(output) == 1L)
+        if (length(output) > 2L || (final && length(output) > 1L)) 
+	    stop("Located more than one ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ": ", paste(sQuote(output), collapse=", "))
+	# If weave produced a TeX and then a PDF without cleaning out
+	# the TeX, consider the newer one (PDF wins a tie) as the weave product
+	if (length(output) == 2L) {
+	    idxs <- match(tolower(file_ext(output)), exts)
+	    output <- output[order(idxs)]
+	    if (file_test("-nt", output[2L], output[1L])) output <- output[2L]
+	    else output <- output[1L]
         }
     } else if (by == "tangle") {
         if (main)
@@ -515,6 +516,106 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     invisible(vigns)
 }
 
+### * buildVignette
+###
+### Run a weave and/or tangle on one vignette and try to
+### remove all temporary files that were created.
+
+buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE, 
+    quiet = TRUE, clean = TRUE, engine=NULL, buildPkg=NULL, ...) {
+
+    if (!file_test("-f", file))
+	stop(gettextf("file '%s' not found", file),
+	     domain = NA)
+
+    if (!file_test("-d", dir))
+	stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+
+    if (!is.null(buildPkg))
+	for (pkg in buildPkg)
+	    loadNamespace(pkg)
+	    
+    if (is.null(engine)) {
+    # Infer vignette engine from vignette content
+	lines <- readLines(file, warn=FALSE)
+	engine <- .get_vignette_metadata(lines, "Engine")
+	if (length(engine) == 0L)
+	    engine <- "utils::Sweave"
+	else 
+	    engine <- engine[1]
+    }
+
+    # Get the vignette engine
+    if (is.character(engine))
+	engine <- vignetteEngine(engine, package=buildPkg)
+
+    # Infer the vignette name
+    names <- sapply(engine$pattern, FUN = sub, "", file)
+    name <- basename(names[(names != file)][1L])
+
+    # A non-matching filename?
+    if (is.na(name))
+	stop(gettextf("vignette filename '%s' does not match any of the '%s' filename patterns", 
+		file, paste(engine$package, engine$name, sep="::")),
+		domain = NA)
+
+    # Set output directory temporarily
+    file <- file_path_as_absolute(file)
+    olddir <- getwd()
+    if (!is.null(olddir)) on.exit(setwd(olddir))
+    setwd(dir)
+
+    # Record existing files
+    origfiles <- list.files(all.files = TRUE)
+    if (is.na(clean) || clean) {
+	file.create(".build.timestamp")
+    }
+
+    output <- NULL
+
+    # Weave
+    if (weave) {
+	engine$weave(file, quiet = quiet, ...)
+	setwd(dir)  # In case weave/vignette changed it
+	output <- find_vignette_product(name, by = "weave", engine = engine)
+
+	# Compile TeX to PDF?
+	if(latex && vignette_is_tex(output)) {
+	    texi2pdf(file = output, clean = FALSE, quiet = quiet)
+	    final <- find_vignette_product(name, by = "texi2pdf", engine = engine)
+	} else
+	    final <- output
+    } else {
+	final <- NULL
+    }
+
+    # Tangle
+    if (tangle) {
+	engine$tangle(file, quiet = quiet, ...)
+	setwd(dir)  # In case tangle changed it
+	sources <- find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
+    } else
+	sources <- NULL
+
+    # Cleanup
+    keep <- c(sources, final)
+    if (is.na(clean)) {  # Use NA to signal we want .tex files kept.
+	keep <- c(keep, output)
+	clean <- TRUE
+    }
+    if (clean) {
+	f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), keep)
+	newer <- file_test("-nt", f, ".build.timestamp")
+	## some packages create directories
+	unlink(f[newer], recursive = TRUE)
+    }
+    f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), c(keep, origfiles))
+    f <- f[file_test("-f", f)]
+    file.remove(f)
+
+    unique(keep)
+}
+
 ### * .getVignetteEncoding
 
 getVignetteEncoding <-  function(file, ...)
@@ -855,6 +956,8 @@ vignetteEngine <- local({
     engineKey <- function(name, package) {
         key <- strsplit(name, split = "::", fixed = TRUE)[[1L]]
         if (length(key) == 1L) {
+	    if (missing(package)) 
+		stop("Vignette engine package not specified.", call.=FALSE)
             key[2L] <- key[1L]
             key[1L] <- package
         } else if (length(key) != 2L) {
@@ -887,6 +990,7 @@ vignetteEngine <- local({
                 } else {
                     key <- engineKey(name)
                 }
+		loadNamespace(key[1])
                 name <- paste(key, collapse = "::")
                 result <- registry[[name]]
                 if (is.null(result))
@@ -894,6 +998,7 @@ vignetteEngine <- local({
             } else {
                 for (pkg in package) {
                     key <- engineKey(name, pkg)
+		    try(loadNamespace(key[1]), silent = TRUE)
                     nameT <- paste(key, collapse = "::")
                     result <- registry[[nameT]]
                     if (!is.null(result))
