@@ -163,11 +163,11 @@ begin
   filename := ExpandConstant(CurrentFilename);
   LoadStringsFromFile(filename, lines);
   
-  changed := changed or SetCommentMarker(lines, 'MDI = yes', MDISDIPage.SelectedValueIndex = 0);
-  changed := changed or SetCommentMarker(lines, 'MDI = no', MDISDIPage.SelectedValueIndex = 1);
+  if SetCommentMarker(lines, 'MDI = yes', MDISDIPage.SelectedValueIndex = 0) then changed := true;
+  if SetCommentMarker(lines, 'MDI = no', MDISDIPage.SelectedValueIndex = 1) then changed := true;
   
-  changed := changed or SetCommentMarker(lines, 'options(help_type="text"', HelpStylePage.SelectedValueIndex = 0);
-  changed := changed or SetCommentMarker(lines, 'options(help_type="html"', HelpStylePage.SelectedValueIndex = 1);
+  if SetCommentMarker(lines, 'options(help_type="text"', HelpStylePage.SelectedValueIndex = 0) then changed := true;
+  if SetCommentMarker(lines, 'options(help_type="html"', HelpStylePage.SelectedValueIndex = 1) then changed := true;
   
   if changed then
     SaveStringsToFile(filename, lines, False);
