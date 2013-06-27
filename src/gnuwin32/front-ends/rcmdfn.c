@@ -76,8 +76,8 @@ void rcmdusage (char *RCMD)
 	    "  Rdiff    difference R output files\n",
 	    "  Rd2pdf   Convert Rd format to PDF\n",
 	    "  Rd2txt   Convert Rd format to pretty text\n",
-	    "  tangle   Extract S/R code from vignette\n",
-	    "  weave    Process vignette documentation\n",
+	    "  Stangle   Extract S/R code from vignette\n",
+	    "  Sweave    Process vignette documentation\n",
 	    "  config   Obtain configuration information about R\n"
 	    "  open     Open a file via Windows file associations\n"
 	    "  texify   Process a latex file\n"
@@ -452,12 +452,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		 "%s/%s/Rterm.exe -e tools:::..Rd2pdf() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (!strcmp(argv[cmdarg], "Sweave") || !strcmp(argv[cmdarg], "weave")) {
+    } else if (!strcmp(argv[cmdarg], "Sweave")) {
 	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe --no-restore --slave -e utils:::.Sweave() --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (!strcmp(argv[cmdarg], "Stangle") || !strcmp(argv[cmdarg], "tangle")) {
+    } else if (!strcmp(argv[cmdarg], "Stangle")) {
 	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe --vanilla --slave -e utils:::.Stangle() --args ",
 		 getRHOME(3), BINDIR);

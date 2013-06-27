@@ -110,11 +110,10 @@
       \code{R CMD build --no-build-vignettes} has been preferred since
       \R 3.0.0.
       
-      \item \code{R CMD weave} and \code{R CMD tangle} have been
-      added:  these process Sweave and non-Sweave vignettes.  
-      (\code{R CMD Sweave} and \code{R CMD Stangle} have been retained
-      as synonyms.)  The \code{tools::buildVignette()} function has
-      been added to do the same tasks from within \R. 
+      \item \code{R CMD Sweave} and \code{R CMD Stangle} now 
+      process both Sweave and non-Sweave vignettes.  The 
+      \code{tools::buildVignette()} function has been added to do the 
+      same tasks from within \R. 
     }
   }
 

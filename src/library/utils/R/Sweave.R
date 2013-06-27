@@ -416,7 +416,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
 
     Usage <- function() {
-        cat("Usage: R CMD weave [options] file",
+        cat("Usage: R CMD Sweave [options] file",
             "",
             "A front-end for Sweave and other vignette engines",
             "",
@@ -533,7 +533,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
 
     Usage <- function() {
-        cat("Usage: R CMD tangle file",
+        cat("Usage: R CMD Stangle file",
             "",
             "A front-end for Stangle and other vignette engines",
             "",
