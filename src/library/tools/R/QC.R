@@ -3009,7 +3009,7 @@ function(dfile)
     required_fields <- c("Package", "Version", "License", "Description",
                          "Title", "Author", "Maintainer")
     if(length(i <- which(is.na(match(required_fields, names(db))) |
-                         is.na(db[required_fields]))))
+                         !nzchar(db[required_fields]))))
         out$missing_required_fields <- required_fields[i]
 
     val <- package_name <- db["Package"]
@@ -6097,6 +6097,21 @@ function(dir)
         uses <- c(uses, p)
     }
     if (length(uses)) out$uses <- sort(unique(uses))
+
+    ## Check for vignette source (only) in old-style 'inst/doc' rather
+    ## than new-style 'vignettes'.
+    ## Currently only works for Sweave vignettes: eventually, we should
+    ## be able to use build/vignettes.rds for determining *all* package
+    ## vignettes.
+
+    pattern <- vignetteEngine("Sweave")$pattern
+    sources <- setdiff(list.files(file.path(dir, "inst", "doc"),
+                                  pattern = pattern),
+                       list.files(file.path(dir, "vignettes"),
+                                  pattern = pattern))
+    if(length(sources))
+        out$vignette_sources_only_in_inst_doc <- sources
+    
     out
 }
 
@@ -6192,6 +6207,10 @@ function(x, ...)
 		"Uses the superseded packages:" else
 		"Uses the superseded package:",
                 paste(sQuote(y), collapse = ", "))
+      },
+      if(length(y <- x$vignette_sources_only_in_inst_doc)) {
+          c("Vignette sources in 'inst/doc' missing from 'vignettes':",
+            strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       }
       )
 }
