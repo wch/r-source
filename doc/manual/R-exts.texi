@@ -643,7 +643,7 @@ The @samp{Biarch} logical field is used on Windows to select the
 
 @c DESCRIPTION field BuildVignettes
 The @samp{BuildVignettes} logical field can be set to a false value to
-stop @command{R CMD build} from attempting to rebuild the vignettes, as
+stop @command{R CMD build} from attempting to build the vignettes, as
 well as preventing @command{R CMD check} from testing this.  This should
 only be used exceptionally, for example if the PDFs include large
 figures which are not part of the package sources (and hence only in
@@ -1784,11 +1784,9 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the Linux, Windows and
 Solaris platforms, but portable packages cannot assume that end users
-have recent versions (there are some years-old versions of Linux in
-use), and it may be safest to assume version 2.5.  The compilers
-currently used on OS X have partial support for OpenMP 2.5, but this is
-not enabled in the @acronym{CRAN} build. (Apple have announced the
-imminent discontinuation of support for those compilers, and the
+have recent versions.  The compilers currently used on OS X have partial
+support for OpenMP 2.5, but this is not enabled in the @acronym{CRAN}
+build. (Apple have discontinued support for those compilers, and their
 preferred alternative, @command{clang}, has no OpenMP support.)
 
 The performance of OpenMP varies substantially between platforms.  Both
@@ -1808,11 +1806,11 @@ consideration needs to be given to resource usage.  OpenMP works with
 parallel regions, and for most implementations the default is to use as
 many threads as `CPUs' for such regions.  Parallel regions can be
 nested, although it is common to use only a single thread below the
-first level.  The detected number of `CPUs' and the assumption that the
-@R{} process is entitled to use them all are both dubious assumptions.
-The best way to limit resources is to limit the overall number of
-threads available to OpenMP in the R process: this can be done via
-environment variable @env{OMP_THREAD_LIMIT}, where
+first level.  The correctness of the detected number of `CPUs' and the
+assumption that the @R{} process is entitled to use them all are both
+dubious assumptions.  The best way to limit resources is to limit the
+overall number of threads available to OpenMP in the R process: this can
+be done via environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
 Solaris Studio and Intel compilers.}  Alternatively, the number of
 threads per region can be limited by the environment variable
@@ -2351,7 +2349,7 @@ file @file{@var{foo.ext}.log} is created in the check directory.  The
 vignette PDFs are re-made in a copy of the package sources in the
 @file{vign_test} subdirectory of the check directory, so for further
 information on errors look in directory
-@file{@var{pkgname}/vign_test/inst/doc}.  (It is only retained if there
+@file{@var{pkgname}/vign_test/vignettes}.  (It is only retained if there
 are errors or if environment variable @env{_R_CHECK_CLEAN_VIGN_TEST_} is
 set to a false value.)
 
@@ -2640,12 +2638,18 @@ and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
 A special case are PDF documents with sources in Sweave, which we call
-@emph{package vignettes}.  (Since @R{} version 3.0.0, other vignette
-formats besides Sweave are supported; see @ref{Non-Sweave vignettes}.)
-The preferred location for the sources is the subdirectory
-@file{vignettes} of the source packages, but for compatibility with
-earlier versions of @R{}, vignette sources will be looked for in
-@file{inst/doc} if @file{vignettes} does not exist.
+@emph{package vignettes}.  (Since @R{} 3.0.0, other vignette formats are
+supported; see @ref{Non-Sweave vignettes}.)  The preferred location for
+the sources is the subdirectory @file{vignettes} of the source package,
+but @emph{pro tem}@footnote{This is expected to be removed in @R{}
+3.1.0.} for compatibility with the layout before @R{} 2.14.0, vignette
+sources will be looked for in @file{inst/doc} if subdirectory
+@file{vignettes} does not exist.  Note that the location of the vignette
+sources only affects @command{R CMD build} and @command{R CMD check}:
+the tarball built by @command{R CMD build} includes in @file{inst/doc}
+the components@footnote{at least the PDF documents and the Sweave files
+so these can be tangled to produce the @R{} code.} intended to be
+installed.
 
 Vignette sources are normally given the file extension @file{.Rnw} or
 @file{.Rtex}, but for historical reasons extensions@footnote{and to
@@ -2673,19 +2677,21 @@ is not necessary that the vignette PDFs can be re-built at install time,
 i.e., the package author can use private @R{} packages, screen snapshots
 and @LaTeX{} extensions which are only available on his
 machine.@footnote{provided the conditions of the package's license are
-met: many would see these as incompatible with an Open Source license.}
+met: many, including @acronym{CRAN}, see the omission of source
+components as incompatible with an Open Source license.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
-Sweave format in @file{vignettes}, or if that does not exist,
-@file{inst/doc} (but not in sub-directories).  If no @file{Makefile} is
-found in directory @file{inst/doc}, then @code{tools::texi2dvi(pdf =
-TRUE)} is run on all processed vignettes.  Whenever a @file{Makefile} is
-found, then @code{R CMD build} will try to run @command{make} after the
-@code{Sweave} runs.  The first target in the @file{Makefile} should take
-care of both creation of PDF files and cleaning up afterwards (including
-after @code{Sweave}), i.e., delete all files that shall not appear in
-the final package archive.  Note that if the @code{make} step runs @R{}
-it needs to be careful to respect the environment values of @env{R_LIBS}
+Sweave format in @file{vignettes}, or @emph{pro tem} if that does not
+exist, @file{inst/doc} (but not in sub-directories).  If no
+@file{Makefile} is found in directory @file{inst/doc}, then
+@code{tools::texi2pdf} is run on all processed vignettes.  Whenever a
+@file{Makefile} is found in the vignette source directory, then @code{R
+CMD build} will try to run @command{make} after the @code{Sweave} runs.
+The first target in the @file{Makefile} should take care of both
+creation of PDF files and cleaning up afterwards (including after
+@code{Sweave}), i.e., delete all files that shall not appear in the
+final package archive.  Note that if the @code{make} step runs @R{} it
+needs to be careful to respect the environment values of @env{R_LIBS}
 and @env{R_HOME}@footnote{@code{R_HOME/bin} is prepended to the
 @env{PATH} so that references to @command{R} or @command{Rscript} in the
 @file{Makefile} do make use of the currently running version of @R{}.}.
@@ -2820,22 +2826,21 @@ would have been in the locale's encoding.
 @node Non-Sweave vignettes,  , Encodings and vignettes, Writing package vignettes
 @subsection Non-Sweave vignettes
 
-New in @R{} version 3.0.0 is the possibility of vignettes in formats
-other than Sweave by means of ``vignette engines''. For example
-@CRANpkg{knitr} version 1.1 or higher can create @file{.tex} files
-from a variation on Sweave format, or @file{.html} files from a
-variation on ``markdown'' format. These engines replace the
-@code{Sweave()} function with other functions to convert vignette
-source files into @LaTeX{} files for processing into @file{.pdf}, or
-directly into @file{.pdf} or @file{.html} files. The @code{Stangle()}
-function is replaced with a function that extracts the @R{} source
-from a vignette.
+@R{} 3.0.0 and later allow vignettes in formats other than Sweave by
+means of ``vignette engines''.  For example @CRANpkg{knitr} version 1.1
+or later can create @file{.tex} files from a variation on Sweave format,
+and @file{.html} files from a variation on ``markdown'' format. These
+engines replace the @code{Sweave()} function with other functions to
+convert vignette source files into @LaTeX{} files for processing into
+@file{.pdf}, or directly into @file{.pdf} or @file{.html} files. The
+@code{Stangle()} function is replaced with a function that extracts the
+@R{} source from a vignette.
 
 @R{} recognizes non-Sweave vignettes using filename extensions specified
 by the engine.  For example, the @CRANpkg{knitr} package supports 
 the extension @file{.Rmd} (standing for
 ``R markdown'').  The user indicates the vignette engine
-within the vignette source using the @code{\VignetteEngine} line, for example
+within the vignette source using a @code{\VignetteEngine} line, for example
 @example
 %\VignetteEngine@{knitr::knitr@}
 @end example
@@ -2870,9 +2875,8 @@ tools::vignetteEngine("knitr", weave = vweave, tangle = vtangle,
 @end example
 @noindent
 (The actual registration in @CRANpkg{knitr} is more complicated, because
-it supports other input formats as well as @file{.Rmd}.)
-See the @code{?tools::vignetteEngine} help topic for details
-on engine registration.
+it supports other input formats.)  See the @code{?tools::vignetteEngine}
+help topic for details on engine registration.
 
 
 @node Package namespaces, Writing portable packages, Writing package vignettes, Creating R packages
