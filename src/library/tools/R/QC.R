@@ -5227,13 +5227,17 @@ function(package, dir, lib.loc = NULL)
     Rfiles <- if (file_test("-d", testsrcdir)) {
         od <- setwd(testsrcdir)
         on.exit(setwd(od))
-        vign_exts <- .make_file_exts( "vignette")
-        Rfiles <- dir(".", pattern="[.]R$")
-        if (length(Rfiles))
-        ## check they have a matching vignette
-        Rfiles[sapply(Rfiles,
-                      function(x) any(file.exists(paste(sub("[.]R$", "", x),
-                                                        vign_exts, sep = "."))))]
+        Rfiles <- dir(".", pattern = "[.]R$")
+        if (length(Rfiles)) {
+            ## check they have a matching vignette source file
+            pattern <- vignetteEngine("Sweave")$pattern
+            Rfiles[sapply(Rfiles,
+                          function(x)
+                          length(dir(".",
+                                     pattern =
+                                     paste(sub("[.]R$", "", x), pattern,
+                                           sep = ""))) > 0L)]
+        }
         else Rfiles
     } else character()
     .check_packages_used_helper(db, Rfiles)

@@ -599,7 +599,9 @@ function(dir,
             subdir <- character()
     }
     files <- if(length(subdir))
-        tools::list_files_with_type(subdir, "vignette")
+        list.files(subdir,
+                   pattern = tools::vignetteEngine("Sweave")$pattern,
+                   full.names = TRUE)
     else character()
 
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)

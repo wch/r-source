@@ -1171,6 +1171,10 @@ function(package, lib.loc)
 
 ### ** .make_file_exts
 
+## <FIXME>
+## Remove support for type "vignette" eventually ...
+## </FIXME>
+
 .make_file_exts <-
 function(type = c("code", "data", "demo", "docs", "vignette"))
 {
