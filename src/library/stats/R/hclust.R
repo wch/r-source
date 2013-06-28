@@ -1,7 +1,7 @@
 #  File src/library/stats/R/hclust.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -149,23 +149,6 @@ plot.hclust <-
     invisible()
 }
 
-## For S ``compatibility'': was in cluster just as
-## plclust <- plot.hclust ## .Alias
-plclust <- function(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
-                    square = TRUE, labels = NULL, plot. = TRUE,
-                    axes = TRUE, frame.plot = FALSE, ann = TRUE,
-                    main = "", sub = NULL, xlab = NULL, ylab = "Height")
-{
-    if(!missing(level) && level)	.NotYetUsed("level", error = FALSE)
-    if(!missing(hmin) && hmin != 0)	.NotYetUsed("hmin",  error = FALSE)
-    if(!missing(square) && !square)	.NotYetUsed("square",error = FALSE)
-    if(!missing(plot.) && !plot.)	.NotYetUsed("plot.", error = TRUE)
-    if(!missing(hmin)) tree$height <- pmax(tree$height, hmin)
-    if(unit) tree$height <- rank(tree$height)
-    plot.hclust(x = tree, labels = labels, hang = hang,
-                axes = axes, frame.plot = frame.plot, ann = ann,
-                main = main, sub = sub, xlab = xlab, ylab = ylab)
-}
 
 
 as.hclust <- function(x, ...) UseMethod("as.hclust")

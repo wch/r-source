@@ -140,6 +140,9 @@
 
       \item \code{package.skeleton()}'s deprecated argument
       \code{namespace} has been removed.
+      
+      \item \code{plclust()} is deprecated: use the \code{plot()} method
+      instead.
     }
   }
 

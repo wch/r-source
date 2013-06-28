@@ -7667,7 +7667,7 @@ Number of Fisher Scoring iterations: 3
 > 
 > ### Name: hclust
 > ### Title: Hierarchical Clustering
-> ### Aliases: hclust plot.hclust plclust print.hclust
+> ### Aliases: hclust plot.hclust print.hclust
 > ### Keywords: multivariate cluster
 > 
 > ### ** Examples

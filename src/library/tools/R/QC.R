@@ -5666,7 +5666,7 @@ function(package, dir, lib.loc = NULL)
                  ".find.package", ".path.package")
 
     bad <- c(bad_depr, bad_def)
-    bad_closures <- character()
+    bad_closures <- c("plclust")
     found <- character()
 
     find_bad_closures <- function(env) {
