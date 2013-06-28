@@ -6095,12 +6095,16 @@ function(dir)
         out$new_license <- list(meta["License"], l_d)
 
     uses <- character()
+    BUGS <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
         p <- strsplit(meta[field], " *, *")[[1L]]
-        p <- grep("^(multicore|snow)( |\\(|$)", p, value = TRUE)
-        uses <- c(uses, p)
+        p2 <- grep("^(multicore|snow)( |\\(|$)", p, value = TRUE)
+        uses <- c(uses, p2)
+        p2 <- grep("^(BRugs|R2OpenBUGS|R2WinBUGS)( |\\(|$)", p, value = TRUE)
+        BUGS <- c(BUGS, p2)
     }
     if (length(uses)) out$uses <- sort(unique(uses))
+    if (length(BUGS)) out$BUGS <- sort(unique(BUGS))
 
     ## Check for vignette source (only) in old-style 'inst/doc' rather
     ## than new-style 'vignettes'.
@@ -6212,6 +6216,12 @@ function(x, ...)
           paste(if(length(y) > 1L)
 		"Uses the superseded packages:" else
 		"Uses the superseded package:",
+                paste(sQuote(y), collapse = ", "))
+      },
+      if (length(y <- x$BUGS)) {
+          paste(if(length(y) > 1L)
+		"Uses the non-portable packages:" else
+		"Uses the non-portable package:",
                 paste(sQuote(y), collapse = ", "))
       },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
