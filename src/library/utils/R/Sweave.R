@@ -496,29 +496,28 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
     output <- do.call(tools::buildVignette, args)
     message("Output file:  ", output)
-    if (toPDF) {
-        if(compact != "no") {
-            ## <NOTE>
-            ## Same code as used for --compact-vignettes in
-            ## .build_packages() ...
-            message("Compacting PDF document")
-            if(compact %in% c("gs", "gs+qpdf", "both")) {
-                gs_cmd <- tools:::find_gs_cmd(Sys.getenv("R_GSCMD", ""))
-                gs_quality <- "ebook"
-            } else {
-                gs_cmd <- ""
-                gs_quality <- "none"
-            }
-            qpdf <- if(compact %in% c("qpdf", "gs+qpdf", "both"))
-                Sys.which(Sys.getenv("R_QPDF", "qpdf"))
-            else ""
-            res <- tools::compactPDF(ofile, qpdf = qpdf,
-                                     gs_cmd = gs_cmd,
-                                     gs_quality = gs_quality)
-            res <- format(res, diff = 1e5)
-            if(length(res))
-                message(paste(format(res), collapse = "\n"))
-        }
+    if (toPDF && compact != "no" 
+        && length(output) == 1 && grepl(".pdf$", output, ignore.case=TRUE)) {
+	## <NOTE>
+	## Same code as used for --compact-vignettes in
+	## .build_packages() ...
+	message("Compacting PDF document")
+	if(compact %in% c("gs", "gs+qpdf", "both")) {
+	    gs_cmd <- tools:::find_gs_cmd(Sys.getenv("R_GSCMD", ""))
+	    gs_quality <- "ebook"
+	} else {
+	    gs_cmd <- ""
+	    gs_quality <- "none"
+	}
+	qpdf <- if(compact %in% c("qpdf", "gs+qpdf", "both"))
+	    Sys.which(Sys.getenv("R_QPDF", "qpdf"))
+	else ""
+	res <- tools::compactPDF(output, qpdf = qpdf,
+				 gs_cmd = gs_cmd,
+				 gs_quality = gs_quality)
+	res <- format(res, diff = 1e5)
+	if(length(res))
+	    message(paste(format(res), collapse = "\n"))
     }
     do_exit()
 }
