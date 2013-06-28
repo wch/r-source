@@ -5651,7 +5651,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 .check_depdef <-
 function(package, dir, lib.loc = NULL)
 {
-    bad_depr <- character()
+    bad_depr <- c("plclust")
 
     bad_def <- c("La.eigen", "tetragamma", "pentagamma",
                  "package.description", "gammaCody",
@@ -5666,7 +5666,7 @@ function(package, dir, lib.loc = NULL)
                  ".find.package", ".path.package")
 
     bad <- c(bad_depr, bad_def)
-    bad_closures <- c("plclust")
+    bad_closures <- character()
     found <- character()
 
     find_bad_closures <- function(env) {
