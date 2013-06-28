@@ -6105,13 +6105,15 @@ function(dir)
     ## vignettes.
 
     pattern <- vignetteEngine("Sweave")$pattern
+    vign_dir <- file.path(dir, "vignettes")
     sources <- setdiff(list.files(file.path(dir, "inst", "doc"),
                                   pattern = pattern),
-                       list.files(file.path(dir, "vignettes"),
-                                  pattern = pattern))
-    if(length(sources))
+                       list.files(vign_dir, pattern = pattern))
+    if(length(sources)) {
+        out$have_vignettes_dir <- file_test("-d", vign_dir)
         out$vignette_sources_only_in_inst_doc <- sources
-    
+    }
+
     out
 }
 
@@ -6209,8 +6211,13 @@ function(x, ...)
                 paste(sQuote(y), collapse = ", "))
       },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
-          c("Vignette sources in 'inst/doc' missing from 'vignettes':",
-            strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+          if(identical(x$have_vignettes_dir, FALSE))
+              c("Vignette sources in 'inst/doc' with no 'vignettes' directory:",
+                strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L),
+                "A 'vignettes' directory has been preferred since R 2.14.0")
+          else
+              c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
+                strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       }
       )
 }

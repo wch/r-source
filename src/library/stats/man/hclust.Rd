@@ -51,10 +51,12 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
     used. If \code{labels = FALSE} no labels at all are plotted.}
 
   \item{axes, frame.plot, ann}{logical flags as in \code{\link{plot.default}}.}
+  
   \item{main, sub, xlab, ylab}{character strings for
     \code{\link{title}}.  \code{sub} and \code{xlab} have a non-NULL
     default when there's a \code{tree$call}.}
-  \item{\dots}{Further graphical arguments.}
+  \item{\dots}{Further graphical arguments.  E.g. \code{cex} controls
+    the size of the labels (if plotted) in the same way as \code{\link{text}}.}
 
   \item{unit}{logical.  If true, the splits are plotted at
     equally-spaced heights rather than at the height in the object.}
@@ -62,7 +64,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   \item{hmin}{numeric.  All heights less than \code{hmin} are regarded
     as being \code{hmin}: this can be used to suppress detail at the
     bottom of the tree.}
-  \item{level, square, plot.}{as yet unimplemented arguments of
+  \item{level, square, plot.}{unimplemented arguments of
     \code{plclust} for S-PLUS compatibility.}
 }
 \value{
@@ -104,10 +106,10 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
 
   There are \code{\link{print}}, \code{\link{plot}} and \code{identify}
   (see \code{\link{identify.hclust}}) methods and the
-  \code{\link{rect.hclust}()} function for \code{hclust} objects.
-  The \code{plclust()} function is basically the same as the plot method,
-  \code{plot.hclust}, primarily for back compatibility with S-PLUS. Its
-  extra arguments are not yet implemented.
+  \code{\link{rect.hclust}()} function for \code{hclust} objects.  The
+  \code{plclust()} function is basically the same as the \code{plot}
+  method, \code{plot.hclust}, primarily for back compatibility with
+  S-PLUS.  Its extra arguments are not implemented.
 }
 \details{
   This function performs a hierarchical cluster analysis
