@@ -72,7 +72,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-primitive) utf8-regex.Rout
 
 .SUFFIXES:
-.SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
+.SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .tsin .ts
 
 $(test-out): FORCE
 
@@ -177,9 +177,6 @@ test-Packages:
 	    --no-build-vignettes \
 	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
-
-.SUFFIXES:
-.SUFFIXES: .tsin .ts
 
 PKG_OBJECTS = $(R_PKGS_BASE:=.ts)
 
