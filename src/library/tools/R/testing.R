@@ -222,19 +222,39 @@ testInstalledPackages <-
         pkgs <- known_packages$base
     if (scope %in% c("both", "recommended"))
         pkgs <- c(pkgs, known_packages$recommended)
-    ## It *should* be an error if any of these are missing
-    for (pkg in pkgs) {
-        if(is.null(srcdir) && pkg %in% known_packages$base)
-            srcdir <- R.home("tests/Examples")
-        res <- testInstalledPackage(pkg, .Library, outDir, types, srcdir, Ropts)
-        if (res) {
-            status <- 1L
-            msg <- gettextf("testing '%s' failed", pkg)
-            if (errorsAreFatal) stop(msg, domain = NA, call. = FALSE)
-            else warning(msg, domain = NA, call. = FALSE, immediate. = TRUE)
+    mc.cores <- as.integer(Sys.getenv("TEST_MC_CORES", 1L))
+    if (.Platform$OS.type != "windows" &&
+        !is.na(mc.cores) && mc.cores > 1L) {
+        do_one <- function(pkg) {
+            if(is.null(srcdir) && pkg %in% known_packages$base)
+                srcdir <- R.home("tests/Examples")
+            testInstalledPackage(pkg, .Library, outDir, types, srcdir, Ropts)
+        }
+        res <- parallel::mclapply(pkgs, do_one, mc.cores = mc.cores,
+                                  mc.preschedule = FALSE)
+        res <- unlist(res) != 0L
+        if (any(res)) {
+            for(i in which(res))
+                warning(gettextf("testing '%s' failed", pkgs[i]),
+                        domain = NA, call. = FALSE, immediate. = TRUE)
+            if (errorsAreFatal)
+                stop(gettextf("%d of the package tests failed", sum(res)),
+                     domain = NA, call. = FALSE)
+        }
+    } else {
+        for (pkg in pkgs) {
+            if(is.null(srcdir) && pkg %in% known_packages$base)
+                srcdir <- R.home("tests/Examples")
+            res <- testInstalledPackage(pkg, .Library, outDir, types, srcdir, Ropts)
+            if (res) {
+                status <- 1L
+                msg <- gettextf("testing '%s' failed", pkg)
+                if (errorsAreFatal) stop(msg, domain = NA, call. = FALSE)
+                else warning(msg, domain = NA, call. = FALSE, immediate. = TRUE)
+            }
         }
     }
-    return(invisible(status))
+    invisible(status)
 }
 
 testInstalledPackage <-

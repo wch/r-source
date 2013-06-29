@@ -66,6 +66,18 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item There is some support for parallel testing of an
+      installation (and more to come).
+
+      If environemnt variables \env{TEST_MC_CORES} is set to an integer
+      greater than one (and not on Windows) the tests of package
+      examples in \command{make check} are done in parallel using that
+      number of cores.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
