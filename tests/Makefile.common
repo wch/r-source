@@ -178,6 +178,27 @@ test-Packages:
 	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
 
+.SUFFIXES:
+.SUFFIXES: .tsin .ts
+
+PKG_OBJECTS = $(R_PKGS_BASE:=.ts)
+
+test-Packages2:
+	@for p in $(R_PKGS_BASE); do \
+	  touch $${p}.tsin; \
+	done
+	@$(MAKE) stamp-Packages
+	@rm -f *.tsin
+stamp-Packages: $(PKG_OBJECTS)
+
+.tsin.ts:
+	@$(ECHO) "begin checking package '`basename $@ .ts`'"
+	@rm -f $@
+	@_R_CHECK_FF_CALLS_=registration \
+	$(top_builddir)/bin/R CMD check --install=skip --no-build-vignettes \
+	  $(top_srcdir)/src/library/`basename $@ .ts` > $@ 2>&1
+	@cat $@
+
 test-Gct: $(test-out-gct)
 
 test-Vgct: $(test-out-valgct)

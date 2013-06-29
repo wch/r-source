@@ -93,6 +93,7 @@ clean:
 	-@rm -rf anRpackage myTst* myLib
 	-@rm -f *.tar.gz
 	-@rm -f keepsource.tex test-system2 test-system.Rout
+	-@rm -f *.ts *.tsin
 
 distclean: clean
 	-@for d in $(SUBDIRS); do \

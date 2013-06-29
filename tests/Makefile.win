@@ -84,6 +84,7 @@ clean:
 	@rm -f keepsource.tex test-system2.exe test-system.Rout
 	@$(MK) -C Examples $@
 	@$(MK) -C Embedding $@
+	-@rm -f *.ts *.tsin
 
 distclean: clean
 	@$(MK) -C Examples $@
