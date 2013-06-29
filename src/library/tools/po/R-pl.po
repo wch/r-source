@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-06-29 17:49\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1381,6 +1381,15 @@ msgstr ""
 msgid "running 'make' failed"
 msgstr "uruchomienie 'make' nie powiodło się"
 
+# tools/R/Vignettes.R: 756
+# stop(gettextf("file '%s' not found", vignette),
+#              domain = NA)
+msgid "file '%s' not found"
+msgstr "nie znaleziono pliku '%s'"
+
+msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
 # tools/R/Vignettes.R: 637
 # stop(gettextf("In '%s' vignettes '%s' and '%s' have the same vignette name",
 #     		      basename(dirname(dir)), orig, dup),
@@ -1393,11 +1402,11 @@ msgstr "W ilustracjach '%s', '%s' oraz '%s' mają te same nazwy winiet"
 msgid "argument 'vignette' must be of length 1"
 msgstr "argument 'vignette' musi być długości 1"
 
-# tools/R/Vignettes.R: 756
-# stop(gettextf("file '%s' not found", vignette),
-#              domain = NA)
-msgid "file '%s' not found"
-msgstr "nie znaleziono pliku '%s'"
+# tools/R/install.R: 1467
+# stop("ERROR: no packages specified", call.=FALSE)
+#, fuzzy
+msgid "Vignette engine package not specified."
+msgstr "BŁĄD: nie określono pakietów"
 
 # tools/R/Vignettes.R: 854
 # stop("Unsupported engine name ", sQuote(name))
@@ -1657,6 +1666,12 @@ msgstr "BŁĄD: wersja tego programu to R %s, wymagana jest R %s %s"
 # stop("loading failed", call. = FALSE)
 msgid "loading failed"
 msgstr "ładowanie nie powiodło się"
+
+msgid "Expected %s, got %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get expected %s in evaluating %s"
+msgstr ""
 
 # tools/R/bibstyle.R: 339
 # stop("Changes require specified 'style'")
@@ -2384,6 +2399,9 @@ msgstr "Znaleziono %s, prawdopodobnie z %s"
 # gettextf("testing '%s' failed", pkg)
 msgid "testing '%s' failed"
 msgstr "testowanie '%s' nie powiodło się"
+
+msgid "%d of the package tests failed"
+msgstr ""
 
 # tools/R/testing.R: 239
 # message(gettextf("Testing examples for package %s", sQuote(pkg)),

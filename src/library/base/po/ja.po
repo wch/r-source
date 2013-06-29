@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-06-29 17:48+0100\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -187,7 +187,7 @@ msgstr " '%ls' の表示に問題があります "
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3505
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3508
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
@@ -848,8 +848,8 @@ msgstr " 1 個の引数を持つ未実装の数値関数 "
 msgid "unimplemented complex function"
 msgstr " 未実装の複素関数です "
 
-#: src/main/arithmetic.c:1391 src/main/arithmetic.c:1744
-#: src/main/arithmetic.c:1923 src/main/arithmetic.c:2035
+#: src/main/arithmetic.c:1391 src/main/arithmetic.c:1745
+#: src/main/arithmetic.c:1924 src/main/arithmetic.c:2036
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr " %d 個の数値引数を持つ未実装の数値関数 "
@@ -860,15 +860,15 @@ msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 " %d 個の引数が '%s' に渡されましたが、1 つまたは 2 つが必要とされています "
 
-#: src/main/arithmetic.c:1440
+#: src/main/arithmetic.c:1441
 msgid "invalid second argument of length 0"
 msgstr " 二番目の長さ 0 の引数が不正です "
 
-#: src/main/arithmetic.c:1510
+#: src/main/arithmetic.c:1511
 msgid "invalid argument 'base' of length 0"
 msgstr " 長さ 0 の 'base ' 引数です "
 
-#: src/main/arithmetic.c:1518
+#: src/main/arithmetic.c:1519
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1392,6 +1392,13 @@ msgstr " 'EXPR' がありません "
 #: src/main/builtin.c:993 src/main/eval.c:4957
 msgid "EXPR must be a length 1 vector"
 msgstr " EXPR は長さ 1 のベクトルでなければなりません "
+
+#: src/main/builtin.c:996
+#, c-format
+msgid ""
+"EXPR is a \"factor\", treated as integer.\n"
+" Consider using '%s' instead."
+msgstr ""
 
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:132
 #: src/main/character.c:135
@@ -2471,7 +2478,7 @@ msgstr " 'opts' は、小さな非負の整数でなくてはなりません "
 msgid "object '%s' not found"
 msgstr " オブジェクト '%s' がありません "
 
-#: src/main/deparse.c:1466
+#: src/main/deparse.c:1471
 msgid "badly formed function expression"
 msgstr " 関数の構文が不適切です "
 
@@ -3665,136 +3672,136 @@ msgstr " 'getGrapshicsEvent' の再帰的使用はサポートされていませ
 msgid "no graphics event handlers set"
 msgstr " 設定されたグラフィックス event handler がありません "
 
-#: src/main/gram.y:221 src/main/gram.y:236 src/main/gram.y:2230
-#: src/main/gram.y:2244
+#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2231
+#: src/main/gram.y:2245
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr " MBCS 文字を読んでいる途中に EOF に遭遇しました (%d 行) "
 
-#: src/main/gram.y:225 src/main/gram.y:233 src/main/gram.y:2234
-#: src/main/gram.y:2241
+#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2235
+#: src/main/gram.y:2242
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr " 構文解析中に不正なマルチバイト文字列がありました (%d 行) "
 
-#: src/main/gram.y:465
+#: src/main/gram.y:467
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr " 入力バッファが溢れました (%d 行) "
 
-#: src/main/gram.y:1054
+#: src/main/gram.y:1056
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr " tag の型が正しくありません (%d 行) "
 
-#: src/main/gram.y:1668
+#: src/main/gram.y:1669
 msgid "contextstack overflow"
 msgstr " コンテクストスタックが溢れました "
 
-#: src/main/gram.y:1905
+#: src/main/gram.y:1906
 msgid "input"
 msgstr " 入力 "
 
-#: src/main/gram.y:1906
+#: src/main/gram.y:1907
 msgid "end of input"
 msgstr " 入力の終り "
 
-#: src/main/gram.y:1907
+#: src/main/gram.y:1908
 msgid "string constant"
 msgstr " 文字列定数 "
 
-#: src/main/gram.y:1908
+#: src/main/gram.y:1909
 msgid "numeric constant"
 msgstr " 数値定数 "
 
-#: src/main/gram.y:1909
+#: src/main/gram.y:1910
 msgid "symbol"
 msgstr " シンボル "
 
-#: src/main/gram.y:1910
+#: src/main/gram.y:1911
 msgid "assignment"
 msgstr " 付値 "
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1912
 msgid "end of line"
 msgstr " 行の終り "
 
-#: src/main/gram.y:1925 src/main/gram.y:1931
+#: src/main/gram.y:1926 src/main/gram.y:1932
 #, c-format
 msgid "unexpected %s"
 msgstr " 予想外の %s です "
 
-#: src/main/gram.y:1941
+#: src/main/gram.y:1942
 #, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr " 形式的引数 '%s' が繰り返されています (%d 行において) "
 
-#: src/main/gram.y:2147
+#: src/main/gram.y:2148
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr " 整数リテラル %s は小数を含んでいます; 実数値を使用します "
 
-#: src/main/gram.y:2151
+#: src/main/gram.y:2152
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr " 非整数値 %s に L がついています; 実数値を使用します "
 
-#: src/main/gram.y:2164
+#: src/main/gram.y:2165
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr " 整数リテラル %s は不要な小数点を含んでいます "
 
-#: src/main/gram.y:2196
+#: src/main/gram.y:2197
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr " 文字列が長すぎるためメモリ確保ができません (%d 行) "
 
-#: src/main/gram.y:2349
+#: src/main/gram.y:2350
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\x' が使われています "
 
-#: src/main/gram.y:2363
+#: src/main/gram.y:2364
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\uxxxx シーケンスはバックチック内ではサポートされません (%d 行) "
 
-#: src/main/gram.y:2378
+#: src/main/gram.y:2379
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\u' が使われています "
 
-#: src/main/gram.y:2386
+#: src/main/gram.y:2387
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr " 不正な \\u{xxxx} 系列です (%d 行) "
 
-#: src/main/gram.y:2398
+#: src/main/gram.y:2399
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\Uxxxxxxxx シーケンスはバックチック内ではサポートされません (%d 行) "
 
-#: src/main/gram.y:2413
+#: src/main/gram.y:2414
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\U' が使われています "
 
-#: src/main/gram.y:2421
+#: src/main/gram.y:2422
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr " 不正な \\U{xxxxxxxx} 系列です (%d 行) "
 
-#: src/main/gram.y:2461
+#: src/main/gram.y:2462
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 " \"%2$s\" で始まる文字列の中で '\\%1$c' は文字列で認識されないエスケープです "
 
-#: src/main/gram.y:2520
+#: src/main/gram.y:2521
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr " 文字列中にユニコードや 8 進・16 進エスケープ文字は許されません "
 
-#: src/main/gram.y:2524
+#: src/main/gram.y:2525
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3803,8 +3810,8 @@ msgstr ""
 " このロケールにはない Unicode エスケープを含む %d 行の文字列は \n"
 " 長すぎます (最大 10000 文字です) "
 
-#: src/main/gram.y:3115 src/main/gram.y:3122 src/main/gram.y:3128
-#: src/main/gram.y:3135
+#: src/main/gram.y:3116 src/main/gram.y:3123 src/main/gram.y:3129
+#: src/main/gram.y:3136
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr " コンテクストスタックが溢れました (%d 行) "
@@ -3932,9 +3939,9 @@ msgstr " モジュール中でインターネットルーチンがアクセス�
 msgid "internet routines cannot be loaded"
 msgstr " インターネットルーチンがロードできません "
 
-#: src/main/internet.c:118 src/main/memory.c:3220 src/main/memory.c:3229
-#: src/main/memory.c:3240 src/main/memory.c:3253 src/main/memory.c:3269
-#: src/main/memory.c:3286
+#: src/main/internet.c:118 src/main/memory.c:3223 src/main/memory.c:3232
+#: src/main/memory.c:3243 src/main/memory.c:3256 src/main/memory.c:3272
+#: src/main/memory.c:3289
 msgid "bad value"
 msgstr " 不適切な値です "
 
@@ -4000,63 +4007,63 @@ msgstr " '%s' 型の引数を論理型に変換します "
 msgid "dummy - do not translate"
 msgstr " ダミー、訳してはいけない (けど、訳してしまった) "
 
-#: src/main/main.c:478
+#: src/main/main.c:477
 msgid "Error: segfault from C stack overflow\n"
 msgstr " エラー: C スタック・オーバーフローによるセグメンテーション違反 \n"
 
-#: src/main/main.c:834
+#: src/main/main.c:835
 msgid "unable to open the base package\n"
 msgstr " base パッケージを開くことができません \n"
 
-#: src/main/main.c:911
+#: src/main/main.c:912
 #, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr " %s に保存されたデータを復帰できません \n"
 
-#: src/main/main.c:958
+#: src/main/main.c:959
 msgid "During startup - "
 msgstr " 起動準備中です - "
 
-#: src/main/main.c:1188
+#: src/main/main.c:1189
 msgid "cannot quit from browser"
 msgstr " ブラウザを終了できません "
 
-#: src/main/main.c:1192
+#: src/main/main.c:1193
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 " \"yes\", \"no\", \"ask\" または \"default\" のどれかが期待されています "
 
-#: src/main/main.c:1197
+#: src/main/main.c:1198
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 " 非対話的な使用での save=\"ask\": コマンドラインでの既定動作が使用されます "
 
-#: src/main/main.c:1205
+#: src/main/main.c:1206
 msgid "unrecognized value of 'save'"
 msgstr " 'save' の値が認識できません "
 
-#: src/main/main.c:1208
+#: src/main/main.c:1209
 msgid "invalid 'status', 0 assumed"
 msgstr " 'status' が不正です。0 が仮定されました "
 
-#: src/main/main.c:1213
+#: src/main/main.c:1214
 msgid "invalid 'runLast', FALSE assumed"
 msgstr " 'runLast' が不正です。FALSE が仮定されました "
 
-#: src/main/main.c:1244
+#: src/main/main.c:1245
 msgid "cannot allocate space for toplevel callback element"
 msgstr " トップレベルの callback 要素に作業空間を割り当てることができません "
 
-#: src/main/main.c:1322
+#: src/main/main.c:1323
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr " R_removeTaskCallbackByIndex に負の添字が渡されました "
 
-#: src/main/main.c:1431
+#: src/main/main.c:1432
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr " トップレベルの task callback '%s' からの警告メッセージ \n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1488
 msgid "top-level task callback did not return a logical value"
 msgstr " トップレベルの task callback が論理値を返していません "
 
@@ -4178,51 +4185,51 @@ msgstr " サイズ %0.1f Mb のベクトルを割り当てることができま�
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr " サイズ %0.f Kb のベクトルを割り当てることができません "
 
-#: src/main/memory.c:2832
+#: src/main/memory.c:2835
 msgid "protect(): protection stack overflow"
 msgstr " protect(): プロテクションスタックが溢れました "
 
-#: src/main/memory.c:2848
+#: src/main/memory.c:2851
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr " unprotect(): %d 個の保護された項目 "
 
-#: src/main/memory.c:2862
+#: src/main/memory.c:2865
 msgid "unprotect_ptr: pointer not found"
 msgstr " unprotect_ptr: ポインターがありません "
 
-#: src/main/memory.c:2899
+#: src/main/memory.c:2902
 #, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr ""
 " R_Reprotect: %d 個の保護された項目だけです、インデックス %d を再プロテクトで"
 "きません "
 
-#: src/main/memory.c:2941
+#: src/main/memory.c:2944
 #, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr ""
 " 'Calloc' がメモリー (%.0f バイト、%u バイト中) を割りあてられませんでした "
 
-#: src/main/memory.c:2952
+#: src/main/memory.c:2955
 #, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr " 'Realloc' がメモリーを再確保できません (%.0f バイト) "
 
-#: src/main/memory.c:3174
+#: src/main/memory.c:3177
 msgid "not safe to return vector pointer"
 msgstr " ベクトルのポインタを返すのは安全ではありません "
 
-#: src/main/memory.c:3427
+#: src/main/memory.c:3430
 msgid "memory profiling is not available on this system"
 msgstr " メモリプロファリングはこのシステムでは使えません "
 
-#: src/main/memory.c:3492
+#: src/main/memory.c:3495
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr " Rprofmem: ファイル '%s' を開くことができません "
 
-#: src/main/memory.c:3599
+#: src/main/memory.c:3602
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr " 長いベクトルはまだサポートされていません: %s:%d "
@@ -5294,14 +5301,14 @@ msgstr " 因子の長さが異なります "
 msgid "result would be too long a vector"
 msgstr " 結果のベクトルが長すぎます "
 
-#: src/main/seq.c:162 src/main/seq.c:166
+#: src/main/seq.c:162
+msgid "argument of length 0"
+msgstr " 引数の長さが 0 です "
+
+#: src/main/seq.c:164 src/main/seq.c:166
 #, c-format
 msgid "numerical expression has %d elements: only the first used"
 msgstr " 数値演算式は %d 個の要素を持っています: 最初の要素だけが使われました "
-
-#: src/main/seq.c:164
-msgid "argument of length 0"
-msgstr " 引数の長さが 0 です "
 
 #: src/main/seq.c:170
 msgid "NA/NaN argument"

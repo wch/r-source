@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-06-29 17:48+0100\n"
 "PO-Revision-Date: 2011-11-29 09:15+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,76 +17,76 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-#: fork.c:136 fork.c:139
+#: fork.c:137 fork.c:140
 msgid "unable to create a pipe"
 msgstr "kan ikke oprette en datakanal"
 
-#: fork.c:150
+#: fork.c:151
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "kan ikke forgrene, mulig årsag: %s"
 
-#: fork.c:179
+#: fork.c:180
 msgid "memory allocation error"
 msgstr "allokeringsfejl for hukommelse"
 
-#: fork.c:217
+#: fork.c:232
 msgid "only children can send data to the master process"
 msgstr "kun underprocesser kan sende data til overprocessen"
 
-#: fork.c:219
+#: fork.c:234
 msgid "there is no pipe to the master process"
 msgstr "der er ingen datakanal til overprocessen"
 
-#: fork.c:221
+#: fork.c:236
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "indhold at sende skal være RAW (RÅ), brug serialize() hvis krævet"
 
-#: fork.c:230 fork.c:237 fork.c:567
+#: fork.c:245 fork.c:252 fork.c:582
 msgid "write error, closing pipe to the master"
 msgstr "skrivefejl, lukke datakanal til overproces"
 
-#: fork.c:250
+#: fork.c:265
 msgid "only the master process can send data to a child process"
 msgstr "kun overprocessen kan sende data til en underproces"
 
-#: fork.c:257
+#: fork.c:272
 #, c-format
 msgid "child %d does not exist"
 msgstr "underproces %d findes ikke"
 
-#: fork.c:263
+#: fork.c:278
 msgid "write error"
 msgstr "skrivefejl"
 
-#: fork.c:343 fork.c:465
+#: fork.c:358 fork.c:480
 #, c-format
 msgid "error '%s' in select"
 msgstr "fejl '%s' i select"
 
-#: fork.c:549
+#: fork.c:564
 #, fuzzy
 msgid "'mckill' failed"
 msgstr "mckill fejlede"
 
-#: fork.c:559
+#: fork.c:574
 #, fuzzy
 msgid "'mcexit' can only be used in a child process"
 msgstr "mcexit kan kun bruges i en underproces"
 
-#: fork.c:580
+#: fork.c:595
 #, fuzzy
 msgid "'mcexit' failed"
 msgstr "mcexit fejlede"
 
-#: fork.c:610 fork.c:619
+#: fork.c:625 fork.c:634
 msgid "invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:630
+#: fork.c:645
 msgid "requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:653
+#: fork.c:668
 msgid "retrieving CPU affinity set failed"
 msgstr ""

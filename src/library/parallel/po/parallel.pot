@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-06-29 17:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,73 +17,73 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fork.c:136 fork.c:139
+#: fork.c:137 fork.c:140
 msgid "unable to create a pipe"
 msgstr ""
 
-#: fork.c:150
+#: fork.c:151
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr ""
 
-#: fork.c:179
+#: fork.c:180
 msgid "memory allocation error"
 msgstr ""
 
-#: fork.c:217
+#: fork.c:232
 msgid "only children can send data to the master process"
 msgstr ""
 
-#: fork.c:219
+#: fork.c:234
 msgid "there is no pipe to the master process"
 msgstr ""
 
-#: fork.c:221
+#: fork.c:236
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 
-#: fork.c:230 fork.c:237 fork.c:567
+#: fork.c:245 fork.c:252 fork.c:582
 msgid "write error, closing pipe to the master"
 msgstr ""
 
-#: fork.c:250
+#: fork.c:265
 msgid "only the master process can send data to a child process"
 msgstr ""
 
-#: fork.c:257
+#: fork.c:272
 #, c-format
 msgid "child %d does not exist"
 msgstr ""
 
-#: fork.c:263
+#: fork.c:278
 msgid "write error"
 msgstr ""
 
-#: fork.c:343 fork.c:465
+#: fork.c:358 fork.c:480
 #, c-format
 msgid "error '%s' in select"
 msgstr ""
 
-#: fork.c:549
+#: fork.c:564
 msgid "'mckill' failed"
 msgstr ""
 
-#: fork.c:559
+#: fork.c:574
 msgid "'mcexit' can only be used in a child process"
 msgstr ""
 
-#: fork.c:580
+#: fork.c:595
 msgid "'mcexit' failed"
 msgstr ""
 
-#: fork.c:610 fork.c:619
+#: fork.c:625 fork.c:634
 msgid "invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:630
+#: fork.c:645
 msgid "requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:653
+#: fork.c:668
 msgid "retrieving CPU affinity set failed"
 msgstr ""

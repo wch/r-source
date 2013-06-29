@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-06-29 17:48+0100\n"
 "PO-Revision-Date: 2013-03-19 19:17-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -192,7 +192,7 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3505
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3508
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
@@ -850,8 +850,8 @@ msgstr "нереализованная действительная функци
 msgid "unimplemented complex function"
 msgstr "нереализованная комплексная функция"
 
-#: src/main/arithmetic.c:1391 src/main/arithmetic.c:1744
-#: src/main/arithmetic.c:1923 src/main/arithmetic.c:2035
+#: src/main/arithmetic.c:1391 src/main/arithmetic.c:1745
+#: src/main/arithmetic.c:1924 src/main/arithmetic.c:2036
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "нереализованная действительная функция %d числовых аргументов"
@@ -861,15 +861,15 @@ msgstr "нереализованная действительная функци
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d аргументов передано '%s', а требуется 1 или 2"
 
-#: src/main/arithmetic.c:1440
+#: src/main/arithmetic.c:1441
 msgid "invalid second argument of length 0"
 msgstr "неправильный второй аргумент нулевой длины"
 
-#: src/main/arithmetic.c:1510
+#: src/main/arithmetic.c:1511
 msgid "invalid argument 'base' of length 0"
 msgstr "неправильный аргумент 'base' нулевой длины"
 
-#: src/main/arithmetic.c:1518
+#: src/main/arithmetic.c:1519
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d аргумента передано 'log', а требуется 1 или 2"
@@ -1379,6 +1379,13 @@ msgstr "'EXPR' отсутствует"
 #: src/main/builtin.c:993 src/main/eval.c:4957
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR должно быть вектором единичной длины"
+
+#: src/main/builtin.c:996
+#, c-format
+msgid ""
+"EXPR is a \"factor\", treated as integer.\n"
+" Consider using '%s' instead."
+msgstr ""
 
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:132
 #: src/main/character.c:135
@@ -2452,7 +2459,7 @@ msgstr "'opts' должен быть малым положительным це�
 msgid "object '%s' not found"
 msgstr "объект '%s' не найден"
 
-#: src/main/deparse.c:1466
+#: src/main/deparse.c:1471
 msgid "badly formed function expression"
 msgstr "плохо сформированное выражение для функции"
 
@@ -3643,143 +3650,143 @@ msgstr "рекурсивное использование 'getGraphicsEvent' н�
 msgid "no graphics event handlers set"
 msgstr "нет графических обработчиков событий"
 
-#: src/main/gram.y:221 src/main/gram.y:236 src/main/gram.y:2230
-#: src/main/gram.y:2244
+#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2231
+#: src/main/gram.y:2245
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF во время чтения символа MBCS на строке %d"
 
-#: src/main/gram.y:225 src/main/gram.y:233 src/main/gram.y:2234
-#: src/main/gram.y:2241
+#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2235
+#: src/main/gram.y:2242
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "неправильный многобайтный символ при обработке на строке %d"
 
-#: src/main/gram.y:465
+#: src/main/gram.y:467
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "переполнение буфера ввода на строке %d"
 
-#: src/main/gram.y:1054
+#: src/main/gram.y:1056
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "некорректный тип тега на строке %d"
 
-#: src/main/gram.y:1668
+#: src/main/gram.y:1669
 msgid "contextstack overflow"
 msgstr "переполнение стека контекста"
 
-#: src/main/gram.y:1905
+#: src/main/gram.y:1906
 msgid "input"
 msgstr "ввод"
 
-#: src/main/gram.y:1906
+#: src/main/gram.y:1907
 msgid "end of input"
 msgstr "конец ввода"
 
-#: src/main/gram.y:1907
+#: src/main/gram.y:1908
 msgid "string constant"
 msgstr "строковая константа"
 
-#: src/main/gram.y:1908
+#: src/main/gram.y:1909
 msgid "numeric constant"
 msgstr "числовая константа"
 
-#: src/main/gram.y:1909
+#: src/main/gram.y:1910
 msgid "symbol"
 msgstr "символ"
 
-#: src/main/gram.y:1910
+#: src/main/gram.y:1911
 msgid "assignment"
 msgstr "присвоение"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1912
 msgid "end of line"
 msgstr "конец строки"
 
-#: src/main/gram.y:1925 src/main/gram.y:1931
+#: src/main/gram.y:1926 src/main/gram.y:1932
 #, c-format
 msgid "unexpected %s"
 msgstr "неожиданный %s"
 
-#: src/main/gram.y:1941
+#: src/main/gram.y:1942
 #, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "повторный формальный аргумент '%s' на строке %d"
 
-#: src/main/gram.y:2147
+#: src/main/gram.y:2148
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "целочисленная константа %s содержит доли; использую числовое значение"
 
-#: src/main/gram.y:2151
+#: src/main/gram.y:2152
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "нечисловое значение %s ограничено L; использую числовое значение"
 
-#: src/main/gram.y:2164
+#: src/main/gram.y:2165
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "целочисленная константа %s имеет ненужный десятичный разделитель"
 
-#: src/main/gram.y:2196
+#: src/main/gram.y:2197
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "не могу разместить буфер для длинной подстроки на строке %d"
 
-#: src/main/gram.y:2349
+#: src/main/gram.y:2350
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
-#: src/main/gram.y:2363
+#: src/main/gram.y:2364
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "последовательности \\uxxxx не поддерживаются внутри обратных кавычек (строка "
 "%d)"
 
-#: src/main/gram.y:2378
+#: src/main/gram.y:2379
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
-#: src/main/gram.y:2386
+#: src/main/gram.y:2387
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "неправильная \\u{xxxx} последовательность (строка %d)"
 
-#: src/main/gram.y:2398
+#: src/main/gram.y:2399
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "последовательности \\Uxxxxxxxx не поддерживаются внутри обратных кавычек "
 "(строка %d)"
 
-#: src/main/gram.y:2413
+#: src/main/gram.y:2414
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
-#: src/main/gram.y:2421
+#: src/main/gram.y:2422
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "неправильная \\U{xxxxxxxx} последовательность (строка %d)"
 
-#: src/main/gram.y:2461
+#: src/main/gram.y:2462
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' -- нераспознаваемый префикс в строке в строке начинающейся с \"%s\""
 
-#: src/main/gram.y:2520
+#: src/main/gram.y:2521
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr "смешивание Юникода и octal/hex escapes в строке не позволяется"
 
-#: src/main/gram.y:2524
+#: src/main/gram.y:2525
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3788,8 +3795,8 @@ msgstr ""
 "подстрока на строке %d, содержащая Unicode-escapes не из этой локали\n"
 "слишком длинная (максимум 10000 символов)"
 
-#: src/main/gram.y:3115 src/main/gram.y:3122 src/main/gram.y:3128
-#: src/main/gram.y:3135
+#: src/main/gram.y:3116 src/main/gram.y:3123 src/main/gram.y:3129
+#: src/main/gram.y:3136
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "переполнение стека целых чисел на строке %d"
@@ -3917,9 +3924,9 @@ msgstr "средства Интернет не доступны из модул�
 msgid "internet routines cannot be loaded"
 msgstr "средства Интернет не могут быть загружены"
 
-#: src/main/internet.c:118 src/main/memory.c:3220 src/main/memory.c:3229
-#: src/main/memory.c:3240 src/main/memory.c:3253 src/main/memory.c:3269
-#: src/main/memory.c:3286
+#: src/main/internet.c:118 src/main/memory.c:3223 src/main/memory.c:3232
+#: src/main/memory.c:3243 src/main/memory.c:3256 src/main/memory.c:3272
+#: src/main/memory.c:3289
 msgid "bad value"
 msgstr "неправильное значение"
 
@@ -3986,64 +3993,64 @@ msgstr "преобразование аргумента типа '%s' в лог�
 msgid "dummy - do not translate"
 msgstr "dummy - do not translate"
 
-#: src/main/main.c:478
+#: src/main/main.c:477
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Ошибка сегментации памяти из переполненного стека C\n"
 
-#: src/main/main.c:834
+#: src/main/main.c:835
 msgid "unable to open the base package\n"
 msgstr "не могу открыть пакет 'base'\n"
 
-#: src/main/main.c:911
+#: src/main/main.c:912
 #, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr "не могу восстановить сохраненные в %s данные\n"
 
-#: src/main/main.c:958
+#: src/main/main.c:959
 msgid "During startup - "
 msgstr "Во время загрузки - "
 
-#: src/main/main.c:1188
+#: src/main/main.c:1189
 msgid "cannot quit from browser"
 msgstr "не могу выйти из браузера"
 
-#: src/main/main.c:1192
+#: src/main/main.c:1193
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "ожидается одно из: \"yes\", \"no\", \"ask\" или \"default\"."
 
-#: src/main/main.c:1197
+#: src/main/main.c:1198
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" во время неинтерактивной работы: будет использована командная "
 "строка по умолчанию"
 
-#: src/main/main.c:1205
+#: src/main/main.c:1206
 msgid "unrecognized value of 'save'"
 msgstr "нераспознанное значение 'save'"
 
-#: src/main/main.c:1208
+#: src/main/main.c:1209
 msgid "invalid 'status', 0 assumed"
 msgstr "неправильный 'status', принят 0"
 
-#: src/main/main.c:1213
+#: src/main/main.c:1214
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "неправильный 'runLast', принято FALSE"
 
-#: src/main/main.c:1244
+#: src/main/main.c:1245
 msgid "cannot allocate space for toplevel callback element"
 msgstr "не могу выделить место обратного вызова элемента верхнего уровня"
 
-#: src/main/main.c:1322
+#: src/main/main.c:1323
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "отрицательный индекс передан в R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1432
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 "предупреждающие сообщения из обратного вызова задачи верхнего уровня '%s'\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1488
 msgid "top-level task callback did not return a logical value"
 msgstr "обратный вызов задачи верхнего уровня не вернул логического значения"
 
@@ -4167,49 +4174,49 @@ msgstr "не могу разместить вектор размером %0.1f M
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "не могу разместить вектор размером %0.f Kb"
 
-#: src/main/memory.c:2832
+#: src/main/memory.c:2835
 msgid "protect(): protection stack overflow"
 msgstr "protect(): переполнение стека защиты"
 
-#: src/main/memory.c:2848
+#: src/main/memory.c:2851
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): только %d защищенных элементов"
 
-#: src/main/memory.c:2862
+#: src/main/memory.c:2865
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: указатель не найден"
 
-#: src/main/memory.c:2899
+#: src/main/memory.c:2902
 #, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr ""
 "R_Reprotect: только %d защищенных элементов, не могу перезащитить индекс %d"
 
-#: src/main/memory.c:2941
+#: src/main/memory.c:2944
 #, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc' не может выделить память (%.0f из %u байт)"
 
-#: src/main/memory.c:2952
+#: src/main/memory.c:2955
 #, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc' не может переразместить память (%.0f байт)"
 
-#: src/main/memory.c:3174
+#: src/main/memory.c:3177
 msgid "not safe to return vector pointer"
 msgstr "небезопасно возвращать указатель вектора"
 
-#: src/main/memory.c:3427
+#: src/main/memory.c:3430
 msgid "memory profiling is not available on this system"
 msgstr "профилирование памяти в этой системе недоступно"
 
-#: src/main/memory.c:3492
+#: src/main/memory.c:3495
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: не могу открыть выходной файл '%s'"
 
-#: src/main/memory.c:3599
+#: src/main/memory.c:3602
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "длинные вектора еще не поддерживаются: %s:%d"
@@ -5265,14 +5272,14 @@ msgstr "неравные длины факторов"
 msgid "result would be too long a vector"
 msgstr "результат может оказаться слишком длинным вектором"
 
-#: src/main/seq.c:162 src/main/seq.c:166
+#: src/main/seq.c:162
+msgid "argument of length 0"
+msgstr "аргумент нулевой длины"
+
+#: src/main/seq.c:164 src/main/seq.c:166
 #, c-format
 msgid "numerical expression has %d elements: only the first used"
 msgstr "у числового выражения %d элементов: использован только первый"
-
-#: src/main/seq.c:164
-msgid "argument of length 0"
-msgstr "аргумент нулевой длины"
 
 #: src/main/seq.c:170
 msgid "NA/NaN argument"

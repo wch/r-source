@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-06-29 17:49\n"
 "PO-Revision-Date: 2013-03-19 13:39+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -551,6 +551,12 @@ msgstr ""
 msgid "running 'make' failed"
 msgstr " 'make' の実行に失敗しました "
 
+msgid "file '%s' not found"
+msgstr " ファイル '%s' が見つかりません "
+
+msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
 " '%s' において、ビニエット '%s' と '%s' は同じビニエット名になっています "
@@ -558,8 +564,9 @@ msgstr ""
 msgid "argument 'vignette' must be of length 1"
 msgstr " 引数 'vignette' は長さ1でなければなりません "
 
-msgid "file '%s' not found"
-msgstr " ファイル '%s' が見つかりません "
+#, fuzzy
+msgid "Vignette engine package not specified."
+msgstr " ビニエットの依存性は不要です: "
 
 msgid "Unsupported engine name"
 msgstr " 未サポートのエンジン名 "
@@ -687,6 +694,12 @@ msgstr " エラー: この R はバージョン %s です。 R %s %s を必要�
 
 msgid "loading failed"
 msgstr " ロードに失敗しました "
+
+msgid "Expected %s, got %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get expected %s in evaluating %s"
+msgstr ""
 
 msgid "Changes require specified 'style'"
 msgstr " 指定された 'style' の変更が必要です "
@@ -1062,6 +1075,9 @@ msgstr " %s が見つかりました（おそらく %s から） "
 
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
+
+msgid "%d of the package tests failed"
+msgstr ""
 
 msgid "Testing examples for package %s"
 msgstr " %s パッケージに対する例をテストしています "
@@ -1607,9 +1623,6 @@ msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しによ�
 
 #~ msgid "Package which this enhances but not available for checking: %s"
 #~ msgstr " これが拡張するパッケージがチェック可能ではありません：%s "
-
-#~ msgid "Vignette dependencies not required:"
-#~ msgstr " ビニエットの依存性は不要です: "
 
 #~ msgid "Vignette dependencies not required: %s"
 #~ msgstr " ビニエットの依存性は不要です: %s "

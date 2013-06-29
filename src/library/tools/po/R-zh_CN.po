@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-06-29 17:49\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -523,14 +523,21 @@ msgstr ""
 msgid "running 'make' failed"
 msgstr "调用'make'失败"
 
+msgid "file '%s' not found"
+msgstr "找不到'%s'这个文件"
+
+msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "'%s'简介里'%s'和'%s'的名字是一样的"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "参数'vignette'的长度必需为一"
 
-msgid "file '%s' not found"
-msgstr "找不到'%s'这个文件"
+#, fuzzy
+msgid "Vignette engine package not specified."
+msgstr "不需要标头从属:"
 
 msgid "Unsupported engine name"
 msgstr "不支持这样的引擎名"
@@ -654,6 +661,12 @@ msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 
 msgid "loading failed"
 msgstr "载入失败"
+
+msgid "Expected %s, got %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get expected %s in evaluating %s"
+msgstr ""
 
 msgid "Changes require specified 'style'"
 msgstr "改动需要特别'style'"
@@ -1014,6 +1027,9 @@ msgstr "找到了%s,可能是从%s来的"
 
 msgid "testing '%s' failed"
 msgstr "试用'%s'失败了"
+
+msgid "%d of the package tests failed"
+msgstr ""
 
 msgid "Testing examples for package %s"
 msgstr "试验程序包%s的范例"
@@ -1539,9 +1555,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "Package which this enhances but not available for checking: %s"
 #~ msgstr "无法检查被加强功能的程辑包:%s"
-
-#~ msgid "Vignette dependencies not required:"
-#~ msgstr "不需要标头从属:"
 
 #~ msgid "Vignette dependencies not required: %s"
 #~ msgstr "不需要标头从属: %s"

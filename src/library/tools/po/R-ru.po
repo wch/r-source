@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-06-29 17:49\n"
 "PO-Revision-Date: 2013-03-19 22:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -551,14 +551,21 @@ msgstr ""
 msgid "running 'make' failed"
 msgstr "не удался запуск 'make'"
 
+msgid "file '%s' not found"
+msgstr "файл '%s' не найден"
+
+msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Среди миниатюр '%s' '%s' и '%s' имеют одинаковые имена"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "аргумент 'vignette' должен быть единичной длины"
 
-msgid "file '%s' not found"
-msgstr "файл '%s' не найден"
+#, fuzzy
+msgid "Vignette engine package not specified."
+msgstr "Зависимости очерка не требуются:"
 
 msgid "Unsupported engine name"
 msgstr "Неподдерживаемое имя устройства"
@@ -684,6 +691,12 @@ msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
 
 msgid "loading failed"
 msgstr "загрузка не удалась"
+
+msgid "Expected %s, got %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get expected %s in evaluating %s"
+msgstr ""
 
 msgid "Changes require specified 'style'"
 msgstr "Изменения требуют определенного 'style'"
@@ -1052,6 +1065,9 @@ msgstr "Нашел %s, возможно, из %s"
 
 msgid "testing '%s' failed"
 msgstr "тестирование '%s' не удалось"
+
+msgid "%d of the package tests failed"
+msgstr ""
 
 msgid "Testing examples for package %s"
 msgstr "Проверяю примеры к пакету %s"
@@ -1651,9 +1667,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
 #~ msgid "Package which this enhances but not available for checking: %s"
 #~ msgstr "Пакет, который это усиливает, недоступен для выдачи: %s"
-
-#~ msgid "Vignette dependencies not required:"
-#~ msgstr "Зависимости очерка не требуются:"
 
 #~ msgid "Vignette dependencies not required: %s"
 #~ msgstr "Зависимости очерка не требуются: %s"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-06-29 17:48+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -191,7 +191,7 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3505
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3508
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
@@ -874,8 +874,8 @@ msgstr "ikkje-implementert reell funksjon med 1 argument"
 msgid "unimplemented complex function"
 msgstr "ikkje-implementert kompleks funksjon"
 
-#: src/main/arithmetic.c:1391 src/main/arithmetic.c:1744
-#: src/main/arithmetic.c:1923 src/main/arithmetic.c:2035
+#: src/main/arithmetic.c:1391 src/main/arithmetic.c:1745
+#: src/main/arithmetic.c:1924 src/main/arithmetic.c:2036
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "ikkje-implementert reell funksjon med %d numeriske argument"
@@ -885,15 +885,15 @@ msgstr "ikkje-implementert reell funksjon med %d numeriske argument"
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d argument sende til «%s», som tek 1 eller 2 argument"
 
-#: src/main/arithmetic.c:1440
+#: src/main/arithmetic.c:1441
 msgid "invalid second argument of length 0"
 msgstr "ugyldig andreargument av lengd 0"
 
-#: src/main/arithmetic.c:1510
+#: src/main/arithmetic.c:1511
 msgid "invalid argument 'base' of length 0"
 msgstr "ugyldig argument «base» av lengd 0"
 
-#: src/main/arithmetic.c:1518
+#: src/main/arithmetic.c:1519
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d argument sende til «log», som tek 1 eller 2 argument"
@@ -1412,6 +1412,13 @@ msgstr "«EXPR» manglar"
 #: src/main/builtin.c:993 src/main/eval.c:4957
 msgid "EXPR must be a length 1 vector"
 msgstr "«EXPR» må vera ein vektor av lengd 1"
+
+#: src/main/builtin.c:996
+#, c-format
+msgid ""
+"EXPR is a \"factor\", treated as integer.\n"
+" Consider using '%s' instead."
+msgstr ""
 
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:132
 #: src/main/character.c:135
@@ -2505,7 +2512,7 @@ msgstr "«opts» må vera eit lite, ikkje-negativt tal"
 msgid "object '%s' not found"
 msgstr "fann ikkje objektet «%s»"
 
-#: src/main/deparse.c:1466
+#: src/main/deparse.c:1471
 msgid "badly formed function expression"
 msgstr "feilutforma funksjonsuttrykk"
 
@@ -3709,138 +3716,138 @@ msgstr "rekursiv bruk av «getGraphicsEvent» er ikkje støtta"
 msgid "no graphics event handlers set"
 msgstr "ingen grafikkhendingshandsamarar definerte"
 
-#: src/main/gram.y:221 src/main/gram.y:236 src/main/gram.y:2230
-#: src/main/gram.y:2244
+#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2231
+#: src/main/gram.y:2245
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "Nådde slutten av fila ved lesing av MBCS-teikn på linje %d"
 
-#: src/main/gram.y:225 src/main/gram.y:233 src/main/gram.y:2234
-#: src/main/gram.y:2241
+#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2235
+#: src/main/gram.y:2242
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "Ugyldig multibyte-teikn i tolkar på linje %d"
 
-#: src/main/gram.y:465
+#: src/main/gram.y:467
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "overflyt i inndatabuffer på linje %d"
 
-#: src/main/gram.y:1054
+#: src/main/gram.y:1056
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "ugyldig merkelapptype på linje %d"
 
-#: src/main/gram.y:1668
+#: src/main/gram.y:1669
 msgid "contextstack overflow"
 msgstr "contextstack-overflyt"
 
-#: src/main/gram.y:1905
+#: src/main/gram.y:1906
 msgid "input"
 msgstr "inndata"
 
-#: src/main/gram.y:1906
+#: src/main/gram.y:1907
 msgid "end of input"
 msgstr "slutt på inndata"
 
-#: src/main/gram.y:1907
+#: src/main/gram.y:1908
 msgid "string constant"
 msgstr "teiknkonstant"
 
-#: src/main/gram.y:1908
+#: src/main/gram.y:1909
 msgid "numeric constant"
 msgstr "numerisk konstant"
 
-#: src/main/gram.y:1909
+#: src/main/gram.y:1910
 msgid "symbol"
 msgstr "symbol"
 
-#: src/main/gram.y:1910
+#: src/main/gram.y:1911
 msgid "assignment"
 msgstr "tildeling"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1912
 msgid "end of line"
 msgstr "linjeskift"
 
-#: src/main/gram.y:1925 src/main/gram.y:1931
+#: src/main/gram.y:1926 src/main/gram.y:1932
 #, c-format
 msgid "unexpected %s"
 msgstr "uventa %s"
 
-#: src/main/gram.y:1941
+#: src/main/gram.y:1942
 #, fuzzy, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "Gjenteke formelt argument «%s» på linje %d"
 
-#: src/main/gram.y:2147
+#: src/main/gram.y:2148
 #, fuzzy, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr ""
 "heiltalsliteralen %sL inneheld ein desimalverdi (brukar flyttalsverdien)"
 
-#: src/main/gram.y:2151
+#: src/main/gram.y:2152
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "flyttalsverdien %s kvalifisert med L (brukar flyttalsverdien)"
 
-#: src/main/gram.y:2164
+#: src/main/gram.y:2165
 #, fuzzy, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "heiltalsverdien %sL inneheld eit unødvendig desimalpunktum"
 
-#: src/main/gram.y:2196
+#: src/main/gram.y:2197
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "klarte ikkje reservera buffer til lang streng på linje %d"
 
-#: src/main/gram.y:2349
+#: src/main/gram.y:2350
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "«\\x» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
-#: src/main/gram.y:2363
+#: src/main/gram.y:2364
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\uxxxx-følgjer er ikkje støtta mellom `-teikn (linje %d)"
 
-#: src/main/gram.y:2378
+#: src/main/gram.y:2379
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "«\\u» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
-#: src/main/gram.y:2386
+#: src/main/gram.y:2387
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "ugyldig \\u{xxxx}-følgje (linje %d)"
 
-#: src/main/gram.y:2398
+#: src/main/gram.y:2399
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\Uxxxxxxxx-følgjer er ikkje støtta mellom `-teikn (linje %d)"
 
-#: src/main/gram.y:2413
+#: src/main/gram.y:2414
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "«\\U» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
-#: src/main/gram.y:2421
+#: src/main/gram.y:2422
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "ugyldig \\U{xxxxxxxx}-følgje (linje %d)"
 
-#: src/main/gram.y:2461
+#: src/main/gram.y:2462
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "«\\%c» er eit ukjent verneteikn i tekststreng som startar med «%s»"
 
-#: src/main/gram.y:2520
+#: src/main/gram.y:2521
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "det er ikkje mogleg å blanda Unicode og oktal- eller heksadesimal-koding i "
 "tekststrengar"
 
-#: src/main/gram.y:2524
+#: src/main/gram.y:2525
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3849,8 +3856,8 @@ msgstr ""
 "strengen på linje %d som inneheld Unicode-verneteikn som\n"
 "ikkje finst i dette lokalet er for lang (maks 10000 teikn)"
 
-#: src/main/gram.y:3115 src/main/gram.y:3122 src/main/gram.y:3128
-#: src/main/gram.y:3135
+#: src/main/gram.y:3116 src/main/gram.y:3123 src/main/gram.y:3129
+#: src/main/gram.y:3136
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "contextstack-overflyt på linje %d"
@@ -3976,9 +3983,9 @@ msgstr "kan ikkje bruka Internett-rutinar i modul"
 msgid "internet routines cannot be loaded"
 msgstr "kan ikkje lasta Internett-rutinar"
 
-#: src/main/internet.c:118 src/main/memory.c:3220 src/main/memory.c:3229
-#: src/main/memory.c:3240 src/main/memory.c:3253 src/main/memory.c:3269
-#: src/main/memory.c:3286
+#: src/main/internet.c:118 src/main/memory.c:3223 src/main/memory.c:3232
+#: src/main/memory.c:3243 src/main/memory.c:3256 src/main/memory.c:3272
+#: src/main/memory.c:3289
 msgid "bad value"
 msgstr "ugyldig verdi"
 
@@ -4047,62 +4054,62 @@ msgstr "gjer om argument av typen «%s» til logisk verdi"
 msgid "dummy - do not translate"
 msgstr ""
 
-#: src/main/main.c:478
+#: src/main/main.c:477
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Feil: Minnepeikarfeil frå C-stakkoverflyt\n"
 
-#: src/main/main.c:834
+#: src/main/main.c:835
 msgid "unable to open the base package\n"
 msgstr "klarte ikkje opna pakken «base»\n"
 
-#: src/main/main.c:911
+#: src/main/main.c:912
 #, fuzzy, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr "klarte ikkje gjenoppretta lagra data i «.RData»\n"
 
-#: src/main/main.c:958
+#: src/main/main.c:959
 msgid "During startup - "
 msgstr "Ved oppstart – "
 
-#: src/main/main.c:1188
+#: src/main/main.c:1189
 msgid "cannot quit from browser"
 msgstr "klarte ikkje avslutta browser"
 
-#: src/main/main.c:1192
+#: src/main/main.c:1193
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "venta anten «yes», «no», «ask» eller «default»"
 
-#: src/main/main.c:1197
+#: src/main/main.c:1198
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" i ikkje-interaktiv bruk: kommandolinjestandardverdien vert brukt"
 
-#: src/main/main.c:1205
+#: src/main/main.c:1206
 msgid "unrecognized value of 'save'"
 msgstr "ukjend «save»-verdi"
 
-#: src/main/main.c:1208
+#: src/main/main.c:1209
 msgid "invalid 'status', 0 assumed"
 msgstr "ugyldig «status» (brukar 0)"
 
-#: src/main/main.c:1213
+#: src/main/main.c:1214
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "ugyldig «runLast» (brukar FALSE)"
 
-#: src/main/main.c:1244
+#: src/main/main.c:1245
 msgid "cannot allocate space for toplevel callback element"
 msgstr "klarte ikkje reservera plass til tilbakekall-element på toppnivå"
 
-#: src/main/main.c:1322
+#: src/main/main.c:1323
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "negativ indeks send til R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1432
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "åtvaringsmeldingar frå oppgåve-tilbakekall «%s» på toppnivå\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1488
 msgid "top-level task callback did not return a logical value"
 msgstr "oppgåve-tilbakekall på toppnivå returnerte ikkje ein logisk verdi"
 
@@ -4228,48 +4235,48 @@ msgstr "kan ikkje reservera vektor av storleik %0.1f Mb"
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "kan ikkje reservera vektor av storleik %0.f Kb"
 
-#: src/main/memory.c:2832
+#: src/main/memory.c:2835
 msgid "protect(): protection stack overflow"
 msgstr "protect(): vern av stakkoverflyt"
 
-#: src/main/memory.c:2848
+#: src/main/memory.c:2851
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): berre %d verna objekt"
 
-#: src/main/memory.c:2862
+#: src/main/memory.c:2865
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: fann ikkje peikar"
 
-#: src/main/memory.c:2899
+#: src/main/memory.c:2902
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr "unprotect(): berre %d verna objekt"
 
-#: src/main/memory.c:2941
+#: src/main/memory.c:2944
 #, fuzzy, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc klarte ikkje reservera (%u av %u) minne"
 
-#: src/main/memory.c:2952
+#: src/main/memory.c:2955
 #, fuzzy, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc klarte ikkje endra storleik (%u) på reservert minne"
 
-#: src/main/memory.c:3174
+#: src/main/memory.c:3177
 msgid "not safe to return vector pointer"
 msgstr "ikkje trygt å returnera vektorpeikar"
 
-#: src/main/memory.c:3427
+#: src/main/memory.c:3430
 msgid "memory profiling is not available on this system"
 msgstr "minneprofilering er ikkje tilgjengeleg på dette systemet"
 
-#: src/main/memory.c:3492
+#: src/main/memory.c:3495
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: klarte ikkje opna utfila «%s»"
 
-#: src/main/memory.c:3599
+#: src/main/memory.c:3602
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
@@ -5359,14 +5366,14 @@ msgstr "ulike faktorlengder"
 msgid "result would be too long a vector"
 msgstr "resultatet ville vera ein lang vektor"
 
-#: src/main/seq.c:162 src/main/seq.c:166
+#: src/main/seq.c:162
+msgid "argument of length 0"
+msgstr "argumentet har lengd null"
+
+#: src/main/seq.c:164 src/main/seq.c:166
 #, c-format
 msgid "numerical expression has %d elements: only the first used"
 msgstr "det numeriske uttrykket har %d element: berre det først vart brukt"
-
-#: src/main/seq.c:164
-msgid "argument of length 0"
-msgstr "argumentet har lengd null"
 
 #: src/main/seq.c:170
 msgid "NA/NaN argument"

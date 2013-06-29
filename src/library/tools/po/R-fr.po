@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-06-29 17:49\n"
 "PO-Revision-Date: 2013-03-19 21:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -566,14 +566,21 @@ msgstr ""
 msgid "running 'make' failed"
 msgstr "l'exécution de 'make' a échoué"
 
+msgid "file '%s' not found"
+msgstr "le fichier '%s' est introuvable"
+
+msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Dans '%s' les vignettes '%s' et '%s' ont le même nom de vignette"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "l'argument 'vignette' doit être de longueur 1"
 
-msgid "file '%s' not found"
-msgstr "le fichier '%s' est introuvable"
+#, fuzzy
+msgid "Vignette engine package not specified."
+msgstr "Dependences de vignette non requises :"
 
 msgid "Unsupported engine name"
 msgstr "Module de traitement non supporté"
@@ -700,6 +707,12 @@ msgstr "ERREUR : cette version de R est %s, requis R %s %s "
 
 msgid "loading failed"
 msgstr "le chargement a échoué"
+
+msgid "Expected %s, got %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get expected %s in evaluating %s"
+msgstr ""
 
 msgid "Changes require specified 'style'"
 msgstr "Les modifications nécessite le 'style' spécifié"
@@ -1076,6 +1089,9 @@ msgstr "%s est trouvé, sans doute depuis %s"
 
 msgid "testing '%s' failed"
 msgstr "le test '%s' a échoué"
+
+msgid "%d of the package tests failed"
+msgstr ""
 
 msgid "Testing examples for package %s"
 msgstr "Vérification des exemples du package %s"
@@ -1669,9 +1685,6 @@ msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
 #~ msgstr ""
 #~ "Package qui serait amélioré mais qui n'est pas disponible pour la "
 #~ "vérification :"
-
-#~ msgid "Vignette dependencies not required:"
-#~ msgstr "Dependences de vignette non requises :"
 
 #~ msgid "Vignette dependencies not required: %s"
 #~ msgstr "Dépendences de vignette non requises :"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-06-29 17:49\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -519,14 +519,21 @@ msgstr ""
 msgid "running 'make' failed"
 msgstr ""
 
+msgid "file '%s' not found"
+msgstr ""
+
+msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
 
 msgid "argument 'vignette' must be of length 1"
 msgstr ""
 
-msgid "file '%s' not found"
-msgstr ""
+#, fuzzy
+msgid "Vignette engine package not specified."
+msgstr "Vignette afhængigheder ikke krævet:"
 
 msgid "Unsupported engine name"
 msgstr ""
@@ -646,6 +653,12 @@ msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr ""
 
 msgid "loading failed"
+msgstr ""
+
+msgid "Expected %s, got %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get expected %s in evaluating %s"
 msgstr ""
 
 msgid "Changes require specified 'style'"
@@ -997,6 +1010,9 @@ msgstr ""
 msgid "testing '%s' failed"
 msgstr ""
 
+msgid "%d of the package tests failed"
+msgstr ""
+
 msgid "Testing examples for package %s"
 msgstr ""
 
@@ -1290,9 +1306,6 @@ msgstr[1] ""
 
 #~ msgid "Package which this enhances but not available for checking: %s"
 #~ msgstr "Pakker som dette forbedrer men ikke tilgængelige for kontrol: %s"
-
-#~ msgid "Vignette dependencies not required:"
-#~ msgstr "Vignette afhængigheder ikke krævet:"
 
 #~ msgid "Vignette dependencies not required: %s"
 #~ msgstr "Vignette afhængigheder ikke krævet: %s"

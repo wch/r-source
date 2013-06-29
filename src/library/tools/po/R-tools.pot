@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-06-29 17:49\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -470,13 +470,19 @@ msgstr ""
 msgid "running 'make' failed"
 msgstr ""
 
+msgid "file '%s' not found"
+msgstr ""
+
+msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
 
 msgid "argument 'vignette' must be of length 1"
 msgstr ""
 
-msgid "file '%s' not found"
+msgid "Vignette engine package not specified."
 msgstr ""
 
 msgid "Unsupported engine name"
@@ -591,6 +597,12 @@ msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr ""
 
 msgid "loading failed"
+msgstr ""
+
+msgid "Expected %s, got %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get expected %s in evaluating %s"
 msgstr ""
 
 msgid "Changes require specified 'style'"
@@ -921,6 +933,9 @@ msgid "Found %s, possibly from %s"
 msgstr ""
 
 msgid "testing '%s' failed"
+msgstr ""
+
+msgid "%d of the package tests failed"
 msgstr ""
 
 msgid "Testing examples for package %s"

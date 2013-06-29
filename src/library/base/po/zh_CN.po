@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-06-29 17:48+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -187,7 +187,7 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/grep.c:772 src/main/grep.c:1061 src/main/grep.c:1063
 #: src/main/grep.c:1065 src/main/grep.c:1510 src/main/grep.c:1514
 #: src/main/grep.c:1519 src/main/grep.c:2323 src/main/grep.c:2328
-#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3505
+#: src/main/grep.c:2621 src/main/grep.c:2626 src/main/memory.c:3508
 #: src/main/paste.c:96 src/main/paste.c:384 src/main/paste.c:391
 #: src/main/paste.c:398 src/main/paste.c:403 src/main/paste.c:408
 #: src/main/paste.c:413 src/main/paste.c:416 src/main/paste.c:424
@@ -841,8 +841,8 @@ msgstr "一参数的实数函数目前还没有实现"
 msgid "unimplemented complex function"
 msgstr "目前没有实现复数功能"
 
-#: src/main/arithmetic.c:1391 src/main/arithmetic.c:1744
-#: src/main/arithmetic.c:1923 src/main/arithmetic.c:2035
+#: src/main/arithmetic.c:1391 src/main/arithmetic.c:1745
+#: src/main/arithmetic.c:1924 src/main/arithmetic.c:2036
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d数值参数的实数函数目前没有实现"
@@ -852,15 +852,15 @@ msgstr "%d数值参数的实数函数目前没有实现"
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "给了%d个参数到'%s'，但它最多只能用两个参数"
 
-#: src/main/arithmetic.c:1440
+#: src/main/arithmetic.c:1441
 msgid "invalid second argument of length 0"
 msgstr "第二参数长度为零是不对的"
 
-#: src/main/arithmetic.c:1510
+#: src/main/arithmetic.c:1511
 msgid "invalid argument 'base' of length 0"
 msgstr "不能有长度为零的'base'参数"
 
-#: src/main/arithmetic.c:1518
+#: src/main/arithmetic.c:1519
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "给了'log'%d个参数，但它最多只能用两个参数"
@@ -1363,6 +1363,13 @@ msgstr "缺少'EXPR'"
 #: src/main/builtin.c:993 src/main/eval.c:4957
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR必需是长度为一的矢量"
+
+#: src/main/builtin.c:996
+#, c-format
+msgid ""
+"EXPR is a \"factor\", treated as integer.\n"
+" Consider using '%s' instead."
+msgstr ""
 
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:132
 #: src/main/character.c:135
@@ -2414,7 +2421,7 @@ msgstr "'opts'必需是小的非负整数"
 msgid "object '%s' not found"
 msgstr "找不到对象'%s'"
 
-#: src/main/deparse.c:1466
+#: src/main/deparse.c:1471
 msgid "badly formed function expression"
 msgstr "函数表达式形式不对"
 
@@ -3587,135 +3594,135 @@ msgstr "不支持'getGraphicsEvent'的递归应用"
 msgid "no graphics event handlers set"
 msgstr "还没有设定图形事件处理机"
 
-#: src/main/gram.y:221 src/main/gram.y:236 src/main/gram.y:2230
-#: src/main/gram.y:2244
+#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2231
+#: src/main/gram.y:2245
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "%d行读MBCS字节时遇到EOF"
 
-#: src/main/gram.y:225 src/main/gram.y:233 src/main/gram.y:2234
-#: src/main/gram.y:2241
+#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2235
+#: src/main/gram.y:2242
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "句法分析器%d行里不能有多字节字符"
 
-#: src/main/gram.y:465
+#: src/main/gram.y:467
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "%d行输入缓冲区上溢"
 
-#: src/main/gram.y:1054
+#: src/main/gram.y:1056
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "%d行的标记种类不对"
 
-#: src/main/gram.y:1668
+#: src/main/gram.y:1669
 msgid "contextstack overflow"
 msgstr "节点堆叠上溢"
 
-#: src/main/gram.y:1905
+#: src/main/gram.y:1906
 msgid "input"
 msgstr "输入"
 
-#: src/main/gram.y:1906
+#: src/main/gram.y:1907
 msgid "end of input"
 msgstr "输入结束"
 
-#: src/main/gram.y:1907
+#: src/main/gram.y:1908
 msgid "string constant"
 msgstr "字符常量"
 
-#: src/main/gram.y:1908
+#: src/main/gram.y:1909
 msgid "numeric constant"
 msgstr "数值量"
 
-#: src/main/gram.y:1909
+#: src/main/gram.y:1910
 msgid "symbol"
 msgstr "符号"
 
-#: src/main/gram.y:1910
+#: src/main/gram.y:1911
 msgid "assignment"
 msgstr "任务"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1912
 msgid "end of line"
 msgstr "行尾"
 
-#: src/main/gram.y:1925 src/main/gram.y:1931
+#: src/main/gram.y:1926 src/main/gram.y:1932
 #, c-format
 msgid "unexpected %s"
 msgstr "意外的%s"
 
-#: src/main/gram.y:1941
+#: src/main/gram.y:1942
 #, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "%2$d行上正式参数'%1$s'有重复"
 
-#: src/main/gram.y:2147
+#: src/main/gram.y:2148
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "整数文字%s里有小数点；转用数值"
 
-#: src/main/gram.y:2151
+#: src/main/gram.y:2152
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "同L一起修饰的%s是非整数值; 转用数值"
 
-#: src/main/gram.y:2164
+#: src/main/gram.y:2165
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "整数文字%s里含多余的小数点"
 
-#: src/main/gram.y:2196
+#: src/main/gram.y:2197
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "%d行无法为长字符串分配内存"
 
-#: src/main/gram.y:2349
+#: src/main/gram.y:2350
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\x'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2363
+#: src/main/gram.y:2364
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "不支持反引号里\\uxxxx这样的序列(%d行)"
 
-#: src/main/gram.y:2378
+#: src/main/gram.y:2379
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\u'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2386
+#: src/main/gram.y:2387
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "\\u{xxxx}顺序不对(%d行)"
 
-#: src/main/gram.y:2398
+#: src/main/gram.y:2399
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "不支持反引号里\\Uxxxxxxxx这样的序列(%d行)"
 
-#: src/main/gram.y:2413
+#: src/main/gram.y:2414
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\U'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2421
+#: src/main/gram.y:2422
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "\\U{xxxxxxxx}顺序不对(%d行)"
 
-#: src/main/gram.y:2461
+#: src/main/gram.y:2462
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "由\"%2$s\"开头的字符串中存在'\\%1$c'，但没有这种逸出号"
 
-#: src/main/gram.y:2520
+#: src/main/gram.y:2521
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr "在字符串中混合Unicode和八进制/十六进制转义是不允许的"
 
-#: src/main/gram.y:2524
+#: src/main/gram.y:2525
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3724,8 +3731,8 @@ msgstr ""
 "%d行字符串里包含了不属于目前语言环境的Unicode转义字符\n"
 "太长了(最多只能有10000个字符)"
 
-#: src/main/gram.y:3115 src/main/gram.y:3122 src/main/gram.y:3128
-#: src/main/gram.y:3135
+#: src/main/gram.y:3116 src/main/gram.y:3123 src/main/gram.y:3129
+#: src/main/gram.y:3136
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "%d行上下文堆叠上溢"
@@ -3851,9 +3858,9 @@ msgstr "无法读写模块里的互联网例行程序"
 msgid "internet routines cannot be loaded"
 msgstr "无法载入互联网例行程序"
 
-#: src/main/internet.c:118 src/main/memory.c:3220 src/main/memory.c:3229
-#: src/main/memory.c:3240 src/main/memory.c:3253 src/main/memory.c:3269
-#: src/main/memory.c:3286
+#: src/main/internet.c:118 src/main/memory.c:3223 src/main/memory.c:3232
+#: src/main/memory.c:3243 src/main/memory.c:3256 src/main/memory.c:3272
+#: src/main/memory.c:3289
 msgid "bad value"
 msgstr "值不对"
 
@@ -3919,61 +3926,61 @@ msgstr "将种类为'%s'的参数强迫转化为逻辑值"
 msgid "dummy - do not translate"
 msgstr "dummy - do not translate"
 
-#: src/main/main.c:478
+#: src/main/main.c:477
 msgid "Error: segfault from C stack overflow\n"
 msgstr "错误：C堆叠上溢\n"
 
-#: src/main/main.c:834
+#: src/main/main.c:835
 msgid "unable to open the base package\n"
 msgstr "无法打开基本程序包\n"
 
-#: src/main/main.c:911
+#: src/main/main.c:912
 #, c-format
 msgid "unable to restore saved data in %s\n"
 msgstr "无法復原保存在%s里的数据\n"
 
-#: src/main/main.c:958
+#: src/main/main.c:959
 msgid "During startup - "
 msgstr "在启动过程中 - "
 
-#: src/main/main.c:1188
+#: src/main/main.c:1189
 msgid "cannot quit from browser"
 msgstr "无法退出瀏覽器"
 
-#: src/main/main.c:1192
+#: src/main/main.c:1193
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用\"yes\", \"no\", \"ask\"或\"default\"中的一个."
 
-#: src/main/main.c:1197
+#: src/main/main.c:1198
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\"不能在非交互型状态时使用，改用命令行缺省值"
 
-#: src/main/main.c:1205
+#: src/main/main.c:1206
 msgid "unrecognized value of 'save'"
 msgstr "没有这种'save'值"
 
-#: src/main/main.c:1208
+#: src/main/main.c:1209
 msgid "invalid 'status', 0 assumed"
 msgstr "'status'不对, 假設为零"
 
-#: src/main/main.c:1213
+#: src/main/main.c:1214
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast'不对, 假設为FALSE"
 
-#: src/main/main.c:1244
+#: src/main/main.c:1245
 msgid "cannot allocate space for toplevel callback element"
 msgstr "无法为最高层回叫元素分配空间"
 
-#: src/main/main.c:1322
+#: src/main/main.c:1323
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex不能用负的索引值"
 
-#: src/main/main.c:1431
+#: src/main/main.c:1432
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高层任务回叫'%s'时产生了警告信息\n"
 
-#: src/main/main.c:1487
+#: src/main/main.c:1488
 msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没有回覆逻辑值"
 
@@ -4095,48 +4102,48 @@ msgstr "无法分配大小为%0.1f Mb的矢量"
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "无法分配大小为%0.f Kb的矢量"
 
-#: src/main/memory.c:2832
+#: src/main/memory.c:2835
 msgid "protect(): protection stack overflow"
 msgstr "protect()：防护堆叠上溢"
 
-#: src/main/memory.c:2848
+#: src/main/memory.c:2851
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect():只有%d个保护项"
 
-#: src/main/memory.c:2862
+#: src/main/memory.c:2865
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: 找不到指针"
 
-#: src/main/memory.c:2899
+#: src/main/memory.c:2902
 #, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr "R_Reprotect:只有%d个保护项, 不能重新保护索引%d"
 
-#: src/main/memory.c:2941
+#: src/main/memory.c:2944
 #, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc'无法分配(%2$u字节的%1$.0f)内存"
 
-#: src/main/memory.c:2952
+#: src/main/memory.c:2955
 #, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc'无法重新分配(大小为%.0f字节)的内存"
 
-#: src/main/memory.c:3174
+#: src/main/memory.c:3177
 msgid "not safe to return vector pointer"
 msgstr "回覆矢量指针不是安全的做法"
 
-#: src/main/memory.c:3427
+#: src/main/memory.c:3430
 msgid "memory profiling is not available on this system"
 msgstr "本系统没有记忆概要分析这个功能"
 
-#: src/main/memory.c:3492
+#: src/main/memory.c:3495
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: 无法输出文件'%s'"
 
-#: src/main/memory.c:3599
+#: src/main/memory.c:3602
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "现在还没有支持长向量：%s:%d"
@@ -5171,14 +5178,14 @@ msgstr "因子长度不相等"
 msgid "result would be too long a vector"
 msgstr "答案矢量会太长"
 
-#: src/main/seq.c:162 src/main/seq.c:166
+#: src/main/seq.c:162
+msgid "argument of length 0"
+msgstr "参数长度为零"
+
+#: src/main/seq.c:164 src/main/seq.c:166
 #, c-format
 msgid "numerical expression has %d elements: only the first used"
 msgstr "数值表达式一共有%d元素: 只用了第一个"
-
-#: src/main/seq.c:164
-msgid "argument of length 0"
-msgstr "参数长度为零"
 
 #: src/main/seq.c:170
 msgid "NA/NaN argument"
