@@ -44,6 +44,9 @@
       \item The \code{tools::getVignetteInfo()} function has been added
       to give information about installed vignettes.
 
+      \item New \code{assertCondition()} utility in \pkg{tools}, useful
+      for testing.
+
     }
   }
 
@@ -101,6 +104,9 @@
       \item The unused \code{namespace} argument to
       \code{package.skeleton()} is now formally deprecated and will be
       removed in \R 3.1.0.
+      
+      \item \code{plclust()} is deprecated: use the \code{plot()} method
+      for class \code{"hclust"} instead.
     }
   }
 
@@ -153,14 +159,14 @@
       had a comment-out bug in two places.
       This caused trouble with \code{eigen()} for Hermitian matrices.
       (\PR{15345} and report from Robin Hankin)
-      
-      \item \code{vignette()} and \code{browseVignettes()} did not 
+
+      \item \code{vignette()} and \code{browseVignettes()} did not
       display non-Sweave vignettes properly.
-      
+
       \item Two warning/error messages have been corrected:
       the (optional) warning produced by a partial name match
       with a pairlist, the error message from a zero length argument to
-      the \code{:} operator.  (Found by Radford Neal; \PR{15358}, 
+      the \code{:} operator.  (Found by Radford Neal; \PR{15358},
       \PR{15356})
       
       \item \code{svd()} returned \code{NULL} rather than omitting
