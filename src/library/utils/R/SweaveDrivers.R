@@ -109,7 +109,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                            width = width, height = height,
                            res = options$resolution, units = "in")
         jpeg.Swd <- function(name, width, height, options, ...)
-            grDevices::jpeg(filename = paste(chunkprefix, "png", sep = "."),
+            grDevices::jpeg(filename = paste(chunkprefix, "jpeg", sep = "."),
                             width = width, height = height,
                             res = options$resolution, units = "in")
 
