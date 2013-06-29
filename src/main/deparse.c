@@ -883,6 +883,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	 	    else if (userbinop)
 	 	    	fop.kind = PP_BINARY;
 		}
+		if (fop.kind != PP_FUNCALL  && !isNull(getAttrib(s, R_NamesSymbol)))
+		    fop.kind = PP_FUNCALL; /* operator with named operands */
 		switch (fop.kind) {
 		case PP_IF:
 		    print2buff("if (", d);

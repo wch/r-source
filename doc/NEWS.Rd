@@ -185,6 +185,9 @@
       
       \item The \code{jpeg} driver in Sweave created a JPEG file, but gave
       it a \file{.png} extension. (\PR{15370})
+      
+      \item Deparsing of infix operators with named arguments is
+      improved. (\PR{15350})
     }
   }
 }
