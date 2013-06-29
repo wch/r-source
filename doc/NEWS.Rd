@@ -59,8 +59,8 @@
       %% Move to 3.0.1 patched after a while:
       \item \code{switch(f, ...)} now warns when \code{f} is a factor,
       as this typically happens accidentally where the useR meant to
-      pass a character, but \code{f} is treated as integer (as always
-      documented).
+      pass a character string, but \code{f} is treated as integer (as
+      always documented).
 
       \item The parser has been modified to use less memory.
     }
@@ -69,12 +69,20 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item There is some support for parallel testing of an
-      installation (and more to come).
+      installation.
 
-      If environemnt variables \env{TEST_MC_CORES} is set to an integer
-      greater than one (and not on Windows) the tests of package
-      examples in \command{make check} are done in parallel using that
-      number of cores.
+      If environemnt variable \env{TEST_MC_CORES} is set to an integer
+      greater than one (and not on Windows) the tests of standard
+      package examples in \command{make check} are done in parallel
+      using that number of cores.  (It is probably worth using 8 cores
+      if available.)  This also applies to running
+      \code{tools::testInstalledPackages()}.
+
+      The standard package checks in \command{make check-devel} are done
+      in parallel if environemnt variable \env{TEST_MC_CORES} is set,
+      using its value as the maximum number of parallel processes.
+      (This requires a \command{make} program which supports
+      \command{make -j nproc}.)
     }
   }
 
