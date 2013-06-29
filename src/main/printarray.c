@@ -429,7 +429,7 @@ static void printRawMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 	for (i = 0; i < r_pr; i++) {
 	    MatrixRowLabel(rl, i, rlabw, lbloff);
 	    for (j = jmin; j < jmax; j++)
-		Rprintf("%*s%s", w[j]-2, "", EncodeRaw(x[i + j * r]));
+		Rprintf("%*s%s", w[j]-2, "", EncodeRaw(x[i + j * r], ""));
 	}
 	Rprintf("\n");
 	jmin = jmax;
