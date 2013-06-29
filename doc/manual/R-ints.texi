@@ -363,7 +363,7 @@ Bits 1, 2, 3, 5 and 6 are used for a @code{CHARSXP} to denote its
 encoding.  Bit 1 indicates that the @code{CHARSXP} should be treated as
 a set of bytes, not necessarily representing a character in any known
 encoding.  Bits 2, 3 and 6 are used to indicate that it is known to be
-in Latin-1, UTF-8 or ASCII respectively.
+in Latin-1, UTF-8 or @acronym{ASCII} respectively.
 
 Bit 5 for a @code{CHARSXP} indicates that it is hashed by its address,
 that is @code{NA_STRING} or is in the @code{CHARSXP} cache (this is not
@@ -1130,12 +1130,13 @@ of the file (a single LF-terminated line) which the lower-level versions
 do not.
 
 @code{save} and @code{saveRDS} allow various forms of compression, and
-@command{gzip} compression is the default (except for ASCII saves).
-Compression is applied to the whole file stream, including the headers,
-so serialized files can be uncompressed or re-compressed by external
-programs.  Both @code{load} and @code{readRDS} can read @command{gzip},
-@command{bzip2} and @command{xz} forms of compression when reading from
-a file, and @command{gzip} compression when reading from a connection.
+@command{gzip} compression is the default (except for @acronym{ASCII}
+saves).  Compression is applied to the whole file stream, including the
+headers, so serialized files can be uncompressed or re-compressed by
+external programs.  Both @code{load} and @code{readRDS} can read
+@command{gzip}, @command{bzip2} and @command{xz} forms of compression
+when reading from a file, and @command{gzip} compression when reading
+from a connection.
 
 @R{} has used the same serialization format since @R{} 1.4.0 in December
 2001.  Earlier formats are still supported via @code{load} and
@@ -1220,7 +1221,7 @@ The `ASCII' format writes 7-bit characters.  Integers are formatted with
 doubles formatted with @code{%.16g} (plus @code{NA}, @code{Inf} and
 @code{-Inf}) and bytes with @code{%02x}.  Strings are written using
 standard escapes (e.g.@: @code{\t} and @code{\013}) for non-printing and
-non-ASCII bytes.
+non-@acronym{ASCII} bytes.
 
 @node Encodings for CHARSXPs, The CHARSXP cache, Serialization Formats, R Internal Structures
 @section Encodings for CHARSXPs
@@ -1249,10 +1250,10 @@ if this is known, either via the @code{encoding} argument to
 the @R{} command line.  (Other ways are recorded on the help page for
 @code{Encoding}.)
 
-It is not necessary to declare the encoding of ASCII strings as they
-will work in any locale.  ASCII strings should never have a marked
-encoding, as any encoding will be ignored when entering such strings
-into the @code{CHARSXP} cache.
+It is not necessary to declare the encoding of @acronym{ASCII} strings
+as they will work in any locale.  @acronym{ASCII} strings should never
+have a marked encoding, as any encoding will be ignored when entering
+such strings into the @code{CHARSXP} cache.
 
 The rationale behind considering only UTF-8 and Latin-1 was that most
 systems are capable of producing UTF-8 strings and this is the nearest
@@ -1316,7 +1317,7 @@ examples still exist).
 The cache records the encoding of the string as well as the bytes: all
 requests to create a @code{CHARSXP} should be @emph{via} a call to
 @code{mkCharLenCE}.  Any encoding given in @code{mkCharLenCE} call will
-be ignored if the string's bytes are all ASCII characters.
+be ignored if the string's bytes are all @acronym{ASCII} characters.
 
 
 @node Warnings and errors, S4 objects, The CHARSXP cache, R Internal Structures
@@ -2639,14 +2640,14 @@ Windows has another couple of peculiarities.  Whereas a POSIX file
 system has a single root directory (and other physical file systems are
 mounted onto logical directories under that root), Windows has separate
 roots for each physical or logical file system (`volume'), organized
-under @emph{drives} (with file paths starting @code{D:} for an ASCII
-letter, case-insensitively) and @emph{network shares} (with paths like
-@code{\netname\topdir\myfiles\a file}.  There is a current drive, and
-path names without a drive part are relative to the current drive.
-Further, each drive has a current directory, and relative paths are
-relative to that current directory, on a particular drive if one is
-specified.  So @file{D:dir\file} and @file{D:} are valid path
-specifications (the last being the current directory on drive
+under @emph{drives} (with file paths starting @code{D:} for an
+@acronym{ASCII} letter, case-insensitively) and @emph{network shares}
+(with paths like @code{\netname\topdir\myfiles\a file}.  There is a
+current drive, and path names without a drive part are relative to the
+current drive.  Further, each drive has a current directory, and
+relative paths are relative to that current directory, on a particular
+drive if one is specified.  So @file{D:dir\file} and @file{D:} are valid
+path specifications (the last being the current directory on drive
 @file{D:}).
 
 @c basename        Wchar   na

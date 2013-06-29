@@ -1602,12 +1602,13 @@ are interchangeable (for the same 2.x.? version of R, at least).
 
 Note though that character data in a workspace will be in a particular
 encoding that is not recorded in the workspace, so workspaces containing
-non-ASCII character data may not be interchangeable even on the same OS.
-Since R marks character data when it knows it to be in UTF-8 or Latin-1
-(including its Windows superset, CP1252), strings in those encodings are
-likely to be transferred correctly: fortunately this covers most of the
-common cases (OS X normally uses UTF-8, and Linux users are likely
-to use UTF-8 or perhaps Latin-1 (which used to be used for English)).
+non-@acronym{ASCII} character data may not be interchangeable even on
+the same OS.  Since R marks character data when it knows it to be in
+UTF-8 or Latin-1 (including its Windows superset, CP1252), strings in
+those encodings are likely to be transferred correctly: fortunately this
+covers most of the common cases (OS X normally uses UTF-8, and Linux
+users are likely to use UTF-8 or perhaps Latin-1 (which used to be used
+for English)).
 
 It is possible to save references to package namespaces when saving the
 workspace: if that happens the package will need to be installed on the

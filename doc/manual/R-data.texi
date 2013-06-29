@@ -215,9 +215,9 @@ discussed in @ref{Network interfaces}.
 @subsection Encodings
 @cindex Encodings
 
-Unless the file to be imported from is entirely in ASCII, it is usually
-necessary to know how it was encoded.  For text files, a good way to
-find out something about its structure is the @command{file}
+Unless the file to be imported from is entirely in @acronym{ASCII}, it
+is usually necessary to know how it was encoded.  For text files, a good
+way to find out something about its structure is the @command{file}
 command-line tool (for Windows, included in @code{Rtools}).  This
 reports something like
 
@@ -371,11 +371,12 @@ The second is the form of escape commonly used by spreadsheets.
 @item @strong{Encodings}
 @cindex Encodings
 
-Text files do not contain metadata on their encodings, so for non-ASCII
-data the file needs to be targetted to the application intended to read
-it.  All of these functions can write to a @emph{connection} which
-allows an encoding to be specified for the file, and @code{write.table}
-has a @code{fileEncoding} argument to make this easier.
+Text files do not contain metadata on their encodings, so for
+non-@acronym{ASCII} data the file needs to be targetted to the
+application intended to read it.  All of these functions can write to a
+@emph{connection} which allows an encoding to be specified for the file,
+and @code{write.table} has a @code{fileEncoding} argument to make this
+easier.
 
 The hard part is to know what file encoding to use.  For use on Windows,
 it is best to use what Windows calls `Unicode'@footnote{Even then,
@@ -485,9 +486,9 @@ Some of the issues to consider are:
 @enumerate
 @item @strong{Encoding}
 
-If the file contains non-ASCII character fields, ensure that it is read
-in the correct encoding.  This is mainly an issue for reading Latin-1
-files in a UTF-8 locale, which can be done by something like
+If the file contains non-@acronym{ASCII} character fields, ensure that
+it is read in the correct encoding.  This is mainly an issue for reading
+Latin-1 files in a UTF-8 locale, which can be done by something like
 
 @example
 read.table("file.dat", fileEncoding="latin1")

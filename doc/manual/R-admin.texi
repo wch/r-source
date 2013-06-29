@@ -4015,7 +4015,7 @@ scaled-down desktop screen).
 More complicated problems can occur in non-Western-European locales, so
 if you are using one, the first thing to check is that things work in
 the @code{C} locale.  The likely issues are a failure to find any fonts
-or glyphs being rendered incorrectly (often as a pair of ASCII
+or glyphs being rendered incorrectly (often as a pair of @acronym{ASCII}
 characters).  X11 works by being asked for a font specification and
 coming up with its idea of a close match.  For text (as distinct from
 the symbols used by plotmath), the specification is the first element of
@@ -5039,9 +5039,9 @@ Then @R{} itself can be built by something like
 There are also FreeBSD packages for a small eclectic collection of
 @acronym{CRAN} packages.
 
-Beware that the lack of adequate support for non-ASCII characters in
-UTF-8 locales has many consequences in @R{}: for example names will not
-be recognized as alphabetic by @code{make.names}.
+Beware that the lack of adequate support for non-@acronym{ASCII}
+characters in UTF-8 locales has many consequences in @R{}: for example
+names will not be recognized as alphabetic by @code{make.names}.
 
 @node Cygwin, New platforms, FreeBSD, Platform notes
 @section Cygwin

@@ -2512,7 +2512,7 @@ setRlibs <-
 
             if (do_build_vignettes &&
                 parse_description_field(desc, "BuildVignettes", TRUE)) {
-                checkingLog(Log, "re-building of vignette PDFs")
+                checkingLog(Log, "re-building of vignette outputs")
                 ## copy the whole pkg directory to check directory
                 ## so we can work in place, and allow ../../foo references.
                 dir.create(vd2 <- "vign_test")
@@ -2559,13 +2559,13 @@ setRlibs <-
                     resultLog(Log, "OK")
                 }
             } else {
-                checkingLog(Log, "re-building of vignette PDFs")
+                checkingLog(Log, "re-building of vignette outputs")
                 resultLog(Log, "SKIPPED")
             }
         } else {
             checkingLog(Log, "running R code from vignettes")
             resultLog(Log, "SKIPPED")
-            checkingLog(Log, "re-building of vignettes")
+            checkingLog(Log, "re-building of vignette outputs")
             resultLog(Log, "SKIPPED")
         }
     }
