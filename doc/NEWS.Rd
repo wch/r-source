@@ -188,9 +188,6 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
-      
-      \item \code{log()}, \code{signif()} and \code{round()} now raise an 
-      error if a single named argument is not named \code{x}.  (\PR{15361})
     }
   }
 }
@@ -367,6 +364,9 @@
       \code{stdout} with a descriptor pointed to \file{/dev/null}
       instead. For this purpose, internal \code{closeStdout} and
       \code{closeStderr} functions have gained the \code{to.null} flag.
+      
+      \item \code{log()}, \code{signif()} and \code{round()} now raise an 
+      error if a single named argument is not named \code{x}.  (\PR{15361})
       
       \item \code{deparse()} now deparses raw vectors in a form that
       is syntactically correct. (\PR{15369})
