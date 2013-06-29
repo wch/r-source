@@ -140,9 +140,6 @@
 
       \item \code{package.skeleton()}'s deprecated argument
       \code{namespace} has been removed.
-      
-      \item \code{plclust()} is deprecated: use the \code{plot()} method
-      instead.
     }
   }
 
@@ -275,6 +272,9 @@
       \item The unused \code{namespace} argument to
       \code{package.skeleton()} is now formally deprecated and will be
       removed in \R 3.1.0.
+      
+      \item \code{plclust()} is deprecated: use the \code{plot()} method
+      for class \code{"hclust"} instead.
     }
   }
 
