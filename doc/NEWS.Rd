@@ -179,6 +179,9 @@
       \code{stdout} with a descriptor pointed to \file{/dev/null}
       instead. For this purpose, internal \code{closeStdout} and
       \code{closeStderr} functions have gained the \code{to.null} flag.
+      
+      \item \code{deparse()} now deparses raw vectors in a form that
+      is syntactically correct. (\PR{15369})
     }
   }
 }
