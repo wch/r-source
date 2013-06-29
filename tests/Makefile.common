@@ -131,7 +131,7 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	@($(ECHO) '.ptime <- proc.time(); gctorture()' ; \
 	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@ 2>&1
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
-	  if test ! -r $${Ro}; then $(MAKE) $${Ro}; fi; \
+	  if test ! -r $${Ro}; then $(MK) $${Ro}; fi; \
 	  $(ECHO) $(ECHO_N) "  comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
 	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $${Ro} 1 || exit 1; \
 	  mv $@.fail $@; \
@@ -170,6 +170,14 @@ test-Specific:
 	@$(MK) test-Specific-sloppy RVAL_IF_DIFF=0
 
 test-Packages:
+	@if test -n "${TEST_MC_CORES}"; then \
+	  $(ECHO) "Using ${TEST_MC_CORES} cores to check packages"; \
+	  $(MK) -j ${TEST_MC_CORES} test-Packages2; \
+	else \
+	  $(MK) test-Packages1; \
+	fi
+
+test-Packages1:
 	@for p in $(R_PKGS_BASE); do \
 	  $(ECHO) "checking package '$${p}'"; \
 	  _R_CHECK_FF_CALLS_=registration \
@@ -184,7 +192,7 @@ test-Packages2:
 	@for p in $(R_PKGS_BASE); do \
 	  touch $${p}.tsin; \
 	done
-	@$(MAKE) stamp-Packages
+	+@$(MK) stamp-Packages
 	@rm -f *.tsin
 stamp-Packages: $(PKG_OBJECTS)
 
