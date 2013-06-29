@@ -182,6 +182,9 @@
       
       \item \code{deparse()} now deparses raw vectors in a form that
       is syntactically correct. (\PR{15369})
+      
+      \item The \code{jpeg} driver in Sweave created a JPEG file, but gave
+      it a \file{.png} extension. (\PR{15370})
     }
   }
 }
