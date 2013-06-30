@@ -69,7 +69,8 @@ stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
                           "testInstalledPackages", # runs whole suite
                           "readNEWS",              # slow, pure R code
                           "findHTMLlinks", "pskill",
-                          "texi2dvi", "texi2pdf"   # hang on Windows
+                          "texi2dvi", "texi2pdf",  # hang on Windows
+                          "getVignetteInfo"        # very slow on large installation
                           )
 stop.list[["ts"]] <- c("arma0f", "KalmanLike")
 stop.list[["grDevices"]] <- dev.int
