@@ -43,7 +43,7 @@ test-src-segfault = no-segfault.R
 test-src-reg-1 = reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-2.R \
   reg-examples1.R reg-examples2.R reg-packages.R \
   reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-BLAS.R
-## set on Windows
+## overridden by Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
 test-src-reg3 = reg-tests-3.R reg-plot-latin1.R
@@ -72,7 +72,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-primitive) utf8-regex.Rout
 
 .SUFFIXES:
-.SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .ts
+.SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
 
 $(test-out): FORCE
 
@@ -96,9 +96,6 @@ FORCE:
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
 
-## We could use Rdiff now this is in R.
-## An attempt to use pdf(compress=FALSE) in Sept 2011 failed, as 
-## Win32 gave sligtly different answers (rounding error).
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
@@ -145,12 +142,14 @@ R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
 	  cat $< $(srcdir)/gct-foot.R) | $(R-valgrind) > $@ 2>&1
 	grep "==[0-9]*==" $@
 
-
+all-basic-tests = Examples Specific Reg Internet
 test-all-basics:
 	@for name in $(all-basic-tests); do \
 	  $(MK) test-$${name} || exit 1; \
 	done
 
+all-devel-tests = Docs IsAs Random Demo Primitive Regexp Segfault \
+   Standalone Packages
 test-all-devel:
 	@for name in $(all-devel-tests); do \
 	  $(MK) test-$${name} || exit 1; \
@@ -186,7 +185,7 @@ test-Packages1:
 	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
 
-PKG_OBJECTS = $(R_PKGS_BASE:=.ts)
+PKG_OBJECTS = $(R_PKGS_BASE:=.log)
 
 test-Packages2:
 	@for p in $(R_PKGS_BASE); do \
@@ -196,12 +195,12 @@ test-Packages2:
 	@rm -f *.tsin
 stamp-Packages: $(PKG_OBJECTS)
 
-.tsin.ts:
-	@$(ECHO) "begin checking package '`basename $@ .ts`'"
+.tsin.log:
+	@$(ECHO) "begin checking package '`basename $@ .log`'"
 	@rm -f $@
 	@_R_CHECK_FF_CALLS_=registration \
 	$(top_builddir)/bin/R CMD check --install=skip --no-build-vignettes \
-	  $(top_srcdir)/src/library/`basename $@ .ts` > $@ 2>&1
+	  $(top_srcdir)/src/library/`basename $@ .log` > $@ 2>&1
 	@cat $@
 
 test-Gct: $(test-out-gct)
@@ -385,7 +384,7 @@ test-Packages1-Recommended:
 	    --library="$(top_builddir)/library" Packages/$${p} || $(ECHO); \
 	done
 
-PKG_ROBJECTS = $(R_PKGS_RECOMMENDED:=.ts)
+PKG_ROBJECTS = $(R_PKGS_RECOMMENDED:=.log)
 
 test-Packages2-Recommended:
 	-@rm -rf PACKAGES
@@ -397,8 +396,8 @@ test-Packages2-Recommended:
 	@rm -f *.trin
 stamp-Packages2: $(PKG_ROBJECTS)
 
-.trin.ts:
-	@p=`basename $@ .ts`; \
+.trin.log:
+	@p=`basename $@ .log`; \
 	gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd Packages && $(TAR) xf -) ; \
 	  $(ECHO) "begin checking package '$${p}'"; \

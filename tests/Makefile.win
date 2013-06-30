@@ -32,11 +32,8 @@ ECHO_T =
 MK = $(MAKE) -f Makefile.win
 TAR = tar
 
+## override Makefile.common
 test-src-reg-1e = reg-win.R
-
-all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = Docs IsAs Random Demo Primitive Regexp Segfault \
-   Standalone Packages
 
 all check test-all-basics test-all-devel: Makefile.win Makefile.common
 
@@ -84,7 +81,7 @@ clean:
 	@rm -f keepsource.tex test-system2.exe test-system.Rout
 	@$(MK) -C Examples $@
 	@$(MK) -C Embedding $@
-	-@rm -f *.ts *.tsin *.trin
+	-@rm -f *.log *.tsin *.trin
 
 distclean: clean
 	@$(MK) -C Examples $@

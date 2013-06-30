@@ -893,13 +893,16 @@ library.  This can occasionally be useful when the operating environment
 has been changed, for example by OS updates or by substituting the
 @acronym{BLAS} (@pxref{Shared BLAS}).
 
-Parallel checking of packages may be possible: see the environment
+Parallel checking of packages may be possible: set the environment
 variable @env{TEST_MC_CORES} to the maximum number of processes to be
 run in parallel.  This affects both checking the package examples (part
 of @command{make check}) and package sources (part of @command{make
 check-devel} and @command{make check-recommended}).  It does require a
 @command{make} command which supports the @command{make -j @var{n}}
-option: most do.
+option: most do but on Solaris you need to select GNU @code{make} or
+@code{dmake}.  Where parallel checking of package sources is done, a log
+file @file{@var{pngname}.log} is left in the @code{tests} directory for
+inspection.
 
 
 Alternatively, the installed @R{} can be run, preferably with
