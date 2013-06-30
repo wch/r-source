@@ -7091,9 +7091,9 @@ shorthand for @code{Rd2conv -t txt}.
 @item Rd2pdf
 Convert Rd format to PDF.
 @item Stangle
-Extract S/R code from Sweave documentation
+Extract S/R code from Sweave or other vignette documentation
 @item Sweave
-Process Sweave documentation
+Process Sweave or other vignette documentation
 @item Rdiff
 Diff @R{} output ignoring headers etc
 @item config

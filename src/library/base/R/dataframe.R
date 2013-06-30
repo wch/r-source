@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2012 The R Core Team
+# Changes Copyright (C) 1998-2013 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -722,7 +722,7 @@ data.frame <-
             ## except for two column numeric matrix or full-sized logical matrix
             if(is.numeric(i) && is.matrix(i) && ncol(i) == 2) {
                 # Rewrite i as a logical index
-                index <- rep(FALSE, prod(dim(x)))
+                index <- rep.int(FALSE, prod(dim(x)))
                 dim(index) <- dim(x)
                 tryCatch(index[i] <- TRUE,
                          error = function(e) stop(conditionMessage(e), call.=FALSE))
@@ -842,7 +842,7 @@ data.frame <-
                 ## try to use the names of a list `value'
                 if(is.list(value) && !is.null(vnm <- names(value))) {
                     p <- length(jseq)
-                    if(length(vnm) < p) vnm <- rep(vnm, length.out = p)
+                    if(length(vnm) < p) vnm <- rep_len(vnm, p)
                     new.cols <- vnm[jseq > nvars]
                 }
 	    }
@@ -918,7 +918,7 @@ data.frame <-
     nrowv <- dimv[1L]
     if(nrowv < n && nrowv > 0L) {
 	if(n %% nrowv == 0L)
-	    value <- value[rep(seq_len(nrowv), length.out = n),,drop = FALSE]
+	    value <- value[rep_len(seq_len(nrowv), n),,drop = FALSE]
 	else
             stop(sprintf(ngettext(nrowv,
                                   "%d row in value to replace %d rows",
@@ -932,7 +932,7 @@ data.frame <-
                         nrowv, n), domain = NA)
     ncolv <- dimv[2L]
     jvseq <- seq_len(p)
-    if(ncolv < p) jvseq <- rep(seq_len(ncolv), length.out = p)
+    if(ncolv < p) jvseq <- rep_len(seq_len(ncolv), p)
     else if(ncolv > p) {
         warning(sprintf(ngettext(ncolv,
                                  "provided %d variable to replace %d variables",
@@ -1498,7 +1498,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
                      domain = NA)
 	} else {
 	    if(!rscalar)
-		e2 <- split(rep(as.vector(e2), length.out = prod(dim(e1))),
+		e2 <- split(rep_len(as.vector(e2), prod(dim(e1))),
 			    rep.int(seq_len(ncol(e1)),
                                     rep.int(nrow(e1), ncol(e1))))
 	}
@@ -1515,7 +1515,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
                      domain = NA)
 	} else {
 	    if(!lscalar)
-		e1 <- split(rep(as.vector(e1), length.out = prod(dim(e2))),
+		e1 <- split(rep_len(as.vector(e1), prod(dim(e2))),
 			    rep.int(seq_len(ncol(e2)),
                                     rep.int(nrow(e2), ncol(e2))))
 	}

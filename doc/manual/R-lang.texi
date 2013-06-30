@@ -4325,7 +4325,9 @@ once.
 @end example
 
 Numeric constants can also be hexadecimal, starting with @samp{0x} or
-@samp{0x} followed by zero or more digits, @samp{a-f} or @samp{A-F}.
+@samp{0x} followed by zero or more digits, @samp{a-f} or @samp{A-F}.  
+Hexadecimal floating point constants are supported using C99 syntax, e.g.
+@samp{0x1.1p1}.
 
 There is now a separate class of integer constants.  They are created
 by using the qualifier @code{L} at the end of the number.  For
@@ -4340,12 +4342,13 @@ constants and syntax errors.
 
 @example
 @r{Valid integer constants:}  1L, 0x10L, 1000000L, 1e6L
-@r{Valid numeric constants:}  1.1L, 1e-3L 
-@r{Syntax error:}  12iL
+@r{Valid numeric constants:}  1.1L, 1e-3L, 0x1.1p-2
+@r{Syntax error:}  12iL 0x1.1
 @end example
 
-A warning is emitted for values that contain an unnecessary
-decimal point, e.g. @code{1.L}.
+A warning is emitted for decimal values that contain an unnecessary
+decimal point, e.g. @code{1.L}.  It is an error to have a decimal
+point in a hexadecimal constant without the binary exponent.
 
 Note also that a preceding sign (@code{+} or @code{-}) is treated as a
 unary operator, not as part of the constant.

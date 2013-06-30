@@ -32,7 +32,7 @@ function(data = NA, dim = length(data), dimnames = NULL)
             ## C code allows long vectors, but rep() does not.
             if(vl > .Machine$integer.max)
                 stop("'dim' specifies too large an array")
-            data <- rep(data, length.out=vl)
+            data <- rep_len(data, vl)
         }
         if(length(dim)) dim(data) <- dim
         if(is.list(dimnames) && length(dimnames)) dimnames(data) <- dimnames

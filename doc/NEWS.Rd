@@ -180,6 +180,9 @@
       instead. For this purpose, internal \code{closeStdout} and
       \code{closeStderr} functions have gained the \code{to.null} flag.
       
+      \item \code{log()}, \code{signif()} and \code{round()} now raise an 
+      error if a single named argument is not named \code{x}.  (\PR{15361})
+      
       \item \code{deparse()} now deparses raw vectors in a form that
       is syntactically correct. (\PR{15369})
       

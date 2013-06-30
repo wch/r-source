@@ -68,7 +68,7 @@ quade.test(y, \dots)
   D. Quade (1979),
   Using weighted rankings in the analysis of complete blocks with
   additive block effects.
-  \emph{Journal of the American Statistical Association}, \bold{74},
+  \emph{Journal of the American Statistical Association} \bold{74},
   680--683.
 
   William J. Conover (1999),

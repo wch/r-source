@@ -366,11 +366,11 @@ The format is that of a version of a `Debian Control File' (see the help
 for @samp{read.dcf} and
 @uref{http://www.debian.org/@/doc/@/debian-policy/@/ch-controlfields.html}:
 @R{} does not require encoding in UTF-8 and does not support comments
-starting with @samp{#}).  Fields start with an ASCII name immediately
-followed by a colon: the value starts after the colon and a space.
-Continuation lines (for example, for descriptions longer than one line)
-start with a space or tab.  Field names are case-sensitive: all those
-used by @R{} are capitalized.
+starting with @samp{#}).  Fields start with an @acronym{ASCII} name
+immediately followed by a colon: the value starts after the colon and a
+space.  Continuation lines (for example, for descriptions longer than
+one line) start with a space or tab.  Field names are case-sensitive:
+all those used by @R{} are capitalized.
 
 For maximal portability, the @file{DESCRIPTION} file should be written
 entirely in @acronym{ASCII} --- if this is not possible it must contain
@@ -384,13 +384,13 @@ The @samp{Package}, @samp{Version}, @samp{License}, @samp{Description},
 @samp{Title}, @samp{Author}, and @samp{Maintainer} fields are mandatory,
 all other fields are optional.  Fields @samp{Author} and
 @samp{Maintainer} can be auto-generated from @samp{Authors@@R}, and may
-be omitted if the latter is provided: however if they are not ASCII we
-recommend that they are provided.
+be omitted if the latter is provided: however if they are not
+@acronym{ASCII} we recommend that they are provided.
 
 @c DESCRIPTION field Package
 The mandatory @samp{Package} field gives the name of the package.  This
-should contain only (ASCII) letters, numbers and dot, have at least two
-characters and start with a letter and not end in a dot.
+should contain only (@acronym{ASCII}) letters, numbers and dot, have at
+least two characters and start with a letter and not end in a dot.
 
 @c DESCRIPTION field Version
 The mandatory @samp{Version} field gives the version of the package.
@@ -910,9 +910,9 @@ will normally@footnote{This is true for OSes which implement the
 @samp{C} locale: Windows' idea of the @samp{C} locale uses the WinAnsi
 charset.} fail when the package is installed.  Any byte will be allowed
 in a quoted character string but @code{\uxxxx} escapes should be used
-for non-ASCII characters.  However, non-@acronym{ASCII} character
-strings may not be usable in some locales and may display incorrectly in
-others.
+for non-@acronym{ASCII} characters.  However, non-@acronym{ASCII}
+character strings may not be usable in some locales and may display
+incorrectly in others.
 
 
 @findex library.dynam
@@ -1040,9 +1040,9 @@ and have one of the extensions @file{.R} or @file{.r}.  If present, the
 line for each demo, giving its name and a description separated by white
 space. (Note that it is not possible to generate this index file
 automatically.)  Note that a demo does not have a specified encoding and
-so should be an ASCII file (@pxref{Encoding issues}).  As from @R{} 3.0.0
-@code{demo()} will use the package encoding if there is one, but this
-is mainly useful for non-ASCII comments.
+so should be an @acronym{ASCII} file (@pxref{Encoding issues}).  As from
+@R{} 3.0.0 @code{demo()} will use the package encoding if there is one,
+but this is mainly useful for non-@acronym{ASCII} comments.
 
 @cindex .Rinstignore file
 The contents of the @file{inst} subdirectory will be copied recursively
@@ -2279,8 +2279,8 @@ sections of @file{Rd} files are documented in the corresponding
 @code{\arguments} section.
 
 @item
-The @file{data} directory is checked for non-ASCII characters and for
-the use of reasonable levels of compression.
+The @file{data} directory is checked for non-@acronym{ASCII} characters
+and for the use of reasonable levels of compression.
 
 @item
 C, C++ and FORTRAN source and header files@footnote{An exception is made
@@ -2326,8 +2326,8 @@ If the package sources contain a @file{tests} directory then the tests
 specified in that directory are run.  (Typically they will consist of a
 set of @file{.R} source files and target output files
 @file{.Rout.save}.)  Please note that the comparison will be done in the
-end user's locale, so the target output files should be ASCII if at all
-possible.
+end user's locale, so the target output files should be @acronym{ASCII}
+if at all possible.
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
@@ -2670,33 +2670,33 @@ BiBTeX input files and files for any figures not created by running the
 code in the vignette) must be in the vignette source directory.
 
 @code{R CMD build} will automatically@footnote{unless inhibited by using
-@samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create PDF
-versions of the vignettes in @file{inst/doc} for distribution with the
-package sources.  By including the PDF version in the package sources it
-is not necessary that the vignette PDFs can be re-built at install time,
-i.e., the package author can use private @R{} packages, screen snapshots
-and @LaTeX{} extensions which are only available on his
+@samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create the
+(PDF or @HTML{} versions of the) vignettes in @file{inst/doc} for
+distribution with the package sources.  By including the vignettes in
+the package sources it is not necessary that these can be re-built at
+install time, i.e., the package author can use private @R{} packages,
+screen snapshots and @LaTeX{} extensions which are only available on his
 machine.@footnote{provided the conditions of the package's license are
 met: many, including @acronym{CRAN}, see the omission of source
 components as incompatible with an Open Source license.}
 
-By default @code{R CMD build} will run @code{Sweave} on all files in
-Sweave format in @file{vignettes}, or @emph{pro tem} if that does not
-exist, @file{inst/doc} (but not in sub-directories).  If no
+By default @code{R CMD build} will run @code{Sweave} on all Sweave
+vignette source files in @file{vignettes}, or @emph{pro tem} if that
+does not exist, @file{inst/doc} (but not in sub-directories).  If no
 @file{Makefile} is found in directory @file{inst/doc}, then
-@code{tools::texi2pdf} is run on all processed vignettes.  Whenever a
-@file{Makefile} is found in the vignette source directory, then @code{R
-CMD build} will try to run @command{make} after the @code{Sweave} runs.
-The first target in the @file{Makefile} should take care of both
-creation of PDF files and cleaning up afterwards (including after
-@code{Sweave}), i.e., delete all files that shall not appear in the
-final package archive.  Note that if the @code{make} step runs @R{} it
-needs to be careful to respect the environment values of @env{R_LIBS}
-and @env{R_HOME}@footnote{@code{R_HOME/bin} is prepended to the
-@env{PATH} so that references to @command{R} or @command{Rscript} in the
-@file{Makefile} do make use of the currently running version of @R{}.}.
-Finally, if there is a @file{Makefile} and it has a @samp{clean:}
-target, @command{make clean} is run.
+@code{tools::texi2pdf} is run on all processed vignette sources.
+Whenever a @file{Makefile} is found in the vignette source directory,
+then @code{R CMD build} will try to run @command{make} after the
+@code{Sweave} runs.  The first target in the @file{Makefile} should take
+care of both creation of PDF/@HTML{} files and cleaning up afterwards
+(including after @code{Sweave}), i.e., delete all files that shall not
+appear in the final package archive.  Note that if the @code{make} step
+runs @R{} it needs to be careful to respect the environment values of
+@env{R_LIBS} and @env{R_HOME}@footnote{@code{R_HOME/bin} is prepended to
+the @env{PATH} so that references to @command{R} or @command{Rscript} in
+the @file{Makefile} do make use of the currently running version of
+@R{}.}.  Finally, if there is a @file{Makefile} and it has a
+@samp{clean:}  target, @command{make clean} is run.
 
 All the usual @emph{caveats} about including a @file{Makefile} apply.
 It must be portable (no @acronym{GNU} extensions), use LF line endings
@@ -2717,13 +2717,14 @@ clean:
 @end example
 
 @noindent
-which will start removing the source files whilst @command{pdflatex} is working.
+which will start removing the source files whilst @command{pdflatex} is
+working.
 
 Note that it is pointless (and potentially misleading since the files
 might be outdated) to include in @file{inst/doc} @R{} code files which
-would be generated from vignettes, as these will be re-generated when
-the package is installed (unless the vignette does not generate any @R{}
-code, in which case it is also pointless/misleading).
+would be generated from vignette sources, as these will be re-generated
+when the package is installed (unless the vignette does not generate any
+@R{} code, in which case it is also pointless/misleading).
 
 Metadata lines can be placed in the source file, preferably in @LaTeX{}
 comments in the preamble.  One such is a @code{\VignetteIndexEntry} of
@@ -2762,7 +2763,7 @@ much better to generate fairly high resolution bitmap (PNG, JPEG)
 figures and include those in the PDF document.
 
 @cindex .install_extras file
-When @command{R CMD build} builds the vignette PDFs, it copies these and
+When @command{R CMD build} builds the vignettes, it copies these and
 the vignette sources from directory @file{vignettes} to @file{inst/doc}.
 To install any other files from the @file{vignettes} directory, include
 a file @file{vignettes/.install_extras} which specifies these as
@@ -2773,21 +2774,21 @@ description of the @file{.Rinstignore} file for full details.)
 @node Encodings and vignettes, Non-Sweave vignettes, Writing package vignettes, Writing package vignettes
 @subsection Encodings and vignettes
 
-Vignette PDFs will in general include descriptive text, @R{} input, @R{}
+Vignettes will in general include descriptive text, @R{} input, @R{}
 output and figures, @LaTeX{} include files and bibliographic references.
-As any of these may contain non-ASCII characters, the handling of
-encodings can become very complicated.
+As any of these may contain non-@acronym{ASCII} characters, the handling
+of encodings can become very complicated.
 
-The vignette source file should be written in ASCII or contain a
-declaration of the encoding (see below).  This applies even to comments
-within the source file, since @code{Sweave()} processes comments to look
-for options and metadata lines.  When @code{Sweave()} or
-@code{Stangle()} is called on the vignette source, it will be converted
+The vignette source file should be written in @acronym{ASCII} or contain
+a declaration of the encoding (see below).  This applies even to
+comments within the source file, since vignette engines process comments
+to look for options and metadata lines.  When an engine's weave and
+tangle functions are called on the vignette source, it will be converted
 to the encoding of the current @R{} session.
 
 @code{Stangle()} will produce an @R{} code file in the current locale's
-encoding: for a non-ASCII vignette what that is recorded in a comment at
-the top of the file.
+encoding: for a non-@acronym{ASCII} vignette what that is recorded in a
+comment at the top of the file.
 
 @code{Sweave()} will produce a @file{.tex} file in the current locale's
 encoding.  That needs to be declared to @LaTeX{} via a line like
@@ -2796,18 +2797,18 @@ encoding.  That needs to be declared to @LaTeX{} via a line like
 @end example
 @noindent
 (It is also possible to use the more recent @samp{inputenx} @LaTeX{}
-package.)  @command{R CMD check} will warn about any non-ASCII vignettes
-it finds which do not have such a declaration.
+package.)  @command{R CMD check} will warn about any non-@acronym{ASCII}
+vignettes it finds which do not have such a declaration.
 
 @code{Sweave()} will also parse and evaluate the @R{} code in each
 chunk.  The @R{} output will also be in the current locale, and should
 be covered by the @samp{inputenc} declaration.  One thing people often
-forget is that the @R{} output may not be ASCII even for ASCII @R{}
-sources, for many possible reasons.  One common one is the use of
-`fancy' quotes: see the @R{} help on @code{sQuote}: note carefully that
-it is not portable to declare UTF-8 or CP1252 to cover such quotes, as
-their encoding will depend on the locale used to run @code{Sweave()}:
-this can be circumvented by setting
+forget is that the @R{} output may not be @acronym{ASCII} even for
+@acronym{ASCII} @R{} sources, for many possible reasons.  One common one
+is the use of `fancy' quotes: see the @R{} help on @code{sQuote}: note
+carefully that it is not portable to declare UTF-8 or CP1252 to cover
+such quotes, as their encoding will depend on the locale used to run
+@code{Sweave()}:  this can be circumvented by setting
 @code{options(useFancyQuotes="UTF-8")} in the vignette.
 
 The final issue is the encoding of figures -- this applies only to PDF
@@ -2817,10 +2818,10 @@ set appropriately: see the help for the @code{pdf()} graphics device.
 
 As a real example of the complexities, consider the @CRANpkg{fortunes}
 package version @samp{1.4-0}.  That package did not have a declared
-encoding, and its vignette was in ASCII.  However, the data it displays
-are read from a UTF-8 CSV file and will be assumed to be in the current
-encoding, so @file{fortunes.tex} will be in UTF-8 in any locale.  Had
-@code{read.table} been told the data were UTF-8, @file{fortunes.tex}
+encoding, and its vignette was in @acronym{ASCII}.  However, the data it
+displays are read from a UTF-8 CSV file and will be assumed to be in the
+current encoding, so @file{fortunes.tex} will be in UTF-8 in any locale.
+Had @code{read.table} been told the data were UTF-8, @file{fortunes.tex}
 would have been in the locale's encoding.
 
 @node Non-Sweave vignettes,  , Encodings and vignettes, Writing package vignettes
@@ -2846,15 +2847,15 @@ within the vignette source using a @code{\VignetteEngine} line, for example
 @end example
 @noindent
 This specifies the name of a package and an engine to use in place of
-Sweave in processing the vignette.  As @code{Sweave} is the only
-engine supplied with @R{}, the package providing any other engine must
-be specified in the @samp{VignetteBuilder} field of the package
-@file{DESCRIPTION} file, and also specified in the @samp{Suggests},
-@samp{Imports} or @samp{Depends} field (since its namespace must be
-available to build or check your package).  If more than one package is
-specified as a builder, they will be searched in the order given
-there.  The @pkg{utils} package is always implicitly appended to the
-list of builder packages.
+Sweave in processing the vignette.  As @code{Sweave} is the only engine
+supplied with the @R{} distribution, the package providing any other
+engine must be specified in the @samp{VignetteBuilder} field of the
+package @file{DESCRIPTION} file, and also specified in the
+@samp{Suggests}, @samp{Imports} or @samp{Depends} field (since its
+namespace must be available to build or check your package).  If more
+than one package is specified as a builder, they will be searched in the
+order given there.  The @pkg{utils} package is always implicitly
+appended to the list of builder packages.
 
 Note that a package with non-Sweave vignettes should always have a
 @samp{VignetteBuilder} field in the @file{DESCRIPTION} file, since this
@@ -4149,12 +4150,13 @@ An installed file named @file{CITATION} will be used by the
 @file{inst} subdirectory of the package sources.)
 
 The @file{CITATION} file is parsed as @R{} code (in the package's
-declared encoding, or in ASCII if none is declared).  If no such file is
-present, @code{citation} auto-generates citation information from the
-package @file{DESCRIPTION} metadata, and an example of what that would
-look like as a @file{CITATION} file can be seen in recommended package
-@CRANpkg{nlme} (see below): recommended packages @CRANpkg{boot},
-@CRANpkg{cluster} and @CRANpkg{mgcv} have further examples.
+declared encoding, or in @acronym{ASCII} if none is declared).  If no
+such file is present, @code{citation} auto-generates citation
+information from the package @file{DESCRIPTION} metadata, and an example
+of what that would look like as a @file{CITATION} file can be seen in
+recommended package @CRANpkg{nlme} (see below): recommended packages
+@CRANpkg{boot}, @CRANpkg{cluster} and @CRANpkg{mgcv} have further
+examples.
 
 A @file{CITATION} file will contain calls to function @code{bibentry}.
 
@@ -7434,9 +7436,9 @@ directory.
 Note that there are some implicit restrictions on this mechanism as the
 basename of the DLL needs to be both a valid file name and valid as part
 of a C entry point (e.g.@: it cannot contain @samp{.}): for portable
-code it is best to confine DLL names to be ASCII alphanumeric plus
-underscore.  If entry point @code{R_init_@var{lib}} is not found it is
-also looked for with @samp{.} replaced by @samp{_}.
+code it is best to confine DLL names to be @acronym{ASCII} alphanumeric
+plus underscore.  If entry point @code{R_init_@var{lib}} is not found it
+is also looked for with @samp{.} replaced by @samp{_}.
 
 
 The following example shows templates for the initialization and

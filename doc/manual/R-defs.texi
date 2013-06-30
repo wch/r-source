@@ -63,6 +63,11 @@ except that this permission notice may be stated in a translation
 approved by the R Core Team.
 @end macro
 
+@c This breaks HTML conversion on texinfo 4.x.
+@iftex
+@hyphenation{name-space name-spaces}
+@end iftex
+
 @set ISBN-FAQ 
 @set ISBN-admin 
 @set ISBN-data 

@@ -61,7 +61,7 @@ print.by <- function(x, ..., vsep)
     dn <- dimnames(x)
     dnn <- names(dn)
     if(missing(vsep))
-        vsep <- paste(rep("-", 0.75*getOption("width")), collapse = "")
+        vsep <- paste(rep.int("-", 0.75*getOption("width")), collapse = "")
     lapply(X = seq_along(x), FUN = function(i, x, vsep, ...) {
         if(i != 1L && !is.null(vsep)) cat(vsep, "\n")
         ii <- i - 1L
