@@ -1,6 +1,6 @@
 % File src/library/tools/man/testInstalledPackage.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-11 R Core Team
+% Copyright 2009-13 R Core Team
 % Distributed under GPL 2 or later
 
 \name{testInstalledPackage}
@@ -55,6 +55,11 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
   be desirable to set environment variables \env{LANGUAGE} to \samp{en}
   and \env{LC_TIME} to \samp{C} to reduce the number of differences from
   reference results.
+
+  Except on Windows, if the environment variable \env{TEST_MC_CORES} is
+  set to an integer greater than one, \code{testInstalledPackages} will
+  run the package tests in parallel using its value as the maximum
+  number of parallel processes.
 
 #ifdef unix
   The package-specific tests for the base and recommended packages are

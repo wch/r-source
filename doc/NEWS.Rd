@@ -71,18 +71,18 @@
       \item There is some support for parallel testing of an
       installation.
 
-      If environemnt variable \env{TEST_MC_CORES} is set to an integer
+      If environment variable \env{TEST_MC_CORES} is set to an integer
       greater than one (and not on Windows) the tests of standard
       package examples in \command{make check} are done in parallel
       using that number of cores.  (It is probably worth using 8 cores
       if available.)  This also applies to running
       \code{tools::testInstalledPackages()}.
 
-      The standard package checks in \command{make check-devel} are done
-      in parallel if environemnt variable \env{TEST_MC_CORES} is set,
-      using its value as the maximum number of parallel processes.
-      (This requires a \command{make} program which supports
-      \command{make -j nproc}.)
+      The package checks in \command{make check-devel} and \command{make
+      check-recommended} are done in parallel if environemnt variable
+      \env{TEST_MC_CORES} is set, using its value as the maximum number
+      of parallel processes.  (This requires a \command{make} program
+      which supports \command{${MAKE} -j nproc}.)
     }
   }
 

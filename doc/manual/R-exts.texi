@@ -6602,6 +6602,10 @@ collections after objects have been deleted).
 Note that memory access errors may be seen with LAPACK, BLAS and
 Java-using packages: some at least of these seem to be intentional.
 
+There are other memory-access-checking tools available: GCC supports
+@command{mudflap} and `lightweight bounds checking' (`LBC') is
+promised soon as a plug-in.
+
 @menu
 * Using gctorture::             
 * Using valgrind::              

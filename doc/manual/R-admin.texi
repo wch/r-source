@@ -327,7 +327,8 @@ make check-all
 @end example
 
 @noindent
-see file @file{tests/README}.
+see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
+for the possibilities of doing this in parallel.
 
 If the command @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
@@ -892,6 +893,15 @@ library.  This can occasionally be useful when the operating environment
 has been changed, for example by OS updates or by substituting the
 @acronym{BLAS} (@pxref{Shared BLAS}).
 
+Parallel checking of packages may be possible: see the environment
+variable @env{TEST_MC_CORES} to the maximum number of processes to be
+run in parallel.  This affects both checking the package examples (part
+of @command{make check}) and package sources (part of @command{make
+check-devel} and @command{make check-recommended}).  It does require a
+@command{make} command which supports the @command{make -j @var{n}}
+option: most do.
+
+
 Alternatively, the installed @R{} can be run, preferably with
 @option{--vanilla}.  Then
 @enindex LC_COLLATE
@@ -1225,6 +1235,11 @@ for @code{check-devel} and @code{check-recommended}.
 If a test fails, there will almost always be a @file{.Rout.fail} file in
 the directory being checked (often @file{tests/Examples} or
 @file{tests}): examine the file to help pinpoint the problem.
+
+Parallel checking of package sources (part of @command{make check-devel}
+and @command{make check-recommended}) is possible: see the environment
+variable @env{TEST_MC_CORES} to the maximum number of processes to be
+run in parallel.
 
 
 @node Building the manuals, Building the Inno Setup installer, Checking the build, Building from source
