@@ -191,6 +191,10 @@
       
       \item Deparsing of infix operators with named arguments is
       improved. (\PR{15350})
+      
+      \item \code{mget()}, \code{seq.int()} and \code{numericDeriv()}
+      did not duplicate arguments properly. (\PR{15352}, \PR{15353}, 
+      \PR{15354})
     }
   }
 }

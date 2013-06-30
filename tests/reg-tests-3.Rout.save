@@ -748,3 +748,44 @@ x1     a b <NA>
   b    0 2    0
   <NA> 0 0    1
 > 
+> 
+> ## median should work by default for a suitable S4 class.
+> ## adapted from adaptsmoFMRI
+> library(Matrix)
+> x <- matrix(c(1,2,3,4))
+> median(x)
+[1] 2.5
+> median(as(x, "dgeMatrix"))
+[1] 2.5
+> 
+> ## Various arguments were not duplicated:  PR#15352 to 15354
+> x <- 5
+> y <- 2
+> f <- function (y) x
+> numericDeriv(f(y),"y")
+[1] 5
+attr(,"gradient")
+     [,1]
+[1,]    0
+> x
+[1] 5
+> 
+> a<-list(1,2)
+> b<-rep.int(a,c(2,2))
+> b[[1]][1]<-9
+> a[[1]]
+[1] 1
+> 
+> a <- numeric(1)
+> x <- mget("a",as.environment(1))
+> x
+$a
+[1] 0
+
+> a[1] <- 9
+> x
+$a
+[1] 0
+
+> 
+> 

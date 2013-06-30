@@ -299,10 +299,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
 
     PROTECT(pars = allocVector(VECSXP, LENGTH(theta)));
 
-    if (TYPEOF(expr) == SYMSXP)
-	PROTECT(ans = duplicate(eval(expr, rho)));
-    else
-	PROTECT(ans = eval(expr, rho));
+    PROTECT(ans = duplicate(eval(expr, rho)));
 
     if(!isReal(ans)) {
 	SEXP temp = coerceVector(ans, REALSXP);

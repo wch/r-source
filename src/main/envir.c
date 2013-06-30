@@ -1888,9 +1888,9 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("invalid '%s' argument"), "mode");
 	}
 	SET_VECTOR_ELT(ans, i,
-		       gfind(translateChar(STRING_ELT(x, i % nvals)), env,
+		       duplicate(gfind(translateChar(STRING_ELT(x, i % nvals)), env,
 			     gmode, VECTOR_ELT(ifnotfound, i % nifnfnd),
-			     ginherits, rho));
+			     ginherits, rho)));
     }
 
     setAttrib(ans, R_NamesSymbol, duplicate(x));
