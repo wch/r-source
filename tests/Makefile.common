@@ -385,7 +385,7 @@ test-Packages1-Recommended:
 	    --library="$(top_builddir)/library" Packages/$${p} || $(ECHO); \
 	done
 
-PKG_OBJECTS = $(R_PKGS_RECOMMENDED:=.ts)
+PKG_ROBJECTS = $(R_PKGS_RECOMMENDED:=.ts)
 
 test-Packages2-Recommended:
 	-@rm -rf PACKAGES
@@ -395,14 +395,13 @@ test-Packages2-Recommended:
 	done
 	+@$(MK) stamp-Packages2
 	@rm -f *.trin
-stamp-Packages2: $(PKG_OBJECTS)
+stamp-Packages2: $(PKG_ROBJECTS)
 
 .trin.ts:
-	@$(ECHO) "begin checking package '`basename $@ .ts`'"
 	@p=`basename $@ .ts`; \
 	gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd Packages && $(TAR) xf -) ; \
-	  $(ECHO) "checking package '$${p}'"; \
+	  $(ECHO) "begin checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
 	    --library="$(top_builddir)/library" Packages/$${p}  > $@ 2>&1
 	@cat $@
