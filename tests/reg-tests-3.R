@@ -132,3 +132,23 @@ library(Matrix)
 x <- matrix(c(1,2,3,4))
 median(x)
 median(as(x, "dgeMatrix"))
+
+## Various arguments were not duplicated:  PR#15352 to 15354
+x <- 5
+y <- 2
+f <- function (y) x
+numericDeriv(f(y),"y")
+x
+
+a<-list(1,2)
+b<-rep.int(a,c(2,2))
+b[[1]][1]<-9
+a[[1]]
+
+a <- numeric(1)
+x <- mget("a",as.environment(1))
+x
+a[1] <- 9
+x
+
+

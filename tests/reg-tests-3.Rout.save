@@ -758,3 +758,35 @@ x1     a b <NA>
 > median(as(x, "dgeMatrix"))
 [1] 2.5
 > 
+> ## Various arguments were not duplicated:  PR#15352 to 15354
+> x <- 5
+> y <- 2
+> f <- function (y) x
+> numericDeriv(f(y),"y")
+[1] 5
+attr(,"gradient")
+     [,1]
+[1,]    0
+> x
+[1] 5
+> 
+> a<-list(1,2)
+> b<-rep.int(a,c(2,2))
+> b[[1]][1]<-9
+> a[[1]]
+[1] 1
+> 
+> a <- numeric(1)
+> x <- mget("a",as.environment(1))
+> x
+$a
+[1] 0
+
+> a[1] <- 9
+> x
+$a
+[1] 0
+
+> 
+> 
+> 
