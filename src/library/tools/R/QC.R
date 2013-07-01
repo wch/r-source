@@ -5893,7 +5893,7 @@ function(dir)
         if(length(bad))
             out$depends_with_restricts_use_NA <- bad
         bv <- parse_description_field(meta, "BuildVignettes", TRUE)
-        if (!bv) out$foss_with_BuildVigettes <- FALSE
+        if (!bv) out$foss_with_BuildVigettes <- TRUE
     }
 
     ## Check for possibly mis-spelled field names.

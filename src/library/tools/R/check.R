@@ -3149,7 +3149,7 @@ setRlibs <-
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
                 do_exit(1L)
             } else if(length(res$bad_version) ||
-                      identical(res$foss_with_BuildVigettes, FALSE))
+                      identical(res$foss_with_BuildVigettes, TRUE))
                 warningLog(Log)
             else if(length(res) > 1L) noteLog(Log)
             else resultLog(Log, "OK")
