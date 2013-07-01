@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-06-11 r62940) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-06-30 r63119) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -8200,7 +8200,7 @@ Within cluster sum of squares by cluster:
 Available components:
 
 [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-[6] "betweenss"    "size"        
+[6] "betweenss"    "size"         "iter"        
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:2, pch = 8, cex = 2)
 > 
@@ -8262,7 +8262,7 @@ Within cluster sum of squares by cluster:
 Available components:
 
 [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-[6] "betweenss"    "size"        
+[6] "betweenss"    "size"         "iter"        
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:5, pch = 8)
 > 
@@ -17803,7 +17803,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  14.692 0.324 15.073 0 0 
+Time elapsed:  11.744 0.245 12.454 0 0 
 > grDevices::dev.off()
 null device 
           1 
