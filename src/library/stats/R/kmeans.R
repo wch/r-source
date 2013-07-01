@@ -1,7 +1,7 @@
 #  File src/library/stats/R/kmeans.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,60 +18,66 @@
 
 kmeans <-
 function(x, centers, iter.max = 10, nstart = 1,
-         algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"))
+	 algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"), trace=FALSE)
 {
     do_one <- function(nmeth) {
-        Z <-
-            switch(nmeth,
-                   { # 1
-                       Z <- .Fortran(C_kmns, x, m, p,
-                                centers = centers,
-                                as.integer(k), c1 = integer(m), integer(m),
-                                nc = integer(k), double(k), double(k), integer(k),
-                                double(m), integer(k), integer(k),
-                                iter.max, wss = double(k),
-                                ifault = 0L)
-                       switch(Z$ifault,
-                              stop("empty cluster: try a better set of initial centers",
-                                   call. = FALSE),
-                              warning(sprintf(ngettext(iter.max,
-                                                       "did not converge in %d iteration",
-                                                       "did not converge in %d iterations"),
-                                              iter.max), call. = FALSE, domain =NA),
-                              stop("number of cluster centres must lie between 1 and nrow(x)",
-                                   call.=FALSE)
-                              )
-                       Z
-                   },
-                   { # 2
-                       Z <- .C(C_kmeans_Lloyd, x, m, p,
-                               centers = centers, k,
-                               c1 = integer(m), iter = iter.max,
-                               nc = integer(k), wss = double(k))
-                       if(Z$iter > iter.max)
-                           warning(sprintf(ngettext(iter.max,
-                                                    "did not converge in %d iteration",
-                                                    "did not converge in %d iterations"),
-                                           iter.max), call.=FALSE, domain = NA)
-                       if(any(Z$nc == 0))
-                           warning("empty cluster: try a better set of initial centers", call.=FALSE)
-                       Z
-                   },
-                   { # 3
-                       Z <- .C(C_kmeans_MacQueen, x, m, p,
-                               centers = as.double(centers), k,
-                               c1 = integer(m), iter = iter.max,
-                               nc = integer(k), wss = double(k))
-                       if(Z$iter > iter.max)
-                           warning(sprintf(ngettext(iter.max,
-                                                    "did not converge in %d iteration",
-                                                    "did not converge in %d iterations"),
-                                           iter.max), call.=FALSE, domain = NA)
-                       if(any(Z$nc == 0))
-                           warning("empty cluster: try a better set of initial centers", call.=FALSE)
-                       Z
-                    })
-        Z
+        switch(nmeth,
+           {                            # 1 : Hartigan-Wong
+               isteps.Qtran <- 50 * m
+               iTran <- c(as.integer(isteps.Qtran), integer(max(0,k-1)))
+               Z <- .Fortran(C_kmns, x, m, p,
+                             centers = centers,
+                             as.integer(k), c1 = integer(m), c2 = integer(m),
+                             nc = integer(k), double(k), double(k), ncp=integer(k),
+                             D = double(m), iTran = iTran, live = integer(k),
+                             iter = iter.max, wss = double(k),
+                             ifault = as.integer(trace))
+               switch(Z$ifault,
+                      ## 1:
+                      stop("empty cluster: try a better set of initial centers",
+                           call. = FALSE),
+                      ## 2:
+                          Z$iter <- max(Z$iter, iter.max+1L), # -> and warn below
+                      ## 3:
+                      stop("number of cluster centres must lie between 1 and nrow(x)",
+                           call.=FALSE),
+                      ## 4: {new @ 2013-06-30; maybe better fix (in Fortran) ?}
+                      warning(gettextf("Quick-TRANSfer stage steps exceeded maximum (= %d)",
+                                       isteps.Qtran),
+                              call.=FALSE)
+                      )
+           },
+           {                            # 2 : Lloyd-Forgy
+               Z <- .C(C_kmeans_Lloyd, x, m, p,
+                       centers = centers, k,
+                       c1 = integer(m), iter = iter.max,
+                       nc = integer(k), wss = double(k))
+           },
+           {                            # 3 : MacQueen
+               Z <- .C(C_kmeans_MacQueen, x, m, p,
+                       centers = as.double(centers), k,
+                       c1 = integer(m), iter = iter.max,
+                       nc = integer(k), wss = double(k))
+           })
+
+	if(m23 <- any(nmeth == c(2L, 3L))) {
+	    if(any(Z$nc == 0))
+		warning("empty cluster: try a better set of initial centers",
+			call.=FALSE)
+	}
+	if(Z$iter > iter.max) {
+	    warning(sprintf(ngettext(iter.max,
+				     "did not converge in %d iteration",
+				     "did not converge in %d iterations"),
+			    iter.max), call.=FALSE, domain = NA)
+	    if(m23) Z$ifault <- 2L
+	}
+        if(nmeth %in% c(2L, 3L)) {
+            if(any(Z$nc == 0))
+                warning("empty cluster: try a better set of initial centers",
+                        call.=FALSE)
+        }
+	Z
     }
     x <- as.matrix(x)
     m <- as.integer(nrow(x))
@@ -132,8 +138,9 @@ function(x, centers, iter.max = 10, nstart = 1,
         names(cluster) <- rn
     totss <- sum(scale(x, scale = FALSE)^2)
     structure(list(cluster = cluster, centers = centers, totss = totss,
-                   withinss = Z$wss, tot.withinss = best,
-                   betweenss = totss - best, size = Z$nc),
+		   withinss = Z$wss, tot.withinss = best,
+		   betweenss = totss - best, size = Z$nc,
+		   iter = Z$iter, ifault = Z$ifault),
 	      class = "kmeans")
 }
 
@@ -152,6 +159,8 @@ print.kmeans <- function(x, ...)
 		100 * x$betweenss/x$totss),
 	"Available components:\n", sep="\n")
     print(names(x))
+    if(!is.null(x$ifault) && x$ifault == 2)
+	cat("Warning: did *not* converge in specified number of iterations\n")
     invisible(x)
 }
 

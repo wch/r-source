@@ -104,7 +104,7 @@
       \item The unused \code{namespace} argument to
       \code{package.skeleton()} is now formally deprecated and will be
       removed in \R 3.1.0.
-      
+
       \item \code{plclust()} is deprecated: use the \code{plot()} method
       for class \code{"hclust"} instead.
     }
@@ -168,7 +168,7 @@
       with a pairlist, the error message from a zero length argument to
       the \code{:} operator.  (Found by Radford Neal; \PR{15358},
       \PR{15356})
-      
+
       \item \code{svd()} returned \code{NULL} rather than omitting
       components as documented.  (Found by Radford Neal; \PR{15360})
 
@@ -179,22 +179,25 @@
       \code{stdout} with a descriptor pointed to \file{/dev/null}
       instead. For this purpose, internal \code{closeStdout} and
       \code{closeStderr} functions have gained the \code{to.null} flag.
-      
-      \item \code{log()}, \code{signif()} and \code{round()} now raise an 
+
+      \item \code{log()}, \code{signif()} and \code{round()} now raise an
       error if a single named argument is not named \code{x}.  (\PR{15361})
-      
+
       \item \code{deparse()} now deparses raw vectors in a form that
       is syntactically correct. (\PR{15369})
-      
+
       \item The \code{jpeg} driver in Sweave created a JPEG file, but gave
       it a \file{.png} extension. (\PR{15370})
-      
+
       \item Deparsing of infix operators with named arguments is
       improved. (\PR{15350})
-      
+
       \item \code{mget()}, \code{seq.int()} and \code{numericDeriv()}
-      did not duplicate arguments properly. (\PR{15352}, \PR{15353}, 
+      did not duplicate arguments properly. (\PR{15352}, \PR{15353},
       \PR{15354})
+
+      \item \code{kmeans()} now always stops iterating in the QTran
+      stage. (\PR{15364}).
     }
   }
 }
