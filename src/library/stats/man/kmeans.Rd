@@ -1,6 +1,6 @@
 % File src/library/stats/man/kmeans.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{kmeans}
@@ -16,7 +16,7 @@ K-Means Clustering
 \usage{
 kmeans(x, centers, iter.max = 10, nstart = 1,
        algorithm = c("Hartigan-Wong", "Lloyd", "Forgy",
-                     "MacQueen"))
+                     "MacQueen"), trace=FALSE)
 \method{fitted}{kmeans}(object, method = c("centers", "classes"), ...)
 }
 \arguments{
@@ -36,6 +36,10 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
     \code{fitted} to return cluster centers (one for each input point) and
     \code{"classes"} causes \code{fitted} to return a vector of class
     assignments.}
+  \item{trace}{logical or integer number, currently only used in the
+    default method (\code{"Hartigan-Wong"}): if positive (or true),
+    tracing information on the progress of the algorithm is
+    produced.  Higher values may produce more tracing information.}
   \item{\dots}{not used.}
 }
 \details{
@@ -49,9 +53,13 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   that some authors use \eqn{k}-means to refer to a specific algorithm
   rather than the general method: most commonly the algorithm given by
   MacQueen (1967) but sometimes that given by Lloyd (1957) and Forgy
-  (1965). The Hartigan--Wong algorithm generally does a better job than
+  (1965).  The Hartigan--Wong algorithm generally does a better job than
   either of those, but trying several random starts (\code{nstart}\eqn{>
-  1}) is often recommended.
+  1}) is often recommended.  In rare cases, when some of the points
+  (rows of \code{x}) are extremely close, the algorithm may not converge
+  in the \dQuote{Quick-Transfer} stage, signalling a warning (and
+  returning \code{ifault = 4}).  Slight
+  rounding of the data may be advisable then, see the artificial example.
   For ease of programmatic exploration, \eqn{k=1} is allowed, notably
   returning the center and \code{withinss}.
 
@@ -74,6 +82,8 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \item{tot.withinss}{Total within-cluster sum of squares, i.e., \code{sum(withinss)}.}
   \item{betweenss}{The between-cluster sum of squares, i.e. \code{totss-tot.withinss}.}
   \item{size}{The number of points in each cluster.}
+  \item{iter}{The number of (outer) iterations.}
+  \item{ifault}{possibly an algorithm problem indicator for experts.}
 }
 \references{
   Forgy, E. W. (1965) Cluster analysis of multivariate data:
@@ -131,6 +141,13 @@ kmeans(x,1)$withinss # trivial one-cluster, (its W.SS == ss(x))
 (cl <- kmeans(x, 5, nstart = 25))
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:5, pch = 8)
+
+## Artificial example [was "infinite loop" on x86_64; PR#15364]
+rr <- c(rep(-0.4, 5), rep(-0.4- 1.11e-16, 14), -.5)
+r. <- signif(rr, 12)
+try ( k3 <- kmeans(rr, 3, trace=2) ) ## Warning: Quick-Transfer.. steps exceed
+try ( k. <- kmeans(r., 3) ) # after rounding, have only two distinct points
+      k. <- kmeans(r., 2)   # fine
 }
 \keyword{multivariate}
 \keyword{cluster}
