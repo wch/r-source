@@ -98,3 +98,4 @@ detach("package:tools", unload=TRUE)
 options(oo)
 ## gave warning (-> Error) about creating package name
 
+proc.time()

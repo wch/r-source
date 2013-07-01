@@ -62,3 +62,6 @@ stopifnot(t2  / t1 < 20)
 (m <- matrix(1:12, 3,4, dimnames=list(ROWS=paste0("row",1:3), COLS=NULL)))
 ftable(m)
 ## failed to format (and hence print) because of NULL 'COLS' dimnames
+
+
+proc.time()
