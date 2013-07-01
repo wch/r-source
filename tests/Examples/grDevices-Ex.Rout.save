@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-06-05 r62869) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-01 r63127) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -377,7 +377,8 @@ $allowed
 > plot(10*(0:10)); (pu <- par("usr"))
 [1]   0.6  11.4  -4.0 104.0
 > aX <- function(side, at, ...)
-+     axis(side, at = at, labels = FALSE, lwd.ticks = 2, col.ticks = 2, tck = 0.05, ...)
++     axis(side, at = at, labels = FALSE, lwd.ticks = 2, col.ticks = 2,
++          tck = 0.05, ...)
 > aX(1, print(xa <- axisTicks(pu[1:2], log = FALSE)))  # x axis
 [1]  2  4  6  8 10
 > aX(2, print(ya <- axisTicks(pu[3:4], log = FALSE)))  # y axis
@@ -3707,7 +3708,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  8.787 0.196 9.011 0 0 
+Time elapsed:  8.877 0.335 9.271 0 0 
 > grDevices::dev.off()
 null device 
           1 
