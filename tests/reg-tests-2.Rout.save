@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-06-30 r63108) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-01 r63128) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -6397,15 +6397,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x334b9f0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3b15540> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x33436d8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3ab5e30> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x33436d8> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3ab5e30> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -6893,16 +6893,12 @@ F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10
 > ## R < 2.15.1 got these as FALSE, TRUE, FALSE.
 > 
 > 
-> ## Error in constructing the error message
-> assertErrorPrint <- function(expr) {
-+     stopifnot(inherits(e <- tryCatch(expr, error=function(e)e), "error"))
-+     cat("Asserted Error:", e[["message"]],"\n")
-+ }
 > library("methods")# (not needed here)
-> assertErrorPrint( getMethod(ls, "bar", fdef=ls) )
-Asserted Error: no generic function found for 'ls' 
-> assertErrorPrint( getMethod(show, "bar") )
-Asserted Error: no method found for function 'show' and signature bar 
+> assertCondition <- tools::assertCondition
+> assertCondition( getMethod(ls, "bar", fdef=ls), "error", verbose=TRUE)
+Asserted error: no generic function found for 'ls'
+> assertCondition( getMethod(show, "bar"),        "error", verbose=TRUE)
+Asserted error: no method found for function 'show' and signature bar
 > ## R < 2.15.1 gave
 > ##   cannot coerce type 'closure' to vector of type 'character'
 > 

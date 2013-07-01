@@ -7,14 +7,7 @@ options(stringsAsFactors=TRUE)
 ## .Machine
 (Meps <- .Machine$double.eps)# and use it in this file
 
-assertError <- function(expr)
-    stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
-assertWarning <- function(expr)
-    stopifnot(inherits(tryCatch(expr, warning = function(w)w), "warning"))
-assertWarning_atleast <- function(expr) {
-    r <- tryCatch(expr, warning = function(w)w, error = function(e)e)
-    stopifnot(inherits(r, "warning") || inherits(r, "error"))
-}
+assertCondition <- tools::assertCondition
 
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
@@ -501,7 +494,8 @@ stopifnot(
     !is.nan(c(1,NA)),
     c(FALSE,TRUE,FALSE) == is.nan(c   (1,NaN,NA))
 )
-assertError(is.nan(list(1,NaN,NA))) #-> result allowed but varies in older versions
+assertCondition(is.nan(list(1,NaN,NA)),
+		"error") #-> result allowed but varies in older versions
 
 
 stopifnot(identical(lgamma(Inf), Inf))

@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-06-05 r62869) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-01 r63128) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -100,7 +100,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x33c3a60>
+<environment: 0x30ba3a8>
 
 $showURLs
 [1] FALSE
@@ -134,7 +134,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x33c3a60>
+<environment: 0x30ba3a8>
 
 $showURLs
 [1] FALSE
@@ -168,7 +168,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x33c3a60>
+<environment: 0x30ba3a8>
 
 $showURLs
 [1] FALSE
@@ -194,6 +194,48 @@ $underline_titles
 > ### Keywords: utilities documentation
 > 
 > ### ** Examples
+> 
+> 
+> cleanEx()
+> nameEx("assertCondition")
+> ### * assertCondition
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: assertCondition
+> ### Title: Asserting Error Conditions
+> ### Aliases: assertCondition
+> ### Keywords: programming error
+> 
+> ### ** Examples
+> 
+> assertCondition( ""-1 ) # ok, as it signals a "condition"
+> 
+> try( assertCondition(sqrt(2), "warning") )
+Error in assertCondition(sqrt(2), "warning") : 
+  Failed to get expected warning in evaluating sqrt(2)
+> ## .. Failed to get expected warning in evaluating sqrt(2)
+>      assertCondition(sqrt("abc"), "error")   # ok
+> try( assertCondition(sqrt("abc"), "warning") )# -> error: had no warning
+Error in assertCondition(sqrt("abc"), "warning") : 
+  Expected warning, got simpleError in evaluating sqrt("abc")
+> ## verbose ==> show error message additionally:
+>      assertCondition(sqrt("abc"), verbose=TRUE, "error")
+Asserted error: non-numeric argument to mathematical function
+> 
+> try( assertCondition(matrix(1:5, 2,3), "warning") )
+> ## .. Expected warning, got simpleError in evaluating sqrt("abc")
+> try( assertCondition(matrix(1:8, 4,3), "error") )
+Error in assertCondition(matrix(1:8, 4, 3), "error") : 
+  Expected error, got simpleWarning in evaluating matrix(1:8, 4, 3)
+> ## .. Expected error, got simpleWarning in evaluating matrix(1:8, 4, 3)
+>      assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning")
+Asserted warning: data length [8] is not a sub-multiple or multiple of the number of columns [3]
+> 
+> ## either warning or worse:
+> assertCondition(matrix(1:8, 4, 3), "error", "warning") # OK
+> assertCondition(matrix(1:8, 4, 3), "warning", "error") # ditto
+> 
 > 
 > 
 > cleanEx()
@@ -232,7 +274,7 @@ $underline_titles
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x3320198>
+<environment: 0x2e144e0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -980,7 +1022,7 @@ List of 5
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.349 0.012 0.363 0 0 
+Time elapsed:  0.829 0.042 0.983 0 0 
 > grDevices::dev.off()
 null device 
           1 

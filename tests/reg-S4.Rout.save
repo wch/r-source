@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-06-05 r62869) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-01 r63128) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -18,6 +18,7 @@ Type 'q()' to quit R.
 > ####--- S4 Methods (and Classes)  --- see also ../src/library/methods/tests/
 > options(useFancyQuotes=FALSE)
 > require(methods)
+> assertCondition <- tools::assertCondition # "import"
 > ##too fragile: showMethods(where = "package:methods")
 > 
 > ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
@@ -269,21 +270,12 @@ Slot "y":
 > setMethod("Logic", signature("ANY", "brob"), logic2)
 [1] "Logic"
 > ## Now ensure that using group members gives error:
-> assertError <- function(expr)
-+     stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
-> assertWarning <- function(expr)
-+     stopifnot(inherits(tryCatch(expr, warning = function(w)w), "warning"))
-> assertWarning_atleast <- function(expr) {
-+     r <- tryCatch(expr, warning = function(w)w, error = function(e)e)
-+     stopifnot(inherits(r, "warning") || inherits(r, "error"))
-+ }
-> 
-> assertError(b & b)
+> assertCondition(b & b, "error")
 Note: method with signature 'brob#ANY' chosen for function '&',
  target signature 'brob#brob'.
  "ANY#brob" would also be valid
-> assertError(b | 1)
-> assertError(TRUE & b)
+> assertCondition(b | 1, "error")
+> assertCondition(TRUE & b, "error")
 > 
 > 
 > ## methods' hidden cbind() / rbind:
@@ -645,9 +637,9 @@ Creating a generic function for 'as.vector' from package 'base' in the global en
 > setGeneric("test1", function(x, printit = TRUE, name = "tmp")
 +            standardGeneric("test1"))
 [1] "test1"
-> assertWarning_atleast(
-+ setMethod("test1", "numeric", function(x, name, printit) match.call())
-+ )## did not warn or error in R 2.7.0 and earlier
+> assertCondition(
++ setMethod("test1", "numeric", function(x, name, printit) match.call()),
++ "warning", "error")## did not warn or error in R 2.7.0 and earlier
 > 
 > library(stats4)
 > c1 <- getClass("mle", where = "stats4")
@@ -726,12 +718,12 @@ Creating a new generic function for 'rbind' in the global environment
 > ## Invalid "factor"s -- now "caught" by  validity check :
 >  ok.f <- gl(3,5, labels = letters[1:3])
 > bad.f <- structure(rep(1:3, each=5), levels=c("a","a","b"), class="factor")
-> validObject(ok.f) ; assertError(validObject(bad.f))
+> validObject(ok.f) ; assertCondition(validObject(bad.f), "error")
 [1] TRUE
 > setClass("myF", contains = "factor")
 > validObject(new("myF", ok.f))
 [1] TRUE
-> assertError(validObject(new("myF", bad.f)))
+> assertCondition(validObject(new("myF", bad.f)), "error")
 > removeClass("myF")
 [1] TRUE
 > ## no validity check in R <= 2.9.0

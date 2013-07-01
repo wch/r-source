@@ -1,6 +1,7 @@
 ####--- S4 Methods (and Classes)  --- see also ../src/library/methods/tests/
 options(useFancyQuotes=FALSE)
 require(methods)
+assertCondition <- tools::assertCondition # "import"
 ##too fragile: showMethods(where = "package:methods")
 
 ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
@@ -181,18 +182,9 @@ logic2 <- function(e1,e2) logic.brob.error(.Generic)
 setMethod("Logic", signature("brob", "ANY"), logic2)
 setMethod("Logic", signature("ANY", "brob"), logic2)
 ## Now ensure that using group members gives error:
-assertError <- function(expr)
-    stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
-assertWarning <- function(expr)
-    stopifnot(inherits(tryCatch(expr, warning = function(w)w), "warning"))
-assertWarning_atleast <- function(expr) {
-    r <- tryCatch(expr, warning = function(w)w, error = function(e)e)
-    stopifnot(inherits(r, "warning") || inherits(r, "error"))
-}
-
-assertError(b & b)
-assertError(b | 1)
-assertError(TRUE & b)
+assertCondition(b & b, "error")
+assertCondition(b | 1, "error")
+assertCondition(TRUE & b, "error")
 
 
 ## methods' hidden cbind() / rbind:
@@ -421,9 +413,9 @@ stopifnot(dim(x) == c(1,1), is(tt, "ts"), is(t2, "ts"),
 ## Method with wrong argument order :
 setGeneric("test1", function(x, printit = TRUE, name = "tmp")
            standardGeneric("test1"))
-assertWarning_atleast(
-setMethod("test1", "numeric", function(x, name, printit) match.call())
-)## did not warn or error in R 2.7.0 and earlier
+assertCondition(
+setMethod("test1", "numeric", function(x, name, printit) match.call()),
+"warning", "error")## did not warn or error in R 2.7.0 and earlier
 
 library(stats4)
 c1 <- getClass("mle", where = "stats4")
@@ -494,10 +486,10 @@ stopifnot(packageSlot(class(S <- new("SIG"))) == ".GlobalEnv",
 ## Invalid "factor"s -- now "caught" by  validity check :
  ok.f <- gl(3,5, labels = letters[1:3])
 bad.f <- structure(rep(1:3, each=5), levels=c("a","a","b"), class="factor")
-validObject(ok.f) ; assertError(validObject(bad.f))
+validObject(ok.f) ; assertCondition(validObject(bad.f), "error")
 setClass("myF", contains = "factor")
 validObject(new("myF", ok.f))
-assertError(validObject(new("myF", bad.f)))
+assertCondition(validObject(new("myF", bad.f)), "error")
 removeClass("myF")
 ## no validity check in R <= 2.9.0
 

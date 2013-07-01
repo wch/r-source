@@ -22,7 +22,8 @@ useDynLib(tools, .registration = TRUE)
 
 export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db", "Rdiff",
-       "Rdindex", "SweaveTeXFilter", "add_datalist", "bibstyle",
+       "Rdindex", "SweaveTeXFilter",
+       "add_datalist", "assertCondition", "bibstyle",
        "buildVignettes", "charset_to_Unicode", "checkDocFiles",
        "checkDocStyle", "checkFF", "checkMD5sums", "checkNEWS",
        "checkRd", "checkPoFile", "checkPoFiles", "checkRdaFiles",
