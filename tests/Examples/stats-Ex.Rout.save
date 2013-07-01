@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-06-05 r62869) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-01 r63124) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2535,7 +2535,8 @@ outcome    2   5.4523         6     5.1291  0.06547 .
 treatment  2   0.0000         4     5.1291  1.00000  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-> glm.D93a <- update(glm.D93, ~treatment*outcome) ## equivalent to Pearson Chi-square
+> glm.D93a <-
++    update(glm.D93, ~treatment*outcome) # equivalent to Pearson Chi-square
 > anova(glm.D93, glm.D93a, test = "Rao")
 Analysis of Deviance Table
 
@@ -3713,7 +3714,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x42f62c0>
+<environment: 0x3597be8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4714,7 +4715,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x78d6310>
+<bytecode: 0x655ce58>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6731,8 +6732,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<bytecode: 0x42d2f68>
-<environment: 0x9163b98>
+<environment: namespace:stats>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7133,7 +7133,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x8a7d228>
+<environment: 0x8d72c18>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -8200,7 +8200,7 @@ Within cluster sum of squares by cluster:
 Available components:
 
 [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-[6] "betweenss"    "size"        
+[6] "betweenss"    "size"         "iter"         "ifault"      
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:2, pch = 8, cex = 2)
 > 
@@ -8262,9 +8262,68 @@ Within cluster sum of squares by cluster:
 Available components:
 
 [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-[6] "betweenss"    "size"        
+[6] "betweenss"    "size"         "iter"         "ifault"      
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:5, pch = 8)
+> 
+> ## Artificial example [was "infinite loop" on x86_64; PR#15364]
+> rr <- c(rep(-0.4, 5), rep(-0.4- 1.11e-16, 14), -.5)
+> r. <- signif(rr, 12)
+> try ( k3 <- kmeans(rr, 3, trace=2) ) ## Warning: Quick-Transfer.. steps exceed
+KMNS(*, k=3): iter=  1, indx=7
+ QTRAN(): istep=20, icoun=6, NCP[1:3]= 34 -1 34
+ QTRAN(): istep=40, icoun=5, NCP[1:3]= 55 -1 55
+ QTRAN(): istep=60, icoun=4, NCP[1:3]= 76 -1 76
+ QTRAN(): istep=80, icoun=3, NCP[1:3]= 97 -1 97
+ QTRAN(): istep=100, icoun=2, NCP[1:3]= 118 -1 118
+ QTRAN(): istep=120, icoun=1, NCP[1:3]= 139 -1 139
+ QTRAN(): istep=140, icoun=7, NCP[1:3]= 153 -1 153
+ QTRAN(): istep=160, icoun=6, NCP[1:3]= 174 -1 174
+ QTRAN(): istep=180, icoun=5, NCP[1:3]= 195 -1 195
+ QTRAN(): istep=200, icoun=4, NCP[1:3]= 216 -1 216
+ QTRAN(): istep=220, icoun=3, NCP[1:3]= 237 -1 237
+ QTRAN(): istep=240, icoun=2, NCP[1:3]= 258 -1 258
+ QTRAN(): istep=260, icoun=1, NCP[1:3]= 279 -1 279
+ QTRAN(): istep=280, icoun=7, NCP[1:3]= 293 -1 293
+ QTRAN(): istep=300, icoun=6, NCP[1:3]= 314 -1 314
+ QTRAN(): istep=320, icoun=5, NCP[1:3]= 335 -1 335
+ QTRAN(): istep=340, icoun=4, NCP[1:3]= 356 -1 356
+ QTRAN(): istep=360, icoun=3, NCP[1:3]= 377 -1 377
+ QTRAN(): istep=380, icoun=2, NCP[1:3]= 398 -1 398
+ QTRAN(): istep=400, icoun=1, NCP[1:3]= 419 -1 419
+ QTRAN(): istep=420, icoun=7, NCP[1:3]= 433 -1 433
+ QTRAN(): istep=440, icoun=6, NCP[1:3]= 454 -1 454
+ QTRAN(): istep=460, icoun=5, NCP[1:3]= 475 -1 475
+ QTRAN(): istep=480, icoun=4, NCP[1:3]= 496 -1 496
+ QTRAN(): istep=500, icoun=3, NCP[1:3]= 517 -1 517
+ QTRAN(): istep=520, icoun=2, NCP[1:3]= 538 -1 538
+ QTRAN(): istep=540, icoun=1, NCP[1:3]= 559 -1 559
+ QTRAN(): istep=560, icoun=7, NCP[1:3]= 573 -1 573
+ QTRAN(): istep=580, icoun=6, NCP[1:3]= 594 -1 594
+ QTRAN(): istep=600, icoun=5, NCP[1:3]= 615 -1 615
+ QTRAN(): istep=620, icoun=4, NCP[1:3]= 636 -1 636
+ QTRAN(): istep=640, icoun=3, NCP[1:3]= 657 -1 657
+ QTRAN(): istep=660, icoun=2, NCP[1:3]= 678 -1 678
+ QTRAN(): istep=680, icoun=1, NCP[1:3]= 699 -1 699
+ QTRAN(): istep=700, icoun=7, NCP[1:3]= 713 -1 713
+ QTRAN(): istep=720, icoun=6, NCP[1:3]= 734 -1 734
+ QTRAN(): istep=740, icoun=5, NCP[1:3]= 755 -1 755
+ QTRAN(): istep=760, icoun=4, NCP[1:3]= 776 -1 776
+ QTRAN(): istep=780, icoun=3, NCP[1:3]= 797 -1 797
+ QTRAN(): istep=800, icoun=2, NCP[1:3]= 818 -1 818
+ QTRAN(): istep=820, icoun=1, NCP[1:3]= 839 -1 839
+ QTRAN(): istep=840, icoun=7, NCP[1:3]= 853 -1 853
+ QTRAN(): istep=860, icoun=6, NCP[1:3]= 874 -1 874
+ QTRAN(): istep=880, icoun=5, NCP[1:3]= 895 -1 895
+ QTRAN(): istep=900, icoun=4, NCP[1:3]= 916 -1 916
+ QTRAN(): istep=920, icoun=3, NCP[1:3]= 937 -1 937
+ QTRAN(): istep=940, icoun=2, NCP[1:3]= 958 -1 958
+ QTRAN(): istep=960, icoun=1, NCP[1:3]= 979 -1 979
+ QTRAN(): istep=980, icoun=7, NCP[1:3]= 993 -1 993
+Warning: Quick-TRANSfer stage steps exceeded maximum (= 1000)
+> try ( k. <- kmeans(r., 3) ) # after rounding, have only two distinct points
+Error in kmeans(r., 3) : more cluster centers than distinct data points.
+>       k. <- kmeans(r., 2)   # fine
 > 
 > 
 > 
@@ -11709,26 +11768,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<bytecode: 0x42d0918>
-<environment: 0xc179750>
+<environment: namespace:stats>
 
 $linkinv
 function (eta) 
 eta
-<bytecode: 0x42d08a8>
-<environment: 0xc179750>
+<environment: namespace:stats>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<bytecode: 0x42d0838>
-<environment: 0xc179750>
+<environment: namespace:stats>
 
 $valideta
 function (eta) 
 TRUE
-<bytecode: 0x42d0678>
-<environment: 0xc179750>
+<environment: namespace:stats>
 
 $name
 [1] "identity"
@@ -11739,14 +11794,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0xc185268>
-<environment: 0xc3c3aa8>
+<bytecode: 0xa704370>
+<environment: 0xa6f7830>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0xc185380>
-<environment: 0xc3c3aa8>
+<bytecode: 0xa704530>
+<environment: 0xa6f7830>
 
 > 
 > 
@@ -15540,8 +15595,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x4490400>
-<environment: 0xb2f06e0>
+<bytecode: 0x3e254b0>
+<environment: 0xa09d250>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17793,7 +17848,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.377 0.16 7.564 0 0 
+Time elapsed:  14.867 0.293 15.717 0 0 
 > grDevices::dev.off()
 null device 
           1 
