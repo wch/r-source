@@ -5892,9 +5892,9 @@ function(dir)
         bad <- intersect(depends, pnames_restricts_use_NA)
         if(length(bad))
             out$depends_with_restricts_use_NA <- bad
-        out$foss_with_BuildVigettes <-
-            parse_description_field(meta, "BuildVignettes", TRUE)
-    } else out$foss_with_BuildVigettes <- TRUE
+        bv <- parse_description_field(meta, "BuildVignettes", TRUE)
+        if (!bv) out$foss_with_BuildVigettes <- FALSE
+    }
 
     ## Check for possibly mis-spelled field names.
     nms <- names(meta)
@@ -6176,7 +6176,7 @@ function(x, ...)
                     names(s),
                     lapply(s, paste, collapse = ", ")))
       },
-      if(!x$foss_with_BuildVigettes) {
+      if(identical(x$foss_with_BuildVigettes, FALSE)) {
           "FOSS licence with BuildVignettes false"
       },
       if(length(y <- x$fields)) {
