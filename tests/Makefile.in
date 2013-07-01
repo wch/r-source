@@ -57,6 +57,13 @@ test-system2: $(srcdir)/test-system2.c
 test-System: test-system2
 	-@$(MAKE) test-system.Rout
 
+## Avoid site library, which could be very large
+no-segfault.Rout: no-segfault.R
+	@rm -f $@ $@.fail
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@R_LIBS_SITE=no-such-dir $(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@$(ECHO) "$(ECHO_T) OK"
+
 
 ## <NOTE>
 ## These depend on an internet connection, and the sites being up.
