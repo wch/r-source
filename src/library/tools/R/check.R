@@ -659,6 +659,31 @@ setRlibs <-
                 }
             }
         }
+        topfiles <- Sys.glob(file.path("inst", c("LICENCE", "LICENSE")))
+        if (length(topfiles)) {
+            ## Are these mentioned in DESCRIPTION?
+            lic <- desc["License"]
+            if(!is.na(lic)) {
+                found <- sapply(basename(topfiles),
+                                function(x) grepl(x, lic, fixed = TRUE))
+                topfiles <- topfiles[!found]
+                if (length(topfiles)) {
+                    any <- TRUE
+                    noteLog(Log)
+                    one <- (length(topfiles) == 1L)
+                    msg <- c(if(one) "File" else "Files",
+                             "\n",
+                             .format_lines_with_indent(topfiles),
+                             "\n",
+                             if(one) {
+                                 "will install at top-level and is not mentioned in the DESCRIPTION file.\n"
+                             } else {
+                                 "will install at top-level and are not mentioned in the DESCRIPTION file.\n"
+                             })
+                    printLog(Log, msg)
+                }
+            }
+        }
         if (!any) resultLog(Log, "OK")
     }
 
