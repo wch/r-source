@@ -83,28 +83,30 @@ FORCE:
 	@$(R) < $< > /dev/null
 
 .R.Rout:
-	@rm -f $@ $@.fail
-	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
-	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
-	@$(ECHO) "$(ECHO_T) OK"
+	@rm -f $@ $@.fail $@.log
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)" > $@.log
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && exit 1)
+	@$(ECHO) "$(ECHO_T) OK" >> $@.log
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
 	  $(ECHO) $(ECHO_N) \
-	    "  comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
-	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	    "  comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)" >> $@.log; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) >> $@.log|| exit 1; \
 	  mv $@.fail $@; \
-	  $(ECHO) "$(ECHO_T) OK"; \
+	  $(ECHO) "$(ECHO_T) OK" >> $@.log; \
 	fi
+	@cat $@.log; rm -f $@.log
 
 reg-plot.Rout: reg-plot.R
-	@rm -f $@ $@.fail
-	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
-	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
-	@$(ECHO) "$(ECHO_T) OK"
+	@rm -f $@ $@.fail $@.log
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)" > $@.log
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && exit 1)
+	@$(ECHO) "$(ECHO_T) OK" >> $@.log
 	@$(ECHO) $(ECHO_N) \
-	  "  comparing 'reg-plot.pdf' to '$(srcdir)/reg-plot.pdf.save' ...$(ECHO_C)"
-	@$(RDIFF) reg-plot.pdf $(srcdir)/reg-plot.pdf.save
-	@$(ECHO) "$(ECHO_T) OK"
+	  "  comparing 'reg-plot.pdf' to '$(srcdir)/reg-plot.pdf.save' ...$(ECHO_C)" >> $@.log
+	@$(RDIFF) reg-plot.pdf $(srcdir)/reg-plot.pdf.save >> $@.log
+	@$(ECHO) "$(ECHO_T) OK" >> $@.log
+	@cat $@.log; rm -f $@.log
 
 ## allow this to fail, as it may if the locale does not support Latin-1 chars
 reg-plot-latin1.Rout: reg-plot-latin1.R
@@ -234,7 +236,11 @@ test-Random:
 
 test-Reg:
 	@$(ECHO) "running regression tests ..."
-	@$(MK) $(test-out-reg) RVAL_IF_DIFF=1
+	@if test -n "${TEST_MC_CORES}"; then \
+	  $(MK) -j ${TEST_MC_CORES} $(test-out-reg) RVAL_IF_DIFF=1; \
+	else \
+	  $(MK) $(test-out-reg) RVAL_IF_DIFF=1; \
+	fi
 	@$(MK) $(test-out-reg3) RVAL_IF_DIFF=0
 
 test-Regexp:
@@ -247,6 +253,12 @@ test-Segfault:
 	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
 	-@rm -rf data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz FALSE-package.Rd FALSE.* ./-Ex.R
 
+## Avoid site library, which could be very large
+no-segfault.Rout: no-segfault.R
+	@rm -f $@ $@.fail
+	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@R_LIBS_SITE=no-such-dir $(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@$(ECHO) "$(ECHO_T) OK"
 
 test-Rd: $(srcdir)/testit.Rd $(srcdir)/ver20.Rd
 	@$(ECHO) "testing Rd conversion"
