@@ -8,7 +8,8 @@
   conveniently.
 }
 \usage{
-assertCondition(expr, ..., verbose=getOption("verbose"))
+assertCondition(expr, ..., verbose=getOption("verbose"),
+	        ignoreWarning = is.na(match("warning", conds)))
 }
 \arguments{
   \item{expr}{an unevaluated \R expression which will be evaluated via
@@ -17,6 +18,10 @@ assertCondition(expr, ..., verbose=getOption("verbose"))
     \code{"warning"}; defaults to \code{"condition"}.}
   \item{verbose}{logical indicating if the message should be shown even
     when the condition is asserted.}
+  \item{ignoreWarning}{logical indicating if \code{"warning"} messages
+    should be caught.  In that case, the warning is typically caught
+    \emph{before} an error can be signalled, and so an \code{"error"} can
+    not be asserted.}
 }
 %% \details{
 %% }
@@ -40,15 +45,22 @@ try( assertCondition(sqrt("abc"), "warning") )# -> error: had no warning
 ## verbose ==> show error message additionally:
      assertCondition(sqrt("abc"), verbose=TRUE, "error")
 
-try( assertCondition(matrix(1:5, 2,3), "warning") )
-## .. Expected warning, got simpleError in evaluating sqrt("abc")
+assertCondition(matrix(1:5, 2,3), "warning")
 try( assertCondition(matrix(1:8, 4,3), "error") )
-## .. Expected error, got simpleWarning in evaluating matrix(1:8, 4, 3)
-     assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning")
+## .. Failed to get expected error ....
 
 ## either warning or worse:
-assertCondition(matrix(1:8, 4, 3), "error", "warning") # OK
+assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning") # OK
 assertCondition(matrix(1:8, 4, 3), "warning", "error") # ditto
+
+## when both are signalled:
+ff <- function() { warning("my warning"); stop("my error") }
+    assertCondition(ff(), "warning")
+    assertCondition(ff(), "error")          # ok + signalling the warning
+    assertCondition(ff(), "error", ignoreWarning=TRUE)   # ditto
+try(assertCondition(ff(), "error", ignoreWarning=FALSE) )# not ok:
+                                          #-> gets warning instead of error
+assertCondition(ff(), "error", "warning") # ok (quietly, catching warning)
 }
 \keyword{programming}
 \keyword{error}
