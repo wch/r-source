@@ -69,20 +69,22 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item There is some support for parallel testing of an
-      installation.
+      installation, by setting \env{TEST_MC_CORES} is set to an integer
+      greater than one to indicate the maximum number of cores to be
+      used in parallel. (It is worth specifying at least 8 cores if
+      available.)  Most of these require a \command{make} program (such
+      as GNU \command{make} and \command{dmake}) which supports the
+      \command{${MAKE} -j nproc} syntax.
 
-      If environment variable \env{TEST_MC_CORES} is set to an integer
-      greater than one (and not on Windows) the tests of standard
-      package examples in \command{make check} are done in parallel
-      using that number of cores.  (It is probably worth using 8 cores
-      if available.)  This also applies to running
+      Except on Windows: the tests of standard package examples in
+      \command{make check} are done in parallel using that number of
+      cores.  This also applies to running
       \code{tools::testInstalledPackages()}.
 
+      The more time-consuming regression tests are done in parallel.
+
       The package checks in \command{make check-devel} and \command{make
-      check-recommended} are done in parallel if environemnt variable
-      \env{TEST_MC_CORES} is set, using its value as the maximum number
-      of parallel processes.  (This requires a \command{make} program
-      which supports \command{${MAKE} -j nproc}.)
+      check-recommended} are done in parallel.
     }
   }
 

@@ -2629,7 +2629,7 @@ provided), the file names should start with an @acronym{ASCII} letter
 and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
-A special case are @emph{package vignettes}.  Vignettes are documents in
+A special case is @emph{package vignettes}.  Vignettes are documents in
 PDF or @HTML{} format obtained from plain text literate source files
 from which @R{} knows how to extract @R{} code and create output (in
 PDF/@HTML{} or intermediate (La)@TeX{}).  Vignette engines do this work,
