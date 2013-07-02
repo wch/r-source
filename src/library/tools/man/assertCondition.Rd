@@ -51,10 +51,12 @@ assertCondition(matrix(1:8, 4, 3), "warning", "error") # ditto
 ## when both are signalled:
 ff <- function() { warning("my warning"); stop("my error") }
 assertCondition(ff(), "warning")
-assertCondition(ff(), "error")          # ok + signalling the warning
-## these two have the same effect *here*, but are not equivalent in general:
-assertCondition(ff(), "error", ignoreWarning=FALSE) # ok (quietly)
-assertCondition(ff(), "error", "warning")           # ok (quietly)
+    assertCondition(ff(), "error")          # ok + signalling the warning
+    assertCondition(ff(), "error", ignoreWarning=TRUE) # ditto
+try(assertCondition(ff(), "error", ignoreWarning=FALSE) )
+#-> not ok: gets warning instead of error
+assertCondition(ff(), "error", "warning") # ok (quietly, catching warning)
+
 }
 \keyword{programming}
 \keyword{error}
