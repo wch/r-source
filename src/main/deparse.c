@@ -856,13 +856,16 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    if ((TYPEOF(SYMVALUE(op)) == BUILTINSXP) ||
 		(TYPEOF(SYMVALUE(op)) == SPECIALSXP) ||
 		(userbinop = isUserBinop(op))) {
+		s = CDR(s);
 		if (userbinop) {
-		    fop.kind = PP_BINARY2;    /* not quite right for spacing, but can't be unary */
-		    fop.precedence = PREC_PERCENT;
-		    fop.rightassoc = 0;
+		    if (isNull(getAttrib(s, R_NamesSymbol))) {  
+			fop.kind = PP_BINARY2;    /* not quite right for spacing, but can't be unary */
+			fop.precedence = PREC_PERCENT;
+			fop.rightassoc = 0;
+		    } else 
+			fop.kind = PP_FUNCALL;  /* if args are named, deparse as function call (PR#15350) */
 		} else 
 		    fop = PPINFO(SYMVALUE(op));
-		s = CDR(s);
 		if (fop.kind == PP_BINARY) {
 		    switch (length(s)) {
 		    case 1:
@@ -883,8 +886,6 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	 	    else if (userbinop)
 	 	    	fop.kind = PP_BINARY;
 		}
-		if (fop.kind != PP_FUNCALL  && fop.kind != PP_SUBSET && !isNull(getAttrib(s, R_NamesSymbol)))
-		    fop.kind = PP_FUNCALL; /* operator with named operands */
 		switch (fop.kind) {
 		case PP_IF:
 		    print2buff("if (", d);
