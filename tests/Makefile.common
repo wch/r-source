@@ -247,7 +247,6 @@ test-Regexp:
 	@$(ECHO) "running regexp regression tests"
 	@$(R2) < $(srcdir)/utf8-regex.R > utf8-regex.Rout 2>&1 || (mv utf8-regex.Rout utf8-regex.Rout.fail && exit 1)
 
-## There can be problems with PACKAGES vs Packages on case-insenstive OSes
 test-Segfault:
 	@$(ECHO) "running tests to possibly trigger segfaults"
 	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
@@ -386,22 +385,20 @@ test-Packages-Recommended:
 	fi
 
 test-Packages1-Recommended:
-	-@rm -rf PACKAGES
-	@test -d Packages || mkdir Packages
+	@test -d RecPackages || mkdir RecPackages
 	@for p in $(R_PKGS_RECOMMENDED); do \
-	  rm -rf Packages/$${p}; \
+	  rm -rf RecPackages/$${p}; \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
-	    (cd Packages && $(TAR) xf -) ; \
+	    (cd RecPackages && $(TAR) xf -) ; \
 	  $(ECHO) "checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
-	    --library="$(top_builddir)/library" Packages/$${p} || $(ECHO); \
+	    --library="$(top_builddir)/library" RecPackages/$${p} || $(ECHO); \
 	done
 
 PKG_ROBJECTS = $(R_PKGS_RECOMMENDED:=.log)
 
 test-Packages2-Recommended:
-	-@rm -rf PACKAGES
-	@test -d Packages || mkdir Packages
+	@test -d RecPackages || mkdir RecPackages
 	@for p in $(R_PKGS_RECOMMENDED); do \
 	  touch $${p}.trin; \
 	done
@@ -411,12 +408,12 @@ stamp-Packages2: $(PKG_ROBJECTS)
 
 .trin.log:
 	@p=`basename $@ .log`; \
-	rm -rf Packages/$${p}; \
+	rm -rf RecPackages/$${p}; \
 	gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
-	    (cd Packages && $(TAR) xf -) ; \
+	    (cd RecPackages && $(TAR) xf -) ; \
 	  $(ECHO) "begin checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
-	    --library="$(top_builddir)/library" Packages/$${p}  > $@ 2>&1
+	    --library="$(top_builddir)/library" RecPackages/$${p}  > $@ 2>&1
 	@cat $@
 
 INSTFILES = README \
