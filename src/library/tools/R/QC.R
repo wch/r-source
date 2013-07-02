@@ -5653,7 +5653,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 ### * .check_depdef
 
 .check_depdef <-
-function(package, dir, lib.loc = NULL)
+function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
 {
     bad_depr <- c("plclust")
 
@@ -5669,8 +5669,11 @@ function(package, dir, lib.loc = NULL)
                  "real", "as.real", "is.real",
                  ".find.package", ".path.package")
 
-    bad_dev <- c("quartz", "windows", "win.graph", "win.metafile",
-                 "win.print", "x11", "X11")
+    ## X11 may not work on even a Unix-alike: it needs X support
+    ## (optional) at install time and and an X server at run time.
+    bad_dev <- c("quartz", "x11", "X11")
+    if(!WINDOWS)
+        bad_dev <- c(bad_dev,  "windows", "win.graph", "win.metafile", "win.print")
 
     bad <- c(bad_depr, bad_def, bad_dev)
     bad_closures <- character()
@@ -5813,7 +5816,9 @@ function(x, ...)
                         "Found the platform-specific device:",
                         "Found the platform-specific devices:"
                         )
-        out <- c(out, strwrap(msg), .pretty_format(x$devices))
+        out <- c(out, strwrap(msg), .pretty_format(x$devices),
+                 "dev.new() is the preferred way to open a new device,",
+                 "in the unlikely event one is needed.")
     }
     out
 }

@@ -1272,13 +1272,14 @@ setRlibs <-
         }
 
 
-        ## Use of deprecated and defunct?
+        ## Use of deprecated, defunct and platform-specific devices?
         if(!is_base_pkg && R_check_use_codetools && R_check_depr_def) {
+            win <- identical(OS_type, "windows")
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
-                              sprintf("tools:::.check_depdef(package = \"%s\")\n", pkgname)
+                              sprintf("tools:::.check_depdef(package = \"%s\", WINDOWS = %s)\n", pkgname, win)
                           else
-                              sprintf("tools:::.check_depdef(dir = \"%s\")\n", pkgdir))
+                              sprintf("tools:::.check_depdef(dir = \"%s\", WINDOWS = %s)\n", pkgdir, win))
             out8 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
         if (length(out1) || length(out2) || length(out3) ||
@@ -3929,7 +3930,7 @@ setRlibs <-
                     messageLog(Log, "this is a Windows-only package, skipping installation")
                     do_install <- FALSE
                 }
-            }
+            } else OS_type <- NA
 
             check_incoming <- Sys.getenv("_R_CHECK_CRAN_INCOMING_", "NA")
             check_incoming <- if(check_incoming == "NA") as_cran else {
