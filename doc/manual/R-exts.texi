@@ -2637,7 +2637,7 @@ provided), the file names should start with an @acronym{ASCII} letter
 and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
-A special case are PDF documents with sources in Sweave, which we call
+A special case is PDF documents with sources in Sweave, which we call
 @emph{package vignettes}.  (Since @R{} 3.0.0, other vignette formats are
 supported; see @ref{Non-Sweave vignettes}.)  The preferred location for
 the sources is the subdirectory @file{vignettes} of the source package,
