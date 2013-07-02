@@ -63,8 +63,13 @@
       always documented).
 
       \item The parser has been modified to use less memory.
-    }
-  }
+
+      \item Methods invoked by NextMethod had different dynamic parent
+      than the generic. This was causing trouble where S3 methods
+      invoked via lazy evaluation could lose track of their generic 
+      (\PR{15267}).
+
+} }
 
   \subsection{INSTALLATION}{
     \itemize{
