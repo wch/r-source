@@ -40,15 +40,21 @@ try( assertCondition(sqrt("abc"), "warning") )# -> error: had no warning
 ## verbose ==> show error message additionally:
      assertCondition(sqrt("abc"), verbose=TRUE, "error")
 
-try( assertCondition(matrix(1:5, 2,3), "warning") )
-## .. Expected warning, got simpleError in evaluating sqrt("abc")
+assertCondition(matrix(1:5, 2,3), "warning")
 try( assertCondition(matrix(1:8, 4,3), "error") )
-## .. Expected error, got simpleWarning in evaluating matrix(1:8, 4, 3)
-     assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning")
+## .. Failed to get expected error ....
 
 ## either warning or worse:
-assertCondition(matrix(1:8, 4, 3), "error", "warning") # OK
+assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning") # OK
 assertCondition(matrix(1:8, 4, 3), "warning", "error") # ditto
+
+## when both are signalled:
+ff <- function() { warning("my warning"); stop("my error") }
+assertCondition(ff(), "warning")
+assertCondition(ff(), "error")          # ok + signalling the warning
+## these two have the same effect *here*, but are not equivalent in general:
+assertCondition(ff(), "error", ignoreWarning=FALSE) # ok (quietly)
+assertCondition(ff(), "error", "warning")           # ok (quietly)
 }
 \keyword{programming}
 \keyword{error}
