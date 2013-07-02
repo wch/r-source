@@ -58,10 +58,19 @@ uf <- factor(u)
 stopifnot(t2  / t1 < 20)
 ## was around 600--850 for R <= 3.0.1
 
+
 ## ftable(<array with unusual dimnames>)
 (m <- matrix(1:12, 3,4, dimnames=list(ROWS=paste0("row",1:3), COLS=NULL)))
 ftable(m)
 ## failed to format (and hence print) because of NULL 'COLS' dimnames
+
+## regression test formerly in kmeans.Rd, but result differs by platform
+## Artificial example [was "infinite loop" on x86_64; PR#15364]
+rr <- c(rep(-0.4, 5), rep(-0.4- 1.11e-16, 14), -.5)
+r. <- signif(rr, 12)
+try ( k3 <- kmeans(rr, 3, trace=2) ) ## Warning: Quick-Transfer.. steps exceed
+try ( k. <- kmeans(r., 3) ) # after rounding, have only two distinct points
+      k. <- kmeans(r., 2)   # fine
 
 
 proc.time()

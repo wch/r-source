@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-06-30 r63119) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-01 r63131) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -8200,7 +8200,7 @@ Within cluster sum of squares by cluster:
 Available components:
 
 [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-[6] "betweenss"    "size"         "iter"        
+[6] "betweenss"    "size"         "iter"         "ifault"      
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:2, pch = 8, cex = 2)
 > 
@@ -8262,7 +8262,7 @@ Within cluster sum of squares by cluster:
 Available components:
 
 [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-[6] "betweenss"    "size"         "iter"        
+[6] "betweenss"    "size"         "iter"         "ifault"      
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:5, pch = 8)
 > 
