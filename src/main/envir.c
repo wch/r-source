@@ -367,8 +367,11 @@ static SEXP DeleteItem(SEXP symbol, SEXP lst)
 
 static void R_HashDelete(int hashcode, SEXP symbol, SEXP table)
 {
-    SET_VECTOR_ELT(table, hashcode % HASHSIZE(table),
-	DeleteItem(symbol, VECTOR_ELT(table, hashcode % HASHSIZE(table))));
+    SEXP list = DeleteItem(symbol,
+			   VECTOR_ELT(table, hashcode % HASHSIZE(table)));
+    if (list == R_NilValue)
+	SET_HASHPRI(table, HASHPRI(table) - 1);
+    SET_VECTOR_ELT(table, hashcode % HASHSIZE(table), list);
     return;
 }
 
@@ -1629,6 +1632,8 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
 	list = RemoveFromList(name, VECTOR_ELT(hashtab, idx), &found);
 	if (found) {
 	    if(env == R_GlobalEnv) R_DirtyImage = 1;
+	    if (list == R_NilValue)
+		SET_HASHPRI(hashtab, HASHPRI(hashtab) - 1);
 	    SET_VECTOR_ELT(hashtab, idx, list);
 #ifdef USE_GLOBAL_CACHE
 	    if (IS_GLOBAL_FRAME(env))
