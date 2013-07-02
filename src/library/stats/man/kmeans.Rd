@@ -29,7 +29,9 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \item{iter.max}{the maximum number of iterations allowed.}
   \item{nstart}{if \code{centers} is a number, how many random sets
     should be chosen?}
-  \item{algorithm}{character: may be abbreviated.}
+  \item{algorithm}{character: may be abbreviated.  Note that
+    \code{"Lloyd"} and \code{"Forgy"} and alternative names for one
+    algorithm.}
   \item{object}{an \R object of class \code{"kmeans"}, typically the
     result \code{ob} of \code{ob <- kmeans(..)}.}
   \item{method}{character: may be abbreviated. \code{"centers"} causes
@@ -78,12 +80,16 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   }
   \item{centers}{A matrix of cluster centres.}
   \item{totss}{The total sum of squares.}
-  \item{withinss}{Vector of within-cluster sum of squares, one component per cluster.}
-  \item{tot.withinss}{Total within-cluster sum of squares, i.e., \code{sum(withinss)}.}
-  \item{betweenss}{The between-cluster sum of squares, i.e. \code{totss-tot.withinss}.}
+  \item{withinss}{Vector of within-cluster sum of squares,
+    one component per cluster.}
+  \item{tot.withinss}{Total within-cluster sum of squares,
+    i.e., \code{sum(withinss)}.}
+  \item{betweenss}{The between-cluster sum of squares,
+    i.e. \code{totss-tot.withinss}.}
   \item{size}{The number of points in each cluster.}
   \item{iter}{The number of (outer) iterations.}
-  \item{ifault}{possibly an algorithm problem indicator for experts.}
+  \item{ifault}{integer: indicator of a possible algorithm problem
+    -- for experts.}
 }
 \references{
   Forgy, E. W. (1965) Cluster analysis of multivariate data:
@@ -141,13 +147,6 @@ kmeans(x,1)$withinss # trivial one-cluster, (its W.SS == ss(x))
 (cl <- kmeans(x, 5, nstart = 25))
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:5, pch = 8)
-
-## Artificial example [was "infinite loop" on x86_64; PR#15364]
-rr <- c(rep(-0.4, 5), rep(-0.4- 1.11e-16, 14), -.5)
-r. <- signif(rr, 12)
-try ( k3 <- kmeans(rr, 3, trace=2) ) ## Warning: Quick-Transfer.. steps exceed
-try ( k. <- kmeans(r., 3) ) # after rounding, have only two distinct points
-      k. <- kmeans(r., 2)   # fine
 }
 \keyword{multivariate}
 \keyword{cluster}
