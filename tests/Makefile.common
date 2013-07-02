@@ -389,7 +389,7 @@ test-Packages1-Recommended:
 	-@rm -rf PACKAGES
 	@test -d Packages || mkdir Packages
 	@for p in $(R_PKGS_RECOMMENDED); do \
-	  rm -f Packages/$${p}; \
+	  rm -rf Packages/$${p}; \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd Packages && $(TAR) xf -) ; \
 	  $(ECHO) "checking package '$${p}'"; \
@@ -411,7 +411,7 @@ stamp-Packages2: $(PKG_ROBJECTS)
 
 .trin.log:
 	@p=`basename $@ .log`; \
-	rm -f Packages/$${p}; \
+	rm -rf Packages/$${p}; \
 	gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd Packages && $(TAR) xf -) ; \
 	  $(ECHO) "begin checking package '$${p}'"; \
