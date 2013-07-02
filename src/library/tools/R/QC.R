@@ -5669,7 +5669,10 @@ function(package, dir, lib.loc = NULL)
                  "real", "as.real", "is.real",
                  ".find.package", ".path.package")
 
-    bad <- c(bad_depr, bad_def)
+    bad_dev <- c("quartz", "windows", "win.graph", "win.metafile",
+                 "win.print", "x11", "X11")
+
+    bad <- c(bad_depr, bad_def, bad_dev)
     bad_closures <- character()
     found <- character()
 
@@ -5759,9 +5762,10 @@ function(package, dir, lib.loc = NULL)
     found <- sort(unique(found))
     deprecated <- found[found %in% bad_depr]
     defunct <- found[found %in% bad_def]
+    devices <- found[found %in% bad_dev]
 
     out <- list(bad_closures = bad_closures, deprecated = deprecated,
-                defunct = defunct)
+                defunct = defunct, devices = devices)
     class(out) <- "check_depdef"
     out
 }
@@ -5771,22 +5775,22 @@ function(x, ...)
 {
     out <- if(length(x$bad_closures)) {
         msg <- ngettext(length(x$bad_closures),
-                        "Found an obsolete call in the following function:",
-                        "Found an obsolete call in the following functions:"
+                        "Found an obsolete/platform-specific call in the following function:",
+                        "Found an obsolete/platform-specific call in the following functions:"
                         )
         c(strwrap(msg), .pretty_format(x$bad_closures))
     } else character()
     if(length(x$bad_S4methods)) {
         msg <- ngettext(length(x$bad_S4methods),
-                        "Found an obsolete call in methods for the following S4 generic:",
-                        "Found an obsolete call in methods for the following S4 generics:"
+                        "Found an obsolete/platform-specific call in methods for the following S4 generic:",
+                        "Found an obsolete/platform-specific call in methods for the following S4 generics:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_S4methods))
     }
     if(length(x$bad_refs)) {
         msg <- ngettext(length(x$bad_refs),
-                        "Found an obsolete call in methods for the following reference class:",
-                        "Found an obsolete call in methods for the following reference classes:"
+                        "Found an obsolete/platform-specific call in methods for the following reference class:",
+                        "Found an obsolete/platform-specific call in methods for the following reference classes:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_refs))
     }
@@ -5803,6 +5807,13 @@ function(x, ...)
                         "Found the defunct/removed functions:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$defunct))
+    }
+    if(length(x$devices)) {
+        msg <- ngettext(length(x$devices),
+                        "Found the platform-specific device:",
+                        "Found the platform-specific devices:"
+                        )
+        out <- c(out, strwrap(msg), .pretty_format(x$devices))
     }
     out
 }

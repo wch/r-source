@@ -4006,7 +4006,8 @@ Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_DEPRECATED_DEFUNCT_
 Should the package code be checked for the presence of recently deprecated
-or defunct functions (including completely removed functions). 
+or defunct functions (including completely removed functions).  Also for
+platform-specific graphics devices.
 Default: false (but true for CRAN submission checks).
 
 @end vtable
