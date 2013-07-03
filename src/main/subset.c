@@ -937,7 +937,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int len = length(thesub);
 
 	if (len > 1)
-	    x = vectorIndex(x, thesub, 0, len-1, pok, call);
+	    x = vectorIndex(x, thesub, 0, len-1, pok, call, FALSE);
 	    
 	offset = get1index(thesub, getAttrib(x, R_NamesSymbol),
 			   xlength(x), pok, len > 1 ? len-1 : -1, call);

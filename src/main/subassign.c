@@ -1572,10 +1572,11 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	thesub = CAR(subs);
 	len = length(thesub); /* depth of recursion, small */
 	if (len > 1) {
-	    xup = vectorIndex(x, thesub, 0, len-2, /*partial ok*/TRUE, call);
+	    xup = vectorIndex(x, thesub, 0, len-2, /*partial ok*/TRUE, call,
+			      TRUE);
 	    /* OneIndex sets newname, but it will be overwritten before being used. */
 	    off = OneIndex(xup, thesub, xlength(xup), 0, &newname, len-2, R_NilValue);
-	    x = vectorIndex(xup, thesub, len-2, len-1, TRUE, call);
+	    x = vectorIndex(xup, thesub, len-2, len-1, TRUE, call, TRUE);
 	    recursed = TRUE;
 	}
     }
