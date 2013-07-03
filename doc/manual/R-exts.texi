@@ -2147,10 +2147,11 @@ and it is required for packages which need it to install (including
 those with @file{configure.win} or @file{cleanup.win} scripts or a
 @file{src} directory) and e.g.@: need vignettes built.
 
-You may need to set @env{TMPDIR} to point to a suitable writable
-directory with a path not containing spaces -- use forward slashes for
-the separators.  Also, the directory needs to be on a case-honouring
-file system (some network-mounted file systems are not).
+You may need to set the environment variable @env{TMPDIR} to point to a
+suitable writable directory with a path not containing spaces -- use
+forward slashes for the separators.  Also, the directory needs to be on
+a case-honouring file system (some network-mounted file systems are
+not).
 @end quotation
 
 
@@ -2195,15 +2196,16 @@ be rare false positives.)
 The @file{DESCRIPTION} file is checked for completeness, and some of its
 entries for correctness.  Unless installation tests are skipped,
 checking is aborted if the package dependencies cannot be resolved at
-run time.  (You may need to set @env{R_LIBS} if dependent packages are
-in a separate library tree.) One check is that the package name is not
-that of a standard package, nor one of the defunct standard packages
-(@samp{ctest}, @samp{eda}, @samp{lqs}, @samp{mle}, @samp{modreg},
-@samp{mva}, @samp{nls}, @samp{stepfun} and @samp{ts}).  Another check is
-that all packages mentioned in @code{library} or @code{require}s or from
-which the @file{NAMESPACE} file imports or are called @emph{via}
-@code{::} or @code{:::} are listed (in @samp{Depends}, @samp{Imports},
-@samp{Suggests}): this is not an exhaustive check of the actual imports.
+run time.  (You may need to set @env{R_LIBS} in the environment if
+dependent packages are in a separate library tree.) One check is that
+the package name is not that of a standard package, nor one of the
+defunct standard packages (@samp{ctest}, @samp{eda}, @samp{lqs},
+@samp{mle}, @samp{modreg}, @samp{mva}, @samp{nls}, @samp{stepfun} and
+@samp{ts}).  Another check is that all packages mentioned in
+@code{library} or @code{require}s or from which the @file{NAMESPACE}
+file imports or are called @emph{via} @code{::} or @code{:::} are listed
+(in @samp{Depends}, @samp{Imports}, @samp{Suggests}): this is not an
+exhaustive check of the actual imports.
 
 @item
 Available index information (in particular, for demos and vignettes) is
@@ -3482,6 +3484,12 @@ Portable packages should have simple file names: use only alphanumeric
 @acronym{ASCII} characters and @code{.}, and avoid those names not
 allowed under Windows which are mentioned above.
 
+Many of the graphics devices are platform-specific: even @code{X11()}
+(aka @code{x11()}) which although emulated on Windows may not be
+available on a Unix-alike (and is not the preferred screen device on OS
+X).  It is rarely necessary for package code or examples to open a new
+device, but if essential, use @code{dev.new()}.
+
 Use @command{R CMD build} to make the release @file{.tar.gz} file.
 
 @command{R CMD check} provides a basic set of checks, but often further
@@ -3757,8 +3765,8 @@ for further analysis.
 
 Timings for the tests and vignette runs are given at the bottom of the
 corresponding log file: note that log files for successful vignette runs
-are only retained if @env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_} is set
-to a true value.
+are only retained if environment variable
+@env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_} is set to a true value.
 
 
 @node Encoding issues, Binary distribution, Check timing, Writing portable packages
@@ -8207,7 +8215,8 @@ library.dynam("packA", pkg, lib,
 @end example
 
 Note that @code{DLLpath} can only set one path, and so for linking to
-two or more packages you would need to resort to setting @env{PATH}.
+two or more packages you would need to resort to setting environment
+variable @env{PATH}.
 
 @end itemize
 
