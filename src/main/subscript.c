@@ -21,7 +21,7 @@
  *
  *  OneIndex()        -- used for "[[<-" in ./subassign.c
  *  get1index()       -- used for "[["   in ./subassign.c & subset.c
- *  vectorIndex()     -- used for "[[" with a vector arg
+ *  vectorIndex()     -- used for "[[" and "[[<-" with a vector arg
 
  *  mat2indsub()      -- for "mat[i]"     "    "            "
 
@@ -273,12 +273,19 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 /* This is used for [[ and [[<- with a vector of indices of length > 1 .
    x is a list or pairlist, and it is indexed recusively from 
    level start to level stop-1.  ( 0...len-1 or 0..len-2 then len-1).
+   For [[<- it needs to duplicate if substructure has NAMED > 1.
  */
 SEXP attribute_hidden
-vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call) 
+vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
+	    Rboolean dup) 
 {
     int i;
     R_xlen_t offset;
+    SEXP cx;
+
+    /* sanity check */
+    if (dup && NAMED(x) > 1)
+	error("should only be called in an assignment context.");
 
     for(i = start; i < stop; i++) {
 	if(!isVectorList(x) && !isPairList(x)) {
@@ -296,9 +303,19 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call)
 	    if (offset > R_SHORT_LEN_MAX)
 		error("invalid subscript for pairlist");
 #endif
-	    x = CAR(nthcdr(x, (int) offset));
+	    cx = nthcdr(x, (int) offset);
+	    x = CAR(cx);
+	    if (dup && NAMED(x) > 1) {
+		x = duplicate(x);
+		nthcdr(x, (int) offset);
+	    }
 	} else {
+	    cx = x;
 	    x = VECTOR_ELT(x, offset);
+	    if (dup && NAMED(x) > 1) {
+		x = duplicate(x);
+		SET_VECTOR_ELT(cx, offset, x);
+	    }
     	}
     }
     return x;
