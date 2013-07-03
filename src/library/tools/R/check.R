@@ -3362,7 +3362,7 @@ setRlibs <-
             ## Check for installed copies of the package in some subdir.
             files <- files[basename(dirname(files)) == "Meta"]
             if(length(files) &&
-               all(!is.na(match(c("nsInfo.rds", "package.rds"),
+               all(!is.na(match(c("package.rds", "hsearch.rds"),
                                 basename(files))))) {
                 if(!any) noteLog(Log)
                 any <- TRUE
