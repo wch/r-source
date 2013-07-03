@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-07-01 r63128) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-03 r63159) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -223,18 +223,31 @@ Error in assertCondition(sqrt("abc"), "warning") :
 >      assertCondition(sqrt("abc"), verbose=TRUE, "error")
 Asserted error: non-numeric argument to mathematical function
 > 
-> try( assertCondition(matrix(1:5, 2,3), "warning") )
-> ## .. Expected warning, got simpleError in evaluating sqrt("abc")
+> assertCondition(matrix(1:5, 2,3), "warning")
 > try( assertCondition(matrix(1:8, 4,3), "error") )
+Warning in matrix(1:8, 4, 3) :
+  data length [8] is not a sub-multiple or multiple of the number of columns [3]
 Error in assertCondition(matrix(1:8, 4, 3), "error") : 
-  Expected error, got simpleWarning in evaluating matrix(1:8, 4, 3)
-> ## .. Expected error, got simpleWarning in evaluating matrix(1:8, 4, 3)
->      assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning")
-Asserted warning: data length [8] is not a sub-multiple or multiple of the number of columns [3]
+  Failed to get expected error in evaluating matrix(1:8, 4, 3)
+> ## .. Failed to get expected error ....
 > 
 > ## either warning or worse:
-> assertCondition(matrix(1:8, 4, 3), "error", "warning") # OK
+> assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning") # OK
+Asserted warning: data length [8] is not a sub-multiple or multiple of the number of columns [3]
 > assertCondition(matrix(1:8, 4, 3), "warning", "error") # ditto
+> 
+> ## when both are signalled:
+> ff <- function() { warning("my warning"); stop("my error") }
+>     assertCondition(ff(), "warning")
+>     assertCondition(ff(), "error")          # ok + signalling the warning
+Warning in ff() : my warning
+>     assertCondition(ff(), "error", ignoreWarning=TRUE)   # ditto
+Warning in ff() : my warning
+> try(assertCondition(ff(), "error", ignoreWarning=FALSE) )# not ok:
+Error in assertCondition(ff(), "error", ignoreWarning = FALSE) : 
+  Expected error, got simpleWarning in evaluating ff()
+>                                           #-> gets warning instead of error
+> assertCondition(ff(), "error", "warning") # ok (quietly, catching warning)
 > 
 > 
 > 
@@ -1022,7 +1035,7 @@ List of 5
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.829 0.042 0.983 0 0 
+Time elapsed:  0.664 0.03 0.701 0 0 
 > grDevices::dev.off()
 null device 
           1 
