@@ -87,7 +87,7 @@ clean:
 
 distclean: clean
 	@$(MK) -C Examples $@
-	@rm -rf *.Rcheck Packages
+	@rm -rf *.Rcheck RecPackages
 
 
 install-tests:
