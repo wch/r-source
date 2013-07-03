@@ -29,7 +29,7 @@ function(formula, data, subset, na.action, var.equal = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$var.equal <- NULL
-    m[[1L]] <- as.name("model.frame")
+    m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
     y <- mf[[response]]

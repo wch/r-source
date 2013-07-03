@@ -19,7 +19,7 @@
 manova <- function(...)
 {
     Call <- fcall <- match.call()
-    fcall[[1L]] <- as.name("aov")
+    fcall[[1L]] <- quote(stats::aov)
     result <- eval(fcall, parent.frame())
     if(inherits(result, "aovlist")) {
         for(i in seq_along(result)) {

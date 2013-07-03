@@ -30,7 +30,7 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     mf$model <- mf$span <- mf$enp.target <- mf$degree <-
 	mf$parametric <- mf$drop.square <- mf$normalize <- mf$family <-
 	    mf$method <- mf$control <- mf$... <- NULL
-    mf[[1L]] <- as.name("model.frame")
+    mf[[1L]] <- quote(stats::model.frame)
     mf <- eval(mf, parent.frame())
     if (match.arg(method) == "model.frame") return(mf)
     mt <- attr(mf, "terms")

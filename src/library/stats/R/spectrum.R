@@ -215,12 +215,12 @@ plot.spec <-
     log <- match.arg(log)
     m <- match.call()
     if(plot.type == "coherency") {
-        m[[1L]] <- as.name("plot.spec.coherency")
+        m[[1L]] <- quote(stats::plot.spec.coherency)
         m$plot.type <- m$log <- m$add <- NULL
         return(eval(m, parent.frame()))
     }
     if(plot.type == "phase") {
-        m[[1L]] <- as.name("plot.spec.phase")
+        m[[1L]] <- quote(stats::plot.spec.phase)
         m$plot.type <- m$log <- m$add <- NULL
         return(eval(m, parent.frame()))
     }

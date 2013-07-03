@@ -34,7 +34,7 @@ function(formula, data = list(),
     m <- match.call(expand.dots = FALSE)
     m <- m[c(1L, match(c("formula", "data", "subset"), names(m), 0L))]
     require(stats, quietly=TRUE)
-    m[[1L]] <- as.name("model.frame")
+    m[[1L]] <- quote(stats::model.frame)
     mf <- eval.parent(m)
     if(NCOL(mf) != 2L)
         stop("'formula' should specify exactly two variables")

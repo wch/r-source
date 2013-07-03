@@ -697,7 +697,7 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
     m <- match.call(expand.dots = FALSE)
     m$value <- NULL
     m$extend <- TRUE
-    m[[1L]] <- as.name("window")
+    m[[1L]] <- quote(stats::window)
     xx <- eval.parent(m)
     xxtsp <- tsp(xx)
     start <- xxtsp[1L]; end <- xxtsp[2L]

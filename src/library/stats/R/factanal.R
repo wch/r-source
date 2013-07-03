@@ -69,7 +69,7 @@ factanal <-
             names(mf)[names(mf) == "x"] <- "formula"
             mf$factors <- mf$covmat <- mf$scores <- mf$start <-
                 mf$rotation <- mf$control <- mf$... <- NULL
-            mf[[1L]] <- as.name("model.frame")
+            mf[[1L]] <- quote(stats::model.frame)
             mf <- eval.parent(mf)
             na.act <- attr(mf, "na.action")
             if (.check_vars_numeric(mf))

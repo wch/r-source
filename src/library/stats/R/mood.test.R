@@ -74,7 +74,7 @@ function(formula, data, subset, na.action, ...)
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
-    m[[1L]] <- as.name("model.frame")
+    m[[1L]] <- quote(stats::model.frame)
     m$... <- NULL
     mf <- eval(m, parent.frame())
     DNAME <- paste(names(mf), collapse = " by ")

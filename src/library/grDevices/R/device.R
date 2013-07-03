@@ -136,7 +136,7 @@ dev.print <- function(device = postscript, ...)
     if(!dev.displaylist())
         stop("can only print from a screen device")
     oc <- match.call()
-    oc[[1L]] <- as.name("dev.copy")
+    oc[[1L]] <- quote(grDevices::dev.copy)
     oc$device <- device
     din <- graphics::par("din"); w <- din[1L]; h <- din[2L]
     if(missing(device)) { ## safe way to recognize postscript
@@ -196,7 +196,7 @@ dev.copy2eps <- function(...)
     if(!dev.displaylist())
         stop("can only print from a screen device")
     oc <- match.call()
-    oc[[1L]] <- as.name("dev.copy")
+    oc[[1L]] <- quote(grDevices::dev.copy)
     oc$device <- postscript
     oc$onefile <- FALSE
     oc$horizontal <- FALSE
@@ -222,7 +222,7 @@ dev.copy2pdf <- function(..., out.type = "pdf")
     if(!dev.displaylist())
         stop("can only print from a screen device")
     oc <- match.call()
-    oc[[1L]] <- as.name("dev.copy")
+    oc[[1L]] <- quote(grDevices::dev.copy)
     if(out.type == "quartz" && capabilities("aqua")) {
         oc$device <- quartz
         oc$type <- "pdf"
