@@ -1274,7 +1274,7 @@ setRlibs <-
 
         ## Use of deprecated, defunct and platform-specific devices?
         if(!is_base_pkg && R_check_use_codetools && R_check_depr_def) {
-            win <- identical(OS_type, "windows")
+            win <- !is.na(OS_type) && OS_type == "windows"
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
                               sprintf("tools:::.check_depdef(package = \"%s\", WINDOWS = %s)\n", pkgname, win)
