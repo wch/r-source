@@ -48,9 +48,9 @@
       useful as \code{as.data.frame.table()}, now passes \code{sep} and
       \code{base} arguments to \code{provideDimnames()}.
 
-      \item The new \code{unirootS()} function is a \sQuote{safe}
-      version of \code{uniroot()} auto-extending the search interval
-      when needed.
+      \item \code{uniroot()} gets new optional arguments, notably
+      \code{extendInt}, allowing to auto-extend the search interval when
+      needed.
 
       % advertize at all?
       % \item New \code{.lm.fit()} for benchmark lovers but not Joe
