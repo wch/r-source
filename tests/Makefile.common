@@ -85,28 +85,29 @@ FORCE:
 .R.Rout:
 	@rm -f $@ $@.fail $@.log
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)" > $@.log
-	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && exit 1)
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && rm $@.log && exit 1)
 	@$(ECHO) "$(ECHO_T) OK" >> $@.log
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
 	  $(ECHO) $(ECHO_N) \
 	    "  comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)" >> $@.log; \
-	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) >> $@.log|| exit 1; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) >> $@.log \
+	    || (cat $@.log && rm @.log && exit 1); \
 	  mv $@.fail $@; \
 	  $(ECHO) "$(ECHO_T) OK" >> $@.log; \
 	fi
-	@cat $@.log; rm -f $@.log
+	@cat $@.log; rm $@.log
 
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail $@.log
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)" > $@.log
-	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && exit 1)
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && cat $@.log && rm $@.log && exit 1)
 	@$(ECHO) "$(ECHO_T) OK" >> $@.log
 	@$(ECHO) $(ECHO_N) \
 	  "  comparing 'reg-plot.pdf' to '$(srcdir)/reg-plot.pdf.save' ...$(ECHO_C)" >> $@.log
 	@$(RDIFF) reg-plot.pdf $(srcdir)/reg-plot.pdf.save >> $@.log
 	@$(ECHO) "$(ECHO_T) OK" >> $@.log
-	@cat $@.log; rm -f $@.log
+	@cat $@.log; rm $@.log
 
 ## allow this to fail, as it may if the locale does not support Latin-1 chars
 reg-plot-latin1.Rout: reg-plot-latin1.R
