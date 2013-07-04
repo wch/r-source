@@ -47,7 +47,7 @@ assertCondition <- function(expr, ..., verbose = getOption("verbose")) {
     res <- res[[1]]
     if(length(res)) {
 	if(is.null(conds)) {
-	    if(verbose) cat(sprintf("Got condition \"%s\": %s \n",
+	    if(verbose) cat(sprintf("Got condition \"%s\": %s\n",
 				    class(lastCond)[[1]],
 				    conditionMessage(lastCond)))
 	    invisible(res)
@@ -59,7 +59,7 @@ assertCondition <- function(expr, ..., verbose = getOption("verbose")) {
 		    got <- res[which.max(ii)]
 		    text <- if(got %in% class(lastCond))
 			paste(":", conditionMessage(lastCond)) else ""
-		    cat(sprintf("Asserted %s %s\n", got, text))
+		    cat(sprintf("Asserted %s%s\n", got, text))
 		}
 		invisible(res)
 	    }

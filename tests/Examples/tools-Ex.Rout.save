@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-04 r63172) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-04 r63177) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -100,7 +100,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x2853b10>
+<environment: 0x2ecf050>
 
 $showURLs
 [1] FALSE
@@ -134,7 +134,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x2853b10>
+<environment: 0x2ecf050>
 
 $showURLs
 [1] FALSE
@@ -168,7 +168,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x2853b10>
+<environment: 0x2ecf050>
 
 $showURLs
 [1] FALSE
@@ -221,7 +221,7 @@ Error in assertCondition(sqrt("abc"), "warning") :
   Got simpleError (non-numeric argument to mathematical function) in evaluating sqrt("abc"); expected warning
 > ## verbose ==> show error message additionally:
 >      assertCondition(sqrt("abc"), verbose=TRUE, "error")
-Asserted error : non-numeric argument to mathematical function
+Asserted error: non-numeric argument to mathematical function
 > 
 > assertCondition(matrix(1:5, 2,3), "warning")
 > try( assertCondition(matrix(1:8, 4,3), "error") )
@@ -231,7 +231,7 @@ Error in assertCondition(matrix(1:8, 4, 3), "error") :
 > 
 > ## either warning or worse:
 > assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning") # OK
-Asserted warning : data length [8] is not a sub-multiple or multiple of the number of columns [3]
+Asserted warning: data length [8] is not a sub-multiple or multiple of the number of columns [3]
 > assertCondition(matrix(1:8, 4, 3), "warning", "error") # ditto
 > 
 > ## when both are signalled:
@@ -245,7 +245,7 @@ Asserted warning : data length [8] is not a sub-multiple or multiple of the numb
 > assertCondition( assertCondition(sqrt("abc"), "warning"), "error")
 > assertCondition( assertCondition(matrix(1:8, 4,3), "error"),
 +                 "error", verbose=TRUE)
-Asserted error : Got simpleWarning (data length [8] is not a sub-multiple or multiple of the number of columns [3]) in evaluating matrix(1:8, 4, 3); expected error
+Asserted error: Got simpleWarning (data length [8] is not a sub-multiple or multiple of the number of columns [3]) in evaluating matrix(1:8, 4, 3); expected error
 > 
 > 
 > 
@@ -285,7 +285,7 @@ Asserted error : Got simpleWarning (data length [8] is not a sub-multiple or mul
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x2d8adf8>
+<environment: 0x3406378>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1033,7 +1033,7 @@ List of 5
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.474 0.026 0.639 0 0 
+Time elapsed:  0.471 0.023 0.593 0 0 
 > grDevices::dev.off()
 null device 
           1 
