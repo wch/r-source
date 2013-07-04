@@ -65,11 +65,17 @@
       \item The parser has been modified to use less memory.
 
       \item Methods invoked by NextMethod had different dynamic parent
-      than the generic. This was causing trouble where S3 methods
-      invoked via lazy evaluation could lose track of their generic 
+      to the generic. This was causing trouble where S3 methods invoked
+      via lazy evaluation could lose track of their generic
       (\PR{15267}).
 
-} }
+      \item Various functions in \pkg{stats} and elsewhere that use
+      non-standard evaluation are now more careful to follow the
+      namespace scoping rules.  E.g. \code{stats::lm()} can now find
+      \code{stats::model.frame()} even if \pkg{stats} is not on the
+      search path or if some package defines a function of that name.
+    }
+  }
 
   \subsection{INSTALLATION}{
     \itemize{
