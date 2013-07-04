@@ -163,7 +163,9 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	! (TYPEOF(vec) == LISTSXP || TYPEOF(vec) == LANGSXP))
 	return R_NilValue;
 
+    const void *vmax = vmaxget();
     if (isString(name)) name = install(translateChar(STRING_ELT(name, 0)));
+    vmaxset(vmax);
 
     /* special test for c(NA, n) rownames of data frames: */
     if (name == R_RowNamesSymbol) {
@@ -222,8 +224,11 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
     PROTECT(vec);
     PROTECT(name);
 
-    if (isString(name))
+    if (isString(name)) {
+	const void *vmax = vmaxget();
 	name = install(translateChar(STRING_ELT(name, 0)));
+	vmaxset(vmax);
+    }
     if (val == R_NilValue) {
 	UNPROTECT(2);
 	return removeAttrib(vec, name);
@@ -642,9 +647,11 @@ static SEXP cache_class(const char *class, SEXP klass) {
     return klass;
 }
 
-static SEXP S4_extends(SEXP klass) {
-  static SEXP s_extends = 0, s_extendsForS3;
+static SEXP S4_extends(SEXP klass) 
+{
+    static SEXP s_extends = 0, s_extendsForS3;
     SEXP e, val; const char *class;
+    const void *vmax = vmaxget();
     if(!s_extends) {
 	s_extends = install("extends");
 	s_extendsForS3 = install(".extendsForS3");
@@ -656,6 +663,7 @@ static SEXP S4_extends(SEXP klass) {
         return klass;
     class = translateChar(STRING_ELT(klass, 0)); /* TODO: include package attr. */
     val = findVarInFrame(R_S4_extends_table, install(class));
+    vmaxset(vmax);
     if(val != R_UnboundValue)
        return val;
     PROTECT(e = allocVector(LANGSXP, 2));
@@ -1447,6 +1455,7 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 /* These provide useful shortcuts which give access to */
 /* the dimnames for matrices and arrays in a standard form. */
 
+/* NB: this may return R_alloc-ed rn and dn */
 void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl,
 		       const char **rn, const char **cn)
 {

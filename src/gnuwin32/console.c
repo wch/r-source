@@ -285,7 +285,7 @@ static void xbufadds(xbuf p, const char *s, int user)
 	xbufaddxs(p, tmp, user);
     } else {
 	/* very long line */
-	void *vmax = vmaxget();
+	const void *vmax = vmaxget();
 	wchar_t *tmp = (wchar_t*) R_alloc(n, sizeof(wchar_t));
 	enctowcs(tmp, (char *) s, n);
 	xbufaddxs(p, tmp, user);

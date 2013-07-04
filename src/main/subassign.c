@@ -1241,6 +1241,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
     SEXP indx, sub = CAR(s);
     int ii, n, nx;
     R_xlen_t stretch = 1;
+    const void *vmax = vmaxget();
 
     if (length(s) > 1)
 	error(_("invalid number of subscripts to list assign"));
@@ -1278,6 +1279,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 	}
     }
     UNPROTECT(3);
+    vmaxset(vmax);
     return x;
 }
 
@@ -1288,9 +1290,7 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
     SEXP a, pa, px;
     int i, ii, *indx, ns, nx;
     R_xlen_t stretch=0;
-    const void *vmax;
-
-    vmax = vmaxget();
+    const void *vmax = vmaxget();
     nx = length(x);
     PROTECT(s = GetOneIndex(s, ind));
     PROTECT(s = makeSubscript(x, s, &stretch, R_NilValue));

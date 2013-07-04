@@ -2500,6 +2500,7 @@ static void text_init(Rconnection con, SEXP text, int type)
     size_t nchars = 0; /* -Wall */
     double dnc = 0.0;
     Rtextconn this = con->private;
+    const void *vmax = vmaxget();
 
     for(i = 0; i < nlines; i++)
 	dnc += 
@@ -2524,6 +2525,7 @@ static void text_init(Rconnection con, SEXP text, int type)
     }
     this->nchars = nchars;
     this->cur = this->save = 0;
+    vmaxset(vmax);
 }
 
 static Rboolean text_open(Rconnection con)

@@ -77,6 +77,7 @@ Rboolean psmatch(const char *f, const char *t, Rboolean exact)
 Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 {
     const char *f, *t;
+    const void *vmax = vmaxget();
     switch (TYPEOF(formal)) {
     case SYMSXP:
 	f = CHAR(PRINTNAME(formal));
@@ -103,7 +104,9 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
     default:
 	goto fail;
     }
-    return psmatch(f, t, exact);
+    Rboolean res = psmatch(f, t, exact);
+    vmaxset(vmax);
+    return res;
  fail:
     error(_("invalid partial string match"));
     return FALSE;/* for -Wall */

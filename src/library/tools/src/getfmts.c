@@ -44,6 +44,7 @@ SEXP getfmts(SEXP format)
 
     int nthis, nstar;
     Rboolean use_UTF8;
+    const void *vmax = vmaxget();
     
     SEXP res = PROTECT(allocVector(STRSXP, MAXNARGS));
     
@@ -147,6 +148,7 @@ SEXP getfmts(SEXP format)
     }  /* end for ( each chunk ) */
 
     res = xlengthgets(res, maxlen);
+    vmaxset(vmax);
     UNPROTECT(1);
     return res;
 }
