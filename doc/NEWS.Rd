@@ -50,7 +50,7 @@
 
       \item \code{uniroot()} gets new optional arguments, notably
       \code{extendInt}, allowing to auto-extend the search interval when
-      needed.
+      needed.  Its return value has an extra component, \code{init.it}.
 
       % advertize at all?
       % \item New \code{.lm.fit()} for benchmark lovers but not Joe

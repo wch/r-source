@@ -71,11 +71,11 @@ uniroot <- function(f, interval, ...,
 		  "no"   =  0,
 		  "upX"  =  1,
 		  stop("invalid 'extendInt'; please report"))
-    ## protect against later   0 * Inf  |--> NaN :
-    min.at.least <- function(x) pmax.int(x, -.Machine$double.xmax)
-    max.at.most  <- function(x) pmin.int(x,  .Machine$double.xmax)
-    f.low. <- min.at.least(f.lower)
-    f.upp. <- max.at.most (f.upper)
+    ## protect against later   0 * Inf  |--> NaN  and Inf * -Inf.
+    truncate <- function(x) pmax.int(pmin(x, .Machine$double.xmax),
+                                    -.Machine$double.xmax)
+    f.low. <- truncate(f.lower)
+    f.upp. <- truncate(f.upper)
     doX <- (   is.null(Sig) && f.low. * f.upp. > 0 ||
 	    is.numeric(Sig) && (Sig*f.low. > 0 || Sig*f.upp. < 0))
     if(doX) { ## extend the interval = [lower, upper]
@@ -135,7 +135,7 @@ uniroot <- function(f, interval, ...,
 	if(trace && trace < 2)
             cat(sprintf("extended to [%g, %g] in %d steps\n", lower, upper, it))
     }
-    if(!isTRUE(min.at.least(f.lower) * max.at.most(f.upper) <= 0))
+    if(!isTRUE(sign(f.lower) * sign(f.upper) <= 0))
 	stop(if(doX)
 	"did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 	     else "f() values at end points not of opposite sign")
