@@ -5258,6 +5258,7 @@ static unsigned int uiSwap (unsigned int x)
 attribute_hidden
 SEXP R_compress1(SEXP in)
 {
+    const void *vmax = vmaxget();
     unsigned int inlen;
     uLong outlen;
     int res;
@@ -5275,12 +5276,14 @@ SEXP R_compress1(SEXP in)
     if(res != Z_OK) error("internal error %d in R_compress1", res);
     ans = allocVector(RAWSXP, outlen + 4);
     memcpy(RAW(ans), buf, outlen + 4);
+    vmaxset(vmax);
     return ans;
 }
 
 attribute_hidden
 SEXP R_decompress1(SEXP in, Rboolean *err)
 {
+    const void *vmax = vmaxget();
     uLong inlen, outlen;
     int res;
     Bytef *buf;
@@ -5300,12 +5303,14 @@ SEXP R_decompress1(SEXP in, Rboolean *err)
     }
     ans = allocVector(RAWSXP, outlen);
     memcpy(RAW(ans), buf, outlen);
+    vmaxset(vmax);
     return ans;
 }
 
 attribute_hidden
 SEXP R_compress2(SEXP in)
 {
+    const void *vmax = vmaxget();
     unsigned int inlen, outlen;
     int res;
     char *buf;
@@ -5331,12 +5336,14 @@ SEXP R_compress2(SEXP in)
     }
     ans = allocVector(RAWSXP, outlen + 5);
     memcpy(RAW(ans), buf, outlen + 5);
+    vmaxset(vmax);
     return ans;
 }
 
 attribute_hidden
 SEXP R_decompress2(SEXP in, Rboolean *err)
 {
+    const void *vmax = vmaxget();
     unsigned int inlen, outlen;
     int res;
     char *buf, *p = (char *) RAW(in), type;
@@ -5373,6 +5380,7 @@ SEXP R_decompress2(SEXP in, Rboolean *err)
     }
     ans = allocVector(RAWSXP, outlen);
     memcpy(RAW(ans), buf, outlen);
+    vmaxset(vmax);
     return ans;
 }
 
@@ -5444,6 +5452,7 @@ static void init_filters(void)
 attribute_hidden
 SEXP R_compress3(SEXP in, Rboolean *err)
 {
+    const void *vmax = vmaxget();
     unsigned int inlen, outlen;
     unsigned char *buf;
     SEXP ans;
@@ -5478,12 +5487,14 @@ SEXP R_compress3(SEXP in, Rboolean *err)
     /* printf("compressed %d to %d\n", inlen, outlen); */
     ans = allocVector(RAWSXP, outlen + 5);
     memcpy(RAW(ans), buf, outlen + 5);
+    vmaxset(vmax);
     return ans;
 }
 
 attribute_hidden
 SEXP R_decompress3(SEXP in, Rboolean *err)
 {
+    const void *vmax = vmaxget();
     unsigned int inlen, outlen;
     unsigned char *buf, *p = RAW(in), type = p[4];
     SEXP ans;
@@ -5542,6 +5553,7 @@ SEXP R_decompress3(SEXP in, Rboolean *err)
     }
     ans = allocVector(RAWSXP, outlen);
     memcpy(RAW(ans), buf, outlen);
+    vmaxset(vmax);
     return ans;
 }
 

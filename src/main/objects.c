@@ -1324,6 +1324,7 @@ argument to standardGeneric.
 */
 static SEXP get_this_generic(SEXP args)
 {
+    const void *vmax = vmaxget();
     SEXP value = R_NilValue; static SEXP gen_name;
     int i, n;
     RCNTXT *cptr;
@@ -1353,6 +1354,7 @@ static SEXP get_this_generic(SEXP args)
 	}
     }
     UNPROTECT(1);
+    vmaxset(vmax);
     return(value);
 }
 
