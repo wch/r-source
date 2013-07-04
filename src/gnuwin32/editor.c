@@ -142,7 +142,7 @@ static void editor_load_file(editor c, const char *name, int enc)
     gsetmodified(t, 0);
     free(buffer);
     fclose(f);
-    vmaxset(vmax)
+    vmaxset(vmax);
 }
 
 static void editor_save_file(editor c, const char *name, int enc)
