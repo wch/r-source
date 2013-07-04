@@ -42,8 +42,11 @@ try(expr, silent = FALSE)
   \code{\link{options}} for setting error handlers and suppressing the
   printing of error messages;
   \code{\link{geterrmessage}} for retrieving the last error message.
-  \code{\link{tryCatch}} provides another means of catching and handling
-  errors.
+  The underlying \code{\link{tryCatch}} provides more flexible means of
+  catching and handling errors.
+
+  \code{\link{assertCondition}} in package \pkg{tools} is related and
+  useful for testing.
 }
 \examples{
 ## this example will not work correctly in example(try), but

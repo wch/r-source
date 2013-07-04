@@ -201,7 +201,11 @@ restartFormals(r)
   Dylan.  Restarts are based on the Common Lisp restart mechanism.}
 
 \seealso{\code{\link{stop}} and \code{\link{warning}} signal conditions,
-  and \code{\link{try}} is essentially a simplified version of \code{tryCatch}.
+  and \code{\link{try}} is essentially a simplified version of
+  \code{tryCatch}.
+  \code{\link{assertCondition}} in package \pkg{tools} \emph{tests}
+  that conditions are signalled and works with several of the above
+  handlers.
 }
 
 \examples{
