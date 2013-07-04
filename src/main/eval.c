@@ -4112,6 +4112,12 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
     }							\
 } while (0)
 
+/* The CALLBUILTIN instruction handles calls to both true BUILTINs and
+   to .Internals of type BUILTIN. To handle profiling in a way that is
+   consistent with this instruction needs to be able to distinguish a
+   true BUILTIN from a .Internal. LT */
+#define IS_TRUE_BUILTIN(x) ((R_FunTab[PRIMOFFSET(x)].eval % 100 )/10 == 0)
+
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
   SEXP value, constants;
@@ -4584,7 +4590,18 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  error(_("not a BUILTIN function"));
 	flag = PRIMPRINT(fun);
 	R_Visible = flag != 1;
-	value = PRIMFUN(fun) (call, fun, args, rho);
+	if (R_Profiling && IS_TRUE_BUILTIN(fun)) {
+	    RCNTXT cntxt;
+	    SEXP oldref = R_Srcref;
+	    begincontext(&cntxt, CTXT_BUILTIN, call,
+			 R_BaseEnv, R_BaseEnv, R_NilValue, R_NilValue);
+	    R_Srcref = NULL;
+	    value = PRIMFUN(fun) (call, fun, args, rho);
+	    R_Srcref = oldref;
+	    endcontext(&cntxt);
+	} else {
+	    value = PRIMFUN(fun) (call, fun, args, rho);
+	}
 	if (flag < 2) R_Visible = flag != 1;
 	vmaxset(vmax);
 	R_BCNodeStackTop -= 2;

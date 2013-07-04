@@ -47,6 +47,9 @@
       \item New \code{assertCondition()} utility in \pkg{tools}, useful
       for testing.
 
+      \item Profiling now records non-inlined calls from byte compiled
+      code to BUILTIN functions.
+      
     }
   }
 
