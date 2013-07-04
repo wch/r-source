@@ -24,7 +24,7 @@
    Adapted by Paul Murrell
 */
 
-/* Only include by plot3d.c, currently */
+/* Included by src/main/plot3d.c and src/library/graphics/src/plot3d  */
 
 	/*  C o n t o u r   P l o t t i n g  */
 
