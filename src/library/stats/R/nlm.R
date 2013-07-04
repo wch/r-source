@@ -135,7 +135,8 @@ uniroot <- function(f, interval, ...,
 	if(trace && trace < 2)
             cat(sprintf("extended to [%g, %g] in %d steps\n", lower, upper, it))
     }
-    if(!isTRUE(sign(f.lower) * sign(f.upper) <= 0))
+    ## this might have names
+    if(!isTRUE(as.vector(sign(f.lower) * sign(f.upper) <= 0)))
 	stop(if(doX)
 	"did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 	     else "f() values at end points not of opposite sign")
