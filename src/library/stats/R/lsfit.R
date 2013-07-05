@@ -46,8 +46,8 @@ lsfit <- function(x, y, wt = NULL, intercept = TRUE, tolerance = 1e-07,
                                  "%d missing value deleted",
                                  "%d missing values deleted"),
                         sum(!good)), domain = NA)
-	x <- as.matrix(x)[good, ]
-	y <- as.matrix(y)[good, ]
+	x <- as.matrix(x)[good, , drop=FALSE]
+	y <- as.matrix(y)[good, , drop=FALSE]
 	wt <- wt[good]
     }
 
@@ -65,8 +65,8 @@ lsfit <- function(x, y, wt = NULL, intercept = TRUE, tolerance = 1e-07,
               ", ",
               ngettext(nry,
                        "'Y' has %d case (row)",
-                       "'Y' has %d cases (rows)"),
-                       nrx, nry)),
+                       "'Y' has %d cases (rows)")),
+                       nrx, nry),
                        domain = NA)
     if(nry < ncx)
         stop(sprintf(paste0(ngettext(nry,
