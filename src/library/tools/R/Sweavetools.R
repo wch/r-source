@@ -17,18 +17,23 @@
 #  http://www.r-project.org/Licenses/
 
 
-SweaveTeXFilter <- function(ifile, encoding = "unknown")
+SweaveTeXFilter <-
+function(ifile, encoding = "unknown")
 {
     if(inherits(ifile, "srcfile"))
         ifile <- ifile$filename
 
     lines <- readLines(ifile, encoding = encoding, warn = FALSE)
 
+    syntax <- utils:::SweaveGetSyntax(ifile)
+
     TEXT <- 1L
     CODE <- 0L
 
-    recs <- rbind( data.frame(line=grep("^@", lines), type=TEXT),
-                   data.frame(line=grep("^<<(.*)>>=.*", lines), type=CODE))
+    recs <- rbind( data.frame(line = grep(syntax$doc, lines),
+                              type = TEXT),
+                   data.frame(line = grep(syntax$code, lines),
+                              type = CODE))
     recs <- recs[order(recs$line),]
     last <- 0L
     state <- TEXT
