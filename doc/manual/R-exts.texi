@@ -56,6 +56,10 @@ This is a guide to extending @R{}, describing the process of creating
 foreign language interfaces, and the @R{} @acronym{API}.
 
 The current version of this document is @value{VERSION}.
+
+@Rcopyright{1999}
+
+@permission{}
 @end ifnottex
 
 @menu

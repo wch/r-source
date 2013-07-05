@@ -51,6 +51,11 @@ This manual is for R, version @value{VERSION}.
 This is a guide to importing and exporting data to and from R.
 
 The current version of this document is @value{VERSION}.
+
+@Rcopyright{2000}
+
+@permission{}
+
 @end ifnottex
 
 @menu

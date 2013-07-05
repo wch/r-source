@@ -35,6 +35,17 @@ Copyright @copyright{} 1997, 1998 M.@: Maechler@*
 @end quotation
 @end copying
 
+@ifnottex
+@macro RIcopyright{}
+Copyright @copyright{} 1990 W.@: N.@: Venables@*
+Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
+Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
+Copyright @copyright{} 1997, 1998 M.@: Maechler@*
+@Rcopyright{1999}
+@end macro
+@end ifnottex
+
+
 @c <FIXME>
 @c Apparently AUCTeX 11.06 has a problem with '@appendixsection' entries
 @c when updating nodes---the equivalent '@appendixsec' seems to work.
@@ -62,9 +73,7 @@ Copyright @copyright{} 1997, 1998 M.@: Maechler@*
 @insertcopying
 @end ifplaintext
 
-@c @ifnothtml
 @contents
-@c @end ifnothtml
 
 @ifnottex
 @node Top, Preface, (dir), (dir)
@@ -83,6 +92,10 @@ This manual provides information on data types, programming elements,
 statistical modelling and graphics.
 
 The current version of this document is @value{VERSION}.
+
+@RIcopyright{}
+
+@permission{}
 @end ifnottex
 
 @menu

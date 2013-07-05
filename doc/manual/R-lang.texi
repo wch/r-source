@@ -57,6 +57,11 @@ parsing, object oriented programming, computing on the language, and so
 forth.
 
 The current version of this document is @value{VERSION} @b{DRAFT}.
+
+@Rcopyright{2000}
+
+@permission{}
+
 @end ifnottex
 
 @menu
