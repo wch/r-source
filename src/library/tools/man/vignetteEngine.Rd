@@ -17,7 +17,7 @@ is used by those packages to register their engines, and internally by
 }
 \usage{
 vignetteEngine(name, weave, tangle, pattern = NULL,
-	       package = NULL)
+	       package = NULL, text = NULL)
 }
 \arguments{
   \item{name}{the name of the engine.}
@@ -27,6 +27,8 @@ vignetteEngine(name, weave, tangle, pattern = NULL,
     by this engine, or \code{NULL} for the default pattern.}
   \item{package}{the package registering the engine.  By default, this
     is the package calling \code{vignetteEngine}.}
+  \item{text}{a filter to be used for spell checking the text in the
+    vignette source file with \code{\link{aspell}}.}
 }
 \details{
 If \code{weave} is missing, \code{vignetteEngine} will return the currently
