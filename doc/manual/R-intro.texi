@@ -35,16 +35,6 @@ Copyright @copyright{} 1997, 1998 M.@: Maechler@*
 @end quotation
 @end copying
 
-@ifnottex
-@macro RIcopyright{}
-Copyright @copyright{} 1990 W.@: N.@: Venables@*
-Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
-Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
-Copyright @copyright{} 1997, 1998 M.@: Maechler@*
-@Rcopyright{1999}
-@end macro
-@end ifnottex
-
 
 @c <FIXME>
 @c Apparently AUCTeX 11.06 has a problem with '@appendixsection' entries
@@ -91,11 +81,8 @@ analysis, classification, clustering, ...).
 This manual provides information on data types, programming elements,
 statistical modelling and graphics.
 
-The current version of this document is @value{VERSION}.
+@insertcopying
 
-@RIcopyright{}
-
-@permission{}
 @end ifnottex
 
 @menu

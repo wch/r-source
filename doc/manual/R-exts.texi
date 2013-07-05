@@ -55,11 +55,8 @@ This is a guide to extending @R{}, describing the process of creating
 @R{} add-on packages, writing @R{} documentation, @R{}'s system and
 foreign language interfaces, and the @R{} @acronym{API}.
 
-The current version of this document is @value{VERSION}.
+@insertcopying
 
-@Rcopyright{1999}
-
-@permission{}
 @end ifnottex
 
 @menu

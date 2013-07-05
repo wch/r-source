@@ -51,10 +51,8 @@ This manual is for R, version @value{VERSION}.
 
 This is a guide to installation and administration for R.
 
-The current version of this document is @value{VERSION}.
-@Rcopyright{2001}
+@insertcopying
 
-@permission{}
 @end ifnottex
 
 @menu

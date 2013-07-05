@@ -53,11 +53,8 @@ This manual is for R, version @value{VERSION}.
 This is a guide to the internal structures of @R{} and coding standards for
 the core team working on @R{} itself.
 
-The current version of this document is @value{VERSION}.
+@insertcopying
 
-@Rcopyright{1999}
-
-@permission{}
 @end ifnottex
 
 @menu
