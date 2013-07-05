@@ -104,6 +104,7 @@ static void editor_load_file(editor c, const char *name, int enc)
     char *buffer = NULL, tmp[MAX_PATH+50];
     const char *sname;
     long num = 1, bufsize;
+    const void *vmax = vmaxget();
 
     if(enc == CE_UTF8) {
 	wchar_t wname[MAX_PATH+1];
@@ -141,6 +142,7 @@ static void editor_load_file(editor c, const char *name, int enc)
     gsetmodified(t, 0);
     free(buffer);
     fclose(f);
+    vmaxset(vmax);
 }
 
 static void editor_save_file(editor c, const char *name, int enc)
@@ -153,6 +155,7 @@ static void editor_save_file(editor c, const char *name, int enc)
     if (name == NULL)
 	return;
     else {
+	const void *vmax = vmaxget();
 	if(enc == CE_UTF8) {
 	    wchar_t wname[MAX_PATH+1];
 	    Rf_utf8towcs(wname, name, MAX_PATH+1);
@@ -169,6 +172,7 @@ static void editor_save_file(editor c, const char *name, int enc)
 	}
 	fprintf(f, "%s", gettext(t));
 	fclose(f);
+	vmaxset(vmax);
     }
 }
 
@@ -181,6 +185,7 @@ static void editorsaveas(editor c)
     setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     wname = askfilesaveW(G_("Save script as"), "");
     if (wname) {
+	const void *vmax = vmaxget();
 	char name[4*MAX_PATH+1];
 	const char *tname;
 	wcstoutf8(name, wname, MAX_PATH);
@@ -193,6 +198,7 @@ static void editorsaveas(editor c)
 	strncpy(p->filename, tname, MAX_PATH+1);
 	gsetmodified(t, 0);
 	editor_set_title(c, tname);
+	vmaxset(vmax);
     }
     show(c);
 }
@@ -376,6 +382,7 @@ static void editoropen(const char *default_name)
     setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     wname = askfilenameW(G_("Open script"), default_name); /* returns NULL if open dialog cancelled */
     if (wname) {
+	const void *vmax = vmaxget();
 	wcstoutf8(name, wname, MAX_PATH);
 	/* check if file is already open in an editor. If so, close and open again */
 	for (i = 0; i < neditors; ++i) {
@@ -388,6 +395,7 @@ static void editoropen(const char *default_name)
 	}
 	title = reEnc(name, CE_UTF8, CE_NATIVE, 3);
 	Rgui_Edit(name, CE_UTF8, title, 0);
+	vmaxset(vmax);
     } else show(RConsole);
 }
 

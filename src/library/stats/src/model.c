@@ -72,6 +72,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     char buf[256];
     int i, j, nr, nc;
     int nvars, ndots, nactualdots;
+    const void *vmax = vmaxget();
 
     args = CDR(args);
     terms = CAR(args); args = CDR(args);
@@ -220,6 +221,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
        Now done at R level.
        setAttrib(ans, install("terms"), terms); */
     UNPROTECT(1);
+    vmaxset(vmax);
     return ans;
 }
 
@@ -992,7 +994,7 @@ static int Seql2(SEXP a, SEXP b)
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
     else {
-    	void *vmax = vmaxget();
+    	const void *vmax = vmaxget();
     	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
     	vmaxset(vmax); /* discard any memory used by translateCharUTF8 */
     	return result;
@@ -1059,6 +1061,7 @@ static void CheckRHS(SEXP v)
 {
     int i, j;
     SEXP s, t;
+    const void *vmax = vmaxget();
     while ((isList(v) || isLanguage(v)) && v != R_NilValue) {
 	CheckRHS(CAR(v));
 	v = CDR(v);
@@ -1078,6 +1081,7 @@ static void CheckRHS(SEXP v)
 	    }
 	}
     }
+    vmaxset(vmax);
 }
 
 
@@ -1098,11 +1102,13 @@ static void ExtractVars(SEXP formula, int checkonly)
 	if (formula == dotSymbol) haveDot = TRUE;
 	if (!checkonly) {
 	    if (formula == dotSymbol && framenames != R_NilValue) {
+		const void *vmax = vmaxget();
 		haveDot = TRUE;
 		for (i = 0; i < length(framenames); i++) {
 		    v = install(translateChar(STRING_ELT(framenames, i)));
 		    if (!MatchVar(v, CADR(varlist))) InstallVar(v);
 		}
+		vmaxset(vmax);
 	    } else
 		InstallVar(formula);
 	}
@@ -1501,6 +1507,7 @@ static SEXP EncodeVars(SEXP formula)
 	    /* prior to 1.7.0 this made term.labels in reverse order. */
 	    SEXP r = R_NilValue, v = R_NilValue; /* -Wall */
 	    int i, j; const char *c;
+	    const void *vmax = vmaxget();
 
 	    if (!LENGTH(framenames)) return r;
 	    for (i = 0; i < LENGTH(framenames); i++) {
@@ -1516,6 +1523,7 @@ static SEXP EncodeVars(SEXP formula)
 		else {SETCDR(v, CONS(term, R_NilValue)); v = CDR(v);}
 	    }
 	    UNPROTECT(1);
+	    vmaxset(vmax);
 	    return r;
 	}
 	else {
@@ -1887,6 +1895,7 @@ SEXP termsform(SEXP args)
     /* If there are specials stick them in here */
 
     if (specials != R_NilValue) {
+	const void *vmax = vmaxget();
 	i = length(specials);
 	PROTECT(v = allocList(i));
 	for (j = 0, t = v; j < i; j++, t = CDR(t)) {
@@ -1916,6 +1925,7 @@ SEXP termsform(SEXP args)
 	SET_TAG(a, install("specials"));
 	a = CDR(a);
 	UNPROTECT(1);
+	vmaxset(vmax);
     }
 
     UNPROTECT(2);	/* keep termlabs until here */
@@ -1925,6 +1935,7 @@ SEXP termsform(SEXP args)
 
     if (haveDot) {
 	if(length(framenames)) {
+	    const void *vmax = vmaxget();
 	    PROTECT_INDEX ind;
 	    PROTECT_WITH_INDEX(rhs = install(translateChar(STRING_ELT(framenames, 0))),
 			       &ind);
@@ -1938,6 +1949,7 @@ SEXP termsform(SEXP args)
 	    else
 		SETCADR(ans, ExpandDots(CADR(ans), rhs));
 	    UNPROTECT(1);
+	    vmaxset(vmax);
 	} else if(!allowDot && !hadFrameNames) {
 	    error(_("'.' in formula and no 'data' argument"));
 	}

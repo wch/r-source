@@ -459,6 +459,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
     R_xlen_t i, n, n1, n2, res;
     SEXP ans, c1, c2;
+    const void *vmax = vmaxget(); // for Scollate
 
     n1 = XLENGTH(s1);
     n2 = XLENGTH(s2);
@@ -568,6 +569,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     }
     UNPROTECT(3);
+    vmaxset(vmax);
     return ans;
 }
 

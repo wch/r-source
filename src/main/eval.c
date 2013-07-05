@@ -2138,6 +2138,7 @@ static SEXP VectorToPairListNamed(SEXP x)
 {
     SEXP xptr, xnew, xnames;
     int i, len = 0, named;
+    const void *vmax = vmaxget();
 
     PROTECT(x);
     PROTECT(xnames = getAttrib(x, R_NamesSymbol)); /* isn't this protected via x? */
@@ -2159,6 +2160,7 @@ static SEXP VectorToPairListNamed(SEXP x)
 	UNPROTECT(1);
     } else xnew = allocList(0);
     UNPROTECT(2);
+    vmaxset(vmax);
     return xnew;
 }
 
@@ -2540,6 +2542,7 @@ static void findmethod(SEXP Class, const char *group, const char *generic,
 		       char *buf, SEXP rho)
 {
     int len, whichclass;
+    const void *vmax = vmaxget();
 
     len = length(Class);
 
@@ -2568,6 +2571,7 @@ static void findmethod(SEXP Class, const char *group, const char *generic,
 	    break;
 	}
     }
+    vmaxset(vmax);
     *which = whichclass;
 }
 
@@ -2651,6 +2655,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     findmethod(lclass, group, generic, &lsxp, &lgr, &lmeth, &lwhich,
 	       lbuf, rho);
     PROTECT(lgr);
+    const void *vmax = vmaxget();
     if(isFunction(lsxp) && IS_S4_OBJECT(CAR(args)) && lwhich > 0
        && isBasicClass(translateChar(STRING_ELT(lclass, lwhich)))) {
 	/* This and the similar test below implement the strategy
@@ -2675,6 +2680,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	value = R_getS4DataSlot(value, S4SXP);
 	if(value != R_NilValue) SETCADR(args, value);
     }
+    vmaxset(vmax);
 
     PROTECT(rgr);
 
@@ -2717,6 +2723,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     PROTECT(newrho = allocSExp(ENVSXP));
     PROTECT(m = allocVector(STRSXP,nargs));
+    vmax = vmaxget();
     s = args;
     for (i = 0 ; i < nargs ; i++) {
 	t = IS_S4_OBJECT(CAR(s)) ? R_data_class2(CAR(s))
@@ -2736,6 +2743,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	    SET_STRING_ELT(m, i, R_BlankString);
 	s = CDR(s);
     }
+    vmaxset(vmax);
 
     defineVar(R_dot_Method, m, newrho);
     UNPROTECT(1);

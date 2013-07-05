@@ -702,7 +702,8 @@ static size_t Wpipe_write(const void *ptr, size_t size, size_t nitems,
 #define BUFSIZE 1000
 static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
 {
-    char buf[BUFSIZE], *b = buf, *vmax = vmaxget();
+    char buf[BUFSIZE], *b = buf;
+    const void *vmax = vmaxget();
     int res = 0, usedRalloc = FALSE;
 
     res = vsnprintf(b, BUFSIZE, format, ap);

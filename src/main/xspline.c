@@ -4,6 +4,7 @@
  * See copyright etc below.
  *
  * #included from engine.c
+ * That manages the R_alloc stack.
  */
 
 /*
@@ -45,6 +46,7 @@ static double *ypoints;
 
 /************* Code begins here *************/
 
+/* R_allocs or mallocs global arrays */
 static Rboolean
 add_point(double x, double y, pGEDevDesc dd)
 {

@@ -158,6 +158,7 @@ static Rboolean smin(SEXP x, SEXP *value, Rboolean narm)
     R_xlen_t i;
     SEXP s = NA_STRING; /* -Wall */
     Rboolean updated = FALSE;
+    const void *vmax = vmaxget(); // precautionary for Scollate
 
     for (i = 0; i < XLENGTH(x); i++) {
 	if (STRING_ELT(x, i) != NA_STRING) {
@@ -174,7 +175,8 @@ static Rboolean smin(SEXP x, SEXP *value, Rboolean narm)
     }
     *value = s;
 
-    return(updated);
+    vmaxset(vmax);
+    return updated;
 }
 
 static Rboolean imax(int *x, R_xlen_t n, int *value, Rboolean narm)
@@ -227,6 +229,7 @@ static Rboolean smax(SEXP x, SEXP *value, Rboolean narm)
     R_xlen_t i;
     SEXP s = NA_STRING; /* -Wall */
     Rboolean updated = FALSE;
+    const void *vmax = vmaxget(); // precautionary for Scollate
 
     for (i = 0; i < XLENGTH(x); i++) {
 	if (STRING_ELT(x, i) != NA_STRING) {
@@ -243,7 +246,8 @@ static Rboolean smax(SEXP x, SEXP *value, Rboolean narm)
     }
     *value = s;
 
-    return(updated);
+    vmaxset(vmax);
+    return updated;
 }
 
 static Rboolean iprod(int *x, R_xlen_t n, double *value, Rboolean narm)

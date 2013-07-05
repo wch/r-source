@@ -1399,7 +1399,9 @@ void F77_SYMBOL(rchkusr)(void)
     R_CheckUserInterrupt();
 }
 
-/* Return a copy of a string using memory from R_alloc */
+/* Return a copy of a string using memory from R_alloc.
+   NB: caller has to manage R_alloc stack.  Used in platform.c
+*/
 char *acopy_string(const char *in)
 {
     char *out;
@@ -1810,6 +1812,7 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* Caller has to manage the R_alloc stack */
 /* NB: strings can have equal collation weight without being identical */
 attribute_hidden
 int Scollate(SEXP a, SEXP b)
@@ -2163,6 +2166,7 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
     double xx;
     int iex;
     size_t j, len_flag = strlen(flag);
+    const void *vmax = vmaxget();
 
     char *f0  =	 R_alloc((size_t) do_fg ? 1+1+len_flag+3 : 1, sizeof(char));
     char *form = R_alloc((size_t) 1+1+len_flag+3 + strlen(format),
@@ -2270,4 +2274,5 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
 	} else
 	    error("'type' must be \"real\" for this format");
     }
+    vmaxset(vmax);
 }

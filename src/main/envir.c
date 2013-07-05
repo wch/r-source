@@ -2744,6 +2744,7 @@ SEXP attribute_hidden do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 static SEXP matchEnvir(SEXP call, const char *what)
 {
     SEXP t, name;
+    const void *vmax = vmaxget();
     if(!strcmp(".GlobalEnv", what))
 	return R_GlobalEnv;
     if(!strcmp("package:base", what))
@@ -2751,10 +2752,14 @@ static SEXP matchEnvir(SEXP call, const char *what)
     for (t = ENCLOS(R_GlobalEnv); t != R_EmptyEnv ; t = ENCLOS(t)) {
 	name = getAttrib(t, R_NameSymbol);
 	if(isString(name) && length(name) > 0 &&
-	   !strcmp(translateChar(STRING_ELT(name, 0)), what))
+	   !strcmp(translateChar(STRING_ELT(name, 0)), what)) {
+	    vmaxset(vmax);
 	    return t;
+	}
     }
     errorcall(call, _("no item called \"%s\" on the search list"), what);
+    /* not reached */
+    vmaxset(vmax);
     return R_NilValue;
 }
 
@@ -3211,7 +3216,9 @@ static SEXP checkNSname(SEXP call, SEXP name)
 	break;
     case STRSXP:
 	if (LENGTH(name) >= 1) {
+	    const void *vmax = vmaxget();
 	    name = install(translateChar(STRING_ELT(name, 0)));
+	    vmaxset(vmax);
 	    break;
 	}
 	/* else fall through */

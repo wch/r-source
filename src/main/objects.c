@@ -308,11 +308,13 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 
     nclass = length(klass);
     for (i = 0; i < nclass; i++) {
+	const void *vmax = vmaxget();
         const char *ss = translateChar(STRING_ELT(klass, i));
 	if(strlen(generic) + strlen(ss) + 2 > 512)
 	    error(_("class name too long in '%s'"), generic);
 	snprintf(buf, 512, "%s.%s", generic, ss);
 	method = install(buf);
+	vmaxset(vmax);
 	sxp = R_LookupMethod(method, rho, callrho, defrho);
 	if (isFunction(sxp)) {
 	    if(method == sort_list && CLOENV(sxp) == R_BaseNamespace)
@@ -847,7 +849,9 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
  */
 static SEXP inherits3(SEXP x, SEXP what, SEXP which)
 {
+    const void *vmax = vmaxget();
     SEXP klass, rval = R_NilValue /* -Wall */;
+
     if(IS_S4_OBJECT(x))
 	PROTECT(klass = R_data_class2(x));
     else
@@ -887,6 +891,7 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
 	    }
 	}
     }
+    vmaxset(vmax);
     if(!isvec) {
     	UNPROTECT(1);
 	return mkFalse();
@@ -1072,6 +1077,8 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
        calls to standardGeneric during the loading of the methods package */
     SEXP e, value, rho, fun, symbol;
     RCNTXT *cptr;
+    const void *vmax = vmaxget();
+
     /* find a non-generic function */
     symbol = install(translateChar(asChar(name)));
     for(rho = ENCLOS(env); rho != R_EmptyEnv;
@@ -1108,6 +1115,7 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
        the same environment as the call to the generic version */
     value = eval(e, cptr->sysparent);
     UNPROTECT(1);
+    vmaxset(vmax);
     return value;
 }
 
@@ -1159,6 +1167,7 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 		       SEXP mlist)
 {
     const char *code_string;
+    const void *vmax = vmaxget();
     if(!isValidString(code_vec))
 	error(_("argument 'code' must be a character string"));
     code_string = translateChar(asChar(code_vec));
@@ -1178,7 +1187,8 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 	return value;
     }
     do_set_prim_method(op, code_string, fundef, mlist);
-    return(fname);
+    vmaxset(vmax);
+    return fname;
 }
 
 SEXP R_primitive_methods(SEXP op)
@@ -1355,7 +1365,8 @@ static SEXP get_this_generic(SEXP args)
     }
     UNPROTECT(1);
     vmaxset(vmax);
-    return(value);
+
+    return value;
 }
 
 /* Could there be methods for this op?	Checks
@@ -1508,6 +1519,7 @@ SEXP R_do_new_object(SEXP class_def)
 {
     static SEXP s_virtual = NULL, s_prototype, s_className;
     SEXP e, value;
+    const void *vmax = vmaxget();
     if(!s_virtual) {
 	s_virtual = install("virtual");
 	s_prototype = install("prototype");
@@ -1528,6 +1540,7 @@ SEXP R_do_new_object(SEXP class_def)
 	setAttrib(value, R_ClassSymbol, e);
 	SET_S4_OBJECT(value);
     }
+    vmaxset(vmax);
     return value;
 }
 

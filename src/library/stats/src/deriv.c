@@ -275,6 +275,7 @@ static SEXP D(SEXP expr, SEXP var)
 #define PP_S2(F,a1)   PP(simplify(F,a1, R_MissingArg))
 
     SEXP ans=R_NilValue, expr1, expr2;
+    const void *vmax = vmaxget();
     switch(TYPEOF(expr)) {
     case LGLSXP:
     case INTSXP:
@@ -531,6 +532,7 @@ static SEXP D(SEXP expr, SEXP var)
     default:
 	ans = Constant(NA_REAL);
     }
+    vmaxset(vmax);
     return ans;
 
 #undef PP_S
@@ -707,8 +709,10 @@ static int Accumulate2(SEXP expr, SEXP exprlist)
 
 static SEXP MakeVariable(int k, SEXP tag)
 {
+    const void *vmax = vmaxget();    
     char buf[64];
     snprintf(buf, 64, "%s%d", translateChar(STRING_ELT(tag, 0)), k);
+    vmaxset(vmax);
     return install(buf);
 }
 

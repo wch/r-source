@@ -153,12 +153,14 @@ void Rwin_fpset(void)
 SEXP in_loadRconsole(SEXP sfile)
 {
     struct structGUI gui;
+    const void *vmax = vmaxget();
 
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	error(_("invalid '%s' argument"), "file");
     getActive(&gui);  /* Will get defaults if there's no active console */
     if (loadRconsole(&gui, translateChar(STRING_ELT(sfile, 0)))) applyGUI(&gui);
     if (strlen(gui.warning)) warning(gui.warning);
+    vmaxset(vmax);
     return R_NilValue;
 }
 
@@ -522,6 +524,7 @@ SEXP in_shortpath(SEXP paths)
     char tmp[MAX_PATH];
     wchar_t wtmp[32768];
     DWORD res;
+    const void *vmax = vmaxget();
 
     if(!isString(paths)) error(_("'path' must be a character vector"));
 
@@ -548,6 +551,7 @@ SEXP in_shortpath(SEXP paths)
 	}
     }
     UNPROTECT(1);
+    vmaxset(vmax);
     return ans;
 }
     

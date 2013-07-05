@@ -231,6 +231,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 
     /* Make up the load symbol */
     if(TYPEOF(op) == STRSXP) {
+	const void *vmax = vmaxget();
 	p = translateChar(STRING_ELT(op, 0));
 	if(strlen(p) >= MaxSymbolBytes)
 	    error(_("symbol '%s' is too long"), p);
@@ -240,6 +241,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	    p++;
 	    q++;
 	}
+	vmaxset(vmax);
     }
 
     if(dll.type != FILENAME && strlen(ns)) {
@@ -1389,7 +1391,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}, NULL};
     R_NativePrimitiveArgType *checkTypes = NULL;
     R_NativeArgStyle *argStyles = NULL;
-    void *vmax;
+    const void *vmax;
     char symName[MaxSymbolBytes];
 
     if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));

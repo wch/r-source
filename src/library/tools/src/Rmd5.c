@@ -24,6 +24,7 @@
 #define ROL_UNUSED
 #include "md5.h"
 
+/* .Call so manages R_alloc stack */
 SEXP Rmd5(SEXP files)
 {
     SEXP ans;

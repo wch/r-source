@@ -41,6 +41,7 @@
 /* based on EncodeEnvironment in  printutils.c */
 static void PrintEnvironment(SEXP x)
 {
+    const void *vmax = vmaxget();
     if (x == R_GlobalEnv)
 	Rprintf("<R_GlobalEnv>");
     else if (x == R_BaseEnv)
@@ -54,6 +55,7 @@ static void PrintEnvironment(SEXP x)
 	Rprintf("<namespace:%s>",
 		translateChar(STRING_ELT(R_NamespaceEnvSpec(x), 0)));
     else Rprintf("<%p>", (void *)x);
+    vmaxset(vmax);
 }
 
 /* print prefix */

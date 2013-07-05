@@ -387,6 +387,8 @@ SEXP VectorToPairList(SEXP x)
 {
     SEXP xptr, xnew, xnames;
     int i, len, named;
+    const void *vmax = vmaxget();
+
     len = length(x);
     PROTECT(x);
     PROTECT(xnew = allocList(len)); /* limited to int */
@@ -402,6 +404,7 @@ SEXP VectorToPairList(SEXP x)
     if (len > 0)       /* can't set attributes on NULL */
 	copyMostAttrib(x, xnew);
     UNPROTECT(3);
+    vmaxset(vmax);
     return xnew;
 }
 
@@ -1281,9 +1284,11 @@ SEXP CreateTag(SEXP x)
 	return x;
     if (isString(x)
 	&& length(x) >= 1
-	&& length(STRING_ELT(x, 0)) >= 1)
+	&& length(STRING_ELT(x, 0)) >= 1) {
+	const void *vmax = vmaxget();
 	x = install(translateChar(STRING_ELT(x, 0)));
-    else
+	vmaxset(vmax);
+    } else
 	x = install(CHAR(STRING_ELT(deparse1(x, 1, SIMPLEDEPARSE), 0)));
     return x;
 }
@@ -2540,14 +2545,18 @@ static int class2type(const char *s)
     /* cannot get here return -1; */
 }
 
-static SEXP do_unsetS4(SEXP obj, SEXP newClass) {
+static SEXP do_unsetS4(SEXP obj, SEXP newClass) 
+{
   if(isNull(newClass))  { /* NULL class is only valid for S3 objects */
     warning(_("Setting class(x) to NULL;   result will no longer be an S4 object"));
   }
   else if(length(newClass) > 1)
-    warning(_("Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no longer be an S4 object"), translateChar(STRING_ELT(newClass, 0)), translateChar(STRING_ELT(newClass, 1)));
+    warning(_("Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no longer be an S4 object"), 
+	    translateChar(STRING_ELT(newClass, 0)),
+	    translateChar(STRING_ELT(newClass, 1)));
   else
-    warning(_("Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be an S4 object"), CHAR(asChar(newClass)));
+    warning(_("Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be an S4 object"),
+	    CHAR(asChar(newClass)));
   UNSET_S4_OBJECT(obj);
   return obj;
 }

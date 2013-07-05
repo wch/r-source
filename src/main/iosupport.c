@@ -188,6 +188,8 @@ int attribute_hidden R_TextBufferInit(TextBuffer *txtb, SEXP text)
 {
     int i, k, l, n;
     if (isString(text)) {
+	// translateChar might allocate
+	void *vmax = vmaxget();
 	n = length(text);
 	l = 0;
 	for (i = 0; i < n; i++) {
@@ -197,7 +199,8 @@ int attribute_hidden R_TextBufferInit(TextBuffer *txtb, SEXP text)
 		    l = k;
 	    }
 	}
-	txtb->vmax = vmaxget();
+	vmaxset(vmax);
+	txtb->vmax = vmax;
 	txtb->buf = (unsigned char *)R_alloc(l+2, sizeof(char)); /* '\n' and '\0' */
 	txtb->bufp = txtb->buf;
 	txtb->text = text;
@@ -237,12 +240,13 @@ int attribute_hidden R_TextBufferGetc(TextBuffer *txtb)
 	if (txtb->offset == txtb->ntext) {
 	    txtb->buf = NULL;
 	    return EOF;
-	}
-	else {
+	} else {
+	    const void *vmax = vmaxget();
 	    transferChars(txtb->buf,
 			  translateChar(STRING_ELT(txtb->text, txtb->offset)));
 	    txtb->bufp = txtb->buf;
 	    txtb->offset++;
+	    vmaxset(vmax);
 	}
     }
     return *txtb->bufp++;

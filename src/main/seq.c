@@ -42,6 +42,7 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
     SEXP a, la, ls, lt, rs, rt;
     int i, j, k, n, nls, nlt;
     char *cbuf;
+    const void *vmax = vmaxget();
 
     if (length(s) != length(t))
 	errorcall(call, _("unequal factor lengths"));
@@ -85,7 +86,8 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
     setAttrib(a, R_ClassSymbol, la);
     UNPROTECT(2);
     R_FreeStringBufferL(&cbuff);
-    return(a);
+    vmaxset(vmax);
+    return a;
 }
 
 /* interval at which to check interrupts */

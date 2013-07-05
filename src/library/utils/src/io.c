@@ -954,6 +954,7 @@ static const char
     if (indx < 0 || indx >= length(x))
 	error(_("index out of range"));
     if(TYPEOF(x) == STRSXP) {
+	const void *vmax = vmaxget();
 	p0 = translateChar(STRING_ELT(x, indx));
 	if(!quote) return p0;
 	for(nbuf = 2, p = p0; *p; p++) /* find buffer length needed */
@@ -965,6 +966,7 @@ static const char
 	    *q++ = *p++;
 	}
 	*q++ = '"'; *q = '\0';
+	vmaxset(vmax);
 	return buff->data;
     }
     return EncodeElement(x, indx, quote ? '"' : 0, cdec);

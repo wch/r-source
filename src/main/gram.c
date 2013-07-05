@@ -3469,7 +3469,11 @@ static SEXP TagArg(SEXP arg, SEXP tag, YYLTYPE *lloc)
 {
     switch (TYPEOF(tag)) {
     case STRSXP:
+    {
+	const void *vmax = vmaxget();
 	tag = install(translateChar(STRING_ELT(tag, 0)));
+	vmaxset(vmax);
+    }
     case NILSXP:
     case SYMSXP:
 	return lang2(arg, tag);

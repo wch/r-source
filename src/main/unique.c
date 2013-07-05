@@ -1149,7 +1149,7 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, n_input));
     int *ians = INTEGER(ans);
 
-    const void *vmax = vmaxget();
+    const void *vmax = vmaxget();  // prudence: .Internal does this too.
     for(R_xlen_t i = 0; i < n_input; i++) {
 	if(useBytes)
 	    ss = CHAR(STRING_ELT(input, i));
@@ -1630,7 +1630,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     int n, len, maxlen = 0;
     HashData data;
     const char *csep, *ss;
-    void *vmax;
+    const void *vmax;
 
     checkArity(op, args);
     names = CAR(args);
