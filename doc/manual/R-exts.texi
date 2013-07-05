@@ -20,16 +20,15 @@
 @include R-defs.texi
 @include version.texi
 
-@ifinfo
-@ignore
-Permission is granted to process this file through TeX and print the
-results, provided the printed document carries a copying permission
-notice identical to this one except for the removal of this paragraph
-(this paragraph not being relevant to the printed manual).
+@copying
+This manual is for R, version @value{VERSION}.
 
-@end ignore
+@Rcopyright{1999}
 
-@end ifinfo
+@quotation
+@permission{}
+@end quotation
+@end copying
 
 @titlepage
 @title Writing R Extensions
@@ -37,12 +36,12 @@ notice identical to this one except for the removal of this paragraph
 @author R Core Team
 @page
 @vskip 0pt plus 1filll
-@permission{}
-
-@Rcopyright{1999}
-
-@value{ISBN-exts}
+@insertcopying
 @end titlepage
+
+@ifplaintext
+@insertcopying
+@end ifplaintext
 
 @c @ifnothtml
 @contents
@@ -56,14 +55,7 @@ This is a guide to extending @R{}, describing the process of creating
 @R{} add-on packages, writing @R{} documentation, @R{}'s system and
 foreign language interfaces, and the @R{} @acronym{API}.
 
-The current version of this document is @value{VERSION}.
-
-@value{ISBN-exts}
-
-@Rcopyright{1999}
-
-@permission{}
-@c ---------- ^- read that
+@insertcopying
 
 @end ifnottex
 

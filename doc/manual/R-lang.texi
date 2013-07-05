@@ -21,16 +21,15 @@
 @strong{C}
 @end macro
 
-@ifinfo
-@ignore
-Permission is granted to process this file through TeX and print the
-results, provided the printed document carries a copying permission
-notice identical to this one except for the removal of this paragraph
-(this paragraph not being relevant to the printed manual).
+@copying
+This manual is for R, version @value{VERSION}.
 
-@end ignore
+@Rcopyright{2000}
 
-@end ifinfo
+@quotation
+@permission{}
+@end quotation
+@end copying
 
 @titlepage
 @title R Language Definition
@@ -38,12 +37,12 @@ notice identical to this one except for the removal of this paragraph
 @author R Core Team
 @page
 @vskip 0pt plus 1filll
-@Rcopyright{2000}
-
-@permission{}
-
-@value{ISBN-lang}
+@insertcopying
 @end titlepage
+
+@ifplaintext
+@insertcopying
+@end ifplaintext
 
 @c @ifnothtml
 @contents
@@ -57,13 +56,7 @@ This is an introduction to the @R{} language, explaining evaluation,
 parsing, object oriented programming, computing on the language, and so
 forth.
 
-The current version of this document is @value{VERSION} @b{DRAFT}.
-
-@value{ISBN-lang}
-
-@Rcopyright{2000}
-
-@permission{}
+@insertcopying
 
 @end ifnottex
 

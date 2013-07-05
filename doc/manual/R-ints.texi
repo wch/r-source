@@ -19,15 +19,15 @@
 @include R-defs.texi
 @include version.texi
 
-@ifinfo
-@ignore
-Permission is granted to process this file through TeX and print the
-results, provided the printed document carries a copying permission
-notice identical to this one except for the removal of this paragraph
-(this paragraph not being relevant to the printed manual).
+@copying
+This manual is for R, version @value{VERSION}.
 
-@end ignore
-@end ifinfo
+@Rcopyright{1999}
+
+@quotation
+@permission{}
+@end quotation
+@end copying
 
 @titlepage
 @title R Internals
@@ -35,12 +35,12 @@ notice identical to this one except for the removal of this paragraph
 @author R Core Team
 @page
 @vskip 0pt plus 1filll
-@permission{}
-
-@Rcopyright{1999}
-
-@value{ISBN-ints}
+@insertcopying
 @end titlepage
+
+@ifplaintext
+@insertcopying
+@end ifplaintext
 
 @c @ifnothtml
 @contents
@@ -53,14 +53,7 @@ notice identical to this one except for the removal of this paragraph
 This is a guide to the internal structures of @R{} and coding standards for
 the core team working on @R{} itself.
 
-The current version of this document is @value{VERSION}.
-
-@value{ISBN-ints}
-
-@Rcopyright{1999}
-
-@permission{}
-@c ---------- ^- read that
+@insertcopying
 
 @end ifnottex
 
