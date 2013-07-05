@@ -30,8 +30,8 @@ SweaveTeXFilter(ifile, encoding = "unknown")
   original locations.
 }
 \value{
-  A character vector which if written to a file, one element per line, would
-  duplicate the text elements of the original Rd file.
+  A character vector which if written to a file, one element per line,
+  would duplicate the text elements of the original Sweave input file.
 }
 \author{
 Duncan Murdoch
