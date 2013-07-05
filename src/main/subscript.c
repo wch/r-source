@@ -307,7 +307,7 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	    x = CAR(cx);
 	    if (dup && NAMED(x) > 1) {
 		x = duplicate(x);
-		nthcdr(x, (int) offset);
+		SETCAR(cx, x);
 	    }
 	} else {
 	    cx = x;
