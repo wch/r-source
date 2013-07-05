@@ -242,7 +242,7 @@
       \item The \code{tools::getVignetteInfo()} function has been added
       to give information about installed vignettes.
 
-      \item New \code{assertCondition()} utility in \pkg{tools}, useful
+      \item New \code{assertCondition()}, etc. utilities in \pkg{tools}, useful
       for testing.
 
       \item Profiling now records non-inlined calls from byte compiled

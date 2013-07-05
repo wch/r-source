@@ -16,60 +16,74 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-assertCondition <- function(expr, ..., verbose = getOption("verbose")) {
+assertCondition <- function(expr, ..., .exprString = .deparseTrim(substitute(expr), cutoff = 30L)) {
     fe <- function(e)e
-    getCondClasses <- function(expr) {
-	conds <- character()
-	lastCond <- NULL
+    getConds <- function(expr) {
+	conds <- list()
 	tryCatch(withCallingHandlers(expr,
 				     warning = function(w) {
-					 conds <<- c(conds, class(w))
-					 lastCond <<- w
+					 conds <<- c(conds, list(w))
 					 invokeRestart("muffleWarning")
 				     },
-				     condition = function(cond) {
-					 conds <<- c(conds, class(cond))
-					 lastCond <<- cond}),
-		 error = function(e) {
-		     conds <<- c(conds, class(e))
-		     lastCond <<- e})
-	list(unique(conds), lastCond)
+				     condition = function(cond)
+					 conds <<- c(conds, list(cond))),
+		 error = function(e)
+		     conds <<- c(conds, list(e)))
+	conds
     }
-    d.expr <- deparse(substitute(expr), width.cutoff = 30L)
-    if(length(d.expr) > 1)
-	d.expr <- paste(d.expr[[1]], "...")
     conds <- if(nargs() > 1) c(...) # else NULL
-    .Wanted <- (if(length(conds))
-		paste("expected", paste(conds, collapse = " | "))
-		else "any condition")
-    res <- getCondClasses(expr)
-    lastCond <- res[[2]]
-    res <- res[[1]]
+    .Wanted <- if(nargs() > 1) paste(c(...), collapse = " or ") else "any condition"
+    res <- getConds(expr)
     if(length(res)) {
-	if(is.null(conds)) {
-	    if(verbose) cat(sprintf("Got condition \"%s\": %s\n",
-				    class(lastCond)[[1]],
-				    conditionMessage(lastCond)))
+	if(is.null(conds))
 	    invisible(res)
-	}
 	else {
-	    ii <- res %in% conds
-	    if(any(ii)) {
-		if(verbose) {
-		    got <- res[which.max(ii)]
-		    text <- if(got %in% class(lastCond))
-			paste(":", conditionMessage(lastCond)) else ""
-		    cat(sprintf("Asserted %s%s\n", got, text))
-		}
+	    ii <- sapply(res, function(cond) any(class(cond) %in% conds))
+	    if(any(ii))
 		invisible(res)
-	    }
-	    else
-		stop(gettextf("Got %s (%s) in evaluating %s; %s",
-			      class(lastCond)[[1]], conditionMessage(lastCond),
-			      d.expr, .Wanted))
+	    else {
+                .got <- paste(unique((sapply(res, function(obj)class(obj)[[1]]))),
+                                     collapse = ", ")
+		stop(gettextf("Got %s in evaluating %s; wanted %s",
+			      .got, .exprString, .Wanted))
+            }
 	}
     }
     else
 	stop(gettextf("Failed to get %s in evaluating %s",
-		      .Wanted, d.expr))
+		      .Wanted, .exprString))
+}
+
+assertError <- function(expr) {
+    d.expr <- .deparseTrim(substitute(expr), cutoff = 30L)
+    tryCatch(res <- assertCondition(expr, "error", .exprString = d.expr),
+             error = function(e)
+                 stop(gettextf("Failed to get error in evaluating %s", d.expr),
+                      call. = FALSE)
+             )
+    invisible(res)
+}
+
+assertWarning <- function(expr) {
+    d.expr <- .deparseTrim(substitute(expr), cutoff = 30L)
+    res <- assertCondition(expr, "warning", .exprString = d.expr)
+    if(any(sapply(res, function(cond) "error" %in% class(cond))))
+        stop(gettextf("Got warning in evaluating %s, but also an error", d.expr))
+    invisible(res)
+}
+
+.deparseTrim <- function(expr, cutoff = 30L) {
+    res <- deparse(expr)
+    if(length(res) > 1) {
+        if(res[[1]] == "{") {
+            exprs <- sub("^[ \t]*", "", res[c(-1, -length(res))])
+            res <- paste0("{", paste(exprs, collapse = "; "), "}")
+        }
+        else
+            res <- paste(res[[1]], " ...")
+    }
+    if(nchar(res) > cutoff)
+        paste(substr(res, 1, cutoff), " ...")
+    else
+        res
 }
