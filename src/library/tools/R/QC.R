@@ -5207,39 +5207,25 @@ function(package, dir, lib.loc = NULL)
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
-        dfile <- file.path(dir, "DESCRIPTION")
-        db <- .read_description(dfile)
-        ## fake installs do not have this.
-        testsrcdir <- file.path(dir, "doc")
+        subdir <- "doc"
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
         ## not currently used
+        ## <NOTE>
+        ## This needs unpacked sources built with R >= 3.0.0, which
+        ## apparently also tangles the vignette sources.
         if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+            stop(gettextf("directory '%s' does not exist", dir),
+                 domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        dfile <- file.path(dir, "DESCRIPTION")
-        db <- .read_description(dfile)
-        testsrcdir <- file.path(dir, "inst", "doc")
-        ## FIXME: this isn't right, as we've not tangled in this dir
+        subdir <- file.path("inst", "doc")
+        ## </NOTE>
     }
-    Rfiles <- if (file_test("-d", testsrcdir)) {
-        od <- setwd(testsrcdir)
-        on.exit(setwd(od))
-        Rfiles <- dir(".", pattern = "[.]R$")
-        if (length(Rfiles)) {
-            ## check they have a matching vignette source file
-            pattern <- vignetteEngine("Sweave")$pattern
-            Rfiles[sapply(Rfiles,
-                          function(x)
-                          length(dir(".",
-                                     pattern =
-                                     paste(sub("[.]R$", "", x), pattern,
-                                           sep = ""))) > 0L)]
-        }
-        else Rfiles
-    } else character()
+    db <- .read_description(file.path(dir, "DESCRIPTION"))
+    vinfo <- pkgVignettes(dir = dir, subdirs = subdir, source = TRUE)
+    Rfiles <- unique(as.character(unlist(vinfo$sources)))
     .check_packages_used_helper(db, Rfiles)
 }
 
