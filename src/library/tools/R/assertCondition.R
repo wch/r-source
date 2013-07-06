@@ -16,7 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-assertCondition <- function(expr, ..., .exprString = .deparseTrim(substitute(expr), cutoff = 30L)) {
+assertCondition <- function(expr, ...,
+                            .exprString = .deparseTrim(substitute(expr), cutoff = 30L),
+                            verbose = FALSE) {
     fe <- function(e)e
     getConds <- function(expr) {
 	conds <- list()
@@ -35,12 +37,22 @@ assertCondition <- function(expr, ..., .exprString = .deparseTrim(substitute(exp
     .Wanted <- if(nargs() > 1) paste(c(...), collapse = " or ") else "any condition"
     res <- getConds(expr)
     if(length(res)) {
-	if(is.null(conds))
+	if(is.null(conds)) {
+            if(verbose)
+                message("assertConditon: Successfully caught a condition\n")
 	    invisible(res)
+        }
 	else {
 	    ii <- sapply(res, function(cond) any(class(cond) %in% conds))
-	    if(any(ii))
+	    if(any(ii)) {
+                if(verbose) {
+                    found <-
+                        unique(sapply(res, function(cond) class(cond)[class(cond) %in% conds]))
+                    message(sprintf("assertCondition: caught %s",
+                                    paste(dQuote(found), collapse =", ")))
+                }
 		invisible(res)
+            }
 	    else {
                 .got <- paste(unique((sapply(res, function(obj)class(obj)[[1]]))),
                                      collapse = ", ")
@@ -54,21 +66,29 @@ assertCondition <- function(expr, ..., .exprString = .deparseTrim(substitute(exp
 		      .Wanted, .exprString))
 }
 
-assertError <- function(expr) {
+assertError <- function(expr, verbose = FALSE) {
     d.expr <- .deparseTrim(substitute(expr), cutoff = 30L)
     tryCatch(res <- assertCondition(expr, "error", .exprString = d.expr),
              error = function(e)
                  stop(gettextf("Failed to get error in evaluating %s", d.expr),
                       call. = FALSE)
              )
+    if(verbose) {
+        error <- res[ sapply(res, function(cond) "error" %in% class(cond)) ]
+        message(sprintf("Asserted error: %s", error[[1]]$message))
+    }
     invisible(res)
 }
 
-assertWarning <- function(expr) {
+assertWarning <- function(expr, verbose = FALSE) {
     d.expr <- .deparseTrim(substitute(expr), cutoff = 30L)
     res <- assertCondition(expr, "warning", .exprString = d.expr)
     if(any(sapply(res, function(cond) "error" %in% class(cond))))
         stop(gettextf("Got warning in evaluating %s, but also an error", d.expr))
+    if(verbose) {
+        warning <- res[ sapply(res, function(cond) "warning" %in% class(cond)) ]
+        message(sprintf("Asserted warning: %s", warning[[1]]$message))
+    }
     invisible(res)
 }
 

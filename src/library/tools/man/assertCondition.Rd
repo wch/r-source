@@ -13,9 +13,9 @@
   an error is signalled.
 }
 \usage{
-assertError(expr)
-assertWarning(expr)
-assertCondition(expr, ..., .exprString = )
+assertError(expr, verbose = FALSE)
+assertWarning(expr, verbose = FALSE)
+assertCondition(expr, ..., .exprString = , verbose = FALSE)
 }
 \arguments{
   \item{expr}{an unevaluated \R expression which will be evaluated via
@@ -31,6 +31,8 @@ assertCondition(expr, ..., .exprString = )
       called from another 
         function, with the actual expression passed as an argument to
         that function, supply the deparsed version.}
+  \item{verbose}{If \code{TRUE}, a message is printed when the
+        condition is satisfied.}
 }
 \details{
   \code{assertCondition()} uses the general condition mechanism to

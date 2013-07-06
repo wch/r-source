@@ -2609,9 +2609,9 @@ is.unsorted(data.frame(x=3:4, y=1:2))
 
 
 library("methods")# (not needed here)
-assertCondition <- tools::assertCondition
-assertCondition( getMethod(ls, "bar", fdef=ls), "error", verbose=TRUE)
-assertCondition( getMethod(show, "bar"),        "error", verbose=TRUE)
+assertError <- tools::assertError
+assertError( getMethod(ls, "bar", fdef=ls), verbose=TRUE)
+assertError( getMethod(show, "bar"), verbose=TRUE)
 ## R < 2.15.1 gave
 ##   cannot coerce type 'closure' to vector of type 'character'
 

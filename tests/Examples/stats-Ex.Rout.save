@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-07-06 r63201) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-06 r63204) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin12.4.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -914,7 +914,7 @@ Asym   94.1282     8.4030  11.202 0.001525 **
 resp0  -8.2508     1.2261  -6.729 0.006700 ** 
 lrc    -3.2176     0.1386 -23.218 0.000175 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.7493 on 3 degrees of freedom
 
@@ -999,7 +999,7 @@ Asym  38.1398     0.9164  41.620 1.99e-06 ***
 lrc   -4.3806     0.2042 -21.457 2.79e-05 ***
 c0    51.2232    11.6698   4.389   0.0118 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 1.663 on 4 degrees of freedom
 
@@ -1122,7 +1122,7 @@ lrc1   0.5794     0.1247   4.648  0.00235 **
 A2     0.1915     0.1106   1.731  0.12698    
 lrc2  -1.7878     0.7871  -2.271  0.05737 .  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.04103 on 7 degrees of freedom
 
@@ -1209,7 +1209,7 @@ lKe  -2.9196     0.1709 -17.085 1.40e-07 ***
 lKa   0.5752     0.1728   3.328   0.0104 *  
 lCl  -3.9159     0.1273 -30.768 1.35e-09 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.732 on 8 degrees of freedom
 
@@ -1268,7 +1268,7 @@ B     348.971     57.899   6.027 0.000314 ***
 xmid   19.391      2.194   8.836 2.12e-05 ***
 scal    6.673      1.002   6.662 0.000159 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 2.351 on 8 degrees of freedom
 
@@ -1363,7 +1363,7 @@ Asym  4.60333    0.65321   7.047 8.71e-06 ***
 b2    2.27134    0.14373  15.803 7.24e-10 ***
 b3    0.71647    0.02206  32.475 7.85e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.02684 on 13 degrees of freedom
 
@@ -1459,7 +1459,7 @@ Parameters:
 Vm 2.127e+02  6.947e+00  30.615 3.24e-11 ***
 K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
@@ -1475,7 +1475,7 @@ Parameters:
 Vm 2.127e+02  6.947e+00  30.615 3.24e-11 ***
 K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
@@ -1554,7 +1554,7 @@ Drop 110.9971     2.6330   42.16 1.10e-09 ***
 lrc   -5.9934     0.3733  -16.05 8.83e-07 ***
 pwr    2.6461     0.1613   16.41 7.62e-07 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 2.061 on 7 degrees of freedom
 
@@ -1731,7 +1731,7 @@ wool         1    451   450.7   3.339 0.07361 .
 tension      2   2034  1017.1   7.537 0.00138 **
 Residuals   50   6748   135.0                   
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > TukeyHSD(fm1, "tension", ordered = TRUE)
   Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -1990,7 +1990,7 @@ Education         1      1163 3268 209   22.64 2.4e-05 ***
 Catholic          1       448 2553 198    8.72  0.0052 ** 
 Infant.Mortality  1       409 2514 197    7.96  0.0073 ** 
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ## following example(glm)
 > ## Don't show: 
@@ -2016,7 +2016,7 @@ counts ~ outcome + treatment
 outcome    2    10.58 58.2 5.45    0.065 .
 treatment  2     5.13 52.8 0.00    1.000  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > drop1(glm.D93, test = "F")
 Warning in drop1.glm(glm.D93, test = "F") :
   F test assumes 'quasipoisson' family
@@ -2534,7 +2534,7 @@ NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291  0.06547 .
 treatment  2   0.0000         4     5.1291  1.00000  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > glm.D93a <-
 +    update(glm.D93, ~treatment*outcome) # equivalent to Pearson Chi-square
 > anova(glm.D93, glm.D93a, test = "Rao")
@@ -2574,7 +2574,7 @@ dpi        1  12.40  12.401  0.8576 0.3593551
 ddpi       1  63.05  63.054  4.3605 0.0424711 *  
 Residuals 45 650.71  14.460                      
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ## same effect via separate models
 > fit0 <- lm(sr ~ 1, data = LifeCycleSavings)
@@ -2597,7 +2597,7 @@ Model 5: sr ~ pop15 + pop75 + dpi + ddpi
 4     46 713.77  1    12.401  0.8576 0.3593551    
 5     45 650.71  1    63.054  4.3605 0.0424711 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > anova(fit4, fit2, fit0, test = "F") # unconventional order
 Analysis of Variance Table
@@ -2610,7 +2610,7 @@ Model 3: sr ~ 1
 2     47 726.17 -2   -75.455 2.6090 0.0847088 .  
 3     49 983.63 -2  -257.460 8.9023 0.0005527 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > 
 > 
@@ -2698,7 +2698,7 @@ Contrasts orthogonal to
 1      9      1249.6                                          
 2     10  1   2013.2 0.9456   17.381      5      5 0.003534 **
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ## Assuming sphericity
 > anova(mlmfit, mlmfit0, X = ~1, test = "Spherical")
@@ -2989,11 +2989,11 @@ N          1 189.28  189.28  12.259 0.00437 **
 P          1   8.40    8.40   0.544 0.47490   
 K          1  95.20   95.20   6.166 0.02880 * 
 N:P        1  21.28   21.28   1.378 0.26317   
-N:K        1  33.14   33.14   2.146 0.16865   
+N:K        1  33.13   33.13   2.146 0.16865   
 P:K        1   0.48    0.48   0.031 0.86275   
 Residuals 12 185.29   15.44                   
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > options(op)  # reset to previous
 > 
 > 
@@ -3698,7 +3698,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
-detaching ‘package:cluster’
+detaching 'package:cluster'
 
 > nameEx("asOneSidedFormula")
 > ### * asOneSidedFormula
@@ -3714,7 +3714,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x486db38>
+<environment: 0x7f9342c1cd88>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4032,7 +4032,7 @@ I(x^2)         -0.542292   0.138460  -3.917 0.001374 **
 I(x^3)          0.020905   0.004372   4.782 0.000242 ***
 I((x - 10)^2)         NA         NA      NA       NA    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 2.838 on 15 degrees of freedom
 Multiple R-squared:  0.9702,	Adjusted R-squared:  0.9643 
@@ -4665,7 +4665,7 @@ Population   B    B   , . 1
 Year         B    B   , . B 1  
 Employed     B    B   . . B B 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > ## Spearman's rho  and  Kendall's tau
 > symnum(clS <- cor(longley, method = "spearman"))
@@ -4678,7 +4678,7 @@ Population   B    B   ,   1
 Year         B    B   ,   1 1  
 Employed     B    B   .   B B 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(clK <- cor(longley, method = "kendall"))
              GNP. GNP U A P Y E
 GNP.deflator 1                 
@@ -4689,7 +4689,7 @@ Population   B    B   .   1
 Year         B    B   .   1 1  
 Employed     *    *   .   + + 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > ## How much do they differ?
 > i <- lower.tri(Cl)
 > cor(cbind(P = Cl[i], S = clS[i], K = clK[i]))
@@ -4715,7 +4715,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x72a8660>
+<bytecode: 0x7f934795c078>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -4760,7 +4760,7 @@ Eductn . . .  1
 Cathlc     .     1  
 Infn.M             1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(Rp <- cor(swM, method = "kendall", use = "pairwise"))
        F A Ex Ed C I
 Frtlty 1            
@@ -4770,7 +4770,7 @@ Eductn . . .  1
 Cathlc     .     1  
 Infn.M .           1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(R. <- cor(swiss, method = "kendall"))
                  F A Ex Ed C I
 Fertility        1            
@@ -4780,7 +4780,7 @@ Education        . . .  1
 Catholic             .     1  
 Infant.Mortality .           1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > ## "pairwise" is closer componentwise,
 > summary(abs(c(1 - Rp/R.)))
@@ -6399,7 +6399,7 @@ Empirical CDF:	  10 unique values with summary
 Call:
 aov(formula = Yield ~ A * B * C + Error(Block), data = aovdat)
 
-Grand Mean: 291.5938
+Grand Mean: 291.5937
 
 Stratum 1: Block
 
@@ -6418,7 +6418,7 @@ Terms:
 Sum of Squares    3465.28 161170.03 278817.78     28.17   1802.67  11528.17
 Deg. of Freedom         1         1         1         1         1         1
                     A:B:C Residuals
-Sum of Squares      45.37   5423.28
+Sum of Squares      45.38   5423.28
 Deg. of Freedom         1        17
 
 Residual standard error: 17.86103
@@ -7133,7 +7133,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0xa604d28>
+<environment: 0x7f934a9db600>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7574,7 +7574,7 @@ Prewt        -0.5655     0.1612  -3.509 0.000803 ***
 TreatCont    -4.0971     1.8935  -2.164 0.033999 *  
 TreatFT       4.5631     2.1333   2.139 0.036035 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for gaussian family taken to be 48.69504)
 
@@ -7604,7 +7604,7 @@ Coefficients:
 (Intercept) -0.0165544  0.0009275  -17.85 4.28e-07 ***
 log(u)       0.0153431  0.0004150   36.98 2.75e-09 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for Gamma family taken to be 0.002446059)
 
@@ -7628,7 +7628,7 @@ Coefficients:
 (Intercept) -0.0239085  0.0013265  -18.02 4.00e-07 ***
 log(u)       0.0235992  0.0005768   40.91 1.36e-09 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for Gamma family taken to be 0.001813354)
 
@@ -7758,7 +7758,7 @@ raises     .  ,  . , 1
 critical             .  1   
 advance          . . .     1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > heatmap(Ca,               symm = TRUE, margins = c(6,6)) # with reorder()
 > heatmap(Ca, Rowv = FALSE, symm = TRUE, margins = c(6,6)) # _NO_ reorder()
 > ## slightly artificial with color bar, without and with ordering:
@@ -7784,7 +7784,7 @@ WRIT    * +  B  *  *  B  B B 1
 PHYS    , ,  +  +  +  +  + + + 1   
 RTEN    * *  *  *  *  B  * B B *  1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > hU <- heatmap(cU, Rowv = FALSE, symm = TRUE, col = topo.colors(16),
 +              distfun = function(c) as.dist(1 - c), keep.dendro = TRUE)
@@ -7911,7 +7911,7 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > integrate(integrand, lower = 0, upper = 100000)
 3.135268 with absolute error < 4.2e-07
 > integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)
-failed with message ‘the integral is probably divergent’
+failed with message 'the integral is probably divergent'
 > 
 > ## some functions do not handle vector input properly
 > f <- function(x) 2.0
@@ -8587,7 +8587,7 @@ pop75       -1.6914977  1.0835989  -1.561 0.125530
 dpi         -0.0003369  0.0009311  -0.362 0.719173    
 ddpi         0.4096949  0.1961971   2.088 0.042471 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 3.803 on 45 degrees of freedom
 Multiple R-squared:  0.3385,	Adjusted R-squared:  0.2797 
@@ -9119,7 +9119,7 @@ N:K        1 0.21654   1.5201      2     11 0.26127
 P:K        1 0.41992   3.9814      2     11 0.05003 .
 Residuals 12                                         
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ( npk2.aovE <- manova(cbind(yield, foo) ~  N*P*K + Error(block), npk2) )
 
@@ -9172,7 +9172,7 @@ N:K        1 0.21654   1.5201      2     11 0.26127
 P:K        1 0.41992   3.9814      2     11 0.05003 .
 Residuals 12                                         
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > 
 > 
@@ -10266,7 +10266,7 @@ Asym   2.3452     0.0782    30.0  2.2e-13 ***
 xmid   1.4831     0.0814    18.2  1.2e-10 ***
 scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0192 on 13 degrees of freedom
 
@@ -10296,7 +10296,7 @@ xmid   1.4831     0.0814    18.2  1.2e-10 ***
 scal   1.0415     0.0323    32.3  8.5e-14 ***
 .lin   2.3452     0.0782    30.0  2.2e-13 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0192 on 13 degrees of freedom
 
@@ -10315,7 +10315,7 @@ Asym   2.3452     0.0782    30.0  2.2e-13 ***
 xmid   1.4831     0.0814    18.2  1.2e-10 ***
 scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0192 on 13 degrees of freedom
 
@@ -10335,7 +10335,7 @@ Asym   2.3452     0.0782    30.0  2.2e-13 ***
 xmid   1.4831     0.0814    18.2  1.2e-10 ***
 scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0192 on 13 degrees of freedom
 
@@ -10368,7 +10368,7 @@ Parameters:
 Vm 2.07e+02   9.22e+00   22.42  7.0e-10 ***
 K  5.46e-02   7.98e-03    6.84  4.5e-05 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 1.21 on 10 degrees of freedom
 
@@ -10445,7 +10445,7 @@ a b
 > nlmod <- nls(y ~  Const + A * exp(B * x))
 Warning in nls(y ~ Const + A * exp(B * x)) :
   No starting values specified for some parameters.
-Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
+Initializing 'Const', 'A', 'B' to '1.'.
 Consider specifying 'start' or using a selfStart model
 > 
 > plot(x,y, main = "nls(*), data, true function and fit, n=100")
@@ -10485,7 +10485,7 @@ th       0.608      0.115    5.31  1.9e-06 ***
 .lin1   28.963      1.230   23.55  < 2e-16 ***
 .lin2  -34.227      3.793   -9.02  1.4e-12 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 4.67 on 57 degrees of freedom
 
@@ -10549,7 +10549,7 @@ b20  -36.917      8.033   -4.60  0.00026 ***
 b21  -26.508      7.012   -3.78  0.00149 ** 
 th     0.797      0.127    6.30  8.0e-06 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 1.11 on 17 degrees of freedom
 
@@ -10693,7 +10693,7 @@ Response: extra
 group      1 12.482 12.4820  3.4626 0.07919 .
 Residuals 18 64.886  3.6048                  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > 
 > 
@@ -11748,14 +11748,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x8262e78>
-<environment: 0x8251420>
+<bytecode: 0x7f93488e2630>
+<environment: 0x7f9348866548>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x8262028>
-<environment: 0x8251420>
+<bytecode: 0x7f93488e2748>
+<environment: 0x7f9348866548>
 
 > 
 > 
@@ -12340,7 +12340,7 @@ sexM          0.1750     0.7783   0.225    0.822
 ldose         0.9060     0.1671   5.422 5.89e-08 ***
 sexM:ldose    0.3529     0.2700   1.307    0.191    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
@@ -13076,7 +13076,7 @@ Standard deviations:
 [2,]  10.1836  3.5496  2.8689 0.0041185 ** 
 [3,]   9.1644  2.7365  3.3490 0.0008111 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > op <- options(show.coef.Pvalues = FALSE)
 > printCoefmat(cmat, digits = 2)
      Estimate Std.Err Z value
@@ -13089,7 +13089,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 [2,]     10.2     3.5     2.9  0.004 ** 
 [3,]      9.2     2.7     3.3  8e-04 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > options(op) # restore
 > 
 > 
@@ -13903,7 +13903,7 @@ woolB         -5.778      3.162  -1.827   0.0736 .
 tensionL      10.000      3.872   2.582   0.0128 *  
 tensionH      -4.722      3.872  -1.219   0.2284    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 11.62 on 50 degrees of freedom
 Multiple R-squared:  0.2691,	Adjusted R-squared:  0.2253 
@@ -14678,7 +14678,7 @@ A:B          2  81.56   40.78   4.823 0.01527 *
   A:B: C2    1  68.06   68.06   8.049 0.00809 **
 Residuals   30 253.67    8.46                   
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > ## t.stat^2 is the F value on the A:B: C1 line (with Helmert contrasts)
 > ## Now look at all three interaction contrasts
 > cont <- c(1, -1)[A] * cbind(c(1, -1, 0), c(1, 0, -1), c(0, 1, -1))[B,]
@@ -14720,7 +14720,7 @@ eff.vl> (fit <- aov(Yield ~ A*B*C + Error(Block), data = aovdat))
 Call:
 aov(formula = Yield ~ A * B * C + Error(Block), data = aovdat)
 
-Grand Mean: 291.5938
+Grand Mean: 291.5937
 
 Stratum 1: Block
 
@@ -14739,7 +14739,7 @@ Terms:
 Sum of Squares    3465.28 161170.03 278817.78     28.17   1802.67  11528.17
 Deg. of Freedom         1         1         1         1         1         1
                     A:B:C Residuals
-Sum of Squares      45.37   5423.28
+Sum of Squares      45.38   5423.28
 Deg. of Freedom         1        17
 
 Residual standard error: 17.86103
@@ -15549,8 +15549,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x40d6fa8>
-<environment: 0x9d28d70>
+<bytecode: 0x7f9344070e30>
+<environment: 0x7f9349fb2dc8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -15787,7 +15787,7 @@ Coefficients:
 groupCtl   5.0320     0.2202   22.85 9.55e-15 ***
 groupTrt   4.6610     0.2202   21.16 3.62e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.6964 on 18 degrees of freedom
 Multiple R-squared:  0.9818,	Adjusted R-squared:  0.9798 
@@ -15816,7 +15816,7 @@ Coefficients: (1 not defined because of singularities)
 groupTrt               -0.3710     0.3114  -1.191    0.249    
 I(group != "Ctl")TRUE       NA         NA      NA       NA    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.6964 on 18 degrees of freedom
 Multiple R-squared:  0.07308,	Adjusted R-squared:  0.02158 
@@ -15918,12 +15918,12 @@ Rape     -0.54          0.82
 0 1 2 3 4 5 6 7 8 
 . . . - - + + $ $ 
 attr(,"legend")
-[1] 0 ‘.’ 2 ‘-’ 4 ‘+’ 6 ‘$’ 8
+[1] 0 '.' 2 '-' 4 '+' 6 '$' 8
 > symnum(ii, cut =  2*(0:4), sym = c(".", "-", "+", "$"), show.max = TRUE)
 0 1 2 3 4 5 6 7 8 
 . . . - - + + $ 8 
 attr(,"legend")
-[1] 0 ‘.’ 2 ‘-’ 4 ‘+’ 6 ‘$’ 8
+[1] 0 '.' 2 '-' 4 '+' 6 '$' 8
 > 
 > symnum(1:12 %% 3 == 0)  # --> "|" = TRUE, "." = FALSE  for logical
  [1] . . | . . | . . | . . |
@@ -15985,7 +15985,7 @@ raises     .  ,  . ,
 critical             .      
 advance          . . .      
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cor(attitude), abbr. = NULL)
                         
 rating     1            
@@ -15996,7 +15996,7 @@ raises     . , . , 1
 critical           . 1  
 advance        . . .   1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cor(attitude), abbr. = FALSE)
            rating complaints privileges learning raises critical advance
 rating     1                                                            
@@ -16007,7 +16007,7 @@ raises     .      ,          .          ,        1
 critical                                         .      1               
 advance                      .          .        .               1      
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cor(attitude), abbr. = 2)
            rt cm pr lr rs cr ad
 rating     1                   
@@ -16018,7 +16018,7 @@ raises     .  ,  .  ,  1
 critical               .  1    
 advance          .  .  .     1 
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > symnum(cor(rbind(1, rnorm(25), rnorm(25)^2)))
                                                        
@@ -16048,7 +16048,7 @@ attr(,"legend")
 [24,] * , , . , , .     , . . * * . , ,     .     B 1  
 [25,] B + . . + . , . . .   , B ,   * *   . +   . B B 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cor(matrix(rexp(30, 1), 5, 18))) # <<-- PATTERN ! --
                                          
  [1,] 1                                  
@@ -16070,7 +16070,7 @@ attr(,"legend")
 [17,]   , .   1 ,   , .   1 ,   , .   1  
 [18,]   ,     , 1   ,     , 1   ,     , 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cm1 <- cor(matrix(rnorm(90) ,  5, 18))) # < White Noise SMALL n
                                          
  [1,] 1                                  
@@ -16092,7 +16092,7 @@ attr(,"legend")
 [17,]   , +   , +       . . * .     . 1  
 [18,]   . .   * , . . .   , ,     .   . 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cm1, diag = FALSE)
                                         
  [1,]                                   
@@ -16114,7 +16114,7 @@ attr(,"legend")
 [17,]   , +   , +       . . * .     .   
 [18,]   . .   * , . . .   , ,     .   . 
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cm2 <- cor(matrix(rnorm(900), 50, 18))) # < White Noise "BIG" n
                                          
  [1,] 1                                  
@@ -16136,7 +16136,7 @@ attr(,"legend")
 [17,]                                 1  
 [18,]                                   1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cm2, lower = FALSE)
                                          
  [1,] 1                                  
@@ -16158,7 +16158,7 @@ attr(,"legend")
 [17,]                                 1  
 [18,]                                   1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > ## NA's:
 > Cm <- cor(matrix(rnorm(60),  10, 6)); Cm[c(3,6), 2] <- NA
@@ -16171,7 +16171,7 @@ attr(,"legend")
 [5,]     .     
 [6,] , ?       
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1 \t    ## NA: ‘?’
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1 \t    ## NA: '?'
 > 
 > ## Graphical P-values (aka "significance stars"):
 > pval <- rev(sort(c(outer(1:6, 10^-(1:3)))))
@@ -16959,25 +16959,28 @@ search in [0,2] ... extended to [-1073.74, 2.14748e+07] in 30 steps
 > ## Nonsense example (must give an error):
 > tools::assertCondition( uniroot(function(x) 1, 0:1, extendInt="yes"),
 +                        "error", verbose=TRUE)
+assertCondition: caught "error"
 > 
 > ## Convergence checking :
 > sinc <- function(x) ifelse(x == 0, 1, sin(x)/x)
 > curve(sinc, -6,18); abline(h=0,v=0, lty=3, col=adjustcolor("gray", 0.8))
 > ## Don't show: 
-> tools::assertCondition(
+> tools::assertWarning(
 + ## End Don't show
 + uniroot(sinc, c(0,5), extendInt="yes", maxiter=4) #-> "just" a warning
 + ## Don't show: 
-+  , "warning", verbose=TRUE)
++  , verbose=TRUE)
+Asserted warning: _NOT_ converged in 4 iterations
 > ## End Don't show
 > 
 > ## now with  check.conv=TRUE, must signal a convergence error :
 > ## Don't show: 
-> tools::assertCondition(
+> tools::assertError(
 + ## End Don't show
 + uniroot(sinc, c(0,5), extendInt="yes", maxiter=4, check.conv=TRUE)
 + ## Don't show: 
-+  , "error", verbose=TRUE)
++  , verbose=TRUE)
+Asserted error: _NOT_ converged in 4 iterations
 > ## End Don't show
 > 
 > ### Weibull cumulative hazard (example origin, Ravi Varadhan):
@@ -17003,11 +17006,12 @@ search in [0,2] ... extended to [-1073.74, 2.14748e+07] in 30 steps
 > 
 > ## An error if 'extendInt' assumes "wrong zero-crossing direction":
 > ## Don't show: 
-> tools::assertCondition(
+> tools::assertError(
 + ## End Don't show
 + uniroot(froot, u= 0.99, a=a, b=b, interval= c(0.1, 10), extendInt="down")
 + ## Don't show: 
-+  , "error", verbose=TRUE)
++  , verbose=TRUE)
+Asserted error: no sign change found in 1000 iterations
 > ## End Don't show
 > 
 > 
@@ -17056,7 +17060,7 @@ Coefficients:
 groupCtl   5.0320     0.2202   22.85 9.55e-15 ***
 groupTrt   4.6610     0.2202   21.16 3.62e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.6964 on 18 degrees of freedom
 Multiple R-squared:  0.9818,	Adjusted R-squared:  0.9798 
@@ -17795,7 +17799,7 @@ y . . . . 2
 > 
 > cleanEx()
 
-detaching ‘package:Matrix’, ‘package:lattice’
+detaching 'package:Matrix', 'package:lattice'
 
 > nameEx("zC")
 > ### * zC
@@ -17843,7 +17847,7 @@ woolB                   -5.778      3.162  -1.827   0.0736 .
 C(tension, base = 2)1   10.000      3.872   2.582   0.0128 *  
 C(tension, base = 2)3   -4.722      3.872  -1.219   0.2284    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 11.62 on 50 degrees of freedom
 Multiple R-squared:  0.2691,	Adjusted R-squared:  0.2253 
@@ -17875,7 +17879,7 @@ agegp^5         -0.20288    0.19523  -1.039  0.29872
 C(tobgp, , 1).L  0.58501    0.18331   3.191  0.00142 ** 
 C(alcgp, , 1).L  1.46034    0.18899   7.727 1.10e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
@@ -17893,7 +17897,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.709 0.126 6.858 0 0 
+Time elapsed:  7.043 0.31 7.584 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-07-06 r63201) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-06 r63204) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin12.4.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -6400,15 +6400,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x30a4940> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7fe741ccaa28> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3131e30> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7fe741d1a0d8> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3131e30> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x7fe741d1a0d8> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -6897,9 +6897,11 @@ F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10
 > 
 > 
 > library("methods")# (not needed here)
-> assertCondition <- tools::assertCondition
-> assertCondition( getMethod(ls, "bar", fdef=ls), "error", verbose=TRUE)
-> assertCondition( getMethod(show, "bar"),        "error", verbose=TRUE)
+> assertError <- tools::assertError
+> assertError( getMethod(ls, "bar", fdef=ls), verbose=TRUE)
+Asserted error: no generic function found for 'ls'
+> assertError( getMethod(show, "bar"), verbose=TRUE)
+Asserted error: no method found for function 'show' and signature bar
 > ## R < 2.15.1 gave
 > ##   cannot coerce type 'closure' to vector of type 'character'
 > 

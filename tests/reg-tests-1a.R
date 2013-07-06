@@ -12,7 +12,7 @@ envLst <- c(t(outer(c("R_ENVIRON","R_PROFILE"), c("","_USER"), paste0)),
 cbind(Sys.getenv(envLst))
 .libPaths()
 
-assertCondition <- tools::assertCondition
+assertError <- tools::assertError
 
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
@@ -499,8 +499,7 @@ stopifnot(
     !is.nan(c(1,NA)),
     c(FALSE,TRUE,FALSE) == is.nan(c   (1,NaN,NA))
 )
-assertCondition(is.nan(list(1,NaN,NA)),
-		"error") #-> result allowed but varies in older versions
+assertError(is.nan(list(1,NaN,NA))) #-> result allowed but varies in older versions
 
 
 stopifnot(identical(lgamma(Inf), Inf))
