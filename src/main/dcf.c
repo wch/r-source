@@ -43,7 +43,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int nwhat, nret, nc, nr, m, k, lastm, need;
     Rboolean blank_skip, field_skip = FALSE;
-    int whatlen, dynwhat, buflen = 100;
+    int whatlen, dynwhat, buflen = 8096; // was 100, but that re-alloced often
     char line[MAXELTSIZE], *buf;
     regex_t blankline, contline, trailblank, regline, eblankline;
     regmatch_t regmatch[1];
@@ -215,14 +215,8 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			UNPROTECT_PTR(what);
 			retval = retval2;
 			what = what2;
-			/* FIXME:
-			   Why are we doing this?
-			   We need to copy the matched beginning of the
-			   line to buf, so shouldn't we need
-			     regmatch[0].rm_eo
-			   bytes?
-			*/
-			need = (int) strlen(line+regmatch[0].rm_eo);
+			/* Make sure enough space was used */
+			need = (int) (Rf_strchr(line, ':') - line + 1);
 			if(buflen < need){
 			    char *tmp = (char *) realloc(buf, need);
 			    if(!tmp) {
