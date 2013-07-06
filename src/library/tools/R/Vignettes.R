@@ -1015,7 +1015,7 @@ vignetteEngine <- local({
     }
 
     setEngine <- function(name, package, pattern, weave, tangle,
-                          text = NULL) {
+                          aspell = list()) {
         key <- engineKey(name, package)
         if (!is.null(package) && key[1L] != package)
             stop("Engine name ", sQuote(name), " and package ", sQuote(package), " do not match")
@@ -1043,7 +1043,7 @@ vignetteEngine <- local({
 
             result <-
                 list(name = key[2L], package = key[1L], pattern = pattern,
-                     weave = weave, tangle = tangle, text = text)
+                     weave = weave, tangle = tangle, aspell = aspell)
             assign(rname, result, registry)
         }
 
@@ -1053,11 +1053,10 @@ vignetteEngine <- local({
     setEngine(name = "Sweave", package = "utils", pattern = NULL,
               weave = function(...) utils::Sweave(...),
               tangle = function(...) utils::Stangle(...),
-              text = "Sweave")
-
+              aspell = list(filter = "Sweave", control = "-t"))
 
     function(name, weave, tangle, pattern = NULL, package = NULL,
-             text = NULL) {
+             aspell = list()) {
         if (missing(weave)) { # we're getting the engine
             getEngine(name, package)
         } else { # we're setting a new engine
@@ -1068,7 +1067,7 @@ vignetteEngine <- local({
                 package <- utils::packageName(parent.frame())
             result <-
                 setEngine(name, package, pattern = pattern,
-                          weave = weave, tangle = tangle, text = text)
+                          weave = weave, tangle = tangle, aspell = aspell)
             invisible(result)
         }
     }
