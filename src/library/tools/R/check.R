@@ -2119,13 +2119,13 @@ setRlibs <-
             }
             bad_lines <- grep("^Warning.*screen devices should not be used in examples",
                               lines, useBytes = TRUE, value = TRUE)
-            wrapLog("dev.new() is the preferred way to open a new device,",
-                    "in the unlikely event one is needed.")
 
             if(length(bad_lines)) {
                 any <- TRUE
                 warningLog(Log, "Found the following significant warnings:")
                 printLog(Log, .format_lines_with_indent(bad_lines), "\n")
+                wrapLog("dev.new() is the preferred way to open a new device,",
+                        "in the unlikely event one is needed.")
             }
             if (!any) resultLog(Log, "OK")
 
