@@ -64,6 +64,13 @@ windows <-
              buffered, title, restoreConsole, clickToConfirm,
              fillOddEven, family = "", antialias)
 {
+    check <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", "")
+    msg <- "screen devices should not be used in examples etc"
+    if (identical(check, "stop"))
+        stop(msg, domain = NA)
+    else if (identical(check, "warn"))
+        warning(msg, immediate. = TRUE, domain = NA)
+
     new <- list()
     if(!missing(width)) new$width <- as.double(width)
     if(!missing(height)) new$height <- as.double(height)
@@ -111,6 +118,10 @@ win.print <-
     function(width = 7, height = 7, pointsize = 12, printer = "",
              family = "", antialias = "default", restoreConsole = TRUE)
 {
+    check <- Sys.getenv("_R_CHECK_WINDOWS_DEVICE_", "")
+    if (identical(check, "stop"))
+        stop("windows devices should not be used in examples etc", domain = NA)
+
     antialias <- match(match.arg(antialias, aa.win), aa.win)
     invisible(.External(C_devga, paste("win.print:", printer, sep=""),
                         width, height, pointsize, FALSE, 1L,
@@ -124,6 +135,10 @@ win.metafile <-
     function(filename = "", width = 7, height = 7, pointsize = 12,
              family = "", restoreConsole = TRUE)
 {
+    check <- Sys.getenv("_R_CHECK_WINDOWS_DEVICE_", "")
+    if (identical(check, "stop"))
+        stop("windows devices should not be used in examples etc", domain = NA)
+
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
     invisible(.External(C_devga, paste("win.metafile:", filename, sep=""),

@@ -49,6 +49,15 @@ quartz.options <- function(..., reset = FALSE)
 quartz <- function(title, width, height, pointsize, family, antialias,
                    type, file = NULL, bg, canvas, dpi)
 {
+    if (missing(type) || type %in% c("", "native", "Cocoa")) {
+        check <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", "")
+        msg <- "screen devices should not be used in examples etc"
+        if (identical(check, "stop"))
+            stop(msg, domain = NA)
+        else if (identical(check, "warn"))
+            warning(msg, immediate. = TRUE, domain = NA)
+    }
+
     new <- list()
     if(!missing(title)) new$title <- title
     if(!missing(width)) new$width <- width

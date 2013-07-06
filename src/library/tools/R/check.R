@@ -2117,6 +2117,16 @@ setRlibs <-
                         "soon as of the next release of R.\n",
                         "See ?Deprecated.\n")
             }
+            bad_lines <- grep("^Warning.*screen devices should not be used in examples",
+                              lines, useBytes = TRUE, value = TRUE)
+            wrapLog("dev.new() is the preferred way to open a new device,",
+                    "in the unlikely event one is needed.")
+
+            if(length(bad_lines)) {
+                any <- TRUE
+                warningLog(Log, "Found the following significant warnings:")
+                printLog(Log, .format_lines_with_indent(bad_lines), "\n")
+            }
             if (!any) resultLog(Log, "OK")
 
             ## Try to compare results from running the examples to
@@ -3712,6 +3722,8 @@ setRlibs <-
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
         Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
         Sys.setenv("_R_CHECK_DOT_FIRSTLIB_" = "TRUE")
+        prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
+        if(is.na(prev))  Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
