@@ -201,6 +201,9 @@
 
       \item \code{kmeans()} now always stops iterating in the QTran
       stage. (\PR{15364}).
+
+      \item \code{read.dcf()} re-allocated incorrectly and so could
+      segfault when called on a file with lines of more than 100 bytes.
     }
   }
 }
