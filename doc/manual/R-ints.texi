@@ -4016,7 +4016,7 @@ If set to @samp{warn}, give a warning if examples etc open a screen
 device.  If set to @samp{stop}, give an error.
 Default: empty (but @samp{stop} for CRAN submission checks).
 
-@item _R_CHECK_WINODWS_DEVICE_
+@item _R_CHECK_WINDOWS_DEVICE_
 If set to @samp{stop}, give an error if a Windows-only device is used in
 example etc.  This is only useful on Windows: the devices do not exist
 elsewhere.
@@ -4040,8 +4040,7 @@ _R_CHECK_CODE_ATTACH_=TRUE
 _R_CHECK_CODE_DATA_INTO_GLOBALENV_=TRUE
 _R_CHECK_DOT_FIRSTLIB_=TRUE
 _R_CHECK_DEPRECATED_DEFUNCT_=TRUE
-_R_CHECK_SCREEN_DEVICE_=stop
-@end example
+1@end example
 
 @noindent
 These are turned on by @command{R CMD check --as-cran}: the incoming
