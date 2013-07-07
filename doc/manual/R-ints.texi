@@ -4017,7 +4017,7 @@ device.  If set to @samp{stop}, give an error.
 Default: empty (but @samp{stop} for CRAN submission checks).
 
 @item _R_CHECK_WINODWS_DEVICE_
-If set to @samp{stop}, give an error if a windows-only device is used in
+If set to @samp{stop}, give an error if a Windows-only device is used in
 example etc.  This is only useful on Windows: the devices do not exist
 elsewhere.
 Default: empty (but @samp{stop} for CRAN submission checks on Windows).

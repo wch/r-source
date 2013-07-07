@@ -112,8 +112,9 @@ is.na(xx) <- c(2, 4)
 xx                     #> 0 NA  2 NA  4
 anyNA(xx) # TRUE
 
+\donttest{
 ## Measure speed difference in an extreme case:
-if(require("microbenchmark")) {
+if(require("microbenchmark")) { # does not work reliably on all platforms
   x <- c(NaN, 1:10000)
   print(microbenchmark(any(is.na(x)), anyNA(x)))
 } else { ## much less accurate
@@ -121,6 +122,7 @@ if(require("microbenchmark")) {
   nSim <- 2^13
   print(rbind(is.na = system.time(replicate(nSim, any(is.na(x)))),
               anyNA = system.time(replicate(nSim, anyNA(x)))))
+}
 }
 
 ## anyNA() works recursively with list()s:
@@ -133,12 +135,6 @@ sapply(L2, anyNA); anyNA(L2)
 dN <- dd <- USJudgeRatings; dN[3,6] <- NA
 anyNA(dd) # FALSE
 anyNA(dN) # TRUE
-\dontshow{
-stopifnot(anyNA(x), anyNA(xx),
-          anyNA(LL), !anyNA(L2),
-          anyNA(dN), !anyNA(dd), !any(is.na(dd)),
-          all(c(3,6) == which(is.na(dN), arr.ind=TRUE)))
-}
 }
 \keyword{NA}
 \keyword{logic}
