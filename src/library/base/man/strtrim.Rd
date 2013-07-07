@@ -1,6 +1,6 @@
 % File src/library/base/man/strtrim.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strtrim}
@@ -31,7 +31,7 @@ strtrim(x, width)
   A character vector of the same length and with the same attributes
   as \code{x} (after possible coercion).
 
-  Elements of the result will be have the encoding declared as that of
+  Elements of the result will have the encoding declared as that of
   the current locale (see \code{\link{Encoding}}) if the corresponding
   input had a declared encoding and the current locale is either Latin-1
   or UTF-8.
