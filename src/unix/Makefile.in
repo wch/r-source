@@ -76,6 +76,7 @@ install-pc:
 	  -e "s:@rincludedir:$(rincludedir):" \
 	  -e "s:@rarch:$(R_ARCH):" \
 	  -e 's:@libsprivate:$(STATIC_LIBR_PC):' \
+	  -e 's:@others:$(MAIN_LDFLAGS) $(LDFLAGS):' \
 	  -e 's/@VERSION/$(VERSION)/' $(srcdir)/libR.pc.in \
 	  > "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
 

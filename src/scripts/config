@@ -38,9 +38,9 @@ Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
       --cppflags        print pre-processor flags required to compile
-			a program using R as a library
-      --ldflags         print linker flags needed for linking against
-			the R library
+			a C/C++ file using R as a library
+      --ldflags         print linker flags needed for linking a front-end
+                        against the R library
       --no-user-files  ignore customization files under ~/.R
       --no-site-files  ignore site customization files under R_HOME/etc
 
@@ -143,6 +143,9 @@ query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 LIBR=`eval $query VAR=LIBR`
 STATIC_LIBR=`eval $query VAR=STATIC_LIBR`
+MAIN_LDFLAGS=`eval $query VAR=MAIN_LDFLAGS`
+LIBS=`eval $query VAR=LIBS`
+
 
 if test -n "${R_ARCH}"; then
   includes="-I${R_INCLUDE_DIR} -I${R_INCLUDE_DIR}${R_ARCH}"
@@ -172,14 +175,15 @@ while test -n "${1}"; do
       exit 0
       ;;
     --ldflags)
+      ## changed in R 3.1.0 to be those needed to link a front-end
       if test -z "${LIBR}"; then
 	if test -z "${STATIC_LIBR}"; then
 	  echo "R was not built as a library" >&2
 	else
-	  echo "${STATIC_LIBR}"
+	  echo "${MAIN_LDFLAGS} ${LDFLAGS} ${STATIC_LIBR}"
 	fi
       else
-	echo "${LIBR}"
+	echo "${MAIN_LDFLAGS} ${LDFLAGS} ${LIBR} ${LIBS}"
       fi
       exit 0
       ;;

@@ -11925,9 +11925,9 @@ pkg-config --cflags libR
 pkg-config --libs --static libR
 @end example
 
-However, these may not suffice and a more comprehensive way is to set up
-a @file{Makefile} to compile the front-end.  Suppose file @file{myfe.c}
-is to be compiled to @file{myfe}. A suitable @file{Makefile} might be
+However, a more comprehensive way is to set up a @file{Makefile} to
+compile the front-end.  Suppose file @file{myfe.c} is to be compiled to
+@file{myfe}. A suitable @file{Makefile} might be
 
 @example
 include $@{R_HOME@}/etc$@{R_ARCH@}/Makeconf

@@ -147,6 +147,11 @@
       process both Sweave and non-Sweave vignettes.  The
       \code{tools::buildVignette()} function has been added to do the
       same tasks from within \R.
+      
+      \item The flags returned by \command{R CMD config --ldflags} and
+      (where installed) \command{pkg-config --libs libR} are now those
+      needed to link a front-end against the (shared or static) \R
+      library.
     }
   }
 
