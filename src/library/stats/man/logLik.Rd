@@ -1,6 +1,6 @@
 % File src/library/stats/man/logLik.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -39,6 +39,11 @@ logLik(object, \dots)
 %   \code{corStruct}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
 %   \code{varFunc}.
 \details{
+  \code{logLik} is most commonly used for a model fitted by maximum
+  likelihood, and some uses, e.g. by \code{\link{AIC}}, assume this.  So
+  care is needed where other fit criteria have been used, for example
+  REML (the default for \code{"lme"}).
+
   For a \code{"glm"} fit the \code{\link{family}} does not have to
   specify how to calculate the log-likelihood, so this is based on using
   the family's \code{aic()} function to compute the AIC.  For the
@@ -70,6 +75,8 @@ logLik(object, \dots)
 \seealso{
   \code{\link[nlme:logLik.lme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, in
   package \CRANpkg{nlme}, etc.
+
+  \code{\link{AIC}}
 }
 \references{
   For \code{logLik.lm}:
