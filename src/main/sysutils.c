@@ -1183,19 +1183,21 @@ void reEnc2(const char *x, char *y, int ny,
 {
     void * obj;
     const char *inbuf;
-    char *outbuf, *p;
+    char *outbuf;
     size_t inb, outb, res, top;
     char *tocode = NULL, *fromcode = NULL;
     char buf[20];
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-    if(ce_in == ce_out || ce_in == CE_ANY || ce_out == CE_ANY) return x;
-    if(utf8locale && ce_in == CE_NATIVE && ce_out == CE_UTF8) return x;
-    if(utf8locale && ce_out == CE_NATIVE && ce_in == CE_UTF8) return x;
-    if(latin1locale && ce_in == CE_NATIVE && ce_out == CE_LATIN1) return x;
-    if(latin1locale && ce_out == CE_NATIVE && ce_in == CE_LATIN1) return x;
+    strncpy(y, x, ny);
 
-    if(strIsASCII(x)) return x;
+    if(ce_in == ce_out || ce_in == CE_ANY || ce_out == CE_ANY) return;
+    if(utf8locale && ce_in == CE_NATIVE && ce_out == CE_UTF8) return;
+    if(utf8locale && ce_out == CE_NATIVE && ce_in == CE_UTF8) return;
+    if(latin1locale && ce_in == CE_NATIVE && ce_out == CE_LATIN1) return;
+    if(latin1locale && ce_out == CE_NATIVE && ce_in == CE_LATIN1) return;
+
+    if(strIsASCII(x)) return;
 
     switch(ce_in) {
     case CE_NATIVE:
@@ -1207,7 +1209,7 @@ void reEnc2(const char *x, char *y, int ny,
 	}
     case CE_LATIN1: fromcode = "CP1252"; break;
     case CE_UTF8:   fromcode = "UTF-8"; break;
-    default: return x;
+    default: return;
     }
 
     switch(ce_out) {
@@ -1220,11 +1222,11 @@ void reEnc2(const char *x, char *y, int ny,
 	}
     case CE_LATIN1: tocode = "latin1"; break;
     case CE_UTF8:   tocode = "UTF-8"; break;
-    default: return x;
+    default: return;
     }
 
     obj = Riconv_open(tocode, fromcode);
-    if(obj == (void *)(-1)) return x;
+    if(obj == (void *)(-1)) return;
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
     inbuf = x; inb = strlen(inbuf);
@@ -1274,7 +1276,7 @@ next_char:
     *outbuf = '\0';
     res = (top-outb)+1; /* strlen(cbuff.data) + 1; */
     if (res > ny) error("converted string too long for buffer");
-    memcpy(out, cbuff.data, res);
+    memcpy(y, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
 }
 #endif

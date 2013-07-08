@@ -699,8 +699,8 @@ static size_t Wpipe_write(const void *ptr, size_t size, size_t nitems,
     else return 0;
 }
 
-/* FIXME: now we use trio we could use vasprintf. */
 #define BUFSIZE 1000
+#ifdef OLD
 static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     char buf[BUFSIZE], *b = buf;
@@ -722,6 +722,23 @@ static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
     if(usedRalloc) vmaxset(vmax);
     return res;
 }
+#endif
+
+int trio_vasprintf (char **ret, const char *format, va_list args);
+
+static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
+{
+    char *buf;
+    int res =trio_vasprintf(&buf, format, ap);
+    if (res != -1) Wpipe_write(buf, strlen(buf), 1, con);
+    
+    char b[BUFSIZE];
+    vsnprintf(b, BUFSIZE, format, ap);
+    b[BUFSIZE - 1] = '\0';
+    warning("printing of extremely long output is truncated");    
+    return Wpipe_write(b, BUFSIZE, 1, con);
+}
+
 
 Rconnection newWpipe(const char *description, int ienc, const char *mode)
 {
