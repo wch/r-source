@@ -1241,7 +1241,6 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
     SEXP indx, sub = CAR(s);
     int ii, n, nx;
     R_xlen_t stretch = 1;
-    const void *vmax = vmaxget();
 
     if (length(s) > 1)
 	error(_("invalid number of subscripts to list assign"));
@@ -1263,7 +1262,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 	    SEXP z = yi;
 	    int i;
 	    for(i = 0; i < LENGTH(t); i++, z = CDR(z))
-		SET_TAG(z, install(translateChar(STRING_ELT(t, i))));
+		SET_TAG(z, installTrChar(STRING_ELT(t, i)));
 	}
 	PROTECT(x = listAppend(x, yi));
 	nx = (int) stretch;
@@ -1279,7 +1278,6 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 	}
     }
     UNPROTECT(3);
-    vmaxset(vmax);
     return x;
 }
 
@@ -1561,7 +1559,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( TYPEOF(x) == ENVSXP) {
 	if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
 	    error(_("wrong args for environment subassignment"));
-	defineVar(install(translateChar(STRING_ELT(CAR(subs), 0))), y, x);
+	defineVar(installTrChar(STRING_ELT(CAR(subs), 0)), y, x);
 	UNPROTECT(1);
 	return(S4 ? xOrig : x);
     }
@@ -1861,7 +1859,7 @@ SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
       return(ans);
 
     if (! iS)
-	nlist = install(translateChar(STRING_ELT(input, 0)));
+	nlist = installTrChar(STRING_ELT(input, 0));
 
     return R_subassign3_dflt(call, CAR(ans), nlist, CADDR(ans));
 }

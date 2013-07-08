@@ -1859,7 +1859,7 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* fix up a duplicate or args and recursively call do_set */
 	SEXP val;
 	PROTECT(args = duplicate(args));
-	SETCAR(args, install(translateChar(STRING_ELT(CAR(args), 0))));
+	SETCAR(args, installTrChar(STRING_ELT(CAR(args), 0)));
 	val = do_set(call, op, args, rho);
 	UNPROTECT(1);
 	return val;
@@ -2153,7 +2153,7 @@ static SEXP VectorToPairListNamed(SEXP x)
 	for (i = 0; i < length(x); i++) {
 	    if (CHAR(STRING_ELT(xnames, i))[0] != '\0') {
 		SETCAR(xptr, VECTOR_ELT(x, i));
-		SET_TAG(xptr, install(translateChar(STRING_ELT(xnames, i))));
+		SET_TAG(xptr, installTrChar(STRING_ELT(xnames, i)));
 		xptr = CDR(xptr);
 	    }
 	}

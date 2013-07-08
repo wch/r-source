@@ -200,7 +200,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   explanatory variables */
 	setAttrib(data, install("terms"), terms);
 	if (isString(na_action) && length(na_action) > 0)
-	    na_action = install(translateChar(STRING_ELT(na_action, 0)));
+	    na_action = installTrChar(STRING_ELT(na_action, 0));
 	PROTECT(na_action);
 	PROTECT(tmp = lang2(na_action, data));
 	PROTECT(ans = eval(tmp, rho));
@@ -1061,14 +1061,13 @@ static void CheckRHS(SEXP v)
 {
     int i, j;
     SEXP s, t;
-    const void *vmax = vmaxget();
     while ((isList(v) || isLanguage(v)) && v != R_NilValue) {
 	CheckRHS(CAR(v));
 	v = CDR(v);
     }
     if (isSymbol(v)) {
 	for (i = 0; i < length(framenames); i++) {
-	    s = install(translateChar(STRING_ELT(framenames, i)));
+	    s = installTrChar(STRING_ELT(framenames, i));
 	    if (v == s) {
 		t = allocVector(STRSXP, length(framenames) - 1);
 		for (j = 0; j < length(t); j++) {
@@ -1081,7 +1080,6 @@ static void CheckRHS(SEXP v)
 	    }
 	}
     }
-    vmaxset(vmax);
 }
 
 
@@ -1102,13 +1100,11 @@ static void ExtractVars(SEXP formula, int checkonly)
 	if (formula == dotSymbol) haveDot = TRUE;
 	if (!checkonly) {
 	    if (formula == dotSymbol && framenames != R_NilValue) {
-		const void *vmax = vmaxget();
 		haveDot = TRUE;
 		for (i = 0; i < length(framenames); i++) {
-		    v = install(translateChar(STRING_ELT(framenames, i)));
+		    v = installTrChar(STRING_ELT(framenames, i));
 		    if (!MatchVar(v, CADR(varlist))) InstallVar(v);
 		}
-		vmaxset(vmax);
 	    } else
 		InstallVar(formula);
 	}
@@ -1935,13 +1931,12 @@ SEXP termsform(SEXP args)
 
     if (haveDot) {
 	if(length(framenames)) {
-	    const void *vmax = vmaxget();
 	    PROTECT_INDEX ind;
-	    PROTECT_WITH_INDEX(rhs = install(translateChar(STRING_ELT(framenames, 0))),
+	    PROTECT_WITH_INDEX(rhs = installTrChar(STRING_ELT(framenames, 0)),
 			       &ind);
 	    for (i = 1; i < LENGTH(framenames); i++) {
 		REPROTECT(rhs = lang3(plusSymbol, rhs,
-				      install(translateChar(STRING_ELT(framenames, i)))),
+				      installTrChar(STRING_ELT(framenames, i))),
 			  ind);
 	    }
 	    if (!isNull(CADDR(ans)))
@@ -1949,7 +1944,6 @@ SEXP termsform(SEXP args)
 	    else
 		SETCADR(ans, ExpandDots(CADR(ans), rhs));
 	    UNPROTECT(1);
-	    vmaxset(vmax);
 	} else if(!allowDot && !hadFrameNames) {
 	    error(_("'.' in formula and no 'data' argument"));
 	}
