@@ -2682,6 +2682,14 @@ static SEXP install_and_save(char * text)
     return install(text);
 }
 
+/* Get an R symbol, and set different yytext.  Used for translation of -> to <-. ->> to <<- */
+static SEXP install_and_save2(char * text, char * savetext)
+{
+    strcpy(yytext, savetext);
+    return install(text);
+}
+
+
 /* Split the input stream into tokens. */
 /* This is the lowest of the parsing levels. */
 
@@ -2773,11 +2781,11 @@ static int token(void)
     case '-':
 	if (nextchar('>')) {
 	    if (nextchar('>')) {
-		yylval = install_and_save("<<-");
+		yylval = install_and_save2("<<-", "->>");
 		return RIGHT_ASSIGN;
 	    }
 	    else {
-		yylval = install_and_save("<-");
+		yylval = install_and_save2("<-", "->");
 		return RIGHT_ASSIGN;
 	    }
 	}
@@ -2867,9 +2875,8 @@ static int token(void)
 	   help for 'Deprecated'.  S-PLUS 6.2 still allowed this, so
 	   presumably it was for compatibility with S. */
 	if (nextchar('*')) {
-	    strcpy(yytext, "**");
-	    yylval = install("^");
-	    c = '^';
+	    yylval = install_and_save2("^", "**");
+	    return '^';
 	} else
 	    yylval = install_and_save("*");
 	return c;
