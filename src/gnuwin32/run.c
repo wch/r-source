@@ -702,6 +702,7 @@ static size_t Wpipe_write(const void *ptr, size_t size, size_t nitems,
 #define BUFSIZE 10000
 static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
 {
+    R_CheckStack2(BUFSIZE);
     char buf[BUFSIZE], *b = buf;
     int res = 0;
 
