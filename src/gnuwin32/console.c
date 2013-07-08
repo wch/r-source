@@ -278,18 +278,17 @@ static size_t enctowcs(wchar_t *wc, char *s, int n)
 
 static void xbufadds(xbuf p, const char *s, int user)
 {
-    int n = strlen(s) + 1; /* UCS-2 must be shorter */
+    int n = strlen(s) + 1; /* UCS-2 must be no more chars */
     if (n < 1000) {
 	wchar_t tmp[n];
 	enctowcs(tmp, (char *) s, n);
 	xbufaddxs(p, tmp, user);
     } else {
 	/* very long line */
-	const void *vmax = vmaxget();
-	wchar_t *tmp = (wchar_t*) R_alloc(n, sizeof(wchar_t));
+	wchar_t *tmp = (wchar_t*) malloc(n * sizeof(wchar_t));
 	enctowcs(tmp, (char *) s, n);
 	xbufaddxs(p, tmp, user);
-	vmaxset(vmax);
+	free(tmp);
     }
 }
 
