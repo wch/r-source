@@ -11717,9 +11717,9 @@ mean a GUI or other application that has the ability to submit commands
 to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
 example the package @CRANpkg{Rserve} (from @acronym{CRAN}, see also
-@uref{http://www.rforge.net/@/Rserve/}) and connections to Java in the
-Omegahat package @samp{SJava} and @samp{JRI} (part of the
-@CRANpkg{rJava} package on @acronym{CRAN}).
+@uref{http://www.rforge.net/@/Rserve/}) and connections to Java in
+@samp{JRI} (part of the @CRANpkg{rJava} package on @acronym{CRAN}) and
+the Omegahat/Bioconductor package @samp{SJava}.
 
 Note that the APIs described in this chapter are only intended to be
 used in an alternative front-end: they are not part of the API made
@@ -11741,7 +11741,7 @@ that platform.} if configured with @option{--enable-R-shlib}.  This
 shared library can be used to run @R{} from alternative front-end
 programs.  We will assume this has been done for the rest of this
 section.  Also, it can be built as a static library if configured with
-@option{--enable-R-static-lib}, and this can be used in a very similar
+@option{--enable-R-static-lib}, and that can be used in a very similar
 way.
 
 The command-line @R{} front-end, @file{@var{R_HOME}/bin/exec/R} is one
@@ -11799,7 +11799,8 @@ R CMD exec/R
 
 @noindent
 will both work in a standard @R{} installation. (@command{R CMD} looks
-first for executables in @file{@var{R_HOME}/bin}.)  If you do not want
+first for executables in @file{@var{R_HOME}/bin}.  These command-lines
+need modification if a sub-architecture is in use.) If you do not want
 to run your front-end in this way, you need to ensure that @env{R_HOME}
 is set and @env{LD_LIBRARY_PATH} is suitable.  (The latter might well
 be, but modern Unix/Linux systems do not normally include
@@ -11840,7 +11841,7 @@ int main(int ac, char **av)
 @end example
 
 @noindent
-If you don't want to pass @R{} arguments, you can fake an @code{argv}
+If you do not want to pass @R{} arguments, you can fake an @code{argv}
 array, for example by
 
 @example
@@ -11854,7 +11855,7 @@ for our GUI callbacks to be called during the @R{} mainloop.
 
 One issue to watch is that on some platforms @code{Rf_initEmbeddedR} and
 @code{Rf_endEmbeddedR} change the settings of the FPU (e.g.@: to allow
-errors to be trapped and to set extended precision registers).
+errors to be trapped and to make use of extended precision registers).
 
 The standard code sets up a session temporary directory in the usual
 way, @emph{unless} @code{R_TempDir} is set to a non-NULL value before
@@ -11905,6 +11906,39 @@ and for a static @R{} library
 pkg-config --cflags libR
 pkg-config --libs --static libR
 @end example
+
+However, these may not suffice and a more comprehensive way is to set up
+a @file{Makefile} to compile the front-end.  Suppose file @file{myfe.c}
+is to be compiled to @file{myfe}. A suitable @file{Makefile} might be
+
+@example
+include $@{R_HOME@}/etc$@{R_ARCH@}/Makeconf
+all: myfe
+
+## The following is not needed, but avoids PIC flags.
+myfe.o: myfe.c
+        $(CC) $(ALL_CPPFLAGS) $(CFLAGS) -c myfe.c -o $@@
+
+## replace $(LIBR) $(LIBS) by $(STATIC_LIBR) if R was build with a static libR
+myfe: myfe.o
+        $(MAIN_LINK) -o $@@ myfe.o $(LIBR) $(LIBS)
+@end example
+
+@noindent
+invoked as
+
+@example
+R CMD make
+R CMD myfe
+@end example
+
+Additional flags which @code{$(MAIN_LINK)} includes are, amongst others,
+those to select OpenMP and @option{--export-dynamic} for the GNU linker
+on some platforms.  In principle @code{$(LIBS)} is not needed
+when using a shared @R{} library as @file{libR} is linked against
+those libraries, but some platforms need the executable also linked
+against them.
+@c E.g. it seems current Linux needs the executable linked against -lm.
 
 @node Setting R callbacks, Registering symbols, Compiling against the R library, Embedding R under Unix-alikes
 @subsection Setting R callbacks
