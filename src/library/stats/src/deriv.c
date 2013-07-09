@@ -274,8 +274,7 @@ static SEXP D(SEXP expr, SEXP var)
 #define PP_S(F,a1,a2) PP(simplify(F,a1,a2))
 #define PP_S2(F,a1)   PP(simplify(F,a1, R_MissingArg))
 
-    SEXP ans=R_NilValue, expr1, expr2;
-    const void *vmax = vmaxget();
+    SEXP ans = R_NilValue, expr1, expr2;
     switch(TYPEOF(expr)) {
     case LGLSXP:
     case INTSXP:
@@ -532,7 +531,6 @@ static SEXP D(SEXP expr, SEXP var)
     default:
 	ans = Constant(NA_REAL);
     }
-    vmaxset(vmax);
     return ans;
 
 #undef PP_S
@@ -635,7 +633,7 @@ SEXP doD(SEXP args)
 	error(_("variable must be a character string"));
     if (length(var) > 1)
 	warning(_("only the first element is used as variable name"));
-    var = install(translateChar(STRING_ELT(var, 0)));
+    var = installTrChar(STRING_ELT(var, 0));
     InitDerivSymbols();
     PROTECT(expr = D(expr, var));
     expr = AddParens(expr);
@@ -951,14 +949,14 @@ SEXP deriv(SEXP args)
     UNPROTECT(1);
     for(i=0, k=0; i<nderiv ; i++) {
 	PROTECT(ans = duplicate(expr));
-	PROTECT(ans = D(ans, install(translateChar(STRING_ELT(names, i)))));
+	PROTECT(ans = D(ans, installTrChar(STRING_ELT(names, i))));
 	PROTECT(ans2 = duplicate(ans));	/* keep a temporary copy */
 	d_index[i] = FindSubexprs(ans, exprlist, tag); /* examine the derivative first */
 	PROTECT(ans = duplicate(ans2));	/* restore the copy */
 	if (hessian) {
 	    for(j = i; j < nderiv; j++) {
 		PROTECT(ans2 = duplicate(ans)); /* install could allocate */
-		PROTECT(ans2 = D(ans2, install(translateChar(STRING_ELT(names, j)))));
+		PROTECT(ans2 = D(ans2, installTrChar(STRING_ELT(names, j))));
 		d2_index[k] = FindSubexprs(ans2, exprlist, tag);
 		k++;
 		UNPROTECT(2);
@@ -982,13 +980,13 @@ SEXP deriv(SEXP args)
 	    Accumulate2(MakeVariable(d_index[i], tag), exprlist);
 	    if (hessian) {
 		PROTECT(ans = duplicate(expr));
-		PROTECT(ans = D(ans, install(translateChar(STRING_ELT(names, i)))));
+		PROTECT(ans = D(ans, installTrChar(STRING_ELT(names, i))));
 		for (j = i; j < nderiv; j++) {
 		    if (d2_index[k]) {
 			Accumulate2(MakeVariable(d2_index[k], tag), exprlist);
 		    } else {
 			PROTECT(ans2 = duplicate(ans));
-			PROTECT(ans2 = D(ans2, install(translateChar(STRING_ELT(names, j)))));
+			PROTECT(ans2 = D(ans2, installTrChar(STRING_ELT(names, j))));
 			Accumulate2(ans2, exprlist);
 			UNPROTECT(2);
 		    }
@@ -998,7 +996,7 @@ SEXP deriv(SEXP args)
 	    }
 	} else { /* the first derivative is constant or simple variable */
 	    PROTECT(ans = duplicate(expr));
-	    PROTECT(ans = D(ans, install(translateChar(STRING_ELT(names, i)))));
+	    PROTECT(ans = D(ans, installTrChar(STRING_ELT(names, i))));
 	    Accumulate2(ans, exprlist);
 	    UNPROTECT(2);
 	    if (hessian) {
@@ -1007,7 +1005,7 @@ SEXP deriv(SEXP args)
 			Accumulate2(MakeVariable(d2_index[k], tag), exprlist);
 		    } else {
 			PROTECT(ans2 = duplicate(ans));
-			PROTECT(ans2 = D(ans2, install(translateChar(STRING_ELT(names, j)))));
+			PROTECT(ans2 = D(ans2, installTrChar(STRING_ELT(names, j))));
 			if(isZero(ans2)) Accumulate2(R_MissingArg, exprlist);
 			else Accumulate2(ans2, exprlist);
 			UNPROTECT(2);
@@ -1092,7 +1090,7 @@ SEXP deriv(SEXP args)
 	PROTECT(ans = allocList(length(names)));
 	SET_FORMALS(funarg, ans);
 	for(i = 0; i < length(names); i++) {
-	    SET_TAG(ans, install(translateChar(STRING_ELT(names, i))));
+	    SET_TAG(ans, installTrChar(STRING_ELT(names, i)));
 	    SETCAR(ans, R_MissingArg);
 	    ans = CDR(ans);
 	}

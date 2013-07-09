@@ -87,7 +87,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	REPROTECT(fcall = LCONS(tmp2, fcall), fi);
 	UNPROTECT(2);
 	if (named && CHAR(STRING_ELT(vnames, j))[0] != '\0')
-	    SET_TAG(fcall, install(translateChar(STRING_ELT(vnames, j))));
+	    SET_TAG(fcall, installTrChar(STRING_ELT(vnames, j)));
     }
 
     REPROTECT(fcall = LCONS(f, fcall), fi);

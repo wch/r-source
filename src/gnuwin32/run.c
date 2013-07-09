@@ -699,28 +699,22 @@ static size_t Wpipe_write(const void *ptr, size_t size, size_t nitems,
     else return 0;
 }
 
-#define BUFSIZE 1000
+#define BUFSIZE 10000
 static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
 {
+    R_CheckStack2(BUFSIZE);
     char buf[BUFSIZE], *b = buf;
-    const void *vmax = vmaxget();
-    int res = 0, usedRalloc = FALSE;
+    int res = 0;
 
     res = vsnprintf(b, BUFSIZE, format, ap);
     if(res < 0) { /* a failure indication, so try again */
-	usedRalloc = TRUE;
-	b = R_alloc(10*BUFSIZE, sizeof(char));
-	res = vsnprintf(b, 10*BUFSIZE, format, ap);
-	if (res < 0) {
-	    *(b + 10*BUFSIZE) = '\0';
-	    warning("printing of extremely long output is truncated");
-	    res = 10*BUFSIZE;
-	}
+	b[BUFSIZE -1] = '\0';
+	warning("printing of extremely long output is truncated");
+	res = BUFSIZE;
     }
-    res = Wpipe_write(buf, res, 1, con);
-    if(usedRalloc) vmaxset(vmax);
-    return res;
+    return Wpipe_write(buf, res, 1, con);
 }
+
 
 Rconnection newWpipe(const char *description, int ienc, const char *mode)
 {

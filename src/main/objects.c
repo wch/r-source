@@ -418,7 +418,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	The generic need not be a closure (Henrik Bengtsson writes
 	UseMethod("$"), although only functions are documented.)
     */
-    val = findVar1(install(translateChar(STRING_ELT(generic, 0))),
+    val = findVar1(installTrChar(STRING_ELT(generic, 0)),
 		   ENCLOS(env), FUNSXP, TRUE); /* That has evaluated promises */
     if(TYPEOF(val) == CLOSXP) defenv = CLOENV(val);
     else defenv = R_BaseNamespace;
@@ -1077,10 +1077,9 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
        calls to standardGeneric during the loading of the methods package */
     SEXP e, value, rho, fun, symbol;
     RCNTXT *cptr;
-    const void *vmax = vmaxget();
 
     /* find a non-generic function */
-    symbol = install(translateChar(asChar(name)));
+    symbol = installTrChar(asChar(name));
     for(rho = ENCLOS(env); rho != R_EmptyEnv;
 	rho = ENCLOS(rho)) {
 	fun = findVarInFrame3(rho, symbol, TRUE);
@@ -1115,7 +1114,6 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
        the same environment as the call to the generic version */
     value = eval(e, cptr->sysparent);
     UNPROTECT(1);
-    vmaxset(vmax);
     return value;
 }
 

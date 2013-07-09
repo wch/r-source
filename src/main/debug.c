@@ -34,7 +34,7 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 #define find_char_fun \
     if (isValidString(CAR(args))) {				\
 	SEXP s;							\
-	PROTECT(s = install(translateChar(STRING_ELT(CAR(args), 0))));	\
+	PROTECT(s = installTrChar(STRING_ELT(CAR(args), 0)));	\
 	SETCAR(args, findFun(s, rho));				\
 	UNPROTECT(1);						\
     }
