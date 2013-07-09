@@ -49,7 +49,8 @@
 
       \item Profiling now records non-inlined calls from byte compiled
       code to BUILTIN functions.
-      
+
+      \item The included version of xz's liblzma has been updated to 5.0.5.
     }
   }
 

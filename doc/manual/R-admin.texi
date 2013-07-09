@@ -2965,7 +2965,9 @@ sources will be compiled in.  As the latter suffice and are tested with
 @code{liblzma} from @code{xz-utils} version 4.999 or later (preferably
 5.0.0 or later) will be used if installed: the version in the @R{}
 sources can be selected instead by configuring with
-@option{--with-system-xz=no}.
+@option{--with-system-xz=no}.  Systems differ in what they call the
+package including this: e.g.@: on Fedara the library is in
+@samp{xz-libs} and the headers in @samp{xz-devel}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
