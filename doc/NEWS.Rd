@@ -44,7 +44,7 @@
       \item The \code{tools::getVignetteInfo()} function has been added
       to give information about installed vignettes.
 
-      \item New \code{assertCondition()} utility in \pkg{tools}, useful
+      \item New \code{assertCondition()}, etc. utilities in \pkg{tools}, useful
       for testing.
 
       \item Profiling now records non-inlined calls from byte compiled
@@ -205,6 +205,10 @@
 
       \item \code{read.dcf()} re-allocated incorrectly and so could
       segfault when called on a file with lines of more than 100 bytes.
+
+      \item On system where \code{mktime()} does not set \code{errno},
+      the last second before the epoch could not be converted from
+      \code{POSIXlt} to \code{POSIXct}. (Reported by Bill Dunlap.)
     }
   }
 }

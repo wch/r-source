@@ -798,8 +798,12 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef MKTIME_SETS_ERRNO
 	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
 #else
-	    REAL(ans)[i] = (tmp == (double)(-1)) ?
-		NA_REAL : tmp + (secs - fsecs);
+	    REAL(ans)[i] = ((tmp == (double)(-1))
+			    /* avoid silly gotcha at epoch minus one sec */
+			    && (tm.tm_sec == 59)
+			    && ((tm.tm_sec = 58), (mktime0(&tm, 1 - isgmt) != (double)(-2)))
+			    ) ?
+	      NA_REAL : tmp + (secs - fsecs);
 #endif
 	}
     }
