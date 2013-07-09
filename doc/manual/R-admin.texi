@@ -3042,7 +3042,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.19.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
@@ -3062,6 +3062,17 @@ Java-using packages.  For example
 @example
 R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.7.0/jre/lib/amd64/server
 @end example
+
+It may be possible to avoid this by specifying an invariant link as the
+path. For example, on that system either of
+
+@example
+JAVA_HOME=/usr/lib/jvm/java-1.7.0
+JAVA_HOME=/usr/lib/jvm/java-1.7.0/jre
+@end example
+
+@noindent
+worked.
 
 
 @node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under a Unix-alike

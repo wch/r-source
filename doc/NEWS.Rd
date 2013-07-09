@@ -82,6 +82,17 @@
       group writably whenever the library (\code{lib.loc}) is group
       writable.  Hence, \code{update.packages()} works for other group
       members (suggested originally and from a patch by Dirk Eddelbuettel).
+      
+      \item \command{R CMD javareconf} now supports the use of symbolic
+      links for \env{JAVA_HOME} on platforms which have
+      \command{realpath}.  So it is now possible to
+      use \preformatted{R CMD javareconf JAVA_HOME=/usr/lib/jvm/java-1.7.0}
+      on a Linux system and record that value rather than the
+      frequently-changing full path such as
+      \file{/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64}.
+
+      Since \command{javareconf} is used when \R is installed, a
+      simplified \env{JAVA_HOME} can be supplied then.
     }
   }
 
