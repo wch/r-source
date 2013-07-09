@@ -4040,7 +4040,8 @@ _R_CHECK_CODE_ATTACH_=TRUE
 _R_CHECK_CODE_DATA_INTO_GLOBALENV_=TRUE
 _R_CHECK_DOT_FIRSTLIB_=TRUE
 _R_CHECK_DEPRECATED_DEFUNCT_=TRUE
-1@end example
+_R_CHECK_SCREEN_DEVICE_=stop
+@end example
 
 @noindent
 These are turned on by @command{R CMD check --as-cran}: the incoming
