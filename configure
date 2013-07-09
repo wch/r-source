@@ -33520,7 +33520,7 @@ done
 
   fi
 if test "x${have_lzma}" = xyes; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if lzma version >= 5.0.0" >&5
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if lzma version >= 5.0.3" >&5
 $as_echo_n "checking if lzma version >= 5.0.0... " >&6; }
 if ${r_cv_have_lzma+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -33547,7 +33547,7 @@ int main() {
     unsigned int ver = lzma_version_number();
     // This is 10000000*major + 10000*minor + 10*revision + [012]
     // I.e. xyyyzzzs and 5.1.2 would be 50010020
-    exit(ver < 50000000);
+    exit(ver < 50000030);
 }
 
 _ACEOF
