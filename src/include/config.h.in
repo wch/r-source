@@ -456,7 +456,7 @@
 /* Define to 1 if the system has the type `long long int'. (For intl) */
 #undef HAVE_LONG_LONG_INT
 
-/* Define if your system has lzma >= 4.999. */
+/* Define if your system has lzma >= 5.0.0. */
 #undef HAVE_LZMA
 
 /* Define to 1 if you have the <lzma.h> header file. */

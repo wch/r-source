@@ -33520,8 +33520,8 @@ done
 
   fi
 if test "x${have_lzma}" = xyes; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if lzma version >= 4.999" >&5
-$as_echo_n "checking if lzma version >= 4.999... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if lzma version >= 5.0.0" >&5
+$as_echo_n "checking if lzma version >= 5.0.0... " >&6; }
 if ${r_cv_have_lzma+:} false; then :
   $as_echo_n "(cached) " >&6
 else
@@ -33545,7 +33545,9 @@ else
 #include <stdlib.h>
 int main() {
     unsigned int ver = lzma_version_number();
-    exit(ver < 49990000);
+    // This is 10000000*major + 10000*minor + 10*revision + [012]
+    // I.e. xyyyzzzs and 5.1.2 would be 50010020
+    exit(ver < 50000000);
 }
 
 _ACEOF
@@ -35526,11 +35528,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35529: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35531: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35533: \$? = $ac_status" >&5
+   echo "$as_me:35535: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35625,11 +35627,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35628: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35630: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35632: \$? = $ac_status" >&5
+   echo "$as_me:35634: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35677,11 +35679,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35680: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35682: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35684: \$? = $ac_status" >&5
+   echo "$as_me:35686: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
