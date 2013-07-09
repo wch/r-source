@@ -79,6 +79,9 @@
 
   \subsection{INSTALLATION}{
     \itemize{
+      \item The minimum version for a system \code{xz} library is now
+      5.0.0 (was 4.999).
+
       \item There is some support for parallel testing of an
       installation, by setting \env{TEST_MC_CORES} is set to an integer
       greater than one to indicate the maximum number of cores to be
