@@ -64,9 +64,9 @@
 
       \item The parser has been modified to use less memory.
 
-      \item Methods invoked by NextMethod had different dynamic parent
-      to the generic. This was causing trouble where S3 methods invoked
-      via lazy evaluation could lose track of their generic
+      \item Methods invoked by \code{NextMethod()} had different dynamic
+      parent to the generic. This was causing trouble where S3 methods
+      invoked via lazy evaluation could lose track of their generic
       (\PR{15267}).
 
       \item Various functions in \pkg{stats} and elsewhere that use
@@ -80,7 +80,8 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item The minimum version for a system \code{xz} library is now
-      5.0.3 (was 4.999).
+      5.0.3 (was 4.999).  This is in part of avoid 5.0.2, which can
+      compress in ways other versions cannot decompress.
 
       \item There is some support for parallel testing of an
       installation, by setting \env{TEST_MC_CORES} is set to an integer
@@ -91,9 +92,8 @@
       \command{${MAKE} -j nproc} syntax.
 
       Except on Windows: the tests of standard package examples in
-      \command{make check} are done in parallel using that number of
-      cores.  This also applies to running
-      \code{tools::testInstalledPackages()}.
+      \command{make check} are done in parallel.  This also applies to
+      running \code{tools::testInstalledPackages()}.
 
       The more time-consuming regression tests are done in parallel.
 
