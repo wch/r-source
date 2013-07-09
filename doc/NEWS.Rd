@@ -74,6 +74,9 @@
       namespace scoping rules.  E.g. \code{stats::lm()} can now find
       \code{stats::model.frame()} even if \pkg{stats} is not on the
       search path or if some package defines a function of that name.
+
+      \item Code for the negative binomial distribution now treats the case
+      \code{size == 0} as a one-point distribution at zero.
     }
   }
 
