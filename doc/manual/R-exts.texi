@@ -3503,9 +3503,10 @@ LF-terminated (including the final line of the file) and not make use of
 GNU extensions.  Commonly misused GNU extensions are conditional
 inclusions (@code{ifeq} and the like), @code{$@{shell ...@}} and
 @code{$@{wildcard ...@}}, and the use of @code{+=} and @code{:=}.  Also,
-the use of @code{$<} other than in implicit rules is a GNU extension.
-Unfortunately makefiles which use GNU extensions often run on other
-platforms but do not have the intended results.
+the use of @code{$<} other than in implicit rules is a GNU extension, as
+is the @code{$^} macro  Unfortunately makefiles which use GNU
+extensions often run on other platforms but do not have the intended
+results.
 
 The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
 

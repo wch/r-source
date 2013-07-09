@@ -5103,7 +5103,7 @@ current FPUs can support this, selecting such support can be a pain.
 The problem is that there is no agreement on how to set the signalling
 behaviour; Sun/Sparc, SGI/IRIX and @cputype{ix86} Linux require no
 special action, FreeBSD requires a call to (the macro)
-@code{fpsetmask(0)} and OSF1 requires that computation be done with a
+@code{fpsetmask(0)} and OSF1 required that computation be done with a
 @option{-ieee_with_inexact} flag etc.  On a new platform you must find
 out the magic recipe and add some code to make it work.  This can often
 be done via the file @file{config.site} which resides in the top level
@@ -5112,7 +5112,8 @@ directory.
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
 @acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
-Studio compilers has caused @R{}'s @code{NaN} to be set incorrectly.
+Studio compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
+@command{gcc}'s @option{-ffast-math} has given incorrect results.
 
 @strong{Shared Objects}: There seems to be very little agreement
 across platforms on what needs to be done to build shared objects.
