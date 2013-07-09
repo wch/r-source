@@ -121,7 +121,7 @@ Some notes on terminology complete this introduction.  These will help
 with the reading of this manual, and also in describing concepts
 accurately when asking for help.
 
-A @emph{package} is a directory of files which extend @R{}, either a
+A @emph{package} is a directory of files which extend @R{}, a
 @emph{source package} (the master files of a package), or a tarball
 containing the files of a source package, or an @emph{installed}
 package, the result of running @command{R CMD INSTALL} on a source
@@ -153,7 +153,7 @@ known on Unix-alikes as a @emph{shared object} and on Windows as a DLL.
 The concept of a @emph{shared library} (@emph{dynamic library} on OS X)
 as a collection of compiled code to which a package might link is also
 used, especially for @R{} itself on some platforms. On most platforms
-these concepts are interchangeable (shared objects and DLL can both be
+these concepts are interchangeable (shared objects and DLLs can both be
 loaded into the @R{} process and be linked against), but OS X
 distinguishes between shared objects (extension @file{.so}) and dynamic
 libraries (extension @file{.dylib}).
@@ -617,16 +617,18 @@ exceptionally for a package designed to always be used with
 @code{keep.source = TRUE}.
 
 @c DESCRIPTION field ByteCompile
-The @samp{ByteCompile} logical field controls if the package code is
-byte-compiled on installation: the default is currently not to, so this
-may be useful for a package known to benefit particularly from
+The @samp{ByteCompile} logical field controls if the package code is to
+be byte-compiled on installation: the default is currently not to, so
+this may be useful for a package known to benefit particularly from
 byte-compilation (which can take quite a long time and increases the
-installed size of the package).
+installed size of the package).  It is used for the recommended
+packages, as they are byte-compiled when @R{} is installed and for
+consistency should be byte-compiled when updated.
 
 @c DESCRIPTION field ZipData
 The @samp{ZipData} logical field was used to control whether the automatic
 Windows build would zip up the data directory or not prior to @R{}
-2.13.0: it is ignored.
+2.13.0: it is now ignored.
 
 @c DESCRIPTION field Biarch
 The @samp{Biarch} logical field is used on Windows to select the
@@ -824,7 +826,7 @@ users or usage, or known not to.  These are used by, e.g.@:, the
 @cindex LICENSE file
 @cindex LICENCE file
 The optional file @file{LICENSE}/@file{LICENCE} contains a copy of the
-license to the package.  To avoid any confusion only include such a file
+license of the package.  To avoid any confusion only include such a file
 if it is referred to in the @samp{License} field of the
 @file{DESCRIPTION} file.
 
