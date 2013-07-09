@@ -7351,9 +7351,14 @@ should be avoided where possible.  Only the first element of the
 character vector is passed in, as a fixed-length (255) character array.
 Up to 255 characters are passed back to a length-one character vector.
 How well this works (or even if it works at all) depends on the C and
-FORTRAN compilers on each platform.
+FORTRAN compilers on each platform (including on their options).  Often
+what is being passed to FORTRAN is one of a small set of possible values
+(a factor in @R{} terms) which could alternatively be passed as an
+integer code: similarly FORTRAN code that wants to generate diagnostic
+messages can pass an integer code to a C or @R{} wrapper which will
+convert it to a character string.
 
-It is possible to pass @R{} objects other than atomic vectors via
+It is possible to pass some @R{} objects other than atomic vectors via
 @code{.C}, but this is only supported for historical compatibility: use
 the @code{.Call} or @code{.External} interfaces for such objects.  Any
 C/C++ code that includes @file{Rinternals.h} should be called via
@@ -10003,7 +10008,8 @@ encoding of the current locale: this can be done by accessing the data
 in the @code{CHARSXP} by @code{translateChar} rather than by
 @code{CHAR}.  If re-encoding is needed this allocates memory with
 @code{R_alloc} which thus persists to the end of the
-@code{.Call}/@code{.External} call unless @code{vmaxset} is used.
+@code{.Call}/@code{.External} call unless @code{vmaxset} is used
+(@pxref{Transient storage allocation}).
 
 There is a similar function @code{translateCharUTF8} which converts to
 UTF-8: this has the advantage that a faithful translation is almost
@@ -10125,7 +10131,9 @@ This remapping can cause problems@footnote{Known problems are redefining
 @code{error}, @code{length}, @code{vector} and @code{warning}}, and can
 be eliminated by defining @code{R_NO_REMAP} and prepending @samp{Rf_} to
 @emph{all} the function names used from @file{Rinternals.h} and
-@file{R_ext/Error.h}.
+@file{R_ext/Error.h}.  These problems can usually be avoided by
+including other headers (such as system headers and those for external
+software used by the package) before @file{R.h}.
 
 We can classify the entry points as
 
@@ -10155,15 +10163,15 @@ compilers/loaders when using @R{} as a shared library) not exported.
 @cindex Memory allocation from C
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient storage allocation::  
+* User-controlled memory::      
 @end menu
 
 There are two types of memory allocation available to the C programmer,
 one in which @R{} manages the clean-up and the other in which user
 has full control (and responsibility).
 
-@node Transient, User-controlled, Memory allocation, Memory allocation
+@node Transient storage allocation, User-controlled memory, Memory allocation, Memory allocation
 @subsection Transient storage allocation
 @findex R_alloc
 @findex S_alloc
@@ -10171,8 +10179,8 @@ has full control (and responsibility).
 @findex vmaxget
 @findex vmaxset
 
-Here @R{} will reclaim the memory at the end of the call to @code{.C}.
-Use
+Here @R{} will reclaim the memory at the end of the call to @code{.C},
+@code{.Call} or @code{.External}.  Use
 
 @example
 char *R_alloc(size_t @var{n}, int @var{size})
@@ -10219,17 +10227,30 @@ type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
 This memory is taken from the heap, and released at the end of the
 @code{.C}, @code{.Call} or @code{.External} call.  Users can also manage
 it, by noting the current position with a call to @code{vmaxget} and
-clearing memory allocated subsequently by a call to @code{vmaxset}.
+subsequently clearing memory allocated by a call to @code{vmaxset}. An
+example might be
+
+@example
+void *vmax = vmaxget()
+// a loop involving the use of R_alloc at each iteration
+vmaxset(vmax)
+@end example
+
+@noindent
 This is only recommended for experts.
 
 Note that this memory will be freed on error or user interrupt
 (if allowed: @pxref{Allowing interrupts}).
 
-Note that although @var{n} is @code{long}, there are limits imposed by
-@R{}'s internal allocation mechanism.  These will only come into play on
-64-bit systems, where the current limit for @var{n} is just under 16Gb.
+Note that although @var{n} is @code{size_t}, there may be limits imposed
+by @R{}'s internal allocation mechanism.  These will only come into play
+on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
+just under 16Gb.
 
-@node User-controlled,  , Transient, Memory allocation
+These functions should only be used in code called by @code{.C} etc,
+never from front-ends.  They are not thread-safe.
+
+@node User-controlled memory,  , Transient storage allocation, Memory allocation
 @subsection User-controlled memory
 @findex Calloc
 @findex Realloc
@@ -11360,11 +11381,10 @@ visibility of entry points.  These are only effective when
 @samp{HAVE_VISIBILITY_ATTRIBUTE} is defined -- this is checked when @R{}
 is configured and recorded in header @file{Rconfig.h} (included by
 @file{R_ext/Visibility.h}).  It is generally defined on modern
-Unix-alikes with a recent compiler (e.g.@: @code{gcc4}), but not
-supported on Windows.  Minimizing the visibility of symbols in a shared
-library will both speed up its loading (unlikely to be significant) and
-reduce the possibility of linking to the wrong entry points of the same
-name.
+Unix-alikes with a recent compiler, but not supported on OS X nor
+Windows.  Minimizing the visibility of symbols in a shared library will
+both speed up its loading (unlikely to be significant) and reduce the
+possibility of linking to the wrong entry points of the same name.
 
 C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for
@@ -11432,7 +11452,7 @@ C program include
 @end example
 
 @noindent
-and link against @samp{-lRmath} (and perhaps @samp{-lm}.  There is an
+and link against @samp{-lRmath} (and perhaps @samp{-lm}).  There is an
 example file @file{test.c}.
 
 A little care is needed to use the random-number routines. You will
@@ -11475,7 +11495,7 @@ currently includes
 @item @file{Rinternals.h} @tab definitions for using @R{}'s internal
 structures
 @item @file{Rdefines.h} @tab macros for an @Sl{}-like interface to the
-above
+above (no longer maintained)
 @item @file{Rmath.h} @tab standalone math library
 @item @file{Rversion.h} @tab @R{} version information
 @item @file{Rinterface.h} @tab for add-on front-ends (Unix-alikes only)
@@ -11491,7 +11511,6 @@ handlers
 routines, not all of which are included in @R{}
 @item @file{R_ext/Parse.h} @tab a small part of @R{}'s parse interface:
 not part of the stable API.
-@item @file{R_ext/RConvertors.h}
 @item @file{R_ext/RStartup.h} @tab for add-on front-ends
 @item @file{R_ext/Rdynload.h} @tab needed to register compiled code in
 packages
@@ -11531,10 +11550,7 @@ The graphics systems are exposed in headers
 includes) and @file{R_ext/QuartzDevice.h}. Facilities for defining
 custom connection implementations are provided in
 @file{R_ext/Connections.h}, but make sure you consult the file before
-use. Some entry points from the @pkg{stats} package are in
-@file{R_ext/stats_package.h} (currently related to the internals of
-@code{nls} and @code{nlminb}).
-
+use.
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
@@ -11725,7 +11741,8 @@ Note that the APIs described in this chapter are only intended to be
 used in an alternative front-end: they are not part of the API made
 available for @R{} packages and can be dangerous to use in a
 conventional package (although packages may contain alternative
-front-ends).
+front-ends).  Conversely some of the functions from the API (such as
+@code{R_alloc}) should not be used in front-ends.
 
 @menu
 * Embedding R under Unix-alikes::  
@@ -12240,7 +12257,7 @@ up and removes its handlers when its namespace is unloaded.
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out
 during events of the second type.  This is not handled very well in the
-existing examples.  The GNOME front-end can run a own handler for polled
+existing examples.  The GNOME front-end ran a private handler for polled
 events by setting
 
 @example
@@ -12289,7 +12306,7 @@ main thread.  Stack-checking can be disabled by setting
 @code{R_CStackLimit = (uintptr_t)-1}, but it is better to if possible
 set appropriate values.  (What these are and how to determine them are
 OS-specific, and the stack size limit may differ for secondary threads.
-If you have a choice of stack size, at least 8Mb is recommended.)
+If you have a choice of stack size, at least 10Mb is recommended.)
 
 You may also want to consider how signals are handled: @R{} sets signal
 handlers for several signals, including @code{SIGINT}, @code{SIGSEGV},
@@ -12332,17 +12349,16 @@ currently available that interface directly with @R{} and provide a
 @itemize
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
-Baier available via
-@uref{http://CRAN.R-project.org/@/other-software.html} or
-@uref{http://sunsite.univie.ac.at/rcom/}, which works with package
-@CRANpkg{rscproxy} to support transfer of data to and from @R{} and remote
-execution of R commands, as well as embedding of an @R{} graphics
-window.  The @CRANpkg{rcom} package on @acronym{CRAN} provides a (D)COM
-server in a running @R{} session.
+Baier available @emph{via} @uref{http://sunsite.univie.ac.at/rcom/},
+which works with @R{} packages to support transfer of data to and from
+@R{} and remote execution of @R{} commands, as well as embedding of an
+@R{} graphics window.
+
+Recent versions have usage restrictions.
 
 @item
 Another (D)COM server, @code{RDCOMServer}, is available from
-@uref{http://www.omegahat.org/}. Its philosophy is discussed in
+@uref{http://www.omegahat.org/}.  Its philosophy is discussed in
 @uref{http://www.omegahat.org/@/RDCOMServer/@/Docs/@/Paradigm.html} and is
 very different from the purpose of this section.
 @end itemize
@@ -12614,7 +12630,7 @@ use its value for @code{InstallPath}.
 
 Prior to @R{} 2.12.0 @file{R.dll} and the various front-end executables
 were in @file{R_HOME\bin}, but they are now in @file{R_HOME\bin\i386} or
-@file{R_HOME\bin\x64}.  So you need to arrange to look first in the
+@file{R_HOME\bin\x64}.  So you may need to arrange to look first in the
 architecture-specific subdirectory and then in @file{R_HOME\bin}.
 
 @node Function and variable index, Concept index, Linking GUIs and other front-ends to R, Top
