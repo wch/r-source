@@ -176,9 +176,9 @@
       \item \code{svd()} returned \code{NULL} rather than omitting
       components as documented.  (Found by Radford Neal; \PR{15360})
 
-      \item \code{mclapply()} and \code{mcparallel()} with
-      \code{silent=TRUE} could break a process that uses \code{stdout}
-      output unguarded against broken pipes (e.g., \code{zip} will fail
+      \item \code{mclapply()} and \code{mcparallel()} with \code{silent
+      = TRUE} could break a process that uses \code{stdout} output
+      unguarded against broken pipes (e.g., \code{zip} will fail
       silently). To work around such issues, they now replace
       \code{stdout} with a descriptor pointed to \file{/dev/null}
       instead. For this purpose, internal \code{closeStdout} and
@@ -200,8 +200,8 @@
       did not duplicate arguments properly. (\PR{15352}, \PR{15353},
       \PR{15354})
 
-      \item \code{kmeans()} now always stops iterating in the QTran
-      stage. (\PR{15364}).
+      \item \code{kmeans(algorithm = "Hartigan-Wong")} now always stops
+      iterating in the QTran stage. (\PR{15364}).
 
       \item \code{read.dcf()} re-allocated incorrectly and so could
       segfault when called on a file with lines of more than 100 bytes.

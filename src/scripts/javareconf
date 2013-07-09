@@ -405,3 +405,8 @@ done
 
 echo "Done."
 echo ''
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

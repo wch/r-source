@@ -3725,8 +3725,11 @@ and suitable options might be
 
 @noindent
 ; see @uref{http://www.ghostscript.com/@/doc/@/9.07/@/Ps2pdf.htm} for
-more such and consider all the options for image downsampling).   We
-come across occasionally large PDF files containing excessively
+more such and consider all the options for image downsampling).  There
+have been examples in @acronym{CRAN} packages for which Ghostscript 9.06
+and later produced dramatically better reductions than 9.05 or earlier.
+
+We come across occasionally large PDF files containing excessively
 complicated figures using PDF vector graphics: such figures are often
 best redesigned or failing that, output as PNG files.
 
