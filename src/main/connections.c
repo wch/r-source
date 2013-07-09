@@ -316,10 +316,11 @@ int vasprintf(char **strp, const char *fmt, va_list ap);
 # define BUFSIZE 10000
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 {
+    R_CheckStack2(BUFSIZE); // prudence
     char buf[BUFSIZE], *b = buf;
     int res;
-    const void *vmax = vmaxget();
-    int usedRalloc = FALSE, usedVasprintf = FALSE;
+    const void *vmax = NULL; /* -Wall*/
+    int usedVasprintf = FALSE;
     va_list aq;
 
     va_copy(aq, ap);
@@ -336,14 +337,14 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
     }
 #else
     if(res >= BUFSIZE) { /* res is the desired output length */
-	usedRalloc = TRUE;
+	vmax = vmaxget();
 	/* apparently some implementations count short,
 	   <http://unixpapa.com/incnote/stdio.html>
 	   so add some margin here */
 	b = R_alloc(res + 101, sizeof(char));
-	vsnprintf(b, res+100, format, ap);
+	vsnprintf(b, res + 100, format, ap);
     } else if(res < 0) { /* just a failure indication */
-	usedRalloc = TRUE;
+	vmax = vmaxget();
 	b = R_alloc(10*BUFSIZE, sizeof(char));
 	res = vsnprintf(b, 10*BUFSIZE, format, ap);
 	if (res < 0) {
@@ -378,7 +379,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 				       zero-length input */
     } else
 	con->write(b, 1, res, con);
-    if(usedRalloc) vmaxset(vmax);
+    if(vmax) vmaxset(vmax);
     if(usedVasprintf) free(b);
     return res;
 }
@@ -2646,8 +2647,8 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     Routtextconn this = con->private;
     char buf[BUFSIZE], *b = buf, *p, *q;
-    const void *vmax = vmaxget();
-    int res = 0, usedRalloc = FALSE, buffree,
+    const void *vmax = NULL;
+    int res = 0, buffree,
 	already = (int) strlen(this->lastline); // we do not allow longer lines
     SEXP tmp;
 
@@ -2667,14 +2668,14 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
     }
     va_end(aq);
     if(res >= buffree) { /* res is the desired output length */
-	usedRalloc = TRUE;
+	vmax = vmaxget();
 	b = R_alloc(res + already + 1, sizeof(char));
 	strcpy(b, this->lastline);
 	p = b + already;
 	vsprintf(p, format, ap);
     } else if(res < 0) { /* just a failure indication */
 #define NBUFSIZE (already + 100*BUFSIZE)
-	usedRalloc = TRUE;
+	vmax = vmaxget();
 	b = R_alloc(NBUFSIZE, sizeof(char));
 	strncpy(b, this->lastline, NBUFSIZE);
 	*(b + NBUFSIZE - 1) = '\0';
@@ -2727,7 +2728,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    break;
 	}
     }
-    if(usedRalloc) vmaxset(vmax);
+    if(vmax) vmaxset(vmax);
     return res;
 }
 
@@ -5257,6 +5258,8 @@ static unsigned int uiSwap (unsigned int x)
 #define uiSwap(x) (x)
 #endif
 
+/* These are all hidden and used only in serialize.c, 
+   so managing R_alloc stack is prudence. */
 attribute_hidden
 SEXP R_compress1(SEXP in)
 {
