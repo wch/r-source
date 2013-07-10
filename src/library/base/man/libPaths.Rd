@@ -43,6 +43,12 @@
   and this is returned.  If given no argument, a character vector with
   the currently active library trees is returned.
 
+  How paths \code{new} with a trailing slash are treated is
+  OS-dependent.  On a POSIX filesystem existing directories can usually
+  be specified with a trailing slash: on Windows filepaths with a
+  trailing slash (or backslash) are invalid and so will never be added
+  to the library search path.
+
 #ifdef unix
   The library search path is initialized at startup from the environment
   variable \env{R_LIBS} (which should be a colon-separated list of
