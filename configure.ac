@@ -599,6 +599,9 @@ R_PROG_BROWSER
 R_PROG_PDFVIEWER
 ## Noweb
 AC_PATH_PROG(NOTANGLE, notangle, false)
+## javareconf needs this
+AC_PATH_PROG(REALPATH, realpath, false)
+
 
 ## cairographics needs pkg-config
 AC_PATH_PROG(PKGCONF, pkg-config , [], 
@@ -2649,6 +2652,7 @@ AC_CONFIG_FILES(
   src/scripts/R.sh
   src/scripts/Rcmd
   src/scripts/f77_f2c
+  src/scripts/javareconf
   src/scripts/mkinstalldirs
   src/scripts/pager
   src/unix/Makefile
