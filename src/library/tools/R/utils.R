@@ -1290,10 +1290,10 @@ function(package)
              SMPracticals = "exp.gibbs",
              XML = "text.SAX",
              ape = "sort.index",
-	     assist = "chol.new",
+             assist = "chol.new",
              boot = "exp.tilt",
              car = "scatterplot.matrix",
-	     calibrator = "t.fun",
+             calibrator = "t.fun",
              clusterfly = "ggobi.som",
              coda = "as.mcmc.list",
              crossdes = "all.combn",
@@ -1323,11 +1323,12 @@ function(package)
              rgeos = "scale.poly",
              sac = "cumsum.test",
              sm = "print.graph",
+             splusTimeDate = "sort.list",
              stats = c("anova.lmlist", "fitted.values", "lag.plot",
              "influence.measures", "t.test",
              "plot.spec.phase", "plot.spec.coherency"),
              supclust = c("sign.change", "sign.flip"),
-	     tensorA = "chol.tensor",
+             tensorA = "chol.tensor",
              utils = c("close.socket", "flush.console", "update.packages")
              )
     if(is.null(package)) return(unlist(stopList))
