@@ -34,8 +34,12 @@ Sys.glob(paths, dirmark = FALSE)
 
   All systems should interpret \code{*} (match zero or more characters),
   \code{?} (match a single character) and (probably) \code{[} (begin a
-  character class or range).  By default paths ending in \code{/} will
-  be accepted and matched only to directories.
+  character class or range).  The handling of paths
+  ending with a separator is system-dependent.  On a POSIX-2008
+  compliant OS they will match directories (only), but as they are not
+  valid filepaths on Windows, they match nothing there.  (Earlier POSIX
+  standards allowed them to match files.)
+  % section A.4.12, http://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap04.html
 
   The rest of these details are indicative (and based on the POSIX
   standard).
