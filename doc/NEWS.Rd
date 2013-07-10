@@ -425,6 +425,9 @@
       the last second before the epoch could not be converted from
       \code{POSIXlt} to \code{POSIXct}. (Reported by Bill Dunlap.)
       
+      \item \code{add1.glm} miscalculated F-statistics when df > 1. (Bill 
+      Dunlap, \PR{15386}).
+
       \item \code{stem()} now discards infinite inputs rather than
       hanging.  (\PR{15376})
     }
