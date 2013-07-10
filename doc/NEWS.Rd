@@ -224,8 +224,8 @@
 
       \item The included version of PCRE has been updated to 8.33.
 
-      \item The included version of zlib has been updated to 1.2.8, a
-      bug-fix release.
+      \item The included version of \code{zlib} has been updated to
+      1.2.8, a bug-fix release.
 
       \item \code{str(x)} is considerably faster for very large lists,
       or factors with 100,000 levels, the latter as in \PR{15337}.
@@ -237,9 +237,7 @@
       method.
 
       \item There is now support for the LaTeX style file \file{zi4.sty}
-      which has in some distributions replaced \file{inconsolata.sty}
-      (which has been removed from the \pkg{inconsolata} LaTeX package
-      without any warning).
+      which has in some distributions replaced \file{inconsolata.sty}.
 
       \item \code{unlist(x)} now typically returns all non-list
       \code{x}s unchanged, not just the \dQuote{vector} ones.
@@ -255,7 +253,8 @@
       \item Profiling now records non-inlined calls from byte compiled
       code to BUILTIN functions.
 
-      \item The included version of xz's liblzma has been updated to 5.0.5.
+      \item The included version of xz utils's \code{liblzma} has been
+      updated to 5.0.5.
     }
   }
 
@@ -422,9 +421,12 @@
       \item \code{read.dcf()} re-allocated incorrectly and so could
       segfault when called on a file with lines of more than 100 bytes.
 
-      \item On system where \code{mktime()} does not set \code{errno},
+      \item On systems where \code{mktime()} does not set \code{errno},
       the last second before the epoch could not be converted from
       \code{POSIXlt} to \code{POSIXct}. (Reported by Bill Dunlap.)
+      
+      \item \code{stem()} now discards infinite inputs rather than
+      hanging.  (\PR{15376})
     }
   }
 }

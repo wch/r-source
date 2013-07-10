@@ -83,5 +83,9 @@ stopifnot(anyNA(xx), anyNA(LL), !anyNA(L2),
           anyNA(dN), !anyNA(dd), !any(is.na(dd)),
           all(c(3,6) == which(is.na(dN), arr.ind=TRUE)))
 
+## PR#15376
+stem(c(1, Inf))
+## hung in 3.0.1
+
 
 proc.time()
