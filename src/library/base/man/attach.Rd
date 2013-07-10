@@ -1,6 +1,6 @@
 % File src/library/base/man/attach.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attach}
@@ -65,7 +65,7 @@ attach(what, pos = 2L, name = deparse(substitute(what)),
   \code{\link{load}} or \code{\link{sys.source}}.
 
   Names starting \code{"package:"} are reserved for
-  \code{\link{library}} and should not be used by end users. Attached
+  \code{\link{library}} and should not be used by end users.  Attached
   files are by default given the name \code{file:\var{what}}.  The
   \code{name} argument given for the attached environment will be used
   by \code{\link{search}} and can be used as the argument to
@@ -75,6 +75,7 @@ attach(what, pos = 2L, name = deparse(substitute(what)),
   \code{"UserDefinedDatabase"}, supported by the Omegahat package
   \pkg{RObjectTables}.  See \url{http://www.omegahat.org/RObjectTables/}.
 }
+
 \value{
   The \code{\link{environment}} is returned invisibly with a
   \code{"name"} attribute.
@@ -90,7 +91,7 @@ attach(what, pos = 2L, name = deparse(substitute(what)),
 
   In programming, functions should not change the search path unless
   that is their purpose.  Often \code{\link{with}} can be used within a
-  function, but if not good practice is to
+  function. If not, good practice is to
   \itemize{
     \item Always use a distinctive \code{name} argument, and
     \item To immediately follow the \code{attach} call by an

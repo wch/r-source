@@ -83,7 +83,7 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item The minimum version for a system \code{xz} library is now
-      5.0.3 (was 4.999).  This is in part of avoid 5.0.2, which can
+      5.0.3 (was 4.999).  This is in part to avoid 5.0.2, which can
       compress in ways other versions cannot decompress.
 
       \item There is some support for parallel testing of an
