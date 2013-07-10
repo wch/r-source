@@ -366,8 +366,9 @@ rm -rf ${tempdir}
 echo ""
 
 if test "${export_vars}" = yes; then
-    ## we have to re-substitute $(JAVA_HOME), otherwise it will be replaced by R's
-    ## Makeconf setting which is highly likely different and thus not intended
+    ## we have to re-substitute $(JAVA_HOME), 
+    ## otherwise it will be replaced by R's Makeconf setting
+    ## which is highly likely different and thus not intended
     JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED-sed} -e 's:$(JAVA_HOME):'"${JAVA_HOME}:g"`
     JAVA_CPPFLAGS=`echo ${JAVA_CPPFLAGS}|${SED-sed} -e 's:$(JAVA_HOME):'"${JAVA_HOME}:g"`
     JAVA_LIBS=`echo ${JAVA_LIBS}|${SED-sed} -e 's:$(JAVA_HOME):'"${JAVA_HOME}:g"`
@@ -383,6 +384,7 @@ if test "${export_vars}" = yes; then
 fi
 
 echo ""
+echo "JAVA_HOME        : ${JAVA_HOME}"
 echo "Java library path: ${JAVA_LD_LIBRARY_PATH}"
 echo "JNI cpp flags    : ${JAVA_CPPFLAGS}"
 echo "JNI linker flags : ${JAVA_LIBS}"
