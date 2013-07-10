@@ -125,6 +125,7 @@ ar.yw.default <-
         dimnames(partialacf) <- list(seq_len(order.max), snames, snames)
         colnames(resid) <- colnames(x)
     } else {
+        if (xacf[1L] == 0) stop("zero-variance series")
         ## univariate case
         r <- as.double(drop(xacf))
         z <- .Fortran(C_eureka, as.integer(order.max), r, r,
@@ -558,6 +559,7 @@ ar.burg.default <-
     coefs <- matrix(z[[1L]], order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
     var.pred <- if(var.method == 1L) z[[2L]] else z[[3L]]
+    if (any(is.nan(var.pred))) stop("zero-variance series")
     xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
     maic <- min(aic)
     xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
