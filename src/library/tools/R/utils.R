@@ -1324,6 +1324,7 @@ function(package)
              sac = "cumsum.test",
              sm = "print.graph",
              splusTimeDate = "sort.list",
+             splusTimeSeries = "sort.list",
              stats = c("anova.lmlist", "fitted.values", "lag.plot",
              "influence.measures", "t.test",
              "plot.spec.phase", "plot.spec.coherency"),
