@@ -244,10 +244,11 @@ if test "${JAVA_LIBS}" = "~autodetect~"; then
 	fi	
 	IFS=${save_IFS}
 	# replace occurrences of JAVA_HOME with $(JAVA_HOME)
-	java_home=${JAVA_HOME}
-	# if JAVA_HOME was a link, it will be the canonical path we want to replace
-        java_home=`realpath "${JAVA_HOME}"`
-	if test $? -ne 0; then
+	# If JAVA_HOME was a link, it will be the canonical path we
+	# want to replace.  We need realpath to determine what that is.
+	if test "@REALPATH@" != "false"; then
+             java_home=`@REALPATH@ "${JAVA_HOME}"`
+	else
        	    java_home="${JAVA_HOME}"
 	fi
 	JAVA_LD_LIBRARY_PATH=`echo "${java_library_path}" | ${SED-sed} -e" s:${java_home}:\$\(JAVA_HOME\):g"`
