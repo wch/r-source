@@ -77,6 +77,10 @@
 
       \item Code for the negative binomial distribution now treats the case
       \code{size == 0} as a one-point distribution at zero.
+      
+      \item If an invalid/corrupt \code{.Random.seed} object is
+      encountered in the workspace it is ignored with a warning rather
+      than giving an error.
     }
   }
 
