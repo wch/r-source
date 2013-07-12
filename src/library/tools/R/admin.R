@@ -554,9 +554,8 @@ function(dir, outDir, encoding = "")
             file <- sources[i]
             if (!file_test("-f", file)) next
             bfr <- readLines(file, warn = FALSE)
-            if(all(grepl("(^###|^[[:space:]]*$)", bfr), useBytes = TRUE)) {
+            if(all(grepl("(^###|^[[:space:]]*$)", bfr, useBytes = TRUE)))
                 unlink(file)
-            }
         }
 
         # Update
