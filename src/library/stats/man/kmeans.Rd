@@ -45,7 +45,7 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \item{\dots}{not used.}
 }
 \details{
-  The data given by \code{x} is clustered by the \eqn{k}-means method,
+  The data given by \code{x} are clustered by the \eqn{k}-means method,
   which aims to partition the points into \eqn{k} groups such that the
   sum of squares from points to the assigned cluster centres is minimized.
   At the minimum, all cluster centres are at the mean of their Voronoi
@@ -61,7 +61,8 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   (rows of \code{x}) are extremely close, the algorithm may not converge
   in the \dQuote{Quick-Transfer} stage, signalling a warning (and
   returning \code{ifault = 4}).  Slight
-  rounding of the data may be advisable then, see the artificial example.
+  rounding of the data may be advisable in that case.
+
   For ease of programmatic exploration, \eqn{k=1} is allowed, notably
   returning the center and \code{withinss}.
 
@@ -73,7 +74,8 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
 }
 \value{
   \code{kmeans} returns an object of class \code{"kmeans"} which has a
-  \code{print} and a \code{fitted} method.  It is a list with components:
+  \code{print} and a \code{fitted} method.  It is a list with at least
+  the following components:
   \item{cluster}{
     A vector of integers (from \code{1:k}) indicating the cluster to
     which each point is allocated.

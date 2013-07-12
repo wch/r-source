@@ -1,6 +1,6 @@
 % File src/library/stats/man/uniroot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{uniroot}
@@ -60,12 +60,14 @@ uniroot(f, interval, \dots,
 }
 
 \value{
-  A list with four components: \code{root} and \code{f.root} give the
-  location of the root and the value of the function evaluated at that
-  point. \code{iter} and \code{estim.prec} give the number of iterations
-  used and an approximate estimated precision for \code{root}.  (If the
-  root occurs at one of the endpoints, the estimated precision is
-  \code{NA}.)
+  A list with at least four components: \code{root} and \code{f.root}
+  give the location of the root and the value of the function evaluated
+  at that point. \code{iter} and \code{estim.prec} give the number of
+  iterations used and an approximate estimated precision for
+  \code{root}.  (If the root occurs at one of the endpoints, the
+  estimated precision is \code{NA}.)
+
+  Further components may be added in future.
 }
 \source{
   Based on \file{zeroin.c} in \url{http://www.netlib.org/c/brent.shar}.
