@@ -69,18 +69,8 @@
       invoked via lazy evaluation could lose track of their generic
       (\PR{15267}).
 
-      \item Various functions in \pkg{stats} and elsewhere that use
-      non-standard evaluation are now more careful to follow the
-      namespace scoping rules.  E.g. \code{stats::lm()} can now find
-      \code{stats::model.frame()} even if \pkg{stats} is not on the
-      search path or if some package defines a function of that name.
-
       \item Code for the negative binomial distribution now treats the case
       \code{size == 0} as a one-point distribution at zero.
-      
-      \item If an invalid/corrupt \code{.Random.seed} object is
-      encountered in the workspace it is ignored with a warning rather
-      than giving an error.
     }
   }
 
@@ -259,6 +249,17 @@
 
       \item The included version of xz utils's \code{liblzma} has been
       updated to 5.0.5.
+
+      \item Various functions in \pkg{stats} and elsewhere that use
+      non-standard evaluation are now more careful to follow the
+      namespace scoping rules.  E.g. \code{stats::lm()} can now find
+      \code{stats::model.frame()} even if \pkg{stats} is not on the
+      search path or if some package defines a function of that name.
+      
+      \item If an invalid/corrupt \code{.Random.seed} object is
+      encountered in the workspace it is ignored with a warning rather
+      than giving an error.  (This allows \R itself to rely on a working
+      RNG, e.g. to choose a random port.)
     }
   }
 
@@ -428,8 +429,8 @@
       \item On systems where \code{mktime()} does not set \code{errno},
       the last second before the epoch could not be converted from
       \code{POSIXlt} to \code{POSIXct}. (Reported by Bill Dunlap.)
-      
-      \item \code{add1.glm} miscalculated F-statistics when df > 1. (Bill 
+
+      \item \code{add1.glm()} miscalculated F-statistics when df > 1. (Bill 
       Dunlap, \PR{15386}).
 
       \item \code{stem()} now discards infinite inputs rather than
