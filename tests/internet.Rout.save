@@ -29,7 +29,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 4613
+[1] 4676
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")

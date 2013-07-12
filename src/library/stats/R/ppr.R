@@ -26,7 +26,7 @@ function(formula, data, weights, subset,
     call <- match.call()
     m <- match.call(expand.dots = FALSE)
     m$contrasts <- m$... <- NULL
-    m[[1L]] <- as.name("model.frame")
+    m[[1L]] <- quote(stats::model.frame)
     m <- eval(m, parent.frame())
     Terms <- attr(m, "terms")
     attr(Terms, "intercept") <- 0L

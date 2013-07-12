@@ -147,7 +147,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
                                    paste(c(rvars, cvars),
                                          collapse = "+")),
                                 env = environment(formula))
-        m[[1L]] <- as.name("model.frame")
+        m[[1L]] <- quote(stats::model.frame)
         mf <- eval(m, parent.frame())
         ftable(mf, row.vars = rvars, col.vars = cvars, ...)
     }

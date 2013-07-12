@@ -304,7 +304,7 @@ replications <- function(formula, data = NULL, na.action)
     labels <- attr(formula, "term.labels")
     vars <- as.character(attr(formula, "variables"))[-1L]
     if(is.null(data)) {
-	v <- c(as.name("data.frame"), attr(formula, "variables"))
+	v <- c(quote(stats::data.frame), attr(formula, "variables"))
 	data <- eval(as.call(v), parent.frame())
     }
     if(!is.function(na.action)) stop("na.action must be a function")
@@ -482,8 +482,7 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
     args$formula <- form
     env <- environment(Terms)
     if (is.null(env)) env <- parent.frame()
-    fcall <- c(list(as.name("model.frame")), args)
-#    do.call("model.frame", args)
+    fcall <- c(list(quote(stats::model.frame)), args)
     eval(as.call(fcall), env)
 }
 

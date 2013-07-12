@@ -68,7 +68,7 @@ monthplot.default <-
     if (!add) {
         dev.hold(); on.exit(dev.flush())
         Call <- match.call()
-        Call[[1L]] <- as.name("plot")
+        Call[[1L]] <- quote(graphics::plot)
         Call$x <- NA
         Call$y <- NA
         Call$axes <- FALSE

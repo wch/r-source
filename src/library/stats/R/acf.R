@@ -24,7 +24,7 @@ acf <-
     type <- match.arg(type)
     if(type == "partial") {
         m <- match.call()
-        m[[1L]] <- as.name("pacf")
+        m[[1L]] <- quote(stats::pacf)
         m$type <- NULL
         return(eval(m, parent.frame()))
     }

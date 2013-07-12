@@ -354,7 +354,7 @@ model.frame.default <-
         m <- match(c("formula", "data", "subset", "weights", "na.action"),
                    names(fcall), 0)
         fcall <- fcall[c(1, m)]
-        fcall[[1L]] <- as.name("model.frame")
+        fcall[[1L]] <- quote(stats::model.frame)
         env <- environment(formula$terms)
 	if (is.null(env)) env <- parent.frame()
         return(eval(fcall, env, parent.frame()))

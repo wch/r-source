@@ -31,7 +31,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
                               "there are %d Error terms: only 1 is allowed"),
                      length(indError)), domain = NA)
     lmcall <- Call <- match.call()
-    lmcall[[1L]] <- as.name("lm")
+    lmcall[[1L]] <- quote(stats::lm)
     lmcall$singular.ok <- TRUE
     if(projections) qr <- lmcall$qr <- TRUE
     lmcall$projections <- NULL

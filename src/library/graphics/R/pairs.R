@@ -27,7 +27,7 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
         m$data <- as.data.frame(data)
     m$... <- NULL
     m$na.action <- na.action # force in even if  default
-    m[[1L]] <- as.name("model.frame")
+    m[[1L]] <- quote(stats::model.frame)
     require(stats, quietly=TRUE)
     mf <- eval(m, parent.frame())
     pairs(mf, ...)

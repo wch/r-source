@@ -410,7 +410,7 @@ function(formula, data = NULL, ...,
             m$data <- as.data.frame(data)
         m$main <- m$... <- NULL
         m$na.action <- na.action
-        m[[1L]] <- as.name("model.frame")
+        m[[1L]] <- quote(stats::model.frame)
         mf <- eval(m, parent.frame())
         mosaicplot(table(mf), main = main, ...)
     }

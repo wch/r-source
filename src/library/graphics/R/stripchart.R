@@ -114,7 +114,7 @@ stripchart.formula <-
     m$x <- NULL
     m$na.action <- na.action # force use of default for this method
     require(stats, quietly = TRUE)
-    m[[1L]] <- as.name("model.frame")
+    m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
     if (is.null(dlab)) dlab <- names(mf)[response]

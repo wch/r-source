@@ -99,7 +99,7 @@ boxplot.formula <-
     m$... <- NULL
     m$na.action <- na.action # force use of default for this method
     require(stats, quietly = TRUE)
-    m[[1L]] <- as.name("model.frame")
+    m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
     boxplot(split(mf[[response]], mf[-response]), ...)

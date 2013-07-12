@@ -116,7 +116,7 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$... <- m$FUN <- NULL
-    m[[1L]] <- as.name("model.frame")
+    m[[1L]] <- quote(stats::model.frame)
 
     if (formula[[2L]] == ".") {
         ## LHS is a dot, expand it ...

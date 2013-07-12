@@ -353,8 +353,12 @@ setRlibs <-
         ## characters 1 to 31 and 34, 36, 58, 60, 62, 63, 92, and 124)
         ## are or can be invalid.  (In addition, one cannot have
         ## one-character file names consisting of just ' ', '.', or
-        ## '~'.)  Based on information by Uwe Ligges, Duncan Murdoch,
-        ## and Brian Ripley.
+        ## '~'., and '~' has a special meaning for 8.3 short file
+        ## names).
+
+        ## Based on information by Uwe Ligges, Duncan Murdoch, and
+        ## Brian Ripley: see also
+        ## http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx
 
         ## In addition, Windows does not allow the following DOS type
         ## device names (by themselves or with possible extensions),
@@ -3303,7 +3307,7 @@ setRlibs <-
             ## Check for installed copies of the package in some subdir.
             files <- files[basename(dirname(files)) == "Meta"]
             if(length(files) &&
-               all(!is.na(match(c("nsInfo.rds", "package.rds"),
+               all(!is.na(match(c("package.rds", "hsearch.rds"),
                                 basename(files))))) {
                 if(!any) noteLog(Log)
                 any <- TRUE
