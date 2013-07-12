@@ -6124,6 +6124,13 @@ function(dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
+    ## Check for excessive 'Depends'
+    deps <- strsplit(meta["Depends"], ", *")[[1]]
+    deps <- sub("[ (].*", "", deps)
+    deps <- setdiff(deps, c("R", "base", "datasets", "grDevices", "graphics",
+                            "methods", "utils", "stats"))
+    if(length(deps) > 5) out$many_depends <- deps
+
     out
 }
 
@@ -6234,6 +6241,10 @@ function(x, ...)
           else
               c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
                 strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$many_depends)) {
+          c(.pretty_format2("Depends: include the non-default packages:", y),
+            "Adding more than 5 packages to the search path is excessive.")
       }
       )
 }
