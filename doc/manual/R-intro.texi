@@ -100,6 +100,7 @@ statistical modelling and graphics.
 * Statistical models in R::     
 * Graphics::                    
 * Packages::                    
+* OS facilities::               
 * A sample session::            
 * Invoking R::                  
 * The command-line editor::     
@@ -6411,7 +6412,7 @@ and these can be accessed from @R{} via the package @CRANpkg{rggobi}, described 
 Also, package @CRANpkg{rgl} provides ways to interact with 3D plots, for example
 of surfaces.
 
-@node Packages, A sample session, Graphics, Top
+@node Packages, OS facilities, Graphics, Top
 @chapter Packages
 @cindex Packages
 
@@ -6441,7 +6442,7 @@ command like
 
 Users connected to the Internet can use the @code{install.packages()}
 and @code{update.packages()} functions (available through the
-@code{Packages} menu in the Windows and RAqua GUIs, @pxref{Installing
+@code{Packages} menu in the Windows and R.app GUIs, @pxref{Installing
 packages, , , R-admin, R Installation and Administration}) to install and
 update packages.
 
@@ -6510,13 +6511,12 @@ collection of available packages changes very frequently.
 @findex ::
 @findex :::
 
-Packages can have @emph{namespaces}, and currently all of the base and
-recommended packages do except the @code{datasets} package.  Namespaces
-do three things: they allow the package writer to hide functions and
-data that are meant only for internal use, they prevent functions from
-breaking when a user (or other package writer) picks a name that clashes
-with one in the package, and they provide a way to refer to an object
-within a particular package.
+All paackages have @emph{namespaces}, and have since @R{} 2.14.0.
+Namespaces do three things: they allow the package writer to hide
+functions and data that are meant only for internal use, they prevent
+functions from breaking when a user (or other package writer) picks a
+name that clashes with one in the package, and they provide a way to
+refer to an object within a particular package.
 
 For example, @code{t()} is the transpose function in @R{}, but users
 might define their own function named @code{t}.  Namespaces prevent
@@ -6541,8 +6541,155 @@ cause automatic loading of the associated package.  When packages with
 namespaces are loaded automatically they are not added to the search
 list.
 
+@node OS facilities, A sample session, Packages, Top
+@chapter OS facilities
 
-@node A sample session, Invoking R, Packages, Top
+@R{} has quite extensive facilities to access the OS under which it is
+running: this allows it to be used as a scripting language and that
+ability is much used by @R{} itself, for example to install packages.
+
+@menu
+* Files and directories::       
+* Filepaths::                   
+* System commands::             
+@end menu
+
+@node Files and directories, Filepaths, OS facilities, OS facilities
+@section Files and directories
+
+There are many functions to manipulate files and directories. Here are
+pointers to some of the more commonly used ones.
+
+To create an (empty) file or directory, use @code{file.create} or
+@code{create.dir}.  (These are the equivalent of the POSIX utilities
+@command{touch} and @command{mkdir}.)  For temporary files and
+directories in the @R{} session directory see @code{tempfile}.
+
+Files can be removed by either @code{file.remove} or @code{unlink}: the
+later can remove directory trees.
+
+For directory listings use @code{list.files} (also available as
+@code{dir}) or @code{list.dirs}. These can select files using a regular
+expresssion: to select by wildcards use @code{Sys.glob}.
+
+Many types of information on a filepath (including for example if it is
+a file or directory) can be found by @code{file.info}.
+
+There are several ways to find out if a file `exists' (and file can
+exist on the filesystem and not be visible to the current user).
+There are functions @code{file.exists}, @code{file.access} and
+@code{file_test} with various versions of this test: @code{file.test} is
+a version of the POSIX @command{test} command for those familiar with
+shell scripting.
+
+Function @code{file.copy} is the @R{} analogue of the POSIX command
+@command{cp}.
+
+Choosing files can be done interactively by @code{file.choose}: the
+Windows port has the more versatile functions @code{choose.files} and
+@code{choose.dir} and there are similar functions in the @pkg{tcltk}
+package: @code{tk_choose.files} and @code{tk_choose.dir}.
+
+There is some support for @emph{links} in the filesystem: see functions
+@code{file.link} and @code{Sys.readlink}.
+
+
+@node Filepaths, System commands, Files and directories, OS facilities
+@section Filepaths
+
+With a few exceptions, @R{} relies on the underlying OS functions to
+manipulate filepaths.  Some aspects of this are allowed to depend on the
+OS, and do, even down to the version of the OS.  There are POSIX
+standards for how OSes should interpret filepaths and many @R{} users
+assume POSIX compliance: but Windows does not claim to be compliant and
+other OSes may be less than completely compliant.
+
+The following are some issues which have been encountered with filepaths.
+
+@itemize @bullet
+@item
+POSIX filesystems are case-sensitive, so @file{foo.png} and
+@file{Foo.PNG} are different files.  However, the defaults on Windows
+and OS X are to be case-insensitive, and FAT filesystems (commonly used
+on removable storage) are not normally case-sensitive (and all filepaths
+may be mapped to lower case).
+
+@item
+Almost all the Windows' OS services support the use of slash or
+backslash as the filepath separator, and @R{} converts the known
+exceptions to the form required by Windows.
+
+@item
+The behaviour of filepaths with a trailing slash is OS-dependent.  Such
+paths are not valid on Windows and should not be expected to work.
+POSIX-2008 requires such paths to match only directories, but earlier
+versions allowed them to also match files.  So they are best avoided.
+
+@item
+Multiple slashes in filepaths such as @file{/abc//def} are valid on
+POSIX filesytems and treated as if there was only one slash.  They are
+@emph{usually} accepted by Windows' OS functions. However, leading
+double slashes may have a different meaning.
+
+@item
+Windows' UNC filepaths (such as @file{\\server\dir1\dir2\file} and
+@file{\\?\UNC\server\dir1\dir2\file}) are not supported, but they may
+work in some @R{} functions.  POSIX filesystems are allowed to treat a
+leading double slash specially.
+
+@item
+Windows allows filepaths containing drives and relative to the current
+directory on a drive, e.g.@: @file{d:foo/bar} refers to
+@file{d:/a/b/c/foo/bar} if the current directory @emph{on drive
+@file{d:}} is @file{/a/b/c}.  It is intended that these work, but the
+use of absolute paths is safer.
+@end itemize
+
+Functions @code{basename} and @code{dirname} select parts of a file
+path: the recommended way to assemble a file path from components is
+@code{file.path}.  Function @code{pathexpand} does `tilde expansion',
+substituting for home directories (the current user's, and perhaps those
+of other users).
+
+On systems with links, a single file can be referred to by many
+filepaths.  Function @code{normalizePath} will find a canonical
+filepath.
+
+Windows has the concepts of short (`8.3') and long file names:
+@code{normalizePath} will return an absolute path using long file names
+and @code{shortPathName} will return the short path name.  The latter
+does not contain spaces and uses backslash as the separator, so is
+sometimes useful for exporting names from @R{}.
+
+File @emph{permissions} are a related topic.  @R{} has support for the
+POSIX concepts of read/write/execute permission for owner/group/all but
+this may be partially supported on the filesystem (so for example on
+Windows only read-only files (for the account running the @R{} session)
+are recognized.  Access Control Lists (ACLs) are employed on several
+filesystems, but do not have an agreed standard and @R{} has no
+facilities to control them.  Use @code{Sys.chmod} to change permissions.
+
+@node System commands,  , Filepaths, OS facilities
+@section System commands
+
+Functions @code{system} and @code{system2} are used to invoke a system
+command and optionally collect its output.  @code{system2} is a little
+more general but its main advantage is that it is easier to write
+cross-platform code using it.
+
+@code{system} behaves differently on Windows from other OSes (because
+the API C call of that name does).  Elsewhere it invokes a shell to run
+the command: the Windows port of @R{} has a function @code{shell} to do
+that.
+
+To find out is the OS includes a command, use @code{Sys.which}, which
+attempts to do this in a cross-platform way (unfortunately it is not a
+standard OS service).
+
+Function @code{shQuote} will quote filepaths as needed for commands in
+the current OS.
+
+@node A sample session, Invoking R, OS facilities, Top
 @appendix A sample session
 
 The following session is intended to introduce to you some features of

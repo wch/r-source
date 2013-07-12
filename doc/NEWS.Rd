@@ -135,6 +135,13 @@
     }
   }
 
+  \subsection{DOCUMENTATION}{
+    \itemize{
+      \item \sQuote{An Introduction to R} has a new chapter on using \R
+      as a scripting language, interacting with the OS.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{help.request()} could not determine the current version
