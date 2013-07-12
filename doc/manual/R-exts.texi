@@ -296,9 +296,10 @@ For maximal portability filenames should only contain only
 utilities do not accept spaces in file paths): non-English alphabetic
 characters cannot be guaranteed to be supported in all locales.  It
 would be good practice to avoid the shell metacharacters
-@code{()@{@}'[]$~}.  In addition, packages are normally distributed as
-tarballs, and these have a limit on path lengths: for maximal
-portability 100 bytes.
+@code{()@{@}'[]$~}: @code{~} is also used as part of `8.3' filenames on
+Windows.  In addition, packages are normally distributed as tarballs,
+and these have a limit on path lengths: for maximal portability 100
+bytes.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
