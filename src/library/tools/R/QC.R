@@ -6244,7 +6244,8 @@ function(x, ...)
       },
       if(length(y <- x$many_depends)) {
           c(.pretty_format2("Depends: include the non-default packages:", y),
-            "Adding more than 5 packages to the search path is excessive.")
+            "Adding so many packages to the search path is excessive",
+            "and importing selectively is preferable.")
       }
       )
 }
