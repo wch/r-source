@@ -6442,9 +6442,9 @@ command like
 
 Users connected to the Internet can use the @code{install.packages()}
 and @code{update.packages()} functions (available through the
-@code{Packages} menu in the Windows and R.app GUIs, @pxref{Installing
-packages, , , R-admin, R Installation and Administration}) to install and
-update packages.
+@code{Packages} menu in the Windows and OS X GUIs, @pxref{Installing
+packages, , , R-admin, R Installation and Administration}) to install
+and update packages.
 
 To see which packages are currently loaded, use
 
@@ -6511,7 +6511,7 @@ collection of available packages changes very frequently.
 @findex ::
 @findex :::
 
-All paackages have @emph{namespaces}, and have since @R{} 2.14.0.
+All packages have @emph{namespaces}, and have since @R{} 2.14.0.
 Namespaces do three things: they allow the package writer to hide
 functions and data that are meant only for internal use, they prevent
 functions from breaking when a user (or other package writer) picks a
@@ -6589,6 +6589,11 @@ Choosing files can be done interactively by @code{file.choose}: the
 Windows port has the more versatile functions @code{choose.files} and
 @code{choose.dir} and there are similar functions in the @pkg{tcltk}
 package: @code{tk_choose.files} and @code{tk_choose.dir}.
+
+Functions @code{file.show} and @code{file.edit} will display and edit
+one or more files in a way appropriate to the @R{} port, using the
+facilities of a console (such as RGui on Windows or R.app on OS X) if
+one is in use.
 
 There is some support for @emph{links} in the filesystem: see functions
 @code{file.link} and @code{Sys.readlink}.
