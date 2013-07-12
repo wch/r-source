@@ -91,14 +91,15 @@ uniroot(f, interval, \dots,
 }
 
 \value{
-  A list with five components: \code{root} and \code{f.root} give the
-  location of the root and the value of the function evaluated at that
-  point. \code{iter} and \code{estim.prec} give the number of iterations
-  used and an approximate estimated precision for \code{root}.  (If the
-  root occurs at one of the endpoints, the estimated precision is
-  \code{NA}.)
+  A list with at least four components: \code{root} and \code{f.root}
+  give the location of the root and the value of the function evaluated
+  at that point. \code{iter} and \code{estim.prec} give the number of
+  iterations used and an approximate estimated precision for
+  \code{root}.  (If the root occurs at one of the endpoints, the
+  estimated precision is \code{NA}.)
 
-  Component \code{init.it} was added in \R 3.1.0.
+  Further components may be added in future: component \code{init.it}
+  was added in \R 3.1.0.  
 }
 %\author{of \code{extendInt} and \code{check.conv}: Martin Maechler.}% originally as
 % safeUroot() in CRAN packages nor1mix and copula
