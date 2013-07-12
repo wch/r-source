@@ -6243,7 +6243,7 @@ function(x, ...)
                 strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if(length(y <- x$many_depends)) {
-          c(.pretty_format2("Depends: include the non-default packages:", y),
+          c(.pretty_format2("Depends: includes the non-default packages:", y),
             "Adding so many packages to the search path is excessive",
             "and importing selectively is preferable.")
       }
