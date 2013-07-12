@@ -78,7 +78,8 @@ vignettes: stamp-recommended
 	@(cd src/library && $(MAKE) $@)
 
 ## This needs packages built, hence 'R' dependence on 'javaconf'
-stamp-java : etc/javaconf bin/javareconf
+## javareconf gets remade often.
+stamp-java : etc/javaconf $(srcdir)/src/scripts/javareconf.in
 	@$(ECHO) "configuring Java ..."
 	@-bin/R CMD javareconf
 	@touch stamp-java
