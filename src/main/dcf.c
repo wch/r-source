@@ -39,12 +39,40 @@ static void con_cleanup(void *data)
 
 static Rboolean field_is_foldable_p(const char *, SEXP);
 
+/* Use R_alloc as this might get interrupted */
+static char *Rconn_getline2(Rconnection con)
+{
+    int c, bufsize = MAXELTSIZE, nbuf = -1;
+    char *buf;
+
+    buf = R_alloc(bufsize, sizeof(char));
+    while((c = Rconn_fgetc(con)) != R_EOF) {
+	if(nbuf+2 >= bufsize) { // allow for terminator below
+	    bufsize *= 2;
+	    char *buf2 = R_alloc(bufsize, sizeof(char));
+	    memcpy(buf2, buf, nbuf);
+	    buf = buf2;
+	}
+	if(c != '\n'){
+	    buf[++nbuf] = (char) c;
+	} else {
+	    buf[++nbuf] = '\0';
+	    break;
+	}
+    }
+    /* Make sure it is null-terminated even if file did not end with
+     *  newline.
+     */
+    if(nbuf >= 0 && buf[nbuf]) buf[++nbuf] = '\0';
+    return (nbuf == -1) ? NULL: buf;
+}
+
 SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int nwhat, nret, nc, nr, m, k, lastm, need;
     Rboolean blank_skip, field_skip = FALSE;
     int whatlen, dynwhat, buflen = 8096; // was 100, but that re-alloced often
-    char line[MAXELTSIZE], *buf;
+    char *line, *buf;
     regex_t blankline, contline, trailblank, regline, eblankline;
     regmatch_t regmatch[1];
     SEXP file, what, what2, retval, retval2, dims, dimnames;
@@ -98,7 +126,8 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     k = 0;
     lastm = -1; /* index of the field currently being recorded */
     blank_skip = TRUE;
-    while(Rconn_getline(con, line, MAXELTSIZE) >= 0) {
+    void *vmax = vmaxget();
+    while((line = Rconn_getline2(con))) {
 	if(strlen(line) == 0 ||
 	   tre_regexecb(&blankline, line, 0, 0, 0) == 0) {
 	    /* A blank line.  The first one after a record ends a new
@@ -255,6 +284,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
+    vmaxset(vmax);
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
     free(buf);
     tre_regfree(&blankline);
