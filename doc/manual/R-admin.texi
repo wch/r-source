@@ -4501,7 +4501,7 @@ run.
 
 Configuring and building @R{} both looks for a JRE and for support for
 compiling JNI programs (used by packages @CRANpkg{rJava} and
-@CRANpkg{JavaGD}); the later requires a JDK (Java SDK) and not just a
+@CRANpkg{JavaGD}); the latter requires a JDK (Java SDK) and not just a
 JRE.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
@@ -4794,7 +4794,7 @@ The notes here are for @command{gcc} set up to use the Solaris linker:
 it can also be set up to use GNU @command{ld}, but that has not been
 tested.
 
-Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.8.0
+Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.8.1
 needed
 
 @example
@@ -4822,7 +4822,7 @@ be in the
 The compilation can be tuned to a particular cpu: the @acronym{CRAN}
 check system uses @code{-mtune=niagara2}.
 
-Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.8.0
+Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.8.1
 needed
 
 @example
@@ -4835,11 +4835,11 @@ LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
 @end example
 
 @noindent
-(@code{-L/opt/csw/lib} is needed since TexLive 2011 was built using
+(@code{-L/opt/csw/lib} is needed since TeXLive was built using
 32-bit @code{gcc}, and we need @file{/opt/csw/lib} in
 @code{R_LD_LIBRARY_PATH}.)
 
-For an @cputype{amd64} target with @command{gcc}@tie{}4.8.0
+For an @cputype{amd64} target with @command{gcc}@tie{}4.8.1
 we used 
 
 @example
