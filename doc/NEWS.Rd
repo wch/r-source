@@ -73,7 +73,7 @@
       \code{size == 0} as a one-point distribution at zero.
       
       \item \code{read.dcf()} no longer has a limit of 8191 bytes per
-      line. (Wish of PR{15250}.)
+      line. (Wish of \PR{15250}.)
     }
   }
 
