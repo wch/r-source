@@ -6126,7 +6126,11 @@ function(dir)
 
     ## Check for excessive 'Depends'
     deps <- strsplit(meta["Depends"], ", *")[[1]]
-    deps <- sub("[ (].*", "", deps)
+    deps <- sub("[ (].*$", "", deps)
+    ## and seems some spaces get through
+    deps <- sub("^\\s+", "", str, perl = TRUE)
+    deps <- sub("\\s+$", "", str, perl = TRUE)
+
     deps <- setdiff(deps, c("R", "base", "datasets", "grDevices", "graphics",
                             "methods", "utils", "stats"))
     if(length(deps) > 5) out$many_depends <- deps
