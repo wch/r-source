@@ -10,17 +10,9 @@
 \section{\Rlogo CHANGES IN R 3.0.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item The macros used for the texinfo manuals have been changed to
-      work better with the incompatible changes made in texinfo 5.x.
-
       \item The \code{example()} and \code{tools::Rd2ex()} functions now
       have parameters to allow them to ignore \verb{\dontrun} markup in
       examples.  (Suggested by Peter Solymos.)
-
-      \item The included version of PCRE has been updated to 8.33.
-
-      \item The included version of \code{zlib} has been updated to
-      1.2.8, a bug-fix release.
 
       \item \code{str(x)} is considerably faster for very large lists,
       or factors with 100,000 levels, the latter as in \PR{15337}.
@@ -47,9 +39,6 @@
 
       \item Profiling now records non-inlined calls from byte compiled
       code to BUILTIN functions.
-
-      \item The included version of xz utils's \code{liblzma} has been
-      updated to 5.0.5.
 
       \item Various functions in \pkg{stats} and elsewhere that use
       non-standard evaluation are now more careful to follow the
@@ -100,12 +89,28 @@
       on a Linux system and record that value rather than the
       frequently-changing full path such as
       \file{/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64}.
-
-      Since \command{javareconf} is used when \R is installed, a
-      simplified \env{JAVA_HOME} can be supplied then.
     }
   }
 
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The macros used for the texinfo manuals have been changed to
+      work better with the incompatible changes made in \command{texinfo
+      5.x}.
+
+      \item The included version of PCRE has been updated to 8.33.
+
+      \item The included version of \code{zlib} has been updated to
+      1.2.8, a bug-fix release.
+
+      \item The included version of xz utils's \code{liblzma} has been
+      updated to 5.0.5.
+
+      \item Since \command{javareconf} (see above) is used when \R is
+      installed, a stable link for \env{JAVA_HOME} can be supplied then.
+    }
+  }
+  
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Installation is aborted immediately if a \code{LinkingTo}
@@ -138,7 +143,7 @@
   \subsection{DOCUMENTATION}{
     \itemize{
       \item \sQuote{An Introduction to R} has a new chapter on using \R
-      as a scripting language, interacting with the OS.
+      as a scripting language including interacting with the OS.
     }
   }
   
