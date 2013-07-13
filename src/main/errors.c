@@ -1696,7 +1696,7 @@ R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
     SEXP klass, rho, entry, name;
 
     if ((cptr->handlerstack != R_HandlerStack ||
-	 cptr->handlerstack != R_HandlerStack)) {
+	 cptr->restartstack != R_RestartStack)) {
 	if (IS_RESTART_BIT_SET(cptr->callflag))
 	    return;
 	else
