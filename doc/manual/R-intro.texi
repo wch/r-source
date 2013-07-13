@@ -6548,10 +6548,15 @@ list.
 running: this allows it to be used as a scripting language and that
 ability is much used by @R{} itself, for example to install packages.
 
+Because @R{}'s own scripts need to work across all platforms,
+considerable effort has gone into make the scripting facilities as
+platform-independent as is feasible.
+
 @menu
 * Files and directories::       
 * Filepaths::                   
 * System commands::             
+* Compression and Archives::    
 @end menu
 
 @node Files and directories, Filepaths, OS facilities, OS facilities
@@ -6561,16 +6566,16 @@ There are many functions to manipulate files and directories. Here are
 pointers to some of the more commonly used ones.
 
 To create an (empty) file or directory, use @code{file.create} or
-@code{create.dir}.  (These are the equivalent of the POSIX utilities
+@code{create.dir}.  (These are the analogues of the POSIX utilities
 @command{touch} and @command{mkdir}.)  For temporary files and
 directories in the @R{} session directory see @code{tempfile}.
 
 Files can be removed by either @code{file.remove} or @code{unlink}: the
-later can remove directory trees.
+latter can remove directory trees.
 
 For directory listings use @code{list.files} (also available as
 @code{dir}) or @code{list.dirs}. These can select files using a regular
-expresssion: to select by wildcards use @code{Sys.glob}.
+expression: to select by wildcards use @code{Sys.glob}.
 
 Many types of information on a filepath (including for example if it is
 a file or directory) can be found by @code{file.info}.
@@ -6578,7 +6583,7 @@ a file or directory) can be found by @code{file.info}.
 There are several ways to find out if a file `exists' (and file can
 exist on the filesystem and not be visible to the current user).
 There are functions @code{file.exists}, @code{file.access} and
-@code{file_test} with various versions of this test: @code{file.test} is
+@code{file_test} with various versions of this test: @code{file_test} is
 a version of the POSIX @command{test} command for those familiar with
 shell scripting.
 
@@ -6653,28 +6658,28 @@ use of absolute paths is safer.
 Functions @code{basename} and @code{dirname} select parts of a file
 path: the recommended way to assemble a file path from components is
 @code{file.path}.  Function @code{pathexpand} does `tilde expansion',
-substituting for home directories (the current user's, and perhaps those
-of other users).
+substituting values for home directories (the current user's, and
+perhaps those of other users).
 
-On systems with links, a single file can be referred to by many
+On filesystems with links, a single file can be referred to by many
 filepaths.  Function @code{normalizePath} will find a canonical
 filepath.
 
 Windows has the concepts of short (`8.3') and long file names:
 @code{normalizePath} will return an absolute path using long file names
-and @code{shortPathName} will return the short path name.  The latter
-does not contain spaces and uses backslash as the separator, so is
-sometimes useful for exporting names from @R{}.
+and @code{shortPathName} will return a version using short names.  The
+latter does not contain spaces and uses backslash as the separator, so
+is sometimes useful for exporting names from @R{}.
 
 File @emph{permissions} are a related topic.  @R{} has support for the
 POSIX concepts of read/write/execute permission for owner/group/all but
-this may be partially supported on the filesystem (so for example on
-Windows only read-only files (for the account running the @R{} session)
-are recognized.  Access Control Lists (ACLs) are employed on several
-filesystems, but do not have an agreed standard and @R{} has no
+this may be only partially supported on the filesystem (so for example
+on Windows only read-only files (for the account running the @R{}
+session) are recognized.  Access Control Lists (ACLs) are employed on
+several filesystems, but do not have an agreed standard and @R{} has no
 facilities to control them.  Use @code{Sys.chmod} to change permissions.
 
-@node System commands,  , Filepaths, OS facilities
+@node System commands, Compression and Archives, Filepaths, OS facilities
 @section System commands
 
 Functions @code{system} and @code{system2} are used to invoke a system
@@ -6687,12 +6692,42 @@ the API C call of that name does).  Elsewhere it invokes a shell to run
 the command: the Windows port of @R{} has a function @code{shell} to do
 that.
 
-To find out is the OS includes a command, use @code{Sys.which}, which
+To find out if the OS includes a command, use @code{Sys.which}, which
 attempts to do this in a cross-platform way (unfortunately it is not a
 standard OS service).
 
 Function @code{shQuote} will quote filepaths as needed for commands in
 the current OS.
+
+@node Compression and Archives,  , System commands, OS facilities
+@section Compression and Archives
+
+Recent versions of @R{} have extensive facilities to read and write
+compressed files, often transparently.  Reading of files in @R{} is to a
+vey large extent done by @emph{connections}, and the @code{file}
+function which is used to open a connection to a file (or a URL) and is
+able to identify the compression used from the `magic' header of the
+file.
+
+The type of compression which has been supported for longest is
+@command{gzip} compression, and that remains a good general compromise.
+Files compressed by the earlier Unix @command{compress} utility can also
+be read, but these are becoming rare.  Two other forms of compression,
+those of the @command{bzip2} and @command{xz} utilities are also
+available.  These generally achieve higher rates of compression
+(depending on the file, much higher) at the expense of slower
+decompression and much slower compression.
+
+There is some confusion between @command{xz} and @command{lzma}
+compression (see @uref{http://en.wikipedia.org/wiki/Xz} and
+@uref{http://en.wikipedia.org/wiki/LZMA}): @R{} can read files
+compressed by most versions of either.
+
+File archives are single files which contain a collection of files, the
+most common ones being `tarballs' and zip files as used to distribute
+@R{} packages.  @R{} can list and unpack both (see functions @code{untar}
+and @code{unzip}) and create both (for @command{zip} with the help of an
+external program).
 
 @node A sample session, Invoking R, OS facilities, Top
 @appendix A sample session
