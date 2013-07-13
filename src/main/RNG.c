@@ -360,13 +360,13 @@ static void GetRNGkind(SEXP seeds)
     tmp = is[0];
     /* avoid overflow here: max current value is 705 */
     if (tmp == NA_INTEGER || tmp < 0 || tmp > 1000) {
-	error(_("'.Random.seed[1]' is not a valid integer, so ignored"));
+	warning(_("'.Random.seed[1]' is not a valid integer, so ignored"));
 	goto invalid;
     }
     newRNG = (RNGtype) (tmp % 100);
     newN01 = (N01type) (tmp / 100);
     if (newN01 > KINDERMAN_RAMAGE) {
-	error(_("'.Random.seed[1]' is not a valid Normal type, so ignored"));
+	warning(_("'.Random.seed[1]' is not a valid Normal type, so ignored"));
 	goto invalid;
     }
     switch(newRNG) {
