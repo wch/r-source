@@ -309,7 +309,7 @@
       updated to 5.0.5.
 
       \item Since \command{javareconf} (see above) is used when \R is
-      installed, a stabe link for \env{JAVA_HOME} can be supplied then.
+      installed, a stable link for \env{JAVA_HOME} can be supplied then.
     }
   }
   

@@ -6128,8 +6128,8 @@ function(dir)
     deps <- strsplit(meta["Depends"], ", *")[[1]]
     deps <- sub("[ (].*$", "", deps)
     ## and seems some spaces get through
-    deps <- sub("^\\s+", "", str, perl = TRUE)
-    deps <- sub("\\s+$", "", str, perl = TRUE)
+    deps <- sub("^\\s+", "", deps, perl = TRUE)
+    deps <- sub("\\s+$", "", deps, perl = TRUE)
 
     deps <- setdiff(deps, c("R", "base", "datasets", "grDevices", "graphics",
                             "methods", "utils", "stats"))
