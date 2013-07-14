@@ -5803,8 +5803,9 @@ function(x, ...)
                         "Found the platform-specific devices:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$devices),
-                 "dev.new() is the preferred way to open a new device,",
-                 "in the unlikely event one is needed.")
+                 strwrap(paste("dev.new() is the preferred way to open a new device,",
+                               "in the unlikely event one is needed.",
+                               collapse = " ")))
     }
     out
 }

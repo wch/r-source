@@ -1286,6 +1286,7 @@ setRlibs <-
                               sprintf("tools:::.check_depdef(dir = \"%s\", WINDOWS = %s)\n", pkgdir, win))
             out8 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
+
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6) ||
             length(out7) || length(out8)) {
@@ -1305,7 +1306,8 @@ setRlibs <-
             }
             if (length(out8)) {
                 printLog0(Log, paste(c(ini, out8, ""), collapse = "\n"))
-                ini <- ""
+                if(length(grep("^Found the defunct/removed function", out8)))
+                    ini <- ""
             }
             ## All remaining checks give notes and not warnings.
             if(length(ini))
