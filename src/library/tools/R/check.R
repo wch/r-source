@@ -663,6 +663,31 @@ setRlibs <-
                 }
             }
         }
+        topfiles <- Sys.glob(file.path("inst", c("LICENCE", "LICENSE")))
+        if (length(topfiles)) {
+            ## Are these mentioned in DESCRIPTION?
+            lic <- desc["License"]
+            if(!is.na(lic)) {
+                found <- sapply(basename(topfiles),
+                                function(x) grepl(x, lic, fixed = TRUE))
+                topfiles <- topfiles[!found]
+                if (length(topfiles)) {
+                    any <- TRUE
+                    noteLog(Log)
+                    one <- (length(topfiles) == 1L)
+                    msg <- c(if(one) "File" else "Files",
+                             "\n",
+                             .format_lines_with_indent(topfiles),
+                             "\n",
+                             if(one) {
+                                 "will install at top-level and is not mentioned in the DESCRIPTION file.\n"
+                             } else {
+                                 "will install at top-level and are not mentioned in the DESCRIPTION file.\n"
+                             })
+                    printLog(Log, msg)
+                }
+            }
+        }
         if (!any) resultLog(Log, "OK")
     }
 
@@ -1239,15 +1264,17 @@ setRlibs <-
         }
 
 
-        ## Use of deprecated and defunct?
+        ## Use of deprecated, defunct and platform-specific devices?
         if(!is_base_pkg && R_check_use_codetools && R_check_depr_def) {
+            win <- !is.na(OS_type) && OS_type == "windows"
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
-                              sprintf("tools:::.check_depdef(package = \"%s\")\n", pkgname)
+                              sprintf("tools:::.check_depdef(package = \"%s\", WINDOWS = %s)\n", pkgname, win)
                           else
-                              sprintf("tools:::.check_depdef(dir = \"%s\")\n", pkgdir))
+                              sprintf("tools:::.check_depdef(dir = \"%s\", WINDOWS = %s)\n", pkgdir, win))
             out8 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
+
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6) ||
             length(out7) || length(out8)) {
@@ -1267,7 +1294,8 @@ setRlibs <-
             }
             if (length(out8)) {
                 printLog0(Log, paste(c(ini, out8, ""), collapse = "\n"))
-                ini <- ""
+                if(length(grep("^Found the defunct/removed function", out8)))
+                    ini <- ""
             }
             ## All remaining checks give notes and not warnings.
             if(length(ini))
@@ -3874,7 +3902,7 @@ setRlibs <-
                     messageLog(Log, "this is a Windows-only package, skipping installation")
                     do_install <- FALSE
                 }
-            }
+            } else OS_type <- NA
 
             check_incoming <- Sys.getenv("_R_CHECK_CRAN_INCOMING_", "NA")
             check_incoming <- if(check_incoming == "NA") as_cran else {

@@ -1976,7 +1976,7 @@ function(package, dir, file, lib.loc = NULL,
             enhances <- .get_requires_from_package_db(db, "Enhances")
             bad <- bad[!bad %in% c(depends, imports, suggests, enhances)]
             attr(bad_exprs, "undeclared") <- bad
-       }
+        }
     }
     class(bad_exprs) <- "checkFF"
     if(verbose)
@@ -2840,7 +2840,7 @@ function(dfile)
     required_fields <- c("Package", "Version", "License", "Description",
                          "Title", "Author", "Maintainer")
     if(length(i <- which(is.na(match(required_fields, names(db))) |
-                         is.na(db[required_fields]))))
+                         !nzchar(db[required_fields]))))
         out$missing_required_fields <- required_fields[i]
 
     val <- package_name <- db["Package"]
@@ -5440,7 +5440,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 ### * .check_depdef
 
 .check_depdef <-
-function(package, dir, lib.loc = NULL)
+function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
 {
     bad_depr <- c(".find.package", ".path.package", "plclust")
 
@@ -5455,7 +5455,13 @@ function(package, dir, lib.loc = NULL)
                  "zip.file.extract",
                  "real", "as.real", "is.real")
 
-    bad <- c(bad_depr, bad_def)
+    ## X11 may not work on even a Unix-alike: it needs X support
+    ## (optional) at install time and and an X server at run time.
+    bad_dev <- c("quartz", "x11", "X11")
+    if(!WINDOWS)
+        bad_dev <- c(bad_dev,  "windows", "win.graph", "win.metafile", "win.print")
+
+    bad <- c(bad_depr, bad_def, bad_dev)
     bad_closures <- character()
     found <- character()
 
@@ -5545,9 +5551,10 @@ function(package, dir, lib.loc = NULL)
     found <- sort(unique(found))
     deprecated <- found[found %in% bad_depr]
     defunct <- found[found %in% bad_def]
+    devices <- found[found %in% bad_dev]
 
     out <- list(bad_closures = bad_closures, deprecated = deprecated,
-                defunct = defunct)
+                defunct = defunct, devices = devices)
     class(out) <- "check_depdef"
     out
 }
@@ -5557,22 +5564,22 @@ function(x, ...)
 {
     out <- if(length(x$bad_closures)) {
         msg <- ngettext(length(x$bad_closures),
-                        "Found an obsolete call in the following function:",
-                        "Found an obsolete call in the following functions:"
+                        "Found an obsolete/platform-specific call in the following function:",
+                        "Found an obsolete/platform-specific call in the following functions:"
                         )
         c(strwrap(msg), .pretty_format(x$bad_closures))
     } else character()
     if(length(x$bad_S4methods)) {
         msg <- ngettext(length(x$bad_S4methods),
-                        "Found an obsolete call in methods for the following S4 generic:",
-                        "Found an obsolete call in methods for the following S4 generics:"
+                        "Found an obsolete/platform-specific call in methods for the following S4 generic:",
+                        "Found an obsolete/platform-specific call in methods for the following S4 generics:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_S4methods))
     }
     if(length(x$bad_refs)) {
         msg <- ngettext(length(x$bad_refs),
-                        "Found an obsolete call in methods for the following reference class:",
-                        "Found an obsolete call in methods for the following reference classes:"
+                        "Found an obsolete/platform-specific call in methods for the following reference class:",
+                        "Found an obsolete/platform-specific call in methods for the following reference classes:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$bad_refs))
     }
@@ -5589,6 +5596,16 @@ function(x, ...)
                         "Found the defunct/removed functions:"
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$defunct))
+    }
+    if(length(x$devices)) {
+        msg <- ngettext(length(x$devices),
+                        "Found the platform-specific device:",
+                        "Found the platform-specific devices:"
+                        )
+        out <- c(out, strwrap(msg), .pretty_format(x$devices),
+                 strwrap(paste("dev.new() is the preferred way to open a new device,",
+                               "in the unlikely event one is needed.",
+                               collapse = " ")))
     }
     out
 }
