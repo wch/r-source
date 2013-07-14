@@ -42,8 +42,6 @@
       \item \code{abbreviate()} handles without warning non-ASCII input
       strings which require no abbreviation.
 
-      \item The included version of LAPACK has been updated to 3.4.2.
-
       \item The \code{"table"} method for \code{as.data.frame()}, also
       useful as \code{as.data.frame.table()}, now passes \code{sep} and
       \code{base} arguments to \code{provideDimnames()}.
@@ -77,8 +75,10 @@
     }
   }
 
-  \subsection{INSTALLATION}{
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
+      \item The included version of LAPACK has been updated to 3.4.2.
+
       \item The minimum version for a system \code{xz} library is now
       5.0.3 (was 4.999).  This is in part to avoid 5.0.2, which can
       compress in ways other versions cannot decompress.
@@ -194,10 +194,6 @@
       \item If \code{x} is a symbol, \code{is.vector(x, "name")} now returns
       \code{TRUE}, since \code{"name"} and \code{"symbol"} should be synonyms.
       (Reported by Hervé Pagès.)
-
-      \item The parser now enforces C99 syntax for floating point
-      hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
-      unintended values for malformed constants. (\PR{15234})
 
       \item \code{is.unsorted(NA)} returns false as documented (rather than
       \code{NA}).
@@ -450,6 +446,10 @@
 
       \item \code{stem()} now discards infinite inputs rather than
       hanging.  (\PR{15376})
+
+      \item The parser now enforces C99 syntax for floating point
+      hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
+      unintended values for malformed constants. (\PR{15234})
     }
   }
 }
