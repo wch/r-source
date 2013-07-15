@@ -1,6 +1,6 @@
 % File src/library/stats/man/ts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ts}
@@ -29,7 +29,7 @@ is.ts(x)
 \arguments{
   \item{data}{a numeric vector or matrix of the observed time-series
     values. A data frame will be coerced to a numeric matrix via
-    \code{data.matrix}.}
+    \code{data.matrix}.  (See also \sQuote{Details}.)}
   \item{start}{the time of the first observation.  Either a single
     number or a vector of two integers, which specify a natural time
     unit and a (1-based) number of samples into the time unit.  See
