@@ -29,7 +29,7 @@
 \usage{
 
 rc.settings(ops, ns, args, func, ipck, S3, data, help,
-            argdb, quotes, files)
+            argdb, fuzzy, quotes, files)
 
 rc.status()
 rc.getOption(name)
@@ -44,7 +44,7 @@ rc.options(\dots)
 }
 
 \arguments{
-  \item{ops, ns, args, func, ipck, S3, data, help, argdb, quotes, files}{
+  \item{ops, ns, args, func, ipck, S3, data, help, argdb, fuzzy, quotes, files}{
 
     logical, turning some optional completion features on and off.
 
@@ -92,6 +92,11 @@ rc.options(\dots)
         already included, and more can be added by the user through the
         unexported function \code{.addFunctionInfo} (see below).  }
 
+      \item{\code{fuzzy}:}{ Enables fuzzy matching, where close but
+	non-exact matches (e.g., with different case) are considered if
+	no exact matches are found.  This feature is experimental and
+	the details can change.  }
+
       \item{\code{quotes}:}{ Enables completion in \R code when inside
         quotes.  This normally leads to filename completion, but can be
         otherwise depending on context (for example, when the open quote
@@ -105,10 +110,10 @@ rc.options(\dots)
 
     }
 
-    All settings are turned on by default except \code{ipck} and
-    \code{func}.  Turn more off if your CPU cycles are valuable; you
-    will still retain basic completion on names of objects in the search
-    list.  See below for additional details.
+    All settings are turned on by default except \code{ipck},
+    \code{func}, and \code{fuzzy}.  Turn more off if your CPU cycles are
+    valuable; you will still retain basic completion on names of objects
+    in the search list.  See below for additional details.
 
   }
   \item{name, \dots}{ user-settable options.  Currently valid names are

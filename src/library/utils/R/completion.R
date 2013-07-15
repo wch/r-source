@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 # Copyright (C) 2006  Deepayan Sarkar
-#               2006-2012  The R Core Team
+#               2006-2013  The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,6 +45,42 @@
 ### careful because 0 length components in sprintf will cause errors.
 
 
+## [July 2013] First attempt to support fuzzy matching, if
+## rc.settings(fuzzy=TRUE), based on suggestion from Rasmus Baath.
+## Initially, this replaces use of grep() to find matches by
+## findMatches(), which behaves differently depending on the 'fuzzy'
+## setting.  This does not affect basic object name completion, which
+## is done using apropos().  For that, we need to write a fuzzy
+## version of apropos (which is not that difficult; just loop through
+## everything in the search path).
+
+findExactMatches <- function(pattern, values)
+{
+    grep(pattern, values, value = TRUE)
+}
+
+findFuzzyMatches <- function(pattern, values)
+{
+    ## Try exact matches first
+    ans <- findExactMatches(pattern, values)
+    if (length(ans) == 0)
+        agrep(pattern, values, max.distance = 2,
+              ignore.case = TRUE, fixed = FALSE, value = TRUE)
+    else
+        ans
+}
+
+findMatches <- function(pattern, values)
+{
+    if (.CompletionEnv$settings[["fuzzy"]])
+        findFuzzyMatches(pattern, values)
+    else 
+        findExactMatches(pattern, values)
+}
+
+
+
+
 ## generic and built-in methods to generate completion after $
 
 .DollarNames <- function(x, pattern)
@@ -52,15 +88,18 @@
 
 .DollarNames.default <- function(x, pattern = "") {
     if (is.atomic(x) || is.symbol(x)) character()
-    else grep(pattern, names(x), value = TRUE)
+    else findMatches(pattern, names(x))
 }
 
 .DollarNames.list <- function(x, pattern = "") {
-    grep(pattern, names(x), value = TRUE)
+    findMatches(pattern, names(x))
 }
 
 .DollarNames.environment <- function(x, pattern = "") {
-    ls(x, all.names = TRUE, pattern = pattern)
+    if (!.CompletionEnv$settings[["fuzzy"]])
+        ls(x, all.names = TRUE, pattern = pattern) # more efficient
+    else 
+        findMatches(pattern, ls(x, all.names = TRUE))
 }
 
 ## if (is.environment(object))
@@ -80,7 +119,7 @@
 
 ## modifies settings:
 
-rc.settings <- function(ops, ns, args, func, ipck, S3, data, help, argdb, quotes, files)
+rc.settings <- function(ops, ns, args, func, ipck, S3, data, help, argdb, fuzzy, quotes, files)
 {
     if (length(match.call()) == 1) return(unlist(.CompletionEnv[["settings"]]))
     checkAndChange <- function(what, value)
@@ -101,10 +140,9 @@ rc.settings <- function(ops, ns, args, func, ipck, S3, data, help, argdb, quotes
     if (!missing(argdb)) checkAndChange("argdb", argdb)
     if (!missing(files)) checkAndChange("files", files)
     if (!missing(quotes))checkAndChange("quotes", quotes)
+    if (!missing(fuzzy)) checkAndChange("fuzzy", fuzzy)
     invisible()
 }
-
-
 
 
 
@@ -279,8 +317,8 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
                        suffix
                    else
                    {
-                       grep(sprintf("^%s", makeRegexpSafe(suffix)),
-                            methods::slotNames(object), value = TRUE)
+                       findMatches(sprintf("^%s", makeRegexpSafe(suffix)),
+                                   methods::slotNames(object))
                    }
                } else suffix
            },
@@ -292,8 +330,8 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
                        suffix
                    else
                    {
-                       grep(sprintf("^%s", makeRegexpSafe(suffix)),
-                            nse, value = TRUE)
+                       findMatches(sprintf("^%s", makeRegexpSafe(suffix)),
+                                   nse)
                    }
                } else suffix
            },
@@ -305,9 +343,13 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
                        suffix
                    else
                    {
-                       ls(ns,
-                          all.names = TRUE,
-                          pattern = sprintf("^%s", makeRegexpSafe(suffix)))
+                       if (!.CompletionEnv$settings[["fuzzy"]])
+                           ls(ns,
+                              all.names = TRUE,
+                              pattern = sprintf("^%s", makeRegexpSafe(suffix)))
+                       else
+                           findMatches(sprintf("^%s", makeRegexpSafe(suffix)),
+                                       ls(ns, all.names = TRUE))
                    }
                } else suffix
            },
@@ -365,7 +407,7 @@ matchAvailableTopics <- function(prefix, text)
                envir = .CompletionEnv)
     }
     aliases <- .CompletionEnv[["help_topics"]]
-    ans <- grep(sprintf("^%s", makeRegexpSafe(text)), aliases, value = TRUE)
+    ans <- findMatches(sprintf("^%s", makeRegexpSafe(text)), aliases)
     if (nzchar(prefix)) {
         tmp <- grep(sprintf("-%s$", prefix), ans, value = TRUE)
         if (length(tmp)) substring(tmp, 1, nchar(tmp) - nchar(prefix) - 1L)
@@ -378,10 +420,6 @@ matchAvailableTopics <- function(prefix, text)
 
 ## this is for requests of the form ?suffix[TAB] or prefix?suffix[TAB]
 
-## can be improved when prefix is non-trivial, but that is rarely used
-## (on the other hand, can be useful for exploring S4 methods; but
-## usage of ? needs to be fixed in R first).  Anyway, that case is not
-## currently handled
 
 helpCompletions <- function(prefix = "", suffix)
 {
@@ -444,20 +482,17 @@ specialCompletions <- function(text, spl)
 
 keywordCompletions <- function(text)
 {
-    grep(sprintf("^%s", makeRegexpSafe(text)),
-         c("NULL", "NA", "TRUE", "FALSE", "Inf", "NaN",
-           "NA_integer_", "NA_real_", "NA_character_", "NA_complex_",
-           "repeat ", "in ", "next ", "break ", "else "),
-         value = TRUE)
+    findMatches(sprintf("^%s", makeRegexpSafe(text)),
+                c("NULL", "NA", "TRUE", "FALSE", "Inf", "NaN",
+                  "NA_integer_", "NA_real_", "NA_character_", "NA_complex_",
+                  "repeat ", "in ", "next ", "break ", "else "))
 }
 
 
 
 
 ## 'package' environments in the search path.  These will be completed
-## with a :: IIRC, that works even if there's no namespace, but I
-## haven't actually checked.
-
+## with a ::
 
 
 attachedPackageCompletions <- function(text, add = rc.getOption("package.suffix"))
@@ -466,9 +501,8 @@ attachedPackageCompletions <- function(text, add = rc.getOption("package.suffix"
     {
         s <- grep("^package", search(), value = TRUE)
         comps <-
-            grep(sprintf("^%s", makeRegexpSafe(text)),
-                 substr(s, 9L, 1000000L),
-                 value = TRUE)
+            findMatches(sprintf("^%s", makeRegexpSafe(text)),
+                        substr(s, 9L, 1000000L))
         if (length(comps) && !is.null(add))
             sprintf("%s%s", comps, add)
         else
@@ -492,7 +526,11 @@ normalCompletions <-
     if (text == "") character() ## too many otherwise
     else
     {
-        comps <- apropos(sprintf("^%s", makeRegexpSafe(text)), ignore.case = FALSE)
+        comps <-
+            if (.CompletionEnv$settings[["fuzzy"]])
+                apropos(sprintf("^%s", makeRegexpSafe(text)), ignore.case = TRUE)
+            else 
+                apropos(sprintf("^%s", makeRegexpSafe(text)), ignore.case = FALSE)
         if (.CompletionEnv$settings[["func"]] && check.mode && !is.null(add.fun))
         {
             which.function <- sapply(comps, function(s) exists(s, mode = "function"))
@@ -647,8 +685,8 @@ specialFunctionArgs <- function(fun, text)
            require = {
                if (.CompletionEnv$settings[["ipck"]])
                {
-                   grep(sprintf("^%s", makeRegexpSafe(text)),
-                        rownames(installed.packages()), value = TRUE)
+                   findMatches(sprintf("^%s", makeRegexpSafe(text)),
+                               rownames(installed.packages()))
                }
                else character()
            },
@@ -656,8 +694,8 @@ specialFunctionArgs <- function(fun, text)
            data = {
                if (.CompletionEnv$settings[["data"]])
                {
-                   grep(sprintf("^%s", makeRegexpSafe(text)),
-                        data()$results[, "Item"], value = TRUE)
+                   findMatches(sprintf("^%s", makeRegexpSafe(text)),
+                               data()$results[, "Item"])
                }
                else character()
            },
@@ -684,7 +722,7 @@ functionArgs <-
                        error = function(e) {}))
     if (S4methods) warning("cannot handle S4 methods yet")
     allArgs <- unique(unlist(lapply(fun, argNames)))
-    ans <- grep(sprintf("^%s", makeRegexpSafe(text)), allArgs, value = TRUE)
+    ans <- findMatches(sprintf("^%s", makeRegexpSafe(text)), allArgs)
     if (length(ans) && !is.null(add.args))
         ans <- sprintf("%s%s", ans, add.args)
     c(specialFunArgs, ans)
@@ -1220,7 +1258,7 @@ assign("settings",
        list(ops = TRUE, ns = TRUE,
             args = TRUE, func = FALSE,
             ipck = FALSE, S3 = TRUE, data = TRUE,
-            help = TRUE, argdb = TRUE,
+            help = TRUE, argdb = TRUE, fuzzy = FALSE,
             files = TRUE, # FIXME: deprecate in favour of quotes
             quotes = TRUE),
        env = .CompletionEnv)
