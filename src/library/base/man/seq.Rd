@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{seq}
@@ -39,6 +39,9 @@ seq_len(length.out)
   \item{along.with}{take the length from the length of this argument.}
 }
 \details{
+  Numerical inputs should all be \link{finite} (that is, not infinite,
+  \code{\link{NaN}} or \code{NA}).
+
   The interpretation of the unnamed arguments of \code{seq} and
   \code{seq.int} is \emph{not} standard, and it is recommended always to
   name the arguments when programming.

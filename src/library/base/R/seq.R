@@ -24,8 +24,10 @@ seq.default <-
 {
     if((One <- nargs() == 1L) && !missing(from)) {
 	lf <- length(from)
-	return(if(mode(from) == "numeric" && lf == 1L) 1L:from else
-	       if(lf) 1L:lf else integer())
+	return(if(mode(from) == "numeric" && lf == 1L) {
+            if(!is.finite(from)) stop("'from' cannot be NA, NaN or infinite")
+            1L:from
+        } else if(lf) 1L:lf else integer())
     }
     if(!missing(along.with)) {
 	length.out <- length(along.with)
@@ -48,6 +50,10 @@ seq.default <-
 		domain = NA)
     if (!missing(from) && length(from) != 1L) stop("'from' must be of length 1")
     if (!missing(to) && length(to) != 1L) stop("'to' must be of length 1")
+    if (!missing(from) && !is.finite(from))
+        stop("'from' cannot be NA, NaN or infinite")
+    if (!missing(to) && !is.finite(to))
+        stop("'to' cannot be NA, NaN or infinite")
     if(is.null(length.out))
 	if(missing(by))
 	    from:to

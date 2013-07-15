@@ -25,9 +25,10 @@
 \usage{
 is.finite(x)
 is.infinite(x)
+is.nan(x)
+
 Inf
 NaN
-is.nan(x)
 }
 \arguments{
   \item{x}{\R object to be tested: the default methods handle atomic
