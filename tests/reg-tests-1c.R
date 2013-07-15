@@ -118,21 +118,26 @@ stopifnot(!is.object(z), is.null(oldClass(z)))
 ## PR15219
 val <- sqrt(pi)
 fun <- function(x) (-log(x))^(-1/2)
-(res <- integrate(fun, 0, 1, rel.tol=1e-4))
+(res <- integrate(fun, 0, 1, rel.tol = 1e-4))
 stopifnot(abs(res$value - val) < res$abs.error)
-(res <- integrate(fun, 0, 1, rel.tol=1e-6))
+(res <- integrate(fun, 0, 1, rel.tol = 1e-6))
 stopifnot(abs(res$value - val) < res$abs.error)
-res <- integrate(fun, 0, 1, rel.tol=1e-8)
+res <- integrate(fun, 0, 1, rel.tol = 1e-8)
 stopifnot(abs(res$value - val) < res$abs.error)
 
 fun <- function(x) x^(-1/2)*exp(-x)
-(res <- integrate(fun, 0, Inf, rel.tol=1e-4))
+(res <- integrate(fun, 0, Inf, rel.tol = 1e-4))
 stopifnot(abs(res$value - val) < res$abs.error)
-(res <- integrate(fun, 0, Inf, rel.tol=1e-6))
+(res <- integrate(fun, 0, Inf, rel.tol = 1e-6))
 stopifnot(abs(res$value - val) < res$abs.error)
-(res <- integrate(fun, 0, Inf, rel.tol=1e-8))
+(res <- integrate(fun, 0, Inf, rel.tol = 1e-8))
 stopifnot(abs(res$value - val) < res$abs.error)
 ## sometimes exceeded reported error in 2.12.0 - 3.0.1
+
+
+## Unary + should coerce
+x <- c(TRUE, FALSE, NA, TRUE)
+## +x was logical in R <= 3.0.1
 
 
 proc.time()

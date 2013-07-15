@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-15 r63300) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-15 r63326) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin12.4.0/x86_64 (64-bit)
 
@@ -3292,7 +3292,9 @@ NULL
 [1] 1
 > dimnames(x) <- list(some=letters[1:5])
 > x[]
-[1] 1 2 3 4 5
+some
+a b c d e 
+1 2 3 4 5 
 > x[2:3]
 some
 b c 
@@ -7107,4 +7109,33 @@ Error in seq.int(to = NaN) : 'to' cannot be NA, NaN or infinite
 Error in seq.int(NaN, NaN) : 'from' cannot be NA, NaN or infinite
 > ## R 3.0.1 gave messages from ':' or about negative-length vectors.
 > 
+> 
+> ## Some dimnames were lost from 1D arrays: PR#15301
+> x <- array(0:2, dim=3, dimnames=list(d1=LETTERS[1:3]))
+> x
+d1
+A B C 
+0 1 2 
+> x[]
+d1
+A B C 
+0 1 2 
+> x[3:1]
+d1
+C B A 
+2 1 0 
+> x <- array(0, dimnames=list(d1="A"))
+> x
+d1
+A 
+0 
+> x[]
+d1
+A 
+0 
+> x[drop = FALSE]
+d1
+A 
+0 
+> ## lost dimnames in 3.0.1
 > 

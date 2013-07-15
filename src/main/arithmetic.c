@@ -299,6 +299,7 @@ static double logbase(double x, double base)
 
 SEXP R_unary(SEXP, SEXP, SEXP);
 SEXP R_binary(SEXP, SEXP, SEXP, SEXP);
+static SEXP logical_unary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP integer_unary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP real_unary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP real_binary(ARITHOP_TYPE, SEXP, SEXP);
@@ -534,6 +535,7 @@ SEXP attribute_hidden R_unary(SEXP call, SEXP op, SEXP s1)
     ARITHOP_TYPE operation = (ARITHOP_TYPE) PRIMVAL(op);
     switch (TYPEOF(s1)) {
     case LGLSXP:
+	return logical_unary(operation, s1, call);
     case INTSXP:
 	return integer_unary(operation, s1, call);
     case REALSXP:
@@ -542,6 +544,33 @@ SEXP attribute_hidden R_unary(SEXP call, SEXP op, SEXP s1)
 	return complex_unary(operation, s1, call);
     default:
 	errorcall(call, _("invalid argument to unary operator"));
+    }
+    return s1;			/* never used; to keep -Wall happy */
+}
+
+static SEXP logical_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
+{
+    R_xlen_t i, n;
+    int x;
+    SEXP ans;
+
+    switch (code) {
+    case PLUSOP:
+	ans = duplicate(s1);
+	SET_TYPEOF(ans, INTSXP);
+	return ans;
+    case MINUSOP:
+	ans = duplicate(s1);
+	SET_TYPEOF(ans, INTSXP);
+	n = XLENGTH(s1);
+	for (i = 0; i < n; i++) {
+	    x = INTEGER(s1)[i];
+	    INTEGER(ans)[i] = (x == NA_INTEGER) ?
+		NA_INTEGER : ((x == 0.0) ? 0 : -x);
+	}
+	return ans;
+    default:
+	errorcall(call, _("invalid unary operator"));
     }
     return s1;			/* never used; to keep -Wall happy */
 }

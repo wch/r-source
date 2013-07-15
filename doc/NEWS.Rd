@@ -458,7 +458,7 @@
       hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
       unintended values for malformed constants. (\PR{15234})
 
-      \item \code{model.matrix()} now works with very long lhs
+      \item \code{model.matrix()} now works with very long LHS
       names (more than 500 bytes).  (\PR{15377})
 
       \item \code{integrate()} reverts to the pre-2.12.0 behaviour.
@@ -469,6 +469,11 @@
 
       \item \R is now better protected against people trying to interact
       with the console in startup code.  (\PR{15325})
+      
+      \item Subsetting 1D arrays often lost dimnames (\PR{15301}).
+
+      \item Unary \code{+} on a logical vector did not coerce to
+      integer, although unary \code{-} did.
     }
   }
 }

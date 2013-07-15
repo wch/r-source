@@ -2724,3 +2724,14 @@ try(seq.int(to = NaN))
 try(seq.int(NaN, NaN))
 ## R 3.0.1 gave messages from ':' or about negative-length vectors.
 
+
+## Some dimnames were lost from 1D arrays: PR#15301
+x <- array(0:2, dim=3, dimnames=list(d1=LETTERS[1:3]))
+x
+x[]
+x[3:1]
+x <- array(0, dimnames=list(d1="A"))
+x
+x[]
+x[drop = FALSE]
+## lost dimnames in 3.0.1
