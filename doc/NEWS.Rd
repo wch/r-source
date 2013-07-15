@@ -259,7 +259,10 @@
       (\PR{15219})
 
       \item \code{strptime()} now handles \samp{\%W} fields with value
-      0. (\PR{15915}) 
+      0. (\PR{15915})
+
+      \item \R is now better protected against people trying to interact
+      with the console in startup code.  (\PR{15325})
     }
   }
 }

@@ -315,7 +315,6 @@ static unsigned char DLLbuf[CONSOLE_BUFFER_SIZE+1], *DLLbufp;
 
 void R_ReplDLLinit(void)
 {
-    R_IoBufferInit(&R_ConsoleIob);
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     R_IoBufferWriteReset(&R_ConsoleIob);
@@ -847,7 +846,7 @@ void setup_Rmainloop(void)
        user's profile (in that order).  If there is an error, we
        drop through to further processing.
     */
-
+    R_IoBufferInit(&R_ConsoleIob);
     R_LoadProfile(R_OpenSysInitFile(), baseEnv);
     /* These are the same bindings, so only lock them once */
     R_LockEnvironment(R_BaseNamespace, TRUE);
@@ -980,7 +979,6 @@ void run_Rmainloop(void)
 {
     /* Here is the real R read-eval-loop. */
     /* We handle the console until end-of-file. */
-    R_IoBufferInit(&R_ConsoleIob);
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     R_ReplConsole(R_GlobalEnv, 0, 0);
