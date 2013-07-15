@@ -254,6 +254,9 @@
 
       \item \code{model.matrix()} now works with very long lhs
       names (more than 500 bytes).  (\PR{15377})
+
+      \item \code{integrate()} reverts to the pre-2.12.0 behaviour.
+      (\PR{15219})
     }
   }
 }
