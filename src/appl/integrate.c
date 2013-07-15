@@ -688,7 +688,7 @@ standard fortran subroutine
 		maxerr = iord[nrmax];
 		errmax = elist[maxerr];
 		if (fabs(blist[maxerr] - alist[maxerr]) > small) {
-		    continue;
+		    goto L90;
 		}
 		++nrmax;
 		/* L50: */
@@ -729,6 +729,8 @@ L70:
 	extrap = FALSE;
 	small *= .5;
 	erlarg = errsum;
+ L90:
+	;
     }
 
 /* L100:     set final result and error estimate. */
@@ -1390,7 +1392,7 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 		maxerr = iord[nrmax];
 		errmax = elist[maxerr];
 		if (fabs(blist[maxerr] - alist[maxerr]) > small) {
-		    continue;
+		    goto L90;
 		}
 		++nrmax;
 		/* L50: */
@@ -1430,6 +1432,8 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 	extrap = FALSE;
 	small *= .5;
 	erlarg = errsum;
+ L90:
+	;
     }
 
 
