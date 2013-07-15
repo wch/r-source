@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -29,7 +29,8 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 \arguments{
   \item{x}{an atomic numerical or character object, possibly
     \code{\link{complex}} only for \code{prettyNum()}, typically a
-    vector of real numbers.}
+    vector of real numbers.  Classed objects should be used only
+    exceptionally (see \sQuote{Value}).}
 
   \item{digits}{the desired number of digits after the decimal
     point (\code{format = "f"}) or \emph{significant} digits
@@ -112,7 +113,9 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 }
 \value{
   A character object of same size and attributes as \code{x}, in the
-  current locale's encoding.
+  current locale's encoding.  Because the attribute include any class,
+  this can create invalid results if applied to a classed object.
+  
   Unlike \code{\link{format}}, each number is formatted individually.
   Looping over each element of \code{x}, the C function
   \code{sprintf(\dots)} is called for numeric inputs (inside the C
