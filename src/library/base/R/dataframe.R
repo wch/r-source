@@ -566,8 +566,10 @@ data.frame <-
         ## added in 1.8.0
         if(anyDuplicated(cols)) names(y) <- make.unique(cols)
         ## since we have not touched the rows, copy over the raw row.names
-	return(structure(y, class = oldClass(x),
-                         row.names = .row_names_info(x, 0L)))
+        ## Claimed at one time at least one fewer copies: PR#15274
+        attr(y, "row.names") <- .row_names_info(x, 0L)
+        attr(y, "class") <- oldClass(x)
+        return(y)
     }
 
     if(missing(i)) { # df[, j] or df[ , ]
@@ -591,9 +593,12 @@ data.frame <-
         nrow <- .row_names_info(x, 2L)
         if(drop && !mdrop && nrow == 1L)
             return(structure(y, class = NULL, row.names = NULL))
-        else
-            return(structure(y, class = oldClass(x),
-                             row.names = .row_names_info(x, 0L)))
+        else {
+            ## Claimed at one time at least one fewer copies: PR#15274
+            attr(y, "class") <- oldClass(x)
+            attr(y, "row.names") <- .row_names_info(x, 0L)
+            return(y)
+        }
     }
 
     ### df[i, j] or df[i , ]
