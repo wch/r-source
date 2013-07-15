@@ -466,6 +466,14 @@ static SEXP La_zgecon(SEXP A, SEXP norm)
 		     /* iwork: */(int *) R_alloc(n, sizeof(int)),
 		     &info);
     if (info) {
+	if (info < 0) {
+	    UNPROTECT(1);
+	    error(_("error [%d] from Lapack 'zgetrf()'"), info);
+	} else {
+	    REAL(val)[0] = 0.; /* rcond = 0 <==> singularity */
+	    UNPROTECT(1);
+	    return val;
+	}
 	UNPROTECT(1);
 	error(_("error [%d] from Lapack 'zgetrf()'"), info);
     }
