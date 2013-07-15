@@ -92,7 +92,7 @@ FORCE:
 	  $(ECHO) $(ECHO_N) \
 	    "  comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)" >> $@.log; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) >> $@.log \
-	    || (cat $@.log && rm @.log && exit 1); \
+	    || (cat $@.log && rm $@.log && exit 1); \
 	  mv $@.fail $@; \
 	  $(ECHO) "$(ECHO_T) OK" >> $@.log; \
 	fi
