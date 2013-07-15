@@ -107,4 +107,12 @@ B <- B + 0i
 rcond(B)
 ## gave error message (OK) in R 3.0.1: now returns 0 as in real case.
 
+
+## Misuse of formatC as in PR#15303
+days <- as.Date(c("2012-02-02", "2012-03-03", "2012-05-05"))
+(z <- formatC(days))
+stopifnot(!is.object(z), is.null(oldClass(z)))
+## used to copy over class in R < 3.1.0.
+
+
 proc.time()

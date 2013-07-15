@@ -538,7 +538,8 @@ plot.ts <-
 	    if(do.lab)
 		text(xy, labels =
 		     if(is.character(xy.labels)) xy.labels
-		     else if(all(tsp(x) == tsp(y))) formatC(time(x), width = 1)
+		     else if(all(tsp(x) == tsp(y)))
+                         formatC(unclass(time(x)), width = 1)
 		     else seq_along(xy$x),
 		     col = col, cex = cex)
 	    if(xy.lines)
@@ -558,10 +559,10 @@ plot.ts <-
 	    k <- ncol(x)
 	    tx <- time(x)
 	    xy <- xy.coords(x = matrix(rep.int(tx, k), ncol = k),
-			    y = x, log=log)
+			    y = x, log = log)
 	    xy$x <- tx
 	}
-	else xy <- xy.coords(x, NULL, log=log)
+	else xy <- xy.coords(x, NULL, log = log)
 	if(is.null(xlim)) xlim <- range(xy$x)
 	if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
 	plot.new()
