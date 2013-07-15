@@ -746,8 +746,12 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(One && from != R_MissingArg) {
 	lf = length(from);
-	if(lf == 1 && (TYPEOF(from) == INTSXP || TYPEOF(from) == REALSXP))
-	    ans = seq_colon(1.0, asReal(from), call);
+	if(lf == 1 && (TYPEOF(from) == INTSXP || TYPEOF(from) == REALSXP)) {
+	    double rfrom = asReal(from);
+	    if (!R_FINITE(rfrom))
+		errorcall(call, "'from' cannot be NA, NaN or infinite");
+	    ans = seq_colon(1.0, rfrom, call);
+	}
 	else if (lf)
 	    ans = seq_colon(1.0, (double)lf, call);
 	else
@@ -776,6 +780,10 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if(length(from) != 1) error("'from' must be of length 1");
 	if(to == R_MissingArg) rto = 1.0;
 	else if(length(to) != 1) error("'to' must be of length 1");
+	if (!R_FINITE(rfrom))
+	    errorcall(call, "'from' cannot be NA, NaN or infinite");
+	if (!R_FINITE(rto))
+	    errorcall(call, "'to' cannot be NA, NaN or infinite");
 	if(by == R_MissingArg)
 	    ans = seq_colon(rfrom, rto, call);
 	else {

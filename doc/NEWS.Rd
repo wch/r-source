@@ -50,6 +50,9 @@
       encountered in the workspace it is ignored with a warning rather
       than giving an error.  (This allows \R itself to rely on a working
       RNG, e.g. to choose a random port.)
+      
+      \item \code{seq()} and \code{seq.int()} give more explicit error
+      messages if called with invalid (e.g. \code{NaN}) inputs.
     }
   }
 
