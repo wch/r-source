@@ -257,6 +257,9 @@
 
       \item \code{integrate()} reverts to the pre-2.12.0 behaviour.
       (\PR{15219})
+
+      \item \code{strptime()} now handles \samp{\%W} fields with value
+      0. (\PR{15915}) 
     }
   }
 }
