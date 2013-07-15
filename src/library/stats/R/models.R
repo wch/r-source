@@ -490,8 +490,10 @@ model.matrix.default <- function(object, data = environment(object),
     if (is.null(attr(data, "terms")))
 	data <- model.frame(object, data, xlev=xlev)
     else {
-	reorder <- match(sapply(attr(t,"variables"),deparse,
-                                width.cutoff=500)[-1L],
+        ## need complete deparse, PR#15377
+        deparse2 <- function(x)
+            paste(deparse(x, width.cutoff = 500L), collapse = " ")
+	reorder <- match(sapply(attr(t, "variables"), deparse2)[-1L],
                          names(data))
 	if (any(is.na(reorder)))
 	    stop("model frame and formula mismatch in model.matrix()")
@@ -602,7 +604,9 @@ makepredictcall.default  <- function(var, call)
 
 .getXlevels <- function(Terms, m)
 {
-    xvars <- sapply(attr(Terms, "variables"), deparse, width.cutoff=500)[-1L]
+    deparse2 <- function(x)
+        paste(deparse(x, width.cutoff = 500L), collapse = " ")
+    xvars <- sapply(attr(Terms, "variables"), deparse2)[-1L]
     if((yvar <- attr(Terms, "response")) > 0) xvars <- xvars[-yvar]
     if(length(xvars)) {
         xlev <- lapply(m[xvars], 

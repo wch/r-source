@@ -92,10 +92,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
             ## ww = index to rows in the data, selecting one of each unique
             ##        predictor value
             if (is.fac[i]) {
-                ff <- mf[, nmt[i]]
-                if (!is.null(model$na.action))
-                    ff <- naresid(model$na.action, ff)
-                xx <- ff[[1L]]  # data frame to variable
+                ## PR#15344
+                xx <- mf[, nmt[i]]
+                if (!is.null(use.rows)) xx <- xx[use.rows]
                 ## "nomatch' in case there is a level not in the data
                 ww <- match(levels(xx), xx, nomatch = 0L)
             }

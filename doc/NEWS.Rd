@@ -251,6 +251,9 @@
 
       \item \code{stem()} now discards infinite inputs rather than
       hanging.  (\PR{15376})
+
+      \item \code{model.matrix()} now works with very long lhs
+      names (more than 500 bytes).  (\PR{15377})
     }
   }
 }
