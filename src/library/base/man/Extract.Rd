@@ -113,11 +113,13 @@ x$i <- value
   \emph{subassignment}) then that part of \code{x} is set to the value
   of the right hand side of the assignment.  In this case no partial
   matching of character indices is done, and the left-hand-side is
-  coerced as needed to accept the values.  Attributes are preserved
-  (although \code{names}, \code{dim} and \code{dimnames} will be
-  adjusted suitably).  Subassignment is done sequentially, so if an
-  index is specified more than once the latest assigned value for an
-  index will result.
+  coerced as needed to accept the values.  For vectors, the answer will
+  be of the higher of the types of \code{x} and \code{value} in the
+  hierarchy raw < logical < integer < double < complex < character <
+  list < expression.  Attributes are preserved (although \code{names},
+  \code{dim} and \code{dimnames} will be adjusted suitably).
+  Subassignment is done sequentially, so if an index is specified more
+  than once the latest assigned value for an index will result.
 
   It is an error to apply any of these operators to an object which is
   not subsettable (e.g. a function).
