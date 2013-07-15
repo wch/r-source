@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-06 r63204) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-15 r63300) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin12.4.0/x86_64 (64-bit)
 
@@ -7012,6 +7012,7 @@ $`a.b:c`
 [1] "255 "   "1000 "  "30000 "
 > ## *values* were cutoff when printed
 > 
+> 
 > ## allows deparse limits to be set
 > form <- reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + reallylongnamex2 + reallylongnamex3
 > form
@@ -7027,12 +7028,14 @@ reallylongnamey ~ reallylongnamex0 + reallylongnamex1 +
 > options(op)
 > ## fixed to 60 in R 2.15.x
 > 
+> 
 > ## PR#15179: user defined binary ops were not deparsed properly
 > quote( `%^%`(x, `%^%`(y,z)) )
 x %^% (y %^% z)
 > quote( `%^%`(x) )
 `%^%`(x)
 > ##
+> 
 > 
 > ## Anonymous function calls were not deparsed properly
 > substitute(f(x), list(f = function(x) x + 1))
@@ -7050,6 +7053,7 @@ a[n](x)
 g(y)(x)
 > ## The first three need parens, the last three don't.
 > 
+> 
 > ## PR#15247 : str() on invalid data frame names (where print() works):
 > d <- data.frame(1:3, "B", 4); names(d) <- c("A", "B\xba","C\xabcd")
 > str(d)
@@ -7059,12 +7063,14 @@ g(y)(x)
  $ C«cd: num  4 4 4
 > ## gave an error in R <= 3.0.0
 > 
+> 
 > ## PR#15299 : adding a simple vector to a classed object produced a bad result:
 > 1:2 + table(1:2)
 
 1 2 
 2 3 
 > ## Printed the class attribute in R <= 3.0.0
+> 
 > 
 > ## PR#15311 : regmatches<- mishandled regexpr results.
 >   x <- c('1', 'B', '3')
@@ -7073,6 +7079,7 @@ g(y)(x)
 >   print(x)
 [1] "A" "B" "C"
 > ## Gave a warning and a wrong result up to 3.0.1
+> 
 > 
 > ## Bad warning found by Radford Neal
 >   saveopt <- options(warnPartialMatchDollar=TRUE)
@@ -7083,4 +7090,21 @@ Warning message:
 In pl$ab : partial match of 'ab' to 'abc'
 >   if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
 > ## 'abc' was just ''
+> 
+> 
+> ## seq() with NaN etc inputs now gives explicit error messages
+> try(seq(NaN))
+Error in seq.default(NaN) : 'from' cannot be NA, NaN or infinite
+> try(seq(to = NaN))
+Error in seq.default(to = NaN) : 'to' cannot be NA, NaN or infinite
+> try(seq(NaN, NaN))
+Error in seq.default(NaN, NaN) : 'from' cannot be NA, NaN or infinite
+> try(seq.int(NaN))
+Error in seq.int(NaN) : 'from' cannot be NA, NaN or infinite
+> try(seq.int(to = NaN))
+Error in seq.int(to = NaN) : 'to' cannot be NA, NaN or infinite
+> try(seq.int(NaN, NaN))
+Error in seq.int(NaN, NaN) : 'from' cannot be NA, NaN or infinite
+> ## R 3.0.1 gave messages from ':' or about negative-length vectors.
+> 
 > 

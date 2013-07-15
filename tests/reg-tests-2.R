@@ -2660,6 +2660,7 @@ lns <- capture.output(
 sub("^ +", '', lns[2* 1:3])
 ## *values* were cutoff when printed
 
+
 ## allows deparse limits to be set
 form <- reallylongnamey ~ reallylongnamex0 + reallylongnamex1 + reallylongnamex2 + reallylongnamex3
 form
@@ -2670,10 +2671,12 @@ form
 options(op)
 ## fixed to 60 in R 2.15.x
 
+
 ## PR#15179: user defined binary ops were not deparsed properly
 quote( `%^%`(x, `%^%`(y,z)) )
 quote( `%^%`(x) )
 ##
+
 
 ## Anonymous function calls were not deparsed properly
 substitute(f(x), list(f = function(x) x + 1))
@@ -2684,14 +2687,17 @@ substitute(f(x), list(f = quote(a[n])))
 substitute(f(x), list(f = quote(g(y))))
 ## The first three need parens, the last three don't.
 
+
 ## PR#15247 : str() on invalid data frame names (where print() works):
 d <- data.frame(1:3, "B", 4); names(d) <- c("A", "B\xba","C\xabcd")
 str(d)
 ## gave an error in R <= 3.0.0
 
+
 ## PR#15299 : adding a simple vector to a classed object produced a bad result:
 1:2 + table(1:2)
 ## Printed the class attribute in R <= 3.0.0
+
 
 ## PR#15311 : regmatches<- mishandled regexpr results.
   x <- c('1', 'B', '3')
@@ -2700,9 +2706,21 @@ str(d)
   print(x)
 ## Gave a warning and a wrong result up to 3.0.1
 
+
 ## Bad warning found by Radford Neal
   saveopt <- options(warnPartialMatchDollar=TRUE)
   pl <- pairlist(abc=1, def=2)
   pl$ab
   if (!is.null(saveopt[["warnPartialMatchDollar"]])) options(saveopt)
 ## 'abc' was just ''
+
+
+## seq() with NaN etc inputs now gives explicit error messages
+try(seq(NaN))
+try(seq(to = NaN))
+try(seq(NaN, NaN))
+try(seq.int(NaN))
+try(seq.int(to = NaN))
+try(seq.int(NaN, NaN))
+## R 3.0.1 gave messages from ':' or about negative-length vectors.
+
