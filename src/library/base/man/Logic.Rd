@@ -1,6 +1,6 @@
 % File src/library/base/man/Logic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Logic}
@@ -70,7 +70,8 @@ isTRUE(x)
 
   See \link{Syntax} for the precedence of these operators: unlike many
   other languages (including S) the AND and OR operators do not have the
-  same precedence (the AND operators are higher than the OR operators).
+  same precedence (the AND operators have higher precedence than the OR
+  operators).
 }
 \value{
   For \code{!}, a logical or raw vector of the same length as \code{x}:
