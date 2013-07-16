@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -180,6 +180,9 @@ strptime(x, format, tz = "")
   3}).  Further, for \code{strptime} \code{\%OS} will input seconds
   including fractional seconds.  Note that \code{\%S} ignores (and not
   rounds) fractional parts on output.
+
+  Even when conversion specifications are implemented they may not be
+  implemented correctly: \code{\%z} seems particularly unreliable.
 
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion

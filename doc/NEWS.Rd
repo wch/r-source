@@ -252,10 +252,15 @@
       \item \code{stem()} now discards infinite inputs rather than
       hanging.  (\PR{15376})
 
+      \item The parser now enforces C99 syntax for floating point
+      hexadecimal constants (e.g. \code{0x1.1p0}), rather than returning
+      unintended values for malformed constants. (\PR{15234})
+
       \item \code{model.matrix()} now works with very long LHS
       names (more than 500 bytes).  (\PR{15377})
 
-      \item \code{integrate()} reverts to the pre-2.12.0 behaviour.
+      \item \code{integrate()} reverts to the pre-2.12.0 behaviour: it
+      sometimes reported error estimates that were exceeded.
       (\PR{15219})
 
       \item \code{strptime()} now handles \samp{\%W} fields with value
