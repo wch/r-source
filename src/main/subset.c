@@ -779,19 +779,20 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    int len = length(ans);
 
 	    if(!drop || len > 1) {
+		// must grab these before the dim is set.
+		SEXP nm = PROTECT(getAttrib(ans, R_NamesSymbol));
 		PROTECT(attr = allocVector(INTSXP, 1));
 		INTEGER(attr)[0] = length(ans);
 		setAttrib(ans, R_DimSymbol, attr);
-		UNPROTECT(1);
 		if((attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue) {
 		    /* reinstate dimnames, include names of dimnames */
 		    PROTECT(nattrib = duplicate(attrib));
-		    SET_VECTOR_ELT(nattrib, 0,
-				   getAttrib(ans, R_NamesSymbol));
+		    SET_VECTOR_ELT(nattrib, 0, nm);
 		    setAttrib(ans, R_DimNamesSymbol, nattrib);
 		    setAttrib(ans, R_NamesSymbol, R_NilValue);
 		    UNPROTECT(1);
 		}
+		UNPROTECT(2);
 	    }
 	}
     } else {
