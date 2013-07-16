@@ -61,11 +61,24 @@ findExactMatches <- function(pattern, values)
 
 findFuzzyMatches <- function(pattern, values)
 {
-    ## Try exact matches first
+    ## Try exact matches first, and return them if found
     ans <- findExactMatches(pattern, values)
-    if (length(ans) == 0)
-        agrep(pattern, values, max.distance = 2,
-              ignore.case = TRUE, fixed = FALSE, value = TRUE)
+    if (length(ans) == 0) {
+        fuzzies <-
+            agrep(pattern, values, max.distance = 2,
+                  ignore.case = TRUE, fixed = FALSE, value = TRUE)
+        ## Multiple inconsistent matches will lead to more deletion
+        ## than reasonable.  To avoid this, we find distances, and
+        ## return the one with minimum distance.  However, if minimum
+        ## distance is not unique, this will still delete.
+        ## E.g., a = list(.foobar = 1, foo.bar = 2) ; a$foob<TAB>
+        if (length(fuzzies) == 0) character(0)
+        else {
+            fdist <- adist(pattern, fuzzies, ignore.case=TRUE, partial = TRUE, fixed = FALSE)
+            fmin <- which(fdist == min(fdist))
+            fuzzies[fmin]
+        }
+    }
     else
         ans
 }
@@ -77,7 +90,6 @@ findMatches <- function(pattern, values)
     else 
         findExactMatches(pattern, values)
 }
-
 
 
 
@@ -482,10 +494,14 @@ specialCompletions <- function(text, spl)
 
 keywordCompletions <- function(text)
 {
-    findMatches(sprintf("^%s", makeRegexpSafe(text)),
-                c("NULL", "NA", "TRUE", "FALSE", "Inf", "NaN",
-                  "NA_integer_", "NA_real_", "NA_character_", "NA_complex_",
-                  "repeat ", "in ", "next ", "break ", "else "))
+    ## FIXME: Will not allow fuzzy completions, as this adds too much
+    ## noise in normalCompletions.  Should revisit later once we
+    ## figure out a way to suppress fuzzy matching if there is at
+    ## least one exact match.
+    findExactMatches(sprintf("^%s", makeRegexpSafe(text)),
+                     c("NULL", "NA", "TRUE", "FALSE", "Inf", "NaN",
+                       "NA_integer_", "NA_real_", "NA_character_", "NA_complex_",
+                       "repeat ", "in ", "next ", "break ", "else "))
 }
 
 
@@ -497,12 +513,13 @@ keywordCompletions <- function(text)
 
 attachedPackageCompletions <- function(text, add = rc.getOption("package.suffix"))
 {
+    ## FIXME: Will not allow fuzzy completions. See comment in keywordCompletions() above
     if (.CompletionEnv$settings[["ns"]])
     {
         s <- grep("^package", search(), value = TRUE)
         comps <-
-            findMatches(sprintf("^%s", makeRegexpSafe(text)),
-                        substr(s, 9L, 1000000L))
+            findExactMatches(sprintf("^%s", makeRegexpSafe(text)),
+                             substr(s, 9L, 1000000L))
         if (length(comps) && !is.null(add))
             sprintf("%s%s", comps, add)
         else
