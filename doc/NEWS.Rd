@@ -75,7 +75,12 @@
 
       \item \code{formatC(x)} no longer copies the class of \code{x} to
       the result, to avoid misuse creating invalid objects as in
-      \PR{15303}.  A warning is given if a class is discarded. 
+      \PR{15303}.  A warning is given if a class is discarded.
+
+      \item The way the unary operators (\code{+ - !}) handle attributes
+      is now more coherent.  If there is no coercion, all attributes
+      (including class) are copied from the input to the result:
+      otherwise only names, dims and dimnames are.
     }
   }
 
@@ -461,7 +466,8 @@
       \item \code{model.matrix()} now works with very long LHS
       names (more than 500 bytes).  (\PR{15377})
 
-      \item \code{integrate()} reverts to the pre-2.12.0 behaviour.
+      \item \code{integrate()} reverts to the pre-2.12.0 behaviour: it
+      sometimes reported error estimates that were exceeded.
       (\PR{15219})
 
       \item \code{strptime()} now handles \samp{\%W} fields with value

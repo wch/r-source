@@ -39,11 +39,10 @@ x \%/\% y
     coerced to such, or other objects for which methods have been written.}
 }
 \value{
-  Unary \code{+} returns \code{x} unchanged (without coercing logical
-  vectors).
-
-  Unary \code{-} returns a numeric or complex vector with the same
-  attributes as \code{x}: logical \code{x} are coerced to integer.
+  Unary \code{+} and unary \code{-} return a numeric or complex vector.
+  All attributes (including class) are preserved if there is no
+  coercion: logical \code{x} is coerced to integer and names, dims and
+  dimnames are preserved.
   
   The binary operators return vectors containing the result of the element
   by element operations.  The elements of shorter vectors are recycled

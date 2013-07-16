@@ -140,4 +140,16 @@ x <- c(TRUE, FALSE, NA, TRUE)
 ## +x was logical in R <= 3.0.1
 
 
+## Attritbutes of value of unary operators
+# +x, -x were ts, !x was not in 3.0.2
+x <- ts(c(a=TRUE, b=FALSE, c=NA, d=TRUE), frequency = 4, start = 2000)
+x; +x; -x; !x
+stopifnot(is.ts(!x), !is.ts(+x), !is.ts(-x))
+# +x, -x were ts, !x was not in 3.0.2
+x <- ts(c(a=1, b=2, c=0, d=4), frequency = 4, start = 2010)
+x; +x; -x; !x
+stopifnot(!is.ts(!x), is.ts(+x), is.ts(-x))
+##
+
+
 proc.time()

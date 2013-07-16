@@ -170,10 +170,18 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 	if (!len) return allocVector(LGLSXP, 0);
 	errorcall(call, _("invalid argument type"));
     }
-    PROTECT(names = getAttrib(arg, R_NamesSymbol));
-    PROTECT(dim = getAttrib(arg, R_DimSymbol));
-    PROTECT(dimnames = getAttrib(arg, R_DimNamesSymbol));
-    PROTECT(x = allocVector(isRaw(arg) ? RAWSXP : LGLSXP, len));
+    if (isLogical(arg) || isRaw(arg))
+	x = PROTECT(duplicate(arg));  // copy all attributes in this case 
+    else {
+	x = PROTECT(allocVector(isRaw(arg) ? RAWSXP : LGLSXP, len));
+	PROTECT(names = getAttrib(arg, R_NamesSymbol));
+	PROTECT(dim = getAttrib(arg, R_DimSymbol));
+	PROTECT(dimnames = getAttrib(arg, R_DimNamesSymbol));
+	if(names != R_NilValue) setAttrib(x, R_NamesSymbol, names);
+	if(dim != R_NilValue) setAttrib(x, R_DimSymbol, dim);
+	if(dimnames != R_NilValue) setAttrib(x, R_DimNamesSymbol, dimnames);
+	UNPROTECT(3);
+    }
     switch(TYPEOF(arg)) {
     case LGLSXP:
 	for (i = 0; i < len; i++) {
@@ -212,10 +220,7 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
     default:
 	UNIMPLEMENTED_TYPE("lunary", arg);
     }
-    if(names != R_NilValue) setAttrib(x, R_NamesSymbol, names);
-    if(dim != R_NilValue) setAttrib(x, R_DimSymbol, dim);
-    if(dimnames != R_NilValue) setAttrib(x, R_DimNamesSymbol, dimnames);
-    UNPROTECT(4);
+    UNPROTECT(1);
     return x;
 }
 

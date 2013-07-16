@@ -550,29 +550,32 @@ SEXP attribute_hidden R_unary(SEXP call, SEXP op, SEXP s1)
 
 static SEXP logical_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {
-    R_xlen_t i, n;
-    int x;
-    SEXP ans;
+    R_xlen_t n = XLENGTH(s1);
+    SEXP ans = PROTECT(allocVector(INTSXP, n));
+    SEXP names = PROTECT(getAttrib(s1, R_NamesSymbol));
+    SEXP dim = PROTECT(getAttrib(s1, R_DimSymbol));
+    SEXP dimnames = PROTECT(getAttrib(s1, R_DimNamesSymbol));
+    if(names != R_NilValue) setAttrib(ans, R_NamesSymbol, names);
+    if(dim != R_NilValue) setAttrib(ans, R_DimSymbol, dim);
+    if(dimnames != R_NilValue) setAttrib(ans, R_DimNamesSymbol, dimnames);
+    UNPROTECT(3);
 
     switch (code) {
     case PLUSOP:
-	ans = duplicate(s1);
-	SET_TYPEOF(ans, INTSXP);
-	return ans;
+	for (R_xlen_t  i = 0; i < n; i++) INTEGER(ans)[i] = LOGICAL(s1)[i];
+	break;
     case MINUSOP:
-	ans = duplicate(s1);
-	SET_TYPEOF(ans, INTSXP);
-	n = XLENGTH(s1);
-	for (i = 0; i < n; i++) {
-	    x = INTEGER(s1)[i];
+	for (R_xlen_t  i = 0; i < n; i++) {
+	    int x = LOGICAL(s1)[i];
 	    INTEGER(ans)[i] = (x == NA_INTEGER) ?
 		NA_INTEGER : ((x == 0.0) ? 0 : -x);
 	}
-	return ans;
+	break;
     default:
 	errorcall(call, _("invalid unary operator"));
     }
-    return s1;			/* never used; to keep -Wall happy */
+    UNPROTECT(1);
+    return ans;
 }
 
 static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
@@ -586,7 +589,6 @@ static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 	return s1;
     case MINUSOP:
 	ans = duplicate(s1);
-	SET_TYPEOF(ans, INTSXP);
 	n = XLENGTH(s1);
 	for (i = 0; i < n; i++) {
 	    x = INTEGER(s1)[i];
