@@ -210,6 +210,9 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
+
+      \item \command{R CMD rtags} works on platforms (such as OS X) 
+      with a XSI-conformant \command{echo}. (\PR{15231})
     }
   }
 }
