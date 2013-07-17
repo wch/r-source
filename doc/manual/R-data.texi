@@ -1162,8 +1162,8 @@ from a database for separate analysis.
 Increasingly OSes are themselves making use of DBMSs for these reasons,
 so it is nowadays likely that one will be already installed on your
 (non-Windows) OS.  @uref{http://en.wikipedia.org/wiki/Akonadi, Akonadi}
-is used by KDE4 to store personal information and uses MySQL.  Several
-OS X applications, including Mail and Address Book, use SQLite.
+is used by KDE4 to store personal information.  Several OS X
+applications, including Mail and Address Book, use SQLite.
 @c http://www.actualtechnologies.com/sqlite_applications.php
 
 @node Overview of RDBMSs, R interface packages, Why use a database?, Relational databases
@@ -1175,11 +1175,11 @@ Oracle}; @uref{http://www.sybase.com, Sybase};
 @uref{http://www.ibm.com/db2, IBM's DB2};
 @uref{http://www.microsoft.com/SQL/default.mspx, Microsoft @acronym{SQL}
 Server} on Windows) and academic and small-system databases (such as
-MySQL, PostgreSQL, Microsoft Access, @dots{}), the former marked out by
-much greater emphasis on data security features.  The line is blurring,
-with the Open Source MySQL and PostgreSQL having more and more high-end
-features, and free `express' versions being made available for the
-commercial DBMSs.
+MySQL@footnote{and forks, notably MariaDB.}, PostgreSQL, Microsoft
+Access, @dots{}), the former marked out by much greater emphasis on data
+security features.  The line is blurring, with MySQL and PostgreSQL
+having more and more high-end features, and free `express' versions
+being made available for the commercial DBMSs.
 
 @cindex ODBC
 @cindex Open Database Connectivity
@@ -1449,13 +1449,14 @@ Arkansas          8.8     190       50 19.5
 @cindex ODBC
 @cindex Open Database Connectivity
 
-Package @CRANpkg{RODBC} on @acronym{CRAN} provides an interface to database
-sources supporting an @acronym{ODBC} interface.  This is very widely
-available, and allows the same @R{} code to access different database
-systems.  @CRANpkg{RODBC} runs on Unix/Linux, Windows and OS X, and
-almost all database systems provide support for @acronym{ODBC}.  We have
-tested Microsoft SQL Server, Access, MySQL, PostgreSQL, Oracle and IBM
-DB2 on Windows and MySQL, Oracle, PostgreSQL and SQLite on Linux.
+Package @CRANpkg{RODBC} on @acronym{CRAN} provides an interface to
+database sources supporting an @acronym{ODBC} interface.  This is very
+widely available, and allows the same @R{} code to access different
+database systems.  @CRANpkg{RODBC} runs on Unix/Linux, Windows and OS X,
+and almost all database systems provide support for @acronym{ODBC}.  We
+have tested Microsoft SQL Server, Access, MySQL, PostgreSQL, Oracle and
+IBM DB2 on Windows and MySQL, MariaDB, Oracle, PostgreSQL and SQLite on
+Linux.
 
 ODBC is a client-server system, and we have happily connected to a DBMS
 running on a Unix server from a Windows client, and @emph{vice versa}.
