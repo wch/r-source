@@ -31,13 +31,13 @@ Then check the built system worked correctly, by
 
 	make check
 
-and make the manuals by (as many options as preferred from)
+and make the manuals by either or both of
 
 	make pdf	to create PDF versions
 	make info	to create info files
 
-However, please read the notes in `R-admin.html' about making the
-reference manual.
+However, please read the notes in `R-admin.html' about paper size and
+making the reference manual.
 
 
 INSTALLATION
