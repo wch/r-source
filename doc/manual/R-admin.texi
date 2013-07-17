@@ -1870,7 +1870,7 @@ appropriate to both architectures use@footnote{for a small number of
 @acronym{CRAN} packages where this is known to be safe and is needed by
 the autobuilder this is the default.  Look at the source of
 @file{tools:::.install_packages} for the list.  It can also be specified
-in the package's @file{DESCRIPTON} file.} option
+in the package's @file{DESCRIPTION} file.} option
 @option{--force-biarch}: otherwise @command{R CMD INSTALL
 --merge-multiarch} can be applied to a source tarball to merge separate
 32- and 64-bit installs.  (This can only be applied to a tarball, and

@@ -3522,7 +3522,7 @@ which works in all versions of @command{make} known@footnote{GNU make,
 BSD make as in FreeBSD, AT&T make as implemented on Solaris.} to be used
 with @R{}.
 
-If you really must assume GNU make, declare it in the @file{DESCRIPTON}
+If you really must assume GNU make, declare it in the @file{DESCRIPTION}
 file by
 
 @example
