@@ -78,7 +78,7 @@
       \PR{15303}.  A warning is given if a class is discarded.
 
       \item The way the unary operators (\code{+ - !}) handle attributes
-      is now more coherent.  If there is no coercion, all attributes
+      is now more consistent.  If there is no coercion, all attributes
       (including class) are copied from the input to the result:
       otherwise only names, dims and dimnames are.
     }
