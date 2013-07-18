@@ -1017,7 +1017,12 @@ setRlibs <-
 
         ## Valid CITATION metadata?
         if (file.exists(file.path("inst", "CITATION"))) {
-            Rcmd <- "tools:::.check_citation(\"inst/CITATION\")\n"
+            Rcmd <- if(do_install)
+                sprintf("tools:::.check_citation(\"inst/CITATION\", \"%s\")\n",
+                        file.path(if(is_base_pkg) .Library else libdir,
+                                  pkgname))
+            else
+                "tools:::.check_citation(\"inst/CITATION\")\n"
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=utils")
             if(length(out)) {
                 if(!any) warningLog(Log)
