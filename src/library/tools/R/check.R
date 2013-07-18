@@ -1849,9 +1849,9 @@ setRlibs <-
             printLog(Log, "Some Unix 'make' programs require LF line endings.\n")
         } else resultLog(Log, "OK")
 
-        ## Check src/Makevars[.in] for portable compilation flags.
+        ## Check src/Makevars[.in] compilation flags.
         if (any(file.exists(file.path("src", c("Makevars", "Makevars.in")))) ) {
-            checkingLog(Log, "for portable compilation flags in Makevars")
+            checkingLog(Log, "compilation flags in Makevars")
             Rcmd <- "tools:::.check_make_vars(\"src\")\n"
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {

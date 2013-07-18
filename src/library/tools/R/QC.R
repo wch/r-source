@@ -3233,22 +3233,34 @@ function(dir)
     mfile <- paths[1L]
     make <- Sys.getenv("MAKE")
     if(make == "") make <- "make"
-
-    lines <-
-        suppressWarnings(tryCatch(system(sprintf("%s -f %s -f %s",
-                                                 make,
-                                                 shQuote(mfile),
-                                                 shQuote(file.path(R.home("share"), "make", "check.mk"))),
-                                         intern = TRUE, ignore.stderr = TRUE),
-                                  error = identity))
+    command <- sprintf("%s -f %s -f %s -f %s",
+                       make,
+                       shQuote(file.path(R.home("share"), "make",
+                                         "check_vars_ini.mk")),
+                       shQuote(mfile),
+                       shQuote(file.path(R.home("share"), "make",
+                                         "check_vars_out.mk")))
+    lines <- suppressWarnings(tryCatch(system(command, intern = TRUE,
+                                              ignore.stderr = TRUE),
+                                       error = identity))
     if(!length(lines) || inherits(lines, "error"))
         return(bad_flags)
 
+    prefixes <- c("CPP", "C", "CXX", "F", "FC", "OBJC", "OBJCXX")
+
+    uflags_re <- sprintf("^(%s)FLAGS: *(.*)$",
+                         paste(prefixes, collapse = "|"))
+    pos <- grep(uflags_re, lines)
+    ind <- (sub(uflags_re, "\\2", lines[pos]) != "-o /dev/null")
+    if(any(ind))
+        bad_flags$uflags <- lines[pos[ind]]
+
     ## Try to be careful ...
-    pkg_flags_re <- "^PKG_(CPP|C|CXX|F|FC|OBJC|OBJCCXX)FLAGS: "
-    lines <- lines[grepl(pkg_flags_re, lines)]
+    pflags_re <- sprintf("^PKG_(%s)FLAGS: ",
+                         paste(prefixes, collapse = "|"))
+    lines <- lines[grepl(pflags_re, lines)]
     names <- sub(":.*", "", lines)
-    lines <- sub(pkg_flags_re, "", lines)
+    lines <- sub(pflags_re, "", lines)
     flags <- strsplit(lines, "[[:space:]]+")
     ## Bad flags:
     ##   -O*
@@ -3270,8 +3282,9 @@ function(dir)
     for(i in seq_along(lines)) {
         bad <- grep(bad_flags_regexp, flags[[i]], value = TRUE)
         if(length(bad))
-            bad_flags <- c(bad_flags,
-                           structure(list(bad), names = names[i]))
+            bad_flags$pflags <-
+                c(bad_flags$pflags,
+                  structure(list(bad), names = names[i]))
     }
 
     class(bad_flags) <- "check_make_vars"
@@ -3281,13 +3294,20 @@ function(dir)
 format.check_make_vars <-
 function(x, ...)
 {
-    .fmt <- function(i) {
-        c(gettextf("Non-portable flags in variable '%s':",
-                   names(x)[i]),
-          sprintf("  %s", paste(x[[i]], collapse = " ")))
+    .fmt <- function(x) {
+        s <- Map(c,
+                 gettextf("Non-portable flags in variable '%s':",
+                          names(x)),
+                 sprintf("  %s", lapply(x, paste, collapse = " ")))
+        as.character(unlist(s))
     }
 
-    as.character(unlist(lapply(seq_along(x), .fmt)))
+    c(character(),
+      if(length(bad <- x$pflags)) .fmt(bad),
+      if(length(bad <- x$uflags)) {
+          c(gettextf("Variables overriding user/site settings:"),
+            sprintf("  %s", bad))
+      })
 }
 
 ### * .check_code_usage_in_package
@@ -4549,17 +4569,19 @@ function(dir)
         ## (This may fail for conditionalized code not meant for R
         ## [e.g., argument 'where'].)
         mc <- tryCatch(match.call(base::assign, e), error = identity)
-        (!inherits(mc, "error") &&
-         (mc$x != ".Random.seed") &&
-         ((is.name(pos <- mc$pos) &&
-           as.character(pos) == ".GlobalEnv") ||
-          (is.call(pos) &&
-           as.character(pos) == "globalenv") ||
-          (is.numeric(pos) && pos == 1) ||
-          (is.name(env <- mc$envir) &&
-           as.character(env) == ".GlobalEnv") ||
-          (is.call(env) &&
-           as.character(env) == "globalenv")))
+        if(inherits(mc, "error") || mc$x == ".Random.seed")
+            return(FALSE)
+        if(!is.null(env <- mc$envir) &&
+           identical(tryCatch(eval(env),
+                              error = identity),
+                     globalenv()))
+            return(TRUE)
+        if(!is.null(pos <- mc$pos) &&
+           identical(tryCatch(eval(call("as.environment", pos)),
+                              error = identity),
+                     globalenv()))
+            return(TRUE)
+        FALSE
     }
 
     calls <- Filter(length,
@@ -5978,16 +6000,16 @@ function(x, ...)
       },
       if(length(y <- x$depends_with_restricts_use_TRUE)) {
           c("Package has a FOSS license but eventually depends on the following",
-            ifelse(length(y) > 1L,
-                   "packages which restrict use:",
-                   "package which restricts use:"),
+	    if(length(y) > 1L)
+	    "packages which restrict use:" else
+	    "package which restricts use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if(length(y <- x$depends_with_restricts_use_NA)) {
           c("Package has a FOSS license but eventually depends on the following",
-            ifelse(length(y) > 1L,
-                   "packages which may restrict use:",
-                   "package which may restrict use:"),
+	    if(length(y) > 1L)
+            "packages which may restrict use:" else
+	    "package which may restrict use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       }
       )
