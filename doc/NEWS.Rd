@@ -259,8 +259,9 @@
       \item \code{model.matrix()} now works with very long LHS
       names (more than 500 bytes).  (\PR{15377})
 
-      \item \code{integrate()} reverts to the pre-2.12.0 behaviour: it
-      sometimes reported error estimates that were exceeded.
+      \item \code{integrate()} reverts to the pre-2.12.0 behaviour: from
+      2.12.0 to 3.0.1 it sometimes failed to achieve the requested
+      tolerance and reported error estimates that were exceeded.
       (\PR{15219})
 
       \item \code{strptime()} now handles \samp{\%W} fields with value

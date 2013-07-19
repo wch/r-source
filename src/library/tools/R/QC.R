@@ -5693,6 +5693,16 @@ function(dir)
 
     urls <- .get_standard_repository_URLs()
 
+    parse_description_field <- function(desc, field, default = TRUE)
+    {
+        tmp <- desc[field]
+        if (is.na(tmp)) default
+        else switch(tmp,
+                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
+                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
+                    default)
+    }
+
     ## If a package has a FOSS license, check whether any of its strong
     ## recursive dependencies restricts use.
     if(foss) {
@@ -5927,6 +5937,45 @@ function(dir)
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
 
+    uses <- character()
+    BUGS <- character()
+    for (field in c("Depends", "Imports", "Suggests")) {
+        p <- strsplit(meta[field], " *, *")[[1L]]
+        p2 <- grep("^(multicore)( |\\(|$)", p, value = TRUE)
+        uses <- c(uses, p2)
+        p2 <- grep("^(BRugs|R2OpenBUGS)( |\\(|$)", p, value = TRUE)
+        BUGS <- c(BUGS, p2)
+    }
+    if (length(uses)) out$uses <- sort(unique(uses))
+    if (length(BUGS)) out$BUGS <- sort(unique(BUGS))
+
+    ## Check for vignette source (only) in old-style 'inst/doc' rather
+    ## than new-style 'vignettes'.
+    ## Currently only works for Sweave vignettes: eventually, we should
+    ## be able to use build/vignettes.rds for determining *all* package
+    ## vignettes.
+
+    pattern <- vignetteEngine("Sweave")$pattern
+    vign_dir <- file.path(dir, "vignettes")
+    sources <- setdiff(list.files(file.path(dir, "inst", "doc"),
+                                  pattern = pattern),
+                       list.files(vign_dir, pattern = pattern))
+    if(length(sources)) {
+        out$have_vignettes_dir <- file_test("-d", vign_dir)
+        out$vignette_sources_only_in_inst_doc <- sources
+    }
+
+    ## Check for excessive 'Depends'
+    deps <- strsplit(meta["Depends"], ", *")[[1]]
+    deps <- sub("[ (].*$", "", deps)
+    ## and seems some spaces get through
+    deps <- sub("^\\s+", "", deps, perl = TRUE)
+    deps <- sub("\\s+$", "", deps, perl = TRUE)
+
+    deps <- setdiff(deps, c("R", "base", "datasets", "grDevices", "graphics",
+                            "methods", "utils", "stats"))
+    if(length(deps) > 5) out$many_depends <- deps
+
     out
 }
 
@@ -6016,6 +6065,32 @@ function(x, ...)
             "packages which may restrict use:" else
 	    "package which may restrict use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+      },
+      if (length(y <- x$uses)) {
+          paste(if(length(y) > 1L)
+		"Uses the superseded packages:" else
+		"Uses the superseded package:",
+                paste(sQuote(y), collapse = ", "))
+      },
+      if (length(y <- x$BUGS)) {
+          paste(if(length(y) > 1L)
+		"Uses the non-portable packages:" else
+		"Uses the non-portable package:",
+                paste(sQuote(y), collapse = ", "))
+      },
+      if(length(y <- x$vignette_sources_only_in_inst_doc)) {
+          if(identical(x$have_vignettes_dir, FALSE))
+              c("Vignette sources in 'inst/doc' with no 'vignettes' directory:",
+                strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L),
+                "A 'vignettes' directory has been preferred since R 2.14.0")
+          else
+              c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
+                strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$many_depends)) {
+          c(.pretty_format2("Depends: includes the non-default packages:", y),
+            "Adding so many packages to the search path is excessive",
+            "and importing selectively is preferable.")
       }
       )
 }
