@@ -562,10 +562,6 @@ function(package, dir, lib.loc = NULL,
     db_names <- db_names[!ind]
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
-    db_synopses <- lapply(db, .Rd_get_section, "synopsis")
-    ind <- sapply(db_synopses, length) > 0L
-    db_usages[ind] <- db_synopses[ind]
-    with_synopsis <- as.character(db_names[ind])
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(db_usages,
                              function(x) !is.null(attr(x, "bad_lines"))))
@@ -742,7 +738,6 @@ function(package, dir, lib.loc = NULL,
     attr(bad_doc_objects, "functions_missing_from_usages") <-
         functions_missing_from_usages
     attr(bad_doc_objects, "has_namespace") <- has_namespace
-    attr(bad_doc_objects, "with_synopsis") <- with_synopsis
     attr(bad_doc_objects, "bad_lines") <- bad_lines
     class(bad_doc_objects) <- "codoc"
     bad_doc_objects
@@ -2869,6 +2864,12 @@ function(dir, force_suggests = TRUE)
             bad_depends$missing_namespace_depends <- reqs
     }
 
+    ## Check for excessive 'Depends'
+
+    deps <- setdiff(depends, c("R", "base", "datasets", "grDevices", "graphics",
+                            "methods", "utils", "stats"))
+    if(length(deps) > 5L) bad_depends$many_depends <- deps
+
     class(bad_depends) <- "check_package_depends"
     bad_depends
 }
@@ -2934,6 +2935,14 @@ function(x, ...)
           c(.pretty_format2("Namespace dependencies not required:", bad), "")
       } else if(length(bad)) {
           c(sprintf("Namespace dependency not required: %s", sQuote(bad)), "")
+      },
+      if(length(y <- x$many_depends)) {
+          c(.pretty_format2("Depends: includes the non-default packages:", y),
+            strwrap(paste("Adding so many packages to the search path",
+                          "is excessive",
+                          "and importing selectively is preferable."
+                          , collapse = ", ")))
+
       }
       )
 }
@@ -4802,7 +4811,7 @@ function(dir)
     predicate <- function(e) {
         if(!is.call(e) || as.character(e[[1L]]) != "data")
             return(FALSE)
-        ## As data() has synopsis
+        ## As data() has usage
         ##   data(..., list = character(), package = NULL, lib.loc = NULL,
         ##        verbose = getOption("verbose"), envir = .GlobalEnv))
         ## argument 'envir' must be matched exactly, and calls which
@@ -6126,16 +6135,6 @@ function(dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
-    ## Check for excessive 'Depends'
-    deps <- strsplit(meta["Depends"], ", *")[[1]]
-    deps <- sub("[ (].*$", "", deps)
-    ## and seems some spaces get through
-    deps <- sub("^\\s+", "", deps, perl = TRUE)
-    deps <- sub("\\s+$", "", deps, perl = TRUE)
-
-    deps <- setdiff(deps, c("R", "base", "datasets", "grDevices", "graphics",
-                            "methods", "utils", "stats"))
-    if(length(deps) > 5) out$many_depends <- deps
 
     out
 }
@@ -6247,11 +6246,6 @@ function(x, ...)
           else
               c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
                 strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
-      },
-      if(length(y <- x$many_depends)) {
-          c(.pretty_format2("Depends: includes the non-default packages:", y),
-            "Adding so many packages to the search path is excessive",
-            "and importing selectively is preferable.")
       }
       )
 }
