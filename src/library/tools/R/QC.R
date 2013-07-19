@@ -2940,9 +2940,9 @@ function(x, ...)
           c(.pretty_format2("Depends: includes the non-default packages:", y),
             strwrap(paste("Adding so many packages to the search path",
                           "is excessive",
-                          "and importing selectively is preferable.\n"
-                          , collapse = ", ")))
-
+                          "and importing selectively is preferable."
+                          , collapse = ", ")),
+            "")
       }
       )
 }
