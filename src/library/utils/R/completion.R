@@ -59,29 +59,57 @@ findExactMatches <- function(pattern, values)
     grep(pattern, values, value = TRUE)
 }
 
-findFuzzyMatches <- function(pattern, values)
-{
-    ## Try exact matches first, and return them if found
-    ans <- findExactMatches(pattern, values)
-    if (length(ans) == 0) {
-        fuzzies <-
-            agrep(pattern, values, max.distance = 2,
-                  ignore.case = TRUE, fixed = FALSE, value = TRUE)
-        ## Multiple inconsistent matches will lead to more deletion
-        ## than reasonable.  To avoid this, we find distances, and
-        ## return the one with minimum distance.  However, if minimum
-        ## distance is not unique, this will still delete.
-        ## E.g., a = list(.foobar = 1, foo.bar = 2) ; a$foob<TAB>
-        if (length(fuzzies) == 0) character(0)
-        else {
-            fdist <- adist(pattern, fuzzies, ignore.case=TRUE, partial = TRUE, fixed = FALSE)
-            fmin <- which(fdist == min(fdist))
-            fuzzies[fmin]
-        }
+### agrep() version
+## 
+## findFuzzyMatches <- function(pattern, values)
+## {
+##     ## Try exact matches first, and return them if found
+##     ans <- findExactMatches(pattern, values)
+##     if (length(ans) == 0) {
+##         fuzzies <-
+##             agrep(pattern, values, max.distance = 2,
+##                   ignore.case = TRUE, fixed = FALSE, value = TRUE)
+##         ## Multiple inconsistent matches will lead to more deletion
+##         ## than reasonable.  To avoid this, we find distances, and
+##         ## return the one with minimum distance.  However, if minimum
+##         ## distance is not unique, this will still delete.
+##         ## E.g., a = list(.foobar = 1, foo.bar = 2) ; a$foob<TAB>
+##         if (length(fuzzies) == 0) character(0)
+##         else {
+##             fdist <- adist(pattern, fuzzies, ignore.case=TRUE, partial = TRUE, fixed = FALSE)
+##             fmin <- which(fdist == min(fdist))
+##             fuzzies[fmin]
+##         }
+##     }
+##     else
+##         ans
+## }
+
+### normalizing version (from Rasmus Baath)
+## 
+
+findFuzzyMatches <- function(pattern, values) {
+    ## FIXME: option to allow experimentation, remove eventually
+    if (!is.null(ffun <- getOption("fuzzy.match.fun"))) {
+        return (ffun(pattern, values))
     }
-    else
-        ans
+    ## Try exact matches first, and return them if found
+    exact.matches <- findExactMatches(pattern, values)
+    if (length(exact.matches) == 0) {
+        ## Removes "\\." and "_" in the pattern excluding the anchor
+        ## (^) and the first character but does not removes "\\." and
+        ## "_" if it is the last character.
+        normalizedPattern <- gsub("(?<!\\^)(?<=.)(\\\\\\.|_)(?!$)", "", pattern, perl = TRUE)
+        ## Replaces "\\." and "_" last in the pattern with ".", that
+        ## is the pattern is "seq\\."  we transform it into "seq." in
+        ## order to match "seq_along" and "seq.int" but not "seq".
+        normalizedPattern <- gsub("(\\\\\\.|_)$", ".", normalizedPattern)
+        normalizedValues <- gsub("(?<=.)[._]", "", values, perl = TRUE)
+        values[ grep(normalizedPattern, normalizedValues, ignore.case = TRUE) ]
+    }
+    else exact.matches
 }
+
 
 findMatches <- function(pattern, values)
 {
@@ -91,7 +119,16 @@ findMatches <- function(pattern, values)
         findExactMatches(pattern, values)
 }
 
-
+fuzzyApropos <- function(what)
+{
+    stopifnot(is.character(what))
+    x <- character(0L)
+    for (i in seq_along(search())) {
+	li <- findFuzzyMatches(what, ls(pos = i, all.names = TRUE))
+	if (length(li)) { x <- c(x, li) }
+    }
+    findFuzzyMatches(what, x)
+}
 
 ## generic and built-in methods to generate completion after $
 
@@ -266,14 +303,11 @@ rc.status <- function()
 
 
 
-
-
 ## convert a string to something that escapes special regexp
 ## characters.  Doesn't have to be perfect, especially for characters
 ## that would cause breaks or be handled elsewhere.  All we really
 ## need is to handle ".", so that e.g. "heat." doesn't match
 ## "heatmap".
-
 
 makeRegexpSafe <- function(s)
 {
@@ -545,7 +579,7 @@ normalCompletions <-
     {
         comps <-
             if (.CompletionEnv$settings[["fuzzy"]])
-                apropos(sprintf("^%s", makeRegexpSafe(text)), ignore.case = TRUE)
+                fuzzyApropos(sprintf("^%s", makeRegexpSafe(text)))
             else 
                 apropos(sprintf("^%s", makeRegexpSafe(text)), ignore.case = FALSE)
         if (.CompletionEnv$settings[["func"]] && check.mode && !is.null(add.fun))
