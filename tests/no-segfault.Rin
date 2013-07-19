@@ -72,9 +72,9 @@ stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
                           "texi2dvi", "texi2pdf",  # hang on Windows
                           "getVignetteInfo"        # very slow on large installation
                           )
-stop.list[["ts"]] <- c("arma0f", "KalmanLike")
 stop.list[["grDevices"]] <- dev.int
 stop.list[["utils"]] <- c("Rprof", "aspell", # hangs on Windows
+                          "winProgressBar",
                           inet.list, socket.fun, edit.int, misc.int, misc.2)
 
 sink("no-segfault.R")

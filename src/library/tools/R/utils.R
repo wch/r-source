@@ -1070,9 +1070,9 @@ function(x)
     raw_ub <- charToRaw("\x7f")
     raw_lb <- charToRaw("\xa0")
     vapply(as.character(x), function(txt) {
-	    raw <- charToRaw(txt)
-	    all(raw <= raw_ub | raw >= raw_lb)
-	}, NA)
+        raw <- charToRaw(txt)
+        all(raw <= raw_ub | raw >= raw_lb)
+    }, NA)
 }
 
 ### ** .is_primitive_in_base

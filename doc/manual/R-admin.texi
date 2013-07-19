@@ -550,7 +550,8 @@ make install
 
 @noindent
 A parallel make can be used (but run @command{make} before @command{make
-install}).
+install}): however it is not recommended for @command{make check} as the
+output from different checks will interleaved and hard to decipher.
 
 This will install to the following directories:
 

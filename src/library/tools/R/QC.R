@@ -5725,6 +5725,8 @@ function(dir)
         bad <- intersect(depends, pnames_restricts_use_NA)
         if(length(bad))
             out$depends_with_restricts_use_NA <- bad
+        bv <- parse_description_field(meta, "BuildVignettes", TRUE)
+        if (!bv) out$foss_with_BuildVigettes <- TRUE
     }
 
     ## Check for possibly mis-spelled field names.
@@ -5979,6 +5981,9 @@ function(x, ...)
                     names(s),
                     lapply(s, paste, collapse = ", ")))
       },
+      if(identical(x$foss_with_BuildVigettes, FALSE)) {
+          "FOSS licence with BuildVignettes false"
+      },
       if(length(y <- x$fields)) {
           c("Possibly mis-spelled fields in DESCRIPTION:",
             sprintf("  %s", paste(sQuote(y), collapse = " ")))
@@ -6224,6 +6229,14 @@ function(x, ...)
     }
 
     limit <- attr(x, "limit")
+    ## Rd2txt() by default adds a section indent of 5 also incorporated
+    ## in the limits used for checking.  But users actually look at the
+    ## line widths in their source Rd file, so remove the indent when
+    ## formatting for reporting check results.
+    ## (This should reduce confusion as long as we only check the line
+    ## widths in verbatim type sections.)
+    limit <- limit - 5L
+
     sections <- names(limit)
 
     .fmt <- function(nm) {

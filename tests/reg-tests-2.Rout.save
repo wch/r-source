@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-07-01 r63128) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-19 r63349) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3292,7 +3292,9 @@ NULL
 [1] 1
 > dimnames(x) <- list(some=letters[1:5])
 > x[]
-[1] 1 2 3 4 5
+some
+a b c d e 
+1 2 3 4 5 
 > x[2:3]
 some
 b c 

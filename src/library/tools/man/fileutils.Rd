@@ -28,7 +28,8 @@ list_files_with_type(dir, type, all.files = FALSE,
   \item{compression}{logical: should compression extension \file{.gz},
     \file{.bz2} or \file{.xz} be removed first?}
   \item{dir}{a character string with the path name to a directory.}
-  \item{exts}{a character vector of possible file extensions.}
+  \item{exts}{a character vector of possible file extensions (excluding
+    the leading dot).}
   \item{all.files}{a logical.  If \code{FALSE} (default), only visible
     files are considered; if \code{TRUE}, all files are used.}
   \item{full.names}{a logical indicating whether the full paths of the
@@ -45,7 +46,8 @@ list_files_with_type(dir, type, all.files = FALSE,
     \code{\link{.Platform}$OS.type}, is used.}
 }
 \details{
-  \code{file_ext} returns the file (name) extensions.
+  \code{file_ext} returns the file (name) extensions (excluding the
+  leading dot).
   (Only purely alphanumeric extensions are recognized.)
 
   \code{file_path_as_absolute} turns a possibly relative file path
@@ -53,7 +55,8 @@ list_files_with_type(dir, type, all.files = FALSE,
   this is a wrapper for \code{\link{normalizePath}}.  Currently,
   \code{x} must be a single existing path.
 
-  \code{file_path_sans_ext} returns the file paths without extensions.
+  \code{file_path_sans_ext} returns the file paths without extensions
+  (and the leading dot).
   (Only purely alphanumeric extensions are recognized.)
 
   \code{list_files_with_exts} returns the paths or names of the files in

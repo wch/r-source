@@ -2547,8 +2547,14 @@ setRlibs <-
                 }
             } else resultLog(Log, "OK")
 
-            if (do_build_vignettes &&
-                parse_description_field(desc, "BuildVignettes", TRUE)) {
+            build_vignettes <-
+                parse_description_field(desc, "BuildVignettes", TRUE)
+            if (!build_vignettes && as_cran) {
+                ## FOSS packages must be able to rebuild their vignettes
+                info <- analyze_license(desc["License"])
+                build_vignettes <- info$is_verified
+            }
+            if (do_build_vignettes && build_vignettes) {
                 checkingLog(Log, "re-building of vignette outputs")
                 ## copy the whole pkg directory to check directory
                 ## so we can work in place, and allow ../../foo references.
@@ -3153,7 +3159,8 @@ setRlibs <-
                 errorLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
                 do_exit(1L)
-            } else if(length(res$bad_version))
+            } else if(length(res$bad_version) ||
+                      identical(res$foss_with_BuildVigettes, TRUE))
                 warningLog(Log)
             else if(length(res) > 1L) noteLog(Log)
             else resultLog(Log, "OK")

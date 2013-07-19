@@ -639,10 +639,11 @@ The @samp{Biarch} logical field is used on Windows to select the
 @c DESCRIPTION field BuildVignettes
 The @samp{BuildVignettes} logical field can be set to a false value to
 stop @command{R CMD build} from attempting to build the vignettes, as
-well as preventing @command{R CMD check} from testing this.  This should
-only be used exceptionally, for example if the PDFs include large
-figures which are not part of the package sources (and hence only in
-packages which do not have an Open Source license).
+well as preventing@footnote{But it is checked for Open Source packages
+by @command{R CMD check --as-cran}.}  @command{R CMD check} from testing
+this.  This should only be used exceptionally, for example if the PDFs
+include large figures which are not part of the package sources (and
+hence only in packages which do not have an Open Source license).
 
 @c DESCRIPTION field VignetteBuilder
 The @samp{VignetteBuilder} field names a package that provides 
@@ -7841,10 +7842,11 @@ specify additional flags by setting some of the variables
 @vindex PKG_FCFLAGS
 @vindex PKG_OBJCFLAGS
 @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, @code{PKG_FFLAGS},
-@code{PKG_FCFLAGS}, and @code{PKG_OBJCFLAGS} (for the C, C++, FORTRAN
-77, Fortran 9x, and Objective C compilers, respectively) in the file
-@file{Makevars} in the compilation directory (or, of course, create the
-object files directly from the command line).
+@code{PKG_FCFLAGS}, @code{PKG_OBJCFLAGS}, and @code{PKG_OBJCXXFLAGS}
+(for the C, C++, FORTRAN 77, Fortran 9x, Objective C, and Objective C++
+compilers, respectively) in the file @file{Makevars} in the compilation
+directory (or, of course, create the object files directly from the
+command line).
 @vindex PKG_LIBS
 Similarly, variable @code{PKG_LIBS} in @file{Makevars} can be used for
 additional @samp{-l} and @samp{-L} flags to be passed to the linker when
