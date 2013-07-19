@@ -3253,7 +3253,8 @@ setRlibs <-
         if(any(sapply(res, length) > 0L)) {
             out <- format(res)
             if(!all(names(res) %in% c("suggests_but_not_installed",
-                                      "enhances_but_not_installed"))) {
+                                      "enhances_but_not_installed",
+                                      "many_depends"))) {
                 errorLog(Log)
                 printLog(Log, paste(out, collapse = "\n"), "\n")
                 if(length(res$suggested_but_not_installed))
