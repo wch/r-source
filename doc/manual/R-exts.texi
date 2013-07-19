@@ -529,8 +529,10 @@ The general rules are
 @itemize @bullet
 @item
 Packages whose namespace only is needed to load the package using
-@code{library(@var{pkgname})} must be listed in the @samp{Imports}
-field and not in the @samp{Depends} field.
+@code{library(@var{pkgname})} must be listed in the @samp{Imports} field
+and not in the @samp{Depends} field.  Packages listed in @code{imports}
+or @code{importFrom} directives in the @file{NAMESPACE} file should
+almost always be in @samp{Imports} and not @samp{Depends}.
 @item
 Packages that need to be attached to successfully load the package using
 @code{library(@var{pkgname})} must be listed in the @samp{Depends}
