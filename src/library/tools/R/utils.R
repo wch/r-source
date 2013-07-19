@@ -352,8 +352,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(length(grep("MiKTeX", ver[1L]))) {
             ## AFAICS need separate -I for each element of texinputs.
             texinputs <- c(texinputs0, Rtexinputs, Rbstinputs)
-        texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
-        paths <- paste ("-I", shQuote(texinputs))
+            texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
+            paths <- paste ("-I", shQuote(texinputs))
             extra <- paste(extra, paste(paths, collapse = " "))
         }
         ## 'file' could be a file path
