@@ -614,7 +614,8 @@ function(package, dir, lib.loc = NULL,
         functions <- sapply(exprs, function(e) as.character(e[[1L]]))
         ## Catch assignments: checkDocFiles() will report these, so drop
         ## them here.
-        ind <- !(functions %in% c("<-", "="))
+        ## And also unary/binary operators
+        ind <- !(functions %in% c("<-", "=", "+", "-"))
         exprs <- exprs[ind]
         functions <- functions[ind]
         functions <- .transform_S3_method_markup(as.character(functions))
