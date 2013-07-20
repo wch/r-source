@@ -64,8 +64,7 @@ test-Internet:
 
 test-Standalone:
 	@echo "testing building standalone Rmath"
-	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
-	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
+	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win check || exit 1
 
 
 clean:

@@ -35,6 +35,7 @@ else
 test: test-static.exe test.exe
 endif
 
+
 ## see R-admin for alternatives
 test.exe: test.c
 	$(CC) -I../../include -DRMATH_DLL -o $@ $< -L. Rmath.dll
@@ -43,10 +44,21 @@ test-static.exe: test.c
 	$(CC) -I../../include -o $@ $< -L. libRmath.a
 	./$@
 
+check: distclean
+	@rm -f check.log
+	@if test -n "${TEST_MC_CORES}"; then \
+	  echo "using ${TEST_MC_CORES} cores" > check.log; \
+	  $(MAKE) -f Makefile.win -j ${TEST_MC_CORES} all >> check.log 2>&1; \
+	  $(MAKE) -f Makefile.win test >> check.log 2>&1; \
+	else \
+	  $(MAKE) -f Makefile.win all test > check.log 2>&1; \
+	fi
+	@$(ECHO) "check output can be found in src/nmath/standalone/check.log"
+
 clean:
-	$(RM) $(SOURCES_NMATH) *.o *.d *.def Makedeps stamp-src
+	@$(RM) $(SOURCES_NMATH) *.o *.d *.def Makedeps stamp-src
 distclean: clean
-	$(RM) *.a Rmath.dll test*.exe
+	@$(RM) *.a Rmath.dll test*.exe check.log
 
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
 CPPFLAGS=-I.. -I../../include $(DEFS)
