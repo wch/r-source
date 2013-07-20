@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2013-03-18 22:13+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -113,11 +113,11 @@ msgstr "seulement le premier élément est utilisé comme nom de variable"
 msgid "invalid expression in '%s'"
 msgstr "expression incorrecte dans '%s'"
 
-#: deriv.c:924 model.c:91
+#: deriv.c:926 model.c:92
 msgid "invalid variable names"
 msgstr "nom de variable incorrect"
 
-#: deriv.c:933
+#: deriv.c:935
 msgid "invalid tag"
 msgstr "marque (tag) incorrecte"
 
@@ -239,146 +239,146 @@ msgstr "vmethod incorrecte"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "l'algorithme de Burg n'a pas trouvé la correlation partielle"
 
-#: model.c:89
+#: model.c:90
 msgid "invalid variables"
 msgstr "variables incorrectes"
 
-#: model.c:93 model.c:98
+#: model.c:94 model.c:99
 msgid "number of variables != number of variable names"
 msgstr "le nombre de variables n'est pas égal au nombre de noms de variables"
 
-#: model.c:96
+#: model.c:97
 msgid "invalid extra variables"
 msgstr "variables supplémentaires incorrectes"
 
-#: model.c:100
+#: model.c:101
 msgid "invalid extra variable names"
 msgstr "noms de variables supplémentaires incorrects"
 
-#: model.c:121
+#: model.c:122
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "noms trop longs dans '%s'"
 
-#: model.c:148
+#: model.c:149
 #, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr "type (%s) incorrect pour la variable '%s'"
 
-#: model.c:153
+#: model.c:154
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr "les longueurs des variables diffèrent (trouvé pour '%s')"
 
-#: model.c:207
+#: model.c:208
 msgid "invalid result from na.action"
 msgstr "résultat incorrect de na.action"
 
-#: model.c:363 model.c:371 optim.c:190
+#: model.c:365 model.c:373 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
 
-#: model.c:382
+#: model.c:384
 msgid "invalid model frame"
 msgstr "trame de modèle incorrect"
 
-#: model.c:384
+#: model.c:386
 msgid "do not know how many cases"
 msgstr "nombre de cas inconnu"
 
-#: model.c:408
+#: model.c:410
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "les longueurs des variables diffèrent (trouvé pour la variable %d)"
 
-#: model.c:412 model.c:419
+#: model.c:414 model.c:421
 #, c-format
 msgid "variable %d has no levels"
 msgstr "la variable %d n'a pas de niveaux"
 
-#: model.c:531
+#: model.c:533
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "la réponse est apparue dans le membre de droite et y a été éliminée"
 
-#: model.c:551
+#: model.c:553
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "le terme %d nécessite %.0g colonnes "
 
-#: model.c:555
+#: model.c:557
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "la matrice nécessite %.0g colonnes"
 
-#: model.c:566
+#: model.c:568
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 "problème avec le terme %d dans model.matrix : aucune colonne n'est assignée"
 
-#: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
+#: model.c:617 model.c:622 model.c:628 model.c:639 model.c:645 model.c:651
 msgid "term names will be truncated"
 msgstr "les noms des termes seront tronqués"
 
-#: model.c:629
+#: model.c:631
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
 "des variables complexes ne sont pas encore acceptées dans les matrices de "
 "modèle"
 
-#: model.c:653
+#: model.c:655
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr ""
 "les variables de type '%s' ne sont pas autorisées dans des matrices de modèle"
 
-#: model.c:875
+#: model.c:877
 msgid "invalid formula in 'update'"
 msgstr "formule de modèle incorrecte dans 'update'"
 
-#: model.c:909
+#: model.c:911
 msgid "formula expected"
 msgstr "formule de modèle attendue"
 
-#: model.c:1040
+#: model.c:1042
 msgid "invalid term in model formula"
 msgstr "terme incorrect dans une formule de modèle"
 
-#: model.c:1115
+#: model.c:1117
 msgid "invalid model formula"
 msgstr "formule de modèle incorrecte"
 
-#: model.c:1141 model.c:1389
+#: model.c:1143 model.c:1391
 msgid "invalid power in formula"
 msgstr "puissance incorrecte dans une formule de modèle"
 
-#: model.c:1177
+#: model.c:1179
 msgid "invalid model formula in ExtractVars"
 msgstr "formule de modèle incorrecte dans ExtractVars"
 
-#: model.c:1511
+#: model.c:1514
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "nom dupliqué '%s' dans le data frame utilisant '.'"
 
-#: model.c:1568
+#: model.c:1572
 msgid "invalid model formula in EncodeVars"
 msgstr "formule de modèle incorrecte dans EncodeVars"
 
-#: model.c:1654
+#: model.c:1658
 msgid "argument is not a valid model"
 msgstr "l'argument n'est pas un modèle correct"
 
-#: model.c:1664
+#: model.c:1668
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' doit être NULL ou un vecteur de chaîne de caractères"
 
-#: model.c:1676
+#: model.c:1680
 msgid "'data' argument is of the wrong type"
 msgstr "l'argument 'data' est d'un mauvais type"
 
-#: model.c:1942
+#: model.c:1948
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' dans la formule et pas d'argument 'data'"
 
@@ -447,17 +447,17 @@ msgstr "'rho' doit être un environnement"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' n'est pas un vecteur numérique de longueur correcte"
 
-#: nls.c:314 nls.c:342
+#: nls.c:311 nls.c:341
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Valeur manquante ou infinie obtenue au cours du calcul du modèle"
 
-#: nls.c:320
+#: nls.c:318
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 "la variable '%s' est une valeur entière, non un nombre à virgule flottante"
 
-#: nls.c:322
+#: nls.c:320
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "la variable '%s' n'est pas numérique"

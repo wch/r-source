@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12+0000\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2013-03-19 21:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -18,39 +18,36 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: tcltk.c:63
 msgid "parse error in R expression"
 msgstr "ошибка разбора выражения R"
 
-#: tcltk.c:159
-#: tcltk.c:233
+#: tcltk.c:159 tcltk.c:236
 msgid "tcl error.\n"
 msgstr "ошибка tcl.\n"
 
-#: tcltk.c:187
-#: tcltk.c:714
+#: tcltk.c:188 tcltk.c:733
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
-#: tcltk.c:282
-#: tcltk.c:300
-#: tcltk.c:370
-#: tcltk.c:433
-#: tcltk.c:485
+#: tcltk.c:292 tcltk.c:310 tcltk.c:383 tcltk.c:446 tcltk.c:498
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "неправильный tclObj -- может быть, сохраненный в другой сессии?"
 
-#: tcltk.c:589
+#: tcltk.c:608
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
-msgstr "список аргументов слишком длинен во внутренней функции tcltk 'callback_closure'"
+msgstr ""
+"список аргументов слишком длинен во внутренней функции tcltk "
+"'callback_closure'"
 
-#: tcltk.c:622
+#: tcltk.c:641
 msgid "argument is not of correct type"
 msgstr "аргументы неправильного типа"
 
-#: tcltk.c:673
+#: tcltk.c:692
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "нет переменной DISPLAY, поэтому Tk недоступен"
 
@@ -64,4 +61,3 @@ msgstr "Tcl не является последней загруженной инструкцией"
 
 #~ msgid "Tcl already loaded"
 #~ msgstr "Tcl уже загружен"
-

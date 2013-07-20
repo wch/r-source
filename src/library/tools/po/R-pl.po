@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1667,10 +1667,28 @@ msgstr "BŁĄD: wersja tego programu to R %s, wymagana jest R %s %s"
 msgid "loading failed"
 msgstr "ładowanie nie powiodło się"
 
-msgid "Expected %s, got %s in evaluating %s"
+msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
-msgid "Failed to get expected %s in evaluating %s"
+msgid "assertCondition: caught %s"
+msgstr ""
+
+msgid "Got %s in evaluating %s; wanted %s"
+msgstr ""
+
+msgid "Failed to get %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get error in evaluating %s"
+msgstr ""
+
+msgid "Asserted error: %s"
+msgstr ""
+
+msgid "Got warning in evaluating %s, but also an error"
+msgstr ""
+
+msgid "Asserted warning: %s"
 msgstr ""
 
 # tools/R/bibstyle.R: 339
@@ -2785,8 +2803,10 @@ msgstr[2] ""
 #                         "Found an obsolete call in the following function:",
 #                         "Found an obsolete call in the following functions:"
 #                         )
-msgid "Found an obsolete call in the following function:"
-msgid_plural "Found an obsolete call in the following functions:"
+#, fuzzy
+msgid "Found an obsolete/platform-specific call in the following function:"
+msgid_plural ""
+"Found an obsolete/platform-specific call in the following functions:"
 msgstr[0] "Znaleziono przestarzałe wywołanie w następującej funkcji:"
 msgstr[1] "Znaleziono przestarzałe wywołanie w następujących funkcjach:"
 msgstr[2] "Znaleziono przestarzałe wywołanie w następujących funkcjach:"
@@ -2796,8 +2816,13 @@ msgstr[2] "Znaleziono przestarzałe wywołanie w następujących funkcjach:"
 #                         "Found an obsolete call in methods for the following S4 generic:",
 #                         "Found an obsolete call in methods for the following S4 generics:"
 #                         )
-msgid "Found an obsolete call in methods for the following S4 generic:"
-msgid_plural "Found an obsolete call in methods for the following S4 generics:"
+#, fuzzy
+msgid ""
+"Found an obsolete/platform-specific call in methods for the following S4 "
+"generic:"
+msgid_plural ""
+"Found an obsolete/platform-specific call in methods for the following S4 "
+"generics:"
 msgstr[0] ""
 "Znaleziono przestarzałe wywołanie w metodach w następującej funkcji ogólnej "
 "S4:"
@@ -2813,9 +2838,13 @@ msgstr[2] ""
 #                         "Found an obsolete call in methods for the following reference class:",
 #                         "Found an obsolete call in methods for the following reference classes:"
 #                         )
-msgid "Found an obsolete call in methods for the following reference class:"
+#, fuzzy
+msgid ""
+"Found an obsolete/platform-specific call in methods for the following "
+"reference class:"
 msgid_plural ""
-"Found an obsolete call in methods for the following reference classes:"
+"Found an obsolete/platform-specific call in methods for the following "
+"reference classes:"
 msgstr[0] ""
 "Znaleziono przestarzałe wywołanie w metodach w następującej klasie "
 "referencyjnej:"
@@ -2847,6 +2876,12 @@ msgid_plural "Found the defunct/removed functions:"
 msgstr[0] "Znaleziono zlikwidowaną/usuniętą funkcję:"
 msgstr[1] "Znaleziono zlikwidowane/usunięte funkcje:"
 msgstr[2] "Znaleziono zlikwidowane/usunięte funkcje:"
+
+msgid "Found the platform-specific device:"
+msgid_plural "Found the platform-specific devices:"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 # tools/R/QC.R: 6274
 # message(sprintf(ngettext(sum(!ok),

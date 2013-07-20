@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2013-03-19 21:46-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -284,6 +284,9 @@ msgstr "'order.max' должен быть >= 1"
 
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' должен быть < 'n.used'"
+
+msgid "zero-variance series"
+msgstr ""
 
 msgid "'n.ahead' must be at least 1"
 msgstr "'n.ahead' должен быть по меньшей мере 1"
@@ -1218,6 +1221,9 @@ msgstr "пустой кластер: попробуйте другой набор исходных центров"
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "количество центров кластеров должно быть в пределах между 1 и nrow(x)"
 
+msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
+msgstr ""
+
 msgid "invalid nrow(x)"
 msgstr "неправильный nrow(x)"
 
@@ -1602,8 +1608,9 @@ msgstr "f.lower = f(lower) -- это NA"
 msgid "f.upper = f(upper) is NA"
 msgstr "f.upper = f(upper) -- это NA"
 
-msgid "f() values at end points not of opposite sign"
-msgstr "f() значений на концевых точках не противоположного знака"
+#, fuzzy
+msgid "invalid 'extendInt'; please report"
+msgstr "недопустимый аргумент 'method'"
 
 #, fuzzy
 msgid "no sign change found in %d iterations"
@@ -1612,6 +1619,9 @@ msgstr "не сошлось за %d итерацию"
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+
+msgid "f() values at end points not of opposite sign"
+msgstr "f() значений на концевых точках не противоположного знака"
 
 #, fuzzy
 msgid "convergence problem in zero finding:"

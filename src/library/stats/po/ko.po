@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2013-02-21 20:47-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -119,11 +119,11 @@ msgstr "오로지 첫번째 요소만이 변수명으로서 사용되었습니�
 msgid "invalid expression in '%s'"
 msgstr "'%s'에 유효하지 않은 표현식이 있습니다"
 
-#: deriv.c:924 model.c:91
+#: deriv.c:926 model.c:92
 msgid "invalid variable names"
 msgstr "유효하지 않은 변수명입니다"
 
-#: deriv.c:933
+#: deriv.c:935
 msgid "invalid tag"
 msgstr "유효하지 않은 태그입니다"
 
@@ -247,144 +247,144 @@ msgstr "유효하지 않은 vmethod입니다"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "partial correlation을 찾기 위해 사용된 Burg의 알고리즘이 실패했습니다"
 
-#: model.c:89
+#: model.c:90
 msgid "invalid variables"
 msgstr "유효하지 않은 변수들입니다"
 
-#: model.c:93 model.c:98
+#: model.c:94 model.c:99
 msgid "number of variables != number of variable names"
 msgstr "변수의 개수가 변수명의 개수와 같지 않습니다"
 
-#: model.c:96
+#: model.c:97
 msgid "invalid extra variables"
 msgstr "유효하지 않은 추가 변수들입니다"
 
-#: model.c:100
+#: model.c:101
 msgid "invalid extra variable names"
 msgstr "유효하지 않은 추가 변수명들입니다"
 
-#: model.c:121
+#: model.c:122
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "'%s'내에 너무 긴 이름들이 있습니다"
 
-#: model.c:148
+#: model.c:149
 #, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr "변수 %2$s에 유효하지 않은 타입 (%1$s)입니다"
 
-#: model.c:153
+#: model.c:154
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr ""
 
-#: model.c:207
+#: model.c:208
 msgid "invalid result from na.action"
 msgstr "na.action으로부터 결과가 유효하지 않습니다"
 
-#: model.c:363 model.c:371 optim.c:190
+#: model.c:365 model.c:373 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "유효하지 않은 '%s' 인자입니다"
 
-#: model.c:382
+#: model.c:384
 msgid "invalid model frame"
 msgstr "유효하지 않은 모델프레임입니다"
 
-#: model.c:384
+#: model.c:386
 msgid "do not know how many cases"
 msgstr "얼마나 많은 경우들이 있는지 모릅니다"
 
-#: model.c:408
+#: model.c:410
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr ""
 
-#: model.c:412 model.c:419
+#: model.c:414 model.c:421
 #, c-format
 msgid "variable %d has no levels"
 msgstr "변수 %d은 아무런 level을 가지고 있지 않습니다"
 
-#: model.c:531
+#: model.c:533
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "종속변수가 우변에서 발견되어 이를 포함시키지 않았습니다"
 
-#: model.c:551
+#: model.c:553
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "항 %d는 %.0g 열들을 필요로 합니다"
 
-#: model.c:555
+#: model.c:557
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "행렬은 %.0g 열들을 필요로 합니다"
 
-#: model.c:566
+#: model.c:568
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 "model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습니"
 "다"
 
-#: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
+#: model.c:617 model.c:622 model.c:628 model.c:639 model.c:645 model.c:651
 msgid "term names will be truncated"
 msgstr "항 이름들이 잘려질 것입니다"
 
-#: model.c:629
+#: model.c:631
 msgid "complex variables are not currently allowed in model matrices"
 msgstr "복소수 변수들은 현재 model matrices에서는 허용되지 않습니다"
 
-#: model.c:653
+#: model.c:655
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "유형 '%s'를 가지는 변수들은 model matrices에서 허용되지 않습니다"
 
-#: model.c:875
+#: model.c:877
 msgid "invalid formula in 'update'"
 msgstr "'update'내에 유효하지 않은 formula가 있습니다"
 
-#: model.c:909
+#: model.c:911
 msgid "formula expected"
 msgstr "formula가 와야 합니다"
 
-#: model.c:1040
+#: model.c:1042
 msgid "invalid term in model formula"
 msgstr "모델식에 유효하지 않은 항이 있습니다"
 
-#: model.c:1115
+#: model.c:1117
 msgid "invalid model formula"
 msgstr "유효하지 않은 모델식입니다"
 
-#: model.c:1141 model.c:1389
+#: model.c:1143 model.c:1391
 msgid "invalid power in formula"
 msgstr ""
 
-#: model.c:1177
+#: model.c:1179
 msgid "invalid model formula in ExtractVars"
 msgstr "ExtractVars에 유효하지 않은 모델식이 있습니다"
 
-#: model.c:1511
+#: model.c:1514
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "'.'를 이용한 데이터 프레임에서 중복된 이름 '%s'을 발견했습니다"
 
-#: model.c:1568
+#: model.c:1572
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars내에 유효하지 않은 모델식이 발견되었습니다"
 
-#: model.c:1654
+#: model.c:1658
 msgid "argument is not a valid model"
 msgstr "인자가 유효한 모델이 아닙니다"
 
-#: model.c:1664
+#: model.c:1668
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials'는 반드시 NULL 또는 문자형 벡터이어야 합니다"
 
-#: model.c:1676
+#: model.c:1680
 msgid "'data' argument is of the wrong type"
 msgstr "'data' 인자의 유형이 잘못되었습니다"
 
-#: model.c:1942
+#: model.c:1948
 msgid "'.' in formula and no 'data' argument"
 msgstr "formula 안에  '.'가 사용되었는데 'data' 인자가 없습니다"
 
@@ -452,16 +452,16 @@ msgstr "'rho'는 반드시 environment이어야 합니다"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'은 올바른 길이를 가지는 수치형 벡터가 아닙니다"
 
-#: nls.c:314 nls.c:342
+#: nls.c:311 nls.c:341
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "모델 평가시에 값이 누락되거나 무한값이 생성되었습니다"
 
-#: nls.c:320
+#: nls.c:318
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "변수 '%s'는 약분할 수 없는 정수입니다"
 
-#: nls.c:322
+#: nls.c:320
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "변수 '%s'는 수치형이 아닙니다"

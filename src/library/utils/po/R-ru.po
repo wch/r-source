@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2013-03-19 22:58-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -887,6 +887,10 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "не могу перевести 'x' в римскую"
 
+#, fuzzy
+msgid "Could not create file %s, aborting"
+msgstr "не могу восстановить информацию о типе"
+
 msgid "no valid packages were specified"
 msgstr "правильные пакеты не указаны"
 
@@ -987,6 +991,10 @@ msgstr "миниатюра %s не найдена"
 #, fuzzy
 msgid "vignette %s has no PDF/HTML"
 msgstr "у миниатюры %s нет PDF"
+
+#, fuzzy
+msgid "vignette %s has no R code"
+msgstr "миниатюра %s не найдена"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() нельзя использовать неинтерактивно"

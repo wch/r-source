@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:37\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1409,6 +1409,9 @@ msgstr "'vec' musi zostać posortowany w sposób niemalejący"
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "używanie pierwszego elementu 'value' typu \"expression\""
 
+msgid "class of 'x' was discarded"
+msgstr ""
+
 # src/library/base/R/format.R: 129
 # stop("'mode' must be \"double\" (\"real\"), \"integer\" or \"character\"")
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
@@ -2633,6 +2636,9 @@ msgstr "długość 'scale' musi równać się liczbie kolumn 'x'"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "określ albo 'nmax' albo 'n', ale nie oba naraz"
 
+msgid "'from' cannot be NA, NaN or infinite"
+msgstr ""
+
 # src/library/base/R/seq.R: 36
 # stop("argument 'length.out' must be of length 1")
 msgid "argument 'length.out' must be of length 1"
@@ -2642,6 +2648,9 @@ msgstr "argument 'length.out' musi mieć długość 1"
 # warning("first element used of 'length.out' argument")
 msgid "first element used of 'length.out' argument"
 msgstr "użyto pierwszego elementu argumentu 'length.out'"
+
+msgid "'to' cannot be NA, NaN or infinite"
+msgstr ""
 
 # src/library/base/R/seq.R: 61
 # stop("invalid (to - from)/by in seq(.)")

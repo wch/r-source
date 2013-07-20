@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-20 07:20\n"
+"POT-Creation-Date: 2013-07-20 09:37\n"
 "PO-Revision-Date: 2013-02-28 16:30+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -417,7 +417,8 @@ msgstr "Anzahl der Zeilen von 'locations' und 'x' müssen gleich sein"
 msgid "length of 'angles' must equal 'ncol(x)'"
 msgstr "Länge von 'angels' muss 'ncol(x)' entsprechen"
 
-msgid "no non-missing values"
+#, fuzzy
+msgid "no finite and non-missing values"
 msgstr "ausschließlich fehlende Werte"
 
 msgid "'scale' must be positive"

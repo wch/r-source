@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -269,6 +269,9 @@ msgstr "'order.max'必需大于等于一"
 
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max'必需小于'n.used'"
+
+msgid "zero-variance series"
+msgstr ""
 
 msgid "'n.ahead' must be at least 1"
 msgstr "'n.ahead'至少必需为一"
@@ -1175,6 +1178,9 @@ msgstr "空的群集: 请试试更精确一点的初始中心集"
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "群集中心数目必需在一和nrow(x) 这间"
 
+msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
+msgstr ""
+
 msgid "invalid nrow(x)"
 msgstr "nrow(x)不对"
 
@@ -1543,8 +1549,9 @@ msgstr "f.lower = f(lower)的值为NA"
 msgid "f.upper = f(upper) is NA"
 msgstr "f.upper = f(upper)的值为NA "
 
-msgid "f() values at end points not of opposite sign"
-msgstr "位于极点边的f()值之正负号不相反"
+#, fuzzy
+msgid "invalid 'extendInt'; please report"
+msgstr "'method'参数不对"
 
 #, fuzzy
 msgid "no sign change found in %d iterations"
@@ -1553,6 +1560,9 @@ msgstr "%d迭代仍没有聚合"
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+
+msgid "f() values at end points not of opposite sign"
+msgstr "位于极点边的f()值之正负号不相反"
 
 #, fuzzy
 msgid "convergence problem in zero finding:"

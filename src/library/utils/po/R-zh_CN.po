@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -850,6 +850,10 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "无法将'x'转变成罗马数"
 
+#, fuzzy
+msgid "Could not create file %s, aborting"
+msgstr "无法恢復种类的信息"
+
 msgid "no valid packages were specified"
 msgstr "没有设定程序包"
 
@@ -950,6 +954,10 @@ msgstr "没有找到小文品%s"
 #, fuzzy
 msgid "vignette %s has no PDF/HTML"
 msgstr "小文品%s没有PDF文件"
+
+#, fuzzy
+msgid "vignette %s has no R code"
+msgstr "没有找到小文品%s"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list()不能在非互交形式下使用"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -653,6 +653,9 @@ msgstr "'order.max' musi być >= 1"
 # stop("'order.max' must be < 'n.used'")
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' musi być < 'n.used'"
+
+msgid "zero-variance series"
+msgstr ""
 
 # stats/R/ar.R: 194
 # stop("'n.ahead' must be at least 1")
@@ -2640,6 +2643,9 @@ msgstr "pusta grupa: spróbuj lepszego zestawu początkowych centrów"
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "liczba centrów grup musi leżeć pomiędzy 1 a 'nrow(x)'"
 
+msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
+msgstr ""
+
 # stats/R/kmeans.R: 78
 # stop("invalid nrow(x)")
 msgid "invalid nrow(x)"
@@ -3328,10 +3334,11 @@ msgstr "'f.lower = f(lower)' ma wartość NA"
 msgid "f.upper = f(upper) is NA"
 msgstr "'f.upper = f(upper)' ma wartość NA"
 
-# stats/R/nlm.R: 63
-# stop("f() values at end points not of opposite sign")
-msgid "f() values at end points not of opposite sign"
-msgstr "wartości 'f()' na końcach nie są przeciwnego znaku"
+# stats/R/glm.R: 56
+# stop("invalid 'method' argument")
+#, fuzzy
+msgid "invalid 'extendInt'; please report"
+msgstr "niepoprawny argument 'method'"
 
 # stats/R/kmeans.R: 37
 # warning(sprintf(ngettext(iter.max,
@@ -3355,6 +3362,11 @@ msgstr "nie zbiegł się w %d iteracji"
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+
+# stats/R/nlm.R: 63
+# stop("f() values at end points not of opposite sign")
+msgid "f() values at end points not of opposite sign"
+msgstr "wartości 'f()' na końcach nie są przeciwnego znaku"
 
 # stats/R/arima.R: 231
 # warning(gettextf("possible convergence problem: optim gave code = %d",

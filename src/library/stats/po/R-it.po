@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -291,6 +291,9 @@ msgstr "'order.max' deve essere >= 1"
 #, fuzzy
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' deve essere >= 1"
+
+msgid "zero-variance series"
+msgstr ""
 
 #, fuzzy
 msgid "'n.ahead' must be at least 1"
@@ -1286,6 +1289,9 @@ msgstr "cluster vuoto: provare con un insieme di centri iniziali migliore"
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "il numero di centri dei cluster deve essere tra 1 e nrow(x)"
 
+msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
+msgstr ""
+
 #, fuzzy
 msgid "invalid nrow(x)"
 msgstr "'x' non valida"
@@ -1688,8 +1694,9 @@ msgstr ""
 msgid "f.upper = f(upper) is NA"
 msgstr ""
 
-msgid "f() values at end points not of opposite sign"
-msgstr "i valori di f() negli estremi hanno segno opposto"
+#, fuzzy
+msgid "invalid 'extendInt'; please report"
+msgstr "argomento 'data' non valido"
 
 #, fuzzy
 msgid "no sign change found in %d iterations"
@@ -1698,6 +1705,9 @@ msgstr "non converge in %d iterazioni"
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+
+msgid "f() values at end points not of opposite sign"
+msgstr "i valori di f() negli estremi hanno segno opposto"
 
 #, fuzzy
 msgid "convergence problem in zero finding:"

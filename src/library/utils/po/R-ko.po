@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2013-03-10 12:14-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -892,6 +892,10 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "'x'를 roman으로 강제변환을 할 수 없습니다"
 
+#, fuzzy
+msgid "Could not create file %s, aborting"
+msgstr "유형에 관련된 정보를 복구할 수 없습니다"
+
 msgid "no valid packages were specified"
 msgstr "유효한 패키지들이 지정되지 않았습니다"
 
@@ -995,6 +999,10 @@ msgstr "비니에트 %s를 찾을 수 없습니다"
 #, fuzzy
 msgid "vignette %s has no PDF/HTML"
 msgstr "비니에트 %s는 PDF를 가지지 않습니다"
+
+#, fuzzy
+msgid "vignette %s has no R code"
+msgstr "비니에트 %s를 찾을 수 없습니다"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list()는 비대화식으로 사용될 수 없습니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -283,6 +283,9 @@ msgstr "'order.max' deve ser >= 1"
 
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' deve ser < 'n.used'"
+
+msgid "zero-variance series"
+msgstr ""
 
 msgid "'n.ahead' must be at least 1"
 msgstr "'lag.max' deve ser ao menos 1"
@@ -1256,6 +1259,9 @@ msgstr "agrupamento vazio: experimente um jogo melhor de centros iniciais"
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "número de centros de agrupamento deve estar entre 1 e nrow(x)"
 
+msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
+msgstr ""
+
 #, fuzzy
 msgid "invalid nrow(x)"
 msgstr "'x' inválido"
@@ -1658,8 +1664,9 @@ msgstr "f.lower = f(lower) é NA"
 msgid "f.upper = f(upper) is NA"
 msgstr "f.upper = f(upper) é NA"
 
-msgid "f() values at end points not of opposite sign"
-msgstr "valores f() nas extremidades não têm sinais opostos"
+#, fuzzy
+msgid "invalid 'extendInt'; please report"
+msgstr "argumento 'method' inválido"
 
 #, fuzzy
 msgid "no sign change found in %d iterations"
@@ -1668,6 +1675,9 @@ msgstr "não convergiu em %d iterações"
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+
+msgid "f() values at end points not of opposite sign"
+msgstr "valores f() nas extremidades não têm sinais opostos"
 
 #, fuzzy
 msgid "convergence problem in zero finding:"

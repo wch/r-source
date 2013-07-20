@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2013-03-01 05:19+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -113,11 +113,11 @@ msgstr " 最初の要素だけが変数名として使われました "
 msgid "invalid expression in '%s'"
 msgstr " '%s' 中の式が不正です "
 
-#: deriv.c:924 model.c:91
+#: deriv.c:926 model.c:92
 msgid "invalid variable names"
 msgstr " 変数名が不正です "
 
-#: deriv.c:933
+#: deriv.c:935
 msgid "invalid tag"
 msgstr " タグが不正です "
 
@@ -239,143 +239,143 @@ msgstr " 不正な vmethod です "
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr " Burg のアルゴリズムが偏相関を見つけ損ないました "
 
-#: model.c:89
+#: model.c:90
 msgid "invalid variables"
 msgstr " 変数が不正です "
 
-#: model.c:93 model.c:98
+#: model.c:94 model.c:99
 msgid "number of variables != number of variable names"
 msgstr " 変数の個数が変数名の個数と一致していません "
 
-#: model.c:96
+#: model.c:97
 msgid "invalid extra variables"
 msgstr " 追加変数が不正です "
 
-#: model.c:100
+#: model.c:101
 msgid "invalid extra variable names"
 msgstr " 追加変数名が不正です "
 
-#: model.c:121
+#: model.c:122
 #, c-format
 msgid "overlong names in '%s'"
 msgstr " '%s' の名前が長すぎます "
 
-#: model.c:148
+#: model.c:149
 #, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr " 型 (%s) は変数 '%s' に対しては不正です "
 
-#: model.c:153
+#: model.c:154
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr " 変数 ('%s' に基づく) の長さが異なります "
 
-#: model.c:207
+#: model.c:208
 msgid "invalid result from na.action"
 msgstr " na.action の結果が不正です "
 
-#: model.c:363 model.c:371 optim.c:190
+#: model.c:365 model.c:373 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
 
-#: model.c:382
+#: model.c:384
 msgid "invalid model frame"
 msgstr " モデルフレームが不正です "
 
-#: model.c:384
+#: model.c:386
 msgid "do not know how many cases"
 msgstr " ケースの数が幾つあるか分かりません "
 
-#: model.c:408
+#: model.c:410
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr " 変数 (%d 変数に基づく) の長さが異なります "
 
-#: model.c:412 model.c:419
+#: model.c:414 model.c:421
 #, c-format
 msgid "variable %d has no levels"
 msgstr " 変数 %d は水準を持ちません "
 
-#: model.c:531
+#: model.c:533
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr " 目的変数が右辺にあるため、捨て去られました "
 
-#: model.c:551
+#: model.c:553
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr " 項 %d は %.0g 行を必要とするかもしれません "
 
-#: model.c:555
+#: model.c:557
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr " 行列は %.0g 行を必要とするかもしれません "
 
-#: model.c:566
+#: model.c:568
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 " model.matrix 中の項 %d に問題があります: いかなる列も指定されていません "
 
-#: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
+#: model.c:617 model.c:622 model.c:628 model.c:639 model.c:645 model.c:651
 msgid "term names will be truncated"
 msgstr " 項の名前は切りつめらられるでしょう "
 
-#: model.c:629
+#: model.c:631
 msgid "complex variables are not currently allowed in model matrices"
 msgstr " モデル行列中では複素数は現在許されていません "
 
-#: model.c:653
+#: model.c:655
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr " タイプ '%s' の変数はモデル行列中では許されません "
 
-#: model.c:875
+#: model.c:877
 msgid "invalid formula in 'update'"
 msgstr " 'update' 中の式が不正です "
 
-#: model.c:909
+#: model.c:911
 msgid "formula expected"
 msgstr " 式が期待されています "
 
-#: model.c:1040
+#: model.c:1042
 msgid "invalid term in model formula"
 msgstr " モデル式に不正な項があります "
 
-#: model.c:1115
+#: model.c:1117
 msgid "invalid model formula"
 msgstr " モデル式が不正です "
 
-#: model.c:1141 model.c:1389
+#: model.c:1143 model.c:1391
 msgid "invalid power in formula"
 msgstr " モデル式中に不正なべき乗があります "
 
-#: model.c:1177
+#: model.c:1179
 msgid "invalid model formula in ExtractVars"
 msgstr " ExtractVars 中のモデル式が不正です "
 
-#: model.c:1511
+#: model.c:1514
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr " データフレーム中の重複した名前 '%s' を '.' を使って複製しました "
 
-#: model.c:1568
+#: model.c:1572
 msgid "invalid model formula in EncodeVars"
 msgstr " EncodeVars 中のモデル式が不正です "
 
-#: model.c:1654
+#: model.c:1658
 msgid "argument is not a valid model"
 msgstr " 引数は有効なモデルではありません "
 
-#: model.c:1664
+#: model.c:1668
 msgid "'specials' must be NULL or a character vector"
 msgstr " 'specials' は NULL または文字ベクタでなくてはなりません "
 
-#: model.c:1676
+#: model.c:1680
 msgid "'data' argument is of the wrong type"
 msgstr " 'data' 引数が誤った型です "
 
-#: model.c:1942
+#: model.c:1948
 msgid "'.' in formula and no 'data' argument"
 msgstr " '.' が式中にありますが, 'data' 引数がありません "
 
@@ -443,16 +443,16 @@ msgstr " 'rho' は環境 (environment) でなければなりません "
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr " 'dir' は正しい長さの数値ベクトルではありません "
 
-#: nls.c:314 nls.c:342
+#: nls.c:311 nls.c:341
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr " モデルを評価する際，欠損値または無限大が生成されました "
 
-#: nls.c:320
+#: nls.c:318
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr " 変数 '%s' は整数です、数値ではありません "
 
-#: nls.c:322
+#: nls.c:320
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr " 変数 '%s' は数値ではありません "

@@ -76,7 +76,7 @@ isTRUE(x)
 \value{
   For \code{!}, a logical or raw vector(for raw \code{x}) of the same
   length as \code{x}: names, dims and dimnames are copied from \code{x},
-  and all other attributes (including class) if the no coercion is done.
+  and all other attributes (including class) if no coercion is done.
 
   For \code{|}, \code{&} and \code{xor} a logical or raw vector. The
   elements of shorter vectors are recycled as necessary (with a

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:37\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -675,6 +675,9 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve essere ordinato in ordine non decrescente"
 
 msgid "using the first element of 'value' of type \"expression\""
+msgstr ""
+
+msgid "class of 'x' was discarded"
 msgstr ""
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
@@ -1356,11 +1359,17 @@ msgstr "la lunghezza di 'scale' deve essere uguale al numero di colonne di 'x'"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "si specifichi 'nmax' o 'n', ma non entrambi"
 
+msgid "'from' cannot be NA, NaN or infinite"
+msgstr ""
+
 #, fuzzy
 msgid "argument 'length.out' must be of length 1"
 msgstr "'lenght.out' deve avere lunghezza 1"
 
 msgid "first element used of 'length.out' argument"
+msgstr ""
+
+msgid "'to' cannot be NA, NaN or infinite"
 msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"

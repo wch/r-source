@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: io.c:314 io.c:318 io.c:328 io.c:557 io.c:738 io.c:789 io.c:801 io.c:805
-#: io.c:811 io.c:1031 io.c:1032 io.c:1034 io.c:1035 io.c:1036 io.c:1037
-#: io.c:1038 io.c:1039 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:811 io.c:1033 io.c:1034 io.c:1036 io.c:1037 io.c:1038 io.c:1039
+#: io.c:1040 io.c:1041 stubs.c:39 stubs.c:59 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -32,7 +32,7 @@ msgstr ""
 msgid "invalid quote symbol set"
 msgstr ""
 
-#: io.c:349 io.c:819 io.c:1019
+#: io.c:349 io.c:819 io.c:1021
 msgid "cannot open the connection"
 msgstr ""
 
@@ -71,29 +71,29 @@ msgstr ""
 msgid "index out of range"
 msgstr ""
 
-#: io.c:1012
+#: io.c:1014
 msgid "'file' is not a connection"
 msgstr ""
 
-#: io.c:1015
+#: io.c:1017
 msgid "cannot write to this connection"
 msgstr ""
 
-#: io.c:1045
+#: io.c:1047
 msgid "'dec' must be a single character"
 msgstr ""
 
-#: io.c:1072
+#: io.c:1074
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 
-#: io.c:1102
+#: io.c:1104
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
-#: io.c:1120
+#: io.c:1122
 msgid "corrupt matrix -- dims not not match length"
 msgstr ""
 
@@ -105,19 +105,19 @@ msgstr ""
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr ""
 
-#: stubs.c:76
+#: stubs.c:77
 msgid "invalid timestamp"
 msgstr ""
 
-#: stubs.c:141 stubs.c:149
+#: stubs.c:143 stubs.c:151
 msgid "X11 dataentry cannot be loaded"
 msgstr ""
 
-#: stubs.c:145 stubs.c:174 stubs.c:180
+#: stubs.c:147 stubs.c:176 stubs.c:182
 msgid "X11 is not available"
 msgstr ""
 
-#: stubs.c:237 stubs.c:240
+#: stubs.c:240 stubs.c:243
 #, c-format
 msgid "invalid '%s' specification"
 msgstr ""
@@ -187,37 +187,37 @@ msgstr ""
 msgid "unsupported version of Windows"
 msgstr ""
 
-#: windows/util.c:274
+#: windows/util.c:275
 msgid "argument must be a character vector or a raw vector"
 msgstr ""
 
-#: windows/util.c:311
+#: windows/util.c:312
 msgid "unable to open the clipboard"
 msgstr ""
 
-#: windows/util.c:316
+#: windows/util.c:317
 msgid "unable to write to the clipboard"
 msgstr ""
 
-#: windows/util.c:395
+#: windows/util.c:397
 msgid "'title' must be a character string"
 msgstr ""
 
-#: windows/util.c:404
+#: windows/util.c:406
 msgid "'text' must be a character string"
 msgstr ""
 
-#: windows/util.c:443
+#: windows/util.c:445
 #, c-format
 msgid "'%s' must be length 1"
 msgstr ""
 
-#: windows/util.c:556
+#: windows/util.c:558
 #, c-format
 msgid "'%s' must be a list"
 msgstr ""
 
-#: windows/util.c:560
+#: windows/util.c:562
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr ""

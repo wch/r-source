@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:37\n"
 "PO-Revision-Date: 2013-02-17 18:18-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -617,6 +617,9 @@ msgstr ""
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "타입 \"expression\"을 가지는 'value'의 첫번째 요소를 사용합니다"
 
+msgid "class of 'x' was discarded"
+msgstr ""
+
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
 "'mode'는 반드시 \"double\" (\"real\"), \"integer\" 또는 \"character\"이어야 "
@@ -1222,11 +1225,17 @@ msgstr "'scale'의 길이는 반드시 'x'의 열의 개수와 같아야 합니�
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "'nmax' 또는 'n' 중 하나는 지정되어야 하지만 모두는 아닙니다"
 
+msgid "'from' cannot be NA, NaN or infinite"
+msgstr ""
+
 msgid "argument 'length.out' must be of length 1"
 msgstr "인자 'length.out'은 반드시 길이가 1이어야 합니다"
 
 msgid "first element used of 'length.out' argument"
 msgstr "'length.out' 인자에 사용된 첫번째 요소입니다"
+
+msgid "'to' cannot be NA, NaN or infinite"
+msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "seq(.)내에 유효하지 않은 (to - from)/by 입니다"

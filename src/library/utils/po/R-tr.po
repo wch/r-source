@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -828,6 +828,9 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr ""
 
+msgid "Could not create file %s, aborting"
+msgstr ""
+
 msgid "no valid packages were specified"
 msgstr ""
 
@@ -924,6 +927,9 @@ msgid "vignette %s not found"
 msgstr ""
 
 msgid "vignette %s has no PDF/HTML"
+msgstr ""
+
+msgid "vignette %s has no R code"
 msgstr ""
 
 msgid "select.list() cannot be used non-interactively"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2013-03-18 15:11+0100\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -83,8 +83,8 @@ msgstr ""
 # utils/src/windows/widgets.c: 86
 # error(_("invalid '%s' argument"), "preselect")
 #: io.c:314 io.c:318 io.c:328 io.c:557 io.c:738 io.c:789 io.c:801 io.c:805
-#: io.c:811 io.c:1031 io.c:1032 io.c:1034 io.c:1035 io.c:1036 io.c:1037
-#: io.c:1038 io.c:1039 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:811 io.c:1033 io.c:1034 io.c:1036 io.c:1037 io.c:1038 io.c:1039
+#: io.c:1040 io.c:1041 stubs.c:39 stubs.c:59 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -107,7 +107,7 @@ msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 # error(_("cannot open the connection"))
 # utils/src/io.c: 995
 # error(_("cannot open the connection"))
-#: io.c:349 io.c:819 io.c:1019
+#: io.c:349 io.c:819 io.c:1021
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
@@ -172,38 +172,38 @@ msgstr ""
 
 # utils/src/io.c: 988
 # error(_("'file' is not a connection"))
-#: io.c:1012
+#: io.c:1014
 msgid "'file' is not a connection"
 msgstr "'file' nie jest połączeniem"
 
 # utils/src/io.c: 991
 # error(_("cannot write to this connection"))
-#: io.c:1015
+#: io.c:1017
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
 
 # utils/src/io.c: 1021
 # error(_("'dec' must be a single character"))
-#: io.c:1045
+#: io.c:1047
 msgid "'dec' must be a single character"
 msgstr "'dec' musi być pojedynczym znakiem"
 
 # utils/src/io.c: 1048
 # error(_("corrupt data frame -- length of column %d does not not match nrows"), j+1)
-#: io.c:1072
+#: io.c:1074
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
-#: io.c:1102
+#: io.c:1104
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
 # utils/src/io.c: 1096
 # error(_("corrupt matrix -- dims not not match length"))
-#: io.c:1120
+#: io.c:1122
 msgid "corrupt matrix -- dims not not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
 
@@ -221,7 +221,7 @@ msgstr "'loadhistory' może zostać użyte jedynie w Rgui oraz Rterm"
 
 # utils/src/stubs.c: 76
 #  _("invalid timestamp")
-#: stubs.c:76
+#: stubs.c:77
 msgid "invalid timestamp"
 msgstr "niepoprawna sygnatura czasu"
 
@@ -229,7 +229,7 @@ msgstr "niepoprawna sygnatura czasu"
 # error(_("X11 dataentry cannot be loaded"))
 # utils/src/stubs.c: 149
 # error(_("X11 dataentry cannot be loaded"))
-#: stubs.c:141 stubs.c:149
+#: stubs.c:143 stubs.c:151
 msgid "X11 dataentry cannot be loaded"
 msgstr "moduł X11 nie może zostać załadowany"
 
@@ -239,7 +239,7 @@ msgstr "moduł X11 nie może zostać załadowany"
 # error(_("X11 is not available"))
 # utils/src/stubs.c: 180
 # error(_("X11 is not available"))
-#: stubs.c:145 stubs.c:174 stubs.c:180
+#: stubs.c:147 stubs.c:176 stubs.c:182
 msgid "X11 is not available"
 msgstr "X11 nie jest dostępne"
 
@@ -247,7 +247,7 @@ msgstr "X11 nie jest dostępne"
 # error(_("invalid '%s' specification"), "editor")
 # utils/src/stubs.c: 240
 # error(_("invalid '%s' specification"), "filename")
-#: stubs.c:237 stubs.c:240
+#: stubs.c:240 stubs.c:243
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "niepoprawne określenie '%s'"
@@ -360,51 +360,51 @@ msgstr "niewspierana wersja systemu Windows"
 
 # utils/src/windows/util.c: 274
 # error(_("argument must be a character vector or a raw vector"))
-#: windows/util.c:274
+#: windows/util.c:275
 msgid "argument must be a character vector or a raw vector"
 msgstr "argument musi być wektorem tekstowym lub pustym wektorem"
 
 # utils/src/windows/util.c: 311
 # warning(_("unable to open the clipboard"))
-#: windows/util.c:311
+#: windows/util.c:312
 msgid "unable to open the clipboard"
 msgstr "nie można otworzyć schowka"
 
 # utils/src/windows/util.c: 316
 # warning(_("unable to write to the clipboard"))
-#: windows/util.c:316
+#: windows/util.c:317
 msgid "unable to write to the clipboard"
 msgstr "nie można zapisać do schowka"
 
 # utils/src/windows/util.c: 395
 # error(_("'title' must be a character string"))
-#: windows/util.c:395
+#: windows/util.c:397
 msgid "'title' must be a character string"
 msgstr "'title' musi być łańcuchem tekstowym"
 
 # utils/src/windows/util.c: 404
 # error(_("'text' must be a character string"))
-#: windows/util.c:404
+#: windows/util.c:406
 msgid "'text' must be a character string"
 msgstr "'text' musi być łańcuchem tekstowym"
 
 # utils/src/windows/util.c: 443
 # error(_("'%s' must be length 1"), "which")
-#: windows/util.c:443
+#: windows/util.c:445
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' musi mieć długość równą 1"
 
 # utils/src/windows/util.c: 556
 # error(_("'%s' must be a list"), "windows")
-#: windows/util.c:556
+#: windows/util.c:558
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' musi być listą"
 
 # utils/src/windows/util.c: 560
 # error(_("'%s' element %d is not a window handle"), "windows", i+1)
-#: windows/util.c:560
+#: windows/util.c:562
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "element %2$d '%1$s' nie jest uchwytem okna"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2013-03-19 22:02+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -910,6 +910,10 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "impossible de convertir 'x' en roman"
 
+#, fuzzy
+msgid "Could not create file %s, aborting"
+msgstr "impossible de restaurer l'information de type"
+
 msgid "no valid packages were specified"
 msgstr "aucun package valide n'a été spécifié"
 
@@ -1012,6 +1016,10 @@ msgstr "vignette %s introuvable"
 #, fuzzy
 msgid "vignette %s has no PDF/HTML"
 msgstr "la vignette %s n'a pas de PDF"
+
+#, fuzzy
+msgid "vignette %s has no R code"
+msgstr "vignette %s introuvable"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() ne peut pas être utilisé en mode non-interactif"

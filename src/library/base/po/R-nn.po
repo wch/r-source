@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:37\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -644,6 +644,9 @@ msgstr "«vec» må vera sortert aukande rekkjefølgja"
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "brukar første element av «value» i uttrykket"
 
+msgid "class of 'x' was discarded"
+msgstr ""
+
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "«mode» må vera «double» («real»), «integer» eller «character»"
 
@@ -1272,11 +1275,17 @@ msgstr "lengda av «scale» må vera lik talet på kolonnar til «x»"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "oppgje «nmax» eller «n», men ikkje begge"
 
+msgid "'from' cannot be NA, NaN or infinite"
+msgstr ""
+
 msgid "argument 'length.out' must be of length 1"
 msgstr "argumentet «length.out» må ha lengd 1"
 
 msgid "first element used of 'length.out' argument"
 msgstr "det første element i «length.out» vert brukt"
+
+msgid "'to' cannot be NA, NaN or infinite"
+msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "ugyldig (to - from)/by i seq(.)"

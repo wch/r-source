@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2013-02-16 10:16-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -24,39 +24,39 @@ msgstr ""
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: Rmd5.c:36
+#: Rmd5.c:37
 msgid "argument 'files' must be character"
 msgstr "인자 'files'는 반드시 문자이어야 합니다"
 
-#: Rmd5.c:50
+#: Rmd5.c:51
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "파일 '%s'에서 md5가 작동하지 않습니다"
 
-#: getfmts.c:51
+#: getfmts.c:52
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "오로지 %d 인자들만이 허용됩니다"
 
-#: getfmts.c:56
+#: getfmts.c:57
 msgid "'fmt' is not a character vector"
 msgstr "'fmt'는 문자형 벡터가 아닙니다"
 
-#: getfmts.c:59
+#: getfmts.c:60
 msgid "'fmt' must be length 1"
 msgstr "'fmt'는 반드시 길이가 1이어야 합니다"
 
-#: getfmts.c:65
+#: getfmts.c:66
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt' 길이가 최대 포맷길이 %d를 초과합니다"
 
-#: getfmts.c:86
+#: getfmts.c:87
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "알 수 없는 포맷 지정 '%s'입니다"
 
-#: getfmts.c:126
+#: getfmts.c:127
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
@@ -143,12 +143,12 @@ msgstr "'deparseRd'에 잘못된 텍스트 모드 %d가 있습니다"
 msgid "invalid bind address specification"
 msgstr "유효하지 않은 바인드 주소지정이 있습니다"
 
-#: install.c:102 install.c:123 install.c:125
+#: install.c:104 install.c:125 install.c:127
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "유효하지 않은 '%s' 인자입니다"
 
-#: install.c:153
+#: install.c:155
 msgid "write error during file append"
 msgstr "파일병합을 하는 동안 쓰기 에러가 발생했습니다"
 
@@ -160,10 +160,10 @@ msgstr "이 플랫폼에서 pskill()은 지원되지 않습니다"
 msgid "psnice() is not supported on this platform"
 msgstr "이 플랫폼에서 psnice()은 지원되지 않습니다"
 
-#: text.c:65
+#: text.c:66
 msgid "invalid argument type"
 msgstr "유효하지 않은 인자 타입입니다"
 
-#: text.c:222 text.c:244
+#: text.c:223 text.c:245
 msgid "out of memory"
 msgstr "메모리가 부족합니다"

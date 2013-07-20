@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -647,10 +647,28 @@ msgstr ""
 msgid "loading failed"
 msgstr ""
 
-msgid "Expected %s, got %s in evaluating %s"
+msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
-msgid "Failed to get expected %s in evaluating %s"
+msgid "assertCondition: caught %s"
+msgstr ""
+
+msgid "Got %s in evaluating %s; wanted %s"
+msgstr ""
+
+msgid "Failed to get %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get error in evaluating %s"
+msgstr ""
+
+msgid "Asserted error: %s"
+msgstr ""
+
+msgid "Got warning in evaluating %s, but also an error"
+msgstr ""
+
+msgid "Asserted warning: %s"
 msgstr ""
 
 msgid "Changes require specified 'style'"
@@ -1171,19 +1189,27 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Found an obsolete call in the following function:"
-msgid_plural "Found an obsolete call in the following functions:"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Found an obsolete call in methods for the following S4 generic:"
-msgid_plural "Found an obsolete call in methods for the following S4 generics:"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Found an obsolete call in methods for the following reference class:"
+msgid "Found an obsolete/platform-specific call in the following function:"
 msgid_plural ""
-"Found an obsolete call in methods for the following reference classes:"
+"Found an obsolete/platform-specific call in the following functions:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid ""
+"Found an obsolete/platform-specific call in methods for the following S4 "
+"generic:"
+msgid_plural ""
+"Found an obsolete/platform-specific call in methods for the following S4 "
+"generics:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid ""
+"Found an obsolete/platform-specific call in methods for the following "
+"reference class:"
+msgid_plural ""
+"Found an obsolete/platform-specific call in methods for the following "
+"reference classes:"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1194,6 +1220,11 @@ msgstr[1] ""
 
 msgid "Found the defunct/removed function:"
 msgid_plural "Found the defunct/removed functions:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Found the platform-specific device:"
+msgid_plural "Found the platform-specific devices:"
 msgstr[0] ""
 msgstr[1] ""
 

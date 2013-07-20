@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -17,39 +17,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: Rmd5.c:36
+#: Rmd5.c:37
 msgid "argument 'files' must be character"
 msgstr "参数'files'必需是字符"
 
-#: Rmd5.c:50
+#: Rmd5.c:51
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "用于'%s'文件的md5运行失败"
 
-#: getfmts.c:51
+#: getfmts.c:52
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "只允许%d个参数"
 
-#: getfmts.c:56
+#: getfmts.c:57
 msgid "'fmt' is not a character vector"
 msgstr "'fmt'不是字符向量"
 
-#: getfmts.c:59
+#: getfmts.c:60
 msgid "'fmt' must be length 1"
 msgstr "'fmt'的长度必需为一"
 
-#: getfmts.c:65
+#: getfmts.c:66
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt'的长度超过了最大格式长度%d"
 
-#: getfmts.c:86
+#: getfmts.c:87
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "没有这样的格式设定'%s'"
 
-#: getfmts.c:126
+#: getfmts.c:127
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "每一个转换设置最多只支持一个星'*'"
 
@@ -136,12 +136,12 @@ msgstr "'deparseRd'里的文本模式%d不对"
 msgid "invalid bind address specification"
 msgstr "绑定地址规范不对"
 
-#: install.c:102 install.c:123 install.c:125
+#: install.c:104 install.c:125 install.c:127
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
 
-#: install.c:153
+#: install.c:155
 msgid "write error during file append"
 msgstr "文件追加写入时出了错"
 
@@ -153,10 +153,10 @@ msgstr "这个平台不支持pskill()"
 msgid "psnice() is not supported on this platform"
 msgstr "这个平台不支持psnice()"
 
-#: text.c:65
+#: text.c:66
 msgid "invalid argument type"
 msgstr "参数种类不对"
 
-#: text.c:222 text.c:244
+#: text.c:223 text.c:245
 msgid "out of memory"
 msgstr "内存不足"

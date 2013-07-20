@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2013-03-19 13:40+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -274,6 +274,9 @@ msgstr " 'order.max' は 1 以上でなければなりません "
 
 msgid "'order.max' must be < 'n.used'"
 msgstr " 'order.max' は 'n.used' より小さくなければなりません "
+
+msgid "zero-variance series"
+msgstr ""
 
 msgid "'n.ahead' must be at least 1"
 msgstr " 'n.ahead' は少なくとも 1 です "
@@ -1211,6 +1214,9 @@ msgstr " 空のクラスタ: より良い初期中心を試みましょう "
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr " クラスタ中心の数は 1 と nrow(x) の間になければなりません "
 
+msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
+msgstr ""
+
 msgid "invalid nrow(x)"
 msgstr " nrow(x) が不正です "
 
@@ -1587,8 +1593,9 @@ msgstr " f.lower = f(lower) が NA です "
 msgid "f.upper = f(upper) is NA"
 msgstr " f.upper = f(upper) が NA です "
 
-msgid "f() values at end points not of opposite sign"
-msgstr " f() の端点での値が異なった符号を持ちません "
+#, fuzzy
+msgid "invalid 'extendInt'; please report"
+msgstr " 無効な 'method' 引数です "
 
 #, fuzzy
 msgid "no sign change found in %d iterations"
@@ -1597,6 +1604,9 @@ msgstr " %d 回の反復を行いましたが収束しませんでした "
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+
+msgid "f() values at end points not of opposite sign"
+msgstr " f() の端点での値が異なった符号を持ちません "
 
 #, fuzzy
 msgid "convergence problem in zero finding:"

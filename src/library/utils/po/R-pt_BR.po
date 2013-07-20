@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -838,6 +838,9 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr ""
 
+msgid "Could not create file %s, aborting"
+msgstr ""
+
 msgid "no valid packages were specified"
 msgstr ""
 
@@ -936,6 +939,10 @@ msgstr "documento não encontrado"
 
 #, fuzzy
 msgid "vignette %s has no PDF/HTML"
+msgstr "documento não encontrado"
+
+#, fuzzy
+msgid "vignette %s has no R code"
 msgstr "documento não encontrado"
 
 msgid "select.list() cannot be used non-interactively"

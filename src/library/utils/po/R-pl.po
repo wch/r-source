@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1717,6 +1717,12 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "nie można przekształcić 'x' na liczby rzymskie"
 
+# utils/R/de.R: 100
+# warning("could not restore type information")
+#, fuzzy
+msgid "Could not create file %s, aborting"
+msgstr "nie można przywrócić informacji o typie"
+
 # utils/R/sessionInfo.R: 38
 # stop("no valid packages were specified")
 msgid "no valid packages were specified"
@@ -1919,6 +1925,13 @@ msgstr "ilustracja %s nie została znaleziona"
 #, fuzzy
 msgid "vignette %s has no PDF/HTML"
 msgstr "ilustracja %s nie posiada PDF"
+
+# utils/R/vignette.R: 71
+# warning(gettextf("vignette %s not found", sQuote(topic)),
+#                     call. = FALSE, domain = NA)
+#, fuzzy
+msgid "vignette %s has no R code"
+msgstr "ilustracja %s nie została znaleziona"
 
 # utils/R/widgets.R: 23
 # stop("select.list() cannot be used non-interactively")

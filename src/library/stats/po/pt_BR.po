@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-21 09:09+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -115,11 +115,11 @@ msgstr "apenas o primeiro elemento é usado como nome da variável"
 msgid "invalid expression in '%s'"
 msgstr "expressão inválida em '%s'"
 
-#: deriv.c:924 model.c:91
+#: deriv.c:926 model.c:92
 msgid "invalid variable names"
 msgstr "nomes inválidos de variável"
 
-#: deriv.c:933
+#: deriv.c:935
 msgid "invalid tag"
 msgstr "etiqueta inválida"
 
@@ -242,145 +242,145 @@ msgstr "vmethod inválido"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "algoritmo de Burg não conseguiu encontrar correlação parcial"
 
-#: model.c:89
+#: model.c:90
 msgid "invalid variables"
 msgstr "variáveis inválidas"
 
-#: model.c:93 model.c:98
+#: model.c:94 model.c:99
 msgid "number of variables != number of variable names"
 msgstr "número de variáveis != número de nomes de variáveis"
 
-#: model.c:96
+#: model.c:97
 msgid "invalid extra variables"
 msgstr "variáveis extra inválidas"
 
-#: model.c:100
+#: model.c:101
 msgid "invalid extra variable names"
 msgstr "nomes de variáveis extras inválidos"
 
-#: model.c:121
+#: model.c:122
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "nomes longos demais em '%s'"
 
-#: model.c:148
+#: model.c:149
 #, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr "tipo inválido (%s) para variável '%s'"
 
-#: model.c:153
+#: model.c:154
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr "comprimentos das variáveis diferem (encontradas em '%s')"
 
-#: model.c:207
+#: model.c:208
 msgid "invalid result from na.action"
 msgstr "resultado inválido de na.action"
 
-#: model.c:363 model.c:371 optim.c:190
+#: model.c:365 model.c:373 optim.c:190
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argumento '%s' inválido"
 
-#: model.c:382
+#: model.c:384
 msgid "invalid model frame"
 msgstr "estrutura de modelo inválida"
 
-#: model.c:384
+#: model.c:386
 msgid "do not know how many cases"
 msgstr "não é possível determinar o número de casos"
 
-#: model.c:408
+#: model.c:410
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "comprimentos das variáveis diferem (encontrados para a variável %d)"
 
-#: model.c:412 model.c:419
+#: model.c:414 model.c:421
 #, c-format
 msgid "variable %d has no levels"
 msgstr "variável %d não tem níveis"
 
-#: model.c:531
+#: model.c:533
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "a resposta apareceu no lado direito e foi descartada"
 
-#: model.c:551
+#: model.c:553
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "termo %d requeriria %.0g colunas"
 
-#: model.c:555
+#: model.c:557
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "matrix requeriria %.0g colunas"
 
-#: model.c:566
+#: model.c:568
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 "problema com o termo %d na matriz do modelo: nenhuma coluna foi atribuida"
 
-#: model.c:615 model.c:620 model.c:626 model.c:637 model.c:643 model.c:649
+#: model.c:617 model.c:622 model.c:628 model.c:639 model.c:645 model.c:651
 msgid "term names will be truncated"
 msgstr "nomes dos termos serão truncados"
 
-#: model.c:629
+#: model.c:631
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
 "variáveis complexas não são atualmente permitidas em matrizes de modelo"
 
-#: model.c:653
+#: model.c:655
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "variáveis de tipo '%s' não são permitidas em matrizes de modelo"
 
-#: model.c:875
+#: model.c:877
 msgid "invalid formula in 'update'"
 msgstr "fórmula inválida em 'update'"
 
-#: model.c:909
+#: model.c:911
 msgid "formula expected"
 msgstr "fórmula esperada"
 
-#: model.c:1040
+#: model.c:1042
 msgid "invalid term in model formula"
 msgstr "termo inválido na fórmula de modelo"
 
-#: model.c:1115
+#: model.c:1117
 msgid "invalid model formula"
 msgstr "fórmula de modelo inválida"
 
-#: model.c:1141 model.c:1389
+#: model.c:1143 model.c:1391
 msgid "invalid power in formula"
 msgstr "potenciação inválida na fórmula"
 
-#: model.c:1177
+#: model.c:1179
 msgid "invalid model formula in ExtractVars"
 msgstr "fórmula de modelo inválida em ExtractVars"
 
-#: model.c:1511
+#: model.c:1514
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "nome duplicado '%s' em data frame usando '.'"
 
-#: model.c:1568
+#: model.c:1572
 msgid "invalid model formula in EncodeVars"
 msgstr "fórmula de modelo inválida em EncodeVars"
 
-#: model.c:1654
+#: model.c:1658
 msgid "argument is not a valid model"
 msgstr "argumento não é um modelo válido"
 
-#: model.c:1664
+#: model.c:1668
 #, fuzzy
 msgid "'specials' must be NULL or a character vector"
 msgstr "'path' deve ser um vetor de caracteres"
 
-#: model.c:1676
+#: model.c:1680
 msgid "'data' argument is of the wrong type"
 msgstr "argumento 'data' é do tipo errado"
 
-#: model.c:1942
+#: model.c:1948
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' na fórmula e nenhum argumento 'data'"
 
@@ -448,16 +448,16 @@ msgstr "'rho' deve ser um ambiente"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' não é um vetor numérico de comprimento correto"
 
-#: nls.c:314 nls.c:342
+#: nls.c:311 nls.c:341
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Obtido valor faltante ou infinito quando avaliando o modelo"
 
-#: nls.c:320
+#: nls.c:318
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "variável '%s' é inteira, não numérica"
 
-#: nls.c:322
+#: nls.c:320
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "variável '%s' não é numérica"

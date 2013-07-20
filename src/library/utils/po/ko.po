@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-07-20 09:38+0100\n"
 "PO-Revision-Date: 2013-02-16 14:52-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -25,8 +25,8 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: io.c:314 io.c:318 io.c:328 io.c:557 io.c:738 io.c:789 io.c:801 io.c:805
-#: io.c:811 io.c:1031 io.c:1032 io.c:1034 io.c:1035 io.c:1036 io.c:1037
-#: io.c:1038 io.c:1039 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:811 io.c:1033 io.c:1034 io.c:1036 io.c:1037 io.c:1038 io.c:1039
+#: io.c:1040 io.c:1041 stubs.c:39 stubs.c:59 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -39,7 +39,7 @@ msgstr "'%s' 인자가 잘못되었습니다"
 msgid "invalid quote symbol set"
 msgstr ""
 
-#: io.c:349 io.c:819 io.c:1019
+#: io.c:349 io.c:819 io.c:1021
 msgid "cannot open the connection"
 msgstr "연결을 열 수 없습니다"
 
@@ -79,31 +79,31 @@ msgstr ""
 msgid "index out of range"
 msgstr ""
 
-#: io.c:1012
+#: io.c:1014
 msgid "'file' is not a connection"
 msgstr "'file'은 연결이 아닙니다"
 
-#: io.c:1015
+#: io.c:1017
 msgid "cannot write to this connection"
 msgstr "이 연결에 쓰기를 할 수 없습니다"
 
-#: io.c:1045
+#: io.c:1047
 msgid "'dec' must be a single character"
 msgstr "'dec'는 반드시 한개의 문자이어야 합니다"
 
-#: io.c:1072
+#: io.c:1074
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습니"
 "다"
 
-#: io.c:1102
+#: io.c:1104
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
-#: io.c:1120
+#: io.c:1122
 msgid "corrupt matrix -- dims not not match length"
 msgstr "행렬이 손상되었습니다 -- dims 가 길이가 일치하지 않습니다"
 
@@ -115,19 +115,19 @@ msgstr "'savehistory'는 오로지 Rgui 와 Rterm에서만 사용될 수 있습�
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory'는 오로지 Rgui 와 Rterm에서만 사용될 수 있습니다"
 
-#: stubs.c:76
+#: stubs.c:77
 msgid "invalid timestamp"
 msgstr "잘못된 타임스탬프입니다"
 
-#: stubs.c:141 stubs.c:149
+#: stubs.c:143 stubs.c:151
 msgid "X11 dataentry cannot be loaded"
 msgstr "X11 데이터엔트리가 로드될 수 없습니다"
 
-#: stubs.c:145 stubs.c:174 stubs.c:180
+#: stubs.c:147 stubs.c:176 stubs.c:182
 msgid "X11 is not available"
 msgstr "X11이 사용가능하지 않습니다"
 
-#: stubs.c:237 stubs.c:240
+#: stubs.c:240 stubs.c:243
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "유효하지 않은 '%s' 지정입니다"
@@ -197,37 +197,37 @@ msgstr "레지스트리 키 '%ls'를 찾을 수 없습니다"
 msgid "unsupported version of Windows"
 msgstr "지원되지 않는 버전의 윈도우즈입니다"
 
-#: windows/util.c:274
+#: windows/util.c:275
 msgid "argument must be a character vector or a raw vector"
 msgstr "인자는 반드시 문자형 벡터 또는  raw 벡터이어야 합니다"
 
-#: windows/util.c:311
+#: windows/util.c:312
 msgid "unable to open the clipboard"
 msgstr "클립보드를 열 수 없습니다"
 
-#: windows/util.c:316
+#: windows/util.c:317
 msgid "unable to write to the clipboard"
 msgstr "클립보드에 쓸 수 없습니다"
 
-#: windows/util.c:395
+#: windows/util.c:397
 msgid "'title' must be a character string"
 msgstr "'title'은 반드시 문자열이어야 합니다"
 
-#: windows/util.c:404
+#: windows/util.c:406
 msgid "'text' must be a character string"
 msgstr "'text'는 반드시 문자열이어야 합니다"
 
-#: windows/util.c:443
+#: windows/util.c:445
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s'는 반드시 길이가 1이어야 합니다"
 
-#: windows/util.c:556
+#: windows/util.c:558
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s'은 반드시 리스트이어야 합니다"
 
-#: windows/util.c:560
+#: windows/util.c:562
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s'의 구성요소 %d는 윈도우 핸들이 아닙니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -270,6 +270,9 @@ msgid "'order.max' must be >= 1"
 msgstr ""
 
 msgid "'order.max' must be < 'n.used'"
+msgstr ""
+
+msgid "zero-variance series"
 msgstr ""
 
 msgid "'n.ahead' must be at least 1"
@@ -1175,6 +1178,9 @@ msgstr ""
 msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr ""
 
+msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
+msgstr ""
+
 msgid "invalid nrow(x)"
 msgstr ""
 
@@ -1537,7 +1543,7 @@ msgstr ""
 msgid "f.upper = f(upper) is NA"
 msgstr ""
 
-msgid "f() values at end points not of opposite sign"
+msgid "invalid 'extendInt'; please report"
 msgstr ""
 
 msgid "no sign change found in %d iterations"
@@ -1545,6 +1551,9 @@ msgstr ""
 
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
+msgstr ""
+
+msgid "f() values at end points not of opposite sign"
 msgstr ""
 
 #, fuzzy

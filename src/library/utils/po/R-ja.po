@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -898,6 +898,10 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr " 'x' を roman に変換できません "
 
+#, fuzzy
+msgid "Could not create file %s, aborting"
+msgstr " 型情報を再構成出来ませんでした "
+
 msgid "no valid packages were specified"
 msgstr " 有効なパッケージが指定されませんでした "
 
@@ -1001,6 +1005,10 @@ msgstr " ビニエット %s が見付かりません "
 #, fuzzy
 msgid "vignette %s has no PDF/HTML"
 msgstr " ビニエット %s は PDF ファイルを持ちません "
+
+#, fuzzy
+msgid "vignette %s has no R code"
+msgstr " ビニエット %s が見付かりません "
 
 msgid "select.list() cannot be used non-interactively"
 msgstr " select.list() は対話的にしか使えません "

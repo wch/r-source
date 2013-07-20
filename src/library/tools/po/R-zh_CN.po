@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:49\n"
+"POT-Creation-Date: 2013-07-20 09:38\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -662,10 +662,28 @@ msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 msgid "loading failed"
 msgstr "载入失败"
 
-msgid "Expected %s, got %s in evaluating %s"
+msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
-msgid "Failed to get expected %s in evaluating %s"
+msgid "assertCondition: caught %s"
+msgstr ""
+
+msgid "Got %s in evaluating %s; wanted %s"
+msgstr ""
+
+msgid "Failed to get %s in evaluating %s"
+msgstr ""
+
+msgid "Failed to get error in evaluating %s"
+msgstr ""
+
+msgid "Asserted error: %s"
+msgstr ""
+
+msgid "Got warning in evaluating %s, but also an error"
+msgstr ""
+
+msgid "Asserted warning: %s"
 msgstr ""
 
 msgid "Changes require specified 'style'"
@@ -1184,17 +1202,28 @@ msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] "下面的引用类里的方法调用了.Internal:"
 
-msgid "Found an obsolete call in the following function:"
-msgid_plural "Found an obsolete call in the following functions:"
+#, fuzzy
+msgid "Found an obsolete/platform-specific call in the following function:"
+msgid_plural ""
+"Found an obsolete/platform-specific call in the following functions:"
 msgstr[0] "下面的函数里出现了过时的调用"
 
-msgid "Found an obsolete call in methods for the following S4 generic:"
-msgid_plural "Found an obsolete call in methods for the following S4 generics:"
+#, fuzzy
+msgid ""
+"Found an obsolete/platform-specific call in methods for the following S4 "
+"generic:"
+msgid_plural ""
+"Found an obsolete/platform-specific call in methods for the following S4 "
+"generics:"
 msgstr[0] "下面S4泛型函数里出现了过时的调用"
 
-msgid "Found an obsolete call in methods for the following reference class:"
+#, fuzzy
+msgid ""
+"Found an obsolete/platform-specific call in methods for the following "
+"reference class:"
 msgid_plural ""
-"Found an obsolete call in methods for the following reference classes:"
+"Found an obsolete/platform-specific call in methods for the following "
+"reference classes:"
 msgstr[0] "下面引用类型里出现了过时的调用"
 
 msgid "Found the deprecated function:"
@@ -1204,6 +1233,10 @@ msgstr[0] "出现了不推荐使用的功能"
 msgid "Found the defunct/removed function:"
 msgid_plural "Found the defunct/removed functions:"
 msgstr[0] "出现已不存在的或是被取消的功能"
+
+msgid "Found the platform-specific device:"
+msgid_plural "Found the platform-specific devices:"
+msgstr[0] ""
 
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"

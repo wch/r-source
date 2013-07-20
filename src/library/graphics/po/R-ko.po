@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-20 07:20\n"
+"POT-Creation-Date: 2013-07-20 09:37\n"
 "PO-Revision-Date: 2013-02-21 18:03-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -530,7 +530,8 @@ msgid "length of 'angles' must equal 'ncol(x)'"
 msgstr "'angles'의 길이는 반드시 'ncol(x)'와 같아야 합니다"
 
 # CHL20130308
-msgid "no non-missing values"
+#, fuzzy
+msgid "no finite and non-missing values"
 msgstr "누락된 값들이 없습니다"
 
 # CHL20130308
