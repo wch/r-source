@@ -1,6 +1,6 @@
 % File src/library/utils/man/unix/LINK.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{LINK}
@@ -20,11 +20,11 @@
 }
 \details{
   The linker front-end is useful in particular when linking against the
-  R shared library, in which case \code{linkcmd} must contain \code{-lR}
+  \R shared library, in which case \code{linkcmd} must contain \code{-lR}
   but need not specify its library path.
 
-  Currently only works if the C compiler is used for linking, and no C++
-  code is used.
+  Currently only works if the C compiler can be used for linking, and no
+  C++ code is used.
 
   Use \command{R CMD LINK --help} for more usage information.
 }
