@@ -53,6 +53,10 @@
       
       \item \code{seq()} and \code{seq.int()} give more explicit error
       messages if called with invalid (e.g. \code{NaN}) inputs.
+      
+      \item When \code{parse()} finds a syntax error, it now makes 
+      partial parse information available up to the location of the 
+      error.  (Request of Reijo Sund.)
     }
   }
 
