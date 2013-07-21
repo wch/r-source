@@ -61,7 +61,7 @@ na.omit.data.frame <- function(object, ...)
 {
     ## Assuming a data.frame like object
     n <- length(object)
-    omit <- FALSE
+    omit <- logical(nrow(object))
     vars <- seq_len(n)
     for(j in vars) {
 	x <- object[[j]]
@@ -115,7 +115,7 @@ na.exclude.data.frame <- function(object, ...)
 {
     ## Assuming a data.frame like object
     n <- length(object)
-    omit <- FALSE
+    omit <- logical(nrow(object))
     vars <- seq_len(n)
     for(j in vars) {
 	x <- object[[j]]
