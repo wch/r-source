@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -144,7 +144,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   internal method does not support.  They will block all other activity
   on the \R process.
 
-  For methods \code{"wget"}, \code{"curl"}and \code{"lynx"} a system
+  For methods \code{"wget"}, \code{"curl"} and \code{"lynx"} a system
   call is made to the tool given by \code{method}, and the respective
   program must be installed on your system and be in the search path for
   executables.
