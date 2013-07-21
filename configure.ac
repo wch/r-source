@@ -1396,6 +1396,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
       ## Could also try grepping LIBS for '-lcc_dynamic' ...
       SHLIB_LIBADD="-lcc_dynamic"
     fi
+    shlib_rpath="-WL,-rpath"
     ;;
   freebsd*)
     main_ldflags="-export-dynamic"
@@ -1476,6 +1477,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     ## Luke Tierney says that just '-export-dynamic' does not work for
     ## Intel compilers (icc).
     main_ldflags="-Wl,--export-dynamic"
+    shlib_rpath="-Wl,-rpath"
     ;;
   mingw*)
     SHLIB_EXT=".dll"
@@ -1518,12 +1520,15 @@ rm -f libconftest${DYLIB_EXT} conftest.c
 	main_ldflags="-Wl,-export-dynamic"
 	shlib_ldflags="-shared"
         shlib_cxxldflags="-shared"
+        shlib_rpath="-Wl,-rpath"
       else
         ## it seems gcc c 4.6.2 needs this with Solaris linker
 	shlib_ldflags="-shared"
         shlib_cxxldflags="-shared"
+        shlib_rpath="-R"
       fi
     else
+      shlib_rpath="-R"
       cpicflags="-KPIC"
       if test "`basename ${CXX}`" = "CC" ; then
         ## Forte version 7 needs -lCstd: Forte 6 does not.	
@@ -1638,6 +1643,11 @@ if test -z "${SHLIB_CXXLDFLAGS}"; then
   warn_shlib_cxxldflags="I could not determine SHLIB_CXXLDFLAGS"
   AC_MSG_WARN([${warn_shlib_cxxldflags}])
 fi
+if test -z "${SHLIB_RPATH}"; then
+  R_SH_VAR_ADD(SHLIB_RPATH, [${shlib_rpath}])
+  warn_shlib_rpart="I could not determine SHLIB_RPATH"
+  AC_MSG_WARN([${warn_shlib_rpath}])
+fi
 
 ## Step 6.  We may need flags different from SHLIB_LDFLAGS and SHLIB_EXT
 ## for building R as a shared library to link against (the SHLIB_* vars
@@ -1711,6 +1721,7 @@ AC_SUBST(SHLIB_LD)
 AC_SUBST(SHLIB_LDFLAGS)
 AC_SUBST(SHLIB_LIBADD)
 AC_SUBST(SHLIB_EXT)
+AC_SUBST(SHLIB_RPATH)
 AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}",
 [Define this to be the extension used for shared objects on your system.])
 AM_CONDITIONAL(USE_EXPORTFILES, [test "x${use_exportfiles}" = xyes])
