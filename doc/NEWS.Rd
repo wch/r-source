@@ -274,6 +274,9 @@
 
       \item Unary \code{+} on a logical vector did not coerce to
       integer, although unary \code{-} did.
+      
+      \item \code{na.omit()} and \code{na.exclude()} added a row
+      to a zero row data frame.  (\PR{15399})
     }
   }
 }
