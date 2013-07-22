@@ -2735,3 +2735,12 @@ x
 x[]
 x[drop = FALSE]
 ## lost dimnames in 3.0.1
+
+
+## PR#15396
+load(file.path(Sys.getenv('SRCDIR'), 'arima.rda'))
+(f1 <- arima(x, xreg = xreg, order = c(1,1,1), seasonal = c(1,0,1)))
+(f2 <- arima(diff(x), xreg = diff(xreg), order = c(1,0,1), seasonal = c(1,0,1),
+             include.mean = FALSE))
+stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3)
+## first gave local optim in 3.0.1

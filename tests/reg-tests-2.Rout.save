@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-19 r63351) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-22 r63374) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -7139,3 +7139,33 @@ A
 0 
 > ## lost dimnames in 3.0.1
 > 
+> 
+> ## PR#15396
+> load(file.path(Sys.getenv('SRCDIR'), 'arima.rda'))
+> (f1 <- arima(x, xreg = xreg, order = c(1,1,1), seasonal = c(1,0,1)))
+
+Call:
+arima(x = x, order = c(1, 1, 1), seasonal = c(1, 0, 1), xreg = xreg)
+
+Coefficients:
+          ar1     ma1    sar1     sma1    xreg
+      -0.4791  0.3525  0.9877  -0.8295  0.3574
+s.e.   0.4184  0.4444  0.0331   0.2221  0.7480
+
+sigma^2 estimated as 0.001515:  log likelihood = 162.05,  aic = -312.09
+> (f2 <- arima(diff(x), xreg = diff(xreg), order = c(1,0,1), seasonal = c(1,0,1),
++              include.mean = FALSE))
+
+Call:
+arima(x = diff(x), order = c(1, 0, 1), seasonal = c(1, 0, 1), xreg = diff(xreg), 
+    include.mean = FALSE)
+
+Coefficients:
+          ar1     ma1    sar1     sma1  diff(xreg)
+      -0.4791  0.3526  0.9877  -0.8295      0.3571
+s.e.   0.4162  0.4420  0.0329   0.2210      0.7441
+
+sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
+> stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3)
++ ## first gave local optim in 3.0.1
++ 
