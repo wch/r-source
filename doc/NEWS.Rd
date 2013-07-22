@@ -281,10 +281,6 @@
       
       \item \code{na.omit()} and \code{na.exclude()} added a row
       to a zero row data frame.  (\PR{15399})
-      
-      \item The initialization of the regression coefficients for
-      differenced models in \code{arima()} has been changed and
-      in some examples avoids a local maximum.  (\PR{15396})
     }
   }
 }
