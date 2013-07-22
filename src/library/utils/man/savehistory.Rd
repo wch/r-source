@@ -1,6 +1,6 @@
 % File src/library/utils/man/savehistory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{savehistory}
@@ -31,7 +31,7 @@ timestamp(stamp = date(),
   \item{reverse}{logical. If true, the lines are shown in reverse
     order. Note: this is not useful when there are continuation lines.}
   \item{pattern}{A character string to be matched against the lines of
-    the history}
+    the history.  When supplied, only \emph{unique} matching lines are shown.}
   \item{\dots}{Arguments to be passed to \code{\link{grep}} when doing
     the matching.}
   \item{stamp}{A value or vector of values to be written into the history.}
@@ -41,31 +41,41 @@ timestamp(stamp = date(),
 }
 \details{
   There are several history mechanisms available for the different \R
-  consoles, which work in similar but not identical ways.  Other uses of
-  \R, in particular embedded uses, may have no history.
-#ifdef windows
-  This works in Rgui and interactive Rterm but not in batch use of Rterm
-  nor in embedded/DCOM versions.
+  consoles, which work in similar but not identical ways.  There are
+  separate versions of this help file for Unix and Windows.
 
-  The history mechanism is controlled by two environment
+#ifdef windows
+  The functions described here work in \command{Rgui} and interactive
+  \command{Rterm} but not in batch use of \command{Rterm} nor in
+  embedded/DCOM versions.
+
+  The history mechanism is
 #endif
 #ifdef unix
-  The functions described here work under the \code{readline}
-  command-line interface but may not otherwise (for example, in batch
-  use or in an embedded application).
+  The functions described here work on Unix-alikes under the
+  \code{readline} command-line interface but may not otherwise (for
+  example, in batch use or in an embedded application).  Note that \R
+  can be built without \code{readline}.
 
-  The \code{readline} history mechanism is controlled by two environment
+  \command{R.app}, the console on OS X, has a separate and largely
+  incompatible history mechanism, which by default uses a file
+  \file{.Rapp.history} and saves up to 250 entries.  These functions are
+  not currently implemented there.
+
+  The \code{readline} history mechanism
 #endif
-  variables: \env{R_HISTSIZE} controls the number of lines that are
-  saved (default 512), and \env{R_HISTFILE} sets the filename used for
-  the loading/saving of history if requested at the beginning/end of a
-  session (but not the default for these functions).  There is no limit
-  on the number of lines of history retained during a session, so
-  setting \env{R_HISTSIZE} to a large value has no penalty unless a
-  large file is actually generated.
+  is controlled by two environment variables: \env{R_HISTSIZE} controls
+  the number of lines that are saved (default 512), and \env{R_HISTFILE}
+  (default \file{.Rhistory}) sets the filename used for the
+  loading/saving of history if requested at the beginning/end of a
+  session (but not the default for
+  \code{loadhistory}/\code{savehistory}).  There is no limit on the
+  number of lines of history retained during a session, so setting
+  \env{R_HISTSIZE} to a large value has no penalty unless a large file
+  is actually generated.
 
-  These variables are read at the time of saving, so can be altered
-  within a session by the use of \code{\link{Sys.setenv}}.
+  These environment variables are read at the time of saving, so can be
+  altered within a session by the use of \code{\link{Sys.setenv}}.
 
 #ifdef unix
   Note that \code{readline} history library saves files with permission
@@ -73,13 +83,9 @@ timestamp(stamp = date(),
   even read permission for any other account.
 #endif
 
-  \code{history} shows only unique matching lines if \code{pattern} is
-  supplied.
-
   The \code{timestamp} function writes a timestamp (or other message)
   into the history and echos it to the console.  On platforms that do not
-  support a history mechanism (where the mechanism does not support
-  timestamps) only the console message is printed.
+  support a history mechanism only the console message is printed.
 }
 \note{
   If you want to save the history at the end of (almost) every
@@ -88,8 +94,8 @@ timestamp(stamp = date(),
   \code{\link{.Last}}.  See the examples.
 }
 \examples{\dontrun{
-## save the history in the home directory: note that it is not
-## (by default) read from there.
+## Save the history in the home directory: note that it is not
+## (by default) read from there but from the current directory
 .Last <- function()
     if(interactive()) try(savehistory("~/.Rhistory"))
 }}
