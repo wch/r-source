@@ -11280,7 +11280,7 @@ of @code{iconv}.
 
 These are declared in header file @file{R_ext/Riconv.h}.
 
-@deftypefun void *Riconv_open (const char *@var{to}, const char *@var{from})
+@deftypefun {void *} Riconv_open (const char *@var{to}, const char *@var{from})
 @end deftypefun
 Set up a pointer to an encoding object to be used to convert between two
 encodings: @code{""} indicates the current locale.
