@@ -118,8 +118,9 @@
 	check-recommended} are done in parallel.
     
       \item More of \command{make check} will work if recommended packages
-      are not installed.
-  }
+      are not installed: but recomemended packages remain needed for
+      thorough checking of an \R build.
+    }
   }
 
   \subsection{PACKAGE INSTALLATION}{
@@ -510,6 +511,9 @@
       
       \item \code{na.omit()} and \code{na.exclude()} added a row
       to a zero row data frame.  (\PR{15399})
+      
+      \item All the (where necessary cut-down) vignettes are installed
+      if \R was configured with \option{--without-recommended-packages}.
     }
   }
 }
