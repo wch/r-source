@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-07-22 r63380) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-23 r63381) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin12.4.0 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2875,6 +2875,8 @@ ratio of scales
 > 
 > ### ** Examples
 > 
+> ## From Venables and Ripley (2002) p.165.
+> 
 > ## Set orthogonal contrasts.
 > op <- options(contrasts = c("contr.helmert", "contr.poly"))
 > ( npk.aov <- aov(yield ~ block + N*P*K, npk) )
@@ -2892,18 +2894,6 @@ Deg. of Freedom        12
 Residual standard error: 3.929447
 1 out of 13 effects not estimable
 Estimated effects are balanced
-> summary(npk.aov)
-            Df Sum Sq Mean Sq F value  Pr(>F)   
-block        5  343.3   68.66   4.447 0.01594 * 
-N            1  189.3  189.28  12.259 0.00437 **
-P            1    8.4    8.40   0.544 0.47490   
-K            1   95.2   95.20   6.166 0.02880 * 
-N:P          1   21.3   21.28   1.378 0.26317   
-N:K          1   33.1   33.14   2.146 0.16865   
-P:K          1    0.5    0.48   0.031 0.86275   
-Residuals   12  185.3   15.44                   
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > coefficients(npk.aov)
 (Intercept)      block1      block2      block3      block4      block5 
  54.8750000   1.7125000   1.6791667  -1.8229167  -1.0137500   0.2950000 
@@ -3694,7 +3684,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x7f9b25638800>
+<environment: 0x44e4e00>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4657,7 +4647,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x7f9b25c6dfc8>
+<bytecode: 0x4e6bbb0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7074,7 +7064,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x7f9b2609c310>
+<environment: 0x4dd9670>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11555,14 +11545,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x7f9b252b0c38>
-<environment: 0x7f9b252a8710>
+<bytecode: 0x3ebac80>
+<environment: 0x3d0b348>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x7f9b252b0d50>
-<environment: 0x7f9b252a8710>
+<bytecode: 0x3ebad98>
+<environment: 0x3d0b348>
 
 > 
 > 
@@ -15330,8 +15320,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x7f9b24a459c0>
-<environment: 0x7f9b25761c60>
+<bytecode: 0x3b66558>
+<environment: 0x50fc380>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17620,7 +17610,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.762 0.36 8.224 0 0 
+Time elapsed:  5.009 0.113 5.139 0 0 
 > grDevices::dev.off()
 null device 
           1 
