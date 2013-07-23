@@ -41,7 +41,7 @@ RCMD = $(top_builddir)/$(BINDIR)/Rcmd
 	R_INSTALL_TAR='tar.exe --no-same-owner --no-same-permissions' \
 	  R_LIBS_USER= R_LIBS_SITE= \
 	  _R_CHECK_INSTALL_DEPENDS_=no \
-	  $(RCMD) INSTALL $(INSTALL_OPTS) -l $(top_builddir)/library `basename $< .tgz`_*.tar.gz; \
+	  $(RCMD) INSTALL $(INSTALL_OPTS) --no-byte-compile -l $(top_builddir)/library `basename $< .tgz`_*.tar.gz; \
 	else \
 	R_INSTALL_TAR='tar.exe --no-same-owner --no-same-permissions' \
 	  R_LIBS_USER= R_LIBS_SITE= \
