@@ -44,7 +44,8 @@ npk
   Venables, W. N. and Ripley, B. D. (2002)
   \emph{Modern Applied Statistics with S.} Fourth edition.  Springer.
 }
-\examples{
+% This gets different roundings
+\examples{\donttest{
 options(contrasts = c("contr.sum", "contr.poly"))
 npk.aov <- aov(yield ~ block + N*P*K, npk)
 npk.aov
@@ -55,5 +56,5 @@ npk.aov1 <- aov(yield ~ block + N + K, data = npk)
 summary.lm(npk.aov1)
 se.contrast(npk.aov1, list(N=="0", N=="1"), data = npk)
 model.tables(npk.aov1, type = "means", se = TRUE)
-}
+}}
 \keyword{datasets}

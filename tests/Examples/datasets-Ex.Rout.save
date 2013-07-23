@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-23 r63381) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-07-23 r63383) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2657,97 +2657,6 @@ Model 2: Speed ~ Run + Expt
 > ### Keywords: datasets
 > 
 > ### ** Examples
-> 
-> options(contrasts = c("contr.sum", "contr.poly"))
-> npk.aov <- aov(yield ~ block + N*P*K, npk)
-> npk.aov
-Call:
-   aov(formula = yield ~ block + N * P * K, data = npk)
-
-Terms:
-                   block        N        P        K      N:P      N:K      P:K
-Sum of Squares  343.2950 189.2817   8.4017  95.2017  21.2817  33.1350   0.4817
-Deg. of Freedom        5        1        1        1        1        1        1
-                Residuals
-Sum of Squares   185.2867
-Deg. of Freedom        12
-
-Residual standard error: 3.929447
-1 out of 13 effects not estimable
-Estimated effects may be unbalanced
-> summary(npk.aov)
-            Df Sum Sq Mean Sq F value  Pr(>F)   
-block        5  343.3   68.66   4.447 0.01594 * 
-N            1  189.3  189.28  12.259 0.00437 **
-P            1    8.4    8.40   0.544 0.47490   
-K            1   95.2   95.20   6.166 0.02880 * 
-N:P          1   21.3   21.28   1.378 0.26317   
-N:K          1   33.1   33.14   2.146 0.16865   
-P:K          1    0.5    0.48   0.031 0.86275   
-Residuals   12  185.3   15.44                   
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-> coef(npk.aov)
-(Intercept)      block1      block2      block3      block4      block5 
- 54.8750000  -0.8500000   2.5750000   5.9000000  -4.7500000  -4.3500000 
-         N1          P1          K1       N1:P1       N1:K1       P1:K1 
- -2.8083333   0.5916667   1.9916667  -0.9416667  -1.1750000   0.1416667 
-> options(contrasts = c("contr.treatment", "contr.poly"))
-> npk.aov1 <- aov(yield ~ block + N + K, data = npk)
-> summary.lm(npk.aov1)
-
-Call:
-aov(formula = yield ~ block + N + K, data = npk)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--6.4083 -2.1438  0.2042  2.3292  7.0750 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   53.208      2.276  23.381  8.5e-14 ***
-block2         3.425      2.787   1.229  0.23690    
-block3         6.750      2.787   2.422  0.02769 *  
-block4        -3.900      2.787  -1.399  0.18082    
-block5        -3.500      2.787  -1.256  0.22723    
-block6         2.325      2.787   0.834  0.41646    
-N1             5.617      1.609   3.490  0.00302 ** 
-K1            -3.983      1.609  -2.475  0.02487 *  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 3.942 on 16 degrees of freedom
-Multiple R-squared:  0.7163,	Adjusted R-squared:  0.5922 
-F-statistic: 5.772 on 7 and 16 DF,  p-value: 0.001805
-
-> se.contrast(npk.aov1, list(N=="0", N=="1"), data = npk)
-[1] 1.609175
-> model.tables(npk.aov1, type = "means", se = TRUE)
-Tables of means
-Grand mean
-       
-54.875 
-
- block 
-block
-    1     2     3     4     5     6 
-54.03 57.45 60.77 50.12 50.52 56.35 
-
- N 
-N
-    0     1 
-52.07 57.68 
-
- K 
-K
-    0     1 
-56.87 52.88 
-
-Standard errors for differences of means
-        block     N     K
-        2.787 1.609 1.609
-replic.     4    12    12
-> 
 > 
 > 
 > base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
