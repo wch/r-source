@@ -66,11 +66,12 @@ if(file_test("-d", pkgSrcPath)) {
     ## could use file.copy(recursive = TRUE)
     system(paste('cp -R', shQuote(pkgSrcPath), shQuote(tempdir())))
     pkgPath <- file.path(tempdir(), "Pkgs")
-#    op <- options(warn = 2)    # There should be *NO* warnings here!
     ## pkgB tests an empty R directory
     dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
                showWarnings = FALSE)
-    p.lis <- c("pkgA", "pkgB", "exNSS4")
+    p.lis <- if("Matrix" %in% row.names(installed.packages()))
+        c("pkgA", "pkgB", "exNSS4")
+    else "exNSS4"
     for(p. in p.lis) {
         cat("building package", p., "...\n")
         r <- build.pkg(file.path(pkgPath, p.))
@@ -83,7 +84,6 @@ if(file_test("-d", pkgSrcPath)) {
     ## TODO: not just print, but check the "list":
     res <- installed.packages(lib.loc = "myLib", priority = "NA")
     print(res)
-#    options(op)
     unlink("myLib", recursive = TRUE)
     unlink(file.path(pkgPath), recursive = TRUE)
 }

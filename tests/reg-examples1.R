@@ -44,7 +44,6 @@ if(require("microbenchmark")) {
 
 ## utils
 example(news)
-example(packageDescription)
 example(sessionInfo)
 
 ## datasets

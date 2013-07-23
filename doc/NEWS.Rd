@@ -81,6 +81,9 @@
       is now more consistent.  If there is no coercion, all attributes
       (including class) are copied from the input to the result:
       otherwise only names, dims and dimnames are.
+      
+      \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
+      more tests to be run without recommended packages being installed.
     }
   }
 
@@ -107,8 +110,11 @@
       The more time-consuming regression tests are done in parallel.
 
       The package checks in \command{make check-devel} and \command{make
-      check-recommended} are done in parallel.
-    }
+	check-recommended} are done in parallel.
+    
+      \item More of \command{make check} will work if recommended packages
+      are not installed.
+  }
   }
 
   \subsection{PACKAGE INSTALLATION}{

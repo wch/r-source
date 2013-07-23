@@ -157,7 +157,7 @@ pc.cr <- princomp(~ Murder + Assault + UrbanPop,
 ## (Simple) Robust PCA:
 ## Classical:
 (pc.cl  <- princomp(stackloss))
-## Robust:
+\donttest{## Robust:
 (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
-}
+}}
 \keyword{multivariate}

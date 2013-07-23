@@ -17,6 +17,9 @@ check-recommended: test-Packages-Recommended
 include $(top_builddir)/Makeconf
 include $(srcdir)/Makefile.common
 
+@USE_RECOMMENDED_PACKAGES_FALSE@test-src-reg3 = reg-plot-latin1.R
+
+
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
 DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \

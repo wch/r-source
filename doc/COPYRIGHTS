@@ -146,6 +146,7 @@ src/library/splines/R/splineClasses.R
 src/library/datasets/man/austres.Rd
 src/library/datasets/man/beavers.Rd
 src/library/datasets/man/lh.Rd
+src/library/datasets/man/npk.Rd
 src/library/datasets/man/rock.Rd
 src/library/datasets/man/UKLungDeaths.Rd
 src/library/datasets/man/USAccDeaths.Rd
