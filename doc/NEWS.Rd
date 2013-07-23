@@ -82,6 +82,11 @@
       (including class) are copied from the input to the result:
       otherwise only names, dims and dimnames are.
       
+      \item The initialization of the regression coefficients for
+      differenced models in \code{arima()} has been changed and
+      in some examples avoids a local maximum.
+      (\PR{15396})
+      
       \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
       more tests to be run without recommended packages being installed.
     }
@@ -497,10 +502,6 @@
       
       \item \code{na.omit()} and \code{na.exclude()} added a row
       to a zero row data frame.  (\PR{15399})
-      
-      \item The initialization of the regression coefficients for
-      differenced models in \code{arima()} has been changed and
-      in some examples avoids a local maximum.  (\PR{15396})
     }
   }
 }
