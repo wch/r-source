@@ -626,7 +626,8 @@ this may be useful for a package known to benefit particularly from
 byte-compilation (which can take quite a long time and increases the
 installed size of the package).  It is used for the recommended
 packages, as they are byte-compiled when @R{} is installed and for
-consistency should be byte-compiled when updated.
+consistency should be byte-compiled when updated. This can be overrriden
+by installing with flag @option{--no-byte-compile}.
 
 @c DESCRIPTION field ZipData
 The @samp{ZipData} logical field was used to control whether the automatic

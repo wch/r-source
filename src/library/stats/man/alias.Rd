@@ -41,6 +41,9 @@ alias(object, \dots)
   have their coefficients omitted from the fit. Partial aliasing refers
   to effects that can be estimated less precisely because of
   correlations induced by the design.
+  
+  Some parts of the \code{"lm"} method require recommended package
+  \pkg{MASS} to be installed. 
 }
 \value{
   A list (of \code{\link{class}} \code{"listof"}) containing components

@@ -115,6 +115,10 @@
 
       \item Since \command{javareconf} (see above) is used when \R is
       installed, a stable link for \env{JAVA_HOME} can be supplied then.
+
+      \item Configuring with \option{--disable-byte-compilation} will
+      override the \file{DESCRIPTION} files of recommended packages,
+      which typically require byte-compilation.
     }
   }
   
@@ -122,6 +126,10 @@
     \itemize{
       \item Installation is aborted immediately if a \code{LinkingTo}
       package is not installed.
+      
+      \item \command{R CMD INSTALL} has a new option
+      \code{--no-byte-compile} which will override a \samp{ByteCompile}
+      field in the packages's \file{DESCRIPTION} file.
     }
   }
 

@@ -3,6 +3,8 @@
 #
 #  Copyright (C) 1995-2013 The R Core Team
 #
+# NB: also copyright date in Usage.
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
@@ -676,7 +678,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2010 The R Core Team.",
+                "Copyright (C) 2000-2013 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
