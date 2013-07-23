@@ -99,6 +99,8 @@ Rdfiles:
 
 PDFLATEX = @PDFLATEX@
 vignettes:
+	@USE_RECOMMENDED_PACKAGES_FALSE@ @mv $(srcdir)/grid/vignettes/grid.Rnw $(srcdir)/grid/vignettes/grid.Rnw-lattice
+	@USE_RECOMMENDED_PACKAGES_FALSE@ @cp $(srcdir)/grid/vignettes/grid.Rnw-nolattice $(srcdir)/grid/vignettes/grid.Rnw
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "'pdflatex' is needed to make vignettes but is missing on your system."; \
 	else \
@@ -110,6 +112,7 @@ vignettes:
 	          $(R_EXE) > /dev/null; \
 	  done \
 	fi
+	@USE_RECOMMENDED_PACKAGES_FALSE@ @mv $(srcdir)/grid/vignettes/grid.Rnw-lattice $(srcdir)/grid/vignettes/grid.Rnw
 
 metadata:
 	@$(ECHO) "building/updating package metadata ..."

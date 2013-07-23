@@ -143,9 +143,12 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         ## regularize fancy quotes.  First UTF-8 ones:
         txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
                       perl = TRUE, useBytes = TRUE)
+        txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
+                      perl = TRUE, useBytes = TRUE)
         if(.Platform$OS.type == "windows") {
             ## not entirely safe ...
-            txt <- gsub("(\x93|\x94)", "'", txt, perl = TRUE, useBytes = TRUE)
+            txt <- gsub("(\x91|\x92)", "'", txt, perl = TRUE, useBytes = TRUE)
+            txt <- gsub("(\x93|\x94)", '"', txt, perl = TRUE, useBytes = TRUE)
             txt <- txt[!grepl('options(pager = "console")', txt,
                               fixed = TRUE, useBytes = TRUE)]
         }
@@ -232,7 +235,7 @@ testInstalledPackages <-
             else warning(msg, domain = NA, call. = FALSE, immediate. = TRUE)
         }
     }
-    return(invisible(status))
+    invisible(status)
 }
 
 testInstalledPackage <-

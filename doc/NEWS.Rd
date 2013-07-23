@@ -289,6 +289,9 @@
       
       \item \code{na.omit()} and \code{na.exclude()} added a row
       to a zero row data frame.  (\PR{15399})
+      
+      \item All the (where necessary cut-down) vignettes are installed
+      if \R was configured with \option{--without-recommended-packages}.
     }
   }
 }
