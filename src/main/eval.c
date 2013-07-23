@@ -1336,6 +1336,31 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
     return (eval(Stmt, rho));
 }
 
+static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
+{
+    if (rho == R_BaseEnv || rho == R_BaseNamespace)
+	return R_NilValue;
+    else {
+	SEXP loc = (SEXP) R_findVarLocInFrame(rho, symbol);
+	return (loc != NULL) ? loc : R_NilValue;
+    }
+}
+
+static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
+    /* This depends on the current implementation of bindings */
+    if (loc != R_NilValue &&
+	! BINDING_IS_LOCKED(loc) && ! IS_ACTIVE_BINDING(loc)) {
+	if (CAR(loc) != value) {
+	    SETCAR(loc, value);
+	    if (MISSING(loc))
+		SET_MISSING(loc, 0);
+	}
+	return TRUE;
+    }
+    else
+	return FALSE;
+}
+
 SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* Need to declare volatile variables whose values are relied on
@@ -1344,7 +1369,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
        include n and bgn, but gcc -O2 -Wclobbered warns about these so
        to be safe we declare them volatile as well. */
     volatile int i = 0, n, bgn;
-    volatile SEXP v, val;
+    volatile SEXP v, val, cell;
     int dbg, val_type;
     SEXP sym, body;
     RCNTXT cntxt;
@@ -1365,6 +1390,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(rho);
     PROTECT(val = eval(val, rho));
     defineVar(sym, R_NilValue, rho);
+    PROTECT(cell = GET_BINDING_CELL(sym, rho));
 
     /* deal with the case where we are iterating over a factor
        we need to coerce to character - then iterate */
@@ -1447,7 +1473,8 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
             default:
                 errorcall(call, _("invalid for() loop sequence"));
             }
-            defineVar(sym, v, rho);
+	    if (CAR(cell) == R_UnboundValue || ! SET_BINDING_VALUE(cell, v))
+		defineVar(sym, v, rho);
 	}
 
 	eval(body, rho);
@@ -1457,7 +1484,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
  for_break:
     endcontext(&cntxt);
-    UNPROTECT(4);
+    UNPROTECT(5);
     SET_RDEBUG(rho, dbg);
     return R_NilValue;
 }
@@ -3344,31 +3371,6 @@ typedef int BCODE;
 #define BCCODE(e) INTEGER(BCODE_CODE(e))
 #endif
 
-static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
-{
-    if (rho == R_BaseEnv || rho == R_BaseNamespace)
-	return R_NilValue;
-    else {
-	SEXP loc = (SEXP) R_findVarLocInFrame(rho, symbol);
-	return (loc != NULL) ? loc : R_NilValue;
-    }
-}
-
-static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
-    /* This depends on the current implementation of bindings */
-    if (loc != R_NilValue &&
-	! BINDING_IS_LOCKED(loc) && ! IS_ACTIVE_BINDING(loc)) {
-	if (CAR(loc) != value) {
-	    SETCAR(loc, value);
-	    if (MISSING(loc))
-		SET_MISSING(loc, 0);
-	}
-	return TRUE;
-    }
-    else
-	return FALSE;
-}
-
 static R_INLINE SEXP BINDING_VALUE(SEXP loc)
 {
     if (loc != R_NilValue && ! IS_ACTIVE_BINDING(loc))
@@ -4329,7 +4331,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  default:
 	    error(_("invalid sequence argument in for loop"));
 	  }
-	  if (! SET_BINDING_VALUE(cell, value))
+	  if (CAR(cell) == R_UnboundValue || ! SET_BINDING_VALUE(cell, value))
 	      defineVar(BINDING_SYMBOL(cell), value, rho);
 	  BC_CHECK_SIGINT();
 	  pc = codebase + label;
