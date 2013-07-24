@@ -472,6 +472,7 @@ typedef struct RCNTXT {
     IStackval *intstack;
 #endif
     SEXP srcref;	        /* The source line in effect */
+    int browserfinish;     /* should browser finish this context without stopping */
 } RCNTXT, *context;
 
 /* The Various Context Types.
@@ -678,6 +679,7 @@ extern0   void WinCheckUTF8(void);
 
 extern char OutDec	INI_as('.');  /* decimal point used for output */
 extern0 Rboolean R_DisableNLinBrowser	INI_as(FALSE);
+extern0 char R_BrowserLastCommand	INI_as('n');
 
 /* Initialization of the R environment when it is embedded */
 extern int Rf_initEmbeddedR(int argc, char **argv);

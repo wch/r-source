@@ -936,12 +936,14 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 
     /* Debugging */
 
-    SET_RDEBUG(newrho, RDEBUG(op) || RSTEP(op));
+    SET_RDEBUG(newrho, RDEBUG(op) || RSTEP(op) 
+                     || (RDEBUG(rho) && R_BrowserLastCommand == 's')) ;
     if( RSTEP(op) ) SET_RSTEP(op, 0);
     if (RDEBUG(newrho)) {
 	int old_bl = R_BrowseLines,
 	    blines = asInteger(GetOption1(install("deparse.max.lines")));
 	SEXP savesrcref;
+	cntxt.browserfinish = 0; /* Don't want to inherit the "f" */
 	/* switch to interpreted version when debugging compiled code */
 	if (TYPEOF(body) == BCODESXP)
 	    body = bytecodeExpr(body);
@@ -1002,7 +1004,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     else {
 	PROTECT(tmp = eval(body, newrho));
     }
-
+    
     endcontext(&cntxt);
 
     if (RDEBUG(op)) {
@@ -1044,7 +1046,8 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 
     /* Debugging */
 
-    SET_RDEBUG(newrho, RDEBUG(op) || RSTEP(op));
+    SET_RDEBUG(newrho, RDEBUG(op) || RSTEP(op) 
+		     || (RDEBUG(rho) && R_BrowserLastCommand == 's')) ;
     if( RSTEP(op) ) SET_RSTEP(op, 0);
     if (RDEBUG(op)) {
         SEXP savesrcref;
@@ -1291,13 +1294,6 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 #define BodyHasBraces(body) \
     ((isLanguage(body) && CAR(body) == R_BraceSymbol) ? 1 : 0)
 
-#define DO_LOOP_RDEBUG(call, op, args, rho, bgn) do { \
-    if (bgn && RDEBUG(rho)) { \
-	SrcrefPrompt("debug", R_Srcref); \
-	PrintValue(CAR(args)); \
-	do_browser(call, op, R_NilValue, rho); \
-    } } while (0)
-
 /* Allocate space for the loop variable value the first time through
    (when v == R_NilValue) and when the value has been assigned to
    another variable (NAMED(v) == 2). This should be safe and avoid
@@ -1323,7 +1319,7 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
         else
            vis = 1;
     } 
-    if( RDEBUG(rho) && !BodyHasBraces(Stmt)) {
+    if( !vis && RDEBUG(rho) && !BodyHasBraces(Stmt) && !R_GlobalContext->browserfinish) {
 	SrcrefPrompt("debug", R_Srcref);
         PrintValue(Stmt);
         do_browser(call, op, R_NilValue, rho);
@@ -1423,7 +1419,6 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     case CTXT_NEXT: goto for_next;
     }
     for (i = 0; i < n; i++) {
-	DO_LOOP_RDEBUG(call, op, args, rho, bgn);
 
 	switch (val_type) {
 
@@ -1476,7 +1471,11 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (CAR(cell) == R_UnboundValue || ! SET_BINDING_VALUE(cell, v))
 		defineVar(sym, v, rho);
 	}
-
+	if (!bgn && RDEBUG(rho) && !R_GlobalContext->browserfinish) { 
+	    SrcrefPrompt("debug", R_Srcref);
+	    PrintValue(body);
+	    do_browser(call, op, R_NilValue, rho); 
+	} 
 	eval(body, rho);
 
     for_next:
@@ -1513,8 +1512,18 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
 	while (asLogicalNoNA(eval(CAR(args), rho), call)) {
-	    DO_LOOP_RDEBUG(call, op, args, rho, bgn);
+	    if (RDEBUG(rho) && !bgn && !R_GlobalContext->browserfinish) { 
+		SrcrefPrompt("debug", R_Srcref); 
+		PrintValue(body); 
+		do_browser(call, op, R_NilValue, rho);
+	    }
 	    eval(body, rho);
+	    if (RDEBUG(rho) && !R_GlobalContext->browserfinish) {
+		SrcrefPrompt("debug", R_Srcref); 
+		Rprintf("(while) ");
+		PrintValue(CAR(args)); 
+		do_browser(call, op, R_NilValue, rho);
+	    }	    
 	}
     }
     endcontext(&cntxt);
@@ -1526,7 +1535,6 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int dbg;
-    volatile int bgn;
     volatile SEXP body;
     RCNTXT cntxt;
 
@@ -1539,13 +1547,11 @@ SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     dbg = RDEBUG(rho);
     body = CAR(args);
-    bgn = BodyHasBraces(body);
 
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
 	for (;;) {
-	    DO_LOOP_RDEBUG(call, op, args, rho, bgn);
 	    eval(body, rho);
 	}
     }
@@ -1576,7 +1582,7 @@ SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
     	int i = 1;
 	while (args != R_NilValue) {
 	    PROTECT(R_Srcref = getSrcref(srcrefs, i++));
-	    if (RDEBUG(rho)) {
+	    if (RDEBUG(rho) && !R_GlobalContext->browserfinish) {
 	    	SrcrefPrompt("debug", R_Srcref);
 	        PrintValue(CAR(args));
 		do_browser(call, op, R_NilValue, rho);

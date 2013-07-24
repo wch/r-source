@@ -133,6 +133,26 @@
       case-insensitively on all platforms.
     }
   }
+  
+  \subsection{DEBUGGING}{
+    \itemize{
+      \item The behaviour of the code browser has been made more
+      consistent, in part following the suggestions in \PR{14985}.
+      
+      \item Calls to \code{browser()} are now consistent with calls
+      to the browser triggered by \code{debug()}, in that \kbd{Enter}
+      will default to \code{n} rather than \code{c}.
+      
+      \item A new browser command \code{s} has been added, to 
+      \dQuote{step into} function calls.
+      
+      \item A new browser command \code{f} has been added, to 
+      \dQuote{finish} the current loop or function.
+      
+      \item Within the browser, the command \code{help} will 
+      display a short list of available commands.
+    }
+  }
 
   \subsection{UTILITIES}{
     \itemize{

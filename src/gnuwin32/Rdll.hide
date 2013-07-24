@@ -62,6 +62,7 @@
  R_BCNodeStackTop
  R_BrowseLevel
  R_BrowseLines
+ R_BrowserLastCommand
  R_CBoundsCheck
  R_CStackDir
  R_ChooseFile

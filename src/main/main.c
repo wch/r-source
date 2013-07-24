@@ -1011,24 +1011,44 @@ static void printwhere(void)
   Rprintf("\n");
 }
 
+static void printBrowserHelp(void)
+{
+    Rprintf("n          next\n");
+    Rprintf("s          step into\n");
+    Rprintf("f          finish\n");
+    Rprintf("c or cont  continue\n");
+    Rprintf("Q          quit\n");
+    Rprintf("where      show stack\n");
+    Rprintf("help       show help\n");
+    Rprintf("<expr>     evaluate expression\n");
+}
+
 static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
     int rval = 0;
     if (isSymbol(CExpr)) {
 	const char *expr = CHAR(PRINTNAME(CExpr));
-	if (!strcmp(expr, "n")) {
+	if (!strcmp(expr, "c") || !strcmp(expr, "cont")) {
+	    rval = 1;
+	    SET_RDEBUG(rho, 0);
+	} else if (!strcmp(expr, "f")) {
+	    rval = 1;
+	    RCNTXT *cntxt = R_GlobalContext;
+	    while (cntxt != R_ToplevelContext 
+		      && !(cntxt->callflag & (CTXT_RETURN | CTXT_LOOP))) {
+		cntxt = cntxt->nextcontext;
+	    }
+	    cntxt->browserfinish = 1;	    
 	    SET_RDEBUG(rho, 1);
+	    R_BrowserLastCommand = 'f';
+	} else if (!strcmp(expr, "help")) {
+	    rval = 2;
+	    printBrowserHelp();
+	} else if (!strcmp(expr, "n")) {
 	    rval = 1;
-	}
-	if (!strcmp(expr, "c")) {
-	    rval = 1;
-	    SET_RDEBUG(rho, 0);
-	}
-	if (!strcmp(expr, "cont")) {
-	    rval = 1;
-	    SET_RDEBUG(rho, 0);
-	}
-	if (!strcmp(expr, "Q")) {
+	    SET_RDEBUG(rho, 1);
+	    R_BrowserLastCommand = 'n';
+	} else if (!strcmp(expr, "Q")) {
 
 	    /* Run onexit/cend code for everything above the target.
 	       The browser context is still on the stack, so any error
@@ -1042,11 +1062,14 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    SET_RDEBUG(rho, 0); /*PR#1721*/
 
 	    jump_to_toplevel();
-	}
-	if (!strcmp(expr, "where")) {
+	} else if (!strcmp(expr, "s")) {
+	    rval = 1;
+	    SET_RDEBUG(rho, 1);
+	    R_BrowserLastCommand = 's';	    
+	} else if (!strcmp(expr, "where")) {
+	    rval = 2;
 	    printwhere();
 	    /* SET_RDEBUG(rho, 1); */
-	    rval = 2;
 	}
     }
     return rval;
@@ -1105,9 +1128,10 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	Rprintf("Called from: ");
 	tmp = asInteger(GetOption(install("deparse.max.lines"), R_BaseEnv));
 	if(tmp != NA_INTEGER && tmp > 0) R_BrowseLines = tmp;
-        if( cptr != R_ToplevelContext )
+        if( cptr != R_ToplevelContext ) {
 	    PrintValueRec(cptr->call, rho);
-        else
+	    SET_RDEBUG(cptr->cloenv, 1);
+        } else
             Rprintf("top level \n");
 
 	R_BrowseLines = 0;

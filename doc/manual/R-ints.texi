@@ -234,7 +234,7 @@ struct sxpinfo_struct @{
     unsigned int mark  :  1;  /* @r{mark object as `in use' in GC} */
     unsigned int debug :  1;
     unsigned int trace :  1;
-    unsigned int spare :  1;  /* @r{unused} */
+    unsigned int spare :  1;  /* @r{debug once} */
     unsigned int gcgen :  1;  /* @r{generation for GC} */
     unsigned int gccls :  3;  /* @r{class of node for GC} */
 @};  /*              Tot: 32 */
@@ -250,6 +250,10 @@ single-step mode.
 @findex trace bit
 The @code{trace} bit is used for functions for @code{trace()} and for
 other objects when tracing duplications (see @code{tracemem}).
+
+@findex spare bit
+The @code{spare} bit is used for closures to mark them for one
+time debugging.
 
 @findex named bit
 @findex NAMED
