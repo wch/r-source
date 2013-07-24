@@ -3453,8 +3453,8 @@ function(dir)
     bad_flags_regexp <-
         sprintf("^-(%s)$",
                 paste(c("O.*",
-                        "Wall",
-                        "Winline", # see in RxCEcolInf
+                        "W",
+                        "W[^l].*", # -Wl, might just be portable
                         "ansi", "pedantic", "traditional",
                         "f.*", "m.*", "std.*",
                         "x",
@@ -3468,7 +3468,6 @@ function(dir)
                   structure(list(bad), names = names[i]))
     }
 
-    class(bad_flags) <- "check_make_vars"
     bad_flags
 }
 
