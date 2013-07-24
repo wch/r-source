@@ -1519,8 +1519,9 @@ example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
 
 When writing a @file{Makevars} file for a package you intend to
 distribute, take care to ensure that it is not specific to your
-compiler: flags such as @option{-O2 -Wall -pedantic} are all specific to
-GCC.
+compiler: flags such as @option{-O2 -Wall -pedantic} (and all other
+@option{-W} flags: for the Solaris compiler these are used to pass
+arguments to compiler phases) are all specific to GCC.
 
 Also, do not set variables such as @code{CPPFLAGS}, @code{CFLAGS} etc.:
 these should be settable by users (sites) through appropriate personal
