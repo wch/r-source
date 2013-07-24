@@ -1859,9 +1859,11 @@ setRlibs <-
         } else resultLog(Log, "OK")
 
         ## Check src/Makevars[.in] compilation flags.
-        if (any(file.exists(file.path("src", c("Makevars", "Makevars.in")))) ) {
+        if (length(makevars)) {
             checkingLog(Log, "compilation flags in Makevars")
-            Rcmd <- "tools:::.check_make_vars(\"src\")\n"
+
+            Rcmd <- sprintf("tools:::.check_make_vars(\"src\", %s)\n",
+                            deparse(makevars))
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 warningLog(Log)
@@ -3978,7 +3980,7 @@ setRlibs <-
                         "but it is better to handcraft a NAMESPACE file.")
             } else {
                 noteLog(Log)
-                wrapLog("Packages without R code can be instaled without",
+                wrapLog("Packages without R code can be installed without",
                         "a NAMESPACE file, but it is cleaner to add",
                         "an empty one.")
             }
@@ -3993,6 +3995,10 @@ setRlibs <-
             if (R_check_permissions) check_permissions(allfiles)
 	    setwd(startdir)
 
+            ## record this before installation.
+            makevars <-
+                basename(Sys.glob(file.path(pkgdir, "src",
+                                           c("Makevars.in", "Makevars"))))
             if (do_install) {
                 check_install()
                 if(R_check_pkg_sizes) check_install_sizes()

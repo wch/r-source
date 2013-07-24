@@ -3400,18 +3400,17 @@ function(x, ...)
 ### * .check_make_vars
 
 .check_make_vars <-
-function(dir)
+function(dir, makevars = c("Makevars.in", "Makevars"))
 {
-
     bad_flags <- list()
     class(bad_flags) <- "check_make_vars"
 
-    paths <- file.path(dir, c("Makevars.in", "Makevars"))
+    paths <- file.path(dir, makevars)
     paths <- paths[file_test("-f", paths)]
     if(!length(paths)) return(bad_flags)
+    bad_flags$paths <- file.path("src", basename(paths))
     ## Makevars could be used with --no-configure
     ## and maybe configure does not even use src/Makevars.in
-    ## So this is not right, but the check is done after installation.
     mfile <- paths[1L]
     make <- Sys.getenv("MAKE")
     if(make == "") make <- "make"
@@ -3490,6 +3489,13 @@ function(x, ...)
       if(length(bad <- x$uflags)) {
           c(gettextf("Variables overriding user/site settings:"),
             sprintf("  %s", bad))
+      },
+      if(length(x$paths) > 1L) {
+          c(sprintf("Package has both %s and %s.",
+                  sQuote("src/Makevars.in"), sQuote("src/Makevars")),
+            strwrap(sprintf("Installation with --no-configure' is unlikely to work.  If you intended %s to be used on Windows, rename it to %s otherwise remove it.",
+                            sQuote("src/Makevars"),
+                            sQuote("src/Makevars.win"))))
       })
 }
 
