@@ -3409,6 +3409,9 @@ function(dir)
     paths <- file.path(dir, c("Makevars.in", "Makevars"))
     paths <- paths[file_test("-f", paths)]
     if(!length(paths)) return(bad_flags)
+    ## Makevars could be used with --no-configure
+    ## and maybe configure does not even use src/Makevars.in
+    ## So this is not right, but the check is done after installation.
     mfile <- paths[1L]
     make <- Sys.getenv("MAKE")
     if(make == "") make <- "make"
