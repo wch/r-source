@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.record.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-11 R Core Team
+% Copyright 2009-13 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.raster}
@@ -70,7 +70,8 @@ rasterGrob(image,
 
   Not all graphics devices are capable of rendering raster images
   and some may not be able to produce rotated images (i.e., if
-  a raster object is rendered within a rotated viewport).
+  a raster object is rendered within a rotated viewport).  See also the
+  comments under \code{\link{rasterImage}}.
 
   All graphical parameter settings in \code{gp} will be ignored,
   including \code{alpha}.
