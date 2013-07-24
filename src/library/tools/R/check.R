@@ -1866,7 +1866,8 @@ setRlibs <-
                             deparse(makevars))
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                warningLog(Log)
+                if(any(grepl("^(Non-portable flags|Variables overriding)", out)))
+                   warningLog(Log) else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
