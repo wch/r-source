@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/colorRamp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -42,12 +42,14 @@ colorRampPalette(colors, \dots)
   the colors produced with \code{space = "Lab"}.
 }
 \value{
-  \code{colorRamp} returns a \code{\link{function}} that maps values between 0 and 1
-  to colors.
+  \code{colorRamp} returns a \code{\link{function}} with argument a
+  vector of values between 0 and 1 that are mapped to a numeric matrix
+  of RGB color values with one row per color and 3 columns.
+  
   \code{colorRampPalette} returns a function that takes an integer
-  argument and returns that number of colors interpolating the given
-  sequence (similar to \code{\link{heat.colors}} or
-  \code{\link{terrain.colors}}.
+  argument (the required number of colors) and returns a character
+  vector of colors (see \code{\link{rgb}}) interpolating the given sequence
+  (similar to \code{\link{heat.colors}} or \code{\link{terrain.colors}}.
 }
 
 \seealso{
