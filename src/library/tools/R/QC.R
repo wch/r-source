@@ -3493,9 +3493,12 @@ function(x, ...)
       if(length(x$paths) > 1L) {
           c(sprintf("Package has both %s and %s.",
                   sQuote("src/Makevars.in"), sQuote("src/Makevars")),
-            strwrap(sprintf("Installation with --no-configure' is unlikely to work.  If you intended %s to be used on Windows, rename it to %s otherwise remove it.",
+            strwrap(sprintf("Installation with --no-configure' is unlikely to work.  If you intended %s to be used on Windows, rename it to %s otherwise remove it.  If %s created %s, you need a %s script.",
                             sQuote("src/Makevars"),
-                            sQuote("src/Makevars.win"))))
+                            sQuote("src/Makevars.win"),
+                            sQuote("configure"),
+                            sQuote("src/Makevars"),
+                            sQuote("cleanup"))))
       })
 }
 
