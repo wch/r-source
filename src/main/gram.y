@@ -1461,7 +1461,8 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
 	    break;
 	case PARSE_INCOMPLETE:
 	case PARSE_ERROR:
-	    finalizeData();
+	    if (ParseState.keepSrcRefs) 
+	        finalizeData();
 	    R_PPStackTop = savestack;
 	    R_FinalizeSrcRefState();	    
 	    return R_NilValue;
