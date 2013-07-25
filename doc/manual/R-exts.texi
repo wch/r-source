@@ -1276,9 +1276,7 @@ for libraries, etc.).
 Under a Unix-alike only, an executable (Bourne shell) script
 @file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
 option @option{--clean} was given, and by @code{R CMD build} when
-preparing the package for building from its source.  It can be used to
-clean up the package source tree: in particular, it should remove all
-files created by @command{configure}.
+preparing the package for building from its source.
 
 As an example consider we want to use functionality provided by a (C or
 FORTRAN) library @code{foo}.  Using Autoconf, we can create a configure
@@ -1398,6 +1396,24 @@ not be used (and hence e.g.@: removed from @code{ACX_BLAS}).  (Recent
 versions of Autoconf in fact allow an already set @code{FLIBS} to
 override the test for the FORTRAN linker flags.)
 
+
+@strong{Note bene:} If the @command{configure} script creates files,
+e.g.@: @file{src/Makevars}, you do need a @command{cleanup} script to
+remove them.  Otherwise if the package has vignettes, @command{R CMD
+build} will ship the files that are created.  For example, package
+@pkg{RODBC} has
+
+@example
+#!/bin/sh
+
+rm -f config.* src/Makevars src/config.h
+@end example
+
+@noindent
+As this example shows, @command{configure} often creates working files
+such as @file{config.log}.
+
+
 You should bear in mind that the configure script will not be used on
 Windows systems.  If your package is to be made publicly available,
 please give enough information for a user on a non-Unix-alike platform
@@ -1406,12 +1422,12 @@ used on that platform.  (Optionally, there can be a @file{cleanup.win}
 script.  Both should be shell scripts to be executed by @command{ash},
 which is a minimal version of Bourne-style @command{sh}.)  When
 @file{configure.win} is run the environment variables @env{R_HOME}
-(which uses @samp{/} as the file separator) and @env{R_ARCH} will be
-set.  Use @env{R_ARCH} to decide if this is a 64-bit build (its value
-there is @samp{/x64}) and to install DLLs to the correct place
-(@file{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use @env{R_ARCH_BIN} to find the
-correct place under the @file{bin} directory, e.g.@:
-@file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
+(which uses @samp{/} as the file separator), @env{R_ARCH} and Use
+@env{R_ARCH_BIN} will be set.  Use @env{R_ARCH} to decide if this is a
+64-bit build (its value there is @samp{/x64}) and to install DLLs to the
+correct place (@file{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
+@env{R_ARCH_BIN} to find the correct place under the @file{bin}
+directory, e.g.@: @file{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
