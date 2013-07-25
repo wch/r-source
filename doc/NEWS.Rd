@@ -89,6 +89,12 @@
       
       \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
       more tests to be run without recommended packages being installed.
+      
+      \item \code{colorRamp()} and \code{colorRampPalette()} now allow
+      non-opaque colours and a ramp in opacity via the new argument
+      \code{alpha = TRUE}.  (Suggested by Alberto Krone-Martins, but
+      there are existing uses which expect only RGB values.)
+      % https://stat.ethz.ch/pipermail/r-devel/2013-July/067046.html
     }
   }
 

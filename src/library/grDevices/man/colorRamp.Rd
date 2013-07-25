@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/colorRamp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -17,7 +17,7 @@
 }
 \usage{
 colorRamp(colors, bias = 1, space = c("rgb", "Lab"),
-          interpolate = c("linear", "spline"))
+          interpolate = c("linear", "spline"), alpha = FALSE)
 colorRampPalette(colors, \dots)
 }
 \arguments{
@@ -28,6 +28,9 @@ colorRampPalette(colors, \dots)
   \item{space}{a character string; interpolation in RGB or CIE Lab
     color spaces.}
   \item{interpolate}{use spline or linear interpolation.}
+  \item{alpha}{logical: should alpha channel (opacity) values should be
+    returned?   It is an error to give a true value if
+    \code{space} is specified.}
   \item{\dots}{arguments to pass to \code{colorRamp}.}
 }
 \details{
@@ -40,14 +43,18 @@ colorRampPalette(colors, \dots)
   completely accurate and the color ramp may not reach the extreme
   values in Lab space.  Future changes in the \R color model may change
   the colors produced with \code{space = "Lab"}.
+
+  Argument \code{alpha} has introduced in \R 3.1.0.
 }
 \value{
-  \code{colorRamp} returns a \code{\link{function}} that maps values between 0 and 1
-  to colors.
+  \code{colorRamp} returns a \code{\link{function}} with argument a
+  vector of values between 0 and 1 that are mapped to a numeric matrix
+  of RGB color values with one row per color and 3 or 4 columns.
+  
   \code{colorRampPalette} returns a function that takes an integer
-  argument and returns that number of colors interpolating the given
-  sequence (similar to \code{\link{heat.colors}} or
-  \code{\link{terrain.colors}}.
+  argument (the required number of colors) and returns a character
+  vector colors (see \code{\link{rgb}}) interpolating the given sequence
+  (similar to \code{\link{heat.colors}} or \code{\link{terrain.colors}}.
 }
 
 \seealso{
@@ -63,10 +70,9 @@ colorRampPalette(colors, \dots)
 ## Both return a *function* :
 colorRamp(c("red", "green"))( (0:4)/4 ) ## (x) , x in [0,1]
 colorRampPalette(c("blue", "red"))( 4 ) ## (n)
-\dontshow{## special case, invalid in R <= 2.15.0:
-bb <- colorRampPalette(2)(4)
-stopifnot(bb[1] == bb)
-}
+## a ramp in opacity of blue values
+colorRampPalette(c(rgb(0,0,1,1), rgb(0,0,1,0)), alpha=TRUE)(6)
+
 require(graphics)
 
 ## Here space="rgb" gives palettes that vary only in saturation,

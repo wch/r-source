@@ -151,5 +151,10 @@ x; +x; -x; !x
 stopifnot(!is.ts(!x), is.ts(+x), is.ts(-x))
 ##
 
+## regression test incorrectly in colorRamp.Rd
+bb <- colorRampPalette(2)(4)
+stopifnot(bb[1] == bb)
+## special case, invalid in R <= 2.15.0:
+
 
 proc.time()
