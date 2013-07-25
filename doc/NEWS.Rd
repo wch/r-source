@@ -130,6 +130,12 @@
       \item \command{R CMD INSTALL} has a new option
       \code{--no-byte-compile} which will override a \samp{ByteCompile}
       field in the packages's \file{DESCRIPTION} file.
+      
+      \item License \code{BSD} is deprecated: use \sQuote{BSD_2_clause}
+      or \sQuote{BSD_3_clause} instead.
+
+      License \code{X11} is deprecated: use \sQuote{MIT} or
+      \sQuote{BSD_2_clause} instead.
     }
   }
 

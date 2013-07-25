@@ -1946,9 +1946,8 @@ function(package, dir, file, lib.loc = NULL,
                 exprs2 <- lapply(unlist(refs, FALSE), checkFFmy)
                 exprs <- c(exprs, exprs2)
             }
-       }
-    }
-    else {
+        }
+    } else {
         if(!is.na(enc) &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
             ## FIXME: what if conversion fails on e.g. UTF-8 comments
@@ -3166,6 +3165,10 @@ function(dfile, dir)
                 ok <- FALSE
             }
         }
+        if(any(status$components %in% c("BSD", "X11"))) {
+            status$deprecated <- intersect(status$components, c("BSD", "X11"))
+            ok <- FALSE
+        }
         ## Components with extensions but not extensible:
         if(length(extensions <- status$extensions) &&
            any(ind <- !extensions$extensible)) {
@@ -3207,6 +3210,13 @@ function(x, ...)
                 c(gettext("Standardized license specification:"),
                   strwrap(x$standardization, indent = 2L, exdent = 2L))
             })
+      },
+      if(length(y <- x$deprecated)) {
+          if(length(y) > 1L)
+              gettextf("Deprecated licenses: %s",
+                       paste(y, collapse = ", "))
+          else
+              gettextf("Deprecated license: %s", y)
       },
       if(length(y <- x$bad_pointers)) {
           c(gettextf("Invalid license file pointers: %s",
@@ -3275,8 +3285,8 @@ function(dir)
     bad_flags_regexp <-
         sprintf("^-(%s)$",
                 paste(c("O.*",
-                        "Wall",
-                        "Winline", # see in RxCEcolInf
+                        "W",
+                        "W[^l].*", # -Wl, might just be portable
                         "ansi", "pedantic", "traditional",
                         "f.*", "m.*", "std.*",
                         "x",
