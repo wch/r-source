@@ -129,6 +129,9 @@
       is no longer recognized as valid.  Use \sQuote{MIT} or
       \sQuote{BSD_2_clause} instead.
 
+      License \code{BSD} is deprecated: use \sQuote{BSD_2_clause} or
+      \sQuote{BSD_3_clause} instead.
+
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
     }

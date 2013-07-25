@@ -3344,6 +3344,10 @@ function(dfile, dir)
                 ok <- FALSE
             }
         }
+        if(any(status$components %in% "BSD")) {
+            status$deprecated <- "BSD"
+            ok <- FALSE
+        }
         ## Components with extensions but not extensible:
         if(length(extensions <- status$extensions) &&
            any(ind <- !extensions$extensible)) {
@@ -3385,6 +3389,10 @@ function(x, ...)
                 c(gettext("Standardized license specification:"),
                   strwrap(x$standardization, indent = 2L, exdent = 2L))
             })
+      },
+      if(length(y <- x$deprecated)) {
+          c(gettextf("Deprecated license: %s",
+                     paste(y, collapse = " ")))
       },
       if(length(y <- x$bad_pointers)) {
           c(gettextf("Invalid license file pointers: %s",
