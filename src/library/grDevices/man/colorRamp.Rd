@@ -53,7 +53,7 @@ colorRampPalette(colors, \dots)
   
   \code{colorRampPalette} returns a function that takes an integer
   argument (the required number of colors) and returns a character
-  vector colors (see \code{\link{rgb}}) interpolating the given sequence
+  vector of colors (see \code{\link{rgb}}) interpolating the given sequence
   (similar to \code{\link{heat.colors}} or \code{\link{terrain.colors}}.
 }
 

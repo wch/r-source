@@ -8,7 +8,7 @@
 \alias{colorspaces}
 \title{Convert between Colour Spaces}
 \description{
-  Convert opaque colours between their representations in standard
+  Convert colours between their representations in standard
   colour spaces.
 }
 \usage{
@@ -16,7 +16,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
              scale.in = 1, scale.out = 1, clip = TRUE)
 }
 \arguments{
-  \item{color}{A matrix whose rows specify opague colors.}
+  \item{color}{A matrix whose rows specify colors.}
   \item{from, to}{Input and output color spaces.  See \sQuote{Details} below.}
   \item{from.ref.white, to.ref.white}{Reference whites or \code{NULL}
     if these are built in to the definition, as for RGB
@@ -59,6 +59,9 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   The RGB color spaces are specific to a particular class of display.
   An RGB space cannot represent all colors, and the \code{clip} option
   controls what is done to out-of-range colors.
+  
+  For the named color spaces \code{color} must be a matrix of values in
+  the \code{from} color space: in particular opaque colors.
 }
 \value{
   A 3-column matrix whose rows specify the colors.
