@@ -1691,6 +1691,14 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal,  R_varloc_t tmploc)
 /* We have checked to see that CAR(args) is a LANGSXP */
 
 static const char * const asym[] = {":=", "<-", "<<-", "="};
+#define NUM_ASYM (sizeof(asym) / sizeof(char *))
+static SEXP asymSymbol[NUM_ASYM];
+
+void attribute_hidden R_initAsymSymbol(void)
+{
+    for (int i = 0; i < NUM_ASYM; i++)
+	asymSymbol[i] = install(asym[i]);
+}
 
 static void tmp_cleanup(void *data)
 {
@@ -1860,7 +1868,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid function in complex assignment"));
     }
     SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
-    PROTECT(expr = assignCall(install(asym[PRIMVAL(op)]), CDR(lhs),
+    PROTECT(expr = assignCall(asymSymbol[PRIMVAL(op)], CDR(lhs),
 			      afun, R_TmpvalSymbol, CDDR(expr), rhsprom));
     expr = eval(expr, rho);
     UNPROTECT(nprot);

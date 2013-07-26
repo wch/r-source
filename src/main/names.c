@@ -1079,6 +1079,7 @@ void attribute_hidden InitNames()
     /*  Builtin Functions */
     for (int i = 0; R_FunTab[i].name; i++) installFunTab(i);
 
+    R_initAsymSymbol();
     R_initialize_bcode();
 }
 
