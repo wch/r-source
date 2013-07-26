@@ -298,6 +298,12 @@
       
       \item All the (where necessary cut-down) vignettes are installed
       if \R was configured with \option{--without-recommended-packages}.
+      
+      \item \code{source()} did not display filenames when reporting 
+      syntax errors.
+      
+      \item Syntax error reports misplaced the caret pointing out the bad
+      token.
     }
   }
 }

@@ -144,7 +144,7 @@ void parseError(SEXP call, int linenum)
 	    error("%s%d:%d: %s\n%d: %s\n%*s",
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
 		  R_ParseContextLine, CHAR(STRING_ELT(context, 0)), 
-		  width+R_ParseErrorCol, "^");
+		  width+R_ParseErrorCol+1, "^");
 	    break;
 	default:
 	    width = snprintf(buffer, 10, "%d:", R_ParseContextLine);
@@ -152,7 +152,7 @@ void parseError(SEXP call, int linenum)
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
 		  R_ParseContextLine-1, CHAR(STRING_ELT(context, len-2)),
 		  R_ParseContextLine, CHAR(STRING_ELT(context, len-1)), 
-		  width+R_ParseErrorCol, "^");
+		  width+R_ParseErrorCol+1, "^");
 	    break;
 	}
     } else {
