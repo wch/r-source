@@ -1166,6 +1166,14 @@ R_xlen_t  Rf_xlength(SEXP);
 #undef isObject
 #define isObject(s)	(OBJECT(s) != 0)
 
+/* macro version of R_CheckStack */
+#define R_CheckStack() do {						\
+	void R_SignalCStackOverflow(void);				\
+	int dummy;							\
+	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
+	if(R_CStackLimit != -1 && usage > /*0.95 * */R_CStackLimit)	\
+	    R_SignalCStackOverflow();					\
+    } while (FALSE)
 #endif
 
 

@@ -697,6 +697,10 @@ void setup_Rmainloop(void)
     char deferred_warnings[11][250];
     volatile int ndeferred_warnings = 0;
 
+    /* make sure we have enough head room to handle errors */
+    if(R_CStackLimit != -1)
+	R_CStackLimit = 0.95 * R_CStackLimit;
+
     InitConnections(); /* needed to get any output at all */
 
     /* Initialize the interpreter's internal structures. */

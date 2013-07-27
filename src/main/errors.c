@@ -74,7 +74,7 @@ static char * R_ConciseTraceback(SEXP call, int skip);
 
   ErrorMessage()-> errorcall   (but with message from ErrorDB[])
 
-  WarningMessage()-> warningcall (but with message from WarningDB[]).
+  WarningMessage()-> warningcall (but with message Rfrom WarningDB[]).
 */
 
 static void reset_stack_limit(void *data)
@@ -83,27 +83,33 @@ static void reset_stack_limit(void *data)
     R_CStackLimit = *limit;
 }
 
-void R_CheckStack(void)
+void R_SignalCStackOverflow(void)
+{
+    /* We do need some stack space to process error recovery, so
+       temporarily raise the limit.  We have 5% head room because we
+       reduced R_CStackLimit to 95% of the initial value in
+       setup_Rmainloop.
+    */
+    RCNTXT cntxt;
+    uintptr_t stacklimit = R_CStackLimit;
+    R_CStackLimit += 0.05*R_CStackLimit;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &reset_stack_limit;
+    cntxt.cenddata = &stacklimit;
+
+    errorcall(R_NilValue, "C stack usage is too close to the limit");
+    /* Do not translate this, to save stack space */
+}
+
+void (R_CheckStack)(void)
 {
     int dummy;
     intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);
 
     /* printf("usage %ld\n", usage); */
-    if(R_CStackLimit != -1 && usage > 0.95 * R_CStackLimit) {
-	/* We do need some stack space to process error recovery,
-	   so temporarily raise the limit.
-	 */
-	RCNTXT cntxt;
-	uintptr_t stacklimit = R_CStackLimit;
-	R_CStackLimit += 0.05*R_CStackLimit;
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &reset_stack_limit;
-	cntxt.cenddata = &stacklimit;
-
-	errorcall(R_NilValue, "C stack usage is too close to the limit");
-	/* Do not translate this, to save stack space */
-    }
+    if(R_CStackLimit != -1 && usage > /*0.95 * */R_CStackLimit) 
+	R_SignalCStackOverflow();
 }
 
 void R_CheckStack2(size_t extra)
@@ -114,21 +120,9 @@ void R_CheckStack2(size_t extra)
     /* do it this way, as some compilers do usage + extra 
        in unsigned arithmetic */
     usage += extra;
-    if(R_CStackLimit != -1 && usage > 0.95 * R_CStackLimit) {
-	/* We do need some stack space to process error recovery,
-	   so temporarily raise the limit.
-	 */
-	RCNTXT cntxt;
-	uintptr_t stacklimit = R_CStackLimit;
-	R_CStackLimit += 0.05*R_CStackLimit;
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &reset_stack_limit;
-	cntxt.cenddata = &stacklimit;
+    if(R_CStackLimit != -1 && usage > /*0.95 * */R_CStackLimit)
+	R_SignalCStackOverflow();
 
-	errorcall(R_NilValue, "C stack usage is too close to the limit");
-	/* Do not translate this, to save stack space */
-    }
 }
 
 void R_CheckUserInterrupt(void)
