@@ -119,18 +119,18 @@ HANDLE ProfileEvent;
 /* Careful here!  These functions are called asynchronously, maybe in the middle of GC,
    so don't do any allocations */
 
-/* This does a linear search through the previously recorded filenames.  If 
+/* This does a linear search through the previously recorded filenames.  If
    this one is new, we try to add it.  FIXME:  if there are eventually
    too many files for an efficient linear search, do hashing. */
-   
+
 static int getFilenum(const char* filename) {
     int fnum;
-    
+
     for (fnum = 0; fnum < R_Line_Profiling-1
 		   && strcmp(filename, R_Srcfiles[fnum]); fnum++);
 
     if (fnum == R_Line_Profiling-1) {
-	size_t len = strlen(filename); 
+	size_t len = strlen(filename);
 	if (fnum >= R_Srcfile_bufcount) { /* too many files */
 	    R_Profiling_Error = 1;
 	    return 0;
@@ -145,7 +145,7 @@ static int getFilenum(const char* filename) {
 	*(R_Srcfiles[fnum+1]) = '\0';
 	R_Line_Profiling++;
     }
-    
+
     return fnum + 1;
 }
 
@@ -164,26 +164,26 @@ static int getFilenum(const char* filename) {
    file is wrong. Maybe writing an overflow marker of some sort would
    be better.  LT */
 
-static void lineprof(char* buf, SEXP srcref) 
+static void lineprof(char* buf, SEXP srcref)
 {
     size_t len;
     if (srcref && !isNull(srcref) && (len = strlen(buf)) < PROFLINEMAX) {
 	int fnum, line = asInteger(srcref);
 	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
 	const char *filename;
-	
+
 	if (!srcfile || TYPEOF(srcfile) != ENVSXP) return;
 	srcfile = findVar(install("filename"), srcfile);
 	if (TYPEOF(srcfile) != STRSXP || !length(srcfile)) return;
 	filename = CHAR(STRING_ELT(srcfile, 0));
-	
+
 	if ((fnum = getFilenum(filename)))
 	    snprintf(buf+len, PROFBUFSIZ - len, "%d#%d ", fnum, line);
     }
 }
 
 /* FIXME: This should be done wih a proper configure test, also making
-   sure that the pthreads library is linked in. LT */ 
+   sure that the pthreads library is linked in. LT */
 #ifndef Win32
 #if (defined(__APPLE__) || defined(_REENTRANT) || defined(HAVE_OPENMP)) && \
      ! defined(HAVE_PTHREAD)
@@ -202,9 +202,9 @@ static void doprof(int sig)  /* sig is ignored in Windows */
     unsigned long bigv, smallv, nodes;
     size_t len;
     int prevnum = R_Line_Profiling;
-    
+
     buf[0] = '\0';
-    
+
 #ifdef Win32
     SuspendThread(MainThread);
 #elif defined(HAVE_PTHREAD)
@@ -217,46 +217,46 @@ static void doprof(int sig)  /* sig is ignored in Windows */
     if (R_Mem_Profiling){
 	    get_current_mem(&smallv, &bigv, &nodes);
 	    if((len = strlen(buf)) < PROFLINEMAX)
-		snprintf(buf+len, PROFBUFSIZ - len, 
+		snprintf(buf+len, PROFBUFSIZ - len,
 			 ":%ld:%ld:%ld:%ld:", smallv, bigv,
 			 nodes, get_duplicate_counter());
 	    reset_duplicate_counter();
     }
-    
+
     if (R_GC_Profiling && R_gc_running())
 	strcat(buf, "\"<GC>\" ");
 
     if (R_Line_Profiling)
-    	lineprof(buf, R_Srcref);
-    
+	lineprof(buf, R_Srcref);
+
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
 	    if(strlen(buf) < PROFLINEMAX) {
-	    	strcat(buf, "\"");
+		strcat(buf, "\"");
 		strcat(buf, TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
-		       	"<Anonymous>");
+			"<Anonymous>");
 		strcat(buf, "\" ");
 		if (R_Line_Profiling)
 		    lineprof(buf, cptr->srcref);
 	    }
 	}
     }
-    
+
     /* I believe it would be slightly safer to place this _after_ the
        next two bits, along with the signal() call. LT */
 #ifdef Win32
     ResumeThread(MainThread);
-#endif /* Win32 */	
+#endif /* Win32 */
 
     for (int i = prevnum; i < R_Line_Profiling; i++)
-    	fprintf(R_ProfileOutfile, "#File %d: %s\n", i, R_Srcfiles[i-1]);
+	fprintf(R_ProfileOutfile, "#File %d: %s\n", i, R_Srcfiles[i-1]);
 
     if(strlen(buf))
 	fprintf(R_ProfileOutfile, "%s\n", buf);
 
-#ifndef Win32	
+#ifndef Win32
     signal(SIGPROF, doprof);
 #endif /* not Win32 */
 
@@ -301,12 +301,12 @@ static void R_EndProfiling(void)
     R_ProfileOutfile = NULL;
     R_Profiling = 0;
     if (R_Srcfiles_buffer) {
-        R_ReleaseObject(R_Srcfiles_buffer);
-        R_Srcfiles_buffer = NULL;
+	R_ReleaseObject(R_Srcfiles_buffer);
+	R_Srcfiles_buffer = NULL;
     }
-    if (R_Profiling_Error) 
-    	warning(_("source files skipped by Rprof; please increase '%s'"), 
-    		R_Profiling_Error == 1 ? "numfiles" : "bufsize");
+    if (R_Profiling_Error)
+	warning(_("source files skipped by Rprof; please increase '%s'"),
+		R_Profiling_Error == 1 ? "numfiles" : "bufsize");
 }
 
 static void R_InitProfiling(SEXP filename, int append, double dinterval,
@@ -330,30 +330,30 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
     if(mem_profiling)
 	fprintf(R_ProfileOutfile, "memory profiling: ");
     if(gc_profiling)
-        fprintf(R_ProfileOutfile, "GC profiling: ");
+	fprintf(R_ProfileOutfile, "GC profiling: ");
     if(line_profiling)
-        fprintf(R_ProfileOutfile, "line profiling: ");
+	fprintf(R_ProfileOutfile, "line profiling: ");
     fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
 
     R_Mem_Profiling=mem_profiling;
     if (mem_profiling)
 	reset_duplicate_counter();
-	
-    R_Profiling_Error = 0;	
+
+    R_Profiling_Error = 0;
     R_Line_Profiling = line_profiling;
     R_GC_Profiling = gc_profiling;
     if (line_profiling) {
-        /* Allocate a big RAW vector to use as a buffer.  The first len1 bytes are an array of pointers
-           to strings; the actual strings are stored in the second len2 bytes. */
-        R_Srcfile_bufcount = numfiles;
-    	size_t len1 = R_Srcfile_bufcount*sizeof(char *), len2 = bufsize;
-    	R_PreserveObject( R_Srcfiles_buffer = Rf_allocVector(RAWSXP, len1 + len2) );
- //   	memset(RAW(R_Srcfiles_buffer), 0, len1+len2);
-    	R_Srcfiles = (char **) RAW(R_Srcfiles_buffer);
-    	R_Srcfiles[0] = (char *)RAW(R_Srcfiles_buffer) + len1;
-    	*(R_Srcfiles[0]) = '\0';
-    } 	
-    
+	/* Allocate a big RAW vector to use as a buffer.  The first len1 bytes are an array of pointers
+	   to strings; the actual strings are stored in the second len2 bytes. */
+	R_Srcfile_bufcount = numfiles;
+	size_t len1 = R_Srcfile_bufcount*sizeof(char *), len2 = bufsize;
+	R_PreserveObject( R_Srcfiles_buffer = Rf_allocVector(RAWSXP, len1 + len2) );
+ //	memset(RAW(R_Srcfiles_buffer), 0, len1+len2);
+	R_Srcfiles = (char **) RAW(R_Srcfiles_buffer);
+	R_Srcfiles[0] = (char *)RAW(R_Srcfiles_buffer) + len1;
+	*(R_Srcfiles[0]) = '\0';
+    }
+
 #ifdef Win32
     /* need to duplicate to make a real handle */
     DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread,
@@ -395,19 +395,19 @@ SEXP do_Rprof(SEXP args)
 #endif
     if (!isString(filename = CAR(args)) || (LENGTH(filename)) != 1)
 	error(_("invalid '%s' argument"), "filename");
-    					      args = CDR(args);
+					      args = CDR(args);
     append_mode = asLogical(CAR(args));       args = CDR(args);
     dinterval = asReal(CAR(args));            args = CDR(args);
     mem_profiling = asLogical(CAR(args));     args = CDR(args);
     gc_profiling = asLogical(CAR(args));      args = CDR(args);
     line_profiling = asLogical(CAR(args));    args = CDR(args);
-    numfiles = asInteger(CAR(args));  	      args = CDR(args);
+    numfiles = asInteger(CAR(args));	      args = CDR(args);
     if (numfiles < 0)
 	error(_("invalid '%s' argument"), "numfiles");
     bufsize = asInteger(CAR(args));
     if (bufsize < 0)
 	error(_("invalid '%s' argument"), "bufsize");
-    
+
     filename = STRING_ELT(filename, 0);
     if (LENGTH(filename))
 	R_InitProfiling(filename, append_mode, dinterval, mem_profiling,
@@ -471,13 +471,20 @@ static SEXP forcePromise(SEXP e)
 
 /* Return value of "e" evaluated in "rho". */
 
+/* some places, e.g. deparse2buff, call this with a promise and rho = NULL */
 SEXP eval(SEXP e, SEXP rho)
 {
     SEXP op, tmp;
     static int evalcount = 0;
-    
+
+    if (!rho)
+	error("'rho' cannot be C NULL: detected in C-level eval");
+    if (!isEnvironment(rho)) 
+	error("'rho' must be an environment not %s: detected in C-level eval", 
+	      type2char(TYPEOF(rho)));
+
     /* Save the current srcref context. */
-    
+
     SEXP srcrefsave = R_Srcref;
 
     /* The use of depthsave below is necessary because of the
@@ -673,14 +680,14 @@ void SrcrefPrompt(const char * prefix, SEXP srcref)
 {
     /* If we have a valid srcref, use it */
     if (srcref && srcref != R_NilValue) {
-        if (TYPEOF(srcref) == VECSXP) srcref = VECTOR_ELT(srcref, 0);
+	if (TYPEOF(srcref) == VECSXP) srcref = VECTOR_ELT(srcref, 0);
 	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
 	if (TYPEOF(srcfile) == ENVSXP) {
 	    SEXP filename = findVar(install("filename"), srcfile);
 	    if (isString(filename) && length(filename)) {
-	    	Rprintf(_("%s at %s#%d: "), prefix, CHAR(STRING_ELT(filename, 0)), 
-	                                    asInteger(srcref));
-	        return;
+		Rprintf(_("%s at %s#%d: "), prefix, CHAR(STRING_ELT(filename, 0)),
+					    asInteger(srcref));
+		return;
 	    }
 	}
     }
@@ -737,7 +744,7 @@ void attribute_hidden R_init_jit_enabled(void)
 	}
     }
 }
-    
+
 SEXP attribute_hidden R_cmpfun(SEXP fun)
 {
     SEXP packsym, funsym, call, fcall, val;
@@ -810,9 +817,9 @@ SEXP attribute_hidden do_compilepkgs(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* forward declaration */
 static SEXP bytecodeExpr(SEXP);
 
-/* this function gets the srcref attribute from a statement block, 
+/* this function gets the srcref attribute from a statement block,
    and confirms it's in the expected format */
-   
+
 static R_INLINE SEXP getBlockSrcrefs(SEXP call)
 {
     SEXP srcrefs = getAttrib(call, R_SrcrefSymbol);
@@ -827,8 +834,8 @@ static R_INLINE SEXP getSrcref(SEXP srcrefs, int ind)
 {
     SEXP result;
     if (!isNull(srcrefs)
-        && length(srcrefs) > ind
-        && !isNull(result = VECTOR_ELT(srcrefs, ind))
+	&& length(srcrefs) > ind
+	&& !isNull(result = VECTOR_ELT(srcrefs, ind))
 	&& TYPEOF(result) == INTSXP
 	&& length(result) >= 6)
 	return result;
@@ -846,6 +853,15 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     /* formals = list of formal parameters */
     /* actuals = values to be bound to formals */
     /* arglist = the tagged list of arguments */
+
+    /* protection against rho = NULL */
+    // these are deliberately not translated
+    if (!rho)
+	errorcall(call, 
+		  "'rho' cannot be C NULL: detected in C-level applyClosure");
+    if (!isEnvironment(rho)) 
+	errorcall(call, "'rho' must be an environment not %s: detected in C-level applyClosure", 
+		  type2char(TYPEOF(rho)));
 
     formals = FORMALS(op);
     body = BODY(op);
@@ -926,9 +942,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist, op);
 
     /* Get the srcref record from the closure object */
-    
+
     R_Srcref = getAttrib(op, R_SrcrefSymbol);
-    
+
     /* The default return value is NULL.  FIXME: Is this really needed
        or do we always get a sensible value returned?  */
 
@@ -1047,7 +1063,7 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     SET_RDEBUG(newrho, RDEBUG(op) || RSTEP(op));
     if( RSTEP(op) ) SET_RSTEP(op, 0);
     if (RDEBUG(op)) {
-        SEXP savesrcref;
+	SEXP savesrcref;
 	/* switch to interpreted version when debugging compiled code */
 	if (TYPEOF(body) == BCODESXP)
 	    body = bytecodeExpr(body);
@@ -1303,7 +1319,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
    another variable (NAMED(v) == 2). This should be safe and avoid
    allocation in many cases. */
 #define ALLOC_LOOP_VAR(v, val_type, vpi) do { \
-        if (v == R_NilValue || NAMED(v) == 2) { \
+	if (v == R_NilValue || NAMED(v) == 2) { \
 	    REPROTECT(v = allocVector(val_type, 1), vpi); \
 	    SET_NAMED(v, 1); \
 	} \
@@ -1315,23 +1331,23 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
     int vis=0;
 
     PROTECT(Cond = eval(CAR(args), rho));
-    if (asLogicalNoNA(Cond, call)) 
-        Stmt = CAR(CDR(args));
+    if (asLogicalNoNA(Cond, call))
+	Stmt = CAR(CDR(args));
     else {
-        if (length(args) > 2) 
-           Stmt = CAR(CDR(CDR(args)));
-        else
-           vis = 1;
-    } 
+	if (length(args) > 2)
+	   Stmt = CAR(CDR(CDR(args)));
+	else
+	   vis = 1;
+    }
     if( RDEBUG(rho) && !BodyHasBraces(Stmt)) {
 	SrcrefPrompt("debug", R_Srcref);
-        PrintValue(Stmt);
-        do_browser(call, op, R_NilValue, rho);
-    } 
+	PrintValue(Stmt);
+	do_browser(call, op, R_NilValue, rho);
+    }
     UNPROTECT(1);
     if( vis ) {
-        R_Visible = FALSE; /* case of no 'else' so return invisible NULL */
-        return Stmt;
+	R_Visible = FALSE; /* case of no 'else' so return invisible NULL */
+	return Stmt;
     }
     return (eval(Stmt, rho));
 }
@@ -1357,7 +1373,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ( !isSymbol(sym) ) errorcall(call, _("non-symbol loop variable"));
 
     if (R_jit_enabled > 2 && ! R_PendingPromises) {
-	R_compileAndExecute(call, rho); 
+	R_compileAndExecute(call, rho);
 	return R_NilValue;
     }
 
@@ -1370,9 +1386,9 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
        we need to coerce to character - then iterate */
 
     if ( inherits(val, "factor") ) {
-        SEXP tmp = asCharacterFactor(val);
+	SEXP tmp = asCharacterFactor(val);
 	UNPROTECT(1); /* val from above */
-        PROTECT(val = tmp);
+	PROTECT(val = tmp);
     }
 
     if (isList(val) || isNull(val))
@@ -1419,35 +1435,35 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	default:
 
-            switch (val_type) {
-            case LGLSXP:
-                ALLOC_LOOP_VAR(v, val_type, vpi);
-                LOGICAL(v)[0] = LOGICAL(val)[i];
-                break;
-            case INTSXP:
-                ALLOC_LOOP_VAR(v, val_type, vpi);
-                INTEGER(v)[0] = INTEGER(val)[i];
-                break;
-            case REALSXP:
-                ALLOC_LOOP_VAR(v, val_type, vpi);
-                REAL(v)[0] = REAL(val)[i];
-                break;
-            case CPLXSXP:
-                ALLOC_LOOP_VAR(v, val_type, vpi);
-                COMPLEX(v)[0] = COMPLEX(val)[i];
-                break;
-            case STRSXP:
-                ALLOC_LOOP_VAR(v, val_type, vpi);
-                SET_STRING_ELT(v, 0, STRING_ELT(val, i));
-                break;
-            case RAWSXP:
-                ALLOC_LOOP_VAR(v, val_type, vpi);
-                RAW(v)[0] = RAW(val)[i];
-                break;
-            default:
-                errorcall(call, _("invalid for() loop sequence"));
-            }
-            defineVar(sym, v, rho);
+	    switch (val_type) {
+	    case LGLSXP:
+		ALLOC_LOOP_VAR(v, val_type, vpi);
+		LOGICAL(v)[0] = LOGICAL(val)[i];
+		break;
+	    case INTSXP:
+		ALLOC_LOOP_VAR(v, val_type, vpi);
+		INTEGER(v)[0] = INTEGER(val)[i];
+		break;
+	    case REALSXP:
+		ALLOC_LOOP_VAR(v, val_type, vpi);
+		REAL(v)[0] = REAL(val)[i];
+		break;
+	    case CPLXSXP:
+		ALLOC_LOOP_VAR(v, val_type, vpi);
+		COMPLEX(v)[0] = COMPLEX(val)[i];
+		break;
+	    case STRSXP:
+		ALLOC_LOOP_VAR(v, val_type, vpi);
+		SET_STRING_ELT(v, 0, STRING_ELT(val, i));
+		break;
+	    case RAWSXP:
+		ALLOC_LOOP_VAR(v, val_type, vpi);
+		RAW(v)[0] = RAW(val)[i];
+		break;
+	    default:
+		errorcall(call, _("invalid for() loop sequence"));
+	    }
+	    defineVar(sym, v, rho);
 	}
 
 	eval(body, rho);
@@ -1545,13 +1561,13 @@ SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s = R_NilValue;
     if (args != R_NilValue) {
-    	SEXP srcrefs = getBlockSrcrefs(call);
-    	int i = 1;
+	SEXP srcrefs = getBlockSrcrefs(call);
+	int i = 1;
 	while (args != R_NilValue) {
 	    PROTECT(R_Srcref = getSrcref(srcrefs, i++));
 	    if (RDEBUG(rho)) {
-	    	SrcrefPrompt("debug", R_Srcref);
-	        PrintValue(CAR(args));
+		SrcrefPrompt("debug", R_Srcref);
+		PrintValue(CAR(args));
 		do_browser(call, op, R_NilValue, rho);
 	    }
 	    s = eval(CAR(args), rho);
@@ -1962,13 +1978,13 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
-                    ev = CONS(eval(CAR(h), rho), R_NilValue);
-                    if (head==R_NilValue)
-                        PROTECT(head = ev);
-                    else
-                        SETCDR(tail, ev);
-                    COPY_TAG(ev, h);
-                    tail = ev;
+		    ev = CONS(eval(CAR(h), rho), R_NilValue);
+		    if (head==R_NilValue)
+			PROTECT(head = ev);
+		    else
+			SETCDR(tail, ev);
+		    COPY_TAG(ev, h);
+		    tail = ev;
 		    h = CDR(h);
 		}
 	    }
@@ -1980,21 +1996,21 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    errorcall(call, _("argument %d is empty"), n);
 	} else if (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)) {
 	    /* It was missing */
-	    errorcall(call, _("'%s' is missing"), CHAR(PRINTNAME(CAR(el)))); 
+	    errorcall(call, _("'%s' is missing"), CHAR(PRINTNAME(CAR(el))));
 	} else {
-            ev = CONS(eval(CAR(el), rho), R_NilValue);
-            if (head==R_NilValue)
-                PROTECT(head = ev);
-            else
-                SETCDR(tail, ev);
-            COPY_TAG(ev, el);
-            tail = ev;
+	    ev = CONS(eval(CAR(el), rho), R_NilValue);
+	    if (head==R_NilValue)
+		PROTECT(head = ev);
+	    else
+		SETCDR(tail, ev);
+	    COPY_TAG(ev, el);
+	    tail = ev;
 	}
 	el = CDR(el);
     }
 
-    if (head!=R_NilValue) 
-        UNPROTECT(1);
+    if (head!=R_NilValue)
+	UNPROTECT(1);
 
     return head;
 
@@ -2025,16 +2041,16 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
-                    if (CAR(h) == R_MissingArg) 
-                        ev = CONS(R_MissingArg, R_NilValue);
-                    else
-                        ev = CONS(eval(CAR(h), rho), R_NilValue);
-                    if (head==R_NilValue)
-                        PROTECT(head = ev);
-                    else
-                        SETCDR(tail, ev);
-                    COPY_TAG(ev, h);
-                    tail = ev;
+		    if (CAR(h) == R_MissingArg)
+			ev = CONS(R_MissingArg, R_NilValue);
+		    else
+			ev = CONS(eval(CAR(h), rho), R_NilValue);
+		    if (head==R_NilValue)
+			PROTECT(head = ev);
+		    else
+			SETCDR(tail, ev);
+		    COPY_TAG(ev, h);
+		    tail = ev;
 		    h = CDR(h);
 		}
 	    }
@@ -2042,23 +2058,23 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 		error(_("'...' used in an incorrect context"));
 	}
 	else {
-            if (CAR(el) == R_MissingArg ||
-                 (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)))
-                ev = CONS(R_MissingArg, R_NilValue);
-            else
-                ev = CONS(eval(CAR(el), rho), R_NilValue);
-            if (head==R_NilValue)
-                PROTECT(head = ev);
-            else
-                SETCDR(tail, ev);
-            COPY_TAG(ev, el);
-            tail = ev;
+	    if (CAR(el) == R_MissingArg ||
+		 (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)))
+		ev = CONS(R_MissingArg, R_NilValue);
+	    else
+		ev = CONS(eval(CAR(el), rho), R_NilValue);
+	    if (head==R_NilValue)
+		PROTECT(head = ev);
+	    else
+		SETCDR(tail, ev);
+	    COPY_TAG(ev, el);
+	    tail = ev;
 	}
 	el = CDR(el);
     }
 
-    if (head!=R_NilValue) 
-        UNPROTECT(1);
+    if (head!=R_NilValue)
+	UNPROTECT(1);
 
     return head;
 }
@@ -2188,7 +2204,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	encl = R_BaseEnv;
     } else if ( !isEnvironment(encl) &&
 		!isEnvironment((encl = simple_as_environment(encl))) ) {
-	error(_("invalid '%s' argument of type '%s'"), 
+	error(_("invalid '%s' argument of type '%s'"),
 	      "enclos", type2char(tEncl));
     }
     if(IS_S4_OBJECT(env) && (TYPEOF(env) == S4SXP))
@@ -2219,12 +2235,12 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("numeric 'envir' arg not of length one"));
 	frame = asInteger(env);
 	if (frame == NA_INTEGER)
-	    error(_("invalid '%s' argument of type '%s'"), 
+	    error(_("invalid '%s' argument of type '%s'"),
 		  "envir", type2char(TYPEOF(env)));
 	PROTECT(env = R_sysframe(frame, R_GlobalContext));
 	break;
     default:
-	error(_("invalid '%s' argument of type '%s'"), 
+	error(_("invalid '%s' argument of type '%s'"),
 	      "envir", type2char(TYPEOF(env)));
     }
 
@@ -2255,7 +2271,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args, op);
 	if (!SETJMP(cntxt.cjmpbuf))
 	    for(i = 0 ; i < n ; i++) {
-	    	R_Srcref = getSrcref(srcrefs, i); 
+		R_Srcref = getSrcref(srcrefs, i);
 		tmp = eval(VECTOR_ELT(expr, i), env);
 	    }
 	else {
@@ -2331,8 +2347,8 @@ SEXP attribute_hidden do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
     else
 	PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
-    if (TYPEOF(s) != CLOSXP) 
-    	error(_("'Recall' called from outside a closure"));
+    if (TYPEOF(s) != CLOSXP)
+	error(_("'Recall' called from outside a closure"));
     ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_BaseEnv);
     UNPROTECT(1);
     return ans;
@@ -2356,23 +2372,23 @@ int DispatchAnyOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 		      SEXP rho, SEXP *ans, int dropmissing, int argsevald)
 {
     if(R_has_methods(op)) {
-        SEXP argValue, el,  value; 
-	/* Rboolean hasS4 = FALSE; */ 
+	SEXP argValue, el,  value;
+	/* Rboolean hasS4 = FALSE; */
 	int nprotect = 0, dispatch;
 	if(!argsevald) {
-            PROTECT(argValue = evalArgs(args, rho, dropmissing, call, 0));
+	    PROTECT(argValue = evalArgs(args, rho, dropmissing, call, 0));
 	    nprotect++;
 	    argsevald = TRUE;
 	}
 	else argValue = args;
 	for(el = argValue; el != R_NilValue; el = CDR(el)) {
 	    if(IS_S4_OBJECT(CAR(el))) {
-	        value = R_possible_dispatch(call, op, argValue, rho, TRUE);
-	        if(value) {
+		value = R_possible_dispatch(call, op, argValue, rho, TRUE);
+		if(value) {
 		    *ans = value;
 		    UNPROTECT(nprotect);
 		    return 1;
-	        }
+		}
 		else break;
 	    }
 	}
@@ -2478,7 +2494,7 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 		    SET_TAG(argValue, CreateTag(TAG(args)));
 		}
 		nprotect++;
-		args = argValue; 
+		args = argValue;
 		argsevald = 1;
 	    }
 	}
@@ -2660,7 +2676,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
        && isBasicClass(translateChar(STRING_ELT(lclass, lwhich)))) {
 	/* This and the similar test below implement the strategy
 	 for S3 methods selected for S4 objects.  See ?Methods */
-        value = CAR(args);
+	value = CAR(args);
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = R_getS4DataSlot(value, S4SXP); /* the .S3Class obj. or NULL*/
 	if(value != R_NilValue) /* use the S3Part as the inherited object */
@@ -2675,7 +2691,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     if(isFunction(rsxp) && IS_S4_OBJECT(CADR(args)) && rwhich > 0
        && isBasicClass(translateChar(STRING_ELT(rclass, rwhich)))) {
-        value = CADR(args);
+	value = CADR(args);
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = R_getS4DataSlot(value, S4SXP);
 	if(value != R_NilValue) SETCADR(args, value);
@@ -2694,11 +2710,11 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	    /* special-case some methods involving difftime */
 	    const char *lname = CHAR(PRINTNAME(lmeth)),
 		*rname = CHAR(PRINTNAME(rmeth));
-	    if( streql(rname, "Ops.difftime") && 
+	    if( streql(rname, "Ops.difftime") &&
 		(streql(lname, "+.POSIXt") || streql(lname, "-.POSIXt") ||
 		 streql(lname, "+.Date") || streql(lname, "-.Date")) )
 		rsxp = R_NilValue;
-	    else if (streql(lname, "Ops.difftime") && 
+	    else if (streql(lname, "Ops.difftime") &&
 		     (streql(rname, "+.POSIXt") || streql(rname, "+.Date")) )
 		lsxp = R_NilValue;
 	    else {
@@ -3191,7 +3207,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 # define DO_FAST_BINOP_INT(op, a, b) do { \
     double dval = ((double) (a)) op ((double) (b)); \
     if (dval <= INT_MAX && dval >= INT_MIN + 1) { \
-        SKIP_OP(); \
+	SKIP_OP(); \
 	SETSTACK_INTEGER(-2, (int) dval); \
 	R_BCNodeStackTop--; \
 	NEXT(); \
@@ -3204,7 +3220,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
     int typex = bcStackScalar(R_BCNodeStackTop - 2, &vx); \
     int typey = bcStackScalar(R_BCNodeStackTop - 1, &vy); \
     if (typex == REALSXP) { \
-        if (typey == REALSXP) \
+	if (typey == REALSXP) \
 	    DO_FAST_BINOP(op, vx.dval, vy.dval); \
 	else if (typey == INTSXP && vy.ival != NA_INTEGER) \
 	    DO_FAST_BINOP(op, vx.dval, vy.ival); \
@@ -3215,7 +3231,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	else if (typey == INTSXP && vy.ival != NA_INTEGER) { \
 	    if (opval == DIVOP) \
 		DO_FAST_BINOP(op, (double) vx.ival, (double) vy.ival); \
-            else \
+	    else \
 		DO_FAST_BINOP_INT(op, vx.ival, vy.ival); \
 	} \
     } \
@@ -4098,8 +4114,8 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 	       been signaled.  The interpreter, in evalList, does
 	       _not_ signal an error for a call expression that
 	       produces an R_MissingArg value; for example
-	       
-	           c(alist(a=)$a)
+
+		   c(alist(a=)$a)
 
 	       does not signal an error. If we decide we do want an
 	       error in this case we can modify evalList for the
@@ -4779,8 +4795,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(AND1ST, 2): {
 	int callidx = GETOP();
 	int label = GETOP();
-        FIXUP_SCALAR_LOGICAL(callidx, "'x'", "&&");
-        value = GETSTACK(-1);
+	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "&&");
+	value = GETSTACK(-1);
 	if (LOGICAL(value)[0] == FALSE)
 	    pc = codebase + label;
 	NEXT();
@@ -4788,7 +4804,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(AND2ND, 1): {
 	int callidx = GETOP();
 	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "&&");
-        value = GETSTACK(-1);
+	value = GETSTACK(-1);
 	/* The first argument is TRUE or NA. If the second argument is
 	   not TRUE then its value is the result. If the second
 	   argument is TRUE, then the first argument's value is the
@@ -4801,8 +4817,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(OR1ST, 2):  {
 	int callidx = GETOP();
 	int label = GETOP();
-        FIXUP_SCALAR_LOGICAL(callidx, "'x'", "||");
-        value = GETSTACK(-1);
+	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "||");
+	value = GETSTACK(-1);
 	if (LOGICAL(value)[0] != NA_LOGICAL && LOGICAL(value)[0]) /* is true */
 	    pc = codebase + label;
 	NEXT();
@@ -4810,7 +4826,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(OR2ND, 1):  {
 	int callidx = GETOP();
 	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "||");
-        value = GETSTACK(-1);
+	value = GETSTACK(-1);
 	/* The first argument is FALSE or NA. If the second argument is
 	   not FALSE then its value is the result. If the second
 	   argument is FALSE, then the first argument's value is the
@@ -4861,8 +4877,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       }
     OP(SETTER_CALL, 2):
       {
-        SEXP lhs = GETSTACK(-5);
-        SEXP rhs = GETSTACK(-4);
+	SEXP lhs = GETSTACK(-5);
+	SEXP rhs = GETSTACK(-4);
 	SEXP fun = GETSTACK(-3);
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP vexpr = VECTOR_ELT(constants, GETOP());
@@ -4889,7 +4905,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  args = duplicate(CDR(call));
 	  SETSTACK(-2, args);
 	  /* insert evaluated promise for LHS as first argument */
-          prom = mkPROMISE(R_TmpvalSymbol, rho);
+	  prom = mkPROMISE(R_TmpvalSymbol, rho);
 	  SET_PRVALUE(prom, lhs);
 	  SETCAR(args, prom);
 	  /* insert evaluated promise for RHS as last argument */
@@ -4909,7 +4925,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  PUSHCALLARG(prom);
 	  SET_TAG(GETSTACK(-1), R_valueSym);
 	  /* replace first argument with evaluated promise for LHS */
-          prom = mkPROMISE(R_TmpvalSymbol, rho);
+	  prom = mkPROMISE(R_TmpvalSymbol, rho);
 	  SET_PRVALUE(prom, lhs);
 	  args = GETSTACK(-2);
 	  SETCAR(args, prom);
@@ -4943,7 +4959,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  args = duplicate(CDR(call));
 	  SETSTACK(-2, args);
 	  /* insert evaluated promise for LHS as first argument */
-          prom = mkPROMISE(R_TmpvalSymbol, rho);
+	  prom = mkPROMISE(R_TmpvalSymbol, rho);
 	  SET_PRVALUE(prom, lhs);
 	  SETCAR(args, prom);
 	  /* make the call */
@@ -4951,7 +4967,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  break;
 	case CLOSXP:
 	  /* replace first argument with evaluated promise for LHS */
-          prom = mkPROMISE(R_TmpvalSymbol, rho);
+	  prom = mkPROMISE(R_TmpvalSymbol, rho);
 	  SET_PRVALUE(prom, lhs);
 	  args = GETSTACK(-2);
 	  SETCAR(args, prom);

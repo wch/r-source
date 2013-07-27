@@ -129,10 +129,10 @@
       
       \item \command{R CMD INSTALL} has a new option
       \code{--no-byte-compile} which will override a \samp{ByteCompile}
-      field in the packages's \file{DESCRIPTION} file.
+      field in the package's \file{DESCRIPTION} file.
       
-      \item License \code{BSD} is deprecated: use \sQuote{BSD_2_clause}
-      or \sQuote{BSD_3_clause} instead.
+      \item License \code{BSD} is deprecated: use \sQuote{BSD_3_clause}
+      or \sQuote{BSD_2_clause} instead.
 
       License \code{X11} is deprecated: use \sQuote{MIT} or
       \sQuote{BSD_2_clause} instead.
@@ -147,6 +147,9 @@
 
       Note that \file{Rdefines.h} is not kept up-to-date, and
       \file{Rinternals.h} is preferred for new code.
+
+      \item \code{eval} and \code{applyClosure} qre now protected
+      against package code supplying an invalid \code{rho}.
     }
   }
 
