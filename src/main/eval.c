@@ -477,6 +477,43 @@ SEXP eval(SEXP e, SEXP rho)
     SEXP op, tmp;
     static int evalcount = 0;
 
+    R_Visible = TRUE;
+
+    /* this is needed even for self-evaluating objects or somehting like
+       'while (TRUE) NULL' will not be interruptable */
+    if (++evalcount > 1000) { /* was 100 before 2.8.0 */
+	R_CheckUserInterrupt();
+	evalcount = 0 ;
+    }
+
+    /* handle self-evluating objects with minimal overhead */
+    switch (TYPEOF(e)) {
+    case NILSXP:
+    case LISTSXP:
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case STRSXP:
+    case CPLXSXP:
+    case RAWSXP:
+    case S4SXP:
+    case SPECIALSXP:
+    case BUILTINSXP:
+    case ENVSXP:
+    case CLOSXP:
+    case VECSXP:
+    case EXTPTRSXP:
+    case WEAKREFSXP:
+    case EXPRSXP:
+	/* Make sure constants in expressions are NAMED before being
+	   used as values.  Setting NAMED to 2 makes sure weird calls
+	   to replacement functions won't modify constants in
+	   expressions.  */
+	if (NAMED(e) != 2) SET_NAMED(e, 2);
+	return e;
+    default: break;
+    }
+
     if (!rho)
 	error("'rho' cannot be C NULL: detected in C-level eval");
     if (!isEnvironment(rho)) 
@@ -501,10 +538,6 @@ SEXP eval(SEXP e, SEXP rho)
 		  _("evaluation nested too deeply: infinite recursion / options(expressions=)?"));
     }
     R_CheckStack();
-    if (++evalcount > 1000) { /* was 100 before 2.8.0 */
-	R_CheckUserInterrupt();
-	evalcount = 0 ;
-    }
 
     tmp = R_NilValue;		/* -Wall */
 #ifdef Win32
@@ -515,32 +548,7 @@ SEXP eval(SEXP e, SEXP rho)
     __asm__ ( "fninit" );
 #endif
 
-    R_Visible = TRUE;
     switch (TYPEOF(e)) {
-    case NILSXP:
-    case LISTSXP:
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case STRSXP:
-    case CPLXSXP:
-    case RAWSXP:
-    case S4SXP:
-    case SPECIALSXP:
-    case BUILTINSXP:
-    case ENVSXP:
-    case CLOSXP:
-    case VECSXP:
-    case EXTPTRSXP:
-    case WEAKREFSXP:
-    case EXPRSXP:
-	tmp = e;
-	/* Make sure constants in expressions are NAMED before being
-	   used as values.  Setting NAMED to 2 makes sure weird calls
-	   to replacement functions won't modify constants in
-	   expressions.  */
-	if (NAMED(tmp) != 2) SET_NAMED(tmp, 2);
-	break;
     case BCODESXP:
 	tmp = bcEval(e, rho, TRUE);
 	    break;
