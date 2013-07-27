@@ -1240,6 +1240,8 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
 /* to prevent evaluation.  As an example consider */
 /* e <- quote(f(x=1,y=2); names(e) <- c("","a","b") */
 
+static SEXP R_valueSym = NULL; /* initialized in R_initAsignSymbols below */
+
 static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
 {
     SEXP tmp, ptmp;
@@ -1258,7 +1260,7 @@ static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
 	args = CDR(args);
     }
     SETCAR(ptmp, rhs);
-    SET_TAG(ptmp, install("value"));
+    SET_TAG(ptmp, R_valueSym);
     SET_TYPEOF(tmp, LANGSXP);
     return tmp;
 }
@@ -1725,6 +1727,7 @@ void attribute_hidden R_initAsignSymbols(void)
     R_Subset2Sym = install("[[");
     R_Subassign2Sym = install("[[<-");
     R_DollarGetsSymbol = install("$<-");
+    R_valueSym = install("value");
 }
 
 static R_INLINE SEXP lookupAssignFcnSymbol(SEXP fun)
@@ -2908,7 +2911,6 @@ static SEXP R_AndSym = NULL;
 static SEXP R_OrSym = NULL;
 static SEXP R_NotSym = NULL;
 static SEXP R_CSym = NULL;
-static SEXP R_valueSym = NULL;
 static SEXP R_TrueValue = NULL;
 static SEXP R_FalseValue = NULL;
 
@@ -2936,7 +2938,6 @@ void R_initialize_bcode(void)
   R_OrSym = install("|");
   R_NotSym = install("!");
   R_CSym = install("c");
-  R_valueSym = install("value");
 
   R_TrueValue = mkTrue();
   SET_NAMED(R_TrueValue, 2);
