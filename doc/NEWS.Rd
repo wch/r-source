@@ -396,8 +396,8 @@
       Note that \file{Rdefines.h} is not kept up-to-date, and
       \file{Rinternals.h} is preferred for new code.
 
-      \item \code{applyClosure} is now protected against package code
-      supplying an invalid \code{rho}, e.g. \code{NULL}. 
+      \item \code{eval} and \code{applyClosure} qre now protected
+      against package code supplying an invalid \code{rho}.
     }
   }
 

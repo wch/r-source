@@ -9353,8 +9353,9 @@ SEXP eval(SEXP expr, SEXP rho);
 
 @noindent
 the equivalent of the interpreted @R{} code @code{eval(expr, envir =
-rho)}, although we can also make use of @code{findVar}, @code{defineVar}
-and @code{findFun} (which restricts the search to functions).
+rho)} (so @code{rho} must be an environment), although we can also make
+use of @code{findVar}, @code{defineVar} and @code{findFun} (which
+restricts the search to functions).
 
 To see how this might be applied, here is a simplified internal version
 of @code{lapply} for expressions, used as
