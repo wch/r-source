@@ -708,7 +708,7 @@ extern0 int R_jit_enabled INI_as(0);
 extern0 int R_compile_pkgs INI_as(0);
 extern SEXP R_cmpfun(SEXP);
 extern void R_init_jit_enabled(void);
-extern void R_initAsymSymbol(void);
+extern void R_initAsignSymbols(void);
 
 LibExtern int R_num_math_threads INI_as(1);
 LibExtern int R_max_num_math_threads INI_as(1);

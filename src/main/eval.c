@@ -1705,10 +1705,36 @@ static const char * const asym[] = {":=", "<-", "<<-", "="};
 #define NUM_ASYM (sizeof(asym) / sizeof(char *))
 static SEXP asymSymbol[NUM_ASYM];
 
-void attribute_hidden R_initAsymSymbol(void)
+static SEXP R_ReplaceFunsTable = NULL;
+static SEXP R_SubsetSym = NULL;
+static SEXP R_SubassignSym = NULL;
+static SEXP R_Subset2Sym = NULL;
+static SEXP R_Subassign2Sym = NULL;
+static SEXP R_DollarGetsSymbol = NULL;
+
+void attribute_hidden R_initAsignSymbols(void)
 {
     for (int i = 0; i < NUM_ASYM; i++)
 	asymSymbol[i] = install(asym[i]);
+
+    R_ReplaceFunsTable = R_NewHashedEnv(R_EmptyEnv, ScalarInteger(1099));
+    R_PreserveObject(R_ReplaceFunsTable);
+
+    R_SubsetSym = install("[");
+    R_SubassignSym = install("[<-");
+    R_Subset2Sym = install("[[");
+    R_Subassign2Sym = install("[[<-");
+    R_DollarGetsSymbol = install("$<-");
+}
+
+static R_INLINE SEXP lookupAssignFcnSymbol(SEXP fun)
+{
+    return findVarInFrame(R_ReplaceFunsTable, fun);
+}
+
+static void enterAssignFcnSymbol(SEXP fun, SEXP val)
+{
+    defineVar(fun, val, R_ReplaceFunsTable);
 }
 
 static void tmp_cleanup(void *data)
@@ -1744,13 +1770,37 @@ static void tmp_cleanup(void *data)
     } while (0)
 
 #define ASSIGNBUFSIZ 32
-static R_INLINE SEXP installAssignFcnName(SEXP fun)
+static SEXP installAssignFcnSymbol(SEXP fun)
 {
     char buf[ASSIGNBUFSIZ];
+
+    /* install the symbol */
     if(strlen(CHAR(PRINTNAME(fun))) + 3 > ASSIGNBUFSIZ)
 	error(_("overlong name in '%s'"), EncodeChar(PRINTNAME(fun)));
     sprintf(buf, "%s<-", CHAR(PRINTNAME(fun)));
-    return install(buf);
+    SEXP val = install(buf);
+
+    enterAssignFcnSymbol(fun, val);
+    return val;
+}
+
+static R_INLINE SEXP getAssignFcnSymbol(SEXP fun)
+{
+    /* handle [<-, [[<-, and $<- efficiently */
+    if (fun == R_SubsetSym)
+	return R_SubassignSym;
+    else if (fun == R_Subset2Sym)
+	return R_Subassign2Sym;
+    else if (fun == R_DollarSymbol)
+	return R_DollarGetsSymbol;
+
+    /* look up in the replacement functions table */
+    SEXP val = lookupAssignFcnSymbol(fun);
+    if (val != R_UnboundValue)
+	return val;
+    
+    /* instal symbol, entern in table,  and return */
+    return installAssignFcnSymbol(fun);
 }
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1835,7 +1885,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     while (isLanguage(CADR(expr))) {
 	nprot = 1; /* the PROTECT of rhs below from this iteration */
 	if (TYPEOF(CAR(expr)) == SYMSXP)
-	    tmp = installAssignFcnName(CAR(expr));
+	    tmp = getAssignFcnSymbol(CAR(expr));
 	else {
 	    /* check for and handle assignments of the form
 	       foo::bar(x) <- y or foo:::bar(x) <- y */
@@ -1844,7 +1894,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 		(CAR(CAR(expr)) == R_DoubleColonSymbol ||
 		 CAR(CAR(expr)) == R_TripleColonSymbol) &&
 		length(CAR(expr)) == 3 && TYPEOF(CADDR(CAR(expr))) == SYMSXP) {
-		tmp = installAssignFcnName(CADDR(CAR(expr)));
+		tmp = getAssignFcnSymbol(CADDR(CAR(expr)));
 		PROTECT(tmp = lang3(CAAR(expr), CADR(CAR(expr)), tmp));
 		nprot++;
 	    }
@@ -1862,7 +1912,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     nprot = 5; /* the commont case */
     if (TYPEOF(CAR(expr)) == SYMSXP)
-	afun = installAssignFcnName(CAR(expr));
+	afun = getAssignFcnSymbol(CAR(expr));
     else {
 	/* check for and handle assignments of the form
 	   foo::bar(x) <- y or foo:::bar(x) <- y */
@@ -1871,7 +1921,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    (CAR(CAR(expr)) == R_DoubleColonSymbol ||
 	     CAR(CAR(expr)) == R_TripleColonSymbol) &&
 	    length(CAR(expr)) == 3 && TYPEOF(CADDR(CAR(expr))) == SYMSXP) {
-	    afun = installAssignFcnName(CADDR(CAR(expr)));
+	    afun = getAssignFcnSymbol(CADDR(CAR(expr)));
 	    PROTECT(afun = lang3(CAAR(expr), CADR(CAR(expr)), afun));
 	    nprot++;
 	}
@@ -2857,11 +2907,7 @@ static SEXP R_GtSym = NULL;
 static SEXP R_AndSym = NULL;
 static SEXP R_OrSym = NULL;
 static SEXP R_NotSym = NULL;
-static SEXP R_SubsetSym = NULL;
-static SEXP R_SubassignSym = NULL;
 static SEXP R_CSym = NULL;
-static SEXP R_Subset2Sym = NULL;
-static SEXP R_Subassign2Sym = NULL;
 static SEXP R_valueSym = NULL;
 static SEXP R_TrueValue = NULL;
 static SEXP R_FalseValue = NULL;
@@ -2889,11 +2935,7 @@ void R_initialize_bcode(void)
   R_AndSym = install("&");
   R_OrSym = install("|");
   R_NotSym = install("!");
-  R_SubsetSym = R_BracketSymbol; /* "[" */
-  R_SubassignSym = install("[<-");
   R_CSym = install("c");
-  R_Subset2Sym = R_Bracket2Symbol; /* "[[" */
-  R_Subassign2Sym = install("[[<-");
   R_valueSym = install("value");
 
   R_TrueValue = mkTrue();
