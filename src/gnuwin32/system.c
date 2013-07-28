@@ -327,7 +327,7 @@ FileReadConsole(const char *prompt, char *buf, int len, int addhistory)
 	char obuf[len+1], *ob = obuf;
 	if(!cd) {
 	    cd = Riconv_open("", R_StdinEnc);
-	    if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);
+	    if(cd == (void *)-1) error(_("encoding '%s' is not recognised"), R_StdinEnc);
 	}
 	res = Riconv(cd, &ib, &inb, &ob, &onb);
 	*ob = '\0';

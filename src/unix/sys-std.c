@@ -860,7 +860,7 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    char *ob = obuf;
 	    if(!cd) {
 		cd = Riconv_open("", R_StdinEnc);
-		if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);
+		if(cd == (void *)-1) error(_("encoding '%s' is not recognised"), R_StdinEnc);
 	    }
 	    res = Riconv(cd, &ib, &inb, &ob, &onb);
 	    *ob = '\0';
