@@ -3165,14 +3165,21 @@ function(dfile, dir)
                 ok <- FALSE
             }
         }
-        if(any(status$components %in% c("BSD", "X11"))) {
-            status$deprecated <- intersect(status$components, c("BSD", "X11"))
+        depr <- c("X11", "BSD")
+        if(any(status$components %in% depr)) {
+            status$deprecated <- intersect(status$components, depr)
             ok <- FALSE
         }
         ## Components with extensions but not extensible:
         if(length(extensions <- status$extensions) &&
            any(ind <- !extensions$extensible)) {
             status$bad_extensions <- extensions$components[ind]
+            ok <- FALSE
+        }
+        ## Components which need extensions:
+        if(any(ind <- status$components %in%
+               c("MIT", "BSD_2_clause", "BSD_3_clause"))) {
+            status$miss_extension <- status$components[ind]
             ok <- FALSE
         }
         ## Could always return the analysis results and not print them
@@ -3224,6 +3231,10 @@ function(x, ...)
       },
       if(length(y <- x$bad_extensions)) {
           c(gettext("Components with restrictions not permitted:"),
+            paste(" ", y))
+      },
+      if(length(y <- x$miss_extension)) {
+          c(gettext("Components which are templates and need '+ file LICENSE':"),
             paste(" ", y))
       }
       )
