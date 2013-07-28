@@ -448,7 +448,7 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
 
 static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
-    SEXP dim, indx, newnames;
+    SEXP indx, newnames;
     R_xlen_t i, ii, n, nx, ny;
     int iy, which;
     R_xlen_t stretch;
@@ -461,19 +461,21 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* Check to see if we have special matrix subscripting. */
     /* If so, we manufacture a real subscript vector. */
 
-    dim = getAttrib(x, R_DimSymbol);
     PROTECT(s);
-    if (isMatrix(s) && isArray(x) && ncols(s) == length(dim)) {
-        if (isString(s)) {
-            s = strmat2intmat(s, GetArrayDimnames(x), call);
-            UNPROTECT(1);
-            PROTECT(s);
-        }
-        if (isInteger(s) || isReal(s)) {
-            s = mat2indsub(dim, s, R_NilValue);
-            UNPROTECT(1);
-            PROTECT(s);
-        }
+    if (ATTRIB(s) != R_NilValue) { /* pretest to speed up simple case */
+	SEXP dim = getAttrib(x, R_DimSymbol);
+	if (isMatrix(s) && isArray(x) && ncols(s) == length(dim)) {
+	    if (isString(s)) {
+		s = strmat2intmat(s, GetArrayDimnames(x), call);
+		UNPROTECT(1);
+		PROTECT(s);
+	    }
+	    if (isInteger(s) || isReal(s)) {
+		s = mat2indsub(dim, s, R_NilValue);
+		UNPROTECT(1);
+		PROTECT(s);
+	    }
+	}
     }
 
     stretch = 1;
@@ -1332,11 +1334,12 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 
 static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 {
+    int nargs = length(args);
     SEXP p;
-    if (length(args) < 2)
+    if (nargs < 2)
 	error(_("SubAssignArgs: invalid number of arguments"));
     *x = CAR(args);
-    if(length(args) == 2) {
+    if(nargs == 2) {
 	*s = R_NilValue;
 	*y = CADR(args);
     }
