@@ -1396,7 +1396,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
       ## Could also try grepping LIBS for '-lcc_dynamic' ...
       SHLIB_LIBADD="-lcc_dynamic"
     fi
-    shlib_rpath="-WL,-rpath"
+    shlib_rpath="-Wl,-rpath"
     ;;
   freebsd*)
     main_ldflags="-export-dynamic"

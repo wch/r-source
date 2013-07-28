@@ -74,7 +74,7 @@ static char * R_ConciseTraceback(SEXP call, int skip);
 
   ErrorMessage()-> errorcall   (but with message from ErrorDB[])
 
-  WarningMessage()-> warningcall (but with message Rfrom WarningDB[]).
+  WarningMessage()-> warningcall (but with message from WarningDB[]).
 */
 
 static void reset_stack_limit(void *data)

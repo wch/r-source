@@ -479,7 +479,7 @@ SEXP eval(SEXP e, SEXP rho)
 
     R_Visible = TRUE;
 
-    /* this is needed even for self-evaluating objects or somehting like
+    /* this is needed even for self-evaluating objects or something like
        'while (TRUE) NULL' will not be interruptable */
     if (++evalcount > 1000) { /* was 100 before 2.8.0 */
 	R_CheckUserInterrupt();
