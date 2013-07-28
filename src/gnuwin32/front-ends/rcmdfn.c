@@ -167,7 +167,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		fprintf(stderr, "command line too long\n");
 		return(27);
 	    }
-	    if(strchr(argv[i], ' ')) {
+	    if(strchr(argv[i], ' ') || !strlen(argv[i])) {
 		strcat(cmd, "\"");
 		strcat(cmd, argv[i]);
 		strcat(cmd, "\"");

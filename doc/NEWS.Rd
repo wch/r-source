@@ -310,6 +310,10 @@
       
       \item Syntax error reports misplaced the caret pointing out the bad
       token.
+      
+      \item (Windows only) Starting \R with \command{R} (instead of 
+      \command{Rterm} or \command{Rgui}) would lose any
+      zero length strings from the command line arguments. (\PR{15406})
     }
   }
 }
