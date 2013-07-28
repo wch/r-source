@@ -3230,11 +3230,11 @@ function(x, ...)
                      paste(y, collapse = " ")))
       },
       if(length(y <- x$bad_extensions)) {
-          c(gettext("Components with restrictions not permitted:"),
+          c(gettext("License components with restrictions not permitted:"),
             paste(" ", y))
       },
       if(length(y <- x$miss_extension)) {
-          c(gettext("Components which are templates and need '+ file LICENSE':"),
+          c(gettext("Licenses which are templates and need '+ file LICENSE':"),
             paste(" ", y))
       }
       )
