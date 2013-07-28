@@ -314,6 +314,9 @@
       \item (Windows only) Starting \R with \command{R} (instead of 
       \command{Rterm} or \command{Rgui}) would lose any
       zero length strings from the command line arguments. (\PR{15406})
+      
+      \item Errors in the encoding specified on the command line via
+      \command{--encoding=foo} were not handled properly.  (\PR{15405})
     }
   }
 }
