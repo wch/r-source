@@ -47,10 +47,10 @@ summary(model2 <- glm(case ~ age+parity+education+spontaneous+induced,
                      data = infert, family = binomial()))
 ## Really should be analysed by conditional logistic regression
 ## which is in the survival package
-if(require(survival)){
+\donttest{if(require(survival)){
   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
   print(summary(model3))
   detach()  # survival (conflicts)
-}
+}}
 }
 \keyword{datasets}

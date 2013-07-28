@@ -57,6 +57,9 @@
       \item When \code{parse()} finds a syntax error, it now makes 
       partial parse information available up to the location of the 
       error.  (Request of Reijo Sund.)
+      
+      \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
+      more tests to be run without recommended packages being installed.
     }
   }
 

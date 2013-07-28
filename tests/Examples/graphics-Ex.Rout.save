@@ -1,7 +1,7 @@
 
-R version 3.0.1 Patched (2013-06-05 r62869) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-28 r63429) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin12.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2027,7 +2027,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x3995e98>
+<bytecode: 0x7fda81dbcfb8>
 <environment: namespace:graphics>
 > 
 > 
@@ -2427,35 +2427,6 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > ### Keywords: hplot
 > 
 > ### ** Examples
-> 
-> ## A largish data set
-> n <- 10000
-> x1  <- matrix(rnorm(n), ncol = 2)
-> x2  <- matrix(rnorm(n, mean = 3, sd = 1.5), ncol = 2)
-> x   <- rbind(x1, x2)
-> 
-> oldpar <- par(mfrow = c(2, 2))
-> smoothScatter(x, nrpoints = 0)
-KernSmooth 2.23 loaded
-Copyright M. P. Wand 1997-2009
-> smoothScatter(x)
-> 
-> ## a different color scheme:
-> Lab.palette <- colorRampPalette(c("blue", "orange", "red"), space = "Lab")
-> smoothScatter(x, colramp = Lab.palette)
-> 
-> ## somewhat similar, using identical smoothing computations,
-> ## but considerably *less* efficient for really large data:
-> plot(x, col = densCols(x), pch = 20)
-> 
-> ## use with pairs:
-> par(mfrow = c(1, 1))
-> y <- matrix(rnorm(40000), ncol = 4) + 3*rnorm(10000)
-> y[, c(2,4)] <-  -y[, c(2,4)]
-> pairs(y, panel = function(...) smoothScatter(..., nrpoints = 0, add = TRUE))
-> 
-> par(oldpar)
-> 
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
@@ -2927,7 +2898,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x458e0d8>
+<bytecode: 0x7fda83a49fc0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3007,7 +2978,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.664 0.067 3.741 0 0 
+Time elapsed:  3.954 0.236 4.283 0 0 
 > grDevices::dev.off()
 null device 
           1 

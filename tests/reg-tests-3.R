@@ -36,8 +36,8 @@ if(require(MASS)) {
 
 ## PR#7829 model.tables & replications
 if(require(MASS)) {
-oats.aov <- aov(Y ~ B + V + N + V:N, data=oats[-1,])
-model.tables(oats.aov, "means", cterms=c("N", "V:N"))
+    oats.aov <- aov(Y ~ B + V + N + V:N, data=oats[-1,])
+    model.tables(oats.aov, "means", cterms=c("N", "V:N"))
 }
 ## wrong printed output in 2.1.0
 
@@ -86,16 +86,17 @@ print(1.001, digits=16)
 
 
 ## as.matrix.data.frame with coercion
-library(survival)
-soa <- Surv(1:5, c(0, 0, 1, 0, 1))
-df.soa <- data.frame(soa)
-as.matrix(df.soa) # numeric result
-df.soac <- data.frame(soa, letters[1:5])
-as.matrix(df.soac) # character result
+if(require("survival")) {
+    soa <- Surv(1:5, c(0, 0, 1, 0, 1))
+    df.soa <- data.frame(soa)
+    print(as.matrix(df.soa)) # numeric result
+    df.soac <- data.frame(soa, letters[1:5])
+    print(as.matrix(df.soac)) # character result
+    detach("package:survival")
+}
 ## failed in 2.8.1
 
 ## wish of PR#13505
-utils::data(npk, package="MASS")
 npk.aov <- aov(yield ~ block + N * P + K, npk)
 foo <- proj(npk.aov)
 cbind(npk, foo)
@@ -111,6 +112,7 @@ if(suppressMessages(require("Matrix"))) {
   x3 <- x2; x3[4:5] <- x2[5:4]
   print(xtabs(~ x1 + x2, sparse= TRUE, exclude = 'c'))
   print(xtabs(~ x1 + x3, sparse= TRUE, exclude = 'c'))
+  detach("package:Matrix")
   ## failed in R <= 2.13.1
 }
 
@@ -128,10 +130,12 @@ print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass))
 
 ## median should work by default for a suitable S4 class.
 ## adapted from adaptsmoFMRI
-library(Matrix)
-x <- matrix(c(1,2,3,4))
-median(x)
-median(as(x, "dgeMatrix"))
+if(suppressMessages(require("Matrix"))) {
+    x <- matrix(c(1,2,3,4))
+    print(median(x))
+    print(median(as(x, "dgeMatrix")))
+    detach("package:Matrix")
+}
 
 ## Various arguments were not duplicated:  PR#15352 to 15354
 x <- 5
@@ -151,3 +155,15 @@ x
 a[1] <- 9
 x
 
+
+## needs MASS installed
+## PR#2586 labelling in alias()
+if(require("MASS")) {
+    Y <- c(0,1,2)
+    X1 <- c(0,1,0)
+    X2 <- c(0,1,0)
+    X3 <- c(0,0,1)
+    print(res <- alias(lm(Y ~ X1 + X2 + X3)))
+    stopifnot(identical(rownames(res[[2]]), "X2"))
+}
+## the error was in lm.(w)fit

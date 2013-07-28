@@ -1,0 +1,345 @@
+
+R Under development (unstable) (2013-07-22 r63380) -- "Unsuffered Consequences"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin12.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## For examples skipped in testing because they need recommended packages.
+> 
+> ## From datasets
+> if(require("survival")){
++   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
++   print(summary(model3))
++   detach("package:survival")  # survival (conflicts)
++ }
+Loading required package: survival
+Loading required package: splines
+Call:
+coxph(formula = Surv(rep(1, 248L), case) ~ spontaneous + induced + 
+    strata(stratum), data = infert, method = "exact")
+
+  n= 248, number of events= 83 
+
+              coef exp(coef) se(coef)     z Pr(>|z|)    
+spontaneous 1.9859    7.2854   0.3524 5.635 1.75e-08 ***
+induced     1.4090    4.0919   0.3607 3.906 9.38e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+spontaneous     7.285     0.1373     3.651    14.536
+induced         4.092     0.2444     2.018     8.298
+
+Rsquare= 0.193   (max possible= 0.519 )
+Likelihood ratio test= 53.15  on 2 df,   p=2.869e-12
+Wald test            = 31.84  on 2 df,   p=1.221e-07
+Score (logrank) test = 48.44  on 2 df,   p=3.032e-11
+
+> 
+> 
+> ## From grDevices
+> x1  <- matrix(rnorm(1e3), ncol = 2)
+> x2  <- matrix(rnorm(1e3, mean = 3, sd = 1.5), ncol = 2)
+> x   <- rbind(x1, x2)
+> 
+> dcols <- densCols(x)
+KernSmooth 2.23 loaded
+Copyright M. P. Wand 1997-2009
+> graphics::plot(x, col = dcols, pch = 20, main = "n = 1000")
+> 
+> 
+> ## From graphics:
+> ## A largish data set
+> set.seed(123)
+> n <- 10000
+> x1  <- matrix(rnorm(n), ncol = 2)
+> x2  <- matrix(rnorm(n, mean = 3, sd = 1.5), ncol = 2)
+> x   <- rbind(x1, x2)
+> 
+> oldpar <- par(mfrow = c(2, 2))
+> smoothScatter(x, nrpoints = 0)
+> smoothScatter(x)
+> 
+> ## a different color scheme:
+> Lab.palette <- colorRampPalette(c("blue", "orange", "red"), space = "Lab")
+> smoothScatter(x, colramp = Lab.palette)
+> 
+> ## somewhat similar, using identical smoothing computations,
+> ## but considerably *less* efficient for really large data:
+> plot(x, col = densCols(x), pch = 20)
+> 
+> ## use with pairs:
+> par(mfrow = c(1, 1))
+> y <- matrix(rnorm(40000), ncol = 4) + 3*rnorm(10000)
+> y[, c(2,4)] <-  -y[, c(2,4)]
+> pairs(y, panel = function(...) smoothScatter(..., nrpoints = 0, add = TRUE))
+> 
+> par(oldpar)
+> 
+> 
+> ## From stats
+> # alias.Rd
+> op <- options(contrasts = c("contr.helmert", "contr.poly"))
+> npk.aov <- aov(yield ~ block + N*P*K, npk)
+> alias(npk.aov)
+Model :
+yield ~ block + N * P * K
+
+Complete :
+         (Intercept) block1 block2 block3 block4 block5 N1    P1    K1    N1:P1
+N1:P1:K1     0           1    1/3    1/6  -3/10   -1/5      0     0     0     0
+         N1:K1 P1:K1
+N1:P1:K1     0     0
+
+> options(op)  # reset
+> 
+> # as.hclust.Rd
+> if(require("cluster", quietly = TRUE)) {# is a recommended package
++   set.seed(123)
++   x <- matrix(rnorm(30), ncol = 3)
++   hc <- hclust(dist(x), method = "complete")
++   ag <- agnes(x, method = "complete")
++   hcag <- as.hclust(ag)
++   ## The dendrograms order slightly differently:
++   op <- par(mfrow = c(1,2))
++   plot(hc) ;  mtext("hclust", side = 1)
++   plot(hcag); mtext("agnes",  side = 1)
++   detach("package:cluster")
++ }
+> 
+> # confint.Rd
+> counts <- c(18,17,15,20,10,20,25,13,12)
+> outcome <- gl(3, 1, 9); treatment <- gl(3, 3)
+> glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
+> confint(glm.D93)
+Waiting for profiling to be done...
+                 2.5 %      97.5 %
+(Intercept)  2.6958215  3.36655581
+outcome2    -0.8577018 -0.06255840
+outcome3    -0.6753696  0.08244089
+treatment2  -0.3932548  0.39325483
+treatment3  -0.3932548  0.39325483
+> confint.default(glm.D93)  # based on asymptotic normality}
+                 2.5 %      97.5 %
+(Intercept)  2.7095672  3.37947764
+outcome2    -0.8505027 -0.05800787
+outcome3    -0.6707552  0.08478093
+treatment2  -0.3919928  0.39199279
+treatment3  -0.3919928  0.39199279
+> 
+> # contrasts.Rd
+> utils::example(factor)
+
+factor> (ff <- factor(substring("statistics", 1:10, 1:10), levels = letters))
+ [1] s t a t i s t i c s
+Levels: a b c d e f g h i j k l m n o p q r s t u v w x y z
+
+factor> as.integer(ff)      # the internal codes
+ [1] 19 20  1 20  9 19 20  9  3 19
+
+factor> (f. <- factor(ff))  # drops the levels that do not occur
+ [1] s t a t i s t i c s
+Levels: a c i s t
+
+factor> ff[, drop = TRUE]   # the same, more transparently
+ [1] s t a t i s t i c s
+Levels: a c i s t
+
+factor> factor(letters[1:20], labels = "letter")
+ [1] letter1  letter2  letter3  letter4  letter5  letter6  letter7  letter8 
+ [9] letter9  letter10 letter11 letter12 letter13 letter14 letter15 letter16
+[17] letter17 letter18 letter19 letter20
+20 Levels: letter1 letter2 letter3 letter4 letter5 letter6 letter7 ... letter20
+
+factor> class(ordered(4:1)) # "ordered", inheriting from "factor"
+[1] "ordered" "factor" 
+
+factor> z <- factor(LETTERS[3:1], ordered = TRUE)
+
+factor> ## and "relational" methods work:
+factor> stopifnot(sort(z)[c(1,3)] == range(z), min(z) < max(z))
+
+factor> ## Don't show: 
+factor> of <- ordered(ff)
+
+factor> stopifnot(identical(range(of, rev(of)), of[3:2]),
+factor+ 	  identical(max(of), of[2]))
+
+factor> ## End Don't show
+factor> 
+factor> ## suppose you want "NA" as a level, and to allow missing values.
+factor> (x <- factor(c(1, 2, NA), exclude = NULL))
+[1] 1    2    <NA>
+Levels: 1 2 <NA>
+
+factor> is.na(x)[2] <- TRUE
+
+factor> x  # [1] 1    <NA> <NA>
+[1] 1    <NA> <NA>
+Levels: 1 2 <NA>
+
+factor> is.na(x)
+[1] FALSE  TRUE FALSE
+
+factor> # [1] FALSE  TRUE FALSE
+factor> 
+factor> ## Using addNA()
+factor> Month <- airquality$Month
+
+factor> table(addNA(Month))
+
+   5    6    7    8    9 <NA> 
+  31   30   31   31   30    0 
+
+factor> table(addNA(Month, ifany = TRUE))
+
+ 5  6  7  8  9 
+31 30 31 31 30 
+> fff <- ff[, drop = TRUE]  # reduce to 5 levels.
+> contrasts(fff) <- contr.sum(5)[, 1:2]; contrasts(fff)
+  [,1] [,2]       [,3]       [,4]
+a    1    0 -0.2471257  0.2688164
+c    0    1 -0.2471257  0.2688164
+i    0    0 -0.1498721 -0.8817814
+s    0    0  0.8912491  0.0753323
+t   -1   -1 -0.2471257  0.2688164
+> 
+> ## using sparse contrasts: % useful, once model.matrix() works with these :
+> ffs <- fff
+> contrasts(ffs) <- contr.sum(5, sparse = TRUE)[, 1:2]; contrasts(ffs)
+  [,1] [,2]       [,3]       [,4]
+a    1    0 -0.2471257  0.2688164
+c    0    1 -0.2471257  0.2688164
+i    0    0 -0.1498721 -0.8817814
+s    0    0  0.8912491  0.0753323
+t   -1   -1 -0.2471257  0.2688164
+> stopifnot(all.equal(ffs, fff))
+> contrasts(ffs) <- contr.sum(5, sparse = TRUE); contrasts(ffs)
+5 x 4 sparse Matrix of class "dgCMatrix"
+             
+a  1  .  .  .
+c  .  1  .  .
+i  .  .  1  .
+s  .  .  .  1
+t -1 -1 -1 -1
+> 
+> # glm.Rd
+> utils::data(anorexia, package = "MASS")
+> 
+> anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
++                 family = gaussian, data = anorexia)
+> summary(anorex.1)
+
+Call:
+glm(formula = Postwt ~ Prewt + Treat + offset(Prewt), family = gaussian, 
+    data = anorexia)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-14.1083   -4.2773   -0.5484    5.4838   15.2922  
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  49.7711    13.3910   3.717 0.000410 ***
+Prewt        -0.5655     0.1612  -3.509 0.000803 ***
+TreatCont    -4.0971     1.8935  -2.164 0.033999 *  
+TreatFT       4.5631     2.1333   2.139 0.036035 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for gaussian family taken to be 48.69504)
+
+    Null deviance: 4525.4  on 71  degrees of freedom
+Residual deviance: 3311.3  on 68  degrees of freedom
+AIC: 489.97
+
+Number of Fisher Scoring iterations: 2
+
+> 
+> # logLik.Rd
+> {utils::data(Orthodont, package = "nlme")
++ fm1 <- lm(distance ~ Sex * age, Orthodont)
++ logLik(fm1)
++ logLik(fm1, REML = TRUE)
++ 
++ # nls.Rd
++ od <- options(digits=5)
++ ## The muscle dataset in MASS is from an experiment on muscle
++ ## contraction on 21 animals.  The observed variables are Strip
++ ## (identifier of muscle), Conc (Cacl concentration) and Length
++ ## (resulting length of muscle section).
++ utils::data(muscle, package = "MASS")
++ 
++ ## The non linear model considered is
++ ##       Length = alpha + beta*exp(-Conc/theta) + error
++ ## where theta is constant but alpha and beta may vary with Strip.
++ 
++ with(muscle, table(Strip)) # 2, 3 or 4 obs per strip
++ 
++ ## We first use the plinear algorithm to fit an overall model,
++ ## ignoring that alpha and beta might vary with Strip.
++ 
++ musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
++               start = list(th = 1), algorithm = "plinear")
++ summary(musc.1)
++ 
++ ## Then we use nls' indexing feature for parameters in non-linear
++ ## models to use the conventional algorithm to fit a model in which
++ ## alpha and beta vary with Strip.  The starting values are provided
++ ## by the previously fitted model.
++ ## Note that with indexed parameters, the starting values must be
++ ## given in a list (with names):
++ b <- coef(musc.1)
++ musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
++               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
++ summary(musc.2)
++ options(od)
++ 
++ # princomp.Rd
++ ## Robust:
++ (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
++ 
++ # xtabs.Rd
++ if(require("Matrix")) {
++  ## similar to "nlme"s  'ergoStool' :
++  d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
++                       Subj = gl(9, 4, 36*4))
++  print(xtabs(~ Type + Subj, data = d.ergo)) # 4 replicates each
++  set.seed(15) # a subset of cases:
++  print(xtabs(~ Type + Subj, data = d.ergo[sample(36, 10), ], sparse = TRUE))
++ 
++  ## Hypothetical two level setup:
++  inner <- factor(sample(letters[1:25], 100, replace = TRUE))
++  inout <- factor(sample(LETTERS[1:5], 25, replace = TRUE))
++  fr <- data.frame(inner = inner, outer = inout[as.integer(inner)])
++  print(xtabs(~ inner + outer, fr, sparse = TRUE))
++ }
++ 
++ 
++ ## From tools
++ 
++ ## This may not be installed
++ gridEx <- system.file("doc", "grid.Rnw", package = "grid")
++ vignetteDepends(gridEx)
++ 
++ 
++ ## From utils
++ example(packageDescription)
++ 
++ 
++ ## From splines
++ library(splines)
++ Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))
++ 
++ 

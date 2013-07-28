@@ -1,7 +1,7 @@
 
-R version 3.0.1 Patched (2013-06-05 r62869) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-28 r63429) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin12.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2439,41 +2439,10 @@ Number of Fisher Scoring iterations: 4
 
 > ## Really should be analysed by conditional logistic regression
 > ## which is in the survival package
-> if(require(survival)){
-+   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
-+   print(summary(model3))
-+   detach()  # survival (conflicts)
-+ }
-Loading required package: survival
-Loading required package: splines
-Call:
-coxph(formula = Surv(rep(1, 248L), case) ~ spontaneous + induced + 
-    strata(stratum), data = infert, method = "exact")
-
-  n= 248, number of events= 83 
-
-              coef exp(coef) se(coef)     z Pr(>|z|)    
-spontaneous 1.9859    7.2854   0.3524 5.635 1.75e-08 ***
-induced     1.4090    4.0919   0.3607 3.906 9.38e-05 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-            exp(coef) exp(-coef) lower .95 upper .95
-spontaneous     7.285     0.1373     3.651    14.536
-induced         4.092     0.2444     2.018     8.298
-
-Rsquare= 0.193   (max possible= 0.519 )
-Likelihood ratio test= 53.15  on 2 df,   p=2.869e-12
-Wald test            = 31.84  on 2 df,   p=1.221e-07
-Score (logrank) test = 48.44  on 2 df,   p=3.032e-11
-
 > 
 > 
 > 
 > cleanEx()
-
-detaching ‘package:splines’
-
 > nameEx("iris")
 > ### * iris
 > 
@@ -2676,6 +2645,21 @@ Model 2: Speed ~ Run + Expt
 > ## End(Not run)
 > 
 > 
+> cleanEx()
+> nameEx("npk")
+> ### * npk
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: npk
+> ### Title: Classical N, P, K Factorial Experiment
+> ### Aliases: npk
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> 
+> base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
 > cleanEx()
 > nameEx("occupationalStatus")
 > ### * occupationalStatus
@@ -3436,7 +3420,7 @@ c0   -5.14
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.888 0.037 1.933 0 0 
+Time elapsed:  3.17 0.183 3.425 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,7 +1,7 @@
 
-R version 3.0.1 Patched (2013-07-01 r63131) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-28 r63429) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin12.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2443,24 +2443,6 @@ Frequency = 1
 > 
 > ### ** Examples
 > 
-> ## From Venables and Ripley (2002) p.165.
-> utils::data(npk, package = "MASS")
-> 
-> op <- options(contrasts = c("contr.helmert", "contr.poly"))
-> npk.aov <- aov(yield ~ block + N*P*K, npk)
-> alias(npk.aov)
-Model :
-yield ~ block + N * P * K
-
-Complete :
-         (Intercept) block1 block2 block3 block4 block5 N1    P1    K1    N1:P1
-N1:P1:K1     0           1    1/3    1/6  -3/10   -1/5      0     0     0     0
-         N1:K1 P1:K1
-N1:P1:K1     0     0
-
-> options(op)  # reset
-> 
-> 
 > 
 > base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
 > cleanEx()
@@ -2894,7 +2876,6 @@ ratio of scales
 > ### ** Examples
 > 
 > ## From Venables and Ripley (2002) p.165.
-> utils::data(npk, package = "MASS")
 > 
 > ## Set orthogonal contrasts.
 > op <- options(contrasts = c("contr.helmert", "contr.poly"))
@@ -3684,22 +3665,11 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > x <- matrix(rnorm(30), ncol = 3)
 > hc <- hclust(dist(x), method = "complete")
 > 
-> if(require("cluster", quietly = TRUE)) {# is a recommended package
-+   ag <- agnes(x, method = "complete")
-+   hcag <- as.hclust(ag)
-+   ## The dendrograms order slightly differently:
-+   op <- par(mfrow = c(1,2))
-+   plot(hc) ;  mtext("hclust", side = 1)
-+   plot(hcag); mtext("agnes",  side = 1)
-+ }
 > 
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
-
-detaching ‘package:cluster’
-
 > nameEx("asOneSidedFormula")
 > ### * asOneSidedFormula
 > 
@@ -3714,7 +3684,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3597be8>
+<environment: 0x7f9a747a4b48>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4271,25 +4241,6 @@ am          -0.614677730 0.926307310
        2.5 %   97.5 %
 wt 0.3800887 1.622518
 > 
-> ## from example(glm) (needs MASS to be present on the system)
-> counts <- c(18,17,15,20,10,20,25,13,12)
-> outcome <- gl(3, 1, 9); treatment <- gl(3, 3)
-> glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
-> confint(glm.D93)
-Waiting for profiling to be done...
-                 2.5 %      97.5 %
-(Intercept)  2.6958215  3.36655581
-outcome2    -0.8577018 -0.06255840
-outcome3    -0.6753696  0.08244089
-treatment2  -0.3932548  0.39325483
-treatment3  -0.3932548  0.39325483
-> confint.default(glm.D93)  # based on asymptotic normality
-                 2.5 %      97.5 %
-(Intercept)  2.7095672  3.37947764
-outcome2    -0.8505027 -0.05800787
-outcome3    -0.6707552  0.08478093
-treatment2  -0.3919928  0.39199279
-treatment3  -0.3919928  0.39199279
 > 
 > 
 > 
@@ -4498,25 +4449,6 @@ i    0    0 -0.1498721 -0.8817814
 s    0    0  0.8912491  0.0753323
 t   -1   -1 -0.2471257  0.2688164
 > 
-> ## using sparse contrasts: % useful, once model.matrix() works with these :
-> ffs <- fff
-> contrasts(ffs) <- contr.sum(5, sparse = TRUE)[, 1:2]; contrasts(ffs)
-  [,1] [,2]       [,3]       [,4]
-a    1    0 -0.2471257  0.2688164
-c    0    1 -0.2471257  0.2688164
-i    0    0 -0.1498721 -0.8817814
-s    0    0  0.8912491  0.0753323
-t   -1   -1 -0.2471257  0.2688164
-> stopifnot(all.equal(ffs, fff))
-> contrasts(ffs) <- contr.sum(5, sparse = TRUE); contrasts(ffs)
-5 x 4 sparse Matrix of class "dgCMatrix"
-             
-a  1  .  .  .
-c  .  1  .  .
-i  .  .  1  .
-s  .  .  .  1
-t -1 -1 -1 -1
-> 
 > 
 > 
 > cleanEx()
@@ -4715,7 +4647,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x655ce58>
+<bytecode: 0x7f9a751074e8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6184,7 +6116,6 @@ y 2.4
 > 
 > options(contrasts = c("contr.helmert", "contr.poly"))
 > ## From Venables and Ripley (2002) p.165.
-> utils::data(npk, package = "MASS")
 > npk.aov <- aov(yield ~ block + N*P*K, npk)
 > dummy.coef(npk.aov)
 Full coefficients are 
@@ -7133,7 +7064,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x8d72c18>
+<environment: 0x7f9a760dbdb8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7552,38 +7483,14 @@ NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291
 treatment  2   0.0000         4     5.1291
 > 
-> ## an example with offsets from Venables & Ripley (2002, p.189)
-> utils::data(anorexia, package = "MASS")
-> 
-> anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
-+                 family = gaussian, data = anorexia)
-> summary(anorex.1)
-
-Call:
-glm(formula = Postwt ~ Prewt + Treat + offset(Prewt), family = gaussian, 
-    data = anorexia)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--14.1083   -4.2773   -0.5484    5.4838   15.2922  
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  49.7711    13.3910   3.717 0.000410 ***
-Prewt        -0.5655     0.1612  -3.509 0.000803 ***
-TreatCont    -4.0971     1.8935  -2.164 0.033999 *  
-TreatFT       4.5631     2.1333   2.139 0.036035 *  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-(Dispersion parameter for gaussian family taken to be 48.69504)
-
-    Null deviance: 4525.4  on 71  degrees of freedom
-Residual deviance: 3311.3  on 68  degrees of freedom
-AIC: 489.97
-
-Number of Fisher Scoring iterations: 2
-
+> ## Not run: 
+> ##D ## an example with offsets from Venables & Ripley (2002, p.189)
+> ##D utils::data(anorexia, package = "MASS")
+> ##D 
+> ##D anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
+> ##D                 family = gaussian, data = anorexia)
+> ##D summary(anorex.1)
+> ## End(Not run)
 > 
 > # A Gamma example, from McCullagh & Nelder (1989, pp. 300-2)
 > clotting <- data.frame(
@@ -8819,13 +8726,6 @@ Coefficients:
 > logLik(fm1, REML = TRUE)
 'log Lik.' -102.6851 (df=8)
 > 
-> utils::data(Orthodont, package = "nlme")
-> fm1 <- lm(distance ~ Sex * age, Orthodont)
-> logLik(fm1)
-'log Lik.' -239.1209 (df=5)
-> logLik(fm1, REML = TRUE)
-'log Lik.' -241.7796 (df=5)
-> 
 > 
 > 
 > cleanEx()
@@ -9069,9 +8969,6 @@ List of 5
 > ### Keywords: models
 > 
 > ### ** Examples
-> 
-> ## From Venables and Ripley (2002) p.165.
-> utils::data(npk, package = "MASS")
 > 
 > ## Set orthogonal contrasts.
 > op <- options(contrasts = c("contr.helmert", "contr.poly"))
@@ -10440,106 +10337,6 @@ Consider specifying 'start' or using a selfStart model
 > lines(x, predict(nlmod), col = 2)
 > 
 > 
-> ## The muscle dataset in MASS is from an experiment on muscle
-> ## contraction on 21 animals.  The observed variables are Strip
-> ## (identifier of muscle), Conc (Cacl concentration) and Length
-> ## (resulting length of muscle section).
-> utils::data(muscle, package = "MASS")
-> 
-> ## The non linear model considered is
-> ##       Length = alpha + beta*exp(-Conc/theta) + error
-> ## where theta is constant but alpha and beta may vary with Strip.
-> 
-> with(muscle, table(Strip)) # 2,3 or 4 obs per strip
-Strip
-S01 S02 S03 S04 S05 S06 S07 S08 S09 S10 S11 S12 S13 S14 S15 S16 S17 S18 S19 S20 
-  4   4   4   3   3   3   2   2   2   2   3   2   2   2   2   4   4   3   3   3 
-S21 
-  3 
-> 
-> ## We first use the plinear algorithm to fit an overall model,
-> ## ignoring that alpha and beta might vary with Strip.
-> 
-> musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
-+               start = list(th = 1), algorithm = "plinear")
-> summary(musc.1)
-
-Formula: Length ~ cbind(1, exp(-Conc/th))
-
-Parameters:
-      Estimate Std. Error t value Pr(>|t|)    
-th       0.608      0.115    5.31  1.9e-06 ***
-.lin1   28.963      1.230   23.55  < 2e-16 ***
-.lin2  -34.227      3.793   -9.02  1.4e-12 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 4.67 on 57 degrees of freedom
-
-> 
-> ## Then we use nls' indexing feature for parameters in non-linear
-> ## models to use the conventional algorithm to fit a model in which
-> ## alpha and beta vary with Strip.  The starting values are provided
-> ## by the previously fitted model.
-> ## Note that with indexed parameters, the starting values must be
-> ## given in a list (with names):
-> b <- coef(musc.1)
-> musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
-+               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
-> summary(musc.2)
-
-Formula: Length ~ a[Strip] + b[Strip] * exp(-Conc/th)
-
-Parameters:
-    Estimate Std. Error t value Pr(>|t|)    
-a1    23.454      0.796   29.46  5.0e-16 ***
-a2    28.302      0.793   35.70  < 2e-16 ***
-a3    30.801      1.716   17.95  1.7e-12 ***
-a4    25.921      3.016    8.60  1.4e-07 ***
-a5    23.201      2.891    8.02  3.5e-07 ***
-a6    20.120      2.435    8.26  2.3e-07 ***
-a7    33.595      1.682   19.98  3.0e-13 ***
-a8    39.053      3.753   10.41  8.6e-09 ***
-a9    32.137      3.318    9.69  2.5e-08 ***
-a10   40.005      3.336   11.99  1.0e-09 ***
-a11   36.190      3.109   11.64  1.6e-09 ***
-a12   36.911      1.839   20.07  2.8e-13 ***
-a13   30.635      1.700   18.02  1.6e-12 ***
-a14   34.312      3.495    9.82  2.0e-08 ***
-a15   38.395      3.375   11.38  2.3e-09 ***
-a16   31.226      0.886   35.26  < 2e-16 ***
-a17   31.230      0.821   38.02  < 2e-16 ***
-a18   19.998      1.011   19.78  3.6e-13 ***
-a19   37.095      1.071   34.65  < 2e-16 ***
-a20   32.594      1.121   29.07  6.2e-16 ***
-a21   30.376      1.057   28.74  7.5e-16 ***
-b1   -27.300      6.873   -3.97  0.00099 ***
-b2   -26.270      6.754   -3.89  0.00118 ** 
-b3   -30.901      2.270  -13.61  1.4e-10 ***
-b4   -32.238      3.810   -8.46  1.7e-07 ***
-b5   -29.941      3.773   -7.94  4.1e-07 ***
-b6   -20.622      3.647   -5.65  2.9e-05 ***
-b7   -19.625      8.085   -2.43  0.02661 *  
-b8   -45.780      4.113  -11.13  3.2e-09 ***
-b9   -31.345      6.352   -4.93  0.00013 ***
-b10  -38.599      3.955   -9.76  2.2e-08 ***
-b11  -33.921      3.839   -8.84  9.2e-08 ***
-b12  -38.268      8.992   -4.26  0.00053 ***
-b13  -22.568      8.194   -2.75  0.01355 *  
-b14  -36.167      6.358   -5.69  2.7e-05 ***
-b15  -32.952      6.354   -5.19  7.4e-05 ***
-b16  -47.207      9.540   -4.95  0.00012 ***
-b17  -33.875      7.688   -4.41  0.00039 ***
-b18  -15.896      6.222   -2.55  0.02051 *  
-b19  -28.969      7.235   -4.00  0.00092 ***
-b20  -36.917      8.033   -4.60  0.00026 ***
-b21  -26.508      7.012   -3.78  0.00149 ** 
-th     0.797      0.127    6.30  8.0e-06 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 1.11 on 17 degrees of freedom
-
 > ## Don't show: 
 > options(od)
 > ## End Don't show
@@ -11735,14 +11532,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0xa704370>
-<environment: 0xa6f7830>
+<bytecode: 0x7f9a76fb9430>
+<environment: 0x7f9a75dc6000>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0xa704530>
-<environment: 0xa6f7830>
+<bytecode: 0x7f9a76fb9548>
+<environment: 0x7f9a75dc6000>
 
 > 
 > 
@@ -12181,18 +11978,10 @@ predict.bs :
 	 function (object, newx, ...)  NULL 
 predict.glm :
 	 function (object, newdata = NULL, type = c("link", "response",      "terms"), se.fit = FALSE, dispersion = NULL, terms = NULL,      na.action = na.pass, ...)  NULL 
-predict.glmmPQL :
-	 function (object, newdata = NULL, type = c("link", "response"),      level = Q, na.action = na.pass, ...)  NULL 
-predict.lda :
-	 function (object, newdata, prior = object$prior, dimen, method = c("plug-in",      "predictive", "debiased"), ...)  NULL 
 predict.lm :
 	 function (object, newdata, se.fit = FALSE, scale = NULL, df = Inf,      interval = c("none", "confidence", "prediction"), level = 0.95,      type = c("response", "terms"), terms = NULL, na.action = na.pass,      pred.var = res.var/weights, weights = 1, ...)  NULL 
 predict.loess :
 	 function (object, newdata = NULL, se = FALSE, na.action = na.pass,      ...)  NULL 
-predict.lqs :
-	 function (object, newdata, na.action = na.pass, ...)  NULL 
-predict.mca :
-	 function (object, newdata, type = c("row", "factor"), ...)  NULL 
 predict.mlm :
 	 function (object, newdata, se.fit = FALSE, na.action = na.pass,      ...)  NULL 
 predict.nbSpline :
@@ -12205,8 +11994,6 @@ predict.ns :
 	 function (object, newx, ...)  NULL 
 predict.pbSpline :
 	 function (object, x, nseg = 50, deriv = 0, ...)  NULL 
-predict.polr :
-	 function (object, newdata, type = c("class", "probs"), ...)  NULL 
 predict.poly :
 	 function (object, newdata, ...)  NULL 
 predict.polySpline :
@@ -12219,10 +12006,6 @@ predict.prcomp :
 	 function (object, newdata, ...)  NULL 
 predict.princomp :
 	 function (object, newdata, ...)  NULL 
-predict.qda :
-	 function (object, newdata, prior = object$prior, method = c("plug-in",      "predictive", "debiased", "looCV"), ...)  NULL 
-predict.rlm :
-	 function (object, newdata = NULL, scale = NULL, ...)  NULL 
 predict.smooth.spline :
 	 function (object, x, deriv = 0, ...)  NULL 
 predict.smooth.spline.fit :
@@ -12501,7 +12284,6 @@ Warning in predict.lm(wfit, new, interval = "prediction") :
 13  3.58282936  2.2662384  4.89942029
 > 
 > ##-- From  aov(.) example ---- predict(.. terms)
-> utils::data(npk, package = "MASS")
 > npk.aov <- aov(yield ~ block + N*P*K, npk)
 > (termL <- attr(terms(npk.aov), "term.labels"))
 [1] "block" "N"     "P"     "K"     "N:P"   "N:K"   "P:K"   "N:P:K"
@@ -13002,17 +12784,6 @@ Standard deviations:
 13.596589  4.676077  2.617533  1.366320 
 
  4  variables and  21 observations.
-> ## Robust:
-> (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
-Call:
-princomp(x = stackloss, covmat = MASS::cov.rob(stackloss))
-
-Standard deviations:
-   Comp.1    Comp.2    Comp.3    Comp.4 
-7.8322873 4.0077676 1.9114016 0.7624211 
-
- 4  variables and  21 observations.
-> 
 > 
 > 
 > cleanEx()
@@ -15536,8 +15307,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3e254b0>
-<environment: 0xa09d250>
+<bytecode: 0x7f9a7555ca28>
+<environment: 0x7f9a73d337c8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17631,68 +17402,10 @@ B    L                 27 14 29 19 29 31 41 20 44
 > 
 > ### ---- Sparse Examples ----
 > 
-> if(require("Matrix")) {
-+  ## similar to "nlme"s  'ergoStool' :
-+  d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
-+                       Subj = gl(9, 4, 36*4))
-+  print(xtabs(~ Type + Subj, data = d.ergo)) # 4 replicates each
-+  set.seed(15) # a subset of cases:
-+  print(xtabs(~ Type + Subj, data = d.ergo[sample(36, 10), ], sparse = TRUE))
-+ 
-+  ## Hypothetical two level setup:
-+  inner <- factor(sample(letters[1:25], 100, replace = TRUE))
-+  inout <- factor(sample(LETTERS[1:5], 25, replace = TRUE))
-+  fr <- data.frame(inner = inner, outer = inout[as.integer(inner)])
-+  print(xtabs(~ inner + outer, fr, sparse = TRUE))
-+ }
-Loading required package: Matrix
-Loading required package: lattice
-    Subj
-Type 1 2 3 4 5 6 7 8 9
-  T1 4 4 4 4 4 4 4 4 4
-  T2 4 4 4 4 4 4 4 4 4
-  T3 4 4 4 4 4 4 4 4 4
-  T4 4 4 4 4 4 4 4 4 4
-4 x 9 sparse Matrix of class "dgCMatrix"
-   1 2 3 4 5 6 7 8 9
-T1 . 1 . 1 . 1 . 1 .
-T2 1 . . . . . 1 . 1
-T3 . . . . 1 . . . .
-T4 1 . . . . . 1 . .
-25 x 5 sparse Matrix of class "dgCMatrix"
-  A B C D E
-a 2 . . . .
-b . . 1 . .
-c . 6 . . .
-d . . . 5 .
-e . . . 3 .
-f 1 . . . .
-g . 9 . . .
-h . . 3 . .
-i . . . . 5
-j . . . 1 .
-k 3 . . . .
-l . 2 . . .
-m 6 . . . .
-n . . 1 . .
-o 2 . . . .
-p . . 2 . .
-q . 5 . . .
-r . . . . 6
-s . . 4 . .
-t . . . 7 .
-u . 4 . . .
-v . . . 7 .
-w . . . 7 .
-x . . . . 6
-y . . . . 2
 > 
 > 
 > 
 > cleanEx()
-
-detaching ‘package:Matrix’, ‘package:lattice’
-
 > nameEx("zC")
 > ### * zC
 > 
@@ -17789,7 +17502,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  14.867 0.293 15.717 0 0 
+Time elapsed:  9.421 1.236 10.807 0 0 
 > grDevices::dev.off()
 null device 
           1 

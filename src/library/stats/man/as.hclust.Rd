@@ -38,16 +38,15 @@ as.hclust(x, \dots)
 x <- matrix(rnorm(30), ncol = 3)
 hc <- hclust(dist(x), method = "complete")
 
-% .srch <- search()
-if(require("cluster", quietly = TRUE)) {# is a recommended package
+\donttest{if(require("cluster", quietly = TRUE)) {# is a recommended package
   ag <- agnes(x, method = "complete")
   hcag <- as.hclust(ag)
   ## The dendrograms order slightly differently:
   op <- par(mfrow = c(1,2))
   plot(hc) ;  mtext("hclust", side = 1)
   plot(hcag); mtext("agnes",  side = 1)
-%  if(!any("package:cluster" == .srch)) detach("package:cluster")
-}
+  detach("package:cluster")
+}}
 }
 \keyword{multivariate}
 \keyword{cluster}

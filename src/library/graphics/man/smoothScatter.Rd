@@ -72,7 +72,7 @@ smoothScatter(x, y = NULL, nbin = 128, bandwidth,
   regression smoother to a scatter plot.
 }
 \author{Florian Hahne at FHCRC, originally}
-\examples{
+\examples{\donttest{
 ## A largish data set
 n <- 10000
 x1  <- matrix(rnorm(n), ncol = 2)
@@ -98,5 +98,5 @@ y[, c(2,4)] <-  -y[, c(2,4)]
 pairs(y, panel = function(...) smoothScatter(..., nrpoints = 0, add = TRUE))
 
 par(oldpar)
-}
+}}
 \keyword{hplot}

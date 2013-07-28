@@ -1979,16 +1979,6 @@ stopifnot(identical(mode(x), "numeric"))
 ##
 
 
-## PR#2586 labelling in alias()
-Y <- c(0,1,2)
-X1 <- c(0,1,0)
-X2 <- c(0,1,0)
-X3 <- c(0,0,1)
-(res <- alias(lm(Y ~ X1 + X2 + X3)))
-stopifnot(identical(rownames(res[[2]]),	 "X2"))
-## the error was in lm.(w)fit
-
-
 ## coercion lost the object bit in [<-
 x <- I(TRUE)
 is.object(x)

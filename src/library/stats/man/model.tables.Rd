@@ -58,9 +58,6 @@ model.tables(x, \dots)
 }
 
 \examples{\donttest{
-## From Venables and Ripley (2002) p.165.
-utils::data(npk, package = "MASS")
-
 options(contrasts = c("contr.helmert", "contr.treatment"))
 npk.aov <- aov(yield ~ block + N*P*K, npk)
 model.tables(npk.aov, "means", se = TRUE)

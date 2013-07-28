@@ -46,7 +46,7 @@ test-src-reg-1 = reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-2.R \
 ## overridden by Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
-test-src-reg3 = reg-tests-3.R reg-plot-latin1.R
+test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)

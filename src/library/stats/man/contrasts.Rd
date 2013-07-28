@@ -82,11 +82,11 @@ contrasts(fff, 2) <- contr.sum(5); contrasts(fff)  # set 2 contrasts
 # supply 2 contrasts, compute 2 more to make full set of 4.
 contrasts(fff) <- contr.sum(5)[, 1:2]; contrasts(fff)
 
-## using sparse contrasts: % useful, once model.matrix() works with these :
+\donttest{## using sparse contrasts: % useful, once model.matrix() works with these :
 ffs <- fff
 contrasts(ffs) <- contr.sum(5, sparse = TRUE)[, 1:2]; contrasts(ffs)
 stopifnot(all.equal(ffs, fff))
 contrasts(ffs) <- contr.sum(5, sparse = TRUE); contrasts(ffs)
-}
+}}
 \keyword{design}
 \keyword{regression}

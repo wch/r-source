@@ -105,7 +105,7 @@ ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
 
 ### ---- Sparse Examples ----
 
-if(require("Matrix")) {
+\donttest{if(require("Matrix")) {
  ## similar to "nlme"s  'ergoStool' :
  d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
                       Subj = gl(9, 4, 36*4))
@@ -118,6 +118,6 @@ if(require("Matrix")) {
  inout <- factor(sample(LETTERS[1:5], 25, replace = TRUE))
  fr <- data.frame(inner = inner, outer = inout[as.integer(inner)])
  print(xtabs(~ inner + outer, fr, sparse = TRUE))
-}% only if Matrix is available
+}}% only if Matrix is available
 }
 \keyword{category}

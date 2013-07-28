@@ -33,12 +33,12 @@ library(help="splines")
 
 ## utils
 example(news)
-example(packageDescription)
 example(sessionInfo)
 
 ## datasets
 example(JohnsonJohnson)
 example(ability.cov)
+example(npk)
 
 ## grDevices
 if(.Platform$OS.type == "windows") {

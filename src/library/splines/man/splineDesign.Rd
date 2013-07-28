@@ -56,8 +56,8 @@ spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE,
 \examples{
 require(graphics)
 splineDesign(knots = 1:10, x = 4:7)
-## "visualize" band structure
-Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))
+## visualize band structure
+\donttest{Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))}
 
 knots <- c(1,1.8,3:5,6.5,7,8.1,9.2,10)  # 10 => 10-4 = 6 Basis splines
 x <- seq(min(knots)-1, max(knots)+1, length.out = 501)

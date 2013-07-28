@@ -70,13 +70,10 @@ alias(object, \dots)
   The design was inspired by the S function of the same name described
   in Chambers \emph{et al.} (1992).
 }
-\examples{
-## From Venables and Ripley (2002) p.165.
-utils::data(npk, package = "MASS")
-
+\examples{\donttest{
 op <- options(contrasts = c("contr.helmert", "contr.poly"))
 npk.aov <- aov(yield ~ block + N*P*K, npk)
 alias(npk.aov)
 options(op)  # reset
-}
+}}
 \keyword{models}

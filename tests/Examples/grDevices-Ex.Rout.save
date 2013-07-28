@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-07-01 r63127) -- "Good Sport"
+R Under development (unstable) (2013-07-22 r63380) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1845,16 +1845,6 @@ gray    76.97594   0.00000    0.00000
 > ### Keywords: dplot
 > 
 > ### ** Examples
-> 
-> x1  <- matrix(rnorm(1e3), ncol = 2)
-> x2  <- matrix(rnorm(1e3, mean = 3, sd = 1.5), ncol = 2)
-> x   <- rbind(x1, x2)
-> 
-> dcols <- densCols(x)
-KernSmooth 2.23 loaded
-Copyright M. P. Wand 1997-2009
-> graphics::plot(x, col = dcols, pch = 20, main = "n = 1000")
-> 
 > 
 > 
 > cleanEx()
