@@ -70,6 +70,9 @@ typedef int R_len_t;
 # define R_XLEN_T_MAX R_LEN_T_MAX
 #endif
 
+#ifndef TESTING_WRITE_BARRIER
+# define INLINE_PROTECT
+#endif
 
 /* Fundamental Data Types:  These are largely Lisp
  * influenced structures, with the exception of LGLSXP,
@@ -697,7 +700,9 @@ SEXP Rf_nthcdr(SEXP, int);
 Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
 Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 void Rf_PrintValue(SEXP);
+#ifndef INLINE_PROTECT
 SEXP Rf_protect(SEXP);
+#endif
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
@@ -709,11 +714,19 @@ const char * Rf_translateChar0(SEXP);
 const char * Rf_translateCharUTF8(SEXP);
 const char * Rf_type2char(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
+#ifndef INLINE_PROTECT
 void Rf_unprotect(int);
+#endif
 void Rf_unprotect_ptr(SEXP);
 
+void R_signal_protect_error(void);
+void R_signal_unprotect_error(void);
+void R_signal_reprotect_error(PROTECT_INDEX i);
+
+#ifndef INLINE_PROTECT
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
+#endif
 SEXP R_tryEval(SEXP, SEXP, int *);
 SEXP R_tryEvalSilent(SEXP, SEXP, int *);
 const char *R_curErrorBuf();
@@ -1142,6 +1155,12 @@ SEXP	 Rf_ScalarRaw(Rbyte);
 SEXP	 Rf_ScalarReal(double);
 SEXP	 Rf_ScalarString(SEXP);
 R_xlen_t  Rf_xlength(SEXP);
+# ifdef INLINE_PROTECT
+SEXP Rf_protect(SEXP);
+void Rf_unprotect(int);
+void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
+void R_Reprotect(SEXP, PROTECT_INDEX);
+# endif
 #endif
 
 #ifdef USE_RINTERNALS

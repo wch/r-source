@@ -96,7 +96,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     int useNames, rnk_v = -1; // = array_rank(value) := length(dim(value))
     Rboolean array_value;
     SEXPTYPE commonType;
-    PROTECT_INDEX index;
+    PROTECT_INDEX index = 0; /* initialize to avoid a warning */
 
     checkArity(op, args);
     PROTECT(X = CAR(args));
