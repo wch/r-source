@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-07-03 r63159) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-28 r63431) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -100,7 +100,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x30ba3a8>
+<environment: 0xb29358>
 
 $showURLs
 [1] FALSE
@@ -134,7 +134,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x30ba3a8>
+<environment: 0xb29358>
 
 $showURLs
 [1] FALSE
@@ -168,7 +168,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x30ba3a8>
+<environment: 0xb29358>
 
 $showURLs
 [1] FALSE
@@ -287,7 +287,7 @@ Error in assertCondition(ff(), "error", ignoreWarning = FALSE) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x2e144e0>
+<environment: 0x182dde0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1036,7 +1036,7 @@ List of 5
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.664 0.03 0.701 0 0 
+Time elapsed:  0.33 0.009 0.339 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,7 +1,7 @@
 
-R version 3.0.1 Patched (2013-07-28 r63429) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-28 r63431) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin12.4.0 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2027,7 +2027,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x7fda81dbcfb8>
+<bytecode: 0x3af9b30>
 <environment: namespace:graphics>
 > 
 > 
@@ -2898,7 +2898,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x7fda83a49fc0>
+<bytecode: 0x3e809d0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2978,7 +2978,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.954 0.236 4.283 0 0 
+Time elapsed:  2.492 0.048 2.549 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-07-22 r63380) -- "Unsuffered Consequences"
+R version 3.0.1 Patched (2013-07-28 r63431) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin12.4.0 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -738,13 +738,13 @@ b . 1
 > ## xtabs did not exclude levels from factors
 > x1 <- c('a','b','a','b','c', NA)
 > x2 <- factor(x1, exclude=NULL)
-> print(xtabs(~ x1 + x2, na.action = na.pass)) 
+> print(xtabs(~ x1 + x2, na.action = na.pass))
    x2
 x1  a b c <NA>
   a 2 0 0    0
   b 0 2 0    0
   c 0 0 1    0
-> print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass)) 
+> print(xtabs(~ x1 + x2, exclude = 'c', na.action = na.pass))
       x2
 x1     a b <NA>
   a    2 0    0

@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-07-22 r63380) -- "Unsuffered Consequences"
+R version 3.0.1 Patched (2013-07-28 r63431) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin12.4.0 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -576,7 +576,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.194 0.011 0.208 0 0 
+Time elapsed:  0.166 0.006 0.174 0 0 
 > grDevices::dev.off()
 null device 
           1 
