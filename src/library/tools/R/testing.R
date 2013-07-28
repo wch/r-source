@@ -495,7 +495,7 @@ testInstalledPackage <-
                          appendLF = FALSE, domain = NA)
     files <- names(db)
     if (pkg == "grDevices")
-        files <- files[!grepl("/unix|windows/", files)]
+        files <- files[!grepl("^(unix|windows)/", files)]
     filedir <- tempfile()
     dir.create(filedir)
     on.exit(unlink(filedir, recursive = TRUE))
