@@ -1645,7 +1645,7 @@ if test -z "${SHLIB_CXXLDFLAGS}"; then
 fi
 if test -z "${SHLIB_RPATH}"; then
   R_SH_VAR_ADD(SHLIB_RPATH, [${shlib_rpath}])
-  warn_shlib_rpart="I could not determine SHLIB_RPATH"
+  warn_shlib_rpath="I could not determine SHLIB_RPATH"
   AC_MSG_WARN([${warn_shlib_rpath}])
 fi
 

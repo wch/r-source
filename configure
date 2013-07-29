@@ -26169,7 +26169,7 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
       ## Could also try grepping LIBS for '-lcc_dynamic' ...
       SHLIB_LIBADD="-lcc_dynamic"
     fi
-    shlib_rpath="-WL,-rpath"
+    shlib_rpath="-Wl,-rpath"
     ;;
   freebsd*)
     main_ldflags="-export-dynamic"
@@ -26447,7 +26447,7 @@ if test -z "${SHLIB_RPATH}"; then
 else
   SHLIB_RPATH="${SHLIB_RPATH}${separator}${shlib_rpath}"
 fi
-  warn_shlib_rpart="I could not determine SHLIB_RPATH"
+  warn_shlib_rpath="I could not determine SHLIB_RPATH"
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_shlib_rpath}" >&5
 $as_echo "$as_me: WARNING: ${warn_shlib_rpath}" >&2;}
 fi
