@@ -6637,8 +6637,8 @@ versions allowed them to also match files.  So they are best avoided.
 
 @item
 Multiple slashes in filepaths such as @file{/abc//def} are valid on
-POSIX filesytems and treated as if there was only one slash.  They are
-@emph{usually} accepted by Windows' OS functions. However, leading
+POSIX filesystems and treated as if there was only one slash.  They are
+@emph{usually} accepted by Windows' OS functions.  However, leading
 double slashes may have a different meaning.
 
 @item

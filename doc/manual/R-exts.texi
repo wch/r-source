@@ -626,7 +626,7 @@ this may be useful for a package known to benefit particularly from
 byte-compilation (which can take quite a long time and increases the
 installed size of the package).  It is used for the recommended
 packages, as they are byte-compiled when @R{} is installed and for
-consistency should be byte-compiled when updated. This can be overrriden
+consistency should be byte-compiled when updated. This can be overridden
 by installing with flag @option{--no-byte-compile}.
 
 @c DESCRIPTION field ZipData
@@ -3557,7 +3557,7 @@ Moreover, Bash extensions also need to be avoided in shell scripts,
 including expression in Makefiles (which are passed to the shell for
 processing).  Some @R{} platforms use strictly POSIX-conformant Bourne
 shells, and Windows and some Unix-alike OSes use @command{ash}
-(@uref{http://en.wikipedia.org/wiki/Almquist_shell}), a rather mininal
+(@uref{http://en.wikipedia.org/wiki/Almquist_shell}), a rather minimal
 shell with few builtins.  Beware of assuming that all the POSIX
 command-line utilities are available, especially on Windows where only a
 minimal set is provided for use with @R{}.
