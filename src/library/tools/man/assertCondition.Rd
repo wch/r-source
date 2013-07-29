@@ -21,18 +21,17 @@ assertCondition(expr, ..., .exprString = , verbose = FALSE)
   \item{expr}{an unevaluated \R expression which will be evaluated via
     \code{\link{tryCatch}(expr, ..)}.}
   \item{\dots}{\code{\link{character}} strings corresponding to the
-      classes of the conditions that would satisfy the assertion; e.g., \code{"error"} or
+    classes of the conditions that would satisfy the assertion; e.g., \code{"error"} or
     \code{"warning"}. If none are specified, any condition will
     satisfy the assertion.  See the details section. }
   \item{.exprString}{The string to be printed corresponding to
-      \code{expr}. By default, the actual \code{expr} will be
-      deparsed.  Will be omitted if the function is supplied with the
-      actual expression to be tested.  If \code{assertCondition()} is
-      called from another 
-        function, with the actual expression passed as an argument to
-        that function, supply the deparsed version.}
+    \code{expr}. By default, the actual \code{expr} will be
+    deparsed.  Will be omitted if the function is supplied with the
+    actual expression to be tested.  If \code{assertCondition()} is
+    called from another function, with the actual expression passed as
+    an argument to that function, supply the deparsed version.}
   \item{verbose}{If \code{TRUE}, a message is printed when the
-        condition is satisfied.}
+    condition is satisfied.}
 }
 \details{
   \code{assertCondition()} uses the general condition mechanism to
@@ -69,7 +68,7 @@ try( assertCondition(sqrt(2), "warning") )
 ## .. Failed to get warning in evaluating sqrt(2)
      assertCondition(sqrt("abc"), "error")   # ok
 try( assertCondition(sqrt("abc"), "warning") )# -> error: had no warning
-     assertCondition(sqrt("abc"), "error") 
+     assertCondition(sqrt("abc"), "error")
   ## identical to assertError() call above
 
 assertCondition(matrix(1:5, 2,3), "warning")
@@ -78,7 +77,7 @@ try( assertCondition(matrix(1:8, 4,3), "error") )
 
 ## either warning or worse:
 assertCondition(matrix(1:8, 4,3), "error","warning") # OK
-assertCondition(matrix(1:8, 4, 3), "warning") # OK 
+assertCondition(matrix(1:8, 4, 3), "warning") # OK
 
 ## when both are signalled:
 ff <- function() { warning("my warning"); stop("my error") }
