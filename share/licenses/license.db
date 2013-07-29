@@ -136,7 +136,7 @@ Note: this is a template, needs + file LICENSE
 
 Name: BSD 3-clause License
 Abbrev: BSD_3_clause
-OSI: open (http://opensource.org/licenses/BSD-2-Clause)
+OSI: open (http://opensource.org/licenses/BSD-3-Clause)
 FSF: free_and_GPLv3_compatible (http://www.gnu.org/licenses/license-list.html#ModifiedBSD)
 File: share/licenses/BSD_3_clause
 URL: http://opensource.org/licenses/BSD-3-Clause
