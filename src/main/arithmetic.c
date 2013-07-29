@@ -588,7 +588,7 @@ static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
     case PLUSOP:
 	return s1;
     case MINUSOP:
-	ans = duplicate(s1);
+	ans = NAMED(s1) == 0 ? s1 : duplicate(s1);
 	n = XLENGTH(s1);
 	for (i = 0; i < n; i++) {
 	    x = INTEGER(s1)[i];
@@ -610,7 +610,7 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
     switch (code) {
     case PLUSOP: return s1;
     case MINUSOP:
-	ans = duplicate(s1);
+	ans = NAMED(s1) == 0 ? s1 : duplicate(s1);
 	n = XLENGTH(s1);
 	for (i = 0; i < n; i++)
 	    REAL(ans)[i] = -REAL(s1)[i];
