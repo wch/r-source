@@ -2964,7 +2964,7 @@ sources will be compiled in.  As the latter suffice and are tested with
 @R{} you should not need to change this.
 
 @code{liblzma} from @code{xz-utils} version 4.999 or later (preferably
-5.0.0 or later) will be used if installed: the version in the @R{}
+5.0.3 or later) will be used if installed: the version in the @R{}
 sources can be selected instead by configuring with
 @option{--with-system-xz=no}.  Systems differ in what they call the
 package including this: e.g.@: on Fedara the library is in

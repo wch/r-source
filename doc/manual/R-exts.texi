@@ -7234,6 +7234,10 @@ by a shell) and the second argument to @code{system} will be
 @code{internal} which if true will collect the output of the command
 into an @R{} character vector.
 
+On POSIX-compliant OSes these commands pass a command-line to a shell:
+Wndows is not POSIX-compliant and there is a separate function
+@code{shell} to do so.
+
 The function @code{system.time}
 @findex system.time
 is available for timing.  Timing on child processes is only available on

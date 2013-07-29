@@ -150,6 +150,9 @@ nls(formula, data, start, control, algorithm,
 \seealso{
   \code{\link{summary.nls}}, \code{\link{predict.nls}},
   \code{\link{profile.nls}}.
+
+  Self starting models (with \sQuote{automatic initial values}):
+  \code{\link{selfStart}}.
 }
 \examples{
 \testonly{od <- options(digits=5)}

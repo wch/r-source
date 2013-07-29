@@ -116,6 +116,8 @@ LDFLAGS =
 # MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
 # don't have this: would 'mkdir -p' do?
 # MKINSTALLDIRS = $(R_HOME)/bin/mkinstalldirs
+## There is no ObjC support in the recommended toolchain,
+## but if a toolchain had support, this it what it would be.
 OBJC = $(CC)
 OBJCFLAGS = -O2
 OBJC_LIBS = -lobjc
