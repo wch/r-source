@@ -1190,7 +1190,7 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 	void R_SignalCStackOverflow(void);				\
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
-	if(R_CStackLimit != -1 && usage > /*0.95 * */R_CStackLimit)	\
+	if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))	\
 	    R_SignalCStackOverflow();					\
     } while (FALSE)
 #endif

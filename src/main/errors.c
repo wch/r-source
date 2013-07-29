@@ -108,7 +108,7 @@ void (R_CheckStack)(void)
     intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);
 
     /* printf("usage %ld\n", usage); */
-    if(R_CStackLimit != -1 && usage > /*0.95 * */R_CStackLimit) 
+    if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))
 	R_SignalCStackOverflow();
 }
 
@@ -120,7 +120,7 @@ void R_CheckStack2(size_t extra)
     /* do it this way, as some compilers do usage + extra 
        in unsigned arithmetic */
     usage += extra;
-    if(R_CStackLimit != -1 && usage > /*0.95 * */R_CStackLimit)
+    if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))
 	R_SignalCStackOverflow();
 
 }
