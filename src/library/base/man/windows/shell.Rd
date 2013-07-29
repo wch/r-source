@@ -1,6 +1,6 @@
 % File src/library/base/man/windows/shell.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shell}
@@ -36,7 +36,7 @@ shell(cmd, shell, flag = "/c", intern = FALSE, wait = TRUE,
 
 \description{
   \code{shell} runs the command specified by \code{cmd}, usually under
-  a shell.
+  a shell, because that is what the POSIX standards require.
 }
 
 \value{
@@ -68,6 +68,11 @@ shell(cmd, shell, flag = "/c", intern = FALSE, wait = TRUE,
   See \code{\link{system}} for fuller details: \code{shell} is a more
   user-friendly wrapper for \code{system}.  To make use of Windows
   file associations, use \code{\link{shell.exec}}.
+}
+
+\note{
+  This function exists only on Windows: on all other platform
+  \code{\link{system}} uses a shell.
 }
 
 \seealso{\code{\link{system}}, \code{\link{shell.exec}}}
