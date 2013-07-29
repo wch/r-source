@@ -121,7 +121,7 @@
 	check-recommended} are done in parallel.
     
       \item More of \command{make check} will work if recommended packages
-      are not installed: but recomemended packages remain needed for
+      are not installed: but recommended packages remain needed for
       thorough checking of an \R build.
     }
   }

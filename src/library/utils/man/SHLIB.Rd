@@ -53,7 +53,7 @@
   Objective C(++) support is optional when \R was configured: their main
   usage is on OS X.
 
-  Note that the appopriate run-time libraries will be used when linking
+  Note that the appropriate run-time libraries will be used when linking
   if C++, Fortran or Objective C(++) sources are supplied, but not for
   compiled object files from these languages.
 
