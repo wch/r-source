@@ -1,7 +1,7 @@
- /*
+/*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2012	The R Core Team.
+ *  Copyright (C) 1998--2013	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -516,8 +516,8 @@ SEXP eval(SEXP e, SEXP rho)
 
     if (!rho)
 	error("'rho' cannot be C NULL: detected in C-level eval");
-    if (!isEnvironment(rho)) 
-	error("'rho' must be an environment not %s: detected in C-level eval", 
+    if (!isEnvironment(rho))
+	error("'rho' must be an environment not %s: detected in C-level eval",
 	      type2char(TYPEOF(rho)));
 
     /* Save the current srcref context. */
@@ -865,10 +865,10 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     /* protection against rho = NULL */
     // these are deliberately not translated
     if (!rho)
-	errorcall(call, 
+	errorcall(call,
 		  "'rho' cannot be C NULL: detected in C-level applyClosure");
-    if (!isEnvironment(rho)) 
-	errorcall(call, "'rho' must be an environment not %s: detected in C-level applyClosure", 
+    if (!isEnvironment(rho))
+	errorcall(call, "'rho' must be an environment not %s: detected in C-level applyClosure",
 		  type2char(TYPEOF(rho)));
 
     formals = FORMALS(op);
@@ -1809,7 +1809,7 @@ static R_INLINE SEXP getAssignFcnSymbol(SEXP fun)
     SEXP val = lookupAssignFcnSymbol(fun);
     if (val != R_UnboundValue)
 	return val;
-    
+
     /* instal symbol, entern in table,  and return */
     return installAssignFcnSymbol(fun);
 }
@@ -2547,15 +2547,15 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 #endif
 		    dots = TRUE;
 		    x = eval(CAR(h), rho);
-		break;
+		    break;
 		}
 		else if (h != R_NilValue && h != R_MissingArg)
 		    error(_("'...' used in an incorrect context"));
 	    }
 	    else {
 		dots = FALSE;
-	    x = eval(CAR(args), rho);
-	    break;
+		x = eval(CAR(args), rho);
+		break;
 	    }
 	}
 	PROTECT(x); nprotect++;
