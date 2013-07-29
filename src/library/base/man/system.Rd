@@ -189,7 +189,7 @@ system(command, intern = FALSE,
     Windows the command is run directly -- use \code{shell} for an
     interface which runs \code{command} \emph{via} a shell (by default
     the Windows shell \command{cmd.exe}, which has many differences from
-    the POSIX shell).
+    a POSIX shell).
 
     This means that it cannot be assumed that redirection or piping will
     work in \code{system} (redirection sometimes does, but we have seen
@@ -216,10 +216,14 @@ system(command, intern = FALSE,
 }
 \seealso{
   \code{\link{system2}}.
+  
 #ifdef windows
-
   \code{\link{shell}} or \code{\link{shell.exec}} for a less raw
   interface.
+#endif
+#ifdef unix
+  \command{man system} and \command{man sh} for how this is implemented
+  on the OS in use.
 #endif
 
   \code{\link{.Platform}} for platform-specific variables.
