@@ -217,6 +217,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 
     n = (n1 > n2) ? n1 : n2;
     ans = allocVector(CPLXSXP, n);
+    PROTECT(ans);
 
     switch (code) {
     case PLUSOP:
@@ -259,19 +260,19 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     default:
 	error(_("unimplemented complex operation"));
     }
+    UNPROTECT(1);
 
     /* quick return if there are no attributes */
     if (ATTRIB(s1) == R_NilValue && ATTRIB(s2) == R_NilValue)
 	return ans;
 
     /* Copy attributes from longer argument. */
-    if (n1 > n2)
-	copyMostAttrib(s1, ans);
-    else if (n1 == n2) {
-	copyMostAttrib(s2, ans);
-	copyMostAttrib(s1, ans);
-    } else
-	copyMostAttrib(s2, ans);
+
+    if (n == n2 && ATTRIB(s2) != R_NilValue)
+        copyMostAttrib(s2, ans);
+    if (n == n1 && ATTRIB(s1) != R_NilValue)
+        copyMostAttrib(s1, ans); /* Done 2nd so s1's attrs overwrite s2's */
+
     return ans;
 }
 
@@ -285,8 +286,8 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchGroup("Complex", call, op, args, env, &x))
 	return x;
     x = CAR(args);
-    n = xlength(x);
     if (isComplex(x)) {
+	n = XLENGTH(x);
 	switch(PRIMVAL(op)) {
 	case 1:	/* Re */
 	    y = allocVector(REALSXP, n);
@@ -327,22 +328,22 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     else if(isNumeric(x)) { /* so no complex numbers involved */
+	n = XLENGTH(x);
 	if(isReal(x)) PROTECT(x);
 	else PROTECT(x = coerceVector(x, REALSXP));
+        y = allocVector(REALSXP, n);
+
 	switch(PRIMVAL(op)) {
 	case 1:	/* Re */
 	case 5:	/* Conj */
-	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
 		REAL(y)[i] = REAL(x)[i];
 	    break;
 	case 2:	/* Im */
-	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
 		REAL(y)[i] = 0.0;
 	    break;
 	case 4:	/* Arg */
-	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
 		if(ISNAN(REAL(x)[i]))
 		    REAL(y)[i] = REAL(x)[i];
@@ -353,7 +354,6 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	case 3:	/* Mod */
 	case 6:	/* abs */
-	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
 		REAL(y)[i] = fabs(REAL(x)[i]);
 	    break;
@@ -361,10 +361,13 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
     else errorcall(call, _("non-numeric argument to function"));
-    PROTECT(x);
-    PROTECT(y);
-    DUPLICATE_ATTRIB(y, x);
-    UNPROTECT(2);
+
+    if (ATTRIB(x) != R_NilValue) {
+        PROTECT(x);
+        PROTECT(y);
+        DUPLICATE_ATTRIB(y, x);
+        UNPROTECT(2);
+    }
     return y;
 }
 
