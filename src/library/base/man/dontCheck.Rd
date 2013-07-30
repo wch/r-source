@@ -19,4 +19,10 @@ dontCheck(x)
 \arguments{
   \item{x}{an \R object.}
 }
+\seealso{
+  \code{suppressForeignCheck} which explains why that and
+  \code{dontCheck} are undesirable and should be avoided if at all
+  possible.
+}
+
 \keyword{programming}

@@ -1643,6 +1643,8 @@ if test -z "${SHLIB_CXXLDFLAGS}"; then
   warn_shlib_cxxldflags="I could not determine SHLIB_CXXLDFLAGS"
   AC_MSG_WARN([${warn_shlib_cxxldflags}])
 fi
+
+: ${SHLIB_RPATH=${shlib_rpath}"}
 if test -z "${SHLIB_RPATH}"; then
   R_SH_VAR_ADD(SHLIB_RPATH, [${shlib_rpath}])
   warn_shlib_rpath="I could not determine SHLIB_RPATH"

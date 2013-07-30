@@ -88,7 +88,9 @@ suppressForeignCheck(names, package, add = TRUE)
   require changes in \code{check} and/or in \code{codetools}, so in this
   version the information is stored at the package level.
 }
-
+\seealso{
+  \code{dontCheck}.
+}
 \examples{
 \dontrun{
 ## assume your package has some code that assigns ".obj1" and ".obj2"
