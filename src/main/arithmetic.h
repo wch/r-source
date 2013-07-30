@@ -30,3 +30,30 @@ SEXP complex_math1(SEXP, SEXP, SEXP, SEXP);
 SEXP complex_math2(SEXP, SEXP, SEXP, SEXP);
 SEXP complex_unary(ARITHOP_TYPE, SEXP, SEXP);
 SEXP complex_binary(ARITHOP_TYPE, SEXP, SEXP);
+
+/* for binary operations */
+static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
+					  SEXPTYPE type , R_xlen_t n)
+{
+    R_xlen_t n1 = XLENGTH(s1);
+    R_xlen_t n2 = XLENGTH(s2);
+
+    /* Try to use space for 2nd arg if both same length, so 1st argument's
+       attributes will then take precedence when copied. */
+
+    if (n == n2) {
+        if (TYPEOF(s2) == type && NAMED(s2) == 0)
+            return s2;
+        else
+            /* Can use 1st arg's space only if 2nd arg has no attributes, else
+               we may not get attributes of result right. */
+            if (n == n1 && TYPEOF(s1) == type && NAMED(s1) == 0
+		&& ATTRIB(s2) == R_NilValue)
+                return s1;
+    }
+    else if (n == n1 && TYPEOF(s1) == type && NAMED(s1) == 0)
+	/* n == n1 test needed to rule out n == 0 with n1 and n2 positive */
+	return s1;
+
+    return allocVector(type, n);
+}
