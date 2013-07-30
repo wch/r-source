@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-07-28 r63431) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-29 r63455) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -100,7 +100,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0xb29358>
+<environment: 0x2b0d2a8>
 
 $showURLs
 [1] FALSE
@@ -134,7 +134,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0xb29358>
+<environment: 0x2b0d2a8>
 
 $showURLs
 [1] FALSE
@@ -168,7 +168,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0xb29358>
+<environment: 0x2b0d2a8>
 
 $showURLs
 [1] FALSE
@@ -204,50 +204,52 @@ $underline_titles
 > 
 > ### Name: assertCondition
 > ### Title: Asserting Error Conditions
-> ### Aliases: assertCondition
+> ### Aliases: assertCondition assertWarning assertError
 > ### Keywords: programming error
 > 
 > ### ** Examples
 > 
-> assertCondition( ""-1 ) # ok, as it signals a "condition"
+>   assertError(sqrt("abc"))
+>   assertWarning(matrix(1:8, 4,3))
+> 
+>   assertCondition( ""-1 ) # ok, any condition would satisfy this
 > 
 > try( assertCondition(sqrt(2), "warning") )
 Error in assertCondition(sqrt(2), "warning") : 
-  Failed to get expected warning in evaluating sqrt(2)
-> ## .. Failed to get expected warning in evaluating sqrt(2)
+  Failed to get warning in evaluating sqrt(2)
+> ## .. Failed to get warning in evaluating sqrt(2)
 >      assertCondition(sqrt("abc"), "error")   # ok
 > try( assertCondition(sqrt("abc"), "warning") )# -> error: had no warning
 Error in assertCondition(sqrt("abc"), "warning") : 
-  Expected warning, got simpleError in evaluating sqrt("abc")
-> ## verbose ==> show error message additionally:
->      assertCondition(sqrt("abc"), verbose=TRUE, "error")
-Asserted error: non-numeric argument to mathematical function
+  Got simpleError in evaluating sqrt("abc"); wanted warning
+>      assertCondition(sqrt("abc"), "error")
+>   ## identical to assertError() call above
 > 
 > assertCondition(matrix(1:5, 2,3), "warning")
 > try( assertCondition(matrix(1:8, 4,3), "error") )
-Warning in matrix(1:8, 4, 3) :
-  data length [8] is not a sub-multiple or multiple of the number of columns [3]
 Error in assertCondition(matrix(1:8, 4, 3), "error") : 
-  Failed to get expected error in evaluating matrix(1:8, 4, 3)
+  Got simpleWarning in evaluating matrix(1:8, 4, 3); wanted error
 > ## .. Failed to get expected error ....
 > 
 > ## either warning or worse:
-> assertCondition(matrix(1:8, 4,3), verbose=TRUE, "error","warning") # OK
-Asserted warning: data length [8] is not a sub-multiple or multiple of the number of columns [3]
-> assertCondition(matrix(1:8, 4, 3), "warning", "error") # ditto
+> assertCondition(matrix(1:8, 4,3), "error","warning") # OK
+> assertCondition(matrix(1:8, 4, 3), "warning") # OK
 > 
 > ## when both are signalled:
 > ff <- function() { warning("my warning"); stop("my error") }
 >     assertCondition(ff(), "warning")
->     assertCondition(ff(), "error")          # ok + signalling the warning
-Warning in ff() : my warning
->     assertCondition(ff(), "error", ignoreWarning=TRUE)   # ditto
-Warning in ff() : my warning
-> try(assertCondition(ff(), "error", ignoreWarning=FALSE) )# not ok:
-Error in assertCondition(ff(), "error", ignoreWarning = FALSE) : 
-  Expected error, got simpleWarning in evaluating ff()
->                                           #-> gets warning instead of error
+> ## but assertWarning does not allow an error to follow
+> try(assertWarning(ff()))
+Error in assertWarning(ff()) : 
+  Got warning in evaluating ff(), but also an error
+>     assertCondition(ff(), "error")          # ok
 > assertCondition(ff(), "error", "warning") # ok (quietly, catching warning)
+> 
+> ## assert that assertC..() does not assert [and use *one* argument only]
+> assertCondition( assertCondition(sqrt( 2   ), "warning") )
+> assertCondition( assertCondition(sqrt("abc"), "warning"), "error")
+> assertCondition( assertCondition(matrix(1:8, 4,3), "error"),
++                 "error")
 > 
 > 
 > 
@@ -287,7 +289,7 @@ Error in assertCondition(ff(), "error", ignoreWarning = FALSE) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x182dde0>
+<environment: 0x2a5edc0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1036,7 +1038,7 @@ List of 5
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.33 0.009 0.339 0 0 
+Time elapsed:  0.872 0.023 0.976 0 0 
 > grDevices::dev.off()
 null device 
           1 

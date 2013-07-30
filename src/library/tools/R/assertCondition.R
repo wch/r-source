@@ -16,31 +16,94 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-assertCondition <- function(expr, ..., verbose=getOption("verbose"),
-			    ignoreWarning = is.na(match("warning", conds))) {
+assertCondition <- function(expr, ...,
+                            .exprString = .deparseTrim(substitute(expr), cutoff = 30L),
+                            verbose = FALSE) {
     fe <- function(e)e
-    d.expr <- deparse(substitute(expr), width.cutoff = 30L)
-    if(length(d.expr) > 1)
-	d.expr <- paste(d.expr[[1]], "...")
-    conds <- if(nargs() > 1) c(...) else "condition"
-    .Wanted <- paste(conds, collapse = " | ")
-    if(ignoreWarning)
-	res <- tryCatch(expr, error = fe, finally = fe)
-    else
-	res <- tryCatch(expr, error = fe, warning = fe, finally = fe)
-    if(inherits(res, "condition")) {
-	ii <- class(res) %in% conds
-	if(any(ii)) {
-	    if(verbose) cat(sprintf("Asserted %s: %s\n",
-				    class(res)[which.max(ii)],
-				    conditionMessage(res)))
+    getConds <- function(expr) {
+	conds <- list()
+	tryCatch(withCallingHandlers(expr,
+				     warning = function(w) {
+					 conds <<- c(conds, list(w))
+					 invokeRestart("muffleWarning")
+				     },
+				     condition = function(cond)
+					 conds <<- c(conds, list(cond))),
+		 error = function(e)
+		     conds <<- c(conds, list(e)))
+	conds
+    }
+    conds <- if(nargs() > 1) c(...) # else NULL
+    .Wanted <- if(nargs() > 1) paste(c(...), collapse = " or ") else "any condition"
+    res <- getConds(expr)
+    if(length(res)) {
+	if(is.null(conds)) {
+            if(verbose)
+                message("assertConditon: Successfully caught a condition\n")
 	    invisible(res)
+        }
+	else {
+	    ii <- sapply(res, function(cond) any(class(cond) %in% conds))
+	    if(any(ii)) {
+                if(verbose) {
+                    found <-
+                        unique(sapply(res, function(cond) class(cond)[class(cond) %in% conds]))
+                    message(sprintf("assertCondition: caught %s",
+                                    paste(dQuote(found), collapse =", ")))
+                }
+		invisible(res)
+            }
+	    else {
+                .got <- paste(unique((sapply(res, function(obj)class(obj)[[1]]))),
+                                     collapse = ", ")
+		stop(gettextf("Got %s in evaluating %s; wanted %s",
+			      .got, .exprString, .Wanted))
+            }
 	}
-	else
-	    stop(gettextf("Expected %s, got %s in evaluating %s",
-			 .Wanted, class(res)[[1]], d.expr))
     }
     else
-	stop(gettextf("Failed to get expected %s in evaluating %s",
-		     .Wanted, d.expr))
+	stop(gettextf("Failed to get %s in evaluating %s",
+		      .Wanted, .exprString))
+}
+
+assertError <- function(expr, verbose = FALSE) {
+    d.expr <- .deparseTrim(substitute(expr), cutoff = 30L)
+    tryCatch(res <- assertCondition(expr, "error", .exprString = d.expr),
+             error = function(e)
+                 stop(gettextf("Failed to get error in evaluating %s", d.expr),
+                      call. = FALSE)
+             )
+    if(verbose) {
+        error <- res[ sapply(res, function(cond) "error" %in% class(cond)) ]
+        message(sprintf("Asserted error: %s", error[[1]]$message))
+    }
+    invisible(res)
+}
+
+assertWarning <- function(expr, verbose = FALSE) {
+    d.expr <- .deparseTrim(substitute(expr), cutoff = 30L)
+    res <- assertCondition(expr, "warning", .exprString = d.expr)
+    if(any(sapply(res, function(cond) "error" %in% class(cond))))
+        stop(gettextf("Got warning in evaluating %s, but also an error", d.expr))
+    if(verbose) {
+        warning <- res[ sapply(res, function(cond) "warning" %in% class(cond)) ]
+        message(sprintf("Asserted warning: %s", warning[[1]]$message))
+    }
+    invisible(res)
+}
+
+.deparseTrim <- function(expr, cutoff = 30L) {
+    res <- deparse(expr)
+    if(length(res) > 1) {
+        if(res[[1]] == "{") {
+            exprs <- sub("^[ \t]*", "", res[c(-1, -length(res))])
+            res <- paste0("{", paste(exprs, collapse = "; "), "}")
+        }
+        else
+            res <- paste(res[[1]], " ...")
+    }
+    if(nchar(res) > cutoff)
+        paste(substr(res, 1, cutoff), " ...")
+    else
+        res
 }

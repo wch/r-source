@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-07-28 r63431) -- "Good Sport"
+R version 3.0.1 Patched (2013-07-29 r63450) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -6399,15 +6399,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x43591f8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3023c00> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x397a5f0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2f55200> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x397a5f0> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2f55200> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -6898,9 +6898,9 @@ F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10
 > library("methods")# (not needed here)
 > assertCondition <- tools::assertCondition
 > assertCondition( getMethod(ls, "bar", fdef=ls), "error", verbose=TRUE)
-Asserted error: no generic function found for 'ls'
+assertCondition: caught "error"
 > assertCondition( getMethod(show, "bar"),        "error", verbose=TRUE)
-Asserted error: no method found for function 'show' and signature bar
+assertCondition: caught "error"
 > ## R < 2.15.1 gave
 > ##   cannot coerce type 'closure' to vector of type 'character'
 > 
