@@ -1911,11 +1911,14 @@ function(package, dir, file, lib.loc = NULL,
 		    return ("SYMBOL OK") # skip false positives
                 if (have_registration || !allow_suppress) {
                     if (name %in% fr) {
-                        other_problem <<- c(other_problem, e)
-                        other_desc <<-
-                            c(other_desc, sprintf("symbol %s in the local frame%s",
-                                                  sQuote(name),
-                                                  if(!have_registration) ", but no registered symbols" else ""))
+                        if (have_registration) { # at least for now
+                            other_problem <<- c(other_problem, e)
+                            other_desc <<-
+                                c(other_desc,
+                                  sprintf("symbol %s in the local frame%s",
+                                          sQuote(name),
+                                          if(!have_registration) ", but no registered symbols" else ""))
+                        }
                     } else {
                         other_problem <<- c(other_problem, e)
                         other_desc <<- c(other_desc,
