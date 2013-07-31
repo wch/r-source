@@ -3998,8 +3998,14 @@ setRlibs <-
 
             ## record this before installation.
             makevars <-
-                basename(Sys.glob(file.path(pkgdir, "src",
-                                           c("Makevars.in", "Makevars"))))
+                Sys.glob(file.path(pkgdir, "src",
+                                   c("Makevars.in", "Makevars")))
+            if(grepl("^check", install) &&
+               file.exists(its <- file.path(pkgdir, ".install_timestamp"))) {
+                makevars <- makevars[file_test("-ot", makevars, its)]
+            }
+            makevars <- basename(makevars)
+            
             if (do_install) {
                 check_install()
                 if(R_check_pkg_sizes) check_install_sizes()
