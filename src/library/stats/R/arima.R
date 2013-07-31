@@ -202,7 +202,13 @@ arima <- function(x, order = c(0, 0, 0),
             dx <- diff(dx, seasonal$period, seasonal$order[2L])
             dxreg <- diff(dxreg, seasonal$period, seasonal$order[2L])
         }
-        fit <- lm(dx ~ dxreg - 1, na.action = na.omit)
+        fit <- if(length(dx) > ncol(dxreg))
+            lm(dx ~ dxreg - 1, na.action = na.omit)
+        else list(rank = 0L)
+        if(fit$rank == 0L) {
+            ## Degenerate model. Proceed anyway so as not to break old code
+            fit <- lm(x ~ xreg - 1, na.action = na.omit)
+        }
         n.used <- sum(!is.na(resid(fit))) - length(Delta)
         init0 <- c(init0, coef(fit))
         ses <- summary(fit)$coefficients[, 2L]
