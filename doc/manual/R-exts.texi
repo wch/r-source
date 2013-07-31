@@ -8179,16 +8179,18 @@ this can be done by e.g.@:
 PKGB_PATH=`echo 'library(packB); 
   cat(system.file("libs", package="packB", mustWork=TRUE)))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
-PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -rpath "$(PKGB_PATH)$(R_ARCH)" -lpackB
+PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -Wl,-rpath -Wl,"$(PKGB_PATH)$(R_ARCH)" -lpackB
 @end example
 
 @noindent
 and on some other systems (e.g.@: Solaris with its native linker) use
-@code{-R} rather than @code{-rpath}.
+@option{-Rdir} rather than @option{-rpath dir} (and this is accepted by the
+compiler as well as the linker).
 
 It may be possible to figure out what is required semi-automatically
 from the result of @command{R CMD libtool --config} (look for
-@samp{hardcode}).
+@samp{hardcode}), although that does not currently know the spell for OS
+X (as given in the example above).
 
 Making headers provided by package @pkg{packB} available to the code to
 be compiled in package @pkg{packA} can be done by the @code{LinkingTo}
