@@ -438,6 +438,10 @@ void (SET_ACTIVE_BINDING_BIT)(SEXP b);
 void (LOCK_BINDING)(SEXP b);
 void (UNLOCK_BINDING)(SEXP b);
 
+void (SET_BASE_SYM_CACHED)(SEXP b);
+void (UNSET_BASE_SYM_CACHED)(SEXP b);
+Rboolean (BASE_SYM_CACHED)(SEXP b);
+
 #endif /* USE_RINTERNALS */
 
 typedef SEXP R_bcstack_t;
