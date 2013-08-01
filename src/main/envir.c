@@ -42,6 +42,10 @@
  *  "value" slot is inspected for a value.  This "top-level"
  *  environment is where system functions and variables reside.
  *
+ *  Environments with the NO_SPECIAL_SYMBOLS flag set are known to not
+ *  contain any special symbols, as indicated by the IS_SPECIAL_SYMBOL
+ *  macro.  Lookup for such a symbol can then bypass this environment
+ *  without searching it.
  */
 
 /* R 1.8.0: namespaces are no longer experimental, so the following
@@ -153,6 +157,21 @@ static SEXP getActiveValue(SEXP fun)
 
 /* Macro version of isNull for only the test against R_NilValue */
 #define ISNULL(x) ((x) == R_NilValue)
+
+/* Function to determine whethr an environment contains special symbols */
+Rboolean R_envHasNoSpecialSymbols (SEXP env)
+{
+    SEXP frame;
+   
+    if (HASHTAB(env) != R_NilValue)
+	return FALSE;
+
+    for (frame = FRAME(env); frame != R_NilValue; frame = CDR(frame))
+        if (IS_SPECIAL_SYMBOL(TAG(frame)))
+            return FALSE;
+
+    return TRUE;
+}
 
 /*----------------------------------------------------------------------
 
@@ -1332,6 +1351,14 @@ SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
 SEXP findFun(SEXP symbol, SEXP rho)
 {
     SEXP vl;
+
+    /* If the symbol is marked as spacial, skip to the first
+       environment that might contain such a symbol. */
+    if (IS_SPECIAL_SYMBOL(symbol)) {
+        while (rho != R_EmptyEnv && NO_SPECIAL_SYMBOLS(rho))
+            rho = ENCLOS(rho);
+    }
+
     while (rho != R_EmptyEnv) {
 	/* This is not really right.  Any variable can mask a function */
 #ifdef USE_GLOBAL_CACHE
@@ -1407,6 +1434,10 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 #ifdef USE_GLOBAL_CACHE
 	if (IS_GLOBAL_FRAME(rho)) R_FlushGlobalCache(symbol);
 #endif
+
+        if (IS_SPECIAL_SYMBOL(symbol))
+            UNSET_NO_SPECIAL_SYMBOLS(rho);
+
 	if (HASHTAB(rho) == R_NilValue) {
 	    /* First check for an existing binding */
 	    frame = FRAME(rho);

@@ -3417,6 +3417,13 @@ void (SET_BASE_SYM_CACHED)(SEXP b) { SET_BASE_SYM_CACHED(b); }
 void (UNSET_BASE_SYM_CACHED)(SEXP b) { UNSET_BASE_SYM_CACHED(b); }
 Rboolean (BASE_SYM_CACHED)(SEXP b) { return BASE_SYM_CACHED(b); }
 
+void (SET_SPECIAL_SYMBOL)(SEXP b) { SET_SPECIAL_SYMBOL(b); }
+void (UNSET_SPECIAL_SYMBOL)(SEXP b) { UNSET_SPECIAL_SYMBOL(b); }
+Rboolean (IS_SPECIAL_SYMBOL)(SEXP b) { return IS_SPECIAL_SYMBOL(b); }
+void (SET_NO_SPECIAL_SYMBOLS)(SEXP b) { SET_NO_SPECIAL_SYMBOLS(b); }
+void (UNSET_NO_SPECIAL_SYMBOLS)(SEXP b) { UNSET_NO_SPECIAL_SYMBOLS(b); }
+Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b) { return NO_SPECIAL_SYMBOLS(b); }
+
 /* R_FunTab accessors, only needed when write barrier is on */
 /* Not hidden to allow experimentaiton without rebuilding R - LT */
 /* attribute_hidden */

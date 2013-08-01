@@ -417,6 +417,14 @@ typedef struct {
 #define UNSET_BASE_SYM_CACHED(b) ((b)->sxpinfo.gp &= (~BASE_SYM_CACHED_MASK))
 #define BASE_SYM_CACHED(b) ((b)->sxpinfo.gp & BASE_SYM_CACHED_MASK)
 
+#define SPECIAL_SYMBOL_MASK (1<<12)
+#define SET_SPECIAL_SYMBOL(b) ((b)->sxpinfo.gp |= SPECIAL_SYMBOL_MASK)
+#define UNSET_SPECIAL_SYMBOL(b) ((b)->sxpinfo.gp &= (~SPECIAL_SYMBOL_MASK))
+#define IS_SPECIAL_SYMBOL(b) ((b)->sxpinfo.gp & SPECIAL_SYMBOL_MASK)
+#define SET_NO_SPECIAL_SYMBOLS(b) ((b)->sxpinfo.gp |= SPECIAL_SYMBOL_MASK)
+#define UNSET_NO_SPECIAL_SYMBOLS(b) ((b)->sxpinfo.gp &= (~SPECIAL_SYMBOL_MASK))
+#define NO_SPECIAL_SYMBOLS(b) ((b)->sxpinfo.gp & SPECIAL_SYMBOL_MASK)
+
 #else /* USE_RINTERNALS */
 
 typedef struct VECREC *VECP;
@@ -441,6 +449,13 @@ void (UNLOCK_BINDING)(SEXP b);
 void (SET_BASE_SYM_CACHED)(SEXP b);
 void (UNSET_BASE_SYM_CACHED)(SEXP b);
 Rboolean (BASE_SYM_CACHED)(SEXP b);
+
+void (SET_SPECIAL_SYMBOL)(SEXP b);
+void (UNSET_SPECIAL_SYMBOL)(SEXP b);
+Rboolean (IS_SPECIAL_SYMBOL)(SEXP b);
+void (SET_NO_SPECIAL_SYMBOLS)(SEXP b);
+void (UNSET_NO_SPECIAL_SYMBOLS)(SEXP b);
+Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b);
 
 #endif /* USE_RINTERNALS */
 

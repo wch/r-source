@@ -941,6 +941,31 @@ FUNTAB R_FunTab[] =
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };
 
+
+/* Table of special names.  These are marked as special with
+   SET_SPECIAL_SYMBOL.  Environments on the function call stack that
+   have never contained such a symbol are marked as such, so they can
+   be quickly skipped when searching for a function named by such a
+   special symbol.
+
+   Any symbols can be put here, but ones that contain special
+   characters, or are reserved words, are the ones unlikely to be
+   defined in any environment other than base, and hence the ones
+   where this is most likely to help. */
+
+static char *Spec_name[] = { 
+    "if", "while", "repeat", "for", "break", "next", "return", "function",
+    "(", "{",
+    "+", "-", "*", "/", "^", "%%", "%/%", "%*%", ":",
+    "==", "!=", "<", ">", "<=", ">=",
+    "&", "|", "&&", "||", "!",
+    "<-", "<<-", "=",
+    "$", "[", "[[", 
+    "$<-", "[<-", "[[<-", 
+    0
+};
+
+
 /* also used in eval.c */
 SEXP attribute_hidden R_Primitive(const char *primname)
 {
@@ -1071,13 +1096,20 @@ void attribute_hidden InitNames()
     R_print.na_string = NA_STRING;
     /* R_BlankString */
     R_BlankString = mkChar("");
+
     /* Initialize the symbol Table */
     for (int i = 0; i < HSIZE; i++) R_SymbolTable[i] = R_NilValue;
+
     /* Set up a set of globals so that a symbol table search can be
        avoided when matching something like dim or dimnames. */
     SymbolShortcuts();
+
     /*  Builtin Functions */
     for (int i = 0; R_FunTab[i].name; i++) installFunTab(i);
+
+    /* Special base functions */
+    for (int i = 0; Spec_name[i]; i++)
+        SET_SPECIAL_SYMBOL(install(Spec_name[i]));
 
     R_initAsignSymbols();
     R_initialize_bcode();
@@ -1106,6 +1138,7 @@ SEXP install(const char *name)
     sym = mkSYMSXP(mkChar(name), R_UnboundValue);
     SET_HASHVALUE(PRINTNAME(sym), hashcode);
     SET_HASHASH(PRINTNAME(sym), 1);
+
     R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
     return (sym);
 }

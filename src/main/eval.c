@@ -920,6 +920,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	a = CDR(a);
     }
 
+    if (R_envHasNoSpecialSymbols(newrho))
+	SET_NO_SPECIAL_SYMBOLS(newrho);
+
     /*  Fix up any extras that were supplied by usemethod. */
 
     if (suppliedenv != R_NilValue) {

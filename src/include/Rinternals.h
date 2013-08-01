@@ -664,6 +664,7 @@ SEXP Rf_DropDims(SEXP);
 SEXP Rf_duplicate(SEXP);
 /* the next really should not be here and is also in Defn.h */
 SEXP Rf_duplicated(SEXP, Rboolean);
+Rboolean R_envHasNoSpecialSymbols(SEXP);
 SEXP Rf_eval(SEXP, SEXP);
 SEXP Rf_findFun(SEXP, SEXP);
 SEXP Rf_findVar(SEXP, SEXP);
