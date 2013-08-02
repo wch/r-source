@@ -64,6 +64,10 @@
       \item The initialization of the regression coefficients for
       non-degenerate differenced models in \code{arima()} has been
       changed and in some examples avoids a local maximum.  (\PR{15396})
+      
+      \item \code{termplot()} now has an argument \code{transform.x}
+      to control the display of individual terms in the plot.  
+      (\PR{15329})
     }
   }
 

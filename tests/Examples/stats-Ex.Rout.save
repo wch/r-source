@@ -16064,10 +16064,23 @@ Loading required package: splines
 > termplot(model, partial.resid = TRUE, smooth = panel.smooth, span.smth = 1/4)
 > if(!had.splines && rs) detach("package:splines")
 > 
+> if (require(MASS)) {
++     hills.lm <- lm(log(time) ~ log(climb)+log(dist), data=hills)
++     termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth, 
++              terms = "log(dist)", main = "Original")
++     termplot(hills.lm, transform.x = TRUE, partial.resid = TRUE, 
++ 	     terms = "log(dist)", main = "Transformed",
++ 	     smooth=panel.smooth)
++ }
+Loading required package: MASS
+> 
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
+
+detaching 'package:MASS'
+
 > nameEx("terms.object")
 > ### * terms.object
 > 

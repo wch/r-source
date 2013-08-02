@@ -1,6 +1,6 @@
 % File src/library/stats/man/termplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -23,7 +23,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
          col.smth = "darkred", lty.smth = 2, span.smth = 2/3,
          ask = dev.interactive() && nb.fig < n.tms,
          use.factor.levels = TRUE, smooth = NULL, ylim = "common",
-         plot = TRUE, \dots)
+         plot = TRUE, transform.x = FALSE, \dots)
 }
 \arguments{
   \item{model}{fitted model object}
@@ -33,7 +33,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
   \item{partial.resid}{logical; should partial residuals be plotted?}
   \item{rug}{add \link{rug}plots (jittered 1-d histograms) to the axes?}
   \item{terms}{which terms to plot (default \code{NULL} means all
-    terms); a \code{\link{character}} vector, passed to
+    terms); a vector passed to
     \code{\link{predict}(.., term = "terms", terms = *)}.}
   \item{se}{plot pointwise standard errors?}
   \item{xlabs}{vector of labels for the x axes}
@@ -61,6 +61,12 @@ termplot(model, data = NULL, envir = environment(formula(model)),
      \code{"free"} when limits are computed for each plot.}
    \item{plot}{if set to \code{FALSE} plots are not produced: instead a
      list is returned containing the data that would have been plotted.}
+   \item{transform.x}{logical vector; if an element (recycled as necessary)
+     is \code{TRUE}, partial residuals for the corresponding term are 
+     plotted against transformed values. 
+     The model response is then a straight line, allowing a
+     ready comparison against the data or against the curve
+     obtained from \code{smooth-panel.smooth}.}
    \item{\dots}{other graphical parameters.}
 }
 \details{
@@ -112,6 +118,15 @@ termplot(model, rug = TRUE)
 termplot(model, partial.resid = TRUE, se = TRUE, main = TRUE)
 termplot(model, partial.resid = TRUE, smooth = panel.smooth, span.smth = 1/4)
 if(!had.splines && rs) detach("package:splines")
+
+if (require(MASS)) {
+    hills.lm <- lm(log(time) ~ log(climb)+log(dist), data=hills)
+    termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth, 
+             terms = "log(dist)", main = "Original")
+    termplot(hills.lm, transform.x = TRUE, partial.resid = TRUE, 
+	     terms = "log(dist)", main = "Transformed",
+	     smooth=panel.smooth)
+}
 }
 \keyword{hplot}
 \keyword{regression}
