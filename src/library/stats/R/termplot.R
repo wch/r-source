@@ -26,7 +26,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
                      col.smth = "darkred", lty.smth = 2, span.smth = 2/3,
                      ask = dev.interactive() && nb.fig < n.tms,
                      use.factor.levels = TRUE, smooth = NULL,
-                     ylim = "common", plot = TRUE,  ...)
+                     ylim = "common", plot = TRUE, transform.x = FALSE, ...)
 {
     which.terms <- terms
     terms <- ## need if(), since predict.coxph() has non-NULL default terms :
@@ -35,13 +35,8 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
 	else
 	    predict(model, type = "terms", se.fit = se, terms = terms)
     n.tms <- ncol(tms <- as.matrix(if(se) terms$fit else terms))
-##     if(inherits(model, "gam")) {
-##         m.nms <- names(model$model)
-##         for(j in seq_along(model$smooth)) {
-##             sj <- model$smooth[[j]]
-##             names(model$model)[m.nms == sj[["term"]]] <- sj[["label"]]
-##         }
-##     }
+    transform.x <- rep_len(transform.x, n.tms)
+
     mf <- model.frame(model)
     if (is.null(data))
         data <- eval(model$call$data, envir)
@@ -68,10 +63,11 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
         stop("'main' must be TRUE, FALSE, NULL or character (vector).")
     main <- rep_len(main, n.tms) # recycling
     pf <- envir
-    carrier <- function(term) { # used for non-factor ones
-	if (length(term) > 1L)
-	    carrier(term[[2L]])
-	else
+    carrier <- function(term, transform) { # used for non-factor ones
+	if (length(term) > 1L){
+	    if (transform) tms[,i] 
+	    else carrier(term[[2L]])
+	} else
 	    eval(term, data, enclos = pf)
     }
     carrier.name <- function(term){
@@ -99,7 +95,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
                 ww <- match(levels(xx), xx, nomatch = 0L)
             }
             else {
-                xx <- carrier(cn[[i]])
+                xx <- carrier(cn[[i]], transform.x[i])
                 if (!is.null(use.rows)) xx <- xx[use.rows]
                 ww <- match(sort(unique(xx)), xx)
             }
@@ -128,10 +124,10 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
         stop("'main' must be TRUE, FALSE, NULL or character (vector).")
     main <- rep_len(main, n.tms) # recycling
 
-
-    if (is.null(xlabs))
+    if (is.null(xlabs)){
         xlabs <- unlist(lapply(cn,carrier.name))
-
+	if(any(transform.x)) xlabs <- ifelse(transform.x, lapply(cn, deparse), xlabs)
+    }
     if (partial.resid || !is.null(smooth)){
 	pres <- residuals(model, "partial")
         if (!is.null(which.terms)) pres <- pres[, which.terms, drop = FALSE]
@@ -200,7 +196,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
 	    }
 	}
 	else { ## continuous carrier
-	    xx <- carrier(cn[[i]])
+	    xx <- carrier(cn[[i]], transform.x[i])
             if (!is.null(use.rows)) xx <- xx[use.rows]
 	    xlims <- range(xx, na.rm = TRUE)
 	    if(rug)
