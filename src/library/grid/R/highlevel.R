@@ -129,10 +129,10 @@ grid.multipanel <- function(x = stats::runif(90), y = stats::runif(90),
         popViewport()
 }
 
-grid.show.layout <- function(l, newpage=TRUE,
+grid.show.layout <- function(l, newpage=TRUE, vp.ex=0.8,
                              bg="light grey",
-                         cell.border="blue", cell.fill="light blue",
-                         cell.label=TRUE, label.col="blue",
+                             cell.border="blue", cell.fill="light blue",
+                             cell.label=TRUE, label.col="blue",
                              unit.col="red", vp=NULL) {
   if (!is.layout(l))
     stop("'l' must be a layout")
@@ -141,7 +141,7 @@ grid.show.layout <- function(l, newpage=TRUE,
   if (!is.null(vp))
     pushViewport(vp)
   grid.rect(gp=gpar(col=NULL, fill=bg))
-  vp.mid <- viewport(0.5, 0.5, 0.8, 0.8, layout=l)
+  vp.mid <- viewport(0.5, 0.5, vp.ex, vp.ex, layout=l)
   pushViewport(vp.mid)
   grid.rect(gp=gpar(fill="white"))
   gp.red <- gpar(col=unit.col)
@@ -183,7 +183,7 @@ grid.show.layout <- function(l, newpage=TRUE,
   invisible(vp.mid)
 }
 
-grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE,
+grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE, vp.ex=0.8,
                                border.fill="light grey",
                                vp.col="blue", vp.fill="light blue",
                                scale.col="red",
@@ -196,7 +196,7 @@ grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE,
         !is.null(parent.layout)) {
         if (!is.null(vp))
             pushViewport(vp)
-        vp.mid <- grid.show.layout(parent.layout,
+        vp.mid <- grid.show.layout(parent.layout, vp.ex=vp.ex,
                                    cell.border="grey", cell.fill="white",
                                    cell.label=FALSE, newpage=newpage)
         pushViewport(vp.mid)
@@ -220,7 +220,7 @@ grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE,
         ## parent viewport of the viewport we are "show"ing (v).
         ## This is so that annotations at the edges of the
         ## parent viewport will be at least partially visible
-        vp.mid <- viewport(0.5, 0.5, 0.8, 0.8)
+        vp.mid <- viewport(0.5, 0.5, vp.ex, vp.ex)
         pushViewport(vp.mid)
         grid.rect(gp=gpar(fill="white"))
         x <- v$x

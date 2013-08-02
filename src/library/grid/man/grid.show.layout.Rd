@@ -11,7 +11,7 @@
   Grid layout.
 }
 \usage{
-grid.show.layout(l, newpage=TRUE, bg = "light grey",
+grid.show.layout(l, newpage=TRUE, vp.ex = 0.8, bg = "light grey",
              cell.border = "blue", cell.fill = "light blue",
              cell.label = TRUE, label.col = "blue",
              unit.col = "red", vp = NULL)
@@ -20,6 +20,8 @@ grid.show.layout(l, newpage=TRUE, bg = "light grey",
   \item{l}{A Grid layout object.}
   \item{newpage}{A logical value indicating whether to move on
     to a new page before drawing the diagram.}
+  \item{vp.ex}{positive number, typically in \eqn{(0,1]}, specifying the
+    scaling of the layout.}
   \item{bg}{The colour used for the background.}
   \item{cell.border}{The colour used to draw the borders of the cells
     in the layout.}
