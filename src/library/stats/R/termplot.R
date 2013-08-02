@@ -66,7 +66,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
     carrier <- function(term, transform) { # used for non-factor ones
 	if (length(term) > 1L){
 	    if (transform) tms[,i] 
-	    else carrier(term[[2L]])
+	    else carrier(term[[2L]], transform)
 	} else
 	    eval(term, data, enclos = pf)
     }
