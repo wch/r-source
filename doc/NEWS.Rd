@@ -89,7 +89,7 @@
       % https://stat.ethz.ch/pipermail/r-devel/2013-July/067046.html
 
       \item \code{grid.show.layout} and \code{grid.show.viewport} get an
-      optional \code{vp.ex}} argument.
+      optional \code{vp.ex} argument.
     }
   }
 
