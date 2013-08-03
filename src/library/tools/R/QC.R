@@ -4656,7 +4656,7 @@ function(dir)
     predicate <- function(e) {
         if(!is.call(e) || as.character(e[[1L]]) != "data")
             return(FALSE)
-        ## As data() has synopsis
+        ## As data() has usage
         ##   data(..., list = character(), package = NULL, lib.loc = NULL,
         ##        verbose = getOption("verbose"), envir = .GlobalEnv))
         ## argument 'envir' must be matched exactly, and calls which
@@ -5760,7 +5760,7 @@ function(dir)
         if(length(bad))
             out$depends_with_restricts_use_NA <- bad
         bv <- parse_description_field(meta, "BuildVignettes", TRUE)
-        if (!bv) out$foss_with_BuildVigettes <- TRUE
+        if (!bv) out$foss_with_BuildVignettes <- TRUE
     }
 
     ## Check for possibly mis-spelled field names.
@@ -6054,8 +6054,8 @@ function(x, ...)
                     names(s),
                     lapply(s, paste, collapse = ", ")))
       },
-      if(identical(x$foss_with_BuildVigettes, FALSE)) {
-          "FOSS licence with BuildVignettes false"
+      if(identical(x$foss_with_BuildVignettes, TRUE)) {
+          "FOSS licence with BuildVignettes: false"
       },
       if(length(y <- x$fields)) {
           c("Possibly mis-spelled fields in DESCRIPTION:",
