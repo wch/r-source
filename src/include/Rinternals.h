@@ -1188,11 +1188,11 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 
 /* macro version of R_CheckStack */
 #define R_CheckStack() do {						\
-	void R_SignalCStackOverflow(void);				\
+	void R_SignalCStackOverflow(intptr_t);				\
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
 	if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))	\
-	    R_SignalCStackOverflow();					\
+	    R_SignalCStackOverflow(usage);					\
     } while (FALSE)
 #endif
 

@@ -83,7 +83,7 @@ static void reset_stack_limit(void *data)
     R_CStackLimit = *limit;
 }
 
-void R_SignalCStackOverflow(void)
+void R_SignalCStackOverflow(intptr_t usage)
 {
     /* We do need some stack space to process error recovery, so
        temporarily raise the limit.  We have 5% head room because we
@@ -98,7 +98,7 @@ void R_SignalCStackOverflow(void)
     cntxt.cend = &reset_stack_limit;
     cntxt.cenddata = &stacklimit;
 
-    errorcall(R_NilValue, "C stack usage is too close to the limit");
+    errorcall(R_NilValue, "C stack usage  %ld is too close to the limit", usage);
     /* Do not translate this, to save stack space */
 }
 
@@ -109,7 +109,7 @@ void (R_CheckStack)(void)
 
     /* printf("usage %ld\n", usage); */
     if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))
-	R_SignalCStackOverflow();
+	R_SignalCStackOverflow(usage);
 }
 
 void R_CheckStack2(size_t extra)
@@ -121,7 +121,7 @@ void R_CheckStack2(size_t extra)
        in unsigned arithmetic */
     usage += extra;
     if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))
-	R_SignalCStackOverflow();
+	R_SignalCStackOverflow(usage);
 
 }
 
