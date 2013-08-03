@@ -5941,7 +5941,7 @@ function(dir)
         if(length(bad))
             out$depends_with_restricts_use_NA <- bad
         bv <- parse_description_field(meta, "BuildVignettes", TRUE)
-        if (!bv) out$foss_with_BuildVigettes <- TRUE
+        if (!bv) out$foss_with_BuildVignettes <- TRUE
     }
 
     ## Check for possibly mis-spelled field names.
@@ -6225,8 +6225,8 @@ function(x, ...)
                     names(s),
                     lapply(s, paste, collapse = ", ")))
       },
-      if(identical(x$foss_with_BuildVigettes, FALSE)) {
-          "FOSS licence with BuildVignettes false"
+      if(identical(x$foss_with_BuildVignettes, TRUE)) {
+          "FOSS licence with BuildVignettes: false"
       },
       if(length(y <- x$fields)) {
           c("Possibly mis-spelled fields in DESCRIPTION:",
