@@ -697,6 +697,11 @@ void setup_Rmainloop(void)
     char deferred_warnings[11][250];
     volatile int ndeferred_warnings = 0;
 
+    /* In case this is a silly limit: 2^32 -3 has been seen and
+     * casting to intptr_r relies on this being smaller than 2^31 on a
+     * 32-bit platform. */
+    if(R_CStackLimit > 100000000U) 
+	R_CStackLimit = (uintptr_t)-1;
     /* make sure we have enough head room to handle errors */
     if(R_CStackLimit != -1)
 	R_CStackLimit = 0.95 * R_CStackLimit;

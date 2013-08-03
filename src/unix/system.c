@@ -175,8 +175,6 @@ int Rf_initialize_R(int ac, char **av)
 	lim1 = (unsigned long) rlim.rlim_cur;
 	lim2 = (unsigned long) rlim.rlim_max; /* Usually unlimited */
 	R_CStackLimit = lim1 < lim2 ? lim1 : lim2;
-	/* In case this is a silly limit */
-	if (R_CStackLimit > 100000000UL) R_CStackLimit = (uintptr_t)-1;
     }
 #if defined(HAVE_LIBC_STACK_END)
     R_CStackStart = (uintptr_t) __libc_stack_end;
