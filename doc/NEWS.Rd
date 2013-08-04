@@ -230,9 +230,6 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
-
-      \item \command{R CMD rtags} works on platforms (such as OS X)
-      with a XSI-conformant \command{echo}. (\PR{15231})
     }
   }
 }
@@ -569,6 +566,9 @@
       \item If \code{x} is a symbol, \code{is.vector(x, "name")} now
       returns \code{TRUE}, since \code{"name"} and \code{"symbol"}
       should be synonyms.  (Reported by Hervé Pagès.)
+
+      \item \command{R CMD rtags} works on platforms (such as OS X)
+      with a XSI-conformant shell command \command{echo}. (\PR{15231})
     }
   }
 }
