@@ -1,6 +1,6 @@
 % File src/library/base/man/dcf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dcf}
@@ -67,8 +67,8 @@ write.dcf(x, file = "", append = FALSE,
     multi-paragraph field values).
     \item Records are separated by one or more empty (i.e., whitespace
     only) lines.
-    \item Individual lines may not be arbitrarily long; currently the
-    length limit is approximately 8192 bytes per line.
+    \item Individual lines may not be arbitrarily long; prior to \R 3.0.2 the
+    length limit was approximately 8191 bytes per line.
   }
 
   Note that \code{read.dcf(all = FALSE)} reads the file byte-by-byte.

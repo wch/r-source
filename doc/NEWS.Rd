@@ -45,22 +45,25 @@
       namespace scoping rules.  E.g. \code{stats::lm()} can now find
       \code{stats::model.frame()} even if \pkg{stats} is not on the
       search path or if some package defines a function of that name.
-      
+
       \item If an invalid/corrupt \code{.Random.seed} object is
       encountered in the workspace it is ignored with a warning rather
       than giving an error.  (This allows \R itself to rely on a working
       RNG, e.g. to choose a random port.)
-      
+
       \item \code{seq()} and \code{seq.int()} give more explicit error
       messages if called with invalid (e.g. \code{NaN}) inputs.
-      
-      \item When \code{parse()} finds a syntax error, it now makes 
-      partial parse information available up to the location of the 
+
+      \item When \code{parse()} finds a syntax error, it now makes
+      partial parse information available up to the location of the
       error.  (Request of Reijo Sund.)
-      
+
+      \item \code{read.dcf()} no longer has a limit of 8191 bytes per
+      line. (Wish of \PR{15250}.)
+
       \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
       more tests to be run without recommended packages being installed.
-      
+
       \item The initialization of the regression coefficients for
       non-degenerate differenced models in \code{arima()} has been
       changed and in some examples avoids a local maximum.  (\PR{15396})
@@ -99,7 +102,7 @@
       group writably whenever the library (\code{lib.loc}) is group
       writable.  Hence, \code{update.packages()} works for other group
       members (suggested originally and from a patch by Dirk Eddelbuettel).
-      
+
       \item \command{R CMD javareconf} now supports the use of symbolic
       links for \env{JAVA_HOME} on platforms which have
       \command{realpath}.  So it is now possible to
@@ -132,16 +135,16 @@
       which typically require byte-compilation.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Installation is aborted immediately if a \code{LinkingTo}
       package is not installed.
-      
+
       \item \command{R CMD INSTALL} has a new option
       \code{--no-byte-compile} which will override a \samp{ByteCompile}
       field in the package's \file{DESCRIPTION} file.
-      
+
       \item License \code{BSD} is deprecated: use \sQuote{BSD_3_clause}
       or \sQuote{BSD_2_clause} instead.
 
@@ -181,7 +184,7 @@
       as a scripting language including interacting with the OS.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{help.request()} could not determine the current version
@@ -278,7 +281,7 @@
       the last second before the epoch could not be converted from
       \code{POSIXlt} to \code{POSIXct}. (Reported by Bill Dunlap.)
 
-      \item \code{add1.glm()} miscalculated F-statistics when df > 1. (Bill 
+      \item \code{add1.glm()} miscalculated F-statistics when df > 1. (Bill
       Dunlap, \PR{15386}).
 
       \item \code{stem()} now discards infinite inputs rather than
@@ -301,28 +304,28 @@
 
       \item \R is now better protected against people trying to interact
       with the console in startup code.  (\PR{15325})
-      
+
       \item Subsetting 1D arrays often lost dimnames (\PR{15301}).
 
       \item Unary \code{+} on a logical vector did not coerce to
       integer, although unary \code{-} did.
-      
+
       \item \code{na.omit()} and \code{na.exclude()} added a row
       to a zero row data frame.  (\PR{15399})
-      
+
       \item All the (where necessary cut-down) vignettes are installed
       if \R was configured with \option{--without-recommended-packages}.
-      
-      \item \code{source()} did not display filenames when reporting 
+
+      \item \code{source()} did not display filenames when reporting
       syntax errors.
-      
+
       \item Syntax error reports misplaced the caret pointing out the bad
       token.
-      
-      \item (Windows only) Starting \R with \command{R} (instead of 
+
+      \item (Windows only) Starting \R with \command{R} (instead of
       \command{Rterm} or \command{Rgui}) would lose any
       zero length strings from the command line arguments. (\PR{15406})
-      
+
       \item Errors in the encoding specified on the command line via
       \command{--encoding=foo} were not handled properly.  (\PR{15405})
     }
