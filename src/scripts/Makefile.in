@@ -12,10 +12,10 @@ include $(top_builddir)/Makeconf
 
 ## don't add '#! R_SHELL' for scripts intend to be run by 'R CMD script'
 SCRIPTS_S = BATCH COMPILE INSTALL LINK REMOVE Rd2pdf Rdconv Rdiff Rprof \
-  SHLIB Stangle Sweave build check config rtags
+  SHLIB Stangle Sweave build check config
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
-SCRIPTS_B_IN = Rcmd.in f77_f2c.in javareconf.in mkinstalldirs.in pager.in
+SCRIPTS_B_IN = Rcmd.in f77_f2c.in javareconf.in mkinstalldirs.in pager.in rtags.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
 
@@ -47,6 +47,8 @@ javareconf: $(srcdir)/javareconf.in $(top_builddir)/config.status
 makeinstalldirs: $(srcdir)/makeinstalldirs.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 pager: $(srcdir)/pager.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+rtags: $(srcdir)/rtags.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 ## The following target helps in automatically generating the above
 ## target rules (provided that $(ECHO) understands backslash escapes).

@@ -339,6 +339,9 @@
       \item If \code{x} is a symbol, \code{is.vector(x, "name")} now
       returns \code{TRUE}, since \code{"name"} and \code{"symbol"}
       should be synonyms.  (Reported by Hervé Pagès.)
+
+      \item \command{R CMD rtags} works on platforms (such as OS X)
+      with a XSI-conformant shell command \command{echo}. (\PR{15231})
     }
   }
 }
