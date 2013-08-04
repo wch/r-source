@@ -58,6 +58,9 @@
       partial parse information available up to the location of the
       error.  (Request of Reijo Sund.)
 
+      \item \code{abbreviate()} handles without warning non-ASCII input
+      strings which require no abbreviation.
+      
       \item \code{read.dcf()} no longer has a limit of 8191 bytes per
       line. (Wish of \PR{15250}.)
 

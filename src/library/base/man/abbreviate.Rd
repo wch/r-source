@@ -1,6 +1,6 @@
 % File src/library/base/man/abbreviate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Copyright 2008      The R Foundation
 % Distributed under GPL 2 or later
 
@@ -30,8 +30,8 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   unless \code{strict = TRUE}.
 }
 \details{
-  The algorithm (\code{method = "left.kept"}) used is similar to that of
-  S.  For a single string it works as follows.
+  The default algorithm (\code{method = "left.kept"}) used is similar
+  to that of S.  For a single string it works as follows.
   First all spaces at the beginning of the string are stripped.
   Then (if necessary) any other spaces are stripped.
   Next, lower case vowels are removed (starting at the right)
@@ -67,7 +67,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 \section{Warning}{
   This is really only suitable for English, and does not work correctly with
   non-ASCII characters in multibyte locales.  It will warn if used with
-  non-ASCII characters.
+  non-ASCII characters (and required to reduce the length).
 }
 \seealso{
   \code{\link{substr}}.
