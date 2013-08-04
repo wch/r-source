@@ -464,6 +464,7 @@ static SEXP forcePromise(SEXP e)
 	R_PendingPromises = prstack.next;
 	SET_PRSEEN(e, 0);
 	SET_PRVALUE(e, val);
+        SET_NAMED (val, 2);
 	SET_PRENV(e, R_NilValue);
     }
     return PRVALUE(e);
