@@ -35,9 +35,6 @@ SEXP complex_binary(ARITHOP_TYPE, SEXP, SEXP);
 static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
 					  SEXPTYPE type , R_xlen_t n)
 {
-    /* temporarily disabled to avoid some CRAN failures */
-    return allocVector(type, n);
-
     R_xlen_t n1 = XLENGTH(s1);
     R_xlen_t n2 = XLENGTH(s2);
 
