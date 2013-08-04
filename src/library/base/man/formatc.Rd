@@ -151,7 +151,7 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   reversed on insertion if it contained more than one character.
 }
 \note{
-  Prior to \R 3.1.0 this copied the class of \code{x} to the return
+  Prior to \R 3.0.2 this copied the class of \code{x} to the return
   value and could easily create invalid objects.
 }
 \author{

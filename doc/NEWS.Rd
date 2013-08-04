@@ -39,9 +39,6 @@
 
       \item \code{is.unsorted()} now also works for \code{raw} vectors
 
-      \item \code{abbreviate()} handles without warning non-ASCII input
-      strings which require no abbreviation.
-
       \item The \code{"table"} method for \code{as.data.frame()}, also
       useful as \code{as.data.frame.table()}, now passes \code{sep} and
       \code{base} arguments to \code{provideDimnames()}.
@@ -70,13 +67,6 @@
       \item Code for the negative binomial distribution now treats the case
       \code{size == 0} as a one-point distribution at zero.
 
-      \item \code{read.dcf()} no longer has a limit of 8191 bytes per
-      line. (Wish of \PR{15250}.)
-
-      \item \code{formatC(x)} no longer copies the class of \code{x} to
-      the result, to avoid misuse creating invalid objects as in
-      \PR{15303}.  A warning is given if a class is discarded.
-
       \item The way the unary operators (\code{+ - !}) handle attributes
       is now more consistent.  If there is no coercion, all attributes
       (including class) are copied from the input to the result:
@@ -88,8 +78,9 @@
       there are existing uses which expect only RGB values.)
       % https://stat.ethz.ch/pipermail/r-devel/2013-July/067046.html
 
-      \item \code{grid.show.layout} and \code{grid.show.viewport} get an
-      optional \code{vp.ex} argument.
+      \item \code{grid.show.layout()} and \code{grid.show.viewport()}
+      get an optional \code{vp.ex} argument.
+      
     }
   }
 
@@ -232,11 +223,7 @@
       array-overrun in the Fortran code and a not very sensible answer.
       It is now special-cased with a simpler answer (no \code{qr}
       component).
-
-      \item If \code{x} is a symbol, \code{is.vector(x, "name")} now returns
-      \code{TRUE}, since \code{"name"} and \code{"symbol"} should be synonyms.
-      (Reported by Hervé Pagès.)
-
+      
       \item \code{is.unsorted(NA)} returns false as documented (rather than
       \code{NA}).
 
@@ -301,6 +288,16 @@
       partial parse information available up to the location of the
       error.  (Request of Reijo Sund.)
 
+      \item \code{abbreviate()} handles without warning non-ASCII input
+      strings which require no abbreviation.
+      
+      \item \code{read.dcf()} no longer has a limit of 8191 bytes per
+      line. (Wish of \PR{15250}.)
+
+      \item \code{formatC(x)} no longer copies the class of \code{x} to
+      the result, to avoid misuse creating invalid objects as in
+      \PR{15303}.  A warning is given if a class is discarded.
+      
       \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
       more tests to be run without recommended packages being installed.
 
@@ -568,6 +565,10 @@
 
       \item Errors in the encoding specified on the command line via
       \command{--encoding=foo} were not handled properly.  (\PR{15405})
+
+      \item If \code{x} is a symbol, \code{is.vector(x, "name")} now
+      returns \code{TRUE}, since \code{"name"} and \code{"symbol"}
+      should be synonyms.  (Reported by Hervé Pagès.)
     }
   }
 }
