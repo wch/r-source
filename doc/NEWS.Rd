@@ -335,6 +335,10 @@
 
       \item Errors in the encoding specified on the command line via
       \command{--encoding=foo} were not handled properly.  (\PR{15405})
+
+      \item If \code{x} is a symbol, \code{is.vector(x, "name")} now
+      returns \code{TRUE}, since \code{"name"} and \code{"symbol"}
+      should be synonyms.  (Reported by Hervé Pagès.)
     }
   }
 }

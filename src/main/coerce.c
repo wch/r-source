@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
- *  Copyright (C) 1997-2012  The R Core Team
+ *  Copyright (C) 1997-2013  The R Core Team
  *  Copyright (C) 2003-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1131,7 +1131,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error(_("(list) object cannot be coerced to type '%s'"), 
+	error(_("(list) object cannot be coerced to type '%s'"),
 	      type2char(type));
 
     if (warn) CoercionWarning(warn);
@@ -1150,11 +1150,11 @@ static SEXP coerceSymbol(SEXP v, SEXPTYPE type)
 	SET_VECTOR_ELT(rval, 0, v);
 	UNPROTECT(1);
     } else if (type == CHARSXP)
-	rval = PRINTNAME(v);	
+	rval = PRINTNAME(v);
     else if (type == STRSXP)
 	rval = ScalarString(PRINTNAME(v));
     else
-	warning(_("(symbol) object cannot be coerced to type '%s'"), 
+	warning(_("(symbol) object cannot be coerced to type '%s'"),
 		type2char(type));
     return rval;
 }
@@ -1421,7 +1421,7 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Method dispatch has failed, we now just */
     /* run the generic internal code */
-    
+
     checkArity(op, args);
     x = CAR(args);
     if(TYPEOF(x) == type) {
@@ -1938,11 +1938,15 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stype = CHAR(STRING_ELT(CADR(args), 0)); /* ASCII */
 
+    /* "name" and "symbol" are synonymous */
+    if (streql(stype, "name"))
+      stype = "symbol";
+
     PROTECT(ans = allocVector(LGLSXP, 1));
     if (streql(stype, "any")) {
 	/* isVector is inlined, means atomic or VECSXP or EXPRSXP */
 	LOGICAL(ans)[0] = isVector(x);
-    } 
+    }
     else if (streql(stype, "numeric")) {
 	LOGICAL(ans)[0] = (isNumeric(x) && !isLogical(x));
     }
@@ -2492,7 +2496,7 @@ SEXP attribute_hidden do_quote(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "expr");
-    SEXP val = CAR(args); 
+    SEXP val = CAR(args);
     /* Make sure expression has NAMED == 2 before being returning
        in to avoid modification of source code */
     if (NAMED(val) != 2) SET_NAMED(val, 2);
