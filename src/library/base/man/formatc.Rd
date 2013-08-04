@@ -29,8 +29,7 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 \arguments{
   \item{x}{an atomic numerical or character object, possibly
     \code{\link{complex}} only for \code{prettyNum()}, typically a
-    vector of real numbers.  Classed objects should be used only
-    exceptionally (see \sQuote{Value}).}
+    vector of real numbers.  Any class is discarded, with a warning.}
 
   \item{digits}{the desired number of digits after the decimal
     point (\code{format = "f"}) or \emph{significant} digits
@@ -112,9 +111,8 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   \item{\dots}{arguments passed to \code{format}.}
 }
 \value{
-  A character object of same size and attributes as \code{x}, in the
-  current locale's encoding.  Because the attribute include any class,
-  this can create invalid results if applied to a classed object.
+  A character object of same size and attributes as \code{x} (after
+  discarding any class), in the current locale's encoding.
   
   Unlike \code{\link{format}}, each number is formatted individually.
   Looping over each element of \code{x}, the C function
@@ -151,6 +149,10 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 
   In versions of \R before 2.13.0, the \code{big.mark} would be
   reversed on insertion if it contained more than one character.
+}
+\note{
+  Prior to \R 3.0.2 this copied the class of \code{x} to the return
+  value and could easily create invalid objects.
 }
 \author{
   \code{formatC} was originally written by Bill Dunlap for S-PLUS, later

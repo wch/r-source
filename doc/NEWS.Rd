@@ -64,6 +64,10 @@
       \item \code{read.dcf()} no longer has a limit of 8191 bytes per
       line. (Wish of \PR{15250}.)
 
+      \item \code{formatC(x)} no longer copies the class of \code{x} to
+      the result, to avoid misuse creating invalid objects as in
+      \PR{15303}.  A warning is given if a class is discarded.
+      
       \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
       more tests to be run without recommended packages being installed.
 

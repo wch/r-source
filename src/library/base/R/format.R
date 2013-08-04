@@ -109,7 +109,10 @@ formatC <- function (x, digits = NULL, width = NULL,
 		     decimal.mark = ".", preserve.width = "individual",
                      zero.print = NULL, drop0trailing = FALSE)
 {
-    ## This copies all the attributes, do consider unclassing x.
+    if(is.object(x)) {
+        x <- unclass(x)
+        warning("class of 'x' was discarded")
+    }
 
     format.char <- function (x, width, flag)
     {
