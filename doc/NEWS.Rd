@@ -33,8 +33,8 @@
 
       \item \code{is.unsorted()} now also works for \code{raw} vectors.
 
-      \item The \code{"table"} method for \code{as.data.frame()}, also
-      useful as \code{as.data.frame.table()}, now passes \code{sep} and
+      \item The \code{"table"} method for \code{as.data.frame()} (also
+      useful as \code{as.data.frame.table()}) now passes \code{sep} and
       \code{base} arguments to \code{provideDimnames()}.
 
       \item \code{uniroot()} gets new optional arguments, notably
@@ -52,14 +52,6 @@
       always documented).
 
       \item The parser has been modified to use less memory.
-
-      \item Methods invoked by \code{NextMethod()} had different dynamic
-      parent to the generic. This was causing trouble where S3 methods
-      invoked via lazy evaluation could lose track of their generic
-      (\PR{15267}).
-
-      \item Code for the negative binomial distribution now treats the case
-      \code{size == 0} as a one-point distribution at zero.
 
       \item The way the unary operators (\code{+ - !}) handle attributes
       is now more consistent.  If there is no coercion, all attributes
@@ -214,9 +206,6 @@
       It is now special-cased with a simpler answer (no \code{qr}
       component).
       
-      \item \code{is.unsorted(NA)} returns false as documented (rather than
-      \code{NA}).
-
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
@@ -280,6 +269,14 @@
       \item When \code{parse()} finds a syntax error, it now makes
       partial parse information available up to the location of the
       error.  (Request of Reijo Sund.)
+
+      \item Methods invoked by \code{NextMethod()} had different dynamic
+      parent to the generic. This was causing trouble where S3 methods
+      invoked via lazy evaluation could lose track of their generic
+      (\PR{15267}).
+
+      \item Code for the negative binomial distribution now treats the case
+      \code{size == 0} as a one-point distribution at zero.
 
       \item \code{abbreviate()} handles without warning non-ASCII input
       strings which require no abbreviation.
