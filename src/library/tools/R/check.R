@@ -562,6 +562,7 @@ setRlibs <-
         checkingLog(Log, "DESCRIPTION meta-information")
         dfile <- if (is_base_pkg) "DESCRIPTION.in" else "DESCRIPTION"
         ## FIXME: this does not need to be run in another process
+        ## but that needs conversion to format().
         Rcmd <- sprintf("tools:::.check_package_description(\"%s\")", dfile)
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
@@ -3118,8 +3119,8 @@ setRlibs <-
             if(!all(OK)) {
                 fail <- mandatory[!OK]
                 msg <- ngettext(length(fail),
-                                "Mandatory field missing or empty:",
-                                "Mandatory fields missing or empty:")
+                                "Required field missing or empty:",
+                                "Required fields missing or empty:")
                 msg <- paste0(msg, "\n", .pretty_format(fail))
                 errorLog(Log, msg)
                 do_exit(1L)

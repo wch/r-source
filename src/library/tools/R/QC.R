@@ -2834,14 +2834,15 @@ function(dfile)
         out <- c(out, res)
     }
 
+    ## FIXME: this was done right at the beginning
     ## Mandatory entries in DESCRIPTION:
     ##   Package, Version, License, Description, Title, Author,
     ##   Maintainer.
-    required_fields <- c("Package", "Version", "License", "Description",
-                         "Title", "Author", "Maintainer")
-    if(length(i <- which(is.na(match(required_fields, names(db))) |
-                         !nzchar(db[required_fields]))))
-        out$missing_required_fields <- required_fields[i]
+##     required_fields <- c("Package", "Version", "License", "Description",
+##                          "Title", "Author", "Maintainer")
+##     if(length(i <- which(is.na(match(required_fields, names(db))) |
+##                          !nzchar(db[required_fields]))))
+##         out$missing_required_fields <- required_fields[i]
 
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
@@ -2945,11 +2946,11 @@ function(x, ...)
     if(length(s))
         writeLines(c(s, ""))
 
-    if(length(x$missing_required_fields)) {
-        writeLines(gettext("Required fields missing:"))
-        .pretty_print(x$missing_required_fields)
-        writeLines("")
-    }
+##     if(length(x$missing_required_fields)) {
+##         writeLines(gettext("Required fields missing or empty:"))
+##         .pretty_print(x$missing_required_fields)
+##         writeLines("")
+##     }
 
     if(length(x$bad_package))
         writeLines(c(strwrap(x$bad_package), ""))
