@@ -10,6 +10,12 @@
 \section{\Rlogo CHANGES IN R 3.0.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
+      \item \code{sum()} for integer arguments now uses an integer
+      accumulator of at least 64 bits and so will be more accurate in
+      the very rare case that a cumulative sum exceeds
+      \eqn{2^{53}}{2^53} (necessarily summing more than 4 million
+      elements).
+
       \item The \code{example()} and \code{tools::Rd2ex()} functions now
       have parameters to allow them to ignore \verb{\dontrun} markup in
       examples.  (Suggested by Peter Solymos.)
@@ -126,6 +132,10 @@
       work better with the incompatible changes made in \command{texinfo
       5.x}.
 
+      \item The minimum version for a system \code{xz} library is now
+      5.0.3 (was 4.999).  This is in part to avoid 5.0.2, which can
+      compress in ways other versions cannot decompress.
+      
       \item The included version of PCRE has been updated to 8.33.
 
       \item The included version of \code{zlib} has been updated to
