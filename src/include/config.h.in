@@ -343,6 +343,9 @@
 /* Define to 1 if you have the <iconv.h> header file. */
 #undef HAVE_ICONV_H
 
+/* Define to 1 if the system has the type `int64_t'. */
+#undef HAVE_INT64_T
+
 /* Define if you have support for ftp/http access. */
 #undef HAVE_INTERNET
 
@@ -359,6 +362,9 @@
 /* Define if <inttypes.h> exists, doesn't clash with <sys/types.h>, and
    declares uintmax_t. (For intl) */
 #undef HAVE_INTTYPES_H_WITH_UINTMAX
+
+/* Define to 1 if the system has the type `int_fast64_t'. */
+#undef HAVE_INT_FAST64_T
 
 /* Define to 1 if you have the `isblank' function. */
 #undef HAVE_ISBLANK
@@ -450,7 +456,7 @@
 /* Define to 1 if the system has the type `long long int'. (For intl) */
 #undef HAVE_LONG_LONG_INT
 
-/* Define if your system has lzma >= 4.999. */
+/* Define if your system has lzma >= 5.0.3. */
 #undef HAVE_LZMA
 
 /* Define to 1 if you have the <lzma.h> header file. */
