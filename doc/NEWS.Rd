@@ -31,7 +31,7 @@
       \code{which(*, arr.ind = TRUE)} now make use of
       \code{names(.dimnames)} when available.
 
-      \item \code{is.unsorted()} now also works for \code{raw} vectors
+      \item \code{is.unsorted()} now also works for \code{raw} vectors.
 
       \item The \code{"table"} method for \code{as.data.frame()}, also
       useful as \code{as.data.frame.table()}, now passes \code{sep} and
@@ -569,6 +569,9 @@
 
       \item \command{R CMD rtags} works on platforms (such as OS X)
       with a XSI-conformant shell command \command{echo}. (\PR{15231})
+      
+      \item \code{is.unsorted(NA)} returns false as documented (rather than
+      \code{NA}).
     }
   }
 }
