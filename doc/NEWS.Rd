@@ -352,6 +352,9 @@
 
       \item \command{R CMD rtags} works on platforms (such as OS X)
       with a XSI-conformant shell command \command{echo}. (\PR{15231})
+      
+      \item \code{is.unsorted(NA)} returns false as documented (rather than
+      \code{NA}).
     }
   }
 }
