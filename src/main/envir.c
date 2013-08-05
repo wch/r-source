@@ -1352,7 +1352,7 @@ SEXP findFun(SEXP symbol, SEXP rho)
 {
     SEXP vl;
 
-    /* If the symbol is marked as spacial, skip to the first
+    /* If the symbol is marked as special, skip to the first
        environment that might contain such a symbol. */
     if (IS_SPECIAL_SYMBOL(symbol)) {
         while (rho != R_EmptyEnv && NO_SPECIAL_SYMBOLS(rho))

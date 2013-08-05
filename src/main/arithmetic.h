@@ -42,8 +42,19 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
        attributes will then take precedence when copied. */
 
     if (n == n2) {
-        if (TYPEOF(s2) == type && NAMED(s2) == 0)
+        if (TYPEOF(s2) == type && NAMED(s2) == 0) {
+	    if (ATTRIB(s2) != R_NilValue) {
+		/* need to remove 'dim', 'dimnames' and 'names'
+		   attributes if present to match what copyMostAttrib
+		   does (it might be OK to ignore 'dim' and 'dimnames'
+		   here since those should be replaced by attribute
+		   cleanup code in R_Binary) */
+		setAttrib(s2, R_DimSymbol, R_NilValue);
+		setAttrib(s2, R_DimNamesSymbol, R_NilValue);
+		setAttrib(s2, R_NamesSymbol, R_NilValue);
+	    }
             return s2;
+	}
         else
             /* Can use 1st arg's space only if 2nd arg has no attributes, else
                we may not get attributes of result right. */
