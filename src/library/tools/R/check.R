@@ -3146,6 +3146,18 @@ setRlibs <-
                 resultLog(Log, "EXISTS but not correct format")
                 do_exit(1L)
             }
+            mandatory <- c("Package", "Version", "License", "Description",
+                           "Title", "Author", "Maintainer")
+            OK <- sapply(desc[mandatory], function(x) !is.na(x) && nzchar(x))
+            if(!all(OK)) {
+                fail <- mandatory[!OK]
+                msg <- ngettext(length(fail),
+                                "Mandatory field missing or empty:",
+                                "Mandatory fields missing or empty:")
+                msg <- paste0(msg, "\n", .pretty_format(fail))
+                errorLog(Log, msg)
+                do_exit(1L)
+            }
             if(!grepl("^[[:alpha:]][[:alnum:].]*[[:alnum:]]$", desc["Package"])
                || grepl("[.]$", desc["Package"])) {
                 warningLog(Log)
@@ -4005,7 +4017,7 @@ setRlibs <-
                 makevars <- makevars[file_test("-ot", makevars, its)]
             }
             makevars <- basename(makevars)
-            
+
             if (do_install) {
                 check_install()
                 if(R_check_pkg_sizes) check_install_sizes()
