@@ -7502,8 +7502,8 @@ EOF
 but here @code{stdin()} refers to the program source and
 @code{"stdin"} will not be usable.
 
-Very short scripts can be passed to @command{Rscript} on the
-command-line via the @option{-e} flag.
+Short scripts can be passed to @command{Rscript} on the command-line
+@emph{via} the @option{-e} flag.  (Empty scripts are not accepted.)
 
 Note that on a Unix-alike the input filename (such as @file{foo.R})
 should not contain spaces nor shell metacharacters.

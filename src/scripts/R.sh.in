@@ -191,7 +191,7 @@ while test -n "${1}"; do
       if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
 	a=`echo "${2}" | ${SED} -e 's/ /~+~/g'`; shift
       else
-	error "option '${1}' requires an argument"
+	error "option '${1}' requires a non-empty argument"
       fi
       args="${args} -e $a"
       ;;
@@ -199,7 +199,7 @@ while test -n "${1}"; do
       if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
 	a=`echo "${2}" | ${SED} -e 's/ /~+~/g'`; shift
       else
-	error "option '${1}' requires an argument"
+	error "option '${1}' requires a filename argument"
       fi
       args="${args} -f $a"
       ;;
