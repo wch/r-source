@@ -5683,12 +5683,6 @@ function(dir)
     class(out) <- "check_package_CRAN_incoming"
 
     meta <- .get_package_metadata(dir, FALSE)
-    if(is.na(meta["Package"]))
-            stop("Package has no 'Package' field", call. = FALSE)
-    if(is.na(meta["License"]))
-        stop("Package has no 'License' field", call. = FALSE)
-    if(is.na(meta["Maintainer"]))
-        stop("Package has no 'Maintainer' field", call. = FALSE)
     info <- analyze_license(meta["License"])
     ## Use later to indicate changes from FOSS to non-FOSS licence.
     foss <- info$is_verified
