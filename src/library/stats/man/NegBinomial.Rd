@@ -62,6 +62,11 @@ rnbinom(n, size, prob, mu)
   If an element of \code{x} is not integer, the result of \code{dnbinom}
   is zero, with a warning.
 
+  The case \code{size == 0} is the distribution concentrated at zero. This 
+  is the limiting distribution for \code{size} approaching zero, even if 
+  \code{mu} rather than \code{prob} is held constant. Notice though, that
+  the mean of the limit distribution is 0, whatever the value of \code{mu}.  
+
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }

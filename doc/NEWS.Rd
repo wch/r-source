@@ -64,6 +64,14 @@
       partial parse information available up to the location of the
       error.  (Request of Reijo Sund.)
 
+      \item Methods invoked by \code{NextMethod()} had different dynamic
+      parent to the generic. This was causing trouble where S3 methods
+      invoked via lazy evaluation could lose track of their generic
+      (\PR{15267}).
+
+      \item Code for the negative binomial distribution now treats the case
+      \code{size == 0} as a one-point distribution at zero.
+
       \item \code{abbreviate()} handles without warning non-ASCII input
       strings which require no abbreviation.
       

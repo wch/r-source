@@ -806,6 +806,12 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     defineVar(R_dot_Group, group, m);
 
     SETCAR(newcall, method);
+
+    /* applyMethod expects that the parent of the caller is the caller
+       of the generic, so fixup by brute force. This should fix
+       PR#15267 --pd */
+    R_GlobalContext->sysparent = callenv;
+
     ans = applyMethod(newcall, nextfun, matchedarg, env, m);
     UNPROTECT(10);
     return(ans);

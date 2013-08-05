@@ -36,7 +36,11 @@ double pnbinom(double x, double size, double prob, int lower_tail, int log_p)
 	return x + size + prob;
     if(!R_FINITE(size) || !R_FINITE(prob))	ML_ERR_return_NAN;
 #endif
-    if (size <= 0 || prob <= 0 || prob > 1)	ML_ERR_return_NAN;
+    if (size < 0 || prob <= 0 || prob > 1)	ML_ERR_return_NAN;
+
+    /* limiting case: point mass at zero */
+    if (size == 0) 
+        return (x >= 0) ? R_DT_1 : R_DT_0; 
 
     if (x < 0) return R_DT_0;
     if (!R_FINITE(x)) return R_DT_1;
@@ -51,7 +55,11 @@ double pnbinom_mu(double x, double size, double mu, int lower_tail, int log_p)
 	return x + size + mu;
     if(!R_FINITE(size) || !R_FINITE(mu))	ML_ERR_return_NAN;
 #endif
-    if (size <= 0 || mu < 0)	ML_ERR_return_NAN;
+    if (size < 0 || mu < 0)	ML_ERR_return_NAN;
+
+    /* limiting case: point mass at zero */
+    if (size == 0) 
+        return (x >= 0) ? R_DT_1 : R_DT_0; 
 
     if (x < 0) return R_DT_0;
     if (!R_FINITE(x)) return R_DT_1;
