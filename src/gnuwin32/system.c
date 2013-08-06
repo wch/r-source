@@ -1060,9 +1060,9 @@ int cmdlineoptions(int ac, char **av)
 		}
 	    } else if(CharacterMode == RTerm && !strcmp(*av, "-e")) {
 		ac--; av++;
-		if (!ac) {
+		if (!ac || !strlen(*av)) {
 		    snprintf(s, 1024,
-			    _("option '%s' requires an argument"),
+			    _("option '%s' requires a non-empty argument"),
 			    "-e");
 		    R_Suicide(s);
 		}
