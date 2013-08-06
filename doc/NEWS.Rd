@@ -131,6 +131,10 @@
       on a Linux system and record that value rather than the
       frequently-changing full path such as
       \file{/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64}.
+      
+      \item (Windows only.) \command{Rscript -e} requires a non-empty
+      argument for consistency with Unix versions of \R.  (Also
+      \command{Rterm -e} and \command{R -e}.)
     }
   }
 
