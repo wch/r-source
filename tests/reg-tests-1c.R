@@ -112,7 +112,7 @@ rcond(B)
 days <- as.Date(c("2012-02-02", "2012-03-03", "2012-05-05"))
 (z <- formatC(days))
 stopifnot(!is.object(z), is.null(oldClass(z)))
-## used to copy over class in R < 3.1.0.
+## used to copy over class in R < 3.0.2.
 
 
 ## PR15219
@@ -137,6 +137,7 @@ stopifnot(abs(res$value - val) < res$abs.error)
 
 ## Unary + should coerce
 x <- c(TRUE, FALSE, NA, TRUE)
+stopifnot(is.integer(+x))
 ## +x was logical in R <= 3.0.1
 
 
@@ -151,10 +152,26 @@ x; +x; -x; !x
 stopifnot(!is.ts(!x), is.ts(+x), is.ts(-x))
 ##
 
+
 ## regression test incorrectly in colorRamp.Rd
 bb <- colorRampPalette(2)(4)
 stopifnot(bb[1] == bb)
 ## special case, invalid in R <= 2.15.0:
+
+
+## Setting NAMED on ... arguments
+f <- function(...) { x <- (...); x[1] <- 7; (...) }
+stopifnot(f(1+2) == 3)
+## was 7 in 3.0.1
+
+
+## copying attributes from only one arg of a binary operator.
+A <- array(c(1), dim = c(1L,1L), dimnames = list("a", 1))
+x <- c(a = 1)
+B <- A/(pi*x)
+stopifnot(is.null(names(B)))
+## was wrong in R-devel in Aug 2013
+## needed an un-NAMED rhs.
 
 
 proc.time()
